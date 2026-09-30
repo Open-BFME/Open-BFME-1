@@ -21,8 +21,11 @@ def test_current_data_only_providers_are_compile_inputs():
 
 
 def test_data_objects_are_linked_once_and_checked_for_currency(monkeypatch, tmp_path):
-    rows = [{"name": "code", "source": "game/shared.cpp"}]
-    providers = [{"source": "game/shared.cpp"}, {"source": "game/data.cpp"}, {"source": "game/data.cpp"}]
+    rows = [{"name": "code", "target_rva": "0x00001000", "source": "game/shared.cpp"}]
+    providers = [{"name": name, "address": address, "address_kind": "rva", "source": source, "status": "matched"}
+                 for name, address, source in (("d0", "0x00F00000", "game/shared.cpp"),
+                                               ("d1", "0x00F00010", "game/data.cpp"),
+                                               ("d2", "0x00F00008", "game/data.cpp"))]
     monkeypatch.setattr(data_rows, "load", lambda: providers)
     monkeypatch.setattr(census.build, "extract_lib_members", lambda rows: None)
     path = lambda source: tmp_path / (Path(source).stem + ".obj")

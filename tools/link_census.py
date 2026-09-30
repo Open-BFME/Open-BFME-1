@@ -4,7 +4,9 @@
 Every other gate verifies one function at a time. Nothing had ever linked the
 tree, so nobody knew how far "the functions match" is from "the game builds".
 This links the object of every matched ledger row (compiled TUs, MASM dumps,
-generated C++, prebuilt-library members) with MSVC 7.1's own link.exe under
+generated C++, prebuilt-library members) and of every matched data row
+(data_rows.csv: a data-only TU's globals resolve references like any other
+definition), in retail's link order (link_order), with MSVC 7.1's own link.exe under
 /FORCE, so it reports every problem instead of stopping at the first, and sorts
 them into the classes the integration work has to clear:
 
@@ -36,7 +38,9 @@ no COMDAT copy that differs from retail's body (comdat_losers), no name it
 defines or references resolves in the link to a kept definition proven not
 retail's (wrong_selected; the /MAP of a second link says which it kept), and
 the file holds no hard-coded image address. LINKED is progress.py's DECOMPILED restricted to
-those sources; progress.py and the README print the last census's figure.
+those sources; progress.py and the README print the last census's figure. A
+data-only source has a status row but no code, so it adds 0 LINKED bytes
+itself: its definitions only unblock the files that reference them.
 
 The census is diagnostic. The image it writes is not expected to run.
 """
@@ -99,6 +103,22 @@ def verify_data_objects():
         raise SystemExit(f"link_census: {len(stale):,} data provider objects are missing or stale, "
                          f"e.g. {stale[0].relative_to(ROOT)}; rerun with --build")
     data_rows.verify(compile=False)
+
+
+def data_ledger():
+    """The matched rows of data_rows.csv: globals a game/ source defines,
+    byte-verified at their retail address by the gate (tools/data_rows.py)."""
+    import data_rows
+    return [row for row in data_rows.load() if row.get("status") == "matched"]
+
+
+def data_rva(row):
+    import data_rows
+    return data_rows.va_of(row) - BASE
+
+
+def data_object(row):
+    return build.obj_path(ROOT / row["source"])
 
 
 def pins(routes=None):
@@ -232,16 +252,35 @@ def data_names():
         return {row["name"] for row in csv.DictReader(handle)}
 
 
-def objects(rows):
-    """Unique object per matched row; (present, missing)."""
+def link_order(rows, data=()):
+    """Every object of a matched ledger row or a matched data row, in link order.
+
+    Retail's .text follows its link order, so an object goes where its code
+    sits in retail: by the lowest retail RVA among its matched functions.csv
+    rows. Objects that own only data rows (a data-only TU) follow, by the
+    lowest retail RVA of their data. Ties, which only an over-claimed address
+    can produce, go by object path. Neither the ledger's row order nor a file's
+    name decides a place (before 2026-09-30 the first row naming an object
+    did, and functions.csv is not sorted by RVA)."""
+    code, data_only = {}, {}
+    for row in rows:
+        obj = build.row_object(row)
+        code[obj] = min(code.get(obj, int(row["target_rva"], 16)), int(row["target_rva"], 16))
+    for row in data:
+        obj = data_object(row)
+        if obj not in code:
+            data_only[obj] = min(data_only.get(obj, data_rva(row)), data_rva(row))
+    key = {obj: (0, rva, obj.as_posix()) for obj, rva in code.items()}
+    key.update({obj: (1, rva, obj.as_posix()) for obj, rva in data_only.items()})
+    return sorted(key, key=key.__getitem__)
+
+
+def objects(rows, data=None):
+    """Unique object per matched row and per matched data row, in link_order;
+    (present, missing). `data` defaults to data_ledger()."""
     build.extract_lib_members([r for r in rows if r["source"].lower().endswith(build.LIB_SUFFIX)])
-    seen, present, missing = set(), [], []
-    candidates = [build.row_object(row) for row in rows]
-    candidates.extend(build.obj_path(source) for source in data_sources())
-    for obj in candidates:
-        if obj in seen:
-            continue
-        seen.add(obj)
+    present, missing = [], []
+    for obj in link_order(rows, data_ledger() if data is None else data):
         (present if obj.exists() else missing).append(obj)
     return present, missing
 
@@ -618,6 +657,8 @@ class RetailTruth:
             for name in names:  # a gen-alias twin's object symbol names its original, not the twin
                 self.ledger[_normal(name)].add(address)
             names_at[address].add(row["name"])
+        for row in data_ledger():  # a data row is byte-verified at its address, like a function row
+            self.ledger[_normal(row["name"])].add(data_rva(row))
         # An address several names claim is an unresolved over-claim (retail
         # had no ICF, so at most one of them is right): a mismatch against it
         # proves nothing about the copy, only about the ledger.
@@ -935,15 +976,18 @@ def comdat_losers(objs, rows=None, stats=None, facts=None):
     return losers
 
 
-def ledger_owners(rows):
+def ledger_owners(rows, data=None):
     """{name: {object}}: the object of each ledger row naming it (its object
-    symbol too), never an icf-owner over-claim or a scaffold row. For a name
-    several objects define, the owner's is retail's definition."""
+    symbol too), never an icf-owner over-claim or a scaffold row, and of each
+    matched data row (`data`, default data_ledger()). For a name several
+    objects define, the owner's is retail's definition."""
     owners = collections.defaultdict(set)
     for row in rows:
         if "icf-owner=" not in (row.get("notes") or "") and not build.is_scaffold_row(row):
             for name in {row["name"], build.ledger_object_symbol(row)}:
                 owners[name].add(build.row_object(row).name)
+    for row in data_ledger() if data is None else data:
+        owners[row["name"]].add(data_object(row).name)
     return owners
 
 
@@ -1596,11 +1640,13 @@ def write_status(log, rows, present, meta, kept):
             duplicates[Path(found.group(1)).name].add(symbol)
             duplicates[Path(found.group(4)).name].add(symbol)
     out, blockers, clean_prev, unknown_only = {}, {}, set(), set()
-    for row in rows:
+    # A data-only source is a file like any other; it owns no code, so linking
+    # it adds no LINKED bytes, only the definitions other files resolve to.
+    for row, object_of in [(row, build.row_object) for row in rows] + [(row, data_object) for row in data_ledger()]:
         source = row["source"]
         if source in out or Path(source).suffix.lower() not in (".c", ".cpp"):
             continue
-        obj = build.row_object(row).name
+        obj = object_of(row).name
         try:
             text = (ROOT / source).read_text(encoding="utf-8", errors="replace")
         except OSError:
@@ -1787,6 +1833,9 @@ def record(census, rows, rerun=False, fresh=False):
 
 
 HISTORY = ROOT / "targets/game/reverse/link_census_history.csv"
+# *_prev_rule: the same census without wrong_selected (from 7401e9d0dd), except
+# the 2026-09-30 re-baseline row, which holds the figures of the rules before
+# link_order and data-only objects (the previous link_census.py, same tree).
 HISTORY_FIELDS = ["date", "commit", "objects", "unresolved", "alias", "pinned_elsewhere", "dump", "data",
                   "import", "unpinned", "duplicates", "comdat_conflicts", "comdat_vtables",
                   "scaffold_aliases", "scaffold_unresolved", "scaffold_crashed",

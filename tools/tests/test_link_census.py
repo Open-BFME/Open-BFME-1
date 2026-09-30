@@ -561,3 +561,76 @@ def test_malformed_link_output_never_records_a_census(tmp_path, monkeypatch):
     # the control links: a valid image and a clean exit record the census
     monkeypatch.setattr(L, "link", lambda *a, **k: ((tmp_path / "census.exe").write_bytes(valid_pe()), ("", 0, 0))[1])
     assert L.main([]) == 0 and (tmp_path / "census.json").exists()
+
+
+def _ordered_ledger(monkeypatch):
+    """Rows of four sources (one with two rows, lowest RVA not first), a data
+    row whose source also owns code, and a data-only source."""
+    monkeypatch.setattr(L.build, "row_object", lambda row: Path("/o") / (Path(row["source"]).stem + ".obj"))
+    monkeypatch.setattr(L.build, "obj_path", lambda source, member=None: Path("/o") / (Path(source).stem + ".obj"))
+    rows = [{"name": "f1", "target_rva": "0x00003000", "source": "game/z.cpp"},
+            {"name": "g", "target_rva": "0x00005000", "source": "game/a.cpp"},
+            {"name": "f0", "target_rva": "0x00001000", "source": "game/z.cpp"},
+            {"name": "h", "target_rva": "0x00002000", "source": "game/m.cpp"},
+            {"name": "h2", "target_rva": "0x00002000", "source": "game/b.cpp"}]  # an over-claimed address: tie
+    data = [{"name": "d2", "address": "0x01300010", "address_kind": "va", "source": "game/lang.cpp"},
+            {"name": "d1", "address": "0x00F00000", "address_kind": "rva", "source": "game/glob.cpp"},
+            {"name": "d0", "address": "0x00F00008", "address_kind": "rva", "source": "game/a.cpp"}]
+    return rows, data
+
+
+def test_link_order_is_retail_layout_not_ledger_order(monkeypatch):
+    rows, data = _ordered_ledger(monkeypatch)
+    order = [obj.name for obj in L.link_order(rows, data)]
+    # code by lowest retail RVA (tie by path), then data-only objects by their data's RVA
+    assert order == ["z.obj", "b.obj", "m.obj", "a.obj", "glob.obj", "lang.obj"]
+
+
+def test_shuffling_the_ledger_changes_no_census_result(monkeypatch):
+    import random
+    rows, data = _ordered_ledger(monkeypatch)
+    # one symbol with no retail address, whose kept copy link order decides,
+    # and one judged by retail truth whose kept copy is the first unproven one
+    facts = {"z.obj": ([("inl", "p", 5, None)], [], [], []),
+             "b.obj": ([("inl", "q", 5, None), ("t", "u1", 5, "unknown")], [], [], []),
+             "m.obj": ([("inl", "p", 5, None), ("t", "u2", 5, "unknown")], [], [], []),
+             "a.obj": ([("t", "u1", 5, "unknown")], ["d0"], ["d1"], []),
+             "lang.obj": ([], ["d2"], [], []),
+             "glob.obj": ([], ["d1"], [], [])}
+
+    def census(ledger_rows, data_rows):
+        present = L.link_order(ledger_rows, data_rows)
+        found = [facts[obj.name] for obj in present]
+        losers = L.comdat_losers(present, ledger_rows, facts=found)
+        owners = L.ledger_owners([], data_rows)
+        kept = {}  # link.exe keeps the first definition in link order
+        for obj, (copies, strong, _, _) in zip(present, found):
+            for name in strong + [copy[0] for copy in copies]:
+                kept.setdefault(name, obj.name)
+        return [obj.name for obj in present], dict(losers), L.selection_verdicts(present, found, owners, kept)
+
+    expected = census(rows, data)
+    assert expected[1] == {"b.obj": {"inl"}, "m.obj": {"t"}}
+    generator = random.Random(7)
+    for _ in range(20):
+        shuffled, shuffled_data = rows[:], data[:]
+        generator.shuffle(shuffled)
+        generator.shuffle(shuffled_data)
+        assert census(shuffled, shuffled_data) == expected
+
+
+def test_data_row_owner_is_a_ledger_owner(monkeypatch):
+    rows, data = _ordered_ledger(monkeypatch)
+    owners = L.ledger_owners([], data)
+    assert owners["d1"] == {"glob.obj"} and owners["d0"] == {"a.obj"}
+
+
+def test_selected_legacy_data_over_the_verified_provider_blocks_its_callers(monkeypatch):
+    rows, data = _ordered_ledger(monkeypatch)
+    # legacy.obj defines d1 too, ahead of glob.obj (the data row's owner), and the link kept it
+    present = [Path("/o/legacy.obj"), Path("/o/glob.obj"), Path("/o/caller.obj")]
+    facts = [([], ["d1"], [], []), ([], ["d1"], [], []), ([], [], ["d1"], [])]
+    results, _ = L.selection_verdicts(present, facts, L.ledger_owners([], data), {"d1": "legacy.obj"})
+    assert results["d1"] == "wrong"  # judge_selected: the kept definition is not the owner's
+    results, _ = L.selection_verdicts(present, facts, L.ledger_owners([], data), {"d1": "glob.obj"})
+    assert results["d1"] == "ok"
