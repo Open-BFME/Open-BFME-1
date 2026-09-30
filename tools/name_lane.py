@@ -701,9 +701,25 @@ def cmd_status(args):
     return 0
 
 
+def retail_import_names():
+    """API identifiers witnessed by retail's PE import table, without pin proposals."""
+    import link_census
+
+    names = set()
+    for _dll, name, _slot in link_census._retail_import_entries():
+        # Miles exports decorated stdcall names; the C identifier excludes
+        # the leading underscore and argument-byte suffix. Keep ordinary
+        # export names (including CRT names such as _vsnprintf) exact.
+        decorated = re.fullmatch(r"_([A-Za-z_]\w*)@\d+", name)
+        identifier = decorated.group(1) if decorated else name
+        if WORD.fullmatch(identifier):
+            names.add(identifier)
+    return names
+
+
 def cmd_check(args):
     """Refuse a placeholder swapped for a coined name outside the lane. Allowed replacements: an
-    agreed name, an EA name, or a type or member name some header already declares (adoption)."""
+    agreed name, an EA name, a retail import, or a name a header already declares (adoption)."""
     coined = collections.defaultdict(set)
     for f in git("diff", "--cached", "--name-only", "--diff-filter=M", "--no-renames").split():
         if not f.startswith("game/") or f.startswith(GENERATED) or not f.endswith((".cpp", ".c", ".h", ".inl")):
@@ -724,6 +740,7 @@ def cmd_check(args):
     allowed |= {w for r in csv.DictReader(io.StringIO(EA.read_text(encoding="utf-8"))) if r["kind"] == "name"
                 for w in WORD.findall(r["value"])}
     allowed |= {w for pin in STORED[1:] for w in WORD.findall(git("show", f":{pin.relative_to(ROOT).as_posix()}"))}
+    allowed |= retail_import_names()
 
     def declared(word):
         if not (word[0].isupper() or word.startswith("m_")):

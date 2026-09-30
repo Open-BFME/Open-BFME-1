@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) int __stdcall bfmeStatusDXD(void *h);
+extern "C" __declspec(dllimport) int __stdcall AIL_3D_sample_status(void *h);
 
 struct BfmeThingEQA
 {
@@ -19,5 +19,5 @@ char BfmeThingEQA::bfmeGoEQA()
 	void *h = m_bfmeHEQA;
 	if (!h)
 		return 1;
-	return bfmeStatusDXD(h) != 4;
+	return AIL_3D_sample_status(h) != 4;
 }
