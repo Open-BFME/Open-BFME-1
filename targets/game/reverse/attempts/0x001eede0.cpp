@@ -1,5 +1,5 @@
 // ?update@AutoHealBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.995 date=2026-09-28
+// partial score=0.9951 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // BANK 0x001EEDE0 AutoHealBehavior::update (1216 B): this is the WHOLE
