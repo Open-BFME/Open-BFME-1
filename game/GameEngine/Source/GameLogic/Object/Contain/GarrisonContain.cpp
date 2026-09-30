@@ -359,7 +359,9 @@ GarrisonContainModuleData::GarrisonContainModuleData( void )
 }  // end if
 
 //-----------------------------------------------------------------------------
-inline Real calcDistSqr(const Coord3D& a, const Coord3D& b)
+// No longer inline: the retail trackTargets lives in GarrisonContainTrackTargets.cpp,
+// so nothing here calls it and an inline body would not be emitted (row 0x0021DD60).
+Real calcDistSqr(const Coord3D& a, const Coord3D& b)
 {
 	return sqr(a.x - b.x) + sqr(a.y - b.y) + sqr(a.z - b.z);
 }
@@ -838,109 +840,7 @@ void GarrisonContain::addValidObjectsToGarrisonPoints( void )
 
 }  // end addValidObjectsToGarrisonPoints
 
-// ------------------------------------------------------------------------------------------------
-/** Every frame this method is called.  It keeps any of the attacking units at any of the
-	* fire points closest to their active target and shuffles them around to any open garrison
-	* points that are available if they are closer.  We will also track our targets position
-	* and orient any effect stuff we need to (gun barrel / muzzle flash) */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp
-// ?trackTargets@GarrisonContain@@IAEXXZ present-unmatched
-void GarrisonContain::trackTargets( void )
-{
-
-
-  if ( ! isEnclosingContainerFor( 0 ) )
-    return; // since ina non-enclosing container, objects fire from their station points, instead of being juggled around between garrison firepoints
-
-
-
-	Int conditionIndex = findConditionIndex();
-	const ContainedItemsList& containList = getContainList();
-	AIUpdateInterface *ai;
-	Object *obj;
-
-	for( ContainedItemsList::const_iterator it = containList.begin(); it != containList.end(); ++it )
-	{
-
-		DEBUG_ASSERTCRASH(m_garrisonPointsInitialized, ("garrisonPoints are not inited"));
-
-		// get the object
-		obj = *it;
-
-		// only consider objects that are actually at garrison points for re-shuffling
-		Int ourIndex = getObjectGarrisonPointIndex( obj );
-		if( ourIndex != GARRISON_INDEX_INVALID )
-		{
-
-			// does this object have a target?
-			ai = obj->getAIUpdateInterface();
-			if( ai )
-			{
-				Object *victim = ai->getCurrentVictim();
-				// even though the target position can't change in some cases, still must do this code at least once.
-				const Coord3D *victimPos = ai->getCurrentVictimPos();
-
-				if( victim || victimPos )
-				{
-					if (victim)
-						victimPos = victim->getPosition();
-					const Coord3D *ourPos = obj->getPosition();
-
-					// find the closest free (of all remaining) garrison points to our target
-					Int newIndex = findClosestFreeGarrisonPointIndex( conditionIndex, 
-																														victimPos );
-
-					// if unable to find another garrison point, don't bother
-					if( newIndex != GARRISON_INDEX_INVALID )
-					{
-
-						// get the distance from our current index to the target
-						Real currentDistSq = calcDistSqr(*victimPos, *ourPos );
-
-						// get the distance from the newly chosen index
-						Real newDistSq = calcDistSqr(*victimPos, m_garrisonPoint[ conditionIndex ][ newIndex ] );
-
-						// if the newly chosen index is closer than our current index, switch
-						if( newDistSq < currentDistSq )
-						{
-
-							// remove from the old index
-							removeObjectFromGarrisonPoint( obj, ourIndex );
-
-							// place at the new index
-							putObjectAtGarrisonPoint( obj, victim ? victim->getID() : INVALID_ID, conditionIndex, newIndex );
-
-						}  // end if, new index is closer
-
-					}  // end if, possible closer index was found
-
-					//
-					// we are now either at a new garrison fire point, or we have remained at our
-					// existing point still tracking our target.  Orient the effect drawable which
-					// shows the gun barrel and muzzle flash towards our target position
-					//
-					if( m_garrisonPointData[ ourIndex ].effect )
-					{
-						Coord2D v;
-						v.x = victimPos->x - ourPos->x;
-						v.y = victimPos->y - ourPos->y;
-//					v.z = victomPos->z - ourPos.z;
-
-						// orient the effect object towards the victim position
-						m_garrisonPointData[ ourIndex ].effect->setOrientation( v.toAngle() );
-
-					}  // end if
-
-				}  // end if, victim present
-
-			}  // end if, ai
-
-		}  // end if, we're at a garrison point
-
-	}  // end for it
-
-}  // end trackTargets
+// Retail GarrisonContain::trackTargets is implemented in GarrisonContainTrackTargets.cpp.
 
 // Retail GarrisonContain::redeployOccupants is implemented in GarrisonContain_redeployOccupants.cpp.
 
