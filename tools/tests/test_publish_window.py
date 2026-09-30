@@ -112,8 +112,12 @@ def test_gate_evidence_is_opt_in_exact_tree_and_full_covers_scoped(clones, monke
     _git(seat, "commit", "-q", "-am", "b")
     assert not gate_evidence.reusable("HEAD", "full", root=seat)[0]        # a different tree
     _git(seat, "commit", "-q", "--allow-empty", "-m", "same tree")
-    gate_evidence.record("HEAD", "scoped", root=seat)
+    gate_evidence.record("HEAD", "scoped", root=seat, selectors=["game/a.cpp"], base=first)
     assert not gate_evidence.reusable("HEAD", "full", root=seat)[0]        # scoped never covers full
+    assert gate_evidence.reusable("HEAD", "scoped", root=seat, selectors=["game/a.cpp"])[0]
+    assert not gate_evidence.reusable("HEAD", "scoped", root=seat,
+                                      selectors=["game/a.cpp", "game/b.cpp"])[0]
+    assert not gate_evidence.reusable("HEAD", "scoped", root=seat)[0]       # scope must be named
 
 
 def test_a_multi_commit_unit_lands_whole_under_the_window(world, monkeypatch):
@@ -149,3 +153,67 @@ def test_a_multi_commit_unit_lands_whole_under_the_window(world, monkeypatch):
     assert len(receipt["commits"]) == 2 and receipt["commit"] == receipt["commits"][-1]
     assert pw.read(root=service.repo) == (None, None)                     # closed afterwards
     assert pw.TOKEN_ENV not in os.environ
+
+
+# ---- 2026-09-30 review (review_20260930_0251.md) ----
+
+def test_a_narrow_scoped_record_never_skips_a_wider_gate(tmp_path):
+    # review_five_probes.py: the same tip pushed onto an older base changes two
+    # headers instead of one; the narrow record from the first push let the
+    # wider gate (which fails on b.cpp) be skipped.
+    repo = tmp_path / "repo"
+    _git(tmp_path, "init", "-q", str(repo))
+    for key, value in (("user.name", "t"), ("user.email", "t@example.com"), ("core.hooksPath", "no-hooks")):
+        _git(repo, "config", key, value)
+    for sub_dir in ("tools", ".githooks", "game", "targets/game/reverse"):
+        (repo / sub_dir).mkdir(parents=True)
+    (repo / "targets/game/reverse/functions.csv").write_text("name,source,status\n")
+    shutil.copy(REPO / ".githooks" / "pre-push", repo / ".githooks" / "pre-push")
+    shutil.copy(TOOLS / "gate_evidence.py", repo / "tools" / "gate_evidence.py")
+    for name in ("check_csv", "one_identity", "target_hooks", "conversion_gate", "name_regression",
+                 "name_history", "name_oracle", "retired_guard", "doc_budget", "ea_name_guard",
+                 "pin_consistency", "b_pin_check", "delta_sources", "protected_paths"):
+        (repo / f"tools/{name}.py").write_text("import sys\nsys.exit(0)\n")
+    (repo / "tools/layout_migration.py").write_text("import sys\nsys.exit(1)\n")
+    (repo / "tools/header_dependents.py").write_text(
+        "import subprocess,sys\n"
+        "paths=subprocess.check_output(['git','diff','--name-only',sys.argv[2],sys.argv[3],'--','game'])"
+        ".decode().splitlines()\n"
+        "for p in paths:\n if p.endswith('.h'): print(p[:-2]+'.cpp')\n")
+    (repo / "build.sh").write_text('#!/usr/bin/env bash\nprintf "%s\\n" "$@" >> gate_calls.txt\n'
+                                   'case "$*" in *b.cpp*) exit 1;; esac\n')
+    (repo / "game/a.h").write_text("old\n")
+    (repo / "game/b.h").write_text("old\n")
+    _git(repo, "add", "--", ".githooks", "tools", "build.sh", "game", "targets")
+    _git(repo, "update-index", "--chmod=+x", "build.sh")
+    _git(repo, "commit", "-q", "-m", "initial")
+    older = _git(repo, "rev-parse", "HEAD")
+    (repo / "game/b.h").write_text("bad b\n")
+    _git(repo, "commit", "-q", "-am", "header b")
+    newer = _git(repo, "rev-parse", "HEAD")
+    (repo / "game/a.h").write_text("new a\n")
+    _git(repo, "commit", "-q", "-am", "header a")
+    tip = _git(repo, "rev-parse", "HEAD")
+
+    def hook(base, reuse=True):
+        env = {k: v for k, v in os.environ.items() if k != gate_evidence.ENABLE}
+        if reuse:
+            env[gate_evidence.ENABLE] = "1"
+        return subprocess.run(["bash", ".githooks/pre-push", "origin", "unused"], cwd=repo, env=env,
+                              input=f"refs/heads/topic {tip} refs/heads/topic {base}\n",
+                              capture_output=True, text=True)
+    assert hook(newer).returncode == 0                  # narrow: only a.cpp, green, recorded
+    assert hook(older).returncode != 0                  # wider: b.cpp is red, reuse must not hide it
+    assert hook(older, reuse=False).returncode != 0
+    assert hook(newer).returncode == 0 and "REUSING" in hook(newer).stderr   # same scope: reused
+
+
+def test_closing_someone_elses_window_needs_the_token_or_an_explicit_force(clones):
+    token = pw.open_window(30, owner="holder", purpose="stack", root=clones["service"])
+    assert not pw.close_window(root=clones["seat"])                     # tokenless: refused
+    assert not pw.close_window("wrong", root=clones["seat"])
+    assert pw.read(root=clones["service"])[0] == token
+    assert pw.close_window(force=True, root=clones["seat"])             # explicit, logged
+    log = Path(_git(clones["seat"], "rev-parse", "--absolute-git-dir")) / "bfme-window-forced.log"
+    assert "forced close" in log.read_text() and "holder" in log.read_text()
+    assert pw.read(root=clones["service"]) == (None, None)

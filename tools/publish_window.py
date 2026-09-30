@@ -23,7 +23,7 @@ needs origin anyway). An abandoned window blocks master until it expires
 
   python3 tools/publish_window.py status
   python3 tools/publish_window.py open [--minutes 90] [--purpose TEXT]   # prints the token
-  python3 tools/publish_window.py close TOKEN | --force
+  python3 tools/publish_window.py close TOKEN | --force   # --force is logged
   python3 tools/publish_window.py check        # exit 1 while someone else holds it
 """
 import argparse
@@ -108,10 +108,29 @@ def open_window(minutes=90, purpose="", owner=None, remote="origin", root=None):
 
 
 def close_window(token=None, force=False, remote="origin", root=None):
-    """Release the window we hold (or any, with force). Returns True if closed."""
-    current, _ = read(remote, root)
-    if not current or (token and current != token and not force):
+    """Release the window whose token we hold; True if closed. Without the
+    matching token nothing is closed unless `force` is explicit (review
+    2026-09-30: a rival's tokenless close deleted a live window). A forced
+    close is logged to stderr and to <git common dir>/bfme-window-forced.log.
+    The delete is a compare-and-swap on the token read here."""
+    current, info = read(remote, root)
+    if not current:
         return False
+    if current != token and not force:
+        return False
+    if current != token:
+        line = (f"{time.strftime('%Y-%m-%dT%H:%M:%S')} forced close of {current} held by "
+                f"{(info or {}).get('owner')} ({(info or {}).get('purpose', '')}) "
+                f"by {os.environ.get('USERNAME') or os.environ.get('USER') or '?'}@{socket.gethostname()}")
+        print(f"publish_window: {line}", file=sys.stderr)
+        common = _git("rev-parse", "--git-common-dir", root=root).stdout.strip()
+        if common:
+            log = Path(common) if Path(common).is_absolute() else Path(root or ROOT) / common
+            try:
+                with (log / "bfme-window-forced.log").open("a", encoding="utf-8") as handle:
+                    handle.write(line + "\n")
+            except OSError:
+                pass
     pushed = _git("push", "-q", f"--force-with-lease={REF}:{current}", remote,
                   f":{REF}", root=root, timeout=120)
     return pushed.returncode == 0
