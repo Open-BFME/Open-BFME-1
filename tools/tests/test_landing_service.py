@@ -514,7 +514,7 @@ def test_an_unreadable_window_after_a_failed_delete_is_reported_open(world, monk
         if a[:2] == ("push", "-q") and f":{pw.REF}" in a:
             state["deletes"] += 1
             return subprocess.CompletedProcess(a, 1, "", "simulated failed deletion")
-        if state["deletes"] and a[:3] == ("log", "-1", "--format=%B") and not state["log_failures"]:
+        if state["deletes"] and a[:3] == ("log", "-1", "--format=%ct%n%B") and not state["log_failures"]:
             state["log_failures"] += 1
             return subprocess.CompletedProcess(a, 128, "", "simulated git-log read failure")
         return real_git(*a, **k)
@@ -547,13 +547,46 @@ def test_malformed_window_metadata_is_unknown_and_reported_open(world, monkeypat
     import publish_window as pw
     service, unit, origin = world
     real_git = pw._git
-    monkeypatch.setattr(pw, "_git", lambda *a, **k: subprocess.CompletedProcess(a, 0, body, "")
-                        if a[:3] == ("log", "-1", "--format=%B") else real_git(*a, **k))
+    import time as _time
+    monkeypatch.setattr(pw, "_git", lambda *a, **k: subprocess.CompletedProcess(
+        a, 0, f"{int(_time.time())}" + chr(10) + body, "")
+        if a[:3] == ("log", "-1", "--format=%ct%n%B") else real_git(*a, **k))
     nonce = pw.open_window(root=service.repo)
     token, info = pw.read(root=service.repo)
     assert token and info.get("invalid") and not pw.valid(info)
     monkeypatch.setattr(ls.time, "sleep", lambda s: None)
     assert service._close_window(pw, nonce) is True               # unknown, never "someone else's"
     assert "STILL OPEN" in capsys.readouterr().err
+    monkeypatch.setattr(pw, "_git", real_git)
+    assert pw.close_window(nonce, root=service.repo)
+
+
+@pytest.mark.parametrize("age_minutes, blocks", [(0, True), (11, False)])
+def test_invalid_window_metadata_blocks_only_for_one_lease(world, monkeypatch, age_minutes, blocks):
+    # review 2026-09-30 (45a5af4bf3): invalid metadata read as expires=0 let
+    # pushes through while the service reported the window open. Now it
+    # blocks pushes and takeovers until the ref's commit time + one lease.
+    import time as _time
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    nonce = pw.open_window(root=service.repo)
+    made = int(_time.time()) - age_minutes * 60
+    real_git = pw._git
+    monkeypatch.setattr(pw, "_git", lambda *a, **k: subprocess.CompletedProcess(
+        a, 0, f'{made}' + chr(10) + '{"nonce": 12345, "expires": 9999999999}', "")
+        if a[:3] == ("log", "-1", "--format=%ct%n%B") else real_git(*a, **k))
+    allowed, message = pw.check(root=service.repo)
+    assert allowed is (not blocks)
+    if blocks:
+        assert "close --force" in message
+        with pytest.raises(pw.WindowHeld):
+            pw.open_window(root=service.repo)
+    else:
+        taken = pw.open_window(owner="next", root=service.repo)   # CAS takeover of the stale ref
+        monkeypatch.setattr(pw, "_git", real_git)
+        assert pw.read(root=service.repo)[1]["nonce"] == taken
+        assert pw.close_window(taken, root=service.repo)
+        return
     monkeypatch.setattr(pw, "_git", real_git)
     assert pw.close_window(nonce, root=service.repo)

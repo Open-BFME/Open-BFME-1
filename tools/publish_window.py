@@ -76,18 +76,28 @@ def read(remote="origin", root=None):
         got = _git("fetch", "-q", "--no-tags", remote, f"+{REF}:{SEEN}", root=root, timeout=60)
         if got.returncode:
             raise RuntimeError(f"publish_window: cannot fetch {REF}: {got.stderr.strip()}")
-    body = _git("log", "-1", "--format=%B", token, root=root)
+    body = _git("log", "-1", "--format=%ct%n%B", token, root=root)
     if body.returncode:
         # unreadable is unknown, never "no window" or "someone else's"
         raise RuntimeError(f"publish_window: cannot read {REF} at {token[:10]}: {body.stderr.strip()}")
+    stamp, _, text = body.stdout.partition("\n")
     try:
-        info = json.loads(body.stdout)
+        info = json.loads(text)
     except ValueError:
         info = None
     if not valid(info):
-        # a window whose metadata is not the shape we write is unknown, never
-        # "someone else's" (review 2026-09-30: list JSON, numeric nonce)
-        return token, {"owner": "?", "expires": 0, "invalid": True}
+        # Metadata not in the shape we write is unknown, never "someone
+        # else's" and never "no window" (review 2026-09-30): it blocks pushes
+        # and takeovers, but only for one maximum lease from the ref's own
+        # commit time (a future-dated commit counts from now), so a corrupt
+        # ref cannot lock the swarm out indefinitely.
+        try:
+            made = min(int(stamp), int(time.time()))
+        except ValueError:
+            made = int(time.time())
+        return token, {"owner": "? (unreadable window metadata)", "invalid": True,
+                       "expires": made + LEASE_MINUTES * 60,
+                       "purpose": "force-close: python3 tools/publish_window.py close --force"}
     return token, info
 
 
