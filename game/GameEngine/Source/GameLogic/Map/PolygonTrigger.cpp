@@ -491,47 +491,7 @@ Real PolygonTrigger::getRadius(void)	const
 }
 
 
-/**
- PolygonTrigger - pointInTrigger.
-*/
-// ?pointInTrigger@PolygonTrigger@@ present-unmatched
-Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
-{	
-	if (m_boundsNeedsUpdate) {
-		updateBounds();
-	}
-	if (point.x < m_bounds.lo.x) return false;
-	if (point.y < m_bounds.lo.y) return false;
-	if (point.x > m_bounds.hi.x) return false;
-	if (point.y > m_bounds.hi.y) return false;
-
-	Bool inside = false;
-	Int i;
-	for (i=0; i<m_numPoints; i++) {
-		ICoord3D pt1 = m_points[i];
-		ICoord3D pt2;
-		if (i==m_numPoints-1) {
-			pt2 = m_points[0];
-		} else {
-			pt2 = m_points[i+1];
-		}
-		if (pt1.y == pt2.y) {
-			continue; // ignore horizontal lines.
-		}
-		if (pt1.y < point.y && pt2.y < point.y) continue;
-		if (pt1.y >= point.y && pt2.y >= point.y) continue;
-		if (pt1.x<point.x && pt2.x < point.x) continue;
-		// Line segment crosses ray from point x->infinity.
-		Int dy = pt2.y-pt1.y;
-		Int dx = pt2.x-pt1.x;
-
-		Real intersectionX = pt1.x + (dx * (point.y-pt1.y)) / ((Real)dy);
-		if (intersectionX >= point.x) {
-			inside = !inside;
-		}
-	}
-	return inside;
-}
+// Retail pointInTrigger is implemented in PolygonTrigger_pointInTrigger.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ?getWaterHandle@PolygonTrigger@@ present-unmatched
