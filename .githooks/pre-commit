@@ -384,6 +384,10 @@ if [ "${#verify_set[@]}" -ne 0 ]; then
 import csv, os, sys
 claimed = {r["source"] for r in csv.DictReader(open("targets/game/reverse/functions.csv"))
            if r.get("status") == "matched"}
+# a data-only TU owns data_rows.csv rows (tools/data_rows.py) and is verified like any claimed source
+if os.path.exists("targets/game/reverse/data_rows.csv"):
+    claimed |= {r["source"] for r in csv.DictReader(open("targets/game/reverse/data_rows.csv"))
+                if r.get("status") == "matched"}
 with open(sys.argv[1], "rb") as stream:
     paths = stream.read().split(b"\0")[:-1]
 for path in paths:

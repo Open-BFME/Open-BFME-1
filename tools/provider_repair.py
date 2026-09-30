@@ -740,18 +740,22 @@ def data_identifier(symbol):
 
 
 def reference_definitions(qualified):
-    """[(file, line, text)] of file-scope definitions of `qualified` in the ZH tree."""
-    pattern = (r"^[A-Za-z_][\w:<>,\s\*&]*[\s\*&]" + re.escape(qualified)
-               + r"\s*(\[[^\]]*\]\s*)*(=[^;]*)?;?\s*(//.*)?$")
-    proc = subprocess.run(["rg", "-n", "--no-heading", "-g", "*.cpp", "-e", pattern,
+    """[(file, line, text)] of every file- or namespace-scope definition of
+    `qualified` in the ZH tree: rg finds the files that spell it, then each file's
+    braces are scanned (comments, literals and `#if 0` blocks blanked) so a
+    function-local, class-member or initializer line never counts. None when a
+    candidate file's braces do not balance (its scope cannot be established)."""
+    import reloc_ledger
+    proc = subprocess.run(["rg", "-l", "-g", "*.cpp", "-w", "-F", qualified.split("::")[-1],
                            REFERENCE.relative_to(ROOT).as_posix()],
                           capture_output=True, text=True, errors="replace", cwd=str(ROOT))
     out = []
-    for line in proc.stdout.splitlines():
-        path, number, text = line.split(":", 2)
-        if text.lstrip().startswith(("extern", "return", "//", "typedef")) or "(" in text.split("=")[0]:
-            continue
-        out.append((path.replace("\\", "/"), int(number), text.strip()))
+    for path in sorted(proc.stdout.splitlines()):
+        text = (ROOT / path).read_text(encoding="latin-1")
+        found = reloc_ledger.file_scope_definitions(text, qualified)
+        if found is None:
+            return None
+        out += [(path.replace("\\", "/"), number, line) for number, line in found]
     return out
 
 
@@ -788,11 +792,13 @@ def cmd_data_next(args):
                    else "busy" if (va - 0x400000) in busy or recorded(hex(va - 0x400000)) else None)
         if verdict is None:
             found = reference_definitions(ident[0])
-            files = {f for f, _, _ in found}
+            if found is None:
+                tally["reference-scope-unknown"] = tally.get("reference-scope-unknown", 0) + 1
+                continue
             # a ZH `static` is TU-local: the external name our code spells cannot be
             # landed from that definition without changing its linkage -- not served
             verdict = ("no-reference-definition" if not found else "several-reference-definitions"
-                       if len(files) != 1 else "reference-definition-is-static"
+                       if len(found) != 1 else "reference-definition-is-static"
                        if found[0][2].startswith("static") else None)
         if verdict:
             tally[verdict] = tally.get(verdict, 0) + 1
@@ -834,11 +840,19 @@ def cmd_data_check(args):
     if len(rows) != 1:
         failures.append(f"{args.symbol} has {len(rows)} data_rows.csv row(s), expected one")
     else:
+        verified = []
         try:
-            data_rows.verify(rows=rows, log=lambda text: failures.append(text.strip())
-                             if "FAIL" in text or text.startswith("    ") else None)
-        except SystemExit:
-            pass
+            data_rows.verify(rows=rows, log=lambda text: (failures if "FAIL" in text or text.startswith("    ")
+                                                          else verified).append(text.strip()))
+        except SystemExit as exc:
+            # any nonzero exit is a failure, whatever was or was not logged
+            # (a missing compiler exits before verify logs a word)
+            if exc.code not in (0, None):
+                failures.append(f"verification exited {exc.code!r}")
+        except Exception as exc:  # a crashed verifier proves nothing
+            failures.append(f"verification crashed: {type(exc).__name__}: {exc}")
+        if not failures and not any(t.startswith("Data rows: OK") for t in verified):
+            failures.append("verification reported no result")
     rva = f"0x{data_rows.va_of(rows[0]) - 0x400000:08X}" if len(rows) == 1 else "unknown"
     receipt = {"mode": "data", "symbol": args.symbol, "rva": rva, "pass": not failures, "failures": failures}
     d = OUT / f"data_{rva.lower()}"

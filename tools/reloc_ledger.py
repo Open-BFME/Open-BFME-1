@@ -902,6 +902,79 @@ def linker_ranges(img, startup=STARTUP_TABLES):
     return out
 
 
+# --------------------------------------------------------------------------- C++ file scope
+
+_LITERALS = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'', re.S)
+
+
+def blank_literals(text):
+    """Comments and string/char literals replaced by blanks (newlines kept, quotes
+    kept for strings), and `#if 0` ... `#endif` regions dropped, so braces and
+    semicolons in the result are code."""
+    def blank(m):
+        s = m.group(0)
+        if s.startswith('"'):
+            return '"' + " " * (len(s) - 2) + '"'
+        return re.sub(r"[^\n]", " ", s)
+    text = _LITERALS.sub(blank, text)
+    out, depth = [], 0
+    for line in text.split("\n"):
+        directive = line.strip()
+        if depth:
+            if re.match(r"#\s*if", directive):
+                depth += 1
+            elif re.match(r"#\s*endif", directive):
+                depth -= 1
+            elif depth == 1 and re.match(r"#\s*(else|elif)", directive):
+                depth = 0
+            out.append("")
+            continue
+        if re.match(r"#\s*if\s+0\b", directive):
+            depth = 1
+            out.append("")
+            continue
+        out.append(line)
+    return "\n".join(out)
+
+
+def file_scope_lines(text):
+    """[(1-based line, stripped line)] of the lines that START at file or namespace
+    scope (not inside a function, class, enum or initializer body); None when the
+    braces do not balance, so no scope can be trusted."""
+    code = blank_literals(text)
+    stack, starts, last = [], [], 0
+    lines = code.split("\n")
+    position = 0
+    for number, line in enumerate(lines, 1):
+        if all(kind == "namespace" for kind in stack):
+            starts.append((number, line.strip()))
+        for offset, char in enumerate(line):
+            at = position + offset
+            if char in ";{}":
+                if char == "{":
+                    prefix = code[last:at]
+                    namespace = re.search(r'\bnamespace\b[\w\s]*$', prefix) or re.search(r'\bextern\s*""\s*$', prefix)
+                    stack.append("namespace" if namespace else "body")
+                elif char == "}":
+                    if not stack:
+                        return None
+                    stack.pop()
+                last = at + 1
+        position += len(line) + 1
+    return starts if not stack else None
+
+
+def file_scope_definitions(text, qualified):
+    """[(line, text)] of file/namespace-scope definitions of `qualified` (a
+    declarator with an initializer or a plain `;`, not extern/typedef/a function)."""
+    starts = file_scope_lines(text)
+    if starts is None:
+        return None
+    pattern = re.compile(r"^(?!extern\b|typedef\b|return\b|using\b)[A-Za-z_][\w:<>,\s\*&]*[\s\*&]"
+                         + re.escape(qualified) + r"\s*(\[[^\]]*\]\s*)*(=|;)")
+    return [(number, line) for number, line in starts if pattern.match(line)]
+
+
 # --------------------------------------------------------------------------- partition
 
 class Partition:
@@ -1453,6 +1526,8 @@ class CTypes:
             return 4, 4, [(0, 4, "scalar")]
         if rest and rest[0] == "struct" and len(rest) == 2:
             return self.struct(rest[1], depth)
+        if rest and rest[0] == "enum":
+            return 4, 4, [(0, 4, "scalar")]  # MSVC 7.1: an enum is an int
         if all(w in SCALAR_WORDS for w in rest):
             for name, size in BASE_SIZES:
                 if name in rest:
@@ -1467,6 +1542,9 @@ class CTypes:
             return self.layout(m.group(1).split(), depth + 1)
         if re.search(r"typedef[^;]*\(\s*\*\s*" + re.escape(rest[0]) + r"\s*\)", self.text):
             return 4, 4, [(0, 4, "pointer")]  # a function-pointer typedef
+        if (re.search(r"typedef\s+enum\s*\w*\s*\{[^{}]*\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
+                or re.search(r"\benum\s+" + re.escape(rest[0]) + r"\s*\{", self.text)):
+            return 4, 4, [(0, 4, "scalar")]
         m = re.search(r"typedef\s+struct\s*\w*\s*\{([^{}]*)\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
         if m:
             return self.members(m.group(1), depth, m.start())
@@ -1519,6 +1597,30 @@ class CTypes:
             return found[0][0].strip() + " *", (4, 4, [(0, 4, "pointer")])
         element = self.layout(found[0][0].split())
         return (found[0][0].strip(), element) if element else None
+
+
+def declared_size(source, cname, types=None):
+    """(bytes, declaration) the one file-scope definition of `cname` in `source`
+    declares -- its element type's size times every array dimension, each a
+    number after preprocessing -- or None (no single definition, an unsized or
+    symbolic dimension, a type it cannot lay out)."""
+    types = types or CTypes(Path(source))
+    defs = file_scope_definitions(types.source, cname)
+    if not defs or len(defs) != 1:
+        return None
+    m = re.match(r"^(?:static\s+)?([A-Za-z_][\w \t]*?)[ \t]+(\**)\s*" + re.escape(cname)
+                 + r"\s*((?:\[[^\]]*\]\s*)*)(=|;)", defs[0][1])
+    if not m:
+        return None
+    count = 1
+    for dim in re.findall(r"\[([^\]]*)\]", m.group(3)):
+        if not dim.strip().isdigit():
+            return None
+        count *= int(dim.strip())
+    element = (4, 4, []) if m.group(2) else types.layout(m.group(1).split())
+    if element is None:
+        return None
+    return element[0] * count, defs[0][1]
 
 
 def upstream_declaration(source, cname):

@@ -20,10 +20,12 @@ size, the section containing the whole range, one owner per address, no two
 ranges overlapping, one row per name, a tracked source.
 
 Verification (build.py, per source and in the full gate), per row:
-  size      the symbol's extent in its object section (the next symbol, or the
-            section end), or the size its mangled scalar type declares when
-            that fits the extent; a COMMON symbol's own size; anything else is
-            refused -- a size is never taken on the row's word.
+  size      the type's size, proven independently of the allocation: the
+            mangled scalar type, the one file-scope definition in the
+            preprocessed source (element size x numeric dimensions), or a
+            COMMON symbol's own size -- and no larger than the symbol's
+            allocation extent (to the next symbol or the section end, padding
+            included), which alone proves nothing; otherwise refused.
   bytes     initialised: equal to retail over the extent outside relocation
             fields, and every relocation's target (symbol + in-place addend)
             equal to retail's pointer there, the target's address coming from
@@ -173,8 +175,15 @@ def _tools():
     return build, reloc_ledger
 
 
-def symbol_size(sections, symbols, sym):
-    """(proven sizes, what proves them) for a defined or COMMON data symbol."""
+def symbol_size(sections, symbols, sym, source=None):
+    """(proven sizes, what proves them) for a defined or COMMON data symbol.
+
+    The allocation extent (to the next symbol or the section end) includes
+    alignment padding, so it only BOUNDS the size. The size itself must be
+    proven independently: a COMMON symbol's own size, the size its mangled
+    scalar type declares, or the one file-scope definition in its source laid
+    out by the compiler's preprocessed unit (element size times numeric array
+    dimensions). With none of these, nothing is proven and the row is refused."""
     _, rl = _tools()
     if sym["section"] == 0:  # COMMON: the value is the size
         return {sym["value"]}, "COMMON symbol size"
@@ -183,12 +192,19 @@ def symbol_size(sections, symbols, sym):
                     and s["storage"] in (EXTERNAL, STATIC) and s["name"] and not s["name"].startswith(".")
                     and s["value"] > sym["value"]})
     extent = (later[0] if later else sec["size"]) - sym["value"]
-    sizes, why = {extent}, "extent in its object section"
     scalar = rl.mangled_scalar_size(sym["name"])
-    if scalar is not None and scalar <= extent:
-        sizes.add(scalar)
-        why += f"; mangled type declares {scalar}"
-    return sizes, why
+    if scalar is not None:
+        if scalar <= extent:
+            return {scalar}, f"mangled type declares {scalar} (allocation extent {extent})"
+        return set(), f"mangled type declares {scalar} but the allocation extent is {extent}"
+    cname = rl.c_name(sym["name"])
+    declared = rl.declared_size(source, cname) if source is not None and cname else None
+    if declared is not None:
+        size, text = declared
+        if size <= extent:
+            return {size}, f"`{text}` declares {size} (allocation extent {extent})"
+        return set(), f"`{text}` declares {size} but the allocation extent is {extent}"
+    return set(), f"no type size proven (allocation extent {extent} is not a size)"
 
 
 class Resolver:
@@ -237,7 +253,7 @@ def verify_row(row, img, resolve, compile=True):
         return False, f"{row['name']} is not defined once in {obj.name}"
     sym = found[0]
     size = int(row["size"])
-    sizes, why = symbol_size(sections, symbols, sym)
+    sizes, why = symbol_size(sections, symbols, sym, source)
     if size not in sizes:
         return False, f"size {size} unproven: {why} gives {sorted(sizes)}"
     va = va_of(row)

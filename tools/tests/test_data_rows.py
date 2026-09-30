@@ -45,7 +45,7 @@ def test_integrity_refusals():
     assert "bad header" in problems_of(b"name,address\n")[0]
 
 
-def compiled(tmp_path, monkeypatch, sections, symbols):
+def compiled(tmp_path, monkeypatch, sections, symbols, source_text="// fixture\n"):
     """A fake object for game/G.cpp: sections [(name, flags, body, size, relocs)]."""
     coff = data_scaffold.Coff()
     for name, flags, body, size, relocs in sections:
@@ -56,7 +56,7 @@ def compiled(tmp_path, monkeypatch, sections, symbols):
     obj = tmp_path / "G.obj"
     coff.write(obj)
     (tmp_path / "game").mkdir(exist_ok=True)
-    (tmp_path / "game/G.cpp").write_text("// fixture\n")
+    (tmp_path / "game/G.cpp").write_text(source_text)
     monkeypatch.setattr(data_rows, "ROOT", tmp_path)
     monkeypatch.setattr(data_rows._tools()[0], "obj_path", lambda source: obj)
 
@@ -70,8 +70,8 @@ def test_initialised_symbol_needs_retail_bytes_and_retail_pointers(tmp_path, mon
     # retail .data at 0x403000: {0x00402010 (pointer to _target), 7}
     img = image_with(data=struct.pack("<2I", BASE + 0x2010, 7))
     body = struct.pack("<2I", 0, 7)
-    compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, body, 8, [(0, 1)])], [("?t@@3PAUX@@A", 0, 1),
-                                                                                  ("_target", 0, 0)])
+    compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, body, 8, [(0, 1)])],
+             [("?t@@3PAUX@@A", 0, 1), ("_target", 0, 0)], "X *t[2] = { &target, (X *)7 };\n")
     entry = row("?t@@3PAUX@@A", size="8")
     assert verify(img, entry, {"_target": {BASE + 0x2010}})[0]
     ok, message = verify(img, entry, {"_target": {BASE + 0x2020}})
@@ -100,7 +100,7 @@ def test_zero_filled_symbols_are_checked_alone_at_their_own_address(tmp_path, mo
 def test_a_relocation_to_a_tu_local_cannot_be_placed(tmp_path, monkeypatch):
     img = image_with(data=struct.pack("<I", BASE + 0x2000))
     compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, bytes(4), 4, [(0, 1)])],
-             [("?p@@3PBDB", 0, 1), ("$SG1", 0, 2)])
+             [("?p@@3PBDB", 0, 1), ("$SG1", 0, 2)], 'const char *p = "x";\n')
     ok, message = verify(img, row("?p@@3PBDB"), {})
     assert not ok and "TU-local" in message
 
@@ -116,3 +116,83 @@ def test_provider_repair_data_mode_names_globals_and_ranks_the_queue(tmp_path):
                      "?b@@3HA,unpinned,static/global data,5,,,\n"
                      "?f@@YAXXZ,unpinned,other method or function,9,,,\n")
     assert [r["name"] for r in provider_repair.data_candidates(queue)] == ["?b@@3HA", "?a@@3HA"]
+
+
+def test_allocation_padding_is_not_a_size(tmp_path, monkeypatch):
+    # a 4-byte int alone in an 8-byte allocation (4 bytes of alignment padding)
+    compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, bytes(8), 8, [])], [("?g@@3HA", 0, 1)])
+    img = image_with(data=bytes(8))
+    ok, message = verify(img, row(size="8"), {})
+    assert not ok and "size 8 unproven" in message
+    assert verify(img, row(size="4"), {})[0]
+
+
+def test_a_class_typed_global_needs_its_declaration_for_a_size(tmp_path, monkeypatch):
+    compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, bytes(8), 8, [])], [("?s@@3US@@A", 0, 1)])
+    ok, message = verify(image_with(data=bytes(8)), row("?s@@3US@@A", size="8"), {})
+    assert not ok and "no type size proven" in message
+
+
+def test_data_check_fails_closed_when_verification_exits_or_says_nothing(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    import provider_repair
+    ledger = tmp_path / "data_rows.csv"
+    ledger.write_bytes(ledger_bytes := data_rows.HEADER.encode() + b"\n"
+                       + ",".join(row("?OurLanguage@@3W4LanguageID@@A")).encode() + b"\n")
+    monkeypatch.setattr(data_rows, "DATA_ROWS", ledger)
+    monkeypatch.setattr(data_rows, "check", lambda raw, problems, *a, **k: 1)
+    monkeypatch.setattr(provider_repair, "OUT", tmp_path / "receipts")
+    assert ledger_bytes
+
+    def compiler_missing(**kwargs):
+        raise SystemExit("VC71_ROOT does not exist")
+    monkeypatch.setattr(data_rows, "verify", compiler_missing)
+    assert provider_repair.cmd_data_check(SimpleNamespace(symbol="?OurLanguage@@3W4LanguageID@@A")) == 1
+    monkeypatch.setattr(data_rows, "verify", lambda **kwargs: 0)  # returns, logs nothing
+    assert provider_repair.cmd_data_check(SimpleNamespace(symbol="?OurLanguage@@3W4LanguageID@@A")) == 1
+    monkeypatch.setattr(data_rows, "verify", lambda **kwargs: kwargs["log"]("Data rows: OK (1 row(s))"))
+    assert provider_repair.cmd_data_check(SimpleNamespace(symbol="?OurLanguage@@3W4LanguageID@@A")) == 0
+
+
+def test_reference_definitions_count_only_file_scope(tmp_path, monkeypatch):
+    import provider_repair
+    ref = tmp_path / "Code"
+    ref.mkdir()
+    (ref / "Local.cpp").write_text("void f() {\nint OurLanguage = 0;\n}\nstruct S { int OurLanguage; };\n")
+    (ref / "Global.cpp").write_text("namespace N {\n}\n#if 0\nint OurLanguage = 2;\n#endif\n"
+                                    "LanguageID OurLanguage = LANGUAGE_ID_US;\n")
+    monkeypatch.setattr(provider_repair, "ROOT", tmp_path)
+    monkeypatch.setattr(provider_repair, "REFERENCE", ref)
+    found = provider_repair.reference_definitions("OurLanguage")
+    assert found == [("Code/Global.cpp", 6, "LanguageID OurLanguage = LANGUAGE_ID_US;")]
+    (ref / "Two.cpp").write_text("int OurLanguage;\n")
+    assert len(provider_repair.reference_definitions("OurLanguage")) == 2  # two definitions: not served
+
+
+def test_hooks_keep_a_data_only_source_under_verification(tmp_path):
+    root = Path(__file__).resolve().parents[2]
+    text = (root / ".githooks/pre-commit").read_text()
+    start = text.index("import csv, os, sys\nclaimed =")
+    hook_python = text[start:text.index("\nPY\n", start)]
+    ledger = tmp_path / "targets/game/reverse"
+    ledger.mkdir(parents=True)
+    (ledger / "functions.csv").write_text("name,target_rva,target_size,status,source,notes\n")
+    (ledger / "data_rows.csv").write_text(data_rows.HEADER + "\n" + ",".join(row(source="game/G.cpp")) + "\n")
+    selectors = tmp_path / "selectors"
+    selectors.write_bytes(b"game/G.cpp\0game/Other.cpp\0")
+    import subprocess
+    result = subprocess.run([sys.executable, "-", str(selectors)], input=hook_python, cwd=tmp_path,
+                            capture_output=True, text=True, check=True)
+    assert result.stdout == "game/Other.cpp\0"  # only the unowned source is dropped
+
+
+def test_delta_sources_reports_changed_data_rows(monkeypatch):
+    import delta_sources
+    old = data_rows.HEADER + "\n" + ",".join(row()) + "\n"
+    new = old + ",".join(row("?h@@3HA", "0x00403004", source="game/H.cpp")) + "\n"
+    texts = {"A:" + delta_sources.DATA_ROWS: old, "B:" + delta_sources.DATA_ROWS: new}
+    monkeypatch.setattr(delta_sources, "text_at", lambda spec: texts.get(spec, ""))
+    assert delta_sources.data_delta_sources("A", "B") == ["game/H.cpp"]
+    changed = new.replace("ZH defines it", "ZH defines it at line 3")
+    texts["B:" + delta_sources.DATA_ROWS] = changed
+    assert delta_sources.data_delta_sources("A", "B") == ["game/G.cpp", "game/H.cpp"]

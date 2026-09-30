@@ -294,6 +294,12 @@ def git(*argv):
 
 claimed = {r["source"] for r in csv.DictReader(io.StringIO(
     git("show", "%s:targets/game/reverse/functions.csv" % rev))) if r.get("status") == "matched"}
+# a data-only TU owns data_rows.csv rows (tools/data_rows.py): its edits are verified too
+data = subprocess.run(("git", "show", "%s:targets/game/reverse/data_rows.csv" % rev),
+                      capture_output=True, text=True)
+if data.returncode == 0:
+    claimed |= {r["source"] for r in csv.DictReader(io.StringIO(data.stdout))
+                if r.get("status") == "matched"}
 # No suffix list here: the ledger owns which paths are claimed sources
 # (.c, .cc, .cpp, .cxx, .asm today), so every changed game/ path is
 # intersected with the claimed set. A hook-local extension list let a .cc,

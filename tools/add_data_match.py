@@ -69,9 +69,9 @@ def main(argv=None):
              and (s["section"] > 0 or s["value"] > 0)]
     if len(found) != 1:
         raise SystemExit(f"add_data_match: {args.name} is not defined once in {obj.name}")
-    sizes, why = data_rows.symbol_size(sections, symbols, found[0])
-    if args.size is None and len(sizes) != 1:
-        raise SystemExit(f"add_data_match: several sizes are proven ({why}: {sorted(sizes)}); pass --size")
+    sizes, why = data_rows.symbol_size(sections, symbols, found[0], source)
+    if not sizes:
+        raise SystemExit(f"add_data_match: no size is proven for {args.name}: {why}")
     size = args.size if args.size is not None else next(iter(sizes))
     if size not in sizes:
         raise SystemExit(f"add_data_match: size {size} is not proven ({why}: {sorted(sizes)})")

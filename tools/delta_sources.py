@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Print the source files whose functions.csv claims change between two states.
+"""Print the source files whose functions.csv (or data_rows.csv) claims change between two states.
 
 New and edited claims need byte-proof. Removing or reordering a callable name
 can also remove a resolver candidate, so untouched callers of lost candidates
@@ -30,6 +30,7 @@ import layout_history
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = "targets/game/reverse/functions.csv"
 PINS = "targets/game/reverse/symbols.csv"
+DATA_ROWS = "targets/game/reverse/data_rows.csv"
 REL32 = 0x0014
 LIB_SUFFIX = ".lib"
 
@@ -292,6 +293,15 @@ def function_delta_sources(old_spec, new_spec):
     return sorted(sources)
 
 
+def data_delta_sources(old_spec, new_spec):
+    """Sources whose data_rows.csv rows are new or changed (tools/data_rows.py):
+    a data-only TU has no function row, so only this puts it under verification."""
+    old = {tuple(sorted(r.items())) for r in csv.DictReader(io.StringIO(text_at(f"{old_spec}:{DATA_ROWS}")))}
+    new = list(csv.DictReader(io.StringIO(text_at(f"{new_spec}:{DATA_ROWS}"))))
+    return sorted({r["source"] for r in new if r.get("name") and r.get("status") == "matched"
+                   and tuple(sorted(r.items())) not in old})
+
+
 def function_delta_selectors(old_spec, new_spec):
     """Typed source checks plus exact matched-row build selectors for hook use."""
     old = dict_rows_at(f"{old_spec}:{LEDGER}")
@@ -344,11 +354,13 @@ def main():
     if args.selectors and args.pins:
         selectors = pin_deletion_selectors(old_spec, new_spec)
     elif args.selectors:
-        selectors = function_delta_selectors(old_spec, new_spec)
+        selectors = function_delta_selectors(old_spec, new_spec) + [
+            f"source:{source}" for source in data_delta_sources(old_spec, new_spec)]
     elif args.pins:
         selectors = pin_deletion_sources(old_spec, new_spec)
     else:
-        selectors = function_delta_sources(old_spec, new_spec)
+        selectors = sorted(set(function_delta_sources(old_spec, new_spec))
+                           | set(data_delta_sources(old_spec, new_spec)))
 
     # Hooks read paths line by line: force LF-only output or
     # Windows text-mode stdout appends CR to every path and -f "$s" fails.
