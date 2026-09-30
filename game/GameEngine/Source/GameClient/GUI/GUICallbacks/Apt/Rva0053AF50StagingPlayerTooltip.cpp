@@ -11,11 +11,7 @@
 #include "ascii_string.h"
 #include "Common/UnicodeString.h"
 
-template<> inline const char *StringBase<char>::str() const
-{ static const char TheNullChr = 0; return m_data ? &m_data->data[0] : &TheNullChr; }
 
-template<> inline const wchar_t *StringBase<wchar_t>::str() const
-{ static const wchar_t TheNullChr = 0; return m_data ? &m_data->data[0] : &TheNullChr; }
 
 typedef int Int;
 typedef bool Bool;

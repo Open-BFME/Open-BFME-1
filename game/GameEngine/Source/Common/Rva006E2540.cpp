@@ -2,8 +2,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 #include "ascii_string.h"
 #include "wwmath.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 struct Triple006E2540 {
     float x,y,z;
