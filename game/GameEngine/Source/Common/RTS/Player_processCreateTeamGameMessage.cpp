@@ -7,11 +7,7 @@
 #include "Common/MessageStream.h"
 #include "Common/Player.h"
 
-class Gen_0018B850
-{
-public:
-	void bfmeClear(void);
-};
+#include "PlayerHotkeyClear.h"
 
 class Rva0018B9A0Holder
 {

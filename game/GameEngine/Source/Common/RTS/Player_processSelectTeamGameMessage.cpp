@@ -4,6 +4,7 @@
 #include "PreRTS.h"
 
 #include "Common/Player.h"
+#include "PlayerHotkeyClear.h"
 
 class Object;
 
@@ -118,5 +119,34 @@ void Player::processSelectTeamGameMessage(Int hotkeyNum, GameMessage *msg)
 			(PlayerMaskType)(1 << ((BFMEPlayerIndexView *)this)->m_playerIndex);
 		TheGameLogic->selectObject(object, FALSE,
 			playerMask, FALSE);
+	}
+}
+
+// Retail 0x000D2A60 uses an explicit first-object transition, not i == 0.
+void Player::processAddTeamGameMessage(Int hotkeyNum, GameMessage *msg)
+{
+	(void)msg;
+	BFMEPlayerHotkeyView *hotkeyView = (BFMEPlayerHotkeyView *)this;
+	if (hotkeyNum < 0 || hotkeyNum >= NUM_HOTKEY_SQUADS)
+		return;
+	if (hotkeyView->m_squads[hotkeyNum] == NULL)
+		return;
+	BFMEPlayerSelectionView *selectionView = (BFMEPlayerSelectionView *)this;
+	if (selectionView->m_currentSelection == NULL)
+		selectionView->m_currentSelection = new Rva000D1930;
+	((Gen_0018B850 *)selectionView->m_currentSelection)->bfmeClear();
+	BfmeVecHolder holder = {
+		hotkeyView->m_squads[hotkeyNum]->bfmeCompact(true)
+	};
+	Int numObjects = holder.objects->size();
+	Bool createNewSelection = true;
+	for (Int i = 0; i < numObjects; ++i)
+	{
+		Object *object = (Object *)holder.objects->begin()[i];
+		((Rva0018B9A0Holder *)selectionView->m_currentSelection)->addObject(object);
+		PlayerMaskType playerMask =
+			(PlayerMaskType)(1 << ((BFMEPlayerIndexView *)this)->m_playerIndex);
+		TheGameLogic->selectObject(object, createNewSelection, playerMask, FALSE);
+		createNewSelection = false;
 	}
 }
