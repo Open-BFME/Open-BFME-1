@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "60ee0276f791eb8a5bd225d1eabf83abd4abfd8c79af82dbed035b8c3580643c",
+  "symbol": "??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z\r\n// partial score=0.82 date=2026-09-02\r\n// cl: /DNDEBUG /MD /EHsc\r\n\r\nclass Host0035E450;\r\n\r\nclass DLinkAt4\r\n{\r\npublic:\r\n\tDLinkAt4(void *other);\r\n\r\nprivate:\r\n\tvoid *m_a;\r\n\tvoid *m_b;\r\n};\r\n\r\nclass NestedAt0C\r\n{\r\npublic:\r\n\tNestedAt0C(const NestedAt0C &other);\r\n};\r\n\r\nclass NestedAt2C\r\n{\r\npublic:\r\n\tNestedAt2C(const NestedAt2C &other);\r\n};\r\n\r\nclass Base0035E3B0\r\n{\r\npublic:\r\n\tBase0035E3B0(void *slot);\r\n\tvirtual ~Base0035E3B0();\r\n\r\nprivate:\r\n\tDLinkAt4 m_link;\r\n};\r\n\r\nBase0035E3B0::Base0035E3B0(void *slot)\r\n\t: m_link(slot)\r\n{\r\n}\r\n\r\nclass Gen0035E3B0 : public Base0035E3B0\r\n{\r\npublic:\r\n\tGen0035E3B0(Host0035E450 *other);\r\n\r\nprivate:\r\n\tNestedAt0C m_at0C;\r\n\tchar m_pad[0x2C - 0xC - sizeof(NestedAt0C)];\r\n\tNestedAt2C m_at2C;\r\n};\r\n\r\nstatic NestedAt0C &hostAt0C(Host0035E450 *other)\r\n{\r\n\treturn *(NestedAt0C *)((char *)other + 0xC);\r\n}\r\n\r\nstatic NestedAt2C &hostAt2C(Host0035E450 *other)\r\n{\r\n\treturn *(NestedAt2C *)((char *)other + 0x2C);\r\n}\r\n\r\nGen0035E3B0::Gen0035E3B0(Host0035E450 *other)\r\n\t: Base0035E3B0(other ? (char *)other + 4 : 0),\r\n\t  m_at0C(hostAt0C(other)),\r\n\t  m_at2C(hostAt2C(other))\r\n{\r\n}\r\n"
+}

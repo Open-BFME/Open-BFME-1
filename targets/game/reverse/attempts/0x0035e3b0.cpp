@@ -1,13 +1,22 @@
 // ??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z
-// partial score=0.82 date=2026-09-02
+// partial score=0.9024 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
 
 class Host0035E450;
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+static __forceinline void *rva0035E3B0Link(Host0035E450 *other)
+{
+	Host0035E450 *source = other;
+	_ReadWriteBarrier();
+	return source ? (char *)source + 4 : 0;
+}
 
 class DLinkAt4
 {
 public:
 	DLinkAt4(void *other);
+	~DLinkAt4();
 
 private:
 	void *m_a;
@@ -18,6 +27,7 @@ class NestedAt0C
 {
 public:
 	NestedAt0C(const NestedAt0C &other);
+	~NestedAt0C();
 };
 
 class NestedAt2C
@@ -29,22 +39,16 @@ public:
 class Base0035E3B0
 {
 public:
-	Base0035E3B0(void *slot);
+	__forceinline Base0035E3B0() {}
 	virtual ~Base0035E3B0();
-
-private:
-	DLinkAt4 m_link;
 };
 
-Base0035E3B0::Base0035E3B0(void *slot)
-	: m_link(slot)
-{
-}
 
-class Gen0035E3B0 : public Base0035E3B0
+class Gen0035E3B0 : public Base0035E3B0, public DLinkAt4
 {
 public:
 	Gen0035E3B0(Host0035E450 *other);
+	virtual ~Gen0035E3B0();
 
 private:
 	NestedAt0C m_at0C;
@@ -63,7 +67,7 @@ static NestedAt2C &hostAt2C(Host0035E450 *other)
 }
 
 Gen0035E3B0::Gen0035E3B0(Host0035E450 *other)
-	: Base0035E3B0(other ? (char *)other + 4 : 0),
+	: DLinkAt4(rva0035E3B0Link(other)),
 	  m_at0C(hostAt0C(other)),
 	  m_at2C(hostAt2C(other))
 {
