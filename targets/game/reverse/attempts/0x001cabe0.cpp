@@ -1,5 +1,5 @@
 // ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
-// partial score=0.35 date=2026-09-10
+// partial score=0.8803 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
 // The BfmeThingBXF family reaches this 376-byte helper through the
 // BfmeSubBIC::bfmeAskBIC member ABI.  Retail's complete boundary is
@@ -126,13 +126,6 @@ public:
 	UnsignedInt m_indicatorColor;
 };
 
-int __stdcall bfmeGoBIC(BfmeSubBIC *sub)
-{
-	if (sub == 0)
-		return -1;
-	return sub->bfmeAskBIC();
-}
-
 int BfmeSubBIC::bfmeAskBIC()
 {
 	Player *localPlayer = ThePlayerList->m_localPlayer;
@@ -141,9 +134,8 @@ int BfmeSubBIC::bfmeAskBIC()
 	Bool useDefaultColor = true;
 
 	ThingTemplate *thing = m_template;
-	if (thing != 0)
 	{
-		if (thing->m_override != 0)
+		if (thing != 0 && thing->m_override != 0)
 			thing = thing->m_override->getFinalOverride();
 
 		if ((thing->m_kindOf & 0x00800000) != 0)
