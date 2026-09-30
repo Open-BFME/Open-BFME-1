@@ -531,7 +531,6 @@ WW3DErrorType WW3D::Set_Next_Render_Device(void)
  * HISTORY:                                                                                    *
  *   3/28/2001  pds : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Window@WW3D@@ present-unmatched
 void *WW3D::Get_Window( void )
 {
 	return _Hwnd;
