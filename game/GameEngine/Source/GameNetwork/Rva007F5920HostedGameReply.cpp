@@ -7,7 +7,8 @@ public:
     virtual void v0(); virtual void v1(); virtual void v2();
     virtual void fail(const char *expr, const char *file, int line);
 };
-extern int Rva007EB810Get();
+struct Rva007EB810Diag;
+extern Rva007EB810Diag *Rva007EB810Get();
 class Rva007E8810Message
 {
 public:

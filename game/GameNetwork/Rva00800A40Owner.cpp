@@ -21,7 +21,8 @@ struct Rva00800A40Diag
 	virtual void fail(const char *expression, const char *file, int line);
 };
 
-extern int Rva007EB810Get();
+struct Rva007EB810Diag;
+extern Rva007EB810Diag *Rva007EB810Get();
 
 struct Rva00800A40Slot
 {

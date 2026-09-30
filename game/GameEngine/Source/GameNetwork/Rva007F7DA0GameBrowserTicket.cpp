@@ -99,7 +99,7 @@ public:
 	virtual void onEntry( BfmeEntryZI *entry, int value );
 };
 
-class Rva007EB810Diag
+struct Rva007EB810Diag
 {
 public:
 	virtual void v0();
@@ -108,7 +108,7 @@ public:
 	virtual void fail( const char *expression, const char *file, int line );
 };
 
-extern int Rva007EB810Get();
+extern Rva007EB810Diag *Rva007EB810Get();
 
 // The empty NUL-terminated literal in retail .rdata, pinned as
 // ?g_Rva0107301CEmptyString@@3QBDB (targets/game/reverse/symbols.csv).

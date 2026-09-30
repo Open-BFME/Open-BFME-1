@@ -14,7 +14,7 @@ struct Rva007EB810Diag
 	virtual void log(int level, const char *format, ...);
 };
 
-extern int Rva007EB810Get();
+extern Rva007EB810Diag *Rva007EB810Get();
 extern "C" int __cdecl isprint(int value);
 extern "C" int __cdecl Rva007EEC30(
 	const char *text, unsigned char *destination, int size, const char *empty);

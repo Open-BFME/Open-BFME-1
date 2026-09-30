@@ -17,7 +17,7 @@ public:
 	char bfmeGoUPB( void *a, char *b, void *c );
 };
 
-class Rva007EB810Diag
+struct Rva007EB810Diag
 {
 public:
 	virtual void v0();
@@ -26,7 +26,7 @@ public:
 	virtual void fail( const char *expr, const char *file, int line );
 };
 
-extern int Rva007EB810Get();
+extern Rva007EB810Diag *Rva007EB810Get();
 
 // Retail calls the decoder with the encoded blob first and writes decoded bytes
 // into this method's destination buffer.  Its return value is intentionally

@@ -12658,7 +12658,6 @@ name,address,notes
 ?Rva007EB650Shutdown@@YAHH@Z,0x007EB650,body 0x007EB650; Thread_Function 0x0063EB00 +0x20F push esi(0) call add esp 4: cdecl 1 arg; 34B body never reads it and returns 0; address-derived
 ?Rva007EB710Global@@3PAVRva007EB710Object@@A,0x0130A5A0,Address-derived release global loaded and cleared by retail 0x007EB710
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
-?Rva007EB810Get@@YAPAURva008063B0Diag@@XZ,0x007EB810,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008063B0 calls; autopin
 ?Rva007EB820BoundCallback@@YAXXZ,0x007EB820,Address-derived callback bound by the retail logger constructor at 0x007EB850; callback at 0x007EB820 is a distinct stub
 ?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
 ?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null

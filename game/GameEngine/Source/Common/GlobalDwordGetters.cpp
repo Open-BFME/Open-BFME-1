@@ -252,9 +252,10 @@ int Rva007EB260Get( void )
 	return g_Va0130A588;
 }
 
-int Rva007EB810Get( void )
+struct Rva007EB810Diag;
+Rva007EB810Diag *Rva007EB810Get( void )
 {
-	return g_Va0130A5A0;
+	return reinterpret_cast<Rva007EB810Diag *>(g_Va0130A5A0);
 }
 
 int Rva0081C390Get( void )

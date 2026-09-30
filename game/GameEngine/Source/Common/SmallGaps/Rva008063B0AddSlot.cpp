@@ -3,7 +3,8 @@ struct Rva008063B0Diag {
 	virtual void s0(); virtual void s1(); virtual void s2();
 	virtual void report(const char* message, const char* file, int line);
 };
-Rva008063B0Diag* __cdecl Rva007EB810Get();
+struct Rva007EB810Diag;
+Rva007EB810Diag* __cdecl Rva007EB810Get();
 extern char g_bfmeMsgUVB[];
 struct Rva008063B0Slot { int m_a; int m_b; };
 struct Rva008063B0Owner {
@@ -21,5 +22,5 @@ void Rva008063B0Owner::addSlot(int a, int b)
 			return;
 		}
 	}
-	Rva007EB810Get()->report(g_bfmeMsgUVB, "\\views\\feslbuild_main\\jabba\\fesl\\source\\statemachine.cpp", 0x6b);
+	reinterpret_cast<Rva008063B0Diag *>(Rva007EB810Get())->report(g_bfmeMsgUVB, "\\views\\feslbuild_main\\jabba\\fesl\\source\\statemachine.cpp", 0x6b);
 }

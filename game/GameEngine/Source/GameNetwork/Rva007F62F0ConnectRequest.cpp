@@ -5,8 +5,9 @@ class Rva007F6260GameBrowser;
 void Rva007F62E0Callback(Rva007E8810Message *, Rva007F6260GameBrowser *);
 void a_007ea650();
 
-int Rva007EB810Get();
-class Rva007EB810Diag
+struct Rva007EB810Diag;
+extern Rva007EB810Diag *Rva007EB810Get();
+struct Rva007EB810Diag
 {
 public:
     virtual void v0();
