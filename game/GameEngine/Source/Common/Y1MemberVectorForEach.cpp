@@ -1,3 +1,7 @@
+// cl: /MD /D_STLP_USE_STATIC_LIB
+// stlport
+#include <vector>
+
 // Nine small __thiscall members that walk a half-open pointer pair held in the
 // object and call one member function on every element.  They fall into six
 // shapes, and the shapes differ from each other in ways the bytes fix exactly:
@@ -74,8 +78,8 @@ class Y1ForEachArg
 {
 public:
 	virtual void bfmeSlot0(void);
-	virtual void bfmeSlot1(void);
-	virtual void bfmeSlot2(void);
+	virtual bool bfmeSlot1(void);
+	virtual bool bfmeSlot2(void);
 	virtual void bfmeSlot3(void);
 	virtual void bfmeSlot4(void);
 	virtual void bfmeSlot5(void);
@@ -93,7 +97,7 @@ public:
 	virtual void bfmeSlot17(void);
 	virtual void bfmeSlot18(void);
 	virtual void bfmeSlot19(void);
-	virtual void bfmeSlot20(void);
+	virtual void bfmeSlot20(void *item);
 	virtual void bfmeSlot21(void);
 	virtual void bfmeSlot22(void);
 	virtual void bfmeSlot23(void);
@@ -404,18 +408,75 @@ void Rva003CD260::run( Y1ForEachArg *first, Y1ForEachArg *second )
 // 0x003D0720 walks four inline ranges of the same 0x3C-byte elements as
 // Rva003CD260, then dispatches the owner through the 0x0000F2EA thunk twice.
 
+struct Rva003D0560Coord
+{
+	float x;
+	float y;
+	Rva003D0560Coord() {}
+	Rva003D0560Coord(const Rva003D0560Coord &other) : x(other.x), y(other.y) {}
+	~Rva003D0560Coord() {}
+};
+
+struct Rva003D0560Element
+{
+	float x;
+	float y;
+	char tail[0x34];
+};
+
+// Retail calls the vector<int> growth helper pinned at ILT 0x000028C4. The vector entries hold 32-bit element addresses.
+typedef _STL::vector<int> Rva003D0560Vector;
+
+class Rva003D0560Range
+{
+public:
+	char lead[8];
+	Rva003D0560Element *begin;
+	Rva003D0560Element *end;
+
+	Rva003D0560Element *lookup(Rva003D0560Coord coord);
+};
+
+typedef Rva003D0560Element *(Rva003D0560Range::*Rva003D0560Lookup)(Rva003D0560Coord);
+union Rva003D0560LookupThunk
+{
+	void (*raw)(void);
+	Rva003D0560Lookup member;
+};
+
+extern void j_0000c121();
+extern void j_000486cb();
+
+static __forceinline void rva003D0560Reserve(void *receiver, unsigned int count)
+{
+	typedef void (Rva003D0560Vector::*Reserve)(unsigned int);
+	union
+	{
+		void (*raw)(void);
+		Reserve member;
+	} target;
+	target.raw = j_000486cb;
+	(reinterpret_cast<Rva003D0560Vector *>(receiver)->*target.member)(count);
+}
+
+class Rva003D0560
+{
+public:
+	char lead[0x10];
+	Rva003D0560Range * volatile ranges[4];
+	char mid[4];
+	Rva003D0560Vector second;
+	Rva003D0560Vector first;
+
+	void method(Y1ForEachArg *, void *, Y1ForEachArg *);
+};
+
 class Rva003D0720Range
 {
 public:
 	char m_lead[ 8 ];
 	Gen000135B1 *m_begin;
 	Gen000135B1 *m_end;
-};
-
-class Rva003D0720Tail
-{
-public:
-	void dispatch( Y1ForEachArg *, void *, Y1ForEachArg * );
 };
 
 extern void j_0000f2ea();
@@ -450,17 +511,64 @@ void Rva003D0720::run( Y1ForEachArg *first, Y1ForEachArg *second )
 		--count;
 	} while ( count != 0 );
 
-	typedef void (Rva003D0720Tail::*TailCall)( Y1ForEachArg *, void *, Y1ForEachArg * );
+	typedef void (Rva003D0560::*TailCall)( Y1ForEachArg *, void *, Y1ForEachArg * );
 	union
 	{
 		void (*raw)( void );
 		TailCall member;
 	} tail;
 	tail.raw = j_0000f2ea;
-	( reinterpret_cast<Rva003D0720Tail *>( this )->*tail.member )(
+	( reinterpret_cast<Rva003D0560 *>( this )->*tail.member )(
 		first, (char *)this + 0x30, second );
-	( reinterpret_cast<Rva003D0720Tail *>( this )->*tail.member )(
+	( reinterpret_cast<Rva003D0560 *>( this )->*tail.member )(
 		first, (char *)this + 0x24, second );
+}
+
+void Rva003D0560::method(
+	Y1ForEachArg *xfer,
+	void *vector,
+	Y1ForEachArg *)
+{
+	Rva003D0560LookupThunk lookup;
+	lookup.raw = j_0000c121;
+	Rva003D0560Vector *items = (Rva003D0560Vector *)vector;
+	int count = items->size();
+	xfer->bfmeTakeAt78(&count);
+	if (xfer->bfmeSlot1())
+	{
+		items->erase(items->begin(), items->end());
+		rva003D0560Reserve(items, count);
+	}
+
+	for (int index = 0; index < count; ++index)
+	{
+		Rva003D0560Coord coord;
+		if (xfer->bfmeSlot2())
+		{
+			Rva003D0560Element *element = (Rva003D0560Element *)items->begin()[index];
+			coord.x = element->x;
+			coord.y = element->y;
+		}
+
+		xfer->bfmeSlot20(&coord);
+		if (xfer->bfmeSlot1())
+		{
+			for (unsigned int childIndex = 0; childIndex < 4; ++childIndex)
+			{
+				if (ranges[childIndex] != 0)
+				{
+					int element = (int)(ranges[childIndex]->*lookup.member)(coord);
+					if (element != 0
+						&& ((Rva003D0560Element *)element)->x == coord.x
+						&& ((Rva003D0560Element *)element)->y == coord.y)
+					{
+						items->push_back(element);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 // ---------------------------------------------------------------- shape D ---
