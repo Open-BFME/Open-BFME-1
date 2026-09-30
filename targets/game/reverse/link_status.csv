@@ -10521,7 +10521,7 @@ game/GameEngine/Source/Common/Y1FourSubRangeTotal.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/Common/Y1GatedRangeDispatch.cpp,no,4,0,0,0,0
 game/GameEngine/Source/Common/Y1GuardedBitfieldGetters.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/Common/Y1IntRangeEquals.cpp,yes,0,0,0,0,0
-game/GameEngine/Source/Common/Y1MemberVectorForEach.cpp,no,11,0,0,0,0
+game/GameEngine/Source/Common/Y1MemberVectorForEach.cpp,no,11,0,6,0,5
 game/GameEngine/Source/Common/Y3AdjustedGetterCollectors.cpp,no,0,0,1,0,2
 game/GameEngine/Source/Common/Y3ChainCopyCtors.cpp,no,7,0,0,0,0
 game/GameEngine/Source/Common/Y3ChainNotifyArities.cpp,yes,0,0,0,0,0
@@ -11922,8 +11922,8 @@ game/GameEngine/Source/GameClient/Input/Keyboard.cpp,no,1,2,3,0,2
 game/GameEngine/Source/GameClient/Input/KeyboardCtor.cpp,no,0,2,1,0,2
 game/GameEngine/Source/GameClient/Input/KeyboardEventProcessing.cpp,no,1,0,0,0,0
 game/GameEngine/Source/GameClient/Input/Keyboard_translateKey.cpp,yes,0,0,0,0,0
-game/GameEngine/Source/GameClient/Input/Mouse.cpp,no,4,8,19,0,29
-game/GameEngine/Source/GameClient/Input/Mouse_createStreamMessages.cpp,no,0,1,0,0,1
+game/GameEngine/Source/GameClient/Input/Mouse.cpp,no,4,7,18,0,28
+game/GameEngine/Source/GameClient/Input/Mouse_createStreamMessages.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/GameClient/Input/Mouse_destructor.cpp,no,1,1,1,0,4
 game/GameEngine/Source/GameClient/Input/Mouse_drawCursorText.cpp,no,0,1,0,0,1
 game/GameEngine/Source/GameClient/Input/Mouse_drawTooltip.cpp,no,3,1,4,0,7
@@ -12487,7 +12487,7 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005DA700TinyNoops.c
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005DA910NoOp.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005DA9C0.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005DAB00Empty.cpp,yes,0,0,0,0,0
-game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005E5590CreateModule.cpp,no,0,0,0,6,0
+game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005E5590CreateModule.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005E5E60ModuleAllocation.cpp,no,1,0,0,3,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005EE070WriteIndentedLine.cpp,no,4,0,0,0,2
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005EE1D0Finish.cpp,no,3,0,0,0,2
@@ -12549,7 +12549,7 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModule
 game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleInfoVectorDeletingDestructor.cpp,no,0,1,1,0,3
 game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleTemplateCloneThunk.cpp,no,4,0,0,0,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleTemplateCopyCtorThunk.cpp,no,4,0,0,2,3
-game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleTemplateCtorThunk.cpp,no,0,1,3,6,3
+game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleTemplateCtorThunk.cpp,no,2,1,4,0,3
 game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleTemplateVectorDeletingDestructor.cpp,no,0,1,2,0,2
 game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionSlot1.cpp,yes,0,0,0,0,0
 game/GameEngine/Source/GameClient/System/FXParticleSystem/V3ModuleInfoCompositeCopyCtors.cpp,no,4,0,10,0,6
@@ -18548,7 +18548,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawRemainingRectClo
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawStrings006e8790.cpp,yes,0,0,0,0,0
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawThirdDebugDisplay006e8800.cpp,no,4,0,1,0,1
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayGatherDebugStatsThunk.cpp,yes,0,0,0,0,0
-game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayInit_Bfme.cpp,no,22,0,2,3,6
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayInit_Bfme.cpp,no,22,0,2,0,6
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayLetterBox.cpp,no,1,5,0,0,5
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayMode.cpp,no,0,4,0,0,5
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayReset.cpp,no,1,1,0,0,2
@@ -18594,7 +18594,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawPlaceAngle.cpp
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawSelectionRegion.cpp,yes,0,0,0,0,0
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_dtor.cpp,no,2,0,0,0,1
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DLivingWorld.cpp,no,2,0,0,0,5
-game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,no,10,7,13,0,10
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,no,10,7,13,0,9
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouseConstructor.cpp,no,35,6,1,0,2
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouseLoadD3DCursorTexturesThunk.cpp,yes,0,0,0,0,0
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DParticleSys.cpp,no,2,5,16,0,16
@@ -18901,7 +18901,7 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem_openFile.cpp,yes,0,0,0,0,0
 game/GameEngineDevice/Source/Win32Device/Common/Win32OSDisplay.cpp,no,1,1,5,0,5
 game/GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboard.cpp,no,6,0,1,0,2
-game/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,no,10,0,3,0,10
+game/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,no,10,0,3,0,9
 game/GameEngineDevice/Source/Win32Device/GameClient/Win32MouseDeletingDestructor.cpp,no,1,0,1,0,1
 game/GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse_addWin32Event.cpp,yes,0,0,0,0,0
 game/GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse_init.cpp,no,1,0,0,0,0
@@ -19814,7 +19814,7 @@ game/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTriangles.cpp,no,3,1,2,
 game/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesNoSphere.cpp,no,0,1,1,0,1
 game/Libraries/Source/WWVegas/WW3D2/StaticSortListClass_Dtor_Thunk.cpp,no,0,1,1,0,0
 game/Libraries/Source/WWVegas/WW3D2/StreakLineAddPoint.cpp,no,1,4,3,0,4
-game/Libraries/Source/WWVegas/WW3D2/StreakLineClass_Get_Obj_Space_Bounding_Box.cpp,no,0,1,0,0,1
+game/Libraries/Source/WWVegas/WW3D2/StreakLineClass_Get_Obj_Space_Bounding_Box.cpp,yes,0,0,0,0,0
 game/Libraries/Source/WWVegas/WW3D2/StreakLineCtor.cpp,no,0,2,9,0,12
 game/Libraries/Source/WWVegas/WW3D2/StreakLineRender.cpp,no,0,1,0,0,2
 game/Libraries/Source/WWVegas/WW3D2/StreakLineUVOffsetRate.cpp,no,0,3,1,0,4
@@ -19954,7 +19954,7 @@ game/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp,no,3,15,3,0,6
 game/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp,no,0,1,9,0,17
 game/Libraries/Source/WWVegas/WW3D2/static_sort_list.cpp,no,1,1,1,0,2
 game/Libraries/Source/WWVegas/WW3D2/statistics.cpp,no,19,0,0,0,0
-game/Libraries/Source/WWVegas/WW3D2/streak.cpp,no,7,61,67,0,38
+game/Libraries/Source/WWVegas/WW3D2/streak.cpp,no,7,12,66,0,37
 game/Libraries/Source/WWVegas/WW3D2/streakRender.cpp,no,0,5,11,0,7
 game/Libraries/Source/WWVegas/WW3D2/stripoptimizer.cpp,yes,0,0,0,0,0
 game/Libraries/Source/WWVegas/WW3D2/surfaceclass.cpp,no,2,2,2,0,2
@@ -21399,7 +21399,6 @@ inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pointgr.cpp,no,1,46,17,0,10
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp,no,0,54,33,0,20
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp,no,1,15,23,0,6
-inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streak.cpp,no,6,60,77,0,38
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,no,3,34,14,0,6
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,no,0,41,35,0,16
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/TARGA.CPP,no,0,7,1,0,1
