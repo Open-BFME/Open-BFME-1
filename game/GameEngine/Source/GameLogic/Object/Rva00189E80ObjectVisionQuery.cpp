@@ -12,6 +12,14 @@
 typedef float Real;
 typedef bool Bool;
 
+extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
+extern "C" void *bfmeVftRva0025ED50RootFilter[];
+extern "C" void *bfmeVftPartitionFilterRelationship[];
+extern const void *g_010956C4[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+
 struct Coord3D
 {
 	Real x;
@@ -53,13 +61,13 @@ public:
 	__forceinline explicit Rva00189E80SameMapFilter(const Object *object)
 		: PartitionFilter()
 	{
-		m_vptr = 0x01085DD0;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterSameMapStatus;
 		m_object = object;
 	}
 
 	~Rva00189E80SameMapFilter(void)
 	{
-		m_vptr = 0x01083B80;
+		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
 	}
 
 private:
@@ -76,7 +84,7 @@ public:
 	__forceinline Rva00189E80RelationshipShapedFilter(const Object *object, int flags, int state)
 		: PartitionFilter()
 	{
-		m_vptr = 0x010956C4;
+		m_vptr = (unsigned int)g_010956C4;
 		m_object = object;
 		m_flags = flags;
 		m_state = state;
@@ -84,7 +92,7 @@ public:
 
 	~Rva00189E80RelationshipShapedFilter(void)
 	{
-		m_vptr = 0x01083B80;
+		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
 	}
 
 private:
@@ -99,7 +107,7 @@ public:
 	__forceinline PartitionFilterRelationship(const Object *object, int flags, Bool state)
 		: PartitionFilter()
 	{
-		m_vptr = 0x01085DC0;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterRelationship;
 		m_object = object;
 		m_flags = flags;
 		m_state = state;
@@ -107,7 +115,7 @@ public:
 
 	~PartitionFilterRelationship(void)
 	{
-		m_vptr = 0x01083B80;
+		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
 	}
 
 private:

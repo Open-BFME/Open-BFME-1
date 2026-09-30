@@ -164,8 +164,14 @@ extern void j_0003b75f();
 extern void j_0000abc3();
 extern void j_00004e67();
 
-#define DRAWABLE_CAPTION_GLOBAL(type, address) \
-	(*reinterpret_cast<type **>( address ))
+extern DisplayStringManager *TheDisplayStringManager;
+extern LanguageFilter *TheLanguageFilter;
+extern FontLibrary *TheFontLibrary;
+extern InGameUI *TheInGameUI;
+extern GlobalLanguageData *TheGlobalLanguageData;
+
+#define DRAWABLE_CAPTION_GLOBAL(type, global) \
+	(static_cast<type *>( global ))
 
 void Drawable::setCaptionText( const UnicodeString &captionText )
 {
@@ -173,7 +179,7 @@ void Drawable::setCaptionText( const UnicodeString &captionText )
 	{
 		if ( m_captionDisplayString )
 		{
-			DRAWABLE_CAPTION_GLOBAL( DisplayStringManager, 0x012f12cc )
+			DRAWABLE_CAPTION_GLOBAL( DisplayStringManager, TheDisplayStringManager )
 				->freeDisplayString( m_captionDisplayString );
 		}
 		m_captionDisplayString = 0;
@@ -182,23 +188,23 @@ void Drawable::setCaptionText( const UnicodeString &captionText )
 
 	{
 		UnicodeString sanitizedString = captionText;
-		DRAWABLE_CAPTION_GLOBAL( LanguageFilter, 0x012f1570 )->filterLine( sanitizedString );
+		DRAWABLE_CAPTION_GLOBAL( LanguageFilter, TheLanguageFilter )->filterLine( sanitizedString );
 
 		if ( m_captionDisplayString == 0 )
 		{
 			CaptionFontNameValue fontNameCall = { j_0003b75f };
 			GetFontValue getFontCall = { j_0000abc3 };
 			AdjustFontSizeValue adjustCall = { j_00004e67 };
-			m_captionDisplayString = DRAWABLE_CAPTION_GLOBAL( DisplayStringManager, 0x012f12cc )
+			m_captionDisplayString = DRAWABLE_CAPTION_GLOBAL( DisplayStringManager, TheDisplayStringManager )
 				->newDisplayString();
 			GameFont *font =
-				(DRAWABLE_CAPTION_GLOBAL( FontLibrary, 0x012f1b38 )->*getFontCall.memberFunction)(
-					&(DRAWABLE_CAPTION_GLOBAL( InGameUI, 0x012f148c )->*fontNameCall.memberFunction)(),
-					(Real)(DRAWABLE_CAPTION_GLOBAL( GlobalLanguageData, 0x012f1484 )
+				(DRAWABLE_CAPTION_GLOBAL( FontLibrary, TheFontLibrary )->*getFontCall.memberFunction)(
+					&(DRAWABLE_CAPTION_GLOBAL( InGameUI, TheInGameUI )->*fontNameCall.memberFunction)(),
+					(Real)(DRAWABLE_CAPTION_GLOBAL( GlobalLanguageData, TheGlobalLanguageData )
 						->*adjustCall.memberFunction)(
-							DRAWABLE_CAPTION_GLOBAL( InGameUI, 0x012f148c )
+							DRAWABLE_CAPTION_GLOBAL( InGameUI, TheInGameUI )
 								->getDrawableCaptionPointSize() ),
-					DRAWABLE_CAPTION_GLOBAL( InGameUI, 0x012f148c )->isDrawableCaptionBold() );
+					DRAWABLE_CAPTION_GLOBAL( InGameUI, TheInGameUI )->isDrawableCaptionBold() );
 			m_captionDisplayString->setFont( font );
 			m_captionDisplayString->setText( sanitizedString );
 		}
