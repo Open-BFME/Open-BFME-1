@@ -32,7 +32,7 @@ int Rva00885920Class::d_00885920( void )
 }
 
 extern "C" int __stdcall send( int, const char*, int, int );
-extern "C" __declspec(dllimport) void __stdcall Rva01358EA8( void* );
+extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char* );
 
 int Rva00885920Class::d_00885990( const char *buf, int len )
 {
@@ -43,8 +43,8 @@ int Rva00885920Class::d_00885530( const char* command, int size )
 {
 	if ( send( m_socket4, command, size, 0 ) > 0 )
 	{
-		Rva01358EA8( (void*)"-->" );
-		Rva01358EA8( (void*)command );
+		OutputDebugStringA( "-->" );
+		OutputDebugStringA( command );
 		return 0;
 	}
 	return 0x80040001;

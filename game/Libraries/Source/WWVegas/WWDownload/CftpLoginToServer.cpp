@@ -20,7 +20,7 @@ extern "C" __declspec(dllimport) int __cdecl _strnicmp(
     const char *left, const char *right, unsigned int count);
 extern "C" __declspec(dllimport) char *__cdecl strstr(
     const char *text, const char *find);
-extern "C" __declspec(dllimport) void __stdcall Rva01358EA8(const void *text);
+extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *text);
 
 enum
 {
@@ -47,8 +47,8 @@ public:
         int sent = send(m_iCommandSocket, command, size, 0);
         if (sent > 0)
         {
-            Rva01358EA8("-->");
-            Rva01358EA8((void *)command);
+            OutputDebugStringA("-->");
+            OutputDebugStringA(command);
             return FTP_SUCCEEDED;
         }
 
@@ -170,8 +170,8 @@ HRESULT Cftp::RecvReply(const char *reply, int size, int *replyCode)
 
 		recv(m_iCommandSocket, pc, end - pc + 2, 0);
 
-		Rva01358EA8(debugPrefix);
-		Rva01358EA8(pc);
+		OutputDebugStringA(debugPrefix);
+		OutputDebugStringA(pc);
 		const char *bogusResponse = "500";
 		if (_strnicmp(pc, bogusResponse, strlen(bogusResponse)) == 0)
 			continue;
