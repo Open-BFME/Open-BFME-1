@@ -79,3 +79,5 @@ docs/fps60.md
 # Retired 2026-09-30 (effectiveness audit: 0 bar bytes, no live caller).
 tools/fleet/provider_seat.py
 tools/tests/test_provider_seat.py
+tools/throwinfo_graph.py
+tools/tests/test_throwinfo_graph.py
