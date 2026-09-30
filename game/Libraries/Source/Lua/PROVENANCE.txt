@@ -74,8 +74,10 @@ change is marked at the point of change in the file itself as well as here.
                      `io_rename` use retail's fixed generic error tuple
                      (`pushresult_close`) instead of the errno-based
                      `pushresult`; read_word reads with getc, not fgetc
-                     (retail's slot is MSVCR71 getc). This is a BFME-specific
-                     reconstruction claim, not a claim about upstream Lua.
+                     (retail's slot is MSVCR71 getc). EA also replaces the
+                     stdin-based `io_debug` with a game-console callback in
+                     luaB_debug.cpp. This is a BFME-specific reconstruction
+                     claim, not a claim about upstream Lua.
                      File opens and numeric output are upstream's fopen and
                      fprintf: the slots retail calls through are MSVCR71's
                      (an earlier "bfmeFopenVIF"/"bfmeLogSF" import was a

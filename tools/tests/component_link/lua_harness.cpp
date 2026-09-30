@@ -9,7 +9,7 @@ extern "C" {
 #include "lualib.h"
 }
 
-/* TEST DOUBLE, the only one: luaB_print writes through the game's logger
+/* TEST DOUBLE: luaB_print writes through the game's logger
    (retail ILT 0x0003EBAD -> 0x002E5090, a body known only as the gen_asm
    dump ?d_002e5090). This one records what print() sends it. */
 static char logged[1024];
@@ -17,6 +17,20 @@ void bfmeLogMsg574(const char *message)
 {
     if (strlen(logged) + strlen(message) < sizeof logged)
         strcat(logged, message);
+}
+
+/* TEST DOUBLE: EA's io_debug delegates to the game's console helper.  Retail
+   ILT 0x0000630C reaches the 0x002E5390 body. */
+static int debug_calls;
+static void *debug_state;
+static void *debug_parameter;
+void bfmeNotify2_574(void *state, void *parameter)
+{
+    debug_calls++;
+    debug_state = state;
+    /* Keep this store last: retail's helper returns EAX=0 on every path, and
+       io_debug deliberately reuses that value as Lua's result count. */
+    debug_parameter = parameter;
 }
 
 static int failures;
@@ -61,6 +75,12 @@ int main(void)
     lua_baselibopen(L);
     lua_strlibopen(L);
     lua_mathlibopen(L);
+    lua_iolibopen(L);
+
+    run(L, "debug()", "EA debug callback");
+    check(debug_calls == 1 && debug_state == L && debug_parameter == 0,
+        "debug delegates to the game console helper");
+    logged[0] = '\0';
 
     run(L, "x = 1 + 2 * 3 - 8 / 4", "arithmetic");
     check(number(L, "x") == 5.0, "arithmetic result");

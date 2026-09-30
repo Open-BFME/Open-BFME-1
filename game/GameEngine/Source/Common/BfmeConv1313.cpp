@@ -84,12 +84,3 @@ void bfmeGoTGC(BfmeSourceTGC *src, BfmeArgTGC *p)
 {
 	bfmeCalcTGC(src->bfmeGetTGC(p), &p->m_bfmeTail);
 }
-
-void bfmePrintTGD(const char *s);
-void bfmeRunTGD(int a, int b);
-
-void bfmeGoTGD(int a)
-{
-	bfmePrintTGD("\nEntering LUA debug mode.  Type ? for help, 'cont' to exit debug mode\n");
-	bfmeRunTGD(a, 0);
-}

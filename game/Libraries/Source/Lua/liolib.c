@@ -602,17 +602,8 @@ static int io_exit (lua_State *L) {
 
 
 
-static int io_debug (lua_State *L) {
-  for (;;) {
-    char buffer[250];
-    fprintf(stderr, "lua_debug> ");
-    if (fgets(buffer, sizeof(buffer), stdin) == 0 ||
-        strcmp(buffer, "cont\n") == 0)
-      return 0;
-    lua_dostring(L, buffer);
-    lua_settop(L, 0);  /* remove eventual returns */
-  }
-}
+/* EA replaced Lua's stdin debugger with the game's debug console. */
+extern void io_debug (lua_State *L);
 
 
 #define LEVELS1	12	/* size of the first part of the stack */
@@ -692,7 +683,7 @@ static const struct luaL_reg iolib[] = {
   {LUA_ERRORMESSAGE, errorfb},
   {"clock",     io_clock},
   {"date",     io_date},
-  {"debug",    io_debug},
+  {"debug",    (lua_CFunction)io_debug},
   {"execute",  io_execute},
   {"exit",     io_exit},
   {"getenv",   io_getenv},

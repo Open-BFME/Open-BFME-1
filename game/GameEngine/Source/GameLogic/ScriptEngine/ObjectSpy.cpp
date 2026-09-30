@@ -25,7 +25,7 @@ NameKeyType NAMEKEY(const char *name);
 
 void bfmeLogMsg574(const char *message);
 void bfmeNotify2_574(void *state, void *parameter);
-void bfmeGoTGD(int state);
+extern "C" void io_debug(lua_State *state);
 
 struct BfmeArgED8
 {
@@ -91,7 +91,7 @@ int ObjectSpy(lua_State *state)
 		if (reinterpret_cast<BfmeCallJ63 *>(TheLuaScriptEngine)->invoke(
 				(void *)eventKey) == 0)
 		{
-			bfmeGoTGD(reinterpret_cast<int>(state));
+			io_debug(state);
 			return 0;
 		}
 
@@ -99,7 +99,7 @@ int ObjectSpy(lua_State *state)
 		NameKeyType spyKey = NAMEKEY(spyName);
 		if (reinterpret_cast<Gen_002E3AB0 *>(TheLuaScriptEngine)->bfmeFind(spyKey) == 0)
 		{
-			bfmeGoTGD(reinterpret_cast<int>(state));
+			io_debug(state);
 			return 0;
 		}
 
