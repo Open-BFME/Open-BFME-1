@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3398586b2bcf53521aba02a8c741278f3886ab770bf83ede4b5e083a24aac884",
+  "symbol": "?find@NearestTemplate0036FE10@@QAEPAXABVAsciiString@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.616487,
+  "source": "// ?find@NearestTemplate0036FE10@@QAEPAXABVAsciiString@@@Z\n// partial score=0.616487 date=2026-09-28\n// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath\n#include \"ascii_string.h\"\n#include \"coord3d.h\"\nclass Overridable { public: const Overridable *getFinalOverride() const; };\nclass Gen_00383090 { public: int m(); };\nextern Gen_00383090 *TheBfmeGameLogic;\nclass NearestTemplate0036FE10 {\npublic:\n void *find(const AsciiString &name);\n};\nvoid *NearestTemplate0036FE10::find(const AsciiString &name) {\n void *object=(void*)TheBfmeGameLogic->m();\n void *best=0;\n float distance=99999.0f;\n if(object) {\n const void *nameData=*(const void **)&name;\n for(;object;object=*(void**)((char*)object+0x88)) {\n  const void *tmpl=*(void**)((char*)object+4);\n  if(tmpl) {\n   const Overridable *next=*(Overridable**)((char*)tmpl+4);\n   if(next) tmpl=next->getFinalOverride();\n  }\n  if(((const AsciiString*)((const char*)tmpl+0x20))->compare(*(const AsciiString*)&nameData)==0) {\n   const Coord3DBase *src=(const Coord3DBase*)((char*)object+0x38);\n   const Coord3DBase *pos=(const Coord3DBase*)((char*)*(void**)((char*)this+8)+0x38);\n   Coord3DBase delta;\n   delta.z=src->z; delta.x=src->x-pos->x; delta.y=src->y-pos->y; delta.z-=pos->z;\n   float d=((const Coord3D*)&delta)->GetLengthEstimate();\n   if(!best || d<distance) { distance=d; best=object; }\n  }\n }\n }\n return best;\n}\n"
+}
