@@ -1,8 +1,7 @@
-// ?d_002fa4e0@@YAXXZ
-// partial score=0.87 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
-// NAMED_USE_COMMANDBUTTON_ON_NEAREST_KINDOF at retail RVA 0x002FA4E0.
+// NAMED_USE_COMMANDBUTTON_ON_NEAREST_KINDOF at retail RVA 0x002FA4E0; the
+// executeAction template at index 426 calls this body (arm 0x00308FC0).
 
 #include "StringInline.h"
 #include <bitset>
@@ -106,11 +105,7 @@ public:
 	CommandOptions m_options;
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class Object
 {
@@ -192,18 +187,20 @@ public:
 	VptrZeroBlock24 m_second;
 };
 
-class Rva001ED510
+class PartitionFilterValidCommandButtonTarget : public PartitionFilter
 {
 public:
-	Rva001ED510 &set(int a, int b, char c, int d);
+	PartitionFilterValidCommandButtonTarget(Object *source,
+		const CommandButton *button, Bool match, CommandSourceType sourceType);
+
+protected:
+	virtual Bool allow(Object *object);
 
 private:
-	void *m_dword00;
-	int m_dword04;
-	int m_dword08;
-	int m_dword0c;
-	char m_byte10;
-	int m_dword14;
+	Object *m_source;
+	const CommandButton *m_button;
+	Bool m_match;
+	CommandSourceType m_sourceType;
 };
 
 class PartitionManager
@@ -280,11 +277,6 @@ void ScriptActions::doNamedUseCommandButtonOnNearestKindof(
 		Object *target = 0;
 		{
 			PartitionFilterSameMapStatus mapFilter(unit);
-			Rva001ED510 validFilter;
-			PartitionFilter *validFilterBase =
-				reinterpret_cast<PartitionFilter *>(
-					&validFilter.set((int)unit, (int)button, 1,
-						CMD_FROM_SCRIPT));
 			target = ThePartitionManager->getClosestObject(
 				unit->getPosition(), 1000000.0f, 0,
 				PartitionFilterPlayerAffiliation(
@@ -292,13 +284,10 @@ void ScriptActions::doNamedUseCommandButtonOnNearestKindof(
 					Rva000C3DD0VptrZeroBlockObject(
 						*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
 						*(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(
-						validFilterBase->link(&mapFilter))));
+						PartitionFilterValidCommandButtonTarget(unit, button, true,
+							CMD_FROM_SCRIPT).link(&mapFilter))));
 		}
 		if (target)
 			unit->doCommandButtonAtObject(button, target, CMD_FROM_SCRIPT, false);
 	}
 }
-
-
-
-
