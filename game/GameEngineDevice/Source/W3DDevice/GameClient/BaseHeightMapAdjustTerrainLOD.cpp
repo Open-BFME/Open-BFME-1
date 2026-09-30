@@ -13,8 +13,9 @@ class View;
 	virtual void prefix##c(); virtual void prefix##d(); virtual void prefix##e(); virtual void prefix##f()
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+class GlobalData
 {
+	public:
 	char m_unknown[0x54];
 	int m_terrainLOD;
 };
