@@ -36,7 +36,7 @@ public:
 };
 
 // targets/game/reverse/symbols.csv pins __imp___stricmp to the retail IAT VA 0x0135933c.
-extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *, const char *);
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 
@@ -110,7 +110,7 @@ void AutoPickUpUpdateModuleData::iniParseEatObjectEntry(
 	AutoPickUpEatObjectEntry entry;
 
 	const char *token = ini->getNextTokenOrNull(ini->getSepsColon());
-	if (token == 0 || _stricmp(token, "MyHealth") != 0)
+	if (token == 0 || _strcmpi(token, "MyHealth") != 0)
 		THROW_EAT_OBJECT_ENTRY_ERROR(
 			"AutoPickUpUpdateModuleData::iniParseEatObjectEntry -- Expecting 'MyHealth' entry. You specified %s.",
 			token);
@@ -121,7 +121,7 @@ void AutoPickUpUpdateModuleData::iniParseEatObjectEntry(
 	INI::parsePercentToReal(ini, instance, &entry.m_myHealth, 0);
 
 	token = ini->getNextTokenOrNull(ini->getSepsColon());
-	if (token == 0 || _stricmp(token, "TargetHealth") != 0)
+	if (token == 0 || _strcmpi(token, "TargetHealth") != 0)
 		THROW_EAT_OBJECT_ENTRY_ERROR(
 			"AutoPickUpUpdateModuleData::iniParseEatObjectEntry -- Expecting 'TargetHealth' entry. You specified %s.",
 			token);
@@ -132,7 +132,7 @@ void AutoPickUpUpdateModuleData::iniParseEatObjectEntry(
 	INI::parsePercentToReal(ini, instance, &entry.m_targetHealth, 0);
 
 	token = ini->getNextTokenOrNull(ini->getSepsColon());
-	if (token == 0 || _stricmp(token, "Filter") != 0)
+	if (token == 0 || _strcmpi(token, "Filter") != 0)
 		THROW_EAT_OBJECT_ENTRY_ERROR(
 			"AutoPickUpUpdateModuleData::iniParseEatObjectEntry -- Expecting 'Filter' entry. You specified %s.",
 			token);

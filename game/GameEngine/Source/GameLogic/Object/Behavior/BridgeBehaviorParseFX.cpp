@@ -11,7 +11,7 @@
 #include "Common/AsciiString.h"
 #include "Common/INIException.h"
 
-extern "C" __declspec( dllimport ) int __cdecl stricmp( const char *, const char * );
+extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *, const char * );
 
 typedef unsigned int UnsignedInt;
 
@@ -85,13 +85,13 @@ struct BoneNameSlot
 static void parseTimeAndLocationInfo( INI *ini, void *instance, TimeAndLocationInfo *info )
 {
 	const char *token = ini->getNextToken( ini->getSepsColon() );
-	if( stricmp( token, "Delay" ) != 0 )
+	if( _strcmpi( token, "Delay" ) != 0 )
 		throw INIException( 3, "Expected 'Delay' token, found '%s'\n", token );
 	ini->parseDurationUnsignedInt( ini, instance, &info->delay, 0 );
 	token = ini->getNextTokenOrNull( ini->getSepsColon() );
 	if( token != 0 )
 	{
-		if( stricmp( token, "Bone" ) != 0 )
+		if( _strcmpi( token, "Bone" ) != 0 )
 			throw INIException( 3, "Expected 'Bone' token, found '%s'\n", token );
 		BoneNameSlot( &info->boneName ) = ini->getNextAsciiString();
 	}
@@ -107,7 +107,7 @@ void BridgeBehaviorModuleData::parseFX( INI *ini, void *instance, void *store, c
 
 	const char *sepsColon = *(const char **)((const char *)ini + 0x41C);
 	token = ini->getNextToken( sepsColon );
-	if( stricmp( token, "FX" ) != 0 )
+	if( _strcmpi( token, "FX" ) != 0 )
 		throw INIException( 3, "Expected 'FX' token, found '%s'\n", token );
 
 	FXList *fx;
@@ -125,7 +125,7 @@ void BridgeBehaviorModuleData::parseOCL( INI *ini, void *instance, void *store, 
 		(_STL::list<BridgeOCLInfo, _STL::allocator<BridgeOCLInfo> > *)store;
 	const char *sepsColon = *(const char **)((const char *)ini + 0x41C);
 	token = ini->getNextToken( sepsColon );
-	if( stricmp( token, "OCL" ) != 0 )
+	if( _strcmpi( token, "OCL" ) != 0 )
 		throw INIException( 3, "Expected 'OCL' token, found '%s'\n", token );
 	ObjectCreationList *ocl;
 	INI::parseObjectCreationList( ini, instance, &ocl, 0 );

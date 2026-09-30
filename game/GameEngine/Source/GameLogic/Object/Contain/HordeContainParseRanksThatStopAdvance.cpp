@@ -20,7 +20,7 @@
 
 typedef int Int;
 
-__declspec(dllimport) int __cdecl bfmeAtoi1027( char *text );
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
@@ -41,6 +41,6 @@ void parseHordeContainRanksThatStopAdvance( INI *ini, void *instance, void *stor
 	for ( const char *token = ini->getNextTokenOrNull( ini->getSeps() ); token != 0;
 		token = ini->getNextTokenOrNull( ini->getSeps() ) )
 	{
-		( (BfmeRankList *)store )->push_back( bfmeAtoi1027( (char *)token ) );
+		( (BfmeRankList *)store )->push_back( atoi( (char *)token ) );
 	}
 }

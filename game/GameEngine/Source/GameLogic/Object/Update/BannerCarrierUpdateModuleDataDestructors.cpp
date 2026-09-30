@@ -14,9 +14,9 @@
 // initializers. The base carries no ctor; the four dwords at +0x08..+0x14 are
 // written from the derived body, which is the order retail emits them in.
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
+extern "C" __declspec(dllimport) void *__cdecl memmove(
 	void *destination, const void *source, unsigned int bytes );
-#define memmove BfmeMemMove
+#define memmove memmove
 #include <vector>
 #undef memmove
 

@@ -34,11 +34,11 @@ void parseMinMaxDuration(INI *ini, void *instance, void * /*store*/, const void 
 
 	const char *token = ini->getNextTokenOrNull(ini->getSepsColon());
 
-	if (stricmp(token, MIN_LABEL) == 0)
+	if (_strcmpi(token, MIN_LABEL) == 0)
 	{
 		*reinterpret_cast<Int *>(reinterpret_cast<char *>(instance) + 0x4B8) = INI::scanInt(ini->getNextToken(ini->getSepsColon()));
 		token = ini->getNextTokenOrNull(ini->getSepsColon());
-		if (stricmp(token, MAX_LABEL) != 0)
+		if (_strcmpi(token, MAX_LABEL) != 0)
 		{
 			*reinterpret_cast<Int *>(reinterpret_cast<char *>(instance) + 0x4BC) = *reinterpret_cast<Int *>(reinterpret_cast<char *>(instance) + 0x4B8);
 		}

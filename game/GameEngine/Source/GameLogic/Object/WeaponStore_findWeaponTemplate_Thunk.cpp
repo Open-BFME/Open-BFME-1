@@ -28,7 +28,7 @@ protected:
 // ?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VAsciiString@@@Z
 const WeaponTemplate *WeaponStore::findWeaponTemplate(AsciiString name) const
 {
-	if (_stricmp(name.str(), "None") == 0) {
+	if (_strcmpi(name.str(), "None") == 0) {
 		return 0;
 	}
 	return findWeaponTemplatePrivate(TheNameKeyGenerator->nameToKey(name.str()));

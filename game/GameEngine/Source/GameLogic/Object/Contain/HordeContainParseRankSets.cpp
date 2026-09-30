@@ -8,7 +8,7 @@
 
 typedef int Int;
 
-__declspec(dllimport) int __cdecl bfmeAtoi1027( char *text );
+
 
 class INI
 {
@@ -27,6 +27,6 @@ void parse_002368c0( INI *ini, void *, void *store, const void * )
 	for ( const char *token = ini->getNextTokenOrNull( ini->getSeps() ); token != 0;
 		token = ini->getNextTokenOrNull( ini->getSeps() ) )
 	{
-		( (BfmeRankSet *)store )->insert( bfmeAtoi1027( (char *)token ) );
+		( (BfmeRankSet *)store )->insert( atoi( (char *)token ) );
 	}
 }
