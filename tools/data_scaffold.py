@@ -37,6 +37,7 @@ Verification:
   python3 tools/data_scaffold.py --trial-link --census-rsp build/census_objects.rsp
 """
 import argparse
+import bisect
 import collections
 import csv
 import json
@@ -489,7 +490,6 @@ REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 
 
 def trial_link(img, objects, rsp, out, log=print):
-    import link_census
     swap = dump_objects()
     census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
     linked, swapped, missing = [], 0, []
@@ -525,20 +525,56 @@ def trial_link(img, objects, rsp, out, log=print):
         lock.rmdir()
     text = proc.stdout + proc.stderr
     (work / "trial.log").write_text(text, encoding="utf-8")
+    meta = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
+            "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode}
+    (work / "trial_meta.json").write_text(json.dumps(meta), encoding="utf-8")
+    return classify_trial(img, objects, text, meta, work, log)
+
+
+def classify_trial(img, objects, text, meta, work, log=print):
+    """Unresolved and duplicate names of a trial link log, classified."""
+    import link_census
     rows = [r for r in build.load_function_rows() if r["target_rva"].startswith("0x")]
     classes, detail, dup_kinds, dups = link_census.classify(text, rows)
     scaffold_names = set()
     for path in objects:
         _, symbols = RL.parse_coff(path.read_bytes())
         scaffold_names |= {s["name"] for s in symbols.values() if s["storage"] == EXTERNAL and s["section"] > 0}
+    # why the scaffold left a name undefined: its role in the ledger's names.csv,
+    # else the extent that holds its address
+    roles = {}
+    for row in RL.read_csv_rows(LEDGER / "names.csv"):
+        roles.setdefault(row["name"], row["role"])
+    spans = sorted((int(r["start"], 16), int(r["end"], 16), r["source"])
+                   for r in RL.read_csv_rows(LEDGER / "items.csv") if r["source"] != "scaffold")
+    starts = [s for s, _, _ in spans]
+    code_link = {}
+    for row in RL.read_csv_rows(LEDGER / "ledger.csv"):
+        if row["link_symbol"].startswith("g_") and row["target_section"] == ".text":
+            code_link.setdefault(row["link_symbol"], row["link_class"])
+
+    def holder(va):
+        i = bisect.bisect_right(starts, va) - 1
+        return spans[i][2] if i >= 0 and va < spans[i][1] else "none"
+
     refined = collections.Counter()
     for name, entry in detail.items():
         kind = entry["kind"]
         m = re.fullmatch(r"g_([0-9A-F]{8})", name)
         if m:
-            kind = "g_" + (img.section(int(m.group(1), 16)) or "outside").strip(".")
+            va = int(m.group(1), 16)
+            section = (img.section(va) or "outside").strip(".")
+            if section == "text":
+                why = code_link.get(name, "dump-reference")
+            elif section in ("rdata", "data"):
+                why = "inside-" + holder(va)
+            else:
+                why = section
+            kind = f"g_{section}:{why}"
         elif kind == "unpinned" and name in RL.KNOWN_ABSOLUTE:
             kind = "crt-absolute"
+        elif kind == "data":
+            kind = "data:" + roles.get(name, "not-a-data-address")
         refined[kind] += 1
         entry["kind"] = kind
     dup_refined = collections.Counter()
@@ -546,9 +582,7 @@ def trial_link(img, objects, rsp, out, log=print):
         involved = any(Path(o).name.startswith(("scaffold_", "aliases")) for o in objs)
         dup_refined[("scaffold-" if involved else "") + ("data" if name in scaffold_names else "other")] += 1
     fatal = sorted(set(re.findall(r"fatal error (LNK\d+)", text)))
-    summary = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
-               "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode,
-               "fatal": fatal, "unresolved": sum(refined.values()), "unresolved_classes": dict(refined),
+    summary = {**meta, "fatal": fatal, "unresolved": sum(refined.values()), "unresolved_classes": dict(refined),
                "duplicates": len(dups), "duplicate_classes": dict(dup_refined),
                "duplicate_classes_census": dict(dup_kinds)}
     (work / "trial.json").write_text(json.dumps({**summary, "unresolved_detail": detail, "duplicate_detail": dups},
@@ -565,6 +599,7 @@ def main(argv=None):
     ap.add_argument("--out", type=Path, default=OUT)
     ap.add_argument("--link-check", action="store_true", help="also link the scaffold alone at a moved base")
     ap.add_argument("--trial-link", action="store_true", help="also link the whole program without /FORCE")
+    ap.add_argument("--reclassify", action="store_true", help="classify the last trial link's log again")
     ap.add_argument("--census-rsp", type=Path, default=ROOT / "build" / "link_census" / "objects.rsp",
                     help="the census's object list (repo-relative paths)")
     args = ap.parse_args(argv)
@@ -582,6 +617,10 @@ def main(argv=None):
         report["link_failures"] = link_failures[:50]
     if args.trial_link:
         report["trial"] = trial_link(img, objects, args.census_rsp, args.out)
+    elif args.reclassify:
+        work = args.out / "trial"
+        report["trial"] = classify_trial(img, objects, (work / "trial.log").read_text(encoding="utf-8"),
+                                         json.loads((work / "trial_meta.json").read_text(encoding="utf-8")), work)
     (args.out / "verify.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "failures"}, indent=1))
     bad = checks.get("retail_differs", 0) or checks.get("field_not_moved", 0) or checks.get("byte_changed", 0) \

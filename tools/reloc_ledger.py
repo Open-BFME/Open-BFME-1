@@ -360,14 +360,17 @@ def scan_data(task):
 # --------------------------------------------------------------------------- compiler phase (driver)
 
 def object_anchors(rows):
-    """{object path: [(object symbol, rva, size)]} for matched rows whose object exists."""
+    """{object path: [(object symbol, rva, size)]} for every matched row's object. A
+    funclet or gen-alias row anchors nothing (its bytes are another row's), but
+    its object is still read: the names it defines are not scaffold names."""
     anchors = collections.defaultdict(list)
     for row in rows:
-        if "gen-funclet" in (row.get("notes") or "") or "gen-alias" in (row.get("notes") or ""):
-            continue
         try:
             obj = build.row_object(row)
         except SystemExit:
+            continue
+        if "gen-funclet" in (row.get("notes") or "") or "gen-alias" in (row.get("notes") or ""):
+            anchors[str(obj)]
             continue
         anchors[str(obj)].append((build.ledger_object_symbol(row), int(row["target_rva"], 16),
                                   int(row["target_size"])))
@@ -1241,6 +1244,12 @@ def run(args, log=print):
         real = remap(path, args.objects_root) if args.objects_root else Path(path)
         if real.exists():
             anchors[str(real)] = rows
+    if args.objects_rsp:
+        # exactly the objects a census links (repo-relative paths, one per line)
+        root = args.objects_root or ROOT
+        listed = [str(Path(root) / line.strip().strip('"'))
+                  for line in args.objects_rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
+        anchors = {p: anchors.get(p, []) for p in listed if Path(p).exists()}
     objects = sorted(anchors)
     log(f"reloc_ledger: {len(objects):,} objects, {sum(len(v) for v in anchors.values()):,} anchored rows")
     comp = compiler_phase(objects, anchors, workers, log)
@@ -1467,6 +1476,8 @@ def main(argv=None):
                     help="read row objects from this checkout (same relative paths); default: this tree")
     ap.add_argument("--dump-relocs", type=Path, default=ROOT / "build" / "dump_relocs",
                     help="tools/dump_relocs.py --all output directory")
+    ap.add_argument("--objects-rsp", type=Path, default=None,
+                    help="read exactly these objects (a link_census objects.rsp); default: every matched row's")
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args(argv)
     return run(args)
