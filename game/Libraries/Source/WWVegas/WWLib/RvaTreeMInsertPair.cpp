@@ -6,10 +6,10 @@
 // only a machine byte-dump row.  Most are the callee of an insert_unique
 // converted in RvaTreeInsertUniqueSigned.cpp or RvaTreeInsertUniqueUnsigned.cpp
 // -- that call is how those addresses were found and how their trees were
-// named.  The last four were found by their shape instead: nothing that is
-// itself converted calls them, so only the bytes speak for them -- and one of
-// those four is not a pair at all: it reads its key at value+0x18, so its
-// extractor reaches past 24 bytes rather than taking the first member.
+// named.  The last four were originally found by their shape instead. One
+// of those four is not a pair at all: it reads its key at value+0x18, so its
+// extractor reaches past 24 bytes rather than taking the first member. Its
+// matching insert_unique caller at 0x00064F70 is also reconstructed below.
 //
 // The __w_ and __x_ arguments let a caller that has already compared skip the
 // comparison, and both short-circuits are visible: __w_ non-null goes straight
@@ -69,6 +69,7 @@ struct pair
 
 	T1 first;
 	T2 second;
+	__forceinline pair(const T1 &a, const T2 &b) : first(a), second(b) {}
 };
 
 template <class T>
@@ -103,10 +104,14 @@ struct _Rb_tree_node : public _Rb_tree_node_base
 	V _M_value_field;					// +0x10
 };
 
+template <class Threads> struct _Rb_global;
+
 template <class V, class Traits>
 struct _Rb_tree_iterator
 {
 	_Rb_tree_iterator(_Rb_tree_node_base *node) : _M_node(node) {}
+	__forceinline bool operator==(const _Rb_tree_iterator &x) const { return _M_node == x._M_node; }
+	__forceinline _Rb_tree_iterator &operator--();
 
 	_Rb_tree_node_base *_M_node;
 };
@@ -116,7 +121,12 @@ struct _Rb_global
 {
 	static void __cdecl _Rebalance(_Rb_tree_node_base *x,
 		_Rb_tree_node_base *&root);			// retail 0x0082C9D0
+	static _Rb_tree_node_base *__cdecl _M_decrement(_Rb_tree_node_base *x); // retail 0x0082B8E0
 };
+
+template <class V, class Traits>
+_Rb_tree_iterator<V, Traits> &_Rb_tree_iterator<V, Traits>::operator--()
+{ _M_node = _Rb_global<bool>::_M_decrement(_M_node); return *this; }
 
 template <class Pointer, class Value, class Alloc>
 class _STLP_alloc_proxy : public Alloc
@@ -141,6 +151,8 @@ public:
 	typedef _Rb_tree_node<Value> _Node;
 	typedef _Node *_Link_type;
 	typedef _Rb_tree_iterator<Value, _Nonconst_traits<Value> > iterator;
+	pair<iterator, bool> insert_unique(const Value &v);
+	__forceinline iterator begin() const { return iterator(_M_leftmost()); }
 
 private:
 	iterator _M_insert(_Rb_tree_node_base *x_, _Rb_tree_node_base *y_,
@@ -219,6 +231,29 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_insert(
 	_Rb_global<bool>::_Rebalance(z, this->_M_header._M_data->_M_parent);
 	++_M_node_count;
 	return iterator(z);
+
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+pair<typename _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator, bool>
+_Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value &v)
+{
+    _Link_type y = (_Link_type)this->_M_header._M_data;
+    _Link_type x = (_Link_type)_M_root();
+    bool comp = true;
+    while (x != 0) {
+        y = x;
+        comp = _M_key_compare(KeyOfValue()(v), _S_key(x));
+        x = (_Link_type)(comp ? x->_M_left : x->_M_right);
+    }
+    iterator j = iterator(y);
+    if (comp && j == begin())
+        return pair<iterator, bool>(_M_insert(y, y, v, 0), true);
+    if (comp)
+        --j;
+    if (_M_key_compare(_S_key(j._M_node), KeyOfValue()(v)))
+        return pair<iterator, bool>(_M_insert(x, y, v, 0), true);
+    return pair<iterator, bool>(j, false);
 }
 
 }
@@ -1058,6 +1093,10 @@ struct Rva00064A30KeyOfValue
 
 typedef _STL::_Rb_tree<unsigned int, Rva00064A30Value, Rva00064A30KeyOfValue,
 	_STL::less<unsigned int>, _STL::allocator<Rva00064A30Value> > Rva00064A30Tree;
+
+// retail 0x00064F70: same value and extractor as the exact 0x00064A30 _M_insert.
+template _STL::pair<Rva00064A30Tree::iterator, bool>
+Rva00064A30Tree::insert_unique(const Rva00064A30Value &);
 
 // retail 0x00064A30, a 44-byte node
 Rva00064A30Tree::iterator BfmeRbTreeInsertAnchor00064A30( Rva00064A30Tree *tree,
