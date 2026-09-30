@@ -1,7 +1,7 @@
 // ?d_00519150@@YAXXZ
-// partial score=0.55 date=2026-09-26
-// Partial reconstruction for 0x00519150, best measured 872 of 884 bytes.
-// Identity is unresolved; keep the target address in the saved attempt.
+// partial score=0.9842 date=2026-09-30
+// Retail vtable 0x01105A78 slot 5 (int return); only the tail game slot differs.
+// Retail shares the tail game slot with case 7's game; ours gives it its own.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 template <typename T> class StringBase
@@ -190,7 +190,7 @@ class BfmeAptScreenLanLobby
 public:
     bool initLanRva00517D00();
     bool callSelection(int, GameInfo **);
-    bool rva00519150();
+    int rva00519150();
 
 private:
     char m_head[0x250];
@@ -234,18 +234,16 @@ bool BfmeAptScreenLanLobby::callSelection(int row, GameInfo **item)
     return (this->*bits.member)(row, item);
 }
 
-bool BfmeAptScreenLanLobby::rva00519150()
+int BfmeAptScreenLanLobby::rva00519150()
 {
     if (m_tail.m_flag4)
     {
         m_state.flushPendingUpdates();
-        return false;
+        return 0;
     }
 
     if (TheLAN)
         TheLAN->slot05();
-
-    GameInfo *game;
 
     switch (m_3a8)
     {
@@ -284,30 +282,31 @@ bool BfmeAptScreenLanLobby::rva00519150()
     launchPlay:
         {
             unsigned int actionOwner = (unsigned int)m_actionOwner;
+            m_3a8 = 4;
             g_theWindowManager->bfmeBuildAN(actionOwner,
                 (int)0x011059e4, 0, 0, 0, 0, 0, 0);
         }
-        m_3a8 = 4;
         break;
 
     case 7:
     {
         ((Rva0051A5A0Host *)this)->setup(0);
+        m_3a8 = 1;
         int selected = -1;
         GadgetListBoxGetSelected(m_customGamesList, &selected);
-        game = 0;
-        if (!callSelection(selected, &game))
         {
-            GadgetListBoxAddEntryText(m_chat,
-                TheGameText->fetch((const char *)0x01102e18, 0),
-                chatSystemColor, -1, 0, true);
-            break;
+            GameInfo *game = 0;
+            if (callSelection(selected, &game))
+            {
+                m_3a8 = 8;
+                BfmeNetAddress address;
+                TheLAN->RequestGameJoin((LANGameInfo *)game, &address);
+                break;
+            }
         }
-        m_3a8 = 8;
-        {
-            BfmeNetAddress address;
-            TheLAN->RequestGameJoin((LANGameInfo *)game, &address);
-        }
+        GadgetListBoxAddEntryText(m_chat,
+            TheGameText->fetch((const char *)0x01102e18, 0),
+            chatSystemColor, -1, 0, true);
         break;
     }
 
@@ -317,8 +316,8 @@ bool BfmeAptScreenLanLobby::rva00519150()
         if (game == 0 || game->getLocalSlotNum() == -1)
         {
             MessageBoxOk(
-                TheGameText->fetch((const char *)0x01102e8c, 0),
-                TheGameText->fetch((const char *)0x0110267c, 0), 0);
+                TheGameText->fetch((const char *)0x0110267c, 0),
+                TheGameText->fetch((const char *)0x01102e8c, 0), 0);
             ((BfmeA1061 *)this)->bfmeGo1061A();
             m_3a8 = 0;
         }
@@ -330,7 +329,7 @@ bool BfmeAptScreenLanLobby::rva00519150()
     {
         int selected = -1;
         GadgetListBoxGetSelected(m_customGamesList, &selected);
-        game = 0;
+        GameInfo *game = 0;
         callSelection(selected, &game);
     }
 
@@ -341,12 +340,12 @@ bool BfmeAptScreenLanLobby::rva00519150()
     {
         m_tail.m_flag2 = false;
         MessageBoxOk(
-            TheGameText->fetch((const char *)0x010ff638, 0),
-            TheGameText->fetch((const char *)0x010ff624, 0), 0);
+            TheGameText->fetch((const char *)0x010ff624, 0),
+            TheGameText->fetch((const char *)0x010ff638, 0), 0);
         if (g_bfme935GlobC)
             g_bfmeManager->bfmeCall_000290d2();
     }
 
     m_state.flushPendingUpdates();
-    return true;
+    return 1;
 }
