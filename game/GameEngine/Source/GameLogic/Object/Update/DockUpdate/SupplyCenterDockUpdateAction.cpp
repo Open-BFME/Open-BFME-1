@@ -1,29 +1,14 @@
 // ?action@SupplyCenterDockUpdate@@QAE_NPAVObject@@0@Z
-// partial score=0.36 date=2026-09-21
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /DZH_EMIT_POOL_GLUE /DBFME_MODULE_NO_MPO /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-//
-// SupplyCenterDockUpdate::action, retail RVA 0x002CF2C0 (586B). Sits directly
-// between the matched scalar deleting destructor (0x002CF290) and the matched
-// SupplyCenterDockUpdateModuleData constructor (0x002CF5A0) -- the class's
-// missing action() slot. ZH's SupplyCenterDockUpdate::action (reference
-// GeneralsMD/.../DockUpdate/SupplyCenterDockUpdate.cpp) drains the docking
-// SupplyTruckAIInterface's boxes into Player money, but BFME replaced the
-// getUpgradedSupplyBoost() bonus with an attribute-modifier multiplier, a
-// multiplayer/skirmish player-count scale (or, offline, a Living World bounty
-// adjustment), a science-gated bonus multiplier, and an ExperienceTracker
-// award -- and dropped the stealth-grant block entirely. The tail (deposit,
-// score, "GUI:AddCash" floating text) reuses the class declarations already
-// proven byte-exact by the same six retail helper thunks (0x1e0ab, 0x389f6,
-// 0x9e12, 0x24938, 0x27d6d, 0x3a45e) in the matched
-// AutoDepositUpdate::awardInitialCaptureBonus (0x00280EE0).
+// SupplyCenterDockUpdate::action: drains the docking supply truck's boxes into Player money
+// with BFME's attribute, player-count, bounty and science scaling, then awards experience.
 
 #include "PreRTS.h"
 
 #include "Common/GlobalData.h"
 #include "GameClient/Color.h"
 #include "GameClient/GameText.h"
-#include "GameLogic/Object.h"
 
 class GameLogicShim
 {
@@ -68,7 +53,7 @@ public:
 class Player
 {
 public:
-	UnsignedInt getSupplyBoxValue() const;
+	UnsignedInt getSupplyBoxValue();
 	Bool hasScience(ScienceType t) const;
 
 	Rva00027D6DMoney *getMoney()
@@ -87,23 +72,16 @@ public:
 	}
 };
 
-// Object's own attribute-modifier query (BFME addition, not present in the
-// vendored ZH Object.h): reached by casting the already-real Object* to this
-// shim, matching the Rva000C97C0PlayerThunk / Rva002EE330PlayerListThunk
-// pattern used for the other BFME-only helpers above.
-class ObjectAttributeModifierShim
+// Object view: the vendored Object.h lacks BFME's attribute-modifier query.
+class Object : public Thing
 {
 public:
+	Player *getControllingPlayer() const;
 	Bool getAttributeModifierMultiplier(Int which, Real *out) const;
 };
 
-// AIUpdateInterface / SupplyTruckAIInterface -- only the slots this body
-// uses. Object::getAI() is a plain field read at Object+0x204 (no virtual
-// call, BFME addition not modeled in the vendored ZH Object header); the
-// interface it returns dispatches through slot 0x144 (index 81) for the
-// still-unnamed accessor this body treats the way ActionManager's already
-// matched canTransferSuppliesAt treats getSupplyTruckAIInterface, and
-// SupplyTruckAIInterface's third slot (+8) is that same file's loseOneBox.
+// The AI interface lives at Object+0x204 in BFME; slot 0x144 returns the supply-truck
+// interface, whose slot +8 is loseOneBox.
 class SupplyTruckAIInterface
 {
 public:
@@ -139,17 +117,13 @@ inline BFMEAIUpdateInterface *bfmeGetAI(const Object *obj)
 	return *(BFMEAIUpdateInterface *const *)((const char *)obj + 0x204);
 }
 
-// ExperienceTracker -- only isAcceptingExperiencePoints (already matched,
-// class ExperienceTracker) and the still-dump award call (thunk 0x00010096,
-// still targeting the unconverted body at 0x001B28C0: 5 args, this-call).
+// ExperienceTracker at Object+0x210; addExperiencePoints is the pinned ILT 0x00010096.
 class ExperienceTracker
 {
 public:
 	Bool isAcceptingExperiencePoints() const;
-	void bfmeAwardExperience001B28C0(Int amount, Bool a, Bool b, Bool c, Int d);
+	void addExperiencePoints(Real amount, Bool a, Bool b, Bool c, Bool d);
 };
-
-#pragma comment(linker, "/alternatename:?bfmeAwardExperience001B28C0@ExperienceTracker@@QAEXHHHHH@Z=?j_00010096@@YAXXZ")
 
 inline ExperienceTracker *bfmeGetExperienceTracker(const Object *obj)
 {
@@ -163,11 +137,8 @@ class PlayerList;
 extern PlayerList *Rva002EE330ThePlayers;
 extern GlobalData *TheWritableGlobalData;
 
-// InGameUI / TerrainLogic -- hand-rolled with placeholder slots, same as
-// AutoDepositUpdate_awardInitialCaptureBonus.cpp: the vendored ZH headers'
-// InGameUI/TerrainLogic hierarchies (SubsystemInterface/Snapshot bases, etc.)
-// don't reproduce BFME's actual vtable slot count, so the real headers are
-// not used for these two globals.
+// InGameUI and TerrainLogic views with BFME's vtable slot positions, as in
+// AutoDepositUpdate_awardInitialCaptureBonus.cpp.
 class InGameUI
 {
 public:
@@ -213,11 +184,19 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterDockUpdate.h
-// Open-BFME5: float@10 (attribute-multiplier scale), int@14 (gated science,
-// -1 = none), float@18 (science bonus scale) -- ctor default 1.0f/-1/1.0f,
-// see SupplyCenterDockUpdateModuleDataConstructorThunk.cpp.
-class SupplyCenterDockUpdateModuleData
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterDockUpdate.h
+// BFME fields as in SupplyCenterDockUpdateModuleDataConstructorThunk.cpp: scale, science, science scale.
+class DockUpdateModuleData
+{
+public:
+	DockUpdateModuleData();
+	virtual ~DockUpdateModuleData();
+
+private:
+	unsigned char m_pad[0x0c];
+};
+
+class SupplyCenterDockUpdateModuleData : public DockUpdateModuleData
 {
 public:
 	Real m_10;
@@ -252,9 +231,8 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 	if (supplyTruckAI == 0)
 		return false;
 
-	Player *ownerPlayer = getObject()->getControllingPlayer();
-
 	Real value = 0.0f;
+	Player *ownerPlayer = getObject()->getControllingPlayer();
 	while (supplyTruckAI->loseOneBox())
 	{
 		value += (Real)ownerPlayer->getSupplyBoxValue();
@@ -263,12 +241,11 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 	if (!(value > 0.0f))
 		return false;
 
-	SupplyCenterDockUpdateModuleData *data = getSupplyCenterDockUpdateModuleData();
-
 	Real multiplier = 1.0f;
-	((ObjectAttributeModifierShim *)getObject())->getAttributeModifierMultiplier(0xc, &multiplier);
+	getObject()->getAttributeModifierMultiplier(0xc, &multiplier);
 	value *= multiplier;
-	value *= data->m_10;
+	Rva00027D6DMoney *ownerPlayerMoney = ownerPlayer->getMoney();
+	value *= getSupplyCenterDockUpdateModuleData()->m_10;
 
 	if (((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab())
 	{
@@ -277,24 +254,22 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 		value *= scale;
 	}
 
-	Int intValue = (Int)value;
-	intValue = ((Rva000C97C0PlayerThunk *)ownerPlayer)->unidentified_00024938(intValue);
-	value = (Real)intValue;
+	value = (Real)((Rva000C97C0PlayerThunk *)ownerPlayer)->unidentified_00024938((Int)value);
 
-	if (ownerPlayer->hasScience((ScienceType)data->m_14))
+	if (ownerPlayer->hasScience((ScienceType)getSupplyCenterDockUpdateModuleData()->m_14))
 	{
-		value *= data->m_18;
+		value *= getSupplyCenterDockUpdateModuleData()->m_18;
 	}
 
-	Int finalValue = (Int)ceil((double)value);
+	Int finalValue = fast_float2long_round((Real)ceil(value));
 
-	ownerPlayer->getMoney()->unidentified_00027d6d((UnsignedInt)finalValue, true);
+	ownerPlayerMoney->unidentified_00027d6d((UnsignedInt)finalValue, true);
 	ownerPlayer->getScoreKeeper()->unidentified_0003a45e(finalValue);
 
-	ExperienceTracker *tracker = bfmeGetExperienceTracker(docker);
+	ExperienceTracker *tracker = bfmeGetExperienceTracker(getObject());
 	if (tracker != 0 && tracker->isAcceptingExperiencePoints())
 	{
-		tracker->bfmeAwardExperience001B28C0(finalValue, true, true, true, 0);
+		tracker->addExperiencePoints(value, true, true, true, false);
 	}
 
 	UnicodeString moneys;
@@ -302,8 +277,8 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 
 	Coord3D pos;
 	const Coord3D *dockerPos = docker->getPosition();
-	pos.y = dockerPos->y;
 	pos.x = dockerPos->x;
+	pos.y = dockerPos->y;
 	pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y);
 
 	Color color = ownerPlayer->getPlayerColor() | GameMakeColor(0, 0, 0, 230);
