@@ -28,7 +28,7 @@ void Gen009D6DD0::bfmeClose()
 	{
 		if (m_emitEnd)
 		{
-			unsigned int endTag = 0x00454E44;
+			unsigned int endTag = 'END';
 			m_channel->bfmeWrite(&endTag, sizeof(endTag));
 		}
 		m_channel = 0;

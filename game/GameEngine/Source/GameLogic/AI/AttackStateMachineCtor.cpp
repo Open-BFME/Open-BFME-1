@@ -92,6 +92,23 @@ private:
 
 typedef Bool (*StateConditionFunction)( State *, void * );
 
+extern void j_0001745e();
+extern void j_0000d7a1();
+extern void j_00035a53();
+extern void d_0016af70();
+Bool inWeaponRangeObject( State *thisState, void *userData );
+
+extern "C" void *bfmeVftAIAttackAimAtTargetState[];
+extern "C" void *bfmeVftAIAttackFireWeaponState[];
+extern "C" void *bfmeVftFailureState[];
+extern "C" void *bfmeVftAIWaitUntilFinishedFiringState[];
+extern "C" void *bfmeVftRva0016AB00TailDtor[];
+#pragma comment(linker, "/alternatename:_bfmeVftAIAttackAimAtTargetState=??_7AIAttackAimAtTargetState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftAIAttackFireWeaponState=??_7AIAttackFireWeaponState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftFailureState=??_7FailureState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftAIWaitUntilFinishedFiringState=??_7AIWaitUntilFinishedFiringState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0016AB00TailDtor=??_7Rva0016AB00TailDtor@@6B@")
+
 struct StateConditionInfo
 {
 	StateConditionFunction test;
@@ -109,7 +126,7 @@ public:
 		Bool forceAttacking )
 		: State(machine, AsciiString("AIAttackAimAtTargetState"))
 	{
-		*(UnsignedInt *)this = 0x01097C60;
+		*(void **)this = bfmeVftAIAttackAimAtTargetState;
 		m_attackingObject = attackingObject;
 		m_canTurnInPlace = false;
 		m_setLocomotor = false;
@@ -128,7 +145,7 @@ public:
 	Rva00180810FireState( StateMachine *machine, void *notify )
 		: State(machine, AsciiString("AIAttackFireWeaponState"))
 	{
-		*(UnsignedInt *)this = 0x01097DC0;
+		*(void **)this = bfmeVftAIAttackFireWeaponState;
 		m_notify = notify;
 		m_finished = false;
 	}
@@ -143,7 +160,7 @@ public:
 	Rva00180810FailureState( StateMachine *machine )
 		: State(machine, AsciiString("FailureState"))
 	{
-		*(UnsignedInt *)this = 0x01097950;
+		*(void **)this = bfmeVftFailureState;
 	}
 
 private:
@@ -185,7 +202,7 @@ public:
 	Rva00180810WaitState( StateMachine *machine )
 		: State(machine, AsciiString("AIWaitUntilFinishedFiringState"))
 	{
-		*(UnsignedInt *)this = 0x01097D40;
+		*(void **)this = bfmeVftAIWaitUntilFinishedFiringState;
 	}
 };
 
@@ -201,20 +218,20 @@ AttackStateMachine::AttackStateMachine(
 	Bool follow, Bool attackingObject, Bool forceAttacking )
 : StateMachine(obj, name, false)
 {
-	*(UnsignedInt *)this = 0x01097168;
+	*(void **)this = bfmeVftRva0016AB00TailDtor;
 
 	static const StateConditionInfo objectConditionsNormal[] =
 	{
-		StateConditionInfo((StateConditionFunction)0x0041745E, 0x64, 0),
-		StateConditionInfo((StateConditionFunction)0x0040D7A1, 0x64, 0),
-		StateConditionInfo((StateConditionFunction)0x0056AF70, 0x270f, (void *)2),
+		StateConditionInfo((StateConditionFunction)j_0001745e, 0x64, 0),
+		StateConditionInfo((StateConditionFunction)j_0000d7a1, 0x64, 0),
+		StateConditionInfo((StateConditionFunction)d_0016af70, 0x270f, (void *)2),
 		StateConditionInfo(0, 0, 0)
 	};
 	static const StateConditionInfo objectConditionsForced[] =
 	{
-		StateConditionInfo((StateConditionFunction)0x0041745E, 0x64, 0),
-		StateConditionInfo((StateConditionFunction)0x0056AF70, 0x270f, (void *)3),
-		StateConditionInfo((StateConditionFunction)0x0040D7A1, 0x64, 0),
+		StateConditionInfo((StateConditionFunction)j_0001745e, 0x64, 0),
+		StateConditionInfo((StateConditionFunction)d_0016af70, 0x270f, (void *)3),
+		StateConditionInfo((StateConditionFunction)j_0000d7a1, 0x64, 0),
 		StateConditionInfo(0, 0, 0)
 	};
 	const StateConditionInfo *objectConditions =
@@ -222,12 +239,12 @@ AttackStateMachine::AttackStateMachine(
 
 	static const StateConditionInfo positionConditions[] =
 	{
-		StateConditionInfo((StateConditionFunction)0x00435A53, 0x64, 0),
+		StateConditionInfo((StateConditionFunction)j_00035a53, 0x64, 0),
 		StateConditionInfo(0, 0, 0)
 	};
 	static const StateConditionInfo immobileConditions[] =
 	{
-		StateConditionInfo((StateConditionFunction)0x0056AF70, 0x270f, (void *)2),
+		StateConditionInfo((StateConditionFunction)d_0016af70, 0x270f, (void *)2),
 		StateConditionInfo(0, 0, 0)
 	};
 	if (((Object *)obj)->isImmobile())
@@ -251,7 +268,7 @@ AttackStateMachine::AttackStateMachine(
 		{
 			static const StateConditionInfo portableStructureChaseConditions[] =
 			{
-				StateConditionInfo((StateConditionFunction)0x00571FD0, 0x66, 0),
+				StateConditionInfo((StateConditionFunction)inWeaponRangeObject, 0x66, 0),
 				StateConditionInfo(0, 0, 0)
 			};
 
