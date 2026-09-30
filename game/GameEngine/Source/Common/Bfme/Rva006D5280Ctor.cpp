@@ -18,6 +18,8 @@ public:
 // ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z (retail 0x0090CF90).
 #pragma comment(linker, "/alternatename:??0Rva006D5280TextureBase@@QAE@IIIIII@Z=??0Rva006D51B0TextureBase@@QAE@IIIIII@Z")
 
+extern int BfmeVfZQ;
+
 class Rva006D5280Texture : public Rva006D5280TextureBase
 {
 public:
@@ -25,7 +27,7 @@ public:
 		unsigned pool, unsigned renderTarget, unsigned reducible)
 		: Rva006D5280TextureBase(width, height, mip, pool, renderTarget, reducible)
 	{
-		*reinterpret_cast<unsigned *>(this) = 0x0111dfb0;
+		*reinterpret_cast<unsigned *>(this) = reinterpret_cast<unsigned>(&BfmeVfZQ);
 	}
 };
 

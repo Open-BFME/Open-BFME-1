@@ -11,6 +11,8 @@
 // for its size to be pushed as a byte, and those two facts together are the
 // seven bytes it saves.
 
+extern "C" const void *bfmeVftW3DGameWindow[];
+#pragma comment(linker, "/alternatename:_bfmeVftW3DGameWindow=??_7W3DGameWindow@@6B@")
 
 class BfmeMadeBase_0045DC70
 {
@@ -76,7 +78,7 @@ BfmeMade_0045DC70 * __stdcall bfmeMake_0045DC70(void *owner)
 __declspec(noinline) BfmeMade_0045DC70::BfmeMade_0045DC70(void *owner)
 	: BfmeMadeBase_0045DC70(owner)
 {
-	*(volatile unsigned int *)this = 0x010F7160;
+	*(volatile unsigned int *)this = (unsigned int)bfmeVftW3DGameWindow;
 	m_bfmeTail = 0;
 }
 

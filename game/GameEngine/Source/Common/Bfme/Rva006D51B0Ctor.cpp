@@ -120,6 +120,8 @@ Rva006D51B0TextureBase::Rva006D51B0TextureBase(unsigned width, unsigned height,
 	m_bfme14->go(width, height, mip, pool, renderTarget, reducible, 0);
 }
 
+extern int BfmeVfZQ;
+
 class Rva006D51B0Texture : public Rva006D51B0TextureBase
 {
 public:
@@ -127,7 +129,7 @@ public:
 		unsigned pool, unsigned renderTarget, unsigned reducible)
 		: Rva006D51B0TextureBase(width, height, mip, pool, renderTarget, reducible)
 	{
-		*reinterpret_cast<unsigned *>(this) = 0x0111dfb0;
+		*reinterpret_cast<unsigned *>(this) = reinterpret_cast<unsigned>(&BfmeVfZQ);
 	}
 };
 

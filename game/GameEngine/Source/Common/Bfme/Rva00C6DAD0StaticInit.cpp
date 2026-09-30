@@ -1,4 +1,6 @@
 // cl: /O2 /MD
+extern const char g_Rva0107301CEmptyString[];
+
 class BfmeSub1030
 {
 public:
@@ -11,7 +13,7 @@ public:
 	Rva00C6DAD0Init()
 	{
 		char allocator;
-		bfmeInit1030(0x0107301C, (int *)&allocator);
+		bfmeInit1030((int)g_Rva0107301CEmptyString, (int *)&allocator);
 	}
 	~Rva00C6DAD0Init();
 };

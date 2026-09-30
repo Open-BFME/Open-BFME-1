@@ -60,7 +60,7 @@ public:
 
 BfmeHostSJ::BfmeHostSJ(BfmeSrcSJ *src)
 {
-	if (src->m_bfmeObjSJ != 0 && src->m_bfmeObjSJ->bfmeKindSJ() == 0x544558)
+	if (src->m_bfmeObjSJ != 0 && src->m_bfmeObjSJ->bfmeKindSJ() == 'TEX')
 	{
 		BfmeThingSJ *tex = new BfmeThingSJ();
 
