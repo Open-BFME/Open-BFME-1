@@ -1,46 +1,33 @@
 // ??0OpenContainModuleData@@QAE@XZ
-// partial score=0.85 date=2026-09-27
+// partial score=1.0 date=2026-09-30
+// ??0OpenContainModuleData@@QAE@XZ
+// partial score=1.0 date=2026-09-30; EXACT modulo relocation slots only.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: ??0OpenContainModuleData@@QAE@XZ, retail 0x00227200, 398 bytes.
 //
-// The class this body constructs is OpenContainModuleData; the same retail
-// range is the ICF twin of ??0CaveContainModuleData@@QAE@XZ (two ledger rows,
-// one body), because CaveContainModuleData derives from it and adds nothing the
-// compiler can see.  Two independent landed siblings fix the size at 0x168:
+// OpenContainModuleData is the constructor identity evidenced by the callers.
+// Two historical ledger names share this retail range; this is not proof of ICF.
 // S4ModuleData0012A070Constructor.cpp and TransportContainModuleDataCtorThunk.cpp
-// both carry typedef char VerifyBaseSize[sizeof(OpenContainModuleData) == 0x168].
+// independently fix sizeof(OpenContainModuleData) at 0x168.
 //
 // Every member offset below is read off the body, not guessed: each one is a
 // store or a subobject-construction site in the 398 bytes at 0x00227200.  Where
 // a name would claim a meaning the bytes do not carry, the name keeps the
 // offset.  What the body does prove is written next to each field.
 //
-// STATE: not landed.  bytes +0x0000..+0x00D0 are byte-exact, the whole store
-// sequence of the constructor body is in retail's order, and the compiled body
-// is 399 bytes against retail's 398.  Four known residues remain, all of them
-// MSVC list-scheduling / register-choice, not a wrong member or a wrong value:
+// STATE: evidence only, not landed. Probe is 398/398 bytes, EXACT modulo relocations.
+// Three levers recover the old bank's scheduling/register residue:
+//   - unsigned words[3] cleared with memset at +0x12C;
+//   - native STLport vector<AsciiString> at +0x158, explicit erase declaration;
+//   - m_sounds.clear() before the plain +0x164 = 100 store.
 //
-//   1. +0x00D1: retail materialises a FRESH zero (`xor ecx,ecx`) for the three
-//      +0x12C subobject-constructor stores and uses ecx; this source reuses the
-//      ebx zero that is already live and so loses the 2-byte xor.
-//   2. +0x00D1: the `lea ecx,[esi+0x158]` is hoisted above that group here and
-//      lands at +0x00D1 instead of +0x00E5.
-//   3. +0x00F1: the first `assign` argument load is hoisted to the top of the
-//      store block (`mov edx,[esi+0x15c]`) instead of sitting at the call site as
-//      `mov edx,[ecx+4]`, and the EH state store 7 is hoisted with it.
-//   4. +0x0169: the +0x164 store lands before the two argument pushes; retail
-//      emits it after the call, in the epilogue between the `mov ecx,[esp+0xc]`
-//      and `mov eax,esi`.
-//
-// Tried and rejected: volatile on m_containMax/m_real138 (moves the +0x140 and
-// +0x138 stores out of source order); volatile reads inside begin()/end() (pins
-// the second load but hoists the first into eax); putting m_doorOpenTime before
-// the call in the source (then the tail is in source order but +0x164 is
-// definitively before the call).  Removing the destructor declaration from
-// Rva002158StringVector loses the `lea ecx` shape for its three stores; adding
-// one back costs an extra EH state.  See tools/shape_family_levers.py families
-// register,store,frame for the untried permutations.
+// Landing blockers remain outside instruction shape:
+// Rva002551A0DieMuxData and Gen003A0410 are redeclared without shared headers.
+// AudioEventRTS is redeclared rather than using the canonical fuller layout.
+// The native erase symbol is pinned at 0x00065960 while the ledger's real
+// same-symbol body is 0x006FA560. No symbol pins were changed in this attempt.
+// link_check could not run because this worktree has no link_index.pkl.
 #include "ascii_string.h"
 
 // The vptr-bearing base the body installs at +0x00.  Retail never touches
@@ -167,39 +154,19 @@ private:
 	unsigned int m_word124;
 };
 
-// Three-pointer member whose default construction the body inlines as three
-// zero stores at +0x12C.  Nothing in the body names it, so the offset does.
-class Rva00212CThreePointer
-{
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
+#include <string.h>
+class Rva00212CThreePointer {
 public:
-	Rva00212CThreePointer() : m_a( 0 ), m_b( 0 ), m_c( 0 ) {}
-
+ Rva00212CThreePointer() { memset(m_words,0,sizeof(m_words)); }
 private:
-	void *m_a;
-	void *m_b;
-	void *m_c;
+ unsigned int m_words[3];
 };
-
-// The three-pointer member at +0x158 whose three words retail zeroes through a
-// materialised subobject `this` in ecx, then uses as the object of one
-// out-of-line two-pointer call.
-class Rva002158StringVector
-{
-public:
-	~Rva002158StringVector();
-
-	Rva002158StringVector() : m_a( 0 ), m_b( 0 ), m_c( 0 ) {}
-
-	void assign( void *first, void *last );
-
-	void *begin() const { return m_a; }
-	void *end() const { return m_b; }
-
-private:
-	void *m_a;
-	void *m_b;
-	void *m_c;
-};
+typedef _STL::vector<AsciiString> Rva002158StringVector;
+template <> _STL::vector<AsciiString>::iterator
+_STL::vector<AsciiString>::erase(iterator first, iterator last);
 
 class OpenContainModuleData : public OpenContainModuleDataBase
 {
@@ -235,8 +202,7 @@ private:
 	bool m_flag155;                                     // +0x155
 	bool m_flag156;                                     // +0x156
 	Rva002158StringVector m_sounds;                     // +0x158
-	// Volatile: without it MSVC sinks this store into the call's argument block.
-	volatile unsigned int m_doorOpenTime;             // +0x164
+	unsigned int m_doorOpenTime;                       // +0x164
 };
 
 // ??0OpenContainModuleData@@QAE@XZ
@@ -260,8 +226,8 @@ OpenContainModuleData::OpenContainModuleData()
 	m_flag153 = false;
 	m_flag154 = true;
 	m_flag156 = false;
+	m_sounds.clear();
 	m_doorOpenTime = 100;
-	m_sounds.assign( m_sounds.begin(), m_sounds.end() );
 }
 
 typedef char VerifyDieMuxSize[sizeof( Rva002551A0DieMuxData ) == 0x2C ? 1 : -1];
