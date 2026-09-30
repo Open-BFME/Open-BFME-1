@@ -47,6 +47,13 @@ A. **Dump relocation recovery** (tool, scripted): disassemble every dump body (c
 B. **Typed relocation ledger** (code + data): target, addend, kind, provenance (compiler reloc / dump analysis /
    data scan / manual evidence). Source for the data scaffold and the comparator; a pointer scan alone is never
    accepted as proof.
+   Status 2026-09-29 (tools/reloc_ledger.py + tools/data_scaffold.py, db6fc68ade census objects): 259,301 rows
+   (compiler 127,621; dump 22,157; EH/FieldParse structure 39,563; vftable slot 32,620; use 124; scan-candidate
+   37,216, never linked). Data scaffold 1,797,981 B in 59,089 items (482,131 B structure-proven, 105,437 B
+   strings, 337,219 B zero-fill, 872,618 B inferred); retail placement exact, links alone at 0x10000000 with no
+   /FORCE, 71,061 fields move. Trial whole-program link (census + relocatable dumps + scaffold, no /FORCE):
+   110,286 unresolved (60,578 alias, 17,453 unpinned, 16,499 EH unwind targets whose funclet has only a TU-local
+   `$L` label, 10,597 pinned-elsewhere), 5,601 duplicates, none involving the scaffold.
 C. **Whole-image comparator** (COFF-level, extends component_link): statics, section-relative labels, unmatched
    extents, aliases, padding, scaffold provenance; verifies at a shifted placement.
 D. **Loader/startup lanes**: CRT entry and initializer order, EH and SafeSEH tables, imports/IAT order, exports,
