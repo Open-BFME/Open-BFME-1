@@ -1,6 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc-
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// The overflow helper has no EH frame and uses the retail node allocator.
+#define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
 // The 16-byte curve record is a one-word head followed by a trivially copied
