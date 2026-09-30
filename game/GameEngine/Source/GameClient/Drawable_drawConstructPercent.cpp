@@ -306,8 +306,15 @@ static __forceinline void constructCenter( Drawable *drawable, Coord3D *center )
 	(drawable->*call.memberFunction)( center );
 }
 
-#define DRAWABLE_CONSTRUCT_GLOBAL(type, address) \
-	(*reinterpret_cast<type **>( address ))
+extern DisplayStringManager *TheDisplayStringManager;
+extern FontLibrary *TheFontLibrary;
+extern InGameUI *TheInGameUI;
+extern GlobalLanguageData *TheGlobalLanguageData;
+extern GameTextInterface *TheGameText;
+extern TacticalView *TheTacticalView;
+
+#define DRAWABLE_CONSTRUCT_GLOBAL(type, global) \
+	(static_cast<type *>( global ))
 
 typedef AsciiString (InGameUI::*CaptionFontNameCall)();
 union CaptionFontNameValue
@@ -325,7 +332,7 @@ void Drawable::drawConstructPercent()
 	{
 		if ( m_constructDisplayString )
 		{
-			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, 0x012f12cc )
+			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, TheDisplayStringManager )
 				->freeDisplayString( m_constructDisplayString );
 			m_constructDisplayString = NULL;
 		}
@@ -335,16 +342,16 @@ void Drawable::drawConstructPercent()
 	if ( m_constructDisplayString == NULL )
 	{
 		m_constructDisplayString =
-			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, 0x012f12cc )->newDisplayString();
+			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, TheDisplayStringManager )->newDisplayString();
 		CaptionFontNameValue fontNameCall = { j_0003b75f };
 		GetFontValue getFontCall = { j_0000abc3 };
 		AdjustFontSizeValue adjustCall = { j_00004e67 };
 		m_constructDisplayString->setFont(
-			(DRAWABLE_CONSTRUCT_GLOBAL( FontLibrary, 0x012f1b38 )->*getFontCall.memberFunction)(
-				&(DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->*fontNameCall.memberFunction)(),
-				(Real)(DRAWABLE_CONSTRUCT_GLOBAL( GlobalLanguageData, 0x012f1484 )->*adjustCall.memberFunction)(
-					DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->getDrawableCaptionPointSize() ),
-				DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->isDrawableCaptionBold() ) );
+			(DRAWABLE_CONSTRUCT_GLOBAL( FontLibrary, TheFontLibrary )->*getFontCall.memberFunction)(
+				&(DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->*fontNameCall.memberFunction)(),
+				(Real)(DRAWABLE_CONSTRUCT_GLOBAL( GlobalLanguageData, TheGlobalLanguageData )->*adjustCall.memberFunction)(
+					DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->getDrawableCaptionPointSize() ),
+				DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->isDrawableCaptionBold() ) );
 	}
 
 	if ( m_lastConstructDisplayed != obj->m_constructionPercent )
@@ -358,14 +365,14 @@ void Drawable::drawConstructPercent()
 			(obj->*countermeasuresCall.memberFunction)()->isActive() )
 		{
 			buffer.format(
-				DRAWABLE_CONSTRUCT_GLOBAL( GameTextInterface, 0x012f147c )
+				DRAWABLE_CONSTRUCT_GLOBAL( GameTextInterface, TheGameText )
 					->fetch( "CONTROLBAR:CouncilDesc" ),
 				obj->m_constructionPercent );
 		}
 		else
 		{
 			buffer.format(
-				DRAWABLE_CONSTRUCT_GLOBAL( GameTextInterface, 0x012f147c )
+				DRAWABLE_CONSTRUCT_GLOBAL( GameTextInterface, TheGameText )
 					->fetch( "CONTROLBAR:UnderConstructionDesc" ),
 				obj->m_constructionPercent );
 		}
@@ -377,7 +384,7 @@ void Drawable::drawConstructPercent()
 	Coord3D center;
 	constructCenter( this, &center );
 	Real z = constructPosition( this )->z;
-	TacticalView *view = DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, 0x012f1600 );
+	TacticalView *view = DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, TheTacticalView );
 	center.z = center.z - (center.z - z) * 0.333f;
 	if ( view->worldToScreen( &center, &screen ) != 0 )
 		return;

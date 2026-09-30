@@ -115,6 +115,9 @@ static __forceinline BuildListCallback0019B030 callbackAt0019B030(unsigned addre
 }
 
 typedef bool (*CallbackBase0019B030)(DataChunkInput &, DataChunkInfo *, void *);
+extern void j_0001579e();
+extern void j_0000f51a();
+extern void j_00013c6e();
 extern "C" int _bfmeVftVE[];
 extern "C" const void *bfmeVftBfmeParserBindingVE[];
 #pragma comment(linker, "/alternatename:_bfmeVftBfmeParserBindingVE=??_7BfmeParserBindingVE@@6B@")
@@ -123,7 +126,7 @@ public:
   ParserBase0019B030(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
     vtable_ = _bfmeVftVE;
     table_ = table;
-    parser_ = table->registerParser(name, parent, (CallbackBase0019B030)0x0041579E, this);
+    parser_ = table->registerParser(name, parent, (CallbackBase0019B030)j_0001579e, this);
   }
   ~ParserBase0019B030() {
     vtable_ = _bfmeVftVE;
@@ -157,7 +160,7 @@ void BfmeTableERJ::rva0019B030(void) {
       return;
     }
     DataChunkInput campsData(&camps);
-    BfmeParserBindingVE binding(reinterpret_cast<SidesList *>(this), callbackAt0019B030(0x0040F51A), &campsData,
+    BfmeParserBindingVE binding(reinterpret_cast<SidesList *>(this), callbackAt0019B030((unsigned)j_0000f51a), &campsData,
                                 AsciiString("BuildLists"), AsciiString::TheEmptyString);
     if (!campsData.parse(0)) {
       throw(ERROR_CORRUPT_FILE_FORMAT);
@@ -171,7 +174,7 @@ void BfmeTableERJ::rva0019B030(void) {
       return;
     }
     DataChunkInput othersData(&others);
-    BfmeParserBindingVE binding(reinterpret_cast<SidesList *>(this), callbackAt0019B030(0x00413C6E), &othersData,
+    BfmeParserBindingVE binding(reinterpret_cast<SidesList *>(this), callbackAt0019B030((unsigned)j_00013c6e), &othersData,
                                 AsciiString("BuildLists"), AsciiString::TheEmptyString);
     if (!othersData.parse(0)) {
       throw(ERROR_CORRUPT_FILE_FORMAT);

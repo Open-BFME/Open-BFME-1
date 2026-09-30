@@ -184,12 +184,14 @@ extern void __cdecl Add_Prototype(void *prototype);
 
 #pragma comment(linker, "/alternatename:??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z=??0Gen0090DB70@@QAE@PAX@Z")
 
+extern const void *g_0113A6F8[];
+
 class WaterTrackThing : public BfmeThingSJ
 {
 public:
 	WaterTrackThing(int what) : BfmeThingSJ(what)
 	{
-		*(unsigned int *)this = 0x0113A6F8;
+		*(unsigned int *)this = (unsigned int)g_0113A6F8;
 	}
 };
 
