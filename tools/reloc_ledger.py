@@ -826,9 +826,20 @@ def read_csv_rows(path):
         return list(csv.DictReader(handle))
 
 
-def linker_ranges(img):
-    """[(start, end, label)] the linker writes into .rdata itself: debug and export directories."""
+STARTUP_TABLES = ROOT / "build" / "startup" / "retail_tables.json"
+
+
+def linker_ranges(img, startup=STARTUP_TABLES):
+    """[(start, end, label)] the linker writes itself: debug and export directories,
+    and the CRT initializer tables it assembles from every input's .CRT$X?? /
+    .rtc$??? sections, from ___xc_a to ___xc_z inclusive (tools/startup_tables.py
+    retail, which reads each delimiter at its genuine library relocation)."""
     out = []
+    if startup is not None and Path(startup).exists():
+        for table, t in json.loads(Path(startup).read_text(encoding="utf-8")).items():
+            if t.get("begin") is not None:
+                begin, end = int(str(t["begin"]), 0), int(str(t["end"]), 0)
+                out.append((begin, end + 4, f"crt-table-{table}"))
     rva, size = img.directories[0]
     if size:
         out.append((img.base + rva, img.base + rva + size, "export-directory"))

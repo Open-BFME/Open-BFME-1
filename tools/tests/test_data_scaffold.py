@@ -86,3 +86,20 @@ def test_unpinned_residue_groups_by_cause_most_referenced_first():
     assert ctor["names"] == 2 and ctor["references"] == 7 and ctor["top"][0] == ["??1Foo@@QAE@XZ", 5]
     assert set(out) == {"crt", "ctor/dtor (private class copies)", "invented Bfme*/Rva*/Gen* name", "operator",
                         "other method or function"}
+
+
+def test_queue_suggests_an_owner_by_address_or_by_qualified_name(tmp_path):
+    img = image_with()
+    log = "\n".join([
+        'a.obj : error LNK2001: unresolved external symbol "public: __thiscall Foo::Foo(int)" (??0Foo@@QAE@H@Z)',
+        'b.obj : error LNK2001: unresolved external symbol "public: __thiscall Foo::Foo(int)" (??0Foo@@QAE@H@Z)',
+        "c.obj : error LNK2001: unresolved external symbol g_00401010"])
+    detail = {"??0Foo@@QAE@H@Z": {"kind": "unpinned"}, "g_00401010": {"kind": "g_text:dump-reference"}}
+    rows = [{"name": "??0Foo@@QAE@XZ", "target_rva": "0x00001200", "source": "game/Foo.cpp"},
+            {"name": "?body@@YAXXZ", "target_rva": "0x00001010", "source": "game/Body.cpp"}]
+    data_scaffold.write_queue(tmp_path / "queue.csv", log, detail, rows, img)
+    out = list(reloc_ledger.read_csv_rows(tmp_path / "queue.csv"))
+    assert [r["name"] for r in out] == ["??0Foo@@QAE@H@Z", "g_00401010"]
+    assert out[0]["referring_objects"] == "2" and out[0]["cause"] == "ctor/dtor (private class copies)"
+    assert out[0]["suggested_owner_row"] == "??0Foo@@QAE@XZ" and "same-qualified-name" in out[0]["evidence"]
+    assert out[1]["suggested_owner_row"] == "?body@@YAXXZ" and "address-derived" in out[1]["evidence"]

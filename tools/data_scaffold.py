@@ -471,6 +471,44 @@ def census_lock_path():
     return main / "build" / "wt_link.census-lock"
 
 
+def retail_libraries(out):
+    """The libraries retail's imports come from: msvcrt.lib (MSVCR71 and the CRT's
+    static members, crtexew.obj's _WinMainCRTStartup among them), the toolchain's
+    import library for every other DLL in retail's import table, and for a DLL
+    the toolchain lacks one generated from retail's own import names and hints
+    (tools/loader_lanes.py). Plus retail's resources as a .res. Returns
+    (paths, report)."""
+    import loader_lanes
+    root = build.vc71_root() / "Vc7"
+    folders = [root / "lib", root / "PlatformSDK" / "Lib"]
+    shipped = {}
+    for folder in folders:
+        for path in sorted(folder.iterdir()):
+            if path.suffix.lower() == ".lib":
+                shipped.setdefault(path.stem.lower(), path)
+    retail = loader_lanes.facts(loader_lanes.load(build.EXE))
+    gen = out / "import_libs"
+    gen.mkdir(parents=True, exist_ok=True)
+    paths, report = [shipped["msvcrt"]], {"msvcr71.dll": "toolchain msvcrt.lib"}
+    for imp in retail["imports"]:
+        stem = imp["dll"].rsplit(".", 1)[0].lower()
+        if stem == "msvcr71":
+            continue
+        lib = shipped.get("vfw32" if stem == "avifil32" else stem)
+        if lib is not None:
+            report[imp["dll"]] = f"toolchain {lib.name}"
+        else:
+            lib = loader_lanes.write_import_lib(imp["dll"], imp["names"], imp["hints"], gen / f"{stem}.lib")
+            report[imp["dll"]] = f"generated from retail's {len(imp['names'])} imports"
+        if lib not in paths:
+            paths.append(lib)
+    res = out / "retail.res"
+    res.write_bytes(loader_lanes.res_bytes(loader_lanes.resource_leaves(loader_lanes.load(build.EXE))))
+    paths.append(res)
+    report["resources"] = "retail .rsrc as retail.res"
+    return paths, report
+
+
 def dump_sources():
     """{census object path (repo-relative): .asm source} for every dump source."""
     return {build.row_object(row).resolve().relative_to(ROOT.resolve()).as_posix(): row["source"]
@@ -497,7 +535,7 @@ DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^
 REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 
 
-def trial_link(img, objects, rsp, out, log=print, code=True):
+def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
     swap = dump_objects()
     census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
     linked, swapped, missing, raw_dumps = [], 0, [], 0
@@ -549,8 +587,15 @@ def trial_link(img, objects, rsp, out, log=print, code=True):
     listfile = work / "objects.rsp"
     listfile.write_text("\n".join(f'"{p}"' for p in linked) + "\n", encoding="utf-8")
     link, env = linker()
+    extra = []
+    if libraries:
+        libs, lib_report = retail_libraries(out)
+        extra = [str(p) for p in libs] + ["/SAFESEH:NO"]
+        counts["libraries"] = lib_report
+        log(json.dumps(lib_report))
     cmd = [str(link), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86", "/SUBSYSTEM:WINDOWS",
-           "/ENTRY:WinMainCRTStartup", f"/OUT:{work / 'trial.exe'}", f"@{listfile}"]
+           "/ENTRY:WinMainCRTStartup", f"/OUT:{work / 'trial.exe'}", f"/MAP:{work / 'trial.map'}", f"@{listfile}",
+           *extra]
     lock = census_lock_path()
     deadline = time.time() + LOCK_WAIT
     while True:
@@ -638,8 +683,69 @@ def classify_trial(img, objects, text, meta, work, log=print):
                "unpinned_residue": residue([n for n, e in detail.items() if e["kind"] == "unpinned"], refs)}
     (work / "trial.json").write_text(json.dumps({**summary, "unresolved_detail": detail, "duplicate_detail": dups},
                                                 indent=1), encoding="utf-8")
+    write_queue(work.parent / "queue.csv", text, detail, rows, img)
     log(json.dumps(summary, indent=1))
     return summary
+
+
+def qualified(name):
+    """The part of a name that survives a signature change: `?f@C@@` of a mangled
+    name, the bare identifier of a C one."""
+    if name.startswith("?"):
+        i = name.find("@@")
+        return name[:i + 2] if i > 0 else name
+    return re.sub(r"@\d+$", "", name.lstrip("_"))
+
+
+def write_queue(path, text, detail, rows, img):
+    """queue.csv: one row per unresolved name -- class, cause group, referring
+    objects, a suggested owner row and the evidence for it. A suggestion is a
+    lead, never an identity: `address` rows come from a pin or an address-derived
+    name, `same-qualified-name` rows only share the name up to the signature."""
+    referrers = collections.defaultdict(list)
+    for line in text.splitlines():
+        found = UNRESOLVED.search(line)
+        ref = REFERRER.match(line)
+        if found and ref:
+            referrers[found.group(1) or found.group(2)].append(Path(ref.group(1)).name)
+    pinned = {}
+    with (ROOT / "targets/game/reverse/symbols.csv").open(newline="", encoding="utf-8") as handle:
+        for row in csv.reader(handle):
+            if len(row) >= 2 and row[1].startswith("0x"):
+                pinned.setdefault(row[0], int(row[1], 16))
+    at = collections.defaultdict(list)
+    by_qualified = collections.defaultdict(list)
+    for row in rows:
+        at[int(row["target_rva"], 16)].append(row)
+        by_qualified[qualified(row["name"])].append(row)
+    out = []
+    for name, entry in sorted(detail.items()):
+        kind = entry["kind"]
+        cause = next(c for c, rx in RESIDUE_CAUSES if rx.search(name)) if kind == "unpinned" else kind
+        suggestion, evidence = "", ""
+        m = re.fullmatch(r"g_([0-9A-F]{8})", name)
+        rva = int(m.group(1), 16) - img.base if m else pinned.get(name)
+        if rva is not None:
+            owners = [r for r in at.get(rva, []) if not r["name"].startswith("?j_")] or at.get(rva, [])
+            if owners:
+                suggestion = owners[0]["name"]
+                how = "address-derived name" if m else "symbols.csv pin"
+                evidence = f"address 0x{rva:08X} ({how}); row source {owners[0]['source']}"
+            else:
+                evidence = f"address 0x{rva:08X} has no ledger row"
+        else:
+            same = [r for r in by_qualified.get(qualified(name), []) if r["name"] != name]
+            if same:
+                suggestion = same[0]["name"]
+                evidence = f"same-qualified-name at {same[0]['target_rva']} ({len(same)} row(s)); signature differs"
+        refs = referrers.get(name, [])
+        out.append([name, kind, cause, len(refs), " ".join(sorted(set(refs))[:5]), suggestion, evidence])
+    out.sort(key=lambda r: (-r[3], r[0]))
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        w = csv.writer(handle, lineterminator="\n")
+        w.writerow(["name", "class", "cause", "referring_objects", "referrers_first5", "suggested_owner_row",
+                    "evidence"])
+        w.writerows(out)
 
 
 RESIDUE_CAUSES = (
@@ -678,6 +784,8 @@ def main(argv=None):
     ap.add_argument("--trial-link", action="store_true", help="also link the whole program without /FORCE")
     ap.add_argument("--no-code-scaffold", action="store_true",
                     help="trial link without funclet labels and code aliases (tools/code_scaffold.py)")
+    ap.add_argument("--no-libraries", action="store_true",
+                    help="trial link without msvcrt.lib, the import libraries and retail's .res")
     ap.add_argument("--reclassify", action="store_true", help="classify the last trial link's log again")
     ap.add_argument("--census-rsp", type=Path, default=ROOT / "build" / "link_census" / "objects.rsp",
                     help="the census's object list (repo-relative paths)")
@@ -695,7 +803,8 @@ def main(argv=None):
         report["link_check"], link_failures = link_check(img, objects, labels, aliases, scan, args.out)
         report["link_failures"] = link_failures[:50]
     if args.trial_link:
-        report["trial"] = trial_link(img, objects, args.census_rsp, args.out, code=not args.no_code_scaffold)
+        report["trial"] = trial_link(img, objects, args.census_rsp, args.out, code=not args.no_code_scaffold,
+                                     libraries=not args.no_libraries)
     elif args.reclassify:
         work = args.out / "trial"
         report["trial"] = classify_trial(img, objects, (work / "trial.log").read_text(encoding="utf-8"),

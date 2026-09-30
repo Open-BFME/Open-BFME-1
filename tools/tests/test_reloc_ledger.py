@@ -156,3 +156,10 @@ def test_looks_string_ascii_and_wide():
     assert reloc_ledger.looks_string(img, BASE + 0x2000) == 4
     assert reloc_ledger.looks_string(img, BASE + 0x2004) == 10
     assert reloc_ledger.looks_string(img, BASE + 0x200E) == 0
+
+
+def test_crt_initializer_tables_are_linker_built(tmp_path):
+    tables = tmp_path / "retail_tables.json"
+    tables.write_text('{"XC": {"begin": "0x00403000", "end": "0x00403010"}, "XI": {"begin": null}}')
+    ranges = reloc_ledger.linker_ranges(image_with(), tables)
+    assert (BASE + 0x3000, BASE + 0x3014, "crt-table-XC") in ranges and len(ranges) == 1
