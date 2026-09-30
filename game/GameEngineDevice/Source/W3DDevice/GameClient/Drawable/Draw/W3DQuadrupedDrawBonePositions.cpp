@@ -1,7 +1,6 @@
-// ?rva00759A40@Rva00759A40ObjectDraw@@UBE_NPAV?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@_N@Z
-// partial score=0.09 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
-// Retail RVA 0x00759A40, W3DQuadrupedDraw secondary-interface slot 41.
+// Open-BFME5: fills four bone positions, W3DQuadrupedDraw W3DModelDrawInterface slot 41 (0x00759A40).
+// Slots 3 and 5 are W3DModelDraw::getPristineBonePositionsForConditionState and ::getCurrentWorldspaceClientBonePositions.
 
 #include "matrix3d.h"
 
@@ -23,7 +22,7 @@ class vector
 public:
 	void resize(unsigned int newSize);
 	Type *begin() { return _M_start; }
-	Type &operator[](unsigned int index) { return _M_start[index]; }
+	Type &operator[](unsigned int index) { return *(begin() + index); }
 
 private:
 	Type *_M_start;
@@ -34,13 +33,47 @@ private:
 
 struct Rva00759A40String
 {
-	char *m_data;
+	struct Data
+	{
+		int m_refCount;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		char m_text[1];
+	};
+
+	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
+	const char *str() const
+	{
+		static const char TheNullChr = 0;
+		return m_data ? m_data->m_text : &TheNullChr;
+	}
+
+	Data *m_data;
 };
 
 struct Rva00759A40ModuleData
 {
 	unsigned char m_pad[0x15C];
 	Rva00759A40String m_names[4];
+};
+
+struct Rva00759A40Thing
+{
+	unsigned char m_pad0[0x8];
+	Matrix3D m_transform;
+
+	const Matrix3D *getTransformMatrix() const { return &m_transform; }
+};
+
+struct Rva00759A40Drawable
+{
+	unsigned char m_pad0[0xFC];
+	Rva00759A40Thing *m_object;
+	unsigned char m_pad100[0x150];
+	unsigned int m_conditionState;
+
+	const Rva00759A40Thing *getObject() const { return m_object; }
+	const void *getModelConditionFlags() const { return &m_conditionState; }
 };
 
 class Rva00759A40ModelDrawInterface
@@ -51,7 +84,7 @@ public:
 	virtual void slot02() = 0;
 	virtual int getPristine(const void *condition, const char *name,
 		int start, Coord3D *positions, Matrix3D *transforms,
-		int maxBones, int extra) const = 0;
+		int maxBones, int *extra) const = 0;
 	virtual int slot04(const char *name, int start, Coord3D *positions,
 		Matrix3D *transforms, int maxBones) const = 0;
 	virtual bool getCurrent(const char *name, Matrix3D &transform) const = 0;
@@ -90,9 +123,22 @@ public:
 	virtual void slot38() = 0;
 	virtual void slot39() = 0;
 	virtual void slot40() = 0;
-	};
+	virtual bool rva00759A40(
+		_STL::vector<Coord3D, _STL::allocator<Coord3D> > *positions,
+		bool pristine) const = 0;
+};
 
-class Rva00759A40ObjectDraw : public Rva00759A40ModelDrawInterface
+class Rva00759A40DrawModuleBase
+{
+public:
+	virtual void moduleSlot00() = 0;
+
+protected:
+	Rva00759A40ModuleData *m_moduleData;
+	Rva00759A40Drawable *m_drawable;
+};
+
+class Rva00759A40ObjectDraw : public Rva00759A40DrawModuleBase, public Rva00759A40ModelDrawInterface
 {
 public:
 	virtual bool rva00759A40(
@@ -100,91 +146,75 @@ public:
 		bool pristine) const;
 
 private:
-	Rva00759A40ModuleData *getModuleData() const
-	{
-		return *(Rva00759A40ModuleData **)(
-			(unsigned char *)const_cast<Rva00759A40ObjectDraw *>(this) - 8);
-	}
-
-	char *getDrawable() const
-	{
-		return *(char **)(
-			(unsigned char *)const_cast<Rva00759A40ObjectDraw *>(this) - 4);
-	}
+	const Rva00759A40ModuleData *getModuleData() const { return m_moduleData; }
+	const Rva00759A40Drawable *getDrawable() const { return m_drawable; }
 };
 
 bool Rva00759A40ObjectDraw::rva00759A40(
 	_STL::vector<Coord3D, _STL::allocator<Coord3D> > *positions,
 	bool pristine) const
 {
-	int zero = 0;
 	const Rva00759A40ModuleData *data = getModuleData();
-	if (data == (const Rva00759A40ModuleData *)zero)
+	if (data == 0)
 		return false;
-	Rva00759A40String *names =
-		(Rva00759A40String *)((char *)data + 0x15C);
-	char *text = names[0].m_data;
-	if (text == (char *)zero || *(unsigned short *)(text + 4) == (unsigned short)zero)
-	{
-		text = names[1].m_data;
-		if (text == (char *)zero || *(unsigned short *)(text + 4) == (unsigned short)zero)
-			return false;
-	}
-	text = names[2].m_data;
-	if (text == (char *)zero || *(unsigned short *)(text + 4) == (unsigned short)zero)
-		text = names[3].m_data;
-	if (text == (char *)zero || *(unsigned short *)(text + 4) == (unsigned short)zero)
+	if (data->m_names[0].isEmpty() && data->m_names[1].isEmpty())
+		return false;
+	if (data->m_names[2].isEmpty() && data->m_names[3].isEmpty())
 		return false;
 
-	char *drawable = (char *)zero;
-	Matrix3D *world = (Matrix3D *)zero;
+	const Rva00759A40Drawable *drawable = 0;
+	const Matrix3D *world = 0;
 	if (pristine)
 	{
 		drawable = getDrawable();
-		if (drawable == (char *)zero)
+		if (drawable == 0)
 			return false;
-		char *matrixStorage = *(char **)(drawable + 0xFC);
-		if (matrixStorage == (char *)zero)
+		const Rva00759A40Thing *object = drawable->getObject();
+		if (object == 0)
 			return false;
-		world = (Matrix3D *)(matrixStorage + 8);
+		world = object->getTransformMatrix();
+		if (world == 0)
+			return false;
 	}
 	positions->resize(4);
 	bool valid[4];
-	Rva00759A40String *current = names;
-	unsigned int offset = 0;
-	for (int i = 0; i < 4; ++i, ++current, offset += 0x0C)
+	for (int i = 0; i < 4; ++i)
 	{
+		if (data->m_names[i].isEmpty())
+		{
+			valid[i] = false;
+			continue;
+		}
 		Matrix3D transform;
-		const char *name = current->m_data + 8;
 		if (pristine)
 		{
-			valid[i] = getPristine(drawable + 0x250, name, 0,
-				0, &transform, 1, 0) != 0;
-			if (valid[i])
-				transform.preMul(*world);
+			valid[i] = getPristine(drawable->getModelConditionFlags(), data->m_names[i].str(), 0, 0, &transform, 1, 0) != 0;
+			transform.preMul(*world);
 		}
 		else
-			valid[i] = getCurrent(name, transform);
+			valid[i] = getCurrent(data->m_names[i].str(), transform);
 		if (valid[i])
 		{
-			Coord3D *position = (Coord3D *)(
-				(char *)positions->begin() + offset);
-			position->x = transform[0][3];
-			position->y = transform[1][3];
-			position->z = transform[2][3];
+			(*positions)[i].x = transform.Get_X_Translation();
+			(*positions)[i].y = transform.Get_Y_Translation();
+			(*positions)[i].z = transform.Get_Z_Translation();
 		}
 	}
 
-	if (!valid[0] && !valid[1])
-		return false;
 	if (!valid[0])
+	{
+		if (!valid[1])
+			return false;
 		(*positions)[0] = (*positions)[1];
+	}
 	else if (!valid[1])
 		(*positions)[1] = (*positions)[0];
-	if (!valid[2] && !valid[3])
-		return false;
 	if (!valid[2])
+	{
+		if (!valid[3])
+			return false;
 		(*positions)[2] = (*positions)[3];
+	}
 	else if (!valid[3])
 		(*positions)[3] = (*positions)[2];
 	return true;
