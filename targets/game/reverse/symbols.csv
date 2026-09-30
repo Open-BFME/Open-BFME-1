@@ -77415,6 +77415,7 @@ name,address,notes
 ?bfmeGetBRC@BfmeOwnerRC@@QAEPAXXZ,0x00040246,pin
 ?bfmeGetBS@BfmeInnerBS@@QAEPAVBfmeCtxBS@@XZ,0x000022BB,pin
 ?bfmeGetBUZA@BfmeSubBUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x0092C9D0,pin
+?bfmeGetBlockZone@PathfindZoneManager@@QBEGABUPathfindMovementProfile@@HHPAPAVPathfindCell@@@Z,0x00403520,class-key ABI spelling of the matched struct-key PathfindZoneManager::bfmeGetBlockZone body (PathfindZoneBlockQueries.cpp); processHierarchicalCell 0x003D9970 calls it twice through ILT 0x00003FF3 with ecx=zone manager and four stack args
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local Object.cpp ABI view of the AttributeModifierPoolUpdate additive bonus method
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
@@ -83035,6 +83036,8 @@ name,address,notes
 ?get@Rva00012E3BDrawableHiddenIlt@@QBE_NXZ,0x00012E3B,decoded hidden predicate ABI uses const this and returns Bool through the target ILT
 ?get@Rva0003DAA5LocoSpeedIlt@@QAEMXZ,0x0003DAA5,decoded locomotor speed helper ABI uses nonconst this and returns Real through the target ILT
 ?get@Rva0007F560@@QAE_NXZ,0x0001B74D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00092D70 calls; autopin
+?get@Rva003D49E0@@QAE_NXZ,0x0000F7BD,byte-return alias of the matched guarded bitfield getter body at 0x003D49E0 (route=0x003D49E0); processHierarchicalCell 0x003D9970 calls it three times with the cell in ecx and tests only al
+?get@Rva003D4A00@@QAE_NXZ,0x00038E92,byte-return alias of the matched guarded bitfield getter body at 0x003D4A00 (route=0x003D4A00); processHierarchicalCell 0x003D9970 calls it three times with the cell in ecx and tests only al
 ?get@Rva003D4C50@@QAE_NXZ,0x00024FAA,byte-return alias of the matched guarded bitfield getter body at 0x003D4C50; the obstacle callback at 0x003DEBB0 tests only al so the return has to be byte-typed
 ?get@Rva007EA650FieldAddress@@QAEPADXZ,0x007EA650,address-derived FESL owner field at +0x30
 ?get@Rva007EA690FieldAddress@@QAEPADXZ,0x007EA690,address-derived FESL owner field at +0x50
