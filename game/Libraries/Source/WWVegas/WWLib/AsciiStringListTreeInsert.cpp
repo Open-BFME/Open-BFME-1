@@ -19,13 +19,67 @@ typedef _STL::pair<const AsciiString,
 typedef _STL::_Rb_tree<AsciiString, AsciiStringListPair,
  _STL::_Select1st<AsciiStringListPair>, _STL::less<AsciiString>,
  _STL::allocator<AsciiStringListPair> > AsciiStringListTree;
-template _STL::pair<AsciiStringListTree::iterator, bool>
- AsciiStringListTree::insert_unique(const AsciiStringListPair &);
+// Specializations preserve the STLport tree algorithm and pooled-node ABI.
+// Retail keeps the search-loop comparison inline, then calls the independently
+// matched StringBase<char>::compare at 0x0005FEB0 for the final comparison.
+// Public AsciiString inheritance makes these casts require no pointer adjustment.
+template <> AsciiStringListTree::iterator AsciiStringListTree::_M_insert(
+ _STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *, const AsciiStringListPair &, _STL::_Rb_tree_node_base *);
+template <> _STL::pair<AsciiStringListTree::iterator, bool>
+AsciiStringListTree::insert_unique(const AsciiStringListPair &__v)
+{
+  _Link_type __y = this->_M_header._M_data;
+  _Link_type __x = _M_root();
+  bool __comp = true;
+  while (__x != 0) {
+    __y = __x;
+    __comp = _M_key_compare(_STL::_Select1st<AsciiStringListPair>()(__v), _S_key(__x));
+    __x = __comp ? _S_left(__x) : _S_right(__x);
+  }
+  iterator __j = iterator(__y);
+  if (__comp && __j == begin())
+    return _STL::pair<iterator,bool>(_M_insert(__y, __y, __v), true);
+  if (__comp)
+    --__j;
+  if (static_cast<const StringBase<char> &>(_S_key(__j._M_node)).compare(
+        static_cast<const StringBase<char> &>(_STL::_Select1st<AsciiStringListPair>()(__v))) < 0)
+    return _STL::pair<iterator,bool>(_M_insert(__x, __y, __v), true);
+  return _STL::pair<iterator,bool>(__j, false);
+}
 
 // Full 183-byte private insertion at RVA 0x000817C0, including both allocation arms.
-template AsciiStringListTree::iterator AsciiStringListTree::_M_insert(
- _STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
- const AsciiStringListPair &, _STL::_Rb_tree_node_base *);
+template <> AsciiStringListTree::iterator AsciiStringListTree::_M_insert(
+ _STL::_Rb_tree_node_base* __x_, _STL::_Rb_tree_node_base* __y_,
+ const AsciiStringListPair& __v, _STL::_Rb_tree_node_base* __w_)
+{
+  _Link_type __w = (_Link_type) __w_;
+  _Link_type __x = (_Link_type) __x_;
+  _Link_type __y = (_Link_type) __y_;
+  _Link_type __z;
+  if (__y == this->_M_header._M_data ||
+      (__w == 0 && (__x != 0 ||
+       static_cast<const StringBase<char> &>(_STL::_Select1st<AsciiStringListPair>()(__v)).compare(
+         static_cast<const StringBase<char> &>(_S_key(__y))) < 0))) {
+    __z = _M_create_node(__v);
+    _S_left(__y) = __z;
+    if (__y == this->_M_header._M_data) {
+      _M_root() = __z;
+      _M_rightmost() = __z;
+    } else if (__y == _M_leftmost())
+      _M_leftmost() = __z;
+  } else {
+    __z = _M_create_node(__v);
+    _S_right(__y) = __z;
+    if (__y == _M_rightmost())
+      _M_rightmost() = __z;
+  }
+  _S_parent(__z) = __y;
+  _S_left(__z) = 0;
+  _S_right(__z) = 0;
+  _STL::_Rb_global_inst::_Rebalance(__z, this->_M_header._M_data->_M_parent);
+  ++_M_node_count;
+  return iterator(__z);
+}
 
 // Full pair copy construction at RVA 0x00080AF0.
 template _STL::pair<const AsciiString,
