@@ -324,6 +324,19 @@ masking a pointer does not prove it. Exit 0 means all examined data is proved,
 unplaced sections). Run it when defining a global or table. It does not prove
 the declared extent, alignment, startup behavior, or whole-program linkage.
 
+`python3 tools/reloc_ledger.py` (~2 min, after `tools/dump_relocs.py --all`)
+writes `build/reloc_ledger/`: one typed row per reference into or pointer
+held by .rdata/.data/STLPORT_, with provenance (compiler relocation of a placed
+object, dump analysis, EH/FieldParse structure, vftable slot, use-proven) and
+the data partition (object-defined, linker-built, scaffold; size proven or
+inferred). A pointer scan only fills `review_scan.csv`; nothing links from it.
+`review_types.csv` lists data names whose declared type disagrees with a use,
+a structure or another copy. `python3 tools/data_scaffold.py [--link-check]
+[--trial-link]` turns the scaffold items into COFF objects (retail bytes,
+DIR32 at every non-scan row, one label per address, other names as weak
+aliases), verifies them at retail and moved placements, and links the whole
+program without /FORCE. Scaffolding is never progress.
+
 ## Publication and measurement
 
 Harvest stages fleet evidence and cited C++ sources explicitly. It refuses an

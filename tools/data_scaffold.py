@@ -1,0 +1,593 @@
+#!/usr/bin/env python3
+"""Data scaffold: COFF objects defining every retail data item no source object defines.
+
+Reads build/reloc_ledger/ (tools/reloc_ledger.py) and writes, under
+build/data_scaffold/:
+
+  obj/scaffold_NNN.obj  one COFF section per contiguous run of scaffold items
+                        (.rdata$S, .data$S, STLPORT_, uninitialised .bss$S), holding
+                        retail's bytes, a public label at every item start (the
+                        name callers spell, else g_<VA>) and a DIR32 relocation at
+                        every ledger site in it whose provenance is not
+                        scan-candidate. Scan candidates stay literal.
+  obj/aliases.obj       weak externals (SEARCH_ALIAS) for every other name a
+                        caller spells at a scaffold item, or at an object-defined
+                        label: labelled aliases, one definition per address.
+  symbols.csv           every scaffold symbol: va, role, item kind, size proof,
+                        the sources of its name. SCAFFOLDING, never progress.
+  verify.json           the checks below.
+
+Verification:
+  retail   each section resolved with every symbol at its retail address
+           equals retail's bytes (uninitialised sections: retail holds zeros).
+  shifted  every symbol moved by its own offset (each scaffold section moves
+           as one), every relocation field decodes to its target's moved
+           address, no other byte changes, and no in-image dword is left
+           outside a relocation field except the ledger's scan candidates.
+  link     (--link-check) link.exe 7.1 links the scaffold objects, the alias
+           object and a stub defining every other external, at base
+           0x10000000, no /FORCE; the linked bytes are checked the same way.
+  trial    (--trial-link) the census objects (link_census.py objects.rsp,
+           gen_asm dumps swapped for tools/dump_relocs.py objects) + scaffold +
+           aliases, no /FORCE: every unresolved and duplicate name, classified.
+           Holds the census lock (build/wt_link.census-lock) while linking.
+
+  python3 tools/data_scaffold.py                     # emit + verify (retail, shifted)
+  python3 tools/data_scaffold.py --link-check        # + link.exe at a moved base
+  python3 tools/data_scaffold.py --trial-link --census-rsp build/census_objects.rsp
+"""
+import argparse
+import collections
+import csv
+import json
+import re
+import struct
+import subprocess
+import sys
+import time
+import zlib
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import build  # noqa: E402
+import reloc_ledger as RL  # noqa: E402
+
+OUT = ROOT / "build" / "data_scaffold"
+LEDGER = ROOT / "build" / "reloc_ledger"
+DIR32 = 0x0006
+EXTERNAL, STATIC, WEAK_EXTERNAL = 2, 3, 105
+NRELOC_OVFL = 0x01000000
+SECTION_FLAGS = {".rdata": 0x40000040, ".data": 0xC0000040, "STLPORT_": 0xC0000040}
+BSS_FLAGS = 0xC0000080
+SECTION_NAMES = {".rdata": ".rdata$S", ".data": ".data$S", "STLPORT_": "STLPORT_"}
+SECTIONS_PER_OBJECT = 2000
+LINK_BASE = 0x10000000
+MAX_ALIGN = 16
+
+
+def align_flags(va):
+    align = 1
+    while align < MAX_ALIGN and va % (align * 2) == 0:
+        align *= 2
+    return (align.bit_length()) << 20  # IMAGE_SCN_ALIGN_{1,2,4,8,16}BYTES = 1..5 << 20
+
+
+def parse_int(text):
+    return -int(text[1:], 16) if text.startswith("-") else int(text, 16)
+
+
+# --------------------------------------------------------------------------- inputs
+
+def load(ledger_dir):
+    items = [r for r in RL.read_csv_rows(ledger_dir / "items.csv") if r["source"] == "scaffold"]
+    for it in items:
+        it["start"], it["end"] = int(it["start"], 16), int(it["end"], 16)
+    relocs = collections.defaultdict(list)   # site -> row
+    scan = set()
+    with (ledger_dir / "ledger.csv").open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            if row["site_section"] not in RL.SCAFFOLD_SECTIONS:
+                continue
+            site = int(row["site_va"], 16)
+            if row["provenance"] == "scan-candidate":
+                scan.add(site)
+                continue
+            relocs[site] = row
+    names = RL.read_csv_rows(ledger_dir / "names.csv")
+    return items, relocs, scan, names
+
+
+def blocks_of(items):
+    """Maximal runs of contiguous scaffold items in one section, split where
+    the virtual-only (uninitialised) tail begins."""
+    blocks = []
+    for it in sorted(items, key=lambda i: i["start"]):
+        bss = it["proof"] == "uninitialised"
+        if blocks and blocks[-1]["end"] == it["start"] and blocks[-1]["section"] == it["section"] \
+                and blocks[-1]["bss"] == bss:
+            blocks[-1]["items"].append(it)
+            blocks[-1]["end"] = it["end"]
+        else:
+            blocks.append({"start": it["start"], "end": it["end"], "section": it["section"], "bss": bss,
+                           "items": [it]})
+    return blocks
+
+
+# --------------------------------------------------------------------------- COFF writer
+
+class Coff:
+    def __init__(self):
+        self.sections = []   # dicts: name, flags, data (bytes or None), size, relocs [(off, symbol index)]
+        self.symbols = []    # (name, value, section number, storage, aux bytes or None)
+        self.index = {}
+        self.strings = bytearray(4)
+
+    def symbol(self, name, value=0, section=0, storage=EXTERNAL):
+        if name in self.index and section == 0:
+            return self.index[name]
+        if name in self.index:
+            raise ValueError(f"symbol {name} defined twice in one object")
+        self.index[name] = len(self.symbols)
+        self.symbols.append((name, value, section, storage))
+        return self.index[name]
+
+    def define(self, name, value, section):
+        """Define a name, promoting an earlier undefined reference."""
+        if name in self.index:
+            i = self.index[name]
+            if self.symbols[i][2] != 0:
+                raise ValueError(f"symbol {name} defined twice in one object")
+            self.symbols[i] = (name, value, section, EXTERNAL)
+            return i
+        return self.symbol(name, value, section)
+
+    def add_section(self, name, flags, data, size):
+        self.sections.append({"name": name, "flags": flags, "data": data, "size": size, "relocs": []})
+        return len(self.sections)
+
+    def _name(self, text):
+        raw = text.encode("latin-1")
+        if len(raw) <= 8:
+            return raw.ljust(8, b"\0")
+        offset = len(self.strings)
+        self.strings += raw + b"\0"
+        return struct.pack("<II", 0, offset)
+
+    def write(self, path):
+        head = 20 + 40 * len(self.sections)
+        body = bytearray()
+        headers = bytearray()
+        for s in self.sections:
+            raw_ptr = head + len(body) if s["data"] is not None else 0
+            if s["data"] is not None:
+                body += s["data"]
+            relocs = s["relocs"]
+            flags = s["flags"]
+            nrel = len(relocs)
+            rel_ptr = head + len(body) if nrel else 0
+            if nrel >= 0xFFFF:
+                flags |= NRELOC_OVFL
+                body += struct.pack("<IIH", nrel + 1, 0, 0)
+                count_field = 0xFFFF
+            else:
+                count_field = nrel
+            for off, sym in relocs:
+                body += struct.pack("<IIH", off, sym, DIR32)
+            name = s["name"].encode("latin-1")
+            if len(name) > 8:
+                offset = len(self.strings)
+                self.strings += name + b"\0"
+                name = f"/{offset}".encode("ascii")
+            headers += name.ljust(8, b"\0") + struct.pack(
+                "<IIIIIIHHI", 0, 0, s["size"], raw_ptr if s["data"] is not None else 0, rel_ptr, 0,
+                count_field, 0, flags)
+        table = bytearray()
+        for name, value, section, storage in self.symbols:
+            table += self._name(name) + struct.pack("<IhHBB", value, section, 0, storage, 0)
+        symtab = head + len(body)
+        struct.pack_into("<I", self.strings, 0, len(self.strings))
+        header = struct.pack("<HHIIIHH", 0x14C, len(self.sections), 0, symtab, len(self.symbols), 0, 0)
+        path.write_bytes(header + bytes(headers) + bytes(body) + bytes(table) + bytes(self.strings))
+
+
+def alias_object(table, path):
+    """Weak externals with IMAGE_WEAK_EXTERN_SEARCH_ALIAS (link_census.alias_object's record)."""
+    targets = sorted(set(table.values()))
+    strings = bytearray(4)
+
+    def field(text):
+        raw = text.encode("latin-1")
+        if len(raw) <= 8:
+            return raw.ljust(8, b"\0")
+        offset = len(strings)
+        strings.extend(raw + b"\0")
+        return struct.pack("<II", 0, offset)
+
+    symbols, index = bytearray(), {}
+    for target in targets:
+        index[target] = len(symbols) // 18
+        symbols += field(target) + struct.pack("<IhHBB", 0, 0, 0, EXTERNAL, 0)
+    for alias, target in sorted(table.items()):
+        symbols += field(alias) + struct.pack("<IhHBB", 0, 0, 0, WEAK_EXTERNAL, 1)
+        symbols += struct.pack("<II", index[target], 3) + b"\0" * 10
+    struct.pack_into("<I", strings, 0, len(strings))
+    header = struct.pack("<HHIIIHH", 0x14C, 0, 0, 20, len(symbols) // 18, 0, 0)
+    path.write_bytes(header + bytes(symbols) + bytes(strings))
+
+
+# --------------------------------------------------------------------------- emission
+
+def emit(img, items, relocs, names, out):
+    """Write the scaffold objects; returns (objects, manifest rows, sections, aliases, problems)."""
+    blocks = blocks_of(items)
+    labels = {}                                   # name -> va (scaffold definitions)
+    for it in items:
+        labels[it["label"]] = it["start"]
+    # aliases: every other caller name at a scaffold item or an object label
+    aliases, manifest, problems = {}, [], collections.Counter()
+    by_va = collections.defaultdict(list)
+    for row in names:
+        by_va[int(row["va"], 16)].append(row)
+        if row["role"] == "alias" and row["alias_of"]:
+            aliases[row["name"]] = row["alias_of"]
+    (out / "obj").mkdir(parents=True, exist_ok=True)
+    for old in (out / "obj").glob("scaffold_*.obj"):
+        old.unlink()
+    objects, sections, unlinkable = [], [], set()
+    for k in range(0, len(blocks), SECTIONS_PER_OBJECT):
+        coff = Coff()
+        for block in blocks[k:k + SECTIONS_PER_OBJECT]:
+            size = block["end"] - block["start"]
+            if block["bss"]:
+                number = coff.add_section(".bss$S", BSS_FLAGS | align_flags(block["start"]), None, size)
+            else:
+                data = img.read(block["start"], size)
+                number = coff.add_section(SECTION_NAMES[block["section"]],
+                                          SECTION_FLAGS[block["section"]] | align_flags(block["start"]),
+                                          bytearray(data), size)
+            section = coff.sections[number - 1]
+            section["va"] = block["start"]
+            for it in block["items"]:
+                coff.define(it["label"], it["start"] - block["start"], number)
+                manifest.append([f"0x{it['start']:08X}", it["label"], "definition", it["kind"], it["proof"],
+                                 it["end"] - it["start"], "+".join(sorted({s for r in by_va.get(it["start"], [])
+                                                                          for s in r["sources"].split("+")}))
+                                 or "address"])
+            if block["bss"]:
+                sections.append(section)
+                continue
+            for site in sorted(s for s in relocs if block["start"] <= s < block["end"] - 3):
+                row = relocs[site]
+                symbol = row["link_symbol"]
+                if not symbol:
+                    problems[f"unlinkable:{row['link_class']}"] += 1
+                    unlinkable.add(site)
+                    continue
+                off = site - block["start"]
+                struct.pack_into("<i", section["data"], off, parse_int(row["link_addend"]))
+                section["relocs"].append((off, coff.symbol(symbol)))
+            section["data"] = bytes(section["data"])
+            sections.append(section)
+        path = out / "obj" / f"scaffold_{k // SECTIONS_PER_OBJECT:03d}.obj"
+        coff.write(path)
+        objects.append(path)
+    for alias, target in sorted(aliases.items()):
+        manifest.append([f"0x{labels.get(target, 0):08X}", alias, "alias", "", "", "", f"alias of {target}"])
+    alias_object(aliases, out / "obj" / "aliases.obj")
+    with (out / "symbols.csv").open("w", newline="", encoding="utf-8") as handle:
+        w = csv.writer(handle, lineterminator="\n")
+        w.writerow(["va", "name", "role", "kind", "size_proof", "size", "name_sources"])
+        w.writerows(sorted(manifest))
+    return objects, labels, aliases, problems, unlinkable
+
+
+# --------------------------------------------------------------------------- verification
+
+def shift_of(name):
+    return 0x1000 + (zlib.crc32(name.encode("latin-1")) % 0xFF00) * 0x10
+
+
+def read_scaffold(objects):
+    """[(section dict, [(off, symbol name, addend)], {label: offset})] from the written objects."""
+    out = []
+    for path in objects:
+        sections, symbols = RL.parse_coff(path.read_bytes())
+        labels = collections.defaultdict(dict)
+        for s in symbols.values():
+            if s["section"] > 0:
+                labels[s["section"]][s["name"]] = s["value"]
+        for sec in sections:
+            relocs = []
+            for where, index, kind in sec["relocs"]:
+                addend = struct.unpack_from("<i", sec["body"], where)[0]
+                relocs.append((where, symbols[index]["name"], addend))
+            out.append((sec, relocs, labels[sec["number"]]))
+    return out
+
+
+def verify(img, objects, ledger_rows, scan, labels, unlinkable=frozenset()):
+    """retail and shifted placements, per section; returns a summary dict."""
+    parsed = read_scaffold(objects)
+    retail_of = dict(labels)
+    clash = collections.Counter()
+    for row in ledger_rows.values():
+        if not row["link_symbol"]:
+            continue
+        va = (int(row["target_va"], 16) - parse_int(row["link_addend"])) & 0xFFFFFFFF
+        if retail_of.setdefault(row["link_symbol"], va) != va:
+            clash[row["link_symbol"]] += 1
+    section_base = {}
+    for sec, relocs, lab in parsed:
+        name, off = next(iter(sorted(lab.items(), key=lambda kv: kv[1])))
+        section_base[id(sec)] = labels[name] - off
+    result = collections.Counter()
+    failures = []
+    for sec, relocs, lab in parsed:
+        base = section_base[id(sec)]
+        retail = img.read(base, sec["size"])
+        if sec["body"] is None:
+            result["sections_bss"] += 1
+            if any(retail):
+                failures.append(f"{base:#010x}: uninitialised section but retail holds non-zero bytes")
+            continue
+        result["sections"] += 1
+        result["relocations"] += len(relocs)
+        # (i) retail placement
+        got = bytearray(sec["body"])
+        for where, symbol, addend in relocs:
+            struct.pack_into("<I", got, where, (retail_of[symbol] + addend) & 0xFFFFFFFF)
+        if bytes(got) != retail:
+            diff = next(i for i in range(len(got)) if got[i] != retail[i])
+            failures.append(f"{base:#010x}+{diff:#x}: retail placement differs")
+            result["retail_differs"] += 1
+        # (ii) every symbol moved; this section moves by the shift of its first label
+        moved_self = shift_of(min(lab, key=lab.get))
+        local = {n: labels[n] + moved_self for n in lab}
+        moved = bytearray(sec["body"])
+        fields = set()
+        for where, symbol, addend in relocs:
+            fields.update(range(where, where + 4))
+            target = local.get(symbol, retail_of[symbol] + shift_of(symbol))
+            struct.pack_into("<I", moved, where, (target + addend) & 0xFFFFFFFF)
+            if (target + addend) & 0xFFFFFFFF == struct.unpack_from("<I", retail, where)[0]:
+                failures.append(f"{base + where:#010x}: field did not move ({symbol})")
+                result["field_not_moved"] += 1
+        literal = 0
+        for off in range(0, len(moved) - 3):
+            if off in fields or off + 1 in fields or off + 2 in fields or off + 3 in fields:
+                continue
+            if moved[off] != retail[off]:
+                result["byte_changed"] += 1
+            value = struct.unpack_from("<I", moved, off)[0]
+            if img.in_image(value) and any(base + off + k in unlinkable for k in range(-3, 4)):
+                result["unlinkable_literals"] += 1
+            elif img.in_image(value) and base + off not in scan:
+                literal += 1
+                if literal <= 3:
+                    failures.append(f"{base + off:#010x}: in-image literal {value:#010x} left, not a listed candidate")
+        result["unlisted_literals"] += literal
+        result["listed_literals"] += sum(1 for s in scan if base <= s < base + len(moved) - 3)
+    result["symbol_address_clashes"] = len(clash)
+    return dict(result), failures
+
+
+# --------------------------------------------------------------------------- link.exe checks
+
+def stub_object(names, path):
+    strings, symbols = bytearray(4), bytearray()
+    for i, name in enumerate(sorted(names)):
+        raw = name.encode("latin-1")
+        field = raw.ljust(8, b"\0") if len(raw) <= 8 else struct.pack("<II", 0, len(strings))
+        if len(raw) > 8:
+            strings.extend(raw + b"\0")
+        symbols += field + struct.pack("<IhHBB", 16 * i, 1, 0, EXTERNAL, 0)
+    struct.pack_into("<I", strings, 0, len(strings))
+    body = b"\xcc" * (16 * max(1, len(names)))
+    table = 20 + 40 + len(body)
+    header = struct.pack("<HHIIIHH", 0x14C, 1, 0, table, len(symbols) // 18, 0, 0)
+    section = b".text$zz" + struct.pack("<IIIIIIHHI", 0, 0, len(body), 60, 0, 0, 0, 0, 0x60500020)
+    path.write_bytes(header + section + body + bytes(symbols) + bytes(strings))
+
+
+def linker():
+    root = build.vc71_root()
+    return root / "Vc7" / "bin" / "link.exe", build.compiler_environment(root, None)
+
+
+def link_check(img, objects, labels, aliases, scan, out):
+    """Link the scaffold alone at LINK_BASE and check every linked section."""
+    import pefile
+    work = out / "link"
+    work.mkdir(parents=True, exist_ok=True)
+    defined, referenced = set(), set()
+    for path in objects:
+        _, symbols = RL.parse_coff(path.read_bytes())
+        for s in symbols.values():
+            if s["storage"] == EXTERNAL:
+                (defined if s["section"] > 0 else referenced).add(s["name"])
+    externs = (referenced | set(aliases.values())) - defined
+    stub_object(externs | {"_stub_entry"}, work / "stub.obj")
+    exe, mapfile = work / "scaffold.exe", work / "scaffold.map"
+    link, env = linker()
+    cmd = [str(link), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86", "/SUBSYSTEM:CONSOLE",
+           "/FIXED", f"/BASE:{LINK_BASE:#x}", "/OPT:NOREF", "/ENTRY:stub_entry", f"/MAP:{mapfile}", f"/OUT:{exe}",
+           *[str(p) for p in objects], str(out / "obj" / "aliases.obj"), str(work / "stub.obj")]
+    proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=env)
+    (work / "link.log").write_text(proc.stdout + proc.stderr, encoding="utf-8")
+    if proc.returncode != 0:
+        return {"linked": False, "exit": proc.returncode, "log": (proc.stdout + proc.stderr)[-2000:]}, []
+    linked = {}
+    for line in mapfile.read_text(errors="replace").splitlines():
+        parts = line.split()
+        if len(parts) >= 3 and re.fullmatch(r"[0-9a-f]{4}:[0-9a-f]{8}", parts[0]) \
+                and re.fullmatch(r"[0-9a-f]{8}", parts[2]):
+            linked.setdefault(parts[1], int(parts[2], 16))
+    pe = pefile.PE(str(exe))
+    image = pe.get_memory_mapped_image()
+    result, failures = collections.Counter(), []
+    for alias, target in aliases.items():
+        if alias in linked and target in linked and linked[alias] != linked[target]:
+            failures.append(f"alias {alias} linked at {linked[alias]:#x}, target {target} at {linked[target]:#x}")
+            result["alias_mismatch"] += 1
+    for sec, relocs, lab in read_scaffold(objects):
+        first = min(lab, key=lab.get)
+        if first not in linked:
+            result["section_missing_from_map"] += 1
+            continue
+        place = linked[first] - lab[first]
+        base = labels[first] - lab[first]
+        got = image[place - LINK_BASE:place - LINK_BASE + sec["size"]]
+        retail = img.read(base, sec["size"])
+        if place == base:
+            failures.append(f"{base:#010x}: linked at its retail address")
+        fields = set()
+        for where, symbol, addend in relocs:
+            fields.update(range(where, where + 4))
+            want = (linked[symbol] + addend) & 0xFFFFFFFF
+            if struct.unpack_from("<I", got, where)[0] != want:
+                result["field_wrong"] += 1
+                if result["field_wrong"] <= 5:
+                    failures.append(f"{base + where:#010x}: {symbol}+{addend:#x} linked wrong")
+        bad = sum(1 for i in range(len(retail)) if i not in fields and got[i] != retail[i])
+        result["byte_differs"] += bad
+        result["sections"] += 1
+        result["fields"] += len(relocs)
+    result["linked"] = True
+    return dict(result), failures
+
+
+# --------------------------------------------------------------------------- trial whole-program link
+
+
+
+def census_lock_path():
+    """build/wt_link.census-lock of the MAIN checkout (daily_census.sh's lock)."""
+    common = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], cwd=ROOT,
+                            capture_output=True, text=True).stdout.strip()
+    main = Path(common).parent if common else ROOT
+    return main / "build" / "wt_link.census-lock"
+
+
+def dump_objects():
+    """{census object path (repo-relative): dump_relocs object} for every .asm dump source."""
+    out = {}
+    for row in build.load_function_rows():
+        if not row["source"].lower().endswith(".asm") or not row["target_rva"].startswith("0x"):
+            continue
+        stem = re.sub(r"[^A-Za-z0-9_]+", "_", Path(row["source"]).with_suffix("").as_posix())
+        relobj = ROOT / "build" / "dump_relocs" / "obj" / f"{stem}.obj"
+        census = build.row_object(row).resolve().relative_to(ROOT.resolve()).as_posix()
+        out[census] = relobj
+    return out
+
+
+UNRESOLVED = re.compile(r'error LNK20(?:01|19): unresolved external symbol (?:"[^"]*" \((\S+)\)|(\S+))')
+DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^"]*" \((\S+)\)|(\S+)) '
+                       r'already defined in (\S+\.obj)')
+REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
+
+
+def trial_link(img, objects, rsp, out, log=print):
+    import link_census
+    swap = dump_objects()
+    census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
+    linked, swapped, missing = [], 0, []
+    for rel in census:
+        path = swap.get(rel)
+        if path is not None:
+            if path.exists():
+                linked.append(path)
+                swapped += 1
+            else:
+                missing.append(str(path))
+            continue
+        linked.append(ROOT / rel)
+    linked = list(dict.fromkeys(linked))
+    linked += objects + [out / "obj" / "aliases.obj"]
+    work = out / "trial"
+    work.mkdir(parents=True, exist_ok=True)
+    listfile = work / "objects.rsp"
+    listfile.write_text("\n".join(f'"{p}"' for p in linked) + "\n", encoding="utf-8")
+    link, env = linker()
+    cmd = [str(link), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86", "/SUBSYSTEM:WINDOWS",
+           "/ENTRY:WinMainCRTStartup", f"/OUT:{work / 'trial.exe'}", f"@{listfile}"]
+    lock = census_lock_path()
+    try:
+        lock.mkdir()
+    except FileExistsError:
+        raise SystemExit(f"data_scaffold: {lock} is held (a census link is running); not linking")
+    try:
+        started = time.time()
+        proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=env)
+        seconds = time.time() - started
+    finally:
+        lock.rmdir()
+    text = proc.stdout + proc.stderr
+    (work / "trial.log").write_text(text, encoding="utf-8")
+    rows = [r for r in build.load_function_rows() if r["target_rva"].startswith("0x")]
+    classes, detail, dup_kinds, dups = link_census.classify(text, rows)
+    scaffold_names = set()
+    for path in objects:
+        _, symbols = RL.parse_coff(path.read_bytes())
+        scaffold_names |= {s["name"] for s in symbols.values() if s["storage"] == EXTERNAL and s["section"] > 0}
+    refined = collections.Counter()
+    for name, entry in detail.items():
+        kind = entry["kind"]
+        m = re.fullmatch(r"g_([0-9A-F]{8})", name)
+        if m:
+            kind = "g_" + (img.section(int(m.group(1), 16)) or "outside").strip(".")
+        elif kind == "unpinned" and name in RL.KNOWN_ABSOLUTE:
+            kind = "crt-absolute"
+        refined[kind] += 1
+        entry["kind"] = kind
+    dup_refined = collections.Counter()
+    for name, objs in dups.items():
+        involved = any(Path(o).name.startswith(("scaffold_", "aliases")) for o in objs)
+        dup_refined[("scaffold-" if involved else "") + ("data" if name in scaffold_names else "other")] += 1
+    fatal = sorted(set(re.findall(r"fatal error (LNK\d+)", text)))
+    summary = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
+               "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode,
+               "fatal": fatal, "unresolved": sum(refined.values()), "unresolved_classes": dict(refined),
+               "duplicates": len(dups), "duplicate_classes": dict(dup_refined),
+               "duplicate_classes_census": dict(dup_kinds)}
+    (work / "trial.json").write_text(json.dumps({**summary, "unresolved_detail": detail, "duplicate_detail": dups},
+                                                indent=1), encoding="utf-8")
+    log(json.dumps(summary, indent=1))
+    return summary
+
+
+# --------------------------------------------------------------------------- driver
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--ledger", type=Path, default=LEDGER, help="tools/reloc_ledger.py output directory")
+    ap.add_argument("--out", type=Path, default=OUT)
+    ap.add_argument("--link-check", action="store_true", help="also link the scaffold alone at a moved base")
+    ap.add_argument("--trial-link", action="store_true", help="also link the whole program without /FORCE")
+    ap.add_argument("--census-rsp", type=Path, default=ROOT / "build" / "link_census" / "objects.rsp",
+                    help="the census's object list (repo-relative paths)")
+    args = ap.parse_args(argv)
+    img = RL.Image()
+    items, relocs, scan, names = load(args.ledger)
+    args.out.mkdir(parents=True, exist_ok=True)
+    objects, labels, aliases, problems, unlinkable = emit(img, items, relocs, names, args.out)
+    checks, failures = verify(img, objects, relocs, scan, labels, unlinkable)
+    report = {"objects": len(objects), "items": len(items), "labels": len(labels), "aliases": len(aliases),
+              "bytes": sum(it["end"] - it["start"] for it in items),
+              "bss_bytes": sum(it["end"] - it["start"] for it in items if it["proof"] == "uninitialised"),
+              "unlinkable": dict(problems), "verify": checks, "failures": failures[:50]}
+    if args.link_check:
+        report["link_check"], link_failures = link_check(img, objects, labels, aliases, scan, args.out)
+        report["link_failures"] = link_failures[:50]
+    if args.trial_link:
+        report["trial"] = trial_link(img, objects, args.census_rsp, args.out)
+    (args.out / "verify.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
+    print(json.dumps({k: v for k, v in report.items() if k != "failures"}, indent=1))
+    bad = checks.get("retail_differs", 0) or checks.get("field_not_moved", 0) or checks.get("byte_changed", 0) \
+        or checks.get("unlisted_literals", 0) or (args.link_check and not report["link_check"].get("linked"))
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
