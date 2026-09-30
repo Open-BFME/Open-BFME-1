@@ -123,6 +123,7 @@ import shutil
 import socket
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -353,33 +354,61 @@ class Service:
         result["rejected"].append(unit)
         records.pop(unit, None)
 
-    def run_once(self, max_batch=20, publish=True, attempts=3, window=False, window_minutes=90):
+    def run_once(self, max_batch=20, publish=True, attempts=3, window=False, window_minutes=None,
+                 max_hold=300):
         """Land up to `max_batch` queued units. Returns {landed, rejected}.
 
         window=True holds the cooperative publish window (publish_window.py)
-        for the whole pass: master is quiet while the batch is gated, so the
-        verified tip still fast-forwards afterwards, and the publishing
-        push reuses this host's gate evidence for the identical tree
-        (gate_evidence.py) instead of gating it a second time."""
+        for the pass: master is quiet while the batch is gated, so the
+        verified tip still fast-forwards afterwards, and the publishing push
+        reuses this host's gate evidence for the identical tree. The window
+        is a short lease (publish_window.LEASE_MINUTES) renewed every third
+        of it while the pass works, closed in `finally` on success or
+        failure; no new pass starts after `max_hold` seconds of holding
+        (the rest stays queued), and the hold time is in the result."""
         if not window:
             return self._run_once(max_batch, publish, attempts)
         import publish_window
-        token = publish_window.open_window(window_minutes, purpose="landing_service batch",
+        minutes = window_minutes or publish_window.LEASE_MINUTES
+        opened = time.time()
+        nonce = publish_window.open_window(minutes, purpose="landing_service batch",
                                            remote=self.remote, root=self.repo)
         saved = {k: os.environ.get(k) for k in (publish_window.TOKEN_ENV, "BFME_REUSE_GATE_EVIDENCE")}
-        os.environ[publish_window.TOKEN_ENV] = token
+        os.environ[publish_window.TOKEN_ENV] = nonce
         os.environ["BFME_REUSE_GATE_EVIDENCE"] = "1"
+        done = threading.Event()
+        lost = []
+
+        def renew():
+            while not done.wait(minutes * 60 / 3):
+                if publish_window.renew_window(nonce, minutes, remote=self.remote, root=self.repo) is None:
+                    lost.append(time.time())
+                    return
+        renewer = threading.Thread(target=renew, daemon=True)
+        renewer.start()
+        result = {}
         try:
-            return dict(self._run_once(max_batch, publish, attempts), window=token)
+            result = self._run_once(max_batch, publish, attempts, deadline=opened + max_hold)
+            return result
         finally:
+            done.set()
+            renewer.join(timeout=30)
             for k, v in saved.items():
                 if v is None:
                     os.environ.pop(k, None)
                 else:
                     os.environ[k] = v
-            publish_window.close_window(token, remote=self.remote, root=self.repo)
+            publish_window.close_window(nonce, remote=self.remote, root=self.repo)
+            held = round(time.time() - opened, 1)
+            result.update(window=nonce, window_held_seconds=held,
+                          **({"window_lost": True} if lost else {}))
+            with (self.state / "windows.log").open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps({"nonce": nonce, "opened": int(opened), "held": held,
+                                         "landed": len(result.get("landed", [])),
+                                         "rejected": len(result.get("rejected", [])),
+                                         "lost": bool(lost)}) + "\n")
 
-    def _run_once(self, max_batch=20, publish=True, attempts=3):
+    def _run_once(self, max_batch=20, publish=True, attempts=3, deadline=None):
         recovered = self.recover(note="recovered after a crash")
         records = {r["id"]: r for r in self.queued()[:max_batch]}
         result = {"landed": recovered, "rejected": []}
@@ -389,6 +418,8 @@ class Service:
         for _ in range(attempts + len(records)):
             if not records:
                 return result
+            if deadline and time.time() > deadline:
+                return dict(result, deferred=sorted(records))   # stays queued for the next window
             base = self.snapshot()
             self._phase(phase="verifying", base=base, units=list(records))
             order = list(records)
@@ -562,7 +593,7 @@ def drain(service, interval=10, once=False, max_batch=20, seed=None):
                 shutil.copytree(seed, service.work / "build" / "match")
             started = time.time()
             try:
-                result = service.run_once(max_batch, window=True)
+                result = service.run_once(max_batch, window=True)   # short lease, renewed, closed
             except Exception as error:  # noqa: BLE001 -- a held window is closed by run_once
                 result = {"error": str(error)}
             print(json.dumps(dict(result, seconds=round(time.time() - started, 1))), flush=True)

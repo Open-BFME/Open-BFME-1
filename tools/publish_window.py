@@ -18,8 +18,9 @@ the push. The holder's own pushes carry BFME_WINDOW_TOKEN=<window sha>.
 COOPERATIVE. Only hooks that contain the check respect it: a checkout older
 than this file, a --no-verify push, or a push through the GitHub API ignores
 the window. The check fails OPEN when origin cannot be asked (the push itself
-needs origin anyway). An abandoned window blocks master until it expires
-(default 90 minutes); `close --force` ends one.
+needs origin anyway). A window is a 10-minute lease its holder renews while
+it works (renew_window, compare-and-swap, keyed on the window's nonce), so a
+dead holder blocks master for at most ~10 minutes; `close --force` ends one.
 
   python3 tools/publish_window.py status
   python3 tools/publish_window.py open [--minutes 90] [--purpose TEXT]   # prints the token
@@ -40,6 +41,10 @@ ROOT = Path(__file__).resolve().parents[1]
 REF = "refs/landing/window"
 SEEN = "refs/landing-seen/window"
 TOKEN_ENV = "BFME_WINDOW_TOKEN"
+# A window is a SHORT lease its holder renews while it works (renew_window),
+# so a crashed holder blocks master for at most this long -- never the 90
+# minutes the first version used (owner's request, 2026-09-30).
+LEASE_MINUTES = 10
 
 
 class WindowHeld(RuntimeError):
@@ -81,30 +86,49 @@ def live(info, now=None):
     return bool(info) and info.get("expires", 0) > (now or time.time())
 
 
-def open_window(minutes=90, purpose="", owner=None, remote="origin", root=None):
-    """Hold the window; returns its token. Raises WindowHeld."""
+def _commit(body, root=None):
+    tree = _git("mktree", input_text="", root=root).stdout.strip()
+    made = _git("-c", "user.name=window", "-c", "user.email=window@localhost",
+                "commit-tree", tree, "-m", json.dumps(body, sort_keys=True), root=root)
+    if made.returncode:
+        raise RuntimeError(made.stderr.strip())
+    return made.stdout.strip()
+
+
+def renew_window(nonce, minutes=LEASE_MINUTES, remote="origin", root=None):
+    """Extend the window we hold by `minutes` from now: compare-and-swap on
+    the current ref, and only while it still carries our nonce. Returns the
+    new expiry, or None when the window is no longer ours."""
+    current, info = read(remote, root)
+    if not current or (info or {}).get("nonce") != nonce:
+        return None
+    body = dict(info, expires=int(time.time() + minutes * 60))
+    new = _commit(body, root)
+    pushed = _git("push", "-q", f"--force-with-lease={REF}:{current}", remote, f"+{new}:{REF}",
+                  root=root, timeout=120)
+    return body["expires"] if pushed.returncode == 0 else None
+
+
+def open_window(minutes=LEASE_MINUTES, purpose="", owner=None, remote="origin", root=None):
+    """Hold the window; returns its NONCE, which stays valid across
+    renew_window() (the ref's sha does not). Raises WindowHeld."""
     token, info = read(remote, root)
     if token and live(info):
         raise WindowHeld(f"publish window held by {info.get('owner')} "
                          f"({info.get('purpose', '')}) for {(info['expires'] - time.time()) / 60:.0f} more min")
     now = time.time()
-    body = json.dumps({"owner": owner or f"{os.environ.get('USERNAME') or os.environ.get('USER') or '?'}"
-                                        f"@{socket.gethostname()}",
-                       "host": socket.gethostname(), "purpose": purpose, "nonce": uuid.uuid4().hex,
-                       "opened": int(now), "expires": int(now + minutes * 60)}, sort_keys=True)
-    tree = _git("mktree", input_text="", root=root).stdout.strip()
-    made = _git("-c", "user.name=window", "-c", "user.email=window@localhost",
-                "commit-tree", tree, "-m", body, root=root)
-    if made.returncode:
-        raise RuntimeError(made.stderr.strip())
-    new = made.stdout.strip()
+    nonce = uuid.uuid4().hex
+    new = _commit({"owner": owner or f"{os.environ.get('USERNAME') or os.environ.get('USER') or '?'}"
+                                     f"@{socket.gethostname()}",
+                   "host": socket.gethostname(), "purpose": purpose, "nonce": nonce,
+                   "opened": int(now), "expires": int(now + minutes * 60)}, root)
     lease = f"--force-with-lease={REF}:{token or ''}"
     # the push hook skips refs/landing/* (a lock marker, like refs/claims/*)
     pushed = _git("push", "-q", lease, remote, f"+{new}:{REF}", root=root, timeout=120)
     if pushed.returncode:
         token, info = read(remote, root)
         raise WindowHeld(f"publish window taken by {info and info.get('owner')} first")
-    return new
+    return nonce
 
 
 def close_window(token=None, force=False, remote="origin", root=None):
@@ -116,9 +140,10 @@ def close_window(token=None, force=False, remote="origin", root=None):
     current, info = read(remote, root)
     if not current:
         return False
-    if current != token and not force:
+    ours = bool(token) and token in (current, (info or {}).get("nonce"))
+    if not ours and not force:
         return False
-    if current != token:
+    if not ours:
         line = (f"{time.strftime('%Y-%m-%dT%H:%M:%S')} forced close of {current} held by "
                 f"{(info or {}).get('owner')} ({(info or {}).get('purpose', '')}) "
                 f"by {os.environ.get('USERNAME') or os.environ.get('USER') or '?'}@{socket.gethostname()}")
@@ -144,7 +169,7 @@ def check(remote="origin", root=None):
         return True, f"{error}; not checking the publish window"
     if not token or not live(info):
         return True, ""
-    if os.environ.get(TOKEN_ENV) == token:
+    if os.environ.get(TOKEN_ENV) in (token, info.get("nonce")) and os.environ.get(TOKEN_ENV):
         return True, "this push holds the publish window"
     left = (info.get("expires", 0) - time.time()) / 60
     return False, (f"master is in a publish window held by {info.get('owner')} "
@@ -155,7 +180,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("action", choices=["status", "open", "close", "check"])
     ap.add_argument("token", nargs="?")
-    ap.add_argument("--minutes", type=float, default=90)
+    ap.add_argument("--minutes", type=float, default=LEASE_MINUTES)
     ap.add_argument("--purpose", default="")
     ap.add_argument("--remote", default="origin")
     ap.add_argument("--force", action="store_true")

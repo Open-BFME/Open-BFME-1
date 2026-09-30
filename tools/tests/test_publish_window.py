@@ -61,7 +61,7 @@ def test_an_expired_window_is_taken_over_and_blocks_nothing(clones):
     pw.open_window(-1, owner="crashed", root=clones["service"])
     assert pw.check(root=clones["seat"]) == (True, "")
     token = pw.open_window(30, owner="next", root=clones["seat"])
-    assert pw.read(root=clones["service"])[0] == token
+    assert pw.read(root=clones["service"])[1]["nonce"] == token
 
 
 def test_an_unreachable_origin_does_not_block_pushes(clones):
@@ -212,8 +212,79 @@ def test_closing_someone_elses_window_needs_the_token_or_an_explicit_force(clone
     token = pw.open_window(30, owner="holder", purpose="stack", root=clones["service"])
     assert not pw.close_window(root=clones["seat"])                     # tokenless: refused
     assert not pw.close_window("wrong", root=clones["seat"])
-    assert pw.read(root=clones["service"])[0] == token
+    assert pw.read(root=clones["service"])[1]["nonce"] == token
     assert pw.close_window(force=True, root=clones["seat"])             # explicit, logged
     log = Path(_git(clones["seat"], "rev-parse", "--absolute-git-dir")) / "bfme-window-forced.log"
     assert "forced close" in log.read_text() and "holder" in log.read_text()
     assert pw.read(root=clones["service"]) == (None, None)
+
+
+# ---- short renewable lease (owner request 2026-09-30) ----
+
+def test_a_window_is_a_short_lease_its_holder_renews(clones, monkeypatch):
+    assert pw.LEASE_MINUTES <= 10
+    nonce = pw.open_window(owner="drainer", root=clones["service"])
+    token, info = pw.read(root=clones["service"])
+    assert info["expires"] - info["opened"] <= pw.LEASE_MINUTES * 60
+    expires = pw.renew_window(nonce, 5, root=clones["service"])
+    new_token, info = pw.read(root=clones["service"])
+    assert expires and new_token != token and info["nonce"] == nonce
+    monkeypatch.setenv(pw.TOKEN_ENV, nonce)                  # the holder's pushes still pass
+    assert pw.check(root=clones["seat"])[0]
+    monkeypatch.delenv(pw.TOKEN_ENV)
+    assert pw.renew_window("not-ours", 5, root=clones["seat"]) is None
+    assert pw.close_window(nonce, root=clones["service"])
+
+
+def test_a_dead_holder_blocks_only_until_its_short_lease_expires(clones):
+    pw.open_window(-0.01, owner="crashed drainer", root=clones["service"])   # never renewed
+    assert pw.check(root=clones["seat"]) == (True, "")
+
+
+def test_the_drainer_renews_while_working_closes_and_logs_its_hold(world, monkeypatch):
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    uid = service.enqueue(unit("renewed_window"))
+    real_gate = service._gate
+    renewals = []
+    real_renew = pw.renew_window
+
+    def counting(*args, **kwargs):
+        renewals.append(1)
+        return real_renew(*args, **kwargs)
+    monkeypatch.setattr(pw, "renew_window", counting)
+
+    def slow_gate(base, tip):
+        import time
+        time.sleep(4)                                       # longer than a renewal interval
+        return real_gate(base, tip)
+    service._gate = slow_gate
+    result = service.run_once(window=True, window_minutes=0.05)     # 3 s lease, renew each 1 s
+    assert result["landed"] == [uid] and renewals and "window_lost" not in result
+    assert result["window_held_seconds"] > 0
+    assert pw.read(root=service.repo) == (None, None)
+    logged = json.loads((service.state / "windows.log").read_text().splitlines()[-1])
+    assert logged["held"] == result["window_held_seconds"] and logged["landed"] == 1
+
+
+def test_the_window_closes_even_when_the_pass_fails(world, monkeypatch):
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    service.enqueue(unit("boom"))
+
+    def boom(*args, **kwargs):
+        raise RuntimeError("gate host fell over")
+    service._gate = boom
+    with pytest.raises(RuntimeError):
+        service.run_once(window=True)
+    assert pw.read(root=service.repo) == (None, None)
+
+
+def test_no_new_pass_starts_after_the_hold_cap(world, monkeypatch):
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    uid = service.enqueue(unit("capped"))
+    result = service.run_once(window=True, max_hold=-1)       # cap already reached
+    assert result["landed"] == [] and result["deferred"] == [uid]
+    assert [r["id"] for r in service.queued()] == [uid]       # stays queued
+    assert pw.read(root=service.repo) == (None, None)
