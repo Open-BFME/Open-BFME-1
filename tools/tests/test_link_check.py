@@ -148,3 +148,29 @@ def test_serve_fails_closed_when_freshness_cannot_be_read(tmp_path, monkeypatch)
     monkeypatch.setattr(claims, "_fetch_master", lambda: "HEAD")   # census "c" is not a commit
     with pytest.raises(SystemExit, match="nothing claimed"):
         C.main(["next", "--queue", str(queue)])
+
+
+def _preview(monkeypatch, tmp_path, names):
+    import link_census
+    ix = index(blockers={"a.cpp": {"object": "a.obj", "linked": False, "unresolved": [], "duplicates": [],
+                                   "losers": [], "addresses": 0}}, sizes={"a.cpp": 100})
+    monkeypatch.setattr(C, "load_index", lambda: ix)
+    monkeypatch.setattr(C, "resolve", lambda path, _: (path.replace(".obj", ".cpp"), tmp_path / path))
+    monkeypatch.setattr(link_census, "ledger", lambda: None)
+    monkeypatch.setattr(link_census, "RetailTruth", lambda _: None)
+    monkeypatch.setattr(C, "refresh", lambda *a: None)
+    monkeypatch.setattr(C, "source_bytes", lambda sources: {s: 100 for s in sources})
+    monkeypatch.setattr(C, "check_object", lambda *a: {k: [] for k in
+                        ("unresolved", "duplicates", "comdat", "addresses", "selected")})
+    return C.main(names)
+
+
+def test_a_file_named_twice_counts_once(monkeypatch, tmp_path, capsys):
+    assert _preview(monkeypatch, tmp_path, ["a.obj", "a.obj"]) == 0
+    assert "1 of 1 link cleanly; LINKED 0 -> 100 bytes" in capsys.readouterr().out
+
+
+def test_an_object_outside_the_census_is_refused(monkeypatch, tmp_path):
+    import pytest
+    with pytest.raises(SystemExit, match="not in census c.*new.cpp"):
+        _preview(monkeypatch, tmp_path, ["a.obj", "new.obj"])

@@ -474,7 +474,15 @@ def main(argv=None):
     if not args.paths:
         return 0
     truth = link_census.RetailTruth(link_census.ledger())
-    resolved = [resolve(path, index) for path in args.paths]
+    resolved = list({obj.resolve(): (source, obj) for source, obj in
+                     (resolve(path, index) for path in args.paths)}.values())  # a file named twice counts once
+    outside = sorted(source or obj.name for source, obj in resolved if obj.name not in index["objects"])
+    if outside:
+        # Its link position is unknown, so neither its own duplicates nor what
+        # it provides to others can be judged: two new objects defining one
+        # exclusive symbol both looked clean while link.exe fails LNK2005.
+        raise SystemExit(f"link_check: not in census {index['meta'].get('commit', '?')}, so not previewable "
+                         f"(the next census measures it): {', '.join(outside)}")
     if not args.census_only:
         refresh(index, [obj for _, obj in resolved], truth)
     now = source_bytes({source for source, _ in resolved if source})
