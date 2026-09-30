@@ -45,6 +45,8 @@ public:
 extern "C" char *strncpy(char *dest, const char *src, unsigned int n);
 char *Rva007F89F0(void);
 Bfme5Obj70 *bfme5MakeObj70(int arg);
+class Rva007E9FC0Owner;
+void __cdecl rva007EAC10BeginCallback(Rva007E9FC0Owner *owner, int count, void *peer);
 
 class Rva007EAC30Owner
 {
@@ -84,13 +86,13 @@ void Rva007EAC30Owner::send(int arg)
 	if (m_04->m_flag)
 	{
 		int n = m_224;
-		m_04->m_iface->sendFlag(m_bufA0, n > 0 ? n : arg, 0x00BEAC10, this);
+		m_04->m_iface->sendFlag(m_bufA0, n > 0 ? n : arg, (int)rva007EAC10BeginCallback, this);
 	}
 	else
 	{
 		int n = m_224;
 		if (n <= 0)
 			n = arg;
-		m_0C->sendTriple(m_buf30, m_buf70, m_buf90, n, 0x00BEAC10, this);
+		m_0C->sendTriple(m_buf30, m_buf70, m_buf90, n, (int)rva007EAC10BeginCallback, this);
 	}
 }

@@ -8,6 +8,9 @@ class AIAttackState;
 struct StateConditionInfo;
 class NotifyWeaponFiredInterface;
 
+bool __cdecl rva00171b20FlagCheck(const void *object);
+extern void d_0016af70();
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
@@ -98,9 +101,9 @@ Rva00171B40AttackHordeStateMachine::Rva00171B40AttackHordeStateMachine(
 	static const StateConditionInfo conditions[] =
 	{
 		StateConditionInfo(
-			(Rva00171B40StateTransFunc)0x00571B20, 0x270f, 0 ),
+			(Rva00171B40StateTransFunc)rva00171b20FlagCheck, 0x270f, 0 ),
 		StateConditionInfo(
-			(Rva00171B40StateTransFunc)0x0056af70, 0x270f, (void *)2 ),
+			(Rva00171B40StateTransFunc)d_0016af70, 0x270f, (void *)2 ),
 		StateConditionInfo( 0, 0, 0 )
 	};
 
