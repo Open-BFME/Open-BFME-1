@@ -1,21 +1,8 @@
-// ??1BfmeAptScreenSaveLoad@@UAE@XZ
-// partial score=0.5764 date=2026-09-28
-// stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
-//
-// BfmeAptScreenSaveLoad destructor, retail 0x0056E230, 753 bytes.
-// Identity: it installs the vtable pair 0x0110A684 / 0x0110A680 (+0x218) that
-// the SaveLoad constructor 0x0056E980 installs, and its only caller is the
-// scalar deleting destructor 0x0056E830 (ILT 0x00027E44).  The body drops the
-// "SaveLoadMode" / "GameTypes" registrations (table 0x012B7E60), closes the
-// "AptSaveLoad::InitGadgets" screen, clears the TheAptSaveLoad singleton,
-// restores the pause state and -- when the screen was left in mode 5 with a
-// chosen save -- starts the load the way PopupSaveLoad.cpp does (replays go
-// through TheRecorder->playbackFile), then destroys the list of
-// AvailableGameInfo at +0x284 (0x44-byte STLport nodes) and chains to the
-// _bfme_AptGameWindow base destructor (ILT 0x000204C3).  Layout of the two
-// bases follows BfmeAptScreenQuitMenuDestructor.cpp; members this body alone
-// touches keep their offsets in their names.
+// stlport
+// BfmeAptScreenSaveLoad destructor, retail 0x0056E230 (753 bytes of code, jump table after).
+// Identity: installs the vtable pair 0x0110A684 / 0x0110A680 of constructor 0x0056E980, and its
+// only caller is the deleting destructor 0x0056E830; layout follows AptQuitMenu.cpp.
 
 #include <list>
 #include "GameClient/BfmeAptScreenBaseLayout.h"
@@ -148,13 +135,15 @@ public:
 
 extern WindowManager *g_theWindowManager;
 
-// 0x0046DD00 (`add ecx,0x1c; jmp`): the window manager's name-taking method,
-// under the address-derived name S4DrainStringVector.cpp already calls it by.
-class S4Holder0046DBB0
+// 0x0046DD00 (`add ecx,0x1c; jmp`), landed under this opaque name; it takes the
+// registration name, so the call casts it to that signature.
+class Rva0046DD00
 {
 public:
-	void take0046DD00( const AsciiString &s );
+	void invoke();
 };
+
+typedef void ( Rva0046DD00::*Rva0046DD00TakeName )( const AsciiString &name );
 
 class GameWindowManager
 {
@@ -169,8 +158,8 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
-// The 0x012F4B40 singleton is the quit menu (BfmeAptScreenQuitMenuDestructor.cpp
-// clears it and tests its +0x259 flag before hiding the background).
+// The 0x012F4B40 singleton is the quit menu (AptQuitMenu.cpp clears it and
+// tests its +0x259 flag before hiding the background).
 class BfmeAptScreenQuitMenu
 {
 public:
@@ -178,7 +167,7 @@ public:
 	bool m_field259;
 };
 
-extern BfmeAptScreenQuitMenu *g_obj12F4B40;
+extern void *g_obj12F4B40;
 
 class AptSaveLoad;
 extern AptSaveLoad *TheAptSaveLoad;
@@ -230,7 +219,8 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 		Bool showBackground = FALSE;
 		for( Int i = 0; i < 2; ++i )
 		{
-			reinterpret_cast<S4Holder0046DBB0 *>( g_theWindowManager )->take0046DD00(
+			( reinterpret_cast<Rva0046DD00 *>( g_theWindowManager )->*
+				reinterpret_cast<Rva0046DD00TakeName>( &Rva0046DD00::invoke ) )(
 				AsciiString( g_saveLoadRegistrations012B7E60[ i ] ) );
 		}
 
@@ -247,13 +237,15 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 			case 0:
 				showBackground = TRUE;
 			case 1:
-			case 3:
 				m_flag280 = TRUE;
 				break;
 			case 2:
 				if( g_obj12F4B40 )
-					g_obj12F4B40->m_field259 = TRUE;
+					static_cast<BfmeAptScreenQuitMenu *>( g_obj12F4B40 )->m_field259 = TRUE;
 				m_flag280 = FALSE;
+				break;
+			case 3:
+				m_flag280 = TRUE;
 				break;
 			}
 

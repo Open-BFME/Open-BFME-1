@@ -1214,6 +1214,8 @@ name,va
 ??_7BfmeAptScreenQuickMatchMenu@@6B@,0x0110401C
 ??_7BfmeAptScreenQuitMenu@@6BBfmeAptScreenQuitMenuSecondary@@@,0x0110A384
 ??_7BfmeAptScreenQuitMenu@@6B_bfme_AptGameWindow@@@,0x0110A388
+??_7BfmeAptScreenSaveLoad@@6BBfmeAptScreenSaveLoadSecondary@@@,0x0110A680
+??_7BfmeAptScreenSaveLoad@@6B_bfme_AptGameWindow@@@,0x0110A684
 ??_7BfmeAptScreenScoreScreen@@6BBfmeAptScreenScoreSecondary@@@,0x0110AAB4
 ??_7BfmeAptScreenScoreScreen@@6BRva00465200GameWindow@@@,0x0110AAB4
 ??_7BfmeAptScreenScoreScreen@@6BRva00578160Primary@@@,0x0110AAB8
@@ -11957,6 +11959,7 @@ name,va
 ?g_s5Head0059DE10@@3HA,0x0110C920
 ?g_s5Head0059FB50@@3HA,0x0110CBEC
 ?g_s9C@@3VAsciiString@@A,0x012F1220
+?g_saveLoadRegistrations012B7E60@@3PAPBDA,0x012B7E60
 ?g_scene@@3PAVSceneClass@@A,0x012F8058
 ?g_script00293E50@@3PAVBfmeOwnerBR@@A,0x012F060C
 ?g_sentinel012ADC38@@3IA,0x012ADC38

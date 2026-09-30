@@ -78168,6 +78168,7 @@ name,address,notes
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
+?bfmeOpenEAH@@YAXPAX@Z,0x00047780,route=0x00569150; BfmeAptScreenSaveLoad destructor 0x0056E230 calls the matched cdecl body through this ILT (push arg then add esp 4)
 ?bfmeOpenHV@ClientRoot4120@@QAEXXZ,0x0000D350,pin
 ?bfmeOpenVHT@BfmeChunkVHT@@QAE_NXZ,0x009E1380,pin
 ?bfmeOpenZO@BfmeChunkZO@@QAEXPADG@Z,0x0003A256
@@ -84979,6 +84980,7 @@ name,address,notes
 ?invoke@Rva00268CB0@@QAEXPAVObject@@@Z,0x00046C13,0x00263CA0 +0x46 ILT to 0x00268CB0; thiscall object-relative helper with Object argument ret4; previous destructor label conflicts with retail event/audio behavior
 ?invoke@Rva00341C70@@QAE?AURva00343EB0Result@@PBX@Z,0x00341C70,address-qualified body; caller 0x00343EB0 invokes ILT 0x0002EA7D to this body; independent 505B callee receives this in ECX and returns pointer plus bool through hidden 8B result buffer with ret 8; container identity unknown
 ?invoke@Rva0035BFB0CallTarget@@QAE_NPAX0@Z,0x0035BFB0,address-derived ABI name; retail 0x001916F0 calls this body through ILT 0x00035AAD with a thiscall bool two-argument shape; callee identity unknown
+?invoke@Rva0046DD00@@QAEXXZ,0x00023A60,route=0x0046DD00; BfmeAptScreenSaveLoad destructor 0x0056E230 calls the matched offset tail thunk through this ILT (thiscall plus one AsciiString reference)
 ?invoke@Rva0056E600@@UAEPAXI@Z,0x0056E830,opaque ABI carrier for secondary-base adjustor0056E600; target independently proven by ILT0001C391; body0056E830 calls dtor viaILT00027E44 tests flags bit0 conditionally deletes returns original this RET4; no semantic class identity asserted
 ?invoke@Rva005CE090@@QAEXXZ,0x005CE090,Address-derived body identity; independent complete disassembly proves niladic ABI and RET; caller 00C70410 reaches via ILT 00007CBB; ECX object operand is VA012F6510
 ?invoke@Rva005CE4D0@@QAEXXZ,0x005CE4D0,Address-derived body identity; independent complete disassembly proves niladic ABI and RET; caller 00C70420 reaches via ILT 0002083D; ECX object operand is VA012F6750
@@ -87305,6 +87307,7 @@ name,address,notes
 ?showOptions@AptPalantir@@QAEXXZ,0x000131A1,AptPalantir OnBttnOptions dispatcher
 ?showPalantirScreen@Rva00465200GameWindow@@QAEXABVAsciiString@@VRva0051EE90FunctorHolder@@@Z,0x000265E9,MainMenu ctor RenderCredits palantir registration through this ILT
 ?showScreen@DisconnectMenu@@QAEXXZ,0x0050E9A0,ZH DisconnectMenu::showScreen twin: HideDiplomacy 0x0052ADE0 / HideInGameChat 0x00512670 / 0x00598F30 (ZH HideQuitMenu position; ledger name hidePurchaseScience is suspect) / HideSaveLoadMenu 0x005696D0 then UI singleton 0x012F148C slot +0x150(1) then TheWindowManager 0x012F1B40 slot +0x6C (winCreateLayout position) with literal DisconnectScreen.apt 0x01087A9C stored to 0x012F4960 and layout slot 0(0); this-less like hideScreen; sole caller DisconnectManager::turnOnScreen 0x0066BFE4; ILT 0x00020144
+?showShell@Shell@@QAEX_N@Z,0x00042366,route=0x00580150; BfmeAptScreenSaveLoad destructor 0x0056E230 calls the matched body through this ILT with ecx=TheShell and one Bool
 ?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
 ?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
 ?shroudMapForPlayer@PartitionManager@@QAEXH@Z,0x008F7410,retail direct call from ScriptActions::doShroudMapEntire at 0x002EEF40; facade forwards the player index to updatePlayerCells008FB060

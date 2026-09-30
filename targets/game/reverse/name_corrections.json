@@ -10468,5 +10468,15 @@
   "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
   "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
   "reason": "token-alignment artifact: reordered statements pair request with Rva008AD8F0Owner; request is kept and still appears 45 times in the new bank, and Rva008AD8F0Owner is a separate identifier"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0056e230.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptSaveLoad.cpp",
+  "old_name": "S4Holder0046DBB0",
+  "new_name": "Rva0046DD00",
+  "before_sha256": "06dc4b32ae7e4567df9938f87fdfa7614463a8fa725e00594475cdf3dcbcfbc3",
+  "after_sha256": "403fcc747d84b6e35e309ff73eeaef35a1852f506d8b0ab768f3ab39944003ad",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?invoke@Rva0046DD00@@QAEXXZ at 0x00023A60, which spells the name Rva0046DD00; the source uses that pinned spelling instead of S4Holder0046DBB0."
  }
 ]
