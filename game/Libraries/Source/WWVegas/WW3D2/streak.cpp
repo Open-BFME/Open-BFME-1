@@ -408,11 +408,11 @@ void StreakLineClass::Set_Color(const Vector3 &color)
 	reinterpret_cast<StreakRendererClass *>(reinterpret_cast<char *>(&StreakRenderer) + 0x38)->Set_Color(color);
 }
 
-// ?Set_Opacity@StreakLineClass@@ present-unmatched
+// BFME embeds the renderers 0x34 and 0x38 bytes after their ZH offsets.
 void StreakLineClass::Set_Opacity(float opacity)
 {
-	LineRenderer.Set_Opacity(opacity);
-	StreakRenderer.Set_Opacity(opacity);
+	reinterpret_cast<SegLineRendererClass *>(reinterpret_cast<char *>(&LineRenderer) + 0x34)->Set_Opacity(opacity);
+	reinterpret_cast<StreakRendererClass *>(reinterpret_cast<char *>(&StreakRenderer) + 0x38)->Set_Opacity(opacity);
 }
 
 // ?Set_Noise_Amplitude@StreakLineClass@@ present-unmatched
