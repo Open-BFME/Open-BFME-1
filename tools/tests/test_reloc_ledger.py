@@ -230,23 +230,43 @@ def test_vendored_tag_without_a_declaration_proves_nothing(monkeypatch, tmp_path
     assert counts == {"unproven": 2}
 
 
+def preprocessed(tmp_path, text, headers=""):
+    """What cl -E would give for a fixture unit: headers, then the source."""
+    return "#pragma pack(from-flags 8)\n" + headers + "\n" + text
+
+
 def test_upstream_declaration_lays_out_the_element_type(tmp_path):
-    (tmp_path / "zconf.h").write_text("typedef unsigned char uch;\ntypedef unsigned short ush;\n"
-                                      "typedef int (*compress_func)(int);\n")
-    src = tmp_path / "t.c"
-    src.write_text("local const uch tab[4] = {1,2,3,4};\nconst char *names[] = {\"a\"};\n"
-                   "typedef struct config_s { ush good; ush lazy; compress_func func; } config;\n"
-                   "local const config configuration_table[2] = {{1,2,0},{3,4,0}};\n"
-                   "/* uch fake[1] = {0}; */\n")
-    tab = reloc_ledger.upstream_declaration(src, "tab")
+    headers = "typedef unsigned char uch;\ntypedef unsigned short ush;\ntypedef int (*compress_func)(int);\n"
+    text = ("local const uch tab[4] = {1,2,3,4};\nconst char *names[] = {\"a\"};\n"
+            "typedef struct config_s { ush good; ush lazy; compress_func func; } config;\n"
+            "local const config configuration_table[2] = {{1,2,0},{3,4,0}};\n"
+            "/* uch fake[1] = {0}; */\n")
+    types = reloc_ledger.CTypes(tmp_path / "t.c", preprocessed=preprocessed(tmp_path, text, headers))
+    tab = types.declaration("tab")
     assert tab == ("local const uch", (1, 1, [(0, 1, "scalar")]))
     assert reloc_ledger.scalar_bytes(tab[1], 0)
-    names = reloc_ledger.upstream_declaration(src, "names")
-    assert not reloc_ledger.scalar_bytes(names[1], 0)
-    config = reloc_ledger.upstream_declaration(src, "configuration_table")[1]
+    assert not reloc_ledger.scalar_bytes(types.declaration("names")[1], 0)
+    config = types.declaration("configuration_table")[1]
     assert config[0] == 8 and reloc_ledger.scalar_bytes(config, 0) and not reloc_ledger.scalar_bytes(config, 4)
-    assert reloc_ledger.upstream_declaration(src, "fake") is None
+    assert types.declaration("fake") is None
     assert reloc_ledger.c_name("?primeTable@@3PAGA") == "primeTable" and reloc_ledger.c_name("?a@B@@2HA") is None
+
+
+def test_pack_pragmas_move_the_pointer_and_an_unknown_pack_proves_no_struct(tmp_path):
+    text = ("#pragma pack(push,1)\ntypedef struct { char tag; double number; int *p; } Packed;\n"
+            "const Packed tbl[1] = {{0,0,(int *)0x00401000}};\n#pragma pack(pop)\n"
+            "typedef struct { char c; int *q; } Loose;\nconst Loose after[1] = {{0,0}};\n")
+    types = reloc_ledger.CTypes(tmp_path / "packed.c", preprocessed=preprocessed(tmp_path, text))
+    packed = types.declaration("tbl")[1]
+    assert packed[0] == 13 and not reloc_ledger.scalar_bytes(packed, 9) and reloc_ledger.scalar_bytes(packed, 1)
+    loose = types.declaration("after")[1]
+    assert loose == (8, 4, [(0, 1, "scalar"), (4, 4, "pointer")])  # pack(pop) restored /Zp8
+    unknown = reloc_ledger.CTypes(tmp_path / "raw.c", preprocessed=preprocessed(
+        tmp_path, "#pragma pack(pop)\ntypedef struct { char c; } S;\nconst S s[1] = {{0}};\n"))
+    assert unknown.declaration("s") is None  # popping an empty stack: pack state unknown
+    src = tmp_path / "notpre.c"
+    src.write_text(text)
+    assert reloc_ledger.upstream_declaration(src, "tbl") is None  # no preprocessed unit, no struct layout
 
 
 def test_vendored_declaration_proves_only_arithmetic_words(tmp_path, monkeypatch):
@@ -261,7 +281,27 @@ def test_vendored_declaration_proves_only_arithmetic_words(tmp_path, monkeypatch
             "verdicts": {key: (addr, "verified")}}
     monkeypatch.setattr(reloc_ledger.build, "row_object", lambda row: Path("up.obj"))
     monkeypatch.setattr(reloc_ledger, "ROOT", tmp_path)
+    monkeypatch.setattr(reloc_ledger, "preprocess", lambda source: preprocessed(tmp_path, source.read_text()))
     ledger = reloc_ledger.Ledger(img)
     counts, _ = reloc_ledger.prove_scalars(img, comp, ledger, [{"source": "up.c", "notes": "vendored=x-1"}], {})
     assert counts == {"vendored-declaration": 1, "unproven": 1}
     assert "sha256" in ledger.rows[addr]["origin"] and addr + 4 not in ledger.rows
+
+
+def test_call_evidence_records_the_symbol_not_the_addend_shifted_destination(tmp_path, monkeypatch):
+    import data_scaffold
+    obj = tmp_path / "addend.obj"
+    coff = data_scaffold.Coff()
+    section = coff.add_section(".text", 0x60500020, b"\xe8" + struct.pack("<I", 4) + b"\xc3", 6)
+    coff.symbol("_caller", 0, section)
+    callee = coff.symbol("_callee")
+    coff.sections[section - 1]["relocs"] = [(1, callee)]
+    coff.write(obj)
+    data = bytearray(obj.read_bytes())
+    reloc_at = struct.unpack_from("<I", data, 20 + 24)[0]
+    struct.pack_into("<H", data, reloc_at + 8, reloc_ledger.REL32)  # the writer emits DIR32
+    obj.write_bytes(data)
+    # retail: call 0x00401014 = _callee (0x00401010) + 4
+    monkeypatch.setattr(reloc_ledger, "_IMAGE", image_with(text=b"\xe8" + struct.pack("<i", 0x1014 - 0x1005) + b"\xc3"))
+    result = reloc_ledger.scan_code((str(obj), [("_caller", 0x1000, 6)]))
+    assert result["calls"] == [("_callee", BASE + 0x1010, BASE + 0x1014)]

@@ -790,8 +790,9 @@ def write_queue(path, text, detail, rows, img):
                             " ".join(sorted(set(referrers.get(name, [])))[:5]), "",
                             f"symbols.csv pin 0x{pinned[name]:08X}: {how} (RVA {readings})"])
                 continue
-            how = "symbols.csv pin read as " + {"rva": "RVA", "va": "VA", "dir32": "the dir32 address",
-                                                "call-target": "where verified calls land"}[how]
+            words = {"rva": "RVA", "va": "VA", "dir32": "the dir32 address",
+                     "call-target": "where verified calls land"}
+            how = "symbols.csv pin read as " + " and ".join(words[h] for h in how.split("+"))
         if rva is not None:
             owners = [r for r in at.get(rva, []) if not r["name"].startswith("?j_")] or at.get(rva, [])
             if owners:

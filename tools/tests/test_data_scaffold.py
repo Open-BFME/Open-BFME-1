@@ -88,7 +88,8 @@ def test_unpinned_residue_groups_by_cause_most_referenced_first():
                         "other method or function"}
 
 
-def test_queue_suggests_an_owner_by_address_or_by_qualified_name(tmp_path):
+def test_queue_suggests_an_owner_by_address_or_by_qualified_name(tmp_path, monkeypatch):
+    monkeypatch.setattr(data_scaffold, "LEDGER", tmp_path)
     img = image_with()
     log = "\n".join([
         'a.obj : error LNK2001: unresolved external symbol "public: __thiscall Foo::Foo(int)" (??0Foo@@QAE@H@Z)',
@@ -168,3 +169,21 @@ def test_queue_reports_a_va_rva_ambiguous_pin_instead_of_picking(tmp_path, monke
     data_scaffold.write_queue(tmp_path / "q.csv", log, detail, [actual], image_with())
     row = reloc_ledger.read_csv_rows(tmp_path / "q.csv")[0]
     assert row["suggested_owner_row"] == "?actual@@YAXXZ" and "read as VA" in row["evidence"]
+
+
+def test_queue_names_every_kind_of_pin_evidence(tmp_path, monkeypatch):
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
+    (tmp_path / "targets/game/reverse/symbols.csv").write_text("name,address\n?call@@YAXXZ,0x00401010\n")
+    (tmp_path / "dir32.csv").write_text("name,va\n?call@@YAXXZ,0x00401010\n")
+    (tmp_path / "call_targets.csv").write_text("name,symbol_va,destination_va,sites\n"
+                                               "?call@@YAXXZ,0x00401010,0x00401010,1\n")
+    monkeypatch.setattr(data_scaffold, "ROOT", tmp_path)
+    monkeypatch.setattr(data_scaffold, "LEDGER", tmp_path)
+    monkeypatch.setattr(data_scaffold.build, "DIR32_ADDRESSES", tmp_path / "dir32.csv")
+    rows = [{"name": "?actual@@YAXXZ", "target_rva": "0x00001010", "source": "actual.cpp"},
+            {"name": "?decoy@@YAXXZ", "target_rva": "0x00401010", "source": "decoy.cpp"}]
+    data_scaffold.write_queue(tmp_path / "q.csv", "x.obj : error LNK2001: unresolved external symbol ?call@@YAXXZ",
+                              {"?call@@YAXXZ": {"kind": "alias"}}, rows, image_with(text=b"\xc3" * 0x1000))
+    row = reloc_ledger.read_csv_rows(tmp_path / "q.csv")[0]
+    assert row["suggested_owner_row"] == "?actual@@YAXXZ"
+    assert "where verified calls land and the dir32 address" in row["evidence"]

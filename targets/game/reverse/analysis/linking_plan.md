@@ -59,13 +59,14 @@ B. **Typed relocation ledger** (code + data): target, addend, kind, provenance (
    involving the scaffold. Round 3 (+ msvcrt.lib, 18 import libraries (mss32, DINPUT8 generated from retail's
    import table), retail .res, /SAFESEH:NO; the four CRT initializer tables, 6,008 B, left to the linker):
    18,586 unresolved (13,810 unpinned, 1,947 pinned-elsewhere, 491 `__imp_` names retail does not import under
-   that spelling), duplicates unchanged at 5,601. Round 4 (census 007ae4e6b1; ambiguous VA/RVA pins decided
-   only by where byte-verified calls land or dir32 evidence): 18,513 unresolved (13,828 unpinned, 1,879
-   pinned-elsewhere, 491 import, 964 data names, 857 g_ code refs, 274 alias, 39 pins left ambiguous), 4,619
-   duplicates; queue: build/data_scaffold/queue.csv. Unrelocated in-image data words at every byte offset:
-   119,586 proven scalars (119,389 library member, 177 vendored declaration read from the hashed source, 20
-   element access covering every byte), 13,086 unproven in game object sections; scaffold: 72,390 proven
-   pointers, 21,118 aligned + 15,476 unaligned unproven.
+   that spelling), duplicates unchanged at 5,601. Round 4 (census 007ae4e6b1; a pin read as RVA or VA only
+   where a ledger row lives and where byte-verified calls land / dir32 agree, contradictions reported): 18,604
+   unresolved (13,828 unpinned, 1,944 pinned-elsewhere, 491 import, 972 data names, 857 g_ code refs, 292 alias;
+   76 pins fail closed on contrary evidence, 39 ambiguous), 4,619 duplicates; queue: build/data_scaffold/
+   queue.csv. Unrelocated in-image data words at every byte offset: 119,602 proven scalars (119,389 library
+   member, 193 vendored declaration laid out from the cl -E unit under its #pragma pack state, 20 element
+   access covering every byte), 13,070 unproven in game object sections; scaffold: 72,390 proven pointers,
+   21,118 aligned + 15,476 unaligned unproven.
 C. **Whole-image comparator** (COFF-level, extends component_link): statics, section-relative labels, unmatched
    extents, aliases, padding, scaffold provenance; verifies at a shifted placement.
 D. **Loader/startup lanes**: CRT entry and initializer order, EH and SafeSEH tables, imports/IAT order, exports,

@@ -77,6 +77,7 @@ import json
 import os
 import re
 import struct
+import subprocess
 import sys
 from pathlib import Path
 
@@ -313,9 +314,13 @@ def scan_code(task):
             referent = symbols.get(index)
             if kind == REL32 and referent is not None and referent["storage"] == EXTERNAL \
                     and referent["section"] == 0 and where + 4 <= hi:
-                # where retail's own call goes: independent evidence for the name's address
+                # where retail's own call goes: independent evidence for the name's address.
+                # retail's rel32 = S + A - (P + 4), A the object's in-place addend: the
+                # destination is P + 4 + rel32, the symbol's address that minus A
                 disp = struct.unpack("<i", img.read(base + where, 4))[0]
-                out["calls"].append((referent["name"], (base + where + 4 + disp) & 0xFFFFFFFF))
+                addend = struct.unpack_from("<i", section["body"], where)[0]
+                destination = (base + where + 4 + disp) & 0xFFFFFFFF
+                out["calls"].append((referent["name"], (destination - addend) & 0xFFFFFFFF, destination))
             fact = _dir32_fact(img, obj, sections, symbols, section, base, where, index, kind)
             if fact is None:
                 continue
@@ -458,8 +463,8 @@ def compiler_phase(objects, anchors, workers, log=print):
             for name, number, value, typ in result["defined"]:
                 defined[name].append((path, number, value, typ))
             absolute.update(result["absolute"])
-            for name, target in result["calls"]:
-                calls[name][target] += 1
+            for name, symbol_va, destination in result["calls"]:
+                calls[name][(symbol_va, destination)] += 1
             for key in ("mismatch", "missing", "rows_ok"):
                 stats["code_" + key] += result[key]
             absorb(result)
@@ -1341,20 +1346,102 @@ BASE_SIZES = (("__int64", 8), ("double", 8), ("__int8", 1), ("char", 1), ("__int
               ("__int32", 4), ("long", 4), ("float", 4), ("int", 4))
 
 
+_PREPROCESSED = {}
+
+
+def preprocess(source):
+    """The source as MSVC 7.1 preprocesses it with its own build flags (cl -E),
+    or None when that is not possible. Pack pragmas survive preprocessing."""
+    source = Path(source)
+    if source in _PREPROCESSED:
+        return _PREPROCESSED[source]
+    text = None
+    try:
+        rel = source.resolve().relative_to(ROOT.resolve())
+    except ValueError:
+        rel = None
+    if rel is not None and source.suffix.lower() in (".c", ".cpp"):
+        command, env = build.compiler_command(ROOT / rel, ROOT / "build" / "reloc_ledger" / "probe.obj")
+        flags = [a for a in command if not a.startswith("-Fo")]
+        flags[flags.index("-c")] = "-E"
+        proc = subprocess.run(flags, capture_output=True, text=True, errors="replace", env=env, cwd=str(ROOT))
+        if proc.returncode == 0 and proc.stdout.strip():
+            zp = [a for a in flags if re.fullmatch(r"[-/]Zp\d*", a)]
+            pack = int(zp[-1][3:] or 1) if zp else 8
+            text = f"#pragma pack(from-flags {pack})\n" + proc.stdout
+    _PREPROCESSED[source] = text
+    return text
+
+
 class CTypes:
     """Just enough of C's type system to lay out an upstream declaration:
-    arithmetic types, typedefs, structs of them, pointers (4 bytes) and arrays.
-    Anything it cannot read makes the answer None (unproven), never a guess."""
+    arithmetic types, typedefs, structs of them, pointers (4 bytes) and arrays,
+    read from the translation unit as MSVC preprocesses it (cl -E, the build's
+    own flags). A struct is laid out under the #pragma pack state in force at
+    its definition (push/pop/set replayed from the preprocessed text, the /Zp
+    flag as the default): each member aligned to min(its alignment, pack). A
+    source that cannot be preprocessed, an unreadable pragma or
+    __declspec(align) leaves structs unproven. Anything it cannot read makes
+    the answer None (unproven), never a guess."""
 
-    def __init__(self, source):
-        texts = []
-        for path in sorted(source.parent.glob("*.h")) + [source]:
-            try:
-                texts.append(C_COMMENT.sub(" ", path.read_text(encoding="latin-1")))
-            except OSError:
+    def __init__(self, source, preprocessed=None):
+        if preprocessed is None:
+            preprocessed = preprocess(source)
+        self.exact = preprocessed is not None
+        if self.exact:
+            self.text = self.source = C_COMMENT.sub(" ", preprocessed)
+        else:
+            texts = []
+            for path in sorted(source.parent.glob("*.h")) + [source]:
+                try:
+                    texts.append(C_COMMENT.sub(" ", path.read_text(encoding="latin-1")))
+                except OSError:
+                    continue
+            self.text = "\n".join(texts)
+            self.source = C_COMMENT.sub(" ", source.read_text(encoding="latin-1")) if source.is_file() else ""
+        self.default_pack = 8
+        m = re.match(r"#pragma pack\(from-flags (\d+)\)", self.text.lstrip())
+        if m:
+            self.default_pack = int(m.group(1))
+        self.pragmas = [(m.start(), m.group(1)) for m in re.finditer(r"#\s*pragma\s+pack\s*\(([^)]*)\)", self.text)
+                        if not m.group(1).startswith("from-flags")]
+
+    def pack_at(self, pos):
+        """MSVC's #pragma pack state at text offset `pos` (push/pop with ids and
+        values, reset, set), or None when a directive cannot be read."""
+        current, stack = self.default_pack, []
+        for at, args in self.pragmas:
+            if at >= pos:
+                break
+            parts = [a.strip() for a in args.split(",") if a.strip()]
+            if not parts:
+                current = self.default_pack
+            elif parts[0].isdigit() and len(parts) == 1:
+                current = int(parts[0])
+            elif parts[0] == "show":
                 continue
-        self.text = "\n".join(texts)
-        self.source = C_COMMENT.sub(" ", source.read_text(encoding="latin-1")) if source.is_file() else ""
+            elif parts[0] == "push":
+                ident = next((x for x in parts[1:] if not x.isdigit()), None)
+                stack.append((ident, current))
+                value = next((x for x in parts[1:] if x.isdigit()), None)
+                if value:
+                    current = int(value)
+            elif parts[0] == "pop":
+                ident = next((x for x in parts[1:] if not x.isdigit()), None)
+                value = next((x for x in parts[1:] if x.isdigit()), None)
+                if ident:
+                    while stack and stack[-1][0] != ident:
+                        stack.pop()
+                    if not stack:
+                        return None
+                if not stack:
+                    return None
+                current = stack.pop()[1]
+                if value:
+                    current = int(value)
+            else:
+                return None
+        return current if current in (1, 2, 4, 8, 16) else None
 
     def layout(self, words, depth=0):
         """(size, align, [(offset, size, 'scalar'|'pointer')]) of a type given as words."""
@@ -1382,14 +1469,23 @@ class CTypes:
             return 4, 4, [(0, 4, "pointer")]  # a function-pointer typedef
         m = re.search(r"typedef\s+struct\s*\w*\s*\{([^{}]*)\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
         if m:
-            return self.members(m.group(1), depth)
+            return self.members(m.group(1), depth, m.start())
         return None
 
     def struct(self, tag, depth):
         m = re.search(r"struct\s+" + re.escape(tag) + r"\s*\{([^{}]*)\}", self.text)
-        return self.members(m.group(1), depth) if m else None
+        return self.members(m.group(1), depth, m.start()) if m else None
 
-    def members(self, body, depth):
+    def members(self, body, depth, pos):
+        """A struct body laid out under the pack state in force where it is
+        defined; None when that state is unknown (no preprocessed unit, an
+        unreadable pragma) or the body asks for __declspec(align)."""
+        pack = self.pack_at(pos) if self.exact else None
+        if pack is None or re.search(r"__declspec\s*\(\s*align", body):
+            return None
+        return self._members(body, depth, pack)
+
+    def _members(self, body, depth, pack=8):
         fields, offset, align = [], 0, 1
         for decl in (d.strip() for d in body.split(";")):
             if not decl:
@@ -1404,6 +1500,7 @@ class CTypes:
             if inner is None:
                 return None
             size, a, sub = inner
+            a = min(a, pack)  # MSVC: a member aligns to the smaller of its own and the pack
             offset = (offset + a - 1) // a * a
             for k in range(count):
                 fields += [(offset + k * size + o, s, kind) for o, s, kind in sub]
@@ -1770,9 +1867,9 @@ def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, 
         [hx(r["site"]), hx(r["target"]), img.section(r["target"]) or "", r["rule"].split("-")[0], r["origin"],
          hx(part.scaffold_item(r["site"])["start"]), part.scaffold_item(r["site"])["kind"],
          part.scaffold_item(r["site"]).get("label", "")] for r in rows if r["provenance"] == "scan-candidate"))
-    write_csv(out / "call_targets.csv", ["name", "target_va", "sites"], (
-        [name, hx(target), n] for name, targets in sorted(comp["calls"].items())
-        for target, n in sorted(targets.items())))
+    write_csv(out / "call_targets.csv", ["name", "symbol_va", "destination_va", "sites"], (
+        [name, hx(symbol_va), hx(destination), n] for name, targets in sorted(comp["calls"].items())
+        for (symbol_va, destination), n in sorted(targets.items())))
     write_csv(out / "proven_scalars.csv", ["va", "value", "rule", "evidence"], (
         [hx(r["site"]), hx(r["target"]), r["rule"], r["origin"]] for r in rows if r["provenance"] == "proven-scalar"))
     write_csv(out / "review_size.csv", ["start", "size", "section", "kind", "proof", "label"], (

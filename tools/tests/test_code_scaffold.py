@@ -73,7 +73,7 @@ def test_code_aliases_follow_ilt_stubs_and_need_an_exported_definer(tmp_path, mo
                                              "?nowhere@@YAXXZ": 0x3000})
     img = image_with(text=b"\xc3" * 0x1000)
     undefined = {"?called@@YAXXZ", "?direct@@YAXXZ", "?nowhere@@YAXXZ", "g_00401000"}
-    table, why = code_scaffold.code_aliases(img, rows, undefined, {"?real@@YAXXZ"}, {})
+    table, why = code_scaffold.code_aliases(img, rows, undefined, {"?real@@YAXXZ"}, {}, dir32={}, calls={})
     assert table == {"?called@@YAXXZ": "?real@@YAXXZ", "?direct@@YAXXZ": "?real@@YAXXZ",
                      "g_00401000": "?real@@YAXXZ"}
     assert why["pinned:via-ilt"] == 1 and why["pinned:no-owner"] == 1
@@ -93,3 +93,25 @@ def test_where_verified_calls_land_decides_an_ambiguous_pin():
     both = {0x1010, 0x401010}.__contains__
     calls = {"?f@@YAXXZ": {0x1010}}
     assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x00401010, both, {}, calls) == (0x1010, "call-target")
+
+
+def test_contrary_call_evidence_fails_closed_instead_of_picking_an_exported_decoy(tmp_path, monkeypatch):
+    obj = tmp_path / "decoy.obj"
+    coff = data_scaffold.Coff()
+    n = coff.add_section(".text", 0x60500020, b"\xc3", 1)
+    coff.symbol("?decoy@@YAXXZ", 0, n)
+    coff.write(obj)
+    rows = [{"name": "?actual@@YAXXZ", "target_rva": "0x00401010", "target_size": "1", "notes": "",
+             "source": "game/actual.cpp"},
+            {"name": "?decoy@@YAXXZ", "target_rva": "0x00001010", "target_size": "1", "notes": "",
+             "source": "game/decoy.cpp"}]
+    monkeypatch.setattr(code_scaffold.link_census, "pins", lambda routes=None: {"?f@@YAXXZ": 0x401010})
+    monkeypatch.setattr(code_scaffold.build, "row_object",
+                        lambda row: obj if row["name"] == "?decoy@@YAXXZ" else tmp_path / "absent.obj")
+    img = image_with(text=b"\xc3" * 0x1000)
+    table, why = code_scaffold.code_aliases(img, rows, {"?f@@YAXXZ"}, {"?decoy@@YAXXZ"}, {}, dir32={},
+                                            calls={"?f@@YAXXZ": {0x401010}})
+    assert table == {} and why == {"pinned:no-exported-definer": 1}
+    # evidence pointing at neither owned reading is a contradiction, reported
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x401010, lambda r: True, {}, {"?f@@YAXXZ": {0x5000}}) \
+        == (None, "evidence-contradicts-pin")
