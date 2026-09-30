@@ -93,6 +93,7 @@ def test_a_missing_object_is_never_an_empty_clean_one(tmp_path):
 def test_families_follow_the_name_scope_not_its_arguments():
     assert C.family_of("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z") == "stlport"
     assert C.family_of("??1facet@locale@_STL@@MAE@XZ") == "stlport"
+    assert C.family_of("?_Stl_atod@_STL@@YANPADHH@Z") == "stlport"
     assert C.family_of("?bfmeBitVectorEqual@@YA_NABV?$vector@_NV?$allocator@_N@_STL@@@_STL@@0@Z") == ""
     assert C.family_of("??1AsciiString@@QAE@XZ") == "strings"
     assert C.family_of("?compareNoCase@?$StringBase@D@@QBEHABV1@@Z") == "strings"
@@ -110,7 +111,7 @@ def test_publish_and_serve_skip_changed_landed_and_family_rows(tmp_path, monkeyp
     queue = tmp_path / "q.csv"
     C.publish(index(blockers=blockers, sizes=sizes), queue)
     monkeypatch.setattr(claims, "_fetch_master", lambda: "tip")
-    monkeypatch.setattr(C, "_git", lambda *a: "changed.cpp\n" if a[0] == "diff"
+    monkeypatch.setattr(C, "_git", lambda *a, **k: "changed.cpp\n" if a[0] == "diff"
                         else f"Claim-Lease: 0x{C.claim_key('landed'):08X}=abcdef12\n")
     monkeypatch.setattr(claims, "owner", lambda: "me")
     monkeypatch.setattr(claims, "active", lambda: {})
@@ -131,3 +132,19 @@ def test_refresh_replaces_a_passed_objects_census_definitions(monkeypatch):
     C.refresh(ix, [SimpleNamespace(name="b.obj"), SimpleNamespace(name="new.obj")], None)
     assert ix["strong"] == {"f": [0], "g": [1]} and ix["comdat"] == {"h": []}
     assert not C.duplicate("f", 0, True, 0, ix)
+
+
+def test_serve_fails_closed_when_freshness_cannot_be_read(tmp_path, monkeypatch):
+    """No origin/master, or a census commit git cannot find: exit, never claim."""
+    import claims
+    import pytest
+    queue = tmp_path / "q.csv"
+    C.publish(index(blockers={"a.cpp": {"object": "a.obj", "linked": False, "unresolved": ["x"], "duplicates": [],
+                                        "losers": [], "addresses": 0}}, sizes={"a.cpp": 1}), queue)
+    monkeypatch.setattr(claims, "claim", lambda *a, **k: pytest.fail("claimed a stale queue"))
+    monkeypatch.setattr(claims, "_fetch_master", lambda: None)
+    with pytest.raises(SystemExit):
+        C.main(["next", "--queue", str(queue)])
+    monkeypatch.setattr(claims, "_fetch_master", lambda: "HEAD")   # census "c" is not a commit
+    with pytest.raises(SystemExit, match="nothing claimed"):
+        C.main(["next", "--queue", str(queue)])

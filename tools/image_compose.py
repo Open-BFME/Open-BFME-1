@@ -1084,7 +1084,8 @@ def cmd_next(args):
     last = history[-1].split(",")[1] if len(history) > 1 else census
     if last != census:
         print(f"image_compose next: the worklist is from census {census}; the last census is {last} "
-              "(regenerate: tools/fleet/daily_census.sh, or the worklist command)", file=sys.stderr)
+              "(the daily census no longer regenerates it: `link_check.py next` serves the linking queue; "
+              "run the worklist command for a fresh local list)", file=sys.stderr)
     busy = set() if args.no_claim else {int(t, 16) for t in eligibility.busy_rvas() if t.startswith("0x")}
     latest = eligibility.latest_verdicts()
     skipped = collections.Counter()

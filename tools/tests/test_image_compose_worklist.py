@@ -198,7 +198,12 @@ def test_generated_destinations_are_not_published(tmp_path):
     assert "less 1 whose fix would edit" in path.read_text(encoding="utf-8")
 
 
-def test_daily_census_holds_its_lock_through_the_worklist():
+def test_daily_census_publishes_the_link_queue_under_its_lock():
+    """The census, not image_compose, publishes the queue now (36288d9ff6): after
+    the lock is taken, from this census's index, committed with the census."""
     script = (Path(__file__).resolve().parents[1] / "fleet" / "daily_census.sh").read_text(encoding="utf-8")
     assert script.count('rmdir "$lock"') == 1 and "trap 'rmdir \"$lock\"' EXIT" in script
-    assert 'python3 "$wt/tools/image_check.py"' in script  # $wt's own tool: no second lock
+    lock, census = script.index('mkdir "$lock"'), script.index("tools/link_census.py --build --history")
+    publish = script.index("python3 tools/link_check.py --publish")
+    assert lock < census < publish < script.index("targets/game/reverse/link_queue.csv", publish)
+    assert "image_check.py" not in script and "linking_worklist.csv" not in script

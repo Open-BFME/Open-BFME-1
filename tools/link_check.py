@@ -293,7 +293,7 @@ QUEUE_LIMIT = 500  # measured 2026-09-30: past ~500 names a fix unlocks under 10
 FAMILIES = (("stlport", re.compile(r"_STL@")),
             ("strings", re.compile(r"^\?(\?[0-9A-Z_]|\w+@)(\?\$StringBase@|\w*(AsciiString|UnicodeString)@)")),
             ("globals", re.compile(r"^\?The[A-Z]\w*@@3")))
-PLAIN = re.compile(r"^\?(\?[0-9A-Z_])?\w+@(\w+@)?@")
+PLAIN = re.compile(r"^\?(\?[0-9A-Z_])?\w+@(?!_STL@)(\w+@)?@")
 HINTS = {
     "unresolved": "nothing defines it: define the datum once (add_data_match.py), map the import to retail's "
                   "IAT name, or fix the callee's name",
@@ -367,8 +367,11 @@ def claim_key(name):
     return 0xF0000000 | (zlib.crc32(name.encode("utf-8")) & 0x0FFFFFFF)
 
 
-def _git(*args):
-    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True).stdout
+def _git(*args, check=False):
+    done = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
+    if check and done.returncode:
+        raise SystemExit(f"link_check next: `git {' '.join(args)}` failed ({done.stderr.strip()}); nothing claimed")
+    return done.stdout
 
 
 def serve(argv):
@@ -386,10 +389,15 @@ def serve(argv):
         print("link_check next: the queue is empty")
         return 1
     census = rows[0]["census"]
-    tip = claims._fetch_master() or "HEAD"
-    changed = set(_git("diff", "--name-only", census, tip).split())
+    # Freshness fails closed: a queue whose census or origin/master cannot be
+    # read is never served, since nothing could say which rows are stale.
+    tip = claims._fetch_master()
+    if not tip:
+        raise SystemExit("link_check next: cannot fetch origin/master; nothing claimed")
+    _git("rev-parse", "--verify", "--quiet", f"{census}^{{commit}}", check=True)
+    changed = set(_git("diff", "--name-only", census, tip, check=True).split())
     landed = {int(key, 16) for key, _ in claims.LEASE_TRAILER.findall(
-        _git("log", "--format=%B", "--grep=^Claim-Lease:", f"{census}..{tip}"))}
+        _git("log", "--format=%B", "--grep=^Claim-Lease:", f"{census}..{tip}", check=True))}
     held = claims.active()
     who = claims.owner()
     if args.family:
