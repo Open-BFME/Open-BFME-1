@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob2
 
 class Rva007F0210
 {
@@ -8,6 +8,7 @@ class Rva007F0210
 
 public:
     Rva007F0210 &set(int a, int b);
+    __forceinline Rva007F0210(int a, int b) { set(a, b); }
 };
 
 extern int bfmeRva012C3B38TagValue;
@@ -390,3 +391,6 @@ void bfmeRva00C6D800InitializeTag()
 {
     bfmeRva0130A9E0TagSlot.set(bfmeRva012C3BC0TagValue, 0x4847414D);
 }
+
+// Retail 0x00C6D050: compiler-generated initializer for the tag slot.
+Rva007F0210 bfmeRva0130A8E4TagSlot(bfmeRva012C3B38TagValue, 0x55534348);
