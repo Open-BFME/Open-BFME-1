@@ -60,7 +60,7 @@ G. **Swarm infrastructure**: fail-closed claims with unique worker ids, heartbea
    authoritative landing; one publisher (landing service) with verification receipts tied to exact snapshots,
    idempotent queue, batch bisection and crash recovery; protected verifier/baseline changes; authenticated
    model/provider receipts; blind cross-vendor review; cost per accepted byte (incl. review and landing).
-   Status 2026-09-29 (all PARTIAL; a gpt-6.1-sol review found holes, fixed in 559cbd823f/5a388c2787):
+   Status 2026-09-29 (all PARTIAL; a gpt-6.1-sol review found holes, fixed in be983869f8/0b1312f505):
    - Claims fail closed with per-worker owners (89cbfe7263). Fencing is PARTIAL: tokens exist and a
      lost/expired claim stops the fleet worker and fences its add_match and pre-push, but nothing on
      origin checks a token; a non-fleet agent, a --no-verify push or the harvest API fast-forward is
