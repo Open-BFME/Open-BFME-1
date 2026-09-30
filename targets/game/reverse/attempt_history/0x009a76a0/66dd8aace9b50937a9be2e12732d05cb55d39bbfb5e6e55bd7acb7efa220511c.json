@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "66dd8aace9b50937a9be2e12732d05cb55d39bbfb5e6e55bd7acb7efa220511c",
+  "symbol": "?Rva009A76A0@@YAXPBEPAHIIIIPBH@Z",
+  "score_kind": "measured",
+  "score": 0.9379,
+  "source": "// ?Rva009A76A0@@YAXPBEPAHIIIIPBH@Z\n// partial score=0.9379 date=2026-09-30\n// cl: /DNDEBUG /MD /O2\nvoid __cdecl Rva009A76A0(\n\tconst unsigned char *source,\n\tint *destination,\n\tunsigned sourcePitch,\n\tunsigned sourceDelta,\n\tunsigned rows,\n\tunsigned columns,\n\tconst int *weights)\n{\n\tunsigned row, column;\n\tfor(row=0; row<rows; ++row) {\n\t column=0;\n\t if(columns>0) {\n\t const unsigned char *previous=source-sourceDelta;\n\t const unsigned char *next=source+sourceDelta;\n\t do {\n\t  int value = next[sourceDelta]*weights[3] + source[0]*weights[1] + next[0]*weights[2] + previous[0]*weights[0];\n\t  value=(value+0x40)>>7;\n\t  if(value<0) value=0;\n\t  else if(value>255) value=255;\n\t  destination[column]=value;\n\t  ++source; ++next; ++previous; ++column;\n\t } while(column<columns);\n\t }\n\t source+=sourcePitch-columns;\n\t destination+=columns;\n\t}\n}\n"
+}

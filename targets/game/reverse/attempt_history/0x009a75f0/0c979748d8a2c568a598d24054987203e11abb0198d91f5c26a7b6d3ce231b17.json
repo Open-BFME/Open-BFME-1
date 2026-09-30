@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0c979748d8a2c568a598d24054987203e11abb0198d91f5c26a7b6d3ce231b17",
+  "symbol": "?bfmeFilter75F0@@YAXPAEPAGHHHHPBH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.73,
+  "source": "// ?bfmeFilter75F0@@YAXPAEPAGHHHHPBH@Z\n// partial score=0.73 date=2026-09-04\nvoid __cdecl bfmeFilter75F0(\n\tunsigned char *source,\n\tunsigned short *destination,\n\tint sourcePitch,\n\tint sourceDelta,\n\tint rows,\n\tint columns,\n\tconst int *weights)\n{\n\tint rowCount = rows;\n\tint columnCount = columns;\n\tconst int *coefficient = weights;\n\tif ((unsigned int)rowCount > 0)\n\t{\n\t\tdo\n\t\t{\n\t\t\tint column = 0;\n\t\t\tunsigned char *previous = source - sourceDelta;\n\t\t\tunsigned char *next = source + sourceDelta;\n\t\t\tif ((unsigned int)columnCount > 0)\n\t\t\t{\n\t\t\t\tdo\n\t\t\t\t{\n\t\t\t\t\tint value = next[sourceDelta] * coefficient[3];\n\t\t\t\t\tvalue += source[0] * coefficient[1];\n\t\t\t\t\tvalue += next[0] * coefficient[2];\n\t\t\t\t\tvalue += previous[0] * coefficient[0];\n\t\t\t\t\tvalue = (value + 0x40) >> 7;\n\t\t\t\t\tif (value < 0)\n\t\t\t\t\t\tvalue = 0;\n\t\t\t\t\telse if (value > 0xFF)\n\t\t\t\t\t\tvalue = 0xFF;\n\t\t\t\t\tdestination[column] = (unsigned short)value;\n\t\t\t\t\t++source;\n\t\t\t\t\t++next;\n\t\t\t\t\t++previous;\n\t\t\t\t\t++column;\n\t\t\t\t}\n\t\t\t\twhile ((unsigned int)column < (unsigned int)columnCount);\n\t\t\t}\n\t\t\tsource += sourcePitch - columnCount;\n\t\t\tdestination += columnCount;\n\t\t}\n\t\twhile (--rowCount != 0);\n\t}\n}\n"
+}

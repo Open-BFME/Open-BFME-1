@@ -10658,5 +10658,25 @@
   "after_sha256": "2f7a84a253ce0ee7c59b4d65547dd2133f85df67aee98d07fd7d4f9e1242e88b",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "targets/game/reverse/functions.csv names the body at 0x003C8D50 ?rva003C8D50@LivingWorldRegionManager@@QAEXPAVXfer@@@Z; the old spelling managerXferCall matches no ledger row or pin, so the source uses the ledger name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x009a75f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x009a75f0.cpp",
+  "old_name": "bfmeFilter75F0",
+  "new_name": "Rva009A75F0",
+  "before_sha256": "0c979748d8a2c568a598d24054987203e11abb0198d91f5c26a7b6d3ce231b17",
+  "after_sha256": "c4f37a0043854dfafaac9d7fa155984f67fc0dd11878df896464c96df2e4ec34",
+  "evidence": "targets/game/reverse/identity_evidence/rva009a75f0_009a76a0_banks.md",
+  "reason": "Prior partial-bank name has no proven vendor identity; bfmeGo7760 additionally points at the next separate body. Replacement names preserve independently decoded actual body addresses and ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x009a76a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x009a76a0.cpp",
+  "old_name": "bfmeGo7760",
+  "new_name": "Rva009A76A0",
+  "before_sha256": "26f7575af1ba9c890aaf096c938c1a67c1c24a2a1efbf3f325fa9b523784a357",
+  "after_sha256": "66dd8aace9b50937a9be2e12732d05cb55d39bbfb5e6e55bd7acb7efa220511c",
+  "evidence": "targets/game/reverse/identity_evidence/rva009a75f0_009a76a0_banks.md",
+  "reason": "Prior partial-bank name has no proven vendor identity; bfmeGo7760 additionally points at the next separate body. Replacement names preserve independently decoded actual body addresses and ABI."
  }
 ]
