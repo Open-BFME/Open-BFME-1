@@ -49,7 +49,6 @@ extern void __cdecl rva009C7380BinkSse(const unsigned char *, const unsigned cha
 
 // Unconverted gen-dump callees that already carry a functions.csv row (the
 // row is the candidate; no new pin needed).
-extern void __cdecl d_009c5080(void);
 extern void __cdecl d_009c6cb0(void);
 extern void __cdecl d_009c6d30(void);
 extern void __cdecl d_009c74f0(void);
@@ -69,6 +68,9 @@ extern void __cdecl Rva009A7B00(void);
 extern void __cdecl Rva009A7300(void);
 extern void __cdecl Rva009C4E90(short *work, unsigned char *output,
 	const unsigned char *source, const short *residual, int stride);
+extern void __cdecl Rva009C5080(short *work, unsigned char *output,
+	const unsigned char *first, const unsigned char *second, const short *residual,
+	int stride);
 extern void __cdecl Rva009C5360(short *work, short *addend,
 	unsigned char *output, int dstStride);
 extern void __cdecl Rva009C4DF0(short *work, unsigned char *dst,
@@ -208,7 +210,7 @@ void __cdecl bfmeInstallSpreadTable(void)
 		g_bfmeSlotB48 = (void *)&Rva009A7030;
 		g_bfmeSlotD8C = (void *)&Rva009C4DF0;
 		g_bfmeSlotD84 = (void *)&Rva009C4E90;
-		g_bfmeSlotB58 = (void *)&d_009c5080;
+		g_bfmeSlotB58 = (void *)&Rva009C5080;
 		g_bfmeSlotB4C = (void *)&Rva009A7040;
 		g_bfmeSlotB50 = (void *)&widen8x8;
 		g_bfmeSlotD88 = (void *)&Rva009C5360;
