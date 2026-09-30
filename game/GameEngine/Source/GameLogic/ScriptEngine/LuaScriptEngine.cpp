@@ -206,3 +206,71 @@ int rva002E7740(lua_State *state)
 	lua_pushnil(state);
 	return 1;
 }
+
+#define LUA_API extern "C"
+#include "../../../../Libraries/Source/Lua/luadebug.h"
+#undef LUA_API
+#include <string.h>
+
+// The body pin and matched callers identify the Lua debug console callback.
+class BfmeAwakenDebug
+{
+public:
+#define SLOT(n) virtual void slot##n() = 0;
+SLOT(00) SLOT(04) SLOT(08) SLOT(0C) SLOT(10) SLOT(14) SLOT(18) SLOT(1C)
+SLOT(20) SLOT(24) SLOT(28) SLOT(2C) SLOT(30) SLOT(34) SLOT(38) SLOT(3C)
+SLOT(40) SLOT(44) SLOT(48) SLOT(4C) SLOT(50) SLOT(54) SLOT(58) SLOT(5C)
+SLOT(60) SLOT(64) SLOT(68) SLOT(6C) SLOT(70) SLOT(74) SLOT(78) SLOT(7C)
+SLOT(80) SLOT(84) SLOT(88) SLOT(8C) SLOT(90)
+#undef SLOT
+	virtual int slot94(char *buffer, int size, bool *inputAvailable) = 0;
+};
+
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_activeObj12F0610;
+extern void __cdecl bfmeLogMsg574(const char *message);
+extern void __cdecl bfmeNotify1_574(void *state, void *activation);
+
+int __cdecl bfmeNotify2_574(void *state, void *parameter)
+{
+	lua_Debug activation;
+	char command[250];
+	bool inputAvailable = false;
+	if (parameter == 0) {
+		parameter = &activation;
+		lua_getstack((lua_State *)state, 1, &activation);
+	}
+
+	bfmeLogMsg574("> ");
+readCommand:
+	if (TheBfmeAwakenDebug->slot94(command, 250, &inputAvailable) > 0) {
+		if (strcmp(command, "cont") == 0) {
+			bfmeLogMsg574("cont - Exiting LUA debug mode.\n");
+			g_activeObj12F0610 = 0;
+			return 0;
+		}
+		if (strcmp(command, "step") == 0) {
+			bfmeLogMsg574("step\n");
+			g_activeObj12F0610 = state;
+			return 0;
+		}
+		if (strcmp(command, "where") == 0) {
+			bfmeNotify1_574(state, parameter);
+			bfmeLogMsg574("> ");
+		} else if (strncmp(command, "?", 1) == 0) {
+			bfmeLogMsg574("cont - continue, step - single step script, where - describe current execution point.\n");
+			bfmeLogMsg574("Any other text is passed to the LUA interpreter.  Try print('something')\n");
+			bfmeLogMsg574("> ");
+		} else {
+			bfmeLogMsg574(command);
+			bfmeLogMsg574("\n");
+			lua_dostring((lua_State *)state, command);
+			lua_settop((lua_State *)state, 0);
+			bfmeLogMsg574("> ");
+		}
+	}
+	if (inputAvailable)
+		goto readCommand;
+	bfmeLogMsg574("No console input devices.  Exiting LUA debug mode.\n");
+	return 0;
+}

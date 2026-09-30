@@ -1,5 +1,6 @@
 // ?add@ContainInsert2265F0@@QAEXPAVObject@@@Z
-// partial score=0.951 date=2026-09-28
+// partial score=0.8266 date=2026-09-28
+// This attempt file keeps its earlier method spelling. The current verdict says the vtable and callers do not prove that name.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT

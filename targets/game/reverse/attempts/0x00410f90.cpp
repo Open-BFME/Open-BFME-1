@@ -1,6 +1,7 @@
 // ?drawGroupNumeral00410F90@Drawable@@QAEXXZ
-// partial score=0.945 date=2026-09-28
-// Retail 0x00410F90: Drawable group numeral rendering; offsets read from retail.
+// partial score=0.5543 date=2026-09-28
+// This attempt file keeps its earlier method spelling. The current verdict rejects that identity.
+// Retail body at RVA 0x00410F90. Its method name is unproven.
 class Player { public: int getSquadNumberForObject(const class Object*) const; char pad[0x1c4]; unsigned field1c4; };
 class Object { public: Player* getControllingPlayer() const; };
 class Numeral00410F90 {

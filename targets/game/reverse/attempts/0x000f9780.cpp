@@ -1,5 +1,5 @@
-// ?rvaCalcBuildProgress@Rva000F9780Owner@@QAEMH@Z
-// partial score=0.6 date=2026-09-21
+// ?method@Rva000F9780@@QAEMH@Z
+// partial score=0.656 date=2026-09-21
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x000F9780, 125 bytes, __thiscall taking one Int index and cleaning
@@ -77,18 +77,18 @@ struct Rva00367E30Logic
 
 extern Rva00367E30Logic *TheBfmeGameLogic;  // 0x012F0898
 
-class Rva000F9780Owner
+class Rva000F9780
 {
 public:
-	Real rvaCalcBuildProgress(Int index);
+	Real method(Int index);
 
 private:
 	char m_prefix[0x10];
 	Player *m_owningPlayer;   // +0x10
 };
 
-// ?rvaCalcBuildProgress@Rva000F9780Owner@@QAEMH@Z
-Real Rva000F9780Owner::rvaCalcBuildProgress(Int index)
+// ?method@Rva000F9780@@QAEMH@Z
+Real Rva000F9780::method(Int index)
 {
 	BfmeElemVLH *record = ((BfmeVecVLH *)this)->bfmeAtVLH(index);
 	if (record != 0)
