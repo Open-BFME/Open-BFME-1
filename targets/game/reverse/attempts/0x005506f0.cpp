@@ -1,15 +1,19 @@
 // ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
-// partial score=0.9987 date=2026-09-28
+// partial score=1.0 date=2026-09-30
+// ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// BfmeAptScreenOnlineLogin::_bfme_populateCountryList, retail 0x005506F0
-// (791 bytes).  Its only caller, _bfme_onInitGadget (0x00551DD0), calls it
-// through ILT 0x00005F83 once the country list box (+0x88) is initialised.
-// Row 0 is "WOL:Locale01"; locales 02..37 are sorted through a
-// map<UnicodeString, locale> (the operator[] at 0x0054FA30) and added in
-// name order, and the row matching the registry language is selected, with an
-// empty or "english" language standing for "United States".
+// The login-screen handler _bfme_onInitGadget lives at RVA 0x00551DD0.
+// It stores the country-list box at this+0x88.
+// It then calls this method through the pinned jump stub at 0x00005F83.
+//
+// This method adds "WOL:Locale01" as row 0.
+// It stores locales 02 through 37 in a map from UnicodeString names to
+// Rva0054FA30Mapped values.
+// The map sorts those rows by locale name before the method adds them.
+// It selects the row that matches the registry language.
+// An empty registry language or "english" selects "United States".
 
 void __cdecl operator delete[]( void * ) throw();
 void __cdecl operator delete( void * ) throw();
@@ -25,8 +29,6 @@ struct Rva0009ECA0NoCaseTraits
 	int compareNoCaseRaw( const unsigned short *left, const unsigned short *right,
 		int length ) const throw();
 
-private:
-	int m_unused;
 };
 
 template <typename T>
@@ -49,7 +51,7 @@ public:
 	{
 		int thisLength = m_data ? m_data->length : 0;
 		const T *thisText = m_data ? m_data->data : (const T *)L"";
-		int result = Rva0009ECA0NoCaseTraits().compareNoCaseRaw( thisText, str,
+		int result = ((const Rva0009ECA0NoCaseTraits *)(this + 5))->compareNoCaseRaw( thisText, str,
 			thisLength < strLength ? thisLength : strLength );
 		return result != 0 ? result : thisLength - strLength;
 	}
