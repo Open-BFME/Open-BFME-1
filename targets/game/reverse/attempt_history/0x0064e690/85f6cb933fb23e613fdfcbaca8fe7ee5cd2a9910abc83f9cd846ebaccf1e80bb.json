@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "85f6cb933fb23e613fdfcbaca8fe7ee5cd2a9910abc83f9cd846ebaccf1e80bb",
+  "symbol": "??A?$map@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@HU?$less@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@_STL@@QAEAAHABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??A?$map@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@HU?$less@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@_STL@@QAEAAHABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@@Z\n// partial score=1.0 date=2026-09-30\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#include <map>\n#include <string>\ntypedef _STL::map<_STL::string, int> Rva0064E690Map;\ntemplate int &Rva0064E690Map::operator[](const _STL::string &key);\n"
+}
