@@ -12,6 +12,8 @@
 
 #include "GameClient/DisplayStringManager.h"
 
+DisplayStringManager *TheDisplayStringManager = 0;
+
 DisplayStringManager::DisplayStringManager( void )
 {
 
