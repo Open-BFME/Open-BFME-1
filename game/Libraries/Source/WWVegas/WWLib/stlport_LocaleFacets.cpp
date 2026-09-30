@@ -348,6 +348,216 @@ static char *__TranslateToSystem(const char *lname, char *buf)
 
 }
 
+extern "C" {
+
+/* Slot holding the "LC_CTYPE" category name. */
+extern const char *g_Rva012C83A0;
+
+typedef struct _OSVERSIONINFOA {
+    unsigned long dwOSVersionInfoSize;
+    unsigned long dwMajorVersion;
+    unsigned long dwMinorVersion;
+    unsigned long dwBuildNumber;
+    unsigned long dwPlatformId;
+    char szCSDVersion[128];
+} OSVERSIONINFOA;
+
+typedef struct _cpinfo {
+    unsigned int MaxCharSize;
+    unsigned char DefaultChar[2];
+    unsigned char LeadByte[12];
+} CPINFO;
+
+__declspec(dllimport) int __stdcall GetCPInfo(unsigned int codePage, CPINFO *info);
+__declspec(dllimport) int __stdcall GetVersionExA(OSVERSIONINFOA *info);
+__declspec(dllimport) int __stdcall GetStringTypeA(
+    LCID locale, unsigned long infoType, const char *source, int count, unsigned short *charType);
+__declspec(dllimport) int __stdcall GetStringTypeW(
+    unsigned long infoType, const unsigned short *source, int count, unsigned short *charType);
+
+typedef struct _Locale_ctype_t
+{
+    LCID lcid;
+    unsigned int cp;
+    unsigned int unknown08;
+    unsigned int ctable[256];
+} _Locale_ctype_t;
+
+// STLport 4.5.3 _Locale_ctype_create with __Extract_locale_name and
+// __GetDefaultCP expanded in place, as retail inlines them.
+void *_Locale_ctype_create(const char *name)
+{
+    char lname[256];
+    char cp_name[6];
+    int NativeCP;
+    unsigned char Buffer[256];
+    unsigned char *ptr;
+    unsigned short ctable[256];
+    CPINFO CPInfo;
+    int i;
+    unsigned short *wbuffer;
+    int BufferSize;
+
+    _Locale_ctype_t *ltype = (_Locale_ctype_t *)malloc(sizeof(_Locale_ctype_t));
+
+    if (!ltype)
+        return ltype;
+    memset(ltype, 0, sizeof(_Locale_ctype_t));
+
+    lname[0] = 0;
+
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_')
+    {
+        char *p = strstr(name, g_Rva012C83A0);
+        if (p != 0)
+        {
+            char *q = strchr(p, '=');
+            if (q != 0)
+            {
+                unsigned int matchLen;
+                ++q;
+                matchLen = strcspn(q, ";");
+                if (matchLen > 0x100)
+                    matchLen = 0x100;
+                strncpy(lname, q, matchLen);
+                lname[matchLen] = 0;
+            }
+        }
+    }
+    else
+    {
+        strncpy(lname, name, 0x100);
+    }
+
+    if (__GetLCIDFromName(lname, &ltype->lcid, cp_name) == -1)
+    {
+        free(ltype);
+        return 0;
+    }
+
+    ltype->cp = atoi(cp_name);
+
+    {
+        char cp[6];
+        GetLocaleInfoA(ltype->lcid, 0x1004, cp, 6);
+        NativeCP = atoi(cp);
+        if (NativeCP == 0)
+        {
+            GetLocaleInfoA(ltype->lcid, 0x0b, cp, 6);
+            NativeCP = atoi(cp);
+        }
+    }
+
+    for (i = 0; i < 256; ++i)
+        Buffer[i] = (unsigned char)i;
+
+    if (!GetCPInfo(NativeCP, &CPInfo))
+    {
+        free(ltype);
+        return 0;
+    }
+
+    if (CPInfo.MaxCharSize > 1)
+    {
+        for (ptr = (unsigned char *)CPInfo.LeadByte; *ptr && *(ptr + 1); ptr += 2)
+            for (i = *ptr; i <= *(ptr + 1); ++i)
+                Buffer[i] = 0;
+    }
+
+    if ((unsigned int)NativeCP != ltype->cp)
+    {
+        OSVERSIONINFOA ver_info;
+        ver_info.dwOSVersionInfoSize = sizeof(ver_info);
+        GetVersionExA(&ver_info);
+        if (ver_info.dwPlatformId == 2)
+        {
+            BufferSize = MultiByteToWideChar(ltype->cp, 1, (const char *)Buffer, 256, 0, 0);
+            wbuffer = (unsigned short *)malloc(BufferSize * sizeof(unsigned short));
+            if (!MultiByteToWideChar(ltype->cp, 1, (const char *)Buffer, 256, wbuffer, BufferSize))
+            {
+                free(wbuffer);
+                free(ltype);
+                return 0;
+            }
+
+            GetStringTypeW(1, wbuffer, 256, ctable);
+
+            for (i = 0; i < 256; ++i)
+                ltype->ctable[i] = (unsigned int)ctable[i];
+
+            if (CPInfo.MaxCharSize > 1)
+            {
+                for (ptr = (unsigned char *)CPInfo.LeadByte; *ptr && *(ptr + 1); ptr += 2)
+                    for (i = *ptr; i <= *(ptr + 1); ++i)
+                        ltype->ctable[i] = 0x8000;
+            }
+
+            free(wbuffer);
+        }
+        else
+        {
+            unsigned char TargetBuffer[256];
+            GetStringTypeA(ltype->lcid, 1, (const char *)Buffer, 256, ctable);
+
+            BufferSize = MultiByteToWideChar(NativeCP, 1, (const char *)Buffer, 256, 0, 0);
+            wbuffer = (unsigned short *)malloc(BufferSize * sizeof(unsigned short));
+            if (!MultiByteToWideChar(NativeCP, 1, (const char *)Buffer, 256, wbuffer, BufferSize))
+            {
+                free(wbuffer);
+                free(ltype);
+                return 0;
+            }
+            if (!WideCharToMultiByte(ltype->cp, 0x220, wbuffer, BufferSize, (char *)TargetBuffer, 256, 0, 0))
+            {
+                free(wbuffer);
+                free(ltype);
+                return 0;
+            }
+
+            free(wbuffer);
+
+            for (i = 0; i < 256; ++i)
+            {
+                if (!TargetBuffer[i])
+                    continue;
+                ltype->ctable[TargetBuffer[i]] = ctable[i];
+            }
+
+            ltype->unknown08 = 0;
+            if (!GetCPInfo(ltype->cp, &CPInfo))
+            {
+                free(ltype);
+                return 0;
+            }
+
+            if (CPInfo.MaxCharSize > 1)
+            {
+                for (ptr = (unsigned char *)CPInfo.LeadByte; *ptr && *(ptr + 1); ptr += 2)
+                    for (i = *ptr; i <= *(ptr + 1); ++i)
+                        ltype->ctable[i] = 0x8000;
+            }
+        }
+    }
+    else
+    {
+        GetStringTypeA(ltype->lcid, 1, (const char *)Buffer, 256, ctable);
+        for (i = 0; i < 256; ++i)
+            ltype->ctable[i] = (unsigned int)ctable[i];
+
+        if (CPInfo.MaxCharSize > 1)
+        {
+            for (ptr = (unsigned char *)CPInfo.LeadByte; *ptr && *(ptr + 1); ptr += 2)
+                for (i = *ptr; i <= *(ptr + 1); ++i)
+                    ltype->ctable[i] = 0x8000;
+        }
+    }
+
+    ltype->unknown08 = 0;
+    return ltype;
+}
+
+}
+
 class Rva0084E030Buffer
 {
 public:
