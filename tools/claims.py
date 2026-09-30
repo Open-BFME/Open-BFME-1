@@ -521,7 +521,8 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     Every queued landing (queue_landed) whose exact row origin/master now
     holds is released under the owner that queued it and dropped from the
     queue; with `sha`, the matched rows that commit adds are released under
-    `who`. Unsettled entries older than `keep_days` are dropped (their claims
+    `who` -- except any body that still has an unsettled queued landing,
+    which stays claimed whatever selected it. Unsettled entries older than `keep_days` are dropped (their claims
     have long expired). Returns (released, still_pending) lists of ints.
     Raises ClaimsUnavailable when origin/master cannot be read."""
     queue = pending(root)
@@ -552,7 +553,7 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             return False
         return all(published.get(path, "") == blob for path, blob in deps.items())
     extra = landed_rvas(sha, root, tip) if sha else []
-    by_owner, waiting, keep = {}, [], []
+    by_owner, waiting, keep, unsettled = {}, [], [], set()
     now = time.time()
     for entry in queue:
         try:
@@ -561,14 +562,24 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             continue
         if landed(entry):
             by_owner.setdefault(entry.get("owner") or who or owner(root), set()).add(rva)
-        elif now - entry.get("queued", 0) < keep_days * 86400:
-            keep.append(entry)
-            waiting.append(rva)
+        else:
+            unsettled.add(rva)
+            if now - entry.get("queued", 0) < keep_days * 86400:
+                keep.append(entry)
+                waiting.append(rva)
     if extra:
         by_owner.setdefault(who or owner(root), set()).update(extra)
+    # A body with ANY queued landing whose row and blobs are not all on
+    # origin/master stays claimed, however it was selected: an older commit
+    # that adds the same RVA (release --landed SHA), or an earlier queued
+    # landing of the same body, never overrides a pending one (review
+    # 2026-09-29: `release --landed <old sha>` freed a body whose replacement
+    # source was still local).
     released = []
     for holder, rvas in by_owner.items():
-        released += release(sorted(rvas), who=holder, root=root)
+        rvas -= unsettled
+        if rvas:
+            released += release(sorted(rvas), who=holder, root=root)
     if queue:
         # drop only the entries settled here: ones queued while we were on
         # the network survive the rewrite

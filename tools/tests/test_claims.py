@@ -276,3 +276,34 @@ def test_a_directory_inside_a_checkout_never_inherits_its_origin(hosts, monkeypa
     with pytest.raises(claims.ClaimsUnavailable):
         claims.claim([0x500], root=inner)
     assert _git(hosts.origin, "for-each-ref", "refs/claims/") == ""
+
+
+def test_release_landed_sha_cannot_override_a_pending_landing(hosts):
+    # review 2026-09-29 (reproduction test_release_bypass.py): settlement kept
+    # the claim, but `release --landed <old published sha>` released it while
+    # the replacement source was still local.
+    a = hosts("a")
+    _commit_ledger(a, [], "base")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    sha = _commit_ledger(a, [row], "old published body", {"game/x.cpp": "void f() {}\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    (a / "game/x.cpp").write_text("void f() { different(); }\n", encoding="utf-8")
+    claims.queue_landed(0x100, row)
+    assert claims.release_landed() == ([], [0x100])
+    assert claims.release_landed(sha) == ([], [0x100])
+    assert 0x100 in claims.active()
+    assert claims.main(["release", "--landed", sha]) == 0 and 0x100 in claims.active()
+
+
+def test_an_earlier_settled_landing_does_not_release_a_newer_pending_one(hosts):
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "published", {"game/x.cpp": "void f() {}\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    claims.queue_landed(0x100, row)                          # matches origin: settled
+    (a / "game/x.cpp").write_text("void f() { again(); }\n", encoding="utf-8")
+    claims.queue_landed(0x100, row)                          # a second, local-only pass
+    assert claims.release_landed() == ([], [0x100])
+    assert 0x100 in claims.active()

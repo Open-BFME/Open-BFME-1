@@ -66,9 +66,14 @@ G. **Swarm infrastructure**: fail-closed claims with unique worker ids, heartbea
      origin checks a token; a non-fleet agent, a --no-verify push or the harvest API fast-forward is
      not fenced. Heartbeat: fleet_run only, hourly; a host that sleeps past the TTL loses claims
      without knowing until its next beat.
-   - Release on landing is PARTIAL (07e7fb1df0): bound to the row plus the published blobs of the
-     source and changed game/ and inputs/reference/ files, but not to symbols.csv pins or to what the
-     byte gate actually read; it runs only when fleet_run settles or someone runs release --landed.
+   - Release on landing is PARTIAL (07e7fb1df0). Guarantee: while this checkout holds a queued
+     landing for a body whose row, source blob and changed game/ + inputs/reference/ blobs are not
+     ALL on origin/master, no path in claims.py releases that body's claim -- not settlement, not
+     `release --landed SHA` for an older commit adding the same RVA, not an earlier settled entry
+     (fixed after review: the SHA path bypassed the blob check). Not covered: symbols.csv pins, what
+     the byte gate actually read, queues in OTHER checkouts, `release 0xRVA` and `--force` (manual,
+     unconditional), and queue entries older than a day (dropped; the claim has expired). It runs
+     only when fleet_run settles or someone runs release --landed.
    - Test isolation: claims git calls no longer discover an enclosing repository; a fixture must
      still point at its own bare origin (tests assert it). One review run created real claims first.
    - Receipts record host/launched/model with reserved keys (5e7b12a8a0), unauthenticated.
