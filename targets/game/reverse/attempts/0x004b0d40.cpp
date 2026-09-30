@@ -1,24 +1,13 @@
 // ?rva004B0D40@Gen_004B1720@@QAEXXZ
-// partial score=0.5056 date=2026-09-28
+// partial score=0.9918 date=2026-09-30
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 //
-// Retail 0x004B0D40 (979 B, ret at +0x3D2): vtable 0x010FD1D8 slot 7 of the
-// SubsystemInterface-derived menu owner (ctor 0x004B18B0, clear 0x004B1720,
-// reset 0x004B19A0). Lays out the owner's windows on a rotating ring: count>1
-// rotates the start direction by 1 - min(650, t)/650 (0x012B6624 = 650.0f),
-// sizes each window by min(1, m_3c), positions it along the direction, syncs
-// the window's map<UnsignedInt, Rva004B0C80Value> target through bfmeGo1073B,
-// keeps an unused bounds rectangle, rotates by m_40 and toggles status 0x200
-// against 600.0f; clears m_active after 650.
-// Measured: 969/979 B, 464 raw differing, probe shape 0.953. Residue: retail
-// keeps `distance` alive on the x87 stack (reloads dir.y, fmul st(2), spills
-// offset.y) and loads both scale floats before reusing EAX; that is the
-// missing 4-byte frame slot (0x44 vs 0x48). Rotate is Coord2D::Rotate
-// (coord2d.cpp) with separate sine/cosine locals, force-inlined as retail.
-// Landing needs one pin: find<UnsignedInt> of this map -> 0x004B0530 (row
-// dup_4b0530, next to this map's matched _M_insert/insert_unique) and a DIR32
-// name for 0x012B6624.
+// Retail 0x004B0D40 (979 B): vtable 0x010FD1D8 slot 7 of the menu owner; lays its
+// windows out on a ring rotated by m_40 per step (0x012B6624 = 650.0f duration).
+// Residue: 8 B of x87 operand order in both inlined rotations (retail loads dir.y
+// first, ours sine/cosine). Landing needs a find<UnsignedInt> pin at 0x004B0530
+// and a DIR32 name for 0x012B6624.
 #include <map>
 #include <vector>
 #include <math.h>
@@ -75,10 +64,23 @@ public:
 
 extern Real g_rva004B0D40Duration;	// 0x012B6624 (650.0f)
 
+// Window size; height stays in a register but keeps its frame slot.
+struct Rva004B0D40Size
+{
+	Int x;
+	Int y;
+};
+
 #define RVA004B0D40_MIN(a, b) ((a) < (b) ? (a) : (b))
 
+// Built through the inline constructor so its fields stay on the x87 stack.
+// ??0Coord2D@@QAE@MM@Z absent-from-retail
+inline Coord2D::Coord2D(float px, float py) { x = px; y = py; }
+// ??1Coord2D@@QAE@XZ absent-from-retail
+inline Coord2D::~Coord2D() {}
+
 // Coord2D::Rotate (coord2d.cpp), inlined here as retail does.
-__forceinline void rva004B0D40Rotate(Coord2DBase &v, float angle)
+__forceinline Coord2D &Coord2D::Rotate(float angle)
 {
 	float sine;
 	float cosine;
@@ -92,11 +94,12 @@ __forceinline void rva004B0D40Rotate(Coord2DBase &v, float angle)
 		fstp sine
 	}
 
-	float new_x = cosine * v.x - sine * v.y;
-	float new_y = cosine * v.y;
-	new_y += sine * v.x;
-	v.y = new_y;
-	v.x = new_x;
+	float new_x = cosine * x - sine * y;
+	float new_y = cosine * y;
+	new_y += sine * x;
+	y = new_y;
+	x = new_x;
+	return *this;
 }
 
 class Gen_004B1720
@@ -133,42 +136,41 @@ void Gen_004B1720::rva004B0D40()
 	if (!m_active)
 		return;
 
-	Coord2DBase dir;
-	dir.x = 0.0f;
-	dir.y = (Real)(1 < count ? -1 : 0);
+	Coord2D dir(0.0f, (Real)(1 < count ? -1 : 0));
 	if (count > 1)
 	{
 		Real t = RVA004B0D40_MIN(g_rva004B0D40Duration, (Real)m_38);
-		rva004B0D40Rotate(dir, 1.0f - t / g_rva004B0D40Duration);
+		dir.Rotate(1.0f - t / g_rva004B0D40Duration);
 	}
 
-	struct { Coord2DBase lo, hi; } bounds;
-	bounds.lo.y = 1000000.0f;
-	bounds.lo.x = 1000000.0f;
-	bounds.hi.y = 0.0f;
-	bounds.hi.x = 0.0f;
+	Coord2DBase lo;
+	Coord2DBase hi;
+	lo.y = 999999.0f;
+	lo.x = 999999.0f;
+	hi.y = 0.0f;
+	hi.x = 0.0f;
 
 	for (_STL::vector<GameWindow *>::iterator it = m_windows.begin(); it != m_windows.end(); ++it)
 	{
 		GameWindow *window = *it;
-		Int width = (Int)(((Real)m_28 - 1.0f) * RVA004B0D40_MIN(1.0f, m_3c) + 1.0f);
-		Int height = (Int)(((Real)m_2c - 1.0f) * RVA004B0D40_MIN(1.0f, m_3c) + 1.0f);
-		window->winSetSize(width, height);
+		Rva004B0D40Size size;
+		size.x = (Int)(((Real)m_28 - 1.0f) * RVA004B0D40_MIN(1.0f, m_3c) + 1.0f);
+		size.y = (Int)(((Real)m_2c - 1.0f) * RVA004B0D40_MIN(1.0f, m_3c) + 1.0f);
+		window->winSetSize(size.x, size.y);
 
 		Real distance = ((Real)m_30 - 0.1f) * m_3c + 0.1f;
-		Coord2DBase offset;
-		offset.x = dir.x * distance;
-		offset.y = dir.y * distance;
+		Coord2D offset(dir.x * distance, dir.y * distance);
 		Int x = (Int)((Real)m_20 + offset.x);
 		Int y = (Int)((Real)m_24 + offset.y);
 
 		_STL::map<UnsignedInt, Rva004B0C80Value>::iterator found = m_targets.find((UnsignedInt &)window);
 		if (found != m_targets.end())
 		{
-			const Coord2DBase *scale = g_theWindowManager->getScreenPoint();
+			const Coord2DBase *screen = g_theWindowManager->getScreenPoint();
+			Coord2D scale(screen->x, screen->y);
 			Rva004B0C80Target *target = (*found).second.m_target;
-			Real sy = (Real)y * scale->y;
-			Real sx = (Real)x * scale->x;
+			Real sy = (Real)y * scale.y;
+			Real sx = (Real)x * scale.x;
 			if (sx != target->m_left || sy != target->m_top)
 			{
 				bfmeGo1073B(&target->m_08, sx, sy);
@@ -177,21 +179,21 @@ void Gen_004B1720::rva004B0D40()
 			}
 		}
 
-		x -= width / 2;
-		y -= height / 2;
+		x -= size.x / 2;
+		y -= size.y / 2;
 		window->winSetPosition(x, y);
-		if ((Real)x < bounds.lo.x)
-			bounds.lo.x = (Real)x;
-		if ((Real)y < bounds.lo.y)
-			bounds.lo.y = (Real)y;
-		x += width;
-		y += height;
-		if ((Real)x > bounds.hi.x)
-			bounds.hi.x = (Real)x;
-		if ((Real)y > bounds.hi.y)
-			bounds.hi.y = (Real)y;
+		if ((Real)x < lo.x)
+			lo.x = (Real)x;
+		if ((Real)y < lo.y)
+			lo.y = (Real)y;
+		x += size.x;
+		y += size.y;
+		if ((Real)x > hi.x)
+			hi.x = (Real)x;
+		if ((Real)y > hi.y)
+			hi.y = (Real)y;
 
-		rva004B0D40Rotate(dir, m_40);
+		dir.Rotate(m_40);
 
 		if ((Real)m_38 < 600.0f)
 			window->winSetStatus(0x200);
