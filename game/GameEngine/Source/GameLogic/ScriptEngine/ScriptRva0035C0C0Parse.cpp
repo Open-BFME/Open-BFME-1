@@ -50,6 +50,11 @@ typedef bool Bool;
 
 typedef Bool (__cdecl *BfmeParserCallback)( DataChunkInput &, DataChunkInfo *, void * );
 
+// Incremental-link thunks of the three nested parsers (game/gen_small/gthunks_*.cpp).
+void j_00016568();
+void j_0002f70c();
+void j_00025de2();
+
 class DataChunkInput
 {
 public:
@@ -108,11 +113,11 @@ Bool Script::Rva0035C0C0( DataChunkInput &file, unsigned short version )
 	}
 
 	file.registerParser( AsciiString( "OrCondition" ), AsciiString( "Script" ),
-		(BfmeParserCallback)0x00416568, 0 );
+		(BfmeParserCallback)j_00016568, 0 );
 	file.registerParser( AsciiString( "ScriptAction" ), AsciiString( "Script" ),
-		(BfmeParserCallback)0x0042F70C, 0 );
+		(BfmeParserCallback)j_0002f70c, 0 );
 	file.registerParser( AsciiString( "ScriptActionFalse" ), AsciiString( "Script" ),
-		(BfmeParserCallback)0x00425DE2, 0 );
+		(BfmeParserCallback)j_00025de2, 0 );
 
 	return file.parse( this );
 }

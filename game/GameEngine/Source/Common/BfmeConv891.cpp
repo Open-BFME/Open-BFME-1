@@ -128,6 +128,15 @@ class Object
 {
 };
 
+extern "C" void *bfmeVftPartitionFilter[];
+extern "C" void *bfmeVftRva0025ED50ObjectFilter[];
+extern "C" void *bfmeVftRva0025ED50RootFilter[];
+extern "C" void *bfmeVftPartitionFilterRelationship[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50ObjectFilter=??_7Rva0025ED50ObjectFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+
 static __forceinline void setFilterVptr(void *filter, unsigned int value)
 {
 	*(unsigned int *)filter = value;
@@ -137,7 +146,7 @@ class __declspec(novtable) PartitionFilter
 {
 public:
 	PartitionFilter() : m_next(0) {}
-	virtual ~PartitionFilter() { setFilterVptr(this, 0x01083B5C); }
+	virtual ~PartitionFilter() { setFilterVptr(this, (unsigned int)bfmeVftPartitionFilter); }
 	virtual bool allow(Object *);
 	virtual int getPlayerMask();
 	PartitionFilter *link(PartitionFilter *next);
@@ -149,7 +158,7 @@ class __declspec(novtable) Rva0025ED50ObjectFilter : public PartitionFilter
 public:
 	explicit Rva0025ED50ObjectFilter(Object *object)
 	{
-		setFilterVptr(this, 0x01085DD0);
+		setFilterVptr(this, (unsigned int)bfmeVftRva0025ED50ObjectFilter);
 		m_object = object;
 	}
 	virtual ~Rva0025ED50ObjectFilter() {}
@@ -160,7 +169,7 @@ public:
 class __declspec(novtable) Rva0025ED50RootFilter : public PartitionFilter
 {
 public:
-	Rva0025ED50RootFilter() { setFilterVptr(this, 0x01083B80); }
+	Rva0025ED50RootFilter() { setFilterVptr(this, (unsigned int)bfmeVftRva0025ED50RootFilter); }
 	virtual ~Rva0025ED50RootFilter() {}
 	virtual bool allow(Object *);
 };
@@ -170,7 +179,7 @@ class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
 public:
 	PartitionFilterRelationship(Object *object, int flags, bool match)
 	{
-		setFilterVptr(this, 0x01085DC0);
+		setFilterVptr(this, (unsigned int)bfmeVftPartitionFilterRelationship);
 		m_object = object;
 		m_flags = flags;
 		m_match = match;

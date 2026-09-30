@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
 extern void ji_00afd528();
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *, const char *, ...);
+extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *);
 
 // TU-scoped BFME FrameGrabClass ABI.  The shared reference header describes
 // the older Generals object and cannot represent BFME's buffered frame ring.
@@ -53,9 +55,9 @@ void FrameGrabClass::Rva00958570_Flush_Buffered_Frames()
 		if( BufferedFrames > 0 )
 		{
 			int (__cdecl *format)( char *, const char *, ... ) =
-				*(int (__cdecl **)( char *, const char *, ... ))0x0135948C;
+				sprintf;
 			void (__stdcall *print)( const char * ) =
-				*(void (__stdcall **)( const char * ))0x01358EA8;
+				OutputDebugStringA;
 			char error[ 0x100 ];
 			for( ; frame < BufferedFrames; ++frame )
 			{
