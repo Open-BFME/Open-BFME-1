@@ -168,6 +168,15 @@ private:
 	int m_drawOriginY;                                       // +0x120E4
 };
 
+class TileData;
+class WorldHeightMap
+{
+	friend class Rva0074DE60WorldHeightMap;
+
+protected:
+	static TileData *m_alphaTiles[12];
+};
+
 // ??1WorldHeightMap@@UAE@XZ
 Rva0074DE60WorldHeightMap::~Rva0074DE60WorldHeightMap(void)
 {
@@ -206,8 +215,8 @@ Rva0074DE60WorldHeightMap::~Rva0074DE60WorldHeightMap(void)
 		}
 	}
 
-	for (int alphaAddress = 0x01301E30;
-		alphaAddress < 0x01301E60; alphaAddress += 4)
+	for (int alphaAddress = (int)WorldHeightMap::m_alphaTiles;
+		alphaAddress < (int)(WorldHeightMap::m_alphaTiles + 12); alphaAddress += 4)
 	{
 		Rva0074DE60TileData **p =
 			(Rva0074DE60TileData **)alphaAddress;

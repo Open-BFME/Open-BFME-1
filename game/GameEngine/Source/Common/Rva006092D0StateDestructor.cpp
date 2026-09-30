@@ -148,9 +148,12 @@ private:
 	char m_tail[0x3c];
 };
 
+extern "C" const void *bfmeVftRva006092D0State[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva006092D0State=??_7Rva006092D0State@@6B@")
+
 Rva006092D0State::~Rva006092D0State()
 {
-	*(unsigned int *)this = 0x01115AD0;
+	*(unsigned int *)this = (unsigned int)bfmeVftRva006092D0State;
 	if (g_bfmeGameCW != 0)
 		g_bfmeGameCW->rva00615850();
 	if (TheAudioClientUpdate != 0 && TheAudioClientUpdate->slot40() == 1)
