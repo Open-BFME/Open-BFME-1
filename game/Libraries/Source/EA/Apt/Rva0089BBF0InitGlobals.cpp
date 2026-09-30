@@ -272,6 +272,14 @@ extern Rva008A9B00 *Rva008C3B60Head;
 
 extern void __cdecl d_0089abc0();
 
+// value callbacks installed at BfmeA1029+0x20
+extern void __cdecl d_008c64c0();
+extern void __cdecl d_008c66a0();
+extern void __cdecl d_008c6800();
+extern void __cdecl d_008c6ad0();
+Rva008A9B00 *rva008C6840StringTransform();
+Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count);
+
 // ---- globals written by the body ----------------------------------------
 
 struct Rva0089BBF0ColorTransform
@@ -384,32 +392,32 @@ void Rva0089BBF0InitGlobals()
 	g_Va01337A08.m_tx = 0.0f;
 	g_Va01337A08.m_ty = 0.0f;
 
-	BfmeA1029 *value = new BfmeA1029(0x00CC64C0);
+	BfmeA1029 *value = new BfmeA1029(reinterpret_cast<int>(&d_008c64c0));
 	g_Va013379EC = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379EC);
 
-	value = new BfmeA1029(0x00CC66A0);
+	value = new BfmeA1029(reinterpret_cast<int>(&d_008c66a0));
 	g_Va013379C4 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379C4);
 
-	value = new BfmeA1029(0x00CC6800);
+	value = new BfmeA1029(reinterpret_cast<int>(&d_008c6800));
 	g_Va013379C8 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379C8);
 
-	value = new BfmeA1029(0x00CC6840);
+	value = new BfmeA1029(reinterpret_cast<int>(&rva008C6840StringTransform));
 	g_Va013379F8 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379F8);
 
-	value = new BfmeA1029(0x00CC6990);
+	value = new BfmeA1029(reinterpret_cast<int>(&rva008C6990StringTransform));
 	g_Va013379B8 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379B8);
 
-	value = new BfmeA1029(0x00CC6AD0);
+	value = new BfmeA1029(reinterpret_cast<int>(&d_008c6ad0));
 	g_Va013379B0 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379B0);
