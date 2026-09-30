@@ -4,6 +4,17 @@
 // uses the same CategoryModuleTemplate<8> hierarchy as the independently
 // matched TerrainCollisionModuleTemplate constructor.
 
+extern "C" const void *bfmeVftCategoryModuleInfo8[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+extern "C" char CategoryModuleTemplate8_vtbl0;
+extern "C" char CategoryModuleTemplate8_vtbl4;
+extern "C" const void *bfmeVftLifeEventModuleTemplate[];
+#pragma comment(linker, "/alternatename:_bfmeVftLifeEventModuleTemplate=??_7LifeEventModuleTemplate@FXParticleSystem@@6B@")
+extern "C" const void *bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseA[];
+#pragma comment(linker, "/alternatename:_bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseA=??_7LifeEventModuleTemplate@FXParticleSystem@@6BLifeEventCategoryBaseA@1@@")
+extern "C" const void *bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseB[];
+#pragma comment(linker, "/alternatename:_bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseB=??_7LifeEventModuleTemplate@FXParticleSystem@@6BLifeEventCategoryBaseB@1@@")
+
 namespace FXParticleSystem
 {
 
@@ -22,7 +33,7 @@ class __declspec(novtable) CategoryModuleInfo<8>
 public:
 	CategoryModuleInfo()
 	{
-		*(volatile unsigned int *)this = 0x0107375c;
+		*(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
 		m_a = true;
 		m_b = true;
 	}
@@ -69,8 +80,8 @@ public:
 	CategoryModuleTemplate()
 		: CategoryModuleTemplateBase<8>()
 	{
-		*(unsigned int *)((unsigned char *)this + 0) = 0x01073848;
-		*(unsigned int *)((unsigned char *)this + 4) = 0x01073844;
+		*(unsigned int *)((unsigned char *)this + 0) = (unsigned int)&CategoryModuleTemplate8_vtbl0;
+		*(unsigned int *)((unsigned char *)this + 4) = (unsigned int)&CategoryModuleTemplate8_vtbl4;
 	}
 	virtual ~CategoryModuleTemplate();
 };
@@ -95,9 +106,9 @@ LifeEventModuleTemplate::LifeEventModuleTemplate()
 	: CategoryModuleTemplate<8>(),
 	  LifeEventModuleInfo()
 {
-	*(unsigned int *)((unsigned char *)this + 0xc) = 0x011112a4;
-	*(unsigned int *)((unsigned char *)this + 0) = 0x01111290;
-	*(unsigned int *)((unsigned char *)this + 4) = 0x0111128c;
+	*(unsigned int *)((unsigned char *)this + 0xc) = (unsigned int)bfmeVftLifeEventModuleTemplate;
+	*(unsigned int *)((unsigned char *)this + 0) = (unsigned int)bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseA;
+	*(unsigned int *)((unsigned char *)this + 4) = (unsigned int)bfmeVftLifeEventModuleTemplate_LifeEventCategoryBaseB;
 }
 
 }
