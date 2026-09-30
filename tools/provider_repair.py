@@ -753,6 +753,16 @@ def reference_definitions(qualified):
 WORKLIST = ROOT / "build" / "image_compose" / "worklist.csv"
 
 
+def type_agrees(symbol, definition):
+    """False when the mangled name encodes a class the ZH definition does not
+    declare (`?TheVictoryConditions@@3PAVVictoryConditions@@A` against ZH's
+    `VictoryConditionsInterface *TheVictoryConditions`): ZH's line would define
+    a different name, so it cannot resolve ours."""
+    classes = re.findall(r"(?:[UVT]|W4)(\w+)@@", symbol.split("@@", 1)[1]) if "@@" in symbol else []
+    words = set(re.findall(r"\w+", definition.split("=")[0]))
+    return all(c in words for c in classes)
+
+
 def data_candidates(path, tally=None):
     """Data definitions to serve, best first, from ONE named input:
     tools/image_compose.py's worklist (family `data`, verdict `unresolved`:
@@ -815,7 +825,8 @@ def cmd_data_next(args):
             # landed from that definition without changing its linkage -- not served
             verdict = ("no-reference-definition" if not found else "several-reference-definitions"
                        if len(found) != 1 else "reference-definition-is-static"
-                       if found[0][2].startswith("static") else None)
+                       if found[0][2].startswith("static") else "reference-type-differs"
+                       if not type_agrees(name, found[0][2]) else None)
         if verdict:
             tally[verdict] = tally.get(verdict, 0) + 1
             continue

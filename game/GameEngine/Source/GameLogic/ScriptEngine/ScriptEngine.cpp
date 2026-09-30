@@ -130,6 +130,9 @@ private:
 	BreezeInfo m_breezeInfo;
 };
 
+// GLOBALS (ZH ScriptEngine.cpp:143, the one definition in the game's ZH source)
+ScriptEngine *TheScriptEngine = 0;  // ZH spells it NULL; this TU includes no header defining NULL
+
 // ?getStats@ScriptEngine@@QAE?AVAsciiString@@PAM00@Z
 AsciiString ScriptEngine::getStats( Real *curTimePtr, Real *script1Time, Real *script2Time )
 {

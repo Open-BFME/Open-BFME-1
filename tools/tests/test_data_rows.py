@@ -296,3 +296,13 @@ def test_the_sizeof_probe_refuses_a_macro_named_like_the_symbol():
     assert size is None and "does not compile" in how
     source.write_text("int values[2] = {0, 0};\n")
     assert data_rows.compiled_size(source, "?values@@3PAHA")[0] == 8
+
+
+def test_data_next_refuses_a_zh_line_that_defines_another_type():
+    import provider_repair
+    assert not provider_repair.type_agrees("?TheVictoryConditions@@3PAVVictoryConditions@@A",
+                                           "VictoryConditionsInterface *TheVictoryConditions = 0;")
+    assert provider_repair.type_agrees("?TheWritableGlobalData@@3PAVGlobalData@@A",
+                                       "GlobalData* TheWritableGlobalData = 0;")
+    assert provider_repair.type_agrees("?OurLanguage@@3W4LanguageID@@A", "LanguageID OurLanguage = LANGUAGE_ID_US;")
+    assert not provider_repair.type_agrees("?OurLanguage@@3W4Other@@A", "LanguageID OurLanguage = LANGUAGE_ID_US;")
