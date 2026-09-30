@@ -1,11 +1,12 @@
 // ?setDisabledUntil@ObjectSetDisabledUntilShim@@QAEXW4DisabledType@@I@Z
 // Clean BFME reconstruction of the pinned incremental-link target at retail 0x001C81C0.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class AsciiString { unsigned int m_data; };
+#include "ascii_string.h"
+extern AsciiString TheEmptyString;
 struct Coord3D { float x, y, z; };
 
 class AudioEventRTS
@@ -128,7 +129,7 @@ void ObjectSetDisabledUntilShim::setDisabledUntil(DisabledType type, UnsignedInt
 	if (disabledType < 0 || disabledType >= 11)
 		return;
 
-	AudioEventRTS sound(*(const AsciiString *)0x01336E50, 0);
+	AudioEventRTS sound(TheEmptyString, 0);
 	if (disabledType == 5 && !((Thing *)self)->isKindOf((KindOfType)0x48))
 	{
 		sound = *(AudioEventRTS *)((char *)TheAudioClientUpdate->getMiscAudio() + 0x7E0);

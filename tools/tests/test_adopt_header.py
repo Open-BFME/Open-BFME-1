@@ -108,6 +108,31 @@ def test_an_unsupported_multiline_template_is_rejected():
         adopt_header.rewrite(source, "StringBase", "string_base.h", "headers")
 
 
+@pytest.mark.parametrize(
+    ("diagnostic", "relative_path"),
+    [
+        (r"c:\Users\vvval\Desktop\BFME\Open-BFME-1\game\Libraries\Source\WWVegas\WWLib"
+         r"\string_base.h(81) : error C2953: duplicate",
+         "game/Libraries/Source/WWVegas/WWLib/string_base.h(81)"),
+        (r"z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib"
+         r"\string_base.h(81) : error C2953: duplicate",
+         "game/Libraries/Source/WWVegas/WWLib/string_base.h(81)"),
+    ],
+)
+def test_record_normalizes_absolute_compiler_paths(
+        tmp_path, monkeypatch, diagnostic, relative_path):
+    blocked = tmp_path / "header_adopt_blocked.tsv"
+    monkeypatch.setattr(adopt_header, "BLOCKED", blocked)
+
+    adopt_header.record([("game/file.cpp", "UnicodeString", diagnostic)])
+
+    recorded = blocked.read_text(encoding="utf-8")
+    assert relative_path in recorded
+    assert "error C2953" in recorded
+    assert "c:\\" not in recorded.lower()
+    assert "z:\\" not in recorded.lower()
+
+
 def test_automatic_commit_does_not_add_fabricated_attribution(tmp_path, monkeypatch):
     (tmp_path / "adopted.cpp").touch()
     monkeypatch.setattr(adopt_header, "ROOT", tmp_path)

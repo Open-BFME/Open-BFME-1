@@ -86,6 +86,40 @@ NON_CODE = re.compile(
     r'"(?:\\.|[^"\\])*(?:"|\Z)|\'(?:\\.|[^\'\\])*(?:\'|\Z)', re.S)
 
 
+ABSOLUTE_DIAGNOSTIC_PATH = re.compile(
+    r"(?P<path>(?:[A-Za-z]:[\\/]|/(?!/)).*?)"
+    r"(?P<site>\(\d+\)\s*:\s*)")
+
+
+def relative_diagnostic_paths(text):
+    """Tracked evidence paths are repo-relative; strip compiler host/worktree
+    roots."""
+    def relativize(match):
+        path = match.group("path").replace("\\", "/")
+        lowered = path.lower()
+        for marker in ("/game/", "/inputs/", "/targets/", "/vendor/",
+                       "/tools/", "/docs/", "/mods/"):
+            index = lowered.rfind(marker)
+            if index >= 0:
+                relative = path[index + 1:]
+                break
+        else:
+            marker = "/code/"
+            index = lowered.rfind(marker)
+            if index >= 0:
+                relative = "game/" + path[index + len(marker):]
+            else:
+                marker = "/build/toolchains/vs2003/"
+                index = lowered.rfind(marker)
+                if index >= 0:
+                    relative = "inputs/toolchains/vs2003/" + path[index + len(marker):]
+                else:
+                    relative = "external/" + path.rsplit("/", 1)[-1]
+        return relative + match.group("site")
+
+    return ABSOLUTE_DIAGNOSTIC_PATH.sub(relativize, text)
+
+
 class Shim(NamedTuple):
     start: int
     end: int
@@ -352,11 +386,12 @@ def fix_staged(jobs):
 
 
 def record(entries):
-    """Append (path, type, reason) so the next run does not re-pay for them."""
+    """Append blocker evidence using repo-relative compiler diagnostic paths."""
     if not entries:
         return
     with BLOCKED.open("a", encoding="utf-8") as fh:
         for path, kind, why in entries:
+            why = relative_diagnostic_paths(why)
             fh.write(f"{path}\t{kind}\t{why}\n".replace("\r", " "))
 
 
