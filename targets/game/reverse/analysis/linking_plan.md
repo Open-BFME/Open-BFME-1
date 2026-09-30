@@ -60,10 +60,22 @@ G. **Swarm infrastructure**: fail-closed claims with unique worker ids, heartbea
    authoritative landing; one publisher (landing service) with verification receipts tied to exact snapshots,
    idempotent queue, batch bisection and crash recovery; protected verifier/baseline changes; authenticated
    model/provider receipts; blind cross-vendor review; cost per accepted byte (incl. review and landing).
-   Status 2026-09-29: fail-closed claims + per-worker owner + fencing tokens + heartbeat (89cbfe7263);
-   release on origin/master landing (07e7fb1df0); host/launched-model receipts, unauthenticated
-   (5e7b12a8a0); Verifier-Change trailer + shrink-only baselines (b9eaa9c709); landing service
-   designed and prototyped in tools/landing_service.py (b0926cee30), not yet in use.
+   Status 2026-09-29 (all PARTIAL; a gpt-6.1-sol review found holes, fixed in 559cbd823f/5a388c2787):
+   - Claims fail closed with per-worker owners (89cbfe7263). Fencing is PARTIAL: tokens exist and a
+     lost/expired claim stops the fleet worker and fences its add_match and pre-push, but nothing on
+     origin checks a token; a non-fleet agent, a --no-verify push or the harvest API fast-forward is
+     not fenced. Heartbeat: fleet_run only, hourly; a host that sleeps past the TTL loses claims
+     without knowing until its next beat.
+   - Release on landing is PARTIAL (07e7fb1df0): bound to the row plus the published blobs of the
+     source and changed game/ and inputs/reference/ files, but not to symbols.csv pins or to what the
+     byte gate actually read; it runs only when fleet_run settles or someone runs release --landed.
+   - Test isolation: claims git calls no longer discover an enclosing repository; a fixture must
+     still point at its own bare origin (tests assert it). One review run created real claims first.
+   - Receipts record host/launched/model with reserved keys (5e7b12a8a0), unauthenticated.
+   - Verifier-Change trailer + per-commit shrink-only baselines (b9eaa9c709) are client-side hooks:
+     advisory against edited hooks, --no-verify, and the harvest scratch-branch path.
+   - Landing service: design + fixture-tested prototype (b0926cee30); not in use, so publication
+     is still one push per seat and none of the server-side checks above exist yet.
 H. **Test hosts**: Linux workers that fleet_cgroup accepts; a separate boot host (windowed, timeout, logs, crash
    capture). Nothing launches the game on the owner's desktop.
 
