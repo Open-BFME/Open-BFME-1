@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class TerrainRoadType
+{
+public:
+	static const FieldParse m_terrainBridgeFieldParseTable[];
+};
+
 void *Rva000C2D30Get()
 {
-	return reinterpret_cast<void *>(0x01114BF0u);
+	return const_cast<FieldParse *>(TerrainRoadType::m_terrainBridgeFieldParseTable);
 }

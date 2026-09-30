@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class MultiplayerColorDefinition
+{
+public:
+	static const FieldParse m_colorFieldParseTable[];
+};
+
 void *Rva000C25E0Get()
 {
-	return reinterpret_cast<void *>(0x0107F6D8u);
+	return const_cast<FieldParse *>(MultiplayerColorDefinition::m_colorFieldParseTable);
 }
