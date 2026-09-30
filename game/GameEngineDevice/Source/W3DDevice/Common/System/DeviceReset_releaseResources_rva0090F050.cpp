@@ -10,9 +10,6 @@ struct BfmeLockTEA
 	bool m_armed;
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA(BfmeLockTEA *lock);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA(BfmeLockTEA *lock);
-
 class Rva00886F60Class
 {
 public:
@@ -21,7 +18,7 @@ public:
 		m_lock = lock;
 		if (lock && lock->m_armed)
 		{
-			bfmeEnterTEA(lock);
+			EnterCriticalSection(reinterpret_cast<CRITICAL_SECTION *>(lock));
 		}
 	}
 
@@ -77,6 +74,6 @@ void Rva0090F050()
 	TheBfmeObject_00C71060.m_end = TheBfmeObject_00C71060.m_begin;
 	if (armed)
 	{
-		bfmeLeaveTEA(reinterpret_cast<BfmeLockTEA *>(&g_bfmeRva012D6DE0CriticalSection));
+		LeaveCriticalSection(&g_bfmeRva012D6DE0CriticalSection);
 	}
 }
