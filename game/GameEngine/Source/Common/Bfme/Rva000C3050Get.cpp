@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern const char g_0109FBC8[];
+
 void *Rva000C3050Get()
 {
-	return reinterpret_cast<void *>(0x0109FBC8u);
+	return (void *)g_0109FBC8;
 }

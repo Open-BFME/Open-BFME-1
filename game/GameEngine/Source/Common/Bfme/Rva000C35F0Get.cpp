@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class WaterSetting
+{
+public:
+	static const FieldParse m_waterSettingFieldParseTable[];
+};
+
 void *Rva000C35F0Get()
 {
-	return reinterpret_cast<void *>(0x010F6C00u);
+	return (void *)WaterSetting::m_waterSettingFieldParseTable;
 }

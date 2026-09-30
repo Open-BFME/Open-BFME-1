@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class SpecialPowerTemplate
+{
+	friend void *Rva000EB100Get();
+
+private:
+	static const FieldParse m_specialPowerFieldParse[];
+};
+
 void *Rva000EB100Get()
 {
-	return reinterpret_cast<void *>(0x012A8FA0u);
+	return (void *)SpecialPowerTemplate::m_specialPowerFieldParse;
 }

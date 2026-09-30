@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class WaterTransparencySetting
+{
+public:
+	static const FieldParse m_waterTransparencySettingFieldParseTable[];
+};
+
 void *Rva000C3600Get()
 {
-	return reinterpret_cast<void *>(0x010F6CD0u);
+	return (void *)WaterTransparencySetting::m_waterTransparencySettingFieldParseTable;
 }
