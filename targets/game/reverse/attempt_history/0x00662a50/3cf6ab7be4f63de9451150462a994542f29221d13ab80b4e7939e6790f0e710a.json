@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3cf6ab7be4f63de9451150462a994542f29221d13ab80b4e7939e6790f0e710a",
+  "symbol": "?query@Rva00662A50Owner@@QAE_NH@Z",
+  "score_kind": "measured",
+  "score": 0.9855,
+  "source": "// ?query@Rva00662A50Owner@@QAE_NH@Z\n// partial score=0.9855 date=2026-09-30\n// cl: /DNDEBUG /MD /GX /D_STLP_USE_STATIC_LIB\r\n// stlport\r\n#define private protected\r\n#include \"../../../../game/GameEngine/Source/GameNetwork/native_connection_timing.cpp\"\r\n#undef private\r\nextern unsigned int g_dword010EAD50;\r\nclass Rva00662A50Owner : public BFMEConnectionManager {\r\npublic:\r\n    bool query(int playerID);\r\n};\r\nbool Rva00662A50Owner::query(int playerID) {\r\n    if (playerID == m_localSlot) return true;\r\n    Connection *connection=m_connections[playerID];\r\n    if (!connection) return true;\r\n    if (!connection->m_lastHeardFrom) {\r\n        connection->m_lastHeardFrom=timeGetTime();\r\n        return true;\r\n    }\r\n    unsigned int now=timeGetTime();\r\n    if (TheGameLogic->frame >= g_dword010EAD50) {\r\n        unsigned int last=static_cast<volatile Connection *>(connection)->m_lastHeardFrom;\r\n        unsigned int limit=*reinterpret_cast<volatile unsigned int *>(reinterpret_cast<char *>(TheWritableGlobalData)+0xCBC);\r\n        now -= last;\r\n        return limit >= now ? true:false;\r\n    }\r\n    unsigned int limit=*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(TheWritableGlobalData)+0xCBC)*4;\r\n    now -= connection->m_lastHeardFrom;\r\n    return limit >= now ? true:false;\r\n}\r\n"
+}
