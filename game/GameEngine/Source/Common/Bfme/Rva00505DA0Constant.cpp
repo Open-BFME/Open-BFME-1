@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern void j_00041af6();
+
 class Rva00505DA0
 {
 public:
@@ -8,5 +10,5 @@ public:
 
 int Rva00505DA0::value()
 {
-	return 0x00441af6;
+	return (int)&j_00041af6;
 }
