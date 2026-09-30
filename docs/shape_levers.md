@@ -159,6 +159,17 @@ returns moved that epilogue into the body. After the logger call, use
 reloads the state-machine pointer from `this + 0x1c`. The `+0x44` virtual slot
 and owner identity remain opaque.
 
+## Local order keeps a frustum test's spill shape
+
+The 91-byte sphere-visibility body at `0x0073DF50` matches with the actual
+`CameraClass::Get_Frustum()` helper when its body starts with a local camera
+pointer, then constructs a `Vector3`, default-constructs `SphereClass`, and
+assigns `Center` and `Radius` separately. The earlier named-vector plus
+`SphereClass(vector, radius)` spelling left a same-sized body with 31
+non-relocation differences. Keep this compiler-facing local sequence; no
+volatile access or assembly is needed.
+
+
 ## Compiler-private ABI: compile the static helper with its caller
 
 At `0x0072FCA0`, the track binder passed a render object in ESI, one bone
