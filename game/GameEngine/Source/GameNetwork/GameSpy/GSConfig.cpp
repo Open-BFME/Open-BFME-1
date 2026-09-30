@@ -63,7 +63,6 @@ public:
 	virtual Int getPingCutoffBad( void )				{ return m_pingCutoffBad;	}
 
 	// QM
-	// ?getQMMaps@GameSpyConfig@@UAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@XZ present-unmatched
 	// Retail505D10 is a string getter, not this list-return reference method.
 	std::list<AsciiString> getQMMaps(void)			{ return m_qmMaps; }
 	Int getQMBotID(void)												{ return m_qmBotID; }

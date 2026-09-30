@@ -1019,7 +1019,6 @@ void MeshMatDescClass::Post_Load_Process(bool lighting_enabled,MeshModelClass * 
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
-// ?Configure_Material@MeshMatDescClass@@IAEXPAVVertexMaterialClass@@H_N@Z present-unmatched
 void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,bool lighting_enabled)
 {
 	mtl->Set_Diffuse_Color_Source(DCGSource[pass]);
