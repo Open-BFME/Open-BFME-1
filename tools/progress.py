@@ -19,6 +19,9 @@ uses the full .text and includes dumps: bounded coverage, not progress.
 Every retail byte is counted once. Clean C++ ownership wins when it overlaps an
 assembly-backed row (including ICF aliases), leaving "ASM-only" as actionable
 porting debt. This reads the ledger but compiles nothing; build.sh is proof.
+STATIC DATA separately sums validated matched data_rows.csv extents in the
+selected revision. These are initial image values, including loader zeros,
+not runtime state; tools/data_rows.py provides their independent byte gate.
 
   python3 tools/progress.py                # HEAD vs worktree
   python3 tools/progress.py REF            # REF vs worktree
@@ -34,6 +37,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import build
+import data_rows
 import layout_history
 from gaps import padding_split
 from list_naked_candidates import NAKED_RE, block_bytes, symbol_comment
@@ -581,6 +585,37 @@ def data_denominator():
     return sum(s["size"] for s in build.pe_sections(build.EXE.read_bytes()) if s["name"] in (".rdata", ".data"))
 
 
+def static_data_stats(raw, sources_ok=None, sections=None):
+    """Count valid matched initial-image extents; compilation remains the gate's job."""
+    if raw is None:
+        return {"bytes": 0, "rows": 0, "sections": set()}
+    problems = []
+    data_rows.check(raw, problems, sources_ok=sources_ok, sections=sections)
+    if problems:
+        raise SystemExit("invalid static-data ledger: " + "; ".join(problems))
+    rows = [row for _, row in data_rows.parse(raw) if row["status"] == "matched"]
+    return {"bytes": sum(int(row["size"]) for row in rows), "rows": len(rows),
+            "sections": {row["section"] for row in rows}}
+
+
+def static_data_at(ref):
+    """Use the selected repository state's ledger and tracked source ownership."""
+    text = _text_at(ref, "targets/game/reverse/data_rows.csv")
+    if text is None:
+        return static_data_stats(None)
+    command = (["git", "ls-files", "--", "game"] if ref is None else
+               ["git", "ls-tree", "-r", "--name-only", ref, "--", "game"])
+    tracked = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)
+    return static_data_stats(text.encode("utf-8"), sources_ok=set(tracked.stdout.splitlines()))
+
+
+def static_data_line(stats, denominator):
+    coverage = (f" ({percent(stats['bytes'], denominator):.2f}% of .rdata/.data)"
+                if denominator and stats["sections"] <= {".rdata", ".data"} else "")
+    return (f"STATIC DATA    {stats['bytes']:,} bytes in {stats['rows']:,} matched rows{coverage}"
+            "  <- initial image values; ledger-derived, separate from code")
+
+
 def game_code(split, denominator):
     """The game's own code: all real code minus vendored library source and
     prebuilt libraries (readme_progress.game_code, the C++ and Linking bars)."""
@@ -641,7 +676,6 @@ def print_headline(padding, denominator, old_split, new_split, old_census, new_c
     own, own_before = decompiled(new_split), decompiled(old_split)
     print(f"  our own source (C++ we wrote + library source) {own:,} bytes ({percent(own, denominator):.2f}%)"
           f"  delta {format_delta(own, own_before, denominator)}")
-    print(f"GAME DATA      not measured  <- {data_denominator():,} bytes of .rdata/.data; no data is byte-verified yet")
 
 
 def marker_delta(ref1, ref2):
@@ -739,6 +773,7 @@ def main():
     old_notes, new_notes = notes_at(ref1), notes_at(ref2)
     print_headline(padding, denominator, real_split(old, old_notes, text_start, text_size, old_naked),
                    real_split(new, new_notes, text_start, text_size, new_naked), census_at(ref1), census_at(ref2))
+    print(static_data_line(static_data_at(ref2), data_denominator()))
     print_scorecard(ref1, label2, old_stats, new_stats)
     if args.details:
         print_details(ref1, ref2, old, new, old_naked, new_naked)
