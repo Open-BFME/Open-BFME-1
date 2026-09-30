@@ -216,18 +216,7 @@ void Render2DClass::Enable_Texturing(bool b)
 	}
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/Render2DSetCoordinateRangeThunk.cpp
-// ?Set_Coordinate_Range@Render2DClass@@QAEXABVRectClass@@@Z present-unmatched
-void	Render2DClass::Set_Coordinate_Range( const RectClass & range )
-{
-	// default range is (-1,1)-(1,-1)
-	CoordinateScale.X = 2 / range.Width();
-	CoordinateScale.Y = -2 / range.Height();
-	CoordinateOffset.X = -(CoordinateScale.X * range.Left) - 1;
-	CoordinateOffset.Y = -(CoordinateScale.Y * range.Top) + 1;
-
-	Update_Bias();
-}
+// Retail Render2DClass::Set_Coordinate_Range is implemented in Render2DSetCoordinateRangeThunk.cpp.
 
 // ?Update_Bias@Render2DClass@@IAEXXZ present-unmatched
 void	  Render2DClass::Update_Bias( void )
@@ -529,60 +518,11 @@ void	Render2DClass::Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vect
 	Internal_Add_Quad_Colors( color );
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddQuad.cpp
-// ?Add_Quad@Render2DClass@@ present-unmatched
-void	Render2DClass::Add_Quad( const RectClass & screen, unsigned long color )
-{
-	Internal_Add_Quad_Indicies( Vertices.Count() );
-	Internal_Add_Quad_Vertices( screen );
-	Internal_Add_Quad_UVs( RectClass( 0,0,1,1 ) );
-	Internal_Add_Quad_Colors( color );
-}
+// Retail Render2DClass::Add_Quad(const RectClass &, unsigned long) is implemented in Render2DClassAddQuadColor.cpp.
 
-/*
-** Add Tri
-*/
-// ?Add_Tri@Render2DClass@@QAEXABVVector2@@00000K@Z present-unmatched
-void	Render2DClass::Add_Tri( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & uv0, const Vector2 & uv1, const Vector2 & uv2, unsigned long color )
-{
-	int old_vert_count = Vertices.Count();
+// Retail Render2DClass::Add_Tri is implemented in Render2DClassAddTri.cpp.
 
-	// Add the verticies (translated to new coordinates)
-#if 0
-	Vertices.Add( Convert_Vert( v0 ), new_vert_count );
-	Vertices.Add( Convert_Vert( v1 ), new_vert_count );
-	Vertices.Add( Convert_Vert( v2 ), new_vert_count );
-#else
-	Convert_Vert( *Vertices.Uninitialized_Add(), v0 );
-	Convert_Vert( *Vertices.Uninitialized_Add(), v1 );
-	Convert_Vert( *Vertices.Uninitialized_Add(), v2 );
-	
-#endif
-
-	// Add the uv coordinates
-
-	*UVCoordinates.Uninitialized_Add()=uv0;
-	*UVCoordinates.Uninitialized_Add()=uv1;
-	*UVCoordinates.Uninitialized_Add()=uv2;
-
-	// Add the colors
-	*Colors.Uninitialized_Add()=color;
-	*Colors.Uninitialized_Add()=color;
-	*Colors.Uninitialized_Add()=color;
-
-	// Add the faces
-	*Indices.Uninitialized_Add()=old_vert_count + 0;
-	*Indices.Uninitialized_Add()=old_vert_count + 1;
-	*Indices.Uninitialized_Add()=old_vert_count + 2;
-
-}
-
-// ?Add_Line@Render2DClass@@ present-unmatched
-// Retail outline calls keep this overload out of line.
-__declspec(noinline) void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, unsigned long color )
-{
-	Add_Line( a, b, width, RectClass( 0,0,1,1 ), color );
-}
+// Retail Render2DClass::Add_Line(a, b, width, color) is implemented in Render2DClassAddLine.cpp.
 
 // ?Add_Line@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, const RectClass & uv, unsigned long color )
@@ -600,11 +540,7 @@ void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width,
 }
 
 
-// ?Add_Line@Render2DClass@@ present-unmatched
-void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, unsigned long color, unsigned long color2 )
-{
-	Add_Line( a, b, width, RectClass( 0,0,1,1 ), color, color2 );
-}
+// Retail Render2DClass::Add_Line(a, b, width, color, color2) is implemented in Render2DClassAddLine.cpp.
 
 // ?Add_Line@Render2DClass@@ present-unmatched
 void Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, const RectClass & uv, unsigned long color , unsigned long color2)
