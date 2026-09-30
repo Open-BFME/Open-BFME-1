@@ -206,58 +206,7 @@ void SceneClass::Remove_Render_Object(RenderObjClass * obj)
 }
 
 
-/***********************************************************************************************
- * SceneClass::Render -- preps the scene for rendering, derived classes should add functionalit*
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   12/10/98   GTH : Created.                                                                 *
- *=============================================================================================*/
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/SceneClass_Render.cpp
-// ?Render@SceneClass@@MAEXAAVRenderInfoClass@@@Z present-unmatched
-void SceneClass::Render(RenderInfoClass & rinfo)
-{
-	// Any stuff that needs to get done before anything else
-	Pre_Render_Processing(rinfo);
-
-	DX8Wrapper::Set_Fog(FogEnabled, FogColor, FogStart, FogEnd);
-
-	if (Get_Extra_Pass_Polygon_Mode()==EXTRA_PASS_DISABLE) {
-		Customized_Render(rinfo);
-	}
-	else {
-		bool old_enable=WW3D::Is_Texturing_Enabled();
-
-		DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-		Customized_Render(rinfo);
-		switch (Get_Extra_Pass_Polygon_Mode()) {
-		case EXTRA_PASS_LINE:
-			WW3D::Enable_Texturing(false);
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 7);
-			Customized_Render(rinfo);
-			break;
-		case EXTRA_PASS_CLEAR_LINE:
-// ?Clear@DX8Wrapper@@ present-unmatched
-			DX8Wrapper::Clear(true, false, Vector3(0.0f,0.0f,0.0f));	// Clear color but not z
-			WW3D::Enable_Texturing(false);
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 7);
-			Customized_Render(rinfo);
-			break;
-		}
-
-		WW3D::Enable_Texturing(old_enable);
-	}
-
-	// Any stuff that needs to get done after anything else
-	Post_Render_Processing(rinfo);
-}
+// Retail SceneClass::Render (0x009436C0) is implemented in SceneClass_Render.cpp.
 
 /***********************************************************************************************
  * SceneClass::Save -- saves scene settings into a chunk                                       *
@@ -356,109 +305,16 @@ SimpleSceneClass::~SimpleSceneClass(void)
 	Remove_All_Render_Objects();
 }
 
-/***********************************************************************************************
- * SimpleSceneClass::Remove_All_Render_Objects -- Removes all render objects from the scene    *
- *                                                                                             *
- *                                                                                             *
- *                                                                                             *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   8/27/2001  hy : Created.                                                                  *
- *=============================================================================================*/
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Remove_All_Render_Objects.cpp
-// ?Remove_All_Render_Objects@SimpleSceneClass@@UAEXXZ present-unmatched
-void SimpleSceneClass::Remove_All_Render_Objects(void)
-{
-	RenderObjClass * obj;
-	while ( ( obj = RenderList.Remove_Head() ) != NULL ) {
-		SceneClass::Remove_Render_Object(obj);
-		obj->Release_Ref();							// remove head gets a ref
-	}
-}
+// Retail SimpleSceneClass::Remove_All_Render_Objects (0x00943890) is implemented in SimpleSceneClass_Remove_All_Render_Objects.cpp.
 
-/***********************************************************************************************
- * SimpleSceneClass::Add_Render_Object -- add a render object to the scene                     *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   3/24/98    GTH : Created.                                                                 *
- *=============================================================================================*/
-// byte-exact reconstruction: game/GameEngine/Source/Common/SimpleSceneClass_Add_Render_Object_Thunk.cpp
-// ?Add_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
-void SimpleSceneClass::Add_Render_Object(RenderObjClass * obj)
-{
-	SceneClass::Add_Render_Object(obj);
-	RenderList.Add(obj);
-}
+// Retail SimpleSceneClass::Add_Render_Object (0x00942FA0) is implemented in SimpleSceneClass_Add_Render_Object_Thunk.cpp.
 
 
-/***********************************************************************************************
- * SimpleSceneClass::Remove_Render_Object -- remove a render object from this scene            *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   3/24/98    GTH : Created.                                                                 *
- *=============================================================================================*/
-// byte-exact reconstruction: game/GameEngine/Source/Common/SimpleSceneClass_Remove_Render_Object_Thunk.cpp
-// ?Remove_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
-void SimpleSceneClass::Remove_Render_Object(RenderObjClass * obj)
-{
-	SceneClass::Remove_Render_Object(obj);
-	// HY
-	// this line must come last because otherwise it might cause
-	// a premature release ref and cause a crash
-	RenderList.Remove(obj);
-}
+// Retail SimpleSceneClass::Remove_Render_Object (0x009438C0) is implemented in SimpleSceneClass_Remove_Render_Object_Thunk.cpp.
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/SimpleSceneClass_Register_Thunk.cpp
-// ?Register@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z present-unmatched
-void SimpleSceneClass::Register(RenderObjClass * obj,RegType for_what)
-{
-	switch (for_what) {
-		case ON_FRAME_UPDATE:	
-			UpdateList.Add(obj);			
-			break;
-		case LIGHT:	
-			LightList.Add_Tail(obj);	
-			break;
-		case RELEASE:				
-			ReleaseList.Add(obj);		
-			break;
-	};
-}
+// Retail SimpleSceneClass::Register (0x00943000) is implemented in SimpleSceneClass_Register_Thunk.cpp.
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/SimpleSceneClass_Unregister_Thunk.cpp
-// ?Unregister@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z present-unmatched
-void SimpleSceneClass::Unregister(RenderObjClass * obj,RegType for_what)
-{
-	switch (for_what) {
-		case ON_FRAME_UPDATE:	
-			UpdateList.Remove(obj);			
-			break;
-		case LIGHT:	
-			LightList.Remove(obj);	
-			break;
-		case RELEASE:				
-			ReleaseList.Remove(obj);		
-			break;
-	}
-}
+// Retail SimpleSceneClass::Unregister (0x009430F0) is implemented in SimpleSceneClass_Unregister_Thunk.cpp.
 
 
 
@@ -618,27 +474,7 @@ void SimpleSceneClass::Customized_Render(RenderInfoClass & rinfo)
 	}
 }
 
-// ?Post_Render_Processing@SimpleSceneClass@@MAEXAAVRenderInfoClass@@@Z present-unmatched
-void SimpleSceneClass::Post_Render_Processing(RenderInfoClass& rinfo)
-{
-	// process the 'Release' list.  These are objects that have notified us that they
-	// want to be released.  We have to walk this list twice, first un-linking the
-	// object from the scene or its container.  And then removing them all from 
-	// the list.  (this last removal will destroy any auto-created objects)
-	RefRenderObjListIterator it(&ReleaseList);
-	for (it.First(&ReleaseList); !it.Is_Done(); it.Next()) {
-		RenderObjClass * robj = it.Peek_Obj();
-		if (robj->Get_Container()) {
-			robj->Get_Container()->Remove_Sub_Object(robj);
-		} else {
-			robj->Remove();
-		}
-	}
-
-	while(!ReleaseList.Is_Empty()) {
-		ReleaseList.Release_Head();
-	}
-}
+// Retail SimpleSceneClass::Post_Render_Processing (0x00943C60) is implemented in SimpleSceneClass_Post_Render_Processing.cpp.
 
 /***********************************************************************************************
  * SimpleSceneClass::Create_Iterator -- create an iterator for this scene                      *
