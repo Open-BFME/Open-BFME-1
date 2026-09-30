@@ -10628,5 +10628,15 @@
   "after_sha256": "d2a7ff084bc0d6055950b684be62c8ea5acda97b48353f783fd841a01c63b244",
   "evidence": "targets/game/reverse/identity_evidence/0x007f63f0-browser-owner.md",
   "reason": "Rva007F7000 calls the body as a member of Rva007F7980Browser, which refutes the banked Rva007F63F0Owner class. The callback gives no behavior name, so the new method keeps the address."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/Rva009F7256CrtForwarders.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva009F7256CrtForwarders.cpp",
+  "old_name": "_CIacos",
+  "new_name": "Rva009F7256_CIacos",
+  "before_sha256": "dd27d5893a904f4a5d9329f0d0474fce7930528935a6ba2a9c0c1101a8181fcc",
+  "after_sha256": "cb9efae73f817ee96830ca2ff1e1974ac40599dc10d85c3b5194218a9a277a07",
+  "evidence": "targets/game/reverse/identity_evidence/009f7256-import-stub.md",
+  "reason": "_CIacos is the import library's own call stub for this import; the TU's definition of the same name collides with it (LNK2005), so the body at 0x009F7256 keeps its bytes under an address-owned name."
  }
 ]
