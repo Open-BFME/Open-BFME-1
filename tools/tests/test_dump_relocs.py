@@ -17,13 +17,13 @@ BODY = 0x401100
 def context(rows=(), dir32=None, iat=None, rdata=b"", data=b""):
     """A Context over a synthetic image; rows are (va, size, symbol)."""
     ctx = object.__new__(D.Context)
-    image = bytearray(0x3000)
-    image[0x1000:0x1000 + len(rdata)] = rdata
-    image[0x2000:0x2000 + len(data)] = data
-    ctx.data = bytes(image)
+    image = bytearray(0x4000)                                           # mapped: offset = VA - BASE
+    image[RDATA - BASE:RDATA - BASE + len(rdata)] = rdata
+    image[DATA - BASE:DATA - BASE + len(data)] = data
+    ctx.mapped = bytes(image)
     ctx.base, ctx.image_end = BASE, 0x404000
-    ctx.sections = [(".text", TEXT, RDATA, 0), (".rdata", RDATA, DATA, 0x1000),
-                    (".data", DATA, IDATA, 0x2000), (".idata", IDATA, 0x404000, 0x2800)]
+    ctx.sections = [(".text", TEXT, RDATA), (".rdata", RDATA, DATA), (".data", DATA, IDATA),
+                    (".idata", IDATA, 0x404000)]
     ctx.row_starts = sorted(va for va, _, _ in rows)
     ctx.row_info = {va: (size, [symbol], [symbol]) for va, size, symbol in rows}
     ctx.multibody = set()
@@ -32,6 +32,10 @@ def context(rows=(), dir32=None, iat=None, rdata=b"", data=b""):
     ctx.ghidra, ctx.exports, ctx.vtables = set(), set(), set()
     ctx._ghidra_sorted = []
     return ctx
+
+
+def poke(ctx, va, raw):
+    ctx.mapped = ctx.mapped[:va - BASE] + bytes(raw) + ctx.mapped[va - BASE + len(raw):]
 
 
 def call(at, to):
@@ -127,7 +131,7 @@ def test_jump_table_after_the_body_is_emitted_as_its_own_labelled_table():
             + b"\xc3" + b"\x33\xc0\xc3")
     image_table = struct.pack("<II", BODY + 0x0C, BODY + 0x0D)
     ctx = context()
-    ctx.data = ctx.data[:0x120] + image_table + ctx.data[0x128:]
+    poke(ctx, BODY + 0x20, image_table)
     c = run(code, ctx)
     assert [(t["label"], t["va"], len(t["relocs"])) for t in c["tables"]] == [("g_00401120", 0x401120, 2)]
     assert [(r["addend"]) for r in c["tables"][0]["relocs"]] == [0x0C, 0x0D]
@@ -150,7 +154,7 @@ def test_trailing_call_to_a_returning_function_is_a_boundary_defect():
     """Regression (review of cb480bffec): a truncated body ending in a call was `exact`."""
     code = b"\x6a\x00" + call(BODY + 2, 0x401800)
     ctx = context(rows=[(0x401800, 1, "?returning@@YAXXZ")])
-    ctx.data = ctx.data[:0x800] + b"\xc3" + ctx.data[0x801:]          # the callee is `ret`
+    poke(ctx, 0x401800, b"\xc3")                                       # the callee is `ret`
     assert [f[0] for f in run(code, ctx)["failures"]] == ["falls-off-end-after-call"]
 
 
@@ -159,10 +163,8 @@ def test_trailing_call_to_a_noreturn_import_ends_the_body():
     thunk = 0x401800                                                    # jmp [slot]
     ilt = 0x401810                                                      # jmp thunk
     ctx = context(iat={slot: "MSVCR71.dll!_CxxThrowException"})
-    image = bytearray(ctx.data)
-    image[0x800:0x806] = b"\xff\x25" + struct.pack("<I", slot)
-    image[0x810:0x815] = b"\xe9" + struct.pack("<i", thunk - (ilt + 5))
-    ctx.data = bytes(image)
+    poke(ctx, thunk, b"\xff\x25" + struct.pack("<I", slot))
+    poke(ctx, ilt, b"\xe9" + struct.pack("<i", thunk - (ilt + 5)))
     for code in (b"\x6a\x00" + call(BODY + 2, ilt),                     # through ILT and import thunk
                  b"\x6a\x00\xff\x15" + struct.pack("<I", slot)):        # call [IAT] directly
         c = run(code, ctx)
@@ -178,6 +180,74 @@ def test_cmp_against_a_known_function_address_is_listed_not_relocated():
     c = run(code, context(rows=[(0x401800, 1, "?fn@@YAXXZ")]))
     assert c["relocs"] == []
     assert [(a[0], a[3], a[5]) for a in c["ambiguous"]] == [(1, "imm-cmp", "start:row")]
+
+
+def test_mapped_image_reads_zero_past_a_sections_raw_data():
+    """Regression (audit of cb480bffec): a raw read of .data's zero-filled tail found the
+    next section's file bytes and witnessed a string ('tDevCaps') that is not in memory."""
+    header = bytearray(0x400)
+    header[0:2] = b"MZ"
+    struct.pack_into("<I", header, 0x3C, 0x80)
+    header[0x80:0x84] = b"PE\0\0"
+    struct.pack_into("<HH", header, 0x84, 0x14C, 2)                      # machine, two sections
+    struct.pack_into("<H", header, 0x94, 0xE0)                           # optional header size
+    struct.pack_into("<I", header, 0x98 + 28, BASE)
+    struct.pack_into("<I", header, 0x98 + 56, 0x3000)                    # SizeOfImage
+    struct.pack_into("<I", header, 0x98 + 60, 0x400)                     # SizeOfHeaders
+    table = 0x98 + 0xE0
+    # .data: 0x1000 virtual over 0x200 raw at file 0x400; .next: raw right after it
+    header[table:table + 8] = b".data\0\0\0"
+    struct.pack_into("<IIII", header, table + 8, 0x1000, 0x1000, 0x200, 0x400)
+    header[table + 40:table + 48] = b".next\0\0\0"
+    struct.pack_into("<IIII", header, table + 48, 0x200, 0x2000, 0x200, 0x600)
+    data = bytes(header) + b"\1" * 0x200 + b"\0tDevCaps\0".ljust(0x200, b"\0")
+    base, end, sections, mapped = D.map_image(data)
+    assert (base, end) == (BASE, BASE + 0x3000)
+    assert sections == [(".data", BASE + 0x1000, BASE + 0x2000), (".next", BASE + 0x2000, BASE + 0x2200)]
+    ctx = context()
+    ctx.base, ctx.image_end, ctx.sections, ctx.mapped = base, end, sections, mapped
+    assert ctx.read(BASE + 0x11FF, 2) == b"\1\0"                          # raw, then zero fill
+    assert ctx.read(BASE + 0x1201, 8) == bytes(8)                          # the raw read gave tDevCaps
+    assert ctx.read(BASE + 0x2001, 8) == b"tDevCaps"
+    ctx.sections = [(".data", BASE + 0x1000, BASE + 0x2000), (".rdata", BASE + 0x2000, BASE + 0x2200)]
+    assert ctx.start_evidence(BASE + 0x1201) is None
+    assert ctx.start_evidence(BASE + 0x2001) == "string"
+
+
+def test_pointer_embedded_in_the_body_is_listed_not_left_exact():
+    """Regression (audit of cb480bffec): `mov eax, [BODY+6]; ret; dd callee` came out exact
+    and the unaligned function pointer stayed at its retail address when moved."""
+    code = b"\xa1" + struct.pack("<I", BODY + 6) + b"\xc3" + struct.pack("<I", 0x401800)
+    c = run(code, context(rows=[(0x401800, 0x10, "?callee@@YAXXZ")]))
+    assert [(r["site"], r["symbol"], r["addend"]) for r in c["relocs"]] == [(1, "?body@@YAXXZ", 6)]
+    assert [(a[0], a[1], a[3]) for a in c["ambiguous"]] == [(6, 0x401800, "embedded-data-dword")]
+    assert c["analysis"]["untyped"] == [(6, 10)]
+
+
+def test_verifier_fails_an_unmoved_value_in_embedded_data(tmp_path, monkeypatch):
+    code = b"\xa1" + struct.pack("<I", BODY + 6) + b"\xc3" + struct.pack("<I", 0x401800)
+    analysis = {"insns": {0: D.decode(code, 0, BODY), 5: D.decode(code, 5, BODY)},
+                "ambiguous_sites": set(), "untyped": [(6, 10)]}
+    reloc = {"site": 1, "kind": D.DIR32, "symbol": "?body@@YAXXZ", "addend": 6, "target": BODY + 6}
+    monkeypatch.setattr(D, "read_object", lambda path: (
+        {".text$d": (code[:1] + struct.pack("<I", 6) + code[5:], [(1, D.DIR32, "?body@@YAXXZ")])},
+        {"?body@@YAXXZ": (".text$d", 0)}))
+    errors = D.verify_file(tmp_path / "x.obj", [("?body@@YAXXZ", BODY, code, [reloc], analysis)], {},
+                           lambda v: BASE + 0x1000 <= v < 0x404000)["?body@@YAXXZ"]
+    assert errors == ["+0x6 embedded value 0x401800 did not move"]
+    analysis["ambiguous_sites"] = {6}
+    assert D.verify_file(tmp_path / "x.obj", [("?body@@YAXXZ", BODY, code, [reloc], analysis)], {},
+                         lambda v: BASE + 0x1000 <= v < 0x404000)["?body@@YAXXZ"] == []
+
+
+def test_lea_of_an_instruction_address_does_not_make_code_into_data():
+    """Regression (audit of cb480bffec): `lea eax, [0C8E8F9h]` at 0xC8E8F9 blocked the code
+    after it as a table and failed with decode-runs-into-table."""
+    code = b"\x90" + b"\x8d\x05" + struct.pack("<I", BODY + 1) + b"\x50" + b"\x58\xc3"  # nop; lea eax,[self]
+    c = run(code, context())
+    assert c["failures"] == [] and c["ambiguous"] == [] and c["analysis"]["tables"] == {}
+    assert [(r["site"], r["symbol"], r["addend"], r["rule"]) for r in c["relocs"]] == \
+        [(3, "?body@@YAXXZ", 1, "mem-abs")]
 
 
 toolchain = pytest.mark.skipif(sys.platform != "win32" or not (build.DEFAULT_VC71_ROOT / "Vc7" / "bin" / "ml.exe").exists(),

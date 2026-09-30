@@ -59,6 +59,13 @@ undecodable or unreached bytes
 (int3, nop and MSVC's `mov r,r` / `lea r,[r+0]` fillers are padding), a
 table that cannot be bounded, or any verification error.
 
+Non-code bytes inside a body: jump-table entries are relocated; byte-table
+index bytes are typed up to the switch bound (bytes past it are unreached);
+any other region a memory ACCESS reads (not a `lea`, not decoded code) is
+untyped payload, and each in-image dword in it is listed, never left silently
+exact. Image reads go through the loader's mapping: a section's tail past its
+raw data is zero (retail .data: 0xB3000 virtual over 0x49000 raw).
+
 Verification per body, on the assembled object: the object's relocations are
 exactly the recovered ones; (i) resolved with every symbol at its retail
 address the bytes equal retail's; (ii) with EVERY symbol, this body included,
@@ -130,17 +137,38 @@ def disassembler():
 
 # --------------------------------------------------------------------------- context
 
+def map_image(data):
+    """(base, end, [(name, start VA, end VA)], mapped bytes) of a PE file as loaded.
+
+    A section occupies VirtualSize; only min(SizeOfRawData, VirtualSize) comes
+    from the file and the rest is zero. Reading the file linearly instead runs
+    into the NEXT section's raw bytes: retail .data is 0xB3000 virtual over
+    0x49000 raw, and a raw read at BSS 0x012EF794 found the string 'tDevCaps'.
+    """
+    pe = build.u32(data, 0x3C)
+    count, optional = build.u16(data, pe + 6), build.u16(data, pe + 20)
+    base, image_size = build.u32(data, pe + 24 + 28), build.u32(data, pe + 24 + 56)
+    mapped = bytearray(image_size)
+    headers = build.u32(data, pe + 24 + 60)
+    mapped[:headers] = data[:headers]
+    sections = []
+    for i in range(count):
+        o = pe + 24 + optional + 40 * i
+        name = data[o:o + 8].rstrip(b"\0").decode("ascii", "replace").strip() or "?"
+        vsize, rva, raw_size, raw_ptr = struct.unpack_from("<IIII", data, o + 8)
+        vsize = vsize or raw_size
+        take = min(raw_size, vsize)
+        mapped[rva:rva + take] = data[raw_ptr:raw_ptr + take]
+        sections.append((name, base + rva, base + rva + vsize))
+    return base, base + image_size, sections, bytes(mapped)
+
+
 class Context:
     """Everything the classifier asks about an address. Tests build a fake one."""
 
     def __init__(self):
-        data, sections = build.exe_image()
-        self.data = data
-        pe = build.u32(data, 0x3C)
-        self.base = build.u32(data, pe + 24 + 28)
-        self.image_end = self.base + build.u32(data, pe + 24 + 56)
-        self.sections = [(s["name"] or "?", self.base + s["rva"], self.base + s["rva"] + s["size"],
-                          s["raw_pointer"]) for s in sections]
+        data, _ = build.exe_image()
+        self.base, self.image_end, self.sections, self.mapped = map_image(data)
         rows = [r for r in build.load_function_rows() if r["target_rva"].startswith("0x")]
         by_start = collections.defaultdict(list)
         for row in rows:
@@ -183,7 +211,7 @@ class Context:
 
     # -- raw image
     def section(self, va):
-        for name, start, end, _ in self.sections:
+        for name, start, end in self.sections:
             if start <= va < end:
                 return name
         return "header" if self.base <= va < self.image_end else None
@@ -192,11 +220,10 @@ class Context:
         return self.base <= va < self.image_end
 
     def read(self, va, size):
-        for _, start, end, raw in self.sections:
-            if start <= va < end:
-                off = raw + va - start
-                return self.data[off:off + size]
-        return b""
+        """Bytes as the loader maps them: a section's tail past its raw data is zero."""
+        if not self.in_image(va):
+            return b""
+        return bytes(self.mapped[va - self.base:min(va + size, self.image_end) - self.base])
 
     # -- ownership
     def row_at(self, va):
@@ -457,7 +484,10 @@ def analyze(body, va, ctx=None, extra_entries=()):
                 continue
             if ref.kind == "branch":
                 new_stops.add(t)
-            elif ref.kind == "disp":
+            elif ref.kind == "disp" and (ref.jump_table or ref.byte_table or (
+                    ref.mnemonic != "lea" and t not in insns and t not in stops)):
+                # an address computed (lea) or pointing at decoded code proves nothing about
+                # its target: `lea eax, [0C8E8F9h]` at 0xC8E8F9 takes its own address
                 new_data.setdefault(t, "jumptable" if ref.jump_table else
                                     "bytetable" if ref.byte_table else "data")
         new_entries = set(entries)
@@ -589,6 +619,27 @@ def classify(body, va, ctx, symbol, extra_entries=()):
             ambiguous.append((ref.off, target, ctx.section(target), "imm-no-witnessed-start", ref.text, ""))
         else:
             relocs.append(make_reloc(ctx, ref, DIR32, target, "imm", evidence, va, size, symbol))
+    untyped = []
+    for start, (kind, end) in result["tables"].items():
+        if kind == "bytetable":
+            # index bytes, as many as the switch's `cmp reg, N / ja` bound; more is untyped
+            bound = min((switch_bound(result["insns"], r.insn_off) or 0 for r in result["refs"]
+                         if r.kind == "disp" and r.byte_table and r.value == va + start), default=0)
+            if start + bound < end and not is_filler(body[start + bound:end]):
+                # nothing references the bytes past the bound: unreached, not table
+                untyped.append((start + bound, end, "unreached"))
+        elif kind != "jumptable":
+            untyped.append((start, end, "embedded-data"))
+    for start, end, why in untyped:
+        if why == "unreached":
+            info["unreached-bytes"] += end - start
+            failures.append(("unreached", start, f"{end - start} bytes after a byte table's bound"))
+        # every dword holding an in-image value could be a pointer
+        for o in range(start, end - 3):
+            value = struct.unpack_from("<I", body, o)[0]
+            if ctx.in_image(value) and value >= ctx.base + 0x1000:
+                ambiguous.append((o, value, ctx.section(value), f"{why}-dword", "", ""))
+    result["untyped"] = [(start, end) for start, end, _ in untyped]
     for start, (kind, end) in result["tables"].items():
         if kind != "jumptable":
             continue
@@ -985,8 +1036,15 @@ def verify_file(obj_path, bodies, symbol_va, in_image):
                 got_target = (place + off + 4 + struct.unpack_from("<i", moved, off)[0]) & 0xFFFFFFFF
             if got_target != want or want == r["target"]:
                 errors.append(f"+{off:#x} {sym} decodes to {got_target:#x}, moved target is {want:#x}")
-        # no literal retail address left in reached code, except the listed ambiguous ones
+        # no in-image value left unmoved in untyped embedded data, except listed ones
         listed = analysis["ambiguous_sites"]
+        for start, end in analysis.get("untyped", ()):
+            for o in range(start, end - 3):
+                if o in listed or any(i in fields for i in range(o, o + 4)):
+                    continue
+                if in_image(struct.unpack_from("<I", moved, o)[0]):
+                    errors.append(f"+{o:#x} embedded value {struct.unpack_from('<I', moved, o)[0]:#x} did not move")
+        # no literal retail address left in reached code, except the listed ambiguous ones
         for off, insn in analysis["insns"].items():
             moved_insn = decode(moved, off, place)
             if moved_insn is None or moved_insn.size != insn.size:
