@@ -6,6 +6,9 @@
 // and returns this (mov eax,esi idiom). The owner is identified by the
 // installed vtable, shared with the (int, name) constructor at 0x0092BA60.
 
+extern "C" const void *bfmeVftTexBufferClass[];
+#pragma comment(linker, "/alternatename:_bfmeVftTexBufferClass=??_7TexBufferClass@@6B@")
+
 class BfmeOwnVVE
 {
 public:
@@ -21,5 +24,5 @@ public:
 TexBufferClass::TexBufferClass(const TexBufferClass &other)
 	: BfmeOwnVVE(other)
 {
-	*(unsigned int *)this = 0x0113C340;
+	*(unsigned int *)this = (unsigned int)bfmeVftTexBufferClass;
 }

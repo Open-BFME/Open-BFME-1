@@ -45,6 +45,9 @@ private:
 	unsigned char m_body[0x5C];
 };
 
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+
 class Rva007206E0Snapshot
 {
 public:
@@ -54,7 +57,7 @@ public:
 
 	~Rva007206E0Snapshot(void)
 	{
-		*(volatile unsigned int *)this = 0x01073744;
+		*(volatile unsigned int *)this = (unsigned int)bfmeVftSnapshot;
 	}
 
 private:

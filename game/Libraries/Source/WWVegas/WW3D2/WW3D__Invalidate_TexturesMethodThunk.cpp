@@ -86,7 +86,7 @@ public:
 // ?_Invalidate_Textures@WW3D@@SAXXZ
 void WW3D::_Invalidate_Textures()
 {
-	Rva009EBBC0(0x544558);
+	Rva009EBBC0('TEX');
 	AssetReference texture;
 	bool has_texture;
 	for (;;)
