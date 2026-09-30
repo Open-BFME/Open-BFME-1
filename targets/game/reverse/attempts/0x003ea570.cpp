@@ -1,5 +1,5 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.94 date=2026-09-28
+// partial score=0.2542 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x003EA570 (ILT 0x000441C0): the BFME three-argument
