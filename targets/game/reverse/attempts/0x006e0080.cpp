@@ -1,5 +1,5 @@
 // ?step006E0080@Rva006E0080Owner@@QAEXPAUCoord3D@@0PAURva006E0080Context@@@Z
-// partial score=0.501 date=2026-09-28
+// partial score=0.7525 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x006E0080 (986 bytes): an anonymous camera-transition step.
 //
@@ -7,6 +7,9 @@
 // 0x006E0580 (through ILT), which calls it thiscall with two Coord3D out
 // pointers and a context record.  No vtable slot, string or Zero Hour twin
 // names the owner, so every name here carries the address.
+// Caller evidence: 0x006E0580 (Rva006E0580State::build, reached from
+// W3DView::buildCameraTransform) passes its own this and its context argument,
+// so the owner is that state object and the context is the 0xD8 Gen_006DFC60.
 //
 // What the bytes show: a five-state machine on this+0x2C.
 //   - It compares a module AsciiString (0x012F8044) against "Target" and
@@ -209,8 +212,11 @@ void Rva006E0080Owner::step006E0080( Coord3D *pos, Coord3D *target, Rva006E0080C
 			if( s_blend012F8038 < s_limit012BA8B8 )
 				s_blend012F8038 = s_step012BA8BC + s_blend012F8038;
 
+			Object *obj = TheGameLogic->findObjectByID( context->m_objectIDA4 );
 			Coord3D objPos;
-			objPos = *TheGameLogic->findObjectByID( context->m_objectIDA4 )->getPosition();
+			objPos.x = obj->getPosition()->x;
+			objPos.y = obj->getPosition()->y;
+			objPos.z = obj->getPosition()->z;
 			target->x = (objPos.x - m_target30.x) * s_blend012F803C + m_target30.x;
 			target->y = (objPos.y - m_target30.y) * s_blend012F803C + m_target30.y;
 			target->z = (objPos.z - m_target30.z) * s_blend012F803C + m_target30.z;
@@ -238,8 +244,11 @@ void Rva006E0080Owner::step006E0080( Coord3D *pos, Coord3D *target, Rva006E0080C
 				s_blend012F8030 = s_step012BA8B4 + s_blend012F8030;
 			if( s_blend012F8034 < 0.9f )
 			{
+				Object *obj = TheGameLogic->findObjectByID( context->m_objectIDA4 );
 				Coord3D objPos;
-				objPos = *TheGameLogic->findObjectByID( context->m_objectIDA4 )->getPosition();
+				objPos.x = obj->getPosition()->x;
+				objPos.y = obj->getPosition()->y;
+				objPos.z = obj->getPosition()->z;
 				ICoord2D center;
 				center.x = context->m_widthBC / 2;
 				center.y = context->m_heightC0 / 2;
