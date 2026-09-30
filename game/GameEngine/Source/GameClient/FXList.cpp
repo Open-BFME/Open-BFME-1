@@ -915,8 +915,8 @@ const FXList *FXListStore::findFXList(const char* name) const
 // DamageFXStore::parseDamageFXDefinition, now in Common/DamageFX.cpp. The two
 // are interchangeable under byte comparison because a store-map parser's only
 // distinguishing operands are DIR32 slots, which the verifier fills from the
-// target. The real body is much larger and builds an AsciiString, so this
-// transcription is not it either.
+// target. The real body builds an AsciiString and is matched in
+// FXListStoreParse.cpp; this transcription is kept for its TU.
 /*static */ void FXListStore::parseFXListDefinition(INI *ini)
 {
 	// read the FXList name
