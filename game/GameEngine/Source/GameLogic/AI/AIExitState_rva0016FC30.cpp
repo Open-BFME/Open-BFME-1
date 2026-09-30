@@ -39,10 +39,8 @@ enum ExitDoorType
 
 class Object;
 
-// Existing pin at ILT 0x0000E570 -> StateMachine::getGoalObject body.
-extern void j_0000e570();
-class StateMachine;
-typedef Object *(__fastcall *GetGoalObject)( StateMachine * );
+// StateMachine::getGoalObject: retail 0x000A1490, called through ILT 0x0000E570
+// (symbols.csv pin); the body is StateMachine_getGoalObject.cpp.
 
 class StateMachine
 {
@@ -52,10 +50,7 @@ public:
 		return m_owner;
 	}
 
-	Object *getGoalObject()
-	{
-		return ((GetGoalObject)j_0000e570)( this );
-	}
+	Object *getGoalObject();
 
 	Int getCurrentStateID() const
 	{

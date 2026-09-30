@@ -847,12 +847,8 @@ void StateMachine::internalSetGoalObject( const Object *obj )
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/StateMachine_getGoalObject.cpp
-// ?getGoalObject@StateMachine@@ present-unmatched
-Object *StateMachine::getGoalObject() 
-{ 
-	return TheGameLogic->findObjectByID( m_goalObjectID ); 
-}
+// Retail StateMachine::getGoalObject (0x000A1490) is implemented in
+// StateMachine_getGoalObject.cpp.
 
 //-----------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/StateMachine_getGoalObject.cpp
