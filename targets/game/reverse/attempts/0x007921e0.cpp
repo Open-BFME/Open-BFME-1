@@ -1,5 +1,5 @@
 // ?d_007921e0@@YAXXZ
-// partial score=0.99 date=2026-09-10
+// partial score=0.9966 date=2026-09-10
 typedef int Int;
 typedef int Color;
 typedef unsigned char Bool;
