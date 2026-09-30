@@ -1,5 +1,5 @@
 // ??0AIUpdateInterface@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.953920776071 date=2026-09-28
+// partial score=1.0 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -368,8 +368,23 @@ AIUpdateInterface::AIUpdateInterface(Thing *thing, const ModuleData *data) :
             m_turretAI[i] = new TurretAI(getObject(), d->m_turretData[i], (WhichTurretType)i);
     }
     chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-    if (!d->m_044.isEmpty()) m_attackInfo = TheScriptEngine->getAttackInfo(d->m_044);
+    if (!d->m_044.isEmpty()) {
+        ScriptEngine *engine = TheScriptEngine;
+        m_attackInfo = engine->getAttackInfo(d->m_044);
+        const AsciiString * volatile retainedName = &d->m_044;
+    }
     setWakeFrame(getObject(), 1);
     m_200 = TheLuaScriptEngine->rva002EBF60(d->m_030);
 }
 
+
+// Integration blocker (not a landed constructor): this isolated body probes exact at 1237B with 32 relocations, but must be adopted into official AIUpdate.cpp rather than introducing another AIUpdateInterface class.
+// Retail final vptrs are +0/+0x0C/+0x10/+0x20/+0x24; own fields start +0x28. Current aiupdatelayout shim lacks the fifth interface base.
+// Retail command source is +0x48 (constructor/privateDock), ignored obstacle +0x164 (named path-state callers), blocked-frame field +0x16C, BFME LocomotorSet +0x1A8..+0x1CB (0x24 bytes), curLocomotor +0x1CC, turrets +0x1E8, attitude +0x1F8, and next mood check +0x1FC.
+// The current shim uses a 0x18-byte ZH LocomotorSet at +0x1B4. Padding keeps some later offsets exact while the actual member layout is wrong; two ZH pathfind cells conflict with retail blockedFrames.
+// Adding the fifth base and shrinking pre-locomotor padding preserves 61/65 current official-TU rows, but is diagnostic only and does not establish a correct BFME layout.
+// Wrong existing AI identities: setLastCommandSource at0x001B49AE stores+0x3C and overlaps retained AnimateWindow::setAnimType; true AI command source is+0x48. setAttitude at0x0045DC60 stores+0x1F4, while seven named callers reach true body0x0027DEF0/128B storing+0x1F8. ignoreObstacleID at0x007F21F0 stores+0x154, whereas named callers use getter0x0026F940 and setter0x0026F930 at+0x164.
+// Anonymous seven-byte getter rows0x002B1020/0x004A3AA0 also read+0x154 and must retain anonymous coverage under distinct owners when the AI header is corrected. Do not silently delete them.
+// Use durable tombstones, add_match identity corrections, and exact snapshot naming evidence for proven wrong identities. Existing BFME name witnesses have stale conflicting attitude/mood fields and need independent reconciliation, not a broadened baseline.
+// Final codegen lever: load TheScriptEngine before getAttackInfo, then retain a volatile pointer to d->m_044 after the call to reproduce the retail stack spill. This local has no gameplay effect and needs integration review.
+// Full official-TU/header-dependent byte and relocation gates remain pending. This bank is evidence only; no authored C++ progress is claimed.
