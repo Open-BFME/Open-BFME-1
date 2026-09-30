@@ -1,4 +1,4 @@
-// cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/peer /DNDEBUG /MD -Iinputs/reference/shims/gamespy
+// cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/peer /DNDEBUG /MD -Iinputs/reference/shims/gamespy /Dstrcasecmp=_strcmpi /Dstrzcpy=strncpy
 // Upstream: GameSpy Peer SDK peerPlayers.c, 2004 release.
 
 #include <ctype.h>
@@ -66,7 +66,6 @@ HashTable TableNew(int elemSize, int numBuckets,
 	void (*freeFn)(void *));
 void TableFree(HashTable table);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
-__declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
 PEERBool piPingInitPlayer(PEER peer, piPlayer *player);
 void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType);
 void piPingPlayerLeftRoom(PEER peer, piPlayer *player);
