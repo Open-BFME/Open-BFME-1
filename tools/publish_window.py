@@ -46,6 +46,7 @@ TOKEN_ENV = "BFME_WINDOW_TOKEN"
 # so a crashed holder blocks master for at most this long -- never the 90
 # minutes the first version used (owner's request, 2026-09-30).
 LEASE_MINUTES = 10
+FUTURE_SKEW = 300        # seconds of clock skew tolerated on a window commit
 
 
 class WindowHeld(RuntimeError):
@@ -89,12 +90,21 @@ def read(remote="origin", root=None):
         # Metadata not in the shape we write is unknown, never "someone
         # else's" and never "no window" (review 2026-09-30): it blocks pushes
         # and takeovers, but only for one maximum lease from the ref's own
-        # commit time (a future-dated commit counts from now), so a corrupt
-        # ref cannot lock the swarm out indefinitely.
+        # commit time, so a corrupt ref cannot lock the swarm out. Our writers
+        # stamp the current time: a commit more than FUTURE_SKEW in the future
+        # is corrupt AND expired (counting it "from now" re-extended the
+        # deadline on every read: ~70 min, review 2026-09-30).
+        now = int(time.time())
         try:
-            made = min(int(stamp), int(time.time()))
+            made = int(stamp)
         except ValueError:
-            made = int(time.time())
+            made = 0
+        if made > now + FUTURE_SKEW:
+            print(f"publish_window: {REF} at {token[:10]} has unreadable metadata and a commit "
+                  f"time {made - now} s in the future; treating it as expired (anyone may take "
+                  f"it over; force-close: python3 tools/publish_window.py close --force)",
+                  file=sys.stderr)
+            made = -LEASE_MINUTES * 60
         return token, {"owner": "? (unreadable window metadata)", "invalid": True,
                        "expires": made + LEASE_MINUTES * 60,
                        "purpose": "force-close: python3 tools/publish_window.py close --force"}

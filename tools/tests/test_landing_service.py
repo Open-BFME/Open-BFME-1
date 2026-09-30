@@ -561,7 +561,7 @@ def test_malformed_window_metadata_is_unknown_and_reported_open(world, monkeypat
     assert pw.close_window(nonce, root=service.repo)
 
 
-@pytest.mark.parametrize("age_minutes, blocks", [(0, True), (11, False)])
+@pytest.mark.parametrize("age_minutes, blocks", [(0, True), (11, False), (-60, False), (-2, True)])
 def test_invalid_window_metadata_blocks_only_for_one_lease(world, monkeypatch, age_minutes, blocks):
     # review 2026-09-30 (45a5af4bf3): invalid metadata read as expires=0 let
     # pushes through while the service reported the window open. Now it
