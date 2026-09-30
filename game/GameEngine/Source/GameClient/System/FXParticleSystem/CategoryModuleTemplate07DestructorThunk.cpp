@@ -1,6 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: CategoryModuleTemplate<8> empty dual-vtbl dtor.
 
+extern "C" const void *bfmeVftCategoryModuleInfo8[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+extern "C" const void *bfmeVftModuleTemplate[];
+#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+
 namespace FXParticleSystem
 {
 
@@ -20,8 +25,8 @@ public:
 CategoryModuleTemplate<8>::~CategoryModuleTemplate()
 {
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = 0x0107375C;
-	*(volatile unsigned int *)this = 0x01073758;
+	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo8;
+	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
 }
 
 }
