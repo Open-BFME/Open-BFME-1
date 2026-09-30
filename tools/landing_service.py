@@ -401,18 +401,26 @@ class Service:
         still byte-verified and every ledger/identity/string/constant/DIR32
         check still runs. Nothing is reused that the fingerprints do not
         prove. Measured need: a header-wide full gate held master 28+ min
-        compiling inside the window (2026-09-30)."""
+        compiling inside the window (2026-09-30). Not free: TUs build.py
+        cannot cache (114 in a full gate, 2026-09-30: macro or
+        parent-traversing includes) recompile inside the window every time."""
         if not window:
             return self._run_once(max_batch, publish, attempts)
         pre = {}
         if pregate and publish:
             started = time.time()
             pre = self._run_once(max_batch, publish=False, attempts=1)
-            pre_seconds = round(time.time() - started, 1)
+            pre["pregate_seconds"] = round(time.time() - started, 1)
             if not pre.get("would_land"):
-                return dict(pre, pregate_seconds=pre_seconds)
-            pre = {"pregate_seconds": pre_seconds, "pregate_rejected": pre.get("rejected", [])}
-        return dict(self._windowed(max_batch, publish, attempts, window_minutes, max_hold), **pre)
+                return pre
+        result = self._windowed(max_batch, publish, attempts, window_minutes, max_hold)
+        # both phases report into the documented fields: a publication the
+        # pregate recovered, or a unit it rejected, is still landed/rejected
+        for key in ("landed", "rejected"):
+            result[key] = list(dict.fromkeys(pre.get(key, []) + result.get(key, [])))
+        if "pregate_seconds" in pre:
+            result["pregate_seconds"] = pre["pregate_seconds"]
+        return result
 
     def _windowed(self, max_batch, publish, attempts, window_minutes, max_hold):
         import publish_window

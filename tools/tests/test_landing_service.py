@@ -617,3 +617,22 @@ def test_a_unit_that_fails_the_pregate_never_opens_a_window(world, monkeypatch):
     bad = service.enqueue(unit("bad_pregate"))
     result = service.run_once(window=True)
     assert result["rejected"] == [bad] and opened == []
+
+
+def test_both_phases_report_landed_and_rejected(world, monkeypatch):
+    # review 2026-09-30 (test_pregate_reporting.py): the pregate's results were
+    # dropped or moved out of the documented fields.
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    bad = service.enqueue(unit("bad_rejected_in_pregate"))
+    good = service.enqueue(unit("good_after_pregate"))
+    # a publication journal the pregate's recover() settles
+    recovered = service.enqueue(unit("recovered_on_origin"))
+    base = service.snapshot()
+    tip, _ = service._apply(base, [recovered])
+    git(service.work, "push", "-q", "origin", f"{tip}:refs/heads/master")
+    service._phase(phase="publishing", base=base, tip=tip, units=[recovered])
+    result = service.run_once(window=True)
+    assert result["landed"] == [recovered, good]
+    assert result["rejected"] == [bad]
