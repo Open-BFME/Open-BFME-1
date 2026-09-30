@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+
 class Rva0045C1B0
 {
 	unsigned m_vt;
@@ -12,5 +15,5 @@ public:
 void Rva0045C1B0::apply()
 {
 	m_zero = 0;
-	m_vt = 0x01073744u;
+	m_vt = (unsigned)bfmeVftSnapshot;
 }

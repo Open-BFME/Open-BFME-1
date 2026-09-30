@@ -9,6 +9,7 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;
+extern void j_0000d779();
 
 class Rva0040E090
 {
@@ -24,5 +25,5 @@ void Rva0040E090::set(int a, int b)
 {
 	m_2C = a;
 	m_30 = b;
-	TheWritableGlobalData->m_C58 = (unsigned char)(a == 0x40D779);
+	TheWritableGlobalData->m_C58 = (unsigned char)(a == (int)j_0000d779);
 }
