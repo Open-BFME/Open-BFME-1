@@ -2284,47 +2284,7 @@ void Debug::UpdateFrameStatus(FrameHashEntry &entry)
   entry.status=active?NoSkip:Skip;
 }
 
-// ?AddLogGroup@Debug@@AAEPBDPBD0@Z present-unmatched
-const char *Debug::AddLogGroup(const char *fileOrGroup, const char *descr)
-{
-  // helper buffer for stripping down fileOrGroup
-  char help[200];
-
-  // do we need to strip down fileOrGroup?
-  const char *p=strrchr(fileOrGroup,'\\');
-  const char *q=strchr(p?p:fileOrGroup,'.');
-  if (p||q)
-  {
-    // this extracts everything beyond the last backslash
-    // up to the first dot
-    p=p?p+1:fileOrGroup;
-    if (!q) q=p+strlen(p);
-    if (q-p>=sizeof(help))
-      q=p+sizeof(help)-1;
-    memcpy(help,p,q-p);
-    help[q-p]=0;
-    fileOrGroup=help;
-  }
-
-  // is that log group known?
-  for (KnownLogGroupList *cur=firstLogGroup;cur;cur=cur->next)
-  {
-    if (!strcmp(cur->nameGroup,fileOrGroup))
-    {
-      // yes, return translated name
-      return cur->nameGroup;
-    }
-  }
-
-  // no, add new entry
-  cur=(KnownLogGroupList *)DebugAllocMemory(sizeof(KnownLogGroupList));
-  cur->next=firstLogGroup;
-  cur->nameGroup=(char *)DebugAllocMemory(strlen(fileOrGroup)+1);
-  strcpy(cur->nameGroup,fileOrGroup);
-  cur->descr=descr;
-  firstLogGroup=cur;
-  return cur->nameGroup;
-}
+// Retail AddLogGroup implementation: Debug_AddLogGroup_0088A020.cpp.
 
 // ?StartOutput@Debug@@AAAXW4StringType@DebugIOInterface@@PBDZZ present-unmatched
 void Debug::StartOutput(DebugIOInterface::StringType type, const char *fmt, ...)

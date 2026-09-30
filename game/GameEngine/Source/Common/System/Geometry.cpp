@@ -224,40 +224,7 @@ void GeometryInfo::setMaxHeightAbovePosition(Real z)
 }
 
 //=============================================================================
-// given an object with this geom, how far above the object's canonical position does its max z extend?
-// ?GeometryInfo::getMaxHeightAbovePosition present-unmatched
-Real GeometryInfo::getMaxHeightAbovePosition() const
-{
-	switch(m_type)
-	{
-		case GEOMETRY_SPHERE:
-			return m_majorRadius;
-
-		case GEOMETRY_BOX:
-		case GEOMETRY_CYLINDER:
-			return m_height;
-	};
-
-	return 0.0f;
-}
-
-//=============================================================================
-// given an object with this geom, how far below the object's canonical position does its max z extend?
-// ?GeometryInfo::getMaxHeightBelowPosition present-unmatched
-Real GeometryInfo::getMaxHeightBelowPosition() const
-{
-	switch(m_type)
-	{
-		case GEOMETRY_SPHERE:
-			return m_majorRadius;
-
-		case GEOMETRY_BOX:
-		case GEOMETRY_CYLINDER:
-			return 0.0f;
-	};
-
-	return 0.0f;
-}
+// Retail upper/lower height getters: GeometryInfo_getMaxHeightAbovePosition.cpp.
 
 //=============================================================================
 // given an object with this geom, located at 'pos', where is the "center" of the geometry?
