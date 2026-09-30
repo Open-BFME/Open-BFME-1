@@ -1,5 +1,5 @@
-// ?d_0049ba80@@YAXXZ
-// partial score=0.62 date=2026-09-21
+// ?rva0049ba80@Rva0049BA80Owner@@QAEXPAX_N@Z
+// partial score=1.0 date=2026-09-30
 // cl: /DNDEBUG /MD
 // Retail 0x0049BA80, 292 bytes. Dispatches on this+0x18's flag bits to pick
 // one of several status checks on the caller-supplied object, comparing (or
@@ -36,7 +36,20 @@ public:
 class BfmeX1004
 {
 public:
-	char m_unmodelled000[ 0xd8 ];
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+    virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+    virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3c();
+    virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4c();
+    virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5c();
+    virtual void slot60(); virtual void slot64(); virtual void slot68(); virtual void slot6c();
+    virtual void slot70(); virtual void slot74(); virtual void slot78(); virtual void slot7c();
+    virtual void slot80(); virtual void slot84(); virtual void slot88(); virtual void slot8c();
+    virtual void slot90(); virtual void slot94(); virtual void slot98(); virtual void slot9c();
+    virtual void slota0(); virtual void slota4(); virtual void slota8(); virtual void slotac();
+    virtual void slotb0(); virtual void slotb4(); virtual void slotb8(); virtual void slotbc();
+    virtual void slotc0(); virtual void slotc4(); virtual void slotc8(); virtual void slotcc();
+    virtual void slotd0(); virtual void slotd4(); virtual bool slotd8();
 };
 
 class BfmeHold1004
@@ -84,7 +97,7 @@ void Rva0049BA80Owner::rva0049ba80( void *object, bool flag )
 	if ( object == 0 )
 		return;
 
-	if ( ( UInt )( m_vecEnd - m_vecBegin ) >> 2 < 2u )
+    if ( ( UInt )( (m_vecEnd - m_vecBegin) >> 2 ) < 2u )
 	{
 		m_cached148 = 0;
 		return;
@@ -113,22 +126,14 @@ void Rva0049BA80Owner::rva0049ba80( void *object, bool flag )
 		if ( found == 0 )
 			return;
 
-		typedef bool ( BfmeX1004::*Slot0xd8 )();
-		void *slotPtr = ( *reinterpret_cast<void ***>( found ) )[ 0xd8 / 4 ];
-		union
-		{
-			void *asVoid;
-			Slot0xd8 asMember;
-		} slotCast;
-		slotCast.asVoid = slotPtr;
-		m_cached148 = ( ( found->*slotCast.asMember )() != flag ) ? 1 : 0;
+        m_cached148 = !(found->slotd8() ^ flag);
 		return;
 	}
 
 	if ( flags & 0x800000 )
 	{
-		if ( m_field10 == 0x22 )
-		{
+        switch (m_field10) { case 0x22:
+        {
 			BFMESelectionStatusBits *bits =
 				reinterpret_cast<BFMESelectionStatusBits *>( object );
 			if ( bits->test( 0x89 ) )
@@ -145,12 +150,12 @@ void Rva0049BA80Owner::rva0049ba80( void *object, bool flag )
 			return;
 		}
 
-		if ( m_field10 != 0x2e )
-			return;
+        case 0x2e: {
 
 		BFMEActionObject *action = reinterpret_cast<BFMEActionObject *>( object );
 		bool status = action->testStatus( 0x17 );
-		m_cached148 = ( status != flag ) ? 1 : 0;
+        m_cached148 = status == flag;
 		return;
-	}
+        } default: return; }
+    }
 }
