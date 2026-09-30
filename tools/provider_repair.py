@@ -808,7 +808,8 @@ def cmd_data_next(args):
             pass
     img = reloc_ledger.Image()
     tally = {}
-    for row in data_candidates(args.worklist or args.queue, tally):
+    chosen = args.queue if args.queue else (args.worklist or str(WORKLIST))
+    for row in data_candidates(chosen, tally):
         name = row["name"]
         ident = data_identifier(name)
         va = dir32.get(name)
@@ -911,9 +912,10 @@ def main(argv=None):
     sub.add_parser("status")
     dn = sub.add_parser("data-next", help="serve + claim ONE global the link cannot find, with its ZH definition")
     source = dn.add_mutually_exclusive_group()
-    source.add_argument("--worklist", default=str(WORKLIST),
-                        help="tools/image_compose.py worklist.csv (default): family data, verdict unresolved")
-    source.add_argument("--queue", help="instead: tools/data_scaffold.py --trial-link's queue.csv")
+    source.add_argument("--worklist", default=None,
+                        help="tools/image_compose.py worklist.csv (the default input: build/image_compose/"
+                             "worklist.csv): family data, verdict unresolved")
+    source.add_argument("--queue", default=None, help="instead: tools/data_scaffold.py --trial-link's queue.csv")
     dn.add_argument("--model", default="")
     dn.add_argument("--no-claim", action="store_true", help="list without claiming (dry run)")
     dc = sub.add_parser("data-check", help="verify the symbol's data_rows.csv row; one PASS/FAIL and a receipt")

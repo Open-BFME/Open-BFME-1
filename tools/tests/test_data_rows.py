@@ -306,3 +306,33 @@ def test_data_next_refuses_a_zh_line_that_defines_another_type():
                                        "GlobalData* TheWritableGlobalData = 0;")
     assert provider_repair.type_agrees("?OurLanguage@@3W4LanguageID@@A", "LanguageID OurLanguage = LANGUAGE_ID_US;")
     assert not provider_repair.type_agrees("?OurLanguage@@3W4Other@@A", "LanguageID OurLanguage = LANGUAGE_ID_US;")
+
+
+def test_only_a_compiler_proven_arithmetic_type_is_a_number():
+    """review_20260930_1105: a pointer with the same reference declaration was a
+    'proven scalar'. The compiler's own overload resolution decides now."""
+    _toolchain()
+    work = data_rows.ROOT / "build" / "data_rows" / "test_arith"
+    work.mkdir(parents=True, exist_ok=True)
+    source = work / "kinds.cpp"
+    source.write_text("int *pointer = (int *)0x00401000;\n"
+                      "unsigned short table[3] = { 67, 61, 59 };\n"
+                      "double ratio = 1.5;\n"
+                      "enum Kind { KA, KB };\nKind kind = KB;\n"
+                      "struct Pair { float a, b; };\nPair pair = { 1.0f, 2.0f };\n"
+                      "int **handle = 0;\n"
+                      "short grid[2][2] = { {1, 2}, {3, 4} };\n")
+    expect = {"?pointer@@3PAHA": False, "?table@@3PAGA": True, "?ratio@@3NA": True, "?kind@@3W4Kind@@A": False,
+              "?pair@@3UPair@@A": False, "?handle@@3PAPAHA": False, "?grid@@3PAY01FA": False}
+    for symbol, want in expect.items():
+        assert data_rows.compiled_arithmetic(source, symbol)[0] is want, symbol
+
+
+def test_data_next_uses_the_input_it_is_given(tmp_path, monkeypatch):
+    import provider_repair
+    seen = []
+    monkeypatch.setattr(provider_repair, "data_candidates", lambda path, tally=None: seen.append(str(path)) or [])
+    provider_repair.main(["data-next", "--no-claim", "--queue", str(tmp_path / "q.csv")])
+    provider_repair.main(["data-next", "--no-claim", "--worklist", str(tmp_path / "w.csv")])
+    provider_repair.main(["data-next", "--no-claim"])
+    assert seen == [str(tmp_path / "q.csv"), str(tmp_path / "w.csv"), str(provider_repair.WORKLIST)]

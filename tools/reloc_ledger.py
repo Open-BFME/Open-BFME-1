@@ -1767,11 +1767,12 @@ def c_name(symbol):
     return symbol[1:] if symbol.startswith("_") else symbol
 
 
-def reference_evidence(source, symbol, base, va, cache, sizer=None):
+def reference_evidence(source, symbol, base, va, cache, sizer=None, typer=None):
     """("reference-declaration", why) when the word's covering symbol is defined
     at file scope in our source by exactly the text the Zero Hour reference uses
     for its one definition of that name (so upstream declared the same type), the
-    compiler's sizeof of it (probe TU, our build command) covers the whole word,
+    compiler types it as an arithmetic scalar or array of one (a pointer, enum,
+    class or unresolved type is refused) and its sizeof covers the whole word,
     and -- the caller's premise -- our matching object holds no relocation there.
     Else None."""
     if source is None or not source.is_file():
@@ -1779,7 +1780,7 @@ def reference_evidence(source, symbol, base, va, cache, sizer=None):
     name, value = symbol
     key = (str(source), name)
     if key not in cache:
-        cache[key] = _reference_match(source, name, sizer)
+        cache[key] = _reference_match(source, name, sizer, typer)
     match = cache[key]
     if match is None:
         return None
@@ -1791,7 +1792,7 @@ def reference_evidence(source, symbol, base, va, cache, sizer=None):
                                      f"sizeof {size} (compiler, our build command) covers +{offset:#x}")
 
 
-def _reference_match(source, name, sizer=None):
+def _reference_match(source, name, sizer=None, typer=None):
     import data_rows
     expression = data_rows.cpp_name(name)
     if expression is None:
@@ -1813,6 +1814,11 @@ def _reference_match(source, name, sizer=None):
     size, _ = (sizer or data_rows.compiled_size)(source, name)
     if size is None:
         return None
+    # the words must be NUMBERS: a pointer (`int *p = (int *)0x401000`), an enum,
+    # a class or an unresolved type is not proven arithmetic -- refused
+    arithmetic, _ = (typer or data_rows.compiled_arithmetic)(source, name)
+    if arithmetic is not True:
+        return None
     return size, definition_text(mine[0][1]), f"{theirs[0][0]}:{theirs[0][1]}"
 
 
@@ -1832,7 +1838,8 @@ def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
                             structs resolved; anything unreadable is unproven)
       reference-declaration our source defines the covering symbol with exactly
                             the text of the Zero Hour reference's one definition
-                            of it, and the compiler's sizeof covers the word
+                            of it, the compiler types it arithmetic (scalar or
+                            array of one) and its sizeof covers the word
       element-access        every retail reference into the section is an
                             8/16-bit integer or x87 float access, nothing in
                             data points into it, and direct (unindexed)

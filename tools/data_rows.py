@@ -232,6 +232,75 @@ def compiled_size(source, symbol):
     return struct.unpack_from("<I", body, found[0]["value"])[0], f"sizeof({expression}) under the build's flags"
 
 
+ARRAY_PROBE = """template<class T, int N> char (&drp_n(T (&)[N]))[2];
+char (&drp_n(...))[1];
+"""
+ARITHMETIC_PROBE = "".join(f"char (&drp_k(const volatile {t} *))[2];\n" for t in (
+    "char", "signed char", "unsigned char", "short", "unsigned short", "int", "unsigned int", "long",
+    "unsigned long", "__int64", "unsigned __int64", "float", "double", "long double", "bool")) \
+    + "char (&drp_k(...))[1];\n"
+
+
+def _type_probe(source, symbol, tag, preamble, value):
+    """Compile a probe TU (#include `source`, its own build command) holding
+    `preamble` and `extern "C" const unsigned data_row_kind = <value>`; the value, or (None, why)."""
+    import subprocess
+    import zlib
+    build, rl = _tools()
+    expression = cpp_name(symbol)
+    probe_dir = ROOT / "build" / "data_rows" / "probe"
+    probe_dir.mkdir(parents=True, exist_ok=True)
+    probe = probe_dir / f"{source.stem}_{zlib.crc32((str(source) + symbol).encode()):08x}_{tag}{source.suffix}"
+    obj = probe.with_suffix(".obj")
+    tokens = set(expression.replace("::", " ").split()) | {"data_row_kind", "drp_n", "drp_k"}
+    guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
+                     for token in sorted(tokens))
+    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards + preamble
+                     + f'extern "C" const unsigned int data_row_kind = {value};\n', encoding="utf-8")
+    command, env = build.compiler_command(source, obj)
+    command[-1] = probe.relative_to(ROOT).as_posix()
+    if obj.exists():
+        obj.unlink()
+    proc = subprocess.run(command, capture_output=True, text=True, errors="replace", env=env, cwd=str(ROOT))
+    if proc.returncode or not obj.exists():
+        return None, f"the type probe does not compile: {(proc.stdout + proc.stderr).strip()[-300:]}"
+    sections, symbols = rl.parse_coff(obj.read_bytes())
+    found = [x for x in symbols.values() if x["name"] == "_data_row_kind" and x["section"] > 0]
+    body = sections[found[0]["section"] - 1]["body"] if found else None
+    if not found or body is None:
+        return None, "the type probe emitted no value"
+    return struct.unpack_from("<I", body, found[0]["value"])[0], ""
+
+
+def compiled_arithmetic(source, symbol):
+    """(True/False/None, how): whether the compiler, in probe TUs that #include
+    `source` under its own build command, types the symbol as a built-in
+    arithmetic scalar (integer, character, bool, floating) or a one-dimensional
+    array of one. A pointer (`int *p`), an enum, a class, a multi-dimensional
+    array and anything a probe cannot name or compile are not proven numbers."""
+    expression = cpp_name(symbol)
+    if expression is None:
+        return None, f"{symbol} cannot be named from its TU"
+    source = Path(source) if Path(source).is_absolute() else ROOT / source
+    if source.suffix.lower() == ".c":
+        return None, "a C source: the type probe needs C++ overloading"
+    try:
+        source.resolve().relative_to(ROOT.resolve())
+    except ValueError:
+        return None, f"{source} is outside the repository: no build command"
+    is_array, why = _type_probe(source, symbol, "array", ARRAY_PROBE, f"sizeof(drp_n({expression})) - 1")
+    if is_array is None:
+        return None, why
+    form = expression if is_array else f"&{expression}"  # an array decays to its element pointer
+    kind, why = _type_probe(source, symbol, "kind", ARITHMETIC_PROBE, f"sizeof(drp_k({form})) - 1")
+    if kind is None:
+        return None, why
+    arithmetic = kind == 1
+    shape = "array element" if is_array else "scalar"
+    return arithmetic, (f"the compiler types {expression} as {'an arithmetic' if arithmetic else 'a non-arithmetic'}"
+                        f" {shape}")
+
+
 def symbol_size(sections, symbols, sym, source=None, sizer=compiled_size):
     """(proven sizes, what proves them) for a defined or COMMON data symbol.
 
