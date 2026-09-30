@@ -989,6 +989,8 @@ def file_scope_statements(text):
                         tuple(name for _, name in stack), states[index], line.strip()))
         if line.lstrip().startswith("#"):
             continue
+        if states[index] == "unknown" and ("{" in line or "}" in line):
+            return None  # a brace in a branch that may not exist: no scope can be trusted
         for char in line:
             if char in ";{}":
                 if char == "{":

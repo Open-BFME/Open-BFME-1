@@ -284,3 +284,15 @@ def test_data_next_reads_the_worklist_and_names_c_globals(tmp_path):
     rows = provider_repair.data_candidates(worklist, tally)
     assert [r["name"] for r in rows] == ["___gameMemFreePtr", "?TheWritableGlobalData@@3PAVGlobalData@@A"]
     assert tally == {"typed-evidence-lane": 1, "code-literal-lane": 1}
+
+
+def test_the_sizeof_probe_refuses_a_macro_named_like_the_symbol():
+    _toolchain()
+    work = data_rows.ROOT / "build" / "data_rows" / "test_macro"
+    work.mkdir(parents=True, exist_ok=True)
+    source = work / "macro.cpp"
+    source.write_text("int values[2] = {0, 0};\nshort tiny;\n#define values tiny\n")
+    size, how = data_rows.compiled_size(source, "?values@@3PAHA")
+    assert size is None and "does not compile" in how
+    source.write_text("int values[2] = {0, 0};\n")
+    assert data_rows.compiled_size(source, "?values@@3PAHA")[0] == 8

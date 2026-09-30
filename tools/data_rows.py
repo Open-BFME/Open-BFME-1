@@ -211,8 +211,12 @@ def compiled_size(source, symbol):
     probe = probe_dir / (stem + source.suffix)
     obj = probe.with_suffix(".obj")
     linkage = 'extern "C" ' if source.suffix.lower() != ".c" else ""
-    probe.write_text(f'#include "{source.resolve().as_posix()}"\n'
-                     f"{linkage}const unsigned int data_row_sizeof = sizeof({expression});\n", encoding="utf-8")
+    # a macro named like the symbol, a scope of it or the probe's own variable
+    # would make sizeof measure something else: refuse (#error) instead
+    guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
+                     for token in sorted(set(expression.replace("::", " ").split()) | {"data_row_sizeof"}))
+    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards
+                     + f"{linkage}const unsigned int data_row_sizeof = sizeof({expression});\n", encoding="utf-8")
     command, env = build.compiler_command(source, obj)
     command[-1] = probe.relative_to(ROOT).as_posix()
     if obj.exists():

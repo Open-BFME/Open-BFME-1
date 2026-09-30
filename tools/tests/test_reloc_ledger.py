@@ -328,3 +328,9 @@ def test_a_c_unit_with_two_typedefs_of_one_name_lays_out_nothing(tmp_path):
     cpp = ("#pragma pack(from-flags 8)\nnamespace A { typedef char Element; }\n"
            "namespace B { typedef long Element; }\nusing namespace B;\nElement values[2] = {0,0};\n")
     assert reloc_ledger.CTypes(tmp_path / "t.cpp", preprocessed=cpp).declaration("values") is None
+
+
+def test_a_brace_in_an_unknown_branch_leaves_scope_unknown():
+    text = "#ifdef X\nnamespace A {\n#endif\nint value = 1;\n#ifdef X\n}\n#endif\n"
+    assert reloc_ledger.file_scope_definitions(text, "A::value") is None
+    assert reloc_ledger.file_scope_definitions(text, "value") is None
