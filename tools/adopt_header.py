@@ -92,7 +92,8 @@ ABSOLUTE_DIAGNOSTIC_PATH = re.compile(
 
 
 def relative_diagnostic_paths(text):
-    """Tracked evidence paths must be repository-relative.
+    """Never commit machine-specific absolute paths. All paths recorded in tracked files,
+    including compiler diagnostics and reverse-engineering evidence, must be repository-relative.
     Strip compiler host/worktree roots before recording diagnostics."""
     def relativize(match):
         path = match.group("path").replace("\\", "/")
