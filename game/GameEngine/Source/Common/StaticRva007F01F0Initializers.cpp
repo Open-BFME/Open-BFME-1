@@ -195,3 +195,5 @@ Rva007F01F0 bfmeRva0130A6F8Slot(bfmeRva012C39E0Value, (int)"TransactionException
 extern int bfmeRva012C3A14Value;
 // Retail 0x00C6CF80: MSVC emits _$E117 for this global.
 Rva007F01F0 bfmeRva0130A788Slot(bfmeRva012C3A14Value, (int)"Hello");
+// Retail 0x00C6CFA0: MSVC emits _$E119 for this global.
+extern "C" Rva007F01F0 g_bfmeNameAZC(bfmeRva012C3A14Value, (int)"Ping");
