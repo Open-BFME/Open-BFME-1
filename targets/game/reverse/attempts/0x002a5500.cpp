@@ -1,9 +1,13 @@
 // ?update@SlavedUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.986013986 date=2026-09-28
+// partial score=0.9953 date=2026-09-30
 // ?update@SlavedUpdate@@UAE?AW4UpdateSleepTime@@XZ
 // Retry: retail858B; native scalar/coordinate lifetimes and restored guard-object branch.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // Retail update body at 0x002A5500; BFME layout views follow landed neighbors.
+#include <string.h>
+#pragma intrinsic(memcpy)
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -466,8 +470,16 @@ UpdateSleepTime SlavedUpdate::update()
         Object *guardObject = TheGameLogic->findObjectByID(m_objectID040);
         if (guardObject) {
             endRepair();
-            Coord3D guardPosition=*guardObject->getPosition();
-            doGuardLogic(&guardPosition);
+            const Coord3D *source = guardObject->getPosition();
+            unsigned gx, gz, gy;
+            memcpy(&gx, &source->x, 4);
+            memcpy(&gz, &source->z, 4);
+            memcpy(&gy, &source->y, 4);
+            memcpy(&pinnedPosition.x, &gx, 4);
+            _ReadWriteBarrier();
+            memcpy(&pinnedPosition.z, &gz, 4);
+            memcpy(&pinnedPosition.y, &gy, 4);
+            doGuardLogic(&pinnedPosition);
         }
         else if (myAI->isIdle() &&
             reinterpret_cast<const Gen_000E5A50 *>(me)->bfmeDistanceSquared(
