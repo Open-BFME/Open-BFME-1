@@ -2,7 +2,8 @@
 
 // Open-BFME5: STLport ios_base auxiliary word-array growth for iword and pword.
 
-extern "C" __declspec(dllimport) void *__cdecl u2_import_01359474(void *p, unsigned int bytes);
+// Retail calls MSVCR71.dll!realloc through IAT 0x01359474.
+#include <stdlib.h>
 
 namespace _STL
 {
@@ -29,7 +30,7 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 		unsigned int grown = old_count + old_count;
 		unsigned int count = stlp_max(grown, needed);
 		unsigned int bytes = count * sizeof(T);
-		T *p = (T *)u2_import_01359474(old_ptr, bytes);
+		T *p = (T *)realloc(old_ptr, bytes);
 		if (p != 0)
 		{
 			T *end = (T *)(count * sizeof(T) + (unsigned int)p);
