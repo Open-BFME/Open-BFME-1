@@ -389,3 +389,89 @@ def test_the_drainer_settles_a_journal_even_with_an_empty_queue():
         def queued(self):
             return []
     assert ls.drain(Journal(), once=True) == 0 and calls == ["recover"]
+
+
+# ---- review 2026-09-30 cycle 6 (test_adversarial.py) ----
+
+def test_a_renewal_racing_the_close_still_leaves_no_live_window(world, monkeypatch):
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    uid = service.enqueue(unit("close_race"))
+    original = pw._git
+    raced = []
+
+    def race(*args, **kwargs):
+        if args[:2] == ("push", "-q") and f":{pw.REF}" in args and not raced:
+            raced.append(True)                       # a renewal lands under the close's CAS
+            _, info = pw.read(root=service.repo)
+            assert pw.renew_window(info["nonce"], 9, root=service.repo)
+        return original(*args, **kwargs)
+    monkeypatch.setattr(pw, "_git", race)
+    result = service.run_once(window=True)
+    assert raced and result["landed"] == [uid] and "window_left_open" not in result
+    assert pw.read(root=service.repo) == (None, None)
+
+
+def test_a_window_that_cannot_be_closed_is_reported_and_fails_the_drain(world, monkeypatch, capsys):
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    service.enqueue(unit("stuck_window"))
+    monkeypatch.setattr(pw, "close_window", lambda *a, **k: False)
+    monkeypatch.setattr(ls.time, "sleep", lambda s: None)
+    assert ls.drain(service, once=True) == 1
+    assert "STILL OPEN AND BLOCKING MASTER" in capsys.readouterr().err
+    monkeypatch.undo()
+    _, info = pw.read(root=service.repo)
+    pw.close_window(info["nonce"], root=service.repo)
+
+
+def test_exhausted_publication_retries_fail_a_one_shot_drain(world, monkeypatch):
+    service, unit, origin = world
+    uid = service.enqueue(unit("cannot_publish"))
+    original = ls.git
+
+    def fail_push(*args, **kwargs):
+        if args[:1] == ("push",) and any(str(a).endswith(":refs/heads/master") for a in args):
+            return subprocess.CompletedProcess(args, 1, b"", b"simulated transport failure")
+        return original(*args, **kwargs)
+    monkeypatch.setattr(ls, "git", fail_push)
+    assert ls.drain(service, once=True) == 1
+    assert [r["id"] for r in service.queued()] == [uid]         # still queued for the next pass
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="NTFS junctions")
+def test_a_junction_at_build_cannot_redirect_an_attachment(tmp_path):
+    service = ls.Service(repo=tmp_path, state=tmp_path / "state", gate="true")
+    service.work.mkdir()
+    victim = tmp_path / "other_agent"
+    (victim / "evidence").mkdir(parents=True)
+    (victim / "evidence" / "keep.txt").write_text("other agent data")
+    src = tmp_path / "replacement"
+    src.mkdir()
+    (src / "brief.json").write_text("{}")
+    made = subprocess.run(["cmd", "/c", "mklink", "/J", str(service.work / "build"), str(victim)],
+                          capture_output=True, text=True)
+    assert made.returncode == 0, made.stderr
+    rc = service._unit_checks("base", "tip", [{"id": "unit", "verify": "true",
+                                               "attach": {"build/evidence": str(src)}}])
+    assert rc != 0
+    assert (victim / "evidence" / "keep.txt").exists() and not (victim / "evidence" / "brief.json").exists()
+
+
+def test_a_symlink_inside_build_cannot_redirect_an_attachment(tmp_path):
+    service = ls.Service(repo=tmp_path, state=tmp_path / "state", gate="true")
+    (service.work / "build").mkdir(parents=True)
+    victim = tmp_path / "other_agent"
+    victim.mkdir()
+    (victim / "keep.txt").write_text("keep")
+    try:
+        (service.work / "build" / "link").symlink_to(victim, target_is_directory=True)
+    except OSError:
+        pytest.skip("no symlink privilege")
+    src = tmp_path / "replacement"
+    src.mkdir()
+    rc = service._unit_checks("base", "tip", [{"id": "unit", "verify": "true",
+                                               "attach": {"build/link/x": str(src)}}])
+    assert rc != 0 and (victim / "keep.txt").exists()

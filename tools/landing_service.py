@@ -280,7 +280,9 @@ class Service:
                 # 2026-09-30: `../victim` deleted another agent's files)
                 build_dir = (self.work / "build").resolve()
                 target = (self.work / dest).resolve()
-                if target == build_dir or not target.is_relative_to(build_dir):
+                if (target == build_dir or not target.is_relative_to(build_dir)
+                        or build_dir != self.work.resolve() / "build"      # build/ itself a link
+                        or self._linked(dest)):
                     with (self.state / "logs" / f"{tip}.log").open("ab") as handle:
                         handle.write(f"\n--- unit {record['id']}: refused attachment {dest!r}: "
                                      f"not under {build_dir}\n".encode())
@@ -296,6 +298,20 @@ class Service:
             if got.returncode:
                 return got.returncode
         return 0
+
+    def _linked(self, dest):
+        """True when any existing component of work/dest is a symlink or a
+        junction (a junction at build/ escaped the resolved-path check)."""
+        path = self.work
+        for part in Path(dest).parts:
+            path = path / part
+            if not os.path.lexists(path):
+                break
+            is_junction = getattr(path, "is_junction", lambda: False)()
+            if path.is_symlink() or is_junction:
+                return True
+        return (self.work / "build").is_symlink() or getattr(
+            self.work / "build", "is_junction", lambda: False)()
 
     def _artifacts(self, since):
         """{path: sha256} of build products the gate wrote in the worktree."""
@@ -399,22 +415,45 @@ class Service:
             result = self._run_once(max_batch, publish, attempts, deadline=opened + max_hold)
             return result
         finally:
+            # Stop the renewer BEFORE closing (its push is bounded by the
+            # git timeout), then close while the window is still ours: a
+            # renewal racing the close's compare-and-swap left the window
+            # LIVE while the pass reported success (review 2026-09-30).
             done.set()
-            renewer.join(timeout=30)
+            renewer.join(timeout=180)
             for k, v in saved.items():
                 if v is None:
                     os.environ.pop(k, None)
                 else:
                     os.environ[k] = v
-            publish_window.close_window(nonce, remote=self.remote, root=self.repo)
+            left_open = self._close_window(publish_window, nonce)
             held = round(time.time() - opened, 1)
             result.update(window=nonce, window_held_seconds=held,
-                          **({"window_lost": True} if lost else {}))
+                          **({"window_lost": True} if lost else {}),
+                          **({"window_left_open": True} if left_open else {}))
             with (self.state / "windows.log").open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps({"nonce": nonce, "opened": int(opened), "held": held,
                                          "landed": len(result.get("landed", [])),
                                          "rejected": len(result.get("rejected", [])),
                                          "lost": bool(lost)}) + "\n")
+
+    def _close_window(self, publish_window, nonce, attempts=5):
+        """Close our window, retrying while it is still ours. True (and a
+        loud message) when it is STILL live and ours afterwards."""
+        for _ in range(attempts):
+            if publish_window.close_window(nonce, remote=self.remote, root=self.repo):
+                return False
+            try:
+                token, info = publish_window.read(self.remote, self.repo)
+            except RuntimeError:
+                time.sleep(2)
+                continue
+            if not token or (info or {}).get("nonce") != nonce:
+                return False                    # gone, or not ours any more
+            time.sleep(2)
+        print(f"landing_service: PUBLISH WINDOW {nonce} IS STILL OPEN AND BLOCKING MASTER; "
+              f"close it: python3 tools/publish_window.py close {nonce}", file=sys.stderr, flush=True)
+        return True
 
     def _run_once(self, max_batch=20, publish=True, attempts=3, deadline=None):
         recovered = self.recover(note="recovered after a crash")
@@ -504,6 +543,8 @@ class Service:
                     records.pop(unit, None)
                 return result
             # master moved or a claim changed under the lease: re-read, redo
+        if records:
+            result["unlanded"] = sorted(records)    # publication retries exhausted
         return result
 
     def _commits_of(self, unit):
@@ -583,9 +624,9 @@ def main(argv=None):
         return 0
     if args.action == "drain":
         return drain(service, args.interval, args.once, args.max_batch, args.seed_cache)
-    print(json.dumps(service.run_once(args.max_batch, publish=not args.no_publish,
-                                      window=args.window), indent=1))
-    return 0
+    result = service.run_once(args.max_batch, publish=not args.no_publish, window=args.window)
+    print(json.dumps(result, indent=1))
+    return 1 if result.get("unlanded") or result.get("window_left_open") else 0
 
 
 def drain(service, interval=10, once=False, max_batch=20, seed=None):
@@ -609,6 +650,9 @@ def drain(service, interval=10, once=False, max_batch=20, seed=None):
                     shutil.copytree(seed, service.work / "build" / "match")
                 result = service.run_once(max_batch, window=True)   # short lease, renewed, closed
                 print(json.dumps(dict(result, seconds=round(time.time() - started, 1))), flush=True)
+                # a unit that could not be published, or a window left open,
+                # is a failure of this pass, never a quiet success
+                failed = bool(result.get("unlanded") or result.get("window_left_open"))
         except Exception as error:  # noqa: BLE001 -- a held window is closed by run_once
             failed = True
             print(json.dumps({"error": str(error), "seconds": round(time.time() - started, 1)}),
