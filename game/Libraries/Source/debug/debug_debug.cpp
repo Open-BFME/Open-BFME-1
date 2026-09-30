@@ -2397,55 +2397,8 @@ void Debug::FlushOutput(bool defaultLog)
   *curSource=0;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/Debug_AddPatternEntry_Thunk.cpp
-// ?AddPatternEntry@Debug@@AAEXI_NPBD@Z present-unmatched
-void Debug::AddPatternEntry(unsigned types, bool isActive, const char *pattern)
-{
-  __ASSERT(pattern);
-
-  // alloc new pattern entry
-  PatternListEntry *cur=(PatternListEntry *)
-      DebugAllocMemory(sizeof(PatternListEntry));
-
-  // init
-  cur->next=NULL;
-  cur->frameTypes=types;
-  cur->isActive=isActive;
-  cur->pattern=(char *)DebugAllocMemory(strlen(pattern)+1);
-  strcpy(cur->pattern,pattern);
-
-  // add to list
-  if (lastPatternEntry)
-    lastPatternEntry->next=cur;
-  else
-    firstPatternEntry=cur;
-  lastPatternEntry=cur;
-}
-
-// ?SimpleMatch@Debug@@SA_NPBD0@Z present-unmatched
-bool Debug::SimpleMatch(const char *str, const char *pattern)
-{
-  __ASSERT(str);
-  __ASSERT(pattern);
-  while (*str&&*pattern)
-  {
-    if (*pattern=='*')
-    {
-      pattern++;
-      while (*str)
-        if (SimpleMatch(str++,pattern))
-          return true;
-      return *str==*pattern;
-    }
-    else 
-    {
-      if (*str++!=*pattern++)
-        return false;
-    }
-  }
-
-  return *str==*pattern;
-}
+// Retail AddPatternEntry is defined in Debug_AddPatternEntry_Thunk.cpp.
+// Retail SimpleMatch is defined in WWVegas/WWDebug/DebugSimpleMatch.cpp.
 
 // ?SetBuildInfo@Debug@@SAXPBD00@Z present-unmatched
 void Debug::SetBuildInfo(const char *version,
