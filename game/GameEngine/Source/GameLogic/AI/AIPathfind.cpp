@@ -3635,29 +3635,7 @@ ObjectID PathfindLayer::getBridgeID(void)
 	return m_bridge->peekBridgeInfo()->bridgeObjectID;
 }
 
-/**
- * Return the cell at the index location.
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/pathfind_getcell.cpp
-// ?getCell@PathfindLayer@@QAEPAVPathfindCell@@HH@Z present-unmatched
-PathfindCell *PathfindLayer::getCell(Int x, Int y)
-{
-	DEBUG_ASSERTCRASH(m_layerCells, ("no data in layer, why get cells?"));
-	if (m_layerCells==NULL) {
-		return NULL;
-	}
-	x -= m_xOrigin;
-	y -= m_yOrigin;
-	if (x<0 || x>=m_width) return NULL;
-	if (y<0 || y>=m_height) return NULL;
-	PathfindCell *cell = &m_layerCells[x][y];
-	if (cell->getType() == PathfindCell::CELL_IMPASSABLE) {
-		return NULL; // Impassable cells are ignored.
-	}
-	return cell;
-}
-
-
+// Retail PathfindLayer::getCell is implemented in pathfind_getcell.cpp.
 
 /**
  * Classify the given map cell as clear, or not, etc.
