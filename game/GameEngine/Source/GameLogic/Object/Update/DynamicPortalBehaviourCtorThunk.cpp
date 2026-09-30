@@ -7,6 +7,23 @@ extern "C" void _ReadWriteBarrier(void);
 class Thing;
 class ModuleData;
 
+extern "C" const void *bfmeVftBfmeBasePB0[];
+extern "C" const void *bfmeVftCreateModuleInterface[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourObjectModule[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourInterface[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourUpgradeMux[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourModuleInterface[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourBase4[];
+extern "C" const void *bfmeVftDynamicPortalBehaviourBase5[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeBasePB0=??_7?$BfmeBasePB@$0A@@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftCreateModuleInterface=??_7CreateModuleInterface@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourObjectModule=??_7DynamicPortalBehaviour@@6BDynamicPortalObjectModule@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourInterface=??_7DynamicPortalBehaviour@@6BDynamicPortalBehaviourInterface@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourUpgradeMux=??_7DynamicPortalBehaviour@@6BDynamicPortalUpgradeMux@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourModuleInterface=??_7DynamicPortalBehaviour@@6BDynamicPortalModuleInterface@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourBase4=??_7DynamicPortalBehaviour@@6BDynamicPortalBase4@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicPortalBehaviourBase5=??_7DynamicPortalBehaviour@@6BDynamicPortalBase5@@@")
+
 class QueueProductionExitUpdateBase
 {
 public:
@@ -29,19 +46,19 @@ DynamicPortalBehaviour::DynamicPortalBehaviour(Thing *thing, const ModuleData *m
     reinterpret_cast<QueueProductionExitUpdateBase *>(this)->construct(thing, moduleData);
 
     volatile unsigned int *words = reinterpret_cast<volatile unsigned int *>(bytes);
-    words[0x1c / 4] = 0x010a257c;
-    words[0x20 / 4] = 0x010a372c;
+    words[0x1c / 4] = reinterpret_cast<unsigned int>(bfmeVftBfmeBasePB0);
+    words[0x20 / 4] = reinterpret_cast<unsigned int>(bfmeVftCreateModuleInterface);
 
     _ReadWriteBarrier();
     unsigned int zero = 0;
     *reinterpret_cast<volatile unsigned char *>(bytes + 0x3c) = static_cast<unsigned char>(zero);
     *reinterpret_cast<volatile unsigned char *>(bytes + 0x3d) = static_cast<unsigned char>(zero);
-    words[0x00 / 4] = 0x010a397c;
-    words[0x0c / 4] = 0x010a38b8;
-    words[0x10 / 4] = 0x010a3868;
-    words[0x18 / 4] = 0x010a3858;
-    words[0x1c / 4] = 0x010a3854;
-    words[0x20 / 4] = 0x010a3844;
+    words[0x00 / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourObjectModule);
+    words[0x0c / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourInterface);
+    words[0x10 / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourUpgradeMux);
+    words[0x18 / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourModuleInterface);
+    words[0x1c / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourBase4);
+    words[0x20 / 4] = reinterpret_cast<unsigned int>(bfmeVftDynamicPortalBehaviourBase5);
     words[0x24 / 4] = zero;
     words[0x28 / 4] = zero;
     words[0x2c / 4] = zero;
