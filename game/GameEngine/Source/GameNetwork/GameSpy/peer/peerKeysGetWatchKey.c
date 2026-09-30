@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy
+// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy /Dstrcasecmp=_strcmpi
 /* GameSpy PEER SDK -- watch-key functions from peerKeys.c. */
 
 #include <string.h>

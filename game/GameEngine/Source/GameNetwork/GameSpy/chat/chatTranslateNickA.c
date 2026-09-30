@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy
+// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy /Dstrcasecmp=_strcmpi
 /* GameSpy Chat SDK -- chatTranslateNickA, retail 0x00860690, 83 bytes.
    The 2007 SDK source keeps a namespace extension only when it matches the
    end of the nickname, then returns the shortened nickname. */

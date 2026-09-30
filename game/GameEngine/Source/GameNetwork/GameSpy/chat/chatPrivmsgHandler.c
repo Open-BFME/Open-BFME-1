@@ -1,3 +1,4 @@
+// cl: /Dstrcasecmp=_strcmpi
 // GameSpy Chat SDK -- chatHandlers.c, 2007 release.
 // Retail command dispatch table proves UTM -> 0086D0F0 and ATM -> 0086D1C0.
 // The former NOTICE/UTM labels were shifted; callback types remain 3/4.
