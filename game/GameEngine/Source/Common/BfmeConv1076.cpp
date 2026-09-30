@@ -46,6 +46,13 @@ public:
 	virtual void appendMessage(unsigned int type) = 0;
 };
 
+class CampaignManager;
+class GameLogic;
+class MessageStream;
+extern CampaignManager *TheLivingWorldLogic;
+extern GameLogic *TheGameLogic;
+extern MessageStream *TheMessageStream;
+
 #define BFME_GLOBAL_AT(TYPE, ADDRESS) (*(TYPE *)(ADDRESS))
 
 class BfmeQ1076
@@ -85,13 +92,13 @@ void BfmeQ1076::bfmeG1076(int)
 		}
 	}
 
-	if (!BFME_GLOBAL_AT(Rva003BCB00 *, 0x012F1028)->flag())
+	if (!BFME_GLOBAL_AT(Rva003BCB00 *, &TheLivingWorldLogic)->flag())
 	{
-		BFME_GLOBAL_AT(BfmeThingBZF *, 0x012F0898)->bfmeGoBZF();
+		BFME_GLOBAL_AT(BfmeThingBZF *, &TheGameLogic)->bfmeGoBZF();
 		j_00011464();
 		return;
 	}
 
-	BFME_GLOBAL_AT(BfmeMessageStream *, 0x012ED5EC)->appendMessage(0x1D);
+	BFME_GLOBAL_AT(BfmeMessageStream *, &TheMessageStream)->appendMessage(0x1D);
 	j_00010762();
 }

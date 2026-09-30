@@ -90,14 +90,21 @@ public:
 	virtual void bfmeSlot0();
 };
 
+extern "C" const void *bfmeVftHordeContainModuleDataBase[];
+#pragma comment(linker, "/alternatename:_bfmeVftHordeContainModuleDataBase=??_7HordeContainModuleDataBase@@6B@")
+extern "C" const void *bfmeVftLargeGroupAudioRva004948B0Base[];
+#pragma comment(linker, "/alternatename:_bfmeVftLargeGroupAudioRva004948B0Base=??_7LargeGroupAudio@@6BRva004948B0Base@@@")
+extern "C" const void *bfmeVftLargeGroupAudioHordeContainModuleDataBase[];
+#pragma comment(linker, "/alternatename:_bfmeVftLargeGroupAudioHordeContainModuleDataBase=??_7LargeGroupAudio@@6BHordeContainModuleDataBase@@@")
+
 class AudioVectorInit
 {
 public:
 	AudioVectorInit()
 	{
-		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = 0x01073744;
-		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x0C ) = 0x010EE13C;
-		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = 0x010EE128;
+		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = reinterpret_cast<int>( bfmeVftHordeContainModuleDataBase );
+		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x0C ) = reinterpret_cast<int>( bfmeVftLargeGroupAudioRva004948B0Base );
+		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = reinterpret_cast<int>( bfmeVftLargeGroupAudioHordeContainModuleDataBase );
 		m_begin = 0;
 		m_end = 0;
 		m_capacity = 0;

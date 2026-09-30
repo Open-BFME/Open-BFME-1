@@ -66,7 +66,7 @@ protected:
 	friend class W3DDisplay;
 };
 
-#define RVA006EB3E0_DATA(type, address) (*reinterpret_cast<const type *>(address))
+#define RVA006EB3E0_DATA(type, value) (static_cast<type>(value))
 
 class W3DDisplay
 {
@@ -90,8 +90,8 @@ void W3DDisplay::rva006EB3E0(int modeIndex, int *xres, int *yres,
 		if (resolutions[res].BitDepth >= 24 && resolutions[res].Width >= 800 &&
 			fabs((float)resolutions[res].Width /
 				(float)resolutions[res].Height -
-				RVA006EB3E0_DATA(float, 0x0111e368)) <
-			RVA006EB3E0_DATA(float, 0x01076c24))
+				RVA006EB3E0_DATA(float, 1.3333f)) <
+			RVA006EB3E0_DATA(float, 0.01f))
 		{
 			if (numResolutions == modeIndex)
 			{

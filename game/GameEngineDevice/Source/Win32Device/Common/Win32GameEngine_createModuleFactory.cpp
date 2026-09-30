@@ -11,13 +11,16 @@ private:
     unsigned char m_storage[0x20];
 };
 
+extern const void *g_0111CAAC[];
+extern const void *g_0111CA98[];
+
 class W3DModuleFactory : public ModuleFactory
 {
 public:
     W3DModuleFactory() : ModuleFactory()
     {
-        *(volatile unsigned int *)this = 0x0111CAAC;
-        *(volatile unsigned int *)((unsigned char *)this + 0x08) = 0x0111CA98;
+        *(volatile unsigned int *)this = (unsigned int)g_0111CAAC;
+        *(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)g_0111CA98;
     }
 
 private:

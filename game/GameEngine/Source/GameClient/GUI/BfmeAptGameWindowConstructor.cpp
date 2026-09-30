@@ -14,6 +14,13 @@ public:
 extern "C" void _ReadWriteBarrier( void );
 #pragma intrinsic( _ReadWriteBarrier )
 
+extern "C" void *bfmeVftS4Owner[];
+#pragma comment(linker, "/alternatename:_bfmeVftS4Owner=??_7S4Owner@@6B@")
+extern "C" void *bfmeVft_bfme_AptGameWindowGameWindow[];
+#pragma comment(linker, "/alternatename:_bfmeVft_bfme_AptGameWindowGameWindow=??_7_bfme_AptGameWindow@@6BGameWindow@@@")
+extern "C" void *bfmeVft_bfme_AptGameWindowGen_dtor_004654c0Base[];
+#pragma comment(linker, "/alternatename:_bfmeVft_bfme_AptGameWindowGen_dtor_004654c0Base=??_7_bfme_AptGameWindow@@6BGen_dtor_004654c0Base@@@")
+
 class _bfme_AptGameWindow
 {
 public:
@@ -25,7 +32,7 @@ _bfme_AptGameWindow::_bfme_AptGameWindow( void *context )
 {
 	( (BfmeAptScreenBase *)this )->initialize( context );
 
-	*(volatile unsigned int *)( (char *)this + 0x218 ) = 0x010F7114;
+	*(volatile unsigned int *)( (char *)this + 0x218 ) = (unsigned int)bfmeVftS4Owner;
 	_ReadWriteBarrier();
 	unsigned int zero = 0;
 	*(unsigned int *)( (char *)this + 0x21C ) = zero;
@@ -42,8 +49,8 @@ _bfme_AptGameWindow::_bfme_AptGameWindow( void *context )
 	*(unsigned int *)( (char *)this + 0x248 ) = zero;
 
 	_ReadWriteBarrier();
-	*(volatile unsigned int *)( (char *)this + 0x000 ) = 0x010F711C;
-	*(volatile unsigned int *)( (char *)this + 0x218 ) = 0x010F7118;
+	*(volatile unsigned int *)( (char *)this + 0x000 ) = (unsigned int)bfmeVft_bfme_AptGameWindowGameWindow;
+	*(volatile unsigned int *)( (char *)this + 0x218 ) = (unsigned int)bfmeVft_bfme_AptGameWindowGen_dtor_004654c0Base;
 	_ReadWriteBarrier();
 	*(unsigned int *)( (char *)this + 0x24C ) = zero;
 	*(unsigned char *)( (char *)this + 0x254 ) = 0;

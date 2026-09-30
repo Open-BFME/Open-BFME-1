@@ -49,12 +49,17 @@ private:
 	volatile float m_targetDiffuse[3];
 };
 
+extern "C" const void *bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase=??_7Rva006F5BE0MultiTailDtor@@6BRva0093BE00MultiBase@@@")
+extern "C" const void *bfmeVftRva006F5BE0MultiTailDtorTailMixinA[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva006F5BE0MultiTailDtorTailMixinA=??_7Rva006F5BE0MultiTailDtor@@6BTailMixinA@@@")
+
 // ??0W3DDynamicLight@@QAE@XZ
 W3DDynamicLight::W3DDynamicLight() :
 	LightClass(POINT)
 {
-	m_vptr = 0x0111ff78;
-	m_vptr2 = 0x0111ff70;
+	m_vptr = (unsigned int)bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase;
+	m_vptr2 = (unsigned int)bfmeVftRva006F5BE0MultiTailDtorTailMixinA;
 	m_targetAmbient[0] = 0.0f;
 	m_targetAmbient[1] = 0.0f;
 	m_targetAmbient[2] = 0.0f;
