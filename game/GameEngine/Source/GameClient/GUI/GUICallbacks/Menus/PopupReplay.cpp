@@ -48,6 +48,8 @@
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 
+// Retail's namespace-scope string constructor calls the static STLport body.
+#define _STLP_USE_STATIC_LIB
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/LocalFileSystem.h"
