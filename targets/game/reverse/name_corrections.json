@@ -10478,5 +10478,25 @@
   "after_sha256": "403fcc747d84b6e35e309ff73eeaef35a1852f506d8b0ab768f3ab39944003ad",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "targets/game/reverse/symbols.csv pins ?invoke@Rva0046DD00@@QAEXXZ at 0x00023A60, which spells the name Rva0046DD00; the source uses that pinned spelling instead of S4Holder0046DBB0."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "AIUpdateInterface",
+  "new_name": "Rva0045DC60Owner",
+  "before_sha256": "f542fbe51752738802472bf53dac4cfba8fc5cc245bfeff6f9ab84fee8879a86",
+  "after_sha256": "64f14aec0342a191d3c5ef61598510656db42572cf7014a81109fb9fcac6a6ec",
+  "evidence": "targets/game/reverse/identity_evidence/aiupdate-identity-corrections.md",
+  "reason": "Retail body stores+1F4; seven matched callers identify the distinct128-byte true AI setter at0027DEF0 storing+1F8. The physical body and exact extent are preserved under an address-derived owner; no new semantic identity is claimed."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "AIUpdateInterface",
+  "new_name": "Rva007F21F0Owner",
+  "before_sha256": "8658b589e7edc2c9779631d27fb37c8a9dbbceb91671bec344d483fd4ae39a00",
+  "after_sha256": "398f07b0612d3d148d94b6778c90e06765cf90e81b25f36f5ad6719bbe0e5a9e",
+  "evidence": "targets/game/reverse/identity_evidence/aiupdate-identity-corrections.md",
+  "reason": "Retail body stores+154; eight matched callers and true setter/getter bodies prove AI ignored-obstacle field+164. The physical body and exact extent are preserved under an address-derived owner; no new semantic identity is claimed."
  }
 ]
