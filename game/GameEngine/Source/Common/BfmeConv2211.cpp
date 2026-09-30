@@ -22,8 +22,9 @@ struct Rva003FD060TerrainLogic
 
 extern Rva003FD060TerrainLogic *TheTerrainLogic;
 extern const float BfmeZeroRange;
+extern const float g_0109B46C;
 
-#define G_BFME_007AE900_BIAS (*(const float *)0x0109B46C)
+#define G_BFME_007AE900_BIAS g_0109B46C
 
 // Slot cap only: this reaches the retail vtable slot 0x158 (index 86) that
 // 0x007AE900 calls twice on its incoming object; slots 0..85 are unproven
