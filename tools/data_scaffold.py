@@ -64,6 +64,7 @@ BSS_FLAGS = 0xC0000080
 SECTION_NAMES = {".rdata": ".rdata$S", ".data": ".data$S", "STLPORT_": "STLPORT_"}
 SECTIONS_PER_OBJECT = 2000
 LINK_BASE = 0x10000000
+LOCK_WAIT = 2 * 3600  # seconds to wait for another census link to release the lock
 MAX_ALIGN = 16
 
 
@@ -489,7 +490,7 @@ DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^
 REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 
 
-def trial_link(img, objects, rsp, out, log=print):
+def trial_link(img, objects, rsp, out, log=print, code=True):
     swap = dump_objects()
     census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
     linked, swapped, missing = [], 0, []
@@ -504,19 +505,49 @@ def trial_link(img, objects, rsp, out, log=print):
             continue
         linked.append(ROOT / rel)
     linked = list(dict.fromkeys(linked))
-    linked += objects + [out / "obj" / "aliases.obj"]
     work = out / "trial"
     work.mkdir(parents=True, exist_ok=True)
+    counts = {}
+    if code:
+        import code_scaffold
+        rows = [r for r in build.load_function_rows() if r["target_rva"].startswith("0x")]
+        eh_targets = {int(r["target_va"], 16) for r in RL.read_csv_rows(LEDGER / "ledger.csv")
+                      if r["rule"] in code_scaffold.EH_RULES}
+        census_set = {p.resolve() for p in linked}
+        funclet_swaps, funclets, fcounts, refused = code_scaffold.funclet_labels(img, rows, census_set, out,
+                                                                                 eh_targets, log)
+        linked = [funclet_swaps.get(p.resolve(), p) for p in linked]
+        dumped, dump_objs, dcounts = code_scaffold.funclet_dumps(img, refused, out, log)
+        funclets.update(dumped)
+        linked += dump_objs
+        defined, referenced = code_scaffold.object_externals(linked + objects + [out / "obj" / "aliases.obj"])
+        data_aliases = {r["name"] for r in RL.read_csv_rows(out / "symbols.csv") if r["role"] == "alias"}
+        table, why = code_scaffold.code_aliases(img, rows, referenced - defined, defined, funclets, data_aliases)
+        alias_object(table, out / "obj" / "code_aliases.obj")
+        with (out / "code_aliases.csv").open("w", newline="", encoding="utf-8") as handle:
+            w = csv.writer(handle, lineterminator="\n")
+            w.writerow(["alias", "defined_as"])
+            w.writerows(sorted(table.items()))
+        linked.append(out / "obj" / "code_aliases.obj")
+        counts = {"funclet_labels": dict(fcounts), "funclet_bodies_from_retail": dict(dcounts), "code_aliases": len(table), "code_alias_kinds": dict(why),
+                  "undefined_before_code_aliases": len(referenced - defined)}
+        log(json.dumps(counts))
+    linked += objects + [out / "obj" / "aliases.obj"]
     listfile = work / "objects.rsp"
     listfile.write_text("\n".join(f'"{p}"' for p in linked) + "\n", encoding="utf-8")
     link, env = linker()
     cmd = [str(link), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86", "/SUBSYSTEM:WINDOWS",
            "/ENTRY:WinMainCRTStartup", f"/OUT:{work / 'trial.exe'}", f"@{listfile}"]
     lock = census_lock_path()
-    try:
-        lock.mkdir()
-    except FileExistsError:
-        raise SystemExit(f"data_scaffold: {lock} is held (a census link is running); not linking")
+    deadline = time.time() + LOCK_WAIT
+    while True:
+        try:
+            lock.mkdir()
+            break
+        except FileExistsError:
+            if time.time() > deadline:
+                raise SystemExit(f"data_scaffold: {lock} held for {LOCK_WAIT // 60} min; not linking")
+            time.sleep(30)
     try:
         started = time.time()
         proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=env)
@@ -526,7 +557,7 @@ def trial_link(img, objects, rsp, out, log=print):
     text = proc.stdout + proc.stderr
     (work / "trial.log").write_text(text, encoding="utf-8")
     meta = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
-            "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode}
+            "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode, **counts}
     (work / "trial_meta.json").write_text(json.dumps(meta), encoding="utf-8")
     return classify_trial(img, objects, text, meta, work, log)
 
@@ -582,13 +613,45 @@ def classify_trial(img, objects, text, meta, work, log=print):
         involved = any(Path(o).name.startswith(("scaffold_", "aliases")) for o in objs)
         dup_refined[("scaffold-" if involved else "") + ("data" if name in scaffold_names else "other")] += 1
     fatal = sorted(set(re.findall(r"fatal error (LNK\d+)", text)))
+    refs = collections.Counter()
+    for line in text.splitlines():
+        found = UNRESOLVED.search(line)
+        if found and REFERRER.match(line):
+            refs[found.group(1) or found.group(2)] += 1
     summary = {**meta, "fatal": fatal, "unresolved": sum(refined.values()), "unresolved_classes": dict(refined),
                "duplicates": len(dups), "duplicate_classes": dict(dup_refined),
-               "duplicate_classes_census": dict(dup_kinds)}
+               "duplicate_classes_census": dict(dup_kinds),
+               "unpinned_residue": residue([n for n, e in detail.items() if e["kind"] == "unpinned"], refs)}
     (work / "trial.json").write_text(json.dumps({**summary, "unresolved_detail": detail, "duplicate_detail": dups},
                                                 indent=1), encoding="utf-8")
     log(json.dumps(summary, indent=1))
     return summary
+
+
+RESIDUE_CAUSES = (
+    ("crt", re.compile(r"^_[^?]|^__|^\?\?[23]@YAPAXI@Z$|^\?\?[23]@YAXPAX@Z$")),
+    ("vtable/rtti", re.compile(r"^\?\?_[7R]")),
+    ("invented Bfme*/Rva*/Gen* name", re.compile(r"Bfme|BFME|bfme|Rva[0-9A-Fa-f]{8}|Gen_?[0-9A-Fa-f]{8}|Rva[0-9A-F]")),
+    ("ctor/dtor (private class copies)", re.compile(r"^\?\?[01]|^\?\?_[DEG]")),
+    ("operator", re.compile(r"^\?\?[2-9A-Z]|^\?\?_[0-9A-Z]")),
+    ("static/global data", re.compile(r"^\?[^?].*@@[23]")),
+    ("other method or function", re.compile(r".")),
+)
+
+
+def residue(names, refs, top=12):
+    """Unpinned names grouped by cause, with the most-referenced first (references =
+    referring objects in the link log)."""
+    groups = collections.defaultdict(list)
+    for name in names:
+        cause = next(c for c, rx in RESIDUE_CAUSES if rx.search(name))
+        groups[cause].append(name)
+    out = {}
+    for cause, members in sorted(groups.items(), key=lambda kv: -len(kv[1])):
+        ranked = sorted(members, key=lambda n: (-refs.get(n, 0), n))
+        out[cause] = {"names": len(members), "references": sum(refs.get(n, 0) for n in members),
+                      "top": [[n, refs.get(n, 0)] for n in ranked[:top]]}
+    return out
 
 
 # --------------------------------------------------------------------------- driver
@@ -599,6 +662,8 @@ def main(argv=None):
     ap.add_argument("--out", type=Path, default=OUT)
     ap.add_argument("--link-check", action="store_true", help="also link the scaffold alone at a moved base")
     ap.add_argument("--trial-link", action="store_true", help="also link the whole program without /FORCE")
+    ap.add_argument("--no-code-scaffold", action="store_true",
+                    help="trial link without funclet labels and code aliases (tools/code_scaffold.py)")
     ap.add_argument("--reclassify", action="store_true", help="classify the last trial link's log again")
     ap.add_argument("--census-rsp", type=Path, default=ROOT / "build" / "link_census" / "objects.rsp",
                     help="the census's object list (repo-relative paths)")
@@ -616,7 +681,7 @@ def main(argv=None):
         report["link_check"], link_failures = link_check(img, objects, labels, aliases, scan, args.out)
         report["link_failures"] = link_failures[:50]
     if args.trial_link:
-        report["trial"] = trial_link(img, objects, args.census_rsp, args.out)
+        report["trial"] = trial_link(img, objects, args.census_rsp, args.out, code=not args.no_code_scaffold)
     elif args.reclassify:
         work = args.out / "trial"
         report["trial"] = classify_trial(img, objects, (work / "trial.log").read_text(encoding="utf-8"),

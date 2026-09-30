@@ -77,3 +77,12 @@ def test_an_unlisted_in_image_literal_fails_verification(tmp_path):
     img, objects, labels, aliases, relocs, scan, unlinkable = scaffold_fixture(tmp_path, scan_listed=False)
     checks, failures = data_scaffold.verify(img, objects, relocs, scan, labels, unlinkable)
     assert checks["unlisted_literals"] == 1 and "0x00401234" in failures[0]
+
+
+def test_unpinned_residue_groups_by_cause_most_referenced_first():
+    out = data_scaffold.residue(["_memcpy", "??0Foo@@QAE@XZ", "?x@BfmeThing@@QAEXXZ", "??4Foo@@QAEAAV0@ABV0@@Z",
+                                 "??1Foo@@QAE@XZ", "?f@A@@QAEXXZ"], {"??1Foo@@QAE@XZ": 5, "??0Foo@@QAE@XZ": 2})
+    ctor = out["ctor/dtor (private class copies)"]
+    assert ctor["names"] == 2 and ctor["references"] == 7 and ctor["top"][0] == ["??1Foo@@QAE@XZ", 5]
+    assert set(out) == {"crt", "ctor/dtor (private class copies)", "invented Bfme*/Rva*/Gen* name", "operator",
+                        "other method or function"}
