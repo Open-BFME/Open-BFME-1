@@ -136,16 +136,25 @@ inline Color GameMakeColor(Int red, Int green, Int blue, Int alpha)
 }
 
 // The initObserverControls body establishes these exact BFME data slots.
-#define BFME_WINDOW_AT(rva) (*(GameWindow **)(rva))
-#define ObserverPlayerInfoWindow BFME_WINDOW_AT(0x012F358C)
-#define ObserverPlayerListWindow BFME_WINDOW_AT(0x012F3590)
-#define staticTextNumberOfUnits BFME_WINDOW_AT(0x012F35E0)
-#define staticTextNumberOfBuildings BFME_WINDOW_AT(0x012F35E4)
-#define staticTextNumberOfUnitsKilled BFME_WINDOW_AT(0x012F35E8)
-#define staticTextNumberOfUnitsLost BFME_WINDOW_AT(0x012F35EC)
-#define staticTextPlayerName BFME_WINDOW_AT(0x012F35F0)
-#define winFlag BFME_WINDOW_AT(0x012F35D8)
-#define winGeneralPortrait BFME_WINDOW_AT(0x012F35DC)
+extern GameWindow *g_012F358C;
+extern GameWindow *g_012F3590;
+extern GameWindow *g_012F35D8;
+extern GameWindow *g_012F35DC;
+extern GameWindow *g_012F35E0;
+extern GameWindow *g_012F35E4;
+extern GameWindow *g_012F35E8;
+extern GameWindow *g_012F35EC;
+extern GameWindow *g_012F35F0;
+#define BFME_WINDOW_AT(window) (window)
+#define ObserverPlayerInfoWindow BFME_WINDOW_AT(g_012F358C)
+#define ObserverPlayerListWindow BFME_WINDOW_AT(g_012F3590)
+#define staticTextNumberOfUnits BFME_WINDOW_AT(g_012F35E0)
+#define staticTextNumberOfBuildings BFME_WINDOW_AT(g_012F35E4)
+#define staticTextNumberOfUnitsKilled BFME_WINDOW_AT(g_012F35E8)
+#define staticTextNumberOfUnitsLost BFME_WINDOW_AT(g_012F35EC)
+#define staticTextPlayerName BFME_WINDOW_AT(g_012F35F0)
+#define winFlag BFME_WINDOW_AT(g_012F35D8)
+#define winGeneralPortrait BFME_WINDOW_AT(g_012F35DC)
 
 void ControlBar::populateObserverInfoWindow(void)
 {
