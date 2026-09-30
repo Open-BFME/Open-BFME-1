@@ -2,6 +2,8 @@
 // at retail RVA 0x0078A430.  The original owning type is not recovered, so the
 // address-derived view records only the observed fields and table pointer.
 
+extern void *g_Rva00789900Table[];
+
 struct Gen_0078A430
 {
 	unsigned int m_vptr;
@@ -21,7 +23,7 @@ struct Gen_0078A430
 	{
 		m_a = -1;
 		m_b = 0;
-		m_vptr = 0x01126ccc;
+		m_vptr = (unsigned int)g_Rva00789900Table;
 		m_c = 0;
 		m_d = 0;
 		m_flag = flag;

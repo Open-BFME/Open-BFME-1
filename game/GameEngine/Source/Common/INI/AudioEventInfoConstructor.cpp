@@ -84,10 +84,13 @@ private:
 	Rva000B0D10VectorStorage m_vector8c;
 };
 
+extern "C" const void *bfmeVftAudioEventInfo[];
+#pragma comment(linker, "/alternatename:_bfmeVftAudioEventInfo=??_7AudioEventInfo@@6B@")
+
 AudioEventInfo::AudioEventInfo()
 {
 	m_zero = 0;
-	m_vft = 0x010818CC;
+	m_vft = (int)bfmeVftAudioEventInfo;
 	m_name = 0;
 	m_filename = 0;
 	m_volume = 0x42c80000;

@@ -62,7 +62,7 @@ extern Glo012F1028Type *Glo012F1028;
 
 static __forceinline PlayerList *readPlayersForNewMap()
 {
-    return *(PlayerList * volatile *)0x012ED748;
+    return Rva002EE330ThePlayers;
 }
 
 class BfmePlayerMapState

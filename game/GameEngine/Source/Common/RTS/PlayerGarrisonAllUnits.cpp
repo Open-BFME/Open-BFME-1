@@ -211,6 +211,9 @@ struct BfmePlayerTeamListNode
 
 typedef BitFlags<192> BfmeGarrisonKindOfMask;
 
+extern "C" void *bfmeVftPartitionFilter[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
@@ -226,7 +229,7 @@ public:
 	BfmeGarrisonKindOfMask m_mustBeClear;
 	~PartitionFilterAcceptByKindOf()
 	{
-		*(UnsignedInt *)this = 0x01083B5C;
+		*(UnsignedInt *)this = (UnsignedInt)bfmeVftPartitionFilter;
 	}
 };
 
