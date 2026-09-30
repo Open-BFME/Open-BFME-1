@@ -10748,5 +10748,55 @@
   "after_sha256": "a40aca26c386f566f57a8b2febb02f1d8e128ce72a64db484a1979af3a6bf232",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "False pairing: storage is the member of the removed bank's Rva0021D180Tree; m_unmodelled000 is the member of BfmeSubBDB, the class view of the matched 0x0021D070 ?bfmeDoBDB@BfmeSubBDB@@QAEXPAXH@Z row in BfmeConv443.cpp, where it existed before this change. No name was replaced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "old_name": "BfmeParticleSystemXferHandle",
+  "new_name": "Rva0010C3E0",
+  "before_sha256": "f29946e7fdfbc31356fa45d6335aff6823d240c92b3accc03fd438e7836aaf3e",
+  "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
+  "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
+  "reason": "Retail caller 007217DA routes via00008CA1 to matched cdecl Rva0010C3E0; independent25-byte forwarding body proves two pointer args and slot90 dispatch, not old particle-system helper identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "old_name": "ModuleData",
+  "new_name": "Rva00721380ModuleDataView",
+  "before_sha256": "f29946e7fdfbc31356fa45d6335aff6823d240c92b3accc03fd438e7836aaf3e",
+  "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
+  "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
+  "reason": "False pairing: native ModuleData remains included and used. Its compiled getAsTree slot18 differs retail slot24; new distinct opaque view describes only measured slot9 ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "old_name": "ModuleInfo",
+  "new_name": "Rva00721380ModuleInfoView",
+  "before_sha256": "f29946e7fdfbc31356fa45d6335aff6823d240c92b3accc03fd438e7836aaf3e",
+  "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
+  "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
+  "reason": "Old local two-pointer view was not complete native ModuleInfo, whose upstream definition owns std::vector<Nugget>. New opaque prefix view limits claim to observed2A0/2A4 pointers and20-byte records."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "old_name": "XferVersion",
+  "new_name": "Rva00721380Version",
+  "before_sha256": "f29946e7fdfbc31356fa45d6335aff6823d240c92b3accc03fd438e7836aaf3e",
+  "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
+  "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
+  "reason": "Old local two-byte constructor helper had no original EA identity. Native Xfer::Version is now included; new opaque initialization helper derives from it without renaming native type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00721380.cpp",
+  "old_name": "getModuleInfo2A0",
+  "new_name": "rva00721380Modules",
+  "before_sha256": "f29946e7fdfbc31356fa45d6335aff6823d240c92b3accc03fd438e7836aaf3e",
+  "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
+  "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
+  "reason": "Old inline accessor was invented from measured offset2A0, not a retail named call. New free opaque accessor avoids redeclaring native ThingTemplate or guessing which module-info member occupies BFME offset."
  }
 ]

@@ -1,28 +1,26 @@
 // ?xfer@W3DShrubBuffer@@MAEXPAVXfer@@@Z
+// partial score=0.8882 date=2026-09-30
+// ?xfer@W3DShrubBuffer@@MAEXPAVXfer@@@Z
+// stlport
 // partial score=0.99743 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
-// Probe: 1557/1557 bytes, four differing load-order bytes.
+// cl: /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WW3D2 /Igame /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/shims/sweep /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Native-header bank: 1553/1557 bytes, 166 differing nonrelocation bytes.
+// Shape 0.994 is diagnostic only; the measured raw-byte quality is 0.8882.
 // Retail loads treeType into EDI at 0x0072178E before this into EBX at 0x00721792.
 // The append callee 0x00720D10 and the 0x0071CD80 record copy are already typed.
 
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <string.h>
 
 #include "vector3.h"
 #include "matrix3d.h"
 #include "sphere.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-
+#include "basetype.h"
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 
 #include "ascii_string.h"
 
-template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 inline Int compareNamesNoCase(const AsciiString &self, const AsciiString &other)
 {
@@ -36,86 +34,31 @@ inline Int compareNamesNoCase(const AsciiString &self, const AsciiString &other)
  return lenThis-lenOther;
 }
 
-struct Coord2D
+#include "GameEngine/Source/Common/System/xfer.h"
+struct Rva00721380Version : Xfer::Version
 {
-	Real x, y;
-};
-
-struct Coord3D
-{
-	Coord3D() {}
-	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
-
-	Real x, y, z;
-};
-
-struct Region2D
-{
-	Coord2D lo, hi;
-};
-
-struct XferVersion
-{
-	XferVersion(unsigned char version, unsigned char currentVersion) :
-		m_version(version), m_currentVersion(currentVersion)
-	{
-	}
-
-	unsigned char m_version;
-	unsigned char m_currentVersion;
-};
-
-class Xfer
-{
-public:
-	virtual void slot00();
-	virtual Bool IsLoading() const;
-	virtual Bool IsStoring() const;
-	virtual Bool IsCRC() const;
-	virtual Bool IsLightCRC() const;
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual void xferVersion(XferVersion *version);
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void xferRegion2D(Region2D *value);
-	virtual void slot19();
-	virtual void xferCoord2D(Coord2D *value);
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void xferCoord3D(Coord3D *value);
-	virtual void slot25();
-	virtual void xferAsciiString(AsciiString *value);
-	virtual void xferReal(Real *value);
-	virtual void slot28();
-	virtual void xferUnsignedInt(UnsignedInt *value);
-	virtual void xferInt(Int *value);
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual void xferBool(Bool *value);
-	virtual void xferUser(const char *typeName, void *data, Int dataSize);
+ Rva00721380Version(unsigned char v, unsigned char c)
+ {
+  data[0] = v;
+  data[1] = c;
+ }
 };
 
 // Landed cdecl helpers that transfer three floats, a drawable ID and a matrix.
 class BfmeSeedTarget;
 void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item);
-void BfmeParticleSystemXferHandle(Xfer &xfer, void *value);
+class MidVirtualSlot90Receiver;
+void Rva0010C3E0(MidVirtualSlot90Receiver *, void *);
 void BfmeParticleSystemXferMatrix(Xfer &xfer, void *value);
 
 struct Rva00720D10Data;
 
-class ModuleData
+#define ASCIISTRING_H
+#include "GameEngine/Include/Common/Module.h"
+
+// Retail dispatch at +0x24 differs from native ModuleData (+0x18).
+// This address-derived view describes only that independently decoded vtable ABI.
+class Rva00721380ModuleDataView
 {
 public:
 	virtual void slot00();
@@ -132,7 +75,7 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
-class ModuleInfo
+class Rva00721380ModuleInfoView
 {
 public:
 	const ModuleData *getNthData(Int i) const
@@ -160,56 +103,27 @@ private:
 	Nugget *m_infoEnd;
 };
 
-class ThingTemplate
+class ThingTemplate;
+inline const Rva00721380ModuleInfoView &rva00721380Modules(const ThingTemplate *value)
 {
-public:
-	const ModuleInfo &getModuleInfo2A0(void) const { return m_moduleInfo2A0; }
+ return *reinterpret_cast<const Rva00721380ModuleInfoView *>(reinterpret_cast<const unsigned char *>(value) + 0x2a0);
+}
 
-private:
-	unsigned char m_pad000[0x2a0];
-	ModuleInfo m_moduleInfo2A0;
-};
-
-class ThingFactory
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern ThingFactory *TheThingFactory;
+extern BfmeThingFactory *TheThingFactory;
 
-class MeshClass;
-
-class RenderObjClass
-{
-public:
-	virtual void Delete_This(void);
-	virtual void renderObjSlot04(void);
-	virtual void renderObjSlot08(void);
-	virtual Int Class_ID(void) const;
-	virtual void renderObjSlot10(void);
-	// Retail slot +0x14 returns the mesh view; its original name is unknown.
-	virtual MeshClass *renderObjSlot14(void) const;
-
-	void Release_Ref(void)
-	{
-		--m_refCount;
-		if (m_refCount == 0)
-			Delete_This();
-	}
-
-	Int m_refCount;
-};
-
-class MeshClass : public RenderObjClass
-{
-};
+#include "rendobj.h"
 
 RenderObjClass *Create_Render_Obj(const char *name);
 
 struct BfmeFormattedText
 {
-	void *text;
+	char *text;
 	Int tag;
 };
 
@@ -243,7 +157,7 @@ public:
 
 struct Rva00721380ShrubType
 {
-	MeshClass *m_mesh;
+	RenderObjClass *m_mesh;
 	Vector3 m_offset;
 	SphereClass m_bounds;
 	const Rva00720D10Data *m_data;
@@ -290,23 +204,23 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 		return;
 
 	// version
-	XferVersion version(1, 2);
-	xfer->xferVersion(&version);
+	Rva00721380Version version(1,2);
+	*xfer == version;
 
 	Int i;
 	Int numTrees = m_numTrees;
 	xfer->xferInt(&numTrees);
 
-	if (version.m_currentVersion >= 2) {
+	if (version.data[1] >= 2) {
 		xfer->xferInt(&m_numTreeTypes);
 		for (i = 0; i < m_numTreeTypes; i++) {
 			bfmeHandOver_00001A50((BfmeSeedTarget *)xfer, &m_treeTypes[i].m_offset);
 			bfmeHandOver_00001A50((BfmeSeedTarget *)xfer, &m_treeTypes[i].m_bounds.Center);
 			xfer->xferReal(&m_treeTypes[i].m_bounds.Radius);
-			xfer->xferCoord2D(&m_treeTypes[i].m_coord24);
-			xfer->xferCoord2D(&m_treeTypes[i].m_coord2C);
-			xfer->xferCoord2D(&m_treeTypes[i].m_coord34);
-			xfer->xferCoord2D(&m_treeTypes[i].m_coord3C);
+			*xfer == m_treeTypes[i].m_coord24;
+			*xfer == m_treeTypes[i].m_coord2C;
+			*xfer == m_treeTypes[i].m_coord34;
+			*xfer == m_treeTypes[i].m_coord3C;
 			xfer->xferBool(&m_treeTypes[i].m_doShadow);
 			xfer->xferAsciiString(&m_treeTypes[i].m_textureName);
 			xfer->xferAsciiString(&m_treeTypes[i].m_modelName);
@@ -318,9 +232,9 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 				m_treeTypes[i].m_data = 0;
 				const ThingTemplate *tmpl = TheThingFactory->findTemplate(m_treeTypes[i].m_templateName);
 				if (tmpl) {
-					const ModuleData *moduleData = tmpl->getModuleInfo2A0().getNthData(0);
+					const ModuleData *moduleData = rva00721380Modules(tmpl).getNthData(0);
 					if (moduleData)
-						m_treeTypes[i].m_data = moduleData->slot09();
+						m_treeTypes[i].m_data = reinterpret_cast<const Rva00721380ModuleDataView *>(moduleData)->slot09();
 				}
 				if (!m_treeTypes[i].m_data) {
 					BfmeFormattedText error;
@@ -334,7 +248,7 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 				RenderObjClass *robj = Create_Render_Obj(m_treeTypes[i].m_modelName.str());
 				if (robj) {
 					if (robj->Class_ID() == 0)
-						m_treeTypes[i].m_mesh = robj->renderObjSlot14();
+						m_treeTypes[i].m_mesh = reinterpret_cast<RenderObjClass *>(robj->_bfme_ro_v3());
 					else
 						robj->Release_Ref();
 				}
@@ -380,7 +294,7 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 		xfer->xferReal(&tree.location.Z);
 		xfer->xferReal(&tree.scale);
 		BfmeParticleSystemXferMatrix(*xfer, &tree.transform);
-		BfmeParticleSystemXferHandle(*xfer, &tree.drawableID);
+		Rva0010C3E0(reinterpret_cast<MidVirtualSlot90Receiver *>(xfer), &tree.drawableID);
 
 		Bool doShadow = false;
 		AsciiString textureName;
@@ -391,7 +305,7 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 		xfer->xferBool(&doShadow);
 		xfer->xferAsciiString(&textureName);
 		bfmeHandOver_00001A50((BfmeSeedTarget *)xfer, &m_cameraLookAtVector);
-		xfer->xferRegion2D(&m_bounds);
+		*xfer == m_bounds;
 
 		if (xfer->IsLoading() && treeType >= 0 && treeType < m_numTreeTypes) {
 			Coord3D pos;
