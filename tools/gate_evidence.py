@@ -26,6 +26,8 @@ OPT-IN. `check` only ever answers yes when BFME_REUSE_GATE_EVIDENCE=1 (the
 landing service sets it for its own publishing push). Without it every push
 gates exactly as before. Like any local file this can be forged by someone
 who could equally push with --no-verify; it is a cache, not an attestation.
+BLIND SPOT: the key is the TRACKED tree, so an untracked (e.g. ignored) file a
+source #includes can change between the gate and the reusing push unseen.
 
   python3 tools/gate_evidence.py record --commit SHA --kind full
   python3 tools/gate_evidence.py record --commit SHA --kind scoped --base BASE --selectors-file F
