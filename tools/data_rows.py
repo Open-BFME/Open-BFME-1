@@ -178,16 +178,43 @@ def _tools():
 
 def cpp_name(symbol):
     """The expression naming a data symbol in its own TU: `x` for a C `_x`,
-    `::A::B::x` for `?x@B@A@@[23]...`; None for anything a plain name cannot
-    reach (templates, anonymous namespaces, function-local statics)."""
-    import re
+    `::A::B::x` for global, public, or protected data. Protected static data
+    is probed from a derived access scope; private members remain refused."""
     if not symbol.startswith("?"):
         return symbol[1:] if symbol.startswith("_") else None
-    m = re.match(r"^\?(\w+)@((?:\w+@)*)@[23]", symbol)
+    m = re.match(r"^\?(\w+)@((?:\w+@)*)@([123])", symbol)
     if not m or "?" in m.group(2):
         return None
     scopes = [part for part in m.group(2).split("@") if part]
+    if m.group(3) == "1" and not scopes:
+        return None
     return "::" + "::".join(list(reversed(scopes)) + [m.group(1)])
+
+
+def _cpp_data_access(symbol):
+    """(expression, declaring class, protected) for supported data names.
+
+    MSVC access digits 1/2/3 are protected/public/global. Private 0 is not
+    admitted by this grammar, so no derived probe can widen private access."""
+    if not symbol.startswith("?"):
+        expression = symbol[1:] if symbol.startswith("_") else None
+        return expression, None, False
+    m = re.match(r"^\?(\w+)@((?:\w+@)*)@([123])", symbol)
+    if not m or "?" in m.group(2):
+        return None, None, False
+    scopes = [part for part in m.group(2).split("@") if part]
+    protected = m.group(3) == "1"
+    if protected and not scopes:
+        return None, None, False
+    expression = "::" + "::".join(list(reversed(scopes)) + [m.group(1)])
+    owner = "::" + "::".join(reversed(scopes)) if scopes else None
+    return expression, owner, protected
+
+
+def _protected_probe_name(source, symbol, tag):
+    import zlib
+    key = f"{Path(source)}:{symbol}:{tag}".encode()
+    return f"data_row_protected_access_{zlib.crc32(key):08x}"
 
 
 def compiled_size(source, symbol):
@@ -196,7 +223,7 @@ def compiled_size(source, symbol):
     (None, why) when it cannot be named or the probe does not compile."""
     import subprocess
     build, rl = _tools()
-    expression = cpp_name(symbol)
+    expression, owner, protected = _cpp_data_access(symbol)
     if expression is None:
         return None, f"{symbol} cannot be named from its TU"
     import zlib
@@ -211,12 +238,19 @@ def compiled_size(source, symbol):
     probe = probe_dir / (stem + source.suffix)
     obj = probe.with_suffix(".obj")
     linkage = 'extern "C" ' if source.suffix.lower() != ".c" else ""
+    helper = _protected_probe_name(source, symbol, "size") if protected else None
     # a macro named like the symbol, a scope of it or the probe's own variable
     # would make sizeof measure something else: refuse (#error) instead
+    tokens = set(expression.replace("::", " ").split()) | {"data_row_sizeof"}
+    if helper:
+        tokens.add(helper)
     guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
-                     for token in sorted(set(expression.replace("::", " ").split()) | {"data_row_sizeof"}))
-    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards
-                     + f"{linkage}const unsigned int data_row_sizeof = sizeof({expression});\n", encoding="utf-8")
+                     for token in sorted(tokens))
+    access_scope = (f"class {helper} : public {owner} {{ public: "
+                    f"enum {{ size_value = sizeof({expression}) }}; }};\n" if helper else "")
+    size_expression = f"{helper}::size_value" if helper else f"sizeof({expression})"
+    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards + access_scope
+                     + f"{linkage}const unsigned int data_row_sizeof = {size_expression};\n", encoding="utf-8")
     command, env = build.compiler_command(source, obj)
     command[-1] = probe.relative_to(ROOT).as_posix()
     if obj.exists():
@@ -229,7 +263,10 @@ def compiled_size(source, symbol):
     body = sections[found[0]["section"] - 1]["body"] if found else None
     if not found or body is None:
         return None, "the sizeof probe emitted no value"
-    return struct.unpack_from("<I", body, found[0]["value"])[0], f"sizeof({expression}) under the build's flags"
+    how = f"sizeof({expression}) under the build's flags"
+    if helper:
+        how += f" via derived access scope {helper}"
+    return struct.unpack_from("<I", body, found[0]["value"])[0], how
 
 
 ARRAY_PROBE = """template<class T, int N> char (&drp_n(T (&)[N]))[2];
@@ -247,16 +284,24 @@ def _type_probe(source, symbol, tag, preamble, value):
     import subprocess
     import zlib
     build, rl = _tools()
-    expression = cpp_name(symbol)
+    expression, owner, protected = _cpp_data_access(symbol)
+    if expression is None:
+        return None, f"{symbol} cannot be named from its TU"
     probe_dir = ROOT / "build" / "data_rows" / "probe"
     probe_dir.mkdir(parents=True, exist_ok=True)
     probe = probe_dir / f"{source.stem}_{zlib.crc32((str(source) + symbol).encode()):08x}_{tag}{source.suffix}"
     obj = probe.with_suffix(".obj")
+    helper = _protected_probe_name(source, symbol, tag) if protected else None
     tokens = set(expression.replace("::", " ").split()) | {"data_row_kind", "drp_n", "drp_k"}
+    if helper:
+        tokens.add(helper)
     guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
                      for token in sorted(tokens))
-    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards + preamble
-                     + f'extern "C" const unsigned int data_row_kind = {value};\n', encoding="utf-8")
+    access_scope = (f"class {helper} : public {owner} {{ public: enum {{ kind_value = {value} }}; }};\n"
+                    if helper else "")
+    kind_expression = f"{helper}::kind_value" if helper else value
+    probe.write_text(f'#include "{source.resolve().as_posix()}"\n' + guards + preamble + access_scope
+                     + f'extern "C" const unsigned int data_row_kind = {kind_expression};\n', encoding="utf-8")
     command, env = build.compiler_command(source, obj)
     command[-1] = probe.relative_to(ROOT).as_posix()
     if obj.exists():
@@ -269,7 +314,8 @@ def _type_probe(source, symbol, tag, preamble, value):
     body = sections[found[0]["section"] - 1]["body"] if found else None
     if not found or body is None:
         return None, "the type probe emitted no value"
-    return struct.unpack_from("<I", body, found[0]["value"])[0], ""
+    how = f"via derived access scope {helper}" if helper else ""
+    return struct.unpack_from("<I", body, found[0]["value"])[0], how
 
 
 def compiled_arithmetic(source, symbol):
@@ -278,7 +324,7 @@ def compiled_arithmetic(source, symbol):
     arithmetic scalar (integer, character, bool, floating) or a one-dimensional
     array of one. A pointer (`int *p`), an enum, a class, a multi-dimensional
     array and anything a probe cannot name or compile are not proven numbers."""
-    expression = cpp_name(symbol)
+    expression, _, _ = _cpp_data_access(symbol)
     if expression is None:
         return None, f"{symbol} cannot be named from its TU"
     source = Path(source) if Path(source).is_absolute() else ROOT / source

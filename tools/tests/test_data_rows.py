@@ -213,6 +213,8 @@ def test_delta_sources_reports_changed_data_rows(monkeypatch):
 def test_cpp_names_reach_namespaced_and_member_data_only():
     assert data_rows.cpp_name("?OurLanguage@@3W4LanguageID@@A") == "::OurLanguage"
     assert data_rows.cpp_name("?x@B@A@@2HA") == "::A::B::x"
+    assert data_rows.cpp_name("?render_state@DX8Wrapper@@1URenderStateStruct@@A") == "::DX8Wrapper::render_state"
+    assert data_rows.cpp_name("?private_state@DX8Wrapper@@0URenderStateStruct@@A") is None
     assert data_rows.cpp_name("_c_global") == "c_global"
     assert data_rows.cpp_name("?$S1@?1??f@@YAXXZ@4IA") is None
 
@@ -239,6 +241,33 @@ def _toolchain():
     build = data_rows._tools()[0]
     if not (build.vc71_root() / "Vc7" / "bin" / "cl.exe").exists():
         pytest.skip("MSVC 7.1 toolchain not present")
+
+
+def test_compiler_sizes_real_protected_static_member_and_private_stays_inaccessible():
+    _toolchain()
+    import subprocess
+    build = data_rows._tools()[0]
+    source = data_rows.ROOT / "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp"
+    symbol = "?render_state@DX8Wrapper@@1URenderStateStruct@@A"
+    size, how = data_rows.compiled_size(source, symbol)
+    assert size == 624, how
+    assert "derived access scope" in how
+
+    private_source = data_rows.ROOT / "build/data_rows/test_private_access.cpp"
+    private_obj = private_source.with_suffix(".obj")
+    private_source.parent.mkdir(parents=True, exist_ok=True)
+    private_source.write_text(
+        "class PrivateBase { private: static int hidden; };\n"
+        "class DerivedProbe : public PrivateBase { public: enum { n = sizeof(PrivateBase::hidden) }; };\n",
+        encoding="utf-8")
+    command, env = build.compiler_command(private_source, private_obj)
+    private_obj.unlink(missing_ok=True)
+    result = subprocess.run(command, capture_output=True, text=True, errors="replace", env=env,
+                            cwd=str(data_rows.ROOT))
+    assert result.returncode != 0
+    assert "C2248" in result.stdout + result.stderr
+    refused, why = data_rows.compiled_size(source, "?private_state@DX8Wrapper@@0URenderStateStruct@@A")
+    assert refused is None and "cannot be named" in why
 
 
 def test_reference_lookup_refuses_a_file_it_cannot_preprocess_no_raw_fallback():

@@ -148,7 +148,9 @@ bool								DX8Wrapper::world_identity;
 unsigned							DX8Wrapper::RenderStates[256];
 unsigned							DX8Wrapper::TextureStageStates[MAX_TEXTURE_STAGES][32];
 IDirect3DBaseTexture8 *		DX8Wrapper::Textures[MAX_TEXTURE_STAGES];
+#pragma inline_depth(0)
 RenderStateStruct				DX8Wrapper::render_state;
+#pragma inline_depth(255)
 unsigned							DX8Wrapper::render_state_changed;
 
 bool								DX8Wrapper::FogEnable									= false;
