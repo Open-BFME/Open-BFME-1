@@ -87,3 +87,4 @@ jobs:
           tools/tests/test_fleet_shared_claims.py
           tools/tests/test_add_match_claim_release.py
           tools/tests/test_protected_paths.py
+          tools/tests/test_landing_service.py
