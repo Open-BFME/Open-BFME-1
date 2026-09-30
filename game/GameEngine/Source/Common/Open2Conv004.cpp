@@ -197,8 +197,18 @@ public:
 
 extern Open27110B0Source *TheOpen27110B0Source;
 
-// @?Rva007110B0@@YGXPAVOpen2Triple@@@Z 0x007110B0
-void __stdcall Rva007110B0( Open2Triple *out )
+class Open2Triple5;
+struct Triple006E2540;
+class Sink006E2540
+{
+public:
+	void read( Open2Triple *out );
+	void write( const Open2Triple5 *record );
+	void adjust( Triple006E2540 *value, bool enable );
+};
+
+// @?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z 0x007110B0
+void Sink006E2540::read( Open2Triple *out )
 {
 	if( TheOpen27110B0Source )
 		*out = *TheOpen27110B0Source->fetch( 0 );

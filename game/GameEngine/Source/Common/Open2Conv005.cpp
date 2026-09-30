@@ -88,8 +88,18 @@ public:
 extern Open27110F0Sink *TheOpen27110F0Sink;
 extern Open27110F0Flusher *TheOpen27110F0Flusher;
 
-// @?Rva007110F0@@YGXPAVOpen2Triple5@@@Z 0x007110F0
-void __stdcall Rva007110F0( const Open2Triple5 *record )
+class Open2Triple;
+struct Triple006E2540;
+class Sink006E2540
+{
+public:
+	void read( Open2Triple *out );
+	void write( const Open2Triple5 *record );
+	void adjust( Triple006E2540 *value, bool enable );
+};
+
+// @?write@Sink006E2540@@QAEXPBVOpen2Triple5@@@Z 0x007110F0
+void Sink006E2540::write( const Open2Triple5 *record )
 {
 	if( TheOpen27110F0Sink )
 	{

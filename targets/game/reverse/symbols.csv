@@ -89887,3 +89887,11 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?rva00522110@@YA_NHABVUnicodeString@@0@Z,0x00047307,ILT to the generated dump 0x00522110 that the sole caller 0x0056D070 encodes twice; address-derived cdecl ABI decoded from that body: mode dword stored into the APT message-box state then title and body read by reference; returns al=1 or 0
 ?_M_initialize_map@?$_Deque_base@PAPAUBfmeNodeZN@@V?$allocator@PAPAUBfmeNodeZN@@@_STL@@@_STL@@IAEXI@Z,0x00048838,retail call at 0x0035CA0F in Rva0035E510 bfmeLinkEAT (local deque of link-slot pointers) encodes j_00048838 -> 0x003546E0 with ecx=this and one pushed count; same 203B 4-byte-element map body as the pointer deque pins
 ?_M_reallocate_map@?$deque@PAPAUBfmeNodeZN@@V?$allocator@PAPAUBfmeNodeZN@@@_STL@@@_STL@@IAEXI_N@Z,0x00031E08,retail call at 0x0035CA74 in Rva0035E510 bfmeLinkEAT push_back encodes j_00031e08 -> 0x00356FA0 with ecx=this and two pushed args (count 1 and false); 367B map reallocate
+?copyStringAt9C@Rva006E22E0Host@@QAE?AVAsciiString@@XZ,0x00015BD6,0x006E2540 witnessed caller ABI;route=0x006E22E0
+?findFXList@FXListStore@@QBEPBVFXList@@PBD@Z,0x0001669E,0x006E2540 witnessed caller ABI;route=0x0042B660
+?bfmeGoBC@BfmeObjBC@@QAEPAUBfmeVecBC@@PAU2@@Z,0x00018552,0x006E2540 witnessed caller ABI;route=0x0040BC50
+?bfmeGoB3@BfmeObjB3@@QAEIXZ,0x0001A1FE,0x006E2540 witnessed caller ABI;route=0x0040B300
+?write@Sink006E2540@@QAEXPBVOpen2Triple5@@@Z,0x00022BB0,0x006E2540 witnessed caller ABI;route=0x007110F0
+?adjust@Sink006E2540@@QAEXPAUTriple006E2540@@_N@Z,0x00034608,0x006E2540 witnessed caller ABI;route=0x00711130
+?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z,0x0003ED6F,0x006E2540 witnessed caller ABI;route=0x007110B0
+?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020

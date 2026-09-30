@@ -455,19 +455,6 @@ BfmeRetailNarrowString Rva0068AEC0Host::copyStringAt60( void )
 		reinterpret_cast<const char *>( this ) + 0x60 );
 }
 
-class Rva006E22E0Host
-{
-public:
-	BfmeRetailNarrowString copyStringAt9C( void );
-};
-
-// retail 0x006E22E0, the string at +0x9C
-BfmeRetailNarrowString Rva006E22E0Host::copyStringAt9C( void )
-{
-	return *reinterpret_cast<const BfmeRetailNarrowString *>(
-		reinterpret_cast<const char *>( this ) + 0x9C );
-}
-
 class Rva00751390Host
 {
 public:
