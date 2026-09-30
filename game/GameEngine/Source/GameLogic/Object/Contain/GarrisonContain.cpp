@@ -630,43 +630,7 @@ Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weap
 	return FALSE;
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Place the object at the "best" garrison point position so it's on the same "side" of
-	* the structure that its target is */
-//-------------------------------------------------------------------------------------------------
-// ?putObjectAtBestGarrisonPoint@GarrisonContain@@IAEXPAVObject@@0PBUCoord3D@@@Z present-unmatched
-void GarrisonContain::putObjectAtBestGarrisonPoint( Object *obj, Object *target, const Coord3D *targetPos )
-{
-
-	// sanity
-	if( obj == NULL || (target == NULL && targetPos == NULL) )
-		return;
-
-#if defined __DEBUG || defined _INTERNAL
-  const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
-  DEBUG_ASSERTCRASH(modData->m_isEnclosingContainer, ("calcBestGarrisonPosition... SHOULD NOT GET HERE, since this container is non-enclosing") );
-#endif
-	// if obj target, override pos
-	if (target != NULL)
-		targetPos = target->getPosition();
-
-	// if this object is already at a garrison point do nothing
-	if( getObjectGarrisonPointIndex( obj ) != GARRISON_INDEX_INVALID )
-		return;
-
-	// find which garrison point position array we will used based on body condition
-	Int conditionIndex = findConditionIndex();
-
-	// get the index of the garrison point that is closest to the target position
-	Int placeIndex = findClosestFreeGarrisonPointIndex( conditionIndex, targetPos );
-	DEBUG_ASSERTCRASH( placeIndex != GARRISON_INDEX_INVALID, 
-										 ("GarrisonContain::putObjectAtBestGarrisonPoint - Unable to find suitable garrison point for '%s'\n", 
-										 obj->getTemplate()->getName().str()) );
-
-	// put it here
-	putObjectAtGarrisonPoint( obj, target ? target->getID() : INVALID_ID, conditionIndex, placeIndex );
-
-}  // end putObjectAtBestGarrisonPoint
+// Retail GarrisonContain::putObjectAtBestGarrisonPoint is implemented in GarrisonContain_putObjectAtBestGarrisonPoint.cpp.
 
 // Retail GarrisonContain::removeObjectFromGarrisonPoint (0x0021E260) is
 // implemented in GarrisonContainTrackTargets.cpp.
@@ -978,57 +942,7 @@ void GarrisonContain::trackTargets( void )
 
 }  // end trackTargets
 
-// ------------------------------------------------------------------------------------------------
-/** Remove all the objects at garrison points back to the center and redeploy them among the
-	* garrison points.  NOTE that we are preserving the frame in which the object was put
-	* at the garrison point originally as this method is used when the model condition changes
-	* which could shuffle the garrison point positions but that shouldn't logically change
-	* when an object was placed at the point */
-// ------------------------------------------------------------------------------------------------
-// ?redeployOccupants@GarrisonContain@@MAEXXZ present-unmatched
-void GarrisonContain::redeployOccupants( void )
-{
-	GarrisonPointData garrisonPointDataCopy[ MAX_GARRISON_POINTS ];
-	Int i;
-
-	// copy the current set of garrison point data sets
-	for( i = 0; i < MAX_GARRISON_POINTS; ++i )
-		garrisonPointDataCopy[ i ] = m_garrisonPointData[ i ];
-
-// Lorenzen changed, 6/11/03, so that garrisoncontains that are not enclosing will keep units at their assigned stations,
-// rather than Bamphing them all over the building as they fire.
-//	// remove the occupants
-//	removeInvalidObjectsFromGarrisonPoints();
-//	// redeploy them
-//	addValidObjectsToGarrisonPoints();
-
-
-  // ATTENTION... setting this false allows each redeployOccupants() call to create fresh station points, based on the new transform
-  // if anything wierd ever happens, like rotating buildings and such, we will need a way of transforming the points without clearing the
-  // list (and thus forgetting where everyone contained was stationed)... just a handy reminder.
-  m_stationGarrisonPointsInitialized = FALSE;
-
-
-  matchObjectsToGarrisonPoints();
-
-	// restore the frame markers that things were recorded as entering their point
-	Int index;
-	for( i = 0; i < MAX_GARRISON_POINTS; ++i )
-	{
-
-		if( garrisonPointDataCopy[ i ].object )
-		{
-
-			// where was this object redeployed
-			index = getObjectGarrisonPointIndex( garrisonPointDataCopy[ i ].object );
-			if( index != GARRISON_INDEX_INVALID )
-				m_garrisonPointData[ index ].placeFrame = garrisonPointDataCopy[ i ].placeFrame;
-
-		}  // end if
-
-	}  // end for i
-
-}  // end redeployOccupants
+// Retail GarrisonContain::redeployOccupants is implemented in GarrisonContain_redeployOccupants.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Do any effects during an update cycle that we need to */
@@ -1376,45 +1290,7 @@ void GarrisonContain::healObjects( void )
 
 
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?healSingleObject@GarrisonContain@@IAEXPAVObject@@M@Z present-unmatched
-void GarrisonContain::healSingleObject( Object *obj, Real framesForFullHeal)
-{
-	// setup the healing damageInfo structure with all but the amount
-	DamageInfo healInfo;
-	healInfo.in.m_damageType = DAMAGE_HEALING;
-	healInfo.in.m_deathType = DEATH_NONE;
-	//healInfo.in.m_sourceID = getObject()->getID();
-
-	// get body module of the thing to heal
-	BodyModuleInterface *body = obj->getBodyModule();
-
-	// if we've been in here long enough ... set our health to max
-	if( TheGameLogic->getFrame() - obj->getContainedByFrame() >= framesForFullHeal )
-	{
-	
-		// set the amount to max just to be sure we're at the top
-		healInfo.in.m_amount = body->getMaxHealth();
-		
-		// set max health
-		body->attemptHealing( &healInfo );
-
-	}  // end if
-	else
-	{
-		//
-		// given the *whole* time it would take to heal this object, lets pretend that the
-		// object is at zero health ... and give it a sliver of health as if it were at 0 health
-		// and would be fully healed at 'framesForFullHeal'
-		//
-		healInfo.in.m_amount = body->getMaxHealth() / framesForFullHeal;
-
-		// do the healing
-		body->attemptHealing( &healInfo );
-
-	}  // end else
-}
+// Retail GarrisonContain::healSingleObject is implemented in GarrisonContainHealSingleObject.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** return the player that *appears* to control this unit. if null, 
@@ -1653,48 +1529,7 @@ void GarrisonContain::loadGarrisonPoints( void )
 
 }  // end loadGarrisonPoints
 
-// ------------------------------------------------------------------------------------------------
-/** Validate any exit rally point that has been chosen (if any).  If it's not valid,
-	* try to find a new one */
-// ------------------------------------------------------------------------------------------------
-// ?validateRallyPoint@GarrisonContain@@IAEXXZ present-unmatched
-void GarrisonContain::validateRallyPoint( void )
-{
-
-	// if we have a rally point already picked, make sure it's valid
-	if( m_rallyValid == TRUE )
-	{
-		Coord3D result;
-		FindPositionOptions options;
-
-		// ask for a valid position exactly at the rally point
-		options.flags = FPF_IGNORE_ALLY_OR_NEUTRAL_UNITS;
-		options.minRadius = 0.0f;
-		options.maxRadius = 0.0f;
-		options.ignoreObject = getObject();
-		options.relationshipObject = getObject();
-		if( ThePartitionManager->findPositionAround( &m_exitRallyPoint, &options, &result ) == FALSE )
-			m_rallyValid = FALSE;
-
-	}  // end if
-
-	// if no rally point is present, try to find one
-	if( m_rallyValid == FALSE )
-	{
-		FindPositionOptions options;
-
-		// pick a location for everybody to rally at
-		options.flags = FPF_IGNORE_ALLY_OR_NEUTRAL_UNITS;
-		options.minRadius = getObject()->getGeometryInfo().getBoundingCircleRadius();
-		options.maxRadius = options.minRadius * 1.8f;  // arbitrary max distance away, change as needed
-		options.ignoreObject = getObject();
-		options.relationshipObject = getObject();
-		m_rallyValid = ThePartitionManager->findPositionAround( getObject()->getPosition(),
-																													  &options,
-																													  &m_exitRallyPoint );
-	}  // end if
-
-}  // end validateRallyPoint
+// Retail GarrisonContain::validateRallyPoint is implemented in GarrisonContain_validateRallyPoint.cpp.
 
 
 
@@ -2485,46 +2320,7 @@ __declspec(naked) void GarrisonContain::exitObjectViaDoor( Object *, ExitDoorTyp
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?onContaining@GarrisonContain@@UAEXPAVObject@@_N@Z present-unmatched
-void GarrisonContain::onContaining( Object *obj, Bool wasSelected )
-{
-
-	// extend base class
-	OpenContain::onContaining( obj, wasSelected );
-
-	// get the structure object
-	Object *structure = getObject();
-
-	// objects inside a building are held
-	obj->setDisabled( DISABLED_HELD );
-
-	// the building can now attack, since it has soldiers inside of it
-	structure->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_CAN_ATTACK ) );
-
-	// give the object a garrisoned version of its weapon
-	obj->setWeaponBonusCondition( WEAPONBONUSCONDITION_GARRISONED );
-
-	// put the object in the center of the building
-  if (isEnclosingContainerFor( obj ))
-	  obj->setPosition( structure->getPosition() );
-
-	obj->getControllingPlayer()->getAcademyStats()->recordBuildingGarrisoned();
-
-	//
-	// the team of the building is now the same as those that have garrisoned it, be sure
-	// to save our original team tho so that we can revert back to it when all the 
-	// occupants are gone
-	//
-	recalcApparentControllingPlayer();
-
-  Drawable *draw = obj->getDrawable();
-  if ( draw && draw->isSelected() )
-    TheInGameUI->deselectDrawable( draw );
-
-
-}  // end onContaining
+// Retail GarrisonContain::onContaining is implemented in GarrisonContain_onContaining.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -2638,33 +2434,7 @@ void GarrisonContain::onBodyDamageStateChange( const DamageInfo* , BodyDamageTyp
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/GarrisonContain_onObjectCreated_Thunk.cpp
-// ?onObjectCreated@GarrisonContain@@MAEXXZ present-unmatched
-void GarrisonContain::onObjectCreated()
-{
-	GarrisonContainModuleData* self = (GarrisonContainModuleData*)getGarrisonContainModuleData();
-
-	Int count = self->m_initialRoster.count;
-	const ThingTemplate* rosterTemplate = TheThingFactory->findTemplate( self->m_initialRoster.templateName );
-	Object* object = getObject();
-
-	for( int i = 0; i < count; i++ )
-	{
-		//We are creating a garrison that comes with an initial roster, so add it now!
-		Object* payload = TheThingFactory->newObject( rosterTemplate, object->getControllingPlayer()->getDefaultTeam() );
-		if( object->getContain() && object->getContain()->isValidContainerFor( payload, true ) )
-		{
-			object->getContain()->addToContain( payload );
-		}
-		else
-		{
-			DEBUG_CRASH( ( "DeliverPayload: PutInContainer %s is full, or not valid for the payload %s!", 
-				object->getName().str(), self->m_initialRoster.templateName.str() ) );
-		}
-	}
-}
+// Retail GarrisonContain::onObjectCreated is implemented in GarrisonContainOnObjectCreated.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
