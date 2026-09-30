@@ -30,6 +30,7 @@ dead holder blocks master for at most ~10 minutes; `close --force` ends one.
 import argparse
 import json
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -80,9 +81,25 @@ def read(remote="origin", root=None):
         # unreadable is unknown, never "no window" or "someone else's"
         raise RuntimeError(f"publish_window: cannot read {REF} at {token[:10]}: {body.stderr.strip()}")
     try:
-        return token, json.loads(body.stdout)
+        info = json.loads(body.stdout)
     except ValueError:
-        return token, {"owner": "?", "expires": 0}
+        info = None
+    if not valid(info):
+        # a window whose metadata is not the shape we write is unknown, never
+        # "someone else's" (review 2026-09-30: list JSON, numeric nonce)
+        return token, {"owner": "?", "expires": 0, "invalid": True}
+    return token, info
+
+
+NONCE = re.compile(r"[0-9a-f]{32}")
+
+
+def valid(info):
+    """The metadata shape open_window() writes: an object with a hex nonce
+    and numeric expiry."""
+    return (isinstance(info, dict) and isinstance(info.get("nonce"), str)
+            and bool(NONCE.fullmatch(info["nonce"]))
+            and isinstance(info.get("expires"), (int, float)))
 
 
 def live(info, now=None):

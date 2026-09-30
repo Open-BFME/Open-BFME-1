@@ -451,11 +451,12 @@ class Service:
                 pass
             try:
                 token, info = publish_window.read(self.remote, self.repo)
+                if token is None:
+                    return False                # confirmed gone
+                if publish_window.valid(info) and info["nonce"] != nonce:
+                    return False                # a valid, different window
             except Exception:  # noqa: BLE001 -- unknown: try again
-                token, info = "unknown", None
-            other = (info or {}).get("nonce")
-            if token is None or (other and other != nonce):
-                return False                    # confirmed gone, or a different window
+                pass
             time.sleep(2)
         print(f"landing_service: PUBLISH WINDOW {nonce} IS STILL OPEN AND BLOCKING MASTER; "
               f"close it: python3 tools/publish_window.py close {nonce}", file=sys.stderr, flush=True)

@@ -538,3 +538,22 @@ def test_read_raises_when_window_metadata_cannot_be_read(world, monkeypatch):
         pw.read(root=service.repo)
     monkeypatch.setattr(pw, "_git", real_git)
     assert pw.close_window(nonce, root=service.repo)
+
+
+# ---- review 2026-09-30 cycle 8: window metadata must have the shape we write ----
+
+@pytest.mark.parametrize("body", ['{"nonce": 12345, "expires": 9999999999}', '["not", "an", "object"]'])
+def test_malformed_window_metadata_is_unknown_and_reported_open(world, monkeypatch, capsys, body):
+    import publish_window as pw
+    service, unit, origin = world
+    real_git = pw._git
+    monkeypatch.setattr(pw, "_git", lambda *a, **k: subprocess.CompletedProcess(a, 0, body, "")
+                        if a[:3] == ("log", "-1", "--format=%B") else real_git(*a, **k))
+    nonce = pw.open_window(root=service.repo)
+    token, info = pw.read(root=service.repo)
+    assert token and info.get("invalid") and not pw.valid(info)
+    monkeypatch.setattr(ls.time, "sleep", lambda s: None)
+    assert service._close_window(pw, nonce) is True               # unknown, never "someone else's"
+    assert "STILL OPEN" in capsys.readouterr().err
+    monkeypatch.setattr(pw, "_git", real_git)
+    assert pw.close_window(nonce, root=service.repo)

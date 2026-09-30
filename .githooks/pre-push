@@ -188,16 +188,6 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
                     'inputs/reference/shims/*' game inputs \
                 || fail "working tree differs from $local_sha in a header or dependent source; the scoped header gate would verify the wrong bytes"
             echo "pre-push: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
-            # tools/gate_evidence.py: reuse only when BFME_REUSE_GATE_EVIDENCE=1
-            # (the landing service's own publishing push of a tip it gated here)
-            # the requested scope: exactly these dependents against this base
-            scope_file=$(mktemp)
-            printf '%s\n' "${header_deps[@]}" > "$scope_file"
-            if [ -f tools/gate_evidence.py ] \
-               && python3 tools/gate_evidence.py check --commit "$local_sha" --kind scoped \
-                    --base "$base" --selectors-file "$scope_file"; then
-                header_deps=()
-            fi
             chunk=()
             chunk_bytes=0
             for path in "${header_deps[@]}"; do
@@ -212,23 +202,13 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             if [ "${#chunk[@]}" -ne 0 ]; then
                 BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
             fi
-            if [ "${#header_deps[@]}" -ne 0 ] && [ -f tools/gate_evidence.py ]; then
-                python3 tools/gate_evidence.py record --commit "$local_sha" --kind scoped \
-                        --base "$base" --selectors-file "$scope_file" > /dev/null \
-                    || echo "pre-push: could not record scoped gate evidence (gate still passed)" >&2
-            fi
-            rm -f "$scope_file"
             wide_change=0
         else
             rm -f "$header_deps_out"
         fi
     fi
-    if [ "$wide_change" -ne 0 ] && [ -f tools/gate_evidence.py ] \
-       && python3 tools/gate_evidence.py check --commit "$local_sha" --kind full; then
-        window_check
-        echo "PRE-PUSH OK (full gate evidence for this exact tree reused)"
-        continue
-    fi
+    # No gate-evidence reuse: review 2026-09-30 (cycles 6 and 8) showed a reused
+    # gate misses a change to an ignored #included file; every push gates.
     if [ "$wide_change" -ne 0 ]; then
         wide_empty=$(mktemp)
         wide_manifest=$(mktemp)
@@ -244,10 +224,6 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             || { rm -f "$wide_empty" "$wide_manifest"; \
                  fail "post-gate snapshot verification (see above)"; }
         rm -f "$wide_empty" "$wide_manifest"
-        if [ -f tools/gate_evidence.py ]; then
-            python3 tools/gate_evidence.py record --commit "$local_sha" --kind full > /dev/null \
-                || echo "pre-push: could not record full gate evidence (gate still passed)" >&2
-        fi
         window_check
         echo "PRE-PUSH OK (full gate after wide dependency change)"
         continue

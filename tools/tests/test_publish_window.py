@@ -205,7 +205,8 @@ def test_a_narrow_scoped_record_never_skips_a_wider_gate(tmp_path):
     assert hook(newer).returncode == 0                  # narrow: only a.cpp, green, recorded
     assert hook(older).returncode != 0                  # wider: b.cpp is red, reuse must not hide it
     assert hook(older, reuse=False).returncode != 0
-    assert hook(newer).returncode == 0 and "REUSING" in hook(newer).stderr   # same scope: reused
+    again = hook(newer)                                  # no reuse any more: it gates again
+    assert again.returncode == 0 and "REUSING" not in again.stderr
 
 
 def test_closing_someone_elses_window_needs_the_token_or_an_explicit_force(clones):
