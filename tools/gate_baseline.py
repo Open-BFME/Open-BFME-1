@@ -110,6 +110,18 @@ def verdict(output):
     return "FAIL" if FULL_GATE_RE.match(line) else None
 
 
+# build.py's exit status for each verdict: SystemExit(1) after "FULL GATE: FAIL",
+# a normal return after "FULL GATE: OK". Any other status (a crash, a kill, 137)
+# after a printed verdict is abnormal termination, never an approval.
+VERDICT_EXIT = {"OK": 0, "FAIL": 1}
+
+
+def exit_agrees(final, returncode):
+    """True when there is no exit status to check (a saved transcript) or it is
+    exactly the one build.py uses for this verdict."""
+    return returncode is None or returncode == VERDICT_EXIT[final]
+
+
 def check(output, baseline, dir32_baseline=None, dir32_report=None, returncode=None):
     """dir32_report is the gate's own dir32_inconsistent.txt text, or None when the
     gate did not write one. dir32_baseline None skips the DIR32 comparison.
@@ -125,9 +137,9 @@ def check(output, baseline, dir32_baseline=None, dir32_report=None, returncode=N
         print("gate_baseline: the gate did not finish (no FULL GATE verdict); nothing is proven")
         print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
         return 2
-    if returncode is not None and (returncode == 0) != (final == "OK"):
-        print(f"gate_baseline: the gate exited {returncode} but its transcript says FULL GATE: {final}; "
-              "nothing is proven")
+    if not exit_agrees(final, returncode):
+        print(f"gate_baseline: the gate exited {returncode} but its transcript says FULL GATE: {final} "
+              f"(build.py exits {VERDICT_EXIT[final]}); nothing is proven")
         return 2
     full_gate = next((line for line in reversed(output.splitlines())
                       if line.startswith("FULL GATE: ")), None)
@@ -221,7 +233,7 @@ def main():
     if a.record:
         now = red_rows(output)
         final = verdict(output)
-        if now is None or final is None or (returncode is not None and (returncode == 0) != (final == "OK")):
+        if now is None or final is None or not exit_agrees(final, returncode):
             print("gate_baseline: the gate died, did not finish, or exited against its verdict; refusing to record")
             print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
             sys.exit(2)

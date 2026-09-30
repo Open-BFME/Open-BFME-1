@@ -178,3 +178,11 @@ def test_exit_status_must_agree_with_the_verdict():
     code, out = run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, 0)  # FAIL transcript, clean exit
     assert code == 2 and "exited 0" in out
     assert run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, 1)[0] == 0
+
+
+def test_abnormal_exit_after_a_verdict_never_passes():
+    # A killed or crashed gate can have printed a valid verdict first.
+    for status in (137, 2, -9, 0xC000013A):
+        code, out = run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, status)  # known-red FAIL
+        assert code == 2 and "nothing is proven" in out
+        assert run(gb.check, GATE_OK, [], None, None, status)[0] == 2
