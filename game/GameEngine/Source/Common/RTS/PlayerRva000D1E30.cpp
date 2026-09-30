@@ -76,7 +76,8 @@ inline FindTeamD1E30 findTeamThunk() {
     return u.member;
 }
 extern SidesListD1E30 *TheSidesList;
-#define KEY(va) (((StaticNameKey *)(va))->key())
+extern const StaticNameKey TheKey_playerName, TheKey_teamOwner, TheKey_teamName;
+#define KEY(name) ((name).key())
 class Player {
     char prefix[0x24];
     int m_playerIndex;
@@ -104,14 +105,14 @@ void Player::rva000D1E30(const AsciiString &pname) {
         }
         side->scripts=scripts;
     }
-    AsciiString originalPlayerName=TheSidesList->getSkirmishSide(skirmishNdx)->dict.getAsciiString(KEY(0x12a7918));
+    AsciiString originalPlayerName=TheSidesList->getSkirmishSide(skirmishNdx)->dict.getAsciiString(KEY(TheKey_playerName));
     for (int i=TheSidesList->skirmishTeams.nodes[0].next; i; i=TheSidesList->skirmishTeams.nodes[i].next) {
-        if (TheSidesList->skirmishTeams.nodes[i].dict.getAsciiString(KEY(0x12a75c0)).compare(originalPlayerName)==0) {
+        if (TheSidesList->skirmishTeams.nodes[i].dict.getAsciiString(KEY(TheKey_teamOwner)).compare(originalPlayerName)==0) {
             Dict teamDict(TheSidesList->skirmishTeams.nodes[i].dict);
-            AsciiString teamName=teamDict.getAsciiString(KEY(0x12a75b8));
+            AsciiString teamName=teamDict.getAsciiString(KEY(TheKey_teamName));
             if (((const StringBase<char> &)teamName).compare(AsciiString("team")+originalPlayerName)==0)
-                teamDict.setAsciiString(KEY(0x12a75b8),AsciiString("team")+pname);
-            teamDict.setAsciiString(KEY(0x12a75c0),pname);
+                teamDict.setAsciiString(KEY(TheKey_teamName),AsciiString("team")+pname);
+            teamDict.setAsciiString(KEY(TheKey_teamOwner),pname);
             int index;
             if ((TheSidesList->*findTeamThunk())(pname+"/"+teamName,&index)) ((BfmeIndexedNodesFM *)&TheSidesList->teams)->bfmeRelease(index);
             ((Rva0019BE80TeamRec *)&TheSidesList->teams)->append(&teamDict);

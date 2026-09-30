@@ -4,7 +4,7 @@
 // method at both calls through ILT 4650B. Retail returns with ret 0xC.
 // Local filter sizes 8/12/12/12/16/20 follow their stores and stack slots;
 // PartitionFilterRejectBuildings' matched constructor independently fixes its layout.
-// The other filters retain retail vtable addresses while their owners remain opaque.
+// The other filters store retail vtables through bfmeVft aliases while their owners remain opaque.
 // Canonical basetype.h supplies struct Coord3D and the fundamental typedefs.
 #include "basetype.h"
 
@@ -34,6 +34,17 @@ protected:
 	PartitionFilter *m_next;
 };
 
+extern "C" void *bfmeVftRva0025ED50RootFilter[];
+extern "C" void *bfmeVftRva00260180SelfFilter[];
+extern "C" void *bfmeVftRva0025ED50ObjectFilter[];
+extern "C" void *bfmeVftBfmeObjEQT[];
+extern "C" void *bfmeVftPartitionFilterRelationship[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00260180SelfFilter=??_7Rva00260180SelfFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50ObjectFilter=??_7Rva0025ED50ObjectFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeObjEQT=??_7BfmeObjEQT@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+
 static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
 {
 	*reinterpret_cast<UnsignedInt *>(filter) = value;
@@ -44,7 +55,7 @@ class __declspec(novtable) Rva0025ED50RootFilter : public PartitionFilter
 public:
 	Rva0025ED50RootFilter()
 	{
-		setFilterVptr(this, 0x01083B80);
+		setFilterVptr(this, (UnsignedInt)bfmeVftRva0025ED50RootFilter);
 	}
 	virtual ~Rva0025ED50RootFilter() {}
 };
@@ -54,7 +65,7 @@ class __declspec(novtable) Rva00260180SelfFilter : public PartitionFilter
 public:
 	Rva00260180SelfFilter(Object *object)
 	{
-		setFilterVptr(this, 0x01095724);
+		setFilterVptr(this, (UnsignedInt)bfmeVftRva00260180SelfFilter);
 		m_object = object;
 	}
 	virtual ~Rva00260180SelfFilter() {}
@@ -67,7 +78,7 @@ class __declspec(novtable) Rva0025ED50ObjectFilter : public PartitionFilter
 public:
 	Rva0025ED50ObjectFilter(Object *object)
 	{
-		setFilterVptr(this, 0x01085DD0);
+		setFilterVptr(this, (UnsignedInt)bfmeVftRva0025ED50ObjectFilter);
 		m_object = object;
 	}
 	virtual ~Rva0025ED50ObjectFilter() {}
@@ -80,7 +91,7 @@ class __declspec(novtable) BfmeObjEQT : public PartitionFilter
 public:
 	BfmeObjEQT(Object *object)
 	{
-		setFilterVptr(this, 0x010956B0);
+		setFilterVptr(this, (UnsignedInt)bfmeVftBfmeObjEQT);
 		m_object = object;
 	}
 	virtual ~BfmeObjEQT() {}
@@ -104,7 +115,7 @@ class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
 public:
 	PartitionFilterRelationship(Object *object, Int flags, Bool match)
 	{
-		setFilterVptr(this, 0x01085DC0);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterRelationship);
 		m_object = object;
 		m_flags = flags;
 		m_match = match;

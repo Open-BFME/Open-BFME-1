@@ -155,6 +155,11 @@ public:
 extern void j_000338ed();
 extern void j_0000acfe();
 extern void j_0003df14();
+extern void j_00019844();
+extern void j_0003af0d();
+extern void j_00046a2e();
+extern void j_000316e2();
+extern void j_000385e1();
 
 class HomeRegistry
 {
@@ -291,35 +296,35 @@ BfmeAptScreenOnlineHome::BfmeAptScreenOnlineHome( int context )
 
 		HomeRegistry *registry = (HomeRegistry *)this;
 		{
-			FunctorMethod callback = rawFunctorMethod( 0x00419844 );
+			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_00019844 );
 			AsciiString name( "AptOnline::OnlineHome::OfficialSite" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
 			(registry->*HomeRegistry::plainRegistrar())( name,
 				Rva0050F8B0FunctorHolder( binding ) );
 		}
 		{
-			FunctorMethod callback = rawFunctorMethod( 0x0043AF0D );
+			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_0003af0d );
 			AsciiString name( "AptOnline::OnlineHome::OnOpened" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
 			(registry->*HomeRegistry::plainRegistrar())( name,
 				Rva0050F8B0FunctorHolder( binding ) );
 		}
 		{
-			FunctorMethod callback = rawFunctorMethod( 0x00446A2E );
+			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_00046a2e );
 			AsciiString name( "AptOnlineHome::InitGadgets" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
 			((HomeRefRegistrar)j_0003df14)( name,
 				HomeFunctorHolderBEC( binding ) );
 		}
 		{
-			FunctorMethod callback = rawFunctorMethod( 0x004316E2 );
+			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_000316e2 );
 			AsciiString name( "OnlineShell/OnlineHome/tooltipPlayerLevelIcon" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
 			g_theWindowManager->bfmeBindRva004650F0( name,
 				Rva0050F8B0FunctorHolder( binding ) );
 		}
 		{
-			FunctorMethod callback = rawFunctorMethod( 0x004385E1 );
+			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_000385e1 );
 			AsciiString name( "ShowOnlineHomeMovies" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
 			(registry->*HomeRegistry::argRegistrar())( name, (void *)0,
