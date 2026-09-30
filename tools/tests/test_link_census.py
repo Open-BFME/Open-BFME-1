@@ -414,3 +414,27 @@ def test_link_check_agrees_with_the_census(monkeypatch):
     # the file that fixes the kept copy links: its own current copy replaces the census's
     facts["gm.obj"] = ([("new", "y", 5, "retail")], ["new"], [], [])
     assert C.check_object(present[0], ix, None)["selected"] == []
+
+
+def test_rerun_refuses_an_object_missing_now(tmp_path, monkeypatch):
+    # falsifier: census replay (--status) omitted objects that went missing after the census
+    import pytest
+    census = {"missing": 0, "when": "2026-09-29 00:00", "unresolved_classes": {}, "duplicate_classes": {}}
+    monkeypatch.setattr(L.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout=""))
+    monkeypatch.setattr(L, "objects", lambda rows: ([], [tmp_path / "gone.obj"]))
+    monkeypatch.setattr(L, "write_status", lambda *a, **k: pytest.fail("reached write_status"))
+    with pytest.raises(SystemExit, match="missing now"):
+        L.record(census, [], rerun=True)
+
+
+def test_an_unexplained_linker_exit_records_nothing(tmp_path, monkeypatch):
+    # falsifier: link.exe exiting 7 with an empty log was recorded as a clean census
+    import pytest
+    monkeypatch.setattr(L, "OUT", tmp_path)
+    monkeypatch.setattr(L, "ledger", lambda: [])
+    monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "link", lambda *a, **k: ("", 0, 7))
+    with pytest.raises(SystemExit, match="no linker diagnostic"):
+        L.main([])
+    L.unexplained_exit(0, "")  # a clean exit needs no diagnostic
+    L.unexplained_exit(1120, "x.obj : error LNK2001: unresolved external symbol _f")  # explained

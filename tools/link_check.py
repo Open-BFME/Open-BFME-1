@@ -211,6 +211,8 @@ def resolve(argument, index):
     path = Path(argument)
     if path.suffix.lower() == ".obj":
         obj = path if path.is_absolute() else ROOT / path
+        if not obj.is_file():
+            raise SystemExit(f"link_check: {argument} does not exist; nothing to check (never LINKS)")
         by_object = {entry["object"]: source for source, entry in index["blockers"].items()}
         source = by_object.get(obj.name)
         if source is not None and not link_census.object_current(ROOT / source, obj):
@@ -290,8 +292,15 @@ def main(argv=None):
     truth = link_census.RetailTruth(link_census.ledger())
     resolved = [resolve(path, index) for path in args.paths]
     now = source_bytes({source for source, _ in resolved if source})
-    clean = [report(source, obj, check_object(obj, index, truth, source), index, now.get(source, 0))
-             for source, obj in resolved]
+    clean = []
+    for source, obj in resolved:
+        try:
+            result = check_object(obj, index, truth, source)
+        except link_census.MissingObject as exc:
+            print(f"{source or obj.name}: UNKNOWN ({exc})")
+            clean.append(False)
+            continue
+        clean.append(report(source, obj, result, index, now.get(source, 0)))
     print(f"link_check: {sum(clean)} of {len(clean)} link cleanly ({time.time() - started:.1f}s)")
     return 0 if all(clean) else 1
 

@@ -72,3 +72,19 @@ def test_stale_object_is_never_evidence(tmp_path, monkeypatch):
     import pytest
     with pytest.raises(SystemExit, match="not current"):
         C.resolve(str(obj), ix)
+
+
+def test_a_missing_object_is_never_an_empty_clean_one(tmp_path):
+    # falsifier from the 2026-09-29 linking audit: object_facts turned a read failure into empty
+    # facts, and link_check reported LINKS for an object that does not exist
+    import pytest
+    import link_census
+    missing = tmp_path / "does_not_exist.obj"
+    with pytest.raises(link_census.MissingObject):
+        link_census.object_facts(missing)
+    ix = {**index(), "objects": [], "selection": {"exceptions": {}, "owners": {}},
+          "excuses": {"runtime": set(), "imported": {}, "stubs": {}}}
+    with pytest.raises(link_census.MissingObject):
+        C.check_object(missing, ix, None)
+    with pytest.raises(SystemExit):
+        C.resolve(str(missing), ix)

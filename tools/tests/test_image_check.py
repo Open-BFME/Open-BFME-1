@@ -90,7 +90,7 @@ def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None
         return image[rva:rva + size] if 0 <= rva and rva + size <= len(image) else None
     lanes = {name: {None: "authored"} for name, _ in objects}
     return I.Image(objs, kept, truth(image, ledger, pinned), statics or {}, read, excused or (lambda n: None),
-                   lanes, (TEXT, DATA)).run()
+                   lanes, (TEXT, DATA), len(image)).run()
 
 
 def call(at, to):
@@ -259,3 +259,151 @@ def test_row_on_an_ilt_stub_is_judged_at_the_body():
                   retail, {**LEDGER, "?j_00001100@@YAXXZ": {0x1100}})
     j = item(image, "?j_00001100@@YAXXZ")
     assert j.home == 0x1100 and j.verdict == "retail" and image.badset[j.id] == frozenset()
+
+
+# Regression tests from the gpt-6.1-sol review of 79965a5d2a (build/rtreview_scratch/probes.py,
+# literal_probe.py): three ways the first version reported CLOSED STRICT falsely.
+
+def test_zero_fill_is_compared_with_retail():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xa1" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"
+    retail[0x2000:0x2004] = struct.pack("<I", 7)  # retail's variable holds 7; ours is zero-fill
+    obj = coff([(".text", CODE_FLAGS, b"\xa1" + bytes(4) + b"\xc3", [(1, "_d", I.DIR32)], None),
+                (".bss", DATA_FLAGS | I.UNINITIALIZED, bytes(4), [], None)],
+               [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_d", 2, 0, I.EXTERNAL, 0, None)])
+    image = build([("F.obj", obj)], {"_f": "F.obj", "_d": "F.obj"}, retail, {"_f": {0x1040}, "_d": {0x2000}})
+    assert item(image, "_d").verdict == "wrong" and "zero-fill" in item(image, "_d").reason
+    assert item(image, "_f").verdict == "retail"
+    assert I.results(image)[0]["closed_strict_bytes"] == 0
+    retail[0x2000:0x2004] = bytes(4)  # retail's bytes are zero there too: retail-true
+    image = build([("F.obj", obj)], {"_f": "F.obj", "_d": "F.obj"}, retail, {"_f": {0x1040}, "_d": {0x2000}})
+    assert item(image, "_d").verdict == "retail" and I.results(image)[0]["closed_strict_bytes"] == 6
+
+
+def test_caller_must_reach_the_home_the_callee_is_verified_at():
+    retail = bytearray(RETAIL)
+    retail[0x1030:0x1036] = b"\xb8\x02\0\0\0\xc3"
+    retail[0x1000:0x1006] = call(0x1000, 0x1020) + b"\xc3"  # retail calls 0x1020
+    objects = [("A.obj", function("_a", b"\xe8\0\0\0\0\xc3", [(1, "_c", I.REL32)])),
+               ("C.obj", function("_c", b"\xb8\x02\0\0\0\xc3"))]  # matches only at 0x1030
+    image = build(objects, {"_a": "A.obj", "_c": "C.obj"}, retail, {"_a": {0x1000}, "_c": {0x1020, 0x1030}})
+    c, a = item(image, "_c"), item(image, "_a")
+    assert c.home == 0x1030 and c.homes == {0x1030} and c.verdict == "retail"
+    assert a.verdict == "wrong" and "0x00001030" in a.reason
+    assert I.results(image)[0]["closed_strict_bytes"] == 6  # _c alone
+
+
+def test_several_matching_candidates_leave_the_home_unknown():
+    retail = bytearray(RETAIL)
+    retail[0x1030:0x1036] = retail[0x1020:0x1026]  # two identical retail bodies claimed by one name
+    image = build(CHAIN, {"_a": "A.obj", "_b": "B.obj", "_c": "C2.obj"}, retail, {**LEDGER, "_c": {0x1020, 0x1030}})
+    c = item(image, "_c")
+    assert c.verdict == "unknown" and "several candidate" in c.reason
+    assert image.badset[item(image, "_a").id] == frozenset({c.id})
+
+
+def test_unrelocated_image_literal_is_not_movable():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xb8" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"  # mov eax, 0x402000; ret
+    image = build([("Literal.obj", function("_f", bytes(retail[0x1040:0x1046])))], {"_f": "Literal.obj"}, retail,
+                  {"_f": {0x1040}})
+    f = item(image, "_f")
+    assert f.retail_verdict == "retail" and f.verdict == "unknown" and "immediate" in f.reason
+    summary = I.results(image)[0]
+    assert summary["closed_bytes"] == 6 and summary["closed_strict_bytes"] == 0 and summary["movable_bytes"] == 0
+    # the same address through a relocation moves with its target
+    obj = coff([(".text", CODE_FLAGS, b"\xb8\0\0\0\0\xc3", [(1, "_d", I.DIR32)], 2),
+                (".data", DATA_FLAGS, bytes(4), [], None)],
+               [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_d", 2, 0, I.EXTERNAL, 0, None)])
+    image = build([("R.obj", obj)], {"_f": "R.obj", "_d": "R.obj"}, retail, {"_f": {0x1040}, "_d": {0x2000}})
+    assert item(image, "_f").verdict == "retail" and I.results(image)[0]["closed_strict_bytes"] == 6
+
+
+def test_unrelocated_branch_and_address_are_wrong_when_moved():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = call(0x1040, 0x1000) + b"\xc3"  # a dump-style call with no relocation
+    retail[0x1050:0x1056] = b"\xa1" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"  # mov eax, [0x402000]
+    retail[0x1060:0x1066] = b"\x3d" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"  # cmp eax, imm: a number
+    objects = [("B.obj", function("_br", bytes(retail[0x1040:0x1046]))),
+               ("M.obj", function("_mem", bytes(retail[0x1050:0x1056]))),
+               ("N.obj", function("_num", bytes(retail[0x1060:0x1066])))]
+    image = build(objects, {"_br": "B.obj", "_mem": "M.obj", "_num": "N.obj"}, retail,
+                  {"_br": {0x1040}, "_mem": {0x1050}, "_num": {0x1060}})
+    assert item(image, "_br").verdict == "wrong" and "leaves its section" in item(image, "_br").reason
+    assert item(image, "_mem").verdict == "wrong" and "unrelocated address" in item(image, "_mem").reason
+    assert item(image, "_num").verdict == "retail"
+
+
+def test_data_dword_is_a_counted_boundary_not_a_verdict():
+    # retail has no base relocations: a data dword in the image range may be a pointer or a table of shorts
+    retail = bytearray(RETAIL)
+    for value in (I.BASE + 0x1020, I.BASE + 0x2800):  # _c's start; an in-image value nothing starts at
+        retail[0x2040:0x2044] = struct.pack("<I", value)
+        table = coff([(".rdata", RDATA_FLAGS, struct.pack("<I", value), [], None)],
+                     [("_table", 1, 0, I.EXTERNAL, 0, None)])
+        image = build(CHAIN + [("T.obj", table)], {"_a": "A.obj", "_b": "B.obj", "_c": "C2.obj", "_table": "T.obj"},
+                      retail, {**LEDGER, "_table": {0x2040}})
+        assert item(image, "_table").verdict == "retail" and item(image, "_table").literals == 1
+        assert I.results(image)[0]["unproven_in_image_data_dwords"] == 1
+
+
+# Falsifiers from the owner-run gpt-6.1-sol linking audit, 2026-09-29 (build/audit_gate/image_falsifier.py,
+# image_unmodelled_transfer.py): each one reported CLOSED STRICT for a caller of a wrong body.
+
+def test_addend_crossing_into_another_item_follows_what_it_reaches():
+    retail = bytearray(RETAIL)
+    retail[0x1000:0x1006] = call(0x1000, 0x1020) + b"\xc3"
+    retail[0x1010:0x1020] = b"\xc3" + b"\xcc" * 15
+    retail[0x1020:0x1026] = b"\xb8\x01\0\0\0\xc3"
+    a = function("_a", b"\xe8" + struct.pack("<i", 16) + b"\xc3", [(1, "_b", I.REL32)])  # calls _b+16
+    bc = coff([(".text", CODE_FLAGS, b"\xc3" + b"\xcc" * 15 + b"\xb8\x02\0\0\0\xc3", [], None)],
+              [("_b", 1, 0, I.EXTERNAL, 0x20, None), ("_c", 1, 16, I.EXTERNAL, 0x20, None)])
+    image = build([("A.obj", a), ("BC.obj", bc)], {"_a": "A.obj", "_b": "BC.obj", "_c": "BC.obj"}, retail, LEDGER)
+    a_, c_ = item(image, "_a"), item(image, "_c")
+    (_, _, target, _, flag), = a_.edges
+    assert target is c_ and "addend-crosses-from:_b" in flag
+    assert c_.verdict == "wrong" and image.badset[a_.id] == frozenset({c_.id})
+    assert I.results(image)[0]["closed_strict_bytes"] == 1  # only _b's ret
+
+
+def test_zero_fill_outside_the_image_is_wrong():
+    obj = coff([(".bss", DATA_FLAGS | I.UNINITIALIZED, bytes(8), [], None)], [("_z", 1, 0, I.EXTERNAL, 0, None)])
+    image = build([("Z.obj", obj)], {"_z": "Z.obj"}, RETAIL, {"_z": {END - 4}})  # runs past the image's end
+    assert item(image, "_z").verdict == "wrong" and "outside" in item(image, "_z").reason
+
+
+def test_resolved_transfer_inside_one_section_is_an_edge():
+    # one ordinary section, two functions, a call the assembler resolved: no relocation, still a dependency
+    retail = bytearray(RETAIL)
+    retail[0x1000:0x1006] = call(0x1000, 0x1010) + b"\xc3"
+    retail[0x1006:0x1010] = b"\xcc" * 10
+    retail[0x1010:0x1016] = b"\xb8\x01\0\0\0\xc3"
+    body = call(0, 0x10) + b"\xc3" + b"\xcc" * 10 + b"\xb8\x02\0\0\0\xc3"  # the second function is not retail's
+    obj = coff([(".text", CODE_FLAGS, body, [], None)],
+               [("_a", 1, 0, I.EXTERNAL, 0x20, None), ("_c", 1, 16, I.EXTERNAL, 0x20, None)])
+    image = build([("S.obj", obj)], {"_a": "S.obj", "_c": "S.obj"}, retail, {"_a": {0x1000}, "_c": {0x1010}})
+    a, c = item(image, "_a"), item(image, "_c")
+    assert [(t.label(), flag) for _, _, t, _, flag in a.edges] == [("_c", "decoded")]
+    assert a.verdict == "retail" and c.verdict == "wrong" and image.badset[a.id] == frozenset({c.id})
+
+
+def test_resolved_transfer_out_of_its_section_is_not_movable():
+    retail = bytearray(RETAIL)
+    retail[0x1000:0x1006] = call(0x1000, 0x1020) + b"\xc3"
+    objects = [("A.obj", function("_a", bytes(retail[0x1000:0x1006]))), ("C2.obj", CHAIN[3][1])]
+    image = build(objects, {"_a": "A.obj", "_c": "C2.obj"}, retail, {"_a": {0x1000}, "_c": {0x1020}})
+    a = item(image, "_a")
+    assert a.retail_verdict == "retail" and a.verdict == "wrong" and not a.edges
+    assert image.badset[a.id] == frozenset({a.id})
+
+
+def test_indirect_transfer_is_an_unproven_boundary():
+    retail = bytearray(RETAIL)
+    retail[0x1000:0x1003] = b"\xff\x51\x08"  # call [ecx+8]: a virtual call
+    retail[0x1003] = 0xC3
+    image = build([("V.obj", function("_v", b"\xff\x51\x08\xc3"))], {"_v": "V.obj"}, retail, {"_v": {0x1000}})
+    v = item(image, "_v")
+    assert v.verdict == "retail" and v.indirect == 1
+    assert image.badset[v.id] == frozenset() and image.badset_direct[v.id] == frozenset({v.id})
+    summary = I.results(image)[0]
+    assert summary["closed_strict_bytes"] == 4 and summary["closed_strict_direct_bytes"] == 0

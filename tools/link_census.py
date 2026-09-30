@@ -306,6 +306,15 @@ def link(objs, aliases=None, tag="census", extra=(), options=()):
     return result.stdout + result.stderr, time.time() - started, result.returncode
 
 
+def unexplained_exit(code, log):
+    """A failing link.exe exit must be explained by the linker's own
+    diagnostics (under /FORCE, the LNK errors and warnings the census
+    counts); an exit with none, a crash of the tool or its host, is never
+    recorded as a census with nothing wrong."""
+    if code and not re.search(r"\b(?:error|warning) LNK\d+", log):
+        raise SystemExit(f"link_census: link.exe exited {code} with no linker diagnostic; no counts recorded")
+
+
 def classify(log, rows):
     pinned = pins()
     data = data_names()
@@ -738,18 +747,24 @@ def _comdat_selections(data):
     return found
 
 
+class MissingObject(RuntimeError):
+    """An object a check needs cannot be read. Never an empty object: an
+    object with no facts has no blockers and would read as linking."""
+
+
 def object_facts(obj, truth=None):
     """(COMDAT copies [(name, digest, size, verdict)], exclusive definitions,
     undefined externals, weak externals [(name, default)]) of one object:
-    what a link needs to know about it.
+    what a link needs to know about it. An unreadable object raises
+    MissingObject.
     A definition is exclusive when link.exe refuses a second one (LNK2005):
     in an ordinary section, or in a COMDAT whose selection is NODUPLICATES,
     which /Gy gives every non-inline function."""
     truth = truth or _TRUTH
     try:
         data = obj.read_bytes()
-    except OSError:
-        return [], [], [], []
+    except OSError as exc:
+        raise MissingObject(f"{obj}: cannot read the object ({exc})") from exc
     import struct
     count = struct.unpack_from("<H", data, 2)[0]
     optional = struct.unpack_from("<H", data, 16)[0]
@@ -1176,7 +1191,8 @@ def main(argv=None):
     if missing:
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
               f"linking the {len(present):,} present", file=sys.stderr)
-    log, seconds, _ = link(present)
+    log, seconds, code = link(present)
+    unexplained_exit(code, log)
     crashed = FATAL.search(log)
     if crashed:
         # A linker that dies prints no per-symbol errors, which would read as
@@ -1192,7 +1208,8 @@ def main(argv=None):
         table = alias_scaffold(rows, wanted)
         if args.scaffold_limit:
             table = dict(sorted(table.items())[:args.scaffold_limit])
-        log, seconds, _ = link(present, table, tag="scaffold")
+        log, seconds, code = link(present, table, tag="scaffold")
+        unexplained_exit(code, log)
         crashed = FATAL.search(log)
         after, after_detail, after_dup_kinds, _ = classify(log, rows)
         census["scaffold"] = {"aliases": len(table), "seconds": seconds,
@@ -1573,7 +1590,10 @@ def record(census, rows, rerun=False, fresh=False):
     # full build stops at the first failure: an object that is not current for
     # its source, recorded headers and compile command is last week's code
     # under this week's ledger.
-    present, _ = objects(rows)
+    present, missing = objects(rows)
+    if missing:  # census.json's count is the census's; an object gone since then would read as clean
+        raise SystemExit(f"link_census: {len(missing):,} objects are missing now, e.g. {missing[0].name}; "
+                         "nothing recorded")
     by_object = _object_sources(rows)
     stale = [] if fresh else [obj for obj in present if obj in by_object and not object_current(by_object[obj], obj)]
     if stale:

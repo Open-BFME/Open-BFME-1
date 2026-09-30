@@ -24,35 +24,53 @@ built, at COFF level, section by section:
              static inside its own object, a weak external to its definition
              or, when nothing defines it, to its default (flagged
              weak-fallback), a section symbol plus addend to the item holding
-             that offset. A name nothing defines is a leaf: an import or CRT
-             name the real link finds (link_census.excused) or unresolved.
+             that offset. An edge goes to the item symbol + addend REACHES
+             (`_b+16` is whatever starts 16 bytes into _b's section). A rel
+             branch the object already resolved between two items of one
+             ordinary section is an edge too (DECODED): no relocation is not
+             no dependency. A name nothing defines is a leaf: an import or
+             CRT name the real link finds (link_census.excused) or
+             unresolved.
   retail     an item with a retail address -- the ledger row or symbols.csv
              pin of an external name (RetailTruth: ILT stubs followed, an
              address several names claim only proves "unknown"), the
              object's own ledger row for a static, dir32_addresses.csv for
-             data -- is compared with retail at that address outside the
-             relocation fields, and every relocation must land on the retail
-             address of the definition the link SELECTED (content-named
-             constants by content; imports on retail's IAT slot). An item
-             with no address of its own is placed where a byte-true item's
-             relocation says retail put it (component_link's propagation, to
-             a fixed point); placements that disagree make it unknown, and a
-             derived item is then compared like any other.
+             data -- gets ONE home: the candidate its bytes equal retail's
+             at outside the relocation fields (zero-fill against retail's
+             zero-filled virtual bytes); several matching candidates leave it
+             unknown. Every relocation must land on the home of the
+             definition the link SELECTED, directly or through a proven ILT
+             stub (content-named constants by content; imports on retail's
+             IAT slot). An item with no address of its own is placed where a
+             byte-true item's relocation says retail put it (component_link's
+             propagation, to a fixed point); placements that disagree make it
+             unknown, and a derived item is then compared like any other.
+  movable    the shifted-placement check: relocated fields move with their
+             targets by construction, so an item is movable when no field
+             WITHOUT a relocation holds an image address or branches out of
+             it (dump_relocs.py's operand rules; shift_finding). A dump body
+             (MASM db / __emit, no relocations) fails it wherever it reaches
+             outside itself.
   verdicts   retail-true, wrong (a byte or a relocation disagrees with
-             retail), unknown (no retail address, a target with none, or
-             disagreeing placements), shadowed.
-  closure    a function item is CLOSED when it is retail-true and every node
-             reachable through relocation edges is retail-true or an excused
-             leaf. A dump body (MASM db / __emit) has no relocations, so what
-             it calls is invisible: `closed` counts it as good, `closed_strict`
-             does not.
-  queue      for every function that is not closed, the nearest bad node
+             retail, or an unrelocated address), unknown (no retail address,
+             a target with none, disagreeing placements, an ambiguous
+             in-image immediate), shadowed. `retail_verdict` is the verdict
+             at retail's placement, before the movable check.
+  closure    a function is CLOSED when every node reachable through
+             relocation edges (itself included) is retail-true at retail's
+             placement or an excused leaf; CLOSED STRICT, the acceptance,
+             when every one is also movable. A call or jump through a
+             register or data (a virtual call, a function pointer) names no
+             destination: it is counted per item (`indirect`), and
+             closed_strict_direct also requires none anywhere in the closure.
+  queue      for every function that is not closed strict, the nearest bad node
              (first bad path) and the set of bad nodes it reaches; a bad node
              that is some function's ONLY one would close that function by
              itself. Ranked by those bytes (authored + vendored, 0xCC out).
 
 Metrics count authored + vendored .text bytes (progress.source_lane of the
-selected item's own object) in retail-true and in closed items, next to the
+selected item's own object) in retail-true, movable, closed and closed-strict
+functions, next to the
 census's LINKED. Dumps, generated C++, libraries and scaffold are in the graph
 and never in the metric.
 
@@ -85,6 +103,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "build" / "image_check"
 BASE = 0x400000
 DIR32, DIR32NB, SECTION, REL32 = 0x0006, 0x0007, 0x000A, 0x0014
+DECODED = 0x10000  # not a COFF type: a rel branch the object resolved inside one section
 EXTERNAL, STATIC, WEAK_EXTERNAL = 2, 3, 105
 COMDAT, CODE, UNINITIALIZED = 0x1000, 0x20, 0x80
 SKIP = 0x800 | 0x200  # LNK_REMOVE | LNK_INFO: .drectve, .sxdata
@@ -176,13 +195,15 @@ def parse_object(name, data, position=0):
 class Item:
     """One definition in the image: [start, end) of a section of an object."""
     __slots__ = ("id", "obj", "sec", "start", "end", "names", "relocs", "code", "candidates", "home", "derived",
-                 "verdict", "reason", "edges", "lane", "bound", "constant", "bytes_ok", "pending")
+                 "verdict", "reason", "edges", "lane", "bound", "constant", "bytes_ok", "pending", "homes",
+                 "retail_verdict", "indirect", "literals")
 
     def __init__(self, obj, sec, start, end, names):
         self.obj, self.sec, self.start, self.end, self.names = obj, sec, start, end, names
         self.relocs, self.edges, self.pending = [], [], []
         self.code = bool(sec.flags & CODE)
-        self.candidates, self.home, self.derived = set(), None, False
+        self.candidates, self.home, self.derived, self.homes = set(), None, False, set()
+        self.retail_verdict, self.indirect, self.literals = None, 0, 0
         self.verdict, self.reason, self.lane, self.bound = None, "", None, False
         self.constant = any(name.startswith(CONSTANT) for name, _, _ in names)
         self.bytes_ok = False
@@ -257,8 +278,9 @@ class Image:
     `excused(name)` -> "import" | "crt" | None; `lanes` {object name: {name:
     lane, None: default lane}}; `text` retail .text (start, end)."""
 
-    def __init__(self, objs, kept, truth, statics, read, excused, lanes, text, unresolved_kinds=None,
+    def __init__(self, objs, kept, truth, statics, read, excused, lanes, text, image_size, unresolved_kinds=None,
                  row_homes=None):
+        self.image_size, self._md, self._known, self.numbers = image_size, None, None, 0
         self.objs, self.kept, self.truth, self.statics = objs, kept, truth, statics
         self.row_homes = row_homes  # matched ledger addresses: the metric counts only these
         self.read, self.excused, self.lanes, self.text = read, excused, lanes, text
@@ -269,6 +291,7 @@ class Image:
         for obj in objs:
             self.by_name.setdefault(obj.name, obj)
         self.items, self.leaves, self._bind, self.weak_fallbacks = [], {}, {}, []
+        self.crossing = {}  # (item id, relocation offset) -> the item the symbol names, when + addend leaves it
         self.unmapped = collections.defaultdict(list)
         for obj in objs:
             for name in obj.exports:
@@ -358,6 +381,8 @@ class Image:
         for item in self.items:
             if item.bound:
                 self._edges(item)
+                if item.code and len(item.sec.items) > 1 and item.sec.body is not None:
+                    self._decoded_edges(item)
         for index, leaf in enumerate(self.leaves.values()):
             leaf.id = len(self.items) + index
 
@@ -390,11 +415,11 @@ class Image:
                         name, value, section, _, storage, is_section = default
                         target = None
                 if target is not None:
-                    item.edges.append((where, kind, target, self._position(target, name, addend), flag))
+                    self._add_edge(item, where, kind, target, self._position(target, name, addend), flag)
                     continue
             if storage == EXTERNAL and name not in ABSOLUTE:
                 target = self.bind(name)
-                item.edges.append((where, kind, target, self._position(target, name, addend), flag))
+                self._add_edge(item, where, kind, target, self._position(target, name, addend), flag)
                 continue
             if storage == EXTERNAL:
                 item.edges.append((where, kind, self.leaf("absolute", name, True), 0, flag))
@@ -407,9 +432,44 @@ class Image:
                     continue
                 position = value + addend
                 target = item_at(sec, position if is_section else value)
-                item.edges.append((where, kind, target, position, flag))
+                self._add_edge(item, where, kind, target, position, flag)
                 continue
             item.edges.append((where, kind, self.leaf("unresolved", name, False, "no definition"), 0, flag))
+
+    def _add_edge(self, item, where, kind, named, position, flag):
+        """An edge to the item `position` (symbol + addend, a section offset)
+        actually reaches: link.exe computes symbol + addend, and in this
+        image the section is laid out as the object lays it out, so `_b+16`
+        executes whatever item starts 16 bytes into _b's section. A data
+        pointer just past the named item (an end sentinel) or outside the
+        section stays on the named item; a branch has no sentinel. A crossing
+        edge keeps the named item (self.crossing) for the retail check."""
+        target = named
+        end = named.end if kind in (DIR32, DIR32NB) and isinstance(named, Item) else None
+        if isinstance(named, Item) and not (named.start <= position < named.end or position == end) \
+                and 0 <= position < named.sec.size:
+            target = item_at(named.sec, position)
+            if target is not named:
+                flag = (flag + " " if flag else "") + f"addend-crosses-from:{named.label()}"
+                self.crossing[(item.id, where)] = named
+        item.edges.append((where, kind, target, position, flag))
+
+    def _decoded_edges(self, item):
+        """Transfers the object already resolved: a rel branch with no
+        relocation from one item to another of the same ordinary section (a
+        MASM file's PROCs, a TU without /Gy). No relocation is not no
+        dependency: each becomes an edge of kind DECODED."""
+        body = item.body()
+        fields = self._fields(item)
+        covered = self._covered(fields)
+        for off, insn in self._instructions(body, fields, covered):
+            branch = self._branch(insn)
+            if branch is None or off + insn.imm_offset in covered:
+                continue
+            destination = item.start + branch - self._VA
+            if 0 <= destination < item.sec.size and not item.start <= destination < item.end:
+                item.edges.append((item.start + off + insn.imm_offset, DECODED, item_at(item.sec, destination),
+                                   destination, "decoded"))
 
     @staticmethod
     def _position(target, name, addend):
@@ -446,40 +506,65 @@ class Image:
             return value & 0xFFFFFFFF
         return (home + where + 4 + value) & 0xFFFFFFFF
 
-    def judge_at(self, item, home):
-        """(status, reason, proposals, pending, bytes_ok) of `item` placed at
-        retail `home`. REL32/DIR32 values below include the addend, so a
-        target's expected address is its item's home plus the position."""
-        truth = self.truth
+    def bytes_at(self, item, home):
+        """None when `item` placed at retail `home` equals retail outside its
+        relocation fields, else why not. Zero-fill (.bss) must meet retail
+        zeros: retail's virtual bytes there, past raw data or zero in it."""
         if item.sec.body is None:
             if self.text[0] <= home < self.text[1]:
-                return "wrong", f"uninitialized data, but retail's 0x{home:08X} is code", [], [], False
-            return "retail", "", [], [], True
+                return f"uninitialized data, but retail's 0x{home:08X} is code"
+            chunk = self.read(home, item.size)
+            if chunk is None:
+                return f"0x{home:08X} is outside retail's image"
+            if chunk.count(0) != len(chunk):
+                first = next(i for i, b in enumerate(chunk) if b)
+                return f"zero-fill, but retail holds 0x{chunk[first]:02X} at +0x{first:X} (0x{home + first:08X})"
+            return None
         retail = self.read(home, item.size)
         if retail is None:
-            return "wrong", f"0x{home:08X} is outside retail's image", [], [], False
+            return f"0x{home:08X} is outside retail's image"
         ours, theirs = bytearray(item.body()), bytearray(retail)
         for where, _, kind in item.relocs:
             at, width = where - item.start, 2 if kind == SECTION else 4
             if at + width > len(ours):
-                return "wrong", f"relocation at +0x{at:X} runs past the item", [], [], False
+                return f"relocation at +0x{at:X} runs past the item"
             ours[at:at + width] = theirs[at:at + width]
         if ours != theirs:
             first = next(i for i in range(len(ours)) if ours[i] != theirs[i])
-            return "wrong", f"bytes differ at +0x{first:X} (0x{home + first:08X})", [], [], False
+            return f"bytes differ at +0x{first:X} (0x{home + first:08X})"
+        return None
+
+    def judge_at(self, item, home):
+        """(status, reason, proposals, pending, bytes_ok) of `item` placed at
+        retail `home`: its bytes, then every relocation (edges_at)."""
+        reason = self.bytes_at(item, home)
+        if reason:
+            return "wrong", reason, [], [], False
+        return (*self.edges_at(item, home), True)
+
+    def edges_at(self, item, home):
+        """(status, reason, proposals, pending) for the relocations of a
+        byte-true `item` at `home`. REL32/DIR32 values include the addend, so
+        a target's expected address is its home plus the position. An
+        anchored target is expected at the ONE home its bytes proved
+        (target.homes), or through a proven ILT route to it; an unanchored
+        one is proposed where retail's field says it is."""
+        truth = self.truth
+        retail = self.read(home, item.size)
         status, reason, proposals, pending = "retail", "", [], []
         for where, kind, target, position, _ in item.edges:
             at = where - item.start
-            if kind not in (DIR32, DIR32NB, REL32):
+            if kind not in (DIR32, DIR32NB, REL32, DECODED):
                 if status == "retail":
                     status, reason = "unknown", f"relocation type 0x{kind:X} at +0x{at:X}"
                 continue
-            actual = self._actual(home, at, kind, retail)
+            # a decoded branch's bytes matched retail: it lands where its displacement says
+            actual = home + position - item.start if kind == DECODED else self._actual(home, at, kind, retail)
             if isinstance(target, Leaf):
                 if target.kind == "absolute":
                     if kind == DIR32 and target.name in ABSOLUTE:
                         if (actual + BASE) & 0xFFFFFFFF != ABSOLUTE[target.name]:
-                            return "wrong", f"+0x{at:X} {target.name} is not absolute 0", [], [], True
+                            return "wrong", f"+0x{at:X} {target.name} is not absolute 0", [], []
                     continue
                 expected = None
                 if target.kind in ("import", "crt", "unresolved"):
@@ -493,27 +578,34 @@ class Image:
                         status, reason = "unknown", f"+0x{at:X} {target.name}: only a shared claim disagrees"
                         continue
                     return "wrong", (f"+0x{at:X} {target.name} lands at 0x{actual:08X}, retail's is "
-                                     f"{_hexes(expected)}"), [], [], True
+                                     f"{_hexes(expected)}"), [], []
                 continue
             offset = position - target.start
             if target is item:
                 if actual != home + offset:
-                    return "wrong", f"+0x{at:X} own label lands at 0x{actual:08X}", [], [], True
+                    return "wrong", f"+0x{at:X} own label lands at 0x{actual:08X}", [], []
                 continue
             if target.constant:
                 body = target.body()
                 if body is None or self.read((actual - offset) & 0xFFFFFFFF, len(body)) != body:
-                    return "wrong", f"+0x{at:X} {target.label()} is not at 0x{actual:08X}", [], [], True
+                    return "wrong", f"+0x{at:X} {target.label()} is not at 0x{actual:08X}", [], []
                 continue
             if target.candidates:
-                expected = {c + offset for c in target.candidates}
+                expected = {h + offset for h in target.homes}
                 if actual in expected or (offset == 0 and truth._lands(actual, expected)):
                     continue
                 if all(c in truth.shared for c in target.candidates):
                     status, reason = "unknown", f"+0x{at:X} {target.label()}: only a shared claim disagrees"
                     continue
+                named = self.crossing.get((item.id, where))
+                if named is not None and named.homes and \
+                        actual in {h + position - named.start for h in named.homes}:
+                    # retail's value is named-relative arithmetic; this image reaches another item there
+                    status, reason = "unknown", (f"+0x{at:X} {named.label()}+0x{position - named.start:X} is "
+                                                 f"retail's value, but here it reaches {target.label()}")
+                    continue
                 return "wrong", (f"+0x{at:X} {target.label()} ({target.obj.name}) lands at 0x{actual:08X}, "
-                                 f"its retail address is {_hexes(expected)}"), [], [], True
+                                 f"its retail address is {_hexes(expected)}"), [], []
             base = (actual - offset) & 0xFFFFFFFF
             if target.code and offset == 0:
                 stub = truth._stub(base)
@@ -526,30 +618,196 @@ class Image:
                 place = ("outside retail's image" if self.read(base, 1) is None else
                          "inside retail's .text" if inside else "outside retail's .text")
                 kind_ = "code" if target.code else "data"
-                return "wrong", f"+0x{at:X} {target.label()} ({kind_}) would be at 0x{base:08X}, {place}", [], [], True
+                return "wrong", f"+0x{at:X} {target.label()} ({kind_}) would be at 0x{base:08X}, {place}", [], []
             proposals.append((target, base))
             pending.append((at, target))
-        return status, reason, proposals, pending, True
+        return status, reason, proposals, pending
+
+    # -------------------------------------------------------- shifted placement
+
+    def in_image(self, value):
+        return BASE <= value < BASE + self.image_size
+
+    def shift_finding(self, item):
+        """(status, reason) when `item` would not survive a placement other
+        than retail's, else None. Every relocated field moves with its
+        target by construction; what does not move is a field with no
+        relocation: an operand holding an image address, or a branch out of
+        the item. dump_relocs.py's operand rules decide: a rel branch leaving
+        the item and a disp32 (absolute, SIB or based) inside the image are
+        addresses (wrong); a push/mov imm32 inside the image is ambiguous
+        (unknown), and wrong when a ledger row, pin or placed item starts at
+        it; any other imm32 (cmp, test, arithmetic) is a number. Data has no
+        operand to read: an unrelocated in-image dword is counted per item
+        (`literals`, items.csv) as an unproven boundary and changes no
+        verdict. Retail has no base relocations to say which dwords are
+        pointers, and on 2026-09-30 all 16 data dwords that hit the
+        ledger-start evidence were byte or short tables (Lua's opcode
+        properties 0x01000000, zlib's configuration_table, D3DX shader
+        tables)."""
+        body = item.body()
+        if body is None or item.constant:
+            return None
+        fields = self._fields(item)
+        covered = self._covered(fields)
+        if not item.code:
+            for off in range((-item.start) % 4, len(body) - 3, 4):
+                if off in covered or off + 3 in covered:
+                    continue
+                value = struct.unpack_from("<I", body, off)[0]
+                if self.in_image(value) and value >= BASE + 0x1000:
+                    item.literals += 1
+                    self.numbers += 1
+            return None
+        return self._scan_code(item, body, fields, covered)
+
+    def known_address(self, value):
+        """Address evidence for an in-image value: a matched ledger row, a
+        symbols.csv pin or dir32 entry, or a placed item starts there."""
+        if self._known is None:
+            known = set(self.row_homes or ())
+            for table in (self.truth.ledger, self.truth.pinned):
+                for homes in table.values():
+                    known.update(homes)
+            known.update(item.home for item in self.items if item.home is not None)
+            self._known = known
+        return (value - BASE) in self._known
+
+    _VA = 0x10000000  # any base: branch destinations are read item-relative
+
+    @staticmethod
+    def _fields(item):
+        """Item-relative (start, end) of every relocation field."""
+        return sorted((where - item.start, where - item.start + (2 if kind == SECTION else 4))
+                      for where, _, kind in item.relocs)
+
+    @staticmethod
+    def _covered(fields):
+        covered = set()
+        for low, high in fields:
+            covered.update(range(low, high))
+        return covered
+
+    def _instructions(self, body, fields, covered):
+        """(offset, instruction) by linear sweep of a function's code. It
+        stops at the first relocation that is not an operand of the
+        instruction around it, or at a relocated field where an instruction
+        should start: MSVC puts a switch's jump and index tables after the
+        code."""
+        if self._md is None:
+            from capstone import CS_ARCH_X86, CS_MODE_32, Cs
+            self._md = Cs(CS_ARCH_X86, CS_MODE_32)
+            self._md.detail = True
+        starts = {low for low, _ in fields}
+        off, size = 0, len(body)
+        while off < size:
+            if off in covered:
+                return
+            insn = next(self._md.disasm(body[off:off + 16], self._VA + off, 1), None)
+            if insn is None:
+                off += 1
+                continue
+            end = off + insn.size
+            operand_fields = {off + insn.disp_offset if insn.disp_size else None,
+                              off + insn.imm_offset if insn.imm_size else None}
+            if any(off < low < end and low not in operand_fields for low in starts):
+                return
+            yield off, insn
+            off = end
+
+    @staticmethod
+    def _branch(insn):
+        """The destination (at _VA) of a rel call/jmp/jcc, else None."""
+        from capstone import CS_GRP_CALL, CS_GRP_JUMP
+        from capstone.x86 import X86_OP_IMM
+        ops = insn.operands
+        if set(insn.groups) & {CS_GRP_JUMP, CS_GRP_CALL} and len(ops) == 1 and ops[0].type == X86_OP_IMM:
+            return ops[0].imm & 0xFFFFFFFF
+        return None
+
+    def _scan_code(self, item, body, fields, covered):
+        """shift_finding for code. Also counts, in item.indirect, the calls
+        and jumps whose destination the code does not state: through a
+        register or through memory other than an import slot or the item's
+        own switch table (a virtual call, a function pointer). Those are an
+        unproven boundary, never an absent dependency."""
+        from capstone import CS_GRP_CALL, CS_GRP_JUMP
+        from capstone.x86 import X86_OP_IMM, X86_OP_MEM, X86_REG_FS, X86_REG_GS, X86_REG_INVALID
+        targets = {where - item.start: target for where, _, target, _, _ in item.edges}
+        unknown, indirect = None, 0
+        for off, insn in self._instructions(body, fields, covered):
+            ops = insn.operands
+            branch = self._branch(insn)
+            if branch is not None:
+                destination = item.start + branch - self._VA
+                if off + insn.imm_offset not in covered and not 0 <= destination < item.sec.size:
+                    item.indirect = indirect
+                    return "wrong", f"unrelocated {insn.mnemonic} at +0x{off:X} leaves its section (not movable)"
+                continue
+            if set(insn.groups) & {CS_GRP_JUMP, CS_GRP_CALL} and ops:
+                target = targets.get(off + insn.disp_offset) if insn.disp_size == 4 else None
+                switch = (insn.mnemonic == "jmp" and ops[0].type == X86_OP_MEM and ops[0].mem.base == X86_REG_INVALID
+                          and ops[0].mem.index != X86_REG_INVALID and target is item)
+                if not (isinstance(target, Leaf) and target.kind == "import") and not switch:
+                    indirect += 1
+            for op in ops:
+                if op.type == X86_OP_MEM and insn.disp_size == 4:
+                    if op.mem.segment in (X86_REG_FS, X86_REG_GS):
+                        continue
+                    value = op.mem.disp & 0xFFFFFFFF
+                    if off + insn.disp_offset not in covered and self.in_image(value):
+                        item.indirect = indirect
+                        return "wrong", (f"unrelocated address 0x{value:08X} in `{insn.mnemonic} {insn.op_str}` "
+                                         f"at +0x{off:X} (not movable)")
+                elif op.type == X86_OP_IMM and insn.imm_size == 4:
+                    value = op.imm & 0xFFFFFFFF
+                    if (unknown is None and off + insn.imm_offset not in covered and self.in_image(value)
+                            and insn.mnemonic in ("push", "mov")):
+                        if self.known_address(value):
+                            item.indirect = indirect
+                            return "wrong", (f"unrelocated address 0x{value:08X} (a ledger row, pin or placed item "
+                                             f"starts there) in `{insn.mnemonic} {insn.op_str}` at +0x{off:X}")
+                        unknown = ("unknown", f"unrelocated in-image immediate 0x{value:08X} in "
+                                              f"`{insn.mnemonic} {insn.op_str}` at +0x{off:X} (ambiguous, "
+                                              "not movable)")
+        item.indirect = indirect
+        return unknown
+
+    # -------------------------------------------------------- verdicts
 
     def verify(self):
-        """Judge anchored items, propagate placements to a fixed point, then
-        settle every verdict."""
+        """Resolve one home per anchored item (the candidate its bytes
+        match), judge its relocations against the homes of what the link
+        selected, propagate placements to a fixed point, settle every verdict
+        at retail's placement, then check that each retail-true item would
+        survive another placement."""
+        truth = self.truth
         placements = collections.defaultdict(dict)  # item -> {home: first proposer}
-        judged = {}
-        queue = []
-        for item in self.items:
-            if item.bound and item.candidates and not item.constant:
-                results = [(home, self.judge_at(item, home)) for home in sorted(item.candidates)]
-                if all(home in self.truth.shared for home, _ in results):
-                    results = [(h, ("unknown", "shared address: " + r[1], *r[2:])) if r[0] == "wrong" else (h, r)
-                               for h, r in results]
-                rank = {"retail": 0, "unknown": 1, "wrong": 2}
-                # the best verdict; among equals a body before an ILT stub, so a report names the body
-                home, result = min(results, key=lambda hr: (rank[hr[1][0]], not hr[1][4],
-                                                            self.truth._stub(hr[0]) is not None, hr[0]))
-                item.home = home
-                judged[item] = result
-                queue.append(item)
+        judged, queue, failed = {}, [], {}
+
+        def preference(home):  # a body before an ILT stub, so a report names the body
+            return truth._stub(home) is not None, home
+        anchored = [i for i in self.items if i.bound and i.candidates and not i.constant]
+        for item in anchored:
+            reasons = {home: self.bytes_at(item, home) for home in item.candidates}
+            matches = sorted((h for h, r in reasons.items() if r is None), key=preference)
+            if matches:
+                item.home, item.homes = matches[0], set(matches)
+            else:
+                item.home = min(item.candidates, key=preference)
+                item.homes = set(item.candidates)
+                failed[item] = reasons[item.home]
+        for item in anchored:
+            if item in failed:
+                shared = all(home in truth.shared for home in item.candidates)
+                judged[item] = ("unknown" if shared else "wrong",
+                                ("shared address: " if shared else "") + failed[item], [], [], False)
+            elif len(item.homes) > 1:
+                judged[item] = ("unknown", "bytes match at several candidate addresses " + _hexes(item.homes),
+                                [], [], True)
+            else:
+                judged[item] = (*self.edges_at(item, item.home), True)
+            queue.append(item)
         while queue:
             fresh = []
             for item in queue:
@@ -567,27 +825,30 @@ class Image:
         conflicts = {target for target, homes in placements.items() if len(homes) > 1 and not target.candidates}
         for item in self.items:
             if item.constant:
-                item.verdict, item.reason = "retail", "content-named constant"
-                continue
-            if not item.bound:
-                item.verdict, item.reason = "shadowed", "another object's definition is the selected one"
-                continue
-            if item not in judged:
-                item.verdict, item.reason = "unknown", "no retail address (no row, pin or placing reference)"
-                continue
-            status, reason, _, pending, bytes_ok = judged[item]
-            item.bytes_ok, item.pending = bytes_ok, pending
-            if item in conflicts:
-                homes = placements[item]
-                status, reason = "unknown", "placements disagree: " + ", ".join(
-                    f"0x{h:08X} ({p.label()})" for h, p in sorted(homes.items())[:3])
-            elif status == "retail":
-                bad = [(at, t) for at, t in pending if t in conflicts]
-                if bad:
-                    status, reason = "unknown", f"+0x{bad[0][0]:X} {bad[0][1].label()}: placements disagree"
-            if item.derived and status == "wrong" and reason:
-                proposer = placements[item].get(item.home)
-                reason += f" (placed by {proposer.label() if proposer else '?'})"
+                status, reason = "retail", "content-named constant"
+            elif not item.bound:
+                status, reason = "shadowed", "another object's definition is the selected one"
+            elif item not in judged:
+                status, reason = "unknown", "no retail address (no row, pin or placing reference)"
+            else:
+                status, reason, _, pending, bytes_ok = judged[item]
+                item.bytes_ok, item.pending = bytes_ok, pending
+                if item in conflicts:
+                    homes = placements[item]
+                    status, reason = "unknown", "placements disagree: " + ", ".join(
+                        f"0x{h:08X} ({p.label()})" for h, p in sorted(homes.items())[:3])
+                elif status == "retail":
+                    bad = [(at, t) for at, t in pending if t in conflicts]
+                    if bad:
+                        status, reason = "unknown", f"+0x{bad[0][0]:X} {bad[0][1].label()}: placements disagree"
+                if item.derived and status == "wrong" and reason:
+                    proposer = placements[item].get(item.home)
+                    reason += f" (placed by {proposer.label() if proposer else '?'})"
+            item.retail_verdict = status
+            if status == "retail":
+                found = self.shift_finding(item)
+                if found:
+                    status, reason = found
             item.verdict, item.reason = status, reason
 
     # -------------------------------------------------------- closure
@@ -603,8 +864,10 @@ class Image:
         return len(chunk) - chunk.count(0xCC)
 
     def closure(self):
-        """Per node: good, reachable bad set (up to 2, None = more), dump
-        reached, next hop toward the nearest bad node."""
+        """Per node, twice: the reachable bad set (up to 2 nodes, None =
+        more) with good = retail-true at retail's placement (`badset_retail`)
+        and with good = retail-true AND movable (`badset`, the acceptance);
+        and for the latter the next hop toward the nearest bad node."""
         nodes = self.items + list(self.leaves.values())
         count = len(nodes)
         succ = [()] * count
@@ -612,35 +875,18 @@ class Image:
             if item.edges:
                 succ[item.id] = tuple({t.id for _, _, t, _, _ in item.edges if t.id != item.id})
         good = [False] * count
+        good_retail = [False] * count
         for node in nodes:
-            good[node.id] = node.good if isinstance(node, Leaf) else node.verdict == "retail"
-        opaque = [isinstance(n, Item) and n.lane == "dump" for n in nodes]
+            if isinstance(node, Leaf):
+                good[node.id] = good_retail[node.id] = node.good
+            else:
+                good[node.id] = node.verdict == "retail"
+                good_retail[node.id] = node.retail_verdict == "retail"
         comp = self._scc(succ)
-        members = collections.defaultdict(list)
-        for node, c in enumerate(comp):
-            members[c].append(node)
-        badset = {}
-        dump = {}
-        for c in sorted(members):  # _scc numbers components in reverse topological order
-            found, many, seen_dump = set(), False, False
-            for node in members[c]:
-                if not good[node]:
-                    found.add(node)
-                seen_dump |= opaque[node]
-                for nxt in succ[node]:
-                    d = comp[nxt]
-                    if d == c:
-                        continue
-                    other = badset[d]
-                    seen_dump |= dump[d]
-                    if other is None:
-                        many = True
-                    else:
-                        found |= other
-                if len(found) > 2:
-                    many = True
-            badset[c] = None if many or len(found) > 2 else frozenset(found)
-            dump[c] = seen_dump
+        self.badset = self._badsets(succ, comp, good)
+        self.badset_retail = self._badsets(succ, comp, good_retail)
+        direct = [good[n] and not (isinstance(node, Item) and node.indirect) for n, node in enumerate(nodes)]
+        self.badset_direct = self._badsets(succ, comp, direct)
         pred = [[] for _ in range(count)]
         for node in range(count):
             for nxt in succ[node]:
@@ -659,9 +905,32 @@ class Image:
                         fresh.append(p)
             frontier = fresh
         self.nodes, self.succ, self.good = nodes, succ, good
-        self.badset = [badset[comp[n]] for n in range(count)]
-        self.reaches_dump = [dump[comp[n]] for n in range(count)]
         self.hop, self.dist = hop, dist
+
+    @staticmethod
+    def _badsets(succ, comp, good):
+        """Reachable bad nodes per node, up to two (None = more)."""
+        members = collections.defaultdict(list)
+        for node, c in enumerate(comp):
+            members[c].append(node)
+        badset = {}
+        for c in sorted(members):  # _scc numbers components in reverse topological order
+            found, many = set(), False
+            for node in members[c]:
+                if not good[node]:
+                    found.add(node)
+                for nxt in succ[node]:
+                    d = comp[nxt]
+                    if d == c:
+                        continue
+                    if badset[d] is None:
+                        many = True
+                    else:
+                        found |= badset[d]
+                if len(found) > 2:
+                    many = True
+            badset[c] = None if many else frozenset(found)
+        return [badset[comp[n]] for n in range(len(comp))]
 
     @staticmethod
     def _scc(succ):
@@ -766,27 +1035,37 @@ def results(image, linked=None):
                 last = high
         return total
 
-    true_items = [i for i in counted if i.verdict == "retail"]
-    closed = [i for i in true_items if image.badset[i.id] == frozenset()]
-    strict = [i for i in closed if not image.reaches_dump[i.id]]
+    true_items = [i for i in counted if i.retail_verdict == "retail"]
+    movable = [i for i in counted if i.verdict == "retail"]
+    closed = [i for i in true_items if image.badset_retail[i.id] == frozenset()]
+    strict = [i for i in movable if image.badset[i.id] == frozenset()]
+    direct = [i for i in strict if image.badset_direct[i.id] == frozenset()]
     summary = {
         "items": len(image.items), "bound_items": sum(1 for i in image.items if i.bound),
         "leaves": len(image.leaves), "edges": sum(len(i.edges) for i in image.items),
         "verdicts_all": dict(verdicts), "verdicts_bound": dict(bound_verdicts),
         "derived_items": sum(1 for i in image.items if i.derived),
         "weak_fallbacks": len(image.weak_fallbacks),
+        "unproven_in_image_data_dwords": image.numbers,
+        "data_items_with_unproven_dwords": sum(1 for i in image.items if i.literals),
         "leaf_kinds": dict(collections.Counter(leaf.kind for leaf in image.leaves.values())),
         "functions": len(functions),
+        "function_verdicts_retail_placement": dict(collections.Counter(i.retail_verdict for i in functions)),
         "function_verdicts": dict(collections.Counter(i.verdict for i in functions)),
         "decompiled_functions": len(counted),
         "decompiled_bytes": intervals(counted),
         "retail_true_functions": len(true_items), "retail_true_bytes": intervals(true_items),
+        "movable_functions": len(movable), "movable_bytes": intervals(movable),
         "closed_functions": len(closed), "closed_bytes": intervals(closed),
         "closed_strict_functions": len(strict), "closed_strict_bytes": intervals(strict),
+        "closed_strict_direct_functions": len(direct), "closed_strict_direct_bytes": intervals(direct),
+        "functions_with_indirect_transfers": sum(1 for i in functions if i.indirect),
+        "decoded_edges": sum(1 for i in image.items for e in i.edges if e[1] == DECODED),
+        "crossing_edges": len(image.crossing),
     }
     by_lane = collections.defaultdict(list)
     for item in functions:
-        if item.verdict == "retail":
+        if item.retail_verdict == "retail":
             by_lane[item.lane or "?"].append(item)
     summary["lane_bytes_retail_true"] = {lane: intervals(items) for lane, items in sorted(by_lane.items())}
     if linked:
@@ -829,9 +1108,13 @@ def results(image, linked=None):
         item_rows.append({"id": item.id, "name": item.label(), "object": item.obj.name, "section": item.sec.name,
                           "offset": item.start, "size": item.size,
                           "home": f"0x{item.home:08X}" if item.home is not None else "",
-                          "derived": "yes" if item.derived else "", "verdict": item.verdict, "lane": item.lane or "",
-                          "closed": "" if not item.bound else "yes" if image.badset[item.id] == frozenset() else
-                          "no", "reason": item.reason})
+                          "derived": "yes" if item.derived else "", "retail_verdict": item.retail_verdict,
+                          "verdict": item.verdict, "lane": item.lane or "",
+                          "closed": "" if not item.bound else "yes" if image.badset_retail[item.id] == frozenset()
+                          else "no",
+                          "closed_strict": "" if not item.bound else "yes" if image.badset[item.id] == frozenset()
+                          else "no", "indirect": item.indirect, "data_literals": item.literals,
+                          "reason": item.reason})
     return summary, queue, path_rows, item_rows
 
 
@@ -840,15 +1123,16 @@ def compact(image):
     nodes = []
     for node in image.nodes:
         if isinstance(node, Leaf):
-            nodes.append(("leaf", node.name, node.kind, node.good, node.reason, None, None, None, ()))
+            nodes.append(("leaf", node.name, node.kind, node.good, node.reason, None, None, None, (), None))
         else:
             nodes.append(("item", node.label(), node.obj.name, node.verdict == "retail", node.reason, node.verdict,
-                          node.home, node.lane, tuple(n for n, _, _ in node.names)))
+                          node.home, node.lane, tuple(n for n, _, _ in node.names), node.retail_verdict))
     edges = {}
     for item in image.items:
         if item.edges:
             edges[item.id] = [(w - item.start, t.id, flag) for w, _, t, _, flag in item.edges]
-    return {"nodes": nodes, "hop": image.hop, "badset": image.badset, "dump": image.reaches_dump, "edges": edges}
+    return {"nodes": nodes, "hop": image.hop, "badset": image.badset, "badset_retail": image.badset_retail,
+            "edges": edges}
 
 
 # ------------------------------------------------------------------ the census tree
@@ -869,8 +1153,8 @@ def load_tree(tree):
 
 
 def retail_reader(build):
-    """read(rva, size) over retail's virtual image (.bss zero-filled) and
-    (.text start, end)."""
+    """read(rva, size) over retail's virtual image (.bss zero-filled),
+    (.text start, end) and SizeOfImage."""
     import pefile
     data = build.EXE.read_bytes()
     pe = pefile.PE(data=data, fast_load=True)
@@ -889,7 +1173,7 @@ def retail_reader(build):
         if rva < 0 or rva + length > size:
             return None
         return image[rva:rva + length]
-    return read, text
+    return read, text, size
 
 
 def census_row(census_tree):
@@ -969,8 +1253,8 @@ def load(tree, census_tree):
     if census_json.exists():
         kinds = {name: entry.get("kind", "") for name, entry in
                  json.loads(census_json.read_text(encoding="utf-8")).get("unresolved", {}).items()}
-    read, text = retail_reader(build)
-    image = Image(objs, kept, truth, statics, read, excused, lanes, text, kinds,
+    read, text, size = retail_reader(build)
+    image = Image(objs, kept, truth, statics, read, excused, lanes, text, size, kinds,
                   {int(row["target_rva"], 16) for row in rows})
     linked = {"commit": commit, "date": history.get("date"), "linked_bytes": int(history.get("linked_bytes") or 0),
               "linked_authored": int(history.get("linked_authored") or 0)}
@@ -1000,14 +1284,25 @@ def print_summary(summary):
     print(f"image_check: {summary['items']:,} items ({summary['bound_items']:,} bound), {summary['edges']:,} "
           f"relocation edges, {summary['leaves']:,} leaves {summary['leaf_kinds']}")
     print(f"  bound item verdicts: {summary['verdicts_bound']}; placed by propagation: {summary['derived_items']:,}; "
-          f"weak-external fallbacks: {summary['weak_fallbacks']:,}")
-    print(f"  functions with a retail .text address: {summary['functions']:,} {summary['function_verdicts']}")
+          f"weak-external fallbacks: {summary['weak_fallbacks']:,}; decoded in-section transfers: "
+          f"{summary['decoded_edges']:,}; addends crossing into another item: {summary['crossing_edges']:,}; "
+          f"unrelocated in-image data dwords (unproven, per item in items.csv): "
+          f"{summary['unproven_in_image_data_dwords']:,} in {summary['data_items_with_unproven_dwords']:,} items")
+    print(f"  functions with a retail .text address: {summary['functions']:,}; at retail's placement "
+          f"{summary['function_verdicts_retail_placement']}, movable {summary['function_verdicts']}")
     print(f"  authored + vendored bytes: {summary['decompiled_bytes']:,} in {summary['decompiled_functions']:,} "
           f"functions")
-    print(f"    retail-true   {summary['retail_true_bytes']:>10,} ({summary['retail_true_functions']:,} functions)")
-    print(f"    closed        {summary['closed_bytes']:>10,} ({summary['closed_functions']:,}; dumps count as good)")
+    print(f"    retail-true   {summary['retail_true_bytes']:>10,} ({summary['retail_true_functions']:,} functions, "
+          "at retail's placement)")
+    print(f"    movable       {summary['movable_bytes']:>10,} ({summary['movable_functions']:,}; retail-true and no "
+          "unrelocated image address or outward branch)")
+    print(f"    closed        {summary['closed_bytes']:>10,} ({summary['closed_functions']:,}; everything reached is "
+          "retail-true at retail's placement)")
     print(f"    closed strict {summary['closed_strict_bytes']:>10,} ({summary['closed_strict_functions']:,}; "
-          "nothing reached through a dump)")
+          "everything reached is retail-true and movable: the acceptance)")
+    print(f"      no indirect {summary['closed_strict_direct_bytes']:>10,} "
+          f"({summary['closed_strict_direct_functions']:,}; and nothing reached calls or jumps through a register "
+          "or data: virtual calls are an unproven boundary)")
     if linked:
         print(f"    census LINKED {linked.get('linked_bytes', 0):>10,} (per file, {linked.get('commit')} "
               f"{linked.get('date')})")
@@ -1032,12 +1327,12 @@ def print_path(graph, symbol):
             print(f"image_check: no selected item named {symbol}")
             return 1
     for node in found:
-        kind, label, obj, good, reason, verdict, home, lane, _ = nodes[node]
+        kind, label, obj, good, reason, verdict, home, lane, _, retail_verdict = nodes[node]
         bad = graph["badset"][node]
-        state = "CLOSED" if bad == frozenset() else "not closed"
-        print(f"{label} ({obj}) at {'0x%08X' % home if home is not None else 'no address'}: {verdict}, {state}"
-              f"{' (reaches a dump)' if graph['dump'][node] and bad == frozenset() else ''}"
-              f"{'; ' + reason if reason else ''}")
+        state = "CLOSED STRICT" if bad == frozenset() else "not closed strict"
+        at_retail = "closed" if graph["badset_retail"][node] == frozenset() else "not closed"
+        print(f"{label} ({obj}) at {'0x%08X' % home if home is not None else 'no address'}: {verdict}, {state} "
+              f"(at retail's placement {retail_verdict}, {at_retail}){'; ' + reason if reason else ''}")
         if bad == frozenset():
             continue
         print(f"  bad nodes reached: {'more than two' if bad is None else len(bad)}")
