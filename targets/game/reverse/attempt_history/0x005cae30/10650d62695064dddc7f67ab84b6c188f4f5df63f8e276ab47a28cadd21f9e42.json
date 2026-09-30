@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "10650d62695064dddc7f67ab84b6c188f4f5df63f8e276ab47a28cadd21f9e42",
+  "symbol": "??$?HDV?$char_traits@D@_STL@@V?$allocator@D@1@@_STL@@YA?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABV10@PBD@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??$?HDV?$char_traits@D@_STL@@V?$allocator@D@1@@_STL@@YA?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABV10@PBD@Z\n// partial score=1.0 date=2026-09-30\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#include <string>\nnamespace _STL {\ntemplate basic_string<char, char_traits<char>, allocator<char> > operator+(const basic_string<char, char_traits<char>, allocator<char> > &, const char *);\n}\n"
+}
