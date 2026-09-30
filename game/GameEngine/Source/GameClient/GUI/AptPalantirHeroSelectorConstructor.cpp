@@ -131,6 +131,8 @@ public:
 };
 
 extern WindowManager *g_theWindowManager;
+extern void j_00040bbf();
+extern void j_0001cfdf();
 
 class AptPalantirHeroSelector : public FunctorTargetSingle
 {
@@ -171,7 +173,7 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 		void (*raw)( void );
 		FunctorMethodSingle member;
 	} callback;
-	callback.raw = (void (*)( void ))0x00440BBF;
+	callback.raw = j_00040bbf;
 	AptPalantirHeroSelector *self = this;
 	Gen_p24pod *end = self->m_slots + 17;
 	self->m_selectAll = false;
@@ -207,7 +209,7 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 		BFMERetailAsciiString name( "Palantir/HeroSelectUI/SelectAllHeroesBttn/" );
 		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder(
-				FunctorBindingSingle( rawFunctorMethod( 0x0041CFDF ), self ),
+				FunctorBindingSingle( rawFunctorMethod( (unsigned int)j_0001cfdf ), self ),
 				(Rva0058D030FunctorSingleWrapper *)0 ) );
 	}
 }

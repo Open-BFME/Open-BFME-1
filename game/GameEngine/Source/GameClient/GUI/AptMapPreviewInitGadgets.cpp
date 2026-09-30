@@ -93,6 +93,8 @@ public:
 
 
 extern WindowManager *g_theWindowManager;
+extern void j_00036df9();
+extern void j_0000afab();
 
 void _bfme_setAptScreenRef( const AsciiString &name,
     Rva0050F840FunctorHolder callback );
@@ -111,7 +113,7 @@ void AptMapPreview::initGadgets()
         void (*raw)( void );
         FunctorMethodSingle member;
     } callback;
-    callback.raw = (void (*)( void ))0x00436DF9;
+    callback.raw = j_00036df9;
     AptMapPreview *self = this;
     {
         AsciiString name( "AptMapPreview::MapGadgetInit" );
@@ -120,7 +122,7 @@ void AptMapPreview::initGadgets()
                 FunctorBindingSingle( callback.member, self ) ) );
     }
 
-    callback.raw = (void (*)( void ))0x0040AFAB;
+    callback.raw = j_0000afab;
     {
         AsciiString name( "AptMapPreview::Picture" );
         g_theWindowManager->registerAptCallback( name,

@@ -171,6 +171,8 @@ class ImageCollection
     const Image *findImageByName(const AsciiString &);
 };
 extern ImageCollection *TheMappedImageCollection;
+extern void j_0001e9bb();
+extern void j_00011bf8();
 class Overridable
 {
   public:
@@ -307,7 +309,7 @@ void ControlBar::init()
         info.field04 = parent->winGetStatus();
         info.width = TheDisplay->slot11();
         info.height = TheDisplay->slot12();
-        info.field24 = 0x0041E9BB;
+        info.field24 = (int)j_0001e9bb;
         info.field2C = 0;
         GameWindow *overlay = TheWindowManager->winCreate(&info);
         field34[9] = overlay;
@@ -436,7 +438,7 @@ void ControlBar::init()
         if (field278)
         {
             field278->hide(true);
-            field278->setUpdate((WindowLayoutUpdateFunc)0x00411BF8);
+            field278->setUpdate((WindowLayoutUpdateFunc)j_00011bf8);
             for (GameWindow *w = field278->getFirstWindow(); w; w = w->winGetNextInLayout())
             {
                 w->winSetSize(1, 1);
