@@ -104,19 +104,17 @@ def lease_of(wt, rva):
 # Upstream changes that can alter what `check` proved even when none of the
 # receipt's input files changed: headers, the reference/shim tree, the
 # toolchain, and the tools that compile and judge.
-# An upstream change needs no second `check` only if it is one of these: prose,
-# banked evidence, or a game SOURCE file the check did not compile (the check
-# rebuilds the owner and competitor TUs, and those are its recorded inputs).
-# Everything else -- ledgers (functions.csv, symbols.csv and every other file
+# An upstream change needs no second `check` only if it is prose or banked
+# evidence. Everything else -- ledgers (functions.csv, symbols.csv and every other file
 # under targets/), headers, inputs/, tools/, hooks, build scripts -- is a
 # verification input (review 2026-09-30: a symbols.csv change after check
-# landed with one check). Unknown means recheck.
+# landed with one check; then an upstream .cpp that a checked .cpp #includes
+# landed with one check, so no game source is exempt). Unknown means recheck.
 HARMLESS_PREFIXES = ("docs/", "targets/game/reverse/attempts/")
 HARMLESS_FILES = ("README.md", "AGENTS.md", "targets/game/reverse/re_attempts.log")
-UNCOMPILED_SOURCE = (".cpp", ".c", ".cc", ".cxx", ".asm")
 
 
-def recheck_reasons(wt, old_base, new_base, inputs):
+def recheck_reasons(wt, old_base, new_base):
     """Upstream paths between the checked base and the new one that the
     check could have read."""
     if old_base == new_base:
@@ -125,8 +123,6 @@ def recheck_reasons(wt, old_base, new_base, inputs):
     out = []
     for path in changed:
         if path in HARMLESS_FILES or path.startswith(HARMLESS_PREFIXES):
-            continue
-        if path.startswith("game/") and path.endswith(UNCOMPILED_SOURCE) and path not in inputs:
             continue
         out.append(path)
     return out
@@ -155,7 +151,7 @@ def stale(wt, receipt_path, old_base, new_base):
             return f"{path} is gone"
         if now != digest:
             return f"{path} changed since check"
-    changed = recheck_reasons(wt, old_base, new_base, inputs)
+    changed = recheck_reasons(wt, old_base, new_base)
     if changed:
         return f"upstream changed {changed[0]}" + (f" (+{len(changed) - 1})" if len(changed) > 1 else "")
     return None

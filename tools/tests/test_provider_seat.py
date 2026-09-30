@@ -204,11 +204,10 @@ def test_an_unrelated_upstream_change_needs_no_second_check(seat, tmp_path, monk
     peer = _peer(origin, tmp_path)
 
     def unrelated():
-        # prose and a game source the check never compiled
+        # prose only: any game source, even one the check never named, rechecks
         (peer / "docs").mkdir()
         (peer / "docs/notes.md").write_text("unrelated\n")
-        (peer / "game/other.cpp").write_text("void other() {}\n")
-        git(peer, "add", "docs/notes.md", "game/other.cpp")
+        git(peer, "add", "docs/notes.md")
         git(peer, "commit", "-q", "-m", "unrelated")
         git(peer, "push", "-q", "origin", "HEAD:master")
     _after_first_check(monkeypatch, unrelated)
@@ -300,3 +299,30 @@ def test_the_published_digest_is_the_final_receipt(seat, tmp_path, monkeypatch):
     assert json.loads(receipt.read_text())["check_number"] == 2
     message = git(origin, "log", "-1", "--format=%B", "master")
     assert "receipt sha256: " + hashlib.sha256(receipt.read_bytes()).hexdigest() in message
+
+
+def test_an_upstream_change_to_an_included_cpp_is_checked_again(seat, tmp_path, monkeypatch):
+    # review 2026-09-30 cycle 3 (test_review_rechecks.py): the receipt names only
+    # top-level sources, and a .cpp can #include another .cpp; a change to the
+    # included one landed on one check. No game source is exempt now.
+    wt, origin = seat
+    monkeypatch.setenv("FAKE_MODE", "pass")
+    (wt / "game/dependency.cpp").write_text("/* retail dependency */\n")
+    (wt / "game/owner.cpp").write_text('#include "dependency.cpp"\n')
+    fake = wt / "tools/provider_repair.py"
+    fake.write_text(FAKE.replace('owner = (ROOT / "game/owner.cpp").read_text()',
+                                 'owner = (ROOT / "game/owner.cpp").read_text()'
+                                 ' + (ROOT / "game/dependency.cpp").read_text()'), encoding="utf-8")
+    git(wt, "add", "game/dependency.cpp", "game/owner.cpp", "tools/provider_repair.py")
+    git(wt, "commit", "-q", "-m", "fixture included source")
+    git(wt, "push", "-q", "origin", "HEAD:master")
+    peer = _peer(origin, tmp_path)
+
+    def upstream():
+        (peer / "game/dependency.cpp").write_text("/* wrong provider */\n")
+        git(peer, "commit", "-q", "-am", "dependency changes after verification")
+        git(peer, "push", "-q", "origin", "HEAD:master")
+    _after_first_check(monkeypatch, upstream)
+    assert ps.once(wt) == ps.FAILED
+    assert (wt / "checks.txt").read_text().count("check") == 2
+    assert git(origin, "log", "-1", "--format=%s", "master") == "dependency changes after verification"
