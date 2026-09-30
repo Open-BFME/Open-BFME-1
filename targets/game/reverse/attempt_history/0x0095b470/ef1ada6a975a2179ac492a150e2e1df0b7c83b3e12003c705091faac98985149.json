@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ef1ada6a975a2179ac492a150e2e1df0b7c83b3e12003c705091faac98985149",
+  "symbol": "?method@Rva0095B470@@QAEHI@Z",
+  "score_kind": "measured",
+  "score": 0.9845,
+  "source": "// ?method@Rva0095B470@@QAEHI@Z\n// partial score=0.9845 date=2026-09-30\nstruct Rva0095B470 {\n unsigned int m_00,m_04,m_08;\n int m_0c,m_10,m_14;\n unsigned int *m_18;\n int method(unsigned int value);\n};\nint Rva0095B470::method(unsigned int value)\n{\n unsigned int *data = m_18;\n int index = m_14;\n if (value >= (data[index] & 0x7fffffffU)) return index;\n int stride = m_0c;\n int left = 0;\n int right = m_10 - 2;\n for (;;) {\n  int mid = (right + left) / 2;\n  unsigned int *packet = data + stride * mid;\n  if (value < (*packet & 0x7fffffffU)) {right = mid; continue;}\n  if (value < (packet[stride] & 0x7fffffffU)) return packet-data;\n  if (left ^ mid) {left = mid; continue;}\n  ++left;\n }\n}\n"
+}
