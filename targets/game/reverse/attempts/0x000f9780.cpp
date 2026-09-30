@@ -1,5 +1,5 @@
 // ?method@Rva000F9780@@QAEMH@Z
-// partial score=0.656 date=2026-09-21
+// partial score=0.968 date=2026-09-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x000F9780, 125 bytes, __thiscall taking one Int index and cleaning
@@ -22,6 +22,8 @@
 // be resolved.
 
 #include "ascii_string.h"
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -90,26 +92,26 @@ private:
 // ?method@Rva000F9780@@QAEMH@Z
 Real Rva000F9780::method(Int index)
 {
-	BfmeElemVLH *record = ((BfmeVecVLH *)this)->bfmeAtVLH(index);
-	if (record != 0)
-	{
-		Int *startFrame = (Int *)(record->m_opaque04 + (0x30 - 4));
-		if (*startFrame != -1)
-		{
-			const ThingTemplate *tmplate = TheThingFactory->findTemplate(record->m_name);
-			if (tmplate == 0)
-				return g_bfmeDefaultBU;
+    BfmeElemVLH *record = ((BfmeVecVLH *)this)->bfmeAtVLH(index);
+    if (record == 0)
+    {
+        _WriteBarrier();
+        return BfmeZeroRange;
+    }
 
-			Int quantity = *(Int *)(record->m_opaque04 + (0x34 - 4));
-			Int buildTime = (Int)(long)((BfmeUseB980 *)tmplate)->bfmeApply980B(
-					(Int)(long)m_owningPlayer, quantity);
+    Int *startFrame = (Int *)(record->m_opaque04 + (0x30 - 4));
+    if (*startFrame == -1)
+        return BfmeZeroRange;
 
-			if (buildTime <= 0)
-				return g_bfmeDefaultBU;
-
-			return ((Real)(UnsignedInt)TheBfmeGameLogic->m_frame - *startFrame) / (Real)buildTime;
-		}
-	}
-
-	return BfmeZeroRange;
+    Player *player = m_owningPlayer;
+    const ThingTemplate *tmplate = TheThingFactory->findTemplate(record->m_name);
+    if (tmplate != 0)
+    {
+        Int quantity = *(Int *)(record->m_opaque04 + (0x34 - 4));
+        Int buildTime = (Int)(long)((BfmeUseB980 *)tmplate)->bfmeApply980B(
+                (Int)(long)player, quantity);
+        if (buildTime > 0)
+            return ((Real)(UnsignedInt)TheBfmeGameLogic->m_frame - *startFrame) / (Real)buildTime;
+    }
+    return g_bfmeDefaultBU;
 }
