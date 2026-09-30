@@ -32,7 +32,7 @@ public:
 #undef RVA005A6470_STREAM_SLOT
 
 extern MessageStream *TheMessageStream;
-__declspec(dllimport) unsigned long __stdcall timeGetTime();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
 struct Rva005A6470MouseEvent
 {

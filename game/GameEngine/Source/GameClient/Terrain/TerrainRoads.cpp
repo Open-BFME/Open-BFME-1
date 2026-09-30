@@ -148,9 +148,9 @@ const FieldParse TerrainRoadType::m_terrainBridgeFieldParseTable[] =
 	// which transition is this
 	Bool damageTransition;
 	token = ini->getNextSubToken( "Transition" );
-	if( stricmp( token, "Damage" ) == 0 )
+	if( _strcmpi( token, "Damage" ) == 0 )
 		damageTransition = TRUE;
-	else if( stricmp( token, "Repair" ) == 0 )
+	else if( _strcmpi( token, "Repair" ) == 0 )
 		damageTransition = FALSE;
 	else
 	{
@@ -202,9 +202,9 @@ const FieldParse TerrainRoadType::m_terrainBridgeFieldParseTable[] =
 	// which transition is this
 	Bool damageTransition;
 	token = ini->getNextSubToken( "Transition" );
-	if( stricmp( token, "Damage" ) == 0 )
+	if( _strcmpi( token, "Damage" ) == 0 )
 		damageTransition = TRUE;
-	else if( stricmp( token, "Repair" ) == 0 )
+	else if( _strcmpi( token, "Repair" ) == 0 )
 		damageTransition = FALSE;
 	else
 	{

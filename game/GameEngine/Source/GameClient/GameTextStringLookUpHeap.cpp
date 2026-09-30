@@ -3,7 +3,7 @@
 // stack has six words: first/hole/top, the two-word value, and comparator state.
 
 extern const char g_bfmeEmptyAscii[];
-extern "C" __declspec(dllimport) int __cdecl _stricmp(
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
 class AsciiStringData;
@@ -24,7 +24,7 @@ struct StringLookUpCompare00437D80
 	__forceinline bool operator()(const StringLookUp &left,
 		const StringLookUp &right) const
 	{
-		return _stricmp(left.label->str(), right.label->str()) < 0;
+		return _strcmpi(left.label->str(), right.label->str()) < 0;
 	}
 };
 

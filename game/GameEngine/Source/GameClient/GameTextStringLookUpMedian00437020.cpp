@@ -15,7 +15,7 @@
 // duplicate or unproven function identity.
 
 extern const char g_bfmeEmptyAscii[];
-extern "C" __declspec(dllimport) int __cdecl _stricmp(
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
 class GameTextAsciiString00437020
@@ -51,14 +51,14 @@ template <class Tp, class Compare>
 const Tp &game_text_median(const Tp &a, const Tp &b, const Tp &c,
 	Compare comp)
 {
-	if (_stricmp(a.label->str(), b.label->str()) < 0)
-		if (_stricmp(b.label->str(), c.label->str()) < 0)
+	if (_strcmpi(a.label->str(), b.label->str()) < 0)
+		if (_strcmpi(b.label->str(), c.label->str()) < 0)
 			return b;
 		else if (comp((const void *)&a, (const void *)&c))
 			return c;
 		else
 			return a;
-	else if (_stricmp(a.label->str(), c.label->str()) < 0)
+	else if (_strcmpi(a.label->str(), c.label->str()) < 0)
 		return a;
 	else if (comp((const void *)&b, (const void *)&c))
 		return c;

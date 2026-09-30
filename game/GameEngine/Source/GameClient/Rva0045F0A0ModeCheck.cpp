@@ -51,11 +51,11 @@ private:
 	Rva0045F0A0AsciiString m_name;
 };
 
-__declspec(dllimport) int __cdecl bfmeCmp1026(char *, char *, int);
+extern "C" __declspec(dllimport) int __cdecl strncmp(char *, char *, int);
 
 void Rva0045F0A0::process(Rva0045F0A0Input *input)
 {
-	if (bfmeCmp1026(input->m_name.str(), m_name.str(), m_name.getLength()) == 0)
+	if (strncmp(input->m_name.str(), m_name.str(), m_name.getLength()) == 0)
 	{
 		BfmeUnit1013 *unit = input->m_unit;
 		if (unit != 0)

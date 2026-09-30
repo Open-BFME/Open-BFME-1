@@ -31,7 +31,7 @@ typedef unsigned short WideChar;
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcscpy(WideChar *dest, const WideChar *src);
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsstr(const WideChar *haystack, const WideChar *needle);
-__declspec(dllimport) unsigned __cdecl bfmeLenVGI(const unsigned short *s);
+extern "C" __declspec(dllimport) unsigned __cdecl wcslen(const unsigned short *s);
 extern const unsigned short BFMEEmptyUnicodeString;
 
 // BFME's StringBase keeps the 2-argument set (retail 0x008885C0) and the
@@ -67,7 +67,7 @@ public:
 	// handed to the out-of-line two-argument set.
 	void set(const WideChar *text)
 	{
-		set(text, text ? (Int)bfmeLenVGI(text) : 0);
+		set(text, text ? (Int)wcslen(text) : 0);
 	}
 
 	void set(const WideChar *text, Int len)

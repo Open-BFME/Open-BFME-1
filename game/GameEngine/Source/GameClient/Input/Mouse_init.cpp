@@ -4,7 +4,7 @@
 extern "C" void * __cdecl memset(void *block, int value, unsigned int bytes);
 #pragma intrinsic(memset)
 
-__declspec(dllimport) unsigned long __stdcall timeGetTime();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
