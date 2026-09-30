@@ -25,7 +25,7 @@ void ciCallCallbacks(CHAT,int);
 static __declspec(noinline) int ciProcessServerMessage(CHAT chat,const ciServerMessage *message) {
  int i;
  for(i=0;i<numServerMessageTypes;i++) {
-  if(_stricmp(message->command,serverMessageTypes[i].command)==0) {
+  if(_strcmpi(message->command,serverMessageTypes[i].command)==0) {
    if(serverMessageTypes[i].handler)serverMessageTypes[i].handler(chat,message);
    return 1;
   }

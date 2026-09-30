@@ -1,4 +1,4 @@
-__declspec(dllimport) int __cdecl bfmeAtoi1027(char *text);
+extern "C" __declspec(dllimport) int __cdecl atoi(char *text);
 
 extern "C" void __cdecl peerSetQuietMode(void *peer, int quiet);
 extern "C" void __cdecl peerStopListingGames(void *peer);
@@ -33,7 +33,7 @@ extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
 void __cdecl bfmeQuitEAV(void *peer, int unused, char *text)
 {
-	int value = bfmeAtoi1027(text);
+	int value = atoi(text);
 
 	BfmeMsgEAV msg;
 

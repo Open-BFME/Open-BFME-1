@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD
 
-__declspec(dllimport) void __cdecl bfmeFree1035(void *);
+extern "C" __declspec(dllimport) void __cdecl free(void *);
 
 struct Rva0086FD80Callback
 {
@@ -10,5 +10,5 @@ struct Rva0086FD80Callback
 
 void Rva0086FD80FreeCallback(Rva0086FD80Callback *callback)
 {
-    bfmeFree1035(callback->data);
+    free(callback->data);
 }

@@ -26,9 +26,9 @@ struct AsciiComparator
 	bool operator()( AsciiString s1, AsciiString s2 ) const;
 };
 
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *, const char * );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *, const char * );
 
 bool AsciiComparator::operator()( AsciiString s1, AsciiString s2 ) const
 {
-	return _stricmp( s1.str(), s2.str() ) < 0;
+	return _strcmpi( s1.str(), s2.str() ) < 0;
 }

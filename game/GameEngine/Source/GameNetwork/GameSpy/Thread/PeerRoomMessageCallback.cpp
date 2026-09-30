@@ -141,7 +141,7 @@ extern std::wstring MultiByteToWideCharSingleLine(const char *);
 extern "C" int peerGetPlayerInfoNoWaitA(PEER, const char *, UnsignedInt *, Int *);
 // BFME's import is the decorated parser at 0x00F59384; CRT atoi has a
 // different relocation and does not reproduce retail here.
-__declspec(dllimport) int __cdecl bfmeAtoi1027(char *);
+
 extern "C" int strcmp(const char *, const char *);
 
 // These offsets are independently present in the retail body: QM status is
@@ -203,8 +203,8 @@ void roomMessageCallback(PEER peer, RoomType roomType, const char *nick,
 						char *sizeStr = strtok_r(NULL, " ", &lastStr);
 						if (poolStr && sizeStr)
 						{
-							Int pool = bfmeAtoi1027(poolStr);
-							Int size = bfmeAtoi1027(sizeStr);
+							Int pool = atoi(poolStr);
+							Int size = atoi(sizeStr);
 							if (pool == t->getQMLadder())
 							{
 								poolSize = size;

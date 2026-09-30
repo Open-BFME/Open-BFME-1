@@ -281,7 +281,7 @@ void playerLeftCallback(PEER peer, RoomType roomType, const char *nick,
 
 	if (t->getQMStatus() != QM_IDLE && t->getQMStatus() != QM_STOPPED)
 	{
-		if (!stricmp(((Rva00647920Host *)t)->copyStringAt3CC().c_str(), nick))
+		if (!_strcmpi(((Rva00647920Host *)t)->copyStringAt3CC().c_str(), nick))
 		{
 			PeerResponse resp;
 			resp.peerResponseType = 17;

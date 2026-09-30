@@ -132,7 +132,7 @@ void PeerThreadClass::handleQMMatch(PEER peer,Int mapIndex,Int seed,
   m_qmStatus=QM_MATCHED;
   peerLeaveRoomA(peer,1,"");
   for(Int i=0;i<MAX_SLOTS;++i) {
-   if(playerName[i] && stricmp(playerName[i],m_loginName.c_str()))
+   if(playerName[i] && _strcmpi(playerName[i],m_loginName.c_str()))
     peerMessagePlayerA(peer,playerName[i],"We're matched!",NormalMessage);
   }
   PeerResponse resp;

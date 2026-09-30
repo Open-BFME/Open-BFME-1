@@ -1136,9 +1136,9 @@ void PeerThreadClass::Thread_Function()
 						// allocate a port
 						if (preferredQRPort < 1024)
 						{
-							preferredQRPort = 6500 + (ntohl(localIP) & 0xff);
+							preferredQRPort = 6500 + (htonl(localIP) & 0xff);
 						}
-						DEBUG_LOG(("Using %8.8X:%d for QR2\n", ntohl(localIP), preferredQRPort));
+						DEBUG_LOG(("Using %8.8X:%d for QR2\n", htonl(localIP), preferredQRPort));
 					}
 					else
 					{
@@ -1147,7 +1147,7 @@ void PeerThreadClass::Thread_Function()
 					}
 					qr2Sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 					struct sockaddr_in saddr;
-					saddr.sin_port=htons(preferredQRPort);
+					saddr.sin_port=ntohs(preferredQRPort);
 					saddr.sin_addr.s_addr=localIP;
 					saddr.sin_family=AF_INET;
 					if (bind(qr2Sock, (sockaddr *)&saddr, sizeof(saddr)) != 0)

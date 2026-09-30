@@ -159,7 +159,7 @@ void GameSpyInfo::addGroupRoom( GameSpyGroupRoom room )
 		room.m_translatedName = TheGameText->fetch(groupLabel, &exists);
 		if (!exists) room.m_translatedName.translate(room.m_name);
 		m_groupRooms[room.m_groupID] = room;
-		if ( !stricmp("quickmatch", room.m_name.str()) )
+		if ( !_strcmpi("quickmatch", room.m_name.str()) )
 		{
 			TheGameSpyConfig->setQMChannel(room.m_groupID);
 		}
