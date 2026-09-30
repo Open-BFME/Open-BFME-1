@@ -741,18 +741,28 @@ def data_identifier(symbol):
 
 def reference_definitions(qualified):
     """[(file, line, text)] of every file- or namespace-scope definition of
-    `qualified` in the ZH tree: rg finds the files that spell it, then each file's
-    braces are scanned (comments, literals and `#if 0` blocks blanked) so a
-    function-local, class-member or initializer line never counts. None when a
-    candidate file's braces do not balance (its scope cannot be established)."""
+    `qualified` in the ZH tree, by FULL name (enclosing namespaces + written
+    qualifier): rg finds the files that spell it, then each file -- preprocessed
+    by the reference build's own command when possible (cl -E, lines of this
+    file only), else raw with only literal #if 0/1 branches trusted -- is
+    scanned brace by brace, so a function-local, class-member, other-namespace
+    or inactive-branch line never counts. None when a candidate file's scope
+    cannot be established (unbalanced braces, a match in an unknown branch)."""
     import reloc_ledger
     proc = subprocess.run(["rg", "-l", "-g", "*.cpp", "-w", "-F", qualified.split("::")[-1],
                            REFERENCE.relative_to(ROOT).as_posix()],
                           capture_output=True, text=True, errors="replace", cwd=str(ROOT))
     out = []
     for path in sorted(proc.stdout.splitlines()):
-        text = (ROOT / path).read_text(encoding="latin-1")
-        found = reloc_ledger.file_scope_definitions(text, qualified)
+        path = path.replace("\\", "/")
+        # the unit as the reference build preprocesses it (conditionals and macros
+        # resolved), counting only lines of this file; the raw text otherwise,
+        # where a definition in a non-literal #if branch leaves scope unknown
+        unit = reloc_ledger.preprocess(ROOT / path)
+        if unit is not None:
+            found = reloc_ledger.file_scope_definitions(unit, qualified, origin=path)
+        else:
+            found = reloc_ledger.file_scope_definitions((ROOT / path).read_text(encoding="latin-1"), qualified)
         if found is None:
             return None
         out += [(path.replace("\\", "/"), number, line) for number, line in found]

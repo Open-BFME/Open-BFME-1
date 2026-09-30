@@ -905,74 +905,145 @@ def linker_ranges(img, startup=STARTUP_TABLES):
 # --------------------------------------------------------------------------- C++ file scope
 
 _LITERALS = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'', re.S)
+_LINE_DIRECTIVE = re.compile(r'^\s*#\s*line\s+(\d+)\s+"([^"]*)"')
 
 
 def blank_literals(text):
-    """Comments and string/char literals replaced by blanks (newlines kept, quotes
-    kept for strings), and `#if 0` ... `#endif` regions dropped, so braces and
-    semicolons in the result are code."""
+    """Comments and string/char literals replaced by blanks (newlines kept,
+    quotes kept for strings), so braces and semicolons in the result are code."""
     def blank(m):
         s = m.group(0)
         if s.startswith('"'):
             return '"' + " " * (len(s) - 2) + '"'
         return re.sub(r"[^\n]", " ", s)
-    text = _LITERALS.sub(blank, text)
-    out, depth = [], 0
-    for line in text.split("\n"):
-        directive = line.strip()
-        if depth:
-            if re.match(r"#\s*if", directive):
-                depth += 1
-            elif re.match(r"#\s*endif", directive):
-                depth -= 1
-            elif depth == 1 and re.match(r"#\s*(else|elif)", directive):
-                depth = 0
-            out.append("")
-            continue
-        if re.match(r"#\s*if\s+0\b", directive):
-            depth = 1
-            out.append("")
-            continue
-        out.append(line)
-    return "\n".join(out)
+    return _LITERALS.sub(blank, text)
 
 
-def file_scope_lines(text):
-    """[(1-based line, stripped line)] of the lines that START at file or namespace
-    scope (not inside a function, class, enum or initializer body); None when the
-    braces do not balance, so no scope can be trusted."""
+def conditional_states(lines):
+    """Per line: 'active', 'inactive' or 'unknown', from #if/#ifdef/#ifndef/
+    #elif/#else/#endif. Only the literals 0 and 1 are evaluated; any other
+    condition makes its branches (and every later branch of that #if) unknown."""
+    states, stack = [], []   # stack: [state of this branch, taken: True/False/None(unknown)]
+
+    def outer():
+        for state, _ in stack:
+            if state != "active":
+                return state if state == "inactive" else "unknown"
+        return "active"
+
+    for raw in lines:
+        line = raw.strip()
+        m = re.match(r"#\s*(if|ifdef|ifndef|elif|else|endif)\b(.*)", line)
+        if not m:
+            states.append(outer())
+            continue
+        states.append("inactive")  # a directive line is never a definition
+        kind, cond = m.group(1), m.group(2).strip()
+        literal = {"0": False, "1": True}.get(cond) if kind in ("if", "elif") else None
+        if kind in ("if", "ifdef", "ifndef"):
+            if literal is None:
+                stack.append(["unknown", None])
+            else:
+                stack.append(["active" if literal else "inactive", literal])
+        elif kind == "elif" and stack:
+            taken = stack[-1][1]
+            if taken is True:
+                stack[-1] = ["inactive", True]
+            elif taken is None or literal is None:
+                stack[-1] = ["unknown", None]
+            else:
+                stack[-1] = ["active" if literal else "inactive", literal]
+        elif kind == "else" and stack:
+            taken = stack[-1][1]
+            stack[-1] = ["inactive", True] if taken is True else (["unknown", None] if taken is None
+                                                                  else ["active", True])
+        elif kind == "endif" and stack:
+            stack.pop()
+    return states
+
+
+def file_scope_statements(text):
+    """[(file, line, namespace path, state, text)] for each line that STARTS at
+    file or namespace scope (not inside a function, class, enum or initializer
+    body). `file`/`line` follow #line directives (a cl -E unit) and default to
+    ('', physical line); `namespace path` is the enclosing named namespaces
+    ('(anonymous)' for an unnamed one); `state` is the line's conditional state.
+    None when the braces do not balance, so no scope can be trusted."""
     code = blank_literals(text)
-    stack, starts, last = [], [], 0
     lines = code.split("\n")
-    position = 0
-    for number, line in enumerate(lines, 1):
-        if all(kind == "namespace" for kind in stack):
-            starts.append((number, line.strip()))
-        for offset, char in enumerate(line):
-            at = position + offset
+    original = text.split("\n")  # #line file names live in string literals, blanked in `lines`
+    states = conditional_states(lines)
+    stack, out = [], []
+    code_since = []          # code text since the last ; { } (for namespace detection)
+    where_file, where_line = "", 0
+    for index, line in enumerate(lines):
+        m = _LINE_DIRECTIVE.match(original[index])
+        if m:
+            where_file, where_line = m.group(2).replace("\\\\", "/").replace("\\", "/"), int(m.group(1)) - 1
+            continue
+        where_line += 1
+        if states[index] == "inactive":
+            continue
+        if all(kind == "namespace" for kind, _ in stack):
+            out.append((where_file, where_line if where_file else index + 1,
+                        tuple(name for _, name in stack), states[index], line.strip()))
+        if line.lstrip().startswith("#"):
+            continue
+        for char in line:
             if char in ";{}":
                 if char == "{":
-                    prefix = code[last:at]
-                    namespace = re.search(r'\bnamespace\b[\w\s]*$', prefix) or re.search(r'\bextern\s*""\s*$', prefix)
-                    stack.append("namespace" if namespace else "body")
+                    prefix = "".join(code_since)
+                    named = re.search(r"\bnamespace\s+(\w+)\s*$", prefix)
+                    if named:
+                        stack.append(("namespace", named.group(1)))
+                    elif re.search(r"\bnamespace\s*$", prefix):
+                        stack.append(("namespace", "(anonymous)"))
+                    elif re.search(r'\bextern\s*""\s*$', prefix):
+                        stack.append(("namespace", None))  # linkage block: no name, still file scope
+                    else:
+                        stack.append(("body", None))
                 elif char == "}":
                     if not stack:
                         return None
                     stack.pop()
-                last = at + 1
-        position += len(line) + 1
-    return starts if not stack else None
+                code_since = []
+            else:
+                code_since.append(char)
+        code_since.append(" ")
+    return out if not stack else None
 
 
-def file_scope_definitions(text, qualified):
-    """[(line, text)] of file/namespace-scope definitions of `qualified` (a
-    declarator with an initializer or a plain `;`, not extern/typedef/a function)."""
-    starts = file_scope_lines(text)
-    if starts is None:
+def file_scope_definitions(text, qualified, origin=None):
+    """[(line, text)] of the file/namespace-scope definitions of `qualified`
+    (`Name`, `A::B::Name`; a leading `::` is ignored) whose FULL name -- the
+    enclosing namespaces plus the qualifier written before the name -- equals
+    it: a declarator with an initializer or a plain `;`, not extern, typedef or
+    a function. With `origin`, only lines #line-attributed to a file ending in
+    it count (a cl -E unit holds every header too). None when the scope cannot
+    be established: unbalanced braces, or a matching line in a conditional
+    branch whose condition is not a literal."""
+    statements = file_scope_statements(text)
+    if statements is None:
         return None
-    pattern = re.compile(r"^(?!extern\b|typedef\b|return\b|using\b)[A-Za-z_][\w:<>,\s\*&]*[\s\*&]"
-                         + re.escape(qualified) + r"\s*(\[[^\]]*\]\s*)*(=|;)")
-    return [(number, line) for number, line in starts if pattern.match(line)]
+    want = qualified.lstrip(":")
+    bare = want.split("::")[-1]
+    pattern = re.compile(r"^(?!extern\b|typedef\b|return\b|using\b|friend\b)[A-Za-z_][\w:<>,\s\*&]*?[\s\*&]"
+                         r"((?:\w+::)*)" + re.escape(bare) + r"\s*(\[[^\]]*\]\s*)*(=|;)")
+    found = []
+    for file, line, namespaces, state, textline in statements:
+        if origin is not None and not file.lower().endswith(origin.lower().replace("\\", "/")):
+            continue
+        m = pattern.match(textline)
+        if not m:
+            continue
+        written = [part for part in m.group(1).split("::") if part]
+        full = "::".join([n for n in namespaces if n] + written + [bare])
+        if full != want:
+            continue
+        if state != "active":
+            return None
+        found.append((line, textline))
+    return found
 
 
 # --------------------------------------------------------------------------- partition
@@ -1476,6 +1547,8 @@ class CTypes:
         m = re.match(r"#pragma pack\(from-flags (\d+)\)", self.text.lstrip())
         if m:
             self.default_pack = int(m.group(1))
+        # C++ scoping (namespaces, classes, templates) is beyond a textual lookup
+        self.cplusplus = bool(re.search(r"\b(namespace|class|template)\b", self.text))
         self.pragmas = [(m.start(), m.group(1)) for m in re.finditer(r"#\s*pragma\s+pack\s*\(([^)]*)\)", self.text)
                         if not m.group(1).startswith("from-flags")]
 
@@ -1535,24 +1608,46 @@ class CTypes:
             return None
         if len(rest) != 1:
             return None
-        m = re.search(r"typedef\s+([\w \t]+?)[ \t]+(\**)\s*" + re.escape(rest[0]) + r"\s*;", self.text)
-        if m:
-            if m.group(2):
-                return 4, 4, [(0, 4, "pointer")]
-            return self.layout(m.group(1).split(), depth + 1)
-        if re.search(r"typedef[^;]*\(\s*\*\s*" + re.escape(rest[0]) + r"\s*\)", self.text):
-            return 4, 4, [(0, 4, "pointer")]  # a function-pointer typedef
-        if (re.search(r"typedef\s+enum\s*\w*\s*\{[^{}]*\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
-                or re.search(r"\benum\s+" + re.escape(rest[0]) + r"\s*\{", self.text)):
-            return 4, 4, [(0, 4, "scalar")]
-        m = re.search(r"typedef\s+struct\s*\w*\s*\{([^{}]*)\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
-        if m:
-            return self.members(m.group(1), depth, m.start())
-        return None
+        return self.named(rest[0], depth)
+
+    def named(self, name, depth):
+        """A typedef'd or tagged name's layout, only when the unit is C (no
+        namespace, class or template: C++ scoping is not something a regex can
+        resolve) and the name has exactly one definition in it."""
+        if self.cplusplus:
+            return None
+        n = re.escape(name)
+        hits = set()
+        for m in re.finditer(r"typedef\s+([\w \t]+?)[ \t]+(\**)\s*" + n + r"\s*;", self.text):
+            hits.add(("typedef", " ".join(m.group(1).split()), m.group(2), None))
+        if re.search(r"typedef[^;]*\(\s*\*\s*" + n + r"\s*\)", self.text):
+            hits.add(("function-pointer", "", "", None))
+        for m in re.finditer(r"typedef\s+enum\s*\w*\s*\{([^{}]*)\}\s*" + n + r"\s*;", self.text):
+            hits.add(("enum", " ".join(m.group(1).split()), "", None))
+        for m in re.finditer(r"\benum\s+" + n + r"\s*\{([^{}]*)\}", self.text):
+            hits.add(("enum", " ".join(m.group(1).split()), "", None))
+        for m in re.finditer(r"typedef\s+struct\s*\w*\s*\{([^{}]*)\}\s*" + n + r"\s*;", self.text):
+            hits.add(("struct", " ".join(m.group(1).split()), "", m.start()))
+        kinds = {(kind, body, star) for kind, body, star, _ in hits}
+        if len(kinds) != 1:
+            return None  # undefined, or defined more than once: ambiguous
+        kind, body, star = next(iter(kinds))
+        if kind in ("function-pointer",) or star:
+            return 4, 4, [(0, 4, "pointer")]
+        if kind == "enum":
+            return 4, 4, [(0, 4, "scalar")]  # MSVC 7.1: an enum is an int
+        if kind == "typedef":
+            return self.layout(body.split(), depth + 1)
+        position = min(pos for k, b, _, pos in hits if k == "struct")
+        return self.members(body, depth, position)
 
     def struct(self, tag, depth):
-        m = re.search(r"struct\s+" + re.escape(tag) + r"\s*\{([^{}]*)\}", self.text)
-        return self.members(m.group(1), depth, m.start()) if m else None
+        if self.cplusplus:
+            return None
+        found = list(re.finditer(r"struct\s+" + re.escape(tag) + r"\s*\{([^{}]*)\}", self.text))
+        if len({" ".join(m.group(1).split()) for m in found}) != 1:
+            return None  # undefined, or two different definitions
+        return self.members(found[0].group(1), depth, found[0].start())
 
     def members(self, body, depth, pos):
         """A struct body laid out under the pack state in force where it is
@@ -1589,38 +1684,19 @@ class CTypes:
     def declaration(self, cname):
         """(declared type text, element layout) of the one initialised definition
         of `cname` in the source file, or None."""
-        found = re.findall(r"(?:^|[;{}])\s*([A-Za-z_][\w \t]*?)[ \t]+(\**)\s*" + re.escape(cname)
-                           + r"\s*((?:\[[^\]]*\]\s*)*)=", self.source, flags=re.M)
+        # the one definition at file scope (not a local or a member, not in an
+        # inactive or unknown conditional branch), then its type
+        defs = file_scope_definitions(self.source, cname)
+        if not defs or len(defs) != 1:
+            return None
+        found = re.findall(r"^\s*([A-Za-z_][\w \t]*?)[ \t]+(\**)\s*" + re.escape(cname)
+                           + r"\s*((?:\[[^\]]*\]\s*)*)=", defs[0][1])
         if len(found) != 1:
             return None
         if found[0][1]:
             return found[0][0].strip() + " *", (4, 4, [(0, 4, "pointer")])
         element = self.layout(found[0][0].split())
         return (found[0][0].strip(), element) if element else None
-
-
-def declared_size(source, cname, types=None):
-    """(bytes, declaration) the one file-scope definition of `cname` in `source`
-    declares -- its element type's size times every array dimension, each a
-    number after preprocessing -- or None (no single definition, an unsized or
-    symbolic dimension, a type it cannot lay out)."""
-    types = types or CTypes(Path(source))
-    defs = file_scope_definitions(types.source, cname)
-    if not defs or len(defs) != 1:
-        return None
-    m = re.match(r"^(?:static\s+)?([A-Za-z_][\w \t]*?)[ \t]+(\**)\s*" + re.escape(cname)
-                 + r"\s*((?:\[[^\]]*\]\s*)*)(=|;)", defs[0][1])
-    if not m:
-        return None
-    count = 1
-    for dim in re.findall(r"\[([^\]]*)\]", m.group(3)):
-        if not dim.strip().isdigit():
-            return None
-        count *= int(dim.strip())
-    element = (4, 4, []) if m.group(2) else types.layout(m.group(1).split())
-    if element is None:
-        return None
-    return element[0] * count, defs[0][1]
 
 
 def upstream_declaration(source, cname):

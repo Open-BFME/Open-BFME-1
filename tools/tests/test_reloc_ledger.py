@@ -305,3 +305,26 @@ def test_call_evidence_records_the_symbol_not_the_addend_shifted_destination(tmp
     monkeypatch.setattr(reloc_ledger, "_IMAGE", image_with(text=b"\xe8" + struct.pack("<i", 0x1014 - 0x1005) + b"\xc3"))
     result = reloc_ledger.scan_code((str(obj), [("_caller", 0x1000, 6)]))
     assert result["calls"] == [("_callee", BASE + 0x1010, BASE + 0x1014)]
+
+
+def test_scope_needs_the_full_qualified_name_and_live_branches():
+    text = "namespace Other {\nint OurLanguage = 0;\n}\nint Other::x = 1;\n"
+    assert reloc_ledger.file_scope_definitions(text, "OurLanguage") == []
+    assert reloc_ledger.file_scope_definitions(text, "Other::OurLanguage") == [(2, "int OurLanguage = 0;")]
+    assert reloc_ledger.file_scope_definitions("int Other::y = 0;\n", "Other::y") == [(1, "int Other::y = 0;")]
+    chain = "#if 0\nint g = 1;\n#elif 0\nint g = 2;\n#else\nint g = 3;\n#endif\n"
+    assert reloc_ledger.file_scope_definitions(chain, "g") == [(6, "int g = 3;")]
+    assert reloc_ledger.file_scope_definitions("#ifdef X\nint g = 1;\n#endif\n", "g") is None  # unknown branch
+    assert reloc_ledger.file_scope_definitions("namespace {\nint g = 1;\n}\n", "g") == []  # anonymous
+    unit = '#line 1 "hdr.h"\nint g = 1;\n#line 1 "game/src.c"\nint h = 2;\n'
+    assert reloc_ledger.file_scope_definitions(unit, "g", origin="game/src.c") == []
+    assert reloc_ledger.file_scope_definitions(unit, "h", origin="game/src.c") == [(1, "int h = 2;")]
+
+
+def test_a_c_unit_with_two_typedefs_of_one_name_lays_out_nothing(tmp_path):
+    text = ("#pragma pack(from-flags 8)\ntypedef char Element;\ntypedef long Element;\n"
+            "Element values[2] = {0,0};\n")
+    assert reloc_ledger.CTypes(tmp_path / "t.c", preprocessed=text).declaration("values") is None
+    cpp = ("#pragma pack(from-flags 8)\nnamespace A { typedef char Element; }\n"
+           "namespace B { typedef long Element; }\nusing namespace B;\nElement values[2] = {0,0};\n")
+    assert reloc_ledger.CTypes(tmp_path / "t.cpp", preprocessed=cpp).declaration("values") is None

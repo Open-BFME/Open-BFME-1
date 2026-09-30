@@ -61,9 +61,17 @@ def compiled(tmp_path, monkeypatch, sections, symbols, source_text="// fixture\n
     monkeypatch.setattr(data_rows._tools()[0], "obj_path", lambda source: obj)
 
 
+# what the compiler's sizeof probe answers for the fixture objects' symbols
+SIZES = {"?t@@3PAUX@@A": 8, "?g@@3HA": 4, "?a@@3HA": 4, "?b@@3NA": 8, "?p@@3PBDB": 4}
+
+
+def fixture_sizer(source, symbol):
+    return (SIZES[symbol], "fixture sizeof") if symbol in SIZES else (None, "the sizeof probe does not compile")
+
+
 def verify(img, entry, homes):
     return data_rows.verify_row(dict(zip(data_rows.FIELDS, entry)), img, lambda name: homes.get(name, set()),
-                                compile=False)
+                                compile=False, sizer=fixture_sizer)
 
 
 def test_initialised_symbol_needs_retail_bytes_and_retail_pointers(tmp_path, monkeypatch):
@@ -127,10 +135,10 @@ def test_allocation_padding_is_not_a_size(tmp_path, monkeypatch):
     assert verify(img, row(size="4"), {})[0]
 
 
-def test_a_class_typed_global_needs_its_declaration_for_a_size(tmp_path, monkeypatch):
+def test_no_compiler_sizeof_no_size(tmp_path, monkeypatch):
     compiled(tmp_path, monkeypatch, [(".data", 0xC0300040, bytes(8), 8, [])], [("?s@@3US@@A", 0, 1)])
     ok, message = verify(image_with(data=bytes(8)), row("?s@@3US@@A", size="8"), {})
-    assert not ok and "no type size proven" in message
+    assert not ok and "unproven" in message and "does not compile" in message
 
 
 def test_data_check_fails_closed_when_verification_exits_or_says_nothing(tmp_path, monkeypatch):
@@ -196,3 +204,27 @@ def test_delta_sources_reports_changed_data_rows(monkeypatch):
     changed = new.replace("ZH defines it", "ZH defines it at line 3")
     texts["B:" + delta_sources.DATA_ROWS] = changed
     assert delta_sources.data_delta_sources("A", "B") == ["game/G.cpp", "game/H.cpp"]
+
+
+def test_cpp_names_reach_namespaced_and_member_data_only():
+    assert data_rows.cpp_name("?OurLanguage@@3W4LanguageID@@A") == "::OurLanguage"
+    assert data_rows.cpp_name("?x@B@A@@2HA") == "::A::B::x"
+    assert data_rows.cpp_name("_c_global") == "c_global"
+    assert data_rows.cpp_name("?$S1@?1??f@@YAXXZ@4IA") is None
+
+
+def test_the_compiler_sizes_what_a_textual_lookup_gets_wrong():
+    """The review's real-MSVC case: A::Element is char, B::Element is long, and
+    `using namespace B` makes `Element values[2]` 8 bytes. A textual parser
+    picked A's typedef (2 bytes); the sizeof probe asks the compiler."""
+    import pytest
+    build = data_rows._tools()[0]
+    if not (build.vc71_root() / "Vc7" / "bin" / "cl.exe").exists():
+        pytest.skip("MSVC 7.1 toolchain not present")
+    work = data_rows.ROOT / "build" / "data_rows" / "test_type_scope"
+    work.mkdir(parents=True, exist_ok=True)
+    source = work / "type_scope.cpp"
+    source.write_text("namespace A { typedef char Element; }\nnamespace B { typedef long Element; }\n"
+                      "using namespace B;\nElement values[2] = {0,0};\n")
+    size, how = data_rows.compiled_size(source, "?values@@3PAJA")
+    assert size == 8, how
