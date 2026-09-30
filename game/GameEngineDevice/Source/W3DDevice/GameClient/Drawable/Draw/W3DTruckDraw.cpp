@@ -59,17 +59,9 @@
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
-//-------------------------------------------------------------------------------------------------
-// ??0W3DTruckDrawModuleData@@QAE@XZ present-unmatched
-W3DTruckDrawModuleData::W3DTruckDrawModuleData() 
-{
-}
+// Retail W3DTruckDrawModuleData constructor (0x0077F830) is implemented in W3DTruckDrawModuleDataConstructor.cpp.
 
-//-------------------------------------------------------------------------------------------------
-// ??1W3DTruckDrawModuleData@@UAE@XZ present-unmatched
-W3DTruckDrawModuleData::~W3DTruckDrawModuleData()
-{
-}
+// Retail W3DTruckDrawModuleData destructor (0x0077F920) is implemented in W3DTruckDrawModuleDataDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?buildFieldParse@W3DTruckDrawModuleData@@ present-unmatched
@@ -107,27 +99,7 @@ void W3DTruckDrawModuleData::buildFieldParse(MultiIniFieldParse& p)
   p.add(dataFieldParse);
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??0W3DTruckDraw@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-W3DTruckDraw::W3DTruckDraw( Thing *thing, const ModuleData* moduleData ) : W3DModelDraw( thing, moduleData ),
-m_dirtEffect(NULL), m_dustEffect(NULL), m_powerslideEffect(NULL), m_effectsInitialized(false),
-m_wasAirborne(false), m_isPowersliding(false), 
-m_frontWheelRotation(0), m_rearWheelRotation(0), m_midFrontWheelRotation(0), m_midRearWheelRotation(0),
-m_frontRightTireBone(0), m_frontLeftTireBone(0), m_rearLeftTireBone(0),m_rearRightTireBone(0),
-m_midFrontRightTireBone(0), m_midFrontLeftTireBone(0), m_midRearLeftTireBone(0),m_midRearRightTireBone(0),
-m_midMidRightTireBone(0), m_midMidLeftTireBone(0), m_prevRenderObj(NULL)
-{	 
-	const AudioEventRTS * event;
-	event = thing->getTemplate()->getPerUnitSound("TruckLandingSound");
-	if (event) {
-		m_landingSound = *event; 
-	}
-	event = thing->getTemplate()->getPerUnitSound("TruckPowerslideSound");
-	if (event) {
-		m_powerslideSound = *event; 
-	}
-}
+// Retail W3DTruckDraw constructor (0x0077FB20) is implemented in W3DTruckDrawConstructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -277,95 +249,7 @@ void W3DTruckDraw::enableEmitters( Bool enable  )
 			m_powerslideEffect->stop();
 	}
 }
-//-------------------------------------------------------------------------------------------------
-// ?updateBones@W3DTruckDraw@@IAEXXZ present-unmatched
-void W3DTruckDraw::updateBones( void ) 
-{
-	if( getW3DTruckDrawModuleData() ) 
-	{
-		//Front tires
-		if( !getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.isEmpty() ) 
-		{
-			m_frontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_frontLeftTireBone, ("Missing front-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.str(), getRenderObject()->Get_Name()));
-		}
-
-		if( !getW3DTruckDrawModuleData()->m_frontRightTireBoneName.isEmpty() )
-		{
-			m_frontRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_frontRightTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_frontRightTireBone, ("Missing front-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_frontRightTireBoneName.str(), getRenderObject()->Get_Name()));
-		}
-
-		//Rear tires
-		if( !getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.isEmpty() ) 
-		{
-			m_rearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_rearLeftTireBone, ("Missing rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.str(), getRenderObject()->Get_Name()));
-		}
-
-		if( !getW3DTruckDrawModuleData()->m_rearRightTireBoneName.isEmpty() ) 
-		{
-			m_rearRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_rearRightTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_rearRightTireBone, ("Missing rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_rearRightTireBoneName.str(), getRenderObject()->Get_Name()));
-		}
-
-		//midFront tires
-		if( !getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.isEmpty() ) 
-		{
-			m_midFrontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midFrontLeftTireBone, ("Missing mid-front-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.str(), getRenderObject()->Get_Name()));
-			
-			m_midFrontRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midFrontRightTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midFrontRightTireBone, ("Missing mid-front-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midFrontRightTireBoneName.str(), getRenderObject()->Get_Name()));
-			
-			if (!m_midFrontRightTireBone ) 
-			{
-				m_midFrontLeftTireBone = 0;
-			}
-		}
-
-		//midRear tires
-		if( !getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.isEmpty() ) 
-		{
-			m_midRearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midRearLeftTireBone, ("Missing mid-rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.str(), getRenderObject()->Get_Name()));
-
-			m_midRearRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midRearRightTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midRearRightTireBone, ("Missing mid-rear-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midRearRightTireBoneName.str(), getRenderObject()->Get_Name()));
-
-			if (!m_midRearRightTireBone) 
-			{
-				m_midRearLeftTireBone = 0;
-			}
-		}
-
-		//midMid tires
-		if( !getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.isEmpty() ) 
-		{
-			m_midMidLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midMidLeftTireBone, ("Missing mid-mid-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.str(), getRenderObject()->Get_Name()));
-
-			m_midMidRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midMidRightTireBoneName.str());
-			DEBUG_ASSERTCRASH(m_midMidRightTireBone, ("Missing mid-mid-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midMidRightTireBoneName.str(), getRenderObject()->Get_Name()));
-
-			if (!m_midMidRightTireBone) 
-			{
-				m_midMidLeftTireBone = 0;
-			}
-		}
-
-		//Cab
-		if( !getW3DTruckDrawModuleData()->m_cabBoneName.isEmpty() ) 
-		{
-			m_cabBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_cabBoneName.str());
-			DEBUG_ASSERTCRASH(m_cabBone, ("Missing cab bone %s in model %s\n", getW3DTruckDrawModuleData()->m_cabBoneName.str(), getRenderObject()->Get_Name()));
-			m_trailerBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_trailerBoneName.str());
-		}
-	}
-
-	m_prevRenderObj = getRenderObject();
-	m_prevNumBones = m_prevRenderObj->Get_Num_Bones();
-}
+// Retail W3DTruckDraw::updateBones (0x00780170) is implemented in W3DTruckDrawUpdateBones.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?setHidden@W3DTruckDraw@@UAEX_N@Z present-unmatched
@@ -378,26 +262,7 @@ void W3DTruckDraw::setHidden(Bool h)
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?onRenderObjRecreated@W3DTruckDraw@@MAEXXZ present-unmatched
-void W3DTruckDraw::onRenderObjRecreated(void)
-{
-	//DEBUG_LOG(("Old obj %x, newObj %x, new bones %d, old bones %d\n",
-	//	m_prevRenderObj, getRenderObject(), getRenderObject()->Get_Num_Bones(), 
-	//	m_prevNumBones));
-	m_prevRenderObj = NULL;
-	m_frontLeftTireBone = 0;
-	m_frontRightTireBone = 0;
-	m_rearLeftTireBone = 0;
-	m_rearRightTireBone = 0;
-	m_midFrontLeftTireBone = 0;
-	m_midFrontRightTireBone = 0;
-	m_midRearLeftTireBone = 0;
-	m_midRearRightTireBone = 0;
-	m_midMidLeftTireBone = 0;
-	m_midMidRightTireBone = 0;
-	updateBones();
-}
+// Retail W3DTruckDraw::onRenderObjRecreated (0x00781440) is implemented in W3DTruckDrawUpdateBones.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Rotate and position wheels and other truck parts. */
