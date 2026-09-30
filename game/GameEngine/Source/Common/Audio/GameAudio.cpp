@@ -1262,26 +1262,6 @@ void AudioManager::regainFocus( void )
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?parseAudioSettingsDefinition@INI@@ present-unmatched
-void INI::parseAudioSettingsDefinition( INI *ini )
-{
-	ini->initFromINI(TheAudio->friend_getAudioSettings(), TheAudio->getFieldParseTable());
-
-	// time to override the volume settings, default 3-D provider, and speaker setup with the
-	// ones stored from the prefs
-	OptionPreferences prefs;
-
-	TheAudio->setPreferredProvider(prefs.getPreferred3DProvider());
-	TheAudio->setPreferredSpeaker(prefs.getSpeakerType());
-
-	Real relative2DVolume = TheAudio->getAudioSettings()->m_relative2DVolume;
-	relative2DVolume = MIN( 1.0f, MAX( -1.0f, relative2DVolume ) );
-
-	TheAudio->friend_getAudioSettings()->m_preferredSoundVolume		= prefs.getSoundVolume() / 100.0f;
-	TheAudio->friend_getAudioSettings()->m_preferred3DSoundVolume	= prefs.get3DSoundVolume() / 100.0f;
-	TheAudio->friend_getAudioSettings()->m_preferredSpeechVolume	= prefs.getSpeechVolume() / 100.0f;
-	TheAudio->friend_getAudioSettings()->m_preferredMusicVolume		= prefs.getMusicVolume() / 100.0f;
-}
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
