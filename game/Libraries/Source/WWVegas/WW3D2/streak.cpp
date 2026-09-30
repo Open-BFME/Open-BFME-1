@@ -544,72 +544,7 @@ void StreakLineClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 	sphere.Radius = box.Extent.Length();
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/StreakLineClass_Get_Obj_Space_Bounding_Box.cpp
-// ?Get_Obj_Space_Bounding_Box@StreakLineClass@@ present-unmatched
-void StreakLineClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
-{
-	unsigned int num_points = PointLocations.Count();
-	
-	// Line must have at least two points to be valid
-	
-	if (num_points >= 2) {
-
-		// Find object-space axis-aligned bounding box
-		Vector3 max_coords;
-		Vector3 min_coords;
-		unsigned int i;
-
-		// We create two bounding boxes; one from the points, and if we have random noise
-		// subdivision we create another one from the midpoints and factor the noise amplitude
-		// into the second box, and then combine the two.
-
-		// First bounding box:
-		max_coords = PointLocations[0];
-		min_coords = PointLocations[0];
-		for (i = 1; i < num_points; i++) {
-			max_coords.Update_Max(PointLocations[i]);
-			min_coords.Update_Min(PointLocations[i]);
-		}
-		// Enlarge bounding box by half the width
-		float enlarge_factor = LineRenderer.Get_Width() * 0.5f;
-		Vector3 enlarge_offset;
-		enlarge_offset.Set(enlarge_factor, enlarge_factor, enlarge_factor);
-		max_coords += enlarge_offset;
-		min_coords -= enlarge_offset;
-
-		if (MaxSubdivisionLevels > 0) {
-			// Second bounding box:
-			Vector3 max_coords2;
-			Vector3 min_coords2;
-			Vector3 midpoint = (PointLocations[0] + PointLocations[1]) * 0.5f;
-			max_coords2 = midpoint;
-			min_coords2 = midpoint;
-			for (i = 1; i < num_points - 1; i++) {
-				midpoint = (PointLocations[i] + PointLocations[i + 1]) * 0.5f;
-				max_coords2.Update_Max(midpoint);
-				min_coords2.Update_Min(midpoint);
-			}
-
-			// We ignore the actual number of subdivision levels: we multiply the random noise
-			// amplitude by 2, which is the limit as the number of subdivision levels goes to
-			// infinity.
-			enlarge_factor += (2 * LineRenderer.Get_Noise_Amplitude());
-			enlarge_offset.Set(enlarge_factor, enlarge_factor, enlarge_factor);
-			max_coords2 += enlarge_offset;
-			min_coords2 -= enlarge_offset;
-
-			// Combine the two:
-			max_coords.Update_Max(max_coords2);
-			min_coords.Update_Min(min_coords2);
-		}
-
-		box.Init_Min_Max(min_coords, max_coords);
-
-	} else {
-		// Invalid line - return something
-		box.Init(Vector3(0,0,0),Vector3(1,1,1));
-	}
-}
+// Retail bounding-box implementation: StreakLineClass_Get_Obj_Space_Bounding_Box.cpp.
 
 // ?Prepare_LOD@StreakLineClass@@ present-unmatched
 void StreakLineClass::Prepare_LOD(CameraClass &camera)
