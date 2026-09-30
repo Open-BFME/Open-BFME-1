@@ -1,14 +1,27 @@
 // ?xferAudioHandle@AudioManager@@UAEXPAVXfer@@PAI@Z
-// partial score=0.918 date=2026-09-28
+// partial score=0.928 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
+// stlport
 
 // Open-BFME5: AudioManager::xferAudioHandle, retail 0x006A28D0, 502 bytes.
 // The MilesAudioManager vtable at 0x0111C0C0 names this slot 82.  The three
 // address-derived helper declarations below retain the retail call contracts
 // without claiming identities that are not present in the ledger.
+//
+// Retail keeps the resolved info and event pointers in ESI/EBP across the
+// Xfer call and releases the info without a reload or a second null test.
+// MSVC 7.1 does that only when the resolver 0x006A20D0 and the reference
+// copy-assign 0x00696810 have visible bodies in the TU (retail shares the
+// resolver's TU), so both are defined here, noinline; the resolver body is
+// the 0x006A20D0 bank, not a matched body.  The version record sits in its
+// own block because retail reuses its slot for the info reference.
+// Residue: retail materialises a zero in EBX (state/info stores, pointer
+// compares) and keeps the event in EBP; this source keeps the event in EBX.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include "ascii_string.h"
+#include <deque>
+#include <list>
 
 typedef unsigned int AudioHandle;
 typedef unsigned char UnsignedByte;
@@ -85,6 +98,345 @@ public:
  Rva006AInfo *ptr;
 };
 
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
+	long volatile *value);
+// This barrier makes MSVC issue an IAT call for each increment site.
+extern "C" void __cdecl _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+class Rva006A20D0Counted
+{
+public:
+	virtual ~Rva006A20D0Counted();
+
+	void Add_Ref(void)
+	{
+		InterlockedIncrement(&m_refCount);
+		_ReadWriteBarrier();
+	}
+
+	void Release_Ref(void)
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0)
+			delete this;
+	}
+
+	long m_refCount;
+};
+
+class Rva006A20D0PlayingAudio : public Rva006A20D0Counted
+{
+public:
+	void *m_milesHandle;
+	int m_type;
+	int m_status;
+	AudioEventRTS *m_audioEventRTS;
+};
+
+class Rva006A20D0PlayingRef
+{
+public:
+	Rva006A20D0PlayingRef(void) : m_pointer(0) {}
+
+	Rva006A20D0PlayingRef(const Rva006A20D0PlayingRef &other) :
+		m_pointer(other.m_pointer)
+	{
+		if (m_pointer != 0)
+			m_pointer->Add_Ref();
+	}
+
+	~Rva006A20D0PlayingRef(void)
+	{
+		if (m_pointer != 0)
+			m_pointer->Release_Ref();
+	}
+
+	Rva006A20D0PlayingRef &operator=(const Rva006A20D0PlayingRef &other)
+	{
+		if (this != &other)
+		{
+			if (other.m_pointer != 0)
+				InterlockedIncrement(&other.m_pointer->m_refCount);
+		_ReadWriteBarrier();
+			if (m_pointer != 0)
+				if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
+					delete m_pointer;
+			m_pointer = other.m_pointer;
+		}
+		return *this;
+	}
+
+	Rva006A20D0PlayingRef &operator=(Rva006A20D0Counted *pointer)
+	{
+		if (pointer != 0)
+			InterlockedIncrement(&pointer->m_refCount);
+		_ReadWriteBarrier();
+		if (m_pointer != 0)
+			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
+				delete m_pointer;
+		m_pointer = pointer;
+		return *this;
+	}
+
+	operator Rva006A20D0PlayingAudio *(void) const
+	{
+		return (Rva006A20D0PlayingAudio *)m_pointer;
+	}
+
+	Rva006A20D0PlayingAudio *operator->(void) const
+	{
+		return (Rva006A20D0PlayingAudio *)m_pointer;
+	}
+
+	Rva006A20D0Counted *m_pointer;
+};
+
+class Rva00087750Ref
+{
+public:
+	Rva00087750Ref(void) : m_pointer(0) {}
+
+	__declspec(noinline) Rva00087750Ref &operator=(const Rva00087750Ref &other)
+	{
+		if (this != &other)
+		{
+			if (other.m_pointer)
+				InterlockedIncrement(&other.m_pointer->m_refCount);
+			if (m_pointer)
+				m_pointer->Release_Ref();
+			m_pointer = other.m_pointer;
+		}
+		return *this;
+	}
+
+	Rva00087750Ref &operator=(Rva006A20D0Counted *pointer)
+	{
+		if (pointer != 0)
+			InterlockedIncrement(&pointer->m_refCount);
+		_ReadWriteBarrier();
+		if (m_pointer != 0)
+			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
+				delete m_pointer;
+		m_pointer = pointer;
+		return *this;
+	}
+
+	Rva00087750Ref &assignInline(const Rva006A20D0PlayingRef &other)
+	{
+		if (other.m_pointer != 0)
+			InterlockedIncrement(&other.m_pointer->m_refCount);
+		_ReadWriteBarrier();
+		if (m_pointer != 0)
+			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
+				delete m_pointer;
+		m_pointer = other.m_pointer;
+		return *this;
+	}
+
+	Rva006A20D0Counted *m_pointer;
+};
+
+typedef _STL::list<Rva006A20D0PlayingRef> Rva006A20D0PlayingList;
+typedef _STL::deque<Rva006A20D0PlayingRef> Rva006A20D0PlayingDeque;
+
+struct Rva006A20D0EventRecord
+{
+	void *m_vftable;
+	unsigned char m_pad004[8];
+	AudioHandle m_playingHandle;
+	unsigned char m_tail010[0x68];
+};
+
+class Rva006A20D0EventVector
+{
+public:
+	Rva006A20D0EventRecord *begin(void)
+	{
+		return m_start;
+	}
+
+	Rva006A20D0EventRecord *end(void)
+	{
+		return m_finish;
+	}
+
+	Rva006A20D0EventRecord *m_start;
+	Rva006A20D0EventRecord *m_finish;
+	Rva006A20D0EventRecord *m_endOfStorage;
+};
+
+struct Rva006A20D0Pending
+{
+	void *m_unused;
+	AudioEventRTS *m_event;
+};
+
+typedef _STL::list<Rva006A20D0Pending *> Rva006A20D0PendingList;
+
+struct SelfPair006A1650
+{
+	void *m_value;
+	void *m_owner;
+};
+
+// Retail's unwind map puts `playing` at -0x4c in a 0x40-byte frame.
+// The maker writes only the pair's first two pointers. The adjacent bytes
+// preserve the eight-byte pair and reproduce the retail frame size.
+struct Rva006A1650PairStorage
+{
+	SelfPair006A1650 m_pair;
+	unsigned char m_pad[8];
+};
+
+class Rva006A1650Maker
+{
+public:
+	SelfPair006A1650 *make(SelfPair006A1650 *result, void *argument);
+};
+
+class MilesAudioManager
+{
+public:
+	virtual void owner00(void);
+
+	bool rva006A20D0(AudioHandle handle, void *eventOutArg, void *infoOutArg);
+
+private:
+	char m_pad004[0x4c - 4];
+	Rva006A20D0PendingList m_pending;
+	char m_pad050[0x94 - 0x50];
+	Rva006A20D0EventVector m_events[3];
+	char m_pad0b8[0x9c8 - 0xb8];
+	Rva006A20D0PlayingList m_playingSounds;
+	Rva006A20D0PlayingList m_playing3DSounds;
+	Rva006A20D0PlayingList m_playingStreams;
+	unsigned char m_audioQueuesStorage[3][2][0x28];
+};
+
+// ?rva006A20D0@MilesAudioManager@@QAE_NIPAX0@Z present-unmatched
+__declspec(noinline) bool MilesAudioManager::rva006A20D0(AudioHandle handle, void *eventOutArg, void *infoOutArg)
+{
+	AudioEventRTS **eventOut = (AudioEventRTS **)eventOutArg;
+	Rva00087750Ref *infoOut = (Rva00087750Ref *)infoOutArg;
+	void *nullPointer = 0;
+	if (eventOut != nullPointer)
+		*eventOut = (AudioEventRTS *)nullPointer;
+	if (infoOut != nullPointer)
+		*infoOut = (Rva006A20D0Counted *)nullPointer;
+	if (handle < 5)
+		return false;
+
+	Rva006A20D0PlayingRef playing;
+	Rva006A20D0PlayingList::iterator it;
+
+	for (it = m_playingSounds.begin(); it != m_playingSounds.end(); ++it)
+	{
+		playing = *it;
+		if (playing != nullPointer &&
+			playing->m_audioEventRTS->m_playingHandle == handle)
+		{
+			if (eventOut != nullPointer)
+				*eventOut = playing->m_audioEventRTS;
+			if (infoOut != nullPointer)
+				infoOut->operator=(*(const Rva00087750Ref *)
+					(const void *)&playing);
+			return true;
+		}
+	}
+
+	for (it = m_playing3DSounds.begin(); it != m_playing3DSounds.end(); ++it)
+	{
+		playing = *it;
+		if (playing != nullPointer &&
+			playing->m_audioEventRTS->m_playingHandle == handle)
+		{
+			if (eventOut != nullPointer)
+				*eventOut = playing->m_audioEventRTS;
+			if (infoOut != nullPointer)
+				infoOut->assignInline(playing);
+			return true;
+		}
+	}
+
+	for (it = m_playingStreams.begin(); it != m_playingStreams.end(); ++it)
+	{
+		playing = *it;
+		if (playing != nullPointer &&
+			playing->m_audioEventRTS->m_playingHandle == handle)
+		{
+			if (eventOut != nullPointer)
+				*eventOut = playing->m_audioEventRTS;
+			if (infoOut != nullPointer)
+				infoOut->assignInline(playing);
+			return true;
+		}
+	}
+
+	Rva006A20D0PlayingDeque *queueGroup =
+		(Rva006A20D0PlayingDeque *)((char *)this + 0x9d4);
+	Rva006A20D0EventRecord **eventFinish = &m_events[0].m_finish;
+	for (unsigned int group = 0; group < 3;
+		++group, eventFinish += 3, queueGroup += 2)
+	{
+		Rva006A20D0EventRecord *eventIt;
+		for (eventIt = eventFinish[-1]; eventIt != *eventFinish; ++eventIt)
+		{
+			if (eventIt->m_playingHandle == handle)
+			{
+				if (eventOut != nullPointer)
+					*eventOut = (AudioEventRTS *)eventIt;
+				return true;
+			}
+		}
+
+		Rva006A20D0PlayingDeque *queue = queueGroup;
+		for (unsigned int queueIndex = 0; queueIndex < 2;
+			++queueIndex, ++queue)
+		{
+			Rva006A20D0PlayingDeque::iterator queueIt;
+			for (queueIt = queue->begin();
+				queueIt != queue->end(); ++queueIt)
+			{
+				playing = *queueIt;
+				if (playing != nullPointer &&
+					playing->m_audioEventRTS->m_playingHandle == handle)
+				{
+					if (eventOut != nullPointer)
+						*eventOut = playing->m_audioEventRTS;
+					if (infoOut != nullPointer)
+						infoOut->assignInline(playing);
+					return true;
+				}
+			}
+		}
+	}
+
+	Rva006A20D0PendingList::iterator pending = m_pending.begin();
+	for (; pending != m_pending.end(); ++pending)
+	{
+		Rva006A20D0Pending *entry = *pending;
+		if (entry != nullPointer && entry->m_event != nullPointer &&
+			entry->m_event->m_playingHandle == handle)
+		{
+			if (eventOut != nullPointer)
+				*eventOut = entry->m_event;
+			return true;
+		}
+	}
+
+	Rva006A1650PairStorage pairStorage;
+	SelfPair006A1650 &pair = pairStorage.m_pair;
+	Rva006A1650Maker *maker =
+		(Rva006A1650Maker *)((char *)this + 0xb10);
+	maker->make(&pair, (void *)handle);
+	if (pair.m_value == 0)
+		return false;
+
+	if (eventOut != nullPointer)
+		*eventOut = *(AudioEventRTS **)((char *)pair.m_value + 4);
+	return true;
+}
+
 class BfmeSeedTarget;
 
 class BfmeSubAccept_0002C41C
@@ -103,7 +455,6 @@ extern AsciiString TheBfmeCrateNameDefault;
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 
-class MilesAudioManager { public: bool rva006A20D0(unsigned,void *,void *); };
 
 class AudioManager
 {
@@ -140,9 +491,12 @@ private:
 
 void AudioManager::xferAudioHandle(Xfer *xfer, AudioHandle *handle)
 {
-	Xfer::Version version;
-    version.data[0] = 1; version.data[1] = 1;
-    *xfer == version;
+	{
+		Xfer::Version version;
+		version.data[0] = 1;
+		version.data[1] = 1;
+		*xfer == version;
+	}
 	if (xfer->IsCRC())
 		return;
 
@@ -152,25 +506,20 @@ void AudioManager::xferAudioHandle(Xfer *xfer, AudioHandle *handle)
 		bool accepted;
 		AudioInfo006A28D0Ref info;
 		AudioEventRTS *event;
-		typedef bool (AudioManager::*Resolve)(AudioHandle, AudioEventRTS **, AudioInfo006A28D0Ref &);
-        union { void (*address)(); Resolve method; } resolve;
-        resolve.address = j_00008549;
-        accepted = (this->*resolve.method)(*handle, &event, info);
-        Rva006AInfo *infoValue = info.ptr;
-        AudioEventRTS *eventValue = event;
+		accepted = reinterpret_cast<MilesAudioManager *>(this)->rva006A20D0(*handle, &event, &info);
 
 		if (accepted)
 		{
-			if (eventValue == 0 || eventValue->m_flag45)
+			if (event == 0 || event->m_flag45)
 				accepted = false;
-			if (infoValue != 0 && infoValue->m_flag34)
+			if (info.ptr != 0 && info.ptr->m_flag34)
 				accepted = false;
 		}
 
 		*xfer == accepted;
 		if (accepted)
 		{
-			reinterpret_cast<BfmeSubAccept_0002C41C *>(eventValue)->bfmeAccept(
+			reinterpret_cast<BfmeSubAccept_0002C41C *>(event)->bfmeAccept(
 				reinterpret_cast<BfmeSeedTarget *>(xfer));
 		}
 
