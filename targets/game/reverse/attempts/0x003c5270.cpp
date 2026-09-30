@@ -1,44 +1,20 @@
 // ?Rva003C5270Find@@YGHPAVRva003C5820Owner@@PAVRva003C5820Key@@@Z
-// partial score=0.29 date=2026-09-22
-// Called as a raw __stdcall function pointer (not virtual/thiscall -- both
-// args are plain stack args, ret 8) from Rva003C5820Owner::appendMatch
-// (Code/GameEngine/Source/Common/Rva003C5820AppendMatch.cpp), which already
-// declares the exact FindFunction signature this body must match:
-// `int __stdcall (Rva003C5820Owner*, Rva003C5820Key*)`. That caller already
-// existed before this session; this is the first compilable candidate for
-// the callee itself.
-//
-// Full disassembly read start to finish (not just the boundary): linear
-// scan over owner's vector<Item*> (modelled directly as the STLport
-// _M_start/_M_finish pointer pair, no <vector> needed -- read-only). Each
-// Item (owner->m_begin[i]) and the Key are BOTH a pointer to a
-// length-prefixed blob: word length at blob+4, data at blob+8; a null blob
-// pointer falls back to the shared empty-string constant Rva006A16B0Empty
-// (VA 0x0107388B, named by an existing relocation in this body). The
-// compare is `memcmp(key,item,min(keyLen,itemLen))==0 && keyLen==itemLen`
-// (exact match only, not prefix) -- confirmed from the tail `sub
-// ebx,ebp;test;je` after the `repe cmpsb`. Returns the index of the first
-// exact match, or -1. `extern "C" int memcmp(...); #pragma intrinsic(memcmp)`
-// is what gets MSVC to emit `repe cmpsb` for the byte compare instead of a
-// manual loop (a hand-written char-by-char loop compiled to ~30 extra bytes
-// and never produced the rep-string opcode).
-//
-// RESULT: ours=152B retail=181B, 128/181 nonreloc diff, first divergence at
-// +2 (i.e. only the initial `push ecx` prologue byte matches). The residue
-// is REGISTER CHOICE, not missing logic: retail loads `owner` into EDX and
-// keeps `count` in EAX across the whole function; every source order tried
-// here put `owner` in EAX instead (edx never appears). Tried (all compiled,
-// none changed the register choice or beat this diff count): a manual
-// byte-compare loop instead of memcmp (209B, worse), computing the item's
-// blob fields into named locals inline instead of through the getRange()
-// helper (162B, worse), marking getRange() __forceinline explicitly (no
-// change, already inlined), and declaring `p = owner->m_begin` before vs.
-// after the key-range lookup (156B, worse either way tried). NEXT LEVER:
-// something that makes MSVC 7.1 prefer EDX over EAX for the first
-// dereferenced pointer parameter of a 2-argument __stdcall free function --
-// not yet found; shape_family_levers.py --families register,sib,loop,branch
-// found no applicable automatic lever (no adjacent atom-initialized decl
-// pair to swap). t=25min model=claude-sonnet-5 score=0.29
+// partial score=0.9834 date=2026-09-30
+// Bankable near match: retail RVA 0x003C5270, 181 bytes.
+// Complete ret 8 at RVA 0x003C5322 ends at 0x003C5325.
+// Caller Rva003C5820Owner::appendMatch at 0x003C5820 proves the two-stack-
+// argument stdcall ABI through its FindFunction declaration.
+// Probe: ours181 retail181, exactly3 differing non-relocation bytes.
+// Retail loads initial owner into EDX; ours uses EAX for that same initial
+// load and its two dereferences. Every later instruction matches exactly.
+// Borrowed-view comparator and unsigned count replace the old 0.29 draft.
+// Declare count before index to preserve the retail's later register map.
+// Tested definition-order permutations, pointer/reference/const parameters,
+// inline size helper, inline core wrapper, count arithmetic spellings and
+// /G5 /G6 /G7 /O1 /Os /Ot /Ob2 /Og /Oy- /Og- shaping flags.
+// Both DIR32 references independently decode to empty-string VA0x0107388B,
+// already mapped to Rva006A16B0Empty. There are no calls.
+// blocker=regalloc/initial-owner-register model=gpt-6
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
 extern char Rva006A16B0Empty[];
@@ -73,40 +49,37 @@ public:
 extern "C" int memcmp( const void *, const void *, unsigned int );
 #pragma intrinsic( memcmp )
 
-static __forceinline void getRange( Rva003C5270Blob *blob, unsigned short &len, const char *&data )
+class Rva003C5270BorrowedView
 {
-	if( blob )
-	{
-		len = blob->m_len;
-		data = blob->m_data;
-	}
-	else
-	{
-		len = 0;
-		data = Rva006A16B0Empty;
-	}
-}
-
-int __stdcall Rva003C5270Find( Rva003C5820Owner *owner, Rva003C5820Key *key )
+public:
+ Rva003C5270Blob *m_blob;
+ int compare(const Rva003C5820Item &that) const
+ {
+  int thatLength = that.m_blob ? that.m_blob->m_len : 0;
+  const char *thatText = that.m_blob ? that.m_blob->m_data : Rva006A16B0Empty;
+  int thisLength = m_blob ? m_blob->m_len : 0;
+  const char *thisText = m_blob ? m_blob->m_data : Rva006A16B0Empty;
+  int length = thisLength < thatLength ? thisLength : thatLength;
+  int difference = memcmp(thisText, thatText, length);
+  if (difference != 0) return difference;
+  return thisLength - thatLength;
+ }
+};
+int __stdcall Rva003C5270Find(Rva003C5820Owner *owner,Rva003C5820Key *key)
 {
-	int count = (int)( owner->m_end - owner->m_begin );
-	if( count > 0 )
-	{
-		unsigned short keyLen;
-		const char *keyData;
-		getRange( key->m_blob, keyLen, keyData );
-
-		Rva003C5820Item **p = owner->m_begin;
-		for( int i = 0; i < count; ++i, ++p )
-		{
-			unsigned short itemLen;
-			const char *itemData;
-			getRange( (*p)->m_blob, itemLen, itemData );
-
-			unsigned short n = ( keyLen < itemLen ) ? keyLen : itemLen;
-			if( memcmp( keyData, itemData, n ) == 0 && keyLen == itemLen )
-				return i;
-		}
-	}
-	return -1;
+ Rva003C5820Item **begin=owner->m_begin;
+ unsigned int count=(unsigned int)(owner->m_end-owner->m_begin);
+ unsigned int index=0;
+ if(count>0)
+ {
+  Rva003C5270BorrowedView query={key->m_blob};
+  Rva003C5820Item **cursor=begin;
+  while(index<count)
+  {
+   if(query.compare(**cursor)==0) return index;
+   ++index;
+   ++cursor;
+  }
+ }
+ return -1;
 }

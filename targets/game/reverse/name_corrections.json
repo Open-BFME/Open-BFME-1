@@ -10678,5 +10678,15 @@
   "after_sha256": "66dd8aace9b50937a9be2e12732d05cb55d39bbfb5e6e55bd7acb7efa220511c",
   "evidence": "targets/game/reverse/identity_evidence/rva009a75f0_009a76a0_banks.md",
   "reason": "Prior partial-bank name has no proven vendor identity; bfmeGo7760 additionally points at the next separate body. Replacement names preserve independently decoded actual body addresses and ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003c5270.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003c5270.cpp",
+  "old_name": "__forceinline",
+  "new_name": "Rva003C5270BorrowedView",
+  "before_sha256": "6f9b1de761359ce8404b92977c992eec42ee4682843141edd38db6624e51b234",
+  "after_sha256": "07adb1885bdb604907c2756c30683f4149cfc42103aec57446ad6d5d2e4e3e1d",
+  "evidence": "targets/game/reverse/attempt_history/0x003c5270/07adb1885bdb604907c2756c30683f4149cfc42103aec57446ad6d5d2e4e3e1d.json",
+  "reason": "The old token __forceinline is an MSVC language keyword rather than a descriptive function identity. The new borrowed string view is a scratch helper with the actual body address; measured bank metadata identifies the decoded leaf and extent."
  }
 ]
