@@ -276,7 +276,15 @@ class Service:
             if not record.get("verify"):
                 continue
             for dest, src in (record.get("attach") or {}).items():
-                target = self.work / dest
+                # only ever inside the service worktree's build/ (review
+                # 2026-09-30: `../victim` deleted another agent's files)
+                build_dir = (self.work / "build").resolve()
+                target = (self.work / dest).resolve()
+                if target == build_dir or not target.is_relative_to(build_dir):
+                    with (self.state / "logs" / f"{tip}.log").open("ab") as handle:
+                        handle.write(f"\n--- unit {record['id']}: refused attachment {dest!r}: "
+                                     f"not under {build_dir}\n".encode())
+                    return 2
                 if target.exists():
                     shutil.rmtree(target)
                 shutil.copytree(src, target)
@@ -586,19 +594,27 @@ def drain(service, interval=10, once=False, max_batch=20, seed=None):
     (state/wt) persists between passes, so its object cache stays warm;
     `seed` copies a warm build/match into it the first time."""
     while True:
-        if service.queued():
-            if seed and not (service.work / "build" / "match").exists():
-                base = service.snapshot()
-                service._worktree(base)
-                shutil.copytree(seed, service.work / "build" / "match")
-            started = time.time()
-            try:
+        failed = False
+        started = time.time()
+        try:
+            # a publication journal left by an interrupted pass is settled
+            # first, even when the queue is empty (review 2026-09-30)
+            settled = service.recover()
+            if settled:
+                print(json.dumps({"recovered": settled}), flush=True)
+            if service.queued():
+                if seed and not (service.work / "build" / "match").exists():
+                    base = service.snapshot()
+                    service._worktree(base)
+                    shutil.copytree(seed, service.work / "build" / "match")
                 result = service.run_once(max_batch, window=True)   # short lease, renewed, closed
-            except Exception as error:  # noqa: BLE001 -- a held window is closed by run_once
-                result = {"error": str(error)}
-            print(json.dumps(dict(result, seconds=round(time.time() - started, 1))), flush=True)
+                print(json.dumps(dict(result, seconds=round(time.time() - started, 1))), flush=True)
+        except Exception as error:  # noqa: BLE001 -- a held window is closed by run_once
+            failed = True
+            print(json.dumps({"error": str(error), "seconds": round(time.time() - started, 1)}),
+                  flush=True)
         if once:
-            return 0
+            return 1 if failed else 0        # an error is never reported as success
         time.sleep(interval * 60)
 
 

@@ -332,6 +332,9 @@ def test_the_drainer_runs_a_windowed_pass_only_when_the_queue_is_non_empty(tmp_p
         def __init__(self, queued):
             self._queued = queued
 
+        def recover(self):
+            return []
+
         def queued(self):
             return self._queued
 
@@ -341,3 +344,48 @@ def test_the_drainer_runs_a_windowed_pass_only_when_the_queue_is_non_empty(tmp_p
     assert ls.drain(Fake([]), once=True) == 0 and calls == []
     assert ls.drain(Fake([{"id": "u"}]), once=True, max_batch=5) == 0
     assert calls == [(5, True)] and '"landed": ["u"]' in capsys.readouterr().out
+
+
+# ---- review 2026-09-30 cycle 5 (adversarial_checks.py) ----
+
+def test_an_attachment_outside_the_service_build_dir_is_refused(tmp_path):
+    service = ls.Service(repo=tmp_path, state=tmp_path / "state", gate="true")
+    service.work.mkdir(parents=True, exist_ok=True)
+    src = tmp_path / "evidence"
+    src.mkdir()
+    (src / "brief.json").write_text("{}")
+    victim = service.state / "victim"
+    victim.mkdir()
+    (victim / "other_agent.txt").write_text("keep")
+    for dest in ("../victim", "build/../../victim", "build", str(victim)):
+        assert service._unit_checks("base", "tip", [{"id": "u", "verify": "true",
+                                                     "attach": {dest: str(src)}}]) != 0
+    assert (victim / "other_agent.txt").read_text() == "keep" and not (victim / "brief.json").exists()
+    assert service._unit_checks("base", "tip", [{"id": "u", "verify": "true",
+                                                 "attach": {"build/provider_repair/X": str(src)}}]) == 0
+
+
+def test_a_one_shot_drain_error_is_not_success():
+    class Failure:
+        def recover(self):
+            return []
+
+        def queued(self):
+            return [{"id": "u"}]
+
+        def run_once(self, *args, **kwargs):
+            raise RuntimeError("verification failed")
+    assert ls.drain(Failure(), once=True) == 1
+
+
+def test_the_drainer_settles_a_journal_even_with_an_empty_queue():
+    calls = []
+
+    class Journal:
+        def recover(self):
+            calls.append("recover")
+            return ["settled-unit"]
+
+        def queued(self):
+            return []
+    assert ls.drain(Journal(), once=True) == 0 and calls == ["recover"]
