@@ -1,28 +1,25 @@
 // ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.9913 date=2026-09-28
+// partial score=0.9971 date=2026-09-30
 // ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // W3DGadgetHorizontalSliderImageDrawB, retail 0x00791730 (1380 bytes, ret).
-// Identity: the seven UTF-16 debug literals it formats ("mult:%g/%g, img
-// offset:%d,%d", "\norigin: %d,%d size:%d,%d", "\ns= %d <--> %d, numTicks=%g,
-// pos = %d", "\nHighlighted: ...", "\n  bsX = ...", "\ntop: start=...") are
-// Zero Hour's W3DGadgetHorizontalSliderImageDrawB (W3DHorizontalSlider.cpp)
-// word for word, and the draw loops, the tooltip hand-off and the image
-// accessors follow it line for line. BFME only adds the resolution scale gate:
-// the 800x600 multipliers stay 1.0 when window status bit 0x08000000 is set.
-// Retail's UnicodeString is the StringBase<unsigned short> wrapper
-// (stringbaseunicode shim): by-value format strings, inline concat.
-// BANKED 1380/1380 bytes, 12 differing: in the HILITED block (+0x2AE..+0x30D)
-// retail loads size.x into eax and origin.x into ecx for `origin.x + size.x`
-// (loop test and the "bsX" format args); ours swaps the two. Not reached by
-// operand order, declaration order, block scope, raw state read (worse) or the
-// 9 shape-family choices. Intended home: the Gadget directory next to
-// W3DHorizontalSlider.cpp, whose older ZH-port copy of this function is
-// unclaimed and should be removed when this lands.
+// Seven UTF-16 debug literals identify Zero Hour's function in W3DHorizontalSlider.cpp.
+// They include the multiplier, origin, tick, highlighted-range, bsX and top strings.
+// The drawing loops, tooltip hand-off and image accessors match that function line for line.
+
+// BFME checks window status bit 0x08000000 before applying screen multipliers.
+// At 800x600, the multipliers stay at 1.0 when that bit is set.
+// This body uses the stringbaseunicode shim for UnicodeString formatting and concatenation.
+
+// This source matches retail in size and differs in four bytes at +0x508..+0x514.
+// Retail loads size.x into ecx and origin.x into edx before the fill-loop add.
+// This source loads size.x into edx and origin.x into ecx, then adds and compares in those registers.
+// Taking size.x's address after winGetSize fixed the earlier 8-byte HILITED mismatch.
+// Place this body beside W3DHorizontalSlider.cpp in the Gadget directory.
+// Remove the older Zero Hour copy when this body lands.
 
 #include <wchar.h>
 #include "string_base.h"
-template <typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)L""; }
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
 
@@ -159,6 +156,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	// get screen position and size
 	window->winGetScreenPosition( &origin.x, &origin.y );
 	window->winGetSize( &size.x, &size.y );
+	const Int *sizeX = &size.x;
 
 	SliderData *s = (SliderData *)window->winGetUserData();
 
@@ -176,7 +174,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	UnicodeString tooltip, tmp;
 	tooltip.format( UnicodeString( L"mult:%g/%g, img offset:%d,%d" ), xMulti, yMulti, xOffset, yOffset );
 
-	tmp.format( UnicodeString( L"\norigin: %d,%d size:%d,%d" ), origin.x, origin.y, size.x, size.y );
+	tmp.format( UnicodeString( L"\norigin: %d,%d size:%d,%d" ), origin.x, origin.y, sizeX[0], size.y );
 	tooltip.concat( tmp );
 
 	tmp.format( UnicodeString( L"\ns= %d <--> %d, numTicks=%g, pos = %d" ), s->minVal, s->maxVal, s->numTicks, s->position );
@@ -193,10 +191,10 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 
 		tmp.format( UnicodeString( L"\nHighlighted: (%d,%d) -> (%d,%d), step %d/%g, full %d/%d" ), backgroundStart.x, backgroundStart.y,
 			backgroundEnd.x, backgroundEnd.y, highlightSquare->getImageWidth(), highlightSquare->getImageWidth() * xMulti,
-			origin.x, size.x );
+			origin.x, sizeX[0] );
 		tooltip.concat( tmp );
 
-		while( backgroundStart.x < origin.x + size.x )
+		while( backgroundStart.x < origin.x + sizeX[0] )
 		{
 			TheWindowManager->winDrawImage( highlightSquare,
 				backgroundStart.x, backgroundStart.y,
@@ -205,7 +203,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 			backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
 		}
 		tmp.format( UnicodeString( L"\n  bsX = %d, beX = %d (%d < %d+%d or %d?)" ), backgroundStart.x, backgroundEnd.x,
-			backgroundStart.x, origin.x, size.x, origin.x + size.x );
+			backgroundStart.x, origin.x, sizeX[0], origin.x + sizeX[0] );
 		tooltip.concat( tmp );
 	}
 
@@ -218,7 +216,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	tmp.format( UnicodeString( L"\ntop: start=%d,%d, end=%d,%d" ), start.x, start.y, end.x, end.y );
 	tooltip.concat( tmp );
 
-	while( start.x <= origin.x + ( s->numTicks * ( s->position - s->minVal ) ) && end.x < origin.x + size.x && s->position != s->minVal )
+	while( start.x <= origin.x + ( s->numTicks * ( s->position - s->minVal ) ) && end.x < origin.x + sizeX[0] && s->position != s->minVal )
 	{
 		TheWindowManager->winDrawImage( fillSquare,
 			start.x, start.y,
@@ -230,7 +228,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	blankSquare = GadgetSliderGetDisabledImageRight( window );
 	end.x = start.x + blankSquare->getImageWidth() * xMulti;
 
-	while( end.x < origin.x + size.x )
+	while( end.x < origin.x + sizeX[0] )
 	{
 		TheWindowManager->winDrawImage( blankSquare,
 			start.x, start.y,

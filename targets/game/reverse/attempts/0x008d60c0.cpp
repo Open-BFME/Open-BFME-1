@@ -1,7 +1,9 @@
 // ?d_008d60c0@@YAXXZ
-// partial score=0.21 date=2026-09-22
-// Retail 0x008D60C0: opaque Apt frame-stack constructor.
-// The address-derived type preserves unresolved ownership while retaining the decoded ABI.
+// partial score=0.2609 date=2026-09-29
+// This draft shapes the body at RVA 0x008D60C0 as a constructor.
+// Matched callers identify the body as BfmeB1055::bfmeBase1055.
+// The unwind map identifies Rva00899F00Base and Rva00899560Value cleanups.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
@@ -37,7 +39,8 @@ struct RvaD60Link
 class Rva0089C860State
 {
 public:
-	Rva0089C860State *initialize(int value);
+	Rva0089C860State(int value);
+	~Rva0089C860State();
 
 	int m_value;
 	int m_first;
@@ -49,7 +52,7 @@ class Rva008D20F0Node
 {
 public:
 	char m_padding00[4];
-	unsigned int m_kind;
+	int m_kind;
 	char m_padding08[0x4C - 8];
 	Rva008D20F0Node *m_next;
 
@@ -107,37 +110,72 @@ struct Rva00899C20Registry
 extern Rva00899C20Registry *g_Va013387D8;
 extern char g_rva8D0D80CreateTag;
 
-class Rva008D60C0Base
+class Rva00899560Value;
+struct Rva00899560Pool
+{
+    void addPooled(Rva00899560Value *value);
+};
+extern Rva00899560Pool *g_rva8CD130IdleHook;
+
+class Rva00899560Value
 {
 public:
-	Rva008D60C0Base();
-	virtual ~Rva008D60C0Base();
+    virtual ~Rva00899560Value();
 
-	protected:
-	unsigned int m_flags;
-	Rva0089C860State m_state;
-	unsigned int m_stateBits;
-	unsigned int m_bits;
-	};
+protected:
+    unsigned int m_flags;
 
-Rva008D60C0Base::Rva008D60C0Base()
+    __forceinline Rva00899560Value(unsigned int type)
+    {
+        if (type == 0xa)
+        {
+            m_flags = (m_flags & 0xb000800a) | 0x800a;
+        }
+        else
+        {
+            unsigned int flags = (((m_flags & ~0x3f) | type) & 0xF000803F) | 0x8000;
+            m_flags = flags;
+            if (type != 0x1c)
+            {
+                m_flags = flags | 0x40000000;
+                g_rva8CD130IdleHook->addPooled(this);
+            }
+            else
+            {
+                m_flags = flags & 0xBFFFFFFF;
+            }
+        }
+    }
+};
+
+class Rva00899F00Base : public Rva00899560Value
 {
-	m_flags = (m_flags & 0xb000800a) | 0x0000800a;
-	Rva0089C860State &state = m_state;
-	*(unsigned int *)this = 0x01136058;
-	state.initialize(8);
-	*(unsigned char *)&m_bits = 0;
-	unsigned int bits = m_bits;
-	bits &= 0xfffffcff;
-	m_stateBits = 0;
-	m_bits = bits;
+public:
+    Rva00899F00Base(unsigned int type, int stateValue);
+    virtual ~Rva00899F00Base();
+    virtual void rva008991B0();
+
+protected:
+    Rva0089C860State m_state;
+    unsigned int m_stateBits;
+    unsigned int m_bits;
+};
+
+Rva00899F00Base::Rva00899F00Base(unsigned int type, int stateValue)
+    : Rva00899560Value(type), m_state(stateValue)
+{
+    *(unsigned char *)&m_bits = 0;
+    unsigned int bits = m_bits;
+    bits &= 0xFFFFFCFF;
+    m_stateBits = 0;
+    m_bits = bits;
 }
 
-class Rva008D60C0FrameStack : public Rva008D60C0Base
+class Rva008D60C0 : public Rva00899F00Base
 {
 public:
-	Rva008D60C0FrameStack(unsigned int first, unsigned int second, RvaD60Virtual *value);
-	virtual ~Rva008D60C0FrameStack();
+	Rva008D60C0(unsigned int first, unsigned int second, RvaD60Virtual *value);
+	virtual ~Rva008D60C0();
 
 	private:
 	unsigned int m_first;
@@ -146,12 +184,12 @@ public:
 	RvaD60Virtual *m_lookup;
 };
 
-Rva008D60C0FrameStack::Rva008D60C0FrameStack(
+Rva008D60C0::Rva008D60C0(
 	unsigned int first, unsigned int second, RvaD60Virtual *value)
+	: Rva00899F00Base(0xa, 8)
 {
 	Rva0089C860State &state = m_state;
 	m_first = first;
-	*(unsigned int *)this = 0x01137770;
 	m_value = value;
 	value->retain();
 	m_second = second;
