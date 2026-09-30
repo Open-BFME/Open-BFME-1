@@ -74,6 +74,18 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         continue
     fi
 
+    # Verifier code and baselines: every outgoing commit that changes one
+    # carries a Verifier-Change trailer, and shrink-only baselines do not grow
+    # across the range. Judged by the checker as of the remote tip, so an
+    # outgoing edit to the checker cannot approve itself.
+    if git cat-file -e "$base:tools/protected_paths.py" 2>/dev/null; then
+        git show "$base:tools/protected_paths.py" | python3 - --range "$base" "$local_sha" \
+            || fail "protected verifier/baseline change in outgoing range (see above)"
+    elif git cat-file -e "$local_sha:tools/protected_paths.py" 2>/dev/null; then
+        git show "$local_sha:tools/protected_paths.py" | python3 - --range "$base" "$local_sha" \
+            || fail "protected verifier/baseline change in outgoing range (see above)"
+    fi
+
     # Direction gate over the OUTGOING range, same call verify_pr.sh makes on a
     # PR. pre-commit runs it too, but --no-verify and clones that never ran
     # tools/setup_hooks.sh skip that entirely, and the byte-verify below cannot

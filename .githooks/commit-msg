@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# A commit that changes verifier code or a baseline must say why in a
+# `Verifier-Change: <reason>` trailer, and a shrink-only baseline may not grow
+# (tools/protected_paths.py). This is the one hook that sees the message.
+# The checker runs AS OF HEAD, so an edit to it cannot approve itself.
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+checker=tools/protected_paths.py
+if git cat-file -e "HEAD:$checker" 2>/dev/null; then
+    git show "HEAD:$checker" | python3 - --commit-msg "$1" \
+        || { echo "COMMIT-MSG FAILED: protected verifier/baseline change (see above)" >&2; exit 1; }
+elif [ -f "$checker" ]; then
+    python3 "$checker" --commit-msg "$1" \
+        || { echo "COMMIT-MSG FAILED: protected verifier/baseline change (see above)" >&2; exit 1; }
+fi

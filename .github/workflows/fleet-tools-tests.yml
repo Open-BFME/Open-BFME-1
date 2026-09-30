@@ -83,3 +83,7 @@ jobs:
           tools/tests/test_pre_commit_argv.py
           tools/tests/test_pre_push_lists_fail_closed.py
           tools/tests/test_pre_push_source_selection.py
+          tools/tests/test_claims.py
+          tools/tests/test_fleet_shared_claims.py
+          tools/tests/test_add_match_claim_release.py
+          tools/tests/test_protected_paths.py
