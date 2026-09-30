@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX /Igame/Libraries/Source/WWVegas/WWLib
 // The script-debug-window frame pump, both halves:
 //
 //   0x00336F20  isTimeFrozenDebug          is the LOGIC frame held
@@ -19,6 +19,8 @@
 // TheGameClient through vtable slot 26, the logic half reads TheGameLogic+0x3C
 // directly.
 
+#include "ascii_string.h"
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
@@ -28,6 +30,8 @@ public:
 	void _bfme_updateClientDebugFrame(void);
 	void _bfme_updateLogicDebugFrame(void);
 	void notifyCameraChange(void);
+	void Rva0033E880();
+	void AppendDebugMessage(const AsciiString &text, bool forcePause);
 
 private:
 	char m_unknown00[0x17638];
@@ -235,4 +239,14 @@ void __cdecl rva00337280PublishClientFrame(void)
 			((SetFrameNumberProc)proc)(frame);
 		}
 	}
+}
+
+void ScriptEngine::Rva0033E880()
+{
+	bool forcePause = isTimeFrozenDebug() || _bfme_isClientFrameFrozen();
+	m_useLogicDebugFrame = !m_useLogicDebugFrame;
+	if (m_useLogicDebugFrame)
+		AppendDebugMessage(AsciiString("Stepping logic frames."), forcePause);
+	else
+		AppendDebugMessage(AsciiString("Stepping client frames."), forcePause);
 }
