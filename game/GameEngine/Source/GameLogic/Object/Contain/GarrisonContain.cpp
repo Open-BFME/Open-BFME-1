@@ -667,83 +667,8 @@ void GarrisonContain::putObjectAtBestGarrisonPoint( Object *obj, Object *target,
 
 }  // end putObjectAtBestGarrisonPoint
 
-// ------------------------------------------------------------------------------------------------
-/** Remove the object from the garrison point position and replace at the center of the building */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp
-// ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z present-unmatched
-void GarrisonContain::removeObjectFromGarrisonPoint( Object *obj, Int index )
-{
-
-  if ( ! isEnclosingContainerFor(obj) )
-    return;// since I am not enclosed, I am not at a garrison point!
-
-#if defined __DEBUG || defined _INTERNAL
-  const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
-  DEBUG_ASSERTCRASH(modData->m_isEnclosingContainer, ("calcBestGarrisonPosition... SHOULD NOT GET HERE, since this container is non-enclosing") );
-#endif
-
-	// sanity
-	if( obj == NULL )
-		return;
-
-	// search for the object in the garrison point data, if found, remove it
-	Int removeIndex = index;
-	if( removeIndex == SEARCH_FOR_REMOVE )
-	{
-
-		for( Int i = 0; i < MAX_GARRISON_POINTS; ++i )
-		{
-
-			if( m_garrisonPointData[ i ].object == obj )
-			{
-
-				removeIndex = i;
-				break;
-
-			}  // end if
-
-		}  // end for i
-
-	}  // end if
-
-	// validate the index slot to remove
-	if( removeIndex < 0 || removeIndex >= MAX_GARRISON_POINTS )
-	{
-
-		//
-		// this is not an error, if a search was ordered, we may very well not find the
-		// object at a garrison point and therefore can't remove it
-		//
-		return;
-
-	}  // end if
-
-	// remove from this spot
-	m_garrisonPointData[ removeIndex ].object = NULL;
-	m_garrisonPointData[ removeIndex ].targetID = INVALID_ID;
-	m_garrisonPointData[ removeIndex ].placeFrame = 0;
-	m_garrisonPointData[ removeIndex ].lastEffectFrame = 0;
-	--m_garrisonPointsInUse;
-
-	// destroy drawable for gun barrel and effects if present
-	if( m_garrisonPointData[ removeIndex ].effect )
-		TheGameClient->destroyDrawable( m_garrisonPointData[ removeIndex ].effect );
-	m_garrisonPointData[ removeIndex ].effect = NULL;
-
-	// set the position of the object to back to the center of the garrisoned building
-	obj->setPosition( getObject()->getPosition() );
-
-/*
-UnicodeString msg;
-msg.format( L"Removed object '%S'(%d) from point '%d'", 
-						obj->getTemplate()->getName().str(),
-						obj->getID(),
-						removeIndex );
-TheInGameUI->message( msg );
-*/
-
-}  // end removeObjectFromGarrisonPoint
+// Retail GarrisonContain::removeObjectFromGarrisonPoint (0x0021E260) is
+// implemented in GarrisonContainTrackTargets.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
