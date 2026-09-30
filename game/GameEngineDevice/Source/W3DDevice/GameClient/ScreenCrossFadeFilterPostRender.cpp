@@ -48,7 +48,6 @@ struct BfmeDevice
 	BfmeDeviceVt *vt;
 };
 
-#define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
 #define BfmeSkipRender (ScreenCrossFadeFilter::m_skipRender)
 
 class DX8Wrapper
@@ -57,8 +56,11 @@ public:
 	// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUBfmeDevice@@XZ present-unmatched
 	static BfmeDevice *_Get_D3D_Device8(void)
 	{
-		return BfmeDeviceGlobal;
+		return (BfmeDevice *)D3DDevice;
 	}
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
 };
 
 class BfmeTacticalView
@@ -165,9 +167,8 @@ Bool ScreenCrossFadeFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	if (mode == FM_VIEW_CROSSFADE_CIRCLE)
 	{
 		// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUBfmeDevice@@XZ present-unmatched
-		DX8Wrapper::_Get_D3D_Device8()->vt->SetTexture(
-			// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUBfmeDevice@@XZ present-unmatched
-			DX8Wrapper::_Get_D3D_Device8(), 1,
+		BfmeDevice *device = DX8Wrapper::_Get_D3D_Device8();
+		device->vt->SetTexture(device, 1,
 			g_bfmeCurrentCZ.Peek_D3D_Base_Texture());
 		radius = (1.0f - ScreenCrossFadeFilterUpdateFadeLevelShim::m_curFadeValue) * 2.0f;
 		if (radius <= 0)
