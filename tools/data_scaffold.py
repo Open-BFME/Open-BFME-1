@@ -471,6 +471,13 @@ def census_lock_path():
     return main / "build" / "wt_link.census-lock"
 
 
+def dump_sources():
+    """{census object path (repo-relative): .asm source} for every dump source."""
+    return {build.row_object(row).resolve().relative_to(ROOT.resolve()).as_posix(): row["source"]
+            for row in build.load_function_rows()
+            if row["source"].lower().endswith(".asm") and row["target_rva"].startswith("0x")}
+
+
 def dump_objects():
     """{census object path (repo-relative): dump_relocs object} for every .asm dump source."""
     out = {}
@@ -493,16 +500,22 @@ REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 def trial_link(img, objects, rsp, out, log=print, code=True):
     swap = dump_objects()
     census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
-    linked, swapped, missing = [], 0, []
+    linked, swapped, missing, raw_dumps = [], 0, [], 0
+    symbolic_sources = {r["source"] for r in RL.read_csv_rows(ROOT / "build" / "dump_relocs" / "bodies.csv")
+                        if r["status"] == "symbolic"} - {r["source"] for r in RL.read_csv_rows(
+                            ROOT / "build" / "dump_relocs" / "bodies.csv") if r["status"] != "symbolic"}
+    symbolic = {rel for rel, source in dump_sources().items() if source in symbolic_sources}
     for rel in census:
         path = swap.get(rel)
-        if path is not None:
-            if path.exists():
-                linked.append(path)
-                swapped += 1
-            else:
-                missing.append(str(path))
+        if path is not None and path.exists():
+            linked.append(path)
+            swapped += 1
             continue
+        if path is not None:
+            # dump_relocs wrote no object: an already-symbolic MASM source (bodies.csv
+            # `symbolic`) links its own object; anything else stays raw and is counted
+            missing.append(str(path))
+            raw_dumps += rel not in symbolic
         linked.append(ROOT / rel)
     linked = list(dict.fromkeys(linked))
     work = out / "trial"
@@ -557,7 +570,8 @@ def trial_link(img, objects, rsp, out, log=print, code=True):
     text = proc.stdout + proc.stderr
     (work / "trial.log").write_text(text, encoding="utf-8")
     meta = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
-            "dump_objects_missing": len(missing), "seconds": round(seconds), "exit": proc.returncode, **counts}
+            "dump_sources_kept_symbolic": len(missing) - raw_dumps,
+            "dump_sources_left_raw": raw_dumps, "seconds": round(seconds), "exit": proc.returncode, **counts}
     (work / "trial_meta.json").write_text(json.dumps(meta), encoding="utf-8")
     return classify_trial(img, objects, text, meta, work, log)
 
