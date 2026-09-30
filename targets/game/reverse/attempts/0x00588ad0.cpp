@@ -1,5 +1,5 @@
 // ?select@Rva00588AD0Selection@@QAEXH@Z
-// partial score=0.26241135 date=2026-09-25
+// partial score=0.5319 date=2026-09-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Source/GameClient
 
 // The dump boundary and indexed record layout are known, but the owning class
@@ -62,6 +62,15 @@ extern void __cdecl bfmeNamedAudio0046F1A0(const char *name);
 extern const char Rva0110BA90[];
 extern const char Rva0110BAC0[];
 
+struct Rva00588AD0Record
+{
+	GameWindow *m_window;
+	char *m_data;
+	int m_unknown08;
+	int m_mode;
+	char m_unknown10[0x10];
+};
+
 class Rva00588AD0Selection
 {
 public:
@@ -69,21 +78,18 @@ public:
 
 private:
 	char m_unmodelled00[0x2c];
-	GameWindow *m_window;
-	char m_unmodelled30[0x8];
-	int m_mode;
+	Rva00588AD0Record m_records[1];
 };
 
 // Retail @ 0x00588AD0; the sole explicit argument is thiscall index.
 void Rva00588AD0Selection::select(int index)
 {
-	Rva00588AD0Selection *record = (Rva00588AD0Selection *)
-		(index * 0x20 + (unsigned int)this);
+	Rva00588AD0Record *record = &m_records[index];
 	GameWindow *window = record->m_window;
 	if (window == 0)
 		return;
 
-	char *data = *(char **)((char *)record + 0x30);
+	char *data = record->m_data;
 	if (data == 0)
 		return;
 
@@ -114,7 +120,7 @@ void Rva00588AD0Selection::select(int index)
 	if (mode == 4)
 	{
 		managerMode = Rva00579160TheManager->m_windowMode;
-		data = *(char **)((char *)record + 0x30);
+		data = record->m_data;
 		const char *sound = Rva0110BA90;
 		if (managerMode == 2 && *(unsigned char *)(data + 0x158) != 0)
 			sound = Rva0110BAC0;
