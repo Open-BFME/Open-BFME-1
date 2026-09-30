@@ -14,11 +14,12 @@
 // _Reallocate below -- goes through that table, which is why the call sites
 // are DIR32 slots rather than REL32 calls. symbols.csv pins two of the slots:
 // __gameMemAllocPtr (0x0130E9B4 -> _Allocate) and __gameMemFreePtr
-// (0x0130E9AC -> _Free). The block-size slot (0x0130E9B0 -> _GetBlockSize) is
-// unpinned, so its name here is a placeholder.
+// (0x0130E9AC -> _Free); the block-size slot (0x0130E9B0 -> _GetBlockSize)
+// keeps the resolver's address name. The table is defined once, in
+// Rva00882E10ResolveMemoryPoolExports.cpp.
 extern "C" void *(__cdecl *__gameMemAllocPtr)(unsigned int, int);
 extern "C" void (__cdecl *__gameMemFreePtr)(void *, int);
-extern unsigned int (__cdecl *g_poolBlockSize)(void *);
+extern "C" unsigned int (__cdecl *g_rva0130E9B0)(void *);
 
 // BFME's heap verifier is a separate owner object, not the Zero Hour
 // MemoryPool class.  The validation entry point below calls its already
@@ -515,7 +516,7 @@ __declspec(naked) void *MemoryPool::_Allocate(unsigned int size, MemoryPool::All
 void *MemoryPool::_Reallocate(void *ptr, unsigned int size, MemoryPool::AllocType type)
 {
     void *newPtr = size ? __gameMemAllocPtr(size, type) : 0;
-    unsigned int oldSize = ptr ? g_poolBlockSize(ptr) : 0;
+    unsigned int oldSize = ptr ? g_rva0130E9B0(ptr) : 0;
     if (size != 0 && oldSize != 0) {
         memcpy(newPtr, ptr, size < oldSize ? size : oldSize);
     }
