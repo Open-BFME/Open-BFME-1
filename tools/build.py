@@ -2181,6 +2181,12 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
 REL32 = 0x0014
 GHIDRA_FUNCTIONS = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
 RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
+# The full gate writes its regenerated table HERE, never over the tracked copy
+# above: a gate that rewrites a tracked file cannot verify the tree it runs on,
+# and the push hook's post-gate snapshot check refused every header-wide push
+# (2026-09-30 landing window). `python3 tools/reloc_names.py promote` copies it
+# over the tracked copy as a separate, reviewed commit.
+RELOC_NAMES_GENERATED = ROOT / "build" / "reloc_names.generated.csv"
 # MSVC hashes the absolute source path into anonymous-namespace symbols, so the
 # same function carries a different token in every clone. Naming a retail
 # address after one would churn this file on each contributor's gate.
@@ -2321,16 +2327,21 @@ def select_reloc_names(named):
     return selected
 
 
-def write_reloc_names(patches):
-    """Regenerate targets/game/reverse/reloc_names.csv from this gate's byte-true rows.
+def write_reloc_names(patches, output=None):
+    """Regenerate the reloc-names table from this gate's byte-true rows into
+    build/reloc_names.generated.csv (RELOC_NAMES_GENERATED). The tracked
+    targets/game/reverse/reloc_names.csv, which every reader uses, changes
+    only through `tools/reloc_names.py promote` and a reviewed commit.
 
     Regenerated, never appended: it is derived output, and a row that stops
     being re-derivable must stop being published. There is deliberately no
     status column — what is byte-verified here is the naming evidence, not the
     named function's body, and no derived file gets to imply otherwise.
     """
+    output = Path(output or RELOC_NAMES_GENERATED)
+    output.parent.mkdir(parents=True, exist_ok=True)
     selected = select_reloc_names(harvest_reloc_names(patches))
-    with RELOC_NAMES.open("w", encoding="utf-8", newline="") as handle:
+    with output.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(
             handle, ["name", "target_rva", "target_size", "source", "notes"],
             lineterminator="\n")
@@ -2340,7 +2351,14 @@ def write_reloc_names(patches):
     print(f"Reloc names: {len(selected)} anonymous function(s) named from "
           f"byte-true call sites ({real} recovered identity, "
           f"{len(selected) - real} generated placeholder) -> "
-          f"{RELOC_NAMES.relative_to(ROOT)}")
+          f"{output.relative_to(ROOT) if output.is_relative_to(ROOT) else output}")
+    try:
+        same = RELOC_NAMES.read_bytes() == output.read_bytes()
+    except OSError:
+        same = False
+    if not same:
+        print(f"Reloc names: differs from the tracked {RELOC_NAMES.relative_to(ROOT)}; "
+              f"`python3 tools/reloc_names.py promote` updates it (commit it separately)")
     return selected
 
 
