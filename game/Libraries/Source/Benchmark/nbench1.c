@@ -961,7 +961,7 @@ locbitopstruct=&global_bitopstruct;
 /*
 ** Set the error context.
 */
-errorcontext=(char *)0x0107301c;
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 /*
 ** See if we need to run adjustment code.
