@@ -191,3 +191,7 @@ Rva007F01F0 bfmeRva0130A740Slot(bfmeRva012C39E0Value, (int)"GetClub");
 Rva007F01F0 bfmeRva0130A734Slot(bfmeRva012C39E0Value, (int)"GetMembers");
 // ?Rva00C6CF60Init@@YAXXZ is MSVC's _$E115 for this global.
 Rva007F01F0 bfmeRva0130A6F8Slot(bfmeRva012C39E0Value, (int)"TransactionException");
+
+extern int bfmeRva012C3A14Value;
+// Retail 0x00C6CF80: MSVC emits _$E117 for this global.
+Rva007F01F0 bfmeRva0130A788Slot(bfmeRva012C3A14Value, (int)"Hello");
