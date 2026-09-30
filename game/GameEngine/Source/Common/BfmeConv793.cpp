@@ -1,7 +1,8 @@
-struct BfmeCsDXB
-{
-	unsigned char m_bfmeHead[0x18];
-};
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
+#include <stdio.h>
+#include "windows.h"
+#include "oleauto.h"
+#include "Mss.H"
 
 class BfmeSubDXB
 {
@@ -9,45 +10,41 @@ public:
 	void bfmeCallDXB();
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeInitDXB(BfmeCsDXB *cs);
-
 struct BfmeThingDXB
 {
 	void bfmeGoDXB();
 	unsigned char m_bfmeHead[0x18];
-	BfmeCsDXB m_bfmeCs;
+	CRITICAL_SECTION m_bfmeCs;
 	BfmeSubDXB m_bfmeSub;
 };
 
 void BfmeThingDXB::bfmeGoDXB()
 {
-	bfmeInitDXB(&m_bfmeCs);
+	DeleteCriticalSection(&m_bfmeCs);
 	m_bfmeSub.bfmeCallDXB();
 }
-
-extern "C" __declspec(dllimport) void __cdecl bfmeFreeDXC(void *what);
 
 struct BfmeThingDXC
 {
 	void bfmeGoDXC();
 	void bfmeTailDXC();
 	unsigned char m_bfmeHead[0x48];
-	void *m_bfmeP;
+	FILE *m_bfmeP;
 };
 
 void BfmeThingDXC::bfmeGoDXC()
 {
-	bfmeFreeDXC(m_bfmeP);
+	fclose(m_bfmeP);
 	bfmeTailDXC();
 }
 
-extern "C" __declspec(dllimport) int __stdcall bfmeStatusDXD(void *h);
+extern "C" __declspec(dllimport) S32 __stdcall AIL_3D_sample_status(H3DSAMPLE h);
 
 struct BfmeThingDXD
 {
 	bool bfmeGoDXD();
 	unsigned char m_bfmeHead[4];
-	void *m_bfmeH;
+	H3DSAMPLE m_bfmeH;
 };
 
 bool BfmeThingDXD::bfmeGoDXD()
@@ -55,23 +52,23 @@ bool BfmeThingDXD::bfmeGoDXD()
 	void *h = m_bfmeH;
 	if (!h)
 		return true;
-	return bfmeStatusDXD(h) != 4;
+	return AIL_3D_sample_status(h) != 4;
 }
 
-extern "C" __declspec(dllimport) int __stdcall bfmeQueryDXE(void *what);
-extern unsigned char g_bfmeArgDXE[];
+extern "C" __declspec(dllimport) HRESULT __stdcall VariantClear(VARIANT *what);
+extern VARIANT g_bfmeArgDXE;
 void __stdcall bfmeFailDXE(int code);
 
 void bfmeGoDXE()
 {
-	int r = bfmeQueryDXE(g_bfmeArgDXE);
+	int r = VariantClear(&g_bfmeArgDXE);
 	if (r < 0)
 		bfmeFailDXE(r);
 }
 
-extern "C" __declspec(dllimport) int __stdcall bfmeMaskDXF(void *a);
+extern "C" __declspec(dllimport) DWORD WINAPI GetFileType(HANDLE a);
 
 bool bfmeGoDXF(void *a)
 {
-	return (bfmeMaskDXF(a) & 0xffff7fff) == 1;
+	return (GetFileType(a) & 0xffff7fff) == 1;
 }
