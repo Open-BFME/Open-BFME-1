@@ -75,9 +75,12 @@ def read(remote="origin", root=None):
         got = _git("fetch", "-q", "--no-tags", remote, f"+{REF}:{SEEN}", root=root, timeout=60)
         if got.returncode:
             raise RuntimeError(f"publish_window: cannot fetch {REF}: {got.stderr.strip()}")
-    body = _git("log", "-1", "--format=%B", token, root=root).stdout
+    body = _git("log", "-1", "--format=%B", token, root=root)
+    if body.returncode:
+        # unreadable is unknown, never "no window" or "someone else's"
+        raise RuntimeError(f"publish_window: cannot read {REF} at {token[:10]}: {body.stderr.strip()}")
     try:
-        return token, json.loads(body)
+        return token, json.loads(body.stdout)
     except ValueError:
         return token, {"owner": "?", "expires": 0}
 

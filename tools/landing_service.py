@@ -438,18 +438,24 @@ class Service:
                                          "lost": bool(lost)}) + "\n")
 
     def _close_window(self, publish_window, nonce, attempts=5):
-        """Close our window, retrying while it is still ours. True (and a
-        loud message) when it is STILL live and ours afterwards."""
+        """Close our window. Done only on CONFIRMED absence or a valid
+        different nonce; an exception from closing or reading, or metadata
+        without a nonce, is unknown and retried (review 2026-09-30: a
+        transient read error, or an unreadable window read as "someone
+        else's", left a live window unreported). True (and a loud message)
+        when that cannot be confirmed."""
         for _ in range(attempts):
-            if publish_window.close_window(nonce, remote=self.remote, root=self.repo):
-                return False
+            try:
+                publish_window.close_window(nonce, remote=self.remote, root=self.repo)
+            except Exception:  # noqa: BLE001 -- confirmed below, by reading
+                pass
             try:
                 token, info = publish_window.read(self.remote, self.repo)
-            except RuntimeError:
-                time.sleep(2)
-                continue
-            if not token or (info or {}).get("nonce") != nonce:
-                return False                    # gone, or not ours any more
+            except Exception:  # noqa: BLE001 -- unknown: try again
+                token, info = "unknown", None
+            other = (info or {}).get("nonce")
+            if token is None or (other and other != nonce):
+                return False                    # confirmed gone, or a different window
             time.sleep(2)
         print(f"landing_service: PUBLISH WINDOW {nonce} IS STILL OPEN AND BLOCKING MASTER; "
               f"close it: python3 tools/publish_window.py close {nonce}", file=sys.stderr, flush=True)

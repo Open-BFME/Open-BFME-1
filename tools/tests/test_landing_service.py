@@ -475,3 +475,66 @@ def test_a_symlink_inside_build_cannot_redirect_an_attachment(tmp_path):
     rc = service._unit_checks("base", "tip", [{"id": "unit", "verify": "true",
                                                "attach": {"build/link/x": str(src)}}])
     assert rc != 0 and (victim / "keep.txt").exists()
+
+
+# ---- review 2026-09-30 cycle 7 (repro_close.py, repro_status_drain.py) ----
+
+def test_a_transient_close_error_is_retried_and_the_window_closes(world, monkeypatch):
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": []}
+    real_close = pw.close_window
+    attempts = []
+
+    def transient(*a, **k):
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise RuntimeError("simulated transient ls-remote failure in close_window.read")
+        return real_close(*a, **k)
+    monkeypatch.setattr(pw, "close_window", transient)
+    monkeypatch.setattr(ls.time, "sleep", lambda s: None)
+    result = service.run_once(window=True)
+    assert len(attempts) >= 2 and "window_left_open" not in result
+    assert pw.read(root=service.repo) == (None, None)
+    assert (service.state / "windows.log").exists()
+
+
+def test_an_unreadable_window_after_a_failed_delete_is_reported_open(world, monkeypatch, capsys):
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": []}
+    service.queued = lambda: [{"id": "fixture-unit"}]
+    service.recover = lambda **k: []
+    real_git = pw._git
+    state = {"deletes": 0, "log_failures": 0}
+
+    def bad_status(*a, **k):
+        if a[:2] == ("push", "-q") and f":{pw.REF}" in a:
+            state["deletes"] += 1
+            return subprocess.CompletedProcess(a, 1, "", "simulated failed deletion")
+        if state["deletes"] and a[:3] == ("log", "-1", "--format=%B") and not state["log_failures"]:
+            state["log_failures"] += 1
+            return subprocess.CompletedProcess(a, 128, "", "simulated git-log read failure")
+        return real_git(*a, **k)
+    monkeypatch.setattr(pw, "_git", bad_status)
+    monkeypatch.setattr(ls.time, "sleep", lambda s: None)
+    assert ls.drain(service, once=True) == 1                        # not a quiet success
+    assert "STILL OPEN AND BLOCKING MASTER" in capsys.readouterr().err
+    monkeypatch.setattr(pw, "_git", real_git)
+    _, info = pw.read(root=service.repo)
+    assert pw.live(info) and pw.close_window(info["nonce"], root=service.repo)
+
+
+def test_read_raises_when_window_metadata_cannot_be_read(world, monkeypatch):
+    import publish_window as pw
+    service, unit, origin = world
+    nonce = pw.open_window(root=service.repo)
+    real_git = pw._git
+    monkeypatch.setattr(pw, "_git", lambda *a, **k: subprocess.CompletedProcess(a, 128, "", "boom")
+                        if a[:1] == ("log",) else real_git(*a, **k))
+    with pytest.raises(RuntimeError):
+        pw.read(root=service.repo)
+    monkeypatch.setattr(pw, "_git", real_git)
+    assert pw.close_window(nonce, root=service.repo)
