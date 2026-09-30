@@ -82,7 +82,8 @@ def truth(image, ledger=None, pinned=None, shared=()):
     return t
 
 
-def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None, scalars=None):
+def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None, scalars=None,
+          map_commons=None):
     objs = [I.parse_object(name, data, i) for i, (name, data) in enumerate(objects)]
     image = bytes(retail)
 
@@ -90,7 +91,7 @@ def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None
         return image[rva:rva + size] if 0 <= rva and rva + size <= len(image) else None
     lanes = {name: {None: "authored"} for name, _ in objects}
     return I.Image(objs, kept, truth(image, ledger, pinned), statics or {}, read, excused or (lambda n: None),
-                   lanes, (TEXT, DATA), len(image), scalars=scalars).run()
+                   lanes, (TEXT, DATA), len(image), scalars=scalars, map_commons=map_commons).run()
 
 
 def call(at, to):
@@ -519,3 +520,51 @@ def test_entries_and_decoded_branches_reach_a_fixed_point():
     assert fi.entries == {1} and [(t.label(), flag) for _, _, t, _, flag in fi.edges] == [("_g", "decoded")]
     assert g.verdict == "wrong" and g.id in (image.badset[item(image, "_caller").id] or ())
     assert I.results(image)[0]["closed_strict_bytes"] == 0
+
+
+
+# data-definitions pilot, 2026-09-30: C tentative definitions and compiler literals
+
+def test_a_common_symbol_is_a_linker_allocated_data_item():
+    # `int g[2];` in one TU and `int g;` in another: COFF common symbols (external, section 0, value =
+    # size). link.exe allocates the largest in .bss (<common> in the /MAP); nothing is unresolved
+    def user(name, size):
+        return coff([(".text", CODE_FLAGS, b"\xa1\0\0\0\0\xc3", [(1, "_g", I.DIR32)], 2)],
+                    [(name, 1, 0, I.EXTERNAL, 0x20, None), ("_g", 0, size, I.EXTERNAL, 0, None)])
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xa1" + struct.pack("<I", I.BASE + 0x2080) + b"\xc3"
+    retail[0x1050:0x1056] = b"\xa1" + struct.pack("<I", I.BASE + 0x2080) + b"\xc3"
+    objects = [("A.obj", user("_fa", 8)), ("B.obj", user("_fb", 4))]
+    kept = {"_fa": "A.obj", "_fb": "B.obj"}
+    ledger = {"_fa": {0x1040}, "_fb": {0x1050}}
+    kept["_g"] = I.COMMON  # the /MAP names <common> as the holder
+    image = build(objects, kept, retail, ledger, pinned={"_g": {0x2080}}, map_commons={"_g"})
+    g = item(image, "_g")
+    assert g.obj.name == "<common>" and g.size == 8 and g.verdict == "retail"
+    assert not [leaf for leaf in image.leaves.values() if leaf.name == "_g"]
+    assert image.badset[item(image, "_fa").id] == frozenset()
+    retail[0x2084:0x2088] = struct.pack("<I", 7)  # retail holds data inside the common's extent
+    image = build(objects, kept, retail, ledger, pinned={"_g": {0x2080}}, map_commons={"_g"})
+    assert item(image, "_g").verdict == "wrong" and "zero-fill" in item(image, "_g").reason
+
+
+def test_a_name_on_a_compiler_literal_is_flagged_code_literal():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xd9\x05" + struct.pack("<I", I.BASE + 0x2090)  # fld dword ptr [one]
+    retail[0x1050:0x1056] = b"\xd9\x05" + struct.pack("<I", I.BASE + 0x2090)  # fld [__real@3f800000]
+    retail[0x2090:0x2094] = struct.pack("<f", 1.0)
+    retail[0x20A0:0x20A4] = struct.pack("<f", 1.0)  # the same bytes where no code reads the literal
+    f = coff([(".text", CODE_FLAGS, b"\xd9\x05\0\0\0\0", [(2, "_one", I.DIR32)], 2)],
+             [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_one", 0, 0, I.EXTERNAL, 0, None)])
+    literal = coff([(".text", CODE_FLAGS, b"\xd9\x05\0\0\0\0", [(2, "__real@3f800000", I.DIR32)], 2),
+                    (".rdata", RDATA_FLAGS, struct.pack("<f", 1.0), [], 2)],
+                   [("_g", 1, 0, I.EXTERNAL, 0x20, None), ("__real@3f800000", 2, 0, I.EXTERNAL, 0, None)])
+    kept = {"_f": "F.obj", "_g": "L.obj", "__real@3f800000": "L.obj"}
+    image = build([("F.obj", f), ("L.obj", literal)], kept, retail, {"_f": {0x1040}, "_g": {0x1050}},
+                  pinned={"_one": {0x2090}})
+    leaf = next(leaf for leaf in image.leaves.values() if leaf.name == "_one")
+    assert leaf.kind == "code-literal" and "__real@3f800000" in leaf.reason and not leaf.good
+    assert item(image, "_f").verdict == "retail"  # the relabel changes no verdict
+    image = build([("F.obj", f), ("L.obj", literal)], kept, retail, {"_f": {0x1040}, "_g": {0x1050}},
+                  pinned={"_one": {0x20A0}})
+    assert next(leaf for leaf in image.leaves.values() if leaf.name == "_one").kind == "unresolved"

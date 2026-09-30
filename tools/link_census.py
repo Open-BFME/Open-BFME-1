@@ -342,7 +342,10 @@ def unexplained_exit(code, log, output=None):
 def pe_defect(path):
     """Why `path` is not a complete PE image, or None: DOS header and
     e_lfanew, the PE signature, an i386 COFF header, a PE32 optional header
-    that fits, and every section's raw data inside the file."""
+    whose size covers its fixed fields and every data directory it
+    declares, SizeOfHeaders inside the file and covering all headers and
+    the section table, and every section's raw data inside the file and
+    after the headers."""
     import struct
     try:
         data = path.read_bytes()
@@ -357,12 +360,20 @@ def pe_defect(path):
     if machine != 0x14C or not sections:
         return f"COFF header: machine 0x{machine:X}, {sections} sections"
     table = pe + 24 + optional
-    if optional < 96 or struct.unpack_from("<H", data, pe + 24)[0] != 0x10B or table + 40 * sections > len(data):
+    if optional < 96 or table + 40 * sections > len(data) or struct.unpack_from("<H", data, pe + 24)[0] != 0x10B:
         return "optional header or section table does not fit"
+    directories = struct.unpack_from("<I", data, pe + 24 + 92)[0]
+    if 96 + 8 * directories > optional:
+        return f"the optional header declares {directories} data directories but holds {(optional - 96) // 8}"
+    headers = struct.unpack_from("<I", data, pe + 24 + 60)[0]
+    if headers > len(data) or headers < table + 40 * sections:
+        return f"SizeOfHeaders 0x{headers:X} does not cover the headers and section table inside the file"
     for index in range(sections):
         size, pointer = struct.unpack_from("<II", data, table + 40 * index + 16)
         if size and pointer + size > len(data):
             return f"section {index + 1}'s raw data runs past the end of the file"
+        if size and pointer < headers:
+            return f"section {index + 1}'s raw data overlaps the headers"
     return None
 
 

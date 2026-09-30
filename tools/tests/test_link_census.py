@@ -498,27 +498,61 @@ def test_the_selection_link_is_checked_like_every_link(tmp_path, monkeypatch):
         L.selection_link([], "")
 
 
+def valid_pe(sections=1, raw_end=0x400, signature=b"PE\0\0", machine=0x14C, optional=224, directories=16,
+             headers=0x200, pointer=0x200):
+    """A structurally valid PE32 image (the control), with each field a negative fixture can break."""
+    data = bytearray(0x400)
+    data[0:2] = b"MZ"
+    struct.pack_into("<I", data, 0x3C, 0x40)
+    data[0x40:0x44] = signature
+    struct.pack_into("<HHIIIHH", data, 0x44, machine, sections, 0, 0, 0, optional, 0x102)
+    opt = 0x58
+    struct.pack_into("<H", data, opt, 0x10B)
+    struct.pack_into("<II", data, opt + 32, 0x1000, 0x200)  # SectionAlignment, FileAlignment
+    struct.pack_into("<II", data, opt + 56, 0x2000, headers)  # SizeOfImage, SizeOfHeaders
+    struct.pack_into("<I", data, opt + 92, directories)
+    table = opt + optional
+    for index in range(sections):
+        at = table + 40 * index
+        data[at:at + 8] = b".text\0\0\0"
+        struct.pack_into("<IIII", data, at + 8, 0x100, 0x1000, raw_end - pointer, pointer)
+        struct.pack_into("<I", data, at + 36, 0x60000020)
+    return bytes(data)
+
+
 def test_only_a_complete_pe_image_is_a_link_output(tmp_path):
-    # review of 3897870f3b: a file holding just "MZ" passed as the link's image
-    def pe(sections=1, raw_end=0x400, signature=b"PE\0\0", machine=0x14C):
-        data = bytearray(0x400)
-        data[0:2] = b"MZ"
-        struct.pack_into("<I", data, 0x3C, 0x40)
-        data[0x40:0x44] = signature
-        struct.pack_into("<HHIIIHH", data, 0x44, machine, sections, 0, 0, 0, 224, 0x102)
-        struct.pack_into("<H", data, 0x58, 0x10B)
-        table = 0x58 + 224
-        for index in range(sections):
-            struct.pack_into("<II", data, table + 40 * index + 16, raw_end - 0x200, 0x200)
-        return bytes(data)
-    cases = {"good": pe(), "mz": b"MZ", "signature": pe(signature=b"XX\0\0"), "machine": pe(machine=0x8664),
-             "section": pe(raw_end=0x800)}
+    # reviews of 3897870f3b and 5cae4bdffc: "MZ" alone, a 96-byte optional header declaring 16
+    # directories, SizeOfHeaders past the file or short of the section table, and section data over
+    # the headers all passed as the link's image
+    cases = {"good": valid_pe(), "mz": b"MZ", "signature": valid_pe(signature=b"XX\0\0"),
+             "machine": valid_pe(machine=0x8664), "section-past-end": valid_pe(raw_end=0x800),
+             "directories": valid_pe(optional=96, directories=16, headers=0x200),
+             "headers-past-file": valid_pe(headers=0x800),
+             "headers-short": valid_pe(headers=0x100),
+             "section-over-headers": valid_pe(pointer=0x100)}
     verdicts = {}
     for name, data in cases.items():
         path = tmp_path / f"{name}.exe"
         path.write_bytes(data)
         verdicts[name] = L.pe_defect(path)
-    assert verdicts["good"] is None and all(verdicts[name] for name in cases if name != "good")
+    assert verdicts["good"] is None, verdicts["good"]
+    assert all(verdicts[name] for name in cases if name != "good"), verdicts
+
+
+def test_malformed_link_output_never_records_a_census(tmp_path, monkeypatch):
     import pytest
-    with pytest.raises(SystemExit, match="no DOS header"):
-        L.unexplained_exit(0, "", tmp_path / "mz.exe")
+    monkeypatch.setattr(L, "OUT", tmp_path)
+    monkeypatch.setattr(L, "ledger", lambda: [])
+    monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "comdat_conflicts", lambda objs: {})
+    for broken in (valid_pe(optional=96, directories=16), valid_pe(headers=0x800), valid_pe(pointer=0x100), b"MZ"):
+        def link(*a, _image=broken, **k):
+            (tmp_path / "census.exe").write_bytes(_image)
+            return "", 0, 0
+        monkeypatch.setattr(L, "link", link)
+        with pytest.raises(SystemExit, match="wrote no image"):
+            L.main([])
+        assert not (tmp_path / "census.json").exists()
+    # the control links: a valid image and a clean exit record the census
+    monkeypatch.setattr(L, "link", lambda *a, **k: ((tmp_path / "census.exe").write_bytes(valid_pe()), ("", 0, 0))[1])
+    assert L.main([]) == 0 and (tmp_path / "census.json").exists()

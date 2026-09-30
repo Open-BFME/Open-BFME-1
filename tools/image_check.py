@@ -111,6 +111,7 @@ CONSTANT = ("??_C@", "__real@")  # named by content: retail may hold several cop
 ABSOLUTE = {"__except_list": 0}  # fs:[0]
 DECOMPILED = ("authored", "vendored")
 STUB_OBJECT = "selected_stubs.obj"
+COMMON = "<common>"  # the /MAP's holder for a C tentative definition link.exe allocated
 
 
 def normal(name):
@@ -132,11 +133,12 @@ class Section:
 
 
 class Obj:
-    __slots__ = ("name", "position", "sections", "symbols", "exports", "weak")
+    __slots__ = ("name", "position", "sections", "symbols", "exports", "weak", "commons")
 
     def __init__(self, name, position):
         self.name, self.position = name, position
         self.sections, self.symbols, self.exports, self.weak = [], {}, {}, {}
+        self.commons = {}  # C tentative definitions: name -> size (external, section 0, value = size)
 
 
 def parse_object(name, data, position=0):
@@ -186,6 +188,8 @@ def parse_object(name, data, position=0):
                 sec.leader = index  # the COMDAT symbol: the first after the section symbol
             if storage == EXTERNAL:
                 obj.exports.setdefault(symbol, (section, value))
+        if storage == EXTERNAL and section == 0 and value:
+            obj.commons[symbol] = max(value, obj.commons.get(symbol, 0))
         if storage == WEAK_EXTERNAL and aux:
             obj.weak[index] = struct.unpack_from("<I", data, at + 18)[0]
         index += 1 + aux
@@ -279,7 +283,12 @@ class Image:
     lane, None: default lane}}; `text` retail .text (start, end)."""
 
     def __init__(self, objs, kept, truth, statics, read, excused, lanes, text, image_size, unresolved_kinds=None,
-                 row_homes=None, scalars=None):
+                 row_homes=None, scalars=None, map_commons=None):
+        # C tentative (common) symbols no section defines: link.exe allocates them in .bss itself (<common> in
+        # the /MAP, `map_commons`), sized by the largest declaration; they become items of one synthetic object
+        self.map_commons = map_commons
+        self.literal_homes = {}  # retail address -> content-named constant retail-true code reads there
+        self.common = Obj(COMMON, len(objs))
         # {(retail VA, value)} data words typed evidence proves scalar (workstream B's proven_scalars.csv)
         self.scalars, self.proven_scalars = scalars or set(), 0
         self.image_size, self._md, self._known, self.numbers = image_size, None, None, 0
@@ -299,6 +308,21 @@ class Image:
             for name in obj.exports:
                 if name not in kept:
                     self.unmapped[name].append(obj)
+        sizes = {}
+        for obj in objs:
+            for name, size in obj.commons.items():
+                if kept.get(name, COMMON) == COMMON and name not in self.unmapped:  # a definition absorbs a common
+                    sizes[name] = max(size, sizes.get(name, 0))
+        for name, size in sorted(sizes.items()):
+            if map_commons is not None and name not in map_commons:
+                continue  # the link did not allocate it: leave it to the ordinary rules
+            sec = Section(len(self.common.sections) + 1, ".bss$common", size, UNINITIALIZED | 0x40, None, [])
+            sec.kept = True
+            self.common.sections.append(sec)
+            self.common.exports[name] = (sec.number, 0)
+        if self.common.sections:
+            self.objs = list(objs) + [self.common]
+            self.by_name[self.common.name] = self.common
 
     # -------------------------------------------------------- selection
 
@@ -335,6 +359,9 @@ class Image:
                 section, value = obj.exports[name]
                 sec = obj.sections[section - 1]
                 found = item_at(sec, value) if sec.kept else None
+        elif holder is None and name in self.common.exports:
+            section, _ = self.common.exports[name]
+            found = self.common.sections[section - 1].items[0]
         elif holder is None and name in self.unmapped:
             owners = self.unmapped[name]
             if len(owners) == 1:
@@ -367,6 +394,11 @@ class Image:
     def select(self):
         """Keep sections, split items, bind names, resolve every edge."""
         for obj in self.objs:
+            if obj is self.common:
+                for name, (number, _) in self.common.exports.items():
+                    sec = obj.sections[number - 1]
+                    sec.items, sec.starts = [Item(obj, sec, 0, sec.size, [(name, 0, EXTERNAL)])], [0]
+                continue
             for sec in obj.sections:
                 if sec.flags & SKIP or sec.name.startswith(".debug") or not sec.size:
                     continue
@@ -402,6 +434,22 @@ class Image:
                 changed |= self._decoded_edges(item)
         for index, leaf in enumerate(self.leaves.values()):
             leaf.id = len(self.items) + index
+
+    def _code_literals(self):
+        """Relabel an unresolved name whose retail address is where
+        retail-true code reads one of the image's content-named constants
+        (`__real@3f800000`, the shared 1.0f; self.literal_homes, filled by
+        edges_at): the source names a global where retail uses a compiler
+        literal. Matching bytes alone prove nothing (every 4 zero bytes
+        would be 0.0f). Still unresolved: nothing defines the name."""
+        for leaf in self.leaves.values():
+            if leaf.kind != "unresolved":
+                continue
+            homes = self.truth.addresses(leaf.name, DIR32) if self._by_kind else self.truth.addresses(leaf.name)
+            literal = next((self.literal_homes[h] for h in sorted(homes or ()) if h in self.literal_homes), None)
+            if literal:
+                leaf.kind = "code-literal"
+                leaf.reason = f"retail code reads the compiler literal {literal} there; nothing defines the name"
 
     def _is_bound(self, item):
         if not item.names:
@@ -615,6 +663,7 @@ class Image:
                 body = target.body()
                 if body is None or self.read((actual - offset) & 0xFFFFFFFF, len(body)) != body:
                     return "wrong", f"+0x{at:X} {target.label()} is not at 0x{actual:08X}", [], []
+                self.literal_homes.setdefault((actual - offset) & 0xFFFFFFFF, target.label())
                 continue
             if target.candidates:
                 expected = {h + offset for h in target.homes}
@@ -1101,6 +1150,7 @@ class Image:
         self.select()
         self.anchor()
         self.verify()
+        self._code_literals()
         self.closure()
         return self
 
@@ -1342,7 +1392,9 @@ def load(tree, census_tree, scalars_path=None):
         raise SystemExit(f"image_check: {len(wanted - names)} ledger objects are not in objects.rsp")
     objs = [parse_object(p.name, p.read_bytes(), i) for i, p in enumerate(paths)]
     print(f"image_check: parsed {len(objs):,} objects ({time.time() - started:.0f}s)", flush=True)
-    kept = link_census.selected_definitions((census / "selected.map").read_text(encoding="latin-1"))
+    map_text = (census / "selected.map").read_text(encoding="latin-1")
+    kept = link_census.selected_definitions(map_text)
+    map_commons = {line.split()[1] for line in map_text.splitlines() if line.rstrip().endswith("<common>")}
     truth = link_census.RetailTruth(rows)
     statics = collections.defaultdict(set)
     lanes = collections.defaultdict(dict)
@@ -1373,7 +1425,7 @@ def load(tree, census_tree, scalars_path=None):
                  json.loads(census_json.read_text(encoding="utf-8")).get("unresolved", {}).items()}
     read, text, size = retail_reader(build)
     image = Image(objs, kept, truth, statics, read, excused, lanes, text, size, kinds,
-                  {int(row["target_rva"], 16) for row in rows}, read_scalars(scalars_path))
+                  {int(row["target_rva"], 16) for row in rows}, read_scalars(scalars_path), map_commons)
     linked = {"commit": commit, "date": history.get("date"), "linked_bytes": int(history.get("linked_bytes") or 0),
               "linked_authored": int(history.get("linked_authored") or 0)}
     return image, linked
