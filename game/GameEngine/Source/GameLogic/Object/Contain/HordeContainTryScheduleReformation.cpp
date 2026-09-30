@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: delayed HordeContain formation refresh, retail 0x0023F9A0.
+// Open-BFME5: delayed HordeContain formation refresh, retail 0x0023F9A0,
+// and its guarded caller, retail 0x0023FA50.
+
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -26,6 +30,8 @@ public:
 
 	char m_head[ 0x1f8 ];
 	BfmeHordeOwnerInterface *m_refreshInterface;
+	char m_gap0[ 0x204 - 0x1fc ];
+	BfmeHordeMember *m_member;
 };
 
 class BfmeHordeRefreshContextData
@@ -64,6 +70,8 @@ public:
 	void *m_pendingRefresh;
 	char m_gap1[ 0x1cc - 0x1c0 ];
 	UnsignedInt m_refreshDelay;
+
+	void rva0023fa50( void );
 };
 
 void BfmeHordeContainOwner::bfmeTryScheduleReformation(
@@ -93,4 +101,16 @@ void BfmeHordeContainOwner::bfmeTryScheduleReformation(
 	threshold -= 20;
 	if ( refreshValue < threshold )
 		bfmeRefreshFormation();
+}
+
+// Retail keeps the owner test after the ternary already proved it; the
+// barrier stops MSVC 7.1 threading the first test into the second.
+void BfmeHordeContainOwner::rva0023fa50( void )
+{
+	BfmeHordeOwner *owner = m_owner;
+	BfmeHordeMember *member = owner ? owner->m_member : 0;
+	_ReadWriteBarrier();
+	if ( member && owner )
+		bfmeTryScheduleReformation( member,
+			(BfmeHordeRefreshContext *)owner );
 }
