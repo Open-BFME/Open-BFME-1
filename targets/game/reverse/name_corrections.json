@@ -10598,5 +10598,15 @@
   "after_sha256": "a36a9f80a9220b3ee93ad31b1a6edaba727573c0a2a364e7c2b10f54e5776b15",
   "evidence": "targets/game/reverse/identity_evidence/00242a30-names.md",
   "reason": "Retail reads byte +0x1FC as a condition. No BFME witness identifies it as a ready flag, so the replacement keeps its offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001a3d30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001a3d30.cpp",
+  "old_name": "sample",
+  "new_name": "rva001A3D30",
+  "before_sha256": "7eb465654567c3840aa8e1648670ffa509dc010d3c7b1749d309ab32cb8f5670",
+  "after_sha256": "8de7057103a6db2e197364e0cef9c545b7393718e97b9ce7ed803e27147fd268",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?rva001A3D30@TerrainLogic@@QAE_NABVVector3@@PAV2@@Z at 0x0002CF4D, which spells the name rva001A3D30; the source uses that pinned spelling instead of sample."
  }
 ]
