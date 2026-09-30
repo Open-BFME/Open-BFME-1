@@ -58,7 +58,7 @@ public:
 	~AsciiString() {}
 };
 
-__declspec(dllimport) unsigned int __cdecl bfmeLenVGI(const unsigned short *);
+extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const unsigned short *);
 
 class UnicodeString : private StringBase<WideChar>
 {
@@ -73,10 +73,10 @@ public:
 
 	UnicodeString &operator=(const WideChar *text)
 	{
-		set(text, bfmeLenVGI(text));
+		set(text, wcslen(text));
 		return *this;
 	}
-	void concat(const WideChar *text) { StringBase<WideChar>::concat(text, bfmeLenVGI(text)); }
+	void concat(const WideChar *text) { StringBase<WideChar>::concat(text, wcslen(text)); }
 	void concat(const UnicodeString &other) { StringBase<WideChar>::concat(other.str(), other.getLength()); }
 
 	void __cdecl format(UnicodeString fmt, ...);		// 0x00889190

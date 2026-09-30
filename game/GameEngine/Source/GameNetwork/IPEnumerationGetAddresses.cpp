@@ -29,7 +29,7 @@ extern "C" __declspec(dllimport) int __stdcall gethostname( char *name,
 	int length );
 extern "C" __declspec(dllimport) hostent *__stdcall gethostbyname(
 	const char *name );
-extern "C" __declspec(dllimport) unsigned long __stdcall ntohl(
+extern "C" __declspec(dllimport) unsigned long __stdcall htonl(
 	unsigned long value );
 
 template <typename T> struct StringInlineData
@@ -142,7 +142,7 @@ EnumeratedIP *Rva00624C80IPEnumeration::getAddresses()
 			(unsigned char)entry[2], (unsigned char)entry[3] );
 
 		UnsignedInt testIP = *((UnsignedInt *)entry);
-		UnsignedInt ip = (UnsignedInt)ntohl( testIP );
+		UnsignedInt ip = (UnsignedInt)htonl( testIP );
 
 		newIP->setIPstring( str );
 		newIP->setIP( ip );

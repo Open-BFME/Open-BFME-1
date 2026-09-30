@@ -147,13 +147,13 @@ extern "C" static __declspec(noinline) void piProcessUTM(PEER peer, piPlayer *pl
 	}
 }
 
-__declspec(dllimport) int __cdecl bfmeCmp1026(char *left, char *right, int count);
+
 extern char *(__cdecl *g_bfmeStrStrVMZ)(const char *text, const char *find);
 
 static void Rva0086B2F0(char *text, piPlayer *player)
 {
 	int length = (int)strlen(text);
-	if (bfmeCmp1026(text + length - 2, "X\\", 2) == 0)
+	if (strncmp(text + length - 2, "X\\", 2) == 0)
 		return;
 	if (!player->inRoom[2])
 		return;

@@ -61,9 +61,9 @@ void piQRKeyListCallback(void);
 void piQRCountCallback(void);
 void piQRAddErrorCallback(void);
 
-extern __declspec(dllimport) char *__cdecl strzcpy(char *dest,
+extern __declspec(dllimport) char *__cdecl strncpy(char *dest,
 	const char *source, unsigned int len);
-extern __declspec(dllimport) char *__cdecl strzcat(char *dest,
+extern __declspec(dllimport) char *__cdecl strncat(char *dest,
 	const char *source, unsigned int len);
 
 PEERBool piStartAutoMatchReporting(PEER peer)
@@ -79,9 +79,9 @@ PEERBool piStartAutoMatchReporting(PEER peer)
 	}
 
 	operation = peer->autoMatchOperation;
-	strzcpy(autoMatchTitle, peer->title, sizeof(autoMatchTitle));
+	strncpy(autoMatchTitle, peer->title, sizeof(autoMatchTitle));
 	autoMatchTitle[sizeof(autoMatchTitle) - 1] = '\0';
-	strzcat(autoMatchTitle, "am",
+	strncat(autoMatchTitle, "am",
 		sizeof(autoMatchTitle) - strlen(autoMatchTitle));
 	autoMatchTitle[sizeof(autoMatchTitle) - 1] = '\0';
 

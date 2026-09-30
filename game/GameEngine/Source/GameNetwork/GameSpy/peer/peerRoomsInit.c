@@ -41,9 +41,9 @@ typedef struct piConnection
 
 typedef piConnection *PEER;
 
-__declspec(dllimport) int __cdecl strcasecmp(const char *left,
+__declspec(dllimport) int __cdecl _strcmpi(const char *left,
 	const char *right);
-__declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source,
+__declspec(dllimport) char *__cdecl strncpy(char *dest, const char *source,
 	int len);
 int piParseFlags(const char *flags);
 void chatSetChannelKeysA(void *chat, const char *channel, const char *user,
@@ -85,7 +85,7 @@ void piFinishedEnteringRoom(PEER peer, RoomType roomType, const char *name)
 
 	peer->inRoom[roomType] = 1;
 	peer->enteringRoom[roomType] = 0;
-	strzcpy(peer->name[roomType], name, 0x200);
+	strncpy(peer->name[roomType], name, 0x200);
 	peer->name[roomType][0x1FF] = '\0';
 	piSetLocalFlags(peer);
 	piKeyCacheRefreshRoom(peer, roomType);
@@ -154,7 +154,7 @@ PEERBool piRoomToType(PEER peer, const char *room, RoomType *roomType)
 
 	for (i = 0; i < NumRooms; i++)
 	{
-		if (strcasecmp(room, peer->room[i]) == 0)
+		if (_strcmpi(room, peer->room[i]) == 0)
 		{
 			*roomType = (RoomType)i;
 			return 1;

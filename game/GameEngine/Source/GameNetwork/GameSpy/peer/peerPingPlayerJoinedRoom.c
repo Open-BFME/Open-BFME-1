@@ -126,7 +126,7 @@ int piXpingTableHashFn(const void *param, int numBuckets)
 
 	return (int)hash;
 }
-__declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
+__declspec(dllimport) int __cdecl _strcmpi(const char *left, const char *right);
 
 int piXpingTableCompareFn(const void *param1, const void *param2)
 {
@@ -153,7 +153,7 @@ int piXpingTableCompareFn(const void *param1, const void *param2)
 
 	for(i = 0; i < 2; i++)
 	{
-		rcode = strcasecmp(nicks[0][i], nicks[1][i]);
+		rcode = _strcmpi(nicks[0][i], nicks[1][i]);
 		if(rcode != 0)
 			return rcode;
 	}
@@ -458,7 +458,7 @@ static void piPickPingPlayersMap(void *elem, void *clientData)
 			(other->inRoom[2] && !player->inRoom[2]) ||
 			(piIsPlayerVIP(other, StagingRoom) &&
 			 !piIsPlayerVIP(player, StagingRoom)) ||
-			(strcasecmp(other->nick, player->nick) < 0))
+			(_strcmpi(other->nick, player->nick) < 0))
 			break;
 	}
 

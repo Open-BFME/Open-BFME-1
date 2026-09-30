@@ -36,12 +36,12 @@ void piLeaveRoom(PEER peer, int roomType, const char *reason);
 int piCountRoomOps(PEER peer, int roomType, const char *nick);
 PEERBool piSBStartListingAutoMatches(PEER peer);
 PEERBool piStartAutoMatchReporting(PEER peer);
-extern __declspec(dllimport) void __cdecl gsifree(void *memory);
+extern __declspec(dllimport) void __cdecl free(void *memory);
 void piRemoveOperation(PEER peer, void *operation);
 
 static __declspec(noinline) void piCleanAutoMatch(PEER peer)
 {
-	gsifree(peer->autoMatchFilter);
+	free(peer->autoMatchFilter);
 	piRemoveOperation(peer, peer->autoMatchOperation);
 	peer->autoMatchOperation = 0;
 }

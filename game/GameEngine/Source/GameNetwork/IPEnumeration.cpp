@@ -142,7 +142,7 @@ EnumeratedIP * IPEnumeration::getAddresses( void )
 		str.format("%d.%d.%d.%d", (unsigned char)entry[0], (unsigned char)entry[1], (unsigned char)entry[2], (unsigned char)entry[3]);
 
 		UnsignedInt testIP = *((UnsignedInt *)entry);
-		UnsignedInt ip = ntohl(testIP);
+		UnsignedInt ip = htonl(testIP);
 
 		/*
 		ip = *entry++;
