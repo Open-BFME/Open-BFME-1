@@ -2,6 +2,7 @@
 // stlport
 
 #include <stdio.h>
+#include <io.h>
 #include <string.h>
 #include <map>
 #include "ascii_string.h"
@@ -127,4 +128,22 @@ Bool UserPreferences::load(const UnicodeString &fname)
 		return true;
 	}
 	return false;
+}
+
+// Retail 0x000AA030: the receiver's identity is not established.  The body
+// joins the writable data directory and filename, then reports _wunlink success.
+class Rva000AA030Owner
+{
+public:
+	Bool method(const StringBase<unsigned short> &filename);
+};
+
+Bool Rva000AA030Owner::method(const StringBase<unsigned short> &filename)
+{
+	StringBase<unsigned short> path =
+		((Rva00083DA0Host *)TheWritableGlobalData)->copyStringAt1280();
+	path.concat(filename);
+	if (_wunlink((const wchar_t *)path.str()) != 0)
+		return false;
+	return true;
 }
