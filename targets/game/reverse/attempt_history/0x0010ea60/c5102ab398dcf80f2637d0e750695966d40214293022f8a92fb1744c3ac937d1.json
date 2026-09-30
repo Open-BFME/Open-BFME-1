@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c5102ab398dcf80f2637d0e750695966d40214293022f8a92fb1744c3ac937d1",
+  "symbol": "?rva0010EA60@Rva0010EA60Owner@@QAEXPAXI@Z",
+  "score_kind": "measured",
+  "score": 0.2951,
+  "source": "// ?rva0010EA60@Rva0010EA60Owner@@QAEXPAXI@Z\n// partial score=0.2951 date=2026-09-30\n// cl: /DNDEBUG /MD /EHsc\n// stlport\n#include <list>\n#include <utility>\nclass Rva0010EA60Owner\n{\npublic:\n    void rva0010EA60(void *unused, unsigned key);\n    unsigned char m_prefix[0x48];\n    std::list<void *> m_48;\n    std::list<std::pair<void *, unsigned> > m_4c;\n};\nvoid Rva0010EA60Owner::rva0010EA60(void *, unsigned key)\n{\n    typedef std::list<std::pair<void *, unsigned> > Entries;\n    Entries::iterator it = m_4c.begin();\n    while (it != m_4c.end())\n    {\n        if (it->second >= key)\n        {\n            Entries::iterator removed = it++;\n            std::pair<void *, unsigned> *entry = &*removed;\n            m_4c.erase(removed);\n            m_48.remove(entry->first);\n        }\n        else\n            ++it;\n    }\n}\n"
+}
