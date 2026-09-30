@@ -187,11 +187,9 @@ private:
 	BFMERetailAsciiString m_s1284, m_s1288;					// +0x1284, +0x1288
 };
 
-// GlobalData.cpp's two globals, defined once here with Zero Hour's
-// initializers (GlobalData.cpp: TheWritableGlobalData = NULL,
-// GlobalData::m_theOriginal = NULL). Retail keeps them adjacent in .data at
-// 0x012ED5C8 / 0x012ED5CC, both zero.
-GlobalData *TheWritableGlobalData = 0;
+// Zero Hour's GlobalData::m_theOriginal = NULL, defined once here; retail
+// keeps it at 0x012ED5CC, zero. TheWritableGlobalData (0x012ED5C8) is
+// defined once in GlobalData.cpp, its data_rows.csv owner.
 GlobalData *GlobalData::m_theOriginal = 0;
 
 __declspec(nothrow) __forceinline void GlobalData::cleanupBeforeMembers()
