@@ -724,26 +724,7 @@ Bool AudioEventRTS::getIsLogicalAudio( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Audio/Rva000B28F0IsPositionalAudio.cpp
-// ?isPositionalAudio@AudioEventRTS@@ present-unmatched
-Bool AudioEventRTS::isPositionalAudio( void ) const
-{
-	if( m_eventInfo ) 
-	{
-		if( !BitTest( m_eventInfo->m_type, ST_WORLD ) ) 
-		{
-			return FALSE;
-		}
-	}
-	if( m_ownerType != OT_INVALID )
-	{
-		if( m_drawableID != INVALID_DRAWABLE_ID || m_objectID != INVALID_ID || m_ownerType == OT_Positional )
-		{
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
+// Retail positional-audio predicate: AudioEventRTSClassification.cpp.
 
 //-------------------------------------------------------------------------------------------------
 Bool AudioEventRTS::isCurrentlyPlaying( void ) const
