@@ -92,18 +92,23 @@ def findings(text):
     return {row.get("finding", "") for row in csv.DictReader(io.StringIO(text))} - {""}
 
 
+# Each measure returns {key: description} of what `new` adds over `old`, so
+# a merge can be judged against every parent (a key grown vs all of them).
+
 def _grown_lines(old, new):
-    return sorted(lines_set(new) - lines_set(old))
+    return {line: line for line in lines_set(new) - lines_set(old)}
 
 
 def _grown_counts(old, new):
+    """A raised count, and a count that is new (or deleted and reintroduced,
+    review 2026-09-29: surplus deleted then restored as 1000) above zero."""
     before, after = counts(old), counts(new)
-    return sorted(f"{k} = {after[k]} (was {before[k]})" for k in after
-                  if k in before and after[k] > before[k])
+    return {k: f"{k} = {after[k]} (was {before[k] if k in before else 'absent'})"
+            for k in after if after[k] > before.get(k, 0)}
 
 
 def _grown_findings(old, new):
-    return sorted(findings(new) - findings(old))
+    return {f: f for f in findings(new) - findings(old)}
 
 
 # path -> (what grows, detector whose change may excuse growth, or None)
@@ -149,17 +154,26 @@ def banner(title, paths, why, where=""):
     print(bar, file=sys.stderr)
 
 
-def growth(old_rev, new_rev, touched, excused):
-    """[(path, [grown items])] for shrink-only baselines that grew."""
+def growth(old_revs, new_rev, touched, excused):
+    """[(path, [grown items])] for shrink-only baselines that grew in ONE
+    commit (or the staged change): `new_rev` against each of `old_revs`, its
+    parents. An item counts only if it is new against every parent. A
+    detector exception applies only when that same commit changes the
+    detector and declares it (`excused`); review 2026-09-29 found a detector
+    edit in one commit excusing growth in another when the range was pooled."""
     out = []
     for path, (measure, detector) in SHRINK_ONLY.items():
         if path not in touched:
             continue
         if detector and detector in excused:
             continue
-        grown = measure(blob(old_rev, path), blob(new_rev, path))
+        new = blob(new_rev, path)
+        grown = None
+        for old in old_revs:
+            items = measure(blob(old, path), new)
+            grown = items if grown is None else {k: v for k, v in grown.items() if k in items}
         if grown:
-            out.append((path, grown))
+            out.append((path, sorted(grown.values())))
     return out
 
 
@@ -191,7 +205,7 @@ def check_staged(message_file):
         why = reason(handle.read())
     head = "HEAD" if git("rev-parse", "-q", "--verify", "HEAD").returncode == 0 else None
     banner("PROTECTED VERIFIER/BASELINE PATHS IN THIS COMMIT", hits, why)
-    grown = growth(head, ":", set(staged), set(staged) if why else set()) if head else []
+    grown = growth([head], ":", set(staged), set(staged) if why else set()) if head else []
     report_growth(grown)
     if not why:
         print("commit-msg: this commit changes verifier code or a baseline without saying so.",
@@ -201,8 +215,12 @@ def check_staged(message_file):
     return 1 if grown else 0
 
 
+def parents_of(sha):
+    return git("rev-list", "--parents", "-n", "1", sha, check=True).stdout.split()[1:]
+
+
 def commit_paths(sha):
-    parents = git("rev-list", "--parents", "-n", "1", sha, check=True).stdout.split()[1:]
+    parents = parents_of(sha)
     if len(parents) > 1:
         # only what the merge itself changed against every parent (a resolution)
         got = git("diff-tree", "--no-commit-id", "--cc", "--name-only", "-r", sha, check=True)
@@ -215,21 +233,21 @@ def commit_paths(sha):
 
 def check_range(base, tip):
     commits = git("rev-list", "--reverse", f"{base}..{tip}", check=True).stdout.split()
-    bad, touched, excused = 0, set(), set()
+    bad, grown = 0, []
     for sha in commits:
         paths = commit_paths(sha)
-        touched.update(paths)
         hits = protected(paths)
         if not hits:
             continue
         why = reason(git("log", "-1", "--format=%B", sha, check=True).stdout)
         subject = git("log", "-1", "--format=%s", sha).stdout.strip()
         banner("PROTECTED VERIFIER/BASELINE PATHS", hits, why, f" in {sha[:10]} {subject[:40]}")
-        if why:
-            excused.update(paths)
-        else:
+        if not why:
             bad += 1
-    grown = growth(base, tip, touched, excused)
+        # every commit against its own parent(s); the exception is this commit's alone
+        parents = parents_of(sha) or ["4b825dc642cb6eb9a060e54bf8d69288fbee4904"]   # empty tree
+        mine = growth(parents, sha, set(paths), set(paths) if why else set())
+        grown += [(f"{path} in {sha[:10]}", items) for path, items in mine]
     report_growth(grown)
     if bad:
         print(f"pre-push: {bad} outgoing commit(s) change verifier code or a baseline "

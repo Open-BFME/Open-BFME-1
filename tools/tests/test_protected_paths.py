@@ -167,3 +167,37 @@ def test_the_commit_msg_hook_runs_the_checker_as_of_head(repo):
     ok = git(repo, "commit", "-q", "-m", "declared\n\nVerifier-Change: retire the old checker for a test",
              check=False)
     assert ok.returncode == 0, ok.stderr
+
+
+GROWN_ORACLE = ("finding,file,line,confidence,source\nA+0x4|m_a|m_b,game/a.cpp,3,1.00,w\n"
+                "B+0x8|m_c|m_d,game/b.cpp,9,1.00,w\n")
+
+
+def test_a_detector_edit_excuses_growth_only_in_its_own_commit(repo):
+    # review 2026-09-29: pooled over the range, a detector edit in commit A
+    # excused baseline growth in commit B.
+    base = git(repo, "rev-parse", "HEAD").stdout.strip()
+    commit(repo, "detector\n\nVerifier-Change: improve detector coverage",
+           {"tools/name_oracle.py": "v = 2\n"})
+    tip = commit(repo, "grow\n\nVerifier-Change: add exception without detector edit",
+                 {ORACLE: GROWN_ORACLE})
+    assert pp.check_range(base, tip) == 1
+    git(repo, "reset", "-q", "--hard", base)
+    tip = commit(repo, "both\n\nVerifier-Change: detector widened, baseline records it",
+                 {"tools/name_oracle.py": "v = 3\n", ORACLE: GROWN_ORACLE})
+    assert pp.check_range(base, tip) == 0
+
+
+def test_a_deleted_count_cannot_come_back_raised(repo):
+    base = git(repo, "rev-parse", "HEAD").stdout.strip()
+    mid = commit(repo, "remove\n\nVerifier-Change: remove surplus count entry",
+                 {IDENT: "multi_name.family = 0\n"})
+    tip = commit(repo, "restore\n\nVerifier-Change: restore count entry",
+                 {IDENT: "multi_name.family = 0\none_identity.surplus = 1000\n"})
+    assert pp.check_range(mid, tip) == 1
+    assert pp.check_range(base, mid) == 0
+    # a brand-new key at zero is not growth
+    git(repo, "reset", "-q", "--hard", base)
+    tip = commit(repo, "new detector\n\nVerifier-Change: add a zero coverage floor",
+                 {IDENT: "multi_name.family = 0\none_identity.surplus = 10\nnew.floor = 0\n"})
+    assert pp.check_range(base, tip) == 0
