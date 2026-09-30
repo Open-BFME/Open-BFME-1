@@ -125,9 +125,12 @@ public:
     AsciiString rva0010f820MapPathCode(const AsciiString &path) const;
 };
 
-static __forceinline const char *rva0010f820String(unsigned int address)
+extern const char *PORTABLE_SAVE;
+extern const char *g_012ABFC8;
+
+static __forceinline const char *rva0010f820String(const char *const *slot)
 {
-    return *(const char *const *)address;
+    return *slot;
 }
 
 // The retail slots at C0/C4/CC/D0/D4 hold these path/code values.  These
@@ -146,15 +149,15 @@ AsciiString GameState::rva0010f820MapPathCode(const AsciiString &path) const
     AsciiString prefix;
 
     if (((const StringBase<char> *)&path)->startsWithNoCase(
-            rva0010f820String(0x012ABFBC),
-            rva0010f820String(0x012ABFBC)
-                ? (int)strlen(rva0010f820String(0x012ABFBC)) : 0))
+            rva0010f820String(&PORTABLE_SAVE),
+            rva0010f820String(&PORTABLE_SAVE)
+                ? (int)strlen(rva0010f820String(&PORTABLE_SAVE)) : 0))
     {
-        const char *code = rva0010f820String(0x012ABFC8);
+        const char *code = rva0010f820String(&g_012ABFC8);
         ((StringBase<char> *)&prefix)->set(
             code, code ? (int)strlen(code) : 0);
 
-        const int tailOffset = (int)strlen(rva0010f820String(0x012ABFBC));
+        const int tailOffset = (int)strlen(rva0010f820String(&PORTABLE_SAVE));
         const char *tail = path.str() + tailOffset;
         const int tailLength = tail ? (int)strlen(tail) : 0;
         ((StringBase<char> *)&prefix)->concat(tail, tailLength);
