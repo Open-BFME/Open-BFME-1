@@ -28,7 +28,7 @@ struct BfmeEntityEAN
 };
 
 extern BfmeEntityEAN g_bfmeEntityTableEAN[]; // retail 0x012B3ED0
-__declspec(dllimport) int __cdecl bfmeCmp1026(char *left, char *right, int count);
+extern "C" __declspec(dllimport) int __cdecl strncmp(char *left, char *right, int count);
 extern "C" void *__cdecl memset(void *destination, int value, unsigned int count);
 #pragma intrinsic(memset)
 
@@ -48,7 +48,7 @@ BfmeLexEAN::BfmeLexEAN(char *text, char *buffer, int limit)
 	m_bfmePosEAN = text;
 	if (text[0] == 0x3C && text[1] == 0x3F)
 	{
-		if (bfmeCmp1026(text, "<?xml version=\"1.0\"?>", 0x15) != 0)
+		if (strncmp(text, "<?xml version=\"1.0\"?>", 0x15) != 0)
 			m_bfmePosEAN = 0;
 
 		m_bfmePosEAN += 0x15;
@@ -74,7 +74,7 @@ char BfmeLexEAN::bfmeExpandEAN(char *out)
 		while (c != 0);
 
 		int length = end - first;
-		if (bfmeCmp1026(m_bfmePosEAN,
+		if (strncmp(m_bfmePosEAN,
 			g_bfmeEntityTableEAN[index].m_bfmeNameEAN, length) == 0)
 		{
 			m_bfmePosEAN += length;

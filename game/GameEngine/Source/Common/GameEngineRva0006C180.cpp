@@ -4,7 +4,7 @@
 #include <string.h>
 
 extern "C" __declspec(dllimport) char *__stdcall GetEnvironmentStrings(void);
-__declspec(dllimport) void __cdecl bfmeFree1035(void *);
+extern "C" __declspec(dllimport) void __cdecl free(void *);
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
@@ -102,5 +102,5 @@ void GameEngine::Rva0006C180(void *value)
 	}
 
 	m_childProcessCount = count;
-	bfmeFree1035(environmentCopy);
+	free(environmentCopy);
 }

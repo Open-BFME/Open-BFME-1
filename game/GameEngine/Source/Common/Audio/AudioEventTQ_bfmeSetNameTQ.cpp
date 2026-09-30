@@ -10,7 +10,7 @@ public:
 	void *m_bfmeDataTQ;
 };
 
-extern "C" __declspec(dllimport) long __stdcall BfmeDecTQ(long *p);
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long *p);
 
 class BfmeHandleTQ
 {
@@ -41,7 +41,7 @@ void AudioEventTQ::bfmeSetNameTQ(BfmeStrTQ name)
 
 		if (eventInfoHandle != 0)
 		{
-			long remainingRefs = BfmeDecTQ(&eventInfoHandle->m_bfmeRefTQ);
+			long remainingRefs = InterlockedDecrement(&eventInfoHandle->m_bfmeRefTQ);
 
 			if (remainingRefs <= 0 && m_bfmeHandleTQ != 0)
 				m_bfmeHandleTQ->bfmeCloseTQ(1);

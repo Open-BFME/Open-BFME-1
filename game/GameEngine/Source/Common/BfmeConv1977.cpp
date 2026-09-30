@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) int __cdecl bfmeSprintfESP(char *buffer,
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer,
 	const char *format, ...);
 
 extern char g_bfmeFmtESP[];
@@ -35,7 +35,7 @@ char BfmeHostESP::bfmeClearESP(unsigned int index)
 
 	char name[32];
 
-	bfmeSprintfESP(name, g_bfmeFmtESP, index);
+	sprintf(name, g_bfmeFmtESP, index);
 
 	bfmeApplyESP(g_bfmeEmptyESP, name);
 

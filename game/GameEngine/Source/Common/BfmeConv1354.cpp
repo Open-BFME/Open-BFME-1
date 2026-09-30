@@ -3,7 +3,7 @@
 extern "C" unsigned strlen(const char *s);
 #pragma intrinsic(strlen)
 
-__declspec(dllimport) void __cdecl bfmeCopyVGK(char *d, const char *s);
+extern "C" __declspec(dllimport) void __cdecl sprintf(char *d, const char *s);
 
 class BfmeThingVGK
 {
@@ -16,5 +16,5 @@ public:
 void BfmeThingVGK::bfmeGoVGK(const char *s)
 {
 	if (s && strlen(s) < 0x20)
-		bfmeCopyVGK(m_bfmeBuf, s);
+		sprintf(m_bfmeBuf, s);
 }

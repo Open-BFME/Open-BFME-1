@@ -42,7 +42,7 @@ public:
 	int m_bfmeHandle;
 };
 
-extern "C" __declspec(dllimport) void * __cdecl BfmeMemMove(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
 inline BfmeAQAElement **bfmeCopyAQA(
 	BfmeAQAElement **destination,
@@ -53,7 +53,7 @@ inline BfmeAQAElement **bfmeCopyAQA(
 		return destination;
 
 	int bytes = (char *)last - (char *)first;
-	return (BfmeAQAElement **)((char *)BfmeMemMove(destination, first, bytes) + bytes);
+	return (BfmeAQAElement **)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeAQAElementVector

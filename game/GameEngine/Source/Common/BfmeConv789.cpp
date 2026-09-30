@@ -3,9 +3,9 @@ struct BfmeCsDWA
 	unsigned char m_bfmeHead[0x18];
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterDWA(BfmeCsDWA *cs);
-extern "C" __declspec(dllimport) void __stdcall bfmeInitDWA(BfmeCsDWA *cs);
-extern "C" __declspec(dllimport) void __stdcall bfmeStartDWB(BfmeCsDWA *cs);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCsDWA *cs);
+extern "C" __declspec(dllimport) void __stdcall InterlockedIncrement(BfmeCsDWA *cs);
+extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection(BfmeCsDWA *cs);
 
 struct BfmeThingDWB
 {
@@ -18,7 +18,7 @@ struct BfmeThingDWB
 void BfmeThingDWB::bfmeGoDWB()
 {
 	bfmeOneDWB();
-	bfmeStartDWB(&m_bfmeCs);
+	DeleteCriticalSection(&m_bfmeCs);
 }
 
 extern BfmeCsDWA g_bfmeCsDWC;
@@ -32,7 +32,7 @@ struct BfmeThingDWC
 
 bool BfmeThingDWC::bfmeGoDWC()
 {
-	bfmeInitDWA(&m_bfmeCs);
-	bfmeEnterDWA(&g_bfmeCsDWC);
+	InterlockedIncrement(&m_bfmeCs);
+	EnterCriticalSection(&g_bfmeCsDWC);
 	return false;
 }

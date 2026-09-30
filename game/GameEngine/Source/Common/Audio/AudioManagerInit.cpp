@@ -230,7 +230,7 @@ public:
 // _AIL_set_file_callbacks@16, reached through the mss32.dll IAT slot at
 // 0x0135966C. The four pointers are the retail callback bodies at
 // 0x00A96370, 0x00A963A0, 0x00A963B0 and 0x00A963D0.
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_file_callbacks(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_file_callbacks(
 	void *open, void *close, void *read, void *write);
 
 // ?rva00696370OpenFile@@YGHPBDPAPAVFile@@@Z
@@ -331,7 +331,7 @@ void AudioManager::init()
 
 	m_bfmeB1012->bfmeGo1012B(m_audioSettings->m_field44);
 
-	_AIL_set_file_callbacks(rva00696370OpenFile, dup_006963a0,
+	AIL_set_file_callbacks(rva00696370OpenFile, dup_006963a0,
 		rva006963B0ForwardSlot5, rva006963D0ForwardSlot3);
 
 	// Retail clamps the speaker count to the LOD table (stride 8 rows at +0x170

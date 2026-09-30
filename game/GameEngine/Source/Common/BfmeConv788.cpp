@@ -3,8 +3,8 @@ struct BfmeCsDVC
 	unsigned char m_bfmeHead[0x18];
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterDVC(BfmeCsDVC *cs);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveDVC(BfmeCsDVC *cs);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCsDVC *cs);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCsDVC *cs);
 
 struct BfmeThingDVC
 {
@@ -16,7 +16,7 @@ struct BfmeThingDVC
 
 void BfmeThingDVC::bfmeGoDVC()
 {
-	bfmeEnterDVC(&m_bfmeCs);
+	EnterCriticalSection(&m_bfmeCs);
 	m_bfmeCount = m_bfmeCount + 1;
-	bfmeLeaveDVC(&m_bfmeCs);
+	LeaveCriticalSection(&m_bfmeCs);
 }

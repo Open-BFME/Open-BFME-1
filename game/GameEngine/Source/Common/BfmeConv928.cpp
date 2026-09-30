@@ -180,7 +180,7 @@ void BfmeThing928F::bfmeOne928F()
 	pending.clear();
 }
 
-__declspec(dllimport) void __stdcall bfmeImport928G(void *h);
+extern "C" __declspec(dllimport) void __stdcall SetErrorMode(void *h);
 extern char g_bfme928Vft[];
 
 class BfmeThing928G
@@ -197,6 +197,6 @@ void BfmeThing928G::bfmeGo928G()
 {
 	void *h = m_bfmeH;
 	m_bfmeVft = g_bfme928Vft;
-	bfmeImport928G(h);
+	SetErrorMode(h);
 	bfmeTail928G();
 }

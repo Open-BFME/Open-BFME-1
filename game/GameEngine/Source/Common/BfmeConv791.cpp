@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) void __stdcall bfmeCloseDWE(void *h);
+extern "C" __declspec(dllimport) void __stdcall DeleteObject(void *h);
 
 struct BfmeThingDWE
 {
@@ -11,7 +11,7 @@ void BfmeThingDWE::bfmeGoDWE()
 {
 	if (m_bfmeH)
 	{
-		bfmeCloseDWE(m_bfmeH);
+		DeleteObject(m_bfmeH);
 		m_bfmeH = 0;
 	}
 }

@@ -17,7 +17,7 @@ static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_
 
 }
 
-__declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+extern "C" __declspec(dllimport) void __cdecl free(void *p);
 
 class BfmeThingEC
 {
@@ -68,7 +68,7 @@ void BfmeHostXY::bfmeClearXY()
 	while (m_bfmeCurXY != m_bfmeListXY)
 	{
 		if (m_bfmeCurXY->m_bfmeValXY)
-			bfmeFree1035((void *)m_bfmeCurXY->m_bfmeValXY->bfmeTakeEC(&n));
+			free((void *)m_bfmeCurXY->m_bfmeValXY->bfmeTakeEC(&n));
 
 		m_bfmeCurXY = m_bfmeCurXY->m_bfmeNextXY;
 	}

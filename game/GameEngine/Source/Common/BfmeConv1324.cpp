@@ -42,7 +42,7 @@ BfmeThingTUA::BfmeThingTUA()
 
 extern void *g_bfmeVftTVA[];
 
-__declspec(dllimport) void __stdcall bfmeReleaseTVA(void *h);
+extern "C" __declspec(dllimport) void __stdcall CloseHandle(void *h);
 void bfmeFreeTVA(void *p);
 
 class BfmeThingTVA
@@ -59,14 +59,14 @@ void *BfmeThingTVA::bfmeDelTVA(unsigned char flags)
 	void *h = m_bfmeHandle;
 	m_bfmeVft = g_bfmeVftTVA;
 	if (h)
-		bfmeReleaseTVA(h);
+		CloseHandle(h);
 	bfmeDtorTVA();
 	if (flags & 1)
 		bfmeFreeTVA(this);
 	return this;
 }
 
-__declspec(dllimport) void __stdcall bfmeReleaseTVB(void *h);
+extern "C" __declspec(dllimport) void __stdcall SysFreeString(void *h);
 void bfmeFreeArrayTVB(void *p);
 void bfmeFreeTVB(void *p);
 
@@ -81,7 +81,7 @@ public:
 void *BfmeThingTVB::bfmeDelTVB(unsigned char flags)
 {
 	if (m_bfmeObj)
-		bfmeReleaseTVB(m_bfmeObj);
+		SysFreeString(m_bfmeObj);
 	if (m_bfmeBuf)
 		bfmeFreeArrayTVB(m_bfmeBuf);
 	if (flags & 1)

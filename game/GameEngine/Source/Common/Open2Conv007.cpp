@@ -4,7 +4,7 @@
 // classes; callee names that already have byte-verified ledger rows are
 // spelled, because this file's call sites add nothing to those claims.
 
-extern "C" __declspec(dllimport) unsigned int __stdcall bfmeTickDYA( void );
+extern "C" __declspec(dllimport) unsigned int __stdcall timeGetTime( void );
 extern "C" __declspec(dllimport) char * __cdecl strchr( const char *text, int c );
 
 // ---------------------------------------------------------------------------
@@ -30,9 +30,9 @@ void Rva00782E80( unsigned char running )
 
 	g_open2Running = running;
 	if( running )
-		g_open2Started = bfmeTickDYA();
+		g_open2Started = timeGetTime();
 	else
-		g_open2Accumulated += bfmeTickDYA() - g_open2Started;
+		g_open2Accumulated += timeGetTime() - g_open2Started;
 }
 
 // ---------------------------------------------------------------------------

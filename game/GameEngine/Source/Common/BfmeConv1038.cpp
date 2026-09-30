@@ -115,7 +115,7 @@ public:
 	virtual void bfmeSay1038(char *m);
 };
 
-__declspec(dllimport) int __stdcall bfmeClose1038(void *h);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *h);
 BfmeLog1038 *bfmeGetLog1038(void);
 extern char g_bfmeMsg1038[];
 
@@ -130,7 +130,7 @@ public:
 
 void BfmeD1038::bfmeGo1038D(void)
 {
-	if (bfmeClose1038(m_bfmeHandle) == 0)
+	if (ReleaseMutex(m_bfmeHandle) == 0)
 		bfmeGetLog1038()->bfmeSay1038(g_bfmeMsg1038);
 }
 

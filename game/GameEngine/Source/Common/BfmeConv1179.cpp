@@ -1,8 +1,8 @@
 // Open-BFME5 conversions.
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnter1179(void *p);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeave1179(void *p);
-extern "C" __declspec(dllimport) void __stdcall bfmeSignal1179(void *h);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *p);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *p);
+extern "C" __declspec(dllimport) void __stdcall ReleaseMutex(void *h);
 extern "C" int __cdecl bfmeTid1179(void);
 
 extern "C" volatile int g_bfmeOwner1179;
@@ -17,15 +17,15 @@ char bfmeUnlock1179(void)
 	if (bfmeTid1179() == g_bfmeOwner1179)
 		(void)g_bfmeCount1179;
 
-	bfmeEnter1179(g_bfmeCs1179);
+	EnterCriticalSection(g_bfmeCs1179);
 	g_bfmeCount1179 = g_bfmeCount1179 - 1;
 	r = (char)(g_bfmeCount1179 == 0);
 
 	if (r)
 		g_bfmeOwner1179 = 0;
 
-	bfmeLeave1179(g_bfmeCs1179);
-	bfmeSignal1179(g_bfmeEv1179);
+	LeaveCriticalSection(g_bfmeCs1179);
+	ReleaseMutex(g_bfmeEv1179);
 
 	return r;
 }

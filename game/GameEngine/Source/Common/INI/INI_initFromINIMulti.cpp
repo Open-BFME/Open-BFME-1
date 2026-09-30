@@ -46,7 +46,7 @@ void INI::initFromINIMulti(void *what, const MultiIniFieldParse& parseTableList)
 		const char *field = strtok(m_buffer, getSeps());
 		if (field != NULL)
 		{
-			if (stricmp(field, m_blockEndToken) == 0)
+			if (_strcmpi(field, m_blockEndToken) == 0)
 				done = TRUE;
 			else
 			{

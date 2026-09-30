@@ -82,7 +82,7 @@ public:
 };
 
 extern BfmeSrc1044 g_bfmeSrc1044;
-__declspec(dllimport) void * __stdcall bfmeMap1044(void *h, int k);
+extern "C" __declspec(dllimport) void * __stdcall SelectObject(void *h, int k);
 
 class BfmeF1044
 {
@@ -103,7 +103,7 @@ void *BfmeF1044::bfmeGo1044F(void)
 
 	if (m_bfmeH == 0) {
 		m_bfmeH = g_bfmeSrc1044.bfmeGet1044();
-		m_bfmeM = bfmeMap1044(m_bfmeH, m_bfmeKey);
+		m_bfmeM = SelectObject(m_bfmeH, m_bfmeKey);
 	}
 
 	return m_bfmeH;

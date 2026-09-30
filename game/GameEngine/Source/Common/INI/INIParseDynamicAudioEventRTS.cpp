@@ -27,7 +27,7 @@
 typedef int Int;
 typedef bool Bool;
 
-extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *string1, const char *string2);
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 
 enum ObjectID { INVALID_ID = 0 };
 
@@ -108,7 +108,7 @@ void INIParseDynamicAudioEventRTSShim::parse( INI *ini, void * /*instance*/, voi
 	DynamicAudioEventRTS **theSound = (DynamicAudioEventRTS **)store;
 
 	// translate the string into a sound
-	if (_stricmp(token, "NoSound") == 0)
+	if (_strcmpi(token, "NoSound") == 0)
 	{
 		if (*theSound)
 		{

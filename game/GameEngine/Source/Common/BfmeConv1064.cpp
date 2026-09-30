@@ -49,7 +49,7 @@ void BfmeQ1064::bfmeSet1064B(char a)
 	g_bfmeR1064->bfmeRun1064(m_bfme250, a ? g_bfmeFmtB1064 : g_bfmeFmtC1064, 0, 0, 0, 0, 0, 0);
 }
 
-__declspec(dllimport) int __cdecl bfmeFmt1064(char *b, unsigned int n, char *f, int a);
+extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, char *f, int a);
 
 extern BfmeX1064 *g_bfmeV1064;
 extern char *g_bfmeTbl1064[];
@@ -63,7 +63,7 @@ void bfmeGo1064C(int a, int b)
 	char buf[0x10];
 	BfmeX1064 *x;
 
-	bfmeFmt1064(buf, 0x10, g_bfmeFmtD1064, a);
+	_snprintf(buf, 0x10, g_bfmeFmtD1064, a);
 	x = bfmeMk1064(g_bfmeV1064, g_bfmeV1064);
 	g_bfmeR1064->bfmeRun1064(x, g_bfmeFmtE1064, 2, buf, g_bfmeTbl1064[b], 0, 0, 0);
 }

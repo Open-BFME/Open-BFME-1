@@ -66,7 +66,7 @@ char bfmeGoKD(BfmeObjKD **beg, BfmeObjKD **end, char r)
 	return r;
 }
 
-__declspec(dllimport) void *__stdcall bfmeTickKE(int a);
+extern "C" __declspec(dllimport) void *__stdcall GetKeyboardLayout(int a);
 unsigned int __stdcall bfmeQueryKE(void *h, int n);
 
 class BfmeThingKE
@@ -81,7 +81,7 @@ public:
 
 void BfmeThingKE::bfmeGoKE()
 {
-	void *h = bfmeTickKE(0);
+	void *h = GetKeyboardLayout(0);
 	unsigned int v = bfmeQueryKE(h, 4);
 	m_bfmeA = (v >> 0x12) & 1;
 	m_bfmeB = (char)((v >> 0x13) & 1);

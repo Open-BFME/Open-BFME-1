@@ -14,7 +14,7 @@
 
 typedef int Int;
 
-extern "C" __declspec(dllimport) int __cdecl stricmp(const char *string1, const char *string2);
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 
 enum ScienceType { SCIENCE_INVALID = -1 };
 
@@ -48,7 +48,7 @@ void INI::parseScienceVector(INI *ini, void *instance, void *store, const void *
 	asv->clear();
 	for (const char *token = ini->getNextTokenOrNull(); token != 0; token = ini->getNextTokenOrNull())
 	{
-		if (stricmp(token, "None") == 0)
+		if (_strcmpi(token, "None") == 0)
 		{
 			asv->clear();
 			return;

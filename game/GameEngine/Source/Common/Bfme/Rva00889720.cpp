@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave( void* );
-extern "C" __declspec(dllimport) void __stdcall Rva01358E54( void* );
-extern "C" __declspec(dllimport) void __stdcall Rva01358ECC( void* );
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection( void* );
+extern "C" __declspec(dllimport) void __stdcall InterlockedDecrement( void* );
+extern "C" __declspec(dllimport) void __stdcall ReleaseMutex( void* );
 
 struct BfmeCsDWA;
 extern BfmeCsDWA g_bfmeCsDWC;
@@ -22,8 +22,8 @@ public:
 bool Rva00889720Class::d_00889720( void )
 {
 	m_field9DFC = 0;
-	Rva01358E74Leave( &g_bfmeCsDWC );
-	Rva01358E54( &m_field9DF8 );
-	Rva01358ECC( (void*)m_field9F50 );
+	LeaveCriticalSection( &g_bfmeCsDWC );
+	InterlockedDecrement( &m_field9DF8 );
+	ReleaseMutex( (void*)m_field9F50 );
 	return false;
 }

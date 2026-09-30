@@ -94,7 +94,7 @@ void INI::parseWaterSettingDefinition( INI* ini )
 	while( timeOfDayName && *timeOfDayName )
 	{
 
-		if( stricmp( *timeOfDayName, name.str() ) == 0 )
+		if( _strcmpi( *timeOfDayName, name.str() ) == 0 )
 		{
 
 			waterSetting = &WaterSettings[ timeOfDayIndex ];

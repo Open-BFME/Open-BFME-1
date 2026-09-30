@@ -18,13 +18,13 @@ extern char g_bfmeFmtR1071[];
 extern char g_bfmeF1071;
 extern char g_bfmeH1071;
 
-__declspec(dllimport) int __cdecl bfmeSpf1071(char *b, char *f, int a);
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
 void bfmeGo1071A(int a, char b)
 {
 	char buf[0x10] = "";
 
-	bfmeSpf1071(buf, g_bfmeFmtD1071, a);
+	sprintf(buf, g_bfmeFmtD1071, a);
 	g_bfmeR1071->bfmeRun1071(g_bfmeX1071, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
 }
 

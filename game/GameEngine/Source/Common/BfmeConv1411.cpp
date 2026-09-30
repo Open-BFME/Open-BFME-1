@@ -18,7 +18,7 @@ struct BfmeRefVKV
 	int m_bfme04;
 };
 
-__declspec(dllimport) void __stdcall bfmeAddRefVKV(void *p);
+extern "C" __declspec(dllimport) void __stdcall InterlockedIncrement(void *p);
 
 class BfmeThingVKV
 {
@@ -37,7 +37,7 @@ BfmeThingVKV *BfmeThingVKV::bfmeInitVKV(const BfmeThingVKV &o)
 	m_bfme00.bfmeCopyVKV(o.m_bfme00);
 	m_bfme04 = o.m_bfme04;
 	if (m_bfme04)
-		bfmeAddRefVKV(&m_bfme04->m_bfme04);
+		InterlockedIncrement(&m_bfme04->m_bfme04);
 	m_bfme08 = o.m_bfme08;
 	m_bfme0c = o.m_bfme0c;
 	m_bfme34 = o.m_bfme34;

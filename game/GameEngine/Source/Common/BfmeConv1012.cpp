@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
-__declspec(dllimport) void __stdcall bfmeClose1012(void *h);
-__declspec(dllimport) int __stdcall bfmeWait1012(void *h, int t);
+extern "C" __declspec(dllimport) void __stdcall ReleaseMutex(void *h);
+extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int t);
 
 class BfmeA1012
 {
@@ -15,13 +15,13 @@ public:
 void BfmeA1012::bfmeGo1012A(void *h, int t)
 {
 	if (m_bfmeOn) {
-		bfmeClose1012(m_bfmeHandle);
+		ReleaseMutex(m_bfmeHandle);
 		m_bfmeOn = 0;
 	}
 
 	m_bfmeHandle = h;
 
-	if (bfmeWait1012(h, t) != 0x102)
+	if (WaitForSingleObject(h, t) != 0x102)
 		m_bfmeOn = 1;
 }
 
@@ -41,11 +41,11 @@ void BfmeB1012::bfmeGo1012B(int v)
 	void *h = m_bfmeHandle;
 	char ok = 0;
 
-	if (bfmeWait1012(h, -1) != 0x102)
+	if (WaitForSingleObject(h, -1) != 0x102)
 		ok = 1;
 
 	m_bfmeVal = v;
 
 	if (ok)
-		bfmeClose1012(h);
+		ReleaseMutex(h);
 }

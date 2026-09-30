@@ -2,7 +2,7 @@
 // cl: /DNDEBUG /MD /O2
 // Byte-exact C++ reconstruction of the tokeniser at retail RVA 0x009D1C50.
 
-__declspec(dllimport) int __cdecl isspace(int c);
+extern "C" __declspec(dllimport) int __cdecl isspace(int c);
 
 class BfmeLayoutVHH;
 

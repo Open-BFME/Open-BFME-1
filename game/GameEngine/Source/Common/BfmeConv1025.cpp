@@ -207,7 +207,7 @@ int BfmeH1025::bfmeVal1025(void)
 
 extern BfmeH1025 *g_bfmeH1025;
 extern char g_bfmeFmt1025[];
-__declspec(dllimport) void __cdecl bfmePrint1025(int a, char *f, int b);
+extern "C" __declspec(dllimport) void __cdecl sprintf(int a, char *f, int b);
 
 void __stdcall bfmeGo1025G(int unused, int b, char skip)
 {
@@ -217,7 +217,7 @@ void __stdcall bfmeGo1025G(int unused, int b, char skip)
 	if (g_bfmeH1025 == 0)
 		return;
 
-	bfmePrint1025(b, g_bfmeFmt1025, g_bfmeH1025->bfmeVal1025());
+	sprintf(b, g_bfmeFmt1025, g_bfmeH1025->bfmeVal1025());
 }
 
 class BfmeT1025

@@ -1,5 +1,5 @@
-__declspec(dllimport) int __stdcall bfmeWait1012(void *h, int ms);
-__declspec(dllimport) void __stdcall bfmeReleaseYE(void *h);
+extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int ms);
+extern "C" __declspec(dllimport) void __stdcall ReleaseMutex(void *h);
 
 struct BfmeBlobYE
 {
@@ -34,7 +34,7 @@ void BfmeAudioYE::bfmeSetYE(int a1, const BfmeBlobYE *a2, int a3, char a4)
 	void *h = m_bfme04YE->m_bfme48YE;
 	char locked = 0;
 
-	if (bfmeWait1012(h, -1) != 0x102)
+	if (WaitForSingleObject(h, -1) != 0x102)
 		locked = 1;
 
 	m_bfme2CYE = a1;
@@ -45,5 +45,5 @@ void BfmeAudioYE::bfmeSetYE(int a1, const BfmeBlobYE *a2, int a3, char a4)
 	m_bfme41YE = 1;
 
 	if (locked)
-		bfmeReleaseYE(h);
+		ReleaseMutex(h);
 }

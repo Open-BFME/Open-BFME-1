@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave( void *body );
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection( void *body );
 
 class Rva00886EE0Class
 {
@@ -23,7 +23,7 @@ Rva00886F60Class::~Rva00886F60Class()
 	{
 		if ( m_lock->m_flag18 )
 		{
-			Rva01358E74Leave( m_lock );
+			LeaveCriticalSection( m_lock );
 		}
 	}
 }

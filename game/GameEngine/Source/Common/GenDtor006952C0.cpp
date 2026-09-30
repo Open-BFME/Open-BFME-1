@@ -42,7 +42,7 @@ class BfmeItemKA
 extern BfmeItemKA **g_bfmeBegKA;
 extern BfmeItemKA **g_bfmeEndKA;
 
-extern "C" __declspec(dllimport) void *u2_import_0135945C(
+extern "C" __declspec(dllimport) void *memmove(
 	void *destination, const void *source, unsigned int bytes);
 
 class Gen0000D33C
@@ -86,7 +86,7 @@ Gen0000D33C::~Gen0000D33C()
 		const ScienceType *next = found + 1;
 		if (next != (const ScienceType *)end)
 		{
-			u2_import_0135945C(
+			memmove(
 				(void *)found, next, (unsigned int)((char *)end - (char *)next));
 		}
 

@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) unsigned int __stdcall bfmeTickDZC();
+extern "C" __declspec(dllimport) unsigned int __stdcall timeGetTime();
 
 class BfmeUiDZD
 {
@@ -64,6 +64,6 @@ void BfmeThingDZD::bfmeGoDZD(void *unused)
 	if (g_bfmeUiDZD->bfmeAskDZD())
 	{
 		bfmeDoDZD();
-		m_bfmeT = bfmeTickDZC();
+		m_bfmeT = timeGetTime();
 	}
 }

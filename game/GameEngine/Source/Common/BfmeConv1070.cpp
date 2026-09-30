@@ -74,7 +74,7 @@ void BfmeQ1070::bfmeGo1070A(void)
 	g_bfmeR1070->bfmeRun1070(m_bfme250, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0);
 }
 
-__declspec(dllimport) int __cdecl bfmeSpf1070(char *b, char *f, int a);
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
 
 
@@ -87,6 +87,6 @@ void bfmeGo1070B(float a)
 		n = 1;
 	else if (n > 100)
 		n = 100;
-	bfmeSpf1070(buf, g_bfmeFmtD1070, n);
+	sprintf(buf, g_bfmeFmtD1070, n);
 	g_bfmeR1070->bfmeRun1070(g_bfmeX1070, g_bfmeFmtB1070, 1, buf, 0, 0, 0, 0);
 }

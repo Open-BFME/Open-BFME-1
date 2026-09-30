@@ -12,7 +12,7 @@ int bfmeCrossUXA(const BfmeVecUXA *a, const BfmeVecUXA *b, const BfmeVecUXA *c)
 		- (b->m_bfmeY - a->m_bfmeY) * (c->m_bfmeX - a->m_bfmeX));
 }
 
-__declspec(dllimport) void __cdecl bfmeFreeUXB(void *p);
+extern "C" __declspec(dllimport) void __cdecl fclose(void *p);
 
 class BfmeStrUXB
 {
@@ -34,7 +34,7 @@ public:
 void BfmeThingUXB::bfmeGoUXB()
 {
 	if (m_bfmeHandle) {
-		bfmeFreeUXB(m_bfmeHandle);
+		fclose(m_bfmeHandle);
 		m_bfmeHandle = 0;
 	}
 	m_bfmeStr.bfmeClearUXB();

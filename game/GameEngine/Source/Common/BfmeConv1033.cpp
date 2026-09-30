@@ -20,7 +20,7 @@ void BfmeB1033::bfmeGo1033B(int unused)
 }
 
 extern "C" void *bfmeVft1033D[];
-__declspec(dllimport) void __stdcall bfmeClose1033(int h);
+extern "C" __declspec(dllimport) void __stdcall CloseHandle(int h);
 
 class BfmeD1033
 {
@@ -37,7 +37,7 @@ void BfmeD1033::bfmeGo1033D(void)
 	m_bfmeVfptr = bfmeVft1033D;
 
 	if (m_bfmeH != 0)
-		bfmeClose1033(m_bfmeH);
+		CloseHandle(m_bfmeH);
 
 	bfmeBaseDtor1033();
 }

@@ -49,7 +49,7 @@ public:
 	virtual void bfmeSay1037(char *m);
 };
 
-__declspec(dllimport) int __stdcall bfmeWait1037(void *h, int t);
+extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int t);
 BfmeLog1037 *bfmeGetLog1037(void);
 extern char g_bfmeMsg1037[];
 
@@ -64,7 +64,7 @@ public:
 
 void BfmeH1037::bfmeGo1037H(void)
 {
-	if (bfmeWait1037(m_bfmeHandle, -1) != 0)
+	if (WaitForSingleObject(m_bfmeHandle, -1) != 0)
 		bfmeGetLog1037()->bfmeSay1037(g_bfmeMsg1037);
 }
 

@@ -2,8 +2,8 @@
 
 extern void *g_bfmeHandleSRA;
 
-__declspec(dllimport) void *__stdcall bfmeFindSRA(void *h, int n);
-__declspec(dllimport) void __stdcall bfmeShowSRA(void *w, int cmd, int f);
+extern "C" __declspec(dllimport) void *__stdcall GetSystemMenu(void *h, int n);
+extern "C" __declspec(dllimport) void __stdcall EnableMenuItem(void *w, int cmd, int f);
 
 class BfmeThingSRA
 {
@@ -13,6 +13,6 @@ public:
 
 BfmeThingSRA::BfmeThingSRA()
 {
-	void *w = bfmeFindSRA(g_bfmeHandleSRA, 0);
-	bfmeShowSRA(w, 0xf060, 1);
+	void *w = GetSystemMenu(g_bfmeHandleSRA, 0);
+	EnableMenuItem(w, 0xf060, 1);
 }

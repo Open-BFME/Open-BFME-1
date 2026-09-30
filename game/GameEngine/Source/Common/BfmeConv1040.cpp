@@ -138,8 +138,8 @@ struct BfmeCs1040
 	char m_bfmePad[0x18];
 };
 
-__declspec(dllimport) void __stdcall bfmeLock1040(BfmeCs1040 *c);
-__declspec(dllimport) void __stdcall bfmeUnlock1040(BfmeCs1040 *c);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCs1040 *c);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCs1040 *c);
 void __stdcall bfmeFree1040E(void *p);
 
 class BfmeK1040
@@ -153,13 +153,13 @@ public:
 
 void BfmeK1040::bfmeGo1040K(void)
 {
-	bfmeLock1040(&m_bfmeCs);
+	EnterCriticalSection(&m_bfmeCs);
 
 	if (m_bfmeP != 0)
 		bfmeFree1040E(m_bfmeP);
 
 	m_bfmeP = 0;
-	bfmeUnlock1040(&m_bfmeCs);
+	LeaveCriticalSection(&m_bfmeCs);
 }
 
 class BfmeG1040

@@ -158,10 +158,19 @@ def oldnames():
 
 def libraries():
     """Retail's import libraries, as the trial whole-program link uses them,
-    plus oldnames.lib (a default library of every /MD object)."""
+    plus oldnames.lib (a default library of every /MD object). Generated once
+    (data_scaffold.retail_libraries runs lib.exe) and reused: seats run in
+    parallel, and regenerating a library another process is linking races."""
+    listing = OUT / "libraries.txt"
+    if listing.exists():
+        paths = [Path(line) for line in listing.read_text(encoding="utf-8").splitlines() if line]
+        if all(p.exists() for p in paths):
+            return paths + [oldnames()]
     import data_scaffold
     paths, _ = data_scaffold.retail_libraries(OUT)
-    return [p for p in paths if p.suffix.lower() == ".lib"] + [oldnames()]
+    paths = [p for p in paths if p.suffix.lower() == ".lib"]
+    listing.write_text("".join(f"{p}\n" for p in paths), encoding="utf-8")
+    return paths + [oldnames()]
 
 
 class Imports:
@@ -249,6 +258,33 @@ def site_witnesses(obj, rows):
     return found
 
 
+def site_counts(obj, rows):
+    """{__imp_ name: DIR32 sites inside matched bodies}."""
+    counts = collections.Counter()
+    for row in rows:
+        size = int(row["target_size"])
+        try:
+            _, relocs = build.read_object_symbol_bytes(obj, build.ledger_object_symbol(row), size)
+        except (ValueError, KeyError, OSError):
+            continue
+        counts.update(sym for off, rtype, sym in relocs
+                      if rtype == DIR32 and sym.startswith("__imp_") and off + 4 <= size)
+    return counts
+
+
+def reloc_counts(obj):
+    """{__imp_ name: DIR32 sites anywhere in the object}."""
+    import reloc_ledger
+    sections, symbols = reloc_ledger.parse_coff(obj.read_bytes())
+    names = {i: s["name"] for i, s in symbols.items()}
+    counts = collections.Counter()
+    for section in sections:
+        for _, index, rtype in section["relocs"]:
+            if rtype == DIR32 and names.get(index, "").startswith("__imp_"):
+                counts[names[index]] += 1
+    return counts
+
+
 def classify(symbol, imports, found, sites=None):
     """(class, detail, slot or None) for one `__imp_` name. `sites` are this
     object's own site witnesses (site_witnesses)."""
@@ -330,21 +366,18 @@ def census_objects():
 
 
 def source_of_objects():
-    """{object file name: source} for every matched row's source."""
-    out = {}
-    for row in build.load_function_rows():
-        if not row["source"].lower().endswith(build.LIB_SUFFIX):
-            out.setdefault(build.obj_path(ROOT / row["source"]).name, row["source"])
-    return out
+    """{object file name: source} for every matched row's C/C++ source."""
+    sources = {r["source"] for r in build.load_function_rows() if not r["source"].lower().endswith(build.LIB_SUFFIX)}
+    return {build.obj_path(ROOT / source).name: source for source in sorted(sources)}
 
 
 def rows_by_object():
     """{object file name: [matched rows]} for every C/C++ source."""
-    out = collections.defaultdict(list)
+    by_source = collections.defaultdict(list)
     for row in build.load_function_rows():
         if not row["source"].lower().endswith(build.LIB_SUFFIX) and row["target_rva"].startswith("0x"):
-            out[build.obj_path(ROOT / row["source"]).name].append(row)
-    return out
+            by_source[row["source"]].append(row)
+    return {build.obj_path(ROOT / source).name: rows for source, rows in by_source.items()}
 
 
 def measure(objects, imports, found):
@@ -450,6 +483,14 @@ def plan(source, obj, imports, found):
         kind, detail, slot = classify(symbol, imports, found, sites)
         if kind == "correct":
             continue
+        if kind == "wrong-slot":
+            # A real import name read through another slot: rebind only when the
+            # TU's own matched bodies witness one IAT slot at EVERY site that
+            # reads the name, so no unverified call is redirected.
+            witnessed = sites.get(symbol, set())
+            if len(witnessed) == 1 and next(iter(witnessed)) in imports.slots and site_counts(obj, rows).get(symbol) == reloc_counts(obj).get(symbol):
+                kind, slot = "alias:wrong-name", next(iter(witnessed))
+                detail = "{}!{}".format(*imports.slots[slot])
         if kind not in REPAIRABLE:
             refused.append(f"{symbol}: {kind} ({detail})")
             continue
@@ -571,11 +612,21 @@ def strict_link(obj, imports, work, label):
     import link_census
     import provider_repair
     libs = libraries()
-    provided = set()
-    for lib in libs:
-        provided |= link_census.library_symbols(lib)
-    undefined = {name for _, name, section, storage, _ in coff_symbols(obj.read_bytes())
-                 if storage == EXTERNAL and section == 0}
+    # The libraries provide only retail imports: an import's `__imp_` slot and
+    # call stub (and oldnames' spelling of one). Everything else, CRT statics
+    # included, is a labelled stub: a static member would drag in imports of
+    # its own (operator delete[] -> MSVCR71's operator delete), which is the
+    # CRT's closure, not this TU's. Where two import libraries define the same
+    # `__imp_` name (WSock32.Lib and WS2_32.Lib: htonl, send), the library of
+    # the DLL retail imports it from goes first.
+    provided = set(imports.thunk)
+    provided |= {a for a, t in weak_aliases(oldnames()).items() if t in imports.thunk}
+    order = {"wsock32.lib": 0}
+    libs = sorted(libs, key=lambda p: order.get(p.name.lower(), 1))
+    records = coff_symbols(obj.read_bytes())
+    defined = {name for _, name, section, storage, _ in records if storage == EXTERNAL and section > 0}
+    undefined = {name for _, name, section, storage, _ in records
+                 if storage == EXTERNAL and section == 0} - defined
     stubbed = {n for n in undefined if not n.startswith("__imp_") and n not in provided}
     work.mkdir(parents=True, exist_ok=True)
     stubs = link_census.stub_object(stubbed, work / f"{label}_stubs.obj")
@@ -679,6 +730,7 @@ def cmd_apply(args):
     try:
         steps = plan(source, obj, imports, found)
     except Refused as why:
+        (work / "refused.txt").write_text(str(why) + "\n", encoding="utf-8")
         print(f"import_binding: REFUSED {source}: {why}")
         return 1
     if not steps:
@@ -728,6 +780,7 @@ def cmd_apply(args):
         last = "; ".join(problems)
     path.write_bytes(original)
     fresh_object(source)
+    (work / "refused.txt").write_text(f"no rewrite binds it: {last}\n", encoding="utf-8")
     print(f"import_binding: REFUSED {source}: no rewrite binds it ({last}); source restored")
     return 1
 
@@ -750,7 +803,8 @@ def cmd_check(args):
     before = work / "before.obj"
     if before.exists():  # the control: the unrepaired object must NOT link strictly
         bok, btext, _, _ = strict_link(before, imports, work, "before")
-        receipt["before_strict_link"] = {"ok": bok, "output": btext}
+        receipt["before_strict_link"] = {"ok": bok, "output": btext,
+                                         "binding_problems": verify_object(source, before, imports, found, [])}
     receipt["pass"] = not failures
     receipt["failures"] = failures
     (work / "receipt.json").write_text(json.dumps(receipt, indent=1), encoding="utf-8")
@@ -758,7 +812,10 @@ def cmd_check(args):
     for line in failures:
         print(f"  {line}")
     if receipt.get("before_strict_link"):
-        print(f"  control: unrepaired object {'links' if receipt['before_strict_link']['ok'] else 'fails'} strictly")
+        control = receipt["before_strict_link"]
+        misbound = len(control["binding_problems"])
+        print(f"  control: unrepaired object {'links' if control['ok'] else 'fails'} strictly"
+              + (f", {misbound} import(s) bound to the wrong slot or undefined" if misbound else ""))
     print(f"  receipt: {work / 'receipt.json'}")
     return 0 if not failures else 1
 
@@ -767,7 +824,7 @@ def cmd_next(args):
     """One TU whose every import defect is repairable, from a measure run."""
     measured = json.loads(Path(args.measure).read_text(encoding="utf-8"))
     sources = source_of_objects()
-    done = {p.parent.name for p in OUT.glob("*/receipt.json")}
+    done = {p.parent.name for pattern in ("*/receipt.json", "*/refused.txt") for p in OUT.glob(pattern)}
     for name, facts in sorted(measured["objects"].items()):
         kinds = set(facts["imports"].values()) - {"correct"}
         if not (kinds or facts["duplicate_thunks"]) or not kinds <= set(REPAIRABLE):

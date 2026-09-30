@@ -2,7 +2,7 @@
 
 extern void *g_bfme912Glob;
 
-__declspec(dllimport) void __stdcall bfmeFree912B(void *p);
+extern "C" __declspec(dllimport) void __stdcall CloseHandle(void *p);
 
 class Gen_007f0300
 {
@@ -19,7 +19,7 @@ void bfmeGo912B(void)
 	void *p = g_bfme912A;
 	*(char **)&g_bfme912B = g_bfme912Str;
 	if (p)
-		bfmeFree912B(p);
+		CloseHandle(p);
 	g_bfme912B.m();
 }
 

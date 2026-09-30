@@ -4,7 +4,7 @@ struct BfmeRefDYE
 	long m_bfmeRef;
 };
 
-extern "C" __declspec(dllimport) long __stdcall bfmeIncDYE(long *p);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long *p);
 
 struct BfmeThingDYE
 {
@@ -20,11 +20,11 @@ BfmeThingDYE *BfmeThingDYE::bfmeGoDYE(BfmeThingDYE *o)
 	BfmeRefDYE *p = o->m_bfmeP;
 	m_bfmeP = p;
 	if (p)
-		bfmeIncDYE(&p->m_bfmeRef);
+		InterlockedIncrement(&p->m_bfmeRef);
 	return this;
 }
 
-extern "C" __declspec(dllimport) int __cdecl bfmeCmpDYF(const char *a, const char *b);
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *a, const char *b);
 extern "C" unsigned char bfmeStrDYF[];
 
 class BfmeGlobDYF
@@ -37,17 +37,17 @@ extern BfmeGlobDYF *g_bfmeObjDYF;
 
 void bfmeGoDYF(const char *s)
 {
-	g_bfmeObjDYF->bfmeSetDYF(bfmeCmpDYF(s, (const char *)bfmeStrDYF) == 0);
+	g_bfmeObjDYF->bfmeSetDYF(_strcmpi(s, (const char *)bfmeStrDYF) == 0);
 }
 
-extern "C" __declspec(dllimport) int __cdecl bfmeScanDYG(const char *s, const char *fmt, void *out);
+extern "C" __declspec(dllimport) int __cdecl sscanf(const char *s, const char *fmt, void *out);
 extern "C" unsigned char bfmeFmtDYG[];
 
 int bfmeGoDYG(void *s)
 {
 	if (!s)
 		return -1;
-	if (bfmeScanDYG((const char *)s, (const char *)bfmeFmtDYG, &s) == 1)
+	if (sscanf((const char *)s, (const char *)bfmeFmtDYG, &s) == 1)
 		return (int)s;
 	return -1;
 }

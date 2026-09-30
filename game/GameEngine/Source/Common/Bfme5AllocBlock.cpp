@@ -7,7 +7,7 @@ public:
 };
 
 extern BfmeAllocGlobal *g_bfmeAllocGlobal;
-extern "C" __declspec(dllimport) void * __cdecl u2_import_0135944C(unsigned int bytes);
+extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
 
 // ?bfmeAllocBlock@@YAPAXI@Z
 void * __cdecl bfmeAllocBlock(unsigned int bytes)
@@ -18,5 +18,5 @@ void * __cdecl bfmeAllocBlock(unsigned int bytes)
 		unsigned int metadata[3] = { 0, 0, 0 };
 		return global->allocate(bytes, metadata);
 	}
-	return u2_import_0135944C(bytes);
+	return malloc(bytes);
 }

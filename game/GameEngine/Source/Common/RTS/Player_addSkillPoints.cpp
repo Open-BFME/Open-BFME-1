@@ -89,7 +89,7 @@ extern const Real BfmeZeroRange;
 #define TheRankInfoStore TheRankInfoStore
 #define BfmeZeroRange BfmeZeroRange
 
-extern "C" __declspec(dllimport) double BfmeFloorER(double value);
+extern "C" __declspec(dllimport) double floor(double value);
 
 __forceinline Int bfmeFloatToInt(Real input)
 {
@@ -142,7 +142,7 @@ Bool Player::addSkillPoints(Real delta, Bool fromScript)
 	newSkillPoints = bfmeMax(pointCapReal, newSkillPoints);
 	state->m_skillPoints = newSkillPoints;
 
-	Real floorSkillPoints = (Real)BfmeFloorER((double)newSkillPoints);
+	Real floorSkillPoints = (Real)floor((double)newSkillPoints);
 	points = bfmeFloatToInt(floorSkillPoints);
 	while (points >= state->m_levelUp)
 	{

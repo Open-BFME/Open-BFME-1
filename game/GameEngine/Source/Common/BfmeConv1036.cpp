@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-__declspec(dllimport) int __stdcall bfmeWait1036(void *h, int t);
+extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int t);
 
 class BfmeA1036
 {
@@ -16,7 +16,7 @@ BfmeA1036 *BfmeA1036::bfmeGo1036A(void *h)
 	m_bfmeOn = 0;
 	m_bfmeHandle = h;
 
-	if (bfmeWait1036(h, -1) != 0x102)
+	if (WaitForSingleObject(h, -1) != 0x102)
 		m_bfmeOn = 1;
 
 	return this;

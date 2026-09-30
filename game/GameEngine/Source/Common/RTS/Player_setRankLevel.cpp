@@ -73,7 +73,7 @@ extern RankInfoStore *TheRankInfoStore;
 extern ControlBar *TheControlBar;
 extern Eva *TheEva;
 extern BfmePlayerList *Rva002EE330ThePlayers;
-extern "C" __declspec(dllimport) double BfmeFloorER(double value);
+extern "C" __declspec(dllimport) double floor(double value);
 
 __forceinline long fast_float2long_round(Real input)
 {
@@ -145,7 +145,7 @@ Bool Player::setRankLevel(Int newLevel)
 			if (state->m_sciencePurchasePoints < 0)
 				state->m_sciencePurchasePoints = 0;
 
-			Real currentSkillPoints = (Real)BfmeFloorER(state->m_skillPoints);
+			Real currentSkillPoints = (Real)floor(state->m_skillPoints);
 			if (fast_float2long_round(currentSkillPoints) < skillPointsNeeded)
 				state->m_skillPoints = (Real)skillPointsNeeded;
 

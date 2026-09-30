@@ -21,7 +21,7 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-extern "C" __declspec(dllimport) void * __cdecl BfmeMemMove(
+extern "C" __declspec(dllimport) void * __cdecl memmove(
 	void *destination, const void *source, unsigned int bytes);
 
 class Overridable
@@ -71,7 +71,7 @@ void ScienceStore::reset()
 		{
 			Overridable **next = it + 1;
 			if (next != m_sciencesEnd)
-				BfmeMemMove(it, next,
+				memmove(it, next,
 					(unsigned int)((char *)m_sciencesEnd - (char *)next));
 			--m_sciencesEnd;
 		}

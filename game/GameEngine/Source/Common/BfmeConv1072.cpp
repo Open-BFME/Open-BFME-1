@@ -18,7 +18,7 @@ extern char g_bfmeLitA1072[];
 extern char g_bfmeLitB1072[];
 extern char g_bfmeD1072;
 
-__declspec(dllimport) int __cdecl bfmeSpf1072(char *b, char *f, int a);
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
 class BfmeQ1072
 {
@@ -42,8 +42,8 @@ void BfmeQ1072::bfmeGo1072A(int a, int b)
 	char buf1[0x40];
 	char buf2[0x40];
 
-	bfmeSpf1072(buf1, g_bfmeFmtA1072, m_bfme80[a]);
-	bfmeSpf1072(buf2, g_bfmeFmtA1072, b);
+	sprintf(buf1, g_bfmeFmtA1072, m_bfme80[a]);
+	sprintf(buf2, g_bfmeFmtA1072, b);
 	g_bfmeR1072->bfmeRun1072(m_bfme5c, g_bfmeFmtB1072, 2, buf1, buf2, 0, 0, 0);
 }
 

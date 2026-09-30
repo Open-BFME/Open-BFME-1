@@ -4,7 +4,7 @@ extern "C" void *bfmeVft1030A[];
 extern "C" void *bfmeVft1030B[];
 extern "C" void *bfmeVft1030C[];
 
-__declspec(dllimport) int __stdcall bfmeMake1030(int a, int b, int c);
+extern "C" __declspec(dllimport) int __stdcall CreateMutexA(int a, int b, int c);
 
 class BfmeA1030
 {
@@ -20,7 +20,7 @@ BfmeA1030 *BfmeA1030::bfmeGo1030A(void)
 {
 	bfmeBase1030();
 	m_bfmeVfptr = bfmeVft1030A;
-	m_bfmeH = bfmeMake1030(0, 0, 0);
+	m_bfmeH = CreateMutexA(0, 0, 0);
 	return this;
 }
 

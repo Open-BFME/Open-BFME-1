@@ -38,7 +38,7 @@ void BfmeQ1073::bfmeGo1073A(char a)
 	}
 }
 
-__declspec(dllimport) int __cdecl bfmeFmt1073(char *b, unsigned int n, char *f, double d);
+extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, char *f, double d);
 
 struct BfmeN1073
 {
@@ -52,8 +52,8 @@ void bfmeGo1073B(BfmeN1073 *n, float b, float c)
 	char *q;
 	char *s;
 
-	bfmeFmt1073(buf1, 0x10, g_bfmeFmtF1073, b);
-	bfmeFmt1073(buf2, 0x10, g_bfmeFmtF1073, c);
+	_snprintf(buf1, 0x10, g_bfmeFmtF1073, b);
+	_snprintf(buf2, 0x10, g_bfmeFmtF1073, c);
 	q = n->m_bfme00;
 	s = q ? q + 8 : g_bfmeLit1073;
 	g_bfmeR1073->bfmeRun1073(g_bfmeX1073, g_bfmeFmtG1073, 3, s, buf1, buf2, 0, 0);

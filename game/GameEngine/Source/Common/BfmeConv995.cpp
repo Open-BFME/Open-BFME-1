@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-__declspec(dllimport) void __stdcall bfmeSet995A(int h, float a, float b);
+extern "C" __declspec(dllimport) void __stdcall AIL_set_stream_reverb_levels(int h, float a, float b);
 
 struct BfmeSub995
 {
@@ -43,11 +43,11 @@ void BfmeA995::bfmeGo995A(BfmeArg995 *a)
 		BfmeX995 *x = a->m_bfmeX;
 		BfmeSub995 *s = x->m_bfmeMid->m_bfmeSub;
 
-		bfmeSet995A(x->m_bfmeHandle, s->m_bfmeB, s->m_bfmeA);
+		AIL_set_stream_reverb_levels(x->m_bfmeHandle, s->m_bfmeB, s->m_bfmeA);
 		return;
 	}
 
-	bfmeSet995A(a->m_bfmeX->m_bfmeHandle, 1.0f, 0.0f);
+	AIL_set_stream_reverb_levels(a->m_bfmeX->m_bfmeHandle, 1.0f, 0.0f);
 }
 
 class BfmeLog995

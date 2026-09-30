@@ -2,7 +2,7 @@
 
 extern void *g_bfmeVftTGE[];
 
-__declspec(dllimport) void *__stdcall bfmeMakeTGE(int a);
+extern "C" __declspec(dllimport) void *__stdcall SetErrorMode(int a);
 
 class BfmeThingTGE
 {
@@ -18,7 +18,7 @@ BfmeThingTGE::BfmeThingTGE()
 {
 	bfmeBaseTGE();
 	m_bfmeVft = g_bfmeVftTGE;
-	m_bfmeHandle = bfmeMakeTGE(1);
+	m_bfmeHandle = SetErrorMode(1);
 }
 
 class BfmeSubTGB

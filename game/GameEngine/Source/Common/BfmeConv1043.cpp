@@ -157,7 +157,7 @@ public:
 
 extern char g_bfmeMsg2_1043[];
 __declspec(noreturn) void __stdcall bfmeFatal2_1043(BfmeErr2_1043 *e, char *m);
-__declspec(dllimport) void * __stdcall bfmeOpen1043(char *n);
+extern "C" __declspec(dllimport) void * __stdcall LoadLibraryA(char *n);
 
 class BfmeP1043
 {
@@ -171,7 +171,7 @@ public:
 BfmeP1043 *BfmeP1043::bfmeGo1043P(char *n)
 {
 	m_bfmeVfptr = bfmeVft1043P;
-	m_bfmeHandle = bfmeOpen1043(n);
+	m_bfmeHandle = LoadLibraryA(n);
 
 	if (m_bfmeHandle == 0) {
 		BfmeErr2_1043 e;

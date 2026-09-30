@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) long __stdcall bfmeDecESG(long *addend);
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long *addend);
 
 class BfmeSubESG
 {
@@ -30,7 +30,7 @@ public:
 		{
 			BfmeSubESG *sub = &m_bfmeOwnerESG->m_bfmeSubESG;
 
-			if (bfmeDecESG(&sub->m_bfmeRefESG) <= 0)
+			if (InterlockedDecrement(&sub->m_bfmeRefESG) <= 0)
 				bfmeKillESG(sub);
 		}
 	}

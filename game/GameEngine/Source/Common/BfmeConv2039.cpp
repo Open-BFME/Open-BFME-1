@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) double BfmeFloorER(double x);
+extern "C" __declspec(dllimport) double floor(double x);
 
 class BfmeHostER
 {
@@ -13,7 +13,7 @@ public:
 
 unsigned int BfmeHostER::bfmeIndexER(float v)
 {
-	float t = (float)BfmeFloorER((v - m_bfmeBaseER) * m_bfmeInvER * (float)m_bfmeCountER);
+	float t = (float)floor((v - m_bfmeBaseER) * m_bfmeInvER * (float)m_bfmeCountER);
 	int i;
 
 	__asm fld t

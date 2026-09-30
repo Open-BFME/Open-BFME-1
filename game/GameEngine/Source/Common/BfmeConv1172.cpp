@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnter1172(void *p);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeave1172(void *p);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *p);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *p);
 
 class BfmeF1172
 {
@@ -29,10 +29,10 @@ void BfmeQ1172::bfmeGo1172(int a)
 	int t[2];
 	void *p = &m_bfme2c;
 
-	bfmeEnter1172(p);
+	EnterCriticalSection(p);
 	m_bfme44.bfmeFill1172(t);
 	m_bfme58 = t[0];
 	m_bfme5c = t[1];
 	m_bfme1e8 = a;
-	bfmeLeave1172(p);
+	LeaveCriticalSection(p);
 }

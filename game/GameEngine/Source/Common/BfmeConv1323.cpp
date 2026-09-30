@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-__declspec(dllimport) long __stdcall bfmeInitTTD(void *a, int b);
+extern "C" __declspec(dllimport) long __stdcall CoInitializeEx(void *a, int b);
 
 class BfmeThingTTD
 {
@@ -25,11 +25,11 @@ BfmeThingTTD::BfmeThingTTD()
 	m_bfme0a = 0;
 	m_bfmeHr = 0x80004005;
 	m_bfme10 = 0;
-	m_bfmeHr = bfmeInitTTD(0, 6);
+	m_bfmeHr = CoInitializeEx(0, 6);
 }
 
-__declspec(dllimport) int __cdecl bfmeOpenTTE(void *name);
-__declspec(dllimport) void __cdecl bfmeBindTTE(int h, void *name);
+extern "C" __declspec(dllimport) int __cdecl getc(void *name);
+extern "C" __declspec(dllimport) void __cdecl ungetc(int h, void *name);
 
 class BfmeThingTTE
 {
@@ -41,9 +41,9 @@ public:
 
 int BfmeThingTTE::bfmeGoTTE()
 {
-	int h = bfmeOpenTTE(m_bfmeName);
+	int h = getc(m_bfmeName);
 	if (h != -1) {
-		bfmeBindTTE(h, m_bfmeName);
+		ungetc(h, m_bfmeName);
 		return h;
 	}
 	return -1;

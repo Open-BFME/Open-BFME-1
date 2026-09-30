@@ -16,13 +16,13 @@ void __cdecl bfmePushUserVHR(BfmeLuaVHR *L, void *u, int tag);
 void *__cdecl bfmeToUserVIF(BfmeLuaVHR *L, int n);
 void __cdecl bfmeSetTopVIF(BfmeLuaVHR *L, int n);
 
-__declspec(dllimport) void *__cdecl bfmeFopenVIF(const char *name, const char *mode);
+extern "C" __declspec(dllimport) void *__cdecl fopen(const char *name, const char *mode);
 
 int __cdecl bfmeOpenVIF(BfmeLuaVHR *L)
 {
 	BfmeTagVIF *tag = (BfmeTagVIF *)bfmeToUserVIF(L, -1);
 	bfmeSetTopVIF(L, -2);
-	void *fp = bfmeFopenVIF(bfmeCheckStrVHR(L, 1, 0), bfmeCheckStrVHR(L, 2, 0));
+	void *fp = fopen(bfmeCheckStrVHR(L, 1, 0), bfmeCheckStrVHR(L, 2, 0));
 	if (fp)
 	{
 		bfmePushUserVHR(L, fp, tag->m_bfme08);

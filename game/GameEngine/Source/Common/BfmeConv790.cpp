@@ -4,8 +4,8 @@ struct BfmeCsDWD
 	unsigned char m_bfmeHead[0x18];
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterDWD(BfmeCsDWD *cs);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveDWD(BfmeCsDWD *cs);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCsDWD *cs);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCsDWD *cs);
 
 struct BfmeThingDWD
 {
@@ -18,14 +18,14 @@ struct BfmeThingDWD
 
 int BfmeThingDWD::bfmeLockDWD()
 {
-	bfmeEnterDWD(m_bfmeCs);
+	EnterCriticalSection(m_bfmeCs);
 	m_bfmeHeld = 1;
 	return 0;
 }
 
 void BfmeThingDWD::bfmeUnlockDWD()
 {
-	bfmeLeaveDWD(m_bfmeCs);
+	LeaveCriticalSection(m_bfmeCs);
 	m_bfmeHeld = 0;
 }
 
@@ -33,7 +33,7 @@ void BfmeThingDWD::bfmeReleaseDWD()
 {
 	if (m_bfmeHeld)
 	{
-		bfmeLeaveDWD(m_bfmeCs);
+		LeaveCriticalSection(m_bfmeCs);
 		m_bfmeHeld = 0;
 	}
 }

@@ -100,7 +100,7 @@ int BfmeE1035::bfmeGo1035E(void)
 	return n;
 }
 
-__declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+extern "C" __declspec(dllimport) void __cdecl free(void *p);
 
 class BfmeF1035
 {
@@ -118,7 +118,7 @@ void BfmeF1035::bfmeGo1035F(void)
 	int z = 0;
 
 	if (m_bfmeP != 0) {
-		bfmeFree1035(m_bfmeP);
+		free(m_bfmeP);
 		m_bfmeP = (void *)z;
 	}
 

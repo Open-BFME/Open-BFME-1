@@ -28,7 +28,7 @@ void __stdcall bfmeCopyVHE(BfmeMsgVHE *dst, BfmeMsgVHE *src)
 
 struct BfmeParseVHG;
 
-__declspec(dllimport) int __cdecl bfmeAtoiVHG(const char *s);
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *s);
 
 struct BfmeFieldVHG
 {
@@ -53,7 +53,7 @@ public:
 
 void __cdecl bfmeGoVHG(BfmeIniVHG *ini, BfmeThingVHG *obj)
 {
-	int n = bfmeAtoiVHG(ini->bfmeNextTokenVHG(0)) - 1;
+	int n = atoi(ini->bfmeNextTokenVHG(0)) - 1;
 	ini->bfmeInitFromVHG(&obj->m_bfmeArr[n], g_bfmeParseVHG);
 }
 

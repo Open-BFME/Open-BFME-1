@@ -67,7 +67,7 @@ void BfmeThingVGH::bfmeGoVGH(const char *s)
 	m_bfmeStr.bfmeSetVGD(s, s ? strlen(s) : 0);
 }
 
-__declspec(dllimport) unsigned __cdecl bfmeLenVGI(const unsigned short *s);
+extern "C" __declspec(dllimport) unsigned __cdecl wcslen(const unsigned short *s);
 
 class BfmeWideVGI
 {
@@ -86,7 +86,7 @@ public:
 void BfmeThingVGI::bfmeGoVGI(BfmeWideVGI *out)
 {
 	const unsigned short *p = m_bfmeBuf;
-	out->bfmeSetVGI(p, p ? bfmeLenVGI(p) : 0);
+	out->bfmeSetVGI(p, p ? wcslen(p) : 0);
 }
 
 class BfmeThingVGJ
