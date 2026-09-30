@@ -103,17 +103,25 @@ public:
 
 void *bfmeGo929C( void );
 
+extern "C" const void *bfmeVftRva007F6D60Child[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva007F6D60Child=??_7Rva007F6D60Child@@6B@")
+extern void *g_bfmeVftBTWB[];
+extern const void *Rva0112B5F0[];
+extern const void *g_0112B800[];
+extern const void *g_0112B7F8[];
+extern const void *g_0112B7F0[];
+
 // One 0x94-byte record of the four the holder owns at this+0x58.
 struct Rva007F6D60Child
 {
 	~Rva007F6D60Child()
 	{
-		m_vftable = 0x0112b5c4;
+		m_vftable = (unsigned)bfmeVftRva007F6D60Child;
 		m_08 = 0;
 		m_chain3C.m();
 		m_chain2C.m();
 		m_buffer1C.reset();
-		m_vftable = 0x0112b598;
+		m_vftable = (unsigned)g_bfmeVftBTWB;
 	}
 
 	unsigned m_vftable;									///< child+0x00
@@ -131,7 +139,7 @@ struct Rva007F6D60Child
 class Rva007F8090Base
 {
 public:
-	~Rva007F8090Base() { m_v0 = 0x0112b5f0; }
+	~Rva007F8090Base() { m_v0 = (unsigned)Rva0112B5F0; }
 
 	unsigned m_v0;
 	unsigned m_v4;
@@ -170,9 +178,9 @@ public:
 // ??1BfmeThingDGD@@QAE@XZ
 BfmeThingDGD::~BfmeThingDGD()
 {
-	m_v0 = 0x0112b800;
-	m_v4 = 0x0112b7f8;
-	m_v8 = 0x0112b7f0;
+	m_v0 = (unsigned)g_0112B800;
+	m_v4 = (unsigned)g_0112B7F8;
+	m_v8 = (unsigned)g_0112B7F0;
 
 	if( m_20 != 0 )
 	{

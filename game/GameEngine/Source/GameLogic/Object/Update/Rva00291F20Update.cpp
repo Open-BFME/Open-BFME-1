@@ -219,6 +219,16 @@ public:
 	void *m_fx2c;
 };
 
+extern "C" const void *bfmeVftPartitionFilter[];
+extern "C" const void *bfmeVftPartitionFilterRelationship[];
+extern "C" const void *bfmeVftRva00265150RJFilter[];
+extern "C" const void *bfmeVftRva0025ED50RootFilter[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00265150RJFilter=??_7Rva00265150RJFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+extern int g_target_00291860;
+
 // ABI views of retail filters. Vtables 010A5158/01085DC0/010BE58C
 // have deleting destructors that route to 00201F10/000EC7A0/00291880;
 // each restores the actual base vtable 01083B5C.
@@ -237,7 +247,7 @@ public:
 	__forceinline PartitionFilterA00291F20(const void *field, Player *player, bool match)
 	{
 		m_next = 0;
-		*reinterpret_cast<unsigned int *>(this) = 0x010A5158;
+		*reinterpret_cast<unsigned int *>(this) = (unsigned int)bfmeVftRva00265150RJFilter;
 		m_field = field;
 		m_player = player;
 		m_match = match;
@@ -245,7 +255,7 @@ public:
 
 	~PartitionFilterA00291F20()
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const void *m_field;
@@ -260,7 +270,7 @@ public:
 
 	~Rva001DCBB0Filter()
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	Player *m_player;
@@ -273,7 +283,7 @@ public:
 	__forceinline PartitionFilterB00291F20(Object *object, int mode, bool match)
 	{
 		m_next = 0;
-		*reinterpret_cast<unsigned int *>(this) = 0x01085DC0;
+		*reinterpret_cast<unsigned int *>(this) = (unsigned int)bfmeVftPartitionFilterRelationship;
 		m_object = object;
 		m_mode = mode;
 		m_match = match;
@@ -281,7 +291,7 @@ public:
 
 	~PartitionFilterB00291F20()
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	Object *m_object;
@@ -295,12 +305,12 @@ public:
 	__forceinline PartitionFilterBase00291F20()
 	{
 		m_next = 0;
-		m_vptr = 0x010BE58C;
+		m_vptr = (unsigned int)&g_target_00291860;
 	}
 
 	~PartitionFilterBase00291F20()
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	volatile unsigned int m_vptr;
@@ -313,12 +323,12 @@ public:
 	__forceinline PartitionFilterRoot00291F20()
 	{
 		m_next = 0;
-		m_vptr = 0x01083B80;
+		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
 	}
 
 	~PartitionFilterRoot00291F20()
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	volatile unsigned int m_vptr;
