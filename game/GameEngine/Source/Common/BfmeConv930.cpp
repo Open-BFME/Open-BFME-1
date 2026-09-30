@@ -1,3 +1,6 @@
+// cl: /MD
+#include <stdlib.h>
+
 // Open-BFME5 conversions.
 
 class BfmeSub911E
@@ -46,7 +49,6 @@ public:
 };
 
 extern BfmeGlob930C *g_bfme930Glob;
-__declspec(dllimport) void __cdecl bfmeImport930C(void *a);
 
 void bfmeGo930C(void *a)
 {
@@ -55,7 +57,7 @@ void bfmeGo930C(void *a)
 		g->bfmeVirt930C(a, 0);
 		return;
 	}
-	bfmeImport930C(a);
+	free(a);
 }
 
 void bfmeFreeRC(void *p);
@@ -81,26 +83,6 @@ void BfmeThing930D::bfmeGo930D()
 	BfmeOldKB *s = m_bfmeP;
 	if (s)
 		s->bfmeRelKB();
-}
-
-extern char g_bfme930Vft[];
-
-class BfmeThing930F
-{
-public:
-	void bfmeGo930F();
-	void bfmeTail930F();
-	char *m_bfmeVft;
-	char m_bfmePad[0x18];
-	void *m_bfmeP;
-};
-
-void BfmeThing930F::bfmeGo930F()
-{
-	void *p = m_bfmeP;
-	m_bfmeVft = g_bfme930Vft;
-	bfmeFreeRC(p);
-	bfmeTail930F();
 }
 
 void bfmeCall930G(int a, int b, int n, void *p, int m, int f);
