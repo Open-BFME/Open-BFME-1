@@ -53,6 +53,17 @@ class StaleBrief(RuntimeError):
     """A brief target is no longer an open body at the stated size."""
 
 
+class SharedClaimsUnavailable(RuntimeError):
+    """Origin could not confirm the shared claims: no worker may start.
+    Distinct from ClaimConflict (exit 75, repick at once) so seat.sh backs
+    off instead of spinning while the network is down."""
+
+
+# fleet_run exits with this when origin cannot confirm the shared claims
+# (EX_UNAVAILABLE); seat.sh treats it as a fast failure and backs off.
+EXIT_CLAIMS_UNAVAILABLE = 69
+
+
 class CoordinationUnavailable(RuntimeError):
     """Prior fleet state cannot be proved intact; refuse a new owner."""
 
@@ -718,6 +729,117 @@ def release(root, run, reason, *, stopped_fleet=False, expected_state_sha=None):
         db.execute("INSERT INTO releases VALUES (?,?,?)", (run, time.time(), reason))
 
 
+def shared_claims_enabled():
+    return os.environ.get("BFME_CLAIMS", "on") != "off"
+
+
+class Heartbeat:
+    """Renews a run's shared claims every `interval` seconds (claims.renew).
+    A claim reported lost (expired and taken over) is recorded, never
+    re-taken: the other worker owns the body now."""
+
+    def __init__(self, root, run, record, lock, interval):
+        self.root, self.run, self.record, self.lock = root, run, record, lock
+        self.interval = interval
+        self.done = threading.Event()
+        self.thread = threading.Thread(target=self.loop, daemon=True)
+
+    def start(self):
+        self.thread.start()
+        return self
+
+    def beat(self):
+        import claims
+        with self.lock:
+            tokens = dict(self.record.get("shared_claim_tokens") or {})
+        if not tokens:
+            return
+        try:
+            renewed, lost = claims.renew(tokens, who=f"fleet:{self.run}", root=self.root)
+        except Exception as error:  # noqa: BLE001 -- the claim just expires
+            with self.lock:
+                self.record["shared_claims_heartbeat_error"] = str(error)
+            return
+        with self.lock:
+            self.record["shared_claim_tokens"] = {f"0x{r:08x}": t for r, t in renewed.items()}
+            self.record["shared_claims_renewed"] = time.time()
+            if lost:
+                self.record.setdefault("shared_claims_lost", []).extend(f"0x{r:08x}" for r in lost)
+
+    def loop(self):
+        while not self.done.wait(self.interval):
+            self.beat()
+
+    def stop(self):
+        self.done.set()
+        if self.thread.is_alive():
+            self.thread.join(timeout=5)
+
+
+def claim_shared(root, run, targets, engine, seat, record, lock=None):
+    """Claim a run's targets on origin before any worker starts.
+
+    Raises ClaimConflict (exit 75: seat.sh repicks at once) when another
+    worker holds a target or origin never confirmed one, and
+    SharedClaimsUnavailable (exit 69: seat.sh backs off) when origin cannot be
+    reached. Before 2026-09-29 both were ignored and the worker started
+    anyway, which let two seats convert the same body. Returns a started
+    Heartbeat, or None when BFME_CLAIMS=off."""
+    if not shared_claims_enabled():
+        record["shared_claims_skipped"] = "BFME_CLAIMS=off"
+        return None
+    import claims
+    if not claims.configured(root):
+        record["shared_claims_skipped"] = f"no {claims.REMOTE} remote in {root}"
+        return None
+    rvas = [int(rva, 16) for rva, _ in targets]
+    try:
+        result = claims.claim(rvas, who=f"fleet:{run}", note=f"{engine} seat {seat}", root=root)
+    except claims.ClaimsUnavailable as error:
+        record["shared_claims"] = [f"0x{r:08x}" for r in error.claimed]
+        record["shared_claims_error"] = str(error)
+        raise SharedClaimsUnavailable(str(error)) from error
+    record["shared_claims"] = [f"0x{r:08x}" for r in result.claimed]
+    record["shared_claim_tokens"] = {f"0x{r:08x}": t for r, t in result.tokens.items()}
+    record["shared_claim_worker"] = result.worker
+    if result.refused:
+        held = [r for r in result.refused if r not in result.unconfirmed]
+        record["shared_claims_refused"] = [f"0x{r:08x}" for r in result.refused]
+        raise ClaimConflict(
+            "shared claim not granted for "
+            + " ".join(f"0x{r:08X}" for r in result.refused)
+            + (" (held by another worker)" if held else " (origin did not confirm)"))
+    interval = max(60.0, claims.TTL_HOURS * 3600 / 4)
+    return Heartbeat(root, run, record, lock or threading.RLock(), interval).start()
+
+
+def settle_shared(root, run, record):
+    """A run ended: release its shared claims except bodies whose landing is
+    committed here but not yet on origin/master (those stay claimed until
+    `claims.py release --landed` sees them upstream, or until they expire).
+    Never raises: claims expire on their own."""
+    try:
+        import claims
+        tokens = {int(r, 16): t for r, t in (record.get("shared_claim_tokens") or {}).items()}
+        try:
+            released, waiting = claims.release_landed(root=root)
+        except (claims.ClaimsUnavailable, ValueError) as error:
+            released, waiting = [], None
+            record["shared_claims_settle_error"] = str(error)
+        mine = [int(r, 16) for r in record.get("shared_claims") or []]
+        # origin/master unreadable: landed-but-unpublished bodies look like
+        # abandoned ones, so keep every claim until it expires.
+        keep = set(mine) if waiting is None else set(waiting) & set(mine)
+        free = [r for r in mine if r not in keep and r not in released]
+        done = claims.release(free, who=f"fleet:{run}", root=root,
+                              tokens={r: t for r, t in tokens.items() if r in free}) if free else []
+        record["shared_claims_released"] = [f"0x{r:08x}" for r in sorted(set(done) | set(released))]
+        if keep:
+            record["shared_claims_kept"] = [f"0x{r:08x}" for r in sorted(keep)]
+    except Exception as error:  # noqa: BLE001
+        record["shared_claims_settle_error"] = str(error)
+
+
 def save(path, data):
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=2), encoding="utf-8")
@@ -764,6 +886,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
             save(record_path, record)
 
     claimed = False
+    heartbeat = None
     child = None
     bootstrap = None
     timer = None
@@ -774,15 +897,12 @@ def execute(root, brief, legacy_log, engine, seat, command):
         save_record()
         claim(root, run, targets, cgroup_path=str(unit.path), expires_at=lease_expires)
         claimed = True
-        # The lease above is local to this checkout; also claim the targets on
-        # origin so other hosts' pickers skip them (tools/claims.py). Advisory:
-        # a network failure never stops the run.
-        try:
-            import claims
-            record["shared_claims"] = claims.claim([rva for rva, _ in targets],
-                                                   who=f"fleet:{run}", note=f"{engine} seat {seat}")[0]
-        except Exception as error:  # noqa: BLE001
-            record["shared_claims_error"] = str(error)
+        # The lease above is local to this checkout; the shared claim on
+        # origin is what other hosts see (tools/claims.py). Fail-closed: a
+        # target another worker holds, or one origin never confirmed, means
+        # no worker starts on this brief.
+        heartbeat = claim_shared(root, run, targets, engine, seat, record, record_lock)
+        save_record()
         validate_targets(root, targets)
         record["status"] = "running"
         save_record()
@@ -930,14 +1050,14 @@ def execute(root, brief, legacy_log, engine, seat, command):
             save(record_path, record)
         # Release only after a positive empty observation. The record carries
         # that evidence before the DB row is removed; then remove only our unit.
+        if heartbeat is not None:
+            heartbeat.stop()
         if claimed and empty:
             release(root, run, "contained worker unit empty")
             if record.get("shared_claims"):
-                try:
-                    import claims
-                    claims.release(record["shared_claims"], who=f"fleet:{run}")
-                except Exception:  # noqa: BLE001 -- claims expire on their own
-                    pass
+                with record_lock:
+                    settle_shared(root, run, record)
+                    save(record_path, record)
         if empty:
             unit.remove()
 
@@ -987,6 +1107,9 @@ def main():
     except (ClaimConflict, StaleBrief) as error:
         print(f"fleet run: {error}; repick", file=sys.stderr)
         sys.exit(75)
+    except SharedClaimsUnavailable as error:
+        print(f"fleet run: {error}; no worker started, back off", file=sys.stderr)
+        sys.exit(EXIT_CLAIMS_UNAVAILABLE)
 
 
 if __name__ == "__main__":

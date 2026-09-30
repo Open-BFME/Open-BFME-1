@@ -544,10 +544,14 @@ def launch(groups, hours, note_template=None, brief_fn=None, mode=None):
         seat_id = f"{stamp}_{i}"
         # Claim on origin before any work: a body another host claimed since
         # pick() ran is dropped, never converted twice.
-        got, refused = claims.claim(rvas, note=f"astra seat {seat_id}")
+        try:
+            got, refused = claims.claim(rvas, note=f"astra seat {seat_id}")
+        except claims.ClaimsUnavailable as error:
+            # fail-closed: an unconfirmed claim is no claim; launch nothing more
+            raise SystemExit(f"astra_seats: {error}; stopped before seat {seat_id}")
         if refused:
-            print(f"seat {seat_id}: {len(refused)} body(ies) claimed elsewhere, dropped: "
-                  + " ".join(f"0x{r:08X}" for r in refused))
+            print(f"seat {seat_id}: {len(refused)} body(ies) not claimed (held elsewhere or "
+                  "unconfirmed), dropped: " + " ".join(f"0x{r:08X}" for r in refused))
             rvas = [r for r in rvas if r not in set(refused)]
             if not rvas:
                 continue

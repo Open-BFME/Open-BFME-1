@@ -28,10 +28,14 @@ def hosts(tmp_path, monkeypatch):
         _git(clone, "config", "user.email", f"{name}@example.com")
         clones[name] = clone
 
+    monkeypatch.delenv("BFME_RUN_ID", raising=False)
+
     def act(name):
         monkeypatch.setattr(claims, "ROOT", clones[name])
         monkeypatch.setenv("BFME_CLAIM_OWNER", name)
         claims.active.cache_clear()
+        return clones[name]
+    act.origin = origin
     return act
 
 
@@ -70,11 +74,15 @@ def test_renewing_your_own_claim_succeeds(hosts):
     assert claims.claim([0x100]) == ([0x100], [])
 
 
-def test_an_unreachable_origin_blocks_nothing(hosts, monkeypatch):
+def test_an_unreachable_origin_fails_closed(hosts, monkeypatch):
+    # Readers still serve (a picker only proposes), but claim() may no longer
+    # answer ([], []) -- "nothing claimed" and "nothing to claim" looked alike.
     hosts("a")
     monkeypatch.setattr(claims, "REMOTE", "no-such-remote")
     assert claims.active() == {}
-    assert claims.claim([0x100]) == ([], [])
+    with pytest.raises(claims.ClaimsUnavailable):
+        claims.claim([0x100])
+    assert claims.main(["claim", "0x100"]) == 2
 
 
 def test_active_reads_the_origin_of_the_given_root_not_this_checkout(hosts, tmp_path):
@@ -92,3 +100,114 @@ def test_active_reads_the_origin_of_the_given_root_not_this_checkout(hosts, tmp_
     import eligibility
     (lonely / "build").mkdir()
     assert "0x00000300" not in eligibility.busy_rvas(lonely)
+
+
+def test_a_claim_result_carries_tokens_and_still_unpacks(hosts):
+    hosts("a")
+    result = claims.claim([0x100, 0x200])
+    got, refused = result
+    assert (got, refused) == ([0x100, 0x200], [])
+    assert result.worker == "a" and result.unconfirmed == []
+    token = result.tokens[0x100]
+    assert claims.holds(0x100, token)
+    assert result.tokens[0x200] == token          # one claim commit per call
+
+
+def test_a_push_origin_refuses_without_a_holder_is_unconfirmed(hosts, monkeypatch):
+    hosts("a")
+    real = claims._git
+
+    def flaky(*args, **kw):
+        if args[:1] == ("push",):
+            return claims.subprocess.CompletedProcess(args, 1, "", "connection reset")
+        return real(*args, **kw)
+    monkeypatch.setattr(claims, "_git", flaky)
+    with pytest.raises(claims.ClaimsUnavailable):
+        claims.claim([0x100])
+
+
+def test_a_race_lost_after_fetch_is_refused_not_unconfirmed(hosts, monkeypatch):
+    hosts("a")
+    real_fetch = claims.fetch
+    calls = []
+
+    def fetch_then_race(root=None):
+        ok = real_fetch(root)
+        if not calls:                  # b claims between a's fetch and a's push
+            calls.append(1)
+            monkeypatch.setenv("BFME_CLAIM_OWNER", "b")
+            claims.claim([0x100], root=hosts.b_root)
+            monkeypatch.setenv("BFME_CLAIM_OWNER", "a")
+        return ok
+    hosts.b_root = hosts("b")
+    hosts("a")
+    monkeypatch.setattr(claims, "fetch", fetch_then_race)
+    result = claims.claim([0x100])
+    assert result == ([], [0x100]) and result.unconfirmed == []
+
+
+def test_the_default_owner_is_per_checkout_not_per_host(hosts, monkeypatch, tmp_path):
+    a = hosts("a")
+    b = hosts("b")
+    monkeypatch.delenv("BFME_CLAIM_OWNER")
+    assert claims.owner(a) != claims.owner(b)
+    assert claims.owner(a) == claims.owner(a)
+    monkeypatch.setenv("BFME_RUN_ID", "20260929T000000Z-abc")
+    assert claims.owner(a) == "fleet:20260929T000000Z-abc"
+
+
+def test_heartbeat_renews_and_fencing_detects_a_takeover(hosts):
+    hosts("a")
+    result = claims.claim([0x100, 0x200], ttl_hours=-1)            # both already expired
+    renewed, lost = claims.renew({0x100: result.tokens[0x100]})
+    assert lost == [] and claims.holds(0x100, renewed[0x100])
+    assert not claims.holds(0x100, result.tokens[0x100])           # old token is dead
+    hosts("b")
+    taken = claims.claim([0x200])                                  # expired: b takes it over
+    assert taken.claimed == [0x200]
+    hosts("a")
+    renewed, lost = claims.renew({0x200: result.tokens[0x200]})
+    assert renewed == {} and lost == [0x200]
+    # a stale release (even forced) never deletes the successor's claim
+    assert claims.release([0x200], force=True, tokens={0x200: result.tokens[0x200]}) == []
+    assert claims.active()[0x200]["owner"] == "b"
+
+
+def _commit_ledger(clone, rows, message):
+    ledger = clone / claims.LEDGER
+    ledger.parent.mkdir(parents=True, exist_ok=True)
+    ledger.write_text("name,export_rva,target_rva,target_size,source,status,notes\n"
+                      + "".join(r + "\n" for r in rows), encoding="utf-8")
+    _git(clone, "add", claims.LEDGER)
+    _git(clone, "commit", "-q", "-m", message)
+    return _git(clone, "rev-parse", "HEAD").strip()
+
+
+def test_a_landing_releases_only_once_origin_master_holds_the_row(hosts):
+    a = hosts("a")
+    base = _commit_ledger(a, ["?d_00000100@@YAXXZ,,0x00000100,16,game/gen_asm/x.asm,matched,gen-dump"], "base")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    sha = _commit_ledger(a, [row], "land")
+    claims.queue_landed(0x100, row)
+    # verified and committed locally, not pushed: the claim must hold
+    assert claims.release_landed() == ([], [0x100])
+    assert 0x100 in claims.active()
+    with pytest.raises(ValueError):
+        claims.landed_rvas(sha)
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert claims.release_landed() == ([0x100], [])
+    assert claims.active() == {} and claims.pending() == []
+    assert base != sha
+
+
+def test_release_landed_sha_releases_the_rows_that_commit_adds(hosts):
+    a = hosts("a")
+    _commit_ledger(a, [], "base")
+    claims.claim([0x300])
+    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,"], "land")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert claims.landed_rvas(sha) == [0x300]
+    assert claims.main(["release", "--landed", sha]) == 0
+    assert claims.active() == {}
