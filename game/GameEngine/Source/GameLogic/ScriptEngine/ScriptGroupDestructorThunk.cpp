@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ lift of the retail pooled-list destructor.
 
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+
 class ScriptPoolObject
 {
 public:
@@ -40,7 +43,7 @@ private:
 // ??1ScriptGroup@@MAE@XZ
 ScriptGroup::~ScriptGroup()
 {
-	*(volatile unsigned int *)this = 0x01073744;
+	*(volatile unsigned int *)this = (unsigned int)bfmeVftSnapshot;
 	PoolAllocation<ScriptGroupPoolObject> *nextGroup =
 		*(PoolAllocation<ScriptGroupPoolObject> * volatile *)&m_nextGroup;
 	delete nextGroup;

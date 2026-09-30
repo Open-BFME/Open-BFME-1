@@ -59,6 +59,8 @@ private:
 	char m_2AC;
 };
 
+void __cdecl rva007EAC10BeginCallback(Rva007E9FC0Owner *owner, int count, void *peer);
+
 void Rva007E9FC0Owner::begin(int n, void *peer)
 {
 	if (peer)
@@ -77,7 +79,7 @@ void Rva007E9FC0Owner::begin(int n, void *peer)
 	else if (!m_A0 && !m_2AC)
 	{
 		m_2AC = 1;
-		m_0C->sendTriple(m_buf30, 0, m_buf90, n, 0x00BEAC10, this);
+		m_0C->sendTriple(m_buf30, 0, m_buf90, n, (int)rva007EAC10BeginCallback, this);
 	}
 	else
 	{

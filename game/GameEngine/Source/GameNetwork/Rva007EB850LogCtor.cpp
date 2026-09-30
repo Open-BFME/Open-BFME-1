@@ -1,3 +1,5 @@
+void Rva007EB820BoundCallback();
+
 class Rva007EB850Log
 {
 public:
@@ -10,7 +12,7 @@ private:
 
 Rva007EB850Log::Rva007EB850Log()
 {
-    m_callback = reinterpret_cast<void (*)()>(0x00BEB820);
+    m_callback = &Rva007EB820BoundCallback;
     for (int i = 0; i < 3; ++i)
         m_fields[i] = 0;
 }
