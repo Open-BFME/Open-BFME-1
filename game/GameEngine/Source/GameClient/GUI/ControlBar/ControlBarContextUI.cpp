@@ -143,6 +143,7 @@ struct ContainEntry
 };
 
 typedef void (*ContainIterateFunc)(Object *, void *);
+extern void j_0003fd5f();
 
 class ContainModuleInterface
 {
@@ -826,7 +827,7 @@ void ControlBar::doTransportInventoryUI(Object *transport, const CommandSet *com
 		data.currIndex = firstInventoryIndex;
 		data.maxIndex = lastInventoryIndex;
 		data.transport = transport;
-		contain->slot63((ContainIterateFunc)0x0043fd5f, &data, true);
+		contain->slot63((ContainIterateFunc)j_0003fd5f, &data, true);
 	}
 
 	m_lastRecordedInventoryCount = contain->getContainCount(false);

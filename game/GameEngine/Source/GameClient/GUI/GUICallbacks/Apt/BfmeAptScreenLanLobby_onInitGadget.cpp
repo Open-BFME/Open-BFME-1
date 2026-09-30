@@ -115,8 +115,9 @@ int GadgetComboBoxAddEntry(GameWindow *comboBox, UnicodeString text, int color);
 // The tooltip callback starts at RVA 0x00518150 after 0xCC padding and
 // ends at 0x005182E1. Its cdecl ABI reads the window and packed coordinates
 // from stack arguments 1 and 3 and returns without stack cleanup.
-static GameWinTooltipFunc const kLanLobbyGamesTooltip =
-	reinterpret_cast<GameWinTooltipFunc>(0x00918150u);
+void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
+	unsigned int mouse);
+#define kLanLobbyGamesTooltip Rva00518150LanLobbyTooltip
 
 class LanLobbyUserNamePrefs
 {

@@ -1,3 +1,6 @@
+extern "C" const void *bfmeVftRva007F6D60Member2C[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva007F6D60Member2C=??_7Rva007F6D60Member2C@@6B@")
+
 struct Rva7F4CC0Child
 {
 	Rva7F4CC0Child();
@@ -6,7 +9,7 @@ struct Rva7F4CC0Child
 		second = 0;
 		third = 0;
 		first = 0;
-		table = 0x011296B0;
+		table = (unsigned int)bfmeVftRva007F6D60Member2C;
 	}
 
 	volatile unsigned int table;
