@@ -309,9 +309,8 @@ It prints the file's LINKED bytes at the census and after your change. The
 census stays the record; the check is a preview and can be stale by whatever
 other files changed since.
 
-`python3 tools/link_check.py --next` ranks blocker names by the bytes their fix
-alone would link: files where that name is the only thing left. Pick one, fix
-the name in every file it blocks, and re-check those files.
+`--next` ranks names by the bytes their fix alone would link; the daily
+census publishes it as `link_queue.csv`, served by `link_check.py next`.
 
 No index yet? It is written by `python3 tools/link_census.py --build --history`
 (the daily census) or `--status` on the census's own tree.

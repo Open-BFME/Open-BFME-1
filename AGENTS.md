@@ -19,37 +19,35 @@ An explicit request or assigned lane overrides the queue. WorldBuilder work
 uses `python3 tools/worldbuilder.py next` and `docs/worldbuilder.md`; its
 ledger and verification are separate from the game's.
 
-1. `python3 tools/next_work.py` is the default work and explains its
-   tiers. The first, `finish`, serves a body whose banked attempt already
-   scores 0.90+: start from that stash, even if a later session recorded
-   `blocked`.
-2. Most remaining work is anonymous `?d_` bodies; the brief's evidence pack
+1. **Linking first.** `python3 tools/link_check.py next` claims the name that
+   alone blocks the most unlinked bytes. Fix it the
+   smallest way: keep the retail-proven copy, remove a wrong definition nothing
+   verified needs, define one datum (`tools/add_data_match.py`), or map an
+   import to retail's. Gate, push with its `Claim-Lease:` trailer and
+   `link_check.py <file>` before/after (or the queue row's bytes) in the
+   message, then `claims.py release --landed <sha>`. STLport, string and
+   `The*` global names have one owner each (`next --family F`); leave them.
+   Never reorder `functions.csv` rows to win COMDAT selection.
+2. `python3 tools/next_work.py` is the byte-matching default and explains its
+   tiers. Its `finish` tier serves a banked attempt scoring 0.90+: start from
+   that stash, even after a later `blocked`.
+3. Most remaining work is anonymous `?d_` bodies; the brief's evidence pack
    is the lead. A proven identity gets its real name, evidence cited. An
    unproven one gets an opaque name that keeps the address
    (`RvaXXXXXXXX::method`, `?dup_XXXXXXXX`). Never ship a plausible
    guessed name: no gate can see it. `docs/carving.md` and
    `tools/carve_unclaimed.py` serve bodies found by boundary evidence.
-3. Named `__emit` lifts are dumps too; `python3 tools/lift_lane.py` lists them.
+4. Named `__emit` lifts are dumps too; `python3 tools/lift_lane.py` lists them.
    Names are often wrong; follow the brief's EXTENT and IDENTITY CHECK
-   lines. Convert one by writing the real body in the TU its
-   `// readable body of` comment names, landing it with
-   `add_match --replace-existing` at the proven extent, and deleting the naked
-   function.
-4. When `next_work.py` is dry, `python3 tools/list_naked_candidates.py game`
-   serves byte-true dumps from `game/gen_asm/` with proven boundaries.
-5. Replacing generator-written C++ scores +0 on the headline but recolours the
-   bar. Only `gen-tgrid`/`gen-shim` rows have source to write; `gen-thunk`,
-   `gen-funclet`, `gen-ehstub`, `gen-dtor` and `gen-import` never do. Take it
-   after the lanes above.
-6. **Linked build.** `python3 tools/image_compose.py next [--family F]` claims
-   the blocker whose fix alone closes the most authored files and prints its
-   command: `provider` -> `tools/provider_repair.py next --symbol S`, `apply`,
-   `check` (fleet lane `provider`); `data` -> its `data-next --symbol S`,
-   `tools/add_data_match.py`; `import` -> `tools/import_binding.py apply`,
-   `check`. `tools/link_check.py <file>` lists its blockers;
-   `tools/link_debt.py --report` lists addresses to name.
+   lines. Write the real body in the TU its `// readable body of` comment
+   names, land it with `add_match --replace-existing` at the proven extent,
+   delete the naked function.
+5. When `next_work.py` is dry, `python3 tools/list_naked_candidates.py game`
+   serves `game/gen_asm/` dumps with proven boundaries.
+6. Replacing generator-written C++ scores +0; take it last. Only
+   `gen-tgrid`/`gen-shim` rows have source to write.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
-   own name and every file it touches; follow its steps.
+   own name and every file it touches.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
    file's placeholder names. A name lands only when another vendor's model
    proposes it too; never rename placeholders by hand.
