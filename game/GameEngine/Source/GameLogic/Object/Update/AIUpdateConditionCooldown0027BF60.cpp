@@ -1,9 +1,7 @@
-// ?rva0027bf60@AIUpdateInterface@@QAEHXZ
-// partial score=0.56 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /MD /EHs-c-
-// Retry of retail 0x0027BF60. Corrected overlapping model flags at +0x110,
-// unsigned template count, bit-not-set branch polarity, native override chain,
-// and rva002774c0 ABI. Remaining frame and control-flow differences are banked.
+// Retail 0x0027BF60, called through ILT 0x00021189 from the body at 0x0027E5A0. Toggles model
+// condition bit 147 from the unit's and its parent AI's range checks with a frame cooldown.
+// Receiver and member offsets are proved by the decoded body; the method name stays opaque.
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
@@ -106,55 +104,69 @@ public:
 
 // ?rva0027bf60@AIUpdateInterface@@QAEHXZ
 
-__forceinline void updateCondition(BfmeObjAS *obj, bool enabled) {
- if(enabled) {
-  if(!obj->m_bfmeConditionFlags.test(147)) { obj->m_bfmeConditionFlags.set(147); reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI(); }
- } else {
-  if(obj->m_bfmeConditionFlags.test(147)) { obj->m_bfmeConditionFlags.reset(147); reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI(); }
- }
+__forceinline void updateCondition(BfmeObjAS *obj, bool enabled)
+{
+	if (enabled) {
+		if (!obj->m_bfmeConditionFlags.test(147)) {
+			obj->m_bfmeFlags120 |= 0x80000;
+			reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI();
+		}
+	} else {
+		if (obj->m_bfmeFlags120 & 0x80000) {
+			obj->m_bfmeFlags120 &= ~0x80000;
+			reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI();
+		}
+	}
 }
-template<class T> inline const T& smaller(const T& a,const T& b) { return a<b ? a:b; }
+
 Int AIUpdateInterface::rva0027bf60(void)
 {
- BfmeObjAS *obj=m_bfmeObject;
- if(!obj) return 1;
- UnsignedInt result=0x3fffffff;
- static const BitFlags<304> s_bfmeAttackModeMask(BitFlags<304>::kInit,0x74,0x75,0x76);
- const BfmeBlockVKQ &attackModeMask=reinterpret_cast<const BfmeBlockVKQ&>(s_bfmeAttackModeMask);
- if(obj->m_bfmeConditionFlags.test(147)) {
-  bool ready=false;
-  AIUpdateInterface *owner=this;
-  if(!obj->m_bfmeConditionFlags.bfmeAnyVKQ(attackModeMask)) {
-   bool outside=false;
-   if(obj->m_bfmeByte114&0x20) {
-    Real range=obj->getTemplate()->getRange();
-    if(rva002774c0()>range) outside=true;
-   }
-   if(!outside) {
-    BfmeObjAS *parent=obj->bfmeParentAS(0);
-    if(parent && reinterpret_cast<const BFMESelectionStatusBits*>(parent)->test(0x25)) {
-     owner=(AIUpdateInterface*)parent->m_bfmeAi;
-     if(owner) {
-      Real range=reinterpret_cast<const Thing*>(parent)->getTemplate()->getRange();
-      if(!(owner->rva002774c0()>range)) ready=true;
-     } else ready=true;
-     owner=this;
-    } else ready=true;
-   }
-  }
-  UnsignedInt count=(obj->getTemplate()->getCount()>>1)+1;
-  if(ready) {
-   UnsignedInt frame=TheBfmeGameLogic->getFrame();
-   if((UnsignedInt)owner->m_bfmeNextAllowedFrame<=frame) {
-    updateCondition(obj,false);
-   } else { result=owner->m_bfmeNextAllowedFrame-frame; if(result>count) result=count; }
-  } else { 
-   UnsignedInt frame=TheBfmeGameLogic->getFrame();
-   m_bfmeNextAllowedFrame=obj->getTemplate()->getCount()+frame;
-   result=count;
-  }
- } else if(obj->m_bfmeConditionFlags.bfmeAnyVKQ(attackModeMask)) {
-  updateCondition(obj,true);
- }
- return result;
+	BfmeObjAS *obj = m_bfmeObject;
+	if (!obj)
+		return 1;
+	UnsignedInt result = 0x3fffffff;
+	static const BitFlags<304> s_bfmeAttackModeMask(BitFlags<304>::kInit, 0x74, 0x75, 0x76);
+	const BfmeBlockVKQ &attackModeMask = reinterpret_cast<const BfmeBlockVKQ&>(s_bfmeAttackModeMask);
+	BfmeBlockVKQ &flags = obj->m_bfmeConditionFlags;
+	if (flags.test(147)) {
+		bool ready = false;
+		if (!flags.bfmeAnyVKQ(attackModeMask)) {
+			bool outside = false;
+			if (obj->m_bfmeByte114 & 0x20) {
+				Real range = obj->getTemplate()->getRange();
+				if (rva002774c0() > range)
+					outside = true;
+			}
+			if (!outside) {
+				BfmeObjAS *parent = obj->bfmeParentAS(0);
+				if (parent && reinterpret_cast<const BFMESelectionStatusBits*>(parent)->test(0x25)) {
+					AIUpdateInterface *ai = (AIUpdateInterface*)parent->m_bfmeAi;
+					if (ai && ai->rva002774c0() > reinterpret_cast<const Thing*>(parent)->getTemplate()->getRange())
+						outside = true;
+				}
+				if (!outside)
+					ready = true;
+			}
+		}
+		UnsignedInt count = (obj->getTemplate()->getCount() >> 1) + 1;
+		if (ready) {
+			UnsignedInt frame = TheBfmeGameLogic->getFrame();
+			if ((UnsignedInt)m_bfmeNextAllowedFrame <= frame) {
+				updateCondition(obj, false);
+			} else {
+				UnsignedInt diff = m_bfmeNextAllowedFrame - frame;
+				if (diff > count)
+					result = count;
+				else
+					result = diff;
+			}
+		} else {
+			UnsignedInt frame = TheBfmeGameLogic->getFrame();
+			m_bfmeNextAllowedFrame = obj->getTemplate()->getCount() + frame;
+			result = count;
+		}
+	} else if (flags.bfmeAnyVKQ(attackModeMask)) {
+		updateCondition(obj, true);
+	}
+	return result;
 }
