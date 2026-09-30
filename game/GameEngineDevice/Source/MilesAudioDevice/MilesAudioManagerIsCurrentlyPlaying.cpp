@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include
 // stlport
 //
 // Retail 0x006A2750 is MilesAudioManager::isCurrentlyPlaying: primary
@@ -11,6 +11,11 @@
 // The guard keeps the Zero Hour ScopedMutex shape: the wait result goes into
 // a named status local before it is tested.  Testing the call result
 // directly swaps the this/mutex registers (ESI/EDI) against retail.
+
+#define Matrix4x4 Matrix4
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "PreRTS.h"
+#include "Common/AudioEventRTS.h"
 
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
@@ -50,6 +55,7 @@ class MilesAudioManager
 public:
 	virtual Bool isCurrentlyPlaying(AudioHandle handle);
 	Bool rva006A20D0(AudioHandle handle, void *out1, void *out2);
+	void Rva006A2800(AudioHandle handle, const Coord3D *position);
 
 private:
 	char m_pad004[0x95c - 4];
@@ -60,4 +66,14 @@ Bool MilesAudioManager::isCurrentlyPlaying(AudioHandle handle)
 {
 	MilesAudioScopedMutex lock(m_mutex);
 	return rva006A20D0(handle, 0, 0);
+}
+
+// Retail 0x006A2800 shares this owner's mutex and playing-list search with
+// isCurrentlyPlaying. On success it updates the returned AudioEventRTS position.
+void MilesAudioManager::Rva006A2800(AudioHandle handle, const Coord3D *position)
+{
+	MilesAudioScopedMutex lock(m_mutex);
+	AudioEventRTS *event = 0;
+	if (rva006A20D0(handle, &event, 0) && event)
+		event->setPosition(position);
 }
