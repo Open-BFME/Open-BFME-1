@@ -1,15 +1,6 @@
-// ?d_007446a0@@YAXXZ
-// partial score=0.9992360580595875 date=2026-09-28
 // cl: /DNDEBUG /MD
-// Candidate symbol: ?update@W3DView@@UAEXXZ
-// Candidate symbol: ?update@W3DView@@UAEXXZ
-// Complete reconstruction of RVA 007446A0, 2618 bytes.
-// NOT EXACT: final guard-band copies use opposite stack slots (+09F0 and +09F6).
-// Probe shape 1.000; 2/2618 unmasked bytes differ. Relocations are not landed.
-// NOT EXACT: final guard-band copies use opposite stack slots (+09F0 and +09F6).
-// Probe shape 1.000; 2/2618 unmasked bytes differ. Relocations are not landed.
-// ZH W3DView::update twin, BFME secondary SubsystemInterface this at +FC.
-// Field offsets and virtual slots are witnessed by retail; unnamed additions retain offsets.
+// BFME W3DView::update, retail 0x007446A0.
+// Constructor 0x00745B10 installs SubsystemInterface table 0x01121764 at +0xFC. Slot 5 reaches this body through ILT 0x00007F31.
 #include <math.h>
 struct Coord3D { float x,y,z; };
 struct Coord2D { float x,y; Coord2D &operator=(const Coord2D &o) { x=o.x; y=o.y; return *this; } };
@@ -26,14 +17,13 @@ extern ScriptEngine *TheScriptEngine;
 class Rva0045A000 { public: float sample(float,float); char data[0x1c]; };
 class PolygonTrigger { public: bool bfmeContainsPointAt0018FA20(Coord3D&) const; };
 class CameraShakeSystemClass { public: bool IsCameraShaking(); };
-extern CameraShakeSystemClass *Rva007446A0CameraShakeReceiver;
+extern CameraShakeSystemClass CameraShakerSystem;
 extern float FollowFactor007446A0;
 class WW3D { public: static unsigned int SyncTime, PreviousSyncTime; };
 extern void *TheTerrainLogic;
 float getHeightAroundPos(float,float);
-// RVA 0073AD50 calls ILT 00003873 with first argument in ECX and second on stack.
-// This is the ZH drawDrawable callback shape; the current ledger matcher name is suspect.
-void DrawDrawable0073AD50(BFMERopeDrawable *,void*);
+class Drawable;
+void drawDrawable(Drawable *,void*);
 class GlobalData { public:
 
  char gap0000[444];
@@ -231,7 +221,7 @@ class GameClient { public:
  virtual void slot048();
  virtual void slot04c();
  virtual void slot050();
- virtual void slot054(void*,float,void (*)(BFMERopeDrawable*,void*),void*);
+ virtual void slot054(void*,float,void (*)(Drawable*,void*),void*);
 
 };
 extern GameClient *TheGameClient;
@@ -610,7 +600,7 @@ void W3DView::update()
         }
         if(!getCameraLockDrawable()) recalcCamera=true;
     } else { m_shakeIntensity=0.0f; m_shakeOffset.x=0.0f; m_shakeOffset.y=0.0f; }
-    if(Rva007446A0CameraShakeReceiver->IsCameraShaking()) recalcCamera=true;
+    if((*reinterpret_cast<CameraShakeSystemClass **>(&CameraShakerSystem))->IsCameraShaking()) recalcCamera=true;
     if(field2354!=2 && field2354!=3) {
         if(!getCameraLockDrawable() && !getCameraLock()) {
             if(field2464) {
@@ -703,6 +693,11 @@ heightDone:
         if(didScriptedMovement && g_bfmeA1087) g_bfmeA1087->slot234(0);
     }
     if(WW3D::SyncTime-WW3D::PreviousSyncTime) {
-float biasX=m_guardBandBias.x; float biasY=m_guardBandBias.y; TheGameClient->slot054(m_3DCamera->Get_Frustum(),sqrt(biasX*biasX+biasY*biasY)-0.01f,DrawDrawable0073AD50,this);
+float biasY;
+float biasX;
+float *biasYAddress=&biasY;
+biasX=m_guardBandBias.x;
+*biasYAddress=m_guardBandBias.y;
+TheGameClient->slot054(m_3DCamera->Get_Frustum(),sqrt(biasX*biasX+biasY*biasY)-0.01f,drawDrawable,this);
     }
 }
