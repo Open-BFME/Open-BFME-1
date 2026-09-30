@@ -1,5 +1,15 @@
 // ?d_008a1e80@@YAXXZ
-// partial score=0.912 date=2026-09-28
+// partial score=0.2381 date=2026-09-30
+// ?d_008a1e80@@YAXXZ
+// cl: /O2 /DNDEBUG /MD /EHsc
+// Partial 0x008A1E80: 485B vs retail 483B; normalized instruction shape 0.928.
+// Startup registers this callback beside matched Rva008A1DF0 for the
+// 0x12B4-byte object constructed by the matched BfmeThingUEW ctor. The name
+// stays address-derived because registration gives no semantic method name.
+// Record indexing is 0x20-byte stride, as retail's two SHL EAX,5 instructions
+// and the ctor's BfmeVecEVE element size independently show.
+// Remaining first divergence: retail saves EBP only at +0x16E for the final
+// record scan, while MSVC currently saves EBP at +0x26 for the whole body.
 class BfmeSlotLD
 {
 public:
@@ -90,10 +100,15 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 	if (offset == 1)
 		return reinterpret_cast<int>(state->m_value129C);
 
-	int count = (state->m_end - state->m_begin) / 20;
-	int index = offset - 2;
-	int wrapped = count;
-	if (count < 0)
+	int index = offset;
+	index -= 2;
+	int difference = reinterpret_cast<int>(state->m_begin);
+	difference = reinterpret_cast<int>(state->m_end) - difference;
+	int count = difference / 20;
+	int wrapped;
+	if (count >= 0)
+		wrapped = count;
+	else
 		wrapped = state->m_count12B0 + count;
 	if (index < wrapped * 2)
 	{
@@ -111,8 +126,10 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 			return reinterpret_cast<int>(bfmeCheckGC((BfmeItemGC *)slot->m_words[3]));
 		}
 	}
-	int wrappedCount = count;
-	if (count < 0)
+	int wrappedCount;
+	if (count >= 0)
+		wrappedCount = count;
+	else
 		wrappedCount = state->m_count12B0 + count;
 	index = index - wrappedCount * 2;
 	if (index < state->m_count10)
@@ -148,12 +165,12 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 		if (record->m_value00 != 0)
 		{
 			if (remaining == 0)
-				return reinterpret_cast<int>(base[recordIndex * 8].m_value04);
+				return reinterpret_cast<int>(base[recordIndex].m_value04);
 			--remaining;
 			if (remaining < record->m_count14)
 			{
 				return reinterpret_cast<int>(bfmeCheckGC(
-					*(base[recordIndex * 8].m_values1c - 1 +
+					*(base[recordIndex].m_values1c - 1 +
 						(record->m_count14 - remaining))));
 			}
 			remaining -= record->m_count14;
