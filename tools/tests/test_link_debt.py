@@ -1,4 +1,4 @@
-"""link_debt: new hard-coded image addresses fail; moves and removals pass."""
+"""link_debt: new hard-coded image addresses fail; renames and removals pass."""
 import subprocess
 import sys
 from pathlib import Path
@@ -52,6 +52,30 @@ def test_moving_a_file_keeps_its_count(repo):
     git(repo, "commit", "-qm", "base")
     git(repo, "mv", "game/A.cpp", "game/B.cpp")
     assert L.staged() == 0
+
+
+def test_new_literal_cannot_hide_behind_removal_in_another_file(repo):
+    put(repo, "game/A.cpp", LITERAL)
+    put(repo, "game/B.cpp", NAMED)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", NAMED)
+    put(repo, "game/B.cpp", LITERAL)
+    assert L.staged() == 1
+
+
+def test_new_address_cannot_replace_an_old_one_in_the_same_file(repo):
+    put(repo, "game/A.cpp", LITERAL)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", LITERAL.replace("0x012ED5C8", "0x012ED5CC"))
+    assert L.staged() == 1
+
+
+def test_moving_literal_into_watched_tree_fails(repo):
+    put(repo, "scratch/A.cpp", LITERAL)
+    git(repo, "commit", "-qm", "base")
+    (repo / "game").mkdir(exist_ok=True)
+    git(repo, "mv", "scratch/A.cpp", "game/A.cpp")
+    assert L.staged() == 1
 
 
 def test_generated_roots_are_not_watched(repo):

@@ -9,13 +9,14 @@ for the linked build (tools/link_census.py). Declare the global as a named
 extern instead -- targets/game/reverse/dir32_addresses.csv names 16,000 of
 them, and an address-derived name (g_XXXXXXXX) is fine for one it does not;
 docs/shape_levers.md shows that an extern array also matches where a literal
-was tried first. The count may only fall: moving or splitting a file keeps its
-count, adding a literal fails the commit.
+was tried first. A source's address multiset may only shrink. A detected file
+rename keeps it; adding or substituting an address fails the commit.
 
   python3 tools/link_debt.py --staged     # commit hook: staged total vs HEAD
   python3 tools/link_debt.py --report     # per-file counts in the tree
 """
 import argparse
+import collections
 import re
 import subprocess
 import sys
@@ -75,24 +76,40 @@ def blob(ref, path):
 
 
 def staged():
-    changes = git("diff", "--cached", "--name-status", "-z", "--no-renames").stdout.split("\0")
+    fields = git("diff", "--cached", "--name-status", "-z", "--find-renames").stdout.split("\0")
+    changes, index = [], 0
+    while index < len(fields) and fields[index]:
+        status = fields[index]
+        if status.startswith(("R", "C")):
+            changes.append((status, fields[index + 1], fields[index + 2]))
+            index += 3
+        else:
+            changes.append((status, fields[index + 1], fields[index + 1]))
+            index += 2
     before = after = 0
     grew = []
-    for status, path in zip(changes[0::2], changes[1::2]):
+    for status, old_path, path in changes:
         if not path or not watched(path):
             continue
-        old = len(literals(blob("HEAD", path)))
+        old_literals = ([] if status.startswith(("A", "C")) or not watched(old_path)
+                        else literals(blob("HEAD", old_path)))
         new = [] if status.startswith("D") else literals(blob("", path))
-        before += old
+        before += len(old_literals)
         after += len(new)
-        if len(new) > old:
-            grew.append((path, old, new))
-    if after <= before:
+        old_addresses = collections.Counter(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group().lower()
+                                             for item in old_literals)
+        new_addresses = collections.Counter(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group().lower()
+                                             for item in new)
+        added = list((new_addresses - old_addresses).elements())
+        if added:
+            grew.append((path, len(old_literals), new, added))
+    if after <= before and not grew:
         return 0
-    print(f"link_debt: this commit adds {after - before} hard-coded image address(es) "
-          f"({before} -> {after} across the staged sources):")
-    for path, old, new in grew:
-        print(f"  {path}: {old} -> {len(new)}   e.g. {new[-1][:80]}")
+    added = sum(len(found) for _, _, _, found in grew)
+    print(f"link_debt: this commit adds {added} hard-coded image address(es) to staged source(s) "
+          f"({before} -> {after} in total across the staged sources):")
+    for path, old, new, found in grew:
+        print(f"  {path}: {old} -> {len(new)}   new address e.g. {found[-1]}")
     print("  Declare the global as a named extern instead (dir32_addresses.csv names most; "
           "g_XXXXXXXX otherwise). A literal breaks the linked build the moment data moves.")
     return 1

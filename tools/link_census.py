@@ -543,12 +543,41 @@ class RetailTruth:
             return True
         return any(self._stub(address) == target for address in expected)
 
+    @staticmethod
+    def _verdict_fingerprint(symbol, relocs):
+        """Parts of one copy that can change relocation judgment.
+
+        The COMDAT digest deliberately normalises a TU-local referent to
+        ``local`` so equivalent private labels do not manufacture conflicts.
+        That digest is therefore too coarse for the verdict cache: a label in
+        the COMDAT's own section is checked at its section-relative value, and
+        two copies can have the same digest while those values differ.  Keep
+        section numbering out of this key (it is TU-dependent); only whether
+        the referent is in the symbol's own section affects _judge.
+        """
+        found = []
+        for where, kind, referent in relocs:
+            external = referent["storage"] in (EXTERNAL, WEAK_EXTERNAL)
+            same_section = referent["section"] == symbol["section"]
+            content = referent.get("content")
+            # Mirror _judge's branch order exactly.  In particular, absolute
+            # symbols are recognized by name regardless of storage class, and
+            # a same-section weak external takes the section-relative branch.
+            identity = (("absolute", referent["name"]) if
+                        kind == RetailTruth.DIR32 and referent["name"] in RetailTruth.ABSOLUTE else
+                        ("content", content) if content is not None else
+                        ("self", referent["value"]) if same_section and referent["storage"] != EXTERNAL else
+                        ("external", _normal(referent["name"])) if external else
+                        ("local",))
+            found.append((where, kind, identity))
+        return symbol["value"], tuple(found)
+
     def verdict(self, symbol, body, relocs, digest, size):
         home = self.ledger.get(_normal(symbol["name"])) or self.pinned.get(_normal(symbol["name"]))
         if not home:
             return None
         home = set(home) | {self._stub(address) for address in home} - {None}  # a row on an ILT stub
-        key = (symbol["name"], digest)
+        key = (symbol["name"], digest, self._verdict_fingerprint(symbol, relocs))
         if key not in self._cache:
             results = [self._judge(address - symbol["value"], symbol, body, relocs, size) for address in sorted(home)]
             if all(address in self.shared for address in home):

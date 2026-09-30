@@ -81,6 +81,49 @@ def test_static_referent_is_unknown_and_absolute_symbol_is_checked():
     assert t.verdict(symbol("seh"), body, [(2, L.RetailTruth.DIR32, local)], "i", 6) == "unknown"
 
 
+def test_verdict_cache_distinguishes_absolute_symbol_from_other_static():
+    image = bytearray(IMAGE)
+    image[0x28:0x2E] = b"\x64\xa1\0\0\0\0"
+    t = truth(image, {**LEDGER, "seh": {0x1028}})
+    body = b"\x64\xa1\0\0\0\0"
+    absolute = {"name": "__except_list", "section": 3, "storage": 3, "value": 0}
+    other = {"name": "_$E2", "section": 3, "storage": 3, "value": 0}
+
+    def relocs(target):
+        return [(2, L.RetailTruth.DIR32, target)]
+
+    assert t.verdict(symbol("seh"), body, relocs(absolute), "same-digest", 6) == "retail"
+    assert t.verdict(symbol("seh"), body, relocs(other), "same-digest", 6) == "unknown"
+
+
+def test_verdict_cache_distinguishes_same_section_local_offsets_and_symbol_value():
+    image = bytearray(IMAGE)
+    # Both pre-link copies contain the same zero addend and receive the same
+    # normalised COMDAT digest.  Retail points eight bytes into the COMDAT.
+    image[0x24:0x29] = b"\xa1" + struct.pack("<I", L.BASE + 0x102C)
+    t = truth(image, {**LEDGER, "local_user": {0x1028}})
+    body = b"\xa1\0\0\0\0"
+    owner = symbol("local_user", value=4)  # COMDAT begins at 0x1024
+
+    def local(value):
+        return {"name": "_$E2", "section": owner["section"], "storage": 3, "value": value}
+
+    assert t.verdict(owner, body, [(1, L.RetailTruth.DIR32, local(8))], "same-digest", 5) == "retail"
+    # Before the cache key included the local value, this reused "retail".
+    assert t.verdict(owner, body, [(1, L.RetailTruth.DIR32, local(12))], "same-digest", 5) == "wrong"
+
+    # The external symbol's offset changes the retail start and is likewise
+    # part of the judgment even when name, body, digest and relocations match.
+    shifted = symbol("local_user", value=0)
+    assert t.verdict(shifted, body, [(1, L.RetailTruth.DIR32, local(8))], "same-digest", 5) == "wrong"
+
+    # Evaluation order must not decide the result either: a wrong copy cached
+    # first cannot poison the retail copy with the same normalised digest.
+    reverse = truth(image, {**LEDGER, "local_user": {0x1028}})
+    assert reverse.verdict(owner, body, [(1, L.RetailTruth.DIR32, local(12))], "same-digest", 5) == "wrong"
+    assert reverse.verdict(owner, body, [(1, L.RetailTruth.DIR32, local(8))], "same-digest", 5) == "retail"
+
+
 def test_pin_is_read_as_va_and_rva():
     assert L.RetailTruth._rvas(0x0044A061) == {0x0044A061, 0x0004A061}
     assert L.RetailTruth._rvas(0x0003A061) == {0x0003A061}
