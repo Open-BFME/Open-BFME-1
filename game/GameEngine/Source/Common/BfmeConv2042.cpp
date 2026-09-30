@@ -1,8 +1,7 @@
-extern "C" double sqrt(double x);
+// cl: /MD
+#include <math.h>
 
 #pragma intrinsic(sqrt)
-
-extern "C" __declspec(dllimport) double bfmeMathVE(double x);
 
 class BfmeShapeEU
 {
@@ -32,7 +31,7 @@ int BfmeHostEU::bfmeStepsEU(const BfmeShapeEU *s)
 		case 0:
 		case 1:
 		{
-			t = (float)bfmeMathVE((s->m_bfmeAEU + s->m_bfmeAEU) * m_bfmeScaleEU);
+			t = (float)ceil((double)((s->m_bfmeAEU + s->m_bfmeAEU) * m_bfmeScaleEU));
 
 			__asm fld t
 			__asm fistp n
@@ -42,8 +41,8 @@ int BfmeHostEU::bfmeStepsEU(const BfmeShapeEU *s)
 
 		case 2:
 		{
-			float d = (float)sqrt(s->m_bfmeAEU * s->m_bfmeAEU + s->m_bfmeBEU * s->m_bfmeBEU);
-			t = (float)bfmeMathVE((d + d) * m_bfmeScaleEU);
+			float d = (float)sqrt((double)(s->m_bfmeAEU * s->m_bfmeAEU + s->m_bfmeBEU * s->m_bfmeBEU));
+			t = (float)ceil((double)((d + d) * m_bfmeScaleEU));
 
 			__asm fld t
 			__asm fistp n

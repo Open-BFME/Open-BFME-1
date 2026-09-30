@@ -1,9 +1,10 @@
+// cl: /MD
+#include <math.h>
+
 typedef float Real;
 
 extern volatile const Real TheBfmeCountScaleA;
 extern volatile const Real TheBfmeCountScaleB;
-
-extern "C" __declspec(dllimport) double __cdecl BfmeScaledCountImport(double value);
 
 int __stdcall bfmeScaledCount(Real first, Real second)
 {
@@ -11,7 +12,7 @@ int __stdcall bfmeScaledCount(Real first, Real second)
 	product *= TheBfmeCountScaleA;
 	product *= first;
 	product *= TheBfmeCountScaleB;
-	second = (Real)BfmeScaledCountImport(product);
+	second = (Real)ceil(product);
 
 	// MSVC otherwise keeps this float-to-int conversion in SSE. The retail
 	// function uses the two-instruction x87 conversion sequence.
