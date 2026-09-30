@@ -197,3 +197,5 @@ extern int bfmeRva012C3A14Value;
 Rva007F01F0 bfmeRva0130A788Slot(bfmeRva012C3A14Value, (int)"Hello");
 // Retail 0x00C6CFA0: MSVC emits _$E119 for this global.
 extern "C" Rva007F01F0 g_bfmeNameAZC(bfmeRva012C3A14Value, (int)"Ping");
+// Retail 0x00C6CFC0: MSVC emits _$E121 for this global.
+extern "C" Rva007F01F0 g_bfmeNameBZC(bfmeRva012C3A14Value, (int)"Goodbye");
