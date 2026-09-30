@@ -26,6 +26,19 @@
 #include "codex.h"
 #include "refcodex.h"
 
+// Retail's TU-local big-endian writer. The real REF_encode call sites below
+// let MSVC select its private EAX/ECX/EDX register convention.
+namespace Rva0081F3D0 {
+static void gputm(void *memory, unsigned long value, int count)
+{
+    unsigned char *p = static_cast<unsigned char *>(memory);
+    if (count == 1) { p[0] = (unsigned char)value; return; }
+    if (count == 2) { p[0] = (unsigned char)(value >> 8); p[1] = (unsigned char)value; return; }
+    if (count == 4) { p[0] = (unsigned char)(value >> 24); p[1] = (unsigned char)(value >> 16); p[2] = (unsigned char)(value >> 8); p[3] = (unsigned char)value; return; }
+    if (count == 3) { p[0] = (unsigned char)(value >> 16); p[1] = (unsigned char)(value >> 8); p[2] = (unsigned char)value; }
+}
+}
+
 /****************************************************************/
 /*  Internal Functions                                          */
 /****************************************************************/
@@ -247,14 +260,14 @@ int GCALL REF_encode(void *compresseddata, const void *source, int sourcesize, i
 
     if (sourcesize>0xffffff)  // 32 bit header required
     {
-        gputm(compresseddata,   (unsigned int) 0x90fb, 2);
-        gputm((char *)compresseddata+2, (unsigned int) sourcesize, 4);
+        Rva0081F3D0::gputm(compresseddata,   (unsigned int) 0x90fb, 2);
+        Rva0081F3D0::gputm((char *)compresseddata+2, (unsigned int) sourcesize, 4);
         hlen = 6L;
     }
     else
     {
-        gputm(compresseddata,   (unsigned int) 0x10fb, 2);
-        gputm((char *)compresseddata+2, (unsigned int) sourcesize, 3);
+        Rva0081F3D0::gputm(compresseddata,   (unsigned int) 0x10fb, 2);
+        Rva0081F3D0::gputm((char *)compresseddata+2, (unsigned int) sourcesize, 3);
         hlen = 5L;
     }
     plen = hlen+refcompress((unsigned char *)source, sourcesize, (unsigned char *)compresseddata+hlen, maxback, quick);
