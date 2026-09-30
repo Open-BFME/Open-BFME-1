@@ -1,8 +1,8 @@
 // ?bfmeSendRC@BfmeOwnerRC@@QAEDPAVBfmeUnitRC@@PAVBfmeHolderRC@@PAX222@Z
-// partial score=0.99 date=2026-09-28
+// partial score=0.9946 date=2026-09-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // ?bfmeSendRC@BfmeOwnerRC@@QAEDPAVBfmeUnitRC@@PAVBfmeHolderRC@@PAX222@Z, retail 0x00413A40, 922 bytes.
-//
+
 // Terrain tilt for the wheel suspension. Drawable::calcPhysicsXformWheels
 // (0x00421xxx) and BfmeOwnerRC::Rva0041EFD0 call it through ILT 0x00036EA3
 // with (object, locomotor, position, unit direction, &pitch, &roll); it never
@@ -10,8 +10,10 @@
 // terrain under three corners of the object's geometry box and takes the
 // plane normal; otherwise it asks the terrain for the normal under the
 // position. Pitch and roll are the arcsines of the normal against the
-// direction and its perpendicular. The corner array is a Coord3D[4], whose
-// out-of-line constructor and destructor give the EH frame.
+// direction and its perpendicular.
+
+// The corner array is a Coord3D[4], whose out-of-line constructor and
+// destructor give the EH frame.
 
 #include "coord3d.h"
 #include <math.h>
@@ -108,7 +110,7 @@ char BfmeOwnerRC::bfmeSendRC(BfmeUnitRC *unit, BfmeHolderRC *holder, void *posAr
 		float minor = geom->boxMinorRadius();
 
 		Coord3DBase forward;
-		forward.x = dir->x * major * 0.5;
+		forward.x = *(const volatile float *)&dir->x * major * 0.5;
 		forward.y = dir->y * major * 0.5;
 		Coord2DBase side;
 		side.x = perp.x * minor * 0.5;
