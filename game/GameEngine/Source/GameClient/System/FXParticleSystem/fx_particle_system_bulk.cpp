@@ -417,6 +417,18 @@ public:
 };
 
 
+// The shared header's INI view lacks these statics, so they are reached by alias.
+extern "C" void bfmeINIParseIndexList(INI *, void *, void *, const void *);
+#pragma comment(linker, "/alternatename:_bfmeINIParseIndexList=?parseIndexList@INI@@SAXPAV1@PAX1PBX@Z")
+extern "C" void bfmeINIParseBool(INI *, void *, void *, const void *);
+#pragma comment(linker, "/alternatename:_bfmeINIParseBool=?parseBool@INI@@SAXPAV1@PAX1PBX@Z")
+extern "C" void bfmeINIParseAsciiString(INI *, void *, void *, const void *);
+#pragma comment(linker, "/alternatename:_bfmeINIParseAsciiString=?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")
+extern "C" void bfmeINIParseCoord3D(INI *, void *, void *, const void *);
+#pragma comment(linker, "/alternatename:_bfmeINIParseCoord3D=?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")
+extern "C" void bfmeINIParseUnsignedInt(INI *, void *, void *, const void *);
+#pragma comment(linker, "/alternatename:_bfmeINIParseUnsignedInt=?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")
+void j_00036615();
 extern const float BfmeZeroRange;
 
 void b_005f8b40();
@@ -9936,26 +9948,26 @@ void ParticleSystemTemplate::parse(INI *ini, void *data, void *store, const void
     // reached through its retail ILT at 0x00436615 -> 0x004B8F60;
     // the other parser routes are their named INI bodies.
     Field fields[] = {
-        { "Priority", reinterpret_cast<ParseProc>(0x00c51050), (const void *)&g_01110208, 0x7c },
-        { "IsOneShot", reinterpret_cast<ParseProc>(0x00c52e00), 0, 0x04 },
-        { "Shader", reinterpret_cast<ParseProc>(0x00c51050), (const void *)&g_01110180, 0x08 },
-        { "Type", reinterpret_cast<ParseProc>(0x00c51050), (const void *)&g_011101B0, 0x0c },
-        { "ParticleName", reinterpret_cast<ParseProc>(0x00c51ee0), 0, 0x10 },
-        { "SlaveSystem", reinterpret_cast<ParseProc>(0x00c51ee0), 0, 0x68 },
-        { "SlavePosOffset", reinterpret_cast<ParseProc>(0x00c53380), 0, 0x6c },
-        { "PerParticleAttachedSystem", reinterpret_cast<ParseProc>(0x00c51ee0), 0, 0x78 },
-        { "Lifetime", reinterpret_cast<ParseProc>(0x00436615), 0, 0x14 },
-        { "SystemLifetime", reinterpret_cast<ParseProc>(0x00c52ac0), 0, 0x20 },
-        { "SortLevel", reinterpret_cast<ParseProc>(0x00c52ac0), 0, 0x24 },
-        { "Size", reinterpret_cast<ParseProc>(0x00436615), 0, 0x28 },
-        { "StartSizeRate", reinterpret_cast<ParseProc>(0x00436615), 0, 0x34 },
-        { "BurstDelay", reinterpret_cast<ParseProc>(0x00436615), 0, 0x44 },
-        { "BurstCount", reinterpret_cast<ParseProc>(0x00436615), 0, 0x50 },
-        { "InitialDelay", reinterpret_cast<ParseProc>(0x00436615), 0, 0x5c },
-        { "IsGroundAligned", reinterpret_cast<ParseProc>(0x00c52e00), 0, 0x80 },
-        { "IsEmitAboveGroundOnly", reinterpret_cast<ParseProc>(0x00c52e00), 0, 0x81 },
-        { "IsParticleUpTowardsEmitter", reinterpret_cast<ParseProc>(0x00c52e00), 0, 0x82 },
-        { "UseMaximumHeight", reinterpret_cast<ParseProc>(0x00c52e00), 0, 0x83 },
+        { "Priority", reinterpret_cast<ParseProc>(bfmeINIParseIndexList), (const void *)&g_01110208, 0x7c },
+        { "IsOneShot", reinterpret_cast<ParseProc>(bfmeINIParseBool), 0, 0x04 },
+        { "Shader", reinterpret_cast<ParseProc>(bfmeINIParseIndexList), (const void *)&g_01110180, 0x08 },
+        { "Type", reinterpret_cast<ParseProc>(bfmeINIParseIndexList), (const void *)&g_011101B0, 0x0c },
+        { "ParticleName", reinterpret_cast<ParseProc>(bfmeINIParseAsciiString), 0, 0x10 },
+        { "SlaveSystem", reinterpret_cast<ParseProc>(bfmeINIParseAsciiString), 0, 0x68 },
+        { "SlavePosOffset", reinterpret_cast<ParseProc>(bfmeINIParseCoord3D), 0, 0x6c },
+        { "PerParticleAttachedSystem", reinterpret_cast<ParseProc>(bfmeINIParseAsciiString), 0, 0x78 },
+        { "Lifetime", reinterpret_cast<ParseProc>(j_00036615), 0, 0x14 },
+        { "SystemLifetime", reinterpret_cast<ParseProc>(bfmeINIParseUnsignedInt), 0, 0x20 },
+        { "SortLevel", reinterpret_cast<ParseProc>(bfmeINIParseUnsignedInt), 0, 0x24 },
+        { "Size", reinterpret_cast<ParseProc>(j_00036615), 0, 0x28 },
+        { "StartSizeRate", reinterpret_cast<ParseProc>(j_00036615), 0, 0x34 },
+        { "BurstDelay", reinterpret_cast<ParseProc>(j_00036615), 0, 0x44 },
+        { "BurstCount", reinterpret_cast<ParseProc>(j_00036615), 0, 0x50 },
+        { "InitialDelay", reinterpret_cast<ParseProc>(j_00036615), 0, 0x5c },
+        { "IsGroundAligned", reinterpret_cast<ParseProc>(bfmeINIParseBool), 0, 0x80 },
+        { "IsEmitAboveGroundOnly", reinterpret_cast<ParseProc>(bfmeINIParseBool), 0, 0x81 },
+        { "IsParticleUpTowardsEmitter", reinterpret_cast<ParseProc>(bfmeINIParseBool), 0, 0x82 },
+        { "UseMaximumHeight", reinterpret_cast<ParseProc>(bfmeINIParseBool), 0, 0x83 },
         { 0, 0, 0, 0 }
     };
 
