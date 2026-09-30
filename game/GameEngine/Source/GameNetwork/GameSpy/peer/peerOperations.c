@@ -192,6 +192,8 @@ void piAddChangeNickCallback(PEER peer, int success, const char *oldNick,
 		const char *newNick, void *callback, void *param, int ID);
 void piAddAuthenticateCDKeyCallback(PEER peer, int result, const char *message,
 		void *callback, void *param, int ID);
+void piAddNickErrorCallback(PEER peer, int type, const char *nick,
+		int numSuggestedNicks, char **suggestedNicks, void *param, int ID);
 
 void piChangeNickCallback(void *chat, int success, const char *oldNick,
 		const char *newNick, void *param)
@@ -221,4 +223,12 @@ void piAuthenticateCDKeyCallback(void *chat, int result, const char *message,
 			operation->callback, operation->param, operation->ID);
 
 	piRemoveOperation(peer, operation);
+}
+
+void piConnectNickErrorCallbackA(PEER peer, int type, const char *nick,
+		int numSuggestedNicks, const char **suggestedNicks, void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	piAddNickErrorCallback(operation->peer, type, nick, numSuggestedNicks,
+		(char **)suggestedNicks, operation->param, operation->ID);
 }

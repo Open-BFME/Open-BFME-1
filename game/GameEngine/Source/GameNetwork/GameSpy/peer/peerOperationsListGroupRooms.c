@@ -168,7 +168,8 @@ extern const char *(__cdecl *GOAGetUniqueID)(void);
 void MD5Digest(const unsigned char *text, unsigned int length, char *digest);
 void piChatDisconnectedA(void);
 void piChatPrivateMessageA(void);
-void piConnectNickErrorCallbackA(void);
+void piConnectNickErrorCallbackA(PEER peer, int type, const char *nick,
+		int numSuggestedNicks, const char **suggestedNicks, void *param);
 void piConnectFillInUserCallbackA(void);
 void piConnectConnectCallback(void *chat, int success,
 	int failureReason, void *param);
