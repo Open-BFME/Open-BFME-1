@@ -7,6 +7,16 @@
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *pointer);
 
+// Retail vtables 0x0113C5FC, 0x0113C644, 0x0113C614 and 0x0113C62C; the alternate names define no table.
+extern "C" void *bfmeVftVectorClassBfmeHandleCX[];
+extern "C" void *bfmeVftDynamicVectorClassShaderClass[];
+extern "C" void *bfmeVftDynamicVectorClassVertexMaterialClass[];
+extern "C" void *bfmeVftDynamicVectorClassBfmeHandleCX[];
+#pragma comment(linker, "/alternatename:_bfmeVftVectorClassBfmeHandleCX=??_7?$VectorClass@VBfmeHandleCX@@@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassShaderClass=??_7?$DynamicVectorClass@VShaderClass@@@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassVertexMaterialClass=??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassBfmeHandleCX=??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")
+
 class ShaderVectorBaseCtorShim
 {
 public:
@@ -57,7 +67,7 @@ private:
 // ?construct@TextureVectorBaseCtorShim@@QAEXHH@Z
 TextureVectorBaseCtorShim::TextureVectorBaseCtorShim(int size, TextureVectorCell const *array)
 {
-	*(unsigned int *)this = 0x0113c5fc;
+	*(unsigned int *)this = (unsigned int)bfmeVftVectorClassBfmeHandleCX;
 	Vector = 0;
 	VectorMax = size;
 	IsValid = true;
@@ -79,7 +89,7 @@ public:
 	__forceinline ShaderVector()
 	{
 		((ShaderVectorBaseCtorShim *)this)->construct(0, 0);
-		*(unsigned int *)this = 0x0113c644;
+		*(unsigned int *)this = (unsigned int)bfmeVftDynamicVectorClassShaderClass;
 		*(unsigned int *)((unsigned char *)this + 0x14) = 10;
 		*(unsigned int *)((unsigned char *)this + 0x10) = 0;
 	}
@@ -99,7 +109,7 @@ public:
 		*(unsigned int *)(self + 8) = 0;
 		*(unsigned char *)(self + 0x0c) = 1;
 		*(unsigned char *)(self + 0x0d) = 0;
-		*(unsigned int *)self = 0x0113c614;
+		*(unsigned int *)self = (unsigned int)bfmeVftDynamicVectorClassVertexMaterialClass;
 		*(unsigned int *)(self + 0x14) = 10;
 		*(unsigned int *)(self + 0x10) = 0;
 	}
@@ -117,7 +127,7 @@ public:
 		: TextureVectorBaseCtorShim(0, 0)
 	{
 		*(unsigned int *)((unsigned char *)this + 0x10) = 0;
-		*(unsigned int *)this = 0x0113c62c;
+		*(unsigned int *)this = (unsigned int)bfmeVftDynamicVectorClassBfmeHandleCX;
 		*(unsigned int *)((unsigned char *)this + 0x14) = 10;
 	}
 	~TextureVector();

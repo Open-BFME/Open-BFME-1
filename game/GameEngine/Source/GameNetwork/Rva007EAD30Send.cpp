@@ -2,6 +2,11 @@
 // 0x007EAD30 / 0x007EADC0: after a prepare helper, send either the flag
 // string at +0x101/+0x142 or the +0x30/+0x70 pair through this+0xC.
 
+class Rva007EA320Owner;
+class Rva007EA380Owner;
+void __cdecl rva007EAD10BindCallback(Rva007EA320Owner *owner, void *first, void *second);
+void __cdecl rva007EADA0BindCallback(Rva007EA380Owner *owner, void *first, void *second);
+
 class Rva007EADIface
 {
 public:
@@ -55,11 +60,11 @@ void Rva007EAD30Owner::send()
 		int n = m_n;
 		if (n <= 0)
 			n = 0x34C1;
-		m_iface->sendFlag(flag, n, 0x00BEAD10, this);
+		m_iface->sendFlag(flag, n, (int)rva007EAD10BindCallback, this);
 	}
 	else
 	{
-		m_iface->sendPairC(m_buf30, m_buf70, 0x00BEAD10, this);
+		m_iface->sendPairC(m_buf30, m_buf70, (int)rva007EAD10BindCallback, this);
 	}
 }
 
@@ -72,10 +77,10 @@ void Rva007EADC0Owner::send()
 		int n = m_n;
 		if (n <= 0)
 			n = 0x37DC;
-		m_iface->sendFlag(flag, n, 0x00BEADA0, this);
+		m_iface->sendFlag(flag, n, (int)rva007EADA0BindCallback, this);
 	}
 	else
 	{
-		m_iface->sendPairD(m_buf30, m_buf70, 0x00BEADA0, this);
+		m_iface->sendPairD(m_buf30, m_buf70, (int)rva007EADA0BindCallback, this);
 	}
 }

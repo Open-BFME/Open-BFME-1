@@ -18,6 +18,12 @@ extern "C" int __cdecl ghttpHeadA(const char *url, int blocking,
 // Retail calls the lower-level Gamespy implementation through ILT 0x0087AD40.
 extern "C" int __cdecl ghiSetProxy(const char *server);
 
+enum GHTTPBool { GHTTPFalse, GHTTPTrue };
+enum GHTTPResult { GHTTPSuccess };
+void d_0062fe40();
+GHTTPBool __cdecl configHeadCallback(int request, GHTTPResult result, char *buffer, __int64 bufferLen, void *param);
+GHTTPBool rva0062EE00MainMenuOnlineCallback(int request, int result, char *buffer, __int64 bufferLen, void *param);
+
 extern void bfmeRequestEUG(void);
 extern int checksLeftBeforeOnline;
 extern int timeThroughOnline;
@@ -36,16 +42,16 @@ void bfmeReallyStartPatchCheck(void)
 
 	// These callback VAs are the direct operands in the retail call sites.
 	ghttpGetA(gameURL.c_str(), 1,
-		reinterpret_cast<GHTTPCompletedCallback>(0x00A2FE40),
+		reinterpret_cast<GHTTPCompletedCallback>(d_0062fe40),
 		reinterpret_cast<void *>(timeThroughOnline));
 	ghttpGetA(mapURL.c_str(), 1,
-		reinterpret_cast<GHTTPCompletedCallback>(0x00A2FE40),
+		reinterpret_cast<GHTTPCompletedCallback>(d_0062fe40),
 		reinterpret_cast<void *>(timeThroughOnline));
 	ghttpHeadA(configURL.c_str(), 1,
-		reinterpret_cast<GHTTPCompletedCallback>(0x00A2F130),
+		reinterpret_cast<GHTTPCompletedCallback>(configHeadCallback),
 		reinterpret_cast<void *>(timeThroughOnline));
 	ghttpGetA(motdURL.c_str(), 1,
-		reinterpret_cast<GHTTPCompletedCallback>(0x00A2EE00),
+		reinterpret_cast<GHTTPCompletedCallback>(rva0062EE00MainMenuOnlineCallback),
 		reinterpret_cast<void *>(timeThroughOnline));
 
 	bfmeRequestEUG();

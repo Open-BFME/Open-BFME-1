@@ -6,6 +6,12 @@
 
 #include <new>
 
+// 0x0112B9C0 is the secondary base's own four-slot table, which the table does not name.
+extern const void *g_0112B9C0[];
+extern void *g_Rva00803890Vt2[];
+extern "C" void *bfmeVftRva00803890Owner[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva00803890Owner=??_7Rva00803890Owner@@6B@")
+
 struct BfmeOwnerUNC
 {
 };
@@ -33,7 +39,7 @@ class Rva00803890Secondary
 public:
 	Rva00803890Secondary()
 	{
-		*(int *)this = 0x0112B9C0;
+		*(int *)this = (int)g_0112B9C0;
 	}
 
 	virtual void v0();
@@ -58,8 +64,8 @@ public:
 
 Rva00803890Owner::Rva00803890Owner( unsigned char flag, BfmeOwnerUNC *owner )
 {
-	*(int *)this = 0x0112C738;
-	*(int *)( (char *)this + 4 ) = 0x0112C728;
+	*(int *)this = (int)bfmeVftRva00803890Owner;
+	*(int *)( (char *)this + 4 ) = (int)g_Rva00803890Vt2;
 	m_registry = 0;
 	m_peer = 0;
 	m_flag = flag;
