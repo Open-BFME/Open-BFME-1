@@ -211,6 +211,7 @@ extern Gen_00609320 *g_bfmeStateDF;
 extern const void *BfmeAptScreenQuitMenuVftable[];
 extern const void *BfmeAptScreenQuitMenuSecondaryVftable[];
 extern void *g_obj12F4B40;
+extern const char *g_012B7E30;
 
 class __declspec(novtable) __multiple_inheritance BfmeAptScreenQuitMenu
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
@@ -320,7 +321,7 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 			methodBits.m_words[ 1 ] = 0;
 			callback = methodBits.m_method;
 			FunctorBinding binding( callback, (FunctorTarget *)this );
-			const char *hasFocus = *(const char **)0x012B7E30;
+			const char *hasFocus = *(const char *volatile *)&g_012B7E30;
 			AsciiString name( hasFocus );
 			registry->showAptScreenWithArg( name, (void *)0,
 				Rva0056A280FunctorHolder( binding ) );
