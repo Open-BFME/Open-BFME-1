@@ -1,5 +1,4 @@
 // ??0ScriptEngine@@QAE@XZ
-// partial score=0.9914 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -8,22 +7,13 @@
 #include <map>
 #include <utility>
 
-// ScriptEngine's constructor, retail 0x00347E60 (1164 bytes).
+// ScriptEngine constructor at retail RVA 0x00347E60.
 //
-// Identity: the only caller is GameEngine::init (through the ILT). The body
-// installs vtable 0x010E7A30 (slot 1 is the matched ScriptEngine::init at
-// 0x00340B80) and the Snapshot-side vtable 0x010E7A18, after the inline
-// Snapshot constructor. Its tail is the Zero Hour constructor's body
-// (st_CanAppCont, the two frame counters, setGlobalDifficulty(NORMAL)).
-
-// Layout: every member with a destructor is pinned by the retail unwind table
-// (FuncInfo 0x00E086DC, 24 states). ActionTemplate[543] and
-// ConditionTemplate[184] follow Zero Hour's order; m_attackPriorityInfo[256]
-// and m_numAttackInfo are witnessed by the matched findAttackInfo
-// (0x0033DD70); m_objectsShouldReceiveDifficultyBonus and
-// m_ChooseVictimAlwaysUsesNormal by their matched setters; m_useLogicDebugFrame
-// by the matched debug-frame bodies. Members without such a witness keep
-// their offset as their name.
+// GameEngine::init calls this constructor through an ILT. The body installs
+// the ScriptEngine vtable at 0x010E7A30 and the Snapshot vtable at 0x010E7A18.
+//
+// Retail stores and the unwind map prove the array counts and offsets below.
+// Address-based member names retain fields that the evidence does not name.
 
 class AsciiString
 {
@@ -129,6 +119,13 @@ class ObjectTypes;
 
 typedef _STL::pair<AsciiString, AsciiString> ScriptNamePair;
 
+struct Rva00347E60PointerPair
+{
+	void *m_begin;
+	void *m_end;
+	Rva00347E60PointerPair() : m_begin(0), m_end(0) {}
+};
+
 class ScriptEngine : public SubsystemInterface, public Snapshot
 {
 public:
@@ -190,7 +187,8 @@ protected:
 	_STL::list<_STL::pair<AsciiString, ObjectID> > m_173F4[32];
 	_STL::vector<ScienceType> m_17474[32];
 	_STL::list<_STL::pair<AsciiString, Coord3D> > m_175F4;
-	_STL::vector<NamedReveal> m_namedReveals;                        // +0x175F8
+	Rva00347E60PointerPair m_namedReveals;                     // +0x175F8
+	void *m_17600;                                    // +0x17600
 	BreezeInfo m_breezeInfo;                                          // +0x17604
 	int m_17620;
 	bool m_17624;
@@ -211,7 +209,6 @@ extern int g_scriptFrame012F0764;
 extern bool LogicCanAppContinue;
 extern bool ClientCanAppContinue;
 
-// ??0ScriptEngine@@QAE@XZ
 ScriptEngine::ScriptEngine()
 	: m_00018(0),
 	  m_numAttackInfo(0),
@@ -235,6 +232,7 @@ ScriptEngine::ScriptEngine()
 	  m_170D4(0),
 	  m_170D8(0),
 	  m_170DC(0),
+	  m_17600(0),
 	  m_17624(false),
 	  m_objectsShouldReceiveDifficultyBonus(true),
 	  m_ChooseVictimAlwaysUsesNormal(false),
