@@ -333,13 +333,37 @@ def unexplained_exit(code, log, output=None):
     if code and not re.search(r"\b(?:error|warning) LNK\d+", log):
         raise SystemExit(f"link_census: link.exe exited {code} with no linker diagnostic; no counts recorded")
     if output is not None:
-        try:
-            head = output.read_bytes()[:2]
-        except OSError:
-            head = b""
-        if head != b"MZ":
-            raise SystemExit(f"link_census: link.exe exited {code} but wrote no image at {output.name}; "
+        why = pe_defect(output)
+        if why:
+            raise SystemExit(f"link_census: link.exe exited {code} but wrote no image at {output.name} ({why}); "
                              "no counts recorded")
+
+
+def pe_defect(path):
+    """Why `path` is not a complete PE image, or None: DOS header and
+    e_lfanew, the PE signature, an i386 COFF header, a PE32 optional header
+    that fits, and every section's raw data inside the file."""
+    import struct
+    try:
+        data = path.read_bytes()
+    except OSError as exc:
+        return f"unreadable: {exc}"
+    if len(data) < 0x40 or data[:2] != b"MZ":
+        return "no DOS header"
+    pe = struct.unpack_from("<I", data, 0x3C)[0]
+    if pe + 24 > len(data) or data[pe:pe + 4] != b"PE\0\0":
+        return "no PE signature at e_lfanew"
+    machine, sections, _, _, _, optional, _ = struct.unpack_from("<HHIIIHH", data, pe + 4)
+    if machine != 0x14C or not sections:
+        return f"COFF header: machine 0x{machine:X}, {sections} sections"
+    table = pe + 24 + optional
+    if optional < 96 or struct.unpack_from("<H", data, pe + 24)[0] != 0x10B or table + 40 * sections > len(data):
+        return "optional header or section table does not fit"
+    for index in range(sections):
+        size, pointer = struct.unpack_from("<II", data, table + 40 * index + 16)
+        if size and pointer + size > len(data):
+            return f"section {index + 1}'s raw data runs past the end of the file"
+    return None
 
 
 def classify(log, rows):

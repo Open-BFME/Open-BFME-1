@@ -383,13 +383,23 @@ class Image:
         for item in self.items:
             if item.bound:
                 self._edges(item)
-                if item.code and len(item.sec.items) > 1 and item.sec.body is not None:
-                    self._decoded_edges(item)
-        for item in self.items:  # where other items enter a function: every one is a descent root
-            for _, _, target, position, _ in item.edges:
-                if isinstance(target, Item) and target is not item and target.code \
-                        and target.start < position < target.end:
-                    target.entries.add(position - target.start)
+        # Interior entry points and decoded branches feed each other: an entry
+        # reached through a relocation can reveal a decoded branch to another
+        # item, which can enter a third item mid-body. Iterate to a fixed point.
+        decodable = [item for item in self.items if item.bound and item.code and len(item.sec.items) > 1
+                     and item.sec.body is not None]
+        changed = True
+        while changed:
+            changed = False
+            for item in self.items:  # where other items enter a function: every one is a descent root
+                for _, _, target, position, _ in item.edges:
+                    if isinstance(target, Item) and target is not item and target.code \
+                            and target.start < position < target.end \
+                            and position - target.start not in target.entries:
+                        target.entries.add(position - target.start)
+                        changed = True
+            for item in decodable:
+                changed |= self._decoded_edges(item)
         for index, leaf in enumerate(self.leaves.values()):
             leaf.id = len(self.items) + index
 
@@ -465,8 +475,11 @@ class Image:
         """Transfers the object already resolved: a rel branch with no
         relocation from one item to another of the same ordinary section (a
         MASM file's PROCs, a TU without /Gy). No relocation is not no
-        dependency: each becomes an edge of kind DECODED."""
+        dependency: each becomes an edge of kind DECODED. Returns whether
+        an edge was added (select() iterates with interior entry points)."""
         body = item.body()
+        known = {(where, target.id) for where, kind, target, _, _ in item.edges if kind == DECODED}
+        added = False
         fields = self._fields(item)
         covered = self._covered(fields)
         insns, _ = self._instructions(item, body, fields, covered)
@@ -476,8 +489,13 @@ class Image:
                 continue
             destination = item.start + branch - self._VA
             if 0 <= destination < item.sec.size and not item.start <= destination < item.end:
-                item.edges.append((item.start + off + insn.imm_offset, DECODED, item_at(item.sec, destination),
-                                   destination, "decoded"))
+                target = item_at(item.sec, destination)
+                where = item.start + off + insn.imm_offset
+                if (where, target.id) not in known:
+                    known.add((where, target.id))
+                    item.edges.append((where, DECODED, target, destination, "decoded"))
+                    added = True
+        return added
 
     @staticmethod
     def _position(target, name, addend):

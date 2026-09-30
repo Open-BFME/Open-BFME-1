@@ -501,3 +501,21 @@ def test_an_interior_entry_from_another_item_is_inspected():
     assert item(image, "_f").entries == {5}
     assert item(image, "_f").verdict == "wrong" and "0x00402000" in item(image, "_f").reason
     assert I.results(image)[0]["closed_strict_bytes"] == 0
+
+
+def test_entries_and_decoded_branches_reach_a_fixed_point():
+    # review of 3897870f3b: a caller enters _f+1, whose jmp to the byte-wrong _g (same section, no
+    # relocation) was never added as an edge, because entries were collected after decoding
+    retail = bytearray(RETAIL)
+    fraw, gwrong, gright = b"\xc3\xe9\0\0\0\0", b"\xb8\x02\0\0\0\xc3", b"\xb8\x01\0\0\0\xc3"
+    retail[0x1040:0x104C] = fraw + gright
+    retail[0x1080:0x1086] = call(0x1080, 0x1041) + b"\xc3"
+    f = coff([(".text", CODE_FLAGS, fraw + gwrong, [], None)],
+             [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_g", 1, 6, I.EXTERNAL, 0x20, None)])
+    caller = function("_caller", b"\xe8\x01\0\0\0\xc3", [(1, "_f", I.REL32)])
+    image = build([("F.obj", f), ("C.obj", caller)], {"_f": "F.obj", "_g": "F.obj", "_caller": "C.obj"}, retail,
+                  {"_f": {0x1040}, "_g": {0x1046}, "_caller": {0x1080}})
+    fi, g = item(image, "_f"), item(image, "_g")
+    assert fi.entries == {1} and [(t.label(), flag) for _, _, t, _, flag in fi.edges] == [("_g", "decoded")]
+    assert g.verdict == "wrong" and g.id in (image.badset[item(image, "_caller").id] or ())
+    assert I.results(image)[0]["closed_strict_bytes"] == 0

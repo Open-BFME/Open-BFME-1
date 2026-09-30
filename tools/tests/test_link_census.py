@@ -496,3 +496,29 @@ def test_the_selection_link_is_checked_like_every_link(tmp_path, monkeypatch):
     monkeypatch.setattr(L, "link", map_but_no_image)
     with pytest.raises(SystemExit, match="wrote no image"):
         L.selection_link([], "")
+
+
+def test_only_a_complete_pe_image_is_a_link_output(tmp_path):
+    # review of 3897870f3b: a file holding just "MZ" passed as the link's image
+    def pe(sections=1, raw_end=0x400, signature=b"PE\0\0", machine=0x14C):
+        data = bytearray(0x400)
+        data[0:2] = b"MZ"
+        struct.pack_into("<I", data, 0x3C, 0x40)
+        data[0x40:0x44] = signature
+        struct.pack_into("<HHIIIHH", data, 0x44, machine, sections, 0, 0, 0, 224, 0x102)
+        struct.pack_into("<H", data, 0x58, 0x10B)
+        table = 0x58 + 224
+        for index in range(sections):
+            struct.pack_into("<II", data, table + 40 * index + 16, raw_end - 0x200, 0x200)
+        return bytes(data)
+    cases = {"good": pe(), "mz": b"MZ", "signature": pe(signature=b"XX\0\0"), "machine": pe(machine=0x8664),
+             "section": pe(raw_end=0x800)}
+    verdicts = {}
+    for name, data in cases.items():
+        path = tmp_path / f"{name}.exe"
+        path.write_bytes(data)
+        verdicts[name] = L.pe_defect(path)
+    assert verdicts["good"] is None and all(verdicts[name] for name in cases if name != "good")
+    import pytest
+    with pytest.raises(SystemExit, match="no DOS header"):
+        L.unexplained_exit(0, "", tmp_path / "mz.exe")
