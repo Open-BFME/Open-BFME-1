@@ -5,6 +5,7 @@
 #include <map>
 #undef private
 #include <bitset>
+#include <list>
 
 typedef bool Bool;
 
@@ -190,4 +191,117 @@ void BfmeSubBDB::bfmeDoBDB(void *what, int flag)
 	if (erased)
 		_STL::__node_alloc<true, 0>::_M_deallocate(erased, 0x1c);
 	--tree->nodeCount;
+}
+
+class Rva226730CountFlaggedOverrides
+{
+public:
+	void updateCount();
+};
+
+class Rva0021D180Interface
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+};
+
+void j_0003be1c();
+
+// ContestableContain primary view; bfmeDoBDB above is inlined into body().
+class Rva0021D180
+{
+public:
+	void body();
+
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual void slot26();
+	virtual void slot27();
+	virtual void slot28();
+	virtual void slot29(Object *object);
+
+	char pad04[0x4];
+	Object *m_object;
+	char pad0c[0x14];
+	Rva0021D180Interface m_interface;
+	char pad24[0x14];
+	_STL::list<Object *> m_containList;
+	unsigned int m_containListSize;
+	char pad40[0x97c];
+	_STL::list<Object *> m_rva_09bc;
+	Rva0021D070Tree m_rva_09c4;
+	char pad9d0[0xc];
+	Bool m_rva_09d8;
+};
+
+void Rva0021D180::body()
+{
+	m_object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 35), false);
+
+	if (m_containList.empty())
+	{
+		m_rva_09d8 = true;
+		for (_STL::list<Object *>::iterator it = m_rva_09bc.begin(); it != m_rva_09bc.end(); )
+		{
+			Object *object = *it;
+			++it;
+			*(int *)((char *)object + 0x214) = 0;
+			slot29(object);
+			Rva0021D070Interface *module = *(Rva0021D070Interface **)((char *)object + 0x1fc);
+			if (module)
+			{
+				Rva0021D070Callback callback = (Rva0021D070Callback)j_0003be1c;
+				module->slot63(callback, (BfmeSubBDB *)this, 1);
+				module->slot63(callback, (BfmeSubBDB *)this, 0x10);
+			}
+		}
+		m_rva_09bc.clear();
+		m_rva_09d8 = false;
+		m_containListSize = m_containList.size();
+		((Rva226730CountFlaggedOverrides *)this)->updateCount();
+		m_interface.slot16();
+	}
+
+	for (_STL::list<Object *>::iterator it = m_containList.begin(); it != m_containList.end(); ++it)
+		((BfmeSubBDB *)this)->bfmeDoBDB(*it, 0);
 }

@@ -10738,5 +10738,15 @@
   "after_sha256": "0c65d7e8b9db5f23dabdca0de5bdd4dc80f6ebadd8a2ae5d855b7661f483417d",
   "evidence": "targets/game/reverse/re_attempts.log",
   "reason": "BfmeThingBU is an unproven generated placeholder; the prior verdict establishes three position fields at +0x38 but no retail type name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0021d180.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv443.cpp",
+  "old_name": "storage",
+  "new_name": "m_unmodelled000",
+  "before_sha256": "207886a55fd70562994680f24a2d4567ccb8817ca355c0ef22837db460b385b3",
+  "after_sha256": "a40aca26c386f566f57a8b2febb02f1d8e128ce72a64db484a1979af3a6bf232",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "False pairing: storage is the member of the removed bank's Rva0021D180Tree; m_unmodelled000 is the member of BfmeSubBDB, the class view of the matched 0x0021D070 ?bfmeDoBDB@BfmeSubBDB@@QAEXPAXH@Z row in BfmeConv443.cpp, where it existed before this change. No name was replaced."
  }
 ]
