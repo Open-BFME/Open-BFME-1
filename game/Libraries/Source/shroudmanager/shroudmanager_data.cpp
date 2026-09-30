@@ -77,8 +77,11 @@ public:
 // order -- base, element size, count, element destructor -- so the alternatename
 // resolves the local spelling onto the real library symbol.
 #pragma comment(linker, "/alternatename:?ArrayDeleteHelperBodyThunk@@YGXPAXII0@Z=??_M@YGXPAXIHP6EX0@Z@Z")
+// This alias supplies the element-destructor address passed to that helper.
+#pragma comment(linker, "/alternatename:?ElementDtorArrayCallback@@YAXXZ=??1Element@@QAE@XZ")
 
 void __stdcall ArrayDeleteHelperBodyThunk(void *, unsigned, unsigned, void *);
+extern void __cdecl ElementDtorArrayCallback();
 extern void __cdecl operator delete[](void *);
 
 bool BfmeThingCDE::bfmeCheckABI()
@@ -137,7 +140,7 @@ void BfmeThingCDE::bfmeDtorCDE()
 	{
 		void *cookie = (char *)m_array - 4;
 		ArrayDeleteHelperBodyThunk(m_array, 0x10, *(unsigned *)cookie,
-			reinterpret_cast<void *>(0x00CF7BD0));
+			reinterpret_cast<void *>(ElementDtorArrayCallback));
 		::operator delete[](cookie);
 	}
 	if (m_prev != 0)
