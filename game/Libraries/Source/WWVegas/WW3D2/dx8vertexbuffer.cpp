@@ -290,26 +290,7 @@ VertexBufferClass::WriteLockClass::WriteLockClass(VertexBufferClass* VertexBuffe
 
 // ----------------------------------------------------------------------------
 
-// ??1WriteLockClass@@ present-unmatched
-VertexBufferClass::WriteLockClass::~WriteLockClass()
-{
-	DX8_THREAD_ASSERT();
-	switch (VertexBuffer->Type()) {
-	case BUFFER_TYPE_DX8:
-#ifdef VERTEX_BUFFER_LOG
-		WWDEBUG_SAY(("VertexBuffer->Unlock()\n"));
-#endif
-		DX8_Assert();
-		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(VertexBuffer)->Get_DX8_Vertex_Buffer()->Unlock());
-		break;
-	case BUFFER_TYPE_SORTING:
-		break;
-	default:
-		WWASSERT(0);
-		break;
-	}
-	VertexBuffer->Release_Ref();
-}
+// Retail WriteLockClass destructor: VertexBufferClass_WriteLockClass_QAEDestructorThunk.cpp.
 
 // ----------------------------------------------------------------------------
 //
@@ -384,7 +365,6 @@ VertexBufferClass::AppendLockClass::~AppendLockClass()
 //
 // ----------------------------------------------------------------------------
 
-// ??0SortingVertexBufferClass@@ present-unmatched
 SortingVertexBufferClass::SortingVertexBufferClass(unsigned short VertexCount)
 	:
 	VertexBufferClass(BUFFER_TYPE_SORTING, dynamic_fvf_type, VertexCount)
