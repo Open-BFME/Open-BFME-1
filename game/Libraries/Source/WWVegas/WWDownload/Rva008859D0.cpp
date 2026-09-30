@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-extern "C" __declspec(dllimport) char* __cdecl _strdup( const char* );
+#include <mbstring.h>
 extern "C" __declspec(dllimport) int __cdecl sprintf( char*, const char*, ... );
 extern "C" __declspec(dllimport) void __cdecl free( void* );
 
@@ -15,7 +15,7 @@ public:
 
 void Rva008859D0Class::d_008859d0( const char* name, char* outBuf )
 {
-	char* dupName = _strdup( name );
+	char* dupName = (char *)_mbsdup( (const unsigned char *)name );
 	for ( char* p = dupName; *p; ++p )
 	{
 		if ( *p == '\\' || *p == '.' || *p == ' ' )

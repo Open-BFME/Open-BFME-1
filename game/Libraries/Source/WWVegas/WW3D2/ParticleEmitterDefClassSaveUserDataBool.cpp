@@ -3,6 +3,9 @@
 // local because the later vendored declaration returns WW3DErrorType.
 
 #include "winbase_shim.h"
+// Retail's KERNEL32 IAT entry is named lstrcpyn (0x01358F84).
+#undef lstrcpyn
+extern "C" __declspec(dllimport) char *__stdcall lstrcpyn(char *, const char *, int);
 #define MAX_PATH 260
 #define LPCTSTR const char *
 #include "chunkio.h"

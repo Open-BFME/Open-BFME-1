@@ -9,6 +9,7 @@
 #include "w3d_file.h"
 #include <stdlib.h>
 #include <string.h>
+#include <mbstring.h>
 
 #define DECL_DUMMY(n) virtual void Dummy##n();
 
@@ -109,7 +110,7 @@ bool ParticleEmitterDefClass::Read_Header(ChunkLoadClass &chunk_load)
 
 		W3dEmitterHeaderStruct header = { 0 };
 		if (chunk_load.Read(&header, sizeof(header)) == sizeof(header)) {
-			Name = ::_strdup(header.Name);
+			Name = (char *)::_mbsdup((const unsigned char *)header.Name);
 			Version = header.Version;
 			ret_val = true;
 		}
