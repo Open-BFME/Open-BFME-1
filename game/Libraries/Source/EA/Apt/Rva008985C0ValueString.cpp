@@ -165,7 +165,7 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
     }
     case 22:
         reinterpret_cast<BfmeStringWriter1284 *>(this)->bfmeBuildString1284(
-            reinterpret_cast<BfmeString1284 *>(output), 0x01076FE8);
+            reinterpret_cast<BfmeString1284 *>(output), (int)",");
         break;
     case 21:
         *output = BfmeStrVKI("[sound]"); // T2

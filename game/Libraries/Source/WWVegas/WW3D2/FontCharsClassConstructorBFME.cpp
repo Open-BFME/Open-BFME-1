@@ -24,6 +24,11 @@ public:
 // Retail global 0x0134AEAC (targets/game/reverse/dir32_addresses.csv).
 extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
 
+struct Gen_t_0093fa90_p4pod
+{
+	char m_body[4];
+};
+
 namespace _STL
 {
 class __new_alloc
@@ -31,7 +36,25 @@ class __new_alloc
 public:
 	static void *allocate(unsigned int bytes);
 };
+
+template <class T1, class T2> struct pair;
+template <class T> struct _Select1st;
+template <class T> struct less;
+template <class T> class allocator;
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+class _Rb_tree
+{
+public:
+	~_Rb_tree();
+
+private:
+	char m_body[12];
+};
 }
+
+typedef _STL::pair<const int, Gen_t_0093fa90_p4pod> Rva0093FA90TreePair;
+typedef _STL::_Rb_tree<int, Rva0093FA90TreePair, _STL::_Select1st<Rva0093FA90TreePair>,
+	_STL::less<int>, _STL::allocator<Rva0093FA90TreePair> > Rva0093FA90Tree;
 
 struct FontCharsMapNode
 {
@@ -60,9 +83,7 @@ public:
 
 	~FontCharDataTree() throw()
 	{
-		typedef void (__fastcall *Rva0093FA90TreeDestructor)(FontCharDataTree *, void *);
-		// The retail cleanup reads the tree through ECX and ignores EDX.
-		((Rva0093FA90TreeDestructor)0x00D3FA90)(this, 0);
+		((Rva0093FA90Tree *)this)->~Rva0093FA90Tree();
 	}
 
 	FontCharsMapNode *m_header;

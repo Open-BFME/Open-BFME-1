@@ -12,6 +12,8 @@ class DataChunkInput;
 struct DataChunkInfo;
 extern "C" int _bfmeVftVE[];
 extern "C" int g_010E8538[];
+extern void j_0001579e();
+extern void j_00004877();
 typedef bool (*BfmeParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
 
 class DataChunkInput
@@ -31,7 +33,7 @@ public:
         m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
-            (BfmeParserCallback)0x0041579E, this);
+            (BfmeParserCallback)j_0001579e, this);
     }
     ~BfmeParserRegistrationVE();
 
@@ -90,7 +92,7 @@ bool Rva00352810ParserRegistration::bfmeReadScripts_0035BFB0(
 {
     {
         AsciiString name("ScriptList");
-        file.registerParser(name, label, (BfmeParserCallback)0x00404877, 0);
+        file.registerParser(name, label, (BfmeParserCallback)j_00004877, 0);
     }
 
     BfmeScriptListReadInfo readInfo;

@@ -67,7 +67,7 @@ Xfer &Xfer::operator==(unsigned short &s)
 
 Xfer &Xfer::operator==(int &i)
 {
-    XferEnum((const char *)0x696e74, &i, 4);
+    XferEnum((const char *)'int', &i, 4);
     return *this;
 }
 
@@ -85,7 +85,7 @@ Xfer &Xfer::operator==(float &f)
 
 Xfer &Xfer::operator==(__int64 &i)
 {
-    XferEnum((const char *)0x693634, &i, 8);
+    XferEnum((const char *)'i64', &i, 8);
     return *this;
 }
 
