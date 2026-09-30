@@ -1,8 +1,8 @@
 // ?Rva0069A8D0Toggle@@YGXPAVBfmeHolderLK@@@Z (identity unknown)
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-extern "C" __declspec(dllimport) void __stdcall Rva013596C4On(void *handle);
-extern "C" __declspec(dllimport) void __stdcall Rva0135961COff(void *handle);
+extern "C" __declspec(dllimport) void __stdcall AIL_stop_sample(void *handle);
+extern "C" __declspec(dllimport) void __stdcall AIL_resume_sample(void *handle);
 
 class BfmeThingLK
 {
@@ -33,8 +33,8 @@ void __stdcall Rva0069A8D0Toggle(BfmeHolderLK *holder)
 		goto ON;
 	if (thing->m_bfmeDLK)
 		goto ON;
-	Rva0135961COff(thing->m_bfmeHandleLK);
+	AIL_resume_sample(thing->m_bfmeHandleLK);
 	return;
 ON:
-	Rva013596C4On(thing->m_bfmeHandleLK);
+	AIL_stop_sample(thing->m_bfmeHandleLK);
 }
