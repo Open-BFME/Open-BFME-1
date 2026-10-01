@@ -266,3 +266,5 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,getStartPositionInfo,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,Player,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,InGameUI,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,Player,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,InGameUI,gemini+grok,applied,2026-10-01

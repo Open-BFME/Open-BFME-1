@@ -11,7 +11,7 @@ public:
 
 }
 
-class BfmeInfoDB
+class Player
 {
 public:
 	unsigned char m_bfmeHeadDB[0x24];
@@ -21,7 +21,7 @@ public:
 class BfmeItemDB
 {
 public:
-	BfmeInfoDB *bfmeInfoDB(void);
+	Player *bfmeInfoDB(void);
 };
 
 class BfmeValDB
@@ -40,7 +40,7 @@ public:
 	BfmeValDB m_bfmeValueDB;
 };
 
-class BfmeOwnDB
+class InGameUI
 {
 public:
 	virtual void bfmeSlot000DB(void);
@@ -154,7 +154,7 @@ public:
 	BfmeNodeDB *m_idleWorkers[1];
 };
 
-void BfmeOwnDB::addIdleWorker(BfmeItemDB *item)
+void InGameUI::addIdleWorker(BfmeItemDB *item)
 {
 	if (item == 0)
 		return;

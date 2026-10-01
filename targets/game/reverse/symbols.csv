@@ -77658,7 +77658,7 @@ name,address,notes
 ?bfmeIncVGO@@YAIPAI@Z,0x00894D80,pin
 ?bfmeIndexGE@BfmeVecGE@@QAEHPAHH@Z,0x0003068E,pin index for BfmeConv2061
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
-?bfmeInfoDB@BfmeItemDB@@QAEPAVBfmeInfoDB@@XZ,0x00020824,pin
+?bfmeInfoDB@BfmeItemDB@@QAEPAVPlayer@@XZ,0x00020824,pin
 ?bfmeInfoERW@BfmeSubERW@@QAEPAVBfmeInfoERW@@XZ,0x0002369B,pin
 ?bfmeInit000078A1@@YAXXZ,0x000078A1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85A0 calls
 ?bfmeInit0000B686@@YAXXZ,0x0000B686,Open-BFME5 ILT the initialiser the run-once latch at 0x005E8570 calls
