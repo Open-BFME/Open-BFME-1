@@ -317,7 +317,8 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 extern GameEngine *TheGameEngine;
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 extern const RGBColor g_rva00CF1058TintColor;
 extern const RGBColor g_rva00CF1064TintColor;
 extern Real g_rva00EB4F98;
@@ -486,7 +487,7 @@ void Drawable::updateDrawable(void)
 
 	if (m_fadeMode124 != 0)
 	{
-		UnsignedInt frame = TheGameClient->getFrame();
+		UnsignedInt frame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 		UnsignedInt delta = frame - m_lastFadeFrame308;
 		m_lastFadeFrame308 = frame;
 		m_timeElapsedFade128 = bfmeMin(m_timeElapsedFade128 + delta, m_timeToFade12C);
@@ -512,7 +513,7 @@ void Drawable::updateDrawable(void)
 				m_fadeMode124 = 1;
 				m_timeToFade12C = m_bfme130;
 				m_timeElapsedFade128 = 0;
-				m_lastFadeFrame308 = TheGameClient->getFrame();
+				m_lastFadeFrame308 = ((ClientRoot4120 *)TheGameClient)->getFrame();
 			}
 		}
 	}
@@ -534,7 +535,7 @@ void Drawable::updateDrawable(void)
 		{
 			if (m_decalFadeRateDC != 0.0f)
 			{
-				UnsignedInt frame = TheGameClient->getFrame();
+				UnsignedInt frame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 				Int delta = frame - m_lastDecalFrame30C;
 				Int one = 1;
 				Int steps = bfmeMax(delta, one);
@@ -562,11 +563,11 @@ void Drawable::updateDrawable(void)
 
 	if (m_expirationDate2DC != 0 && now >= m_expirationDate2DC)
 	{
-		TheGameClient->destroyDrawable(this);
+		((ClientRoot4120 *)TheGameClient)->destroyDrawable(this);
 		return;
 	}
 
-	if (m_flashCount160 > 0 && (TheGameClient->getFrame() % 15) == 0)
+	if (m_flashCount160 > 0 && (((ClientRoot4120 *)TheGameClient)->getFrame() % 15) == 0)
 	{
 		RGBColor tmp;
 		const Real scale = 1.0f / 255.0f;

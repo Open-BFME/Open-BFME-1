@@ -47,7 +47,8 @@ public:
 	virtual UnsignedInt getFrame(void);
 };
 
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+class GameClient;
+extern GameClient *TheGameClient;
 
 // Field names follow Shadow::rva00459960 (ShadowRva00459960.cpp), which writes
 // +0x38 .. +0x54; +0x34 is the type mask Shadow::setOpacity tests.
@@ -98,7 +99,7 @@ private:
 void W3DProjectedShadowManager::rva007B4620(void)
 {
 	_STL::list<W3DProjectedShadow *> expired;
-	UnsignedInt frame = TheGameClientClientUpdate->getFrame();
+	UnsignedInt frame = ((ClientFrameSubsystem *)TheGameClient)->getFrame();
 
 	for (Int i = 0; i <= 1; ++i)
 	{

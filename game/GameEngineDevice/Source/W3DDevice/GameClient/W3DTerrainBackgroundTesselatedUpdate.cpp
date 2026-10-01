@@ -87,8 +87,8 @@ public:
 	TextureClass *m_texture;
 };
 
-class ClientRoot4120;
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 void Rva0090F050( void );
 
 class Rva00729300BitPlane

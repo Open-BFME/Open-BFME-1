@@ -188,7 +188,8 @@ virtual void slot24();
 virtual void slot25();
 virtual int slot26();
 };
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 class Object;
 struct Gen_t_00715d40_p4pod { int a[1]; };
 struct Node00754E70 { Node00754E70 *next,*prev; _STL::vector<Object *> data; };
@@ -217,7 +218,7 @@ void Synchronize00755170::apply(Entry00755170 **first, Entry00755170 **last)
   if (!model) continue;
   if (!selected) { selected=*it; selectedModel=model; }
   if (module->field284==module->field014) {
-   int frame=TheGameClient->slot26();
+   int frame=((ClientRoot4120 *)TheGameClient)->slot26();
    int stamp=module->field280;
    bool positive=true;
    if (stamp<0) { positive=false; stamp=-stamp; }
@@ -254,8 +255,8 @@ selected_ready:
   if (model!=selectedModel) {
    model->retain();
    models.push_back(trackedModel); model->slot58(selectedModel);
-   module->field280=-TheGameClient->slot26();
-  } else module->field280=TheGameClient->slot26();
+   module->field280=-((ClientRoot4120 *)TheGameClient)->slot26();
+  } else module->field280=((ClientRoot4120 *)TheGameClient)->slot26();
   void **slot=base;
   for (int n=model->slot28(); n>0;) {
    Render00755170 *child=model->slot29(--n);

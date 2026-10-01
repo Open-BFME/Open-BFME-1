@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // RecorderClass command-history dump (RVA 0x0009A580): the sole caller 0x00388C10 loads TheRecorder into ecx.
-// Globals by VA: CommandsAt012ED5F4 list head at +8, ClientAt012F1464 lookup at vslot +0x2C, RelationshipsAt012A9FC8 name table.
+// Globals by VA: CommandsAt012ED5F4 list head at +8, TheGameClient lookup at vslot +0x2C, RelationshipsAt012A9FC8 name table.
 #include "ascii_string.h"
 #include "unicode_string.h"
 // Retail inlines every string access and scope exit in this body.
@@ -45,7 +45,8 @@ extern GameLogic* TheGameLogic;
 extern ThingFactory* TheThingFactory;
 extern ScienceStore* TheScienceStore;
 extern SpecialPowerStore* TheSpecialPowerStore;
-extern Client0009A580* ClientAt012F1464;
+class GameClient;
+extern GameClient* TheGameClient;
 extern char* CommandsAt012ED5F4;
 extern bool FlagAt012ED4E5, FlagAt012ED4E6;
 extern int OpenBFME5_netCRCInterval;
@@ -109,7 +110,7 @@ void RecorderClass::dumpCommandHistory0009A580(CommandDumpFile0009A580* file,uns
     }
     case ARG_DRAWABLE: {
      int id=message->getArgument(i)->integer;
-     Drawable0009A580* drawable=ClientAt012F1464->find(id);
+     Drawable0009A580* drawable=((Client0009A580*)TheGameClient)->find(id);
      if (drawable) text.format("    %02d: Drawable:%s(%d)",i,drawable->getTemplate()->rva0009A580_at20.str(),id);
      else text.format("    %02d: Drawable:INVALID",i);
      break;

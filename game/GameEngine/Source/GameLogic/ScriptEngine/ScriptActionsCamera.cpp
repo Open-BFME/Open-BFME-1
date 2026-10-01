@@ -276,7 +276,8 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;					// 0x012EF4CC
 extern View *TheTacticalView;							// 0x012F1600
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -344,7 +345,7 @@ void ScriptActions::doModCameraMoveToSelection(void)
 	Coord3D destination;
 	destination.x = destination.y = destination.z = 0;
 
-	for (Drawable *draw = TheGameClient->firstDrawable(); draw; draw = draw->getNextDrawable())
+	for (Drawable *draw = ((ClientRoot4120 *)TheGameClient)->firstDrawable(); draw; draw = draw->getNextDrawable())
 	{
 		if (draw->isSelected())
 		{

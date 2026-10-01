@@ -50,7 +50,8 @@ struct ObjectFields007629F0 {
     const GeometryInfo &geometry() const { return *reinterpret_cast<const GeometryInfo *>((const char *)this + 0xAC); }
 };
 struct Engine007629F0 { char unknown00[0x30]; int mode30; int unknown34; float value38; };
-extern Client007629F0 *ClientGlobal007629F0;
+class GameClient;
+extern GameClient *TheGameClient;
 extern Engine007629F0 *EngineGlobal007629F0;
 extern int AttachmentFailures007629F0;
 void stepAngleToward(float *, float);
@@ -84,7 +85,7 @@ typedef char AttachmentBoneOffset007629F0[offsetof(AttachmentTransform007629F0, 
 void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
 {
     if (parentID88) {
-        Drawable *parent = ClientGlobal007629F0->slot2C(parentID88);
+        Drawable *parent = ((Client007629F0 *)TheGameClient)->slot2C(parentID88);
         if (parent) {
             ObjectFields007629F0 *object = parent->m_object;
             Matrix3D boneMtx;
@@ -110,8 +111,8 @@ void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
             mtx = boneMtx;
     }
     if (blend264 < 1.0f) {
-        if (frame268 < ClientGlobal007629F0->slot68()) {
-            frame268 = ClientGlobal007629F0->slot68();
+        if (frame268 < ((Client007629F0 *)TheGameClient)->slot68()) {
+            frame268 = ((Client007629F0 *)TheGameClient)->slot68();
             blend264 += 1.0f / 30.0f;
             if (blend264 > 1.0f) blend264 = 1.0f;
         }

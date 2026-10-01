@@ -336,7 +336,8 @@ extern Rva004FC7C0Display *TheDisplay;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameTextInterface *TheGameText;
-extern Rva004FC7C0Client *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 extern GameSpyConfigInterface *TheGameSpyConfig;
 extern GameSpyStagingRoom *TheGameSpyGame;
 struct Rva004FC7C0Global {
@@ -442,7 +443,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
         buttonJoin->winEnable(TRUE);
         static UnsignedInt lastFrame = 0;
         static Int lastID = -1;
-        UnsignedInt now = TheGameClient->getFrame();
+        UnsignedInt now = ((Rva004FC7C0Client *)TheGameClient)->getFrame();
         PeerRequest req;
         req.peerRequestType =
             PeerRequest::PEERREQUEST_GETEXTENDEDSTAGINGROOMINFO;
