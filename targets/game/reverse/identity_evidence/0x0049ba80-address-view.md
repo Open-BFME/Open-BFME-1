@@ -1,8 +1,10 @@
 # RVA0049BA80: extent and physical ABI evidence
 
-No original owner identity or semantic member names are claimed. The entry
-retains its address in Rva0049BA80Owner::rva0049ba80. The bank supplied the
-source hypothesis; independent retail instruction decoding supplies the proof.
+ILT 0x00006938 pins the method as Rva0049BA80::call(Object*, bool) const, and
+the matched Rva0049C2E0::method caller uses that name. The receiver keeps an
+address-derived class name because retail evidence does not identify its owner.
+The bank supplied the source hypothesis; retail instruction decoding supplies
+the physical ABI proof below.
 
 ## Extent and entry contract
 
@@ -50,8 +52,7 @@ no covered type is redeclared. No shared header or generated source is edited.
 
 ## Reproduction artifacts
 
-Independent full retail and helper disassembly:
-build/0049ba80_abi_extent.txt in the isolated conversion clone.
-Strict scratch comparison: build/0049ba80_strict.log,1/1 exact292B,6REL32,
-DIR32zero references, no-op patchpass. The official source-scoped add_match/build
-must pass before publication; scratch instruction/shape scores alone are not proof.
+`build/0049ba80_abi_extent.txt` records the full retail body and helper disassembly from an isolated conversion clone.
+`build/0049ba80_strict.log` records the scratch comparison, which matched all 292 bytes, resolved six REL32 relocations, used no DIR32 references, and applied no retail patches.
+The official `add_match.py` and `build.sh` checks must pass before the repository records the source.
+A scratch comparison alone does not prove a landing.

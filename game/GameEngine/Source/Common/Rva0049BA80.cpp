@@ -4,9 +4,10 @@
 // storing) the result into this+0x148. this+0x138/+0x13c bound a pointer
 // vector that must hold >=2 entries or the result is forced to 0; a null
 // object, or any branch's own lookup miss, instead leaves this+0x148
-// untouched. No caller, vtable, or string proves the owning class, so the
-// receiver keeps an address-derived name; existing legacy callee declarations are ABI views only; their routes and
-// physical contracts are independently documented in the identity evidence.
+// untouched. ILT 0x00006938 and matched Rva0049C2E0::method prove the
+// method name and signature. The receiver keeps an address-derived class
+// name because retail gives no native owner type. Existing callee declarations
+// are ABI views, with routes and contracts in the evidence file.
 
 typedef int Int;
 typedef unsigned int UInt;
@@ -72,10 +73,12 @@ public:
 	bool test( UInt bit ) const;
 };
 
-class Rva0049BA80Owner
+class Object;
+
+class Rva0049BA80
 {
 public:
-	void rva0049ba80( void *object, bool flag );
+	void call( Object *object, bool flag ) const;
 
 private:
 	char m_unmodelled000[ 0x10 ];
@@ -91,10 +94,10 @@ private:
 	char *m_vecBegin;
 	char *m_vecEnd;
 	char m_unmodelled140[ 0x148 - 0x140 ];
-	Int m_cached148;
+	mutable Int m_cached148;
 };
 
-void Rva0049BA80Owner::rva0049ba80( void *object, bool flag )
+void Rva0049BA80::call( Object *object, bool flag ) const
 {
 	if ( object == 0 )
 		return;
