@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "06ba21f8114aabbd26c8ef3991f4529f93e55d57070cf212f7f5edd31259ffba",
+  "symbol": "?Update@Rva0061DF60@@QAEXXZ",
+  "score_kind": "measured",
+  "score": 0.7285,
+  "source": "// ?Update@Rva0061DF60@@QAEXXZ\n// partial score=0.7285 date=2026-10-01\n// cl: /DNDEBUG /MD /EHs /I game/Libraries/Source/WWVegas/WWLib /I game/Libraries/Source/WWVegas/WWMath /I game/Libraries/Source/WWVegas/WWDebug /I game/Libraries/Source/WWVegas/WWSaveLoad /I game/Libraries/Source/WWVegas/WW3D2 /I game/Libraries/Include\n#include \"rendobj.h\"\nclass Rva0061DF60 {\npublic:\n virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3(); virtual void slot4(); virtual void slot5(); virtual void slot6(); virtual void slot7(Vector3 position);\n void Update();\nprivate:\n char _pad04[4]; RenderObjClass *m_primary; char _pad0c[0x38]; int m_mode; char _pad48[4]; bool m_enabled; char _pad4d[3]; Vector3 m_from; Vector3 m_to; float m_amount;\n};\nvoid Rva0061DF60::Update() {\n if (m_enabled && m_mode != 0) {\n  m_primary->Validate_Transform();\n  Vector3 position;\n  RenderObjClass *primary=m_primary;\n  if(primary) {\n   Matrix3D transform(primary->Get_Transform());\n   position=transform.Get_Translation();\n  }\n  Vector3 delta(m_to);\n  delta -= m_from;\n  if(m_mode==1) delta *= m_amount;\n  else if(m_mode==2) delta *= -m_amount;\n  position += delta;\n  slot7(Vector3(position));\n }\n}\n"
+}
