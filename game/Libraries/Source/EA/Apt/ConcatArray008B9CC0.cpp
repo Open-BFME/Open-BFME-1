@@ -56,7 +56,8 @@ public:
     }
 };
 extern Value008B9CC0 **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeResult1233;
 void *aptArrayConcat(Value008B9CC0 *self,int count) {
     if (self->isType(0x16)) {
@@ -65,7 +66,7 @@ void *aptArrayConcat(Value008B9CC0 *self,int count) {
         for (int i=0;i<source->field28;++i)
             out->set(out->field28,(Value008B9CC0 *)(source->m_elements[i]&~1u));
         for (int j=0;j<count;++j) {
-            Value008B9CC0 *v=g_bfmeArr1233[g_bfmeCount1233-j-1];
+            Value008B9CC0 *v=g_bfmeArr1233[Rva008AE770TheStack.field00-j-1];
             if (v->isType(0x16)) {
                 Rva008B9C90HeaderedDeleting *a=(Rva008B9C90HeaderedDeleting *)v;
                 for (int k=0;k<a->field28;++k)

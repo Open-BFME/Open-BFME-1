@@ -28,7 +28,8 @@ public:
 class Rva8CD130Value { public: void getName(Rva8CD130String *output); };
 class AptValue { public: int toInteger() const; };
 extern AptValue **g_bfmeArr1233;
-extern int g_count01338748;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *(__cdecl *WideAllocPtr)(unsigned int);
 struct Rva00899560Value;
 struct Rva00899560Pool {
@@ -84,10 +85,10 @@ Rva008A1110Value *findStringValue008A9C30(Rva8CD130Value *value, int count) {
     int start = 0;
     value->getName(&text);
     if (!count) return g_fallback013379BC;
-    Rva8CD130Value *top = (Rva8CD130Value *)g_bfmeArr1233[g_count01338748 - 1];
+    Rva8CD130Value *top = (Rva8CD130Value *)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
     top->getName(&needle);
     if (count == 2) {
-        start = g_bfmeArr1233[g_count01338748 - 2]->toInteger();
+        start = g_bfmeArr1233[Rva008AE770TheStack.field00 - 2]->toInteger();
         if (start < 0) start = 0;
     }
     int found = text.find0089FF80((const char *)(needle.m_data + 1), start);

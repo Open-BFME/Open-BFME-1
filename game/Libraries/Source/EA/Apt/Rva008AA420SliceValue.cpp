@@ -37,7 +37,8 @@ class AptValue { public: int toInteger() const; };
 class EAStringC { public: int bfmeUtf8Length() const; };
 class BfmeStrVKK { public: void bfmeTruncVKK(unsigned n); };
 extern AptValue **g_bfmeArr1233;
-extern int g_count01338748;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *(__cdecl *WideAllocPtr)(unsigned int);
 class Rva008A9B00 {
 public:
@@ -83,8 +84,8 @@ Rva008A9B00 *sliceValue008AA420(Rva8CD130Value *value, int count) {
     int start = -1;
     int length = 9999999;
     if (!count) return g_fallback013379BC;
-    if (count >= 1) start = g_bfmeArr1233[g_count01338748 - 1]->toInteger();
-    if (count >= 2) length = g_bfmeArr1233[g_count01338748 - 2]->toInteger();
+    if (count >= 1) start = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1]->toInteger();
+    if (count >= 2) length = g_bfmeArr1233[Rva008AE770TheStack.field00 - 2]->toInteger();
     value->getName(&text);
     int total = ((EAStringC *)&text)->bfmeUtf8Length();
     if (start < 0) start += total;

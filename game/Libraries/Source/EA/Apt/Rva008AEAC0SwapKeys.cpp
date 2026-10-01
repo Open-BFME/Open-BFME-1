@@ -24,12 +24,13 @@ struct Value008AEAC0 {
  bool validRange() { int t=m_flags&0x3f; return t>=0xc && t<=0x13 && !((unsigned char)~(m_flags>>15)&1); }
 };
 extern Value008AEAC0 **g_bfmeArr1233;
-extern int g_stack01338748;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 AptValue *aptSwapKeys008AEAC0(Value008AEAC0 *self,int argc) {
  if(argc!=1 && self->validRange()) goto done;
  {
- Value008AEAC0 *v=g_bfmeArr1233[g_stack01338748-1];
+ Value008AEAC0 *v=g_bfmeArr1233[Rva008AE770TheStack.field00-1];
  Value008AEAC0 *other=0; void *previous=0;
  unsigned bits=v->m_flags; int type=bits&0x3f;
  if(type>=0xc && type<=0x13 && !((unsigned char)~(bits>>15)&1)) other=v;
@@ -66,7 +67,7 @@ done:
 AptValue *aptSetNextKey008AECC0(Value008AEAC0 *self,int argc) {
  if(argc!=1 && self->validRange()) goto done;
  {
- Value008AEAC0 *v=g_bfmeArr1233[g_stack01338748-1];
+ Value008AEAC0 *v=g_bfmeArr1233[Rva008AE770TheStack.field00-1];
  if(v->validRange()) {
   if(v->m_flags&0x8000) {
    int key=v->m_f8;

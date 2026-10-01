@@ -11458,5 +11458,95 @@
  "after_sha256": "bb4583836d1a39f0cbe2b8bd98c9e12881efecef7e5b249c8fb956346d7b2a03",
  "evidence": "targets/game/reverse/identity_evidence/009ebff0-result-view.md",
  "reason": "The token comparison falsely pairs the removed explicit output-pointer parameter out with the shared result TYPE Rva009EF6D0Output. No source variable is renamed to a type. The independently witnessed native output operand is now the aggregate hidden result parameter, and its original source declaration remains unknown."
-}
+},
+ {
+  "old_path": "game/Libraries/Source/Apt/Rva008AE7C0CreateChannels.cpp",
+  "new_path": "game/Libraries/Source/Apt/Rva008AE7C0CreateChannels.cpp",
+  "old_name": "g_stack01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "acb8da3f4c5cb00f277a893351dbb126997a494db18887a8ba5510fb0329586f",
+  "after_sha256": "5711c4b4a3f918a1148678312394db94533dc842b3c435b78f4d3b5160011235",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp",
+  "old_name": "g_bfmeCount1233",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "68f570c556a755d238165b95b2f26069c403e7d670ec3bcfb4b2e975464e8ddd",
+  "after_sha256": "df635896215d4cfcf95c91256645b8ffe6bac2e5b80228844b1e83558ac6f9b6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/FindStringValue008A9C30.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/FindStringValue008A9C30.cpp",
+  "old_name": "g_count01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "c8340102a5a6060d9be256c84f62f760ef5465acb581347f1320dc5393b866d2",
+  "after_sha256": "5a6bc5f571991da6e8e58ea758be3ef96cfe4afd903e9084505345f32a29b7e6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008A9F70CodepointStringValue.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008A9F70CodepointStringValue.cpp",
+  "old_name": "g_count01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "06216ceb6e878d90540f109ce376ee30036d872c01ff6dfe1f63d46e3d43b32a",
+  "after_sha256": "39f9e2ab6a0100fc951cd38fadf52b7272d00294b1e1a5bc8d61fc1188de2956",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008AA420SliceValue.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008AA420SliceValue.cpp",
+  "old_name": "g_count01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "762cd680dc082a5a074b5e7155075d8d42149955e95054e9b199a7e3cde7a7d3",
+  "after_sha256": "7b5e569b815c61fdfdff1e4a7b43adb6bac51c1059d032d644413d1ee1057036",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008AEAC0SwapKeys.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008AEAC0SwapKeys.cpp",
+  "old_name": "g_stack01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "cb1250b0b74ee21bcbe82c71fbed645dc010a5708a6621c5a8952ea880af9910",
+  "after_sha256": "d08b12269cc1557e3db90c9c3f8c849541ea79bb372791b7d92729c1e143aeef",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008C6840StringTransform.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008C6840StringTransform.cpp",
+  "old_name": "g_bfmeCount1233",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "a4c79c870bc25ee8f2bbd5b354db8e086256a08c7390b2b05d0959b005f18d52",
+  "after_sha256": "82251415ff52f16c60d9146e490592874fc54053becfcaef26bac1fca3bdcbbc",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/SubstringBoundsValue008AACF0.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/SubstringBoundsValue008AACF0.cpp",
+  "old_name": "g_count01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "376caa437ab7e07af7662c09c078f17059d08572e0631398996c31e168a75408",
+  "after_sha256": "c3dc00c0601298cfe4da6ba01bd479c3e3880e548064abe3c7c9d44caf2b07c6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/SubstringValue008AAB20.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/SubstringValue008AAB20.cpp",
+  "old_name": "g_count01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "8c0c65961314e6db2e22783220d4fcb8fa0abb4998121fcfc6126311b27859b2",
+  "after_sha256": "c83fd94bd46bbddd6462a445569ef7abffd14fe7b9ea42d98579b6b07f631beb",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ }
 ]

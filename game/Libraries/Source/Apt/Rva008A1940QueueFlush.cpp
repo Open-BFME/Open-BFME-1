@@ -51,7 +51,8 @@ struct Rva008A1940Interpreter {
     char gap0c[0x24];
     Rva008A1940Stack retained;
 };
-extern Rva008A1940Interpreter Rva01338748State;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern unsigned Rva008A5250LastKey;
 struct Rva008A1940Holder { char gap00[0x1268]; Rva008A1940Value *field1268; Rva008A1940Value *get() { return field1268; } };
 extern Rva008A1940Holder *g_bfmeHolderBU;
@@ -79,13 +80,13 @@ void Rva008A1940Queue::flush()
             Rva008A1940Value *value = it->field10.value;
             if (!value->invalid() && !value->kind19() &&
                 (it->field08.code >= 0 || -it->field08.code == value->field50->field18)) {
-                ((BfmeR1226 *)&Rva01338748State)->bfmeAdd1226(*it->field0c.stream, value, -1);
-                ((BfmeR1226 *)&Rva01338748State)->bfmeLine1226("eActionType == AAT_ACTION");
+                ((BfmeR1226 *)&Rva008AE770TheStack)->bfmeAdd1226(*it->field0c.stream, value, -1);
+                ((BfmeR1226 *)&Rva008AE770TheStack)->bfmeLine1226("eActionType == AAT_ACTION");
                 rva008A18C0();
             }
         } else if (it->type == 1) {
             Rva008A5250LastKey = it->packed;
-            Rva01338748State.retained.pushAlways(it->field08.receiver);
+            ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->retained.pushAlways(it->field08.receiver);
             unsigned key = it->packed;
             if (key && (unsigned char)(key & 3) == 1) {
                 unsigned packed = it->packed;
@@ -93,18 +94,18 @@ void Rva008A1940Queue::flush()
                 int number = packed >> 17;
                 selector &= 0x7f;
                 if (it->field10.count > 0 && (packed & 0x3fc) == 4 && (selector & 7)) {
-                    if (it->field10.count > 1) Rva01338748State.primary.push(g_bfmeHolderBU->get());
+                    if (it->field10.count > 1) ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->primary.push(g_bfmeHolderBU->get());
                     if (selector == 4) number = -number;
-                    Rva01338748State.primary.push((Rva008A1940Value *)AptInteger::Create(number));
+                    ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->primary.push((Rva008A1940Value *)AptInteger::Create(number));
                 }
             }
-            ((Rva008CF740 *)&Rva01338748State)->run((Rva008CF740Value *)it->field08.receiver,
+            ((Rva008CF740 *)&Rva008AE770TheStack)->run((Rva008CF740Value *)it->field08.receiver,
                 (Rva008CF740Value *)it->field0c.function, it->field10.count);
-            ((BfmeR1226 *)&Rva01338748State)->bfmeLine1226("eActionType == AAT_FUNCTION");
-            Rva01338748State.retained.popAlways();
-            Rva01338748State.primary.pop();
+            ((BfmeR1226 *)&Rva008AE770TheStack)->bfmeLine1226("eActionType == AAT_FUNCTION");
+            ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->retained.popAlways();
+            ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->primary.pop();
         }
-        if (Rva01338748State.primary.count > 0) Rva01338748State.primary.pop();
+        if (((Rva008A1940Interpreter *)&Rva008AE770TheStack)->primary.count > 0) ((Rva008A1940Interpreter *)&Rva008AE770TheStack)->primary.pop();
         if (oldEnd > end) it -= oldEnd - end;
         ++it;
         if (it == storage + capacity) it = storage;
