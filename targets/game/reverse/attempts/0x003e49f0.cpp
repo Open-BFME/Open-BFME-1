@@ -1,5 +1,5 @@
 // ?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z
-// partial score=0.96 date=2026-09-28
+// partial score=0.9668 date=2026-10-01
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003E49F0, 753 bytes (ret 0xC at +0x2EE). Identity: ILT 0x00005484 and
@@ -144,7 +144,8 @@ Int Pathfinder::bfmeCheckAttackViewHelper( Object *obj, Coord3D *pos, void *cell
 	Int radius;
 	Bool center;
 	{
-		Int iRadius;
+		Int iRadiusStorage[2];
+#define iRadius iRadiusStorage[1]
 		getRadiusAndCenter(obj, iRadius, center);
 		radius = iRadius;
 	}
