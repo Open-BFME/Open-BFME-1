@@ -19,7 +19,8 @@
 // passing true and the other false, which is the clearest thing in this family:
 // the same forwarder written twice with the flag flipped.
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived.  The pushed byte is
+// IDENTITY.  The 0x00027F2A callee is proven GameWindow::winHide; the
+// 0x0000C955 callee's name stays address-derived.  The pushed byte is
 // spelled bool because a bool argument compiles to exactly this push, but a
 // byte-wide enum would encode the same.
 
@@ -30,10 +31,18 @@
 		void handle( bool flag );                                         \
 	};
 
-BFME_FORWARD_CALLEE( 00027F2A )
 BFME_FORWARD_CALLEE( 0000C955 )
 
-#define BFME_GUARDED_FORWARD_MEMBER( NAME, CALLEE, OFFSET, VALUE )        \
+// The 0x00027F2A callee is the retail thunk of GameWindow::winHide (see
+// ?winHide@GameWindow@@QAEH_N@Z in targets/game/reverse/functions.csv), so
+// the receiver really is a GameWindow and the flag is its bool parameter.
+class GameWindow
+{
+public:
+	int winHide( bool hide );
+};
+
+#define BFME_GUARDED_FORWARD_MEMBER( NAME, CALLEE, MEMBER, OFFSET, VALUE ) \
 	class NAME                                                            \
 	{                                                                     \
 	public:                                                               \
@@ -45,12 +54,12 @@ BFME_FORWARD_CALLEE( 0000C955 )
 	{                                                                     \
 		if ( m_target )                                                   \
 		{                                                                 \
-			m_target->handle( VALUE );                                    \
+			m_target->MEMBER( VALUE );                                    \
 		}                                                                 \
 	}
 
-BFME_GUARDED_FORWARD_MEMBER( Rva0048D1B0, Gen00027F2A, 0x3050, false )
-BFME_GUARDED_FORWARD_MEMBER( Rva0048D1D0, Gen00027F2A, 0x3050, true )
+BFME_GUARDED_FORWARD_MEMBER( Rva0048D1B0, GameWindow, winHide, 0x3050, false )
+BFME_GUARDED_FORWARD_MEMBER( Rva0048D1D0, GameWindow, winHide, 0x3050, true )
 
 extern Gen0000C955 *Data00EF49FC;
 
