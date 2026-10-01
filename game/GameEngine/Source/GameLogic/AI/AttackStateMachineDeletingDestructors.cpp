@@ -4,9 +4,13 @@
 // deleting wrappers. Matched constructors install the dedicated vtables
 // whose slot-zero ILTs identify each wrapper.
 
+// Retail's own StateMachine scalar-deleting destructor is
+// ??1StateMachine@@MAE@XZ (game/GameEngine/Source/Common/StateMachineDestructorThunk.cpp),
+// i.e. a PROTECTED virtual destructor.  Spelled public here the reference would
+// never link, so keep the retail access specifier.
 class StateMachine
 {
-public:
+protected:
 	virtual ~StateMachine();
 };
 

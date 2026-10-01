@@ -34,6 +34,12 @@ class StateMachine : public StateMachineBase
 {
 public:
 	StateMachine( Object *owner, AsciiString name, Bool flag );
+
+	// Retail's own destructor is protected: ??1StateMachine@@MAE@XZ, defined in
+	// game/GameEngine/Source/Common/StateMachineDestructorThunk.cpp.  Spelled
+	// public here the vtable reference would carry ??1StateMachine@@UAE@XZ and
+	// could never link.
+protected:
 	virtual ~StateMachine();
 
 private:
