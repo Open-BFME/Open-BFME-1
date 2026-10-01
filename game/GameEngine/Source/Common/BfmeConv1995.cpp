@@ -1,5 +1,10 @@
 extern "C" void *bfmeVtblEVD[];
 
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slots this TU calls, so every use casts.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -16,7 +21,7 @@ public:
 	virtual void bfmeReleaseEVD(void *item);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class BfmeBaseEVD
 {
@@ -42,7 +47,7 @@ BfmeEntryEVD::~BfmeEntryEVD()
 
 	for (int i = 0; i < m_bfmeCountEVD; i++)
 	{
-		Rva0048EC80TheManager->bfmeReleaseEVD(m_bfmeSlotsEVD[i]);
+		((Rva0048EC80Manager *)TheDisplayStringManager)->bfmeReleaseEVD(m_bfmeSlotsEVD[i]);
 		m_bfmeSlotsEVD[i] = 0;
 	}
 }

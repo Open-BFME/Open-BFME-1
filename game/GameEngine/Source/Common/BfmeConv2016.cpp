@@ -1,5 +1,10 @@
 extern "C" void *bfmeVftEAZ[];
 
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slots this TU calls, so every use casts.
+class DisplayStringManager;
+
 class BfmeStrEAZ
 {
 public:
@@ -24,7 +29,7 @@ public:
 	virtual void bfmeReleaseEAZ(void *item);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class BfmeHostEAZ
 {
@@ -50,10 +55,10 @@ BfmeHostEAZ::~BfmeHostEAZ()
 	void *a = *(void *volatile *)&m_bfmeAEAZ;
 
 	if (a != 0)
-		Rva0048EC80TheManager->bfmeReleaseEAZ(a);
+		((Rva0048EC80Manager *)TheDisplayStringManager)->bfmeReleaseEAZ(a);
 
 	if (m_bfmeBEAZ != 0)
-		Rva0048EC80TheManager->bfmeReleaseEAZ(m_bfmeBEAZ);
+		((Rva0048EC80Manager *)TheDisplayStringManager)->bfmeReleaseEAZ(m_bfmeBEAZ);
 
 	m_bfmeCEAZ = 0;
 }

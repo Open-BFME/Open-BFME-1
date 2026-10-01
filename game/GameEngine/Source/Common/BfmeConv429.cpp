@@ -1,3 +1,8 @@
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slots this TU calls, so the use casts.
+class DisplayStringManager;
+
 class BfmeMakerAWB
 {
 public:
@@ -13,7 +18,7 @@ public:
 	virtual void *bfmeMakeAWB();
 };
 
-extern BfmeMakerAWB *g_bfmeMakerAWB;
+extern DisplayStringManager *TheDisplayStringManager;
 
 struct BfmeNodeAWB
 {
@@ -41,5 +46,5 @@ void bfmeGoAWB(BfmeKeyAWB *key)
 	node->m_bfmeFlag = true;
 	node->m_bfmeZero = 0;
 	if (have == 0)
-		node->m_bfmeWhat = g_bfmeMakerAWB->bfmeMakeAWB();
+		node->m_bfmeWhat = ((BfmeMakerAWB *)TheDisplayStringManager)->bfmeMakeAWB();
 }

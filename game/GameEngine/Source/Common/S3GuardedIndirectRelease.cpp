@@ -37,6 +37,11 @@
 // virtuals exist only to place slots 10, 19 and 12; and the globals are typed
 // only as far as the guard and the call convention require.
 
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slot this TU calls, so its uses cast.
+class DisplayStringManager;
+
 class GenSink
 {
 public:
@@ -53,7 +58,7 @@ public:
 	virtual void take( void *item );
 };
 
-extern GenSink *TheGenSink;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class Rva00411BB0
 {
@@ -65,7 +70,7 @@ public:
 void Rva00411BB0::handOff()
 {
 	if( m_item )
-		TheGenSink->take( m_item );
+		((GenSink *)TheDisplayStringManager)->take( m_item );
 	m_item = 0;
 }
 
@@ -80,7 +85,7 @@ void Rva0048E590::handOff()
 {
 	if( m_item )
 	{
-		TheGenSink->take( m_item );
+		((GenSink *)TheDisplayStringManager)->take( m_item );
 		m_item = 0;
 	}
 }

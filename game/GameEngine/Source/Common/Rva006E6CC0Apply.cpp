@@ -1,5 +1,10 @@
 // cl: /O2 /Ob0
 
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slots this TU calls, so the use casts.
+class DisplayStringManager;
+
 class Rva006E6CC0Target
 {
 public:
@@ -15,7 +20,7 @@ public:
 	virtual int slot24();
 };
 
-extern Rva006E6CC0Target *g_rva006E6CC0Target;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class Rva006E6CC0
 {
@@ -28,5 +33,5 @@ public:
 
 void Rva006E6CC0::apply()
 {
-	m_at2C = g_rva006E6CC0Target->slot24();
+	m_at2C = ((Rva006E6CC0Target *)TheDisplayStringManager)->slot24();
 }

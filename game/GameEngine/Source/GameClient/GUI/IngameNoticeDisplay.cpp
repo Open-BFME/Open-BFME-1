@@ -1,5 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
+// Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
+// GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
+// the slots this TU calls, so its use casts.
+class DisplayStringManager;
+
 template <typename T> class Rva0048EC80StringBase
 {
 friend class Rva0048EC80UnicodeString;
@@ -43,7 +48,7 @@ public:
 	virtual Rva0048EC80Resource *create(void);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class Rva0048EC80ResourceOwner
 {
@@ -66,7 +71,7 @@ Rva0048EC80ResourceOwner::Rva0048EC80ResourceOwner(
 	m_resource = 0;
 	m_unused = 0;
 	m_identifier = identifier;
-	m_resource = Rva0048EC80TheManager->create();
+	m_resource = ((Rva0048EC80Manager *)TheDisplayStringManager)->create();
 	if (m_resource)
 	{
 		m_resource->setDescriptor(desc->field4);
