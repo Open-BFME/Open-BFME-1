@@ -178,10 +178,19 @@ class Team
         return DLINK_ITERATOR<Object>(head0c, Object::dlink_next_TeamMemberList);
     }
 };
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum
+// return as ?AW4NameKeyType@@, the matched defining symbol (0x0008FFC0).
+enum NameKeyType
+{
+    NAMEKEY_INVALID = 0,
+    NAMEKEY_MAX = 1 << 23,
+    FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 class NameKeyGenerator
 {
   public:
-    int nameToKey(const char *);
+    NameKeyType nameToKey(const char *);
 };
 extern ScriptEngine *TheScriptEngine;
 extern ControlBar *TheControlBar;
@@ -260,7 +269,7 @@ void ScriptActions::doTeamHuntWithCommandButton(const AsciiString &teamName,
         case 23:
         case 26:
         case 36: {
-            static int key_CommandButtonHuntUpdate =
+            static NameKeyType key_CommandButtonHuntUpdate =
                 TheNameKeyGenerator->nameToKey("CommandButtonHuntUpdate");
             HuntUpdate002F7B80 *huntUpdate = obj->findUpdateModule(key_CommandButtonHuntUpdate);
             if (huntUpdate)

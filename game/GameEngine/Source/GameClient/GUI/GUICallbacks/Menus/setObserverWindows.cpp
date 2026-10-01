@@ -83,7 +83,15 @@ public:
 	int winSetEnabledImage( int index, const Image *image );
 };
 
-typedef int NameKeyType;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum
+// return as ?AW4NameKeyType@@, the matched defining symbol (0x0008FFC0).
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	NAMEKEY_MAX = 1 << 23,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

@@ -14,10 +14,20 @@ public:
 	unsigned char m_bfmeFlagDJ;
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// Retail returns the enum by value; MSVC mangles a by-value enum return as
+// ?AW4NameKeyType@@, which is the matched defining symbol (0x0008FFC0).
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	NAMEKEY_MAX = 1 << 23,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
+
 class NameKeyGenerator
 {
 public:
-	int bfmeKeyDJ(const char *name);
+	NameKeyType nameToKey(const char *name);
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
@@ -30,7 +40,7 @@ public:
 
 int __cdecl bfmeCheckDJ(BfmeThingDJ *thing)
 {
-	static int key = TheNameKeyGenerator->bfmeKeyDJ("CastleMemberBehavior");
+	static NameKeyType key = TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
 
 	BfmeItemDJ *it = thing->bfmeFindDJ(key);
 

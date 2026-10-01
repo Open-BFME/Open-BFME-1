@@ -4,14 +4,22 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum
+// return as ?AW4NameKeyType@@, the matched defining symbol (0x0008FFC0).
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	NAMEKEY_MAX = 1 << 23,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
+
 enum KindOfType
 {
 	KINDOF_0014CA60_HORDE = 0x6c,
 	KINDOF_0014CA60_HORDE_MEMBER = 0x6d,
 	KINDOF_0014CA60_SIEGE_TARGET = 0x5c
 };
-
-typedef int NameKeyType;
 
 class Object;
 class BfmeOutOfWeaponRangeObject;
