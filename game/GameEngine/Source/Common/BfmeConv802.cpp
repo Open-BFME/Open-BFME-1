@@ -44,7 +44,16 @@ public:
 	void *bfmeLookEBE(void *p);
 };
 
-extern BfmeGlobEBE *g_bfmeObjEBE;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; BfmeGlobEBE is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGlobEBE *bfmeGlobEBE()
+{
+	return (BfmeGlobEBE *)TheGameLogic;
+}
 
 struct BfmeThingEBE
 {
@@ -58,7 +67,7 @@ void *BfmeThingEBE::bfmeGoEBEa()
 {
 	void *p = m_bfmeP;
 	if (p)
-		return g_bfmeObjEBE->bfmeLookEBE(p);
+		return bfmeGlobEBE()->bfmeLookEBE(p);
 	return 0;
 }
 
@@ -66,7 +75,7 @@ void *BfmeThingEBE::bfmeGoEBEb()
 {
 	void *p = m_bfmeP;
 	if (p)
-		return g_bfmeObjEBE->bfmeLookEBE(p);
+		return bfmeGlobEBE()->bfmeLookEBE(p);
 	return 0;
 }
 

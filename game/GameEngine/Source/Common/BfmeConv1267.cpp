@@ -20,7 +20,16 @@ public:
 	unsigned int m_bfme3c;
 };
 
-extern BfmeG1267 *g_bfme1267;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; BfmeG1267 is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeG1267 *bfmeG1267()
+{
+	return (BfmeG1267 *)TheGameLogic;
+}
 
 class BfmeA1267
 {
@@ -45,7 +54,7 @@ BfmeVec1267 *BfmeA1267::bfmeGet1267()
 	r->m_bfme04 = m_bfme28.m_bfme04;
 	r->m_bfme08 = m_bfme28.m_bfme08;
 
-	s = (float)sin((float)g_bfme1267->m_bfme3c * m_bfme40) * *(volatile float *)&m_bfme3c * g_bfmeK1267A + g_bfmeK1267B;
+	s = (float)sin((float)bfmeG1267()->m_bfme3c * m_bfme40) * *(volatile float *)&m_bfme3c * g_bfmeK1267A + g_bfmeK1267B;
 	r->m_bfme00 = r->m_bfme00 * s;
 	m_bfme44.m_bfme04 = m_bfme44.m_bfme04 * s;
 	m_bfme44.m_bfme08 = m_bfme44.m_bfme08 * s;

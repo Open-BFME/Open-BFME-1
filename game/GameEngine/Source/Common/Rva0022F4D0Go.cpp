@@ -54,14 +54,25 @@ public:
 	int ask();
 };
 
-class GameLogic
+// This TU's view of the pointee; the global itself is EA's canonical
+// `GameLogic *TheGameLogic` (retail 0x012F0898, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp).  Only the symbol name
+// matters here, so the view is kept and cast at the use.
+class Rva0022F4D0GameLogicView
 {
 public:
 	char m_pad[0x3C];
 	volatile int m_frame;
 };
 
-extern volatile GameLogic * volatile TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva0022F4D0GameLogicView *theGameLogic()
+{
+	return (Rva0022F4D0GameLogicView *)TheGameLogic;
+}
+
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
@@ -108,7 +119,7 @@ void Gen_0022F4D0::bfmeGo4D0(void *payload)
 	BfmeV28NoArg *first = (BfmeV28NoArg *)object;
 	if (first->slot28() != 0)
 	{
-		int frame = TheGameLogic->m_frame;
+		int frame = theGameLogic()->m_frame;
 		_ReadWriteBarrier();
 		BfmeSubBIA *over = object->m_override;
 		if (over != 0 && over->m_nextOverride != 0)

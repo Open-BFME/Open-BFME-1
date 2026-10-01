@@ -45,11 +45,23 @@ public:
 	AINotify *m_ai;
 };
 
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp -- this TU must not
+// define it.  Only the symbol name matters here; the local class GameLogic
+// below stays this TU's view of the pointee (it is what the retail
+// ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z callee name encodes).
+extern GameLogic *TheGameLogic;
+
 class GameLogic
 {
 public:
 	Object *findObjectByID(int id);
 };
+
+static inline GameLogic *theGameLogic()
+{
+	return TheGameLogic;
+}
 
 class AICommandInterface
 {
@@ -198,8 +210,6 @@ public:
 	virtual void notify(int objectId, int);
 };
 
-GameLogic *TheBfmeGameLogic;
-
 void AIUpdateSetAttitudeShim::setAttitude(AttitudeType tude)
 {
 	m_attitude = tude;
@@ -208,7 +218,7 @@ void AIUpdateSetAttitudeShim::setAttitude(AttitudeType tude)
 
 	if (m_lookedUpId)
 	{
-		Object *found = TheBfmeGameLogic->findObjectByID(m_lookedUpId);
+		Object *found = theGameLogic()->findObjectByID(m_lookedUpId);
 		if (found)
 		{
 			m_slot38->clear(0);
@@ -219,7 +229,7 @@ void AIUpdateSetAttitudeShim::setAttitude(AttitudeType tude)
 	if (m_lookedUpId)
 	{
 		Object *self = m_object;
-		Object *found = TheBfmeGameLogic->findObjectByID(m_lookedUpId);
+		Object *found = theGameLogic()->findObjectByID(m_lookedUpId);
 		if (self && found)
 		{
 			AINotify *ai = found->m_ai;

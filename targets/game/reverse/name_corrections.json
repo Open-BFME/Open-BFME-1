@@ -11198,5 +11198,15 @@
   "after_sha256": "9eee0885ced60b3658399a525bfa2951a7fd41136f21861fbf8902c588e8c717",
   "evidence": "targets/game/reverse/identity_evidence/smudge-native-vtable-routes.md",
   "reason": "Same-address identity correction: ctor/vtable and matched native base-init caller prove actual Smudge init at005D37F0; matched W3DDisplay literal callback store disproves Smudge ownership at005D4500. Exact ledger-row hashes are supplied by the name guard."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva0022F4D0Go.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva0022F4D0Go.cpp",
+  "old_name": "GameLogic",
+  "new_name": "Rva0022F4D0GameLogicView",
+  "before_sha256": "e76f43a945e6d8a8088b402061fe27199d48ab72574d8eb0a9b74f1893c475f7",
+  "after_sha256": "3cf11ded71f2e1f1fe4e5a74d987440f886bde31c16a4a4ece0e8f9f2122606c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

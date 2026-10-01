@@ -58,7 +58,16 @@ public:
 	Object *bfmeFind(int id);
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; GameLogicFrameSlice is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline GameLogicFrameSlice *theGameLogic()
+{
+	return (GameLogicFrameSlice *)TheGameLogic;
+}
 
 class Gen_002875C0
 {
@@ -81,7 +90,7 @@ void Gen_002875C0::bfmeRun(void)
 {
 	Object *secondary = *reinterpret_cast<Object **>(
 		reinterpret_cast<char *>(this) - 0x18);
-	Object *object = TheGameLogic->bfmeFind(m_bfmeObjectID);
+	Object *object = theGameLogic()->bfmeFind(m_bfmeObjectID);
 	if (object != 0) {
 		BfmeRelationInterface *relation = object->bfmeGetInterface();
 		if (relation != 0 && bfmeAccept(object)) {

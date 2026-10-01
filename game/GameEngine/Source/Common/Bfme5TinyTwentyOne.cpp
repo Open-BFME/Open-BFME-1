@@ -34,7 +34,16 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol
+// name matters here; BfmeClockCJ is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;					// retail 0x012F0898
+
+static inline BfmeClockCJ *bfmeClockCJ()
+{
+	return (BfmeClockCJ *)TheGameLogic;
+}
 
 class Gen_000ECA20
 {
@@ -49,7 +58,7 @@ private:
 // ?bfmeSetDeadline@Gen_000ECA20@@QAEXI@Z
 void Gen_000ECA20::bfmeSetDeadline(unsigned int milliseconds)
 {
-	m_bfmeDeadline = milliseconds / 1000 * 5 + g_bfmeSwitchCJ->m_bfmeNow;
+	m_bfmeDeadline = milliseconds / 1000 * 5 + bfmeClockCJ()->m_bfmeNow;
 }
 
 class BfmeSlotCM

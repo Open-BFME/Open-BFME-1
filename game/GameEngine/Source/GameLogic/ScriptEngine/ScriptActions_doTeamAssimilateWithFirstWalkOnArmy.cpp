@@ -83,7 +83,17 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeGlobFEA *TheGameLogic;
+
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; BfmeGlobFEA is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGlobFEA *bfmeGlobFEA()
+{
+	return (BfmeGlobFEA *)TheGameLogic;
+}
 
 extern void j_0001867e();
 
@@ -109,14 +119,14 @@ void ScriptActions::doTeamAssimilateWithFirstWalkOnArmy(Parameter *team)
 	Team *theTeam = TheScriptEngine->getTeamNamed(team->m_string, false);
 	if (theTeam)
 	{
-		int army = ((BfmeFirstWalkOnArmyThunk)j_0001867e)(TheGameLogic);
+		int army = ((BfmeFirstWalkOnArmyThunk)j_0001867e)(bfmeGlobFEA());
 		if (army >= 0)
 		{
 			for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList();
 				!iter.done(); iter.advance())
 			{
 				if (iter.cur())
-					TheGameLogic->bfmeCallFEA(iter.cur(), army);
+					bfmeGlobFEA()->bfmeCallFEA(iter.cur(), army);
 			}
 		}
 	}

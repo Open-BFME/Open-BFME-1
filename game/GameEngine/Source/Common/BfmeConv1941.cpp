@@ -19,7 +19,16 @@ struct Rva00367E30Logic
 	BfmeObjDN *bfmeFindDN(int id);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; Rva00367E30Logic is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic *theBfmeGameLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 struct Rva002EE330PlayerList
 {
@@ -52,7 +61,7 @@ void BfmeHostDN::bfmeNotifyDN(void *unused)
 	if (id == 0)
 		return;
 
-	BfmeObjDN *o = TheBfmeGameLogic->bfmeFindDN(id);
+	BfmeObjDN *o = theBfmeGameLogic()->bfmeFindDN(id);
 
 	if (o == 0)
 		return;

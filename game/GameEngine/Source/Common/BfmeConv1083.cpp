@@ -155,7 +155,16 @@ public:
 	char bfmeChk1083(void);
 };
 
-extern BfmeB1083 *g_bfmeB1083;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; BfmeB1083 is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeB1083 *bfmeB1083()
+{
+	return (BfmeB1083 *)TheGameLogic;
+}
 
 class BfmeZ1083
 {
@@ -184,7 +193,7 @@ extern BfmeZ1083 *g_bfmeZ1083;
 
 void bfmeGo1083B(void)
 {
-	if (g_bfmeD1083 && g_bfmeD1083->bfmeSlot1083D_114() && !g_bfmeB1083->bfmeChk1083())
+	if (g_bfmeD1083 && g_bfmeD1083->bfmeSlot1083D_114() && !bfmeB1083()->bfmeChk1083())
 		g_bfmeZ1083->bfmeSlot1083Z_17();
 	else
 		g_bfmeZ1083->bfmeSlot1083Z_17();

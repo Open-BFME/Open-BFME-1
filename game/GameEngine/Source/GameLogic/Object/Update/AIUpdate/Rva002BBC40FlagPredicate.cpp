@@ -55,7 +55,17 @@ private:
 	UnsignedInt m_frameLimit18;
 };
 
-extern Rva002BBC40FrameSource *g_Rva002F0898;
+// retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
+// matters here; Rva002BBC40FrameSource is this TU's view of the pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva002BBC40FrameSource *bfmeFrameSource()
+{
+	return (Rva002BBC40FrameSource *)TheGameLogic;
+}
+
 extern void j_000479ba();
 
 typedef Rva002BBC40Point *(__fastcall *Rva002BBC40Lookup)( void *key );
@@ -74,7 +84,7 @@ unsigned char Rva002BBC40Owner::check( void *key )
 	}
 
 	UnsignedInt flags = *(UnsignedInt *)&m_flagByte04;
-	Rva002BBC40FrameSource *frameSource = g_Rva002F0898;
+	Rva002BBC40FrameSource *frameSource = bfmeFrameSource();
 	if ( (flags & 2) != 0 &&
 		frameSource->m_frame3c >= m_frameLimit18 )
 		return 1;
