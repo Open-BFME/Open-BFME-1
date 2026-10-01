@@ -100,7 +100,11 @@ public:
 	Rva002377A0ObjectHash m_objectHash;
 };
 
-extern Rva002377A0GameLogicView *TheGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the object-id hash only.
+extern GameLogic *TheGameLogic;
 
 class Rva002377A0HordeContain
 {
@@ -197,7 +201,8 @@ void Rva002377A0HordeContain::rva002377a0( void )
 		UnsignedInt key = entry->m_key;
 		if ( key != 0 )
 		{
-			Object *member = TheGameLogic->findObjectByID( key );
+			Object *member =
+					((Rva002377A0GameLogicView *)TheGameLogic)->findObjectByID( key );
 			if ( member != 0 )
 			{
 				Rva002377A0DrawableView *drawable = member->getDrawable();

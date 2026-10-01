@@ -84,7 +84,11 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheBfmeGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the object-id hash only.
+extern GameLogic *TheGameLogic;
 
 template <int N>
 class Rva00239950MemberViewSlots : public Rva00239950MemberViewSlots<N - 1>
@@ -149,7 +153,8 @@ void Rva00239950HordeContain::rva00239950(void *what, Real target,
 		UnsignedInt key = entry->m_key;
 		if (key != 0)
 		{
-			Object *object = TheBfmeGameLogic->findObjectByID(key);
+			Object *object =
+				((BfmeGameLogic *)TheGameLogic)->findObjectByID(key);
 			if (object != 0)
 			{
 				if (filter == 0 || filter->accepts(object,

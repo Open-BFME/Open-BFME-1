@@ -7,7 +7,11 @@ struct BfmeClockYD
 	int m_bfmeNow;
 };
 
-extern BfmeClockYD *g_bfmeClockYD;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view holding only the frame stamp.
+extern GameLogic *TheGameLogic;
 
 struct AudioEventInfoRef
 {
@@ -159,5 +163,5 @@ void BfmeThingYD::bfmeGoYD()
 	bfmeSetYD(2);
 	m_bfmeFlag = false;
 	m_bfmeCount = 0;
-	m_bfmeStamp = g_bfmeClockYD->m_bfmeNow;
+	m_bfmeStamp = ((BfmeClockYD *)TheGameLogic)->m_bfmeNow;
 }

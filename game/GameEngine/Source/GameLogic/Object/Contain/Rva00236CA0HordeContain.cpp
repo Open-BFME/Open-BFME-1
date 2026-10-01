@@ -86,7 +86,11 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheBfmeGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the object-id hash only.
+extern GameLogic *TheGameLogic;
 
 template <int N>
 class Rva00236CA0Slots : public Rva00236CA0Slots<N - 1>
@@ -136,7 +140,7 @@ void Rva00236CA0HordeContain::rva00236ca0(UpgradeTemplate *upgrade)
 		UnsignedInt id = entry->m_key;
 		Object *member = (Object *)id;
 		if (id != 0)
-			member = TheBfmeGameLogic->findObjectByID(id);
+			member = ((BfmeGameLogic *)TheGameLogic)->findObjectByID(id);
 		member->giveUpgrade(upgrade);
 		Drawable *drawable = member->getDrawable();
 		if (drawable)

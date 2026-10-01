@@ -30,7 +30,16 @@ public:
 	int m_fp;
 };
 
-extern GameLogicFp *TheBfmeGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view holding only the FP guard.
+extern GameLogic *TheGameLogic;
+
+static __forceinline GameLogicFp *TheBfmeGameLogicView()
+{
+	return (GameLogicFp *)TheGameLogic;
+}
 extern void setFPMode();
 
 class Glo012ED5C8Type
@@ -92,7 +101,7 @@ void Rva003C1A50::start(unsigned char mordor)
 {
 	run();
 
-	GameLogicFp *logic = TheBfmeGameLogic;
+	GameLogicFp *logic = TheBfmeGameLogicView();
 	int *fp = &logic->m_fp;
 	if (*fp == 0)
 		setFPMode();
@@ -122,5 +131,5 @@ void Rva003C1A50::start(unsigned char mordor)
 	m_at28->bfmeNotify();
 	refreshEntries003BEC30();
 	Glo012F4B98->after();
-	--TheBfmeGameLogic->m_fp;
+	--TheBfmeGameLogicView()->m_fp;
 }

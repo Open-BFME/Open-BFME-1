@@ -191,7 +191,16 @@ struct Rva00367E30Logic
 	_STL::hash_map<int, BfmeUnitCN *> m_bfmeObjectHashCN;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the frame and object-id hash only.
+extern GameLogic *TheGameLogic;
+
+static __forceinline Rva00367E30Logic *TheBfmeGameLogicCN()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 static __forceinline BfmeUnitCN *BfmeFindObjectByIDCN(int id)
 {
@@ -199,8 +208,8 @@ static __forceinline BfmeUnitCN *BfmeFindObjectByIDCN(int id)
 		return 0;
 
 	_STL::hash_map<int, BfmeUnitCN *>::iterator it =
-		TheBfmeGameLogic->m_bfmeObjectHashCN.find(id);
-	if (it == TheBfmeGameLogic->m_bfmeObjectHashCN.end())
+		TheBfmeGameLogicCN()->m_bfmeObjectHashCN.find(id);
+	if (it == TheBfmeGameLogicCN()->m_bfmeObjectHashCN.end())
 		return 0;
 
 	return (*it).second;
@@ -306,7 +315,7 @@ int BfmeHostCN::bfmeTickCN()
 
 	bfmeBeginCN(u);
 
-	if (m_bfmeFirstCN <= TheBfmeGameLogic->m_bfmeFrameCN)
+	if (m_bfmeFirstCN <= TheBfmeGameLogicCN()->m_bfmeFrameCN)
 	{
 		BfmeSubCN *s = u->m_bfmeSubCN;
 
@@ -316,7 +325,7 @@ int BfmeHostCN::bfmeTickCN()
 		m_bfmeFirstCN = 0xffffffff;
 	}
 
-	if (m_bfmeSecondCN <= TheBfmeGameLogic->m_bfmeFrameCN)
+	if (m_bfmeSecondCN <= TheBfmeGameLogicCN()->m_bfmeFrameCN)
 	{
 		u->bfmeDoneCN();
 

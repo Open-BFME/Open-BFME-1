@@ -46,7 +46,16 @@ public:
 	unsigned int m_objectChangeFrame;
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads only the frame and object-change stamps through a local view.
+extern GameLogic *TheGameLogic;
+
+static __forceinline GameLogicFrameSlice *TheGameLogicView()
+{
+	return (GameLogicFrameSlice *)TheGameLogic;
+}
 
 class ScriptEngine
 {
@@ -128,7 +137,7 @@ void Object::setEffectivelyDead(Bool dead)
 		m_privateStatus = (unsigned char)(status | 1);
 		if (m_radarData)
 			TheRadar->removeObject(this);
-		TheGameLogic->m_objectChangeFrame = TheGameLogic->m_frame;
+		TheGameLogicView()->m_objectChangeFrame = TheGameLogicView()->m_frame;
 		TheScriptEngine->notifyOfObjectCreationOrDestruction();
 		if (isKindOf(KINDOF_RETAIL_59))
 		{
@@ -154,7 +163,7 @@ void Object::setEffectivelyDead(Bool dead)
 		m_privateStatus = (unsigned char)(status & 0xfe);
 		if (m_radarData)
 			TheRadar->addObject(this);
-		TheGameLogic->m_objectChangeFrame = TheGameLogic->m_frame;
+		TheGameLogicView()->m_objectChangeFrame = TheGameLogicView()->m_frame;
 		TheScriptEngine->notifyOfObjectCreationOrDestruction();
 	}
 }

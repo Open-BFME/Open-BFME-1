@@ -146,7 +146,11 @@ public:
 void _bfme_closeAptScreen(const AsciiString &name);
 
 extern InGameUI *TheInGameUI;
-extern BfmeGameLogicPause *TheGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the pause/mode fields only.
+extern GameLogic *TheGameLogic;
 extern Shell *TheShell;
 extern BfmeOtherYH *g_bfmeOtherYH;
 extern void *g_obj12F49E4;
@@ -177,7 +181,7 @@ AptPlayerStatus::~AptPlayerStatus()
 		if (ui)
 			ui->slot84(0);
 
-		BfmeGameLogicPause *gameLogic = TheGameLogic;
+		BfmeGameLogicPause *gameLogic = (BfmeGameLogicPause *)TheGameLogic;
 		if (gameLogic && gameLogic->m_gameMode != 1 && gameLogic->m_gameMode != 5)
 			gameLogic->setGamePaused(false, 0, true);
 

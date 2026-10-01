@@ -128,7 +128,11 @@ public:
 	ObjectIDBuckets m_buckets;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the object-id hash only.
+extern GameLogic *TheGameLogic;
 
 class DockUpdateStorage
 {
@@ -187,7 +191,7 @@ void DockUpdate::cancelDock(Object *docker)
 			dockingObject = 0;
 		else
 		{
-			dockingObject = TheBfmeGameLogic->findObjectByID(m_activeDocker);
+			dockingObject = ((Rva00367E30Logic *)TheGameLogic)->findObjectByID(m_activeDocker);
 		}
 		m_activeDocker = INVALID_ID;
 		m_dockerInside = FALSE;

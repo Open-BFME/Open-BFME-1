@@ -26,7 +26,16 @@ public:
 	Rva0036F910ObjectMap m_objects;
 };
 
-extern Rva0036F910GameLogic *TheGameLogic;
+class GameLogic;
+
+// The retail global at 0x012F0898 is EA's GameLogic *TheGameLogic; this TU
+// reads it through a local view of the object-id hash only.
+extern GameLogic *TheGameLogic;
+
+static __forceinline Rva0036F910GameLogic *TheGameLogicView()
+{
+	return (Rva0036F910GameLogic *)TheGameLogic;
+}
 
 class Rva0036F910Owner
 {
@@ -52,8 +61,9 @@ int Rva0036F910Owner::countCompleteStructures()
 		ObjectID id = *current;
 		if (id != 0)
 		{
-			Rva0036F910ObjectMap::iterator it = TheGameLogic->m_objects.find(id);
-			if (it != TheGameLogic->m_objects.end())
+			Rva0036F910GameLogic *logic = TheGameLogicView();
+			Rva0036F910ObjectMap::iterator it = logic->m_objects.find(id);
+			if (it != logic->m_objects.end())
 			{
 				BfmeY982 *object = (*it).second;
 				if (object != 0)
@@ -78,8 +88,9 @@ int Rva0036F910Owner::countCompleteStructuresSecondary()
 		ObjectID id = *current;
 		if (id != 0)
 		{
-			Rva0036F910ObjectMap::iterator it = TheGameLogic->m_objects.find(id);
-			if (it != TheGameLogic->m_objects.end())
+			Rva0036F910GameLogic *logic = TheGameLogicView();
+			Rva0036F910ObjectMap::iterator it = logic->m_objects.find(id);
+			if (it != logic->m_objects.end())
 			{
 				BfmeY982 *object = (*it).second;
 				if (object != 0)
