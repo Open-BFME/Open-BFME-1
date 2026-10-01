@@ -49,7 +49,9 @@ public:
 	Int m_imageWidth;
 };
 
-class MappedImageCollection
+// retail: the global is a plain ImageCollection* (dir32 0x012F6924); the
+// collection class is named ImageCollection, not MappedImageCollection.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
@@ -150,7 +152,7 @@ public:
 };
 
 extern GameSpyInfo *TheGameSpyInfo;
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 extern GameWindow *listboxLobbyPlayers;
 
 Int GadgetListBoxGetColumnWidth(GameWindow *listbox, Int column);

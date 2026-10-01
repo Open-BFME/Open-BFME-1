@@ -54,13 +54,15 @@ private:
 	char *m_data;
 };
 
-class MappedImageCollection
+// retail: the global is a plain ImageCollection* (dir32 0x012F6924); the
+// collection class is named ImageCollection, not MappedImageCollection.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 extern int g_bfmeDefaultBG;
 

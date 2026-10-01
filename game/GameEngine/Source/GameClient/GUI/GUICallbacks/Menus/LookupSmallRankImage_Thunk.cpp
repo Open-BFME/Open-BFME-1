@@ -7,7 +7,9 @@ typedef int Int;
 
 class Image;
 
-class MappedImageCollection
+// retail: the global is a plain ImageCollection* (dir32 0x012F6924); the
+// collection class is named ImageCollection, not MappedImageCollection.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
@@ -21,7 +23,7 @@ public:
 };
 
 extern RankPoints *TheRankPointValues;
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 static __forceinline const char *asciiStringText(const AsciiString &text)
 {

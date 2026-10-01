@@ -36,13 +36,15 @@ class Image
 {
 };
 
-class MappedImageCollection
+// retail: the global is a plain ImageCollection* (dir32 0x012F6924); the
+// collection class is named ImageCollection, not MappedImageCollection.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 #pragma comment(linker, "/alternatename:?resolveNames@ProductionPrerequisite@@QAEXXZ=?j_0002dfbf@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getAllPossibleBuildFacilityTemplates@ProductionPrerequisite@@QBEHPAPBVThingTemplate@@H@Z=?j_000335c8@@YAXXZ")

@@ -20,13 +20,15 @@ public:
 
 class Image;
 
-class MappedImageCollection
+// retail: the global is a plain ImageCollection* (dir32 0x012F6924); the
+// collection class is named ImageCollection, not MappedImageCollection.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class Transition
