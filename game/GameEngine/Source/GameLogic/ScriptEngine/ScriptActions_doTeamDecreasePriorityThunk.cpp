@@ -1,8 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Clean C++ recovery of ScriptActions::doTeamDecreasePriority.
 // Retail RVA 0x002F3A60 (196 bytes), executeAction TEAM_DECREASE_PRIORITY arm.
+//
+// The debug message is a real AsciiString: retail's by-value format temp is
+// built by `??0?$StringBase@D@@AAE@PBD@Z` (0x00888BC0) and formatted by
+// `?format@AsciiString@@QAAXV1@ZZ` (0x00888FF0), so the string model comes from
+// game/Libraries/Source/WWVegas/WWLib/ascii_string.h rather than a local view.
 
-#include "StringInline.h"
+#include "ascii_string.h"
 
 typedef bool Bool;
 typedef int Int;
@@ -50,34 +55,6 @@ static const char *bfmeStringChars(const AsciiString &str)
 		*(const BfmeAsciiStringData * const *)&str;
 	return data ? (const char *)(data + 1) : "";
 }
-
-// This local spelling carries the out-of-line BFME constructor, formatter and
-// release ABI without changing the shared AsciiString header.
-class BfmeStringLiteralBase
-{
-	friend class BFMERetailAsciiString;
-
-private:
-	BfmeStringLiteralBase(const char *string);
-	~BfmeStringLiteralBase();
-};
-
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString() : m_data(0) {}
-	BFMERetailAsciiString(const char *string)
-	{
-		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(string);
-	}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	void __cdecl format(BFMERetailAsciiString fmt, ...);
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
 
 class BfmeTeamProtoField
 {
@@ -147,9 +124,9 @@ void ScriptActions::doTeamDecreasePriority(const AsciiString &teamName)
 
 	theTeamProto->decreaseAIPriorityForFailure();
 
-	BFMERetailAsciiString msg;
+	AsciiString msg;
 	msg.format("Team '%s' priority decreased to %d for failure.",
 		bfmeStringChars(teamName),
 		((const BfmeTeamPrototypeFields *)theTeamProto)->m_productionPriority);
-	TheScriptEngine->AppendDebugMessage(*(const AsciiString *)&msg, false);
+	TheScriptEngine->AppendDebugMessage(msg, false);
 }

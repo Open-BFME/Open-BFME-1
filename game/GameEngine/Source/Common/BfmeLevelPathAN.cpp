@@ -1,53 +1,16 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: the level-path builder at retail 0x004675F0, 206 bytes.  The
 // level number becomes a suffix, and the result is assembled into a shared
 // buffer whose address the caller gets back.
+//
+// The suffix is a real AsciiString: retail builds its format temporary with
+// ??0?$StringBase@D@@AAE@PBD@Z (0x00888BC0), formats it with
+// ?format@AsciiString@@QAAXV1@ZZ (0x00888FF0) and releases it with
+// ?releaseBuffer@?$StringBase@D@@AAEXXZ (0x00887940).  str() reads the same
+// ref-counted header the local bfmeTextAN() did (text at data+8).
 
-class StringBaseNarrowAN
-{
-public:
-	void __cdecl format(class AsciiStringAN text, ...);
-
-protected:
-	StringBaseNarrowAN(void)
-	{
-		m_bfmeNarrowAN = 0;
-	}
-
-	StringBaseNarrowAN(const char *text);
-
-	StringBaseNarrowAN(const StringBaseNarrowAN &other);
-
-	~StringBaseNarrowAN(void);
-
-	char *m_bfmeNarrowAN;
-};
-
-class AsciiStringAN : public StringBaseNarrowAN
-{
-public:
-	AsciiStringAN(void)
-	{
-	}
-
-	AsciiStringAN(const char *text) : StringBaseNarrowAN(text)
-	{
-	}
-
-	AsciiStringAN(const AsciiStringAN &other) : StringBaseNarrowAN(other)
-	{
-	}
-
-	~AsciiStringAN(void)
-	{
-	}
-
-	const char *bfmeTextAN(void) const
-	{
-		return (m_bfmeNarrowAN != 0) ? m_bfmeNarrowAN + 8 : "";
-	}
-};
+#include "ascii_string.h"
 
 extern char g_bfmeBufferAN[];
 
@@ -71,11 +34,11 @@ char *BfmeLevelAN::bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p
 
 	if (level < 12)
 	{
-		AsciiStringAN suffix;
+		AsciiString suffix;
 
-		suffix.format(AsciiStringAN("/_level%d"), level);
+		suffix.format(AsciiString("/_level%d"), level);
 
-		bfmeAssembleAN(p2, g_bfmeBufferAN, suffix.bfmeTextAN(), p3, p4, p5, p6, p7, p8);
+		bfmeAssembleAN(p2, g_bfmeBufferAN, suffix.str(), p3, p4, p5, p6, p7, p8);
 
 		m_bfmeBuiltAN = 1;
 	}
