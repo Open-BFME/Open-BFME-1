@@ -67,7 +67,15 @@ public:
 	void bfmeStoreZB(const AsciiStringZB &key, const UnicodeStringZB &value);
 };
 
-extern BfmePalantirZB *g_bfmePalantirZB;			// retail 0x012F19E8
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  BfmePalantirZB above is this TU's view of the same object.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline BfmePalantirZB *bfmePalantirZBView(void)
+{
+	return (BfmePalantirZB *)g_rva012F19E8WindowManager;
+}
 
 // ?bfmePowerCapZB@@YAXH@Z
 void bfmePowerCapZB(int cap)
@@ -78,5 +86,5 @@ void bfmePowerCapZB(int cap)
 
 	value.format(UnicodeStringZB(L"%d"), cap);
 
-	g_bfmePalantirZB->bfmeStoreZB(s_bfmeKeyZB, value);
+	bfmePalantirZBView()->bfmeStoreZB(s_bfmeKeyZB, value);
 }

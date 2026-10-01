@@ -8,7 +8,17 @@ public:
 	void bfmeRun1079(BfmeX1079 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1079 *g_bfmeR1079;
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  BfmeR1079 above is this TU's view of the same object, so every
+// use casts back to it.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline BfmeR1079 *bfmeR1079View(void)
+{
+	return (BfmeR1079 *)g_rva012F19E8WindowManager;
+}
+
 extern char g_bfmeFmt1079[];
 extern char g_bfmeLitA1079[];
 extern char g_bfmeLitB1079[];
@@ -116,7 +126,7 @@ void BfmeH1079::bfmeGo1079A(void)
 		return;
 	m_bfme1d5 = v;
 	if (v)
-		g_bfmeR1079->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitA1079, 0, 0, 0, 0);
+		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitA1079, 0, 0, 0, 0);
 	else
-		g_bfmeR1079->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitB1079, 0, 0, 0, 0);
+		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitB1079, 0, 0, 0, 0);
 }

@@ -39,7 +39,15 @@ public:
 		int p1, int p2, int p3, int p4);
 };
 
-extern BfmeMgrEHR *g_bfmeMgrEHR;
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  BfmeMgrEHR above is this TU's view of the same object.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline BfmeMgrEHR *bfmeMgrEHRView(void)
+{
+	return (BfmeMgrEHR *)g_rva012F19E8WindowManager;
+}
 
 void *bfmeWinEHR(BfmeObjEHR *obj);
 
@@ -49,6 +57,6 @@ void bfmeReportEHR(BfmeObjEHR *obj)
 		return;
 
 	void *win = bfmeWinEHR(obj);
-	g_bfmeMgrEHR->bfmeAddEHR(win, obj->m_bfmeTagEHR.bfmeTextEHR(), 1,
+	bfmeMgrEHRView()->bfmeAddEHR(win, obj->m_bfmeTagEHR.bfmeTextEHR(), 1,
 		obj->bfmeNameEHR().bfmeTextEHR(), 0, 0, 0, 0);
 }

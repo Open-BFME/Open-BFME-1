@@ -6,7 +6,16 @@ public:
 	void bfmeLog1051(int a, char *f, int n, char *t, int p, int q, int r, int s);
 };
 
-extern BfmeLog1051 *g_bfmeLog1051;
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  BfmeLog1051 above is this TU's view of the same object.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline BfmeLog1051 *bfmeLog1051View(void)
+{
+	return (BfmeLog1051 *)g_rva012F19E8WindowManager;
+}
+
 extern char g_bfmeFmt1051[];
 extern char g_bfmeArg1051[];
 
@@ -24,7 +33,7 @@ public:
 void BfmeA1051::bfmeGo1051A(void)
 {
 	m_bfmeState = 4;
-	g_bfmeLog1051->bfmeLog1051(m_bfmeId, g_bfmeFmt1051, 1, g_bfmeArg1051, 0, 0, 0, 0);
+	bfmeLog1051View()->bfmeLog1051(m_bfmeId, g_bfmeFmt1051, 1, g_bfmeArg1051, 0, 0, 0, 0);
 }
 
 struct BfmeC1051

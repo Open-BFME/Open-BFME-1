@@ -66,7 +66,9 @@ public:
     void bfme_bindAptText( const AsciiString &name, const UnicodeString &text, class AptTextListener *listener );
 };
 
-extern WindowManager *g_theWindowManager;
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 #pragma comment(linker, "/alternatename:?getText@Rva00788290Allocation@@QAE?AVUnicodeString@@XZ=?j_00005380@@YAXXZ")
 #pragma comment(linker, "/alternatename:?bfme_bindAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@PAVAptTextListener@@@Z=?j_00023362@@YAXXZ")
@@ -93,7 +95,7 @@ Rva00788290Allocation::~Rva00788290Allocation()
 {
     if ( !m_name.isEmpty() )
     {
-        g_theWindowManager->bfme_bindAptText( m_name, getText(), 0 );
+        g_rva012F19E8WindowManager->bfme_bindAptText( m_name, getText(), 0 );
     }
 
     if ( TheDisplayStringManager )

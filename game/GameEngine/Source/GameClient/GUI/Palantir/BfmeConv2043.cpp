@@ -13,7 +13,15 @@ struct Rva00579160Manager
 	virtual const float *bfmeScaleEV();
 };
 
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  Rva00579160Manager above is this TU's view of the same object.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline Rva00579160Manager *rva00579160TheManagerView(void)
+{
+	return (Rva00579160Manager *)g_rva012F19E8WindowManager;
+}
 
 class BfmeCellEV
 {
@@ -42,7 +50,7 @@ public:
 
 void BfmeHostEV::bfmeExtentsEV(BfmeVec2EV *a, BfmeVec2EV *b, BfmeVec2EV *out)
 {
-	const float *k = Rva00579160TheManager->bfmeScaleEV();
+	const float *k = rva00579160TheManagerView()->bfmeScaleEV();
 
 	if (m_bfmeFirstEV != 0)
 	{

@@ -80,7 +80,18 @@ class Glo00EF19E8
 public:
 	void h0046B2B0( int value );
 };
-extern Glo00EF19E8 *g_Glo00EF19E8;
+
+// Retail's WindowManager global at 0x012F19E8, under the one linked-build
+// spelling.  Glo00EF19E8 above is this TU's view of the same object, and
+// R1GuardedPointerTailCalls.cpp (which also reads 0x012F19E8) declares the
+// same view.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline Glo00EF19E8 *glo00EF19E8View(void)
+{
+	return (Glo00EF19E8 *)g_rva012F19E8WindowManager;
+}
 
 class Rva0046B3B0
 {
@@ -89,7 +100,7 @@ public:
 	char m_lead[ 0x1c0 ];
 	int m_value;
 };
-void Rva0046B3B0::go() const { g_Glo00EF19E8->h0046B2B0( m_value ); }
+void Rva0046B3B0::go() const { glo00EF19E8View()->h0046B2B0( m_value ); }
 
 // -------------------------------------------------- receiver off the stack
 
