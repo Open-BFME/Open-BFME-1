@@ -1,11 +1,15 @@
 // Terrain texture matrix at retail RVA 0x007DCF00, 281 bytes.
-// Existing g_bfmeG1059 pin denotes TheTerrainRenderObject at VA 0x012F7FE0.
+// Canonical TheTerrainRenderObject is owned by BaseHeightMap.cpp at VA 0x012F7FE0.
 // +0x2FF4 is its WorldHeightMap: width +8, height +12, border +16.
 // Original field volatility is unknown; volatile preserves the retail read order.
 // Matrix owner/method identity remains address-derived.
 // Keep the final copy inside each branch: MSVC merges the tails while
 // preserving retail lea-then-count setup of the final rep movsd.
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmeheightmap /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "W3DDevice/GameClient/BaseHeightMap.h"
 
 struct Rva007DCF00Matrix
 {
@@ -21,24 +25,6 @@ struct Rva007DCF00HeightMap
 	volatile int border;
 };
 
-class BfmeG1059
-{
-public:
-	unsigned char m_pad00[0x2FF4];
-	Rva007DCF00HeightMap *heightMap;
-	unsigned char m_pad2FF8[0x74];
-	bool useHeightMapMatrix;
-};
-
-extern BfmeG1059 *g_bfmeG1059;
-
-extern "C" Rva007DCF00Matrix *__stdcall D3DXMatrixTranslation(
-	Rva007DCF00Matrix *, float, float, float);
-extern "C" Rva007DCF00Matrix *__stdcall D3DXMatrixScaling(
-	Rva007DCF00Matrix *, float, float, float);
-extern "C" Rva007DCF00Matrix *__stdcall D3DXMatrixMultiply(
-	Rva007DCF00Matrix *, const Rva007DCF00Matrix *, const Rva007DCF00Matrix *);
-
 class Rva007DCF00TextureMatrix
 {
 public:
@@ -52,28 +38,30 @@ void Rva007DCF00TextureMatrix::build(Rva007DCF00Matrix *destMatrix,
 	Rva007DCF00Matrix result;
 	Rva007DCF00Matrix scale;
 
-	if (g_bfmeG1059->useHeightMapMatrix)
+	// The meaning of the native byte at +0x306C is unproven.
+	if (*((unsigned char *)TheTerrainRenderObject + 0x306C))
 	{
-		Rva007DCF00HeightMap *heightMap = g_bfmeG1059->heightMap;
+		Rva007DCF00HeightMap *heightMap =
+			*(Rva007DCF00HeightMap **)((char *)TheTerrainRenderObject + 0x2FF4);
 		int borderPixels = heightMap->border;
 		int widthPixels = heightMap->width;
 		int heightPixels = heightMap->height;
 		Rva007DCF00Matrix offset;
 		float border = borderPixels * 10.0f;
-		D3DXMatrixTranslation(&offset, border, border, 0.0f);
-		D3DXMatrixScaling(&scale,
+		D3DXMatrixTranslation((D3DXMATRIX *)&offset, border, border, 0.0f);
+		D3DXMatrixScaling((D3DXMATRIX *)&scale,
 			1.0f / (widthPixels * 10.0f),
 			-1.0f / (heightPixels * 10.0f),
 			1.0f);
-		D3DXMatrixMultiply(&result, &offset, &scale);
+		D3DXMatrixMultiply((D3DXMATRIX *)&result, (D3DXMATRIX *)&offset, (D3DXMATRIX *)&scale);
 		scale = result;
-		D3DXMatrixMultiply(&result, curViewInverse, &scale);
+		D3DXMatrixMultiply((D3DXMATRIX *)&result, (const D3DXMATRIX *)curViewInverse, (D3DXMATRIX *)&scale);
 		*destMatrix = result;
 	}
 	else
 	{
-		D3DXMatrixScaling(&scale, 0.0015151514671742916f, -0.0015151514671742916f, 1.0f);
-		D3DXMatrixMultiply(&result, curViewInverse, &scale);
+		D3DXMatrixScaling((D3DXMATRIX *)&scale, 0.0015151514671742916f, -0.0015151514671742916f, 1.0f);
+		D3DXMatrixMultiply((D3DXMATRIX *)&result, (const D3DXMATRIX *)curViewInverse, (D3DXMATRIX *)&scale);
 		*destMatrix = result;
 	}
 
