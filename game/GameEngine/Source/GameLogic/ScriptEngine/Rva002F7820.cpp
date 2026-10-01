@@ -215,7 +215,19 @@ protected:
 		int actionType);
 };
 
-extern BfmeGlobFEA *TheGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously spelled it ?TheGameLogic@@3PAVBfmeGlobFEA@@A, a name nothing
+// defines. It now uses the canonical spelling and casts at each use; the
+// emitted bytes are unchanged because DIR32 relocations are masked.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
+static __forceinline BfmeGlobFEA *theGameLogicFEA()
+{
+	return (BfmeGlobFEA *)TheGameLogic;
+}
 extern BfmeScriptEngineVtbl_44 *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
@@ -223,7 +235,7 @@ void ScriptActions::rva002F7820(Parameter *objectParameter,
 	Parameter *armyParameter, int actionType)
 {
 	int savedState;
-	BfmeNode2B0 *army = TheGameLogic->lookupByField(
+	BfmeNode2B0 *army = theGameLogicFEA()->lookupByField(
 		(char *)armyParameter + 0x10);
 	if (!army)
 		return;
@@ -238,7 +250,7 @@ void ScriptActions::rva002F7820(Parameter *objectParameter,
 			Object *object = ((BfmeScriptEngineVtbl_68 *)TheScriptEngine)
 				->getUnitNamed(*(const AsciiString *)objectParameter);
 			if (object)
-				TheGameLogic->bfmeCallFEA(object,
+				theGameLogicFEA()->bfmeCallFEA(object,
 					army->m_army);
 			break;
 		}
@@ -253,7 +265,7 @@ void ScriptActions::rva002F7820(Parameter *objectParameter,
 			{
 				Object *object = objects.cur();
 				if (object)
-					TheGameLogic->bfmeCallFEA(object,
+					theGameLogicFEA()->bfmeCallFEA(object,
 						army->m_army);
 			}
 		}
@@ -291,7 +303,7 @@ void ScriptActions::rva002F7820(Parameter *objectParameter,
 							{
 								Object *object = objects.cur();
 								if (object)
-										TheGameLogic->bfmeCallFEA(object,
+										theGameLogicFEA()->bfmeCallFEA(object,
 											army->m_army);
 								}
 							}

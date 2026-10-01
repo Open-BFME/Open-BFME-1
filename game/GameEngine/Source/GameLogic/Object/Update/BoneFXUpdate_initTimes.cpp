@@ -41,17 +41,26 @@ private:
 	float m_high;
 };
 
-class GameLogic
-{
-public:
-	unsigned int getFrame() const { return m_frame; }
+// The retail global is EA's `GameLogic *TheGameLogic`, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp. Declare it here with
+// that spelling so the linker sees one symbol; the frame field is read through
+// this TU-local view of the retail layout.
+class GameLogic;
 
-private:
+extern GameLogic *TheGameLogic;
+
+struct BoneFXGameLogicView
+{
 	char m_pad[0x3C];
 	unsigned int m_frame;
+
+	unsigned int getFrame() const { return m_frame; }
 };
 
-GameLogic *TheGameLogic;
+static __forceinline BoneFXGameLogicView *boneFXGameLogic()
+{
+	return (BoneFXGameLogicView *)TheGameLogic;
+}
 
 enum { BONE_FX_MAX_BONES = 8 };
 enum { BODYDAMAGETYPE_COUNT = 4 };
@@ -101,7 +110,7 @@ void BoneFXUpdateInitTimesShim::initTimes()
 {
 	int i;
 	const BoneFXUpdateModuleData *d = getBoneFXUpdateModuleData();
-	int now = TheGameLogic->getFrame();
+	int now = boneFXGameLogic()->getFrame();
 
 	for (i = 0; i < BONE_FX_MAX_BONES; ++i) {
 		if (d->m_fxList[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) {

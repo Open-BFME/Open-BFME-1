@@ -127,8 +127,21 @@ public:
  int *m_bonusCapacity;
  unsigned int m_minimumFrames;
 };
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously spelled it ?Rva012F0898TheGameLogic@@3PAURva012F0898GameLogic@@A,
+// a name nothing defines. It now uses the canonical spelling and casts at the
+// use; the emitted bytes are unchanged because DIR32 relocations are masked.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 struct Rva012F0898GameLogic { unsigned char m_pad[0x3c]; unsigned int m_frame; };
-extern Rva012F0898GameLogic *Rva012F0898TheGameLogic;
+
+static __forceinline Rva012F0898GameLogic *theGameLogicFrame()
+{
+	return (Rva012F0898GameLogic *)TheGameLogic;
+}
 class __declspec(novtable) OpenContain : public ContainModuleInterface
 {
 public:
@@ -168,7 +181,7 @@ void OpenContain::onRemoving(Object *rider)
    {
     unsigned int entryFrame = ((RiderTimeNode *)it._M_node)->m_frame;
     m_riderTimes.erase(it);
-    if (Rva012F0898TheGameLogic->m_frame-entryFrame > data->m_minimumFrames)
+    if (theGameLogicFrame()->m_frame-entryFrame > data->m_minimumFrames)
     {
      for (int *bonus = data->m_bonusBegin; bonus != data->m_bonusEnd; ++bonus)
       rider->applyBonus(bonus);

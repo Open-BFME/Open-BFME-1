@@ -164,13 +164,24 @@ public:
 		Real desiredSpeed);
 };
 
-struct Rva00367E30Logic
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. Referencing it
+// under the canonical spelling gives the linker one symbol; the stamp field is
+// read through this TU-local view of the retail layout.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
+struct LocomotorGameLogicView
 {
 	char m_pad000[0x3c];
 	unsigned m_stamp;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+static __forceinline LocomotorGameLogicView *locomotorGameLogic()
+{
+	return (LocomotorGameLogicView *)TheGameLogic;
+}
 
 class Rva001BC820Locomotor
 {
@@ -216,7 +227,7 @@ void Rva001BC820Locomotor::locoUpdate_moveTowardsPosition(Object *obj,
 	memcpy(&saved->m_cell[10], &live->m_cell[10], sizeof(Real));
 	memcpy(&saved->m_cell[11], &live->m_cell[11], sizeof(Real));
 
-	if (TheBfmeGameLogic->m_stamp <= m_stampLimit && desiredSpeed > m_maxSpeed)
+	if (locomotorGameLogic()->m_stamp <= m_stampLimit && desiredSpeed > m_maxSpeed)
 		desiredSpeed = m_maxSpeed;
 
 	Real cap = ((Rva001B7E90Receiver *)this)->query(obj);

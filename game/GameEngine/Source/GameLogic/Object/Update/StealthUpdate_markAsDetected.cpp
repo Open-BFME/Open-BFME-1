@@ -33,8 +33,14 @@ class Player { public:
 };
 class PlayerList { public: Player* getNthPlayer(int); char pad[0x10]; int count; };
 extern PlayerList* ThePlayerList;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. Referencing it
+// under the canonical spelling gives the linker one symbol; the frame field is
+// read through this TU-local view of the retail layout.
+class GameLogic;
+extern GameLogic* TheGameLogic;
 struct Rva002AD380GameLogic { char pad[0x3c]; unsigned frame; unsigned getFrame() const {return frame;} };
-extern Rva002AD380GameLogic* TheGameLogic;
+static __forceinline Rva002AD380GameLogic* stealthGameLogic() { return (Rva002AD380GameLogic*)TheGameLogic; }
 struct Rva002AD380ControlBar { char pad[0x24]; bool dirty; };
 extern Rva002AD380ControlBar* TheControlBar;
 struct Rva002AD380Drawable { char pad[0x3ac]; bool selected; };
@@ -223,7 +229,7 @@ void StealthUpdate::markAsDetected(unsigned frames,bool propagate) {
    }
   }
  }
- unsigned now=TheGameLogic->frame;
+ unsigned now=stealthGameLogic()->frame;
  if(!frames) m_detectionExpiresFrame=now+d->m_stealthDelay;
  else if(m_detectionExpiresFrame<now+frames) m_detectionExpiresFrame=now+frames;
 }

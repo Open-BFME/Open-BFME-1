@@ -5,13 +5,27 @@
 // stlport
 #include <vector>
 
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously spelled it ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A,
+// ?g_bfmeObjFBA@@3PAUBfmeGlobFBA@@A and ?g_bfmeObjFBD@@3PAVBfmeGlobFBD@@A --
+// three names for the same address, so three unresolvable symbols. All three
+// now reference the one canonical spelling and read their fields through these
+// TU-local views of the retail layout.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 struct BfmeGlobFBA
 {
 	unsigned char m_bfmeHead[0x3c];
 	unsigned int m_bfmeMax;
 };
 
-extern BfmeGlobFBA *g_bfmeObjFBA;
+static __forceinline BfmeGlobFBA *g_bfmeObjFBA()
+{
+	return (BfmeGlobFBA *)TheGameLogic;
+}
 
 struct BfmeThingFBA
 {
@@ -24,7 +38,7 @@ struct BfmeThingFBA
 
 float BfmeThingFBA::bfmeGoFBA(void *a)
 {
-	if (m_bfmeN < g_bfmeObjFBA->m_bfmeMax)
+	if (m_bfmeN < g_bfmeObjFBA()->m_bfmeMax)
 		bfmeUpdFBA(a);
 	return m_bfmeF;
 }
@@ -85,7 +99,10 @@ public:
 	BfmeObjFBD *bfmeFindFBD(void *p);
 };
 
-extern BfmeGlobFBD *g_bfmeObjFBD;
+static __forceinline BfmeGlobFBD *g_bfmeObjFBD()
+{
+	return (BfmeGlobFBD *)TheGameLogic;
+}
 
 struct BfmeThingFBD
 {
@@ -96,7 +113,7 @@ struct BfmeThingFBD
 
 bool BfmeThingFBD::bfmeGoFBD()
 {
-	BfmeObjFBD *o = g_bfmeObjFBD->bfmeFindFBD(m_bfmeP);
+	BfmeObjFBD *o = g_bfmeObjFBD()->bfmeFindFBD(m_bfmeP);
 	if (o && o->bfmeAskFBD())
 		return true;
 	return false;
@@ -265,7 +282,10 @@ struct Rva00367E30Logic
 	unsigned int m_frame;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+static __forceinline Rva00367E30Logic *TheBfmeGameLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 void BfmeThingFBA::bfmeUpdFBA(void *a)
 {
@@ -296,5 +316,5 @@ void BfmeThingFBA::bfmeUpdFBA(void *a)
 		total += objectTemplate->m_float3FC;
 	}
 	m_bfmeF = total;
-	m_bfmeN = TheBfmeGameLogic->m_frame + 25;
+	m_bfmeN = TheBfmeGameLogic()->m_frame + 25;
 }

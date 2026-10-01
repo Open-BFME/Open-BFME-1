@@ -87,7 +87,23 @@ public:
 #undef CPAD
 };
 
-struct GameLogic { unsigned char m_pad[0x3C]; UnsignedInt m_frame; };
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously declared a TU-local `struct GameLogic` and the global as
+// ?TheBfmeGameLogic@@3PAUGameLogic@@A -- a name nothing defines, since MSVC
+// mangles the pointee type. It now forward-declares the real class and reads the
+// frame through this local view; the emitted bytes are unchanged because DIR32
+// relocations are masked by the byte gate.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
+struct GameLogicFrameView { unsigned char m_pad[0x3C]; UnsignedInt m_frame; };
+
+static __forceinline GameLogicFrameView *theGameLogicFrameView()
+{
+	return (GameLogicFrameView *)TheGameLogic;
+}
 
 class ObjectSetDisabledUntilShim
 {
@@ -110,7 +126,6 @@ private:
 };
 
 extern AudioClient *TheAudioClientUpdate;
-extern GameLogic *TheBfmeGameLogic;
 
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
@@ -161,7 +176,7 @@ void ObjectSetDisabledUntilShim::setDisabledUntil(DisabledType type, UnsignedInt
 		if (disabledType != 3 && !self->isDisabledByType((DisabledType)disabledType))
 			((Object *)self)->pauseAllSpecialPowers(true);
 		self->m_disabledTillFrame[disabledType] = frame;
-		self->m_disabledMask.set((UnsignedInt)disabledType, TheBfmeGameLogic->m_frame < frame);
+		self->m_disabledMask.set((UnsignedInt)disabledType, theGameLogicFrameView()->m_frame < frame);
 		Drawable *drawable = self->m_drawable;
 		if (drawable && self->isDisabled() && disabledType != 3 &&
 			 disabledType != 9 && disabledType != 5 && disabledType != 4 && disabledType != 8)

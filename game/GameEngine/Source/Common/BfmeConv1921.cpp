@@ -33,12 +33,24 @@ public:
 	unsigned char m_bfmeFlagsBX;
 };
 
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously spelled it ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A, a name
+// nothing defines. It now uses the canonical spelling and casts at the use; the
+// emitted bytes are unchanged because DIR32 relocations are masked.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 struct Rva00367E30Logic
 {
 	BfmeObjBX *bfmeFindBX(int id);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+static __forceinline Rva00367E30Logic *theGameLogicView()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class BfmeCfgBX
 {
@@ -163,7 +175,7 @@ int BfmeHostBX::bfmeStartBX()
 		BfmeObjBX *o = 0;
 
 		if (m_bfmeIdBX != 0)
-			o = TheBfmeGameLogic->bfmeFindBX(m_bfmeIdBX);
+			o = theGameLogicView()->bfmeFindBX(m_bfmeIdBX);
 
 		if (o != 0 && (o->m_bfmeFlagsBX & 1) == 0)
 			owner->bfmeAimBX(&o->m_bfmeAtBX);

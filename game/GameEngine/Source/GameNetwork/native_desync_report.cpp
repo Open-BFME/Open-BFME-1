@@ -13,6 +13,15 @@ struct GameLogicBFMERetailLayout
     Int m_gameMode;
 };
 
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously spelled it ?TheGameLogic@@3PAVGameLogicBFMEShim@@A, a name nothing
+// defines. It now uses the canonical spelling and casts at each use, so the
+// emitted bytes are unchanged (DIR32 relocations are masked by the byte gate).
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 class GameLogicBFMEShim
 {
 public:
@@ -23,7 +32,10 @@ public:
     }
 };
 
-extern GameLogicBFMEShim *TheGameLogic;
+static __forceinline GameLogicBFMEShim *theGameLogicShim()
+{
+    return reinterpret_cast<GameLogicBFMEShim *>(TheGameLogic);
+}
 // Retail enable byte at VA 0x012ED4E4.
 extern unsigned char BfmeClientCRCCheckEnabled;
 
@@ -131,7 +143,7 @@ BFMEDesyncCheck::BFMEDesyncCheck()
 		GameLogicBFMERetailLayout *logic = reinterpret_cast<GameLogicBFMERetailLayout *>( TheGameLogic );
 		if (logic->m_gameMode != 8 && logic->m_gameMode != 4)
 		{
-			m_crcBeforeClientUpdate = TheGameLogic->getCRC( 0 );
+			m_crcBeforeClientUpdate = theGameLogicShim()->getCRC( 0 );
 			return;
 		}
 	}
@@ -147,7 +159,7 @@ void BFMEDesyncCheck::writeReportIfMismatched()
     if (reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 8 ||
         reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 4)
         return;
-    UnsignedInt crc = TheGameLogic->getCRC(0);
+    UnsignedInt crc = theGameLogicShim()->getCRC(0);
     if ((reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 1 ||
          reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 5) &&
         m_crcBeforeClientUpdate != crc)
@@ -162,7 +174,7 @@ void BFMEDesyncCheck::writeReportIfMismatched()
         DesyncSystemTime time;
         GetLocalTime(&time);
         report.format("Desync detected on frame %d on %u-%u-%u %u:%u:%u\n\n",
-            TheGameLogic->getFrame(),
+            theGameLogicShim()->getFrame(),
             time.month, time.day, time.year, time.hour, time.minute, time.second);
         fwrite(report.str(), 1, report.getLength(), file);
         fclose(file);

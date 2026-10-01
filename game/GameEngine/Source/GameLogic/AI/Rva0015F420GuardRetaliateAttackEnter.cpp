@@ -236,7 +236,19 @@ public:
 	char m_body[0x54 - 0x20];
 };
 
-extern "C" BfmeLook1011R0015F420 *g_bfmeClockBK;		// 0x012F0898
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
+// previously declared it under the unmangled C-linkage name. It now uses
+// the canonical mangled spelling and casts at each use; the emitted bytes are
+// unchanged because DIR32 relocations are masked by the byte gate.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
+static __forceinline BfmeLook1011R0015F420 *theGameLogicView()
+{
+	return (BfmeLook1011R0015F420 *)TheGameLogic;
+}
 extern "C" AIRootR0015F420 *TheAIParseDefinitionAI;		// 0x012EF214
 
 class Rva0015EBE0State
@@ -273,13 +285,13 @@ Int SelfR0015F420::run(void)
 	m_field44 = 0;
 
 	BfmeX1011R0015F420 *nemesis = static_cast<BfmeX1011R0015F420 *>(
-		g_bfmeClockBK->findObjectByID(m_machine->getNemesisID()));
+		theGameLogicView()->findObjectByID(m_machine->getNemesisID()));
 
 	QueryVtblR0015F420 *body = obj->m_field0x200;
 	if (!nemesis && body && body->v3CCall()->m_field8 && body->v3CCall()->m_field0x10 != 7)
 	{
 		nemID = obj->m_field0x200->v3CCall()->m_field8;
-		nemesis = static_cast<BfmeX1011R0015F420 *>(g_bfmeClockBK->findObjectByID(nemID));
+		nemesis = static_cast<BfmeX1011R0015F420 *>(theGameLogicView()->findObjectByID(nemID));
 		if (nemesis && obj->getRelationship(nemesis) == ENEMIES)
 			m_machine->setNemesisID(nemID);
 	}
@@ -313,7 +325,7 @@ Int SelfR0015F420::run(void)
 		frames += frames >> 1;
 
 	m_center = pos;
-	m_giveUpFrame = g_bfmeClockBK->getFrame() + frames;
+	m_giveUpFrame = theGameLogicView()->getFrame() + frames;
 	m_radiusSqr = sqr0015F420(range + AIGuardRetaliateMachine::getStdGuardRange(obj));
 	m_conditions = 7;
 
