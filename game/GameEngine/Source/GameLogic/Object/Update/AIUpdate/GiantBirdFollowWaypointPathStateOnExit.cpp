@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame
 //
 // GiantBirdFollowWaypointPathState::onExit at retail RVA 0x002BF3A0.
 // The constructor at 0x002BEFA0 stores the state name, and its vtable at
@@ -19,13 +19,13 @@ struct Coord3D
 	float z;
 };
 
-class Object;
-
-class AIUpdateInterface
-{
-public:
-	void notifyModelConditionChanged();
-};
+// The condition-change notification is Object's own member: the call goes
+// through ILT 0x0002191D, whose thunk jumps to
+// ?notifyModelConditionChanged@Object@@QAEXXZ (0x001BE1C0).  The body reaches
+// the object as a raw pointer, so the real header supplies the spelling and no
+// AIUpdateInterface stands in for it.
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged(void);
+#include "GameEngine/Source/GameLogic/Object/object.h"
 
 class Pathfinder
 {
@@ -67,19 +67,19 @@ void GiantBirdFollowWaypointPathState::onExit(StateExitType status)
 	{
 		flags &= 0xefffffff;
 		*(UnsignedInt *)(object + 0x114) = flags;
-		((AIUpdateInterface *)object)->notifyModelConditionChanged();
+		((Object *)object)->notifyModelConditionChanged();
 	}
 	if (*(unsigned char *)(object + 0x11c) & 0x40)
 	{
 		flags = *(UnsignedInt *)(object + 0x11c) & 0xffffffbf;
 		*(UnsignedInt *)(object + 0x11c) = flags;
-		((AIUpdateInterface *)object)->notifyModelConditionChanged();
+		((Object *)object)->notifyModelConditionChanged();
 	}
 	if ((*(unsigned char *)(object + 0x118) >> 7) != 0)
 	{
 		flags = *(UnsignedInt *)(object + 0x118) & 0xffffff7f;
 		*(UnsignedInt *)(object + 0x118) = flags;
-		((AIUpdateInterface *)object)->notifyModelConditionChanged();
+		((Object *)object)->notifyModelConditionChanged();
 	}
 
 	TheAI->pathfinder()->removeGoal((Object *)object);
