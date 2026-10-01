@@ -82,7 +82,9 @@ class ControlBar { public: const CommandButton* findCommandButton(const AsciiStr
 class GameLogic { public: char pad00[0x91]; bool m_showBehindBuildingMarkers; char pad92[0x7a]; int m_mode;
  bool isInMultiplayerGame(); bool rva000652A0() const; bool isInReplayGame() const { return m_mode==3; }
 };
-class GlobalData { public:
+// TU-local field view of retail's GlobalData; the one writable global at
+// 0x012ED5C8 is declared with EA's own class below and cast at each use.
+class RvaGlobalDataView { public:
  char pad00[0x38]; bool m_useCloudMap; char pad39[0xb]; bool m_useLightMap; char pad45[0x1b]; bool m_useAlternateMouse;
  char pad61[3]; bool m_useShadowVolumes; char pad65[0xaa7]; int m_netMinPlayers; char padb10[0x7c]; int m_maxParticleCount;
  char padb90[0xc9]; bool m_TiVOFastMode;
@@ -587,7 +589,9 @@ extern MessageStream* TheMessageStream;
 extern PlayerList* ThePlayerList;
 extern View* TheTacticalView;
 extern GameLogic* TheGameLogic;
-extern GlobalData* TheGlobalData;
+class GlobalData;
+extern GlobalData* TheWritableGlobalData;
+static inline RvaGlobalDataView* localGlobalData() { return (RvaGlobalDataView*)TheWritableGlobalData; }
 extern Mouse* TheMouse;
 extern Radar* TheRadar;
 extern ControlBar* TheControlBar;
@@ -822,7 +826,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   GameLogic* logic=TheGameLogic;
   if(logic->isInMultiplayerGame() && !logic->isInReplayGame()) {
    Player* localPlayer=ThePlayerList->getLocalPlayer();
-   if(localPlayer && localPlayer->isPlayerActive() || !TheGlobalData->m_netMinPlayers) rva00511CC0(0);
+   if(localPlayer && localPlayer->isPlayerActive() || !localGlobalData()->m_netMinPlayers) rva00511CC0(0);
   }
   disp=DESTROY_MESSAGE; break;
  }
@@ -830,7 +834,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   GameLogic* logic=TheGameLogic;
   if(logic->isInMultiplayerGame() && !logic->isInReplayGame()) {
    Player* localPlayer=ThePlayerList->getLocalPlayer();
-   if(localPlayer && localPlayer->isPlayerActive() || !TheGlobalData->m_netMinPlayers) rva00511CC0(1);
+   if(localPlayer && localPlayer->isPlayerActive() || !localGlobalData()->m_netMinPlayers) rva00511CC0(1);
   }
   disp=DESTROY_MESSAGE; break;
  }
@@ -844,7 +848,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   GameLogic* logic=TheGameLogic;
   if(logic->isInMultiplayerGame() && !logic->isInReplayGame() &&
     ThePlayerList->getLocalPlayer()->isPlayerActive() &&
-    (TheGlobalData->m_netMinPlayers==0 || TheGameInfo->isMultiPlayer())) {
+    (localGlobalData()->m_netMinPlayers==0 || TheGameInfo->isMultiPlayer())) {
    int count;
    const ThingTemplate* thing=TheThingFactory->findTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate()->getBeaconTemplate());
    ThePlayerList->getLocalPlayer()->countObjectsByThingTemplate(1,&thing,false,&count,true);
@@ -868,28 +872,28 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   disp=DESTROY_MESSAGE; break;
  }
  case 0x6e: {
-  if(TheGlobalData) {
+  if(TheWritableGlobalData) {
    static bool isLowDetails=false;
    static bool oldShadowVolumesValue=true,oldLightMapValue=true,oldCloudMap=true,oldBehindBuildingMarkers=true;
    static int oldMaxParticleCount=0;
    if(isLowDetails) {
-    TheGlobalData->m_useShadowVolumes=oldShadowVolumesValue;
-    TheGlobalData->m_useLightMap=oldLightMapValue;
-    TheGlobalData->m_useCloudMap=oldCloudMap;
-    TheGlobalData->m_maxParticleCount=oldMaxParticleCount;
+    localGlobalData()->m_useShadowVolumes=oldShadowVolumesValue;
+    localGlobalData()->m_useLightMap=oldLightMapValue;
+    localGlobalData()->m_useCloudMap=oldCloudMap;
+    localGlobalData()->m_maxParticleCount=oldMaxParticleCount;
     TheGameLogic->m_showBehindBuildingMarkers=oldBehindBuildingMarkers;
     if(TheInGameUI) TheInGameUI->message("GUI:ReturnGraphicsToPreviousSettings");
    } else {
-    oldShadowVolumesValue=TheGlobalData->m_useShadowVolumes;
-    TheGlobalData->m_useShadowVolumes=false;
-    oldLightMapValue=TheGlobalData->m_useLightMap;
-    TheGlobalData->m_useLightMap=false;
-    oldCloudMap=TheGlobalData->m_useCloudMap;
-    TheGlobalData->m_useCloudMap=false;
+    oldShadowVolumesValue=localGlobalData()->m_useShadowVolumes;
+    localGlobalData()->m_useShadowVolumes=false;
+    oldLightMapValue=localGlobalData()->m_useLightMap;
+    localGlobalData()->m_useLightMap=false;
+    oldCloudMap=localGlobalData()->m_useCloudMap;
+    localGlobalData()->m_useCloudMap=false;
     oldBehindBuildingMarkers=TheGameLogic->m_showBehindBuildingMarkers;
     TheGameLogic->m_showBehindBuildingMarkers=false;
-    oldMaxParticleCount=TheGlobalData->m_maxParticleCount;
-    TheGlobalData->m_maxParticleCount=1000;
+    oldMaxParticleCount=localGlobalData()->m_maxParticleCount;
+    localGlobalData()->m_maxParticleCount=1000;
     if(TheInGameUI) TheInGameUI->message("GUI:DetailsSetToLowest");
    }
   }
@@ -1006,7 +1010,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
  case 0x1b: case 0x1c: {
   bool isPoint=!field2c;
   if(m_mouseRightUp-m_mouseRightDown<TheMouse->m_clickTime) isPoint=true;
-  if(TheGlobalData->m_useAlternateMouse && isPoint) {
+  if(localGlobalData()->m_useAlternateMouse && isPoint) {
    if(!TheTacticalView) break;
    Coord3D pos;
    TheTacticalView->screenToTerrain(&msg->getArgument(0)->pixel,&pos,false);
@@ -1032,13 +1036,13 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
                 (unsigned)msg->getArgument(0)->pixelRegion.width()<=TheMouse->m_dragTolerance);
   if(field28-field24<TheMouse->m_clickTime) isPoint=true;
   if(!TheTacticalView) break;
-  if(TheGlobalData->m_useAlternateMouse) break;
+  if(localGlobalData()->m_useAlternateMouse) break;
   Coord3D pos;
   TheTacticalView->screenToTerrain(&msg->getArgument(0)->pixel,&pos,false);
   const CommandButton* command=TheInGameUI->getGUICommand();
   int commandType=command?command->getCommandType():0;
   bool isFiringGUICommand=command && command->isContextCommand();
-  if(TheGlobalData->m_useAlternateMouse && !isFiringGUICommand) break;
+  if(localGlobalData()->m_useAlternateMouse && !isFiringGUICommand) break;
   bool controllable=TheInGameUI->rva0043EC00();
    if(!controllable && command && (commandType==0x1f || commandType==0x24)) controllable=true;
   if(isPoint && controllable) {
@@ -1056,10 +1060,10 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
  case 0x18: rva005A9C90(msg); break;
  case 0x92:
   if(TheGameLogic->isInReplayGame()) {
-   if(TheGlobalData) {
-    TheGlobalData->m_TiVOFastMode=1-TheGlobalData->m_TiVOFastMode;
-    TheInGameUI->message(UnicodeString(L">> %s"),TheGlobalData->m_TiVOFastMode?L"ON":L"OFF");
-    if(TheGlobalData->m_TiVOFastMode) {
+   if(TheWritableGlobalData) {
+    localGlobalData()->m_TiVOFastMode=1-localGlobalData()->m_TiVOFastMode;
+    TheInGameUI->message(UnicodeString(L">> %s"),localGlobalData()->m_TiVOFastMode?L"ON":L"OFF");
+    if(localGlobalData()->m_TiVOFastMode) {
      AudioEventRTS event("UIBaboop",0);
      TheAudio->addAudioEvent(&event);
     } else {

@@ -8248,7 +8248,9 @@ extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,
 extern Rva0038DA10Recorder* g012ED62C;
 extern Rva0038DA10GameInfo* g012F708C;
 extern unsigned g012A6F38;
-extern Rva0038DA10GlobalData* g012ED5C8;
+// Retail's writable GlobalData global lives at 0x012ED5C8 and is declared as
+// `GlobalData *TheWritableGlobalData` by Common/Recorder.h; the field view below
+// is TU-local, so the pointer is cast back at its single use.
 extern Rva0038DA10PlayerList* g012ED748;
 extern bool g012ED4E5,g012ED4E6;
 extern Rva00065A40* g012ED4FC;
@@ -8306,7 +8308,7 @@ void Rva0038DA10GameLogic::update(int phase) {
             generate=(frame%interval)==0;
             if (mode==2) generate=false;
         }
-        if (g012A6F38!=-1U) generate=(frame>=g012A6F38-g012ED5C8->rvaCB4-2 && frame<=g012A6F38);
+        if (g012A6F38!=-1U) generate=(frame>=g012A6F38-((Rva0038DA10GlobalData*)TheWritableGlobalData)->rvaCB4-2 && frame<=g012A6F38);
         if (generate) {
             BfmeByteStream* text=0;
             int player=g012ED748->player()->index();

@@ -50,7 +50,7 @@
 // Retail accessor returns an owned value; the ZH header returns a reference.
 // No GlobalData fields are read through this declaration.
 class GlobalData { public: AsciiString getPath_UserData() const; };
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 #include "Common/Debug.h"
 #include "Common/File.h"
@@ -264,18 +264,18 @@ char const * GameFileClass::Set_Name( char const *filename )
 	}  // end if
 
 	// We allow the user to load their own images for various assets (like the control bar)
-	if( m_fileExists == FALSE  && TheGlobalData)
+	if( m_fileExists == FALSE  && TheWritableGlobalData)
 	{
 		if( fileType == FILE_TYPE_W3D )
 		{
-			sprintf(m_filePath,USER_W3D_DIR_PATH, TheGlobalData->getPath_UserData().str());
+			sprintf(m_filePath,USER_W3D_DIR_PATH, TheWritableGlobalData->getPath_UserData().str());
 			//strcpy( m_filePath, USER_W3D_DIR_PATH );
 			strcat( m_filePath, filename );
 
 		}  // end if
 		if( isImageFileType(fileType) )
 		{
-			sprintf(m_filePath,USER_TGA_DIR_PATH, TheGlobalData->getPath_UserData().str());
+			sprintf(m_filePath,USER_TGA_DIR_PATH, TheWritableGlobalData->getPath_UserData().str());
 			//strcpy( m_filePath, USER_TGA_DIR_PATH );
 			strcat( m_filePath, filename );
 
@@ -287,11 +287,11 @@ char const * GameFileClass::Set_Name( char const *filename )
 	}  // end if
 
 	// We Need to be able to "temporarily copy over the map preview for whichever directory it came from
-	if( m_fileExists == FALSE  && TheGlobalData)
+	if( m_fileExists == FALSE  && TheWritableGlobalData)
 	{
 		if( fileType == FILE_TYPE_TGA ) // just TGA, since we don't dds previews
 		{
-			sprintf(m_filePath,MAP_PREVIEW_DIR_PATH, TheGlobalData->getPath_UserData().str());
+			sprintf(m_filePath,MAP_PREVIEW_DIR_PATH, TheWritableGlobalData->getPath_UserData().str());
 			//strcpy( m_filePath, USER_TGA_DIR_PATH );
 			strcat( m_filePath, filename );
 

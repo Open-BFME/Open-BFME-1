@@ -55,7 +55,13 @@ struct Rva006C9270GlobalData
 	char gap19[0xdbc - 0x19];
 	bool useOverbright;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail's one writable GlobalData global (0x012ED5C8) is declared with EA's
+// own type; the field view above is TU-local and cast at each use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+static inline Rva006C9270GlobalData *localGlobalData() {
+	return (Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 struct Rva002EE330Player
 {
 	char head[0x24];
@@ -329,7 +335,7 @@ inline int eec0Round(float value)
 }
 void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<RenderObjClass> *lights)
 {
-	if (!isTerrainPass || !TheWritableGlobalData->flag18)
+	if (!isTerrainPass || !localGlobalData()->flag18)
 		return;
 	const BreezeInfo &info = TheScriptEngine->getBreezeInfo();
 	bool pause = ((BfmeScriptEngineFreezeExtra *)TheScriptEngine)->get() || TheScriptEngine->isDebugFrozen();
@@ -468,7 +474,7 @@ void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<Rende
 		DX8Wrapper::SetDeclaration(declaration);
 		DX8Wrapper::SetPixelShader(pixelShader);
 		float overbright = 0.5f;
-		if (TheWritableGlobalData && TheWritableGlobalData->useOverbright)
+		if (TheWritableGlobalData && localGlobalData()->useOverbright)
 			overbright = 1;
 		DX8Wrapper::PixelConstant(1, &Vector4(overbright, overbright, overbright, overbright), 1);
 		if (g_bfmeGlobCC0 && g_bfmeGlobCC0->v28())

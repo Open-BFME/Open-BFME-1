@@ -4,7 +4,7 @@
 //     Bool OptionPreferences::getX(void)
 //     {
 //         it = find("<KEY>");
-//         if (it == end())  return TheGlobalData-><byte at OFFSET>;
+//         if (it == end())  return localGlobalData()-><byte at OFFSET>;
 //         return <compare>(it->second.str(), "yes") == 0;
 //     }
 //
@@ -76,7 +76,11 @@ struct CustomPreferenceMapShim
 // Only the single byte each getter reads is reconstructed; no field layout is
 // asserted, because nothing outside these bodies attests one.
 struct R4GlobalDataShim { unsigned char m_bytes[ 0x1000 ]; };
-extern R4GlobalDataShim *TheGlobalData;             ///< retail [0x012ED5C8]
+// Retail's writable GlobalData global lives at 0x012ED5C8 and is declared with
+// EA's own GlobalData type; the shim above is cast back at each use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+static inline R4GlobalDataShim *localGlobalData() { return (R4GlobalDataShim *)TheWritableGlobalData; }
 
 struct R4AudioSettingsShim
 {
@@ -135,7 +139,7 @@ public:
 		CustomMapNodeShim *node = map->find( &key );                          \
 		key.destroy();                                                        \
 		if ( node == map->m_header )                                          \
-			return TheGlobalData->m_bytes[ OFFSET ];                          \
+			return localGlobalData()->m_bytes[ OFFSET ];                          \
 		CustomStringDataShim *data = node->m_value;                           \
 		const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : ""; \
 		return COMPARE( text, "yes" ) == 0;                                   \
@@ -183,7 +187,7 @@ Bool OptionPreferences::getAlternateMouseSetup( void )
 	CustomMapNodeShim *node = map->find( &key );
 	key.destroy();
 	if ( node == map->m_header )
-		return TheGlobalData->m_bytes[ 0x60 ];
+		return localGlobalData()->m_bytes[ 0x60 ];
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
 	return strcmp( text, "yes" ) != 0;

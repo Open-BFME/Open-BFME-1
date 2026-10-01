@@ -162,7 +162,9 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+// TU-local field view only; retail's global at 0x012ED5C8 is declared below
+// with EA's own GlobalData class, so the pointer is cast back at each use.
+struct RvaGlobalDataView
 {
 	unsigned char m_unreconstructed_0000[0x0A6C];
 	Bool m_audioOn;
@@ -185,7 +187,12 @@ struct PlayerLeaveStatus
 extern GameInfo *TheGameInfo;
 extern PlayerTemplateStore *ThePlayerTemplateStore;
 extern GameTextInterface *TheGameText;
+class GlobalData;
 extern GlobalData *TheWritableGlobalData;
+static inline RvaGlobalDataView *localGlobalData()
+{
+	return (RvaGlobalDataView *)TheWritableGlobalData;
+}
 
 extern Bool g_xObjectCRC;
 extern Bool g_xPartitionCRC;
@@ -315,16 +322,16 @@ void GameLogic::bfmePopulateGameReport( GameInfo *game, Int *localSlot )
 		self->m_commandLineArguments.concat( " zeroFillMemory:ON", 0x12 );
 	else
 		self->m_commandLineArguments.concat( " zeroFillMemory:OFF", 0x13 );
-	if ( !TheWritableGlobalData->m_audioOn )
+	if ( !localGlobalData()->m_audioOn )
 		self->m_commandLineArguments.concat( " -noAudio", 9 );
-	if ( !TheWritableGlobalData->m_musicOn )
+	if ( !localGlobalData()->m_musicOn )
 		self->m_commandLineArguments.concat( " -noMusic", 9 );
 	self->m_commandLineArguments.concat( "\n    GamePlay:", 0x0E );
-	if ( TheWritableGlobalData->m_fastGamePlay )
+	if ( localGlobalData()->m_fastGamePlay )
 		self->m_commandLineArguments.concat( " -fastGamePlay", 0x0E );
-	if ( TheWritableGlobalData->m_startingMoney )
+	if ( localGlobalData()->m_startingMoney )
 	{
-		line.format( (AsciiString)" -startingMoney %d", TheWritableGlobalData->m_startingMoney );
+		line.format( (AsciiString)" -startingMoney %d", localGlobalData()->m_startingMoney );
 		self->m_commandLineArguments.concat( line.str(), line.getLength() );
 	}
 

@@ -182,7 +182,14 @@ struct Rva006C9270GlobalData
     char fieldC08[0x60];
     float fieldC68;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail spells the one writable GlobalData global (0x012ED5C8) with EA's own
+// type; the field view above stays TU-local and the pointer is cast at each use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+static inline Rva006C9270GlobalData *localGlobalData()
+{
+    return (Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 class BfmeAptScreenOptions
 {
   public:
@@ -287,21 +294,21 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                     AsciiString prefString;
                     prefString = AsciiString("no");
                     options["HeatEffects"] = prefString;
-                    TheWritableGlobalData->field1D = false;
-                    TheWritableGlobalData->fieldA75 = false;
+                    localGlobalData()->field1D = false;
+                    localGlobalData()->fieldA75 = false;
                 }
                 else if (index == 2 || index == 1 || index == 0)
                 {
                     AsciiString prefString;
                     prefString = AsciiString("yes");
                     options["HeatEffects"] = prefString;
-                    TheWritableGlobalData->field1D = true;
-                    TheWritableGlobalData->fieldA75 = true;
+                    localGlobalData()->field1D = true;
+                    localGlobalData()->fieldA75 = true;
                 }
                 if (index == 2)
-                    TheWritableGlobalData->fieldA77 = true;
+                    localGlobalData()->fieldA77 = true;
                 else if (index == 1 || index == 0)
-                    TheWritableGlobalData->fieldA77 = false;
+                    localGlobalData()->fieldA77 = false;
                 if (index != 5)
                     Rva0007E5F0OptionPreferencesClear(&options);
             }
@@ -314,8 +321,8 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
             {
                 int width, height, depth;
                 TheDisplay->slot19(index, &width, &height, &depth);
-                if (TheWritableGlobalData->field2C != width ||
-                    TheWritableGlobalData->field30 != height)
+                if (localGlobalData()->field2C != width ||
+                    localGlobalData()->field30 != height)
                 {
                     field278 = height;
                     field274 = width;
@@ -341,17 +348,17 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
             AsciiString prefString;
             prefString.format("%d", val);
             options["Brightness"] = prefString;
-            if (TheWritableGlobalData->fieldC68 != gamma)
-                TheWritableGlobalData->fieldC68 = gamma;
+            if (localGlobalData()->fieldC68 != gamma)
+                localGlobalData()->fieldC68 = gamma;
         }
         val = field2F4 ? GadgetSliderGetPosition(field2F4) : -1;
         if (val != -1)
         {
             if (val < 1)
                 val = 1;
-            TheWritableGlobalData->fieldBBC = val / 50.0f;
-            TheWritableGlobalData->fieldB68 = val / 50.0f;
-            TheWritableGlobalData->fieldB64 = val / 50.0f;
+            localGlobalData()->fieldBBC = val / 50.0f;
+            localGlobalData()->fieldB68 = val / 50.0f;
+            localGlobalData()->fieldB64 = val / 50.0f;
             AsciiString prefString;
             prefString.format("%d", val);
             options["ScrollFactor"] = prefString;
@@ -399,7 +406,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                 AsciiString prefString;
                 prefString = val ? AsciiString("yes") : AsciiString("no");
                 options["AllHealthBars"] = prefString;
-                TheWritableGlobalData->fieldA8E = val != 0;
+                localGlobalData()->fieldA8E = val != 0;
             }
         }
         if (field294)
@@ -410,7 +417,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                 AsciiString prefString;
                 prefString = val ? AsciiString("yes") : AsciiString("no");
                 options["AlternateMouseSetup"] = prefString;
-                TheWritableGlobalData->field60 = val == 0;
+                localGlobalData()->field60 = val == 0;
             }
         }
         if (field29C)
@@ -421,7 +428,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                 AsciiString prefString;
                 prefString = val ? AsciiString("yes") : AsciiString("no");
                 options["UnitDecals"] = prefString;
-                TheWritableGlobalData->fieldA75 = val != 0;
+                localGlobalData()->fieldA75 = val != 0;
             }
         }
         if (field2B4)
@@ -566,11 +573,11 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
             prefString.format("%d", GadgetSliderGetPosition(field300));
             options["MaxParticleCount"] = prefString;
         }
-        options["UsePixelShader"] = TheWritableGlobalData->field28 ? "no" : "yes";
-        options["FPSLimit"] = TheWritableGlobalData->field1E ? "yes" : "no";
-        options["UseHighQualityVideo"] = TheWritableGlobalData->field1F ? "yes" : "no";
-        options["BuildingOcclusion"] = TheWritableGlobalData->field70 ? "yes" : "no";
-        options["GrassDrawSkip"] = TheWritableGlobalData->field1B ? "yes" : "no";
+        options["UsePixelShader"] = localGlobalData()->field28 ? "no" : "yes";
+        options["FPSLimit"] = localGlobalData()->field1E ? "yes" : "no";
+        options["UseHighQualityVideo"] = localGlobalData()->field1F ? "yes" : "no";
+        options["BuildingOcclusion"] = localGlobalData()->field70 ? "yes" : "no";
+        options["GrassDrawSkip"] = localGlobalData()->field1B ? "yes" : "no";
         field258 = 2;
     }
     if (field258 == 3)
@@ -583,7 +590,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                 AsciiString prefString;
                 prefString = val ? AsciiString("yes") : AsciiString("no");
                 options["SendDelay"] = prefString;
-                TheWritableGlobalData->fieldC07 = val != 0;
+                localGlobalData()->fieldC07 = val != 0;
             }
         }
         if (field28C)
