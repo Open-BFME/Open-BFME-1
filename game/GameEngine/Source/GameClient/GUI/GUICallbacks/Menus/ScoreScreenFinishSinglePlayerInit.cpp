@@ -84,10 +84,18 @@ public:
 	~UnicodeString() {}
 };
 
+class VideoBuffer;
+class WinInstanceData
+{
+public:
+	void setVideoBuffer( VideoBuffer *buffer );
+};
+
 class GameWindow
 {
 public:
 	Int winHide( Bool hide );
+	WinInstanceData *winGetInstanceData( void );
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
@@ -103,6 +111,9 @@ public:
 	virtual void slot18();
 	virtual void slot1C();
 	virtual void destroyWindows( void );					///< +0x20
+	char m_unmodelled_04[4];
+	GameWindow *m_windowList;
+	GameWindow *getFirstWindow( void ) { return m_windowList; }
 };
 
 class GameWindowManager
@@ -245,7 +256,77 @@ extern InGameUI *TheInGameUI;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 void GadgetRadioSetText( GameWindow *window, UnicodeString text );
-void PlayMovieAndBlock( AsciiString movieTitle );
+
+class VideoPlayer;
+class VideoStreamInterface;
+class Display;
+class GameEngine;
+class GlobalData
+{
+public:
+	char m_unmodelled_0000[0xbb9];
+	Bool m_loadScreenRender;
+};
+extern VideoPlayer *TheVideoPlayer;
+extern Display *TheDisplay;
+extern GameEngine *TheGameEngine;
+extern GlobalData *TheWritableGlobalData;
+void setFPMode( void );
+
+template<int N> class ScoreScreenVideoSlots : public ScoreScreenVideoSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+template<> class ScoreScreenVideoSlots<0> {};
+
+class ScoreScreenVideoPlayerSlots : public ScoreScreenVideoSlots<12>
+{
+public:
+	virtual VideoStreamInterface *open(AsciiString title, Int argument) = 0;
+};
+class ScoreScreenDisplayCreateSlots : public ScoreScreenVideoSlots<33>
+{
+public:
+	virtual VideoBuffer *createVideoBuffer(Int argument) = 0;
+};
+class ScoreScreenDisplayDrawSlots : public ScoreScreenVideoSlots<7>
+{
+public:
+	virtual void draw(void) = 0;
+};
+class ScoreScreenStreamSlot6 : public ScoreScreenVideoSlots<6>
+{
+public:
+	virtual Int slot6(Int mode) = 0;
+};
+class ScoreScreenStreamSlot7 : public ScoreScreenVideoSlots<7>
+{
+public:
+	virtual void slot7(void) = 0;
+};
+class ScoreScreenStreamSlot14 : public ScoreScreenVideoSlots<14>
+{
+public:
+	virtual Bool slot14(VideoBuffer *buffer) = 0;
+};
+class ScoreScreenStreamSlot15 : public ScoreScreenVideoSlots<15>
+{
+public:
+	virtual VideoBuffer *slot15(void) = 0;
+};
+class ScoreScreenEngineSlot16 : public ScoreScreenVideoSlots<16>
+{
+public:
+	virtual void slot16(void) = 0;
+};
+class ScoreScreenEngineSlot17 : public ScoreScreenVideoSlots<17>
+{
+public:
+	virtual Bool slot17(void) = 0;
+};
+
+void PlayMovieAndBlock(AsciiString movieTitle);
 
 extern GameWindow *parent;								///< retail [0x012F415C]
 extern GameWindow *listboxChatWindowScoreScreen;		///< retail [0x012F417C]
@@ -258,6 +339,49 @@ static GameWindow *buttonBuddies = 0;					///< retail [0x012F4174]
 static GameWindow *staticTextGameSaved = 0;				///< retail [0x012F4178]
 static Bool buttonIsFinishCampaign = FALSE;				///< retail [0x012F4183]
 static WindowLayout *s_blankLayout = 0;					///< retail [0x012F4184]
+
+// finishSinglePlayerInit calls this function through ILT 0x0004782F.
+// VideoPlayer::open uses vtable slot 12. Retail body 0x0081C7B0 releases the title and returns with ret 8.
+void PlayMovieAndBlock(AsciiString movieTitle)
+{
+	VideoStreamInterface *videoStream = ((ScoreScreenVideoPlayerSlots *)TheVideoPlayer)->open(movieTitle, 0);
+	if (videoStream != 0)
+	{
+		if (!((ScoreScreenStreamSlot14 *)videoStream)->slot14(
+			((ScoreScreenDisplayCreateSlots *)TheDisplay)->createVideoBuffer(0)))
+		{
+			((ScoreScreenStreamSlot7 *)videoStream)->slot7();
+		}
+		else
+		{
+			GameWindow *movieWindow = s_blankLayout->getFirstWindow();
+			TheWritableGlobalData->m_loadScreenRender = TRUE;
+			Int frameState;
+			do
+			{
+				((ScoreScreenEngineSlot16 *)TheGameEngine)->slot16();
+				if (((ScoreScreenEngineSlot17 *)TheGameEngine)->slot17() == FALSE)
+					frameState = ((ScoreScreenStreamSlot6 *)videoStream)->slot6(1);
+				else
+				{
+					frameState = ((ScoreScreenStreamSlot6 *)videoStream)->slot6(0);
+					if (frameState & 4)
+					{
+						VideoBuffer *currentBuffer = ((ScoreScreenStreamSlot15 *)videoStream)->slot15();
+						if (currentBuffer)
+							movieWindow->winGetInstanceData()->setVideoBuffer(currentBuffer);
+						((ScoreScreenDisplayDrawSlots *)TheDisplay)->draw();
+					}
+				}
+			} while ((frameState & 2) == 0);
+
+			TheWritableGlobalData->m_loadScreenRender = FALSE;
+			movieWindow->winGetInstanceData()->setVideoBuffer(0);
+			((ScoreScreenStreamSlot7 *)videoStream)->slot7();
+			setFPMode();
+		}
+	}
+}
 
 // ?finishSinglePlayerInit@@YAXXZ
 void finishSinglePlayerInit( void )
