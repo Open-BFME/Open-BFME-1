@@ -596,7 +596,8 @@ def land(rel, renames, now, status="applied"):
             hits = subprocess.run(["rg", "-lw", "--no-messages", ident, "game"], cwd=ROOT,
                                   capture_output=True, text=True).stdout.split()
             owner = scope.split("@")[0]
-            spread |= {f for f in hits if kind == "type" or not owner or re.search(rf"\b{owner}\b", read(f))}
+            # the owner must appear in code: a comment naming it does not make the file's own methods of that name its
+            spread |= {f for f in hits if kind == "type" or not owner or re.search(rf"\b{owner}\b", strip(read(f)))}
     generated = sorted(f for f in spread if f.startswith(GENERATED))
     if generated:
         return f"a generated file names it: {generated[0]}"
@@ -644,9 +645,11 @@ def document_corrections(reason):
     correction documents it; record one for each finding the staged revert produces."""
     import name_regression
     findings, _ = name_regression.check(ROOT, "HEAD", ":")
-    entries = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    raw = CORRECTIONS.read_bytes()
+    entries = json.loads(raw)
     entries += [{**vars(f), "evidence": str(DISPUTES.relative_to(ROOT).as_posix()), "reason": reason} for f in findings]
-    CORRECTIONS.write_text(json.dumps(entries, indent=1) + "\n", encoding="utf-8")
+    eol = "\r\n" if b"\r\n" in raw else "\n"      # keep the file's line endings: eol_guard refuses a whole-file rewrite
+    CORRECTIONS.write_bytes((json.dumps(entries, indent=1) + "\n").replace("\n", eol).encode("utf-8"))
     git("add", str(CORRECTIONS.relative_to(ROOT)))
 
 
@@ -657,7 +660,8 @@ def cmd_dispute(args):
     if not a or a["status"] != "applied":
         fail(f"{args.key}: no landed name to dispute")
     rel, kind, scope, ident = args.key.split("|")
-    if not DISPUTES.exists():
+    before = DISPUTES.read_bytes() if DISPUTES.exists() else None
+    if before is None:
         DISPUTES.write_text("# Names the naming lane landed and a review disputed\n\n", encoding="utf-8")
     with DISPUTES.open("a", encoding="utf-8") as f:
         f.write(f"- `{args.key}`: `{a['name']}` back to `{ident}`. {args.reason}\n")
@@ -665,6 +669,8 @@ def cmd_dispute(args):
     why = land(rel, [(kind, scope, a["name"], ident, a["models"], args.key)], datetime.date.today().isoformat(),
                status=f"disputed: {args.reason}")
     if why:
+        git("reset", "-q", "--", str(DISPUTES.relative_to(ROOT)))
+        DISPUTES.write_bytes(before) if before is not None else DISPUTES.unlink()
         fail(f"could not put {a['name']} back: {why}")
     print(f"{a['name']} is {ident} again in {rel}; the key is open for new votes and refuses {a['name']}. Push the commit.")
     return 0
