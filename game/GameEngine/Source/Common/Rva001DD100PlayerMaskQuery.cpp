@@ -14,7 +14,9 @@ public:
 	unsigned short bfmeLookup1025( int playerIndex, int flags, int extra );
 };
 
-extern BfmeD1025 *g_rva005655C0PlayerList;
+class PlayerList;
+extern PlayerList *ThePlayerList;
+static inline BfmeD1025 *thePlayersView() { return (BfmeD1025 *)ThePlayerList; }
 
 class Rva001DD100PlayerMaskQuery
 {
@@ -31,7 +33,7 @@ private:
 
 unsigned int Rva001DD100PlayerMaskQuery::queryMask( void ) const
 {
-	unsigned int result = g_rva005655C0PlayerList->bfmeLookup1025(
+	unsigned int result = thePlayersView()->bfmeLookup1025(
 		m_player->getPlayerIndex(), m_flags | 1, 0 );
 	if( !m_match )
 	{

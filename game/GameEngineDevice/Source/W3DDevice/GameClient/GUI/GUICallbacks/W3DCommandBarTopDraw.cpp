@@ -87,12 +87,14 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern Rva000DF7F0 *Rva002EE330ThePlayers;
+class PlayerList;
+extern PlayerList *ThePlayerList;
+static inline Rva000DF7F0 *thePlayersView() { return (Rva000DF7F0 *)ThePlayerList; }
 
 void W3DCommandBarTopDraw(GameWindow *, WinInstanceData *)
 {
 	GameWindow *win = TheWindowManager->winGetWindowFromId(
 		0, TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonGeneral"));
-	if (!win || win->winIsHidden() || Rva002EE330ThePlayers->inactive())
+	if (!win || win->winIsHidden() || thePlayersView()->inactive())
 		return;
 }

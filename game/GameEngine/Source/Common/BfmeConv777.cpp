@@ -9,7 +9,9 @@ public:
 	virtual void bfmeRunDSV();
 };
 
-extern BfmeGlobDSV *g_bfmeDSV;
+class PlayerList;
+extern PlayerList *ThePlayerList;
+static inline BfmeGlobDSV *thePlayersView() { return (BfmeGlobDSV *)ThePlayerList; }
 
 class BfmeSubDSV
 {
@@ -27,5 +29,5 @@ struct BfmeThingDSV
 void BfmeThingDSV::bfmeGoDSV()
 {
 	m_bfmeSub->bfmeOneDSV();
-	g_bfmeDSV->bfmeRunDSV();
+	thePlayersView()->bfmeRunDSV();
 }
