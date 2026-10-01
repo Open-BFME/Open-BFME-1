@@ -28,7 +28,11 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
-extern WindowManager *g_theWindowManager;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  The class above is this TU's
+// view of the pointee; keeping the tag name WindowManager keeps the pointee
+// mangling PAVWindowManager@@A and needs no cast at the use.
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void j_00027093();
 extern void j_0002639b();
 
@@ -57,7 +61,7 @@ void BfmeAptScreenSkirmish::rva00579C30LevelText(AsciiString sideName,
 	text.format(TheGameText->fetch("APT:CurrentLevelNumFormat"), rank);
 	{
 		UnicodeString currentValue(text);
-		g_theWindowManager->bfme_setAptText(currentName, currentValue);
+		g_rva012F19E8WindowManager->bfme_setAptText(currentName, currentValue);
 	}
 
 	int points = (m_honorsAt3C4.*nextCall.typed)(sideName, rank);
@@ -69,6 +73,6 @@ void BfmeAptScreenSkirmish::rva00579C30LevelText(AsciiString sideName,
 		text.format(TheGameText->fetch("APT:NextLevelNumFormat"), points);
 	{
 		UnicodeString nextValue(text);
-		g_theWindowManager->bfme_setAptText(nextName, nextValue);
+		g_rva012F19E8WindowManager->bfme_setAptText(nextName, nextValue);
 	}
 }

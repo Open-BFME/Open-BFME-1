@@ -91,6 +91,10 @@ public:
 	FunctorSingleWrapperHead *m_ptr;
 };
 
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  The class below is this TU's
+// view of the pointee; keeping the tag name WindowManager keeps the pointee
+// mangling PAVWindowManager@@A and needs no cast at the use.
 class WindowManager
 {
 public:
@@ -98,7 +102,7 @@ public:
 		Rva0050F8B0FunctorHolder callback );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00566EC0Profile
 {
@@ -138,7 +142,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		FunctorBindingSingle binding(
 			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
-		g_theWindowManager->bfmeBindRva004650F0( name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
@@ -147,7 +151,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		FunctorBindingSingle binding(
 			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
-		g_theWindowManager->bfmeBindRva004650F0( name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
@@ -156,7 +160,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		FunctorBindingSingle binding(
 			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
-		g_theWindowManager->bfmeBindRva004650F0( name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
@@ -165,7 +169,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		FunctorBindingSingle binding(
 			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
-		g_theWindowManager->bfmeBindRva004650F0( name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 }

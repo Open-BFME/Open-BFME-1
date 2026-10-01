@@ -136,7 +136,10 @@ private:
 extern "C" __declspec(dllimport) int __cdecl bfmeNowVNH() throw();
 
 class WindowManager;
-extern WindowManager *g_theWindowManager;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  WindowManager is the real
+// class, defined by its constructor in this TU, so no view cast is needed.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class WindowManager : public SubsystemInterface
 {
@@ -185,6 +188,6 @@ WindowManager::WindowManager()
 	m_at1C0 = 0xFFFFFFFF;
 	m_at1C4 = 0;
 
-	if (g_theWindowManager == 0)
-		g_theWindowManager = this;
+	if (g_rva012F19E8WindowManager == 0)
+		g_rva012F19E8WindowManager = this;
 }

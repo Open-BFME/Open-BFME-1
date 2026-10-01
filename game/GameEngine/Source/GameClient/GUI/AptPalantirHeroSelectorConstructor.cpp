@@ -121,6 +121,10 @@ public:
 	FunctorSingleWrapperHead *m_ptr;
 };
 
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  The class below is this TU's
+// view of the pointee; keeping the tag name WindowManager keeps the pointee
+// mangling PAVWindowManager@@A and needs no cast at the use.
 class WindowManager
 {
 public:
@@ -130,7 +134,7 @@ public:
 		Rva0050F8B0FunctorHolder callback );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void j_00040bbf();
 extern void j_0001cfdf();
 
@@ -180,7 +184,7 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 	self->m_window = 0;
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnSelectAllHeroes" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			BannerAptCallbackHolder(
 				FunctorBindingSingle( callback.member, self ) ) );
 	}
@@ -199,7 +203,7 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 	{
 		BFMERetailAsciiString name;
 		name.format( "Palantir/HeroSelectUI/Hero%d/", index + 1 );
-		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder(
 				FunctorBindingSingle( rawFunctorMethod( index ), self ),
 				(Rva0058D070FunctorSingleWrapper *)0 ) );
@@ -207,7 +211,7 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 
 	{
 		BFMERetailAsciiString name( "Palantir/HeroSelectUI/SelectAllHeroesBttn/" );
-		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder(
 				FunctorBindingSingle( rawFunctorMethod( (unsigned int)j_0001cfdf ), self ),
 				(Rva0058D030FunctorSingleWrapper *)0 ) );

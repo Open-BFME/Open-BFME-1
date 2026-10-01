@@ -41,7 +41,11 @@ public:
 	int notify();
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  BfmeMgr19E is this TU's view
+// of the pointee; the casts at the uses are pointer-size neutral.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeMsgHandler
 {
@@ -57,18 +61,18 @@ int BfmeMsgHandler::defaultHandler(int msg, void *p2, void *p3)
 	switch (msg)
 	{
 	case 2:
-		if (g_mgr12F19E8 && g_mgr12F19E8->m_handler == this)
-			g_mgr12F19E8->m_handler = 0;
+		if (g_rva012F19E8WindowManager && ((BfmeMgr19E *)g_rva012F19E8WindowManager)->m_handler == this)
+			((BfmeMgr19E *)g_rva012F19E8WindowManager)->m_handler = 0;
 		goto success;
 	case 23:
 		if ((int)p2 == 1)
 		{
 			*(bool *)p3 = true;
-			g_mgr12F19E8->m_handler = this;
+			((BfmeMgr19E *)g_rva012F19E8WindowManager)->m_handler = this;
 		}
-		else if (g_mgr12F19E8->m_handler == this)
+		else if (((BfmeMgr19E *)g_rva012F19E8WindowManager)->m_handler == this)
 		{
-			g_mgr12F19E8->m_handler = 0;
+			((BfmeMgr19E *)g_rva012F19E8WindowManager)->m_handler = 0;
 		}
 		goto success;
 	case 29:
@@ -114,7 +118,7 @@ void __stdcall bfmeCheckAndNotify940(void *param)
 		g_obj12F4B58->m_flag59 = 1;
 	}
 	if (g_obj12F495C) {
-		g_mgr12F19E8->notify();
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->notify();
 	}
 }
 

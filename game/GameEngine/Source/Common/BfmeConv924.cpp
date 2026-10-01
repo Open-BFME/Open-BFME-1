@@ -80,8 +80,11 @@ void bfmeGo924F(BfmeKeyLC *k, unsigned short w)
 	}
 }
 
-struct Rva00579160Manager {};
-extern Rva00579160Manager *Rva00579160TheManager;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  BfmeLevelAN is this TU's view
+// of the pointee; the casts at the uses are pointer-size neutral.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class LookAtTranslator;
 extern LookAtTranslator *TheLookAtTranslator;
@@ -153,7 +156,7 @@ void BfmeOne924G::bfmeCall924G()
 		const char *button = mode == 2 ? "YesNo"
 			: mode == 1 ? "OkCancel"
 			: mode == 3 ? "NonInteractive" : "Ok";
-		((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN(11,
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(11,
 			(int)"ShowMessageBox", 2, (int)button, (int)message, 0, 0, 0);
 		m_bfmeState924G = 1;
 	}
@@ -161,7 +164,7 @@ void BfmeOne924G::bfmeCall924G()
 	{
 		const char *message = m_bfmeHideSingle924G
 			? &g_bfmeJpegSingleMessage : &g_bfmeJpegExtendedMessage;
-		((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN(11,
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(11,
 			(int)"HideMessageBox", 1, (int)message, 0, 0, 0, 0);
 		m_bfmeState924G = 0;
 		m_bfmeHideSingle924G = 0;
@@ -172,7 +175,7 @@ void BfmeOne924G::bfmeCall924G()
 		const char *button = mode == 2 ? "YesNo"
 			: mode == 1 ? "OkCancel"
 			: mode == 3 ? "NonInteractive" : "Ok";
-		((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN(11,
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(11,
 			(int)"ChangeMessageBox", 1, (int)button, 0, 0, 0, 0);
 		m_bfmeState924G = 1;
 	}

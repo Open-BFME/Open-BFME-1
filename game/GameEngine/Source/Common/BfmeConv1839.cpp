@@ -43,7 +43,11 @@ public:
 		char *third, char *fourth, char *fifth);
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  BfmeMgr19E is this TU's view
+// of the pointee; the casts at the uses are pointer-size neutral.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmt1057[];
 
 class BfmeNotifyOwnerXC
@@ -111,7 +115,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	{
 	case 0:
 	{
-		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
 			"addFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow70XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow70XC);
@@ -119,7 +123,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 1:
 	{
-		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
 			"addIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow60XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow60XC);
@@ -127,7 +131,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 2:
 	{
-		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
 			"removeFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow90XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow90XC);
@@ -135,7 +139,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 3:
 	{
-		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
 			"removeIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow80XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow80XC);

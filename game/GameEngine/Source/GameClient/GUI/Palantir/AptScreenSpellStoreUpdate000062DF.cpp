@@ -129,7 +129,11 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  The class above is this TU's
+// view of the pointee; keeping the tag name WindowManager keeps the pointee
+// mangling PAVWindowManager@@A and needs no cast at the use.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeAptScreenSpellStore
 {
@@ -174,7 +178,7 @@ void BfmeAptScreenSpellStore::unidentified_000062DF()
 			{
 				AsciiString name;
 				name.format( AsciiString( "SpellStore/Buttons/Spell%d" ), i + 1 );
-				( (BfmeThingBIF *)g_theWindowManager )->bfmeGoBIF( &name, (void *)current );
+				( (BfmeThingBIF *)g_rva012F19E8WindowManager )->bfmeGoBIF( &name, (void *)current );
 			}
 
 		}
@@ -187,7 +191,7 @@ void BfmeAptScreenSpellStore::unidentified_000062DF()
 			costText.format( UnicodeString( (const unsigned short *)L"%d" ), cost );
 			AsciiString costName;
 			costName.format( AsciiString( "APT:Spell%dCost" ), i + 1 );
-			g_theWindowManager->bfme_setAptText( costName, costText );
+			g_rva012F19E8WindowManager->bfme_setAptText( costName, costText );
 		}
 	}
 }
