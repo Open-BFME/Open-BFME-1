@@ -202,3 +202,5 @@ game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,Gam
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,ControlBar,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,GameLogic,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,ControlBar,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeInnerLU,Overridable,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeThingLU,ThingTemplate,gemini+grok,agreed,2026-10-01
