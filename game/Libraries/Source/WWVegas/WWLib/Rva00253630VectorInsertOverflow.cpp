@@ -17,6 +17,16 @@ struct Rva0077BFB0Element
 	char m_body[108];
 };
 
+struct Gen_t_00252ab0_k4;
+struct Gen_t_00252ab0_p12cd;
+struct S4Elem00252ED0;
+struct Gen_t_00770a90_k4;
+struct Gen_t_00770a90_p12cd;
+struct S4Elem007746E0;
+struct Gen_t_007720d0_k4;
+struct Gen_t_007720d0_p12cd;
+struct S4Elem0077B010;
+
 namespace _STL
 
 
@@ -46,8 +56,33 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
+template <class First, class Second> struct pair;
+template <class Type, class Value>
+void __cdecl _Construct(Type *destination, const Value &value);
+
 template <class Type>
 void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+
+template <>
+__forceinline void BfmeElementConstruct(Rva00253630Element *destination, const Rva00253630Element &value)
+{
+	typedef pair<const Gen_t_00252ab0_k4, Gen_t_00252ab0_p12cd> RowPair;
+	_Construct((RowPair *)destination, (const RowPair &)value);
+}
+
+template <>
+__forceinline void BfmeElementConstruct(Rva00777E40Element *destination, const Rva00777E40Element &value)
+{
+	typedef pair<const Gen_t_00770a90_k4, Gen_t_00770a90_p12cd> RowPair;
+	_Construct((RowPair *)destination, (const RowPair &)value);
+}
+
+template <>
+__forceinline void BfmeElementConstruct(Rva0077BFB0Element *destination, const Rva0077BFB0Element &value)
+{
+	typedef pair<const Gen_t_007720d0_k4, Gen_t_007720d0_p12cd> RowPair;
+	_Construct((RowPair *)destination, (const RowPair &)value);
+}
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -80,6 +115,9 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count,
 template <class Type, class Allocator>
 class vector
 {
+public:
+	~vector();
+
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
@@ -89,6 +127,27 @@ protected:
 	Type *_M_finish;
 	Type *_M_end_of_storage;
 };
+
+template <>
+__forceinline void vector<Rva00253630Element, allocator<Rva00253630Element> >::_M_clear()
+{
+	typedef vector<S4Elem00252ED0, allocator<S4Elem00252ED0> > RowVector;
+	((RowVector *)this)->~RowVector();
+}
+
+template <>
+__forceinline void vector<Rva00777E40Element, allocator<Rva00777E40Element> >::_M_clear()
+{
+	typedef vector<S4Elem007746E0, allocator<S4Elem007746E0> > RowVector;
+	((RowVector *)this)->~RowVector();
+}
+
+template <>
+__forceinline void vector<Rva0077BFB0Element, allocator<Rva0077BFB0Element> >::_M_clear()
+{
+	typedef vector<S4Elem0077B010, allocator<S4Elem0077B010> > RowVector;
+	((RowVector *)this)->~RowVector();
+}
 
 template <class Type, class Allocator>
 void vector<Type, Allocator>::_M_insert_overflow(

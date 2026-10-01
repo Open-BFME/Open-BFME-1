@@ -39,13 +39,9 @@
 //     005CF080 -> 005CEB10 -> 005CE420 -> 005CDC20 -> 005CD770
 //              -> 005CD2D0 -> 005CBE40 -> 005CB130 -> 005C92F0
 //
-// Naming a callee that is DEFINED here would inline it, and retail's `call`
-// proves it stayed opaque, so every level's callee is declared as its own
-// class with no definition -- the same weaker claim BigChainBaseDtors.cpp
-// makes, and for the same reason.  The bottom callee, 0x005C92F0, is not
-// converted here; it is a deep-cloning copy constructor over a three-pointer
-// vector and belongs to a different shape.
-//
+// Each level calls the preceding row through its declared copy constructor.
+// The constructors remain out of line at their separate retail addresses.
+
 // THE ONE OUTLIER IS AN EXTRA EMPTY INHERITANCE LEVEL.  Seven of the eight
 // spell the derived-to-base conversion `add edi,4 / push edi`; 0x005CB130
 // spells it `lea eax,[edi+4] / push eax`.  Measured: MSVC 7.1 emits the `lea`
@@ -100,35 +96,28 @@ public:
 	class NAME : public ChainCloneHold, public SECOND                     \
 	{                                                                     \
 	public:                                                               \
-		NAME( const NAME &other );                                        \
+		__declspec(noinline) NAME( const NAME &other );                         \
 	};                                                                    \
 	NAME::NAME( const NAME &other )                                       \
 		: ChainCloneHold( other ), SECOND( other ) {}
 
 BFME_COPY_SECOND_BASE( 005C92F0 )
-BFME_COPY_SECOND_BASE( 005CB130 )
-BFME_COPY_SECOND_BASE( 005CBE40 )
-BFME_COPY_SECOND_BASE( 005CD2D0 )
-BFME_COPY_SECOND_BASE( 005CD770 )
-BFME_COPY_SECOND_BASE( 005CDC20 )
-BFME_COPY_SECOND_BASE( 005CE420 )
-BFME_COPY_SECOND_BASE( 005CEB10 )
 
 class Mid005CB130 : public Sub005C92F0 {};
 
 class Rva005CB130 : public ChainCloneHold, public Mid005CB130
 {
 public:
-	Rva005CB130( const Rva005CB130 &other );
+	__declspec(noinline) Rva005CB130( const Rva005CB130 &other );
 };
 
 Rva005CB130::Rva005CB130( const Rva005CB130 &other )
 	: ChainCloneHold( other ), Mid005CB130( other ) {}
 
-BFME_COPY_CTOR( Rva005CBE40, Sub005CB130 )
-BFME_COPY_CTOR( Rva005CD2D0, Sub005CBE40 )
-BFME_COPY_CTOR( Rva005CD770, Sub005CD2D0 )
-BFME_COPY_CTOR( Rva005CDC20, Sub005CD770 )
-BFME_COPY_CTOR( Rva005CE420, Sub005CDC20 )
-BFME_COPY_CTOR( Rva005CEB10, Sub005CE420 )
-BFME_COPY_CTOR( Rva005CF080, Sub005CEB10 )
+BFME_COPY_CTOR( Rva005CBE40, Rva005CB130 )
+BFME_COPY_CTOR( Rva005CD2D0, Rva005CBE40 )
+BFME_COPY_CTOR( Rva005CD770, Rva005CD2D0 )
+BFME_COPY_CTOR( Rva005CDC20, Rva005CD770 )
+BFME_COPY_CTOR( Rva005CE420, Rva005CDC20 )
+BFME_COPY_CTOR( Rva005CEB10, Rva005CE420 )
+BFME_COPY_CTOR( Rva005CF080, Rva005CEB10 )

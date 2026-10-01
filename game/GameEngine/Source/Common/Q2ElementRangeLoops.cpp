@@ -87,35 +87,44 @@ Q2_VIRTUAL_RANGE_LOOP( Rva003A8DC0, Q2VirtualElemDC )
 	class Gen##BODY                                                       \
 	{                                                                     \
 	public:                                                               \
-		void handle();                                                    \
 	private:                                                              \
 		char m_unreconstructed_00[ STRIDE ];                              \
 	};
 
-#define Q2_DIRECT_RANGE_LOOP( NAME, ELEM )                                \
+#define Q2_DIRECT_RANGE_LOOP( NAME, ELEM, DTOR )                          \
 	void NAME( ELEM *first, ELEM *last )                                  \
 	{                                                                     \
 		while ( first != last )                                           \
 		{                                                                 \
-			first->handle();                                              \
+			((DTOR *)first)->~DTOR();                                              \
 			++first;                                                      \
 		}                                                                 \
 	}
 
+class S4Elem0039EBE0 { public: ~S4Elem0039EBE0(); };
+struct Rva00608FE0Element { ~Rva00608FE0Element(); };
+struct Gen_t_00776240_p128pod { ~Gen_t_00776240_p128pod(); };
+
 Q2_DIRECT_ELEMENT( 00774D40, 0xBC )
 Q2_DIRECT_ELEMENT( 0039DCC0, 0x88 )
-Q2_DIRECT_ELEMENT( 00606F70, 0x1F0 )
+class Gen00606F70
+{
+public:
+	~Gen00606F70();
+private:
+	char m_unreconstructed_00[0x1F0];
+};
 Q2_DIRECT_ELEMENT( 00608480, 0x210 )
 
-Q2_DIRECT_RANGE_LOOP( Rva0013B8B0, Gen00774D40 )
-Q2_DIRECT_RANGE_LOOP( Rva0013BDB0, Gen00774D40 )
-Q2_DIRECT_RANGE_LOOP( Rva0013BF50, Gen00774D40 )
-Q2_DIRECT_RANGE_LOOP( Rva0039EA00, Gen0039DCC0 )
-Q2_DIRECT_RANGE_LOOP( Rva0039EA30, Gen0039DCC0 )
-Q2_DIRECT_RANGE_LOOP( Rva0039EA60, Gen0039DCC0 )
-Q2_DIRECT_RANGE_LOOP( Rva00607360, Gen00606F70 )
-Q2_DIRECT_RANGE_LOOP( Rva00607390, Gen00606F70 )
-Q2_DIRECT_RANGE_LOOP( Rva006073C0, Gen00606F70 )
-Q2_DIRECT_RANGE_LOOP( Rva00608BD0, Gen00608480 )
-Q2_DIRECT_RANGE_LOOP( Rva00608C00, Gen00608480 )
-Q2_DIRECT_RANGE_LOOP( Rva00608C30, Gen00608480 )
+Q2_DIRECT_RANGE_LOOP( Rva0013B8B0, Gen00774D40, Gen_t_00776240_p128pod )
+Q2_DIRECT_RANGE_LOOP( Rva0013BDB0, Gen00774D40, Gen_t_00776240_p128pod )
+Q2_DIRECT_RANGE_LOOP( Rva0013BF50, Gen00774D40, Gen_t_00776240_p128pod )
+Q2_DIRECT_RANGE_LOOP( Rva0039EA00, Gen0039DCC0, S4Elem0039EBE0 )
+Q2_DIRECT_RANGE_LOOP( Rva0039EA30, Gen0039DCC0, S4Elem0039EBE0 )
+Q2_DIRECT_RANGE_LOOP( Rva0039EA60, Gen0039DCC0, S4Elem0039EBE0 )
+Q2_DIRECT_RANGE_LOOP( Rva00607360, Gen00606F70, Gen00606F70 )
+Q2_DIRECT_RANGE_LOOP( Rva00607390, Gen00606F70, Gen00606F70 )
+Q2_DIRECT_RANGE_LOOP( Rva006073C0, Gen00606F70, Gen00606F70 )
+Q2_DIRECT_RANGE_LOOP( Rva00608BD0, Gen00608480, Rva00608FE0Element )
+Q2_DIRECT_RANGE_LOOP( Rva00608C00, Gen00608480, Rva00608FE0Element )
+Q2_DIRECT_RANGE_LOOP( Rva00608C30, Gen00608480, Rva00608FE0Element )

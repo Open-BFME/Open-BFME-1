@@ -63,13 +63,36 @@ public:
 	Rva0013B8F0TargetView *m_target;
 };
 
-struct Rva0013B8F0Element
+class BfmeOwnVUG
 {
+public:
 	int m_word00, m_word04, m_word08;
 	AsciiString m_string0C;
 	Rva0013B8F0ReferenceView m_reference10;
-	~Rva0013B8F0Element(); // actual thiscall body 0x0013B8F0
+	~BfmeOwnVUG();
 };
+
+struct Rva0013B8F0Element : public BfmeOwnVUG
+{
+	Rva0013B8F0Element &operator=(const Rva0013B8F0Element &other)
+	{
+		m_word00 = other.m_word00;
+		m_word04 = other.m_word04;
+		m_word08 = other.m_word08;
+		m_string0C = other.m_string0C;
+		m_reference10 = other.m_reference10;
+		return *this;
+	}
+};
+
+namespace _STL
+{
+template <>
+__forceinline void _Destroy(Rva0013B8F0Element *element)
+{
+	((BfmeOwnVUG *)element)->~BfmeOwnVUG();
+}
+}
 
 // These two retail copies are STLport destroy-range helpers over the same
 // observed 20-byte record.  Their calls enter the element destructor through
@@ -79,7 +102,7 @@ void Rva0013C0E0Destroy(Rva0013B8F0Element *first,
 {
 	while (first != last)
 	{
-		first->~Rva0013B8F0Element();
+		((BfmeOwnVUG *)first)->~BfmeOwnVUG();
 		++first;
 	}
 }
@@ -89,7 +112,7 @@ void Rva0013C170Destroy(Rva0013B8F0Element *first,
 {
 	while (first != last)
 	{
-		first->~Rva0013B8F0Element();
+		((BfmeOwnVUG *)first)->~BfmeOwnVUG();
 		++first;
 	}
 }

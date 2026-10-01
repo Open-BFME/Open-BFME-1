@@ -23,14 +23,22 @@
 
 typedef __int64 FeslInt64;
 
-class Rva007E8810Message
+class BfmeThingRF { public: void *bfmeGoRF(void *key, void *defaultValue); };
+class BfmeThingVMQ { public: bool bfmeGoVMQ(const char *key, char defaultValue); };
+class BfmeThingUPB { public: char bfmeGoUPB(void *key, char *dest, void *destSize); };
+
+#define getBool bfmeGoVMQ
+
+class Rva007E8810Message : public BfmeThingVMQ
 {
 public:
-	int getInt( const char *key, int defaultValue );                 // 0x007E8900
-	bool getBool( const char *key, bool defaultValue );              // 0x007E89C0
-	bool getString( const char *key, char *dest, int destSize );     // 0x007E8A80
+	__forceinline int getIntByRow(const char *key, int defaultValue) { return (int)((BfmeThingRF *)this)->bfmeGoRF((void *)key, (void *)defaultValue); }
+	__forceinline bool getStringByRow(const char *key, char *dest, int destSize) { return ((BfmeThingUPB *)this)->bfmeGoUPB((void *)key, dest, (void *)destSize) != 0; }
 	FeslInt64 getInt64( const char *key, FeslInt64 defaultValue );   // 0x007E8930
 };
+
+#define getInt getIntByRow
+#define getString getStringByRow
 
 // ----------------------------------------------------------- the game record
 class Rva007FBC60Game
