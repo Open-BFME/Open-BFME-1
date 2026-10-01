@@ -96,13 +96,17 @@ extern unsigned int Rva01340568StageChanges;
 extern unsigned int Rva01340560TextureChanges;
 extern Rva006C9270Texture *Rva0133F478Textures[];
 
+// TU-local layout view of the 0x012ED5C8 global, not the real header's body.
 struct Rva006C9270GlobalData
 {
 	char m_unreconstructed[ 0x4C ];
 	unsigned char m_flag4C;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class DX8Wrapper
 {
@@ -160,7 +164,7 @@ void Rva006C9270ResetTextureStages( void )
 	DX8Wrapper::Set_DX8_Render_State( 0x1B, 0 );
 	DX8Wrapper::Set_DX8_Render_State( 0x13, 5 );
 	DX8Wrapper::Set_DX8_Render_State( 0x14, 6 );
-	if( TheWritableGlobalData && !TheWritableGlobalData->m_flag4C )
+	if( TheWritableGlobalData && !((Rva006C9270GlobalData *)TheWritableGlobalData)->m_flag4C )
 	{
 		for( int stage = 0; stage < 8; stage++ )
 		{

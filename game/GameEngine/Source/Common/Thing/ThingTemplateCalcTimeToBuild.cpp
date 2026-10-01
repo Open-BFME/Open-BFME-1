@@ -45,7 +45,10 @@ public:
 };
 class GameLogic { public: bool _bfme_isInMultiplayerOrSkirmishGame(); };
 class PlayerList { public: int unidentified_000df510(bool); };
-extern GlobalData *TheGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData; it is
+// defined once in game/GameEngine/Source/Common/GlobalData.cpp. The class
+// above is a TU-local layout view, not the real header's definition.
+extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
 template<class T> inline const T &min(const T&a,const T&b) { return a<b?a:b; }
@@ -81,10 +84,10 @@ int ThingTemplate::calcTimeToBuild(const Player *player,int overrideTime) const
     float energyPercent=player->getEnergy()->getEnergySupplyRatio();
     if(energyPercent>1.0f) energyPercent=1.0f;
     float energyShort=1.0f-energyPercent;
-    energyShort*=TheGlobalData->lowEnergyPenaltyModifier;
+    energyShort*=TheWritableGlobalData->lowEnergyPenaltyModifier;
     float penaltyRate=1.0f-energyShort;
-    penaltyRate=max(penaltyRate,TheGlobalData->minLowEnergyProductionSpeed);
-    if(energyPercent<1.0f) penaltyRate=min(penaltyRate,TheGlobalData->maxLowEnergyProductionSpeed);
+    penaltyRate=max(penaltyRate,TheWritableGlobalData->minLowEnergyProductionSpeed);
+    if(energyPercent<1.0f) penaltyRate=min(penaltyRate,TheWritableGlobalData->maxLowEnergyProductionSpeed);
     if(penaltyRate<=0.0f) penaltyRate=0.01f;
     buildTime/=penaltyRate;
     if(buildCompletion==1) {
@@ -92,7 +95,7 @@ int ThingTemplate::calcTimeToBuild(const Player *player,int overrideTime) const
         int count=0;
         if(facility) {
             player->countObjectsByThingTemplate(1,&facility,false,&count,true);
-            float mult=TheGlobalData->multipleFactory;
+            float mult=TheWritableGlobalData->multipleFactory;
             if(mult>0.0f) {
                 for(int i=0;i<count-1;++i) buildTime*=mult;
             }
@@ -101,8 +104,8 @@ int ThingTemplate::calcTimeToBuild(const Player *player,int overrideTime) const
     if(TheGameLogic->_bfme_isInMultiplayerOrSkirmishGame()) {
         int players=ThePlayerList->unidentified_000df510(false);
         float modifier;
-        if(kindOfWord0&0x80) modifier=TheGlobalData->populationModifiers.bfmeGet200(players);
-        else modifier=TheGlobalData->populationModifiers.bfmeGet180(players);
+        if(kindOfWord0&0x80) modifier=TheWritableGlobalData->populationModifiers.bfmeGet200(players);
+        else modifier=TheWritableGlobalData->populationModifiers.bfmeGet180(players);
         buildTime*=modifier;
     }
     return fast_float2long_round((float)floor((double)(buildTime*5)));

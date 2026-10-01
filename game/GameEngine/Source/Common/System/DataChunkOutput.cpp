@@ -68,7 +68,10 @@ class GlobalData
 public:
     AsciiString getPath_UserData() const;
 };
-extern GlobalData *TheGlobalData;
+// TU-local layout view of EA's class GlobalData, not the real header's body.
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+extern GlobalData *TheWritableGlobalData;
 
 class Mapping;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
@@ -116,7 +119,7 @@ private:
 // ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z
 DataChunkOutput::DataChunkOutput(OutputStream *output) : m_pOut(output)
 {
-    AsciiString temporaryFileName = TheGlobalData->getPath_UserData();
+    AsciiString temporaryFileName = TheWritableGlobalData->getPath_UserData();
     temporaryFileName.concat("_tmpChunk.dat", 13);
     m_tmp_file = fopen(temporaryFileName.str(), "wb");
     m_chunkStack = 0;

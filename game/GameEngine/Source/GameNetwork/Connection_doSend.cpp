@@ -71,6 +71,7 @@ public:
     bool queueSend(NetPacketAddress *, const unsigned char *, int);
 };
 
+// TU-local layout view of EA's class GlobalData, not the real header's body.
 class GlobalData {
 public:
     char pad[0xcb4];
@@ -83,7 +84,9 @@ public:
     unsigned frame;
 };
 
-extern GlobalData *TheGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;
 Int CommandRequiresAck(NetCommandMsg *);
 
@@ -167,7 +170,7 @@ unsigned Connection::doSend(bool throttle)
 
                         // The command has already entered this packet. Old acknowledged
                         // command retries are retired using the configured frame slack.
-                        if (frame != -1 && frame + TheGlobalData->m_networkRunAheadSlack < TheGameLogic->frame) {
+                        if (frame != -1 && frame + TheWritableGlobalData->m_networkRunAheadSlack < TheGameLogic->frame) {
                             commands->removeMessage(msg);
                             delete msg;
                         }

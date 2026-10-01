@@ -174,13 +174,17 @@ private:
 	BuildListInfo *m_pBuildList;				// +0x1C0
 };
 
-struct GlobalData
+// TU-local layout view of EA's class GlobalData, not the real header's body.
+class GlobalData
 {
+public:
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;						// +0xA88
 };
 
-extern GlobalData *TheGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+extern GlobalData *TheWritableGlobalData;
 
 #define BFME_VIRTUAL_SLOT(n) virtual void slot##n();
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
@@ -241,7 +245,7 @@ void AIPlayer::onStructureProduced(Object *factory, Object *bldg)
 		bldg->clearStatus(MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_RECONSTRUCTING));
 
 		TheScriptEngine->rva00349730(bldg, AsciiString(""));
-		if (TheGlobalData->m_debugAI)
+		if (TheWritableGlobalData->m_debugAI)
 		{
 			AsciiString bldgName = bldg->getTemplate()->getName();
 			// StringBase<char>::concat(const char *, int) at 0x00887D60, length folded.

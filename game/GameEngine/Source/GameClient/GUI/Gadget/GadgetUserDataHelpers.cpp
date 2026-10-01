@@ -80,13 +80,17 @@ struct Rva004BC7E0UserData
 	Rva004BC7E0NestedData *m_nested;			// +0x14
 };
 
+// TU-local layout view of the 0x012ED5C8 global, not the real header's body.
 struct Rva004B5B30GlobalData
 {
 	char m_prefix[0x30];
 	int m_scale;						// +0x30
 };
 
-extern Rva004B5B30GlobalData *TheGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 struct Rva004B5B30UserData
 {
@@ -254,6 +258,6 @@ void Rva004B5B30::set(int value)
 	{
 		Rva004B5B30UserData *data =
 			(Rva004B5B30UserData *)m_window->winGetUserData();
-		data->m_value = (TheGlobalData->m_scale * value) / 768;
+		data->m_value = (((Rva004B5B30GlobalData *)TheWritableGlobalData)->m_scale * value) / 768;
 	}
 }

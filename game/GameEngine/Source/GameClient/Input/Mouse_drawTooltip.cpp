@@ -47,6 +47,7 @@ inline bool operator!=(const UnicodeString &a, const UnicodeString &b)
 	return *(const StringBase<unsigned short> *)&a != *(const StringBase<unsigned short> *)&b;
 }
 
+// TU-local layout view of the 0x012ED5C8 global, not the real header's body.
 struct BfmeGlobalData
 {
 	unsigned char m_pad0[0xA8F];
@@ -54,7 +55,10 @@ struct BfmeGlobalData
 	bool m_flagA90;
 };
 
-extern BfmeGlobalData *TheWritableGlobalData;
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class ScriptEngine
 {
@@ -156,7 +160,7 @@ void Mouse::drawTooltip()
 	UnsignedInt delay = m_tooltipDelayTime;
 	if (m_tooltipDelay >= 0)
 		delay = m_tooltipDelay;
-	if (TheWritableGlobalData->m_flagA90)
+	if (((BfmeGlobalData *)TheWritableGlobalData)->m_flagA90)
 		delay = 0;
 
 	if (now - m_stillTime >= delay)
@@ -176,7 +180,7 @@ void Mouse::drawTooltip()
 	if (TheScriptEngine->m_fade != 0)
 		return;
 
-	if (TheWritableGlobalData->m_showTooltips && m_displayTooltip &&
+	if (((BfmeGlobalData *)TheWritableGlobalData)->m_showTooltips && m_displayTooltip &&
 		TheDisplay != 0 && !m_buttonActivity && !m_tooltipString.isEmpty())
 	{
 		if (m_tooltipState != m_tooltipString)

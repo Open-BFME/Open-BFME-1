@@ -26,12 +26,16 @@ extern "C" __declspec(dllimport) void __stdcall AIL_start_timer(HTIMER timer);
 extern "C" __declspec(dllimport) int __stdcall AIL_enumerate_filters(
 	HPROENUM *next, HPROVIDER *provider, char **name);
 
-struct GlobalData
+// TU-local layout view of EA's class GlobalData, not the real header's body.
+class GlobalData
 {
+public:
 	unsigned char m_prefix[0xa6c];
 	Bool m_audioOn;
 };
 
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
 extern GlobalData *TheWritableGlobalData;
 
 struct AudioSettings

@@ -87,14 +87,18 @@ public:
 #undef BFME_TERRAIN_SLOT
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+// TU-local layout view of EA's class GlobalData, not the real header's body.
+class GlobalData
 {
+public:
 	char m_unknown[0x54];
 	int m_terrainLOD;
 	char m_unknown58[4];
 	int m_terrainLODTargetTimeMS;
 };
 
+// The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp.
 extern GlobalData *TheWritableGlobalData;
 extern Rva006E8E60TerrainAbi *TheTerrainRenderObject;
 
