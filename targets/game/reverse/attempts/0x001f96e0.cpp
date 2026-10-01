@@ -1,20 +1,14 @@
 // ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
-// partial score=0.8407 date=2026-09-28
-// ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
+// partial score=0.8468 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
-// partial score=0.70 date=2026-09-28
-// NOT byte matched: 967/979 B, 295 masked differing bytes, shape 0.961.
-// 2026-09-28 opus-5.5 clean rewrite: real new-expression and by-value
-// AsciiString arguments (EH states 1-5), nodes stored by loop index,
-// Coord3D location copy, pathfinder call OUTSIDE the first !built block
-// (this moves `this` from EBP to EDI as in retail), path[0]/path[count-1].
-// Remaining: count in EBX vs retail EBP (end node swaps with it), the module
-// pointer spill slot (retail esp+0x18, ours esp+0x2C) shifting the path
-// vector by 4, and retail's two extra reloads of the module pointer.
-// Retail 0x001F96E0 / 979 bytes.  DynamicPortalBehaviour receiver (caller
-// 0x001F9C20 is vtable 0x010A3950 slot 1; ctor 0x001F8B80).  The private
-// method has no proven semantic name, so it keeps its address.
+// Retail returns at +0x3D2, confirming a 979-byte body.
+// Caller 0x001F9C20 reaches slot 1 of vtable 0x010A3950, which identifies the receiver as DynamicPortalBehaviour.
+// The caller and vtable do not name the method, so the source uses an address-derived name.
+// The draft reads each path through begin() and end() accessors.
+// It emits 979 bytes with 150 bytes outside relocation operands and seven structural differences.
+// The compiler still writes the module pointer at [esp+0x2C], while retail writes it at [esp+0x18].
+
 
 #define _STLP_NO_EXCEPTIONS 1
 
@@ -22,11 +16,6 @@
 #include "ascii_string.h"
 #include "coord3d.h"
 
-// Retail inlines str() at this call site: null data -> "".
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -211,9 +200,9 @@ void DynamicPortalBehaviour::rva001f96e0()
 		pathIt != data->m_paths.end(); ++pathIt)
 	{
 		Rva001F96E0Path path = *pathIt;
-		Int first = path[0];
+		Int first = *path.begin();
 		Int count = path.size();
-		Int last = path[count - 1];
+		Int last = *(path.end() - 1);
 		if (!built)
 		{
 			Rva001A2D50Node *end = m_nodes[last];
@@ -230,8 +219,8 @@ void DynamicPortalBehaviour::rva001f96e0()
 		{
 			for (Int j = 0; j < count - 2; ++j)
 			{
-				Int next = path[j + 1];
-				Int prev = path[j];
+				Int next = *(path.begin() + j + 1);
+				Int prev = *(path.begin() + j);
 				m_nodes[next]->m_rva48 = FALSE;
 				m_nodes[prev]->m_rva44 = m_nodes[next];
 			}
