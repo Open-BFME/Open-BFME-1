@@ -3,25 +3,24 @@
 //
 // Every body here is an `Int parseXxx(char *args[], int num)` of the shape the
 // Zero Hour CommandLine.cpp uses, and the already-matched rows in
-// game/GameEngine/Source/Common/CommandLine.cpp (parseWin, parseXRes,
-// parseNetMinPlayers, parseFullVersion, parseFPUPreserve) sit in the same run of
-// addresses. The Zero Hour source cannot claim these, though: BFME's GlobalData
-// is a different object, so the ZH header puts m_musicOn at +0x70D where retail
-// stores +0x29, and the ZH translation unit misses on member offsets alone.
-// So GlobalData is rebuilt here from the offsets retail actually writes.
+// game/GameEngine/Source/Common/CommandLine.cpp (parseXRes, parseNetMinPlayers,
+// parseFullVersion, parseFPUPreserve) sit in the same run of addresses. The
+// Zero Hour source cannot claim these, though: BFME's GlobalData is a different
+// object, so the ZH header puts m_windowed at +0x20 where retail stores +0x29,
+// and the ZH translation unit misses on member offsets alone. So GlobalData is
+// rebuilt here from the offsets retail actually writes.
 //
-// Two of those offsets are pinned by numbers rather than by shape: the pair
+// One of those offset pairs is pinned by numbers rather than by shape: the pair
 // (m_useFpsLimit at +0x1E, m_framesPerSecondLimit at +0x24) is written FALSE and
-// 0x7530 = 30000 together, which is ZH parseNoFPSLimit verbatim, and m_windowed
-// at +0x29 is confirmed by the already-matched parseWin at 0x00061050 setting
-// the same byte to TRUE.
+// 0x7530 = 30000 together, which is ZH parseNoFPSLimit verbatim.
 //
 // TheCommandLineFlags at [0x012A6FA0] is a BFME addition with no ZH counterpart:
 // a bitmask of which switches were seen, OR-ed with one bit per handler.
 //
-// Identity is address-derived. Nothing in the image names these handlers, so the
-// ledger rows are Rva-prefixed and each carries the ZH handler it matches in
-// shape where there is one.
+// Identity is address-derived unless
+// targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md proves
+// EA's name. The address-derived rows are Rva-prefixed and each carries the ZH
+// handler it matches in shape where there is one.
 //
 // Every offset below is one retail store; no name moves one. The named members
 // are the offsets retail's own INI field table at 0x00C77018 gives a key to,
@@ -43,7 +42,9 @@ class GlobalData
 public:
 	unsigned char m_unreconstructed_00[0x1E];
 	bool m_useFpsLimit;									///< retail this+0x1E
-	unsigned char m_unreconstructed_1F[0x24 - 0x1F];
+	unsigned char m_unreconstructed_1F[0x20 - 0x1F];
+	bool m_dumpAssetUsage;								///< retail this+0x20, INI key DumpAssetUsage
+	unsigned char m_unreconstructed_21[0x24 - 0x21];
 	Int m_framesPerSecondLimit;							///< retail this+0x24
 	unsigned char m_unreconstructed_28[1];
 	bool m_windowed;									///< retail this+0x29
@@ -399,6 +400,20 @@ Int Rva000609C0_parse(char *args[], int num)
 	if (TheWritableGlobalData)
 	{
 		TheWritableGlobalData->m_windowed = true;
+	}
+	return 1;
+}
+
+// ?parseDumpAssetUsage@@YAHQAPADH@Z -- 0x00061050, the only retail body that
+// stores TRUE to +0x20, the offset retail's INI field table entry
+// "DumpAssetUsage" (0x00C770C8) writes; ZH parseDumpAssetUsage verbatim, and it
+// sits between the parseNoFPSLimit and parseJumpToFrame shapes as in ZH. Its
+// flag is debug-only in ZH's table, and retail's table has no entry for it.
+Int parseDumpAssetUsage(char *args[], int num)
+{
+	if (TheWritableGlobalData)
+	{
+		TheWritableGlobalData->m_dumpAssetUsage = true;
 	}
 	return 1;
 }

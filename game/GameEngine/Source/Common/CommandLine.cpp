@@ -122,6 +122,9 @@ Int parseNoLogOrCrash(char *args[], int)
 
 //=============================================================================
 //=============================================================================
+// Not retail's -win handler: retail's table pairs "-win" with 0x000609C0
+// (Rva000609C0_parse in T3CommandLineParsers.cpp), which stores +0x29. These
+// bytes are retail's parseDumpAssetUsage (0x00061050) under this header's layout.
 Int parseWin(char *args[], int)
 {
 	if (TheWritableGlobalData)
@@ -1063,14 +1066,9 @@ Int parseNoFPSLimit(char *args[], int num)
 	return 1;
 }
 
-Int parseDumpAssetUsage(char *args[], int num)
-{
-	if (TheWritableGlobalData)
-	{
-		TheWritableGlobalData->m_dumpAssetUsage = true;
-	}
-	return 1;
-}
+// parseDumpAssetUsage (retail 0x00061050) is defined in T3CommandLineParsers.cpp:
+// retail's m_dumpAssetUsage is +0x20, not this header's +0x15.
+Int parseDumpAssetUsage(char *args[], int num);
 
 Int parseJumpToFrame(char *args[], int num)
 {
