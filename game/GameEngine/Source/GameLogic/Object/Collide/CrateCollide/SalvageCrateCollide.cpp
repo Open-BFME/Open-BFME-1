@@ -66,7 +66,7 @@ class PlayerList;
 
 extern char g_bfmeFileAO[];
 extern GameLogic *TheBfmeGameLogic;
-extern PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;		// retail [0x012ED748]
 extern void j_0002dcfe();
 extern void j_000389f6();
 extern void j_0003a45e();
@@ -122,7 +122,7 @@ void SalvageCrateCollide::doMoney(Object *other)
 	if (money > 0) {
 		if (reinterpret_cast<GameLogicPortraitShim *>(TheBfmeGameLogic)->
 			isInMultiplayerOrSkirmishGame()) {
-			Int playerIndex = bfmeCurrentPlayerIndex(Rva002EE330ThePlayers);
+			Int playerIndex = bfmeCurrentPlayerIndex(ThePlayerList);
 			Real factor = reinterpret_cast<Gen_00083240 *>(
 				reinterpret_cast<char *>(TheWritableGlobalData) + 0xee0)->bfmeGet0(playerIndex);
 			money = static_cast<Int>(money * factor);

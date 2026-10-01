@@ -226,14 +226,17 @@ struct BfmePlayerList
 	Player *m_localPlayer;
 };
 
+// retail [0x012ED748] EA's `PlayerList *ThePlayerList;`.  The TU-local view
+// type above is cast to at the use site so the decorated name is canonical.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
 extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
 extern View *TheTacticalView;
 extern Display *TheDisplay;
-extern BfmePlayerList *Rva002EE330ThePlayers;
 
 #define TheGlobalData TheWritableGlobalData
-#define ThePlayerList Rva002EE330ThePlayers
 
 // The two ammo pip images (VA 0x012F12D4 / 0x012F12D8) are recorded in
 // targets/game/reverse/dir32_addresses.csv as Drawable's static members, so the
@@ -277,7 +280,7 @@ void Drawable::drawAmmo()
 			return;
 	}
 
-	Player *localPlayer = ThePlayerList->m_localPlayer;
+	Player *localPlayer = ((BfmePlayerList *)ThePlayerList)->m_localPlayer;
 	if (obj->getControllingPlayer() != localPlayer)
 		return;
 

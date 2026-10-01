@@ -64,7 +64,15 @@ class ThePlayerListType
     unsigned char m_pad[0x14];
     Player *m_field14;
 };
-extern ThePlayerListType *ThePlayerList; // VA 0x012ED748
+// retail VA 0x012ED748 is EA's `PlayerList *ThePlayerList;`.  The TU-local view
+// class above is cast to at the use site so the decorated name is canonical.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
+static __forceinline ThePlayerListType *thePlayers()
+{
+    return (ThePlayerListType *)ThePlayerList;
+}
 
 class PartitionData
 {
@@ -281,7 +289,7 @@ class Object
 void Object::setTeam(Team *team)
 {
     if (team && !team->getControllingPlayer()->isPlayerActive())
-        team = ThePlayerList->m_field14->m_defaultTeam;
+        team = thePlayers()->m_field14->m_defaultTeam;
 
     pad54(team);
 

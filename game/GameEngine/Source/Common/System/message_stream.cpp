@@ -36,11 +36,21 @@ struct BFMEPlayerList
 	}
 };
 
-extern BFMEPlayerList *ThePlayerList;
+// retail [0x012ED748] EA's `PlayerList *ThePlayerList;`.  The TU-local view
+// struct above is the real thing under another name, so declare the canonical
+// spelling and drop the alias: the member function mangles to
+// ?getLocalPlayer@BFMEPlayerList@@QBEPAUBFMEPlayer@@XZ, which nothing defines.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
+static __forceinline BFMEPlayerList *thePlayers()
+{
+	return (BFMEPlayerList *)ThePlayerList;
+}
 
 GameMessage::GameMessage(Type type)
 {
-	m_playerIndex = ThePlayerList->getLocalPlayer()->getPlayerIndex();
+	m_playerIndex = thePlayers()->getLocalPlayer()->getPlayerIndex();
 	m_type = type;
 	m_argList = 0;
 	m_argTail = 0;

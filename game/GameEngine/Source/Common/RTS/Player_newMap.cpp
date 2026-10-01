@@ -55,7 +55,7 @@ public:
     int j_0000353f();
 };
 
-extern PlayerList * volatile Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;              // retail [0x012ED748]
 extern GameLogic *TheBfmeGameLogic;
 class GlobalData;
 
@@ -66,7 +66,7 @@ extern Glo012F1028Type *Glo012F1028;
 
 static __forceinline PlayerList *readPlayersForNewMap()
 {
-    return Rva002EE330ThePlayers;
+    return ThePlayerList;
 }
 
 class BfmePlayerMapState
@@ -86,7 +86,7 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
 {
     if (field < 0 || field >= 0x20)
         return;
-    if (!Rva002EE330ThePlayers)
+    if (!ThePlayerList)
         return;
     if (!TheBfmeGameLogic)
         return;
@@ -95,7 +95,7 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
     if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
     {
         const volatile int *multiplier = &m_value14;
-        int count = Rva002EE330ThePlayers->unidentified_000df510(true);
+        int count = ThePlayerList->unidentified_000df510(true);
         int x;
         int y;
         if (count >= 7)
@@ -135,7 +135,7 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
         return;
     }
 
-    Player *player = Rva002EE330ThePlayers->getNthPlayer(m_field);
+    Player *player = ThePlayerList->getNthPlayer(m_field);
     if (!player)
         return;
 

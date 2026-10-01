@@ -85,7 +85,16 @@ struct Rva005655C0PlayerList
 	Rva005655C0Player *m_localPlayer0c;
 };
 
-extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
+// retail [0x012ED748] EA's `PlayerList *ThePlayerList;`; the TU-local view type
+// above is cast to at each use so the decorated name is the canonical one.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
+static __forceinline Rva005655C0PlayerList *thePlayers()
+{
+	return (Rva005655C0PlayerList *)ThePlayerList;
+}
+
 extern PartitionManager *TheShroudManager;
 
 class Rva006DF550
@@ -129,11 +138,11 @@ void Rva006DF550::bfmeClampToArea(Coord3D *position)
 		while (step < 500.0f);
 	}
 
-	int centerPlayer = g_rva005655C0PlayerList->m_localPlayer0c->m_index24;
+	int centerPlayer = thePlayers()->m_localPlayer0c->m_index24;
 	PartitionManager *centerShroud = TheShroudManager;
 	bool centerVisible =
 		centerShroud->getShroudStatusForPlayer(centerPlayer, center) != 2;
-	int targetPlayer = g_rva005655C0PlayerList->m_localPlayer0c->m_index24;
+	int targetPlayer = thePlayers()->m_localPlayer0c->m_index24;
 	PartitionManager *targetShroud = TheShroudManager;
 	bool targetVisible =
 		targetShroud->getShroudStatusForPlayer(targetPlayer, position) != 2;

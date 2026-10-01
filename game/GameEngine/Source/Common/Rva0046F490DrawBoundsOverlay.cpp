@@ -63,7 +63,16 @@ struct Rva002EE330PlayerList
 	char m_pad[0xc];
 	Rva002EE330Player *m_localPlayer;
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+
+// retail [0x012ED748] EA's `PlayerList *ThePlayerList;`; the TU-local view type
+// above is cast to at each use so the decorated name is the canonical one.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
+static __forceinline Rva002EE330PlayerList *thePlayers()
+{
+	return (Rva002EE330PlayerList *)ThePlayerList;
+}
 
 struct Rva006C9270GlobalData
 {
@@ -83,9 +92,9 @@ void Rva0046F490DrawBoundsOverlay(const Coord2D *pos, const Coord2D *size, void 
 		static const Image *overlay2 = TheMappedImageCollection->findImageByName(AsciiString("RadialClockOverlay2"));
 
 		Int color = 0;
-		if (Rva002EE330ThePlayers && Rva002EE330ThePlayers->m_localPlayer)
+		if (thePlayers() && thePlayers()->m_localPlayer)
 		{
-			LocalPlayerTemplateView *t = Rva002EE330ThePlayers->m_localPlayer->m_template04;
+			LocalPlayerTemplateView *t = thePlayers()->m_localPlayer->m_template04;
 			if (t && t->m_flag118)
 				color = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_color1218;
 			else
