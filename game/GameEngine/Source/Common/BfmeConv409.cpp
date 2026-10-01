@@ -48,12 +48,20 @@ public:
 	virtual BfmeNodeAKD *bfmeFindAKD(void *key);
 };
 
-extern BfmeLookAKD *g_bfmeLookAKD;
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp; this TU sees only the one vtable slot.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static __forceinline BfmeLookAKD *bfmeScriptEngine(void)
+{
+	return (BfmeLookAKD *)TheScriptEngine;
+}
 
 void __stdcall bfmeGoAKD(void *one, void *two)
 {
-	BfmeNodeAKD *first = g_bfmeLookAKD->bfmeFindAKD(two);
-	BfmeNodeAKD *second = g_bfmeLookAKD->bfmeFindAKD(one);
+	BfmeNodeAKD *first = bfmeScriptEngine()->bfmeFindAKD(two);
+	BfmeNodeAKD *second = bfmeScriptEngine()->bfmeFindAKD(one);
 	if (second != 0 && second->m_bfmeSub != 0 && first != 0)
 		second->m_bfmeSub->m_bfmeInner.bfmeJoinAKD(first, 0, 1);
 }

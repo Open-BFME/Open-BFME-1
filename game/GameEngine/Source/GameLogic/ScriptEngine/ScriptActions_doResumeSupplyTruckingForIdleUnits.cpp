@@ -17,6 +17,18 @@ public:
         Bool *found);
 };
 
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp.  This TU sees only the player-mask entry point, so it
+// keeps the local view and casts the canonical global to it.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static __forceinline BfmeScriptEngine_getPlayerMaskFromAsciiString *
+bfmeScriptEngine(void)
+{
+    return (BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine;
+}
+
 class Player
 {
 public:
@@ -38,7 +50,6 @@ public:
     Int m_playerCount;
 };
 
-extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
 class ScriptActions
@@ -51,7 +62,7 @@ void ScriptActions::doResumeSupplyTruckingForIdleUnits(
     const AsciiString &playerName)
 {
     PlayerMaskType playerMask =
-        TheScriptEngine->getPlayerMaskFromAsciiString(playerName, 0);
+        bfmeScriptEngine()->getPlayerMaskFromAsciiString(playerName, 0);
     if (!playerMask)
     {
         for (Int i = 0; i < ThePlayerList->getPlayerCount(); ++i)

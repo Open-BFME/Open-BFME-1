@@ -28,7 +28,10 @@ public:
 class AudioManager;
 extern AudioManager *TheAudio;
 #define TheAudioClientUpdate ((ClientSubsystem *)TheAudio)
-extern BFMEScriptEngineFlagLookup *TheScriptEngine;
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp; this TU sees only the flag lookup.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 class ScriptActions
 {

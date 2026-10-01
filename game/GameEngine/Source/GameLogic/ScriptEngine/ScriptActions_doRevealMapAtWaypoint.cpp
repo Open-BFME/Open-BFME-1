@@ -51,6 +51,17 @@ public:
 		Bool *found);
 };
 
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp; this TU sees only the player-mask lookup.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static __forceinline BfmeScriptEngine_getPlayerMaskFromAsciiString *
+bfmeScriptEngine(void)
+{
+	return (BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine;
+}
+
 class PartitionManager
 {
 public:
@@ -61,7 +72,6 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;
 extern PartitionManager *TheShroudManager;
 
 class ScriptActions
@@ -78,7 +88,7 @@ void ScriptActions::doRevealMapAtWaypoint(const AsciiString &waypointName,
 	if (way)
 	{
 		UnsignedShort playerMask =
-			TheScriptEngine->getPlayerMaskFromAsciiString(playerName, 0);
+			bfmeScriptEngine()->getPlayerMaskFromAsciiString(playerName, 0);
 		TheShroudManager->doShroudReveal(&way->m_location,
 			radiusToReveal, playerMask);
 		TheShroudManager->undoShroudReveal(&way->m_location,

@@ -30,7 +30,17 @@ public:
 	virtual void v25();
 	virtual void* vfn26(void *key);
 };
-extern BfmeMgrF07 *g_mgr12F076C;
+
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp.  This TU sees only the vtable slot, so it keeps the local
+// view and casts the canonical global to it.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static __forceinline BfmeMgrF07 *bfmeScriptEngine(void)
+{
+	return (BfmeMgrF07 *)TheScriptEngine;
+}
 
 class BfmeSub210_4B0
 {
@@ -46,7 +56,7 @@ struct BfmeObj4B0
 
 void __stdcall bfmeApplyIntAsFloat4B0(void *key, int intArg)
 {
-	BfmeObj4B0 *obj = (BfmeObj4B0*)g_mgr12F076C->vfn26(key);
+	BfmeObj4B0 *obj = (BfmeObj4B0*)bfmeScriptEngine()->vfn26(key);
 	if (obj && obj->m_sub210) {
 		obj->m_sub210->apply((float)intArg, 1);
 	}

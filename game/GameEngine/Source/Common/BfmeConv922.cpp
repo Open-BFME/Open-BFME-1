@@ -58,12 +58,15 @@ public:
 	virtual void bfmeVirt922D(void *a);
 };
 
-extern BfmeGlob922D *g_bfme922GlobD;
+// 0x012F076C is the game's ScriptEngine *TheScriptEngine, defined once in
+// ScriptEngine.cpp; this TU sees only one vtable slot.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 char __stdcall bfmeGo922D(void *a, void *b, void *c)
 {
 	if (a && c)
-		g_bfme922GlobD->bfmeVirt922D(a);
+		((BfmeGlob922D *)TheScriptEngine)->bfmeVirt922D(a);
 	return 0;
 }
 
