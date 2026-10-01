@@ -1,5 +1,7 @@
 // ??0Rva009A45A0CollisionData@@QAE@XZ
-// partial score=0.99 date=2026-09-16
+// partial score=0.9658 date=2026-10-01
+// ??0Rva009A45A0CollisionData@@QAE@XZ
+// Partial: 113/117 byte agreement measured 2026-10-01.
 // cl: /DNDEBUG /MD /EHsc
 //
 // Rva009A45A0CollisionData::Rva009A45A0CollisionData, retail 0x009A45A0,
@@ -8,16 +10,18 @@
 // The product class name is not recovered, so the address stays in the name.
 //
 // The object holds two cell buckets. Each bucket keeps its cells first and
-// two volatile counters right after them, so the pair at +0xAE08 closes the
+// two counters right after them, so the pair at +0xAE08 closes the
 // bucket at +0x18 and the pair at +0xC060 closes the bucket at +0xAE10.
 // Retail zeroes both counters, then clears the cells, in both buckets. That
-// repeat is what proves the bucket is one type used twice.
+// repeat supports a common address-derived layout; native type identity is unproven.
+// Volatile qualifications below preserve observed store order in this banked
+// experiment; retail does not establish their original source qualifications.
 //
-// Seven bytes still differ. Retail pops ESI right after the store of 3 to
-// +0xC068, and this source pops it two stores later. Every other byte
+// Four bytes still differ. Retail pops ESI right after the store of 3 to
+// +0xC068, and this source pops it one store later. Every other byte
 // matches, including the whole prologue.
 
-extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
+#include <string.h>
 
 template <int N>
 struct Rva009A45A0Bucket
@@ -48,7 +52,7 @@ public:
 	volatile int m_bfme04JU;
 	volatile int m_bfme08JU;
 	volatile int m_bfme0cJU;
-	volatile int m_bfme10JU;
+	int m_bfme10JU;
 	volatile int m_bfme14JU;
 	Rva009A45A0Bucket<0x2b7c> m_bfmeB1JU;
 	Rva009A45A0Bucket<0x494> m_bfmeB2JU;
