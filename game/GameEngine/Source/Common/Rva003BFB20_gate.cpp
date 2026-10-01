@@ -6,6 +6,10 @@
 // m_at80; on success step the campaign manager and finish(); always set
 // owner[+0x10] and notify. Unused stack arg retained for ret 4.
 
+// View of retail's global at 0x012ED5C8. The global itself is
+// Common/GlobalData.cpp's GlobalData *TheWritableGlobalData, the game's only
+// definition of it, so the reference here carries that canonical type and this
+// view is cast in at the one use.
 class Glo012ED5C8Type
 {
 public:
@@ -13,7 +17,8 @@ public:
 	bool m_at90;
 };
 
-extern Glo012ED5C8Type *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Glo012F1024Type
 {
@@ -52,7 +57,7 @@ private:
 void Rva003BFB20::run( int unused )
 {
 	(void)unused;
-	if( !TheWritableGlobalData->m_at90 )
+	if( !( (Glo012ED5C8Type *)TheWritableGlobalData )->m_at90 )
 		return;
 	bool ok = m_at28->probe( &m_at30 );
 	m_at80 = ok;

@@ -8,6 +8,10 @@
 // Sum is written through an int* so MSVC keeps ecx as this for the +0xD0 add
 // and stores the total before the fmul/ftol2 limit path.
 
+// View of retail's global at 0x012ED5C8. That address is
+// Common/GlobalData.cpp's GlobalData *TheWritableGlobalData, which is the only
+// definition of the global in the game; this TU declares the reference with
+// that canonical type and casts the view in at the one use.
 class Glo012ED5C8Type
 {
 public:
@@ -15,7 +19,8 @@ public:
 	float m_atEC4;
 };
 
-extern Glo012ED5C8Type *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Gen003BDCF0Owner
 {
@@ -47,7 +52,7 @@ int Rva003BDCF0::get()
 		int *ps = &sum;
 		*ps = owner->m_at34;
 		*ps += m_atD0;
-		lim = -100 - (int)( TheWritableGlobalData->m_atEC4 * -100.0f );
+		lim = -100 - (int)( ( (Glo012ED5C8Type *)TheWritableGlobalData )->m_atEC4 * -100.0f );
 		return *( ( sum < lim ) ? &sum : &lim );
 	}
 	return 0;

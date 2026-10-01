@@ -46,17 +46,23 @@ void Rva002ED8A0::setByte08( bool val )
 	}
 }
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+// View of retail's global at 0x012ED5C8 -- upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+// The global itself is Common/GlobalData.cpp's GlobalData *TheWritableGlobalData,
+// the one definition of it in the game, so the reference here carries that
+// canonical type and this view is cast in at the single use.
+struct Rva002ED8A0GlobalDataView
 {
 	char  m_pad[ 0xA28 ];
 	float m_valA28;
 };
+
+class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
 void __stdcall setFloatA28( float val )
 {
-	TheWritableGlobalData->m_valA28 = val;
+	( (Rva002ED8A0GlobalDataView *)TheWritableGlobalData )->m_valA28 = val;
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h

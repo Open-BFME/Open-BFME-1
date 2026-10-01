@@ -58,7 +58,11 @@ struct GlobalDataShim
 	Bool m_languageFilterDefault;					///< retail global+0xC04
 };
 
-extern GlobalDataShim *TheGlobalData;				///< retail [0x012ED5C8]
+// retail [0x012ED5C8] is Common/GlobalData.cpp's GlobalData
+// *TheWritableGlobalData; the one byte read here needs no more of its layout,
+// so the reference carries the canonical type and the view is cast in.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;			///< retail [0x012ED5C8]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
@@ -80,7 +84,7 @@ Bool OptionPreferences::getLanguageFilter(void)
 
 	if (node == map->m_header)
 	{
-		return TheGlobalData->m_languageFilterDefault;
+		return ( (GlobalDataShim *)TheWritableGlobalData )->m_languageFilterDefault;
 	}
 
 	CustomStringDataShim *data = node->m_value;

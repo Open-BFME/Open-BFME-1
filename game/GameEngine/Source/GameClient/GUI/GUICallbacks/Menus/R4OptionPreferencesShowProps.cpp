@@ -33,8 +33,12 @@ struct CustomPreferenceMapShim
 	CustomMapNodeShim *find( CustomAsciiStringShim *key );   ///< ILT thunk at 0x0000AEAC
 };
 
+// The global at retail [0x012ED5C8] is Common/GlobalData.cpp's
+// GlobalData *TheWritableGlobalData; only the byte this getter reads is known,
+// so the reference takes its canonical type and the shim view is cast in.
 struct R4GlobalDataShim { unsigned char m_bytes[ 0x1000 ]; };
-extern R4GlobalDataShim *TheGlobalData;             ///< retail [0x012ED5C8]
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;          ///< retail [0x012ED5C8]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
@@ -52,7 +56,7 @@ Bool OptionPreferences::getShowProps( void )
 	CustomMapNodeShim *node = map->find( &key );
 	key.destroy();
 	if ( node == map->m_header )
-		return TheGlobalData->m_bytes[ 0x18 ];
+		return ( (R4GlobalDataShim *)TheWritableGlobalData )->m_bytes[ 0x18 ];
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
 	return _strcmpi( text, "yes" ) == 0;

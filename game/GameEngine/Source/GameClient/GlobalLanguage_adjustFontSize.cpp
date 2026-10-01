@@ -38,8 +38,12 @@ __forceinline long fast_float2long_round( float f )
 
 #define REAL_TO_INT_FLOOR(x)	(fast_float2long_round((Real)floor((double)(x))))
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-class GlobalData
+// View of retail's global at [0x012ED5C8] -- upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+// The global itself is Common/GlobalData.cpp's GlobalData
+// *TheWritableGlobalData, the game's only definition of it, so the reference
+// here carries that canonical type and this view is cast in at the one use.
+class Rva00439000GlobalDataView
 {
 public:
 	// Read as a member, not through a getter: a getter spills the resolution to
@@ -48,7 +52,8 @@ public:
 	Int m_xResolution;									///< retail this+0x2C
 };
 
-extern GlobalData *TheGlobalData;								///< retail [0x012ED5C8]
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 
 class GlobalLanguageData
 {
@@ -58,7 +63,7 @@ public:
 
 Int GlobalLanguageData::adjustFontSize( Int theFontSize )
 {
-	Real ratio = TheGlobalData->m_xResolution / 1024.0f;
+	Real ratio = ( (Rva00439000GlobalDataView *)TheWritableGlobalData )->m_xResolution / 1024.0f;
 	Real size = theFontSize;
 	return REAL_TO_INT_FLOOR( size * ratio );
 }

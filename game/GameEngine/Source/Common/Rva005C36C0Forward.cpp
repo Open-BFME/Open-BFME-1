@@ -25,7 +25,11 @@ public:
 	Real m_valueAB4;
 };
 
-extern BfmeG1269 *g_bfme1269;
+// Retail's global at 0x012ED5C8 is Common/GlobalData.cpp's GlobalData
+// *TheWritableGlobalData; only the +0xAB4 real is needed here, so the
+// reference takes the canonical type and BfmeG1269 is a view cast in.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva005FAE40Receiver
 {
@@ -49,7 +53,7 @@ Rva005C36C0Vec3 Rva005C36C0Owner::rva005C36C0(void *first, void *second)
 {
 	if (m_receiver != 0)
 		return m_receiver->rva005FAE40(m_value180,
-			(*(volatile Real *)&g_bfme1269->m_valueAB4 + g_bfmeK1239) * g_bfmeK1253,
+			(*(volatile Real *)&( (BfmeG1269 *)TheWritableGlobalData )->m_valueAB4 + g_bfmeK1239) * g_bfmeK1253,
 			first, second);
 
 	return Rva005C36C0Vec3(0, 0, 0);

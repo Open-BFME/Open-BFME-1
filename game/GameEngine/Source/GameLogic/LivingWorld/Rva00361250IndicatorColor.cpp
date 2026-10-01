@@ -48,7 +48,12 @@ struct Rva006C9270GlobalData
 	int m_timeOfDay;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail keeps one global at 0x012ED5C8, defined by Common/GlobalData.cpp as
+// GlobalData *TheWritableGlobalData. Only this TU's view of its layout is
+// needed here, so the canonical GlobalData * is what the reference is declared
+// with and the view is applied by a cast at the single use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 struct Rva00361250Entry
 {
@@ -73,7 +78,7 @@ void Rva00361250Owner::applyIndicatorColor( Rva00361250Target *target, int index
 	if( target == 0 || index < 0 || index > m_entries.size() )
 		return;
 	const Rva00361250Entry &entry = m_entries[ index ];
-	unsigned int color = TheWritableGlobalData->m_timeOfDay == 4 ? entry.m_nightColor1C : entry.m_color18;
+	unsigned int color = ( (Rva006C9270GlobalData *)TheWritableGlobalData )->m_timeOfDay == 4 ? entry.m_nightColor1C : entry.m_color18;
 	Drawable *draw = target->getDrawable28();
 	if( draw == 0 )
 		return;

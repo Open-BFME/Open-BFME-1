@@ -19,6 +19,10 @@
 
 typedef float Real;
 
+// View of retail's global at 0x012ED5C8. That global is
+// Common/GlobalData.cpp's GlobalData *TheWritableGlobalData, the game's only
+// definition of it, so the reference here carries that canonical type and this
+// view is cast in at the one use.
 class BfmeThresholdSource
 {
 public:
@@ -26,7 +30,8 @@ public:
 	Real m_bfmeLimit;						// +0x1AC
 };
 
-extern BfmeThresholdSource *TheBfmeThresholdSource;			// 0x012ED5C8
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;				// 0x012ED5C8
 class BfmeCachedThresholdScaleHolder
 {
 public:
@@ -59,7 +64,7 @@ int Gen_00131b70::bfmeExceeds(Real value)
 		m_bfmeFlags |= 2;
 	}
 
-	if (value + m_bfmeCached > TheBfmeThresholdSource->m_bfmeLimit * BfmeCachedThresholdScaleHolder::value)
+	if (value + m_bfmeCached > ( (BfmeThresholdSource *)TheWritableGlobalData )->m_bfmeLimit * BfmeCachedThresholdScaleHolder::value)
 		return 1;
 
 	return 0;
