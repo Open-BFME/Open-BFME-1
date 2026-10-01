@@ -20,7 +20,12 @@ struct Rva00367E30Logic
 	BfmePlayerTF *bfmeFindTF(void *key);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 struct Rva002EE330PlayerList
 {
@@ -54,7 +59,7 @@ void BfmeOwnerTF::bfmeShowTF(int unused)
 	if (item == 0)
 		return;
 
-	BfmePlayerTF *player = TheBfmeGameLogic->bfmeFindTF(base->m_bfmeKeyTF);
+	BfmePlayerTF *player = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindTF(base->m_bfmeKeyTF);
 
 	if (player != 0)
 	{

@@ -11208,5 +11208,15 @@
   "after_sha256": "3cf11ded71f2e1f1fe4e5a74d987440f886bde31c16a4a4ece0e8f9f2122606c",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva0026DE30HeroMode.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva0026DE30HeroMode.cpp",
+  "old_name": "GameLogic",
+  "new_name": "Rva0026DE30LogicView",
+  "before_sha256": "1871a6dea45de17b04d727b6683e356921868a1e57d087bafbe9f6d66913599a",
+  "after_sha256": "fd1bab54f772d29cabd7af7661afde25ba1f0f203db3a838012d6ec4e803962a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

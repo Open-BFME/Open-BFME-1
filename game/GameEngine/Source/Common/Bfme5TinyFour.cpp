@@ -39,7 +39,12 @@ public:
 	int m_bfmeStamp;					// +0x3C
 };
 
-extern BfmeClockBP *g_bfmeClockBP;				// retail 0x012F0898
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;				// retail 0x012F0898
 
 class Gen_002B6330
 {
@@ -56,7 +61,7 @@ private:
 // ?bfmeReset@Gen_002B6330@@QAEHXZ
 int Gen_002B6330::bfmeReset(void)
 {
-	m_bfmeWhen = g_bfmeClockBP->m_bfmeStamp;
+	m_bfmeWhen = ((BfmeClockBP *)TheGameLogic)->m_bfmeStamp;
 
 	m_bfmeFlag = 0;
 

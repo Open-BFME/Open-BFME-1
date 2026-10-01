@@ -19,7 +19,12 @@ public:
 	bool isInMultiplayerOrSkirmishGame();
 };
 
-extern GameLogicPortraitShim *TheGameLogic;
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 struct Rva0037F220Node
 {
@@ -37,7 +42,7 @@ struct Rva0037F220Iterator
 
 static bool rva0037F220Clear(Rva0037F220Node *node)
 {
-	if (TheGameLogic->isInMultiplayerOrSkirmishGame())
+	if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 		return !node->m_singlePlayerOnly;
 	return !node->m_multiPlayerOnly;
 }

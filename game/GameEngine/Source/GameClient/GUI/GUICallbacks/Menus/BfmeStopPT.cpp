@@ -7,7 +7,12 @@ struct Rva00367E30Logic
 	int m_bfmeModePT;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 extern void j_000445da(void);
 extern void j_00002941(void);
 
@@ -29,7 +34,7 @@ int BfmeOwnerPT::bfmeStopPT(void)
 		return 1;
 
 	m_bfmeActivePT = 0;
-	int mode = TheBfmeGameLogic->m_bfmeModePT;
+	int mode = ((Rva00367E30Logic *)TheGameLogic)->m_bfmeModePT;
 
 	if (mode == 1)
 		goto call_a;

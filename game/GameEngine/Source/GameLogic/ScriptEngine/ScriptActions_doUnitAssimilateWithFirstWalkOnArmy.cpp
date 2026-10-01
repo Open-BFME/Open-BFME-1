@@ -74,7 +74,12 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeGlobFEA *TheGameLogic;
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 void j_0001867e();
 
@@ -101,10 +106,11 @@ void ScriptActions::doUnitAssimilateWithFirstWalkOnArmy(Parameter *unit)
 		unit->m_string);
 	if (object)
 	{
-		int army = ((BfmeFirstWalkOnArmyThunk)j_0001867e)(TheGameLogic);
+		int army = ((BfmeFirstWalkOnArmyThunk)j_0001867e)(
+			(BfmeGlobFEA *)TheGameLogic);
 		if (army >= 0)
 		{
-			TheGameLogic->bfmeCallFEA(object, army);
+			((BfmeGlobFEA *)TheGameLogic)->bfmeCallFEA(object, army);
 		}
 	}
 }

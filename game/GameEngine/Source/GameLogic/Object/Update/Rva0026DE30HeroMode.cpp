@@ -15,11 +15,16 @@ struct Rva0026DE30ModuleData
 	unsigned int m_mode;
 };
 
-struct GameLogic
+struct Rva0026DE30LogicView
 {
 	unsigned char m_lead[0x3c];
 	unsigned int m_frame;
 };
+
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
 
 extern GameLogic *TheGameLogic;
 
@@ -48,5 +53,6 @@ void Rva0025FA10HeroModeUpdate::applyModeClear()
 		object->clearCondition(0x12);
 	else if (mode == 2)
 		object->clearCondition(0x13);
-	m_endFrame = data->m_add220 + data->m_add254 + TheGameLogic->m_frame;
+	m_endFrame = data->m_add220 + data->m_add254 +
+		((Rva0026DE30LogicView *)TheGameLogic)->m_frame;
 }

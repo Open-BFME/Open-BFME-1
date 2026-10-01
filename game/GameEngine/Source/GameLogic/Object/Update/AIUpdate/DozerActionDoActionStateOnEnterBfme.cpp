@@ -91,7 +91,12 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic2B6240 *TheGameLogic;
+// Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
+// (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
+// keeps its own partial view of the object and casts at each use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class DozerActionDoActionState
 {
@@ -116,7 +121,7 @@ StateReturnType DozerActionDoActionState::onEnter()
 	if (!dozerAI)
 		return STATE_FAILURE;
 
-	m_enterFrame = TheGameLogic->m_frame;
+	m_enterFrame = ((GameLogic2B6240 *)TheGameLogic)->m_frame;
 	if (m_task == 0 || m_task == 1)
 		dozerAI->setBuildSubTask(0);
 
