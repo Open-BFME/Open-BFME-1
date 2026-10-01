@@ -41,6 +41,19 @@
 /* Desc:       // Define Guard Retaliation states for AI                     */
 /*---------------------------------------------------------------------------*/
 
+#define KindOfMaskType ZHKindOfMaskType
+#define KINDOFMASK_NONE ZHKINDOFMASK_NONE
+#define PartitionFilter ZHPartitionFilter
+#define PartitionFilterRelationship ZHPartitionFilterRelationship
+#define PartitionFilterPossibleToAttack ZHPartitionFilterPossibleToAttack
+#define PartitionFilterSameMapStatus ZHPartitionFilterSameMapStatus
+#define PartitionFilterPossibleToEnter ZHPartitionFilterPossibleToEnter
+#define PartitionFilterPossibleToHijack ZHPartitionFilterPossibleToHijack
+#define PartitionFilterRejectBuildings ZHPartitionFilterRejectBuildings
+#define PartitionFilterAcceptByKindOf ZHPartitionFilterAcceptByKindOf
+#define PartitionManager ZHPartitionManager
+#define ThePartitionManager ZHThePartitionManager
+
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/PerfTimer.h"
@@ -56,6 +69,145 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/PolygonTrigger.h"
+
+#undef KindOfMaskType
+#undef KINDOFMASK_NONE
+typedef BitFlags<192> GuardKindMaskType;
+extern const GuardKindMaskType KINDOFMASK_NONE;
+
+#undef PartitionFilterAcceptByKindOf
+#undef PartitionFilterRejectBuildings
+#undef PartitionFilterPossibleToHijack
+#undef PartitionFilterPossibleToEnter
+#undef PartitionFilterSameMapStatus
+#undef PartitionFilterPossibleToAttack
+#undef PartitionFilterRelationship
+#undef ThePartitionManager
+#undef PartitionManager
+#undef PartitionFilter
+
+class __declspec(novtable) PartitionFilter : public ZHPartitionFilter
+{
+public:
+	PartitionFilter() : m_next(NULL) {}
+	PartitionFilter(UnsignedInt vptr) : m_next(NULL)
+	{
+		*reinterpret_cast<UnsignedInt *>(this) = vptr;
+	}
+	virtual ~PartitionFilter()
+	{
+		*reinterpret_cast<volatile UnsignedInt *>(this) = 0x01083B5C;
+	}
+	virtual Bool allow(Object *) { return TRUE; }
+	PartitionFilter *link(PartitionFilter *next);
+	PartitionFilter *m_next;
+};
+
+class PartitionManager
+{
+public:
+	Object *getClosestObject(const Coord3D *position, Real maxDistance,
+		Int distanceCalculation, PartitionFilter *filter);
+};
+
+extern PartitionManager *ThePartitionManager;
+extern const double g_010965B8;
+
+static __forceinline void setGuardFilterVptr(void *filter, UnsignedInt value)
+{
+	*reinterpret_cast<UnsignedInt *>(filter) = value;
+}
+
+class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
+{
+public:
+	PartitionFilterRelationship(Object *object, Int flags, Bool allow)
+	{
+		setGuardFilterVptr(this, 0x01085DC0);
+		m_object = object;
+		m_flags = flags;
+		m_allow = allow;
+	}
+	virtual ~PartitionFilterRelationship() {}
+
+private:
+	Object *m_object;
+	Int m_flags;
+	Bool m_allow;
+};
+
+class __declspec(novtable) PartitionFilterPossibleToAttack : public PartitionFilter
+{
+public:
+	PartitionFilterPossibleToAttack(Object *object, Int attackType, Int commandSource)
+	{
+		setGuardFilterVptr(this, 0x010956C4);
+		m_object = object;
+		m_commandSource = commandSource;
+		m_attackType = attackType;
+	}
+	virtual ~PartitionFilterPossibleToAttack() {}
+
+private:
+	Object *m_object;
+	Int m_commandSource;
+	Int m_attackType;
+};
+
+class __declspec(novtable) PartitionFilterRejectBuildings : public PartitionFilter
+{
+public:
+	PartitionFilterRejectBuildings(const Object *object);
+	virtual ~PartitionFilterRejectBuildings() {}
+
+private:
+	const Object *m_self;
+	Bool m_acquireEnemies;
+};
+
+class __declspec(novtable) PartitionFilterAcceptByKindOf : public PartitionFilter
+{
+public:
+	__declspec(noinline) PartitionFilterAcceptByKindOf(
+		const GuardKindMaskType &mustBeClear,
+		const GuardKindMaskType &mustBeSet) throw();
+	virtual ~PartitionFilterAcceptByKindOf() {}
+
+private:
+	GuardKindMaskType m_mustBeClear;
+	GuardKindMaskType m_mustBeSet;
+};
+
+__declspec(noinline) PartitionFilterAcceptByKindOf::PartitionFilterAcceptByKindOf(
+	const GuardKindMaskType &mustBeClear,
+	const GuardKindMaskType &mustBeSet) throw()
+	: PartitionFilter(0x01083B70), m_mustBeClear(mustBeClear),
+	  m_mustBeSet(mustBeSet)
+{}
+
+class __declspec(novtable) PartitionFilterSameMapStatus : public PartitionFilter
+{
+public:
+	PartitionFilterSameMapStatus(const Object *object)
+	{
+		setGuardFilterVptr(this, 0x01085DD0);
+		m_object = object;
+	}
+	virtual ~PartitionFilterSameMapStatus() {}
+
+private:
+	const Object *m_object;
+};
+
+class __declspec(novtable) Rva0015B910Filter : public PartitionFilter
+{
+public:
+	Rva0015B910Filter()
+	{
+		setGuardFilterVptr(this, 0x01095FBC);
+	}
+	virtual ~Rva0015B910Filter() {}
+};
 
 const Real CLOSE_ENOUGH = (25.0f);
 
@@ -231,82 +383,67 @@ Bool AIGuardRetaliateMachine::isIdle() const
 }
 
 //--------------------------------------------------------------------------------------
-// ?lookForInnerTarget@AIGuardRetaliateMachine@@ present-unmatched
 Bool AIGuardRetaliateMachine::lookForInnerTarget(void)
 {
-	Object* owner = getOwner();
+	Object *owner = *reinterpret_cast<Object **>(reinterpret_cast<char *>(this) + 0x10);
 	if (!owner->isAbleToAttack())
 	{
 		return false;	// my, that was easy
 	}
 
 	// Check if team auto targets same victim.
-	Object *teamVictim = NULL;
-	if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget) 
+	Team *team = *reinterpret_cast<Team **>(reinterpret_cast<char *>(owner) + 0x23C);
+	const char *teamTemplate = *reinterpret_cast<const char **>(reinterpret_cast<char *>(team) + 4);
+	if (*reinterpret_cast<const Bool *>(teamTemplate + 0x1C2))
 	{
-		teamVictim = owner->getTeam()->getTeamTargetObject();
-		if (teamVictim) 
+		Object *teamVictim = team->getTeamTargetObject();
+		if (teamVictim)
 		{
-			setNemesisID(teamVictim->getID());
+			*reinterpret_cast<ObjectID *>(reinterpret_cast<char *>(this) + 0x50) = teamVictim->getID();
 			return true;	// Transitions to AIGuardRetaliateInnerState.
 		}
 	}
 
-	PartitionFilterRelationship					f1(owner, PartitionFilterRelationship::ALLOW_ENEMIES);
-	PartitionFilterPossibleToAttack			f2(ATTACK_NEW_TARGET, owner, CMD_FROM_AI);
-	PartitionFilterSameMapStatus				filterMapStatus(owner);
-	PartitionFilterRelationship					f5(owner, PartitionFilterRelationship::ALLOW_NEUTRAL);
-	PartitionFilterPossibleToEnter			f6(owner, CMD_FROM_AI);
-	PartitionFilterPossibleToHijack			f7(owner, CMD_FROM_AI);
-	PartitionFilterRejectBuildings			f8( owner );
+	PartitionFilterRelationship relationship(owner, 1, false);
+	PartitionFilterPossibleToAttack attack(owner, ATTACK_NEW_TARGET, CMD_FROM_AI);
+	PartitionFilterRejectBuildings buildings(owner);
 
-	PartitionFilter *filters[16];
-	Int count = 0;
+	GuardKindMaskType kindMask(GuardKindMaskType::kInit, 129);
+	PartitionFilterAcceptByKindOf kindFilter(KINDOFMASK_NONE, kindMask);
 
-	// Enter Guard state
-	if (owner->getTemplate()->isEnterGuard())
+	PartitionFilterSameMapStatus mapStatus(owner);
+	Rva0015B910Filter trailingFilter;
+
+	relationship.link(attack.link(&mapStatus));
+	relationship.link(&buildings);
+	relationship.link(&kindFilter);
+
+	struct GuardRangeData
 	{
-		filters[count++] = &f6;
-
-		// Hijack Guard state
-		if (owner->getTemplate()->isHijackGuard())
-		{
-			filters[count++] = &f1;
-			filters[count++] = &f7;
-		}
-		else
-		{
-			filters[count++] = &f5;
-		}
-	}
-	// Attack Guard state
-	else
+		char pad[0xC4];
+		Real m_guardInnerRange;
+	};
+	struct GuardRangeAI
 	{
-		filters[count++] = &f1;
-		filters[count++] = &f2;
-		filters[count++] = &f8; //Different than guard... we won't allow acquiring of structures (unless base defenses)
-	}
+		char pad[0x14];
+		GuardRangeData *m_aiData;
+	};
+	const GuardRangeAI *ai = reinterpret_cast<const GuardRangeAI *>(TheAI);
+	Real visionRange = ai->m_aiData->m_guardInnerRange * g_010965B8;
 
-	filters[count++] = &filterMapStatus;
-
-	Real visionRange = AIGuardRetaliateMachine::getStdGuardRange(owner);
-
-	filters[count++] = NULL;
-
-//	SimpleObjectIterator* iter = ThePartitionManager->iterateObjectsInRange(
-//					&pos, visionRange, FROM_CENTER_2D, filters, ITER_SORTED_NEAR_TO_FAR);
-//	MemoryPoolObjectHolder hold(iter);
-//	Object* target = iter->first();
-//
-// srj sez: the above code is stupid and slow. since we only want the closest object,
-// just ask for that; the above has to find ALL objects in range, but we ignore all 
-// but the first (closest).
-//
-	const Coord3D *pos = getPositionToGuard();
-	Object* target = ThePartitionManager->getClosestObject(pos, visionRange, FROM_CENTER_2D, filters);
-	if (target) 
+	struct GuardOwnerPosition
 	{
-		setNemesisID(target->getID());	
+		char pad[0x38];
+		Coord3D position;
+	};
+	Coord3D pos;
+	pos.set(reinterpret_cast<const Coord3D *>(
+		reinterpret_cast<const char *>(owner) + 0x38));
+	Object *target = reinterpret_cast<PartitionManager *>(ThePartitionManager)->getClosestObject(
+		&pos, visionRange, FROM_CENTER_3D, &relationship);
+	if (target)
+	{
+		*reinterpret_cast<ObjectID *>(reinterpret_cast<char *>(this) + 0x50) = target->getID();
 		return true;	// Transitions to AIGuardRetaliateInnerState.
 	}
 	else
