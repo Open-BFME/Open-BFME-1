@@ -11048,5 +11048,15 @@
   "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
   "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
   "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008d1e70.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008D1E70.cpp",
+  "old_name": "atLevel",
+  "new_name": "rva008D1E70",
+  "before_sha256": "ed9768231381929596524ab96afce96987bebdbed5475196901e89b46e4ca4e1",
+  "after_sha256": "8a7aa2553a111982512ff75d2573589aa255c40c4e0a3cb1e32143b69f2b1257",
+  "evidence": "targets/game/reverse/identity_evidence/008d1e70-bank-address-view.md",
+  "reason": "The removed bank explicitly labels its owner address-derived and provides only chain-offset behavior, not an EA member identity. No named caller, pin/export or witnessed layout establishes atLevel; retain the independently proven008D1E70 address without a guessed descriptive replacement."
  }
 ]
