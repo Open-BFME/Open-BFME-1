@@ -1,3 +1,4 @@
+// cl: /DNDEBUG
 // 26 identical 18-byte __thiscall constructors:
 //
 //     push esi / mov esi,ecx / call <REL32> / mov dword ptr [esi],<DIR32>
@@ -20,6 +21,32 @@
 // thunk; the pins name the BODY, which is what build_call_thunks() expands.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+//
+// FOUR ARE STILL MISNAMED AND CANNOT BE FIXED HERE.  In the vftables the ctors of
+// Rva00324490, Rva006709F0, Rva0081C500 and Rva009CC350 install (0x010E1F44,
+// 0x0111A394, 0x0112CC60, 0x01143B40) slot 0 holds a SCALAR DELETING DESTRUCTOR
+// of the class itself -- 0x00324570, 0x00670E90, 0x0081C530, 0x009CC440 -- so
+// `handle` stands in for their own virtual destructor.  Spelling that slot means
+// naming the class after its real destructor, which renames this file's
+// constructors and breaks the ledger rows that key on ??0Rva00324490@@QAE@XZ and
+// its three siblings.  That is a ledger change, not a source one, so `handle`
+// stands in until then.
+
+// THE FOUR THAT INHERIT THEIR VFTABLE SLOT 0.  A class whose vftable slot 0 is
+// not its own has an inherited virtual there, and a stand-in member cannot spell
+// it.  The four members below whose base is GenBase00944940 (retail:
+// SimpleSceneClass, ctor 0x00944940) are those: the vftables their ctors
+// install -- 0x01120850, 0x01120B08, 0x01126C28, 0x011279A0 -- all hold the ILT
+// thunk 0x00005D5D at slot 0, and that thunk jumps to 0x005F38C0, the body the
+// ledger calls ?Delete_This@RefCountClass@@UAEXXZ.  RefCountClass is a real type
+// with a real header (game/Libraries/Source/WWVegas/WWLib/refcount.h), so the
+// slot is spelled with it: the base derives from it and adds no virtual, and the
+// four members use the derived macro that declares none.  Retail's slot 1 is
+// each class's own scalar deleting destructor (0x006FD6C0, 0x00712100,
+// 0x007898C0, 0x0079D360), which is why the compiler emits that slot too.
+// The base class itself keeps the stand-in name, because the ctor really is
+// retail's 0x00944940 body and the pin spells it that way.
+#include "../../../Libraries/Source/WWVegas/WWLib/refcount.h"
 
 #define BFME_VPTR_BASE( NAME )                                            \
 	class NAME                                                            \
@@ -35,6 +62,18 @@
 	public:                                                               \
 		NAME();                                                           \
 		virtual void handle();                                            \
+	};                                                                    \
+	NAME::NAME()                                                          \
+	{                                                                     \
+	}
+
+// A derived class that adds no virtual of its own: every slot in its vftable is
+// named by a base, so declaring one here would misname all of them.
+#define BFME_VPTR_DERIVED_INHERITED( NAME, BASE )                          \
+	class NAME : public BASE                                              \
+	{                                                                     \
+	public:                                                               \
+		NAME();                                                           \
 	};                                                                    \
 	NAME::NAME()                                                          \
 	{                                                                     \
@@ -86,9 +125,18 @@ BFME_VPTR_BASE( GenBase0046E5E0 )
 BFME_VPTR_BASE( GenBase00479230 )
 BFME_VPTR_BASE( GenBase004B2C80 )
 BFME_VPTR_BASE( GenBase008AD3F0 )
-BFME_VPTR_BASE( GenBase00944940 )
 BFME_VPTR_BASE( GenBase009A1A30 )
 BFME_VPTR_BASE( GenBase009CA9E0 )
+
+// ??0GenBase00944940@@QAE@XZ -- the base of the four Rva* below.  Its own vftable
+// (0x011135AC) starts with the same RefCountClass::Delete_This thunk, so it adds
+// no virtual of its own either; the ctor name stays the pinned stand-in because
+// the ctor really is retail's 0x00944940 body.
+class GenBase00944940 : public RefCountClass
+{
+public:
+	GenBase00944940();
+};
 
 BFME_VPTR_DERIVED( Rva0006B0D0, GenBase009A1A30 )
 BFME_VPTR_DERIVED( Rva000C3FF0, GenBase009A1A30 )
@@ -106,11 +154,11 @@ BFME_VPTR_DERIVED( Rva00670A10, GenBase004B2C80 )
 BFME_VPTR_DERIVED( Rva006BA440, GenBase00101E20 )
 BFME_VPTR_DERIVED( Rva006BA470, GenBase00101D50 )
 BFME_VPTR_DERIVED( Rva006C0570, GenBase00138960 )
-BFME_VPTR_DERIVED( Rva006FCAD0, GenBase00944940 )
-BFME_VPTR_DERIVED( Rva00711B00, GenBase00944940 )
-BFME_VPTR_DERIVED( Rva00789650, GenBase00944940 )
+BFME_VPTR_DERIVED_INHERITED( Rva006FCAD0, GenBase00944940 )
+BFME_VPTR_DERIVED_INHERITED( Rva00711B00, GenBase00944940 )
+BFME_VPTR_DERIVED_INHERITED( Rva00789650, GenBase00944940 )
 BFME_VPTR_DERIVED( Rva0078ABB0, GenBase0046E5E0 )
-BFME_VPTR_DERIVED( Rva0079D030, GenBase00944940 )
+BFME_VPTR_DERIVED_INHERITED( Rva0079D030, GenBase00944940 )
 BFME_VPTR_DERIVED( Rva0081C500, GenBase009A1A30 )
 BFME_VPTR_DERIVED( Rva008BD2B0, GenBase008AD3F0 )
 BFME_VPTR_DERIVED( Rva008FEB20, GenBase009EB7D0 )
