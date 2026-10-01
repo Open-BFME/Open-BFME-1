@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Append ONE matched row to targets/game/reverse/functions.csv, safely.
 
-Hand-editing the ledger has repeatedly corrupted it (LF damage, wrong column
-counts, duplicate/overlapping claims). This tool is the safe path: it validates
-the claim against the existing ledger, appends in binary mode with CRLF, strips
-the source's `// <name> present-unmatched` marker, and byte-verifies the result
-with ./build.sh — reverting everything if verification fails. A row never
-survives unverified (unless you explicitly pass --no-verify).
+Hand-edited rows have caused LF damage, wrong column counts, and overlapping
+claims. This tool validates each claim against the ledger and appends it with
+CRLF endings. It removes the source's `// <name> present-unmatched` marker and
+checks the bytes with `./build.sh`. It restores the source and ledger when the
+build fails. Rows survive without verification only when a caller passes
+`--no-verify`.
 
 Usage:
   python3 tools/add_match.py <mangled-name> <target_rva> <target_size> <source> \\
@@ -16,11 +16,10 @@ Usage:
 verification.  `--replace-rva` does the same keyed on the ADDRESS instead of the
 name, which is the only way to convert a machine byte-dump: a real conversion
 changes the name (`?d_000a8940@@YAXXZ` -> `?addr@SpikeAccessor@@QAEPADXZ`), so
---replace-existing cannot find the row it needs to retire and add_match refuses
-the address as already claimed. It accepts scaffold rows only. This is the
-supported path for replacing a 5-byte MASM thunk claim with the clean C++ body
-it jumps to, and for replacing gen-tgrid template placeholders at their exact
-range; the original row is restored if the new claim does not byte-verify.
+--replace-existing cannot find the row it needs to retire. It accepts scaffold
+rows at the same range. With identity and boundary evidence, it can also retire
+a matched wrong identity when the old range lies inside the corrected full
+body. Verification restores the old row if it fails.
 """
 if __name__ == "__main__":
     from target_guard import require_game_cli
@@ -218,13 +217,21 @@ def replacement_tombstone_record(replaced, successor_name, successor_rva,
     """
     proof = "gate-required claim" if verified else "verification-deferred claim"
     if boundary_evidence:
-        kind = replaced["notes"].lstrip().split(";", 1)[0]
-        reason = (
-            f"{kind} scaffold retired because its {replaced['size']}-byte extent at "
-            f"0x{replaced['rva']:08X} was wrong. The real identity {successor_name} is a "
-            f"{proof} from {successor_source} over the corrected {successor_size}-byte "
-            f"range at the same start. Boundary evidence: {boundary_evidence}"
-        )
+        if replaceable_scaffold(replaced):
+            kind = replaced["notes"].lstrip().split(";", 1)[0]
+            reason = (
+                f"{kind} scaffold retired because its {replaced['size']}-byte extent at "
+                f"0x{replaced['rva']:08X} was wrong. The real identity {successor_name} is a "
+                f"{proof} from {successor_source} over the corrected {successor_size}-byte "
+                f"range at the same start. Boundary evidence: {boundary_evidence}"
+            )
+        else:
+            reason = (
+                f"{replaced['name']} at 0x{replaced['rva']:08X}/{replaced['size']}B was "
+                f"retired because that range sits inside the full {successor_name} body "
+                f"at 0x{successor_rva:08X}/{successor_size}B. The {proof} uses "
+                f"{successor_source}. Boundary evidence: {boundary_evidence}"
+            )
     elif replaceable_scaffold(replaced):
         kind = replaced["notes"].lstrip().split(";", 1)[0]
         reason = (
@@ -291,19 +298,19 @@ def main():
                         help="replace the symbol's one existing row instead of rejecting it; "
                              "the old row is restored if verification fails")
     parser.add_argument("--replace-rva", metavar="RVA",
-                        help="retire the SCAFFOLD row at this address and claim it "
-                             "under the new name (the dump -> C++ conversion path); "
-                             "the old row is restored if verification fails")
+                        help="retire the scaffold or corrected identity at this address "
+                             "and claim it under the new name; the old row is restored "
+                             "if verification fails")
     parser.add_argument("--correct-identity", metavar="OLD_NAME",
-                        help="with --replace-rva, retire this exact matched real-name claim "
+                        help="with --replace-rva, retire this matched real-name claim "
                              "when independent evidence proves the replacement identity")
     parser.add_argument("--identity-evidence", metavar="PATH",
                         help="targets/game/reverse/identity_evidence/*.md proof required by "
                              "--correct-identity")
     parser.add_argument("--boundary-evidence",
-                        help="with --replace-rva, permit a corrected target_size while "
-                             "recording why the scaffold extent was wrong; the start RVA "
-                             "must still agree")
+                        help="with --replace-rva, record why the claimed extent was wrong; "
+                             "a real-identity correction may replace a contained interior "
+                             "span with its full body")
     parser.add_argument("--no-verify", action="store_true",
                         help="skip ./build.sh verification (row lands UNVERIFIED — "
                              "verify before committing)")
@@ -318,10 +325,9 @@ def main():
              "wrong, replace it with --replace-rva, --correct-identity and --identity-evidence")
     if bool(args.correct_identity) != bool(args.identity_evidence):
         fail("--correct-identity and --identity-evidence must be passed together")
-    if args.correct_identity and (not args.replace_rva or args.replace_existing or
-                                  args.boundary_evidence):
-        fail("--correct-identity requires --replace-rva with the same proven extent "
-             "and cannot be combined with --replace-existing or --boundary-evidence")
+    if args.correct_identity and (not args.replace_rva or args.replace_existing):
+        fail("--correct-identity requires --replace-rva and cannot be combined with "
+             "--replace-existing")
     if args.boundary_evidence is not None:
         if not args.replace_rva:
             fail("--boundary-evidence requires --replace-rva")
@@ -459,19 +465,25 @@ def main():
                  "a real identity correction requires --correct-identity "
                  "and --identity-evidence")
         if old_rva != rva:
-            fail(f"--replace-rva must preserve the prior claim's exact range "
-                 f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
-                 f"0x{rva:08X}/{size}B",
-                 "a different boundary needs an explicit evidence-backed retraction")
+            old_end = old_rva + at_rva[0]["size"]
+            new_end = rva + size
+            contained_identity = (
+                bool(args.correct_identity) and bool(args.boundary_evidence) and
+                rva < old_rva and old_end <= new_end)
+            if not contained_identity:
+                fail(f"--replace-rva must preserve the prior claim's start "
+                     f"0x{old_rva:08X}; new claim starts at 0x{rva:08X}",
+                     "a different start needs identity and boundary evidence for a "
+                     "matched row fully contained in the corrected body")
         if at_rva[0]["size"] != size and not args.boundary_evidence:
             fail(f"--replace-rva must preserve the prior claim's exact range "
                  f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
                  f"0x{rva:08X}/{size}B",
                  "pass --boundary-evidence only when retail disassembly proves the "
-                 "scaffold extent itself was wrong")
-        if at_rva[0]["size"] == size and args.boundary_evidence:
-            fail("--boundary-evidence is only for a proven target_size correction; "
-                 "this replacement already preserves the scaffold extent")
+                 "claimed extent itself was wrong")
+        if at_rva[0]["size"] == size and old_rva == rva and args.boundary_evidence:
+            fail("--boundary-evidence needs a changed extent or start; "
+                 "this replacement already preserves the old range")
         replaced = at_rva[0]
     if args.replace_existing:
         if not claims:
