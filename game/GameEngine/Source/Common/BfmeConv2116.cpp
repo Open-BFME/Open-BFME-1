@@ -31,7 +31,12 @@ struct Rva003FD060TerrainLogic
 	virtual float bfmeHeightAAE(float x, float y, int layer, int a, int b);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 
 class BfmeAimAAE
 {
@@ -51,7 +56,7 @@ void BfmeAimAAE::bfmeFireAAE(Weapon *weapon, BfmeHolderNS *victim)
 {
 	Coord3D pos = weapon->bfmeGetLOSVictimPos(0, (const Object *)victim, 1);
 
-	pos.z = TheTerrainLogic->bfmeHeightAAE(pos.x, pos.y, victim->bfmeQueryNS(), 0, 1);
+	pos.z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightAAE(pos.x, pos.y, victim->bfmeQueryNS(), 0, 1);
 
 	bfmeAimAtAAE(weapon, &pos);
 }

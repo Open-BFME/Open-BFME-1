@@ -91,8 +91,13 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &) = 0;
 };
 
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
 extern ScriptEngine *TheScriptEngine;
-extern TerrainLogicByValue *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 class ScriptActions
 {
@@ -113,7 +118,7 @@ void ScriptActions::doNamedFireWeaponFollowingWaypointPath(
 	pos.y = theUnit->m_position.y;
 	pos.z = theUnit->m_position.z;
 
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath(&pos, waypointPath);
+	Waypoint *way = ((TerrainLogicByValue *)TheTerrainLogic)->getClosestWaypointOnPath(&pos, waypointPath);
 	if (!way) {
 		return;
 	}

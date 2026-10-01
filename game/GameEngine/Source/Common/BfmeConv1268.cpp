@@ -21,7 +21,12 @@ public:
 	virtual float bfmeHeight1268(float a, float b, int c);
 };
 
-extern BfmeR1268 *g_bfme1268;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and casts to its own
+// TU-local view at the single use.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 
 class BfmeA1268
 {
@@ -36,5 +41,5 @@ void BfmeA1268::bfmeCell1268(unsigned int i, BfmeVec1268 *out)
 {
 	out->m_bfme00 = (float)(i % m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_bfmeK1268;
 	out->m_bfme04 = (float)(i / m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_bfmeK1268;
-	out->m_bfme08 = g_bfme1268->bfmeHeight1268(out->m_bfme00, out->m_bfme04, 0) + g_bfmeK1268;
+	out->m_bfme08 = ((BfmeR1268 *)TheTerrainLogic)->bfmeHeight1268(out->m_bfme00, out->m_bfme04, 0) + g_bfmeK1268;
 }

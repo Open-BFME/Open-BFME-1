@@ -28,14 +28,19 @@ public:
 	virtual AsciiString getSourceFilename() = 0;
 };
 
-extern BFMETerrainLogic *TheTerrainLogic;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 
 void WaterTracksRenderSystem::saveTracks()
 {
 	if (TheTerrainLogic == 0) {
 		return;
 	}
-	AsciiString file_name = TheTerrainLogic->getSourceFilename();
+	AsciiString file_name = ((BFMETerrainLogic *)TheTerrainLogic)->getSourceFilename();
 	char path[256];
 	strcpy(path, file_name.str());
 	Int length = strlen(path);

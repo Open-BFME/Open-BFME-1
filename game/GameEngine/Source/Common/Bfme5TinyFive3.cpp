@@ -37,7 +37,12 @@ public:
 	unsigned char m_bfmeFlag;				// +0x18F4
 };
 
-extern BfmeHolderBS *g_bfmeHolderBS;				// retail 0x012EF4CC
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and casts to its own
+// TU-local view at the single use.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;		// retail 0x012EF4CC
 
 class Gen_002ED870
 {
@@ -54,7 +59,7 @@ void Gen_002ED870::bfmeClear(void)
 {
 	m_bfmeFlag = 0;
 
-	BfmeHolderBS *holder = g_bfmeHolderBS;
+	BfmeHolderBS *holder = (BfmeHolderBS *)TheTerrainLogic;
 
 	if (holder != 0)
 		holder->m_bfmeFlag = 0;

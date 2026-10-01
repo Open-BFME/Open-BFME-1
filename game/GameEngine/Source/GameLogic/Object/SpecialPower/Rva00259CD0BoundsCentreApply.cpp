@@ -79,7 +79,12 @@ public:
 	virtual void getExtentIncludingBorder(Region3D_259CD0 *extent);
 };
 
-extern TerrainLogic_259CD0 *TheTerrainLogic;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 
 class Rva00259CD0Dispatch
 {
@@ -102,7 +107,7 @@ void Rva00259CD0Dispatch::apply(Coord3D_259CD0 *subject)
 	if (object->containedBy != 0)
 	{
 		Region3D_259CD0 extent;
-		TheTerrainLogic->getExtentIncludingBorder(&extent);
+		((TerrainLogic_259CD0 *)TheTerrainLogic)->getExtentIncludingBorder(&extent);
 		Coord3D_259CD0 point;
 		point.x = (extent.lo.x + extent.hi.x) * g_bfmeK1253;
 		point.y = (extent.lo.y + extent.hi.y) * g_bfmeK1253;

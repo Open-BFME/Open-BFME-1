@@ -20,7 +20,12 @@ struct Rva003FD060TerrainLogic
 	virtual float bfmeHeightABE(float x, float y, int layer, int normal, int clip);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 
 class PathfindCell
 {
@@ -77,7 +82,7 @@ int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentC
 		float terrainY = ((float)currentCellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 
 		m_lastClearCellY = terrainY;
-		m_lastClearCellHeight = TheTerrainLogic->bfmeHeightABE(terrainX, terrainY, currentCellLayer, 0, 1);
+		m_lastClearCellHeight = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightABE(terrainX, terrainY, currentCellLayer, 0, 1);
 
 		return 0;
 	}

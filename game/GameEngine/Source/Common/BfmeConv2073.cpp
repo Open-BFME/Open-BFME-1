@@ -56,7 +56,12 @@ public:
 	BfmeAiHelperHN *m_bfmeHelperHN;
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
+// mangled name, so this TU declares it canonically and keeps its own TU-local
+// view of the vtable for the members it touches.
+class TerrainLogic;
+
+extern TerrainLogic *TheTerrainLogic;
 extern AI *TheAI;
 
 class BfmeCheckHN
@@ -86,7 +91,7 @@ bool BfmeCheckHN::bfmeTestHN(BfmeVec3HN *p)
 
 	a.m_bfmeZHN = o->m_bfmeGeomHN.getMaxHeightAbovePosition() + a.m_bfmeZHN;
 
-	if (!TheTerrainLogic->bfmeReachHN(&a, &b))
+	if (!((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeReachHN(&a, &b))
 		return false;
 
 	if (TheAI != 0)
