@@ -380,3 +380,12 @@ game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeOwnVUQ,a1d4a0c923b6b2e8
 game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|param|SpecialPowerModule::initiateIntentToDoSpecialPower|arg4,a42dcbd69cf25ef5334fd245,gemini,20261001115136-a9bbed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,dd6e13b6e1c270099c0e49e6,gemini,20261001112544-e6ac4b,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,ed538649e6df413078f3cd87,gemini,20261001112544-e6ac4b,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_001506E0,92153c7d4287a0a613235700,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||BfmeThingBG,8b2b45693a5136d98e9896df,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_000EC5E0,2b24c2908f16c3d4aac59121,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeA,da479d9ab41aa297aad087bb,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeB,b6ca4197a5c2102d99a5dc4f,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeC,ce2bb5d42b219140230a2643,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetA,b644ddc96adbf2aa36728ae1,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetB,a49fa79737c75d03e8994e22,gemini,20261001112544-333ac8,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetC,e02353f445800bbfb3d36f58,gemini,20261001112544-333ac8,2026-10-01

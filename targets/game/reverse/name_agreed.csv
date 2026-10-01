@@ -226,3 +226,12 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,ExperienceLevelSy
 game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,AI,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|function||bfme5ParseNamedValueA,parseInitialPayload,claude-fable+claude-opus;audited-by=gpt-5.6-sol,blocked: the same name as another placeholder,2026-10-01
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|function||bfme5ParseNamedValueB,parseInitialPayload,claude-fable+claude-opus;audited-by=gpt-5.6-sol,blocked: the same name as another placeholder,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_001506E0,AIGroup,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||BfmeThingBG,TeamPrototype,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_000EC5E0,Team,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeA,m_isWaterArea,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeB,m_isRiver,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeC,m_riverStart,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetA,setWaterArea,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetB,setRiver,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetC,setRiverStart,claude-fable+gemini,agreed,2026-10-01
