@@ -62,7 +62,8 @@ struct XferException
 
 extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
-extern void __cdecl bfmeCalcTGC(void *xfer, int *value);
+class MidVirtualSlot90Receiver;
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 extern int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
@@ -90,8 +91,8 @@ Xfer *xferListAsciiStringObjectID(
 		while (node != sentinel)
 		{
 			AsciiStringObjectIDPair *pair = &node->_M_data;
-			bfmeCalcTGC(
-				&xfer->xferAsciiString(&pair->first),
+			Rva0010C3C0(
+				(MidVirtualSlot90Receiver *)&xfer->xferAsciiString(&pair->first),
 				(int *)&pair->second);
 			node = (ListAsciiStringObjectID::_Node *)node->_M_next;
 		}
@@ -109,8 +110,8 @@ Xfer *xferListAsciiStringObjectID(
 		while (count != 0)
 		{
 			--count;
-			bfmeCalcTGC(
-				&xfer->xferAsciiString(&newPair.first),
+			Rva0010C3C0(
+				(MidVirtualSlot90Receiver *)&xfer->xferAsciiString(&newPair.first),
 				(int *)&newPair.second);
 			list->push_back(newPair);
 		}

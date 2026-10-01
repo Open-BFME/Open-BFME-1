@@ -47,7 +47,8 @@ public:
  virtual float value_00e4();
 };
 extern View *TheTacticalView;
-void bfmeCalcTGC(void *, int *);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 class XferException {
 public:
  XferException(int, const char *, ...);
@@ -130,7 +131,7 @@ void InGameUI::DoXfer(Xfer &xferRef) {
      *xfer==playerIndex;
      AsciiString templateName=swInfo->getSpecialPowerTemplate()->getName();
      *xfer==templateName; *xfer==powerName;
-     bfmeCalcTGC(xfer,(int*)&swInfo->m_id);
+     Rva0010C3C0((MidVirtualSlot90Receiver *)xfer,(int*)&swInfo->m_id);
      *xfer==swInfo->m_timestamp; *xfer==swInfo->m_hiddenByScript;
      *xfer==swInfo->m_hiddenByScience; *xfer==swInfo->m_ready;
     }
@@ -147,7 +148,7 @@ void InGameUI::DoXfer(Xfer &xferRef) {
    if(!powerTemplate) throw XferException(0,0);
    AsciiString powerName;
    ObjectID id; unsigned timestamp; bool hiddenByScript,hiddenByScience,ready;
-   *xfer==powerName; bfmeCalcTGC(xfer,(int*)&id); *xfer==timestamp;
+   *xfer==powerName; Rva0010C3C0((MidVirtualSlot90Receiver *)xfer,(int*)&id); *xfer==timestamp;
    *xfer==hiddenByScript; *xfer==hiddenByScience; *xfer==ready;
    SuperweaponInfo *swInfo=findSWInfo(playerIndex,powerName,id,powerTemplate);
    if(swInfo==0) {

@@ -150,7 +150,8 @@ __declspec(noinline) void BfmeSubAccept_0001DE5D::bfmeAccept(BfmeSeedTarget *tar
 	}
 }
 
-void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);		// ILT 0x0000C9B4
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);	// ILT 0x0000C9B4
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
 void bfmeHandOver_00020586(BfmeSeedTarget *target, void *item);		// ILT 0x00020586
 void bfmeHandOver_0003EE32(BfmeSeedTarget *target, void *item);		// ILT 0x0003EE32
@@ -976,7 +977,7 @@ void Gen_0016D180::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 	bfmeAccept(target);
 
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 }
 
 // ?bfmeSeed@Gen_0016D480@@QAEXPAVBfmeSeedTarget@@@Z		50 bytes
@@ -988,7 +989,7 @@ void Gen_0016D480::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 }
 
 // ?bfmeSeed@Gen_001ED0C0@@QAEXPAVBfmeSeedTarget@@@Z		70 bytes
@@ -1102,7 +1103,7 @@ void Gen_00207470::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 	bfmeAccept(target);
 
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 }
 
 // ?bfmeSeed@Gen_00214C60@@QAEXPAVBfmeSeedTarget@@@Z		72 bytes
@@ -1118,7 +1119,7 @@ void Gen_00214C60::bfmeSeed(BfmeSeedTarget *target)
 
 	if ( !target->bfmeSkip() )
 	{
-		bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 	}
 }
 
@@ -1135,7 +1136,7 @@ void Gen_00214EA0::bfmeSeed(BfmeSeedTarget *target)
 
 	if ( !target->bfmeSkip() )
 	{
-		bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 	}
 }
 
@@ -1155,7 +1156,7 @@ void Gen_00268060::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeTakeAt74(&m_bfmeItem2);
 	target->bfmeTakeAt6C(&m_bfmeItem3);
 	target->bfmeTakeAt8C(&m_bfmeItem4);
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem5);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
 }
 
 // ?bfmeSeed@Gen_002802F0@@QAEXPAVBfmeSeedTarget@@@Z		68 bytes
@@ -1193,7 +1194,7 @@ void Gen_0028CE90::bfmeSeed(BfmeSeedTarget *target)
 
 		target->bfmeSeed(&pair);
 		target->bfmeTakeAt74(&m_bfmeItem0);
-		bfmeHandOver_0000C9B4(target, &m_bfmeItem1);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem1);
 	}
 }
 
@@ -1210,7 +1211,7 @@ void Gen_002923B0::bfmeSeed(BfmeSeedTarget *target)
 
 	if ( !target->bfmeSkip() )
 	{
-		bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 
 		if ( pair.m_bfmeSecond >= 2 )
 		{

@@ -54,7 +54,8 @@ public:
 	virtual Xfer &xferBool(bool *value);
 };
 
-extern void bfmeCalcTGC(void *xfer, int *value);
+class MidVirtualSlot90Receiver;
+extern void Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 #pragma comment(linker, "/alternatename:?xfer@Emotion@@QAEXPAVXfer@@@Z=?j_000091ec@@YAXXZ")
 #pragma comment(linker, "/alternatename:?insert_unique@?$_Rb_tree@UGen_t_000ef440_k4@@U1@U?$_Identity@UGen_t_000ef440_k4@@@_STL@@U?$less@UGen_t_000ef440_k4@@@3@V?$allocator@UGen_t_000ef440_k4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_000ef440_k4@@U?$_Nonconst_traits@UGen_t_000ef440_k4@@@_STL@@@_STL@@_N@2@ABUGen_t_000ef440_k4@@@Z=?j_000499f9@@YAXXZ")
@@ -186,7 +187,7 @@ void EmotionTrackerUpdate::xfer(Xfer *xfer)
 	{
 		xfer->xferBool(&m_active[i]);
 		xfer->xferUnsignedInt(&m_startFrame[i]);
-		bfmeCalcTGC(xfer, (int *)&m_endFrame[i]);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (int *)&m_endFrame[i]);
 	}
 
 	m_currentEmotionIndex = -1;
@@ -216,7 +217,7 @@ void EmotionTrackerUpdate::xfer(Xfer *xfer)
 				types = &m_emotionTypes;
 				for (int i = 0; i < typeCount; ++i)
 				{
-					bfmeCalcTGC(xfer, &type.value);
+					Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &type.value);
 					types->insert(type);
 				}
 			}
@@ -228,14 +229,14 @@ void EmotionTrackerUpdate::xfer(Xfer *xfer)
 				it != m_emotionTypes.end(); ++it)
 			{
 				value = it->value;
-				bfmeCalcTGC(xfer, &value);
+				Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &value);
 			}
 		}
 	}
 
 	xfer->xferUser(&m_activeEmotionType, 4);
 	xfer->xferInt(&m_forcedRetry);
-	bfmeCalcTGC(xfer, &m_unknowna4);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_unknowna4);
 	if (version.m_currentVersion >= 2)
 	{
 		xfer->xferUnsignedInt((UnsignedInt *)&m_unknowna8);

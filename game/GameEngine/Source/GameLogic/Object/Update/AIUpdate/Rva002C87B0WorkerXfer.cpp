@@ -80,7 +80,8 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
 extern int g_guardTargetTypeThrowInfo;
-extern void __cdecl bfmeCalcTGC(void *, int *);
+class MidVirtualSlot90Receiver;
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 class BfmeSubAccept_0002C41C
 {
@@ -153,7 +154,7 @@ void Rva002C87B0Worker::xfer(Xfer *xfer)
 	UnsignedInt *taskOrderFrame = &m_task[0].m_taskOrderFrame;
 	for (int i = 0; i < 3; ++i)
 	{
-		bfmeCalcTGC(xfer, reinterpret_cast<int *>(taskOrderFrame - 1));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<int *>(taskOrderFrame - 1));
 		xfer->xferUnsignedInt(taskOrderFrame);
 		taskOrderFrame += 2;
 	}
@@ -182,7 +183,7 @@ void Rva002C87B0Worker::xfer(Xfer *xfer)
 
 	xfer->xferUser(&m_buildSubTask, sizeof(m_buildSubTask));
 	xfer->xferSnapshot(m_supplyTruckStateMachine);
-	bfmeCalcTGC(xfer, reinterpret_cast<int *>(&m_preferredDock));
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<int *>(&m_preferredDock));
 	xfer->xferCoord3D(m_preferredDockLocation);
 	xfer->xferBool(reinterpret_cast<UnsignedInt *>(&m_forcePending));
 	xfer->xferInt(reinterpret_cast<int *>(&m_isRebuild));

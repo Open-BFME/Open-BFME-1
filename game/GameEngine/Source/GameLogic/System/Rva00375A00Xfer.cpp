@@ -86,7 +86,8 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva000A3F30Pair> > Rva000A3F30Tree;
 
-extern void __cdecl xferObjectID0010C3C0(Xfer *xfer, UnsignedInt *value);
+class MidVirtualSlot90Receiver;
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 extern Xfer *__cdecl Rva00372670XferObjectIDVector(Xfer *xfer, ObjectIDVector *vector);
 
 class BfmeSeedTarget;
@@ -144,7 +145,7 @@ void Rva00375A00Owner::xfer(Xfer *xfer)
 	XferVersion version(1, 2);
 	xfer->xferVersion(version);
 	xfer->xferUser(&m_field9c, 4);
-	xferObjectID0010C3C0(xfer, &m_fielda0);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_fielda0);
 	xfer->xferBool(m_fielda4);
 	xfer->xferBool(m_fielda5);
 	xfer->xferReal(m_fielda8);
@@ -159,7 +160,7 @@ void Rva00375A00Owner::xfer(Xfer *xfer)
 		while (current != m_fieldb8.end())
 		{
 			value = *current;
-			xferObjectID0010C3C0(xfer, reinterpret_cast<UnsignedInt *>(&value));
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<UnsignedInt *>(&value));
 			++current;
 		}
 	}
@@ -180,7 +181,7 @@ void Rva00375A00Owner::xfer(Xfer *xfer)
 		vector->m_end = destination;
 		for (Int i = 0; i < fieldb8Count; ++i)
 		{
-			xferObjectID0010C3C0(xfer, reinterpret_cast<UnsignedInt *>(&value));
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<UnsignedInt *>(&value));
 			m_fieldb8.push_back(value);
 		}
 	}
@@ -193,7 +194,7 @@ void Rva00375A00Owner::xfer(Xfer *xfer)
 		while (current != m_fieldc4.end())
 		{
 			value = *current;
-			xferObjectID0010C3C0(xfer, reinterpret_cast<UnsignedInt *>(&value));
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<UnsignedInt *>(&value));
 			++current;
 		}
 	}
@@ -201,7 +202,7 @@ void Rva00375A00Owner::xfer(Xfer *xfer)
 	{
 		for (Int i = 0; i < fieldc4Count; ++i)
 		{
-			xferObjectID0010C3C0(xfer, reinterpret_cast<UnsignedInt *>(&value));
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<UnsignedInt *>(&value));
 			m_fieldc4.push_back(value);
 		}
 	}

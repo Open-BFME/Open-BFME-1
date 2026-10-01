@@ -84,7 +84,8 @@ public:
 // loop; the second transfers the 64-entry floating-point array.
 extern Xfer &__cdecl xferRva003D6CB0(Xfer &, Int (&)[512]);
 extern Xfer &__cdecl xferRva003D6D40(Xfer &, float (&)[64]);
-extern void __cdecl bfmeCalcTGC(void *, Int *);
+class MidVirtualSlot90Receiver;
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 extern void __cdecl bfmeXfer246FC(Xfer *, Int *);
 
 class PathfindCell
@@ -161,7 +162,7 @@ void Pathfinder::xfer(Xfer *xfer)
 		xfer->xferIRegion2D(&m_extent);
 		xfer->xferBool(&m_field04);
 		xfer->xferBool(&m_field838);
-		bfmeCalcTGC(xfer, &m_field840);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_field840);
 		xferRva003D6CB0(*xfer, m_field24714);
 		xfer->xferInt(&m_field24f14);
 		xfer->xferInt(&m_field24f18);

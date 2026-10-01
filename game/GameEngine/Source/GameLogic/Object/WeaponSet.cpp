@@ -317,7 +317,8 @@ public:
 	Weapon *allocateNewWeapon(const WeaponTemplate *weaponTemplate, WeaponSlotType slot) const;
 };
 
-extern void xferObjectID0010C3C0(Xfer *xfer, unsigned int *value);
+class MidVirtualSlot90Receiver;
+extern void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 struct BfmeWeaponTemplateSetView
 {
@@ -449,7 +450,7 @@ void WeaponSet::xfer(Xfer *xfer)
 	bfme->xferUnsignedInt(*reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x28));
 	bfme->xferBool(*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x2D));
 	bfme->xferBool(*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x2C));
-	xferObjectID0010C3C0(xfer, reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x34));
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x34));
 }
 
 // ------------------------------------------------------------------------------------------------

@@ -117,7 +117,8 @@ public:
 	virtual void xferBool(Bool *value);
 };
 
-extern void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *value);
+class MidVirtualSlot90Receiver;
+extern void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 extern "C" BfmeXferException *__cdecl bfmeFormatText(
 	BfmeXferException *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
@@ -235,7 +236,7 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 	BfmeXferVersion version(1, 2);
 
 	target->xferVersion(&version);
-	bfmeHandOver_0000C9B4(target, m_field70);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, m_field70);
 
 	UnsignedShort firstCount = 0;
 	BfmeNode_00161220 *node;
@@ -362,7 +363,7 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 	target->xferUnsignedInt((UnsignedInt *)&m_field20);
 	target->xferUnsignedInt((UnsignedInt *)&m_field24);
 	target->xferUnsignedInt((UnsignedInt *)&m_field1C);
-	((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, m_field74);
+	((BfmeFieldXfer)Rva0010C3C0)(target, m_field74);
 	target->xferUnsignedInt((UnsignedInt *)&m_field28);
 	((BfmeFieldXfer)j_0003e81f)(target, &m_field2C);
 	target->xferUnsignedInt((UnsignedInt *)&m_field30);
@@ -373,10 +374,10 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 	Int fieldCount = 2;
 	for (; fieldCount != 0; --fieldCount)
 	{
-		((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, field);
+		((BfmeFieldXfer)Rva0010C3C0)(target, field);
 		++field;
 	}
-	((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, &m_field50);
+	((BfmeFieldXfer)Rva0010C3C0)(target, &m_field50);
 	target->xferUnsignedInt((UnsignedInt *)&m_field60);
 	target->xferBool((Bool *)&m_field64);
 	target->xferBool((Bool *)&m_field65);
