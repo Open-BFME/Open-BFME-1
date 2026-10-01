@@ -70,7 +70,13 @@ struct AudioView004092A0 {
  virtual void slot42();
  virtual const Position004092A0 *position();
 };
-extern AudioView004092A0 *AudioGlobal004092A0;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline AudioView004092A0 *localAudio004092A0() { return (AudioView004092A0 *)TheAudio; }
 extern float Distance004092A0;
 struct Node004092A0 {
  char bytes00[0x14]; Node004092A0 *next14, *prev18;
@@ -83,7 +89,7 @@ struct SpatialList004092A0 {
 };
 
 void SpatialList004092A0::update() {
- const Position004092A0 *pos = AudioGlobal004092A0->position();
+ const Position004092A0 *pos = localAudio004092A0()->position();
  Position004092A0 delta; delta.x=pos->x; delta.y=pos->y; delta.z=pos->z;
  delta.x -= position1c.x; delta.y -= position1c.y; delta.z -= position1c.z;
  if (delta.x*delta.x + delta.y*delta.y + delta.z*delta.z > Distance004092A0*Distance004092A0 && field14) {
@@ -92,7 +98,7 @@ void SpatialList004092A0::update() {
   if (!field0c) field0c=field14;
   field10=0; field14=0;
  }
- if (!field10) position1c=*AudioGlobal004092A0->position();
+ if (!field10) position1c=*localAudio004092A0()->position();
  Node004092A0 *p=field08;
  while (p) { Node004092A0 *n=p->next14; p->update006059F0(); p=n; }
 }

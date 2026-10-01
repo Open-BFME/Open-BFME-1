@@ -86,7 +86,13 @@ public:
 	virtual int slot40() = 0;
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline ClientSubsystem *localAudio() { return (ClientSubsystem *)TheAudio; }
 
 class Rva0006AB10Curve
 {
@@ -156,8 +162,8 @@ Rva006092D0State::~Rva006092D0State()
 	*(unsigned int *)this = (unsigned int)bfmeVftRva006092D0State;
 	if (g_bfmeGameCW != 0)
 		g_bfmeGameCW->rva00615850();
-	if (TheAudioClientUpdate != 0 && TheAudioClientUpdate->slot40() == 1)
-		TheAudioClientUpdate->slot3c(2);
+	if (localAudio() != 0 && localAudio()->slot40() == 1)
+		localAudio()->slot3c(2);
 	g_bfmeStateDF = 0;
 	m_curve.clear();
 }

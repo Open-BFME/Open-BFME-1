@@ -62,7 +62,13 @@ public:
 	virtual void bfmeKill1022(int h);
 };
 
-extern BfmeG1022 *g_bfmeG1022;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline BfmeG1022 *localAudio() { return (BfmeG1022 *)TheAudio; }
 
 class BfmeF1022
 {
@@ -75,8 +81,8 @@ public:
 
 int BfmeF1022::bfmeGo1022F(void)
 {
-	if (g_bfmeG1022 != 0) {
-		g_bfmeG1022->bfmeKill1022(m_bfmeH);
+	if (localAudio() != 0) {
+		localAudio()->bfmeKill1022(m_bfmeH);
 		m_bfmeH = 1;
 	}
 

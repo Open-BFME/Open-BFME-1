@@ -103,7 +103,13 @@ public:
 	virtual void slot4c(void *arg);
 };
 
-extern BattlePlanUpdateOwner *TheBattlePlanUpdateOwner;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline BattlePlanUpdateOwner *localAudio() { return (BattlePlanUpdateOwner *)TheAudio; }
 
 // Plain virtual rather than a virtual destructor: retail gives this subobject a
 // vptr write and no unwind state.
@@ -134,7 +140,7 @@ BattlePlanUpdate::~BattlePlanUpdate()
 		for (int slot = 0; slot < 4; ++slot)
 		{
 			void *handle = m_slots[plan][slot].m_handle;
-			TheBattlePlanUpdateOwner->slot4c(handle);
+			localAudio()->slot4c(handle);
 		}
 	}
 }

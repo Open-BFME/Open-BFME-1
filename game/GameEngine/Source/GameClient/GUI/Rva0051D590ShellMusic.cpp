@@ -79,7 +79,13 @@ public:
 extern Rva0051D690Shell *g_obj12F4B58;
 struct Rva005A00B0Transition;
 extern Rva005A00B0Transition *TheTransitionHandler;
-extern ClientSubsystem *TheAudioClientUpdate;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline ClientSubsystem *localAudio() { return (ClientSubsystem *)TheAudio; }
 
 class Rva0051D590
 {
@@ -102,5 +108,5 @@ void Rva0051D590::first()
 
 	AudioEventRTS event( AsciiString( "Shell2Music" ), (ObjectID)2 );
 	((LwsAudioEventRTS *)&event)->setIsLogicalAudio( false );
-	TheAudioClientUpdate->addAudioEvent( &event );
+	localAudio()->addAudioEvent( &event );
 }

@@ -12,8 +12,9 @@
 // installed at entry (real virtual dtor); base BfmeBaseASCa vtable
 // 0x010817AC ("_bfmeVftASCa") restored automatically at the tail through an
 // inline-empty base destructor.  Body: guarded notification through
-// TheAudioClientUpdate (ClientSubsystem vtable slot 0x11C, already pinned
-// under this exact global name/type) passing `this`, then a BigBlockReleases-
+// TheAudio (EA's AudioManager *TheAudio at 0x012ED668, reached through this
+// TU's ClientSubsystem view at vtable slot 0x11C) passing `this`, then a
+// BigBlockReleases-
 // style manual vector clear (elemsize 8, start/cap read at +0x8C/+0x94, the
 // middle finish pointer at +0x90 unread, threshold 128 = STLport
 // _MAX_BYTES).  Reverse member unwind: three opaque 0x10-byte members
@@ -122,7 +123,13 @@ public:
 	virtual void notify( void *p );
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline ClientSubsystem *localAudio() { return (ClientSubsystem *)TheAudio; }
 
 class BFMERetailAsciiString
 {
@@ -190,8 +197,8 @@ private:
 // ??1AudioEventInfo@@UAE@XZ
 AudioEventInfo::~AudioEventInfo()
 {
-	if ( TheAudioClientUpdate )
+	if ( localAudio() )
 	{
-		TheAudioClientUpdate->notify( this );
+		localAudio()->notify( this );
 	}
 }

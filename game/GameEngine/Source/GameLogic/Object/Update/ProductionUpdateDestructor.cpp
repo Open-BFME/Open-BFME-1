@@ -83,7 +83,13 @@ public:
 	virtual void slot4c(void *arg);
 };
 
-extern ProductionUpdateOwner *TheProductionUpdateOwner;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline ProductionUpdateOwner *localAudio() { return (ProductionUpdateOwner *)TheAudio; }
 
 class ProductionUpdate
 	: public UpdateModule,
@@ -116,8 +122,8 @@ ProductionUpdate::~ProductionUpdate()
 		}
 	}
 
-	if (TheProductionUpdateOwner)
+	if (localAudio())
 	{
-		TheProductionUpdateOwner->slot4c(m_unreconstructed_e4);
+		localAudio()->slot4c(m_unreconstructed_e4);
 	}
 }

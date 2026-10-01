@@ -98,7 +98,13 @@ public:
 	void bfmeStopMovie(void);
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// address-derived view of that object and casts at the use, so the reference
+// names the one linked global.
+class AudioManager;
+extern AudioManager *TheAudio;
+static inline ClientSubsystem *localAudio() { return (ClientSubsystem *)TheAudio; }
 extern GameLogic *TheBfmeGameLogic;
 extern Display *TheDisplay;
 
@@ -120,12 +126,12 @@ Gen_00491880::~Gen_00491880(void)
 {
 	if (m_bfmeCount != 1)
 	{
-		TheAudioClientUpdate->slot4C(m_bfmeCount);
+		localAudio()->slot4C(m_bfmeCount);
 		m_bfmeCount = 1;
 	}
 	if (m_bfmeLimit != 1)
 	{
-		TheAudioClientUpdate->slot4C(m_bfmeLimit);
+		localAudio()->slot4C(m_bfmeLimit);
 		m_bfmeLimit = 1;
 	}
 	TheBfmeGameLogic->m_bfmeResetFlag = 0;
