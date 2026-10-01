@@ -89420,7 +89420,7 @@ _gpiTransfersHandlePong,0x008F53C0,vendored=gamespy-2004
 _gpiValueForKey,0x008EC930,vendored=gamespy-2004
 _gsiSocketInterface,0x0130E628,GameSpy common socket interface global; exact ciSocketConnect local-bind setup loads it before htonl
 _htonl@4,0x0081BDDE,route=WSOCK32.dll!htonl; matched piSBInit callback identity and sb_serverlist htonl caller; raw thunk equals 0x0081BE32; run=luna4-week-0906-r0007-w2
-_htonl@4,0x0081BE32,vendored=gamespy-2004
+_htonl@4,0x0081BE32,vendored=gamespy-2004;route=WSOCK32.dll!htonl; retail gpiProcessRecvBuddyMessage REL32+0x4C6 and FF25 slot 0x01359718 prove this second native import thunk
 _htons@4,0x0081BE14,vendored=gamespy-2004
 _inet_addr@4,0x0081BE20,vendored=gamespy-2004
 _inet_ntoa@4,0x009F9B76,vendored=gamespy-2004

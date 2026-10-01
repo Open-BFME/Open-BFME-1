@@ -1,5 +1,5 @@
 // cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/gp /MD -Iinputs/reference/shims/gamespy
-/* GameSpy SDK, 2004 vintage -- pristine upstream C source.
+/* GameSpy SDK, 2004 vintage -- upstream C source with the retail call change below.
    Sourced from the Area 51 (Inevitable Entertainment / Midway) source release,
    github.com/bisc67/Area51, Support/NetworkMgr/GameSpy -- the only public
    carrier found with the pre-2005 SDK layout (top-level nonport.c, no common/).
@@ -28,6 +28,11 @@ devsupport@gamespy.com
 ***********************************************************************
 Please see the GameSpy Presence SDK documentation for more information
 **********************************************************************/
+
+/* Retail modification: gpiProcessRecvBuddyMessage calls ntohs for the
+   parsed port. Its REL32 field +0x4FE targets the WSOCK32.dll!ntohs thunk
+   at RVA 0x0081BE14; the upstream htons call has the same byte swap but
+   the wrong native import identity. See the tracked 008F35B0 evidence. */
 
 //INCLUDES
 //////////
@@ -252,7 +257,7 @@ gpiProcessRecvBuddyMessage(
 		else
 		{
 			port = (unsigned short)atoi(intValue);
-			buddyStatus->port = htons(port);
+			buddyStatus->port = ntohs(port);
 		}
 
 		// Call the callback.
