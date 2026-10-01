@@ -39,13 +39,13 @@ public:
 class BfmeHolderXB
 {
 public:
-	void DoXfer(BfmeItemXB *item);
+	void bfmeOnXB(BfmeItemXB *item);
 
 	unsigned char m_bfmeHeadXB[0x284];
 	BfmeSinkXB *m_bfmeSinkXB;
 };
 
-void BfmeHolderXB::DoXfer(BfmeItemXB *item)
+void BfmeHolderXB::bfmeOnXB(BfmeItemXB *item)
 {
 	BfmeMarkXB mark;
 	unsigned char set = 1;
