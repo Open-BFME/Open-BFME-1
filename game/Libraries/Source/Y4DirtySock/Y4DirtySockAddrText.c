@@ -22,8 +22,10 @@
  * away with it because each result is consumed by a separate call.
  */
 
-/* Twenty bytes: the size is the formatter's third argument, an immediate. */
-extern char g_Rva0130ACC8Text[ 20 ];
+/* Address-derived view of the 20-byte zero-filled retail storage interval.
+ * The formatter receives capacity 20; the independent epoch datum begins at
+ * 0x0130ACDC, immediately after this interval. No vendor array name is claimed. */
+char g_Rva0130ACC8Text[ 20 ];
 
 /* RETURNS the destination, or null on a rejected size.  Nothing at the call
  * site below shows that -- a discarded return costs no bytes -- so the type
