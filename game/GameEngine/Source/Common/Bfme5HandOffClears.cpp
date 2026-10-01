@@ -11,10 +11,10 @@ extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const
 
 class BfmeElemY;
 
-class BfmeSinkY
+class AudioManager
 {
 public:
-	virtual ~BfmeSinkY(void);				// slot +0x00
+	virtual ~AudioManager(void);				// slot +0x00
 	virtual void bfmeSlot04(void);
 	virtual void bfmeSlot08(void);
 	virtual void bfmeSlot0C(void);
@@ -36,7 +36,7 @@ public:
 	virtual void bfmeHandOff(BfmeElemY *element);		// slot +0x4C
 };
 
-extern BfmeSinkY *g_bfmeSinkY;					// retail 0x012ED668
+extern AudioManager *TheAudio;					// retail 0x012ED668
 
 inline BfmeElemY **bfmeCopyElems(BfmeElemY **destination, BfmeElemY **first, BfmeElemY **last)
 {
@@ -90,7 +90,7 @@ private:
 void Gen_00613CC0::bfmeClear(void)
 {
 	for (unsigned int index = 0; index < m_bfmeVector.bfmeSize(); ++index)
-		g_bfmeSinkY->bfmeHandOff(m_bfmeVector.bfmeAt(index));
+		TheAudio->bfmeHandOff(m_bfmeVector.bfmeAt(index));
 
 	m_bfmeVector.bfmeClear();
 }

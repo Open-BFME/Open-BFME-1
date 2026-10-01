@@ -64,7 +64,7 @@ public:
 
 extern ClientRoot4120 *TheGameClient;
 
-class ClientSubsystem
+class AudioManager
 {
 public:
 #define CLIENT_SUBSYSTEM_SLOT(number) virtual void slot##number();
@@ -110,7 +110,7 @@ public:
 #undef CLIENT_SUBSYSTEM_SLOT
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 class View
 {
@@ -183,11 +183,11 @@ void Rva00594010::update()
 					if ((thingTemplate->m_kindOf & 0x02000000) != 0)
 					{
 						objectID = object->m_id;
-						if (objectID != 0 && TheAudioClientUpdate != 0 &&
-							TheAudioClientUpdate->getMiscAudio() != 0)
+						if (objectID != 0 && TheAudio != 0 &&
+							TheAudio->getMiscAudio() != 0)
 						{
-							TheAudioClientUpdate->addAudioEvent(
-								reinterpret_cast<char *>(TheAudioClientUpdate->getMiscAudio()) + 0xB60);
+							TheAudio->addAudioEvent(
+								reinterpret_cast<char *>(TheAudio->getMiscAudio()) + 0xB60);
 						}
 						break;
 					}

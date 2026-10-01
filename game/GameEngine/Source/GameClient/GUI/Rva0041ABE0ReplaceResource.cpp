@@ -56,7 +56,8 @@ struct Rva005A00B0AudioClient {
  virtual void slot3C(); virtual void slot40(); virtual void slot44();
  virtual void slot48(); virtual void slot4C(void *);
 };
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 struct Rva0041ABE0Slot { char m_beforeHandle[0x10]; void *m_handle; };
 class Rva0041ABE0Owner {
 public:
@@ -69,8 +70,8 @@ public:
 };
 void Rva0041ABE0Owner::rva0041abe0()
 {
- if (m_slot144) { void *handle = m_slot144->m_handle; TheAudioClientUpdate->slot4C(handle); }
- if (m_slot148) { void *handle = m_slot148->m_handle; TheAudioClientUpdate->slot4C(handle); }
+ if (m_slot144) { void *handle = m_slot144->m_handle; ((Rva005A00B0AudioClient *)TheAudio)->slot4C(handle); }
+ if (m_slot148) { void *handle = m_slot148->m_handle; ((Rva005A00B0AudioClient *)TheAudio)->slot4C(handle); }
  m_ref.clear();
  m_ref = Rva00415C20();
 }

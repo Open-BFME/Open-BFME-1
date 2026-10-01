@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /O2
 // Gen_001FC950 is the S3 seeder at retail 0x001FC950.
 // The direct thunk at 0x00007E5F reaches this body.  Its seed pair, accept
-// helpers, target slots, and TheAudioClientUpdate hand-over identify this
+// helpers, target slots, and TheAudio hand-over identify this
 // member as the next body in the S3 seeder family.
 
 struct BfmeSeedPair
@@ -51,7 +51,7 @@ public:
 	virtual void takeAt8c(void *item);
 };
 
-class Rva005A00B0AudioClient
+class AudioManager
 {
 public:
 	virtual void slot00(void);
@@ -139,7 +139,7 @@ public:
 	virtual void takeItem148(BfmeSeedTarget *target, void *item);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 void bfmeCalcTGC(void *target, int *item);
 
 class Gen_001F61B0
@@ -203,7 +203,7 @@ void Gen_001FC950::bfmeSeed(BfmeSeedTarget *target)
 	target->takeAt78(&m_item38);
 	bfmeCalcTGC(target, &m_item20);
 	target->takeAt78(&m_item3c);
-	TheAudioClientUpdate->takeItem148(target, &m_item40);
+	TheAudio->takeItem148(target, &m_item40);
 	target->takeAt8c(&m_item44);
 
 	if (pair.m_second >= 2)

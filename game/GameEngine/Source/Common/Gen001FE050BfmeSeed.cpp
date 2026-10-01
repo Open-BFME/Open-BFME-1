@@ -47,7 +47,7 @@ public:
 	virtual void takeAt8c(void *item);
 };
 
-class BfmeAudioClientUpdate_001FE050
+class AudioManager
 {
 public:
 	virtual void slot00(void);
@@ -135,7 +135,7 @@ public:
 	virtual void takeItem148(BfmeSeedTarget *target, void *item);
 };
 
-extern BfmeAudioClientUpdate_001FE050 *g_Va012ED668;
+extern AudioManager *TheAudio;
 
 class Gen_001FE050;
 
@@ -187,7 +187,7 @@ void Gen_001FE050::bfmeSeed(BfmeSeedTarget *target)
 	target->takeAt8c(&m_bfmeItem31);
 	target->takeAt8c(&m_bfmeItem32);
 	target->takeAt8c(&m_bfmeItem33);
-	g_Va012ED668->takeItem148(target, &m_bfmeItem24);
+	TheAudio->takeItem148(target, &m_bfmeItem24);
 	if (pair.second >= 2)
 	{
 		target->takeAt74(&m_bfmeItem2c);

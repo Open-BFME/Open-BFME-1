@@ -86,7 +86,7 @@ public:
 	void rva002ED2E0(float a, float b, float c, float d);
 };
 
-class AudioClientUpdate
+class AudioManager
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -140,7 +140,7 @@ private:
 
 extern ImageCollection *TheMappedImageCollection;
 extern Display *TheDisplay;
-extern AudioClientUpdate *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 extern GameLogic *TheBfmeGameLogic;
 extern GlobalData *TheWritableGlobalData;
 
@@ -151,8 +151,8 @@ void Gen_00491580::rva004916D0(int unused)
 	{
 		TheDisplay->rva002ED2E0(0.4677734375f, 0.8411458135f,
 			0.5302734375f, 0.9244791865f);
-		TheAudioClientUpdate->slot3C(2);
-		TheAudioClientUpdate->slot14();
+		TheAudio->slot3C(2);
+		TheAudio->slot14();
 	}
 
 	if (m_second.isNotEmpty())

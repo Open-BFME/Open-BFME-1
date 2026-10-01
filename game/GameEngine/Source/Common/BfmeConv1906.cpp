@@ -45,8 +45,9 @@ public:
 	virtual void bfmeByteAZ(unsigned char *dst);
 };
 
-struct Rva005A00B0AudioClient
+class AudioManager
 {
+public:
 	virtual void bfmeSlot00AU();
 	virtual void bfmeSlot01AU();
 	virtual void bfmeSlot02AU();
@@ -132,7 +133,7 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeAudioAZ(BfmeAgentAZ *ag, void *dst);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 extern "C" void __cdecl bfmeXferHeadAZ(BfmeAgentAZ *ag, void *dst);
 extern "C" void __cdecl bfmeXferTailAZ(BfmeAgentAZ *ag, void *dst);
@@ -178,7 +179,7 @@ void BfmeHostAZ::bfmeSaveAZ(BfmeAgentAZ *ag)
 	ag->bfmeLateAZ(m_bfmeSlotFAZ);
 	ag->bfmeWordAZ(m_bfmeSlotGAZ);
 	ag->bfmeWordAZ(m_bfmeSlotIAZ);
-	TheAudioClientUpdate->bfmeAudioAZ(ag, m_bfmeSlotEAZ);
+	TheAudio->bfmeAudioAZ(ag, m_bfmeSlotEAZ);
 	ag->bfmeByteAZ(&m_bfmeSlotHAZ);
 
 	if (info.m_bfmeLevelAZ >= 2)

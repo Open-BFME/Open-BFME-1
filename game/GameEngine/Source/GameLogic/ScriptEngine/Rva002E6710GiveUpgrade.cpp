@@ -56,12 +56,13 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern UpgradeCenter *TheUpgradeCenter;
-extern void *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // ?Rva002E6710GiveUpgrade@@YAHPAUlua_State@@@Z
 int Rva002E6710GiveUpgrade(lua_State *state)
 {
-	if (lua_gettop(state) < 2 || !TheAudioClientUpdate)
+	if (lua_gettop(state) < 2 || !TheAudio)
 		return 0;
 
 	unsigned id = Rva00990030Lookup(state, 1);

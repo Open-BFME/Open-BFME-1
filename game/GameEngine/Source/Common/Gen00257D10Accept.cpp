@@ -63,7 +63,7 @@ public:
 	void bfmeAccept(BfmeSeedTarget *target);
 };
 
-class Rva005A00B0AudioClient
+class AudioManager
 {
 public:
 #define BFME_AUDIO_SLOT( N ) virtual void slot##N();
@@ -99,7 +99,7 @@ public:
 #undef BFME_AUDIO_SLOT
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
@@ -143,7 +143,7 @@ void Gen_00257D10::bfmeAccept(BfmeSeedTarget *target)
 	target->takeAt8C((char *)this + 0xE5);
 	target->takeAt8C((char *)this + 0xDE);
 	((BfmeSubAccept_0002C41C *)((char *)this + 0x34))->bfmeAccept(target);
-	TheAudioClientUpdate->takeItem148(target, (char *)this + 0xA4);
+	TheAudio->takeItem148(target, (char *)this + 0xA4);
 	if (pair.m_second > 1)
 	{
 		target->takeAt8C((char *)this + 0xDD);

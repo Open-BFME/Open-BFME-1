@@ -20,7 +20,7 @@ public:
 	char m_rest[0x64];
 };
 
-class BfmeAudioManager491110
+class AudioManager
 {
 public:
 	virtual void v00();
@@ -69,7 +69,7 @@ public:
 	virtual void prepareAudioEvent(BfmeAudioEvent491110 *event);
 };
 
-extern BfmeAudioManager491110 *TheBfmeAudio491110; // retail 0x012ED668
+extern AudioManager *TheAudio; // retail 0x012ED668
 
 class Rva00491110
 {
@@ -89,16 +89,16 @@ void Rva00491110::startAudio()
 	m_firstHandle = 1;
 	m_secondHandle = 1;
 
-	if (TheBfmeAudio491110 == 0)
+	if (TheAudio == 0)
 		return;
 
 	BfmeAudioEvent491110 first(m_firstEventName, 2);
-	TheBfmeAudio491110->prepareAudioEvent(&first);
+	TheAudio->prepareAudioEvent(&first);
 	if (first.m_eventInfo != 0)
-		m_firstHandle = TheBfmeAudio491110->addAudioEvent(&first);
+		m_firstHandle = TheAudio->addAudioEvent(&first);
 
 	BfmeAudioEvent491110 second(m_secondEventName, 2);
-	TheBfmeAudio491110->prepareAudioEvent(&second);
+	TheAudio->prepareAudioEvent(&second);
 	if (second.m_eventInfo != 0)
-		m_secondHandle = TheBfmeAudio491110->addAudioEvent(&second);
+		m_secondHandle = TheAudio->addAudioEvent(&second);
 }
