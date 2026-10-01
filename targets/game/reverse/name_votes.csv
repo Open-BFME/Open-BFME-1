@@ -402,3 +402,5 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindRepresentativeSlot,15f49fcda73ddcefb52ceb06,gemini,20261001114358-bf18c9,2026-10-01
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,051d5adf893ef227b2280615,gemini,20261001114358-bf18c9,2026-10-01
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,e83b07ad487ad5ae86397ee2,gemini,20261001114358-bf18c9,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,bbedb7ef023245ec2eadaf9f,gemini,20261001115037-316f00,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,02f79a5e8fa60c290e8fd179,gemini,20261001115037-316f00,2026-10-01
