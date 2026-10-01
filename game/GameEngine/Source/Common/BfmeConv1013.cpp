@@ -73,13 +73,21 @@ int BfmeB1013::bfmeGo1013B()
 	return 1;
 }
 
+// TU-local view of the retail WindowManager; the global below is the real class.
 class BfmeLog1013
 {
 public:
 	void bfmeLog1013(int a, char *fmt, int n, int p, int q, int r, int s, int t);
 };
 
-extern BfmeLog1013 *g_bfmeLog1013;
+class WindowManager;
+
+extern WindowManager *g_theWindowManager;	// retail 0x012F19E8
+
+static inline BfmeLog1013 *localWindowManager1013(void)
+{
+	return (BfmeLog1013 *)g_theWindowManager;
+}
 extern char g_bfmeFmt1013[];
 
 char bfmeAsk1013(void);
@@ -101,7 +109,7 @@ void BfmeC1013::bfmeGo1013C()
 		return;
 
 	if (bfmeAsk1013()) {
-		g_bfmeLog1013->bfmeLog1013(m_bfmeId, g_bfmeFmt1013, 0, 0, 0, 0, 0, 0);
+		localWindowManager1013()->bfmeLog1013(m_bfmeId, g_bfmeFmt1013, 0, 0, 0, 0, 0, 0);
 		m_bfmeState = 9;
 	} else {
 		m_bfmeState = 1;

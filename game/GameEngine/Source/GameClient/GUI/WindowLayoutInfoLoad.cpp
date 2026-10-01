@@ -77,9 +77,16 @@ public:
 
 #pragma comment(linker, "/alternatename:?loadLayout@BfmeAptManager@@QAEPAXPAVAsciiString@@PAVWindowLayoutInfo@@@Z=?j_000429a6@@YAXXZ")
 
-struct Rva00579160Manager;
-extern Rva00579160Manager *Rva00579160TheManager;
-#define TheAptManager (*(BfmeAptManager **)&Rva00579160TheManager)
+class WindowManager;
+
+// The retail global at 0x012F19E8; this TU views it through BfmeAptManager.
+extern WindowManager *g_theWindowManager;
+
+static inline BfmeAptManager *localAptManager(void)
+{
+	return (BfmeAptManager *)g_theWindowManager;
+}
+
 extern GameWindowManager *TheWindowManager;
 
 class WindowLayoutInfo
@@ -106,7 +113,7 @@ Bool WindowLayoutInfo::load(AsciiString filename)
 		if (*extension == '.')
 		{
 			if (_strcmpi(extension, ".apt") == 0)
-				result = TheAptManager->loadLayout(&filename, this);
+				result = localAptManager()->loadLayout(&filename, this);
 			else
 				result = TheWindowManager->winCreateFromScript(
 					*(StringBase<char> *)&filename, this, 0);

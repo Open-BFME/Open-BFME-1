@@ -69,13 +69,21 @@ public:
 	void __cdecl format(UnicodeStringZC text, ...);
 };
 
+// TU-local view of the retail WindowManager; the global below is the real class.
 class BfmePalantirZC
 {
 public:
 	void bfmeStoreZC(const AsciiStringZC &key, const UnicodeStringZC &value);
 };
 
-extern BfmePalantirZC *g_bfmePalantirZC;			// retail 0x012F19E8
+class WindowManager;
+
+extern WindowManager *g_theWindowManager;		// retail 0x012F19E8
+
+static inline BfmePalantirZC *localWindowManagerZC(void)
+{
+	return (BfmePalantirZC *)g_theWindowManager;
+}
 
 // ?bfmeMultiplierZC@@YADM@Z
 char bfmeMultiplierZC(float multiplier)
@@ -89,7 +97,7 @@ char bfmeMultiplierZC(float multiplier)
 	else
 		value.set(L" ", wcslen(L" "));
 
-	g_bfmePalantirZC->bfmeStoreZC(s_bfmeKeyZC, value);
+	localWindowManagerZC()->bfmeStoreZC(s_bfmeKeyZC, value);
 
 	return 1;
 }
