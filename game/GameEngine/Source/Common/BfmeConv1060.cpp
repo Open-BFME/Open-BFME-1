@@ -14,20 +14,28 @@ extern char g_bfmeLitC1060[];
 class BfmeX1060;
 extern BfmeX1060 *g_bfmeX1060;
 
-class BfmeR1060
-{
-public:
-	void bfmeRun1060(BfmeX1060 *a, char *b, int c, char *d, int e, int f, int g, int h);
-};
+class BfmeR1060;
 
 extern BfmeR1060 *g_bfmeR1060;
+
+// The APT/level-path builder the call below reaches (retail 0x004675F0) is a
+// member of the level-path builder class; BfmeLevelAN is this TU's view of the
+// pointee, as in BfmeConv924.cpp.  The casts at the use are pointer-size
+// neutral.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6,
+		int p7, int p8);
+};
 
 void bfmeGo1060B(void)
 {
 	int v = g_bfmeP1060->m_bfme54;
 	char *s = --v ? g_bfmeLitA1060 : g_bfmeLitB1060;
 
-	g_bfmeR1060->bfmeRun1060(g_bfmeX1060, g_bfmeLitC1060, 1, s, 0, 0, 0, 0);
+	((BfmeLevelAN *)g_bfmeR1060)->bfmeBuildAN((unsigned int)g_bfmeX1060,
+		(int)g_bfmeLitC1060, 1, (int)s, 0, 0, 0, 0);
 }
 
 class BfmeO1060

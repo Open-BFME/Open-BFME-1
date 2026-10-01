@@ -7,15 +7,23 @@ class WindowManager
 {
 public:
 	void bfme_hideBackground( bool hide );
-	void unidentified_00015235( int movie, const char *function, int argumentCount,
-		const void *argument1, const void *argument2 = 0, int unused1 = 0,
-		int unused2 = 0, int unused3 = 0 );
 
 private:
 	char m_bfmePrefix[ 0x1B8 ];
 	int m_bfmePendingBackgroundKind;
 	int m_bfmeRememberedBackgroundKind;
 	int m_bfmeBackgroundMovie;
+};
+
+// The APT/level-path builder this body reaches (retail 0x004675F0) is a member
+// of the level-path builder class; BfmeLevelAN is this TU's view of the
+// pointee, as in BfmeConv924.cpp.  The cast at the use is pointer-size
+// neutral.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6,
+		int p7, int p8);
 };
 
 void WindowManager::bfme_hideBackground( bool hide )
@@ -31,9 +39,9 @@ void WindowManager::bfme_hideBackground( bool hide )
 					message = &g_bfmeJpegSingleMessage;
 				else
 					message = &g_bfmeJpegExtendedMessage;
-				unidentified_00015235(
-					m_bfmeBackgroundMovie, "HideInGameBackground", 1,
-					message, 0, 0, 0, 0 );
+				((BfmeLevelAN *)this)->bfmeBuildAN(
+					(unsigned int)m_bfmeBackgroundMovie,
+					(int)"HideInGameBackground", 1, (int)message, 0, 0, 0, 0);
 				m_bfmeRememberedBackgroundKind = 2;
 				break;
 			}
@@ -45,9 +53,9 @@ void WindowManager::bfme_hideBackground( bool hide )
 					message = &g_bfmeJpegSingleMessage;
 				else
 					message = &g_bfmeJpegExtendedMessage;
-				unidentified_00015235(
-					m_bfmeBackgroundMovie, "HideFrontEndBackground", 1,
-					message, 0, 0, 0, 0 );
+				((BfmeLevelAN *)this)->bfmeBuildAN(
+					(unsigned int)m_bfmeBackgroundMovie,
+					(int)"HideFrontEndBackground", 1, (int)message, 0, 0, 0, 0);
 				m_bfmeRememberedBackgroundKind = 1;
 				break;
 			}

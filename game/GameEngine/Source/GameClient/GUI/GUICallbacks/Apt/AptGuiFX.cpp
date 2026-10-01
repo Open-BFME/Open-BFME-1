@@ -41,8 +41,9 @@ public:
 	virtual Rva00510DC0DisplayView *newDisplayString();
 };
 
-// The pinned global is g_theWindowManager; its 0x004675F0 builder is
-// WindowManager::_bfme_callAptFunction.
+// The pinned global is g_theWindowManager; its 0x004675F0 builder is a member
+// of the level-path builder class.  BfmeLevelAN is this TU's view of the
+// pointee, as in BfmeConv924.cpp.
 class WindowManager
 {
 public:
@@ -50,10 +51,13 @@ public:
 	virtual void slot0C(); virtual void slot10(); virtual void slot14();
 	virtual void slot18(); virtual void slot1C(); virtual void slot20();
 	virtual void slot24(); virtual float *slot28();
+};
 
-	void *_bfme_callAptFunction(unsigned int level, const char *functionName,
-		int argCount, const char *a0, const char *a1, const char *a2,
-		const char *a3, const char *a4);
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6,
+		int p7, int p8);
 };
 
 class FontLibraryBFMERetail
@@ -113,6 +117,6 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	char *xTextArg = xText;
 	char *yTextArg = yText;
 	_ReadWriteBarrier();
-	g_theWindowManager->_bfme_callAptFunction(g_bfmeVal995B,
-		"ShowToolTip", 2, xTextArg, yTextArg, 0, 0, 0);
+	((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN((unsigned int)g_bfmeVal995B,
+		(int)"ShowToolTip", 2, (int)xTextArg, (int)yTextArg, 0, 0, 0);
 }

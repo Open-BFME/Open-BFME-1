@@ -48,16 +48,18 @@ void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
 
 // The body at 0x004675F0 this reaches through ILT 0x00015235 is the APT
 // function invoker: it formats /_level%d and hands the named function its
-// five string arguments.
-class WindowManager
-{
-public:
-	void *_bfme_callAptFunction( unsigned int level, const char *functionName,
-		Int argCount, const char *a0, const char *a1, const char *a2,
-		const char *a3, const char *a4 );
-};
+// five string arguments.  It is a member of the level-path builder class;
+// BfmeLevelAN is this TU's view of the pointee, as in BfmeConv924.cpp.
+class WindowManager;
 
 extern WindowManager *g_theWindowManager;
+
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN( unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8 );
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
@@ -113,15 +115,15 @@ void BfmeAptScreenInGameChat::rva00512050( Int mode )
 	switch ( mode )
 	{
 	case 0:
-		g_theWindowManager->_bfme_callAptFunction(
-			m_field250, "CallChild", 1, "addFriend", 0, 0, 0, 0 );
+		((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN( m_field250,
+			(int)"CallChild", 1, (int)"addFriend", 0, 0, 0, 0 );
 		GadgetTextEntrySetText( firstWindow(), UnicodeString::TheEmptyString );
 		TheWindowManager->slot44( firstWindow() );
 		break;
 
 	case 1:
-		g_theWindowManager->_bfme_callAptFunction(
-			m_field250, "CallChild", 1, "removeFriend", 0, 0, 0, 0 );
+		((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN( m_field250,
+			(int)"CallChild", 1, (int)"removeFriend", 0, 0, 0, 0 );
 		GadgetTextEntrySetText( secondWindow(), UnicodeString::TheEmptyString );
 		TheWindowManager->slot44( secondWindow() );
 		break;
