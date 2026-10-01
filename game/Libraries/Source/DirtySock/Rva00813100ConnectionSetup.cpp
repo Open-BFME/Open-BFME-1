@@ -42,7 +42,6 @@ extern "C"
 	int Rva0081B010( void *transport, void *argument );
 	int Rva0081B790( void *transport, void *argument );
 	int Rva0081B910( void *transport, void *argument );
-	int __stdcall Rva0081BDAE( unsigned int handle );
 }
 
 extern "C" int Rva0081B9D0( void *transport );
@@ -54,6 +53,9 @@ extern "C" int Rva0081B9D0( void *transport );
 extern void ji_0081bda8();
 typedef int ( __stdcall *Rva0081BDA8Answer )( int address, int first,
 	int second );
+
+extern void ji_0081bdae();
+typedef int ( __stdcall *Rva0081BDAEClose )( unsigned int handle );
 
 extern "C" __declspec(dllimport) int __cdecl wsprintfA(
 	char *destination, const char *format, ... );
@@ -68,7 +70,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 	{
 		if ( active->m_state == 4 )
 		{
-			Rva0081BDAE( active->m_handle );
+			((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 			active->m_handle = (unsigned int)-1;
 			openResult = Rva008136C0( active->m_lineApplication,
 				active->m_port, &active->m_handle,
@@ -77,7 +79,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 		}
 		else if ( active->m_state == 3 )
 		{
-			Rva0081BDAE( active->m_handle );
+			((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 			active->m_handle = (unsigned int)-1;
 			openResult = Rva008136C0( active->m_lineApplication,
 				active->m_port,
@@ -91,7 +93,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 				&active->m_address, active->m_hostName, 0 );
 			if ( active->m_result <= 0 )
 			{
-				Rva0081BDAE( active->m_handle );
+				((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 				active->m_handle = (unsigned int)-1;
 				active->m_state = 8;
 				return;
@@ -104,7 +106,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 		{
 			active->m_state = 7;
 			Rva0081B010( active->m_transport, 0 );
-			Rva0081BDAE( active->m_handle );
+			((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 			active->m_handle = (unsigned int)-1;
 			openResult = Rva008136C0( active->m_lineApplication,
 				active->m_port, &active->m_handle,
@@ -120,7 +122,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 		{
 			active->m_state = 6;
 			Rva0081B010( active->m_transport, 0 );
-			Rva0081BDAE( active->m_handle );
+			((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 			active->m_handle = (unsigned int)-1;
 			openResult = Rva008136C0( active->m_lineApplication,
 				active->m_port,
@@ -134,7 +136,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 				&active->m_address, active->m_hostName, 0 );
 			if ( active->m_result <= 0 )
 			{
-				Rva0081BDAE( active->m_handle );
+				((Rva0081BDAEClose)ji_0081bdae)( active->m_handle );
 				active->m_handle = (unsigned int)-1;
 				active->m_state = 8;
 				return;
