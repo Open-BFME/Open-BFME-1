@@ -198,3 +198,5 @@ game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value14,m_loc
 game/GameEngine/Source/Common/BfmeConv1838.cpp|function|BfmeHolderXB@|bfmeOnXB,DoXfer,claude-fable+grok,"disputed: The body marks the item, then adds and links it into the holder's base; nothing is serialized, which DoXfer means in SAGE. Fable and Grok likely both read the placeholder's XB suffix as Xfer.",2026-10-01
 game/GameEngine/Source/Common/BfmeConv1916.cpp|type||BfmePlayerBR,Player,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1916.cpp|type||BfmePlayerBR,Player,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,GameLogic,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,ControlBar,gemini+grok,agreed,2026-10-01

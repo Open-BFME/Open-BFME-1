@@ -370,3 +370,5 @@ game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|type||LinePoint0078B040,5
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|type||LineVertex0078B040,8c660744bd84f3451c9830a0,gemini,20261001113828-6e73fc,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1916.cpp|type||BfmePlayerBR,6b892b920df4f076c29ca0c8,gemini,20261001114215-717b95,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1916.cpp|param|BfmeHostBR::xfer|x,bd2360668858266e59eabe97,gemini,20261001114215-717b95,2026-10-01
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,271340a38f0b494f9a5dfefe,gemini,20261001114215-f4a0a3,2026-10-01
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,be86cd1edf4afbdb2fe11671,gemini,20261001114215-f4a0a3,2026-10-01
