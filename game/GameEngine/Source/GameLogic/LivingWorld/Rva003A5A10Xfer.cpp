@@ -140,7 +140,10 @@ struct Rva005A00B0AudioClient
 #undef RVA_AUDIO_SLOT
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; Rva005A00B0AudioClient
+// above is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class Rva003A5A10
 {
@@ -231,5 +234,5 @@ void Rva003A5A10::xfer(Rva003A5A10XferView *xfer)
 		}
 	}
 
-	TheAudioClientUpdate->takeItem148(xfer, &m_field24);
+	((Rva005A00B0AudioClient *)TheAudio)->takeItem148(xfer, &m_field24);
 }

@@ -160,7 +160,10 @@ private:
 
 extern ImageCollection *TheMappedImageCollection;
 extern Display *TheDisplay;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; Rva005A00B0AudioClient
+// above is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern GameLogic *TheBfmeGameLogic;
 extern GlobalData *TheWritableGlobalData;
 extern FontLibrary *TheFontLibrary;
@@ -169,8 +172,8 @@ extern GameTextInterface *TheGameText;
 // ?rva00491A40@Gen_00491880@@UAEXH@Z
 void Gen_00491880::rva00491A40(int unused)
 {
-	TheAudioClientUpdate->slot3C(2);
-	TheAudioClientUpdate->slot14();
+	((Rva005A00B0AudioClient *)TheAudio)->slot3C(2);
+	((Rva005A00B0AudioClient *)TheAudio)->slot14();
 
 	AsciiString foreground("LoadScreenForeground");
 	const Image *image = TheMappedImageCollection->findImageByName(foreground);

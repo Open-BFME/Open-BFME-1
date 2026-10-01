@@ -256,7 +256,10 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
-extern ClientSubsystem *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; ClientSubsystem above
+// is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern const Real Rva00C75334One;
 
 #pragma comment(linker, "/alternatename:?rva002a65c0@SpecialAbilityUpdate@@QAE_NXZ=?j_0004b466@@YAXXZ")
@@ -365,9 +368,9 @@ Bool SpecialAbilityUpdate::continuePreparation()
 					flash.raw = j_0004067e;
 					(targetDraw->*flash.member)(&myHouseColor);
 					AudioEventRTS defectorTimerSound =
-						TheAudioClientUpdate->getMiscAudio()->m_defectorTimerTickSound;
+						((ClientSubsystem *)TheAudio)->getMiscAudio()->m_defectorTimerTickSound;
 					defectorTimerSound.setObjectID(m_targetID);
-					TheAudioClientUpdate->addAudioEvent(&defectorTimerSound);
+					((ClientSubsystem *)TheAudio)->addAudioEvent(&defectorTimerSound);
 				}
 			}
 		}

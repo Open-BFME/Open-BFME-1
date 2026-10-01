@@ -103,7 +103,11 @@ public:
 #undef SLOT
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+class AudioManager;
+
+// 0x012ED668: retail's global is AudioManager *TheAudio; ClientSubsystem below
+// is this TU's view of the same pointer's vtable.
+extern AudioManager *TheAudio;
 
 class GameLogic
 {
@@ -186,7 +190,7 @@ bool Rva0034E810ScriptEngine::isSpeechComplete(const AsciiString &testSpeech, bo
 	{
 		PairAsciiStringUINT newPair;
 		AudioEventRTS event(testSpeech, 0);
-		UnsignedInt frameCount = (UnsignedInt)(TheAudioClientUpdate->getAudioLengthMS(&event) * LOGICFRAMES_PER_MSEC_REAL);
+		UnsignedInt frameCount = (UnsignedInt)(((ClientSubsystem *)TheAudio)->getAudioLengthMS(&event) * LOGICFRAMES_PER_MSEC_REAL);
 
 		newPair.first = testSpeech;
 		newPair.second = frameCount + TheGameLogic->getFrame();

@@ -309,7 +309,10 @@ extern void j_00032a56();
 extern void j_00002e46();
 extern void j_000012e4();
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; ClientSubsystem above
+// is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern InGameUI *TheInGameUI;
 extern GameLogic *TheBfmeGameLogic;
 extern Keyboard *TheKeyboard;
@@ -336,7 +339,7 @@ bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
 
 	if (value != 0)
 	{
-		TheAudioClientUpdate->slot94();
+		((ClientSubsystem *)TheAudio)->slot94();
 
 		owner->m_currentRegionName.set(value->m_name);
 		TheInGameUI->slot23();

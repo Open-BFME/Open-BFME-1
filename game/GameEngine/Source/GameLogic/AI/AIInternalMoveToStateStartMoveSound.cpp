@@ -23,7 +23,7 @@
 //      arms set a `played` flag that suppresses the trailing normal move-loop
 //      block (0x0016E7E4 / 0x0016E845).
 //   4. Each loop event first stops whatever ambient handle is still playing --
-//      `TheAudioClientUpdate != 0 && m_ambientPlayingHandle >= 5` then
+//      `TheAudio != 0 && m_ambientPlayingHandle >= 5` then
 //      vslot +0x4C (0x0016E796, 0x0016E88F) -- which ZH has no equivalent of.
 //      The 5 threshold and the handle type are the BFME spelling already landed
 //      in Rva003720F0AudioRefresh.cpp and AIInternalMoveToState_onEnter.cpp.
@@ -159,7 +159,10 @@ public:
 	virtual void removeAudioEvent(AudioHandle handle) = 0;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; Rva005A00B0AudioClient
+// above is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class StateMachine
@@ -222,18 +225,18 @@ void AIInternalMoveToState::startMoveSound(void)
 		if (!soundEventMoveDamaged.getEventName().isEmpty())
 		{
 			soundEventMoveDamaged.setObjectID(obj->getID());
-			TheAudioClientUpdate->addAudioEvent(&soundEventMoveDamaged);
+			((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&soundEventMoveDamaged);
 			moveStartPlayed = true;
 		}
 
 		soundEventMoveDamaged = *objTemplate->getSound(BFME_SLOT_MOVE_LOOP_DAMAGED);
 		if (!soundEventMoveDamaged.getEventName().isEmpty())
 		{
-			if (TheAudioClientUpdate != 0 && state->m_ambientPlayingHandle >= 5)
-				TheAudioClientUpdate->removeAudioEvent(state->m_ambientPlayingHandle);
+			if (((Rva005A00B0AudioClient *)TheAudio) != 0 && state->m_ambientPlayingHandle >= 5)
+				((Rva005A00B0AudioClient *)TheAudio)->removeAudioEvent(state->m_ambientPlayingHandle);
 			soundEventMoveDamaged.setObjectID(obj->getID());
 			state->m_ambientPlayingHandle =
-				TheAudioClientUpdate->addAudioEvent(&soundEventMoveDamaged);
+				((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&soundEventMoveDamaged);
 			moveLoopPlayed = true;
 		}
 	}
@@ -248,7 +251,7 @@ void AIInternalMoveToState::startMoveSound(void)
 		if (!soundEventMove.getEventName().isEmpty())
 		{
 			soundEventMove.setObjectID(obj->getID());
-			TheAudioClientUpdate->addAudioEvent(&soundEventMove);
+			((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&soundEventMove);
 		}
 	}
 
@@ -257,11 +260,11 @@ void AIInternalMoveToState::startMoveSound(void)
 		AudioEventRTS soundEventMoveLoop = *objTemplate->getSound(BFME_SLOT_MOVE_LOOP);
 		if (!soundEventMoveLoop.getEventName().isEmpty())
 		{
-			if (TheAudioClientUpdate != 0 && state->m_ambientPlayingHandle >= 5)
-				TheAudioClientUpdate->removeAudioEvent(state->m_ambientPlayingHandle);
+			if (((Rva005A00B0AudioClient *)TheAudio) != 0 && state->m_ambientPlayingHandle >= 5)
+				((Rva005A00B0AudioClient *)TheAudio)->removeAudioEvent(state->m_ambientPlayingHandle);
 			soundEventMoveLoop.setObjectID(obj->getID());
 			state->m_ambientPlayingHandle =
-				TheAudioClientUpdate->addAudioEvent(&soundEventMoveLoop);
+				((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&soundEventMoveLoop);
 		}
 	}
 }

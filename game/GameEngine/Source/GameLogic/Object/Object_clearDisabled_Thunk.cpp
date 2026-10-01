@@ -168,7 +168,10 @@ public:
 	virtual void *getMiscAudio();
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// 0x012ED668: retail's global is AudioManager *TheAudio; Rva005A00B0AudioClient
+// above is this TU's view of the same pointer's vtable.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 enum KindOfType
 {
@@ -428,18 +431,18 @@ Bool Object::clearDisabled(DisabledType type)
 			if (isKindOf(KINDOF_STRUCTURE))
 		{
 				AudioEventRTS *event = reinterpret_cast<AudioEventRTS *>(
-					reinterpret_cast<unsigned char *>(TheAudioClientUpdate->getMiscAudio()) + 0x690);
+					reinterpret_cast<unsigned char *>(((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio()) + 0x690);
 				bfmeAudioAssign(&sound, event);
 				bfmeAudioSetPosition(&sound, reinterpret_cast<const Coord3D *>(m_position));
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&sound);
 			}
 			else if (isKindOf(KINDOF_VEHICLE))
 			{
 				AudioEventRTS *event = reinterpret_cast<AudioEventRTS *>(
-					reinterpret_cast<unsigned char *>(TheAudioClientUpdate->getMiscAudio()) + 0x770);
+					reinterpret_cast<unsigned char *>(((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio()) + 0x770);
 				bfmeAudioAssign(&sound, event);
 				bfmeAudioSetPosition(&sound, reinterpret_cast<const Coord3D *>(m_position));
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&sound);
 			}
 		}
 	no_reenabled_sound:;
