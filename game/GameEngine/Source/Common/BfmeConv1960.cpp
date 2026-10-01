@@ -25,7 +25,11 @@ public:
 	virtual void bfmeSlot19ERR(int handle);
 };
 
-extern BfmeAudioERR *g_bfmeAudioERR;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs two slots of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeBufERR
 {
@@ -68,7 +72,7 @@ public:
 
 void BfmeHostERR::bfmeUpdateERR()
 {
-	BfmeAudioERR *audio = g_bfmeAudioERR;
+	BfmeAudioERR *audio = (BfmeAudioERR *)TheAudio;
 	BfmeNodeERR *node = *(BfmeNodeERR **)((char *)this - 0x1c);
 
 	if (audio != 0)
@@ -83,7 +87,7 @@ void BfmeHostERR::bfmeUpdateERR()
 		BfmeBufERR buf(node->m_bfmePayloadERR, value);
 		BfmeBufERR *arg = &buf;
 
-		m_bfmeHandleERR = g_bfmeAudioERR->bfmeSlot17ERR(arg);
+		m_bfmeHandleERR = ((BfmeAudioERR *)TheAudio)->bfmeSlot17ERR(arg);
 	}
 
 	if (node->m_bfmeCountERR > 0)

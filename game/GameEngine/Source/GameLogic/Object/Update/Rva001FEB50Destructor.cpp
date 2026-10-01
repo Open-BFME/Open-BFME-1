@@ -3,7 +3,7 @@
 // SlaveWatcherBehaviorDestructors.cpp) and of ?d_002d3080 (0x002D3080,
 // Rva002D3080Destructor.cpp). Same UpdateModule chain plus one extra
 // interface base (vtable at +0x20, no intervening field-holder class), and a
-// guarded cleanup call on TheAudioClientUpdate passing a field at +0x24, then
+// guarded cleanup call on TheAudio passing a field at +0x24, then
 // marking that field done (=1) -- unlike Rva002D3080 which leaves its field
 // untouched after the call. The GameLogic::findObjectByID id argument is not
 // a stored member of this module (unlike SlaveWatcherBehavior's m_slaveID);
@@ -94,7 +94,11 @@ public:
 	virtual void removeAudioEvent(unsigned int audioEvent);
 };
 
-extern AudioClientUpdateSub *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs one slot of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 // upstream layout: real header unknown; address-derived shape
 class Rva001FEB50
@@ -118,9 +122,9 @@ Rva001FEB50::~Rva001FEB50()
 			found->kill(DAMAGE_SNIPER, DEATH_RVA1FEB50);
 	}
 
-	if (TheAudioClientUpdate)
+	if (TheAudio)
 	{
-		TheAudioClientUpdate->removeAudioEvent(m_field24);
+		((AudioClientUpdateSub *)TheAudio)->removeAudioEvent(m_field24);
 		m_field24 = 1;
 	}
 }

@@ -63,7 +63,11 @@ public:
 
 class PlayingAudio;
 extern void j_000207a2();
-extern ClientSubsystem *TheAudioClientUpdate;
+
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only reaches one slot through it, so it keeps its own view.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class PlayingAudio : public BfmeBaseASCa
 {
@@ -87,7 +91,7 @@ private:
 
 PlayingAudio::~PlayingAudio()
 {
-	if (TheAudioClientUpdate)
+	if (TheAudio)
 	{
 		typedef void (ClientSubsystem::*RemovePlayingAudio)(PlayingAudio *);
 		union
@@ -96,7 +100,7 @@ PlayingAudio::~PlayingAudio()
 			RemovePlayingAudio memberFunction;
 		} remove;
 		remove.freeFunction = ::j_000207a2;
-		(TheAudioClientUpdate->*remove.memberFunction)(this);
+		(((ClientSubsystem *)TheAudio)->*remove.memberFunction)(this);
 	}
 
 }

@@ -45,7 +45,7 @@ public:
 	unsigned char m_storage[0x70];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h (TheAudioClientUpdate's real class)
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h (TheAudio's real class)
 // TU-local partial vtable: only slots 22 and 33 are proven by this body.
 class Rva005A00B0AudioClient
 {
@@ -65,7 +65,11 @@ public:
 	virtual bool slot33();
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs slots 22 and 33, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class Display;
 extern Display *TheDisplay;
@@ -99,11 +103,11 @@ public:
 // proven owner", t=10m model=Codex); every name here is address-derived.
 void __stdcall Rva0051BCE0(void *unused)
 {
-	if (!TheAudioClientUpdate->slot33())
+	if (!((Rva005A00B0AudioClient *)TheAudio)->slot33())
 	{
 		Rva0051BCE0EventStorage event(AsciiString("Shell2Music"), 2);
 		event.setIsLogicalAudio(false);
-		TheAudioClientUpdate->slot22(&event);
+		((Rva005A00B0AudioClient *)TheAudio)->slot22(&event);
 	}
 
 	((Rva0051BCE0DisplayThunk *)TheDisplay)->bfmeFlagVM0(1);

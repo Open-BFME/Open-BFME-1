@@ -134,7 +134,11 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeAudioBI(BfmeAgentBI *ag, void *dst);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs slots 32 and 34 of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeHostBI
 {
@@ -160,7 +164,7 @@ void BfmeHostBI::bfmeSaveBI(BfmeAgentBI *ag)
 	if (ag->bfmeReadingBI() != 0)
 		bfmeResetBI();
 
-	TheAudioClientUpdate->bfmeAudioBI(ag, &m_bfmeHandleBI);
+	((Rva005A00B0AudioClient *)TheAudio)->bfmeAudioBI(ag, &m_bfmeHandleBI);
 
 	ag->bfmeByteBI(&m_bfmeSlotABI);
 	ag->bfmeByteBI(&m_bfmeSlotBBI);
@@ -171,5 +175,5 @@ void BfmeHostBI::bfmeSaveBI(BfmeAgentBI *ag)
 	ag->bfmeByteBI(&live);
 
 	if (ag->bfmeReadingBI() != 0 && live != 0 && m_bfmeHandleBI < 5)
-		m_bfmeHandleBI = TheAudioClientUpdate->bfmeNewBI();
+		m_bfmeHandleBI = ((Rva005A00B0AudioClient *)TheAudio)->bfmeNewBI();
 }

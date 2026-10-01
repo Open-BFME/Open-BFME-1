@@ -110,7 +110,11 @@ public:
 	virtual void giveBack( int slot );
 };
 
-extern GenReturner *TheGenReturner;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs slot 19 of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class Rva0057F100
 {
@@ -121,9 +125,9 @@ public:
 };
 void Rva0057F100::giveBack()
 {
-	if( TheGenReturner )
+	if( TheAudio )
 	{
-		TheGenReturner->giveBack( m_slot );
+		((GenReturner *)TheAudio)->giveBack( m_slot );
 		m_slot = 1;
 	}
 }

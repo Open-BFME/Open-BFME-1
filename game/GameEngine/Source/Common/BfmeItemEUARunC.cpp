@@ -61,7 +61,11 @@ public:
 	AsciiString m_audioEventName;
 };
 
-extern AudioClientUpdate *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs one slot of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeItemEUA
 {
@@ -82,10 +86,10 @@ void BfmeItemEUA::bfmeRunEUAc(void *context)
 	int delta = reinterpret_cast<int>(context);
 	m_specialPowerState.adjust(delta);
 
-	if (m_playerTemplate && delta > 0 && m_playerTemplate->m_audioEventName.m_data && TheAudioClientUpdate)
+	if (m_playerTemplate && delta > 0 && m_playerTemplate->m_audioEventName.m_data && TheAudio)
 	{
 		AudioEventRTS event(m_playerTemplate->m_audioEventName, 0);
 		event.setPlayerIndex(m_playerIndex);
-		TheAudioClientUpdate->addAudioEvent(&event);
+		((AudioClientUpdate *)TheAudio)->addAudioEvent(&event);
 	}
 }

@@ -34,7 +34,11 @@ public:
 #undef SLOT
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs two slots of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class WeatherData
 {
@@ -65,7 +69,7 @@ void GlobalWeatherSystem::setWeather(int which)
 	if (m_current == which)
 		return;
 
-	TheAudioClientUpdate->removeAudioEvent(m_handle);
+	((ClientSubsystem *)TheAudio)->removeAudioEvent(m_handle);
 
 	AsciiString *name = &m_weather[which].m_sound;
 	m_handle = 1;
@@ -73,6 +77,6 @@ void GlobalWeatherSystem::setWeather(int which)
 	if (name->m_data)
 	{
 		AudioEventRTS ev(*name, 0);
-		m_handle = TheAudioClientUpdate->addAudioEvent(&ev);
+		m_handle = ((ClientSubsystem *)TheAudio)->addAudioEvent(&ev);
 	}
 }

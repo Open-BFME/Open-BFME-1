@@ -66,16 +66,20 @@ public:
 	virtual void getInfoForAudioEvent(const AudioEventRTS *event) const = 0;
 };
 
-extern AudioClientUpdate *TheAudioClientUpdate;
+// Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);
+// this TU only needs two slots of it, so it keeps its own view.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 // ?bfmeNamedAudio0046F1A0@@YAXPBD@Z
 void __cdecl bfmeNamedAudio0046F1A0(const char *text)
 {
-    if (TheAudioClientUpdate)
+    if (TheAudio)
     {
         AudioEventRTS event(AsciiString(text), 2);
-		TheAudioClientUpdate->getInfoForAudioEvent(&event);
+		((AudioClientUpdate *)TheAudio)->getInfoForAudioEvent(&event);
 		if (event.m_eventInfo)
-			TheAudioClientUpdate->addAudioEvent(&event);
+			((AudioClientUpdate *)TheAudio)->addAudioEvent(&event);
 	}
 }
