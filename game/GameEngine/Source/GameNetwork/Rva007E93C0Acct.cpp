@@ -5,7 +5,6 @@
 class Rva007E8810Message
 {
 public:
-	void reset(void);
 	void addString(const char *key, const char *value);
 	void addInt(const char *key, int value);
 	void addBool(const char *key, bool value);
@@ -13,6 +12,9 @@ public:
 	char m_head[0x1C];
 	unsigned int m_category;
 };
+
+// retail 0x007E8AC0
+class Rva007E8AC0 { public: void run(); };
 
 extern const char *g_Rva0130A4F4Txn;
 
@@ -22,7 +24,7 @@ void __stdcall Rva007E93C0(Rva007E8810Message *msg, const char *name,
 	bool eaMailFlag, bool thirdPartyMailFlag)
 {
 	const char *txn = g_Rva0130A4F4Txn;
-	msg->reset();
+	((Rva007E8AC0*)msg)->run();
 	msg->m_category = 'acct';
 	msg->addString("TXN", txn);
 	msg->addString("name", name);

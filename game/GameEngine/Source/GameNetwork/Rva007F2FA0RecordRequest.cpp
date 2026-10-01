@@ -7,7 +7,6 @@ typedef __int64 FeslInt64;
 class Rva007E8810Message
 {
 public:
-	void reset( void );
 	void addString( const char *key, const char *value );
 	void addInt( const char *key, int value );
 	void addInt64( const char *key, FeslInt64 value );
@@ -18,6 +17,9 @@ public:
 	char m_tail[ 0x0C ];
 	int m_depth;
 };
+
+// retail 0x007E8AC0
+class Rva007E8AC0 { public: void run(); };
 
 struct Rva007F2FA0Owner
 {
@@ -41,7 +43,7 @@ void __stdcall Rva007F2FA0( Rva007E8810Message *msg,
 	unsigned int i;
 	const Rva007F2FA0Value *entries = values;
 
-	msg->reset();
+	((Rva007E8AC0*)msg)->run();
 	msg->m_category = 'recp';
 	msg->addString( "TXN", txn );
 	if( owner )

@@ -9,9 +9,11 @@
 class Rva007E8810Message
 {
 public:
-	void reset();
 	void setError(int code);
 };
+
+// retail 0x007E8AC0
+class Rva007E8AC0 { public: void run(); };
 
 class Rva007FA5E0Arg
 {
@@ -99,7 +101,7 @@ private:
 void Rva007FA2C0::rva007FA3D0(Rva007FA5E0Arg *arg,
 	Rva007E8810Message *message, unsigned timeout)
 {
-	message->reset();
+	((Rva007E8AC0*)message)->run();
 	if (arg->valid())
 	{
 		message->setError(-103);

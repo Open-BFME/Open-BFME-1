@@ -14,12 +14,14 @@
 
 struct BfmeSetupTarget
 {
-	void bfmeBegin(void);					// retail 0x007E8AC0
 	void bfmeWrite(const char *text, int value);		// retail 0x007E8A10
 
 	char m_bfmeHead[0x1C];
 	unsigned int m_bfmeTag;					// +0x1C
 };
+
+// retail 0x007E8AC0
+struct Rva007E8AC0 { void run(); };
 
 extern const char TheBfmeSetupText[];				// 0x011298AC
 
@@ -41,7 +43,7 @@ void __stdcall bfmeSetup_007E95A0(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E95A0;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
@@ -53,7 +55,7 @@ void __stdcall bfmeSetup_007E95D0(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E95D0;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
@@ -65,7 +67,7 @@ void __stdcall bfmeSetup_007E98A0(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E98A0;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
@@ -77,7 +79,7 @@ void __stdcall bfmeSetup_007E98D0(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E98D0;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
@@ -89,7 +91,7 @@ void __stdcall bfmeSetup_007E9990(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E9990;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
@@ -101,7 +103,7 @@ void __stdcall bfmeSetup_007E99C0(BfmeSetupTarget *thing)
 {
 	int value = TheBfmeSetupValue_007E99C0;
 
-	thing->bfmeBegin();
+	((Rva007E8AC0*)thing)->run();
 
 	thing->m_bfmeTag = 0x61636374;
 
