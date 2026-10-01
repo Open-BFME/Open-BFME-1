@@ -1,12 +1,10 @@
 // ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
-// partial score=1.0 date=2026-09-30
-// ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
+// BfmeAptScreenOnlineLogin::_bfme_populateCountryList, retail 0x005506F0.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// The login-screen handler _bfme_onInitGadget lives at RVA 0x00551DD0.
-// It stores the country-list box at this+0x88.
-// It then calls this method through the pinned jump stub at 0x00005F83.
+// The matched _bfme_onInitGadget caller at 0x00551DD0 stores the country-list
+// window at +0x88. It calls this method through ILT 0x00005F83.
 //
 // This method adds "WOL:Locale01" as row 0.
 // It stores locales 02 through 37 in a map from UnicodeString names to
