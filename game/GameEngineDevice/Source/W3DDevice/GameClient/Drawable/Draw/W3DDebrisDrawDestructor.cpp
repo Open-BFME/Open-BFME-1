@@ -41,7 +41,8 @@ private:
 	int m_refCount;
 };
 
-class SceneClass
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void sceneSlot0();
@@ -56,7 +57,12 @@ public:
 	void handle(void *object);
 };
 
-extern SceneClass *g_scene;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;					// 0x012F8058
+};
 extern Gen0003AC38 *g_shadowManager;
 
 class W3DDebrisDraw : public DrawableModuleLayoutBase,
@@ -96,7 +102,7 @@ W3DDebrisDraw::~W3DDebrisDraw()
 	RenderObjClass *renderObject = m_renderObject;
 	if (renderObject != (RenderObjClass *)zero)
 	{
-		g_scene->Remove_Render_Object(renderObject);
+		W3DDisplay::m_3DScene->Remove_Render_Object(renderObject);
 		if (m_renderObject != (RenderObjClass *)zero)
 		{
 			m_renderObject->releaseRef();

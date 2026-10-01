@@ -270,7 +270,8 @@ private:
 	Char m_storage[ 0x108 ];
 };
 
-class BfmeGlobPB
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void slot0();
@@ -278,7 +279,13 @@ public:
 	virtual void configure( BfmeStreakObject *object );
 };
 
-extern BfmeGlobPB *g_bfmeGlobPB;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;					// 0x00EF8058
+};
+
 extern Int g_bfmeStreakDefault;
 
 class W3DStreakDraw : public DrawModule
@@ -320,7 +327,7 @@ W3DStreakDraw::W3DStreakDraw( Thing *thing, const ModuleData *moduleData )
 		vector.z = data->m_at18;
 		m_streak->setVector( &vector );
 		m_streak->setInt( data->m_at08 );
-		g_bfmeGlobPB->configure( m_streak );
+		W3DDisplay::m_3DScene->configure( m_streak );
 		m_streak->apply( 1 );
 	}
 }

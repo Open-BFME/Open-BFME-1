@@ -28,7 +28,8 @@ public:
 	void removeShadow(Shadow *shadow);
 };
 
-class SceneClass
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void slot0();
@@ -39,10 +40,11 @@ public:
 
 extern W3DShadowManager *TheW3DShadowManager;
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:
-	static SceneClass *m_3DScene;
+	static RTS3DScene *m_3DScene;					// 0x012F8058
 };
 
 class DrawableModule

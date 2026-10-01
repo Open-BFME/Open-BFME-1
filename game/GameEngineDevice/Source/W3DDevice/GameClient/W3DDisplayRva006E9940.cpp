@@ -78,7 +78,8 @@ static void updateLights(float scale, const TerrainLighting *lighting,
     }
 }
 
-class BfmeGlobPB
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
     virtual void slot00();
@@ -106,11 +107,12 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;
-extern BfmeGlobPB *g_bfmeGlobPB;
 
 class W3DDisplay
 {
 public:
+    static RTS3DScene *m_3DScene;              // 0x00EF8058
+
     virtual void rva006E9940(float scale);
 
 private:
@@ -129,13 +131,13 @@ void W3DDisplay::rva006E9940(float scale)
     const TerrainLighting *second =
         reinterpret_cast<const TerrainLighting *>(lighting + 0x734);
 
-    if (g_bfmeGlobPB)
+    if (m_3DScene)
     {
-        g_bfmeGlobPB->Set_Ambient_Light(Vector3(
+        m_3DScene->Set_Ambient_Light(Vector3(
             first->ambient[0] * scale,
             first->ambient[1] * scale,
             first->ambient[2] * scale));
-        g_bfmeGlobPB->m_ambient = Vector3(
+        m_3DScene->m_ambient = Vector3(
             second->ambient[0] * scale,
             second->ambient[1] * scale,
             second->ambient[2] * scale);

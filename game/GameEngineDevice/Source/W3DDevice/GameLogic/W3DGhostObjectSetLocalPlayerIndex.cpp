@@ -23,7 +23,8 @@ public:
 	virtual void Remove();
 };
 
-class BfmeGlobPB
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void slot00();
@@ -31,7 +32,12 @@ public:
 	virtual void addRenderObject(RenderObjClass *renderObject);
 };
 
-extern BfmeGlobPB *g_bfmeGlobPB;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;					// 0x00EF8058
+};
 
 class SnapshotBase
 {
@@ -87,7 +93,7 @@ protected:
 		W3DRenderObjectSnapshot *snap = m_parentSnapshots[playerIndex];
 		while (snap)
 		{
-			g_bfmeGlobPB->addRenderObject(snap->m_robj);
+			W3DDisplay::m_3DScene->addRenderObject(snap->m_robj);
 			snap = snap->m_next;
 		}
 	}

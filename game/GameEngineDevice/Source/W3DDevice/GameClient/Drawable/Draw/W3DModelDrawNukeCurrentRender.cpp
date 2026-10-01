@@ -74,7 +74,8 @@ public:
 	virtual bool predicate01E8();
 };
 
-class SceneClass
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void s0();
@@ -83,7 +84,12 @@ public:
 	virtual void Remove_Render_Object(RenderObjClass *obj);
 };
 
-extern SceneClass *g_Va012F8058;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;					// 0x012F8058
+};
 
 class W3DModelDraw
 {
@@ -129,7 +135,7 @@ void W3DModelDraw::nukeCurrentRender(Matrix3D *out)
 			out->m22 = obj->m_transform.m22; out->m23 = obj->m_transform.m23;
 		}
 		if (m_obj->predicate01E8())
-			g_Va012F8058->Remove_Render_Object(m_obj);
+			W3DDisplay::m_3DScene->Remove_Render_Object(m_obj);
 		obj = m_obj;
 		if (obj)
 		{

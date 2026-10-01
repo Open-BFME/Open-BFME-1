@@ -16,7 +16,8 @@ public:
 	virtual ~StreakDrawBase() {}
 };
 
-class BFME3DScene
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void slot0();
@@ -25,10 +26,11 @@ public:
 	virtual void Remove_Render_Object(void *object);
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:
-	static BFME3DScene *m_3DScene;
+	static RTS3DScene *m_3DScene;					// 0x012F8058
 };
 
 class BfmeStreakObject

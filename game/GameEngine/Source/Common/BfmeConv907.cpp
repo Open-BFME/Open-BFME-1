@@ -32,7 +32,8 @@ void BfmeThingQB::bfmeGoQB()
 	bfmeTailQB();
 }
 
-class BfmeGlobQC
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
+class RTS3DScene
 {
 public:
 	virtual void bfmeSlotQC00();
@@ -57,12 +58,17 @@ public:
 	virtual void bfmeTwoQC(int f);
 };
 
-extern BfmeGlobQC *g_bfmeGlobQC;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;					// 0x00EF8058
+};
 
 void __stdcall bfmeGoQC(void *a)
 {
-	g_bfmeGlobQC->bfmeOneQC(a);
-	g_bfmeGlobQC->bfmeTwoQC(8);
+	W3DDisplay::m_3DScene->bfmeOneQC(a);
+	W3DDisplay::m_3DScene->bfmeTwoQC(8);
 }
 
 class BfmeSubQE
