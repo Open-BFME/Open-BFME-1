@@ -89944,3 +89944,4 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 ?rva001C2380@Object@@QBEMPBUCoord3D@@PBV1@0@Z,0x0001D31D,address-derived Object method. The caller at 0x003EA570 passes three pointers and uses its float result. route=0x001C2380
 ?rva001F8E20@MemoryPool@@QAEXPAUCoord3D@@@Z,0x00034A0E,address-derived method. The caller at 0x003EA570 passes a Coord3D pointer and uses no result. route=0x001F8E20
 ?rva003E4DA0@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z,0x00037196,address-derived Pathfinder method. The caller at 0x003EA570 passes Object and Coord3D pointers and reads EAX. route=0x003E4DA0
+?g_Rva0130E8B4@@3TRva0130E8B4Storage@@A,0x0130E8B4,Address-only storage view: retail00872950 operands at+1 +E +18 all VA0130E8B4; dword read and low-word mutation independently decoded; source union records observed widths only

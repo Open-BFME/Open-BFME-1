@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e32cc72d13d1eb6115564d1fbf0ef706387621eb859ff23e17e6adde149710bb",
+  "symbol": "?Rva003ACD80@@YAPAURva003ACD80Record@@PAU1@00ABUrandom_access_iterator_tag@_STL@@PAH@Z",
+  "score_kind": "measured",
+  "score": 0.0,
+  "source": "// ?Rva003ACD80@@YAPAURva003ACD80Record@@PAU1@00ABUrandom_access_iterator_tag@_STL@@PAH@Z\n// partial score=0.0 date=2026-10-01\n// stlport\r\n#include <algorithm>\r\n\r\nstruct Rva003ACD80Point\r\n{\r\n    float m_at00, m_at04, m_at08;\r\n};\r\n\r\nstruct Rva003ACD80Record\r\n{\r\n    virtual void slot00();\r\n    int m_at04;\r\n    Rva003ACD80Point m_at08;\r\n    int m_at14;\r\n    int m_at18;\r\n    bool m_at1c;\r\n};\r\n\r\nRva003ACD80Record *Rva003ACD80(Rva003ACD80Record *first,\r\n    Rva003ACD80Record *last, Rva003ACD80Record *result,\r\n    const _STL::random_access_iterator_tag &, int *)\r\n{\r\n    int n = last - first;\r\n    if (n >= 4)\r\n    {\r\n        int groups = ((n - 4) >> 2) + 1;\r\n        int left = groups;\r\n        do\r\n        {\r\n            result[0] = first[0];\r\n            result[1] = first[1];\r\n            result[2] = first[2];\r\n            result[3] = first[3];\r\n            first += 4;\r\n            result += 4;\r\n        } while (--left);\r\n        n -= groups << 2;\r\n    }\r\n    while (n-- > 0)\r\n    {\r\n        *result = *first;\r\n        ++first;\r\n        ++result;\r\n    }\r\n    return result;\r\n}\r\n"
+}
