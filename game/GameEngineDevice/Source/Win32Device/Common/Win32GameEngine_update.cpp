@@ -78,7 +78,10 @@ struct Rva00367E30Logic
 extern void j_000021df(void);
 extern GameEngine *TheGameEngine;
 extern LANAPI *TheLAN;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's game-mode singleton at 0x012F0898 is GameLogic *TheGameLogic;
+// Rva00367E30Logic is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern void *Rva0048CD50WindowHandle;
 extern DWORD TheMessageTime;
 
@@ -100,8 +103,8 @@ void Win32GameEngine::update(void)
 			}
 
 			if (TheGameEngine->getQuitting() ||
-				TheBfmeGameLogic->m_gameMode == 5 ||
-				TheBfmeGameLogic->m_gameMode == 1)
+				((Rva00367E30Logic *)TheGameLogic)->m_gameMode == 5 ||
+				((Rva00367E30Logic *)TheGameLogic)->m_gameMode == 1)
 			{
 				break;
 			}

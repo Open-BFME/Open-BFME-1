@@ -37,7 +37,10 @@ public:
 	const Image *getSelectedPortraitImage() const;
 };
 
-extern Open2Logic143730 *TheOpen2Logic143730;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic;
+// Open2Logic143730 is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern Open2Images143730 *TheOpen2Images143730;
 
 // The relevant BFME template flags are in the word at +0x128.  Bit 17
@@ -52,7 +55,7 @@ const Image * __cdecl Open2SelectPortrait143730(
 	if (portraitTemplate == 0 || objectTemplate == 0)
 		return 0;
 
-	if (TheOpen2Logic143730->isInMultiplayerOrSkirmishGame())
+	if (((Open2Logic143730 *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 	{
 		static AsciiString overrideTemplate("GondorGandalf");
 		if (portraitTemplate->m_name.compare(overrideTemplate) == 0 &&

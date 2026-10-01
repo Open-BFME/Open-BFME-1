@@ -57,7 +57,10 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic; BfmeGameLogic
+// is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva002388F0OpenContainInterface
 {
@@ -131,7 +134,7 @@ void Rva002388F0HordeContain::getMembers(BfmeMemberList *members)
 		UnsignedInt key = entry->m_key;
 		if (key != 0)
 		{
-			Object *object = TheGameLogic->findObjectByID(key);
+			Object *object = ((BfmeGameLogic *)TheGameLogic)->findObjectByID(key);
 			if (object != 0)
 				members->push_back(object);
 		}

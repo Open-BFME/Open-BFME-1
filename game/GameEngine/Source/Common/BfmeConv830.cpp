@@ -10,7 +10,10 @@ class BfmeMgr089_E5E
 public:
 	void forwardObj(void *obj);
 };
-extern BfmeMgr089_E5E *g_mgr12F0898;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic;
+// BfmeMgr089_E5E is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeObjE61
 {
@@ -77,7 +80,7 @@ void __stdcall bfmeLookupAndForward5E0(void *key)
 {
 	void *obj = g_mgr12F076C->vfn26(key);
 	if (obj) {
-		g_mgr12F0898->forwardObj(obj);
+		((BfmeMgr089_E5E *)TheGameLogic)->forwardObj(obj);
 	}
 }
 

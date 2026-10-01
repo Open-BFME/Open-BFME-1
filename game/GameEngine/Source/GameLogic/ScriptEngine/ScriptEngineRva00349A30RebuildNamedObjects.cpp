@@ -28,7 +28,10 @@ struct Gen_00383090
 	int m(void);
 };
 
-extern Gen_00383090 *TheGameLogic;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic; Gen_00383090 is
+// this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class ScriptEngine
 {
@@ -49,7 +52,7 @@ void ScriptEngine::createNamedCache(void)
 	if (TheGameLogic == 0)
 		return;
 
-	Object *object = (Object *)TheGameLogic->m();
+	Object *object = (Object *)((Gen_00383090 *)TheGameLogic)->m();
 	while (object != 0)
 	{
 		if (!object->getName().isEmpty())

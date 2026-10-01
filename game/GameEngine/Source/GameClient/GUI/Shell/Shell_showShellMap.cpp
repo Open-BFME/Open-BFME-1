@@ -47,7 +47,10 @@ public:
 	Int m_gameMode;
 };
 
-extern BfmeGameLogic *TheBfmeGameLogic;
+// Retail's game-mode singleton at 0x012F0898 is GameLogic *TheGameLogic;
+// BfmeGameLogic is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Display
 {
@@ -142,7 +145,7 @@ Bool Shell::showShellMap(Bool useShellMap)
 {
 	m_shellMapRequested = useShellMap && !TheWritableGlobalData->m_shellMapOn;
 
-	if (TheWritableGlobalData->m_initialFile.isNotEmpty() || TheBfmeGameLogic == 0)
+	if (TheWritableGlobalData->m_initialFile.isNotEmpty() || TheGameLogic == 0)
 		return false;
 
 	m_clearBackground = false;
@@ -151,10 +154,10 @@ Bool Shell::showShellMap(Bool useShellMap)
 		TheDisplay->bfmeStopMovie();
 		((BfmeShellAudioRelease *)this)->releaseViaThunk();
 
-		if (TheBfmeGameLogic->m_gameMode == BFME_GAME_SHELL)
+		if (((BfmeGameLogic *)TheGameLogic)->m_gameMode == BFME_GAME_SHELL)
 			return true;
 
-		if (TheBfmeGameLogic->m_gameMode != BFME_GAME_NONE)
+		if (((BfmeGameLogic *)TheGameLogic)->m_gameMode != BFME_GAME_NONE)
 			TheMessageStream->appendMessage(BFME_MSG_CLEAR_GAME_DATA);
 
 		TheWritableGlobalData->m_pendingFile = TheWritableGlobalData->m_shellMapName;
@@ -173,7 +176,7 @@ Bool Shell::showShellMap(Bool useShellMap)
 			m_shellAudioHandle = 1;
 		}
 
-		if (TheBfmeGameLogic->m_gameMode == BFME_GAME_SHELL)
+		if (((BfmeGameLogic *)TheGameLogic)->m_gameMode == BFME_GAME_SHELL)
 			TheMessageStream->appendMessage(BFME_MSG_CLEAR_GAME_DATA);
 
 		return false;

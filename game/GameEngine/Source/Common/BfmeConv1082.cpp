@@ -33,7 +33,10 @@ struct BfmeB1082
 	char m_bfme74;
 };
 
-extern BfmeB1082 *g_bfmeB1082;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic; BfmeB1082 is
+// this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeC1082
 {
@@ -124,7 +127,7 @@ void BfmeQ1082::bfmeGo1082A(void)
 		g_bfmeA1082->bfmeSlot1082A_19(m_bfme20);
 		m_bfme20 = 1;
 	}
-	g_bfmeB1082->m_bfme74 = 0;
+	((BfmeB1082 *)TheGameLogic)->m_bfme74 = 0;
 	g_bfmeC1082->bfmeSlot1082C_59();
 	g_bfmeC1082->bfmeStop1082();
 	m_bfme08 = 0;

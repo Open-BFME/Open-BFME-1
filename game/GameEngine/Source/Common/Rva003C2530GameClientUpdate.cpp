@@ -17,9 +17,12 @@ public:
 
 extern BfmeB1083 *g_bfmeSwitchDR;
 extern BfmeB1083 *g_bfmeGameCW;
-// Retail's frame-counter owner is TheBfmeGameLogic at 0x012F0898. The final
-// slot14 dispatch below uses the distinct living-world singleton at 0x012F706C.
-extern BfmeB1083 *TheBfmeGameLogic;
+// Retail's frame-counter owner is TheGameLogic at 0x012F0898 (declared as
+// GameLogic * in GameLogic.cpp); BfmeB1083 is this TU's view of that pointee.
+// The final slot14 dispatch below uses the distinct living-world singleton at
+// 0x012F706C.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Gen_00609320
 {
@@ -91,7 +94,7 @@ void Rva003C2530Owner::update()
 		if( g_bfmeSwitchDR != 0 )
 			g_bfmeSwitchDR->slot14();
 
-		if( TheBfmeGameLogic->bfmeChk1083() )
+		if( ((BfmeB1083 *)TheGameLogic)->bfmeChk1083() )
 			return;
 
 		ownerCall.plain = j_000322e5;
@@ -99,7 +102,7 @@ void Rva003C2530Owner::update()
 		if( !m_ready )
 			return;
 
-		BfmeB1083 *game = TheBfmeGameLogic;
+		BfmeB1083 *game = (BfmeB1083 *)TheGameLogic;
 		int &frameCounter = game->m_frameCounter;
 		if( frameCounter == 0 )
 			setFPMode();
@@ -118,7 +121,7 @@ void Rva003C2530Owner::update()
 		ownerCall.plain = j_00048cb6;
 		( this->*ownerCall.member )();
 		g_bfmeGameCW->slot14();
-		--TheBfmeGameLogic->m_frameCounter;
+		--((BfmeB1083 *)TheGameLogic)->m_frameCounter;
 	}
 }
 

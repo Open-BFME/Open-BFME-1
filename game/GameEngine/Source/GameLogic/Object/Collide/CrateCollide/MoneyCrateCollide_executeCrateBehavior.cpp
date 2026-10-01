@@ -18,8 +18,9 @@ public:
 	Bool unidentified_0001e0ab();
 };
 
-class Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva002EE330PlayerListThunk
 {
@@ -206,7 +207,7 @@ private:
 Bool MoneyCrateCollide::executeCrateBehavior(Object *other)
 {
 	UnsignedInt money = getMoneyCrateCollideModuleData()->m_moneyProvided;
-	if (reinterpret_cast<GameLogicShim *>(TheBfmeGameLogic)->unidentified_0001e0ab())
+	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
 	{
 		const Int playerIndex = reinterpret_cast<Rva002EE330PlayerListThunk *>(
 			Rva002EE330ThePlayers)->unidentified_000389f6(false);

@@ -70,7 +70,10 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic; BfmeGameLogic
+// is this TU's view of that pointee.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class Rva00237070ContainOwner
@@ -119,7 +122,7 @@ Bool BfmeHordeContainOwner::rva00237070(ObjectID *sourceID, UnsignedInt frames)
 {
 	*sourceID = 0;
 
-	UnsignedInt now = TheGameLogic->getFrame();
+	UnsignedInt now = ((BfmeGameLogic *)TheGameLogic)->getFrame();
 	if (frames >= now)
 		return false;
 
@@ -144,7 +147,7 @@ Bool BfmeHordeContainOwner::rva00237070(ObjectID *sourceID, UnsignedInt frames)
 		UnsignedInt key = entry->m_key;
 		if (key != 0)
 		{
-			Object *object = TheGameLogic->findObjectByID(key);
+			Object *object = ((BfmeGameLogic *)TheGameLogic)->findObjectByID(key);
 			if (object != 0 && object->bfmeGetRecentDamageSource(sourceID, 4))
 				return true;
 		}
