@@ -10848,5 +10848,15 @@
   "after_sha256": "3cfd706ebf80565683a908b49f6899736e497c97d6c8896cdee3c49a10be131a",
   "evidence": "targets/game/reverse/re_attempts.log",
   "reason": "The bank explicitly says its semantic method spelling is rejected. The 0x00410F90 identity corrections at rows 41935/41936 and 45709/45710 require an address-derived Rva00410F90::method view because no source or matched caller proves the method name. This preserves that documented opaque ABI view; it does not rename the game's independently established Drawable class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0052ae20.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0052ae20.cpp",
+  "old_name": "bfmeFindNthPred",
+  "new_name": "Rva0052AE20",
+  "before_sha256": "72192581eefff58884fdd203091d85686fb57ddc9122bf3a0f7cf796c779ac6d",
+  "after_sha256": "51e3437a233b8abe70dcfa3f7d2cf0bee12feac4d3ebcd719e2018881a48adf9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0052ae20-objective-helper-name.md",
+  "reason": "The matched callback proves only the helper's int __cdecl(int) ABI. The ledger still uses a generated dump name. The earlier draft inferred bfmeFindNthPred from behavior. No retail export or pin names it. The RVA name records that the identity remains unknown."
  }
 ]

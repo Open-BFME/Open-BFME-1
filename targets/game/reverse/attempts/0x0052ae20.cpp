@@ -1,44 +1,40 @@
-// ?bfmeFindNthPred@@YAHH@Z
-// partial score=0.9 date=2026-09-04
-// ?bfmeFindNthPred@@YAHH@Z
-// stlport
-// cl: /EHs-c-
+// ?Rva0052AE20@@YAHH@Z
+// partial score=0.9221 date=2026-10-01
+// cl: /DNDEBUG /MD /EHsc
+// The caller at 0x0052AE80 proves the int __cdecl(int) ABI. The helper keeps its RVA name.
+// Retail returns at +0x4C and starts padding at +0x4D. The draft still copies cursor early.
 
 class CampaignManager
 {
 public:
 	int getMissionObjectiveCount();
-	bool isMissionObjectiveEligible( int index );
+	bool isMissionObjectiveEligible(int index);
 };
 
-extern CampaignManager *TheCampaignManager;
+typedef CampaignManager Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
 
-// Return the index of the n-th eligible mission objective, or -1 when the
-// campaign manager is absent or fewer than n eligible objectives exist.
-int bfmeFindNthPred( int n )
+int Rva0052AE20(int n)
 {
 	int remain = n;
-
-	if ( TheCampaignManager == 0 )
+	if (Glo012F1028 == 0)
 		return -1;
 
-	int count = TheCampaignManager->getMissionObjectiveCount();
-	int i = 0;
+	bool more = true;
+	int count = Glo012F1028->getMissionObjectiveCount();
+	int cursor = 0;
 	int current;
 
-loop:
-	if ( i >= count )
-		goto failed;
-	current = i++;
-	if ( !TheCampaignManager->isMissionObjectiveEligible( current ) )
-		goto loop;
-	if ( remain <= 0 )
-		goto succeeded;
-	--remain;
-	goto loop;
-
-failed:
-	return -1;
-succeeded:
-	return current;
+	while (more)
+	{
+		current = cursor;
+		if (cursor >= count)
+			return -1;
+		++cursor;
+		if (!Glo012F1028->isMissionObjectiveEligible(current))
+			continue;
+		if (remain <= 0)
+			return current;
+		--remain;
+	}
 }

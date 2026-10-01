@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "51e3437a233b8abe70dcfa3f7d2cf0bee12feac4d3ebcd719e2018881a48adf9",
+  "symbol": "?Rva0052AE20@@YAHH@Z",
+  "score_kind": "measured",
+  "score": 0.9221,
+  "source": "// ?Rva0052AE20@@YAHH@Z\n// partial score=0.9221 date=2026-10-01\n// cl: /DNDEBUG /MD /EHsc\n// The caller at 0x0052AE80 proves the int __cdecl(int) ABI. The helper keeps its RVA name.\n// Retail returns at +0x4C and starts padding at +0x4D. The draft still copies cursor early.\n\nclass CampaignManager\n{\npublic:\n\tint getMissionObjectiveCount();\n\tbool isMissionObjectiveEligible(int index);\n};\n\ntypedef CampaignManager Glo012F1028Type;\nextern Glo012F1028Type *Glo012F1028;\n\nint Rva0052AE20(int n)\n{\n\tint remain = n;\n\tif (Glo012F1028 == 0)\n\t\treturn -1;\n\n\tbool more = true;\n\tint count = Glo012F1028->getMissionObjectiveCount();\n\tint cursor = 0;\n\tint current;\n\n\twhile (more)\n\t{\n\t\tcurrent = cursor;\n\t\tif (cursor >= count)\n\t\t\treturn -1;\n\t\t++cursor;\n\t\tif (!Glo012F1028->isMissionObjectiveEligible(current))\n\t\t\tcontinue;\n\t\tif (remain <= 0)\n\t\t\treturn current;\n\t\t--remain;\n\t}\n}\n"
+}
