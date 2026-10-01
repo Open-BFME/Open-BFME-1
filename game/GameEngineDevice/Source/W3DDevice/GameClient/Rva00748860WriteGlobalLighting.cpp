@@ -18,10 +18,23 @@ struct Rva00748860LightingData {
     bool field_0dbc;
     char field_0dbd;
 };
+// Linked-build spelling: 0x012B4FD8 and 0x012B4FE8 are the globals
+// WorldHeightMap.cpp already declares under these names with the same
+// three-float layout, so the census can collapse onto one symbol per address.
+struct LightingCoord00747FF0 { float x, y, z; };
+// 0x012B4FC8: left as the stand-in. The census proposes
+// ?HighlightColors@@3PAUColor@@A, which needs a local `struct Color` that
+// impersonates GameClient/Color.h (where Color is `typedef Int Color`, so the
+// real header would mangle ?HighlightColors@@3PAH@@A, not PAUColor). Its
+// sibling at this address is ?Value012B4FC8@@3ULightingCoord00747FF0@@A.
 struct Rva00748860Triple { float x, y, z; };
 extern Rva00748860Triple g_lighting012B4FC8;
-extern Rva00748860Triple g_lighting012B4FD8;
-extern Rva00748860Triple g_lighting012B4FE8;
+extern LightingCoord00747FF0 Value012B4FD8;
+extern LightingCoord00747FF0 Value012B4FE8;
+// 0x012ED5C8: left as the stand-in. The census proposes
+// ?GenFallback0012ED5C8@@3PAVGenFallback@@A, but GenFallback is authored in
+// S3TableLookupWithFallback.cpp with a 0x184-byte body that contradicts every
+// offset read here, and this pointer is GlobalData (Recorder.h).
 extern Rva00748860LightingData *lightingData;
 class W3DShadowManager;
 extern W3DShadowManager *TheW3DShadowManager;
@@ -90,11 +103,11 @@ void WriteGlobalLighting00748860(DataChunkOutput *output)
       output->writeReal(x);
       output->writeReal(y);
       output->writeReal(z);
-    x = g_lighting012B4FD8.x; y = g_lighting012B4FD8.y; z = g_lighting012B4FD8.z;
+    x = Value012B4FD8.x; y = Value012B4FD8.y; z = Value012B4FD8.z;
       output->writeReal(x);
       output->writeReal(y);
       output->writeReal(z);
-    x = g_lighting012B4FE8.x; y = g_lighting012B4FE8.y; z = g_lighting012B4FE8.z;
+    x = Value012B4FE8.x; y = Value012B4FE8.y; z = Value012B4FE8.z;
       output->writeReal(x);
       output->writeReal(y);
       output->writeReal(z);
