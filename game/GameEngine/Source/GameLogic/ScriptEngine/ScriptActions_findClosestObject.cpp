@@ -53,6 +53,8 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
 struct Coord3D
 {
 	Real x;
@@ -128,7 +130,7 @@ public:
 		Int distanceCalculation, PartitionFilter *filters);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 
 class ScriptActions
@@ -148,7 +150,7 @@ Object *ScriptActions::findClosestObject(const Coord3D *position,
 
 	for (Int typeIndex = 0; typeIndex < typeCount; typeIndex++)
 	{
-		const ThingTemplate *thisType = TheThingFactory->findTemplate(
+		const ThingTemplate *thisType = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 			objectTypes->getNthInList(typeIndex));
 		if (thisType)
 		{

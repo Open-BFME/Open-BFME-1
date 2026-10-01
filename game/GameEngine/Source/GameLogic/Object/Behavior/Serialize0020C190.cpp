@@ -18,7 +18,8 @@ class Gen_001F61B0 { friend class Serialize0020C190; void bfmeAccept(BfmeSeedTar
 class Gen_001ED0C0 { friend class Serialize0020C190; void bfmeAccept(BfmeSeedTarget*); };
 class BfmeSubAccept_00029DAC { public: void bfmeAccept(BfmeSeedTarget*); };
 class BfmeFind975D { public: void* bfmeFind975D(int); };
-extern BfmeFind975D* g_bfmeFind975D;
+class ThingFactory;
+extern ThingFactory* TheThingFactory;
 extern const AsciiString Rva01336E50EmptyString;
 Xfer* xferListInt(Xfer*,_STL::list<int>*);
 void bfmeHandOver_0000FFE2(BfmeSeedTarget*,void*);
@@ -45,7 +46,7 @@ void Serialize0020C190::xfer(Xfer* xfer) {
  if(xfer->IsLoading()) {
   field34=0;
   if(!name.isEmpty()) {
-   field34=(Template0020C190*)g_bfmeFind975D->bfmeFind975D((int)&name);
+   field34=(Template0020C190*)((BfmeFind975D*)TheThingFactory)->bfmeFind975D((int)&name);
    if(!field34) throw XferException(5,0);
   }
  }

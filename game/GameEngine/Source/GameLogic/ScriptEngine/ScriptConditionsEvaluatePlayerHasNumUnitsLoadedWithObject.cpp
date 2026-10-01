@@ -44,6 +44,7 @@ public:
 
 class BfmeThingFactory;
 class ThingTemplate;
+class ThingFactory;
 
 
 
@@ -249,7 +250,7 @@ protected:
 
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 
 Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 	Parameter *playerParameter, Parameter *minimumCountParameter,
@@ -261,9 +262,9 @@ Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 	if (!player)
 		return false;
 
-	const ThingTemplate *loadedTemplate = TheThingFactory->findTemplate(
+	const ThingTemplate *loadedTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 		loadedTemplateParameter->getString());
-	const ThingTemplate *transportTemplate = TheThingFactory->findTemplate(
+	const ThingTemplate *transportTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 		transportTemplateParameter->getString());
 	if (!loadedTemplate || !transportTemplate)
 		return false;

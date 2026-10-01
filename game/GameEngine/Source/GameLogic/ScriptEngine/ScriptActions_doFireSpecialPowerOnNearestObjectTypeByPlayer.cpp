@@ -64,6 +64,8 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
 class PartitionManager
 {
 public:
@@ -140,7 +142,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PlayerList *ThePlayers;
 extern PartitionManager *ThePartitionManager;
 extern void j_000241fe(void);
@@ -251,7 +253,7 @@ void ScriptActions::rva002F9A80(
 		else
 		{
 			const ThingTemplate *thingTemplate =
-				TheThingFactory->findTemplate(objectType);
+				((BfmeThingFactory *)TheThingFactory)->findTemplate(objectType);
 			if (!thingTemplate)
 				continue;
 

@@ -40,9 +40,8 @@ class ThingFactory
 public:
     ThingTemplate *findTemplate(const AsciiString &name);
 };
-class BfmeOtherBN;
 
-extern BfmeOtherBN *g_bfmeOtherBN;
+extern ThingFactory *TheThingFactory;
 
 class BfmeResGH
 {
@@ -127,7 +126,7 @@ void Rva0036E650BuildListDispatch(
 		{
 			++index;
 			AsciiString name = info.getTemplateName();
-			ThingTemplate *found = reinterpret_cast<ThingFactory *>(g_bfmeOtherBN)->findTemplate(name);
+			ThingTemplate *found = TheThingFactory->findTemplate(name);
 			if (found)
 				reinterpret_cast<BfmeResGH *>(found)->bfmeTwoGH(first, second);
 		}
@@ -138,7 +137,7 @@ void Rva0036E650BuildListDispatch(
 	{
 		const unsigned int begin = (unsigned int)owner->m_begin;
 		AsciiStringBN name = *(const AsciiStringBN *)(begin + index * sizeof(AsciiStringBN));
-		ThingTemplate *found = reinterpret_cast<ThingFactory *>(g_bfmeOtherBN)->findTemplate(name.m_name);
+		ThingTemplate *found = TheThingFactory->findTemplate(name.m_name);
 		if (found)
 			reinterpret_cast<BfmeResGH *>(found)->bfmeTwoGH(first, second);
 	}

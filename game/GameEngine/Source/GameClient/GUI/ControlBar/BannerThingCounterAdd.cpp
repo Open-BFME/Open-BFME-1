@@ -15,6 +15,8 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
 class Rva0039F0A0
 {
 public:
@@ -124,12 +126,12 @@ public:
 	void add(BannerThingCounts *counts, const AsciiString &name, int count);
 };
 
-extern BFMEThingFactory *g_mgr12EF1D8;
+extern ThingFactory *TheThingFactory;
 extern BannerUI *TheBannerUI;
 
 void BannerThingCounter::add(BannerThingCounts *counts, const AsciiString &name, int count)
 {
-	const ThingTemplate *thing = g_mgr12EF1D8->findTemplate(name);
+	const ThingTemplate *thing = ((BFMEThingFactory *)TheThingFactory)->findTemplate(name);
 	if (thing == 0)
 		return;
 

@@ -45,7 +45,9 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class TeamPrototype
 {
@@ -159,13 +161,13 @@ void Rva00351040Script::collectAssets(void *assets, void *context)
 					if (templateInfo != 0)
 					{
 						if (((Rva00351040StringView *)&templateInfo->m_transportUnit)->isNotEmpty())
-							collectAsset(TheThingFactory->findTemplate(
+							collectAsset(((BfmeThingFactory *)TheThingFactory)->findTemplate(
 								templateInfo->m_transportUnit), assets, context);
 
 						Rva00351040UnitInfo *unit = &templateInfo->m_units[0];
 						for (Int i = 0; i < templateInfo->m_numUnits; ++i, ++unit)
 						{
-							collectAsset(TheThingFactory->findTemplate(unit->m_name), assets, context);
+							collectAsset(((BfmeThingFactory *)TheThingFactory)->findTemplate(unit->m_name), assets, context);
 						}
 					}
 				}
@@ -177,7 +179,7 @@ void Rva00351040Script::collectAssets(void *assets, void *context)
 			{
 				Parameter *parameter = action->m_numParameters > 1
 					? action->m_parameters[1] : 0;
-				const ThingTemplate *thing = TheThingFactory->findTemplate(
+				const ThingTemplate *thing = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 					*(AsciiString *)((char *)parameter + 0x10));
 				collectAsset(thing, assets, context);
 				break;
@@ -188,7 +190,7 @@ void Rva00351040Script::collectAssets(void *assets, void *context)
 			{
 				Parameter *parameter = action->m_numParameters > 0
 					? action->m_parameters[0] : 0;
-				const ThingTemplate *thing = TheThingFactory->findTemplate(
+				const ThingTemplate *thing = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 					*(AsciiString *)((char *)parameter + 0x10));
 				collectAsset(thing, assets, context);
 				break;

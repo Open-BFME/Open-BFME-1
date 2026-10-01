@@ -77,6 +77,8 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
 class PartitionFilter
 {
 public:
@@ -187,7 +189,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PlayerList *ThePlayerList;
 extern PartitionManager *ThePartitionManager;
 extern void j_0002990b(void);
@@ -274,7 +276,7 @@ void ScriptActions::doSetRefToNearestTeamOfTypeOwnedByPlayer(
 	else
 	{
 		const ThingTemplate *thingTemplate =
-			TheThingFactory->findTemplate(objectTypeList->m_string);
+			((BfmeThingFactory *)TheThingFactory)->findTemplate(objectTypeList->m_string);
 		if (!thingTemplate)
 			return;
 

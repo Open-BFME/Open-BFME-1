@@ -154,6 +154,8 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
 extern "C" void *bfmeVftPartitionFilter[];
 extern "C" void *bfmeVftPartitionFilterThing[];
 extern "C" void *bfmeVftPartitionFilterPolygonTrigger[];
@@ -240,7 +242,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 
 class ScriptActions
@@ -259,7 +261,7 @@ void ScriptActions::doMoveTeamTowardsNearest(const AsciiString &teamName,
 		return;
 
 	const ThingTemplate *thingTemplate =
-		TheThingFactory->findTemplate(objectType);
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(objectType);
 	if (!thingTemplate)
 		return;
 
