@@ -112,7 +112,11 @@ struct Rva00367E30Logic
 	unsigned char m_unmodelled00[0x3C];
 	UnsignedInt m_frame;									///< +0x3C
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own Rva00367E30Logic view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *localTheGameLogic(void) { return (Rva00367E30Logic *)TheGameLogic; }
 
 template <int NUMBITS>
 class BitFlags
@@ -240,7 +244,7 @@ Bool StealthUpdate::allowedToStealthAt002ACD90(const Coord3D *pos, const Coord3D
 			return false;
 
 		Weapon *weapon;
-		UnsignedInt lastFrame = TheBfmeGameLogic->getFrame() - 1;
+		UnsignedInt lastFrame = localTheGameLogic()->getFrame() - 1;
 
 		if (flags & 8)
 		{

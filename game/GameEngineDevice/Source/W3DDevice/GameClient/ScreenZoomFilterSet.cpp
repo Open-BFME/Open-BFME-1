@@ -13,7 +13,12 @@ struct ZoomSettings{
  void apply82AA0(int);
 };
 extern ZoomSettings *ZoomGlobalSettings;
-struct ZoomClient{char pad[0x3c];int frame;};extern ZoomClient *ZoomGameClient;
+struct ZoomClient{char pad[0x3c];int frame;};
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own ZoomClient view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline ZoomClient *localTheGameLogic(void) { return (ZoomClient *)TheGameLogic; }
 class ZoomEnvironment{public:
 virtual void pad0();
 virtual void pad1();
@@ -94,7 +99,7 @@ class ScreenZoomFilter{public:virtual int set(FilterModes);unsigned shader;Textu
 int ScreenZoomFilter::set(FilterModes mode){
  ZoomGlobalSettings->highlight=false;
  bool changed=false;
- if(ZoomLastFrame!=ZoomGameClient->frame){changed=true;ZoomLastFrame=ZoomGameClient->frame;}
+ if(ZoomLastFrame!=localTheGameLogic()->frame){changed=true;ZoomLastFrame=localTheGameLogic()->frame;}
  if(ZoomPulse&&changed){
   if(ZoomFadeDirection<0&&!ZoomPulseDown){
    ZoomPulseDown=true;ZoomPulse=30;

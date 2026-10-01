@@ -132,7 +132,11 @@ public:
 	char m_leading[ 0x3C ];
 	int m_at3C;
 };
-extern R2Pointee012F0898 *R2Ptr012F0898;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own R2Pointee012F0898 view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline R2Pointee012F0898 *localR2Ptr012F0898(void) { return (R2Pointee012F0898 *)TheGameLogic; }
 
 #define R2_COPY_FROM_GLOBAL( NAME, FIELD )                                \
 	class NAME                                                            \
@@ -144,7 +148,7 @@ extern R2Pointee012F0898 *R2Ptr012F0898;
 	};                                                                    \
 	void NAME::run()                                                      \
 	{                                                                     \
-		m_value = R2Ptr012F0898->m_at3C;                                  \
+		m_value = localR2Ptr012F0898()->m_at3C;                                  \
 	}
 
 R2_COPY_FROM_GLOBAL( Rva0018C910, 0xA0 )
@@ -419,7 +423,7 @@ public:
 	int m_value;
 	void run();
 };
-void Rva001BF100::run() { m_flag = true; m_value = R2Ptr012F0898->m_at3C; }
+void Rva001BF100::run() { m_flag = true; m_value = localR2Ptr012F0898()->m_at3C; }
 
 class Rva001FC420
 {
@@ -430,7 +434,7 @@ public:
 	int m_at3C;
 	void run();
 };
-void Rva001FC420::run() { m_at34 = 0; m_at3C = R2Ptr012F0898->m_at3C; }
+void Rva001FC420::run() { m_at34 = 0; m_at3C = localR2Ptr012F0898()->m_at3C; }
 
 // ---------------------------------------------------------------------------
 // (12) Two member swaps:

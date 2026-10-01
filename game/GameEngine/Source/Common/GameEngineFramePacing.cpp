@@ -80,7 +80,12 @@ public:
 	int m_gameMode;
 };
 
-extern BfmeGameLogicPause *TheGameLogic;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own BfmeGameLogicPause view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeGameLogicPause *localTheGameLogic(void) { return (BfmeGameLogicPause *)TheGameLogic; }
+
 class GameClient;
 extern GameClient *TheGameClient;
 #define TheGameClient ((unsigned char *)TheGameClient)
@@ -295,7 +300,7 @@ bool GameEngine::_bfme_shouldSkipClientFrame(void)
 
 void GameEngine::_bfme_updateNetworkAndLogic(int phase)
 {
-	BfmeGameLogicPause *logic = TheGameLogic;
+	BfmeGameLogicPause *logic = localTheGameLogic();
 	bool ready = true;
 	if (phase == 1)
 	{
@@ -317,11 +322,11 @@ void GameEngine::_bfme_updateNetworkAndLogic(int phase)
 			}
 		}
 
-		logic = TheGameLogic;
+		logic = localTheGameLogic();
 		if (logic != 0 && logic->m_gameMode == 5)
 		{
 			j_00014e25();
-			logic = TheGameLogic;
+			logic = localTheGameLogic();
 		}
 
 	}

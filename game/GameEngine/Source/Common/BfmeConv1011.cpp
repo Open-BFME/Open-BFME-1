@@ -12,7 +12,11 @@ public:
 	BfmeX1011 *bfmeFind1011(int id);
 };
 
-extern BfmeLook1011 *g_bfmeLook1011;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own BfmeLook1011 view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeLook1011 *localTheGameLogic(void) { return (BfmeLook1011 *)TheGameLogic; }
 
 class BfmeA1011
 {
@@ -28,7 +32,7 @@ public:
 
 void BfmeA1011::bfmeGo1011A(int a, int b, int c, int d, int e)
 {
-	BfmeX1011 *x = g_bfmeLook1011->bfmeFind1011(m_bfmeId);
+	BfmeX1011 *x = localTheGameLogic()->bfmeFind1011(m_bfmeId);
 
 	if (x && m_bfmeFlag)
 		return;

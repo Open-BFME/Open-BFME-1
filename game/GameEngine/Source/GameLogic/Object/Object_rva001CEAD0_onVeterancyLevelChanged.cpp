@@ -82,7 +82,11 @@ struct BfmeGameLogic
 	char pad[0x92];
 	Bool drawIconUI;
 };
-extern BfmeGameLogic *TheGameLogic;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own BfmeGameLogic view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeGameLogic *localTheGameLogic(void) { return (BfmeGameLogic *)TheGameLogic; }
 
 struct BfmeAsciiData
 {
@@ -279,7 +283,7 @@ void Rva001CEAD0Object::onVeterancyLevelChanged(int oldLevel, int newLevel)
 		break;
 	}
 
-	if (doAnimation && TheGameLogic->drawIconUI)
+	if (doAnimation && localTheGameLogic()->drawIconUI)
 	{
 		if (TheAnim2DCollection && !TheWritableGlobalData->levelGainAnimationName.isEmpty())
 		{

@@ -137,8 +137,12 @@ struct Rva001B80D0Template : Overridable {
     char before14[0x14-8];
     float scale14;
 };
-struct GameLogic { char before3c[0x3c]; unsigned m_frame; };
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own Rva001B80D0GameLogic view.
+struct Rva001B80D0GameLogic { char before3c[0x3c]; unsigned m_frame; };
+class GameLogic;
 extern GameLogic *TheGameLogic;
+static inline Rva001B80D0GameLogic *localTheGameLogic(void) { return (Rva001B80D0GameLogic *)TheGameLogic; }
 class Locomotor { public: float rva001B5A30(Object*,BodyDamageType) const; };
 class Rva002C12E0Locomotor { public:
     void *vtable;
@@ -167,7 +171,7 @@ void Rva002C12E0Locomotor::locoUpdate1(void *object)
     if(!heightView) return;
     Rva001B80D0Body *body=obj->body200;
     if(!body) return;
-    float desired=(float)sin((int)(TheGameLogic->m_frame+obj->objectId74)*0.1f)*amplitude*0.2f+height44;
+    float desired=(float)sin((int)(localTheGameLogic()->m_frame+obj->objectId74)*0.1f)*amplitude*0.2f+height44;
     float current=obj->getHeightAboveTerrainOrWater();
     bool outside=desired+amplitude*0.2f>current || desired*1.5f<current;
     if(heightView->checkHeight() | outside) velocity9c+=desired-current;

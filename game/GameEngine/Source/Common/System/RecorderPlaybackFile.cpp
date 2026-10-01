@@ -159,7 +159,11 @@ private:
 	Int m_dword2AC;
 };
 
-extern BfmeGameLogicPause *TheGameLogic;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU calls through its own BfmeGameLogicPause view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeGameLogicPause *localTheGameLogic(void) { return (BfmeGameLogicPause *)TheGameLogic; }
 extern GlobalData *TheWritableGlobalData;
 extern MessageStream *TheMessageStream;
 extern Int REPLAY_CRC_INTERVAL;
@@ -174,7 +178,7 @@ void InitRandom(UnsignedInt seed);
 Bool RecorderClass::playbackFile(AsciiString filename)
 {
 	if (!m_doingAnalysis)
-		TheGameLogic->clearGameData(false, false);
+		localTheGameLogic()->clearGameData(false, false);
 
 	m_mode = 1;
 	ReplayHeader header;

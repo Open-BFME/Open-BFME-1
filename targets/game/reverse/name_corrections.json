@@ -11168,5 +11168,15 @@
  "after_sha256": "2bb5d66180d1aa8c229fbbf3051beb2573060bc30586924f31da90697b0a13a5",
  "evidence": "targets/game/reverse/identity_evidence/0x00757e70-94f960-thunk.md",
  "reason": "SegLineRendererClass remains declared for TextureMapMode. Rva0094F960 is a separate local view for the 11-byte thunk at 0x0094F960. The checker paired the two declarations by shape and treated them as a rename, but the source keeps both declarations."
-}
+},
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp",
+  "old_name": "GameLogic",
+  "new_name": "Rva001B80D0GameLogic",
+  "before_sha256": "1e7de138cfc43f8ad4994d2d4b61e0a6ef4403373d4f8a3f27c490810679ea41",
+  "after_sha256": "906ae41c0164c5e5dbc4734219012594ba97d03bee75e60ec763c6395b87a521",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ }
 ]

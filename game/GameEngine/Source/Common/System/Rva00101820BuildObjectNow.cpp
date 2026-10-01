@@ -154,7 +154,11 @@ public:
 	}
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU calls through its own Rva00367E30Logic view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *localTheGameLogic(void) { return (Rva00367E30Logic *)TheGameLogic; }
 
 class AICommandInterface
 {
@@ -422,7 +426,7 @@ Object *Rva00101820::buildObjectNow(Object *constructorObject,
 		owningPlayer->getDefaultTeam(), startingStatus, 0);
 	object->setProducer(constructorObject);
 
-	TheBfmeGameLogic->applyObjectColorIndex383930(object,
+	localTheGameLogic()->applyObjectColorIndex383930(object,
 		*reinterpret_cast<Int *>(reinterpret_cast<UnsignedByte *>(constructorObject) + 0x370));
 
 	Coord3D groundPosition;

@@ -55,7 +55,11 @@ struct Refresh0023FA80GlobalAI {
 };
 struct Refresh0023FA80GameLogic { unsigned char pad000[0x3c]; unsigned int at03c; };
 extern Refresh0023FA80GlobalAI *g0023FA80Va012EF214;
-extern Refresh0023FA80GameLogic *g0023FA80Va012F0898;
+// Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
+// GameLogic.cpp).  This TU reads it through its own Refresh0023FA80GameLogic view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Refresh0023FA80GameLogic *localTheGameLogic(void) { return (Refresh0023FA80GameLogic *)TheGameLogic; }
 
 template<int N> class Refresh0023FA80Slots : public Refresh0023FA80Slots<N-1> {
 public: virtual void unused(char (*)[N]) = 0;
@@ -151,7 +155,7 @@ int FormationRefresh0023FA80::run() {
         }
     }
     primary()->schedule(ai,obj);
-    if (g0023FA80Va012F0898->at03c % 5 == 0 && primary()->slot070()) return 1;
+    if (localTheGameLogic()->at03c % 5 == 0 && primary()->slot070()) return 1;
     if (at0d8 || at134.at004 || at144) {
         at0d8=false;
         if (at144 && !at140) {
@@ -171,6 +175,6 @@ int FormationRefresh0023FA80::run() {
         }
         if (at0d8 || at134.at004) return 1;
     }
-    if (g0023FA80Va012F0898->at03c % 5 == 0) primary()->periodic();
+    if (localTheGameLogic()->at03c % 5 == 0) primary()->periodic();
     return result;
 }
