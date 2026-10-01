@@ -2,6 +2,11 @@
 // ?bfmeSendTM@BfmeOwnerTM@@QAEXPAVBfmeMsgTM@@@Z at 0x0003B372.
 // The object field chain and the matching thiscall ABI establish this owner.
 
+// stlport
+// The lookup below is GameLogic::findObjectByID; GameLogicObjectLookup.h holds
+// the declaration (its body stays in Thing/GameLogicFindObjectByID.cpp).
+#include "Thing/GameLogicObjectLookup.h"
+
 class BfmeThingTM;
 
 class BfmeInnerTM
@@ -37,9 +42,9 @@ public:
 	void *m_bfmeKeyTM;
 };
 
+// Holder for the GameLogic singleton's dir32 spelling in this TU.
 struct Rva00367E30Logic
 {
-	BfmeActorTM *bfmeFindTM(void *key);
 };
 
 extern Rva00367E30Logic *TheBfmeGameLogic;
@@ -54,7 +59,9 @@ public:
 void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 {
 	Rva00367E30Logic *logic = TheBfmeGameLogic;
-	BfmeActorTM *actor = logic->bfmeFindTM(msg->m_bfmeKeyTM);
+	GameLogic *gamelogic = reinterpret_cast<GameLogic *>(logic);
+	BfmeActorTM *actor = reinterpret_cast<BfmeActorTM *>(
+		gamelogic->findObjectByID(reinterpret_cast<int>(msg->m_bfmeKeyTM)));
 
 	if (!actor)
 		return;
@@ -66,7 +73,8 @@ void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 
 	if (thing->m_bfmeFlagsTM & 0x2000000)
 	{
-		BfmeActorTM *target = logic->bfmeFindTM(actor->m_bfmeOwnerTM);
+		BfmeActorTM *target = reinterpret_cast<BfmeActorTM *>(
+			gamelogic->findObjectByID(reinterpret_cast<int>(actor->m_bfmeOwnerTM)));
 		if (!target)
 			return;
 		if (!target->bfmeCanTM(0x59))

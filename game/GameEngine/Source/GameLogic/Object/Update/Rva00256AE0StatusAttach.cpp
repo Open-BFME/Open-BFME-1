@@ -9,6 +9,11 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
+// The lookup below is GameLogic::findObjectByID; GameLogicObjectLookup.h holds
+// the declaration (its body stays in Thing/GameLogicFindObjectByID.cpp). It
+// forward-declares Object, so it adds no second definition of this TU's class.
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
+
 typedef int Int;
 typedef bool Bool;
 
@@ -48,10 +53,9 @@ public:
 	int m_bfme74ESN;
 };
 
+// Holder for the GameLogic singleton's dir32 spelling in this TU.
 class BfmeLogicESN
 {
-public:
-	BfmeObjESN *bfmeFindByIdESN(int id);
 };
 
 extern BfmeLogicESN *g_bfmeLogicESN;
@@ -75,7 +79,8 @@ void BfmeHostESN::bfmeStepESN(BfmeThingESN *thing)
 
 	if (id != 0)
 	{
-		BfmeObjESN *obj = g_bfmeLogicESN->bfmeFindByIdESN(id);
+		BfmeObjESN *obj = reinterpret_cast<BfmeObjESN *>(
+			reinterpret_cast<GameLogic *>(g_bfmeLogicESN)->findObjectByID(id));
 
 		if (obj == 0)
 			m_bfme20ESN = 0;

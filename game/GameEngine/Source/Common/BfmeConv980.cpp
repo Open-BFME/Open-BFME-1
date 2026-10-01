@@ -1,4 +1,9 @@
+// stlport
 // Open-BFME5 conversions.
+
+// The lookup below is GameLogic::findObjectByID; GameLogicObjectLookup.h holds
+// the declaration (its body stays in Thing/GameLogicFindObjectByID.cpp).
+#include "Thing/GameLogicObjectLookup.h"
 
 struct BfmeRecA980
 {
@@ -139,17 +144,17 @@ struct BfmeArgC980
 	int m_bfmeKey;
 };
 
+// Holder for the GameLogic singleton's dir32 spelling in this TU.
 class BfmeLookC980
 {
-public:
-	BfmeXC980 *bfmeFind980C(int k);
 };
 
 extern BfmeLookC980 *g_bfmeLookC980;
 
 void __stdcall bfmeGo980C(BfmeArgC980 *a, int b)
 {
-	BfmeXC980 *x = g_bfmeLookC980->bfmeFind980C(a->m_bfmeKey);
+	BfmeXC980 *x = reinterpret_cast<BfmeXC980 *>(
+		reinterpret_cast<GameLogic *>(g_bfmeLookC980)->findObjectByID(a->m_bfmeKey));
 
 	if (!x)
 		return;

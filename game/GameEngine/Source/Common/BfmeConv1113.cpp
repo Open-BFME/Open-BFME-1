@@ -1,4 +1,10 @@
+// stlport
 // Open-BFME5 conversions.
+
+// GameLogic::findObjectByID(ObjectID) is the retail lookup these callers reach;
+// GameLogicObjectLookup.h carries the declaration and its proof. Only the
+// declaration is used: the body stays in GameLogicFindObjectByID.cpp.
+#include "Thing/GameLogicObjectLookup.h"
 
 class BfmeK1113
 {
@@ -21,10 +27,10 @@ struct BfmeNode1113
 	int m_bfme10;
 };
 
+// The GameLogic singleton is still spelled with this TU's holder type; the
+// dir32 record for ?g_bfmeB1113@@3PAVBfmeB1113@@A keeps that spelling.
 class BfmeB1113
 {
-public:
-	BfmeK1113 *bfmeFind1113(int a);
 };
 
 extern BfmeB1113 *g_bfmeB1113;
@@ -55,7 +61,8 @@ char BfmeW1113::bfmeGo1113A(int a)
 	h = m_bfme30;
 	p = h->m_bfme08;
 	while (p != h) {
-		BfmeK1113 *k = g_bfmeB1113->bfmeFind1113(p->m_bfme10);
+		BfmeK1113 *k = reinterpret_cast<BfmeK1113 *>(
+			reinterpret_cast<GameLogic *>(g_bfmeB1113)->findObjectByID(p->m_bfme10));
 
 		if (k->bfmeChk1113(a))
 			return 1;

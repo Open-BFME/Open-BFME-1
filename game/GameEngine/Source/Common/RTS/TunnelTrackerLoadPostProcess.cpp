@@ -7,7 +7,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef unsigned int ObjectID;
+// GameLogic::findObjectByID(ObjectID) is the retail lookup this body reaches;
+// GameLogicObjectLookup.h carries the declaration and its proof (its body stays
+// in Thing/GameLogicFindObjectByID.cpp). ObjectID comes from that header too.
+#include "../Thing/GameLogicObjectLookup.h"
 
 class BfmeXCQE
 {
@@ -32,16 +35,6 @@ public:
 };
 
 class BfmeX1011 : public BfmeObjectView
-{
-};
-
-class BfmeLook1011
-{
-public:
-	BfmeX1011 *bfmeFind1011(int id);
-};
-
-class GameLogic
 {
 };
 
@@ -121,7 +114,7 @@ void TunnelTracker::loadPostProcess()
 
 	for (it = m_xferContainList.begin(); it != m_xferContainList.end(); ++it)
 	{
-		object = ((BfmeLook1011 *)TheBfmeGameLogic)->bfmeFind1011(*it);
+		object = reinterpret_cast<BfmeX1011 *>(TheBfmeGameLogic->findObjectByID(*it));
 		if (object == 0)
 		{
 			XferException error;

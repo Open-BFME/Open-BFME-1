@@ -1,4 +1,9 @@
+// stlport
 // Open-BFME5 conversions.
+
+// The lookup below is GameLogic::findObjectByID; GameLogicObjectLookup.h holds
+// the declaration (its body stays in Thing/GameLogicFindObjectByID.cpp).
+#include "Thing/GameLogicObjectLookup.h"
 
 class BfmeSrcUDB
 {
@@ -82,10 +87,9 @@ public:
 	virtual void *bfmeGetUDE() = 0;
 };
 
+// Holder for the GameLogic singleton's dir32 spelling in this TU.
 class BfmeMgrUDE
 {
-public:
-	BfmeRecUDE *bfmeFindUDE(int key);
 };
 
 extern BfmeMgrUDE *g_bfmeMgrUDE;
@@ -100,7 +104,8 @@ public:
 
 void *BfmeThingUDE::bfmeGoUDE()
 {
-	BfmeRecUDE *r = g_bfmeMgrUDE->bfmeFindUDE(m_bfmeKey);
+	BfmeRecUDE *r = reinterpret_cast<BfmeRecUDE *>(
+		reinterpret_cast<GameLogic *>(g_bfmeMgrUDE)->findObjectByID(m_bfmeKey));
 	if (r)
 		return r->bfmeGetUDE();
 	return 0;
