@@ -24,13 +24,17 @@
 // A separate identical helper already exists at 0x00933540; this claim covers
 // only 0x00933500. Shared WW3D2 headers retain their existing declarations.
 
-class BFMETextureRelease
+// The destructor of the held object issues the shared counted-texture base
+// leaf ?Release_Ref@TextureBaseClass@@QAEXXZ (0x009EB7A0) out of line.  Only
+// the refcount word at +4 is touched here, so BfmeThingCX keeps its own layout
+// and is cast to the release owner rather than inheriting from it.
+class TextureBaseClass
 {
 public:
 	void Release_Ref(void);
 };
 
-class BfmeThingCX : public BFMETextureRelease
+class BfmeThingCX
 {
 public:
 	int m_bfmeHead;
@@ -58,7 +62,7 @@ public:
 	~BfmeHandleCX(void)
 	{
 		if (m_bfmeThing)
-			m_bfmeThing->Release_Ref();
+			((TextureBaseClass *)m_bfmeThing)->Release_Ref();
 	}
 
 	BfmeThingCX *m_bfmeThing;

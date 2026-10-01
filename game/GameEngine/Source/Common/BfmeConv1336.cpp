@@ -52,17 +52,19 @@ public:
 	unsigned short m_bfmeRefs;
 };
 
-class BfmeCurULD
+// Retail releases the outgoing resource through the shared counted-texture base
+// leaf ?Release_Ref@TextureBaseClass@@QAEXXZ (0x009EB7A0), out of line.
+class TextureBaseClass
 {
 public:
-	void bfmeReleaseULD();
+	void Release_Ref();
 };
 
 class BfmeThingULD
 {
 public:
 	void bfmeSetULD(BfmeResULD *r);
-	BfmeCurULD *m_bfmeCur;
+	TextureBaseClass *m_bfmeCur;
 };
 
 void BfmeThingULD::bfmeSetULD(BfmeResULD *r)
@@ -71,6 +73,6 @@ void BfmeThingULD::bfmeSetULD(BfmeResULD *r)
 		return;
 	++r->m_bfmeRefs;
 	if (m_bfmeCur)
-		m_bfmeCur->bfmeReleaseULD();
-	m_bfmeCur = (BfmeCurULD *)r;
+		m_bfmeCur->Release_Ref();
+	m_bfmeCur = (TextureBaseClass *)r;
 }

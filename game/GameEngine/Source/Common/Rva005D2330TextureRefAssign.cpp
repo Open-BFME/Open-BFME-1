@@ -2,10 +2,13 @@
 // A lazily allocated one-pointer holder.  Retail retains the incoming texture
 // before releasing the old one, so assigning a holder to itself is safe.
 
-class BfmeSharedBlock
+// Retail releases through the shared counted-texture base leaf
+// ?Release_Ref@TextureBaseClass@@QAEXXZ (0x009EB7A0); only the refcount word
+// at +4 is touched here, so this keeps the address-derived holder layout.
+class TextureBaseClass
 {
 public:
-	void bfmeRelease();
+	void Release_Ref();
 	char m_padding[4];
 	unsigned short m_references;
 };
@@ -21,13 +24,13 @@ struct Rva005D2330TextureRef
 		}
 		if (m_value)
 		{
-			m_value->bfmeRelease();
+			m_value->Release_Ref();
 		}
 		m_value = source.m_value;
 		return *this;
 	}
 
-	BfmeSharedBlock *m_value;
+	TextureBaseClass *m_value;
 };
 
 class Rva005D2330TextureRefOwner
