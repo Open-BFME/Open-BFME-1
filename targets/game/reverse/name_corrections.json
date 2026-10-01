@@ -11368,5 +11368,15 @@
  "after_sha256": "4297644905407d0416882e62cac0631bc0907c8bbe6c5e6c9add1ccf991ba644",
  "evidence": "targets/game/reverse/identity_evidence/009ebf90-result-view.md",
  "reason": "Same-address result ABI correction: 009EBF90 constructs a 20-byte result; 009EF6D0 copies a 12-byte tree to its output plus word/byte fields, rather than returning a registry object. Native method identity remains unknown and retains the full address."
+},
+{
+ "old_path": "targets/game/reverse/functions.csv",
+ "new_path": "targets/game/reverse/functions.csv",
+ "old_name": "parseNetMinPlayers",
+ "new_name": "Rva00060C60_parse",
+ "before_sha256": "bfe36270f5f5c274197a90ccf1c954f1e97881f5d26ca459cc28affb50002766",
+ "after_sha256": "d75f23610e72b2f10228444dbe1d2c19cb6d7e17d3363b6d4d18d5d26031eeab",
+ "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
+ "reason": "0x00060C60 stores atoi(args[1]) to GlobalData+0xECC. BFME1 WorldBuilder's full CommandLineParam table pairs -netMinPlayers with a +0xB0C store (game 0x00060F40) and pairs the +0xECC store with -panoramicSlices, a BFME flag with no Zero Hour handler; the game has no -netMinPlayers string and no table entry reaches 0x00060C60. The old name rested only on an unwitnessed field guess, so the body keeps its address."
 }
 ]

@@ -404,8 +404,8 @@ Int parseXRes(char *args[], int num)
 	if (TheWritableGlobalData && num > 1)
 	{
 		// BFME's GlobalData is not this tree's: m_xResolution is at +0x2c here,
-		// +0x24 there. The divergence is not a uniform shift -- see
-		// parseNetMinPlayers, whose field is 0x744 further out, not 8 -- so the
+		// +0x24 there. The divergence is not a uniform shift -- retail's
+		// m_netMinPlayers is +0xB0C against this tree's +0x788 -- so the
 		// offsets are pinned one at a time as retail bodies name them.
 		*(Int *)((char *)TheWritableGlobalData + 0x2c) = atoi(args[1]);
 		return 2;
@@ -932,11 +932,18 @@ Int parseIncrAGPBuf(char *args[], int num)
 	return 1;
 }
 
-Int parseNetMinPlayers(char *args[], int num)
+// Retail's -netMinPlayers handler is not here: BFME1 WorldBuilder's full
+// CommandLineParam table pairs "-netMinPlayers" with a body storing to
+// GlobalData+0xB0C, which in the game is 0x00060F40.
+Int parseNetMinPlayers(char *args[], int num);
+
+// 0x00060C60: an atoi store to GlobalData+0xECC that no retail table entry
+// reaches. WorldBuilder's table pairs that store with "-panoramicSlices", a flag
+// Zero Hour does not have, so EA's handler name is unknown.
+Int Rva00060C60_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
-		// retail m_netMinPlayers at GlobalData+0xecc; this tree lands it at +0x788
 		*(Int *)((char *)TheWritableGlobalData + 0xecc) = atoi(args[1]);
 	}
 	return 2;

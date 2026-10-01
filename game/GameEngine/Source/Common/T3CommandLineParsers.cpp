@@ -3,12 +3,12 @@
 //
 // Every body here is an `Int parseXxx(char *args[], int num)` of the shape the
 // Zero Hour CommandLine.cpp uses, and the already-matched rows in
-// game/GameEngine/Source/Common/CommandLine.cpp (parseXRes, parseNetMinPlayers,
-// parseFullVersion, parseFPUPreserve) sit in the same run of addresses. The
-// Zero Hour source cannot claim these, though: BFME's GlobalData is a different
-// object, so the ZH header puts m_windowed at +0x20 where retail stores +0x29,
-// and the ZH translation unit misses on member offsets alone. So GlobalData is
-// rebuilt here from the offsets retail actually writes.
+// game/GameEngine/Source/Common/CommandLine.cpp (parseXRes, parseFullVersion,
+// parseFPUPreserve) sit in the same run of addresses. The Zero Hour source
+// cannot claim these, though: BFME's GlobalData is a different object, so the
+// ZH header puts m_windowed at +0x20 where retail stores +0x29, and the ZH
+// translation unit misses on member offsets alone. So GlobalData is rebuilt
+// here from the offsets retail actually writes.
 //
 // One of those offset pairs is pinned by numbers rather than by shape: the pair
 // (m_useFpsLimit at +0x1E, m_framesPerSecondLimit at +0x24) is written FALSE and
