@@ -285,21 +285,18 @@ int Rva007FD540( int result )
 	return result;
 }
 
-/* 0x007FE210.  The call is `ff 15` through an IAT slot, i.e. a __declspec
- * (dllimport) __stdcall taking two arguments -- nothing is popped afterwards.
- * THE IMPORT'S NAME NEVER REACHES THESE BYTES: an IAT call site is a DIR32
- * relocation and the gate fills those four bytes from retail, so the name below
- * is address-derived on purpose and asserts nothing about which API this is.
- * What the bytes do fix is the shape: a two-argument stdcall probe over a
- * sub-object at +0x54 that, when it reports non-zero, hands the whole object to
- * a one-argument cdecl helper. */
-__declspec(dllimport) int __stdcall Rva01358E58Probe( void *object, int flag );
+/* Retail's PE import slot 0x01358E58 is KERNEL32.dll!InterlockedExchange.
+ * The existing C shim lacks this API; its native x86 declaration below follows
+ * VS2003 PlatformSDK WinBase.h. LONG and its pointer retain the original
+ * four-byte argument/result representation. */
+__declspec(dllimport) LONG __stdcall InterlockedExchange(
+    LONG volatile *Target, LONG Value );
 
 void Rva007F0030( void *object );
 
 void Rva007FE210( void *object )
 {
-	if ( Rva01358E58Probe( (char *)object + 0x54, 1 ) )
+	if ( InterlockedExchange( (LONG volatile *)((char *)object + 0x54), 1 ) )
 		Rva007F0030( object );
 }
 
@@ -367,14 +364,13 @@ struct Rva0130AB68List
 
 extern struct Rva0130AB68List g_Rva0130AB68Default;
 
-__declspec(dllimport) void __stdcall Rva01358D0CReset( void *body );
 
 void Rva007FEAA0( struct Rva0130AB68List *list )
 {
 	struct Rva0130AB68List *node = list ? list : &g_Rva0130AB68Default;
 
 	node->m_state = 0;
-	Rva01358D0CReset( node->m_body );
+	DeleteCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 }
 
 /* 0x007FE670: the other half of the shutdown handshake at 0x007FE620.  That one
@@ -399,7 +395,6 @@ void Rva007FE670( void )
  * count alone, and hands the +0xC sub-object to a DIFFERENT import slot.  One
  * slot initialising what the other tears down is the usual pairing for an
  * embedded lock, though the bytes fix only that the two slots differ. */
-__declspec(dllimport) void __stdcall Rva01358E4CInit( void *body );
 
 void Rva007FEA20( struct Rva0130AB68List *list )
 {
@@ -408,7 +403,7 @@ void Rva007FEA20( struct Rva0130AB68List *list )
 	node->m_ownerThread = 0;
 	node->m_depth = 0;
 	node->m_state = 0;
-	Rva01358E4CInit( node->m_body );
+	InitializeCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 }
 
 /* 0x007FECB0: release one reference.  Above one, the count simply drops; at one
@@ -421,7 +416,6 @@ void Rva007FEA20( struct Rva0130AB68List *list )
  * SAME SLOT to give the section back after its probe reports busy, which a
  * destroy could not be.  The slot is a LEAVE, so the last release here is
  * `clear the ownership words and leave`, not `tear the object down`. */
-__declspec(dllimport) void __stdcall Rva01358E74Leave( void *body );
 
 void Rva007FECB0( struct Rva0130AB68List *list )
 {
@@ -436,7 +430,7 @@ void Rva007FECB0( struct Rva0130AB68List *list )
 		node->m_ownerThread = 0;
 		node->m_depth = 0;
 		node->m_state = 0;
-		Rva01358E74Leave( node->m_body );
+		LeaveCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 	}
 }
 
@@ -448,7 +442,6 @@ void Rva007FECB0( struct Rva0130AB68List *list )
  * entered and ownership recorded.  Note the owner is re-read from the import
  * AFTER entering rather than reused from the first call: the compiler was given
  * no licence to cache it across the lock. */
-__declspec(dllimport) void __stdcall Rva01358D18Enter( void *body );
 
 int Rva007FEB00( struct Rva0130AB68List *list )
 {
@@ -460,10 +453,10 @@ int Rva007FEB00( struct Rva0130AB68List *list )
 		return 1;
 	}
 
-	if ( Rva01358E58Probe( &node->m_state, 1 ) )
+	if ( InterlockedExchange( (LONG volatile *)(&node->m_state), 1 ) )
 		return 0;
 
-	Rva01358D18Enter( node->m_body );
+	EnterCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 
 	node->m_ownerThread = GetCurrentThreadId();
 	node->m_depth = node->m_depth + 1;
@@ -486,16 +479,16 @@ void Rva007FEBD0( struct Rva0130AB68List *list )
 
 	while ( !Rva007FEB00( list ) )
 	{
-		Rva01358D18Enter( node->m_body );
+		EnterCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 
-		if ( !Rva01358E58Probe( &node->m_state, 1 ) )
+		if ( !InterlockedExchange( (LONG volatile *)(&node->m_state), 1 ) )
 		{
 			node->m_ownerThread = GetCurrentThreadId();
 			node->m_depth = node->m_depth + 1;
 			return;
 		}
 
-		Rva01358E74Leave( node->m_body );
+		LeaveCriticalSection( (LPCRITICAL_SECTION)node->m_body );
 		Sleep( 1 );
 	}
 }
@@ -549,7 +542,7 @@ int Rva007FE250( struct Rva007FE250Request *request )
 		request->m_status = -1;
 	}
 
-	if ( Rva01358E58Probe( &request->m_state, 1 ) )
+	if ( InterlockedExchange( (LONG volatile *)(&request->m_state), 1 ) )
 		Rva007F0030( request );
 
 	return 0;
@@ -568,7 +561,8 @@ int Rva007FE250( struct Rva007FE250Request *request )
 __declspec(dllimport) int __stdcall Rva01358D00CreateWorker(
 	void *security, unsigned int stackSize, void *start, void *parameter,
 	unsigned int flags, unsigned int *identifier );
-__declspec(dllimport) void __stdcall Rva01358F20SetPriority( int thread, int priority );
+/* Native WinBase.h supplies this missing C-shim API declaration. */
+__declspec(dllimport) BOOL __stdcall SetThreadPriority( HANDLE hThread, int nPriority );
 
 extern int g_Rva0130ACB4;
 
@@ -601,7 +595,7 @@ void Rva007FE520( int priority )
 
 	if ( g_Rva0130ACB8Thread != 0 )
 	{
-		Rva01358F20SetPriority( g_Rva0130ACB8Thread, priority );
+		SetThreadPriority( (HANDLE)g_Rva0130ACB8Thread, priority );
 		CloseHandle( (HANDLE)g_Rva0130ACB8Thread );
 	}
 
