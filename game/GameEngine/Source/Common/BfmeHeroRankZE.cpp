@@ -78,6 +78,11 @@ public:
 	virtual UnicodeStringZE bfmeFetchZE(AsciiStringZE label, int *exists) = 0;
 };
 
+// TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
+// declared under its one canonical mangled name; this view keeps the members
+// this body needs and is cast at the use site.
+class WindowManager;
+
 class BfmePalantirZE
 {
 public:
@@ -85,7 +90,7 @@ public:
 };
 
 extern BfmeTextZE *g_bfmeTextZE;					// retail 0x012F147C
-extern BfmePalantirZE *g_bfmePalantirZE;			// retail 0x012F19E8
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmeHeroRankZE@@YADH@Z
 char bfmeHeroRankZE(int rank)
@@ -98,7 +103,7 @@ char bfmeHeroRankZE(int rank)
 
 	value.format(g_bfmeTextZE->bfmeFetchZE(s_bfmeLabelZE, 0), rank);
 
-	g_bfmePalantirZE->bfmeStoreZE(s_bfmeKeyZE, value);
+	((BfmePalantirZE *)g_rva012F19E8WindowManager)->bfmeStoreZE(s_bfmeKeyZE, value);
 
 	return 1;
 }

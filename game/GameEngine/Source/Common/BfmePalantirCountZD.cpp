@@ -68,13 +68,18 @@ public:
 	void __cdecl format(UnicodeStringZD text, ...);
 };
 
+// TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
+// declared under its one canonical mangled name; this view keeps the members
+// this body needs and is cast at the use site.
+class WindowManager;
+
 class BfmePalantirZD
 {
 public:
 	void bfmeStoreZD(const AsciiStringZD &key, const UnicodeStringZD &value);
 };
 
-extern BfmePalantirZD *g_bfmePalantirZD;			// retail 0x012F19E8
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmePalantirCountZD@@YADHH@Z
 char bfmePalantirCountZD(int count, int total)
@@ -93,7 +98,7 @@ char bfmePalantirCountZD(int count, int total)
 	else
 		value.set(L" ", wcslen(L" "));
 
-	g_bfmePalantirZD->bfmeStoreZD(s_bfmeKeyZD, value);
+	((BfmePalantirZD *)g_rva012F19E8WindowManager)->bfmeStoreZD(s_bfmeKeyZD, value);
 
 	return 1;
 }

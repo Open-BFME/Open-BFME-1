@@ -39,7 +39,7 @@ public:
 	void unidentified_00015235(int, const char *, int, const void *, const void *,
 		const void *, const void *, const void *);
 };
-extern WindowManager *g_theWindowManager;                  // 0x012F19E8
+extern WindowManager *g_rva012F19E8WindowManager;         // 0x012F19E8
 
 class HideInGameChatShim
 {
@@ -66,7 +66,7 @@ void HideInGameChatShim::run()
 	else
 		g_unicode12F498C = BFMEUnicodeEmptyString;
 
-	g_theWindowManager->unidentified_00015235(g_Rva005127A0InGameChat->dword_250, "CloseChat", 0, 0, 0, 0, 0, 0);
+	g_rva012F19E8WindowManager->unidentified_00015235(g_Rva005127A0InGameChat->dword_250, "CloseChat", 0, 0, 0, 0, 0, 0);
 	g_Rva005127A0InGameChat->dword_258 = 3;
 	ResetInGameChat();
 }

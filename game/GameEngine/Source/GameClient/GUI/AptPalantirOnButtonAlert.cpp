@@ -39,7 +39,7 @@ public:
 
 extern AptPalantir *TheAptPalantir;
 extern PalantirUIState *g_aptPalantirUIState;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 extern char g_aptPalantirHeroPrefix[];
 extern char g_aptPalantirHeroOne[];
@@ -67,7 +67,7 @@ void aptPalantirOnButtonAlert( char *command )
 
 			char alertNumber[ 16 ] = "";
 			sprintf( alertNumber, g_aptPalantirNumberFormat, 1 );
-			g_theWindowManager->add( (void *)g_aptPalantirWindow,
+			g_rva012F19E8WindowManager->add( (void *)g_aptPalantirWindow,
 				g_aptPalantirHideAlert, 1, alertNumber, 0, 0, 0, 0 );
 			break;
 		}

@@ -79,7 +79,7 @@ extern "C" __declspec(dllimport) int __cdecl swprintf(
 	WideChar *, const WideChar *, ... );
 
 extern GameTextInterface *TheGameText;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeAptScreenMapTransfer
 {
@@ -100,6 +100,6 @@ void BfmeAptScreenMapTransfer::processTimeout( int secondsLeft )
 		minutes, seconds );
 
 	UnicodeString text( buffer );
-	g_theWindowManager->bfme_setAptText(
+	g_rva012F19E8WindowManager->bfme_setAptText(
 		AsciiString( "APT:FileTransferLoadingTime" ), text );
 }

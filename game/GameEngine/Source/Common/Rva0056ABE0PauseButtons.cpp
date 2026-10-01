@@ -19,6 +19,11 @@ void bfmeGoENK(BfmeObjENK *o, char v);
 class GameWindow;
 void Rva004B7A10SetScrollButtonsHidden(GameWindow *window, bool hide);
 
+// TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
+// declared under its one canonical mangled name; this view keeps the member
+// this body calls and is cast at the use sites.
+class WindowManager;
+
 class GenActionSink
 {
 public:
@@ -26,7 +31,7 @@ public:
 		int a, int b, int c, int d);
 };
 
-extern GenActionSink *TheGenActionSink;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 int bfmeAptLevel00465CE0(BfmeH1065 *self);
 
@@ -63,11 +68,11 @@ void BfmeThingME::apply(void)
 	{
 		if (!bfmeTestME())
 		{
-			TheGenActionSink->invokeAtLevel(level, "disableButton", 1, "Load", 0, 0, 0, 0);
-			TheGenActionSink->invokeAtLevel(level, "disableButton", 1, "Delete", 0, 0, 0, 0);
+			((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "disableButton", 1, "Load", 0, 0, 0, 0);
+			((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "disableButton", 1, "Delete", 0, 0, 0, 0);
 			return;
 		}
-		TheGenActionSink->invokeAtLevel(level, "enableButton", 1, "Load", 0, 0, 0, 0);
-		TheGenActionSink->invokeAtLevel(level, "enableButton", 1, "Delete", 0, 0, 0, 0);
+		((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "enableButton", 1, "Load", 0, 0, 0, 0);
+		((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "enableButton", 1, "Delete", 0, 0, 0, 0);
 	}
 }

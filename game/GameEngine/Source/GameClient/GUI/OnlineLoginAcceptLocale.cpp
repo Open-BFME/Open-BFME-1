@@ -29,7 +29,7 @@ public:
 // constructor claim.  Retail 0x00552C40 consumes one BYTE argument, and its
 // two OnlineLogin writers at 0x00553520 and 0x005536F0 call ILT 0x00049E1D
 // with 0/1 before storing the same bool state at this+0x9F.
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The OnlineLogin singleton slot, read at the end of this callback.  Retail
 // 0x012F4AAC; dir32_addresses.csv records ?TheBfmeOnlineLogin@@3PAVBfmeAptScreen
@@ -84,7 +84,7 @@ void BfmeAptScreenOnlineLogin::_bfme_acceptLocale( const char * )
 		g_012F4AB0 = 1;
 	}
 
-	g_theWindowManager->add( m_context->m_window,
+	g_rva012F19E8WindowManager->add( m_context->m_window,
 		"CallChild", 1, (void *)"DoCloseLocale", 0, 0, 0, 0 );
 
 	TheBfmeOnlineLogin->rva00552C40( m_closeLocaleArgument );

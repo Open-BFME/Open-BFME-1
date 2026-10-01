@@ -33,7 +33,7 @@ public:
 		const void *argument, int unused1, int unused2, int unused3, int unused4);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
@@ -77,7 +77,7 @@ void DisconnectMenu::_bfme_showPlayerControls(int slot, bool show)
 	sprintf(slotText, "%d", slot);
 
 	const char *function = show ? "ShowKickButton" : "HideKickButton";
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		m_bfmeMovie, function, 1, slotText, 0, 0, 0, 0);
 	m_playerControlsShown[slot] = show;
 }

@@ -2,13 +2,18 @@
 
 class BfmeX1076;
 
+// TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
+// declared under its one canonical mangled name; this view keeps the member
+// this body calls and is cast at the use site.
+class WindowManager;
+
 class BfmeR1076
 {
 public:
 	void bfmeRun1076(BfmeX1076 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1076 *g_bfmeR1076;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 extern char g_bfmeFmt1076[];
 
 extern bool j_000490a8(void);
@@ -73,7 +78,7 @@ int BfmeQ1076::bfmeGo1076A(int a, char b, char c)
 	if (a != 0x15 || b != 1 || !(c & 1))
 		return 0;
 	if (m_bfme25c == 0 && m_bfme258 != 2)
-		g_bfmeR1076->bfmeRun1076(m_bfme250, g_bfmeFmt1076, 0, 0, 0, 0, 0, 0);
+		((BfmeR1076 *)g_rva012F19E8WindowManager)->bfmeRun1076(m_bfme250, g_bfmeFmt1076, 0, 0, 0, 0, 0, 0);
 	else if (m_bfme25c != 0 && m_bfme258 == 0)
 		bfmeF1076();
 	else if (m_bfme25c == 0 && m_bfme258 == 2)

@@ -11,7 +11,7 @@ public:
 	void hideQuitMenu();
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 class SkirmishPreferences
 {
@@ -67,7 +67,7 @@ void BfmeAptScreenSkirmish::_bfme_close( int )
 	int state = m_state;
 	if( state == 2 || state == 4 )
 	{
-		g_theWindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->unidentified_00015235(
 			m_movie, "PopUpControl", 1, "close", 0, 0, 0, 0 );
 		m_profileOpen = true;
 		m_state = 7;
@@ -83,7 +83,7 @@ void BfmeAptScreenSkirmish::_bfme_close( int )
 			void *screen = g_obj12F4B54;
 			g_bfmeCurrentCB = 0;
 			if( screen )
-				g_theWindowManager->hideQuitMenu();
+				g_rva012F19E8WindowManager->hideQuitMenu();
 		}
 		return;
 	}
@@ -91,7 +91,7 @@ void BfmeAptScreenSkirmish::_bfme_close( int )
 	if( state != 3 )
 		return;
 
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		m_movie, "PopUpControl", 1, "close", 0, 0, 0, 0 );
 	m_profileOpen = true;
 	m_state = 7;
