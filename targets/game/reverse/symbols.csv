@@ -13042,7 +13042,6 @@ name,address,notes
 ?StackWalk@DebugStackwalk@@SAHAAVSignature@1@PAU_CONTEXT@@_N@Z,0x0088CE00,direct body 0x0088CE00; ExceptionFilter 0x0088E5F0 +0x5C calls with 3 cdecl args (sig 0x013373C8 / ContextRecord / 1) caller cleanup; body plain ret and reads arg3 as byte; ZH debug_except.cpp:391 StackWalk(sig pExPtrs->ContextRecord) at same point
 ?Start@ParticleEmitterClass@@QAEXXZ,0x0097F090
 ?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
-?Start_Movie_Capture@WW3D@@SAXPBDM@Z,0x009E7FD0,pinharvest x1 (body)
 ?StaticGameLODNames@@3PAPBDA,0x00EA73E4,GameLODManager::getStaticGameLODIndex direct DIR32; six retail names VeryLow through Custom
 ?StickyShiftRightMant@@YAXPAUInternalFPF@@H@Z,0x00879740,BYTEmark emfloat helper; retail callee of RoundInternalFPF at 0x00879810
 ?Stop@MouseThreadClass@@QAEXXZ,0x009DB5A0,W3DMouse polling thread stop call
