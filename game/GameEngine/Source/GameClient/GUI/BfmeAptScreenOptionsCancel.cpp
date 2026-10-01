@@ -113,6 +113,8 @@ public:
 	void apply( void );
 };
 
+class GlobalData;
+
 struct Rva006C9270GlobalData
 {
 	unsigned char m_head[ 0xc68 ];
@@ -127,8 +129,13 @@ class WindowManager;
 extern WindowManager *g_theWindowManager;
 extern Display *TheDisplay;
 extern Rva005A00B0AudioClient *TheAudioClientUpdate;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern void *g_Va012F4AE4;
+
+static inline const Rva006C9270GlobalData *aptGlobalData()
+{
+	return (const Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 
 enum
 {
@@ -239,7 +246,7 @@ void BfmeAptScreenOptions::_bfme_cancel( const char * )
 		return;
 	}
 
-	TheDisplay->slot20( TheWritableGlobalData->m_movieC68, 0, 1.0f, 0 );
+	TheDisplay->slot20( aptGlobalData()->m_movieC68, 0, 1.0f, 0 );
 
 	{
 		int volume = (int)m_options.getMusicVolume();

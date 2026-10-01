@@ -20,7 +20,11 @@ struct Coord2D{float x,y;};class Vector3{public:float X,Y,Z;};
 class DX8Wrapper{public:static void Set_Render_Target(IDirect3DSurface8*,bool);static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned);static void Set_DX8_Render_State(unsigned long,unsigned);static void Apply_Render_State_Changes();};
 extern Device *HighlightDevice;
 extern bool HighlightRendering;
-struct Settings{char p[0xdbd];bool active;};extern Settings *HighlightSettings;
+// Retail's highlight "Settings" pointer is the GlobalData global at 0x012ED5C8;
+// keep only the member view this function reads.
+class GlobalData;extern GlobalData *TheWritableGlobalData;
+struct Settings{char p[0xdbd];bool active;};
+static inline Settings *highlightSettings(){return (Settings *)TheWritableGlobalData;}
 extern unsigned HighlightFVF,ScreenTotalChanges,HighlightColorIndex;
 struct Color{float x,y,z,w;};extern Color HighlightColors[];
 extern Color HighlightPixelConstants[];
@@ -38,7 +42,7 @@ bool ScreenHilightFilter::postRender(int mode,unsigned unused,bool&extra,Coord2D
  if(valid){DX8Wrapper::Set_Render_Target(0,true);reset();extra=true;valid=false;return true;}
  if(!set(mode))return false;
  Device *dev=HighlightDevice;
- if(HighlightSettings&&HighlightSettings->active){
+ if(highlightSettings()&&highlightSettings()->active){
   DX8Wrapper::Set_Render_Target(surface[0],false);
   union {Vector3 black;Color color;};black.X=0;black.Y=0;black.Z=0;DX8Wrapper::Clear(true,false,false,black,0,1,0);
   dev->v->SetSamplerState(dev,0,1,3);dev->v->SetSamplerState(dev,0,2,3);dev->v->SetSamplerState(dev,0,5,2);dev->v->SetSamplerState(dev,0,6,2);dev->v->SetSamplerState(dev,0,7,2);

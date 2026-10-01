@@ -78,8 +78,8 @@ class Player { public:
     char field00[0x48];
     Money field48;
 };
-class GlobalData { public: char field00[0xc30]; float m_sellPercentage; };
-extern GlobalData *TheGlobalData;
+class GlobalData; extern GlobalData *TheWritableGlobalData;
+class Rva000FEBE0GlobalDataView { public: char field00[0xc30]; float m_sellPercentage; };
 class GameTextInterface { public:
     virtual void slot00();
     virtual void slot01();
@@ -236,7 +236,7 @@ void SellList000FEBE0::process() {
             unsigned int sellValue;
             if(obj->getTemplate()->m_refundValue != 0)
                 sellValue=obj->getTemplate()->m_refundValue;
-            else { float cost=*(float*)((char*)obj+0x258); sellValue=(unsigned int)(cost * TheGlobalData->m_sellPercentage); }
+            else { float cost=*(float*)((char*)obj+0x258); sellValue=(unsigned int)(cost * ((Rva000FEBE0GlobalDataView*)TheWritableGlobalData)->m_sellPercentage); }
             float health=health000FEBE0(obj->m_body);
             ((Money*)((char*)player+0x48))->deposit((unsigned int)(sellValue*health),true);
             UnicodeString message;

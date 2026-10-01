@@ -95,7 +95,9 @@ struct Rva006C9270GlobalData
 	Bool m_shellMapOn;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail's GlobalData at 0x012ED5C8; keep only the members this file touches.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class OptionPreferences
 {
@@ -264,25 +266,25 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 	if (TheWritableGlobalData)
 	{
 		if (level == STATIC_GAME_LOD_VERY_LOW || level == STATIC_GAME_LOD_LOW)
-			TheWritableGlobalData->m_field1d = 0;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1d = 0;
 		if (level == STATIC_GAME_LOD_VERY_LOW || level == STATIC_GAME_LOD_LOW)
-			TheWritableGlobalData->m_fielda75 = 0;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_fielda75 = 0;
 		{
 			OptionPreferences options;
-			TheWritableGlobalData->m_fielda75 = options.getUnitDecals();
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_fielda75 = options.getUnitDecals();
 			if (level == STATIC_GAME_LOD_MEDIUM)
-				TheWritableGlobalData->m_fielda77 = 1;
+				((Rva006C9270GlobalData *)TheWritableGlobalData)->m_fielda77 = 1;
 			else if (level == STATIC_GAME_LOD_HIGH || level == STATIC_GAME_LOD_ULTRA_HIGH)
-				TheWritableGlobalData->m_fielda77 = 0;
+				((Rva006C9270GlobalData *)TheWritableGlobalData)->m_fielda77 = 0;
 		}
 
-		TheWritableGlobalData->m_fieldb8c = lodInfo->m_maxParticleCount;
-		TheWritableGlobalData->m_field64 = lodInfo->m_useShadowVolumes;
-		TheWritableGlobalData->m_field65 = lodInfo->m_useShadowDecals;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_fieldb8c = lodInfo->m_maxParticleCount;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field64 = lodInfo->m_useShadowVolumes;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field65 = lodInfo->m_useShadowDecals;
 
 		if (requestedTextureReduction != Rva008FD440Get())
 		{
-			TheWritableGlobalData->m_field68 = requestedTextureReduction;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field68 = requestedTextureReduction;
 			if (TheGameClient)
 				TheGameClient->adjustLOD(0);
 		}
@@ -298,22 +300,22 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 			}
 		}
 
-		TheWritableGlobalData->m_field47 = lodInfo->byte_6;
-		TheWritableGlobalData->m_field28 = !lodInfo->byte_7;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field47 = lodInfo->byte_6;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field28 = !lodInfo->byte_7;
 		m_field170c = lodInfo->dword_24;
-		TheWritableGlobalData->m_field38 = lodInfo->m_useLightMap;
-		TheWritableGlobalData->m_field44 = lodInfo->m_useLightMap;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field38 = lodInfo->m_useLightMap;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field44 = lodInfo->m_useLightMap;
 		if (lodInfo->m_useLightMap)
 		{
-			TheWritableGlobalData->m_field45 = 1;
-			TheWritableGlobalData->m_field46 = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field45 = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field46 = 1;
 		}
 		else
 		{
-			TheWritableGlobalData->m_field45 = 1;
-			TheWritableGlobalData->m_field46 = 0;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field45 = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field46 = 0;
 		}
-		TheWritableGlobalData->m_field8c = lodInfo->m_showSoftWaterEdge;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field8c = lodInfo->m_showSoftWaterEdge;
 
 		if (m_currentStaticLOD == STATIC_GAME_LOD_UNKNOWN
 			|| lodInfo->m_showSoftWaterEdge != prevLodBackup.m_showSoftWaterEdge)
@@ -322,15 +324,15 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 				g_bfmeTerrainVisual->setShoreLineDetail();
 		}
 
-		TheWritableGlobalData->m_field1f4 = lodInfo->m_maxTankTrackEdges;
-		TheWritableGlobalData->m_field1f8 = lodInfo->m_maxTankTrackOpaqueEdges;
-		TheWritableGlobalData->m_field1fc = lodInfo->m_maxTankTrackFadeDelay;
-		TheWritableGlobalData->m_field1a = lodInfo->m_useTreeSway;
-		TheWritableGlobalData->m_field1b = lodInfo->byte_1a;
-		TheWritableGlobalData->m_field1c = !lodInfo->m_useBuildupScaffolds;
-		TheWritableGlobalData->m_field58 = lodInfo->byte_21;
-		TheWritableGlobalData->m_field18 = lodInfo->byte_22;
-		TheWritableGlobalData->m_field1f = lodInfo->byte_23;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1f4 = lodInfo->m_maxTankTrackEdges;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1f8 = lodInfo->m_maxTankTrackOpaqueEdges;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1fc = lodInfo->m_maxTankTrackFadeDelay;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1a = lodInfo->m_useTreeSway;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1b = lodInfo->byte_1a;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1c = !lodInfo->m_useBuildupScaffolds;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field58 = lodInfo->byte_21;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field18 = lodInfo->byte_22;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field1f = lodInfo->byte_23;
 		m_field16e4 = lodInfo->dword_28;
 		m_field16e8 = lodInfo->dword_2c;
 
@@ -343,7 +345,7 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 	}
 
 	if (!m_memPassed || isReallyLowMHz())
-		TheWritableGlobalData->m_shellMapOn = 0;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shellMapOn = 0;
 	if (g_bfmeTerrainVisual)
 		g_bfmeTerrainVisual->setTerrainTracksDetail();
 }

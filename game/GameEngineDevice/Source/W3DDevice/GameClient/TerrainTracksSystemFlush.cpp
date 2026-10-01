@@ -146,7 +146,11 @@ struct RGBColor
 	Real red, green, blue;
 };
 
+// Retail's GlobalData at 0x012ED5C8; keep only the members this file reads.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 struct Rva006C9270GlobalData
 {
 	char head[0x9BC];
@@ -154,7 +158,10 @@ struct Rva006C9270GlobalData
 	RGBColor m_terrainDiffuse[3];		// this+0x9E0
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+static inline const Rva006C9270GlobalData *tracksGlobalData()
+{
+	return (const Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 
 class IndexBufferClass;
 class TextureBaseClass;
@@ -295,14 +302,15 @@ void TerrainTracksRenderObjClassSystem::flush(void)
 		return;	//don't render track marks in reflections.
 
 	// adjust shading for time of day.
-	diffuseLight = REAL_TO_INT((TheWritableGlobalData->m_terrainAmbient[0].red +
-		TheWritableGlobalData->m_terrainDiffuse[0].red * 0.5f) * 255.0f);
+	const Rva006C9270GlobalData *gd = tracksGlobalData();
+	diffuseLight = REAL_TO_INT((gd->m_terrainAmbient[0].red +
+		gd->m_terrainDiffuse[0].red * 0.5f) * 255.0f);
 	diffuseLight = (diffuseLight << 8) | REAL_TO_INT(
-		(TheWritableGlobalData->m_terrainAmbient[0].green +
-		TheWritableGlobalData->m_terrainDiffuse[0].green * 0.5f) * 255.0f);
+		(gd->m_terrainAmbient[0].green +
+		gd->m_terrainDiffuse[0].green * 0.5f) * 255.0f);
 	diffuseLight = (diffuseLight << 8) | REAL_TO_INT(
-		(TheWritableGlobalData->m_terrainAmbient[0].blue +
-		TheWritableGlobalData->m_terrainDiffuse[0].blue * 0.5f) * 255.0f);
+		(gd->m_terrainAmbient[0].blue +
+		gd->m_terrainDiffuse[0].blue * 0.5f) * 255.0f);
 
 	Real numFadedEdges = m_maxTankTrackEdges - m_maxTankTrackOpaqueEdges;
 

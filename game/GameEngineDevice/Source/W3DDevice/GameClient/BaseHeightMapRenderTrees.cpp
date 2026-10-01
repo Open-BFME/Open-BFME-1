@@ -14,13 +14,20 @@
 #include "scene.h"
 #include "dx8wrapper.h"
 
+// Retail's GlobalData at 0x012ED5C8; keep only the member view this file reads.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 struct Rva006CD990GlobalData
 {
 	unsigned char m_unmodeled00[0x3b];
 	unsigned char m_useTrees;
 };
 
-extern Rva006CD990GlobalData *TheWritableGlobalData;
+static inline const Rva006CD990GlobalData *treesGlobalData()
+{
+	return (const Rva006CD990GlobalData *)TheWritableGlobalData;
+}
 
 class W3DTreeBuffer
 {
@@ -83,7 +90,7 @@ public:
 
 void BaseHeightMapRenderTreesShim::render(CameraClass *camera)
 {
-	if (!m_map || !Scene || !TheWritableGlobalData->m_useTrees)
+	if (!m_map || !Scene || !treesGlobalData()->m_useTrees)
 		return;
 
 	if (m_treeBuffer) {

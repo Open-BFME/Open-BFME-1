@@ -11258,5 +11258,25 @@
   "after_sha256": "2c352d02b862c462558561654389bdde8fecf363e7d4d31ff8d0198cc9c15a7e",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/Gadget/GadgetListboxCreateScrollbar.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Gadget/GadgetListboxCreateScrollbar.cpp",
+  "old_name": "GlobalData",
+  "new_name": "Rva004BCB20GlobalDataView",
+  "before_sha256": "0b77a156b4d67c4b707ad6fa8f320a85d9ea07ca9064acb769075269b97519ea",
+  "after_sha256": "a5c515643bd9d6e0b8e65c6c3ee3c22c0b81393da40fc371ade4cb99e74e5d5d",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToBuild.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToBuild.cpp",
+  "old_name": "GlobalData",
+  "new_name": "Rva00163220GlobalDataView",
+  "before_sha256": "4dec8b48e2f28a83163162a730df666dde4b21efaf30cd12be976a767aa60e71",
+  "after_sha256": "5818b011a3f5929646e5bf44e10ab5595523e5750145d9d4af6cb4eb7a0cf544",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

@@ -80,6 +80,9 @@ public:
 
 extern BfmeCampaignManagerVictorious *TheLivingWorldCampaignManager;
 
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 struct Rva006C9270GlobalData
 {
 	unsigned char m_beforeE70[ 0xe70 ];
@@ -87,7 +90,10 @@ struct Rva006C9270GlobalData
 	int m_int0E74;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+static inline const Rva006C9270GlobalData *ownerUpdateGlobalData()
+{
+	return (const Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 
 extern int __fastcall bfmeOffset( int base );
 extern void __cdecl bfmeSetPalantirYW( int count );
@@ -298,7 +304,7 @@ void Rva0058DBC0Owner::rva0058DDD0()
 		}
 
 		int limit = m_lastCount00 + ( TheLivingWorldCampaignManager->m_byte1c
-			? TheWritableGlobalData->m_int0E74 : TheWritableGlobalData->m_int0E70 );
+			? ownerUpdateGlobalData()->m_int0E74 : ownerUpdateGlobalData()->m_int0E70 );
 
 		if( m_countAnim20.get() )
 		{

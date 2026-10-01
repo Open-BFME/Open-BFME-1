@@ -130,13 +130,20 @@ public:
 };
 extern GameWindowManager *TheWindowManager;
 
-struct GlobalData
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+struct Rva004BCB20GlobalDataView
 {
 	unsigned char m_unmodelled00[0x2c];
 	Int m_xResolution;					// +0x2c
 	Int m_yResolution;					// +0x30
 };
-extern GlobalData *TheWritableGlobalData;
+
+static inline const Rva004BCB20GlobalDataView *scrollbarGlobalData()
+{
+	return (const Rva004BCB20GlobalDataView *)TheWritableGlobalData;
+}
 
 void Rva004BCB20(GameWindow *window, Int value);
 
@@ -178,8 +185,9 @@ void GadgetListboxCreateScrollbar(GameWindow *listbox)
 	((WinInstanceDataInitThunk *)&winInstData)->forward();
 
 	GadgetCreate004B7350 button(21, 22);
-	button.width = TheWritableGlobalData->m_xResolution * 21 / 1024;
-	button.height = TheWritableGlobalData->m_yResolution * 22 / 768;
+	const Rva004BCB20GlobalDataView *gd = scrollbarGlobalData();
+	button.width = gd->m_xResolution * 21 / 1024;
+	button.height = gd->m_yResolution * 22 / 768;
 
 	status |= WIN_STATUS_IMAGE;
 	winInstData.m_owner = listbox;

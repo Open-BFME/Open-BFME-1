@@ -61,13 +61,14 @@ static inline void bfmeConcat(AsciiString &dst, const AsciiString &src)
 	((StringBase<char> *)&dst)->concat(s.str(), s.getLength());
 }
 
-struct GlobalData
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+struct Rva00163220GlobalDataView
 {
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;							// +0xA88
 };
-
-extern GlobalData *TheGlobalData;
 
 class ScriptEngine
 {
@@ -206,7 +207,7 @@ Bool AIPlayer::selectTeamToBuild( void )
 	if (hiPri == invalidPri)
 		return false;
 
-	if (TheGlobalData->m_debugAI) {
+	if (((const Rva00163220GlobalDataView *)TheWritableGlobalData)->m_debugAI) {
 		TheScriptEngine->AppendDebugMessage("**AI** Selecting team to build", false);
 	}
 

@@ -18,7 +18,8 @@ public:
 };
 
 extern ParticleSystemManager *TheParticleSystemManager;
-extern void *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Object
 {
@@ -116,7 +117,7 @@ struct Rva0020FE20ParticleGlobalData
 };
 
 #define BFME_ACTIVE_BODY_PARTICLE_GLOBAL \
-	(*reinterpret_cast<const Rva0020FE20ParticleGlobalData *>(TheWritableGlobalData))
+	(*reinterpret_cast<const Rva0020FE20ParticleGlobalData *>((const void *)TheWritableGlobalData))
 
 #define BFME_OBJECT_IS_AFLAME(obj) \
 	((*(const UnsignedInt *)((const unsigned char *)(obj) + 0x90) & 0x400u) != 0)
