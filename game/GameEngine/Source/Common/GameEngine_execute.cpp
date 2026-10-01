@@ -191,7 +191,12 @@ class BfmeDebugManager;
 
 extern RecorderClass *TheRecorder;
 extern ScriptEngine *TheScriptEngine;
-extern TacticalView *TheTacticalView;
+// Retail defines this global in game/GameEngine/Source/GameClient/View.cpp as
+// `View *TheTacticalView` (?TheTacticalView@@3PAVView@@A). This TU only needs a
+// vtable call through it, so it keeps its own TU-local TacticalView shape and
+// casts at the use site.
+class View;
+extern View *TheTacticalView;
 extern GameClient *TheGameClient;
 extern GlobalData *TheWritableGlobalData;
 extern BfmeDebugManager *TheGen001336E5C;
@@ -291,7 +296,7 @@ void GameEngine::execute(void)
 			REPORT_CRASH("Uncaught Exception in GameEngine::update");
 		}
 
-		TacticalView *view = TheTacticalView;
+		TacticalView *view = (TacticalView *)TheTacticalView;
 		LimitFrameRate = false;
 		if (view->getTimeMultiplier() <= 1 && !TheScriptEngine->isTimeFast())
 			LimitFrameRate = TheGlobalData->useFpsLimit;
