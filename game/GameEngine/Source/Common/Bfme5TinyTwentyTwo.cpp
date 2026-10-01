@@ -99,7 +99,16 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+// retail 0x012F0898: EA's `GameLogic *TheGameLogic`.  Declared with its real
+// type so the linked build has one symbol; BfmeClockCJ stays the TU-local
+// field view used here.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeClockCJ *g_bfmeSwitchCJ()
+{
+	return (BfmeClockCJ *)TheGameLogic;
+}
 
 class Gen_001BFD40
 {
@@ -114,7 +123,7 @@ private:
 // ?bfmeSetDeadline@Gen_001BFD40@@QAEXI@Z
 void Gen_001BFD40::bfmeSetDeadline(unsigned int milliseconds)
 {
-	m_bfmeDeadline = milliseconds / 1000 * 5 + g_bfmeSwitchCJ->m_bfmeNow;
+	m_bfmeDeadline = milliseconds / 1000 * 5 + g_bfmeSwitchCJ()->m_bfmeNow;
 }
 
 class Gen_001C4990

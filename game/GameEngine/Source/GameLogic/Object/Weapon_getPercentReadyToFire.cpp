@@ -12,6 +12,10 @@ enum WeaponStatus
 	BETWEEN_FIRING_SHOTS_2
 };
 
+class GameLogic;
+
+// TU-local field view of the retail global at 0x012F0898. The global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
 class GameLogic40D9
 {
 public:
@@ -19,7 +23,12 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic40D9 *TheGameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline GameLogic40D9 *theGameLogic40D9()
+{
+	return (GameLogic40D9 *)TheGameLogic;
+}
 
 class Weapon
 {
@@ -50,7 +59,7 @@ float Weapon::getPercentReadyToFire() const
 		case RELOADING_CLIP:
 		case BETWEEN_FIRING_SHOTS_2:
 		{
-			UnsignedInt now = TheGameLogic->m_frame;
+			UnsignedInt now = theGameLogic40D9()->m_frame;
 			UnsignedInt nextShot = m_whenWeCanFireAgain;
 			if (now >= nextShot)
 				return 1.0f;

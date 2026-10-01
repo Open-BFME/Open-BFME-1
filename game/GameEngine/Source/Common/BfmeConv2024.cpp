@@ -165,7 +165,15 @@ struct Rva00367E30Logic
 	unsigned int m_bfmeFrameTN;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local field view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline Rva00367E30Logic *theBfmeGameLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class BfmeThingTN
 {
@@ -196,8 +204,8 @@ void BfmeThingTN::bfmeSetTransformTN(const Matrix3DTN *m)
 {
 	bfmeSetMatrixTN(m);
 
-	bfmeMarkTN(TheBfmeGameLogic->m_bfmeFrameTN);
-	bfmeMarkTN(TheBfmeGameLogic->m_bfmeFrameTN);
+	bfmeMarkTN(theBfmeGameLogic()->m_bfmeFrameTN);
+	bfmeMarkTN(theBfmeGameLogic()->m_bfmeFrameTN);
 
 	BfmeXTN *x = bfmeGetXTN();
 

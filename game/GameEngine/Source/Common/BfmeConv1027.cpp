@@ -110,7 +110,15 @@ struct BfmeS1027
 	int m_bfmeBase;
 };
 
-extern BfmeS1027 *g_bfmeS1027;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local field view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline BfmeS1027 *g_bfmeS1027()
+{
+	return (BfmeS1027 *)TheGameLogic;
+}
 
 void __stdcall bfmeGo1027D(BfmeZ1027 *p, int *out)
 {
@@ -119,7 +127,7 @@ void __stdcall bfmeGo1027D(BfmeZ1027 *p, int *out)
 		return;
 	}
 
-	int base = g_bfmeS1027->m_bfmeBase;
+	int base = g_bfmeS1027()->m_bfmeBase;
 
 	*out = base + (int)p->m_bfmeSub.bfmeVal1027();
 }

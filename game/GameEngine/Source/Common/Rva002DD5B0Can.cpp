@@ -65,7 +65,15 @@ struct Rva00367E30Logic
 	unsigned int m_bfme3CZE;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local field view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline Rva00367E30Logic *theBfmeGameLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class BfmeObjZE
 {
@@ -103,7 +111,7 @@ char BfmeHostZE::bfmeCanZE(void *a1, BfmeObjZE *obj)
 		if (age == 0)
 			return 0;
 
-		unsigned int limit = TheBfmeGameLogic->m_bfme3CZE;
+		unsigned int limit = theBfmeGameLogic()->m_bfme3CZE;
 
 		if (age->bfmeAgeZE() < limit)
 			return 0;

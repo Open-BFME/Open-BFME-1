@@ -37,6 +37,10 @@ private:
 	SnapshotBlockList m_snapshotBlockList;
 };
 
+class GameLogic;
+
+// TU-local field view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
 class GameLogicFp
 {
 public:
@@ -44,13 +48,18 @@ public:
 	int m_fp;
 };
 
-extern GameLogicFp *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern void setFPMode();
+
+static inline GameLogicFp *theBfmeGameLogic()
+{
+	return (GameLogicFp *)TheGameLogic;
+}
 
 void GameState::gameStatePostProcessLoad( void )
 {
 	GameState *state = this;
-	GameLogicFp *logic = TheBfmeGameLogic;
+	GameLogicFp *logic = theBfmeGameLogic();
 	int *fp = &logic->m_fp;
 	if( *fp == 0 )
 		setFPMode();
@@ -67,5 +76,5 @@ void GameState::gameStatePostProcessLoad( void )
 
 	state->m_snapshotPostProcessList.clear();
 	state->m_snapshotBlockList.clear();
-	--TheBfmeGameLogic->m_fp;
+	--theBfmeGameLogic()->m_fp;
 }

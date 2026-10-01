@@ -3,7 +3,15 @@ struct Rva00367E30Logic
 	void bfmeStopAAV(int a, int b);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local method view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline Rva00367E30Logic *theBfmeGameLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class ScriptEngine
 {
@@ -67,7 +75,7 @@ void bfmeShutdownAAV(void)
 {
 	g_bfmeDirtyYH = 0;
 
-	TheBfmeGameLogic->bfmeStopAAV(0, 0);
+	theBfmeGameLogic()->bfmeStopAAV(0, 0);
 	TheScriptEngine->bfmeResetAAV(g_bfmeArgAAV);
 
 	if (g_bfmeFlagAAV == 0 && g_bfmePtrAAV != 0)

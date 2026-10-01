@@ -61,7 +61,15 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local method view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline BfmeGameLogic *theBfmeGameLogic()
+{
+	return (BfmeGameLogic *)TheGameLogic;
+}
 
 class Rva0021B200ListOwner
 {
@@ -94,7 +102,7 @@ void Rva0023A100HordeContain::visit( Rva0023A100Callback callback,
 				UnsignedInt key = entry->m_key;
 				Object *object = (Object *)key;
 				if ( key != 0 )
-					object = TheGameLogic->findObjectByID( key );
+					object = theBfmeGameLogic()->findObjectByID( key );
 
 				entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 					(_STL::_Rb_tree_node_base *)entry );

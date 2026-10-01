@@ -21,8 +21,11 @@
 // (mov [esp+0x20],0) only after the copy call returns, and releases it through
 // the existing ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ body at 0x00887940.
 
-struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// The global at retail 0x012F0898 is EA's `GameLogic *TheGameLogic`; it is
+// declared with its real type so the linked build has one symbol, while
+// Rva003BEECDC0LogicView remains the TU-local member-pointer view used below.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 // The generated declarations carry the existing thunks' identities.  The typed
 // casts are TU-local ABI information recovered from the aligned call sites;
@@ -125,7 +128,7 @@ void Rva003BEED0::finish(void)
 			if (entry->m_flag1d != 0)
 			{
 				value = (reinterpret_cast<Rva003BEC30LogicView *>(
-					TheBfmeGameLogic)->*invokeCast.member)(
+					TheGameLogic)->*invokeCast.member)(
 					(reinterpret_cast<Rva003BEC30NameView *>(entry)
 						->*nameCast.member)());
 				if (value != -1)

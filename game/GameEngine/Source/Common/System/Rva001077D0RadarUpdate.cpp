@@ -97,8 +97,17 @@ private:
 	unsigned terrainRefreshFrame;
 };
 
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local field view of the retail global at 0x012F0898; the global itself is
+// declared with its real type (GameLogic *) so the linked build has one symbol.
+static inline Rva001077D0GameLogic *g_rva001077D0GameLogic()
+{
+	return (Rva001077D0GameLogic *)TheGameLogic;
+}
+
 extern Rva001077D0FrameSource *g_rva001077D0FrameSource;
-extern Rva001077D0GameLogic *g_rva001077D0GameLogic;
 extern Rva001077D0TerrainLogic *g_rva001077D0TerrainLogic;
 extern float g_rva001077D0RefreshDelay;
 
@@ -122,7 +131,7 @@ void Rva001077D0Radar::update()
 	}
 
 	if (terrainRefreshFrame != 0
-		&& (float)(g_rva001077D0GameLogic->frame - terrainRefreshFrame)
+		&& (float)(g_rva001077D0GameLogic()->frame - terrainRefreshFrame)
 			> g_rva001077D0RefreshDelay)
 	{
 		Rva001077D0RadarPrimary *primary =
