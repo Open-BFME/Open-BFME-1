@@ -46,7 +46,13 @@ public:
 	virtual void bfmeRunDEE(BfmeSubDEE *sub, int flag);
 };
 
-extern BfmeGlobalDEE *bfmeTheDEE;
+// Retail's global at 0x012F076C is the ScriptEngine singleton; this TU's
+// view of it is BfmeGlobalDEE, so cast at the use.
+class ScriptEngine;
+
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeGlobalDEE *localGlobalDEE() { return (BfmeGlobalDEE *)TheScriptEngine; }
 
 class BfmeSubDEE
 {
@@ -61,5 +67,5 @@ struct BfmeThingDEE
 
 void __stdcall bfmeGoDEE(BfmeThingDEE *a)
 {
-	bfmeTheDEE->bfmeRunDEE(&a->m_bfmeSub, 1);
+	localGlobalDEE()->bfmeRunDEE(&a->m_bfmeSub, 1);
 }

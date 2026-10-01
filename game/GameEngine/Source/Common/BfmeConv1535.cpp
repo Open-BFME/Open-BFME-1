@@ -38,11 +38,17 @@ public:
 	virtual BfmeObjVOJ *bfmeFindVOJ(void *id);
 };
 
-extern BfmeMgrVOJ *g_bfmeMgrVOJ;
+// Retail's global at 0x012F076C is the ScriptEngine singleton; this TU's
+// view of it is BfmeMgrVOJ, so cast at the use.
+class ScriptEngine;
+
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeMgrVOJ *localMgrVOJ() { return (BfmeMgrVOJ *)TheScriptEngine; }
 
 void __stdcall bfmeSetVOJ(void *id, char flag)
 {
-	BfmeObjVOJ *o = g_bfmeMgrVOJ->bfmeFindVOJ(id);
+	BfmeObjVOJ *o = localMgrVOJ()->bfmeFindVOJ(id);
 
 	if (o != 0)
 		o->bfmeSetUntilVOJ(3, flag != 0 ? 0x3fffffff : 0);

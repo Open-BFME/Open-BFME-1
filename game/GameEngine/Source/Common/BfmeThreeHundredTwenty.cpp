@@ -42,11 +42,17 @@ public:
 	virtual BfmeNodeRP *bfmeFindRP(void *key);
 };
 
-extern BfmeLookRP *g_bfmeLookRP;
+// Retail's global at 0x012F076C is the ScriptEngine singleton; this TU's
+// view of it is BfmeLookRP, so cast at the use.
+class ScriptEngine;
+
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeLookRP *localLookRP() { return (BfmeLookRP *)TheScriptEngine; }
 
 void __stdcall bfmeSendRP(void *key, void *what)
 {
-	BfmeNodeRP *node = g_bfmeLookRP->bfmeFindRP(key);
+	BfmeNodeRP *node = localLookRP()->bfmeFindRP(key);
 	if (node == 0)
 		return;
 	BfmeFoundRP *sub = node->m_bfmeSub;
