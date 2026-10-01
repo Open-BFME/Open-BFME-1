@@ -9,6 +9,11 @@
 
 typedef unsigned int UnsignedInt;
 
+// The global at 0x012F0898 is EA's `GameLogic *TheGameLogic`
+// (?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp); only that
+// spelling links.  The real header declares GameLogic with getFrame() only,
+// so the +0x3C frame slot is read through this TU-local view.
+class GameLogic;
 class GameLogicFrameSlice
 {
 public:
@@ -16,7 +21,7 @@ public:
 	UnsignedInt m_bfmeFrame;				// +0x3C
 };
 
-extern GameLogicFrameSlice *TheGameLogic;			// 0x012F0898
+extern GameLogic *TheGameLogic;				// 0x012F0898
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLUpdate.h
 class OCLUpdate
@@ -32,5 +37,5 @@ private:
 // ?getRemainingFrames@OCLUpdate@@QAEIXZ
 UnsignedInt OCLUpdate::getRemainingFrames(void)
 {
-	return m_nextCreationFrame - TheGameLogic->m_bfmeFrame;
+	return m_nextCreationFrame - ((GameLogicFrameSlice *)TheGameLogic)->m_bfmeFrame;
 }

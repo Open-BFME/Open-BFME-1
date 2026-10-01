@@ -154,6 +154,11 @@ class AttributeModifierDefinitionStore {
 // 0x0036B330 twins the pinned 0x0036B250 getter (thiscall, hidden return, ret 8).
 #pragma comment(linker, "/alternatename:?copyClearMask@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z=?j_00018e3f@@YAXXZ")
 extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
+// The global at 0x012F0898 is EA's `GameLogic *TheGameLogic`
+// (?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp); only that
+// spelling links.  The real header declares GameLogic with getFrame() only
+// and nothing at +0x3C, so the frame slot is read through this TU-local view.
+class GameLogic;
 class Rva00367E30Logic {
     private:
     unsigned char m_unreconstructed[0x3c];
@@ -163,7 +168,10 @@ class Rva00367E30Logic {
         return m_frame;
     }
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *theGameLogic36A570() {
+    return (Rva00367E30Logic *)TheGameLogic;
+}
 class AttributeModifierPoolUpdate : public UpdateModule {
     public:
     Bool applyAttributeModifier(const AsciiString &name, Int duration);
@@ -186,7 +194,7 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
     NameKeyType key=TheNameKeyGenerator->nameToKey(text);
     Int index=TheAttributeModifierDefinitionStore->indexOf((Int)key);
     if(index<0)return false;
-    UnsignedInt frame=TheBfmeGameLogic->m_frame;
+    UnsignedInt frame=theGameLogic36A570()->m_frame;
     std::vector<AttributeModifierEntry>::iterator it=m_modifiers.begin();
     for(;it!=m_modifiers.end();++it) {
         if(it->m_index==index) {
@@ -234,7 +242,7 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
             m_nextExpiration=next;
             setWakeFrame(getObject(),expiration);
         }
-        if(isModifierActive(TheBfmeGameLogic->getFrame(),&entry)) {
+        if(isModifierActive(theGameLogic36A570()->getFrame(),&entry)) {
             Drawable *draw=m_object->getDrawable();
             if(draw) {
                 FXList *fx=(FXList*)TheAttributeModifierDefinitionStore->primaryValueAt(entry.m_index,getObject());
