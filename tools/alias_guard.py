@@ -21,6 +21,10 @@ Each alias A=B gets one verdict:
   unknown  A has no address (e.g. a data alias to a vftable) or B has none:
            nothing to compare. Reported, not charged.
 
+cl.exe emits some directives itself (a member template call falls back to
+the non-template member of the same signature); the census and link_check
+read objects, so they judge those too.
+
 The census (link_census.write_status) and link_check charge a wrong alias as
 an `alias_target` blocker to the object that declares it and to any object
 that references A while nothing defines A. The commit hook (--staged) fails
@@ -96,10 +100,12 @@ class Judge:
         self._pins = link_census.pins(self._routes)
         rows = link_census.ledger() if rows is None else rows
         self._rows = collections.defaultdict(set)
+        self._by_address = collections.defaultdict(list)
         self._stubs = {}
         for row in rows:
             address = int(row["target_rva"], 16)
             self._rows[row["name"]].add(address)
+            self._by_address[address].append(row)
             if row["name"].startswith("?j_"):
                 target = link_census._thunk_target(row.get("notes"))
                 if target is not None:
@@ -112,6 +118,7 @@ class Judge:
                 continue
             self._data[row["name"]] = address - BASE if row.get("address_kind") == "va" else address
         self._image = image
+        self._naked = None
 
     @staticmethod
     def _data_rows():
@@ -177,6 +184,37 @@ class Judge:
             return "ok", ""
         return "wrong", (f"alias pinned at 0x{address:08X} (body 0x{want:08X}), target at "
                          f"{', '.join(f'0x{a:08X}' for a in sorted(found))}")
+
+    def respell(self, name):
+        """(row name, why) for a pinned call name: the ledger's name for the
+        body at its pinned address, the spelling a call must use to link.
+        Authored game/ C++ first, then by name (link_census.alias_scaffold's
+        rule). None when the address holds no C++ definition."""
+        import build
+        import link_census
+        address = self.pinned(name) if (name in self._routes or name in self._pins) else None
+        if address is None:
+            return None, "not pinned"
+        if self._naked is None:
+            self._naked = link_census.naked_rows()
+        for at in dict.fromkeys((address, self.normal(address))):
+            owners = [row for row in self._by_address.get(at, ())
+                      if not row["name"].startswith("?j_") and not link_census.build_dump(row, self._naked)]
+            if owners:
+                owners.sort(key=lambda r: (not (r["source"].startswith("game/") and not r["source"].startswith(
+                    ("game/gen_small/", "game/gen_asm/"))), r["name"]))
+                names = sorted({row["name"] for row in owners})
+                chosen = build.ledger_object_symbol(owners[0])  # the symbol its object really defines
+                if chosen == name:
+                    return None, "already the row name"
+                if self.verdict(name, chosen)[0] != "ok":
+                    return None, "row fails the alias check"
+                notes = [] if len(names) == 1 else [f"{len(names)} names at 0x{at:08X}"]
+                if not name.startswith("?") and chosen.startswith("?"):
+                    notes.append("a C name called as a C++ row: prove which name is right before respelling")
+                return chosen, "; ".join(notes)
+        return None, f"no C++ row at 0x{address:08X}"
+
 
 def read_baseline(text=None):
     if text is None:
@@ -252,7 +290,7 @@ def staged(judge_factory=Judge):
           "matched against:", file=sys.stderr)
     for source, alias, target, _, why in bad:
         print(f"  {source}: {alias}={target}\n      {why}", file=sys.stderr)
-    print("  Respell the call to the row name at the alias's pinned address, "
+    print("  Respell the call to the row name at the alias's pinned address (`link_check.py near` prints it), "
           "or fix the pin. Never add the line to the baseline.", file=sys.stderr)
     return 1
 

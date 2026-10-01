@@ -19,15 +19,16 @@ An explicit request or assigned lane overrides the queue. WorldBuilder work
 uses `python3 tools/worldbuilder.py next` and `docs/worldbuilder.md`; its
 ledger and verification are separate from the game's.
 
-1. **Linking first.** `python3 tools/link_check.py next` claims the name that
-   alone blocks the most unlinked bytes. Fix it the
-   smallest way: keep the retail-proven copy, remove a wrong definition nothing
+1. **Linking first.** `tools/link_check.py next` claims the name
+   alone blocking the most unlinked bytes; `near` lists files linking once
+   calls use the pinned row's name (never `/alternatename`). Fix it minimally:
+   keep the retail-proven copy, remove a wrong definition nothing
    verified needs, define one datum (`tools/add_data_match.py`), or map an
    import to retail's. Gate, push with its `Claim-Lease:` trailer and
-   `link_check.py <file>` before/after (or the queue row's bytes) in the
+   `link_check.py <file>` before/after in the
    message, then `claims.py release --landed <sha>`. STLport, string and
-   `The*` global names have one owner each (`next --family F`); leave them.
-   Never reorder `functions.csv` rows to win COMDAT selection.
+   `The*` names have one owner each (`next --family F`).
+   Never reorder `functions.csv` rows for COMDAT selection.
 2. `python3 tools/next_work.py` is the byte-matching default and explains its
    tiers. Its `finish` tier serves a banked attempt scoring 0.90+: start from
    that stash, even after a later `blocked`.

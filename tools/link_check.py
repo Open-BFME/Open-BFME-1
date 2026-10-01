@@ -37,6 +37,7 @@ also counts names referenced only from a COMDAT copy link.exe discards.
   python3 tools/link_check.py --next [--limit 30]         # names that unlock the most bytes
   python3 tools/link_check.py --publish                   # write targets/game/reverse/link_queue.csv
   python3 tools/link_check.py next [--no-claim]           # serve + claim the top open queue row
+  python3 tools/link_check.py near [--max K] [--shared]   # files that link once calls use the row names
 
 THE QUEUE. The daily census publishes --next's ranking as link_queue.csv (no
 index needed to read it), and `next` serves its best row that is not claimed,
@@ -539,7 +540,7 @@ HINTS = {
     "wrong_selected": "the link keeps a non-retail definition: fix or remove the wrong emitter ahead of retail's copy",
     "addresses": "hard-coded image addresses: name them (tools/link_debt.py)",
     "alias_target": "an /alternatename alias binds a call to another body than its pin's: respell the call to the "
-                    "row name at the pinned address or fix the pin (tools/alias_guard.py)",
+                    "row name at the pinned address (link_check.py near) or fix the pin (tools/alias_guard.py)",
 }
 
 
@@ -689,10 +690,77 @@ def serve(argv):
     return 1
 
 
+NEAR_BLOCKING = ("duplicates", "losers", "wrong_selected", "alias_target")
+
+
+def near_rows(index, judge, most=None, under=""):
+    """Unlinked files whose every blocker is an unresolved call name a
+    respelling fixes: the name is pinned, and the ledger row at its pinned
+    address (alias_guard.Judge.respell) is a C++ definition that passes the
+    alias check. Largest first: [{source, bytes, fixes: [(name, row name, note)]}]."""
+    rows = []
+    for source, entry in index["blockers"].items():
+        if entry["linked"] or not source.startswith(under) or entry["addresses"]:
+            continue
+        if any(entry.get(kind) for kind in NEAR_BLOCKING):
+            continue
+        names = entry["unresolved"]
+        if not names or (most and len(names) > most):
+            continue
+        fixes = []
+        for name in names:
+            target, note = judge.respell(name)
+            if target is None:
+                break
+            fixes.append((name, target, note))
+        else:
+            rows.append({"source": source, "bytes": index["bytes"].get(source, 0), "fixes": fixes})
+    rows.sort(key=lambda row: (-row["bytes"], row["source"]))
+    return rows
+
+
+def near(argv):
+    """`link_check.py near`: files that link once their calls are respelled to
+    the ledger's row names (the call-by-row-name lane), with each respelling.
+    Every respelling comes from this tree's symbols.csv and functions.csv:
+    the row at the call name's pinned address. Declare that row's function
+    and call it; never alias it (/alternatename) unless an ABI shape forces it."""
+    ap = argparse.ArgumentParser(prog="link_check.py near", description=near.__doc__)
+    ap.add_argument("--max", type=int, default=0, help="only files with at most this many blockers")
+    ap.add_argument("--under", default="", help="only sources under this path prefix")
+    ap.add_argument("--limit", type=int, default=30)
+    ap.add_argument("--shared", action="store_true",
+                    help="rank respellings by the near files' bytes they appear in (a shared declaration fix)")
+    args = ap.parse_args(argv)
+    index = load_index()
+    census = index["meta"].get("commit", "")
+    changed = set(_git("diff", "--name-only", census, "HEAD").split()) if census else set()
+    rows = near_rows(index, alias_judge(), args.max, args.under)
+    print(f"files every blocker of which a call respelling fixes (census {index['meta'].get('date', '?')} at "
+          f"{census or '?'}): {len(rows):,} files, {sum(r['bytes'] for r in rows):,} bytes")
+    if args.shared:
+        gain, files = collections.Counter(), collections.Counter()
+        for row in rows:
+            for fix in row["fixes"]:
+                gain[fix[:2]] += row["bytes"] / len(row["fixes"])
+                files[fix[:2]] += 1
+        for (name, target), value in gain.most_common(args.limit):
+            print(f"  {int(value):>8,} {files[name, target]:>4} files  {name}\n      -> {target}")
+        return 0
+    for row in rows[:args.limit]:
+        stale = "  (changed since the census: recheck)" if row["source"] in changed else ""
+        print(f"  {row['bytes']:>7,}  {row['source']}{stale}")
+        for name, target, note in row["fixes"]:
+            print(f"      {name}\n        -> {target}{f'  [{note}]' if note else ''}")
+    return 0
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     if argv[:1] == ["next"]:
         return serve(argv[1:])
+    if argv[:1] == ["near"]:
+        return near(argv[1:])
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("paths", nargs="*", help="sources (compiled when stale) or objects; or `next [-h]`")
     ap.add_argument("--next", action="store_true", help="rank blocker names by the bytes their fix alone unlocks")

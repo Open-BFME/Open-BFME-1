@@ -41,6 +41,7 @@ def judge(monkeypatch, pins, rows, image=None, routes=None):
             found.update(routes or {})
         return dict(pins)
     monkeypatch.setattr(L, "pins", fake_pins)
+    monkeypatch.setattr(L, "naked_rows", lambda: set())
     image = image or {}
     return G.Judge(rows, data_rows=[], image=lambda address, size: image.get(address, b"")[:size])
 
@@ -74,6 +75,19 @@ def test_verdicts(monkeypatch):
     assert j.verdict("?viaJmp@@YAXXZ", "?body@@YAXXZ")[0] == "ok"          # a JMP rel32 in the image
     assert j.verdict("?unpinned@@YAXXZ", "?body@@YAXXZ")[0] == "unknown"
     assert j.verdict("?unknownTarget@@YAXXZ", "?nowhere@@YAXXZ")[0] == "unknown"
+
+
+def test_respell_names_the_row_at_the_pinned_address(monkeypatch):
+    rows = [row("?real@@YAXXZ", 0x500), row("?dump@@YAXXZ", 0x600, source="game/gen_asm/x.asm"),
+            row("?j_00000700@@YAXXZ", 0x700, notes="target=0x00000500")]
+    j = judge(monkeypatch, {"?ph@@YAXXZ": 0x500, "?d@@YAXXZ": 0x600, "?viaStub@@YAXXZ": 0x700, "_cname": 0x500},
+              rows)
+    assert j.respell("?ph@@YAXXZ") == ("?real@@YAXXZ", "")
+    assert j.respell("?viaStub@@YAXXZ") == ("?real@@YAXXZ", "")
+    assert j.respell("?d@@YAXXZ")[0] is None        # a dump is not a C++ definition to call
+    assert j.respell("?nopin@@YAXXZ") == (None, "not pinned")
+    assert j.respell("?real@@YAXXZ")[0] is None     # already the row name
+    assert "C name" in j.respell("_cname")[1]     # a C call to a C++ placeholder row is flagged
 
 
 def test_census_charges_the_declarer_and_callers_through_a_wrong_alias(tmp_path, monkeypatch):
@@ -118,6 +132,23 @@ def test_link_check_resolves_through_an_alias_and_judges_it(tmp_path, monkeypatc
     # without any alias the name is simply unresolved
     index["aliases"] = {}
     assert C.check_object(plain, index, NoTruth(), judge=j)["unresolved"] == ["?A@@YAXXZ"]
+
+
+def test_near_serves_files_whose_every_blocker_a_respelling_fixes(monkeypatch):
+    j = judge(monkeypatch, {"?ph1@@YAXXZ": 0x500, "?ph2@@YAXXZ": 0x600, "?gap@@YAXXZ": 0x900},
+              [row("?one@@YAXXZ", 0x500), row("?two@@YAXXZ", 0x600)])
+    blank = {"duplicates": [], "losers": [], "wrong_selected": [], "alias_target": [], "addresses": 0,
+             "linked": False}
+    blockers = {"game/N/both.cpp": {**blank, "unresolved": ["?ph1@@YAXXZ", "?ph2@@YAXXZ"]},
+                "game/N/gap.cpp": {**blank, "unresolved": ["?ph1@@YAXXZ", "?gap@@YAXXZ"]},
+                "game/N/dup.cpp": {**blank, "unresolved": ["?ph1@@YAXXZ"], "duplicates": ["?x@@YAXXZ"]},
+                "game/M/one.cpp": {**blank, "unresolved": ["?ph1@@YAXXZ"]}}
+    index = {"blockers": blockers, "bytes": {"game/N/both.cpp": 300, "game/M/one.cpp": 500}}
+    rows = C.near_rows(index, j)
+    assert [r["source"] for r in rows] == ["game/M/one.cpp", "game/N/both.cpp"]
+    assert rows[1]["fixes"] == [("?ph1@@YAXXZ", "?one@@YAXXZ", ""), ("?ph2@@YAXXZ", "?two@@YAXXZ", "")]
+    assert [r["source"] for r in C.near_rows(index, j, most=1)] == ["game/M/one.cpp"]
+    assert [r["source"] for r in C.near_rows(index, j, under="game/N/")] == ["game/N/both.cpp"]
 
 
 def test_queue_serves_a_wrong_alias_as_its_own_kind():
