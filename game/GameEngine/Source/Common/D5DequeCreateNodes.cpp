@@ -16,10 +16,15 @@
 // 128, so they are modelled four bytes wide; the wider ones take the size their
 // own immediate names. Both are named for the address of the row they serve.
 
+void *__cdecl operator new(unsigned int bytes);
+
 namespace _STL
 {
-void *__cdecl nodeAllocate(unsigned int bytes);
-void *__cdecl blockAllocate(unsigned int bytes);
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int bytes);
+};
 
 template <class Type>
 class allocator
@@ -42,9 +47,9 @@ void _Deque_base<Type, Allocator>::_M_create_nodes( Type **start, Type **finish 
 	for ( Type **cur = start; cur < finish; ++cur )
 	{
 		if ( bytes > 128 )
-			*cur = (Type *)blockAllocate( bytes );
+			*cur = (Type *)::operator new( bytes );
 		else
-			*cur = (Type *)nodeAllocate( bytes );
+			*cur = (Type *)__new_alloc::allocate( bytes );
 	}
 }
 

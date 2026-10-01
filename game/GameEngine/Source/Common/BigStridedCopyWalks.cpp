@@ -35,16 +35,25 @@
 		char m_bytes[ 0x##SIZE ];                                         \
 	};
 
-#define BFME_UCOPY_CONS( ADDR, ELEM )                                     \
-	void __cdecl Cons##ADDR( ELEM *dest, const ELEM *src );
+namespace _STL
+{
+template <class First, class Second> struct pair;
+template <class Destination, class Source>
+void __cdecl _Construct(Destination *dest, const Source &src);
+}
 
-#define BFME_UCOPY_WALK( NAME, ELEM, CONS )                               \
+#define BFME_UCOPY_CONS( ADDR, LOWER ) \
+	struct Gen_t_##LOWER##_k4; \
+	struct Gen_t_##LOWER##_p12cd; \
+	typedef _STL::pair<const Gen_t_##LOWER##_k4, Gen_t_##LOWER##_p12cd> CopyElement##ADDR;
+
+#define BFME_UCOPY_WALK( NAME, ELEM, ROW_ELEM )                               \
 	ELEM * __cdecl NAME( ELEM *first, ELEM *last, ELEM *dest )            \
 	{                                                                     \
 		ELEM *cur = dest;                                                 \
 		while ( first != last )                                           \
 		{                                                                 \
-			CONS( cur, first );                                           \
+			_STL::_Construct( (ROW_ELEM *)cur, *(const ROW_ELEM *)first ); \
 			++first;                                                      \
 			++cur;                                                        \
 		}                                                                 \
@@ -61,27 +70,27 @@ BFME_UCOPY_ELEM( 00000128 )
 BFME_UCOPY_ELEM( 000001F0 )
 BFME_UCOPY_ELEM( 00000210 )
 
-BFME_UCOPY_CONS( 0013A700, Elem00000128 )
-BFME_UCOPY_CONS( 0013A760, Elem000000BC )
-BFME_UCOPY_CONS( 00195060, Elem0000008C )
-BFME_UCOPY_CONS( 00363A60, Elem000000B4 )
-BFME_UCOPY_CONS( 0039E0A0, Elem00000088 )
-BFME_UCOPY_CONS( 003A2460, Elem000000B8 )
-BFME_UCOPY_CONS( 003ABF20, Elem000000DC )
-BFME_UCOPY_CONS( 00607280, Elem000001F0 )
-BFME_UCOPY_CONS( 00608AF0, Elem00000210 )
+BFME_UCOPY_CONS( 0013A700, 0013a700 )
+BFME_UCOPY_CONS( 0013A760, 0013a760 )
+BFME_UCOPY_CONS( 00195060, 00195060 )
+BFME_UCOPY_CONS( 00363A60, 00363a60 )
+BFME_UCOPY_CONS( 0039E0A0, 0039e0a0 )
+BFME_UCOPY_CONS( 003A2460, 003a2460 )
+BFME_UCOPY_CONS( 003ABF20, 003abf20 )
+BFME_UCOPY_CONS( 00607280, 00607280 )
+BFME_UCOPY_CONS( 00608AF0, 00608af0 )
 
-BFME_UCOPY_WALK( Rva00195280, Elem0000008C, Cons00195060 )
-BFME_UCOPY_WALK( Rva00363AC0, Elem000000B4, Cons00363A60 )
-BFME_UCOPY_WALK( Rva00363B40, Elem000000B4, Cons00363A60 )
-BFME_UCOPY_WALK( Rva0039E100, Elem00000088, Cons0039E0A0 )
-BFME_UCOPY_WALK( Rva003A24F0, Elem000000B8, Cons003A2460 )
-BFME_UCOPY_WALK( Rva003ABF80, Elem000000DC, Cons003ABF20 )
-BFME_UCOPY_WALK( Rva003B6860, Elem000000DC, Cons003ABF20 )
-BFME_UCOPY_WALK( Rva006072E0, Elem000001F0, Cons00607280 )
-BFME_UCOPY_WALK( Rva00608B50, Elem00000210, Cons00608AF0 )
-BFME_UCOPY_WALK( Rva00774760, Elem00000128, Cons0013A700 )
-BFME_UCOPY_WALK( Rva007747E0, Elem000000BC, Cons0013A760 )
-BFME_UCOPY_WALK( Rva0013AC80, Elem00000128, Cons0013A700 )
-BFME_UCOPY_WALK( Rva0013ACC0, Elem000000BC, Cons0013A760 )
-BFME_UCOPY_WALK( Rva00195460, Elem0000008C, Cons00195060 )
+BFME_UCOPY_WALK( Rva00195280, Elem0000008C, CopyElement00195060 )
+BFME_UCOPY_WALK( Rva00363AC0, Elem000000B4, CopyElement00363A60 )
+BFME_UCOPY_WALK( Rva00363B40, Elem000000B4, CopyElement00363A60 )
+BFME_UCOPY_WALK( Rva0039E100, Elem00000088, CopyElement0039E0A0 )
+BFME_UCOPY_WALK( Rva003A24F0, Elem000000B8, CopyElement003A2460 )
+BFME_UCOPY_WALK( Rva003ABF80, Elem000000DC, CopyElement003ABF20 )
+BFME_UCOPY_WALK( Rva003B6860, Elem000000DC, CopyElement003ABF20 )
+BFME_UCOPY_WALK( Rva006072E0, Elem000001F0, CopyElement00607280 )
+BFME_UCOPY_WALK( Rva00608B50, Elem00000210, CopyElement00608AF0 )
+BFME_UCOPY_WALK( Rva00774760, Elem00000128, CopyElement0013A700 )
+BFME_UCOPY_WALK( Rva007747E0, Elem000000BC, CopyElement0013A760 )
+BFME_UCOPY_WALK( Rva0013AC80, Elem00000128, CopyElement0013A700 )
+BFME_UCOPY_WALK( Rva0013ACC0, Elem000000BC, CopyElement0013A760 )
+BFME_UCOPY_WALK( Rva00195460, Elem0000008C, CopyElement00195060 )
