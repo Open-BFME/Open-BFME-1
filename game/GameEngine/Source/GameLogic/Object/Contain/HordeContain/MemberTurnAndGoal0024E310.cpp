@@ -202,7 +202,11 @@ struct MemberObject0024E310 {
     }
 };
 struct MemberAIService0024E310 { char pad00[12]; void *m_pathfinder; };
-extern MemberAIService0024E310 *TheAI;
+// 0x012EF214 is retail's TheAI singleton (`extern AI *TheAI`, the class from
+// Common/System/game_engine_subsystems.h). MemberAIService0024E310 stays as this
+// TU's offset view of it; the reference below is the real global.
+class AI;
+extern AI *TheAI;
 class MemberTurnAndGoal0024E310 {
 public:
     void *vptr; void *data04; MemberObject0024E310 *object08;
@@ -232,7 +236,7 @@ void MemberTurnAndGoal0024E310::apply(MemberObject0024E310 *obj,const Coord3D *p
     if (ai->word1d8==4 && ai->m_path) {
         if (!CALL(Bool0,ai->m_path,j_00006dcf)()) {
             unsigned surfaces=ai->word1b8;
-            void *pathfinder=TheAI->m_pathfinder;
+            void *pathfinder=((MemberAIService0024E310*)TheAI)->m_pathfinder;
             if (CALL(Line,pathfinder,j_0003d334)(obj,surfaces,
                     CALL(Int0,obj,j_0003a391)(),&obj->m_position,position,0,true,true)) {
                 ai->slot1e8();
@@ -264,7 +268,7 @@ after_path:
     if (flag204) dest=owner->m_position;
     else {
         dest=*position;
-        CALL(Adjust,TheAI->m_pathfinder,j_000392ca)(obj,&dest,owner,!flag);
+        CALL(Adjust,((MemberAIService0024E310*)TheAI)->m_pathfinder,j_000392ca)(obj,&dest,owner,!flag);
     }
     CALL(Apply,this,j_0000e200)(obj,&dest,orientation);
     return;

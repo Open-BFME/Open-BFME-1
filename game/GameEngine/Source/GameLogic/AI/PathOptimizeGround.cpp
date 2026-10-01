@@ -59,7 +59,10 @@ private:
 	Pathfinder *m_pathfinder;
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+// 0x012EF214 is retail's TheAI singleton: `extern AI *TheAI`. The AI class
+// above is that same name, so the reference below carries retail's spelling
+// and mangles to ?TheAI@@3PAVAI@@A.
+extern AI *TheAI;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
@@ -114,7 +117,7 @@ void Path::optimizeGroundPath(Int pathDiameter)
 		for (; node != anchor; node = node->getPrevious())
 		{
 			Bool isPassable = false;
-			if (TheAIParseDefinitionAI->pathfinder()->isGroundPathPassable(
+			if (TheAI->pathfinder()->isGroundPathPassable(
 				*anchor->getPosition(), layer, *node->getPosition(), pathDiameter))
 			{
 				isPassable = true;

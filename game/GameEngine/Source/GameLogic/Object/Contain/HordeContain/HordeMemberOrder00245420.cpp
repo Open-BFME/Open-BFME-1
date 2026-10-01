@@ -195,7 +195,11 @@ struct MemberData00245420 {
     char pad2d9[7]; float value2e0;
 };
 struct MemberAIService00245420 { char pad00[12]; void *m_pathfinder; };
-extern MemberAIService00245420 *TheAI;
+// 0x012EF214 is retail's TheAI singleton (`extern AI *TheAI`, the class from
+// Common/System/game_engine_subsystems.h). MemberAIService00245420 stays as this
+// TU's offset view of it; the reference below is the real global.
+class AI;
+extern AI *TheAI;
 template<class T> __forceinline const T& min245420(const T&a,const T&b) {return a<b?a:b;}
 template<class T> inline T sqr245420(T x) { return x*x; }
 class HordeMemberOrder00245420 {
@@ -246,7 +250,7 @@ void HordeMemberOrder00245420::apply(MemberObject00245420 *obj,const Coord3D *po
             ((Thing*)obj)->setOrientation(owner->m_orientation);
             CALL(VoidPtr,obj,j_0001a9dd)(owner->m_modelConditionFlags);
             if (!CALL(Bool0,ownerAI,j_00044774)()) {
-                void *pathfinder=TheAI->m_pathfinder;
+                void *pathfinder=((MemberAIService00245420*)TheAI)->m_pathfinder;
                 CALL(UpdateGoal,pathfinder,j_000294e2)(obj,&obj->m_position,
                     CALL(Int0,obj,j_0003a391)(),
                     "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x6e6);
@@ -278,7 +282,7 @@ void HordeMemberOrder00245420::apply(MemberObject00245420 *obj,const Coord3D *po
         if (flag204) dest=owner->m_position;
         else {
             dest=*position;
-            CALL(Adjust,TheAI->m_pathfinder,j_000392ca)(obj,&dest,owner,!arg4);
+            CALL(Adjust,((MemberAIService00245420*)TheAI)->m_pathfinder,j_000392ca)(obj,&dest,owner,!arg4);
         }
         CALL(Apply,this,j_0001fb9a)(obj,&dest,arg3);
     }

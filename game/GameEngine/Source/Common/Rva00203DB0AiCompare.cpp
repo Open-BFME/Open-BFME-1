@@ -18,7 +18,11 @@ public:
 	int compare(int left, int right, int mask);
 };
 
-extern Rva00203DB0AI *_TheAIParseDefinitionAI;
+// 0x012EF214 is retail's TheAI singleton (`extern AI *TheAI`, the class from
+// Common/System/game_engine_subsystems.h). Rva00203DB0AI stays as this TU's
+// member view of it; the reference below is the real global.
+class AI;
+extern AI *TheAI;
 
 class Object;
 class Player;
@@ -273,7 +277,7 @@ unsigned char Rva00203DB0Owner::ready() const
 		return 1;
 	int left = m_left;
 	int right = record->m_right;
-	return _TheAIParseDefinitionAI->compare(left, right, 0x20) >= record->m_limit;
+	return ((Rva00203DB0AI*)TheAI)->compare(left, right, 0x20) >= record->m_limit;
 }
 
 int Rva00203DB0AI::compare(int left, int right, int mask)

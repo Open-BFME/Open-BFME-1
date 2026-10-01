@@ -189,7 +189,11 @@ class Object : public Thing {public:
 class BFMEActionObject {public:bool testStatus(int)const;};
 
 struct Rva000C5FF0AI {char pad00[0xc];Pathfinder *rva0c; Pathfinder *pathfinder(){return rva0c;}};
-extern Rva000C5FF0AI *rva000C5FF0_ai;
+// 0x012EF214 is retail's TheAI singleton (`extern AI *TheAI`, the class from
+// Common/System/game_engine_subsystems.h). Rva000C5FF0AI stays as this TU's
+// offset view of it; the reference below is the real global.
+class AI;
+extern AI *TheAI;
 class NameKeyGenerator {public:NameKeyType nameToKey(const char*);};
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern void j_0000142e();
@@ -223,7 +227,7 @@ bool ActionManager::canDoSpecialPowerAtObject(const Object *obj,const Object *ta
  if(obj && obj->rva204 && CALL(BoolQuery,obj->rva204,j_0000142e)()) {
   Coord3D pos=obj->rva38;
   pos.z+=500.0f;
-  if(rva000C5FF0_ai && CALL(LayerQuery,rva000C5FF0_ai->pathfinder(),j_0001a95b)(&pos)>=17)return false;
+  if(TheAI && CALL(LayerQuery,((Rva000C5FF0AI*)TheAI)->pathfinder(),j_0001a95b)(&pos)>=17)return false;
  }
  Relationship r=obj->getRelationship(target);
  SpecialPowerModuleInterface *mod=obj->getSpecialPowerModule(spTemplate);
