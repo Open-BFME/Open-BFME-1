@@ -12078,5 +12078,85 @@
   "after_sha256": "9a803a53d124a8dc5ea8c57d8154426a9ed133ecfaa45a79a1c4e0515bacbeaf",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002E27F0Forward.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva002E27F0Forward.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "2d02b5d77055bd5bb15a1d268244bc37c2c6366e9d26910c2126f53edb42e7be",
+  "after_sha256": "bc23d2e9ea7de559c1a54f9f2b385542abcb653a96024bae284235d1586ba98f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/SubtitleManagerAccessors.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/SubtitleManagerAccessors.cpp",
+  "old_name": "SubtitleDebugManager",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "be6e2bb202733f6797c9911ad12a074b954c0be154ef830a83dddf95c91d586b",
+  "after_sha256": "bb4d8c1ebe07eca089c4d410b40467ed6e53a8de1dc3b227e317ce8eed29cc34",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/AlphaEdgeTextureClassUpdate.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/AlphaEdgeTextureClassUpdate.cpp",
+  "old_name": "BfmeLogIBD",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "ea62bcdbdd5c80d7e16d06e3a03bd93bd23fc25c32062a454a6ab9cc3e008771",
+  "after_sha256": "f27a6d0e0b66d625288bc707913a438cba8a439591b45ec83ae982925b76f8c8",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDrawUpdateBones.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDrawUpdateBones.cpp",
+  "old_name": "TruckBoneDebugManager",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "2c3e56e41d59fa0ab7ccf8f21b7a9bdbe7177c5db98e86e047ff73657e9ef427",
+  "after_sha256": "c04a5c9f7be5c47f0fca71bb24d22120a49e0bbe9b8b9a850f0c2736edb729a6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "ff30f4b4194198f11376835a8bc9f9be9997e4d0a0bf879739e0543de702d6d8",
+  "after_sha256": "ecd0504c3059d57e3b44eeb126353b5b51d225149f1a4b73416123e9afbeab17",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "85e23b2ab041b8ccf0fdab987a7f4584caec058fbcf4b36fe7cb205e34d9c8c1",
+  "after_sha256": "a77ecf4dad7358190eadbf03240d734db0632e6159903e24119df45ca1652b45",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "ea50d5b8c8225f93c30e24563449ebf2d388d0c60fea878f95b67155d2e912d6",
+  "after_sha256": "2f459b24778d9adde6fc1f1833c42784b807b6f3ecedb01ef4d7834c730c8c2f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "6ae4dd7b2c123a26331e11762c485d0c6f70519e933b320ffbd2306b1cb5ee02",
+  "after_sha256": "fc677408b13e77b500891dd6902e61b54cbe9f6a8f03ea1c77fa6cbef5d0455d",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

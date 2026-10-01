@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-class Gen001336E5C
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00();
@@ -47,7 +47,7 @@ public:
 	virtual void slotA4( void *a, void *b );
 };
 
-extern Gen001336E5C *TheGen001336E5C;
+extern Rva00889690Obj *g_rva00889690;
 
 class Rva00889340Class
 {
@@ -57,6 +57,6 @@ public:
 
 Rva00889340Class *Rva00889340Class::d_00889340( void *a, void *b )
 {
-	TheGen001336E5C->slotA4( a, b );
+	g_rva00889690->slotA4( a, b );
 	return this;
 }

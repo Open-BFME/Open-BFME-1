@@ -26,7 +26,7 @@ public:
 	virtual void show(int mode);
 };
 
-class TruckBoneDebugManager
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -40,20 +40,20 @@ public:
 	virtual TruckBoneCrashMessage *getCrashMessage(void *first, void *second);
 };
 
-extern TruckBoneDebugManager *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 bool _bfme_debugReportingEnabled();
 void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void reportMissingBone(const char *format, const char *name, RenderObjClass *model)
 {
-    TruckBoneCrashMessage *out = g_BFMEIndexBufferDebug->getCrashMessage(0,0);
+    TruckBoneCrashMessage *out = g_rva00889690->getCrashMessage(0,0);
     (*out << Debug::Format(format,name,model->Get_Name())).show(2);
 }
 #define REPORT_MISSING(format, name, model) do { RenderObjClass *object = model; const char *boneName = name; reportMissingBone(format, boneName, object); } while (0)
 #define TRUCK_ASSERT(condition, message) do { \
     if (!(condition) && _bfme_debugReportingEnabled()) { \
         _bfme_debugRecordCallsite(1); \
-        g_BFMEIndexBufferDebug->beginReport(); \
+        g_rva00889690->beginReport(); \
         REPORT_MISSING message; \
     } \
 } while (0)

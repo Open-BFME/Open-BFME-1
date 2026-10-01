@@ -88,7 +88,7 @@ public:
 	virtual void slot4c(int value);
 };
 
-class BfmeLogIBD
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(void);
@@ -121,7 +121,7 @@ public:
 	virtual BfmeMsgIBD *slot6c(int first, int second);
 };
 
-extern BfmeLogIBD *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_DX8_ErrorCode(int result)
@@ -129,8 +129,8 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 	if (result != 0)
 	{
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c(0, 0)->slot38((const void *)"DX8 error ")
+		g_rva00889690->slot60();
+		g_rva00889690->slot6c(0, 0)->slot38((const void *)"DX8 error ")
 			->slot00((const void *)result)->slot4c(1);
 	}
 }

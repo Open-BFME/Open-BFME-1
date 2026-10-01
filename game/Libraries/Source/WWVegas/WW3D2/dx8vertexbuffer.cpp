@@ -72,7 +72,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Finish(int report);
 };
 
-class BFMEIndexBufferDebugClass
+struct Rva00889690Obj
 {
 public:
 	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
@@ -86,15 +86,15 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 {
 	if (result != D3D_OK) {
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(NULL, NULL);
+		g_rva00889690->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = g_rva00889690->Get_Stream(NULL, NULL);
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }

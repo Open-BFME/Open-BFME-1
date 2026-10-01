@@ -4,7 +4,7 @@
 // manager. WWDebug's SkipNext uses this same frame-pointer capture idiom and
 // explicitly requires a valid frame pointer; the rest of the body is C++.
 
-class Gen001336E5C
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -16,7 +16,7 @@ public:
 	virtual void slot5C(void *returnAddress, int kind);
 };
 
-extern Gen001336E5C *TheGen001336E5C;
+extern Rva00889690Obj *g_rva00889690;
 
 // ?_bfme_debugRecordCallsite@@YAXH@Z
 void _bfme_debugRecordCallsite(int kind)
@@ -27,5 +27,5 @@ void _bfme_debugRecordCallsite(int kind)
 		mov eax, [ebp + 4]
 		mov returnAddress, eax
 	}
-	TheGen001336E5C->slot5C(reinterpret_cast<void *>(returnAddress), kind);
+	g_rva00889690->slot5C(reinterpret_cast<void *>(returnAddress), kind);
 }

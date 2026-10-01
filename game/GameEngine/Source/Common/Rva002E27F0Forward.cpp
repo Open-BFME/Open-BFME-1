@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-class BFMEIndexBufferDebugClass
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00();
@@ -43,9 +43,9 @@ public:
 	virtual void slot94(void *a, void *b, void *c);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 
 void rva002E27F0(void *a, void *b, void *c)
 {
-	g_BFMEIndexBufferDebug->slot94(a, b, c);
+	g_rva00889690->slot94(a, b, c);
 }

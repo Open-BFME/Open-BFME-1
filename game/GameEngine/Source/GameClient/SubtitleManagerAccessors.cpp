@@ -20,7 +20,7 @@ public:
 	virtual void show(bool visible);
 };
 
-class SubtitleDebugManager
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -34,7 +34,7 @@ public:
 	virtual SubtitleCrashMessage *getCrashMessage(void *first, void *second);
 };
 
-extern SubtitleDebugManager *TheGen001336E5C;
+extern Rva00889690Obj *g_rva00889690;
 void _bfme_debugRecordCallsite(int kind);
 
 // Retail's AsciiString copy constructor is the 19-byte forwarder at 0x0005EE50
@@ -183,9 +183,9 @@ bool SubtitleManager::hasBeenDisplayed(int index) const
 		return m_entries[index]->m_bulk.fields.displayed;
 
 	_bfme_debugRecordCallsite(1);
-	SubtitleDebugManager *manager = TheGen001336E5C;
+	Rva00889690Obj *manager = g_rva00889690;
 	manager->beginReport();
-	manager = TheGen001336E5C;
+	manager = g_rva00889690;
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::HasBeenDisplayed.")->show(true);
 	return false;
@@ -197,9 +197,9 @@ AsciiString SubtitleManager::getText(int index) const
 		return m_entries[index]->getText();
 
 	_bfme_debugRecordCallsite(1);
-	SubtitleDebugManager *manager = TheGen001336E5C;
+	Rva00889690Obj *manager = g_rva00889690;
 	manager->beginReport();
-	manager = TheGen001336E5C;
+	manager = g_rva00889690;
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::GetText().")->show(true);
 	return AsciiString();
@@ -214,9 +214,9 @@ void SubtitleManager::setDisplayedStats(int index)
 	}
 
 	_bfme_debugRecordCallsite(1);
-	SubtitleDebugManager *manager = TheGen001336E5C;
+	Rva00889690Obj *manager = g_rva00889690;
 	manager->beginReport();
-	manager = TheGen001336E5C;
+	manager = g_rva00889690;
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::SetDisplayedStats().")->show(true);
 }
@@ -227,9 +227,9 @@ unsigned int SubtitleManager::getColor(int index) const
 		return m_entries[index]->m_bulk.fields.color;
 
 	_bfme_debugRecordCallsite(1);
-	SubtitleDebugManager *manager = TheGen001336E5C;
+	Rva00889690Obj *manager = g_rva00889690;
 	manager->beginReport();
-	manager = TheGen001336E5C;
+	manager = g_rva00889690;
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::GetColor().")->show(true);
 	return 0xFFFF00FF;
@@ -241,9 +241,9 @@ int SubtitleManager::getStartFrame(int index) const
 		return m_entries[index]->m_bulk.words[4];
 
 	_bfme_debugRecordCallsite(1);
-	SubtitleDebugManager *manager = TheGen001336E5C;
+	Rva00889690Obj *manager = g_rva00889690;
 	manager->beginReport();
-	manager = TheGen001336E5C;
+	manager = g_rva00889690;
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::GetStartFrame.")->show(true);
 	return 0x7FFFFFFF;

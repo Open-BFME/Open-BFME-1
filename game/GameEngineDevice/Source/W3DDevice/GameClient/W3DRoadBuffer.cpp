@@ -3315,7 +3315,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Finish(int report);
 };
 
-class BFMEIndexBufferDebugClass
+struct Rva00889690Obj
 {
 public:
 	virtual void Slot00(void); virtual void Slot04(void); virtual void Slot08(void); virtual void Slot0C(void);
@@ -3329,7 +3329,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void Rva008FCE00SurfaceOperation(void);
 
@@ -3337,8 +3337,8 @@ static __forceinline void W3DRoadBufferReportDX8Error(unsigned result)
 {
 	if (result != 0) {
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+		g_rva00889690->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = g_rva00889690->Get_Stream(0, 0);
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }
