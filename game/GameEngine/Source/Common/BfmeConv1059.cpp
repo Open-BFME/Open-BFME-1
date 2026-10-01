@@ -141,13 +141,16 @@ public:
 	virtual void bfmeSlot1059_91(BfmeS1059 *s);
 };
 
-extern BfmeC1059 *g_bfmeC1059;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// BfmeC1059 is only the slot view used at the call sites below.
+class View;
+extern View *TheTacticalView;
 
 void bfmeGo1059C(void)
 {
 	BfmeS1059 s;
 
-	g_bfmeC1059->bfmeSlot1059_91(&s);
-	g_bfmeC1059->bfmeSlot1059_49(s.m_bfmeBuf, 1, 0, 0);
+	((BfmeC1059 *)TheTacticalView)->bfmeSlot1059_91(&s);
+	((BfmeC1059 *)TheTacticalView)->bfmeSlot1059_49(s.m_bfmeBuf, 1, 0, 0);
 }
 

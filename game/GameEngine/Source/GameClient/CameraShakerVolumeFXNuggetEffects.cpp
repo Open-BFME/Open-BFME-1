@@ -35,7 +35,10 @@ public:
 	virtual void addCameraShakerVolume(const Coord3D *, int, int, int);
 };
 
-extern TacticalView *TheTacticalView;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// TacticalView is only the slot view used at the call sites below.
+class View;
+extern View *TheTacticalView;
 
 class CameraShakerVolumeFXNugget
 {
@@ -56,13 +59,13 @@ void CameraShakerVolumeFXNugget::doFXPos(const Coord3D *position,
 	const Matrix3D *, float, const Coord3D *) const
 {
 	if (position)
-		TheTacticalView->addCameraShakerVolume(position, m_radius, m_durationSeconds, m_amplitudeDegrees);
+		((TacticalView *)TheTacticalView)->addCameraShakerVolume(position, m_radius, m_durationSeconds, m_amplitudeDegrees);
 }
 
 // ?doFXObj@CameraShakerVolumeFXNugget@@UBEXPBVObject@@0@Z
 void CameraShakerVolumeFXNugget::doFXObj(const Object *object, const Object *) const
 {
 	if (object)
-		TheTacticalView->addCameraShakerVolume(&object->m_position,
+		((TacticalView *)TheTacticalView)->addCameraShakerVolume(&object->m_position,
 			m_radius, m_durationSeconds, m_amplitudeDegrees);
 }

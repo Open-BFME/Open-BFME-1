@@ -35,7 +35,10 @@ public:
 	virtual void bfmeSlot1100D_23(BfmeV1100 *v);
 };
 
-extern BfmeD1100 *g_bfmeD1100;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// BfmeD1100 is only the slot view used at the call sites below.
+class View;
+extern View *TheTacticalView;
 
 void __cdecl bfmeCall1100(int a);
 
@@ -46,10 +49,10 @@ void __stdcall bfmeGo1100A(int a)
 	bfmeCall1100(a);
 	v.m_bfmeX = 1e-4f;
 	v.m_bfmeY = 1e-4f;
-	g_bfmeD1100->bfmeSlot1100D_23(&v);
+	((BfmeD1100 *)TheTacticalView)->bfmeSlot1100D_23(&v);
 	v.m_bfmeX = -1e-4f;
 	v.m_bfmeY = -1e-4f;
-	g_bfmeD1100->bfmeSlot1100D_23(&v);
+	((BfmeD1100 *)TheTacticalView)->bfmeSlot1100D_23(&v);
 }
 
 struct BfmeA1100

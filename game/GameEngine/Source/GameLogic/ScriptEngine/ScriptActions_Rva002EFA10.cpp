@@ -137,7 +137,10 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeTacticalView *TheTacticalView;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// BfmeTacticalView is only the slot view used at the call sites below.
+class View;
+extern View *TheTacticalView;
 
 class Rva002EFA10Owner
 {
@@ -151,10 +154,10 @@ void Rva002EFA10Owner::doCameraTether(const AsciiString &unit, Bool snapToUnit, 
 	Object *theObj = TheScriptEngine->getUnitNamed(unit);
 	if (theObj)
 	{
-		TheTacticalView->setCameraLock(theObj->m_id);
-		TheTacticalView->setCameraLockDrawableID(theObj->getDrawable()->bfmeGetID());
+		((BfmeTacticalView *)TheTacticalView)->setCameraLock(theObj->m_id);
+		((BfmeTacticalView *)TheTacticalView)->setCameraLockDrawableID(theObj->getDrawable()->bfmeGetID());
 		if (snapToUnit)
-			TheTacticalView->snapToCameraLock();
-		TheTacticalView->twoArguments(1, *(int *)&play);
+			((BfmeTacticalView *)TheTacticalView)->snapToCameraLock();
+		((BfmeTacticalView *)TheTacticalView)->twoArguments(1, *(int *)&play);
 	}
 }

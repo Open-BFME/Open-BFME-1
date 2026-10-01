@@ -69,7 +69,10 @@ public:
 #undef BFME_MESSAGE_SLOT
 };
 
-extern TacticalViewShim *TheTacticalView;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// TacticalViewShim is only the slot view used at the call site below.
+class View;
+extern View *TheTacticalView;
 extern MessageStream *TheMessageStream;
 
 enum CommandStatus
@@ -84,7 +87,7 @@ static CommandStatus doPlaceBeacon(const CommandButton *command, const ICoord2D 
 		return COMMAND_COMPLETE;
 
 	Coord3D world;
-	TheTacticalView->screenToTerrain(mouse, &world, false);
+	((TacticalViewShim *)TheTacticalView)->screenToTerrain(mouse, &world, false);
 
 	GameMessage *msg = TheMessageStream->appendMessage(GameMessage::MSG_PLACE_BEACON);
 	msg->appendLocationArgument(world);

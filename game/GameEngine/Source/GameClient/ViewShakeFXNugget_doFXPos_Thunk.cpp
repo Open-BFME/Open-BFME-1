@@ -44,7 +44,10 @@ public:
 };
 #undef BFME_VIEW_SLOT
 
-extern TacticalView *TheTacticalView;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// TacticalView is only the slot view used at the call site below.
+class View;
+extern View *TheTacticalView;
 
 class ViewShakeFXNugget
 {
@@ -62,5 +65,5 @@ void ViewShakeFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *, float,
 	const Coord3D *) const
 {
 	if (primary && TheTacticalView)
-		TheTacticalView->shake(primary, m_shake);
+		((TacticalView *)TheTacticalView)->shake(primary, m_shake);
 }

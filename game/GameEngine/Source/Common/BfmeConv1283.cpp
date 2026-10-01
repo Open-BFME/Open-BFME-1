@@ -24,7 +24,10 @@ public:
 	virtual void bfmeMark1283(BfmeVec1283 *lo, BfmeVec1283 *hi, unsigned int color, int flags);
 };
 
-extern TacticalViewFadeShim *TheTacticalViewFadeShim;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// TacticalViewFadeShim is only the slot view used at the call site below.
+class View;
+extern View *TheTacticalView;
 
 class BfmeA1283
 {
@@ -47,5 +50,5 @@ void BfmeA1283::bfmePlotBounds1283(BfmeVec1283 offset)
 		offset.y + m_hi.y,
 		offset.z + m_hi.z,
 	};
-	TheTacticalViewFadeShim->bfmeMark1283(&lo, &hi, 0xccaaffff, 0);
+	((TacticalViewFadeShim *)TheTacticalView)->bfmeMark1283(&lo, &hi, 0xccaaffff, 0);
 }

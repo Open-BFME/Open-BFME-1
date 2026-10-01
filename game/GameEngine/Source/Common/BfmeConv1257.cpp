@@ -27,7 +27,10 @@ public:
 	virtual void bfmeMark1257(BfmeVec1257 *p, int a, unsigned int c, int d);
 };
 
-extern BfmeR1257 *g_bfme1257;
+// Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
+// BfmeR1257 is only the slot view used at the call sites below.
+class View;
+extern View *TheTacticalView;
 extern const float g_bfmeK1257;
 
 class BfmeA1257
@@ -44,7 +47,7 @@ public:
 void BfmeA1257::bfmeDraw1257(BfmeVec1257 p)
 {
 	p.m_bfme08 = p.m_bfme08 - *(volatile float *)&m_bfme24f * g_bfmeK1257;
-	g_bfme1257->bfmeMark1257(&p, m_bfme24, 0xccaaffff, 0);
+	((BfmeR1257 *)TheTacticalView)->bfmeMark1257(&p, m_bfme24, 0xccaaffff, 0);
 	p.m_bfme08 = p.m_bfme08 + m_bfme24f;
-	g_bfme1257->bfmeMark1257(&p, m_bfme24, 0xccaaffff, 0);
+	((BfmeR1257 *)TheTacticalView)->bfmeMark1257(&p, m_bfme24, 0xccaaffff, 0);
 }
