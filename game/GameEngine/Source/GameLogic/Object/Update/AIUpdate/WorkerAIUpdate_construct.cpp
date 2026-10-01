@@ -513,7 +513,8 @@ extern BuildAssistant *TheBuildAssistant;
 class ThingFactory;
 extern ThingFactory *TheThingFactory;
 #define TheThingFactory ((Rva002C96D0ThingFactory *)TheThingFactory)
-extern Rva002C96D0TerrainLogicPre *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 class AI;
 extern AI *TheAI;
 #define TheAI ((Rva002C96D0AI *)TheAI)
@@ -572,7 +573,7 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *buildTemplate,
 	bfmeSetOrientation(constructedObject, buildOrientation);
 	bfmeFlattenTerrain((Rva002C96D0TerrainLogic *)TheTerrainLogic, constructedObject);
 	Coord3D groundPosition = *buildPosition;
-	groundPosition.z = TheTerrainLogic->getGroundHeight(buildPosition->x, buildPosition->y);
+	groundPosition.z = ((Rva002C96D0TerrainLogicPre *)TheTerrainLogic)->getGroundHeight(buildPosition->x, buildPosition->y);
 	bfmeSetPosition(constructedObject, &groundPosition);
 	bfmeAddObject(TheAI->pathfinder(), constructedObject);
 	bfmeOnStructureCreated((Rva002C96D0Player *)owningPlayer,

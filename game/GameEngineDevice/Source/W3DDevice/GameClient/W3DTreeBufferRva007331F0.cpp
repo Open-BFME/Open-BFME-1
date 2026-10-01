@@ -37,8 +37,8 @@ public:
         Real speed, const Coord3D *secondary) const;
 };
 
-struct Rva003FD060TerrainLogic;
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern const Real BfmeZeroRange;
 
 struct Rva007331F0TypeData

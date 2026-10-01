@@ -20,7 +20,8 @@ struct Rva003FD060TerrainLogic
 	virtual float bfmeHeightAAE(float x, float y, int layer, Coord3D007AE900 *normal, int clip);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern const float BfmeZeroRange;
 extern const float g_0109B46C;
 
@@ -142,7 +143,7 @@ static float Rva007AE900Body(Rva007AE900Src *obj, const Coord3D007AE900 *groundP
 					if (TheTerrainLogic)
 					{
 						Coord3D007AE900 tmp;
-						float h = TheTerrainLogic->bfmeHeightAAE(groundPos->x, groundPos->y, ns, &tmp, 1);
+						float h = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightAAE(groundPos->x, groundPos->y, ns, &tmp, 1);
 						h += G_BFME_007AE900_BIAS;
 						*outNormal = tmp;
 						return h;

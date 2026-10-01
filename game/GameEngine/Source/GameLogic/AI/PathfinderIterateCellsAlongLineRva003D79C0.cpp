@@ -103,7 +103,8 @@ private:
 	}
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern const Real g_bfmeK1253;
 extern const Real g_bfmeDirectionWeight1285;
 
@@ -166,7 +167,7 @@ Int Pathfinder::iterateCellsAlongLine(const ICoord2D &startCell,
 			resultInfo->x = wx;
 			Real wy = ((Real)y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 			resultInfo->y = wy;
-			resultInfo->z = TheTerrainLogic->bfmeHeightABE( wx, wy, hitLayer, 0, true );
+			resultInfo->z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightABE( wx, wy, hitLayer, 0, true );
 			return 1;
 		}
 

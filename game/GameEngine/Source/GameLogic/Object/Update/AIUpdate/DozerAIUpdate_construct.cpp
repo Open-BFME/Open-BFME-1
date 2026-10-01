@@ -492,7 +492,8 @@ extern Rva002B7C80ThingFactory *TheThingFactory;
 // macro scheduled the Coord3D y store before the terrain vtable load.
 // The declaration recovers the
 // retail order without forced instructions or volatile field changes.
-extern Rva002B7C80TerrainLogicPre *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern Rva002B7C80AI *TheAI;
 #define BFME_DEFAULT_HEALTH 1.0f
 
@@ -538,7 +539,7 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *buildTemplat
 	bfmeSetOrientation(constructedObject, buildOrientation);
 	bfmeFlattenTerrain((Rva002B7C80TerrainLogic *)TheTerrainLogic, constructedObject);
 	Coord3D groundPosition = *buildPosition;
-	groundPosition.z = TheTerrainLogic->getGroundHeight(buildPosition->x, buildPosition->y);
+	groundPosition.z = ((Rva002B7C80TerrainLogicPre *)TheTerrainLogic)->getGroundHeight(buildPosition->x, buildPosition->y);
 	bfmeSetPosition(constructedObject, &groundPosition);
 	bfmeAddObject(TheAI->pathfinder(), constructedObject);
 	bfmeOnStructureCreated((Rva002B7C80Player *)owningPlayer,

@@ -89,7 +89,8 @@ struct Rva003FD060TerrainLogic
 	virtual BfmeThingAX *bfmeLookupAX(int id);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 extern "C" void __cdecl bfmeXferIntAX(BfmeAgentAX *ag, int *value);
 
@@ -134,7 +135,7 @@ void BfmeHostAX::bfmeSaveAX(BfmeAgentAX *ag)
 			if (id == 0x7fffffff)
 				t = 0;
 			else
-				t = TheTerrainLogic->bfmeLookupAX(id);
+				t = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeLookupAX(id);
 
 			*p = t;
 		}

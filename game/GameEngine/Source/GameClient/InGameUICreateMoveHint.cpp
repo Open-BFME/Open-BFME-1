@@ -79,7 +79,8 @@ public:
 	virtual Bool terrainSlot22( Real x, Real y ) = 0;		///< vtable +0x58
 };
 
-extern BfmeMoveHintTerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 // BFME's GameClient hands out its frame through vtable +0x68.
 class BfmeMoveHintGameClient
@@ -170,9 +171,9 @@ void InGameUI::createMoveHint( const GameMessage *msg )
 	Coord3D loc;
 	loc.set( &msg->getArgument( 0 )->location );
 
-	if( TheTerrainLogic->terrainSlot20( loc.x, loc.y ) )
+	if( ((BfmeMoveHintTerrainLogic *)TheTerrainLogic)->terrainSlot20( loc.x, loc.y ) )
 		return;
-	if( TheTerrainLogic->terrainSlot22( loc.x, loc.y ) )
+	if( ((BfmeMoveHintTerrainLogic *)TheTerrainLogic)->terrainSlot22( loc.x, loc.y ) )
 		return;
 
 	for( Int i = 0; i < MAX_MOVE_HINTS; i++ )

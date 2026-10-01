@@ -32,7 +32,8 @@ struct Rva003FD060TerrainLogic
 	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 class BfmeCell
 {
@@ -76,7 +77,7 @@ void BfmeCellGrid::rva001B1AD0(Int index, void *parameters)
 			if (cellIndex < m_cellCount)
 			{
 				position.x = (Real)x * m_cellSize + base;
-				position.z = TheTerrainLogic->getGroundHeight(
+				position.z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->getGroundHeight(
 					position.x, position.y, 0) + g_bfmeK1253;
 				m_cells[cellIndex].rva001DE2A0(&position, m_cellSize,
 					index, parameters);

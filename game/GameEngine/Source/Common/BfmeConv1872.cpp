@@ -140,7 +140,8 @@ struct Rva003FD060TerrainLogic
 	virtual float bfmeGroundZC(float x, float y, void *info) = 0;
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern const float g_bfmeK1266B;
 extern const float BfmeZeroRange;
 
@@ -186,7 +187,7 @@ float BfmeHostZC::bfmeHeightZC()
 	coords[0] = p->x;
 	coords[1] = p->y;
 	coords[2] = p->z;
-	float d = coords[2] - TheTerrainLogic->bfmeGroundZC(coords[0], coords[1], 0);
+	float d = coords[2] - ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeGroundZC(coords[0], coords[1], 0);
 
 	return (m_bfme08ZC->bfmeGeomZC()->getMaxHeightAbovePosition() + d) * 2.0f;
 }

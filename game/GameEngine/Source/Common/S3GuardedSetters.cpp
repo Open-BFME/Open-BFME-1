@@ -19,7 +19,8 @@ struct Gen_002EFC30Impl
 	Bool m_bfmeField;						// +0x18F4
 };
 
-extern Gen_002EFC30Impl *TheBfmeImpl_002EFC30;			// 0x012EF4CC
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;			// 0x012EF4CC
 
 void __stdcall bfmeSet_002EFC30(Bool value);
 
@@ -305,8 +306,8 @@ private:
 // ?bfmeSet_002EFC30@@YGX_N@Z
 void __stdcall bfmeSet_002EFC30(Bool value)
 {
-	if (TheBfmeImpl_002EFC30)
-		TheBfmeImpl_002EFC30->m_bfmeField = value;
+	if (TheTerrainLogic)
+		((Gen_002EFC30Impl *)TheTerrainLogic)->m_bfmeField = value;
 }
 
 // ?bfmeSet@Gen_00750550@@QAEX_N@Z
