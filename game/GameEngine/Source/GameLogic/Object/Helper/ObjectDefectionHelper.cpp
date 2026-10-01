@@ -24,7 +24,10 @@ public:
 	unsigned int m_frame;						///< retail this+0x3C
 };
 
-extern GameLogicFrameSource *TheGameLogic;		///< retail [0x012F0898]
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is GameLogicFrameSource
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 enum UpdateSleepTime
@@ -91,7 +94,7 @@ void ObjectDefectionHelper::startDefectionTimer(unsigned int numFrames, bool wit
 		return;
 	}
 
-	unsigned int now = TheGameLogic->m_frame;
+	unsigned int now = ((GameLogicFrameSource *)TheGameLogic)->m_frame;
 	m_defectionDetectionStart = now;
 	m_defectionDetectionEnd = now + numFrames;
 	m_defectionDetectionFlashPhase = 0.0f;

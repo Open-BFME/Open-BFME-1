@@ -83,7 +83,10 @@ public:
 	Rva00236F50ObjectHash m_objectHash;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view below is Rva00367E30Logic
+extern GameLogic *TheGameLogic;
 
 template <int N>
 class Rva00236F50InterfaceSlots : public Rva00236F50InterfaceSlots<N - 1>
@@ -128,7 +131,7 @@ void Rva00236F50Interface::rva00236f50()
 		if (id != 0)
 		{
 			Rva00236F50ObjectView *object =
-				TheBfmeGameLogic->findObjectByID(id);
+				((Rva00367E30Logic *)TheGameLogic)->findObjectByID(id);
 			if (object != 0)
 				object->slot18();
 		}

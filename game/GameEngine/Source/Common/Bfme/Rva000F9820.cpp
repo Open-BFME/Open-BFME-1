@@ -53,7 +53,10 @@ struct BfmeGameLogic
 };
 
 extern BfmeOtherBN *g_bfmeOtherBN;
-extern BfmeGameLogic *TheGameLogic;
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is BfmeGameLogic
+extern GameLogic *TheGameLogic;
 
 class Rva000F9820 : public BfmeVecVLH
 {
@@ -85,7 +88,7 @@ float Rva000F9820::getValue(int divisor, int *out)
 			value = (int)product->bfmeApply980B((int)key, record->value34);
 			if (value > 0)
 			{
-				BfmeGameLogic *logic = TheGameLogic;
+				BfmeGameLogic *logic = (BfmeGameLogic *)TheGameLogic;
 				return ((float)(unsigned int)logic->frame - (float)record->value30) / value;
 			}
 		}

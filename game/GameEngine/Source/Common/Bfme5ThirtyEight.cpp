@@ -10,7 +10,10 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view below is BfmeClockCJ
+extern GameLogic *TheGameLogic;
 
 class Gen_000E8870
 {
@@ -27,7 +30,7 @@ private:
 // ?bfmeAddA@Gen_000E8870@@QAEXH@Z
 void Gen_000E8870::bfmeAddA(int amount)
 {
-	unsigned char enabled = g_bfmeSwitchCJ->m_bfmeEnabled;
+	unsigned char enabled = ((BfmeClockCJ *)TheGameLogic)->m_bfmeEnabled;
 
 	if (enabled)
 		m_bfmeFirst = m_bfmeFirst + amount;
@@ -36,7 +39,7 @@ void Gen_000E8870::bfmeAddA(int amount)
 // ?bfmeAddB@Gen_000E8870@@QAEXH@Z
 void Gen_000E8870::bfmeAddB(int amount)
 {
-	unsigned char enabled = g_bfmeSwitchCJ->m_bfmeEnabled;
+	unsigned char enabled = ((BfmeClockCJ *)TheGameLogic)->m_bfmeEnabled;
 
 	if (enabled)
 		m_bfmeSecond = m_bfmeSecond + amount;

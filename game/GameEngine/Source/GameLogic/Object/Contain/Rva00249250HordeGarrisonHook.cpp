@@ -97,7 +97,10 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern BfmeRva49250Global *g_bfmeRva49250GlobalB;
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is BfmeRva49250Global
+extern GameLogic *TheGameLogic;
 
 class BfmeRva49250Base
 {
@@ -139,6 +142,6 @@ void BfmeRva49250Base::bfmeApplyObject(BfmeRva49250Object *object, void *)
 		BfmeRva49250Owner *owner =
 			*(BfmeRva49250Owner **)((char *)this - 0x1c);
 		*(UnsignedInt *)((char *)this + 0x998) =
-			owner->m_frame + g_bfmeRva49250GlobalB->m_frame;
+			owner->m_frame + ((BfmeRva49250Global *)TheGameLogic)->m_frame;
 	}
 }

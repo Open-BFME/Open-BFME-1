@@ -34,7 +34,10 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeSwitchCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is BfmeSwitchCJ
+extern GameLogic *TheGameLogic;
 
 class Gen_000E8AF0
 {
@@ -51,7 +54,7 @@ private:
 // ?bfmeAddTotal@Gen_000E8AF0@@QAEXH@Z
 void Gen_000E8AF0::bfmeAddTotal(int amount)
 {
-	unsigned char enabled = g_bfmeSwitchCJ->m_bfmeEnabled;
+	unsigned char enabled = ((BfmeSwitchCJ *)TheGameLogic)->m_bfmeEnabled;
 
 	if (enabled)
 		m_bfmeTotal = m_bfmeTotal + amount;
@@ -60,7 +63,7 @@ void Gen_000E8AF0::bfmeAddTotal(int amount)
 // ?bfmeAddCount@Gen_000E8AF0@@QAEXH@Z
 void Gen_000E8AF0::bfmeAddCount(int amount)
 {
-	unsigned char enabled = g_bfmeSwitchCJ->m_bfmeEnabled;
+	unsigned char enabled = ((BfmeSwitchCJ *)TheGameLogic)->m_bfmeEnabled;
 
 	if (enabled)
 		m_bfmeCount = m_bfmeCount + amount;

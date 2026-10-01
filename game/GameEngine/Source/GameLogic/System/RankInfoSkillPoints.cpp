@@ -11,7 +11,9 @@ public:
 	bool bfmeUsePrimaryRank1294();
 };
 
-extern BfmeGameLogic1294 *g_bfmeGameLogic1294;
+class GameLogic;
+
+extern GameLogic *TheGameLogic;					// retail 0x012F0898
 extern char g_bfmeSideNameA1294[];
 extern char g_bfmeSideNameB1294[];
 extern char g_bfmeSideNameC1294[];
@@ -35,7 +37,9 @@ private:
 
 int RankInfo::getSkillPointsNeeded(const AsciiString &side) const
 {
-	if (g_bfmeGameLogic1294 != 0 && g_bfmeGameLogic1294->bfmeUsePrimaryRank1294()) {
+	BfmeGameLogic1294 *logic = (BfmeGameLogic1294 *)TheGameLogic;
+
+	if (logic != 0 && logic->bfmeUsePrimaryRank1294()) {
 		if (m_primary14 != -1)
 			return m_primary14;
 	} else {

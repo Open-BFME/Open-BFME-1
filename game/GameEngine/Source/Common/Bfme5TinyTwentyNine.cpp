@@ -90,7 +90,10 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is BfmeClockCJ
+extern GameLogic *TheGameLogic;
 
 class Gen_00681D30
 {
@@ -108,7 +111,7 @@ int Gen_00681D30::bfmeRemaining(void) const
 	BfmeOwnerCW *owner = m_bfmeOwner;
 
 	if (owner)
-		return owner->m_bfmeDeadline - g_bfmeSwitchCJ->m_bfmeNow + 1;
+		return owner->m_bfmeDeadline - ((BfmeClockCJ *)TheGameLogic)->m_bfmeNow + 1;
 
 	return 0;
 }

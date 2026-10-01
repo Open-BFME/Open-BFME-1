@@ -86,7 +86,9 @@ public:
 	int bfmeNext1094(int a);
 };
 
-extern BfmeB1094 *g_bfmeB1094;
+class GameLogic;
+
+extern GameLogic *TheGameLogic;				// retail 0x012F0898
 extern BfmeD1094 *g_bfmeD1094;
 extern BfmeP1094 *g_bfmeP1094;
 
@@ -103,7 +105,7 @@ char __stdcall bfmeGo1094A(int a, int b)
 	w = e->m_bfme200->bfmeSlot1094F_15();
 	if (!w)
 		return 0;
-	k = g_bfmeB1094->bfmeFind1094(w->m_bfme08);
+	k = ((BfmeB1094 *)TheGameLogic)->bfmeFind1094(w->m_bfme08);
 	if (!k)
 		return 0;
 	a = g_bfmeP1094->bfmeNext1094(b);

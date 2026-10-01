@@ -25,7 +25,10 @@ struct Rva00367E30Logic
 	unsigned int m_bfme3CABA;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+
+// retail 0x012F0898; the TU-local view above is Rva00367E30Logic
+extern GameLogic *TheGameLogic;
 
 struct BfmeOwnerABA
 {
@@ -50,7 +53,8 @@ int BfmeHostABA::bfmeProgressABA(BfmeIterABA last)
 	if (first.m_bfmeNodeABA == l->m_bfmeHeadABA)
 		return 100;
 
-	unsigned int elapsed = TheBfmeGameLogic->m_bfme3CABA - first.m_bfmeNodeABA->m_bfme14ABA;
+	unsigned int elapsed =
+		((Rva00367E30Logic *)TheGameLogic)->m_bfme3CABA - first.m_bfmeNodeABA->m_bfme14ABA;
 	unsigned int limit = o->m_bfme164ABA;
 
 	if (elapsed > limit)
