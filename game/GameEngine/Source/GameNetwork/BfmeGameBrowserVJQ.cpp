@@ -4,8 +4,13 @@ class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH(char *buf, int n) throw();
-	~BfmeMsgVJH() throw();
 	char m_pad[0x34];
+};
+
+class Gen_007e86c0
+{
+public:
+	void m();
 };
 
 class Rva007E8810Message
@@ -144,6 +149,7 @@ void BfmeThingVJQ::bfmeGoVJQ(int a) throw()
 	{
 		m_bfme10->sendOne(&msg, a);
 		m_bfme14->send(&msg, BfmeGameBrowserVJQCallback, this, m_bfme6dc);
+		((Gen_007e86c0 *)&msg)->m();
 		return;
 	}
 	if (m_bfme35)
@@ -156,13 +162,16 @@ void BfmeThingVJQ::bfmeGoVJQ(int a) throw()
 			int error = ask->bfmeGet992C();
 			BfmeSinkErrorVJQ *sink = m_bfme1cError;
 			sink->send19(error);
+			((Gen_007e86c0 *)&msg)->m();
 			return;
 		}
 		else
 		{
 			BfmeSinkZeroVJQ *sink = m_bfme1cZero;
 			sink->send19(0);
+			((Gen_007e86c0 *)&msg)->m();
 			return;
 		}
 	}
+	((Gen_007e86c0 *)&msg)->m();
 }

@@ -3,11 +3,15 @@
 extern "C" void *bfmeVft1045A[];
 extern "C" void *bfmeVft1045B[];
 
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeSub1045
 {
 public:
-	void bfmeDone1045(void);
-
 	char m_bfmePad[0x24];
 };
 
@@ -40,7 +44,7 @@ void BfmeB1045::bfmeGo1045B(void)
 
 	do {
 		p--;
-		p->bfmeDone1045();
+		((Gen_007e86c0 *)p)->m();
 	} while (--n != 0);
 }
 

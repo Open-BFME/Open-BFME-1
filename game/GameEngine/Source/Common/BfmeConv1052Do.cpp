@@ -7,7 +7,6 @@ class BfmeMsg1052
 {
 public:
 	BfmeMsg1052(char *buf, int n) throw();
-	~BfmeMsg1052() throw();
 	void addInt(const char *k, int v) throw();
 
 	int m_00;
@@ -18,6 +17,12 @@ public:
 	int m_1c;
 	int m_20;
 	char m_pad24[0x10];
+};
+
+class Gen_007e86c0
+{
+public:
+	void m();
 };
 
 class BfmeI1052
@@ -65,6 +70,7 @@ void BfmeH1052::bfmeDo1052(int a, BfmeI1052 *p, int r)
 	msg.addInt(g_bfmeName1052, r);
 	msg.addInt((const char *)&g_bfmeKeyCVHD, 1);
 	Rva007F93E0(&msg, "->D", m_10);
+	((Gen_007e86c0 *)&msg)->m();
 }
 
 void BfmeH1052::forward00800C80(BfmeRecord00800C80 *record)

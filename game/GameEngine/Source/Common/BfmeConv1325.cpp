@@ -4,10 +4,15 @@ extern void *g_bfmeVftATWA[];
 extern void *g_bfmeVftBTWA[];
 extern void *g_bfmeVftCTWA[];
 
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeStrTWA
 {
 public:
-	void bfmeDtorTWA();
 	char m_bfmePad[0x20];
 };
 
@@ -29,7 +34,7 @@ void *BfmeThingTWA::bfmeDelTWA(unsigned char flags)
 	m_bfmeVft0 = g_bfmeVftATWA;
 	m_bfmeVft1 = g_bfmeVftBTWA;
 	bfmeStepTWA();
-	m_bfmeStr.bfmeDtorTWA();
+	((Gen_007e86c0 *)&m_bfmeStr)->m();
 	m_bfmeVft0 = g_bfmeVftCTWA;
 	if (flags & 1)
 		bfmeFreeTWA(this, 0x30);
@@ -42,7 +47,6 @@ extern void *g_bfmeVftBTWB[];
 class BfmeStrTWB
 {
 public:
-	void bfmeDtorTWB();
 	char m_bfmePad[0x10];
 };
 
@@ -72,8 +76,8 @@ void *BfmeThingTWB::bfmeDelTWB(unsigned char flags)
 {
 	m_bfmeVft = g_bfmeVftATWB;
 	m_bfme08 = 0;
-	m_bfmeA.bfmeDtorTWB();
-	m_bfmeB.bfmeDtorTWB();
+	((Gen_007e86c0 *)&m_bfmeA)->m();
+	((Gen_007e86c0 *)&m_bfmeB)->m();
 	m_bfmeList.bfmeDropTWB();
 	m_bfmeVft = g_bfmeVftBTWB;
 	if (flags & 1)
@@ -96,7 +100,6 @@ void bfmeFreeTWC(void *p, int n);
 class BfmeHeadTWC
 {
 public:
-	void bfmeDtorTWC();
 	char m_bfmePad[0x10];
 };
 
@@ -115,7 +118,7 @@ void *BfmeThingTWC::bfmeDelTWC(unsigned char flags)
 		bfmeGetTWC()->bfmeDropTWC(m_bfmeItem, 0);
 	m_bfmeItem = 0;
 	m_bfme10 = 0;
-	m_bfmeHead.bfmeDtorTWC();
+	((Gen_007e86c0 *)&m_bfmeHead)->m();
 	if (flags & 1)
 		bfmeFreeTWC(this, 0x20);
 	return this;

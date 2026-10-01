@@ -17,6 +17,12 @@ public:
 	int m_04;
 };
 
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 extern int vftable_011296B0;
 
 class Rva00800780Addr : public Rva7F4CC0Child
@@ -29,7 +35,6 @@ public:
 		m_0C = 0;
 		*(int *)( (char *)this + 4 ) = 0;
 	}
-	~Rva00800780Addr();                                              // 0x007E86C0
 	void parse( const char *str, int extra );                        // 0x007E86D0
 
 	void *m_08;
@@ -69,4 +74,5 @@ void Rva00800780Owner::onConnectReply( Rva007E8810Message *msg )
 	int port = msg->getInt( "PORT", 0 );
 	addr.parse( buf, port );
 	m_sink->notify( 0, &addr, m_d0 );
+	((Gen_007e86c0 *)&addr)->m();
 }

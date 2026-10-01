@@ -4,10 +4,15 @@ class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH(char *buf, int n) throw();
-	~BfmeMsgVJH() throw();
 	char m_pad[0x1c];
 	int m_error;
 	char m_tail[0x14];
+};
+
+class Gen_007e86c0
+{
+public:
+	void m();
 };
 
 class BfmeAVJP
@@ -70,4 +75,5 @@ void BfmeThingVJP::bfmeGoVJP(int a1, int a2, int a3, int a4, int a5,
 	m_bfme10->send(&msg, a1, a2, m_bfme36, a3, selected, a7, a4,
 		a5, a6, a9, a10, a11, a12, a13);
 	m_bfme14->send(&msg, BfmeGameBrowserVJPCallback, this, m_bfme6dc);
+	((Gen_007e86c0 *)&msg)->m();
 }

@@ -6,13 +6,18 @@ class BfmeMsg803C90
 {
 public:
 	BfmeMsg803C90(char *buf, int n) throw();
-	~BfmeMsg803C90() throw();
 	void addInt(const char *k, int v) throw();
 
 	char m_pad[0x1c];
 	unsigned int m_category;
 	unsigned int m_sub;
 	char m_pad20[0x10];
+};
+
+class Gen_007e86c0
+{
+public:
+	void m();
 };
 
 class BfmeSrc803C90
@@ -40,4 +45,5 @@ void BfmeOwner803C90::go(BfmeSrc803C90 *src)
 	if (tid != -1)
 		msg.addInt(g_bfmeName1052, tid);
 	send(&msg);
+	((Gen_007e86c0 *)&msg)->m();
 }
