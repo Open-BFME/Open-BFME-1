@@ -99,8 +99,6 @@ Bool BezFwdIterator::done(void)
 	return (mStep >= mStepsDesired);
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?BezFwdIterator::getCurrent present-unmatched
 const Coord3D& BezFwdIterator::getCurrent(void) const
 {
 	return mCurrPoint;
@@ -115,4 +113,3 @@ void BezFwdIterator::next(void)
 
 	++mStep;
 }
-

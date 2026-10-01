@@ -114,27 +114,6 @@ void BezierSegment::evaluateBezSegmentAtT(Real tValue, Coord3D *outResult) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?BezierSegment::getSegmentPoints present-unmatched
-void BezierSegment::getSegmentPoints(Int numSegments, VecCoord3D *outResult) const
-{
-	if (!outResult) {
-		return;
-	}
-	
-	outResult->clear();
-	outResult->resize(numSegments);
-
-	BezFwdIterator iter(numSegments, this);
-	iter.start();
-	Int i = 0;
-	while (!iter.done()) {
-		(*outResult)[i] = iter.getCurrent();
-		++i;
-		iter.next();
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 // This function isn't terribly fast. There are alternatives, and if this is too slow, we can 
 // take a look at the other approximations.
 // There is no known close-form solution to this problem.

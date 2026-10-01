@@ -34,6 +34,8 @@
 
 #include <D3DX8Math.h>
 
+template class _STL::vector<Coord3D, _STL::allocator<Coord3D> >;
+
 // Retail BezierSegment::BezierSegment (0x000B6D00) is implemented in BezierSegmentConstructionAndLength.cpp.
 
 //-------------------------------------------------------------------------------------------------
@@ -110,27 +112,6 @@ void BezierSegment::evaluateBezSegmentAtT(Real tValue, Coord3D *outResult) const
 	outResult->x = D3DXVec4Dot(&xCoords, &tResult);
 	outResult->y = D3DXVec4Dot(&yCoords, &tResult);
 	outResult->z = D3DXVec4Dot(&zCoords, &tResult);
-}
-
-//-------------------------------------------------------------------------------------------------
-// ?getSegmentPoints@BezierSegment@@ present-unmatched
-void BezierSegment::getSegmentPoints(Int numSegments, VecCoord3D *outResult) const
-{
-	if (!outResult) {
-		return;
-	}
-	
-	outResult->clear();
-	outResult->resize(numSegments);
-
-	BezFwdIterator iter(numSegments, this);
-	iter.start();
-	Int i = 0;
-	while (!iter.done()) {
-		(*outResult)[i] = iter.getCurrent();
-		++i;
-		iter.next();
-	}
 }
 
 //-------------------------------------------------------------------------------------------------
