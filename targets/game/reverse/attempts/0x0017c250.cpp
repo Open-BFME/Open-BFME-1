@@ -1,5 +1,5 @@
 // ?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.975485188968335 date=2026-09-28
+// partial score=0.9755 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/GameLogic/Object
 // Retail 0017C250, 979 bytes. This bank emits 979 bytes with 24 masked
 // byte differences: only scratch-register choices in +00B2..+01E6.
