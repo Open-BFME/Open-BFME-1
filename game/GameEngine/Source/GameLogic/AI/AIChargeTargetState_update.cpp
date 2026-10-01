@@ -7,6 +7,9 @@
 // The local goal copy, source status tests and retained AI pointer are intentional.
 
 typedef bool Bool;
+typedef float Real;
+
+extern const Real g_010977F0;
 
 enum StateReturnType
 {
@@ -34,6 +37,12 @@ struct Coord3D
 
 class Object;
 class AIUpdateInterface;
+
+class Thing
+{
+public:
+	Real bfmeRelativeAngleTo(const Coord3D *position) const;
+};
 
 class StateMachine
 {
@@ -158,9 +167,22 @@ public:
 };
 
 
+class WeaponTemplate
+{
+public:
+	unsigned char m_pad00[0x20];
+	Real m_aimDelta;
+
+	Real getUnmodifiedAttackRange() const;
+};
+
 class Weapon
 {
     friend class AIChargeTargetState;
+public:
+	unsigned char m_pad00[4];
+	WeaponTemplate *m_template;
+
 private:
 	WeaponStatus bfmeComputeStatus(Bool *valid) const;
 };
@@ -208,7 +230,8 @@ public:
         fn.raw = j_0000d689;
         return (this->*fn.member)();
     }
-	__forceinline Bool rva0016FD30() {
+	Bool rva0016FD30();
+	__forceinline Bool rva0016FD30Call() {
         typedef Bool (AIChargeTargetState::*Call)();
         union { void (*raw)(); Call member; } fn;
         fn.raw = j_00035d3c;
@@ -279,7 +302,7 @@ StateReturnType AIChargeTargetState::update()
 		weapon = source->getCurrentWeapon(&slot);
 		if (weapon)
 		{
-			if (victim && rva0016FD30())
+			if (victim && rva0016FD30Call())
 			{
 				if (!((BFMESelectionStatusBits *)source)->test(0x7c) &&
 					weapon->bfmeComputeStatus(0) == READY_TO_FIRE)
@@ -297,4 +320,44 @@ StateReturnType AIChargeTargetState::update()
 		}
 	}
 	return STATE_FAILURE;
+}
+
+
+// The matched AIChargeTargetState::update at RVA 0x00185060 puts its state
+// pointer in ECX before it calls ILT 0x00035D3C. Retail's 223-byte body at
+// RVA 0x0016FD30 reads the state machine at +0x1C. No source or table gives
+// this method a semantic name, so the code uses its address as rva0016FD30.
+Bool AIChargeTargetState::rva0016FD30()
+{
+	StateMachine *machine = m_machine;
+	Object *source = machine->m_owner;
+	Object *victim = machine->getGoalObject();
+	if (!source || !victim)
+		return false;
+
+	Weapon *weapon = source->getCurrentWeapon(0);
+	if (!weapon)
+		return false;
+
+	const Coord3D *victimPosition = victim->getPosition();
+	Coord3D delta;
+	delta.x = source->m_position.x;
+	delta.y = source->m_position.y;
+	delta.z = source->m_position.z;
+	delta.x -= victimPosition->x;
+	delta.y -= victimPosition->y;
+	delta.z -= victimPosition->z;
+	Real range = weapon->m_template->getUnmodifiedAttackRange();
+	if (delta.x * delta.x + delta.y * delta.y + delta.z * delta.z <
+		range * range)
+	{
+		Real angleThreshold = weapon->m_template->m_aimDelta;
+		if (angleThreshold < g_010977F0)
+			angleThreshold = 0.035f;
+
+		if (((Thing *)source)->bfmeRelativeAngleTo(victimPosition) <
+			angleThreshold)
+			return true;
+	}
+	return false;
 }

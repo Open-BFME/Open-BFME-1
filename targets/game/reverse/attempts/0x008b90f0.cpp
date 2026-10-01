@@ -1,5 +1,5 @@
 // ?d_008b90f0@@YAXXZ
-// partial score=0.956 date=2026-10-01
+// partial score=0.992 date=2026-10-01
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // The caller at 0x008B91F0 and pin at 0x008B90F0 identify this tagged-value comparator.
 struct BfmeStringData3AF0
@@ -43,7 +43,7 @@ public:
     void getName(Rva8CD130String *);
 };
 
-int __cdecl dup_008B90F0(unsigned *right, unsigned *left)
+int __cdecl dup_008B90F0(unsigned *left, unsigned *right)
 {
     unsigned leftTagged = *(volatile unsigned *)left;
     unsigned rightTagged = *(volatile unsigned *)right;
