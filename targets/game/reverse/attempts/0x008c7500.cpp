@@ -1,5 +1,5 @@
 // ?_FunctionRva008C7500@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
-// partial score=0.989 date=2026-09-28
+// partial score=0.9894 date=2026-09-28
 // ?_FunctionRva008C7500@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
 // Opaque Apt string-equality handler; SWF7 undefined count feeds a switch, the name compare reuses it.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
