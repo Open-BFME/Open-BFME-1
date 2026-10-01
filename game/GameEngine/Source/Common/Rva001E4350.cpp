@@ -35,7 +35,11 @@ public:
 	Rva001E4350Node *m_listHead;
 };
 
-extern "C" void *g_bfmeOtherBN;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this body only tests it for null.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 #include <vector>
 
@@ -54,13 +58,13 @@ void Rva001E4350::notifyAll(void)
 {
 	Rva001E4350Node *node;
 
-	if (g_bfmeOtherBN)
+	if (TheThingFactory)
 	{
 		for (int i = 0; i < m_owners.size(); ++i)
 		{
 			Rva001E4350Owner *owner = m_owners[i];
 
-			if (owner && g_bfmeOtherBN)
+			if (owner && TheThingFactory)
 			{
 				for (node = owner->m_listHead->m_next;
 					node != owner->m_listHead;

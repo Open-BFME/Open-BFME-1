@@ -14,7 +14,11 @@ public:
 	BfmeResFHH *bfmeLookFHH(BfmeSubFHH *s);
 };
 
-extern BfmeGlobFHH *g_bfmeObjFHH;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeGlobFHH view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 struct BfmeStr917F
 {
@@ -41,7 +45,7 @@ void bfmeGo917F(BfmeArg917F *a, void *b, void *c)
 		return;
 	if (s->m_bfmeLen == 0)
 		return;
-	BfmeResFHH *r = g_bfmeObjFHH->bfmeLookFHH(k);
+	BfmeResFHH *r = ((BfmeGlobFHH *)TheThingFactory)->bfmeLookFHH(k);
 	if (!r)
 		return;
 	r->bfmeUseFHH(b, c);

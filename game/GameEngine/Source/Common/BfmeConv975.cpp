@@ -98,7 +98,11 @@ public:
 	void *bfmeFind975D(int a);
 };
 
-extern BfmeFind975D *g_bfmeFind975D;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps only its own view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class BfmeD975
 {
@@ -109,7 +113,7 @@ public:
 
 char BfmeD975::bfmeGo975D(int a)
 {
-	void *p = g_bfmeFind975D->bfmeFind975D(a);
+	void *p = ((BfmeFind975D *)TheThingFactory)->bfmeFind975D(a);
 
 	if (p)
 		return bfmeUse975D(p);

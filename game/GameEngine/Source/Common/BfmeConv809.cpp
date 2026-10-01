@@ -15,7 +15,11 @@ public:
 	BfmeResEFJ *bfmeLookEFJ(BfmeSubEFJ *s);
 };
 
-extern BfmeGlobEFJ *g_bfmeObjEFJ;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeGlobEFJ view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 struct BfmeThingEFJa
 {
@@ -26,7 +30,7 @@ struct BfmeThingEFJa
 
 void BfmeThingEFJa::bfmeGoEFJa(void *a, void *b)
 {
-	BfmeResEFJ *r = g_bfmeObjEFJ->bfmeLookEFJ(&m_bfmeSub);
+	BfmeResEFJ *r = ((BfmeGlobEFJ *)TheThingFactory)->bfmeLookEFJ(&m_bfmeSub);
 	if (r)
 		r->bfmeUseEFJ(a, b);
 }
@@ -40,7 +44,7 @@ struct BfmeThingEFJb
 
 void BfmeThingEFJb::bfmeGoEFJb(void *a, void *b)
 {
-	BfmeResEFJ *r = g_bfmeObjEFJ->bfmeLookEFJ(&m_bfmeSub);
+	BfmeResEFJ *r = ((BfmeGlobEFJ *)TheThingFactory)->bfmeLookEFJ(&m_bfmeSub);
 	if (r)
 		r->bfmeUseEFJ(a, b);
 }

@@ -12,7 +12,11 @@ public:
 	Rva000F92B0Product *find(void *key);
 };
 
-extern Rva000F92B0Factory *TheRva000F92B0Factory;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own factory view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class Rva000F92B0FactoryLookup
 {
@@ -26,7 +30,7 @@ private:
 
 void *Rva000F92B0FactoryLookup::evaluate(void *argument)
 {
-	Rva000F92B0Product *product = TheRva000F92B0Factory->find(this);
+	Rva000F92B0Product *product = ((Rva000F92B0Factory *)TheThingFactory)->find(this);
 	if (product)
 		return product->evaluate(argument, m_context);
 	return 0;

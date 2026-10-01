@@ -25,7 +25,11 @@ public:
 	void *bfmeApply980B(int first, int second);
 };
 
-extern BfmeOtherBN * volatile g_bfmeOtherBN;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeOtherBN view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class Rva000F95C0
 {
@@ -49,7 +53,7 @@ void *Rva000F95C0::lookup(int key)
 		{
 			int value = (int)m_value10;
 			BfmeUseB980 *use = static_cast<BfmeUseB980 *>(
-				g_bfmeOtherBN->bfmeLookupBN(
+				((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(
 					*reinterpret_cast<const AsciiStringBN *>(record)));
 			if (!use)
 				return 0;

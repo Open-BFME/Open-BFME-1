@@ -6,7 +6,11 @@ public:
 	void *registerObj(void *field);
 };
 
-extern BfmeMgrF1D *g_mgr12EF1D8;
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeMgrF1D view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class BfmeSub942D
 {
@@ -50,7 +54,7 @@ void *BfmeSub942D::bfmeCall942D(void *a)
 {
 	int index = (int)a;
 	if ((unsigned int)index < m_bfmeElements942D.size())
-		return g_mgr12EF1D8->registerObj(
+		return ((BfmeMgrF1D *)TheThingFactory)->registerObj(
 			m_bfmeElements942D.begin() + index);
 	return 0;
 }

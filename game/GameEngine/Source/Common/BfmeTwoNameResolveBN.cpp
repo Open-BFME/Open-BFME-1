@@ -44,7 +44,12 @@ public:
 };
 
 extern BfmeRegistryBN *g_bfmeRegistryBN;		// retail 0x012EF738
-extern BfmeOtherBN *g_bfmeOtherBN;			// retail 0x012EF1D8
+
+// Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
+// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeOtherBN view of it.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class BfmeResolverBN
 {
@@ -67,5 +72,5 @@ void BfmeResolverBN::bfmeResolveBN(void)
 	m_bfmeFirstBN = g_bfmeRegistryBN->bfmeFindBN(m_bfmeNameBN);
 
 	if (!m_bfmeOtherNameBN.bfmeEmptyBN())
-		m_bfmeSecondBN = g_bfmeOtherBN->bfmeLookupBN(m_bfmeOtherNameBN);
+		m_bfmeSecondBN = ((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(m_bfmeOtherNameBN);
 }
