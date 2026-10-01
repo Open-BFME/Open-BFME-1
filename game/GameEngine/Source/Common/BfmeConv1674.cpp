@@ -60,7 +60,11 @@ public:
 		unsigned int data1, unsigned int data2);
 };
 
-extern BfmeWindowManagerERC *g_bfmeWindowManagerERC;
+// Retail 0x012F1B40 is EA's `GameWindowManager *TheWindowManager;`, defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. This TU keeps its
+// own view of the object and casts at the use.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class BfmeWindowERC
 {
@@ -81,7 +85,7 @@ int BfmeWindowERC::bfmeActivateERC(void)
 	unsigned int before = m_bfmeStatusERC;
 	m_bfmeStatusERC &= ~0x10u;
 	if (m_bfmeStatusERC != before)
-		g_bfmeWindowManagerERC->bfmeSendSystemMsgERC(this, 0x1b, 1, 0);
+		((BfmeWindowManagerERC *)TheWindowManager)->bfmeSendSystemMsgERC(this, 0x1b, 1, 0);
 	m_bfmeStatusERC &= ~0x10000000u;
 	return 0;
 }

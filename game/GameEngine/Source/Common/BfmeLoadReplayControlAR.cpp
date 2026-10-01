@@ -64,12 +64,17 @@ public:
 	virtual void *bfmeCreateAR(AsciiStringAR name, int a, int b) = 0;
 };
 
-extern BfmeWindowManagerAR *g_bfmeWindowManagerAR;	// retail 0x012F1B40
+// Retail 0x012F1B40 is EA's `GameWindowManager *TheWindowManager;`, defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. This TU keeps its
+// own view of the object and casts at the use.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
+
 extern void *g_bfmeReplayControlAR;			// retail 0x012F1490
 
 // ?bfmeLoadReplayControlAR@@YAXXZ
 void bfmeLoadReplayControlAR(void)
 {
-	g_bfmeReplayControlAR = g_bfmeWindowManagerAR->bfmeCreateAR(
+	g_bfmeReplayControlAR = ((BfmeWindowManagerAR *)TheWindowManager)->bfmeCreateAR(
 			AsciiStringAR("ReplayControl.wnd"), 0, 0);
 }
