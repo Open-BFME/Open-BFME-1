@@ -907,6 +907,11 @@ def _include_search_roots(source, command, env):
         # R's parent instead walked the directory holding the clone whenever R
         # was the repo root (/I.), i.e. every sibling checkout and project.
         roots.update(root.parent / "include" for root in tuple(roots))
+    # Expanded ../include roots can spell an existing Include directory with
+    # different casing. WindowsPath cache keys fold case, but the inventory
+    # serializes paths verbatim; use the actual spelling for both so a shared
+    # cache cannot substitute another spelling's digest.
+    roots = {Path(_case_resolve(str(root)) or root) for root in roots}
     return sorted(roots, key=str)
 
 
