@@ -7,6 +7,11 @@ class Thing;
 class ModuleData;
 class Object;
 
+// forward declaration only; the enumerators live in
+// game/GameEngine/Include/GameLogic/Module/UpdateModule.h, which this TU
+// cannot include without disturbing its matched layout.
+enum UpdateSleepTime;
+
 class Gen_dtor_00113d40
 {
 public:
@@ -61,9 +66,10 @@ public:
 	}
 	virtual ~UpdateModule() {}
 
-	void setWakeFrame(Object *object, unsigned int frame);
-
 protected:
+	// defining name ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z:
+	// 'I' is protected access and the parameter is enum UpdateSleepTime.
+	void setWakeFrame(Object *object, UpdateSleepTime frame);
 
 private:
 	unsigned int m_nextCallFrameAndPhase;
@@ -92,5 +98,5 @@ SiegeDockingBehavior::SiegeDockingBehavior(Thing *thing, const ModuleData *data)
 	UpdateModule(thing, data),
 	m_enabled(false)
 {
-	setWakeFrame(m_object, 1);
+	setWakeFrame(m_object, (UpdateSleepTime)1);
 }

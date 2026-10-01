@@ -47,7 +47,8 @@ public:
     }
 
 protected:
-    void setWakeFrameViaThunk(Object *, UpdateSleepTime);
+    // defining name ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z
+    void setWakeFrame(Object *, UpdateSleepTime);
     Object *getObject() const { return m_object; }
 
 private:
@@ -83,7 +84,7 @@ private:
 DelayedLuaEventUpdate::DelayedLuaEventUpdate(Thing *thing, const ModuleData *moduleData)
     : UpdateModule(thing, moduleData), m_events()
 {
-    setWakeFrameViaThunk(getObject(), (UpdateSleepTime)0x3fffffff);
+    setWakeFrame(getObject(), (UpdateSleepTime)0x3fffffff);
     m_f20 = 0;
     m_f70 = 0;
     m_f74 = false;

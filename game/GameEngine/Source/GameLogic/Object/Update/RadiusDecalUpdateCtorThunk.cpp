@@ -5,6 +5,11 @@ class Thing;
 class ModuleData;
 class Object;
 
+// forward declaration only; the enumerators live in
+// game/GameEngine/Include/GameLogic/Module/UpdateModule.h, which this TU
+// cannot include without disturbing its matched layout.
+enum UpdateSleepTime;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
@@ -38,7 +43,11 @@ public:
 	UpdateModule(Thing *thing, const ModuleData *moduleData)
 		: ObjectModule(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
 	virtual ~UpdateModule() {}
-	void setWakeFrame(Object *, unsigned int);
+
+protected:
+	// defining name ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z:
+	// 'I' is protected access and the parameter is enum UpdateSleepTime.
+	void setWakeFrame(Object *, UpdateSleepTime);
 
 private:
 	unsigned int m_f14;
@@ -79,5 +88,5 @@ RadiusDecalUpdate::RadiusDecalUpdate(Thing *thing, const ModuleData *moduleData)
 {
 	m_deliveryDecal.clear();
 	m_killWhenNoLongerAttacking = false;
-	setWakeFrame(getObject(), 0x3FFFFFFF);
+	setWakeFrame(getObject(), (UpdateSleepTime)0x3FFFFFFF);
 }

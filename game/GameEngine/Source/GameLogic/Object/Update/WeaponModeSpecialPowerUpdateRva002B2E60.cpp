@@ -50,16 +50,17 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_NONE = 1
 };
 
-class WeaponModeSpecialPowerUpdateBase
+// defining name ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z:
+// 'I' is protected access and the parameter is enum UpdateSleepTime.
+class UpdateModule
 {
-	protected:
-	void setWakeFrame(Object *object, UpdateSleepTime wakeDelay);
-};
+	// the caller reaches this body through a reinterpret_cast on an unrelated
+	// stand-in class; friendship keeps the access check satisfied without
+	// inventing an inheritance that would change the vftable.
+	friend class Rva002B2E60WeaponModeSpecialPowerUpdate;
 
-class UpdateModule : public WeaponModeSpecialPowerUpdateBase
-{
-public:
-	using WeaponModeSpecialPowerUpdateBase::setWakeFrame;
+protected:
+	void setWakeFrame(Object *object, UpdateSleepTime wakeDelay);
 };
 
 class TailInterface002B2E60
