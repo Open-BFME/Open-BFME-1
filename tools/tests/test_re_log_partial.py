@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import re_log  # noqa: E402  (path insert must precede the import)
+import finish_measure  # noqa: E402
 
 
 @pytest.fixture
@@ -285,12 +286,109 @@ def test_inflated_kept_header_is_remeasured_before_ranking(log, tmp_path, monkey
     assert score == 0.85 and "return 2" in path.read_text()
 
 
-def test_unmeasurable_stash_keeps_the_typed_score(log, tmp_path, monkeypatch):
+def test_test_log_stash_keeps_the_typed_score(log, tmp_path, monkeypatch):
     monkeypatch.setattr(re_log, "_measure_stash", lambda rva, data: None)
     body = tmp_path / "attempt.cpp"
     body.write_text("int f() { return 1; }\n")
     result = re_log._bank(SYM, hex(RVA), str(body), "0.6")
     assert result.startswith("score=0.6 ") and "measured=" not in result
+
+
+def evidence_snapshot(log):
+    paths = [log]
+    paths.extend((log.parent / "attempts").glob("*.cpp"))
+    paths.extend((log.parent / "attempt_history").rglob("*.json"))
+    return {path.relative_to(log.parent): path.read_bytes() for path in paths}
+
+
+def seed_bank(log):
+    target = re_log._stash_path(RVA)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    old = f"// {SYM}\n// partial score=0.99 date=2026-09-01\nint f() {{ return 1; }}\n".encode()
+    target.write_bytes(old)
+    history = log.parent / "attempt_history" / f"0x{RVA:08x}"
+    history.mkdir(parents=True, exist_ok=True)
+    # Leave the preferred bytes unarchived: archiving them before a failed
+    # probe would then create a detectable history entry, rather than dedupe.
+    older = f"// {SYM}\n// partial score=0.8 date=2026-08-01\nint f() {{ return 0; }}\n".encode()
+    re_log.archive_attempt(history, older, SYM, 0.8)
+
+
+@pytest.mark.parametrize("prior_bank", [False, True])
+@pytest.mark.parametrize("note", [
+    "wineserver: bind: Operation not permitted",
+    "probe timed out",
+    "fatal error C1083: Cannot open compiler intermediate file: Permission denied",
+])
+def test_unavailable_measurement_refuses_bank_without_evidence_changes(
+        log, tmp_path, monkeypatch, prior_bank, note):
+    if prior_bank:
+        seed_bank(log)
+    before = evidence_snapshot(log)
+    monkeypatch.setattr(re_log, "_REPO_LOG", log)
+    monkeypatch.setattr(finish_measure, "measure", lambda *a: dict(
+        compiles=False, unavailable=True, note=note))
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 2; }\n")
+    refusal = record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
+                     "--stash", str(body), "--score", "0.999")
+    assert "measurement unavailable" in refusal and note in refusal
+    assert evidence_snapshot(log) == before
+    assert not list((log.parent / "attempts").glob(".measure_*.cpp"))
+    if not prior_bank:
+        assert re_log.stash_for(RVA) is None
+        assert not (log.parent / "attempt_history").exists()
+
+
+def test_retained_body_failure_after_candidate_measurement_is_atomic(log, tmp_path, monkeypatch):
+    seed_bank(log)
+    before = evidence_snapshot(log)
+    monkeypatch.setattr(re_log, "_REPO_LOG", log)
+    replies = iter([dict(compiles=True, quality=0.85),
+                    dict(compiles=False, unavailable=True, note="wineserver failed")])
+    measured_bodies = []
+    def measure(rva, path):
+        measured_bodies.append(path.read_bytes())
+        return next(replies)
+    monkeypatch.setattr(finish_measure, "measure", measure)
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 2; }\n")
+    refusal = record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
+                     "--stash", str(body), "--score", "0.5")
+    assert "measurement unavailable" in refusal
+    assert len(measured_bodies) == 2
+    assert b"return 2" in measured_bodies[0] and b"return 1" in measured_bodies[1]
+    assert evidence_snapshot(log) == before
+    assert re_log.stash_for(RVA)[1] == 0.99
+
+
+@pytest.mark.parametrize("error", [OSError("winepath failed"), SystemExit("wine not found")])
+def test_probe_setup_exception_refuses_bank(log, tmp_path, monkeypatch, error):
+    seed_bank(log)
+    before = evidence_snapshot(log)
+    monkeypatch.setattr(re_log, "_REPO_LOG", log)
+    def unavailable(*args):
+        raise error
+    monkeypatch.setattr(finish_measure, "measure", unavailable)
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 2; }\n")
+    refusal = record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
+                     "--stash", str(body), "--score", "0.8")
+    assert "measurement unavailable" in refusal and str(error) in refusal
+    assert evidence_snapshot(log) == before
+
+
+@pytest.mark.parametrize("note", ["source syntax error", "compiles, but no defined symbol measures against this body"])
+def test_confirmed_source_or_symbol_failure_banks_measured_zero(log, tmp_path, monkeypatch, note):
+    monkeypatch.setattr(re_log, "_REPO_LOG", log)
+    monkeypatch.setattr(finish_measure, "measure", lambda *a: dict(
+        compiles=False, quality=0.0, note=note))
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 2; }\n")
+    assert record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
+                  "--stash", str(body), "--score", "0.99") is None
+    assert re_log.stash_for(RVA)[1] == 0.0
+    assert "measured=0.0" in log.read_text()
 
 
 def test_only_the_repository_log_is_measured(log):

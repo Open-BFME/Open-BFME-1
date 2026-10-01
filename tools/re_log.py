@@ -384,7 +384,7 @@ _REPO_LOG = RE_ATTEMPTS  # tests repoint RE_ATTEMPTS; only this log is measured
 
 def _measure_stash(rva, data):
     """The compiler's score for a stash body (bytes with its two header lines),
-    or None when it cannot be measured here.
+    or None for a test log. Unavailable repository probes refuse banking.
 
     Typed scores were estimates: on 2026-09-28 finish_measure found 119 of 355
     "0.9+" banks overstated by 0.2 or more (26-41% for every model), and the
@@ -394,17 +394,21 @@ def _measure_stash(rva, data):
     """
     if _REPO_LOG is None or RE_ATTEMPTS.resolve() != _REPO_LOG.resolve():
         return None
-    import finish_measure
     probe_path = _stash_path(rva).with_name(f".measure_{uuid.uuid4().hex}.cpp")
     try:
+        import finish_measure
         probe_path.write_bytes(data)
         result = finish_measure.measure(rva, probe_path)
-    except Exception:  # noqa: BLE001 -- an unmeasurable body still banks, labelled author-estimate
-        return None
+    except (Exception, SystemExit) as error:
+        raise SystemExit(
+            f"--stash measurement unavailable for 0x{rva:08x}: {error}. "
+            "No bank, attempt history or verdict was changed; retry when the probe works.") from error
     finally:
         probe_path.unlink(missing_ok=True)
-    if result.get("note") == "probe timed out":
-        return None
+    if result.get("unavailable") or result.get("quality") is None:
+        raise SystemExit(
+            f"--stash measurement unavailable for 0x{rva:08x}: {result.get('note', 'probe failed')}. "
+            "No bank, attempt history or verdict was changed; retry when the probe works.")
     return round(float(result.get("quality") or 0.0), 4) if result.get("compiles") else 0.0
 
 
@@ -440,7 +444,6 @@ def _bank(symbol, rva_text, source_text, score_text):
     target = _stash_path(rva)
     target.parent.mkdir(parents=True, exist_ok=True)
     history = RE_ATTEMPTS.parent / "attempt_history" / f"0x{rva:08x}"
-    history.mkdir(parents=True, exist_ok=True)
     # Lock files live in ignored build/, never among the tracked evidence.
     lockdir = RE_ATTEMPTS.parents[3] / "build" / "attempt_locks"
     lockdir.mkdir(parents=True, exist_ok=True)
@@ -448,13 +451,10 @@ def _bank(symbol, rva_text, source_text, score_text):
         lock(handle, exclusive=True)
         try:
             previous = stash_for(rva)
+            previous_score = previous[1] if previous else None
             previous_raw = target.read_bytes() if previous else None
             previous_normalised = (_normalise_stash_bytes(previous_raw)
                                    if previous_raw is not None else None)
-            if previous:
-                # Preserve the exact earlier bytes in immutable history before
-                # repairing a BOM that was left below the metadata headers.
-                archive_attempt(history, previous_raw, symbol, previous[1])
             incoming = _source_body(source.read_bytes())
             candidate = (f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
                          .encode("utf-8") + incoming)
@@ -470,6 +470,12 @@ def _bank(symbol, rva_text, source_text, score_text):
                     if kept is not None and kept != previous[1]:
                         previous_normalised = _with_score(previous_normalised, kept)
                         previous = (previous[0], kept)
+            # Finish both probes before any evidence write. An unavailable
+            # retained-body probe must not leave a half-banked candidate.
+            history.mkdir(parents=True, exist_ok=True)
+            if previous_raw is not None:
+                # Preserve the exact earlier bytes before BOM/score repairs.
+                archive_attempt(history, previous_raw, symbol, previous_score)
             archived = archive_attempt(history, candidate, symbol, score,
                                        "measured" if measured is not None else "author-estimate")
             # Preserve every body; the preferred pointer only moves on an

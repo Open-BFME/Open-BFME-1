@@ -7,14 +7,15 @@ the compiler's answer is authoritative. This module compiles a stash through
 tools/probe.py (about 2 s, dependency-cached), reads the measured distance
 from retail, and keeps it in build/finish_measured.json only while the stash,
 target, probe logic, toolchain and verified compiler dependencies remain the
-same. Failed probes receive a short retry window.
+same. Confirmed negative results receive a short retry window.
 
   python tools/finish_measure.py [--min-score 0.9] [--limit N]   # fill the cache
   python tools/finish_measure.py --report                          # author score vs measured
   python tools/finish_measure.py --one RVA STASH                   # resolve a manual probe
 
 quality: 1.0 for EXACT, else 1 - (differing bytes + 2 x size error) / retail
-size, floored at 0; 0 when the stash no longer compiles. `first` is the offset
+size, floored at 0; 0 for a confirmed source or missing-symbol failure.
+Unavailable probes carry no quality and are not cached. `first` is the offset
 of the first divergence: deep is nearly done, +0 is a different function.
 This is diagnostic ranking, never byte-match acceptance.
 """
@@ -67,6 +68,53 @@ def parse(text):
     distance = count + 2 * abs(ours - retail)
     return dict(compiles=True, ours=ours, retail=retail, diffs=count, first=first,
                 quality=round(max(0.0, 1.0 - distance / max(retail, 1)), 4))
+
+
+_CL_DIAGNOSTIC = re.compile(r"(?:fatal\s+)?error\s+(C\d{4}):\s*([^\n]*)", re.I)
+# Deliberately limited to source syntax, names, types and arguments. Unknown
+# diagnostics cannot prove a zero: cl also diagnoses temp/PDB I/O, exhausted
+# memory and compiler machinery with C numbers.
+_SOURCE_ERRORS = {
+    "C1004", "C1075", "C2001", "C2027", "C2039", "C2059", "C2061",
+    "C2062", "C2064", "C2065", "C2100", "C2143", "C2146", "C2238",
+    "C2248", "C2259", "C2440", "C2511", "C2512", "C2660", "C2661",
+    "C2662", "C2664", "C2678", "C3861",
+}
+_TOOL_FAILURE = re.compile(
+    r"Traceback \(most recent call last\)|\bwine(?:server|path)?\s*:|"
+    r"Operation not permitted|Permission denied|Access is denied|"
+    r"out of memory|memory exhausted|heap limit|insufficient memory|"
+    r"compiler intermediate file|program database|internal compiler error|"
+    r"Runtime Error!|Microsoft Visual C\+\+ Runtime Library|runtime error R\d{4}|"
+    r"Application could not be started|ShellExecuteEx failed|"
+    r"Unhandled (?:exception|page fault)|segmentation fault|"
+    r"(?:failed|unable) to load|error while loading shared libraries", re.I)
+
+
+def _failed_probe(result):
+    """Only positive source-error evidence supports a measured zero.
+
+    The probe can fail before cl runs, or after a successful compile while
+    reading retail/COFF or decoding it. Neither failure measures this body.
+    Inspect the complete stdout and stderr before shortening the diagnostic.
+    """
+    text = "\n".join((result.stdout or "", result.stderr or ""))
+    errors = _CL_DIAGNOSTIC.findall(text)
+    source_errors = bool(errors) and all(
+        code.upper() in _SOURCE_ERRORS
+        or (code.upper() == "C1083" and re.search(
+            r"Cannot open (?:include|source) file:.*No such file or directory", message, re.I))
+        for code, message in errors)
+    note = (text.strip() or f"probe exit {result.returncode}")[-300:]
+    if (result.returncode and re.search(r"^compile failed:", text, re.M) and source_errors
+            and not _TOOL_FAILURE.search(text)):
+        return dict(compiles=False, quality=0.0, note=note)
+    return dict(compiles=False, unavailable=True, note=note)
+
+
+def _missing_symbol(result):
+    return (result.returncode == 2 and "result   NOT IN OBJECT" in result.stdout
+            and not _TOOL_FAILURE.search("\n".join((result.stdout or "", result.stderr or ""))))
 
 
 NEAREST = re.compile(r"^\s{6,}(\S+)\s*$", re.M)
@@ -222,27 +270,28 @@ def measure(rva, path, timeout=180):
     try:
         result = probe(symbol)
         text = result.stdout
+        if result.returncode and not _missing_symbol(result):
+            return _failed_probe(result)
         best = parse(text)
         # the object is cached after the first compile, so each retry is cheap
-        for name in (object_symbols(path, best.get("retail") or ledger_size(rva)) or fallback_symbols(text, rva))                 if "NOT IN OBJECT" in text else []:
+        for name in (object_symbols(path, best.get("retail") or ledger_size(rva)) or fallback_symbols(text, rva))                 if _missing_symbol(result) else []:
             other_result = probe(name)
             other = dict(parse(other_result.stdout), symbol=name)
-            if other_result.returncode:
+            if other_result.returncode or not other["compiles"]:
+                if not _missing_symbol(other_result):
+                    return _failed_probe(other_result)
                 other["compiles"] = False
             # the body is the symbol closest to retail's size, then the best quality
             if other["compiles"] and (not best["compiles"] or
                                       (abs(other["ours"] - other["retail"]), -other["quality"]) <
                                       (abs(best["ours"] - best["retail"]), -best["quality"])):
                 best = other
-        if not best["compiles"] and "NOT IN OBJECT" in text:
+        if not best["compiles"] and _missing_symbol(result):
             best = dict(best, note="compiles, but no defined symbol measures against this body")
-        elif result.returncode and best.get("symbol") is None:
-            best = dict(compiles=False, quality=0.0,
-                        note=(result.stderr or result.stdout or f"probe exit {result.returncode}")[-300:])
         elif not best["compiles"]:
-            best = dict(best, note=(result.stderr or result.stdout or "probe produced no size")[-300:])
+            best = _failed_probe(result)
     except subprocess.TimeoutExpired:
-        return dict(compiles=False, quality=0.0, note="probe timed out")
+        return dict(compiles=False, unavailable=True, note="probe timed out")
     return best
 
 
@@ -296,6 +345,8 @@ def ensure(bodies, budget=8, cache=None):
         result = measure(rva, path)
         if hypothesis(rva, path) != before:
             continue  # changed while probing: never publish the old answer
+        if result.get("unavailable"):
+            continue  # infrastructure/unknown failure measures no quality
         receipt = experiment_store.validated_object_receipt(path) if result.get("compiles") else None
         if result.get("compiles") and receipt is None:
             continue  # a successful probe without a reusable object is not cache proof

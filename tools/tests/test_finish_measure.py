@@ -1,8 +1,10 @@
 """The finish lane ranks on the compiler's measurement, not the author's score."""
 from pathlib import Path
 import shlex
+import subprocess
 import sys
 import time
+from types import SimpleNamespace
 
 import pytest
 
@@ -42,6 +44,85 @@ def test_probe_output_becomes_a_measurement():
     assert finish_measure.parse(EXACT)["quality"] == 1.0
     assert finish_measure.parse(WRONG_SIZE)["quality"] < 0.05      # 760 diffs + 2 x 168 size error of 1137
     assert finish_measure.parse(BROKEN) == dict(compiles=False, quality=0.0)
+
+
+@pytest.mark.parametrize("diagnostic", [
+    "attempt.cpp(1) : error C2065: 'missing' : undeclared identifier",
+    "attempt.cpp(1) : fatal error C1083: Cannot open include file: 'missing.h': No such file or directory",
+])
+def test_confirmed_source_error_measures_zero(tmp_path, monkeypatch, diagnostic):
+    path = stash(tmp_path, "source_error.cpp", "int f;")
+    monkeypatch.setattr(finish_measure.subprocess, "run", lambda *a, **kw: SimpleNamespace(
+        returncode=1, stdout=diagnostic, stderr=f"compile failed: {path}"))
+    result = finish_measure.measure(0x10, path)
+    assert result["compiles"] is False and result["quality"] == 0.0
+    assert not result.get("unavailable")
+
+
+@pytest.mark.parametrize("stdout,stderr,code", [
+    ("", "wineserver: bind: Operation not permitted\nTraceback (most recent call last):\nwinepath failed", 1),
+    ("fatal error C1083: Cannot open compiler intermediate file: 'temp': Permission denied", "compile failed: attempt.cpp", 1),
+    ("fatal error C1083: Cannot open include file: 'header.h': Permission denied", "compile failed: attempt.cpp", 1),
+    ("fatal error C1033: cannot open program database", "compile failed: attempt.cpp", 1),
+    ("fatal error C1060: compiler is out of memory", "compile failed: attempt.cpp", 1),
+    ("error C1999: unrecognized diagnostic", "compile failed: attempt.cpp", 1),
+    ("error C2065: 'missing': undeclared identifier\nRuntime Error!\nMicrosoft Visual C++ Runtime Library\nruntime error R6002", "compile failed: attempt.cpp", 1),
+    ("error C2065: 'missing': undeclared identifier", "compile failed: attempt.cpp\nwineserver: bind: Operation not permitted", 1),
+    (EXACT, "ModuleNotFoundError: No module named capstone", 1),
+    ("result   NOT IN OBJECT\nwineserver: bind: Operation not permitted", "", 2),
+    ("", "", 1),
+    ("", "", 0),
+])
+def test_tool_or_unknown_failure_has_no_measured_quality(tmp_path, monkeypatch, stdout, stderr, code):
+    path = stash(tmp_path, "unavailable.cpp", "int f;")
+    monkeypatch.setattr(finish_measure.subprocess, "run", lambda *a, **kw: SimpleNamespace(
+        returncode=code, stdout=stdout, stderr=stderr))
+    result = finish_measure.measure(0x10, path)
+    assert result["compiles"] is False and result["unavailable"] is True
+    assert "quality" not in result
+
+
+def test_probe_timeout_has_no_measured_quality(tmp_path, monkeypatch):
+    path = stash(tmp_path, "timeout.cpp", "int f;")
+    def timeout(*args, **kwargs):
+        raise subprocess.TimeoutExpired(args[0], kwargs["timeout"])
+    monkeypatch.setattr(finish_measure.subprocess, "run", timeout)
+    result = finish_measure.measure(0x10, path)
+    assert result == dict(compiles=False, unavailable=True, note="probe timed out")
+
+
+def test_completed_missing_symbol_probe_measures_zero(tmp_path, monkeypatch):
+    path = stash(tmp_path, "missing_symbol.cpp", "int f;")
+    monkeypatch.setattr(finish_measure.subprocess, "run", lambda *a, **kw: SimpleNamespace(
+        returncode=2, stdout=NOT_IN_OBJECT, stderr=""))
+    monkeypatch.setattr(finish_measure, "object_symbols", lambda *a: [])
+    monkeypatch.setattr(finish_measure, "fallback_symbols", lambda *a: [])
+    monkeypatch.setattr(finish_measure, "ledger_size", lambda *a: 10)
+    result = finish_measure.measure(0x10, path)
+    assert result["compiles"] is False and result["quality"] == 0.0
+    assert not result.get("unavailable")
+
+
+def test_failure_during_symbol_probe_is_unavailable(tmp_path, monkeypatch):
+    path = stash(tmp_path, "fallback.cpp", "int f;")
+    replies = iter([
+        SimpleNamespace(returncode=2, stdout=NOT_IN_OBJECT, stderr=""),
+        SimpleNamespace(returncode=1, stdout="", stderr="wineserver: bind: Operation not permitted"),
+    ])
+    monkeypatch.setattr(finish_measure.subprocess, "run", lambda *a, **kw: next(replies))
+    monkeypatch.setattr(finish_measure, "object_symbols", lambda *a: ["?actual@@YAXXZ"])
+    monkeypatch.setattr(finish_measure, "ledger_size", lambda *a: 10)
+    result = finish_measure.measure(0x10, path)
+    assert result["unavailable"] is True and "quality" not in result
+
+
+def test_unavailable_probe_is_not_cached(tmp_path, monkeypatch, proof):
+    path = stash(tmp_path, "unavailable.cpp", "int f;")
+    monkeypatch.setattr(finish_measure, "CACHE", tmp_path / "cache.json")
+    monkeypatch.setattr(finish_measure, "measure", lambda *a: dict(
+        compiles=False, unavailable=True, note="probe timed out"))
+    assert finish_measure.ensure([(0x10, path)], budget=1) == {}
+    assert not finish_measure.CACHE.exists()
 
 
 def stash(tmp_path, name, body):
@@ -118,7 +199,10 @@ def test_one_prints_the_measured_symbol_not_the_stale_stash_header(tmp_path, mon
     assert "Diagnostic only" in output
     command = next(line.removeprefix("probe: ") for line in output.splitlines()
                    if line.startswith("probe: "))
-    assert shlex.split(command) == [Path(sys.executable).as_posix(), "tools/probe.py", str(path), actual, "0x00000010"]
+    arguments = shlex.split(command)
+    assert arguments[:2] == [Path(sys.executable).as_posix(), "tools/probe.py"]
+    assert (finish_measure.ROOT / arguments[2]).resolve() == path.resolve()
+    assert arguments[3:] == [actual, "0x00000010"]
 
 
 def test_one_rejects_a_stash_changed_during_measurement(tmp_path, monkeypatch, capsys):
@@ -145,7 +229,7 @@ def test_one_rejects_stale_compiler_dependencies_and_failed_probes(tmp_path, mon
     assert "no longer current" in output.err
     assert "probe:" not in output.out
     monkeypatch.setattr(finish_measure, "measure",
-                        lambda rva, source: dict(compiles=False, quality=0.0, note="compiler unavailable"))
+                        lambda rva, source: dict(compiles=False, unavailable=True, note="compiler unavailable"))
     assert finish_measure.main(["--one", "0x10", str(path)]) == 1
     output = capsys.readouterr()
     assert "compiler unavailable" in output.err
