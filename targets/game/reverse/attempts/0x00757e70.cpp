@@ -1,5 +1,5 @@
 // ??0W3DLaserDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.9 date=2026-09-14
+// partial score=0.9409 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME retail 0x00757E70: W3DLaserDraw::W3DLaserDraw.
@@ -27,7 +27,7 @@ public:
 		if (s != NULL)
 			s += 8;
 		else
-			s = (Char *)0x0107388b;
+			s = (Char *)"";
 		return s;
 	}
 
@@ -353,7 +353,7 @@ public:
 	static RTS3DScene *m_3DScene;
 };
 
-#define BFME_3D_SCENE (*(RTS3DScene **)0x012f8058)
+#define BFME_3D_SCENE W3DDisplay::m_3DScene
 
 class W3DLaserDraw : public DrawModule, public LaserDrawInterface
 {
@@ -396,19 +396,19 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 	for (Int i = 0; i < numTextures; i++)
 	{
 		Char *name = (textureNames->begin() + i)->str();
-		BFMEWaterTrackTextureHandle handle = BFMEGetWaterTrackTexture(name, 0, 0);
-		if (handle.m_texture)
+		BFMEWaterTrackTextureHandle local_handle = BFMEGetWaterTrackTexture(name, 0, 0);
+		if (local_handle.m_texture)
 		{
-			SurfaceClass::SurfaceDescription surfaceDesc;
-			handle.getSurfaceLevel().Get_Description(surfaceDesc);
-			m_textureAspectRatio = (Real)surfaceDesc.Width/(Real)surfaceDesc.Height;
+			SurfaceClass::SurfaceDescription local_surfaceDesc;
+			local_handle.getSurfaceLevel().Get_Description(local_surfaceDesc);
+			m_textureAspectRatio = (Real)local_surfaceDesc.Width/(Real)local_surfaceDesc.Height;
 		}
-		m_textureVector.push_back(handle);
+		m_textureVector.push_back(local_handle);
 	}
 
-	Real innerRed, innerGreen, innerBlue, innerAlpha, outerRed, outerGreen, outerBlue, outerAlpha;
-	GameGetColorComponentsReal( data->m_innerColor, &innerRed, &innerGreen, &innerBlue, &innerAlpha );
-	GameGetColorComponentsReal( data->m_outerColor, &outerRed, &outerGreen, &outerBlue, &outerAlpha );
+	Real innerRed, innerGreen, innerBlue, local_innerAlpha, outerRed, outerGreen, outerBlue, local_outerAlpha;
+	GameGetColorComponentsReal( data->m_innerColor, &innerRed, &innerGreen, &innerBlue, &local_innerAlpha );
+	GameGetColorComponentsReal( data->m_outerColor, &outerRed, &outerGreen, &outerBlue, &local_outerAlpha );
 
 	m_line3D = new SegmentedLineClass *[ data->m_segments * data->m_numBeams ];
 
@@ -423,20 +423,20 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 			if( data->m_numBeams == 1 )
 			{
 				width = data->m_innerBeamWidth;
-				alpha = innerAlpha;
-				red = innerRed * innerAlpha;
-				green = innerGreen * innerAlpha;
-				blue = innerBlue * innerAlpha;
+				alpha = local_innerAlpha;
+				red = innerRed * local_innerAlpha;
+				green = innerGreen * local_innerAlpha;
+				blue = innerBlue * local_innerAlpha;
 			}
 			else
 			{
 				Real scale = i / ( data->m_numBeams - 1.0f);
 
 				width		= data->m_innerBeamWidth	+ scale * (data->m_outerBeamWidth - data->m_innerBeamWidth);
-				alpha		= innerAlpha							+ scale * (outerAlpha - innerAlpha);
-				red			= innerRed								+ scale * (outerRed - innerRed) * innerAlpha;
-				green		= innerGreen							+ scale * (outerGreen - innerGreen) * innerAlpha;
-				blue		= innerBlue								+ scale * (outerBlue - innerBlue) * innerAlpha;
+				alpha		= local_innerAlpha							+ scale * (local_outerAlpha - local_innerAlpha);
+				red			= innerRed								+ scale * (outerRed - innerRed) * local_innerAlpha;
+				green		= innerGreen							+ scale * (outerGreen - innerGreen) * local_innerAlpha;
+				blue		= innerBlue								+ scale * (outerBlue - innerBlue) * local_innerAlpha;
 			}
 
 			m_line3D[ index ] = new SegmentedLineClass;
