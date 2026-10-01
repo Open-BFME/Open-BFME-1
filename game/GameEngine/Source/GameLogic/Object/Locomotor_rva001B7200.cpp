@@ -134,6 +134,7 @@ class Thing
 public:
 	const Coord3D *getPosition() const { return &m_cachedPos; }
 	void setPosition(const Coord3D *pos);
+	const Coord3D *getUnitDirectionVector2D() const;
 
 	char m_pad000[0x38];
 	Coord3D m_cachedPos;
@@ -241,4 +242,42 @@ Bool Rva001B7200Locomotor::rva001B7200(Object *object, Rva001B7200IdRecord *reco
 		return false;
 	cached->bfmeAdvanceCachedPoint(delta);
 	return false;
+}
+
+// Retail 0x0026F670: the AIUpdate.cpp receiver's object, path and goal
+// offsets are witnessed by the adjacent locomotor-goal methods. No authentic
+// method spelling is known, so this aggregate-return query keeps its address.
+class Rva0026F670Owner
+{
+public:
+	char m_prefix[8];
+	Object *m_object;
+	char m_gap00c[0x140 - 12];
+	Path *m_path;
+	char m_gap144[0x1d8 - 0x144];
+	Int m_goalType;
+	Coord3D m_goal;
+
+	Coord3D query() const;
+};
+
+Coord3D Rva0026F670Owner::query() const
+{
+	Object *object = m_object;
+	if (m_goalType == 2 || m_goalType == 4)
+		return m_goal;
+	if (m_goalType == 1 && m_path)
+	{
+		Rva001B7200PathPoint point;
+		m_path->computePointOnPath(object, 0, &point, false);
+		return point.m_coord04;
+	}
+	Coord3D result = *object->getUnitDirectionVector2D();
+	result.x *= 40.0f;
+	result.y *= 40.0f;
+	result.z *= 40.0f;
+	result.x += object->getPosition()->x;
+	result.y += object->getPosition()->y;
+	result.z += object->getPosition()->z;
+	return result;
 }
