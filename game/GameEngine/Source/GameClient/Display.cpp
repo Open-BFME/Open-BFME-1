@@ -73,7 +73,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *, void *);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
 
 class BfmeSubVM0
 {
@@ -160,8 +160,8 @@ void BfmeStrVM0::bfmeGoVM0(int state)
 	if (!SetThreadPriority(thread, 2))
 	{
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+		reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->Get_Stream(0, 0);
 		stream->Put_String("Could not set Movie Thread Priority")->Finish(1);
 	}
 

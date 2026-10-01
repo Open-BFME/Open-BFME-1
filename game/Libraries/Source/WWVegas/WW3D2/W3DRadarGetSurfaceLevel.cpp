@@ -121,7 +121,7 @@ public:
 	virtual W3DRadarIndexBufferDebugStream *slot6c( int first, int second );
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite( int kind );
 
 // retail VA 0x0111D770: the "DX8 error " literal the debug stream reports.
@@ -133,8 +133,8 @@ static __forceinline void W3DRadarDX8ErrorCode( int result )
 	if( result != 0 )
 	{
 		_bfme_debugRecordCallsite( 1 );
-		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c( 0, 0 )->slot38( (const void *)g_111d770 )
+		reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->slot60();
+		reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->slot6c( 0, 0 )->slot38( (const void *)g_111d770 )
 			->slot00( result )->slot4c( 1 );
 	}
 }

@@ -57,16 +57,16 @@ public:
 	virtual BfmeResult __stdcall UnlockRect();
 };
 
-extern BFMEDebugClass008FCF40 *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_Surface_ErrorCode008FCF40(unsigned result)
 {
 	if (result != 0) {
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
+		reinterpret_cast<BFMEDebugClass008FCF40 *>(g_Rva00F36E5C)->Begin_Report();
 		BFMEDebugStream008FCF40 *stream =
-			g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+			reinterpret_cast<BFMEDebugClass008FCF40 *>(g_Rva00F36E5C)->Get_Stream(0, 0);
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }

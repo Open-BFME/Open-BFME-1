@@ -480,7 +480,7 @@ public:
 };
 
 extern BfmeD3DDevice *g_BfmeD3DDevice;
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
 extern void W3DRadarResetUnlock(void);
@@ -502,8 +502,8 @@ static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 {
 	if (result != 0) {
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+		reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = reinterpret_cast<BFMEIndexBufferDebugClass *>(g_Rva00F36E5C)->Get_Stream(0, 0);
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }

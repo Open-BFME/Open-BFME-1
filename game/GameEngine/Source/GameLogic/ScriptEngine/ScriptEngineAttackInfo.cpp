@@ -187,7 +187,7 @@ public:
 	virtual BfmeDebugReport *slot6C(void *first, void *second);
 };
 
-extern BfmeDebugManager *TheGen001336E5C;
+extern void *g_Rva00F36E5C;
 bool _bfme_debugReportingEnabled(void);
 void _bfme_debugRecordCallsite(int kind);
 
@@ -245,8 +245,8 @@ const AttackPriorityInfo *ScriptEngine::getAttackInfo(const AsciiString &name)
 	if (_bfme_debugReportingEnabled())
 	{
 		_bfme_debugRecordCallsite(1);
-		TheGen001336E5C->slot60();
-		BfmeDebugReport *report = TheGen001336E5C->slot6C(0, 0);
+		reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot60();
+		BfmeDebugReport *report = reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot6C(0, 0);
 		report = report->slot38("Attempting to use an undefined attack priority - '");
 		report->slot38(name.str());
 		report = report->slot38("'\n");
