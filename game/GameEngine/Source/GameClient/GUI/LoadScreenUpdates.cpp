@@ -147,7 +147,7 @@ extern GameLogic *TheGameLogic;
 extern Mouse *TheMouse;
 extern GameEngine *TheGameEngine;
 extern GameWindowManager *TheWindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern Display *TheDisplay;
 extern void setFPMode();
 
@@ -222,7 +222,7 @@ void LoadScreen::update( int )
 		TheMouse->setCursorTooltip( UnicodeString::TheEmptyString, -1, 0, 1.0f );
 		TheGameEngine->serviceWindowsOS();
 		TheWindowManager->update();
-		g_theWindowManager->update();
+		g_rva012F19E8WindowManager->update();
 		TheDisplay->update();
 		TheDisplay->draw();
 	}
@@ -276,7 +276,7 @@ void MapTransferLoadScreen::update( int )
 	TheMouse->setCursorTooltip( UnicodeString::TheEmptyString, -1, 0, 1.0f );
 	TheGameEngine->serviceWindowsOS();
 	TheWindowManager->update();
-	g_theWindowManager->update();
+	g_rva012F19E8WindowManager->update();
 	TheDisplay->update();
 	TheDisplay->draw();
 }

@@ -19,7 +19,14 @@ struct Rva00579160Manager {
     virtual void slot18(); virtual void slot1c(); virtual void slot20();
     virtual void slot24(); virtual const float *scale();
 };
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail global 0x012F19E8, canonical name and pointee type;
+// Rva00579160Manager is this TU's view of the pointee scaled() is read from.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+static inline Rva00579160Manager *Rva00579160TheManager()
+{
+    return (Rva00579160Manager *)g_rva012F19E8WindowManager;
+}
 
 class GameFont;
 struct FontLibraryBFMERetail {
@@ -38,7 +45,7 @@ struct Rva00588FA0Widget {
 
 static void Rva00588FA0(Rva00588FA0Widget *widget, BfmeEntryWU *entry)
 {
-    const float *range = Rva00579160TheManager->scale();
+    const float *range = Rva00579160TheManager()->scale();
     float factor = range[0] < range[1] ? range[0] : range[1];
     GameFont *font = TheFontLibrary->getFont(&entry->text,
         entry->size * factor, entry->bold);

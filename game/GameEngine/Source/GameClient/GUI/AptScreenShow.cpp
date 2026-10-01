@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// Retail 0x00464ED0 / 0x00464FE0. If g_theWindowManager is live, push the
+// Retail 0x00464ED0 / 0x00464FE0. If g_rva012F19E8WindowManager is live, push the
 // name onto the vector at this+4 (plain) or this+0x10 (with arg) and forward
 // the by-value functor holder to the WindowManager helper.
 
@@ -64,7 +64,7 @@ public:
 		Rva0050F920FunctorHolder callback );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The vector<AsciiString> COMDAT this TU reaches is the _M_insert_overflow copy
 // at 0x00063700 -- the one whose element copy calls StringBase<char>'s
@@ -95,19 +95,19 @@ private:
 void _bfme_AptGameWindow::_bfme_showAptScreen( const AsciiString &name,
 	Rva0050F8B0FunctorHolder callback )
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		m_names.push_back( *(const Open2Elem063700 *)&name );
-		g_theWindowManager->bindShown( name, callback );
+		g_rva012F19E8WindowManager->bindShown( name, callback );
 	}
 }
 
 void _bfme_AptGameWindow::_bfme_showAptScreenWithArg( const AsciiString &name,
 	void *argument, Rva0050F920FunctorHolder callback )
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		m_namesWithArg.push_back( *(const Open2Elem063700 *)&name );
-		g_theWindowManager->bindShownWithArg( name, argument, callback );
+		g_rva012F19E8WindowManager->bindShownWithArg( name, argument, callback );
 	}
 }

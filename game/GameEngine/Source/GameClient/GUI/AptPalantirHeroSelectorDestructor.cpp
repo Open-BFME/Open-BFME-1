@@ -34,7 +34,7 @@ public:
 	void removeAptObject( const AsciiString &name );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void j_00025464();
 
 typedef void (WindowManager::*RemoveNameMember)( const AsciiString * );
@@ -100,23 +100,23 @@ AptPalantirHeroSelector::~AptPalantirHeroSelector()
 	if( m_window != 0 )
 		TheWindowManager->winDestroy( m_window );
 
-	if( g_theWindowManager != 0 )
+	if( g_rva012F19E8WindowManager != 0 )
 	{
 		{
 			AsciiString name( "Palantir/HeroSelectUI/SelectAllHeroesBttn/" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 
 		for( int index = 0; index < 17; ++index )
 		{
 			AsciiString name;
 			name.format( "Palantir/HeroSelectUI/Hero%d/", index + 1 );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 
 		{
 			AsciiString name( "AptPalantir::OnBttnSelectAllHeroes" );
-			removeName( g_theWindowManager, j_00025464, &name );
+			removeName( g_rva012F19E8WindowManager, j_00025464, &name );
 		}
 	}
 }

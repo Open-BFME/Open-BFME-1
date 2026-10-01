@@ -99,7 +99,7 @@ public:
 
 #pragma comment(linker, "/alternatename:?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z=?j_00023083@@YAXXZ")
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_guiFxWindowHandle;
 AsciiString g_guiFxFile( "GuiFX.apt" );
 extern unsigned char g_guiFxLoaded;
@@ -109,24 +109,24 @@ extern void j_0003ef8b();
 
 void registerGuiFXCallbacks00510FA0()
 {
-	if( g_theWindowManager == 0 )
+	if( g_rva012F19E8WindowManager == 0 )
 		return;
 
 	g_guiFxLoaded = 0;
-	g_guiFxWindowHandle = g_theWindowManager->loadAptWindow(
+	g_guiFxWindowHandle = g_rva012F19E8WindowManager->loadAptWindow(
 		"Apt\\", g_guiFxFile, 1, 0, 11 );
 
-	if( g_theWindowManager != 0 )
+	if( g_rva012F19E8WindowManager != 0 )
 	{
 		BFMERetailAsciiString name( "AptGuiFX::OnInitialized" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			BannerAptCallbackHolder(
 				j_000279df ) );
 	}
 
 	{
 		AsciiString name( "ToolTipText" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			AptMapPreviewFunctorHolder(
 				j_0003ef8b ) );
 	}

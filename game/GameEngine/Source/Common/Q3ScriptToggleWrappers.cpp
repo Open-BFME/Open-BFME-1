@@ -46,13 +46,21 @@ struct Q3ScriptDispatcher
 		const char *arg0, void *a1, void *a2, void *a3, void *a4 );
 };
 
-extern Q3ScriptDispatcher *g_q3ScriptDispatcher;
+// Retail global 0x012F19E8, canonical name and pointee type; the TU-local
+// view below is what these bodies call through.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern Q3ScriptMovie *g_q3ScriptMovie;
+
+static inline Q3ScriptDispatcher *q3Dispatcher()
+{
+	return (Q3ScriptDispatcher *)g_rva012F19E8WindowManager;
+}
 
 #define BFME_SCRIPT_TOGGLE( NAME, ENTRY, WHEN_TRUE, WHEN_FALSE )              \
 	void NAME( bool on )                                                      \
 	{                                                                         \
-		g_q3ScriptDispatcher->invoke( g_q3ScriptMovie, ENTRY, 1,              \
+		q3Dispatcher()->invoke( g_q3ScriptMovie, ENTRY, 1,                     \
 			on ? WHEN_TRUE : WHEN_FALSE, 0, 0, 0, 0 );                        \
 	}
 

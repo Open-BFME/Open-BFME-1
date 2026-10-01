@@ -126,7 +126,15 @@ class Gen000290D2
 public:
 	void handle();
 };
-extern Gen000290D2 *R2Ptr012F19E8;
+// Retail global 0x012F19E8, canonical name and pointee type; Gen000290D2 is
+// this TU's view of the pointee these forwarders call through.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static inline Gen000290D2 *R2Ptr012F19E8()
+{
+	return (Gen000290D2 *)g_rva012F19E8WindowManager;
+}
 
 #define R2_GUARDED_GLOBAL_FORWARD( NAME, GUARD )                          \
 	extern void *GUARD;                                                   \
@@ -134,7 +142,7 @@ extern Gen000290D2 *R2Ptr012F19E8;
 	{                                                                     \
 		if ( GUARD )                                                      \
 		{                                                                 \
-			R2Ptr012F19E8->handle();                                       \
+			R2Ptr012F19E8()->handle();                                     \
 		}                                                                 \
 	}
 

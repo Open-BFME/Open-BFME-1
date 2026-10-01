@@ -105,7 +105,7 @@ private:
 };
 
 class WindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 typedef _STL::hash_map<int, Gen_t_0046d1e0_p12cd,
 	_STL::hash<int>, _STL::equal_to<int>,
@@ -189,12 +189,12 @@ typedef void (__cdecl *ReleaseAll)(int);
 
 WindowManager::~WindowManager()
 {
-	if (g_theWindowManager != 0)
+	if (g_rva012F19E8WindowManager != 0)
 	{
 		if ((m_aptWindows[0].m_flags & 2) != 0)
 			hideAptWindowInternal(0);
 		(reinterpret_cast<ReleaseAll>(d_00894a90))(1);
 		j_0002b314();
-		g_theWindowManager = 0;
+		g_rva012F19E8WindowManager = 0;
 	}
 }

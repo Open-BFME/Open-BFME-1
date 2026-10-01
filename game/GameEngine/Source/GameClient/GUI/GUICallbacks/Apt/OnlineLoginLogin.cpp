@@ -58,7 +58,7 @@ private:
 	int m_locale; // retail [this+0xA4]
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeAptScreenOnlineLogin *TheBfmeOnlineLogin;
 
 void BfmeAptScreenOnlineLogin::_bfme_login( const char * )
@@ -67,22 +67,22 @@ void BfmeAptScreenOnlineLogin::_bfme_login( const char * )
 	{
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonDeleteNickname", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonCreate", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonLogin", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonServiceTerms", 0, 0, 0, 0 );
 		}
 
@@ -96,7 +96,7 @@ void BfmeAptScreenOnlineLogin::_bfme_login( const char * )
 
 		m_closeLocaleArgument = false;
 		void *window = m_context->m_window;
-		g_theWindowManager->add( window,
+		g_rva012F19E8WindowManager->add( window,
 			"CallChild", 1, (void *)"DoOpenLocale", 0, 0, 0, 0 );
 		reinterpret_cast<Rva00548D30WindowGroup *>( this )->winEnable( false );
 	}
