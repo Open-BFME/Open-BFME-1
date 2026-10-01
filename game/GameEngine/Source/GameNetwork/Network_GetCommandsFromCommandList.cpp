@@ -98,8 +98,12 @@ public:
 	unsigned char m_sawCRCMismatch;			// +0x6C
 };
 
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; GameLogicNetView is this
+// TU's local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
+
 extern CommandList *TheCommandList;
-extern GameLogicNetView *TheGameLogic;
 
 class Network
 {
@@ -194,7 +198,7 @@ void Network::GetCommandsFromCommandList(void)
 			}
 			else if (type == BFME_MSG_CLEAR_GAME_DATA)
 			{
-				if (TheGameLogic->m_sawCRCMismatch == 0 && m_localStatus == NETLOCALSTATUS_INGAME)
+				if (((GameLogicNetView *)TheGameLogic)->m_sawCRCMismatch == 0 && m_localStatus == NETLOCALSTATUS_INGAME)
 				{
 					m_conMgr->sendPlayerLeaveCommands();
 					TheCommandList->removeMessage(msg);

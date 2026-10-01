@@ -88,7 +88,11 @@ public:
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_3c;
 };
-extern GameLogicFrameSlice *TheGameLogic;
+
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; GameLogicFrameSlice is this
+// TU's local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 
 class BfmeThingFactory
 {
@@ -169,7 +173,7 @@ UpdateSleepTime SpawnUnitBehavior::update()
 	Player *player = object->getControllingPlayer();
 	if (player == 0)
 		return UPDATE_SLEEP_5;
-	if (TheGameLogic->m_3c < 5)
+	if (((GameLogicFrameSlice *)TheGameLogic)->m_3c < 5)
 		return UPDATE_SLEEP_5;
 	if (*((const unsigned char *)player + 0x681) == 0)
 		return UPDATE_SLEEP_5;

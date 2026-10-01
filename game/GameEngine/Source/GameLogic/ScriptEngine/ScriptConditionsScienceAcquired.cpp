@@ -39,7 +39,10 @@ public:
 	int bfmeFind1091(int a);
 };
 
-extern BfmeB1091 *g_bfmeB1091;
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; BfmeB1091 is this TU's
+// local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 extern BfmeM1091 *g_bfmeM1091;
 extern BfmeC1091 *g_bfmeC1091;
 extern BfmeD1091 *g_bfmeD1091;
@@ -77,7 +80,7 @@ bool ScriptConditions::evaluateScienceAcquired(
 
 char __stdcall bfmeGo1091B(int a)
 {
-	unsigned int n = g_bfmeB1091->m_bfme3c;
+	unsigned int n = ((BfmeB1091 *)TheGameLogic)->m_bfme3c;
 
 	if (n < (unsigned int)(int)(g_bfmeM1091 ? g_bfmeM1091->m_bfme11f8 * 5.0f : 25.0f))
 		return 0;
@@ -93,7 +96,7 @@ char __stdcall bfmeGo1091B(int a)
 
 char __stdcall bfmeGo1091C(int a)
 {
-	unsigned int n = g_bfmeB1091->m_bfme3c;
+	unsigned int n = ((BfmeB1091 *)TheGameLogic)->m_bfme3c;
 
 	if (n < (unsigned int)(int)(g_bfmeM1091 ? g_bfmeM1091->m_bfme11f8 * 5.0f : 25.0f))
 		return 0;

@@ -141,7 +141,10 @@ struct Rva00367E30Logic
 public:
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; Rva00367E30Logic is this
+// TU's local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 
 class DockUpdate
 {
@@ -271,7 +274,7 @@ UpdateSleepTime DockUpdate::update()
 		{
 			FindObjectByIDCall findObjectByID;
 			findObjectByID.freeFunction = j_0001f253;
-			Object *docker = (TheBfmeGameLogic->*findObjectByID.memberFunction)(
+			Object *docker = (((Rva00367E30Logic *)TheGameLogic)->*findObjectByID.memberFunction)(
 				positionIndex);
 			IsKindOfCall isKindOf;
 			isKindOf.freeFunction = j_0003251f;

@@ -34,7 +34,10 @@ private:
 	ObjectPtrHash m_objHash;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;	// 0x012F0898
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; the local view type above
+// supplies findObjectByID, so cast at the use.
+extern GameLogic *TheGameLogic;
 
 class Overridable
 {
@@ -89,7 +92,7 @@ extern AI *TheAI;	// 0x012EF214
 
 static __forceinline void bfmeScanOne(ObjectID id)
 {
-	Object *obj = TheBfmeGameLogic->findObjectByID(id);
+	Object *obj = ((Rva00367E30Logic *)TheGameLogic)->findObjectByID(id);
 	if (obj == 0)
 		return;
 

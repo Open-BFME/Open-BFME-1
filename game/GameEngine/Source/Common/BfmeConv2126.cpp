@@ -60,7 +60,10 @@ struct Rva00367E30Logic
 	void bfmeResetAAY();
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; Rva00367E30Logic is this
+// TU's local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 
 class Gen_00609320
 {
@@ -124,8 +127,8 @@ void BfmeHostAAY::bfmeShutdownAAY()
 	bfmeStep5AAY();
 	bfmeStep6AAY();
 
-	if (TheBfmeGameLogic != 0)
-		TheBfmeGameLogic->bfmeResetAAY();
+	if (TheGameLogic != 0)
+		((Rva00367E30Logic *)TheGameLogic)->bfmeResetAAY();
 
 	if (g_bfmeStateDF != 0)
 		g_bfmeStateDF->bfmeFinishAAY();

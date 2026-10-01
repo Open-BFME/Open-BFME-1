@@ -46,7 +46,12 @@ public:
 	BfmeK1114 *bfmeFind1114(int a);
 };
 
-extern BfmeB1114 *g_bfmeB1114;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; this TU's local view type
+// is BfmeB1114, so cast at the use.
+static __forceinline BfmeB1114 *bfmeGlobalLogic1114()
+{
+	return (BfmeB1114 *)TheGameLogic;
+}
 
 BfmeNode1114 *__cdecl bfmeNext1114(BfmeNode1114 *p);
 
@@ -75,7 +80,7 @@ char BfmeW1114::bfmeGo1114A(int a)
 	h = m_bfme30;
 	p = h->m_bfme08;
 	while (p != h) {
-		BfmeK1114 *k = g_bfmeB1114->bfmeFind1114(p->m_bfme10);
+		BfmeK1114 *k = bfmeGlobalLogic1114()->bfmeFind1114(p->m_bfme10);
 
 		if (k && k->bfmeChk1114(a))
 			return 1;

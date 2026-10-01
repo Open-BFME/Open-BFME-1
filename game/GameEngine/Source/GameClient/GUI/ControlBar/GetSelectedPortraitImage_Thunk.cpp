@@ -46,7 +46,10 @@ public:
 	const Image *getSelectedPortraitImage() const;
 };
 
-extern GameLogicPortraitShim *TheGameLogic;
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; GameLogicPortraitShim is
+// this TU's local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 extern MappedImageCollectionPortraitShim *TheMappedImageCollection;
 // Retail loads 0x012ED62C for the playback checks, not TheGameLogic (0x012F0898).
 // GameEngine::init names 0x012ED62C TheRecorder; this method's `this` is GameLogic
@@ -91,7 +94,7 @@ const Image * __cdecl _bfme_getSelectedPortraitImage(
 	if (portraitTemplate == 0 || objectTemplate == 0)
 		return 0;
 
-	if (TheGameLogic->isInMultiplayerOrSkirmishGame())
+	if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 	{
 		static AsciiString gandalfTemplate("GondorGandalf");
 		if (portraitTemplate->m_name.compare(gandalfTemplate) == 0 &&

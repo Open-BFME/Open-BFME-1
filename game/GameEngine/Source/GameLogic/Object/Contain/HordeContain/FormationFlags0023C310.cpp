@@ -44,7 +44,10 @@ struct Logic0023C310 {
   return it->second;
  }
 };
-extern Logic0023C310 *g0023C310Va012F0898;
+class GameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; Logic0023C310 is this TU's
+// local view of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 template<int N> class Slots0023C310 : public Slots0023C310<N-1> { public: virtual void unused(char (*)[N])=0; };
 template<> class Slots0023C310<0> {};
 class Primary0023C310 : public Slots0023C310<29> { public: virtual void slot074(Object*)=0; };
@@ -69,7 +72,7 @@ void FormationFlags0023C310::run() {
   }
  }
  for(_STL::set<unsigned>::iterator it=at030.begin();it!=at030.end();++it) {
-  Object *obj=g0023C310Va012F0898->find(*it);
+  Object *obj=((Logic0023C310*)TheGameLogic)->find(*it);
   if(obj && clear0023C310(obj)) {
    if(!blocked0023C310(obj->m_ai)) reset0023C310(obj,60);
    primary()->slot074(obj);

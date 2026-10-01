@@ -153,7 +153,9 @@ public:
 		UnsignedInt color) = 0;
 };
 
-extern GameLogicPortraitShim *TheBfmeGameLogic;
+// 0x012F0898 is retail's `GameLogic *TheGameLogic`; the view types below are
+// this TU's local reads of the same global, so cast at the use.
+extern GameLogic *TheGameLogic;
 class PlayerList;
 extern PlayerList *Rva002EE330ThePlayers;
 extern GlobalData *TheWritableGlobalData;
@@ -161,7 +163,7 @@ extern InGameUI *TheInGameUI;
 
 void AutoDepositUpdate::awardInitialCaptureBonus(Player *player)
 {
-	m_depositOnFrame = ((GameLogic *)TheBfmeGameLogic)->getFrame() + getAutoDepositUpdateModuleData()->m_depositFrame;
+	m_depositOnFrame = TheGameLogic->getFrame() + getAutoDepositUpdateModuleData()->m_depositFrame;
 	Int money = 0;
 	Player *recipient;
 	if (!player)
@@ -173,7 +175,7 @@ void AutoDepositUpdate::awardInitialCaptureBonus(Player *player)
 		return;
 
 	money = getAutoDepositUpdateModuleData()->m_initialCaptureBonus;
-	if (((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab())
+	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
 		const Int playerIndex = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
 		const float factor = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerIndex);
