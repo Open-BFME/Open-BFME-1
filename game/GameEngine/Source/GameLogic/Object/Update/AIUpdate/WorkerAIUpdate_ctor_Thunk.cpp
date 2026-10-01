@@ -126,8 +126,11 @@ private:
 	unsigned char m_data[0x6c];
 };
 
-#pragma comment(linker, "/alternatename:??0BfmeWorkerDockPoint@@QAE@XZ=?j_0000fd6c@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeWorkerDockPoint@@QAE@XZ=?j_000211ca@@YAXXZ")
+// The vector constructor iterator is passed the ILT stubs retail pushes:
+// ctor 0x004211CA -> 0x002C7A60 (mov eax, ecx; ret), dtor 0x0040FD6C ->
+// 0x002C7A70 (ret), as dir32_addresses.csv records them.
+#pragma comment(linker, "/alternatename:??0BfmeWorkerDockPoint@@QAE@XZ=?j_000211ca@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1BfmeWorkerDockPoint@@QAE@XZ=?j_0000fd6c@@YAXXZ")
 
 class WorkerAIUpdate
 	: public AIUpdateInterface,
