@@ -53,32 +53,41 @@ public:
 	virtual void bfmeVbc1146(int a, int b) = 0;
 };
 
-extern "C" BfmeO1146 *volatile g_bfmeO1146;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp).  The slots used
+// here are read through the TU-local BfmeO1146 view.  Retail's global is not
+// volatile, so the canonical spelling must not be either.
+class View;
+extern View *TheTacticalView;
+
+static inline BfmeO1146 *local1146(void)
+{
+	return (BfmeO1146 *)TheTacticalView;
+}
 
 void __stdcall bfmeGo1146(char a, int b)
 {
-	BfmeO1146 *o = g_bfmeO1146;
+	BfmeO1146 *o = local1146();
 
 	if (a) {
 		o->bfmeVb01146(1);
-		g_bfmeO1146->bfmeVb81146(1);
-		g_bfmeO1146->bfmeVbc1146(b, 1);
+		local1146()->bfmeVb81146(1);
+		local1146()->bfmeVbc1146(b, 1);
 	} else if (o->bfmeVac1146() == 1) {
-		g_bfmeO1146->bfmeVbc1146(b, -1);
+		local1146()->bfmeVbc1146(b, -1);
 	}
 }
 
 void __stdcall bfmeGo1146B(char a, int b)
 {
-	BfmeO1146 *o = g_bfmeO1146;
+	BfmeO1146 *o = local1146();
 
 	if (a) {
 		o->bfmeVb01146(1);
-		g_bfmeO1146->bfmeVb81146(6);
-		g_bfmeO1146->bfmeVbc1146(b, 1);
+		local1146()->bfmeVb81146(6);
+		local1146()->bfmeVbc1146(b, 1);
 	} else {
 		o->bfmeVb01146(1);
-		g_bfmeO1146->bfmeVb81146(6);
-		g_bfmeO1146->bfmeVbc1146(b, -1);
+		local1146()->bfmeVb81146(6);
+		local1146()->bfmeVbc1146(b, -1);
 	}
 }

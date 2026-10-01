@@ -139,7 +139,10 @@ public:
 	virtual void update();
 };
 
-extern TacticalView *TheTacticalView;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slot used
+// here is read through the TU-local TacticalView view.
+class View;
+extern View *TheTacticalView;
 extern Display *TheDisplay;
 
 class TerrainTracksRenderObjClassSystem;
@@ -188,8 +191,8 @@ void BaseHeightMapRenderObjClass::ReAcquireResources(void)
 		complete->v138(1);
 	if (TheTacticalView != 0)
 	{
-		TheTacticalView->forceRedraw();
-		TheTacticalView->forceRedraw();
+		((TacticalView *)TheTacticalView)->forceRedraw();
+		((TacticalView *)TheTacticalView)->forceRedraw();
 	}
 	j_00043acc();
 	if (TheDisplay != 0)

@@ -85,7 +85,10 @@ public:
 
 extern Display *TheDisplay;
 extern Glo012F7048Shim *g_bfmeStateDF;
-extern TacticalViewFadeShim *TheTacticalViewFadeShim;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slots used
+// here are read through the TU-local TacticalViewFadeShim view.
+class View;
+extern View *TheTacticalView;
 
 class Rva006956D0Owner
 {
@@ -114,11 +117,11 @@ bool Rva006956D0Owner::getScreenCenterWorld(Coord3D *out)
 		}
 		break;
 	case 0:
-		if (TheTacticalViewFadeShim)
+		if (TheTacticalView)
 		{
-			center.x = TheTacticalViewFadeShim->getWidth() / 2;
-			center.y = TheTacticalViewFadeShim->getHeight() / 2;
-			return TheTacticalViewFadeShim->screenToTerrain(&center, out, false);
+			center.x = ((TacticalViewFadeShim *)TheTacticalView)->getWidth() / 2;
+			center.y = ((TacticalViewFadeShim *)TheTacticalView)->getHeight() / 2;
+			return ((TacticalViewFadeShim *)TheTacticalView)->screenToTerrain(&center, out, false);
 		}
 		break;
 	}

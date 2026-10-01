@@ -72,7 +72,10 @@ public:
     virtual bool setViewFilter(int filter);
 };
 
-extern TacticalViewFadeShim *TheTacticalViewFadeShim;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slots used
+// here are read through the TU-local TacticalViewFadeShim view.
+class View;
+extern View *TheTacticalView;
 
 bool ScreenCrossFadeFilter::updateFadeLevel()
 {
@@ -101,8 +104,8 @@ bool ScreenCrossFadeFilterUpdateFadeLevelShim::update()
             ++m_curFadeFrame;
         } else {
             m_curFadeValue = 0.0f;
-            TheTacticalViewFadeShim->setViewFilterMode(0);
-            TheTacticalViewFadeShim->setViewFilter(0);
+            ((TacticalViewFadeShim *)TheTacticalView)->setViewFilterMode(0);
+            ((TacticalViewFadeShim *)TheTacticalView)->setViewFilter(0);
             m_curFadeFrame = 0;
             m_fadeDirection = 0;
             return false;

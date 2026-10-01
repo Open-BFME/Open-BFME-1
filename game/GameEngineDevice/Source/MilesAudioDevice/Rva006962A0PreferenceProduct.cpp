@@ -163,7 +163,10 @@ public:
 	virtual bool testPoint( void *param, Point2D *out ) = 0;
 };
 
-extern GloTacticalView00696040 *TheTacticalViewFadeShim;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slot used
+// here is read through the TU-local GloTacticalView00696040 view.
+class View;
+extern View *TheTacticalView;
 extern Glo012F7048Shim *g_bfmeStateDF;
 
 class Rva00696040Checker
@@ -182,8 +185,8 @@ bool Rva00696040Checker::check( void *param )
 	switch ( m_mode )
 	{
 	case 0:
-		if ( TheTacticalViewFadeShim )
-			return !TheTacticalViewFadeShim->testPoint( param, &pt );
+		if ( TheTacticalView )
+			return !((GloTacticalView00696040 *)TheTacticalView)->testPoint( param, &pt );
 		return false;
 	case 1:
 		if ( g_bfmeStateDF )

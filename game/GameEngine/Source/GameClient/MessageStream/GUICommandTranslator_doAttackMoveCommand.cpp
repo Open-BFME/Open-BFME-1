@@ -113,8 +113,12 @@ public:
 };
 
 extern InGameUI *TheInGameUI;
-extern TacticalViewShim *TheTacticalView;
 extern BfmeMessageStream *TheMessageStream;
+
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slot used
+// here is read through the TU-local TacticalViewShim view.
+class View;
+extern View *TheTacticalView;
 
 class PickAndPlayInfo
 {
@@ -148,7 +152,7 @@ static CommandStatus doAttackMoveCommand(const CommandButton *command, const ICo
 		return COMMAND_COMPLETE;
 
 	Coord3D world;
-	TheTacticalView->screenToTerrain(mouse, &world, false);
+	((TacticalViewShim *)TheTacticalView)->screenToTerrain(mouse, &world, false);
 
 	GameMessage *msg = TheMessageStream->appendMessage((GameMessage::Type)0x42F);
 	msg->appendLocationArgument(world);

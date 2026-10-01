@@ -181,13 +181,16 @@ public:
 	virtual void v105();
 	virtual void vfn106(BfmeCoord12 *pos, void *param);
 };
-extern BfmeMgr160 *g_mgr12F1600;
+// 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slots used
+// here are read through the TU-local BfmeMgr160 view.
+class View;
+extern View *TheTacticalView;
 
 void __stdcall bfmeUpdatePosD70(void *param)
 {
 	BfmeCoord12 pos;
-	g_mgr12F1600->vfn69(&pos);
-	g_mgr12F1600->vfn106(&pos, param);
+	((BfmeMgr160 *)TheTacticalView)->vfn69(&pos);
+	((BfmeMgr160 *)TheTacticalView)->vfn106(&pos, param);
 }
 
 struct BfmeInfoE10
