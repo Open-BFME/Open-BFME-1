@@ -124,7 +124,14 @@ public:
 	virtual int aptSlot2(unsigned int, unsigned int, unsigned int);
 	virtual int aptSlot3(unsigned int);
 	virtual int aptSlot4(unsigned int, unsigned int);
-	virtual int aptSlot5();
+	// Retail primary vtable 0x01108F48 entry +0x14 (slot 5) holds the ILT
+	// thunk 0x00009219, which routes to the body at 0x0055D680 that
+	// OnlineShellShutdown.cpp already defines under its real name. C++
+	// overrides a virtual by NAME as well as signature, so this base slot
+	// carries the same name: the derived declaration then occupies entry
+	// +0x14 instead of being appended as a fifteenth entry. The base's own
+	// vftable is not emitted in this TU, so no symbol is claimed for it.
+	virtual int shutdown();
 	virtual int aptSlot6();
 	virtual void *aptSlot7();
 	virtual int aptSlot8();
@@ -225,7 +232,14 @@ public:
 	virtual int aptSlot2(unsigned int, unsigned int, unsigned int);
 	virtual int aptSlot3(unsigned int);
 	virtual int aptSlot4(unsigned int, unsigned int);
-	virtual int aptSlot5();
+	// Retail primary vtable 0x01108F48 entry +0x14 (slot 5) holds the ILT
+	// thunk 0x00009219, which routes to the body at 0x0055D680 that
+	// OnlineShellShutdown.cpp already defines under its real name. Spelling
+	// this slot with that name and with shutdown's public-virtual int(void)
+	// signature lets the emitted vftable resolve instead of dangling, and
+	// overriding the base's same-named slot keeps the table at fourteen
+	// entries.
+	virtual int shutdown();
 	virtual int aptSlot6();
 	virtual void *aptSlot7();
 	virtual int aptSlot8();
