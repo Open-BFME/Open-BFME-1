@@ -2,7 +2,7 @@
 // 0x00889300 (the int3 run at +0x1E splits it): 0x00889300 passes three
 // arguments to vftable slot 0x80 and 0x00889320 passes two to slot 0x84.
 // They sit between Debug::RepeatChar and the Debug constructor, and load the
-// same TheBfmeAwakenDebug pointer (0x01336E5C) that Debug::PreStaticInit sets.
+// same opaque singleton pointer cell (0x01336E5C) that Debug::PreStaticInit sets.
 // The arguments are pushed again rather than tail-jumped, as a cdecl caller
 // forwarding to a thiscall slot must. No direct callers, so the names keep the
 // address; the slot numbers are all the bytes say about the callees.
@@ -46,16 +46,17 @@ public:
 	virtual void slot84(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Existing owned pointer cell; the original singleton class type is unproven.
+extern void *g_Rva00F36E5C;
 
 // ?Rva00889300DebugForward3@@YAXHHH@Z
 void Rva00889300DebugForward3(int first, int second, int third)
 {
-	TheBfmeAwakenDebug->slot80(first, second, third);
+	reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot80(first, second, third);
 }
 
 // ?Rva00889320DebugForward2@@YAXHH@Z
 void Rva00889320DebugForward2(int first, int second)
 {
-	TheBfmeAwakenDebug->slot84(first, second);
+	reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot84(first, second);
 }

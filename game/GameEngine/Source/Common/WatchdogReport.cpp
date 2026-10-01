@@ -2,7 +2,7 @@
 // Watchdog::reportWatchdog at retail 0x0010B8A0: Watchdog vtable slot 3,
 // called from Thread_Function when the parent thread's heartbeat is older
 // than the timeout. With debug reporting on it logs the parent thread id
-// through TheBfmeAwakenDebug (same sequence as the INI water-texture
+// through the opaque singleton pointer cell (same sequence as the INI water-texture
 // report), then rethrows to force the crash.
 
 typedef unsigned int UnsignedInt;
@@ -79,7 +79,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Existing owned pointer cell; the original singleton class type is unproven.
+extern void *g_Rva00F36E5C;
 bool __cdecl _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int kind);
 
@@ -101,8 +102,8 @@ void Watchdog::reportWatchdog()
 	if (_bfme_debugReportingEnabled())
 	{
 		_bfme_debugRecordCallsite(1);
-		TheBfmeAwakenDebug->slot60();
-		BfmeAwakenLog *log = TheBfmeAwakenDebug->slot6C(0, 0);
+		reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60();
+		BfmeAwakenLog *log = reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0);
 		log->slot38(Debug::Format("Watchdog: Parent thread (ID %d) has stopped responding.\n\n"
 			"I'm going to force a crash; please report it.", m_parentThreadId));
 		log->slot4C(2);

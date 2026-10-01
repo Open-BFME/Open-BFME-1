@@ -53,15 +53,16 @@ class BfmeAwakenDebug { public:
  virtual void slot68();
  virtual BfmeAwakenLog *slot6C(int,int);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Existing owned pointer cell; the original singleton class type is unproven.
+extern void *g_Rva00F36E5C;
 
 void _bfme_debugRecordCallsite(int kind);
 
 int rva0088C500PureVirtualReport()
 {
     _bfme_debugRecordCallsite(1);
-    TheBfmeAwakenDebug->slot60();
-    BfmeAwakenLog *log = TheBfmeAwakenDebug->slot6C(0, 0);
+    reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60();
+    BfmeAwakenLog *log = reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0);
     log = log->slot38("Pure virtual function called.");
     log->slot4C(1);
     return 0;

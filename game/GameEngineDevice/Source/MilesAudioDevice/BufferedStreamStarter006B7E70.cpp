@@ -85,7 +85,8 @@ public:
  virtual void v50(); virtual void v54(); virtual void v58(); virtual void v5c(); virtual void v60();
  virtual void v64(); virtual void v68(); virtual BfmeAwakenLog *v6c(int,int);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Existing owned pointer cell; the original singleton class type is unproven.
+extern void *g_Rva00F36E5C;
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int);
 bool BufferedStreamStarter006B7E70::start(PlayingRef006B7E70 *ref,unsigned sample) {
@@ -108,9 +109,9 @@ bool BufferedStreamStarter006B7E70::start(PlayingRef006B7E70 *ref,unsigned sampl
  WaveInfo006B7E70 *info=ref->ptr->file.info();
  if(info->channels!=1) {
   if(_bfme_debugReportingEnabled()) {
-   _bfme_debugRecordCallsite(1); TheBfmeAwakenDebug->v60();
+   _bfme_debugRecordCallsite(1); reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v60();
    typedef BfmeAwakenLog* (__cdecl *Write)(BfmeAwakenLog*,const StringBase<char>&);
-   BfmeAwakenLog *log=TheBfmeAwakenDebug->v6c(0,0);
+   BfmeAwakenLog *log=reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v6c(0,0);
    Event006B7E70 *event=ref->ptr->event.ptr;
    reinterpret_cast<Write>(j_00016f86)(log->v38("Stereo WAVE file listed for 3D sound "),event->name)->v4c(2);
   }
