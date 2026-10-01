@@ -11,13 +11,15 @@ public:
 class Rva008CF740Value;
 class Rva008CF740 { public: void run(Rva008CF740Value *, Rva008CF740Value *, int); };
 class BfmeR1226 { public: void bfmeLine1226(char *); };
-extern BfmeR1226 g_bfmeR1226;
 extern AptValue **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+// Its address is also what this body passes as the interpreter receiver.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva008CF740Value *Rva01338450SortFunction;
 extern Rva008CF740Value *Rva01338454SortReceiver;
 static void push(AptValue *v) {
-    g_bfmeArr1233[g_bfmeCount1233++] = v;
+    g_bfmeArr1233[Rva008AE770TheStack.m_count++] = v;
     if (!v->permanent()) v->retain();
 }
 int arraySortScriptFunction008B9850(unsigned *a, unsigned *b) {
@@ -26,11 +28,11 @@ int arraySortScriptFunction008B9850(unsigned *a, unsigned *b) {
     AptValue *right = (AptValue *)(*b & ~1u);
     push(right);
     push(left);
-    ((Rva008CF740 *)&g_bfmeR1226)->run(Rva01338454SortReceiver, Rva01338450SortFunction, 2);
-    g_bfmeR1226.bfmeLine1226("arraySortScriptFunction");
-    int result = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
-    AptValue *top = g_bfmeArr1233[g_bfmeCount1233 - 1];
+    ((Rva008CF740 *)&Rva008AE770TheStack)->run(Rva01338454SortReceiver, Rva01338450SortFunction, 2);
+    ((BfmeR1226 *)&Rva008AE770TheStack)->bfmeLine1226("arraySortScriptFunction");
+    int result = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+    AptValue *top = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
     if (!top->permanent()) top->release();
-    --g_bfmeCount1233;
+    --Rva008AE770TheStack.m_count;
     return result;
 }

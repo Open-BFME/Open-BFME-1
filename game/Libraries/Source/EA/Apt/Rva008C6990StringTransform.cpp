@@ -89,7 +89,9 @@ struct Rva00899560Pool
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern Rva008A9B00 *Rva008C3B60Head;
 extern Rva8CD130Value **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void d_008c5360();
 
 Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count)
@@ -106,7 +108,7 @@ Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count)
         result = new Rva008A9B00;
     if (count)
     {
-        Rva8CD130Value *value = g_bfmeArr1233[g_bfmeCount1233 - 1];
+        Rva8CD130Value *value = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
         unsigned type = value->m_flags & 0x3f;
         if ((type == 1 || type == 42) && !value->isUndefined())
         {

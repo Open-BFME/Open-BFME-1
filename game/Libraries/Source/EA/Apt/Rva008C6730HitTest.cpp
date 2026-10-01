@@ -44,7 +44,9 @@ public:
 };
 
 extern AptValue **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 
 AptValue *rva008C6730(BfmeN1235 *target, int argc)
@@ -56,11 +58,11 @@ AptValue *rva008C6730(BfmeN1235 *target, int argc)
 	if (argc <= 1)
 		return fallback;
 
-	float x = g_bfmeArr1233[g_bfmeCount1233 - 1]->toNumber();
-	float y = g_bfmeArr1233[g_bfmeCount1233 - 2]->toNumber();
+	float x = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
+	float y = g_bfmeArr1233[Rva008AE770TheStack.m_count - 2]->toNumber();
 
 	if (argc > 2)
-		g_bfmeArr1233[g_bfmeCount1233 - 3]->toInteger();
+		g_bfmeArr1233[Rva008AE770TheStack.m_count - 3]->toInteger();
 
 	Rva8BB1A0Bounds bounds;
 	target->bfmeInitEmpty1235(&bounds);

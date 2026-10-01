@@ -40,7 +40,9 @@ public:
     AptValue *m_indirect;
 };
 extern AptValue **g_bfmeArr1233;
-extern int g_count01338748;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *(__cdecl *WideAllocPtr)(unsigned int);
 class Rva008A9B00 {
 public:
@@ -66,7 +68,7 @@ extern Rva008A9B00 *g_free01338478;
 extern Rva008A9B00 *g_fallback013379BC;
 
 Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
-    int index = g_bfmeArr1233[g_count01338748 - 1]->toInteger();
+    int index = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
     unsigned int type = value->m_flags & 0x3f;
     AptValue *source = value;
     if (type != 1) source = value->m_indirect;

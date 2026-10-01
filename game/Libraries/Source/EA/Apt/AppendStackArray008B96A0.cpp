@@ -36,12 +36,14 @@ public:
     }
 };
 extern Value008B96A0 **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeResult1233;
 void *appendStackArray008B96A0(BfmeN1242 *source,int count) {
     if (((Value008B96A0 *)source)->isType(0x16)) {
         for (int i=0;i<count;++i) {
-            Value008B96A0 *value=g_bfmeArr1233[g_bfmeCount1233-i-1];
+            Value008B96A0 *value=g_bfmeArr1233[Rva008AE770TheStack.m_count-i-1];
             source->append(value);
         }
         return AptInteger::Create(source->field28);

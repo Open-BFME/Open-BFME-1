@@ -104,7 +104,10 @@ public:
 class BfmeNestedBE;
 extern BfmeNestedBE *Rva008930C0AptLookup(int value);
 
-class Rva008AE770Stack {};
+// m_count is the stack depth the Apt interpreter reads; the cast below reinterprets the
+// whole object as Rva008CF3C0State, so the member is only here to spell the type MSVC
+// mangles the global with (3U...@@A).
+struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 
 class Rva008CF3C0State

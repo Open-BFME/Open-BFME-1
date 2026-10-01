@@ -71,7 +71,9 @@ struct BfmeStringPool3AF0
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 extern BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
-extern int g_bfmeCount1233;
+// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 
 // ?bfmeClearHash3AF0@@YAXXZ
 void __cdecl bfmeClearHash3AF0(void)
@@ -119,5 +121,5 @@ void __cdecl bfmeClearHash3AF0(void)
 		++g_bfmeDefaultString1284.m_refCount;
 		*slot = &g_bfmeDefaultString1284;
 		++slot;
-	} while ((int)slot < (int)(void *)&g_bfmeCount1233);
+	} while ((int)slot < (int)(void *)&Rva008AE770TheStack);
 }
