@@ -11358,5 +11358,15 @@
  "after_sha256": "4297644905407d0416882e62cac0631bc0907c8bbe6c5e6c9add1ccf991ba644",
  "evidence": "targets/game/reverse/identity_evidence/009ebf90-result-view.md",
  "reason": "Same-address result ABI correction: 009EBF90 constructs a 20-byte result; 009EF6D0 copies a 12-byte tree to its output plus word/byte fields, rather than returning a registry object. Native method identity remains unknown and retains the full address."
+},
+{
+ "old_path": "targets/game/reverse/functions.csv",
+ "new_path": "targets/game/reverse/functions.csv",
+ "old_name": "copy",
+ "new_name": "Rva009EF6D0",
+ "before_sha256": "a756cdc02868772db9b5a1ea9251f1442d77fd753cd531e87389c327f3f5bc23",
+ "after_sha256": "4297644905407d0416882e62cac0631bc0907c8bbe6c5e6c9add1ccf991ba644",
+ "evidence": "targets/game/reverse/identity_evidence/009ebf90-result-view.md",
+ "reason": "Same-address result ABI correction: 009EBF90 constructs a 20-byte result; 009EF6D0 copies a 12-byte tree to its output plus word/byte fields, rather than returning a registry object. Native method identity remains unknown and retains the full address."
 }
 ]
