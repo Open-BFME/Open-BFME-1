@@ -89,12 +89,15 @@ private:
 	UnicodeString m_displayName;
 };
 
+class ThingFactory;
+
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 // Banner entries as BannerThingCounterAdd.cpp lays them out (12 bytes, filter
 // at +8); this body copies +0 or +4 as an AsciiString label.
@@ -251,7 +254,7 @@ void BannerThingCounter::rva0049A540(UnicodeString *nameOut, UnicodeString *clea
 		for (Int i = 0; i < nameCount; ++i)
 		{
 			const AsciiString &name = counts.m_unmatchedNames[i];
-			const ThingTemplate *thing = TheThingFactory->findTemplate(name);
+			const ThingTemplate *thing = localThingFactory()->findTemplate(name);
 			if (!summaryOut->isEmpty())
 				*summaryOut += L", ";
 			*summaryOut += thing->getDisplayName();

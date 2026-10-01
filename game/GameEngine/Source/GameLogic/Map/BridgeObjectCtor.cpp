@@ -81,8 +81,10 @@ public:
 };
 class TerrainRoadCollection { public: TerrainRoadType *findBridge(AsciiString); };
 class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString &); };
+class ThingFactory;
 extern TerrainRoadCollection *TheTerrainRoads;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 struct BridgeInfo {
     BridgePoint from, to;
     float bridgeWidth;
@@ -188,7 +190,7 @@ Bridge::Bridge(Object *bridgeObj) : m_next(0), m_layer(LAYER_GROUND), m_extra(0)
 	for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
 	{
 		type = (BridgeTowerType)i;
-		towerTemplate = TheThingFactory->findTemplate( bridgeTemplate->getTowerObjectName( type ) );
+		towerTemplate = localThingFactory()->findTemplate( bridgeTemplate->getTowerObjectName( type ) );
 		if (towerTemplate) {
 			offset = towerTemplate->m_70;
 		}

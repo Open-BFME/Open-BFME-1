@@ -102,8 +102,11 @@ public:
 	const UpgradeTemplate *findUpgrade(const AsciiString &name) const;
 };
 
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern UpgradeCenter *TheUpgradeCenter;
+
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 extern void j_00028560();
 extern void j_00026dd7();
@@ -328,7 +331,7 @@ void ProductionUpdate::xfer(Xfer *xfer)
 			case 1:
 			case 3:
 				production->m_objectToProduce = bfmeFindTemplate(
-					TheThingFactory, name);
+					localThingFactory(), name);
 				break;
 			case 2:
 				production->m_upgradeToResearch = bfmeFindUpgrade(

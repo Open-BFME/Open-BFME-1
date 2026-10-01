@@ -267,7 +267,9 @@ protected:
 
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 Bool ScriptConditions::rva00326f40(
 	Parameter *playerParameter, Parameter *typeParameter,
@@ -286,7 +288,7 @@ Bool ScriptConditions::rva00326f40(
 	if (knownTypes)
 		objectTypesFromParam(typeParameter, temporaryTypes.m_types);
 	else
-		wanted = TheThingFactory->findTemplate(typeParameter->getString());
+		wanted = localThingFactory()->findTemplate(typeParameter->getString());
 
 	for( BfmePlayerTeamListNode *it =
 			( ( BfmePlayerTeamListField * )player )->m_head->m_next;

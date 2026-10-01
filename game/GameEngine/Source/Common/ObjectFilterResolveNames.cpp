@@ -24,12 +24,15 @@
 typedef _STL::vector<AsciiString> ObjectFilterNameVector;
 typedef _STL::vector<const ThingTemplate *> ObjectFilterTemplateVector;
 
+class ThingFactory;
+
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 class ObjectFilter
 {
@@ -57,14 +60,14 @@ void ObjectFilter::rva0039E2B0ResolveNames(ObjectFilter *filter)
 		{
 			const char *templateName = name.str();
 			templateName += 2;
-			const ThingTemplate *tmpl = TheThingFactory->findTemplate(AsciiString(templateName));
+			const ThingTemplate *tmpl = localThingFactory()->findTemplate(AsciiString(templateName));
 			if (!tmpl)
 				throw INIException(3, "ObjectFilter::resolveNames() specified +S:%s but template %s doesn't exist! Typo?", templateName, templateName);
 			filter->m_inclusionSTemplates.push_back(tmpl);
 		}
 		else
 		{
-			const ThingTemplate *tmpl = TheThingFactory->findTemplate(name);
+			const ThingTemplate *tmpl = localThingFactory()->findTemplate(name);
 			if (!tmpl)
 				throw INIException(3, "ObjectFilter::resolveNames() specified +%s but this template doesn't exist! Typo?", name.str());
 			filter->m_inclusionTemplates.push_back(tmpl);
@@ -80,14 +83,14 @@ void ObjectFilter::rva0039E2B0ResolveNames(ObjectFilter *filter)
 		{
 			const char *templateName = name.str();
 			templateName += 2;
-			const ThingTemplate *tmpl = TheThingFactory->findTemplate(AsciiString(templateName));
+			const ThingTemplate *tmpl = localThingFactory()->findTemplate(AsciiString(templateName));
 			if (!tmpl)
 				throw INIException(3, "ObjectFilter::resolveNames() specified -S:%s but template %s doesn't exist! Typo?", templateName, templateName);
 			filter->m_exclusionSTemplates.push_back(tmpl);
 		}
 		else
 		{
-			const ThingTemplate *tmpl = TheThingFactory->findTemplate(name);
+			const ThingTemplate *tmpl = localThingFactory()->findTemplate(name);
 			if (!tmpl)
 				throw INIException(3, "ObjectFilter::resolveNames() specified -%s but this template doesn't exist! Typo?", name.str());
 			filter->m_exclusionTemplates.push_back(tmpl);

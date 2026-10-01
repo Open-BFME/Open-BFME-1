@@ -7,8 +7,10 @@
 #include "Common/PlayerTemplate.h"
 #include "Common/NameKeyGenerator.h"
 class ThingTemplate;
+class ThingFactory;
 class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString &); };
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 extern const StaticNameKey TheKey_playerFaction;
 struct SideEntry00198A10 {
  BuildListInfo *field00; Dict m_dict; char field08[16];
@@ -38,7 +40,7 @@ void BuildListsWriter00198A10::write(DataChunkOutput &chunkWriter) {
    Coord3D center; center.x=0;center.y=0;center.z=0;
    pBuildList=getSide(i)->getBuildList();
    while(pBuildList) {
-    const ThingTemplate *thing=TheThingFactory->findTemplate(pBuildList->getTemplateName());
+    const ThingTemplate *thing=localThingFactory()->findTemplate(pBuildList->getTemplateName());
     // name_oracle witnesses ThingTemplate+0xC8 as m_kindof. Retail tests bit18.
     if(thing && (*(const unsigned*)((const char*)thing+0xc8)&0x40000)) {center=*pBuildList->getLocation(); break;}
     center.x+=pBuildList->getLocation()->x; center.y+=pBuildList->getLocation()->y; center.z+=pBuildList->getLocation()->z;

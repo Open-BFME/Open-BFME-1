@@ -191,7 +191,9 @@ private:
 
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 extern TerrainLogic *TheTerrainLogic;
 extern void j_0002717e();
 
@@ -239,7 +241,7 @@ void Rva001695B0::adjustBuildList(BuildListInfo *list)
 	while (cur)
 	{
 		const ThingTemplate *tTemplate =
-			TheThingFactory->findTemplate(cur->getTemplateName());
+			localThingFactory()->findTemplate(cur->getTemplateName());
 		if (tTemplate && tTemplate->isKindOf(17))
 		{
 			foundInBuildList = true;
@@ -287,7 +289,7 @@ void Rva001695B0::adjustBuildList(BuildListInfo *list)
 	while (cur)
 	{
 		const ThingTemplate *tTemplate =
-			TheThingFactory->findTemplate(list->getTemplateName());
+			localThingFactory()->findTemplate(list->getTemplateName());
 		if (tTemplate && tTemplate->isKindOf(17))
 		{
 			foundInBuildList = true;

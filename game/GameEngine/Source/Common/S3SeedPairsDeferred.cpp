@@ -22,7 +22,12 @@ public:
 	void *registerObj(void *field);
 };
 
-extern BfmeMgrF1D *g_mgr12EF1D8;
+// TU-local view of the retail singleton at 0x012EF1D8; the canonical global
+// is `ThingFactory *TheThingFactory` (defined in Common/Thing/ThingFactory.cpp).
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+
+static inline BfmeMgrF1D *localThingFactory() { return (BfmeMgrF1D *)TheThingFactory; }
 
 struct BfmeSeedPair
 {
@@ -154,7 +159,7 @@ __declspec(noinline) void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *it
 	target->bfmeTakeAt68(&name);
 
 	if (target->bfmeSlot1())
-		*(void **)item = g_mgr12EF1D8->registerObj(&name);
+		*(void **)item = localThingFactory()->registerObj(&name);
 }
 
 class BfmeSubAccept_0002C41C
