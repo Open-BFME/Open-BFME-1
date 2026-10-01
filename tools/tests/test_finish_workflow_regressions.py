@@ -189,7 +189,7 @@ def test_real_compiler_receipt_invalidates_used_header_only(monkeypatch):
     if not (toolchain / "Vc7/bin/cl.exe").exists():
         pytest.skip("MSVC 7.1 compiler unavailable")
     (finish_measure.ROOT / "build").mkdir(exist_ok=True)
-    with (tempfile.TemporaryDirectory(dir=finish_measure.ROOT / "build") as directory,
+    with (tempfile.TemporaryDirectory(prefix="finish-receipt-", dir=finish_measure.ROOT) as directory,
           tempfile.TemporaryDirectory(dir=finish_measure.ROOT / "build") as cache_directory):
         root = Path(directory)
         path = root / "probe.cpp"
