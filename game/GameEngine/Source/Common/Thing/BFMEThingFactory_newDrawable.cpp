@@ -47,7 +47,13 @@ public:
 	virtual Drawable *createDrawable( const ThingTemplate *t, DrawableStatus s, Int i ) = 0;	// +0x5C
 };
 
-extern BFMEDrawableFactory *TheBFMEDrawableFactory;		// 0x012F1464
+// 0x012F1464 is retail's `GameClient *TheGameClient;` (defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp). The pointee is seen here
+// through a TU-local view of its slot +0x5C; the reference itself carries the
+// canonical spelling.
+class GameClient;
+
+extern GameClient *TheGameClient;		// 0x012F1464
 
 class BFMEThingFactory
 {
@@ -61,5 +67,5 @@ Drawable *BFMEThingFactory::newDrawable( const ThingTemplate *t, DrawableStatus 
 	if( !t )
 		return 0;
 
-	return TheBFMEDrawableFactory->createDrawable( t, s, i );
+	return ((BFMEDrawableFactory *)TheGameClient)->createDrawable( t, s, i );
 }

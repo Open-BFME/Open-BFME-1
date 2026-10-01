@@ -7,9 +7,14 @@ public:
 	unsigned char m_flag;
 };
 
-extern Rva002F0DF0Global *g_Rva002F0DF0Global;
+// 0x012F1464 is retail's `GameClient *TheGameClient;` (defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp). The pointee is seen here
+// through a TU-local view; the reference itself carries the canonical spelling.
+class GameClient;
+
+extern GameClient *TheGameClient;
 
 void __stdcall Rva002F0DF0Store(unsigned char value)
 {
-	g_Rva002F0DF0Global->m_flag = value;
+	((Rva002F0DF0Global *)TheGameClient)->m_flag = value;
 }

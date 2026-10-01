@@ -38,7 +38,12 @@ struct Rva0048E5C0Sink
 	virtual void apply(void *storage, void *tail, unsigned int count) = 0;
 };
 
-extern Rva0048E5C0Clock *g_rva0048E5C0Clock;
+// 0x012F1464 is retail's `GameClient *TheGameClient;` (defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp). The pointee is seen here
+// through a TU-local view; the reference itself carries the canonical spelling.
+class GameClient;
+
+extern GameClient *TheGameClient;
 
 class Rva0048E5C0Batch
 {
@@ -54,7 +59,7 @@ public:
 
 void Rva0048E5C0Batch::update()
 {
-	unsigned int available = g_rva0048E5C0Clock->getCount();
+	unsigned int available = ((Rva0048E5C0Clock *)TheGameClient)->getCount();
 	if (available < m_used)
 		return;
 
