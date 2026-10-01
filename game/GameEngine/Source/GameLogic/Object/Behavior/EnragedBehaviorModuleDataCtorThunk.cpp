@@ -29,13 +29,17 @@ public:
 	void *m_capacity;
 };
 
+// Local view of the one field this body reads; the canonical global at
+// 0x012ED5C8 is defined once by game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A.
 struct Rva006C9270GlobalData
 {
 	unsigned char m_unmodelled[ 0x1A0 ];
 	unsigned int m_defaultEnragedDuration;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class EnragedBehaviorModuleData : public EnragedBehaviorModuleDataBase
 {
@@ -56,7 +60,7 @@ private:
 // ??0EnragedBehaviorModuleData@@QAE@XZ
 EnragedBehaviorModuleData::EnragedBehaviorModuleData()
 {
-	m_duration = TheWritableGlobalData->m_defaultEnragedDuration;
+	m_duration = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_defaultEnragedDuration;
 	m_unmodelled_18 = 0;
 	m_unmodelled_1C = 0;
 	m_unmodelled_20 = 0;

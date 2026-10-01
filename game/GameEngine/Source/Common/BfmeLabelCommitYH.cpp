@@ -32,7 +32,12 @@ public:
 	void bfmeRefreshYH(int mode);
 };
 
-extern BfmeBaseYH *g_bfmeBaseYH;				// retail 0x012ED5C8
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.  The member address keeps the local
+// view and casts at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;		// retail 0x012ED5C8
 extern BfmeThingYH *g_bfmeThingYH;				// retail 0x012F4B58
 extern BfmeOtherYH *g_bfmeOtherYH;				// retail 0x012F19E8
 extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D
@@ -42,7 +47,7 @@ void __cdecl bfmeCommitYH(AsciiStringYH label)
 {
 	g_bfmeDirtyYH = true;
 
-	AsciiStringYH *slot = &g_bfmeBaseYH->m_bfmeLabel;
+	AsciiStringYH *slot = &((BfmeBaseYH *)TheWritableGlobalData)->m_bfmeLabel;
 
 	slot->set(label);
 

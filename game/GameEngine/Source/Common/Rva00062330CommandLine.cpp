@@ -19,6 +19,9 @@ private:
 extern bool g_aiTargetDispatchSuppressed;
 extern StringBase<char> g_012F08A4;
 
+// Local view of the two bytes this body writes; the canonical global at
+// 0x012ED5C8 is defined once by game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A.
 struct Rva006C9270GlobalData
 {
 	unsigned char m_head[0x29];
@@ -27,7 +30,8 @@ struct Rva006C9270GlobalData
 	unsigned char m_tail;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 int __cdecl Rva00062330(char **argv, int argc)
 {
@@ -41,8 +45,8 @@ int __cdecl Rva00062330(char **argv, int argc)
 		}
 
 		g_aiTargetDispatchSuppressed = true;
-		TheWritableGlobalData->m_flag = 1;
-		TheWritableGlobalData->m_tail = 0;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_flag = 1;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_tail = 0;
 
 		return 2;
 	}

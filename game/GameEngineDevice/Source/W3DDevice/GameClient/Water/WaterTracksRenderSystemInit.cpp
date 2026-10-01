@@ -43,7 +43,13 @@ public:
 	private:
 };
 
-extern void *TheGlobalData;
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.  Only the forward declaration is
+// needed here: the body reads one float at +0x7c through a byte view.
+class GlobalData;
+
+extern GlobalData *TheWritableGlobalData;
 extern void *operator new(unsigned int size);
 
 class WaterTracksRenderSystemInitShim
@@ -68,7 +74,7 @@ void WaterTracksRenderSystemInitShim::init(void)
 {
 	m_stripSizeX = 2;
 	m_stripSizeY = 2;
-	m_level = *(float *)((unsigned char *)TheGlobalData + 0x7c);
+	m_level = *(float *)((unsigned char *)TheWritableGlobalData + 0x7c);
 	ReAcquireResources();
     m_vertexMaterialClass = VertexMaterialClass::Get_Preset((VertexMaterialClass::PresetType)0);
 

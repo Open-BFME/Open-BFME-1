@@ -41,7 +41,10 @@ public:
 	BFMERetailAsciiString m_structureDamageFX;
 };
 
-extern GlobalData *TheGlobalData;
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.
+extern GlobalData *TheWritableGlobalData;
 extern FXListStore *TheFXListStore;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
@@ -69,7 +72,7 @@ private:
 // ??0StructureBodyModuleData@@QAE@XZ
 StructureBodyModuleData::StructureBodyModuleData()
 {
-	if (TheGlobalData->m_structureDamageFX.isNotEmpty()) {
-		m_fxList = TheFXListStore->findFXList(TheGlobalData->m_structureDamageFX.str());
+	if (TheWritableGlobalData->m_structureDamageFX.isNotEmpty()) {
+		m_fxList = TheFXListStore->findFXList(TheWritableGlobalData->m_structureDamageFX.str());
 	}
 }

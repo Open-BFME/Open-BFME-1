@@ -57,7 +57,14 @@ private:
 };
 
 extern Glo012F1024Type *TheLivingWorldCampaignManager;
-extern Glo012ED5C8Type *TheWritableGlobalData;
+
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.  The field reads keep the local
+// view and cast at each use: caching the pointer in a local would change the
+// emitted shape (see the shape note above).
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 // ?rva003BDD60@Glo012F1028Type@@QAEHXZ
 int Glo012F1028Type::rva003BDD60(void)
@@ -71,17 +78,17 @@ int Glo012F1028Type::rva003BDD60(void)
 		int offset;
 		if (state != 0 && flag != 0)
 		{
-			limit = TheWritableGlobalData->m_bfmeHighLarge;
+			limit = ((Glo012ED5C8Type *)TheWritableGlobalData)->m_bfmeHighLarge;
 		}
 		else
 		{
-			limit = TheWritableGlobalData->m_bfmeLowLarge;
+			limit = ((Glo012ED5C8Type *)TheWritableGlobalData)->m_bfmeLowLarge;
 		}
 		flag = state != 0 ? state->m_bfmeUseHigh : 0;
 		if (state != 0 && flag != 0)
-			offset = TheWritableGlobalData->m_bfmeHigh;
+			offset = ((Glo012ED5C8Type *)TheWritableGlobalData)->m_bfmeHigh;
 		else
-			offset = TheWritableGlobalData->m_bfmeLow;
+			offset = ((Glo012ED5C8Type *)TheWritableGlobalData)->m_bfmeLow;
 
 		int value;
 		int difference;

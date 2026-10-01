@@ -35,14 +35,20 @@ public:
 };
 
 extern SetupGameStartCampaignManagerView *TheCampaignManager;
-extern SetupGameStartGlobalDataView *TheWritableGlobalData;
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.  The member read keeps the local
+// view and casts at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern Shell *TheShell;
 extern TransitionHandler *TheTransitionHandler;
 
 void setupGameStart(AsciiString mapName, int diff)
 {
 	TheCampaignManager->setGameDifficulty(diff);
-	AsciiString *pendingFile = &TheWritableGlobalData->m_pendingFile;
+	AsciiString *pendingFile =
+		&((SetupGameStartGlobalDataView *)TheWritableGlobalData)->m_pendingFile;
 	pendingFile->set(mapName);
 	TheShell->reverseAnimatewindow();
 	TheTransitionHandler->setGroup(AsciiString("FadeWholeScreen"), 0);

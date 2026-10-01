@@ -14,11 +14,19 @@ public:
     unsigned char body[0x12fc];
     TerrainTracksRenderObjClass *m_nextSystem, *m_prevSystem;
 };
-struct GlobalData {
+struct TerrainTracksGlobalDataView {
     unsigned char beforeTracks[0x1f0];
     int m_maxTerrainTracks;
 };
-extern GlobalData *TheGlobalData;
+// Canonical identity of the retail global at 0x012ED5C8, defined once by
+// game/GameEngine/Source/Common/GlobalData.cpp as
+// ?TheWritableGlobalData@@3PAVGlobalData@@A.  The field read keeps the local
+// view and casts at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+static inline TerrainTracksGlobalDataView *localGlobalData() {
+    return (TerrainTracksGlobalDataView *)TheWritableGlobalData;
+}
 class TerrainTracksRenderObjClassSystem {
 public:
     void init(SceneClass *scene);
@@ -31,7 +39,7 @@ public:
 };
 
 void TerrainTracksRenderObjClassSystem::init(SceneClass *scene) {
-    const int numModules = TheGlobalData->m_maxTerrainTracks;
+    const int numModules = localGlobalData()->m_maxTerrainTracks;
     m_TerrainTracksScene = scene;
     ReAcquireResources();
     m_vertexMaterialClass = VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
