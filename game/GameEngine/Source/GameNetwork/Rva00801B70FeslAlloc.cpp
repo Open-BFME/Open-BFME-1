@@ -1,5 +1,5 @@
 // cl: /GX-
-// Allocate counted 0x30-stride array: clear, Gen007EFFC0 acquire, placement-new
+// Allocate counted 0x30-stride array: clear, bfmeGo929C acquire, placement-new
 // Rva00802380Owner per slot. Sibling of clear@Rva00801570 and of 0x00801BD0.
 
 class GenAlloc
@@ -11,7 +11,7 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C();
 
 class Rva00802380Owner
 {
@@ -34,7 +34,7 @@ public:
 void Rva00801570::allocate( int count )
 {
 	clear();
-	m_array = (Rva00802380Owner *)Gen007EFFC0()->allocate( count * 0x30, 0 );
+	m_array = (Rva00802380Owner *)((GenAlloc *)bfmeGo929C())->allocate( count * 0x30, 0 );
 	for( int i = 0; i < count; ++i )
 		new ( (char *)m_array + i * 0x30 ) Rva00802380Owner;
 	m_count = count;

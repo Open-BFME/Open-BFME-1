@@ -42,7 +42,7 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C();
 
 #define S3_ARRAY_CLEAR( NAME, SIZE )                                      \
 	class NAME##Elem                                                      \
@@ -64,7 +64,7 @@ extern GenAlloc *Gen007EFFC0();
 		{                                                                 \
 			for( int i = 0; i < m_count; ++i )                            \
 				m_array[ i ].step( 0 );                                   \
-			Gen007EFFC0()->release( m_array, 0 );                         \
+			((GenAlloc *)bfmeGo929C())->release( m_array, 0 );             \
 			m_array = 0;                                                  \
 		}                                                                 \
 		m_count = 0;                                                      \

@@ -1,7 +1,7 @@
 // Four 20-byte cdecl bodies at 0x007F0130, 0x007F0150, 0x007F0170 and
 // 0x007F0190, all the same shape:
 //
-//     call Gen007EFFC0            fetch the allocator
+//     call bfmeGo929C             fetch the allocator
 //     mov ecx, [esp + 4]          the one argument
 //     push 0
 //     push ecx
@@ -28,7 +28,7 @@ public:
 	virtual void release(void *block, int flags);
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C();
 
 class Gen007F0130
 {
@@ -57,23 +57,23 @@ public:
 // ??2Gen007F0130@@SAPAXI@Z
 void *Gen007F0130::operator new(unsigned int size)
 {
-	return Gen007EFFC0()->allocate(size, 0);
+	return ((GenAlloc *)bfmeGo929C())->allocate(size, 0);
 }
 
 // ??2Gen007F0150@@SAPAXI@Z
 void *Gen007F0150::operator new(unsigned int size)
 {
-	return Gen007EFFC0()->allocate(size, 0);
+	return ((GenAlloc *)bfmeGo929C())->allocate(size, 0);
 }
 
 // ??3Gen007F0170@@SAXPAX@Z
 void Gen007F0170::operator delete(void *block)
 {
-	Gen007EFFC0()->release(block, 0);
+	((GenAlloc *)bfmeGo929C())->release(block, 0);
 }
 
 // ??3Gen007F0190@@SAXPAX@Z
 void Gen007F0190::operator delete(void *block)
 {
-	Gen007EFFC0()->release(block, 0);
+	((GenAlloc *)bfmeGo929C())->release(block, 0);
 }

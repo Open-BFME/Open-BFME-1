@@ -1,5 +1,5 @@
 // cl: /GX-
-// Allocate counted 0x80-stride array: clear@Rva00802A10, Gen007EFFC0 acquire,
+// Allocate counted 0x80-stride array: clear@Rva00802A10, bfmeGo929C acquire,
 // placement-new element ctor at 0x00801FB0.
 
 class GenAlloc
@@ -11,7 +11,7 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C();
 
 class Rva00801FB0Elem
 {
@@ -34,7 +34,7 @@ public:
 void Rva00802A10::allocate( int count )
 {
 	clear();
-	m_array = (Rva00801FB0Elem *)Gen007EFFC0()->allocate( count * 0x80, 0 );
+	m_array = (Rva00801FB0Elem *)((GenAlloc *)bfmeGo929C())->allocate( count * 0x80, 0 );
 	for( int i = 0; i < count; ++i )
 		new ( (char *)m_array + i * 0x80 ) Rva00801FB0Elem;
 	m_count = count;

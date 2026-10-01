@@ -11,9 +11,8 @@
 // WHAT THE BYTES SHOW.  Every allocation and every release goes through a
 // __cdecl getter at 0x007EFFC0 whose result is entered __thiscall with two
 // dwords: slot 2 to acquire (size, 0) and slot 3 to release (block, 0).  That
-// getter and those two slots are already named by the tree (see
-// S3PolymorphicArrayClear.cpp), and the class spelling here matches so the pin
-// resolves.
+// getter uses its ledger spelling bfmeGo929C; the local class describes
+// those two allocator slots (see S3PolymorphicArrayClear.cpp).
 //
 // The buffer keeps a pointer at +0 and a running byte count at +4, and it is
 // filled in two passes: the addPadded/addString members only ADD to the count,
@@ -46,7 +45,7 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C();
 
 // The diagnostic reporter U2FeslGameBrowserAsserts.cpp already names; 0x008002C0
 // reports through its FOURTH slot with the same "\views\feslbuild_main\jabba"
@@ -78,7 +77,7 @@ public:
 
 void Rva00800290Buffer::reset()
 {
-	Gen007EFFC0()->release( m_ptr, 0 );
+	((GenAlloc *)bfmeGo929C())->release( m_ptr, 0 );
 	m_ptr = 0;
 	m_size = 0;
 }
@@ -95,7 +94,7 @@ void Rva00800290Buffer::addString( const char *text )
 
 void Rva00800290Buffer::allocate()
 {
-	m_ptr = (char *)Gen007EFFC0()->acquire( m_size, 0 );
+	m_ptr = (char *)((GenAlloc *)bfmeGo929C())->acquire( m_size, 0 );
 }
 
 // Grow only when the text does not fit what is already there, then copy it in.
@@ -109,8 +108,8 @@ void Rva00800290Buffer::append( const char *text )
 	if( length >= (unsigned int)m_size )
 	{
 		m_size = (int)( length + 1 );
-		Gen007EFFC0()->release( m_ptr, 0 );
-		m_ptr = (char *)Gen007EFFC0()->acquire( m_size, 0 );
+		((GenAlloc *)bfmeGo929C())->release( m_ptr, 0 );
+		m_ptr = (char *)((GenAlloc *)bfmeGo929C())->acquire( m_size, 0 );
 	}
 	if( m_ptr == 0 )
 		Rva007EB810Get()->fail( "mBuffer",
@@ -144,7 +143,7 @@ void Rva00800550Chain::clear()
 	while( node != 0 )
 	{
 		Rva00800550Node *next = node->m_next;
-		Gen007EFFC0()->release( node, 0 );
+		((GenAlloc *)bfmeGo929C())->release( node, 0 );
 		node = next;
 	}
 	m_count = 0;
@@ -154,7 +153,7 @@ void Rva00800550Chain::clear()
 
 void *Rva00800550Chain::append( int size )
 {
-	Rva00800550Node *node = (Rva00800550Node *)Gen007EFFC0()->acquire( size + 4, 0 );
+	Rva00800550Node *node = (Rva00800550Node *)((GenAlloc *)bfmeGo929C())->acquire( size + 4, 0 );
 
 	node->m_next = 0;
 	if( m_tail == 0 )
@@ -182,7 +181,7 @@ void Rva00800550Chain::popFront()
 	if( m_head != 0 )
 	{
 		Rva00800550Node *next = m_head->m_next;
-		Gen007EFFC0()->release( m_head, 0 );
+		((GenAlloc *)bfmeGo929C())->release( m_head, 0 );
 		m_head = next;
 		if( next == 0 )
 			m_tail = 0;
@@ -203,7 +202,7 @@ public:
 
 void Rva008003C0Owner::clear()
 {
-	Gen007EFFC0()->release( m_block, 0 );
+	((GenAlloc *)bfmeGo929C())->release( m_block, 0 );
 	m_block = 0;
 	m_field4 = 0;
 	m_field8 = 0;
@@ -221,7 +220,7 @@ public:
 
 void Rva00800630Owner::clear()
 {
-	Gen007EFFC0()->release( m_block, 0 );
+	((GenAlloc *)bfmeGo929C())->release( m_block, 0 );
 	m_block = 0;
 	m_field4 = 0;
 	m_field8 = 0;
@@ -281,13 +280,13 @@ void Rva00802DF0Owner::set( Rva00802DF0Source *source, int value )
 }
 
 // 0x00800520 -- acquire a chain node for (int)owner + 4 bytes and zero its
-// head link. Same Gen007EFFC0()->acquire(size + 4, 0) + null-store shape as
+// head link. Same allocator acquire(size + 4, 0) + null-store shape as
 // Rva00800550Chain::append in this TU; the (int)owner + 4 spelling (not a
 // member load) reproduces retail's add ecx,4 after the vtable load.
 // Identity is address-derived: no caller, string, or vtable names it.
 void *Rva00800520Alloc( void *owner )
 {
-	void *node = Gen007EFFC0()->acquire( (int)owner + 4, 0 );
+	void *node = ((GenAlloc *)bfmeGo929C())->acquire( (int)owner + 4, 0 );
 	*(void **)node = 0;
 	return node;
 }
