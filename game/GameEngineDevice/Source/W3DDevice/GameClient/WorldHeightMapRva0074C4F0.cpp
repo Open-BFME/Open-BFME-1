@@ -7,7 +7,11 @@ struct Rva006C9270GlobalData
 	char pad[0x68];
 	int textureReductionFactor;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+
+// Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
+// file views the same object through Rva006C9270GlobalData.
+extern GlobalData *TheWritableGlobalData;
 
 class WorldHeightMap;
 
@@ -132,7 +136,7 @@ public:
 ShroudTexture WorldHeightMap::rva0074C4F0(int xCell, int yCell,
 	int cellWidth, int pixelsPerCell, int format)
 {
-	int reduction = TheWritableGlobalData->textureReductionFactor;
+	int reduction = ((Rva006C9270GlobalData *)TheWritableGlobalData)->textureReductionFactor;
 	if (reduction)
 	{
 		if (reduction > 1)

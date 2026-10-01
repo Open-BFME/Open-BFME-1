@@ -88,7 +88,11 @@ struct Rva006C9270GlobalData
 	unsigned char m_unknown47;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+
+// Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
+// file views the same object through Rva006C9270GlobalData.
+extern GlobalData *TheWritableGlobalData;
 extern unsigned char *BfmeCurrentCaps;
 
 #define SET_TERRAIN_TEXTURE_FILTER_STATE(stage_, state_, value_) \
@@ -101,7 +105,7 @@ extern unsigned char *BfmeCurrentCaps;
 // ?setTerrainTextureFilters@@YAXI@Z
 void __cdecl setTerrainTextureFilters( unsigned stage )
 {
-	unsigned char filter_mode = TheWritableGlobalData->m_unknown47;
+	unsigned char filter_mode = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_unknown47;
 	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x400) == 0 )
 		filter_mode = 0;
 	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x04000000) == 0 )
@@ -113,7 +117,7 @@ void __cdecl setTerrainTextureFilters( unsigned stage )
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 3 );
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 10, 2 );
 	}
-	else if( TheWritableGlobalData->m_bilinearTerrainTex || TheWritableGlobalData->m_trilinearTerrainTex )
+	else if( ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_bilinearTerrainTex || ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_trilinearTerrainTex )
 	{
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 2 );
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 2 );
@@ -124,7 +128,7 @@ void __cdecl setTerrainTextureFilters( unsigned stage )
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 1 );
 	}
 
-	if( TheWritableGlobalData->m_trilinearTerrainTex || filter_mode )
+	if( ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_trilinearTerrainTex || filter_mode )
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 7, 2 );
 	else
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 7, 1 );

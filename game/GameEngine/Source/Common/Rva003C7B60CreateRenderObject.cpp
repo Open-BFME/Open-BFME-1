@@ -64,8 +64,11 @@ public:
     void bfmeMarkESM(BfmeThingESM *thing, int flag);
 };
 
-struct Rva006C9270GlobalData;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+
+// Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
+// file only reaches through it for a byte probe.
+extern GlobalData *TheWritableGlobalData;
 extern BfmeHostESM *g_bfmeStateDF;
 extern const char g_bfmeEmptyAscii[];
 RenderObjClass *Create_Render_Obj(const char *name);

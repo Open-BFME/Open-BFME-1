@@ -20,7 +20,13 @@ struct Rva006C9270GlobalData
 	unsigned char m_renderFeatureEnabled;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+
+// Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
+// file views the same object through Rva006C9270GlobalData.
+extern GlobalData *TheWritableGlobalData;
+
+
 
 // BFME's TextureBaseClass release is the matched out-of-line 0x009EB7A0
 // method.  The ZH header exposes a different inline refcount implementation,
@@ -83,7 +89,7 @@ private:
 
 void BaseHeightMapRenderObjClass::rva006C90B0(void)
 {
-	if (!TheWritableGlobalData->m_renderFeatureEnabled ||
+	if (!((Rva006C9270GlobalData *)TheWritableGlobalData)->m_renderFeatureEnabled ||
 		!m_resource2FE0 ||
 		!m_count2FE4 ||
 		!m_count2FE8 ||

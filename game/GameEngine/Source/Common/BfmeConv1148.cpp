@@ -52,7 +52,11 @@ public:
 	char bfmeFd1148(void);
 };
 
-extern "C" BfmeG1148 *volatile g_bfmeG1148;
+class GlobalData;
+
+// Retail [0x012ED5C8] is EA's writable GlobalData, defined by Common/GlobalData.cpp;
+// this file views the same object through BfmeG1148 so the field offsets stay local.
+extern GlobalData *TheWritableGlobalData;
 
 void bfmeGo1148(BfmeS1148 *s)
 {
@@ -63,22 +67,22 @@ void bfmeGo1148(BfmeS1148 *s)
 	else if (n > 2)
 		n = 2;
 
-	g_bfmeG1148->m_bfme68 = n;
-	g_bfmeG1148->m_bfmeb8c = s->bfmeF11148() * 0x1d + 0x64;
-	g_bfmeG1148->m_bfme64 = s->bfmeF21148();
-	g_bfmeG1148->m_bfme65 = s->bfmeF31148();
-	g_bfmeG1148->m_bfme28 = (char)(s->bfmeF41148() == 0);
-	g_bfmeG1148->m_bfme70 = s->bfmeF51148();
-	g_bfmeG1148->m_bfme58 = s->bfmeF61148();
-	g_bfmeG1148->m_bfme44 = s->bfmeF71148();
-	g_bfmeG1148->m_bfme38 = s->bfmeF71148();
-	g_bfmeG1148->m_bfme47 = s->bfmeF81148();
-	g_bfmeG1148->m_bfme8c = s->bfmeF91148();
-	g_bfmeG1148->m_bfme1c = s->bfmeFa1148();
-	BfmeG1148 *g = g_bfmeG1148;
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme68 = n;
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfmeb8c = s->bfmeF11148() * 0x1d + 0x64;
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme64 = s->bfmeF21148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme65 = s->bfmeF31148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme28 = (char)(s->bfmeF41148() == 0);
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme70 = s->bfmeF51148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme58 = s->bfmeF61148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme44 = s->bfmeF71148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme38 = s->bfmeF71148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme47 = s->bfmeF81148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme8c = s->bfmeF91148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1c = s->bfmeFa1148();
+	BfmeG1148 *g = (BfmeG1148 *)TheWritableGlobalData;
 
 	g->m_bfme1a = (char)(g->m_bfme1c == 0);
-	g_bfmeG1148->m_bfme1b = s->bfmeFb1148();
-	g_bfmeG1148->m_bfme1f = s->bfmeFc1148();
-	g_bfmeG1148->m_bfme18 = s->bfmeFd1148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1b = s->bfmeFb1148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1f = s->bfmeFc1148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme18 = s->bfmeFd1148();
 }
