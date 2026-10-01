@@ -51,14 +51,14 @@ extern BfmeP1081 *g_bfmeP1081;
 
 class BfmeF1081;
 
-class BfmeJ1081
+class ExperienceLevelSystem
 {
 public:
 	BfmeF1081 *bfmeFind1081(int a);
 	void bfmeAdd1081(BfmeF1081 *a, BfmeE1081 *b, int c, int d);
 };
 
-extern BfmeJ1081 *g_bfmeJ1081;
+extern ExperienceLevelSystem *g_bfmeJ1081;
 
 void __stdcall bfmeGo1081A(int a, int b)
 {
@@ -80,13 +80,13 @@ public:
 	char bfmeDo1081(BfmeE1081 *a, char *b, char *c, int d);
 };
 
-struct BfmeQ1081
+struct AI
 {
 	char m_bfmePad[0xc];
 	BfmeD1081 *m_pathfinder;
 };
 
-extern BfmeQ1081 *g_bfmeQ1081;
+extern AI *g_bfmeQ1081;
 
 char __stdcall bfmeGo1081B(int a, int b)
 {

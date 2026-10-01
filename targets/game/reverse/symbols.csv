@@ -75555,7 +75555,7 @@ name,address,notes
 ?bfmeAdd1054@BfmeD1054@@QAEXPAVBfmeSubC1054@@@Z,0x000361CE,pin
 ?bfmeAdd1059@BfmeG1059@@QAEXPAVBfmeA1059@@H@Z,0x000398BF,pin
 ?bfmeAdd1061@BfmeS1061@@QAEHPAD@Z,0x0001EDE9,pin
-?bfmeAdd1081@BfmeJ1081@@QAEXPAVBfmeF1081@@PAVBfmeE1081@@HH@Z,0x0000D58A,pin
+?bfmeAdd1081@ExperienceLevelSystem@@QAEXPAVBfmeF1081@@PAVBfmeE1081@@HH@Z,0x0000D58A,pin
 ?bfmeAdd1095@BfmeR1095@@QAEXPAUBfmeZ1095B@@H@Z,0x00040327,pin
 ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z,0x008CCED0,pin
 ?bfmeAdd1227@BfmeR1227@@QAEXPAX00@Z,0x008A0830,pin
@@ -76850,7 +76850,7 @@ name,address,notes
 ?bfmeFind1038@@YGPAVBfmeY1038@@H@Z,0x000181FB,pin
 ?bfmeFind1052@BfmeI1052@@QAEHPADH@Z,0x007E8900,pin
 ?bfmeFind1060@BfmeSub1060@@QAEPAUBfmeFn1060@@PAH@Z,0x0000F2FE,pin
-?bfmeFind1081@BfmeJ1081@@QAEPAVBfmeF1081@@H@Z,0x000335D2,pin
+?bfmeFind1081@ExperienceLevelSystem@@QAEPAVBfmeF1081@@H@Z,0x000335D2,pin
 ?bfmeFind1087@BfmeC1087@@QAEHH@Z,0x0004B36C,pin
 ?bfmeFind1091@BfmeC1091@@QAEHH@Z,0x0004B36C,pin
 ?bfmeFind1094@BfmeB1094@@QAEPAVBfmeK1094@@H@Z,0x0001F253,pin
@@ -81915,7 +81915,7 @@ name,address,notes
 ?g_bfmeJ1020@@3PAVBfmeJ1020@@A,0x00EF0888,pin
 ?g_bfmeJ1023@@3PAVBfmeJ1023@@A,0x00EF1044,pin
 ?g_bfmeJ1058@@3PAVBfmeJ1058@@A,0x00EF0888,pin
-?g_bfmeJ1081@@3PAVBfmeJ1081@@A,0x00EF0888,pin
+?g_bfmeJ1081@@3PAVExperienceLevelSystem@@A,0x00EF0888,pin
 ?g_bfmeJ1101@@3PAVBfmeJ1101@@A,0x00EF086C,pin
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
@@ -82193,7 +82193,7 @@ name,address,notes
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
 ?g_bfmeQ1026@@3PAVBfmeQ1026@@A,0x00EED700,pin
 ?g_bfmeQ1060@@3PAVBfmeQ1060@@A,0x00EED600,pin
-?g_bfmeQ1081@@3PAUBfmeQ1081@@A,0x00EEF214,pin
+?g_bfmeQ1081@@3PAUAI@@A,0x00EEF214,pin
 ?g_bfmeQ1095@@3PAVBfmeQ1095A@@A,0x00EEF188,pin
 ?g_bfmeQueueEUG@@3PAVBfmeQueueEUG@@A,0x012F76F0,pin request queue global for BfmeConv1990
 ?g_bfmeR1060@@3PAVBfmeR1060@@A,0x00EF19E8,pin
