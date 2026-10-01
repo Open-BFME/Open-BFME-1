@@ -20,23 +20,7 @@
 // this+0xB8 (_M_finish).  Node layout is _M_next+0, key+4, value+8.
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
-#include <hash_map>
-
-class Object;
-typedef int ObjectID;
-
-typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
-class GameLogic
-{
-public:
-	Object *findObjectByID(ObjectID id);
-
-private:
-	char m_slice_pad[0xB0];		// retail this+0x00 .. +0xAF, untouched
-	ObjectPtrHash m_objHash;	// bucket vector _M_start lands at this+0xB4
-};
+#include "GameLogicObjectLookup.h"
 
 Object *GameLogic::findObjectByID(ObjectID id)
 {

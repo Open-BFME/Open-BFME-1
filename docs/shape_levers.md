@@ -86,6 +86,17 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | An `int` parameter receives a `Bool`: retail materialises it with `xor`, `test` and `setne`, ours zero-extends it with `movzx` | Pass `flag ? 1 : 0` instead of the `Bool` itself. The addTree call inside `W3DTreeBuffer::xfer` 0x007371D0 (1,966 B) needed this on 2026-09-26; passing `doShadow` directly compiles to 1,960 B with a `movzx`. |
 | Every instruction matches except the order in which the terms of one x87 sum are evaluated, for example one row of an inlined `Matrix3D::Transform_Vector` | Reordering the terms inside the inline does nothing: in a forced-inline copy of `Transform_Vector` all six orders of the row compiled byte-identical, because MSVC 7.1 reorders the chain itself. (Written out as a plain expression instead of through the inline's `v` pointer, the order does change the code, but none of those six spellings matched.) The order it picked moved with the number of local variables in the function: one extra local changed it the same way at each of four positions tried. At the shrub vertex update 0x0071D5E0 (809 B) the match came from `Real x, y, z` temporaries read from the vertex and fed into the `Vector3` (Zero Hour's routine has `x` and `y`) together with dropping the separate `startVertex` local that Zero Hour keeps; `x` and `y` alone did not match. Six or seven unused locals added to the version without `startVertex` also matched, which is dummy code and was not landed. It is not a guaranteed fix: at `W3DTerrainVisual::addFactionBib` 0x00732130 no count of extra locals from 0 to 12 made the body exact. |
 
+The 1540-byte `updateFormationMembers` bank at `0x00241050` is another
+callee-visibility witness: direct `TheGameLogic->findObjectByID` calls plus
+the canonical read-only lookup body in `GameLogicObjectLookup.h` change the
+cached receiver from `ECX`-then-`EBX` to retail's `EBX`-then-`ECX`. The caller
+and the 82-byte lookup both probe exact modulo relocations, and the lookup's
+authoritative TU still reports `Functions: OK`. This is **banked, not landed**:
+the scoped caller gate still lacks the native delay-map `find` binding and
+the class/struct `Coord3D` angle-call ABI view. Do not add another lookup row
+or treat a masked probe as proof that those REL32 bindings are resolved.
+
+
 For the 408-byte wind update at `0x005FE480`, the whole native body already
 matched except four EAX/EDX operand bytes loading its two float bounds.
 Declaring the lower bound before the upper bound fixed all four, even though
