@@ -29,7 +29,11 @@ struct Rva005A63D0Mouse
 	virtual void bfmeSetCursorAAX(int kind);
 };
 
-extern Rva005A63D0Mouse *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  This TU keeps its own view of the layout and
+// casts at the use so the reference links to the one global.
+class Mouse;
+extern Mouse *TheMouse;
 
 struct BfmeArgAAX
 {
@@ -50,7 +54,7 @@ void __stdcall bfmeDispatchAAX(BfmeArgAAX *a, int kind)
 
 			if (Glo012F1028->bfmeCheckAAX(id))
 			{
-				TheMouse->bfmeSetCursorAAX(5);
+				((Rva005A63D0Mouse *)TheMouse)->bfmeSetCursorAAX(5);
 				Glo012F1028->bfmeApplyAAX(a->m_bfme08AAX);
 			}
 
@@ -86,7 +90,7 @@ void __stdcall bfmeApplyCursor0060D510(BfmeArg0060D510 *a)
 
 	if (Glo012F1028->bfmeCheckAAX(id))
 	{
-		TheMouse->bfmeSetCursorAAX(5);
+		((Rva005A63D0Mouse *)TheMouse)->bfmeSetCursorAAX(5);
 		Glo012F1028->bfmeApplyAAX(a->m_bfme08_0060D510);
 	}
 }

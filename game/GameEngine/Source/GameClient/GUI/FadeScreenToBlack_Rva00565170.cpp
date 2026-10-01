@@ -39,7 +39,11 @@ class BfmeZ1100
 public:
 	void bfmeEnd1100(int h);
 };
-extern BfmeZ1100 *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  This TU keeps its own view of the layout and
+// casts at the use so the reference links to the one global.
+class Mouse;
+extern Mouse *TheMouse;
 
 // ?rva00565170@@YAHH_N@Z
 int rva00565170(int, bool start)
@@ -50,7 +54,7 @@ int rva00565170(int, bool start)
 	{
 		((BfmeRankTransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("FadeScreenToBlack"), 0);
 		((Rva004893C0ByteSetter *)TheTransitionHandler)->set();
-		TheMouse->bfmeEnd1100(0);
+		((BfmeZ1100 *)TheMouse)->bfmeEnd1100(0);
 	}
 	else if (TheTransitionHandler->isFinished())
 	{

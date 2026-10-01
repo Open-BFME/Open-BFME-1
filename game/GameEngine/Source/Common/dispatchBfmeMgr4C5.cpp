@@ -23,12 +23,17 @@ public:
 	int mode;
 };
 
-extern BfmeMgr4C5 *g_mgr12F4C5C;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  This TU keeps its own view of the layout and
+// casts at the use so the reference links to the one global.
+class Mouse;
+extern Mouse *TheMouse;
 
 void dispatchBfmeMgr4C5()
 {
-	if (g_mgr12F4C5C->mode == 40)
-		g_mgr12F4C5C->dispatch(1);
+	BfmeMgr4C5 *m = (BfmeMgr4C5 *)TheMouse;
+	if (m->mode == 40)
+		m->dispatch(1);
 	else
-		g_mgr12F4C5C->dispatch(40);
+		m->dispatch(40);
 }

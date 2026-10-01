@@ -96,7 +96,11 @@ struct Rva005A63D0Mouse
 	void bfmeSetHV(int flag);
 };
 
-extern Rva005A63D0Mouse *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  This TU keeps its own view of the layout and
+// casts at the use so the reference links to the one global.
+class Mouse;
+extern Mouse *TheMouse;
 
 void ClientRoot4120::bfmeCloseHV(void)
 {
@@ -130,7 +134,7 @@ void BfmeOwnerHV::bfmeEndHV(int reason)
 		else
 			TheGameClient->bfmeOpenHV();
 
-		TheMouse->bfmeSetHV(0);
+		((Rva005A63D0Mouse *)TheMouse)->bfmeSetHV(0);
 		m_bfmeStateHV = 0;
 	}
 }

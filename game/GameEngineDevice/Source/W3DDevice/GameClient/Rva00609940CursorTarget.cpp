@@ -36,8 +36,10 @@ public:
 	void setCursorTooltip(UnicodeString tooltip, int tooltipDelay, const RGBColor *color, Real width);
 };
 
-struct Rva005A63D0Mouse;
-extern Rva005A63D0Mouse *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  The Mouse view above is this TU's own look at
+// the one global, so the reference links.
+extern Mouse *TheMouse;
 
 class Rva00609940CursorTarget
 {

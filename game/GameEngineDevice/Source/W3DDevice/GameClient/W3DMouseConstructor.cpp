@@ -176,7 +176,11 @@ extern D3DDeviceInterface *g_w3dMouseD3DDevice;
 extern MouseThreadClass g_w3dMouseThread;
 extern unsigned char g_w3dMouseThreadRunLock;
 extern bool g_w3dMouseIsThread;
-extern W3DMouseDrawInterface *g_w3dMouseDrawTarget;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  The Mouse class above is this TU's own view of
+// it, and W3DMouseDrawInterface is the view the draw call needs, so the
+// reference links to the one global.
+extern Mouse *TheMouse;
 extern void *g_w3dMouseCursorImages[50];
 
 W3DMouse::W3DMouse() : m_camera(0)
@@ -276,8 +280,8 @@ void MouseThreadClass::Thread_Function()
 			break;
 
 		g_w3dMouseIsThread = true;
-		if (g_w3dMouseDrawTarget)
-			g_w3dMouseDrawTarget->draw();
+		if (TheMouse)
+			((W3DMouseDrawInterface *)TheMouse)->draw();
 		g_w3dMouseIsThread = false;
 	}
 }
