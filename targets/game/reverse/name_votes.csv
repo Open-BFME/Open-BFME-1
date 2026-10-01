@@ -366,3 +366,5 @@ game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value38,0e9b1
 game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value3c,838df28fc08a4c69500f9f68,grok,20260929230913-2db223,2026-09-29
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|type||BfmeTailA2,7ed1ffce36aad7b433b8f0d9,gemini,20261001113828-b657bb,2026-10-01
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|type||BfmeCoordA2,c23beb6818bd9976af1c2293,gemini,20261001113828-b657bb,2026-10-01
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|type||LinePoint0078B040,5d2e49d229f03ce2dd5d1195,gemini,20261001113828-6e73fc,2026-10-01
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|type||LineVertex0078B040,8c660744bd84f3451c9830a0,gemini,20261001113828-6e73fc,2026-10-01
