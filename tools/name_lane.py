@@ -557,6 +557,12 @@ def rewrite_stored(renames, why="two models agreed"):
             # functions.csv union-merges: a renamed row returns from any older branch unless tombstoned
             renamed = [(a[0], a[2], b[0]) for a, b in zip(csv.reader(io.StringIO(text)), csv.reader(io.StringIO(new)))
                        if a and a[0] != b[0]]
+            # a name put back (a dispute) was tombstoned when it was renamed away; check_csv would read it as resurrected
+            back = {(name, int(rva, 16)) for _, rva, name in renamed}
+            kept = [l for l in TOMBSTONES.read_bytes().decode("utf-8").splitlines(keepends=True)
+                    if not ((r := next(csv.reader([l]), [])) and len(r) > 1 and re.fullmatch(r"0x[0-9A-Fa-f]+", r[1])
+                            and (r[0], int(r[1], 16)) in back)]
+            TOMBSTONES.write_bytes("".join(kept).encode("utf-8"))
             with TOMBSTONES.open("a", encoding="utf-8", newline="") as f:
                 csv.writer(f, lineterminator="\n").writerows(
                     (old, rva, f"renamed to {name} by tools/name_lane.py: {why}") for old, rva, name in renamed)
