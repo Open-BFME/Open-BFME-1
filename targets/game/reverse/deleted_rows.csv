@@ -31787,3 +31787,4 @@ _timeGetTime@0,0x007E4810,"Retired authored shadow of native import-library FF25
 ?bfmeGetStartPositionInfo@MpGameSetup@@QAEPBUStartPositionInfo@@H@Z,0x00525F80,renamed to ?getStartPositionInfo@MpGameSetup@@QAEPBUStartPositionInfo@@H@Z by tools/name_lane.py: two models agreed
 ?d_00907960@@YAXXZ,0x00907960,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@SAXXZ, a gate-required claim from game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp over the same 401-byte range. The game/gen_asm/d_00904510.asm scaffold reproduces those bytes but carries no identity."
 ?addIdleWorker@BfmeOwnDB@@QAEXPAVBfmeItemDB@@@Z,0x004438A0,renamed to ?addIdleWorker@InGameUI@@QAEXPAVBfmeItemDB@@@Z by tools/name_lane.py: two models agreed
+?bfmeGo930D@BfmeThing930D@@QAEXXZ,0x0095C780,renamed to ?bfmeGo930D@StreakRendererClass@@QAEXXZ by tools/name_lane.py: two models agreed

@@ -68,7 +68,7 @@ public:
 	void bfmeRelKB();
 };
 
-class BfmeThing930D
+class StreakRendererClass
 {
 public:
 	void bfmeGo930D();
@@ -77,7 +77,7 @@ public:
 	void *m_vertexBuffer;
 };
 
-void BfmeThing930D::bfmeGo930D()
+void StreakRendererClass::bfmeGo930D()
 {
 	bfmeFreeRC(m_vertexBuffer);
 	BfmeOldKB *s = m_bfmeP;
