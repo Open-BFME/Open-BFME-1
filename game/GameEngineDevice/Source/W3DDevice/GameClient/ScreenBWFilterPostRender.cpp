@@ -78,7 +78,11 @@ public:
 	virtual void getOrigin(Int *, Int *) = 0;
 };
 
-extern BfmeTacticalView *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the size/origin vtable slice.
+class View;
+extern View *TheTacticalView;
+static inline BfmeTacticalView *bfmeTacticalView() { return (BfmeTacticalView *)TheTacticalView; }
 
 void *__cdecl bfmeEndRenderToTexture(void);
 
@@ -115,9 +119,9 @@ Bool ScreenBWFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	Int xpos, ypos, width, height;
 
 	BfmeDeviceGlobal->vt->SetTexture(BfmeDeviceGlobal, 0, tex);
-	TheTacticalView->getOrigin(&xpos, &ypos);
-	width = TheTacticalView->getWidth();
-	height = TheTacticalView->getHeight();
+	bfmeTacticalView()->getOrigin(&xpos, &ypos);
+	width = bfmeTacticalView()->getWidth();
+	height = bfmeTacticalView()->getHeight();
 
 	// bottom right
 	v[0].p = D3DXVECTOR4(xpos + width - 0.5f,

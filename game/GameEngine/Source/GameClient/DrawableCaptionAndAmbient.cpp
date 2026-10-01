@@ -265,7 +265,11 @@ public:
 };
 
 extern Display *TheDisplay;
-extern TacticalView *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the vtable slice of it.
+class View;
+extern View *TheTacticalView;
+static inline TacticalView *tacticalView() { return (TacticalView *)TheTacticalView; }
 extern InGameUI *TheInGameUI;
 extern void j_0003ee55();
 
@@ -372,7 +376,7 @@ void Drawable::drawCaption()
 	center.y += position->y;
 	center.z += position->z;
 
-	TheTacticalView->worldToScreen( &center, &screen );
+	tacticalView()->worldToScreen( &center, &screen );
 	screen.x -= m_captionDisplayString->getWidth( -1 ) / 2;
 
 	Int width, xPos;

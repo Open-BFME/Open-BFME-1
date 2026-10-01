@@ -177,14 +177,18 @@ public:
 	virtual void v45();
 	virtual bool vfn46(int code);
 };
-extern BfmeMgr160_D20 *g_mgr12F1600;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the message-manager vtable slice.
+class View;
+extern View *TheTacticalView;
+static inline BfmeMgr160_D20 *mgr160() { return (BfmeMgr160_D20 *)TheTacticalView; }
 
 void __stdcall bfmeCheckBoolsD20(bool b1, bool b2)
 {
-	if (g_mgr12F1600->vfn46(2)) {
+	if (mgr160()->vfn46(2)) {
 		int code = b2 ? (b1 ? 11 : 12) : (b1 ? 9 : 10);
-		if (!g_mgr12F1600->vfn44(code)) {
-			g_mgr12F1600->vfn46(0);
+		if (!mgr160()->vfn44(code)) {
+			mgr160()->vfn46(0);
 		}
 	}
 }

@@ -311,7 +311,10 @@ extern FontLibrary *TheFontLibrary;
 extern InGameUI *TheInGameUI;
 extern GlobalLanguageData *TheGlobalLanguageData;
 extern GameTextInterface *TheGameText;
-extern TacticalView *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the vtable slice of it.
+class View;
+extern View *TheTacticalView;
 
 #define DRAWABLE_CONSTRUCT_GLOBAL(type, global) \
 	(static_cast<type *>( global ))
@@ -384,7 +387,7 @@ void Drawable::drawConstructPercent()
 	Coord3D center;
 	constructCenter( this, &center );
 	Real z = constructPosition( this )->z;
-	TacticalView *view = DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, TheTacticalView );
+	TacticalView *view = reinterpret_cast<TacticalView *>( TheTacticalView );
 	center.z = center.z - (center.z - z) * 0.333f;
 	if ( view->worldToScreen( &center, &screen ) != 0 )
 		return;

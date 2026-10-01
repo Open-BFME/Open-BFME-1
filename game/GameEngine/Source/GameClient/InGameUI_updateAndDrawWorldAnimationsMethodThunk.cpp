@@ -162,7 +162,11 @@ public:
 #undef BFME_TACTICAL_SLOT
 };
 
-extern TacticalView *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the vtable slice of it.
+class View;
+extern View *TheTacticalView;
+static inline TacticalView *tacticalView() { return (TacticalView *)TheTacticalView; }
 
 static Bool bfmeWorldToScreen( TacticalView *view, const Coord3D *world, ICoord2D *screen )
 {
@@ -295,13 +299,13 @@ void InGameUI::updateAndDrawWorldAnimations()
 		}
 
 		ICoord2D screen;
-		if( bfmeWorldToScreen( TheTacticalView, &wad->m_worldPos, &screen ) == false )
+		if( bfmeWorldToScreen( tacticalView(), &wad->m_worldPos, &screen ) == false )
 		{
 			UnsignedInt width = ((Anim2D *)wad->m_anim)->getCurrentFrameWidth();
 			UnsignedInt height = ((Anim2D *)wad->m_anim)->getCurrentFrameHeight();
-			TacticalView *camera = TheTacticalView;
+			TacticalView *camera = tacticalView();
 			Real maxZoom = camera->getMaxZoom();
-			Real zoomScale = maxZoom / TheTacticalView->getZoom();
+			Real zoomScale = maxZoom / tacticalView()->getZoom();
 			width *= zoomScale;
 			height *= zoomScale;
 			screen.x -= width / 2;

@@ -126,7 +126,11 @@ extern void hideReplayControls();
 extern ControlBar *TheControlBar;
 extern GameWindowManager *TheWindowManager;
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern void *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the vtable slice, so it casts at
+// the use sites rather than declaring the global under a local type.
+class View;
+extern View *TheTacticalView;
 extern void *TheDisplay;
 extern AptPalantir *TheAptPalantir;
 extern BannerUI *TheBannerUI;

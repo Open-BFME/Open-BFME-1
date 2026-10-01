@@ -92,7 +92,13 @@ virtual void pad40();
 virtual void pad41();
 virtual void pad42();
 virtual void pad43();
-virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};extern FadeView *FadeTacticalView;
+virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
+// Retail 0x012F1600 is the one and only tactical-view singleton, declared
+// once in GameClient/View.cpp as `View *TheTacticalView`. This TU only needs
+// the fade-mode vtable slice, so cast the canonical global back to it.
+class View;
+extern View *TheTacticalView;
+static inline FadeView *fadeTacticalView() { return (FadeView *)TheTacticalView; }
 extern int Rva007D31C0FadeDirection,Rva007D31C0FadeFrames,Rva007D31C0FadeCurrentFrame;extern float Rva007D31C0FadeValue;
 enum FilterModes {FM_NULL_MODE};
 class Rva007D31C0 { protected: virtual int set(FilterModes); };
@@ -105,7 +111,7 @@ int Rva007D31C0::set(FilterModes mode) {
  }else if(Rva007D31C0FadeDirection<0){
   int fade=++Rva007D31C0FadeCurrentFrame;
   if(fade<Rva007D31C0FadeFrames)Rva007D31C0FadeValue=1-(float)fade/(float)Rva007D31C0FadeFrames;
-  else{Rva007D31C0FadeValue=0;FadeTacticalView->setMode(0);FadeTacticalView->setFilter(0);Rva007D31C0FadeCurrentFrame=0;Rva007D31C0FadeDirection=0;}
+  else{Rva007D31C0FadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);Rva007D31C0FadeCurrentFrame=0;Rva007D31C0FadeDirection=0;}
  }
 
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);

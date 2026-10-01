@@ -91,7 +91,13 @@ virtual void pad40();
 virtual void pad41();
 virtual void pad42();
 virtual void pad43();
-virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};extern ZoomView *ZoomTacticalView;
+virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
+// Retail 0x012F1600 is the one and only tactical-view singleton, declared
+// once in GameClient/View.cpp as `View *TheTacticalView`. This TU only needs
+// the zoom-mode vtable slice, so cast the canonical global back to it.
+class View;
+extern View *TheTacticalView;
+static inline ZoomView *zoomTacticalView() { return (ZoomView *)TheTacticalView; }
 extern int ZoomLastFrame,ZoomPulse,ZoomFadeDirection,ZoomFadeFrames,ZoomCurrentFrame;
 extern bool ZoomPulseDown;extern float ZoomFadeValue;
 enum FilterModes{FM_NULL_MODE};
@@ -108,10 +114,10 @@ int ScreenZoomFilter::set(FilterModes mode){
   }
   if(ZoomPulseDown){
    ZoomPulse-=3;
-   if(ZoomPulse<1){ZoomPulseDown=false;ZoomPulse=0;ZoomTacticalView->setMode(0);ZoomTacticalView->setFilter(0);}
+   if(ZoomPulse<1){ZoomPulseDown=false;ZoomPulse=0;zoomTacticalView()->setMode(0);zoomTacticalView()->setFilter(0);}
   }else{
    ZoomPulse+=3;
-   if(ZoomPulse>=30){ZoomPulseDown=true;ZoomTacticalView->setMode(15);ZoomTacticalView->setFilter(7);savedMode=ZoomGlobalSettings->mode;ZoomGlobalSettings->apply82AA0(4);ZoomTerrain->apply(4);}
+   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=ZoomGlobalSettings->mode;ZoomGlobalSettings->apply82AA0(4);ZoomTerrain->apply(4);}
   }
  }
  if(mode>FM_NULL_MODE){
@@ -124,7 +130,7 @@ int ScreenZoomFilter::set(FilterModes mode){
    if(changed)++ZoomCurrentFrame;
    int fade=ZoomCurrentFrame;
    if(fade<ZoomFadeFrames)ZoomFadeValue=1-(float)fade/(float)ZoomFadeFrames;
-   else{ZoomFadeValue=0;ZoomTacticalView->setMode(0);ZoomTacticalView->setFilter(0);ZoomCurrentFrame=0;ZoomFadeDirection=0;}
+   else{ZoomFadeValue=0;zoomTacticalView()->setMode(0);zoomTacticalView()->setFilter(0);ZoomCurrentFrame=0;ZoomFadeDirection=0;}
   }
   VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
   if(vmat)++vmat->refs;if(ScreenMaterial)ScreenMaterial->Release_Ref();ScreenMaterial=vmat;TheBoxTextureDirtyMask|=0x4000;if(vmat)vmat->Release_Ref();

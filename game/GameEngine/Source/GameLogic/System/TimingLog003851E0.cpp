@@ -94,7 +94,11 @@ private:
 class GlobalData;								///< retail pointee at 0x012ED5C8
 extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 extern TimingLogThingFactory *TheThingFactory;
-extern TimingView *TheTacticalView;
+// Retail 0x012F1600 is the tactical-view singleton defined once in
+// GameClient/View.cpp; this TU only needs the lookAt vtable slot of it.
+class View;
+extern View *TheTacticalView;
+static inline TimingView *timingView() { return (TimingView *)TheTacticalView; }
 
 void Rva009EBC00(int value);
 void rva00889690Set();
@@ -167,7 +171,7 @@ void TimingLog003851E0::start()
 	thePos.x = 50.0f;
 	thePos.y = 50.0f;
 	thePos.z = 0.0f;
-	TheTacticalView->lookAt(&thePos);
+	timingView()->lookAt(&thePos);
 
 	m_unk24 = 0;
 	m_unk4C = 0;
