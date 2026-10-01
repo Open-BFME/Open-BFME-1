@@ -38,13 +38,19 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
+// The global at retail 0x012F3330 is EA's singleton, declared and defined once
+// as GameWindowTransitionsHandler *TheTransitionHandler in
+// GameWindowTransitions.cpp (?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A).
+// The member is reached through this file's own view of the object, cast at
+// the use, so the called ILT thunk 0x00045C28 stays the one retail calls.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
 class TransitionHandler
 {
 public:
 	void setGroup(AsciiString name, Int i);
 };
-
-extern TransitionHandler *TheTransitionHandler;
 
 class VictoryConditions
 {
@@ -71,6 +77,6 @@ void VictoryConditions::hideEndGame(void)
 	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
 	{
 		if (m_singleAllianceRemaining)
-			TheTransitionHandler->setGroup("MPorSkirmishFadeToScoreScreen", 0);
+			((TransitionHandler *)TheTransitionHandler)->setGroup("MPorSkirmishFadeToScoreScreen", 0);
 	}
 }

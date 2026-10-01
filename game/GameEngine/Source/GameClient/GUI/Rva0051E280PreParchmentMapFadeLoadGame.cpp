@@ -3,13 +3,21 @@
 
 typedef bool Bool;
 
+// The global at retail 0x012F3330 is EA's singleton, declared and defined once
+// as GameWindowTransitionsHandler *TheTransitionHandler in
+// GameWindowTransitions.cpp (?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A).
+// Members are reached through this file's own view of the object, cast at the
+// use, so the called ILT thunks (0x00045C28 setGroup, 0x00042E6F isFinished)
+// stay the ones retail calls.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
 class TransitionHandler
 {
 public:
 	void setGroup(AsciiString name, int immediate);
 	bool isFinished(void);
 };
-extern TransitionHandler *TheTransitionHandler;
 
 class Rva0057F100
 {
@@ -57,12 +65,12 @@ int rva0051E280PreParchmentMapFadeStartNew(int, bool start)
 	int result = 1;
 	if (go)
 	{
-		TheTransitionHandler->setGroup(AsciiString("PreParchmentMapFade_StartNew"), 0);
+		((TransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("PreParchmentMapFade_StartNew"), 0);
 		if (g_obj12F4B58)
 			g_obj12F4B58->giveBack();
 		g_theWindowManager->unidentified_0002e9a1(-1);
 	}
-	else if (TheTransitionHandler->isFinished())
+	else if (((TransitionHandler *)TheTransitionHandler)->isFinished())
 	{
 		((AudioClientUpdate *)TheAudio)->slot30(1, 1, 1);
 		((AudioClientUpdate *)TheAudio)->slot30(2, 1, 1);

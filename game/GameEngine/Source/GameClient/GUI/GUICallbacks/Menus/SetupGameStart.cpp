@@ -28,6 +28,14 @@ public:
 	void reverseAnimatewindow();
 };
 
+// The global at retail 0x012F3330 is EA's singleton, declared and defined once
+// as GameWindowTransitionsHandler *TheTransitionHandler in
+// GameWindowTransitions.cpp (?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A).
+// The member is reached through this file's own view of the object, cast at
+// the use, so the called ILT thunk 0x00045C28 stays the one retail calls.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
 class TransitionHandler
 {
 public:
@@ -42,7 +50,6 @@ extern SetupGameStartCampaignManagerView *TheCampaignManager;
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 extern Shell *TheShell;
-extern TransitionHandler *TheTransitionHandler;
 
 void setupGameStart(AsciiString mapName, int diff)
 {
@@ -51,5 +58,5 @@ void setupGameStart(AsciiString mapName, int diff)
 		&((SetupGameStartGlobalDataView *)TheWritableGlobalData)->m_pendingFile;
 	pendingFile->set(mapName);
 	TheShell->reverseAnimatewindow();
-	TheTransitionHandler->setGroup(AsciiString("FadeWholeScreen"), 0);
+	((TransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("FadeWholeScreen"), 0);
 }

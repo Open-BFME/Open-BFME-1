@@ -56,6 +56,14 @@ public:
 	bool m_inputAllowed;				///< retail ui+0x0E
 };
 
+// The global at retail 0x012F3330 is EA's singleton, declared and defined once
+// as GameWindowTransitionsHandler *TheTransitionHandler in
+// GameWindowTransitions.cpp (?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A).
+// The member is reached through this file's own view of the object, cast at
+// the use, so the called ILT thunk 0x00045C28 stays the one retail calls.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;	///< retail [0x012F3330]
+
 class TransitionHandler
 {
 public:
@@ -63,7 +71,6 @@ public:
 };
 
 extern PlayerList *ThePlayerList;			///< retail [0x012ED748]
-extern TransitionHandler *TheTransitionHandler;	///< retail [0x012F3330]
 extern InGameUI *TheInGameUI;				///< retail [0x012F148C]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
@@ -95,7 +102,7 @@ void ControlBar::onPlayerRankChanged(const Player *p)
 	{
 		if (TheTransitionHandler && TheInGameUI->getInputEnabled())
 		{
-			TheTransitionHandler->setGroup("ControlBarArrow", 0);
+			((TransitionHandler *)TheTransitionHandler)->setGroup("ControlBarArrow", 0);
 		}
 	}
 
