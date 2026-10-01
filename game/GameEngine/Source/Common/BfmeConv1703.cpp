@@ -23,7 +23,16 @@ public:
 	virtual void *bfmeMakeFU(BfmeSubFU *sub);
 };
 
-extern BfmeAudioFU *g_bfmeAudioFU;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline BfmeAudioFU *localBfmeAudioFU()
+{
+	return (BfmeAudioFU *)TheAudio;
+}
 
 class BfmeSubFU
 {
@@ -50,5 +59,5 @@ void BfmeOwnerFU::bfmeGoFU(void *first, void *second)
 
 	sub->bfmeFirstFU(first);
 	sub->bfmeSecondFU(second);
-	sub->bfmeThirdFU(g_bfmeAudioFU->bfmeMakeFU(sub));
+	sub->bfmeThirdFU(localBfmeAudioFU()->bfmeMakeFU(sub));
 }

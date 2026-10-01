@@ -24,7 +24,16 @@ public:
 
 #undef BFME_VSLOT
 
-extern Rva004910C0Audio *TheAudio;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slots this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline Rva004910C0Audio *localAudioView()
+{
+	return (Rva004910C0Audio *)TheAudio;
+}
 
 class Rva004910C0AudioEvent
 {
@@ -40,9 +49,9 @@ bool Rva004910C0AudioEvent::isAllowed()
 {
 	bool allowed = true;
 	if( TheAudio ) {
-		TheAudio->refresh();
+		localAudioView()->refresh();
 		if( m_kind != 1 )
-			allowed = !TheAudio->rejects( m_kind );
+			allowed = !localAudioView()->rejects( m_kind );
 	}
 	return allowed;
 }

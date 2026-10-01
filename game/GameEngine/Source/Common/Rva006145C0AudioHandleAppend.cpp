@@ -26,7 +26,16 @@ public:
 	virtual unsigned int addAudioEvent(void *event);
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline ClientSubsystem *localClientSubsystem()
+{
+	return (ClientSubsystem *)TheAudio;
+}
 
 class Rva006145C0Owner
 {
@@ -40,5 +49,5 @@ private:
 
 void Rva006145C0Owner::addAudioHandle(void *event)
 {
-	m_handles.push_back(TheAudioClientUpdate->addAudioEvent(event));
+	m_handles.push_back(localClientSubsystem()->addAudioEvent(event));
 }

@@ -1,12 +1,13 @@
-class ClientSubsystem;
+// Retail's AudioManager singleton (0x012ED668); only its null-ness is tested.
+class AudioManager;
 
-extern ClientSubsystem *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 void __cdecl bfmeSendAT(void *first, void *second);
 
 void __cdecl bfmeRepeatAT(void *first, void *second)
 {
-	if (TheAudioClientUpdate == 0)
+	if (TheAudio == 0)
 		return;
 
 	int count = 3;

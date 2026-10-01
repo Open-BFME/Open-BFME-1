@@ -63,7 +63,16 @@ public:
 	virtual void removeAudioEvent(UnsignedInt audioEvent);
 };
 
-extern AudioClientUpdate *TheAudioClientUpdate;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline AudioClientUpdate *localAudioClientUpdate()
+{
+	return (AudioClientUpdate *)TheAudio;
+}
 
 class GettingBuiltBehavior
 {
@@ -95,9 +104,9 @@ void GettingBuiltBehavior::onDelete()
 			production->slot14();
 	}
 
-	if (TheAudioClientUpdate != 0 && m_audioHandle >= 5)
+	if (TheAudio != 0 && m_audioHandle >= 5)
 	{
-		TheAudioClientUpdate->removeAudioEvent(m_audioHandle);
+		localAudioClientUpdate()->removeAudioEvent(m_audioHandle);
 		m_audioHandle = 1;
 	}
 }

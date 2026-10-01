@@ -52,24 +52,33 @@ public:
 
 #undef BFME_RVA002EFE20_UNUSED_SLOT
 
-extern Rva002EFEGlobal *g_Rva002EFEGlobal;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slots these wrappers call.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline Rva002EFEGlobal *localRva002EFEGlobal()
+{
+	return (Rva002EFEGlobal *)TheAudio;
+}
 
 void __stdcall Rva002EFE20Call(int value)
 {
-	g_Rva002EFEGlobal->call94(value, 0);
+	localRva002EFEGlobal()->call94(value, 0);
 }
 
 void __stdcall Rva002EFE40Call(int value)
 {
-	g_Rva002EFEGlobal->call98(value, 0);
+	localRva002EFEGlobal()->call98(value, 0);
 }
 
 void __stdcall Rva002EFEE0Call(int value)
 {
-	g_Rva002EFEGlobal->callA4(value, 0);
+	localRva002EFEGlobal()->callA4(value, 0);
 }
 
 void Rva002EFF00Call(void)
 {
-	g_Rva002EFEGlobal->callA8(0);
+	localRva002EFEGlobal()->callA8(0);
 }

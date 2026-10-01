@@ -69,18 +69,27 @@ public:
 #undef CLIENT_SUBSYSTEM_SLOT
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slots this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline ClientSubsystem *localClientSubsystem()
+{
+	return (ClientSubsystem *)TheAudio;
+}
 
 // ?playMessageReceivedSound@BFMEConnectionManager@@SAXXZ
 void BFMEConnectionManager::playMessageReceivedSound()
 {
-	if (TheAudioClientUpdate == 0)
+	if (TheAudio == 0)
 		return;
 
 	char *miscAudio = reinterpret_cast<char *>(
-		TheAudioClientUpdate->getMiscAudio());
+		localClientSubsystem()->getMiscAudio());
 	if (miscAudio == 0)
 		return;
 
-	TheAudioClientUpdate->addAudioEvent(miscAudio + 0xC40);
+	localClientSubsystem()->addAudioEvent(miscAudio + 0xC40);
 }

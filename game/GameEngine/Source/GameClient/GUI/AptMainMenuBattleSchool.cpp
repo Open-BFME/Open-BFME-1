@@ -28,7 +28,16 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeStopBQ( int mode );
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view below only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline Rva005A00B0AudioClient *localAudioClient()
+{
+	return (Rva005A00B0AudioClient *)TheAudio;
+}
 
 class GameWindowTransitionsHandler
 {
@@ -52,7 +61,7 @@ void AptMainMenu::BattleSchool( void *unused )
 	if( g_obj12F4B58 != 0 )
 		g_obj12F4B58->m_bfmeFlagBQ = 0;
 
-	TheAudioClientUpdate->bfmeStopBQ( 8 );
+	localAudioClient()->bfmeStopBQ( 8 );
 
 	TheTransitionHandler->setGroup( AsciiString( "MainMenuToBattleSchool" ) );
 

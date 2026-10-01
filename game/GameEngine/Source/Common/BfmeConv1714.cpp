@@ -23,7 +23,16 @@ public:
 	virtual void bfmeNotifyGG(int value);
 };
 
-extern BfmeAudioGG *g_bfmeAudioGG;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline BfmeAudioGG *localBfmeAudioGG()
+{
+	return (BfmeAudioGG *)TheAudio;
+}
 
 class BfmeOwnerGG
 {
@@ -54,9 +63,9 @@ void BfmeSecondGG::bfmeGoGG(int unused)
 	if ((*(BfmeOwnerGG **)(base - 0x24))->m_bfmeFlagGG == 0)
 		return;
 
-	if (g_bfmeAudioGG != 0)
+	if (TheAudio != 0)
 	{
-		g_bfmeAudioGG->bfmeNotifyGG(m_bfmeValueGG);
+		localBfmeAudioGG()->bfmeNotifyGG(m_bfmeValueGG);
 		m_bfmeValueGG = 1;
 	}
 

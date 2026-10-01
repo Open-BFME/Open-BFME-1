@@ -17,7 +17,16 @@ public:
 	virtual void slot26(int first, int second, int firstDisabled, int secondDisabled);
 };
 
-extern BfmeAudioManager002EF2A0 *TheAudioClientUpdate;
+// Retail's AudioManager singleton (0x012ED668); the TU-local view above only
+// names the slot this body calls.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline BfmeAudioManager002EF2A0 *localAudioManagerView()
+{
+	return (BfmeAudioManager002EF2A0 *)TheAudio;
+}
 
 // ?func002EF2A0@@YGXEEH@Z
 void __stdcall func002EF2A0(Byte first, Byte second, int value)
@@ -32,5 +41,5 @@ void __stdcall func002EF2A0(Byte first, Byte second, int value)
 		secondDisabled = 1;
 	else
 		secondDisabled = 0;
-	TheAudioClientUpdate->slot26(0, value, firstDisabled, secondDisabled);
+	localAudioManagerView()->slot26(0, value, firstDisabled, secondDisabled);
 }
