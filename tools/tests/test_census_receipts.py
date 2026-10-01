@@ -49,6 +49,15 @@ def test_capture_finishes_on_direct_child_exit_with_inherited_handles(
         pool.shutdown(wait=True)
 
 
+def test_capture_turns_a_hung_preprocessor_into_a_failure(tmp_path, monkeypatch):
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setattr(proofs, 'PREPROCESS_TIMEOUT', 1)
+    result = proofs.capture_preprocessor(
+        [sys.executable, '-c', 'import time; time.sleep(30)'], dict(os.environ))
+    assert result.returncode == 124
+    assert b'timed out' in result.stderr
+
+
 def test_real_capture_nonzero_exit_is_rejected_by_snapshot(tmp_path, monkeypatch):
     monkeypatch.setattr(build, 'ROOT', tmp_path)
     source = tmp_path / 'unit.cpp'

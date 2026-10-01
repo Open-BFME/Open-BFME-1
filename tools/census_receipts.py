@@ -43,13 +43,24 @@ def opened_paths(source, include_output):
     return paths
 
 
+PREPROCESS_TIMEOUT = 600
+
+
 def capture_preprocessor(command, env):
     # Wine services can inherit the compiler's standard handles and outlive
     # its launcher. Regular files preserve the exact binary output without
     # making the direct child's completion depend on those services' EOF.
+    # cl.exe -E can spin forever under Wine after reporting C1083; a timeout
+    # turns that hang into the ordinary failed-preprocess path.
     with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
-        result = subprocess.run(command, cwd=build.ROOT, env=env,
-                                stdout=stdout, stderr=stderr)
+        try:
+            result = subprocess.run(command, cwd=build.ROOT, env=env,
+                                    stdout=stdout, stderr=stderr,
+                                    timeout=PREPROCESS_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            return subprocess.CompletedProcess(
+                command, 124, b"",
+                b"preprocessor timed out after %d s" % PREPROCESS_TIMEOUT)
         stdout.seek(0)
         stderr.seek(0)
         return subprocess.CompletedProcess(command, result.returncode,
