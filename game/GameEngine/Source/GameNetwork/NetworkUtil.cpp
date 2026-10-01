@@ -31,6 +31,9 @@
 
 #include "GameNetwork/NetworkUtil.h"
 
+// Retail initializes this mutable frame-ring length to 258 at VA 0x012BA088.
+Int FRAME_DATA_LENGTH = 258;
+
 // Only the one function BFME's own bytes pin is carried here. The rest of the
 // reference's NetworkUtil.cpp cannot be included as-is: its bodies test
 // NETCOMMANDTYPE_RUNAHEADMETRICS, NETCOMMANDTYPE_RUNAHEAD and
