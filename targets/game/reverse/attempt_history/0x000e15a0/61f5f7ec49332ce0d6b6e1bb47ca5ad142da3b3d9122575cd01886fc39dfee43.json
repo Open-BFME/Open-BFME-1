@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "61f5f7ec49332ce0d6b6e1bb47ca5ad142da3b3d9122575cd01886fc39dfee43",
+  "symbol": "?method@Rva000E15A0@@QAE_NW4NameKeyType@@PAI@Z",
+  "score_kind": "measured",
+  "score": 0.375,
+  "source": "// ?method@Rva000E15A0@@QAE_NW4NameKeyType@@PAI@Z\n// partial score=0.375 date=2026-10-01\n// cl: /Igame/Libraries/Source/WWVegas/WWLib\r\n// stlport\r\n#include \"ascii_string.h\"\r\n#include <vector>\r\n\r\nenum NameKeyType;\r\nAsciiString KEYNAME(NameKeyType key);\r\n\r\nstruct Rva000E15A0Record\r\n{\r\n    NameKeyType m_at00;\r\n    char m_at04[0x120];\r\n};\r\n\r\nclass Rva000E15A0\r\n{\r\npublic:\r\n    bool method(NameKeyType key, unsigned int *outIndex);\r\n    char m_at00[8];\r\n    _STL::vector<Rva000E15A0Record> m_records;\r\n\r\n    unsigned int count() const { return m_records.size(); }\r\n};\r\n\r\nbool Rva000E15A0::method(NameKeyType key, unsigned int *outIndex)\r\n{\r\n    for (unsigned int index = 0; index < count(); ++index)\r\n    {\r\n        AsciiString name = KEYNAME(m_records[index].m_at00);\r\n        if (m_records[index].m_at00 == key)\r\n        {\r\n            *outIndex = index;\r\n            return true;\r\n        }\r\n    }\r\n    return false;\r\n}\r\n"
+}
