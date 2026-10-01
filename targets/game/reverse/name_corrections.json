@@ -11148,5 +11148,15 @@
   "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva0089BBF0InitGlobals.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva0089BBF0InitGlobals.cpp",
+  "old_name": "BfmeDerivedKindB",
+  "new_name": "Rva00898D60Target",
+  "before_sha256": "d004cab142671dc622ce25dd770a1c4dc078d2ef4dd19fe26bbfcd3626850b5f",
+  "after_sha256": "9fdce2a1e064ab9b69a14936bedb24a8367d33522d7e56863d518eeb4b9a3f53",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
  }
 ]

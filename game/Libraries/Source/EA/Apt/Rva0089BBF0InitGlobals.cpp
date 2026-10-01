@@ -301,19 +301,39 @@ struct Rva0089BBF0Matrix
 	float m_ty;
 };
 
-extern BfmeDerivedKind3 *g_Va013379BC;
-extern Rva008D2B10 *g_Va01337A04;
-extern BfmeDerivedKindB *g_Va01337A20;
+// The globals below carry retail's own names.  Each address is already
+// named in dir32_addresses.csv, so the declared type here is the one the
+// name mangles with; the value stored is the object this body builds, cast
+// to that pointer.  No member of any of these types is touched here.
+
+// Defining name at 0x00F379BC: a global int (BfmeConv568.cpp reads it as
+// one), holding the kind-3 registry value as an address.
+extern int bfmeTheCBC;
+// Defining name at 0x00F37A04: a global int holding the 0x3C0-byte value.
+extern int g_bfmeB1038;
+// Defining name at 0x00F37A20: pointer to Rva00898D60Target, the class the
+// matched 0x00898D60 body chains through (Rva00898D60GlobalTail.cpp).
+class Rva00898D60Target;
+extern Rva00898D60Target *g_Rva01337A20;
 extern Rva89A2C0Derived *g_Va013379B4;
 extern BfmeThingVDW *g_Va013379FC;
 extern Rva89A540Derived *g_Va013379AC;
-extern Rva89A6E0Derived *g_Va013387D8;
-extern Rva89A880Derived *g_Va0133846C;
+// Defining name at 0x00F387D8: pointer to Rva00899C20Registry, the
+// find-1024 registry the matched 0x00899C20 body searches.
+struct Rva00899C20Registry;
+extern Rva00899C20Registry *g_Va013387D8;
+// Defining name at 0x00F3846C: pointer to BfmeMap1024, the map the matched
+// BfmeConv1024 body probes (BfmeConv1024.cpp).
+struct BfmeMap1024;
+extern BfmeMap1024 *g_bfmeMap1024;
 extern Rva89AA20Derived *g_Va01337A00;
 extern Rva008A9B00 *g_Va013379F0;
-extern void *g_Va01337A28;
+// Defining name at 0x00F37A28: the lazily built Apt global table, spelled
+// void* by the matched 0x00899800 body (Rva00899800TableSet.cpp).
+extern void *g_Rva01337A28Index;
 extern Rva0089BBF0ColorTransform g_Va013379CC;
-extern Rva0089BBF0Matrix g_Va01337A08;
+// Defining name at 0x00F37A08: the C-linkage 2x3 matrix block.
+extern "C" Rva0089BBF0Matrix g_bfmeD1206;
 extern BfmeA1029 *g_Va013379EC;
 extern BfmeA1029 *g_Va013379C4;
 extern BfmeA1029 *g_Va013379C8;
@@ -354,11 +374,11 @@ static __forceinline Rva008A9B00 *rva0089BBF0CreateString()
 void Rva0089BBF0InitGlobals()
 {
 	BfmeDerivedKind3 *kind3 = new BfmeDerivedKind3();
-	g_Va013379BC = kind3;
+	bfmeTheCBC = (int)kind3;
 	Rva008D2B10 *d2b10 = new Rva008D2B10();
-	g_Va01337A04 = d2b10;
+	g_bfmeB1038 = (int)d2b10;
 	BfmeDerivedKindB *kindB = new BfmeDerivedKindB();
-	g_Va01337A20 = kindB;
+	g_Rva01337A20 = (Rva00898D60Target *)kindB;
 	Rva89A2C0Derived *a2c0 = new Rva89A2C0Derived();
 	g_Va013379B4 = a2c0;
 	BfmeThingVDW *vdw = new BfmeThingVDW();
@@ -366,9 +386,9 @@ void Rva0089BBF0InitGlobals()
 	Rva89A540Derived *a540 = new Rva89A540Derived();
 	g_Va013379AC = a540;
 	Rva89A6E0Derived *a6e0 = new Rva89A6E0Derived();
-	g_Va013387D8 = a6e0;
+	g_Va013387D8 = (Rva00899C20Registry *)a6e0;
 	Rva89A880Derived *a880 = new Rva89A880Derived();
-	g_Va0133846C = a880;
+	g_bfmeMap1024 = (BfmeMap1024 *)a880;
 	Rva89AA20Derived *aa20 = new Rva89AA20Derived();
 	g_Va01337A00 = aa20;
 
@@ -377,7 +397,7 @@ void Rva0089BBF0InitGlobals()
 	string->m_flags = (string->m_flags & 0xffffc03f) | 0x40;
 	((Rva0089BBF0Notify *)g_Va013379F0)->notify();
 
-	g_Va01337A28 = (void *)0;
+	g_Rva01337A28Index = (void *)0;
 	d_0089abc0();
 
 	g_Va013379CC.m_mul[0] = 1.0f;
@@ -388,12 +408,12 @@ void Rva0089BBF0InitGlobals()
 	g_Va013379CC.m_add[1] = 0.0f;
 	g_Va013379CC.m_add[2] = 0.0f;
 	g_Va013379CC.m_add[3] = 0.0f;
-	g_Va01337A08.m_a = 1.0f;
-	g_Va01337A08.m_b = 0.0f;
-	g_Va01337A08.m_c = 0.0f;
-	g_Va01337A08.m_d = 1.0f;
-	g_Va01337A08.m_tx = 0.0f;
-	g_Va01337A08.m_ty = 0.0f;
+	g_bfmeD1206.m_a = 1.0f;
+	g_bfmeD1206.m_b = 0.0f;
+	g_bfmeD1206.m_c = 0.0f;
+	g_bfmeD1206.m_d = 1.0f;
+	g_bfmeD1206.m_tx = 0.0f;
+	g_bfmeD1206.m_ty = 0.0f;
 
 	BfmeA1029 *value = new BfmeA1029(reinterpret_cast<int>(&d_008c64c0));
 	g_Va013379EC = value;
