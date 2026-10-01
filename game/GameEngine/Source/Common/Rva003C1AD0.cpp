@@ -51,7 +51,16 @@ public:
 	AsciiString m_at94;
 };
 
-extern Glo012ED5C8Type *TheWritableGlobalData;
+// The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A.  This TU keeps its own view of the object and
+// casts at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline Glo012ED5C8Type *localTheWritableGlobalData()
+{
+	return reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData);
+}
 
 class Glo012F1024Type
 {
@@ -107,7 +116,7 @@ void Rva003C1A50::start(unsigned char mordor)
 		setFPMode();
 	++*fp;
 
-	Glo012ED5C8Type *gd = TheWritableGlobalData;
+	Glo012ED5C8Type *gd = localTheWritableGlobalData();
 	AsciiString *slot = &gd->m_at94;
 	if (stringLive(slot->data()))
 		TheLivingWorldCampaignManager->setCampaign(slot);
@@ -122,7 +131,7 @@ void Rva003C1A50::start(unsigned char mordor)
 		TheLivingWorldCampaignManager->setCampaign(&name);
 	}
 
-	gd = TheWritableGlobalData;
+	gd = localTheWritableGlobalData();
 	if (!gd->m_at8E)
 	{
 		if (!stringLive(gd->m_at94.data()))

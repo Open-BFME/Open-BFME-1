@@ -15,8 +15,9 @@ public:
 	static Bool Has_Stencil(void);
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-class GlobalData
+// TU-local view of the object at 0x012ED5C8; upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+class LocalGlobalData
 {
 	unsigned char m_unreconstructed_000[0x64];
 
@@ -24,7 +25,15 @@ public:
 	Bool m_useShadowVolumes;
 };
 
-extern GlobalData *TheGlobalData;
+// The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A (upstream's TheGlobalData is a macro over it).
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline LocalGlobalData *localTheWritableGlobalData()
+{
+	return reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 struct SphereClass
@@ -193,7 +202,7 @@ private:
 W3DVolumetricShadow *BfmeVolumetricShadowManager::addShadow(
 	RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw)
 {
-	if (!DX8Wrapper::Has_Stencil() || !robj || !TheGlobalData->m_useShadowVolumes)
+	if (!DX8Wrapper::Has_Stencil() || !robj || !localTheWritableGlobalData()->m_useShadowVolumes)
 		return 0;
 
 	W3DShadowGeometry *sg = 0;

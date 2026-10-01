@@ -38,7 +38,17 @@ struct BfmeH1144
 	int m_bfme170c;
 };
 
-extern "C" BfmeG1144 *volatile g_bfmeG1144;
+// The global at 0x012ED5C8 is retail's TheWritableGlobalData, defined in
+// game/GameEngine/Source/Common/GlobalData.cpp as ?TheWritableGlobalData@@3PAVGlobalData@@A.
+// This TU keeps its own view of the object and casts at each use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline BfmeG1144 *volatile localG1144(void)
+{
+	return reinterpret_cast<BfmeG1144 *>(TheWritableGlobalData);
+}
+
 extern "C" BfmeH1144 *volatile g_bfmeH1144;
 
 class BfmeA1144
@@ -75,27 +85,27 @@ public:
 
 void BfmeA1144::bfmeGo1144(void)
 {
-	m_bfme0f0 = g_bfmeG1144->m_bfmeb8c;
-	m_bfme0f4 = g_bfmeG1144->m_bfme064;
-	m_bfme0f5 = g_bfmeG1144->m_bfme065;
-	m_bfme0f6 = g_bfmeG1144->m_bfme047;
-	m_bfme0f7 = (char)(g_bfmeG1144->m_bfme028 == 0);
+	m_bfme0f0 = localG1144()->m_bfmeb8c;
+	m_bfme0f4 = localG1144()->m_bfme064;
+	m_bfme0f5 = localG1144()->m_bfme065;
+	m_bfme0f6 = localG1144()->m_bfme047;
+	m_bfme0f7 = (char)(localG1144()->m_bfme028 == 0);
 	m_bfme114 = g_bfmeH1144->m_bfme170c;
-	m_bfme0f8 = g_bfmeG1144->m_bfme044;
-	m_bfme0f9 = g_bfmeG1144->m_bfme08c;
-	m_bfme0fc = g_bfmeG1144->m_bfme1f4;
-	m_bfme100 = g_bfmeG1144->m_bfme1f8;
-	m_bfme104 = g_bfmeG1144->m_bfme1fc;
+	m_bfme0f8 = localG1144()->m_bfme044;
+	m_bfme0f9 = localG1144()->m_bfme08c;
+	m_bfme0fc = localG1144()->m_bfme1f4;
+	m_bfme100 = localG1144()->m_bfme1f8;
+	m_bfme104 = localG1144()->m_bfme1fc;
 
-	char b = (char)(g_bfmeG1144->m_bfme01c == 0);
+	char b = (char)(localG1144()->m_bfme01c == 0);
 
 	m_bfme108 = b;
 	m_bfme109 = b;
-	m_bfme10c = g_bfmeG1144->m_bfme068;
-	m_bfme110 = g_bfmeG1144->m_bfme01e;
-	m_bfme111 = g_bfmeG1144->m_bfme058;
-	m_bfme112 = g_bfmeG1144->m_bfme018;
-	m_bfme113 = g_bfmeG1144->m_bfme01f;
+	m_bfme10c = localG1144()->m_bfme068;
+	m_bfme110 = localG1144()->m_bfme01e;
+	m_bfme111 = localG1144()->m_bfme058;
+	m_bfme112 = localG1144()->m_bfme018;
+	m_bfme113 = localG1144()->m_bfme01f;
 	m_bfme118 = m_bfme16e4;
 	m_bfme11c = m_bfme16e8;
 }

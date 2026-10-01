@@ -62,7 +62,17 @@ extern GenKey GenKey0012A79C8;
 extern GenKey GenKey0012A79D0;
 extern GenKey GenKey0012A79D8;
 extern GenTable GenTable0012ED5E0;
-extern GenFallback *GenFallback0012ED5C8;
+// 0x012ED5C8 is retail's TheWritableGlobalData, defined in
+// game/GameEngine/Source/Common/GlobalData.cpp as ?TheWritableGlobalData@@3PAVGlobalData@@A.
+// The bytes show this one is dereferenced first, so it is a global POINTER.  The fallback
+// slots stay a TU-local view; the cast keeps the same load.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline GenFallback *localTheWritableGlobalData( void )
+{
+	return reinterpret_cast<GenFallback *>( TheWritableGlobalData );
+}
 
 class Rva006DF290
 {
@@ -82,7 +92,7 @@ public:
 		bool found;                                                       \
 		FIELD = GenTable0012ED5E0.lookup( KEY.fetch( &found ) );          \
 		if( !found )                                                      \
-			FIELD = GenFallback0012ED5C8->FB;                             \
+			FIELD = localTheWritableGlobalData()->FB;                      \
 	}
 
 S3_LOAD( load0, GenKey0012A79B8, m_04, m_f0 )

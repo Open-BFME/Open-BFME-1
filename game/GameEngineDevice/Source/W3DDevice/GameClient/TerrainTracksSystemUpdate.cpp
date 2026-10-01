@@ -47,7 +47,9 @@ public:
 	TerrainTracksRenderObjClass *m_prevSystem;
 };
 
-class GlobalData
+// TU-local view of the object at 0x012ED5C8; upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+class LocalGlobalData
 {
 public:
 	unsigned char m_pad[0x220];
@@ -72,7 +74,10 @@ private:
 	Int m_maxTankTrackFadeDelay;
 };
 
-extern GlobalData *TheGlobalData;
+// The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A (upstream's TheGlobalData is a macro over it).
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 void TerrainTracksRenderObjClassSystem::releaseTrack(TerrainTracksRenderObjClass *mod) {
     if (!mod) return;
@@ -106,7 +111,7 @@ void TerrainTracksRenderObjClassSystem::update(void)
 
 		nextMod = mod->m_nextSystem;
 
-		if (!TheGlobalData->m_makeTrackMarks)
+		if (!reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_makeTrackMarks)
 			mod->m_haveAnchor = false;
 
 		for (i = 0, index = mod->m_bottomIndex; i < mod->m_activeEdgeCount; i++, index++)

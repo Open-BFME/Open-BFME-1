@@ -6,7 +6,9 @@
 // constant.  The balanced reduction is significant: it is the retail x87
 // evaluation tree and avoids rounding the intermediate maxima through memory.
 
-struct GlobalData
+// TU-local view of the object at 0x012ED5C8; upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+struct LocalGlobalData
 {
 	char m_padding[0xe5c];
 	float m_terrainSampleSize;
@@ -24,6 +26,9 @@ public:
 	virtual float getGroundHeight(float x, float y, void *normal = 0) const;
 };
 
+// The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A.
+class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 extern TerrainLogic *TheTerrainLogic;
 
@@ -39,16 +44,16 @@ float getHeightAroundPos(float x, float y)
 	return maxHeight(terrainHeight, maxHeight(
 		maxHeight(
 			TheTerrainLogic->getGroundHeight(
-				x + TheWritableGlobalData->m_terrainSampleSize,
-				y - TheWritableGlobalData->m_terrainSampleSize),
+				x + reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize,
+				y - reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize),
 			TheTerrainLogic->getGroundHeight(
-				x - TheWritableGlobalData->m_terrainSampleSize,
-				y - TheWritableGlobalData->m_terrainSampleSize)),
+				x - reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize,
+				y - reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize)),
 		maxHeight(
 			TheTerrainLogic->getGroundHeight(
-				x + TheWritableGlobalData->m_terrainSampleSize,
-				y + TheWritableGlobalData->m_terrainSampleSize),
+				x + reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize,
+				y + reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize),
 			TheTerrainLogic->getGroundHeight(
-				x - TheWritableGlobalData->m_terrainSampleSize,
-				y + TheWritableGlobalData->m_terrainSampleSize))));
+				x - reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize,
+				y + reinterpret_cast<LocalGlobalData *>(TheWritableGlobalData)->m_terrainSampleSize))));
 }

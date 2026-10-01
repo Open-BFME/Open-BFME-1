@@ -17,12 +17,17 @@ public:
     const char *str() const { return m_data ? m_data->data : ""; }
 };
 
+// The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
+// as ?TheWritableGlobalData@@3PAVGlobalData@@A (upstream's TheGlobalData is a macro over it).
+// This TU calls only the path accessor, so GlobalData stays an opaque declaration
+// carrying that one member: no data members and no layout claim here.  The callee's
+// own name (?getPath_UserData@GlobalData@@QBE?AVAsciiString@@XZ) pins the class name.
 class GlobalData
 {
 public:
     AsciiString getPath_UserData() const;
 };
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class OutputStream
 {
@@ -81,7 +86,7 @@ DataChunkOutput::~DataChunkOutput()
 
     ::fclose(m_tmp_file);
 
-    AsciiString tmpFileName = TheGlobalData->getPath_UserData();
+    AsciiString tmpFileName = TheWritableGlobalData->getPath_UserData();
     tmpFileName.concat("_tmpChunk.dat", 13);
 
     m_tmp_file = ::fopen(tmpFileName.str(), "rb");
