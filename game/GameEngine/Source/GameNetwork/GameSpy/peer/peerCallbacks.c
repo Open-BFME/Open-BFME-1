@@ -53,6 +53,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "../serverbrowsing/sb_internal.h"
 
 /* --- local stand-ins for peer.h / peerMain.h / chat.h / sb_serverbrowsing.h,
        carrying only what this file's bodies need.  Widths are what matter and
@@ -110,8 +111,6 @@ typedef enum
 	PEERComplete
 } PEERAutoMatchStatus;
 
-typedef struct _SBServer *SBServer;
-
 typedef enum
 {
 	CHATFalse,
@@ -130,11 +129,7 @@ typedef struct CHATChannelMode
 	int Limit;
 } CHATChannelMode;
 
-typedef char gsi_char;
-
 #define PEERCBType void*
-
-#define GSI_UNUSED(x) (void)x
 
 #define gsimalloc malloc
 #define gsifree free
@@ -154,6 +149,8 @@ PEERBool peerIsAutoMatching(PEER peer);
    piListingGamesCall at 0x0085C7D0 passes [peer+0x1818] to ArrayLength and
    ArrayNth, and piPlayerInfoCall at 0x0085D4E0 indexes [peer+roomType*4+0x390].
    Everything else is reserved space, deliberately unnamed rather than guessed. */
+/* gameList, gameEngine and the listing fields after them are placed where
+   piAddListingGamesCallback at 0x0085E420 reads them; their types come from sb_internal.h. */
 /* PEERCallbacks.  The offsets are read out of retail, not guessed: each
    piAdd*Callback entry point below loads its own callback from a fixed
    slot and the shared user-data from +0x1814, and the twenty slots run
@@ -207,7 +204,14 @@ typedef struct piConnection
 	void * nickErrorCallback;	/* +0x4c */
 	char reserved0b[0x390 - 0x4c - 4];
 	PEERBool inRoom[NumRooms];
-	char reserved1[0x17a4 - 0x390 - 3 * 4];
+	char reserved1[0xba4 - 0x390 - 3 * 4];
+	SBServerList gameList;
+	char reservedGameList[0x173c - 0xba4 - sizeof(SBServerList)];
+	SBQueryEngine gameEngine;
+	void * gameListCallback;
+	void * gameListParam;
+	PEERBool initialGameList;
+	char reserved1b[0x17a4 - 0x178c - 4];
 	PEERCallbacks callbacks;
 	DArray callbackList;
 	int callbackListLen;
@@ -3795,4 +3799,49 @@ void piClearServerCallbacks(PEER peer, SBServer server)
 			(((piListingGamesParams *)data->params)->server == server))
 			ArrayDeleteAt(connection->callbackList, i);
 	}
+}
+
+void piAddListingGamesCallback(PEER peer, PEERBool success, SBServer server, int msg)
+{
+	piListingGamesParams params;
+	char * name;
+	const char * mode;
+	PEERBool staging;
+	int progress;
+	int numServers;
+	PEER_CONNECTION;
+
+	if(msg == PEER_REMOVE)
+		piClearServerCallbacks(peer, server);
+
+	if(server)
+	{
+		name = (char *)SBServerGetStringValueA(server, "hostname", "(No Name)");
+		mode = SBServerGetStringValueA(server, "gamemode", "");
+		staging = (PEERBool)(strcmpi(mode, "openstaging") == 0);
+	}
+	else
+	{
+		name = NULL;
+		staging = PEERFalse;
+	}
+
+	if(connection->initialGameList)
+	{
+		numServers = SBServerListCount(&connection->gameList);
+		if(numServers)
+			progress = ((numServers - connection->gameEngine.pendinglist.count - connection->gameEngine.querylist.count) * 100) / numServers;
+		else
+			progress = 0;
+	}
+	else
+		progress = 100;
+
+	params.name = name;
+	params.server = server;
+	params.staging = staging;
+	params.msg = msg;
+	params.progress = progress;
+	piAddCallback(peer, success, connection->gameListCallback, connection->gameListParam,
+		PI_LISTING_GAMES_CALLBACK, &params, sizeof(params), -1);
 }
