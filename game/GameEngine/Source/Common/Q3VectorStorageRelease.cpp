@@ -1,3 +1,5 @@
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
 // Nineteen bodies of ONE shape: the deallocation half of a three-pointer
 // vector-like container.
 //
@@ -37,7 +39,7 @@
 // touched here) is a finish pointer, and whether the allocator is a base or a
 // member of the container: nothing in this body reads either.
 
-void Gen0082E5F0( void *p, unsigned int n );
+#include <memory>
 
 #define BFME_VECTOR_RELEASE( NAME, WIDTH )                                    \
 	struct NAME                                                               \
@@ -56,7 +58,7 @@ void Gen0082E5F0( void *p, unsigned int n );
 			if ( n > 128 )                                                    \
 				::operator delete( m_start );                                 \
 			else                                                              \
-				Gen0082E5F0( m_start, n );                                    \
+				_STL::__node_alloc<true, 0>::deallocate( m_start, n );        \
 		}                                                                     \
 	}
 
@@ -98,7 +100,7 @@ struct Rva009A1CElem8 { char bytes[8]; };
 			if ( (unsigned int)n > 128 )                                       \
 				::operator delete( start );                                   \
 			else                                                              \
-				Gen0082E5F0( start, n );                                      \
+				_STL::__node_alloc<true, 0>::deallocate( start, n );          \
 		}                                                                     \
 	}
 

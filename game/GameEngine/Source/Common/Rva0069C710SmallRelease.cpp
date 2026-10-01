@@ -1,6 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-void Gen0082E5F0(void *memory, unsigned int bytes);
+#include <memory>
 
 class Rva0069C710Owner
 {
@@ -11,6 +12,6 @@ public:
 void Rva0069C710Owner::releaseSmall(void *memory)
 {
 	if (memory != 0) {
-		Gen0082E5F0(memory, 8);
+		_STL::__node_alloc<true, 0>::deallocate(memory, 8);
 	}
 }

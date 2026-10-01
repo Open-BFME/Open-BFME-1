@@ -1,3 +1,5 @@
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
 // Six 67-byte bodies of the SAME shape already landed at 62 and 64 bytes in
 // Q3VectorStorageRelease.cpp -- the deallocation half of a three-pointer
 // vector-like container -- differing only in that the element width no longer
@@ -31,7 +33,7 @@
 // read here) is a finish pointer, and whether the allocator is a base or a
 // member of the container: nothing in this body touches either.
 
-void Gen0082E5F0( void *p, unsigned int n );
+#include <memory>
 
 #define R4_VECTOR_RELEASE_WIDE( NAME, WIDTH )                                 \
 	struct NAME                                                               \
@@ -50,7 +52,7 @@ void Gen0082E5F0( void *p, unsigned int n );
 			if ( n > 128 )                                                    \
 				::operator delete( m_start );                                 \
 			else                                                              \
-				Gen0082E5F0( m_start, n );                                    \
+				_STL::__node_alloc<true, 0>::deallocate( m_start, n );        \
 		}                                                                     \
 	}
 
