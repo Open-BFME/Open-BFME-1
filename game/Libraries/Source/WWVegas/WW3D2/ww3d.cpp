@@ -1556,7 +1556,6 @@ void WW3D::Make_Screen_Shot( const char * filename_base , const float gamma, con
  *   5/19/99    GTH : Created.                                                                 *
  *   2/26/2001  hy : updated to dx8                                                            *
  *=============================================================================================*/
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/crc.cpp
 // ?Start_Movie_Capture@WW3D@@ present-unmatched
 void WW3D::Start_Movie_Capture( const char * filename_base, float frame_rate )
 {
