@@ -8,10 +8,12 @@ void __cdecl rva00592D60Notify();
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-class Rva00592D60Panel
+// The panel is a GameWindow: the body's only panel call is the proven
+// GameWindow::winHide thunk at 0x00027F2A.
+class GameWindow
 {
 public:
-	void hide( bool hidden );
+	int winHide( bool hidden );
 };
 
 class Rva00592D60Window
@@ -32,7 +34,7 @@ public:
 
 private:
 	char                m_pad00[ 0x0C ];
-	Rva00592D60Panel   *m_panel;
+	GameWindow         *m_panel;
 	Rva00592D60Window  *m_window;
 	char                m_pad14[ 0x4F4 ];
 	int                 m_state;
@@ -47,7 +49,7 @@ void Rva00592D60Owner::update( int value, int state )
 	if( !rva00592D60Ask() && g_rva012F19E8WindowManager )
 	{
 		rva00592D60Notify();
-		m_panel->hide( false );
+		m_panel->winHide( false );
 	}
 
 	m_window->refresh();

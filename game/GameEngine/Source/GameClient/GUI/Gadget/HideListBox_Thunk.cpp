@@ -6,7 +6,7 @@ class GameWindow
 public:
 	void *winGetUserData();
 	bool winIsHidden();
-	int winHide(int hide);
+	int winHide(bool hide);
 	int winGetSize(int *width, int *height);
 	int winSetSize(int width, int height);
 };

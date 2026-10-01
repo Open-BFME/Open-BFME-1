@@ -22,7 +22,7 @@ public:
 class GameWindow
 {
 public:
-	void winHide(bool);
+	int winHide(bool);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h

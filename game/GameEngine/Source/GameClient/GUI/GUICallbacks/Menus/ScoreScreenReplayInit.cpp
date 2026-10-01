@@ -10,7 +10,7 @@
 class GameWindow
 {
 public:
-	int winHide(int hide);
+	int winHide(bool hide);
 };
 
 void grabSinglePlayerInfo(void);

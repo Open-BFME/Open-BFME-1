@@ -3,7 +3,7 @@ class GameWindow
 {
 public:
 	int winEnable(bool enable);
-	void bfmeClose(bool close);
+	int winHide(bool close);
 };
 
 class BfmeTransitionMD
@@ -38,7 +38,7 @@ void Gen_00588D10::bfmeFinish(void)
 		if (g_bfmeTransitionMD)
 			g_bfmeTransitionMD->bfmeDetach(m_bfmeWindow);
 		m_bfmeWindow->winEnable(false);
-		m_bfmeWindow->bfmeClose(true);
+		m_bfmeWindow->winHide(true);
 	}
 
 	bfmeTransitionFinished();

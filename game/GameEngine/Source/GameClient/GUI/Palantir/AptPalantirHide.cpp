@@ -1,7 +1,7 @@
 class GameWindow
 {
 public:
-	void winHide( bool hide );
+	int winHide( bool hide );
 };
 
 class PalantirAnimation

@@ -2,7 +2,7 @@ class GameWindow
 {
 public:
 	bool winIsHidden();
-	void winHide(bool hide);
+	int winHide(bool hide);
 };
 
 class GameSpyInfo
