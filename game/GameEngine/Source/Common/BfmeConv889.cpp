@@ -55,13 +55,15 @@ public:
 	void bfmeRunEZF();
 };
 
-extern BfmeGlobEZF *g_bfmeObjEZF;
+class ControlBar;
+
+extern ControlBar *TheControlBar;
 bool __stdcall bfmeAskEZF(int k, BfmeSubEZF *s);
 
 void __stdcall bfmeGoEZF(BfmeArgEZF *a)
 {
 	if (a && bfmeAskEZF(3, &a->m_bfmeSub))
-		g_bfmeObjEZF->bfmeRunEZF();
+		((BfmeGlobEZF *)TheControlBar)->bfmeRunEZF();
 }
 
 struct BfmeItemEZG

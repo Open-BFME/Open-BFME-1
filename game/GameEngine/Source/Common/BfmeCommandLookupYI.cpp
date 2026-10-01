@@ -19,18 +19,20 @@ public:
 	void bfmeUseYI(int mode, void *entry);
 };
 
-extern BfmeRegistryYI *g_bfmeRegistryYI;			// retail 0x012F33F8
+class ControlBar;
+
+extern ControlBar *TheControlBar;			// retail 0x012F33F8
 
 // ?bfmeSelectYI@@YGXH@Z
 void __stdcall bfmeSelectYI(int unused)
 {
-	if (g_bfmeRegistryYI == 0)
+	if (TheControlBar == 0)
 		return;
 
 	static AsciiStringYI s_bfmeNameYI("NonCommand_SelectAllHeroes");
 
-	void *entry = g_bfmeRegistryYI->bfmeFindYI(s_bfmeNameYI);
+	void *entry = ((BfmeRegistryYI *)TheControlBar)->bfmeFindYI(s_bfmeNameYI);
 
 	if (entry != 0)
-		g_bfmeRegistryYI->bfmeUseYI(0, entry);
+		((BfmeRegistryYI *)TheControlBar)->bfmeUseYI(0, entry);
 }

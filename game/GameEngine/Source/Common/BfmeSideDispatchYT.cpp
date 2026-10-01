@@ -20,7 +20,9 @@ public:
 	void bfmeUseYT(int mode, void *entry);
 };
 
-extern BfmeRegistryYT *g_bfmeRegistryYT;			// retail 0x012F33F8
+class ControlBar;
+
+extern ControlBar *TheControlBar;			// retail 0x012F33F8
 
 class Gen_0058ECA0
 {
@@ -49,8 +51,8 @@ void Gen_0058ECA0::bfmeApplyYT(int unused)
 		name = &s_bfmeGoodYT;
 	}
 
-	void *entry = g_bfmeRegistryYT->bfmeFindYT(*name);
+	void *entry = ((BfmeRegistryYT *)TheControlBar)->bfmeFindYT(*name);
 
 	if (entry != 0)
-		g_bfmeRegistryYT->bfmeUseYT(0, entry);
+		((BfmeRegistryYT *)TheControlBar)->bfmeUseYT(0, entry);
 }

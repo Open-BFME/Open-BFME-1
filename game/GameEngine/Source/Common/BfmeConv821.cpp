@@ -128,7 +128,9 @@ public:
 	BfmeObj412* lookup(void *p);
 };
 
-extern BfmeMgr412 *g_mgr12F33F8;
+class ControlBar;
+
+extern ControlBar *TheControlBar;
 
 void BfmeObj412::call(void *b, void *c)
 {
@@ -159,7 +161,7 @@ void BfmeObj412::call(void *b, void *c)
 
 void __cdecl bfmeHelper412(char *a, void *b, void *c)
 {
-	BfmeObj412 *obj = g_mgr12F33F8->lookup(a + 0x70);
+	BfmeObj412 *obj = ((BfmeMgr412 *)TheControlBar)->lookup(a + 0x70);
 	if (obj)
 		obj->call(b, c);
 }

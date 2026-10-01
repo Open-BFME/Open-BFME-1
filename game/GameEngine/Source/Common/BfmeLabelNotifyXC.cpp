@@ -47,7 +47,9 @@ public:
 	bool m_bfmeDirty;					// +0x24
 };
 
-extern BfmeStateXC *g_bfmeStateXC;				// retail 0x012F33F8
+class ControlBar;
+
+extern ControlBar *TheControlBar;				// retail 0x012F33F8
 
 class Gen_002D4310
 {
@@ -69,5 +71,5 @@ void Gen_002D4310::bfmeApplyXC(void)
 		slot->bfmeSetXC(label);
 	}
 
-	g_bfmeStateXC->m_bfmeDirty = true;
+	((BfmeStateXC *)TheControlBar)->m_bfmeDirty = true;
 }

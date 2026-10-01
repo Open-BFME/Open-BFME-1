@@ -10,7 +10,9 @@ struct BfmeWorldRV
 	BfmeMemberRV *m_bfmeOther;
 };
 
-extern BfmeWorldRV *g_bfmeWorldRV;
+class ControlBar;
+
+extern ControlBar *TheControlBar;
 
 class BfmeThingRV
 {
@@ -27,7 +29,7 @@ BfmeMemberRV *BfmeThingRV::bfmePickRV()
 		return 0;
 	if (!mine->bfmeAskRV())
 	{
-		BfmeWorldRV *world = g_bfmeWorldRV;
+		BfmeWorldRV *world = (BfmeWorldRV *)TheControlBar;
 		if (world != 0)
 		{
 			BfmeMemberRV *other = world->m_bfmeOther;

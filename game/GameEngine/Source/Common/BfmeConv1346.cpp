@@ -6,7 +6,9 @@ struct BfmeStateUYA
 	char m_bfmeDirty;
 };
 
-extern BfmeStateUYA *g_bfmeStateUYA;
+class ControlBar;
+
+extern ControlBar *TheControlBar;
 
 class BfmeStrUYA
 {
@@ -62,7 +64,7 @@ void BfmeThingUYA::bfmeGoUYA()
 	if (r) {
 		r->m_bfmeA.bfmeClearUYA();
 		r->m_bfmeB.bfmeClearUYA();
-		g_bfmeStateUYA->m_bfmeDirty = 1;
+		((BfmeStateUYA *)TheControlBar)->m_bfmeDirty = 1;
 	}
 	bfmeFinishUYA(0);
 }

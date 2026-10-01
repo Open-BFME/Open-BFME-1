@@ -67,7 +67,9 @@ public:
 	bool m_bfmeDirty;					// +0x24
 };
 
-extern BfmeDirtyAE *g_bfmeDirtyAE;				// retail 0x012F33F8
+class ControlBar;
+
+extern ControlBar *TheControlBar;				// retail 0x012F33F8
 
 class Gen_0049C4B0
 {
@@ -88,5 +90,5 @@ void Gen_0049C4B0::bfmeCopyFrom(Gen_0049C4B0 *source, bool notify)
 		m_bfmeVector.bfmeAppend(*it, &notify);
 
 	if (notify)
-		g_bfmeDirtyAE->m_bfmeDirty = true;
+		((BfmeDirtyAE *)TheControlBar)->m_bfmeDirty = true;
 }
