@@ -58,7 +58,12 @@ struct GameLogicState
     unsigned int m_frame;
 };
 
-extern GameLogicState *g_theGameLogic;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only the +0x3c frame slot is recovered here, so
+// the view is cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern int __cdecl largeGroupRandom(int minimum, int maximum,
                                     const char *file, int line);
 extern const char g_largeGroupSourceFile;
@@ -83,7 +88,7 @@ LargeGroupBonusUpdate::LargeGroupBonusUpdate(Thing *thing, const ModuleData *mod
     Object *owner = getObject();
     m_f28 = false;
     m_f2a = false;
-    m_frame = g_theGameLogic->m_frame;
+    m_frame = ((GameLogicState *)TheGameLogic)->m_frame;
     m_f29 = false;
     int delay = largeGroupRandom(1, m_moduleData->m_maximumDelay,
                                  &g_largeGroupSourceFile, 107);

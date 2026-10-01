@@ -10,7 +10,11 @@ public:
 	void bfmeCallFEA(void *a, int k);
 };
 
-extern BfmeGlobFEA *g_bfmeObjFEA;
+// Retail: 0x012F0898 is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp). This TU only needs
+// its 0x012F0898-facing views, so declare the canonical symbol and cast.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeThingFEA
 {
@@ -29,7 +33,7 @@ void BfmeThingFEA::bfmeGoFEA(void *a)
 	int k = h->m_bfmeK;
 	if (k == -1)
 		return;
-	g_bfmeObjFEA->bfmeCallFEA(a, k);
+	((BfmeGlobFEA *)TheGameLogic)->bfmeCallFEA(a, k);
 }
 
 struct BfmeHeldFEC
@@ -240,7 +244,10 @@ public:
 	BfmeResFEG *bfmeLookFEG(int k);
 };
 
-extern BfmeGlobFEG *g_bfmeObjFEG;
+static inline BfmeGlobFEG *g_bfmeObjFEG(void)
+{
+	return (BfmeGlobFEG *)TheGameLogic;
+}
 
 struct BfmeOwnFEG
 {
@@ -261,7 +268,7 @@ void BfmeThingFEG::bfmeGoFEG(void *a)
 	BfmeOwnFEG *o = *(BfmeOwnFEG **)((char *)this - 4);
 	if (k != o->m_bfmeK)
 	{
-		BfmeResFEG *r = g_bfmeObjFEG->bfmeLookFEG(k);
+		BfmeResFEG *r = g_bfmeObjFEG()->bfmeLookFEG(k);
 		if (r)
 			r->bfmeUseFEG(a);
 	}

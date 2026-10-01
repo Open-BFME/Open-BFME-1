@@ -181,7 +181,12 @@ struct Rva00367E30Logic
 	unsigned int m_bfmeFrameTP;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only the +0x3c frame slot is recovered here, so
+// the view is cast at the uses.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeHostTP
 {
@@ -214,8 +219,8 @@ void BfmeHostTP::bfmeSetPositionTP(const BfmePosTP *pos, bool flag)
 {
 	bfmeSetPosTP(pos);
 
-	bfmeMarkTP(TheBfmeGameLogic->m_bfmeFrameTP);
-	bfmeMarkTP(TheBfmeGameLogic->m_bfmeFrameTP);
+	bfmeMarkTP(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
+	bfmeMarkTP(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
 
 	BfmeXTP *x = bfmeGetXTP();
 

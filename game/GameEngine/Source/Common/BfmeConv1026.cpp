@@ -144,7 +144,11 @@ public:
 	void bfmeDo1026(int h);
 };
 
-extern BfmeStore1026 *g_bfmeStore1026;
+// Retail: 0x012F0898 is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp). This TU only needs
+// its 0x012F0898-facing view, so declare the canonical symbol and cast.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeF1026
 {
@@ -161,5 +165,5 @@ void BfmeF1026::bfmeGo1026F(int h, int u1, int u2)
 	BfmeSrc1026 *p = *(BfmeSrc1026 **)((char *)this - 8);
 
 	if (o->m_bfmeTab.bfmeHas1026(h, p->bfmeGet1026()) != 0)
-		g_bfmeStore1026->bfmeDo1026(h);
+		((BfmeStore1026 *)TheGameLogic)->bfmeDo1026(h);
 }

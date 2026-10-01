@@ -54,7 +54,12 @@ public:
 	BfmeThingERO *bfmeFindByIdERO(int id);
 };
 
-extern BfmeLogicERO *g_bfmeLogicERO;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only this TU's one-member view is recovered, so
+// the view is cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeKeyGenERO
 {
@@ -83,7 +88,7 @@ void BfmeHostERO::bfmeGoERO(int unused)
 
 	if (id != 0)
 	{
-		BfmeThingERO *thing = g_bfmeLogicERO->bfmeFindByIdERO(id);
+		BfmeThingERO *thing = ((BfmeLogicERO *)TheGameLogic)->bfmeFindByIdERO(id);
 
 		if (thing != 0)
 		{

@@ -12,7 +12,11 @@ public:
 	BfmeObjEVB *bfmeFindEVB(void *k);
 };
 
-extern BfmeGlobEVB *g_bfmeObjEVB;
+// Retail: 0x012F0898 is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp). This TU only needs
+// its 0x012F0898-facing view, so declare the canonical symbol and cast.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 BfmeObjEVB *__cdecl bfmeCastEVB(void *a);
 BfmeObjEVB *__cdecl bfmeCast2EVB(void *a);
@@ -24,7 +28,7 @@ void __stdcall bfmeGoEVBa(void *a)
 	BfmeObjEVB *o = bfmeCastEVB(a);
 	if (!o)
 		return;
-	BfmeObjEVB *p = g_bfmeObjEVB->bfmeFindEVB(o->bfmeGet1EVB());
+	BfmeObjEVB *p = ((BfmeGlobEVB *)TheGameLogic)->bfmeFindEVB(o->bfmeGet1EVB());
 	if (!p)
 		return;
 	BfmeObjEVB *q = bfmeCast2EVB(p);
@@ -40,7 +44,7 @@ void __stdcall bfmeGoEVBb(void *a)
 	BfmeObjEVB *o = bfmeCastEVB(a);
 	if (!o)
 		return;
-	BfmeObjEVB *p = g_bfmeObjEVB->bfmeFindEVB(o->bfmeGet1EVB());
+	BfmeObjEVB *p = ((BfmeGlobEVB *)TheGameLogic)->bfmeFindEVB(o->bfmeGet1EVB());
 	if (!p)
 		return;
 	BfmeObjEVB *q = bfmeCast2EVB(p);
@@ -56,7 +60,7 @@ void __stdcall bfmeGoEVBc(void *a)
 	BfmeObjEVB *o = bfmeCastEVB(a);
 	if (!o)
 		return;
-	BfmeObjEVB *p = g_bfmeObjEVB->bfmeFindEVB(o->bfmeGet1EVB());
+	BfmeObjEVB *p = ((BfmeGlobEVB *)TheGameLogic)->bfmeFindEVB(o->bfmeGet1EVB());
 	if (!p)
 		return;
 	BfmeObjEVB *q = bfmeCast2EVB(p);

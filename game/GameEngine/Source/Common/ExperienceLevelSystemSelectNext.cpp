@@ -58,7 +58,12 @@ class ExperienceLevelCollection : public _STL::list<ExperienceLevel>
 {
 };
 
-struct Rva00367E30Logic;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only the one recovered member is needed here, so
+// the TU-local shim is cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class GameLogicShim
 {
@@ -66,13 +71,11 @@ public:
 	Bool unidentified_0001e0ab();
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
-
 // Retail 0x0037D0D0 (43 bytes): whether a level applies to the current game
 // mode.
 static Bool rva0037D0D0IsLevelForGameMode(const ExperienceLevel *level)
 {
-	return ((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab() ?
+	return ((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab() ?
 		!level->m_singlePlayerOnly : !level->m_multiPlayerOnly;
 }
 

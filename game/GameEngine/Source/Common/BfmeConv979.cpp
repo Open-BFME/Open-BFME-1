@@ -18,13 +18,18 @@ public:
 	bool showShellMap(bool useShellMap);
 };
 
-extern BfmeStateA979 *g_bfmeStateA979;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only the +0x10c mode slot of this TU's view is
+// recovered, so the view is cast at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern BfmeActA979 *g_bfmeActA979;
 extern Shell *TheShell;
 
 char bfmeGo979A(void)
 {
-	if (!g_bfmeStateA979 || !TheShell || g_bfmeStateA979->m_bfmeMode == 4
+	if (!((BfmeStateA979 *)TheGameLogic) || !TheShell || ((BfmeStateA979 *)TheGameLogic)->m_bfmeMode == 4
 			|| !TheShell->showShellMap(true))
 		return 1;
 
@@ -94,7 +99,7 @@ public:
 	void *bfmeFind979C(BfmeThing979 *t);
 };
 
-extern BfmeLook979 *g_bfmeLook979;
+
 
 class BfmeC979
 {
@@ -111,7 +116,7 @@ public:
 
 void BfmeC979::bfmeGo979C()
 {
-	BfmeLook979 *g = g_bfmeLook979;
+	BfmeLook979 *g = (BfmeLook979 *)TheGameLogic;
 
 	if (!g->bfmeFind979C(m_bfmeA) && !g->bfmeFind979C(m_bfmeB)
 			&& !g->bfmeFind979C(m_bfmeC))

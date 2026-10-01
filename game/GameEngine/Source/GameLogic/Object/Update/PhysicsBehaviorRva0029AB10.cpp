@@ -39,7 +39,12 @@ public:
 	char m_pad00[0x3c];
 	unsigned int m_frame;
 };
-extern Rva0029AB10GameLogic *TheBfmeGameLogic;
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. Only the +0x3c frame slot is recovered here, so
+// the view is cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class PhysicsBehavior : public UpdateModule
 {
@@ -85,7 +90,7 @@ void PhysicsBehavior::rva0029AB10(const Rva0029AB10Coord3D *where,
 	{
 		m_wakeFlag = 0;
 		m_flag.reset();
-		m_object->bfmeRecordTransform(TheBfmeGameLogic->m_frame);
+		m_object->bfmeRecordTransform(((Rva0029AB10GameLogic *)TheGameLogic)->m_frame);
 		m_flag.reset();
 		setWakeFrame(m_object, 1);
 	}

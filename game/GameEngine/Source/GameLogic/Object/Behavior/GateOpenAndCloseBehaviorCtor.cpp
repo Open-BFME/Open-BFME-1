@@ -20,14 +20,19 @@ class Thing;
 class ModuleData;
 class Object;
 
-// GateOpenAndCloseBehavior reads the current simulation frame off TheGameLogic;
-// only the +0x3c slot (GameLogic::getFrame's m_frame, inlined) is recovered here.
+// Retail [0x012F0898] is EA's GameLogic *TheGameLogic (see
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp); the canonical
+// declaration is what links. GateOpenAndCloseBehavior reads the current
+// simulation frame off it; only the +0x3c slot (GameLogic::getFrame's
+// m_frame, inlined) is recovered here, so the view is cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic; // retail [0x012F0898]
+
 struct GameLogicFrameView
 {
 	unsigned char m_pad00[0x3c];
 	int m_frame;
 };
-extern GameLogicFrameView *TheGameLogic; // retail [0x012F0898]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
@@ -137,7 +142,7 @@ GateOpenAndCloseBehavior::GateOpenAndCloseBehavior(Thing *thing, const ModuleDat
 	m_field30 = true;
 	m_field38 = 100.0f / (float)data->m_openCloseFrames;
 	m_field34 = 100.0f;
-	m_field3c = TheGameLogic->m_frame;
+	m_field3c = ((GameLogicFrameView *)TheGameLogic)->m_frame;
 	m_field2c = 0;
 	m_field24 = 0;
 }
