@@ -85,3 +85,21 @@ Bool EAStringC::rva0089F730(const char *suffix)
 	}
 	return false;
 }
+
+// Address-derived emission view. Original class and member identities unknown.
+// Native wrapper: entry ECX, one stack byte, RET4; forwards callee EAX.
+class Rva0089EFE0
+{
+public:
+    int method(char value);
+    // Native 503-byte body at RVA0089E2B0: ECX receiver, two C strings,
+    // RET8, and an explicit integral count in EAX on all normal exits.
+    int rva0089E2B0(const char *first, const char *second);
+};
+
+int Rva0089EFE0::method(char value)
+{
+    char text[2] = "*";
+    text[0] = value;
+    return rva0089E2B0(text, "");
+}

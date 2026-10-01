@@ -89946,3 +89946,4 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 ?rva003E4DA0@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z,0x00037196,address-derived Pathfinder method. The caller at 0x003EA570 passes Object and Coord3D pointers and reads EAX. route=0x003E4DA0
 ?g_Rva0130E8B4@@3TRva0130E8B4Storage@@A,0x0130E8B4,Address-only storage view: retail00872950 operands at+1 +E +18 all VA0130E8B4; dword read and low-word mutation independently decoded; source union records observed widths only
 ?getCurrent@BezFwdIterator@@QBEABUCoord3D@@XZ,0x00028655,route=0x000B6560;retail getSegmentPoints call at 0x004B7DC6;model=gpt-6-luna
+?rva0089E2B0@Rva0089EFE0@@QAEHPBD0@Z,0x0089E2B0,address-derived actual503B native callee of35B wrapper0089EFE0; entryECX receiver; two bytewise-read C strings; all3exits RET8; explicit EAX0 or EAX=ESI integer count; original identity unknown
