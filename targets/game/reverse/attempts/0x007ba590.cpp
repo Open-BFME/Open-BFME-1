@@ -1,5 +1,5 @@
 // ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ
-// partial score=0.9789 date=2026-09-28
+// partial score=0.9947 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc /O2 /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
 // ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ
 // Retail 0x007BA590, 760 bytes. Identity: W3DVolumetricShadow::Update
@@ -8,9 +8,9 @@
 // Update line for line, and this body writes +0x7C. BFME replaced ZH's
 // Cast_Ray search with a fixed 20-unit terrain walk up to 5120 per top-box
 // corner (probe 200 units ahead when the sample dips under the terrain).
-// Remaining 16 bytes: corners[0].X loads Center before Extent (retail loads
-// Extent first; Y/Z already match) and one sample-point store is scheduled
-// one x87 op late.
+// Remaining four bytes: corners[0].X loads Center before Extent (retail
+// loads Extent first; Y/Z match). Copying lightRay before scaling sampleStep
+// fixes the sample-point store schedule without changing the 760-byte extent.
 #include "rendobj.h"
 
 typedef float Real;
@@ -97,7 +97,8 @@ void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 			lightRay.Normalize();
 
 			Vector3 samplePoint = corners[i];
-			Vector3 sampleStep = lightRay * 20.0f;
+			Vector3 sampleStep = lightRay;
+			sampleStep *= 20.0f;
 			Vector3 shadowRay = lightRay * 200.0f;
 			Real length = 20.0f;
 			do
