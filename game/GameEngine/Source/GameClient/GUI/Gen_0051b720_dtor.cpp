@@ -37,7 +37,12 @@ public:
 };
 
 extern BfmeStrVM0 *TheDisplay;
-extern Rva0051D690Audio *TheAudio;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 extern Shell *TheShell;
 extern const void *g_01105FCC[];
 
@@ -58,6 +63,6 @@ Gen_0051b720::~Gen_0051b720()
 {
 	*(unsigned *)this = (unsigned)g_01105FCC;
 	TheDisplay->bfmeFlagVM0(0);
-	TheAudio->slot6c(2, 1, 0);
+	((Rva0051D690Audio *)TheAudio)->slot6c(2, 1, 0);
 	TheShell->showShell(true);
 }

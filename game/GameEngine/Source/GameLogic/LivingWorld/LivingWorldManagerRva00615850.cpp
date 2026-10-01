@@ -9,7 +9,7 @@
 // TheLivingWorldManager, establishing this body's manager receiver and map
 // layout even though this body's ILT 0x0002EE33 has no named direct caller.
 //
-// Before traversing the map, retail guards TheAudioClientUpdate at 0x012ED668
+// Before traversing the map, retail guards TheAudio at 0x012ED668
 // and dispatches its vtable slot +0x24 with the dword value 2.  The inherited
 // AudioManager layout in GameAudio.h places pauseAmbient(Bool) at that slot;
 // Bool is a 32-bit parameter.  The retail Miles audio vtable 0x0111C0C0 also
@@ -45,7 +45,12 @@ struct Rva005A00B0AudioClient
 	virtual void pauseAmbient(int shouldPause) = 0;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class Rva0061C1D0Object
 {
@@ -68,8 +73,8 @@ private:
 
 void BfmeLivingWorldManager::rva00615850()
 {
-	if (TheAudioClientUpdate)
-		TheAudioClientUpdate->pauseAmbient(2);
+	if (TheAudio)
+		((Rva005A00B0AudioClient *)TheAudio)->pauseAmbient(2);
 
 	for (Rva00615850Map::iterator it = m_objects.begin();
 		it != m_objects.end(); ++it)

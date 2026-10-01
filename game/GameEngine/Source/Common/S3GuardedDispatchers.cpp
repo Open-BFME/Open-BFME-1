@@ -73,7 +73,13 @@ public:
 	virtual void bfmeInvoke(void *item, int flag);	// slot 56, vtable+0xE0
 };
 
-extern Gen_002EDA90Target *TheBfmeTarget_002EDA90;			// 0x012ED668
+// Both globals below are retail's single pointer at 0x012ED668, which is
+// `AudioManager *TheAudio`, defined once in Common/Audio/GameAudio.cpp. Only
+// the name has to be canonical for the link; each dispatcher keeps its own
+// TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;					// 0x012ED668
 
 void __stdcall bfmeDispatch_002EDA90(void *item);
 
@@ -140,7 +146,8 @@ public:
 	virtual void bfmeInvoke(void *item, int flag);	// slot 57, vtable+0xE4
 };
 
-extern Gen_002EDAC0Target *TheBfmeTarget_002EDAC0;			// 0x012ED668
+// The second dispatcher's target view, Gen_002EDAC0Target, reads the SAME global
+// the first one does; retail addresses both bodies to 0x012ED668.
 
 void __stdcall bfmeDispatch_002EDAC0(void *item);
 
@@ -175,15 +182,15 @@ void bfmeDispatch_0064C6A0(void *first, void *second, void *third, Gen_0064C6A0T
 // ?bfmeDispatch_002EDA90@@YGXPAX@Z
 void __stdcall bfmeDispatch_002EDA90(void *item)
 {
-	if (TheBfmeTarget_002EDA90)
-		TheBfmeTarget_002EDA90->bfmeInvoke(item, 0);
+	if (TheAudio)
+		((Gen_002EDA90Target *)TheAudio)->bfmeInvoke(item, 0);
 }
 
 // ?bfmeDispatch_002EDAC0@@YGXPAX@Z
 void __stdcall bfmeDispatch_002EDAC0(void *item)
 {
-	if (TheBfmeTarget_002EDAC0)
-		TheBfmeTarget_002EDAC0->bfmeInvoke(item, 0);
+	if (TheAudio)
+		((Gen_002EDAC0Target *)TheAudio)->bfmeInvoke(item, 0);
 }
 
 // ?bfmeDispatch_006CDF70@@YAXPAX0@Z

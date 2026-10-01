@@ -6,7 +6,7 @@
 // class does not override, so its vtable never changes and needs no tail
 // restore. Body: query the AudioEventRTS-typed member at +0x20 through the
 // already-pinned bfmeAsk1023 method: if true, hand the int at +0x2C to the
-// global audio ClientSubsystem's vtable slot 0x4C. Then release a pointer at
+// global AudioManager TheAudio (vtable slot 0x4C). Then release a pointer at
 // +0x14 (vtable slot 0, arg true) if present. Finally the AudioEventRTS
 // member at +0x20 is destroyed automatically (retail 0x00026F35) before the
 // bases unwind.
@@ -54,7 +54,12 @@ public:
 	virtual void bfmeHandOff0018D600(unsigned int value) = 0;   ///< vtable +0x4C
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;                  ///< retail 0x012ED668
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;                                   ///< retail 0x012ED668
 
 class Rva0018D600NotifyTarget
 {
@@ -81,7 +86,7 @@ Rva0018D600::~Rva0018D600()
 	if (((BfmeSub1023 *)&m_audio)->bfmeAsk1023())
 	{
 		unsigned int arg = m_at2C;
-		TheAudioClientUpdate->bfmeHandOff0018D600(arg);
+		((ClientSubsystem *)TheAudio)->bfmeHandOff0018D600(arg);
 	}
 
 	Rva0018D600NotifyTarget *ptr = m_ptr14;

@@ -38,7 +38,12 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeSendCR(BfmeReqCR *req);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 void __stdcall bfmeQueueCR(BfmeSrcCR *src)
 {
@@ -46,6 +51,6 @@ void __stdcall bfmeQueueCR(BfmeSrcCR *src)
 	{
 		BfmeReqCR req(src, 1);
 
-		TheAudioClientUpdate->bfmeSendCR(&req);
+		((Rva005A00B0AudioClient *)TheAudio)->bfmeSendCR(&req);
 	}
 }

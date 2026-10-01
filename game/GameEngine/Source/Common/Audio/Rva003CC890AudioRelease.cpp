@@ -13,7 +13,12 @@ public:
 	virtual void slot4c( unsigned int handle );
 };
 
-extern Rva003CC890Audio *TheAudio;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class Rva003CC890Event
 {
@@ -48,7 +53,7 @@ void Rva003CC890::release( void )
 {
 	if( m_event )
 	{
-		TheAudio->slot4c( m_event->m_handle );
+		((Rva003CC890Audio *)TheAudio)->slot4c( m_event->m_handle );
 		delete m_event;
 		Rva003CC890Event **eventSlot = &m_event;
 		*eventSlot = 0;

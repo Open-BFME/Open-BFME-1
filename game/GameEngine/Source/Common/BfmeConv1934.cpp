@@ -37,7 +37,12 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeSendDA(BfmeReqDA *req);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeHostDA
 {
@@ -57,7 +62,7 @@ void BfmeHostDA::bfmeStopDA()
 	m_bfmeADA = 1;
 	m_bfmeBDA = 0;
 
-	if (TheAudioClientUpdate != 0)
+	if (TheAudio != 0)
 	{
 		BfmeSlotDA *slot = &m_bfmeSlotDA;
 
@@ -65,7 +70,7 @@ void BfmeHostDA::bfmeStopDA()
 		{
 			BfmeReqDA req(slot, 1);
 
-			TheAudioClientUpdate->bfmeSendDA(&req);
+			((Rva005A00B0AudioClient *)TheAudio)->bfmeSendDA(&req);
 		}
 	}
 }

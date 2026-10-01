@@ -109,7 +109,12 @@ public:
 // The call site only needs the singleton's proven global identity and the
 // virtual slot at +0x148.  The declaration above deliberately keeps all
 // preceding slots so the compiler emits the real indirect dispatch offset.
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeOwnerCGF
 {
@@ -143,7 +148,7 @@ void Rva0039B2B0::xfer(Xfer *xfer)
 	xfer->transferVersionPair(&version);
 
 	Rva0010C280((MidVirtualSlot90Receiver *)xfer, &m_field04);
-	TheAudioClientUpdate->takeItem148(xfer, &m_field08);
+	((ClientSubsystem *)TheAudio)->takeItem148(xfer, &m_field08);
 	Rva0010C2A0((MidVirtualSlot90Receiver *)xfer, &m_field0C);
 	m_owner10.bfmeOneCGF(xfer);
 	xfer->slot68(&m_field14);

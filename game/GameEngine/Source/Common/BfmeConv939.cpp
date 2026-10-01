@@ -79,11 +79,16 @@ public:
 	virtual int bfmeVirt939C(int f);
 };
 
-extern BfmeGlob939C *g_bfme939GlobC;
+// Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
+// this TU keeps its own TU-local view of the pointee and casts at the use.
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 int bfmeGo939C(void)
 {
-	int r = g_bfme939GlobC->bfmeVirt939C(0);
+	int r = ((BfmeGlob939C *)TheAudio)->bfmeVirt939C(0);
 	return r == 0;
 }
 
