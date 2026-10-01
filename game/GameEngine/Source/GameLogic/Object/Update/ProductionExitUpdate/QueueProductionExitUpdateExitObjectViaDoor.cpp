@@ -101,13 +101,15 @@ public:
 	Object *findObjectByID(int id);
 };
 
+// Canonical EA global at 0x012F0898, defined in GameLogic.cpp as
+// ?TheGameLogic@@3PAVGameLogic@@A. Declared here through this TU's view.
+extern GameLogic *TheGameLogic;
+
 class GameLogicFrameSlice
 {
 public:
 	Object *bfmeFind(int id);
 };
-
-extern GameLogicFrameSlice *TheGameLogic;
 
 void j_0003a279();
 class GameLogicColorIndexView
@@ -403,7 +405,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 	reinterpret_cast<GameLogicColorIndexView *>(TheGameLogic)->applyObjectColorIndex383930(produced, creationObject->getColorIndex());
 	_TheAIParseDefinitionAI->pathfinder()->addObjectToPathfindMap(produced);
 
-	Object *host = reinterpret_cast<GameLogic *>(TheGameLogic)->findObjectByID(m_lastExitId);
+	Object *host = TheGameLogic->findObjectByID(m_lastExitId);
 	if (host)
 	{
 		ContainModuleInterface *contain = host->getContain();

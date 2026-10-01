@@ -133,6 +133,8 @@ public:
     SLOTS_30_3C SLOTS_40_4C SLOTS_50_5C SLOT(60) SLOT(64)
     virtual U32 slot68();
 };
+class GameLogic;
+extern GameLogic *TheGameLogic;
 struct Rva0077B3F0Logic { U8 unknown000[0x10c]; int i10c; };
 struct Rva0077B3F0Shadow
 {
@@ -171,7 +173,6 @@ struct Rva0077B3F0Data
     bool HighDetailOnly;
 };
 
-extern Rva0077B3F0Logic *g_va012F0898;
 extern Rva0077B3F0Terrain *g_va012EF4CC;
 extern Rva0077B3F0Manager *g_va012F64BC;
 extern U32 g_va012F8064;
@@ -247,7 +248,7 @@ void Rva0077B3F0::method(const Matrix3D *transform)
 {
     if (!b084 && u088) return;
     const Rva0077B3F0Data *data = p004;
-    if (data->MultiPlayerOnly && g_va012F0898->i10c != 1 && g_va012F0898->i10c != 5)
+    if (data->MultiPlayerOnly && ((Rva0077B3F0Logic *)TheGameLogic)->i10c != 1 && ((Rva0077B3F0Logic *)TheGameLogic)->i10c != 5)
         return;
     if (data->HighDetailOnly && u0a0) return;
     // Preserve retail order: clear the update byte before testing the state byte.

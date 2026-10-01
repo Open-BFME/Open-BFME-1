@@ -140,12 +140,13 @@ class Rva00465B80
 };
 struct Rva00579160Manager;
 extern Rva00579160Manager *Rva00579160TheManager;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 struct Rva00367E30Logic
 {
     char pad[0x10c];
     int field10C;
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
 class GameSpyInfo;
 extern GameSpyInfo *TheGameSpyInfo;
 // Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_bfmeD1072 (0x012F4AD1).
@@ -306,7 +307,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
             }
         }
         if (g_optByte12F4AD0 && field284 &&
-            (TheBfmeGameLogic->field10C == 8 || TheBfmeGameLogic->field10C == 4) && !TheGameSpyInfo)
+            (((Rva00367E30Logic *)TheGameLogic)->field10C == 8 || ((Rva00367E30Logic *)TheGameLogic)->field10C == 4) && !TheGameSpyInfo)
         {
             GadgetComboBoxGetSelectedPos(field284, &index);
             if (index < TheDisplay->slot18() && index >= 0)

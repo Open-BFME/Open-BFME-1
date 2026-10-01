@@ -164,7 +164,9 @@ class AudioManager
     virtual void slot48();
     virtual void removeAudioEvent(unsigned);
 };
-struct GameLogic
+class GameLogic;
+extern GameLogic *TheGameLogic;
+struct RvaBattlePlanLogicView
 {
     char pad[0x3c];
     unsigned frame;
@@ -205,7 +207,6 @@ class InGameUI
     virtual void __cdecl message(UnicodeString, ...);
 };
 extern AudioManager *TheAudio;
-extern GameLogic *TheGameLogic;
 extern Radar *TheRadar;
 extern GameTextInterface *TheGameText;
 extern InGameUI *TheInGameUI;
@@ -327,7 +328,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
         TheAudio->removeAudioEvent(pack[m_currentPlan].getPlayingHandle());
         break;
     }
-    unsigned now = TheGameLogic->frame;
+    unsigned now = ((RvaBattlePlanLogicView *)TheGameLogic)->frame;
     switch (newStatus)
     {
     case IDLE:

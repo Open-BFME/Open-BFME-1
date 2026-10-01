@@ -420,6 +420,8 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameSpyConfigInterface *TheGameSpyConfig;
 extern std::list<PeerResponse> TheLobbyQueuedUTMs;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class Rva004FD9B0Logic {
 public:
   char opaque00[0x3c];
@@ -429,7 +431,6 @@ public:
   bool isInShellGame() { return gameMode == 4; }
   unsigned getFrame() { return frame; }
 };
-extern Rva004FD9B0Logic *TheGameLogic;
 class Glo00EF3330 {
 public:
   void h004893E0();
@@ -604,7 +605,7 @@ void WOLLobbyMenuUpdate(WindowLayout *layout, void *userData) {
     } else
       initialGadgetDelay--;
   }
-  if (TheGameLogic->isInShellGame() && TheGameLogic->getFrame() == 1) {
+  if (((Rva004FD9B0Logic *)TheGameLogic)->isInShellGame() && ((Rva004FD9B0Logic *)TheGameLogic)->getFrame() == 1) {
     SignalUIInteraction(SHELL_SCRIPT_HOOK_GENERALS_ONLINE_ENTERED_FROM_GAME);
   }
 

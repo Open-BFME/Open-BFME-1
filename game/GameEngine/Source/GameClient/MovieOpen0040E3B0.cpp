@@ -214,8 +214,9 @@ extern "C" __declspec(dllimport) int __stdcall SetThreadPriority(void*,int);
 extern void *Window0040F780;
 extern __int64 Counter0040F780;
 extern double Interval0040F780;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class BfmeGameLogicPause {public: void setGamePaused(bool,int,bool);};
-extern BfmeGameLogicPause *Logic0040F780;
 bool bfmeGoEMEa(void*);
 void Rva009EBC00(int);
 void Rva009EBBE0(int);
@@ -410,7 +411,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
 bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) {
  SendMessageA(Window0040F780,15,0,0);
  Interval0040F780=(1.0/30.0)/(double)Counter0040F780*1000.0;
- Logic0040F780->setGamePaused(true,0,false);
+ ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(true,0,false);
  bool active=bfmeGoEMEa(0);
  if(!SettingsGlobal0040F780->field1278 && active) Rva009EBC00(0);
  void *thread=GetCurrentThread();
@@ -455,7 +456,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
  if(AudioGlobal0040F780) AudioGlobal0040F780->resume();
  if(!SetThreadPriority(thread,0)) priorityFailure0040F780();
  if(!SettingsGlobal0040F780->field1278 && active) Rva009EBBE0(0);
- Logic0040F780->setGamePaused(false,0,false);
+ ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(false,0,false);
  if(flags&0x100000) {Transitions0040E3B0->reset(); Mouse0040F780->_bfme_setEngineVisibility(true);}
  Control0040F780->update();
  return true;

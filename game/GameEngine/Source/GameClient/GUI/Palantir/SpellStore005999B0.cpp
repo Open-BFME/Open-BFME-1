@@ -18,8 +18,9 @@ class BfmeH1065 { public: void bfmeGo1065B(int,int); };
 class BfmeH1066 { public: void bfmeGo1066A(int); };
 int bfmeAptLevel00465CE0(BfmeH1065 *);
 int bfmeQuiet();
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class GameLogicPortraitShim { public: bool isInMultiplayerOrSkirmishGame(); };
-extern GameLogicPortraitShim *TheGameLogic;
 extern void *Screen005999B0;
 enum ScienceType { INVALID_SCIENCE=-1 };
 class Player { public:
@@ -49,7 +50,7 @@ void Rva005999B0Screen::frameUpdate()
 {
  if(!Screen005999B0 || !(unsigned char)bfmeQuiet()) { ((BfmeH1066*)this)->bfmeGo1066A(0); return; }
  if(!field258) return;
- int mode=TheGameLogic->isInMultiplayerOrSkirmishGame()?1:0;
+ int mode=((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame()?1:0;
  if(mode!=field25c) {
   ((GenActionSink*)g_theWindowManager)->add((void*)bfmeAptLevel00465CE0((BfmeH1065*)this),"SetLayout",1,mode==1?"_multiplayer":"_campaign",0,0,0,0);
   field25c=mode; return;

@@ -117,7 +117,8 @@ public:
 	static void Get_DX8_Render_State_Value_Name(StringClass &, unsigned long, unsigned int);
 };
 
-extern char *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern char *TheWritableGlobalData;
 extern char *TheGameEngine;
 extern char *TheScriptEngine;
@@ -220,7 +221,7 @@ public:
 // ?Render@W3DStatusCircle@@UAEXAAVRenderInfoClass@@@Z
 void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 {
-	if (*(Int *)(TheGameLogic + 0x10c) == 8)
+	if (*(Int *)((char *)TheGameLogic + 0x10c) == 8)
 		return;
 
 	IndexBufferClass *&indexBuffer = *(IndexBufferClass **)((char *)this + 0xd8);
@@ -233,7 +234,7 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 	Bool setIndex = false;
 	Rva00726290Matrix3D tm(true);
 	if (*(Bool *)(TheWritableGlobalData + 0xa9c) &&
-		*(Int *)(TheGameLogic + 0x10c) != 4) {
+		*(Int *)((char *)TheGameLogic + 0x10c) != 4) {
 		if (g_w3dStatusCircleNeedUpdate)
 			((W3DStatusCircle *)this)->updateCircleVB();
 

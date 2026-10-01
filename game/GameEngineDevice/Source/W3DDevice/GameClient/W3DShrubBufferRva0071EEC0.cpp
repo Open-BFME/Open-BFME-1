@@ -40,8 +40,9 @@ class BfmeScriptEngineFreezeExtra
 	unsigned char get() const;
 };
 extern ScriptEngine *TheScriptEngine;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
 class BfmeGameLogicPause
 {
   public:
@@ -332,7 +333,7 @@ void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<Rende
 		return;
 	const BreezeInfo &info = TheScriptEngine->getBreezeInfo();
 	bool pause = ((BfmeScriptEngineFreezeExtra *)TheScriptEngine)->get() || TheScriptEngine->isDebugFrozen();
-	if (TheBfmeGameLogic && ((BfmeGameLogicPause *)TheBfmeGameLogic)->isGamePaused())
+	if (TheGameLogic && ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused())
 		pause = true;
 	if (!pause && info.version != swayVersion)
 		updateSway(info);

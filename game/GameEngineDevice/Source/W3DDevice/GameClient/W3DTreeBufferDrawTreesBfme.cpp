@@ -40,8 +40,9 @@ public:
   unsigned char get() const;
 };
 extern ScriptEngine *TheScriptEngine;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
 class BfmeGameLogicPause {
 public:
   bool isGamePaused();
@@ -407,8 +408,8 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
   const BreezeInfo &info = TheScriptEngine->getBreezeInfo();
   bool pause = ((BfmeScriptEngineFreezeExtra *)TheScriptEngine)->get() ||
                TheScriptEngine->isDebugFrozen();
-  if (TheBfmeGameLogic &&
-      ((BfmeGameLogicPause *)TheBfmeGameLogic)->isGamePaused())
+  if (TheGameLogic &&
+      ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused())
     pause = true;
   static Rva00265150RJFilter filter((char *)TheWritableGlobalData + 0xedc, 0,
                                     true);
