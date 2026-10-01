@@ -40,6 +40,11 @@ public:
 	BfmeR1095 *bfmeLook1095(short *h);
 };
 
+// Retail's player-list global at 0x012ED748, spelled canonically so this TU
+// links against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
 class BfmeP1095
 {
 public:
@@ -52,7 +57,6 @@ public:
 	BfmeZ1095B *bfmeGet1095(int a);
 };
 
-extern BfmeD1095A *g_bfmeD1095;
 extern BfmeP1095 *g_bfmeP1095;
 extern BfmeQ1095A *g_bfmeQ1095;
 
@@ -60,7 +64,7 @@ void __stdcall bfmeGo1095A(int a, int b)
 {
 	a = g_bfmeP1095->bfmeFirst1095(a, 0);
 	while ((short)a) {
-		BfmeR1095 *r = g_bfmeD1095->bfmeLook1095((short *)&a);
+		BfmeR1095 *r = ((BfmeD1095A *)ThePlayerList)->bfmeLook1095((short *)&a);
 
 		if (r) {
 			BfmeZ1095B *z = g_bfmeQ1095->bfmeGet1095(b);

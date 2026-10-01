@@ -19,7 +19,10 @@ public:
 	BfmeLocalERH *m_bfmeLocalERH;
 };
 
-extern BfmePlayersERH *g_bfmePlayersERH;
+// Retail's player-list global at 0x012ED748, spelled canonically so this TU
+// links against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class BfmeKeyGenERH
 {
@@ -46,10 +49,11 @@ int BfmeHostERH::bfmeGoERH()
 	if ((m_bfmeFlagsERH & 0x800) == 0)
 		return 0;
 
-	if (g_bfmePlayersERH->bfmeBusyERH())
+	if (((BfmePlayersERH *)ThePlayerList)->bfmeBusyERH())
 		return 0;
 
-	if (g_bfmePlayersERH->m_bfmeLocalERH->bfmeRelERH(m_bfmeTeamERH) != 0)
+	if (((BfmePlayersERH *)ThePlayerList)->m_bfmeLocalERH
+			->bfmeRelERH(m_bfmeTeamERH) != 0)
 		return 0;
 
 	static int s_bfmeKeyERH =

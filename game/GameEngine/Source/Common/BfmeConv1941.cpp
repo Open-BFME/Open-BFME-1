@@ -30,12 +30,16 @@ static inline Rva00367E30Logic *theBfmeGameLogic()
 	return (Rva00367E30Logic *)TheGameLogic;
 }
 
+// Rva002EE330PlayerList is this TU's view of retail's player-list global at
+// 0x012ED748.  The global itself carries its canonical spelling, so it links
+// against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
 struct Rva002EE330PlayerList
 {
 	char bfmeOwnsDN(BfmeObjDN *o);
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class ControlBar
 {
@@ -66,10 +70,10 @@ void BfmeHostDN::bfmeNotifyDN(void *unused)
 	if (o == 0)
 		return;
 
-	if (Rva002EE330ThePlayers == 0)
+	if (ThePlayerList == 0)
 		return;
 
-	if (Rva002EE330ThePlayers->bfmeOwnsDN(o) == 0)
+	if (((Rva002EE330PlayerList *)ThePlayerList)->bfmeOwnsDN(o) == 0)
 		return;
 
 	int again = m_bfmeIdDN;

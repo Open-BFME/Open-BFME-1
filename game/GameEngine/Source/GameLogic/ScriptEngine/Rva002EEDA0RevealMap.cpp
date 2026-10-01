@@ -12,11 +12,13 @@
 // reveals for each returned player's own +0x24 field instead.  Both arms call
 // the matched PartitionManager::revealMapForPlayer.
 //
-// THE GLOBALS KEEP THE NAMES THE LEDGER ALREADY PINS at their addresses, which
-// are address-derived (Rva002EE330ThePlayers, Rva002EEDA0TheShroudManager), so
-// the receivers are cast rather than renamed.  The calls prove what those
-// objects are -- a PlayerList and a PartitionManager -- but renaming a pinned
-// global is a separate change.
+// THE GLOBALS KEEP THE NAMES THE LEDGER ALREADY PINS at their addresses.  The
+// player-list global is retail's, so it uses EA's own spelling and type
+// (ThePlayerList); the shroud manager's is address-derived
+// (Rva002EEDA0TheShroudManager), so that receiver is cast rather than renamed.
+// The calls prove what those objects are -- a PlayerList and a
+// PartitionManager -- and renaming the address-derived global is a separate
+// change.
 //
 // IDENTITY IS NOT RECOVERED for the function itself; the name is derived from
 // its address.
@@ -54,13 +56,17 @@ public:
 class ScriptEngine;
 extern ScriptEngine *TheScriptEngine;
 
+// Rva002EE330PlayerList is this TU's view of retail's player-list global at
+// 0x012ED748 (its +0x10 player count).  The global itself carries its
+// canonical spelling, so this TU links against
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
 struct Rva002EE330PlayerList
 {
 	char m_lead[0x10];
 	int m_playerCount;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;
 
 struct Rva002EEDA0ShroudManager;
 extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
@@ -74,9 +80,9 @@ void __stdcall rva002EEDA0(const AsciiString &name)
 
 	if (mask == 0)
 	{
-		for (int i = 0; i < Rva002EE330ThePlayers->m_playerCount; i++)
+		for (int i = 0; i < ((Rva002EE330PlayerList *)ThePlayerList)->m_playerCount; i++)
 		{
-			Player *player = ((PlayerList *)Rva002EE330ThePlayers)->getNthPlayer(i);
+			Player *player = ThePlayerList->getNthPlayer(i);
 			if (player->m_field2c == 0)
 				((PartitionManager *)Rva002EEDA0TheShroudManager)->revealMapForPlayer(i);
 		}
@@ -85,8 +91,7 @@ void __stdcall rva002EEDA0(const AsciiString &name)
 	{
 		while (mask != 0)
 		{
-			Player *player =
-				((PlayerList *)Rva002EE330ThePlayers)->getEachPlayerFromMask(mask);
+			Player *player = ThePlayerList->getEachPlayerFromMask(mask);
 			if (player != 0)
 				((PartitionManager *)Rva002EEDA0TheShroudManager)
 					->revealMapForPlayer(player->m_playerIndex);

@@ -29,10 +29,16 @@ public:
 
 extern Glo012F1028Type *Glo012F1028;
 
+// Rva002EE330PlayerList is this TU's view of retail's player-list global at
+// 0x012ED748, used only as the argument of the ILT thunk below.  The global
+// itself carries its canonical spelling, so this TU links against
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
 struct Rva002EE330PlayerList
 {
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class Rva0058BB30Player
 {
@@ -100,7 +106,8 @@ void __fastcall Rva0058BB30CommandState::refresh()
 		return;
 	}
 
-	register Rva002EE330PlayerList *players = Rva002EE330ThePlayers;
+	register Rva002EE330PlayerList *players =
+		(Rva002EE330PlayerList *)ThePlayerList;
 	Rva0058BB30Player *player =
 		((GetLocalPlayerCall)j_0000762b)(players);
 	typedef Bool (Rva0058BB30Player::*PlayerActiveCall)() const;

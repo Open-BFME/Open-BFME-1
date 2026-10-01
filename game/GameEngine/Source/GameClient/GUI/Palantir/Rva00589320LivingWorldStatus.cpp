@@ -32,16 +32,21 @@ public:
 	unsigned char m_active;
 };
 
+// Rva002EE330PlayerList is this TU's view of retail's player-list global at
+// 0x012ED748.  The global itself carries its canonical spelling, so this TU
+// links against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
 class Rva002EE330PlayerList
 {
 public:
 	Rva00589320Player *getLocalPlayer();
 };
 
+class PlayerList;
+
 extern Glo012F1028Type *Glo012F1028;
 extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
 extern GameLogic *TheBfmeGameLogic;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;
 
 int Rva00589320(void)
 {
@@ -60,7 +65,8 @@ int Rva00589320(void)
 	if (mode == 8 || mode == 4)
 		return 1;
 
-	Rva00589320Player *player = Rva002EE330ThePlayers->getLocalPlayer();
+	Rva00589320Player *player =
+		((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer();
 	if (!player)
 		return 1;
 

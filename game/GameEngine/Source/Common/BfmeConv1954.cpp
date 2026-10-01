@@ -39,7 +39,10 @@ public:
 	BfmePlayerERJ *bfmeNthERJ(int index);
 };
 
-extern BfmePlayersERJ *g_bfmePlayersERJ;
+// Retail's player-list global at 0x012ED748, spelled canonically so this TU
+// links against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 struct BfmeEntryERJ
 {
@@ -72,7 +75,7 @@ void * __stdcall bfmeLookupERJ(BfmeStrERJ *name)
 
 	for (int i = 0; i < g_bfmeTableERJ->m_bfmeCountERJ; ++i)
 	{
-		BfmePlayerERJ *player = g_bfmePlayersERJ->bfmeNthERJ(i);
+		BfmePlayerERJ *player = ((BfmePlayersERJ *)ThePlayerList)->bfmeNthERJ(i);
 
 		if (player != 0 && player->m_bfmeKeyERJ == key)
 			return g_bfmeTableERJ->bfmeAtERJ(i)->m_bfmeValueERJ;

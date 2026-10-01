@@ -50,6 +50,12 @@ public:
 	int m_value;
 };
 
+// BfmeRva9140GlobalA is this TU's view of retail's player-list global at
+// 0x012ED748.  The global itself carries its canonical spelling, so it links
+// against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
 class BfmeRva9140GlobalBResult
 {
 public:
@@ -138,7 +144,6 @@ public:
 	virtual void notify(BfmeRva9140AI *ai) = 0;
 };
 
-extern BfmeRva9140GlobalA *g_bfmeRva9140GlobalA;
 extern BfmeRva9140GlobalB *g_bfmeRva9140GlobalB;
 extern BfmeRva9140GlobalC *g_bfmeRva9140GlobalC;
 
@@ -155,7 +160,7 @@ void Rva00249140::update(BfmeRva9140Member *member)
 		((BfmeRva9140MemberView *)member)->getAI();
 	if (ai != 0 && ai->m_active != 0)
 	{
-		int expected = g_bfmeRva9140GlobalA->m_value;
+		int expected = ((BfmeRva9140GlobalA *)ThePlayerList)->m_value;
 		int count = member->getCount();
 		if (count == expected)
 		{
