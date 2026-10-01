@@ -135,7 +135,7 @@ public:
 	char m_unreconstructed_044[0x74 - 0x44];
 	UnsignedInt m_id;
 	char m_unreconstructed_078[0xbc - 0x78];
-	Real m_bfmeBC;
+	Real m_unreconstructed_0BC;
 };
 
 class NameKeyGenerator
@@ -218,9 +218,9 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 		}
 	}
 
-	if ((target->getTemplate()->m_kindof[1] & 0x08000000))
+	if (target->getTemplate()->isWalkOnTopOfWall())
 	{
-		Real range = source->m_bfmeBC;
+		Real range = source->m_unreconstructed_0BC;
 		if (target->getTemplate()->isWallUpgrade())
 			range = 0.0f;
 		range += 20.0f;
@@ -234,7 +234,7 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 		}
 	}
 
-	if ((target->getTemplate()->m_kindof[2] & 0x10000000))
+	if (target->getTemplate()->isSiegeTower())
 	{
 		MemoryPool *tower = SiegeDeploySpecialPower_getPool(const_cast<Object *>(target));
 		static NameKeyType key = TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
@@ -246,7 +246,7 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 			offset.sub(&goalPos);
 			if ((Real)fabs(offset.z) < 20.0f)
 			{
-				Real range = source->m_bfmeBC;
+				Real range = source->m_unreconstructed_0BC;
 				Real reach = ((const Rva001F8DC0 *)tower)->get() + range;
 				if ((Real)fabs(offset.x) < reach && (Real)fabs(offset.y) < reach)
 					return true;
