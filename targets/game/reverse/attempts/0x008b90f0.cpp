@@ -1,5 +1,5 @@
 // ?d_008b90f0@@YAXXZ
-// partial score=0.708 date=2026-09-29
+// partial score=0.956 date=2026-10-01
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // The caller at 0x008B91F0 and pin at 0x008B90F0 identify this tagged-value comparator.
 struct BfmeStringData3AF0
@@ -43,12 +43,12 @@ public:
     void getName(Rva8CD130String *);
 };
 
-int __cdecl dup_008B90F0(unsigned *left, unsigned *right)
+int __cdecl dup_008B90F0(unsigned *right, unsigned *left)
 {
-    unsigned rightTagged = *(volatile unsigned *)right;
     unsigned leftTagged = *(volatile unsigned *)left;
-    Rva8CD130Value *rightValue = (Rva8CD130Value *)(rightTagged & ~1u);
+    unsigned rightTagged = *(volatile unsigned *)right;
     Rva8CD130Value *leftValue = (Rva8CD130Value *)(leftTagged & ~1u);
+    Rva8CD130Value *rightValue = (Rva8CD130Value *)(rightTagged & ~1u);
     Rva8CD130String leftName;
     Rva8CD130String rightName;
     leftValue->getName(&leftName);
