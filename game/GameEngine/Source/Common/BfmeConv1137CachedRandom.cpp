@@ -22,7 +22,7 @@ public:
 	float getValue() const;
 };
 
-class BfmeOverride1137 : public Overridable
+class WeatherSetting : public Overridable
 {
 public:
 	char m_unmodelled_08[0x40 - 8];
@@ -31,7 +31,13 @@ public:
 	GameClientRandomVariable m_random;
 };
 
-extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 
 class BfmeA1137
 {
@@ -43,13 +49,13 @@ private:
 	char m_flag44;
 };
 
-static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
+static const WeatherSetting *walk3(const WeatherSetting *d)
 {
-	const BfmeOverride1137 *f;
+	const WeatherSetting *f;
 	if (d == 0)
 		f = 0;
 	else if (d->m_nextOverride)
-		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		f = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	else
 		f = d;
 	return f;
@@ -58,8 +64,8 @@ static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
 float BfmeA1137::cachedRandom()
 {
 	int one_bits = 0x3F800000;
-	const BfmeOverride1137 *d = g_bfmeGlo012F15F8;
-	const BfmeOverride1137 *f = walk3(d);
+	const WeatherSetting *d = TheWeatherSetting.ptr;
+	const WeatherSetting *f = walk3(d);
 	if (f->m_flag40 == 0 || m_flag44 == 0)
 		return *(float *)&one_bits;
 	f = walk3(d);

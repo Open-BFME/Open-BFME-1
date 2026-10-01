@@ -25,15 +25,23 @@ public:
     void *vtable;
     const Overridable *next;
 };
-class Rva00725710Weather : public Overridable {
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
+class WeatherSetting : public Overridable {
 public:
     char pad08[0x30];
     unsigned char usePointSprites, snowEnabled;
 };
-extern Rva00725710Weather *g_bfmeGlo012F15F8;
-static const Rva00725710Weather *weather(const Rva00725710Weather *p) {
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T> class OVERRIDE
+{
+public:
+    T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
+static const WeatherSetting *weather(const WeatherSetting *p) {
     if (!p) return 0;
-    if (p->next) return (const Rva00725710Weather *)p->next->getFinalOverride();
+    if (p->next) return (const WeatherSetting *)p->next->getFinalOverride();
     return p;
 }
 struct Rva00725710Caps { char pad00[0x273]; unsigned char pointSprites; };
@@ -157,7 +165,7 @@ private:
     float m_cullOverscan;
 };
 void W3DSnowManager::render(RenderInfoClass &rinfo) {
-    const Rva00725710Weather *settings = g_bfmeGlo012F15F8;
+    const WeatherSetting *settings = TheWeatherSetting.ptr;
     if (!weather(settings)->snowEnabled || !m_flag3D || !m_isVisible)
         return;
     int usePointSprites =

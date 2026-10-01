@@ -20,7 +20,8 @@ public:
 	const BfmeOverridable *m_nextOverride;
 	};
 
-class BFMEWeatherOverride : public BfmeOverridable
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
+class WeatherSetting : public BfmeOverridable
 {
 public:
 	unsigned char m_unmodelled_08[0x30 - 8];
@@ -45,7 +46,14 @@ public:
 	int m_frame;
 };
 
-extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 extern BFMEFrameState *g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
 extern "C" float g_bfmeK1121004;
@@ -106,20 +114,20 @@ private:
 	int m_98;
 };
 
-static const BFMEWeatherOverride *walkSnowOverride(const BFMEWeatherOverride *d)
+static const WeatherSetting *walkSnowOverride(const WeatherSetting *d)
 {
 	if (d && d->m_nextOverride)
-		return (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		return (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	return d;
 }
 
-static const BFMEWeatherOverride *walkSnowOverride3(const BFMEWeatherOverride *d)
+static const WeatherSetting *walkSnowOverride3(const WeatherSetting *d)
 {
-	const BFMEWeatherOverride *f;
+	const WeatherSetting *f;
 	if (d == 0)
 		f = 0;
 	else if (d->m_nextOverride)
-		f = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		f = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	else
 		f = d;
 	return f;
@@ -136,7 +144,7 @@ void W3DSnowManager::update(void)
 
 void W3DSnowManager::extraAfterFmod(void)
 {
-	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
+	const WeatherSetting *ov = walkSnowOverride(TheWeatherSetting.ptr);
 	if (ov->m_flag58 == 0)
 		return;
 
@@ -154,7 +162,7 @@ void W3DSnowManager::extraAfterFmod(void)
 			if (frame != state94)
 			{
 				m_98 = 3;
-				ov = walkSnowOverride(g_bfmeGlo012F15F8);
+				ov = walkSnowOverride(TheWeatherSetting.ptr);
 				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
 				m_94 = frame;
 			}
@@ -175,11 +183,11 @@ void W3DSnowManager::extraAfterFmod(void)
 // 0x000092AF, still held by the ?d_00723b60 gen-dump row)
 void W3DSnowManager::extraTail(void)
 {
-	register const BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
+	register const WeatherSetting *d = TheWeatherSetting.ptr;
 	float slot;
-	register const BFMEWeatherOverride *f;
+	register const WeatherSetting *f;
 	if (d && d->m_nextOverride)
-		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		d = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	if (d->m_flag40 == 0)
 		return;
 	if (m_flag44)
@@ -192,13 +200,13 @@ void W3DSnowManager::extraTail(void)
 		return;
 	}
 	slot = WWMath::Random_Float();
-	d = g_bfmeGlo012F15F8;
+	d = TheWeatherSetting.ptr;
 	if (d && d->m_nextOverride)
-		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		d = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	if (!(slot < d->m_54Override))
 		return;
 	m_flag44 = 1;
-	d = g_bfmeGlo012F15F8;
+	d = TheWeatherSetting.ptr;
 	f = walkSnowOverride3(d);
 	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }
@@ -206,11 +214,11 @@ void W3DSnowManager::extraTail(void)
 // ?transitionTBA@W3DSnowManager@@QAEXXZ present-unmatched (retail address not yet assigned)
 void W3DSnowManager::transitionTBA(void)
 {
-	BFMEWeatherOverride *f = g_bfmeGlo012F15F8;
-	const BFMEWeatherOverride *d = walkSnowOverride(f);
-	const BFMEWeatherOverride *next;
-	const BFMEWeatherOverride *from;
-	const BFMEWeatherOverride *to;
+	WeatherSetting *f = TheWeatherSetting.ptr;
+	const WeatherSetting *d = walkSnowOverride(f);
+	const WeatherSetting *next;
+	const WeatherSetting *from;
+	const WeatherSetting *to;
 	float fraction;
 
 	if (d->m_flag58 == 0 || m_98 == 0)
@@ -223,7 +231,7 @@ void W3DSnowManager::transitionTBA(void)
 	}
 	else
 	{
-		next = (const BFMEWeatherOverride *)f->m_nextOverride;
+		next = (const WeatherSetting *)f->m_nextOverride;
 		if (next == 0)
 		{
 			from = f;
@@ -231,8 +239,8 @@ void W3DSnowManager::transitionTBA(void)
 		}
 		else
 		{
-			from = (const BFMEWeatherOverride *)next->getFinalOverride();
-			to = (const BFMEWeatherOverride *)next->getFinalOverride();
+			from = (const WeatherSetting *)next->getFinalOverride();
+			to = (const WeatherSetting *)next->getFinalOverride();
 		}
 	}
 	fraction = (float)(from->m_5c - m_4c) / (float)to->m_5c;

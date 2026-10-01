@@ -31,21 +31,29 @@ public:
 	const char *m_data;
 };
 
-class BfmeOverride1137 : public Overridable
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
+class WeatherSetting : public Overridable
 {
 public:
 	BfmeAsciiString m_snowTexture;
 };
 
-extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 extern const char Rva006A16B0Empty[];
 
 void j_00038c49(void);
 
-static const BfmeOverride1137 *walkSnowOverride(const BfmeOverride1137 *d)
+static const WeatherSetting *walkSnowOverride(const WeatherSetting *d)
 {
 	if (d && d->m_nextOverride)
-		return (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		return (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	return d;
 }
 
@@ -106,8 +114,8 @@ void W3DSnowManager::updateIniSettings(void)
 
 	if (m_snowTexture)
 	{
-		const BfmeOverride1137 *setting =
-			walkSnowOverride(g_bfmeGlo012F15F8);
+		const WeatherSetting *setting =
+			walkSnowOverride(TheWeatherSetting.ptr);
 		const char *name;
 		if (setting->m_snowTexture.m_data)
 			name = setting->m_snowTexture.m_data + 8;
@@ -118,8 +126,8 @@ void W3DSnowManager::updateIniSettings(void)
 		const char *textureName = texture ? texture->Get_Texture_Name() : 0;
 		if (stricmp(textureName, name) != 0)
 		{
-			const BfmeOverride1137 *replacement =
-				walkSnowOverride(g_bfmeGlo012F15F8);
+			const WeatherSetting *replacement =
+				walkSnowOverride(TheWeatherSetting.ptr);
 			const char *replacementName = replacement->m_snowTexture.m_data;
 			if (replacementName)
 				replacementName += 8;

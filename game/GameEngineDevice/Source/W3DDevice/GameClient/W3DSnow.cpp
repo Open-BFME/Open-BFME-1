@@ -74,7 +74,12 @@ public:
 	}
 };
 
-extern BfmeSnowOverride *g_bfmeGlo012F15F8;
+// TheWeatherSetting is the upstream spelling of the global at 0x012F15F8
+// (GameClient/Snow.h); the fields below go through the local layout mirror.
+static const BfmeSnowOverride *bfmeWeatherGlobal(void)
+{
+	return (const BfmeSnowOverride *)TheWeatherSetting.getNonOverloadedPointer();
+}
 
 static const BfmeSnowOverride *walkSnowOverride(const BfmeSnowOverride *setting)
 {
@@ -220,7 +225,7 @@ Bool W3DSnowManager::ReAcquireResources(void)
 	((Gen0045A970_00723FB0 *)this)->releaseResources();
 
 	BfmeW3DSnowManagerLayout *layout = (BfmeW3DSnowManagerLayout *)this;
-	register const BfmeSnowOverride *base = g_bfmeGlo012F15F8;
+	register const BfmeSnowOverride *base = bfmeWeatherGlobal();
 	register const BfmeSnowOverride *setting = walkSnowOverride(base);
 	if (setting->m_snowEnabled == 0 || layout->m_visible == 0)
 		return true;
@@ -236,7 +241,7 @@ Bool W3DSnowManager::ReAcquireResources(void)
 			if (device->CreateVertexBuffer(
 				0x10000, 0x248, 0x42, 0, &layout->m_vertexBufferD3D, 0) < 0)
 				return false;
-			current = g_bfmeGlo012F15F8;
+			current = bfmeWeatherGlobal();
 		}
 	}
 	else
@@ -261,7 +266,7 @@ Bool W3DSnowManager::ReAcquireResources(void)
 				ib += 6;
 			}
 		}
-		current = g_bfmeGlo012F15F8;
+		current = bfmeWeatherGlobal();
 	}
 
 	register const BfmeSnowOverride *finalSetting = walkSnowOverride(current);

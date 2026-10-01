@@ -15,7 +15,7 @@ public:
 	const Overridable *m_nextOverride;
 };
 
-class BfmeOverride1137 : public Overridable
+class WeatherSetting : public Overridable
 {
 public:
 	char m_unmodelled_08[0x5c - 8];
@@ -24,7 +24,13 @@ public:
 	int m_64;
 };
 
-extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 
 class BfmeA1137
 {
@@ -42,36 +48,36 @@ private:
 	int m_98;
 };
 
-static const BfmeOverride1137 *walk(const BfmeOverride1137 *d)
+static const WeatherSetting *walk(const WeatherSetting *d)
 {
-	const BfmeOverride1137 *f = d;
+	const WeatherSetting *f = d;
 	if (d && d->m_nextOverride)
-		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		f = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	return f;
 }
 
 void BfmeA1137::copyFromOverride()
 {
-	const BfmeOverride1137 *d;
-	const BfmeOverride1137 *f;
+	const WeatherSetting *d;
+	const WeatherSetting *f;
 
 	m_98 = 1;
 	m_flag3d = 1;
 
-	f = walk(g_bfmeGlo012F15F8);
+	f = walk(TheWeatherSetting.ptr);
 	m_4c = f->m_5c;
 
-	f = walk(g_bfmeGlo012F15F8);
+	f = walk(TheWeatherSetting.ptr);
 	m_50 = f->m_60;
 
-	d = g_bfmeGlo012F15F8;
+	d = TheWeatherSetting.ptr;
 	f = d;
-	if (!g_bfmeGlo012F15F8)
+	if (!TheWeatherSetting.ptr)
 	{
 		m_54 = f->m_64;
 		return;
 	}
 	if (d->m_nextOverride)
-		d = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		d = (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	m_54 = d->m_64;
 }

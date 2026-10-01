@@ -30,7 +30,7 @@ public:
 	const Overridable *m_nextOverride;
 };
 
-class BfmeOverride1137 : public Overridable
+class WeatherSetting : public Overridable
 {
 public:
 	char m_unmodelled08[0x58 - 8];
@@ -39,14 +39,20 @@ public:
 	int m_5c;
 };
 
-extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 
 // One inlined level of upstream OVERRIDE<T>::operator->.
-static inline const BfmeOverride1137 *finalOverride1137(const BfmeOverride1137 *root)
+static inline const WeatherSetting *finalOverride1137(const WeatherSetting *root)
 {
 	if (!root)
 		return 0;
-	return (const BfmeOverride1137 *)root->getFinalOverride();
+	return (const WeatherSetting *)root->getFinalOverride();
 }
 
 class BfmeThingTBA
@@ -74,11 +80,11 @@ private:
 
 void BfmeThingTBA::rva007243A0(void)
 {
-	if (!finalOverride1137(g_bfmeGlo012F15F8)->m_spellEnabled || m_98 == 0)
+	if (!finalOverride1137(TheWeatherSetting.ptr)->m_spellEnabled || m_98 == 0)
 		return;
 
-	float fraction = (float)(finalOverride1137(g_bfmeGlo012F15F8)->m_5c - m_4c) /
-		(float)finalOverride1137(g_bfmeGlo012F15F8)->m_5c;
+	float fraction = (float)(finalOverride1137(TheWeatherSetting.ptr)->m_5c - m_4c) /
+		(float)finalOverride1137(TheWeatherSetting.ptr)->m_5c;
 	if (fraction > 1.0f)
 	{
 		bfmeTwoTBA();

@@ -11,7 +11,8 @@ public:
 	const BfmeOverridable *m_nextOverride;
 };
 
-class BFMEWeatherOverride : public BfmeOverridable
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
+class WeatherSetting : public BfmeOverridable
 {
 public:
 	unsigned char m_unmodelled_08[0x58 - 8];
@@ -27,7 +28,14 @@ public:
 	int m_frame;
 };
 
-extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 extern BFMEFrameState *g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
 
@@ -48,16 +56,16 @@ private:
 	int m_98;
 };
 
-static const BFMEWeatherOverride *walkSnowOverride(const BFMEWeatherOverride *d)
+static const WeatherSetting *walkSnowOverride(const WeatherSetting *d)
 {
 	if (d && d->m_nextOverride)
-		return (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		return (const WeatherSetting *)d->m_nextOverride->getFinalOverride();
 	return d;
 }
 
 void W3DSnowManager::extraAfterFmod(void)
 {
-	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
+	const WeatherSetting *ov = walkSnowOverride(TheWeatherSetting.ptr);
 	if (ov->m_flag58 == 0)
 		return;
 
@@ -75,7 +83,7 @@ void W3DSnowManager::extraAfterFmod(void)
 			if (frame != state94)
 			{
 				m_98 = 3;
-				ov = walkSnowOverride(g_bfmeGlo012F15F8);
+				ov = walkSnowOverride(TheWeatherSetting.ptr);
 				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
 				m_94 = frame;
 			}
