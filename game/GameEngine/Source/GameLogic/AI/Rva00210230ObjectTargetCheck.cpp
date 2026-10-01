@@ -51,14 +51,19 @@ public:
 	Real m_bfmeC4;
 };
 
-class BfmeAIRoot
+// 0x012EF214 is retail's TheAI singleton. The old stand-in was C-linkage, so it
+// emitted an unmangled TheAIParseDefinitionAI; retail's own bytes name the
+// global ?TheAI@@3PAVAI@@A, so the C++ spelling with the real class name is
+// the one to bind. This TU has no AI.h in its include closure, so the class is
+// renamed in place rather than pulled in.
+class AI
 {
 public:
 	char m_bfmeHead[0x14];
 	BfmeAIData *m_aiData;
 };
 
-extern "C" BfmeAIRoot *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 // The retail body is reached through this import thunk rather than through a
 // named Object method in the current source tree.
@@ -88,7 +93,7 @@ Bool Rva00210230::check(Object *source, Object *target)
 	if (target->getRelationship(source) != NEUTRAL)
 		goto failure;
 
-	Real distanceLimit = TheAIParseDefinitionAI->m_aiData->m_bfmeC4;
+	Real distanceLimit = TheAI->m_aiData->m_bfmeC4;
     if (!(source->getDistanceSquared(target) > distanceLimit * distanceLimit))
         return source->getControllingPlayer()->m_bfme2c == 0;
 

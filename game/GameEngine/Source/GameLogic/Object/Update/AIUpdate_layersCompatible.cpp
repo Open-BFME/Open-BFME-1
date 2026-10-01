@@ -27,7 +27,10 @@ public:
 	Pathfinder *m_pathfinder;
 };
 
-extern "C" AI *_TheAIParseDefinitionAI;
+// 0x012EF214 is retail's TheAI singleton; the old stand-in was C-linkage, so it
+// emitted an unmangled _TheAIParseDefinitionAI. Retail's own bytes name the
+// global ?TheAI@@3PAVAI@@A, so the C++ spelling is the one to bind.
+extern AI *TheAI;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
@@ -45,7 +48,7 @@ bool AIUpdateInterface::layersCompatible(const Coord3D *pos) const
 {
 	int objectLayer = m_object->getLayer();
 	const Coord3D *p = pos;
-	Pathfinder *pf = _TheAIParseDefinitionAI->m_pathfinder;
+	Pathfinder *pf = TheAI->m_pathfinder;
 	int cellLayer = pf->getLayer(p);
 	if (objectLayer >= 0x11)
 	{

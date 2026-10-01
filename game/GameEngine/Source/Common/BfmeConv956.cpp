@@ -169,13 +169,20 @@ struct BfmeTune956
 	float m_bfmeScale;
 };
 
-struct BfmeGlob956
+// 0x012EF214 is retail's TheAI singleton (the pin records its RVA 0x00EEF214);
+// retail's own bytes name the global ?TheAI@@3PAVAI@@A. The +0x14 member below
+// is retail's m_aiData, following m_pathfinder at +0x0C and the group list, and
+// BfmeTune956 is the TAiData view the +0xC4 scale read goes through. This TU has
+// no AI.h in its include closure, so the class is renamed in place rather than
+// pulled in -- BfmeGlob956 was a placeholder, not a game name.
+class AI
 {
+public:
 	char m_bfmePad[0x14];
 	BfmeTune956 *m_bfmeTune;
 };
 
-extern BfmeGlob956 *g_bfmeGlob956;
+extern AI *TheAI;
 
 struct BfmeSrc956
 {
@@ -194,7 +201,7 @@ float BfmeScale956::bfmeGo956()
 	if ((*(Object **)((char *)this - 0x338))->getControllingPlayer()
 			&& (*(Object **)((char *)this - 0x338))->getControllingPlayer()->m_bfmeMode == 1) {
 		BfmeSrc956 *s = *(BfmeSrc956 **)((char *)this - 0x33c);
-		return s->m_bfmeBase * g_bfmeGlob956->m_bfmeTune->m_bfmeScale;
+		return s->m_bfmeBase * TheAI->m_bfmeTune->m_bfmeScale;
 	}
 
 	BfmeSrc956 *s = *(BfmeSrc956 **)((char *)this - 0x33c);

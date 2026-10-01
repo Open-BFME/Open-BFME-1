@@ -8237,7 +8237,12 @@ extern Rva0038DA10Client* g012F1464;
 extern Rva0038DA10Network* g012F7714;
 extern Rva0038C1E0 g012F08A0;
 extern Rva0060D3D0* g012F706C;
-extern Rva0038DA10AI* g012EF214;
+
+// 0x012EF214 is retail's TheAI singleton; extern AI *TheAI comes from
+// GameLogic/AI.h, already in this TU's include closure. Rva0038DA10AI stays as
+// the local layout view of that object (its +0x0C slot is retail's m_pathfinder)
+// and the two call sites reinterpret the real global rather than declaring a
+// second stand-in name at the same address.
 extern Rva0038DA10Terrain* g012EF4CC;
 extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,*g012ED5C0,*g012ED83C,*g012F1044,*g012EF738,*g012EF504,*g012F079C,*g012F0888;
 extern Rva0038DA10Recorder* g012ED62C;
@@ -8288,7 +8293,7 @@ void Rva0038DA10GameLogic::update(int phase) {
             if (u && u->rva00278830()) u->rva0026F080();
         }
     }
-    g012EF214->rva0C->rva003DC190();
+    ((Rva0038DA10AI *)TheAI)->rva0C->rva003DC190();
     setFPMode();
     if (first) {
         g012F076C->slot14(); g012F060C->slot14(); g012EF4CC->system.slot14();
@@ -8364,7 +8369,7 @@ void Rva0038DA10GameLogic::update(int phase) {
                 }
             }
         }
-        if (phase==5) g012EF214->slot14();
+        if (phase==5) ((Rva0038DA10AI *)TheAI)->slot14();
     }
     rva0038A6F0();
     if (phase==5) {

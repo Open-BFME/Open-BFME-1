@@ -70,15 +70,22 @@ public:
 		const Object *target, const void *unused) const;
 };
 
-struct BfmeAIRoot
+// 0x012EF214 is retail's TheAI singleton. The old stand-in was C-linkage, so it
+// emitted an unmangled TheAIParseDefinitionAI; retail's own bytes name the
+// global ?TheAI@@3PAVAI@@A, so the C++ spelling with the real class name is
+// the one to bind. This TU has no AI.h in its include closure, so the class is
+// renamed in place rather than pulled in. Its +0x0C member is retail's
+// m_pathfinder, read here as the attack-query view the call site needs.
+class AI
 {
+public:
 	BfmeAttackQuery *getAttackQuery() const { return m_attackQuery; }
 
 	unsigned char m_pad000[0x0C];
 	BfmeAttackQuery *m_attackQuery;
 };
 
-extern "C" BfmeAIRoot *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 class BfmeContainInterface
 {
@@ -177,7 +184,7 @@ CanAttackResult Object::getAbleToAttackSpecificObject(AbleToAttackType attackTyp
 	{
 		if (!getFinalTemplate()->m_bfmeAttackFlag
 			&& target->isKindOf(KINDOF_STRUCTURE)
-			&& !TheAIParseDefinitionAI->getAttackQuery()->bfmeCanAttackTarget(
+			&& !TheAI->getAttackQuery()->bfmeCanAttackTarget(
 				this, &m_position, target, 0))
 		{
 			return ATTACKRESULT_NOT_POSSIBLE;

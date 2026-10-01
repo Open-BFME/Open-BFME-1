@@ -1290,6 +1290,11 @@ public:
 		const Coord3D *targetPos );
 };
 
+// 0x012EF214 is retail's TheAI singleton (extern AI *TheAI comes from
+// GameLogic/AI.h, already in this TU's include closure). The local
+// BfmeOutOfWeaponRangeAI view only modelled its +0x0C pathfinder pointer, so
+// it is spelled as a reinterpret of the real global rather than a second
+// stand-in declaration at the same address.
 class BfmeOutOfWeaponRangeAI
 {
 public:
@@ -1305,7 +1310,6 @@ public:
 	virtual Bool isDoingGroundMovement();
 };
 
-extern BfmeOutOfWeaponRangeAI *g_bfmeOutOfWeaponRangeAI;
 
 #pragma comment(linker, "/alternatename:?getGoalObject@BfmeOutOfWeaponRangeStateMachine@@QAEPAVBfmeOutOfWeaponRangeObject@@XZ=?j_0000e570@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getCurrentWeapon@BfmeOutOfWeaponRangeObject@@QAEPAVBfmeOutOfWeaponRangeWeapon@@H@Z=?j_00031a7f@@YAXXZ")
@@ -1362,7 +1366,7 @@ Bool outOfWeaponRangeObject( State *thisState, void* userData )
 			&& !weapon->getTemplate()->isLeechRangeWeapon() && onGround
 			&& !victim->isSignificantlyAboveTerrain())
 		{
-			viewBlocked = g_bfmeOutOfWeaponRangeAI->pathfinder()->isAttackViewBlockedByObstacle(
+			viewBlocked = ((BfmeOutOfWeaponRangeAI *)TheAI)->pathfinder()->isAttackViewBlockedByObstacle(
 				obj, obj->getPosition(), victim, victim->getPosition());
 		}
 		// A weapon with leech range temporarily has unlimited range and is locked onto its target.
