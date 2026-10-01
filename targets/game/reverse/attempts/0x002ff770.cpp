@@ -1,5 +1,5 @@
 // ?doSkirmishCommandButtonOnMostValuable@ScriptActions@@IAEXABVAsciiString@@0M_N@Z
-// partial score=0.982 date=2026-09-28
+// partial score=0.9824 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Clean C++ recovery of ScriptActions::doSkirmishCommandButtonOnMostValuable.
