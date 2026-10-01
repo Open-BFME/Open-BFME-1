@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-#include "../../../../Include/GameLogic/Rva0039D550.h"
+// Four-byte indexed-handle ABI view. The destructor called on the member at
+// +0x3c is retail RVA 0x0039D550, matched as AttributeHandleStandIn, so the
+// member is spelled with that class's own name here.
+class AttributeHandleStandIn
+{
+public:
+	~AttributeHandleStandIn();
+
+private:
+	unsigned int m_index;
+};
 
 // Open-BFME5: RefundDieModuleData constructor lifted from retail.
 
@@ -72,6 +82,6 @@ class __declspec(novtable) RefundDieModuleData;
 // ??1RefundDieModuleData@@UAE@XZ
 RefundDieModuleData::~RefundDieModuleData()
 {
-	(reinterpret_cast<Rva0039D550 *>(reinterpret_cast<unsigned char *>(this) + 0x3c))
-		->~Rva0039D550();
+	(reinterpret_cast<AttributeHandleStandIn *>(reinterpret_cast<unsigned char *>(this) + 0x3c))
+		->~AttributeHandleStandIn();
 }

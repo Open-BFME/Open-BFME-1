@@ -2,7 +2,17 @@
 
 #include <string.h>
 
-#include "../../../../Include/GameLogic/Rva0039D550.h"
+// Four-byte indexed-handle ABI view. The destructor called on the acceptance
+// filter at +0x260 is retail RVA 0x0039D550, matched as AttributeHandleStandIn,
+// so the member is spelled with that class's own name here.
+class AttributeHandleStandIn
+{
+public:
+	~AttributeHandleStandIn();
+
+private:
+	unsigned int m_index;
+};
 
 // BFME base view: named SpecialAbilityUpdate factory 0x00114140 allocates
 // 0x254 bytes and calls ILT 0x0003F503 -> matched constructor 0x002A5AA0.
@@ -75,5 +85,5 @@ class __declspec(novtable) LevelGrantSpecialPowerModuleData;
 // ??1LevelGrantSpecialPowerModuleData@@UAE@XZ
 LevelGrantSpecialPowerModuleData::~LevelGrantSpecialPowerModuleData()
 {
-    reinterpret_cast<Rva0039D550 *>(&m_member.m_acceptanceFilter)->~Rva0039D550();
+    reinterpret_cast<AttributeHandleStandIn *>(&m_member.m_acceptanceFilter)->~AttributeHandleStandIn();
 }

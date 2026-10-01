@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-#include "../../../../Include/GameLogic/Rva0039D550.h"
+// Four-byte indexed-handle ABI view. The handle member's destructor is retail
+// RVA 0x0039D550, matched as AttributeHandleStandIn, so the member is spelled
+// with that class's own name here.
+class AttributeHandleStandIn
+{
+public:
+	~AttributeHandleStandIn();
+
+private:
+	unsigned int m_index;
+};
 
 // A ModuleData base supplying the vptr, then a member whose constructor is out
 // of line -- the call resolves to the existing pin for ??0RS_Member@@QAE@XZ at
@@ -25,7 +35,7 @@ public:
 	RS_Member();
 
 private:
-	Rva0039D550 m_handle;
+	AttributeHandleStandIn m_handle;
 	unsigned char m_tail[0x14];
 };
 

@@ -34,9 +34,12 @@ public:
 private:
 	unsigned char m_pad[4];
 };
-class SpecialPowerModuleDataMemberF {
+// The last four-byte member: retail calls retail RVA 0x0039D550 from this
+// destructor, matched as AttributeHandleStandIn, so the member is spelled with
+// that class's own name here.
+class AttributeHandleStandIn {
 public:
-	~SpecialPowerModuleDataMemberF();
+	~AttributeHandleStandIn();
 private:
 	unsigned char m_pad[4];
 };
@@ -64,7 +67,7 @@ private:
 	unsigned char m_gap4[0x6c];
 	SpecialPowerModuleDataMemberE m_e;
 	unsigned char m_gap5[0x8];
-	SpecialPowerModuleDataMemberF m_f;
+	AttributeHandleStandIn m_f;
 };
 
 SpecialPowerModuleData::~SpecialPowerModuleData()

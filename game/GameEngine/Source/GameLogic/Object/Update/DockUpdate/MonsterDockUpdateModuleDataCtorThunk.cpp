@@ -1,7 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retail-layout C++ conversion of MonsterDockUpdateModuleData.
 
-#include "../../../../../Include/GameLogic/Rva0039D550.h"
+// Four-byte indexed-handle ABI view. The destructor called on the member at
+// +0x10 is retail RVA 0x0039D550, matched as AttributeHandleStandIn, so the
+// member is spelled with that class's own name here.
+class AttributeHandleStandIn
+{
+public:
+	~AttributeHandleStandIn();
+
+private:
+	unsigned int m_index;
+};
 
 // The destructor's only vtable store is Snapshot's (0x01073744): the
 // DockUpdateModuleData store dies against the inlined ~Snapshot.
@@ -57,5 +67,5 @@ class __declspec(novtable) MonsterDockUpdateModuleData;
 // ??1MonsterDockUpdateModuleData@@UAE@XZ
 MonsterDockUpdateModuleData::~MonsterDockUpdateModuleData()
 {
-	reinterpret_cast<Rva0039D550 *>(&m_member)->~Rva0039D550();
+	reinterpret_cast<AttributeHandleStandIn *>(&m_member)->~AttributeHandleStandIn();
 }

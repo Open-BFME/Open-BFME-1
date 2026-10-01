@@ -25,10 +25,13 @@ private:
 	char *m_data;
 };
 
-class AttributeModifierAuraUpdateModuleDataMemberC
+// The four-byte member at +0x70: retail calls retail RVA 0x0039D550 from this
+// destructor, matched as AttributeHandleStandIn, so the member is spelled with
+// that class's own name here.
+class AttributeHandleStandIn
 {
 public:
-	~AttributeModifierAuraUpdateModuleDataMemberC();
+	~AttributeHandleStandIn();
 
 private:
 	unsigned char m_pad[4];
@@ -87,7 +90,7 @@ public:
 	virtual ~CostModifierUpgradeModuleData();
 
 private:
-	AttributeModifierAuraUpdateModuleDataMemberC m_memberC;
+	AttributeHandleStandIn m_memberC;
 	Gen002D4C00Vector m_vector;
 	unsigned char m_flags[4];
 	BFMERetailAsciiString m_string;

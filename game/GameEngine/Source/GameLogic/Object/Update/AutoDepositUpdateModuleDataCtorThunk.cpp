@@ -8,7 +8,17 @@
 // line. ModuleData's inline virtual destructor restores its vptr after member
 // teardown.
 
-#include "../../../../Include/GameLogic/Rva0039D550.h"
+// Four-byte indexed-handle ABI view. The destructor called on the member at
+// +0x1c is retail RVA 0x0039D550, matched as AttributeHandleStandIn, so the
+// member is spelled with that class's own name here.
+class AttributeHandleStandIn
+{
+public:
+	~AttributeHandleStandIn();
+
+private:
+	unsigned int m_index;
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
@@ -60,5 +70,5 @@ class __declspec(novtable) AutoDepositUpdateModuleData;
 // ??1AutoDepositUpdateModuleData@@UAE@XZ
 AutoDepositUpdateModuleData::~AutoDepositUpdateModuleData()
 {
-	reinterpret_cast<Rva0039D550 *>(&m_1c)->~Rva0039D550();
+	reinterpret_cast<AttributeHandleStandIn *>(&m_1c)->~AttributeHandleStandIn();
 }

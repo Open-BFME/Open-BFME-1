@@ -19,15 +19,12 @@ public:
 private:
 	unsigned char m_pad[4];
 };
-class SpyVisionUpdateModuleDataMemberD {
+// The two adjacent four-byte handles: retail calls retail RVA 0x0039D550 twice
+// from this destructor, matched as AttributeHandleStandIn, so both members are
+// spelled with that class's own name here.
+class AttributeHandleStandIn {
 public:
-	~SpyVisionUpdateModuleDataMemberD();
-private:
-	unsigned char m_pad[4];
-};
-class SpyVisionUpdateModuleDataMemberE {
-public:
-	~SpyVisionUpdateModuleDataMemberE();
+	~AttributeHandleStandIn();
 private:
 	unsigned char m_pad[4];
 };
@@ -68,8 +65,8 @@ private:
 	SpyVisionUpdateModuleDataMemberB m_b;
 	SpyVisionUpdateModuleDataMemberC m_c;
 	unsigned char m_gap3[0x18];
-	SpyVisionUpdateModuleDataMemberD m_d;
-	SpyVisionUpdateModuleDataMemberE m_e;
+	AttributeHandleStandIn m_d;
+	AttributeHandleStandIn m_e;
 	unsigned char m_gap5[0x10];
 	SpyVisionUpdateModuleDataMemberF m_f;
 	unsigned char m_gap6[0x8];
