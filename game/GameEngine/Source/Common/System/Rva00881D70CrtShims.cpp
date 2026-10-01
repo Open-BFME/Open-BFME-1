@@ -144,3 +144,11 @@ void *rva00881DD0(void *ptr, size_t size)
 {
     return g_rva0130E9A0(ptr, size, 0);
 }
+
+// Actual matched loader installs this address for _free_dbg(void*,int).
+// Genuine debug block type is ignored; pool allocation type is always zero.
+void rva00881D40(void *ptr, int block_type)
+{
+    if (ptr != 0 && ptr != Rva01357214Onexitbegin)
+        __gameMemFreePtr(ptr, 0);
+}

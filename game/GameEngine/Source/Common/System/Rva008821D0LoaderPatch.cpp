@@ -48,7 +48,7 @@ extern RvaModuleHandle821D0 __stdcall d_00882020(const unsigned short *name,
 extern void *d_00881ca0(unsigned int count, unsigned int size);
 extern void *d_00881ce0(unsigned int count, unsigned int size);
 extern void d_00881d20(void *ptr);
-extern void d_00881d40(void);
+extern void rva00881D40(void *, int);
 extern void *d_00881d70(unsigned int size);
 extern void *d_00881d90(unsigned int size);
 extern void d_00881db0(void);
@@ -99,7 +99,7 @@ void rva008821d0LoaderPatch(void)
 	rva00882140PatchAllModules("msvcr71.dll", "calloc", (void *)d_00881ca0);
 	rva00882140PatchAllModules("msvcr71.dll", "_calloc_dbg", (void *)d_00881ce0);
 	rva00882140PatchAllModules("msvcr71.dll", "free", (void *)d_00881d20);
-	rva00882140PatchAllModules("msvcr71.dll", "_free_dbg", (void *)d_00881d40);
+	rva00882140PatchAllModules("msvcr71.dll", "_free_dbg", (void *)rva00881D40);
 	rva00882140PatchAllModules("msvcr71.dll", "malloc", (void *)d_00881d70);
 	rva00882140PatchAllModules("msvcr71.dll", "_malloc_dbg", (void *)d_00881d90);
 	rva00882140PatchAllModules("msvcr71.dll", "_msize", (void *)d_00881db0);
