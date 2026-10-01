@@ -23,8 +23,6 @@ struct Bfme5WideString
 	Bfme5WideHeader *m_bfmeData;
 };
 
-extern const unsigned short g_bfme5EmptyWide;
-
 static int bfme5WideLength(const Bfme5WideString &s)
 {
 	return s.m_bfmeData ? s.m_bfmeData->m_bfmeLength : 0;
@@ -32,7 +30,7 @@ static int bfme5WideLength(const Bfme5WideString &s)
 
 static const unsigned short *bfme5WideChars(const Bfme5WideString &s)
 {
-	return s.m_bfmeData ? (const unsigned short *)((char *)s.m_bfmeData + 8) : &g_bfme5EmptyWide;
+	return s.m_bfmeData ? (const unsigned short *)((char *)s.m_bfmeData + 8) : (const unsigned short *)L"";
 }
 
 class Bfme5TextWidget

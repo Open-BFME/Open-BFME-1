@@ -10,7 +10,9 @@ public:
 	void *lookup( const AsciiString &name );
 };
 
-extern Rva0007F560Factory *g_rva0007F560Factory;
+class Rva000946B0G;
+extern Rva000946B0G *g_rva000946b0;
+#define g_rva0007F560Factory ((Rva0007F560Factory *)g_rva000946b0)
 
 class Rva0007F560
 {

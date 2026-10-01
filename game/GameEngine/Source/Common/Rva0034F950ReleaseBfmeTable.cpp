@@ -27,7 +27,9 @@ public:
 	BfmeEntryERJ m_entries[1];
 };
 
-extern BfmeTableERJ *g_bfmeTableERJ;
+class SidesList;
+extern SidesList *TheSidesList;
+#define g_bfmeTableERJ ((BfmeTableERJ *)TheSidesList)
 
 // The only reachable evidence is the global table and its anonymous cleanup
 // body; no named caller or owning vtable class has been proven for this RVA.

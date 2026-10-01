@@ -227,7 +227,8 @@ void Rva001F84A0::set(unsigned int value)
 	m_value = value;
 }
 
-extern int Rva001F84B0Vtable;
+extern "C" int __identifier("??_7CreateModuleInterface@@6B@");
+#define Rva001F84B0Vtable __identifier("??_7CreateModuleInterface@@6B@")
 
 class Rva001F84B0
 {

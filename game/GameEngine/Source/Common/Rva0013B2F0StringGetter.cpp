@@ -30,6 +30,7 @@ class AsciiString
 {
 public:
 	AsciiString();
+	static AsciiString TheEmptyString;
 	// Retail inlines this forwarder, so the call site encodes
 	// StringBase<char>'s copy ctor at 0x00887B60 directly.
 	AsciiString(const AsciiString &other)
@@ -51,7 +52,7 @@ struct Rva0013B2F0StringRow
 	AsciiString m_field10;
 };
 
-extern AsciiString TheBfmeCrateNameDefault;
+#define TheBfmeCrateNameDefault AsciiString::TheEmptyString
 
 class Rva0013B2F0StringTable
 {

@@ -2,7 +2,8 @@
 // Open-BFME5: base unsigned*0.03f clamp shared by BfmeRectVNE / VNF / VNG.
 // Retail 0x003BBAF0, 66 bytes. Return-this is materialised before the <1 clamp.
 
-extern void *g_bfmeVtaVNE;
+extern "C" void *__identifier("??_7BfmeBaseVNH@@6B@");
+#define g_bfmeVtaVNE __identifier("??_7BfmeBaseVNH@@6B@")
 
 // Retail 0x003BB860 (31 bytes): the scaling as its own file static. The
 // constructors inline it, but VC7.1 still emits a copy that takes w in EAX.

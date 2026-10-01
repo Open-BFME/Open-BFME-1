@@ -2,7 +2,8 @@
 
 #include "string_base.h"
 
-extern int g_bfmeDirtyBG;
+extern unsigned int g_Rva00EEF418;
+#define g_bfmeDirtyBG g_Rva00EEF418
 
 // The retail value and member slots are narrow shared-buffer strings.  Keep
 // this local view one word wide, but use the real StringBase<char> member

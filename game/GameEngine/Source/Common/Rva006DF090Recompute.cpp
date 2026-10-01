@@ -3,8 +3,6 @@
 // slots 0x30..0x40 run, +0x18 is dirty unless +4/+8/+0xC/+0x10 equal
 // 120, 300, 37.5 and the double constant at 0x01085F58.
 
-extern double Gen01085F58;
-
 class Rva006DF550
 {
 public:
@@ -43,7 +41,7 @@ void Rva006DF550::recompute()
 	v38();
 	v3c();
 	v40();
-	if (m_0C == 37.5f && (double)m_10 == Gen01085F58 && m_04 == 120.0f && m_08 == 300.0f)
+	if (m_0C == 37.5f && (double)m_10 == 0.0 && m_04 == 120.0f && m_08 == 300.0f)
 		m_18 = 0;
 	else
 		m_18 = 1;

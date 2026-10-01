@@ -73,7 +73,9 @@ public:
 	int m_bfmeStamp;					// +0x3C
 };
 
-extern BfmeClockBL *g_bfmeClockBL;				// retail 0x012F0898
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define g_bfmeClockBL ((BfmeClockBL *)TheGameLogic)				// retail 0x012F0898
 
 class Gen_001BFF50
 {

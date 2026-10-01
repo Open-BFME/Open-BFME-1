@@ -9,7 +9,8 @@ public:
 	Int m_level;
 };
 
-extern GameLODLevelState00752F40 *TheGameLODManager;
+class GameLODManager;
+extern GameLODManager *TheGameLODManager;
 extern Int GetGameClientRandomValue(Int low, Int high, char *file, Int line);
 
 struct Gen00752F40Row
@@ -35,7 +36,7 @@ __forceinline Int gen00752F40Scale(Int value, const Gen00752F40Row &row)
 
 Int Gen00752F40::handle(Int upperBound)
 {
-	Int level = TheGameLODManager->m_level - 1;
+	Int level = ((GameLODLevelState00752F40 *)TheGameLODManager)->m_level - 1;
 
 	if (level < 0)
 		level = 0;

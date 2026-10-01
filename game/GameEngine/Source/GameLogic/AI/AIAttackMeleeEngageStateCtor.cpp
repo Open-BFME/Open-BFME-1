@@ -12,7 +12,8 @@ public:
 	AIInternalMoveToState( void *machine, AsciiString name );
 };
 
-extern int g_AIAttackMeleeEngageStateVTable;
+extern "C" int __identifier("??_7Rva001780A0@@6B@");
+#define g_AIAttackMeleeEngageStateVTable __identifier("??_7Rva001780A0@@6B@")
 
 class AIAttackMeleeEngageState : public AIInternalMoveToState
 {

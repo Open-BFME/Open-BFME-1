@@ -37,7 +37,12 @@ public:
 	int m_bfmeFieldB;					// +0x14
 };
 
-extern int g_bfmeDefaultBG[2];					// retail 0x01336E50
+class AsciiString
+{
+public:
+	static AsciiString TheEmptyString;
+};
+#define g_bfmeDefaultBG ((int *)&AsciiString::TheEmptyString)					// retail 0x01336E50
 
 class Team
 {
@@ -72,7 +77,8 @@ int *Team::bfmeFieldB(void) const
 	return &thing->m_bfmeFieldB;
 }
 
-extern int g_bfmeDirtyBG;					// retail 0x012EF418
+extern unsigned int g_Rva00EEF418;
+#define g_bfmeDirtyBG g_Rva00EEF418					// retail 0x012EF418
 
 class Gen_0018F210
 {

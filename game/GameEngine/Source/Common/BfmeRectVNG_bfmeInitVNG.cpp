@@ -3,8 +3,10 @@
 // unsigned*0.03f clamp, but +0xC holds a refcounted pointer instead of a
 // second scaled axis. Retail 0x003BBB70, 95 bytes.
 
-extern void *g_bfmeVtaVNE;
-extern void *g_bfmeVtbVNG;
+extern "C" void *__identifier("??_7BfmeBaseVNH@@6B@");
+extern "C" void *__identifier("??_7Rva003BD6D0@@6B@");
+#define g_bfmeVtaVNE __identifier("??_7BfmeBaseVNH@@6B@")
+#define g_bfmeVtbVNG __identifier("??_7Rva003BD6D0@@6B@")
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long *addend);
 

@@ -64,7 +64,8 @@ private:
 	BfmeWorldHeightMap *m_bfmeMap;							// @0x2ff4
 };
 
-extern BfmeTerrainRenderObject *TheTerrainRenderObject;
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameLogic/W3DTerrainLogic.h
 class W3DTerrainLogic
@@ -90,7 +91,7 @@ void W3DTerrainLogic::getExtentIncludingBorder( Region3D *extent ) const
 	extent->lo.x = 0.0f;
 	extent->lo.y = 0.0f;
 
-	Real border = TheTerrainRenderObject->getMap()->getBorderSizeInline() * MAP_XY_FACTOR;
+	Real border = ((BfmeTerrainRenderObject *)TheTerrainRenderObject)->getMap()->getBorderSizeInline() * MAP_XY_FACTOR;
 	extent->lo.x -= border;
 	extent->lo.y -= border;
 	extent->hi.x = (m_mapDX * MAP_XY_FACTOR)-border;

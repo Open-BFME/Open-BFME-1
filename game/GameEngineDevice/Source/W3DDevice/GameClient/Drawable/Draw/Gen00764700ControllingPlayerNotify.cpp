@@ -11,7 +11,6 @@
 // member->slot127(player, text).
 
 class Player;
-extern const char Rva006A16B0Empty[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -26,7 +25,7 @@ public:
     void *m_buffer;
     const char *text() const
     {
-        return m_buffer ? (const char *)m_buffer + 8 : Rva006A16B0Empty;
+        return m_buffer ? (const char *)m_buffer + 8 : "";
     }
 };
 

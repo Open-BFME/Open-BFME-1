@@ -1,8 +1,7 @@
 // cl: /O2 /Ob0
 
-// Retail vtable 0x0113A56C, pinned as ?g_bfme927Vft@@3PADA
-// (targets/game/reverse/symbols.csv); BfmeConv927.cpp already names it.
-extern char g_bfme927Vft[];
+extern "C" char __identifier("??_7Rva0090C2F0Inner@@6B@")[ ];
+#define g_bfme927Vft __identifier("??_7Rva0090C2F0Inner@@6B@")
 
 class Rva0090C280
 {
