@@ -6,8 +6,10 @@ and checks the successful compilation's object and opened-input hashes.
 """
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import tempfile
 import uuid
@@ -43,7 +45,35 @@ def opened_paths(source, include_output):
     return paths
 
 
-PREPROCESS_TIMEOUT = 600
+PREPROCESS_TIMEOUT = 600  # seconds; BFME_PREPROCESS_TIMEOUT overrides it
+
+
+def preprocess_timeout():
+    value = os.environ.get("BFME_PREPROCESS_TIMEOUT", "").strip()
+    if not value:
+        return PREPROCESS_TIMEOUT
+    try:
+        seconds = float(value)
+    except ValueError:
+        seconds = 0
+    if seconds <= 0:
+        raise ValueError(f"BFME_PREPROCESS_TIMEOUT must be a positive number of seconds, not {value!r}")
+    return seconds
+
+
+def _kill_tree(process):
+    # The compiler runs in its own session, so its process group is the whole
+    # tree it launched (Wine's loader, cl.exe and anything they spawned) and
+    # nothing else: a wineserver started beforehand (`wineserver -p`) or one
+    # that daemonized itself has left the group and keeps serving.
+    if os.name == "posix":
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    else:
+        process.kill()
+    process.wait()
 
 
 def capture_preprocessor(command, env):
@@ -51,19 +81,26 @@ def capture_preprocessor(command, env):
     # its launcher. Regular files preserve the exact binary output without
     # making the direct child's completion depend on those services' EOF.
     # cl.exe -E can spin forever under Wine after reporting C1083; a timeout
-    # turns that hang into the ordinary failed-preprocess path.
+    # kills the whole process tree and turns the hang into the ordinary
+    # failed-preprocess path.
+    timeout = preprocess_timeout()
     with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        process = subprocess.Popen(command, cwd=build.ROOT, env=env,
+                                   stdout=stdout, stderr=stderr,
+                                   start_new_session=True)
         try:
-            result = subprocess.run(command, cwd=build.ROOT, env=env,
-                                    stdout=stdout, stderr=stderr,
-                                    timeout=PREPROCESS_TIMEOUT)
+            returncode = process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
+            _kill_tree(process)
             return subprocess.CompletedProcess(
                 command, 124, b"",
-                b"preprocessor timed out after %d s" % PREPROCESS_TIMEOUT)
+                b"preprocessor timed out after %g s (BFME_PREPROCESS_TIMEOUT)" % timeout)
+        except BaseException:
+            _kill_tree(process)
+            raise
         stdout.seek(0)
         stderr.seek(0)
-        return subprocess.CompletedProcess(command, result.returncode,
+        return subprocess.CompletedProcess(command, returncode,
                                            stdout.read(), stderr.read())
 
 

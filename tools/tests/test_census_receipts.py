@@ -1,6 +1,7 @@
 """One successful compile can prove an uncacheable census TU, never cache it."""
 import sys
 import os
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from types import SimpleNamespace
@@ -51,11 +52,61 @@ def test_capture_finishes_on_direct_child_exit_with_inherited_handles(
 
 def test_capture_turns_a_hung_preprocessor_into_a_failure(tmp_path, monkeypatch):
     monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.delenv('BFME_PREPROCESS_TIMEOUT', raising=False)
     monkeypatch.setattr(proofs, 'PREPROCESS_TIMEOUT', 1)
     result = proofs.capture_preprocessor(
         [sys.executable, '-c', 'import time; time.sleep(30)'], dict(os.environ))
     assert result.returncode == 124
     assert b'timed out' in result.stderr
+
+
+def _alive(pid):
+    try:
+        state = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()[0]
+        return state != 'Z'   # a zombie is dead, only not yet reaped
+    except FileNotFoundError:
+        return False
+    except OSError:
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        return True
+
+
+@pytest.mark.skipif(os.name != 'posix', reason='process groups are POSIX')
+def test_capture_timeout_kills_the_hung_compilers_descendants(tmp_path, monkeypatch):
+    # Wine's loader starts the real compiler as a further process: a timeout
+    # that kills only the direct child would leave that one spinning.
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setenv('BFME_PREPROCESS_TIMEOUT', '1')
+    pidfile = tmp_path / 'descendant.pid'
+    launcher = tmp_path / 'launcher.py'
+    launcher.write_text(
+        'import pathlib, subprocess, sys, time\n'
+        'child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"])\n'
+        'pathlib.Path(sys.argv[1]).write_text(str(child.pid))\n'
+        'time.sleep(60)\n')
+    result = proofs.capture_preprocessor([sys.executable, str(launcher), str(pidfile)],
+                                         dict(os.environ))
+    assert result.returncode == 124
+    assert b'after 1 s (BFME_PREPROCESS_TIMEOUT)' in result.stderr
+    pid = int(pidfile.read_text())
+    deadline = time.monotonic() + 5
+    while _alive(pid) and time.monotonic() < deadline:
+        time.sleep(0.05)
+    try:
+        assert not _alive(pid)
+    finally:
+        if _alive(pid):
+            os.kill(pid, 9)
+
+
+@pytest.mark.parametrize('value', ['0', '-5', 'ten'])
+def test_preprocess_timeout_override_must_be_positive(monkeypatch, value):
+    monkeypatch.setenv('BFME_PREPROCESS_TIMEOUT', value)
+    with pytest.raises(ValueError, match='BFME_PREPROCESS_TIMEOUT'):
+        proofs.preprocess_timeout()
 
 
 def test_real_capture_nonzero_exit_is_rejected_by_snapshot(tmp_path, monkeypatch):
