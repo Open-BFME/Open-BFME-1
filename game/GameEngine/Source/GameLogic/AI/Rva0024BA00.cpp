@@ -29,7 +29,15 @@ public:
 	unsigned int m_status;
 
 	void action(int value);
-	void notifyStatus(void);
+};
+
+// The object this cleanup runs on is a retail Object: the status-notify
+// tail call lands on ?notifyModelConditionChanged@Object@@QAEXXZ (0x0002191D).
+// Only the callee's spelling is needed here, so Object carries no layout.
+class Object
+{
+public:
+	void notifyModelConditionChanged();
 };
 
 class BfmeRvaBA00View
@@ -55,7 +63,7 @@ void Rva0024BA00::cleanup(BfmeRvaBA00Object *object)
 	if (((unsigned char)object->m_status & 0x80) != 0)
 	{
 		object->m_status &= 0xffffff7f;
-		object->notifyStatus();
+		reinterpret_cast<Object *>(object)->notifyModelConditionChanged();
 	}
 
 	BfmeRvaBA00AI *ai = object->getAI();

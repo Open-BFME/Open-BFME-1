@@ -22,12 +22,12 @@ struct BfmeUpdateDataVNI
 	int m_mode;
 };
 
-class BfmeOwnerVNI
+// The owner of this update module is a retail Object: all three tail calls
+// land on ?notifyModelConditionChanged@Object@@QAEXXZ (0x0002191D).
+class Object
 {
 public:
-	void bfmeApply1VNI();
-	void bfmeApply2VNI();
-	void bfmeApply3VNI();
+	void notifyModelConditionChanged();
 
 	char m_pad[0x128];
 	BfmeBitFlagsVNI<32> m_flags;
@@ -42,7 +42,7 @@ public:
 private:
 	char m_pad00[4];
 	BfmeUpdateDataVNI *m_data;
-	BfmeOwnerVNI *m_owner;
+	Object *m_owner;
 	char m_pad0c[0x24 - 0x0c];
 	int m_guard;
 };
@@ -53,14 +53,14 @@ void BfmeUpdateVNI::bfmeUpdateVNI()
 	if (m_guard != 0)
 		return;
 
-	BfmeOwnerVNI *owner = m_owner;
+	Object *owner = m_owner;
 	switch (m_data->m_mode)
 	{
 		case 1:
 			if (!owner->m_flags.test(8))
 			{
 				owner->m_flags.set(8);
-				owner->bfmeApply1VNI();
+				owner->notifyModelConditionChanged();
 			}
 			return;
 
@@ -68,7 +68,7 @@ void BfmeUpdateVNI::bfmeUpdateVNI()
 			if (!owner->m_flags.test(9))
 			{
 				owner->m_flags.set(9);
-				owner->bfmeApply2VNI();
+				owner->notifyModelConditionChanged();
 			}
 			return;
 
@@ -76,7 +76,7 @@ void BfmeUpdateVNI::bfmeUpdateVNI()
 			if (!owner->m_flags.test(10))
 			{
 				owner->m_flags.set(10);
-				owner->bfmeApply3VNI();
+				owner->notifyModelConditionChanged();
 			}
 			return;
 
