@@ -387,8 +387,6 @@ uint32 ChunkSaveClass::Write(const IOQuaternionStruct & q)
 	return Write(&q,sizeof(q));
 }
 
-extern char Rva006A16B0Empty[];
-
 struct Rva009E19A0Owner {
 	int unknown_00;
 	struct Slot {
@@ -407,5 +405,5 @@ char *Rva009E19A0Owner::get()
 	if (value != 0) {
 		return value + 8;
 	}
-	return Rva006A16B0Empty;
+	return "";
 }

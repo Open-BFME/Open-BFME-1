@@ -15,10 +15,6 @@
 
 #include "ascii_string.h"
 
-// Retail's empty-string sentinel: `mov eax, 0x107388b` at +0x16 is a DIR32
-// relocation to ?Rva006A16B0Empty@@3PADA (targets/game/reverse/symbols.csv, 0x0107388B).
-extern char Rva006A16B0Empty[];
-
 class Rva007E3C20Vp6Stream;
 
 // Retail 0x007E35E0 returns al on every path (mov al,bl / mov al,1 before
@@ -133,7 +129,7 @@ private:
 char Rva007E3C20Vp6Stream::invoke(const AsciiString &name, int value, bool flag)
 {
 	const char *text = *reinterpret_cast<const char *const *>(&name);
-	text = text ? text + 8 : Rva006A16B0Empty;
+	text = text ? text + 8 : "";
 
 	if (!((Rva007E3930StringState *)&m_b996)->_bfme_initialize_007E35E0(text, 1, 0))
 		return 0;
