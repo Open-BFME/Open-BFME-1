@@ -49,7 +49,9 @@ public:
 	virtual void slot39(Object *object);
 };
 
-extern "C" Rva001AF550TerrainVisual *g_012F7014;
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+#define g_012F7014 reinterpret_cast<Rva001AF550TerrainVisual *>(TheTerrainVisual)
 
 void TerrainRecordScan001AEFF0::rva001AF550(Object *parameter)
 {

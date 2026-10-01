@@ -1,9 +1,9 @@
 // ?resetFiveGlobals@@YAXXZ
-extern "C" int g_bfmeFirstEB;
-extern "C" int g_bfmeSecondEB;
-extern "C" int g_bfmeThirdEB;
-extern "C" int g_bfmeFourthEB;
-extern "C" int g_bfmeFifthEB;
+extern int g_bfmeFirstEB;
+extern int g_bfmeSecondEB;
+extern int g_bfmeThirdEB;
+extern int g_bfmeFourthEB;
+extern int g_bfmeFifthEB;
 void resetFiveGlobals()
 {
 	g_bfmeSecondEB = 0;

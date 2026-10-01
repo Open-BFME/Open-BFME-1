@@ -6,7 +6,8 @@ struct Rva008791E0Table
 	int m_count;
 };
 
-extern Rva008791E0Table Rva008791E0Handles;
+extern unsigned long mem_array[2][20];
+#define Rva008791E0Handles (*reinterpret_cast<Rva008791E0Table *>(mem_array))
 
 int __cdecl Rva008791E0Remove(void *key, void **out)
 {

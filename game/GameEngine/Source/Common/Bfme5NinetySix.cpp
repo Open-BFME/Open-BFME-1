@@ -12,7 +12,8 @@ public:
 	unsigned char m_bfmeE;						// +0x6a
 };
 
-extern BfmeThingLC *g_bfmeThingLC;
+extern int g_get_00710fb0;
+#define g_bfmeThingLC reinterpret_cast<BfmeThingLC *>(g_get_00710fb0)
 
 class Gen_006E1B80
 {

@@ -26,8 +26,8 @@ public:
 	const char *m_third;
 };
 
-extern const unsigned short BFMEEmptyUnicodeString;
-extern const char Rva006A16B0Empty[];
+
+
 
 void BfmeSrcVOC::bfmeFillVOC( BfmeVOCMessage *message )
 {
@@ -36,19 +36,19 @@ void BfmeSrcVOC::bfmeFillVOC( BfmeVOCMessage *message )
 
 	const WideChar *wideSource = m_first
 		? (const WideChar *)(m_first + 8)
-		: &BFMEEmptyUnicodeString;
+		: (const WideChar *)L"";
 	wcsncpy( message->m_wide, wideSource, 12 );
 	message->m_wide[12] = 0;
 
 	const char *firstSource = m_second
 		? m_second + 8
-		: Rva006A16B0Empty;
+		: "";
 	strncpy( message->m_first, firstSource, 1 );
 	message->m_first[1] = 0;
 
 	const char *secondSource = m_third
 		? m_third + 8
-		: Rva006A16B0Empty;
+		: "";
 	strncpy( message->m_second, secondSource, 1 );
 	message->m_second[1] = 0;
 }

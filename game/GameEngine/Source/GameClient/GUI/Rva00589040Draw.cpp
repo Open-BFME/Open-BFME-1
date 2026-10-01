@@ -2,7 +2,7 @@
 // The Display vtable slots at 0xB0, 0xD4, and 0xDC prove the three calls.
 // TheDisplay at 0x012F1270 supplies the receiver.
 
-extern const float g_bfmeK1257;
+
 
 class Rva00589040Vec2
 {
@@ -78,9 +78,9 @@ extern Display *TheDisplay;
 void Rva00589040Draw(int tag, float bx, float by,
 	const Rva00589040Vec2 *v1, const Rva00589040Vec2 *v2)
 {
-	bx += (v1->m_x - v2->m_x) * g_bfmeK1257;
+	bx += (v1->m_x - v2->m_x) * 0.5f;
 
-	by += (v1->m_y - v2->m_y) * g_bfmeK1257;
+	by += (v1->m_y - v2->m_y) * 0.5f;
 
 	float ey = by + v2->m_y;
 	float ex = bx + v2->m_x;

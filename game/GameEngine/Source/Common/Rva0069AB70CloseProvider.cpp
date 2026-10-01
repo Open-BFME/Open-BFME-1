@@ -33,7 +33,8 @@ public:
 	virtual void v21(int);
 };
 
-extern VideoPlayer *TheVideoPlayer;
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
 
 class Rva0069AB70Owner
 {
@@ -49,7 +50,7 @@ void Rva0069AB70Owner::closeProvider()
 	if (selected >= *(unsigned int *)(m_bytes + 0x954))
 		return;
 
-	VideoPlayer *vp = TheVideoPlayer;
+	VideoPlayer *vp = reinterpret_cast<VideoPlayer *>(TheVideoPlayer);
 	if (vp)
 		vp->v21(0);
 

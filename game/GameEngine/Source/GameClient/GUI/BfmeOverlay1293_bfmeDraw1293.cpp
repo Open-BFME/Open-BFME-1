@@ -68,8 +68,8 @@ public:
 	virtual void bfmeEnd1293();
 };
 
-extern Display * const TheDisplay;
-extern float g_bfmeAlphaScale1293;
+extern Display *TheDisplay;
+
 
 class BfmeOverlay1293
 {
@@ -92,7 +92,7 @@ private:
 
 void BfmeOverlay1293::bfmeDraw1293()
 {
-	int alpha = (int)(m_alpha2c * m_opacity28 * g_bfmeAlphaScale1293);
+	int alpha = (int)(m_alpha2c * m_opacity28 * 255.0f);
 	if (alpha > 255)
 		alpha = 255;
 

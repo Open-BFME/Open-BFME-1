@@ -1,4 +1,5 @@
-extern "C" void *bfmeWeaponVftIA[];
+extern "C" void *__identifier("??_7Weapon@@6B@")[];
+#define bfmeWeaponVftIA __identifier("??_7Weapon@@6B@")
 
 class BfmeSrcIA
 {

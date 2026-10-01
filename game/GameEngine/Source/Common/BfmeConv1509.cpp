@@ -1,7 +1,9 @@
 // Open-BFME5 conversions.
 
-extern void *g_bfmeVtaVNF;
-extern void *g_bfmeVtcVNF;
+extern "C" void *__identifier("??_7BfmeBaseVNH@@6B@");
+#define g_bfmeVtaVNF __identifier("??_7BfmeBaseVNH@@6B@")
+extern "C" void *__identifier("??_7Rva003BD6F0@@6B@");
+#define g_bfmeVtcVNF __identifier("??_7Rva003BD6F0@@6B@")
 
 struct BfmeVecVNF
 {

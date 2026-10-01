@@ -23,7 +23,7 @@ public:
 };
 
 extern GameLogic *TheBfmeGameLogic;
-extern const float BfmeShadowScale;
+
 
 class DestroyEnvironmentUpdateModuleData
 {
@@ -97,7 +97,7 @@ UpdateSleepTime DestroyEnvironmentUpdate::update()
 	{
 		BfmeDestroyable *module = bfmeFindModule();
 		if (module != 0)
-			module->apply(BfmeShadowScale / (float)(unsigned int)data->m_duration);
+			module->apply(-1.0f / (float)(unsigned int)data->m_duration);
 	}
 	return UPDATE_SLEEP_NONE;
 }

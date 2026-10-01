@@ -1,5 +1,5 @@
 extern const float BfmeZeroRange;
-extern const float g_bfmeLimitEK;
+
 
 class BfmePairEK
 {
@@ -27,13 +27,13 @@ char BfmeHostEK::bfmeNormEK(const BfmePairEK *in, BfmePairEK *out) const
 
 		if (out->m_bfmeXEK < BfmeZeroRange)
 			out->m_bfmeXEK = 0.0f;
-		else if (out->m_bfmeXEK >= g_bfmeLimitEK)
+		else if (out->m_bfmeXEK >= 128.0f)
 			out->m_bfmeXEK = 127.0f;
 
 		if (out->m_bfmeYEK < BfmeZeroRange)
 			out->m_bfmeYEK = 0.0f;
 
-		if (out->m_bfmeYEK >= g_bfmeLimitEK)
+		if (out->m_bfmeYEK >= 128.0f)
 			out->m_bfmeYEK = 127.0f;
 
 		return 1;

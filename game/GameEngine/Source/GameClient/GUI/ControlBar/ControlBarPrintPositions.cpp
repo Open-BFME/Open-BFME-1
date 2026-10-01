@@ -22,7 +22,7 @@
 #include "Common/AsciiString.h"
 
 typedef int Int;
-typedef unsigned int NameKeyType;
+enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 class GameWindow;
 
@@ -77,18 +77,19 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern BfmeGameWindowManager *TheWindowManager;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 void PrintInfoRecursive( GameWindow *window, FILE *fp );
 
 // ?PrintOffsetsFromControlBarParent@@YAXXZ
 void PrintOffsetsFromControlBarParent( void )
 {
-	GameWindow *controlBarParent = TheWindowManager->winGetWindowFromId( NULL, TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ControlBarParent" ));
+	GameWindow *controlBarParent = reinterpret_cast<BfmeGameWindowManager *>(TheWindowManager)->winGetWindowFromId( NULL, TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ControlBarParent" ));
 	if(!controlBarParent)
 		return;
 
-	BfmeWindowLayout *layout = TheWindowManager->winCreateLayout("controlBarHidden.wnd");
+	BfmeWindowLayout *layout = reinterpret_cast<BfmeGameWindowManager *>(TheWindowManager)->winCreateLayout("controlBarHidden.wnd");
 	if(!layout)
 		return;
 	FILE *fp = fopen("ControlBarEasier.txt", "w");

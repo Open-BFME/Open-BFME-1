@@ -30,7 +30,7 @@ public:
 	Object *findObjectByID(Int id);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;   // 0x012F0898
+extern GameLogic *TheBfmeGameLogic;   // 0x012F0898
 
 class Rva0049C2E0
 {

@@ -23,7 +23,7 @@ private:
 	float m_value;
 };
 
-extern float g_bfmeZeroCY;
+
 
 void BfmeSub1CC_EC3::queryClamp(float limit, void *val)
 {
@@ -40,7 +40,7 @@ void BfmeSub1CC_EC3::queryClamp(float limit, void *val)
 	float q = effectiveMaxSpeed(val);
 	// MSVC 7.1 needs this spill to retain the retail floating-point ordering.
 	volatile float result = m_value;
-	if (result < g_bfmeZeroCY)
+	if (result < 0.0f)
 		m_value = 0.0f;
 	else if (result > q)
 		m_value = q;
