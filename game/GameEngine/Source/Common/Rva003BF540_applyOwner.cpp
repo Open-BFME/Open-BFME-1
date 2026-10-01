@@ -63,7 +63,10 @@ struct Rva00367E30Logic
 	AsciiString rva003870f0(const AsciiString &name);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
+// view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 // The ledger claims 0x003BD700 as Rva003BD700's constructor and 0x003BD770 as
 // Rva003BD770's destructor; retail pairs them on one frame slot here, so the
@@ -136,11 +139,11 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 		|| g_bfmeStateDF->bfmeDisabled() || anyReady() || TheControlBar == 0)
 		return;
 
-	int id = TheBfmeGameLogic->rva00383890(owner->rva003a4390());
+	int id = ((Rva00367E30Logic *)TheGameLogic)->rva00383890(owner->rva003a4390());
 	if (id < 0)
 		return;
 
-	AsciiString label = TheBfmeGameLogic->rva003870f0(owner->rva003a4390());
+	AsciiString label = ((Rva00367E30Logic *)TheGameLogic)->rva003870f0(owner->rva003a4390());
 	if (!owner->m_at44)
 		label += "Army";
 

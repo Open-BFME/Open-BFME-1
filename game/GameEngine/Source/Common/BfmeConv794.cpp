@@ -108,7 +108,6 @@ public:
 	BfmeSharedString bfmeGoDVBb(int value);
 };
 
-class BfmeGameLogic;
 class ScriptEngine
 {
 public:
@@ -162,7 +161,10 @@ public:
 bool postTimedOp(LoadGameFadeHolder holder, void *key);
 
 extern GameMessageDispatcher *TheGameMessageDispatcher;
-extern BfmeGameLogic *TheGameLogic;
+// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
+// view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern int TheCurrentBannerMovie;
 extern unsigned fadeQueueKey;

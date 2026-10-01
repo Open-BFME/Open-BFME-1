@@ -11,8 +11,7 @@
 // quit); it ends by resetting the "APT:Pause" text and chains to the
 // _bfme_AptGameWindow base destructor (0x00465430 via ILT 0x000204C3).
 //
-// TheGameLogic is declared `* const`, as AptMapPreview.cpp does for
-// TheDisplay. Retail keeps the 0x012F0898 value in ECX across the whole body
+// Retail keeps the 0x012F0898 value in ECX across the whole body
 // and reloads it after every call (0x0056978B, 0x005697C1, 0x0056982F),
 // which MSVC only does for a global it may treat as invariant; the same
 // choice frees ESI so `this` lands in EDI as retail has it.
@@ -86,6 +85,8 @@ enum GameMode
 	GAME_INTERNET
 };
 
+// This TU's view of the real GameLogic (VA 0x012F0898), spelled under its real
+// name so its method calls keep the retail callee spelling.
 class GameLogic : public BfmeGameLogicPause
 {
 public:
@@ -99,7 +100,7 @@ public:
 	int m_gameMode;
 };
 
-extern GameLogic * const TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 // ?bfmeCommit@Gen_005A4470@@QAEXXZ, body 0x005A4470, called on TheMouse.
 class Gen_005A4470

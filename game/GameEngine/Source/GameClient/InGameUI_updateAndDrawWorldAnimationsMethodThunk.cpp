@@ -36,7 +36,10 @@ public:
 	Int m_frame;
 };
 
-extern BfmeGameLogicPause *TheGameLogic;
+// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
+// view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 #define LOGICSECONDS_PER_FRAME 0.2f
 extern const Real BfmeZeroRange;
 
@@ -252,9 +255,9 @@ void InGameUI::updateAndDrawWorldAnimations()
 	while( it != m_worldAnimationList.end() )
 	{
 		wad = it->m_value;
-		if( TheGameLogic->isGamePaused() == false )
+		if( ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused() == false )
 		{
-			if( TheGameLogic->m_frame >= wad->m_expireFrame ||
+			if( ((BfmeGameLogicPause *)TheGameLogic)->m_frame >= wad->m_expireFrame ||
 				((wad->m_options & 2) && (wad->m_anim->m_status & 4)) )
 			{
 				delete wad->m_anim;
@@ -281,7 +284,7 @@ void InGameUI::updateAndDrawWorldAnimations()
 
 		if( wad->m_options & 1 )
 		{
-			UnsignedInt framesTillExpire = wad->m_expireFrame - TheGameLogic->m_frame;
+			UnsignedInt framesTillExpire = wad->m_expireFrame - ((BfmeGameLogicPause *)TheGameLogic)->m_frame;
 			if( framesTillExpire < (Int)framesBeforeExpireToFade )
 			{
 				Real alpha = (Real)framesTillExpire;

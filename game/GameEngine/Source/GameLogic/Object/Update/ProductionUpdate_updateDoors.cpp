@@ -48,13 +48,16 @@ static const ModelConditionFlagType theWaitingOpenFlags[4] =
 	MODELCONDITION_DOOR_4_WAITING_OPEN
 };
 
-struct GameLogic
+// This TU's view of the frame field of the real GameLogic singleton; the
+// global itself is the canonical GameLogic *TheGameLogic (VA 0x012F0898).
+struct GameLogicFrameSource
 {
 	unsigned char m_padding[0x3c];
 	UnsignedInt m_frame;
 	UnsignedInt getFrame() const { return m_frame; }
 };
 
+class GameLogic;
 extern GameLogic *TheGameLogic;
 
 struct ProductionUpdateModuleData
@@ -117,7 +120,7 @@ private:
 void ProductionUpdate::updateDoors()
 {
 	const ProductionUpdateModuleData *d = getProductionUpdateModuleData();
-	UnsignedInt now = TheGameLogic->getFrame();
+	UnsignedInt now = ((GameLogicFrameSource *)TheGameLogic)->getFrame();
 	for (Int i = 0; i < 4; ++i)
 	{
 		if (m_doors[i].m_doorOpenedFrame)

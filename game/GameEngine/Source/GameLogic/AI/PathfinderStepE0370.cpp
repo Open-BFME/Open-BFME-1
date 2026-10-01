@@ -44,7 +44,10 @@ public:
 	BfmeX1011 *bfmeFind1011( Int id );
 };
 
-extern BfmeLook1011 *g_bfmeLook1011;
+// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
+// view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCellInfo
@@ -142,7 +145,7 @@ bool Pathfinder::bfmeStepE0370( Object *object, PathfindCell *cell, ICoord2D *wa
 		return true;
 
 	*lastUnitID = posUnit;
-	Object *unit = (Object *)g_bfmeLook1011->bfmeFind1011( posUnit );
+	Object *unit = (Object *)((BfmeLook1011 *)TheGameLogic)->bfmeFind1011( posUnit );
 	if (unit == 0)
 		return true;
 

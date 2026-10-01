@@ -80,7 +80,10 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// The frame at +0x3c of the real GameLogic singleton (VA 0x012F0898), reached
+// through this TU's own view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class SpawnBehaviorFourthBase
 {
@@ -206,7 +209,7 @@ UpdateSleepTime SpawnBehavior::update()
 	while (iterator != m_replacementTimes.end())
 	{
 		Int replacementTime = *iterator;
-		UnsignedInt currentTime = TheBfmeGameLogic->m_frame;
+		UnsignedInt currentTime = ((Rva00367E30Logic *)TheGameLogic)->m_frame;
 		if (currentTime > (UnsignedInt)replacementTime)
 		{
 			if (createSpawn())

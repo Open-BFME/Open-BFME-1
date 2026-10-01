@@ -23,7 +23,10 @@ struct Logic00243070 {
   return it->second;
  }
 };
-extern Logic00243070 *g00243070Va012F0898;
+// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
+// view of the object.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 template<int N> class Slots00243070 : public Slots00243070<N-1> { public: virtual void unused(char (*)[N])=0; };
 template<> class Slots00243070<0> {};
 class Secondary00243070 : public Slots00243070<65> { public: virtual const _STL::list<Object*> *slot104()=0; };
@@ -47,7 +50,7 @@ void GroupPacket00243070::run(void *target,int source,void *value) {
  Route00243070 *group=(g00243070Va012EF214->*create.call)();
  for(_STL::list<Object*>::iterator it=snapshot.begin();it!=snapshot.end();++it) slot0a0(*it);
  for(_STL::set<unsigned>::iterator it=at030.begin();it!=at030.end();++it) {
-  Object *obj=g00243070Va012F0898->find(*it);
+  Object *obj=((Logic00243070*)TheGameLogic)->find(*it);
   if(obj) {
    typedef void (Route00243070::*Add)(Object*);
    union {void(*fn)();Add call;} add={j_0002b7e2};
