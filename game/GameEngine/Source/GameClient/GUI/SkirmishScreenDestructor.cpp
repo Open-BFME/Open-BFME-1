@@ -108,7 +108,7 @@ private:
 	char m_unmodelled[ 0x10 ];
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void *g_obj12F4B54;
 extern "C" const void *bfmeVftBfmeAptScreenSkirmishPrimary[];
 extern "C" const void *bfmeVftBfmeAptScreenSkirmishGameWindow[];
@@ -142,10 +142,10 @@ BfmeAptScreenSkirmish::~BfmeAptScreenSkirmish()
 
 	if( g_obj12F4B54 == this )
 	{
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			AsciiString name( "Skirmish/tooltipPlayerLevelIcon" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 		{
 			AsciiString name( "AptSkirmish::InitGadgets" );

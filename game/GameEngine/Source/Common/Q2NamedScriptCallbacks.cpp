@@ -41,13 +41,22 @@ public:
 				 void *a4, void *a5, void *a6, void *a7 );
 };
 
-extern Gen004675F0 *g_Q2ScriptTarget;				///< retail 0x012F19E8
+// retail 0x012F19E8: the one global definition is
+// WindowManager *g_rva012F19E8WindowManager (GUI/WindowManager.cpp).  The
+// TU-local view below is what the callee at 0x004675F0 is called through.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;		///< retail 0x012F19E8
 extern void *g_Q2ScriptOwner;						///< retail 0x012B7D80
+
+static __forceinline Gen004675F0 *q2ScriptTarget()
+{
+	return (Gen004675F0 *)g_rva012F19E8WindowManager;
+}
 
 #define Q2_NAMED_SCRIPT_CALLBACK( NAME, CALLBACK, ARGUMENT )              \
 	void NAME()                                                           \
 	{                                                                     \
-		g_Q2ScriptTarget->invoke( g_Q2ScriptOwner, CALLBACK, 1, ARGUMENT, \
+		q2ScriptTarget()->invoke( g_Q2ScriptOwner, CALLBACK, 1, ARGUMENT, \
 								  0, 0, 0, 0 );                           \
 	}
 

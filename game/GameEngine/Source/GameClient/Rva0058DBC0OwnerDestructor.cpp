@@ -16,7 +16,7 @@ public:
 	void removeAptObject( const AsciiString &name );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void j_000347d9();
 
 typedef void (WindowManager::*WindowManagerStringMember)( const AsciiString * );
@@ -73,27 +73,27 @@ private:
 
 Rva0058DBC0Owner::~Rva0058DBC0Owner()
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		{
 			AsciiString name( "ResourceBar/ResourceIcon" );
-			g_theWindowManager->_bfme_removeNamedAptGadget( name );
+			g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget( name );
 		}
 		{
 			AsciiString name( "RenderFactionIcon" );
-			callWindowManagerString( g_theWindowManager, j_000347d9, &name );
+			callWindowManagerString( g_rva012F19E8WindowManager, j_000347d9, &name );
 		}
 		{
 			AsciiString name( "Palantir/ResourceBar/Resources/" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 		{
 			AsciiString name( "Palantir/ResourceBar/ResourceMultiplier/" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 		{
 			AsciiString name( "Palantir/ResourceBar/CommandPoints/" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 	}
 

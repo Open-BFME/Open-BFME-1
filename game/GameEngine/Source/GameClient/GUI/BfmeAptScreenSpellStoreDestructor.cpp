@@ -130,7 +130,7 @@ public:
 
 extern const void *BfmeAptScreenSpellStoreVftable[];
 extern const void *BfmeAptScreenSpellStoreSecondaryVftable[];
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern InGameUISpellStoreView *TheInGameUI;
 extern Shell *TheShell;
 extern void *g_obj12F4C38;
@@ -143,7 +143,7 @@ BfmeAptScreenSpellStore::~BfmeAptScreenSpellStore()
 	if( ui )
 		ui->slot84( zero );
 
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		for( int index = 0; index < 12; ++index )
 		{
@@ -151,13 +151,13 @@ BfmeAptScreenSpellStore::~BfmeAptScreenSpellStore()
 			{
 				AsciiString name;
 				name.format( AsciiString( "SpellStore/Buttons/Spell%d" ), index + 1 );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
+				g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget( name );
 			}
 		}
 
 		if( m_field25B == zero )
 		{
-			g_theWindowManager->bfme_hideBackground( zero );
+			g_rva012F19E8WindowManager->bfme_hideBackground( zero );
 			m_field25B = true;
 		}
 	}

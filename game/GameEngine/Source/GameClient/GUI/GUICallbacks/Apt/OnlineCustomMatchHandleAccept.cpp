@@ -35,7 +35,16 @@ class BfmeMgr19E : public GenActionSink
 {
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// retail 0x012F19E8: the one global definition is
+// WindowManager *g_rva012F19E8WindowManager (GUI/WindowManager.cpp).  BfmeMgr19E
+// stays as the TU-local view the add() call is made through.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
+static __forceinline BfmeMgr19E *windowManager19E()
+{
+	return (BfmeMgr19E *)g_rva012F19E8WindowManager;
+}
 
 class Rva00539110Owner
 {
@@ -59,7 +68,7 @@ private:
 
 void Gen0000C955::handle(bool accepted)
 {
-	if (g_mgr12F19E8 == 0)
+	if (windowManager19E() == 0)
 		return;
 
 	if (accepted)
@@ -80,7 +89,7 @@ void Gen0000C955::handle(bool accepted)
 				++index;
 			}
 
-			g_mgr12F19E8->add(m_owner->m_actionOwner,
+			windowManager19E()->add(m_owner->m_actionOwner,
 				"CallChild", 1, "PopUpConnectingOpen",
 				0, 0, 0, 0);
 		}
@@ -90,7 +99,7 @@ void Gen0000C955::handle(bool accepted)
 	{
 		--m_acceptCount;
 		if (m_acceptCount == 0)
-			g_mgr12F19E8->add(m_owner->m_actionOwner,
+			windowManager19E()->add(m_owner->m_actionOwner,
 				"CallChild", 1, "PopUpConnectingClose",
 				0, 0, 0, 0);
 	}

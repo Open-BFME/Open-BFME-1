@@ -45,7 +45,7 @@ public:
 
 void _bfme_closeAptScreen( const AsciiString &name );
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void *TheBfmeOnlineHomeSlot;
 extern const char *g_onlineHomeGadgetsImage;
 extern const char *g_onlineHomeGadgetsImageLevelIconMain;
@@ -62,15 +62,15 @@ BfmeAptScreenOnlineHome::~BfmeAptScreenOnlineHome()
 	{
 		{
 			AsciiString name( g_onlineHomeGadgetsImage );
-			g_theWindowManager->_bfme_removeNamedAptGadget( name );
+			g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget( name );
 		}
 		{
 			AsciiString name( g_onlineHomeGadgetsImageLevelIconMain );
-			g_theWindowManager->_bfme_removeNamedAptGadget( name );
+			g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget( name );
 		}
 		{
 			AsciiString name( "OnlineShell/OnlineHome/tooltipPlayerLevelIcon" );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 		{
 			AsciiString name( "AptOnlineHome::InitGadgets" );

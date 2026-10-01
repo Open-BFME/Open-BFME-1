@@ -20,7 +20,7 @@ public:
 	void removeAptObject( const AsciiString &name );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00566EC0Profile;
 extern Rva00566EC0Profile *Rva012F4B3CProfile;
@@ -38,23 +38,23 @@ Rva00566EC0Profile::~Rva00566EC0Profile()
 {
 	if( Rva012F4B3CProfile == this )
 	{
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			{
 				AsciiString name( "Skirmish/tooltipPlayerLevelIconGondor" );
-				g_theWindowManager->removeAptObject( name );
+				g_rva012F19E8WindowManager->removeAptObject( name );
 			}
 			{
 				AsciiString name( "Skirmish/tooltipPlayerLevelIconRohan" );
-				g_theWindowManager->removeAptObject( name );
+				g_rva012F19E8WindowManager->removeAptObject( name );
 			}
 			{
 				AsciiString name( "Skirmish/tooltipPlayerLevelIconIsengard" );
-				g_theWindowManager->removeAptObject( name );
+				g_rva012F19E8WindowManager->removeAptObject( name );
 			}
 			{
 				AsciiString name( "Skirmish/tooltipPlayerLevelIconMordor" );
-				g_theWindowManager->removeAptObject( name );
+				g_rva012F19E8WindowManager->removeAptObject( name );
 			}
 		}
 		Rva012F4B3CProfile = 0;
