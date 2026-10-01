@@ -84,7 +84,6 @@ inline void drawImage(Display *display, Image *image, Real x0, Real y0,
 }
 
 extern Display *TheDisplay;
-extern Real g_bfmeScaleB3;
 
 inline Int GameMakeColor(unsigned char red, unsigned char green,
 	unsigned char blue, unsigned char alpha)
@@ -132,7 +131,7 @@ void FadeImage::draw()
 	if (m_drawState < 0)
 		return;
 
-	register Int alpha = m_drawState * m_percent * g_bfmeScaleB3;
+	register Int alpha = m_drawState * m_percent * 255.0f;
 	if (alpha > 255)
 		alpha = 255;
 

@@ -32,10 +32,10 @@ public:
 	Rva006BE630 *m_bfmeTerrainMap;
 };
 
-extern BfmeA1087 *g_bfmeA1087;
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+#define g_bfmeA1087 ((BfmeA1087 *)TheTerrainRenderObject)
 extern const Real BfmeZeroRange;
-extern const Real g_bfmeDirectionWeight1285;
-extern const Real g_bfmeScaleBK;
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
 // Retail converts each floored Real with WWMath::Float_To_Long.  The
@@ -51,14 +51,9 @@ static inline Int bfmeFloatToLong(Real value)
 	return result;
 }
 
-// MSVC 7.1 lowers a plain C++ multiply differently here (216B versus
-// retail 239B). This minimal x87 load/multiply preserves the proven order.
 static inline Real bfmeScaleXForIndex(Real value)
 {
-	__asm {
-		fld [value]
-		fmul dword ptr [g_bfmeScaleBK]
-	}
+	return value * 0.1f;
 }
 
 // Only declarations are needed for the virtual calls.  Keeping the slice
@@ -110,15 +105,15 @@ Bool W3DTerrainLogic::rva006BE890(const Coord2D *point) const
 
 	if (x < BfmeZeroRange)
 		x = 0.0f;
-	else if (x > (Real)m_mapDX * g_bfmeDirectionWeight1285)
-		x = (Real)m_mapDX * g_bfmeDirectionWeight1285;
+	else if (x > (Real)m_mapDX * 10.0f)
+		x = (Real)m_mapDX * 10.0f;
 
 	if (y < BfmeZeroRange)
 		y = BfmeZeroRange;
-	else if (y > (Real)m_mapDY * g_bfmeDirectionWeight1285)
-		y = (Real)m_mapDY * g_bfmeDirectionWeight1285;
+	else if (y > (Real)m_mapDY * 10.0f)
+		y = (Real)m_mapDY * 10.0f;
 
-	y *= g_bfmeScaleBK;
+	y *= 0.1f;
 	Int yIndex = bfmeFloatToLong((Real)floor((double)y));
 	x = bfmeScaleXForIndex(x);
 	Int xIndex = bfmeFloatToLong((Real)floor((double)x));

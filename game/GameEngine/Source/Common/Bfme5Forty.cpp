@@ -148,8 +148,6 @@ public:
 	float *m_bfmeValue;					// +0x08
 };
 
-extern float g_bfmeZeroCY;					// retail 0x01075350
-
 class Gen_0026EB40
 {
 public:
@@ -171,7 +169,7 @@ float Gen_0026EB40::bfmeValue(int index) const
 			return *slot->m_bfmeValue;
 	}
 
-	return g_bfmeZeroCY;
+	return 0.0f;
 }
 
 class BfmeItemDI

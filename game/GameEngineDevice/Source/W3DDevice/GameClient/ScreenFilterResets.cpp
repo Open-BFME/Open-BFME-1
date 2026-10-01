@@ -15,11 +15,16 @@
 
 enum FilterModes { FM_NULL_MODE };
 
+struct IDirect3DDevice8;
+
 class DX8Wrapper
 {
 public:
-	static void *D3DDevice;
 	static void Invalidate_Cached_Render_States(void);
+	static IDirect3DDevice8 *_Get_D3D_Device8() { return D3DDevice; }
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
 };
 
 typedef long (__stdcall *BfmeFilterSetTextureFn)(void *device, unsigned long stage, void *texture);
@@ -33,13 +38,13 @@ enum
 
 static __forceinline void filterSetTexture(unsigned long stage, void *texture)
 {
-	void *device = DX8Wrapper::D3DDevice;
+	void *device = DX8Wrapper::_Get_D3D_Device8();
 	(*(BfmeFilterSetTextureFn **)device)[BFME_FILTER_SET_TEXTURE_SLOT](device, stage, texture);
 }
 
 static __forceinline void filterSetPixelShader(void *shader)
 {
-	void *device = DX8Wrapper::D3DDevice;
+	void *device = DX8Wrapper::_Get_D3D_Device8();
 	(*(BfmeFilterSetPixelShaderFn **)device)[BFME_FILTER_SET_PIXEL_SHADER_SLOT](device, shader);
 }
 

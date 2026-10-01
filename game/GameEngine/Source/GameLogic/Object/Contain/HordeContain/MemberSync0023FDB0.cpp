@@ -9,7 +9,9 @@ template<> class Slots0023FDB0<0> {};
 class Primary0023FDB0 : public Slots0023FDB0<30> { public: virtual void slot078(int)=0; };
 class AIView0023FDB0 : public Slots0023FDB0<127> { public: virtual void slot1fc(int)=0; };
 struct AIHub0023FDB0 { char at000[12]; Route0023FDB0 *at00c; };
-extern AIHub0023FDB0 *g0023FDB0Va012EF214;
+class AI;
+extern AI *TheAI;
+#define g0023FDB0Va012EF214 ((AIHub0023FDB0 *)TheAI)
 struct Node0023FDB0 { Node0023FDB0 *next,*prev; Object *object; };
 struct List0023FDB0 { Node0023FDB0 *head; };
 class MemberSync0023FDB0 {

@@ -39,7 +39,6 @@ public:
 	ShroudFilter *getFilter(void);
 };
 
-extern float g_bfmeScaleB3;
 extern void W3DRadarResetLock(void);
 extern char bfmeUnlock1179(void);
 
@@ -70,7 +69,7 @@ void BaseHeightMapRenderObjClass::initDestAlphaLUT(void)
 		{
 			int pitch;
 			unsigned int *data = (unsigned int *)((SurfaceClass *)&surface)->Lock(&pitch, false);
-			int maxOpacity = (int)(m_minWaterOpacity * g_bfmeScaleB3);
+			int maxOpacity = (int)(m_minWaterOpacity * 255.0f);
 			if (data)
 			{
 				for (int x = 0; x < 256; ++x)

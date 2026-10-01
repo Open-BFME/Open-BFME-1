@@ -26,7 +26,9 @@ public:
 	virtual GameMessage *createMessage( int id );
 };
 
-extern GameMessageDispatcher *TheGameMessageDispatcher;
+class MessageStream;
+extern MessageStream *TheMessageStream;
+#define TheGameMessageDispatcher ((GameMessageDispatcher *)TheMessageStream)
 
 // The retail object at 0x012ED5C8 is the established GlobalData singleton;
 // this TU-local view names only the +0x188 scalar read proven by 0x0073B9C0.

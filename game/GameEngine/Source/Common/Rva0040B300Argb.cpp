@@ -1,9 +1,5 @@
 // cl: /O2 /Ob0 /G6
 
-extern double g_bfmeSubB3;
-extern double g_bfmeMulB3;
-extern float g_bfmeScaleB3;
-
 class BfmeObjB3
 {
 public:
@@ -17,8 +13,8 @@ public:
 
 unsigned BfmeObjB3::bfmeGoB3()
 {
-	double t = g_bfmeSubB3 - m_60;
-	t = t * g_bfmeMulB3;
+	double t = 1.0 - m_60;
+	t = t * 255.0;
 	int v = (int)t;
 	if (v > 255)
 		v = 255;
@@ -26,19 +22,19 @@ unsigned BfmeObjB3::bfmeGoB3()
 		v = 0;
 	float f = (float)v;
 	float s = m_54 * m_60;
-	int r = (int)(s * g_bfmeScaleB3 + f);
+	int r = (int)(s * 255.0f + f);
 	if (r > 255)
 		r = 255;
 	else if (r < 0)
 		r = 0;
 	s = m_58 * m_60;
-	int g = (int)(s * g_bfmeScaleB3 + f);
+	int g = (int)(s * 255.0f + f);
 	if (g > 255)
 		g = 255;
 	else if (g < 0)
 		g = 0;
 	s = m_5C * m_60;
-	int b = (int)(s * g_bfmeScaleB3 + f);
+	int b = (int)(s * 255.0f + f);
 	if (b > 255)
 		b = 255;
 	else if (b < 0)

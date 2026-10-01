@@ -2,11 +2,12 @@
 
 void * __cdecl operator new(unsigned int n);
 
-// This named THREE different globals. Split by RVA; the name claims an
-// address and nothing more.
-extern void *g_bfmeRva010FE034Vt;
-extern void *g_bfmeRva010FE04CVt;
-extern void *g_bfmeRva0109FB98Vt;
+extern "C" void *__identifier("??_7Rva004C5EA0VptrZeroRefObject@@6B@");
+#define g_bfmeRva010FE034Vt __identifier("??_7Rva004C5EA0VptrZeroRefObject@@6B@")
+extern "C" void *__identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@");
+#define g_bfmeRva010FE04CVt __identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@")
+extern "C" void *__identifier("??_7Rva001DDC90Poly@@6B@");
+#define g_bfmeRva0109FB98Vt __identifier("??_7Rva001DDC90Poly@@6B@")
 
 struct Bfme5RefY
 {

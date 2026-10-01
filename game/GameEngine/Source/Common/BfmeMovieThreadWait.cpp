@@ -41,7 +41,8 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
+#define g_BFMEIndexBufferDebug ((BFMEIndexBufferDebugClass *)g_Rva00F36E5C)
 
 class BfmeMovieLockObj
 {

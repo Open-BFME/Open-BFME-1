@@ -67,7 +67,9 @@ public:
 	BfmeEntryERJ m_bfmeEntriesERJ[1];
 };
 
-extern BfmeTableERJ *g_bfmeTableERJ;
+class SidesList;
+extern SidesList *TheSidesList;
+#define g_bfmeTableERJ ((BfmeTableERJ *)TheSidesList)
 
 struct Rva0033CA50Chain
 {

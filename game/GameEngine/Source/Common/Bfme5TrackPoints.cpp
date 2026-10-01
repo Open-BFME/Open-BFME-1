@@ -2,7 +2,8 @@
 
 void * __cdecl operator new(unsigned int n);
 
-extern void *g_bfme5RefVtableC;
+extern "C" void *__identifier("??_7Rva004C5F60VptrZeroRefObject@@6B@");
+#define g_bfme5RefVtableC __identifier("??_7Rva004C5F60VptrZeroRefObject@@6B@")
 
 class Gen_0093D200
 {

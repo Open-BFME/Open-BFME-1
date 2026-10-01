@@ -4,8 +4,6 @@
 // evaluate(int) overload, the two blend callers, and retail RVA 0x0006A400
 // identify the class and method.
 
-extern const float g_bfmeK1266A;
-
 struct Rva00069DF0Element
 {
 	float time;
@@ -72,7 +70,7 @@ float U4Curve006095D0::evaluateSpline( float t ) const
 		float rightTangent = delta * next->tangentIn;
 		m_coefficientA = (leftValue - rightValue) +
 			(leftValue - rightValue) + leftTangent + rightTangent;
-		m_coefficientB = (rightValue - leftValue) * g_bfmeK1266A
+		m_coefficientB = (rightValue - leftValue) * 3.0f
 			- (leftTangent + leftTangent) - rightTangent;
 		m_coefficientC = leftTangent;
 		m_coefficientD = leftValue;
