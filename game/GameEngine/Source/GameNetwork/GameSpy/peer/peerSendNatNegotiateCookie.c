@@ -10,7 +10,7 @@ typedef struct PEERConnection
 
 typedef PEERConnection *PEER;
 
-unsigned short __stdcall htons(unsigned short port);
+unsigned short __stdcall ntohs(unsigned short port);
 void SBSendNatNegotiateCookieToServer(
 	void *serverList,
 	unsigned int ip,
@@ -29,6 +29,6 @@ void piSendNatNegotiateCookie(
 	SBSendNatNegotiateCookieToServer(
 		&peer->gameList,
 		ip,
-		htons(port),
+		ntohs(port),
 		cookie);
 }

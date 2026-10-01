@@ -238,7 +238,7 @@ static SBError WaitForTriggerUpdate(ServerBrowser sb, SBBool viaMaster)
 
 SBError ServerBrowserSendMessageToServerA(ServerBrowser sb, const char *ip, unsigned short port, const char *data, int len)
 {
-	return SBSendMessageToServer(&sb->list, inet_addr(ip), htons(port), data, len);
+	return SBSendMessageToServer(&sb->list, inet_addr(ip), ntohs(port), data, len);
 }
 #ifdef GSI_UNICODE
 SBError ServerBrowserSendMessageToServerW(ServerBrowser sb, const unsigned short *ip, unsigned short port, const char *data, int len)
@@ -251,7 +251,7 @@ SBError ServerBrowserSendMessageToServerW(ServerBrowser sb, const unsigned short
 
 SBError ServerBrowserSendNatNegotiateCookieToServerA(ServerBrowser sb, const char *ip, unsigned short port, int cookie)
 {
-	return SBSendNatNegotiateCookieToServer(&sb->list, inet_addr(ip), htons(port), cookie);
+	return SBSendNatNegotiateCookieToServer(&sb->list, inet_addr(ip), ntohs(port), cookie);
 }
 #ifdef GSI_UNICODE
 SBError ServerBrowserSendNatNegotiateCookieToServerW(ServerBrowser sb, const unsigned short *ip, unsigned short port, int cookie)
@@ -272,7 +272,7 @@ SBError ServerBrowserAuxUpdateIPA(ServerBrowser sb, const char *ip, unsigned sho
 		SBServer server;
 		int i;
 		//need to see if the server exists...
-		i = SBServerListFindServerByIP(&sb->list, inet_addr(ip), htons(port));
+		i = SBServerListFindServerByIP(&sb->list, inet_addr(ip), ntohs(port));
 		if (i == -1)
 		{
 			server = SBQueryEngineUpdateServerByIP(&sb->engine, ip, port, 1, (fullUpdate) ? QTYPE_FULL : QTYPE_BASIC);
@@ -285,13 +285,13 @@ SBError ServerBrowserAuxUpdateIPA(ServerBrowser sb, const char *ip, unsigned sho
 		}
 	} else //do a master update
 	{
-		err = SBGetServerRulesFromMaster(&sb->list, inet_addr(ip), htons(port));	
+		err = SBGetServerRulesFromMaster(&sb->list, inet_addr(ip), ntohs(port));	
 		//this will add the server itself..
 	}
 	if (!async && err == sbe_noerror)
 	{
 		sb->triggerIP = inet_addr(ip);
-		sb->triggerPort = htons(port);
+		sb->triggerPort = ntohs(port);
 		err = WaitForTriggerUpdate(sb, viaMaster);
 	}
 	sb->dontUpdate = SBFalse;
@@ -336,7 +336,7 @@ SBError ServerBrowserAuxUpdateServer(ServerBrowser sb, SBServer server, SBBool a
 
 void ServerBrowserRemoveIPA(ServerBrowser sb, const char *ip, unsigned short port)
 {
-	int i = SBServerListFindServerByIP(&sb->list, inet_addr(ip), htons(port));
+	int i = SBServerListFindServerByIP(&sb->list, inet_addr(ip), ntohs(port));
 	if (i != -1)
 		SBServerListRemoveAt(&sb->list, i);
 }
@@ -476,7 +476,7 @@ SBServer ServerBrowserGetServerByIPA(ServerBrowser sb, const char* ip, unsigned 
 {
 	int anIndex = -1;
 	goa_uint32 anIP = 0;
-	unsigned short aPortNBO = htons(port);
+	unsigned short aPortNBO = ntohs(port);
 
 	anIP = inet_addr(ip);
 	anIndex = SBServerListFindServerByIP(&sb->list, anIP, aPortNBO);
