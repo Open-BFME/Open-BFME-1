@@ -36,7 +36,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 340
     permissions:
-      contents: write
+      contents: read             # builds and measures only; `publish` writes
+    outputs:
+      commit: ${{ steps.head.outputs.commit }}
     env:
       BUILD_POOL: '4'            # the runner is ours alone: all cores
       WINEDEBUG: '-all'
@@ -47,6 +49,10 @@ jobs:
         with:
           ref: master
           fetch-depth: 1
+          persist-credentials: false
+      - name: Record the census commit
+        id: head
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -86,16 +92,50 @@ jobs:
         with:
           path: build/match
           key: ${{ steps.cache.outputs.prefix }}${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload the census files
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-census
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            targets/game/reverse/link_census_history.csv
+            targets/game/reverse/link_status.csv
+            targets/game/reverse/link_queue.csv
+
+  # The only job that can write. It commits the census's three files on the
+  # commit the census measured and rebases that one commit onto master, exactly
+  # as the single-job workflow and tools/fleet/daily_census.sh do: the history
+  # row names the census commit, and status/queue replace master's copies.
+  publish:
+    needs: census
+    if: github.event_name == 'schedule' || inputs.record
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.census.outputs.commit }}
+          fetch-depth: 1
+      - uses: actions/download-artifact@v4
+        with:
+          name: link-census
+          path: ${{ runner.temp }}/link-census
       - name: Commit and push only the census files
-        if: github.event_name == 'schedule' || inputs.record
+        env:
+          CENSUS: ${{ runner.temp }}/link-census
         run: |
+          for name in link_census_history.csv link_status.csv link_queue.csv; do
+            cp "$CENSUS/$name" "targets/game/reverse/$name"
+          done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add targets/game/reverse/link_census_history.csv targets/game/reverse/link_status.csv \
               targets/game/reverse/link_queue.csv
           git commit -q -m "link_census: daily census $(date -u +%F)" \
               -m "Recorded by .github/workflows/link-census.yml (run ${{ github.run_id }})."
-          git reset -q --hard HEAD  # drop build products (reloc_names.csv) so the rebase can run
           for attempt in 1 2 3 4 5; do
             git fetch -q origin +refs/heads/master:refs/remotes/origin/master
             git rebase -q --onto origin/master HEAD~1 || { git rebase --abort; exit 1; }
