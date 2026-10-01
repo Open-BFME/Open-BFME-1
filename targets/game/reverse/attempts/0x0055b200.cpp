@@ -1,5 +1,5 @@
 // ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenOnlineQuickMatch@@QAEXXZ
-// partial score=0.99 date=2026-09-28
+// partial score=0.8241 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/gamewindow /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest, retail
@@ -14,13 +14,6 @@
 #define UNICODESTRING_H
 #include "ascii_string.h"
 #include "unicode_string.h"
-
-template <> inline const char *StringBase<char>::str() const {
-  return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const {
-  return m_data ? m_data->data : (const unsigned short *)L"";
-}
 
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString(const wchar_t *s) {
@@ -272,18 +265,9 @@ class Rva000E1410Store {
 public:
   char prefix[8];
   Rva000E1410PlayerTemplate *begin, *end, *capacity;
+  const Rva000E1410PlayerTemplate *getNthPlayerTemplate(int) const;
 };
 extern Rva000E1410Store *ThePlayerTemplateStore;
-extern void j_00037bd2();
-typedef const Rva000E1410PlayerTemplate *(Rva000E1410Store::*TemplateMethod)(int) const;
-__forceinline TemplateMethod templateMethod() {
-  union {
-    void (*raw)();
-    TemplateMethod method;
-  } f;
-  f.raw = j_00037bd2;
-  return f.method;
-}
 int Rva0009B4B0(int a, int b);
 struct Rva0055B200GlobalData {
   char prefix[0xbc8];
@@ -321,7 +305,7 @@ private:
   int m_slot78;
 };
 
-#pragma comment(linker, "/alternatename:?rva0055AE10PopulateRequest@BfmeAptScreenOnlineQuickMatch@@QAEXPAVPeerRequest@@@Z=?j_00048a04@@YAXXZ")
+
 
 void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
   PeerRequest req;
@@ -381,7 +365,7 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
       AsciiString sideStr = *cit;
       for (int c = 0; c < numPlayerTemplates; ++c) {
         const Rva000E1410PlayerTemplate *fac =
-            (ThePlayerTemplateStore->*templateMethod())(c);
+            ThePlayerTemplateStore->getNthPlayerTemplate(c);
         if (fac && fac->side.compare(sideStr) == 0) {
           req.QM.side = c;
           break;
@@ -401,9 +385,10 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
       val = 0;
     req.QM.numPlayers = (val + 1) * 2;
   }
+  struct QuickMatchOne { int value; } one = { 1 };
   switch (req.QM.numPlayers) {
   case 2:
-    m_slot78 = 1;
+    m_slot78 = one.value;
     break;
   case 4:
     m_slot78 = 2;
@@ -422,7 +407,7 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
   req.QM.rva138 = BFME_QM_GLOBAL_DATA->rvaBC8;
   req.QM.rva13C = BFME_QM_GLOBAL_DATA->rvaBD4;
   unsigned int rankCount;
-  if (m_slot78 == 1) {
+  if (m_slot78 == one.value) {
     req.QM.points = g_bfmePeerReqE4;
     rankCount = g_bfme012F73D0;
   } else if (m_slot78 == 2) {
@@ -434,7 +419,7 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
   }
   if (req.QM.points <= 0)
     req.QM.points = -1;
-  req.QM.minPointPercentage = 1;
+  req.QM.minPointPercentage = one.value;
   int center = 0x7fffffff;
   if (rankCount)
     center = rankCount;
@@ -443,7 +428,7 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest() {
     center = req.QM.points;
   double spread = rankCount * 0.125;
   int lo = center - (int)ceil(spread);
-  req.QM.minPointPercentage = std::max(lo, 1);
+  req.QM.minPointPercentage = std::max(lo, one.value);
   req.QM.maxPointPercentage =
       std::min(center + (int)floor(spread), req.QM.maxPointPercentage);
   TheGameSpyPeerMessageQueue->addRequest(req);
