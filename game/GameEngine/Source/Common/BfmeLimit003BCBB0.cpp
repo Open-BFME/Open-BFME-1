@@ -10,6 +10,7 @@ public:
 	bool m_bfmeUseHigh;					// +0x1C
 };
 
+// TU-local VIEW of the real GlobalData, kept only for its offsets.
 class BfmeBaseDS003BCBB0
 {
 public:
@@ -18,8 +19,12 @@ public:
 	int m_bfmeHigh;						// +0xE74
 };
 
+// retail 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`, defined once
+// in Common/GlobalData.cpp.  In the linked build this TU must spell the global
+// exactly that way or nothing defines it.
+class GlobalData;
 extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
-extern BfmeBaseDS003BCBB0 *g_bfmeBaseDS003BCBB0;		// retail 0x012ED5C8
+extern GlobalData *   TheWritableGlobalData;			// retail 0x012ED5C8
 
 // retail 0x003BCBB0
 int __cdecl bfmeLimit003BCBB0(void)
@@ -27,6 +32,6 @@ int __cdecl bfmeLimit003BCBB0(void)
 	BfmeSwitchDR *state = g_bfmeSwitchDR;
 	int high = state != 0 ? state->m_bfmeUseHigh : 0;
 	if (state != 0 && high != 0)
-		return g_bfmeBaseDS003BCBB0->m_bfmeHigh;
-	return g_bfmeBaseDS003BCBB0->m_bfmeLow;
+		return ((BfmeBaseDS003BCBB0 *)TheWritableGlobalData)->m_bfmeHigh;
+	return ((BfmeBaseDS003BCBB0 *)TheWritableGlobalData)->m_bfmeLow;
 }

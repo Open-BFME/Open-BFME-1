@@ -1,5 +1,6 @@
 // cl: /O2 /Ob0
 
+// TU-local VIEW of the real GlobalData, kept only for its offsets.
 class Rva0040B2E0Global
 {
 public:
@@ -16,9 +17,12 @@ public:
 	float scale() const;
 };
 
-Rva0040B2E0Global *g_rva0040b2e0;
+// retail 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`.  Only
+// Common/GlobalData.cpp may DEFINE it; this TU is a second reader of it.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 float Rva0040B2E0::scale() const
 {
-	return g_rva0040b2e0->m_value * m_scale;
+	return ((Rva0040B2E0Global *)TheWritableGlobalData)->m_value * m_scale;
 }

@@ -7,7 +7,10 @@ struct Vector3
     float Z;
 };
 
-struct GlobalData
+// TU-local VIEW of the real GlobalData, kept only for its offsets.  It must
+// NOT be named GlobalData: MSVC mangles a global's TYPE into its symbol, and
+// retail's global at 0x012ED5C8 is `GlobalData *TheWritableGlobalData`.
+struct WaterSkyBoxGlobalView
 {
     char m_beforeDrawSkyBox[0x180];
     float m_drawSkyBox;
@@ -41,11 +44,15 @@ private:
     SkyBoxRenderObject *m_skyBox;
 };
 
+// retail 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`, defined once
+// in Common/GlobalData.cpp.  `struct` vs `class` changes the mangled name, so
+// the view above is cast at the use instead.
+class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
 // ?setSkyBoxPosition@WaterSkyBoxPositionAccessor@@QAEXABUVector3@@@Z
 void WaterSkyBoxPositionAccessor::setSkyBoxPosition(const Vector3 &position)
 {
-    if (TheWritableGlobalData->m_drawSkyBox != 0.0f)
+    if (((WaterSkyBoxGlobalView *)TheWritableGlobalData)->m_drawSkyBox != 0.0f)
         m_skyBox->setPosition(position);
 }
