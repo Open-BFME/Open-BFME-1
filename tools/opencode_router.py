@@ -377,6 +377,9 @@ def zero_catalog_cost(cost):
         zero(band) for band in cost)
 
 
+CATALOG_RETRY_SECONDS = 60
+
+
 def discover_variants(c, root):
     """Read the location's catalog; never infer capabilities from model names."""
     needs_zen = any(m['enabled'] and needs_catalog_proof(c, m['id']) for m in c['models'])
@@ -792,6 +795,13 @@ def fleet(root, state, c, duration, workers=None, until=None):
             return None
         execution_ready(c)
         capabilities = discover_variants(c, root)
+        # An empty read (the background service just restarted and its plugins
+        # have not settled, or the request failed) fails closed: no Zen model is
+        # verified free and no variant is known. Measured 2026-10-01: a fleet
+        # started on such a snapshot ran a 15-slot free model at zero for its
+        # whole duration. Re-read until a catalog arrives; a non-empty read is
+        # kept for the run, so verification is never revoked mid-run.
+        next_catalog_read = time.monotonic() + CATALOG_RETRY_SECONDS
         with database(state) as db:
             claims = Path(db.execute("SELECT value FROM settings WHERE key='claims_root'").fetchone()[0])
             for m in c['models']:
@@ -818,6 +828,9 @@ def fleet(root, state, c, duration, workers=None, until=None):
                             cpu.publish(state)
                     except Exception as exc:  # noqa: BLE001 - dispatch must continue
                         cpu.fault(state, exc)
+                if not capabilities and time.monotonic() >= next_catalog_read:
+                    capabilities = discover_variants(c, root)
+                    next_catalog_read = time.monotonic() + CATALOG_RETRY_SECONDS
                 if time.monotonic() >= next_monitor_check and (monitor is None or not monitor.is_alive()):
                     # Network IO never delays worker supervision; the cache lease also
                     # serializes concurrent status refreshes and other orchestrators.

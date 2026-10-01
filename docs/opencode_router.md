@@ -220,6 +220,9 @@ set tier/limits/weights, and use a harmless explicit-model smoke task. Removed
 models fail availability checks cleanly. The public catalog establishes valid IDs,
 not access for a particular account. Fresh standalone catalog requests can return
 empty snapshots before plugins settle. This does not disable public-catalog IDs.
+`fleet` re-reads an empty catalog every 60 s until one arrives: a fleet started
+while the background service was restarting otherwise verified no Zen free model
+for its whole run (2026-10-01: a 15-slot free model sat idle).
 
 ### Cost-first Go policy
 
