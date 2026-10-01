@@ -24,6 +24,51 @@ struct Value008B91F0 {
         return (unsigned)g_bfmeResult1233;
     }
 };
+
+struct BfmeStringData3AF0 {
+    unsigned short m_refCount, m_length, m_capacity, m_flags;
+};
+struct BfmeStringPool3AF0 {
+    void *m_unknown00;
+    void (__cdecl *free)(void *);
+};
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern "C" int __cdecl strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+
+class Rva8CD130String {
+public:
+    Rva8CD130String() {
+        m_data = &g_bfmeDefaultString1284;
+        ++m_data->m_refCount;
+    }
+    ~Rva8CD130String() {
+        BfmeStringData3AF0 *old = m_data;
+        if (--old->m_refCount == 0)
+            g_bfmeStringPool1284->free(old);
+    }
+    BfmeStringData3AF0 *m_data;
+};
+
+class Rva8CD130Value {
+public:
+    void getName(Rva8CD130String *);
+};
+
+extern "C" int __cdecl compareValues008B90F0(unsigned *left, unsigned *right) {
+    unsigned leftTagged = *left;
+    unsigned rightTagged = *right;
+    Rva8CD130Value *leftValue = (Rva8CD130Value *)(leftTagged & ~1u);
+    Rva8CD130Value *rightValue = (Rva8CD130Value *)(rightTagged & ~1u);
+    Rva8CD130String leftName;
+    Rva8CD130String rightName;
+    leftValue->getName(&leftName);
+    rightValue->getName(&rightName);
+    return strcmp((const char *)leftName.m_data + 8,
+                  (const char *)rightName.m_data + 8);
+}
+
 extern "C" int bfmeHandler1233(unsigned *a, unsigned *b) {
     Value008B91F0 *left = (Value008B91F0 *)(*a & ~1u);
     Value008B91F0 *right = (Value008B91F0 *)(*b & ~1u);
