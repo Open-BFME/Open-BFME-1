@@ -22,8 +22,13 @@ enum
 	STRETCH_DRAW_HEIGHT = 0x41
 };
 
-// this+0x4e/this+0x50 read through TheWritableGlobalData; only these two
-// bytes are proven from the disassembly.
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; the
+// global must be spelled GlobalData * (class, not struct) so the mangled name
+// matches the one definition in GameEngine/Source/Common/GlobalData.cpp.
+// this+0x4e/this+0x50 read through it; only these two bytes are proven from
+// the disassembly, so the local view below supplies them and is cast at use.
+class GlobalData;
+
 class Rva00747670GlobalData
 {
 public:
@@ -33,7 +38,7 @@ public:
 	Bool m_drawEntireTerrain;      // +0x50
 };
 
-extern Rva00747670GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva00747670HeightMap
 {
@@ -60,12 +65,12 @@ Bool Rva00747670HeightMap::rva00747670( Int xOrg, Int yOrg )
 
 	if ( TheWritableGlobalData )
 	{
-		if ( TheWritableGlobalData->m_stretchTerrain )
+		if ( reinterpret_cast<Rva00747670GlobalData *>(TheWritableGlobalData)->m_stretchTerrain )
 		{
 			newWidth = STRETCH_DRAW_WIDTH;
 			newHeight = STRETCH_DRAW_HEIGHT;
 		}
-		if ( TheWritableGlobalData->m_drawEntireTerrain )
+		if ( reinterpret_cast<Rva00747670GlobalData *>(TheWritableGlobalData)->m_drawEntireTerrain )
 		{
 			newWidth = m_width;
 			newHeight = m_height;

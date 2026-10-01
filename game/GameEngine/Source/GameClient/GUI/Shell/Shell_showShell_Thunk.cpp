@@ -36,14 +36,21 @@ private:
 	bool shellActive;
 };
 
-extern RetailGlobalData *TheGlobalData;
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; the
+// global must be spelled GlobalData * (class, not struct) so the mangled name
+// matches the one definition in GameEngine/Source/Common/GlobalData.cpp.
+// The local view above supplies the members retail reads here.
+class GlobalData;
+
+extern GlobalData *TheWritableGlobalData;
 extern Shell *TheShell;
 extern "C" __declspec(dllimport) char *getenv(const char *);
 
 void Shell::showShell(bool runInit)
 {
-	const char *initial = (const char *)TheGlobalData->initialFileData;
-	if (initial && *(const unsigned short *)(initial + 4) && !TheGlobalData->alternateShell)
+	const char *initial = (const char *)reinterpret_cast<RetailGlobalData *>(TheWritableGlobalData)->initialFileData;
+	if (initial && *(const unsigned short *)(initial + 4) &&
+		!reinterpret_cast<RetailGlobalData *>(TheWritableGlobalData)->alternateShell)
 		return;
 
 	if (runInit && screenCount) {
@@ -52,8 +59,9 @@ void Shell::showShell(bool runInit)
 			layout->runInit(0);
 	}
 
-	if (!TheGlobalData->shellMapOn && screenCount == 0) {
-		if (getenv("_EA_RTS_HEADLESS") == 0 && !TheGlobalData->alternateShell)
+	if (!reinterpret_cast<RetailGlobalData *>(TheWritableGlobalData)->shellMapOn && screenCount == 0) {
+		if (getenv("_EA_RTS_HEADLESS") == 0 &&
+			!reinterpret_cast<RetailGlobalData *>(TheWritableGlobalData)->alternateShell)
 			TheShell->push(AsciiString("MainMenu.apt"));
 		else
 			TheShell->push(AsciiString("Menus/LanLobbyMenu.wnd"));

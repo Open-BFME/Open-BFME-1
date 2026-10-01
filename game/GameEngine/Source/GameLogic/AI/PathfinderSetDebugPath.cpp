@@ -78,8 +78,13 @@ public:
 	virtual void slot11() = 0;
 };
 
-struct GlobalData
+// EA's own GlobalData (Common/GlobalData.h); retail reads only m_debugAI at
+// +0xA88 through this pointer.  The class spelling (not struct) is what makes
+// the mangled global ?TheWritableGlobalData@@3PAVGlobalData@@A, the one name
+// GameEngine/Source/Common/GlobalData.cpp defines.
+class GlobalData
 {
+public:
 	char m_bfmeHead[0xA88];
 	Int m_debugAI;
 };

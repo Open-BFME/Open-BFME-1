@@ -108,7 +108,14 @@ private:
 
 extern PlayerList *ThePlayerList;
 
-class GlobalData
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; retail
+// reads its TimeOfDay at +0x218 through this pointer.  The local view below
+// supplies that one field, and TheWritableGlobalData must be spelled
+// GlobalData * (class, not struct) so the mangled name matches the one
+// definition in GameEngine/Source/Common/GlobalData.cpp.
+class GlobalData;
+
+class CaveContainGlobalDataView
 {
 private:
 	unsigned char m_pad[0x218];
@@ -117,7 +124,12 @@ public:
 	TimeOfDay m_timeOfDay;
 };
 
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline CaveContainGlobalDataView *caveContainGlobalData()
+{
+	return reinterpret_cast<CaveContainGlobalDataView *>(TheWritableGlobalData);
+}
 
 // Retail CaveContain uses OpenContain's genuine multiple-inheritance layout.
 // The primary module base contains the module-data and owning-Object pointers;
@@ -310,7 +322,7 @@ void CaveContain::recalcApparentControllingPlayer()
 		getApparentControllingPlayer(ThePlayerList->getLocalPlayer());
 	if (controller != 0)
 	{
-		if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
+		if (caveContainGlobalData()->m_timeOfDay == TIME_OF_DAY_NIGHT)
 		{
 			Color indicatorColor = controller->getPlayerNightColor();
 			getObject()->getDrawable()->setIndicatorColor(indicatorColor);

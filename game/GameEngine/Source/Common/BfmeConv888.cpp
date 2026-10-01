@@ -4,13 +4,21 @@ struct BfmeGlobEYA
 	void *m_bfmeP;
 };
 
-extern BfmeGlobEYA *g_bfmeObjEYA;
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; this
+// global is retail 0x012ED5C8, defined once in
+// GameEngine/Source/Common/GlobalData.cpp, so it must be spelled
+// GlobalData * (class, not struct) to mangle to the same name.  The local
+// view above supplies the member this TU reads.
+class GlobalData;
+
+extern GlobalData *TheWritableGlobalData;
 void *__cdecl bfmeMakeEYA(unsigned int a, unsigned int b);
 
 int bfmeGoEYA()
 {
-	if (g_bfmeObjEYA)
-		g_bfmeObjEYA->m_bfmeP = bfmeMakeEYA(0xbaadec4c, 0xbaadec4c);
+	if (TheWritableGlobalData)
+		reinterpret_cast<BfmeGlobEYA *>(TheWritableGlobalData)->m_bfmeP =
+			bfmeMakeEYA(0xbaadec4c, 0xbaadec4c);
 	return 1;
 }
 

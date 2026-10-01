@@ -77,16 +77,23 @@ public:
 	int m_bfmeHigh;						// +0xE74
 };
 
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; this
+// global is retail 0x012ED5C8, defined once in
+// GameEngine/Source/Common/GlobalData.cpp, so it must be spelled
+// GlobalData * (class, not struct) to mangle to the same name.  The local
+// view above supplies the members this TU reads.
+class GlobalData;
+
 extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
-extern BfmeBaseDR *g_bfmeBaseDR;				// retail 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;			// retail 0x012ED5C8
 
 // ?bfmeOffset@@YIHH@Z
 int __fastcall bfmeOffset(int base)
 {
 	if (g_bfmeSwitchDR->m_bfmeUseHigh)
-		return g_bfmeBaseDR->m_bfmeHigh + base;
+		return reinterpret_cast<BfmeBaseDR *>(TheWritableGlobalData)->m_bfmeHigh + base;
 
-	return g_bfmeBaseDR->m_bfmeLow + base;
+	return reinterpret_cast<BfmeBaseDR *>(TheWritableGlobalData)->m_bfmeLow + base;
 }
 
 class BfmeThingDR

@@ -16,8 +16,15 @@ public:
 	int m_bfmeHigh;						// +0xEBC
 };
 
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; this
+// global is retail 0x012ED5C8, defined once in
+// GameEngine/Source/Common/GlobalData.cpp, so it must be spelled
+// GlobalData * (class, not struct) to mangle to the same name.  The local
+// view above supplies the members this TU reads.
+class GlobalData;
+
 extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
-extern BfmeBaseDS *g_bfmeBaseDS;				// retail 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;			// retail 0x012ED5C8
 
 // ?bfmeLimit@@YAHXZ
 int __cdecl bfmeLimit(void)
@@ -27,9 +34,9 @@ int __cdecl bfmeLimit(void)
 	int high = state != 0 ? state->m_bfmeUseHigh : 0;
 
 	if (state != 0 && high != 0)
-		return g_bfmeBaseDS->m_bfmeHigh;
+		return reinterpret_cast<BfmeBaseDS *>(TheWritableGlobalData)->m_bfmeHigh;
 
-	return g_bfmeBaseDS->m_bfmeLow;
+	return reinterpret_cast<BfmeBaseDS *>(TheWritableGlobalData)->m_bfmeLow;
 }
 
 class BfmeItemDS

@@ -28,7 +28,15 @@ struct BfmeG1196
 	float m_bfme1bc;
 };
 
-extern "C" BfmeG1196 *volatile g_bfmeG1196;
+// EA's GlobalData (Common/GlobalData.h) is only forward declared here; this
+// global is retail 0x012ED5C8, defined once in
+// GameEngine/Source/Common/GlobalData.cpp, so it must be spelled
+// GlobalData * (class, not struct) to mangle to the same name.  It was
+// spelled with C linkage before, which gave it no mangling at all.  The
+// local view above supplies the member this TU reads.
+class GlobalData;
+
+extern GlobalData *TheWritableGlobalData;
 
 extern const float BfmeZeroRange;
 
@@ -81,7 +89,8 @@ BfmeA1196::BfmeA1196(BfmeSrc1196 *a, char b)
 
 	v = a->m_bfmebc;
 	m_bfme14 = v;
-	m_bfme14 = g_bfmeG1196->m_bfme1bc * 0.70710677f + v;
+	m_bfme14 = reinterpret_cast<BfmeG1196 *>(TheWritableGlobalData)->m_bfme1bc *
+		0.70710677f + v;
 }
 
 bool BfmeA1196::allow(Object *object)
