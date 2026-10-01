@@ -16,13 +16,22 @@ public:
 	float getMaxHeightAbovePosition() const;
 };
 
+// Retail spells the override walk ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Common/Overridable.h). This TU includes no game
+// header, so the defining class is declared here; nothing is defined, so the
+// call stays the single out-of-line call to the matched body at 0x00087A80 that
+// ILT 0x000022BB reaches.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class BfmeLocomotorTemplate
 {
 public:
-	BfmeLocomotorTemplate *getFinalOverride();
-
 	void *m_vtable;
-	BfmeLocomotorTemplate *m_override;
+	Overridable *m_override;
 	unsigned char m_pad08[0x48d];
 	unsigned char m_appearance;
 };
@@ -146,8 +155,10 @@ void AODHordeContainInterfaceView::bfmeTrackLargeUnit(Object *, Object *unit)
 		return;
 
 	BfmeLocomotorTemplate *locomotor = unit->m_locomotorTemplate;
-	if (locomotor != 0 && locomotor->m_override != 0)
-		locomotor = locomotor->m_override->getFinalOverride();
+	const Overridable *ovr = locomotor != 0 ? locomotor->m_override : 0;
+	if (ovr != 0)
+		locomotor = const_cast<BfmeLocomotorTemplate *>(
+			reinterpret_cast<const BfmeLocomotorTemplate *>(ovr->getFinalOverride()));
 
 	if (locomotor->m_appearance == 2 && unit->m_id != m_trackedLargeUnit)
 	{

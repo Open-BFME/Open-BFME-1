@@ -5295,19 +5295,10 @@ Bool PartitionFilterPlayerAffiliation::allow( Object *other )
 }
 
 //-----------------------------------------------------------------------------
-class BfmePartitionThingTemplate
-{
-public:
-	BfmePartitionThingTemplate *getFinalOverride();
-
-	UnsignedByte m_unreconstructed_000[4];
-	BfmePartitionThingTemplate *m_nextOverride;
-};
-
 struct BfmePartitionThingHead
 {
 	UnsignedByte m_unreconstructed_000[4];
-	BfmePartitionThingTemplate *m_template;
+	Overridable *m_template;
 };
 
 struct BfmePartitionFilterThingFields
@@ -5317,18 +5308,36 @@ struct BfmePartitionFilterThingFields
 	Bool m_match;
 };
 
+// Overridable's own header view: m_nextOverride is private, so the chain walk
+// reads it through this at-offset-4 window (vtable, then m_nextOverride) and
+// still calls the real member for the recursion step.
+struct BfmeOverridableNext
+{
+	void *m_vtable;
+	const Overridable *m_nextOverride;
+};
+
+// retail calls ?getFinalOverride@Overridable@@QBEPBV1@XZ (ILT 0x000022BB) out
+// of line and expands no level of its inline body here, so the inline depth is
+// pinned at zero across this function.
+#pragma inline_depth(0)
 Bool PartitionFilterThing::allow( Object *other )
 {
-	BfmePartitionThingTemplate *otherTemplate =
+	const Overridable *otherTemplate =
 		reinterpret_cast<BfmePartitionThingHead *>(other)->m_template;
-	if (otherTemplate && otherTemplate->m_nextOverride)
-		otherTemplate = otherTemplate->m_nextOverride->getFinalOverride();
+	const Overridable *nextTemplate =
+		otherTemplate
+			? reinterpret_cast<const BfmeOverridableNext *>(otherTemplate)->m_nextOverride
+			: NULL;
+	if (nextTemplate)
+		otherTemplate = nextTemplate->getFinalOverride();
 
 	BfmePartitionFilterThingFields *self =
 		reinterpret_cast<BfmePartitionFilterThingFields *>(this);
 	return self->m_tThing->isEquivalentTo(
 		reinterpret_cast<const ThingTemplate *>(otherTemplate)) == self->m_match;
 }
+#pragma inline_depth(default)
 
 //-----------------------------------------------------------------------------
 // ?allow@PartitionFilterGarrisonable@@MAE_NPAVObject@@@Z present-unmatched

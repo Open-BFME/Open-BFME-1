@@ -77,13 +77,22 @@ public:
 
 class Player;
 
+// Retail spells the override walk ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Common/Overridable.h). This TU includes no game
+// header, so the defining class is declared here; nothing is defined, so the
+// call stays the single out-of-line call to the matched body at 0x00087A80 that
+// ILT 0x000022BB reaches.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class ThingTemplate
 {
 public:
-	ThingTemplate *getFinalOverride();
-
 	char m_pad00[4];
-	ThingTemplate *m_overridable;
+	Overridable *m_overridable;
 	char m_pad08[0x398 - 8];
 	float m_fenceWidth;
 };
@@ -195,9 +204,10 @@ Bool WeaponTemplate::shouldProjectileCollideWith(
 	ThingTemplate *tmpl = vic->m_template;
 	if (tmpl)
 	{
-		ThingTemplate *ovr = tmpl->m_overridable;
+		const Overridable *ovr = tmpl->m_overridable;
 		if (ovr)
-			tmpl = ovr->getFinalOverride();
+			tmpl = const_cast<ThingTemplate *>(
+				reinterpret_cast<const ThingTemplate *>(ovr->getFinalOverride()));
 	}
 	if (tmpl->m_fenceWidth > 0.0f)
 		requiredMask |= WEAPON_COLLIDE_WALLS;

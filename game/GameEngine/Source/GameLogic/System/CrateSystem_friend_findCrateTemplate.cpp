@@ -74,25 +74,28 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
-// The shared override-chain walker; the ledger pins it under the name it was
-// first identified with.
-class LocomotorOverridable
+// The shared override-chain walker. Retail spells it
+// ?getFinalOverride@Overridable@@QBEPBV1@XZ -- public, const, returning a const
+// pointer -- and ILT 0x000022BB reaches the matched out-of-line body at
+// 0x00087A80, which is the recursive step this inlines one level of. This TU
+// includes no game header, so the defining class is declared here under its real
+// name with upstream's own recursive inline body; declaring it const and
+// returning const is what makes the mangling match the ledger.
+class Overridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride(void);		// ILT 0x000022BB
-
-	LocomotorOverridable *getFinalOverride(void)
+	const Overridable *getFinalOverride(void) const
 	{
-		return m_nextOverride ? m_nextOverride->friend_getFinalOverride() : this;
+		return m_nextOverride ? m_nextOverride->getFinalOverride() : this;
 	}
 
 protected:
 	char m_bfme_vptr[4];					// this+0x00
-	LocomotorOverridable *m_nextOverride;			// this+0x04
+	Overridable *m_nextOverride;				// this+0x04
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
-class CrateTemplate : public LocomotorOverridable
+class CrateTemplate : public Overridable
 {
 public:
 	AsciiString getName(void) const;			// ILT 0x000259D7

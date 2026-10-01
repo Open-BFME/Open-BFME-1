@@ -72,6 +72,8 @@ public:
 	void receiveGrant(Bool active, UnsignedInt frames);
 };
 
+class Module;
+
 enum PathfindLayerEnum
 {
 	PATHFIND_LAYER_GROUND = 0
@@ -107,7 +109,6 @@ class Object
 {
 public:
 	void setStatus(const ObjectStatusMaskType &status, Bool set);
-	StealthUpdate *findUpdateModule(NameKeyType key);
 	int getLayer() const;
 	void setLayer(PathfindLayerEnum layer);
 	void onRemovedFrom(Object *container);
@@ -120,6 +121,12 @@ public:
 	unsigned char m_unreconstructed_09C[0x160];
 	ContainInterface *m_contain;
 	unsigned char m_unreconstructed_200[0x10];
+
+	// Retail's Object::findModule is a protected member, so the mangled call
+	// name carries that access; only the friend may call it here.
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class Rva226800RemoveContain;
 };
 
 class Rva226800StatusObject
@@ -215,7 +222,7 @@ void Rva226800RemoveContain::remove(Object *object, Bool exposeStealthUnits)
 		{
 			static const NameKeyType key_StealthUpdate =
 				((Rva226800NameKeyGenerator *)TheNameKeyGenerator)->nameToKey("StealthUpdate");
-			StealthUpdate *stealth = object->findUpdateModule(key_StealthUpdate);
+			StealthUpdate *stealth = (StealthUpdate *)object->findModule(key_StealthUpdate);
 			if (stealth)
 				stealth->receiveGrant(false, 1);
 		}

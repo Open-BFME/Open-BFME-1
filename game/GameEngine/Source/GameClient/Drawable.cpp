@@ -1546,13 +1546,22 @@ void Drawable::applyPhysicsXform(Matrix3D* mtx)
 class BFMELocomotorOverride
 {
 public:
-	BFMELocomotorOverride *friend_getFinalOverride();		///< retail ILT 0x000022bb
-
 	Int getAppearance() const
 	{
 		BFMELocomotorOverride *o = m_nextOverride;
 		if (o && o->m_nextOverride)
-			o = o->m_nextOverride->friend_getFinalOverride();
+		{
+			// The chain walk is retail's own Overridable::getFinalOverride (ILT
+			// 0x000022bb). Its upstream body is a recursive inline, so calling it
+			// directly makes MSVC expand the first level; retail expands no level.
+			// Taking the member's ADDRESS forces the body out of line, which leaves
+			// the single rel32 call to ?getFinalOverride@Overridable@@QBEPBV1@XZ.
+			typedef const Overridable *(Overridable::*FinalOverrideCall)(void) const;
+			FinalOverrideCall walk = &Overridable::getFinalOverride;
+			o = reinterpret_cast<BFMELocomotorOverride *>(
+				const_cast<Overridable *>(
+					(reinterpret_cast<const Overridable *>(o->m_nextOverride)->*walk)()));
+		}
 		return o->m_appearance;
 	}
 

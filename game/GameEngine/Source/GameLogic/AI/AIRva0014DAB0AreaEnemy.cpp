@@ -46,13 +46,23 @@ public:
 	Int getPriority(const ThingTemplate *thingTemplate) const;
 };
 
-class BfmeControlBarOverridable
+// The template chain walk is retail's own Overridable::getFinalOverride (ILT
+// 0x000022BB), spelled on the real upstream class. Its body is a recursive
+// inline, so a direct call makes MSVC expand the first level; retail expands no
+// level. Taking the member's ADDRESS forces the body out of line, leaving the
+// single rel32 call the ledger records at 0x000022BB.
+struct BfmeTemplateNextOverride
 {
-public:
-	const BfmeControlBarOverridable *getFinalOverride() const;	// Overridable::getFinalOverride view (ILT 0x000022BB)
 	void *m_vptr;
-	const BfmeControlBarOverridable *m_nextOverride;
+	const Overridable *m_nextOverride;
 };
+
+static __forceinline const Overridable *bfmeGetFinalOverride(const Overridable *o)
+{
+	typedef const Overridable *(Overridable::*FinalOverrideCall)(void) const;
+	FinalOverrideCall walk = &Overridable::getFinalOverride;
+	return (o->*walk)();
+}
 
 struct Rva0014B880Candidate;
 struct Rva0014B880Context
@@ -96,14 +106,16 @@ public:
 	Real getDistanceSquared(const Object *other) const;
 	const ThingTemplate *getTemplate() const
 	{
-		const BfmeControlBarOverridable *t = m_template;
+		const Overridable *t = m_template;
 		if (t == 0)
 			return 0;
-		return (const ThingTemplate *)(t->m_nextOverride ? t->m_nextOverride->getFinalOverride() : t);
+		const Overridable *next =
+			reinterpret_cast<const BfmeTemplateNextOverride *>(t)->m_nextOverride;
+		return (const ThingTemplate *)(next ? bfmeGetFinalOverride(next) : t);
 	}
 
 	void *m_vptr;
-	const BfmeControlBarOverridable *m_template;
+	const Overridable *m_template;
 	unsigned char m_pad08[0x38 - 8];
 	Coord3D m_pos;
 	unsigned char m_pad44[0x94 - 0x44];

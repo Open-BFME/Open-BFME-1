@@ -154,19 +154,11 @@ public:
 
 typedef Object Rva0025E150Object;
 
-// The existing const out-of-line BFME view is retained so the call is a
-// real member call on ThingTemplate+4 rather than an invented free alias.
-class BfmeControlBarOverridable
-{
-public:
-	const BfmeControlBarOverridable *getFinalOverride() const;
-};
-
 class Rva0025E150ThingTemplate
 {
 public:
 	void *m_vptr;
-	BfmeControlBarOverridable *m_overridable;
+	Overridable *m_overridable;
 	unsigned char m_08_to_d8[0xd0];
 	UnsignedInt m_flagsD8;
 };
@@ -250,9 +242,18 @@ void Rva0025E150Owner::callAt0025E150()
 				finalTemplate = 0;
 			else
 			{
+				// The chain walk is Overridable::getFinalOverride (ILT
+				// 0x000022BB). Its body is a recursive inline, so a direct call
+				// makes MSVC expand the first level; retail expands no level.
+				// Taking the member's ADDRESS forces the body out of line, leaving
+				// the single rel32 call to
+				// ?getFinalOverride@Overridable@@QBEPBV1@XZ.
+				typedef const Overridable *(Overridable::*FinalOverrideCall)(void) const;
+				FinalOverrideCall walk = &Overridable::getFinalOverride;
 				if (finalTemplate->m_overridable != 0)
 					finalTemplate = const_cast<Rva0025E150ThingTemplate *>(
-						reinterpret_cast<const Rva0025E150ThingTemplate *>(finalTemplate->m_overridable->getFinalOverride()));
+						reinterpret_cast<const Rva0025E150ThingTemplate *>(
+							(finalTemplate->m_overridable->*walk)()));
 			}
 
 			// Retail reads +D8 even when the template path left EAX null.
