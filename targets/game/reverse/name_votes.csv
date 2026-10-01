@@ -397,3 +397,8 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|type||BfmeThing912F,30d3fbc5b739cd
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeInfoBA,c1c66bde2c90b2bd72dd340e,gemini,20261001113744-bf1b4d,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeAgentBA,1a15c19f5be217ee46fc36f2,gemini,20261001113744-bf1b4d,2026-10-01
 game/GameEngine/Source/Common/BfmeConv572.cpp|type||BfmeOwnerCCA,266b66cff38a1651c01cef27,gemini,20261001114047-4bf0e6,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeCountReadyPlayers,6f9b71e0442ca021fa3c2319,gemini,20261001114358-bf18c9,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeDispatchWindow,f62de25c15af65ffdca38983,gemini,20261001114358-bf18c9,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindRepresentativeSlot,15f49fcda73ddcefb52ceb06,gemini,20261001114358-bf18c9,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,051d5adf893ef227b2280615,gemini,20261001114358-bf18c9,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,e83b07ad487ad5ae86397ee2,gemini,20261001114358-bf18c9,2026-10-01
