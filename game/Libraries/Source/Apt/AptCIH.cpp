@@ -40,7 +40,14 @@ extern Manager008C3F10 *g_manager013377D8;
 extern Rva008C3F10Value *g_value013379BC;
 extern unsigned char g_byte0133781C;
 extern Registry008C3F10 *g_registry01337814;
-extern Rva008CF740 g_hub01338748;
+// Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
+// as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
+// mangles a global's class type 3V for `class` but 3U for `struct`, so the global is
+// declared under its defining type.  Only the hub's `run` member is called here and
+// ?run@Rva008CF740@@ is retail's name for it, so the object stays reached through the
+// Rva008CF740 view: only the address-of spelling changes.
+struct Rva008AE770Stack;
+extern struct Rva008AE770Stack Rva008AE770TheStack;
 extern int g_string01338654;
 class Rva008C3F10Value {
 public:
@@ -80,10 +87,10 @@ void Rva008C3F10Value::cleanup(char mode) {
                 ((BfmeNodeDX *)this)->bfmeEmit1281(4,0,0);
                 Rva008C3F10Value *value=(Rva008C3F10Value *)((BfmeNode1220 *)this)->bfmeTest1220(&g_string01338654,0);
                 if (value && (value->field04&0x8000) && value->isKind(10)) {
-                    g_hub01338748.run((Rva008CF740Value *)this,(Rva008CF740Value *)value,0);
-                    Rva008C3F10Value *top=g_hub01338748.field08[g_hub01338748.field00-1];
+                    ((Rva008CF740 *)&Rva008AE770TheStack)->run((Rva008CF740Value *)this,(Rva008CF740Value *)value,0);
+                    Rva008C3F10Value *top=((Rva008CF740 *)&Rva008AE770TheStack)->field08[((Rva008CF740 *)&Rva008AE770TheStack)->field00-1];
                     if (!top->marked()) top->slot04();
-                    --g_hub01338748.field00;
+                    --((Rva008CF740 *)&Rva008AE770TheStack)->field00;
                 }
             }
             field50->slot00();

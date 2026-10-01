@@ -57,7 +57,12 @@ class Rva8D0D80Table { public: void add(Rva8D0D80String*,Rva8D0D80Value*); };
 struct Value008B02A0 { int m_f0; unsigned m_flags; char pad08[0x18]; float m_f20,m_f24; };
 struct Rect008B02A0 { float m_f0,m_f4,m_f8,m_fC; };
 extern Value008B02A0 **g_bfmeArr1233;
-extern int g_stack01338748;
+// Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
+// as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
+// mangles a global's class type 3V for `class` but 3U for `struct`; only the leading
+// int (the stack depth) is read here, so the rest of the layout stays out of this TU.
+struct Rva008AE770Stack { int count; };
+extern struct Rva008AE770Stack Rva008AE770TheStack;
 extern Rva00899F00Base *g_bfmeFallbackDB;
 extern void *global01337A04;
 extern char key01338734[],key01338738[],key01338740[],key01338744[];
@@ -65,7 +70,7 @@ Rva00899F00Base *aptRelativeRect008B02A0(Value008B02A0 *self,int argc) {
  if(argc>1) return g_bfmeFallbackDB;
  Value008B02A0 *other=self;
  if(argc==1) {
-  other=g_bfmeArr1233[g_stack01338748-1];
+  other=g_bfmeArr1233[Rva008AE770TheStack.count-1];
   if((unsigned char)~(other->m_flags>>15)&1) return g_bfmeFallbackDB;
  }
  Rva00899F00Base *result=new Rva00899F00Base(0x1b,8);

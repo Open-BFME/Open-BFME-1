@@ -13,7 +13,15 @@ public:
 	void bfmeLine1226(char *a);
 };
 
-extern BfmeR1226 g_bfmeR1226;
+// Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
+// as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
+// mangles a global's class type 3V for `class` but 3U for `struct`, so the global is
+// declared under its defining type.  The members called here
+// (?bfmeAdd1226@BfmeR1226@@ / ?bfmeLine1226@BfmeR1226@@, retail 0x008CCED0 and
+// 0x008A0F40) are retail's own names for them, so the object is still reached through
+// the BfmeR1226 view and only the address-of spelling changes.
+struct Rva008AE770Stack;
+extern struct Rva008AE770Stack Rva008AE770TheStack;
 
 struct Rva008A1D80Entry
 {
@@ -44,8 +52,8 @@ void Rva008A1D80Owner::runImportedInitActions(void *arg, int key)
 		Rva008A1D80Entry *entry = m_list->m_entries[i];
 		if (entry->m_type == 8 && entry->m_key == key)
 		{
-			g_bfmeR1226.bfmeAdd1226(m_list->m_entries[i]->m_stream, arg, -1);
-			g_bfmeR1226.bfmeLine1226("Imported Init Actions");
+			((BfmeR1226 *)&Rva008AE770TheStack)->bfmeAdd1226(m_list->m_entries[i]->m_stream, arg, -1);
+			((BfmeR1226 *)&Rva008AE770TheStack)->bfmeLine1226("Imported Init Actions");
 			entry->m_key = -entry->m_key;
 			return;
 		}

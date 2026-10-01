@@ -687,7 +687,15 @@ public:
 	void bfmeForward(void);					// retail 0x008C6020
 };
 
-extern Gen_00C70F80Target TheBfmeObject_00C70F80;		// 0x1338748
+// Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
+// as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
+// mangles a global's class type 3V for `class` but 3U for `struct`, so the global is
+// declared under its defining type.  The forwarder tail-jumps to
+// ?bfmeForward@Gen_00C70F80Target@@ (retail 0x008C6020), which is retail's own name for
+// the member, so the object is still reached through the Gen_00C70F80Target view and
+// only the address-of spelling changes.
+struct Rva008AE770Stack;
+extern struct Rva008AE770Stack Rva008AE770TheStack;	// 0x1338748
 class Gen_00C70FC0Target
 {
 public:
@@ -1333,7 +1341,7 @@ void bfmeForward_00C70F10(void)
 // ?bfmeForward_00C70F80@@YAXXZ
 void bfmeForward_00C70F80(void)
 {
-	TheBfmeObject_00C70F80.bfmeForward();
+	((Gen_00C70F80Target *)&Rva008AE770TheStack)->bfmeForward();
 }
 // ?bfmeForward_00C70FC0@@YAXXZ
 void bfmeForward_00C70FC0(void)

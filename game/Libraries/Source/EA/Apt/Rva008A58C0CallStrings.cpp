@@ -51,14 +51,19 @@ struct Boolean008A58C0 {
 
 };
 extern Rva8CD130Value **g_bfmeArr1233;
-extern int g_stack01338748;
+// Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
+// as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
+// mangles a global's class type 3V for `class` but 3U for `struct`; only the leading
+// int (the stack depth) is read here, so the rest of the layout stays out of this TU.
+struct Rva008AE770Stack { int count; };
+extern struct Rva008AE770Stack Rva008AE770TheStack;
 extern void (__cdecl *callback0133786C)(const char*,const char*,const char*,const char*,int);
 Boolean008A58C0 *aptCallStrings008A58C0(KeyValuePairs00898D80 *self,int argc) {
  if(argc>0 && argc<=3) {
-  Rva8CD130Value *v=g_bfmeArr1233[g_stack01338748-1];
+  Rva8CD130Value *v=g_bfmeArr1233[Rva008AE770TheStack.count-1];
   Rva8CD130String a; v->getName(&a);
-  Rva8CD130String b; if(argc>1) { Rva8CD130Value *v2=g_bfmeArr1233[g_stack01338748-2]; v2->getName(&b); }
-  Rva8CD130String c; if(argc>2) { Rva8CD130Value *v3=g_bfmeArr1233[g_stack01338748-3]; v3->getName(&c); }
+  Rva8CD130String b; if(argc>1) { Rva8CD130Value *v2=g_bfmeArr1233[Rva008AE770TheStack.count-2]; v2->getName(&b); }
+  Rva8CD130String c; if(argc>2) { Rva8CD130Value *v3=g_bfmeArr1233[Rva008AE770TheStack.count-3]; v3->getName(&c); }
   Rva8CD130String pairs=self->keyValuePairs00898D80();
   callback0133786C(a.text(),b.text(),c.text(),pairs.text(),0);
   return Boolean008A58C0::create(true);

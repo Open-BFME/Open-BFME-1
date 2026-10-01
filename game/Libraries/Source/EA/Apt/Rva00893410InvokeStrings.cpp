@@ -62,8 +62,10 @@ extern Rva00893410Registry *g_rva8CD130IdleHook;
 extern Rva008A9B00 *Rva01338478FreeHead;
 class BfmeNestedBE;
 extern BfmeNestedBE *Rva008930C0AptLookup(int);
-class Rva008AE770Stack {
-public:
+// Retail's object at 0x01338748 is `struct Rva008AE770Stack` (Rva00C6DCC0StaticInit.cpp
+// defines it), and MSVC 7.1 mangles a global's class type 3V for `class` but 3U for
+// `struct`, so this must be spelled `struct` to reference ?Rva008AE770TheStack@@3U...
+struct Rva008AE770Stack {
     int count, unused;
     Rva008A9B00 **values;
     Rva008A9B00 *top() { return values[count - 1]; }
@@ -73,7 +75,7 @@ public:
         if (!v->permanent()) v->retain();
     }
 };
-extern Rva008AE770Stack Rva01338748Stack;
+extern Rva008AE770Stack Rva008AE770TheStack;
 
 class Rva008A0C20DwordSlot { public: void set(int); };
 extern char *Rva008A5380Holder;
@@ -87,7 +89,7 @@ bool Rva00893670(const char *name)
         return true;
     }
     BfmeStrVKI value(name);
-    Rva008A9B00 *found = (Rva008A9B00 *)Rva01338748Stack.createString(
+    Rva008A9B00 *found = (Rva008A9B00 *)Rva008AE770TheStack.createString(
         Rva008930C0AptLookup(0), 0, &value, 1, 1, 0);
     if (found == 0) return false;
     if (!found->Rva00893670Eligible()) return false;
@@ -114,7 +116,7 @@ void rva00893410InvokeStrings(const char *name, char *output, const char *scope,
     int i = 0;
     if (scope) {
         BfmeStrVKI value(scope);
-        receiver = Rva01338748Stack.createString(Rva008930C0AptLookup(0), 0, &value, 1, 1, 0);
+        receiver = Rva008AE770TheStack.createString(Rva008930C0AptLookup(0), 0, &value, 1, 1, 0);
     } else receiver = Rva008930C0AptLookup(0);
     int total = count;
     va_list args;
@@ -126,12 +128,12 @@ void rva00893410InvokeStrings(const char *name, char *output, const char *scope,
     }
     va_end(args);
     for (; i < 32; ++i) arguments[i] = 0;
-    for (int j = total - 1; j >= 0; --j) Rva01338748Stack.push(arguments[j]);
+    for (int j = total - 1; j >= 0; --j) Rva008AE770TheStack.push(arguments[j]);
     BfmeStrVKI functionName(name);
-    Rva00899770 *function = Rva01338748Stack.createString(receiver, 0, &functionName, 1, 1, 0);
-    ((Rva008CF740 *)&Rva01338748Stack)->run((Rva008CF740Value *)receiver, (Rva008CF740Value *)function, total);
-    if (output) ((Rva00899770 *)Rva01338748Stack.top())->exportString(output);
-    Rva008A9B00 *top = Rva01338748Stack.top();
+    Rva00899770 *function = Rva008AE770TheStack.createString(receiver, 0, &functionName, 1, 1, 0);
+    ((Rva008CF740 *)&Rva008AE770TheStack)->run((Rva008CF740Value *)receiver, (Rva008CF740Value *)function, total);
+    if (output) ((Rva00899770 *)Rva008AE770TheStack.top())->exportString(output);
+    Rva008A9B00 *top = Rva008AE770TheStack.top();
     if (!top->permanent()) top->release();
-    --Rva01338748Stack.count;
+    --Rva008AE770TheStack.count;
 }

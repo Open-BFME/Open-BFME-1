@@ -80,7 +80,10 @@ class BfmeStrVKI;
 
 typedef Rva00899770 AptValue;
 
-class Rva008AE770Stack
+// Retail's object at 0x01338748 is `struct Rva008AE770Stack` (Rva00C6DCC0StaticInit.cpp
+// defines it), and MSVC 7.1 mangles a global's class type 3V for `class` but 3U for
+// `struct`, so this must be spelled `struct` to reference ?Rva008AE770TheStack@@3U...
+struct Rva008AE770Stack
 {
 public:
 	Rva00899770 *createString(void *value, int unused, BfmeStrVKI *name,
