@@ -13,9 +13,16 @@ public:
 	UnsignedInt m_bits[(NUMBITS + 31) / 32];
 };
 
+// This TU's own view of the passenger-bone mask: the 116-bit BFME mask stored
+// at PassengerBoneNode+0x08.
 typedef BitFlags<116> KindOfMaskType;
 
-extern const KindOfMaskType KINDOFMASK_NONE;
+// The one linked KINDOFMASK_NONE is game/GameEngine/Source/Common/System/KindOf.cpp's
+// `const BitFlags<192>`, so this reference must carry that exact spelling or it
+// names a symbol nothing defines.  isKindOfMulti below is declared with the
+// TU-local 116-bit view, so the use reinterprets the address (an address load
+// either way, hence the same bytes).
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 #include "string_base.h"
 
@@ -80,7 +87,7 @@ AsciiString OpenContain::getPassengerBoneName(Object *object)
 	while (node != moduleData->m_passengerBonePrefix.m_head)
 	{
 		if (object == 0 || object->isKindOfMulti(node->m_kindOf,
-			KINDOFMASK_NONE))
+			*reinterpret_cast<const KindOfMaskType *>(&KINDOFMASK_NONE)))
 			return node->m_boneName;
 		node = node->m_next;
 	}

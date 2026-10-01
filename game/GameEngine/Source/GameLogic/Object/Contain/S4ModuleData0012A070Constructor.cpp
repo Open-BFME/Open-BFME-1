@@ -18,7 +18,24 @@ struct Rva0021FC80Mask
 	Rva0021FC80Mask() {}
 	explicit Rva0021FC80Mask(unsigned int bit) { bits.set(bit); }
 };
-extern const Rva0021FC80Mask Rva012ED8B8NoneMask;
+
+// The one linked KINDOFMASK_NONE is game/GameEngine/Source/Common/System/KindOf.cpp's
+// `const BitFlags<192>`, so this reference must carry that exact spelling or it
+// names a symbol nothing defines.  Rva0021FC80Mask is this TU's view of the same
+// 24-byte mask (std::bitset<192>), so the use reinterprets the address; both
+// layouts are six dwords, hence the same 24-byte by-value copy.
+template <int NUMBITS>
+class BitFlags
+{
+public:
+	unsigned int m_bits[(NUMBITS + 31) / 32];
+};
+extern const BitFlags<192> KINDOFMASK_NONE;
+
+static inline Rva0021FC80Mask noneMask()
+{
+	return Rva0021FC80Mask(*reinterpret_cast<const Rva0021FC80Mask *>(&KINDOFMASK_NONE));
+}
 
 struct Rva0039FF30Filter
 {
@@ -50,7 +67,7 @@ public:
 S4ModuleData0012A070::S4ModuleData0012A070()
 {
 	m_fraction = 1.0f;
-	m_filter.setMasks(Rva0021FC80Mask(8), Rva012ED8B8NoneMask);
+	m_filter.setMasks(Rva0021FC80Mask(8), noneMask());
 }
 
 typedef char VerifyMaskSize[sizeof(Rva0021FC80Mask) == 24 ? 1 : -1];

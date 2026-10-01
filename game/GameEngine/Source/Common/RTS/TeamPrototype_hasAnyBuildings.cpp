@@ -57,7 +57,11 @@ public:
 typedef BitFlags<192> KindOfMaskType;
 typedef BitFlags<126> KindOfMask126;
 
-extern const KindOfMask126 KINDOFMASK_NONE;
+// The one linked KINDOFMASK_NONE is game/GameEngine/Source/Common/System/KindOf.cpp's
+// `const BitFlags<192>`, so this reference must carry that spelling or it names a
+// symbol nothing defines.  isKindOfMulti is declared here with the TU-local 126-bit
+// view, so the use casts the address back to that view (an address load either way).
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 class BfmeOverridable
 {
@@ -153,7 +157,7 @@ Bool Team::hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag)
 		kindOf.m_bits[0] |= 0x80u;
 		if (((Thing *)iter.cur())->isKindOfMulti(
 			*reinterpret_cast<const KindOfMask126 *>(&kindOf),
-			KINDOFMASK_NONE))
+			*reinterpret_cast<const KindOfMask126 *>(&KINDOFMASK_NONE)))
 			return true;
 	}
 	return false;
