@@ -136,8 +136,11 @@ public:
 	AsciiString &ascii( void ) { return *(AsciiString *)this; }
 };
 
-struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp. The only use casts it straight to the DVB
+// view type, so no TU-local view is needed.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 void AddBanner( int id, const AsciiString &name, const AsciiString &label );
 
@@ -195,7 +198,7 @@ done:
 	if ( (unsigned int)slot >= 2 )
 		return -1;
 
-	BannerName type( (BfmeThingDVB *)TheBfmeGameLogic, player );
+	BannerName type( (BfmeThingDVB *)TheGameLogic, player );
 	if ( type.isEmpty() )
 		type.ascii() = "BannerRohan";
 

@@ -26,11 +26,10 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-// targets/game/reverse/symbols.csv types the global at 0x012F0898 as
-// ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A, so the TU-local shim carries that
-// address-derived struct name (landed TUs spell it the same way, e.g.
-// GameLogic/Rva0058BB30CommandState.cpp).  +0x1A0 is the FP-mode nesting count:
-// the body calls setFPMode when it is zero, then increments it.
+// The global at 0x012F0898 is retail's `GameLogic *TheGameLogic`; this TU
+// carries the address-derived view struct for it and casts at each use.
+// +0x1A0 is the FP-mode nesting count: the body calls setFPMode when it is
+// zero, then increments it.
 struct Rva00367E30Logic
 {
 	char m_pad00[0x1A0];
@@ -155,7 +154,11 @@ private:
 	LivingWorldEyeTower *m_eyeTower;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp; the reads go through the TU-local view struct.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logic *)TheGameLogic; }
 extern Rva006174D0State *g_bfmeStateDF;
 extern Rva003BF540 *TheLivingWorldLogic;
 extern BfmeC977 *g_theWindowManager;
@@ -165,7 +168,7 @@ extern void *TheCRCParameterCheck;
 // ?update@BfmeLivingWorldManager@@QAEXXZ
 void BfmeLivingWorldManager::update()
 {
-	Rva00367E30Logic *logic = TheBfmeGameLogic;
+	Rva00367E30Logic *logic = TheBfmeGameLogicView();
 	int *fp = &logic->m_fp;
 	if (*fp == 0)
 		setFPMode();
@@ -203,7 +206,7 @@ void BfmeLivingWorldManager::update()
 
 	Glo012F4B98Type *global012F4B98 = Glo012F4B98;
 	global012F4B98->slot14();
-	Rva00367E30Logic *logicExit = TheBfmeGameLogic;
+	Rva00367E30Logic *logicExit = TheBfmeGameLogicView();
 	--logicExit->m_fp;
 
 	void *desyncSink = TheCRCParameterCheck;

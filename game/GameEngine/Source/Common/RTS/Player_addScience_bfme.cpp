@@ -221,7 +221,11 @@ public:
 	virtual void notifyOfAcquiredScience(Int playerIndex, ScienceType science);
 };
 
-extern GameLogicPortraitShim *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp. The member reads below go through the TU-local
+// view type, cast at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern ControlBar *TheControlBar;
 extern ScriptEngine *TheScriptEngine;
 
@@ -268,8 +272,8 @@ Bool Player::addScience(ScienceType science)
 							if (sp->getRequiredScience() == science)
 							{
 								sp->onSpecialPowerCreation();
-								if (TheBfmeGameLogic->isInMultiplayerOrSkirmishGame())
-									sp->setReadyFrame(TheBfmeGameLogic->m_frame);
+								if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
+									sp->setReadyFrame(((GameLogicPortraitShim *)TheGameLogic)->m_frame);
 								else
 									sp->startPowerRecharge();
 							}

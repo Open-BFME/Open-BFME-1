@@ -111,7 +111,11 @@ public:
 	Int m_gameMode;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp; the reads go through the TU-local view type.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logic *)TheGameLogic; }
 
 class Player;
 
@@ -164,9 +168,9 @@ int Rva00513740Owner::_bfme_getInternetPlayerStatus( const UnicodeString &name )
 {
 	if( TheNetwork == 0 )
 		return 0;
-	if( TheBfmeGameLogic == 0 )
+	if( TheBfmeGameLogicView() == 0 )
 		return 0;
-	if( TheBfmeGameLogic->m_gameMode != 5 )
+	if( TheBfmeGameLogicView()->m_gameMode != 5 )
 		return 0;
 
 	if( Rva002EE330ThePlayers == 0 )

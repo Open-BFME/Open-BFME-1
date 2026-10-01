@@ -14,7 +14,11 @@ extern void j_0002b7e2(); extern void j_0003756a(); extern void j_00015f69();
 class Route002432C0 {};
 struct Hub002432C0 {};
 extern Hub002432C0 *g002432C0Va012EF214;
-extern Route002432C0 *g002432C0Va012F0898;
+// The global at 0x012F0898 is retail's `GameLogic *TheGameLogic`; the member-call
+// below goes through this TU's Route002432C0 view, cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Route002432C0 *g002432C0Va012F0898View() { return (Route002432C0 *)TheGameLogic; }
 template<int N> class Slots002432C0 : public Slots002432C0<N-1> { public: virtual void unused(char (*)[N])=0; };
 template<> class Slots002432C0<0> {};
 class TargetContain002432C0 : public Slots002432C0<33> { public: virtual bool slot084(Object*,bool)=0; };
@@ -47,7 +51,7 @@ void GroupEntry002432C0::run(Object *target,int source) {
   typedef Object *(Route002432C0::*Find)(unsigned);
   union { void (*fn)(); Find call; } find={j_0001f253};
   unsigned id=*it;
-  Object *obj=(g002432C0Va012F0898->*find.call)(id);
+  Object *obj=(g002432C0Va012F0898View()->*find.call)(id);
   if(obj) {
    typedef void (Route002432C0::*Add)(Object*);
    union { void (*fn)(); Add call; } add={j_0002b7e2};

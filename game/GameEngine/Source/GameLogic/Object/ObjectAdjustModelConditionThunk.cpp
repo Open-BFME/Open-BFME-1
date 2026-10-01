@@ -157,7 +157,11 @@ public:
     }
 };
 
-extern BfmeClock *TheGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp. The frame read goes through the TU-local view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeClock *TheBfmeClockView() { return (BfmeClock *)TheGameLogic; }
 
 class Gen_001E1980
 {
@@ -167,7 +171,7 @@ public:
 
 void ObjectAdjustModelConditionShim::adjust()
 {
-    UnsignedInt now = TheGameLogic->getFrame();
+    UnsignedInt now = TheBfmeClockView()->getFrame();
     const unsigned int status = m_status;
     const Bool isAimingWeapon = (status & (1u << 22)) != 0;
     const Bool isFiringWeapon = (status & (1u << 25)) != 0;

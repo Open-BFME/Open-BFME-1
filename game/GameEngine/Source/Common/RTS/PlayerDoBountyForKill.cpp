@@ -138,7 +138,11 @@ public:
 extern const Real BfmeZeroRange;
 extern Real g_bfmeUint32Scale;
 extern const Real g_bfmeDirectionWeight1285;
-extern GameLogicPortraitShim *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp. The call below goes through the TU-local view
+// type, cast at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern PlayerList *Rva002EE330ThePlayers;
 extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
@@ -167,7 +171,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 	Real roundedBounty = (Real)bfmeMathVE((double)((Real)bounty * bountyPercent));
 	bounty = (UnsignedInt)fast_float2long_round(roundedBounty);
 
-	if (((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab())
+	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
 		const Int playerIndex = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
 		const Real factor = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerIndex);

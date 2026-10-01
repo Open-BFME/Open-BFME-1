@@ -52,7 +52,13 @@ public:
 	unsigned int m_frame;
 };
 
-extern Rva00367810GameLogic *Rva00367810TheGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp. Every read below goes through the TU-local view
+// type, so the helper casts once.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367810GameLogic *rva00367810TheGameLogicView() { return (Rva00367810GameLogic *)TheGameLogic; }
 
 static __forceinline unsigned int rva00367810Frame(
 	Rva00367810GameLogic *logic )
@@ -147,7 +153,7 @@ void Rva00367810Entry::update()
 		{
 			m_state = 2;
 			_ReadWriteBarrier();
-			unsigned int frame = Rva00367810TheGameLogic->m_frame;
+			unsigned int frame = rva00367810TheGameLogicView()->m_frame;
 			// The clean C++ expression matches every other instruction but emits
 			// add eax,ecx and stores EAX.  MSVC 7.1 needs these short asm blocks
 			// to preserve retail's add ecx,eax register order.
@@ -158,7 +164,7 @@ void Rva00367810Entry::update()
 			m_startFrame = frame;
 			__asm
 			{
-				mov edx, dword ptr Rva00367810TheGameLogic
+				mov edx, dword ptr TheGameLogic
 				mov eax, dword ptr [edx+3Ch]
 				add ecx, eax
 				mov dword ptr [esi+28h], ecx
@@ -167,7 +173,7 @@ void Rva00367810Entry::update()
 		break;
 
 	case 2:
-		if( rva00367810Frame( Rva00367810TheGameLogic ) < m_frame )
+		if( rva00367810Frame( rva00367810TheGameLogicView() ) < m_frame )
 			break;
 		m_state = 3;
 		break;
@@ -205,7 +211,7 @@ void Rva00367810Entries::update()
 	Rva00367810VirtualGate *gate = Rva00367810TheVirtualGate;
 	if( gate->m_table->m_test( gate ) )
 		return;
-	if( !Rva00367810TheGameLogic->isLivingWorld() )
+	if( !rva00367810TheGameLogicView()->isLivingWorld() )
 		return;
 
 	for( unsigned int index = 0; index < m_entries.size(); ++index )
@@ -216,7 +222,7 @@ void Rva00367810Entries::update()
 			entry.update();
 		}
 		else if( entry.m_state == 2 &&
-			Rva00367810TheGameLogic->m_frame >= entry.m_frame )
+			rva00367810TheGameLogicView()->m_frame >= entry.m_frame )
 		{
 			entry.m_state = 3;
 		}

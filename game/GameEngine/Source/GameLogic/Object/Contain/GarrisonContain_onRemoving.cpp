@@ -165,13 +165,17 @@ struct Rva00367E30Logic
 	UnsignedInt m_frame;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
+// defined once in GameLogic.cpp; the frame read goes through the TU-local view.
 
 class GameLogic
 {
 public:
 	void destroyObject(Object *object);
 };
+
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logic *)TheGameLogic; }
 
 class OpenContain
 {
@@ -350,7 +354,7 @@ void GarrisonContain::onRemoving(Object *removedObject)
 			*reinterpret_cast<Bool *>(reinterpret_cast<unsigned char *>(this) + 0x995) = false;
 	}
 
-	const UnsignedInt currentFrame = TheBfmeGameLogic->m_frame;
+	const UnsignedInt currentFrame = TheBfmeGameLogicView()->m_frame;
 	const BfmeThingTemplateView *thingTemplate =
 		reinterpret_cast<BfmeObjectTemplateLink *>(removedObject)->m_template;
 	if (thingTemplate != 0 && thingTemplate->m_override != 0)
@@ -369,6 +373,6 @@ void GarrisonContain::onRemoving(Object *removedObject)
 			reinterpret_cast<unsigned char *>(reinterpret_cast<BfmeGarrisonOwnerLink *>(
 			reinterpret_cast<unsigned char *>(this) - 0x18)->m_object))->m_body;
 		if (ownerBody->getHealth() <= BfmeZeroRange)
-			reinterpret_cast<GameLogic *>(TheBfmeGameLogic)->destroyObject(removedObject);
+			reinterpret_cast<GameLogic *>(TheBfmeGameLogicView())->destroyObject(removedObject);
 	}
 }
