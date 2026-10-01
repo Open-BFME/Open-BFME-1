@@ -71,16 +71,22 @@ public:
 	void createAndFireTempWeapon( const WeaponTemplate *weaponTemplate, const Object *source, const Coord3D *position );
 };
 
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp.  This TU only null-tests it, so an opaque forward
+// declaration is the whole view; the canonical type keeps the linked build on one
+// mangled name.
+class AudioManager;
+
 extern GameLogic *TheGameLogic;
 extern WeaponStore *TheWeaponStore;
-extern void *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 // ?Rva002E6650FireTempWeaponAtObject@@YAHPAUlua_State@@@Z
 int Rva002E6650FireTempWeaponAtObject( lua_State *state )
 {
 	if( lua_gettop( state ) < 2 )
 		return 0;
-	if( !TheAudioClientUpdate )
+	if( !TheAudio )
 		return 0;
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )

@@ -26,7 +26,11 @@ public:
 	unsigned char m_bfmeTail[0x70];
 };
 
-class ClientSubsystem
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp.  This TU only reaches the object through the
+// +0x44 addAudioEvent vslot, so the local view keeps just that dispatch shape;
+// the global itself carries the canonical type so the linked build has one name.
+class AudioManager
 {
 public:
 	virtual void bfmeUnused00();
@@ -49,15 +53,15 @@ public:
 	virtual int addAudioEvent(const AudioEventRTS *event);
 };
 
-typedef int (__fastcall *AudioEventCall)(ClientSubsystem *, const AudioEventRTS *, const AudioEventRTS *);
+typedef int (__fastcall *AudioEventCall)(AudioManager *, const AudioEventRTS *, const AudioEventRTS *);
 
-struct ClientSubsystemVtable
+struct AudioManagerVtable
 {
 	void *m_bfmeSlots[17];
 	AudioEventCall addAudioEvent;
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 class GateOpenAndCloseBehavior
 {
@@ -126,8 +130,8 @@ void BfmeThingYD::bfmeSetYD(int what)
 		{
 			ObjectID ownerID = owner->m_bfmeOwnerID;
 			AudioEventRTS event(soundSet->m_bfmeEventName, ownerID);
-			ClientSubsystem *audio = TheAudioClientUpdate;
-			ClientSubsystemVtable *vtable = *(ClientSubsystemVtable **)audio;
+			AudioManager *audio = TheAudio;
+			AudioManagerVtable *vtable = *(AudioManagerVtable **)audio;
 			m_bfmeAudioHandle = vtable->addAudioEvent(audio, &event, &event);
 		}
 		goto setNotPlaying;
@@ -136,8 +140,8 @@ void BfmeThingYD::bfmeSetYD(int what)
 		{
 			ObjectID ownerID = owner->m_bfmeOwnerID;
 			AudioEventRTS event(soundSet->m_bfmeEventNameTwo, ownerID);
-			ClientSubsystem *audio = TheAudioClientUpdate;
-			ClientSubsystemVtable *vtable = *(ClientSubsystemVtable **)audio;
+			AudioManager *audio = TheAudio;
+			AudioManagerVtable *vtable = *(AudioManagerVtable **)audio;
 			m_bfmeAudioHandle = vtable->addAudioEvent(audio, &event, &event);
 		}
 	setNotPlaying:

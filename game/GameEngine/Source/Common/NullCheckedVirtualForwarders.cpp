@@ -294,7 +294,20 @@ public:
 	virtual void v83( int, int, int );
 };
 
-extern VDispatch1 *g_Va012ED668;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp.  VDispatch1 below is this TU's shared vslot view and
+// stays under its own name, so the canonical global takes an opaque forward
+// declaration and the cast at the one use is the whole translation.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+// VDispatch1 is this file's generic vslot view; TheAudio is retail's global at
+// 0x012ED668 reached through vslot 0x148.  The cast emits no code.
+static inline VDispatch1 *localTheAudio()
+{
+	return (VDispatch1 *)TheAudio;
+}
 
 class Rva002EEA10GuardedVCall
 {
@@ -304,7 +317,7 @@ public:
 
 void Rva002EEA10GuardedVCall::forward( int a0 )
 {
-	VDispatch1 *target = g_Va012ED668;
+	VDispatch1 *target = localTheAudio();
 	if ( target != 0 )
 		target->v83( a0 );
 }

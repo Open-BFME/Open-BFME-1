@@ -112,7 +112,18 @@ public:
 	virtual void stopAudioEvent(UnsignedInt handle) = 0;
 };
 
-extern BfmeAudioClient *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. BfmeAudioClient above is this TU's vslot view of it,
+// so the canonical global takes an opaque forward declaration and the cast at the
+// use is the whole translation.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline BfmeAudioClient *localTheAudio()
+{
+	return (BfmeAudioClient *)TheAudio;
+}
 
 void InitGameLogicRandom(UnsignedInt seed);
 
@@ -170,9 +181,9 @@ Bool Shell::showShellMap(Bool useShellMap)
 	{
 		TheDisplay->bfmeStopMovie();
 
-		if (TheAudioClientUpdate != 0)
+		if (TheAudio != 0)
 		{
-			TheAudioClientUpdate->stopAudioEvent(m_shellAudioHandle);
+			localTheAudio()->stopAudioEvent(m_shellAudioHandle);
 			m_shellAudioHandle = 1;
 		}
 

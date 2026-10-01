@@ -58,7 +58,11 @@ public:
 	Rva0020A5A0Name(const char *text) : AsciiString(text) {}
 };
 
-class Rva005A00B0AudioClient
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp.  This TU reaches it only through the findAudioEventInfo
+// vslot, so the local view below carries that dispatch shape; naming the view after
+// the canonical class gives the linked build one mangled name for the global.
+class AudioManager
 {
 public:
 #define AUDIO_SLOT(n) virtual void slot##n(void);
@@ -84,7 +88,7 @@ public:
 	virtual Rva000BD3B0Element findAudioEventInfo(const AsciiString *eventName) const;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 extern const char *const Rva002098B0PhaseNames[];
 
 struct Rva0020A5A0Owner
@@ -106,7 +110,7 @@ void parseSound(INI *ini, void *instance, void *, const void *)
 		_STL::vector<Rva000BD3B0Element> &sounds = self->m_sounds[phase];
 		do
 		{
-			Rva000BD3B0Element sound = TheAudioClientUpdate->findAudioEventInfo(
+			Rva000BD3B0Element sound = TheAudio->findAudioEventInfo(
 				&Rva0020A5A0Name(token));
 			sounds.push_back(sound);
 			if (sound.m_info)

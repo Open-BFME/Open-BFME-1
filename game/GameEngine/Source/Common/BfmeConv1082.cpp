@@ -25,7 +25,18 @@ public:
 	virtual void bfmeSlot1082A_19(int a);
 };
 
-extern BfmeA1082 *g_bfmeA1082;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. BfmeA1082 above is this TU's vslot view of it, so the
+// canonical global takes an opaque forward declaration and the casts at the two uses
+// are the whole translation.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline BfmeA1082 *localTheAudio()
+{
+	return (BfmeA1082 *)TheAudio;
+}
 
 struct BfmeB1082
 {
@@ -120,11 +131,11 @@ public:
 void BfmeQ1082::bfmeGo1082A(void)
 {
 	if (m_bfme1c != 1) {
-		g_bfmeA1082->bfmeSlot1082A_19(m_bfme1c);
+		localTheAudio()->bfmeSlot1082A_19(m_bfme1c);
 		m_bfme1c = 1;
 	}
 	if (m_bfme20 != 1) {
-		g_bfmeA1082->bfmeSlot1082A_19(m_bfme20);
+		localTheAudio()->bfmeSlot1082A_19(m_bfme20);
 		m_bfme20 = 1;
 	}
 	((BfmeB1082 *)TheGameLogic)->m_bfme74 = 0;

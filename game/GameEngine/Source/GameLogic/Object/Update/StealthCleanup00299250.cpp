@@ -21,7 +21,17 @@ enum DamageType { DAMAGE8=8 }; enum DeathType { DEATH0=0 };
 class GameLogic { public: Object* findObjectByID(int); char pad00[0x3c]; unsigned at3c; };
 extern GameLogic* TheBfmeGameLogic;
 class AudioDispatch00299250 { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c(); virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c(); virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c(); virtual void s40(); virtual void add(AudioEventRTS*); };
-extern AudioDispatch00299250* g_audio00299250;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. AudioDispatch00299250 above is this TU's vslot view of
+// it, so the canonical global takes an opaque forward declaration and the cast at
+// the one use is the whole translation.
+class AudioManager;
+extern AudioManager* TheAudio;
+
+static inline AudioDispatch00299250 *localTheAudio()
+{
+	return (AudioDispatch00299250 *)TheAudio;
+}
 struct Config00299250 { char pad00[0x20]; AudioEventInfoRef at20; };
 class StealthCleanup00299250 { public: void apply(); char pad00[4]; Config00299250* at04; Object* at08; char pad0c[0x18]; int at24; int at28; int at2c; unsigned at30; };
 void StealthCleanup00299250::apply() {
@@ -39,7 +49,7 @@ void StealthCleanup00299250::apply() {
   if(config->at20.ptr) {
    ObjectID id=object->m_id;
    AudioEventRTS audio(config->at20,id);
-   g_audio00299250->add(&audio);
+   localTheAudio()->add(&audio);
   }
  }
  Object* previous=TheBfmeGameLogic->findObjectByID(at24);

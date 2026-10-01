@@ -2,7 +2,7 @@
 // Retail RVA 0x000BABF0 (283 bytes, cdecl). An INI field parser with the
 // standard (ini, instance, store, userData) shape. It reads one token. The
 // token NoSound drops the counted reference at store and clears it. Any other
-// token becomes a name that a virtual call on TheAudioClientUpdate (slot 0x118)
+// token becomes a name that a virtual call on TheAudio (slot 0x118)
 // resolves to a counted reference, which is assigned into store. The parser
 // throws INIException 3 "Invalid Sound '%s'" when store is still empty. The
 // name and the reference are expression temporaries, which is what keeps the
@@ -155,7 +155,18 @@ public:
 	static void rva000BABF0( INI *ini, void *instance, void *store, const void *userData );
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// Common/Audio/GameAudio.cpp. Rva005A00B0AudioClient above is this TU's vslot view
+// of it, so the canonical global takes an opaque forward declaration and the cast at
+// the use is the whole translation.
+class AudioManager;
+
+extern AudioManager *TheAudio;
+
+static inline Rva005A00B0AudioClient *localTheAudio()
+{
+	return (Rva005A00B0AudioClient *)TheAudio;
+}
 
 void INI::rva000BABF0( INI *ini, void *, void *store, const void * )
 {
@@ -171,7 +182,7 @@ void INI::rva000BABF0( INI *ini, void *, void *store, const void * )
 		return;
 	}
 
-	*handle = TheAudioClientUpdate->findSound( AsciiString( token ) );
+	*handle = localTheAudio()->findSound( AsciiString( token ) );
 
 	if( handle->m_ptr == 0 )
 		throw INIException( 3, "Invalid Sound '%s'", token );
