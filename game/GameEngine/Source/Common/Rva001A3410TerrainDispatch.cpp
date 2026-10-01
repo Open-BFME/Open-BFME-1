@@ -33,7 +33,8 @@ public:
 	virtual void dispatch(int value, int ownerValue) = 0;
 };
 
-extern "C" Rva001A3410TerrainVisual *g_bfmeTerrainVisual;
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 
 class Rva001A3410Owner
 {
@@ -46,5 +47,5 @@ private:
 
 void Rva001A3410Owner::forward(Rva001A3410Input *input, int)
 {
-	g_bfmeTerrainVisual->dispatch(input->m_value, m_value);
+	((Rva001A3410TerrainVisual *)TheTerrainVisual)->dispatch(input->m_value, m_value);
 }

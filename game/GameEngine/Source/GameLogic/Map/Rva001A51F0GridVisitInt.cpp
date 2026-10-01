@@ -95,7 +95,8 @@ public:
 	virtual void notify(int key, int payload);
 };
 
-extern "C" TerrainVisualP48Scan *g_bfmeTerrainVisual;
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 
 // Retail 0x001A51F0: 796 bytes through ret 0x14. Matched 0x001A64F0
 // (TerrainLogicP48Adapter.cpp) stores an int argument in its own home slot and
@@ -169,7 +170,7 @@ void Rva001A51F0GridVisitInt::visit(const Coord3D *position, Real radius,
 					delta.sub(position);
 					if (radius * radius > delta.lengthSqr())
 					{
-						TerrainVisualP48Scan *visual = g_bfmeTerrainVisual;
+						TerrainVisualP48Scan *visual = (TerrainVisualP48Scan *)TheTerrainVisual;
 						visual->notify(key, *payload);
 					}
 				}

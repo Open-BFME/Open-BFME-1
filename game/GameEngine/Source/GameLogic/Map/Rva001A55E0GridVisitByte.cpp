@@ -96,7 +96,8 @@ public:
 	virtual void notify(int key, unsigned char payload);
 };
 
-extern "C" Rva001A55E0Visual *g_bfmeTerrainVisual;
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 
 // Retail 0x001A55E0: 801 bytes through ret 0x14. Matched 0x001A6520
 // takes a byte by value and passes its address plus two zero filters through
@@ -168,7 +169,7 @@ void Rva001A55E0GridVisitByte::visit(const Coord3D *position, Real radius,
 					delta.sub(position);
 					if (radius * radius > delta.lengthSqr())
 					{
-						Rva001A55E0Visual *visual = g_bfmeTerrainVisual;
+						Rva001A55E0Visual *visual = (Rva001A55E0Visual *)TheTerrainVisual;
 						visual->notify(key, *payload);
 					}
 				}
