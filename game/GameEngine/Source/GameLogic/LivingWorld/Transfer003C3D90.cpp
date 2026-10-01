@@ -5,8 +5,8 @@
 #include "GameEngine/Source/Common/System/snapshot.h"
 struct MissionObjectiveState { bool m_visible, m_completed; };
 Xfer *Rva003C2830XferMissionObjectiveStateVector(Xfer *, std::vector<MissionObjectiveState> *);
-class BfmeAgentBA;
-class BfmeHostBA { public: void bfmeSaveBA(BfmeAgentBA *); };
+class Xfer;
+class BfmeHostBA { public: void bfmeSaveBA(Xfer *); };
 struct Record003C3D90 {
     char m_00[8]; int m_08; char m_0C[4],m_10[4]; bool m_14;
 };
@@ -25,7 +25,7 @@ void Transfer003C3D90::transfer(Xfer *xfer) {
     union { Xfer::Version version; unsigned padding; };
     version.data[0]=1; version.data[1]=3;
     *xfer==version;
-    ((BfmeHostBA*)this)->bfmeSaveBA((BfmeAgentBA*)xfer);
+    ((BfmeHostBA*)this)->bfmeSaveBA((Xfer*)xfer);
     int count=m_0C.size();
     *xfer==count;
     for(int i=0;i<count;++i) m_0C[i]->DoXfer(*xfer);

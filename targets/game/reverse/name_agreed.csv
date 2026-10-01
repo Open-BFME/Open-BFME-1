@@ -254,3 +254,5 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|type||BfmeThing912F,RAMFile,gemini
 game/GameEngine/Source/Common/BfmeConv912.cpp|type||BfmeThing912F,RAMFile,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeInfoBA,Version,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeAgentBA,Xfer,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeInfoBA,Version,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeAgentBA,Xfer,gemini+grok,applied,2026-10-01

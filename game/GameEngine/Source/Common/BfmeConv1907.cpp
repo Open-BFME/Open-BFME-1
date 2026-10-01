@@ -1,10 +1,10 @@
-struct BfmeInfoBA
+struct Version
 {
 	unsigned char m_bfmeFlagBA;
 	unsigned char m_bfmeLevelBA;
 };
 
-class BfmeAgentBA
+class Xfer
 {
 public:
 	virtual void bfmeSlot00BA();
@@ -17,7 +17,7 @@ public:
 	virtual void bfmeSlot07BA();
 	virtual void bfmeSlot08BA();
 	virtual void bfmeSlot09BA();
-	virtual void bfmeFillBA(BfmeInfoBA *info);
+	virtual void bfmeFillBA(Version *info);
 	virtual void bfmeSlot11BA();
 	virtual void bfmeSlot12BA();
 	virtual void bfmeSlot13BA();
@@ -45,15 +45,15 @@ public:
 	virtual void bfmeByteBA(unsigned char *dst);
 };
 
-extern "C" void __cdecl bfmeXferOneBA(BfmeAgentBA *ag, void *dst);
-extern "C" void __cdecl bfmeXferTwoBA(BfmeAgentBA *ag, void *dst);
-extern "C" void __cdecl bfmeXferThreeBA(BfmeAgentBA *ag, void *dst);
-extern "C" void __cdecl bfmeXferFourBA(BfmeAgentBA *ag, void *dst);
+extern "C" void __cdecl bfmeXferOneBA(Xfer *ag, void *dst);
+extern "C" void __cdecl bfmeXferTwoBA(Xfer *ag, void *dst);
+extern "C" void __cdecl bfmeXferThreeBA(Xfer *ag, void *dst);
+extern "C" void __cdecl bfmeXferFourBA(Xfer *ag, void *dst);
 
 class BfmeHostBA
 {
 public:
-	void bfmeSaveBA(BfmeAgentBA *ag);
+	void bfmeSaveBA(Xfer *ag);
 
 	unsigned char m_bfmeHeadBA[0x18];
 	unsigned char m_bfmeSlotABA[4];
@@ -75,9 +75,9 @@ public:
 	unsigned char m_bfmeSlotLBA[4];
 };
 
-void BfmeHostBA::bfmeSaveBA(BfmeAgentBA *ag)
+void BfmeHostBA::bfmeSaveBA(Xfer *ag)
 {
-	BfmeInfoBA info;
+	Version info;
 
 	info.m_bfmeFlagBA = 1;
 	info.m_bfmeLevelBA = 4;
