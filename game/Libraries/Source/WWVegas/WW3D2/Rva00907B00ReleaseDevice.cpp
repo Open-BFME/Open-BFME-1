@@ -24,7 +24,6 @@ struct Rva006C9270Device
 
 extern Rva006C9270Device *Rva01340534Device;
 extern unsigned int Rva01340594DX8Calls;
-extern void d_00907960( void );
 
 extern VertexBufferClass *Rva01341120VertexBuffers[];
 extern IndexBufferClass *Rva01341128IndexBuffer;
@@ -66,7 +65,7 @@ void DX8Wrapper::Release_Device( void )
 		Rva01341128IndexBuffer = (IndexBufferClass *)zero;
 	}
 
-	d_00907960();
+	DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns();
 	Rva01340534Device->m_vtable->m_release( Rva01340534Device );
 	Rva01340534Device = (Rva006C9270Device *)zero;
 }

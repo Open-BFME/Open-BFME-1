@@ -666,41 +666,77 @@ void DX8Wrapper::Invalidate_Cached_Render_States(void)
 
 }
 
-// ?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@ present-unmatched
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+void Rva0090F260Nop(void);
+void Rva00912CF0(void);
+void bfmeGo911C(void);
+extern DX8MeshRendererClass *g_bfmeMeshRendererSingleton;
+
+class Gen_00944c30 { public: void m(void); };
+class Gen_00944c40 { public: void m(void); };
+
+struct BfmeCapsShutdownShim
+{
+	unsigned char pad0[0x29C];
+	StringClass DriverDLL;
+	void *Direct3D;
+	StringClass CapsLog;
+	StringClass CompactLog;
+};
+
+class BfmeHandleCX
+{
+public:
+	BfmeHandleCX(void) : p(0) {}
+	~BfmeHandleCX(void) { if (p) p->Release_Ref(); }
+	TextureClass *p;
+};
+
 void DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns(void)
 {
-	/*
-	** Shutdown ww3d systems
-	*/
 	int i;
 	for (i=0;i<MAX_VERTEX_STREAMS;++i) {
 		if (render_state.vertex_buffers[i]) render_state.vertex_buffers[i]->Release_Engine_Ref();
-		REF_PTR_RELEASE(render_state.vertex_buffers[i]);
+		if (render_state.vertex_buffers[i]) {
+			render_state.vertex_buffers[i]->Release_Ref();
+			render_state.vertex_buffers[i] = NULL;
+		}
 	}
 	if (render_state.index_buffer) render_state.index_buffer->Release_Engine_Ref();
-	REF_PTR_RELEASE(render_state.index_buffer);
-	REF_PTR_RELEASE(render_state.material);
-	for (i=0;i<CurrentCaps->Get_Max_Textures_Per_Pass();++i) REF_PTR_RELEASE(render_state.Textures[i]);
+	if (render_state.index_buffer) {
+		render_state.index_buffer->Release_Ref();
+		render_state.index_buffer = NULL;
+	}
+	_ReadWriteBarrier();
+	if (render_state.material) {
+		render_state.material->Release_Ref();
+		render_state.material = NULL;
+	}
+	_ReadWriteBarrier();
+	for (i=0;i<*reinterpret_cast<int *>(reinterpret_cast<char *>(CurrentCaps) + 0x278);++i) {
+		BfmeHandleCX texture;
+		if (render_state.Textures[i]) render_state.Textures[i]->Release_Ref();
+		render_state.Textures[i] = NULL;
+	}
 
-
-	TextureLoader::Deinit();
 	SortingRendererClass::Deinit();
 	DynamicVBAccessClass::_Deinit();
 	DynamicIBAccessClass::_Deinit();
-	ShatterSystem::Shutdown();
-	PointGroupClass::_Shutdown();
+	Rva00912CF0();
+	Rva0090F260Nop();
 	VertexMaterialClass::Shutdown();
-	BoxRenderObjClass::Shutdown();
-	SHD_SHUTDOWN;
-	TheDX8MeshRenderer.Shutdown();
-	MissingTexture::_Deinit();
+	bfmeGo911C();
+	g_bfmeMeshRendererSingleton->Shutdown();
+	((Gen_00944c30 *)g_bfmeMeshRendererSingleton)->m();
 
 	if (CurrentCaps) {
-		delete CurrentCaps;
+		BfmeCapsShutdownShim *caps = reinterpret_cast<BfmeCapsShutdownShim *>(CurrentCaps);
+		delete caps;
 		CurrentCaps=NULL;
 	}
-
-}
+	}
 
 
 bool DX8Wrapper::Create_Device(void)
@@ -821,11 +857,6 @@ public:
 void Rva009EBBC0(int asset_type);							// 0x009EBBC0
 AssetReference Rva009EBDC0();									// 0x009EBDC0
 void Rva0090F050(void);										// 0x0090F050
-
-// The mesh renderer's two reset steps. Both retail bodies are the one-byte
-// `ret` stubs ?m@Gen_00944c30@@QAEXXZ and ?m@Gen_00944c40@@QAEXXZ.
-class Gen_00944c30 { public: void m(void); };
-class Gen_00944c40 { public: void m(void); };
 
 // BFME keeps the mesh renderer BEHIND A POINTER: both calls below arrive as
 // `mov ecx, dword ptr [0x0134B0E8]`, a load of the slot, where the address of
