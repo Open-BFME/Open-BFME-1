@@ -11,15 +11,17 @@ file linked through any alias, and nothing compared the two addresses.
 
 Each alias A=B gets one verdict:
 
-  ok       A's pinned address (symbols.csv route=, else its first pin, else
-           its ledger row or data row) and B's address (its functions.csv
-           row, else its pin, else its data row) are one body. Both are
-           followed through ILT stub rows (target=) and any leading JMP
-           rel32 in the retail image, so an alias to ?j_XXXXXXXX of the
-           pinned body is ok.
+  ok       A's pinned address (symbols.csv route=, else its pin, else its
+           ledger row, data row or dir32_addresses.csv entry) and B's address
+           (its functions.csv row, else its pin, data row or DIR32 entry) are
+           one body. Code addresses are followed through ILT stub rows
+           (target=) and any leading JMP rel32 in the retail image, so an
+           alias to ?j_XXXXXXXX of the pinned body is ok. A name pinned at
+           several addresses has an address only when they are all one body.
   wrong    both are known and differ: callers of A would run B's body.
-  unknown  A has no address (e.g. a data alias to a vftable) or B has none:
-           nothing to compare. Reported, not charged.
+  unknown  A or B has no address, or several pins at different bodies:
+           nothing to compare. A file that calls through an unknown alias is
+           not counted linked (alias_unknown); the hook refuses a new one.
 
 cl.exe emits some directives itself (a member template call falls back to
 the non-template member of the same signature); the census and link_check
@@ -27,9 +29,11 @@ read objects, so they judge those too.
 
 The census (link_census.write_status) and link_check charge a wrong alias as
 an `alias_target` blocker to the object that declares it and to any object
-that references A while nothing defines A. The commit hook (--staged) fails
-on a wrong alias in a staged source unless alias_target_baseline.txt lists
-it; that baseline may only shrink (protected_paths.py).
+that references A while nothing defines A, and an unknown one as
+`alias_unknown` to such a caller. The commit hook (--staged) fails on a
+wrong alias in a staged source unless alias_target_baseline.txt lists it
+(that baseline may only shrink, protected_paths.py), and on an unknown one
+that origin/master's copy of the file does not already declare.
 
   python3 tools/alias_guard.py --staged     # commit hook
   python3 tools/alias_guard.py --report     # every alias in the tree, by verdict
@@ -59,6 +63,7 @@ PRAGMA = re.compile(r'#\s*pragma\s+comment\s*\(\s*linker\s*,\s*"\s*/alternatenam
 DIRECTIVE = re.compile(r'"?/alternatename:"?([^\s"=]+)"?="?([^\s"]+?)"?(?=\s|$)', re.I)
 COMMENTS = re.compile(r'//[^\n]*|/\*.*?\*/', re.S)
 BASE = 0x400000
+UPSTREAM = "origin/master"
 
 
 def source_aliases(text):
@@ -94,10 +99,25 @@ def object_aliases(obj):
 class Judge:
     """Addresses of names from the ledger, and the verdict on one alias."""
 
-    def __init__(self, rows=None, data_rows=None, image=None):
+    def __init__(self, rows=None, data_rows=None, image=None, dir32=None, layout=None):
+        import build
         import link_census
-        self._routes = {}
-        self._pins = link_census.pins(self._routes)
+        if layout is None:
+            sections = build.pe_sections(build.EXE.read_bytes())
+            text = next(section for section in sections if section["name"] == ".text")
+            layout = (text["rva"] + text["size"], max(section["rva"] + section["size"] for section in sections))
+        # Only code is followed through stubs and jumps; data (a vftable) is its own address.
+        self._text_end, image_end = layout
+        self._routes, self._every, self._pin_notes = {}, {}, {}
+        self._pins = link_census.pins(self._routes, self._every, self._pin_notes)
+        # symbols.csv pins a call target as an RVA and a datum as the VA its
+        # DIR32 holds (??_7X@@6B@ at 0x01073744): a value past the image's end
+        # is a VA.
+        def rva(value):
+            return value - BASE if value >= image_end else value
+        self._pins = {name: rva(value) for name, value in self._pins.items()}
+        self._routes = {name: rva(value) for name, value in self._routes.items()}
+        self._every = {name: {rva(value) for value in values} for name, values in self._every.items()}
         rows = link_census.ledger() if rows is None else rows
         self._rows = collections.defaultdict(set)
         self._by_address = collections.defaultdict(list)
@@ -117,6 +137,10 @@ class Judge:
             except (KeyError, ValueError):
                 continue
             self._data[row["name"]] = address - BASE if row.get("address_kind") == "va" else address
+        if dir32 is None:
+            dir32 = build.read_dir32_addresses()
+        # Matched DIR32 references' names (the _bfmeVft*/g_vtb* vftable data aliases among them), as RVAs.
+        self._dir32 = {name: va - BASE for name, va in dir32.items()}
         self._image = image
         self._naked = None
 
@@ -139,7 +163,9 @@ class Judge:
 
     def normal(self, address):
         """The body a call to `address` runs: through ILT stub rows and any
-        leading JMP rel32, at most three hops."""
+        leading JMP rel32, at most three hops. A data address is itself."""
+        if address >= self._text_end:
+            return address
         for _ in range(3):
             if address in self._stubs:
                 address = self._stubs[address]
@@ -151,50 +177,77 @@ class Judge:
             break
         return address
 
-    def pinned(self, name):
-        """The address a call spelled `name` was byte-matched against."""
+    def _pin(self, name):
+        """(address, why not): its pin, or None when its pins are not one body."""
+        every = self._every.get(name, ())
+        if len(every) > 1 and len({self.normal(address) for address in every}) > 1:
+            return None, (f"{len(every)} pins at different bodies "
+                          f"({', '.join(f'0x{a:08X}' for a in sorted(every))})")
+        return self._pins[name], ""
+
+    def located(self, name):
+        """(address, why not) a call spelled `name` was byte-matched against."""
         if name in self._routes:
-            return self._routes[name]
+            return self._routes[name], ""
         if name in self._pins:
-            return self._pins[name]
+            return self._pin(name)
         rows = self._rows.get(name, ())
         if len(rows) == 1:
-            return next(iter(rows))
-        return self._data.get(name)
+            return next(iter(rows)), ""
+        for table in (self._data, self._dir32):
+            if name in table:
+                return table[name], ""
+        return None, "no pin or row"
+
+    def pinned(self, name):
+        """The address a call spelled `name` was byte-matched against."""
+        return self.located(name)[0]
 
     def addresses(self, name):
-        """Where the definition of `name` lives: its ledger rows, else its pin."""
+        """Where the definition of `name` lives: its ledger rows, else its pin,
+        data row or DIR32 entry (empty when its pins are not one body)."""
         if self._rows.get(name):
             return set(self._rows[name])
-        for table in (self._routes, self._pins, self._data):
+        if name in self._routes:
+            return {self._routes[name]}
+        if name in self._pins:
+            address = self._pin(name)[0]
+            return set() if address is None else {address}
+        for table in (self._data, self._dir32):
             if name in table:
                 return {table[name]}
         return set()
 
     def verdict(self, alias, target):
         """('ok' | 'wrong' | 'unknown', why)."""
-        address = self.pinned(alias)
+        address, why = self.located(alias)
         if address is None:
-            return "unknown", "alias has no pin or row"
+            return "unknown", f"alias: {why}"
         found = self.addresses(target)
         if not found:
-            return "unknown", "target has no row or pin"
+            why = self._pin(target)[1] if target in self._pins and not self._rows.get(target) else "no row or pin"
+            return "unknown", f"target: {why}"
         want = self.normal(address)
         if any(candidate == address or self.normal(candidate) == want for candidate in found):
             return "ok", ""
         return "wrong", (f"alias pinned at 0x{address:08X} (body 0x{want:08X}), target at "
                          f"{', '.join(f'0x{a:08X}' for a in sorted(found))}")
 
-    def respell(self, name):
-        """(row name, why) for a pinned call name: the ledger's name for the
-        body at its pinned address, the spelling a call must use to link.
-        Authored game/ C++ first, then by name (link_census.alias_scaffold's
-        rule). None when the address holds no C++ definition."""
+    def respell(self, name, caller=None):
+        """(row name, note, guard) for a pinned call name: the ledger's name
+        for the body at its pinned address, the spelling a call must use to
+        link. Authored game/ C++ first, then by name (link_census.alias_scaffold's
+        rule). The row name is None when the address holds no C++ definition.
+        `note` carries the row's and the pin's ledger notes; `guard`
+        (two_real_names) is set when the respelling would put a second real
+        name on one body, which one_identity.py must settle first."""
         import build
         import link_census
-        address = self.pinned(name) if (name in self._routes or name in self._pins) else None
+        if name not in self._routes and name not in self._pins:
+            return None, "not pinned", ""
+        address, why = self.located(name)
         if address is None:
-            return None, "not pinned"
+            return None, why, ""
         if self._naked is None:
             self._naked = link_census.naked_rows()
         for at in dict.fromkeys((address, self.normal(address))):
@@ -206,14 +259,53 @@ class Judge:
                 names = sorted({row["name"] for row in owners})
                 chosen = build.ledger_object_symbol(owners[0])  # the symbol its object really defines
                 if chosen == name:
-                    return None, "already the row name"
+                    return None, "already the row name", ""
                 if self.verdict(name, chosen)[0] != "ok":
-                    return None, "row fails the alias check"
+                    return None, "row fails the alias check", ""
                 notes = [] if len(names) == 1 else [f"{len(names)} names at 0x{at:08X}"]
                 if not name.startswith("?") and chosen.startswith("?"):
                     notes.append("a C name called as a C++ row: prove which name is right before respelling")
-                return chosen, "; ".join(notes)
-        return None, f"no C++ row at 0x{address:08X}"
+                if owners[0].get("notes"):
+                    notes.append(f"row notes: {owners[0]['notes']}")
+                for pin_note in self._pin_notes.get(name, ()):
+                    notes.append(f"pin notes: {pin_note}")
+                return chosen, "; ".join(notes), two_real_names(name, chosen, owners[0]["source"], caller)
+        return None, f"no C++ row at 0x{address:08X}", ""
+
+
+def address_derived(name):
+    """Is `name` one of the tree's opaque spellings (an address, a generator's
+    or converter's name) rather than a claimed identity? The Ident axis's
+    PLACEHOLDER (readability_metric: Rva/Gen/d_/dup_/j_/tg_ and invented
+    Bfme*/Shim/Thunk names, mangled-name aware), one_identity's
+    multi_name.is_placeholder, and phantom_modules.PLACEHOLDER on the scope's
+    own identifiers (Bfme* converter class names)."""
+    import multi_name
+    import phantom_modules
+    import readability_metric
+    if multi_name.is_placeholder(name) or readability_metric.PLACEHOLDER.search(name):
+        return True
+    scope = phantom_modules.OPERATOR.sub("", name).lstrip("?_").split("@@")[0]
+    return any(phantom_modules.PLACEHOLDER.match(part) for part in scope.split("@") if part)
+
+
+def tree(path):
+    """The top-level tree a source lives in: game/GameEngine, game/Libraries, ..."""
+    return "/".join(path.split("/")[:2])
+
+
+def two_real_names(name, chosen, row_source, caller=None):
+    """Why respelling the call `name` to the row `chosen` (whose source is
+    `row_source`) from `caller` needs tools/one_identity.py first, else "".
+    Two real names on one body are an over-claim (one is wrong), and a call
+    into another top-level tree's row by its address alone is how a folded
+    or misplaced pin launders a name (hasError called as W3DVideoBuffer::valid)."""
+    why = []
+    if not address_derived(name) and not address_derived(chosen):
+        why.append("both are real names")
+    if caller and row_source and tree(row_source) != tree(caller):
+        why.append(f"the row is in {tree(row_source)}, the caller in {tree(caller)}")
+    return f"two real names, one body: run tools/one_identity.py first ({'; '.join(why)})" if why else ""
 
 
 def read_baseline(text=None):
@@ -257,15 +349,32 @@ def judge_all(found, judge):
             for source, aliases in sorted(found.items()) for alias, target in aliases]
 
 
+def upstream_aliases(path, old_path=None):
+    """{(alias, target)} origin/master's copy of `path` (or of the path it was
+    renamed from) declares; empty for a file new since then."""
+    for candidate in dict.fromkeys(filter(None, (path, old_path))):
+        shown = git("show", f"{UPSTREAM}:{candidate}")
+        if shown.returncode == 0:
+            return set(source_aliases(shown.stdout))
+    return set()
+
+
 def staged(judge_factory=Judge):
     """Commit hook: a wrong alias in a staged source, or anywhere when a
-    ledger is staged, fails unless the baseline lists it."""
-    names = git("diff", "--cached", "--name-only", "--diff-filter=ACMR").stdout.split("\n")
+    ledger is staged, fails unless the baseline lists it; an unknown one
+    fails unless origin/master's copy of its file already declares it."""
+    changes = git("diff", "--cached", "--name-status", "-M", "--diff-filter=ACMR").stdout.split("\n")
+    renamed, names = {}, []
+    for line in filter(None, changes):
+        fields = line.split("\t")
+        names.append(fields[-1])
+        if fields[0].startswith("R") and len(fields) == 3:
+            renamed[fields[2]] = fields[1]
     ledger_staged = any(path in LEDGERS for path in names)
     found = {}
     if ledger_staged:
         found = tree_aliases()
-    for path in filter(None, names):
+    for path in names:
         if not scanned(path):
             continue
         text = git("show", f":{path}").stdout
@@ -281,18 +390,27 @@ def staged(judge_factory=Judge):
     results = judge_all(found, judge_factory())
     bad = [r for r in results if r[3] == "wrong" and key(*r[:3]) not in baseline]
     unknown = [r for r in results if r[3] == "unknown"]
-    if unknown:
-        print(f"alias_guard: {len(unknown)} staged alias(es) cannot be judged (no pin for the alias or no "
-              "address for the target); pin the alias so the census can check it", file=sys.stderr)
-    if not bad:
-        return 0
-    print(f"alias_guard: {len(bad)} /alternatename alias(es) bind a call to a body other than the one it was "
-          "matched against:", file=sys.stderr)
-    for source, alias, target, _, why in bad:
-        print(f"  {source}: {alias}={target}\n      {why}", file=sys.stderr)
-    print("  Respell the call to the row name at the alias's pinned address (`link_check.py near` prints it), "
-          "or fix the pin. Never add the line to the baseline.", file=sys.stderr)
-    return 1
+    upstream = {source: upstream_aliases(source, renamed.get(source)) for source in {r[0] for r in unknown}}
+    new_unknown = [r for r in unknown if (r[1], r[2]) not in upstream[r[0]]]
+    if len(unknown) > len(new_unknown):
+        print(f"alias_guard: {len(unknown) - len(new_unknown)} alias(es) already on {UPSTREAM} cannot be judged "
+              "(no single pinned body for the alias or no address for the target); pin them so the census can "
+              "check them", file=sys.stderr)
+    if new_unknown:
+        print(f"alias_guard: {len(new_unknown)} new /alternatename alias(es) cannot be judged, so nothing shows "
+              "the call reaches the body it was matched against:", file=sys.stderr)
+        for source, alias, target, _, why in new_unknown:
+            print(f"  {source}: {alias}={target}\n      {why}", file=sys.stderr)
+        print("  Call the row name at the pinned address instead (`link_check.py near` prints it), or prove and "
+              "pin the alias's address (tools/pin_consistency.py) so it can be judged.", file=sys.stderr)
+    if bad:
+        print(f"alias_guard: {len(bad)} /alternatename alias(es) bind a call to a body other than the one it was "
+              "matched against:", file=sys.stderr)
+        for source, alias, target, _, why in bad:
+            print(f"  {source}: {alias}={target}\n      {why}", file=sys.stderr)
+        print("  Respell the call to the row name at the alias's pinned address (`link_check.py near` prints it), "
+              "or fix the pin. Never add the line to the baseline.", file=sys.stderr)
+    return 1 if bad or new_unknown else 0
 
 
 def report(write_baseline=False):

@@ -39,7 +39,8 @@ defines or references resolves in the link to a kept definition proven not
 retail's (wrong_selected; the /MAP of a second link says which it kept), and
 the file holds no hard-coded image address, and no /alternatename alias it
 declares or calls through targets another body than the one at the alias's
-pinned address (alias_target; tools/alias_guard.py). LINKED is progress.py's DECOMPILED restricted to
+pinned address (alias_target; tools/alias_guard.py), and no call resolves only
+through an alias nothing can judge (alias_unknown). LINKED is progress.py's DECOMPILED restricted to
 those sources; progress.py and the README print the last census's figure. A
 data-only source has a status row but no code, so it adds 0 LINKED bytes
 itself: its definitions only unblock the files that reference them.
@@ -140,15 +141,20 @@ def data_object(row):
     return build.obj_path(ROOT / row["source"])
 
 
-def pins(routes=None):
+def pins(routes=None, every=None, notes=None):
     """{name: address} from symbols.csv (first pin for diagnostic identity).
     The byte resolver checks additive candidates. `routes`, when given,
-    collects {name: target} from `route=0x...` notes."""
+    collects {name: target} from `route=0x...` notes; `every` {name: {every
+    pinned address}}; `notes` {name: [each pin's note]}."""
     found = {}
     with (ROOT / "targets/game/reverse/symbols.csv").open(newline="", encoding="utf-8") as handle:
         for row in csv.reader(handle):
             if len(row) >= 2 and row[1].startswith("0x"):
                 found.setdefault(row[0], int(row[1], 16))
+                if every is not None:
+                    every.setdefault(row[0], set()).add(int(row[1], 16))
+                if notes is not None and ",".join(row[2:]).strip():
+                    notes.setdefault(row[0], []).append(",".join(row[2:]).strip())
                 route = re.search(r"route=(0x[0-9A-Fa-f]+)", ",".join(row[2:]))
                 if routes is not None and route:
                     routes.setdefault(row[0], int(route.group(1), 16))
@@ -1740,7 +1746,7 @@ def _object_sources(rows):
 
 STATUS = ROOT / "targets/game/reverse/link_status.csv"
 STATUS_FIELDS = ["source", "linked", "unresolved", "duplicates", "comdat_losers", "addresses", "wrong_selected",
-                 "alias_target"]
+                 "alias_target", "alias_unknown"]
 
 
 def final_log(census):
@@ -1864,12 +1870,16 @@ def excused(symbol, runtime, imported, thunks=None):
 
 
 def alias_blockers(present, facts, rows, judge=None):
-    """The /alternatename aliases of every object, and the wrong ones each
-    object answers for (alias_guard.Judge): ({alias: [(object index, target)]},
-    {object name: ["A=B", ...]}, counts). An object answers for a wrong alias
-    it declares, and for one it relies on: it references A and no object
-    defines A, so link.exe resolves the call through the alias. Directives
-    are read from each fact's COFF snapshot when it has one."""
+    """The /alternatename aliases of every object, and the wrong and
+    unjudgeable ones each object answers for (alias_guard.Judge):
+    ({alias: [(object index, target)]}, {object name: ["A=B", ...]} wrong,
+    {object name: ["A=B", ...]} unknown, counts). An object answers for a
+    wrong alias it declares, and for one it relies on: it references A and no
+    object defines A, so link.exe resolves the call through the alias. It
+    answers for an unknown alias only when it relies on it (and no alias of A
+    is wrong): nothing shows that call reaches the body it was matched
+    against, so it is not counted resolved. Directives are read from each
+    fact's COFF snapshot when it has one."""
     import alias_guard
     declared = [alias_guard.drectve_aliases(fact.data) if isinstance(getattr(fact, "data", None), bytes)
                 else alias_guard.object_aliases(obj) for obj, fact in zip(present, facts)]
@@ -1877,9 +1887,9 @@ def alias_blockers(present, facts, rows, judge=None):
     for index, found in enumerate(declared):
         for alias, target in found:
             aliases[alias].append((index, target))
-    stats = collections.Counter(ok=0, wrong=0, unknown=0, charged=0)
+    stats = collections.Counter(ok=0, wrong=0, unknown=0, charged=0, charged_unknown=0)
     if not aliases:
-        return {}, {}, stats
+        return {}, {}, {}, stats
     judge = judge or alias_guard.Judge(rows)
     verdicts = {}
     for alias, entries in aliases.items():
@@ -1892,20 +1902,28 @@ def alias_blockers(present, facts, rows, judge=None):
         copies, strong = fact[0], fact[1]
         defined.update(strong)
         defined.update(copy[0] for copy in copies)
-    wrong_by_alias = collections.defaultdict(set)
+    by_alias = {"wrong": collections.defaultdict(set), "unknown": collections.defaultdict(set)}
     for (alias, target), verdict in verdicts.items():
-        if verdict == "wrong":
-            wrong_by_alias[alias].add(f"{alias}={target}")
-    charged = {}
+        if verdict in by_alias:
+            by_alias[verdict][alias].add(f"{alias}={target}")
+    wrong_by_alias, unknown_by_alias = by_alias["wrong"], by_alias["unknown"]
+    charged, unjudged = {}, {}
     for obj, found, fact in zip(present, declared, facts):
         names = {f"{alias}={target}" for alias, target in found if verdicts[alias, target] == "wrong"}
-        for name in set(fact[2]) & set(wrong_by_alias):
-            if name not in defined:
+        unknown = set()
+        for name in set(fact[2]) & (set(wrong_by_alias) | set(unknown_by_alias)):
+            if name in defined:
+                continue
+            if name in wrong_by_alias:
                 names |= wrong_by_alias[name]
+            else:
+                unknown |= unknown_by_alias[name]
         if names:
             charged[obj.name] = sorted(names)
-    stats["charged"] = len(charged)
-    return dict(aliases), charged, stats
+        if unknown:
+            unjudged[obj.name] = sorted(unknown)
+    stats["charged"], stats["charged_unknown"] = len(charged), len(unjudged)
+    return dict(aliases), charged, unjudged, stats
 
 
 def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, currency_guard=None):
@@ -1936,7 +1954,8 @@ def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, cu
     And since 2026-10-01 (alias_target), a file is not linked when it
     declares an /alternatename alias whose target is not the body at the
     alias's pinned address, or calls through one (alias_blockers). The link
-    resolves such a call without an error, to the wrong body.
+    resolves such a call without an error, to the wrong body. Nor (alias_unknown)
+    when it calls through an alias alias_guard cannot judge.
 
     Returns (clean, files, blocking names, clean under the rule before
     wrong_selected, stats). It also writes build/link_census/link_index.pkl, which tools/link_check.py
@@ -1965,10 +1984,10 @@ def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, cu
     print(f"link_census: COMDAT keeper: {stats.get('symbols_retail', 0):,} symbols judged by retail truth "
           f"({stats.get('losers_retail', 0):,} losing copies), {stats.get('symbols_first', 0):,} with no retail "
           f"address by link order ({stats.get('losers_first', 0):,} losing copies)")
-    aliases, alias_target, alias_stats = alias_blockers(present, facts, rows)
+    aliases, alias_target, alias_unknown, alias_stats = alias_blockers(present, facts, rows)
     print(f"link_census: /alternatename aliases: {alias_stats['ok']:,} ok, {alias_stats['wrong']:,} wrong "
           f"({alias_stats['charged']:,} objects charged alias_target), {alias_stats['unknown']:,} unjudged "
-          "(alias_guard.py)")
+          f"({alias_stats['charged_unknown']:,} objects calling through one charged alias_unknown) (alias_guard.py)")
     unresolved = collections.defaultdict(set)
     duplicates = collections.defaultdict(set)
     for line in log.splitlines():
@@ -1997,7 +2016,8 @@ def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, cu
         except OSError:
             continue
         counts = (len(unresolved.get(obj, ())), len(duplicates.get(obj, ())), len(losers.get(obj, ())),
-                  len(link_debt.addresses(text)), len(wrong_selected.get(obj, ())), len(alias_target.get(obj, ())))
+                  len(link_debt.addresses(text)), len(wrong_selected.get(obj, ())), len(alias_target.get(obj, ())),
+                  len(alias_unknown.get(obj, ())))
         out[source] = {"source": source, "linked": "no" if any(counts) else "yes",
                        **dict(zip(STATUS_FIELDS[2:], counts))}
         if not any(counts[:4]):
@@ -2007,7 +2027,7 @@ def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, cu
         blockers[source] = {"object": obj, "linked": not any(counts), "unresolved": sorted(unresolved.get(obj, ())),
                             "duplicates": sorted(duplicates.get(obj, ())), "losers": sorted(losers.get(obj, ())),
                             "addresses": counts[3], "wrong_selected": wrong_selected.get(obj, []),
-                            "alias_target": alias_target.get(obj, [])}
+                            "alias_target": alias_target.get(obj, []), "alias_unknown": alias_unknown.get(obj, [])}
     clean = {source for source, r in out.items() if r["linked"] == "yes"}
     import link_check
     index = link_check.write_index(present, facts, blockers, {"runtime": runtime, "imported": imported, "stubs": thunks},

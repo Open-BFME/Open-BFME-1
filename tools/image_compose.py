@@ -765,7 +765,9 @@ def reconcile(progress, real, counted, status, closed, census):
                 why = ("file has no link_status row" if row is None else
                        "file linked, bytes in no authored census row" if row["linked"] == "yes" else
                        "file not linked: " + "+".join(k for k in ("unresolved", "duplicates", "comdat_losers",
-                                                                   "addresses", "wrong_selected") if row[k] != "0"))
+                                                                   "addresses", "wrong_selected", "alias_target",
+                                                                   "alias_unknown")
+                                                       if row.get(k, "0") != "0"))
                 closed_only[why] += real(a, b) - inside
         for a, b in overlap(census_spans, low, high):
             rest = real(a, b) - sum(real(x, y) for x, y in overlap(strict_a, a, b))

@@ -24,6 +24,9 @@ COMDAT copies with their retail-truth verdicts, and every file's blockers):
   alias_target  an /alternatename alias A=B the object declares or resolves a
               call through, whose B is not the body at A's pinned address
               (tools/alias_guard.py). A name an alias resolves is not unresolved
+  alias_unknown  an alias A=B the object resolves a call through that
+              alias_guard cannot judge (no single pinned body for A, or no
+              address for B): not counted resolved
 
 It prints the file's LINKED bytes (its own authored + vendored bytes, 0xCC out,
 as progress.real_split counts them) at the census and now. The census is the
@@ -37,7 +40,7 @@ also counts names referenced only from a COMDAT copy link.exe discards.
   python3 tools/link_check.py --next [--limit 30]         # names that unlock the most bytes
   python3 tools/link_check.py --publish                   # write targets/game/reverse/link_queue.csv
   python3 tools/link_check.py next [--no-claim]           # serve + claim the top open queue row
-  python3 tools/link_check.py near [--max K] [--shared]   # files that link once calls use the row names
+  python3 tools/link_check.py near [--max K] [--shared] [--all]  # files that link once calls use the row names
 
 THE QUEUE. The daily census publishes --next's ranking as link_queue.csv (no
 index needed to read it), and `next` serves its best row that is not claimed,
@@ -66,7 +69,7 @@ import link_census  # noqa: E402
 INDEX = link_census.OUT / "link_index.pkl"
 COMMON_SCHEMA = 1
 WEAK_SCHEMA = 4
-ALIAS_SCHEMA = 1
+ALIAS_SCHEMA = 2  # 2: blockers carry alias_unknown
 _WEAK_PREVIEW_TOKEN = object()
 ADDRESSES = "<hard-coded image addresses>"
 
@@ -368,7 +371,8 @@ def alias_judge():
 
 
 def check_object(obj, index, truth, source=None, judge=None):
-    """{unresolved, duplicates, comdat, addresses, selected, alias_target} for one object against the index."""
+    """{unresolved, duplicates, comdat, addresses, selected, alias_target, alias_unknown} for one object
+    against the index."""
     import alias_guard
     import link_debt
     require_common_index(index)
@@ -406,13 +410,23 @@ def check_object(obj, index, truth, source=None, judge=None):
     unresolved = sorted(missing - through)
     judged = [(alias, target) for alias, target in declared] + [
         (name, target) for name in through for target in targets[name]]
-    alias_why = {}
+    alias_why, verdicts = {}, {}
     if judged:
         judge = judge or alias_judge()
-        for alias, target in judged:
-            verdict, why = judge.verdict(alias, target)
+        for alias, target in dict.fromkeys(judged):
+            verdicts[alias, target] = verdict, why = judge.verdict(alias, target)
             if verdict == "wrong":
                 alias_why[f"{alias}={target}"] = why
+    # A call resolved through an alias nothing can judge is not counted
+    # resolved: the census charges it as alias_unknown (alias_blockers).
+    unknown_why = {}
+    for name in through:
+        pairs = [(name, target) for target in targets[name]]
+        if any(verdicts[pair][0] == "wrong" for pair in pairs):
+            continue
+        for pair in pairs:
+            if verdicts[pair][0] == "unknown":
+                unknown_why["=".join(pair)] = verdicts[pair][1]
     duplicates = sorted(name for name in mine if duplicate(name, position, name in set(defined), own, index))
     losers = []
     for name, digest, _, verdict in copies:
@@ -431,7 +445,8 @@ def check_object(obj, index, truth, source=None, judge=None):
     return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses,
             "selected": wrong_selected(obj, (copies, defined, undefined, weaks), own, position, index,
                                        common_names=common),
-            "alias_target": sorted(alias_why), "alias_why": alias_why}
+            "alias_target": sorted(alias_why), "alias_unknown": sorted(unknown_why),
+            "alias_why": {**unknown_why, **alias_why}}
 
 
 def wrong_selected(obj, fact, own, position, index, *, common_names=()):
@@ -499,7 +514,7 @@ def report(source, obj, result, index, now_bytes):
     census = index["blockers"].get(source or "", {})
     before = index["bytes"].get(source, 0) if census.get("linked") else 0
     clean = not any(result.get(kind) for kind in ("unresolved", "duplicates", "comdat", "addresses", "selected",
-                                                   "alias_target"))
+                                                   "alias_target", "alias_unknown"))
     after = now_bytes if clean else 0
     print(f"{source or obj.name}: {'LINKS' if clean else 'does not link'}  "
           f"LINKED {before:,} -> {after:,} bytes (census {index['meta'].get('date', '?')} at "
@@ -517,6 +532,9 @@ def report(source, obj, result, index, now_bytes):
     for name in result.get("alias_target", ()):
         print(f"  alias_target {name}  (/alternatename binds the call to another body: "
               f"{result.get('alias_why', {}).get(name, '')})")
+    for name in result.get("alias_unknown", ()):
+        print(f"  alias_unknown {name}  (the call resolves only through an /alternatename alias nothing can "
+              f"judge: {result.get('alias_why', {}).get(name, '')})")
     if result["addresses"]:
         print(f"  addresses   {len(result['addresses'])} hard-coded image address(es), e.g. {result['addresses'][0]}")
     return clean
@@ -541,6 +559,8 @@ HINTS = {
     "addresses": "hard-coded image addresses: name them (tools/link_debt.py)",
     "alias_target": "an /alternatename alias binds a call to another body than its pin's: respell the call to the "
                     "row name at the pinned address (link_check.py near) or fix the pin (tools/alias_guard.py)",
+    "alias_unknown": "a call resolves only through an /alternatename alias nothing can judge: call the row name at "
+                     "the pinned address, or prove and pin the alias's address (tools/alias_guard.py)",
 }
 
 
@@ -557,7 +577,8 @@ def queue_rows(index):
         if entry["linked"]:
             continue
         names = (set(entry["unresolved"]) | set(entry["duplicates"]) | set(entry["losers"])
-                 | set(entry.get("wrong_selected", ())) | set(entry.get("alias_target", ())))
+                 | set(entry.get("wrong_selected", ())) | set(entry.get("alias_target", ()))
+                 | set(entry.get("alias_unknown", ())))
         if entry["addresses"]:
             names.add(ADDRESSES)
         if len(names) == 1:
@@ -566,7 +587,7 @@ def queue_rows(index):
             files[name].append(source)
     kinds = {}
     for entry in index["blockers"].values():
-        for kind in ("unresolved", "duplicates", "losers", "wrong_selected", "alias_target"):
+        for kind in ("unresolved", "duplicates", "losers", "wrong_selected", "alias_target", "alias_unknown"):
             for name in entry.get(kind, ()):
                 kinds.setdefault(name, kind)
     census = index["meta"].get("commit", "")
@@ -690,15 +711,20 @@ def serve(argv):
     return 1
 
 
-NEAR_BLOCKING = ("duplicates", "losers", "wrong_selected", "alias_target")
+NEAR_BLOCKING = ("duplicates", "losers", "wrong_selected", "alias_target", "alias_unknown")
 
 
-def near_rows(index, judge, most=None, under=""):
+def near_rows(index, judge, most=None, under="", every=False, skipped=None):
     """Unlinked files whose every blocker is an unresolved call name a
     respelling fixes: the name is pinned, and the ledger row at its pinned
     address (alias_guard.Judge.respell) is a C++ definition that passes the
-    alias check. Largest first: [{source, bytes, fixes: [(name, row name, note)]}]."""
+    alias check. A file relying on an alias nothing can judge (alias_unknown)
+    is not near. A respelling that would put a second real name on a body,
+    or call into another top-level tree's row (alias_guard.two_real_names),
+    skips its file unless `every`; `skipped` (a Counter) counts the skips.
+    Largest first: [{source, bytes, fixes: [(name, row name, note)]}]."""
     rows = []
+    skipped = collections.Counter() if skipped is None else skipped
     for source, entry in index["blockers"].items():
         if entry["linked"] or not source.startswith(under) or entry["addresses"]:
             continue
@@ -707,13 +733,17 @@ def near_rows(index, judge, most=None, under=""):
         names = entry["unresolved"]
         if not names or (most and len(names) > most):
             continue
-        fixes = []
+        fixes, guarded = [], False
         for name in names:
-            target, note = judge.respell(name)
+            target, note, guard = judge.respell(name, source)
             if target is None:
                 break
-            fixes.append((name, target, note))
+            guarded = guarded or bool(guard)
+            fixes.append((name, target, "; ".join(filter(None, (guard, note)))))
         else:
+            if guarded and not every:
+                skipped["two real names, one body"] += 1
+                continue
             rows.append({"source": source, "bytes": index["bytes"].get(source, 0), "fixes": fixes})
     rows.sort(key=lambda row: (-row["bytes"], row["source"]))
     return rows
@@ -731,13 +761,22 @@ def near(argv):
     ap.add_argument("--limit", type=int, default=30)
     ap.add_argument("--shared", action="store_true",
                     help="rank respellings by the near files' bytes they appear in (a shared declaration fix)")
+    ap.add_argument("--all", action="store_true",
+                    help="also serve files whose respelling puts two real names on one body or calls into another "
+                         "top-level tree (run tools/one_identity.py first)")
     args = ap.parse_args(argv)
     index = load_index()
     census = index["meta"].get("commit", "")
     changed = set(_git("diff", "--name-only", census, "HEAD").split()) if census else set()
-    rows = near_rows(index, alias_judge(), args.max, args.under)
+    if index.get("alias_schema", 0) < ALIAS_SCHEMA:
+        print("link_check near: this census index predates alias_unknown, so a file relying on an alias nothing "
+              "can judge may be listed; the next census fixes that", file=sys.stderr)
+    skipped = collections.Counter()
+    rows = near_rows(index, alias_judge(), args.max, args.under, args.all, skipped)
     print(f"files every blocker of which a call respelling fixes (census {index['meta'].get('date', '?')} at "
-          f"{census or '?'}): {len(rows):,} files, {sum(r['bytes'] for r in rows):,} bytes")
+          f"{census or '?'}): {len(rows):,} files, {sum(r['bytes'] for r in rows):,} bytes"
+          + "".join(f"; {n:,} skipped: {why}: run tools/one_identity.py first (--all lists them)"
+                    for why, n in skipped.items()))
     if args.shared:
         gain, files = collections.Counter(), collections.Counter()
         for row in rows:
