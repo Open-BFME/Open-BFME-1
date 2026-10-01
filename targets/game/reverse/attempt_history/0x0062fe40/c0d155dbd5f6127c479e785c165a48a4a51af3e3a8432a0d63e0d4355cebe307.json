@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c0d155dbd5f6127c479e785c165a48a4a51af3e3a8432a0d63e0d4355cebe307",
+  "symbol": "?Rva0062FE40@@YAHHHPADHHH@Z",
+  "score_kind": "measured",
+  "score": 0.7415,
+  "source": "// ?Rva0062FE40@@YAHHHPADHHH@Z\n// partial score=0.7415 date=2026-10-01\n// cl: /DNDEBUG /MD /EHsc /I. /Igame/Libraries/Source/WWVegas/WWLib\n#include \"game/Libraries/Source/WWVegas/WWLib/ascii_string.h\"\n#include <stdlib.h>\nextern unsigned char checkingForPatchBeforeGameSpy, mustDownloadPatch, cantConnectBeforeOnline;\nextern int checksLeftBeforeOnline, timeThroughOnline;\nvoid Rva0062FA20(int mandatory, AsciiString url);\nvoid Rva0062EA60StartOnline();\nint Rva0062FE40(int request, int status, char *buffer, int bytes, int stamp, int run)\n{\n if(run!=timeThroughOnline) return 1;\n --checksLeftBeforeOnline;\n if(status!=0) {\n  if(checkingForPatchBeforeGameSpy) {\n   cantConnectBeforeOnline=1;\n   if(!checksLeftBeforeOnline) Rva0062EA60StartOnline();\n  }\n  return 1;\n }\n {\n  AsciiString message(buffer), line;\n  while(message.nextToken(&line,\"\\r\\n\")) {\n   AsciiString type, requirement, url;\n   bool ok=true;\n   ok &= line.nextToken(&type,\" \");\n   ok &= line.nextToken(&requirement,\" \");\n   ok &= line.nextToken(&url,\" \");\n   if(ok && type.compare(\"patch\")==0) {\n    Rva0062FA20(atoi(requirement.str()),url);\n    if(atoi(requirement.str())) mustDownloadPatch=1;\n   }\n  }\n  if(!checksLeftBeforeOnline) Rva0062EA60StartOnline();\n }\n return 1;\n}\n"
+}
