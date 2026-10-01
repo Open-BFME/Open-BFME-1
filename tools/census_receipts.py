@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import tempfile
 import uuid
 
 import build
@@ -42,6 +43,19 @@ def opened_paths(source, include_output):
     return paths
 
 
+def capture_preprocessor(command, env):
+    # Wine services can inherit the compiler's standard handles and outlive
+    # its launcher. Regular files preserve the exact binary output without
+    # making the direct child's completion depend on those services' EOF.
+    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        result = subprocess.run(command, cwd=build.ROOT, env=env,
+                                stdout=stdout, stderr=stderr)
+        stdout.seek(0)
+        stderr.seek(0)
+        return subprocess.CompletedProcess(command, result.returncode,
+                                           stdout.read(), stderr.read())
+
+
 def snapshot(source, command, env):
     # VC7.1 ML /EP fails with A1018 writing NUL; do not treat its partial output
     # as complete input evidence. Header-free assembler uses the normal cache.
@@ -51,8 +65,7 @@ def snapshot(source, command, env):
     if "-c" not in pp:
         raise ValueError("unrecognized compilation command")
     pp[pp.index("-c")] = "-E"
-    result = subprocess.run(pp + ["-showIncludes"], cwd=build.ROOT, env=env, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
+    result = capture_preprocessor(pp + ["-showIncludes"], env)
     if result.returncode:
         raise ValueError("preprocessor failed: " + result.stderr.decode("latin-1")[-1200:])
     # MSVC 7.1 ignores /D and /U attempts to replace these reserved macros.

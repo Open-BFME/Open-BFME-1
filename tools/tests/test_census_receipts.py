@@ -1,5 +1,7 @@
 """One successful compile can prove an uncacheable census TU, never cache it."""
 import sys
+import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -8,6 +10,57 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import build
 import census_receipts as proofs
+
+
+@pytest.mark.parametrize('exitcode', [0, 7])
+def test_capture_finishes_on_direct_child_exit_with_inherited_handles(
+        tmp_path, monkeypatch, exitcode):
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    ready = tmp_path / 'descendant.ready'
+    release = tmp_path / 'descendant.release'
+    done = tmp_path / 'descendant.done'
+    child = tmp_path / 'compiler.py'
+    child.write_text(
+        'import os, pathlib, subprocess, sys, time\n'
+        'descendant = subprocess.Popen([sys.executable, "-c", '
+        '"import pathlib, sys, time; "\n'
+        '"ready, release, done = map(pathlib.Path, sys.argv[1:]); ready.touch(); "\n'
+        '"deadline = time.monotonic() + 30\\n"\n'
+        '"while not release.exists() and time.monotonic() < deadline: time.sleep(0.01)\\n"\n'
+        '"done.touch()", *sys.argv[1:4]])\n'
+        'while not pathlib.Path(sys.argv[1]).exists(): time.sleep(0.01)\n'
+        'os.write(1, bytes(range(256)) * 4096 + b"\\r\\n#line 9 \\\"unit.cpp\\\"\\n")\n'
+        'os.write(2, bytes(reversed(range(256))) * 4096 + b"\\r\\ncompiler diagnostic\\n")\n'
+        'sys.exit(int(sys.argv[4]))\n')
+    pool = ThreadPoolExecutor(max_workers=1)
+    future = pool.submit(proofs.capture_preprocessor,
+                         [sys.executable, str(child), str(ready), str(release), str(done), str(exitcode)],
+                         dict(os.environ))
+    try:
+        result = future.result(timeout=5)
+        # The descendant still holds both output handles. Its lifetime must
+        # neither delay the direct child's result nor change that exit code.
+        assert ready.exists() and not release.exists() and not done.exists()
+        assert result.returncode == exitcode
+        assert result.stdout == bytes(range(256)) * 4096 + b'\r\n#line 9 "unit.cpp"\n'
+        assert result.stderr == bytes(reversed(range(256))) * 4096 + b'\r\ncompiler diagnostic\n'
+    finally:
+        release.touch()
+        pool.shutdown(wait=True)
+
+
+def test_real_capture_nonzero_exit_is_rejected_by_snapshot(tmp_path, monkeypatch):
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    source = tmp_path / 'unit.cpp'
+    source.write_text('int f(){return 17;}\n')
+    compiler = tmp_path / 'compiler.py'
+    compiler.write_text(
+        'import sys\n'
+        'sys.stdout.buffer.write(b\'#line 1 "unit.cpp"\\nint f(){return 17;}\\n\')\n'
+        'sys.stderr.buffer.write(b"compiler exit seven\\n")\n'
+        'sys.exit(7)\n')
+    with pytest.raises(ValueError, match='preprocessor failed: compiler exit seven'):
+        proofs.snapshot(source, [sys.executable, str(compiler), '-c', str(source)], dict(os.environ))
 
 
 def fixture(tmp_path, monkeypatch):
@@ -35,6 +88,12 @@ def fixture(tmp_path, monkeypatch):
         output.write_bytes(b'compiled object')
         return SimpleNamespace(returncode=0, stdout='Note: including file: ' + str(header))
     monkeypatch.setattr(build.subprocess, 'run', run)
+    # Input-proof unit tests replace the compiler with the same byte transcript
+    # as before. Real regular-file capture is exercised separately below.
+    monkeypatch.setattr(proofs, 'capture_preprocessor', lambda cmd, env:
+                        build.subprocess.run(cmd, cwd=build.ROOT, env=env,
+                                             stdout=build.subprocess.PIPE,
+                                             stderr=build.subprocess.PIPE))
     return source, header, output, command, env, run
 
 
@@ -126,6 +185,21 @@ def test_failed_actual_compile_cannot_bless_existing_object(tmp_path, monkeypatc
     receipt = proofs.Receipts(tmp_path / 'inputs.json')
     assert not build.try_compile_source(source, obj, input_proof=receipt)[0]
     assert obj.read_bytes() == b'previous object'
+    assert not receipt.current(source, obj)
+
+
+def test_preprocessor_nonzero_exit_refuses_complete_looking_output(tmp_path, monkeypatch):
+    source, header, obj, command, env, _ = fixture(tmp_path, monkeypatch)
+    original = proofs.capture_preprocessor
+    def failed(cmd, flags):
+        result = original(cmd, flags)
+        result.returncode = 7
+        result.stderr += b'\ncompiler failed\n'
+        return result
+    monkeypatch.setattr(proofs, 'capture_preprocessor', failed)
+    with pytest.raises(ValueError, match='preprocessor failed:'):
+        proofs.snapshot(source, command, env)
+    receipt = proofs.Receipts(tmp_path / 'inputs.json')
     assert not receipt.current(source, obj)
 
 
