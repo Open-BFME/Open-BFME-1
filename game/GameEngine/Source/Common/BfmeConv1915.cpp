@@ -101,7 +101,9 @@ public:
 	virtual BfmeBBP *bfmeMakeBP();
 };
 
-class BfmeGlobPB
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void bfmeSlot00G();
@@ -109,7 +111,11 @@ public:
 	virtual void bfmeDropBP(BfmeUBP *u);
 };
 
-extern BfmeGlobPB *g_bfmeGlobPB;
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 class BfmeHostBP
 {
@@ -134,6 +140,6 @@ void BfmeHostBP::bfmeSweepBP()
 		BfmeUBP *u = (*p)->bfmeGetBP();
 
 		if (u != 0 && u->bfmeCheckBP() == 0)
-			g_bfmeGlobPB->bfmeDropBP(u);
+			W3DDisplay::m_3DScene->bfmeDropBP(u);
 	}
 }

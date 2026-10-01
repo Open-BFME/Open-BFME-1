@@ -53,7 +53,9 @@ struct BfmeNodePB
 	BfmeNodePB *m_bfmeNext;
 };
 
-class BfmeGlobPB
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void bfmeSlotPB00();
@@ -61,7 +63,11 @@ public:
 	virtual void bfmeVirtPB(void *o);
 };
 
-extern BfmeGlobPB *g_bfmeGlobPB;
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 class BfmeThingPB
 {
@@ -75,7 +81,7 @@ void BfmeThingPB::bfmeGoPB(int i)
 {
 	BfmeNodePB *n = m_bfmeHeads[i];
 	while (n) {
-		g_bfmeGlobPB->bfmeVirtPB(n->m_bfmeObj);
+		W3DDisplay::m_3DScene->bfmeVirtPB(n->m_bfmeObj);
 		n = n->m_bfmeNext;
 	}
 }

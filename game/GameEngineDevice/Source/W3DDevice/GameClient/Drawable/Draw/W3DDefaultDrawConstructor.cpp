@@ -112,12 +112,15 @@ public:
 
 extern W3DShadowManager *TheW3DShadowManager;
 
-class SceneClass;
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A. Only the pointer value is
+// used here (the call goes through a cast), so an opaque forward decl suffices.
+class RTS3DScene;
 
 class W3DDisplay
 {
 public:
-	static SceneClass *m_3DScene;
+	static RTS3DScene *m_3DScene;
 };
 
 class BfmeSceneView

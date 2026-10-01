@@ -31,10 +31,16 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
-class BfmeGlobPB;
 class RTS2DScene;
+class RTS3DScene;
 class RTS3DInterfaceScene;
-extern BfmeGlobPB *g_bfmeGlobPB;
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 // Declared as an object by camerashakesystem.cpp; BFME holds a pointer at its first dword.
 class CameraShakeSystemClass;
@@ -123,7 +129,7 @@ Gen006EF850::Gen006EF850(void) :
 	m_field188 = 0;
 	m_initialized = false;
 
-	g_bfmeGlobPB = 0;
+	W3DDisplay::m_3DScene = 0;
 	m_2DScene = 0;
 	m_3DInterfaceScene = 0;
 

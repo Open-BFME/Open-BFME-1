@@ -11,7 +11,22 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-extern SceneClass *g_Va012F8058;
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A. Add_Render_Object is the
+// third virtual of the scene object, so it sits at vtable +0x08 as in SceneClass.
+class RTS3DScene
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void Add_Render_Object(RenderObjClass *obj);
+};
+
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 RenderObjClass *Create_Render_Obj(const char *name);
 void Rva00739B30(RenderObjClass *object, bool geometry);
@@ -102,7 +117,7 @@ void W3DShrubBuffer::dispatch(Int index, Int request)
 	}
 	m_trees[index].m_toppleObject = Create_Render_Obj(m_treeTypes[type].m_modelName.str());
 	Rva00739B30(m_trees[index].m_toppleObject, false);
-	g_Va012F8058->Add_Render_Object(m_trees[index].m_toppleObject);
+	W3DDisplay::m_3DScene->Add_Render_Object(m_trees[index].m_toppleObject);
 	Matrix3D transform = m_trees[index].m_toppleObject->Get_Transform();
 	transform[0][3] = m_trees[index].m_location.x;
 	transform[1][3] = m_trees[index].m_location.y;
@@ -118,7 +133,7 @@ void W3DShrubBuffer::dispatch(Int index, Int request)
 	if (m_treeTypes[type].m_state != -2) {
 		m_trees[index].m_pushAsideObject = Create_Render_Obj(m_treeTypes[m_trees[index].m_toppledType].m_data->m_modelName.str());
 		Rva00739B30(m_trees[index].m_pushAsideObject, false);
-		g_Va012F8058->Add_Render_Object(m_trees[index].m_pushAsideObject);
+		W3DDisplay::m_3DScene->Add_Render_Object(m_trees[index].m_pushAsideObject);
 		transform = m_trees[index].m_pushAsideObject->Get_Transform();
 		transform[0][3] = m_trees[index].m_location.x;
 		transform[1][3] = m_trees[index].m_location.y;

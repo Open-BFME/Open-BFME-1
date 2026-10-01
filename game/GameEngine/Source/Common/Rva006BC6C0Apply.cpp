@@ -1,6 +1,8 @@
 // cl: /O2 /Ob0
 
-class Rva006BC6C0Target
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void slot00();
@@ -8,7 +10,11 @@ public:
 	virtual void slot08(int value);
 };
 
-extern Rva006BC6C0Target *g_rva006BC6C0Target;
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 class Rva006BC6C0
 {
@@ -21,5 +27,5 @@ public:
 
 void Rva006BC6C0::apply()
 {
-	g_rva006BC6C0Target->slot08(m_at4);
+	W3DDisplay::m_3DScene->slot08(m_at4);
 }

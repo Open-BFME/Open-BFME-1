@@ -78,7 +78,9 @@ public:
 	virtual void initRopeParms() = 0;
 };
 
-class BFME3DScene
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void slot0();
@@ -91,7 +93,7 @@ public:
 class W3DDisplay
 {
 public:
-	static BFME3DScene *m_3DScene;
+	static RTS3DScene *m_3DScene;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/line3d.h

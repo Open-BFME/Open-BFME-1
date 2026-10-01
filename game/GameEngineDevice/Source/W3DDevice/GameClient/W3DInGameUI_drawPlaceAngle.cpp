@@ -73,7 +73,9 @@ public:
 	virtual void Set_Transform(const Matrix3D &transform);
 };
 
-class BfmeGlobPB
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void slot00();
@@ -82,7 +84,11 @@ public:
 	virtual void Remove_Render_Object(RenderObjClass *object);
 };
 
-extern BfmeGlobPB *g_bfmeGlobPB;
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 extern const Real g_bfmeK1266C;
 extern RenderObjClass *Create_Render_Obj(const char *name);
 
@@ -181,9 +187,9 @@ void W3DInGameUI::drawPlaceAngle(View * /*view*/)
 	if (isPlacementAnchored() == FALSE)
 	{
 		if (anchorInScene)
-			g_bfmeGlobPB->Remove_Render_Object(m_buildingPlacementAnchor);
+			W3DDisplay::m_3DScene->Remove_Render_Object(m_buildingPlacementAnchor);
 		if (arrowInScene)
-			g_bfmeGlobPB->Remove_Render_Object(m_buildingPlacementArrow);
+			W3DDisplay::m_3DScene->Remove_Render_Object(m_buildingPlacementArrow);
 		return;
 	}
 
@@ -200,20 +206,20 @@ void W3DInGameUI::drawPlaceAngle(View * /*view*/)
 	if (showArrow)
 	{
 		if (anchorInScene)
-			g_bfmeGlobPB->Remove_Render_Object(m_buildingPlacementAnchor);
+			W3DDisplay::m_3DScene->Remove_Render_Object(m_buildingPlacementAnchor);
 		if (!arrowInScene)
 		{
-			g_bfmeGlobPB->Add_Render_Object(m_buildingPlacementArrow);
+			W3DDisplay::m_3DScene->Add_Render_Object(m_buildingPlacementArrow);
 			arrowInScene = TRUE;
 		}
 	}
 	else
 	{
 		if (arrowInScene)
-			g_bfmeGlobPB->Remove_Render_Object(m_buildingPlacementArrow);
+			W3DDisplay::m_3DScene->Remove_Render_Object(m_buildingPlacementArrow);
 		if (!anchorInScene)
 		{
-			g_bfmeGlobPB->Add_Render_Object(m_buildingPlacementAnchor);
+			W3DDisplay::m_3DScene->Add_Render_Object(m_buildingPlacementAnchor);
 			anchorInScene = TRUE;
 		}
 	}

@@ -208,13 +208,19 @@ public:
 	virtual void setSlot190(Int value);
 };
 
-class BfmeGlobPB
+// retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
+// mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A.
+class RTS3DScene
 {
 public:
 	virtual void s00(); virtual void s04();
 	virtual void Add_Render_Object(RenderObjClass *obj);
 };
-extern BfmeGlobPB *g_bfmeGlobPB;
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
 
 class BfmeDebugReport
 {
@@ -436,7 +442,7 @@ Particle::Particle(const BfmeParticleSystemHandle &system, const ParticleInfo *i
 			{
 				m_renderObject->setSlot190(1);
 				Rva00739B30(m_renderObject, false);
-				g_bfmeGlobPB->Add_Render_Object(m_renderObject);
+				W3DDisplay::m_3DScene->Add_Render_Object(m_renderObject);
 			}
 			else if (_bfme_debugReportingEnabled())
 			{
