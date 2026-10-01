@@ -1,5 +1,5 @@
 // ?Rva00396D40DoSetRallyPoint@@YA_NPAVObject@@ABUCoord3D@@_N0@Z
-// partial score=0.96 date=2026-09-27
+// partial score=0.975 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00396D40, the rally-point setter the game reaches through the ILT
@@ -19,60 +19,13 @@
 // position replaces the requested one.  Both callers pass zero for the fourth,
 // so its class is unproven; only its +0x38 Coord3D is read.
 //
-// STATE 2026-09-27 (second pass): 37 non-relocation bytes differ from retail, all
-// of them two residues, and the compiled size is retail's 880 exactly.  Both
-// residues are codegen order, not identity: every value keeps retail's role, so
-// the reconstruction is right and only MSVC's two choices are wrong.
-//   1. An ESI/EDI mirror, at four sites (+0x1b, +0x54, +0x98, +0x1b9) and their
-//      users.  Every value keeps retail's role: the object pointer is the
-//      long-lived one, the NameKey result, the &Object::m_position and the
-//      Drawable are the short-lived scratch, and isLocal is in EBX.  Retail
-//      gives the long-lived web EDI and the scratch ESI, this build the other
-//      way round.
-//   2. The 12-byte copy at the top.  Retail emits store 1, then the NameKey
-//      call's argument setup, then stores 2 and 3, with the two later
-//      displacements already adjusted for the push - so this is codegen order,
-//      not a scheduled move.  MSVC stores all three before the call setup here.
-//
-// MEASURED THIS PASS, all negative, all at 37 bytes / 880, object still in ESI:
-//   * The choice is set by the PATHFINDER block, and by nothing later.  With
-//     only the head (isLocal, the copy, nameToKey, the LocomotorSet) the object
-//     gets NO callee-saved register at all - it is reloaded from the argument
-//     slot on every use.  Adding the block that uses the object twice and takes
-//     &object->m_position is what forces the allocation.  Deleting the whole
-//     tail (final feedback block emptied: 503 B; first static removed: 743 B)
-//     leaves head=esi, so the "something later in this function" lead is dead.
-//   * Making Object::getPosition() an out-of-line CALL does NOT flip it (897 B,
-//     head=esi).  The flip is caused by the object's USE COUNT, not by the
-//     inline accessor's lea, so do not re-run the reduced-TU experiment.
-//   * Hoisting the position to a local before the first statement does not flip
-//     it either way: a `const Coord3D &` reference and a `const Coord3D *`
-//     pointer both cost 7 bytes (873 B) and add a fourth save (EBP), because the
-//     value is not live at the top so MSVC sinks its materialisation below the
-//     isLocallyControlled call.  The shape_levers.md "a field address counts
-//     before a field load" lever needs the address to fold into the addressing
-//     mode, which it cannot here.
-//   * &object->m_position instead of &object->getPosition(), a pointer-returning
-//     getPositionPtr(), pointer->reference callee parameters, a top-level const
-//     object parameter, block-scoping the NameKey key, declaring the
-//     LocomotorSet before the key, a named local for findLocomotorTemplate's
-//     result, a cached NameKeyGenerator* receiver, and declared-then-assigned
-//     rallyPosition all leave 37 bytes / head=esi.
-//   * shape_family_levers.py reports NO applicable source-level family lever for
-//     this source, and shape_search over eh_levers.py's six mechanical choices
-//     (throw() on three callees, /EHsc-, _STLP_NO_EXCEPTIONS, nothrow delete[])
-//     scores the unchanged source best.  rotation_sweep.py finds 16 toggles, all
-//     +0.  This matches the documented limit: that lever does not reach
-//     callee-saved swaps, and docs/shape_levers.md records bodies where the
-//     choice stays compiler-internal after every choice is exhausted.
-// CORRECTION to the previous STATE note: landing does NOT need pins for
-// 0x012F0C70 / 0x012F0BE8.  Those are the addresses RETAIL's linker gave the two
-// function-local statics; in this object both the statics and their guard bytes
-// are IMAGE_REL_I386_DIR32 relocations onto ?rallyNotSet@?M@... and
-// ?rallyPointSet@?BM@... (offsets 259, 272, 304, 356, 374 for the first, 645,
-// 663, 695, 746, 751, 767, 772, 785 for the second), so probe masks them and
-// the link resolves them wherever they land.  What a landing still has to pass
-// is build.sh's DIR32-addresses check, which is a separate gate.
+// STATE 2026-10-01: named extern globals replace numeric image-address macros.
+// This restores retail's interleaved three-word position copy and reduces the
+// residue from 37 to 22 non-relocation bytes, with the same 880-byte extent.
+// Score = 1 - 22 / 880 = 0.975. Remaining residue is the ESI/EDI role mirror
+// and the placement of the initial object load between register saves.
+// Function-local audio statics and their guards are ordinary DIR32 relocations.
+// No alternate-name directives or new symbol pins are needed for probing.
 
 typedef int Int;
 typedef bool Bool;
@@ -305,22 +258,18 @@ private:
 	Bool m_uiDirty;
 };
 
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
-#define TheAI (*(AI **)0x012EF214)
-#define TheLocomotorStore (*(LocomotorStore **)0x012EF504)
-#define TheAudioClientUpdate (*(AudioClient **)0x012ED668)
-#define TheGameText (*(GameTextInterface **)0x012F147C)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
-#define TheControlBar (*(ControlBar **)0x012F33F8)
+extern NameKeyGenerator *TheNameKeyGenerator;
+extern AI *TheAI;
+extern LocomotorStore *TheLocomotorStore;
+extern AudioClient *TheAudioClientUpdate;
+extern GameTextInterface *TheGameText;
+extern InGameUI *TheInGameUI;
+extern ControlBar *TheControlBar;
 
 // Retail materialises the fallback as the symbol's own address in a
 // `mov eax, imm32`, so it is an array here and not a pointer variable.
 extern const WideChar g_bfmeEmptyUnicode[];
 
-#pragma comment(linker, "/alternatename:??0LocomotorSet@@QAE@XZ=?Rva001B7450@@QAE@XZ")
-#pragma comment(linker, "/alternatename:??1LocomotorSet@@UAE@XZ=?Gen_001BA9E0@@UAE@XZ")
-#pragma comment(linker, "/alternatename:?getDisplayName@Drawable@@QBE?AVUnicodeString@@@Z=?getDisplayName@Drawable@@QBEDAAVUnicodeString@@@Z")
-#pragma comment(linker, "/alternatename:?clientSafeQuickDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBVCoord3D@@1PAVLocomotorSet@@@Z=?clientSafeQuickDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBVCoord3D@@1H@Z")
 
 Bool Rva00396D40DoSetRallyPoint(Object *object, const Coord3D &position,
 	Bool showFeedback, Object *positionSource)
