@@ -75,8 +75,22 @@ public:
 	virtual void deselectAllDrawables() = 0;
 };
 
+// The singleton retail declares as `InGameUI *TheInGameUI` in
+// game/GameEngine/Source/GameClient/InGameUI.cpp (mangled
+// ?TheInGameUI@@3PAVInGameUI@@A). A global's pointee type is part of its
+// mangled name, so this TU must name the canonical type and cast to its own
+// view at the call; spelling the view `BfmeInGameUI` here would be a second,
+// undefined symbol at the same address.
+class InGameUI;
+
 extern BfmeMessageStream *TheMessageStream;
-extern BfmeInGameUI *TheInGameUI;
+extern InGameUI *TheInGameUI;
+
+// TU-local view of vtable slot 0xE8, reached through the canonical global.
+static inline BfmeInGameUI *LocalTheInGameUI()
+{
+	return (BfmeInGameUI *)TheInGameUI;
+}
 
 // ?BeaconWindowInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
 WindowMsgHandledType BeaconWindowInput( GameWindow *window, UnsignedInt msg,
@@ -87,7 +101,7 @@ WindowMsgHandledType BeaconWindowInput( GameWindow *window, UnsignedInt msg,
 		GameMessage *message = TheMessageStream->appendMessage( 0x3EB );
 		message->appendBooleanArgument( true );
 
-		TheInGameUI->deselectAllDrawables(); // there should only be one beacon and nothing else selected
+		LocalTheInGameUI()->deselectAllDrawables(); // there should only be one beacon and nothing else selected
 		return MSG_HANDLED;
 	}
 
