@@ -1,12 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 #include <bitset>
+// The empty kind-of mask is retail's global at 0x012ED8B8, which KindOf.cpp owns
+// as `const BitFlags<192> KINDOFMASK_NONE`, so this TU names it with the
+// canonical spelling (the template below mangles it as
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B). The established Thing callee keeps
+// BitFlags<116> in its ledger spelling, so the narrower reference below is the
+// established cast.
 template<int N> class BitFlags {
 public:
  _STL::bitset<N> m_bits;
  bool any() const { return m_bits.any(); }
 };
-extern const BitFlags<116> KINDOFMASK_NONE;
+extern const BitFlags<192> KINDOFMASK_NONE;
 class Thing { public: bool isKindOfMulti(const BitFlags<116>&, const BitFlags<116>&) const; };
 class Object {
 public:
@@ -87,8 +93,7 @@ void Rva0022D830::applyPassengerConditions(Thing* passenger) {
  slot55();
  const MaskData0022D830* data=*(const MaskData0022D830**)((char*)this-0x1c);
  Object* owner=*(Object**)((char*)this-0x18);
- if (data->mask1.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask1,KINDOFMASK_NONE)) owner->setCondition(18);
- else if (data->mask2.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask2,KINDOFMASK_NONE)) owner->setCondition(19);
- else if (data->mask3.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask3,KINDOFMASK_NONE)) owner->setCondition(20);
+ if (data->mask1.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask1,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(18);
+ else if (data->mask2.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask2,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(19);
+ else if (data->mask3.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask3,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(20);
 }
-

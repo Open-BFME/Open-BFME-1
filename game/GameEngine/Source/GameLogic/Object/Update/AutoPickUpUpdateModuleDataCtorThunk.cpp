@@ -33,7 +33,14 @@ private:
 	unsigned int m_value;
 };
 
-extern RespawnPolicy g_defaultRespawnPolicy;
+// The default policy is retail's global at 0x012ED8B8, which KindOf.cpp owns as
+// `const BitFlags<192> KINDOFMASK_NONE`. This TU's RespawnPolicy is only a
+// six-word view of that object, so the canonical extern is forward declared here
+// and the view is cast at the use below. BitFlags is a class template, so its
+// forward declaration mangles KINDOFMASK_NONE as
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B -- the one symbol KindOf.cpp defines.
+template <int NUMBITS> class BitFlags;
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 class AutoPickUpUpdateModuleDataMemberB
 {
@@ -87,7 +94,8 @@ AutoPickUpUpdateModuleData::AutoPickUpUpdateModuleData()
 	m_pickupCount = 5;
 	m_pickupRadius = 300.0f;
 	m_enabled = 0;
-	m_policy.setPolicies( g_defaultRespawnPolicy, g_defaultRespawnPolicy );
+	m_policy.setPolicies( *(const RespawnPolicy *)&KINDOFMASK_NONE,
+	                      *(const RespawnPolicy *)&KINDOFMASK_NONE );
 	m_flag3C = 0;
 	m_flag3D = 0;
 	m_value40 = 0;

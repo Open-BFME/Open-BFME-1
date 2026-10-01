@@ -40,7 +40,13 @@ class KindOfMask
 		: bits(static_cast<unsigned long>(1u << bit)) {}
 };
 
-extern const KindOfMask KINDOFMASK_NONE;
+// The empty kind-of mask is retail's global at 0x012ED8B8, which KindOf.cpp owns
+// as `const BitFlags<192> KINDOFMASK_NONE`. This TU's KindOfMask is only a
+// view of that object, so the canonical extern is forward declared here (a class
+// template's forward declaration mangles as
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B) and the view is cast at the use.
+template <int NUMBITS> class BitFlags;
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 class RiderChangeContainModuleDataBase
 {
@@ -122,7 +128,8 @@ RiderChangeContainModuleData::RiderChangeContainModuleData()
 	m_exitBone.set(g_Rva0107301CEmptyString, 0);
 	m_word1d4 = 0;
 	m_byte1d8 = 0;
-	m_filter.setPolicies(KINDOFMASK_NONE, KINDOFMASK_NONE);
+	m_filter.setPolicies(*(const KindOfMask *)&KINDOFMASK_NONE,
+	                     *(const KindOfMask *)&KINDOFMASK_NONE);
 	m_word1e0 = 0;
 	m_byte1e4 = 0;
 	m_word1e8 = 0;

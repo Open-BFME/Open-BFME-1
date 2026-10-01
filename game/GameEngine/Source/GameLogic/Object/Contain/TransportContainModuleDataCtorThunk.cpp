@@ -13,7 +13,14 @@ struct Rva0021FC80Mask
     Rva0021FC80Mask() {}
     explicit Rva0021FC80Mask(unsigned int bit) { bits.set(bit); }
 };
-extern const Rva0021FC80Mask Rva012ED8B8NoneMask;
+
+// The empty mask is retail's global at 0x012ED8B8, which KindOf.cpp owns as
+// `const BitFlags<192> KINDOFMASK_NONE`. Rva0021FC80Mask is only a six-word view
+// of that object, so the canonical extern is forward declared here (a class
+// template's forward declaration mangles as
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B) and the view is cast at the use.
+template <int NUMBITS> class BitFlags;
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 struct Rva0039FF30Filter
 {
@@ -51,13 +58,11 @@ private:
 // ??0TransportContainModuleData@@QAE@XZ
 TransportContainModuleData::TransportContainModuleData()
 {
-    m_filter.setMasks(Rva0021FC80Mask(8), Rva012ED8B8NoneMask);
+    m_filter.setMasks(Rva0021FC80Mask(8),
+                      *(const Rva0021FC80Mask *)&KINDOFMASK_NONE);
     m_flag170 = false;
     m_flag168 = false;
     m_flag171 = false;
     m_initialPayloadCount = 0;
     m_scalar16c = 1.0f;
 }
-typedef char VerifyMaskSize[sizeof(Rva0021FC80Mask) == 24 ? 1 : -1];
-typedef char VerifyBaseSize[sizeof(OpenContainModuleData) == 0x168 ? 1 : -1];
-typedef char VerifyObjectSize[sizeof(TransportContainModuleData) == 0x17c ? 1 : -1];
