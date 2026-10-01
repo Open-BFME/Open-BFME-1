@@ -157,7 +157,7 @@ public:
     virtual GameMessage *appendMessage(int type) = 0;
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern Shell *TheShell;
 extern Display *TheDisplay;
 extern VideoPlayer *TheVideoPlayer;
@@ -171,7 +171,7 @@ int Rva0051D1E0Shutdown(Bool mode, void *unused, Bool enabled)
 
     if (enabled)
     {
-        g_theWindowManager->unidentified_000144bb(-1);
+        g_rva012F19E8WindowManager->unidentified_000144bb(-1);
         TheShell->hide(true);
         TheDisplay->m_displayFlag = true;
         TheVideoPlayer->slot17();

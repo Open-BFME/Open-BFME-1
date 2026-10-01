@@ -13,7 +13,7 @@ public:
 		const void *p1, const void *p2, const void *p3, const void *p4, const void *p5);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class AptSaveLoad;
 extern AptSaveLoad *TheAptSaveLoad;
@@ -45,13 +45,13 @@ void Rva56A8StateOwner::dispatchState(int state)
 		int currentState = m_state;
 		if (currentState == 8)
 		{
-			g_theWindowManager->unidentified_00015235(
+			g_rva012F19E8WindowManager->unidentified_00015235(
 				bfmeAptLevel00465CE0((BfmeH1065 *)this),
 				"closeDelayed", 1,
 				"OnClosed", 0, 0, 0, 0);
 			m_state = 9;
 			if (TheAptSaveLoad != 0)
-				reinterpret_cast<BfmeGlobal_012f19e8 *>(g_theWindowManager)->bfmeCall_000290d2();
+				reinterpret_cast<BfmeGlobal_012f19e8 *>(g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 		}
 		else if (currentState == 0x12)
 			m_state = 1;

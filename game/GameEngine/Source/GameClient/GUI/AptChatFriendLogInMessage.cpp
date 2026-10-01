@@ -39,7 +39,7 @@ public:
 		const void *argument, int unused1, int unused2, int unused3, int unused4 );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeAptChatFriendLogIn
 {
@@ -56,8 +56,8 @@ void BfmeAptChatFriendLogIn::showFriendLogIn( const UnicodeString &text )
 {
 	{
 		AsciiString name( "APT:ChatFriendLogInMessage" );
-		g_theWindowManager->bfme_setAptText( name, text );
+		g_rva012F19E8WindowManager->bfme_setAptText( name, text );
 	}
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		m_movie, "ChatMessageOpen", 0, 0, 0, 0, 0, 0 );
 }

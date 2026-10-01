@@ -88,7 +88,8 @@ inline void drawImage(Display *display, const Image *image, Real x0,
 }
 
 // Retail 0x0046F3D0: the sibling of Rva0046F060DrawImageAt.cpp's body --
-// same manager-hash image lookup and TheDisplay begin/drawCore/end
+// same manager-hash image lookup (the 0x012F19E8 global, reached through
+// this TU's Rva00579160Manager view) and TheDisplay begin/drawCore/end
 // sequence over the rectangle [pos, pos+size), but the draw mode is
 // fetched from a caller-supplied object instead of a literal constant.
 // No named caller or owning identity survived (blocked twice: this body
@@ -99,7 +100,11 @@ struct Rva00579160Manager
 	void *bfmeLookup46C7D0(Int key);
 };
 
-extern Rva00579160Manager *Rva00579160TheManager;
+class WindowManager;
+
+// Retail's single global at 0x012F19E8 is a WindowManager*; this TU keeps a
+// local view of the one method it needs.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The direct (non-thunked) callee at 0x0046F280: still a dump, 257 bytes,
 // no trustworthy owner. Retail calls it thiscall with no explicit stack
@@ -113,7 +118,7 @@ public:
 void Rva0046F3D0DrawImageAt(const Coord2D *pos, const Coord2D *size,
 	Int imageKey, Rva0046F3D0ModeSource *modeSource)
 {
-	const Image *image = (const Image *)Rva00579160TheManager->bfmeLookup46C7D0(imageKey);
+	const Image *image = (const Image *)((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeLookup46C7D0(imageKey);
 	if (!image)
 		return;
 

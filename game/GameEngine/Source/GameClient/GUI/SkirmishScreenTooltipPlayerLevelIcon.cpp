@@ -9,13 +9,17 @@ public:
 	int getRankDisplay( AsciiString name ) const;
 };
 
+// Local view of the one method this body reaches on retail's 0x012F19E8
+// global, which is a WindowManager*.
 class BfmeThingBIF
 {
 public:
 	void bfmeGoBIF( void *what, void *out );
 };
 
-extern BfmeThingBIF *Rva00579160TheManager;
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeAptScreenSkirmish
 {
@@ -31,6 +35,6 @@ void BfmeAptScreenSkirmish::tooltipPlayerLevelIcon(
 	AsciiString name, void *argument )
 {
 	int rank = m_honors.getRankDisplay( name );
-	Rva00579160TheManager->bfmeGoBIF(
+	((BfmeThingBIF *)g_rva012F19E8WindowManager)->bfmeGoBIF(
 		&AsciiString( (const char *)argument ), (void *)rank );
 }

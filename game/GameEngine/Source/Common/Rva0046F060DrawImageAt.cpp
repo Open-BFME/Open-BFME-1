@@ -87,23 +87,26 @@ inline void drawImage(Display *display, const Image *image, Real x0,
 }
 
 // Retail 0x0046F060: looks an image up through the 0x012F19E8 manager
-// hash (already shared as Rva00579160Manager/Rva00579160TheManager
-// elsewhere in this tree; the specific lookup method reached here has no
-// named row of its own, so it keeps the address of the still-dump body
-// its ILT thunk 0x00008FEE reaches) and, when found, draws it as the
-// rectangle [pos, pos+size). No named caller or owning identity survived
-// two prior passes, so the function itself is an address-derived free
-// function rather than a claimed member.
+// hash (this TU keeps a local Rva00579160Manager view of the one method
+// it needs; the specific lookup method reached here has no named row of
+// its own, so it keeps the address of the still-dump body its ILT thunk
+// 0x00008FEE reaches) and, when found, draws it as the rectangle
+// [pos, pos+size). No named caller or owning identity survived two prior
+// passes, so the function itself is an address-derived free function
+// rather than a claimed member.
 struct Rva00579160Manager
 {
 	void *bfmeLookup46C7D0(Int key);
 };
 
-extern Rva00579160Manager *Rva00579160TheManager;
+class WindowManager;
+
+// Retail's single global at 0x012F19E8 is a WindowManager*.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 void Rva0046F060DrawImageAt(const Coord2D *pos, const Coord2D *size, Int imageKey)
 {
-	const Image *image = (const Image *)Rva00579160TheManager->bfmeLookup46C7D0(imageKey);
+	const Image *image = (const Image *)((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeLookup46C7D0(imageKey);
 	if (!image)
 		return;
 

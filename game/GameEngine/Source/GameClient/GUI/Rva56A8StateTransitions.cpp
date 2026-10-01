@@ -22,7 +22,7 @@ public:
 };
 
 class WindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class AptSaveLoad;
 extern AptSaveLoad *TheAptSaveLoad;
@@ -55,6 +55,6 @@ void Rva56A8StateOwner::applyDefaultState(int)
 void Rva56A8StateOwner::applyGlobalCall(int)
 {
 	if (m_state == 0 && *reinterpret_cast<volatile int *>(&TheAptSaveLoad) != 0) {
-		reinterpret_cast<BfmeGlobal_012f19e8 *>(g_theWindowManager)->bfmeCall_000290d2();
+		reinterpret_cast<BfmeGlobal_012f19e8 *>(g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 	}
 }

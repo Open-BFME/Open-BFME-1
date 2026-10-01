@@ -2,6 +2,8 @@
 // The separate state arms are intentional: merging cases 2 and 3 makes the
 // VS2003 compiler replace retail's sub/dec/dec dispatch with a range test.
 
+// Local view of the one method this body reaches on retail's 0x012F19E8
+// global, which is a WindowManager*.
 class BfmeMgr19E
 {
 public:
@@ -9,7 +11,9 @@ public:
 		char *third, char *fourth, char *fifth);
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmtAJ[];
 extern char g_bfmeLitA1072[];
 extern char g_bfmeLitB1072[];
@@ -55,10 +59,10 @@ int BfmeQ1075::bfmeGo1075A(int code, unsigned char kind, char flags)
 	{
 		case 4:
 			if (g_bfmeD1072)
-				g_mgr12F19E8->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
+				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
 					g_bfmeLitA1072, 0, 0, 0, 0);
 			else
-				g_mgr12F19E8->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
+				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
 					g_bfmeLitB1072, 0, 0, 0, 0);
 			((BfmeOwnAJ *)this)->bfmeCloseAJ(0);
 			break;
