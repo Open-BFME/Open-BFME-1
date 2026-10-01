@@ -11158,5 +11158,15 @@
   "after_sha256": "9fdce2a1e064ab9b69a14936bedb24a8367d33522d7e56863d518eeb4b9a3f53",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
- }
+ },
+{
+ "old_path": "targets/game/reverse/attempts/0x00757e70.cpp",
+ "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawBfmeConstructor.cpp",
+ "old_name": "SegLineRendererClass",
+ "new_name": "Rva0094F960",
+ "before_sha256": "57ae7dc0815c0e26b6747475f13467f1dc68b3cfd755c7e815bcb441684e27d7",
+ "after_sha256": "2bb5d66180d1aa8c229fbbf3051beb2573060bc30586924f31da90697b0a13a5",
+ "evidence": "targets/game/reverse/identity_evidence/0x00757e70-94f960-thunk.md",
+ "reason": "SegLineRendererClass remains declared for TextureMapMode. Rva0094F960 is a separate local view for the 11-byte thunk at 0x0094F960. The checker paired the two declarations by shape and treated them as a rename, but the source keeps both declarations."
+}
 ]
