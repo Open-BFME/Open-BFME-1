@@ -41,6 +41,7 @@ public:
 	typedef GameMessageArgument Argument;
 
 	GameMessage(const GameMessage &source);
+	void rva0008B2C0(const GameMessage &source);
 	virtual ~GameMessage();
 
 	const GameMessageArgumentType *getArgument(Int argIndex) const;
@@ -74,6 +75,48 @@ private:
 };
 
 GameMessage::GameMessage(const GameMessage &source)
+{
+	m_playerIndex = source.m_playerIndex;
+	m_type = source.m_type;
+	m_argList = 0;
+	m_argTail = 0;
+	m_argCount = 0;
+	m_list = 0;
+	m_next = 0;
+	m_prev = 0;
+
+	for (Int i = 0; i < source.m_argCount; ++i)
+	{
+		switch (source.getArgumentTypeInline(i))
+		{
+		case 0: { Int value = source.getArgument(i)->integer; Argument *arg = allocArg(); arg->m_data.integer = value; arg->m_type = 0; break; }
+		case 1: { Real value = source.getArgument(i)->real; Argument *arg = allocArg(); arg->m_data.real = value; arg->m_type = 1; break; }
+		case 2: { Bool value = source.getArgument(i)->boolean; Argument *arg = allocArg(); arg->m_data.boolean = value; arg->m_type = 2; break; }
+		case 3: { UnsignedInt value = source.getArgument(i)->id; Argument *arg = allocArg(); arg->m_data.id = value; arg->m_type = 3; break; }
+		case 4: { UnsignedInt value = source.getArgument(i)->id; Argument *arg = allocArg(); arg->m_data.id = value; arg->m_type = 4; break; }
+		case 5: { UnsignedInt value = source.getArgument(i)->id; Argument *arg = allocArg(); arg->m_data.id = value; arg->m_type = 5; break; }
+		case 6: { UnsignedInt value = source.getArgument(i)->id; Argument *arg = allocArg(); arg->m_data.id = value; arg->m_type = 6; break; }
+		case 7:
+		{
+			// member-wise copy keeps all three words in the frame, as retail does
+			const GameMessageLocationRaw &from = source.getArgument(i)->location;
+			GameMessageLocationRaw value;
+			value.x = from.x;
+			value.y = from.y;
+			value.z = from.z;
+			Argument *arg = allocArg();
+			arg->m_data.location = value;
+			arg->m_type = 7;
+			break;
+		}
+		case 8: { GameMessagePixelRaw value = source.getArgument(i)->pixel; Argument *arg = allocArg(); arg->m_data.pixel = value; arg->m_type = 8; break; }
+		case 9: { const GameMessageArgumentType *value = source.getArgument(i); Argument *arg = allocArg(); arg->m_data.pixelRegion = value->pixelRegion; arg->m_type = 9; break; }
+		case 10: { UnsignedInt value = source.getArgument(i)->id; Argument *arg = allocArg(); arg->m_data.id = value; arg->m_type = 10; break; }
+		case 11: { const GameMessageArgumentType *value = source.getArgument(i); Argument *arg = allocArg(); arg->m_data.wideChar = value->wideChar; arg->m_type = 11; break; }
+		}
+	}
+}
+void GameMessage::rva0008B2C0(const GameMessage &source)
 {
 	m_playerIndex = source.m_playerIndex;
 	m_type = source.m_type;
