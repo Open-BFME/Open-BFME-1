@@ -19,8 +19,12 @@ class Gen_00491880 {char storage[0x24];public:Gen_00491880(const AsciiStringVX&,
 class LoadScreen0051BF30 {char storage[0xa4];public:LoadScreen0051BF30(unsigned);};
 class MultiPlayerLoadScreen {char storage[0xb4];public:MultiPlayerLoadScreen();};
 class Rva00490A30 {char storage[0x174];public:Rva00490A30();};
+// Retail global 0x012F19E8 is EA's WindowManager*. The one linked identity is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A; the local view below only
+// describes the one field this body reads, so the cast happens at the use.
+class WindowManager;
+extern WindowManager* g_rva012F19E8WindowManager;
 class Gen000290D2 {public:char pad000[0x1b8];void* at1b8;};
-extern Gen000290D2* R2Ptr012F19E8;
 extern void* R2Glob012F4998;
 extern void* R2Glob012F4ACC;
 extern const AsciiString Rva01336E50EmptyAscii;
@@ -36,7 +40,7 @@ class GameLogic {
 LoadScreen* GameLogic::getLoadScreen(bool loadingSaveGame) {
  switch(m_gameMode) {
  case 4:
-  if(R2Ptr012F19E8->at1b8) return (LoadScreen*)new Gen_0051b690;
+  if(((Gen000290D2*)g_rva012F19E8WindowManager)->at1b8) return (LoadScreen*)new Gen_0051b690;
   return (LoadScreen*)new Gen_00491580((const AsciiStringVX&)at078,(const AsciiStringVX&)at07c);
  case 0: case 3: case 6: case 7:
   if(loadingSaveGame || m_gameMode==3) {

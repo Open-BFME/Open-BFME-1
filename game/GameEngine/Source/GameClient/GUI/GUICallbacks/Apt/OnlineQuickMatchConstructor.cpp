@@ -205,7 +205,7 @@ extern MapCache *TheMapCache;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern NAT *TheNAT;
 extern GameSpyInfo *TheGameSpyInfo;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 
 void _bfme_setAptScreenRefOnlineQuickMatch( const AsciiString &name,
@@ -222,7 +222,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 	m_slot70 = 0;
 	m_slot74 = 0;
 	m_slot78 = 0;
-	if( g_theWindowManager != 0 && g_obj12F4ABC == 0 )
+	if( g_rva012F19E8WindowManager != 0 && g_obj12F4ABC == 0 )
 	{
 		g_obj12F4ABC = this;
 

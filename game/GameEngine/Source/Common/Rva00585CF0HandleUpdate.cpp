@@ -194,10 +194,13 @@ void BfmeHostYF::rva00585D60(BfmeHandleYF h)
 	}
 }
 
+// Retail global 0x012F19E8 is EA's WindowManager*; the struct below is this
+// TU's local view of the one member this body calls, so the cast is at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 struct Rva00579160Manager {
 	unsigned int rva0046B2A0(const AsciiString &name);
 };
-extern Rva00579160Manager *Rva00579160TheManager;
 void _bfme_setLivingWorldRegionName(int index, const UnicodeString &text);
 void _bfme_setLivingWorldRegionBonus(int index, const UnicodeString &text);
 void Open2SendNotice51B050(int index);
@@ -213,7 +216,7 @@ void BfmeHostYF::rva00585E90(BfmeHandleYF h)
 	if (std::find(begin, end, 1) != end) {
 		AsciiString name;
 		name.format("Popup%d/ButtonClip/Portrait", id);
-		Rva00579160TheManager->rva0046B2A0(name);
+		((Rva00579160Manager*)g_rva012F19E8WindowManager)->rva0046B2A0(name);
 		_bfme_setLivingWorldRegionName(id, UnicodeString::TheEmptyString);
 		_bfme_setLivingWorldRegionBonus(id, UnicodeString::TheEmptyString);
 		Open2SendNotice51B050(id);

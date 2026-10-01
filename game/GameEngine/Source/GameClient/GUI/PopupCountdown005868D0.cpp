@@ -46,7 +46,10 @@ struct Command005868D0 { char at00[0x10]; AsciiString at10; char at14[0x64]; int
 struct Popup005868D0 { char at00[0x10]; int at10; CommandButton* at14; char at18[0x18]; int at30; int at34; char at38[0x10]; int at48; int at4c; };
 class BfmeThingBIF { public: void bfmeGoBIF(void*,void*); };
 class WindowManager;
-extern WindowManager* g_theWindowManager;
+// The retail global at 0x012F19E8 (EA's WindowManager*) has one linked
+// identity: ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A. Spelling it
+// anything else is a second symbol nothing defines, so it can never link.
+extern WindowManager* g_rva012F19E8WindowManager;
 extern AsciiString key012F4B80,key012F4B84,key012F4B88;
 void bfmeGo1074B(int,int,int);
 void _bfme_setLivingWorldRegionName(int,const UnicodeString&);
@@ -58,7 +61,7 @@ void __stdcall updateCountdown005868D0(Popup005868D0* popup) {
   AsciiString name;
   name.format("Popup%d/ButtonClip/Portrait",index);
   const Image* image=popup->at14->getButtonImage();
-  ((BfmeThingBIF*)g_theWindowManager)->bfmeGoBIF(&name,(void*)image);
+  ((BfmeThingBIF*)g_rva012F19E8WindowManager)->bfmeGoBIF(&name,(void*)image);
   _bfme_setLivingWorldRegionName(index,TheGameText->fetchByValue(((Command005868D0*)popup->at14)->at10));
   UnicodeString bonus;
   if(!((Command005868D0*)popup->at14)->at98.isEmpty()) bonus=TheGameText->fetchByValue(((Command005868D0*)popup->at14)->at98);

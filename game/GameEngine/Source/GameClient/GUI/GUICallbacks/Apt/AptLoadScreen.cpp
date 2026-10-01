@@ -166,7 +166,7 @@ public:
 struct Rva00579160Current;
 class BfmeH1065;
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameWindowManager *TheWindowManager;
 extern GameTextInterface *TheGameText;
 extern GameSpyInfo *TheGameSpyInfo;
@@ -255,14 +255,14 @@ LoadScreen0051BF30::LoadScreen0051BF30(unsigned int mode)
 	for (int player = 0; player < 8; ++player)
 	{
 		name.format("GameLoading:PlayerColor:%d", player);
-		g_theWindowManager->bindShownWithArg(name, (void *)player,
+		g_rva012F19E8WindowManager->bindShownWithArg(name, (void *)player,
 			Rva0050F920FunctorHolder(FunctorBindingSingle(
 				reinterpret_cast<FunctorMethodSingle>(&LoadScreen0051BF30::Rva0051B560),
 				(FunctorTargetSingle *)this)));
 	}
 	{
 		AsciiString typeName("GameLoadingType");
-		g_theWindowManager->bindShownWithArg(typeName, 0,
+		g_rva012F19E8WindowManager->bindShownWithArg(typeName, 0,
 			Rva0050F920FunctorHolder(FunctorBindingSingle(
 				reinterpret_cast<FunctorMethodSingle>(&LoadScreen0051BF30::Rva0051B5F0),
 				(FunctorTargetSingle *)this)));
@@ -276,16 +276,16 @@ LoadScreen0051BF30::LoadScreen0051BF30(unsigned int mode)
 	{
 		m_bfme0008 = (BfmeH1065 *)m_layout10->m_windowList;
 		m_5C = bfmeAptLevel00465CE0(m_bfme0008);
-		g_theWindowManager->slot38(0);
+		g_rva012F19E8WindowManager->slot38(0);
 		if (Rva00579160TheCurrent == 0 && TheGameSpyInfo == 0)
 		{
 			UnicodeString blank((const unsigned short *)L" ");
-			g_theWindowManager->bfme_setAptText(AsciiString("GUI:Level"), blank);
+			g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("GUI:Level"), blank);
 		}
 		if (TheGameSpyGame != 0 && TheGameSpyGame->m_43C)
 		{
 			AsciiString level("GUI:Level");
-			g_theWindowManager->bfme_setAptText(level, TheGameText->fetch("GUI:Rank", 0));
+			g_rva012F19E8WindowManager->bfme_setAptText(level, TheGameText->fetch("GUI:Rank", 0));
 		}
 	}
 }

@@ -56,7 +56,7 @@ public:
 		BannerAptCallbackHolder callback );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern bool g_aptLivingWorldGuardA;			// 0x0012F499D
 extern bool g_aptLivingWorldGuardB;			// 0x0012F499C
 extern BFMERetailAsciiString g_aptLivingWorldCachedName;	// 0x0012F49A0
@@ -75,60 +75,60 @@ extern void __cdecl bfmeAptLivingWorldOnRegionConqueredNoticeClosed();
 
 void registerAptLivingWorldUICallbacks()
 {
-	if( !g_aptLivingWorldGuardA && g_theWindowManager )
+	if( !g_aptLivingWorldGuardA && g_rva012F19E8WindowManager )
 	{
 		g_aptLivingWorldGuardA = false;
 		g_aptLivingWorldGuardB = false;
-		int idx = g_theWindowManager->resolveAptWindow( BFMERetailAsciiString( "Apt\\" ),
+		int idx = g_rva012F19E8WindowManager->resolveAptWindow( BFMERetailAsciiString( "Apt\\" ),
 			BFMERetailAsciiString( g_aptLivingWorldCachedName ), 0, 0, -1 );
 		g_aptLivingWorldWindowIndex = bfmeMakeEYA( idx, idx );
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnInitialized" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnInitialized );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnInitialized );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnRegionPopupOpen" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionPopupOpen );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionPopupOpen );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnRegionPopupClosed" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionPopupClosed );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionPopupClosed );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnRollOverRegionBttn" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRollOverRegionBttn );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRollOverRegionBttn );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnRollOutRegionBttn" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRollOutRegionBttn );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRollOutRegionBttn );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnPressRegionBttn" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnPressRegionBttn );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnPressRegionBttn );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnReleaseRegionBttn" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnReleaseRegionBttn );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnReleaseRegionBttn );
 		}
 
-		if( g_theWindowManager )
+		if( g_rva012F19E8WindowManager )
 		{
 			BFMERetailAsciiString name( "AptLivingWorldUI::OnRegionConqueredNoticeClosed" );
-			g_theWindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionConqueredNoticeClosed );
+			g_rva012F19E8WindowManager->registerAptCallback( name, bfmeAptLivingWorldOnRegionConqueredNoticeClosed );
 		}
 	}
 }

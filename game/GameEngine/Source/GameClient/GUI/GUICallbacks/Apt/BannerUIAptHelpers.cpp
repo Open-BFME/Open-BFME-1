@@ -40,15 +40,15 @@ public:
 		const void *argument4, const void *argument5 );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 void DeleteBanner( int id )
 {
 	char idText[ 16 ];
 	sprintf( idText, "%d", id );
 	AsciiString movie( "BannerUI.apt" );
-	g_theWindowManager->unidentified_00015235(
-		g_theWindowManager->findAptMovieIndex( movie ),
+	g_rva012F19E8WindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->findAptMovieIndex( movie ),
 		"DeleteBanner", 1, idText, 0, 0, 0, 0 );
 }
 
@@ -57,8 +57,8 @@ void AddBanner( int id, const AsciiString &name, const AsciiString &label )
 	char idText[ 16 ];
 	sprintf( idText, "%d", id );
 	AsciiString movie( "BannerUI.apt" );
-	g_theWindowManager->unidentified_00015235(
-		g_theWindowManager->findAptMovieIndex( movie ),
+	g_rva012F19E8WindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->findAptMovieIndex( movie ),
 		"AddBanner", 3, idText, name.str(), label.str(), 0, 0 );
 }
 
@@ -75,8 +75,8 @@ void SetBannerState( int id, unsigned int state )
 	case 3: label = "_disabled"; break;
 	default: return;
 	}
-	g_theWindowManager->unidentified_00015235(
-		g_theWindowManager->findAptMovieIndex( AsciiString( "BannerUI.apt" ) ),
+	g_rva012F19E8WindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->findAptMovieIndex( AsciiString( "BannerUI.apt" ) ),
 		"SetBannerState", 2, idText, label, 0, 0, 0 );
 }
 
@@ -87,7 +87,7 @@ void SetBannerProgress( int id, int progress )
 	sprintf( idText, "%d", id );
 	sprintf( progressText, "%d", progress );
 	AsciiString movie( "BannerUI.apt" );
-	g_theWindowManager->unidentified_00015235(
-		g_theWindowManager->findAptMovieIndex( movie ),
+	g_rva012F19E8WindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->findAptMovieIndex( movie ),
 		"SetBannerProgress", 2, idText, progressText, 0, 0, 0 );
 }
