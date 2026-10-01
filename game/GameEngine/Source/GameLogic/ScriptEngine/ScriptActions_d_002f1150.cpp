@@ -2,6 +2,8 @@
 
 typedef unsigned char Byte;
 
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every field read casts through this view.
 class Rva0038AD90GameLogic
 {
 public:
@@ -11,12 +13,14 @@ public:
 	unsigned char m_modeLatch;
 };
 
-extern Rva0038AD90GameLogic *TheGameLogic;
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 // ?func002F1150@@YGXH@Z
 void __stdcall func002F1150(int mode)
 {
-	if (TheGameLogic->m_modeLatch != (Byte)mode)
+	if (((Rva0038AD90GameLogic *)TheGameLogic)->m_modeLatch != (Byte)mode)
 	{
 		union RawBool
 		{
@@ -24,7 +28,8 @@ void __stdcall func002F1150(int mode)
 			bool boolean;
 		} raw;
 		raw.integer = mode;
-		TheGameLogic->setObjectIndicators(raw.boolean);
-		TheGameLogic->m_modeLatch = mode;
+		((Rva0038AD90GameLogic *)TheGameLogic)->setObjectIndicators(
+			raw.boolean);
+		((Rva0038AD90GameLogic *)TheGameLogic)->m_modeLatch = mode;
 	}
 }

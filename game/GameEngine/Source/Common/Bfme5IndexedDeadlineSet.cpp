@@ -1,8 +1,12 @@
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every field read casts through this view.
 struct BfmeDeadlineClock
 {
 	char m_bfmeFields[0x3C];
 	int m_bfmeFrame;
 };
+
+class GameLogic;
 
 struct BfmeDeadlineSource
 {
@@ -10,7 +14,7 @@ struct BfmeDeadlineSource
 	int m_bfmeValue;
 };
 
-extern BfmeDeadlineClock *g_bfmeDeadlineClock;
+extern GameLogic *TheGameLogic;
 
 class Gen_0028EEB0
 {
@@ -31,6 +35,7 @@ void Gen_0028EEB0::bfmeSet(
 	int delay)
 {
 	m_bfmeActive[index] = true;
-	m_bfmeDeadlines[index] = g_bfmeDeadlineClock->m_bfmeFrame + delay;
+	m_bfmeDeadlines[index] =
+		((BfmeDeadlineClock *)TheGameLogic)->m_bfmeFrame + delay;
 	m_bfmeValues[index] = source != 0 ? source->m_bfmeValue : 0;
 }

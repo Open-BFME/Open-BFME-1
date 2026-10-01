@@ -3,13 +3,17 @@
 // The retail image does not name the owning class, so this source keeps the
 // class and method names address-derived.
 
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every field read casts through this view.
 struct Rva001F9C20GameLogic
 {
 	unsigned char m_pad00[0x6a];
 	char m_busy;
 };
 
-extern Rva001F9C20GameLogic *TheGameLogic;
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 extern void j_00026044(void);
 
 struct Rva001F9C20Thing
@@ -61,7 +65,7 @@ private:
 // ?invoke@Rva001F9C20Unknown@@QAEXH@Z
 void Rva001F9C20Unknown::invoke(int unused)
 {
-	if (TheGameLogic->m_busy != 0)
+	if (((Rva001F9C20GameLogic *)TheGameLogic)->m_busy != 0)
 		return;
 
 	Rva001F9C20Base *base =

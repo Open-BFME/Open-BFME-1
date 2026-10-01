@@ -16,12 +16,17 @@ public:
 	virtual void slot24(unsigned int frame);
 };
 
-struct GameLogic
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every field read casts through this view.
+struct GameLogicView
 {
 	char pad[0x3c];
 	unsigned int m_frame;
 };
-extern GameLogic *TheBfmeGameLogic;
+
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 int __cdecl rva002555a0FrameDispatch(const Object *object, const SpecialPowerTemplate *power)
 {
@@ -29,7 +34,8 @@ int __cdecl rva002555a0FrameDispatch(const Object *object, const SpecialPowerTem
 	{
 		SpecialPowerModuleInterface *module = object->getSpecialPowerModule(power);
 		if (module)
-			((Rva002555A0Module *)module)->slot24(TheBfmeGameLogic->m_frame);
+			((Rva002555A0Module *)module)->slot24(
+				((GameLogicView *)TheGameLogic)->m_frame);
 	}
 	return 1;
 }

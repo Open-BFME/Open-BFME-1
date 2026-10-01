@@ -28,6 +28,11 @@
 
 // Same type as in V4TwoCallForwarders.cpp; that file declares only the niladic
 // member it needs, this one adds the two the row below reaches.
+//
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every use casts through this view.
+class GameLogic;
+
 class Rva00383860
 {
 public:
@@ -47,7 +52,10 @@ public:
 	int  m_atEB0;
 };
 
-extern Rva00383860 *      Glo012F0898;
+// The canonical GameLogic global (0x012F0898), declared here with the
+// pointee type GameLogic so it links against GameLogic.cpp's definition.
+extern GameLogic *       TheGameLogic;
+// A second, unrelated global; untouched by this spelling.
 extern Glo012ED5C8Type *  Glo012ED5C8;
 
 class Rva003BCC10
@@ -62,8 +70,8 @@ int Rva003BCC10::current()
 {
 	if( m_at2C && m_at2D )
 		goto other;
-	if( !Glo012F0898->test() )
-		return Glo012F0898->m_at110;
+	if( !((Rva00383860 *)TheGameLogic)->test() )
+		return ((Rva00383860 *)TheGameLogic)->m_at110;
 other:
 	return Glo012ED5C8->m_atEB0;
 }

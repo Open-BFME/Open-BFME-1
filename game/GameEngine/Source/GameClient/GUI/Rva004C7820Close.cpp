@@ -2,10 +2,10 @@
 // Exit the download UI and send a message unless GameLogic is in state eight.
 class GameEngine;
 class MessageStream;
-class Rva00367E30Logic;
+class GameLogic;
 extern GameEngine *TheGameEngine;
 extern MessageStream *TheMessageStream;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 void closeDownloadWindow();
 
 struct Rva004C7820Slot13
@@ -22,6 +22,6 @@ void Rva004C7820Close()
 {
     reinterpret_cast<Rva004C7820Slot13 *>(TheGameEngine)->send(1);
     closeDownloadWindow();
-    if (*(int *)((char *)TheBfmeGameLogic + 0x10C) != 8)
+    if (*(int *)((char *)TheGameLogic + 0x10C) != 8)
         reinterpret_cast<Rva004C7820Slot13 *>(TheMessageStream)->send(0x1D);
 }

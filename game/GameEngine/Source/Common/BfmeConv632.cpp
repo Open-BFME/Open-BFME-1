@@ -43,7 +43,11 @@ public:
 	BfmeMidCRA *bfmeFindCRA(void *key);
 };
 
-extern BfmeTableCRA *bfmeTheCRA;
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so the call casts through this view.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 struct BfmeThingCRA
 {
@@ -55,7 +59,8 @@ BfmeResCRA *__stdcall bfmeGoCRA(BfmeThingCRA *thing)
 {
 	if (thing == 0)
 		return 0;
-	BfmeMidCRA *mid = bfmeTheCRA->bfmeFindCRA(thing->m_bfmeKey);
+	BfmeMidCRA *mid =
+		((BfmeTableCRA *)TheGameLogic)->bfmeFindCRA(thing->m_bfmeKey);
 	if (mid == 0)
 		return 0;
 	BfmeSubCRA *sub = mid->m_bfmeSub;

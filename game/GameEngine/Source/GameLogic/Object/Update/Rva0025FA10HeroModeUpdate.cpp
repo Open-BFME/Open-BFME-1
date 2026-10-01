@@ -14,11 +14,15 @@ struct Rva0025FA10ModuleData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
-struct GameLogic
+// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
+// only forward declared here, so every field read casts through this view.
+struct GameLogicView
 {
 	unsigned char m_lead[ 0x3c ];
 	unsigned int m_frame;
 };
+
+class GameLogic;
 
 extern GameLogic *TheGameLogic;
 
@@ -43,5 +47,5 @@ void Rva0025FA10HeroModeUpdate::update()
 	Rva0025FA10ModuleData *data = m_data;
 	if ( object->hasCondition( 0x1b ) )
 		object->clearCondition( 0x1b );
-	m_endFrame = TheGameLogic->m_frame + data->m_duration;
+	m_endFrame = ((GameLogicView *)TheGameLogic)->m_frame + data->m_duration;
 }
