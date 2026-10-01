@@ -298,7 +298,10 @@ class BfmeStructureToppleUpdateCall : public StructureToppleUpdate
 {
 public:
 	void doToppleStartFX(Object *, const DamageInfo *);
-	void setWakeFrame(Object *, UpdateSleepTime);
+	// setWakeFrame(Object*, UpdateSleepTime) is inherited from UpdateModule
+	// (retail ILT 0x000157DA -> 0x002B2040) and is deliberately not redeclared
+	// here: a same-named member of this view class would mangle as
+	// ?setWakeFrame@BfmeStructureToppleUpdateCall@@... and could not link.
 };
 
 extern Int bfmeStructureToppleRandom(Int, Int, char *, Int);

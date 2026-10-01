@@ -237,10 +237,15 @@ public:
 	virtual void lock();
 };
 
+// UpdateSleepTime is spelled by reference only; its definition is in
+// GameLogic/Module/UpdateModule.h, which this TU does not include because its
+// prefix view keeps retail's member offsets local to this file.
+enum UpdateSleepTime;
+
 class UpdateModule
 {
-public:
-	void setWakeFrame(Object *obj, unsigned sleep);
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime sleep);
 };
 
 static __forceinline void luna10RecordTransform(Object *object, unsigned frame)
@@ -293,7 +298,7 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 		m_weapon->getMinWeaponSpeed() : BfmeZeroRange;
 	Coord3D framePad;
 
-	setWakeFrame(obj, 1);
+	setWakeFrame(obj, (UpdateSleepTime)1);
 
 	if (md == (const BezierProjectileBehaviorModuleData *)zero)
 		return;

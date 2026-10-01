@@ -20,6 +20,11 @@ class Thing;
 class ModuleData;
 class Object;
 
+// UpdateSleepTime is spelled by reference only; its definition is in
+// GameLogic/Module/UpdateModule.h, which this TU does not include because its
+// prefix view keeps retail's ctor offsets local to this file.
+enum UpdateSleepTime;
+
 class __declspec(novtable) ObjectModule
 {
 public:
@@ -41,7 +46,7 @@ public:
 	}
 
 protected:
-	void setWakeFrame( Object *, unsigned int );
+	void setWakeFrame( Object *, UpdateSleepTime );
 };
 
 class SpecialAbilityUpdateBaseC
@@ -172,5 +177,5 @@ SpecialAbilityUpdate::SpecialAbilityUpdate( Thing *thing, const ModuleData *modu
 	  m_flag9( 0 )
 {
 	setWakeFrame( *reinterpret_cast<Object **>( reinterpret_cast<unsigned char *>( this ) + 8 ),
-		0x3fffffff );
+		(UpdateSleepTime)0x3fffffff );
 }

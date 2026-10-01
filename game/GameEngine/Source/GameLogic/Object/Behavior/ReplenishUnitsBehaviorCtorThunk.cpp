@@ -66,7 +66,7 @@ public:
 	virtual ~UpdateModule() {}
 
 protected:
-	void setWakeFrame(Object *object, UnsignedInt sleepTime);
+	void setWakeFrame(Object *object, UpdateSleepTime sleepTime);
 
 	UnsignedInt m_nextCallFrameAndPhase;
 	int m_indexInLogic;
@@ -125,7 +125,7 @@ ReplenishUnitsBehavior::ReplenishUnitsBehavior(Thing *thing, const ModuleData *m
 		spawn->setReplenishing(true);
 		int replenishDelay =
 			reinterpret_cast<const ReplenishUnitsBehaviorModuleDataView *>(m_moduleData)->m_replenishDelay;
-		setWakeFrame(object, largeGroupRandom(
+		setWakeFrame(object, (UpdateSleepTime)largeGroupRandom(
 			1, replenishDelay,
 			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\ReplenishUnitsBehavior.cpp", 116));
 	}

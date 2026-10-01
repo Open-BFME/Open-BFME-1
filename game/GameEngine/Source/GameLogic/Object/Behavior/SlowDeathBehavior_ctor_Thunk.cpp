@@ -8,6 +8,11 @@ class Thing;
 class ModuleData;
 class Object;
 
+// UpdateSleepTime is spelled by reference only; its definition is in
+// GameLogic/Module/UpdateModule.h, which this TU does not include because its
+// prefix view keeps retail's ctor offsets local to this file.
+enum UpdateSleepTime;
+
 class ObjectModule
 {
 public:
@@ -30,7 +35,7 @@ public:
 		  m_indexInLogic(-1), m_updateState(-1) {}
 	virtual ~UpdateModule();
 protected:
-	void setWakeFrame(Object *, unsigned int);
+	void setWakeFrame(Object *, UpdateSleepTime);
 private:
 	unsigned int m_nextCallFrameAndPhase;
 	int m_indexInLogic;
@@ -122,5 +127,5 @@ SlowDeathBehavior::SlowDeathBehavior(Thing *thing, const ModuleData *data)
 	if (moduleData->m_lastBegin != moduleData->m_lastEnd)
 		m_hasLoadedEffect = true;
 
-	setWakeFrame(m_object, 0x3fffffff);
+	setWakeFrame(m_object, (UpdateSleepTime)0x3fffffff);
 }

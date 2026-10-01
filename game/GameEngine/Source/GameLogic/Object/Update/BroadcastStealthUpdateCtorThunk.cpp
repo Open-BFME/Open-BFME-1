@@ -10,6 +10,11 @@ class Thing;
 class ModuleData;
 class Object;
 
+// UpdateSleepTime is spelled by reference only; its definition is in
+// GameLogic/Module/UpdateModule.h, which this TU does not include because its
+// prefix view keeps retail's ctor offsets local to this file.
+enum UpdateSleepTime;
+
 class ObjectModule
 {
 public:
@@ -39,7 +44,10 @@ public:
 	UpdateModule(Thing *thing, const ModuleData *data)
 		: BehaviorModule(thing, data), m_value14(0), m_value18(-1), m_value1c(-1) {}
 	virtual ~UpdateModule();
-	void setWakeFrame(Object *, unsigned int);
+
+protected:
+	void setWakeFrame(Object *, UpdateSleepTime);
+
 private:
 	unsigned int m_value14;
 	int m_value18;
@@ -74,6 +82,6 @@ BroadcastStealthUpdate::BroadcastStealthUpdate(
 	Thing *thing, const ModuleData *data)
 	: UpdateModule(thing, data), SpyVisionUpgradeMux()
 {
-	setWakeFrame(m_object, 0x3fffffff);
+	setWakeFrame(m_object, (UpdateSleepTime)0x3fffffff);
 	m_broadcastObjectCount = m_broadcastObjects.size();
 }
