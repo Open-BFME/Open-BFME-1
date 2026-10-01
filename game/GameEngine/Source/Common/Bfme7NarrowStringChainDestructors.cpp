@@ -16,14 +16,9 @@
 // IDENTITY IS NOT RECOVERED.  Six retail classes share this layout and nothing
 // in the bytes separates them, so each is named for its own address.
 
-class BfmeDtorMemberC
-{
-public:
-	~BfmeDtorMemberC(void);					// retail 0x00887940
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	int m_bfmeValue;
-};
+typedef AsciiString BfmeDtorMemberC;
 
 class Gen_001D6700 : public BfmeDtorMemberC
 {

@@ -11,14 +11,9 @@
 // sits 0x1B8 into the object, which is the only reason that body is three
 // bytes longer.
 
-class BfmeDtorMemberC
-{
-public:
-	~BfmeDtorMemberC(void);					// retail 0x00887940
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	int m_bfmeValue;
-};
+typedef AsciiString BfmeDtorMemberC;
 
 class BfmeDtorMemberD
 {

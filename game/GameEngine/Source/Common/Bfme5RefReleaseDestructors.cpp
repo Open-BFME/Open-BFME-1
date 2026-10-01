@@ -24,14 +24,9 @@ public:
 	int m_bfmeCount;					// +0x04
 };
 
-class BfmeDtorMemberC
-{
-public:
-	~BfmeDtorMemberC(void);					// retail 0x00887940
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	int m_bfmeValue;					// +0x00
-};
+typedef AsciiString BfmeDtorMemberC;
 
 class Gen_0045F280 : public BfmeDtorMemberC
 {
