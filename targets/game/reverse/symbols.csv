@@ -76288,7 +76288,7 @@ name,address,notes
 ?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUO@BfmeStrVUO@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
-?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
+?bfmeClearVUQ@AsciiString@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUV@BfmeStrVUV@@QAEXXZ,0x00887940,pin
 ?bfmeClearVVC@BfmeStrVVC@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin

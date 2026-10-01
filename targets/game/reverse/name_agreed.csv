@@ -210,3 +210,5 @@ game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|type||Rva001B74A0,LocomotorSet
 game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|type||Rva001B74A0,LocomotorSet,gemini+grok,"blocked: hook: game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp:7: LocomotorSet+0x4 says 'm_04', witness says 'm_locomotors' (confidence 1.00, layout_witness)",2026-10-01
 game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeStrVUQ,AsciiString,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeOwnVUQ,Script,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeStrVUQ,AsciiString,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeOwnVUQ,Script,gemini+grok,applied,2026-10-01
