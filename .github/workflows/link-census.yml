@@ -1,0 +1,106 @@
+name: Daily link census
+
+# tools/fleet/daily_census.sh on a hosted runner: compile every matched source
+# with the committed MSVC 7.1 under Wine, link with link.exe 7.1, record LINKED
+# in link_census_history.csv (read by readme-progress.yml's README card and
+# Discord post) and publish link_queue.csv. Until this workflow a person ran the
+# script on a toolchain host, so a day nobody ran it left Linking stale.
+#
+# Objects persist in the Actions cache. build.py reuses an object only when its
+# compile command, source and header hashes still match its .deps.json, and the
+# census refuses to record over a stale one, so a restored cache can make a run
+# faster, never wrong. Wine: WineHQ 11 (Ubuntu 24.04's own Wine 9.0 hangs cl.exe
+# on a few files) with a default WoW64 prefix, as on the maintainers' host.
+#
+# Manual runs record nothing unless `record` is set; the daily schedule is added
+# once a dry run has passed on the hosted runner.
+
+on:
+  workflow_dispatch:
+    inputs:
+      record:
+        description: Commit the census row and queue to master
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: link-census
+  cancel-in-progress: false
+
+jobs:
+  census:
+    if: github.repository == 'Open-BFME/Open-BFME-1'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    permissions:
+      contents: write
+    env:
+      BUILD_POOL: '4'            # the runner is ours alone: all cores
+      WINEDEBUG: '-all'
+      WINEDLLOVERRIDES: 'mscoree,mshtml='  # no Mono/Gecko prompts in wineboot
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet -r tools/requirements.txt
+      - name: Install WineHQ 11 and a prefix
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo mkdir -pm755 /etc/apt/keyrings
+          sudo wget -qO /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+          sudo wget -qNP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --install-recommends winehq-stable
+          version=$(wine --version)
+          echo "$version"
+          major=${version#wine-}; major=${major%%.*}
+          [ "$major" -ge 11 ] || { echo "need Wine 11 or newer, got $version" >&2; exit 1; }
+          echo "WINEPREFIX=$HOME/.wine-bfme" >> "$GITHUB_ENV"
+          WINEPREFIX="$HOME/.wine-bfme" wineboot -i
+          WINEPREFIX="$HOME/.wine-bfme" wineserver -w
+      - name: Key the object cache on the toolchain
+        id: cache
+        run: echo "prefix=link-census-${{ hashFiles('inputs/toolchains/**') }}-" >> "$GITHUB_OUTPUT"
+      - name: Restore compiled objects
+        uses: actions/cache/restore@v4
+        with:
+          path: build/match
+          key: ${{ steps.cache.outputs.prefix }}${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: ${{ steps.cache.outputs.prefix }}
+      - name: Census (compile what changed, link, record, publish the queue)
+        run: |
+          wineserver -p   # one wineserver for every cl.exe, not one per launch
+          python3 tools/link_census.py --build --history
+          python3 tools/link_check.py --publish
+      - name: Save compiled objects
+        if: always() && steps.cache.outputs.prefix != ''
+        uses: actions/cache/save@v4
+        with:
+          path: build/match
+          key: ${{ steps.cache.outputs.prefix }}${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Commit and push only the census files
+        if: github.event_name == 'schedule' || inputs.record
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add targets/game/reverse/link_census_history.csv targets/game/reverse/link_status.csv \
+              targets/game/reverse/link_queue.csv
+          git commit -q -m "link_census: daily census $(date -u +%F)" \
+              -m "Recorded by .github/workflows/link-census.yml (run ${{ github.run_id }})."
+          git reset -q --hard HEAD  # drop build products (reloc_names.csv) so the rebase can run
+          for attempt in 1 2 3 4 5; do
+            git fetch -q origin +refs/heads/master:refs/remotes/origin/master
+            git rebase -q --onto origin/master HEAD~1 || { git rebase --abort; exit 1; }
+            git push -q origin HEAD:master && { git log -1 --format='pushed %h %s'; exit 0; }
+            sleep $((attempt * 7))
+          done
+          echo "link census: push lost five races; this run's record is not on origin" >&2
+          exit 1
