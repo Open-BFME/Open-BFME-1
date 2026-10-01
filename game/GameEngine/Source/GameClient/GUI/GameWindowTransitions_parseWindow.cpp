@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -11,11 +11,10 @@
 // needed by the callback body.
 typedef unsigned int NameKeyType;
 
-class INI
-{
-public:
-	void initFromINI( void *object, const void *fieldTable );
-};
+// BFME's own Common/INI/INI.h already declares initFromINI with the retail
+// signature (void *, const FieldParse *); the stand-in spelled the second
+// parameter `const void *` and so mangled to PAXPBX, which nothing defines.
+#include "Common/INI/INI.h"
 
 #include "ascii_string.h"
 
@@ -69,6 +68,6 @@ void GameWindowTransitionsHandler::parseWindow( INI *ini, void *instance,
 	void *store, const void *userData )
 {
 	TransitionWindow *transWin = new TransitionWindow;
-	ini->initFromINI( transWin, Rva0048BD60FieldTable );
+	ini->initFromINI( transWin, (const FieldParse *)Rva0048BD60FieldTable );
 	((TransitionGroup *)instance)->addWindow( transWin );
 }

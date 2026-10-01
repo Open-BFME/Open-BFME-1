@@ -1,14 +1,16 @@
-class BfmeObjEBJ
-{
-public:
-	void bfmeCallEBJ(void *b, const char *s);
-};
+// cl: /O2 /GR- /EHsc- /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
+// BfmeObjEBJ only ever receives the INI* receiver of INI::initFromINI, so the
+// call below goes through the real header rather than a stand-in member whose
+// name nothing defines.
+#include "Common/INI/INI.h"
+
+class BfmeObjEBJ;
 
 extern "C" unsigned char bfmeStrEBJ[];
 
 void __stdcall bfmeGoEBJ(BfmeObjEBJ *o, void *b)
 {
-	o->bfmeCallEBJ(b, (const char *)bfmeStrEBJ);
+	reinterpret_cast<INI *>(o)->initFromINI(b, (const FieldParse *)bfmeStrEBJ);
 }
 
 class BfmeObjEBK

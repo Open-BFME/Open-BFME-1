@@ -1,6 +1,6 @@
 // ??0W3DHordeModelDrawModuleData@@QAE@XZ
 // partial score=0.82 date=2026-08-31
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: W3DHordeModelDraw::friend_newModuleData factory, retail 0x006BFC60,
 // converted out of a machine byte dump.
 //
@@ -12,7 +12,11 @@
 // Retail allocates 0x198 bytes, which is sizeof(W3DHordeModelDrawModuleData) with its
 // vptr, and calls the constructor through 0x00037187.
 
-class INI;
+// BFME's own Common/INI/INI.h already declares initFromINI with the retail
+// signature (void *, const FieldParse *); the stand-in spelled the second
+// parameter `const void *` and so mangled to PAXPBX, which nothing defines.
+#include "Common/INI/INI.h"
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);
@@ -55,13 +59,6 @@ private:
 	int m_194;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
-class INI
-{
-public:
-	void initFromINI(void *what, const void *parseTable);
-};
-
 extern "C" char W3DHordeModelDrawFieldParse;
 extern "C" char W3DHordeModelDrawModuleData_vtbl;
 
@@ -96,6 +93,6 @@ ModuleData *W3DHordeModelDraw::friend_newModuleData(INI *ini)
 {
 	W3DHordeModelDrawModuleData *data = new W3DHordeModelDrawModuleData;
 	if (ini)
-		ini->initFromINI(data, &W3DHordeModelDrawFieldParse);
+		ini->initFromINI(data, (const FieldParse *)&W3DHordeModelDrawFieldParse);
 	return (ModuleData *)data;
 }

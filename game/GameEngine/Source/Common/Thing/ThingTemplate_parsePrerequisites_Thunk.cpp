@@ -4,11 +4,16 @@
 // Retail keeps instance in esi and INI in edi; CREATE_OVERRIDES (load-type
 // at +8) erases m_prereqInfo [begin,end] at +0x2C4 via thiscall erase.
 
+struct FieldParse;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
-	void initFromINI(void *store, const void *fieldParse);
+	// Retail's parameter is `const FieldParse *`, not `const void *`; the void
+	// spelling mangles to PAXPBX, which nothing defines. FieldParse is the
+	// upstream struct named below.
+	void initFromINI(void *store, const FieldParse *fieldParse);
 
 	int m_unk0;
 	int m_unk1;

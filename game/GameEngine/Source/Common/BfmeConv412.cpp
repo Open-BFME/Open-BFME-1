@@ -1,3 +1,9 @@
+// cl: /O2 /GR- /EHsc- /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
+// BfmeSinkANB only ever receives the INI* receiver of INI::initFromINI, so the
+// call below goes through the real header rather than a stand-in member whose
+// name nothing defines.
+#include "Common/INI/INI.h"
+
 extern "C" unsigned char bfmeEmptyANB[];
 extern "C" unsigned char bfmeTagANB[];
 
@@ -10,11 +16,7 @@ public:
 
 class BfmeThingANB;
 
-class BfmeSinkANB
-{
-public:
-	void bfmeAddANB(BfmeThingANB *who, void *tag);
-};
+class BfmeSinkANB;
 
 class BfmeThingANB
 {
@@ -32,6 +34,6 @@ void BfmeThingANB::bfmeInitANB(BfmeSinkANB *sink, void *what)
 	m_bfmeA.bfmeSetANB(bfmeEmptyANB, 0);
 	m_bfmeB.bfmeSetANB(bfmeEmptyANB, 0);
 	m_bfmeFlag = 0;
-	sink->bfmeAddANB(this, bfmeTagANB);
+	reinterpret_cast<INI *>(sink)->initFromINI(this, (const FieldParse *)bfmeTagANB);
 	bfmeFinishANB(sink, what);
 }
