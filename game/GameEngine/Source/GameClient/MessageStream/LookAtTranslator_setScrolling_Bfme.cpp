@@ -100,7 +100,12 @@ private:
 
 extern InGameUI *TheInGameUI;
 extern View *TheTacticalView;
-extern ClientRoot4120 *TheGameClient;
+// The global at 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in GameClient.cpp); this TU
+// keeps its ClientRoot4120 view of it and casts at the use.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientRoot4120 *theGameClientView() { return (ClientRoot4120 *)TheGameClient; }
 extern Mouse *TheMouse;
 extern StatsCollector *g_bfmeT1095;
 extern int (__cdecl *g_bfmeNowVNH)(void);
@@ -116,7 +121,7 @@ void LookAtTranslator::setScrolling(int type)
 		return;
 	if (TheTacticalView->isCameraMovementFinished())
 		return;
-	if (TheGameClient->m_inputBlocked)
+	if (theGameClientView()->m_inputBlocked)
 		return;
 
 	g_bfmeV1095 = TheMouse->m_mouseCursor;

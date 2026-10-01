@@ -58,7 +58,13 @@ public:
 	Int m_frame;
 };
 
-extern Rva0043F110ClientRoot4120 *TheGameClient;
+// The global at 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in
+// game/GameEngine/Source/GameClient/GameClient.cpp); this TU keeps its own
+// Rva0043F110ClientRoot4120 view of it and casts at the use.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline Rva0043F110ClientRoot4120 *theGameClientView() { return (Rva0043F110ClientRoot4120 *)TheGameClient; }
 class GameEngine;
 extern GameEngine *TheGameEngine;
 #define TheGameEngine (*(Rva0043F110GameEngine **)&TheGameEngine)
@@ -129,7 +135,7 @@ void Rva0043F110InGameUI::updateFloatingText( void )
 	register Rva0043F110InGameUI *self = this;
 	Rva0043F110FloatingTextData *ftd;
 	Rva0043F110FloatingTextList &floatingTextList = self->m_floatingTextList;
-	UnsignedInt currLogicFrame = TheGameClient->getFrame();
+	UnsignedInt currLogicFrame = theGameClientView()->getFrame();
 	UnsignedByte r, g, b, a;
 	Int amount;
 	static UnsignedInt lastLogicFrameUpdate = currLogicFrame;

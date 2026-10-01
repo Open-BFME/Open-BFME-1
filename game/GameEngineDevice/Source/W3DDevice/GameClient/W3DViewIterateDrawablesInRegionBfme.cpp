@@ -13,10 +13,12 @@
 // BFME moved m_3DCamera to +0x104 (tools/bfme_layout.py W3DView), and the
 // pick call ORs 0x100 into the pick-type mask.
 //
-// TheGameClient is typed ClientRoot4120 to follow targets/game/reverse/symbols.csv and the
-// landed Rva006957E0ElapsedMs.cpp spelling (VA 0x012F1464); its slot 12 is the
-// proven ?firstDrawable@GameClient@@ at 0x004318B0 (targets/game/reverse/functions.csv,
-// GameClient vtable 0x01120468).
+// The global at VA 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in
+// game/GameEngine/Source/GameClient/GameClient.cpp), so it is declared with that
+// canonical spelling here and this TU's ClientRoot4120 view is reached through a
+// cast.  Slot 12 of that view is the proven ?firstDrawable@GameClient@@ at
+// 0x004318B0 (targets/game/reverse/functions.csv, GameClient vtable 0x01120468).
 //
 // Shape note: the pick-type mask must be computed into its own local before
 // the pickDrawable call.  Spelled inline as an argument, MSVC 7.1 hoists the
@@ -133,7 +135,9 @@ private:
 	Bool m_forceAttackMode;
 };
 
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientRoot4120 *theGameClientView() { return (ClientRoot4120 *)TheGameClient; }
 extern InGameUI *TheInGameUI;
 extern int Rva00459060(bool forceAttackMode);	///< ILT 0x0000F2C2 -> 0x00459060
 
@@ -206,7 +210,7 @@ Int W3DView::iterateDrawablesInRegion(IRegion2D *screenRegion,
 		}
 	}
 
-	for (draw = TheGameClient->firstDrawable();
+	for (draw = theGameClientView()->firstDrawable();
 		draw;
 		draw = draw->getNextDrawable())
 	{

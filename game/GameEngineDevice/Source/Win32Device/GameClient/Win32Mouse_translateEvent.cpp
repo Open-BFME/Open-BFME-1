@@ -42,8 +42,13 @@ struct MouseIO
 };
 
 // The retail GameClient vtable's getFrame entry is slot 0x68.  The BFME
-// global is pinned under this address-derived view so the call remains tied to
-// the existing global without inventing a second GameClient layout here.
+// global at 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in
+// game/GameEngine/Source/GameClient/GameClient.cpp); this TU keeps its own
+// address-derived view and reaches it through a cast, so the call stays tied to
+// that one global without inventing a second GameClient layout here.
+class GameClient;
+extern GameClient *TheGameClient;
 class ClientRoot4120
 {
 public:
@@ -76,7 +81,7 @@ public:
 	virtual UnsignedInt getFrame();
 };
 
-extern ClientRoot4120 *TheGameClient;
+static inline ClientRoot4120 *theGameClientView() { return (ClientRoot4120 *)TheGameClient; }
 
 // BFME carries an additional 0x10-byte tail in Mouse before Win32Mouse's
 // Win32 event ring.  This TU-local prefix keeps the real event fields at the
@@ -107,7 +112,7 @@ void Win32Mouse::translateEvent( UnsignedInt eventIndex, MouseIO *result )
 	UnsignedInt frame;
 
 	if( TheGameClient )
-		frame = TheGameClient->getFrame();
+		frame = theGameClientView()->getFrame();
 	else
 		frame = 1;
 

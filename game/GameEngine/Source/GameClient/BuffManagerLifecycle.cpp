@@ -28,7 +28,12 @@ public:
 	void remove(BuffManager *manager);
 };
 
-extern BuffManagerRegistry *TheGameClientClientUpdate;
+// 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in GameClient.cpp); this TU
+// keeps its BuffManagerRegistry view of it and casts at the use.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline BuffManagerRegistry *theGameClientView() { return (BuffManagerRegistry *)TheGameClient; }
 
 class BuffManager : public Snapshot
 {
@@ -43,11 +48,11 @@ private:
 
 BuffManager::BuffManager(int mode) : m_mode(mode)
 {
-	TheGameClientClientUpdate->add(this);
+	theGameClientView()->add(this);
 }
 
 BuffManager::~BuffManager()
 {
-	TheGameClientClientUpdate->remove(this);
+	theGameClientView()->remove(this);
 	m_mode = 0;
 }

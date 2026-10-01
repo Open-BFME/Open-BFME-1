@@ -124,7 +124,13 @@ public:
 	virtual int bfmeNow1021();
 };
 
-extern BfmeE1021 *g_bfmeE1021;
+// This reference is the global at 0x012F1464, EA's
+// `GameClient *TheGameClient` (?TheGameClient@@3PAVGameClient@@A, defined in
+// game/GameEngine/Source/GameClient/GameClient.cpp); BfmeE1021 is this TU's
+// view of it and is reached through a cast.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline BfmeE1021 *theGameClientView() { return (BfmeE1021 *)TheGameClient; }
 
 class BfmeD1021
 {
@@ -139,7 +145,7 @@ public:
 
 void BfmeD1021::bfmeGo1021D(int a)
 {
-	m_bfmeWhen = g_bfmeE1021->bfmeNow1021();
+	m_bfmeWhen = theGameClientView()->bfmeNow1021();
 	m_bfmeFlag = 0;
 	m_bfmeArg = a;
 }

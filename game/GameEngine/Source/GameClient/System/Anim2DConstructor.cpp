@@ -72,7 +72,12 @@ public:
 	virtual UnsignedInt getFrame();
 };
 
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+// 0x012F1464 is EA's `GameClient *TheGameClient`
+// (?TheGameClient@@3PAVGameClient@@A, defined in GameClient.cpp); this TU
+// keeps its ClientFrameSubsystem view of it and casts at the use.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientFrameSubsystem *theGameClientView() { return (ClientFrameSubsystem *)TheGameClient; }
 extern const void *g_0110F29C[];
 extern Int __cdecl GetGameClientRandomValue(Int lo, Int hi, char *file, Int line);
 
@@ -156,7 +161,7 @@ Anim2D::Anim2D(Anim2DTemplate *animTemplate, Anim2DCollection *collectionSystem)
 	{
 		m_currentFrame = (UnsignedShort)GetGameClientRandomValue(
 			0, m_template->getNumFrames() - 1, (char *)"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\Anim2D.cpp", 0x1AF);
-		m_lastUpdateFrame = TheGameClientClientUpdate->getFrame();
+		m_lastUpdateFrame = theGameClientView()->getFrame();
 	}
 	else
 	{
