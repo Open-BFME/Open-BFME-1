@@ -5,7 +5,8 @@
 class AptValue { public: int toInteger(); };
 extern AptValue* g_bfmeFallbackDB;
 extern AptValue** g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 struct Rva008B6D70Obj {
 	char m_pad0[0x20];
 	char m_rect[0x20];
@@ -19,7 +20,7 @@ AptValue* aptSetField008B6D70(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x30) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x30) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -29,7 +30,7 @@ AptValue* aptSetField008B6E50(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x28) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x28) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -39,7 +40,7 @@ AptValue* aptSetField008B6EA0(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x3C) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x3C) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -49,7 +50,7 @@ AptValue* aptSetField008B6EF0(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x24) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x24) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -59,7 +60,7 @@ AptValue* aptSetField008B6F40(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x34) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x34) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -69,7 +70,7 @@ AptValue* aptSetField008B7260(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x38) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	*(int*)((char*)self + 0x38) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
 	return Rva008B6D70MakeValue(0);
 }

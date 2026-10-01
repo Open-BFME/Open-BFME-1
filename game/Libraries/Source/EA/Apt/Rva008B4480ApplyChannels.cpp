@@ -9,13 +9,14 @@ struct Value008B4480 {
 };
 struct Owner008B4480 { char pad00[0x20]; Value008B4480 *m_f20; };
 extern Value008B4480 **g_bfmeArr1233;
-extern int g_stack01338748;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 extern int key01338668,key01338670,key01338568,key0133856C,key01338514,key01338518,key013384F4,key013384F8;
 AptValue *aptApplyChannels008B4480(Owner008B4480 *self,int argc) {
  if(argc<=0) goto done;
  {
-  Value008B4480 *v=g_bfmeArr1233[g_stack01338748-1];
+  Value008B4480 *v=g_bfmeArr1233[Rva008AE770TheStack.m_count-1];
   Value008B4480 *out=self->m_f20;
   if(!((unsigned char)~(out->m_flags>>15)&1)) {
    unsigned bits=v->m_flags;

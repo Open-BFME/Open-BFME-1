@@ -48,7 +48,7 @@ public:
 
 };
 class Rva00899770;
-class Rva008AE770Stack {
+struct Rva008AE770Stack {
 public:
     Rva00899770 *createString(void *value, int unused, BfmeStrVKI *name, int one, int another, int zero);
 };

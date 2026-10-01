@@ -76,14 +76,15 @@ public:
 };
 
 extern Rva8CD130Value **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva00896AF0Tracker *g_bfmeTracker4310;
 extern Rva8CD130Value *g_bfmeFallbackDB;
 extern void bfmeResetEVF(void *context, BfmeStrVKI *text);
 
 Rva8CD130Value *rva008AE600(void *context)
 {
-	Rva8CD130Value *value = g_bfmeArr1233[g_bfmeCount1233 - 1];
+	Rva8CD130Value *value = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
 	Rva8CD130String name;
 	value->getName(&name);
 	int length = name.m_data->m_length;

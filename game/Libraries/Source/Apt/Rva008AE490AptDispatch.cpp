@@ -103,18 +103,19 @@ extern void d_008accf0(void);
 extern void d_008a18c0(void);
 
 extern Rva8CD130Value **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 extern Rva008A18C0Holder *g_bfmeHolderBU;
 
 int rva008AE490(void *context, int value)
 {
-	Rva8CD130Value *top = g_bfmeArr1233[g_bfmeCount1233 - 1];
-	Rva8CD130Value *third = g_bfmeArr1233[g_bfmeCount1233 - 3];
+	Rva8CD130Value *top = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
+	Rva8CD130Value *third = g_bfmeArr1233[Rva008AE770TheStack.m_count - 3];
 	Rva8CD130Value *fourth;
-	Rva8CD130Value *second = g_bfmeArr1233[g_bfmeCount1233 - 2];
+	Rva8CD130Value *second = g_bfmeArr1233[Rva008AE770TheStack.m_count - 2];
 	if (value >= 4)
-		fourth = g_bfmeArr1233[g_bfmeCount1233 - 4];
+		fourth = g_bfmeArr1233[Rva008AE770TheStack.m_count - 4];
 	else
 		fourth = 0;
 	Rva8CD130String name;

@@ -59,12 +59,13 @@ public:
     unsigned getKind() const { return field04 & 0x3f; }
     bool stringKind() const { unsigned f = field04; unsigned t = f & 0x3f; return (t == 1 || t == 42) && !((unsigned char)(~(f >> 15)) & 1); }
 };
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva8CD130Value **g_bfmeArr1233;
 extern void *g_bfmeResult1233;
 void *nativeStringSlot80At008B3AA0(Rva8CD130Value *owner, int count) {
     if (count >= 1 && owner->getKind() == 0x21) {
-        Rva8CD130Value *arg = g_bfmeArr1233[g_bfmeCount1233 - 1];
+        Rva8CD130Value *arg = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
         if (arg->stringKind()) {
             Rva8CD130String text;
             arg->getName(&text);
@@ -75,7 +76,7 @@ void *nativeStringSlot80At008B3AA0(Rva8CD130Value *owner, int count) {
 }
 void *nativeStringSlot88At008B3B70(Rva8CD130Value *owner, int count) {
     if (count >= 1 && owner->getKind() == 0x21) {
-        Rva8CD130Value *arg = g_bfmeArr1233[g_bfmeCount1233 - 1];
+        Rva8CD130Value *arg = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
         if (arg->stringKind()) {
             Rva8CD130String text;
             arg->getName(&text);

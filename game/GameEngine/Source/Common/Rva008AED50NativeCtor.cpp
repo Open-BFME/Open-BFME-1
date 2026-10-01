@@ -46,7 +46,8 @@ struct Rva008AED50Holder
 
 extern Rva008AED50Holder *g_bfmeHolderBU;    // retail 0x013377D8
 extern AptValue **g_bfmeArgBase;              // retail 0x01338750
-extern int g_bfmeArgCount;                    // retail 0x01338748
+struct Rva008AE770Stack { int m_count; };     // retail 0x01338748
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeFallbackDB;                 // retail 0x013379BC
 
 void *Rva008AED50Ctor(Rva008AED50Obj *obj, int argc)
@@ -61,7 +62,7 @@ void *Rva008AED50Ctor(Rva008AED50Obj *obj, int argc)
 	g_bfmeHolderBU->m_rectC = -9999.0f;
 	g_bfmeHolderBU->m_rectD = -9999.0f;
 
-	if (argc == 0 || !g_bfmeArgBase[g_bfmeArgCount - 1]->toInteger())
+	if (argc == 0 || !g_bfmeArgBase[Rva008AE770TheStack.m_count - 1]->toInteger())
 	{
 		g_bfmeHolderBU->m_fallbackX = (float)g_bfmeHolderBU->m_baseX - obj->m_field20;
 		g_bfmeHolderBU->m_fallbackY = (float)g_bfmeHolderBU->m_baseY - obj->m_field24;
@@ -69,22 +70,22 @@ void *Rva008AED50Ctor(Rva008AED50Obj *obj, int argc)
 
 	if (argc > 0)
 	{
-		g_bfmeHolderBU->m_rectA = ((BfmeE1239 *)g_bfmeArgBase[g_bfmeArgCount - 2])->bfmeF1239();
+		g_bfmeHolderBU->m_rectA = ((BfmeE1239 *)g_bfmeArgBase[Rva008AE770TheStack.m_count - 2])->bfmeF1239();
 		g_bfmeHolderBU->m_rectB = 0.0f;
 		g_bfmeHolderBU->m_rectC = 0.0f;
 		g_bfmeHolderBU->m_rectD = 0.0f;
 	}
 	if (argc > 1)
 	{
-		g_bfmeHolderBU->m_rectB = ((BfmeE1239 *)g_bfmeArgBase[g_bfmeArgCount - 3])->bfmeF1239();
+		g_bfmeHolderBU->m_rectB = ((BfmeE1239 *)g_bfmeArgBase[Rva008AE770TheStack.m_count - 3])->bfmeF1239();
 	}
 	if (argc > 2)
 	{
-		g_bfmeHolderBU->m_rectC = ((BfmeE1239 *)g_bfmeArgBase[g_bfmeArgCount - 4])->bfmeF1239();
+		g_bfmeHolderBU->m_rectC = ((BfmeE1239 *)g_bfmeArgBase[Rva008AE770TheStack.m_count - 4])->bfmeF1239();
 	}
 	if (argc > 3)
 	{
-		g_bfmeHolderBU->m_rectD = ((BfmeE1239 *)g_bfmeArgBase[g_bfmeArgCount - 5])->bfmeF1239();
+		g_bfmeHolderBU->m_rectD = ((BfmeE1239 *)g_bfmeArgBase[Rva008AE770TheStack.m_count - 5])->bfmeF1239();
 	}
 
 	return g_bfmeFallbackDB;

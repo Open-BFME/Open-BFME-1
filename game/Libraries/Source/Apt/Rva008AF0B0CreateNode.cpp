@@ -26,13 +26,14 @@ struct State008AF0B0 { char pad00[0xc]; Link008AF0B0 *m_fC; char pad10[0x14]; Bf
 struct Owner008AF0B0 {
  State008AF0B0 *state() { return m_f50; } int m_f0; unsigned m_flags; char pad08[0x48]; State008AF0B0 *m_f50; };
 extern AptValue **g_bfmeArr1233;
-extern int g_stack01338748;
+struct Rva008AE770Stack { int m_count; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 AptValue *aptCreateNode008AF0B0(Owner008AF0B0 *self,int argc) {
  if(argc!=2) return g_bfmeFallbackDB;
- Rva8CD130Value *v=(Rva8CD130Value*)g_bfmeArr1233[g_stack01338748-1];
- int key=g_bfmeArr1233[g_stack01338748-2]->toInteger();
+ Rva8CD130Value *v=(Rva8CD130Value*)g_bfmeArr1233[Rva008AE770TheStack.m_count-1];
+ int key=g_bfmeArr1233[Rva008AE770TheStack.m_count-2]->toInteger();
  Node008AF0B0 *node=(Node008AF0B0*)Rva008C5D70Alloc(0x40);
  node->m_f0=5;
  node->m_f8=0; node->m_fC=0; node->m_f10=0;
