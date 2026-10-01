@@ -11,16 +11,24 @@
 #include "ascii_string.h"
 
 class ThingTemplate;
+// The canonical retail type of the 0x012EF1D8 singleton; only ever used as a
+// pointee, so a forward declaration is enough.  The definition lives in
+// game_engine_subsystems.h.
+class ThingFactory;
 
 // Existing matched BFME ABI view of the retail ThingFactory body at
-// 0x00137E80.
+// 0x00137E80.  Kept as a TU-local view of the same object; the canonical
+// global is declared with its own type and the view is applied at the use.
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+// Canonical global at 0x012EF1D8
+// (?TheThingFactory@@3PAVThingFactory@@A), defined once in
+// game/GameEngine/Source/Common/Thing/ThingFactory.cpp.
+extern ThingFactory *TheThingFactory;
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -55,5 +63,5 @@ const ThingTemplate *BfmeVecVLH::rva000F9670(int index)
 		return 0;
 	}
 
-	return TheThingFactory->findTemplate(record->m_name);
+	return ((BfmeThingFactory *)TheThingFactory)->findTemplate(record->m_name);
 }
