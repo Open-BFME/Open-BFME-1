@@ -38,7 +38,7 @@ Gen_008BE660::Gen_008BE660(void)
 	m_bfmeThing = new BfmeThingBE();
 }
 
-extern char *g_bfmeArenaStart;					// retail 0x013378D0
+extern void *g_bfmeBufDWG;					// retail 0x013378D0
 extern char *g_bfmeArenaCursor;					// retail 0x013378D4
 extern char *g_bfmeArenaEnd;					// retail 0x013378D8
 
@@ -49,7 +49,7 @@ void __cdecl bfmeArenaInit(unsigned int size)
 {
 	char *block = (char *)WideAllocPtr(0x4000);
 
-	g_bfmeArenaStart = block;
+	g_bfmeBufDWG = block;
 	g_bfmeArenaCursor = block;
 	g_bfmeArenaEnd = block + size;
 
