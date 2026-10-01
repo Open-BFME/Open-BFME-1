@@ -56,7 +56,7 @@ public:
 	virtual void bfmeSlot6CVHJ();
 };
 
-class BfmeLogVHJ
+struct Rva00889690Obj
 {
 public:
 	virtual void bfmeOwn00VHJ();
@@ -89,15 +89,15 @@ public:
 	virtual class BfmeMsgVHJ *bfmeOwn6cVHJ(int a, int b);
 };
 
-extern BfmeLogVHJ *g_bfmeLogVHJ;
+extern Rva00889690Obj *g_rva00889690;
 
 int __cdecl bfmeGoVHJ()
 {
 	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
-		g_bfmeLogVHJ->bfmeOwn60VHJ();
-		g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("ShareExperienceBehavior::update")->bfmeSlot4cVHJ(2);
+		g_rva00889690->bfmeOwn60VHJ();
+		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("ShareExperienceBehavior::update")->bfmeSlot4cVHJ(2);
 	}
 	return 0x3fffffff;
 }
@@ -107,8 +107,8 @@ char __stdcall bfmeGoVHK(int a, int b, int c, int d, int e, int f)
 	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
-		g_bfmeLogVHJ->bfmeOwn60VHJ();
-		g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("GlowOutline buffs are no longer supported. They need to be removed from an INI file.")->bfmeSlot4cVHJ(2);
+		g_rva00889690->bfmeOwn60VHJ();
+		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("GlowOutline buffs are no longer supported. They need to be removed from an INI file.")->bfmeSlot4cVHJ(2);
 	}
 	return 0;
 }

@@ -36,7 +36,7 @@ public:
 	virtual void bfmeSlot6CVHJ();
 };
 
-class BfmeLogVHJ
+struct Rva00889690Obj
 {
 public:
 	virtual void bfmeOwn00VHJ();
@@ -69,7 +69,7 @@ public:
 	virtual class BfmeMsgVHJ *bfmeOwn6cVHJ(int a, int b);
 };
 
-extern BfmeLogVHJ *g_bfmeLogVHJ;
+extern Rva00889690Obj *g_rva00889690;
 
 struct BfmeCsVHM
 {
@@ -93,8 +93,8 @@ void __cdecl W3DRadarResetLock()
 		if (_bfme_debugReportingEnabled())
 		{
 			bfmeRecordVHJ(1);
-			g_bfmeLogVHJ->bfmeOwn60VHJ();
-			g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("A thread held onto DirectX for more than 20000msec.")->bfmeSlot4cVHJ(2);
+			g_rva00889690->bfmeOwn60VHJ();
+			g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("A thread held onto DirectX for more than 20000msec.")->bfmeSlot4cVHJ(2);
 		}
 	}
 	EnterCriticalSection(&g_bfmeCsVHM);

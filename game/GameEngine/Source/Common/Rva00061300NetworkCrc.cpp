@@ -10,7 +10,7 @@ extern bool g_bfmeDoneAPB;
 extern "C" char _bfmeTagAPB;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
 
-class Gen001336E5C
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00();
@@ -51,7 +51,7 @@ public:
 	virtual bool registerCommand(const char *text);
 };
 
-extern Gen001336E5C *TheGen001336E5C;
+extern Rva00889690Obj *g_rva00889690;
 
 class INIException
 {
@@ -68,7 +68,7 @@ int Rva00061300NetworkCrc(void)
 {
 	g_bfmeOnAPB = true;
 	TheCommandLineFlags |= 0x10000;
-	TheGen001336E5C->registerCommand("debug.add l + NETWORK_CRC");
+	g_rva00889690->registerCommand("debug.add l + NETWORK_CRC");
 	if (g_bfmeDoneAPB)
 	{
 		INIException error(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");

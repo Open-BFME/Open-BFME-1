@@ -12158,5 +12158,75 @@
   "after_sha256": "fc677408b13e77b500891dd6902e61b54cbe9f6a8f03ea1c77fa6cbef5d0455d",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1362.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1362.cpp",
+  "old_name": "BfmeLogVHJ",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "846d26d2529e9b73599ec0bdba41d5d053aa861b7a6f2511dfefbe39a5d414e7",
+  "after_sha256": "20f7343b676747748ad9b1862fa41ad7300863d1c970d7c368f3838d392d1037",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/BuffState00409E20.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/BuffState00409E20.cpp",
+  "old_name": "DebugView00409E20",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "9ae34f42dc74ddd164bfa339291dff0436c874009a38efb6652507fd4e282395",
+  "after_sha256": "0b7da63392b740e6b32cf00423d0e2c4495e3f8e6c327cbcad5d8f7ad363d0a0",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/System/INI_parseVictorySystemDefinition.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/System/INI_parseVictorySystemDefinition.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "3db9bed1cdca679ec2c385b4531726fd80c7f4fad1e43320c4d0bece07be2d75",
+  "after_sha256": "891e86f3f9e1fb79eb1c06ea4c9b5bdfbd58617cd17d5e8efc91ba4721c84257",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/VertexBufferClass_WriteLockClass_QAEDestructorThunk.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/VertexBufferClass_WriteLockClass_QAEDestructorThunk.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "d65c94587f5f99c3e66f991cdef3435e5cfc86fcf5bb52aa6627eef3cd3e81f4",
+  "after_sha256": "c010ed962479deb61b9e65a398cc8b6bc4701743991e41e366f30fe22cdacae1",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/W3DRadarResetLock.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/W3DRadarResetLock.cpp",
+  "old_name": "BfmeLogVHJ",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "4d13978752ddbbf590c5ad46d53563f5a168ac766eae64f3b5ca8a786c4ced1f",
+  "after_sha256": "0f8cecbf71fdae20d8360a7bd9dc9dda5ffcdb486fc9465453b7e71c72c1845e",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "old_name": "BfmeLogVHJ",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "2a7bba19c11fb4a04740acda70ba458487e29dd56d757ca6430d5a160227006f",
+  "after_sha256": "80c9954f5d3d504504f35c7a2d3cd41db49092b1797b0f6fad8343de3203a75b",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/file/StreamingArchiveFile.cpp",
+  "new_path": "game/Libraries/Source/file/StreamingArchiveFile.cpp",
+  "old_name": "BFMEIndexBufferDebugClass",
+  "new_name": "Rva00889690Obj",
+  "before_sha256": "f94d9c5ff69691ed4e353be32f4a8772e5d5cb8472e791e7844a3048ba5ac3c9",
+  "after_sha256": "e13e3fedd137d118518d6a6cc8046095e0133c1dddd4064381fc8bdd501968e8",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

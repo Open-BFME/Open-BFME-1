@@ -139,7 +139,7 @@ public:
 	virtual void bfmeSlot68VHJ(); virtual void bfmeSlot6CVHJ();
 };
 
-class BfmeLogVHJ
+struct Rva00889690Obj
 {
 public:
 	virtual void bfmeOwn00VHJ(); virtual void bfmeOwn04VHJ();
@@ -159,7 +159,7 @@ public:
 	virtual BfmeMsgVHJ *bfmeOwn6cVHJ(int a, int b);
 };
 
-extern BfmeLogVHJ *g_bfmeLogVHJ;
+extern Rva00889690Obj *g_rva00889690;
 
 class Rva0090C950Texture
 {
@@ -209,8 +209,8 @@ void BfmeThingVHN::bfmeGoVHN(int code)
 	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
-		g_bfmeLogVHJ->bfmeOwn60VHJ();
-		g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Texture '")->bfmeSlot38VHJ(t->m_bfme18)->bfmeSlot38VHJ("' is not a bump map format. Use run/art/textures/_convert_textures.bat to save as a v8u8 dds format to eliminate redundant loads.")->bfmeSlot4cVHJ(2);
+		g_rva00889690->bfmeOwn60VHJ();
+		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Texture '")->bfmeSlot38VHJ(t->m_bfme18)->bfmeSlot38VHJ("' is not a bump map format. Use run/art/textures/_convert_textures.bat to save as a v8u8 dds format to eliminate redundant loads.")->bfmeSlot4cVHJ(2);
 	}
 	t->bfmeTex30VHN();
 }

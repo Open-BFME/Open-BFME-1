@@ -128,7 +128,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Finish(int report);
 };
 
-class BFMEIndexBufferDebugClass
+struct Rva00889690Obj
 {
 public:
 	virtual void Slot00(void); virtual void Slot04(void); virtual void Slot08(void); virtual void Slot0C(void);
@@ -142,7 +142,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 
 Bool StreamingArchiveFile::openFromArchive(File *archiveFile, const AsciiString &filename, Int offset, Int size)
@@ -177,8 +177,8 @@ Bool StreamingArchiveFile::openFromArchive(File *archiveFile, const AsciiString 
 
 	if (compressionMarker == 0x15fb) {
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+		g_rva00889690->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = g_rva00889690->Get_Stream(0, 0);
 		stream->Put_String("Streaming from a compressed archive file is not supported")->Finish(1);
 	}
 

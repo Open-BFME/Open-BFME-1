@@ -25,7 +25,7 @@ public:
 	virtual DebugStream00409E20 *Finish(int report);
 };
 
-class DebugView00409E20
+struct Rva00889690Obj
 {
 public:
 	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
@@ -39,7 +39,7 @@ public:
 	virtual DebugStream00409E20 *Get_Stream(void *owner, void *context);
 };
 
-extern DebugView00409E20 *DebugGlobal00409E20;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 bool __cdecl _bfme_debugReportingEnabled(void);
 
@@ -74,8 +74,8 @@ void BuffState00409E20::apply(int type,void *arg,int count,const void *color,flo
   case 2:
    if(_bfme_debugReportingEnabled()) {
     _bfme_debugRecordCallsite(1);
-    DebugGlobal00409E20->Begin_Report();
-    DebugGlobal00409E20->Get_Stream(0,0)->Put_String("GlowOutline buffs are no longer supported. They need to be removed from an INI file.")->Finish(2);
+    g_rva00889690->Begin_Report();
+    g_rva00889690->Get_Stream(0,0)->Put_String("GlowOutline buffs are no longer supported. They need to be removed from an INI file.")->Finish(2);
    }
    break;
   }

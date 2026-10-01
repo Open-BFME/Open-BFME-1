@@ -103,7 +103,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Finish(int report);
 };
 
-class BFMEIndexBufferDebugClass
+struct Rva00889690Obj
 {
 public:
 	virtual void Slot00();
@@ -136,7 +136,7 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
 
 // ?iniParseVictorySystemDefinition@@YAXPAVINI@@@Z
@@ -149,10 +149,10 @@ void __cdecl iniParseVictorySystemDefinition(INI *ini)
 	if (TheVictorySystem == 0)
 	{
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->Begin_Report();
+		g_rva00889690->Begin_Report();
 		const char *text = name.str();
 		BFMEIndexBufferDebugStream *stream =
-			g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+			g_rva00889690->Get_Stream(0, 0);
 		stream->Put_String(Debug::Format("TheVictorySystem has not been initialized!.", text));
 		stream->Finish(1);
 	}

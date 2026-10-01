@@ -44,7 +44,7 @@ public:
 	virtual void slot4c(int value);
 };
 
-class Rva00904BE0Debug
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(void);
@@ -77,7 +77,7 @@ public:
 	virtual Rva00904BE0Message *slot6c(int first, int second);
 };
 
-extern Rva00904BE0Debug *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 
 // retail VA 0x0111D770: the "DX8 error " literal the debug stream reports.
 // Not recorded in dir32_addresses.csv, so it keeps an address-derived name.
@@ -88,8 +88,8 @@ static __forceinline void Rva00904BE0Report(long result)
 	if (result != 0)
 	{
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c(0, 0)
+		g_rva00889690->slot60();
+		g_rva00889690->slot6c(0, 0)
 			->slot38((const void *)g_111d770)
 			->slot00((void *)result)
 			->slot4c(1);
