@@ -43,10 +43,19 @@
 
 typedef __int64 FeslInt64;
 
+// Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
+// TU only calls that body through the message pointer, so it is spelled
+// through its defining class; the same pattern is used in
+// Common/Rva007F3980AttributeSerialize.cpp.
+class Rva007E8AC0
+{
+public:
+	void run( void );                                                // 0x007E8AC0
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
 	void addString( const char *key, const char *value );            // 0x007E8A10
 	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addInt64( const char *key, FeslInt64 value );               // 0x007E8E90
@@ -90,7 +99,7 @@ extern const char * const g_Rva0130A7A4;
 void __stdcall Rva007F4310( Rva007E8810Message *msg )
 {
 	const char *txn = g_Rva0130A7A4;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
 	msg->addString( "TXN", txn );
 }
@@ -98,7 +107,7 @@ void __stdcall Rva007F4310( Rva007E8810Message *msg )
 void __stdcall Rva007F4340( Rva007E8810Message *msg )
 {
 	const char *txn = g_Rva0130A798;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
 	msg->addString( "TXN", txn );
 }
@@ -106,7 +115,7 @@ void __stdcall Rva007F4340( Rva007E8810Message *msg )
 void __stdcall Rva007F3E50( Rva007E8810Message *msg, FeslInt64 clubId )
 {
 	const char *txn = g_Rva0130A774;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -115,7 +124,7 @@ void __stdcall Rva007F3E50( Rva007E8810Message *msg, FeslInt64 clubId )
 void __stdcall Rva007F3F40( Rva007E8810Message *msg, FeslInt64 clubId )
 {
 	const char *txn = g_Rva0130A744;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -124,7 +133,7 @@ void __stdcall Rva007F3F40( Rva007E8810Message *msg, FeslInt64 clubId )
 void __stdcall Rva007F3F90( Rva007E8810Message *msg, FeslInt64 clubId, int state )
 {
 	const char *txn = g_Rva0130A738;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -135,7 +144,7 @@ void __stdcall Rva007F3F90( Rva007E8810Message *msg, FeslInt64 clubId, int state
 void __stdcall Rva007F3AF0( Rva007E8810Message *msg, FeslInt64 clubId, FeslInt64 userId )
 {
 	const char *txn = g_Rva0130A720;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -145,7 +154,7 @@ void __stdcall Rva007F3AF0( Rva007E8810Message *msg, FeslInt64 clubId, FeslInt64
 void __stdcall Rva007F3A80( Rva007E8810Message *msg, FeslInt64 clubId, FeslInt64 userId, int state )
 {
 	const char *txn = g_Rva0130A72C;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -159,7 +168,7 @@ void __stdcall Rva007F3B50( Rva007E8810Message *msg, FeslInt64 clubId,
 	const char *txn = g_Rva0130A75C;
 	unsigned int i;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
@@ -179,7 +188,7 @@ void __stdcall Rva007F3B50( Rva007E8810Message *msg, FeslInt64 clubId,
 void __stdcall Rva007F2D10( Rva007E8810Message *msg, const char *key, int periodId )
 {
 	const char *txn = g_Rva0130A678;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'rank';
 	msg->addString( "TXN", txn );
 	msg->addString( "key", key );
@@ -190,7 +199,7 @@ void __stdcall Rva007F2B70( Rva007E8810Message *msg, const char *key, int ownerT
 	int minRank, int maxRank, int periodId, int periodPast )
 {
 	const char *txn = g_Rva0130A684;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'rank';
 	msg->addString( "TXN", txn );
 	msg->addString( "key", key );
@@ -205,7 +214,7 @@ void __stdcall Rva007F30F0( Rva007E8810Message *msg, const Rva007F30F0Owner *own
 	const char *recordName )
 {
 	const char *txn = g_Rva0130A6D8;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'recp';
 	msg->addString( "TXN", txn );
 	if( owner )
@@ -228,7 +237,7 @@ void __stdcall Rva007F3EA0( Rva007E8810Message *msg, bool memberOnly,
 	const char *lookupString, FeslInt64 userId, int state )
 {
 	const char *txn = g_Rva0130A750;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
 	msg->addString( "TXN", txn );
 	msg->addBool( "memberOnly", memberOnly );
@@ -245,7 +254,7 @@ void __stdcall Rva007F4240( Rva007E8810Message *msg, const char *clientString,
 	const char *SDKVersion, const char *clientPlatform, const char *clientType )
 {
 	const char *txn = g_Rva0130A78C;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
 	msg->addString( "TXN", txn );
 	msg->addString( "clientString", clientString );

@@ -19,10 +19,19 @@
 
 typedef __int64 FeslInt64;
 
+// Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
+// TU only calls that body through the message pointer, so it is spelled
+// through its defining class; the same pattern is used in
+// Common/Rva007F3980AttributeSerialize.cpp.
+class Rva007E8AC0
+{
+public:
+	void run( void );                                                // 0x007E8AC0
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
 	void addString( const char *key, const char *value );            // 0x007E8A10
 	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addBool( const char *key, bool value );                     // 0x007E8980
@@ -44,7 +53,7 @@ void __stdcall Rva007FC810( Rva007E8810Message *msg, const char *name,
 {
 	int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UGAM';
 	msg->m_depth = 3;
 	msg->addString( "NAME", name );
@@ -74,7 +83,7 @@ void __stdcall Rva007FC8F0( Rva007E8810Message *msg,
 {
 	int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UGDE';
 	msg->m_depth = 3;
 	for( index = 0; index < numAttributes; index++ )
@@ -91,7 +100,7 @@ void __stdcall Rva007FC990( Rva007E8810Message *msg, int pid,
 {
 	int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UPLA';
 	msg->m_depth = 3;
 	msg->addInt( "PID", pid );
@@ -109,7 +118,7 @@ void __stdcall Rva007FCBA0( Rva007E8810Message *msg, int pid,
 {
 	int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PENT';
 	msg->m_depth = 3;
 	msg->addInt( "PID", pid );
@@ -127,7 +136,7 @@ void __stdcall Rva007FCB10( Rva007E8810Message *msg, bool allowed, int pid,
 {
 	char text[ 28 ];
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EGRS';
 	msg->m_depth = 3;
 	msg->addBool( "ALLOWED", allowed );
@@ -142,7 +151,7 @@ void __stdcall Rva007FCCC0( Rva007E8810Message *msg, int lid, int gid, int pid,
 {
 	const char *typeName = 0;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'ABUS';
 	msg->m_depth = 3;
 	msg->addInt( "LID", lid );

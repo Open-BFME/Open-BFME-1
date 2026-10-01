@@ -20,10 +20,19 @@
 
 typedef __int64 FeslInt64;
 
+// Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
+// TU only calls that body through the message pointer, so it is spelled
+// through its defining class; the same pattern is used in
+// Common/Rva007F3980AttributeSerialize.cpp.
+class Rva007E8AC0
+{
+public:
+	void run( void );                                                // 0x007E8AC0
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
 	void addString( const char *key, const char *value );            // 0x007E8A10
 	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addBool( const char *key, bool value );                     // 0x007E8980
@@ -48,7 +57,7 @@ void __stdcall Rva007FC3B0( Rva007E8810Message *msg, int lid, bool favOnly,
 {
 	unsigned int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GLST';
 	msg->m_depth = 3;
 	msg->addInt( "LID", lid );
@@ -80,7 +89,7 @@ void __stdcall Rva007FC290( Rva007E8810Message *msg, bool favOnly,
 {
 	unsigned int index;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'LLST';
 	msg->m_depth = 3;
 	msg->addBool( "FILTER-FAV-ONLY", favOnly );

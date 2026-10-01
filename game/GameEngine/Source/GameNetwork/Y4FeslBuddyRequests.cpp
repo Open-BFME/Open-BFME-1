@@ -28,10 +28,19 @@ typedef __int64 FeslInt64;
 
 // Class name is the claimed pin (ctor 0x007E8810).  Layout is the same object
 // V2FeslTxnRequests.cpp already recovered from reset()/add* stores.
+// Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
+// TU only calls that body through the message pointer, so it is spelled
+// through its defining class; the same pattern is used in
+// Common/Rva007F3980AttributeSerialize.cpp.
+class Rva007E8AC0
+{
+public:
+	void run( void );                                                // 0x007E8AC0
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
 	void addString( const char *key, const char *value );            // 0x007E8A10
 	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addInt64( const char *key, FeslInt64 value );               // 0x007E8E90
@@ -56,7 +65,7 @@ typedef Rva007E8810Message FeslTxnMessage;
 void __stdcall Rva007FAE40( FeslTxnMessage *msg, const char *lkey,
 	const char *prod, const char *vers, const char *pres, const char *rsrc )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'AUTH';
 	msg->m_depth = 3;
 	msg->addString( "LKEY", lkey );
@@ -73,7 +82,7 @@ void __stdcall Rva007FAEE0( FeslTxnMessage *msg, const char *user,
 	const char *pass, const char *prod, const char *vers, const char *pres,
 	const char *rsrc )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'AUTH';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -92,7 +101,7 @@ void __stdcall Rva007FAEE0( FeslTxnMessage *msg, const char *user,
 void __stdcall Rva007FAFB0( FeslTxnMessage *msg, const char *user,
 	const char *domain, const char *rsrc, bool dist, int maxResults )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'USCH';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -111,7 +120,7 @@ void __stdcall Rva007FAFB0( FeslTxnMessage *msg, const char *user,
 
 void __stdcall Rva007FB080( FeslTxnMessage *msg, const char *user )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PADD';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -119,7 +128,7 @@ void __stdcall Rva007FB080( FeslTxnMessage *msg, const char *user )
 
 void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PDEL';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -127,7 +136,7 @@ void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
 
 void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'TCKL';
 	msg->m_depth = 3;
 	if( user )
@@ -137,7 +146,7 @@ void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
 void __stdcall Rva007FB550( FeslTxnMessage *msg, int list, const char *user,
 	const char *group, const char *lsrc, bool pres )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'RDEL';
 	msg->m_depth = 3;
 	switch( list )
@@ -162,7 +171,7 @@ void __stdcall Rva007FB550( FeslTxnMessage *msg, int list, const char *user,
 void __stdcall Rva007FB390( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc, bool pres )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'RADM';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -176,7 +185,7 @@ void __stdcall Rva007FB390( FeslTxnMessage *msg, const char *user,
 void __stdcall Rva007FB4B0( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'MLST';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -189,7 +198,7 @@ void __stdcall Rva007FB4B0( FeslTxnMessage *msg, const char *user,
 void __stdcall Rva007FB620( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc, bool pres )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'RDEM';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -205,7 +214,7 @@ void __stdcall Rva007FB620( FeslTxnMessage *msg, const char *user,
 void __stdcall Rva007FB7B0( FeslTxnMessage *msg, const char *user,
 	const char *sess, const char *titl )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GINV';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -216,7 +225,7 @@ void __stdcall Rva007FB7B0( FeslTxnMessage *msg, const char *user,
 void __stdcall Rva007FB890( FeslTxnMessage *msg, const char *user,
 	const char *sess )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GRVK';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
@@ -225,7 +234,7 @@ void __stdcall Rva007FB890( FeslTxnMessage *msg, const char *user,
 
 void __stdcall Rva007FB9F0( FeslTxnMessage *msg, const char *addr, bool enab )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EPST';
 	msg->m_depth = 3;
 	msg->addString( "ADDR", addr );
@@ -245,7 +254,7 @@ static char *g_Rva012C3BC4;
 void __stdcall Rva007FC170( FeslTxnMessage *msg, const char *prod,
 	const char *vers, const char *plat, const char *locale )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'CONN';
 	msg->m_depth = 3;
 	msg->addString( "PROT", g_Rva012C3BC4 );
@@ -259,7 +268,7 @@ void __stdcall Rva007FC170( FeslTxnMessage *msg, const char *prod,
 void __stdcall Rva007FC210( FeslTxnMessage *msg, const char *hid,
 	const char *lkey, const char *name )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'USER';
 	msg->m_depth = 3;
 	msg->addString( "HID", hid );
@@ -271,7 +280,7 @@ void __stdcall Rva007FC210( FeslTxnMessage *msg, const char *hid,
 
 void __stdcall Rva007FC510( FeslTxnMessage *msg, int lid, int gid )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GDAT';
 	msg->m_depth = 3;
 	msg->addInt( "LID", lid );
@@ -280,7 +289,7 @@ void __stdcall Rva007FC510( FeslTxnMessage *msg, int lid, int gid )
 
 void __stdcall Rva007FCA40( FeslTxnMessage *msg, bool start )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UBRA';
 	msg->m_depth = 3;
 	msg->addBool( "START", start );
@@ -288,7 +297,7 @@ void __stdcall Rva007FCA40( FeslTxnMessage *msg, bool start )
 
 void __stdcall Rva007FCA70( FeslTxnMessage *msg, int lid, int gid, int port )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EGAM';
 	msg->m_depth = 3;
 	msg->addInt( "LID", lid );
@@ -298,7 +307,7 @@ void __stdcall Rva007FCA70( FeslTxnMessage *msg, int lid, int gid, int port )
 
 void __stdcall Rva007FCAD0( FeslTxnMessage *msg, int lid, int gid )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'ECNL';
 	msg->m_depth = 3;
 	msg->addInt( "LID", lid );
@@ -307,7 +316,7 @@ void __stdcall Rva007FCAD0( FeslTxnMessage *msg, int lid, int gid )
 
 void __stdcall Rva007FCC50( FeslTxnMessage *msg, int pid )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PLVT';
 	msg->m_depth = 3;
 	msg->addInt( "PID", pid );
@@ -315,7 +324,7 @@ void __stdcall Rva007FCC50( FeslTxnMessage *msg, int pid )
 
 void __stdcall Rva007FCE70( FeslTxnMessage *msg, int timeout )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'KEEP';
 	msg->m_depth = 3;
 	msg->addInt( "TIMO", timeout );
@@ -324,7 +333,7 @@ void __stdcall Rva007FCE70( FeslTxnMessage *msg, int timeout )
 void __stdcall Rva007FCEA0( FeslTxnMessage *msg, const char *ugid,
 	const char *secret, int port )
 {
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'HGAM';
 	msg->m_depth = 3;
 	msg->addString( "SECRET", secret );
