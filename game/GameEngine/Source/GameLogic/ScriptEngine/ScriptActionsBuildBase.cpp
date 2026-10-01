@@ -110,10 +110,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
-class ThingFactory
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate(const AsciiString &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // This BFME ILT is a five-byte thunk to the retail base-building module body.
@@ -164,7 +164,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern ThingFactory *TheThingFactory;
+extern BfmeThingFactory *TheThingFactory;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -196,7 +196,8 @@ void ScriptActions::doBuildBaseBuilding(const AsciiString &buildingType,
 	if (player != TheScriptEngine->getCurrentPlayer())
 		return;
 
-	ThingTemplate *templateValue = TheThingFactory->findTemplate(buildingType);
+	ThingTemplate *templateValue =
+		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 
@@ -238,7 +239,8 @@ void ScriptActions::doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 	if (player != TheScriptEngine->getCurrentPlayer())
 		return;
 
-	ThingTemplate *templateValue = TheThingFactory->findTemplate(buildingType);
+	ThingTemplate *templateValue =
+		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 
@@ -280,7 +282,8 @@ void ScriptActions::doBuildBuildingOnFoundation(const AsciiString &buildingType,
 	if (player != TheScriptEngine->getCurrentPlayer())
 		return;
 
-	ThingTemplate *templateValue = TheThingFactory->findTemplate(buildingType);
+	ThingTemplate *templateValue =
+		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 	if (!player->canAffordBuild(templateValue))

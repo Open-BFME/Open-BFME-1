@@ -86,13 +86,13 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
-class ThingFactory
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate( const AsciiString &name );
+	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
-extern ThingFactory *TheThingFactory;
+extern BfmeThingFactory *TheThingFactory;
 
 void LivingWorldArmy::replenish( LivingWorldPlayerArmy *playerArmy )
 {

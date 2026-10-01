@@ -74,15 +74,18 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
-class ThingFactory
+// Retail's findTemplate body at 0x00137E80 is a member of BfmeThingFactory and
+// returns `const ThingTemplate *`; newObject here is only reached through the
+// j_0004494a ILT, so this view is the factory's ABI face in this TU.
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate( const AsciiString &name );
+	const ThingTemplate *findTemplate( const AsciiString &name );
 	Object *newObject( ThingTemplate *, Team *,
 		const volatile ObjectStatusMaskType &, void * );
 };
 
-extern ThingFactory *TheThingFactory;
+extern BfmeThingFactory *TheThingFactory;
 extern void j_000434c3();
 extern void j_0004494a();
 extern void j_0001e9d4();
@@ -118,7 +121,7 @@ private:
 };
 
 typedef void (__fastcall *SpecialAbilityCleanupCall)( SpecialAbilityUpdate * );
-typedef Object *(__fastcall *ThingFactoryNewObjectCall)( ThingFactory *,
+typedef Object *(__fastcall *ThingFactoryNewObjectCall)( BfmeThingFactory *,
 	ObjectStatusMaskType *, ThingTemplate *, Team *,
 	const volatile ObjectStatusMaskType &, void * );
 typedef void (__fastcall *ExperienceSinkCall)( ExperienceTracker *, Object *,
@@ -137,13 +140,13 @@ Object *SpecialAbilityUpdate::createSpecialObject()
 		((SpecialAbilityCleanupCall)j_000434c3)( this );
 	}
 
-	ThingTemplate *thingTemplate = TheThingFactory->findTemplate(
+	const ThingTemplate *thingTemplate = TheThingFactory->findTemplate(
 		data->m_specialObjectName );
 	if ( thingTemplate )
 	{
 		ObjectStatusMaskType statusMask;
 		specialObject = ((ThingFactoryNewObjectCall)j_0004494a)(
-			TheThingFactory, &statusMask, thingTemplate,
+			TheThingFactory, &statusMask, (ThingTemplate *)thingTemplate,
 			getObject()->getTeam(), statusMask, 0 );
 		if ( specialObject )
 		{

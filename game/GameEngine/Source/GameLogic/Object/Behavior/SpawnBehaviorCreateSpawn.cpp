@@ -255,8 +255,15 @@ private:
 class ThingFactory
 {
 public:
-	ThingTemplate *findTemplate(const AsciiString &);
 	Object *newObject(const ThingTemplate *, Team *, const ObjectStatusMaskType &, UnsignedInt);
+};
+
+// The name lookup is the BfmeThingFactory facade: retail's findTemplate body
+// at 0x00137E80 returns `const ThingTemplate *` and is a member of that class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &);
 };
 
 class GameLogic
@@ -432,7 +439,8 @@ Bool SpawnBehavior::createSpawn()
 
 	if (!newSpawn)
 	{
-		m_spawnTemplate = TheThingFactory->findTemplate(*getTemplateNameIterator());
+		m_spawnTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
+			*getTemplateNameIterator());
 		if (md->m_unknown19 && m_spawnTemplate)
 		{
 			Player *controllingPlayer = parent->getControllingPlayer();

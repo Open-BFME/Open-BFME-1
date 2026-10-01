@@ -43,7 +43,7 @@
 
 // BFME's findTemplate is out of line and takes only the name; ZH's is an inline
 // forwarder that passes the default check flag as a second argument.
-struct BFMEThingFactory { const ThingTemplate *findTemplate(const AsciiString &name); };
+struct BfmeThingFactory { const ThingTemplate *findTemplate(const AsciiString &name); };
 
 //-------------------------------------------------------------------------------------------------
 // ??0ObjectTypes@@ present-unmatched
@@ -144,7 +144,7 @@ Int ObjectTypes::prepForPlayerCounting( std::vector<const ThingTemplate *>& temp
 
 	AsciiStringVecIt it;
 	for (it = self->m_objectTypes.begin(); it != self->m_objectTypes.end(); ++it) {
-		const ThingTemplate *templ = ((BFMEThingFactory *)TheThingFactory)->findTemplate(*it);
+		const ThingTemplate *templ = ((BfmeThingFactory *)TheThingFactory)->findTemplate(*it);
 		if (templ) {
 			templates.push_back(templ);
 		}

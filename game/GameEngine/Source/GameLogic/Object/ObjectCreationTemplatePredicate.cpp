@@ -5,13 +5,15 @@
 class ThingTemplate;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
-class ThingFactory
+// The lookup itself is the BfmeThingFactory facade (const return, proven by
+// the retail body at 0x00137E80); accepts() still wants a mutable template.
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate( const AsciiString &name );
+	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
-extern ThingFactory *TheThingFactory;
+extern BfmeThingFactory *TheThingFactory;
 
 class Rva001DB720Predicate
 {
@@ -36,8 +38,8 @@ bool Rva001DB720NameList::anyTemplateAcceptedBy(
 {
 	for ( AsciiString *i = m_begin; i != m_end; ++i )
 	{
-		ThingTemplate *thingTemplate = TheThingFactory->findTemplate( *i );
-		if ( thingTemplate && predicate->accepts( thingTemplate ) )
+		const ThingTemplate *thingTemplate = TheThingFactory->findTemplate( *i );
+		if ( thingTemplate && predicate->accepts( (ThingTemplate *)thingTemplate ) )
 			return true;
 	}
 

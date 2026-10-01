@@ -154,7 +154,7 @@ public:
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Weapon.h"
 
-class BFMEThingFactory
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
@@ -936,7 +936,7 @@ void INI::parseThingTemplate(INI *ini, void *, void *store, const void *)
 	}
 	else
 	{
-		const ThingTemplate *thing = ((BFMEThingFactory *)TheThingFactory)->findTemplate(AsciiString(token));
+		const ThingTemplate *thing = ((BfmeThingFactory *)TheThingFactory)->findTemplate(AsciiString(token));
 		*(const ThingTemplate **)store = thing;
 	}
 }

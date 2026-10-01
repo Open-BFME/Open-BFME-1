@@ -12,7 +12,7 @@
 // `other`'s override chain (`other+4 -> +4 -> Overridable::getFinalOverride`)
 // to a 16-bit id at +0x478 and scans a caller-owned AsciiString vector
 // (`names`) through BfmeThingFactory::findTemplate (reached through the same
-// ICF-shared ILT thunk 0x00028560 as Rva0020AA00Registry::bfmeLookupZF),
+// ICF-shared ILT thunk 0x00028560 as TheThingFactory::findTemplate),
 // returning true the first time a found template's +0x478 id matches.
 //
 // Retail leaves the 16-bit id (`bx`) unset when the override chain is null
@@ -60,11 +60,15 @@ struct Gen_0023c9c0_Kind
 	UnsignedShort m_id;
 };
 
-struct Rva0020AA00Registry
+// The registry global at 0x012EF1D8 is EA's `TheThingFactory`; only the
+// findTemplate member is reached from this body.
+class ThingTemplate;
+class BfmeThingFactory
 {
-	void *bfmeLookupZF( void *key );
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
 };
-extern Rva0020AA00Registry *Rva0020AA00TheRegistry;
+extern BfmeThingFactory *Rva0020AA00TheRegistry;
 
 // The caller-owned name list: retail reads +0x00/+0x04 as begin/end, a
 // 4-byte (AsciiString) stride.
@@ -116,7 +120,7 @@ Bool Gen_0023c9c0_View::bfme( Gen_0023c9c0_Obj *other, void *mustBeNull,
 	for ( AsciiString *it = names->m_begin; it != names->m_end; ++it )
 	{
 		Gen_0023c9c0_Kind *found = (Gen_0023c9c0_Kind *)
-			Rva0020AA00TheRegistry->bfmeLookupZF( it );
+			Rva0020AA00TheRegistry->findTemplate( *it );
 		if ( found && found->m_id == id )
 			return true;
 	}
