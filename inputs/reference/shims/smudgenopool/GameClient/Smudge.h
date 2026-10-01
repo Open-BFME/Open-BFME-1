@@ -80,8 +80,8 @@ public:
 
 	virtual void init(void);
 	virtual void reset (void);
-	virtual void ReleaseResources(void) {}
-	virtual void ReAcquireResources(void) {}
+	virtual void ReleaseResources(void);
+	virtual void ReAcquireResources(void);
 
 	SmudgeSet *addSmudgeSet(void);
 	void removeSmudgeSet(SmudgeSet &mySmudge);

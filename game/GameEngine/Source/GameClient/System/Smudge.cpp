@@ -143,3 +143,14 @@ void SmudgeSet::removeSmudgeFromSet(Smudge &mySmudge)
 	m_freeSmudgeList.Add_Head(&mySmudge);	//add to free list
 	m_usedSmudgeCount--;
 }
+
+// Retail SmudgeManager vtable VA 0x01110164 slots +0x0C/+0x10 route
+// through ILTs 0x000296DB/0x000129D6 to these distinct one-byte bodies.
+// The existing BFME header supplies the class and native virtual declarations.
+void SmudgeManager::ReleaseResources(void)
+{
+}
+
+void SmudgeManager::ReAcquireResources(void)
+{
+}

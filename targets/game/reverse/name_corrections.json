@@ -11159,16 +11159,16 @@
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
  },
-{
- "old_path": "targets/game/reverse/attempts/0x00757e70.cpp",
- "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawBfmeConstructor.cpp",
- "old_name": "SegLineRendererClass",
- "new_name": "Rva0094F960",
- "before_sha256": "57ae7dc0815c0e26b6747475f13467f1dc68b3cfd755c7e815bcb441684e27d7",
- "after_sha256": "2bb5d66180d1aa8c229fbbf3051beb2573060bc30586924f31da90697b0a13a5",
- "evidence": "targets/game/reverse/identity_evidence/0x00757e70-94f960-thunk.md",
- "reason": "SegLineRendererClass remains declared for TextureMapMode. Rva0094F960 is a separate local view for the 11-byte thunk at 0x0094F960. The checker paired the two declarations by shape and treated them as a rename, but the source keeps both declarations."
-},
+ {
+  "old_path": "targets/game/reverse/attempts/0x00757e70.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawBfmeConstructor.cpp",
+  "old_name": "SegLineRendererClass",
+  "new_name": "Rva0094F960",
+  "before_sha256": "57ae7dc0815c0e26b6747475f13467f1dc68b3cfd755c7e815bcb441684e27d7",
+  "after_sha256": "2bb5d66180d1aa8c229fbbf3051beb2573060bc30586924f31da90697b0a13a5",
+  "evidence": "targets/game/reverse/identity_evidence/0x00757e70-94f960-thunk.md",
+  "reason": "SegLineRendererClass remains declared for TextureMapMode. Rva0094F960 is a separate local view for the 11-byte thunk at 0x0094F960. The checker paired the two declarations by shape and treated them as a rename, but the source keeps both declarations."
+ },
  {
   "old_path": "game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp",
   "new_path": "game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp",
@@ -11178,5 +11178,25 @@
   "after_sha256": "906ae41c0164c5e5dbc4734219012594ba97d03bee75e60ec763c6395b87a521",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/Smudge.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva005D4500Noop.cpp",
+  "old_name": "init",
+  "new_name": "Rva005D4500Noop",
+  "before_sha256": "b0d5cdfaf4944f2f20d41168f1de2419c2761385d92634c285f3bb17364899f7",
+  "after_sha256": "36749ac57a02b5cc32ded9d2ebb2172fb5cd51b36fe35d0b23f997f14349acb5",
+  "evidence": "targets/game/reverse/identity_evidence/smudge-native-vtable-routes.md",
+  "reason": "The old SmudgeManager init home005D4500 is independently disproven: real init is005D37F0;005D4500 is an unrelated display callback with unknown original identity/ABI. The native init remains named in Smudge.cpp; this source pairing follows the retired wrong address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "init",
+  "new_name": "Rva005D4500Noop",
+  "before_sha256": "01ba84bf4bff462ecddef713c50090ede04fbcf46f6b9f97a42a901b81053898",
+  "after_sha256": "9eee0885ced60b3658399a525bfa2951a7fd41136f21861fbf8902c588e8c717",
+  "evidence": "targets/game/reverse/identity_evidence/smudge-native-vtable-routes.md",
+  "reason": "Same-address identity correction: ctor/vtable and matched native base-init caller prove actual Smudge init at005D37F0; matched W3DDisplay literal callback store disproves Smudge ownership at005D4500. Exact ledger-row hashes are supplied by the name guard."
  }
 ]
