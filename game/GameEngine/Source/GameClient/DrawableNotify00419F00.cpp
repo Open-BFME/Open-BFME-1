@@ -106,7 +106,7 @@ class GameLogic
   public:
     char m_00[0x3c];
     unsigned m_frame;
-    Object *bfmeFind1011(int);
+    Object *findObjectByID(int);
 };
 extern GameLogic *TheGameLogic;
 
@@ -221,7 +221,7 @@ void Drawable::notify00419F00()
                 return;
 
             int castleID = member->m_18;
-            Object *castle = TheGameLogic->bfmeFind1011(castleID);
+            Object *castle = TheGameLogic->findObjectByID(castleID);
             if (!castle)
                 return;
 

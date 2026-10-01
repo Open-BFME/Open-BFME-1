@@ -60,7 +60,7 @@ public:
 class GameLogic
 {
 public:
-	Object *bfmeFind1011( int id );
+	Object *findObjectByID( int id );
 };
 
 extern GameLogic *TheGameLogic;
@@ -79,7 +79,7 @@ int Rva002E6170ObjectRandomChance( lua_State *state )
 		lua_pushnil( state );
 		return 0;
 	}
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( object )
 	{
 		bool flag = true;
@@ -114,7 +114,7 @@ int Rva002E5FF0ObjectFieldName( lua_State *state )
 		lua_pushnil( state );
 		return 1;
 	}
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( object )
 	{
 		void *field2 = object->m_team->m_field4;
@@ -137,7 +137,7 @@ int ObjectTestModelCondition( lua_State *state )
 		lua_pushnil( state );
 		return 1;
 	}
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( object )
 	{
 		const char *name = lua_tostring( state, 2 );
@@ -206,7 +206,7 @@ int Rva002E9F70ObjectDock( lua_State *state )
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )
 		return 0;
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( !object )
 		return 0;
 	void *p1 = object->m_at208;
@@ -269,7 +269,7 @@ int Rva002E60B0ObjectOverrideName( lua_State *state )
 		lua_pushnil( state );
 		return 1;
 	}
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( object )
 	{
 		ThingTemplate *thingTemplate = object->m_thingTemplate;
@@ -293,7 +293,7 @@ int Rva002E5F40ObjectDescribe( lua_State *state )
 		lua_pushnil( state );
 		return 1;
 	}
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	AsciiString result = DescribeObject( object );
 	lua_pushstring( state, result.m_data ? (const char *)result.m_data + 8 : g_bfmeEmptyAscii );
 	return 1;
@@ -318,7 +318,7 @@ int ObjectSetEnragedState( lua_State *state )
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )
 		return 0;
-	Rva002E6B70Object *object = (Rva002E6B70Object *)TheGameLogic->bfmeFind1011( id );
+	Rva002E6B70Object *object = (Rva002E6B70Object *)TheGameLogic->findObjectByID( id );
 	if( !object )
 		return 0;
 	bool flag = Rva00990210Lookup( state, 2 ) != 0;
@@ -343,7 +343,7 @@ int ObjectSetChanting( lua_State *state )
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )
 		return 0;
-	Rva002E6A00Object *object = (Rva002E6A00Object *)TheGameLogic->bfmeFind1011( id );
+	Rva002E6A00Object *object = (Rva002E6A00Object *)TheGameLogic->findObjectByID( id );
 	if( !object )
 		return 0;
 	bool flag = Rva00990210Lookup( state, 2 ) != 0;
@@ -359,7 +359,7 @@ int ObjectSetDelayedDeath( lua_State *state )
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )
 		return 0;
-	Object *object = TheGameLogic->bfmeFind1011( id );
+	Object *object = TheGameLogic->findObjectByID( id );
 	if( !object )
 		return 0;
 	bool delayed = Rva00990210Lookup( state, 2 ) != 0;
@@ -436,7 +436,7 @@ int ObjectDispatchEvent( lua_State *state )
 	unsigned objectID = Rva00990030Lookup( state, 1 );
 	if( !objectID && lua_type( state, 1 ) != 1 )
 		return 0;
-	Object *object = TheGameLogic->bfmeFind1011( objectID );
+	Object *object = TheGameLogic->findObjectByID( objectID );
 	if( !object )
 		return 0;
 

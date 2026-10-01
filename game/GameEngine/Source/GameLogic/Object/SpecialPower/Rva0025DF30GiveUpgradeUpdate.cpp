@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+class Object;
+
 class Rva0025DF30Object
 {
 public:
@@ -11,7 +13,7 @@ public:
 class GameLogic
 {
 public:
-	Rva0025DF30Object *findObject( int id );
+	Object *findObjectByID( int id );
 };
 
 extern GameLogic *TheGameLogic;
@@ -29,7 +31,8 @@ void Rva0025DF30GiveUpgradeUpdate::update()
 {
 	if ( m_objectId != 0 )
 	{
-		Rva0025DF30Object *object = TheGameLogic->findObject( m_objectId );
+		Rva0025DF30Object *object =
+			(Rva0025DF30Object *)TheGameLogic->findObjectByID( m_objectId );
 		if ( object != 0 )
 		{
 			object->applyUpgrade( 0x41 );

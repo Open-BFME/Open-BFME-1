@@ -133,7 +133,7 @@ class GameLogic
   public:
     char m_00[0x3c];
     unsigned m_frame;
-    Object *bfmeFind1011(int);
+    Object *findObjectByID(int);
 };
 extern GameLogic *TheGameLogic;
 class Eva
@@ -237,7 +237,7 @@ void Drawable::react0041EBD0(const ReactionInfo0041EBD0 *info)
     if (!((BFMESelectionStatusBits *)object)->test(0x93) &&
         !((BFMESelectionStatusBits *)object)->test(0x3e) && !object->testStatus(STATUS37))
     {
-        Object *source = TheGameLogic->bfmeFind1011(info->m_08);
+        Object *source = TheGameLogic->findObjectByID(info->m_08);
         if (source && !source->query((Object *)player, 1))
         {
             bool played = true;

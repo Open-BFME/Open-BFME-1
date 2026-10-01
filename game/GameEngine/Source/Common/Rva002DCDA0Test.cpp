@@ -101,7 +101,7 @@ public:
 class GameLogic
 {
 public:
-	Object *bfmeFind1011(int id);
+	Object *findObjectByID(int id);
 };
 
 class Weapon
@@ -132,7 +132,7 @@ unsigned char Rva002DCDA0::test(void *first, void *second)
 	if (!Rva002DF120::test(first, second))
 		return 0;
 
-	Object *found = TheBfmeGameLogic->bfmeFind1011(
+	Object *found = TheBfmeGameLogic->findObjectByID(
 		((Rva002DCDA0ObjectId *)first)->m_id);
 	if (found == 0 || *(void **)((unsigned char *)found + 0x1fc) == 0)
 		return 1;

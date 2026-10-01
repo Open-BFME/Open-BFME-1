@@ -35,7 +35,7 @@ class Object
 class GameLogic
 {
 public:
-	Object *bfmeFind1011(int id);
+	Object *findObjectByID(int id);
 };
 
 extern GameLogic *TheGameLogic;
@@ -156,7 +156,7 @@ int ObjectBroadcastEventToAllies(lua_State *state)
 	if (!objectID && lua_type(state, 1) != 1)
 		return 0;
 
-	Object *object = TheGameLogic->bfmeFind1011(objectID);
+	Object *object = TheGameLogic->findObjectByID(objectID);
 	if (object == 0)
 		return 0;
 
