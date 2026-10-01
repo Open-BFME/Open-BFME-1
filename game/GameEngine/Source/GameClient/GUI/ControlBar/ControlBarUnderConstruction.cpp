@@ -130,7 +130,14 @@ public:
 	Player *m_localPlayer;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+class PlayerList;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
+
+// The same object as ThePlayerList; these bodies read it through this view.
+static inline Rva002EE330PlayerList *rva002EE330ThePlayers( void )
+{
+	return (Rva002EE330PlayerList *)ThePlayerList;
+}
 
 // The global at 0x012F4B98. Its two entry points here are the already
 // matched bodies at 0x0058C040 and 0x005976B0, reached through their
@@ -214,7 +221,7 @@ void ControlBar::populateUnderConstruction(Object *objectUnderConstruction)
 	_STL::vector<GameWindow *> windows;
 
 	Bool underConstruction = ((BfmeTargetJB *)objectUnderConstruction)->bfmeTailJB();
-	Bool lit = ((BfmePlayersERH *)Rva002EE330ThePlayers)->bfmeBusyERH() || underConstruction;
+	Bool lit = ((BfmePlayersERH *)rva002EE330ThePlayers())->bfmeBusyERH() || underConstruction;
 
 	// set the cancel construction button
 	const CommandButton *commandButton = findCommandButton("Command_CancelConstruction");
@@ -239,7 +246,7 @@ void ControlBar::populateUnderConstruction(Object *objectUnderConstruction)
 			((BfmeUnit1013 *)win)->bfmeStop1013(1);
 			win->winClearStatus(0x40000000);
 		}
-		else if (((BfmeMemberRV *)Rva002EE330ThePlayers->m_localPlayer)->bfmeAskRV())
+		else if (((BfmeMemberRV *)rva002EE330ThePlayers()->m_localPlayer)->bfmeAskRV())
 		{
 			((BfmeUnit1013 *)win)->bfmeStop1013(0);
 			win->winClearStatus(0x40000000);

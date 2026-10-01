@@ -100,7 +100,8 @@ typedef void (__fastcall *Rva004A2F80ReceiverCall)(ControlBar *);
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
 extern GameClient *TheGameClient;
-extern BfmeThingRV *Rva004A2F80Players;
+class PlayerList;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 extern void *g_obj12F4C38;
 void *GadgetButtonGetData(GameWindow *window);
 
@@ -186,7 +187,7 @@ void ControlBar::update()
 		updateContextPurchaseScience();
 	if (m_UIDirty) {
 		evaluateContextUI();
-		populateSpecialPowerShortcut((Player *)Rva004A2F80Players->bfmePickRV());
+		populateSpecialPowerShortcut((Player *)((BfmeThingRV*)ThePlayerList)->bfmePickRV());
 		repopulateBuildTooltipLayout();
 	}
 	if (m_currContext == 7) {

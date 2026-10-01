@@ -62,7 +62,14 @@ struct Rva002EE330PlayerList
 	Player *m_local;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+class PlayerList;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
+
+// The same object as ThePlayerList; this body reads it through this view.
+static inline Rva002EE330PlayerList *rva002EE330ThePlayers( void )
+{
+	return (Rva002EE330PlayerList *)ThePlayerList;
+}
 
 class BfmeAptScreenBase
 {
@@ -134,7 +141,7 @@ Int BfmeAptScreenInGameChat::rva00513BF0( GameWindow *list, void *selected, Int 
 	Int localStatus = 0;
 	if ( !skipStatusFilter )
 	{
-		Player *localPlayer = Rva002EE330ThePlayers->m_local;
+		Player *localPlayer = rva002EE330ThePlayers()->m_local;
 		if ( localPlayer != 0 )
 			localStatus = _bfme_getInternetPlayerStatus( localPlayer->getPlayerDisplayName() );
 	}

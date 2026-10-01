@@ -2368,7 +2368,13 @@ struct Rva002EE330PlayerList
 	Rva00589320Player *getLocalPlayer( void );
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The same object as ThePlayerList (retail [0x012ED748]); this body reads it
+// through the local view above.
+static inline Rva002EE330PlayerList *rva002EE330ThePlayers( void )
+{
+	return (Rva002EE330PlayerList *)ThePlayerList;
+}
+
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;
 class BannerUI;
@@ -2453,7 +2459,7 @@ void InGameUI::update( void )
 	GameWindow *moneyWin = TheWindowManager->winGetWindowFromId( NULL, moneyWindowKey );
 	GameWindow *powerWin = TheWindowManager->winGetWindowFromId( NULL, powerWindowKey );
 
-	Player *moneyPlayer = reinterpret_cast<Player *>( Rva002EE330ThePlayers->getLocalPlayer() );
+	Player *moneyPlayer = reinterpret_cast<Player *>( rva002EE330ThePlayers()->getLocalPlayer() );
 	if( moneyPlayer )
 	{
 		Int currentMoney = *reinterpret_cast<Int *>( reinterpret_cast<UnsignedByte *>( moneyPlayer ) + 0x4c );

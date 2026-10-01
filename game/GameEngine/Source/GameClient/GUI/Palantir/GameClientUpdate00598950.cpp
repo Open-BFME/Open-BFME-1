@@ -19,7 +19,8 @@ extern BfmeThingAOA *Radar00598950;
 class Rva000DF7F0 { public: int inactive() const; };
 class BfmeMemberRV;
 class BfmeThingRV { public: BfmeMemberRV *bfmePickRV(); };
-extern BfmeThingRV *Players00598950;
+class PlayerList;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 class Rva003BDF70Owner { public: int combinedSpanCount(); };
 class CampaignManager { public: unsigned char isMissionObjectiveEligible(int); };
 extern CampaignManager *TheLivingWorldLogic;
@@ -101,7 +102,7 @@ void Rva00597FC0Client::update()
   else {Rva00564E70();Rva00564ED0();stateAt0c()->field1f4=0;}
   bits58.b6=active;
  }
- bool inactive=TheGameLogic && TheGameLogic->_bfme_isInMultiplayerGame() && (unsigned char)((Rva000DF7F0*)Players00598950)->inactive();
+ bool inactive=TheGameLogic && TheGameLogic->_bfme_isInMultiplayerGame() && (unsigned char)((Rva000DF7F0*)ThePlayerList)->inactive();
  if(inactive!=bits58.b7) {if(inactive) Rva00564F00();else Rva00564F30();bits58.b7=inactive;}
  if(!byte_4c5) {
   if(TheLivingWorldLogic && (!at00598950<bool>(TheLivingWorldLogic,0x2c) || !at00598950<bool>(TheLivingWorldLogic,0x2d)) &&
@@ -127,7 +128,7 @@ void Rva00597FC0Client::update()
  } else {
   delete field_4cc;field_4cc=0;
   ((Call00598950)j_0002f51d)(this);
-  BfmeMemberRV *player=Players00598950->bfmePickRV();
+  BfmeMemberRV *player=((BfmeThingRV*)ThePlayerList)->bfmePickRV();
   AsciiString &overrideSide=at00598950<AsciiString>(player,0x698);
   const char *p=*(const char *const*)&overrideSide;
   if(p && *(const unsigned short*)(p+4)) side=overrideSide;

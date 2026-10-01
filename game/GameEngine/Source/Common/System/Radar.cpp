@@ -81,7 +81,14 @@ struct Rva002EE330PlayerList
 {
 	Rva00589320Player *getLocalPlayer();
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+
+// The same object as ThePlayerList (retail [0x012ED748]); these bodies read it
+// through the local view above.
+static inline Rva002EE330PlayerList *rva002EE330ThePlayers( void )
+{
+	return (Rva002EE330PlayerList *)ThePlayerList;
+}
+
 extern void j_00009ca0();
 extern void j_0001483a();
 extern void j_000179bd();
@@ -661,7 +668,7 @@ void Radar::addObject( Object *obj )
 		{
 			if( BfmeIsNeutralControlled( object ) )
 				return;
-		Player *localPlayer = (Player *)Rva002EE330ThePlayers->getLocalPlayer();
+		Player *localPlayer = (Player *)rva002EE330ThePlayers()->getLocalPlayer();
 			if( localPlayer == NULL )
 				return;
 			struct BFMEObjectTeamField
@@ -724,14 +731,14 @@ allocate_radar_object:
 		{
 			if( update->isDisguised() )
 			{
-				Player *clientPlayer = (Player *)Rva002EE330ThePlayers->getLocalPlayer();
+				Player *clientPlayer = (Player *)rva002EE330ThePlayers()->getLocalPlayer();
 				if( clientPlayer != NULL &&
 					BfmeGetRelationship( player,
 					*(Team **)((unsigned char *)clientPlayer + 0x230) ) != ALLIES &&
 					BfmeIsPlayerActive( clientPlayer ) )
 				{
 					Player *disguisedPlayer =
-						((Rva000F4250PlayerListCall *)Rva002EE330ThePlayers)->getNthPlayer(
+						((Rva000F4250PlayerListCall *)rva002EE330ThePlayers())->getNthPlayer(
 							update->getDisguisedPlayerIndex() );
 					//Neutrals and enemies will see this disguised unit as the team it's disguised as.
 					player = disguisedPlayer;
@@ -751,7 +758,7 @@ allocate_radar_object:
 		// Local is okay because radar display is not synced.
 		player = ((BfmeRadarContainView *)contain)
 			->getApparentControllingPlayer(
-			(Player *)Rva002EE330ThePlayers->getLocalPlayer() );
+			(Player *)rva002EE330ThePlayers()->getLocalPlayer() );
 		if( player )
 			useIndicatorColor = false;
 	}

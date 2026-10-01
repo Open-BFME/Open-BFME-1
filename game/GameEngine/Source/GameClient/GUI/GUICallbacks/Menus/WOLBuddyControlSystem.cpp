@@ -338,7 +338,14 @@ class Rva004ED400PlayerList
 		return m_local;
 	}
 };
-extern Rva004ED400PlayerList *ThePlayerList;
+class PlayerList;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
+
+// The same object as ThePlayerList; this body reads it through this view.
+static inline Rva004ED400PlayerList *rva004ED400ThePlayerList( void )
+{
+	return (Rva004ED400PlayerList *)ThePlayerList;
+}
 class GameSpyGameSlot
 {
   public:
@@ -451,7 +458,7 @@ WindowMsgHandledType BuddyControlSystem(GameWindow *window, UnsignedInt msg, Win
 				break;
 
 			if (TheGameSpyGame && TheGameSpyGame->isInGame() && TheGameSpyGame->isGameInProgress() &&
-				!ThePlayerList->getLocalPlayer()->isPlayerActive())
+				!rva004ED400ThePlayerList()->getLocalPlayer()->isPlayerActive())
 			{
 				for (Int i = 0; i < MAX_SLOTS; ++i)
 				{
