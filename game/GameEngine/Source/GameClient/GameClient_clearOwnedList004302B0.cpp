@@ -5,7 +5,18 @@
 // virtual at +0x1C with the MSVC deleting flag (push 1). Deallocator is
 // the STLport small-node helper already pinned at 0x0082E5F0.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+class Gen_00430440;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_00430440;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 class BfmeOwnedItem
 {
@@ -54,7 +65,7 @@ void Gen_00430440::bfmeClear(void)
 	{
 		BfmeOwnNode *current = walk;
 		walk = walk->m_bfmeNext;
-		bfmeDeallocate(current, sizeof(BfmeOwnNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(current, sizeof(BfmeOwnNode));
 	}
 
 	m_bfmeList->m_bfmeNext = m_bfmeList;

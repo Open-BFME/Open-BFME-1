@@ -1,7 +1,18 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
 void __cdecl operator delete(void *block);
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+class Rva006152A0Vector;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Rva006152A0Vector;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 struct Rva006152A0Node;
 
@@ -64,6 +75,6 @@ void Rva006152A0Vector::destroy()
 		if (bytes > 0x80)
 			operator delete(m_begin);
 		else
-			bfmeDeallocate(m_begin, bytes);
+			_STL::__node_alloc<true, 0>::_M_deallocate(m_begin, bytes);
 	}
 }

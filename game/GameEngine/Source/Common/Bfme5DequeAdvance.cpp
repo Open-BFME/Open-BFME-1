@@ -11,7 +11,18 @@
 // it shows up twice: once as the freed size and once as the offset to the new
 // end.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+class Gen_008FA900;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_008FA900;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 struct BfmeDequeElem { char m_bfmeBytes[0x14]; };
 
@@ -37,7 +48,7 @@ void Gen_008FA900::bfmeAdvance(void)
 	}
 
 	if (m_bfmeFirst)
-		bfmeDeallocate(m_bfmeFirst, 6 * sizeof(BfmeDequeElem));
+		_STL::__node_alloc<true, 0>::_M_deallocate(m_bfmeFirst, 6 * sizeof(BfmeDequeElem));
 
 	m_bfmeNode = m_bfmeNode + 1;
 	m_bfmeFirst = *m_bfmeNode;

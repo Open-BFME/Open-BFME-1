@@ -10,7 +10,20 @@
 // Saving the successor instead and freeing the current node swaps which
 // pointer lives in the callee-saved register and moves the push into the loop.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+class Gen_000CE820;
+class Gen_001F2AA0;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_000CE820;
+	friend class ::Gen_001F2AA0;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 struct BfmeClearNode
 {
@@ -40,7 +53,7 @@ void Gen_000CE820::bfmeClear(void)
 
 		node = node->m_bfmeNext;
 
-		bfmeDeallocate(current, sizeof(BfmeClearNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(current, sizeof(BfmeClearNode));
 	}
 
 	m_bfmeList->m_bfmeNext = m_bfmeList;
@@ -68,7 +81,7 @@ void Gen_001F2AA0::bfmeClear(void)
 
 		node = node->m_bfmeNext;
 
-		bfmeDeallocate(current, sizeof(BfmeClearNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(current, sizeof(BfmeClearNode));
 	}
 
 	m_bfmeList->m_bfmeNext = m_bfmeList;

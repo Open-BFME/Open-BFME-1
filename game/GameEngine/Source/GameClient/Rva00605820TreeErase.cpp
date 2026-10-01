@@ -7,7 +7,18 @@
 // eight-byte destruction prefix releases a pointer at +4 and a string at +0;
 // the remaining 0x58 bytes are opaque and do not establish a full value type.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+class Rva00605820Tree;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Rva00605820Tree;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 class Rva00605080Record
 {
@@ -40,7 +51,7 @@ void Rva00605820Tree::eraseSubtree(Rva00605820Node *node)
         eraseSubtree(node->m_right);
         Rva00605820Node *left = node->m_left;
         node->m_record.~Rva00605080Record();
-        bfmeDeallocate(node, sizeof(Rva00605820Node));
+        _STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(Rva00605820Node));
         node = left;
     }
 }

@@ -37,7 +37,18 @@ struct Rva00595160Slot
 
 extern void j_000022bb();
 extern void j_0000c117();
-extern void bfmeDeallocate( void *, unsigned int );
+class Rva00595160;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Rva00595160;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 typedef Rva00595160Template *(__fastcall *Rva00595160OverrideCall)(
 	Rva00595160Template *);
@@ -101,7 +112,7 @@ void Rva00595160::update( Rva00595160Argument *argument )
 			previous->m_next = next;
 			next->m_previous = previous;
 
-			bfmeDeallocate( node, 0x14 );
+			_STL::__node_alloc<true, 0>::_M_deallocate( node, 0x14 );
 			return;
 		}
 		node = node->m_next;

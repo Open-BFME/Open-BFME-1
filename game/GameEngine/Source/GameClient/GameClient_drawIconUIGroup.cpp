@@ -3,7 +3,18 @@
 // Retail 0x00430330 (166B) clears one of GameClient's ten queued icon stages.
 // W3DView::draw reaches it through the incremental-link thunk at 0x0000DBC0.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+class GameClient;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::GameClient;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 extern void j_000042a5();
 
 class Display
@@ -92,7 +103,7 @@ void GameClient::drawIconUIGroup(int stage)
 	{
 		IconNode *current = walk;
 		walk = walk->m_next;
-		bfmeDeallocate(current, sizeof(IconNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(current, sizeof(IconNode));
 	}
 
 	m_iconLists[stage]->m_next = m_iconLists[stage];

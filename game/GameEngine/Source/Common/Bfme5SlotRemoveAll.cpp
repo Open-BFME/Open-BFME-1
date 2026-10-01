@@ -11,7 +11,18 @@
 // this itself is spilled to a stack slot in the prologue and reloaded at the
 // bottom of the outer loop to re-read the end pointer.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+class Gen_002E0990;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_002E0990;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 struct BfmeSlotNode
 {
@@ -61,7 +72,7 @@ void Gen_002E0990::bfmeRemoveAll(void *value, int key)
 					previous->m_bfmeNext = next;
 					next->m_bfmePrev = previous;
 
-					bfmeDeallocate(node, sizeof(BfmeSlotNode));
+					_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(BfmeSlotNode));
 				}
 
 				node = next;

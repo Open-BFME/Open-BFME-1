@@ -10,7 +10,20 @@
 // without one compiles to. The second null test folds away because the holder
 // sits in a register the calls cannot touch.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+class Gen_0043F5D0;
+class Gen_0043FBB0;
+
+// STLport's private node-pool entry point at retail 0x0082E5F0.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_0043F5D0;
+	friend class ::Gen_0043FBB0;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 class BfmeInner
 {
@@ -62,7 +75,7 @@ void Gen_0043F5D0::bfmeClear(void)
 		previous->m_bfmeNext = next;
 		next->m_bfmePrev = previous;
 
-		bfmeDeallocate(node, sizeof(BfmeHoldNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(BfmeHoldNode));
 
 		node = next;
 	}
@@ -99,7 +112,7 @@ void Gen_0043FBB0::bfmeClear(void)
 		previous->m_bfmeNext = next;
 		next->m_bfmePrev = previous;
 
-		bfmeDeallocate(node, sizeof(BfmeHoldNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(BfmeHoldNode));
 
 		node = next;
 	}
