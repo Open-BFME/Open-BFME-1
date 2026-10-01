@@ -118,13 +118,16 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-struct Rva0020AA00Registry;
 struct Rva002EE330PlayerList;
+
+// Retail's singleton at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`;
+// this TU keeps its own BfmeThingFactory ABI view and casts at the use.
+class ThingFactory;
 
 extern ScriptEngine *TheScriptEngine;
 extern TeamFactory *TheTeamFactory;
 extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
-extern Rva0020AA00Registry *Rva0020AA00TheRegistry;
+extern ThingFactory *TheThingFactory;
 extern const Real g_bfmeK1253;
 
 class ScriptConditions
@@ -159,7 +162,7 @@ Bool ScriptConditions::evaluateHasCommandPointsToBuildTeam(Parameter *player,
 	for (Int i = 0; i < prototype->m_memberCount; ++i)
 	{
 		const ThingTemplate *tmpl =
-			((BfmeThingFactory *)Rva0020AA00TheRegistry)
+			((BfmeThingFactory *)TheThingFactory)
 				->findTemplate(prototype->m_members[i].m_templateName);
 		if (tmpl != 0)
 		{

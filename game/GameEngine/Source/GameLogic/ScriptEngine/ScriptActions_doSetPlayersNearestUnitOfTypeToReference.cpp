@@ -138,8 +138,12 @@ protected:
 		const AsciiString &referenceName);
 };
 
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeThingFactory ABI view and casts at the use.
+class ThingFactory;
+
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 
 // ?doTeamSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVParameter@@0@Z
@@ -164,7 +168,7 @@ void ScriptActions::doTeamSetPlayersNearestUnitOfTypeToReference(
 	else
 	{
 		const ThingTemplate *thingTemplate =
-			TheThingFactory->findTemplate(objectType);
+			((BfmeThingFactory *)TheThingFactory)->findTemplate(objectType);
 		if (!thingTemplate)
 			return;
 

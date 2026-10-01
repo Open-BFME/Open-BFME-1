@@ -79,7 +79,11 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeThingFactory ABI view and casts at the use.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class BfmeAwakenLog
 {
@@ -138,7 +142,8 @@ Int W3DShrubBuffer::rva007209F0(const AsciiString &templateName, Int shadowKind,
 {
 	if (templateName.isEmpty())
 		return -2;
-	const ThingTemplate *tmpl = TheThingFactory->findTemplate(templateName);
+	const ThingTemplate *tmpl =
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(templateName);
 	if (tmpl == 0)
 		return -2;
 	const ModuleData *module = tmpl->getDrawModuleInfo().getNthData(0);

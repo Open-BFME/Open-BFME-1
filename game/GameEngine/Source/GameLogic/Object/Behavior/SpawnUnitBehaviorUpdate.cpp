@@ -99,7 +99,12 @@ class BfmeThingFactory
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern BfmeThingFactory *TheThingFactory;
+
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeThingFactory ABI view and casts at the use.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class ControlBar
 {
@@ -196,7 +201,8 @@ UpdateSleepTime SpawnUnitBehavior::update()
 	Rva000C7CD0 *availability = (Rva000C7CD0 *)((unsigned char *)player + 0x30);
 	if (availability == 0)
 		return UPDATE_SLEEP_5;
-	const ThingTemplate *unit = TheThingFactory->findTemplate(data->m_unitName);
+	const ThingTemplate *unit =
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(data->m_unitName);
 	if (unit == 0 || !availability->ok((Rva000C7CD0Obj *)unit, 0))
 		return UPDATE_SLEEP_5;
 	const CommandButton *button = TheControlBar->findCommandButton(data->m_unitCommand);

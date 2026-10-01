@@ -20,7 +20,11 @@ public:
 	BfmeResFDA *bfmeLookFDA(BfmeSubFDA *s);
 };
 
-extern BfmeGlobFDA *g_bfmeObjFDA;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeGlobFDA ABI view and casts at the use.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 struct BfmeThingFDA
 {
@@ -56,7 +60,7 @@ struct BfmeThingFDA
 void BfmeThingFDA::bfmeGoFDA()
 {
 	BfmeSubFDA *s = &(*(BfmeHeldFDA **)((char *)this - 0xe0))->m_bfmeSub;
-	BfmeResFDA *r = g_bfmeObjFDA->bfmeLookFDA(s);
+	BfmeResFDA *r = ((BfmeGlobFDA *)TheThingFactory)->bfmeLookFDA(s);
 	if (r)
 		bfmeVirt25FDA(r);
 }

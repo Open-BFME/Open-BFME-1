@@ -246,9 +246,13 @@ protected:
 	Bool rva00326da0( Parameter *playerParameter, Parameter *templateParameter );
 };
 
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeThingFactory ABI view and casts at the use.
+class ThingFactory;
+
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 
 Bool ScriptConditions::rva00326da0(
 	Parameter *playerParameter, Parameter *templateParameter )
@@ -259,7 +263,7 @@ Bool ScriptConditions::rva00326da0(
 	if( !player )
 		return false;
 
-	const ThingTemplate *wanted = TheThingFactory->findTemplate(
+	const ThingTemplate *wanted = ( ( BfmeThingFactory * )TheThingFactory )->findTemplate(
 		templateParameter->getString() );
 	if( !wanted )
 		return false;

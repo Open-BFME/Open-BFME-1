@@ -22,7 +22,11 @@ public:
 	BfmeS1096 *bfmeMake1096(int a);
 };
 
-extern BfmeM1096 *g_bfmeM1096;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`; this
+// TU keeps its own BfmeM1096 ABI view and casts at the use.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 class BfmeD1096
 {
@@ -81,7 +85,7 @@ void __stdcall bfmeGo1096C(int a, int b)
 
 void __stdcall bfmeGo1096D(int a, int b, char c)
 {
-	BfmeS1096 *s = g_bfmeM1096->bfmeMake1096(b);
+	BfmeS1096 *s = ((BfmeM1096 *)TheThingFactory)->bfmeMake1096(b);
 
 	if (!s)
 		return;
