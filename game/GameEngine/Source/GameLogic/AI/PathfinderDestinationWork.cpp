@@ -107,7 +107,9 @@ class Pathfinder
 public:
 	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);	///< ILT thunk at 0x000171E8
 
-	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
+protected:
+	void getRadiusAndCenter(const Object *object, Int &radius, bool &centerInCell);
+public:
 	bool iterateCircular2(ICoord2D *cell, Int limit, void *info);
 
 	bool adjustTargetDestination(const Object *object, const Object *target,
@@ -143,10 +145,10 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 	const Coord3D *targetPosition, const Weapon *weapon, Coord3D *destination)
 {
 	ICoord2D cellIndex;
-	Bool center;
+	bool center;
 	Coord3D adjustDest;
 
-	bfmeQuery((Object *)object, &cellIndex.x, &center);
+	getRadiusAndCenter(object, cellIndex.x, center);
 	adjustDest.x = destination->x;
 	adjustDest.y = destination->y;
 	adjustDest.z = destination->z;
@@ -165,8 +167,7 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 	info.m_target = (Object *)target;
 	info.m_targetPosition = targetPosition;
 	info.m_weapon = weapon;
-	bfmeQuery(info.m_object, &info.m_radius,
-		reinterpret_cast<Bool *>(&info.m_centerInCell));
+	getRadiusAndCenter(info.m_object, info.m_radius, info.m_centerInCell);
 	return iterateCircular2(&cellIndex, 0x190, &info);
 }
 

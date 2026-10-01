@@ -5,8 +5,9 @@ typedef int Int;
 class Object;
 class Pathfinder
 {
-public:
-    void bfmeQuery(Object *object, Int *radius, Int *center);
+	friend class Rva003E62B0Info;
+protected:
+    void getRadiusAndCenter(const Object *object, Int &radius, bool &center);
 };
 
 class Rva003E62B0Info
@@ -40,5 +41,5 @@ Rva003E62B0Info::Rva003E62B0Info(Pathfinder *pathfinder, Object *object,
 	m_a5 = five;
 	m_pathfinder = pf;
 	m_object = (Object *)obj;
-	pf->bfmeQuery((Object *)obj, &m_radius, &m_center);
+	pf->getRadiusAndCenter((Object *)obj, m_radius, reinterpret_cast<bool &>(m_center));
 }

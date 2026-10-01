@@ -40,8 +40,9 @@ enum PathfindLayerEnum { LAYER_INVALID = 0 };
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
-public:
-	void bfmeQuery( Object *object, int *radius, int *centerInCell );
+	friend class TightenPathStruct;
+protected:
+	void getRadiusAndCenter( const Object *object, int &radius, bool &centerInCell );
 };
 
 class TightenPathStruct
@@ -77,7 +78,7 @@ TightenPathStruct::TightenPathStruct( Pathfinder *pathfinder, Object *object,
 
 	this->adjustedDestination.zero();
 
-	this->pathfinder->bfmeQuery(this->object, &this->radius, &this->centerInCell);
+	this->pathfinder->getRadiusAndCenter(this->object, this->radius, reinterpret_cast<bool &>(this->centerInCell));
 
 	this->foundDestination = false;
 }

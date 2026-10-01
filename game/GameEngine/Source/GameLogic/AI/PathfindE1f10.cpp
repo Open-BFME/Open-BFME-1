@@ -50,7 +50,9 @@ class Pathfinder
 public:
 	Bool sameCell( Object *object, Coord3D fromPosition, Coord3D toPosition );
 
-	void bfmeQuery( Object *object, Int *radius, Bool *centerInCell );
+protected:
+	void getRadiusAndCenter( const Object *object, Int &radius, bool &centerInCell );
+public:
 	bool worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex );
 };
 
@@ -58,7 +60,7 @@ Bool Pathfinder::sameCell( Object *object, Coord3D fromPosition, Coord3D toPosit
 {
 	ICoord2D fromCell;
 	Bool centerInCell;
-	bfmeQuery( object, &fromCell.x, &centerInCell );
+	getRadiusAndCenter( object, fromCell.x, reinterpret_cast<bool &>(centerInCell) );
 
 	if (!centerInCell) {
 		fromPosition.x += PATHFIND_CELL_SIZE_F/2;

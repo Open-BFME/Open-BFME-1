@@ -68,7 +68,10 @@ class Pathfinder
 public:
 	Int bfmeLayerForPosition(Object *object, Coord3D worldPosition);
 
-	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
+protected:
+	void getRadiusAndCenter(const Object *object, Int &radius, bool &centerInCell);
+
+public:
 	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 	PathfindCell *getGroundCell(Int cellX, Int cellY)
@@ -97,8 +100,8 @@ Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D worldPosition)
 		if (object->get())
 			return LAYER_GROUND;
 
-		Bool center;
-		bfmeQuery(object, &cellIndex.x, &center);
+		bool center;
+		getRadiusAndCenter(object, cellIndex.x, center);
 		if (!center)
 		{
 			worldPosition.x += 5.0f;

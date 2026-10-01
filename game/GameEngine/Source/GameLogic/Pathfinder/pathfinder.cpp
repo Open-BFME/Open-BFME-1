@@ -48,8 +48,10 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
-public:
-	void bfmeQuery(Object *obj, Int *radius, Bool *center);
+	friend class Rva003E6110Info;
+	friend class Rva003E6200Info;
+protected:
+	void getRadiusAndCenter(const Object *obj, Int &radius, bool &center);
 };
 
 class Rva003E6110Info
@@ -99,8 +101,8 @@ Rva003E6110Info::Rva003E6110Info(Pathfinder *pathfinder, Object *obj,
 		notComputer = 1;
 	m_notComputer = notComputer;
 
-	(*(Pathfinder * volatile *)&m_pathfinder)->bfmeQuery(m_obj, &m_radius,
-		&m_center);
+	(*(Pathfinder * volatile *)&m_pathfinder)->getRadiusAndCenter(m_obj, m_radius,
+		reinterpret_cast<bool &>(m_center));
 	m_layer = TheTerrainLogic->getLayerForDestination(obj,
 		(const Coord3D *)&m_pos);
 	if (m_groupPos != 0)
@@ -155,7 +157,7 @@ Rva003E6200Info::Rva003E6200Info(Pathfinder *pathfinder, Object *obj, void *arg3
 		notComputer = 1;
 	m_notComputer = notComputer;
 
-	(*(Pathfinder * volatile *)&m_pathfinder)->bfmeQuery(m_obj, &m_radius,
-		&m_center);
+	(*(Pathfinder * volatile *)&m_pathfinder)->getRadiusAndCenter(m_obj, m_radius,
+		reinterpret_cast<bool &>(m_center));
 	m_layer = TheTerrainLogic->getLayerForDestination(o, c);
 }

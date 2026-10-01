@@ -77,8 +77,9 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
+protected:
+	void getRadiusAndCenter( const Object *object, Int &radius, bool &centerInCell );
 public:
-	void bfmeQuery( Object *object, Int *radius, Int *centerInCell );
 	PathfindCell *bfmeGetCellByIndicesTwin( PathfindLayerEnum layer,
 		Int cellX, Int cellY );
 
@@ -90,7 +91,7 @@ void Pathfinder::bfmeObjectCell( Object *object )
 {
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
-	bfmeQuery( object, &radius.i, &center.i );
+	getRadiusAndCenter( object, radius.i, reinterpret_cast<bool &>(center.i) );
 	Bool centerInCell = *(volatile Bool *)&center.b;
 
 	ICoord2D cell;
@@ -120,7 +121,7 @@ void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cellIndex )
 {
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
-	bfmeQuery( object, &radius.i, &center.i );
+	getRadiusAndCenter( object, radius.i, reinterpret_cast<bool &>(center.i) );
 	Bool centerInCell = center.b;
 
 	if (centerInCell) {
