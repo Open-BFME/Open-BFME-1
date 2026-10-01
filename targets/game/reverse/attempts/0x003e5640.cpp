@@ -1,5 +1,5 @@
 // ??0BfmeCheckMovementInfo@@QAE@PAVPathfinder@@PAVObject@@HHHHH@Z
-// partial score=0.379947 date=2026-09-25
+// partial score=0.4037 date=2026-10-01
 // Retain inherited field spellings for navigation; layout and accesses below
 // are established from retail offsets, not from those spellings.
 // Retail RVA 003E5640 /379. Corrected bank: template reads are not Player reads;
@@ -71,8 +71,8 @@ BfmeCheckMovementInfo::BfmeCheckMovementInfo(
  bool computer=object->bfmeIsComputerControlled();
  m_zone.at00=parameter3;
  m_zone.at05=computer;
- m_zone.at04=(flag==0);
  m_zone.at08=index-1;
+ m_zone.at04=(flag==0);
  m_allowPinched=(unsigned char)parameter7;
  m_coordinateZone=m_zone;
  m_coordinateSamePlayer=(unsigned char)parameter4;
