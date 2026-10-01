@@ -1,5 +1,5 @@
 // ?bfmeSendRC@BfmeOwnerRC@@QAEDPAVBfmeUnitRC@@PAVBfmeHolderRC@@PAX222@Z
-// partial score=0.9946 date=2026-09-30
+// partial score=1.0 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // ?bfmeSendRC@BfmeOwnerRC@@QAEDPAVBfmeUnitRC@@PAVBfmeHolderRC@@PAX222@Z, retail 0x00413A40, 922 bytes.
 
@@ -75,6 +75,7 @@ extern TerrainLogic *TheTerrainLogic;
 
 float ASin(float);
 
+static __forceinline float Rva00413A40Scale(float component, double radius) { return radius * component * 0.5; }
 class BfmeUnitRC;
 class BfmeHolderRC;
 
@@ -113,8 +114,8 @@ char BfmeOwnerRC::bfmeSendRC(BfmeUnitRC *unit, BfmeHolderRC *holder, void *posAr
 		forward.x = *(const volatile float *)&dir->x * major * 0.5;
 		forward.y = dir->y * major * 0.5;
 		Coord2DBase side;
-		side.x = perp.x * minor * 0.5;
-		side.y = perp.y * minor * 0.5;
+		side.x = Rva00413A40Scale(perp.x, minor);
+		side.y = Rva00413A40Scale(perp.y, minor);
 
 		Coord3D corners[4];
 		corners[0].x = pos->x - forward.x + side.x;
@@ -154,7 +155,7 @@ char BfmeOwnerRC::bfmeSendRC(BfmeUnitRC *unit, BfmeHolderRC *holder, void *posAr
 			normal.z *= inv;
 		}
 
-		float pitchSine = normal.x * dir->x + normal.y * dir->y + normal.z * dir->z;
+		float pitchSine = *(const volatile float *)&normal.x * dir->x + normal.y * dir->y + normal.z * dir->z;
 		*pitch = ASin(pitchSine);
 		float rollSine = normal.x * perp.x + normal.y * perp.y + normal.z * perp.z;
 		*roll = ASin(rollSine);
@@ -165,7 +166,7 @@ char BfmeOwnerRC::bfmeSendRC(BfmeUnitRC *unit, BfmeHolderRC *holder, void *posAr
 	sample.y = 0.0f;
 	sample.z = 1.0f;
 	TheTerrainLogic->getLayerHeight(pos->x, pos->y, obj->getLayer(), &sample, true);
-	float pitchSine = sample.x * dir->x + sample.y * dir->y;
+	float pitchSine = *(const volatile float *)&sample.x * dir->x + sample.y * dir->y;
 	*pitch = ASin(pitchSine);
 	float rollSine = sample.x * perp.x + sample.y * perp.y;
 	*roll = ASin(rollSine);
