@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+//
 // A based list constructor.
 //
 // The base runs first, then the most-derived vftable goes in, then the list
@@ -59,15 +61,12 @@ public:
 	BfmeCtorNodeD *m_bfmeNode;				// +0x00
 };
 
-class BfmeCtorBaseD
-{
-public:
-	BfmeCtorBaseD(void);					// retail 0x009A1A30
-	virtual ~BfmeCtorBaseD(void);
-
-private:
-	int m_bfmeField;					// +0x04
-};
+// The base is the real SubsystemInterface, not a TU-local stand-in: retail's
+// 0x009A1A30/0x009A1A40 bodies are its constructor and destructor, and the
+// header's `AsciiString m_name` at +0x04 is the four bytes the old
+// `int m_bfmeField` placeholder stood for.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
 
 struct BfmeArrayElementD
 {
@@ -76,7 +75,7 @@ struct BfmeArrayElementD
 	~BfmeArrayElementD(void) {}
 };
 
-class Gen_000FDA80 : public BfmeCtorBaseD
+class Gen_000FDA80 : public SubsystemInterface
 {
 public:
 	Gen_000FDA80(void);

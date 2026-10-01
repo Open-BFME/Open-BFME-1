@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+//
 // Four destructors over a vector member and its neighbours.
 
 //
@@ -60,14 +62,11 @@ public:
 	int *m_bfmeEnd;						// +0x08
 };
 
-class BfmeBaseP
-{
-public:
-	virtual ~BfmeBaseP(void);				// retail 0x009A1A40
-
-private:
-	int m_bfmeField;					// +0x04
-};
+// The primary base is the real SubsystemInterface, not a TU-local stand-in:
+// retail's 0x009A1A40 body is its destructor, and the header's `AsciiString
+// m_name` at +0x04 is the four bytes the old `int m_bfmeField` stood for.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
 
 class BfmeBaseQ
 {
@@ -75,7 +74,7 @@ public:
 	virtual ~BfmeBaseQ(void) {}
 };
 
-class Gen_00378650 : public BfmeBaseP, public BfmeBaseQ
+class Gen_00378650 : public SubsystemInterface, public BfmeBaseQ
 {
 public:
 	virtual ~Gen_00378650(void);

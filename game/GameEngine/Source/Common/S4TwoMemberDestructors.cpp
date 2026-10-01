@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+//
 // Four destructors -- two of 95 bytes and two of 101 -- of polymorphic classes
 // with exactly two destructible members and a destructible base:
 //
@@ -46,6 +48,13 @@
 // callee is DECLARED, never defined, and pinned to the address its REL32
 // resolves to through the ILT thunk in the way.
 
+// The 0x009A1A40 base is the real SubsystemInterface, not a TU-local stand-in:
+// retail's body there is its destructor, and the header's `AsciiString m_name` at
+// +0x04 is the four bytes the old vptr-only stand-in padded around. BASESIZE
+// carries the base's size so the two members keep retail's offsets.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
+
 #define S4_MEMBER( ADDR ) struct S4Mem##ADDR { ~S4Mem##ADDR(); };
 #define S4_BASE( ADDR ) struct S4Base##ADDR { virtual ~S4Base##ADDR(); };
 
@@ -56,15 +65,17 @@ S4_MEMBER( 005B33B0 )
 S4_MEMBER( 00887940 )
 
 S4_BASE( 00479CD0 )
-S4_BASE( 009A1A40 )
 S4_BASE( 0077C1F0 )
 
-#define S4_TWO_MEMBER_DTOR( NAME, BASE, FIRST, SECOND, OFF1, OFF2 )            \
-	struct S4Dtor##NAME : S4Base##BASE                                         \
+// The two SubsystemInterface rows spell their padding explicitly because the
+// real base is eight bytes wide: the 0x005B37C0 row's first member starts at the
+// base's very end, with no gap at all for the old vptr-only stand-in to leave.
+#define S4_TWO_MEMBER_DTOR( NAME, BASE, PAD_A, FIRST, PAD_B, SECOND )           \
+	struct S4Dtor##NAME : BASE                                                 \
 	{                                                                          \
-		char m_padA[ ( OFF1 ) - 4 ];                                           \
+		char m_padA[ PAD_A ];                                                  \
 		S4Mem##FIRST m_first;                                                  \
-		char m_padB[ ( OFF2 ) - ( OFF1 ) - 1 ];                                \
+		char m_padB[ PAD_B ];                                                  \
 		S4Mem##SECOND m_second;                                                \
 		virtual ~S4Dtor##NAME();                                               \
 	};                                                                         \
@@ -72,7 +83,19 @@ S4_BASE( 0077C1F0 )
 	{                                                                          \
 	}
 
-S4_TWO_MEMBER_DTOR( 00494090, 00479CD0, 004948B0, 00887940, 0x218, 0x254 )
-S4_TWO_MEMBER_DTOR( 00587B30, 009A1A40, 005864A0, 005879C0, 0x18, 0x24 )
-S4_TWO_MEMBER_DTOR( 005B37C0, 009A1A40, 005B33B0, 005B33B0, 0x8, 0x14 )
-S4_TWO_MEMBER_DTOR( 0077EB20, 0077C1F0, 00887940, 00887940, 0x15C, 0x160 )
+#define S4_TWO_MEMBER_DTOR_NOPAD_A( NAME, BASE, FIRST, PAD_B, SECOND )          \
+	struct S4Dtor##NAME : BASE                                                 \
+	{                                                                          \
+		S4Mem##FIRST m_first;                                                  \
+		char m_padB[ PAD_B ];                                                  \
+		S4Mem##SECOND m_second;                                                \
+		virtual ~S4Dtor##NAME();                                               \
+	};                                                                         \
+	S4Dtor##NAME::~S4Dtor##NAME()                                              \
+	{                                                                          \
+	}
+
+S4_TWO_MEMBER_DTOR( 00494090, S4Base00479CD0, 0x218 - 4, 004948B0, 0x3B, 00887940 )
+S4_TWO_MEMBER_DTOR( 00587B30, SubsystemInterface, 0x18 - 8, 005864A0, 0xB, 005879C0 )
+S4_TWO_MEMBER_DTOR_NOPAD_A( 005B37C0, SubsystemInterface, 005B33B0, 0xB, 005B33B0 )
+S4_TWO_MEMBER_DTOR( 0077EB20, S4Base0077C1F0, 0x15C - 4, 00887940, 3, 00887940 )

@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+//
 // Three destructors over a vector and its neighbours.
 //
 // Members go in reverse declaration order with the state word counting down,
@@ -66,21 +68,20 @@ private:
 	int m_bfmeField;
 };
 
-class BfmeBaseT
-{
-public:
-	virtual ~BfmeBaseT(void);				// retail 0x009A1A40
+// The base is the real SubsystemInterface, not a TU-local stand-in: retail's
+// 0x009A1A40 body is its destructor, and the header's `AsciiString m_name` at
+// +0x04 is the first of the two ints the old placeholder stood for. The base is
+// eight bytes wide here, so four bytes of padding carry the vector to +0x0C.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
 
-private:
-	int m_bfmeFields[2];					// +0x04
-};
-
-class Gen_004B1670 : public BfmeBaseT
+class Gen_004B1670 : public SubsystemInterface
 {
 public:
 	virtual ~Gen_004B1670(void);
 
 private:
+	char m_pad08[4];						// +0x08
 	BfmeVecMemberU m_bfmeVector;				// +0x0C
 	int m_bfmePad[11];					// +0x18
 	BfmeTailT m_bfmeTail;					// +0x44

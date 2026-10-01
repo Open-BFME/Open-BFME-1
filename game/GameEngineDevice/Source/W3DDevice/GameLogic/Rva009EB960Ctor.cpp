@@ -1,5 +1,5 @@
 // ??0Rva009EB960@@QAE@XZ
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1
@@ -16,15 +16,12 @@ extern "C" __declspec(dllimport) unsigned long __cdecl _beginthread(void (__cdec
 
 #pragma intrinsic(memset)
 
-class BfmeBase1134
-{
-public:
-	BfmeBase1134();
-	virtual ~BfmeBase1134();
-
-private:
-	int m_value;
-};
+// The base is the real SubsystemInterface, not a TU-local stand-in: retail's
+// 0x009A1A30/0x009A1A40 bodies are its constructor and destructor, and the
+// header's `AsciiString m_name` at +0x04 is the four bytes the old
+// `int m_value` placeholder stood for.
+typedef bool Bool;
+#include "GameEngine/Source/Common/System/subsystem_interface.h"
 
 struct Gen_t_009f1470_p12cd
 {
@@ -133,7 +130,7 @@ private:
 typedef char GenDtorSizeCheck[sizeof(Gen_dtor_009eb9e0) == 0x1f4 ? 1 : -1];
 typedef char RegistryWorkerSizeCheck[sizeof(Rva009EEA70CleanupDeleting) == 0x2bf44 ? 1 : -1];
 
-class Rva009EB960 : public BfmeBase1134
+class Rva009EB960 : public SubsystemInterface
 {
 public:
 	Rva009EB960();

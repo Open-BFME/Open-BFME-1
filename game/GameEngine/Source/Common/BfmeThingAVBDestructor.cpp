@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: BfmeThingAVB destructor at retail 0x003B5170 (111B).
 // Sibling of blocked ctor 0x003B5100. Dual inheritance: SubsystemInterface-sized
@@ -22,13 +22,11 @@ private:
 	char m_bytes[12];
 };
 
-struct S4Base009A1A40
-{
-	virtual ~S4Base009A1A40();
-
-private:
-	int m_name04;
-};
+// The primary base is the real SubsystemInterface, not a TU-local stand-in:
+// retail's 0x009A1A40 body is its destructor, and the header's `AsciiString
+// m_name` at +0x04 is the same four bytes the old `int m_name04` stood for.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
 
 struct BfmeThingAVBSecondary
 {
@@ -38,7 +36,7 @@ private:
 	int m_field04;
 };
 
-class BfmeThingAVB : public S4Base009A1A40, public BfmeThingAVBSecondary
+class BfmeThingAVB : public SubsystemInterface, public BfmeThingAVBSecondary
 {
 public:
 	virtual ~BfmeThingAVB();

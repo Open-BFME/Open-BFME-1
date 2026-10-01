@@ -8,6 +8,12 @@
 
 #include "ascii_string.h"
 
+// The base is the real SubsystemInterface, not a TU-local stand-in: retail's
+// 0x009A1A40 body is its destructor, and the header's `AsciiString m_name` at
+// +0x04 is the same four bytes the old `int m_bfme04` placeholder stood for.
+typedef bool Bool;
+#include "System/subsystem_interface.h"
+
 template <int N>
 class BfmeGap1134
 {
@@ -15,16 +21,7 @@ public:
 	char m_bytes[N];
 };
 
-class BfmeBase1134
-{
-public:
-	virtual ~BfmeBase1134();
-
-private:
-	int m_bfme04;
-};
-
-class BfmeA1134 : public BfmeBase1134
+class BfmeA1134 : public SubsystemInterface
 {
 public:
 	virtual ~BfmeA1134();
