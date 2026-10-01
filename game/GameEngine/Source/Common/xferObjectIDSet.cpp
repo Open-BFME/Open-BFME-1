@@ -84,7 +84,8 @@ struct _Rb_global
 extern "C" XferException *__cdecl bfmeFormatText(XferException *, int, const char *, ...);
 extern "C" int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-extern void __cdecl bfmeCalcTGC(void *, int *);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 Xfer *xferObjectIDSet(Xfer *xfer, BfmeObjectIDTree *tree)
 {
@@ -105,7 +106,7 @@ Xfer *xferObjectIDSet(Xfer *xfer, BfmeObjectIDTree *tree)
 		RbNode *node = sent->m_left;
 		while (node != sent)
 		{
-			bfmeCalcTGC(x, &node->m_value);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)x, &node->m_value);
 			node = (RbNode *)_STL::_Rb_global<bool>::_M_increment(
 				(_STL::_Rb_tree_node_base *)node);
 		}
@@ -122,7 +123,7 @@ Xfer *xferObjectIDSet(Xfer *xfer, BfmeObjectIDTree *tree)
 		{
 			--count;
 			int value;
-			bfmeCalcTGC(x, &value);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)x, &value);
 			t->insertUnique(value);
 		}
 	}

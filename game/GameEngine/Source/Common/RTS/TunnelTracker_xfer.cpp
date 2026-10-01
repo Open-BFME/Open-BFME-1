@@ -62,7 +62,8 @@ public:
 
 class BfmeSeedTarget;
 extern BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
-extern void bfmeCalcTGC(void *target, int *item);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 struct BfmeObject
 {
@@ -114,7 +115,7 @@ void TunnelTracker::xfer(Xfer *xfer)
 			while (it != self->m_containList.end())
 			{
 				objectID = (*it)->m_id;
-				bfmeCalcTGC(xfer, (int *)&objectID);
+				Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (int *)&objectID);
 				++it;
 			}
 		}
@@ -122,13 +123,13 @@ void TunnelTracker::xfer(Xfer *xfer)
 		{
 			for (i = 0; i < self->m_containListSize; ++i)
 			{
-				bfmeCalcTGC(xfer, (int *)&objectID);
+				Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (int *)&objectID);
 				self->m_xferContainList.push_back(objectID);
 			}
 		}
 
 		receiver->xferUnsignedInt(self->m_tunnelCount);
-		bfmeCalcTGC(xfer, (int *)&self->m_curNemesisID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (int *)&self->m_curNemesisID);
 		receiver->xferUnsignedInt(self->m_nemesisTimestamp);
 	}
 }

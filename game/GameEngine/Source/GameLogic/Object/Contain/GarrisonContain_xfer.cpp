@@ -144,7 +144,8 @@ protected:
 	virtual void xfer(Xfer *xfer);
 };
 
-extern void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 extern void BfmeParticleSystemXferHandle(Xfer &target, void *item);
 void GarrisonContain::xfer(Xfer *xfer)
 {
@@ -184,8 +185,8 @@ void GarrisonContain::xfer(Xfer *xfer)
 	target->xferUnsignedShort(&pointDataCount);
 	for (i = 0; i < pointDataCount; ++i)
 	{
-		bfmeHandOver_0000C9B4(target, &self->m_garrisonPointData[i].object);
-		bfmeHandOver_0000C9B4(target, &self->m_garrisonPointData[i].targetID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].object);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].targetID);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].placeFrame);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].lastEffectFrame);
 		BfmeParticleSystemXferHandle(*xfer, &self->m_garrisonPointData[i].effect);

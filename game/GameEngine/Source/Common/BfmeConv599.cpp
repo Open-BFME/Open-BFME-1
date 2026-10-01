@@ -65,13 +65,14 @@ public:
 	BfmeSubCGF m_bfmeSub;
 };
 
-void bfmeThreeCGF(void *what, BfmeSubCGF *sub);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 void BfmeThingCGF::bfmeGoCGF(void *what)
 {
 	m_bfmeOwner->bfmeOneCGF(what);
 	bfmeTwoCGF(what);
-	bfmeThreeCGF(what, &m_bfmeSub);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)what, &m_bfmeSub);
 }
 
 // ?bfmeTwoCGF@BfmeThingCGF@@QAEXPAX@Z

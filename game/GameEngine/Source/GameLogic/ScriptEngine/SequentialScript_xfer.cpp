@@ -154,7 +154,8 @@ union SequentialScriptXferLocal
 
 extern "C" XferException *__cdecl bfmeFormatText(XferException *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-extern void __cdecl xferObjectID0010C3C0(Xfer *, UnsignedInt *);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 extern "C" int g_guardTargetTypeThrowInfo;
 
 class SequentialScript
@@ -197,7 +198,7 @@ void SequentialScript::xfer(Xfer *xfer)
 		}
 	}
 
-	xferObjectID0010C3C0(xfer, &m_objectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_objectID);
 
 	xfer->xferAsciiString(m_nameA);
 	xfer->xferAsciiString(m_nameB);

@@ -46,9 +46,10 @@ private:
 };
 
 // Existing ILT 0x0000C9B4: canonical ObjectID transfer helper.  Its ABI is
-// cdecl(target, pointer), and the target body calls it once per member ID and
+// cdecl(receiver, pointer), and the target body calls it once per member ID and
 // once for the designated target.
-void __cdecl bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class AssaultTransportAIUpdate : public Gen_002B5250
 {
@@ -87,15 +88,15 @@ void AssaultTransportAIUpdate::xfer(Xfer *xfer)
 	{
 		for (int i = 0; i < m_currentMembers; ++i)
 		{
-			bfmeHandOver_0000C9B4(
-				reinterpret_cast<BfmeSeedTarget *>(xfer), &m_memberIDs[i]);
+			Rva0010C3C0(
+				reinterpret_cast<MidVirtualSlot90Receiver *>(xfer), &m_memberIDs[i]);
 			*xfer == m_memberHealing[i];
 		}
 	}
 
 	*xfer == m_attackMoveGoalPos;
-	bfmeHandOver_0000C9B4(
-		reinterpret_cast<BfmeSeedTarget *>(xfer), &m_designatedTarget);
+	Rva0010C3C0(
+		reinterpret_cast<MidVirtualSlot90Receiver *>(xfer), &m_designatedTarget);
 
 	int state = (int)m_state;
 	*xfer == state;

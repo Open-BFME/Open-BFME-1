@@ -75,7 +75,8 @@ struct BfmeFormattedText
 
 extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *result, int tag, const char *format, ...);
-extern void __cdecl bfmeCalcTGC(void *xfer, int *value);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
@@ -116,7 +117,7 @@ void BroadcastStealthUpdate::xfer(Xfer *xfer)
 		while (node != m_broadcastObjects._M_node._M_data)
 		{
 			value = *(int *)((char *)node->_M_data + 0x74);
-			bfmeCalcTGC(xfer, &value);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &value);
 			node = (_STL::list<void *>::_Node *)node->_M_next;
 		}
 	}
@@ -132,7 +133,7 @@ void BroadcastStealthUpdate::xfer(Xfer *xfer)
 		xfer->xferInt((int *)&m_broadcastObjectCount);
 		for (unsigned int i = 0; i < m_broadcastObjectCount; ++i)
 		{
-			bfmeCalcTGC(xfer, &value);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &value);
 			m_pendingObjects.push_back(value);
 		}
 	}
