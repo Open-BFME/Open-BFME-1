@@ -7,10 +7,16 @@
 
 typedef __int64 FeslInt64;
 
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run( void );
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );
 	void addString( const char *key, const char *value );
 	void addInt( const char *key, int value );
 	void addInt64( const char *key, FeslInt64 value );
@@ -45,7 +51,7 @@ void __stdcall Rva007F3170( Rva007E8810Message *msg,
 	unsigned int i;
 	const Rva007F3170Value *entries = values;
 
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'recp';
 	msg->addString( "TXN", txn );
 	if( owner )

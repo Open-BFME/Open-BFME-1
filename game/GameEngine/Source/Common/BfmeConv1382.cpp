@@ -1,9 +1,15 @@
 // Open-BFME5 conversions.
 
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run();
+};
+
 class BfmeMsgVJC
 {
 public:
-	void bfmeRunVJC();
 	void bfmeSetVJC(const char *k, void *v);
 	void bfmeSet3VJC(const char *k, int v);
 	char m_bfmePad[0x1c];
@@ -22,7 +28,7 @@ public:
 void BfmeThingVJC::bfmeGoVJC(BfmeMsgVJC *m, int ratingMin, int ratingMax, int downloadMin, int downloadMax, void *a, void *b)
 {
 	void *g = g_bfmeVJC;
-	m->bfmeRunVJC();
+	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
 	m->bfmeSetVJC("TXN", g);
 	bfmeSubVJC(m, a, b);
@@ -48,7 +54,7 @@ public:
 void BfmeThingVJD::bfmeGoVJD(BfmeMsgVJC *m, int ratingMin, int ratingMax, int topN, int periodType, int periodsPast, void *b)
 {
 	void *g = g_bfmeVJD;
-	m->bfmeRunVJC();
+	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
 	m->bfmeSetVJC("TXN", g);
 	bfmeSubVJD(m, topN, b);

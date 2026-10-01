@@ -8,10 +8,16 @@
 
 typedef __int64 FeslInt64;
 
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run();
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset();
 	void addString(const char *key, const char *value);
 	void addInt(const char *key, int value);
 	void addInt64(const char *key, FeslInt64 value);
@@ -90,7 +96,7 @@ void Rva007F1220BlobWriter::write(Rva007E8810Message *message,
 	const Rva007F1220Record *record)
 {
 	const char *txn = (const char *)g_Rva0130A5D0;
-	message->reset();
+	((Rva007E8AC0 *)message)->run();
 	message->m_category = 'blob';
 	message->addString("TXN", txn);
 	message->addInt64("ownerId", owner->owner);

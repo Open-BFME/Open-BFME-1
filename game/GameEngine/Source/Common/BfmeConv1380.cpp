@@ -1,9 +1,15 @@
 // Open-BFME5 conversions.
 
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run();
+};
+
 class BfmeMsgVIX
 {
 public:
-	void bfmeRunVIX();
 	void bfmeSetVIX(const char *k, void *v);
 	void bfmeSet2VIX(const char *k, void *a, void *b);
 	void bfmeSet4VIX(const char *k, void *v);
@@ -18,7 +24,7 @@ extern void *g_bfmeGVIY;
 void __stdcall bfmeGoVIX(BfmeMsgVIX *m, void *email, void *parentalEmail, void *countryCode, void *eaMail, void *thirdPartyMail)
 {
 	void *g = g_bfmeFVIX;
-	m->bfmeRunVIX();
+	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x61636374;
 	m->bfmeSetVIX("TXN", g);
 	m->bfmeSetVIX("email", email);
@@ -71,7 +77,7 @@ void rva007FF100Encode(unsigned int length, const char *source, void *destinatio
 void BfmeThingVIY::bfmeGoVIY(BfmeMsgVIX *m, void *a, void *b, void *c, void *d, void *e)
 {
 	void *g = g_bfmeGVIY;
-	m->bfmeRunVIX();
+	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
 	m->bfmeSetVIX("TXN", g);
 	m->bfmeSet2VIX("blobId", a, b);

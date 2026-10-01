@@ -12,10 +12,16 @@ extern const char g_Rva012DAC04[];
 extern const char g_Rva012DAC14[];
 extern const char g_Rva012DAC20[];
 extern const char g_Rva012DAC30[];
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run( void );
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );
 	void addString( const char *key, const char *value );
 	void addInt( const char *key, int value );
 	void addInt64( const char *key, FeslInt64 value );
@@ -91,7 +97,7 @@ void Rva007F1F60Feedback::buildRequest( Rva007E8810Message *msg, int targetType,
 	const char *extraFeedbackDetail )
 {
 	const char *txn = g_Rva0130A63C;
-	msg->reset();
+	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fdbk';
 	msg->addString( "TXN", txn );
 	addTargetIds( msg, targetIds, targetIdCount );

@@ -10,9 +10,15 @@
 // Every string and global is a relocation, so a single extern per role serves
 // all eight: the build copies the real address in per call site.
 
+// retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
+class Rva007E8AC0
+{
+public:
+	void run(void);
+};
+
 struct BfmeSetupRecord
 {
-	void bfmeBegin(void);					// retail 0x007E8AC0
 	void bfmeWrite(const char *text, int value);		// retail 0x007E8A10
 	void bfmeWriteAlt(const char *text, int value);		// retail 0x007E88D0
 
@@ -44,7 +50,7 @@ void __stdcall bfmeSetupPair_007E94A0(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007E94A0;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
@@ -57,7 +63,7 @@ void __stdcall bfmeSetupPair_007E94E0(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007E94E0;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
@@ -70,7 +76,7 @@ void __stdcall bfmeSetupPair_007E9520(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007E9520;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
@@ -83,7 +89,7 @@ void __stdcall bfmeSetupPair_007E9560(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007E9560;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
@@ -96,7 +102,7 @@ void __stdcall bfmeSetupPair_007E9860(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007E9860;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
@@ -109,7 +115,7 @@ void __stdcall bfmeSetupPair_007F26A0(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007F26A0;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
@@ -122,7 +128,7 @@ void __stdcall bfmeSetupPair_007F26E0(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007F26E0;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
@@ -135,7 +141,7 @@ void __stdcall bfmeSetupPair_007F2720(BfmeSetupRecord *record, int second)
 {
 	int value = TheBfmeSetupGlobal007F2720;
 
-	record->bfmeBegin();
+	((Rva007E8AC0 *)record)->run();
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
