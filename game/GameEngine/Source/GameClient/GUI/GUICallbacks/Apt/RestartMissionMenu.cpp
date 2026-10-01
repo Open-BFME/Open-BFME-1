@@ -46,11 +46,18 @@ public:
 	Bool m_isShellActive;
 };
 
-class Rva00579160Manager
+// The retail global at 0x012F19E8, named by its one linked-build definition
+// (WindowManager *g_rva012F19E8WindowManager).  Rva00465B80 is this TU's view
+// of the one member reached on it: the 8-byte flag setter matched as
+// ?apply@Rva00465B80@@QAEXXZ (retail body 0x00465B80, called through the ILT
+// thunk at RVA 0x000290D2); the cast at the use is pointer-size neutral.
+class Rva00465B80
 {
 public:
-	void notify();
+	void apply();
 };
+
+class WindowManager;
 
 class GameState
 {
@@ -130,7 +137,7 @@ extern BfmeObj947C *g_bfme947ObjC;
 
 // Retail singleton globals, named per targets/game/reverse/symbols.csv.
 extern Shell *TheShell;					// ?TheShell@@3PAVShell@@A @ 0x012F4B58
-extern Rva00579160Manager *Rva00579160TheManager;	// @ 0x012F19E8
+extern WindowManager *g_rva012F19E8WindowManager;	// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A @ 0x012F19E8
 extern BfmeGameLogicPause *g_012F0898;	// ?TheBfmeGameLogic@@3PAVGameLogic@@A @ 0x012F0898
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
 extern GameState *TheGameState;			// ?TheGameState@@3PAVGameState@@A @ 0x012EF190
@@ -155,7 +162,7 @@ __declspec(noinline) void restartMissionMenu()
 		menu->m_hidden = true;
 		g_bfme947ObjC->m_field25c = 2;
 		TheShell->m_isShellActive = true;
-		Rva00579160TheManager->notify();
+		((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 	}
 
 	Int gameMode = TheBfmeGameLogic->getGameMode();
