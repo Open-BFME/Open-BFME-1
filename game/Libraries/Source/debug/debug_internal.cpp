@@ -69,8 +69,7 @@ public:
 
 extern void _bfme_debugRecordCallsite(int kind);
 
-extern BfmeDebugManager *TheGen001336E5C;
-#define TheBfmeDebug TheGen001336E5C
+extern void *g_Rva00F36E5C;
 
 #pragma optimize("y", off)
 void *DebugAllocMemory(unsigned numBytes)
@@ -79,8 +78,8 @@ void *DebugAllocMemory(unsigned numBytes)
   if (!h)
   {
     _bfme_debugRecordCallsite(1);
-    TheBfmeDebug->slot60();
-    BfmeDebugReport *report=TheBfmeDebug->slot6C(0,0);
+    reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot60();
+    BfmeDebugReport *report=reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot6C(0,0);
     report=report->slot38("Debug mem alloc failed");
     report->slot4C(1);
   }
@@ -110,8 +109,8 @@ void *DebugReAllocMemory(void *oldPtr, unsigned newSize)
     if (!h)
     {
       _bfme_debugRecordCallsite(1);
-      TheBfmeDebug->slot60();
-      BfmeDebugReport *report=TheBfmeDebug->slot6C(0,0);
+      reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot60();
+      BfmeDebugReport *report=reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot6C(0,0);
       report=report->slot38("Debug mem realloc failed");
       report->slot4C(1);
     }

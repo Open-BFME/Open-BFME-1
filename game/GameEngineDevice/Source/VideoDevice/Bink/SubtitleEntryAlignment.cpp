@@ -66,7 +66,7 @@ public:
 	virtual BfmeDebugReport *slot6C(void *first, void *second);
 };
 
-extern BfmeDebugManager *TheGen001336E5C;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(Int kind);
 
 static const Int &bfmeMin(const Int &first, const Int &second)
@@ -99,8 +99,8 @@ Int bfmeAlignVIL(Int alignment, Int base, Int unused, Real low, Real high)
 	}
 	default:
 		_bfme_debugRecordCallsite(1);
-		TheGen001336E5C->slot60();
-		BfmeDebugReport *report = TheGen001336E5C->slot6C(0, 0);
+		reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot60();
+		BfmeDebugReport *report = reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C)->slot6C(0, 0);
 		report = report->slot38("Invalid Subtitle alignment!");
 		report->slot4C(1);
 		return 0;
