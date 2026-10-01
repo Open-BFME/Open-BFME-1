@@ -133,7 +133,7 @@ public:
 	char m_lead[0xAF0];
 	void *m_AF0;
 };
-void Rva00866770( Rva00866770Owner *owner )
+extern "C" void piStopReporting( Rva00866770Owner *owner )
 {
 	if ( owner->m_AF0 )
 	{
