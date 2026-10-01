@@ -76977,7 +76977,7 @@ name,address,notes
 ?bfmeFindYT@BfmeRegistryYT@@QAEPAXABVAsciiStringYT@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the side dispatch at 0x0058ECA0
 ?bfmeFindYU@@YGPAVBfmeThingYU@@PAX00@Z,0x00029B31
 ?bfmeFindYU@BfmeRegistryYU@@QAEPAXABVAsciiStringYU@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the dispatch at 0x0058EDB0
-?bfmeFindYV@BfmeRegistryYV@@QAEPAXABVAsciiStringYV@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the dispatch at 0x0058EED0
+?bfmeFindYV@ControlBar@@QAEPAXABVAsciiStringYV@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the dispatch at 0x0058EED0
 ?bfmeFindZK@BfmeFinderZK@@QAEHPAXH@Z,0x000010F5
 ?bfmeFindZK@Rva00367E30Logic@@QAEPAVBfmeActorZK@@PAX@Z,0x0001F253,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
@@ -79541,7 +79541,7 @@ name,address,notes
 ?bfmeUseYI@BfmeRegistryYI@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 the dispatch the command select at 0x0058D990 calls on the registry 0x012F33F8
 ?bfmeUseYT@BfmeRegistryYT@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the side dispatch at 0x0058ECA0
 ?bfmeUseYU@BfmeRegistryYU@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EDB0
-?bfmeUseYV@BfmeRegistryYV@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EED0
+?bfmeUseYV@ControlBar@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EED0
 ?bfmeUsedJV@BfmeSlotJV@@QAEDXZ,0x0002DB2D,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin

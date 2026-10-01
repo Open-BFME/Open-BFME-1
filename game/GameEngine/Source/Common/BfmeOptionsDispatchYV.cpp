@@ -12,14 +12,14 @@ public:
 	~AsciiStringYV(void);
 };
 
-class BfmeObserverYV
+class GameLogic
 {
 public:
 	char m_bfmePadYV[0x10c];
 	int m_gameMode;
 };
 
-class BfmeRegistryYV
+class ControlBar
 {
 public:
 	void *bfmeFindYV(const AsciiStringYV &name);
@@ -27,8 +27,8 @@ public:
 	void bfmeUseYV(int mode, void *entry);
 };
 
-extern BfmeObserverYV *g_bfmeObserverYV;			// retail 0x012F0898
-extern BfmeRegistryYV *g_bfmeRegistryYV;			// retail 0x012F33F8
+extern GameLogic *g_bfmeObserverYV;			// retail 0x012F0898
+extern ControlBar *g_bfmeRegistryYV;			// retail 0x012F33F8
 
 // ?bfmeOptionsYV@@YGXH@Z
 void __stdcall bfmeOptionsYV(int unused)

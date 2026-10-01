@@ -10775,7 +10775,7 @@ name,va
 ?g_bfmeObjWE@@3PAXA,0x0130BCA0
 ?g_bfmeObjectivesProviderNames@@3PAPBDA,0x012B77EC
 ?g_bfmeObserverYU@@3PAVBfmeObserverYU@@A,0x012F0898
-?g_bfmeObserverYV@@3PAVBfmeObserverYV@@A,0x012F0898
+?g_bfmeObserverYV@@3PAVGameLogic@@A,0x012F0898
 ?g_bfmeOffsetDF@@3MA,0x01098AD4
 ?g_bfmeOnAPB@@3_NA,0x012ED4E5
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x012F4B98
@@ -10907,7 +10907,7 @@ name,va
 ?g_bfmeRegistryYI@@3PAVBfmeRegistryYI@@A,0x012F33F8
 ?g_bfmeRegistryYT@@3PAVBfmeRegistryYT@@A,0x012F33F8
 ?g_bfmeRegistryYU@@3PAVBfmeRegistryYU@@A,0x012F33F8
-?g_bfmeRegistryYV@@3PAVBfmeRegistryYV@@A,0x012F33F8
+?g_bfmeRegistryYV@@3PAVControlBar@@A,0x012F33F8
 ?g_bfmeReleaseYY@@3P6GXPAX@ZA,0x01358E44
 ?g_bfmeReplayControlAR@@3PAXA,0x012F1490
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x012F1028
