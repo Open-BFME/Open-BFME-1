@@ -448,14 +448,13 @@ void Rva007FECB0( struct Rva0130AB68List *list )
  * entered and ownership recorded.  Note the owner is re-read from the import
  * AFTER entering rather than reused from the first call: the compiler was given
  * no licence to cache it across the lock. */
-__declspec(dllimport) unsigned int __stdcall Rva01358D7CCurrentId( void );
 __declspec(dllimport) void __stdcall Rva01358D18Enter( void *body );
 
 int Rva007FEB00( struct Rva0130AB68List *list )
 {
 	struct Rva0130AB68List *node = list ? list : &g_Rva0130AB68Default;
 
-	if ( node->m_ownerThread == Rva01358D7CCurrentId() )
+	if ( node->m_ownerThread == GetCurrentThreadId() )
 	{
 		node->m_depth = node->m_depth + 1;
 		return 1;
@@ -466,7 +465,7 @@ int Rva007FEB00( struct Rva0130AB68List *list )
 
 	Rva01358D18Enter( node->m_body );
 
-	node->m_ownerThread = Rva01358D7CCurrentId();
+	node->m_ownerThread = GetCurrentThreadId();
 	node->m_depth = node->m_depth + 1;
 	return 1;
 }
@@ -491,7 +490,7 @@ void Rva007FEBD0( struct Rva0130AB68List *list )
 
 		if ( !Rva01358E58Probe( &node->m_state, 1 ) )
 		{
-			node->m_ownerThread = Rva01358D7CCurrentId();
+			node->m_ownerThread = GetCurrentThreadId();
 			node->m_depth = node->m_depth + 1;
 			return;
 		}
