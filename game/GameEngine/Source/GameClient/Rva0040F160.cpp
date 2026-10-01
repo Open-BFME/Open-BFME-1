@@ -31,6 +31,11 @@ public:
 	virtual int getWidth(int line) = 0;
 };
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -45,7 +50,11 @@ public:
 	virtual void slot20() = 0;
 	virtual DisplayString *newDisplayString() = 0;
 };
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
+static inline Rva0048EC80Manager *theDisplayStringManagerView()
+{
+	return (Rva0048EC80Manager *)TheDisplayStringManager;
+}
 
 class Rva0040F160
 {
@@ -86,7 +95,7 @@ DisplayString *Rva0040F160::rva0040F160()
 	if (*reinterpret_cast<const unsigned short *>(reinterpret_cast<const char *>(text) + 4) == 0)
 		return 0;
 
-	DisplayString *display = Rva0048EC80TheManager->newDisplayString();
+	DisplayString *display = theDisplayStringManagerView()->newDisplayString();
 	if (display != 0)
 	{
 		display->setFont(m_font);

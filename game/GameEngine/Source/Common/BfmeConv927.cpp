@@ -6,6 +6,11 @@
 
 void __cdecl operator delete(void *p);
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -22,7 +27,11 @@ public:
 	virtual void bfmeRelease927B(void *item);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
+static inline Rva0048EC80Manager *theDisplayStringManagerView()
+{
+	return (Rva0048EC80Manager *)TheDisplayStringManager;
+}
 
 class BfmeSub927A
 {
@@ -74,7 +83,7 @@ BfmeObj927B::~BfmeObj927B()
 		{
 			if (entry->m_bfmeDisplayString != 0)
 			{
-				Rva0048EC80TheManager->bfmeRelease927B(entry->m_bfmeDisplayString);
+				theDisplayStringManagerView()->bfmeRelease927B(entry->m_bfmeDisplayString);
 				entry->m_bfmeDisplayString = 0;
 			}
 

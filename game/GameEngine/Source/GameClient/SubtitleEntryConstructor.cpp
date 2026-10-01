@@ -82,6 +82,11 @@ public:
 	virtual void setFont(GameFont *font);
 };
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -97,7 +102,11 @@ public:
 	virtual DisplayString *newDisplayString();
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
+static inline Rva0048EC80Manager *theDisplayStringManagerView()
+{
+	return (Rva0048EC80Manager *)TheDisplayStringManager;
+}
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcscpy(
 	WideChar *destination, const WideChar *source);
@@ -135,7 +144,7 @@ Rva00434810SubtitleEntry::Rva00434810SubtitleEntry(GameFont *font,
 	while (token)
 	{
 		m_displayStrings[m_displayStringCount] =
-			Rva0048EC80TheManager->newDisplayString();
+			theDisplayStringManagerView()->newDisplayString();
 		m_displayStrings[m_displayStringCount]->setFont(font);
 		m_displayStrings[m_displayStringCount]->setText(UnicodeString(token));
 		token = wcstok(0, g_01084C10);

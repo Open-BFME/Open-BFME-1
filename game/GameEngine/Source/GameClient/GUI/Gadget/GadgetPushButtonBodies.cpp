@@ -70,6 +70,11 @@ enum { WIN_STATE_HILITED = 0x00000002 };
 
 class DisplayString;
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the one slot the destructor reaches and casts at the use.
+class DisplayStringManager;
+
 // Only the slot the destructor reaches is claimed, and only its offset.
 class BfmeDisplayStringManager
 {
@@ -87,7 +92,11 @@ public:
 	virtual void freeDisplayString( DisplayString *string ) = 0;	// +0x28
 };
 
-extern BfmeDisplayStringManager *TheDisplayStringManager;			// 0x012F12CC
+extern DisplayStringManager *TheDisplayStringManager;			// 0x012F12CC
+static inline BfmeDisplayStringManager *theDisplayStringManagerView()
+{
+	return (BfmeDisplayStringManager *)TheDisplayStringManager;
+}
 
 // The layout GWM_DESTROY unwinds. Everything below +0x1C is untouched by either
 // body here. The AsciiString at +0x1C was m_altSound in this file, from the
@@ -215,7 +224,7 @@ WindowMsgHandledType GadgetPushButtonSystem( GameWindow *window, UnsignedInt msg
 			PushButtonData *pData = (PushButtonData *)window->winGetUserData();
 			if( pData )
 			{
-				TheDisplayStringManager->freeDisplayString( pData->m_displayString );
+				theDisplayStringManagerView()->freeDisplayString( pData->m_displayString );
 				delete pData;
 			}
 			window->winSetUserData( NULL );

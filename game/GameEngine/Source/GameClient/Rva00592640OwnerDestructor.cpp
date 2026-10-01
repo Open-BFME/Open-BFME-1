@@ -30,6 +30,11 @@ public:
 	Gen0003FA7B *m_held;
 };
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -46,7 +51,11 @@ public:
 	virtual void release(int handle);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
+static inline Rva0048EC80Manager *theDisplayStringManagerView()
+{
+	return (Rva0048EC80Manager *)TheDisplayStringManager;
+}
 
 class S4Holder0046DBB0
 {
@@ -98,11 +107,11 @@ private:
 // ??1Rva00592640Owner@@QAE@XZ
 Rva00592640Owner::~Rva00592640Owner()
 {
-	Rva0048EC80TheManager->release(m_drop1);
-	Rva0048EC80TheManager->release(m_drop2);
-	Rva0048EC80TheManager->release(m_drop3);
-	Rva0048EC80TheManager->release(m_drop4);
-	Rva0048EC80TheManager->release(m_drop5);
+	theDisplayStringManagerView()->release(m_drop1);
+	theDisplayStringManagerView()->release(m_drop2);
+	theDisplayStringManagerView()->release(m_drop3);
+	theDisplayStringManagerView()->release(m_drop4);
+	theDisplayStringManagerView()->release(m_drop5);
 
 	{
 		AsciiString text("HelpBoxText");

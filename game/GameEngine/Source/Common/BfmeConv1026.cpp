@@ -83,6 +83,11 @@ void __stdcall bfmeGo1026B(int a, char b)
 		x->bfmeSet1026(8, (char)(b == 0));
 }
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class BfmeReg1026
 {
 public:
@@ -99,7 +104,11 @@ public:
 	virtual void bfmeDrop1026(int h);
 };
 
-extern BfmeReg1026 *g_bfmeReg1026;
+extern DisplayStringManager *TheDisplayStringManager;		// 0x012F12CC
+static inline BfmeReg1026 *theDisplayStringManagerView()
+{
+	return (BfmeReg1026 *)TheDisplayStringManager;
+}
 void bfmeFree1026(void *p);
 
 class BfmeD1026
@@ -114,7 +123,7 @@ public:
 void *BfmeD1026::bfmeGo1026D(unsigned int f)
 {
 	if (m_bfmeH != 0) {
-		g_bfmeReg1026->bfmeDrop1026(m_bfmeH);
+		theDisplayStringManagerView()->bfmeDrop1026(m_bfmeH);
 		m_bfmeH = 0;
 	}
 

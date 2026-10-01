@@ -76,6 +76,11 @@ public:
 	virtual void setDefaultView(float pitch, float angle, float maxHeight); // +0xe0
 };
 
+// The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
+// defined once in DisplayStringManager.cpp.  This TU keeps its own view of
+// the vtable and casts at the use.
+class DisplayStringManager;
+
 class Rva0048EC80Manager
 {
 public:
@@ -90,7 +95,11 @@ extern Glo012F4B78Type *Glo012F4B78;
 extern Glo012F4B98Type *Glo012F4B98;
 extern BannerUI *TheBannerUI;
 extern View *TheTacticalView;
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
+static inline Rva0048EC80Manager *theDisplayStringManagerView()
+{
+	return (Rva0048EC80Manager *)TheDisplayStringManager;
+}
 extern const AsciiString Rva01336E50EmptyString;
 
 void ResetInGameChat();
@@ -264,7 +273,7 @@ void InGameUI::reset()
 	for (NamedTimerMap::iterator timerIt = m_namedTimers.begin(); timerIt != m_namedTimers.end(); ++timerIt)
 	{
 		NamedTimerInfo *info = timerIt->second;
-		Rva0048EC80TheManager->slot28(info->displayString);
+		theDisplayStringManagerView()->slot28(info->displayString);
 		info->deleteInstance();
 	}
 	m_namedTimers.clear();
