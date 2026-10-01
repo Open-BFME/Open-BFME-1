@@ -40,7 +40,9 @@ public:
 	virtual void bfmeStoreAU(void *dst);
 };
 
-extern "C" void __cdecl bfmeXferAU(BfmeAgentAU *ag, void *dst);
+// Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp).
+class MidVirtualSlot90Receiver;
+void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *dst);
 
 class BfmeHostAU
 {
@@ -67,7 +69,7 @@ void BfmeHostAU::bfmeSaveAU(BfmeAgentAU *ag)
 	info.m_bfmeLevelAU = 2;
 	ag->bfmeFillAU(&info);
 
-	bfmeXferAU(ag, m_bfmeSlotAAU);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)ag, m_bfmeSlotAAU);
 	ag->bfmeWriteAU(m_bfmeSlotBAU);
 
 	if (info.m_bfmeLevelAU >= 2)

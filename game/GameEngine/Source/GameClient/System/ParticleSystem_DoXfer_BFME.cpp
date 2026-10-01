@@ -21,7 +21,8 @@ class BfmeSeedTarget;
 void bfmeHandOver_0000240A( BfmeSeedTarget *target, void *item );
 void BfmeParticleSystemXferHandle( Xfer &xfer, void *value );
 void BfmeParticleSystemXferMatrix( Xfer &xfer, void *value );
-void bfmeHandOver_0000C9B4( BfmeSeedTarget *target, void *item );
+class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+void Rva0010C3C0( MidVirtualSlot90Receiver *target, void *item );
 void bfmeHandOver_00001A50( BfmeSeedTarget *target, void *item );
 
 class Particle
@@ -69,7 +70,7 @@ void ParticleSystem::DoXfer( Xfer &xfer )
 	((Y3NotifyTail_005CBB30 *)( (unsigned char *)this + 0x1b4 ))->notifyAll( (void *)&xfer );
 	bfmeHandOver_0000240A( (BfmeSeedTarget *)&xfer, (unsigned char *)this + 0xac );
 	BfmeParticleSystemXferHandle( xfer, (unsigned char *)this + 0xb4 );
-	bfmeHandOver_0000C9B4( (BfmeSeedTarget *)&xfer, (unsigned char *)this + 0xb8 );
+	Rva0010C3C0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0xb8 );
 
 	xfer == *(bool *)( (unsigned char *)this + 0x1a4 );
 	BfmeParticleSystemXferMatrix( xfer, (unsigned char *)this + 0xc0 );

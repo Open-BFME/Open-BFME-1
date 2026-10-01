@@ -20,7 +20,9 @@ public:
 	virtual void bfmeMarkAC(BfmeMarkAC *mark);
 };
 
-void __cdecl bfmeVisitAC(BfmeItemAC *item, void *slot);
+// Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp).
+class MidVirtualSlot90Receiver;
+void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *item, void *slot);
 
 class BfmeOwnerAC
 {
@@ -49,5 +51,5 @@ void BfmeOwnerAC::bfmeDoAC(BfmeItemAC *item)
 		return;
 
 	for (int i = 0; i < 10; i++)
-		bfmeVisitAC(item, &m_bfmeSlotsAC[i]);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)item, &m_bfmeSlotsAC[i]);
 }

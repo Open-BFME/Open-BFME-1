@@ -49,7 +49,8 @@ public:
 	virtual Xfer &xferUnsignedShort(UnsignedInt *value);
 };
 
-extern void bfmeCalcTGC(void *xfer, int *value);
+class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+extern void Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 class EmotionMap : public _STL::map<int, int>
 {
@@ -88,7 +89,7 @@ void Emotion::xfer(Xfer *xfer)
 	version.m_version = 1;
 	version.m_currentVersion = 1;
 	xfer->xferVersion(&version);
-	bfmeCalcTGC(xfer, &m_unknown08);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_unknown08);
 	xfer->xferUnsignedShort((UnsignedInt *)&m_unknown0c);
 	xfer->xferUnsignedInt((UnsignedInt *)&m_unknown10);
 	int count = m_map.size();
@@ -100,7 +101,7 @@ void Emotion::xfer(Xfer *xfer)
 		int value = 0;
 		for (int i = 0; i < count; ++i)
 		{
-			bfmeCalcTGC(xfer, &key);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &key);
 			xfer->xferUnsignedInt((UnsignedInt *)&value);
 			m_map[key] = value;
 		}
@@ -114,7 +115,7 @@ void Emotion::xfer(Xfer *xfer)
 		{
 			key = it->first;
 			value = it->second;
-			bfmeCalcTGC(xfer, &key);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &key);
 			xfer->xferUnsignedInt((UnsignedInt *)&value);
 			++it;
 		}

@@ -3,7 +3,7 @@
 // Address-derived near-twin of ?bfmeSeed@Gen_002BEC60@@QAEXPAVBfmeSeedTarget@@@Z
 // (game/GameEngine/Source/Common/S3VersionBlocks.cpp). Same versioned
 // hand-over shape, but the first hand-over goes through the free function
-// bfmeCalcTGC(target, item) instead of target->bfmeTakeAt8C(item), and the
+// Rva0010C3C0(target, item) instead of target->bfmeTakeAt8C(item), and the
 // two sub-object offsets swap (item0 at +0x28, item1 at +0x24 via TakeAt74
 // instead of TakeAt78).
 
@@ -48,7 +48,9 @@ public:
 	virtual void bfmeTakeAt74(void *item);		// slot 29, vtable+0x74
 };
 
-void __cdecl bfmeCalcTGC(void *target, int *item);
+// Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp).
+class MidVirtualSlot90Receiver;
+void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *target, void *item);
 
 class Gen_0014F220
 {
@@ -59,7 +61,7 @@ private:
 	char m_bfmePad0[0x24];
 	char m_bfmeItem1;				// +0x24 (bfmeTakeAt74)
 	char m_bfmePad1[0x3];
-	char m_bfmeItem0;				// +0x28 (bfmeCalcTGC)
+	char m_bfmeItem0;				// +0x28 (Rva0010C3C0)
 };
 
 void Gen_0014F220::bfmeSeed(BfmeSeedTarget_14F220 *target)
@@ -70,7 +72,7 @@ void Gen_0014F220::bfmeSeed(BfmeSeedTarget_14F220 *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeCalcTGC(target, (int *)&m_bfmeItem0);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, (int *)&m_bfmeItem0);
 	if (version.m_bfmeVersion >= 2)
 	{
 		target->bfmeTakeAt74(&m_bfmeItem1);

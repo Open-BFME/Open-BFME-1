@@ -68,7 +68,8 @@ class Object
 {
 };
 
-extern void __cdecl bfmeCalcTGC(void *xfer, int *value);
+class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 class Rva001515C0
 {
@@ -105,7 +106,7 @@ void Rva001515C0::xfer(Xfer *xfer)
 		ObjectID id = 0;
 		if (object)
 			id = *(ObjectID *)((char *)object + 0x74);
-		bfmeCalcTGC(xfer, (int *)&id);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (int *)&id);
 		node = (_STL::_List_node<Object *> *)node->_M_next;
 	}
 

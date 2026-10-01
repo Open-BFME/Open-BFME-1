@@ -82,7 +82,8 @@ public:
 	void Rva000D6CF0(BfmeSeedTarget *target);
 };
 
-void bfmeCalcTGC(void *target, int *value);
+class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+void Rva0010C3C0(MidVirtualSlot90Receiver *target, void *value);
 
 class Rva00286C40Self : public Gen_001ED0C0
 {
@@ -123,7 +124,7 @@ void Rva00286C40Self::Rva00286C40(BfmeSeedTarget *target)
 	((Rva000D6CF0Field *)((char *)m_field40 + 0x14))->Rva000D6CF0(target);
 	((Rva000D6CF0Field *)((char *)m_field40 + 0x2c))->Rva000D6CF0(target);
 
-	bfmeCalcTGC(target, &m_field744);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field744);
 
 	BfmeSubAccept_0002C41C *sub = &m_sub[0][0];
 	for (int outer = 4; outer != 0; --outer)

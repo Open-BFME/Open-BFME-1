@@ -43,7 +43,8 @@ public:
 	virtual Xfer &xferBool(bool *);
 };
 
-extern void __cdecl bfmeCalcTGC(void *, Int *);
+class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 struct PathfindCellInfo
 {
@@ -90,10 +91,10 @@ void PathfindCell::xfer(Xfer *xfer)
 		xfer->slot19(m_info);
 		xfer->slot31((char *)m_info + 0x10);
 		xfer->slot31((char *)m_info + 0x12);
-		bfmeCalcTGC(xfer, (Int *)((char *)m_info + 0x14));
-		bfmeCalcTGC(xfer, (Int *)((char *)m_info + 0x18));
-		bfmeCalcTGC(xfer, (Int *)((char *)m_info + 0x1c));
-		bfmeCalcTGC(xfer, (Int *)((char *)m_info + 0x20));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (Int *)((char *)m_info + 0x14));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (Int *)((char *)m_info + 0x18));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (Int *)((char *)m_info + 0x1c));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (Int *)((char *)m_info + 0x20));
 		isFree = (m_info->m_flags & 1) != 0;
 		xfer->xferInt(&isFree);
 		blockedByAlly = (m_info->m_flags >> 1 & 1) != 0;
