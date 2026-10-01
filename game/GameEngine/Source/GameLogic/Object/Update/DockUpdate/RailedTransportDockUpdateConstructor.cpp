@@ -3,6 +3,7 @@
 
 class Thing;
 class ModuleData;
+class Object;
 
 class ObjectModuleBase
 {
@@ -52,7 +53,7 @@ private:
 class DockUpdateInterface
 {
 public:
-	virtual void dockAnchor() = 0;
+	virtual bool isClearToApproach( const Object *docker ) const = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
@@ -60,6 +61,8 @@ class DockUpdate : public UpdateModule, public DockUpdateInterface
 {
 public:
 	DockUpdate( Thing *thing, const ModuleData *moduleData );
+
+	virtual bool isClearToApproach( const Object *docker ) const;
 
 private:
 	unsigned char m_unmodelled_24[ 0x88 - 0x24 ];
@@ -69,7 +72,7 @@ private:
 class RailedTransportDockUpdateInterface
 {
 public:
-	virtual void railedTransportDockAnchor() = 0;
+	virtual bool isLoadingOrUnloading() = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RailedTransportDockUpdate.h
@@ -82,8 +85,7 @@ public:
 	virtual void objectModuleAnchor();
 	virtual void behaviorAnchor();
 	virtual void updateAnchor();
-	virtual void dockAnchor();
-	virtual void railedTransportDockAnchor();
+	virtual bool isLoadingOrUnloading();
 
 private:
 	unsigned int m_dockingObjectID;
