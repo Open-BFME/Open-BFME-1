@@ -33,7 +33,7 @@ inline short shortLength0054FB10(const void *s) { StringHeader0054FB10 *p=*(Stri
 class Gen_0054F1A0 { public: unsigned field00,field04; Gen_0054F1A0() {} bool bfmeDiffers(const Gen_0054F1A0&) const; };
 class OptionPreferences { public: OptionPreferences(); virtual ~OptionPreferences(); bool hasGotOnline(); private: char field04[16]; };
 class WindowManager { public: void add(void*,const char*,int,void*,int,int,int,int); };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 struct LoginContext0054FB10 { char field00[0x250]; void *field250; };
 class BfmeAptScreenOnlineLogin {
 public:
@@ -84,24 +84,24 @@ bool BfmeAptScreenOnlineLogin::applyLoginGadgets0054FB10() {
   if(old9d!=field9d) {
    const char* s=field9d?"EnableButtonLogin":"DisableButtonLogin";
    void *w=field34->field250;
-   g_theWindowManager->add(w,"CallChild",1,(void*)s,0,0,0,0);
+   g_rva012F19E8WindowManager->add(w,"CallChild",1,(void*)s,0,0,0,0);
    const char *s2=field9d?"EnableButtonDeleteNickname":"DisableButtonDeleteNickname";
    void *w2=field34->field250;
-   g_theWindowManager->add(w2,"CallChild",1,(void*)s2,0,0,0,0);
+   g_rva012F19E8WindowManager->add(w2,"CallChild",1,(void*)s2,0,0,0,0);
   }
   if(old9e!=field9e) {
    if(field9e) {
     OptionPreferences prefs;
-    if(prefs.hasGotOnline()) { void *w=field34->field250; g_theWindowManager->add(w,"CallChild",1,(void*)"EnableButtonRegister",0,0,0,0); }
-    else { void *w=field34->field250; g_theWindowManager->add(w,"CallChild",1,(void*)"GlowButtonRegister",0,0,0,0); }
+    if(prefs.hasGotOnline()) { void *w=field34->field250; g_rva012F19E8WindowManager->add(w,"CallChild",1,(void*)"EnableButtonRegister",0,0,0,0); }
+    else { void *w=field34->field250; g_rva012F19E8WindowManager->add(w,"CallChild",1,(void*)"GlowButtonRegister",0,0,0,0); }
    } else {
     void *w=field34->field250;
-    g_theWindowManager->add(w,"CallChild",1,(void*)"DisableButtonRegister",0,0,0,0);
+    g_rva012F19E8WindowManager->add(w,"CallChild",1,(void*)"DisableButtonRegister",0,0,0,0);
     field9d=true;
    }
   }
   void *w=field34->field250;
-  g_theWindowManager->add(w,"CallChild",1,(void*)"EnableButtonServiceTerms",0,0,0,0);
+  g_rva012F19E8WindowManager->add(w,"CallChild",1,(void*)"EnableButtonServiceTerms",0,0,0,0);
   return field9d;
  }
  return false;

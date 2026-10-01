@@ -38,7 +38,7 @@ extern GameSpyStagingRoom *TheGameSpyGame;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameTextInterface *TheGameText;
 extern NAT *TheNAT;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 class GenActionSink { public: void add(void*,const char*,int,const char*,int,int,int,int); };
 class RoomSlots00544E40 { public: virtual void s0(); virtual void s1(); virtual void reset(); };
 class NatSlots00544E40 { public: virtual ~NatSlots00544E40(); };
@@ -70,7 +70,7 @@ void OnlineStateUpdate00544E40::update()
 {
  switch(*(int*)((char*)this+0x188)) {
  case 1:
-  ((GenActionSink*)g_theWindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"OnStartLobby",0,0,0,0);
+  ((GenActionSink*)g_rva012F19E8WindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"OnStartLobby",0,0,0,0);
   *(int*)((char*)this+0x188)=2;
  case 2: invoke1_00544E40<void,bool>(this,j_00030d91,false); break;
  case 4: invoke0_00544E40<void>(this,j_0000fb32); break;
@@ -80,14 +80,14 @@ void OnlineStateUpdate00544E40::update()
   else {
    *(int*)((char*)this+0x188)=6;
    *((char*)this+0x1d5)=1;
-   ((GenActionSink*)g_theWindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"EnableButtonPlayGame",0,0,0,0);
+   ((GenActionSink*)g_rva012F19E8WindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"EnableButtonPlayGame",0,0,0,0);
   }
   break;
  case 8:
   if(!invoke0_00544E40<bool>((char*)this+0x40,j_0001e957)) {
    *(int*)((char*)this+0x188)=6;
    *((char*)this+0x1d5)=1;
-   ((GenActionSink*)g_theWindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"EnableButtonPlayGame",0,0,0,0);
+   ((GenActionSink*)g_rva012F19E8WindowManager)->add(*(void**)(*(char**)((char*)this+0x34)+0x250),"CallChild",1,"EnableButtonPlayGame",0,0,0,0);
   }
   break;
  case 9: invoke0_00544E40<void>(this,j_00017481); break;

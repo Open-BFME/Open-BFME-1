@@ -13,7 +13,7 @@ extern int classifyRva005A6410Value(int);
 extern void bfmeGo1017Y(int,int,int);
 class BfmeC977 { public: char bfmeGo977C(); };
 class WindowManager;
-extern WindowManager *Rva00579160TheManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 struct ManagerView { char pad00[0x1b4]; int mode; };
 struct MouseStatus { char pad00[0x18]; int left; char pad1c[8]; int right; char pad28[8]; int middle; };
 class Mouse {
@@ -47,27 +47,27 @@ int Rva005A67E0Owner::translate(const GameMessage *msg)
     switch(type) {
     case 180: flag1e8=true; disp=1; break;
     case 3:
-        if(any || (((BfmeC977*)Rva00579160TheManager)->bfmeGo977C() && !active)) {
+        if(any || (((BfmeC977*)g_rva012F19E8WindowManager)->bfmeGo977C() && !active)) {
             TheMouse->setCursor(mode); disp=1;
         }
         if(buttons[0] && !TheMouse->status.left) {
             if(++countLeft>5) {
-                ((ManagerView*)Rva00579160TheManager)->mode=0;
+                ((ManagerView*)g_rva012F19E8WindowManager)->mode=0;
                 bfmeGo1017Y(0,1,1); buttons[0]=0; countLeft=0;
             }
         } else countLeft=0;
         if(buttons[2] && !TheMouse->status.right) {
             if(++countRight>5) {
-                ((ManagerView*)Rva00579160TheManager)->mode=2;
+                ((ManagerView*)g_rva012F19E8WindowManager)->mode=2;
                 bfmeGo1017Y(0,1,1); buttons[2]=0; countRight=0;
             }
         } else countRight=0;
 
         break;
     case 4: case 5: case 14: case 15:
-        if(type==4 || type==5) ((ManagerView*)Rva00579160TheManager)->mode=0;
-        else ((ManagerView*)Rva00579160TheManager)->mode=2;
-        if(((BfmeC977*)Rva00579160TheManager)->bfmeGo977C()) {
+        if(type==4 || type==5) ((ManagerView*)g_rva012F19E8WindowManager)->mode=0;
+        else ((ManagerView*)g_rva012F19E8WindowManager)->mode=2;
+        if(((BfmeC977*)g_rva012F19E8WindowManager)->bfmeGo977C()) {
             ((LookAtTranslator*)this)->fillFromMessage(msg);
             bfmeGo1017Y(0,0,1); *button=1; disp=1; break;
         }
@@ -75,7 +75,7 @@ int Rva005A67E0Owner::translate(const GameMessage *msg)
     case 6: case 16:
         if(*button) {
             ((LookAtTranslator*)this)->fillFromMessage(msg);
-            ((ManagerView*)Rva00579160TheManager)->mode=type==6?0:2;
+            ((ManagerView*)g_rva012F19E8WindowManager)->mode=type==6?0:2;
             bfmeGo1017Y(0,1,1); *button=0; disp=1; break;
         }
         break;

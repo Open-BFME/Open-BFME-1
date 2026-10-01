@@ -92,7 +92,7 @@ public:
 extern GameTextInterface *TheGameText;
 
 class WindowManager { public: void bfme_setAptText(const AsciiString &name, const UnicodeString &text); };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 // Erased eight-byte multiple-inheritance member pointer. The constructor
 // only binds these code addresses; their argument-bearing callbacks are
 // invoked by the existing wrappers, never through this erased carrier.
@@ -370,7 +370,7 @@ BfmeAptScreenOptions::BfmeAptScreenOptions( void *context )
 		UnicodeStringAL version = ((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL();
 		{
 			AsciiString versionName( "APT:VersionNum" );
-			g_theWindowManager->bfme_setAptText( versionName, UnicodeString( version ) );
+			g_rva012F19E8WindowManager->bfme_setAptText( versionName, UnicodeString( version ) );
 		}
 		g_Va012F4AE4 = 0;
 	}

@@ -19,7 +19,7 @@ class GameTextInterface { public:
 };
 extern GameTextInterface *TheGameText;
 class WindowManager { public: void bfme_setAptText(const AsciiString &,const UnicodeString &); };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 class BfmeThingBIF { public: void bfmeGoBIF(void *,void *); };
 class Image;
 class CommandButton { public: const Image *getButtonImage() const; };
@@ -68,7 +68,7 @@ void Gen00593A30::handle(void *argument)
  if(image) {
   AsciiString name;
   name.format("RegionUI/Portrait%d/Portrait",current);
-  ((BfmeThingBIF*)g_theWindowManager)->bfmeGoBIF(&name,(void*)image);
+  ((BfmeThingBIF*)g_rva012F19E8WindowManager)->bfmeGoBIF(&name,(void*)image);
  }
  static AsciiString act("LW:ActDisplayString");
  static AsciiString army("LW:RegionBonusArmy");
@@ -79,7 +79,7 @@ void Gen00593A30::handle(void *argument)
  AsciiString bonusName;
  bonusName.format("APT:PalantirRegionBonus%d",current);
  UnicodeString text=TheGameText->fetch(active->label);
- g_theWindowManager->bfme_setAptText(name,text);
+ g_rva012F19E8WindowManager->bfme_setAptText(name,text);
  ((StringBase<unsigned short>*)&text)->clear();
  if(!empty00593A30(active->label98)) text=TheGameText->fetch(active->label98);
  int actValue=active->value88;
@@ -89,6 +89,6 @@ void Gen00593A30::handle(void *argument)
   int resourceValue=active->value7c; appendBonus00591A60(text,resource,resourceValue);
   int legendaryValue=active->value80; appendBonus00591A60(text,legendary,legendaryValue);
  }
- g_theWindowManager->bfme_setAptText(bonusName,text);
+ g_rva012F19E8WindowManager->bfme_setAptText(bonusName,text);
  shown=true;
 }

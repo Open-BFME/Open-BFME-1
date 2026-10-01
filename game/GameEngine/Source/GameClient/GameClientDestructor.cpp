@@ -73,7 +73,7 @@ public:
 	virtual ~CommandTranslator();
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern WindowManager *TheWindowManager;
 extern const void *Rva00597FC0ClientVftable[];
 extern const void *Rva00597FC0ClientSecondaryVftable[];
@@ -258,51 +258,51 @@ Rva00597FC0Client::~Rva00597FC0Client()
 	*(const void ***)this = Rva00597FC0ClientVftable;
 	*(const void ***)((char *)this + 8) = Rva00597FC0ClientSecondaryVftable;
 
-	if (g_theWindowManager)
+	if (g_rva012F19E8WindowManager)
 	{
 		{
 			AsciiString name("AptPalantir::OnBttnObservePriorPlayer");
-			gameClientRemoveName(g_theWindowManager, j_00025464, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_00025464, &name);
 		}
 		{
 			AsciiString name("AptPalantir::OnBttnObserveNextPlayer");
-			gameClientRemoveName(g_theWindowManager, j_00025464, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_00025464, &name);
 		}
 		{
 			AsciiString name("AptPalantir::OnBttnMovie");
-			gameClientRemoveName(g_theWindowManager, j_00025464, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_00025464, &name);
 		}
 		{
 			AsciiString name("AptPalantir::OnBttnObjectives");
-			gameClientRemoveName(g_theWindowManager, j_00025464, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_00025464, &name);
 		}
 		{
 			AsciiString name("Palantir/ObserverStuff/NextPlayerBttn");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("Palantir/ObserverStuff/PriorPlayerBttn");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("Palantir/PalantirButtons/Buttons/Options");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("Palantir/PalantirButtons/Buttons/PlayerMagic/ButtonClip/");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("Palantir/PalantirButtons/Buttons/Objectives/ButtonClip/");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("Palantir/PalantirButtons/Buttons/PlayerPowerCap/");
-			gameClientRemoveName(g_theWindowManager, j_0001e277, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_0001e277, &name);
 		}
 		{
 			AsciiString name("PalantirMinLOD");
-			gameClientRemoveName(g_theWindowManager, j_00023a60, &name);
+			gameClientRemoveName(g_rva012F19E8WindowManager, j_00023a60, &name);
 		}
 	}
 

@@ -206,7 +206,7 @@ private:
 	int m_playerLookup[ 8 ];
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern BfmeAptScreenMapTransfer *TheBfmeAptScreenMapTransfer;
 extern const unsigned short BFMEEmptyString[];
@@ -221,7 +221,7 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		return;
 
 	TheBfmeAptScreenMapTransfer = this;
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		0x0B, "FileTransferPopUpOpen", 0, 0, 0, 0, 0, 0 );
 
 	for( int *lookup = m_playerLookup;
@@ -238,7 +238,7 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		m_playerLookup[ i ] = display;
 		AsciiString variableName;
 		variableName.format( (AsciiString)"FileTransfer::PlayerName%d", display );
-		g_theWindowManager->bfme_setAptText( variableName, slot->getName() );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, slot->getName() );
 
 		variableName.format( (AsciiString)"FileTransfer:PlayerColor:%d", display );
 		MapTransferCallback callback =
@@ -257,13 +257,13 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		variableName.format( (AsciiString)"FileTransfer::PlayerName%d", display );
 		{
 			UnicodeString blank( BFMEEmptyString );
-			g_theWindowManager->bfme_setAptText( variableName, blank );
+			g_rva012F19E8WindowManager->bfme_setAptText( variableName, blank );
 		}
 
 		variableName.format( (AsciiString)"FileTransfer::Status%d", display );
 		{
 			UnicodeString blankStatus( BFMEEmptyString );
-			g_theWindowManager->bfme_setAptText( variableName, blankStatus );
+			g_rva012F19E8WindowManager->bfme_setAptText( variableName, blankStatus );
 		}
 
 		variableName.format( (AsciiString)"FileTransfer:PlayerColor:%d", display );
@@ -278,17 +278,17 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 
 	{
 		AsciiString name( "APT:FileTransferLoadingPlayerName" );
-		g_theWindowManager->bfme_setAptText( name,
+		g_rva012F19E8WindowManager->bfme_setAptText( name,
 			TheGameText->fetch( "GUI:PlayerName" ) );
 	}
 	{
 		AsciiString name( "APT:FileTransferLoadingProgress" );
-		g_theWindowManager->bfme_setAptText( name,
+		g_rva012F19E8WindowManager->bfme_setAptText( name,
 			TheGameText->fetch( "GUI:Progress" ) );
 	}
 	{
 		AsciiString name( "APT:FileTransferLoadingStatus" );
-		g_theWindowManager->bfme_setAptText( name,
+		g_rva012F19E8WindowManager->bfme_setAptText( name,
 			TheGameText->fetch( "GUI:Status" ) );
 	}
 }

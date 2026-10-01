@@ -195,7 +195,7 @@ struct MapCacheNode
 
 extern MapCache *TheMapCache;
 extern ImageCollection *TheMappedImageCollection;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The two function-local statics of the Zero Hour source, one per branch: they
 // cache the "MissingMap" image of the map-not-found path and of the
@@ -249,7 +249,7 @@ void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions
 			}
 		}
 
-		g_theWindowManager->bfme_setAptText(AsciiString("APT:MapTitle"),
+		g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("APT:MapTitle"),
 			UnicodeString(L" "));
 	}
 	else
@@ -312,7 +312,7 @@ void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions
 			// builds the key into a local before the display-name call, and
 			// retail releases both at the end of the enclosing block.
 			AsciiString key("APT:MapTitle");
-			g_theWindowManager->bfme_setAptText(key, mmd.bfme_getDisplayName());
+			g_rva012F19E8WindowManager->bfme_setAptText(key, mmd.bfme_getDisplayName());
 		}
 
 		if (errorListBox)

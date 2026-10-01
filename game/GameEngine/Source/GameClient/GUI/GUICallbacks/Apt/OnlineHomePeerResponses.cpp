@@ -158,7 +158,7 @@ virtual void slot20();
 };
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 class WindowManager {public: void bfme_setAptText(const AsciiString&,const AsciiString&);};
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 class GameTextInterface {public:
 virtual void slot00();
 virtual void slot04();
@@ -205,11 +205,11 @@ void BfmeAptScreenOnlineHome::updatePeerResponses00547160() {
    case 21: {
     AsciiString games;
     games.format(AsciiString("%d"),resp.fieldF4[6]);
-    { AsciiString name("APT:GamesInProgressNum"); AsciiString copy(games); g_theWindowManager->bfme_setAptText(name,copy); }
+    { AsciiString name("APT:GamesInProgressNum"); AsciiString copy(games); g_rva012F19E8WindowManager->bfme_setAptText(name,copy); }
     int players=resp.fieldF4[7];
     if(players<=0) players=1;
     games.format(AsciiString("%d"),players);
-    { AsciiString name("APT:PlayersOnlineNum"); AsciiString copy(games); g_theWindowManager->bfme_setAptText(name,copy); }
+    { AsciiString name("APT:PlayersOnlineNum"); AsciiString copy(games); g_rva012F19E8WindowManager->bfme_setAptText(name,copy); }
    } break;
    case 1: {
     sawImportantMessage=true;
