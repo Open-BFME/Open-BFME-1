@@ -122,17 +122,9 @@ Int parseNoLogOrCrash(char *args[], int)
 
 //=============================================================================
 //=============================================================================
-// Not retail's -win handler: retail's table pairs "-win" with 0x000609C0
-// (Rva000609C0_parse in T3CommandLineParsers.cpp), which stores +0x29. These
-// bytes are retail's parseDumpAssetUsage (0x00061050) under this header's layout.
-Int parseWin(char *args[], int)
-{
-	if (TheWritableGlobalData)
-	{
-		TheWritableGlobalData->m_windowed = true;
-	}
-	return 1;
-}
+// parseWin (retail 0x000609C0, table entry "-win") is defined in
+// T3CommandLineParsers.cpp: retail's m_windowed is +0x29, not this header's +0x20.
+Int parseWin(char *args[], int);
 
 //=============================================================================
 //=============================================================================
@@ -347,17 +339,9 @@ Int parseLogToConsole(char *args[], int)
 
 //=============================================================================
 //=============================================================================
-Int parseNoAudio(char *args[], int)
-{
-	if (TheWritableGlobalData)
-	{
-		TheWritableGlobalData->m_audioOn = false;
-		TheWritableGlobalData->m_speechOn = false;
-		TheWritableGlobalData->m_soundsOn = false;
-		TheWritableGlobalData->m_musicOn = false;
-	}
-	return 1;
-}
+// parseNoAudio (retail 0x00060A60, table entry "-noaudio") is defined in
+// T3CommandLineParsers.cpp: retail stores six audio bytes at +0xA6C..+0xA71.
+Int parseNoAudio(char *args[], int);
 
 //=============================================================================
 //=============================================================================
@@ -413,15 +397,9 @@ Int parseXRes(char *args[], int num)
 	return 1;
 }
 
-Int parseYRes(char *args[], int num)
-{
-	if (TheWritableGlobalData && num > 1)
-	{
-		TheWritableGlobalData->m_yResolution = atoi(args[1]);
-		return 2;
-	}
-	return 1;
-}
+// parseYRes (retail 0x00060C10, table entry "-yres") is defined in
+// T3CommandLineParsers.cpp: retail's m_yResolution is +0x30.
+Int parseYRes(char *args[], int num);
 
 #if defined(_DEBUG) || defined(_INTERNAL)
 //=============================================================================
@@ -768,14 +746,9 @@ Int parseSync(char *args[], int)
 	return 1;
 }
 
-Int parseNoShellMap(char *args[], int)
-{
-	if (TheWritableGlobalData)
-	{
-		TheWritableGlobalData->m_shellMapOn = FALSE;
-	}
-	return 1;
-}
+// parseNoShellMap (retail 0x00060880, table entry "-noshellmap") is defined in
+// T3CommandLineParsers.cpp: retail stores +0xBB4 = FALSE and +0xBB5 = TRUE.
+Int parseNoShellMap(char *args[], int);
 
 Int parseNoShaders(char *args[], int)
 {
@@ -932,9 +905,9 @@ Int parseIncrAGPBuf(char *args[], int num)
 	return 1;
 }
 
-// Retail's -netMinPlayers handler is not here: BFME1 WorldBuilder's full
-// CommandLineParam table pairs "-netMinPlayers" with a body storing to
-// GlobalData+0xB0C, which in the game is 0x00060F40.
+// parseNetMinPlayers (retail 0x00060F40) is defined in T3CommandLineParsers.cpp:
+// BFME1 WorldBuilder's full CommandLineParam table pairs "-netMinPlayers" with
+// a body storing to GlobalData+0xB0C, not this header's +0x788.
 Int parseNetMinPlayers(char *args[], int num);
 
 // 0x00060C60: an atoi store to GlobalData+0xECC that no retail table entry

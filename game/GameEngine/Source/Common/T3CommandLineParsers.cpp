@@ -17,10 +17,13 @@
 // TheCommandLineFlags at [0x012A6FA0] is a BFME addition with no ZH counterpart:
 // a bitmask of which switches were seen, OR-ed with one bit per handler.
 //
-// Identity is address-derived unless
-// targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md proves
-// EA's name. The address-derived rows are Rva-prefixed and each carries the ZH
-// handler it matches in shape where there is one.
+// A handler takes EA's name where tools/ea_flagtable.py reads it from the
+// CommandLineParam tables: retail's own (0x00EA6F40) pairs a flag with a body,
+// BFME1 WorldBuilder's (0x00FBB788) pairs it with a body of identical effects,
+// and Zero Hour's table pairs that flag with the name
+// (targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md).
+// The rest are address-derived: their rows are Rva-prefixed and each carries
+// the ZH handler it matches in shape where there is one.
 //
 // Every offset below is one retail store; no name moves one. The named members
 // are the offsets retail's own INI field table at 0x00C77018 gives a key to,
@@ -136,8 +139,10 @@ Int Rva00060A00_parse(char *args[], int num)
 	return 1;
 }
 
-// ?Rva00060A60_parse@@YAHQAPADH@Z -- ZH parseNoAudio, in ZH's store order
-Int Rva00060A60_parse(char *args[], int num)
+// ?parseNoAudio@@YAHQAPADH@Z -- retail table entry "-noaudio" (0x00EA6F50) ->
+// ILT 0x00019CEF -> 0x00060A60; ZH pairs "-noaudio" with parseNoAudio, and the
+// stores follow ZH's order.
+Int parseNoAudio(char *args[], int num)
 {
 	TheCommandLineFlags |= 2;
 	if (TheWritableGlobalData)
@@ -173,9 +178,10 @@ Int Rva00060B90_parse(char *args[], int num)
 	return 1;
 }
 
-// ?Rva00060C10_parse@@YAHQAPADH@Z -- ZH parseXRes shape, but +0x30 is
-// YResolution; XResolution is the +0x2C its table entry sits beside.
-Int Rva00060C10_parse(char *args[], int num)
+// ?parseYRes@@YAHQAPADH@Z -- retail table entry "-yres" (0x00EA6F60) -> ILT
+// 0x00026CC4 -> 0x00060C10; ZH pairs "-yres" with parseYRes. +0x30 is the
+// YResolution of retail's INI field table.
+Int parseYRes(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
@@ -243,8 +249,10 @@ Int Rva00060EE0_parse(char *args[], int num)
 	return 2;
 }
 
-// ?Rva00060F40_parse@@YAHQAPADH@Z
-Int Rva00060F40_parse(char *args[], int num)
+// ?parseNetMinPlayers@@YAHQAPADH@Z -- BFME1 WorldBuilder's table pairs
+// "-netMinPlayers" with a +0xB0C atoi store; this is the only game body with
+// that effect, and ZH pairs the flag with parseNetMinPlayers.
+Int parseNetMinPlayers(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
@@ -376,8 +384,10 @@ Int Rva000613F0_parse(char *args[], int num)
 	return 1;
 }
 
-// ?Rva00060880_parse@@YAHQAPADH@Z -- the first two stores of Rva00060910_parse
-Int Rva00060880_parse(char *args[], int num)
+// ?parseNoShellMap@@YAHQAPADH@Z -- retail table entry "-noshellmap"
+// (0x00EA6F40) -> ILT 0x000428FC -> 0x00060880; ZH pairs "-noshellmap" with
+// parseNoShellMap. Its two stores are the first two of Rva00060910_parse.
+Int parseNoShellMap(char *args[], int num)
 {
 	if (TheWritableGlobalData)
 	{
@@ -394,8 +404,10 @@ Int Rva00060970_parse(char *args[], int num)
 	return 1;
 }
 
-// ?Rva000609C0_parse@@YAHQAPADH@Z -- the set twin of Rva00060B20_parseNoWin
-Int Rva000609C0_parse(char *args[], int num)
+// ?parseWin@@YAHQAPADH@Z -- retail table entry "-win" (0x00EA6F68) -> ILT
+// 0x00001F2D -> 0x000609C0; ZH pairs "-win" with parseWin. The set twin of
+// Rva00060B20_parseNoWin.
+Int parseWin(char *args[], int num)
 {
 	if (TheWritableGlobalData)
 	{
