@@ -1,5 +1,7 @@
 // cl: /EHsc /Iinputs/reference/shims/pathfind
 // readable body of ?clip@Pathfinder@@QAEXPAUCoord3D@@0@Z: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
+// Keep the CRT-based inline helper local to this TU.
+static float fast_float_floor(float f);
 #include "GameLogic/AIPathfind.h"
 
 // Retail's PathfindLayer::getCell (0x003FBAB0), Pathfinder::getCell (0x003D4E80)

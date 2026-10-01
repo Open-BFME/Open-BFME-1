@@ -16,7 +16,7 @@ typedef unsigned short UnsignedShort;
 struct Coord3D { Real x, y, z; };
 
 // BFME's REAL_TO_INT_FLOOR: CRT floor() then the engine's x87 round.
-__forceinline Real fast_float_floor(Real f)
+static __forceinline Real fast_float_floor(Real f)
 {
 	return (Real)floor((double)f);
 }

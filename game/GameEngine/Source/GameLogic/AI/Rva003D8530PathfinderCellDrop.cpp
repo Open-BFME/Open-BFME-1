@@ -14,6 +14,8 @@
 // &cell. With that knowledge it holds cell.x and cell.y in EBX and EDI across
 // both calls, as retail does, instead of copying them to locals (see
 // docs/shape_levers.md, "AI pathfinding: authentic lookup visibility").
+// Keep the CRT-based inline helper local to this TU.
+static float fast_float_floor(float f);
 #include "GameLogic/AIPathfind.h"
 
 class Rva001A1DE0Owner;
