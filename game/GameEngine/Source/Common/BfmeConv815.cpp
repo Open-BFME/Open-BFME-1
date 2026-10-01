@@ -89,7 +89,8 @@ public:
 	BfmeObjEB2* find(int id);
 };
 
-extern BfmeMgrEB2 *g_bfmeMgr12F0898;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeSubEB2
 {
@@ -107,7 +108,7 @@ struct BfmeThingEB2
 void BfmeThingEB2::doTrigger()
 {
 	if (m_sub) {
-		BfmeObjEB2 *obj = g_bfmeMgr12F0898->find(m_sub->m_id);
+		BfmeObjEB2 *obj = ((BfmeMgrEB2 *)TheGameLogic)->find(m_sub->m_id);
 		if (obj)
 			obj->trigger(8, 0x16);
 	}

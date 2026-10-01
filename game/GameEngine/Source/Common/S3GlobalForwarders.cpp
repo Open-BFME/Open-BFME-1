@@ -57,7 +57,8 @@ public:
 	void bfmeCall_000238a3(void);					// retail 0x000238A3
 };
 
-extern BfmeGlobal_012f0898 *TheBfmeGlobal_012f0898;				// 0x012F0898
+class GameLogic;
+extern GameLogic *TheGameLogic;				// 0x012F0898
 
 class BfmeGlobal_012f142c
 {
@@ -171,7 +172,7 @@ void Gen_002f0dc0(void)
 // ?Gen_002f0f50@@YAXXZ
 void Gen_002f0f50(void)
 {
-	TheBfmeGlobal_012f0898->bfmeCall_000238a3();
+	((BfmeGlobal_012f0898 *)TheGameLogic)->bfmeCall_000238a3();
 }
 
 // ?Gen_0042e720@@YAXXZ

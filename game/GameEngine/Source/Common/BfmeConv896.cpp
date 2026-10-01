@@ -85,7 +85,8 @@ struct BfmeGlobFGC
 	void *m_bfmeV;
 };
 
-extern BfmeGlobFGC *g_bfmeObjFGC;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeSlotFGC
 {
@@ -103,7 +104,7 @@ struct BfmeThingFGC
 void BfmeThingFGC::bfmeGoFGC(int i)
 {
 	if (i >= 0 && i < 8)
-		m_bfmeArr[i].m_bfmeV = g_bfmeObjFGC->m_bfmeV;
+		m_bfmeArr[i].m_bfmeV = ((BfmeGlobFGC *)TheGameLogic)->m_bfmeV;
 }
 
 extern "C" unsigned char bfmeEmptyFGD[];
@@ -141,11 +142,9 @@ public:
 	BfmeResFGE *bfmeFindFGE(void *a);
 };
 
-extern BfmeGlobFGE *g_bfmeObjFGE;
-
 void __stdcall bfmeGoFGE(void *a, void *b, void *c)
 {
-	BfmeResFGE *r = g_bfmeObjFGE->bfmeFindFGE(a);
+	BfmeResFGE *r = ((BfmeGlobFGE *)TheGameLogic)->bfmeFindFGE(a);
 	if (r)
 		r->bfmeUseFGE(b, c);
 }

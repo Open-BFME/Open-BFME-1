@@ -148,12 +148,13 @@ class BfmeMgr089
 public:
 	void send(void *obj, void *param2);
 };
-extern BfmeMgr089 *g_mgr12F0898;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 void __stdcall bfmeLookupAndSendDB0(void *key, void *param2)
 {
 	void *obj = g_mgr12EF1D8->registerObj(key);
 	if (obj) {
-		g_mgr12F0898->send(obj, param2);
+		((BfmeMgr089 *)TheGameLogic)->send(obj, param2);
 	}
 }

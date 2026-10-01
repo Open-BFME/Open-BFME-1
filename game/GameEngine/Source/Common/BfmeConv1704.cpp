@@ -87,7 +87,8 @@ public:
 	int m_bfmeFrameFV;
 };
 
-extern BfmeLogicFV *g_bfmeGameLogicFV;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeSecondFV
 {
@@ -105,7 +106,7 @@ int BfmeSecondFV::bfmeStepFV(void)
 	if (*(void **)(base - 0xc) == 0)
 		return 0x3fffffff;
 
-	int delta = g_bfmeGameLogicFV->m_bfmeFrameFV - m_bfmeStampFV;
+	int delta = ((BfmeLogicFV *)TheGameLogic)->m_bfmeFrameFV - m_bfmeStampFV;
 
 	if (delta == 0)
 		((BfmePrimaryFV *)(base - 0x10))->bfmeResetFV();

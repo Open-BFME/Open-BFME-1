@@ -49,7 +49,8 @@ public:
 	Gen00371340ObjectMap m_objects;
 };
 
-extern Gen00371340GameLogic *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Gen_00371340
 {
@@ -84,7 +85,7 @@ bool Gen_00371340::hasIncompleteStructure(BfmeY982 *argument)
 	ObjectID *current = range->begin;
 	if (current != range->end)
 	{
-		Gen00371340GameLogic *logic = TheGameLogic;
+		Gen00371340GameLogic *logic = (Gen00371340GameLogic *)TheGameLogic;
 
 		while (current != range->end)
 		{
@@ -106,7 +107,7 @@ bool Gen_00371340::hasIncompleteStructure(BfmeY982 *argument)
 					BfmeY982 *completion = object->bfmeConv982B();
 					if (completion != 0 && !completion->isComplete())
 						return true;
-					logic = TheGameLogic;
+					logic = (Gen00371340GameLogic *)TheGameLogic;
 				}
 			}
 		}

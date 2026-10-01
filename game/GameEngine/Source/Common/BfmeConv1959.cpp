@@ -49,7 +49,8 @@ public:
 	BfmeThingERP *bfmeFindByIdERP(int id);
 };
 
-extern BfmeLogicERP *g_bfmeLogicERP;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeKeyGenERP
 {
@@ -97,7 +98,7 @@ void BfmeHostERP::bfmeSweepERP()
 		if (node->m_bfmeIdERP == 0)
 			continue;
 
-		BfmeThingERP *thing = g_bfmeLogicERP->bfmeFindByIdERP(node->m_bfmeIdERP);
+		BfmeThingERP *thing = ((BfmeLogicERP *)TheGameLogic)->bfmeFindByIdERP(node->m_bfmeIdERP);
 
 		if (thing != 0 && (thing->m_bfmeFlagsERP & 1) == 0)
 		{

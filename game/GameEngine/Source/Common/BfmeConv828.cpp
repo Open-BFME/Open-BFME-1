@@ -4,7 +4,9 @@ class BfmeMgr089_152
 public:
 	void reset();
 };
-extern BfmeMgr089_152 *g_mgr12F0898;
+
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeObj1024
 {
@@ -57,7 +59,7 @@ struct BfmeThing152
 void BfmeThing152::resetAll()
 {
 	m_flag8 = 0;
-	g_mgr12F0898->reset();
+	((BfmeMgr089_152 *)TheGameLogic)->reset();
 	clear();
 	g_obj12F1024->m_flag1D = 1;
 	g_mgr12F076C->vfn13();
@@ -278,8 +280,8 @@ struct BfmeArg2B0
 
 void __stdcall bfmeLookupAndForward2B0(BfmeArg2B0 *arg)
 {
-	BfmeNode2B0 *node = ((BfmeMgr2B0*)g_mgr12F0898)->lookupByField(&arg->m_field10);
+	BfmeNode2B0 *node = ((BfmeMgr2B0*)TheGameLogic)->lookupByField(&arg->m_field10);
 	if (node) {
-		((BfmeMgr2B0*)g_mgr12F0898)->forwardVal(node->m_val4);
+		((BfmeMgr2B0*)TheGameLogic)->forwardVal(node->m_val4);
 	}
 }

@@ -26,7 +26,8 @@ class BfmeGameLogicPause
 public:
 	void clearGameData(Bool showScoreScreen, Bool unknown);
 };
-extern BfmeGameLogicPause *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Glo012F7048Type
 {
@@ -118,7 +119,7 @@ unsigned fade005651F0(float, Bool firstCall)
 	{
 		if (TheRecorder->getMode() == RECORDERMODETYPE_RECORD)
 			TheRecorder->stopRecording();
-		TheGameLogic->clearGameData(false, false);
+		((BfmeGameLogicPause *)TheGameLogic)->clearGameData(false, false);
 		TheTransitionHandler->setGroup(AsciiString("FadeScreenRegionToMapBlack"));
 		((Rva004893D0ByteClear *)TheTransitionHandler)->clear();
 		Glo012F7048->setEnabled(true);

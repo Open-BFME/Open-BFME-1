@@ -26,7 +26,8 @@ public:
 	void bfmeUseYU(int mode, void *entry);
 };
 
-extern BfmeObserverYU *g_bfmeObserverYU;			// retail 0x012F0898
+class GameLogic;
+extern GameLogic *TheGameLogic;				// retail 0x012F0898
 extern BfmeRegistryYU *g_bfmeRegistryYU;			// retail 0x012F33F8
 
 // ?bfmeApplyYU@@YGXH@Z
@@ -34,7 +35,7 @@ void __stdcall bfmeApplyYU(int unused)
 {
 	AsciiStringYU *name;
 
-	if (g_bfmeObserverYU != 0 && g_bfmeObserverYU->bfmeActiveYU())
+	if (TheGameLogic != 0 && ((BfmeObserverYU *)TheGameLogic)->bfmeActiveYU())
 	{
 		static AsciiStringYU s_bfmeObjectivesYU("NonCommand_Objectives");
 
