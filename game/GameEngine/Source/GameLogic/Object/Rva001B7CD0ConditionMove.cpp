@@ -2,16 +2,12 @@
 //
 // Retail 0x001B7CD0 is an address-derived two-argument model-condition bit
 // move.  The owner name is intentionally not guessed: the body has no named
-// caller in the current source surface.  The helper is the existing pinned
-// BfmeOwnerVNI::bfmeApply1VNI body reached by the retail ILT.
+// caller in the current source surface.  The condition words sit at +0x110,
+// Object::m_modelConditionFlags, and the helper is the body reached by the
+// retail ILT 0x0002191D: Object::notifyModelConditionChanged.
 
-typedef unsigned int UnsignedInt;
-
-class BfmeOwnerVNI
-{
-public:
-	void bfmeApply1VNI();
-};
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "object.h"
 
 class Rva001B7CD0Owner
 {
@@ -37,5 +33,5 @@ void Rva001B7CD0Owner::moveCondition(UnsignedInt from, UnsignedInt to)
 	m_conditionWords[from >> 5] &= ~fromBit;
 	UnsignedInt toBit = 1U << (to & 0x1f);
 	m_conditionWords[to >> 5] |= toBit;
-	((BfmeOwnerVNI *)this)->bfmeApply1VNI();
+	((Object *)this)->notifyModelConditionChanged();
 }

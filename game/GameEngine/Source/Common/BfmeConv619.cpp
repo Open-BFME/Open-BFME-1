@@ -1,14 +1,14 @@
-struct BfmeMidCLC
-{
-	void bfmeNotifyCLC();
-	unsigned char m_bfmeHead[0x118];
-	unsigned int m_bfmeFlags;
-};
+// The receiver of bfmeNotifyCLC is an Object: the cleared word is
+// Object::m_modelConditionFlags[2] at +0x118, and the call is the ILT
+// 0x0002191D thunk to Object::notifyModelConditionChanged.
+
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "../GameLogic/Object/object.h"
 
 struct BfmeOwnerCLC
 {
 	unsigned char m_bfmeHead[0x10];
-	BfmeMidCLC *m_bfmeMid;
+	Object *m_bfmeMid;
 };
 
 class BfmeThingCLC
@@ -22,11 +22,11 @@ public:
 
 void BfmeThingCLC::bfmeGoCLC(void *what)
 {
-	BfmeMidCLC *mid = m_bfmeOwner->m_bfmeMid;
-	if (mid->m_bfmeFlags & 0x1000)
+	Object *mid = m_bfmeOwner->m_bfmeMid;
+	if (mid->m_modelConditionFlags[2] & 0x1000)
 	{
-		mid->m_bfmeFlags &= ~0x1000u;
-		mid->bfmeNotifyCLC();
+		mid->m_modelConditionFlags[2] &= ~0x1000u;
+		mid->notifyModelConditionChanged();
 	}
 	bfmeThenCLC(what);
 }

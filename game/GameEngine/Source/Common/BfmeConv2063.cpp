@@ -141,22 +141,18 @@ public:
 	BfmeFlagHH *m_bfmeFlagHH;
 };
 
-class BfmeThingHH
-{
-public:
-	void bfmeSomethingHH();
-
-	unsigned char m_bfmeGapHH[0x11c];
-	int m_bfmeFlagsHH;
-	unsigned char m_bfmeGap2HH[0xe4];
-	BfmeCtrlHH *m_bfmeCtrlHH;
-};
+// The receiver of bfmeSomethingHH is an Object: the tested and cleared word
+// is Object::m_modelConditionFlags[3] at +0x11C, the controller at +0x204 is
+// Object::m_ai, and the call is the ILT 0x0002191D thunk to
+// Object::notifyModelConditionChanged.
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "../GameLogic/Object/object.h"
 
 class BfmeOwnerHH
 {
 public:
 	unsigned char m_bfmeGapHH[0x10];
-	BfmeThingHH *m_bfmeThingHH;
+	Object *m_bfmeThingHH;
 };
 
 class BfmeSelfHH
@@ -173,7 +169,7 @@ void BfmeSelfHH::bfmeResetHH(void *p)
 {
 	bfmeBaseHH(p);
 
-	BfmeCtrlHH *c = m_bfmeOwnerHH->m_bfmeThingHH->m_bfmeCtrlHH;
+	BfmeCtrlHH *c = (BfmeCtrlHH *)m_bfmeOwnerHH->m_bfmeThingHH->m_ai;
 
 	if (c != 0)
 	{
@@ -183,16 +179,16 @@ void BfmeSelfHH::bfmeResetHH(void *p)
 			f->m_bfmeFlagsHH &= ~8;
 	}
 
-	BfmeThingHH *t = m_bfmeOwnerHH->m_bfmeThingHH;
+	Object *t = m_bfmeOwnerHH->m_bfmeThingHH;
 
 	if (t != 0)
 	{
-		if (t->m_bfmeFlagsHH & 0x4000000)
+		if (t->m_modelConditionFlags[3] & 0x4000000)
 		{
-			t->m_bfmeFlagsHH &= ~0x4000000;
-			t->bfmeSomethingHH();
+			t->m_modelConditionFlags[3] &= ~0x4000000;
+			t->notifyModelConditionChanged();
 		}
 
-		t->m_bfmeCtrlHH->bfmeApplyHH(0);
+		((BfmeCtrlHH *)t->m_ai)->bfmeApplyHH(0);
 	}
 }

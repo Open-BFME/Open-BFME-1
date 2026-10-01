@@ -134,26 +134,18 @@ public:
 	char m_bfmeShownYH;
 };
 
-class BfmeItemYH
-{
-public:
-	void bfmeNotifyYH();
-
-	unsigned char m_bfmeHeadYH[0x118];
-	union
-	{
-		int m_bfmeFlagsYH;
-		unsigned char m_bfmeFlagBitsYH;
-	};
-	unsigned char m_bfmeMidYH[0xe8];
-	BfmeWinYH *m_bfmeWinYH;
-};
+// The receiver of bfmeNotifyYH is an Object: the tested and cleared word is
+// Object::m_modelConditionFlags[2] at +0x118, the window at +0x204 is
+// Object::m_ai, and the call is the ILT 0x0002191D thunk to
+// Object::notifyModelConditionChanged.
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "../GameLogic/Object/object.h"
 
 class BfmeHolderYH
 {
 public:
 	unsigned char m_bfmeHeadYH[0x10];
-	BfmeItemYH *m_bfmeItemYH;
+	Object *m_bfmeItemYH;
 };
 
 class BfmeOwnerYH
@@ -171,20 +163,20 @@ void BfmeOwnerYH::bfmeCloseYH(void *arg)
 {
 	bfmeBaseYH(arg);
 
-	BfmeItemYH *item = m_bfmeHolderYH->m_bfmeItemYH;
+	Object *item = m_bfmeHolderYH->m_bfmeItemYH;
 
 	if (item == 0)
 		return;
 
-	if (item->m_bfmeFlagBitsYH & 1)
+	if ( ( (unsigned char *)&item->m_modelConditionFlags[2] )[0] & 1 )
 	{
-		item->m_bfmeFlagsYH &= ~1;
-		item->bfmeNotifyYH();
+		item->m_modelConditionFlags[2] &= ~1u;
+		item->notifyModelConditionChanged();
 	}
 
-	if (item->m_bfmeWinYH != 0)
+	if ((BfmeWinYH *)item->m_ai != 0)
 	{
-		item->m_bfmeWinYH->bfmeHideYH(0);
-		item->m_bfmeWinYH->m_bfmeShownYH = 0;
+		((BfmeWinYH *)item->m_ai)->bfmeHideYH(0);
+		((BfmeWinYH *)item->m_ai)->m_bfmeShownYH = 0;
 	}
 }

@@ -3,9 +3,9 @@
 // Retail 0x002D9F30 sets one model-condition bit on the object at +8, using
 // the index held at +0x64 of the record at +4, and tail-calls the reapply. The
 // owner name is not guessed: the body has no named caller in the current
-// source surface. The helper is the existing pinned
-// BfmeOwnerVNI::bfmeApply1VNI body reached through ILT 0x0002191D, which
-// jumps to Object::notifyModelConditionChanged (0x001BE1C0).
+// source surface. The condition words sit at +0x110,
+// Object::m_modelConditionFlags, and the helper is the body reached through
+// ILT 0x0002191D: Object::notifyModelConditionChanged (0x001BE1C0).
 //
 // The set is a clear-and-set whose clear index is the -1 sentinel held in a
 // local. That half folds away entirely, but it is still present when MSVC
@@ -17,11 +17,8 @@
 
 typedef unsigned int UnsignedInt;
 
-class BfmeOwnerVNI
-{
-public:
-	void bfmeApply1VNI();
-};
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "object.h"
 
 class Rva002D9F30Target
 {
@@ -51,7 +48,7 @@ public:
 		}
 
 		if( changed )
-			( (BfmeOwnerVNI *)this )->bfmeApply1VNI();
+			( (Object *)this )->notifyModelConditionChanged();
 	}
 };
 

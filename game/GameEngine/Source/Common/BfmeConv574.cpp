@@ -1,14 +1,14 @@
-struct BfmeSubCCC
-{
-	void bfmeNotifyCCC();
-	unsigned char m_bfmeHead[0x114];
-	unsigned int m_bfmeFlags;
-};
+// The receiver of bfmeNotifyCCC is an Object: the cleared word is
+// Object::m_modelConditionFlags[1] at +0x114, and the call is the ILT
+// 0x0002191D thunk to Object::notifyModelConditionChanged.
+
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "../GameLogic/Object/object.h"
 
 struct BfmeOwnerCCC
 {
 	unsigned char m_bfmeHead[0x10];
-	BfmeSubCCC *m_bfmeMid;
+	Object *m_bfmeMid;
 };
 
 class BfmeThingCCC
@@ -21,10 +21,10 @@ public:
 
 void BfmeThingCCC::bfmeGoCCC(void *spare)
 {
-	BfmeSubCCC *sub = m_bfmeOwner->m_bfmeMid;
-	if (sub->m_bfmeFlags & 0x20000000u)
+	Object *sub = m_bfmeOwner->m_bfmeMid;
+	if (sub->m_modelConditionFlags[1] & 0x20000000u)
 	{
-		sub->m_bfmeFlags &= ~0x20000000u;
-		sub->bfmeNotifyCCC();
+		sub->m_modelConditionFlags[1] &= ~0x20000000u;
+		sub->notifyModelConditionChanged();
 	}
 }
