@@ -296,7 +296,7 @@ private:
 	int m_bfmeBackgroundMovie;
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern DisconnectMenu *TheDisconnectMenu;
 void _bfme_closeAptScreen( const AsciiString &name );
 
@@ -480,7 +480,7 @@ BfmeAptScreenDisconnectScreen::BfmeAptScreenDisconnectScreen( void *context )
 	{
 		TheDisconnectMenu = (DisconnectMenu *)this;
 		memset( m_unmodelledTail, 0, sizeof( BfmeAptDisconnectTail ) );
-		g_theWindowManager->bfme_showBackground( 2 );
+		g_rva012F19E8WindowManager->bfme_showBackground( 2 );
 
 		{
 			FunctorMethod callback =
@@ -549,11 +549,11 @@ void DisconnectMenu::removePlayer( int slot, UnicodeString playerName )
 	if( playerName.isEmpty() )
 	{
 		UnicodeString blank( L" " );
-		g_theWindowManager->bfme_setAptText( variableName, blank );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, blank );
 	}
 	else
 	{
-		g_theWindowManager->bfme_setAptText( variableName, playerName );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, playerName );
 
 		if( *(GameWindow **)( (char *)this + 0x258 ) )
 		{
@@ -567,7 +567,7 @@ void DisconnectMenu::removePlayer( int slot, UnicodeString playerName )
 	sprintf( slotText, "%d", slot );
 
 	int movie = *(int *)( (char *)this + 0x250 );
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		movie, "HideKickButton", 1, slotText,
 		reinterpret_cast< const void * >( 0 ), 0, 0, 0 );
 	*(char *)( (char *)this + 0x262 + slot ) = 0;
@@ -575,7 +575,7 @@ void DisconnectMenu::removePlayer( int slot, UnicodeString playerName )
 	variableName.format( (AsciiString)"DisconnectScreen::VotesReceived%d", slot );
 	{
 		const UnicodeString &blank2 = UnicodeString( L" " );
-		g_theWindowManager->bfme_setAptText( variableName, blank2 );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, blank2 );
 	}
 }
 
@@ -589,17 +589,17 @@ void DisconnectMenu::setPlayerName( int slot, UnicodeString playerName )
 	{
 		{
 			UnicodeString blank( L" " );
-			g_theWindowManager->bfme_setAptText( variableName, blank );
+			g_rva012F19E8WindowManager->bfme_setAptText( variableName, blank );
 		}
 		setPlayerTimeoutTime( slot, 0 );
 	}
 	else
 	{
-		g_theWindowManager->bfme_setAptText( variableName, playerName );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, playerName );
 		sprintf( slotText, "%d", slot );
 
 		int movie = *(int *)( (char *)this + 0x250 );
-		g_theWindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->unidentified_00015235(
 			movie, "HideKickButton", 1, slotText,
 			reinterpret_cast< const void * >( 0 ), 0, 0, 0 );
 		*(char *)( (char *)this + 0x262 + slot ) = 0;
@@ -618,7 +618,7 @@ void DisconnectMenu::setPlayerTimeoutTime( int slot, int percent )
 	const char *percentArgument = percentText.str();
 	const char *slotArgument = slotText.str();
 	int movie = *(int *)( (char *)this + 0x250 );
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		movie, "SetBarPercent", 2, slotArgument, percentArgument, 0, 0, 0 );
 }
 
@@ -640,7 +640,7 @@ BfmeAptScreenDisconnectScreen::~BfmeAptScreenDisconnectScreen()
 	{
 		TheDisconnectMenu = 0;
 		if( !m_isQuitting )
-			g_theWindowManager->bfme_hideBackground( false );
+			g_rva012F19E8WindowManager->bfme_hideBackground( false );
 
 		AsciiString name( "DisconnectScreen::InitGadgets" );
 		_bfme_closeAptScreen( name );
@@ -998,7 +998,7 @@ BfmeAptScreenObjectives::BfmeAptScreenObjectives( void *context )
 			}
 		}
 
-		g_theWindowManager->bfme_showBackground( 2 );
+		g_rva012F19E8WindowManager->bfme_showBackground( 2 );
 
 		{
 			FunctorMethod callback =
@@ -1108,7 +1108,7 @@ void BfmeAptScreenScoreScreen::_bfme_setPlayerTable(
 {
 	AsciiString variableName;
 	variableName.format( (AsciiString)"PlayerTable:%d:%d", row, field );
-	g_theWindowManager->bfme_setAptText( variableName, text );
+	g_rva012F19E8WindowManager->bfme_setAptText( variableName, text );
 }
 
 // ?createAptScreenScoreScreen@@YGPAXPAX@Z
@@ -1241,7 +1241,7 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 		}
 
 		unidentified_0003A085();
-		g_theWindowManager->unidentified_0001A483();
+		g_rva012F19E8WindowManager->unidentified_0001A483();
 	}
 }
 
@@ -1250,7 +1250,7 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 {
 	if( TheLivingWorldLogic == 0 )
 	{
-		g_theWindowManager->bfme_setAptText(
+		g_rva012F19E8WindowManager->bfme_setAptText(
 			AsciiString( "APT:CmpgnRevResult" ),
 			UnicodeString::TheEmptyString );
 		return;
@@ -1260,25 +1260,25 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 	if( result == 2 )
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
-		g_theWindowManager->bfme_setAptText( variableName,
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName,
 			TheGameText->fetch( "APT:TotalVictoryCaps", 0 ) );
 	}
 	else if( result == 1 )
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
-		g_theWindowManager->bfme_setAptText( variableName,
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName,
 			TheGameText->fetch( "APT:VictoryCaps", 0 ) );
 	}
 	else if( result == 0 )
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
-		g_theWindowManager->bfme_setAptText( variableName,
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName,
 			TheGameText->fetch( "APT:SurvivedCaps", 0 ) );
 	}
 	else
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
-		g_theWindowManager->bfme_setAptText(
+		g_rva012F19E8WindowManager->bfme_setAptText(
 			variableName, UnicodeString::TheEmptyString );
 	}
 }
@@ -1379,7 +1379,7 @@ BfmeAptScreenSpellStore::BfmeAptScreenSpellStore( void *context )
 	m_field2D0 = false;
 	m_field2D1 = false;
 
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		g_obj12F4C38 = this;
 		SpellStoreRegistry *registry =
@@ -1435,7 +1435,7 @@ BfmeAptScreenSpellStore::BfmeAptScreenSpellStore( void *context )
 
 		if( m_field25B )
 		{
-			g_theWindowManager->bfme_showBackground( 2 );
+			g_rva012F19E8WindowManager->bfme_showBackground( 2 );
 			m_field25B = false;
 		}
 		unidentified_000062DF();

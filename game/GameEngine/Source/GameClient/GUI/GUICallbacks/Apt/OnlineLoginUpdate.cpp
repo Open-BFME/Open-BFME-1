@@ -275,7 +275,7 @@ class WindowManager
 public:
 	void *_bfme_callAptFunction( unsigned int, const char *, int, const char *, const char *, const char *, const char *, const char * );
 };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00548D30WindowGroup { public: void winEnable( bool ); };
 
@@ -332,10 +332,10 @@ void BfmeAptScreenOnlineLogin::_bfme_update( void )
 		if( m_flagA0 )
 		{
 			((Rva00548D30WindowGroup *)this)->winEnable( true );
-			{ unsigned int level = m_context->field250; g_theWindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonDeleteNickname", 0, 0, 0, 0 ); }
-			{ unsigned int level = m_context->field250; g_theWindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonCreate", 0, 0, 0, 0 ); }
-			{ unsigned int level = m_context->field250; g_theWindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonLogin", 0, 0, 0, 0 ); }
-			{ unsigned int level = m_context->field250; g_theWindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonServiceTerms", 0, 0, 0, 0 ); }
+			{ unsigned int level = m_context->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonDeleteNickname", 0, 0, 0, 0 ); }
+			{ unsigned int level = m_context->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonCreate", 0, 0, 0, 0 ); }
+			{ unsigned int level = m_context->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonLogin", 0, 0, 0, 0 ); }
+			{ unsigned int level = m_context->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction( level, "CallChild", 1, "EnableButtonServiceTerms", 0, 0, 0, 0 ); }
 		}
 
 		PeerResponse resp;

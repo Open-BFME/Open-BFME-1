@@ -148,7 +148,7 @@ class WindowManager {
   public:
     void bfme_setAptText(const AsciiString &, const UnicodeString &);
 };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern "C" int *g_bfmeLimitsDF;
@@ -184,7 +184,7 @@ UnicodeString getUnicodeDateBuffer(_SYSTEMTIME);
 static __forceinline void setText(const char *name, const UnicodeString &source) {
     AsciiString key(name);
     UnicodeString text(source);
-    g_theWindowManager->bfme_setAptText(key, text);
+    g_rva012F19E8WindowManager->bfme_setAptText(key, text);
 }
 static __forceinline void setNumber(UnicodeString &text, const char *key, int value) {
     text.format(UnicodeString(L"%d"), value);
@@ -234,7 +234,7 @@ static __forceinline void level(UnicodeString &text, PSPlayerStats &stats, int s
 static __forceinline void icon(PSPlayerStats &stats, int side, const char *const &name) {
     void *image = ((void *(__cdecl *)(int, int))j_000136a1)(rank(stats, side), side);
     typedef void (Rva0046C770Owner::*M)(const AsciiString &, void *);
-    (((Rva0046C770Owner *)g_theWindowManager)->*retailMethod<M>(j_0001681a))(AsciiString(name),
+    (((Rva0046C770Owner *)g_rva012F19E8WindowManager)->*retailMethod<M>(j_0001681a))(AsciiString(name),
                                                                              image);
 }
 static __forceinline void nextLevel(UnicodeString &text, PSPlayerStats &stats, int side,
@@ -344,7 +344,7 @@ void BfmeOnlineProfileScreen::rva00554AA0() {
             stats.best1v1LadderRank = g_bfmePeerReqE4;
     }
     if (stats.best1v1LadderRank == -1)
-        g_theWindowManager->bfme_setAptText(AsciiString("APT:HighestRankANum"),
+        g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("APT:HighestRankANum"),
                                             UnicodeString(L"--"));
     else
         setNumber(text, "APT:HighestRankANum", stats.best1v1LadderRank);
@@ -355,7 +355,7 @@ void BfmeOnlineProfileScreen::rva00554AA0() {
             stats.best2v2LadderRank = g_bfmePeerReqE8;
     }
     if (stats.best2v2LadderRank == -1)
-        g_theWindowManager->bfme_setAptText(AsciiString("APT:HighestRankBNum"),
+        g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("APT:HighestRankBNum"),
                                             UnicodeString(L"--"));
     else
         setNumber(text, "APT:HighestRankBNum", stats.best2v2LadderRank);

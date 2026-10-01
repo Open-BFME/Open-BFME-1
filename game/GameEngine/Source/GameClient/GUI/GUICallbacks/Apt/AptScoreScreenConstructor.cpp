@@ -174,7 +174,7 @@ public:
   __declspec(noinline) void bfme_showBackground(int kind);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern const char *Rva012B7F9CNames[11];
 extern BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen;
 
@@ -383,6 +383,6 @@ BfmeAptScreenScoreScreen::BfmeAptScreenScoreScreen(void *context)
 
     registerRef(this, "AptScoreScreen::InitGadgets",
                 &BfmeAptScreenScoreScreen::_bfme_onInitGadget);
-    g_theWindowManager->bfme_showBackground(1);
+    g_rva012F19E8WindowManager->bfme_showBackground(1);
   }
 }

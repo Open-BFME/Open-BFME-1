@@ -106,7 +106,7 @@ public:
 };
 class WindowManager {public: void bfme_setAptText(const AsciiString&,const UnicodeString&);};
 extern GameSpyInfo *TheGameSpyInfo;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern int g_bfmePeerReqE4, g_bfmePeerReqE8;
 extern const char *g_onlineHomeGadgetsImageLevelIconMain;
@@ -138,7 +138,7 @@ struct HomeTimeZone { long bias; unsigned short standardName[32]; HomeSystemTime
 extern "C" __declspec(dllimport) unsigned long __stdcall GetTimeZoneInformation(HomeTimeZone*);
 extern "C" __declspec(dllimport) int __stdcall WideCharToMultiByte(unsigned,unsigned long,const unsigned short*,int,char*,int,const char*,int*);
 static __forceinline void setText(const char *key,const UnicodeString& text) {
- g_theWindowManager->bfme_setAptText(AsciiString(key),text);
+ g_rva012F19E8WindowManager->bfme_setAptText(AsciiString(key),text);
 }
 class BfmeAptScreenOnlineHome {
  char field00[0x34]; Rva0055CD80Owner *field34;
@@ -166,7 +166,7 @@ void BfmeAptScreenOnlineHome::rva00547730() {
   setText("APT:CurrentLevelNum",text);
   void *image=((void*(__cdecl*)(int,int))j_000136a1)(level,side);
   typedef void (Rva0046C770Owner::*ImageM)(const AsciiString&,void*);
-  (((Rva0046C770Owner*)g_theWindowManager)->*retailMethod<ImageM>(j_0001681a))(AsciiString(g_onlineHomeGadgetsImageLevelIconMain),image);
+  (((Rva0046C770Owner*)g_rva012F19E8WindowManager)->*retailMethod<ImageM>(j_0001681a))(AsciiString(g_onlineHomeGadgetsImageLevelIconMain),image);
   switch(side) {
    case 3: text=TheGameText->fetch("Apt:IsengardCaps"); break;
    case 0: text=TheGameText->fetch("Apt:RohanCaps"); break;

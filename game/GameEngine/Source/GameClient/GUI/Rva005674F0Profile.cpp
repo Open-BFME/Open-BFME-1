@@ -87,7 +87,7 @@ class WindowManager
 };
 
 extern GameTextInterface *TheGameText;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern "C" __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(const unsigned short *text);
 
 class SkirmishBattleHonors
@@ -130,7 +130,7 @@ static __forceinline void rva005674F0SetText(const char *name, const UnicodeStri
 {
     AsciiString variableName(name);
     UnicodeString text(source);
-    g_theWindowManager->bfme_setAptText(variableName, text);
+    g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }
 static __forceinline void rva005674F0SetNumber(UnicodeString &text, const char *name, int value)
 {

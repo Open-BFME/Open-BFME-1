@@ -42,7 +42,7 @@ virtual GameWindow *getWindowUnderCursor(int,int,bool);
 extern GameWindowManager *TheWindowManager;
 class BfmeC977 { public: char bfmeGo977C(); };
 class WindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 // Radar booleans +0xc/+0xd are read here; their names remain unproven.
 class Radar { public:
 char pad000[0xc]; bool m_field00c; bool m_field00d;
@@ -175,7 +175,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
         if (ss == OBJECTSHROUD_SHROUDED) t = 0xa5;
     }
     GameWindow *window = 0;
-    char underWindow = ((BfmeC977 *)g_theWindowManager)->bfmeGo977C();
+    char underWindow = ((BfmeC977 *)g_rva012F19E8WindowManager)->bfmeGo977C();
     if (!underWindow) {
         const ICoord2D *io = &TheMouse->m_currMouse;
         if (io && TheWindowManager)

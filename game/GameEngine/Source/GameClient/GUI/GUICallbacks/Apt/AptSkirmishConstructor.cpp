@@ -188,7 +188,7 @@ public:
   void bfme_setAptText(const AsciiString &, const UnicodeString &);
   void rva0046c790(const AsciiString &, const AsciiString &);
 };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 class GameTextInterface {
 public:
   virtual void slot00();
@@ -297,7 +297,7 @@ static __forceinline void registerPlain(BfmeAptScreenSkirmish *screen,
 static __forceinline void registerBind(BfmeAptScreenSkirmish *screen,
                                        const char *name, FunctorMethod method) {
   AsciiString key(name);
-  (((RegistryView *)g_theWindowManager)->*RegistryView::bind())(
+  (((RegistryView *)g_rva012F19E8WindowManager)->*RegistryView::bind())(
       key, Rva0057C970FunctorHolder(
                FunctorBinding(method, (FunctorTarget *)screen)));
 }
@@ -330,47 +330,47 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish(void *context)
     {
       AsciiString icon("AptGondorImage");
       AsciiString key(Rva012B8044Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("AptRohanImage");
       AsciiString key(Rva012B8048Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("AptIsengardImage");
       AsciiString key(Rva012B804CImage);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("AptMordorImage");
       AsciiString key(Rva012B8050Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("ScrollShroud");
       AsciiString key(Rva012B8054Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("ScrollShroud");
       AsciiString key(Rva012B8058Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("ScrollShroud");
       AsciiString key(Rva012B805CImage);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("ScrollShroud");
       AsciiString key(Rva012B8060Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     {
       AsciiString icon("ScrollShroud");
       AsciiString key(Rva012B8064Image);
-      ((BfmeA1024 *)g_theWindowManager)->bfmeGo1024A((int)&key, (int)&icon);
+      ((BfmeA1024 *)g_rva012F19E8WindowManager)->bfmeGo1024A((int)&key, (int)&icon);
     }
     RegistryView *registry = (RegistryView *)(Rva00465200GameWindow *)this;
     registerPlain(this, registry, "AptSkirmish::OnInitialized",
@@ -405,7 +405,7 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish(void *context)
     registerRef(this, "AptSkirmish::InitGadgets", rawMethod((unsigned)j_000095ac));
     {
       AsciiString key("APT:OnlineOrNetwork");
-      g_theWindowManager->bfme_setAptText(key,
+      g_rva012F19E8WindowManager->bfme_setAptText(key,
                                           TheGameText->fetch("APT:Skirmish"));
     }
   }
