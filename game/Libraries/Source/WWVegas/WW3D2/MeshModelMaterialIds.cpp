@@ -48,6 +48,16 @@ public:
     }
 };
 
+class Gen_0096D080 { public: BfmeHandleCX bfmeGet(int index) const; };
+class BfmeTexVGS;
+class BfmeTexVGR;
+class BfmeMeshVGT { public: void bfmeSetVGT(BfmeTexVGS **texture, int pass, int stage); };
+class BfmeMeshVGR { public: void bfmeSetVGR(int index, BfmeTexVGR **texture, int pass, int stage); };
+
+#define Peek_Texture(context, index) reinterpret_cast<const Gen_0096D080 *>(context)->bfmeGet(index)
+#define Set_Single_Texture Set_Single_TextureRow
+#define Set_Texture Set_TextureRow
+
 class ChunkLoadClass {
 public:
     unsigned long Cur_Chunk_Length();
@@ -85,8 +95,12 @@ public:
         return Texture[pass][stage].p != 0 ||
                TextureArray[pass][stage] != 0;
     }
-    void Set_Single_Texture(const BfmeHandleCX &texture, int pass, int stage);
-    void Set_Texture(int index, const BfmeHandleCX &texture, int pass, int stage);
+    __forceinline void Set_Single_Texture(const BfmeHandleCX &texture, int pass, int stage) {
+        reinterpret_cast<BfmeMeshVGT *>(this)->bfmeSetVGT(reinterpret_cast<BfmeTexVGS **>(const_cast<BfmeHandleCX *>(&texture)), pass, stage);
+    }
+    __forceinline void Set_Texture(int index, const BfmeHandleCX &texture, int pass, int stage) {
+        reinterpret_cast<BfmeMeshVGR *>(this)->bfmeSetVGR(index, reinterpret_cast<BfmeTexVGR **>(const_cast<BfmeHandleCX *>(&texture)), pass, stage);
+    }
 };
 
 class MeshLoadContextClass {
@@ -109,7 +123,6 @@ public:
     MeshMatDescClass AlternateMatDesc;
 private:
     friend class MeshModelClass;
-    BfmeHandleCX Peek_Texture(int index);
 public:
     ShaderClass Peek_Shader(unsigned long index) { return Shaders[index]; }
     VertexMaterialClass *Peek_Vertex_Material(unsigned long index) { return VertexMaterials[index]; }
@@ -157,12 +170,12 @@ bool MeshModelClass::read_texture_ids(ChunkLoadClass &cload, MeshLoadContextClas
 
     if (cload.Cur_Chunk_Length() == 1 * sizeof(unsigned long)) {
         cload.Read(&texid, sizeof(texid));
-        matdesc->Set_Single_Texture(context->Peek_Texture(texid), pass, stage);
+        matdesc->Set_Single_Texture(Peek_Texture(context, texid), pass, stage);
     } else {
         for (int i = 0; i < Get_Polygon_Count(); i++) {
             cload.Read(&texid, sizeof(unsigned long));
             if (texid != 0xffffffff) {
-                matdesc->Set_Texture(i, context->Peek_Texture(texid), pass, stage);
+                matdesc->Set_Texture(i, Peek_Texture(context, texid), pass, stage);
             }
         }
     }

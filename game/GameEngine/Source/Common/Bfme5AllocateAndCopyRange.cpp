@@ -16,15 +16,18 @@
 // The null test on the destination inside the loop is placement new. The six
 // four-byte bodies copy one word, the four eight-byte ones copy two.
 
-void *bfmeNewAlloc(unsigned int bytes);				// retail 0x00881F30
-void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
+void * __cdecl operator new(unsigned int bytes);
+namespace _STL
+{
+    class __new_alloc { public: static void * __cdecl allocate(unsigned int bytes); };
+}
 
-inline void *bfmeAllocate(unsigned int bytes)
+static inline void *bfmeAllocate(unsigned int bytes)
 {
 	if (bytes > 0x80)
-		return bfmeNewAlloc(bytes);
+		return ::operator new(bytes);
 
-	return bfmeAllocNode(bytes);
+	return _STL::__new_alloc::allocate(bytes);
 }
 
 inline void * __cdecl operator new(unsigned int, void *where) { return where; }

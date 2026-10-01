@@ -61,6 +61,17 @@
 
 #include <vector>
 
+class Rva00252A40 { public: void invoke(); };
+class Rva00608FE0Element { public: ~Rva00608FE0Element(); };
+class Rva00770F40 { public: ~Rva00770F40(); };
+
+#define S4_VECTOR_ROW_DTOR(NAME, DWORDS, ROW, MEMBER) \
+    struct S4Elem##NAME { int m_storage[DWORDS]; ~S4Elem##NAME(); }; \
+    namespace _STL { \
+        template<> inline void _Destroy(S4Elem##NAME *p) { reinterpret_cast<ROW *>(p)->MEMBER(); } \
+    } \
+    void s4vd##NAME(_STL::vector<S4Elem##NAME> *v) { v->~vector(); }
+
 #define S4_VECTOR_DTOR( NAME, DWORDS )                                         \
 	struct S4Elem##NAME                                                        \
 	{                                                                          \
@@ -72,11 +83,11 @@
 		v->~vector();                                                          \
 	}
 
-S4_VECTOR_DTOR( 00252ED0, 11 )
+S4_VECTOR_ROW_DTOR( 00252ED0, 11, Rva00252A40, invoke )
 S4_VECTOR_DTOR( 0039EBE0, 34 )
-S4_VECTOR_DTOR( 00608D40, 132 )
+S4_VECTOR_ROW_DTOR( 00608D40, 132, Rva00608FE0Element, Rva00608FE0Element::~Rva00608FE0Element )
 S4_VECTOR_DTOR( 007746E0, 11 )
-S4_VECTOR_DTOR( 0077B010, 27 )
+S4_VECTOR_ROW_DTOR( 0077B010, 27, Rva00770F40, Rva00770F40::~Rva00770F40 )
 
 #define S4_VECTOR_DTOR_VIRTUAL( NAME, DWORDS )                                 	struct S4Poly##NAME                                                        	{                                                                          		int m_storage[ DWORDS ];                                               		virtual ~S4Poly##NAME();                                               	};                                                                         	void s4vdv##NAME( _STL::vector< S4Poly##NAME > *v )                        	{                                                                          		v->~vector();                                                          	}
 

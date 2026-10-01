@@ -65,7 +65,13 @@ public:
 	virtual void bfmeTakeAt8C(void *item);		// slot 35, vtable+0x8C
 };
 
-void bfmeHandOver_00004B79(BfmeSeedTarget *target, void *item);		// ILT 0x00004B79
+class FlagPairTarget;
+class Gen0016B140 { public: void handle(FlagPairTarget *); };
+class Gen_00248BE0 { public: void bfmeSeed(BfmeSeedTarget *); };
+class Rva001EF3D0Caller { public: void invoke(FlagPairTarget *); };
+class MidVirtualSlot90Receiver;
+void __cdecl Rva0010BE00(MidVirtualSlot90Receiver *, void *);
+static inline void bfmeHandOver_00004B79(BfmeSeedTarget *target, void *item) { Rva0010BE00(reinterpret_cast<MidVirtualSlot90Receiver *>(target), item); }
 void bfmeHandOver_0003EE32(BfmeSeedTarget *target, void *item);		// ILT 0x0003EE32
 
 class Gen_0016B710
@@ -84,8 +90,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
-
 	char m_bfmePad0[0x50];
 	char m_bfmeItem0;				// +0x50
 	char m_bfmePad1[0x3];
@@ -98,8 +102,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
-
 	char m_bfmePad0[0x50];
 	char m_bfmeItem0;				// +0x50
 	char m_bfmePad1[0x3];
@@ -114,8 +116,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00007658
-
 	char m_bfmePad0[0x9BC];
 	char m_bfmeItem0;				// +0x9BC
 	char m_bfmePad1[0x3];
@@ -143,8 +143,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000160B3
-
 	char m_bfmePad0[0x14];
 	char m_bfmeItem0;				// +0x14
 };
@@ -246,7 +244,7 @@ void Gen_0016B7C0::bfmeSeed(BfmeSeedTarget *target)
 	version1.m_bfmeVersion = 1;
 
 	target->bfmeSeed(&version1);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	target->bfmeTakeAt78(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);
@@ -268,7 +266,7 @@ void Gen_0016B890::bfmeSeed(BfmeSeedTarget *target)
 	version1.m_bfmeVersion = 1;
 
 	target->bfmeSeed(&version1);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	target->bfmeTakeAt78(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);
@@ -290,7 +288,7 @@ void Gen_0024E710::bfmeSeed(BfmeSeedTarget *target)
 			target->bfmeTakeAt74(&m_bfmeItem0);
 			target->bfmeTakeAt68(&m_bfmeItem1);
 		}
-		bfmeAccept(target);
+		reinterpret_cast<Gen_00248BE0 *>(this)->bfmeSeed(target);
 
 	}
 }
@@ -328,7 +326,7 @@ void Gen_002D9BD0::bfmeSeed(BfmeSeedTarget *target)
 	version0.m_bfmeVersion = 1;
 
 	target->bfmeSeed(&version0);
-	bfmeAccept(target);
+	reinterpret_cast<Rva001EF3D0Caller *>(this)->invoke(reinterpret_cast<FlagPairTarget *>(target));
 
 	BfmeVersionBlock version1;
 

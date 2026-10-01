@@ -34,14 +34,13 @@
 // `push imm8`, which is why the two families group apart despite the same
 // source shape.
 //
-// IDENTITY IS NOT RECOVERED.  The constructed classes are named after their
-// constructors' addresses and the functions after their own.  Two of those
-// addresses already carry recovered names in the ledger -- 0x00660FD0 is
-// ??0Pinger@@QAE@XZ and 0x0078ABB0 is ??0Rva0078ABB0@@QAE@XZ.  Their real
-// class definitions live elsewhere in game/, so they are NOT redefined here;
-// the address-derived aliases stand in, and what this family adds for them is
-// the size: sizeof(Pinger) == 0xb4 and sizeof(Rva0078ABB0) == 0x1c8.
-// The `char m_storage[SIZE]` member is a size carrier, not a layout claim.
+// The factories retain their ledger return types and construct the row types.
+// Each storage declaration carries the retail allocation size without claiming a field layout.
+
+#define Q4_NEW_NILADIC_ROW_FACTORY(GEN, ROW, SIZE, MAKER) \
+    class GEN; \
+    class ROW { public: ROW(); char m_storage[SIZE]; }; \
+    GEN *MAKER() { return reinterpret_cast<GEN *>(new ROW); }
 
 #define Q4_NEW_NILADIC_FACTORY( GEN, SIZE, MAKER )                         \
 	class GEN                                                              \
@@ -55,14 +54,14 @@
 		return new GEN;                                                    \
 	}
 
-Q4_NEW_NILADIC_FACTORY( Gen0048D200, 0x3060, make0048D380 )
-Q4_NEW_NILADIC_FACTORY( Gen00642300, 0x80,   make006426E0 )
-Q4_NEW_NILADIC_FACTORY( Gen00660FD0, 0xb4,   make00661490 )
-Q4_NEW_NILADIC_FACTORY( Gen006B0E00, 0xb78,  make006B5890 )
-Q4_NEW_NILADIC_FACTORY( Gen006FB500, 0x11c,  make006BA850 )
-Q4_NEW_NILADIC_FACTORY( Gen006C1D70, 0x1508, make006BAA10 )
-Q4_NEW_NILADIC_FACTORY( Gen0078ABB0, 0x1c8,  make006BAA90 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen0048D200, IMEManager, 0x3060, make0048D380 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen00642300, Rva00641C60Queue, 0x80,   make006426E0 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen00660FD0, Pinger, 0xb4,   make00661490 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen006B0E00, MilesAudioManager, 0xb78,  make006B5890 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen006FB500, Rva006FB500, 0x11c,  make006BA850 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen006C1D70, W3DRadar, 0x1508, make006BAA10 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen0078ABB0, Rva0078ABB0, 0x1c8,  make006BAA90 )
 Q4_NEW_NILADIC_FACTORY( Gen006EF850, 0x2a8,  make006FB520 )
 Q4_NEW_NILADIC_FACTORY( Gen006E2310, 0xf8,   make006FB8E0 )
-Q4_NEW_NILADIC_FACTORY( Gen00745B10, 0x24e4, make006FBE60 )
+Q4_NEW_NILADIC_ROW_FACTORY( Gen00745B10, Rva00745B10Owner, 0x24e4, make006FBE60 )
 Q4_NEW_NILADIC_FACTORY( Gen0078D1C0, 0xe0,   make0078F5C0 )
