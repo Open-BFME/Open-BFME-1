@@ -10,6 +10,7 @@
 // Rva009EF6D0 retains its address because no native method name is witnessed.
 // The result is a 12-byte STLport tree, a word at +0x0C and a byte at +0x10.
 // Evidence: targets/game/reverse/identity_evidence/009ebf90-result-view.md.
+// Sibling: targets/game/reverse/identity_evidence/009ebff0-result-view.md.
 
 extern "C" void __cdecl _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -71,11 +72,14 @@ class AssetRegistry
 {
 public:
 	Rva009EF6D0Output Rva009EF6D0();
+	Rva009EF6D0Output Rva009EF750();
 
 private:
 	unsigned char m_unmodelled_000[0x2C];
 	CRITICAL_SECTION m_critical_section;
-	unsigned char m_unmodelled_044[0x188];
+	unsigned char m_unmodelled_044[0x14C];
+	Rva009EF6D0Tree m_tree190;
+	unsigned char m_unmodelled_19c[0x30];
 	Rva009EF6D0Tree m_tree;
 };
 
@@ -94,4 +98,19 @@ Rva009EF6D0Output Rva009EBF90()
 	if (g_theAssetRegistry == NULL)
 		return Rva009EF6D0Output();
 	return g_theAssetRegistry->Rva009EF6D0();
+}
+
+// ?Rva009EF750@AssetRegistry@@QAE?AURva009EF6D0Output@@XZ
+Rva009EF6D0Output AssetRegistry::Rva009EF750()
+{
+	CriticalSectionLock lock(&m_critical_section);
+	return Rva009EF6D0Output(m_tree190);
+}
+
+// ?Rva009EBFF0@@YA?AURva009EF6D0Output@@XZ
+Rva009EF6D0Output Rva009EBFF0()
+{
+	if (g_theAssetRegistry == NULL)
+		return Rva009EF6D0Output();
+	return g_theAssetRegistry->Rva009EF750();
 }

@@ -11418,5 +11418,45 @@
  "after_sha256": "bf44efc52a1b2f104935343200839d8c23aab3ea32fe6fe41639a78249adc348",
  "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
  "reason": "A TU-local stand-in returning 1. Retail binds -Watchdog to ILT 0x00017490 -> 0x00060970 (matched Rva00060970_parse); the flag has no Zero Hour handler, so EA's name is unknown."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/Bfme/Rva009EF750.cpp",
+ "new_path": "game/Libraries/Source/assetmanager/Rva009EF6D0.cpp",
+ "old_name": "copy",
+ "new_name": "Rva009EF750",
+ "before_sha256": "304d410c4d0f4ef68b1b3eb5b0dc9b7649f36bf3c060080a3b59b9d5fdbee188",
+ "after_sha256": "bb4583836d1a39f0cbe2b8bd98c9e12881efecef7e5b249c8fb956346d7b2a03",
+ "evidence": "targets/game/reverse/identity_evidence/009ebff0-result-view.md",
+ "reason": "The old pointer-to-registry output was cast to the separately witnessed natural-size20B tree result. Wrapper009EBFF0 and callee009EF750 operands support one typed result view. Original declarations and method name remain unknown, so the method retains the fullRVA; native receiver tree is+190."
+},
+{
+ "old_path": "targets/game/reverse/functions.csv",
+ "new_path": "targets/game/reverse/functions.csv",
+ "old_name": "copy",
+ "new_name": "Rva009EF750",
+ "before_sha256": "b3c32267c13eb39fd65ddfbc3f517ed8c8e3ac758a9081d4e3bb20b1f04522a1",
+ "after_sha256": "ddfeb575823b6e60f5a5f1c82e59677d8a1c4bddcf6545480ae2b2f148daa3b9",
+ "evidence": "targets/game/reverse/identity_evidence/009ebff0-result-view.md",
+ "reason": "Same-address result ABI correction: callee009EF750 writes a native12Btree plus result word/byte at+0C/+10, matching wrapper009EBFF0. This is a typed result ABI view; original hidden-return declaration and native method name remain unknown."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/Bfme/Rva009EF750.cpp",
+ "new_path": "game/Libraries/Source/assetmanager/Rva009EF6D0.cpp",
+ "old_name": "copy",
+ "new_name": "Rva009EF6D0",
+ "before_sha256": "304d410c4d0f4ef68b1b3eb5b0dc9b7649f36bf3c060080a3b59b9d5fdbee188",
+ "after_sha256": "bb4583836d1a39f0cbe2b8bd98c9e12881efecef7e5b249c8fb956346d7b2a03",
+ "evidence": "targets/game/reverse/identity_evidence/009ebff0-result-view.md",
+ "reason": "The source comparison falsely pairs old009EF750 copy with the already-published009EF6D0 method in the shared TU. That existing113Bbody remains exact and unchanged in behavior; the newly replaced native009EF750 body is the separate fullRVA Rva009EF750 method. Actual replacement identity is separately evidenced at the same address and ledger row."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/Bfme/Rva009EF750.cpp",
+ "new_path": "game/Libraries/Source/assetmanager/Rva009EF6D0.cpp",
+ "old_name": "out",
+ "new_name": "Rva009EF6D0Output",
+ "before_sha256": "304d410c4d0f4ef68b1b3eb5b0dc9b7649f36bf3c060080a3b59b9d5fdbee188",
+ "after_sha256": "bb4583836d1a39f0cbe2b8bd98c9e12881efecef7e5b249c8fb956346d7b2a03",
+ "evidence": "targets/game/reverse/identity_evidence/009ebff0-result-view.md",
+ "reason": "The token comparison falsely pairs the removed explicit output-pointer parameter out with the shared result TYPE Rva009EF6D0Output. No source variable is renamed to a type. The independently witnessed native output operand is now the aggregate hidden result parameter, and its original source declaration remains unknown."
 }
 ]

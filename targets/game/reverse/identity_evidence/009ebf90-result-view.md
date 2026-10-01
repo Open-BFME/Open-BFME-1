@@ -19,11 +19,18 @@ the padding at 0x009EF6CE..CF; the predecessor is not part of this body.
 
 ## Independently witnessed output and receiver
 
-The 0x009EBF90 NULL branch allocates 0x14 bytes for an STLport tree header,
-initializes the output's header/count/comparator words at +0, +4 and +8,
-then writes zero to output +0x0C and one byte with value one to +0x10.
-This is the same 20-byte tree/word/byte result pattern independently matched
-at 0x009EC050 and described in `009ef6b0-construction.md`.
+The 0x009EBF90 NULL branch allocates 0x14 bytes for a separate STLport tree
+header. It writes output +0 (the allocated header pointer) and +4, then
+initializes the allocated header's +0/+4/+8/+0x0C fields. It does not write
+output +8. Finally it writes zero to output +0x0C and one byte to +0x10.
+These are distinct output and allocated-header address bases. The native
+12-byte tree and trailing word/byte support the natural-size 20-byte C++
+result view also matched at 0x009EC050 and described in
+`009ef6b0-construction.md`; original padding, complete type, lifetime and
+output allocation are not independently recovered. The native receiver
+constructor at 0x009F2140 repeats this field pattern at +0x190, +0x1A4,
++0x1B8 and +0x1CC, corroborating the 0x14-byte spacing. This does not settle
+the original hidden-return versus explicit-output declaration.
 
 The 0x009EF6D0 body locks receiver +0x2C through the native
 EnterCriticalSection import, passes receiver +0x1CC to the independently
