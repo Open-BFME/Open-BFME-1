@@ -79,7 +79,7 @@ public:
 	}
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
@@ -233,7 +233,7 @@ StateReturnType AITNGuardReturnState::onEnter()
 	UnsignedInt now = TheGameLogic->getFrame();
 	m_nextReturnScanTime = now + GetGameLogicRandomValue(
 		0,
-		TheAIParseDefinitionAI->getAiData()->m_guardEnemyReturnScanRate,
+		TheAI->getAiData()->m_guardEnemyReturnScanRate,
 		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AITNGuard.cpp",
 		0x1fc);
 

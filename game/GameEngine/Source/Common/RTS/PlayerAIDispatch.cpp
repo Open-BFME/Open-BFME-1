@@ -109,8 +109,6 @@ struct BfmeAI
 	BfmeAIData *m_data;
 };
 
-extern "C" BfmeAI *TheAIParseDefinitionAI;
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
@@ -213,7 +211,7 @@ void Player::setPlayerType(PlayerType type, bool skirmish)
 
 	if (type == PLAYER_COMPUTER)
 	{
-		if (skirmish || TheAIParseDefinitionAI->getAiData()->m_forceSkirmishAI)
+		if (skirmish || reinterpret_cast<BfmeAI *>(TheAI)->getAiData()->m_forceSkirmishAI)
 			m_ai = reinterpret_cast<AIPlayer *>(new AISkirmishPlayer(this));
 		else
 			m_ai = new AIPlayer(this);

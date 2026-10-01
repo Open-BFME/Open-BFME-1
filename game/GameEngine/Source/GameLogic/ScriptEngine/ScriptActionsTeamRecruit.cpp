@@ -87,7 +87,9 @@ public:
 
 extern BfmeScriptEngineVtbl_44_50 *TheScriptEngine;
 extern BfmeThingFactory *TheThingFactory;
-extern BfmeAI *TheAI;
+// retail's TheAI singleton is an AI*; BfmeAI is the view this file reads it through
+class AI;
+extern AI *TheAI;
 extern void j_0001478b();
 extern void j_000439d2();
 extern void j_0000b866();
@@ -178,7 +180,7 @@ void ScriptActions::doTeamRecruitUnits(const AsciiString &teamName,
 	ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectTypeName);
 	if (bfmeHasAnyObjects(team)) {
 		bfmeRecruitUnits(team, thingTemplate, objectTypes, count,
-			TheAI->m_aiData->m_maxRecruitDistance);
+			reinterpret_cast<BfmeAI *>(TheAI)->m_aiData->m_maxRecruitDistance);
 	} else {
 		bfmeRecruitUnits(team, thingTemplate, objectTypes, count,
 			1000000.0f);

@@ -59,7 +59,7 @@ public:
 	}
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 class TunnelTracker
 {
@@ -238,7 +238,7 @@ StateReturnType AITNGuardIdleState::update()
 	if (now < m_nextEnemyScanTime)
 		return (StateReturnType)(m_nextEnemyScanTime - now);
 
-	m_nextEnemyScanTime = now + TheAIParseDefinitionAI->getAiData()->m_guardEnemyScanRate;
+	m_nextEnemyScanTime = now + TheAI->getAiData()->m_guardEnemyScanRate;
 	m_machine->getOwner()->getAI()->friend_setGoalObject(0);
 	Object *owner = m_machine->getOwner();
 	AIUpdateInterface *ai = owner->getAI();

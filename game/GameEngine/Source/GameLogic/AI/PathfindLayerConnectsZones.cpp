@@ -97,7 +97,7 @@ private:
 	Pathfinder *m_pathfinder;
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
@@ -144,7 +144,7 @@ Bool PathfindLayer::connectsZones(PathfindZoneManager *zoneManager,
 			PathfindLayerEnum connectLayer = cell->getConnectLayer();
 			if (connectLayer == LAYER_GROUND || connectLayer >= LAYER_FIRST_BRIDGE)
 			{
-				PathfindCell *groundCell = TheAIParseDefinitionAI->pathfinder()->
+				PathfindCell *groundCell = TheAI->pathfinder()->
 					getGroundCell(i + m_xOrigin, j + m_yOrigin);
 				if (groundCell)
 				{

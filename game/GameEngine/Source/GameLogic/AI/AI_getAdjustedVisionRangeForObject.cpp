@@ -92,7 +92,9 @@ public:
 	BfmeAIFactors *m_bfmeFactors;				// +0x14
 };
 
-extern "C" BfmeAIRoot *TheAIParseDefinitionAI;			// 0x012EF214
+// retail's TheAI singleton is an AI*; this view reads its +0x14 factors
+class AI;
+extern AI *TheAI;						// 0x012EF214
 
 // ?bfmeStateValue@BfmeObjectAI@@QAEHXZ
 #pragma optimize("s", on)
@@ -208,11 +210,11 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
 
 			case 0x800:
 				return range
-					* TheAIParseDefinitionAI->m_bfmeFactors->m_bfme4C;
+					* reinterpret_cast<BfmeAIRoot *>(TheAI)->m_bfmeFactors->m_bfme4C;
 
 			case 0x1000:
 				return range
-					* TheAIParseDefinitionAI->m_bfmeFactors->m_bfme50;
+					* reinterpret_cast<BfmeAIRoot *>(TheAI)->m_bfmeFactors->m_bfme50;
 		}
 	}
 

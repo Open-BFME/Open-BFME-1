@@ -13,7 +13,9 @@ class BfmeRvaA760ProbeInterface { public: bool accepts(BfmeRvaA760Object*,int); 
 class Rva0037C310Owner { public: bool Rva0037C310(int,int,Object*); };
 class Pathfinder { public: bool bfmeGroundCellThreshold(const Coord3D*,bool); bool worldLineNoHit(const Coord3D*,const Coord3D*); };
 struct PathSystem00290990 { char pad00[12]; Pathfinder* at0c; Pathfinder* getPathfinder() { return at0c; } };
-extern PathSystem00290990* g_path00290990;
+// retail's TheAI singleton; PathSystem00290990 is the view its pathfinder sits in
+class AI;
+extern AI *TheAI;
 struct Config00290990 { char pad00[0x10]; BfmeRvaA760ProbeInterface at10; };
 struct Collection00290990 { char pad00[4]; Config00290990* at04; char pad08[0x78]; Rva0037C310Owner** at80; Rva0037C310Owner** at84; };
 class TargetEligibility00290990 {
@@ -38,14 +40,14 @@ bool TargetEligibility00290990::accepts(Object* target) {
  Config00290990* config=at08->at04;
  if(config->at10.accepts((BfmeRvaA760Object*)target,0)) return false;
  const Coord3D* position=(const Coord3D*)((char*)target+0x38);
- if(g_path00290990->at0c->bfmeGroundCellThreshold(position,false)) return false;
+ if(reinterpret_cast<PathSystem00290990 *>(TheAI)->at0c->bfmeGroundCellThreshold(position,false)) return false;
  Rva0037C310Owner** it=at08->at80;
  for(;it!=at08->at84;++it) {
   int kind=*(int*)(*(char**)((char*)*it+4)+4);
   if((kind==0 || kind==3) && (*it)->Rva0037C310(at14,at18,target)) break;
  }
  if(it==at08->at84) return false;
- if(!g_path00290990->getPathfinder()->bfmeGroundCellThreshold((const Coord3D*)((char*)at0c+0x38),false) && ((BfmeHolderNS*)target)->bfmeQueryNS()==1 && !g_path00290990->getPathfinder()->worldLineNoHit((const Coord3D*)((char*)at0c+0x38),position)) return false;
+ if(!reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->bfmeGroundCellThreshold((const Coord3D*)((char*)at0c+0x38),false) && ((BfmeHolderNS*)target)->bfmeQueryNS()==1 && !reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->worldLineNoHit((const Coord3D*)((char*)at0c+0x38),position)) return false;
  at1c=target;
  return true;
 }

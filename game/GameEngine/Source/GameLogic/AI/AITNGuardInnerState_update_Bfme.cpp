@@ -51,7 +51,7 @@ public:
 	}
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+extern AI *TheAI;
 
 class TunnelTracker
 {
@@ -197,7 +197,7 @@ StateReturnType AITNGuardInnerState::update()
 		{
 			getGuardMachine()->setNemesisID(teamVictim->getID());
 			_ReadWriteBarrier();
-			register AIData *data = TheAIParseDefinitionAI->getAiData();
+			register AIData *data = TheAI->getAiData();
 			m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheBfmeGameLogic->getFrame();
 			return STATE_CONTINUE;
 		}
@@ -208,7 +208,7 @@ StateReturnType AITNGuardInnerState::update()
 			{
 				getGuardMachine()->setNemesisID(nemesis->getID());
 				_ReadWriteBarrier();
-				register AIData *data = TheAIParseDefinitionAI->getAiData();
+				register AIData *data = TheAI->getAiData();
 				m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheBfmeGameLogic->getFrame();
 				return STATE_CONTINUE;
 			}

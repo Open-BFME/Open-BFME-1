@@ -20,7 +20,9 @@ private:
 	UnsignedInt m_nextGroupID;
 };
 
-extern AIInterface *TheAI;
+// retail's TheAI singleton is an AI*; AIInterface is the view read here
+class AI;
+extern AI *TheAI;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
@@ -64,7 +66,7 @@ AIGroup::AIGroup()
 	m_formationOffset = 0.0f;
 	m_groundPath = 0;
 	m_dirty = false;
-	m_id = TheAI->getNextGroupID();
+	m_id = reinterpret_cast<AIInterface *>(TheAI)->getNextGroupID();
 	m_memberListSize = 0;
 	m_memberList.clear();
 }

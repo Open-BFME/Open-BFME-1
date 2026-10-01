@@ -32,8 +32,10 @@ public:
 	UnsignedInt m_frame;
 };
 
+class AI;
+
 extern GameLogic *TheGameLogic;
-extern void *TheAI;
+extern AI *TheAI;
 
 class BfmeStateMachine
 {
