@@ -35,11 +35,16 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. The local
+// WindowManager view above is exactly the canonical pointee type, so the name
+// only changes.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 void setConnectingPlayerName( int index, const UnicodeString &text )
 {
 	AsciiString name;
 	name.format( AsciiString( "APT:ConnectingPlayer%dName" ), index + 1 );
-	g_theWindowManager->bfme_setAptText( name, text );
+	g_rva012F19E8WindowManager->bfme_setAptText( name, text );
 }

@@ -18,7 +18,14 @@ public:
 	void bfmeOneMD( int h );
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the bfmeOneMD() through it, so the pointee stays the local BfmeMgr19E view
+// and the access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva0001FF0ABase
 {
@@ -56,7 +63,7 @@ private:
 Rva00470360::~Rva00470360()
 {
 	Rva00470360Inner *p = m_ptr;
-	g_mgr12F19E8->bfmeOneMD( p->m_value );
+	((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeOneMD( p->m_value );
 	( (Gen0003A4AE *)this )->cleanupRva0003A4AE();
 	m_ptr = 0;
 }

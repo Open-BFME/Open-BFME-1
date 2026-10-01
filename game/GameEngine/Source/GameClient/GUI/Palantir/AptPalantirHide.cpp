@@ -34,7 +34,13 @@ public:
 
 extern void bfmeGo1071B( char hidden );
 extern void bfmeGo1085A();
-extern void *g_theWindowManager;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only null-tests
+// it, so the forward declaration is all it needs.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 extern Radar *TheRadar;
 
 class AptPalantir
@@ -55,7 +61,7 @@ private:
 // ?hide@AptPalantir@@QAEX_N@Z
 void AptPalantir::hide( bool immediate )
 {
-	if( !g_theWindowManager )
+	if( !g_rva012F19E8WindowManager )
 		return;
 
 	if( immediate )
