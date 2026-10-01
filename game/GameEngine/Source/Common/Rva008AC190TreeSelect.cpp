@@ -187,7 +187,6 @@ Rva008AC190Node *Rva008AC190Node::select008AC460(int initialIndex)
 			return (Rva008AC190Node *)node->m_index->bfmeAt1238B(index);
 		case 6:
 		case 7:
-			node->m_second->count008AC190();
 			return 0;
 		case 8:
 			if (node->m_field8) {
