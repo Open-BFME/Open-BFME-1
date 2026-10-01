@@ -1,5 +1,5 @@
 // ?grabSinglePlayerInfo@@YAXXZ
-// partial score=0.93 date=2026-09-26
+// partial score=0.9334 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
 // BFME score-screen single-player aggregation, retail 0x004E8320.
 
@@ -63,7 +63,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : "";
 	}
 
 	Int compare(const AsciiString &other) const
@@ -112,7 +112,7 @@ public:
 	Int getTotalMoneyEarned() { return m_totalMoneyEarned; }
 	Int getTotalMoneySpent() { return m_totalMoneySpent; }
 	Int getTotalUnitsDestroyed();
-	Int getTotalUnitsBuilt() { return m_totalUnitsBuilt; }
+	Int getTotalUnitsBuilt() { return *(const volatile Int *)&m_totalUnitsBuilt; }
 	Int getTotalUnitsLost() { return m_totalUnitsLost; }
 	Int getTotalBuildingsDestroyed();
 	Int getTotalBuildingsBuilt() { return m_totalBuildingsBuilt; }
@@ -255,6 +255,18 @@ enum
 	MAX_RELATIONS
 };
 
+static __forceinline void accumulateScore(ScoreGather &sg, ScoreKeeper *sk)
+{
+	sg.m_totalBuildingsBuilt += sk->getTotalBuildingsBuilt();
+	sg.m_totalBuildingsDestroyed += sk->getTotalBuildingsDestroyed();
+	sg.m_totalBuildingsLost += sk->getTotalBuildingsLost();
+	sg.m_totalMoneySpent += sk->getTotalMoneySpent();
+	sg.m_totalMoneyEarned += sk->getTotalMoneyEarned();
+	sg.m_totalUnitsBuilt += sk->getTotalUnitsBuilt();
+	sg.m_totalUnitsDestroyed += sk->getTotalUnitsDestroyed();
+	sg.m_totalUnitsLost += sk->getTotalUnitsLost();
+}
+
 void grabSinglePlayerInfo()
 {
 	Int playerCount = 0;
@@ -346,14 +358,7 @@ void grabSinglePlayerInfo()
 						(isFriend == false && localPlayer->getRelationship(player->getDefaultTeam()) == ENEMIES))
 					{
 						ScoreKeeper *sk = player->getScoreKeeper();
-						sg.m_totalBuildingsBuilt += sk->getTotalBuildingsBuilt();
-						sg.m_totalBuildingsDestroyed += sk->getTotalBuildingsDestroyed();
-						sg.m_totalBuildingsLost += sk->getTotalBuildingsLost();
-						sg.m_totalMoneyEarned += sk->getTotalMoneyEarned();
-						sg.m_totalMoneySpent += sk->getTotalMoneySpent();
-						sg.m_totalUnitsBuilt += sk->getTotalUnitsBuilt();
-						sg.m_totalUnitsDestroyed += sk->getTotalUnitsDestroyed();
-						sg.m_totalUnitsLost += sk->getTotalUnitsLost();
+						accumulateScore(sg, sk);
 						sg.m_sideImage = player->getPlayerTemplate()->getSideIconImage();
 						color = player->getPlayerColor();
 						populate = true;
