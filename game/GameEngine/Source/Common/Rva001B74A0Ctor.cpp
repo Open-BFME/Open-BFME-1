@@ -1,9 +1,9 @@
 // cl: /O2 /Ob0
 
-class Rva001B74A0
+class LocomotorSet
 {
 	void *m_vptr;
-	int m_04;
+	int m_locomotors;
 	int m_08;
 	int m_0C;
 	int m_10;
@@ -12,17 +12,17 @@ class Rva001B74A0
 	int m_1C;
 
 public:
-	Rva001B74A0(int dummy);
+	LocomotorSet(int dummy);
 };
 
 // Retail vtable VA 0x0109DF3C; the alternate name defines no table.
 extern "C" void *bfmeVftGen_001BA9E0[];
 #pragma comment(linker, "/alternatename:_bfmeVftGen_001BA9E0=??_7Gen_001BA9E0@@6B@")
 
-Rva001B74A0::Rva001B74A0(int)
+LocomotorSet::LocomotorSet(int)
 {
 	m_vptr = bfmeVftGen_001BA9E0;
-	m_04 = 0;
+	m_locomotors = 0;
 	m_08 = 0;
 	m_0C = 0;
 	m_18 = 0;
