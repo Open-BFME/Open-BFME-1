@@ -31773,3 +31773,9 @@ _timeGetTime@0,0x007E4810,"Retired authored shadow of native import-library FF25
 ??0Rva001B74A0@@QAE@H@Z,0x001B74A0,renamed to ??0LocomotorSet@@QAE@H@Z by tools/name_lane.py: two models agreed
 ?d_00905140@@YAXXZ,0x00905140,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?Create_Render_Target@DX8Wrapper@@SA?AVGen_005D2040@@HHW4WW3DFormat@@@Z, a gate-required claim from game/Libraries/Source/WWVegas/WW3D2/Rva00905140CreateRenderTarget.cpp over the same 358-byte range. The game/gen_asm/d_00904510.asm scaffold reproduces those bytes but carries no identity."
 ?d_0094cb40@@YAXXZ,0x0094CB40,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?erase@Rva0094CB40@@QAEXABI@Z, a gate-required claim from game/GameEngine/Source/Common/Rva0094CB40Erase.cpp over the same 102-byte range. The game/gen_asm/d_0094c880.asm scaffold reproduces those bytes but carries no identity."
+?bfmeFieldB@Gen_000EC5E0@@QBEPAHXZ,0x000EC600,renamed to ?bfmeFieldB@Team@@QBEPAHXZ by tools/name_lane.py: two models agreed
+?bfmeSetA@Gen_0018F210@@QAEX_N@Z,0x0018F210,renamed to ?setWaterArea@Gen_0018F210@@QAEX_N@Z by tools/name_lane.py: two models agreed
+?bfmeSetB@Gen_0018F210@@QAEX_N@Z,0x0018F270,renamed to ?setRiver@Gen_0018F210@@QAEX_N@Z by tools/name_lane.py: two models agreed
+?bfmeSetC@Gen_0018F210@@QAEXH@Z,0x0018F2E0,renamed to ?setRiverStart@Gen_0018F210@@QAEXH@Z by tools/name_lane.py: two models agreed
+?getName@Gen_000EC5E0@@QBEPAHXZ,0x000EC5E0,renamed to ?getName@Team@@QBEPAHXZ by tools/name_lane.py: two models agreed
+?isEmpty@Gen_001506E0@@QBE_NXZ,0x001506E0,renamed to ?isEmpty@AIGroup@@QBE_NXZ by tools/name_lane.py: two models agreed

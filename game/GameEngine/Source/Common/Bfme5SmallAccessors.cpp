@@ -11,7 +11,7 @@ public:
 	BfmeNodeBG *m_next;					// +0x00
 };
 
-class Gen_001506E0
+class AIGroup
 {
 public:
 	bool isEmpty(void) const;
@@ -21,15 +21,15 @@ private:
 	BfmeNodeBG *m_memberList;					// +0x04
 };
 
-// ?isEmpty@Gen_001506E0@@QBE_NXZ
-bool Gen_001506E0::isEmpty(void) const
+// ?isEmpty@AIGroup@@QBE_NXZ
+bool AIGroup::isEmpty(void) const
 {
 	BfmeNodeBG *node = m_memberList;
 
 	return node->m_next == node;
 }
 
-class BfmeThingBG
+class TeamPrototype
 {
 public:
 	int m_bfmeHead[4];					// +0x00
@@ -39,7 +39,7 @@ public:
 
 extern int g_bfmeDefaultBG[2];					// retail 0x01336E50
 
-class Gen_000EC5E0
+class Team
 {
 public:
 	int *getName(void) const;
@@ -47,13 +47,13 @@ public:
 
 private:
 	int m_bfmeHead;						// +0x00
-	BfmeThingBG *m_proto;				// +0x04
+	TeamPrototype *m_proto;				// +0x04
 };
 
-// ?getName@Gen_000EC5E0@@QBEPAHXZ
-int *Gen_000EC5E0::getName(void) const
+// ?getName@Team@@QBEPAHXZ
+int *Team::getName(void) const
 {
-	BfmeThingBG *thing = m_proto;
+	TeamPrototype *thing = m_proto;
 
 	if (!thing)
 		return g_bfmeDefaultBG;
@@ -61,10 +61,10 @@ int *Gen_000EC5E0::getName(void) const
 	return &thing->m_name;
 }
 
-// ?bfmeFieldB@Gen_000EC5E0@@QBEPAHXZ
-int *Gen_000EC5E0::bfmeFieldB(void) const
+// ?bfmeFieldB@Team@@QBEPAHXZ
+int *Team::bfmeFieldB(void) const
 {
-	BfmeThingBG *thing = m_proto;
+	TeamPrototype *thing = m_proto;
 
 	if (!thing)
 		return g_bfmeDefaultBG;
@@ -77,41 +77,41 @@ extern int g_bfmeDirtyBG;					// retail 0x012EF418
 class Gen_0018F210
 {
 public:
-	void bfmeSetA(bool value);
-	void bfmeSetB(bool value);
-	void bfmeSetC(int value);
+	void setWaterArea(bool value);
+	void setRiver(bool value);
+	void setRiverStart(int value);
 
 private:
 	char m_bfmeHead[0x32];					// +0x00
-	bool m_bfmeA;						// +0x32
+	bool m_isWaterArea;						// +0x32
 	char m_bfmeGap[0x2D];					// +0x33
-	bool m_bfmeB;						// +0x60
+	bool m_isRiver;						// +0x60
 	char m_bfmeGap2[0x13];					// +0x61
-	int m_bfmeC;						// +0x74
+	int m_riverStart;						// +0x74
 };
 
-// ?bfmeSetA@Gen_0018F210@@QAEX_N@Z
-void Gen_0018F210::bfmeSetA(bool value)
+// ?setWaterArea@Gen_0018F210@@QAEX_N@Z
+void Gen_0018F210::setWaterArea(bool value)
 {
 	g_bfmeDirtyBG |= 1;
 
-	m_bfmeA = value;
+	m_isWaterArea = value;
 }
 
-// ?bfmeSetB@Gen_0018F210@@QAEX_N@Z
-void Gen_0018F210::bfmeSetB(bool value)
+// ?setRiver@Gen_0018F210@@QAEX_N@Z
+void Gen_0018F210::setRiver(bool value)
 {
 	g_bfmeDirtyBG |= 1;
 
-	m_bfmeB = value;
+	m_isRiver = value;
 }
 
-// ?bfmeSetC@Gen_0018F210@@QAEXH@Z
-void Gen_0018F210::bfmeSetC(int value)
+// ?setRiverStart@Gen_0018F210@@QAEXH@Z
+void Gen_0018F210::setRiverStart(int value)
 {
 	g_bfmeDirtyBG |= 1;
 
-	m_bfmeC = value;
+	m_riverStart = value;
 }
 
 // The carved retail boundary at 0x000EC5D0 contains only ret.

@@ -235,3 +235,12 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeC,m_riverSta
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetA,setWaterArea,claude-fable+gemini,agreed,2026-10-01
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetB,setRiver,claude-fable+gemini,agreed,2026-10-01
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetC,setRiverStart,claude-fable+gemini,agreed,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_001506E0,AIGroup,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||BfmeThingBG,TeamPrototype,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|type||Gen_000EC5E0,Team,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeA,m_isWaterArea,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeB,m_isRiver,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeC,m_riverStart,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetA,setWaterArea,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetB,setRiver,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetC,setRiverStart,claude-fable+gemini,applied,2026-10-01
