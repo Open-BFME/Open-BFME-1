@@ -23,7 +23,8 @@ public:
 };
 
 extern BfmeE1243 **g_bfmeArr1243;
-extern int g_bfmeCount1243;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeResult1243;
 
 extern "C" void *bfmeMake1243(int n);
@@ -33,11 +34,11 @@ void *bfmeBuild1243(BfmeA1243 *a, int n)
 	if (n < 1)
 		return g_bfmeResult1243;
 
-	a->m_bfme38 = g_bfmeArr1243[g_bfmeCount1243 - 1]->bfmeVal1243();
+	a->m_bfme38 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 1]->bfmeVal1243();
 	if (n > 1)
-		a->m_bfme34 = g_bfmeArr1243[g_bfmeCount1243 - 2]->bfmeVal1243();
+		a->m_bfme34 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 2]->bfmeVal1243();
 	if (n > 2)
-		a->m_bfme30 = g_bfmeArr1243[g_bfmeCount1243 - 3]->bfmeVal1243();
+		a->m_bfme30 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 3]->bfmeVal1243();
 	a->bfmeApply1243(&a->m_bfme20, &a->m_bfme40, a->m_bfme60);
 	return bfmeMake1243(0);
 }

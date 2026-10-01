@@ -9,14 +9,15 @@ class Rva008A4BD0 { public: unsigned char has(int value); };
 class BfmePtrTable64_008A4B20 { public: int remove(BfmeRef008A4B20* value); };
 struct Rva008A5380Value { int m_0; int m_flags; };
 extern AptValue** g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern char* Rva008A5380Holder;
 AptValue* __cdecl Rva008A53D0MakeBool(int value);
 AptValue* aptUnregisterFlagged008A5490(void* self, int argc)
 {
 	if (argc != 1)
 		return Rva008A53D0MakeBool(0);
-	Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[g_bfmeCount1233 - 1];
+	Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
 	int flags = v->m_flags;
 	if (flags & 0x8000) {
 		char* table = Rva008A5380Holder + 0x924;

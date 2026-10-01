@@ -26,12 +26,13 @@ struct Rva008B4370Owner
 };
 
 extern AptValue **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 
 AptValue *aptSetPackedChannels008B4370(Rva008B4370Owner *self, int argc)
 {
-    AptValue *value = g_bfmeArr1233[g_bfmeCount1233 - 1];
+    AptValue *value = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
     BfmeSlotState1289 *state = self->m_state;
     if (state)
     {

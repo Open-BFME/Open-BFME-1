@@ -41,9 +41,9 @@ public:
 	void exportString(char *out);
 };
 
-class Rva008AE770Stack
+// Defining spelling: the global is a struct-typed object (?Rva008AE770TheStack@@3U...).
+struct Rva008AE770Stack
 {
-public:
 	Rva00899770 *createString(void *value, int unused, BfmeStrVKI *name,
 		int one, int another, int zero);
 };

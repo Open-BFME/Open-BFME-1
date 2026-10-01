@@ -28,7 +28,8 @@ public:
 };
 
 extern AptValue **g_bfmeArr1243;
-extern int g_bfmeCount1243;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeResult1243;
 
 extern "C" void *bfmeMake1243(int n);
@@ -38,11 +39,11 @@ void *rva008B7040Build(Rva008B7040Object *a, int n)
 	if (n < 1)
 		return g_bfmeResult1243;
 
-	a->m_value58 = g_bfmeArr1243[g_bfmeCount1243 - 1]->toInteger();
+	a->m_value58 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 1]->toInteger();
 	if (n > 1)
-		a->m_value54 = g_bfmeArr1243[g_bfmeCount1243 - 2]->toInteger();
+		a->m_value54 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 2]->toInteger();
 	if (n > 2)
-		a->m_value50 = g_bfmeArr1243[g_bfmeCount1243 - 3]->toInteger();
+		a->m_value50 = g_bfmeArr1243[Rva008AE770TheStack.field00 - 3]->toInteger();
 
 	((BfmeA1243 *)a)->bfmeApply1243(
 		&a->m_value40, &a->m_value20,

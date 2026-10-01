@@ -38,7 +38,8 @@ extern BfmeStr1233 g_bfmeStr1233;
 extern BfmeBuf1233 g_bfmeEmpty1233;
 extern BfmeAlloc1233 *g_bfmeAlloc1233;
 extern BfmeE1233 **g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_bfmeResult1233;
 
 extern "C" void bfmeHandler1233(void);
@@ -50,7 +51,7 @@ void *bfmeVisit1233(BfmeN1233 *a, int n)
 	BfmeBuf1233 *buf;
 
 	if ((a->m_bfme04 & 0x3f) == 0x16 && !((unsigned char)(~(a->m_bfme04 >> 15)) & 1) && n > 0) {
-		e = g_bfmeArr1233[g_bfmeCount1233 - 1];
+		e = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
 		e->bfmeName1233(&g_bfmeStr1233);
 		bfmeReport1233(a->m_bfme20, a->m_bfme28, 4, bfmeHandler1233);
 		buf = g_bfmeStr1233.m_bfme00;

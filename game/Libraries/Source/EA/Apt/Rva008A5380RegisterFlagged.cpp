@@ -10,7 +10,8 @@ class BfmePtrTable64_008A4B20 { public: void add(BfmeRef008A4B20* value); };
 struct Rva008A5380Value { int m_0; int m_flags; };
 extern AptValue* g_bfmeFallbackDB;
 extern AptValue** g_bfmeArr1233;
-extern int g_bfmeCount1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern char* Rva008A5380Holder;
 
 AptValue* aptRegisterFlagged008A5380(void* self, int argc)
@@ -18,7 +19,7 @@ AptValue* aptRegisterFlagged008A5380(void* self, int argc)
 	if (argc != 1)
 		goto done;
 	{
-		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[g_bfmeCount1233 - 1];
+		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;
@@ -36,7 +37,7 @@ AptValue* aptRegisterFlagged008A5440(void* self, int argc)
 	if (argc != 1)
 		goto done;
 	{
-		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[g_bfmeCount1233 - 1];
+		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;

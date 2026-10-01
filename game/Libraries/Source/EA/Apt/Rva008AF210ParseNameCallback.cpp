@@ -35,13 +35,19 @@ public:
 };
 class AptValue;
 class Rva008CF3C0String;
+// The global stack object's defining spelling (no real header declares it);
+// the parseAndAppend method keeps its own proven class spelling, so the
+// method call goes through a cast, as in the sibling callbacks.
+struct Rva008AE770Stack
+{
+	int m_count;
+};
 class Rva008CF3C0State
 {
 public:
-	int m_count;
 	void parseAndAppend(void *owner, void *scope, Rva008CF3C0String *input);
 };
-extern Rva008CF3C0State Rva008AE770TheStack;
+extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva8CD130Value **g_bfmeArr1233;
 extern AptValue *g_bfmeFallbackDB;
 
@@ -52,7 +58,8 @@ AptValue *rva008AF210ParseNameCallback(void *owner, int argc)
 		Rva8CD130Value *value = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
 		Rva8CD130String name;
 		value->getName(&name);
-		Rva008AE770TheStack.parseAndAppend(owner, 0, (Rva008CF3C0String *)&name);
+		((Rva008CF3C0State *)&Rva008AE770TheStack)->parseAndAppend(
+			owner, 0, (Rva008CF3C0String *)&name);
 	}
 	return g_bfmeFallbackDB;
 }
