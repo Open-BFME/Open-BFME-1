@@ -127,7 +127,7 @@ public:
 
 extern GameEngine *TheGameEngine;
 
-extern BfmeVector3 *__stdcall bfmeVec3Hermite(
+extern "C" BfmeVector3 *__stdcall D3DXVec3CatmullRom(
 	BfmeVector3 *result,
 	const Coord3D *position0,
 	const Coord3D *tangent0,
@@ -182,7 +182,7 @@ const Coord3D *BFMERopeDrawableGetPositionShim::get() const
 
 	Coord3D interpolated;
 	BfmeVector3 result;
-	bfmeVec3Hermite(
+	D3DXVec3CatmullRom(
 		&result,
 		&m_position0,
 		&m_tangent0,
