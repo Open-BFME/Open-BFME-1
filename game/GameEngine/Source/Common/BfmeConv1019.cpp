@@ -39,12 +39,13 @@ public:
 	virtual void bfmeRun1019(int a, int b, int c);
 };
 
-extern BfmeA1019 *g_bfmeA1019;
+class Display;
+extern Display *TheDisplay;
 extern BfmeB1019 *g_bfmeB1019;
 
 void bfmeGo1019A(void)
 {
-	g_bfmeA1019->bfmeStop1019(0);
+	((BfmeA1019 *)TheDisplay)->bfmeStop1019(0);
 	g_bfmeB1019->bfmeRun1019(2, 1, 0);
 }
 

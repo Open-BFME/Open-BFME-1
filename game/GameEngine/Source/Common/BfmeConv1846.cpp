@@ -59,13 +59,14 @@ public:
 	virtual void bfmeEndXL();
 };
 
-extern BfmeDisplayXL *TheBfmeDisplayXL;
+class Display;
+extern Display *TheDisplay;
 
 void __stdcall bfmeDrawXL(int a1, int a2, int a3, int a4, int a5, int a6)
 {
-	BfmeDisplayXL *display = TheBfmeDisplayXL;
+	BfmeDisplayXL *display = (BfmeDisplayXL *)TheDisplay;
 
-	TheBfmeDisplayXL->bfmeBeginXL();
+	((BfmeDisplayXL *)TheDisplay)->bfmeBeginXL();
 	display->bfmeRectXL((float)a3, (float)a4, (float)a5, (float)a6, a2, a1);
 	display->bfmeEndXL();
 }
