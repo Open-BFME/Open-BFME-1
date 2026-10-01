@@ -20,12 +20,23 @@
 
 typedef __int64 FeslInt64;
 
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class Rva007E8AC0
+{
+public:
+	void run();                                                   // 0x007E8AC0
+};
+
+class BfmeThingCIC
+{
+public:
+	void bfmeGoCIC( void *one, void *two );                       // 0x007E8A10
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
-	void addString( const char *key, const char *value );            // 0x007E8A10
-	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addBool( const char *key, bool value );                     // 0x007E8980
 
 	char m_head[ 0x1C ];
@@ -38,32 +49,32 @@ void __stdcall Rva007FB0E0( Rva007E8810Message *msg, const char *rsrc, int show,
 	const char *stat, const char *prod, int attributes, const char *sess,
 	const char *titl, const char *tiid, const char *extr )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'PSET';
 	msg->m_depth = 3;
 	if( rsrc )
-		msg->addString( "RSRC", rsrc );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"RSRC", (void *)rsrc );
 	switch( show )
 	{
 		case 2:
-			msg->addString( "SHOW", "CHAT" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"CHAT" );
 			break;
 		case 3:
-			msg->addString( "SHOW", "AWAY" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"AWAY" );
 			break;
 		case 4:
-			msg->addString( "SHOW", "XA" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"XA" );
 			break;
 		case 5:
-			msg->addString( "SHOW", "DND" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"DND" );
 			break;
 		case 6:
-			msg->addString( "SHOW", "GAME" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"GAME" );
 			break;
 	}
-	msg->addString( "STAT", stat );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"STAT", (void *)stat );
 	if( prod )
-		msg->addString( "PROD", prod );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PROD", (void *)prod );
 	if( attributes )
 	{
 		char attr[ 4 ] = "";
@@ -74,14 +85,14 @@ void __stdcall Rva007FB0E0( Rva007E8810Message *msg, const char *rsrc, int show,
 			strcat( attr, "J" );
 		if( attributes & 4 )
 			strcat( attr, "P" );
-		msg->addString( "ATTR", attr );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ATTR", (void *)attr );
 	}
 	if( sess )
-		msg->addString( "SESS", sess );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SESS", (void *)sess );
 	if( titl )
-		msg->addString( "TITL", titl );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TITL", (void *)titl );
 	if( tiid )
-		msg->addString( "TIID", tiid );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TIID", (void *)tiid );
 	if( extr )
-		msg->addString( "EXTR", extr );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"EXTR", (void *)extr );
 }

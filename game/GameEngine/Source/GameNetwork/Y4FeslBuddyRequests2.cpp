@@ -9,12 +9,29 @@
 
 typedef __int64 FeslInt64;
 
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class Rva007E8AC0
+{
+public:
+	void run();                                                   // 0x007E8AC0
+};
+
+class BfmeThingCIC
+{
+public:
+	void bfmeGoCIC( void *one, void *two );                       // 0x007E8A10
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *one, void *two );                       // 0x007E88D0
+};
+
 class Rva007E8810Message
 {
 public:
-	void reset( void );                                              // 0x007E8AC0
-	void addString( const char *key, const char *value );            // 0x007E8A10
-	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addInt64( const char *key, FeslInt64 value );               // 0x007E8E90
 	void addBool( const char *key, bool value );                     // 0x007E8980
 	void setError( int code );                                       // 0x007E88C0
@@ -27,20 +44,20 @@ public:
 
 void __stdcall Rva007FB810( Rva007E8810Message *msg, const char *user, int answer )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'GRSP';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"USER", (void *)user );
 	switch( answer )
 	{
 		case 0:
-			msg->addString( "ANSW", "Y" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"Y" );
 			break;
 		case 1:
-			msg->addString( "ANSW", "N" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"N" );
 			break;
 		case 2:
-			msg->addString( "ANSW", "R" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"R" );
 			break;
 	}
 }
@@ -48,89 +65,89 @@ void __stdcall Rva007FB810( Rva007E8810Message *msg, const char *user, int answe
 void __stdcall Rva007FB8D0( Rva007E8810Message *msg, int kind, const char *user,
 	const char *subject, const char *body, int secs )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'SEND';
 	msg->m_depth = 3;
 	switch( kind )
 	{
 		case 1:
-			msg->addString( "TYPE", "C" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TYPE", (void *)"C" );
 			break;
 		case 2:
-			msg->addString( "TYPE", "A" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TYPE", (void *)"A" );
 			break;
 	}
-	msg->addString( "USER", user );
-	msg->addString( "SUBJ", subject );
-	msg->addString( "BODY", body );
-	msg->addInt( "SECS", secs );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"USER", (void *)user );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SUBJ", (void *)subject );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"BODY", (void *)body );
+	reinterpret_cast< BfmeThingCIB * >( msg )->bfmeGoCIB( (void *)"SECS", (void *)secs );
 }
 
 void __stdcall Rva007FB960( Rva007E8810Message *msg, int kind, const char *user,
 	const char *subject, const char *body, int secs )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'BRDC';
 	msg->m_depth = 3;
 	switch( kind )
 	{
 		case 1:
-			msg->addString( "TYPE", "C" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TYPE", (void *)"C" );
 			break;
 		case 2:
-			msg->addString( "TYPE", "A" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TYPE", (void *)"A" );
 			break;
 	}
-	msg->addString( "USER", user );
-	msg->addString( "SUBJ", subject );
-	msg->addString( "BODY", body );
-	msg->addInt( "SECS", secs );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"USER", (void *)user );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SUBJ", (void *)subject );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"BODY", (void *)body );
+	reinterpret_cast< BfmeThingCIB * >( msg )->bfmeGoCIB( (void *)"SECS", (void *)secs );
 }
 
 void __stdcall Rva007FB410( Rva007E8810Message *msg, const char *user,
 	int answer, bool pres )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'RRSP';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"USER", (void *)user );
 	switch( answer )
 	{
 		case 0:
-			msg->addString( "ANSW", "Y" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"Y" );
 			break;
 		case 1:
-			msg->addString( "ANSW", "N" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"N" );
 			break;
 		case 2:
-			msg->addString( "ANSW", "B" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ANSW", (void *)"B" );
 			break;
 	}
 	if( answer == 0 )
-		msg->addString( "PRES", pres ? "Y" : "N" );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PRES", (void *)pres ? "Y" : "N" );
 }
 
 void __stdcall Rva007FB6D0( Rva007E8810Message *msg, int list, const char *group,
 	const char *lsrc, bool pres, bool pend )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'RGET';
 	msg->m_depth = 3;
 	switch( list )
 	{
 		case 1:
-			msg->addString( "LIST", "B" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LIST", (void *)"B" );
 			break;
 		case 2:
-			msg->addString( "LIST", "I" );
+			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LIST", (void *)"I" );
 			break;
 	}
 	if( group && strlen( group ) != 0 )
-		msg->addString( "GROUP", group );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"GROUP", (void *)group );
 	if( lsrc && strlen( lsrc ) != 0 )
-		msg->addString( "LSRC", lsrc );
-	msg->addString( "PRES", pres ? "Y" : "N" );
-	msg->addString( "PEND", pend ? "T" : "F" );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LSRC", (void *)lsrc );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PRES", (void *)pres ? "Y" : "N" );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PEND", (void *)pend ? "T" : "F" );
 }
 
 // FESL 'RADD' friend-list request with an optional single-letter attribute.
@@ -138,20 +155,20 @@ void __stdcall Rva007FB260( Rva007E8810Message *msg, int list,
 	const char *user, const char *group, const char *lsrc, bool pres,
 	int attribute )
 {
-	msg->reset();
+	reinterpret_cast< Rva007E8AC0 * >( msg )->run();
 	msg->m_category = 'RADD';
 	msg->m_depth = 3;
 	switch( list )
 	{
-		case 1: msg->addString( "LIST", "B" ); break;
-		case 2: msg->addString( "LIST", "I" ); break;
+		case 1: reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LIST", (void *)"B" ); break;
+		case 2: reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LIST", (void *)"I" ); break;
 	}
-	msg->addString( "USER", user );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"USER", (void *)user );
 	if( group )
-		msg->addString( "GROUP", group );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"GROUP", (void *)group );
 	if( lsrc )
-		msg->addString( "LSRC", lsrc );
-	msg->addString( "PRES", pres ? "Y" : "N" );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"LSRC", (void *)lsrc );
+	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PRES", (void *)pres ? "Y" : "N" );
 	if( attribute )
 	{
 		char text[ 4 ] = "";
@@ -161,6 +178,6 @@ void __stdcall Rva007FB260( Rva007E8810Message *msg, int list,
 			strcat( text, "M" );
 		else if( attribute == 3 )
 			strcat( text, "I" );
-		msg->addString( "ATTR", text );
+		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ATTR", (void *)text );
 	}
 }

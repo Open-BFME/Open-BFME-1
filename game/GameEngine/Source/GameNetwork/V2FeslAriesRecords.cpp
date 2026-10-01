@@ -32,11 +32,23 @@
 
 typedef __int64 FeslInt64;
 
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF( void *one, void *two );                       // 0x007E8900
+};
+
+class BfmeThingUPB
+{
+public:
+	char bfmeGoUPB( void *one, char *out, void *two );            // 0x007E8A80
+};
+
 class Rva007E8810Message
 {
 public:
-	int getInt( const char *key, int defaultValue );                 // 0x007E8900
-	bool getString( const char *key, char *dest, int destSize );     // 0x007E8A80
 	FeslInt64 getInt64( const char *key, FeslInt64 defaultValue );   // 0x007E8930
 };
 
@@ -52,7 +64,7 @@ public:
 Rva007F41B0Reason::Rva007F41B0Reason( Rva007E8810Message *msg )
 {
 	m_msg = msg;
-	m_reason = m_msg->getInt( "reason", 0 );
+	m_reason = (int)(long)reinterpret_cast< BfmeThingRF * >( m_msg )->bfmeGoRF( (void *)"reason", (void *)0 );
 }
 
 class Rva007F4E20RegionCount
@@ -66,7 +78,7 @@ public:
 Rva007F4E20RegionCount::Rva007F4E20RegionCount( Rva007E8810Message *msg )
 {
 	m_msg = msg;
-	m_numRegions = m_msg->getInt( "NUM-REGIONS", 0 );
+	m_numRegions = (int)(long)reinterpret_cast< BfmeThingRF * >( m_msg )->bfmeGoRF( (void *)"NUM-REGIONS", (void *)0 );
 }
 
 // ------------------------------------------------------------ endpoint pair
@@ -85,11 +97,11 @@ public:
 Rva007F4130Endpoints::Rva007F4130Endpoints( Rva007E8810Message *msg )
 {
 	m_msg = msg;
-	m_theaterPort = m_msg->getInt( "theaterPort", 0 );
-	m_messengerPort = m_msg->getInt( "messengerPort", 0 );
-	m_msg->getString( "theaterIp", m_theaterIp, 0x40 );
-	m_msg->getString( "messengerIp", m_messengerIp, 0x40 );
-	m_msg->getString( "addressRemapping", m_addressRemapping, 0x400 );
+	m_theaterPort = (int)(long)reinterpret_cast< BfmeThingRF * >( m_msg )->bfmeGoRF( (void *)"theaterPort", (void *)0 );
+	m_messengerPort = (int)(long)reinterpret_cast< BfmeThingRF * >( m_msg )->bfmeGoRF( (void *)"messengerPort", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( m_msg )->bfmeGoUPB( (void *)"theaterIp", m_theaterIp, (void *)0x40 );
+	reinterpret_cast< BfmeThingUPB * >( m_msg )->bfmeGoUPB( (void *)"messengerIp", m_messengerIp, (void *)0x40 );
+	reinterpret_cast< BfmeThingUPB * >( m_msg )->bfmeGoUPB( (void *)"addressRemapping", m_addressRemapping, (void *)0x400 );
 }
 
 // ------------------------------------------------------------------- region
@@ -106,11 +118,11 @@ public:
 
 Rva007F4E50Region::Rva007F4E50Region( Rva007E8810Message *msg )
 {
-	m_rid = msg->getInt( "RID", 0 );
-	msg->getString( "NAME", m_name, 0x80 );
-	msg->getString( "LOCALE", m_locale, 8 );
-	m_numGames = msg->getInt( "NUM-GAMES", 0 );
-	m_numPlayers = msg->getInt( "NUM-PLAYERS", 0 );
+	m_rid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"RID", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"NAME", m_name, (void *)0x80 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"LOCALE", m_locale, (void *)8 );
+	m_numGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"NUM-GAMES", (void *)0 );
+	m_numPlayers = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"NUM-PLAYERS", (void *)0 );
 }
 
 // -------------------------------------------------------------------- lobby
@@ -130,14 +142,14 @@ public:
 
 Rva007F4EF0Lobby::Rva007F4EF0Lobby( Rva007E8810Message *msg )
 {
-	m_lid = msg->getInt( "LID", 0 );
-	msg->getString( "NAME", m_name, 0x80 );
-	m_passing = msg->getInt( "PASSING", 0 );
-	m_favoriteGames = msg->getInt( "FAVORITE-GAMES", 0 );
-	m_favoritePlayers = msg->getInt( "FAVORITE-PLAYERS", 0 );
-	msg->getString( "LOCALE", m_locale, 8 );
-	m_maxGames = msg->getInt( "MAX-GAMES", 0 );
-	m_numGames = msg->getInt( "NUM-GAMES", 0 );
+	m_lid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LID", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"NAME", m_name, (void *)0x80 );
+	m_passing = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"PASSING", (void *)0 );
+	m_favoriteGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"FAVORITE-GAMES", (void *)0 );
+	m_favoritePlayers = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"FAVORITE-PLAYERS", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"LOCALE", m_locale, (void *)8 );
+	m_maxGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"MAX-GAMES", (void *)0 );
+	m_numGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"NUM-GAMES", (void *)0 );
 }
 
 class Rva007F4F90LobbyCounts
@@ -152,10 +164,10 @@ public:
 
 Rva007F4F90LobbyCounts::Rva007F4F90LobbyCounts( Rva007E8810Message *msg )
 {
-	m_numGames = msg->getInt( "NUM-GAMES", 0 );
-	m_lid = msg->getInt( "LID", 0 );
-	m_lobbyMaxGames = msg->getInt( "LOBBY-MAX-GAMES", 0 );
-	m_lobbyNumGames = msg->getInt( "LOBBY-NUM-GAMES", 0 );
+	m_numGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"NUM-GAMES", (void *)0 );
+	m_lid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LID", (void *)0 );
+	m_lobbyMaxGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LOBBY-MAX-GAMES", (void *)0 );
+	m_lobbyNumGames = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LOBBY-NUM-GAMES", (void *)0 );
 }
 
 // ------------------------------------------------------------- ticket record
@@ -173,12 +185,12 @@ public:
 
 Rva007F51D0Ticket::Rva007F51D0Ticket( Rva007E8810Message *msg )
 {
-	msg->getString( "NAME", m_name, 0x80 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"NAME", m_name, (void *)0x80 );
 	m_uid = msg->getInt64( "UID", 0 );
-	msg->getString( "IP", m_ip, 0x20 );
-	m_pid = msg->getInt( "PID", 0 );
-	msg->getString( "TICKET", m_ticket, 0x80 );
-	m_port = msg->getInt( "PORT", 0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"IP", m_ip, (void *)0x20 );
+	m_pid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"PID", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"TICKET", m_ticket, (void *)0x80 );
+	m_port = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"PORT", (void *)0 );
 }
 
 // ------------------------------------- LID/GID base and the three rows on it
@@ -204,8 +216,8 @@ Rva007F5010Player::Rva007F5010Player( Rva007E8810Message *msg )
 	: Rva007FBC30GameKey( msg )
 {
 	m_msg = msg;
-	m_pid = m_msg->getInt( "PID", 0 );
-	m_msg->getString( "NAME", m_name, 0x80 );
+	m_pid = (int)(long)reinterpret_cast< BfmeThingRF * >( m_msg )->bfmeGoRF( (void *)"PID", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( m_msg )->bfmeGoUPB( (void *)"NAME", m_name, (void *)0x80 );
 	m_uid = m_msg->getInt64( "UID", 0 );
 }
 
@@ -223,11 +235,11 @@ public:
 Rva007F5080Game::Rva007F5080Game( Rva007E8810Message *msg )
 	: Rva007FBC30GameKey( msg )
 {
-	m_maxPlayers = msg->getInt( "MAX-PLAYERS", 0 );
-	m_lobbyId = msg->getInt( "LID", 0 );
-	m_gameId = msg->getInt( "GID", 0 );
-	msg->getString( "SECRET", m_secret, 0x80 );
-	msg->getString( "UGID", m_ugid, 0x25 );
+	m_maxPlayers = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"MAX-PLAYERS", (void *)0 );
+	m_lobbyId = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LID", (void *)0 );
+	m_gameId = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"GID", (void *)0 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"SECRET", m_secret, (void *)0x80 );
+	reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"UGID", m_ugid, (void *)0x25 );
 }
 
 class Rva007F5120Queue : public Rva007FBC30GameKey
@@ -242,8 +254,8 @@ public:
 Rva007F5120Queue::Rva007F5120Queue( Rva007E8810Message *msg )
 	: Rva007FBC30GameKey( msg )
 {
-	if( !msg->getString( "REASON", m_reason, 0x100 ) )
+	if( !reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"REASON", m_reason, (void *)0x100 ) )
 		m_reason[ 0 ] = 0;
-	m_qpos = msg->getInt( "QPOS", 0 );
-	m_qlen = msg->getInt( "QLEN", 0 );
+	m_qpos = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"QPOS", (void *)0 );
+	m_qlen = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"QLEN", (void *)0 );
 }

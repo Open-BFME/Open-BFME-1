@@ -13,10 +13,16 @@ struct Rva007EB810Diag
 
 extern Rva007EB810Diag *Rva007EB810Get();
 
-class Rva007E8810Message
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class BfmeThingUPB
 {
 public:
-	bool getString(const char *key, char *buf, int size);
+	char bfmeGoUPB( void *one, char *out, void *two );            // 0x007E8A80
+};
+
+class Rva007E8810Message
+{
 };
 
 struct Rva007F96C0Rec
@@ -68,7 +74,7 @@ bool Rva007FA2C0::onTxn(Rva007E8810Message *msg)
 	if (!obj)
 	{
 		char txn[0x20] = {0};
-		msg->getString("TXN", txn, 0x20);
+		reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"TXN", txn, (void *)0x20 );
 		Rva007EB810Get()->log(0, "Received serviceless TXN: %s\n", txn);
 		Rva007EB810Get()->fail(
 			"false",

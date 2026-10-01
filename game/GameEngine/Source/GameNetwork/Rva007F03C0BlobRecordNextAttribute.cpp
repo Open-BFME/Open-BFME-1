@@ -5,10 +5,16 @@
 
 #include <stdio.h>
 
-class Rva007E8810Message
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class BfmeThingUPB
 {
 public:
-	bool getString( const char *key, char *dest, int destSize );
+	char bfmeGoUPB( void *one, char *out, void *two );            // 0x007E8A80
+};
+
+class Rva007E8810Message
+{
 };
 
 class Rva007F0CB0BlobRecord
@@ -30,10 +36,10 @@ bool Rva007F0CB0BlobRecord::nextAttribute(
 	if( m_message == 0 )
 		goto failure;
 	sprintf( name, "attributes.%d.key", m_224 );
-	if( m_message->getString( name, key, keySize ) )
+	if( reinterpret_cast< BfmeThingUPB * >( m_message )->bfmeGoUPB( (void *)name, key, (void *)keySize ) )
 	{
 		sprintf( name, "attributes.%d.value", m_224 );
-		m_message->getString( name, value, valueSize );
+		reinterpret_cast< BfmeThingUPB * >( m_message )->bfmeGoUPB( (void *)name, value, (void *)valueSize );
 		++m_224;
 		return true;
 	}

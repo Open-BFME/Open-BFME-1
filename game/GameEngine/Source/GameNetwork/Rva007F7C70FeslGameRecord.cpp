@@ -7,11 +7,22 @@
 // existing 0x007F7C00 owner method.  The event and original method names are
 // unavailable, so the handler name remains address-derived.
 
-class Rva007E8810Message
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class BfmeThingRF
 {
 public:
-	int getInt( const char *key, int defaultValue );
-	bool getString( const char *key, char *dest, int destSize );
+	void *bfmeGoRF( void *one, void *two );                       // 0x007E8900
+};
+
+class BfmeThingUPB
+{
+public:
+	char bfmeGoUPB( void *one, char *out, void *two );            // 0x007E8A80
+};
+
+class Rva007E8810Message
+{
 };
 
 class Rva007FBC30GameKey
@@ -29,8 +40,8 @@ public:
 	__forceinline Rva007F7C70GameRecord( Rva007E8810Message *msg )
 		: Rva007FBC30GameKey( msg )
 	{
-		m_type = msg->getInt( "TYPE", 0 );
-		msg->getString( "REASON", m_reason, sizeof( m_reason ) );
+		m_type = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"TYPE", (void *)0 );
+		reinterpret_cast< BfmeThingUPB * >( msg )->bfmeGoUPB( (void *)"REASON", m_reason, (void *)(sizeof( m_reason )) );
 	}
 
 	int m_type;

@@ -28,10 +28,23 @@
 
 typedef __int64 FeslInt64;
 
+// Calls name each Rva007E8810Message helper by the ledger row at its pinned
+// address (link_check.py near), the spelling the link resolves.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF( void *one, void *two );                       // 0x007E8900
+};
+
+// getString returns bool and three callers return its result; the ledger row at
+// its pinned address 0x007E8A80 (?bfmeGoUPB@BfmeThingUPB) returns char, and
+// converting that to bool changes those callers' bytes. The calls keep their
+// spelling and this alias names the same pinned body (tools/alias_guard.py).
+#pragma comment(linker, "/alternatename:?getString@Rva007E8810Message@@QAE_NPBDPADH@Z=?bfmeGoUPB@BfmeThingUPB@@QAEDPAXPAD0@Z")
+
 class Rva007E8810Message
 {
 public:
-	int getInt( const char *key, int defaultValue );                 // 0x007E8900
 	bool getString( const char *key, char *dest, int destSize );     // 0x007E8A80
 	FeslInt64 getInt64( const char *key, FeslInt64 defaultValue );   // 0x007E8930
 };
@@ -47,8 +60,8 @@ public:
 
 Rva007FBC30GameKey::Rva007FBC30GameKey( Rva007E8810Message *msg )
 {
-	m_lid = msg->getInt( "LID", 0 );
-	m_gid = msg->getInt( "GID", 0 );
+	m_lid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LID", (void *)0 );
+	m_gid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"GID", (void *)0 );
 }
 
 // ------------------------------------------------- game record with UGID key
@@ -68,8 +81,8 @@ public:
 
 Rva007FBEF0GameRecord::Rva007FBEF0GameRecord( Rva007E8810Message *msg )
 {
-	m_lid = msg->getInt( "LID", 0 );
-	m_gid = msg->getInt( "GID", 0 );
+	m_lid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"LID", (void *)0 );
+	m_gid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"GID", (void *)0 );
 	m_msg = msg;
 	m_ugid[ 0 ] = 0;
 	m_msg->getString( "UGID", m_ugid, 0x25 );
