@@ -169,6 +169,10 @@ public:
 	int m_gameMode;
 };
 
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler;
+// TransitionHandler below is this TU's view of the object, so uses cast.
+class GameWindowTransitionsHandler;
+
 class TransitionHandler
 {
 public:
@@ -180,7 +184,12 @@ extern Shell *TheShell;
 extern RecorderClass *TheRecorder;
 extern LANAPI *TheLAN;
 extern GameLogic *TheGameLogic;
-extern TransitionHandler *TheTransitionHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
+static TransitionHandler *localTheTransitionHandler()
+{
+	return (TransitionHandler *)TheTransitionHandler;
+}
 
 extern _STL::string LastReplayFileName;
 extern Bool g_playMusic;
@@ -292,29 +301,29 @@ void Rva004E8DC0ScoreScreen::init(WindowLayout *layout, void *)
 		if (TheRecorder->isMultiplayer())
 		{
 			initReplayMultiPlayer();
-			TheTransitionHandler->setGroup("ScoreScreenShow");
+			localTheTransitionHandler()->setGroup("ScoreScreenShow");
 		}
 		else
 		{
 			overidePlayerDisplayName = TRUE;
 			initReplaySinglePlayer();
-			TheTransitionHandler->setGroup("ScoreScreenShow");
+			localTheTransitionHandler()->setGroup("ScoreScreenShow");
 		}
 	}
 	else if (TheGameLogic->m_gameMode == 5)
 	{
 		initInternetMultiPlayer();
-		TheTransitionHandler->setGroup("ScoreScreenShow");
+		localTheTransitionHandler()->setGroup("ScoreScreenShow");
 	}
 	else if (TheGameLogic->m_gameMode == 1)
 	{
 		initLANMultiPlayer();
-		TheTransitionHandler->setGroup("ScoreScreenShow");
+		localTheTransitionHandler()->setGroup("ScoreScreenShow");
 	}
 	else if (TheGameLogic->m_gameMode == 2)
 	{
 		initSkirmish();
-		TheTransitionHandler->setGroup("ScoreScreenShow");
+		localTheTransitionHandler()->setGroup("ScoreScreenShow");
 	}
 	else
 	{

@@ -103,7 +103,8 @@ public:
 extern Rva0051D690Shell *g_obj12F4B58;
 extern Rva0051D690Audio *TheAudioClientUpdate;
 extern Rva0051D690GlobalData *TheWritableGlobalData;
-extern GameWindowTransitionsHandler *g_theTransitionHandler;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler.
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 class Rva0051D690
 {
@@ -123,7 +124,7 @@ void Rva0051D690::apply()
 		TheAudioClientUpdate->slot6c(2, 1, 0);
 		g_obj12F4B58->restore();
 	}
-	g_theTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
+	TheTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
 }
 
 void Rva0051D690Shell::restore()

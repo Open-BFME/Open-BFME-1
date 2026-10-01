@@ -71,7 +71,8 @@ public:
 
 extern MappedImageCollection *TheMappedImageCollection;
 extern BfmeThingVMZ *TheDisplay;
-extern GameWindowTransitionsHandler *g_theTransitionHandler;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler.
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 class SubsystemInterface
 {
@@ -135,8 +136,8 @@ void Shell::update()
 			BfmeThingVMZ *display = TheDisplay;
 			display->m_imageDrawActive = 1;
 			TheDisplay->bfmeGo2VMZ((Int)image, 0, 0, 0, 0x3F800000, 0x3F800000);
-			g_theTransitionHandler->setGroup(AsciiString("FadeInGameMovie"));
-			g_theTransitionHandler->update();
+			TheTransitionHandler->setGroup(AsciiString("FadeInGameMovie"));
+			TheTransitionHandler->update();
 		}
 		reinterpret_cast<Rva0051D690Shell *>(self)->restore();
 	}

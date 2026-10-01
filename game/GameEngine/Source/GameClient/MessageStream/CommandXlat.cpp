@@ -604,7 +604,10 @@ extern MultiplayerSettings* TheMultiplayerSettings;
 extern GameInfo* TheGameInfo;
 extern AudioManager* TheAudio;
 extern Display* TheDisplay;
-extern Rva004891C0* g_va012F3330;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler;
+// Rva004891C0 is this TU's view of the object, so every use casts.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler* TheTransitionHandler;
 extern Rva003968A0* g_va012F1028;
 extern void* g_va012F71B4;
 extern void* g_va012F4988;
@@ -842,7 +845,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   if(g_va012F71B4) { if(!g_va012F4988) rva00511CC0(3); else HideInGameChat(); }
   disp=DESTROY_MESSAGE; break;
  case 0x6c:
-  if(TheGameLogic->rva000652A0() && g_va012F3330->test()) rva0052B2A0();
+  if(TheGameLogic->rva000652A0() && ((Rva004891C0*)TheTransitionHandler)->test()) rva0052B2A0();
   disp=DESTROY_MESSAGE; break;
  case 0x8e: {
   GameLogic* logic=TheGameLogic;
@@ -866,7 +869,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   disp=DESTROY_MESSAGE; break;
  }
  case 0x6d: {
-  Rva004891C0* current=g_va012F3330;
+  Rva004891C0* current=(Rva004891C0*)TheTransitionHandler;
   if(current && !current->test()) current->field4d=true;
   else rva00569D80();
   disp=DESTROY_MESSAGE; break;

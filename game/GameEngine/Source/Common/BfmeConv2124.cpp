@@ -4,7 +4,11 @@ public:
 	bool bfmeReadyAAW();
 };
 
-extern Rva005A00B0Transition *TheTransitionHandler;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler;
+// Rva005A00B0Transition is this TU's view of the object, so the use casts.
+class GameWindowTransitionsHandler;
+
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 extern const float g_bfmeDeltaAAW;
 extern const float BfmeZeroRange;
@@ -53,7 +57,7 @@ void BfmeHostAAW::bfmeUpdateAAW()
 			if (m_bfme144AAW <= g_bfmeDefaultBU)
 				m_bfme144AAW = g_bfmeDeltaAAW + m_bfme144AAW;
 
-			if (m_bfme144AAW > g_bfmeDefaultBU && TheTransitionHandler->bfmeReadyAAW())
+			if (m_bfme144AAW > g_bfmeDefaultBU && ((Rva005A00B0Transition *)TheTransitionHandler)->bfmeReadyAAW())
 			{
 				bfmeFadeAAW(1, 1);
 				m_bfme144AAW = 0;

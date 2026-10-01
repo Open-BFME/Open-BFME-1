@@ -39,7 +39,11 @@ public:
 	virtual void bfmeReset1013();
 };
 
-extern BfmeHub1013 *g_bfmeHub1013;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler;
+// BfmeHub1013 is this TU's view of the object, so the use casts.
+class GameWindowTransitionsHandler;
+
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 class BfmeB1013
 {
@@ -62,7 +66,7 @@ int BfmeB1013::bfmeGo1013B()
 	}
 
 	if (m_bfmeMode == 1) {
-		g_bfmeHub1013->bfmeReset1013();
+		((BfmeHub1013 *)TheTransitionHandler)->bfmeReset1013();
 		m_bfmeMode = 0;
 	}
 

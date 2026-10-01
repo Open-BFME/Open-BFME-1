@@ -133,13 +133,17 @@ void Rva008A2C60::go()
 
 // Same global the guarded tail-jump at 0x00382980 reads; see
 // R1GuardedPointerTailCalls.cpp for the shared type.
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler;
+// Glo00EF3330 is this TU's view of the object, so the use casts.
+class GameWindowTransitionsHandler;
+
 class Glo00EF3330
 {
 public:
 	void h00489410();
 	void h004893E0();
 };
-extern Glo00EF3330 *g_Glo00EF3330;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 class Rva00382960
 {
@@ -148,6 +152,6 @@ public:
 };
 Rva00382960::Rva00382960()
 {
-	if( g_Glo00EF3330 )
-		g_Glo00EF3330->h004893E0();
+	if( TheTransitionHandler )
+		((Glo00EF3330 *)TheTransitionHandler)->h004893E0();
 }
