@@ -1,3 +1,9 @@
+// stlport
+// The lookup callee is retail's real GameLogic::findObjectByID (0x0009A510,
+// matched in GameLogicFindObjectByID.cpp); declare it through its own header
+// rather than a stand-in class so the emitted call names that symbol.
+#include "Thing/GameLogicObjectLookup.h"
+
 class BfmeThingESK;
 
 class BfmeSubESK
@@ -55,8 +61,6 @@ public:
 
 class BfmeLogicESK
 {
-public:
-	BfmeObjESK *bfmeFindByIdESK(int id);
 };
 
 extern BfmeLogicESK *g_bfmeLogicESK;
@@ -72,7 +76,7 @@ public:
 
 char BfmeHostESK::bfmeAllowESK(BfmeMsgESK *msg, BfmeThingESK *thing)
 {
-	BfmeObjESK *obj = g_bfmeLogicESK->bfmeFindByIdESK(msg->m_bfmeIdESK);
+	BfmeObjESK *obj = (BfmeObjESK *)((GameLogic *)g_bfmeLogicESK)->findObjectByID(msg->m_bfmeIdESK);
 
 	if (obj == 0 || thing == 0 || !bfmeCheckESK(msg, thing))
 		return 0;

@@ -1,4 +1,10 @@
+// stlport
 // Open-BFME5 conversions.
+
+// The lookup callee is retail's real GameLogic::findObjectByID (0x0009A510,
+// matched in GameLogicFindObjectByID.cpp); declare it through its own header
+// rather than a stand-in class so the emitted call names that symbol.
+#include "Thing/GameLogicObjectLookup.h"
 
 struct BfmeNode913D
 {
@@ -153,15 +159,13 @@ struct BfmeArg913E
 
 class BfmeGlob913E
 {
-public:
-	BfmeObj913E *bfmeFind913E(void *k);
 };
 
 extern BfmeGlob913E *g_bfme913Glob;
 
 void __stdcall bfmeGo913E(BfmeArg913E *a, void *b)
 {
-	BfmeObj913E *o = g_bfme913Glob->bfmeFind913E(a->m_bfmeKey);
+	BfmeObj913E *o = (BfmeObj913E *)((GameLogic *)g_bfme913Glob)->findObjectByID((int)(size_t)a->m_bfmeKey);
 	if (o) {
 		BfmeSub913E *s = o->m_bfmeSub;
 		if (s)
