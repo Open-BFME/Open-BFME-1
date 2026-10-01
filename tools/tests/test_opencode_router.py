@@ -399,6 +399,11 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(r.classify({'status':400,'message':'Unsupported value reasoning_effort: xhigh'}),'variant_unavailable')
         self.assertEqual(r.classify({'status':429,'message':'Variant unavailable: rate limit reached'}),'quota')
 
+    def test_local_opencode_store_error_is_infrastructure(self):
+        self.assertEqual(r.classify({'type':'unknown','message':'Failed to execute statement'}),'unavailable')
+        self.assertEqual(r.classify({'type':'unknown','message':'effect/sql/SqlError: database is locked'}),'unavailable')
+        self.assertEqual(r.classify({'type':'unknown','message':'compile error in Foo.cpp'}),'failure')
+
     def test_concurrency_and_workspace_exclusion(self):
         for _ in range(4): self.job(redundant=True)
         self.run_fleet()

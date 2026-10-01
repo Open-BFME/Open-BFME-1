@@ -470,6 +470,12 @@ def classify(error):
     if re.search(r'provider\.internal|\b50[0234]\b|upstream.{0,40}(timeout|error|unavailable)|'
                  r'overloaded|service.unavailable|bad.gateway|gateway.time.?out', text):
         return 'unavailable'
+    # OpenCode's own local store failing (2026-10-01: "Failed to execute statement",
+    # effect/sql SqlError, under write contention on its SQLite database) kills the
+    # worker before it does anything; it is infrastructure, not the task's failure.
+    # Counted as failures it promoted eight fresh jobs to escalation in minutes.
+    if re.search(r'failed to execute statement|sqlerror|database is locked|sqlite_busy', text):
+        return 'unavailable'
     return 'failure'
 
 
