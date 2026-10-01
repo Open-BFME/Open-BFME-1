@@ -634,7 +634,7 @@ def land(rel, renames, now, status="applied"):
         # the hook refuses any staged source that still redeclares a header's type; this swaps or records each one
         subprocess.run([sys.executable, str(ROOT / "tools/adopt_header.py"), "--fix-staged"], cwd=ROOT, check=True)
         done = commit([p for p in paths if p.exists()],
-                      f"name_lane: {status} ({renames[0][2]} in {Path(rel).name})" if dispute
+                      f"name_lane: {status} ({', '.join(r[2] for r in renames)} in {Path(rel).name})" if dispute
                       else f"name_lane: land {len(renames)} agreed name(s) in {Path(rel).name}")
         if done.returncode:
             out = (done.stdout + done.stderr).splitlines()
@@ -660,25 +660,30 @@ def document_corrections(reason):
 
 
 def cmd_dispute(args):
-    """Put a landed name back to its placeholder, byte-gated, and reopen it for votes; the disputed name
-    is refused from then on."""
-    a = agreed_state().get(args.key)
-    if not a or a["status"] != "applied":
-        fail(f"{args.key}: no landed name to dispute")
-    rel, kind, scope, ident = args.key.split("|")
+    """Put landed names in one file back to their placeholders in one byte-gated commit, and reopen them
+    for votes; the disputed names are refused from then on. One commit per file, because name_regression
+    matches a documented correction to the exact file text before and after, across the whole push."""
+    state = agreed_state()
+    for key in args.keys:
+        if key not in state or state[key]["status"] != "applied":
+            fail(f"{key}: no landed name to dispute")
+    files = {key.split("|")[0] for key in args.keys}
+    if len(files) != 1:
+        fail(f"dispute one file at a time; these keys span {len(files)} files")
+    renames = [(*key.split("|")[1:3], state[key]["name"], key.split("|")[3], state[key]["models"], key) for key in args.keys]
+    rel = files.pop()
     before = DISPUTES.read_bytes() if DISPUTES.exists() else None
     if before is None:
         DISPUTES.write_text("# Names the naming lane landed and a review disputed\n\n", encoding="utf-8")
     with DISPUTES.open("a", encoding="utf-8") as f:
-        f.write(f"- `{args.key}`: `{a['name']}` back to `{ident}`. {args.reason}\n")
+        f.writelines(f"- `{key}`: `{landed}` back to `{ident}`. {args.reason}\n" for _, _, landed, ident, _, key in renames)
     git("add", str(DISPUTES.relative_to(ROOT)))
-    why = land(rel, [(kind, scope, a["name"], ident, a["models"], args.key)], datetime.date.today().isoformat(),
-               status=f"disputed: {args.reason}")
+    why = land(rel, renames, datetime.date.today().isoformat(), status=f"disputed: {args.reason}")
     if why:
         git("reset", "-q", "--", str(DISPUTES.relative_to(ROOT)))
         DISPUTES.write_bytes(before) if before is not None else DISPUTES.unlink()
-        fail(f"could not put {a['name']} back: {why}")
-    print(f"{a['name']} is {ident} again in {rel}; the key is open for new votes and refuses {a['name']}. Push the commit.")
+        fail(f"could not put the names back: {why}")
+    print(f"{', '.join(r[2] for r in renames)} put back in {rel}; reopened for new votes, refusing the disputed names. Push the commit.")
     return 0
 
 
@@ -834,7 +839,7 @@ def main():
     s.add_argument("--session", required=True)
     sub.add_parser("apply")
     d = sub.add_parser("dispute")
-    d.add_argument("key", help="as name_agreed.csv spells it: file|kind|scope|placeholder")
+    d.add_argument("keys", nargs="+", help="as name_agreed.csv spells them (file|kind|scope|placeholder), all in one file")
     d.add_argument("--reason", required=True, help="what the code shows against the landed name")
     sub.add_parser("status")
     sub.add_parser("check").add_argument("--staged", action="store_true", required=True)
