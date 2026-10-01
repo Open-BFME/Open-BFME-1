@@ -30,8 +30,6 @@ public:
 };
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;   // 0x012F4988
 extern UnicodeString g_unicode12F498C;                     // 0x012F498C
-extern const UnicodeString BFMEUnicodeEmptyString;
-#pragma comment(linker, "/alternatename:?BFMEUnicodeEmptyString@@3VUnicodeString@@B=?TheEmptyString@UnicodeString@@2V1@B")
 
 class WindowManager
 {
@@ -64,7 +62,7 @@ void HideInGameChatShim::run()
 	if (g_Rva005127A0InGameChat->m_window260)
 		g_unicode12F498C = GadgetTextEntryGetText(g_Rva005127A0InGameChat->m_window260);
 	else
-		g_unicode12F498C = BFMEUnicodeEmptyString;
+		g_unicode12F498C = UnicodeString::TheEmptyString;
 
 	g_rva012F19E8WindowManager->unidentified_00015235(g_Rva005127A0InGameChat->dword_250, "CloseChat", 0, 0, 0, 0, 0, 0);
 	g_Rva005127A0InGameChat->dword_258 = 3;

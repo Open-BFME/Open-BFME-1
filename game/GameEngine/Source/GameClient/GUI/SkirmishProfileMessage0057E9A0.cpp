@@ -111,7 +111,6 @@ public:
 extern GameWindowManager *TheWindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 extern GameTextInterface *TheGameText;
-extern const UnicodeString BFMEEmptyPlayerName;
 extern void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
 extern UnicodeString GadgetComboBoxGetText( GameWindow *window );
 
@@ -164,7 +163,7 @@ int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 			{
 				m_mode = 2;
 				TheWindowManager->winSetFocus( createPersonaEntry() );
-				GadgetTextEntrySetText( createPersonaEntry(), BFMEEmptyPlayerName );
+				GadgetTextEntrySetText( createPersonaEntry(), UnicodeString::TheEmptyString );
 				int movie = m_movie;
 				g_rva012F19E8WindowManager->unidentified_00015235(
 					movie, "PopUpPersona", 0, 0, 0, 0, 0, 0 );

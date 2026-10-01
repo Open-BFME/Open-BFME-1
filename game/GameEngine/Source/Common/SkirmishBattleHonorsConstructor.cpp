@@ -8,10 +8,8 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-// The canonical WWLib headers omit this exported static member. The binary's
-// const export is the same UnicodeString object used by the retail body.
-extern const UnicodeString BFMEUnicodeEmptyString;
-#pragma comment(linker, "/alternatename:?BFMEUnicodeEmptyString@@3VUnicodeString@@B=?TheEmptyString@UnicodeString@@2V1@B")
+// unicode_string.h declares the exported static member, so the retail body's
+// empty-name compare reads the real object and no stand-in global is needed.
 
 typedef bool Bool;
 typedef unsigned short WideChar;
@@ -144,7 +142,7 @@ extern Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options,
 
 SkirmishBattleHonors::SkirmishBattleHonors(UnicodeString userName)
 {
-	if (userName.compare(BFMEUnicodeEmptyString) != 0)
+	if (userName.compare(UnicodeString::TheEmptyString) != 0)
 	{
 		BfmeUnicodeStringArgumentView0009E130 filename(userName);
 		// The facade omits concat(text, length); retail calls StringBase's
