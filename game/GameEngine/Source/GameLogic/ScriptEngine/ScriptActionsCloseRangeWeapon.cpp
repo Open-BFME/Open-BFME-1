@@ -16,7 +16,7 @@ typedef bool Bool;
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 class Object;
-class SupplyWarehouseDockUpdate;
+class Module;
 class Team;
 
 class BfmeStringArgBase
@@ -78,8 +78,13 @@ class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
 public:
-	SupplyWarehouseDockUpdate *findUpdateModule(int key);
 	unsigned char m_tail[0x40];
+
+	// Retail's Object::findModule is a protected member, so the mangled call
+	// name carries that access; only the friend below may call it here.
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class ScriptActions;
 };
 
 class DualWeaponBehavior
@@ -198,14 +203,14 @@ void ScriptActions::doTeamToggleCloseRangeWeapon(
 	Team *team = TheScriptEngine->getTeamNamed(teamName, false);
 	if (team)
 	{
-		static const int dualWeaponBehaviorKey =
+		static const NameKeyType dualWeaponBehaviorKey =
 			TheNameKeyGenerator->nameToKey("DualWeaponBehavior");
 
 		for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList();
 			!iter.done(); iter.advance())
 		{
 			DualWeaponBehavior *behavior = (DualWeaponBehavior *)
-				iter.cur()->findUpdateModule(dualWeaponBehaviorKey);
+				iter.cur()->findModule(dualWeaponBehaviorKey);
 			if (behavior)
 				behavior->m_useCloseRangeWeapon = enabled;
 		}
@@ -218,10 +223,10 @@ void ScriptActions::doNamedToggleCloseRangeWeapon(
 	Object *object = TheScriptEngine->getUnitNamedByValue(unitName);
 	if (object)
 	{
-		static const int dualWeaponBehaviorKey =
+		static const NameKeyType dualWeaponBehaviorKey =
 			TheNameKeyGenerator->nameToKey("DualWeaponBehavior");
 		DualWeaponBehavior *behavior = (DualWeaponBehavior *)
-			object->findUpdateModule(dualWeaponBehaviorKey);
+			object->findModule(dualWeaponBehaviorKey);
 		if (behavior)
 			behavior->m_useCloseRangeWeapon = enabled;
 	}

@@ -42,13 +42,19 @@ public:
 	void receiveGrant(Bool active, UnsignedInt frames);
 };
 
+class Module;
+
 class Object
 {
 public:
-	StealthUpdate *findUpdateModule(NameKeyType key);
-
 	void *m_vtable;
 	ThingTemplate *m_template;
+
+	// Retail's Object::findModule is a protected member, so the mangled call
+	// name carries that access; only the friend may call it here.
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class OpenContain;
 };
 
 struct ContainedItemNode
@@ -90,7 +96,7 @@ void OpenContain::markAllPassengersDetected()
 				continue;
 
 			static const NameKeyType key_StealthUpdate = NAMEKEY("StealthUpdate");
-			StealthUpdate *stealth = rider->findUpdateModule(key_StealthUpdate);
+			StealthUpdate *stealth = (StealthUpdate *)rider->findModule(key_StealthUpdate);
 			if (stealth != 0)
 				stealth->receiveGrant(false, 1);
 		}

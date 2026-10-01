@@ -49,6 +49,7 @@ class PolygonTrigger;
 class CommandButton;
 class Path;
 class OCLUpdate;
+class Module;
 
 enum AICommandType
 {
@@ -111,7 +112,6 @@ class Object
 {
 public:
 	void setWeaponLock(Int weaponSlot, Int lockType);
-	OCLUpdate *findUpdateModule(NameKeyType key);
 	AIUpdateInterface *getAIUpdateInterface() const
 	{
 		return m_ai;
@@ -119,6 +119,13 @@ public:
 
 	unsigned char m_prefix[0x204];
 	AIUpdateInterface *m_ai;
+
+// Retail's Object::findModule is a protected member; the mangled call name
+// carries that access (I...), so the declaration keeps it and only the
+// friend below may call it.
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class AttackNugget;
 };
 
 class RadiusDecalTemplate
@@ -165,7 +172,7 @@ Object *AttackNugget::create(const Object *primaryObj, const Coord3D *primary,
 		}
 
 		static NameKeyType key_RadiusDecalUpdate = NAMEKEY("RadiusDecalUpdate");
-		RadiusDecalUpdate *rd = (RadiusDecalUpdate *)primaryObject->findUpdateModule(
+		RadiusDecalUpdate *rd = (RadiusDecalUpdate *)primaryObject->findModule(
 			key_RadiusDecalUpdate);
 		if (rd)
 		{

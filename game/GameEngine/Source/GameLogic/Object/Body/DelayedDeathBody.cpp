@@ -5,11 +5,16 @@
 // Both upgrade predicates are evaluated. A transition clears the incoming
 // damage flag and zeroes the amount according to module flag68.
 class UpgradeTemplate; class Module; struct DamageInfo { unsigned char before20[0x20]; unsigned char flag20; };
+enum NameKeyType;
 class Player { public: bool hasUpgradeComplete(const UpgradeTemplate*); };
 class Object { public:
  Player *getControllingPlayer() const;
  bool hasUpgrade(const UpgradeTemplate*) const;
- Module *findModule(int) const;
+ // Retail's Object::findModule is a protected member, so the mangled call
+ // name carries that access; only the friend below may call it here.
+protected:
+ Module *findModule(NameKeyType) const;
+ friend struct Rva00212980Owner;
 };
 class NameKeyGenerator { public: unsigned int nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;
@@ -46,7 +51,7 @@ void Rva00212980Owner::apply(float amount,DamageInfo *info)
    bool objectComplete=obj->hasUpgrade(module->upgrade74);
    if(!playerComplete && !objectComplete) goto finish;
   }
-  LifetimeUpdate *lifetime=(LifetimeUpdate*)object()->findModule(TheNameKeyGenerator->nameToKey("LifetimeUpdate"));
+  LifetimeUpdate *lifetime=(LifetimeUpdate*)object()->findModule((NameKeyType)TheNameKeyGenerator->nameToKey("LifetimeUpdate"));
   if(lifetime) lifetime->setLifetimeRange(module->time64,module->time64);
   if(!started) FXList::doFXObj(module->fx6c,object(),0);
   info->flag20=0;
