@@ -182,10 +182,10 @@ def test_failed_replacement_facts_preserve_all_tables(tmp_path, monkeypatch):
     saved = copy.deepcopy(index)
     original = L.object_facts
     coff(a, [])
-    def fail_second(obj, truth):
+    def fail_second(obj, truth, **kwargs):
         if obj == b:
             raise L.MissingObject("bad relocation/COMDAT data")
-        return original(obj, truth)
+        return original(obj, truth, **kwargs)
     monkeypatch.setattr(L, "object_facts", fail_second)
     with pytest.raises(L.MissingObject):
         C.refresh(index, [a, b], NoTruth())

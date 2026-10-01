@@ -406,10 +406,11 @@ def test_link_check_agrees_with_the_census(monkeypatch):
     kept = {"new": "gm.obj", "f": "b.obj", "??_Gc": "d.obj"}  # f: the map kept the second copy
     present, _, exceptions, wrong = _selection(facts, owners, kept)
     assert exceptions == {"f": 3}
-    monkeypatch.setattr(L, "common_definitions", lambda obj: {})
+    monkeypatch.setattr(L, "common_definitions", lambda obj, **kwargs: {})
     ix = C.index_tables(present, list(facts.values()), {"exceptions": exceptions, "owners": owners})
     ix["excuses"] = {"runtime": set(), "imported": {}, "stubs": {}}
-    monkeypatch.setattr(L, "object_facts", lambda obj, truth=None: facts[obj.name])
+    monkeypatch.setattr(L, "object_facts", lambda obj, truth=None, **kwargs: facts[obj.name])
+    monkeypatch.setattr(C, "_object_bytes", lambda obj: b"frozen mocked facts")
     for obj in present:
         assert C.check_object(obj, ix, None)["selected"] == wrong[obj.name], obj
     assert wrong["c.obj"] == ["??_Gc"] and wrong["a.obj"] == ["new"]

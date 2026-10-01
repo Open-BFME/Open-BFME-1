@@ -129,9 +129,9 @@ def test_refresh_replaces_a_passed_objects_census_definitions(monkeypatch):
     from types import SimpleNamespace
     ix = index(strong={"f": [0, 1], "g": [1]}, comdat={"h": [(1, "x", None)]})
     assert C.duplicate("f", 0, True, 0, ix)
-    monkeypatch.setattr(link_census, "object_facts", lambda obj, truth: ([], ["g"], [], []))
-    monkeypatch.setattr(link_census, "common_definitions", lambda obj: {})
-    C.refresh(ix, [SimpleNamespace(name="b.obj"), SimpleNamespace(name="new.obj")], None)
+    monkeypatch.setattr(link_census, "object_facts", lambda obj, truth, **kwargs: ([], ["g"], [], []))
+    monkeypatch.setattr(link_census, "common_definitions", lambda obj, **kwargs: {})
+    C.refresh(ix, [SimpleNamespace(name="b.obj", read_bytes=lambda: b"frozen"), SimpleNamespace(name="new.obj")], None)
     assert ix["strong"] == {"f": [0], "g": [1]} and ix["comdat"] == {"h": []}
     assert not C.duplicate("f", 0, True, 0, ix)
 

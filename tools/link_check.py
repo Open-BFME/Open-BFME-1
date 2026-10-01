@@ -44,6 +44,8 @@ owner each and are served only with `next --family F`.
 import argparse
 import collections
 import csv
+import hashlib
+import json
 import pickle
 import re
 import subprocess
@@ -59,6 +61,8 @@ import link_census  # noqa: E402
 
 INDEX = link_census.OUT / "link_index.pkl"
 COMMON_SCHEMA = 1
+WEAK_SCHEMA = 4
+_WEAK_PREVIEW_TOKEN = object()
 ADDRESSES = "<hard-coded image addresses>"
 
 
@@ -85,18 +89,44 @@ def source_bytes(sources=None):
             for source, found in intervals.items()}
 
 
-def write_index(present, facts, blockers, excuses, meta, selection):
+def write_index(present, facts, blockers, excuses, meta, selection, *, publish=True):
     """Called by link_census.write_status: what a per-file check needs from the
     census, in one pickle. `facts` is link_census.read_facts(present);
     `selection` holds link_census.selection_verdicts' results, holder
     exceptions and ledger owners."""
     index = {"meta": meta, **index_tables(present, facts, selection), "blockers": blockers, "excuses": excuses,
              "bytes": source_bytes(set(blockers))}
+    if publish:
+        publish_index(index)
+    return index
+
+
+def publish_index(index):
     link_census.OUT.mkdir(parents=True, exist_ok=True)
     temp = INDEX.with_suffix(".tmp")
     with temp.open("wb") as handle:
         pickle.dump(index, handle, protocol=pickle.HIGHEST_PROTOCOL)
     temp.replace(INDEX)
+
+
+def selected_receipt_digest(selection):
+    """Canonical actual-MAP receipt; incomplete or corrupt provenance is unknown."""
+    actual = selection.get("weak_kept")
+    addresses, locations = selection.get("weak_addresses"), selection.get("weak_locations")
+    ambiguous = selection.get("weak_ambiguous")
+    valid = (isinstance(actual, dict) and isinstance(addresses, dict) and isinstance(locations, dict)
+             and isinstance(ambiguous, (set, frozenset, list, tuple))
+             and all(isinstance(name, str) and isinstance(holder, str) for name, holder in actual.items())
+             and set(addresses) == set(locations) == set(actual)
+             and all(type(address) is int and 0 <= address <= 0xFFFFFFFF for address in addresses.values())
+             and all(isinstance(locations[name], str) and locations[name].split(":")[-1] == holder
+                     for name, holder in actual.items())
+             and all(isinstance(name, str) and name in actual for name in ambiguous))
+    if not valid:
+        return None
+    payload = {"kept": sorted(actual.items()), "addresses": sorted(addresses.items()),
+               "locations": sorted(locations.items()), "ambiguous": sorted(set(ambiguous))}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def index_tables(present, facts, selection):
@@ -105,10 +135,12 @@ def index_tables(present, facts, selection):
     ledger owners)."""
     if len(present) != len(facts):
         raise ValueError("index needs facts for every census object")
+    selection = {**selection, "weak_receipt": selected_receipt_digest(selection)}
     strong = collections.defaultdict(list)
     comdat = collections.defaultdict(list)
     common = collections.defaultdict(list)
-    common_facts = [link_census.common_definitions(obj) for obj in present]
+    common_facts = [fact.common if isinstance(fact, link_census.ObjectFacts) else
+                    link_census.common_definitions(obj) for obj, fact in zip(present, facts)]
     for index, (copies, defined, _, _) in enumerate(facts):
         for name in defined:
             strong[name].append(index)
@@ -117,7 +149,12 @@ def index_tables(present, facts, selection):
         for name, size in common_facts[index].items():
             common[name].append((index, size))
     return {"objects": [obj.name for obj in present], "strong": dict(strong), "comdat": dict(comdat),
-            "selection": selection, "common": dict(common), "common_schema": COMMON_SCHEMA}
+            "selection": selection, "common": dict(common), "common_schema": COMMON_SCHEMA,
+            "weak_schema": WEAK_SCHEMA, "weak_root": str(ROOT.resolve()),
+            "weak_inventory": {obj.name: (str(obj), hashlib.sha256(fact.data).hexdigest())
+                               for obj, fact in zip(present, facts) if isinstance(fact, link_census.ObjectFacts)},
+            "weak_truth": facts[0].truth if facts and all(isinstance(f, link_census.ObjectFacts) and
+                           f.truth == facts[0].truth for f in facts) else None}
 
 
 def require_common_index(index):
@@ -159,6 +196,89 @@ def duplicate(name, position, exclusive, own, index):
     return exclusive or others[first]
 
 
+def weak_context(index, truth=None):
+    """Use the refreshed complete definition tables and recorded keeper policy."""
+    definers, copies = collections.defaultdict(set), collections.defaultdict(dict)
+    objects = index["objects"]
+    positions_of = {obj: position for position, obj in enumerate(objects)}
+    for name, positions in index["strong"].items():
+        if positions:
+            definers[name].update(objects[position] for position in positions)
+    for name, entries in index["comdat"].items():
+        for position, digest, verdict in entries:
+            definers[name].add(objects[position])
+            copies[name][objects[position]] = (digest, verdict)
+    selection = index.get("selection", {})
+    exceptions = selection.get("exceptions", {})
+    kept = {}
+    for name, found in definers.items():
+        positions = {positions_of[obj] for obj in found}
+        holder = exceptions.get(name, min(positions))
+        if holder in positions:
+            kept[name] = objects[holder]
+    # Keep foreign selected names too: a library/stub primary may be absent
+    # from source facts, while a genuine weak alias shares the default's address.
+    actual = selection.get("weak_kept")
+    addresses, locations = selection.get("weak_addresses"), selection.get("weak_locations")
+    ambiguous = selection.get("weak_ambiguous")
+    receipt = selected_receipt_digest(selection)
+    actual_valid = receipt is not None and receipt == selection.get("weak_receipt")
+    if actual_valid:
+        kept = link_census.SelectedDefinitions(actual)
+        kept.addresses, kept.locations, kept.ambiguous = addresses, locations, ambiguous
+    context = link_census.weak_selection_context(
+        definers, copies, selection.get("owners", {}), kept,
+        {name for name, entries in index["common"].items() if entries})
+    fingerprint = link_census.truth_fingerprint(truth)
+    # An old or partly refreshed context cannot prove absence of a primary or
+    # competing default elsewhere. Require the complete frozen selected input set.
+    inventory = index.get("weak_inventory", {})
+    complete = (actual_valid and fingerprint and getattr(truth, "_weak_inputs", None) == link_census.truth_inputs_fingerprint()
+                and index.get("weak_schema") == WEAK_SCHEMA and
+                index.get("weak_root") == str(ROOT.resolve()) and
+                index.get("weak_truth") == fingerprint and isinstance(inventory, dict) and
+                len(set(objects)) == len(objects) and set(inventory) == set(objects))
+    if complete:
+        for holder, entry in inventory.items():
+            if not isinstance(entry, (tuple, list)) or len(entry) != 2 or not all(isinstance(v, str) for v in entry):
+                complete = False
+                break
+            path, digest = entry
+            try:
+                owned_path = Path(path).resolve()
+                if owned_path.name != holder or not owned_path.is_relative_to(ROOT.resolve()):
+                    complete = False
+                    break
+                if hashlib.sha256(_object_bytes(owned_path)).hexdigest() != digest:
+                    complete = False
+                    break
+            except (link_census.MissingObject, OSError, RuntimeError):
+                complete = False
+                break
+    if not complete:
+        context["defaults"] = {}
+        return context
+    current = index.get("_weak_current_objects", {}) if index.get("_weak_token") is _WEAK_PREVIEW_TOKEN else {}
+    valid = {}
+    for holder, proof in current.items():
+        if not isinstance(proof, (tuple, list)) or len(proof) != 5 or not isinstance(proof[4], dict):
+            continue
+        if (fingerprint and proof[0] == fingerprint and proof[2] == link_census.policy_fingerprint(fresh=True)
+                and Path(str(proof[3])).resolve() == Path(inventory.get(holder, ("", ""))[0]).resolve()
+                and hashlib.sha256(_object_bytes(proof[3])).hexdigest() == proof[1]):
+            valid[holder] = proof[4]
+    context["defaults"] = {name: proof for name, proof in context["defaults"].items()
+                           if valid.get(proof[0], {}).get(name) == proof[1]}
+    return context
+
+
+def _object_bytes(obj):
+    try:
+        return obj.read_bytes()
+    except OSError as exc:
+        raise link_census.MissingObject(f"{obj}: cannot read object ({exc})") from exc
+
+
 def refresh(index, objects, truth):
     """Replace the census's definitions of `objects` with their current
     object files', so a fix in one file (a removed duplicate, a new datum) is
@@ -168,31 +288,59 @@ def refresh(index, objects, truth):
     positions = {index["objects"].index(obj.name): obj for obj in objects if obj.name in index["objects"]}
     if not positions:
         return
-    # Read every replacement before mutating any table. A failed read must
-    # preserve the previous index, including its last COMMON provider.
-    replacements = {position: (link_census.common_definitions(obj), link_census.object_facts(obj, truth))
+    # Freeze each replacement once. Both passes and COMMON parsing use those
+    # same bytes; a failing read or rejudgment cannot partly update the index.
+    payloads = {position: _object_bytes(obj) for position, obj in positions.items()}
+    replacements = {position: (link_census.common_definitions(obj, data=payloads[position]),
+                                link_census.object_facts(obj, truth, data=payloads[position]))
                     for position, obj in positions.items()}
+    updated = {**index, **{table: {name: list(entries) for name, entries in index[table].items()}
+                          for table in ("strong", "comdat", "common")}}
     for table, at in (("strong", lambda entry: entry), ("comdat", lambda entry: entry[0]),
                       ("common", lambda entry: entry[0])):
-        for name, entries in index[table].items():
+        for name, entries in updated[table].items():
             if any(at(entry) in positions for entry in entries):
-                index[table][name] = [entry for entry in entries if at(entry) not in positions]
+                updated[table][name] = [entry for entry in entries if at(entry) not in positions]
     for position, (common, fact) in replacements.items():
         copies, defined, _, _ = fact
         for name in defined:
-            index["strong"].setdefault(name, []).append(position)
+            updated["strong"].setdefault(name, []).append(position)
         for name, digest, _, verdict in copies:
-            index["comdat"].setdefault(name, []).append((position, digest, verdict))
+            updated["comdat"].setdefault(name, []).append((position, digest, verdict))
         for name, size in common.items():
-            index["common"].setdefault(name, []).append((position, size))
+            updated["common"].setdefault(name, []).append((position, size))
+    updated["_weak_current_objects"] = dict(index.get("_weak_current_objects", {})) if index.get("_weak_token") is _WEAK_PREVIEW_TOKEN else {}
+    for position, (_, fact) in replacements.items():
+        updated["_weak_current_objects"][positions[position].name] = (fact.truth if isinstance(fact, link_census.ObjectFacts) else None,
+                                                                      hashlib.sha256(payloads[position]).hexdigest(),
+                                                                      link_census.policy_fingerprint(), positions[position],
+                                                                      fact.independent if isinstance(fact, link_census.ObjectFacts) else {})
+    updated["_weak_token"] = _WEAK_PREVIEW_TOKEN
+    updated["weak_inventory"] = dict(index.get("weak_inventory", {}))
+    for position, obj in positions.items():
+        updated["weak_inventory"][obj.name] = (str(obj), hashlib.sha256(payloads[position]).hexdigest())
+    context = weak_context(updated, truth)
+    for position, (_, fact) in replacements.items():
+        if not fact[3]:
+            continue
+        copies = link_census.object_facts(positions[position], truth, data=payloads[position],
+                                          weak_context=context)[0]
+        for name, digest, _, verdict in copies:
+            updated["comdat"][name] = [(at, digest if at == position else old_digest,
+                                         verdict if at == position else old_verdict)
+                                        for at, old_digest, old_verdict in updated["comdat"][name]]
+    for table in ("strong", "comdat", "common", "_weak_current_objects", "_weak_token", "weak_inventory"):
+        index[table] = updated[table]
 
 
 def check_object(obj, index, truth, source=None):
     """{unresolved, duplicates, comdat, addresses} for one object against the index."""
     import link_debt
     require_common_index(index)
-    common = link_census.common_definitions(obj)
-    copies, defined, undefined, weaks = link_census.object_facts(obj, truth)
+    data = _object_bytes(obj)
+    common = link_census.common_definitions(obj, data=data)
+    copies, defined, undefined, weaks = link_census.object_facts(
+        obj, truth, data=data, weak_context=weak_context(index, truth))
     own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
     position = own if own is not None else len(index["objects"])
     strong, comdat = index["strong"], index["comdat"]

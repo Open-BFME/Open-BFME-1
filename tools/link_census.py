@@ -49,6 +49,10 @@ import collections
 import concurrent.futures
 import csv
 import json
+import hashlib
+import functools
+import io
+import pickle
 import os
 import re
 import subprocess
@@ -67,16 +71,28 @@ DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^
                        r'already defined in (\S+\.obj)')
 FATAL = re.compile(r"fatal error (LNK(?!1120)\d+).*")  # LNK1120 is only the unresolved count
 REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
-# These are compiler inputs, including the headers reached through TU shims.
+# Compiler inputs and the proof policy must stay fixed during a census.
 CENSUS_INPUTS = ("game", "inputs/reference", "inputs/vendor",
                  "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
-                 "targets/game/reverse/dir32_addresses.csv", "targets/game/reverse/data_rows.csv")
+                 "targets/game/reverse/dir32_addresses.csv", "targets/game/reverse/data_rows.csv",
+                 "tools/link_census.py", "tools/link_check.py", "tools/build.py",
+                 "tools/reloc_ledger.py", "tools/pin_consistency.py", "tools/data_rows.py")
+
+
+class LedgerRows(list):
+    """Matched rows bound to the exact functions.csv payload that supplied them."""
+
+    def validate(self):
+        if hashlib.sha256((ROOT / "targets/game/reverse/functions.csv").read_bytes()).hexdigest() != self.digest:
+            raise MissingObject("function ledger changed after rows were loaded; nothing proved")
 
 
 def ledger():
-    with (ROOT / "targets/game/reverse/functions.csv").open(newline="", encoding="utf-8") as handle:
-        return [r for r in csv.DictReader(handle) if r.get("status") == "matched"
-                and (r.get("target_rva") or "").startswith("0x")]
+    raw = (ROOT / "targets/game/reverse/functions.csv").read_bytes()
+    result = LedgerRows(r for r in csv.DictReader(io.StringIO(raw.decode("utf-8")))
+                        if r.get("status") == "matched" and (r.get("target_rva") or "").startswith("0x"))
+    result.digest = hashlib.sha256(raw).hexdigest()
+    return result
 
 
 def data_sources():
@@ -521,10 +537,28 @@ def _coff_symbols(data):
             name = data[strings + offset:data.index(b"\0", strings + offset)]
         else:
             name = record[:8].rstrip(b"\0")
-        value, section, _, storage, aux = struct.unpack_from("<IhHBB", record, 8)
+        value, section, type_, storage, aux = struct.unpack_from("<IhHBB", record, 8)
+        if index + aux >= count or table + 18 * (index + aux + 1) > len(data):
+            raise ValueError("truncated auxiliary symbol")
         out.append({"index": index, "name": name.decode("latin-1"), "section": section, "storage": storage,
-                    "value": value})
+                    "value": value, "type": type_, "aux": aux})
         index += 1 + aux
+    by_index = {symbol["index"]: symbol for symbol in out}
+    for symbol in out:
+        if symbol["storage"] != WEAK_EXTERNAL:
+            continue
+        if symbol["aux"] != 1:
+            symbol["weak_identity"] = ("invalid-aux", symbol["aux"])
+            continue
+        tag, search = struct.unpack_from("<II", data, table + 18 * (symbol["index"] + 1))
+        default = by_index.get(tag)
+        symbol["weak_identity"] = (search, default["name"] if default else None,
+                                    default["storage"] if default else None, tag if default is None else None)
+        if (search == 2 and symbol["section"] == 0 and symbol["value"] == 0
+                and default is not None and default["storage"] == EXTERNAL
+                and default["section"] >= 0 and (default["type"] & 0x30) == 0x20
+                and default["name"] not in ("", "?")):
+            symbol["weak_default"] = default["name"]
     return out
 
 
@@ -572,6 +606,8 @@ def _comdat_sections(data):
                 referent = {**referent, "content": data[start + referent["value"]:start + length] if start else None}
             label = (_normal(referent["name"]) if referent["storage"] in (EXTERNAL, WEAK_EXTERNAL) else "local")
             digest.update(b"%d:%d:" % (where, kind) + label.encode("latin-1") + b";")
+            if referent["storage"] == WEAK_EXTERNAL:
+                digest.update(repr(referent.get("weak_identity")).encode("latin-1") + b";")
             found.append((where, kind, referent))
         yield symbol, body, found, digest.hexdigest()[:12], size
 
@@ -644,6 +680,17 @@ class RetailTruth:
         return {address, address - BASE} if address >= BASE else {address}
 
     def __init__(self, rows):
+        self._weak_rows_current = isinstance(rows, LedgerRows)
+        if self._weak_rows_current:
+            rows.validate()
+        self.image, self.sections = build.exe_image()
+        if self.image != build.EXE.read_bytes():
+            raise MissingObject("native baseline changed after exe_image was cached; nothing proved")
+        self._weak_inputs = truth_inputs_fingerprint()
+        # Native route caches must describe this same baseline/ledger snapshot.
+        import pin_consistency
+        pin_consistency.import_table.cache_clear()
+        pin_consistency.gen_import_targets.cache_clear()
         routes = {}
         pinned = pins(routes)
         self.ledger = collections.defaultdict(set)
@@ -676,8 +723,11 @@ class RetailTruth:
         self.slots = collections.defaultdict(set)
         for name, address in retail_import_slots():
             self.slots[name].add(address)
-        self.image, self.sections = build.exe_image()
         self._cache = {}
+        if self._weak_inputs != truth_inputs_fingerprint():
+            raise MissingObject("native truth inputs changed while routes were read; nothing proved")
+        if self._weak_rows_current:
+            rows.validate()
 
     def addresses(self, name, kind=None):
         """Retail relocation targets, with proven import routes for REL32 only."""
@@ -744,7 +794,10 @@ class RetailTruth:
             identity = (("absolute", referent["name"]) if
                         kind == RetailTruth.DIR32 and referent["name"] in RetailTruth.ABSOLUTE else
                         ("content", content) if content is not None else
-                        ("self", referent["value"]) if same_section and referent["storage"] != EXTERNAL else
+                        ("self", referent["value"]) if same_section and referent["storage"] != EXTERNAL
+                        and "weak_identity" not in referent else
+                        ("weak", _normal(referent["name"]), referent.get("weak_identity"),
+                         referent.get("weak_route")) if referent["storage"] == WEAK_EXTERNAL else
                         ("external", _normal(referent["name"])) if external else
                         ("local",))
             found.append((where, kind, identity))
@@ -801,10 +854,14 @@ class RetailTruth:
                 if self._read(target, len(referent["content"])) != referent["content"]:
                     return "wrong"
                 continue
-            if referent["section"] == symbol["section"] and referent["storage"] != EXTERNAL:
+            if referent["storage"] == WEAK_EXTERNAL and "weak_identity" in referent:
+                route = referent.get("weak_route")
+                expected = self.addresses(route[0], kind) if route else None
+            elif referent["section"] == symbol["section"] and referent["storage"] != EXTERNAL:
                 expected = {start + referent["value"]}  # a label in this very section
             elif referent["storage"] in (EXTERNAL, WEAK_EXTERNAL):
-                expected = self.addresses(referent["name"], kind)
+                name = referent.get("weak_route", (referent["name"],))[0]
+                expected = self.addresses(name, kind)
             else:  # a static's name is per TU (_$E2, $SG1234): no address to check
                 expected = None
             if not expected:
@@ -887,7 +944,7 @@ class MissingObject(RuntimeError):
     object with no facts has no blockers and would read as linking."""
 
 
-def common_definitions(obj):
+def common_definitions(obj, *, data=None):
     """COFF COMMON data definitions, kept separate from exclusive definitions.
 
     An external section-zero record with nonzero value allocates that many
@@ -896,7 +953,7 @@ def common_definitions(obj):
     """
     import struct
     try:
-        data = obj.read_bytes()
+        data = obj.read_bytes() if data is None else data
         if len(data) < 20:
             raise ValueError("truncated COFF header")
         table, count = struct.unpack_from("<II", data, 8)
@@ -932,7 +989,64 @@ def common_definitions(obj):
         raise MissingObject(f"{obj}: cannot read COMMON definitions ({exc})") from exc
 
 
-def object_facts(obj, truth=None):
+class ObjectFacts(tuple):
+    """Four public fact lists plus their immutable COFF proof snapshot."""
+
+
+def policy_fingerprint(*, fresh=False):
+    if not fresh:
+        return _cached_policy_fingerprint()
+    return _read_policy_fingerprint()
+
+
+@functools.lru_cache(maxsize=1)
+def _cached_policy_fingerprint():
+    return _read_policy_fingerprint()
+
+
+def _read_policy_fingerprint():
+    digest = hashlib.sha256()
+    for name in ("link_census.py", "link_check.py", "build.py", "reloc_ledger.py", "pin_consistency.py", "data_rows.py"):
+        digest.update(name.encode())
+        digest.update((ROOT / "tools" / name).read_bytes())
+    return digest.hexdigest()
+
+
+def truth_inputs_fingerprint():
+    digest = hashlib.sha256(build.EXE.read_bytes())
+    for name in ("functions.csv", "symbols.csv", "dir32_addresses.csv", "data_rows.csv"):
+        digest.update(name.encode())
+        digest.update((ROOT / "targets/game/reverse" / name).read_bytes())
+    digest.update(policy_fingerprint(fresh=True).encode())
+    return digest.hexdigest()
+
+
+def truth_fingerprint(truth):
+    if not isinstance(truth, RetailTruth) or getattr(truth, "_weak_rows_current", True) is False:
+        return None
+    if not hasattr(truth, "_weak_fingerprint"):
+        digest = hashlib.sha256(truth.image)
+        for name in ("ledger", "pinned", "slots", "import_routes", "shared", "sections"):
+            value = getattr(truth, name, {})
+            if isinstance(value, dict):
+                value = sorted((key, sorted(items) if isinstance(items, (set, list, tuple)) else items)
+                               for key, items in value.items())
+            elif isinstance(value, set):
+                value = sorted(value)
+            digest.update(repr(value).encode())
+        digest.update(getattr(truth, "_weak_inputs", policy_fingerprint()).encode())
+        truth._weak_fingerprint = digest.hexdigest()
+    return truth._weak_fingerprint
+
+
+def validate_fact_snapshots(present, facts):
+    """Fail before acceptance if any frozen COFF payload has since changed."""
+    for obj, fact in zip(present, facts):
+        if not isinstance(fact, ObjectFacts) or obj.read_bytes() != fact.data:
+            raise MissingObject(f"{obj}: object changed during census; nothing recorded")
+
+
+def object_facts(obj, truth=None, *, data=None, weak_context=None):
     """(COMDAT copies [(name, digest, size, verdict)], exclusive definitions,
     undefined externals, weak externals [(name, default)]) of one object:
     what a link needs to know about it. An unreadable object raises
@@ -942,7 +1056,7 @@ def object_facts(obj, truth=None):
     which /Gy gives every non-inline function."""
     truth = truth or _TRUTH
     try:
-        data = obj.read_bytes()
+        data = bytes(obj.read_bytes() if data is None else data)
     except OSError as exc:
         raise MissingObject(f"{obj}: cannot read the object ({exc})") from exc
     import struct
@@ -960,9 +1074,28 @@ def object_facts(obj, truth=None):
                 undefined.append(symbol["name"])
         elif symbol["section"] not in comdat or selections.get(symbol["section"]) == 1:
             strong.append(symbol["name"])
-    copies = [(symbol["name"], digest, size, truth.verdict(symbol, body, relocs, digest, size))
-              for symbol, body, relocs, digest, size in _comdat_sections(data)]
-    return copies, strong, undefined, _weak_externals(data)
+    common = common_definitions(obj, data=data)
+    parts = list(_comdat_sections(data))
+    if weak_context is not None:
+        # The checked payload can introduce a primary absent from an old index.
+        # Its actual definitions always win, even when their bytes are wrong.
+        weak_context = {**weak_context, "defined": weak_context["defined"] | set(strong) |
+                        set(common) | {symbol["name"] for symbol, *_ in parts},
+                        "defaults": dict(weak_context["defaults"])}
+        for symbol, body, relocs, digest, size in parts:
+            proof = weak_context["defaults"].get(symbol["name"])
+            if proof and proof[0] == obj.name and (proof[1] != digest or
+                    truth.verdict(symbol, body, bind_weak_relocations(relocs, None, truth), digest, size) != "retail"):
+                weak_context["defaults"].pop(symbol["name"])
+    copies = [(symbol["name"], digest, size, truth.verdict(symbol, body, bind_weak_relocations(relocs, weak_context, truth), digest, size))
+              for symbol, body, relocs, digest, size in parts]
+    result = ObjectFacts((copies, strong, undefined, _weak_externals(data)))
+    result.data, result.common = data, common
+    result.independent = {symbol["name"]: digest for symbol, body, relocs, digest, size in parts
+                          if truth.verdict(symbol, body, bind_weak_relocations(relocs, None, truth), digest, size) == "retail"}
+    result.truth = truth_fingerprint(truth)
+    result.policy = policy_fingerprint()
+    return result
 
 
 def _weak_externals(data):
@@ -979,6 +1112,89 @@ def _weak_externals(data):
             found.append((names.get(index, "?"), names.get(tag, "?")))
         index += 1 + aux
     return found
+
+
+def bind_weak_relocations(relocs, context, truth):
+    """Keep the COFF name; attach only a proven selected native fallback route.
+
+    Only direct SEARCH_LIBRARY defaults with independently retail COMDAT bytes
+    and a ledger owner qualify. A primary definition always suppresses fallback.
+    No context, unsupported auxiliaries or ambiguous homes stay unproven.
+    """
+    result = []
+    for where, kind, referent in relocs:
+        referent = {key: value for key, value in referent.items() if key != "weak_route"}
+        default = referent.get("weak_default")
+        proof = context["defaults"].get(default) if context is not None else None
+        homes = truth.ledger.get(_normal(default), ()) if proof and default else ()
+        bodies = {truth._stub(home) or home for home in homes}
+        selected = context.get("selected", {}) if context is not None else {}
+        addresses = context.get("selected_addresses", {}) if context is not None else {}
+        ambiguous = context.get("selected_ambiguous", ()) if context is not None else ()
+        locations = context.get("selected_locations", {}) if context is not None else {}
+        primary = referent["name"]
+        selected_alias = (primary not in selected or
+                          (proof and selected.get(primary) == selected.get(default) == proof[0]
+                           and isinstance(addresses.get(primary), int) and addresses[primary] > 0
+                           and addresses[primary] == addresses.get(default)
+                           and locations.get(primary, selected.get(primary)) == locations.get(default, selected.get(default))
+                           and primary not in ambiguous and default not in ambiguous))
+        if (referent["storage"] == WEAK_EXTERNAL and proof and selected_alias
+                and referent["name"] not in context["defined"] and len(bodies) == 1
+                and not set(homes) & truth.shared):
+            referent = {**referent, "weak_route": (default, *proof)}
+        result.append((where, kind, referent))
+    return result
+
+
+def weak_selection_context(definers, copies, owners, kept, common_names):
+    """One policy for a complete actual selection or its scoped index preview.
+
+    Requiring a sole selected definer deliberately leaves competing defaults
+    unknown. Mere ownership of an ordinary strong definition is insufficient:
+    the selected COMDAT's own body must already have an independent retail verdict.
+    """
+    defaults = {}
+    for name, objects in definers.items():
+        if len(objects) != 1 or name in common_names or name in getattr(kept, "ambiguous", ()):
+            continue
+        holder = next(iter(objects))
+        if (kept.get(name) != holder or holder not in owners.get(name, ()) or
+                getattr(kept, "locations", {}).get(name, holder) != holder):
+            continue
+        addresses = getattr(kept, "addresses", None)
+        if addresses is not None and (type(addresses.get(name)) is not int or addresses[name] <= 0):
+            continue
+        digest, verdict = copies.get(name, {}).get(holder, (None, None))
+        if verdict == "retail":
+            defaults[name] = (holder, digest)
+    return {"defined": frozenset(definers) | frozenset(common_names), "defaults": defaults,
+            "selected": dict(kept), "selected_addresses": dict(getattr(kept, "addresses", {})),
+            "selected_ambiguous": frozenset(getattr(kept, "ambiguous", ())),
+            "selected_locations": dict(getattr(kept, "locations", {}))}
+
+
+def rejudge_weak_facts(present, facts, rows, kept, owners):
+    """Resolve native weak copies only after the actual linker keeper is known."""
+    copies, definers, _ = selection_inputs(present, facts)
+    truth = RetailTruth(rows)
+    fingerprint = truth_fingerprint(truth)
+    if len({obj.name for obj in present}) != len(present):
+        return facts  # duplicate physical names cannot establish one selected owner
+    frozen = fingerprint and all(isinstance(fact, ObjectFacts) and fact.truth == fingerprint and
+                 fact.policy == policy_fingerprint() for fact in facts)
+    if not frozen:
+        # Legacy facts remain useful for ordinary verdicts, never new promotion.
+        return facts
+    common = set().union(*(fact.common for fact in facts))
+    context = weak_selection_context(definers, copies, owners, kept, common)
+    independent = {obj.name: fact.independent for obj, fact in zip(present, facts)}
+    context["defaults"] = {name: proof for name, proof in context["defaults"].items()
+                           if independent[proof[0]].get(name) == proof[1]}
+    return [object_facts(obj, truth, data=fact.data, weak_context=context)
+            if any(name not in context["defined"] and default in context["defaults"]
+                   for name, default in fact[3]) else fact
+            for obj, fact in zip(present, facts)]
 
 
 def read_facts(objs, rows):
@@ -1079,14 +1295,7 @@ def touched_names(fact):
     return names
 
 
-def selection_verdicts(present, facts, owners, kept):
-    """({name: result}, {name: holder index or None}) for every name the census
-    objects define, judged on the definition the link kept (`kept`, from the
-    /MAP: selected_definitions). The second map lists only the names whose
-    kept definition is NOT the first definer in link order (link.exe keeps the
-    first for all but a handful), so link_check can predict the holder the way
-    the census saw it."""
-    position = {obj.name: index for index, obj in enumerate(present)}
+def selection_inputs(present, facts):
     copies = collections.defaultdict(dict)
     definers = collections.defaultdict(set)
     exclusive = collections.defaultdict(set)
@@ -1097,6 +1306,18 @@ def selection_verdicts(present, facts, owners, kept):
         for name in strong:
             definers[name].add(obj.name)
             exclusive[name].add(obj.name)
+    return copies, definers, exclusive
+
+
+def selection_verdicts(present, facts, owners, kept):
+    """({name: result}, {name: holder index or None}) for every name the census
+    objects define, judged on the definition the link kept (`kept`, from the
+    /MAP: selected_definitions). The second map lists only the names whose
+    kept definition is NOT the first definer in link order (link.exe keeps the
+    first for all but a handful), so link_check can predict the holder the way
+    the census saw it."""
+    position = {obj.name: index for index, obj in enumerate(present)}
+    copies, definers, exclusive = selection_inputs(present, facts)
     results, exceptions = {}, {}
     for name, objs in definers.items():
         holder = kept.get(name)
@@ -1110,19 +1331,33 @@ def selection_verdicts(present, facts, owners, kept):
     return results, exceptions
 
 
-MAP_PUBLIC = re.compile(r"^\s*[0-9A-Fa-f]{4}:[0-9A-Fa-f]{8}\s+(\S+)\s+[0-9A-Fa-f]{8}\s+(?:f\s+)?(?:i\s+)?(.+?)\s*$")
+class SelectedDefinitions(dict):
+    """Actual linker holders, with map addresses needed to prove weak aliases."""
+
+
+MAP_PUBLIC = re.compile(r"^\s*[0-9A-Fa-f]{4}:[0-9A-Fa-f]{8}\s+(\S+)\s+([0-9A-Fa-f]{8})\s+(?:f\s+)?(?:i\s+)?(.+?)\s*$")
 
 
 def selected_definitions(map_text):
-    """{symbol: object} for the definition link.exe put in the image, from
-    the /MAP file's "Publics by Value" (its Lib:Object column)."""
-    found = {}
+    """{symbol: object} for the actual Publics by Value, retaining addresses.
+
+    Repeated conflicting public entries are ambiguous, never weak-alias proof.
+    """
+    found = SelectedDefinitions()
+    found.addresses, found.ambiguous, found.locations = {}, set(), {}
     for line in map_text.splitlines():
         if line.lstrip().startswith("Static symbols"):
             break
         match = MAP_PUBLIC.match(line)
         if match:
-            found.setdefault(match.group(1), match.group(2).split(":")[-1])
+            name, address, location = match.group(1), int(match.group(2), 16), match.group(3)
+            holder = location.split(":")[-1]
+            if name in found and (found.locations[name], found.addresses[name]) != (location, address):
+                found.ambiguous.add(name)
+            else:
+                found.setdefault(name, holder)
+                found.addresses.setdefault(name, address)
+                found.locations.setdefault(name, location)
     return found
 
 
@@ -1153,6 +1388,7 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
     selected.csv, duplicates_selected.csv, aliased.csv and selection.json
     under build/link_census/; measures, changes no rule."""
     kept = selected_definitions(map_text)
+    facts = rejudge_weak_facts(present, facts, rows, kept, ledger_owners(rows))
     position = {obj.name: index for index, obj in enumerate(present)}
     copies = collections.defaultdict(list)
     users = collections.defaultdict(set)
@@ -1447,14 +1683,16 @@ def selected_main():
         raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source, "
                          f"e.g. {stale[0].name}")
     log = final_log(None)  # the census's own link says which names nothing defines
+    facts = read_facts(present, rows)
     map_text = selection_link(present, log)
+    validate_fact_snapshots(present, facts)
     if subprocess.run(["git", "diff", "--quiet", history[-1]["commit"], "--", *CENSUS_INPUTS],
                       cwd=ROOT).returncode or stale_objects(present, sources):
         raise SystemExit("link_census: source inputs or objects changed during the selection link; rerun the census")
     with STATUS.open(newline="", encoding="utf-8") as handle:
         clean = {row["source"] for row in csv.DictReader(handle) if row["linked"] == "yes"}
     clean_objects = {build.row_object(row).name for row in rows if row["source"] in clean}
-    summary, bad, owner_misses = selection_report(present, read_facts(present, rows), rows, clean_objects,
+    summary, bad, owner_misses = selection_report(present, facts, rows, clean_objects,
                                     map_text, log)
     import link_check
     sizes = link_check.source_bytes(clean)
@@ -1464,6 +1702,7 @@ def selected_main():
     summary["linked_bytes_on_unproven_selected_copy"] = sum(sizes.get(by_object.get(obj), 0) for obj in bad)
     summary["linked_bytes_on_non_owner_duplicate"] = sum(sizes.get(by_object.get(obj), 0) for obj in owner_misses)
     summary["linked_bytes"] = sum(sizes.values())
+    validate_fact_snapshots(present, facts)
     SELECTION.write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print_selection(summary)
     return 0
@@ -1618,7 +1857,7 @@ def excused(symbol, runtime, imported, thunks=None):
     return symbol in runtime
 
 
-def write_status(log, rows, present, meta, kept):
+def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, currency_guard=None):
     """One row per C/C++ source: does its object link cleanly on its own terms?
 
     Per file, not per program: a clean file may still call into one that is
@@ -1654,9 +1893,10 @@ def write_status(log, rows, present, meta, kept):
     if present is None:
         present, _ = objects(rows)
     stats = {}
-    facts = read_facts(present, rows)
-    losers = comdat_losers(present, rows, stats, facts)
+    facts = read_facts(present, rows) if facts is None else facts
     owners = ledger_owners(rows)
+    facts = rejudge_weak_facts(present, facts, rows, kept, owners)
+    losers = comdat_losers(present, rows, stats, facts)
     results, exceptions = selection_verdicts(present, facts, owners, kept)
     wrong_selected, unknown_selected = {}, {}
     for obj, fact in zip(present, facts):
@@ -1707,19 +1947,45 @@ def write_status(log, rows, present, meta, kept):
         blockers[source] = {"object": obj, "linked": not any(counts), "unresolved": sorted(unresolved.get(obj, ())),
                             "duplicates": sorted(duplicates.get(obj, ())), "losers": sorted(losers.get(obj, ())),
                             "addresses": counts[3], "wrong_selected": wrong_selected.get(obj, [])}
-    with STATUS.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, STATUS_FIELDS, lineterminator="\n")
-        writer.writeheader()
-        writer.writerows(out[s] for s in sorted(out))
     clean = {source for source, r in out.items() if r["linked"] == "yes"}
     import link_check
-    link_check.write_index(present, facts, blockers, {"runtime": runtime, "imported": imported, "stubs": thunks},
-                           meta or {}, {"exceptions": exceptions, "owners": dict(owners)})
-    print(f"link_census: wrote {STATUS.relative_to(ROOT).as_posix()} ({len(clean):,} of {len(out):,} sources link cleanly; "
-          f"{len(clean_prev):,} before wrong_selected; {len(unknown_only):,} of the clean ones use a selected "
-          "definition nothing proves or disproves)")
+    index = link_check.write_index(present, facts, blockers, {"runtime": runtime, "imported": imported, "stubs": thunks},
+                                  meta or {}, {"exceptions": exceptions, "owners": dict(owners), "weak_kept": dict(kept),
+                                               "weak_addresses": dict(getattr(kept, "addresses", {})),
+                                               "weak_locations": dict(getattr(kept, "locations", {})),
+                                               "weak_ambiguous": set(getattr(kept, "ambiguous", ()))}, publish=False)
+    policy = policy_fingerprint()
+
+    def accept():
+        def guard():
+            if currency_guard is not None:
+                currency_guard()
+            validate_fact_snapshots(present, facts)
+            if policy_fingerprint(fresh=True) != policy or truth_fingerprint(RetailTruth(rows)) != index.get("weak_truth"):
+                raise MissingObject("truth inputs changed during census; nothing recorded")
+        guard()
+        # Serialization can be slow. Stage outputs privately, then repeat all
+        # byte/truth guards before replacing any accepted artifact.
+        status_temp = STATUS.with_suffix(".tmp")
+        index_temp = link_check.INDEX.with_suffix(".tmp")
+        try:
+            with status_temp.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, STATUS_FIELDS, lineterminator="\n")
+                writer.writeheader()
+                writer.writerows(out[source] for source in sorted(out))
+            index_temp.parent.mkdir(parents=True, exist_ok=True)
+            with index_temp.open("wb") as handle:
+                pickle.dump(index, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            guard()
+            status_temp.replace(STATUS)
+            index_temp.replace(link_check.INDEX)
+        finally:
+            status_temp.unlink(missing_ok=True)
+            index_temp.unlink(missing_ok=True)
+    if publish:
+        accept()
     blocking = set().union(*unresolved.values()) if unresolved else set()
-    return clean, len(out), len(blocking), clean_prev, {"unknown_only": unknown_only}
+    return clean, len(out), len(blocking), clean_prev, {"unknown_only": unknown_only, "accept": accept}
 
 
 def linked_split(clean):
@@ -1819,6 +2085,8 @@ def record(census, rows, rerun=False, fresh=False):
     only runs on the census's own commit, so a log is never paired with
     another tree's ledger or sources.
     """
+    if isinstance(rows, LedgerRows):
+        rows.validate()
     verify_data_objects()
     if census["missing"]:
         raise SystemExit(f"link_census: {census['missing']:,} objects were missing from the link; "
@@ -1856,12 +2124,20 @@ def record(census, rows, rerun=False, fresh=False):
                 or sum(dup_kinds.values()) != sum(census["duplicate_classes"].values())):
             raise SystemExit("link_census: census.log no longer reproduces census.json's counts; rerun the census")
     import link_debt
+    facts = read_facts(present, rows)
     kept = selected_definitions(selection_link(present, log))
+    validate_fact_snapshots(present, facts)
     if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
             or stale_objects(present, by_object):
         raise SystemExit("link_census: source inputs or objects changed during the selection link; nothing recorded")
-    clean, files, blocking, clean_prev, _ = write_status(log, rows, present, {"date": census["when"], "commit": commit},
-                                                         kept)
+    def currency_guard():
+        if isinstance(rows, LedgerRows):
+            rows.validate()
+        if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
+                or stale_objects(present, by_object):
+            raise SystemExit("link_census: source inputs or objects changed during judgment; nothing recorded")
+    clean, files, blocking, clean_prev, prepared = write_status(log, rows, present, {"date": census["when"], "commit": commit},
+                                                         kept, publish=False, facts=facts, currency_guard=currency_guard)
     before = linked_figures(clean_prev)
     figure = {"files": files, "files_linked": len(clean), "blocking_names": blocking,
               "addresses": sum(count for count, _ in link_debt.per_file(link_debt.addresses)),
@@ -1871,6 +2147,10 @@ def record(census, rows, rerun=False, fresh=False):
         history[-1].update(figure)
     else:
         history.append({**history_row(census, commit), **figure})
+    if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
+            or stale_objects(present, by_object):
+        raise SystemExit("link_census: source inputs or objects changed during judgment; nothing recorded")
+    prepared["accept"]()
     write_history(history)
     print(f"link_census: LINKED {figure['linked_bytes']:,} bytes ({figure['linked_bytes_prev_rule']:,} before "
           f"wrong_selected), authored {figure['linked_authored']:,} ({figure['linked_authored_prev_rule']:,}); "
