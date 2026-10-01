@@ -2,16 +2,19 @@
 
 struct BfmeSlotJA;
 
-class BfmeHookJA
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in is the class
+// that owns it, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	BfmeSlotJA *bfmeCallJA();
+	const Overridable *getFinalOverride() const;
 };
 
 struct BfmeSlotJA
 {
 	char m_bfmePad[4];
-	BfmeHookJA *m_bfmeHook;
+	Overridable *m_bfmeHook;
 	char m_bfmePad2[0xc4];
 	unsigned int m_bfmeBits;
 };
@@ -39,9 +42,10 @@ void BfmeThing916C::bfmeGo916C(void *a)
 		return;
 	BfmeSlotJA *x = m_bfmeSlot;
 	if (x) {
-		BfmeHookJA *h = x->m_bfmeHook;
+		Overridable *h = x->m_bfmeHook;
 		if (h)
-			x = h->bfmeCallJA();
+			x = const_cast<BfmeSlotJA *>(
+				reinterpret_cast<const BfmeSlotJA *>( h->getFinalOverride() ) );
 	}
 	if (!(x->m_bfmeBits & 0x100000))
 		s->bfmeDo916C(a);

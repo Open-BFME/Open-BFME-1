@@ -54,16 +54,19 @@ void BfmeA1002::bfmeGo1002A(BfmeArg1002 *a)
 		m_bfmeC = x->m_bfmeSub->m_bfmeVal;
 }
 
-class BfmeMid1002
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in is the class
+// that owns it, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	void *bfmeGet1002();
+	const Overridable *getFinalOverride() const;
 };
 
 struct BfmeVal1002
 {
 	char m_bfmePad[4];
-	BfmeMid1002 *m_bfmeMid;
+	Overridable *m_bfmeMid;
 	char m_bfmePad2[0xcc];
 	int m_bfmeFlags;
 };
@@ -86,7 +89,8 @@ char BfmeB1002::bfmeGo1002B(BfmeHold1002 *a, int b)
 	BfmeVal1002 *p = a->m_bfmeVal;
 
 	if (p && p->m_bfmeMid)
-		p = (BfmeVal1002 *)p->m_bfmeMid->bfmeGet1002();
+		p = const_cast<BfmeVal1002 *>(
+			reinterpret_cast<const BfmeVal1002 *>( p->m_bfmeMid->getFinalOverride() ) );
 
 	if (p->m_bfmeFlags & 0x1000)
 		return 0;

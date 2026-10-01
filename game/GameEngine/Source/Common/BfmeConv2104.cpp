@@ -1,10 +1,13 @@
-class LocomotorOverridable
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in carries the
+// template layout this body walks, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_bfmeHeadYX[4];
-	LocomotorOverridable *m_bfme04YX;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidYX[0xc0];
 	unsigned int m_bfmeC8YX;
 };
@@ -19,7 +22,7 @@ class BfmeObjYX
 {
 public:
 	unsigned char m_bfmeHeadYX[4];
-	LocomotorOverridable *m_bfme04YX;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidYX[0x6c];
 	int m_bfme74YX;
 };
@@ -58,15 +61,15 @@ public:
 	virtual bool bfmeTestYX(BfmeThingYX *t);
 };
 
-static __forceinline LocomotorOverridable *bfmeFinalYX(LocomotorOverridable *p)
+static __forceinline Overridable *bfmeFinalYX(Overridable *p)
 {
 	if (p == 0)
 		return 0;
 
-	if (p->m_bfme04YX == 0)
+	if (p->m_nextOverride == 0)
 		return p;
 
-	return p->m_bfme04YX->friend_getFinalOverride();
+	return const_cast<Overridable *>( p->m_nextOverride->getFinalOverride() );
 }
 
 class BfmeHostYX
@@ -87,7 +90,7 @@ void BfmeHostYX::bfmeApplyYX(BfmeThingYX *t, int mode)
 	if (!TheActionManager->bfmeCheckYX(o, t, mode))
 		return;
 
-	if ((bfmeFinalYX(o->m_bfme04YX)->m_bfmeC8YX & 0x8000) == 0)
+	if ((bfmeFinalYX(o->m_nextOverride)->m_bfmeC8YX & 0x8000) == 0)
 	{
 		if (!m_bfme340YX.bfmeTestYX(t))
 			return;

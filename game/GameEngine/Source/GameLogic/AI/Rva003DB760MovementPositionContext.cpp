@@ -12,13 +12,16 @@
 // setter on the record, whose arguments MSVC evaluates right to left,
 // reproduces that order.
 
-class LocomotorOverridable
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in carries the
+// template layout the bodies read, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_bfmeHeadYY[4];
-	LocomotorOverridable *m_bfme04YY;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidYY[0x43c];
 	int m_bfme444YY;
 	unsigned char m_bfmeMid2YY[0x84];
@@ -37,7 +40,7 @@ public:
 	bool bfmeIsComputerControlled() const;
 
 	unsigned char m_bfmeHeadYY[4];
-	LocomotorOverridable *m_bfme04YY;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidYY[0x1fc];
 	Gen_0026f940 *m_bfme204YY;
 };
@@ -49,15 +52,15 @@ public:
 	int m_bfme10YY;
 };
 
-static __forceinline LocomotorOverridable *bfmeFinalYY(LocomotorOverridable *p)
+static __forceinline Overridable *bfmeFinalYY(Overridable *p)
 {
 	if (p == 0)
 		return 0;
 
-	if (p->m_bfme04YY == 0)
+	if (p->m_nextOverride == 0)
 		return p;
 
-	return p->m_bfme04YY->friend_getFinalOverride();
+	return const_cast<Overridable *>( p->m_nextOverride->getFinalOverride() );
 }
 
 // Layout and field names as landed at 0x003DB520.
@@ -85,7 +88,7 @@ public:
 	Rva003DB760Context(void *a, Object *o, Rva003DB760Config *c, char d, char e);
 
 	void *m_bfme00YY;
-	Object *m_bfme04YY;
+	Object *m_nextOverride;
 	Rva003DB760Config *m_bfme08YY;
 	BfmeMovementPositionInfo m_bfme0CYY;
 	char m_bfme18YY;
@@ -98,11 +101,11 @@ public:
 Rva003DB760Context::Rva003DB760Context(void *a, Object *o, Rva003DB760Config *c, char d, char e)
 {
 	m_bfme00YY = a;
-	m_bfme04YY = o;
+	m_nextOverride = o;
 	m_bfme08YY = c;
 
-	int n = bfmeFinalYY(o->m_bfme04YY)->m_bfme444YY;
-	char f = bfmeFinalYY(o->m_bfme04YY)->m_bfme4CCYY;
+	int n = bfmeFinalYY(o->m_nextOverride)->m_bfme444YY;
+	char f = bfmeFinalYY(o->m_nextOverride)->m_bfme4CCYY;
 	m_bfme0CYY.set(c->m_bfme10YY, f, o->bfmeIsComputerControlled(), n);
 	m_bfme18YY = 0;
 	m_bfme19YY = d;
@@ -123,7 +126,7 @@ public:
 		char f, int g, int h);
 
 	void *m_bfme00YY;
-	BfmeMovementPositionInfo m_bfme04YY;
+	BfmeMovementPositionInfo m_nextOverride;
 	char m_bfme10YY;
 	char m_bfme11YY;
 	int m_bfme14YY;
@@ -139,9 +142,9 @@ Rva003DB820Context::Rva003DB820Context(void *a, Rva003DB760Config *c, char d,
 {
 	m_bfme00YY = a;
 
-	int n = bfmeFinalYY(o->m_bfme04YY)->m_bfme444YY;
-	char flag = bfmeFinalYY(o->m_bfme04YY)->m_bfme4CCYY;
-	m_bfme04YY.set(c->m_bfme10YY, flag, o->bfmeIsComputerControlled(), n);
+	int n = bfmeFinalYY(o->m_nextOverride)->m_bfme444YY;
+	char flag = bfmeFinalYY(o->m_nextOverride)->m_bfme4CCYY;
+	m_nextOverride.set(c->m_bfme10YY, flag, o->bfmeIsComputerControlled(), n);
 	m_bfme10YY = d;
 	m_bfme11YY = f;
 	m_bfme14YY = e;

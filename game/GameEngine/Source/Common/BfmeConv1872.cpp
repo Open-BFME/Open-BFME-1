@@ -97,13 +97,16 @@ public:
 	float getMaxHeightAbovePosition() const;
 };
 
-class BfmeOverZC
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in carries the
+// template layout these bodies read, so it takes the defining class name.
+class Overridable
 {
 public:
-	BfmeOverZC *bfmeWalkZC();
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_bfmeHeadZC[4];
-	BfmeOverZC *m_bfme04ZC;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidZC[0xc0];
 	unsigned char m_bfmeC8ZC;
 	unsigned char m_bfmeMid2ZC[0x3b9];
@@ -114,7 +117,7 @@ class BfmeSubZC
 {
 public:
 	unsigned char m_bfmeHeadZC[4];
-	BfmeOverZC *m_bfme04ZC;
+	Overridable *m_nextOverride;
 };
 
 class BfmeObjZC
@@ -124,7 +127,7 @@ public:
 	Coord3D *bfmePosZC();
 
 	unsigned char m_bfmeHeadZC[4];
-	BfmeOverZC *m_bfme04ZC;
+	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidZC[0xf4];
 	BfmeSubZC *m_bfmeFCZC;
 };
@@ -145,15 +148,15 @@ extern TerrainLogic *TheTerrainLogic;
 extern const float g_bfmeK1266B;
 extern const float BfmeZeroRange;
 
-static __forceinline BfmeOverZC *bfmeFinalZC(BfmeOverZC *p)
+static __forceinline Overridable *bfmeFinalZC(Overridable *p)
 {
 	if (p == 0)
 		return 0;
 
-	if (p->m_bfme04ZC == 0)
+	if (p->m_nextOverride == 0)
 		return p;
 
-	return p->m_bfme04ZC->bfmeWalkZC();
+	return const_cast<Overridable *>( p->m_nextOverride->getFinalOverride() );
 }
 
 class BfmeHostZC
@@ -170,10 +173,10 @@ public:
 float BfmeHostZC::bfmeHeightZC()
 {
 	BfmeObjZC *o = m_bfme08ZC;
-	BfmeOverZC *ov1 = bfmeFinalZC(o->m_bfme04ZC);
+	Overridable *ov1 = bfmeFinalZC(o->m_nextOverride);
 	BfmeSubZC *s = o->m_bfmeFCZC;
 
-	if (s != 0 && (bfmeFinalZC(s->m_bfme04ZC)->m_bfmeC8ZC & 0x40) != 0)
+	if (s != 0 && (bfmeFinalZC(s->m_nextOverride)->m_bfmeC8ZC & 0x40) != 0)
 		return o->bfmeGeomZC()->getMaxHeightAbovePosition() * g_bfmeK1266B;
 
 	if ((ov1->m_bfme482ZC & 0x386) == 0)

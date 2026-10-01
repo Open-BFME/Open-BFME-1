@@ -1,16 +1,19 @@
 class BfmeThingLW;
 
-class BfmeInnerLW
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in is the class
+// that owns it, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	BfmeThingLW *bfmeResolveLW(void);
+	const Overridable *getFinalOverride() const;
 };
 
 class BfmeThingLW
 {
 public:
 	int m_bfmeSpareLW;
-	BfmeInnerLW *m_bfmeInnerLW;
+	Overridable *m_bfmeInnerLW;
 	unsigned char m_bfmeGapLW[0xc0];
 	int m_bfmeFlagsLW;
 };
@@ -145,7 +148,9 @@ char BfmeOwnerLW::bfmeAnyLW(void)
 				BfmeThingLW *thing = unit->m_bfmeThingLW;
 
 				if (thing && thing->m_bfmeInnerLW)
-					thing = thing->m_bfmeInnerLW->bfmeResolveLW();
+					thing = const_cast<BfmeThingLW *>(
+						reinterpret_cast<const BfmeThingLW *>(
+							thing->m_bfmeInnerLW->getFinalOverride() ) );
 
 				if (thing->m_bfmeFlagsLW & 0x80000)
 					return 1;

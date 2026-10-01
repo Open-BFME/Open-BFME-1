@@ -67,15 +67,19 @@ public:
 	void get( Rva0087DC00Vec *out );
 };
 
-class ThingTemplate
+// The template's override accessor is retail's ?getFinalOverride@Overridable@@
+// QBEPBV1@XZ, so the TU declares the base that owns it (upstream Overridable.h
+// declares `const Overridable *getFinalOverride( void ) const`).
+// Nothing here needs the derived template's own shape.
+class Overridable
 {
 public:
 	void *m_vtable;
-	ThingTemplate *m_nextOverride;
+	Overridable *m_nextOverride;
 	UnsignedByte m_pad008[ 0x58 ];
 	Rva0087DC00 m_geometry;						// +0x60
 
-	ThingTemplate *getFinalOverride();
+	const Overridable *getFinalOverride() const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
@@ -277,7 +281,7 @@ private:
 	void drawCaption();
 
 	UnsignedByte m_pad000[ 4 ];
-	ThingTemplate *m_template;					// +0x004
+	Overridable *m_template;					// +0x004
 	UnsignedByte m_pad008[ 0xfc - 8 ];
 	Object *m_object;						// +0x0fc
 	UnsignedByte m_pad100[ 0x0c ];
@@ -354,9 +358,10 @@ void Drawable::drawCaption()
 	}
 	else
 	{
-		ThingTemplate *drawableTemplate = m_template;
+		Overridable *drawableTemplate = m_template;
 		if ( drawableTemplate != 0 && drawableTemplate->m_nextOverride != 0 )
-			drawableTemplate = drawableTemplate->m_nextOverride->getFinalOverride();
+			drawableTemplate = const_cast<Overridable *>(
+				drawableTemplate->m_nextOverride->getFinalOverride() );
 		geometry = &drawableTemplate->m_geometry;
 	}
 

@@ -23,24 +23,27 @@ struct Coord3D
 	Real z;
 };
 
-class LocomotorOverridable
+// Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// (public const, upstream Overridable.h); the TU-local stand-in carries the
+// template layout this body reads, so it takes the defining class/member name.
+class Overridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_head[4];
-	LocomotorOverridable *m_next;
+	Overridable *m_next;
 	unsigned char m_mid[0xc0];
 	unsigned int m_flagsC8;
 };
 
-static __forceinline LocomotorOverridable *finalOverride(LocomotorOverridable *p)
+static __forceinline Overridable *finalOverride(Overridable *p)
 {
 	if (p == 0)
 		return 0;
 	if (p->m_next == 0)
 		return p;
-	return p->m_next->friend_getFinalOverride();
+	return const_cast<Overridable *>( p->m_next->getFinalOverride() );
 }
 
 class Thing
@@ -50,7 +53,7 @@ public:
 	void setPosition(const Coord3D *pos);
 
 	unsigned char m_head[4];
-	LocomotorOverridable *m_template;
+	Overridable *m_template;
 	unsigned char m_mid[0x30];
 	Coord3D m_cachedPos;
 	Real m_cachedAngle;
