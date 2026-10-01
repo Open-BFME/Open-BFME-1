@@ -111,12 +111,22 @@ public:
 	char m_leadingB[ 0x1278 - 0x91 ];
 	bool m_at1278;
 };
-extern R2Pointee012ED5C8 *R2Ptr012ED5C8;
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the flags it sets and casts at the use.
+class GlobalData;
 
-int Rva00061580() { R2Ptr012ED5C8->m_at8F = true; return 1; }
-int Rva000615A0() { R2Ptr012ED5C8->m_at8E = false; return 1; }
-int Rva000615C0() { R2Ptr012ED5C8->m_at90 = true; return 1; }
-int Rva000615F0() { R2Ptr012ED5C8->m_at1278 = true; return 1; }
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline R2Pointee012ED5C8 *localWritableGlobalData()
+{
+	return (R2Pointee012ED5C8 *)TheWritableGlobalData;
+}
+
+int Rva00061580() { localWritableGlobalData()->m_at8F = true; return 1; }
+int Rva000615A0() { localWritableGlobalData()->m_at8E = false; return 1; }
+int Rva000615C0() { localWritableGlobalData()->m_at90 = true; return 1; }
+int Rva000615F0() { localWritableGlobalData()->m_at1278 = true; return 1; }
 
 // ---------------------------------------------------------------------------
 // (5) Members that copy one field out of an object held in a global pointer:

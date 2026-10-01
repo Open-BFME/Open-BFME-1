@@ -177,7 +177,12 @@ public:
 	static SceneClass *m_3DScene;
 };
 
-class GlobalData
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the fields it reads and casts at the use.
+class GlobalData;
+
+class Rva00730590GlobalData
 {
 public:
 	unsigned char m_beforeCloudPlane[0x63];
@@ -222,26 +227,26 @@ public:
 #define BFME_SIZE_ASSERT(type, value) \
 	typedef char bfme_size_##type[(sizeof(type) == (value)) ? 1 : -1]
 
-BFME_OFFSET_ASSERT(GlobalData, m_useCloudPlane, 0x63);
-BFME_OFFSET_ASSERT(GlobalData, m_waterPositionX, 0x74);
-BFME_OFFSET_ASSERT(GlobalData, m_waterPositionY, 0x78);
-BFME_OFFSET_ASSERT(GlobalData, m_waterPositionZ, 0x7c);
-BFME_OFFSET_ASSERT(GlobalData, m_waterExtentX, 0x80);
-BFME_OFFSET_ASSERT(GlobalData, m_waterExtentY, 0x84);
-BFME_OFFSET_ASSERT(GlobalData, m_waterType, 0x88);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterHeightClampLow, 0xac);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterHeightClampHi, 0xbc);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterAngle, 0xcc);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterXPosition, 0xdc);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterYPosition, 0xec);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterZPosition, 0xfc);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterXGridCells, 0x10c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterYGridCells, 0x11c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterGridSize, 0x12c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterAttenuationA, 0x13c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterAttenuationB, 0x14c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterAttenuationC, 0x15c);
-BFME_OFFSET_ASSERT(GlobalData, m_vertexWaterAttenuationRange, 0x16c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_useCloudPlane, 0x63);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterPositionX, 0x74);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterPositionY, 0x78);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterPositionZ, 0x7c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterExtentX, 0x80);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterExtentY, 0x84);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_waterType, 0x88);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterHeightClampLow, 0xac);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterHeightClampHi, 0xbc);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterAngle, 0xcc);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterXPosition, 0xdc);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterYPosition, 0xec);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterZPosition, 0xfc);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterXGridCells, 0x10c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterYGridCells, 0x11c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterGridSize, 0x12c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterAttenuationA, 0x13c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterAttenuationB, 0x14c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterAttenuationC, 0x15c);
+BFME_OFFSET_ASSERT(Rva00730590GlobalData, m_vertexWaterAttenuationRange, 0x16c);
 
 BFME_SIZE_ASSERT(HeightMapRenderObjClass, 0x317c);
 BFME_SIZE_ASSERT(TerrainTracksRenderObjClassSystem, 0x28);
@@ -280,7 +285,12 @@ extern W3DShadowManager *TheW3DShadowManager;
 extern WaterRenderObjClass *TheWaterRenderObj;
 extern W3DSmudgeManager *TheSmudgeManager;
 extern TerrainVisualSettings *TheTerrainVisual;
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Rva00730590GlobalData *localWritableGlobalData()
+{
+	return (Rva00730590GlobalData *)TheWritableGlobalData;
+}
 extern Bool Rva012F08A0;
 
 class Rva00730590
@@ -316,46 +326,46 @@ void Rva00730590::init(void)
 
 	m_waterRenderObject = new WaterRenderObjClass;
 	TheWaterRenderObj = m_waterRenderObject;
-	m_waterRenderObject->init(TheGlobalData->m_waterPositionZ,
-		TheGlobalData->m_waterExtentX, TheGlobalData->m_waterExtentY,
+	m_waterRenderObject->init(localWritableGlobalData()->m_waterPositionZ,
+		localWritableGlobalData()->m_waterExtentX, localWritableGlobalData()->m_waterExtentY,
 		W3DDisplay::m_3DScene,
-		static_cast<WaterType>(TheGlobalData->m_waterType));
+		static_cast<WaterType>(localWritableGlobalData()->m_waterType));
 	m_waterRenderObject->Set_Position(
-		Vector3(TheGlobalData->m_waterPositionX,
-			TheGlobalData->m_waterPositionY, TheGlobalData->m_waterPositionZ));
+		Vector3(localWritableGlobalData()->m_waterPositionX,
+			localWritableGlobalData()->m_waterPositionY, localWritableGlobalData()->m_waterPositionZ));
 
 	W3DSmudgeManager *smudge = new W3DSmudgeManager;
 	TheSmudgeManager = smudge;
 	smudge->init();
 
-	if (!Rva012F08A0 && TheGlobalData->m_waterType != 1 && m_waterRenderObject)
+	if (!Rva012F08A0 && localWritableGlobalData()->m_waterType != 1 && m_waterRenderObject)
 		W3DDisplay::m_3DScene->Add_Render_Object(
 			static_cast<RenderObjClass *>(m_waterRenderObject));
 
 	if (m_waterRenderObject) {
-		if (TheGlobalData->m_useCloudPlane != 0)
+		if (localWritableGlobalData()->m_useCloudPlane != 0)
 			m_waterRenderObject->toggleCloudLayer(true);
 		else
 			m_waterRenderObject->toggleCloudLayer(false);
 	}
 
 	TheTerrainVisual->setWaterGridHeightClamps(
-		0, TheGlobalData->m_vertexWaterHeightClampLow,
-		TheGlobalData->m_vertexWaterHeightClampHi);
+		0, localWritableGlobalData()->m_vertexWaterHeightClampLow,
+		localWritableGlobalData()->m_vertexWaterHeightClampHi);
 	TheTerrainVisual->setWaterTransform(
-		0, TheGlobalData->m_vertexWaterAngle,
-		TheGlobalData->m_vertexWaterXPosition,
-		TheGlobalData->m_vertexWaterYPosition,
-		TheGlobalData->m_vertexWaterZPosition);
+		0, localWritableGlobalData()->m_vertexWaterAngle,
+		localWritableGlobalData()->m_vertexWaterXPosition,
+		localWritableGlobalData()->m_vertexWaterYPosition,
+		localWritableGlobalData()->m_vertexWaterZPosition);
 	TheTerrainVisual->setWaterGridResolution(
-		0, static_cast<float>(TheGlobalData->m_vertexWaterXGridCells),
-		static_cast<float>(TheGlobalData->m_vertexWaterYGridCells),
-		TheGlobalData->m_vertexWaterGridSize);
+		0, static_cast<float>(localWritableGlobalData()->m_vertexWaterXGridCells),
+		static_cast<float>(localWritableGlobalData()->m_vertexWaterYGridCells),
+		localWritableGlobalData()->m_vertexWaterGridSize);
 	TheTerrainVisual->setWaterAttenuationFactors(
-		0, TheGlobalData->m_vertexWaterAttenuationA,
-		TheGlobalData->m_vertexWaterAttenuationB,
-		TheGlobalData->m_vertexWaterAttenuationC,
-		TheGlobalData->m_vertexWaterAttenuationRange);
+		0, localWritableGlobalData()->m_vertexWaterAttenuationA,
+		localWritableGlobalData()->m_vertexWaterAttenuationB,
+		localWritableGlobalData()->m_vertexWaterAttenuationC,
+		localWritableGlobalData()->m_vertexWaterAttenuationRange);
 
 	m_isWaterGridRenderingEnabled = false;
 }

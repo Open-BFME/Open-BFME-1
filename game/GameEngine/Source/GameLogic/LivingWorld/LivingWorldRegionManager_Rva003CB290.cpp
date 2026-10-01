@@ -23,7 +23,17 @@ public:
 	unsigned char m_flag8F;
 };
 
-extern Glo012ED5C8Type *TheWritableGlobalData;
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp); this TU keeps its own view of
+// the two flags it reads and casts at the use.
+class GlobalData;
+
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Glo012ED5C8Type *localWritableGlobalData()
+{
+	return (Glo012ED5C8Type *)TheWritableGlobalData;
+}
 
 class Glo012F1028Type
 {
@@ -129,8 +139,8 @@ void LivingWorldRegionManager::rva003CB290()
 	Rva003BAD00Owner *owner =
 		(Rva003BAD00Owner *)((char *)regions + 0x40);
 
-	if (TheWritableGlobalData->m_flag8E == 0
-		|| TheWritableGlobalData->m_flag8F != 0
+	if (localWritableGlobalData()->m_flag8E == 0
+		|| localWritableGlobalData()->m_flag8F != 0
 		|| Glo012F1028->m_at34 != 0)
 	{
 		owner->notify08(AsciiString("MouseoverEffectFlareupOwned"), 1);

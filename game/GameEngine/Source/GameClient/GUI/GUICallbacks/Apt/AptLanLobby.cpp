@@ -103,7 +103,12 @@ private:
 	int m_isWinsockInitialized;
 };
 
-struct GlobalData
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the fields it reads and casts at the use.
+class GlobalData;
+
+struct Rva00517D00GlobalData
 {
 	char m_unmodelledA[0x1E];
 	char m_useFpsLimit;
@@ -112,6 +117,11 @@ struct GlobalData
 };
 
 extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Rva00517D00GlobalData *localWritableGlobalData()
+{
+	return (Rva00517D00GlobalData *)TheWritableGlobalData;
+}
 
 class LANAPI
 {
@@ -229,14 +239,14 @@ bool BfmeAptScreenLanLobby::initLanRva00517D00()
 	if (!TheLAN)
 	{
 		TheLAN = new LANAPI();
-		m_useFpsLimit = TheWritableGlobalData->m_useFpsLimit;
+		m_useFpsLimit = localWritableGlobalData()->m_useFpsLimit;
 	}
 	else
 	{
 		TheLAN->reset();
 	}
 
-	UnsignedInt ip = TheWritableGlobalData->m_defaultIP;
+	UnsignedInt ip = localWritableGlobalData()->m_defaultIP;
 	IPEnumeration IPs;
 
 	if (!ip)

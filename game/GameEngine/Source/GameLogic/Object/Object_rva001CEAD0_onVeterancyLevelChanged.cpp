@@ -100,6 +100,11 @@ public:
 	Bool isEmpty() const { return data == 0 || data->length == 0; }
 };
 
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the fields it reads and casts at the use.
+class GlobalData;
+
 struct BfmeGlobalData
 {
 	char pad[0x200];
@@ -107,7 +112,12 @@ struct BfmeGlobalData
 	float displayTime;
 	float zRise;
 };
-extern BfmeGlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline BfmeGlobalData *localWritableGlobalData()
+{
+	return (BfmeGlobalData *)TheWritableGlobalData;
+}
 
 class Anim2DCollection
 {
@@ -285,15 +295,15 @@ void Rva001CEAD0Object::onVeterancyLevelChanged(int oldLevel, int newLevel)
 
 	if (doAnimation && localTheGameLogic()->drawIconUI)
 	{
-		if (TheAnim2DCollection && !TheWritableGlobalData->levelGainAnimationName.isEmpty())
+		if (TheAnim2DCollection && !localWritableGlobalData()->levelGainAnimationName.isEmpty())
 		{
-			Anim2DTemplate *animation = TheAnim2DCollection->findTemplate(TheWritableGlobalData->levelGainAnimationName);
+			Anim2DTemplate *animation = TheAnim2DCollection->findTemplate(localWritableGlobalData()->levelGainAnimationName);
 			Coord3D pos;
 			pos.x = getPosition()->x;
 			pos.y = getPosition()->y;
 			pos.z = getPosition()->z;
 			pos.add(&m_coordOffset24C);
-			TheInGameUI->addWorldAnimation(animation, &pos, WORLD_ANIM_FADE_ON_EXPIRE, TheWritableGlobalData->displayTime, TheWritableGlobalData->zRise);
+			TheInGameUI->addWorldAnimation(animation, &pos, WORLD_ANIM_FADE_ON_EXPIRE, localWritableGlobalData()->displayTime, localWritableGlobalData()->zRise);
 		}
 
 		void *misc = TheAudio->getMiscAudio();

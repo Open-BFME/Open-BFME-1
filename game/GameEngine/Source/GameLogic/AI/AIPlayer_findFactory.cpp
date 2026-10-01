@@ -167,13 +167,23 @@ public:
 	Int m_factoryID;									// +0x08
 };
 
-struct GlobalData
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the one field it reads and casts at the use.
+class GlobalData;
+
+struct Rva000F64B0GlobalData
 {
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;										// +0xA88
 };
 
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Rva000F64B0GlobalData *localWritableGlobalData()
+{
+	return (Rva000F64B0GlobalData *)TheWritableGlobalData;
+}
 
 class ScriptEngine
 {
@@ -299,7 +309,7 @@ Bool AIPlayer::startTraining( WorkOrder *order, Bool busyOK, AsciiString teamNam
 		ProductionUpdateInterface *pu = factory->getProductionUpdateInterface();
 		if (pu && pu->queueCreateUnit( order->m_thing, buildIndex, pu->requestUniqueUnitID(), -1, 0 )) {
 			order->m_factoryID = factory->getID(); 
-			if (TheGlobalData->m_debugAI) {
+			if (localWritableGlobalData()->m_debugAI) {
 				AsciiString teamStr = "Queuing ";
 				((StringBase<char> *)&teamStr)->concat(*(const StringBase<char> *)&order->m_thing->getName());
 				teamStr.concat(" for ");

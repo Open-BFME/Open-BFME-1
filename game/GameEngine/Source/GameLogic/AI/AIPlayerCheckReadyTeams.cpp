@@ -112,13 +112,23 @@ private:
 
 extern GameLogic *TheGameLogic;
 
-struct GlobalData
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the one field it reads and casts at the use.
+class GlobalData;
+
+struct Rva00162560GlobalData
 {
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;							// +0xA88
 };
 
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Rva00162560GlobalData *localWritableGlobalData()
+{
+	return (Rva00162560GlobalData *)TheWritableGlobalData;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class Script
@@ -329,7 +339,7 @@ void AIPlayer::checkReadyTeams( void )
 					if (isSkirmishAI()) {
 						TheScriptEngine->clearTeamFlags();
 					}
-					if (TheGlobalData->m_debugAI) {
+					if (localWritableGlobalData()->m_debugAI) {
 						AsciiString teamName = team->m_team->getPrototype()->getName();
 						// StringBase<char>::concat(const char *, int) at 0x00887D60, length folded.
 						((StringBase<char> *)&teamName)->concat(" - team activated.", 18);

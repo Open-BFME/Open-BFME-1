@@ -31,6 +31,11 @@ template<> inline int StringBase<char>::compareNoCase(const char* s, int len) co
 template<> inline int StringBase<char>::compareNoCase(const char* s) const { return compareNoCase(s, s ? strlen(s) : 0); }
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the fields it reads and casts at the use.
+class GlobalData;
+
 class Rva001A8820GlobalData {
 public:
     char pad[8];
@@ -42,7 +47,10 @@ public:
     int m_vertexWaterXGridCells[4], m_vertexWaterYGridCells[4];
     float m_vertexWaterGridSize[4], m_vertexWaterAttenuationA[4], m_vertexWaterAttenuationB[4], m_vertexWaterAttenuationC[4], m_vertexWaterAttenuationRange[4];
 };
-extern Rva001A8820GlobalData* TheGlobalData;
+extern GlobalData* TheWritableGlobalData;
+static __forceinline Rva001A8820GlobalData* localWritableGlobalData() {
+    return (Rva001A8820GlobalData*)TheWritableGlobalData;
+}
 class WaterHandle;
 class Rva001A8820TerrainVisual {
 public:
@@ -64,25 +72,25 @@ void TerrainLogic::enableWaterGrid(bool enable) {
     if (enable == true) {
         int waterSettingIndex = -1;
         for (int i = 0; i < 4; i++) {
-            if (TheGlobalData->m_mapName.compareNoCase(TheGlobalData->m_vertexWaterAvailableMaps[i].str()) == 0) {
+            if (localWritableGlobalData()->m_mapName.compareNoCase(localWritableGlobalData()->m_vertexWaterAvailableMaps[i].str()) == 0) {
                 waterSettingIndex = i; break;
             }
             AsciiString strippedMapNameOnly;
             AsciiString strippedCompareMapNameOnly;
             const char* c;
-            c = strrchr(TheGlobalData->m_mapName.str(), '\\');
+            c = strrchr(localWritableGlobalData()->m_mapName.str(), '\\');
             if(c) strippedMapNameOnly.set(c);
-            else strippedMapNameOnly = TheGlobalData->m_mapName;
-            c = strrchr(TheGlobalData->m_vertexWaterAvailableMaps[i].str(), '\\');
+            else strippedMapNameOnly = localWritableGlobalData()->m_mapName;
+            c = strrchr(localWritableGlobalData()->m_vertexWaterAvailableMaps[i].str(), '\\');
             if(c) strippedCompareMapNameOnly.set(c);
-            else strippedCompareMapNameOnly = TheGlobalData->m_vertexWaterAvailableMaps[i];
+            else strippedCompareMapNameOnly = localWritableGlobalData()->m_vertexWaterAvailableMaps[i];
             if(strippedMapNameOnly.compareNoCase(strippedCompareMapNameOnly.str()) == 0) { waterSettingIndex = i; break; }
         }
         if(waterSettingIndex == -1) return;
-        TheTerrainVisual->setWaterGridHeightClamps(0,TheGlobalData->m_vertexWaterHeightClampLow[waterSettingIndex],TheGlobalData->m_vertexWaterHeightClampHi[waterSettingIndex]);
-        TheTerrainVisual->setWaterTransform(0,TheGlobalData->m_vertexWaterAngle[waterSettingIndex],TheGlobalData->m_vertexWaterXPosition[waterSettingIndex],TheGlobalData->m_vertexWaterYPosition[waterSettingIndex],TheGlobalData->m_vertexWaterZPosition[waterSettingIndex]);
-        TheTerrainVisual->setWaterGridResolution(0,TheGlobalData->m_vertexWaterXGridCells[waterSettingIndex],TheGlobalData->m_vertexWaterYGridCells[waterSettingIndex],TheGlobalData->m_vertexWaterGridSize[waterSettingIndex]);
-        TheTerrainVisual->setWaterAttenuationFactors(0,TheGlobalData->m_vertexWaterAttenuationA[waterSettingIndex],TheGlobalData->m_vertexWaterAttenuationB[waterSettingIndex],TheGlobalData->m_vertexWaterAttenuationC[waterSettingIndex],TheGlobalData->m_vertexWaterAttenuationRange[waterSettingIndex]);
+        TheTerrainVisual->setWaterGridHeightClamps(0,localWritableGlobalData()->m_vertexWaterHeightClampLow[waterSettingIndex],localWritableGlobalData()->m_vertexWaterHeightClampHi[waterSettingIndex]);
+        TheTerrainVisual->setWaterTransform(0,localWritableGlobalData()->m_vertexWaterAngle[waterSettingIndex],localWritableGlobalData()->m_vertexWaterXPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterZPosition[waterSettingIndex]);
+        TheTerrainVisual->setWaterGridResolution(0,localWritableGlobalData()->m_vertexWaterXGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterGridSize[waterSettingIndex]);
+        TheTerrainVisual->setWaterAttenuationFactors(0,localWritableGlobalData()->m_vertexWaterAttenuationA[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationB[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationC[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationRange[waterSettingIndex]);
     }
     TheTerrainVisual->enableWaterGrid(enable);
 }

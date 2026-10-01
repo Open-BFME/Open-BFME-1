@@ -156,6 +156,8 @@ void ConvertShortMapPathToLongMapPathAnchor(AsciiString &mapName)
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+class GlobalData;
+
 struct Rva006C9270GlobalData
 {
 	unsigned char m_bfmePad000[8];
@@ -166,16 +168,24 @@ struct Rva006C9270GlobalData
 	bool m_bfmeFlagB88;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
+// (game/GameEngine/Source/Common/GlobalData.cpp). This TU keeps its own view of
+// the fields it reads and casts at the use.
+extern GlobalData *TheWritableGlobalData;
+
+static __forceinline Rva006C9270GlobalData *localWritableGlobalData()
+{
+	return (Rva006C9270GlobalData *)TheWritableGlobalData;
+}
 
 int Rva00062CA0ParseMapName(char **arguments, int count)
 {
-	TheWritableGlobalData->m_bfmeFlagB88 = 1;
+	localWritableGlobalData()->m_bfmeFlagB88 = 1;
 
 	if (count > 1)
 	{
-		TheWritableGlobalData->m_bfmeMapNameB80 = arguments[1];
-		ConvertShortMapPathToLongMapPath(TheWritableGlobalData->m_bfmeMapNameB80);
+		localWritableGlobalData()->m_bfmeMapNameB80 = arguments[1];
+		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_bfmeMapNameB80);
 	}
 
 	return 2;
@@ -183,12 +193,12 @@ int Rva00062CA0ParseMapName(char **arguments, int count)
 
 int Rva00062C50ParseMapName(char **arguments, int count)
 {
-	Rva006C9270GlobalData *data = TheWritableGlobalData;
+	Rva006C9270GlobalData *data = localWritableGlobalData();
 
 	if (data != 0 && count > 1)
 	{
 		data->m_bfmeMapNameB80 = arguments[1];
-		ConvertShortMapPathToLongMapPath(TheWritableGlobalData->m_bfmeMapNameB80);
+		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_bfmeMapNameB80);
 	}
 
 	return 2;
@@ -199,10 +209,10 @@ int Rva00062C50ParseMapName(char **arguments, int count)
 // helper, which takes it in EDI (same TU convention as the two parsers above).
 int Rva00062D00ParseMapName(char **arguments, int count)
 {
-	if (TheWritableGlobalData != 0 && count >= 2)
+	if (localWritableGlobalData() != 0 && count >= 2)
 	{
-		TheWritableGlobalData->m_bfmeMapName008.set(arguments[1]);
-		ConvertShortMapPathToLongMapPath(TheWritableGlobalData->m_bfmeMapName008);
+		localWritableGlobalData()->m_bfmeMapName008.set(arguments[1]);
+		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_bfmeMapName008);
 	}
 
 	return 1;
