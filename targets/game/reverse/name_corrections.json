@@ -12608,5 +12608,25 @@
   "after_sha256": "f39568ced0c11f2e4adadd2a82ceda6ae150d1488032d219adbb9e469b9a4635",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+  {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/stlport_push_heap_s4sortelem24.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva009F53D0HeapAbi.cpp",
+  "old_name": "push_heap",
+  "new_name": "Rva009F53D0",
+  "before_sha256": "477b09eed17361d8beeb390183bb0b0e20be358e1dd2198041fc982c9b5258b4",
+  "after_sha256": "3196ab7ed9b7d990b07ca5b6a4d494a0f2d7d792d28cbbbfc29e0db7bfa3eb78",
+  "evidence": "targets/game/reverse/identity_evidence/009f55d0-five-slot-call.md",
+  "reason": "The sole native caller passes five DWORD arguments to 009F53D0. The existing three-parameter push_heap identity has no matched caller or pin witness. The full-RVA replacement is an independently decoded five-slot ABI view; the original vendor helper declaration and trailing argument types remain unknown. No second identity or new pin is added."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x009f55d0.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva009F55D0HeapForward.cpp",
+  "old_name": "push_heap",
+  "new_name": "Rva009F53D0",
+  "before_sha256": "81538208629e98525dee23e896a4a25cdfdb49ce93b230f0bf82ec4005cd61cf",
+  "after_sha256": "ae674f35367f2f0b0a0275d8b2f7a32544f040969434154e95b0d9c7fb2f79ff",
+  "evidence": "targets/game/reverse/identity_evidence/009f55d0-five-slot-call.md",
+  "reason": "The sole native caller passes five DWORD arguments to 009F53D0. The existing three-parameter push_heap identity has no matched caller or pin witness. The full-RVA replacement is an independently decoded five-slot ABI view; the original vendor helper declaration and trailing argument types remain unknown. No second identity or new pin is added. The bank reverses vendor helper topology by defining a five-argument aux adapter that calls the three-argument facade, losing the two zero pushes. The new three-slot wrapper directly calls the corrected native callee with both witnessed zero slots."
  }
 ]
