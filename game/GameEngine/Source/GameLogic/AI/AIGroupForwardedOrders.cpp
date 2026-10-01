@@ -72,6 +72,7 @@ struct Coord3D
 class Object;
 class Waypoint;
 class PolygonTrigger;
+class Module;
 
 enum GuardMode { BFME_GUARD_MODE_NORMAL };
 
@@ -242,7 +243,14 @@ public:
 	bool isAirborneTarget(void) const { return (m_status & 0x40) != 0; }
 	ContainModuleInterface *getContain(void) { return m_contain; }
 
-	StealthUpdate *findUpdateModule(NameKeyType key);	// ILT 0x0002AE23
+protected:
+	// Retail's Object::findModule (ILT 0x0002AE23): protected, const, returns
+	// Module*. AIGroup is the caller here, so it is befriended instead of the
+	// declaration being made public (which would mangle as QBE, not IBE).
+	friend class AIGroup;
+	Module *findModule(NameKeyType key) const;
+
+public:
 	void leaveGroup();
 
 	virtual ~Object();
@@ -468,7 +476,8 @@ void AIGroup::groupStealthIdle()
 
 		BfmeGroupAI *memberAI = memberObject->m_ai;
 		static const NameKeyType key_StealthUpdate = NAMEKEY("StealthUpdate");
-		StealthUpdate *stealthUpdate = memberObject->findUpdateModule(key_StealthUpdate);
+		StealthUpdate *stealthUpdate =
+			(StealthUpdate *)memberObject->findModule(key_StealthUpdate);
 		if (!stealthUpdate)
 			continue;
 

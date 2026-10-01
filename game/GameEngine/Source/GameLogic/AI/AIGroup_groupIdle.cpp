@@ -117,6 +117,8 @@ static void setNextMoodCheckTimeViaIlt(AIUpdateInterface *ai,
 	(ai->*setMoodFrameCast.asMember)(frame);
 }
 
+class Module;
+
 class StealthUpdateModuleData
 {
 public:
@@ -185,7 +187,15 @@ public:
 	AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
 	UnsignedInt getStatusBits() const { return m_statusBits; }
 	ContainModuleInterface *getContain() const { return m_contain; }
-	StealthUpdate *findUpdateModule(NameKeyType key);
+
+protected:
+	// Retail's Object::findModule (ILT 0x0002AE23): protected, const, returns
+	// Module*. AIGroup is the caller here, so it is befriended rather than the
+	// declaration being made public (which would mangle as QBE, not IBE).
+	friend class AIGroup;
+	Module *findModule(NameKeyType key) const;
+
+public:
 	SpawnBehaviorInterface *getSpawnBehaviorInterface() const;
 
 private:
@@ -259,7 +269,7 @@ void AIGroup::groupIdle(Int commandSource)
 						static NameKeyType key_StealthUpdate =
 							NAMEKEY("StealthUpdate");
 						StealthUpdate *stealth =
-							(StealthUpdate *)obj->findUpdateModule(
+							(StealthUpdate *)obj->findModule(
 								key_StealthUpdate);
 						if (stealth)
 						{

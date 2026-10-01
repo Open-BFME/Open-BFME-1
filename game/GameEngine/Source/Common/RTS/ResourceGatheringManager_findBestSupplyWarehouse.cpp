@@ -8,7 +8,11 @@
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int ObjectID;
-typedef unsigned int NameKeyType;
+
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0
+};
 
 class Object;
 class ActionManager;
@@ -149,9 +153,15 @@ public:
 
 class Object : public Gen_000E5A90
 {
+protected:
+	// Retail's Object::findModule (ILT 0x0002AE23): protected, const, returns
+	// Module*. ResourceGatheringManager is the caller here, so it is befriended
+	// rather than the declaration being made public (QBE, not IBE).
+	friend class ResourceGatheringManager;
+	Module *findModule(NameKeyType name) const;
+
 public:
 	AIUpdateInterface *getAI() const { return m_ai; }
-	SupplyWarehouseDockUpdate *findUpdateModule(int name);
 	DockUpdateInterface *getDockUpdateInterface();
 
 private:
@@ -234,7 +244,7 @@ Object *ResourceGatheringManager::findBestSupplyWarehouse(Object *queryObject)
 			static const NameKeyType key_warehouseUpdate =
 				NAMEKEY("SupplyWarehouseDockUpdate");
 			SupplyWarehouseDockUpdate *warehouseModule =
-				(SupplyWarehouseDockUpdate *)dock->findUpdateModule(key_warehouseUpdate);
+				(SupplyWarehouseDockUpdate *)dock->findModule(key_warehouseUpdate);
 			if (warehouseModule &&
 				computeRelativeCost(queryObject, dock, NULL) != FLT_MAX)
 				return dock;
@@ -292,7 +302,7 @@ Object *ResourceGatheringManager::findBestSupplyCenter(Object *queryObject)
 			static const NameKeyType key_centerUpdate =
 				NAMEKEY("SupplyCenterDockUpdate");
 			SupplyWarehouseDockUpdate *centerModule =
-				(SupplyWarehouseDockUpdate *)dock->findUpdateModule(key_centerUpdate);
+				(SupplyWarehouseDockUpdate *)dock->findModule(key_centerUpdate);
 			if (centerModule &&
 				computeRelativeCost(queryObject, dock, NULL) != FLT_MAX)
 				return dock;

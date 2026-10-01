@@ -82,11 +82,18 @@ public:
 	virtual UnsignedInt slot64(Bool flag) = 0;
 };
 
+class Module;
+
 class Object
 {
-public:
-	StealthUpdate *findUpdateModule(NameKeyType key);
+protected:
+	// Retail's Object::findModule (ILT 0x0002AE23): protected, const, returns
+	// Module*. BfmeOwnerXR is the caller here, so it is befriended rather than
+	// the declaration being made public (which would mangle as QBE, not IBE).
+	friend class BfmeOwnerXR;
+	Module *findModule(NameKeyType key) const;
 
+public:
 	UnsignedByte m_unreconstructed_000[0x128];
 	UnsignedInt m_bits128;
 	UnsignedByte m_unreconstructed_12c[0x130 - 0x12c];
@@ -162,7 +169,8 @@ bool BfmeOwnerXR::bfmeCheckXR(void *item)
 	{
 		static NameKeyType key_StealthUpdate = TheNameKeyGenerator->nameToKey("StealthUpdate");
 
-		StealthUpdate *stealth = getObject()->findUpdateModule(key_StealthUpdate);
+		StealthUpdate *stealth =
+			(StealthUpdate *)getObject()->findModule(key_StealthUpdate);
 		if (stealth != 0 && stealth->m_flag2d)
 			return false;
 	}

@@ -99,11 +99,20 @@ private:
 	Real m_boundingCircleRadius;
 };
 
+class Module;
+class OCLUpdate;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
+protected:
+	// Retail's Object::findModule (ILT 0x0002AE23): protected, const, returns
+	// Module*. AIPlayer is the caller here, so it is befriended rather than the
+	// declaration being made public (which would mangle as QBE, not IBE).
+	friend class AIPlayer;
+	Module *findModule(NameKeyType key) const;
+
 public:
-	class OCLUpdate *findUpdateModule(NameKeyType key);
 	const Coord3D *getPosition() const { return &m_position; }
 	const GeometryInfo &getGeometryInfo() const { return m_geometryInfo; }
 private:
@@ -285,7 +294,7 @@ void AIPlayer::checkForSupplyCenter(BuildListInfo *info, Object *bldg)
 		{
 			static const NameKeyType key_centerUpdate =
 				TheNameKeyGenerator->nameToKey("SupplyCenterDockUpdate");
-			OCLUpdate *centerModule = bldg->findUpdateModule(key_centerUpdate);
+			OCLUpdate *centerModule = (OCLUpdate *)bldg->findModule(key_centerUpdate);
 			if (centerModule)
 			{
 				info->setSupplyBuilding(true);
