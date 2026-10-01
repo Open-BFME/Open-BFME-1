@@ -314,257 +314,49 @@ bool Matrix4D::IsExactlyEqualTo(const Matrix4D &that)
 // ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@@Z
 
 // ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@M@Z
-__declspec(naked) Matrix4D &Matrix4D::Set(const Coord3D &v, float w)
+// Export ordinal 1311 proves this overload. The two x87 blocks retain only
+// the proven fsincos and final diagonal/store scheduling exception (58 bytes).
+// Identity and compiler evidence: identity_evidence/Matrix4D_Set_007E61C0.md.
+Matrix4D &Matrix4D::Set(const Coord3D &v, float angle)
 {
+    float sine;
+    float cosine;
     __asm {
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0xd9
-        __emit 0xfb
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xde
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xe1
-        __emit 0xd8
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xd8
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x18
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd8
-        __emit 0x64
-        __emit 0x24
-        __emit 0x04
-        __emit 0xd9
-        __emit 0x42
-        __emit 0x04
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0xd8
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xde
-        __emit 0xe9
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x04
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x08
-        __emit 0xd9
-        __emit 0x42
-        __emit 0x04
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0xd8
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x42
-        __emit 0x04
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xde
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xe1
-        __emit 0xd8
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xd8
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x14
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x04
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0x89
-        __emit 0x48
-        __emit 0x1c
-        __emit 0xde
-        __emit 0xe9
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x18
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x04
-        __emit 0xde
-        __emit 0xe9
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x20
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x04
-        __emit 0xd8
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x0a
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x24
-        __emit 0xd9
-        __emit 0x42
-        __emit 0x08
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xde
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x2c
-        __emit 0xd8
-        __emit 0xe1
-        __emit 0x89
-        __emit 0x48
-        __emit 0x30
-        __emit 0x89
-        __emit 0x48
-        __emit 0x34
-        __emit 0x89
-        __emit 0x48
-        __emit 0x38
-        __emit 0xd8
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x3c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0x3f
-        __emit 0xd8
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x58
-        __emit 0x28
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
+        fld angle
+        fsincos
+        fstp cosine
+        fstp sine
     }
+
+    values[0] = v.x * v.x + cosine * (1.0f - v.x * v.x);
+    values[1] = v.x * v.y * (1.0f - cosine) - v.z * sine;
+    values[2] = v.z * (v.x * (1.0f - cosine)) + v.y * sine;
+    values[3] = 0.0f;
+
+    values[4] = v.x * v.y * (1.0f - cosine) + v.z * sine;
+    values[5] = v.y * v.y + cosine * (1.0f - v.y * v.y);
+    values[6] = v.z * (v.y * (1.0f - cosine)) - v.x * sine;
+    values[7] = 0.0f;
+
+    values[8] = v.z * (v.x * (1.0f - cosine)) - v.y * sine;
+    values[9] = v.z * (v.y * (1.0f - cosine)) + v.x * sine;
+    __asm {
+        fld dword ptr [edx + 8]
+        fld st(0)
+        fmulp st(1), st(0)
+        fld dword ptr [bfmeOne]
+        mov dword ptr [eax + 0x2c], ecx
+        fsub st(0), st(1)
+        mov dword ptr [eax + 0x30], ecx
+        mov dword ptr [eax + 0x34], ecx
+        mov dword ptr [eax + 0x38], ecx
+        fmul dword ptr [esp + 4]
+        mov dword ptr [eax + 0x3c], 0x3f800000
+        fadd st(0), st(1)
+        fstp dword ptr [eax + 0x28]
+        fstp st(0)
+    }
+    return *this;
 }
 
 // ?Transpose@Matrix4D@@QAEAAV1@XZ
