@@ -297,7 +297,8 @@ struct Audio0040F780 {
  virtual void resume();
  virtual void update();
 };
-extern Audio0040F780 *AudioGlobal0040F780;
+class AudioManager;
+extern AudioManager *TheAudio;
 struct MovieControl0040F780 { virtual void v00(); virtual void v04();virtual void v08();virtual void v0c();virtual void v10();virtual void update();};
 extern MovieControl0040F780 *Control0040F780;
 struct Renderer0040F780 {
@@ -416,7 +417,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
  if(!SettingsGlobal0040F780->field1278 && active) Rva009EBC00(0);
  void *thread=GetCurrentThread();
  if(!SetThreadPriority(thread,2)) priorityFailure0040F780();
- if(AudioGlobal0040F780) AudioGlobal0040F780->suspend();
+ if(TheAudio) ((Audio0040F780 *)TheAudio)->suspend();
  if(startMovie(name,flags|8,-1,-1)) {
   field108=true;
   unsigned pending=0;
@@ -443,7 +444,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
     render(true);
     ((MovieControl0040F780*)Transitions0040E3B0)->update();
     RendererGlobal0040F780->update();
-    if(alternateAudio) {AudioGlobal0040F780->update();alternateAudio=false;}
+    if(alternateAudio) {((Audio0040F780 *)TheAudio)->update();alternateAudio=false;}
     else alternateAudio=true;
     setFPMode();
    }
@@ -453,7 +454,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
   ((Display*)this)->bfmeStopMovie();
   KeyboardGlobal0040F780->update();
  }
- if(AudioGlobal0040F780) AudioGlobal0040F780->resume();
+ if(TheAudio) ((Audio0040F780 *)TheAudio)->resume();
  if(!SetThreadPriority(thread,0)) priorityFailure0040F780();
  if(!SettingsGlobal0040F780->field1278 && active) Rva009EBBE0(0);
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(false,0,false);

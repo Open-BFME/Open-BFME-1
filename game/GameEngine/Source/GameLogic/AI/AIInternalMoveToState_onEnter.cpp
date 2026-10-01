@@ -191,7 +191,8 @@ public:
 
 extern AI *TheAI;
 extern Rva003FD060TerrainLogic *TheTerrainLogic;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern Real g_01098AD4;
@@ -260,9 +261,9 @@ typedef void (Rva00172600Calls::*Rva00172600VoidRealCall)(Real);
 StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 {
 	Rva00172600StateWithComputePath *stateObject = this;
-	if (TheAudioClientUpdate != 0 && m_ambientPlayingHandle >= 5)
+	if (TheAudio != 0 && m_ambientPlayingHandle >= 5)
 	{
-		TheAudioClientUpdate->slot19(m_ambientPlayingHandle);
+		((Rva005A00B0AudioClient *)TheAudio)->slot19(m_ambientPlayingHandle);
 		m_ambientPlayingHandle = 1;
 	}
 
@@ -526,4 +527,3 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 #pragma comment(linker, "/alternatename:?g_012F0239@@3EA=?Glo012F0239@@3_NA")
 #pragma comment(linker, "/alternatename:?g_012ED4FC@@3PAXA=?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A")
 #pragma comment(linker, "/alternatename:?g_01098AD4@@3MA=g_bfmeOffsetDF")
-#pragma comment(linker, "/alternatename:?TheAudioClientUpdate@@3PAVRva005A00B0AudioClient@@A=?TheAudioClientUpdate@@3PAURva005A00B0AudioClient@@A")

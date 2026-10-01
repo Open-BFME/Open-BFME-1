@@ -131,8 +131,9 @@ class Rva005A00B0AudioClient
     virtual void slot19();
     virtual void stopAudioEvent(void *);
 };
+class AudioManager;
 extern Display *TheDisplay;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 class Rva00465B80
 {
   public:
@@ -244,7 +245,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
     int val, index;
     if (g_Va012F4AE4)
     {
-        TheAudioClientUpdate->stopAudioEvent(g_Va012F4AE4);
+        ((Rva005A00B0AudioClient *)TheAudio)->stopAudioEvent(g_Va012F4AE4);
         g_Va012F4AE4 = 0;
     }
     // Standard and network pages share graphics and audio preferences.

@@ -242,8 +242,8 @@ extern InGameUI *TheInGameUI;
 #define InGameUISubsystem ((BfmeInGameUI_setInputEnabled *)TheInGameUI)
 extern Mouse *TheMouse;
 #define MouseSubsystem TheMouse
-extern ClientSubsystem *TheAudioClientUpdate;
-#define AudioSubsystem TheAudioClientUpdate
+class AudioManager;
+extern AudioManager *TheAudio;
 class CDManagerInterface;
 extern CDManagerInterface *TheCDManager;
 #define AuxiliarySubsystem ((ClientSubsystem *)TheCDManager)
@@ -381,7 +381,7 @@ void GameEngine::_bfme_updateClientSubsystems(void)
 		}
 	}
 
-	ClientSubsystem *audio = AudioSubsystem;
+	ClientSubsystem *audio = (ClientSubsystem *)TheAudio;
 	ClientSubsystemVtable *audioVtable = *(ClientSubsystemVtable **)audio;
 	TimedOperationInputLocked = inputLocked;
 	audioVtable->update(audio, audioVtable);

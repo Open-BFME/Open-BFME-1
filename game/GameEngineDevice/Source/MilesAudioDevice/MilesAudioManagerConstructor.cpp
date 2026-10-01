@@ -126,7 +126,8 @@ template <class T> inline void deleteAndClearX( T *&pointer )
 class Rva006A9800This { public: void rva006A9800( void ); };
 class BfmeHostESG { public: ~BfmeHostESG( void ); };
 struct Rva005A00B0AudioClient;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // The +0x4C request list and +0x50 pointer-keyed request set, as in
 // RequestFlags006A6B40.cpp; the request destructor is 0x006912A0.
@@ -298,8 +299,8 @@ MilesAudioManager::~MilesAudioManager( void )
 		it = m_requestTable.begin();
 		delete (BfmeHostESG *)request;
 	}
-	if ( TheAudioClientUpdate == (Rva005A00B0AudioClient *)this )
-		TheAudioClientUpdate = 0;
+	if ( TheAudio == (AudioManager *)this )
+		TheAudio = 0;
 	m_b48 = 0;
 	delete [] m_b44;
 	delete m_worker;

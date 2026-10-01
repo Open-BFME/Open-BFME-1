@@ -117,7 +117,8 @@ class Rva004BBFC0Audio { public:
  virtual void slot40();
  virtual void addAudioEvent(AudioEventRTS*);
 };
-extern Rva004BBFC0Audio *rva004BBFC0_audio;
+class AudioManager;
+extern AudioManager *TheAudio;
 extern const AsciiString rva004BBFC0_emptyString;
 struct Rva004BBFC0Keyboard { unsigned int rva00[2]; unsigned int m_modifiers; };
 extern Rva004BBFC0Keyboard *rva004BBFC0_keyboard;
@@ -244,9 +245,9 @@ WindowMsgHandledType GadgetPushButtonInput( GameWindow *window,
 			if(pData && pData->rva1c.isNotEmpty())
 				buttonClick.setEventName(pData->rva1c);
 
-			if( rva004BBFC0_audio )
+			if( TheAudio )
 			{
-				rva004BBFC0_audio->addAudioEvent( &buttonClick );
+				((Rva004BBFC0Audio *)TheAudio)->addAudioEvent( &buttonClick );
 			}  // end if
 
 			//
@@ -326,7 +327,7 @@ WindowMsgHandledType GadgetPushButtonInput( GameWindow *window,
 
 			if( BitTest( window->winGetStatus(), WIN_STATUS_RIGHT_CLICK ) )
 			{
-                if(rva004BBFC0_audio) rva004BBFC0_audio->addAudioEvent(&buttonClick);
+                if(TheAudio) ((Rva004BBFC0Audio *)TheAudio)->addAudioEvent(&buttonClick);
 			//
 			// for 'check-like' buttons we have "dual state", we flip the selected status
 			// in that case instead of just turning it on like normal ... also note
