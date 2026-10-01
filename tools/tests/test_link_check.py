@@ -8,7 +8,8 @@ import link_check as C  # noqa: E402
 
 def index(strong=None, comdat=None, blockers=None, sizes=None):
     return {"meta": {"date": "d", "commit": "c"}, "objects": ["a.obj", "b.obj", "c.obj"],
-            "strong": strong or {}, "comdat": comdat or {}, "blockers": blockers or {}, "bytes": sizes or {}}
+            "strong": strong or {}, "comdat": comdat or {}, "blockers": blockers or {}, "bytes": sizes or {},
+            "common_schema": C.COMMON_SCHEMA, "common": {}}
 
 
 def test_two_inline_copies_fold_silently():
@@ -129,6 +130,7 @@ def test_refresh_replaces_a_passed_objects_census_definitions(monkeypatch):
     ix = index(strong={"f": [0, 1], "g": [1]}, comdat={"h": [(1, "x", None)]})
     assert C.duplicate("f", 0, True, 0, ix)
     monkeypatch.setattr(link_census, "object_facts", lambda obj, truth: ([], ["g"], [], []))
+    monkeypatch.setattr(link_census, "common_definitions", lambda obj: {})
     C.refresh(ix, [SimpleNamespace(name="b.obj"), SimpleNamespace(name="new.obj")], None)
     assert ix["strong"] == {"f": [0], "g": [1]} and ix["comdat"] == {"h": []}
     assert not C.duplicate("f", 0, True, 0, ix)

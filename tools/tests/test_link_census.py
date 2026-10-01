@@ -406,6 +406,7 @@ def test_link_check_agrees_with_the_census(monkeypatch):
     kept = {"new": "gm.obj", "f": "b.obj", "??_Gc": "d.obj"}  # f: the map kept the second copy
     present, _, exceptions, wrong = _selection(facts, owners, kept)
     assert exceptions == {"f": 3}
+    monkeypatch.setattr(L, "common_definitions", lambda obj: {})
     ix = C.index_tables(present, list(facts.values()), {"exceptions": exceptions, "owners": owners})
     ix["excuses"] = {"runtime": set(), "imported": {}, "stubs": {}}
     monkeypatch.setattr(L, "object_facts", lambda obj, truth=None: facts[obj.name])

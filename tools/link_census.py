@@ -887,6 +887,51 @@ class MissingObject(RuntimeError):
     object with no facts has no blockers and would read as linking."""
 
 
+def common_definitions(obj):
+    """COFF COMMON data definitions, kept separate from exclusive definitions.
+
+    An external section-zero record with nonzero value allocates that many
+    bytes. Multiple COMMON records merge; a normal definition overrides them.
+    Extraction proves a provider exists, not its retail layout or identity.
+    """
+    import struct
+    try:
+        data = obj.read_bytes()
+        if len(data) < 20:
+            raise ValueError("truncated COFF header")
+        table, count = struct.unpack_from("<II", data, 8)
+        sections, optional = struct.unpack_from("<H", data, 2)[0], struct.unpack_from("<H", data, 16)[0]
+        header_end = 20 + optional + sections * 40
+        if header_end > len(data):
+            raise ValueError("truncated section table")
+        if table == 0 and count == 0:
+            return {}
+        strings = table + count * 18
+        if table < header_end or strings + 4 > len(data):
+            raise ValueError("truncated symbol table")
+        size = struct.unpack_from("<I", data, strings)[0]
+        if size < 4 or strings + size > len(data):
+            raise ValueError("truncated string table")
+        at = 0
+        while at < count:
+            record = table + at * 18
+            aux = data[record + 17]
+            if at + aux >= count:
+                raise ValueError("truncated auxiliary symbol")
+            if data[record:record + 4] == b"\0" * 4:
+                offset = struct.unpack_from("<I", data, record + 4)[0]
+                if offset < 4 or offset >= size or data.find(b"\0", strings + offset, strings + size) < 0:
+                    raise ValueError("invalid symbol name")
+            at += 1 + aux
+        result = {}
+        for symbol in _coff_symbols(data):
+            if symbol["storage"] == EXTERNAL and symbol["section"] == 0 and symbol["value"] > 0:
+                result[symbol["name"]] = max(result.get(symbol["name"], 0), symbol["value"])
+        return result
+    except (OSError, ValueError, struct.error, IndexError) as exc:
+        raise MissingObject(f"{obj}: cannot read COMMON definitions ({exc})") from exc
+
+
 def object_facts(obj, truth=None):
     """(COMDAT copies [(name, digest, size, verdict)], exclusive definitions,
     undefined externals, weak externals [(name, default)]) of one object:

@@ -58,6 +58,7 @@ import build  # noqa: E402
 import link_census  # noqa: E402
 
 INDEX = link_census.OUT / "link_index.pkl"
+COMMON_SCHEMA = 1
 ADDRESSES = "<hard-coded image addresses>"
 
 
@@ -102,15 +103,27 @@ def index_tables(present, facts, selection):
     """The index's definition tables: every object's exclusive definitions and
     COMDAT copies by name, and the census's selection (holder exceptions,
     ledger owners)."""
+    if len(present) != len(facts):
+        raise ValueError("index needs facts for every census object")
     strong = collections.defaultdict(list)
     comdat = collections.defaultdict(list)
+    common = collections.defaultdict(list)
+    common_facts = [link_census.common_definitions(obj) for obj in present]
     for index, (copies, defined, _, _) in enumerate(facts):
         for name in defined:
             strong[name].append(index)
         for name, digest, _, verdict in copies:
             comdat[name].append((index, digest, verdict))
+        for name, size in common_facts[index].items():
+            common[name].append((index, size))
     return {"objects": [obj.name for obj in present], "strong": dict(strong), "comdat": dict(comdat),
-            "selection": selection}
+            "selection": selection, "common": dict(common), "common_schema": COMMON_SCHEMA}
+
+
+def require_common_index(index):
+    if index.get("common_schema") != COMMON_SCHEMA or not isinstance(index.get("common"), dict):
+        raise SystemExit("link_check: census index lacks complete COMMON providers; rebuild it with "
+                         "python3 tools/link_census.py --build --history")
 
 
 def load_index():
@@ -151,24 +164,34 @@ def refresh(index, objects, truth):
     object files', so a fix in one file (a removed duplicate, a new datum) is
     seen when checking the others. Blockers of files not passed stay as the
     census saw them."""
+    require_common_index(index)
     positions = {index["objects"].index(obj.name): obj for obj in objects if obj.name in index["objects"]}
     if not positions:
         return
-    for table, at in (("strong", lambda entry: entry), ("comdat", lambda entry: entry[0])):
+    # Read every replacement before mutating any table. A failed read must
+    # preserve the previous index, including its last COMMON provider.
+    replacements = {position: (link_census.common_definitions(obj), link_census.object_facts(obj, truth))
+                    for position, obj in positions.items()}
+    for table, at in (("strong", lambda entry: entry), ("comdat", lambda entry: entry[0]),
+                      ("common", lambda entry: entry[0])):
         for name, entries in index[table].items():
             if any(at(entry) in positions for entry in entries):
                 index[table][name] = [entry for entry in entries if at(entry) not in positions]
-    for position, obj in positions.items():
-        copies, defined, _, _ = link_census.object_facts(obj, truth)
+    for position, (common, fact) in replacements.items():
+        copies, defined, _, _ = fact
         for name in defined:
             index["strong"].setdefault(name, []).append(position)
         for name, digest, _, verdict in copies:
             index["comdat"].setdefault(name, []).append((position, digest, verdict))
+        for name, size in common.items():
+            index["common"].setdefault(name, []).append((position, size))
 
 
 def check_object(obj, index, truth, source=None):
     """{unresolved, duplicates, comdat, addresses} for one object against the index."""
     import link_debt
+    require_common_index(index)
+    common = link_census.common_definitions(obj)
     copies, defined, undefined, weaks = link_census.object_facts(obj, truth)
     own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
     position = own if own is not None else len(index["objects"])
@@ -176,11 +199,12 @@ def check_object(obj, index, truth, source=None):
 
     def elsewhere(name):
         return (any(i != own for i in strong.get(name, ())) or
-                any(i != own for i, _, _ in comdat.get(name, ())))
+                any(i != own for i, _, _ in comdat.get(name, ())) or
+                any(i != own for i, _ in index["common"].get(name, ())))
 
     mine = set(defined) | {name for name, _, _, _ in copies}
     excuses = index["excuses"]
-    unresolved = sorted(name for name in set(undefined) - mine
+    unresolved = sorted(name for name in set(undefined) - mine - set(common)
                         if not elsewhere(name) and not link_census.excused(
                             name, excuses["runtime"], excuses["imported"], excuses["stubs"]))
     duplicates = sorted(name for name in mine if duplicate(name, position, name in set(defined), own, index))
@@ -199,10 +223,11 @@ def check_object(obj, index, truth, source=None):
         except OSError:
             pass
     return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses,
-            "selected": wrong_selected(obj, (copies, defined, undefined, weaks), own, position, index)}
+            "selected": wrong_selected(obj, (copies, defined, undefined, weaks), own, position, index,
+                                       common_names=common)}
 
 
-def wrong_selected(obj, fact, own, position, index):
+def wrong_selected(obj, fact, own, position, index, *, common_names=()):
     """Names this object defines or references whose kept definition is proven
     not retail's, judged as the census judges them (link_census.judge_selected)
     with this object's current definitions in place of the census's. The
@@ -214,7 +239,9 @@ def wrong_selected(obj, fact, own, position, index):
     mine_copies = {name: (digest, verdict) for name, digest, _, verdict in copies}
     mine_strong = set(defined)
     found = []
-    for name in sorted(link_census.touched_names(fact)):
+    # A normal definition can override a TU's own COMMON. Its selected
+    # strong/COMDAT body still needs the existing retail-truth check.
+    for name in sorted(link_census.touched_names(fact) | set(common_names)):
         found_copies = {i: (d, v) for i, d, v in index["comdat"].get(name, ()) if i != own}
         exclusive = {i for i in index["strong"].get(name, ()) if i != own}
         if name in mine_copies:
@@ -473,6 +500,7 @@ def main(argv=None):
         next_names(index, args.limit)
     if not args.paths:
         return 0
+    require_common_index(index)
     truth = link_census.RetailTruth(link_census.ledger())
     resolved = list({obj.resolve(): (source, obj) for source, obj in
                      (resolve(path, index) for path in args.paths)}.values())  # a file named twice counts once
