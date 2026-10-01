@@ -73,13 +73,16 @@ public:
 	BfmeSlot996 *m_bfmeSlot;
 };
 
-class BfmeMap996
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	int bfmeIntern996(char *s);
+	NameKeyType nameToKey(const char *s);
 };
 
-extern BfmeMap996 *g_bfmeMap996;
+extern NameKeyGenerator *g_bfmeMap996;
 extern char g_bfmeDefault996[];
 
 void __stdcall bfmeGo996A(BfmeThing996 *t)
@@ -87,7 +90,7 @@ void __stdcall bfmeGo996A(BfmeThing996 *t)
 	BfmeX996 *x = t->bfmeGet996();
 	char *s = x ? x->bfmeName996() : g_bfmeDefault996;
 
-	t->m_bfmeSlot->m_bfmeVal = g_bfmeMap996->bfmeIntern996(s);
+	t->m_bfmeSlot->m_bfmeVal = (int)g_bfmeMap996->nameToKey(s);
 }
 
 class BfmeDev996

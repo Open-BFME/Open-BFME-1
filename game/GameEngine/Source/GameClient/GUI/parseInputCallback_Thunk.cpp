@@ -9,9 +9,10 @@
 // The result is stored into the global AsciiString at 0x012F2574 with an
 // explicit length, guarded so a missing token stores nothing rather than
 // measuring a null pointer. strtok mutates the caller-owned line buffer, matching
-// the retail C runtime call. Its characters then go through the name-to-key call
-// on the generator at 0x012ED600 -- the same one Player::getProductionCostChange
-// Percent uses, and still not identified beyond its address -- and the key is
+// the retail C runtime call. Its characters then go through NameKeyGenerator's
+// name-to-key call on the generator at 0x012ED600 -- the same one
+// Player::getProductionCostChangePercent uses, whose ILT thunk at 0x0003ADD7 is
+// the pinned ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z -- and the key is
 // looked up on the global at 0x012ED88C with a second argument of 1. The result
 // lands in 0x012F255C and the function reports success unconditionally.
 
@@ -35,11 +36,13 @@ public:
 	void *m_data;
 };
 
-class NameKeyGeneratorShim
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	/// address-derived name -- do not treat as an identity.
-	Int unidentified_0003ADD7(const char *name);		///< ILT thunk at 0x0003ADD7
+	NameKeyType nameToKey(const char *name);			///< ILT thunk at 0x0003ADD7
 };
 
 class WindowLookupShim
@@ -52,7 +55,7 @@ public:
 class WinInstanceData;
 
 extern AsciiString TheParsedCallbackName;				///< retail [0x012F2574]
-extern NameKeyGeneratorShim *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
+extern NameKeyGenerator *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
 extern WindowLookupShim *TheWindowLookupShim;			///< retail [0x012ED88C]
 extern void *TheParsedCallbackResult;					///< retail [0x012F255C]
 
@@ -69,7 +72,7 @@ Bool parseInputCallback(char *token, WinInstanceData *instData, char *line, void
 	char *fieldText = strtok(p, "\"");
 	TheParsedCallbackName.set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
-	Int key = TheNameKeyGeneratorShim->unidentified_0003ADD7(TheParsedCallbackName.str());
+	Int key = TheNameKeyGeneratorShim->nameToKey(TheParsedCallbackName.str());
 	TheParsedCallbackResult = TheWindowLookupShim->unidentified_00025CD4(key, 1);
 
 	return true;

@@ -50,16 +50,21 @@ public:
 	int calcCostToBuild(const Player *player, int buildIndex) const;
 };
 
-// Address-derived name: 0x0003ADD7 is ICF-folded and already pinned under
-// findMemoryPool and concat among others, none of which is what it does here --
-// it turns characters into the key this map is indexed by.
-class NameKeyGeneratorShim
+// 0x0003ADD7 is the ILT thunk retail's own header names
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z; it is ICF-folded and
+// already pinned under findMemoryPool and concat among others, none of which is
+// what it does here -- it turns characters into the key this map is indexed by.
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	Int unidentified_0003ADD7(const char *name);	///< ILT thunk at 0x0003ADD7
+	NameKeyType nameToKey(const char *name);	///< ILT thunk at 0x0003ADD7
 };
 
-extern NameKeyGeneratorShim *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
+extern NameKeyGenerator *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
 
 struct CostMapNodeShim
 {
@@ -107,7 +112,7 @@ Bool Player::canAffordBuild(const ThingTemplate *whatToBuild) const
 // ?getProductionCostChangePercent@Player@@QBEMABVAsciiString@@@Z
 Real Player::getProductionCostChangePercent(const AsciiString &name) const
 {
-	Int key = TheNameKeyGeneratorShim->unidentified_0003ADD7(name.str());
+	Int key = (Int)TheNameKeyGeneratorShim->nameToKey(name.str());
 
 	CostMapShim *map = (CostMapShim *)&m_costMap;
 	CostMapIteratorShim it = map->find(key);

@@ -6,10 +6,13 @@ struct BfmeOneAOA
 	void *m_bfmeValue;
 };
 
-class BfmeTwoAOA
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	void *bfmeLookAOA(void *text);
+	NameKeyType nameToKey(const char *text);
 };
 
 class BfmeThreeAOA
@@ -74,7 +77,7 @@ public:
 };
 
 extern BfmeOneAOA *g_bfmeOneAOA;
-extern BfmeTwoAOA *g_bfmeTwoAOA;
+extern NameKeyGenerator *g_bfmeTwoAOA;
 extern BfmeThreeAOA *g_bfmeThreeAOA;
 
 class BfmeThingAOA
@@ -93,6 +96,8 @@ void BfmeThingAOA::bfmeGoAOA()
 		m_bfmeWhat = g_bfmeOneAOA->m_bfmeValue;
 		return;
 	}
-	void *got = g_bfmeTwoAOA->bfmeLookAOA(bfmeTextAOA);
+	// The key is stored through a void* hand-off; the retail body returns the
+	// NameKeyType in eax and this file only forwards it, so the cast is free.
+	void *got = (void *)g_bfmeTwoAOA->nameToKey((const char *)bfmeTextAOA);
 	m_bfmeWhat = g_bfmeThreeAOA->bfmeMakeAOA(0, got);
 }

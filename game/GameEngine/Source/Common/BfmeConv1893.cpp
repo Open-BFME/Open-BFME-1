@@ -34,13 +34,16 @@ public:
 	BfmeThingAE *m_bfmeThingAE;
 };
 
-class BfmeGenAE
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	int bfmeKeyAE(const char *text);
+	NameKeyType nameToKey(const char *text);
 };
 
-extern BfmeGenAE *TheBfmeGenAE;
+extern NameKeyGenerator *TheBfmeGenAE;
 
 class BfmeOwnerAE
 {
@@ -54,7 +57,7 @@ public:
 char BfmeOwnerAE::bfmeSetAE(BfmeStrAE *name, char on)
 {
 	const char *text = name->m_bfmeDataAE != 0 ? name->m_bfmeDataAE + 8 : g_bfmeEmptyAE;
-	int key = TheBfmeGenAE->bfmeKeyAE(text);
+	int key = (int)TheBfmeGenAE->nameToKey(text);
 
 	for (BfmeEntryAE **p = m_bfmeListAE; *p != 0; p++)
 	{

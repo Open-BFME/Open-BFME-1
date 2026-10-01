@@ -18,7 +18,15 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int NameKeyType;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an unscoped enum, not an int typedef: the return type is part
+// of the mangled name retail spells ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z.
+enum NameKeyType { };
+
+// The tree at +0x27C is keyed on the plain int the map<int, ...>::find
+// instantiation (the one this body byte-matches) is built with; the generator
+// hands the key back as the enum above and the local is narrowed at the store.
+typedef int NameKeyInt;
 
 class AsciiString
 {
@@ -36,7 +44,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 extern const char g_bfmeEmptyAscii[];
 
 class BfmeLivingWorldMapObject;
-typedef _STL::map<NameKeyType, BfmeLivingWorldMapObject *> BfmeLivingWorldNameMap;
+typedef _STL::map<NameKeyInt, BfmeLivingWorldMapObject *> BfmeLivingWorldNameMap;
 
 class BfmeLivingWorldManager
 {
@@ -53,7 +61,7 @@ extern "C" BfmeLivingWorldManager *g_bfmeGameCW;
 // ?rva006128f0@BfmeLivingWorldManager@@QAEPAXABVAsciiString@@@Z
 void *BfmeLivingWorldManager::rva006128f0(const AsciiString &name)
 {
-	NameKeyType key = TheNameKeyGenerator->nameToKey(
+	NameKeyInt key = (NameKeyInt)TheNameKeyGenerator->nameToKey(
 		name.m_data != 0 ? name.m_data + 8 : g_bfmeEmptyAscii);
 	if (key == 0)
 	{

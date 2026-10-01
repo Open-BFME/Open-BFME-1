@@ -36,13 +36,16 @@ public:
 	int bfmeGet1060(int a);
 };
 
-class BfmeQ1060
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	int bfmeConv1060(int a);
+	NameKeyType nameToKey(const char *a);
 };
 
-extern BfmeQ1060 *g_bfmeQ1060;
+extern NameKeyGenerator *g_bfmeQ1060;
 
 struct BfmeFn1060
 {
@@ -66,7 +69,9 @@ extern BfmeW1060 *g_bfmeW1060;
 
 void bfmeGo1060D(BfmeO1060 *o, int b, int c, int d)
 {
-	int t = g_bfmeQ1060->bfmeConv1060(o->bfmeGet1060(0));
+	// The stand-in bfmeGet1060 returns the name pointer; its int spelling is
+	// TU-local, so cast at the call and keep the pushed bytes identical.
+	int t = (int)g_bfmeQ1060->nameToKey((const char *)o->bfmeGet1060(0));
 
 	g_bfmeW1060->m_bfmeSub.bfmeFind1060(&t)->m_bfmeFn(o, b, c, d);
 }

@@ -23,13 +23,16 @@ public:
 	BfmeStrDataERA *m_bfmeDataERA;
 };
 
-class BfmeKeyGenERA
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+enum NameKeyType { };
+
+class NameKeyGenerator
 {
 public:
-	int bfmeNameToKeyERA(const char *name);
+	NameKeyType nameToKey(const char *name);
 };
 
-extern BfmeKeyGenERA *g_bfmeKeyGenERA;
+extern NameKeyGenerator *g_bfmeKeyGenERA;
 
 class BfmeNodeERA
 {
@@ -57,7 +60,8 @@ extern BfmeOwnerERA *g_bfmeOwnerERA;
 
 void * __stdcall Rva001B70E0Lookup(BfmeStrERA *name)
 {
-	int key = g_bfmeKeyGenERA->bfmeNameToKeyERA(name->bfmeTextERA());
+	// The map shim keys on int; the value is the same 32-bit NameKeyType.
+	int key = (int)g_bfmeKeyGenERA->nameToKey(name->bfmeTextERA());
 
 	if (key == 0)
 	{
