@@ -39,6 +39,13 @@ public:
 	BfmeR1097 *bfmeGet1097(int h);
 };
 
+// The global this TU reads is the game's TheScriptEngine, whose defining
+// decorated name carries the pointee type
+// (?TheScriptEngine@@3PAVScriptEngine@@A), so the pointee is declared under
+// the real class name here and the modelling class is reached by cast. A cast
+// between pointer types emits nothing, so the compiled bytes are unchanged.
+class ScriptEngine;
+
 class BfmeP1097
 {
 public:
@@ -46,12 +53,12 @@ public:
 };
 
 extern BfmeD1097 *g_bfmeD1097;
-extern BfmeP1097 *g_bfmeP1097;
+extern ScriptEngine *TheScriptEngine;
 extern BfmeS1097 *g_bfmeS1097;
 
 void __stdcall bfmeGo1097A(int a, char b)
 {
-	int h = g_bfmeP1097->bfmeFirst1097(a + 0x10, 0);
+	int h = ((BfmeP1097*)TheScriptEngine)->bfmeFirst1097(a + 0x10, 0);
 	BfmeR1097 *r;
 	BfmeU1097 *u;
 

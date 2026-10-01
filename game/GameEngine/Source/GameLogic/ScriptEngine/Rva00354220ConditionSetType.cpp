@@ -67,9 +67,18 @@ public:
 	}
 };
 
-// address-derived: one fewer leading virtual than ScriptEngine in
-// Condition_setConditionType_Thunk.cpp, so getConditionTemplate lands at
-// slot 0x28 instead of 0x2c.
+// The global this TU reads is the game's TheScriptEngine, whose defining
+// decorated name carries the pointee type
+// (?TheScriptEngine@@3PAVScriptEngine@@A), so the pointee is declared under the
+// real class name and the modelling class below is reached by cast. A cast
+// between pointer types emits nothing, so the compiled bytes are unchanged.
+//
+// This modelling class stays address-derived on purpose: it carries one fewer
+// leading virtual than the ScriptEngine in Condition_setConditionType_Thunk.cpp,
+// so getConditionTemplate lands at slot 0x28 instead of 0x2c. It is a different
+// shape, not the real class.
+class ScriptEngine;
+
 class Rva00354220ScriptEngine
 {
 public:
@@ -86,7 +95,7 @@ public:
 	virtual const Rva00354220ConditionTemplate *getConditionTemplate(int type);
 };
 
-extern Rva00354220ScriptEngine *TheScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Rva00354220Condition
@@ -114,7 +123,8 @@ void Rva00354220Condition::setConditionType(ConditionType type)
 	}
 
 	m_conditionType = type;
-	const Rva00354220ConditionTemplate *conditionTemplate = TheScriptEngine->getConditionTemplate(m_conditionType);
+	const Rva00354220ConditionTemplate *conditionTemplate =
+		((Rva00354220ScriptEngine*)TheScriptEngine)->getConditionTemplate(m_conditionType);
 	m_numParms = conditionTemplate->getNumParameters();
 	for (i = 0; i < m_numParms; ++i)
 		m_parms[i] = new Rva00354220Parameter(conditionTemplate->getParameterType(i));

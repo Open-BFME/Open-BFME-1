@@ -70,6 +70,13 @@ public:
 	virtual BfmeSubGI *bfmeGetGI();
 };
 
+// The global this TU reads is the game's TheScriptEngine, whose defining
+// decorated name carries the pointee type
+// (?TheScriptEngine@@3PAVScriptEngine@@A), so the pointee is declared under
+// the real class name here and the modelling class is reached by cast. A cast
+// between pointer types emits nothing, so the compiled bytes are unchanged.
+class ScriptEngine;
+
 class BfmeGlobGI
 {
 public:
@@ -102,11 +109,11 @@ public:
 	virtual BfmeObjGI *bfmeFindGI(void *a);
 };
 
-extern BfmeGlobGI *g_bfmeGlobGI;
+extern ScriptEngine *TheScriptEngine;
 
 void __stdcall bfmeGoGI(void *a, void *b)
 {
-	BfmeObjGI *o = g_bfmeGlobGI->bfmeFindGI(a);
+	BfmeObjGI *o = ((BfmeGlobGI*)TheScriptEngine)->bfmeFindGI(a);
 	if (o) {
 		BfmeSubGI *s = o->bfmeGetGI();
 		if (s)

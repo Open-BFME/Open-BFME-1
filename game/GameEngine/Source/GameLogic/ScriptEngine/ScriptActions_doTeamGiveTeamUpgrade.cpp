@@ -62,8 +62,18 @@ class Team;
 class Object;
 class SpecialPowerTemplate;
 
-// BFME's ScriptEngine puts getTeamNamed at vtable slot 17 and passes the
-// name by value, with the exact-match flag as its second argument.
+// The global this TU reads is the game's TheScriptEngine, whose defining
+// decorated name carries the pointee type
+// (?TheScriptEngine@@3PAVScriptEngine@@A), so the pointee is declared under the
+// real class name and the modelling class below is reached by cast. A cast
+// between pointer types emits nothing, so the compiled bytes are unchanged.
+//
+// The modelling class stays a placeholder on purpose: BFME's ScriptEngine puts
+// getTeamNamed at vtable slot 17 and passes the name by value, with the
+// exact-match flag as its second argument. Only the slots this body needs are
+// modelled.
+class ScriptEngine;
+
 class BfmeScriptEngineVtbl_44
 {
 public:
@@ -128,7 +138,7 @@ public:
 	Object *getFirstItemIn_TeamMemberList() const;
 };
 
-extern BfmeScriptEngineVtbl_44 *TheScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 extern void *TheUpgradeCenter;
 extern void *TheSpecialPowerStore;
 
@@ -183,8 +193,8 @@ protected:
 void ScriptActions::doTeamGiveTeamUpgrade(Parameter *sourceTeam,
 	Parameter *targetTeam)
 {
-	Team *source = TheScriptEngine->getTeamNamed(sourceTeam->m_string, false);
-	Team *target = TheScriptEngine->getTeamNamed(targetTeam->m_string, false);
+	Team *source = ((BfmeScriptEngineVtbl_44*)TheScriptEngine)->getTeamNamed(sourceTeam->m_string, false);
+	Team *target = ((BfmeScriptEngineVtbl_44*)TheScriptEngine)->getTeamNamed(targetTeam->m_string, false);
 	if (!source || !target)
 		return;
 
