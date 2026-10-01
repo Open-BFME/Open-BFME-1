@@ -88,13 +88,20 @@ public:
 };
 
 extern BfmeObjEGE *g_bfmeObjEGE;
-extern BfmeObj2EGE *g_bfmeObj2EGE;
+
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeObj2EGE above stays as this TU's local view of the
+// pointee, so the uses cast.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 void bfmeGoEGEa()
 {
 	BfmeResEGE *r = g_bfmeObjEGE->bfmeGet13EGE(0x3eb);
 	r->bfmeUseEGE(1);
-	g_bfmeObj2EGE->bfmeVirt58EGE();
+	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }
 
 struct BfmeNodeEGF
@@ -190,5 +197,5 @@ void bfmeGoEGEb()
 {
 	BfmeResEGE *r = g_bfmeObjEGE->bfmeGet13EGE(0x3eb);
 	r->bfmeUseEGE(1);
-	g_bfmeObj2EGE->bfmeVirt58EGE();
+	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }

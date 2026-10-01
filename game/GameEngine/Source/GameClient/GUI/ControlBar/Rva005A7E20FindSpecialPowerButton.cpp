@@ -93,7 +93,13 @@ public:
 };
 #undef RVA005A7E20_SLOT
 
-extern BfmeR1254 *g_bfme1254;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeR1254 above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 extern ControlBar *TheControlBar;
 
 class Rva005A7E20SpecialPowerButtonFinder
@@ -105,7 +111,7 @@ public:
 const CommandButton *Rva005A7E20SpecialPowerButtonFinder::find(
 	unsigned int specialPowerID) const
 {
-	Drawable *drawable = g_bfme1254->getSelectedDrawable();
+	Drawable *drawable = ((BfmeR1254 *)TheInGameUI)->getSelectedDrawable();
 	Object *object = drawable->m_object;
 	const CommandSet *set = TheControlBar->findCommandSet(object->getCommandSetString());
 	if (set)

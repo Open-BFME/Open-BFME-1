@@ -66,7 +66,13 @@ public:
 	virtual int bfmeAsk993();
 };
 
-extern BfmeHub993 *g_bfmeHub993;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeHub993 above stays as this TU's local view of the
+// pointee, so the uses cast.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 class BfmeA993
 {
@@ -81,12 +87,12 @@ void BfmeA993::bfmeGo993A(int unused)
 {
 	m_bfmeOn = 1;
 
-	int r = g_bfmeHub993->bfmeAsk993();
+	int r = ((BfmeHub993 *)TheInGameUI)->bfmeAsk993();
 
 	if (!r)
-		g_bfmeHub993->bfmeFix993(r);
+		((BfmeHub993 *)TheInGameUI)->bfmeFix993(r);
 
-	g_bfmeHub993->bfmeEnd993(0, 0);
+	((BfmeHub993 *)TheInGameUI)->bfmeEnd993(0, 0);
 }
 
 class BfmeAskB993

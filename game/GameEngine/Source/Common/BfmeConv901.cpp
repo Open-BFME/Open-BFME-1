@@ -137,11 +137,17 @@ public:
 	virtual BfmeHolderJB *bfmeGetJB();
 };
 
-extern BfmeGlobJB *g_bfmeGlobJB;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeGlobJB above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 bool bfmeGoJB(void)
 {
-	BfmeListJB *l = g_bfmeGlobJB->bfmeGetJB()->m_bfmeList;
+	BfmeListJB *l = ((BfmeGlobJB *)TheInGameUI)->bfmeGetJB()->m_bfmeList;
 	if (l->m_bfmeHead != l)
 		return l->m_bfmeHead->m_bfmeItem->m_bfmeTarget->bfmeTailJB();
 	return false;

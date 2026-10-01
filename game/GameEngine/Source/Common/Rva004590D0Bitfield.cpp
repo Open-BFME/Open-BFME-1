@@ -72,7 +72,13 @@ public:
 	int m_fifth;
 };
 
-extern Open24590D0Source *TheOpen24590D0Source;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; Open24590D0Source above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 void Rva004590D0( unsigned int flags, Open24590D0Out *out )
 {
@@ -80,7 +86,7 @@ void Rva004590D0( unsigned int flags, Open24590D0Out *out )
 	{
 		out->m_first |= 2;
 
-		Open24590D0Probe *probe = TheOpen24590D0Source->slotBC();
+		Open24590D0Probe *probe = ((Open24590D0Source *)TheInGameUI)->slotBC();
 		if( probe != 0 && probe->m_kind == 0x17 )
 			out->m_second |= 0x8000000;
 	}

@@ -42,7 +42,13 @@ public:
 	virtual void rvaSlot5c() = 0;
 };
 
-extern Rva00615900InGameUI *TheInGameUI;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; Rva00615900InGameUI above stays as this TU's local view of
+// the pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 class BfmeLivingWorldManager
 {
@@ -69,5 +75,5 @@ void BfmeLivingWorldManager::rva00615900(const Coord2D &point)
 		it->second->bfmeUpdateBFromPointNA(point);
 	}
 
-	TheInGameUI->rvaSlot5c();
+	((Rva00615900InGameUI *)TheInGameUI)->rvaSlot5c();
 }

@@ -39,7 +39,13 @@ public:
 			BfmeBlobBM *second, BfmeBlobBM *third, BfmeBlobBM *fourth) throw();
 };
 
-extern BfmeSinkBM *g_bfmeSinkBM;			// retail 0x012F148C
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeSinkBM above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;			// retail 0x012F148C
 
 class BfmeReportBM
 {
@@ -57,7 +63,7 @@ public:
 
 void BfmeReportBM::bfmeSendBM(int unusedA, int unusedB)
 {
-	g_bfmeSinkBM->bfmeSubmitBM(m_bfmeNameBM, m_bfmeCountBM,
+	((BfmeSinkBM *)TheInGameUI)->bfmeSubmitBM(m_bfmeNameBM, m_bfmeCountBM,
 			&m_bfmeFirstBM, &m_bfmeSecondBM, &m_bfmeThirdBM,
 			&m_bfmeFourthBM);
 }
