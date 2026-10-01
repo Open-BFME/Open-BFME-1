@@ -89,6 +89,9 @@ static __forceinline void bfmeGetClosestObject(Object *&object,
 		&thingFilter);
 }
 
+class ThingFactory;
+
+// TU-local view of the singleton's findTemplate entry point.
 class BfmeThingFactory
 {
 public:
@@ -160,7 +163,8 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 extern AI *TheAI;
 
 class ScriptActions;
@@ -215,7 +219,7 @@ void ScriptActions::doTeamMoveToNearestObjectOfType(
 	else
 	{
 		const ThingTemplate *thingTemplate =
-			TheThingFactory->findTemplate(objectType);
+			localTheThingFactory()->findTemplate(objectType);
 		if (!thingTemplate)
 			return;
 

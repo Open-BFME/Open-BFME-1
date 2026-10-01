@@ -49,6 +49,9 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &name) = 0;
 };
 
+class ThingFactory;
+
+// TU-local view of the singleton's findTemplate entry point.
 class BfmeThingFactory
 {
 public:
@@ -189,7 +192,8 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 extern PartitionManager *ThePartitionManager;
 
 class ScriptActions
@@ -216,7 +220,7 @@ void ScriptActions::doMoveUnitTowardsNearest(const AsciiString &unitName,
 	}
 
 	const ThingTemplate *thingTemplate =
-		TheThingFactory->findTemplate(objectType);
+		localTheThingFactory()->findTemplate(objectType);
 	if (!thingTemplate)
 	{
 		return;

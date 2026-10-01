@@ -141,7 +141,10 @@ class BfmeMgrF1D
 public:
 	void* registerObj(void *field);
 };
-extern BfmeMgrF1D *g_mgr12EF1D8;
+class ThingFactory;
+// TU-local view of the retail singleton's registerObj entry point.
+extern ThingFactory *TheThingFactory;
+static inline BfmeMgrF1D *localTheThingFactory() { return (BfmeMgrF1D *)TheThingFactory; }
 
 class BfmeMgr089
 {
@@ -153,7 +156,7 @@ extern GameLogic *TheGameLogic;
 
 void __stdcall bfmeLookupAndSendDB0(void *key, void *param2)
 {
-	void *obj = g_mgr12EF1D8->registerObj(key);
+	void *obj = localTheThingFactory()->registerObj(key);
 	if (obj) {
 		((BfmeMgr089 *)TheGameLogic)->send(obj, param2);
 	}

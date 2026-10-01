@@ -52,7 +52,8 @@ class BFMEThingFactory {
 public:
     Drawable *newDrawable(const ThingTemplate *, DrawableStatus, int);
 };
-extern void *g_global12EF1D8;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 class BfmeOwnerBR {
 public:
     void bfmeGo939B(int, Object *, DelayedLuaEventList *);
@@ -73,7 +74,7 @@ void GameLogic::sendObjectCreated(Object *obj)
     DrawableStatus status = DRAWABLE_STATUS_NONE;
     if (obj->status & 0x400000)
         status = DRAWABLE_STATUS_UNK20;
-    Drawable *draw = static_cast<BFMEThingFactory *>(g_global12EF1D8)->newDrawable(
+    Drawable *draw = reinterpret_cast<BFMEThingFactory *>(TheThingFactory)->newDrawable(
         obj->getTemplate(), status, randomValue);
     bindObjectAndDrawable(obj, draw);
     DelayedLuaEventList events;

@@ -72,13 +72,18 @@ public:
 
 typedef _STL::map<const ThingTemplate *, Int> ObjectCountMap;
 
+class ThingFactory;
+
+// TU-local view of the singleton's findTemplate entry point.
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+
+static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 struct XferException
 {
@@ -129,7 +134,7 @@ void Rva000EACD0ScoreKeeper::xferObjectCountMap(Xfer *xfer, ObjectCountMap *map)
 		for (UnsignedShort i = 0; i < mapSize; ++i)
 		{
 			xfer->xferAsciiString(&thingTemplateName);
-			thingTemplate = TheThingFactory->findTemplate(thingTemplateName);
+			thingTemplate = localTheThingFactory()->findTemplate(thingTemplateName);
 			if (thingTemplate == 0)
 			{
 				XferException error;

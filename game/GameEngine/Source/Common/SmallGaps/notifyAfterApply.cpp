@@ -4,8 +4,9 @@
 // The apply helper called from this TU is the real owner of the generated
 // 0x0022E270 body.  Its first collection is an STLport list of AsciiStrings
 // at +0x174, while the later vector remains at +0x2b0 for notifyAfterApply.
-// The registry object keeps its retail neutral type for the global symbol but
-// inherits the already matched ThingFactory lookup ABI.
+// The global is referenced under its retail spelling ThingFactory *TheThingFactory;
+// this TU reads it through a local view that inherits the already matched
+// ThingFactory lookup ABI.
 #include "ascii_string.h"
 
 struct Rva0020AA00Target
@@ -28,12 +29,16 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class ThingFactory;
+
+// TU-local view of the retail singleton's findTemplate/lookup entry points.
 struct Rva0020AA00Registry : public BfmeThingFactory
 {
 	Rva0020AA00Target *lookup(const int &id);
 };
 
-extern Rva0020AA00Registry *Rva0020AA00TheRegistry;
+extern ThingFactory *TheThingFactory;
+static inline Rva0020AA00Registry *localTheThingFactory() { return (Rva0020AA00Registry *)TheThingFactory; }
 
 struct Rva0022E270ListNode
 {
@@ -105,7 +110,7 @@ void __cdecl Rva00234200Apply(Rva00234200Owner *owner, int a, int b)
 	while (node != savedOwner->m_applyList.m_head)
 	{
 		const ThingTemplate *templateObject =
-			Rva0020AA00TheRegistry->findTemplate(node->m_value);
+			localTheThingFactory()->findTemplate(node->m_value);
 		if (templateObject)
 		{
 			unsigned char notify = *reinterpret_cast<const unsigned char *>(
@@ -136,7 +141,7 @@ void notifyAfterApply(Rva00234200Owner* owner, int a, int b)
 {
 	Rva00234200Apply(owner, a, b);
 	for (int* it = owner->m_begin; it != owner->m_end; ++it) {
-		Rva0020AA00Target* t = Rva0020AA00TheRegistry->lookup(*it);
+		Rva0020AA00Target* t = localTheThingFactory()->lookup(*it);
 		if (t)
 			t->notify(a, b);
 	}

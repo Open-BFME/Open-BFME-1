@@ -68,13 +68,17 @@ class ThingTemplate : public BfmeResGH
 {
 };
 
+class ThingFactory;
+
+// TU-local view of the singleton's findTemplate entry point.
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 class Gen_00429F60Target
 {
@@ -122,7 +126,7 @@ void collectAssets0077F570(Record0077F570 *record, AssetList *list, void *contex
 
 	if (record->m_bfmeTemplateName.isNotEmpty())
 	{
-		const ThingTemplate *found = TheThingFactory->findTemplate(record->m_bfmeTemplateName);
+		const ThingTemplate *found = localTheThingFactory()->findTemplate(record->m_bfmeTemplateName);
 		if (found)
 			const_cast<ThingTemplate *>(found)->bfmeTwoGH(list, context);
 	}

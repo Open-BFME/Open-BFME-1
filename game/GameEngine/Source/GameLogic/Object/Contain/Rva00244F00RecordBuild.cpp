@@ -4,7 +4,7 @@
 // Open-BFME: identity from the landed sibling call at 0x00244E60
 // (Rva00244E60.cpp), whose add(BfmeRva44E60Input*, Int, Int*) is called
 // here directly on "this" (this object is-a Rva00244E60, same address, no
-// offset), plus the global registry lookup TheRegistry->bfmeFind975D and
+// offset), plus the global registry lookup TheThingFactory->bfmeFind975D and
 // the pinned STLport vector<POD4> overflow-insert helper already used
 // elsewhere in this tree under the shared Gen_t_0023db70_m4pod proxy type.
 // The source vector's element type and this object's real class beyond
@@ -55,7 +55,9 @@ class BfmeFind975D
 public:
 	void *bfmeFind975D( Int arg );
 };
-extern BfmeFind975D *Rva0020AA00TheRegistry;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline BfmeFind975D *localTheThingFactory() { return (BfmeFind975D *)TheThingFactory; }
 
 struct Rva0024SourceHolder
 {
@@ -105,7 +107,7 @@ void Rva00244F00Owner::rva00244f00( Rva0024SourceHolder *src )
 		add( (BfmeRva44E60Input *)( *(char **)( src->m_begin + i * 4 ) + 4 ), 0, &node->b );
 
 		Int idx = (Int) * (char **)( src->m_begin + i * 4 );
-		node->a = (Int)Rva0020AA00TheRegistry->bfmeFind975D( idx );
+		node->a = (Int)localTheThingFactory()->bfmeFind975D( idx );
 
 		m_nodes.push_back( *(Gen_t_0023db70_m4pod *)&node );
 

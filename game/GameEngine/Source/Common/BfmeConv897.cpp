@@ -156,7 +156,10 @@ public:
 	BfmeResFHH *bfmeLookFHH(BfmeSubFHH *s);
 };
 
-extern BfmeGlobFHH *g_bfmeObjFHH;
+class ThingFactory;
+// TU-local view of the retail singleton's bfmeLookFHH entry point.
+extern ThingFactory *TheThingFactory;
+static inline BfmeGlobFHH *localTheThingFactory() { return (BfmeGlobFHH *)TheThingFactory; }
 
 struct BfmeThingFHH
 {
@@ -171,7 +174,7 @@ void BfmeThingFHH::bfmeGoFHH(void *a, void *b)
 {
 	if (m_bfmeFlag)
 		return;
-	BfmeResFHH *r = g_bfmeObjFHH->bfmeLookFHH(&m_bfmeSub);
+	BfmeResFHH *r = localTheThingFactory()->bfmeLookFHH(&m_bfmeSub);
 	if (r)
 		r->bfmeUseFHH(a, b);
 }

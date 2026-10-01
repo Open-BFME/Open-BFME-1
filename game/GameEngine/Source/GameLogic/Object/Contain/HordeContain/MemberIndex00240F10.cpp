@@ -25,8 +25,9 @@ __forceinline TemplateView00240F10 *objectTemplate00240F10(Object *obj) {
  if(!obj->m_template) return 0;
  return ((TemplateView00240F10*)obj->m_template)->finalOverride();
 }
-struct Factory00240F10 {};
-extern Factory00240F10 *g00240F10Va012EF1D8;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+static inline void *localTheThingFactory() { return (void *)TheThingFactory; }
 template<int N> class Slots00240F10 : public Slots00240F10<N-1> { public: virtual void unused(char (*)[N])=0; };
 template<> class Slots00240F10<0> {};
 class Primary00240F10 : public Slots00240F10<30> { public: virtual void slot078(int)=0; };
@@ -56,7 +57,7 @@ void MemberIndex00240F10::run(Object *member) {
    if(key==current->at000) {
     typedef TemplateView00240F10 *(Route00240F10::*Find)(const AsciiString&);
     union { void (*fn)(); Find call; } find={j_00028560};
-    TemplateView00240F10 *wanted=(((Route00240F10*)g00240F10Va012EF1D8)->*find.call)(current->at004);
+    TemplateView00240F10 *wanted=(((Route00240F10*)localTheThingFactory())->*find.call)(current->at004);
     TemplateView00240F10 *actual=objectTemplate00240F10(member);
     typedef bool (Route00240F10::*Equal)(TemplateView00240F10*);
     union { void (*fn)(); Equal call; } equal={j_0003e80b};
