@@ -31,25 +31,3 @@ void BfmeThingUJA::bfmeClearUJA()
 	m_bfmeOwned = 0;
 	m_bfmeCount = 0;
 }
-
-struct BfmeStateUJC
-{
-	char m_bfmePad[0x108];
-	int m_bfmeBusy;
-};
-
-struct BfmeConnUJC
-{
-	BfmeStateUJC *m_bfmeState;
-};
-
-void bfmeDisconnectUJC(BfmeConnUJC *c, int f);
-void bfmeResetUJC(BfmeConnUJC *c);
-
-void bfmeGoUJC(BfmeConnUJC *c)
-{
-	if (c && c->m_bfmeState && !c->m_bfmeState->m_bfmeBusy) {
-		bfmeDisconnectUJC(c, 1);
-		bfmeResetUJC(c);
-	}
-}

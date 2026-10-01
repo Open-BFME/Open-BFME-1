@@ -1,5 +1,7 @@
 // cl: /MD -Iinputs/reference/shims/gamespy /Igame/GameEngine/Source/GameNetwork/GameSpy/gp
 /* GameSpy SDK, 2004 vintage -- upstream C source with retail buddy-status behavior.
+   Retail 1.03 also adds gpiReset after gpiDisconnect in gpDisconnect; the
+   public 2004 release omits that reset (retail RVA 0x008E9800 spans 44 bytes).
    Sourced from the Area 51 (Inevitable Entertainment / Midway) source release,
    github.com/bisc67/Area51, Support/NetworkMgr/GameSpy -- the only public
    carrier found with the pre-2005 SDK layout (top-level nonport.c, no common/).
@@ -442,6 +444,7 @@ void gpDisconnect(
 		return;
 
 	gpiDisconnect(connection, GPITrue);
+	gpiReset(connection);
 }
 
 GPResult gpIsConnected
