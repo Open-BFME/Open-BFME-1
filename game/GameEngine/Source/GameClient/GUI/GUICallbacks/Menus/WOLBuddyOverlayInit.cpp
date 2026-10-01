@@ -144,7 +144,17 @@ class Rva004EC6E0WindowManager
 	virtual void slotD8() = 0;
 	virtual GameWindow *winGetWindowFromId(GameWindow *, int) = 0;
 };
-extern Rva004EC6E0WindowManager *TheWindowManager;
+// The global at 0x012F1B40 is EA's singleton, spelled in exactly one name
+// everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. This TU keeps
+// its own address-derived view of the vtable slots it calls and casts to it.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
+static inline Rva004EC6E0WindowManager *localWindowManager()
+{
+	return (Rva004EC6E0WindowManager *)TheWindowManager;
+}
 void WOLBuddyOverlayInit(WindowLayout *layout, void *userData)
 {
 	parentID = TheNameKeyGenerator->nameToKey(AsciiString("WOLBuddyOverlay.wnd:BuddyMenuParent"));
@@ -159,17 +169,17 @@ void WOLBuddyOverlayInit(WindowLayout *layout, void *userData)
 	parentIgnoreID = TheNameKeyGenerator->nameToKey(AsciiString("WOLBuddyOverlay.wnd:IgnoreParent"));
 	listboxIgnoreID = TheNameKeyGenerator->nameToKey(AsciiString("WOLBuddyOverlay.wnd:ListboxIgnore"));
 
-	parent = TheWindowManager->winGetWindowFromId(NULL, parentID);
-	buttonHide = TheWindowManager->winGetWindowFromId(parent, buttonHideID);
-	buttonAddBuddy = TheWindowManager->winGetWindowFromId(parent, buttonAddBuddyID);
-	buttonDeleteBuddy = TheWindowManager->winGetWindowFromId(parent, buttonDeleteBuddyID);
-	buttonAcceptBuddy = TheWindowManager->winGetWindowFromId(parent, buttonAcceptBuddyID);
-	buttonDenyBuddy = TheWindowManager->winGetWindowFromId(parent, buttonDenyBuddyID);
-	radioButtonBuddies = TheWindowManager->winGetWindowFromId(parent, radioButtonBuddiesID);
-	radioButtonIgnore = TheWindowManager->winGetWindowFromId(parent, radioButtonIgnoreID);
-	parentBuddies = TheWindowManager->winGetWindowFromId(parent, parentBuddiesID);
-	parentIgnore = TheWindowManager->winGetWindowFromId(parent, parentIgnoreID);
-	listboxIgnore = TheWindowManager->winGetWindowFromId(parent, listboxIgnoreID);
+	parent = localWindowManager()->winGetWindowFromId(NULL, parentID);
+	buttonHide = localWindowManager()->winGetWindowFromId(parent, buttonHideID);
+	buttonAddBuddy = localWindowManager()->winGetWindowFromId(parent, buttonAddBuddyID);
+	buttonDeleteBuddy = localWindowManager()->winGetWindowFromId(parent, buttonDeleteBuddyID);
+	buttonAcceptBuddy = localWindowManager()->winGetWindowFromId(parent, buttonAcceptBuddyID);
+	buttonDenyBuddy = localWindowManager()->winGetWindowFromId(parent, buttonDenyBuddyID);
+	radioButtonBuddies = localWindowManager()->winGetWindowFromId(parent, radioButtonBuddiesID);
+	radioButtonIgnore = localWindowManager()->winGetWindowFromId(parent, radioButtonIgnoreID);
+	parentBuddies = localWindowManager()->winGetWindowFromId(parent, parentBuddiesID);
+	parentIgnore = localWindowManager()->winGetWindowFromId(parent, parentIgnoreID);
+	listboxIgnore = localWindowManager()->winGetWindowFromId(parent, listboxIgnoreID);
 
 	InitBuddyControls(BUDDY_WINDOW_BUDDIES);
 	GadgetRadioSetSelection(radioButtonBuddies, FALSE);
@@ -177,7 +187,7 @@ void WOLBuddyOverlayInit(WindowLayout *layout, void *userData)
 	parentIgnore->winHide(TRUE);
 	PopulateOldBuddyMessages();
 	((BfmeVirtualHideLayout *)layout)->hide(FALSE);
-	TheWindowManager->winSetFocus(parent);
+	localWindowManager()->winSetFocus(parent);
 	isOverlayActive = true;
 	updateBuddyInfo();
 } // WOLBuddyOverlayInit

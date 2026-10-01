@@ -41,7 +41,14 @@ struct Engine0040E9E0 {
  virtual bool active();
 };
 struct MovieControl0040F780 { virtual void v00(); virtual void v04();virtual void v08();virtual void v0c();virtual void v10();virtual void update();};
-extern MovieControl0040F780 *Control0040F780;
+// The global this body reads at 0x012F1B40 is EA's window-manager singleton,
+// spelled in exactly one name everywhere in the link:
+// `GameWindowManager *TheWindowManager' (?TheWindowManager@@3PAVGameWindowManager@@A),
+// defined in game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The
+// slot this call site uses keeps its TU-local ABI view; only the spelling of the
+// global changes.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 extern Engine0040E9E0 *EngineGlobal0040E9E0;
 extern __int64 Previous0040E9E0, Current0040E9E0, Threshold0040E9E0, Elapsed0040E9E0;
 extern bool Trace0040E9E0;
@@ -179,7 +186,7 @@ unsigned MovieOpen0040E3B0::frame0040E9E0(int force)
                     result = stream34->advance(flags38);
                     if (result & 2)
                         field59 = true;
-                    Control0040F780->update();
+                    ((MovieControl0040F780 *)TheWindowManager)->update();
                     render(false);
                     bfmeUnlock1179();
                     setFPMode();

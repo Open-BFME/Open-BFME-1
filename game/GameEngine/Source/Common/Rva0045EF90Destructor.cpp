@@ -38,7 +38,14 @@ public:
 	virtual void remove(unsigned handle);
 };
 
-extern Rva0045EF90Registry *TheRva0045EF90Registry;
+// The global this body reads at 0x012F1B40 is EA's window-manager singleton,
+// spelled in exactly one name everywhere in the link: `GameWindowManager
+// *TheWindowManager' (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The address-derived
+// class above is this TU's local ABI view of the slots it calls, cast to at the
+// use; the cast is a no-op, so the bytes are unchanged.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class Rva0045EF90Base
 {
@@ -69,9 +76,9 @@ private:
 
 Rva0045EF90Object::~Rva0045EF90Object()
 {
-	if (TheRva0045EF90Registry != 0)
+	if (TheWindowManager != 0)
 	{
-		TheRva0045EF90Registry->remove(m_handle);
+		((Rva0045EF90Registry *)TheWindowManager)->remove(m_handle);
 	}
 	m_handle = 0;
 }

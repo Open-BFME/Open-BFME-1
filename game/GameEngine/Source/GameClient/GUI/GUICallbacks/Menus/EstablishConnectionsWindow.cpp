@@ -126,7 +126,18 @@ public:
 	unsigned char m_isQuickMatch;
 };
 
-extern BfmeEstablishWindowManager *TheWindowManager;
+// The global at 0x012F1B40 is EA's window-manager singleton, spelled in exactly
+// one name everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp.
+// BfmeEstablishWindowManager above is this TU's local ABI view of the slots it
+// calls, reached through the canonical global.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
+static inline BfmeEstablishWindowManager *localWindowManager()
+{
+	return (BfmeEstablishWindowManager *)TheWindowManager;
+}
 extern BfmeEstablishGameSpyGame *TheGameSpyGame;
 extern void ShowUnderlyingGUIElements( bool show, const char *layoutFilename,
 	const char *parentName, const char **gadgetsToHide,
@@ -140,7 +151,7 @@ static void InitEstablishConnectionsDialog( void )
 		BFMERetailAsciiString button( "EstablishConnectionsScreen.wnd:ButtonQuit" );
 		buttonQuitID = TheNameKeyGenerator->nameToKey( button.str() );
 	}
-	buttonQuitWindow = TheWindowManager->winGetWindowFromId( 0, buttonQuitID );
+	buttonQuitWindow = localWindowManager()->winGetWindowFromId( 0, buttonQuitID );
 }
 
 static BfmeEstablishWindowLayout *establishConnectionsLayout;
@@ -183,12 +194,12 @@ void ShowEstablishConnectionsWindow( void )
 {
 	if( establishConnectionsLayout == 0 )
 	{
-		establishConnectionsLayout = TheWindowManager->winCreateLayout(
+		establishConnectionsLayout = localWindowManager()->winCreateLayout(
 			"Menus/EstablishConnectionsScreen.wnd" );
 		InitEstablishConnectionsDialog();
 	}
 	establishConnectionsLayout->hide( 0 );
-	TheWindowManager->winSetFocus( establishConnectionsLayout->getFirstWindow() );
+	localWindowManager()->winSetFocus( establishConnectionsLayout->getFirstWindow() );
 	GameWindow *firstWindow = establishConnectionsLayout->getFirstWindow();
 	if( firstWindow != 0 )
 		*reinterpret_cast<int *>( reinterpret_cast<char *>( firstWindow ) + 0x1f4 ) = 0;

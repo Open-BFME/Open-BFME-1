@@ -53,7 +53,14 @@ public:
 	BfmeClock983 *m_bfmeBack983;
 };
 
-extern BfmeClock983 *g_bfmeClock983;
+// The global read at 0x012F1B40 is EA's window-manager singleton, spelled in
+// exactly one name everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The class above is
+// this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class BfmeG983
 {
@@ -69,7 +76,7 @@ public:
 void BfmeG983::bfmeGo983(int a, void *b, int c)
 {
 	if (a == 0x1b && b)
-		g_bfmeClock983->bfmeNote983(m_bfmeB);
+		((BfmeClock983 *)TheWindowManager)->bfmeNote983(m_bfmeB);
 
 	bfmeBase983(a, b, c);
 }
