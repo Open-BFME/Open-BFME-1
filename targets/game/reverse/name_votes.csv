@@ -378,3 +378,5 @@ game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|type||Rva001B74A0,126bca82243d
 game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeStrVUQ,c1f053a4dabf14490acdb0a2,gemini,20261001115136-d10292,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeOwnVUQ,a1d4a0c923b6b2e8b1395df3,gemini,20261001115136-d10292,2026-10-01
 game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|param|SpecialPowerModule::initiateIntentToDoSpecialPower|arg4,a42dcbd69cf25ef5334fd245,gemini,20261001115136-a9bbed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,dd6e13b6e1c270099c0e49e6,gemini,20261001112544-e6ac4b,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,ed538649e6df413078f3cd87,gemini,20261001112544-e6ac4b,2026-10-01
