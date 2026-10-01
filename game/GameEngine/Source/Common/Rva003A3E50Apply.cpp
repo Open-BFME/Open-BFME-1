@@ -1,5 +1,10 @@
 // cl: /O2 /Ob0
 
+// Canonical global at retail 0x012ED668: AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// view class for the members it calls.
+class AudioManager;
+
 class Rva003A3E50Audio
 {
 public:
@@ -25,7 +30,7 @@ public:
 	virtual void slot4c(int value);
 };
 
-extern Rva003A3E50Audio *g_rva003A3E50Audio;
+extern AudioManager *TheAudio;
 
 class Rva003A3E50
 {
@@ -38,10 +43,10 @@ public:
 
 void Rva003A3E50::apply()
 {
-	if (g_rva003A3E50Audio)
+	if (TheAudio)
 	{
 		int value = m_at24;
 		if (value != 1)
-			g_rva003A3E50Audio->slot4c(value);
+			((Rva003A3E50Audio *)TheAudio)->slot4c(value);
 	}
 }

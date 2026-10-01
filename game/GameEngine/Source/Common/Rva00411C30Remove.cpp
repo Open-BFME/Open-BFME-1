@@ -1,5 +1,10 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
+// Canonical global at retail 0x012ED668: AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// view class for the members it calls.
+class AudioManager;
+
 class Rva00411C30Audio
 {
 public:
@@ -25,7 +30,7 @@ public:
 	virtual void slot4c(void *handle);
 };
 
-extern Rva00411C30Audio *g_audio012ED668;
+extern AudioManager *TheAudio;
 
 struct Rva00411C30Event
 {
@@ -46,5 +51,5 @@ void Rva00411C30::remove()
 {
 	Rva00411C30Event *event = m_event;
 	if (event)
-		g_audio012ED668->slot4c(event->m_handle);
+		((Rva00411C30Audio *)TheAudio)->slot4c(event->m_handle);
 }

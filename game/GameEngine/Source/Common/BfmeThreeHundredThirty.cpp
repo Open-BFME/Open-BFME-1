@@ -1,3 +1,8 @@
+// Canonical global at retail 0x012ED668: AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// view class for the members it calls.
+class AudioManager;
+
 class BfmeSinkSB
 {
 public:
@@ -96,7 +101,7 @@ public:
 	virtual void bfmeNoteSB();
 };
 
-extern BfmeSinkSB *g_bfmeSinkSB;
+extern AudioManager *TheAudio;
 
 class BfmeThingSB
 {
@@ -115,7 +120,7 @@ void BfmeThingSB::bfmeSetSB(int mode)
 	if (m_bfmeMode == mode)
 		return;
 	m_bfmeMode = mode;
-	BfmeSinkSB *sink = g_bfmeSinkSB;
+	BfmeSinkSB *sink = (BfmeSinkSB *)TheAudio;
 	if (sink != 0)
 		sink->bfmeNoteSB();
 }

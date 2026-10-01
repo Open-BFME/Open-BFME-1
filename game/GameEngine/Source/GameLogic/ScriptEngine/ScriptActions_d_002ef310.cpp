@@ -2,6 +2,11 @@
 
 typedef char Byte;
 
+// Canonical global at retail 0x012ED668: AudioManager *TheAudio, defined once
+// in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
+// view class for the members it calls.
+class AudioManager;
+
 class BfmeAudioManager002EF310
 {
 public:
@@ -18,7 +23,7 @@ public:
 	virtual void slot29(int first, int second, int firstDisabled, int secondDisabled);
 };
 
-extern BfmeAudioManager002EF310 * volatile TheAudioClientUpdate;
+extern AudioManager *TheAudio;
 
 // ?func002EF310@@YGXDD@Z
 void __stdcall func002EF310(Byte first, Byte second)
@@ -33,5 +38,5 @@ void __stdcall func002EF310(Byte first, Byte second)
 		secondDisabled = 1;
 	else
 		secondDisabled = 0;
-	TheAudioClientUpdate->slot29(0, 1, firstDisabled, secondDisabled);
+	((BfmeAudioManager002EF310 *)TheAudio)->slot29(0, 1, firstDisabled, secondDisabled);
 }
