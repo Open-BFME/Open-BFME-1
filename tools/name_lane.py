@@ -39,6 +39,7 @@ VOTES, AGREED = REVERSE / "name_votes.csv", REVERSE / "name_agreed.csv"
 LEDGER = REVERSE / "functions.csv"
 STORED = [LEDGER, REVERSE / "symbols.csv", REVERSE / "dir32_addresses.csv"]
 TOMBSTONES, ADOPT_BLOCKED = REVERSE / "deleted_rows.csv", REVERSE / "header_adopt_blocked.tsv"
+CORRECTIONS, DISPUTES = REVERSE / "name_corrections.json", REVERSE / "identity_evidence/name-lane-disputes.md"
 EA = REVERSE / "ea_evidence.csv"
 ZH = ROOT / "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"   # ea_evidence.ZH, without its pefile import
 SESSIONS = ROOT / "build/name_lane"
@@ -143,8 +144,9 @@ def append(path, rows):
 
 
 def agreed_state():
-    """key -> row. Rows are append-only (union merges); applied beats blocked beats stale beats agreed."""
-    rank = {"agreed": 0, "stale": 1, "blocked": 2, "applied": 3}
+    """key -> row. Rows are append-only (union merges); disputed beats applied beats blocked beats stale
+    beats agreed."""
+    rank = {"agreed": 0, "stale": 1, "blocked": 2, "applied": 3, "disputed": 4}
     state = {}
     for a in table(AGREED):
         if a["key"] not in state or rank[a["status"].split(":")[0]] >= rank[state[a["key"]]["status"].split(":")[0]]:
@@ -158,6 +160,16 @@ def canon(name):
     words = re.findall(r"[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+", re.sub(r"^m_", "", name))
     words = [SYNONYMS.get(w.lower(), w.lower()) for w in words]
     return " ".join(sorted(w[:-1] if len(w) > 3 and w.endswith("s") else w for w in words))
+
+
+def wins(mine, rivals):
+    """Models from two vendors agree, and the name leads every rival by two votes: when another model
+    named the thing differently, two models sharing a guess is not enough."""
+    return len({vendor(m) for m in mine}) >= 2 and len(mine) - max(map(len, rivals), default=0) >= 2
+
+
+def open_key(state, key):
+    return key not in state or state[key]["status"].startswith("disputed")
 
 
 def digest(key, name):
@@ -382,7 +394,7 @@ def cmd_next(args):
         text = read(rel)
         if len(text) > 15000:
             continue
-        items = [i for i in owned(rel, text, rows, types) if key_of(rel, *i) not in state]
+        items = [i for i in owned(rel, text, rows, types) if open_key(state, key_of(rel, *i))]
         if len(items) >= (1 if voted[rel] else 3):
             brief(rel, text, items, model, rows)
             served += 1
@@ -469,9 +481,9 @@ def cmd_submit(args):
     if unknown:
         fail(f"keys not in this session: {', '.join(sorted(unknown)[:8])}")
     file_words, types, owners = set(WORD.findall(strip(text))), type_counts(), member_owners(strip(text))
-    earlier = collections.defaultdict(set)
+    earlier = collections.defaultdict(lambda: collections.defaultdict(set))
     for v in table(VOTES):
-        earlier[(v["key"], v["hash"])].add(v["model"])
+        earlier[v["key"]][v["hash"]].add(v["model"])
     state = agreed_state()
     now = datetime.date.today().isoformat()
     votes, rejected, landed, taken = [], [], [], set()
@@ -479,19 +491,21 @@ def cmd_submit(args):
         answer = str(answers.get(answer_key(kind, scope, ident), "skip")).strip()
         if answer.lower() == "skip":
             continue
+        key = key_of(rel, kind, scope, ident)
         why = problem(kind, ident, answer, file_words, types, owners.get(ident, "") if kind == "member" else "")
         if not why and kind in NAMED and canon(answer) in taken:
             why = "the same name as another placeholder in this file"
+        if not why and key in state and state[key]["status"].startswith("disputed") and canon(answer) == canon(state[key]["name"]):
+            why = state[key]["status"]
         if why:
             rejected.append(f"{answer_key(kind, scope, ident)} -> {answer}: {why}")
             continue
         taken |= {canon(answer)} if kind in NAMED else set()
-        key = key_of(rel, kind, scope, ident)
         h = digest(key, answer)
         votes.append({"key": key, "hash": h, "model": model, "session": args.session, "date": now})
-        partners = {m for m in earlier[(key, h)] if vendor(m) != vendor(model)}
-        if partners and key not in state:
-            landed.append({"key": key, "name": spelling(answer, kind), "models": "+".join(sorted(partners | {model})),
+        mine = earlier[key][h] | {model}
+        if open_key(state, key) and wins(mine, [ms for h2, ms in earlier[key].items() if h2 != h]):
+            landed.append({"key": key, "name": spelling(answer, kind), "models": "+".join(sorted(mine)),
                            "status": "agreed", "date": now})
             state[key] = landed[-1]
     if not votes:
@@ -519,7 +533,7 @@ def commit(paths, message):
     return subprocess.run(["git", "commit", "-q", "--only", *names, "-m", message], cwd=ROOT, capture_output=True, text=True)
 
 
-def rewrite_stored(renames):
+def rewrite_stored(renames, why="two models agreed"):
     """Every stored mangled name: ledger names and object-symbol= notes, pins, DIR32 names."""
     subs = []
     for kind, scope, old, new in renames:
@@ -545,7 +559,7 @@ def rewrite_stored(renames):
                        if a and a[0] != b[0]]
             with TOMBSTONES.open("a", encoding="utf-8", newline="") as f:
                 csv.writer(f, lineterminator="\n").writerows(
-                    (old, rva, f"renamed to {name} by tools/name_lane.py apply: two models agreed") for old, rva, name in renamed)
+                    (old, rva, f"renamed to {name} by tools/name_lane.py: {why}") for old, rva, name in renamed)
 
 
 def gate(rel):
@@ -571,9 +585,11 @@ def rename(text, old, new, span=None):
     return "".join(out) + text[last:]
 
 
-def land(rel, renames, now):
-    """Rename, byte-gate and commit one file's agreed names. On any failure everything is put back
-    and the reason returned: a refused file must not hold back the others."""
+def land(rel, renames, now, status="applied"):
+    """Rename, byte-gate and commit one file's agreed names (or, for a dispute, put a landed name back).
+    On any failure everything is put back and the reason returned: a refused file must not hold back
+    the others."""
+    dispute = status.startswith("disputed")
     spread = {rel}
     for kind, scope, ident, new, models, key in renames:
         if kind in ("type", "function"):
@@ -584,7 +600,7 @@ def land(rel, renames, now):
     generated = sorted(f for f in spread if f.startswith(GENERATED))
     if generated:
         return f"a generated file names it: {generated[0]}"
-    paths = [ROOT / f for f in sorted(spread)] + STORED + [TOMBSTONES, ADOPT_BLOCKED, AGREED]
+    paths = [ROOT / f for f in sorted(spread)] + STORED + [TOMBSTONES, ADOPT_BLOCKED, AGREED] + ([CORRECTIONS, DISPUTES] if dispute else [])
     snapshot = {p: p.read_bytes() for p in paths if p.exists()}
     for f in spread:
         # bytes in, bytes out: CRLF sources and stray non-UTF-8 comment bytes must survive untouched
@@ -596,19 +612,23 @@ def land(rel, renames, now):
             elif f == rel and scope in spans:
                 text = rename(text, ident, new, spans[scope])
         (ROOT / f).write_bytes(text.encode("utf-8", "surrogateescape"))
-    rewrite_stored([(k, s, i, n) for k, s, i, n, _, _ in renames if k in ("type", "function")])
+    rewrite_stored([(k, s, i, n) for k, s, i, n, _, _ in renames if k in ("type", "function")], status if dispute else "two models agreed")
     if any(k == "type" and n in real_types() for k, s, i, n, _, _ in renames):
         # the stand-in now carries its real class name, so name_oracle's witness can name its members
         subprocess.run([sys.executable, str(ROOT / "tools/name_oracle.py"), "--todo", "--apply", rel],
                        cwd=ROOT, capture_output=True, check=True)
     why = next((f"{f}: {w}" for f in sorted(spread) if f.endswith((".cpp", ".c")) and (w := gate(f))), None)
     if not why:
-        append(AGREED, [{"key": key, "name": new, "models": models, "status": "applied", "date": now}
+        append(AGREED, [{"key": key, "name": ident if dispute else new, "models": models, "status": status, "date": now}
                         for kind, scope, ident, new, models, key in renames])
         git("add", *[str(p.relative_to(ROOT)) for p in paths if p.exists()])
+        if dispute:
+            document_corrections(status)
         # the hook refuses any staged source that still redeclares a header's type; this swaps or records each one
         subprocess.run([sys.executable, str(ROOT / "tools/adopt_header.py"), "--fix-staged"], cwd=ROOT, check=True)
-        done = commit([p for p in paths if p.exists()], f"name_lane: land {len(renames)} agreed name(s) in {Path(rel).name}")
+        done = commit([p for p in paths if p.exists()],
+                      f"name_lane: {status} ({renames[0][2]} in {Path(rel).name})" if dispute
+                      else f"name_lane: land {len(renames)} agreed name(s) in {Path(rel).name}")
         if done.returncode:
             out = (done.stdout + done.stderr).splitlines()
             why = "hook: " + " | ".join(l.strip() for l in out if l.startswith("  ") or "FAILED" in l)[:300]
@@ -617,6 +637,37 @@ def land(rel, renames, now):
         for p, data in snapshot.items():
             p.write_bytes(data)
     return why
+
+
+def document_corrections(reason):
+    """Putting a descriptive name back to its placeholder is what name_regression refuses unless an exact
+    correction documents it; record one for each finding the staged revert produces."""
+    import name_regression
+    findings, _ = name_regression.check(ROOT, "HEAD", ":")
+    entries = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    entries += [{**vars(f), "evidence": str(DISPUTES.relative_to(ROOT).as_posix()), "reason": reason} for f in findings]
+    CORRECTIONS.write_text(json.dumps(entries, indent=1) + "\n", encoding="utf-8")
+    git("add", str(CORRECTIONS.relative_to(ROOT)))
+
+
+def cmd_dispute(args):
+    """Put a landed name back to its placeholder, byte-gated, and reopen it for votes; the disputed name
+    is refused from then on."""
+    a = agreed_state().get(args.key)
+    if not a or a["status"] != "applied":
+        fail(f"{args.key}: no landed name to dispute")
+    rel, kind, scope, ident = args.key.split("|")
+    if not DISPUTES.exists():
+        DISPUTES.write_text("# Names the naming lane landed and a review disputed\n\n", encoding="utf-8")
+    with DISPUTES.open("a", encoding="utf-8") as f:
+        f.write(f"- `{args.key}`: `{a['name']}` back to `{ident}`. {args.reason}\n")
+    git("add", str(DISPUTES.relative_to(ROOT)))
+    why = land(rel, [(kind, scope, a["name"], ident, a["models"], args.key)], datetime.date.today().isoformat(),
+               status=f"disputed: {args.reason}")
+    if why:
+        fail(f"could not put {a['name']} back: {why}")
+    print(f"{a['name']} is {ident} again in {rel}; the key is open for new votes and refuses {a['name']}. Push the commit.")
+    return 0
 
 
 def cmd_apply(args):
@@ -697,7 +748,7 @@ def cmd_status(args):
     for kind, (n, b) in sorted(kinds.items(), key=lambda kv: -kv[1][1]):
         print(f"  {kind:9} {100 * (1 - b / n):6.2f}% readable  ({b:,} placeholders of {n:,})")
     print(f"votes: {len(table(VOTES)):,}; agreed: {len(state)} (landed {count['applied']}, waiting {count['agreed']}, "
-          f"blocked {count['blocked']}, stale {count['stale']})")
+          f"blocked {count['blocked']}, stale {count['stale']}, disputed {count['disputed']})")
     return 0
 
 
@@ -770,10 +821,14 @@ def main():
     s.add_argument("answer")
     s.add_argument("--session", required=True)
     sub.add_parser("apply")
+    d = sub.add_parser("dispute")
+    d.add_argument("key", help="as name_agreed.csv spells it: file|kind|scope|placeholder")
+    d.add_argument("--reason", required=True, help="what the code shows against the landed name")
     sub.add_parser("status")
     sub.add_parser("check").add_argument("--staged", action="store_true", required=True)
     args = ap.parse_args()
-    return {"next": cmd_next, "submit": cmd_submit, "apply": cmd_apply, "status": cmd_status, "check": cmd_check}[args.cmd](args)
+    return {"next": cmd_next, "submit": cmd_submit, "apply": cmd_apply, "dispute": cmd_dispute, "status": cmd_status,
+            "check": cmd_check}[args.cmd](args)
 
 
 if __name__ == "__main__":
