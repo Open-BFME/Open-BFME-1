@@ -1,53 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 //
 // Open-BFME5: the start-game announcement at retail 0x00649DB0, 177 bytes.
 // The room is marked closed, then the peer library is told to start with the
 // game number as its message.
 
-class StringBaseNarrowAJ
-{
-public:
-	void __cdecl format(class AsciiStringAJ text, ...);
-
-protected:
-	StringBaseNarrowAJ(void)
-	{
-		m_bfmeNarrowAJ = 0;
-	}
-
-	StringBaseNarrowAJ(const char *text);
-
-	StringBaseNarrowAJ(const StringBaseNarrowAJ &other);
-
-	~StringBaseNarrowAJ(void);
-
-	char *m_bfmeNarrowAJ;
-};
-
-class AsciiStringAJ : public StringBaseNarrowAJ
-{
-public:
-	AsciiStringAJ(void)
-	{
-	}
-
-	AsciiStringAJ(const char *text) : StringBaseNarrowAJ(text)
-	{
-	}
-
-	AsciiStringAJ(const AsciiStringAJ &other) : StringBaseNarrowAJ(other)
-	{
-	}
-
-	~AsciiStringAJ(void)
-	{
-	}
-
-	const char *bfmeTextAJ(void) const
-	{
-		return (m_bfmeNarrowAJ != 0) ? m_bfmeNarrowAJ + 8 : "";
-	}
-};
+#include "ascii_string.h"
 
 extern "C" void peerStartGameA(void *peer, const char *message, int reportIntention);
 
@@ -74,13 +32,13 @@ public:
 
 void BfmeSessionAJ::bfmeStartAJ(void *peer)
 {
-	AsciiStringAJ message;
+	AsciiString message;
 
-	message.format(AsciiStringAJ("%d"), m_bfmeNumberAJ);
+	message.format(AsciiString("%d"), m_bfmeNumberAJ);
 
 	m_bfmeRoomAJ.bfmeSetAJ("closedplaying", "");
 
-	peerStartGameA(peer, message.bfmeTextAJ(), 2);
+	peerStartGameA(peer, message.str(), 2);
 
 	m_bfmeStartedAJ = 1;
 }
