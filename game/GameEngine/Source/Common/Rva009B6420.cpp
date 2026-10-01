@@ -17,8 +17,8 @@ typedef char CheckRva009B6420NodeSize[(sizeof(Rva009B6420Node) == 12) ? 1 : -1];
 struct Rva009AC4B0State;
 struct Rva009AC2F0State;
 extern void __cdecl Rva009AC4B0AddValue(Rva009AC4B0State *, int, int);
-extern void __cdecl d_009ac2f0(void);
-typedef void (__cdecl *Rva009AC2F0Fn)(Rva009AC2F0State *, int, int);
+// Retail 0x009AC2F0 consumes three cdecl words and returns with RET.
+extern void __cdecl Rva009AC2F0PackBits(Rva009AC2F0State *, int, int);
 
 void __cdecl Rva009B6420(Rva009B6420Context *context,
 	const Rva009B6420Node *nodes, int bits, int bitCount)
@@ -34,7 +34,7 @@ void __cdecl Rva009B6420(Rva009B6420Context *context,
 		if (context->m_mode != 0)
 			Rva009AC4B0AddValue((Rva009AC4B0State *)context, bit, nodes[node].m_probability);
 		else
-			((Rva009AC2F0Fn)d_009ac2f0)((Rva009AC2F0State *)context, bit, nodes[node].m_probability);
+			Rva009AC2F0PackBits((Rva009AC2F0State *)context, bit, nodes[node].m_probability);
 
 		if (bit)
 			node = (nodes[node].m_right >> 1) & 0x7f;
