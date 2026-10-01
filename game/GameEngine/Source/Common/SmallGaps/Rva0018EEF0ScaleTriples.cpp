@@ -1,5 +1,6 @@
 // ?scaleTriples@Rva0018EEF0Owner@@QAEXM@Z
-extern unsigned int g_bfmeDirtyBG;
+// Address-derived DWORD storage view; the original global identity is unknown.
+unsigned int g_Rva00EEF418;
 struct Rva0018EEF0Triple { int x; int y; int z; };
 struct Rva0018EEF0Owner {
 	char m_pad[0x10];
@@ -11,7 +12,7 @@ struct Rva0018EEF0Owner {
 };
 void Rva0018EEF0Owner::scaleTriples(float scale)
 {
-	g_bfmeDirtyBG |= 1;
+	g_Rva00EEF418 |= 1;
 	for (int i = 0; i < m_count; ++i) {
 		m_triples[i].x = (int)(m_triples[i].x * scale);
 		m_triples[i].y = (int)(m_triples[i].y * scale);

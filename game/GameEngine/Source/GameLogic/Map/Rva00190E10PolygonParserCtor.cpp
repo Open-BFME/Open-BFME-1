@@ -26,7 +26,7 @@ public:
 struct BfmePolygonTriggerTable { PolygonTrigger *head; };
 extern "C" BfmePolygonTriggerTable *g_bfmePolygonTriggerTable;
 extern int g_bfmeBFAE;
-extern unsigned int g_bfmeDirtyBG;
+extern unsigned int g_Rva00EEF418;
 class BfmeLinkNode;
 extern BfmeLinkNode *TheBfmeLinkHead;
 extern void *g_0109BFBC[];
@@ -51,5 +51,5 @@ Rva00190E10PolygonParser::Rva00190E10PolygonParser(
     g_bfmePolygonTriggerTable->head = 0;
     g_bfmeBFAE = 1;
     delete old;
-    g_bfmeDirtyBG |= 1;
+    g_Rva00EEF418 |= 1;
 }

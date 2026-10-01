@@ -43,7 +43,7 @@ const Real MSEC_PER_LOGICFRAME_REAL = (((Real)MSEC_PER_SECOND) / ((Real)LOGICFRA
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 // Flag word whose bit 0 asks the water object to rebuild its polygon list.
-extern UnsignedInt g_bfmeDirtyBG;
+extern UnsignedInt g_Rva00EEF418;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
@@ -129,10 +129,10 @@ void WaterRenderObjClass::update(void)
 	Real elapsed = elapsedMs * 0.001f;
 	lastUpdateTime = now;
 
-	if (g_bfmeDirtyBG & 1)
+	if (g_Rva00EEF418 & 1)
 	{
 		rebuildPolygonList007A50A0(0);
-		g_bfmeDirtyBG &= ~1;
+		g_Rva00EEF418 &= ~1;
 	}
 
 	if (TheGameLogic)
