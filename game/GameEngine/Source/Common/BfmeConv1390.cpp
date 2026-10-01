@@ -1,10 +1,17 @@
 // Open-BFME5 conversions.
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is this body's "done the message" step.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJM
 {
 public:
 	void bfmeInitVJM(char *buf, int n);
-	void bfmeDoneVJM();
 	char m_bfmePad[0x34];
 };
 
@@ -50,5 +57,5 @@ void BfmeThingVJM::bfmeGoVJM(int a, int b)
 	msg.bfmeInitVJM(m_bfmeBuf, 0x400);
 	m_bfme10->bfmeA20VJM(&msg, a, b);
 	m_bfme14->bfmeB08VJM(&msg, bfmeCbVJM, this, m_bfme6dc);
-	msg.bfmeDoneVJM();
+	((Gen_007e86c0 *)&msg)->m();
 }

@@ -38,10 +38,12 @@ struct Rva7F4CC0ConstructorThunk : Rva7F4CC0Primary, Rva7F4CC0Child
 	Rva7F4CC0ConstructorThunk();
 };
 
-class Rva00800780Addr
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is the packet's closing step.
+class Gen_007e86c0
 {
 public:
-	~Rva00800780Addr();
+	void m();
 };
 
 class Rva007FA790Handler
@@ -119,6 +121,6 @@ int Rva007FA6C0::rva007FA790(unsigned now)
 		m_handler->v2(-201);
 		v5();
 	}
-	((Rva00800780Addr *)((char *)&packet + 0x14))->~Rva00800780Addr();
+	((Gen_007e86c0 *)((char *)&packet + 0x14))->m();
 	return 0;
 }

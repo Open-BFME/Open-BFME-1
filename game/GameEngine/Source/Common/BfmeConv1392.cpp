@@ -2,11 +2,18 @@
 
 class BfmeXVJO;
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is this body's "done the message" step.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJO
 {
 public:
 	void bfmeInitVJO(char *buf, int n);
-	void bfmeDoneVJO();
 	char m_bfmePad[0x34];
 };
 
@@ -125,5 +132,5 @@ void BfmeThingVJO::bfmeGoVJO(int id)
 	m_bfme14->bfmeB08VJO(&msg, 0, this, m_bfme6dc);
 	m_bfme2d8->bfmeResetVJO(p);
 	m_bfme1c->bfmeD44VJO(id);
-	msg.bfmeDoneVJO();
+	((Gen_007e86c0 *)&msg)->m();
 }

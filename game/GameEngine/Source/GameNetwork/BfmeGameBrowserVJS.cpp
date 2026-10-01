@@ -1,10 +1,17 @@
 // EA FESL gamebrowser host-state request at retail 0x007F5C30.
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is the end-of-scope teardown of the message.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH(char *buf, int n) throw();
-	~BfmeMsgVJH() throw();
 	char m_pad[0x34];
 };
 
@@ -138,4 +145,5 @@ void BfmeThingVJS::bfmeGoVJS(int id, int requesting, int state) throw()
 	BfmeMsgVJH msg(m_bfmeBuf, 0x400);
 	m_bfme10->send(&msg, requesting, id, state);
 	m_bfme14->send(&msg, 0, this, m_bfme6dc);
+	((Gen_007e86c0 *)&msg)->m();
 }

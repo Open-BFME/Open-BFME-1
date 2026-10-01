@@ -7,10 +7,17 @@
 extern "C" void *bfmeVft1045A[];
 extern "C" void *bfmeVft1045B[];
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is this body's per-slot teardown step.
+class Gen_007e86c0
+{
+public:
+	void m(void);
+};
+
 class BfmeSub1045
 {
 public:
-	void bfmeDone1045(void);
 	char m_bfmePad[0x24];
 };
 
@@ -45,7 +52,7 @@ void *Rva00800B70Owner::bfmeGo( unsigned char flags )
 
 	do {
 		p--;
-		p->bfmeDone1045();
+		((Gen_007e86c0 *)p)->m();
 	} while( --n != 0 );
 
 	if( flags & 1 )

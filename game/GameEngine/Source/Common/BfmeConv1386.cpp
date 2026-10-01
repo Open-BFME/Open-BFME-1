@@ -1,11 +1,18 @@
 // cl: /GS
 // Open-BFME5 conversions.
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is the end-of-scope teardown of the message.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJI
 {
 public:
 	BfmeMsgVJI(char *buf, int n) throw();
-	~BfmeMsgVJI() throw();
 	void bfmeSetVJI(const char *k, const char *v) throw();
 	void bfmeSet3VJI(const char *k, int v) throw();
 	int bfmeGetVJI(const char *k, int d) throw();
@@ -43,4 +50,5 @@ void BfmeThingVJI::bfmeGoVJI(BfmeMsgVJI *src)
 		msg.bfmeSet3VJI("TID", tid);
 	m_bfme18->bfmeNoteVJI(name);
 	bfmeSendVJI(&msg);
+	((Gen_007e86c0 *)&msg)->m();
 }

@@ -5,11 +5,18 @@
 
 // cl: /O2 /Ob0 /Oy
 
+// 0x007E86C0 is the shared FESL base cleanup (ledger:
+// ?m@Gen_007e86c0@@QAEXXZ); it is the end-of-scope teardown of the message.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH(char *buf, int n) throw();
-	~BfmeMsgVJH() throw();
 	char m_pad[0x34];
 };
 
@@ -178,4 +185,5 @@ void BfmeThingVJU::bfmeGoVJU() throw()
 	}
 	m_bfme10->sendFinal(&msg, 0);
 	m_bfme14->send(&msg, 0, this, m_bfme6dc);
+	((Gen_007e86c0 *)&msg)->m();
 }
