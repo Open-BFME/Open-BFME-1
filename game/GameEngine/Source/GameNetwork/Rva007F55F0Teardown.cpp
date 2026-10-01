@@ -5,10 +5,17 @@
 extern void *g_bfmeVftATWB[];
 extern void *g_bfmeVftBTWB[];
 
+// 0x007E86C0 is the matched shim ?m@Gen_007e86c0@@QAEXXZ (game/gen_small/fun_005.cpp):
+// the shared base cleanup that reinstalls vtable 0x01129358.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeStrTWB
 {
 public:
-	void bfmeDtorTWB();
 	char m_bfmePad[0x10];
 };
 
@@ -37,8 +44,8 @@ void Rva007F55F0Host::teardown()
 {
 	m_vft = g_bfmeVftATWB;
 	m_08 = 0;
-	m_a.bfmeDtorTWB();
-	m_b.bfmeDtorTWB();
+	((Gen_007e86c0 *)&m_a)->m();
+	((Gen_007e86c0 *)&m_b)->m();
 	m_list.bfmeDropTWB();
 	m_vft = g_bfmeVftBTWB;
 }

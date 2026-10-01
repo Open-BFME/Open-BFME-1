@@ -9,11 +9,18 @@ public:
 	char m_data[0x34];
 };
 
+// The trailing cleanup at 0x007F8693 is retail body 0x007E86C0, matched as
+// the shim ?m@Gen_007e86c0@@QAEXXZ (game/gen_small/fun_005.cpp).
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsg1052 : public BfmeC994
 {
 public:
 	BfmeMsg1052(char *buffer, int capacity) : BfmeC994(buffer, capacity) {}
-	~BfmeMsg1052();
 };
 
 void __cdecl Rva007F8640Callback(void *payload, BfmeHostBT *host);
@@ -70,4 +77,5 @@ void Rva007F8650Owner::request()
 	BfmeMsg1052 message(m_buffer, sizeof(m_buffer));
 	m_request->send(&message);
 	m_async->send(&message, Rva007F8640Callback, (BfmeHostBT *)this, m_transaction);
+	((Gen_007e86c0 *)&message)->m();
 }
