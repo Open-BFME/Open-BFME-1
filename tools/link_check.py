@@ -21,6 +21,9 @@ COMDAT copies with their retail-truth verdicts, and every file's blockers):
               the kept COMDAT copy is wrong, or the kept one of several
               definitions is not the ledger owner's). The holder is the one
               the census's /MAP showed, else the first definer in link order
+  alias_target  an /alternatename alias A=B the object declares or resolves a
+              call through, whose B is not the body at A's pinned address
+              (tools/alias_guard.py). A name an alias resolves is not unresolved
 
 It prints the file's LINKED bytes (its own authored + vendored bytes, 0xCC out,
 as progress.real_split counts them) at the census and now. The census is the
@@ -62,6 +65,7 @@ import link_census  # noqa: E402
 INDEX = link_census.OUT / "link_index.pkl"
 COMMON_SCHEMA = 1
 WEAK_SCHEMA = 4
+ALIAS_SCHEMA = 1
 _WEAK_PREVIEW_TOKEN = object()
 ADDRESSES = "<hard-coded image addresses>"
 
@@ -89,13 +93,14 @@ def source_bytes(sources=None):
             for source, found in intervals.items()}
 
 
-def write_index(present, facts, blockers, excuses, meta, selection, *, publish=True):
+def write_index(present, facts, blockers, excuses, meta, selection, *, publish=True, aliases=None):
     """Called by link_census.write_status: what a per-file check needs from the
     census, in one pickle. `facts` is link_census.read_facts(present);
     `selection` holds link_census.selection_verdicts' results, holder
-    exceptions and ledger owners."""
-    index = {"meta": meta, **index_tables(present, facts, selection), "blockers": blockers, "excuses": excuses,
-             "bytes": source_bytes(set(blockers))}
+    exceptions and ledger owners; `aliases` link_census.alias_blockers'
+    {alias: [(object index, target)]} (read from the objects when None)."""
+    index = {"meta": meta, **index_tables(present, facts, selection, aliases), "blockers": blockers,
+             "excuses": excuses, "bytes": source_bytes(set(blockers))}
     if publish:
         publish_index(index)
     return index
@@ -129,10 +134,10 @@ def selected_receipt_digest(selection):
     return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
-def index_tables(present, facts, selection):
+def index_tables(present, facts, selection, aliases=None):
     """The index's definition tables: every object's exclusive definitions and
-    COMDAT copies by name, and the census's selection (holder exceptions,
-    ledger owners)."""
+    COMDAT copies by name, its /alternatename aliases, and the census's
+    selection (holder exceptions, ledger owners)."""
     if len(present) != len(facts):
         raise ValueError("index needs facts for every census object")
     selection = {**selection, "weak_receipt": selected_receipt_digest(selection)}
@@ -148,7 +153,17 @@ def index_tables(present, facts, selection):
             comdat[name].append((index, digest, verdict))
         for name, size in common_facts[index].items():
             common[name].append((index, size))
+    if aliases is None:
+        import alias_guard
+        aliases = collections.defaultdict(list)
+        for index, (obj, fact) in enumerate(zip(present, facts)):
+            data = getattr(fact, "data", None)
+            found = (alias_guard.drectve_aliases(data) if isinstance(data, bytes)
+                     else alias_guard.object_aliases(obj))
+            for alias, target in found:
+                aliases[alias].append((index, target))
     return {"objects": [obj.name for obj in present], "strong": dict(strong), "comdat": dict(comdat),
+            "aliases": dict(aliases), "alias_schema": ALIAS_SCHEMA,
             "selection": selection, "common": dict(common), "common_schema": COMMON_SCHEMA,
             "weak_schema": WEAK_SCHEMA, "weak_root": str(ROOT.resolve()),
             "weak_inventory": {obj.name: (str(obj), hashlib.sha256(fact.data).hexdigest())
@@ -294,6 +309,8 @@ def refresh(index, objects, truth):
     replacements = {position: (link_census.common_definitions(obj, data=payloads[position]),
                                 link_census.object_facts(obj, truth, data=payloads[position]))
                     for position, obj in positions.items()}
+    import alias_guard
+    declared = {position: alias_guard.drectve_aliases(payloads[position]) for position in positions}
     updated = {**index, **{table: {name: list(entries) for name, entries in index[table].items()}
                           for table in ("strong", "comdat", "common")}}
     for table, at in (("strong", lambda entry: entry), ("comdat", lambda entry: entry[0]),
@@ -309,6 +326,11 @@ def refresh(index, objects, truth):
             updated["comdat"].setdefault(name, []).append((position, digest, verdict))
         for name, size in common.items():
             updated["common"].setdefault(name, []).append((position, size))
+    updated["aliases"] = {name: [entry for entry in entries if entry[0] not in positions]
+                          for name, entries in index.get("aliases", {}).items()}
+    for position, found in declared.items():
+        for alias, target in found:
+            updated["aliases"].setdefault(alias, []).append((position, target))
     updated["_weak_current_objects"] = dict(index.get("_weak_current_objects", {})) if index.get("_weak_token") is _WEAK_PREVIEW_TOKEN else {}
     for position, (_, fact) in replacements.items():
         updated["_weak_current_objects"][positions[position].name] = (fact.truth if isinstance(fact, link_census.ObjectFacts) else None,
@@ -329,12 +351,24 @@ def refresh(index, objects, truth):
             updated["comdat"][name] = [(at, digest if at == position else old_digest,
                                          verdict if at == position else old_verdict)
                                         for at, old_digest, old_verdict in updated["comdat"][name]]
-    for table in ("strong", "comdat", "common", "_weak_current_objects", "_weak_token", "weak_inventory"):
+    for table in ("strong", "comdat", "common", "aliases", "_weak_current_objects", "_weak_token", "weak_inventory"):
         index[table] = updated[table]
 
 
-def check_object(obj, index, truth, source=None):
-    """{unresolved, duplicates, comdat, addresses} for one object against the index."""
+_JUDGE = []
+
+
+def alias_judge():
+    """One alias_guard.Judge per process, built on first use (it reads the ledger)."""
+    if not _JUDGE:
+        import alias_guard
+        _JUDGE.append(alias_guard.Judge())
+    return _JUDGE[0]
+
+
+def check_object(obj, index, truth, source=None, judge=None):
+    """{unresolved, duplicates, comdat, addresses, selected, alias_target} for one object against the index."""
+    import alias_guard
     import link_debt
     require_common_index(index)
     data = _object_bytes(obj)
@@ -352,9 +386,32 @@ def check_object(obj, index, truth, source=None):
 
     mine = set(defined) | {name for name, _, _, _ in copies}
     excuses = index["excuses"]
-    unresolved = sorted(name for name in set(undefined) - mine - set(common)
-                        if not elsewhere(name) and not link_census.excused(
-                            name, excuses["runtime"], excuses["imported"], excuses["stubs"]))
+
+    def resolves(name):
+        return (name in mine or name in common or elsewhere(name) or link_census.excused(
+            name, excuses["runtime"], excuses["imported"], excuses["stubs"]))
+
+    missing = {name for name in set(undefined) - mine - set(common) if not resolves(name)}
+    # /alternatename:A=B resolves A when nothing defines it and B resolves: this
+    # object's own directives and every other census object's (they are global).
+    declared = alias_guard.drectve_aliases(data)
+    targets = collections.defaultdict(set)
+    for alias, entries in index.get("aliases", {}).items():
+        if alias in missing:
+            targets[alias].update(target for i, target in entries if i != own)
+    for alias, target in declared:
+        targets[alias].add(target)
+    through = {name for name in missing if any(resolves(target) for target in targets.get(name, ()))}
+    unresolved = sorted(missing - through)
+    judged = [(alias, target) for alias, target in declared] + [
+        (name, target) for name in through for target in targets[name]]
+    alias_why = {}
+    if judged:
+        judge = judge or alias_judge()
+        for alias, target in judged:
+            verdict, why = judge.verdict(alias, target)
+            if verdict == "wrong":
+                alias_why[f"{alias}={target}"] = why
     duplicates = sorted(name for name in mine if duplicate(name, position, name in set(defined), own, index))
     losers = []
     for name, digest, _, verdict in copies:
@@ -372,7 +429,8 @@ def check_object(obj, index, truth, source=None):
             pass
     return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses,
             "selected": wrong_selected(obj, (copies, defined, undefined, weaks), own, position, index,
-                                       common_names=common)}
+                                       common_names=common),
+            "alias_target": sorted(alias_why), "alias_why": alias_why}
 
 
 def wrong_selected(obj, fact, own, position, index, *, common_names=()):
@@ -439,7 +497,8 @@ def resolve(argument, index):
 def report(source, obj, result, index, now_bytes):
     census = index["blockers"].get(source or "", {})
     before = index["bytes"].get(source, 0) if census.get("linked") else 0
-    clean = not any(result[kind] for kind in ("unresolved", "duplicates", "comdat", "addresses", "selected"))
+    clean = not any(result.get(kind) for kind in ("unresolved", "duplicates", "comdat", "addresses", "selected",
+                                                   "alias_target"))
     after = now_bytes if clean else 0
     print(f"{source or obj.name}: {'LINKS' if clean else 'does not link'}  "
           f"LINKED {before:,} -> {after:,} bytes (census {index['meta'].get('date', '?')} at "
@@ -454,6 +513,9 @@ def report(source, obj, result, index, now_bytes):
         print(f"  comdat      {name}  ({rule}: {why})")
     for name in result["selected"]:
         print(f"  selected    {name}  (the definition the link keeps is not retail's)")
+    for name in result.get("alias_target", ()):
+        print(f"  alias_target {name}  (/alternatename binds the call to another body: "
+              f"{result.get('alias_why', {}).get(name, '')})")
     if result["addresses"]:
         print(f"  addresses   {len(result['addresses'])} hard-coded image address(es), e.g. {result['addresses'][0]}")
     return clean
@@ -476,6 +538,8 @@ HINTS = {
     "losers": "a COMDAT copy that is not retail's body: fix or remove the wrong emitter",
     "wrong_selected": "the link keeps a non-retail definition: fix or remove the wrong emitter ahead of retail's copy",
     "addresses": "hard-coded image addresses: name them (tools/link_debt.py)",
+    "alias_target": "an /alternatename alias binds a call to another body than its pin's: respell the call to the "
+                    "row name at the pinned address or fix the pin (tools/alias_guard.py)",
 }
 
 
@@ -492,7 +556,7 @@ def queue_rows(index):
         if entry["linked"]:
             continue
         names = (set(entry["unresolved"]) | set(entry["duplicates"]) | set(entry["losers"])
-                 | set(entry.get("wrong_selected", ())))
+                 | set(entry.get("wrong_selected", ())) | set(entry.get("alias_target", ())))
         if entry["addresses"]:
             names.add(ADDRESSES)
         if len(names) == 1:
@@ -501,7 +565,7 @@ def queue_rows(index):
             files[name].append(source)
     kinds = {}
     for entry in index["blockers"].values():
-        for kind in ("unresolved", "duplicates", "losers", "wrong_selected"):
+        for kind in ("unresolved", "duplicates", "losers", "wrong_selected", "alias_target"):
             for name in entry.get(kind, ()):
                 kinds.setdefault(name, kind)
     census = index["meta"].get("commit", "")

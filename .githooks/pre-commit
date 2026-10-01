@@ -100,6 +100,8 @@ present tools/ea_name_guard.py && { python3 tools/ea_name_guard.py --staged || f
 present tools/name_lane.py && { python3 tools/name_lane.py check --staged || fail "a placeholder was renamed outside the naming lane (see above)"; }
 # A literal image address matches bytes but breaks the linked build; name the global.
 python3 tools/link_debt.py --staged || fail "new hard-coded image address (see above)"
+# An /alternatename alias must name the body at its alias's pinned address.
+present tools/alias_guard.py && { python3 tools/alias_guard.py --staged || fail "an alias binds a call to another body (see above)"; }
 
 # WorldBuilder has a separate image and ledger; verify it before the game-only
 # early exit, then keep its exclusive sources out of the game's source parser.

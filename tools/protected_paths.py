@@ -51,7 +51,7 @@ PROTECTED = (
     # evidence reuse and the publish window both decide whether a gate runs
     "tools/gate_evidence.py", "tools/publish_window.py",
     # the linked-build rules
-    "tools/link_census.py", "tools/link_debt.py",
+    "tools/link_census.py", "tools/link_debt.py", "tools/alias_guard.py",
     # ledger, identity and direction guards the hooks call
     "tools/check_csv.py", "tools/conversion_gate.py", "tools/identity_guard.py",
     "tools/multi_name.py", "tools/ctor_vtable.py", "tools/null_reloc.py",
@@ -118,6 +118,7 @@ SHRINK_ONLY = {
     "targets/game/reverse/full_gate_baseline.txt": (_grown_lines, None),
     "targets/game/reverse/dir32_known_red.txt": (_grown_lines, None),
     "targets/game/reverse/identity_baseline.txt": (_grown_counts, None),
+    "targets/game/reverse/alias_target_baseline.txt": (_grown_lines, None),
     "targets/game/reverse/name_oracle_baseline.csv": (_grown_findings, "tools/name_oracle.py"),
 }
 

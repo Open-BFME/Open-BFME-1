@@ -1,0 +1,8 @@
+# /alternatename aliases whose target is not the body at the alias's pinned address
+# (tools/alias_guard.py). Shrink-only: fix the alias, never add a line. 'source: A=B'.
+game/GameEngine/Source/Common/BfmeObjZHSetZH.cpp: ??0AsciiString@@QAE@ABV0@@Z=??0?$StringBase@D@@AAE@ABV0@@Z
+game/GameEngine/Source/GameClient/Rva00608FE0ElementCopyConstructor.cpp: ??1BfmeLegendStringVec@@QAE@XZ=??1SubsystemLegendEntry@@QAE@XZ
+game/GameEngine/Source/GameLogic/Object/ObjectSetDisabledUntil.cpp: ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ
+game/GameEngine/Source/GameLogic/Object/Object_clearDisabled_Thunk.cpp: ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ
+game/GameEngine/Source/GameLogic/Object/Object_clearDisabled_Thunk.cpp: ?countInverseIntersection@?$BitFlags@$0L@@@QBEHABV1@@Z=?j_000108f2@@YAXXZ
+game/GameEngine/Source/GameLogic/System/GameLogicDestructorThunk.cpp: ??1Rva00387480IntList@@QAE@XZ=??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ
