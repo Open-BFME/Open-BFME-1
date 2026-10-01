@@ -29,7 +29,7 @@ struct InGameUI
 class Shell;
 extern void *g_obj12F4B40;
 extern Shell *TheShell;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail [0x012F19E8]
 
 // ?HideSaveLoadMenu@@YAXXZ
 void HideSaveLoadMenu(void)
@@ -46,5 +46,5 @@ void HideSaveLoadMenu(void)
 	static_cast<SaveLoadMenu *>(g_obj12F4B40)->m_25c = 0;
 	((InGameUI *)TheShell)->m_menuHidden = true;
 
-	g_theWindowManager->hideQuitMenu();
+	g_rva012F19E8WindowManager->hideQuitMenu();
 }

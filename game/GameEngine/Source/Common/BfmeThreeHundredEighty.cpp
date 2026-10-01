@@ -16,7 +16,9 @@ public:
 	void bfmeSendAAA(void *what, bool flag, int more);
 };
 
-extern BfmeModeAAA *g_bfmeModeAAA;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeSinkAAA *g_bfmeSinkAAA;
 
 class BfmeThingAAA
@@ -36,5 +38,5 @@ void BfmeThingAAA::bfmeGoAAA(int at)
 	void *what = m_bfmeSlots[at].m_bfmeWhat;
 	if (what == 0)
 		return;
-	g_bfmeSinkAAA->bfmeSendAAA(what, g_bfmeModeAAA->m_bfmeMode != 2, 0);
+	g_bfmeSinkAAA->bfmeSendAAA(what, ((BfmeModeAAA *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
 }

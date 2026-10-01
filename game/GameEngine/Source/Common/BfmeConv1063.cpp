@@ -8,7 +8,9 @@ public:
 	void bfmeRun1063(BfmeX1063 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1063 *g_bfmeR1063;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmtC1063[];
 
 class BfmeQ1063
@@ -27,7 +29,7 @@ void BfmeQ1063::bfmeGo1063Q(void)
 {
 	m_bfme3a8 = 1;
 	if (!(m_bfme3d4 & 2)) {
-		g_bfmeR1063->bfmeRun1063(m_bfme250, g_bfmeFmtC1063, 0, 0, 0, 0, 0, 0);
+		((BfmeR1063 *)g_rva012F19E8WindowManager)->bfmeRun1063(m_bfme250, g_bfmeFmtC1063, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
 }

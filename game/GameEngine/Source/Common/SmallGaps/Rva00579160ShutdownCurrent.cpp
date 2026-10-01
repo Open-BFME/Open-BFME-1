@@ -5,7 +5,9 @@ struct Rva00579160Current { char m_pad[0x58]; Rva00579160Part m_part; };
 struct Rva00579160Manager { void notify(); };
 extern Rva00579160Current* Rva00579160TheCurrent;
 extern int Rva00579160Flag;
-extern Rva00579160Manager* Rva00579160TheManager;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager* g_rva012F19E8WindowManager;
 struct Rva00579160Owner {
 	char m_pad[0x3ac];
 	Rva00579160Sub m_sub;
@@ -18,5 +20,5 @@ void Rva00579160Owner::shutdownCurrent(int unused)
 		Rva00579160TheCurrent->m_part.release(1);
 	Rva00579160TheCurrent = 0;
 	if (Rva00579160Flag)
-		Rva00579160TheManager->notify();
+		((Rva00579160Manager*)g_rva012F19E8WindowManager)->notify();
 }

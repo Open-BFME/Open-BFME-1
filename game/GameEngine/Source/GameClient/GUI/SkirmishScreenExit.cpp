@@ -46,7 +46,7 @@ private:
 
 extern SkirmishGameInfo *g_bfmeCurrentCB;
 extern void *g_obj12F4B54;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail [0x012F19E8]
 
 void BfmeAptScreenSkirmish::_bfme_exit( void * )
 {
@@ -58,5 +58,5 @@ void BfmeAptScreenSkirmish::_bfme_exit( void * )
 	void *screen = g_obj12F4B54;
 	g_bfmeCurrentCB = 0;
 	if( screen )
-		g_theWindowManager->hideQuitMenu();
+		g_rva012F19E8WindowManager->hideQuitMenu();
 }

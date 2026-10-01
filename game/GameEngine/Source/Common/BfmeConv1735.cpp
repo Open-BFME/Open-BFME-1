@@ -4,7 +4,9 @@ public:
 	void bfmeRunAG(void);
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void *g_bfmeReadyAG;
 
 class BfmeOwnAG
@@ -33,7 +35,7 @@ int BfmeOwnAG::bfmeHandleAG(int code, unsigned char kind, int flags)
 	}
 
 	if ((flags & 1) && m_bfmeBusyAG == 0 && g_bfmeReadyAG)
-		g_mgr12F19E8->bfmeRunAG();
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeRunAG();
 
 	return 1;
 }
