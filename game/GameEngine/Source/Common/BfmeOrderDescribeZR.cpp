@@ -4,11 +4,18 @@
 // Sibling of 0x00674C30, but the field it reports is itself a string, so the
 // null-test-and-skip-the-header expansion appears twice.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZR/AsciiStringZR), which named retail's callee
+// ?format@StringBaseNarrowZR@@QAAXVAsciiStringZR@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZR
 {
-public:
-	void __cdecl format(class AsciiStringZR text, ...);
-
 protected:
 	StringBaseNarrowZR(void)
 	{
@@ -64,7 +71,7 @@ AsciiStringZR BfmeOrderZR::bfmeDescribeZR(void)
 {
 	AsciiStringZR text;
 
-	text.format(AsciiStringZR("%s, challenge=%s"),
+	((AsciiString &)text).format(AsciiString("%s, challenge=%s"),
 			bfmeNameZR().bfmeTextZR(), m_bfmeChallengeZR.bfmeTextZR());
 
 	return text;

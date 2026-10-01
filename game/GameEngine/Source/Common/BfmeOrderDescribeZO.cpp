@@ -3,11 +3,18 @@
 // Open-BFME5: the order description at retail 0x006756E0, 185 bytes.
 // Sibling of 0x00674C30; the fields it reports are what differ.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZO/AsciiStringZO), which named retail's callee
+// ?format@StringBaseNarrowZO@@QAAXVAsciiStringZO@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZO
 {
-public:
-	void __cdecl format(class AsciiStringZO text, ...);
-
 protected:
 	StringBaseNarrowZO(void)
 	{
@@ -64,7 +71,7 @@ AsciiStringZO BfmeOrderZO::bfmeDescribeZO(void)
 {
 	AsciiStringZO text;
 
-	text.format(AsciiStringZO("%s, leavePlayer=%d playerLeaveFrame=%d"),
+	((AsciiString &)text).format(AsciiString("%s, leavePlayer=%d playerLeaveFrame=%d"),
 			bfmeNameZO().bfmeTextZO(), m_bfmeLeavePlayerZO, m_bfmeLeaveFrameZO);
 
 	return text;

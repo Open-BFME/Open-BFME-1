@@ -4,11 +4,18 @@
 // Same shape as the order descriptions, but the name comes from a static
 // lookup on the command type rather than from a member.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZK/AsciiStringZK), which named retail's callee
+// ?format@StringBaseNarrowZK@@QAAXVAsciiStringZK@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZK
 {
-public:
-	void __cdecl format(class AsciiStringZK text, ...);
-
 protected:
 	StringBaseNarrowZK(void)
 	{
@@ -68,7 +75,7 @@ AsciiStringZK BfmeMessageZK::bfmeDescribeZK(void)
 {
 	AsciiStringZK text;
 
-	text.format(AsciiStringZK("GameMessage:%s, frame=%d, player=%d, id=%d"),
+	((AsciiString &)text).format(AsciiString("GameMessage:%s, frame=%d, player=%d, id=%d"),
 			bfmeTypeNameZK(m_bfmeTypeZK).bfmeTextZK(), m_bfmeFrameZK, m_bfmePlayerZK,
 			m_bfmeIdZK);
 

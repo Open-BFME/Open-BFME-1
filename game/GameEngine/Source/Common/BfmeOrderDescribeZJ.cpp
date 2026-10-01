@@ -4,11 +4,18 @@
 // thirteen sibling descriptions in the same translation unit: each returns a
 // string by value, built from a name fetched by value and a few fields.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZJ/AsciiStringZJ), which named retail's callee
+// ?format@StringBaseNarrowZJ@@QAAXVAsciiStringZJ@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZJ
 {
-public:
-	void __cdecl format(class AsciiStringZJ text, ...);
-
 protected:
 	StringBaseNarrowZJ(void)
 	{
@@ -66,7 +73,7 @@ AsciiStringZJ BfmeOrderZJ::bfmeDescribeZJ(void)
 {
 	AsciiStringZJ text;
 
-	text.format(AsciiStringZJ("%s, commandID=%d, originalPlayer=%d, originalExecFrame=%d"),
+	((AsciiString &)text).format(AsciiString("%s, commandID=%d, originalPlayer=%d, originalExecFrame=%d"),
 			bfmeNameZJ().bfmeTextZJ(), m_bfmeCommandZJ, m_bfmePlayerZJ, m_bfmeFrameZJ);
 
 	return text;

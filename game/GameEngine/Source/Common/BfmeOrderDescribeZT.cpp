@@ -4,11 +4,18 @@
 // Here the name comes from a virtual call on the owner the order points at,
 // so the struct return slot is passed to an indirect call.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZT/AsciiStringZT), which named retail's callee
+// ?format@StringBaseNarrowZT@@QAAXVAsciiStringZT@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZT
 {
-public:
-	void __cdecl format(class AsciiStringZT text, ...);
-
 protected:
 	StringBaseNarrowZT(void)
 	{
@@ -72,7 +79,7 @@ AsciiStringZT BfmeOrderZT::bfmeDescribeZT(void)
 {
 	AsciiStringZT text;
 
-	text.format(AsciiStringZT("%s, relay=0x%X"),
+	((AsciiString &)text).format(AsciiString("%s, relay=0x%X"),
 			m_bfmeOwnerZT->bfmeNameZT().bfmeTextZT(), m_bfmeRelayZT);
 
 	return text;
