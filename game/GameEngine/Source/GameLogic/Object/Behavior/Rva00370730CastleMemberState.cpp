@@ -92,7 +92,12 @@ struct Rva00370730ModuleData
 	unsigned char m_isCastleBehavior;
 };
 
-extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
+// The singleton itself is retail's PlayerList (game/GameEngine/Source/Common/RTS/PlayerList.cpp
+// defines `PlayerList *ThePlayerList`); only the +0x0C local-player subobject is still
+// address-named, so the global keeps its real spelling and the read is cast.
+class PlayerList;
+
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 extern GameLogic *TheBfmeGameLogic;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern Eva *TheEva;
@@ -113,7 +118,7 @@ void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
 		if( moduleData->m_isCastleBehavior )
 		{
 			Player *localPlayer =
-				g_rva005655C0PlayerList->m_localPlayer0c;
+				((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer0c;
 			if( localPlayer ==
 				(*(Object * volatile *)( self - 0x08 ))->getControllingPlayer() )
 			{

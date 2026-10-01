@@ -36,14 +36,19 @@ public:
 	int bfmeFirst1096(int a, int b);
 };
 
-extern BfmeD1096 *g_bfmeD1096;
+// 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
+// defines `PlayerList *ThePlayerList`); only the address-derived lookups this TU
+// spells are still unnamed, so the global keeps its real spelling and the reads are cast.
+class PlayerList;
+
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 extern BfmeP1096 *g_bfmeP1096;
 
 void __stdcall bfmeGo1096A(int a, char b)
 {
 	a = g_bfmeP1096->bfmeFirst1096(a, 0);
 	while ((short)a) {
-		BfmeR1096 *r = g_bfmeD1096->bfmeLook1096((short *)&a);
+		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
 		if (r)
 			r->m_bfme681 = b;
@@ -54,7 +59,7 @@ void __stdcall bfmeGo1096B(int a, int b)
 {
 	a = g_bfmeP1096->bfmeFirst1096(a, 0);
 	while ((short)a) {
-		BfmeR1096 *r = g_bfmeD1096->bfmeLook1096((short *)&a);
+		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
 		if (r)
 			r->bfmeSet1096(b - 1);
@@ -65,7 +70,7 @@ void __stdcall bfmeGo1096C(int a, int b)
 {
 	a = g_bfmeP1096->bfmeFirst1096(a, 0);
 	while ((short)a) {
-		BfmeR1096 *r = g_bfmeD1096->bfmeLook1096((short *)&a);
+		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
 		if (r) {
 			r->bfmeAdj1096(r->m_bfme258 + b);
@@ -82,7 +87,7 @@ void __stdcall bfmeGo1096D(int a, int b, char c)
 		return;
 	b = g_bfmeP1096->bfmeFirst1096(a + 0x10, 0);
 	while ((short)b) {
-		BfmeR1096 *r = g_bfmeD1096->bfmeLook1096((short *)&b);
+		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&b);
 
 		if (r) {
 			if (c)

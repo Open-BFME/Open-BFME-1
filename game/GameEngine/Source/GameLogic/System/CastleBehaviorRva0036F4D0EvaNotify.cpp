@@ -180,7 +180,12 @@ extern GameLogic *TheBfmeGameLogic;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern Eva *TheEva;
 extern Radar *TheRadar;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The singleton itself is retail's PlayerList (game/GameEngine/Source/Common/RTS/PlayerList.cpp
+// defines `PlayerList *ThePlayerList`); only the +0x0C local-player subobject is still
+// address-named, so the global keeps its real spelling and the reads are cast.
+class PlayerList;
+
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 // Plays the local, allied or enemy Eva message configured on the +0xA0 object's
 // CastleMemberBehavior module; the local message also raises a radar event.
@@ -194,8 +199,8 @@ void CastleBehavior::playEvaEventsForCastlePacking()
 	if (controllingPlayer == 0)
 		return;
 
-	Player *localPlayer = Rva002EE330ThePlayers ?
-		Rva002EE330ThePlayers->getLocalPlayer() : 0;
+	Player *localPlayer = ThePlayerList ?
+		((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer() : 0;
 	if (localPlayer == 0)
 		return;
 

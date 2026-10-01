@@ -39,12 +39,17 @@ public:
 	Player *getControllingPlayer() const;
 };
 
+// The singleton itself is retail's PlayerList (game/GameEngine/Source/Common/RTS/PlayerList.cpp
+// defines `PlayerList *ThePlayerList`); only the member this body calls is still
+// address-named, so the global keeps its real spelling and the call is cast.
+class PlayerList;
+
 struct Rva002EE330PlayerList
 {
 	PlayerMaskType getPlayersWithRelationship(Int playerIndex, Int allowedRelationships, Bool includeSelf);
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 extern const Real BfmeShadowScale;
 extern const Real BfmeZeroRange;
@@ -138,7 +143,7 @@ Real Rva001CA6C0::rva001CA6C0(UnsignedInt *lookingMask)
 	}
 	else
 	{
-		*lookingMask = (PlayerMaskType)Rva002EE330ThePlayers->getPlayersWithRelationship(
+		*lookingMask = (PlayerMaskType)((Rva002EE330PlayerList *)ThePlayerList)->getPlayersWithRelationship(
 				controller->getPlayerIndex(), 3, false)
 			| ((Rva000C9CE0WordGetter *)controller)->get();
 	}

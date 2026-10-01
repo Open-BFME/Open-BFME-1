@@ -58,14 +58,19 @@ public:
 	BfmeLinkedObjBE* findObjBE(int id);
 	BfmeObjAF0_2* findObjAF(int id);
 };
-extern BfmeMgrD74_Linked *g_mgr12ED748;
+// 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
+// defines `PlayerList *ThePlayerList`); only the address-derived lookups this TU
+// spells are still unnamed, so the global keeps its real spelling and the reads are cast.
+class PlayerList;
+
+extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 void __stdcall bfmeLinkObjectsA70(void *k1, void *k2)
 {
 	int id2 = g_mgr12F076C->findSomething(k2, 0);
 	int id1 = g_mgr12F076C->findSomething(k1, 0);
-	BfmeLinkedObj *obj2 = g_mgr12ED748->findObj(id2);
-	BfmeLinkedObj *obj1 = g_mgr12ED748->findObj(id1);
+	BfmeLinkedObj *obj2 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
+	BfmeLinkedObj *obj1 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
 	if (obj2 && obj1) {
 		obj2->link(obj1, 0);
 	}
@@ -75,8 +80,8 @@ void __stdcall bfmeNotifyLinkedBE0(void *k1, void *p3, void *k2)
 {
 	int id2 = g_mgr12F076C->findSomething(k2, 0);
 	int id1 = g_mgr12F076C->findSomething(k1, 0);
-	BfmeLinkedObjBE *obj2 = (BfmeLinkedObjBE*)g_mgr12ED748->findObj(id2);
-	BfmeLinkedObjBE *obj1 = (BfmeLinkedObjBE*)g_mgr12ED748->findObj(id1);
+	BfmeLinkedObjBE *obj2 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
+	BfmeLinkedObjBE *obj1 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
 	if (obj2 && obj1) {
 		obj1->notifyOther(obj2, p3);
 	}
@@ -114,7 +119,7 @@ void __stdcall bfmeAttachSubAF0(void *k1, void *k2)
 {
 	BfmeObjVfnAF0 *obj1 = (BfmeObjVfnAF0*)g_mgr12F076C->vfn26(k1);
 	int id2 = g_mgr12F076C->findSomething(k2, 0);
-	BfmeObjAF0_2 *obj2 = (BfmeObjAF0_2*)g_mgr12ED748->findObj(id2);
+	BfmeObjAF0_2 *obj2 = (BfmeObjAF0_2*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
 	if (obj1 && obj2 && obj2->m_sub230) {
 		obj1->vfn20(obj2->m_sub230);
 		bfmeHelper760(obj1, 0);
