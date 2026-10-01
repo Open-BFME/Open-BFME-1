@@ -131,7 +131,7 @@ public:
 	virtual int winSetFocus( GameWindow *window );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 extern GameWindowManager *TheWindowManager;
 extern UnicodeString g_personaText;
 extern void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
@@ -186,7 +186,7 @@ void BfmeAptScreenSkirmish::personaRemove( int )
 
 		_bfme_refreshProfile();
 		m_preferences.write();
-		g_theWindowManager->unidentified_00015235(
+		g_rva012F19E8WindowManager->unidentified_00015235(
 			m_movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
 		m_profileOpen = true;
 		void **preferencesVtable = *(void ***)&m_preferences;
@@ -199,7 +199,7 @@ void BfmeAptScreenSkirmish::personaRemove( int )
 	{
 		{
 			int movie = m_movie;
-			g_theWindowManager->unidentified_00015235(
+			g_rva012F19E8WindowManager->unidentified_00015235(
 				movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
 		}
 		m_profileOpen = true;
@@ -208,7 +208,7 @@ void BfmeAptScreenSkirmish::personaRemove( int )
 		TheWindowManager->winSetFocus( focusWindow );
 		GadgetTextEntrySetText( m_createPersonaEntry, g_personaText );
 		int finalMovie = m_movie;
-		WindowManager *windowManager = g_theWindowManager;
+		WindowManager *windowManager = g_rva012F19E8WindowManager;
 		windowManager->unidentified_00015235(
 			finalMovie, kPersonaAction, 0, 0, 0, 0, 0, 0 );
 	}

@@ -114,7 +114,7 @@ private:
 	BfmeOnlineLoginContext *m_context;					///< retail this+0x34
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 extern GameTextInterface *TheGameText;
 extern BfmeAptScreenOnlineLogin *TheBfmeOnlineLogin;
 
@@ -125,22 +125,22 @@ void BfmeAptScreenOnlineLogin::_bfme_register( const char * )
 	{
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonDeleteNickname", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonCreate", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonLogin", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"DisableButtonServiceTerms", 0, 0, 0, 0 );
 		}
 
@@ -166,22 +166,22 @@ void BfmeAptScreenOnlineLogin::_bfme_register( const char * )
 
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"EnableButtonDeleteNickname", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"EnableButtonCreate", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"EnableButtonLogin", 0, 0, 0, 0 );
 		}
 		{
 			void *window = m_context->m_window;
-			g_theWindowManager->add( window,
+			g_rva012F19E8WindowManager->add( window,
 				"CallChild", 1, (void *)"EnableButtonServiceTerms", 0, 0, 0, 0 );
 		}
 	}

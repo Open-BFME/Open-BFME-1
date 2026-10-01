@@ -28,17 +28,17 @@ public:
 	void _bfme_removeNamedAptGadget( const AsciiString &name );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 extern void bfmeGoDZFc( int value );
 
 static void clearValue( int value )
 {
 	bfmeGoDZFc( value );
-	if ( g_theWindowManager != 0 )
+	if ( g_rva012F19E8WindowManager != 0 )
 	{
 		AsciiString name;
 		name.format( AsciiString( "RegionUI/Portrait%d/Portrait" ), value );
-		g_theWindowManager->_bfme_removeNamedAptGadget( name );
+		g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget( name );
 	}
 }
 

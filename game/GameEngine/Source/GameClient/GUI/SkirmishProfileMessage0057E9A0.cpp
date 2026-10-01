@@ -109,7 +109,7 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 extern GameTextInterface *TheGameText;
 extern const UnicodeString BFMEEmptyPlayerName;
 extern void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
@@ -166,7 +166,7 @@ int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 				TheWindowManager->winSetFocus( createPersonaEntry() );
 				GadgetTextEntrySetText( createPersonaEntry(), BFMEEmptyPlayerName );
 				int movie = m_movie;
-				g_theWindowManager->unidentified_00015235(
+				g_rva012F19E8WindowManager->unidentified_00015235(
 					movie, "PopUpPersona", 0, 0, 0, 0, 0, 0 );
 				break;
 			}
@@ -176,10 +176,10 @@ int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 				GameWindow* entry = m_createPersonaEntry;
 				TheWindowManager->winSetFocus( entry );
 				int movie = m_movie;
-				g_theWindowManager->unidentified_00015235(
+				g_rva012F19E8WindowManager->unidentified_00015235(
 					movie, "PopUpRemove", 0, 0, 0, 0, 0, 0 );
 				AsciiString name( "APT:RemoveEntryName" );
-				g_theWindowManager->bfme_setAptText( name, m_preferences.getUserName() );
+				g_rva012F19E8WindowManager->bfme_setAptText( name, m_preferences.getUserName() );
 				break;
 			}
 			if( selected.compare( m_preferences.getUserName() ) != 0 )

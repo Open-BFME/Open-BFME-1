@@ -75,7 +75,7 @@ public:
 	void bfme_setAptText(const AsciiString &name, const UnicodeString &text);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 
 class GameTextInterface
 {
@@ -99,7 +99,7 @@ void _bfme_setLivingWorldRegionName(int index, const UnicodeString &text)
 {
 	AsciiString variableName;
 	variableName.format(AsciiString("APT:LivingWorldRegionName%d"), index);
-	g_theWindowManager->bfme_setAptText(variableName, text);
+	g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }
 
 // ?_bfme_setLivingWorldRegionBonus@@YAXHABVUnicodeString@@@Z
@@ -107,7 +107,7 @@ void _bfme_setLivingWorldRegionBonus(int index, const UnicodeString &text)
 {
 	AsciiString variableName;
 	variableName.format(AsciiString("APT:LivingWorldRegionBonus%d"), index);
-	g_theWindowManager->bfme_setAptText(variableName, text);
+	g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }
 
 // ?_bfme_setLivingWorldRegionConqueredBonus@@YAXHABVUnicodeString@@@Z
@@ -115,7 +115,7 @@ void _bfme_setLivingWorldRegionConqueredBonus(int index, const UnicodeString &te
 {
 	AsciiString variableName;
 	variableName.format(AsciiString("APT:LivingWorldRegionConqueredBonus%d"), index);
-	g_theWindowManager->bfme_setAptText(variableName, text);
+	g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }
 
 // ?_bfme_setLivingWorldRegionConquered@@YAXHABVUnicodeString@@ABVAsciiString@@@Z
@@ -127,5 +127,5 @@ void _bfme_setLivingWorldRegionConquered(
 	UnicodeString text;
 	if (textValue.isNotEmpty())
 		text.format(TheGameText->fetch(label), textValue.str());
-	g_theWindowManager->bfme_setAptText(variableName, text);
+	g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }

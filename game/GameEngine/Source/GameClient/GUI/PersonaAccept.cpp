@@ -114,7 +114,7 @@ public:
         int unused1, int unused2, int unused3 );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic( _ReadWriteBarrier )
@@ -176,7 +176,7 @@ void BfmeAptScreenSkirmish::personaAccept( int )
     {
         if( ( (Rva0009F090WideList *)&m_preferences )->findNoCase( value ) >= 0 )
         {
-            g_theWindowManager->unidentified_00015235(
+            g_rva012F19E8WindowManager->unidentified_00015235(
                 m_movie, kErrorSameName, 0, 0, 0, 0, 0, 0 );
             int previousMode = m_mode;
             m_previousMode = previousMode;
@@ -196,7 +196,7 @@ void BfmeAptScreenSkirmish::personaAccept( int )
             preferences->write();
             m_honors.setProfileCreatedDate();
             m_honors.write();
-            g_theWindowManager->unidentified_00015235(
+            g_rva012F19E8WindowManager->unidentified_00015235(
                 m_movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
             m_profileOpen = true;
             void **preferencesVtable = *(void ***)&m_preferences;
@@ -210,10 +210,10 @@ void BfmeAptScreenSkirmish::personaAccept( int )
     else if( !m_preferences.unidentified_00017AF8() )
     {
         int movie = m_movie;
-        g_theWindowManager->unidentified_00015235(
+        g_rva012F19E8WindowManager->unidentified_00015235(
             movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
         int profileMovie = m_movie;
-        g_theWindowManager->unidentified_00015235(
+        g_rva012F19E8WindowManager->unidentified_00015235(
             profileMovie, kPopUpControl, 1, kProfileAction, 0, 0, 0, 0 );
         return;
     }
@@ -221,7 +221,7 @@ void BfmeAptScreenSkirmish::personaAccept( int )
     {
         _bfme_refreshProfile();
         int movie = m_movie;
-        g_theWindowManager->unidentified_00015235(
+        g_rva012F19E8WindowManager->unidentified_00015235(
             movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
         _ReadWriteBarrier();
         m_profileOpen = 1;

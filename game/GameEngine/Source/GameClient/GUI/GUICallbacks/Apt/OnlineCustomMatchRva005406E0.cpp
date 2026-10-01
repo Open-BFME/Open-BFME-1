@@ -88,7 +88,7 @@ public:
 		int unused3 );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 
 class Rva005406E0Field34
 {
@@ -190,16 +190,16 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 					applyStagingRoomRefresh();
 
 					int one = 1;
-					WindowManager *windowManager = g_theWindowManager;
+					WindowManager *windowManager = g_rva012F19E8WindowManager;
 						int movieCopy1 = field34->field250;
 						windowManager->unidentified_00015235( movieCopy1, "CallChild", one, "ClosePassword", 0, 0, 0, 0 );
-					windowManager = g_theWindowManager;
+					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy2 = field34->field250;
 						windowManager->unidentified_00015235( movieCopy2, "CallChild", 2, "gotoAndPlay", "_lobby", 0, 0, 0 );
-					windowManager = g_theWindowManager;
+					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy3 = field34->field250;
 						windowManager->unidentified_00015235( movieCopy3, "CallChild", one, "EnableButtonCreateGame", 0, 0, 0, 0 );
-					windowManager = g_theWindowManager;
+					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy4;
 						movieCopy4 = field34->field250;
 						windowManager->unidentified_00015235( movieCopy4, "CallChild", one, "DisableButtonJoinGame", 0, 0, 0, 0 );

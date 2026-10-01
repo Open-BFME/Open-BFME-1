@@ -100,7 +100,11 @@ public:
 	char m_pad[0x1af];
 };
 
-extern BfmePalantirYX *g_bfmePalantirYX;			// retail 0x012F19E8
+// The one retail global at 0x012F19E8 is the window manager.  This TU only
+// needs the APT store entry and the m_pad byte, so it reaches the global
+// through the BfmePalantirYX view above, cast at each use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 
 class BfmeOne924G
 {
@@ -169,19 +173,20 @@ void Rva00522990ConfigureMessageBox(int newState, const UnicodeStringYX &titleTe
 
 	if (titleText.isEmpty())
 	{
-		g_bfmePalantirYX->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericTitle"), UnicodeStringYX(s_bfmeSpaceYX));
+		((BfmePalantirYX *)g_rva012F19E8WindowManager)->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericTitle"), UnicodeStringYX(s_bfmeSpaceYX));
 	}
 	else
 	{
-		g_bfmePalantirYX->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericTitle"), titleText);
+		((BfmePalantirYX *)g_rva012F19E8WindowManager)->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericTitle"), titleText);
 	}
 
-	g_bfmePalantirYX->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericText"), bodyText);
+	((BfmePalantirYX *)g_rva012F19E8WindowManager)->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericText"), bodyText);
 
 	g_bfmeThingCB->m_34 = 2;
 	g_bfmeThingCB->m_49 = 0;
 	g_bfmeThingCB->m_48 = bodyText.getLength() > 0x100;
 
-	if (g_bfmePalantirYX != 0 && g_bfmePalantirYX->m_pad[0x1ae] == 0)
+	if (g_rva012F19E8WindowManager != 0 &&
+		((BfmePalantirYX *)g_rva012F19E8WindowManager)->m_pad[0x1ae] == 0)
 		((BfmeOne924G *)g_bfmeThingCB)->bfmeCall924G();
 }

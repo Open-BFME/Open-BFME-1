@@ -290,7 +290,11 @@ public:
 		const void *argument, int unused1, int unused2, int unused3, int unused4 );
 };
 
-extern Open2WindowManager *g_theWindowManager;
+// The one retail global at 0x012F19E8 is the window manager.  The three notice
+// senders below only need its unidentified_00015235 entry, so they reach the
+// global through the Open2WindowManager view above, cast at each use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
 
 // @?Open2SendNotice51B050@@YAXH@Z 0x0051B050
 void Open2SendNotice51B050( int what )
@@ -298,7 +302,7 @@ void Open2SendNotice51B050( int what )
 	char text[ 16 ];
 	_snprintf( text, 16, "%d", what );
 
-	g_theWindowManager->unidentified_00015235(
+	((Open2WindowManager *)g_rva012F19E8WindowManager)->unidentified_00015235(
 		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"DestroyRegionPopup", 1, text, 0, 0, 0, 0 );
 }
@@ -309,7 +313,7 @@ void Open2SendNotice51B0C0( int what )
 	char text[ 16 ];
 	_snprintf( text, 16, "%d", what );
 
-	g_theWindowManager->unidentified_00015235(
+	((Open2WindowManager *)g_rva012F19E8WindowManager)->unidentified_00015235(
 		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"CloseRegionPopup", 1, text, 0, 0, 0, 0 );
 }
@@ -320,7 +324,7 @@ void Open2SendNotice51B2F0( int what )
 	char text[ 16 ];
 	_snprintf( text, 16, "%d", what );
 
-	g_theWindowManager->unidentified_00015235(
+	((Open2WindowManager *)g_rva012F19E8WindowManager)->unidentified_00015235(
 		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"DestroyRegionConqueredNotice", 1, text, 0, 0, 0, 0 );
 }
