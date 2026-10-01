@@ -50,17 +50,6 @@
 #include "xstraw.h"
 #include "dx8wrapper.h"
 
-// Retail's checksum helper here is the static member CRC::Memory
-// (?Memory@CRC@@SAKPAEKK@Z, 0x009E19C0), which takes a non-const pointer --
-// not realcrc.h's free CRC_Memory, whose own body is elsewhere. Every call in
-// Compute_CRC encodes the member, so name it that way in this TU.
-class CRC
-{
-public:
-	static unsigned long Memory(unsigned char *data, unsigned long length,
-		unsigned long crc);
-};
-
 #include <stdio.h>
 #include <string.h>
 
@@ -251,22 +240,22 @@ unsigned long VertexMaterialClass::Compute_CRC(void) const
 	unsigned long crc = 0;
 	
 // don't include the name when determining whether two vertex materials match
-//	crc = CRC::Memory((unsigned char *)(Name.Peek_Buffer()),sizeof(char)*strlen(Name),crc);
+//	crc = CRC_Memory((const unsigned char *)(Name.Peek_Buffer()),sizeof(char)*strlen(Name),crc);
 
-	crc = CRC::Memory((unsigned char *)(*(const void **)((const char *)this + 0x08)),sizeof(D3DMATERIAL8),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x0c),sizeof(Flags),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x18),sizeof(DiffuseColorSource),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x10),sizeof(AmbientColorSource),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x14),sizeof(EmissiveColorSource),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x40),sizeof(UVSource),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x69),sizeof(UseLighting),crc);
-	crc = CRC::Memory((unsigned char *)((const char *)this + 0x60),sizeof(UniqueID),crc);
+	crc = CRC_Memory((const unsigned char *)(*(const void **)((const char *)this + 0x08)),sizeof(D3DMATERIAL8),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x0c),sizeof(Flags),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x18),sizeof(DiffuseColorSource),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x10),sizeof(AmbientColorSource),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x14),sizeof(EmissiveColorSource),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x40),sizeof(UVSource),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x69),sizeof(UseLighting),crc);
+	crc = CRC_Memory((const unsigned char *)((const char *)this + 0x60),sizeof(UniqueID),crc);
 
 	TextureMapperClass **mapper = reinterpret_cast<TextureMapperClass **>((char *)this + 0x20);
 	int i;
 	for (i=0; i<MeshBuilderClass::MAX_STAGES; i++)
 	{
-		if (*mapper) crc = CRC::Memory((unsigned char *)(mapper),sizeof(TextureMapperClass*),crc);
+		if (*mapper) crc = CRC_Memory((const unsigned char *)(mapper),sizeof(TextureMapperClass*),crc);
 		++mapper;
 	}
 

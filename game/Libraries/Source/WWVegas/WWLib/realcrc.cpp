@@ -1,9 +1,11 @@
 // cl: /MD /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // WWLib CRC routines, verbatim from the Generals Zero Hour reference
 // (GeneralsMD/.../WWVegas/WWLib/realcrc.cpp). /MD matches the retail toupper,
-// which is called through the __imp__toupper import pointer (CRC_Stringi). The
-// realcrc translation unit is linked twice in lotrbfme.exe, so CRC_Memory and
-// CRC_String each appear at two addresses -- both are recorded in functions.csv.
+// which is called through the __imp__toupper import pointer (CRC_Stringi).
+// Retail places this unit at 0x009E19C0 (CRC_Memory), 0x009E1A00 (CRC_String)
+// and 0x009E1A40 (CRC_Stringi), all over CRC32_Table at 0x012D9930. The
+// look-alike pair at 0x009E7F90/0x009E7FD0 is crc.cpp's CRC::Memory and
+// CRC::String over CRC::_Table (identity_evidence/009e19c0-009e7f90-crc-memory.md).
 #include "realcrc.h"
 #include <ctype.h>
 

@@ -17,14 +17,9 @@
 ??_7LightningDrawModuleInfo@FXParticleSystem@@6B@
 ??_7StreakDrawModuleInfo@FXParticleSystem@@6B@
 ??_7WindModuleInfo@FXParticleSystem@@6B@
-?CRC32_Table@@3PAKA
 _COLLISION_EPSILON
 ??_7MemoryPoolObject@@6B@
 
-# realcrc.cpp is linked twice in retail (same reason CRC_Memory/CRC_String each match at
-# two addresses): its static ?_Table@CRC@@0PAKA exists at both link sites. Callers resolve
-# to whichever copy their TU linked against; both are the same table.
-?_Table@CRC@@0PAKA
 # memmove is imported through two IAT slots in retail (two import descriptors); DIR32
 # references legitimately resolve to either __imp__ address.
 __imp__memmove
@@ -39,12 +34,12 @@ __real@3f800000
 # BitFlags<0xHF>::s_bitNameList materializes per-TU with different initializer arrays
 # (drawable.cpp's TAUNT/CHEER/HERO_CHEER/POINT list at 0xea687c; modelconditionupgrade.cpp's
 # CINEMA/HUD list at 0xec51bc). Both are retail-true references from byte-matched functions —
-# same class of per-TU static as _Table@CRC / __real@3f800000 above.
+# same class of per-TU static as __real@3f800000 above.
 ?s_bitNameList@?$BitFlags@$0HF@@@0PAPBDA
 # hanim.cpp's HAnimComboDataClass* vector TUs are linked twice in retail: one copy's
 # code lives at file 0x96xxxx with vtables at 0x113e690/0x113e6a8, the other at file
 # 0x97xxxx with vtables at 0x113eae0/0x113eb10. Contents differ (each points at its own
-# copy's functions) — same doubly-linked-TU class as _Table@CRC, not a hidden bug.
+# copy's functions) — a doubly-linked TU, not a hidden bug.
 ??_7?$VectorClass@PAVHAnimComboDataClass@@@@6B@
 ??_7?$MultiListClass@VDX8FVFCategoryContainer@@@@6B@
 ??_7?$MultiListClass@VDX8TextureCategoryClass@@@@6B@
@@ -224,8 +219,8 @@ __real@3c8efa35
 # 0x1135C9C: the same base-chain-dtor vptr family as the ??_7 ctor-vs-dtor
 # entries at the top of this file.
 
-# libpng 1.0.5 is linked TWICE in retail, the same class as realcrc.cpp's
-# ?_Table@CRC@@0PAKA above. Two facts establish it rather than a wrong claim:
+# libpng 1.0.5 is linked TWICE in retail, the same doubly-linked-TU class as the
+# hanim.cpp vector vtables above. Two facts establish it rather than a wrong claim:
 # the matched rows form two separate code clusters (0xA62B80-0xA6641E, 48 rows;
 # 0xAABF2A-0xAB0167, 25 rows), and png.c's constant arrays exist as two
 # byte-identical .rdata copies -- png_pass_start holds 0,4,0,2,0,1,0 at BOTH
@@ -292,7 +287,7 @@ __real@30000000
 # and INI_stl.cpp's MultiIniFieldParse::add resolves it to 0x12454C0. Both
 # objects are byte-identical in shape - twelve zero bytes then a pointer to
 # their own CatchableTypeArray at 0x11DFFFC and 0x12454B8 - so this is the same
-# doubly-linked-TU case as ?_Table@CRC@@0PAKA above, not a bad claim. It became
+# per-TU COMDAT case as __real@3f800000 above, not a bad claim. It became
 # visible when MultiIniFieldParse::add moved off its naked dump onto INI_stl.cpp.
 __TI1?AW4ErrorCode@@
 

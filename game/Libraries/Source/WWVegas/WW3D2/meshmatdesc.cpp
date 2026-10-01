@@ -65,17 +65,6 @@
 #include "dx8caps.h"
 #include "meshmdl.h"
 
-// Retail's meshmatdesc reaches crc.cpp's CRC::Memory (0x009E19C0), not
-// realcrc.cpp's free CRC_Memory (0x009E7F90): the two 53-byte bodies are
-// different functions over different tables (0x012D9930 vs 0x012D9DF0), so
-// only the mangled callee separates them. Declare just what the two call
-// sites need rather than pulling in the whole WWLib crc.h.
-class CRC
-{
-public:
-	static unsigned long Memory( unsigned char *data, unsigned long length, unsigned long crc = 0 );
-};
-
 
 /**************************************************************************************************
 **
@@ -216,7 +205,7 @@ bool UVBufferClass::Is_Equal_To(const UVBufferClass & that)
 
 void UVBufferClass::Update_CRC(void)
 {
-	CRC = ::CRC::Memory((unsigned char *)Get_Array(),Get_Count() * sizeof(Vector2));
+	CRC = CRC_Memory((unsigned char *)Get_Array(),Get_Count() * sizeof(Vector2));
 }
 
 
@@ -680,7 +669,7 @@ void MeshMatDescClass::Install_UV_Array(int pass,int stage,Vector2 * uvs,int cou
 	/*
 	** Compute the crc of this uv array
 	*/
-	unsigned int crc = ::CRC::Memory((unsigned char *)uvs,count * sizeof(Vector2));
+	unsigned int crc = CRC_Memory((unsigned char *)uvs,count * sizeof(Vector2));
 
 	/*
 	** See if there is an existing uv-array that matches the one just loaded
