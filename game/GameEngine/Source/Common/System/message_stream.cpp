@@ -1,5 +1,25 @@
 // cl: /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Igame/Libraries/Source/WWVegas/WWLib
 #include "message_stream.h"
+
+class GameMessage;
+
+class GameMessageList
+{
+public:
+	virtual ~GameMessageList();
+	virtual void init();
+	virtual bool loadIniFilesFromLegend();
+	virtual void postProcessLoad();
+	virtual void reset();
+	virtual void update();
+	virtual bool unidentifiedSlot06(int arg);
+	virtual void unidentifiedSlot07();
+	virtual void unidentifiedSlot08(int arg);
+	virtual void appendMessage(GameMessage *message);
+	virtual void insertMessage(GameMessage *message, GameMessage *after);
+	virtual void removeMessage(GameMessage *message);
+};
+
 struct BFMEPlayer
 {
 	Int getPlayerIndex() const
@@ -22,12 +42,12 @@ GameMessage::GameMessage(Type type)
 {
 	m_playerIndex = ThePlayerList->getLocalPlayer()->getPlayerIndex();
 	m_type = type;
-	m_reserved1 = 0;
-	m_reserved2 = 0;
-	m_argCount = 0;
-	m_list = 0;
 	m_argList = 0;
 	m_argTail = 0;
+	m_argCount = 0;
+	m_list = 0;
+	m_next = 0;
+	m_prev = 0;
 }
 
 // Layout of the retail GameMessageArgument (a MemoryPoolObject subclass we have
@@ -41,7 +61,7 @@ struct GameMessagePixelRegionRaw { Int x_min, y_min, x_max, y_max; };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 struct GameMessage::Argument {
-	void *m_vtbl;
+	virtual ~Argument();
 	Argument *m_next;
 	union {
 		Int integer;
@@ -58,6 +78,20 @@ struct GameMessage::Argument {
 	} m_data;
 	Int m_type;
 };
+
+__forceinline GameMessage::~GameMessage()
+{
+	Argument *argument, *next;
+	for (argument = m_argList; argument != 0; argument = next)
+	{
+		next = argument->m_next;
+		delete argument;
+	}
+
+	m_argList = 0;
+	if (m_list != 0)
+		m_list->removeMessage(this);
+}
 
 void GameMessage::appendIntegerArgument(Int arg)
 {

@@ -28,13 +28,32 @@ union GameMessageArgumentType
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 struct GameMessageArgument
 {
-	void *vtable;						// pool object vptr, this+0x00
+	virtual ~GameMessageArgument();						// pool object vptr, this+0x00
 	GameMessageArgument *m_next;				// this+0x04
 	GameMessageArgumentType m_data;				// this+0x08
 	Int m_type;						// this+0x18, BFME ordinals: SQUADID at 6
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
+class GameMessage;
+
+class GameMessageList
+{
+public:
+	virtual ~GameMessageList();
+	virtual void init();
+	virtual bool loadIniFilesFromLegend();
+	virtual void postProcessLoad();
+	virtual void reset();
+	virtual void update();
+	virtual bool unidentifiedSlot06(int arg);
+	virtual void unidentifiedSlot07();
+	virtual void unidentifiedSlot08(int arg);
+	virtual void appendMessage(GameMessage *message);
+	virtual void insertMessage(GameMessage *message, GameMessage *after);
+	virtual void removeMessage(GameMessage *message);
+};
+
 class GameMessage
 {
 public:
@@ -42,7 +61,19 @@ public:
 
 	GameMessage(const GameMessage &source);
 	void rva0008B2C0(const GameMessage &source);
-	virtual ~GameMessage();
+	virtual __forceinline ~GameMessage()
+	{
+		GameMessageArgument *argument, *next;
+		for (argument = m_argList; argument != 0; argument = next)
+		{
+			next = argument->m_next;
+			delete argument;
+		}
+
+		m_argList = 0;
+		if (m_list != 0)
+			m_list->removeMessage(this);
+	}
 
 	const GameMessageArgumentType *getArgument(Int argIndex) const;
 
@@ -66,7 +97,7 @@ protected:
 private:
 	GameMessage *m_next;					// this+0x04
 	GameMessage *m_prev;					// this+0x08
-	void *m_list;						// this+0x0C
+	GameMessageList *m_list;						// this+0x0C
 	Int m_type;						// this+0x10
 	Int m_playerIndex;					// this+0x14
 	UnsignedByte m_argCount;				// this+0x18

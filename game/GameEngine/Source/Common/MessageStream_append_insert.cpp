@@ -22,23 +22,61 @@ struct BfmePlayerList_AppendInsert
 class PlayerList;
 extern PlayerList *ThePlayerList;
 
+class GameMessageArgument
+{
+public:
+	virtual ~GameMessageArgument();
+	GameMessageArgument *m_next;
+};
+
+class GameMessage;
+
+class GameMessageList
+{
+public:
+	virtual ~GameMessageList();
+	virtual void init();
+	virtual bool loadIniFilesFromLegend();
+	virtual void postProcessLoad();
+	virtual void reset();
+	virtual void update();
+	virtual bool unidentifiedSlot06(int arg);
+	virtual void unidentifiedSlot07();
+	virtual void unidentifiedSlot08(int arg);
+	virtual void appendMessage(GameMessage *message);
+	virtual void insertMessage(GameMessage *message, GameMessage *after);
+	virtual void removeMessage(GameMessage *message);
+};
+
 class GameMessage
 {
 public:
 	enum Type { MSG_INVALID = 0 };
 
 	GameMessage(Type type);
-	virtual ~GameMessage() {}
+	virtual __forceinline ~GameMessage()
+	{
+		GameMessageArgument *argument, *next;
+		for (argument = m_argList; argument != 0; argument = next)
+		{
+			next = argument->m_next;
+			delete argument;
+		}
+
+		m_argList = 0;
+		if (m_list != 0)
+			m_list->removeMessage(this);
+	}
 
 	GameMessage *m_next;                      // +0x04
 	GameMessage *m_prev;                      // +0x08
-	void *m_list;                             // +0x0C
+	GameMessageList *m_list;                             // +0x0C
 	Type m_type;                              // +0x10
 	int m_playerIndex;                        // +0x14
 	unsigned char m_argCount;                 // +0x18
 	char m_pad[3];                            // +0x19
-	GameMessage *m_argList;                   // +0x1C
-	GameMessage *m_argTail;                   // +0x20
+	GameMessageArgument *m_argList;                   // +0x1C
+	GameMessageArgument *m_argTail;                   // +0x20
 };
 
 GameMessage::GameMessage(Type type)
@@ -53,7 +91,7 @@ GameMessage::GameMessage(Type type)
 	m_prev = 0;
 }
 
-class MessageStream
+class MessageStream : public GameMessageList
 {
 public:
 	virtual GameMessage *appendMessage(GameMessage::Type type);
