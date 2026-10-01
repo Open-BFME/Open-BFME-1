@@ -138,7 +138,6 @@ private:
 	Coord3D m_position;
 };
 
-extern float g_bfmeDirectionWeight1285;
 
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
@@ -224,7 +223,7 @@ StateReturnType GiantBirdGuardReturnState::update()
 		GetLengthEstimateCall asMember;
 	} getLengthEstimateCast;
 	getLengthEstimateCast.asVoid = (void *)j_00036aa2;
-	if ((positions.delta.*getLengthEstimateCast.asMember)() > g_bfmeDirectionWeight1285)
+	if ((positions.delta.*getLengthEstimateCast.asMember)() > 10.0f)
 	{
 		m_position = positions.goal;
 		union

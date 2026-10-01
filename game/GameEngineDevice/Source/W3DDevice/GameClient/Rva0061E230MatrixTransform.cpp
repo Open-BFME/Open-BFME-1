@@ -9,7 +9,6 @@
 #include "matrix3d.h"
 
 extern const float BfmeZeroRange;
-extern const float g_rva001B5860TwoPi;
 
 class Rva0061E230Receiver
 {
@@ -59,9 +58,9 @@ void Rva0061E230Owner::Rva0061E230(void)
 
 	float angle = m_angle88 + m_angle80;
 	if (angle < BfmeZeroRange)
-		angle += g_rva001B5860TwoPi;
-	else if (angle > g_rva001B5860TwoPi)
-		angle -= g_rva001B5860TwoPi;
+		angle += 6.2831854820251465f;
+	else if (angle > 6.2831854820251465f)
+		angle -= 6.2831854820251465f;
 
 	Matrix3 rotation(true);
 	rotation.Rotate_Z(angle);

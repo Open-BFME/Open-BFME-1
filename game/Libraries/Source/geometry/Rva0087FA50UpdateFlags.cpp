@@ -5,7 +5,6 @@ typedef unsigned short UnsignedShort;
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 
-extern char g_bfmeEmptyF9[];
 
 struct BfmeAsciiDataF9
 {
@@ -18,26 +17,32 @@ struct BfmeAsciiDataF9
 class BfmeStrF9
 {
 public:
-	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : g_bfmeEmptyF9; }
-
-	Int compare(const BfmeStrF9 &other) const
-	{
-		Int lenOther = other.getLength();
-		const char *pOther = other.str();
-		Int lenThis = getLength();
-		const char *pThis = str();
-		Int shorter = lenThis < lenOther ? lenThis : lenOther;
-		Int diff = memcmp(pThis, pOther, shorter);
-		if (diff)
-			return diff;
-		return lenThis - lenOther;
-	}
-
-	bool operator==(const BfmeStrF9 &rhs) const { return compare(rhs) == 0; }
-
-	BfmeAsciiDataF9 *m_data;
+    BfmeAsciiDataF9 *m_data;
 };
+
+// Local helpers avoid emitting shared BfmeStrF9 COMDAT copies.
+static __forceinline Int getLength(const BfmeStrF9 &value)
+{
+    return value.m_data ? value.m_data->m_len : 0;
+}
+
+static __forceinline const char *str(const BfmeStrF9 &value)
+{
+    return value.m_data ? (const char *)(value.m_data + 1) : "";
+}
+
+static __forceinline Int compare(const BfmeStrF9 &value, const BfmeStrF9 &other)
+{
+    Int lenOther = getLength(other);
+    const char *pOther = str(other);
+    Int lenThis = getLength(value);
+    const char *pThis = str(value);
+    Int shorter = lenThis < lenOther ? lenThis : lenOther;
+    Int diff = memcmp(pThis, pOther, shorter);
+    if (diff)
+        return diff;
+    return lenThis - lenOther;
+}
 
 struct BfmeShapeF9
 {
@@ -62,13 +67,13 @@ void BfmeObjF9::rva0087FA50(const BfmeStrF9 &name, char flag)
 	char found = flag;
 	for (BfmeShapeF9 *shape = m_start; shape != m_finish; ++shape)
 	{
-		found |= shape->m_1C == name && shape->m_20;
+		found |= compare(shape->m_1C, name) == 0 && shape->m_20;
 	}
 	if (!found)
 		return;
 	for (BfmeShapeF9 *shape = m_start; shape != m_finish; ++shape)
 	{
-		if (!(shape->m_1C == name))
+		if (!(compare(shape->m_1C, name) == 0))
 			shape->m_20 = flag;
 	}
 }

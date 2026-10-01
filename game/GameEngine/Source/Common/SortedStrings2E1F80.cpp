@@ -14,7 +14,7 @@ struct Gen002DFFD0Elem { int key; char pad[8]; };
 struct Gen002DFFD0Less {};
 Gen002DFFD0Elem *Gen002DFFD0(Gen002DFFD0Elem *,Gen002DFFD0Elem *,const int &,Gen002DFFD0Less,int *) throw();
 struct StringEntry2E1F80 { int key; AsciiString value; bool flag; };
-extern AsciiString emptyString2E1F80;
+#define emptyString2E1F80 AsciiString::TheEmptyString
 class SortedStrings2E1F80 {
  unsigned field00; bool sorted; char pad05[3];
  _STL::vector<StringEntry2E1F80> entries;

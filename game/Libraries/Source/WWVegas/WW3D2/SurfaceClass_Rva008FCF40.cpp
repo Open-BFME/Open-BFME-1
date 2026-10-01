@@ -49,7 +49,8 @@ public:
 	virtual BfmeResult __stdcall UnlockRect();
 };
 
-extern BFMEDebugClass008FCF40 *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
+#define g_BFMEIndexBufferDebug (static_cast<BFMEDebugClass008FCF40 *>(g_Rva00F36E5C))
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_Surface_ErrorCode008FCF40(unsigned result)

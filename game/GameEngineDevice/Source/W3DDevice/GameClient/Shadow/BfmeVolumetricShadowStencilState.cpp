@@ -18,8 +18,17 @@ public:
 	unsigned m_caps;
 };
 
-extern IDirect3DDevice9 *TheD3DDevice;
-extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
+struct IDirect3DDevice8;
+class DX8Caps;
+class DX8Wrapper
+{
+protected:
+    static IDirect3DDevice8 *D3DDevice;
+    static DX8Caps *CurrentCaps;
+    friend void __stdcall setVolumetricShadowStencil(Bool);
+};
+#define TheD3DDevice (reinterpret_cast<IDirect3DDevice9 *>(DX8Wrapper::D3DDevice))
+#define TheW3DRadarFormatCaps (reinterpret_cast<W3DRadarFormatCaps *>(DX8Wrapper::CurrentCaps))
 
 // ?setVolumetricShadowStencil@BfmeShadowState@@SAX_N@Z
 void __stdcall setVolumetricShadowStencil(Bool frontFace)

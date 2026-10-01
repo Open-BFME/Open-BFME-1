@@ -3,7 +3,6 @@
 typedef float Real;
 typedef int Int;
 
-extern const Real Rva00C75350Zero;
 
 class WWMath
 {
@@ -73,7 +72,7 @@ public:
     __forceinline void Normalize()
     {
         Real lengthSquared = Length2();
-        if (lengthSquared != Rva00C75350Zero) {
+        if (lengthSquared != 0.0f) {
             Real inverseLength = WWMath::Inv_Sqrt(lengthSquared);
             X *= inverseLength;
             Y *= inverseLength;

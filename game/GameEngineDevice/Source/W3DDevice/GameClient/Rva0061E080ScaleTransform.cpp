@@ -6,7 +6,6 @@
 #include "rendobj.h"
 #include "wwmath.h"
 
-extern const float g_bfmeScaleBK; // pinned at retail VA 0x01075C70
 
 class Rva0061E080Owner
 {
@@ -34,7 +33,7 @@ void Rva0061E080Owner::Rva0061E080()
 
     Matrix3D transform(primary->Get_Transform());
     float oldScale = m_primary->Get_ObjectScale();
-    if (!(WWMath::Fabs(m_field74 - oldScale) > g_bfmeScaleBK))
+    if (!(WWMath::Fabs(m_field74 - oldScale) > 0.10000000149011612f))
         return;
 
     float newScale = oldScale + (m_field74 - m_field70) * m_field78;

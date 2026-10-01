@@ -4,7 +4,6 @@
 extern "C" double fabs(double value);
 #pragma intrinsic(fabs)
 
-extern float g_bfmeBiasMC;
 
 class BfmeThingMC
 {
@@ -35,7 +34,7 @@ private:
 
 float Gen_001E1480::bfmeReach(const BfmeThingMC *thing, float offset) const
 {
-	float reach = thing->m_bfmeSpeed * m_bfmeScale - g_bfmeBiasMC;
+	float reach = thing->m_bfmeSpeed * m_bfmeScale - 2.5f;
 
 	if (m_bfmeTol > 0.0f && (float)fabs(offset) > m_bfmeTol)
 		return 0.0f;
@@ -46,7 +45,7 @@ float Gen_001E1480::bfmeReach(const BfmeThingMC *thing, float offset) const
 
 float Gen_001E1480::bfmeReachDelta(const BfmeThingMC *thing, const BfmePointMD *a, const BfmePointMD *b) const
 {
-	float reach = thing->m_bfmeSpeed * m_bfmeScale - g_bfmeBiasMC;
+	float reach = thing->m_bfmeSpeed * m_bfmeScale - 2.5f;
 
 	if (m_bfmeTol > 0.0f && (float)fabs(b->m_bfmeZ - a->m_bfmeZ) > m_bfmeTol)
 		return 0.0f;
@@ -57,7 +56,7 @@ float Gen_001E1480::bfmeReachDelta(const BfmeThingMC *thing, const BfmePointMD *
 
 float Gen_001E1480::bfmeReachNeg(const BfmeThingMC *thing, const BfmeThingMC *other) const
 {
-	float reach = thing->m_bfmeSpeed * m_bfmeScale - g_bfmeBiasMC;
+	float reach = thing->m_bfmeSpeed * m_bfmeScale - 2.5f;
 
 	if (m_bfmeTol > 0.0f && (float)fabs(-other->m_bfmeSpeed) > m_bfmeTol)
 		return 0.0f;

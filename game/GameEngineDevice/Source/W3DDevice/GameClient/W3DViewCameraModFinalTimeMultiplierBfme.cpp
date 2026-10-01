@@ -14,7 +14,6 @@ typedef int Int;
 typedef bool Bool;
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
-extern double g_bfmeSubB3;
 
 // The retail path calls CRT double floor, then uses BaseType.h's two-instruction
 // x87 rounding helper. A C++ integer cast uses truncation semantics instead;
@@ -190,7 +189,7 @@ void W3DView::cameraModFinalTimeMultiplier(Int finalMultiplier)
 		{
 			curDistance += waySegmentLength[i];
 			Real factor2 = curDistance / totalDistance;
-			Real factor1 = g_bfmeSubB3 - factor2;
+			Real factor1 = 1.0 - factor2;
 			timeMultiplier[i + 1] = REAL_TO_INT_FLOOR(
 				0.5 + timeMultiplier[i + 1] * factor1 + finalMultiplier * factor2);
 		}

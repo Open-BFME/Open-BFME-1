@@ -165,7 +165,7 @@ public:
 		float z,
 		unsigned int stencil);
 
-private:
+protected:
 	static IDirect3DDevice8 *D3DDevice;
 };
 

@@ -1,43 +1,6 @@
-// Five straight-line field initialisers grouped only by their MNEMONIC RUN --
-// `mov base,this` then a wall of constant stores.  Four are __thiscall bodies
-// that put `this` in eax and return it, which is what a CONSTRUCTOR does; one
-// takes its object as a stack argument and is __cdecl.  The five have five
-// different layouts and five different store orders, so this is one shape and
-// five sources, not one source five times.
-//
-// WHAT THE BYTES SHOW, AND WHY THE ORDER IS EVIDENCE.  MSVC 7.1 does NOT
-// reorder these stores -- a probe with the fields written in ascending order
-// reproduced ascending order exactly.  So the emitted order IS the source
-// order, and where retail's order is not the layout order, the source said so.
-//
-//   Rva006E18A0 is the sharpest case.  Its zeros come out descending in three
-//   runs and its four 1.0f stores come out last, also descending, with the
-//   constant materialised into the SAME register the zero used, after the last
-//   zero.  Descending order out of ascending source is what a CHAINED
-//   assignment does: `a = b = c = 0.0f` evaluates right to left, so the last
-//   name written is stored first.  Two chained statements -- twelve
-//   off-diagonal slots to 0.0f, then four diagonal slots to 1.0f, over a
-//   sixteen-float block -- reproduce all 59 bytes with NO relocation site
-//   anywhere in the body.
-//
-//   Rva003D54E0 writes [+0x2d] and [+0x2e] before [+0x2c]; Rva007049B0 writes
-//   [+0x38..+0x40] in the middle of an otherwise ascending run; Rva0040AE50
-//   writes [+0x20..+0x28] last.  Each of those is transcribed literally.
-//
-// Rva0040AE50 stores two ADDRESSES, at [+0] and [+0x30].  Both point into
-// .rdata at a four-function block followed by a zero and an ASCII name, so they
-// are descriptor-table addresses, and the two are DIFFERENT addresses and
-// therefore two different objects.  They are NOT compiler-emitted vptrs: MSVC
-// emits every vptr store before any body statement, and here a byte store to
-// [+4] and six dword stores sit between them.  Both are DIR32 sites, so their
-// four bytes are copied from retail and prove nothing beyond that; what the
-// bytes do fix is that there are two of them and that they are not vptrs.
-//
-// IDENTITY IS NOT RECOVERED.  All five names are derived from addresses.  The
-// bytes do not say what any field means; where a slot is only ever written zero
-// its declared type is a guess constrained solely by its WIDTH -- byte stores
-// are declared char, dword stores int, and the float spellings are used only
-// where a non-zero float bit pattern (0x3F800000) forced the question.
+// Five address-qualified field initialisers preserve retail's store order.
+// Rva0040AE50 stores BuffEntry and BuffEntryTail vftables at +0 and +0x30.
+// The remaining class and field meanings are unproved.
 
 // ---------------------------------------------------------------- 0x003D54E0
 
@@ -68,8 +31,10 @@ Rva003D54E0::Rva003D54E0()
 
 // ---------------------------------------------------------------- 0x0040AE50
 
-extern const int GenDesc00CF05D8;
-extern const int GenDesc00CF0540;
+extern "C" const int __identifier("??_7BuffEntry@@6B@");
+extern "C" const int __identifier("??_7BuffEntryTail@@6B@");
+#define GenDesc00CF05D8 __identifier("??_7BuffEntry@@6B@")
+#define GenDesc00CF0540 __identifier("??_7BuffEntryTail@@6B@")
 
 class Rva0040AE50
 {

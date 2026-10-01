@@ -108,7 +108,14 @@ struct IDirect3DDevice9
 	virtual HRESULT __stdcall GetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9 **ppRenderTarget) = 0;
 };
 
-extern IDirect3DDevice9 *g_d3dDevice;
+struct IDirect3DDevice8;
+class DX8Wrapper
+{
+protected:
+    static IDirect3DDevice8 *D3DDevice;
+    friend Int copyRect(unsigned char *, Int, int, int, int, int);
+};
+#define g_d3dDevice (reinterpret_cast<IDirect3DDevice9 *>(DX8Wrapper::D3DDevice))
 
 Int copyRect(unsigned char *buf, Int bufSize, int oX, int oY, int width, int height)
 {

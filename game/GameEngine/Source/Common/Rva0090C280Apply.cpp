@@ -30,11 +30,29 @@ struct Rva01340534Device
 	Rva01340534DeviceVtbl *lpVtbl;
 };
 
-extern unsigned char Rva012D6D90Byte;
-extern Rva01340534Device *Rva01340534DeviceGlobal;
-extern unsigned int Rva01340594DX8Calls;
-extern unsigned int Rva01340560TextureChanges;
-extern Rva006C9270Texture *Rva0133F478Textures[8];
+struct IDirect3DDevice8;
+struct IDirect3DBaseTexture8;
+static __forceinline void Rva0090C280SetTexture(unsigned int, Rva006C9270Texture *);
+class DX8Wrapper
+{
+protected:
+    static IDirect3DDevice8 *D3DDevice;
+    static IDirect3DBaseTexture8 *Textures[8];
+    static unsigned int texture_changes;
+    friend void Rva0090C280SetTexture(unsigned int, Rva006C9270Texture *);
+};
+class WW3D
+{
+private:
+    static bool IsTexturingEnabled;
+    friend class Rva0090C280;
+};
+extern unsigned int number_of_DX8_calls;
+#define Rva012D6D90Byte WW3D::IsTexturingEnabled
+#define Rva01340534DeviceGlobal (reinterpret_cast<Rva01340534Device *>(DX8Wrapper::D3DDevice))
+#define Rva01340594DX8Calls number_of_DX8_calls
+#define Rva01340560TextureChanges DX8Wrapper::texture_changes
+#define Rva0133F478Textures (reinterpret_cast<Rva006C9270Texture **>(DX8Wrapper::Textures))
 
 static __forceinline void Rva0090C280SetTexture(unsigned int stage,
 	Rva006C9270Texture *texture)
