@@ -86,7 +86,14 @@ public:
 
 extern BfmeObj947C *g_bfme947ObjC;
 extern BfmeAux947C *g_bfme947AuxC;
-extern BfmeGlob947C *g_bfme947GlobC;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
+// same address through its own BfmeGlob947C view, so it casts at the use; the
+// view keeps the callee's mangled spelling
+// ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 void bfmeTailA947C(void);
 
 void bfmeGo947C(void)
@@ -98,7 +105,7 @@ void bfmeGo947C(void)
 		p->m_bfmeFlag = 1;
 		g_bfme947ObjC->m_bfmeVal = 0;
 		g_bfme947AuxC->m_bfmeFlag = 1;
-		g_bfme947GlobC->bfmeTailB947C();
+		((BfmeGlob947C *)g_rva012F19E8WindowManager)->bfmeTailB947C();
 	} else {
 		bfmeTailA947C();
 	}

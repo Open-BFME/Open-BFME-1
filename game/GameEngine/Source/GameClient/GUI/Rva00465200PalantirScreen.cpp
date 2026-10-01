@@ -46,7 +46,12 @@ public:
 	void registerPalantirCallback( const AsciiString &name, Rva0050F8B0FunctorHolder callback );
 };
 
-extern WindowManager *g_theWindowManager;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. Every reference to
+// that one global must use it or the linked build has two spellings of one
+// address.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The vector<AsciiString> COMDAT this TU reaches is the _M_insert_overflow copy
 // at 0x00063700 -- the one whose element copy calls StringBase<char>'s
@@ -76,9 +81,9 @@ private:
 void Rva00465200GameWindow::showPalantirScreen( const AsciiString &name,
 	Rva0050F8B0FunctorHolder callback )
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		m_names.push_back( *(const Open2Elem063700 *)&name );
-		g_theWindowManager->registerPalantirCallback( name, callback );
+		g_rva012F19E8WindowManager->registerPalantirCallback( name, callback );
 	}
 }

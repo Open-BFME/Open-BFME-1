@@ -66,7 +66,14 @@ public:
 		char *a, char *b, char *c, char *d );
 };
 
-extern BfmeR1070 *g_bfmeR1070;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
+// same address through its own BfmeR1070 view, so it casts at the use; the
+// view keeps the callee's mangled spelling
+// ?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmtA1070[];
 
 class BfmeE976
@@ -103,7 +110,7 @@ void Rva00517450LanLobby::rva00517450()
 	((void (__fastcall *)( GameEngine * ))j_00010f8c)( TheGameEngine );
 	self->m_state = 0;
 	BfmeX1070 *owner = self->m_actionOwner;
-	g_bfmeR1070->bfmeRun1070( owner, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0 );
+	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070( owner, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0 );
 	MessageBoxOk( TheGameText->fetch( "GUI:HostLeftTitle" ),
 		TheGameText->fetch( "GUI:HostLeft" ), 0 );
 }

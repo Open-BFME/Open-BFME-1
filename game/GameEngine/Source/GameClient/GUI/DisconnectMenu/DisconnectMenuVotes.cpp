@@ -48,7 +48,12 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. Every reference to
+// that one global must use it or the linked build has two spellings of one
+// address.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
@@ -66,5 +71,5 @@ void DisconnectMenu::updateVotes( int slot, int votes )
 	if( votes )
 		text.format( (UnicodeString)L"%d", votes );
 
-	g_theWindowManager->bfme_setAptText( variableName, text );
+	g_rva012F19E8WindowManager->bfme_setAptText( variableName, text );
 }

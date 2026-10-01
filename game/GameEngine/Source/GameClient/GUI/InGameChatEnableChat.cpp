@@ -36,7 +36,12 @@ public:
 	virtual void winSetFocus( GameWindow *window );
 };
 
-extern WindowManager *g_theWindowManager;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. Every reference to
+// that one global must use it or the linked build has two spellings of one
+// address.
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameWindowManager *TheWindowManager;
 
 class BfmeAptScreenInGameChat
@@ -64,11 +69,11 @@ void BfmeAptScreenInGameChat::_bfme_enableChat( bool enable )
 	m_enabled = enable;
 
 	const char *entry = enable ? "EnableChatEntryField" : "DisableChatEntryField";
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		m_movie, entry, 0, 0, 0, 0, 0, 0 );
 
 	const char *send = enable ? "EnableSendButton" : "DisableSendButton";
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		m_movie, send, 0, 0, 0, 0, 0, 0 );
 
 	if( m_entryWindow && enable )

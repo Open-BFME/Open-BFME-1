@@ -22,7 +22,13 @@ public:
 
 extern BfmeObj985 *g_bfmeObj985;
 extern BfmeAux985 *g_bfmeAux985;
-extern BfmeHub985 *g_bfmeHub985;
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
+// same address through its own BfmeHub985 view, so it casts at the use; the
+// view keeps the callee's mangled spelling ?bfmeDo985@BfmeHub985@@QAEXXZ.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeA985
 {
@@ -47,7 +53,7 @@ void BfmeA985::bfmeGo985A(int unused)
 	p->m_bfmeFlag = 1;
 	g_bfmeObj985->m_bfmeMode = 2;
 	g_bfmeAux985->m_bfmeFlag = 1;
-	g_bfmeHub985->bfmeDo985();
+	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }
 
 void __stdcall bfmeGo985B(int unused)
@@ -62,7 +68,7 @@ void __stdcall bfmeGo985B(int unused)
 	p->m_bfmeFlag = 1;
 	g_bfmeObj985->m_bfmeMode = 0;
 	g_bfmeAux985->m_bfmeFlag = 1;
-	g_bfmeHub985->bfmeDo985();
+	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }
 
 class BfmeArg985

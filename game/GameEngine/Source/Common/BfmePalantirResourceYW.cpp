@@ -49,7 +49,14 @@ public:
 	void bfmeStoreYW(const AsciiStringYW &key, const AsciiStringYW &value);
 };
 
-extern BfmePalantirYW *g_bfmePalantirYW;			// retail 0x012F19E8
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
+// same address through its own BfmePalantirYW view, so it casts at the use;
+// the view keeps the callee's mangled spelling
+// ?bfmeStoreYW@BfmePalantirYW@@QAEXABVAsciiStringYW@@0@Z.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmeSetPalantirYW@@YAXH@Z
 void bfmeSetPalantirYW(int count)
@@ -63,5 +70,5 @@ void bfmeSetPalantirYW(int count)
 	else
 		value.set(" ", 1);
 
-	g_bfmePalantirYW->bfmeStoreYW(s_bfmeKeyYW, value);
+	((BfmePalantirYW *)g_rva012F19E8WindowManager)->bfmeStoreYW(s_bfmeKeyYW, value);
 }

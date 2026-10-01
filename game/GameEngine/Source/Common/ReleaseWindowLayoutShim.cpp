@@ -76,7 +76,13 @@ public:
 };
 
 extern BfmeThingCB *g_bfmeThingCB;
-extern Rva00579160Manager *Rva00579160TheManager;
+
+// retail 0x012F19E8: the canonical spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reads one
+// flag through its own Rva00579160Manager view, so it casts at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class ReleaseWindowLayoutShim
 {
@@ -115,7 +121,7 @@ void ReleaseWindowLayoutShim::run(WindowLayout *layout)
 		g_bfmeThingCB->released = 1;
 	}
 
-	if (Rva00579160TheManager != 0 && Rva00579160TheManager->flag == 0)
+	if (g_rva012F19E8WindowManager != 0 && ((Rva00579160Manager *)g_rva012F19E8WindowManager)->flag == 0)
 	{
 		reinterpret_cast<BfmeOne924G *>(g_bfmeThingCB)->bfmeCall924G();
 	}
