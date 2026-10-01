@@ -78,6 +78,15 @@ public:
 	ThingTemplate *findTemplate( const AsciiString &name );
 };
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
+};
+
 extern ThingFactory *TheThingFactory;
 
 void LivingWorldArmy::replenish( LivingWorldPlayerArmy *playerArmy )
@@ -92,7 +101,8 @@ Int LivingWorldPlayerArmy::currentCommandPoints() const
 	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
 	{
 		const LivingWorldArmy &army = m_armies[ i ];
-		const ThingTemplate *thingTemplate = TheThingFactory->findTemplate( army.getName() );
+		const ThingTemplate *thingTemplate =
+			((BfmeThingFactory *)TheThingFactory)->findTemplate( army.getName() );
 		if( thingTemplate )
 			commandPoints += thingTemplate->getCommandPointCost() * army.getCount();
 	}

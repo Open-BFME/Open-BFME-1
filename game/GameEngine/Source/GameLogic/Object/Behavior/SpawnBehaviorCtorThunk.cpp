@@ -15,6 +15,14 @@ class ThingFactory
 public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
 extern ThingFactory *TheThingFactory;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
@@ -110,7 +118,8 @@ public:
 	virtual ~SpawnBehavior() {}
 private:
 	void *m_unknown30;
-	ThingTemplate *m_spawnTemplate;
+	// Retail's factory lookup returns const ThingTemplate *.
+	const ThingTemplate *m_spawnTemplate;
 	int m_oneShotCountdown;
 	UnsignedInt m_framesToWait;
 	UnsignedInt m_firstBatchCount;
@@ -132,7 +141,7 @@ SpawnBehavior::SpawnBehavior(Thing *thing, const ModuleData *moduleData)
 	const SpawnBehaviorModuleDataView *md =
 		reinterpret_cast<const SpawnBehaviorModuleDataView *>(m_moduleData);
 	m_templateNameIterator = md->m_spawnTemplateBegin;
-	m_spawnTemplate = TheThingFactory->findTemplate(*m_templateNameIterator);
+	m_spawnTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(*m_templateNameIterator);
 	m_framesToWait = 0;
 	m_firstBatchCount = 0;
 	if (md->m_isOneShotData)

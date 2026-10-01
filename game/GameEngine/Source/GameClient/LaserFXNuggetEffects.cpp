@@ -48,6 +48,15 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 class BFMEThingFactory : public ThingFactory
 {
 public:
@@ -111,7 +120,7 @@ void LaserFXNugget::doFXObj(const Object *primary, const Object *secondary) cons
 	if (primary)
 	{
 		const ThingTemplate *thingTemplate =
-			TheThingFactory->findTemplate(m_laserName);
+			((BfmeThingFactory *)TheThingFactory)->findTemplate(m_laserName);
 		Drawable *draw = ((BFMEThingFactory *)TheThingFactory)->newDrawable(
 			thingTemplate, DRAWABLE_STATUS_NONE, -1);
 		if (draw)
@@ -159,7 +168,7 @@ void LaserFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *, float,
 	if (primary)
 	{
 		const ThingTemplate *thingTemplate =
-			TheThingFactory->findTemplate(m_laserName);
+			((BfmeThingFactory *)TheThingFactory)->findTemplate(m_laserName);
 		Drawable *draw = ((BFMEThingFactory *)TheThingFactory)->newDrawable(
 			thingTemplate, DRAWABLE_STATUS_NONE, -1);
 		if (draw)

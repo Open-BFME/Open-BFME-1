@@ -63,6 +63,15 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
@@ -161,7 +170,8 @@ protected:
 Bool ScriptConditions::evaluateCanBuildObjectTypeAtBase(
 	Parameter *pPlayerParm, Parameter *pUnitParm, Parameter *pTypeParm)
 {
-	ThingTemplate *tmplate = TheThingFactory->findTemplate(
+	// Retail's factory lookup returns const ThingTemplate *.
+	const ThingTemplate *tmplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
 		pTypeParm->getString());
 	if (tmplate) {
 		Object *theUnit = TheScriptEngine->getUnitNamed(pUnitParm);

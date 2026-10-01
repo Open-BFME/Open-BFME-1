@@ -110,6 +110,15 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 extern GameLogic *TheGameLogic;
 extern ThingFactory *TheThingFactory;
 extern const char g_Rva0107301CEmptyString[];
@@ -121,7 +130,8 @@ public:
 
 private:
 	Drawable *m_drawable;
-	ThingTemplate *m_template;
+	// Retail's factory lookup returns const ThingTemplate *.
+	const ThingTemplate *m_template;
 };
 
 void Gen_001B1040::xfer(Xfer *xfer)
@@ -149,7 +159,7 @@ void Gen_001B1040::xfer(Xfer *xfer)
 		}
 
 		if (name.m_data != 0 && *((unsigned short *)(name.m_data + 4)) != 0)
-			m_template = TheThingFactory->findTemplate(name);
+			m_template = ((BfmeThingFactory *)TheThingFactory)->findTemplate(name);
 	}
 	else if (xfer->IsStoring())
 	{

@@ -107,6 +107,14 @@ public:
     }
 };
 extern ThingFactory *TheThingFactory;
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+    const ThingTemplate *findTemplate(const AsciiString &name);
+};
 class GlobalData { public: char pad000[0x11fc]; bool field11FC; };
 extern GlobalData *TheWritableGlobalData;
 class Pathfinder {
@@ -120,7 +128,7 @@ extern AI *TheAI;
 static __declspec(noinline) Object *placeObjectAtPosition(int slotNum, AsciiString name,
     Coord3D &pos, Player *player, const PlayerTemplate *playerTemplate)
 {
-    const ThingTemplate *objectTemplate=TheThingFactory->findTemplate(name);
+    const ThingTemplate *objectTemplate=((BfmeThingFactory *)TheThingFactory)->findTemplate(name);
     if (!objectTemplate) return 0;
     if (!TheWritableGlobalData->field11FC) {
         struct Context0038A770 { bool value; Context0038A770():value(false) {} } flag;

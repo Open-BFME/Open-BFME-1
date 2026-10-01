@@ -48,6 +48,14 @@ public:
 };
 class PlayerList { public: Player *getPlayerFromMask(UnsignedShort); };
 class ThingFactory { public: ThingTemplate *findTemplate(const AsciiString &); };
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call is made through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+    const ThingTemplate *findTemplate(const AsciiString &name);
+};
 class ScriptConditions {
 public:
     friend class Rva00326490Condition;
@@ -81,7 +89,8 @@ Bool Rva00326490Condition::evaluate(Parameter *playerParameter,
 
     Int result = player->m_at030.get(1);
     for (UnsignedInt index = 0; index < count; ++index) {
-        ThingTemplate *thing = TheThingFactory->findTemplate(set->getNthInList((Int)index));
+        const ThingTemplate *thing =
+            ((BfmeThingFactory *)TheThingFactory)->findTemplate(set->getNthInList((Int)index));
         if (thing && result <= *(Int *)((char *)thing + 0x4b4)) return true;
     }
     return false;

@@ -133,6 +133,15 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 extern ThingFactory *TheThingFactory;
 
 class AttackPriorityInfo
@@ -191,7 +200,7 @@ void AttackPriorityInfo::xfer(Xfer *xfer)
 		for (UnsignedShort i = 0; i < priorityMapCount; ++i)
 		{
 			xfer->xferAsciiString(&thingTemplateName);
-			thingTemplate = TheThingFactory->findTemplate(thingTemplateName);
+			thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(thingTemplateName);
 			if (thingTemplate == 0)
 			{
 				bfmeFormatText(&error, 5, 0);

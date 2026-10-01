@@ -26,6 +26,15 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate
+// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
+// call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 // reference interface: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
@@ -93,7 +102,7 @@ RayEffectFXNugget::RayEffectFXNugget()
 void RayEffectFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *,
 	Real, const Coord3D *secondary) const
 {
-	const ThingTemplate *thingTemplate = TheThingFactory->findTemplate(m_templateName);
+	const ThingTemplate *thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(m_templateName);
 	if (primary && secondary && thingTemplate)
 	{
 		Coord3D sourcePosition = *primary;
