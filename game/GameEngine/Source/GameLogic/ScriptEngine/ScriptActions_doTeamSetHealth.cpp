@@ -196,12 +196,19 @@ protected:
 	void doTeamSetHealth(Parameter *team, Parameter *health);
 };
 
-extern BfmeScriptEngineVtbl_44 *TheScriptEngine;
+// retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp.
+// BfmeScriptEngineVtbl_44 is this TU's local view of the pointee; cast at the
+// use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 // ?doTeamSetHealth@ScriptActions@@IAEXPAVParameter@@0@Z
 void ScriptActions::doTeamSetHealth(Parameter *team, Parameter *health)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed(team->m_string, false);
+	Team *theTeam =
+		((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed(
+			team->m_string, false);
 	if (theTeam)
 	{
 		Real value = health->m_real;

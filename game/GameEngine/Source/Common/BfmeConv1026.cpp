@@ -69,11 +69,15 @@ public:
 	virtual BfmeX1026 *bfmeFind1026(int a);
 };
 
-extern BfmeU1026 *g_bfmeU1026;
+// retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeU1026 is
+// this TU's local view of the pointee; cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 void __stdcall bfmeGo1026B(int a, char b)
 {
-	BfmeX1026 *x = g_bfmeU1026->bfmeFind1026(a);
+	BfmeX1026 *x = ((BfmeU1026 *)TheScriptEngine)->bfmeFind1026(a);
 
 	if (x != 0)
 		x->bfmeSet1026(8, (char)(b == 0));

@@ -32,7 +32,11 @@ public:
 	virtual BfmeThingERM *bfmeSlot26ERM(void *handle);
 };
 
-extern BfmeGlobalERM *g_bfmeGlobalERM;
+// retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeGlobalERM
+// is this TU's local view of the pointee; cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 class BfmeIfaceERM
 {
@@ -71,7 +75,8 @@ extern BfmeKeyGenERM *g_bfmeKeyGenERM;
 
 char __stdcall bfmeCheckERM(void *handle)
 {
-	BfmeThingERM *thing = g_bfmeGlobalERM->bfmeSlot26ERM(handle);
+	BfmeThingERM *thing =
+		((BfmeGlobalERM *)TheScriptEngine)->bfmeSlot26ERM(handle);
 
 	if (thing == 0)
 		return 0;

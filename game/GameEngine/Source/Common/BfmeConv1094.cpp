@@ -90,11 +90,16 @@ class GameLogic;
 
 extern GameLogic *TheGameLogic;				// retail 0x012F0898
 extern BfmeD1094 *g_bfmeD1094;
-extern BfmeP1094 *g_bfmeP1094;
+
+// retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeP1094 is
+// this TU's local view of the pointee; cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 char __stdcall bfmeGo1094A(int a, int b)
 {
-	BfmeE1094 *e = g_bfmeP1094->bfmeSlot1094P_26(a);
+	BfmeE1094 *e = ((BfmeP1094 *)TheScriptEngine)->bfmeSlot1094P_26(a);
 	BfmeW1094 *w;
 	BfmeK1094 *k;
 
@@ -108,7 +113,7 @@ char __stdcall bfmeGo1094A(int a, int b)
 	k = ((BfmeB1094 *)TheGameLogic)->bfmeFind1094(w->m_bfme08);
 	if (!k)
 		return 0;
-	a = g_bfmeP1094->bfmeNext1094(b);
+	a = ((BfmeP1094 *)TheScriptEngine)->bfmeNext1094(b);
 	while ((short)a) {
 		BfmeR1094 *r = g_bfmeD1094->bfmeLook1094((short *)&a);
 

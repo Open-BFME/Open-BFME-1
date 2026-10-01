@@ -82,11 +82,15 @@ public:
 	void bfmeUse1085(BfmeE1085 *a, int b);
 };
 
-extern BfmeP1085 *g_bfmeP1085;
+// retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeP1085 is
+// this TU's local view of the pointee; cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 void __stdcall bfmeGo1085B(int a, int b, char c)
 {
-	BfmeE1085 *e = g_bfmeP1085->bfmeSlot1085_26(a);
+	BfmeE1085 *e = ((BfmeP1085 *)TheScriptEngine)->bfmeSlot1085_26(a);
 
 	if (!e)
 		return;
@@ -94,7 +98,7 @@ void __stdcall bfmeGo1085B(int a, int b, char c)
 		return;
 	e->m_bfme204->m_bfme20.bfmeSet1085(1);
 	if (c)
-		g_bfmeP1085->bfmeUse1085(e, b * 5);
+		((BfmeP1085 *)TheScriptEngine)->bfmeUse1085(e, b * 5);
 	else
-		g_bfmeP1085->bfmeUse1085(e, b);
+		((BfmeP1085 *)TheScriptEngine)->bfmeUse1085(e, b);
 }
