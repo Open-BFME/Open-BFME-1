@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ec6a8759d949382a1ba54eb67d29b2b75645701f343ec37005b008c6124b07fc",
+  "symbol": "?d_006fd700@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.9637,
+  "source": "// ?d_006fd700@@YAXXZ\n// partial score=0.9637 date=2026-10-01\n// cl: /DNDEBUG /MD /EHsc /O2 /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include\n#include \"camera.h\"\n#include <math.h>\nclass Rva006FD700CameraTransform {\npublic:\n void build(Matrix3D* result,float distance,float angle);\n char pad000[0xc]; float field0c,field10;\n char pad014[0x94]; Vector3 fielda8,fieldb4,fieldc0;\n float fieldcc;\n char pad0d0[0x14]; float fielde4;\n char pad0e8[0x50]; RenderObjClass* object138;\n char pad13c[8]; float field144;\n};\nvoid Rva006FD700CameraTransform::build(Matrix3D* result,float distance,float angle) {\n Vector3 position(0.0f,-sin(angle)*distance,cos(angle)*distance);\n if(position.Y==0.0f) position.Y=-0.5f;\n float t=fielde4;\n float tt=t*t;\n float blend=(sqrt(t)-tt)*t+tt;\n Vector3::Lerp(fielda8,fieldb4,blend,&fieldc0);\n float x=fieldc0.X;\n fieldc0.X=(field0c-x)*field144+x;\n float y=fieldc0.Y;\n fieldc0.Y=(field10-y)*field144+y;\n position+=fieldc0;\n if(object138) {\n  Matrix3D m(true);\n  m.Set_Translation(Vector3(192.43f,569.88f,(distance+distance)*blend));\n  object138->Set_Transform(m);\n }\n position-=fieldc0;\n float initialTurn=fieldcc;\n float turn=(0.0f-initialTurn)*blend+initialTurn;\n turn=(0.0f-turn)*field144+turn;\n position.Rotate_Z(turn);\n position+=fieldc0;\n result->Make_Identity();\n result->Look_At(position,fieldc0,0.0f);\n}\n"
+}
