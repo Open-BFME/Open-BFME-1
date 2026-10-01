@@ -1,5 +1,7 @@
 import subprocess
+import struct
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -33,11 +35,25 @@ def entry_object(path, imports=(), safeseh=False):
     coff.write(path)
 
 
-def link(root, env, out, *inputs, extra=()):
-    proc = subprocess.run([str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/ENTRY:start",
-                           "/SUBSYSTEM:WINDOWS", "/INCREMENTAL:NO", f"/OUT:{out}", *map(str, inputs), *extra],
-                          capture_output=True, text=True, env=env)
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+def link(root, env, out, *inputs, extra=(), entry="start"):
+    command = [str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", f"/ENTRY:{entry}",
+               "/SUBSYSTEM:WINDOWS", "/INCREMENTAL:NO"]
+    if sys.platform == "win32":
+        command += [f"/OUT:{out.resolve()}", *(str(path.resolve()) for path in inputs), *extra]
+    else:
+        wine = ll.shutil.which("wine")
+        assert wine is not None, "wine not found"
+        command.insert(0, wine)
+        command += [f"/OUT:{build.wine_path(out.resolve())}",
+                    *(build.wine_path(path.resolve()) for path in inputs), *extra]
+    out.unlink(missing_ok=True)
+    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        proc = subprocess.run(command, stdout=stdout, stderr=stderr, env=env, cwd=ll.ROOT)
+        stdout.seek(0)
+        stderr.seek(0)
+        diagnostics = (stdout.read() + stderr.read()).decode("latin-1", errors="replace")
+    assert proc.returncode == 0, diagnostics
+    assert out.is_file() and out.read_bytes().startswith(b"MZ"), diagnostics
     return out
 
 
@@ -47,6 +63,92 @@ def test_name_types_reproduce_retail_import_names():
     assert ll.name_type("_lineClose@4", "lineClose@4") == ll.IMPORT_NOPREFIX
     with pytest.raises(ValueError):
         ll.name_type("_a@4", "b")
+
+
+def import_archive(symbol, dll):
+    strings = symbol.encode('ascii') + b'\0' + dll.encode('ascii') + b'\0'
+    body = struct.pack('<HHHHIIHH', 0, 0xFFFF, 0, 0x14C, 0, len(strings), 0, 0) + strings
+    header = b'import.obj/     ' + b'0           ' + b'0     ' + b'0     ' + b'0       '
+    header += str(len(body)).encode().ljust(10) + b'`\n'
+    assert len(header) == 60
+    return b'!<arch>\n' + header + body + (b'\n' if len(body) & 1 else b'')
+
+
+@pytest.fixture
+def fake_lib_tool(monkeypatch, tmp_path):
+    root = tmp_path / 'Visual Studio with spaces'
+    monkeypatch.setattr(build, 'vc71_root', lambda: root)
+    monkeypatch.setattr(build, 'compiler_environment', lambda root, source: {'TEST': 'environment'})
+    monkeypatch.setattr(ll.shutil, 'which', lambda name: '/usr/bin/wine')
+    conversions = []
+    def wine_path(path):
+        conversions.append(path)
+        return 'Z:' + str(path).replace('/', '\\')
+    monkeypatch.setattr(build, 'wine_path', wine_path)
+    return root, conversions
+
+
+@pytest.mark.parametrize('platform', ['win32', 'linux'])
+@pytest.mark.parametrize('name,hint,symbol,kind', [
+    ('_AIL_startup@0', 212, '_AIL_startup@0', ll.IMPORT_NAME),
+    ('DirectInput8Create', 17, '_DirectInput8Create@20', ll.IMPORT_UNDECORATE)])
+def test_import_lib_portable_command_and_exact_patch(monkeypatch, tmp_path, fake_lib_tool,
+                                                     platform, name, hint, symbol, kind):
+    root, conversions = fake_lib_tool
+    monkeypatch.setattr(ll.sys, 'platform', platform)
+    out = tmp_path / 'output with spaces.lib'
+    calls = []
+    def run(command, **kwargs):
+        calls.append((command, kwargs))
+        assert kwargs['stdout'] != subprocess.PIPE and kwargs['stderr'] != subprocess.PIPE
+        kwargs['stdout'].write(b'generated\n')
+        out.write_bytes(import_archive(symbol, 'mss32.dll'))
+        return subprocess.CompletedProcess(command, 0)
+    monkeypatch.setattr(subprocess, 'run', run)
+    assert ll.write_import_lib('mss32.dll', [name], [hint], out) == out
+    command, kwargs = calls[0]
+    paths = [out.with_suffix('.def').resolve(), out.resolve()]
+    if platform == 'win32':
+        assert command == [str(root / 'Vc7' / 'bin' / 'lib.exe'), '/NOLOGO', '/MACHINE:X86',
+                           '/DEF:' + str(paths[0]), '/OUT:' + str(paths[1])]
+        assert conversions == []
+    else:
+        assert command == ['/usr/bin/wine', str(root / 'Vc7' / 'bin' / 'lib.exe'), '/NOLOGO', '/MACHINE:X86',
+                           '/DEF:Z:' + str(paths[0]).replace('/', '\\'),
+                           '/OUT:Z:' + str(paths[1]).replace('/', '\\')]
+        assert conversions == paths
+    assert kwargs['cwd'] == ll.ROOT and kwargs['env'] == {'TEST': 'environment'}
+    actual_hint, actual_kind = struct.unpack_from('<HH', out.read_bytes(), 8 + 60 + 16)
+    assert actual_hint == hint and actual_kind == kind << ll.NAME_TYPE_SHIFT
+
+
+@pytest.mark.parametrize('verdict', ['nonzero', 'missing', 'bad_archive', 'missing_import'])
+def test_import_lib_refuses_failed_or_missing_output(monkeypatch, tmp_path, fake_lib_tool, verdict):
+    monkeypatch.setattr(ll.sys, 'platform', 'linux')
+    out = tmp_path / 'failed.lib'
+    out.write_bytes(import_archive('_AIL_startup@0', 'mss32.dll'))  # A stale success must not pass.
+    def run(command, **kwargs):
+        assert not out.exists()
+        kwargs['stderr'].write(b'actual lib failure')
+        if verdict == 'nonzero':
+            out.write_bytes(import_archive('_AIL_startup@0', 'mss32.dll'))
+        elif verdict == 'bad_archive':
+            out.write_bytes(b'not an archive')
+        elif verdict == 'missing_import':
+            out.write_bytes(b'!<arch>\n')
+        return subprocess.CompletedProcess(command, 17 if verdict == 'nonzero' else 0)
+    monkeypatch.setattr(subprocess, 'run', run)
+    expected = {'nonzero': 'exit 17.*actual lib failure', 'missing': 'without producing',
+                'bad_archive': 'not an archive', 'missing_import': 'no import object'}[verdict]
+    with pytest.raises(SystemExit, match=expected):
+        ll.write_import_lib('mss32.dll', ['_AIL_startup@0'], [212], out)
+
+
+def test_import_lib_missing_wine_is_explicit(monkeypatch, tmp_path, fake_lib_tool):
+    monkeypatch.setattr(ll.sys, 'platform', 'linux')
+    monkeypatch.setattr(ll.shutil, 'which', lambda name: None)
+    with pytest.raises(SystemExit, match='wine not found'):
+        ll.write_import_lib('mss32.dll', ['_AIL_startup@0'], [212], tmp_path/'mss32.lib')
 
 
 def test_lanes_without_a_linked_image_are_unknown():
@@ -105,16 +207,11 @@ def test_load_config_appears_only_for_an_all_safeseh_crt_link(tmp_path):
     root, env = toolchain()
     lib = root / "Vc7" / "lib"
     crt = [lib / "msvcrt.lib", lib / "kernel32.lib"]
-    flags = ["/ENTRY:WinMainCRTStartup"]
-
     def load_config(name, safeseh, extra=()):
         winmain_object(tmp_path / f"{name}.obj", safeseh)
-        proc = subprocess.run([str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB",
-                               "/SUBSYSTEM:WINDOWS", "/INCREMENTAL:NO", *flags, *extra,
-                               f"/OUT:{tmp_path / name}.exe", str(tmp_path / f"{name}.obj"), *map(str, crt)],
-                              capture_output=True, text=True, env=env)
-        assert proc.returncode == 0, proc.stdout + proc.stderr
-        return ll.facts(ll.load(tmp_path / f"{name}.exe"))["directories"]["load_config"]
+        exe = link(root, env, tmp_path / f"{name}.exe", tmp_path / f"{name}.obj", *crt,
+                   extra=extra, entry="WinMainCRTStartup")
+        return ll.facts(ll.load(exe))["directories"]["load_config"]
 
     assert load_config("safe", True) == 72
     assert load_config("safe_no", True, ["/SAFESEH:NO"]) == 0

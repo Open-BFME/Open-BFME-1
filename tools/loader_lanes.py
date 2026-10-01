@@ -36,6 +36,7 @@ The .res and .lib outputs are generated inputs for a relink, not progress.
 import argparse
 import hashlib
 import json
+import shutil
 import struct
 import sys
 from pathlib import Path
@@ -242,17 +243,37 @@ def write_import_lib(dll, names, hints, out):
     retail's hints: lib.exe /DEF makes the short import objects, then each
     one's name type and hint are set to what retail's import table records."""
     import subprocess
+    import tempfile
     root = build.vc71_root()
     env = build.compiler_environment(root, None)
     want = {import_symbol(n): (n, h) for n, h in zip(names, hints)}
     deffile = out.with_suffix(".def")
     lines = [f"LIBRARY {dll}", "EXPORTS"] + [f"    {s[1:]}" for s in want]
     deffile.write_text("\n".join(lines) + "\n", encoding="ascii")
-    proc = subprocess.run([str(root / "Vc7" / "bin" / "lib.exe"), "/NOLOGO", "/MACHINE:X86", f"/DEF:{deffile}",
-                           f"/OUT:{out}"], capture_output=True, text=True, env=env)
+    command = [str(root / "Vc7" / "bin" / "lib.exe"), "/NOLOGO", "/MACHINE:X86"]
+    if sys.platform == "win32":
+        command += [f"/DEF:{deffile.resolve()}", f"/OUT:{out.resolve()}"]
+    else:
+        wine = shutil.which("wine")
+        if wine is None:
+            raise SystemExit("wine not found. Install Wine to run MSVC 7.1 on this host.")
+        command.insert(0, wine)
+        command += [f"/DEF:{build.wine_path(deffile.resolve())}", f"/OUT:{build.wine_path(out.resolve())}"]
+    out.unlink(missing_ok=True)
+    # Wine services may retain standard handles after lib.exe exits. Regular
+    # files let us wait for the direct child without waiting for pipe EOF.
+    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        proc = subprocess.run(command, stdout=stdout, stderr=stderr, env=env, cwd=ROOT)
+        stdout.seek(0)
+        stderr.seek(0)
+        diagnostics = (stdout.read() + stderr.read()).decode("latin-1", errors="replace")
     if proc.returncode:
-        raise SystemExit(f"lib.exe failed for {dll}: {proc.stdout}{proc.stderr}")
+        raise SystemExit(f"lib.exe failed for {dll} (exit {proc.returncode}): {diagnostics}")
+    if not out.is_file():
+        raise SystemExit(f"{dll}: lib.exe succeeded without producing {out}: {diagnostics}")
     data = bytearray(out.read_bytes())
+    if not data.startswith(b"!<arch>\n"):
+        raise SystemExit(f"{dll}: lib.exe output is not an archive: {out}")
     offset, patched = 8, set()
     while offset + 60 <= len(data):
         size = int(data[offset + 48:offset + 58].decode("latin-1").strip())
