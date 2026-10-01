@@ -79,7 +79,8 @@ unsigned char Gen_001604C0::bfmeHasRoom(void) const
 	return m_bfmeUsed < m_bfmeSize;
 }
 
-extern int g_bfmeDirtyBH;					// retail 0x012EF418
+extern unsigned int g_rva007A6290Flags;
+#define g_bfmeDirtyBH g_rva007A6290Flags
 
 // ?bfmeMarkDirty@@YAXH@Z
 void __cdecl bfmeMarkDirty(int bits)

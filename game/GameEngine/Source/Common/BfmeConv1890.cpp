@@ -1,4 +1,4 @@
-extern const char g_bfmeEmptyAA[];
+#define g_bfmeEmptyAA ((const char *)L"")
 
 struct BfmeStrAA
 {

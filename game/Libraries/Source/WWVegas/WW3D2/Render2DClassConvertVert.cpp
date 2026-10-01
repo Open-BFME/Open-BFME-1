@@ -16,7 +16,8 @@ public:
 
 #include "vector3.h"
 
-extern "C" float g_BfmeRender2DZ;
+extern float g_bfmeStencilDepthRef;
+#define g_BfmeRender2DZ g_bfmeStencilDepthRef
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass

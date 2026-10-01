@@ -21,7 +21,9 @@ public:
 	virtual void drawLine( int x0, int y0, int x1, int y1 );
 };
 
-extern AptPalantirGlobeRenderer *g_bfmeDrawVHP;
+class Rva002EECE0;
+extern Rva002EECE0 *g_rva002eece0;
+#define g_bfmeDrawVHP ((AptPalantirGlobeRenderer *)g_rva002eece0)
 
 // ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z
 void __cdecl aptPalantirRenderGlobe( const PalantirPoint *from, const PalantirPoint *to )

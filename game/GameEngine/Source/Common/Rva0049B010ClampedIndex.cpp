@@ -6,6 +6,7 @@
 
 #include "PreRTS.h"
 #include "Common/STLTypedefs.h"
+#include "Common/AsciiString.h"
 
 struct Rva0049B010Data
 {
@@ -24,7 +25,7 @@ struct Rva0049B010String
 	}
 };
 
-extern Rva0049B010String g_rva0049B010Fallback;
+#define g_rva0049B010Fallback (*(const Rva0049B010String *)&AsciiString::TheEmptyString)
 
 class Rva0049B010Owner
 {

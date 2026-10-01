@@ -1,6 +1,7 @@
 // Open-BFME5 conversions.
 
-extern "C" char g_bfmeV1188[];
+extern "C" char __identifier("??_7BaseY005E7360Pairs@@6B@")[];
+#define g_bfmeV1188 __identifier("??_7BaseY005E7360Pairs@@6B@")
 
 struct BfmePair1188
 {

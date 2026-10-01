@@ -15,7 +15,9 @@ public:
 	virtual int getHigh();
 };
 
-extern BfmeThresholdSource *g_obj12F70E4;
+class GameSpyConfigInterface;
+extern GameSpyConfigInterface *TheGameSpyConfig;
+#define g_obj12F70E4 ((BfmeThresholdSource *)TheGameSpyConfig)
 
 class BfmeAptScreenPickByThreshold
 {

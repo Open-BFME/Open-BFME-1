@@ -1,10 +1,10 @@
 // ?resetFiveGlobalsB@@YAXXZ
 // Open-BFME7: twins of the five-global reset at 0x009336E0 with other values.
-extern "C" int g_bfmeFirstEB;
-extern "C" int g_bfmeSecondEB;
-extern "C" int g_bfmeThirdEB;
-extern "C" int g_bfmeFourthEB;
-extern "C" int g_bfmeFifthEB;
+extern int g_bfmeFirstEB;
+extern int g_bfmeSecondEB;
+extern int g_bfmeThirdEB;
+extern int g_bfmeFourthEB;
+extern int g_bfmeFifthEB;
 void resetFiveGlobalsB()
 {
 	g_bfmeSecondEB = 0;

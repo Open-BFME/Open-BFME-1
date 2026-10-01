@@ -79,7 +79,6 @@ bool Rva004892C0::get() const
 
 // Two readers of one pointee, at two different field offsets, sharing one
 // default.  RVA 0x00C7301C is the empty string in .rdata.
-extern const char Rdata00C7301C[];
 
 class GenRva0063B040
 {
@@ -104,7 +103,7 @@ const char *Rva0063B040::get() const
 	{
 		return m_target->m_name;
 	}
-	return Rdata00C7301C;
+	return "";
 }
 
 class Rva0063B060
@@ -121,5 +120,5 @@ const char *Rva0063B060::get() const
 	{
 		return m_target->m_other;
 	}
-	return Rdata00C7301C;
+	return "";
 }

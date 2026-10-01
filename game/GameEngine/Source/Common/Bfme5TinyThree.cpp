@@ -26,12 +26,10 @@ int __cdecl bfmeMask(BfmeThingBW *thing)
 	return thing->m_bfmeFlags & 0x20;
 }
 
-extern double g_bfmeFactorBW;					// retail 0x01075D80
-
 // ?bfmeScale@@YANI@Z
 double __cdecl bfmeScale(unsigned int value)
 {
-	return value * g_bfmeFactorBW;
+	return value * 0.001;
 }
 
 class Gen_0088A5D0

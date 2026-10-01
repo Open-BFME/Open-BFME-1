@@ -1,7 +1,5 @@
 // Open-BFME5 conversions.
 
-extern "C" float g_bfmeK1127;
-
 class BfmeA1127
 {
 public:
@@ -34,7 +32,7 @@ float BfmeA1127::bfmeGo1127(int a1, int a2)
 	float hi = 0.0f;
 
 	if (!bfmeV191127(a1, a2, &lo, &hi))
-		return g_bfmeK1127;
+		return 0.0f;
 
 	return lo - hi;
 }

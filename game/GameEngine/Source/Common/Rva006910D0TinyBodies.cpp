@@ -141,7 +141,7 @@ struct Rva002E5FF0Str
 	void *m_data;
 };
 
-extern Rva002E5FF0Str Rva01336E50Str;
+#define Rva01336E50Str (*(Rva002E5FF0Str *)&AsciiString::TheEmptyString)
 
 class Rva00694AC0
 {

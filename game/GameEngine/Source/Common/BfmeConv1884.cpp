@@ -1,4 +1,5 @@
-extern "C" unsigned int g_bfmeDirtyZR;
+extern unsigned int g_rva007A6290Flags;
+#define g_bfmeDirtyZR g_rva007A6290Flags
 
 struct BfmeItemZR
 {

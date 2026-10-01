@@ -16,7 +16,8 @@ struct GameLogicFrameSlice
 	unsigned int m_frame;
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00216100TimedCondition
 {
@@ -33,7 +34,7 @@ int Rva00216100TimedCondition::update00216100()
 {
 	if( m_active )
 	{
-		if( m_expirationFrame < TheGameLogic->m_frame )
+		if( m_expirationFrame < ((GameLogicFrameSlice *)TheGameLogic)->m_frame )
 		{
 			Object *object = *(Object **)( (char *)this - 8 );
 			if( object->m_modelConditions & 0x100 )

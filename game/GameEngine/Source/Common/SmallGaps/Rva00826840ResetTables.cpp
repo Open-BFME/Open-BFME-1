@@ -1,9 +1,11 @@
 // ?resetTables@Rva00826840Owner@@QAEXXZ
 #include <string.h>
+#define LZHLINTERNAL
+#include "../../../../Libraries/Source/Compression/LZHCompress/CompLibHeader/_huff.h"
 struct Rva00826740Big { int m_v[0x89]; };
 struct Rva00826740Small { int m_v[0x20]; };
-extern const Rva00826740Big Rva00826740BigInit;
-extern const Rva00826740Small Rva00826740SmallInit;
+#define Rva00826740BigInit (*(const Rva00826740Big *)LZHLDecoderStat::symbolTable0)
+#define Rva00826740SmallInit (*(const Rva00826740Small *)LZHLDecoderStat::groupTable0)
 // Volatile reset slots and destination pointer preserve retail reset/copy order.
 struct Rva00826840Owner {
 	int m_0;
