@@ -10828,5 +10828,15 @@
   "after_sha256": "841547ebe1615b715077600b383efad521c7c339268205eb2c4c8b1ccfe9dcf9",
   "evidence": "targets/game/reverse/identity_evidence/name-lane-disputes.md",
   "reason": "disputed: The file only constructs and destroys these members; nothing in the code shows they hold a name or a locale. Two models shared a guess from the file name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00905140.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/Rva00905140CreateRenderTarget.cpp",
+  "old_name": "RefCountPtr",
+  "new_name": "Gen_005D2040",
+  "before_sha256": "f7e5d09f1cbf930ac788454f477de0f8a34230a240809a07b39ad4de302464bb",
+  "after_sha256": "d2b55bf8e53365558121bbc7b5b9e7ba359746f86886b4d7d44fffbbd6e4b1ec",
+  "evidence": "targets/game/reverse/identity_evidence/00905140-gen-handle.md",
+  "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank’s RefCountPtr<TextureClass> return."
  }
 ]
