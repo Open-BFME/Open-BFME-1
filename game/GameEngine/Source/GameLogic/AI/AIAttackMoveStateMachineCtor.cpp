@@ -11,9 +11,11 @@ class StateMachine
 {
 public:
 	StateMachine( Object *owner, AsciiString name, bool flag );
-	virtual ~StateMachine();
 
 protected:
+	// retail declares the virtual destructor protected; that access level is
+	// part of the mangled name the compiler-emitted cleanup path calls.
+	virtual ~StateMachine();
 	void defineState( unsigned int id, State *state,
 		unsigned int successID, unsigned int failureID,
 		const StateConditionInfo *conditions );
