@@ -1,5 +1,5 @@
-// ?d_0041bac0@@YAXXZ
-// partial score=0.286331 date=2026-09-24
+// ?method0041BAC0@Owner@Rva0041BAC0Detail@@QAEXXZ
+// partial score=0.5871 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Address-qualified reconstruction of retail 0x0041BAC0. Its receiver is the
 // vslot+0x28 subobject passed by Pathfinder::updateAt003FA5B0. The receiver
@@ -30,6 +30,10 @@
 #include "ascii_string.h"
 #include "coord3d.h"
 
+extern const AsciiString Rva01336E50EmptyString;
+class AI;
+extern AI *TheAI;
+
 typedef unsigned char Rva0041BAC0Bool;
 typedef int Rva0041BAC0Int;
 
@@ -39,10 +43,6 @@ struct Rva0041BAC0NameRecord
 	AsciiString m_name;
 };
 
-template <> inline const char *StringBase<char>::str() const
-{ return m_data ? m_data->data : ""; }
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->~StringBase<char>(); }
 
 class Rva0041BAC0View
 {
@@ -171,20 +171,20 @@ void Rva0041BAC0Detail::Owner::method0041BAC0()
 			while (view->queryName(nameIndex, &selected))
 			{
 				{
-				__declspec(align(8)) Coord3D positions[10];
+				Coord3D positions[10];
 				int count = boneSource->getMultiLogicalBonePosition(
 					selected.m_name.str(), 10, positions, 0, true, 0);
 				Rva001AB600Record *previous = 0;
 				if (count >= 2 && count > 0)
 				{
-					const AsciiString &empty = *(const AsciiString *)0x01336E50;
+					const AsciiString &empty = Rva01336E50EmptyString;
 					for (int i = 0; i < count; ++i)
 					{
 						Rva001AB600Record *record = new Rva001AB600Record(
 							0x7ffffffe, AsciiString("#embed"), &positions[i],
 							AsciiString(empty), AsciiString(empty), AsciiString(empty),
 							0, selected.m_word0, AsciiString(empty));
-						Rva0041BAC0Detail::AI *ai = *(Rva0041BAC0Detail::AI **)0x012EF214;
+						Rva0041BAC0Detail::AI *ai = reinterpret_cast<Rva0041BAC0Detail::AI *>(TheAI);
 						ai->m_registry->registerRecord(record);
 						if (previous != 0)
 						{
