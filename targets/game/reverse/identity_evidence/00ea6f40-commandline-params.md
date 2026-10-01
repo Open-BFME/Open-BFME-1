@@ -101,3 +101,31 @@ on the note "m_netMinPlayers at GlobalData+0xecc". The body stores
   (0x00060F20). 0x00060C60 instead directly follows `parseYRes` (0x00060C10).
 
 The body keeps its address: `?Rva00060C60_parse@@YAHQAPADH@Z`.
+
+## The flagtable route
+
+`tools/ea_flagtable.py` derives these names mechanically and writes them to
+`targets/game/reverse/ea_evidence.csv` as `kind=name, route=flagtable,
+basis=strong`; `tools/ea_evidence.py` merges them whenever it rewrites the
+CSV, and `ea_flagtable.py --check` reports stale rows. Its docstring states
+the rules. In short, a name is Zero Hour's handler for a flag, and it goes on
+the body that one of two tables pairs with that flag:
+
+- the game's table (above): the thunk target of the entry;
+- WorldBuilder's table, for flags the game's table lacks: the one game body
+  whose effects (the GlobalData stores with offset, width and value, an OR
+  into another global, and the return value) equal the WorldBuilder
+  handler's, when no other WorldBuilder handler has the same effects. The
+  five flags in both tables with modelled bodies (`-noshellmap`, `-noaudio`,
+  `-xres`, `-yres`, `-win`) give identical effects on both sides, and the
+  tool refuses to write if any shared flag differs.
+
+On 2026-10-01 it gives 28 names: the seven game-table flags with a Zero Hour
+handler, and 21 WorldBuilder flags, all at 0x00060880..0x000610D0 in
+Zero Hour's declaration order (`parseSeed` 0x00060EE0, `parseIncrAGPBuf`
+0x00060F20, `parseNetMinPlayers` 0x00060F40, `parsePlayStats` 0x00060FA0,
+...). `-dumpAssetUsage` gives 0x00061050 and `-netMinPlayers` 0x00060F40,
+as the sections above found by hand. No flagtable name contradicts a
+ledger name. `-panoramicSlices`, `-scriptDebug2`, `-scriptDebugLite`,
+`-preferLocalFiles`, `-Watchdog` and `-noWatchdog` have no Zero Hour handler,
+so their bodies keep address names.

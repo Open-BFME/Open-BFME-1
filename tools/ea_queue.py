@@ -75,8 +75,8 @@ def items(ea, rows_at, exports, zh, blocked):
                 or not source.endswith((".cpp", ".h")) or source.startswith("game/gen_")):
             continue
         have, s = plain(name), shape(name)
-        if not have or not s or have.lower() == want.lower():
-            continue
+        if not have or not s or have.lower() == want.lower() or "::" not in want:
+            continue                              # a flagtable free-function name is landed by hand
         cls, method, virtual = s
         if method and method.lower() in zh.get(cls.lower(), ()):
             continue                              # a Zero Hour name: a dispute, not a rename

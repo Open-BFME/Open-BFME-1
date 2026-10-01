@@ -7,8 +7,10 @@ strong pairing is added or renamed, the new name must be EA's, keep the address 
 retail export there, be a Class::method Zero Hour declares, or say in the row's notes why EA's
 name is wrong for BFME1: `ea-name-disputed=<evidence>`. Labels are evidence, not proof: BFME2
 renamed some members, and a body that inlined a labelled callee carries the callee's label (a
-destructor labelled with the clear() it inlined). Rows whose name did not change are not checked,
-so the invented names already in the ledger are tools/ea_queue.py's work, not a commit's.
+destructor labelled with the clear() it inlined). A flagtable name (tools/ea_flagtable.py) is a
+free function's, `parseWin`, and matches the row's unqualified symbol. Rows whose name did not
+change are not checked, so the invented names already in the ledger are tools/ea_queue.py's
+work, not a commit's.
 
   python3 tools/ea_name_guard.py --staged
   python3 tools/ea_name_guard.py --range OLD NEW
@@ -94,7 +96,9 @@ def problems(rows, old, ea, exports, zh=None):
         if name in old.get(rva, ()):
             continue                          # the name did not change (a source repoint, notes)
         have = plain(name)
-        if ((have and have.lower() == want.lower()) or token in name.lower()
+        free = re.match(r"\?([A-Za-z_]\w*)@@Y", name)
+        if ((have and have.lower() == want.lower()) or (free and free.group(1).lower() == want.lower())
+                or token in name.lower()
                 or name in exports.get(rva, ()) or "ea-name-disputed=" in (r["notes"] or "")):
             continue
         if have:

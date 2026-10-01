@@ -363,7 +363,7 @@ def ea_lines(rva):
     out = []
     if 'name' in e:
         n = e['name']
-        bfme2 = '' if 'wb1' in n['route'] else '; BFME2 label, and BFME2 renamed some members'
+        bfme2 = '' if 'wb1' in n['route'] or n['route'] == 'flagtable' else '; BFME2 label, and BFME2 renamed some members'
         out.append(f"  EA name ({n['route']}, {n['basis']}{bfme2}): {n['value']}")
     if 'file' in e:
         out.append(f"  EA source file ({e['file']['route']}): {e['file']['value']}")
