@@ -77,7 +77,14 @@ public:
 	unsigned int m_bits[6];							// BFME stores six words
 };
 typedef BitFlags<116> KindOfMaskType;
-extern const KindOfMaskType KINDOFMASK_NONE;
+
+// The empty KindOf mask the whole game shares. Retail defines it once as
+// `const BitFlags<192>` (mangled ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,
+// VA 0x012ED8B8, 24 zero bytes) in Common/System/KindOf.cpp, so this is the
+// only spelling that links in a retail-shaped build. This TU's own view type
+// is BitFlags<116>, so the use below casts the address back to it; the byte
+// gate masks DIR32 relocations, so the respelling is byte-neutral.
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 class GeometryInfo
 {
@@ -169,7 +176,7 @@ void ThingTemplate::initForLTA( const AsciiString &name )
 	m_armorCopiedFromDefault = false;
 	m_weaponsCopiedFromDefault = false;
 
-	m_kindof = KINDOFMASK_NONE;
+	m_kindof = *(const KindOfMaskType *)&KINDOFMASK_NONE;
 	m_assetScale = 1.0f;
 	m_instanceScaleFuzziness = 0.0f;
 	m_bfme497 = false;

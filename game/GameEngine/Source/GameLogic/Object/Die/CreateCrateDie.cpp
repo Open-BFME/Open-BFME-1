@@ -19,7 +19,13 @@ public:
 
 typedef BitFlags<116> KindOfMaskType;
 
-extern KindOfMaskType KINDOFMASK_NONE;
+// The empty KindOf mask the whole game shares. Retail defines it once as
+// `const BitFlags<192>` (mangled ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,
+// VA 0x012ED8B8, 24 zero bytes) in Common/System/KindOf.cpp, so this is the
+// only spelling that links in a retail-shaped build. This TU's own view type
+// is BitFlags<116>, so the use below casts the address back to it; the byte
+// gate masks DIR32 relocations, so the respelling is byte-neutral.
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 // The template's inline kind-of test is the one used by CreateCrateDie.  Only
 // the override link and mask offset are needed here; the remaining template
@@ -304,7 +310,7 @@ bool CreateCrateDie::testKillerType( CrateTemplate const *currentCrateData, Obje
 
 	if( ! killer->getTemplate()->isKindOfMulti(
 			currentCrateData->m_killedByTypeKindof,
-			KINDOFMASK_NONE ) )
+			*(const KindOfMaskType *)&KINDOFMASK_NONE ) )
 		return false;
 
 	return true;

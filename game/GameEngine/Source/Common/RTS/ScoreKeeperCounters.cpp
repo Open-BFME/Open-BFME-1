@@ -102,7 +102,19 @@ enum KindOfType
 	KINDOF_SCORE_CREATE = 40
 };
 
-extern const KindOfMaskType KINDOFMASK_NONE;
+// The empty KindOf mask the whole game shares. Retail defines it once as
+// `const BitFlags<192>` (mangled ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,
+// VA 0x012ED8B8, 24 zero bytes) in Common/System/KindOf.cpp, so this is the
+// only spelling that links in a retail-shaped build. This TU's own view type
+// is BitFlags<116>, so every use below casts the address back to it -- the
+// byte gate masks DIR32 relocations, so the respelling is byte-neutral.
+extern const BitFlags<192> KINDOFMASK_NONE;
+
+static inline const KindOfMaskType &noneKindOfMask(void)
+{
+	return *(const KindOfMaskType *)&KINDOFMASK_NONE;
+}
+
 extern KindOfMaskType scoringBuildingMask;
 extern KindOfMaskType scoringBuildingCreateMask;
 extern KindOfMaskType scoringBuildingDestroyMask;
@@ -261,12 +273,12 @@ void ScoreKeeper::addObjectBuilt(Object *o, Int amount)
 		return;
 
 	bool addToCount = false;
-	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, KINDOFMASK_NONE))
+	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, noneKindOfMask()))
 	{
 		m_totalBuildingsBuilt += amount;
 		addToCount = true;
 	}
-	else if (o->getTemplate()->isKindOfMulti(scoringBuildingCreateMask, KINDOFMASK_NONE))
+	else if (o->getTemplate()->isKindOfMulti(scoringBuildingCreateMask, noneKindOfMask()))
 	{
 		m_totalBuildingsBuilt += amount;
 		addToCount = true;
@@ -296,11 +308,11 @@ void ScoreKeeper::removeObjectBuilt(const Object *o)
 	if (o->getStatusBits() & 0x800)
 		return;
 
-	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, KINDOFMASK_NONE))
+	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, noneKindOfMask()))
 	{
 		--m_totalBuildingsBuilt;
 	}
-	else if (o->getTemplate()->isKindOfMulti(scoringBuildingCreateMask, KINDOFMASK_NONE))
+	else if (o->getTemplate()->isKindOfMulti(scoringBuildingCreateMask, noneKindOfMask()))
 	{
 		--m_totalBuildingsBuilt;
 	}
@@ -336,12 +348,12 @@ void ScoreKeeper::addObjectDestroyed(const Object *o)
 	Int playerIdx = player->getPlayerIndex();
 	// int, not bool: this file's Bool was a typedef for int.
 	int addToCount = false;
-	if (object->getTemplate()->isKindOfMulti(scoringBuildingMask, KINDOFMASK_NONE))
+	if (object->getTemplate()->isKindOfMulti(scoringBuildingMask, noneKindOfMask()))
 	{
 		++keeper->m_totalBuildingsDestroyed[playerIdx];
 		addToCount = true;
 	}
-	else if (object->getTemplate()->isKindOfMulti(scoringBuildingDestroyMask, KINDOFMASK_NONE))
+	else if (object->getTemplate()->isKindOfMulti(scoringBuildingDestroyMask, noneKindOfMask()))
 	{
 		++keeper->m_totalBuildingsDestroyed[playerIdx];
 		addToCount = true;
@@ -384,12 +396,12 @@ void ScoreKeeper::addObjectBuilt(Object *o)
 	if (o->getStatusBits() & 0x800)
 		return;
 
-	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, KINDOFMASK_NONE))
+	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, noneKindOfMask()))
 		++m_totalBuildingsLost;
 	// Retail 0x012ED7CC: ScoreKeeper::reset's SCORE_DESTROY mask, which
 	// addObjectDestroyed also reads as scoringBuildingDestroyMask. The CREATE
 	// mask lives at 0x012ED7E4 (addObjectBuilt(Object*,Int) / removeObjectBuilt).
-	else if (o->getTemplate()->isKindOfMulti(scoringBuildingDestroyMask, KINDOFMASK_NONE))
+	else if (o->getTemplate()->isKindOfMulti(scoringBuildingDestroyMask, noneKindOfMask()))
 		++m_totalBuildingsLost;
 	else if (TheWritableGlobalData->m_unitScoreFilter.accepts((BfmeRvaA760Object *)o, 0))
 		++m_totalUnitsLost;
