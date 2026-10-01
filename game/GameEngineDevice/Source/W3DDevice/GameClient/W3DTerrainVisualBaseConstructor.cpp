@@ -29,7 +29,7 @@ public:
 	virtual void bfmeSlot0(void);
 
 private:
-	int m_bfmeState;
+	int m_name;
 };
 
 class W3DTerrainVisualBase : public BfmeSnapshotBase, public SubsystemInterface

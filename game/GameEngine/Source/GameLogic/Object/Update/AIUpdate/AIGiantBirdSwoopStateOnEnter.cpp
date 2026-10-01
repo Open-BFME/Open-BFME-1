@@ -163,7 +163,7 @@ class WeaponTemplate
 {
 public:
 	char m_before4ac[0x4ac];
-	Int m_field4ac;
+	Int m_clipSize;
 };
 
 class Weapon
@@ -392,7 +392,7 @@ StateReturnType AIGiantBirdSwoopState::onEnter()
 			ai->m_flags3f0 |= 0x110;
 		else if (victim->isKindOf((KindOfType)0x0b))
 			ai->m_flags3f0 = (ai->m_flags3f0 & ~0x100) | 0x20;
-		else if (weapon->m_template->m_field4ac > 1 && (victim->m_status[0] & 0x40) == 0)
+		else if (weapon->m_template->m_clipSize > 1 && (victim->m_status[0] & 0x40) == 0)
 			ai->m_flags3f0 |= 8;
 
 		ai->m_mode494 = 2;

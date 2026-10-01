@@ -144,14 +144,14 @@ public:
 
 private:
 	char m_bfmeHead[0x288];
-	BfmeObjectListNode *m_bfmeObjectList;				// +0x288
+	BfmeObjectListNode *m_playerTeamPrototypes;				// +0x288
 };
 
 // ?iterateObjects@Player@@QBEHP6AXPAVObject@@PAX@Z1@Z
 Int Player::iterateObjects(ObjectIterateFunc func, void *userData) const
 {
-	for (BfmeObjectListNode *node = m_bfmeObjectList->m_bfmeNext;
-		node != m_bfmeObjectList;
+	for (BfmeObjectListNode *node = m_playerTeamPrototypes->m_bfmeNext;
+		node != m_playerTeamPrototypes;
 		node = node->m_bfmeNext)
 	{
 		if (!node->m_bfmeObject->bfmeIterate(func, userData))

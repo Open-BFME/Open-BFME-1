@@ -17,7 +17,7 @@ public:
 	virtual ~SubsystemInterface();
 
 private:
-	int m_04;
+	int m_name;
 };
 
 class HotKeyAsciiStringLess

@@ -1,8 +1,8 @@
 // ?rva0094E060SetSortLevel@MeshModelClass@@QAEX_N@Z
 // Address-derived: thiscall(this, bool flag) on MeshModelClass. Picks an
-// override level (m_98) over the base level (m_94) only when flag requests
+// override level (AlternateMatDesc) over the base level (DefMatDesc) only when flag requests
 // it and the override is non-zero; if that differs from the cached level
-// (m_9c) it updates the cache, optionally recomputes static sort levels, and
+// (CurMatDesc) it updates the cache, optionally recomputes static sort levels, and
 // tail-calls TheDX8MeshRenderer->Invalidate(false).
 class DX8MeshRendererClass
 {
@@ -24,9 +24,9 @@ public:
 	unsigned char m_pad0[0x18];
 	unsigned char m_18flags;
 	unsigned char m_pad1[0x94 - 0x19];
-	int m_94;
-	int m_98;
-	int m_9c;
+	int DefMatDesc;
+	int AlternateMatDesc;
+	int CurMatDesc;
 
 	void rva0094E060SetSortLevel(bool flag);
 
@@ -39,18 +39,18 @@ void MeshModelClass::rva0094E060SetSortLevel(bool flag)
 	int level;
 	if (flag == 1)
 	{
-		level = m_98;
+		level = AlternateMatDesc;
 		if (level == 0)
-			level = m_94;
+			level = DefMatDesc;
 	}
 	else
 	{
-		level = m_94;
+		level = DefMatDesc;
 	}
 
-	if (m_9c != level)
+	if (CurMatDesc != level)
 	{
-		m_9c = level;
+		CurMatDesc = level;
 		if ((m_18flags & 0x10) && WW3D::IsMungeSortOnLoadEnabled)
 			compute_static_sort_levels();
 

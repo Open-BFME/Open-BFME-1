@@ -54,7 +54,7 @@ public:
 			*(const StringBase<char> *)&o );
 	}
 
-	int m_bfmeColor;
+	int m_tooltipName;
 };
 
 class Bfme5ColorRecord

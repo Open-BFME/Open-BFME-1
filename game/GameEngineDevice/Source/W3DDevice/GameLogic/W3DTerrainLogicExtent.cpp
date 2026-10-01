@@ -80,8 +80,8 @@ private:
 	Int m_mapDX;																// @0x10
 	Int m_mapDY;																// @0x14
 	char m_bfmeMiddle[0x18fc - 0x18];
-	Real m_bfmeExtentLoZ;												// @0x18fc
-	Real m_bfmeExtentHiZ;												// @0x1900
+	Real m_mapMinZ;												// @0x18fc
+	Real m_mapMaxZ;												// @0x1900
 
 };
 
@@ -95,6 +95,6 @@ void W3DTerrainLogic::getExtentIncludingBorder( Region3D *extent ) const
 	extent->lo.y -= border;
 	extent->hi.x = (m_mapDX * MAP_XY_FACTOR)-border;
 	extent->hi.y = (m_mapDY * MAP_XY_FACTOR)-border;
-	extent->lo.z = m_bfmeExtentLoZ;
-	extent->hi.z = m_bfmeExtentHiZ;
+	extent->lo.z = m_mapMinZ;
+	extent->hi.z = m_mapMaxZ;
 }

@@ -104,7 +104,7 @@ class GlobalData
 {
 public:
 	char m_bfmeHead[0xBB4];
-	Bool m_bfmeNoShellAudio;				// +0xBB4
+	Bool m_shellMapOn;				// +0xBB4
 };
 
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
@@ -146,7 +146,7 @@ public:
 private:
 	char m_bfmeHeadA[0x04];
 	BfmeShellScreen *m_bfmeStack[17];			// +0x04
-	Int m_bfmeTop;						// +0x48
+	Int m_screenCount;						// +0x48
 	char m_bfmeHeadB[0x58 - 0x4C];
 	Bool m_bfmeShown;					// +0x58
 	char m_bfmeHeadC[0x64 - 0x59];
@@ -156,7 +156,7 @@ private:
 // ?hide@Shell@@QAEX_N@Z
 void Shell::hide(Bool hide)
 {
-	Int top = m_bfmeTop;
+	Int top = m_screenCount;
 
 	if (top)
 	{
@@ -174,7 +174,7 @@ void Shell::hide(Bool hide)
 
 	m_bfmeShown = false;
 
-	if (!TheWritableGlobalData->m_bfmeNoShellAudio)
+	if (!TheWritableGlobalData->m_shellMapOn)
 	{
 		TheDisplay->bfmeStopMovie();
 

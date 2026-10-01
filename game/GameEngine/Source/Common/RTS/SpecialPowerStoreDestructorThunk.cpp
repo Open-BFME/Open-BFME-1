@@ -28,7 +28,7 @@ public:
 	virtual ~SubsystemInterface();
 
 private:
-	int m_04;
+	int m_name;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h

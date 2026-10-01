@@ -4,10 +4,10 @@
 class ShaderClass
 {
 public:
-	__forceinline ShaderClass(int bits) { m_bfmeBits = bits; }
-	__forceinline ShaderClass(const ShaderClass &other) { m_bfmeBits = other.m_bfmeBits; }
+	__forceinline ShaderClass(int bits) { ShaderBits = bits; }
+	__forceinline ShaderClass(const ShaderClass &other) { ShaderBits = other.ShaderBits; }
 
-	int m_bfmeBits;
+	int ShaderBits;
 };
 
 class MeshMatDescClass

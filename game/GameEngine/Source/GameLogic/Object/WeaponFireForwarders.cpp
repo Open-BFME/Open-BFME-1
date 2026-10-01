@@ -9,7 +9,7 @@ class Object
 {
 public:
 	unsigned char m_bfmeHeadYB[0x74];
-	int m_bfme74YB;
+	int m_id;
 };
 
 class Weapon
@@ -28,5 +28,5 @@ bool Weapon::bfmeFireYB(const Object *src, const Coord3D *pos, const Coord3D *al
 
 bool Weapon::bfmeFireYC(const Object *src, const Coord3D *pos, const Object *tgt, int n)
 {
-	return privateFireWeapon(src, pos, tgt, tgt->m_bfme74YB, 0, 1, 0, n, 0);
+	return privateFireWeapon(src, pos, tgt, tgt->m_id, 0, 1, 0, n, 0);
 }

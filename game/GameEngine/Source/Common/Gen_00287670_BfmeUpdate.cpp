@@ -54,7 +54,7 @@ public:
 	char m_bfme99[0x16B];
 	BfmeAIHolder *m_bfmeAI;
 	char m_bfme208[0x13C];
-	unsigned char m_bfmeConditionA;
+	unsigned char m_privateStatus;
 };
 
 class Gen_00287670
@@ -75,7 +75,7 @@ int Gen_00287670::bfmeUpdate(void)
 	if (m_bfmeObjectID != 0) {
 		Object *object = TheGameLogic->bfmeFind(m_bfmeObjectID);
 		if (object != 0) {
-			if (!(object->m_bfmeConditionA & 1) &&
+			if (!(object->m_privateStatus & 1) &&
 				(object->m_bfmeConditionB & 1))
 				return 11;
 		}
