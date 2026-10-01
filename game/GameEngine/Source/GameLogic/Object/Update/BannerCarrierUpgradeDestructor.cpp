@@ -3,11 +3,9 @@
 
 #include <vector>
 
-class BannerCarrierString
-{
-public:
-	~BannerCarrierString();
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+typedef AsciiString BannerCarrierString;
 
 class BannerCarrierUpgrade
 {

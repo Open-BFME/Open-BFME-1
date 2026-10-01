@@ -20,12 +20,9 @@ extern "C" __declspec(dllimport) void *__cdecl memmove(
 #include <vector>
 #undef memmove
 
-class BannerCarrierString
-{
-	void *m_data;
-public:
-	~BannerCarrierString();
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+typedef AsciiString BannerCarrierString;
 
 // The two named-effect slots the constructor clears are plain pointers at
 // +0x30/+0x34; nothing in the matched destructor runs for them, so they stay
