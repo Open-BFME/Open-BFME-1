@@ -53,11 +53,19 @@ public:
 	}
 };
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (reached through ILT 0x000022BB), so the reference carries that
+// spelling.  No real header declares Overridable, and only the declaration is
+// needed to name the call.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class BfmeNodeAA
 {
 public:
-	BfmeNodeAA *bfmeLastAA(void);
-
 	char m_bfmePadAAA[4];
 	BfmeNodeAA *m_bfmeNextAA;
 	char m_bfmePadBAA[24];
@@ -132,7 +140,8 @@ void BfmeOwnerAA::bfmeMakeNameAA(AsciiStringAA &out, int index)
 	BfmeNodeAA *node = part->m_bfmeNodeAA;
 
 	if (node != 0 && node->m_bfmeNextAA != 0)
-		node = node->m_bfmeNextAA->bfmeLastAA();
+		node = (BfmeNodeAA *)((const Overridable *)node->m_bfmeNextAA)
+			->getFinalOverride();
 
 	out.format(AsciiStringAA("Dynamic_%s_of_id_%d_at_index_%d"),
 			node->m_bfmeNameAA.bfmeTextAA(), id, index);

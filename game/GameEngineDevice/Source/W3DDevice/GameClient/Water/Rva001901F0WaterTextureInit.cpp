@@ -23,10 +23,18 @@ public:
 	float m_riverTransparencyMultiplier;
 };
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB). Declaration only; the node is reached
+// by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class BfmeSubBIA
 {
 public:
-	BfmeAskResult *lastNode00087A80();
 };
 
 class BfmeGlobal012F18F0
@@ -45,7 +53,7 @@ static BfmeAskResult *bfmeAskResult()
 		return 0;
 	if (g->m_sub == 0)
 		return (BfmeAskResult *)g;
-	return g->m_sub->lastNode00087A80();
+	return (BfmeAskResult *)((const Overridable *)g->m_sub)->getFinalOverride();
 }
 
 class Rva001901F0

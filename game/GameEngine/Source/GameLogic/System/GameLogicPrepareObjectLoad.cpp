@@ -11,9 +11,15 @@
 #define _STLP_USE_NEWALLOC 1
 #include <hash_map>
 struct Coord3D {float x,y,z;};
+// The override-chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ
+// at 0x00087A80 (through ILT 0x000022BB). Only the declaration is needed; the
+// chain node is reached by cast so no inheritance is invented here.
+class Overridable {
+public:
+ const Overridable *getFinalOverride() const;
+};
 class ThingTemplate {
 public:
- ThingTemplate *getFinalOverride();
  char pad0[4]; ThingTemplate *overrideTemplate; char pad8[0xc0]; unsigned kindOf[3];
 };
 class Object {
@@ -21,7 +27,7 @@ public:
  char pad0[4];ThingTemplate *thingTemplate;char pad8[0x30];Coord3D position;char pad44[0x44];Object *next;
  ThingTemplate *getTemplate()const {
   ThingTemplate *t=thingTemplate;
-  if(t && t->overrideTemplate)t=t->overrideTemplate->getFinalOverride();
+  if(t && t->overrideTemplate)t=(ThingTemplate *)((const Overridable *)t->overrideTemplate)->getFinalOverride();
   return t;
  }
 };

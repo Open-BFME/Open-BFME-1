@@ -21,10 +21,18 @@
 void __cdecl operator delete[](void *block);
 class Open2715D80Owner;
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB).  Declaration only, no layout: the node
+// is reached by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class Open2715D80Inner
 {
 public:
-	Open2715D80Owner *poke( void );
 };
 
 class Open2715D80Owner
@@ -53,7 +61,8 @@ int Rva00715D80::query( void ) const
 	{
 		Open2715D80Owner *owner = m_owner;
 		if( owner && owner->m_inner )
-			owner = owner->m_inner->poke();
+			owner = (Open2715D80Owner *)((const Overridable *)owner->m_inner)
+				->getFinalOverride();
 		if( ( owner->m_flags & 0x20 ) == 0 )
 			return 0;
 	}

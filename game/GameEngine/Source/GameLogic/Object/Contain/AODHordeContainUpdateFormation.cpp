@@ -36,11 +36,18 @@ public:
 	float getMaxHeightAbovePosition() const;
 };
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB).  Declaration only, no layout: the node
+// is reached by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class BfmeLocomotorTemplate
 {
 public:
-	BfmeLocomotorTemplate *getFinalOverride();
-
 	void *m_vtable;
 	BfmeLocomotorTemplate *m_override;
 	unsigned char m_pad08[0x48d];
@@ -200,7 +207,8 @@ void AODHordeContainInterfaceView::bfmeTrackLargeUnit(Object *, Object *unit)
 
 	BfmeLocomotorTemplate *locomotor = unit->m_locomotorTemplate;
 	if (locomotor != 0 && locomotor->m_override != 0)
-		locomotor = locomotor->m_override->getFinalOverride();
+		locomotor = (BfmeLocomotorTemplate *)((const Overridable *)locomotor->m_override)
+			->getFinalOverride();
 
 	if (locomotor->m_appearance == 2 && unit->m_id != m_trackedLargeUnit)
 	{

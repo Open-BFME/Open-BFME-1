@@ -24,11 +24,21 @@ public:
 	void bfmeSetERI(int mode, int flag);
 };
 
+enum NameKeyType;
+class Module;
+
+// The module lookup below is retail's Object::findModule (ILT thunk 0x0002AE23),
+// a protected member, so only the friend may call it here.
+class Object
+{
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class BfmeHostERI;
+};
+
 class BfmeThingERI
 {
 public:
-	BfmeModuleERI *bfmeFindERI(int key);
-
 	unsigned char m_bfmeHeadERI[4];
 	BfmeAERI *m_bfmeAERI;
 };
@@ -84,7 +94,8 @@ void BfmeHostERI::bfmeSweepERI()
 		static int s_bfmeKeyERI =
 			g_bfmeKeyGenERI->bfmeNameToKeyERI("StealthUpdate");
 
-		BfmeModuleERI *mod = thing->bfmeFindERI(s_bfmeKeyERI);
+		BfmeModuleERI *mod = (BfmeModuleERI *)((Object *)thing)->findModule(
+			(NameKeyType)s_bfmeKeyERI);
 
 		if (mod != 0)
 			mod->bfmeSetERI(0, 1);

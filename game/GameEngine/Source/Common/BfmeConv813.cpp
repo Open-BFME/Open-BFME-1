@@ -92,10 +92,18 @@ int BfmeThingEFE::bfmeClampIndex(int count)
 	return diff;
 }
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB).  Declaration only, no layout: the node
+// is reached by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class BfmeSubInnerEFF
 {
 public:
-	void* bfmeGetFinalOverride();
 };
 
 struct BfmeSubEFF
@@ -127,7 +135,7 @@ char BfmeThingEFF::bfmeCheckEFF(BfmeArgEFF *arg)
 	if (s) {
 		BfmeSubInnerEFF *in = s->m_inner;
 		if (in)
-			s = (BfmeSubEFF*)in->bfmeGetFinalOverride();
+			s = (BfmeSubEFF*)((const Overridable *)in)->getFinalOverride();
 	}
 	if (s->m_flagFC) {
 		if (arg->m_mask90 & 0x400000)

@@ -8,10 +8,18 @@
 
 #include "GameLogic/AIPathfind.h"
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB).  Declaration only, no layout: the node
+// is reached by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride(void);
 	LocomotorOverridable *getNextOverride(void) const { return m_nextOverride; }
 
 private:
@@ -38,7 +46,7 @@ public:
 			return 0;
 		LocomotorOverridable *next = m_overridable->getNextOverride();
 		if (next)
-			return (const T *)next->friend_getFinalOverride();
+			return (const T *)((const Overridable *)next)->getFinalOverride();
 		return m_overridable;
 	}
 

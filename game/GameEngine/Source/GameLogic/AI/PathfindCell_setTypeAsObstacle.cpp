@@ -29,11 +29,18 @@ public:
 	virtual Int getDamageState(void);
 };
 
+// The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
+// 0x00087A80 (through ILT 0x000022BB). Declaration only; the node is reached
+// by cast so no inheritance is invented here.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride(void);
-
 	char m_pad00[4];
 	LocomotorOverridable *m_override;
 	char m_pad08[0xd0 - 8];
@@ -127,7 +134,8 @@ void PathfindCell::setTypeAsObstacle(Object *obstacle, Bool isFence,
 			((m_info->m_flags ^ (fence << 1)) & 2u);
 		LocomotorOverridable *templ = obstacle->m_template;
 		if (templ != 0 && templ->m_override != 0)
-			templ = templ->m_override->friend_getFinalOverride();
+			templ = (LocomotorOverridable *)((const Overridable *)templ->m_override)
+				->getFinalOverride();
 		unsigned char transparentBit = (unsigned char)(templ->m_kindOf >> 9);
 		unsigned int transparent = (unsigned int)transparentBit << 2;
 		m_info->m_flags = m_info->m_flags ^
