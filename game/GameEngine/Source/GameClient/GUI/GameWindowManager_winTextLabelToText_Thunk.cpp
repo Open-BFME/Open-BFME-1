@@ -38,7 +38,12 @@ public:
 	~UnicodeString();
 	void translate(const AsciiString &);
 
-	static const UnicodeString TheEmptyString;
+	// Retail's storage is ?TheEmptyString@UnicodeString@@2V1@A (0x00F36E54),
+	// which is what Common/System/UnicodeString.cpp -- the only TU that
+	// defines the datum -- exports. The `const` is what decides the trailing
+	// access code: `static const UnicodeString` mangles ...@2V1@B and no
+	// object in the tree defines that, so only its address was ever taken.
+	static UnicodeString TheEmptyString;
 
 private:
 	StringData *Data;
