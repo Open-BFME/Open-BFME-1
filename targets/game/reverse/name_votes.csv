@@ -393,3 +393,4 @@ game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntr
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,288ecd9c44bdd8da932cc309,gemini,20261001113241-32474e,2026-10-01
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field00,407f52d224e63adbb47eb132,gemini,20261001113241-32474e,2026-10-01
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|type||Rva001515C0,9e3faa09440fbe4f892a3d2d,gemini,20261001113241-653f9b,2026-10-01
+game/GameEngine/Source/Common/BfmeConv912.cpp|type||BfmeThing912F,30d3fbc5b739cda64983cdf0,gemini,20261001113522-7a7b7e,2026-10-01
