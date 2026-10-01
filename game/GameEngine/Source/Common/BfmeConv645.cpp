@@ -1,9 +1,9 @@
 extern "C" unsigned char bfmeVftCUAa[];
 extern "C" unsigned char bfmeVftCUAb[];
 
-struct BfmeBaseCUA
+struct GenNode_006fa270
 {
-	void bfmeDtorCUA();
+	void unlink();
 };
 
 struct BfmeSecondCUA
@@ -14,7 +14,7 @@ struct BfmeSecondCUA
 struct BfmeThingCUA
 {
 	void *m_bfmeVftB;
-	BfmeBaseCUA m_bfmeBase;
+	GenNode_006fa270 m_bfmeBase;
 	unsigned char m_bfmeGap[0xc];
 	BfmeSecondCUA m_bfmeSecond;
 };
@@ -24,5 +24,5 @@ void __fastcall bfmeGoCUA(BfmeThingCUA *p)
 	BfmeSecondCUA *s = p ? &p->m_bfmeSecond : 0;
 	s->m_bfmeVft = bfmeVftCUAa;
 	p->m_bfmeVftB = bfmeVftCUAb;
-	p->m_bfmeBase.bfmeDtorCUA();
+	p->m_bfmeBase.unlink();
 }

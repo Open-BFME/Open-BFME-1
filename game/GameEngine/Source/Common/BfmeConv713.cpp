@@ -3,9 +3,9 @@ extern "C" unsigned char bfmeVftDJB2[];
 extern "C" unsigned char bfmeVftDJB3[];
 extern "C" unsigned char bfmeVftDJB4[];
 
-struct BfmeBaseDJB
+struct GenNode_006fa270
 {
-	void bfmeDtorDJB();
+	void unlink();
 };
 
 struct BfmeSub1DJB
@@ -26,7 +26,7 @@ struct BfmeSub3DJB
 struct BfmeThingDJB
 {
 	void *m_bfmeVft;
-	BfmeBaseDJB m_bfmeBase;
+	GenNode_006fa270 m_bfmeBase;
 	unsigned char m_bfmeGap[0xf];
 	BfmeSub3DJB m_bfme3;
 	BfmeSub2DJB m_bfme2;
@@ -42,5 +42,5 @@ void __fastcall bfmeGoDJB(BfmeThingDJB *p)
 	BfmeSub3DJB *c = p ? &p->m_bfme3 : 0;
 	c->m_bfmeVft = bfmeVftDJB3;
 	p->m_bfmeVft = bfmeVftDJB4;
-	p->m_bfmeBase.bfmeDtorDJB();
+	p->m_bfmeBase.unlink();
 }

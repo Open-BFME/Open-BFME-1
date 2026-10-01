@@ -82,10 +82,15 @@ public:
 	virtual ~Rva00008D32MultiBase();
 };
 
-class Rva00013994MultiBase
+// The jump target of this shape is the 0x00013994 ILT thunk, which routes to
+// the byte-verified 0x001DA440 = GenNode_006fa270::unlink in
+// game/GameEngine/Source/Common/Gen_006fa270.cpp.  The base is therefore spelled
+// with that defining name and its cleanup is the real `unlink` member rather
+// than a destructor: a destructor mangles as ??1...@@QAE@XZ and would leave the
+// reference unresolved.
+struct GenNode_006fa270
 {
-public:
-	~Rva00013994MultiBase();
+	void unlink();
 };
 
 class Rva00017EEAMultiBase
@@ -414,7 +419,7 @@ Rva005A01D0MultiTailDtor::~Rva005A01D0MultiTailDtor()
 {
 }
 
-class Rva005DD320MultiTailDtor : public Rva00013994MultiBase
+class Rva005DD320MultiTailDtor : public GenNode_006fa270
 {
 public:
 	virtual ~Rva005DD320MultiTailDtor();
@@ -422,6 +427,7 @@ public:
 
 Rva005DD320MultiTailDtor::~Rva005DD320MultiTailDtor()
 {
+	GenNode_006fa270::unlink();
 }
 
 class Rva006BC560MultiTailDtor : public Rva000486C1MultiBase, public TailMixinA

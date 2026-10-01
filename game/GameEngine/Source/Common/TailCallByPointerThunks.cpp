@@ -35,6 +35,25 @@
 		object->handle();                                                 \
 	}
 
+// The callee at 0x001DA440 is not an unknown body: it is the byte-verified
+// GenNode_006fa270::unlink from game/GameEngine/Source/Common/Gen_006fa270.cpp,
+// and this file's own forwarder at 0x005C4450 already carries the address-derived
+// parameter type Gen001DA440 that targets/game/reverse/functions.csv matches on.
+// So the class of the parameter cannot be respelled without changing the
+// forwarder's own symbol, and the call is made through a cast to the defining
+// class instead.  The emitted code is unchanged: ecx still holds [esp+4] and the
+// call still tail-jumps to the same address.
+struct GenNode_006fa270
+{
+	void unlink();
+};
+
+#define BFME_TAIL_CALL_TO_NODE_UNLINK( NAME, CALLEE )                     \
+	void NAME( CALLEE *object )                                           \
+	{                                                                     \
+		reinterpret_cast<GenNode_006fa270 *>(object)->unlink();           \
+	}
+
 BFME_TAIL_CALL_CALLEE( 0005CC00 )
 BFME_TAIL_CALL_CALLEE( 0005EE90 )
 BFME_TAIL_CALL_CALLEE( 0005EEA0 )
@@ -354,7 +373,7 @@ BFME_TAIL_CALL_BY_POINTER( rva00587590, Gen005871C0 )
 BFME_TAIL_CALL_BY_POINTER( rva0058FDE0, Gen0058C030 )
 BFME_TAIL_CALL_BY_POINTER( rva005A8460, Gen005A7E10 )
 BFME_TAIL_CALL_BY_POINTER( rva005B2C40, Gen005B2950 )
-BFME_TAIL_CALL_BY_POINTER( rva005C4450, Gen001DA440 )
+BFME_TAIL_CALL_TO_NODE_UNLINK( rva005C4450, Gen001DA440 )
 BFME_TAIL_CALL_BY_POINTER( rva005C4BF0, Gen005C2060 )
 BFME_TAIL_CALL_BY_POINTER( rva00605620, Gen00605080 )
 BFME_TAIL_CALL_BY_POINTER( rva00607270, Gen00606F70 )

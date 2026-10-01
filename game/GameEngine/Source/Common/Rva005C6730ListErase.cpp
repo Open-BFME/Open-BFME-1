@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // address-derived identity: retail RVA 0x005C6730 (84 bytes), exact.
 // Intrusive circular-list erase-by-id: walk from the sentinel, unlink the
-// matching node, release its value through the shared 0x00013994 handle
+// matching node, unlink its value through the shared 0x00013994 handle
 // thunk, then free the node through STLport __node_alloc<true,0>.
 
 namespace _STL
@@ -21,9 +21,13 @@ namespace _STL
 	static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
-struct Rva005C6730Value
+// The 12-byte value slot at the tail of the node is the intrusive list node of
+// game/GameEngine/Source/Common/Gen_006fa270.cpp: its unlink() is the shared
+// handle the 0x00013994 thunk reaches, so the member is spelled with that
+// class's real name rather than a per-TU placeholder.
+struct GenNode_006fa270
 {
-	void release();
+	void unlink();
 
 	int m_id;
 	unsigned char m_pad[8];
@@ -33,7 +37,7 @@ struct Rva005C6730Node
 {
 	Rva005C6730Node *m_next;
 	Rva005C6730Node *m_prev;
-	Rva005C6730Value m_value;
+	GenNode_006fa270 m_value;
 };
 
 struct Rva005C6730Key
@@ -73,7 +77,7 @@ void Rva005C6730List::erase(Rva005C6730Key *key)
 	prev->m_next = next;
 	next->m_prev = prev;
 
-	node->m_value.release();
+	node->m_value.unlink();
 
 	_STL::nodePoolDeallocate(node, 0x14);
 
