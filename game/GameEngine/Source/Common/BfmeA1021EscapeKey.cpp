@@ -25,7 +25,11 @@ public:
 		char *third, char *fourth, char *fifth);
 };
 
-extern BfmeMgr19E *g_mgr12F19E8;
+// Retail global 0x012F19E8. EA's own name for this pointer; see
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
+// This TU keeps its local view type BfmeMgr19E and casts at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmt1057[];
 extern char g_bfmeEscAI[];
 
@@ -59,7 +63,7 @@ int BfmeA1021::bfmeKey0052CDA0(int unused, int code, unsigned char kind, unsigne
 		case 1:
 			if ((flags & 1) != 0 && m_bfmeState != 4)
 			{
-				g_mgr12F19E8->bfmeAddAI(m_bfmeOwner->m_bfmeSink, g_bfmeFmt1057, 1,
+				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwner->m_bfmeSink, g_bfmeFmt1057, 1,
 					g_bfmeEscAI, 0, 0, 0, 0);
 
 				bfmeGo1021A(0);

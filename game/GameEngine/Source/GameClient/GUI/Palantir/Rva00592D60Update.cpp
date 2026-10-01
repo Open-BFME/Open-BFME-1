@@ -2,7 +2,11 @@
 
 bool __cdecl rva00592D60Ask();
 void __cdecl rva00592D60Notify();
-extern void *g_rva00592D60NotifyOwner;
+// Retail global 0x012F19E8. EA's own name for this pointer; see
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
+// This TU only null-tests it, so the pointee type is not read through.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00592D60Panel
 {
@@ -40,7 +44,7 @@ void Rva00592D60Owner::update( int value, int state )
 	m_available = !rva00592D60Ask();
 	m_state = state;
 
-	if( !rva00592D60Ask() && g_rva00592D60NotifyOwner )
+	if( !rva00592D60Ask() && g_rva012F19E8WindowManager )
 	{
 		rva00592D60Notify();
 		m_panel->hide( false );

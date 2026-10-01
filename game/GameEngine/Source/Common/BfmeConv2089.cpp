@@ -6,7 +6,11 @@ struct Rva00579160Manager
 	void bfmeCloseXP(int id);
 };
 
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail global 0x012F19E8. EA's own name for this pointer; see
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
+// This TU keeps its local view type Rva00579160Manager and casts at the uses.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Shell40D9
 {
@@ -64,8 +68,8 @@ void BfmeHostXP::bfmeCloseAllXP(int unused)
 
 	if (m_bfme28XP)
 	{
-		Rva00579160TheManager->bfmeDetachXP(m_bfme24XP->m_bfme250XP);
-		Rva00579160TheManager->bfmeCloseXP(m_bfme24XP->m_bfme250XP);
+		((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeDetachXP(m_bfme24XP->m_bfme250XP);
+		((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeCloseXP(m_bfme24XP->m_bfme250XP);
 		m_bfme28XP = 0;
 	}
 
