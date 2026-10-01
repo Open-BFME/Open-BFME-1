@@ -319,13 +319,17 @@ public:
 	Int m_imageWidth;
 };
 
-class MappedImageCollection
+// Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A: the
+// class is ImageCollection. No game header declares it (its Zero Hour
+// GameClient/Image.h cannot be used here), so this TU forward declares the
+// member it calls only.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 extern Int GadgetListBoxGetColumnWidth(GameWindow *listbox, Int column);
 extern Int GadgetListBoxAddEntryImage(GameWindow *listbox, const Image *image,
 	Int row, Int column, Int width, Int height, Bool overwrite, Int color);

@@ -53,7 +53,11 @@ public:
 	ScienceType getScienceFromInternalName(const AsciiString &name);
 };
 
-class MappedImageCollection
+// Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A: the
+// class is ImageCollection. No game header declares it (its Zero Hour
+// GameClient/Image.h cannot be used here), so this TU declares the member it
+// calls only.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
@@ -109,7 +113,7 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 extern ScienceStore *TheScienceStore;
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 extern ThingFactory *TheThingFactory;
 #define TheGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 

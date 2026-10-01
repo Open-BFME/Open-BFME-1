@@ -9,14 +9,17 @@
 class Image;
 class GameWindow;
 
-class MappedImageCollection;
+// Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A: the
+// class is ImageCollection, only forward declared here (this TU reaches the
+// lookup through the 0x0001D606 thunk owner below, which stays as it is).
+class ImageCollection;
 class Rva0001D606ImageCollection
 {
 public:
 	const Image *findImageByName( const AsciiString &name );
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 // Retail's request view is 0x194 bytes; the upstream Zero Hour PeerRequest has
 // a different STL payload and does not describe this BFME ABI.
