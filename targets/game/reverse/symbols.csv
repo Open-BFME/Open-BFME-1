@@ -89479,7 +89479,7 @@ _next,0x0099A9A0,vendored=lua-4.0.1
 _nextScreen,0x00EF4848,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0050CA80 calls; autopin
 _ntohl@4,0x0081BDDE,vendored=gamespy-2004
 _ntohs@4,0x0081BE14,route=WSOCK32.dll!ntohs
-_ntohs@4,0x0081BE3E,vendored=gamespy-2004
+_ntohs@4,0x0081BE3E,vendored=gamespy-2004;route=WSOCK32.dll!ntohs
 _numServerMessageTypes,0x00EC8AE0,Retail dispatcher reads count at VA012C8AE0 =54; adjacent54-entry command table VA012C8930 matches GameSpy chatHandlers.c command order (2004 has no 2007 UDP-relay entry).
 _parlist,0x0099BD30,vendored=lua-4.0.1
 _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by doQuickMatch 0x0064EFD0
