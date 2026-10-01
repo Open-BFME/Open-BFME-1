@@ -1,5 +1,5 @@
 // ?apply@Gen00006D20@@QAEXPAVY1RangeWrapper@@@Z
-// partial score=0.28 date=2026-09-21
+// partial score=0.3656 date=2026-10-01
 // The body at retail RVA 0x003D0320 is the element callee that
 // Rva003D08F0::run(Y1RangeWrapper*) invokes as ( *it )->apply( wrapper ) --
 // see Code/GameEngine/Source/Common/Y1GatedRangeDispatch.cpp, which already
@@ -41,6 +41,8 @@ struct Rva003D2B80Coord
 {
 	int m_f0;
 	int m_f4;
+	Rva003D2B80Coord() {}
+	Rva003D2B80Coord(const Rva003D2B80Coord &other) : m_f0(other.m_f0), m_f4(other.m_f4) {}
 };
 
 struct Rva003D1380Elem
@@ -88,20 +90,20 @@ void Gen00006D20::apply(Y1RangeWrapper *wrapper)
 		return;
 
 	unsigned char *ctx = (unsigned char *)wrapper->m_context;
-	Rva003D2B80Coord coord;
-	coord.m_f0 = *(int *)(ctx + 0x38);
-	coord.m_f4 = *(int *)(ctx + 0x3c);
+	Rva003D2B80Coord coord(*(const Rva003D2B80Coord *)(ctx + 0x38));
 
-	Rva003D2B80Child **it = m_kids;
-	for (int count = 4; count != 0; --count, ++it)
+	Rva003D2B80Child **volatile it = m_kids;
+	volatile int count = 4;
+	int remaining;
+	do
 	{
 		Rva003D2B80Child *child = *it;
 		if (child == 0)
-			continue;
+			goto next;
 
 		Rva003D1380Elem *found = child->lookup(coord);
 		if (found == 0)
-			continue;
+			goto next;
 
 		unsigned short n = *(unsigned short *)((char *)wrapper->m_filter + 0x1c);
 		found->m_count += n;
@@ -109,8 +111,14 @@ void Gen00006D20::apply(Y1RangeWrapper *wrapper)
 		BfmeCmpRQ compare;
 		compare.m_bfmeRawRQ = 0;
 		void *key = found;
-		void **foundIt = bfmeLowerRQ((void **)m_vec.m_bfmeBeginRQ, (void **)m_vec.m_bfmeEndRQ, &key, compare, 0);
-		if (foundIt == (void **)m_vec.m_bfmeEndRQ || *foundIt != key)
+		void **savedEnd = m_vec.m_bfmeEndRQ;
+		void **foundIt = bfmeLowerRQ((void **)m_vec.m_bfmeBeginRQ, savedEnd, &key, compare, 0);
+		if (foundIt == savedEnd || *foundIt != found)
 			m_vec.bfmeInsertRQ(foundIt, &key);
-	}
+	next:
+		Rva003D2B80Child **nextIt = it + 1;
+		remaining = count - 1;
+		it = nextIt;
+		count = remaining;
+	} while (remaining != 0);
 }
