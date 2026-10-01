@@ -1,5 +1,5 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.2542 date=2026-09-28
+// partial score=0.6619 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x003EA570 (ILT 0x000441C0): the BFME three-argument
@@ -98,12 +98,11 @@ private:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf(KindOfType kind) const
-	{
-		return (m_kindof[(UnsignedInt)kind >> 5] & (1 << ((UnsignedInt)kind & 31))) != 0;
-	}
+	Bool isStructure() const { return ((signed char)m_kindof[0]) < 0; }
+	Bool isWalkOnTopOfWall() const { return (m_kindof[1] & 0x08000000) != 0; }
+	Bool isSiegeTower() const { return (m_kindof[2] & 0x10000000) != 0; }
+	Bool isWallUpgrade() const { return (m_kindof[4] & 0x00200000) != 0; }
 
-private:
 	unsigned char m_unreconstructed_08[0xC8 - 0x08];
 	UnsignedInt m_kindof[6];
 };
@@ -208,7 +207,7 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 	Coord3D delta;
 	delta.set(source->getPosition());
 	delta.sub(&goalPos);
-	if (delta.lengthSqr() < 1.0f && !target->getTemplate()->isKindOf(KINDOF_STRUCTURE))
+	if (delta.lengthSqr() < 1.0f && !target->getTemplate()->isStructure())
 	{
 		count = bfmeCheckAttackViewAltHelper(const_cast<Object *>(target),
 			const_cast<Coord3D *>(target->getPosition()), ids);
@@ -219,23 +218,23 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 		}
 	}
 
-	if (target->getTemplate()->isKindOf(KINDOF_WALK_ON_TOP_OF_WALL))
+	if ((target->getTemplate()->m_kindof[1] & 0x08000000))
 	{
 		Real range = source->m_bfmeBC;
-		if (target->getTemplate()->isKindOf(KINDOF_WALL_UPGRADE))
+		if (target->getTemplate()->isWallUpgrade())
 			range = 0.0f;
 		range += 20.0f;
 		Real metric = target->rva001C2380(target->getPosition(), source, &goalPos);
 		if (metric < range * range)
 		{
-			if (target->getTemplate()->isKindOf(KINDOF_WALL_UPGRADE))
+			if (target->getTemplate()->isWallUpgrade())
 				return true;
 			if (rva003E4DA0(source, &goalPos))
 				return true;
 		}
 	}
 
-	if (target->getTemplate()->isKindOf(KINDOF_SIEGE_TOWER))
+	if ((target->getTemplate()->m_kindof[2] & 0x10000000))
 	{
 		MemoryPool *tower = SiegeDeploySpecialPower_getPool(const_cast<Object *>(target));
 		static NameKeyType key = TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
