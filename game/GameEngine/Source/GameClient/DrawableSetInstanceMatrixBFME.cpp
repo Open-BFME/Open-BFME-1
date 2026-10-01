@@ -77,7 +77,8 @@ public:
 };
 
 extern GameEngine *TheGameEngine;
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 
 class Rva00411840Drawable
 {
@@ -116,7 +117,7 @@ void Rva00411840Drawable::setInstanceMatrix(const Matrix3D *instance,
         m_previousInstance = m_instance;
 
     Real frame = (Real)TheGameEngine->m_frame;
-    frame += (Real)TheGameClient->getFrame();
+    frame += (Real)reinterpret_cast<ClientRoot4120 *>(TheGameClient)->getFrame();
     m_frame = (UnsignedInt)frame;
     m_expirationDate = 0xffffffff;
 }

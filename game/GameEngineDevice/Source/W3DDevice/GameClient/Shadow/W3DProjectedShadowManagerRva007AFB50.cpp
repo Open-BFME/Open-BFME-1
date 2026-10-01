@@ -34,7 +34,11 @@ public:
 	virtual unsigned int getFrame(void);
 };
 
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+// Declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A; ClientFrameSubsystem above stays the local
+// vtable-slot view the getFrame() call needs.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class Shadow
 {
@@ -78,7 +82,7 @@ private:
 
 void W3DProjectedShadowManager::rva007AFB50(Rva007AFB50Shadow *shadow)
 {
-	if ((shadow->m_type & 0x0C00) && shadow->m_frame > TheGameClientClientUpdate->getFrame())
+	if ((shadow->m_type & 0x0C00) && shadow->m_frame > reinterpret_cast<ClientFrameSubsystem *>(TheGameClient)->getFrame())
 	{
 		int a40 = shadow->m_40;
 		int a48 = shadow->m_48;

@@ -34,7 +34,11 @@ public:
 	virtual UnsignedInt getFrame();
 };
 
-extern ClientRoot4120 *TheGameClient;
+// Declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A; ClientRoot4120 above stays the local
+// vtable-slot view the two getFrame calls need.
+class GameClient;
+extern GameClient *TheGameClient;
 
 // Event layout as RadarXferObjectList.cpp witnesses it (0x50 bytes).
 struct RadarEvent
@@ -67,7 +71,7 @@ bool Radar::rva00107140(Coord3D *eventPos)
 	{
 		if (eventPos)
 		{
-			UnsignedInt now = TheGameClient->getFrame();
+			UnsignedInt now = reinterpret_cast<ClientRoot4120 *>(TheGameClient)->getFrame();
 			Int cursor = m_field1430;
 			if (cursor >= 0 && (Int)(m_field1434 - m_event[m_lastRadarEvent].createFrame) > 0 &&
 				(Int)(now - m_field1434) < 60)
@@ -90,7 +94,7 @@ bool Radar::rva00107140(Coord3D *eventPos)
 			else
 				m_field1430 = m_lastRadarEvent;
 			*eventPos = m_event[m_field1430].worldLoc;
-			m_field1434 = TheGameClient->getFrame();
+			m_field1434 = reinterpret_cast<ClientRoot4120 *>(TheGameClient)->getFrame();
 		}
 		return true;
 	}

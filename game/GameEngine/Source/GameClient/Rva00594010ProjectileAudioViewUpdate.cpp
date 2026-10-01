@@ -62,7 +62,11 @@ public:
 	virtual ClientNode4120 *getHead();
 };
 
-extern ClientRoot4120 *TheGameClient;
+// Declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A; ClientRoot4120 above stays the local
+// vtable-slot view the getHead() call needs.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class AudioManager
 {
@@ -166,7 +170,7 @@ private:
 void Rva00594010::update()
 {
 	ObjectID objectID = 0;
-	ClientNode4120 *drawable = TheGameClient->getHead();
+	ClientNode4120 *drawable = reinterpret_cast<ClientRoot4120 *>(TheGameClient)->getHead();
 	if (drawable != 0)
 	{
 		do

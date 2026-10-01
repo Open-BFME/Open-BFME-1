@@ -5,7 +5,11 @@ public:
 	int m_bfmeValue;
 };
 
-extern ClientRoot4120 *TheGameClient;
+// The global is declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A; ClientRoot4120 above is only the local
+// +0xb4/+0xb8 layout view the body below needs.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class GlobalData
 {
@@ -163,7 +167,8 @@ void BfmeThingBXF::bfmeOnceBXF()
 	if (!hold)
 		return;
 
-	TheGameClient->m_bfmeValue = *(int *)((char *)hold + 0x74);
+	reinterpret_cast<ClientRoot4120 *>(TheGameClient)->m_bfmeValue =
+		*(int *)((char *)hold + 0x74);
 
 	BfmePreBXF *pre = hold->m_bfmePre;
 	if (pre)

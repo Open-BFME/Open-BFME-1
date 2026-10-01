@@ -86,7 +86,8 @@ public:
 	virtual void bfmeRefresh(void);				// slot +0x80
 };
 
-extern BfmeSingletonR *g_bfmeSingletonR;			// retail 0x012F1464
+class GameClient;
+extern GameClient *TheGameClient;			// retail 0x012F1464
 
 class Gen_0038D000
 {
@@ -121,8 +122,8 @@ void Gen_0038D000::bfmeClear(void)
 
 	bfmeFinish();
 
-	if (g_bfmeSingletonR)
-		g_bfmeSingletonR->bfmeRefresh();
+	if (TheGameClient)
+		reinterpret_cast<BfmeSingletonR *>(TheGameClient)->bfmeRefresh();
 }
 
 class BfmeItemS

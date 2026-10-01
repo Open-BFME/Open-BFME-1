@@ -29,7 +29,12 @@ public:
 	virtual BfmeX1007 *bfmeFind1007(void *a);
 };
 
-extern BfmeSrc1007 *g_bfmeSrc1007;
+// The global is declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A (dir32 0x012F1464, the same pointer
+// BfmeSrc1007 above is a local slot view of).  BfmeSrc1007 stays as the
+// vtable view the bfmeFind1007() call needs.
+class GameClient;
+extern GameClient *TheGameClient;
 
 enum BattlePlanStatus
 {
@@ -93,7 +98,7 @@ char BfmeB1007::bfmeGo1007B(void *a)
 	if (!a)
 		return 0;
 
-	BfmeX1007 *x = g_bfmeSrc1007->bfmeFind1007(a);
+	BfmeX1007 *x = reinterpret_cast<BfmeSrc1007 *>(TheGameClient)->bfmeFind1007(a);
 	int v = 0;
 
 	if (x && x->m_bfmeSub)

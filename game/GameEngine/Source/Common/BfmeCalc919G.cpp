@@ -56,7 +56,8 @@ public:
 	virtual void *getFrameStamp();
 };
 
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+class GameClient;
+extern GameClient *TheGameClient;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -143,7 +144,7 @@ int BfmeCalc919G::bfmeCalc919G()
 
 	register float factor;
 	register unsigned int frameStamp =
-		(unsigned int)TheGameClientClientUpdate->getFrameStamp();
+		(unsigned int)reinterpret_cast<ClientFrameSubsystem *>(TheGameClient)->getFrameStamp();
 	if( m_lastFrameStamp == frameStamp )
 		goto return_cached;
 

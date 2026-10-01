@@ -32,7 +32,12 @@ public:
 	virtual int bfmeNow997();
 };
 
-extern BfmeClock997 *g_bfmeClock997;
+// The global is declared by its defining spelling so the object references
+// ?TheGameClient@@3PAVGameClient@@A (dir32 0x012F1464, the same pointer
+// BfmeClock997 above is a local slot view of).  BfmeClock997 stays as the
+// vtable view the three bfmeNow997() calls need.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BfmeA997
 {
@@ -63,7 +68,7 @@ void BfmeA997::bfmeGo997A(int a)
 	m_bfmeMode = 4;
 	m_bfmeArgA = a;
 	m_bfmeZero = 0;
-	m_bfmeStamp = g_bfmeClock997->bfmeNow997();
+	m_bfmeStamp = reinterpret_cast<BfmeClock997 *>(TheGameClient)->bfmeNow997();
 }
 
 void BfmeA997::bfmeGo997B(int a)
@@ -76,7 +81,7 @@ void BfmeA997::bfmeGo997B(int a)
 	m_bfmeMode = 3;
 	m_bfmeArgA = a;
 	m_bfmeZero = 0;
-	m_bfmeStamp = g_bfmeClock997->bfmeNow997();
+	m_bfmeStamp = reinterpret_cast<BfmeClock997 *>(TheGameClient)->bfmeNow997();
 }
 
 void BfmeA997::bfmeGo997C(int a, int b)
@@ -90,5 +95,5 @@ void BfmeA997::bfmeGo997C(int a, int b)
 	m_bfmeArgA = a;
 	m_bfmeArgB = b;
 	m_bfmeZero = 0;
-	m_bfmeStamp = g_bfmeClock997->bfmeNow997();
+	m_bfmeStamp = reinterpret_cast<BfmeClock997 *>(TheGameClient)->bfmeNow997();
 }

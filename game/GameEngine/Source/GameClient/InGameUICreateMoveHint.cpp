@@ -96,7 +96,8 @@ public:
 	virtual UnsignedInt getFrame() = 0;					///< vtable +0x68
 };
 
-extern BfmeMoveHintGameClient *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 
 struct MoveHintStruct
 {
@@ -179,7 +180,7 @@ void InGameUI::createMoveHint( const GameMessage *msg )
 	for( Int i = 0; i < MAX_MOVE_HINTS; i++ )
 		resetMoveHint( i );
 
-	m_moveHint[ m_nextMoveHint ].frame = TheGameClient->getFrame();
+	m_moveHint[ m_nextMoveHint ].frame = reinterpret_cast<BfmeMoveHintGameClient *>(TheGameClient)->getFrame();
 	m_moveHint[ m_nextMoveHint ].pos = loc;
 	m_moveHint[ m_nextMoveHint ].m_flag10 = false;
 
