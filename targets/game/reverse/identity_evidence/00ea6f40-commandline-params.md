@@ -113,12 +113,14 @@ the body that one of two tables pairs with that flag:
 
 - the game's table (above): the thunk target of the entry;
 - WorldBuilder's table, for flags the game's table lacks: the one game body
-  whose effects (the GlobalData stores with offset, width and value, an OR
-  into another global, and the return value) equal the WorldBuilder
-  handler's, when no other WorldBuilder handler has the same effects. The
-  five flags in both tables with modelled bodies (`-noshellmap`, `-noaudio`,
-  `-xres`, `-yres`, `-win`) give identical effects on both sides, and the
-  tool refuses to write if any shared flag differs.
+  whose effects equal the WorldBuilder handler's, when no other game body and
+  no other WorldBuilder handler has the same effects. Effects cover every path:
+  branch conditions, GlobalData stores with offset, width and value, writes to
+  other globals by identity, import calls and each path's return value. Ten
+  of the twelve flags in both tables have modelled bodies on both sides and
+  give identical effects (they also identify five WorldBuilder globals with
+  the game's, e.g. `-noaudio`'s flag word 0x012A6FA0), and the tool refuses
+  to write if any shared flag differs.
 
 On 2026-10-01 it gives 28 names: the seven game-table flags with a Zero Hour
 handler, and 21 WorldBuilder flags, all at 0x00060880..0x000610D0 in

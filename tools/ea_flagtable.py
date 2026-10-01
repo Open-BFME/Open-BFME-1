@@ -10,14 +10,18 @@ targets/game/reverse/ea_evidence.csv as kind=name, route=flagtable, basis=strong
   game  lotrbfme.exe's release table (TABLES["game"], 12 entries). Each handler is a 5-byte
         incremental-link E9 thunk; the name goes on the thunk's target.
   wb1   worldbuilder.exe's internal-build table (TABLES["wb1"], 145 entries, debug flags
-        included). A WorldBuilder handler names a game body when their effects are identical
-        and no other game body or WorldBuilder handler has those effects. Effects are what a
-        straight-line pass over the body (to its first ret) writes: each store through the
-        GlobalData pointer as (offset, width, value), an OR into another global as its mask,
-        and the value returned. Values are constants or an import's result (atoi). The two
-        builds allocate registers differently, so bytes are never compared. GlobalData's pointer
-        is, in each image, the global its table handlers load most; every flag in both tables
-        must give the same effects on both sides or nothing is written.
+        included). A WorldBuilder handler names a game body when their effects are identical,
+        no other game body has those effects and no other WorldBuilder handler has them either;
+        any such ambiguity names nothing. Effects are a tree over every path through the body
+        (effects()): each branch's compared values and condition, each store through the
+        GlobalData pointer as (offset, width, value), each write to another global with that
+        global's identity, each import call with its arguments, and each path's return value.
+        Code it does not model (a loop, an indirect jump, an unknown stored value) leaves a body
+        unmodelled. The two builds allocate registers differently, so bytes are never compared.
+        GlobalData's pointer is, in each image, the global its table handlers load most; another
+        global is identified across the images only where a flag in both tables writes it at the
+        same place, and every such flag must give the same effects on both sides or nothing is
+        written. Only known function starts that read GlobalData's pointer are candidate bodies.
 
 A flag Zero Hour lacks, or pairs with two handlers in different #if branches, names nothing. An
 address two flags would name differently, or a name two addresses would take, is dropped. The
@@ -114,14 +118,25 @@ def zh_handlers(path=ZH_TABLE):
 REG32 = ("eax", "ecx", "edx", "ebx", "esi", "edi", "ebp")
 LOW = {"al": "eax", "cl": "ecx", "dl": "edx", "bl": "ebx", "ax": "eax", "cx": "ecx", "dx": "edx", "bx": "ebx"}
 MEM = re.compile(r"(byte|word|dword) ptr \[(?:(e[a-z]{2})(?: ([+-]) (0x[0-9a-f]+|\d+))?|(0x[0-9a-f]+))\]")
+JCC = {"je": "jne", "jb": "jae", "jbe": "ja", "jl": "jge", "jle": "jg", "js": "jns", "jo": "jno", "jp": "jnp"}
+NEGATED = {neg: pos for pos, neg in JCC.items()}
+MAX_STEPS = 256                                       # instructions over all paths of one body
 
 
 def effects(img, rva, gd):
-    """The body's writes and return value, or None when the pass meets anything it does not model.
+    """The body's complete behaviour as a tree, or None when any path meets something it does not model.
 
-    gd is the GlobalData pointer's VA. Registers and stack slots hold ('const', n), ('gd',),
-    ('mem', va), ('args',), ('count',), ('arg', k), ('or', mask) or ('call', import, argument)."""
-    regs, stack, out = {}, [], []
+    gd is the GlobalData pointer's VA. A tree is the tuple of one path's events up to its end:
+    ('store', offset, width, value) through GlobalData, ('set', ('global', va), width, value) into
+    another global (`or [g], m` and a load/or/store of g both read ('bitor', ('load', g, w), m)),
+    ('call', import, arguments), then ('return', eax, bytes popped) or ('if', condition, taken,
+    not taken). A condition is ((compared values), jcc) with jcc in JCC's positive forms: `test r,r`
+    is `cmp r,0` (identical flags), and a negated jump swaps the arms, so layout cannot split two
+    equal bodies, while different guards or destinations always give different trees. Values are
+    ('const', n), ('gd',), ('load', ('global', va), width), ('args',), ('count',), ('arg', k),
+    ('bitor', a, b) or ('call', import, arguments). Only forward jumps inside the body are followed."""
+    first, limit = img.base + rva, img.base + rva + MAX_BODY
+    steps = [0]
 
     def mem(text):
         """(width, base register or None, displacement or absolute VA) of a memory operand."""
@@ -133,7 +148,7 @@ def effects(img, rva, gd):
         disp = int(m.group(4), 0) if m.group(4) else 0
         return m.group(1), m.group(2), -disp if m.group(3) == "-" else disp
 
-    def value(text):
+    def value(text, regs, stack):
         if re.fullmatch(r"0x[0-9a-f]+|\d+", text):
             return ("const", int(text, 0))
         if text in REG32:
@@ -147,45 +162,129 @@ def effects(img, rva, gd):
             return None
         width, base, disp = m
         if base is None:
-            return ("gd",) if disp == gd else ("mem", disp)
+            return ("gd",) if disp == gd else ("load", ("global", disp), width)
         if base == "esp":
             return {4: ("args",), 8: ("count",)}.get(disp + 4 * len(stack))
         if regs.get(base) == ("args",) and disp % 4 == 0:
             return ("arg", disp // 4)
         return None
 
-    for i in MD.disasm(bytes(img.mem[rva:rva + MAX_BODY]), img.base + rva):
-        mn, ops = i.mnemonic, [o.strip() for o in i.op_str.split(",")] if i.op_str else []
-        if mn == "ret":
-            return tuple(out) + (("return", regs.get("eax")),)
-        if (mn.startswith("j") and mn != "jmp") or mn in ("test", "cmp"):
-            continue                                  # guards: the pass follows the fall-through
-        dst = mem(ops[0]) if ops else None
-        if mn == "xor" and ops[0] == ops[1] and ops[0] in REG32:
-            regs[ops[0]] = ("const", 0)
-        elif mn == "inc" and ops[0] in REG32 and (regs.get(ops[0]) or ("",))[0] == "const":
-            regs[ops[0]] = ("const", regs[ops[0]][1] + 1)
-        elif mn == "push":
-            stack.append(value(ops[0]))
-        elif mn == "pop" and ops[0] in REG32:
-            regs[ops[0]] = stack.pop() if stack else None
-        elif mn == "add" and ops[0] == "esp" and int(ops[1], 0) % 4 == 0 and int(ops[1], 0) // 4 <= len(stack):
-            del stack[len(stack) - int(ops[1], 0) // 4:]
-        elif mn == "call" and dst and dst[1] is None and dst[2] in img.imports:
-            regs = {"eax": ("call", img.imports[dst[2]], stack[-1] if stack else None)}
-        elif mn == "or" and dst and dst[1] is None and dst[2] != gd:
-            out.append(("or", dst[0], value(ops[1])))           # a flag word |= bit
-        elif mn == "or" and ops[0] in REG32 and (regs.get(ops[0]) or ("",))[0] == "mem":
-            regs[ops[0]] = ("or", "dword", value(ops[1]))
-        elif mn == "mov" and dst and dst[1] is None and (value(ops[1]) or ("",))[0] == "or":
-            out.append(value(ops[1]))
-        elif mn == "mov" and dst and dst[1] and regs.get(dst[1]) == ("gd",):
-            out.append(("store", dst[2], dst[0], value(ops[1])))
-        elif mn == "mov" and ops[0] in REG32:
-            regs[ops[0]] = value(ops[1])
-        else:
+    def target(i):
+        """A direct jump's destination, when it lies ahead inside the body."""
+        if not re.fullmatch(r"0x[0-9a-f]+", i.op_str):
             return None
-    return None
+        to = int(i.op_str, 16)
+        return to if i.address < to < limit else None
+
+    def walk(va, regs, stack, flags):
+        out = []
+        while True:
+            steps[0] += 1
+            if steps[0] > MAX_STEPS or not first <= va < limit:
+                return None
+            i = next(MD.disasm(bytes(img.mem[va - img.base:va - img.base + 16]), va, count=1), None)
+            if i is None:
+                return None
+            va = i.address + i.size
+            mn, ops = i.mnemonic, [o.strip() for o in i.op_str.split(",")] if i.op_str else []
+            dst = mem(ops[0]) if ops else None
+            if mn == "ret":
+                eax = regs.get("eax")
+                return None if eax is None else tuple(out) + (("return", eax, int(ops[0], 0) if ops else 0),)
+            if mn in JCC or mn in NEGATED:
+                to = target(i)
+                if flags is None or to is None:
+                    return None
+                taken = walk(to, dict(regs), list(stack), flags)
+                fall = walk(va, dict(regs), list(stack), flags)
+                if taken is None or fall is None:
+                    return None
+                if mn in NEGATED:
+                    mn, taken, fall = NEGATED[mn], fall, taken
+                return tuple(out) + (("if", (flags, mn), taken, fall),)
+            if mn == "jmp":
+                va = target(i)
+                if va is None:
+                    return None
+                continue
+            if mn in ("cmp", "test") and len(ops) == 2:
+                a, b = value(ops[0], regs, stack), value(ops[1], regs, stack)
+                if a is None or b is None:
+                    return None
+                if mn == "test" and ops[0] == ops[1]:
+                    mn, b = "cmp", ("const", 0)       # test r,r sets exactly cmp r,0's flags
+                elif mn == "test":
+                    a, b = sorted((a, b), key=repr)
+                flags = (mn, a, b)
+                continue
+            if mn in ("mov", "push", "pop"):
+                pass                                  # these leave EFLAGS alone
+            else:
+                flags = None
+            if mn == "xor" and ops[0] == ops[1] and ops[0] in REG32:
+                regs[ops[0]] = ("const", 0)
+            elif mn == "inc" and ops[0] in REG32 and (regs.get(ops[0]) or ("",))[0] == "const":
+                regs[ops[0]] = ("const", (regs[ops[0]][1] + 1) & 0xFFFFFFFF)
+            elif mn == "push":
+                stack.append(value(ops[0], regs, stack))
+            elif mn == "pop" and ops[0] in REG32 and stack:
+                regs[ops[0]] = stack.pop()
+            elif mn == "add" and ops[0] == "esp" and int(ops[1], 0) % 4 == 0 and int(ops[1], 0) // 4 <= len(stack):
+                del stack[len(stack) - int(ops[1], 0) // 4:]
+            elif mn == "call" and dst and dst[1] is None and dst[2] in img.imports:
+                call = ("call", img.imports[dst[2]], tuple(reversed(stack)))
+                out.append(call)
+                regs = {"eax": call}
+            elif mn == "or" and dst and dst[1] is None and dst[2] != gd:
+                g, mask = ("global", dst[2]), value(ops[1], regs, stack)
+                if mask is None:
+                    return None
+                out.append(("set", g, dst[0], ("bitor", ("load", g, dst[0]), mask)))
+            elif mn == "or" and ops[0] in REG32:
+                a, b = regs.get(ops[0]), value(ops[1], regs, stack)
+                regs[ops[0]] = ("bitor", a, b) if a is not None and b is not None else None
+            elif mn == "mov" and dst and (dst[1] is None or regs.get(dst[1]) == ("gd",)):
+                v = value(ops[1], regs, stack)
+                if v is None or dst[1] is None and dst[2] == gd:
+                    return None                       # an unknown value, or GlobalData's pointer itself
+                out.append(("set", ("global", dst[2]), dst[0], v) if dst[1] is None
+                           else ("store", dst[2], dst[0], v))
+            elif mn == "mov" and ops[0] in REG32:
+                regs[ops[0]] = value(ops[1], regs, stack)
+            else:
+                return None
+
+    return walk(first, {}, [], None)
+
+
+def events(tree):
+    """Every event of every path of an effects() tree."""
+    for e in tree:
+        if e[0] == "if":
+            yield from events(e[2])
+            yield from events(e[3])
+        else:
+            yield e
+
+
+def unify(game, wb, globals_map):
+    """Extend globals_map (WorldBuilder VA -> game VA) with the globals two trees use at the same place."""
+    if isinstance(game, tuple) and isinstance(wb, tuple) and len(game) == len(wb):
+        if len(game) == 2 and game[0] == wb[0] == "global":
+            if globals_map.setdefault(wb[1], game[1]) != game[1]:
+                fail(f"WorldBuilder global 0x{wb[1]:08X} is game 0x{globals_map[wb[1]]:08X} and 0x{game[1]:08X}")
+            return
+        for a, b in zip(game, wb):
+            unify(a, b, globals_map)
+
+
+def rename(tree, globals_map):
+    """A WorldBuilder tree in the game's globals; a global no shared flag maps matches nothing."""
+    if not isinstance(tree, tuple):
+        return tree
+    if len(tree) == 2 and tree[0] == "global":
+        return ("global", globals_map[tree[1]]) if tree[1] in globals_map else ("global", "wb1", tree[1])
+    return tuple(rename(x, globals_map) for x in tree)
 
 
 def pointer(img, bodies):
@@ -213,6 +312,30 @@ def game_function_starts():
     return starts
 
 
+def pair(trees, candidates, index):
+    """({flag: game rva}, notes) for candidate WorldBuilder flags whose effects tree (trees[flag])
+    exactly one game body has (index: tree -> {rva}) and no other modelled WorldBuilder handler has.
+    A tree two game bodies share, or one body two handlers share, names nothing: ambiguity is no
+    evidence. A tree that writes nothing (no store or set) is too weak to name anything."""
+    handlers = collections.defaultdict(set)
+    for flag, tree in trees.items():
+        if tree:
+            handlers[tree].add(flag)
+    matched, notes = {}, []
+    for flag in candidates:
+        tree = trees.get(flag)
+        if not tree or not any(e[0] in ("store", "set") for e in events(tree)):
+            continue
+        bodies, rivals = sorted(index.get(tree, ())), sorted(handlers[tree] - {flag})
+        if len(bodies) > 1:
+            notes.append(f"{flag}: no name, game bodies {', '.join(f'0x{b:08X}' for b in bodies)} all have its effects")
+        elif bodies and rivals:
+            notes.append(f"{flag}: no name, 0x{bodies[0]:08X}'s effects are also WorldBuilder {', '.join(rivals)}'s")
+        elif bodies:
+            matched[flag] = bodies[0]
+    return matched, notes
+
+
 def derive():
     """([(rva, name, evidence)], notes)."""
     game, wb = Image(IMAGES["game"]), Image(IMAGES["wb1"])
@@ -226,15 +349,21 @@ def derive():
 
     wb_by_flag = dict(wt)
     shared = [(f, b, wb_by_flag[f]) for f, b in gt if f in wb_by_flag]
+    trees = [(flag, g, w, effects(game, g, gd_game), effects(wb, w, gd_wb)) for flag, g, w in shared]
+    globals_map = {}                                   # the globals shared flags write, WorldBuilder -> game
+    for _, _, _, eg, ew in trees:
+        if eg and ew:
+            unify(eg, ew, globals_map)
     agree = 0
-    for flag, g, w in shared:
-        eg, ew = effects(game, g, gd_game), effects(wb, w, gd_wb)
-        if eg and ew and eg != ew:
+    for flag, g, w, eg, ew in trees:
+        if eg and ew and eg != rename(ew, globals_map):
             fail(f"{flag}: game 0x{g:08X} and WorldBuilder 0x{w:08X} disagree ({eg} vs {ew}); the effects model is wrong")
         agree += bool(eg and ew)
     if not agree:
         fail("no flag in both tables has modelled effects on both sides; the effects model cannot be trusted")
     notes.append(f"{agree} of {len(shared)} flags in both tables have identical effects on both sides; none differ")
+    notes += [f"WorldBuilder global 0x{w:08X} is game 0x{g:08X} (a shared flag writes both)"
+              for w, g in sorted(globals_map.items())]
 
     claims = collections.defaultdict(set)              # rva -> {(name, evidence)}
     for flag, body in gt:
@@ -249,18 +378,18 @@ def derive():
     for rva in sorted(starts):
         if gbytes in bytes(game.mem[rva:rva + MAX_BODY]):    # a superset: effects() decides
             e = effects(game, rva, gd_game)
-            if e and any(x[0] == "store" for x in e):
+            if e:
                 index[e].add(rva)
-    wb_effects = {flag: effects(wb, body, gd_wb) for flag, body in wt}
-    wb_count = collections.Counter(e for e in wb_effects.values() if e)
-    game_flags = {f for f, _ in gt}
+    wb_trees = {}
     for flag, body in wt:
-        e = wb_effects[flag]
-        if flag in game_flags or flag not in zh or not e or wb_count[e] != 1 or len(index.get(e, ())) != 1:
-            continue
-        rva = next(iter(index[e]))
+        e = effects(wb, body, gd_wb)
+        wb_trees[flag] = rename(e, globals_map) if e else None
+    game_flags = {f for f, _ in gt}
+    matched, ambiguous = pair(wb_trees, [f for f, _ in wt if f not in game_flags and f in zh], index)
+    notes += ambiguous
+    for flag, rva in matched.items():
         if rva not in direct:
-            claims[rva].add((zh[flag], f"wb1 table '{flag}' -> 0x{body:08X}, the only game body with its effects"))
+            claims[rva].add((zh[flag], f"wb1 table '{flag}' -> 0x{wb_by_flag[flag]:08X}, the only game body with its effects"))
 
     by_name = collections.Counter(name for c in claims.values() for name in {n for n, _ in c})
     rows = []
