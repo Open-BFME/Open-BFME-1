@@ -374,3 +374,4 @@ game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,271
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,be86cd1edf4afbdb2fe11671,gemini,20261001114215-f4a0a3,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeInnerLU,ffb7c73bf12a3c73f5527c28,gemini,20261001114733-bccd8b,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeThingLU,020936da52ba39c9825cdf97,gemini,20261001114733-bccd8b,2026-10-01
+game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|type||Rva001B74A0,126bca82243d5f71f2218089,gemini,20261001115136-b56f58,2026-10-01
