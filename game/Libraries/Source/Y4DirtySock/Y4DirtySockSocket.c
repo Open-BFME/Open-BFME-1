@@ -569,7 +569,6 @@ __declspec(dllimport) int __stdcall Rva01358D00CreateWorker(
 	void *security, unsigned int stackSize, void *start, void *parameter,
 	unsigned int flags, unsigned int *identifier );
 __declspec(dllimport) void __stdcall Rva01358F20SetPriority( int thread, int priority );
-__declspec(dllimport) void __stdcall Rva01358CCCRelease( int thread );
 
 extern int g_Rva0130ACB4;
 
@@ -603,7 +602,7 @@ void Rva007FE520( int priority )
 	if ( g_Rva0130ACB8Thread != 0 )
 	{
 		Rva01358F20SetPriority( g_Rva0130ACB8Thread, priority );
-		Rva01358CCCRelease( g_Rva0130ACB8Thread );
+		CloseHandle( (HANDLE)g_Rva0130ACB8Thread );
 	}
 
 	if ( 0 )
