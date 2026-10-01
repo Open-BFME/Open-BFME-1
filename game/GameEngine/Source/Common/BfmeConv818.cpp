@@ -51,13 +51,23 @@ bool BfmeThingD4C::checkCondition()
 	return ((BfmeSubD4C*)this)->fallback();
 }
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU reads a frame field through a local view type, so
+// keep the view and cast at the use; the global itself uses the canonical
+// spelling.
 struct BfmeGlobalMgr12F0898
 {
 	unsigned char pad[0x3c];
 	int m_frame3C;
 };
 
-extern BfmeGlobalMgr12F0898 *g_bfmeMgr12F0898;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGlobalMgr12F0898 *localTheGameLogic(void)
+{
+	return reinterpret_cast<BfmeGlobalMgr12F0898 *>(TheGameLogic);
+}
 
 struct BfmeSubDE0
 {
@@ -78,7 +88,7 @@ struct BfmeThingDE0
 void BfmeThingDE0::updateFrame()
 {
 	doInit();
-	m_val2C = m_sub4->m_val254 + g_bfmeMgr12F0898->m_frame3C;
+	m_val2C = m_sub4->m_val254 + localTheGameLogic()->m_frame3C;
 }
 
 class BfmeThingF9D
@@ -191,7 +201,7 @@ public:
 void BfmeThingF9D::checkAndMark()
 {
 	if (vfn_180()) {
-		m_frame1FC = g_bfmeMgr12F0898->m_frame3C;
+		m_frame1FC = localTheGameLogic()->m_frame3C;
 		m_flag32A = 1;
 	}
 }

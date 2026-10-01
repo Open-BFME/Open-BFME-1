@@ -1,10 +1,15 @@
 // Open-BFME5 conversions.
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU reads it through a local view type, so keep the
+// view and cast at the use; the global itself uses the canonical spelling.
 struct BfmeState922A
 {
 	char m_bfmePad[0x10c];
 	int m_bfmeMode;
 };
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeTail922A
 {
@@ -12,12 +17,11 @@ public:
 	char bfmeTail922A();
 };
 
-extern BfmeState922A *g_bfme922State;
 extern BfmeTail922A *g_bfme922Tail;
 
 char bfmeGo922A(void)
 {
-	if (g_bfme922State->m_bfmeMode != 6)
+	if (reinterpret_cast<BfmeState922A *>(TheGameLogic)->m_bfmeMode != 6)
 		return 0;
 	return g_bfme922Tail->bfmeTail922A();
 }

@@ -114,13 +114,22 @@ struct BfmeA944A
 	BfmeB944A *m_bfmeB;
 };
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU reads it through a local view type, so keep the
+// view and cast at the use; the global itself uses the canonical spelling.
 struct BfmeGlob944A
 {
 	char m_bfmePad[0x3c];
 	int m_bfmeBase;
 };
 
-extern BfmeGlob944A *g_bfme944Glob;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGlob944A *localTheGameLogic(void)
+{
+	return reinterpret_cast<BfmeGlob944A *>(TheGameLogic);
+}
 
 class BfmeThing944A
 {
@@ -137,7 +146,7 @@ int BfmeThing944A::bfmeGo944A()
 	BfmeRes944A *r = m_bfmeA->m_bfmeB->m_bfmeC->bfmeFind944A();
 	if (!r)
 		return -2;
-	int base = g_bfme944Glob->m_bfmeBase;
+	int base = localTheGameLogic()->m_bfmeBase;
 	m_bfmeOut = base + r->bfmeVirtA944A();
 	return 0;
 }
@@ -157,7 +166,7 @@ int BfmeThing944B::bfmeGo944B()
 	BfmeRes944A *r = m_bfmeA->m_bfmeB->m_bfmeC->bfmeFind944A();
 	if (!r)
 		return -2;
-	int base = g_bfme944Glob->m_bfmeBase;
+	int base = localTheGameLogic()->m_bfmeBase;
 	m_bfmeOut = base + r->bfmeVirtB944A();
 	return 0;
 }

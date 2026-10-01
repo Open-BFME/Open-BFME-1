@@ -8,8 +8,11 @@
 // matching Zero Hour's Drawable::setIndicatorColor loop shape (vtable
 // slots +0x9c getObjectDrawInterface / +0x74 replaceIndicatorColor).
 
-struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp); this TU only reads a member through a local view type, so
+// cast at the use and keep the canonical spelling for the linker.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeObserverYU
 {
@@ -87,7 +90,7 @@ void Drawable::bfmeApplyIndicatorColor(unsigned int color)
 
 	Thing *thing = m_object;
 
-	if (reinterpret_cast<BfmeObserverYU *>(TheBfmeGameLogic)->bfmeActiveYU())
+	if (reinterpret_cast<BfmeObserverYU *>(TheGameLogic)->bfmeActiveYU())
 	{
 		if (!thing)
 			return;

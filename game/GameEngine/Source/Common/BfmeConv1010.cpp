@@ -2,13 +2,22 @@
 
 class BfmeItem1010;
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU calls through a local view type, so keep the view
+// and cast at the use; the global itself uses the canonical spelling.
 class BfmeSink1010
 {
 public:
 	void bfmeDrop1010(BfmeItem1010 *it);
 };
 
-extern BfmeSink1010 *g_bfmeSink1010;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeSink1010 *localTheGameLogic(void)
+{
+	return reinterpret_cast<BfmeSink1010 *>(TheGameLogic);
+}
 
 struct BfmeNode1010
 {
@@ -35,7 +44,7 @@ void BfmeA1010::bfmeGo1010A()
 		BfmeItem1010 *it = n->m_bfmeItem;
 
 		n = n->m_bfmeNext;
-		g_bfmeSink1010->bfmeDrop1010(it);
+		localTheGameLogic()->bfmeDrop1010(it);
 	}
 
 	bfmeFinish1010A();

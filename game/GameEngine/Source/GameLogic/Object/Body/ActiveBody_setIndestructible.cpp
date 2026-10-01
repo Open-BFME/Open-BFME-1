@@ -65,13 +65,17 @@ public:
 	BodyModuleInterface *m_body;
 };
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU calls through a local view type, so keep the view
+// and cast at the use; the global itself uses the canonical spelling.
 class BfmeActiveBodySetGameLogic
 {
 public:
 	Object *findObjectByID( int id );
 };
 
-extern BfmeActiveBodySetGameLogic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class ActiveBody
 {
@@ -97,7 +101,8 @@ void ActiveBody::setIndestructible( Bool indestructible )
 		{
 			for( Int i = 0; i < 4; ++i )
 			{
-				Object *tower = TheBfmeGameLogic->findObjectByID( bbi->getTowerID( (BridgeTowerType)i ) );
+				Object *tower = reinterpret_cast<BfmeActiveBodySetGameLogic *>(TheGameLogic)
+						->findObjectByID( bbi->getTowerID( (BridgeTowerType)i ) );
 				if( tower )
 				{
 					BodyModuleInterface *body = tower->m_body;

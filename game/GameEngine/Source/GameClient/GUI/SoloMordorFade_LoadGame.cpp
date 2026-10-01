@@ -60,6 +60,9 @@ public:
 };
 extern Shell *g_obj12F4B58;
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU reads it through a local view type, so keep the
+// view and cast at the use; the global itself uses the canonical spelling.
 class BfmeGameLogicPause
 {
 public:
@@ -68,7 +71,13 @@ public:
 	unsigned char m_pad[0x10C];
 	int m_gameMode;
 };
-extern BfmeGameLogicPause *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGameLogicPause *localTheGameLogic(void)
+{
+	return reinterpret_cast<BfmeGameLogicPause *>(TheGameLogic);
+}
 
 class Glo012F7048Type
 {
@@ -108,8 +117,8 @@ int soloMordorFadeLoadGame(int, bool)
 	g_theWindowManager->unidentified_000144bb(-1);
 	TheDisplay->stopMovie();
 	g_obj12F4B58->hide(true);
-	if (TheGameLogic->m_gameMode != 8)
-		TheGameLogic->clearGameData(false, false);
+	if (localTheGameLogic()->m_gameMode != 8)
+		localTheGameLogic()->clearGameData(false, false);
 	Glo012F7048->unidentified_00000010(true);
 	TheTransitionHandler->setGroup(AsciiString("SoloMordorFade_LoadGame"));
 	TheMouse->setCursor(0x28);

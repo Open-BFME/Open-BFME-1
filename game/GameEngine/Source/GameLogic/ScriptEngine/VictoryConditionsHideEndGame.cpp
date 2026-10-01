@@ -26,13 +26,17 @@ private:
 
 extern Display *TheDisplay;
 
+// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
+// game_logic.cpp). This TU calls through a local view type, so keep the view
+// and cast at the use; the global itself uses the canonical spelling.
 class GameLogicShim
 {
 public:
 	Bool unidentified_0001e0ab(void);
 };
 
-extern GameLogicShim *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class TransitionHandler
 {
@@ -64,7 +68,7 @@ void VictoryConditions::hideEndGame(void)
 	m_endGameShowing = false;
 	TheDisplay->setUnidentified13c(true);
 
-	if (TheGameLogic->unidentified_0001e0ab())
+	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
 	{
 		if (m_singleAllianceRemaining)
 			TheTransitionHandler->setGroup("MPorSkirmishFadeToScoreScreen", 0);
