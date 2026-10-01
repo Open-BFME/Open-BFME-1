@@ -16,7 +16,12 @@ public:
 	void bfmeSendAAB(void *what, bool flag, int more);
 };
 
-extern BfmeModeAAB *g_bfmeModeAAB;
+// Retail global at 0x012F19E8; the canonical mangled spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, so the pointee must be
+// the real WindowManager and only the member read needs the TU-local view.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern BfmeSinkAAB *g_bfmeSinkAAB;
 
 class BfmeThingAAB
@@ -36,5 +41,5 @@ void BfmeThingAAB::bfmeGoAAB(int at)
 	void *what = m_bfmeSlots[at].m_bfmeWhat;
 	if (what == 0)
 		return;
-	g_bfmeSinkAAB->bfmeSendAAB(what, g_bfmeModeAAB->m_bfmeMode != 2, 0);
+	g_bfmeSinkAAB->bfmeSendAAB(what, ((BfmeModeAAB *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
 }

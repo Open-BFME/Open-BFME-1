@@ -7,7 +7,12 @@ public:
 };
 
 extern void *g_Va012F4998;
-extern BfmeGlobal_012f19e8 *TheBfmeGlobal_012f19e8;
+
+// Retail global at 0x012F19E8; canonical mangled spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A.  The call target mangles
+// against this TU-local view, so the global is cast to it at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00516A50
 {
@@ -18,5 +23,5 @@ public:
 void Rva00516A50::wrap(int)
 {
 	if (g_Va012F4998)
-		TheBfmeGlobal_012f19e8->bfmeCall_000290d2();
+		((BfmeGlobal_012f19e8 *)g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 }

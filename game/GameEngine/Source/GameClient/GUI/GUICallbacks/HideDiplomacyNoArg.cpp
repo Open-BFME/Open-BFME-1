@@ -9,6 +9,12 @@
 //
 // The final call is in tail position and compiles to a jmp; nothing in the
 // source asks for that beyond the call being last and returning void.
+//
+// Retail global at 0x012F19E8.  Canonical mangled spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, so the pointee must be the
+// class named WindowManager: the callee mangles as
+// ?hideQuitMenu@WindowManager@@QAEXXZ.  No WindowManager.h exists in the tree
+// (each TU declares the class locally), so this local view stays.
 class WindowManager
 {
 public:
@@ -31,7 +37,7 @@ struct InGameUI
 class Shell;
 extern void *g_obj12F49E4;
 extern Shell *TheShell;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // ?HideDiplomacy@@YAXXZ
 void HideDiplomacy(void)
@@ -47,5 +53,5 @@ void HideDiplomacy(void)
 	window->m_hidden = true;
 	((InGameUI *)TheShell)->m_diplomacyHidden = true;
 
-	g_theWindowManager->hideQuitMenu();
+	g_rva012F19E8WindowManager->hideQuitMenu();
 }

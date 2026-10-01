@@ -1,10 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// Retail global at 0x012F19E8.  Canonical mangled spelling is
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, so the pointee must be
+// the class named WindowManager: the hideQuitMenu callee mangles as
+// ?hideQuitMenu@WindowManager@@QAEXXZ.  No WindowManager.h exists in the tree
+// (each TU declares the class locally), so this local view stays.
 class WindowManager
 {
 public:
 	void hideQuitMenu(void);
 };
+
+extern WindowManager *g_rva012F19E8WindowManager;
 
 struct AptPlayerStatusWindow
 {
@@ -22,7 +29,6 @@ public:
 
 extern void *g_obj12F49E4;
 extern Shell *TheShell;
-extern WindowManager *g_theWindowManager;
 
 class AptPlayerStatus
 {
@@ -46,5 +52,5 @@ void AptPlayerStatus::ReturnToGame(const char *)
 	window->m_hidden = true;
 	TheShell->m_playerStatusHidden = true;
 
-	g_theWindowManager->hideQuitMenu();
+	g_rva012F19E8WindowManager->hideQuitMenu();
 }
