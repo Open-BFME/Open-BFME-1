@@ -37,10 +37,16 @@ public:
 	void registerUpdate(Gen00296F90 *update);
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_NONE = 1
+};
+
 class UpdateModule
 {
-public:
-	void setWakeFrame(Object *object, int wakeDelay);
+protected:
+	void setWakeFrame(Object *object, UpdateSleepTime wakeDelay);
 };
 
 extern char g_bfmeFmt1029[];
@@ -81,7 +87,7 @@ void Gen00296F90::handle()
 	LargeGroupAudioUpdateModuleData *moduleData = m_moduleData;
 	int wakeDelay = GetGameLogicRandomValue(0, moduleData->m_a, g_bfmeFmt1029, 0x54) +
 		moduleData->m_b + 1;
-	setWakeFrame(object, wakeDelay);
+	setWakeFrame(object, static_cast<UpdateSleepTime>(wakeDelay));
 
 	m_position = m_object->m_position;
 	memcpy(m_conditionFlags, m_object->m_conditionFlags, sizeof(m_conditionFlags));
