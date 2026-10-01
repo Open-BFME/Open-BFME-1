@@ -1,4 +1,4 @@
-// cl: /Od /GZ /GS /MD /DNDEBUG
+// cl: /Od /GZ /GS /MD /DNDEBUG -Iinputs/reference/shims/gamespy
 
 /* EA DirtySock ("DirtySDK") -- Windows socket layer, dirtynetwin.c.
  *
@@ -25,6 +25,8 @@
  * This lane may not add a .h file, so the struct and the two Winsock
  * prototypes are declared here.
  */
+
+#include <windows.h>
 
 int __stdcall shutdown( unsigned int socket, int how );
 
@@ -301,9 +303,9 @@ void Rva007FE210( void *object )
 		Rva007F0030( object );
 }
 
-/* 0x007FEA00: a bare forwarder onto a no-argument stdcall import.  Nothing but
- * the /GZ esp check surrounds it. */
-__declspec(dllimport) unsigned int __stdcall Rva01358E0CImport( void );
+/* 0x007FEA00: retail's PE import directory identifies its IAT slot
+ * 0x01358E0C as KERNEL32.dll!GetTickCount. The existing C windows shim
+ * supplies the native DWORD __stdcall GetTickCount(void) declaration. */
 
 /* RETURNS ITS RESULT.  Nothing in this body shows that -- a forwarder that
  * drops the value and one that returns it compile to the same bytes, because
@@ -312,7 +314,7 @@ __declspec(dllimport) unsigned int __stdcall Rva01358E0CImport( void );
  * typed from its CALLER rather than from itself. */
 unsigned int Rva007FEA00( void )
 {
-	return Rva01358E0CImport();
+	return GetTickCount();
 }
 
 /* 0x007FE620: the shutdown drain.  A flag is raised, the worker is pumped until
