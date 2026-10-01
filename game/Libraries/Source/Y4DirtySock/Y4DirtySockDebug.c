@@ -1,4 +1,4 @@
-// cl: /Od /GZ /GS /MT /DNDEBUG
+// cl: /Od /GZ /GS /MT /DNDEBUG -Iinputs/reference/shims/gamespy
 /* THIS IS A SEPARATE TRANSLATION UNIT FROM Y4DirtySockSocket.c FOR ONE REASON:
  * /GS.  The body here ends with the MSVC 7.1 cookie epilogue -- the module
  * cookie loaded into ecx and passed to __security_check_cookie -- and the
@@ -8,14 +8,12 @@
  */
 #include <stdarg.h>
 #include <stdio.h>
+#include <windows.h>
 
-/* NOT an import -- there is no IAT entry at this address.  It is an ordinary
- * function pointer in .data, i.e. the sink is HOOKABLE at run time, which is
- * the usual shape for this library's diagnostic output.  The call takes one
- * argument and is followed by no stack cleanup at the call site, so the
- * pointer is __stdcall.
- */
-extern void ( __stdcall *g_Rva01358EA8Print )( const char *pText );
+/* Retail's PE import directory identifies slot 0x01358EA8 as
+ * KERNEL32.dll!OutputDebugStringA. The C shim supplies its native ABI types;
+ * this missing declaration mirrors the existing WWLib/win.h prototype. */
+__declspec(dllimport) void WINAPI OutputDebugStringA( LPCSTR pText );
 
 int Rva007FE780( const char *pFormat, ... )
 {
@@ -41,7 +39,7 @@ int Rva007FE780( const char *pFormat, ... )
 	}
 	va_end( pArgs );
 
-	g_Rva01358EA8Print( pText );
+	OutputDebugStringA( pText );
 
 	/* THE RETURN VALUE IS NOT COSMETIC AND IS NOT A GUESS.  Retail zeroes
 	 * eax immediately before the /GZ frame-variable check, and that xor is
