@@ -5,7 +5,7 @@
 // A shared final resume call lets MSVC duplicate the two return paths as retail
 // does; spelling those calls twice changes the callee-saved register assignment.
 #include "ascii_string.h"
-extern const AsciiString Rva01336E50EmptyString;
+#define Rva01336E50EmptyString AsciiString::TheEmptyString
 struct Coord3D { float x,y,z; };
 struct SampleFile006B4090 { char pad00[8]; char format[0x14]; int channels; char pad20[12]; void *data; };
 struct Event006B4090 { char pad00[0x14]; AsciiString name; char pad18[0x10]; int field28; char pad2c[0x1c]; bool field48; };
@@ -33,7 +33,8 @@ public:
  virtual void v50(); virtual void v54(); virtual void v58(); virtual void v5c(); virtual void v60();
  virtual void v64(); virtual void v68(); virtual BfmeAwakenLog *v6c(int,int);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int);
 extern void j_00001ece(); extern void j_00021ff3(); extern void j_00016f86();

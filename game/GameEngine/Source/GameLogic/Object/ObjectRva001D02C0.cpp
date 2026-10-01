@@ -66,7 +66,6 @@ private:
 	ObjectSMCHelper *m_smcHelper;
 };
 
-extern const Real g_bfmeK1253;
 extern Int GetGameLogicRandomValue(Int low, Int high, char *file, Int line);
 
 #pragma comment(linker, "/alternatename:?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ=?j_0002be77@@YAXXZ")
@@ -86,7 +85,7 @@ void Object::rva001D02C0(Int condition, Int frames, Real percent)
 		Int count = (Int)source->size();
 
 		Int remaining = count;
-		Int selected = (Int)((Real)count * percent + g_bfmeK1253);
+		Int selected = (Int)((Real)count * percent + 0.5f);
 		Int lower = selected;
 		if (selected >= count)
 			lower = count;

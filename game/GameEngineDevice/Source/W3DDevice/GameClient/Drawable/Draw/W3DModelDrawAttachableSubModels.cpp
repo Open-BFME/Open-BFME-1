@@ -46,15 +46,12 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-// Retail's empty-string sentinel (DIR32 at +0x121, +0x182, +0x223, +0x27B).
-extern char Rva006A16B0Empty[];
-
 // Retail inlines AsciiString::str() at every use; ascii_string.h forwards it
 // to the out-of-line StringBase<char>::str().
 static const char *inlineStr(const AsciiString &s)
 {
 	const char *text = *reinterpret_cast<const char *const *>(&s);
-	return text ? text + 8 : Rva006A16B0Empty;
+	return text ? text + 8 : "";
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
@@ -159,7 +156,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 bool _bfme_debugReportingEnabled();
 void _bfme_debugRecordCallsite(int kind);
 

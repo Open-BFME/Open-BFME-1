@@ -18,8 +18,10 @@ struct Gen_007e86c0
 	void m();
 };
 
-extern int vftable_01129CB0;
-extern int vftable_01129AF4;
+extern "C" int __identifier("??_7ServiceHubImpl@@6B@");
+#define vftable_01129CB0 __identifier("??_7ServiceHubImpl@@6B@")
+extern "C" int __identifier("??_7Rva007EA6D0Deleting@@6B@");
+#define vftable_01129AF4 __identifier("??_7Rva007EA6D0Deleting@@6B@")
 
 class ServiceHubImpl
 {

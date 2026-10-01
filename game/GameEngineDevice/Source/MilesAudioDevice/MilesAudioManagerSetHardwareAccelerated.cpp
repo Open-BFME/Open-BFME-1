@@ -118,7 +118,8 @@ public:
 	virtual BfmeAwakenLog *v6c(int first, int second) = 0;
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
 
@@ -149,7 +150,8 @@ public:
 	virtual void notifyVideoPlayerOfNewProvider(Bool nowHasValid) = 0;
 };
 
-extern VideoPlayer *TheVideoPlayer;
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
 
 extern "C" __declspec(dllimport) void __stdcall AIL_get_DirectSound_info(
 	void *sample, void **directSound, void *unused);
@@ -347,6 +349,6 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 					m_speakerTypeB60);
 		}
 		if (TheVideoPlayer)
-			TheVideoPlayer->notifyVideoPlayerOfNewProvider(1);
+			reinterpret_cast<VideoPlayer *>(TheVideoPlayer)->notifyVideoPlayerOfNewProvider(1);
 	}
 }

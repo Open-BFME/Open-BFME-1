@@ -22,7 +22,9 @@ struct Template00242270 {
 };
 __forceinline Template00242270 *objectTemplate00242270(Object *obj) { if(!obj->m_template) return 0; return ((Template00242270*)obj->m_template)->finalOverride(); }
 struct Weapon00242270 { void *at000; Route00242270 *at004; };
-extern Route00242270 *g00242270Va012EF214;
+class AI;
+extern AI *TheAI;
+#define g00242270Va012EF214 (reinterpret_cast<Route00242270 *>(TheAI))
 template<int N> class Slots00242270 : public Slots00242270<N-1> { public: virtual void unused(char (*)[N])=0; };
 template<> class Slots00242270<0> {};
 struct TreeNode00242270 { int color; TreeNode00242270 *parent,*left,*right; int key,value; };

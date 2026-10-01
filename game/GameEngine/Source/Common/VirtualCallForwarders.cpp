@@ -168,13 +168,26 @@ BFME_VCALL_MEMBER( Rva00537F20VCall, 0x40, v6 )
 BFME_VCALL_MEMBER( Rva005A4410VCall, 0x4DAC, v5 )
 BFME_VCALL_MEMBER( Rva007E3A50VCall, 0x2C, v0 )
 
-extern VDispatch *g_Va012F076C;
-extern VDispatch *g_Va012F079C;
-extern VDispatch *g_Va012F1270;
-extern VDispatch *g_Va012F148C;
-extern VDispatch *g_Va012F1600;
-extern VDispatch *g_Va012F7014;
-extern VDispatch *g_Va01336E5C;
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+#define g_Va012F076C (reinterpret_cast<VDispatch *>(TheScriptEngine))
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+#define g_Va012F079C (reinterpret_cast<VDispatch *>(TheVictoryConditions))
+class Display;
+extern Display *TheDisplay;
+#define g_Va012F1270 (reinterpret_cast<VDispatch *>(TheDisplay))
+class InGameUI;
+extern InGameUI *TheInGameUI;
+#define g_Va012F148C (reinterpret_cast<VDispatch *>(TheInGameUI))
+class View;
+extern View *TheTacticalView;
+#define g_Va012F1600 (reinterpret_cast<VDispatch *>(TheTacticalView))
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+#define g_Va012F7014 (reinterpret_cast<VDispatch *>(TheTerrainVisual))
+extern void *g_Rva00F36E5C;
+#define g_Va01336E5C (static_cast<VDispatch *>(g_Rva00F36E5C))
 
 void Rva0005BBA0VCall( void )
 {

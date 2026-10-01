@@ -4,7 +4,8 @@
 #include <string.h>
 #undef _CRTIMP
 
-extern char *g_bfme927Vft;
+extern "C" char *__identifier("??_7Rva0090C2F0Inner@@6B@");
+#define g_bfme927Vft __identifier("??_7Rva0090C2F0Inner@@6B@")
 
 extern void *Rva006F6AB0_OpenW3DFile(char const *filename);
 

@@ -154,7 +154,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(Int first, Int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern void _bfme_debugRecordCallsite(Int kind);
 
 struct FactionVictoryParameters

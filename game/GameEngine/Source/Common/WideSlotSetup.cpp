@@ -28,11 +28,69 @@
 // pairing of table with offset is consistent across all twenty-four, which is
 // what makes the two-axis reading real rather than over-fitted.
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived, the stored blocks are
-// undefined externs, and a member that stores `this`-relative slots asserts
+// IDENTITY IS NOT RECOVERED. Names are address-derived, the stored blocks are
+// existing vtables, and a member that stores `this`-relative slots asserts
 // less than a constructor would.
 
 class WideDesc;
+
+extern "C" const WideDesc __identifier("??_7PolymorphicVptrBase0110F978@@6B@");
+extern "C" const WideDesc __identifier("??_7PolymorphicVptrBase01073760@@6B@");
+extern "C" const WideDesc __identifier("??_7BigMiNarrowC@@6B@");
+extern "C" const WideDesc __identifier("??_7BigMiNarrowD@@6B@");
+extern "C" const WideDesc __identifier("??_7BigMiNarrowE@@6B@");
+extern "C" const WideDesc __identifier("??_7BigMiWide@@6B@");
+extern "C" const WideDesc __identifier("??_7PolymorphicVptrBase01111D20@@6B@");
+extern "C" const WideDesc __identifier("??_7BigMiHead@@6B@");
+
+#define WideA005E9480 __identifier("??_7PolymorphicVptrBase0110F978@@6B@")
+#define WideB005E9480 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E94E0 __identifier("??_7PolymorphicVptrBase0110F978@@6B@")
+#define WideB005E94E0 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E96C0 __identifier("??_7PolymorphicVptrBase01073760@@6B@")
+#define WideB005E96C0 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9720 __identifier("??_7PolymorphicVptrBase01073760@@6B@")
+#define WideB005E9720 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E98E0 __identifier("??_7BigMiNarrowC@@6B@")
+#define WideB005E98E0 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9940 __identifier("??_7BigMiNarrowC@@6B@")
+#define WideB005E9940 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9B30 __identifier("??_7BigMiNarrowD@@6B@")
+#define WideB005E9B30 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9B90 __identifier("??_7BigMiNarrowD@@6B@")
+#define WideB005E9B90 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9D50 __identifier("??_7BigMiNarrowE@@6B@")
+#define WideB005E9D50 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9DB0 __identifier("??_7BigMiNarrowE@@6B@")
+#define WideB005E9DB0 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9F90 __identifier("??_7BigMiWide@@6B@")
+#define WideB005E9F90 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005E9FF0 __identifier("??_7BigMiWide@@6B@")
+#define WideB005E9FF0 __identifier("??_7PolymorphicVptrBase01111D20@@6B@")
+#define WideA005EA4A0 __identifier("??_7PolymorphicVptrBase0110F978@@6B@")
+#define WideB005EA4A0 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EA500 __identifier("??_7PolymorphicVptrBase0110F978@@6B@")
+#define WideB005EA500 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EA760 __identifier("??_7PolymorphicVptrBase01073760@@6B@")
+#define WideB005EA760 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EA7C0 __identifier("??_7PolymorphicVptrBase01073760@@6B@")
+#define WideB005EA7C0 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EA980 __identifier("??_7BigMiNarrowC@@6B@")
+#define WideB005EA980 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EAA20 __identifier("??_7BigMiNarrowC@@6B@")
+#define WideB005EAA20 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EAC20 __identifier("??_7BigMiNarrowD@@6B@")
+#define WideB005EAC20 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EAC80 __identifier("??_7BigMiNarrowD@@6B@")
+#define WideB005EAC80 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EAE40 __identifier("??_7BigMiNarrowE@@6B@")
+#define WideB005EAE40 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EAEE0 __identifier("??_7BigMiNarrowE@@6B@")
+#define WideB005EAEE0 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EB100 __identifier("??_7BigMiWide@@6B@")
+#define WideB005EB100 __identifier("??_7BigMiHead@@6B@")
+#define WideA005EB160 __identifier("??_7BigMiWide@@6B@")
+#define WideB005EB160 __identifier("??_7BigMiHead@@6B@")
 
 class WideLead4
 {
@@ -53,7 +111,7 @@ public:
 	const WideDesc *m_a;
 };
 
-#define WIDE_SLOT_SETUP( NAME, LEAD )                                     	extern const WideDesc WideA##NAME;                                    	extern const WideDesc WideB##NAME;                                    	class Rva##NAME : public LEAD, public WideSlot                        	{                                                                     	public:                                                               		void setup();                                                     	};                                                                    	void Rva##NAME::setup()                                               	{                                                                     		WideSlot *slot = this;                                            		slot->m_a = &WideA##NAME;                                         		m_b = &WideB##NAME;                                               	}
+#define WIDE_SLOT_SETUP( NAME, LEAD )                                     	                                    	                                    	class Rva##NAME : public LEAD, public WideSlot                        	{                                                                     	public:                                                               		void setup();                                                     	};                                                                    	void Rva##NAME::setup()                                               	{                                                                     		WideSlot *slot = this;                                            		slot->m_a = &WideA##NAME;                                         		m_b = &WideB##NAME;                                               	}
 
 WIDE_SLOT_SETUP( 005E9480, WideLead4 )
 WIDE_SLOT_SETUP( 005E94E0, WideLead4 )

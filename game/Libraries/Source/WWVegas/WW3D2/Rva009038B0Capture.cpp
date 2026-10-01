@@ -71,73 +71,80 @@ struct Rva009038B0Stage
 	unsigned long transform[16];
 };
 
+struct IDirect3DDevice8;
+void Rva009038B0Capture(Rva009038B0State *state);
+
 class DX8Wrapper
 {
-public:
-	static Rva009038B0Device *D3DDevice;
+	friend void Rva009038B0Capture(Rva009038B0State *state);
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
 };
+
+#define Rva009038B0D3DDevice (reinterpret_cast<Rva009038B0Device *>(DX8Wrapper::D3DDevice))
 
 void Rva009038B0Capture(Rva009038B0State *state)
 {
 	unsigned char *bytes = state->bytes;
 
-	DX8Wrapper::D3DDevice->GetRenderState(0x16, reinterpret_cast<unsigned long *>(bytes + 0x00));
-	DX8Wrapper::D3DDevice->GetRenderState(0x07, reinterpret_cast<unsigned long *>(bytes + 0x04));
-	DX8Wrapper::D3DDevice->GetRenderState(0x0E, reinterpret_cast<unsigned long *>(bytes + 0x08));
-	DX8Wrapper::D3DDevice->GetRenderState(0x0F, reinterpret_cast<unsigned long *>(bytes + 0x0C));
-	DX8Wrapper::D3DDevice->GetRenderState(0x13, reinterpret_cast<unsigned long *>(bytes + 0x10));
-	DX8Wrapper::D3DDevice->GetRenderState(0x14, reinterpret_cast<unsigned long *>(bytes + 0x14));
-	DX8Wrapper::D3DDevice->GetRenderState(0x17, reinterpret_cast<unsigned long *>(bytes + 0x18));
-	DX8Wrapper::D3DDevice->GetRenderState(0x18, reinterpret_cast<unsigned long *>(bytes + 0x1C));
-	DX8Wrapper::D3DDevice->GetRenderState(0x19, reinterpret_cast<unsigned long *>(bytes + 0x20));
-	DX8Wrapper::D3DDevice->GetRenderState(0x1A, reinterpret_cast<unsigned long *>(bytes + 0x24));
-	DX8Wrapper::D3DDevice->GetRenderState(0x1B, reinterpret_cast<unsigned long *>(bytes + 0x28));
-	DX8Wrapper::D3DDevice->GetRenderState(0x1D, reinterpret_cast<unsigned long *>(bytes + 0x2C));
-	DX8Wrapper::D3DDevice->GetRenderState(0x34, reinterpret_cast<unsigned long *>(bytes + 0x30));
-	DX8Wrapper::D3DDevice->GetRenderState(0x3C, reinterpret_cast<unsigned long *>(bytes + 0x34));
-	DX8Wrapper::D3DDevice->GetRenderState(0x80, reinterpret_cast<unsigned long *>(bytes + 0x38));
-	DX8Wrapper::D3DDevice->GetRenderState(0x81, reinterpret_cast<unsigned long *>(bytes + 0x3C));
-	DX8Wrapper::D3DDevice->GetRenderState(0x88, reinterpret_cast<unsigned long *>(bytes + 0x40));
-	DX8Wrapper::D3DDevice->GetRenderState(0x89, reinterpret_cast<unsigned long *>(bytes + 0x44));
-	DX8Wrapper::D3DDevice->GetRenderState(0x8F, reinterpret_cast<unsigned long *>(bytes + 0x48));
-	DX8Wrapper::D3DDevice->GetRenderState(0xA8, reinterpret_cast<unsigned long *>(bytes + 0x4C));
-	DX8Wrapper::D3DDevice->GetRenderState(0xAB, reinterpret_cast<unsigned long *>(bytes + 0x50));
-	DX8Wrapper::D3DDevice->GetRenderState(0xC1, reinterpret_cast<unsigned long *>(bytes + 0x54));
-	DX8Wrapper::D3DDevice->GetRenderState(0xC3, reinterpret_cast<unsigned long *>(bytes + 0x58));
-	DX8Wrapper::D3DDevice->GetTransform(0x100, bytes + 0x5C);
-	DX8Wrapper::D3DDevice->GetTransform(2, bytes + 0x9C);
-	DX8Wrapper::D3DDevice->GetTransform(3, bytes + 0xDC);
-	DX8Wrapper::D3DDevice->GetVertexShader(reinterpret_cast<unsigned long *>(bytes + 0x11C));
-	DX8Wrapper::D3DDevice->GetPixelShader(reinterpret_cast<unsigned long *>(bytes + 0x120));
+	Rva009038B0D3DDevice->GetRenderState(0x16, reinterpret_cast<unsigned long *>(bytes + 0x00));
+	Rva009038B0D3DDevice->GetRenderState(0x07, reinterpret_cast<unsigned long *>(bytes + 0x04));
+	Rva009038B0D3DDevice->GetRenderState(0x0E, reinterpret_cast<unsigned long *>(bytes + 0x08));
+	Rva009038B0D3DDevice->GetRenderState(0x0F, reinterpret_cast<unsigned long *>(bytes + 0x0C));
+	Rva009038B0D3DDevice->GetRenderState(0x13, reinterpret_cast<unsigned long *>(bytes + 0x10));
+	Rva009038B0D3DDevice->GetRenderState(0x14, reinterpret_cast<unsigned long *>(bytes + 0x14));
+	Rva009038B0D3DDevice->GetRenderState(0x17, reinterpret_cast<unsigned long *>(bytes + 0x18));
+	Rva009038B0D3DDevice->GetRenderState(0x18, reinterpret_cast<unsigned long *>(bytes + 0x1C));
+	Rva009038B0D3DDevice->GetRenderState(0x19, reinterpret_cast<unsigned long *>(bytes + 0x20));
+	Rva009038B0D3DDevice->GetRenderState(0x1A, reinterpret_cast<unsigned long *>(bytes + 0x24));
+	Rva009038B0D3DDevice->GetRenderState(0x1B, reinterpret_cast<unsigned long *>(bytes + 0x28));
+	Rva009038B0D3DDevice->GetRenderState(0x1D, reinterpret_cast<unsigned long *>(bytes + 0x2C));
+	Rva009038B0D3DDevice->GetRenderState(0x34, reinterpret_cast<unsigned long *>(bytes + 0x30));
+	Rva009038B0D3DDevice->GetRenderState(0x3C, reinterpret_cast<unsigned long *>(bytes + 0x34));
+	Rva009038B0D3DDevice->GetRenderState(0x80, reinterpret_cast<unsigned long *>(bytes + 0x38));
+	Rva009038B0D3DDevice->GetRenderState(0x81, reinterpret_cast<unsigned long *>(bytes + 0x3C));
+	Rva009038B0D3DDevice->GetRenderState(0x88, reinterpret_cast<unsigned long *>(bytes + 0x40));
+	Rva009038B0D3DDevice->GetRenderState(0x89, reinterpret_cast<unsigned long *>(bytes + 0x44));
+	Rva009038B0D3DDevice->GetRenderState(0x8F, reinterpret_cast<unsigned long *>(bytes + 0x48));
+	Rva009038B0D3DDevice->GetRenderState(0xA8, reinterpret_cast<unsigned long *>(bytes + 0x4C));
+	Rva009038B0D3DDevice->GetRenderState(0xAB, reinterpret_cast<unsigned long *>(bytes + 0x50));
+	Rva009038B0D3DDevice->GetRenderState(0xC1, reinterpret_cast<unsigned long *>(bytes + 0x54));
+	Rva009038B0D3DDevice->GetRenderState(0xC3, reinterpret_cast<unsigned long *>(bytes + 0x58));
+	Rva009038B0D3DDevice->GetTransform(0x100, bytes + 0x5C);
+	Rva009038B0D3DDevice->GetTransform(2, bytes + 0x9C);
+	Rva009038B0D3DDevice->GetTransform(3, bytes + 0xDC);
+	Rva009038B0D3DDevice->GetVertexShader(reinterpret_cast<unsigned long *>(bytes + 0x11C));
+	Rva009038B0D3DDevice->GetPixelShader(reinterpret_cast<unsigned long *>(bytes + 0x120));
 
 	unsigned long stage = 0;
 	Rva009038B0Stage *stages = reinterpret_cast<Rva009038B0Stage *>(bytes + 0x124);
 	for (; stage < 4; ++stage)
 	{
 		Rva009038B0Stage *current = &stages[stage];
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 1, &current->state1);
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 2, &current->state2);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 1, &current->state1);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 2, &current->state2);
 		unsigned long value = current->state2;
 		value &= 0xFFFFFFF0;
 		current->state2Low = current->state2 & 0x0F;
 		current->state2 = value;
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 3, &current->state3);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 3, &current->state3);
 		value = current->state3;
 		current->state3Low = value & 0x0F;
 		current->state3 = value & 0xFFFFFFF0;
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 4, &current->state4);
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 5, &current->state5);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 4, &current->state4);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 5, &current->state5);
 		value = current->state5;
 		value &= 0xFFFFFFF0;
 		current->state4Low = current->state5 & 0x0F;
 		current->state5 = value;
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 6, &current->state6);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 6, &current->state6);
 		value = current->state6;
 		current->state6Low = value & 0x0F;
 		current->state6 = value & 0xFFFFFFF0;
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 0x0B, &current->state11);
-		DX8Wrapper::D3DDevice->GetTextureStageState(stage, 0x18, &current->state24);
-		DX8Wrapper::D3DDevice->GetTransform(stage + 0x10, &current->transform[0]);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 0x0B, &current->state11);
+		Rva009038B0D3DDevice->GetTextureStageState(stage, 0x18, &current->state24);
+		Rva009038B0D3DDevice->GetTransform(stage + 0x10, &current->transform[0]);
 	}
 }
 

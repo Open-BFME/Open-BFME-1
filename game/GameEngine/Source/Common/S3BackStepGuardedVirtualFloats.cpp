@@ -23,9 +23,8 @@
 // interface would have landed at offset 0 with no `lea`).
 //
 // Control leaves through `jmp`, so the virtual's return value IS this
-// function's: st0, a float.  The other arm loads a float from a fixed address
-// with `fld dword ptr [imm32]`, not `fldz` -- the literal 0.0f compiles to
-// `fldz`, so this is a named object, and it is the SAME address in all five.
+// function's: st0, a float. The other arm loads 0.0f from the shared compiler
+// constant address in every float accessor.
 //
 // ONE AXIS: the vtable slot -- 0x18, 0x1C, 0x6C, 0x78 and 0x8C, i.e. indices 6,
 // 7, 27, 30 and 35.  Predicate, member offset, base adjust and float are shared
@@ -37,7 +36,7 @@
 // declared virtuals exist only to place five slots, and the bytes say nothing
 // about what any of them compute.
 
-extern const float GenFloat00C75350;
+#define GenFloat00C75350 0.0f
 
 struct GenPair002153D0
 {
