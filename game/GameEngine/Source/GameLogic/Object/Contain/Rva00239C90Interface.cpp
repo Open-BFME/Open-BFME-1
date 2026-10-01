@@ -29,14 +29,8 @@ public:
 	bool accepts(BfmeRvaA760Object *object, int currentPlayer);
 };
 
-class BfmeR1094
+class Player
 {
-};
-
-class BfmeK1094
-{
-public:
-	BfmeR1094 *bfmeCur1094();
 };
 
 class BfmeH1040
@@ -49,6 +43,9 @@ class AttributeModifierPoolUpdate;
 class Object
 {
 	friend class Rva00239C90Interface;
+
+	public:
+	Player *getControllingPlayer() const;
 
 	private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
@@ -134,15 +131,15 @@ void Rva00239C90Interface::rva00239c90(
 {
 	const BfmeMemberList &members =
 		((Rva00239C90MemberView *)((char *)this - 0xc4))->getMemberList();
-	BfmeK1094 *owner =
-		*(BfmeK1094 **)((char *)this - 0xdc);
+	Object *owner =
+		*(Object **)((char *)this - 0xdc);
 
 	for (BfmeMemberList::const_iterator it = members.begin();
 		it != members.end(); ++it)
 	{
 		BfmeRvaA760Object *member = *it;
 		if (filter == 0 || filter->accepts(member,
-			(int)owner->bfmeCur1094()))
+			(int)owner->getControllingPlayer()))
 			((BfmeH1040 *)member)->bfmeAdd1040(message);
 	}
 
@@ -156,7 +153,7 @@ void Rva00239C90Interface::rva00239c90(
 				TheBfmeGameLogic->findObjectByID(key);
 			if (member != 0
 				&& (filter == 0 || filter->accepts(member,
-					(int)owner->bfmeCur1094())))
+					(int)owner->getControllingPlayer())))
 				((BfmeH1040 *)member)->bfmeAdd1040(message);
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(

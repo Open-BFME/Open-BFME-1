@@ -25,6 +25,8 @@ public:
 	void deposit(unsigned int amount, bool flag);
 };
 
+class Player;
+
 class BfmePlayerZB
 {
 public:
@@ -35,10 +37,12 @@ public:
 	Money m_bfmeMoneyZB;
 };
 
-class BfmeOwnerZB
+// Retail Object::getControllingPlayer (0x001BE3F0): the pointer this body
+// keeps at this-0x18 is the controlling Player, so it carries retail's names.
+class Object
 {
 public:
-	BfmePlayerZB *bfmeGetPlayerZB();
+	Player *getControllingPlayer() const;
 };
 
 class BfmeSinkZB
@@ -61,7 +65,7 @@ void BfmeHostZB::bfmeGiveZB(BfmeItemZB *item)
 	if (item == 0)
 		return;
 
-	BfmePlayerZB *pl = (*(BfmeOwnerZB **)((char *)this - 0x18))->bfmeGetPlayerZB();
+	BfmePlayerZB *pl = (BfmePlayerZB *)(*(Object **)((char *)this - 0x18))->getControllingPlayer();
 
 	if (item->m_bfme04ZB == 0)
 	{

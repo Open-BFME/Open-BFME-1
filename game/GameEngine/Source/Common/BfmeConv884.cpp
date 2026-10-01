@@ -4,10 +4,20 @@ struct BfmeSubESA
 	int m_bfmeK;
 };
 
-class BfmeObjESA
+class Player;
+
+// The ledger names bfmeGoESB's parameter BfmeObjESA, so the body-facing
+// stand-in keeps that spelling; the call these bodies make is retail's real
+// Object::getControllingPlayer (0x001BE3F0, pinned), named on the retail type
+// through a no-op pointer cast.
+class Object
 {
 public:
-	BfmeSubESA *bfmeGetESA();
+	Player *getControllingPlayer() const;
+};
+
+class BfmeObjESA
+{
 };
 
 struct BfmeThingESB
@@ -19,7 +29,7 @@ struct BfmeThingESB
 
 bool BfmeThingESB::bfmeGoESB(BfmeObjESA *o)
 {
-	return m_bfmeP == o->bfmeGetESA();
+	return m_bfmeP == ((Object *)o)->getControllingPlayer();
 }
 
 class BfmeGlobESC
@@ -40,7 +50,7 @@ struct BfmeThingESCa
 
 int BfmeThingESCa::bfmeGoESCa()
 {
-	BfmeSubESA *s = m_bfmeP->bfmeGetESA();
+	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
 	return g_bfmeObjESCa->bfmeLookESC(s->m_bfmeK, 4, 0);
@@ -55,7 +65,7 @@ struct BfmeThingESCb
 
 int BfmeThingESCb::bfmeGoESCb()
 {
-	BfmeSubESA *s = m_bfmeP->bfmeGetESA();
+	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
 	return g_bfmeObjESCb->bfmeLookESC(s->m_bfmeK, 4, 0);

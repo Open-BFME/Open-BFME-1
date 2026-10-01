@@ -1,10 +1,12 @@
 class Object;
 class Player;
 
-class BfmeKey926C
+// Retail Object::getControllingPlayer (0x001BE3F0), pinned at the 0x00020824
+// ILT thunk this body calls through the owner at this-0x18.
+class Object
 {
 public:
-	Player *bfmeFind926C(void);
+	Player *getControllingPlayer(void) const;
 };
 
 class Rva2225E0Filter
@@ -62,9 +64,9 @@ public:
 	virtual void dispatchObject(Object *object, int mode) = 0;
 
 	Object *findAndDispatch(Rva2225E0Filter *filter);
-	BfmeKey926C *getOwner(void) const
+	Object *getOwner(void) const
 	{
-		return *(BfmeKey926C *const *)((const char *)this - 0x18);
+		return *(Object *const *)((const char *)this - 0x18);
 	}
 
 private:
@@ -79,7 +81,7 @@ Object *Rva222970FilteredDispatch::findAndDispatch(Rva2225E0Filter *filter)
 	while (node != objects) {
 		if (filter == 0 || filter->accepts(
 			node->object,
-			getOwner()->bfmeFind926C()))
+			getOwner()->getControllingPlayer()))
 		{
 			Object *result = node->object;
 			dispatchObject(result, 0);

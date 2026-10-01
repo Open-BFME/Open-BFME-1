@@ -147,16 +147,20 @@ char bfmeReadyB956(BfmeState956 *state, void *user)
 	return ai != 0 && !ai->bfmeBusy956() && ai->bfmeKind956() != 14 && ai->bfmeKind956() != 47;
 }
 
-struct BfmeInfo956
+// Retail Object::getControllingPlayer (0x001BE3F0): the pointer this body
+// keeps at this-0x338 only has its +0x2c mode field read, so the Player
+// stand-in carries just that.
+class Player
 {
+public:
 	char m_bfmePad[0x2c];
 	int m_bfmeMode;
 };
 
-class BfmeKey956
+class Object
 {
 public:
-	BfmeInfo956 *bfmeFind956();
+	Player *getControllingPlayer() const;
 };
 
 struct BfmeTune956
@@ -187,8 +191,8 @@ public:
 
 float BfmeScale956::bfmeGo956()
 {
-	if ((*(BfmeKey956 **)((char *)this - 0x338))->bfmeFind956()
-			&& (*(BfmeKey956 **)((char *)this - 0x338))->bfmeFind956()->m_bfmeMode == 1) {
+	if ((*(Object **)((char *)this - 0x338))->getControllingPlayer()
+			&& (*(Object **)((char *)this - 0x338))->getControllingPlayer()->m_bfmeMode == 1) {
 		BfmeSrc956 *s = *(BfmeSrc956 **)((char *)this - 0x33c);
 		return s->m_bfmeBase * g_bfmeGlob956->m_bfmeTune->m_bfmeScale;
 	}

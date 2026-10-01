@@ -117,10 +117,20 @@ public:
 	unsigned int m_bfme1c4;
 };
 
-class BfmeS1256
+class Player;
+
+// The ledger names bfmeDraw1256's parameter BfmeS1256, so that stand-in keeps
+// its spelling; the call this body makes is retail's real
+// Object::getControllingPlayer (0x001BE3F0, pinned), named on the retail type
+// through a no-op pointer cast.
+class Object
 {
 public:
-	BfmeQ1256 *bfmeGet1256();
+	Player *getControllingPlayer() const;
+};
+
+class BfmeS1256
+{
 };
 
 class BfmeP1256
@@ -148,6 +158,6 @@ void BfmeA1256::bfmeDraw1256(BfmeS1256 *a, int b)
 	v.m_bfme00 = q->m_bfme00;
 	v.m_bfme04 = q->m_bfme04;
 	v.m_bfme08 = *(volatile float *)&q->m_bfme08 + g_bfmeK1256;
-	c = a->bfmeGet1256()->m_bfme1c4 | 0xe6000000;
+	c = ((BfmeQ1256 *)((Object *)a)->getControllingPlayer())->m_bfme1c4 | 0xe6000000;
 	g_bfme1256->bfmeMark1256(b, &v, c);
 }

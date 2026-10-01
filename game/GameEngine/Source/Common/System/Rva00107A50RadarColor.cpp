@@ -1,16 +1,24 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-class Rva00107A50Player
+class Player
 {
 public:
 	char padding00[0x1c4];
 	void *colorData;
 };
 
-class Rva00107A50Object
+// The ledger names refreshObjectColor's parameter Rva00107A50Object, so the
+// radar's own stand-in keeps that spelling; the call it makes is retail's real
+// Object::getControllingPlayer (0x001BE3F0, pinned), so the callee is named on
+// the retail type through a no-op pointer cast.
+class Object
 {
 public:
-	Rva00107A50Player *getControllingPlayer();
+	Player *getControllingPlayer() const;
+};
+
+class Rva00107A50Object
+{
 };
 
 struct Rva00107A50RadarObject
@@ -82,7 +90,7 @@ void Rva00107A50Radar::refreshObjectColor(Rva00107A50Object *object)
 	if (!object)
 		return;
 
-	Rva00107A50Player *player = object->getControllingPlayer();
+	Player *player = ((Object *)object)->getControllingPlayer();
 	if (!player)
 		return;
 

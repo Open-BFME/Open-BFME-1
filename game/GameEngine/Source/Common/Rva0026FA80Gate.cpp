@@ -15,7 +15,7 @@
 //   0x0000CCD4 -> thunk to the landed Rva001E1780ByteField::get() (disp 0x4EE),
 //       the adjacent byte in that same family -- reused here under its
 //       already-matched name rather than re-pinned
-//   0x00020824 -> pinned ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ
+//   0x00020824 -> pinned ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ
 
 class BfmeXCLE;
 
@@ -45,12 +45,12 @@ public:
 	unsigned char get() const;
 };
 
-class BfmeR1094;
+class Player;
 
-class BfmeK1094
+class Object
 {
 public:
-	BfmeR1094 *bfmeCur1094(void);
+	Player *getControllingPlayer(void) const;
 };
 
 // The object returned by bfmeAskCLE: only the +0x04 pointer used by the
@@ -94,7 +94,7 @@ bool Rva0026FA80::evaluate(int value)
 {
 	BfmeXCLE *x;
 	Rva0026FA80Query *query;
-	BfmeR1094 *player;
+	Player *player;
 
 	x = reinterpret_cast<BfmeSubCLE *>(m_engaged)->bfmeAskCLE(0);
 	if (x)
@@ -108,7 +108,7 @@ bool Rva0026FA80::evaluate(int value)
 			{
 				if (!reinterpret_cast<Rva001E1780ByteField *>(query->m_sub)->get())
 				{
-					player = reinterpret_cast<BfmeK1094 *>(m_engaged)->bfmeCur1094();
+					player = reinterpret_cast<Object *>(m_engaged)->getControllingPlayer();
 
 					if (!*reinterpret_cast<int *>(reinterpret_cast<char *>(player) + 0x2c))
 					{
