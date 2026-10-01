@@ -44,9 +44,14 @@ public:
 	virtual void v32(int, int, float, int);
 };
 
-extern VDispatch4 *g_Va012F7014;
+// Retail global at 0x012F7014 is GameClient/Terrain/TerrainVisual.cpp's
+// TerrainVisual *TheTerrainVisual. This TU keeps its own view of the object
+// and casts at the single use, so the mangled name is the canonical one.
+class TerrainVisual;
+
+extern TerrainVisual *TheTerrainVisual;
 
 void __stdcall rva001A34C0(int a, int b, Matrix3D *matrix, int extra)
 {
-	g_Va012F7014->v32(a, b, matrix->Get_Z_Rotation(), extra);
+	((VDispatch4 *)TheTerrainVisual)->v32(a, b, matrix->Get_Z_Rotation(), extra);
 }

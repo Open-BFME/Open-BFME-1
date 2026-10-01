@@ -120,11 +120,16 @@ public:
 	virtual void bfmeVirt921E(void *a);
 };
 
-extern BfmeGlob921E *g_bfme921GlobE;
+// Retail global at 0x012F7014 is GameClient/Terrain/TerrainVisual.cpp's
+// TerrainVisual *TheTerrainVisual. This TU keeps its own view of the object
+// and casts at the single use, so the mangled name is the canonical one.
+class TerrainVisual;
+
+extern TerrainVisual *TheTerrainVisual;
 
 void __stdcall bfmeGo921E(void *a)
 {
-	BfmeGlob921E *g = g_bfme921GlobE;
+	BfmeGlob921E *g = (BfmeGlob921E *)TheTerrainVisual;
 	if (!g)
 		return;
 	if (!a)
