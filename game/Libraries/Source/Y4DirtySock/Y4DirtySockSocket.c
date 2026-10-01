@@ -320,17 +320,15 @@ unsigned int Rva007FEA00( void )
 /* 0x007FE620: the shutdown drain.  A flag is raised, the worker is pumped until
  * a second flag clears, and the first flag is lowered again.  The 0x32 pushed
  * to the one-argument stdcall import is a 50-unit wait -- a poll interval,
- * which is what makes this a drain rather than a single hand-off.  Both globals
- * and the import are address-derived; the import name never reaches the bytes,
- * since an IAT call site is a DIR32 the gate fills from retail. */
+ * which is what makes this a drain rather than a single hand-off. The globals
+ * remain address-derived. Retail's PE import directory identifies slot
+ * 0x01358F30 as KERNEL32.dll!Sleep; windows.h supplies its native declaration. */
 extern int g_Rva012C3CDCDraining;
 /* Holds the worker THREAD HANDLE: the startup at 0x007FE520 stores
  * CreateThread's return here, and the drain loops treat non-zero as
  * "worker still running". It is set to 1 first and then overwritten
  * with the handle, so the same word doubles as the running flag. */
 extern int g_Rva0130ACB8Thread;
-
-__declspec(dllimport) void __stdcall Rva01358F30Wait( int interval );
 
 void Rva007FEE40( void );
 
@@ -341,7 +339,7 @@ void Rva007FE620( void )
 	while ( g_Rva0130ACB8Thread != 0 )
 	{
 		Rva007FEE40();
-		Rva01358F30Wait( 0x32 );
+		Sleep( 0x32 );
 	}
 
 	g_Rva012C3CDCDraining = 0;
@@ -390,7 +388,7 @@ void Rva007FE670( void )
 	g_Rva0130ACB8Thread = 0;
 
 	while ( g_Rva012C3CDCDraining > 0 )
-		Rva01358F30Wait( 1 );
+		Sleep( 1 );
 
 	Rva007FEAA0( 0 );
 	Rva007FEAA0( (struct Rva0130AB68List *)&g_Rva0130AC90 );
@@ -499,7 +497,7 @@ void Rva007FEBD0( struct Rva0130AB68List *list )
 		}
 
 		Rva01358E74Leave( node->m_body );
-		Rva01358F30Wait( 1 );
+		Sleep( 1 );
 	}
 }
 
