@@ -32,7 +32,7 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 void updateAptCurrentDateAndTime()
 {
@@ -40,10 +40,10 @@ void updateAptCurrentDateAndTime()
 	GetLocalTime( &now );
 	{
 		AsciiString name( "APT:CurrentDate" );
-		g_theWindowManager->bfme_setAptText( name, getUnicodeDateBuffer( now ) );
+		g_rva012F19E8WindowManager->bfme_setAptText( name, getUnicodeDateBuffer( now ) );
 	}
 	{
 		AsciiString name( "APT:CurrentTime" );
-		g_theWindowManager->bfme_setAptText( name, getUnicodeTimeBuffer( now ) );
+		g_rva012F19E8WindowManager->bfme_setAptText( name, getUnicodeTimeBuffer( now ) );
 	}
 }

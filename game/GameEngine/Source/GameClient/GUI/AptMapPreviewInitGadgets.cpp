@@ -92,7 +92,7 @@ public:
 };
 
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void j_00036df9();
 extern void j_0000afab();
 
@@ -125,7 +125,7 @@ void AptMapPreview::initGadgets()
     callback.raw = j_0000afab;
     {
         AsciiString name( "AptMapPreview::Picture" );
-        g_theWindowManager->registerAptCallback( name,
+        g_rva012F19E8WindowManager->registerAptCallback( name,
             AptMapPreviewFunctorHolder(
                 FunctorBindingSingle( callback.member, self ) ) );
     }

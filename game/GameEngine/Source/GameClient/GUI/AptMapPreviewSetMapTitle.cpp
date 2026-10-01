@@ -17,7 +17,7 @@ public:
     void bfme_setAptText(const AsciiString &, const UnicodeString &);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class AptMapPreview
 {
@@ -27,14 +27,14 @@ public:
 
 void AptMapPreview::bfmeSetMapTitle(MapMetaData *map)
 {
-    if (g_theWindowManager)
+    if (g_rva012F19E8WindowManager)
     {
         if (map)
         {
             AsciiString key("APT:MapTitle");
-            g_theWindowManager->bfme_setAptText(key, map->bfme_getDisplayName());
+            g_rva012F19E8WindowManager->bfme_setAptText(key, map->bfme_getDisplayName());
         }
         else
-            g_theWindowManager->bfme_setAptText(AsciiString("APT:MapTitle"), UnicodeString(L" "));
+            g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("APT:MapTitle"), UnicodeString(L" "));
     }
 }

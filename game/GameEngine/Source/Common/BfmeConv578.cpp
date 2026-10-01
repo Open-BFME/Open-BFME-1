@@ -24,7 +24,7 @@ public:
 	void _bfme_removeNamedAptGadget(const AsciiString &name);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeThingCDA
 {
@@ -90,7 +90,7 @@ void BfmeThingCDA::bfmeStepCDA()
 		{
 			{
 				AsciiString name("CommandUI/Portrait");
-				g_theWindowManager->_bfme_removeNamedAptGadget(name);
+				g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget(name);
 			}
 			m_bfmePortrait = 0;
 		}
@@ -99,7 +99,7 @@ void BfmeThingCDA::bfmeStepCDA()
 		for (int index = 0; index < 6; ++index)
 		{
 			bfmeGoVHH((char)index, (BfmeLayoutVHH *)&name);
-			g_theWindowManager->_bfme_removeNamedAptGadget(name);
+			g_rva012F19E8WindowManager->_bfme_removeNamedAptGadget(name);
 		}
 	}
 

@@ -46,13 +46,18 @@ public:
 	          int a, int b, int c, int d );
 };
 
-extern GenActionSink *TheGenActionSink;
+// Retail's global at 0x012F19E8 is EA's `WindowManager *g_rva012F19E8WindowManager`,
+// defined by WindowManager.cpp.  This TU keeps its own GenActionSink view of the
+// object and casts at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void *TheGenActionContext;
 
 #define S3_ACTION( NAME, TEXT )                                           \
 	void NAME( const GenString *value )                                   \
 	{                                                                     \
-		TheGenActionSink->add( TheGenActionContext, TEXT, 1,              \
+		((GenActionSink *)g_rva012F19E8WindowManager)->add(                 \
+			TheGenActionContext, TEXT, 1,                              \
 			value->str(), 0, 0, 0, 0 );                                   \
 	}
 

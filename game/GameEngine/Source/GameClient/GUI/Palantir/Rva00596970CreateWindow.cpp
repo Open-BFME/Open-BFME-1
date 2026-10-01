@@ -125,8 +125,10 @@ private:
 	void *m_field34;
 };
 
-struct Rva00579160Manager;
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail's global at 0x012F19E8 is EA's `WindowManager *g_rva012F19E8WindowManager`,
+// defined by WindowManager.cpp; this TU only null-tests it.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern GameWindowManager *TheWindowManager;
 
 void bfmeGo1071A( int index, char value );
@@ -150,7 +152,7 @@ private:
 
 void Rva00596970::create( void )
 {
-	if( Rva00579160TheManager == 0 )
+	if( g_rva012F19E8WindowManager == 0 )
 		return;
 
 	WinInstanceData inst;

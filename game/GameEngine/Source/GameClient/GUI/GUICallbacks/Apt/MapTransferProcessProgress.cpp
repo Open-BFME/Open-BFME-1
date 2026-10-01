@@ -51,7 +51,7 @@ public:
 		int unused3 );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeAptScreenMapTransfer
 {
@@ -76,12 +76,12 @@ void BfmeAptScreenMapTransfer::processProgress(
 
 	AsciiString variableName;
 	variableName.format( (AsciiString)"FileTransfer::Status%d", slot );
-	g_theWindowManager->bfme_setAptText( variableName, text );
+	g_rva012F19E8WindowManager->bfme_setAptText( variableName, text );
 
 	char slotText[ 64 ];
 	char percentText[ 64 ];
 	sprintf( slotText, "%d", slot );
 	sprintf( percentText, "%d", percentage );
-	g_theWindowManager->unidentified_00015235(
+	g_rva012F19E8WindowManager->unidentified_00015235(
 		0x0B, "SetBarTo", 2, slotText, percentText, 0, 0, 0 );
 }

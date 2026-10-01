@@ -63,7 +63,11 @@ public:
         int second, int third, int fourth, int fifth );
 };
 
-extern GenActionSink *g_mgr12F19E8;
+// Retail's global at 0x012F19E8 is EA's `WindowManager *g_rva012F19E8WindowManager`,
+// defined by WindowManager.cpp.  This TU keeps its own GenActionSink view of the
+// object and casts at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class PSRequest
 {
@@ -150,7 +154,7 @@ int BfmeAptScreenOnlineShell::shutdown()
     {
         const char *name = m_name.str();
         int owner = *(volatile int *)( (char *)this + 0x250 );
-        g_mgr12F19E8->add(
+        ((GenActionSink *)g_rva012F19E8WindowManager)->add(
             (void *)owner,
             "LoadScreen", 1,
             name, 0, 0, 0, 0 );

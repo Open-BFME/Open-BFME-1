@@ -48,7 +48,7 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class GameTextInterface
 {
@@ -83,7 +83,7 @@ void BfmeAptScreenScoreScreen::_bfme_setScoreRegionBonus(
 	{
 		UnicodeString text;
 		text.format( TheGameText->fetch( label ), value );
-		g_theWindowManager->bfme_setAptText( variableName, text );
+		g_rva012F19E8WindowManager->bfme_setAptText( variableName, text );
 		_WriteBarrier();
 		++*index;
 	}
@@ -91,7 +91,7 @@ void BfmeAptScreenScoreScreen::_bfme_setScoreRegionBonus(
 	{
 		{
 			UnicodeString text( L" " );
-			g_theWindowManager->bfme_setAptText( variableName, text );
+			g_rva012F19E8WindowManager->bfme_setAptText( variableName, text );
 		}
 		++*index;
 	}

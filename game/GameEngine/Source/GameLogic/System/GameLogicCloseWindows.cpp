@@ -137,7 +137,7 @@ void ReleaseWindowLayout(WindowLayout *layout);
 extern ControlBar *TheControlBar;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeObj947C *g_bfme947ObjC;
 extern void *g_quitMenuLayout;
 
@@ -152,12 +152,12 @@ void GameLogic::closeWindows(void)
 	if (g_quitMenuLayout)
 	{
 		HideQuitMenu();
-		g_theWindowManager->vslot14();
+		g_rva012F19E8WindowManager->vslot14();
 	}
 	if (g_bfme947ObjC)
 	{
 		HideSaveLoadMenu();
-		g_theWindowManager->vslot14();
+		g_rva012F19E8WindowManager->vslot14();
 	}
 	TheWindowManager->vslot14();
 
