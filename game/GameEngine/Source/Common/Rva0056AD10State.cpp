@@ -12,7 +12,13 @@ struct BfmeState56AD10B
 };
 
 extern "C" BfmeState56AD10A *g_bfmeState56AD10A;
-extern "C" BfmeState56AD10B *g_bfmeState56AD10B;
+
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeState56AD10B above is this
+// TU's own view of that address, so the mode read below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class Rva0056AD10
 {
@@ -28,7 +34,7 @@ int Rva0056AD10::resolveMode() const
 {
 	if ( !( g_bfmeState56AD10A->m_firstFlag && g_bfmeState56AD10A->m_secondFlag ) && m_state == 3 )
 	{
-		if ( g_bfmeState56AD10B == 0 || g_bfmeState56AD10B->m_mode != 2 )
+		if ( TheGameLogic == 0 || ((BfmeState56AD10B *)TheGameLogic)->m_mode != 2 )
 			return 0;
 
 		return 2;

@@ -6,7 +6,12 @@ struct Rva00367E30Logic
 	int m_bfme3CXW;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  Rva00367E30Logic above is this
+// TU's own view of that address, so the read below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class BfmeHostXW
 {
@@ -28,7 +33,7 @@ void BfmeHostXW::bfmeSetXW(int when)
 	int v;
 
 	if (when != 0 && when != 0x3fffffff)
-		v = when - TheBfmeGameLogic->m_bfme3CXW;
+		v = when - ((Rva00367E30Logic *)TheGameLogic)->m_bfme3CXW;
 	else
 		v = 0x3fffffff;
 

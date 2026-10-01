@@ -9,7 +9,12 @@ public:
 	bool isInMultiplayerOrSkirmishGame(void);
 };
 
-extern GameLogicPortraitShim *TheGameLogic;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  GameLogicPortraitShim above is
+// this TU's own view of that address, so the predicate call casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class ExperienceTracker
 {
@@ -51,7 +56,7 @@ void Rva0024F810Owner::apply(void)
 	char *base = (char *)this;
 
 	if ((*(Rva0024F810Thing **)(base - 0xc))->m_flag != 0
-		&& TheGameLogic->isInMultiplayerOrSkirmishGame() == 0)
+		&& ((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame() == 0)
 		return;
 
 	Rva0024F810State *state = *(Rva0024F810State **)((char *)this - 8);

@@ -46,7 +46,12 @@ public:
 	bool m_at1C;
 };
 
-extern Rva00383860 *      Glo012F0898;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  Rva00383860 above is this TU's
+// own view of that address, so the tail-called member below casts at the use.
+class GameLogic;
+
+extern GameLogic *      TheGameLogic;
 extern Glo012F1024Type *  Glo012F1024;
 
 class Rva003BCA30
@@ -59,7 +64,7 @@ public:
 void Rva003BCA30::run()
 {
 	m_at28->step();
-	Glo012F0898->invoke();
+	((Rva00383860 *)TheGameLogic)->invoke();
 }
 
 class Rva003BEED0

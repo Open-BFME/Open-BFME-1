@@ -56,7 +56,12 @@ public:
 	BfmeX978 *bfmeFind978D(BfmeThing978 *t);
 };
 
-extern BfmeLook978 *g_bfmeLook978;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeLook978 above is this TU's
+// own view of that address, so the call below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class BfmeD978
 {
@@ -74,7 +79,7 @@ void BfmeD978::bfmeGo978D(int unused)
 	BfmeThing978 *t = m_bfmeThing;
 
 	if (t) {
-		BfmeX978 *x = g_bfmeLook978->bfmeFind978D(t);
+		BfmeX978 *x = ((BfmeLook978 *)TheGameLogic)->bfmeFind978D(t);
 
 		if (x) {
 			BfmeMgr978 *m = x->m_bfmeMgr;

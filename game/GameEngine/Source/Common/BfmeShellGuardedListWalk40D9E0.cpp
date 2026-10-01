@@ -18,7 +18,12 @@ public:
 	unsigned char m_shellMapOn;
 };
 
-extern GameLogic40D9 *TheGameLogic;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  GameLogic40D9 above is this
+// TU's own view of that address, so the mode read below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 extern Shell40D9 *TheShell;
 
 class BfmeWalkNode40D9
@@ -183,7 +188,7 @@ private:
 // ?walk@BfmeHost40D9@@QAEXXZ
 void BfmeHost40D9::walk()
 {
-	if (TheGameLogic->m_gameMode == 4)
+	if (((GameLogic40D9 *)TheGameLogic)->m_gameMode == 4)
 	{
 		if (TheShell->m_shellMapOn)
 			return;

@@ -55,8 +55,13 @@ public:
 	unsigned int m_field3c;
 };
 
+// Retail 0x012F0898 is EA's game-logic singleton, which carries the ONE
+// canonical spelling ?TheGameLogic@@3PAVGameLogic@@A.  GlobalThing above is this
+// TU's own view of the same address, so the field read below casts at the use.
+class GameLogic;
+
 // DIR32 global filled from retail.
-extern GlobalThing *g_theWritableGlobalData;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SubObjectsUpgrade.h
 class SubObjectsUpgrade : public UpgradeModule
@@ -73,6 +78,6 @@ private:
 SubObjectsUpgrade::SubObjectsUpgrade(Thing *thing, const ModuleData *moduleData)
 	: UpgradeModule(thing, moduleData)
 {
-	m_field1c = g_theWritableGlobalData->m_field3c;
+	m_field1c = ((GlobalThing *)TheGameLogic)->m_field3c;
 	m_byte20 = 0;
 }

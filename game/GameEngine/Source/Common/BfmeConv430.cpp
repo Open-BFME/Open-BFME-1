@@ -4,7 +4,12 @@ struct BfmeClockAZA
 	int m_bfmeNow;
 };
 
-extern BfmeClockAZA *g_bfmeClockAZA;
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeClockAZA above is this TU's
+// own view of that address, so the stamp read below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
 
 class BfmeThingAZA
 {
@@ -41,5 +46,5 @@ void BfmeThingAZA::bfmeGoAZA()
 	bfmeSetAZA(0);
 	m_bfmeFlag = false;
 	m_bfmeCount = 0;
-	m_bfmeStamp = g_bfmeClockAZA->m_bfmeNow;
+	m_bfmeStamp = ((BfmeClockAZA *)TheGameLogic)->m_bfmeNow;
 }

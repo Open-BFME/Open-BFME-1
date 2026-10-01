@@ -10,7 +10,12 @@ public:
 	unsigned int m_bfmeStamp;				// +0x3C
 };
 
-extern BfmeClockBN *g_bfmeClockBN;				// retail 0x012F0898
+// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeClockBN above is this TU's
+// own view of that address, so the stamp read below casts at the use.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;				// retail 0x012F0898
 
 class Gen_001BEC20
 {
@@ -61,7 +66,7 @@ private:
 // ?bfmeIsWithin@Gen_001E1980@@QBEEXZ
 unsigned char Gen_001E1980::bfmeIsWithin(void) const
 {
-	unsigned int stamp = g_bfmeClockBN->m_bfmeStamp;
+	unsigned int stamp = ((BfmeClockBN *)TheGameLogic)->m_bfmeStamp;
 
 	if (stamp >= m_bfmeStart && stamp < m_bfmeEnd)
 		return 1;
