@@ -67,7 +67,10 @@ public:
 	virtual void update( FlagPairTarget *target, void *item );
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern void j_000394be();
 
 class Gen0016B140
@@ -109,6 +112,6 @@ void Gen0016B140::handle( FlagPairTarget *target )
 	target->takeAt74( &m_item48 );
 	target->takeAt8C( &m_item4C );
 
-	if ( TheAudioClientUpdate != 0 )
-		TheAudioClientUpdate->update( target, &m_item40 );
+	if ( TheAudio != 0 )
+		reinterpret_cast<ClientSubsystem *>( TheAudio )->update( target, &m_item40 );
 }

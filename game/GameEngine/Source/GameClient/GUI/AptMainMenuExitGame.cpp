@@ -64,7 +64,10 @@ public:
 #undef BFME_VSLOT
 
 extern ScriptEngine *TheScriptEngine;
-extern Rva0051D690Audio *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern Shell *TheShell;
 extern GameEngine *TheGameEngine;
 extern const char *TheShellHookNames[];
@@ -83,7 +86,7 @@ void BfmeAptScreenMainMenu::_bfme_exitGame( const char *name )
 	(void)name;
 	TheScriptEngine->signalUIInteract(
 		TheShellHookNames[ SHELL_SCRIPT_HOOK_MAIN_MENU_EXIT_SELECTED ] );
-	TheAudioClientUpdate->slot6c( 2, 1, 0 );
+	((Rva0051D690Audio *)TheAudio)->slot6c( 2, 1, 0 );
 	TheShell->pop();
 	TheGameEngine->setQuitting( true );
 }

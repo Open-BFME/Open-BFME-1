@@ -2,8 +2,8 @@
 // Open-BFME5: near-twin of ??1FlammableUpdate (0x00293440,
 // FlammableUpdateDestructor.cpp); same UpdateModule chain, but this class adds
 // one more interface base (extra vtable at +0x28) and guards its cleanup call
-// on TheAudioClientUpdate (not TheAudio), passing a field at +0x2c rather than
-// clearing a handle at +0x34 afterward.
+// on the audio manager singleton TheAudio (0x012ED668), passing a field at
+// +0x2c rather than clearing a handle at +0x34 afterward.
 
 class Gen_dtor_00113f20
 {
@@ -72,7 +72,10 @@ public:
 	virtual void removeAudioEvent(unsigned int audioEvent);
 };
 
-extern AudioClientUpdateSub *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class Rva002D3080WithField : public UpdateModule, public DamageModuleInterface
 {
@@ -94,6 +97,6 @@ private:
 // ??1Rva002D3080@@UAE@XZ
 Rva002D3080::~Rva002D3080()
 {
-	if (TheAudioClientUpdate)
-		TheAudioClientUpdate->removeAudioEvent(m_field2c);
+	if (TheAudio)
+		((AudioClientUpdateSub *)TheAudio)->removeAudioEvent(m_field2c);
 }

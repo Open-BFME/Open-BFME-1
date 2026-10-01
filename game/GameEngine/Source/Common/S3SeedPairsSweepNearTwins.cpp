@@ -142,7 +142,10 @@ public:
 	virtual void bfmeTakeItem148(BfmeSeedTarget_NT *target, void *item);	// vtable+0x148
 };
 
-extern BfmeAudioClientUpdate_NT *g_Va012ED668;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeSubAccept_00029DAC_NT
 {
@@ -214,7 +217,7 @@ void Gen_002D35A0::bfmeSeed(BfmeSeedTarget_NT *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	g_Va012ED668->bfmeTakeItem148(target, &m_bfmeItem2c);
+	((BfmeAudioClientUpdate_NT *)TheAudio)->bfmeTakeItem148(target, &m_bfmeItem2c);
 	bfmeAccept(target);
 	((BfmeSubAccept_00029DAC_NT *)((char *)this + 0x20))->bfmeAccept(target);
 }

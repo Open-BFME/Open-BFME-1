@@ -25,7 +25,10 @@ public:
 	virtual void bfmeKill1023(int v);
 };
 
-extern BfmeG1023 *g_bfmeG1023;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeSub1023
 {
@@ -47,7 +50,7 @@ public:
 void BfmeA1023::bfmeGo1023A(void)
 {
 	if (m_bfmeSub.bfmeAsk1023() != 0)
-		g_bfmeG1023->bfmeKill1023(m_bfmeVal);
+		((BfmeG1023 *)TheAudio)->bfmeKill1023(m_bfmeVal);
 }
 
 class BfmeC1023

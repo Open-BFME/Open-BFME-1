@@ -132,7 +132,10 @@ struct Rva005A00B0AudioClient
 	virtual void bfmeAudioBE(BfmeAgentBE *ag, void *dst);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 extern "C" void __cdecl bfmeXferBE(BfmeAgentBE *ag, void *dst);
 
@@ -170,5 +173,5 @@ void BfmeHostBE::bfmeSaveBE(BfmeAgentBE *ag)
 	ag->bfmeWordBE(m_bfmeSlotCBE);
 	ag->bfmeByteBE(&m_bfmeSlotFBE);
 
-	TheAudioClientUpdate->bfmeAudioBE(ag, m_bfmeSlotDBE);
+	((Rva005A00B0AudioClient *)TheAudio)->bfmeAudioBE(ag, m_bfmeSlotDBE);
 }

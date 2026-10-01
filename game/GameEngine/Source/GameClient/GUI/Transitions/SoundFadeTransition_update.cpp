@@ -29,7 +29,10 @@ public:
 	virtual void unfreezeSounds(int fadeIn);
 };
 
-extern AudioClientUpdate *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class SoundFadeTransition
 {
@@ -66,16 +69,16 @@ void SoundFadeTransition::update(Int frame)
 		if (m_soundsUnfrozen)
 		{
 			if (m_fadeInUnfrozenSounds)
-				TheAudioClientUpdate->unfreezeSounds(0);
+				((AudioClientUpdate *)TheAudio)->unfreezeSounds(0);
 			else
-				TheAudioClientUpdate->unfreezeSounds(1);
+				((AudioClientUpdate *)TheAudio)->unfreezeSounds(1);
 			m_soundsUnfrozen = false;
 		}
 		m_isFinished = true;
 	}
 	else if (!m_soundsUnfrozen)
 	{
-		TheAudioClientUpdate->slotEC();
+		((AudioClientUpdate *)TheAudio)->slotEC();
 		m_soundsUnfrozen = true;
 	}
 }

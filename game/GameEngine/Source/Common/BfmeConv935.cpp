@@ -6,11 +6,14 @@ public:
 	void bfmeCall935A();
 };
 
-extern BfmeGlob935A *g_bfme935GlobA;
+// retail reads the audio manager singleton (0x012ED668) here; see
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp for the definition.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 void __stdcall bfmeGo935A(void *a)
 {
-	BfmeGlob935A *g = g_bfme935GlobA;
+	BfmeGlob935A *g = (BfmeGlob935A *)TheAudio;
 	if (g)
 		g->bfmeCall935A();
 }

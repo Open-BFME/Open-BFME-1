@@ -35,7 +35,10 @@ public:
 	virtual void bfmeStartJZ(int one, int two, int three) = 0;	///< retail slot 27, [vptr+0x6c]
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;	///< retail [0x012ED668]
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;	///< retail [0x012ED668]
 
 struct BfmeItemJZ
 {
@@ -58,7 +61,7 @@ private:
 
 void BfmeThingJZ::bfmeGoJZ(void)
 {
-	ClientSubsystem *audio = TheAudioClientUpdate;
+	ClientSubsystem *audio = (ClientSubsystem *)TheAudio;
 
 	if (audio == 0)
 		return;
@@ -99,7 +102,7 @@ private:
 
 void BfmeThingKB::bfmeGoKB(void)
 {
-	ClientSubsystem *audio = TheAudioClientUpdate;
+	ClientSubsystem *audio = (ClientSubsystem *)TheAudio;
 
 	if (audio == 0)
 		return;

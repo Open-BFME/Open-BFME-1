@@ -45,7 +45,10 @@ public:
 	virtual void slot28(); virtual void slot29();
 	virtual void slot30(int, int, int);
 };
-extern AudioClientUpdate *TheAudioClientUpdate;
+// retail reads the audio manager singleton (0x012ED668) here; defined in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // ?rva0051E280PreParchmentMapFadeStartNew@@YAHH_N@Z
 int rva0051E280PreParchmentMapFadeStartNew(int, bool start)
@@ -61,9 +64,9 @@ int rva0051E280PreParchmentMapFadeStartNew(int, bool start)
 	}
 	else if (TheTransitionHandler->isFinished())
 	{
-		TheAudioClientUpdate->slot30(1, 1, 1);
-		TheAudioClientUpdate->slot30(2, 1, 1);
-		TheAudioClientUpdate->slot30(0, 1, 1);
+		((AudioClientUpdate *)TheAudio)->slot30(1, 1, 1);
+		((AudioClientUpdate *)TheAudio)->slot30(2, 1, 1);
+		((AudioClientUpdate *)TheAudio)->slot30(0, 1, 1);
 		result = 3;
 	}
 	return result;
