@@ -12,7 +12,10 @@ struct Rva005655C0PlayerList
 	Rva005655C0Player *m_localPlayer;
 };
 
-extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern const char Rva006A16B0Empty[];
 
 void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
@@ -27,9 +30,9 @@ void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
 		output[0] = 0;
 	}
 
-	if (value == 0 && !preserveText && g_rva005655C0PlayerList != 0 &&
-		g_rva005655C0PlayerList->m_localPlayer != 0) {
-		char *storage = g_rva005655C0PlayerList->m_localPlayer->m_nameStorage;
+	if (value == 0 && !preserveText && ((Rva005655C0PlayerList *)ThePlayerList) != 0 &&
+		((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer != 0) {
+		char *storage = ((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer->m_nameStorage;
 		const char *text = storage != 0 ? storage + 8 :
 			Rva006A16B0Empty;
 		char character;

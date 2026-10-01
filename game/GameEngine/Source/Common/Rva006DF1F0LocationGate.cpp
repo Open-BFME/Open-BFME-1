@@ -29,7 +29,10 @@ public:
 	int bfmeStatus6DF1F0(int playerIndex, const BfmeCoord6DF1F0 *point) const;
 };
 
-extern BfmePlayerList6DF1F0 *g_bfmePlayerList6DF1F0;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern BfmeShroud6DF1F0 *g_bfmeShroud6DF1F0;
 
 class Rva006DF1F0
@@ -47,7 +50,7 @@ bool Rva006DF1F0::allowsLocation(const BfmeCoord6DF1F0 *point) const
 	if (m_polygon1c == 0)
 		return true;
 
-	int playerIndex = g_bfmePlayerList6DF1F0->m_localPlayer0c->m_index24;
+	int playerIndex = ((BfmePlayerList6DF1F0 *)ThePlayerList)->m_localPlayer0c->m_index24;
 	if (g_bfmeShroud6DF1F0->bfmeStatus6DF1F0(playerIndex, point) == 2)
 		return false;
 

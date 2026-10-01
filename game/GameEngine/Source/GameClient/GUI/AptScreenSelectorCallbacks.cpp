@@ -65,7 +65,10 @@ extern MessageStream *TheMessageStream;
 extern Shell40D9 *TheShell;
 extern void *g_bfmeReadyAG;
 extern Rva00579160Manager *Rva00579160TheManager;
-extern BfmeGlob938A *g_bfme938GlobA;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 extern GameLogic *TheGameLogic;
 
@@ -116,5 +119,5 @@ void BfmeAptScreenSaveLoad::_bfme_onClosed( const char *name )
 void BfmeAptScreenPalantir::_bfme_onBttnObserveNextPlayer( const char *name )
 {
 	(void)name;
-	g_bfme938GlobA->bfmeTail938A( 1 );
+	( (BfmeGlob938A *)ThePlayerList )->bfmeTail938A( 1 );
 }

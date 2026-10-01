@@ -32,7 +32,10 @@ struct Rva002EE330PlayerList
 	char bfmeHasTG(BfmePlayerTG *player);
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class ControlBar
 {
@@ -64,10 +67,10 @@ void BfmeOwnerTG::bfmeShowTG(int unused)
 
 	if (player != 0)
 	{
-		if (Rva002EE330ThePlayers == 0)
+		if (ThePlayerList == 0)
 			return;
 
-		if (!Rva002EE330ThePlayers->bfmeHasTG(player))
+		if (!((Rva002EE330PlayerList *)ThePlayerList)->bfmeHasTG(player))
 			return;
 	}
 

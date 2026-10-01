@@ -27,7 +27,10 @@ struct Rva002EE330PlayerList {
     char pad[0xC];
     Rva002EE330Player *local;
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 struct Rva0036BD50Owner {
     char pad[0x38];
@@ -56,7 +59,7 @@ void Rva0036BD50Module::check(int)
     PartitionManager *shroud = (PartitionManager *)Rva002EEDA0TheShroudManager;
     if (!shroud || !owner)
         return;
-    Rva002EE330PlayerList *players = Rva002EE330ThePlayers;
+    Rva002EE330PlayerList *players = (Rva002EE330PlayerList *)ThePlayerList;
     if (!players || !players->local)
         return;
     int index = players->local->index;

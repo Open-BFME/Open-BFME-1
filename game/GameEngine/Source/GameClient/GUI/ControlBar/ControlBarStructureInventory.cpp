@@ -4,7 +4,11 @@ struct Rva002EE330PlayerList
 	void *m_bfme0CZA;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The player-list body below is this TU's own
+// view of that object, so every use casts back through it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class BfmeCZA
 {
@@ -122,7 +126,7 @@ void BfmeHostZA::bfmeTickZA()
 		return;
 	}
 
-	void *p = Rva002EE330ThePlayers->m_bfme0CZA;
+	void *p = ((Rva002EE330PlayerList *)ThePlayerList)->m_bfme0CZA;
 
 	if (c->bfmeCheckZA() && c->bfmeOwnerZA() == p)
 	{

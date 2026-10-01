@@ -6,11 +6,14 @@ public:
 	void bfmeTail938A(int f);
 };
 
-extern BfmeGlob938A *g_bfme938GlobA;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The call below is this TU's own view of it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 void __stdcall bfmeGo938A(void *a)
 {
-	g_bfme938GlobA->bfmeTail938A(0);
+	((BfmeGlob938A *)ThePlayerList)->bfmeTail938A(0);
 }
 
 void bfmeCall938C(int a, int b, int c);

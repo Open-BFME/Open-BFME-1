@@ -51,7 +51,11 @@ struct Rva002EE330PlayerList
     char m_pad[0xc];
     Rva002EE330Player *m_localPlayer;
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
+// Common/RTS/PlayerList.cpp. The player-list body above is this TU's own
+// view of that object, so every use casts back through it.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 bool __stdcall Rva00699F30ShroudCheck(AudioEventRTS *event)
 {
@@ -64,7 +68,7 @@ bool __stdcall Rva00699F30ShroudCheck(AudioEventRTS *event)
             event->resolveOwnerPosition(&pos, &valid);
             if (valid)
             {
-                Rva002EE330PlayerList *players = Rva002EE330ThePlayers;
+                Rva002EE330PlayerList *players = (Rva002EE330PlayerList *)ThePlayerList;
                 if (players)
                 {
                     PartitionManager *shroud = TheShroudManager;
