@@ -10808,5 +10808,25 @@
   "after_sha256": "63feb1b48c3addcd67f342ab6fbd2bce9f81a932d004ad3db966db49a5bdd301",
   "evidence": "targets/game/reverse/identity_evidence/000F7790-team-constructor.md",
   "reason": "The bank RelationHash models an UnsignedInt-keyed hash_map with a trivially destructible 12-byte value whose instantiated clear frees 0x14-byte nodes with no element-destructor call. Retail clear at 0x000F1C80 calls ILT 0x000479D3 on the node+4 pair and frees 0x0c-byte nodes, proving a non-trivially-destructible pair (the AsciiString-keyed byte-valued map the 0x000F75B0 twin witnesses). The banked name claims a container retail refutes; the file-scope Rva000F4250Hash reuses the matched Team destructor 0x000F4250 proven spelling for the same +0x1C member."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp",
+  "old_name": "m_locale",
+  "new_name": "m_value14",
+  "before_sha256": "3f1125e51ba6ad83d0138d5c3f6d823e797940b535cdba875ca8116130cfd7b2",
+  "after_sha256": "841547ebe1615b715077600b383efad521c7c339268205eb2c4c8b1ccfe9dcf9",
+  "evidence": "targets/game/reverse/identity_evidence/name-lane-disputes.md",
+  "reason": "disputed: The file only constructs and destroys these members; nothing in the code shows they hold a name or a locale. Two models shared a guess from the file name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp",
+  "old_name": "m_name",
+  "new_name": "m_value0c",
+  "before_sha256": "3f1125e51ba6ad83d0138d5c3f6d823e797940b535cdba875ca8116130cfd7b2",
+  "after_sha256": "841547ebe1615b715077600b383efad521c7c339268205eb2c4c8b1ccfe9dcf9",
+  "evidence": "targets/game/reverse/identity_evidence/name-lane-disputes.md",
+  "reason": "disputed: The file only constructs and destroys these members; nothing in the code shows they hold a name or a locale. Two models shared a guess from the file name."
  }
 ]

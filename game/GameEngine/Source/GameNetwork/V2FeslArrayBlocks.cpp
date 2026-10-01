@@ -83,8 +83,8 @@ struct Rva00802E70Element
 	virtual void slot();
 	int m_value04;
 	V2ZeroInt m_value08;
-	Gen_dtor_007f6d20 m_name;
-	Gen_dtor_007f6d20 m_locale;
+	Gen_dtor_007f6d20 m_value0c;
+	Gen_dtor_007f6d20 m_value14;
 };
 
 struct Rva00802D00Element
@@ -93,8 +93,8 @@ struct Rva00802D00Element
 	virtual void slot();
 	int m_value04;
 	V2ZeroInt m_value08;
-	Gen_dtor_007f6d20 m_name;
-	Gen_dtor_007f6d20 m_locale;
+	Gen_dtor_007f6d20 m_value0c;
+	Gen_dtor_007f6d20 m_value14;
 	int m_value1c;
 	int m_value20;
 	int m_value24;
