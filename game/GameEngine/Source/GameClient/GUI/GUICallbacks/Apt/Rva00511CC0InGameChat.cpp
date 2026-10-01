@@ -262,7 +262,9 @@ public:
 	}
 };
 
-extern PlayerList *ThePlayers;
+// The retail global at 0x012ED748 is ThePlayerList, so the reference is spelled
+// with the defining name ?ThePlayerList@@3PAVPlayerList@@A.
+extern PlayerList *ThePlayerList;
 
 class GameTextInterface
 {
@@ -330,7 +332,7 @@ void rva00511CC0(int chatType)
 	AsciiString label;
 	if (chatType == INGAME_CHAT_EVERYONE)
 	{
-		if (ThePlayers->getLocalPlayer()->isPlayerActive())
+		if (ThePlayerList->getLocalPlayer()->isPlayerActive())
 			label = "Chat:Everyone";
 		else
 			label = "Chat:Observers";

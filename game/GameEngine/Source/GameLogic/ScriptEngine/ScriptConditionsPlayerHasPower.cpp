@@ -26,6 +26,11 @@ public:
 	int m_bfme258;
 };
 
+// The global at 0x00EED748 is retail's ThePlayerList, declared with the
+// defining spelling ?ThePlayerList@@3PAVPlayerList@@A. bfmeLook1090 is still
+// called through the class symbols.csv pins it under, hence the casts.
+class PlayerList;
+
 class BfmeD1090
 {
 public:
@@ -38,7 +43,7 @@ public:
 	int bfmeNext1090(int a);
 };
 
-extern BfmeD1090 *g_bfmeD1090;
+extern PlayerList *ThePlayerList;
 extern BfmeP1090 *g_bfmeP1090;
 
 class Parameter;
@@ -54,7 +59,7 @@ char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 {
 	a = g_bfmeP1090->bfmeNext1090(a);
 	while ((short)a) {
-		BfmeR1090 *r = g_bfmeD1090->bfmeLook1090((short *)&a);
+		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
 
 		if (r && t->m_bfme08 - 1 == r->m_bfme224)
 			return 1;
@@ -66,7 +71,7 @@ char __stdcall bfmeGo1090B(int a)
 {
 	a = g_bfmeP1090->bfmeNext1090(a);
 	while ((short)a) {
-		BfmeR1090 *r = g_bfmeD1090->bfmeLook1090((short *)&a);
+		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
 
 		if (r) {
 			BfmeS1090 *s = &r->m_bfmeSub;
@@ -84,7 +89,7 @@ bool ScriptConditions::evaluatePlayerHasPower(Parameter *playerParm)
 	playerParm = reinterpret_cast<Parameter *>(
 		g_bfmeP1090->bfmeNext1090(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(playerParm)) {
-		BfmeR1090 *r = g_bfmeD1090->bfmeLook1090(
+		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090(
 			reinterpret_cast<short *>(&playerParm));
 
 		if (r) {

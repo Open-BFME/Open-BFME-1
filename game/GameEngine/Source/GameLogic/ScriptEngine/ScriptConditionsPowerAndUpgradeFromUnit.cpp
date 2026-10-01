@@ -51,7 +51,12 @@ struct BfmeR1088
 };
 
 // PlayerList (ThePlayerList shares g_bfmeD1088's address); bfmeLook1088 is the
-// getEachPlayerFromMask ILT thunk, pinned under this name.
+// getEachPlayerFromMask ILT thunk, pinned under this name. The global itself is
+// retail's ThePlayerList and is declared with the defining spelling
+// ?ThePlayerList@@3PAVPlayerList@@A; bfmeLook1088 is still called through the
+// class symbols.csv pins it under, hence the casts.
+class PlayerList;
+
 class BfmeD1088
 {
 public:
@@ -116,7 +121,7 @@ public:
 	int bfmeNext1088(int a);
 };
 
-extern BfmeD1088 *g_bfmeD1088;
+extern PlayerList *ThePlayerList;
 extern BfmeP1088 *g_bfmeP1088;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
@@ -152,7 +157,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
 	}
 	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
-		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -179,7 +184,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
 	}
 	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
-		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -206,7 +211,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
 	}
 	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
-		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -233,7 +238,7 @@ Bool ScriptConditions::evaluateUpgradeFromUnitComplete(
 	}
 	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
-		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;

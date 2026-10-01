@@ -26,6 +26,12 @@ typedef bool Bool;
 typedef unsigned char BfmeByteBool;			// see the note above
 typedef int Int;
 
+// The global at 0x012ED748 is retail's ThePlayerList, so the reference is
+// spelled with its defining name ?ThePlayerList@@3PAVPlayerList@@A. The
+// predicate at ILT 0x000330DC is still called through the name symbols.csv
+// pins it under, hence the cast rather than a member call on PlayerList.
+class PlayerList;
+
 class BfmeGameOverGateA
 {
 public:
@@ -48,14 +54,15 @@ public:
 	void *m_bfme0290;					// +0x290
 };
 
-extern BfmeGameOverGateA *TheBfmeGameOverGateA;			// 0x012ED748
+extern PlayerList *ThePlayerList;					// 0x012ED748
 extern BfmeGameOverGateB *TheScriptEngine;			// 0x012F076C
 extern GameLogic *TheGameLogic;					// 0x012F0898
 
 // ?BfmeShouldShowGameOverEvent@@YA_NXZ
 BfmeByteBool BfmeShouldShowGameOverEvent(void)
 {
-	if (TheBfmeGameOverGateA->bfmeIsSet() || TheScriptEngine->bfmeIsSet())
+	if (reinterpret_cast<BfmeGameOverGateA *>(ThePlayerList)->bfmeIsSet() ||
+		TheScriptEngine->bfmeIsSet())
 		return 1;
 
 	GameLogic *logic = TheGameLogic;

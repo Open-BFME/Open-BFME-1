@@ -124,16 +124,9 @@ public:
 	Player *m_localPlayer;
 };
 
-// The same object as PlayerList above, under the name the music bodies'
-// relocation resolves.
-class Rva005655C0PlayerList
-{
-public:
-	Player *getLocalPlayer() const { return m_localPlayer; }
-
-	unsigned char m_beforeLocalPlayer[0x0c];
-	Player *m_localPlayer;
-};
+// The music bodies read the same object the speech body does -- the retail
+// global at 0x012ED748 is ThePlayerList -- so they share the PlayerList type
+// above and the reference mangles to ?ThePlayerList@@3PAVPlayerList@@A.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
@@ -190,7 +183,6 @@ public:
 extern PlayerList *ThePlayerList;
 extern AudioManager *TheAudio;
 extern ClientSubsystem *TheAudioClientUpdate;
-extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
 extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -232,7 +224,7 @@ void ScriptActions::doMusicTrackChange(const AsciiString &trackName,
 
 	AudioEventRTS event(trackName, 0);
 	event.setIsLogicalAudio(logicalAudio);
-	event.setPlayerIndex(g_rva005655C0PlayerList->getLocalPlayer()->getPlayerIndex());
+	event.setPlayerIndex(ThePlayerList->getLocalPlayer()->getPlayerIndex());
 	event.m_musicStackValue = stackValue;
 	event.m_musicPlayCount = playCount;
 
@@ -254,7 +246,7 @@ void Rva002F44E0AudioPushMusicAction::execute(const AsciiString &trackName,
 
 	AudioEventRTS event(trackName, 0);
 	event.setIsLogicalAudio(logicalAudio);
-	event.setPlayerIndex(g_rva005655C0PlayerList->getLocalPlayer()->getPlayerIndex());
+	event.setPlayerIndex(ThePlayerList->getLocalPlayer()->getPlayerIndex());
 	event.m_musicStackValue = stackValue;
 	event.m_musicPlayCount = playCount;
 
