@@ -18,8 +18,11 @@ struct Snapshot0040A260 {
  virtual void v00(); virtual void v04(); virtual void v08(); virtual void transfer(Xfer*);
 };
 class ThingTemplate;
+// TU-local view of the 0x012EF1D8 template singleton. findTemplate is a real
+// ThingFactory member, so the view keeps the class name (callee mangling) and
+// the global takes the canonical spelling.
 class ThingFactory { public: const ThingTemplate *findTemplate(const AsciiString&); };
-extern ThingFactory *Factory0040A260;
+extern ThingFactory *TheThingFactory;
 struct EffectFactory0040A260 { Snapshot0040A260 *create001B0E90(const ThingTemplate*,void*); };
 extern EffectFactory0040A260 *Effects0040A260;
 extern void *Owner0040A260;
@@ -45,7 +48,7 @@ void BuffTransfer0040A260::transfer(Xfer *xfer) {
  if(xfer->IsLoading()) {
   if(hasTemplate) {
    *xfer == name;
-   field1c=Factory0040A260->findTemplate(name);
+   field1c=TheThingFactory->findTemplate(name);
    if(!field1c) throw XferException(4,0);
   } else field1c=0;
  } else if(hasTemplate) {

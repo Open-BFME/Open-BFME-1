@@ -97,6 +97,9 @@ private:
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
+// TU-local view of the 0x012EF1D8 template singleton. newObject is a real
+// ThingFactory member, so the view keeps the class name and the global takes
+// the canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
 class ThingFactory
 {
 public:
@@ -104,8 +107,7 @@ public:
 		const ObjectStatusMaskType &status, UnsignedInt extra);
 };
 
-class Rva0020AA00Registry;
-extern Rva0020AA00Registry *Rva0020AA00TheRegistry;
+extern ThingFactory *TheThingFactory;
 
 class Pathfinder
 {
@@ -422,7 +424,7 @@ Object *Rva00101820::buildObjectNow(Object *constructorObject,
 		startingStatus.set(2);
 
 	Object *object = reinterpret_cast<ThingFactory *>(
-		Rva0020AA00TheRegistry)->newObject(what,
+		TheThingFactory)->newObject(what,
 		owningPlayer->getDefaultTeam(), startingStatus, 0);
 	object->setProducer(constructorObject);
 

@@ -92,7 +92,10 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+// TU-local view of the 0x012EF1D8 template singleton; the global takes the
+// canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 class AIPlayer
 {
@@ -120,7 +123,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *baseCenter, Real *baseRadiu
 		AsciiString templateName = buildListInfo->getTemplateName();
 		if (templateName.isEmpty())
 			continue;
-		const ThingTemplate *buildingTemplate = TheThingFactory->findTemplate(templateName);
+		const ThingTemplate *buildingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(templateName);
 		if (!buildingTemplate)
 			continue;
 		Real buildingY = buildListInfo->getLocation()->y;
@@ -148,7 +151,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *baseCenter, Real *baseRadiu
 		AsciiString templateName = buildListInfo->getTemplateName();
 		if (templateName.isEmpty())
 			continue;
-		const ThingTemplate *buildingTemplate = TheThingFactory->findTemplate(templateName);
+		const ThingTemplate *buildingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(templateName);
 		if (!buildingTemplate)
 			continue;
 		Coord3D buildingPosition;

@@ -62,12 +62,15 @@ public:
 	const Image *getSelectedPortraitImage() const;
 };
 
+// TU-local view of the 0x012EF1D8 template singleton; findTemplate is a real
+// ThingFactory member, so member calls go through this view.
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 class BuildAssistant
 {
@@ -311,7 +314,7 @@ Bool ProductionUpdate::queueCreateUnit(const ThingTemplate *unitType, Int buildI
 			for (const QuantityModifier *it = data->m_quantityModifiers.begin();
 				it != data->m_quantityModifiers.end(); ++it)
 			{
-				const ThingTemplate *productionTemplate = TheThingFactory->findTemplate(it->m_templateName);
+				const ThingTemplate *productionTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(it->m_templateName);
 				if (productionTemplate && productionTemplate->isEquivalentTo(unitType))
 				{
 					production->m_productionQuantityTotal = it->m_quantity;

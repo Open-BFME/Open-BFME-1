@@ -157,7 +157,10 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+// TU-local view of the 0x012EF1D8 template singleton; the global takes the
+// canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 extern PlayerList *ThePlayerList;
 extern AI *TheAI;
@@ -192,7 +195,7 @@ void ScriptActions::doTeamMoveToNearestObjectOfTypeOwnedByPlayer(
 	const ThingTemplate *thingTemplate = 0;
 	if (!objectTypes)
 	{
-		thingTemplate = TheThingFactory->findTemplate(objectType);
+		thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(objectType);
 		if (!thingTemplate)
 			return;
 	}

@@ -57,7 +57,10 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *Rva0020AA00TheRegistry;
+// TU-local view of the 0x012EF1D8 template singleton; the global takes the
+// canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 class Rva003392B0TemplateStore
 {
@@ -113,14 +116,14 @@ void GenericObjectCreationNugget::GetAssetList(AssetList &assets, void *context)
 
 	if (!m_putInContainer.isEmpty())
 	{
-		Rva0020AA00Target *container = (Rva0020AA00Target *)Rva0020AA00TheRegistry->findTemplate(m_putInContainer);
+		Rva0020AA00Target *container = (Rva0020AA00Target *)((BfmeThingFactory *)TheThingFactory)->findTemplate(m_putInContainer);
 		if (container)
 			container->notify((int)&assets, (int)context);
 	}
 
 	for (AsciiString *name = m_names.m_begin; name != m_names.m_end; ++name)
 	{
-		Rva0020AA00Target *prototype = (Rva0020AA00Target *)Rva0020AA00TheRegistry->findTemplate(*name);
+		Rva0020AA00Target *prototype = (Rva0020AA00Target *)((BfmeThingFactory *)TheThingFactory)->findTemplate(*name);
 		if (prototype)
 			prototype->notify((int)&assets, (int)context);
 	}

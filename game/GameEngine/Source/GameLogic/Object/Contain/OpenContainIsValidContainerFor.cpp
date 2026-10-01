@@ -142,7 +142,10 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+// TU-local view of the 0x012EF1D8 template singleton; the global takes the
+// canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 class OpenContainModuleData
 {
@@ -273,7 +276,7 @@ Bool OpenContain::isValidContainerFor(const Object *object,
 		if (name.m_data != 0 &&
 			*(unsigned short *)((char *)name.m_data + 4) != 0)
 		{
-			BfmeThingFactory *factory = TheThingFactory;
+			BfmeThingFactory *factory = (BfmeThingFactory *)TheThingFactory;
 			const ThingTemplate *thingTemplate =
 				factory->findTemplate(*(const AsciiString *)&name);
 			if (thingTemplate != 0 &&

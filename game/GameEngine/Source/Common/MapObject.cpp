@@ -69,13 +69,17 @@
 // Vector3 is an ABI reconstruction of the nontrivial three-float value argument;
 // it does not assert a recovered original spelling for the retail declaration.
 
+// TU-local view of the template singleton: the real ThingFactory header is
+// included above (which declares TheThingFactory and findTemplate), but
+// acceptsThingTemplateName is only witnessed here, so calls go through this
+// view.
 class Rva0088B70ThingRegistry
 {
 public:
 	bool acceptsThingTemplateName(const AsciiString &name);
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern Rva0088B70ThingRegistry *bfmeThingRegistry_0088B70;
+
 
 class Rva0041230aName
 {
@@ -138,8 +142,8 @@ Rva0041230aMapObject *Rva00088B70ReadMapObject(DataChunkInput &file, DataChunkIn
 
 	const AsciiString &nameRef = *reinterpret_cast<const AsciiString *>(&name);
 	const ThingTemplate *tmplate = NULL;
-	if (bfmeThingRegistry_0088B70->acceptsThingTemplateName(nameRef))
-		tmplate = bfmeThingRegistry_0088B70->findTemplate(nameRef);
+	if (reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->acceptsThingTemplateName(nameRef))
+		tmplate = reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->findTemplate(nameRef);
 
 	Rva0041230aMapObject *pThisOne;
 
