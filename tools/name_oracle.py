@@ -57,7 +57,9 @@ PLACEHOLDER = re.compile(
     r"|(?:unk|unmodelled|field|pad|slack|slot|reserved|unused)"
     r"|(?:bfme)?(?:dword|word|byte|bool|int|float|short|ptr|hash|string|str|val|value)\d*$"
     r"|[A-Za-z]+\d[0-9A-Fa-f]+$"                  # m_hash20, m_slot1c, m_bfme0C, m_flag40
-    r"|at\d[0-9A-Fa-f]*$)")
+    r"|at\d[0-9A-Fa-f]*$"
+    # the naming lane's placeholders too (tools/name_lane.py): an offset alone, or a converter's bfme name
+    r"|[0-9A-Fa-f]+$|bfme\w*$)")                   # m_04, m_00E4, m_bfmeSpareLU
 
 DECL = re.compile(r"\b(?:class|struct)\s+([A-Za-z_][A-Za-z_0-9]*)\s*(?P<base>:[^{;]*)?\{")
 # `Real m_offsetZ;  // +0x18`, `BfmeShape *m_shapes;  // this+0x2C`, `int m_x;`
@@ -192,7 +194,9 @@ def load_witness():
         if (row.get("notes") or "").startswith("ambiguous"):
             continue
         out.setdefault((owner, int(off, 16)), (member, 1.0, "field_names"))
-    return out
+    # A static (s_objectFieldParseTable, s_bezBasisMatrix) has no instance offset, so a witness that
+    # puts one there has the offset wrong; the slot stays unwitnessed rather than falling to a weaker row.
+    return {k: v for k, v in out.items() if not str(v[0]).startswith("s_")}
 
 
 def struct_body(text, brace):

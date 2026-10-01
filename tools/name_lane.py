@@ -691,7 +691,7 @@ def cmd_apply(args):
     rows, types, ea = ledger_rows(), type_counts(), ea_labelled()
     todo = collections.defaultdict(list)
     for key, a in agreed_state().items():
-        if a["status"] == "agreed":
+        if a["status"] == "agreed" or (args.retry_blocked and a["status"].startswith("blocked")):
             rel, kind, scope, ident = key.split("|")
             todo[rel].append((kind, scope, ident, a["name"], a["models"], key))
     if not todo:
@@ -837,7 +837,8 @@ def main():
     s = sub.add_parser("submit")
     s.add_argument("answer")
     s.add_argument("--session", required=True)
-    sub.add_parser("apply")
+    sub.add_parser("apply").add_argument("--retry-blocked", action="store_true",
+                                         help="try names an earlier apply could not land again, e.g. after a fix")
     d = sub.add_parser("dispute")
     d.add_argument("keys", nargs="+", help="as name_agreed.csv spells them (file|kind|scope|placeholder), all in one file")
     d.add_argument("--reason", required=True, help="what the code shows against the landed name")
