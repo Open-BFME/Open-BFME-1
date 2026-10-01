@@ -1,5 +1,4 @@
 // ?rva003504e0@@YAPAURva003504E0Node@@PAU1@@Z
-// partial score=1.0 date=2026-09-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 struct Rva003504E0Node { Rva003504E0Node *next; };
 static __declspec(noinline) Rva003504E0Node *rva003504e0(Rva003504E0Node *node)
