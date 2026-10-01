@@ -9,18 +9,20 @@
 
 typedef unsigned long UnsignedInt;
 
-struct BfmeV1207
+class Vector2
 {
-	BfmeV1207(float x, float y) : X(x), Y(y) {}
+public:
+	Vector2(float x, float y) : X(x), Y(y) {}
 	float X;
 	float Y;
 };
 
-typedef BfmeV1207 BfmeVector2;
+typedef Vector2 BfmeVector2;
 
-struct BfmeFloatRect
+class RectClass
 {
-	BfmeFloatRect(float left, float top, float right, float bottom)
+public:
+	RectClass(float left, float top, float right, float bottom)
 		: Left(left), Top(top), Right(right), Bottom(bottom) {}
 	float Left;
 	float Top;
@@ -28,7 +30,7 @@ struct BfmeFloatRect
 	float Bottom;
 };
 
-class BfmeRender2D
+class Render2DClass
 {
 private:
 	unsigned char m_unmodelled_00[0x54];
@@ -36,22 +38,17 @@ private:
 
 public:
 	void disableTexturing() { m_texturingEnabled = 0; }
-	void addRect006e(const BfmeFloatRect &rect, int color);
-};
-
-class BfmeA1207 : public BfmeRender2D
-{
-public:
-	void bfmeDo1207(const BfmeV1207 &v0, const BfmeV1207 &v1,
-		const BfmeV1207 &v2, const BfmeV1207 &uv0,
-		const BfmeV1207 &uv1, const BfmeV1207 &uv2, int color);
+	void Add_Quad(const RectClass &rect, unsigned long color);
+	void Add_Tri(const Vector2 &v0, const Vector2 &v1,
+		const Vector2 &v2, const Vector2 &uv0,
+		const Vector2 &uv1, const Vector2 &uv2, unsigned long color);
 };
 
 class W3DDisplay
 {
 private:
 	unsigned char m_unmodelled_04[0x160];
-	BfmeA1207 *m_render2D;
+	Render2DClass *m_render2D;
 
 public:
 	virtual void drawRectClock(float startX, float startY, float width,
@@ -68,72 +65,72 @@ void W3DDisplay::drawRectClock(float startX, float startY, float width,
 	m_render2D->disableTexturing();
 
 	if (percent == 100.0f) {
-		m_render2D->addRect006e(BfmeFloatRect(startX, startY,
+		m_render2D->Add_Quad(RectClass(startX, startY,
 			startX + width, startY + height), color);
 	} else if (percent > 75.0f) {
-		m_render2D->addRect006e(BfmeFloatRect(startX + width / 2.0f, startY,
+		m_render2D->Add_Quad(RectClass(startX + width / 2.0f, startY,
 			startX + width, startY + height), color);
-		m_render2D->addRect006e(BfmeFloatRect(startX, startY + height / 2.0f,
+		m_render2D->Add_Quad(RectClass(startX, startY + height / 2.0f,
 			startX + width / 2.0f, startY + height), color);
 		float remain = percent - 75.0f;
 		if (remain > 12.0f) {
-			m_render2D->bfmeDo1207(BfmeV1207(startX, startY),
+			m_render2D->Add_Tri(Vector2(startX, startY),
 				BfmeVector2(startX, startY + height / 2.0f),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 			float percentDraw = (remain - 12.0f) / 13.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX, startY),
+			m_render2D->Add_Tri(BfmeVector2(startX, startY),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX + (width / 2.0f * percentDraw), startY),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		} else {
 			float percentDraw = remain / 12.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX,
+			m_render2D->Add_Tri(BfmeVector2(startX,
 				startY + height / 2.0f - (height / 2.0f * percentDraw)),
 				BfmeVector2(startX, startY + height / 2.0f),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		}
 	} else if (percent > 50.0f) {
-		m_render2D->addRect006e(BfmeFloatRect(startX + width / 2.0f, startY,
+		m_render2D->Add_Quad(RectClass(startX + width / 2.0f, startY,
 			startX + width, startY + height), color);
 		float remain = percent - 50.0f;
 		if (remain > 12.0f) {
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX, startY + height),
 				BfmeVector2(startX + width / 2.0f, startY + height),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 			float percentDraw = (remain - 12.0f) / 13.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX,
+			m_render2D->Add_Tri(BfmeVector2(startX,
 				startY + height - (height / 2.0f * percentDraw)),
 				BfmeVector2(startX, startY + height),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		} else {
 			float percentDraw = remain / 12.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2.0f, startY + height),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2.0f, startY + height),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX + width / 2.0f - (width / 2.0f * percentDraw),
 					startY + height),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		}
 	} else if (percent > 25.0f) {
-		m_render2D->addRect006e(BfmeFloatRect(startX + width / 2.0f, startY,
+		m_render2D->Add_Quad(RectClass(startX + width / 2.0f, startY,
 			startX + width, startY + height / 2.0f), color);
 		float remain = percent - 25.0f;
 		if (remain > 12.0f) {
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX + width, startY + height),
 				BfmeVector2(startX + width, startY + height / 2.0f),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 			float percentDraw = (remain - 12.0f) / 13.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX + width - (width / 2.0f * percentDraw), startY + height),
 				BfmeVector2(startX + width, startY + height),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		} else {
 			float percentDraw = remain / 12.0f;
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width, startY + height / 2.0f),
+			m_render2D->Add_Tri(BfmeVector2(startX + width, startY + height / 2.0f),
 				BfmeVector2(startX + width / 2.0f, startY + height / 2.0f),
 				BfmeVector2(startX + width,
 					startY + height / 2.0f + (height / 2.0f * percentDraw)),
@@ -141,18 +138,18 @@ void W3DDisplay::drawRectClock(float startX, float startY, float width,
 		}
 	} else {
 		if (percent > 12) {
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2, startY),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2, startY),
 				BfmeVector2(startX + width / 2, startY + height / 2),
 				BfmeVector2(startX + width, startY),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 			float percentDraw = (percent - 12) / 13;
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width, startY),
+			m_render2D->Add_Tri(BfmeVector2(startX + width, startY),
 				BfmeVector2(startX + width / 2, startY + height / 2),
 				BfmeVector2(startX + width, startY + (height / 2 * percentDraw)),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);
 		} else {
 			float percentDraw = percent / 12;
-			m_render2D->bfmeDo1207(BfmeVector2(startX + width / 2, startY),
+			m_render2D->Add_Tri(BfmeVector2(startX + width / 2, startY),
 				BfmeVector2(startX + width / 2, startY + height / 2),
 				BfmeVector2(startX + width / 2 + (width / 2 * percentDraw), startY),
 				BfmeVector2(0, 0), BfmeVector2(0, 0), BfmeVector2(0, 0), color);

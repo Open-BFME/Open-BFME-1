@@ -48,9 +48,39 @@ struct Q3HeapCompare
 	void *m_state;
 };
 
-#define BFME_HEAP_ADJUST_DECL( ADJUST )                                       \
-	void ADJUST( Q3HeapElem *first, int holeIndex, int len,                   \
-		Q3HeapElem value, Q3HeapCompare comp );
+struct Q4Cmp00344A60 { void *m_state; };
+struct Q4Sort003D15A0 { void *m_state; };
+struct Q4Cmp00453BB0 { void *m_state; };
+struct Q4Cmp00453C20 { void *m_state; };
+struct Q4Cmp00753DD0 { void *m_state; };
+class BfmeRecAU;
+class BfmeCompAU { void *m_state; };
+class BfmeCompAV { void *m_state; };
+namespace _STL
+{
+template <class T> struct less { void *m_state; };
+template <class Iterator, class Distance, class Value, class Compare>
+void __adjust_heap(Iterator, Distance, Distance, Value, Compare);
+}
+
+typedef Q4Cmp00344A60 Q3Comparator00342D60;
+#define Q3Adjust00342D60(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator00342D60>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator00342D60 *>(&(comp)))
+typedef Q4Sort003D15A0 Q3Comparator003CDD00;
+#define Q3Adjust003CDD00(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator003CDD00>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator003CDD00 *>(&(comp)))
+typedef Q4Cmp00453BB0 Q3Comparator00453200;
+#define Q3Adjust00453200(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator00453200>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator00453200 *>(&(comp)))
+typedef Q4Cmp00453C20 Q3Comparator00453290;
+#define Q3Adjust00453290(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator00453290>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator00453290 *>(&(comp)))
+typedef bool (__cdecl *Q3Comparator0047E4F0)(int, int);
+#define Q3Adjust0047E4F0(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator0047E4F0>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator0047E4F0 *>(&(comp)))
+typedef _STL::less<int> Q3Comparator00511C10;
+#define Q3Adjust00511C10(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator00511C10>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator00511C10 *>(&(comp)))
+typedef BfmeCompAU Q3Comparator005135F0;
+#define Q3Adjust005135F0(first, hole, len, value, comp) _STL::__adjust_heap<BfmeRecAU **, int, BfmeRecAU *, Q3Comparator005135F0>((BfmeRecAU **)(first), hole, len, (BfmeRecAU *)(value), *reinterpret_cast<Q3Comparator005135F0 *>(&(comp)))
+typedef BfmeCompAV Q3Comparator00530200;
+#define Q3Adjust00530200(first, hole, len, value, comp) _STL::__adjust_heap<BfmeRecAU **, int, BfmeRecAU *, Q3Comparator00530200>((BfmeRecAU **)(first), hole, len, (BfmeRecAU *)(value), *reinterpret_cast<Q3Comparator00530200 *>(&(comp)))
+typedef Q4Cmp00753DD0 Q3Comparator007538A0;
+#define Q3Adjust007538A0(first, hole, len, value, comp) _STL::__adjust_heap<int *, int, int, Q3Comparator007538A0>((int *)(first), hole, len, (int)(value), *reinterpret_cast<Q3Comparator007538A0 *>(&(comp)))
 
 #define BFME_HEAP_MAKE( NAME, ADJUST )                                        \
 	void NAME( Q3HeapElem *first, Q3HeapElem *last, Q3HeapCompare comp )      \
@@ -94,18 +124,17 @@ struct Q3HeapCompare
 	}
 
 #define BFME_HEAP_GROUP( ADJUST, MAKE, POP, AUX4, AUX3 )                      \
-	BFME_HEAP_ADJUST_DECL( ADJUST )                                           \
 	BFME_HEAP_MAKE( MAKE, ADJUST )                                            \
 	BFME_HEAP_POP( POP, ADJUST )                                              \
 	BFME_HEAP_POP_AUX4( AUX4, ADJUST )                                        \
 	BFME_HEAP_POP_AUX3( AUX3, ADJUST )
 
-BFME_HEAP_GROUP( Gen00342D60, Rva00344A60, Rva00344A20, Rva00344AD0, Rva00347D60 )
-BFME_HEAP_GROUP( Gen003CDD00, Rva003CE510, Rva003CE4D0, Rva003CE580, Rva003CED10 )
-BFME_HEAP_GROUP( Gen00453200, Rva00453BB0, Rva00453B30, Rva00453C90, Rva00454010 )
-BFME_HEAP_GROUP( Gen00453290, Rva00453C20, Rva00453B70, Rva00453CD0, Rva00454050 )
-BFME_HEAP_GROUP( Gen0047E4F0, Rva00483480, Rva00483410, Rva004834F0, Rva00483720 )
-BFME_HEAP_GROUP( Gen00511C10, Rva005125C0, Rva00512550, Rva00512630, Rva00513150 )
-BFME_HEAP_GROUP( Gen005135F0, Rva00513B40, Rva00513B00, Rva00513BB0, Rva005147B0 )
-BFME_HEAP_GROUP( Gen00530200, Rva00531BE0, Rva00531A00, Rva00531D40, Rva005321D0 )
-BFME_HEAP_GROUP( Gen007538A0, Rva00753DD0, Rva00753D90, Rva00753E40, Rva00754550 )
+BFME_HEAP_GROUP( Q3Adjust00342D60, Rva00344A60, Rva00344A20, Rva00344AD0, Rva00347D60 )
+BFME_HEAP_GROUP( Q3Adjust003CDD00, Rva003CE510, Rva003CE4D0, Rva003CE580, Rva003CED10 )
+BFME_HEAP_GROUP( Q3Adjust00453200, Rva00453BB0, Rva00453B30, Rva00453C90, Rva00454010 )
+BFME_HEAP_GROUP( Q3Adjust00453290, Rva00453C20, Rva00453B70, Rva00453CD0, Rva00454050 )
+BFME_HEAP_GROUP( Q3Adjust0047E4F0, Rva00483480, Rva00483410, Rva004834F0, Rva00483720 )
+BFME_HEAP_GROUP( Q3Adjust00511C10, Rva005125C0, Rva00512550, Rva00512630, Rva00513150 )
+BFME_HEAP_GROUP( Q3Adjust005135F0, Rva00513B40, Rva00513B00, Rva00513BB0, Rva005147B0 )
+BFME_HEAP_GROUP( Q3Adjust00530200, Rva00531BE0, Rva00531A00, Rva00531D40, Rva005321D0 )
+BFME_HEAP_GROUP( Q3Adjust007538A0, Rva00753DD0, Rva00753D90, Rva00753E40, Rva00754550 )

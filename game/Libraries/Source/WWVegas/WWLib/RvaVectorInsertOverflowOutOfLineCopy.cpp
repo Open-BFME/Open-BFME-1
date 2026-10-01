@@ -41,6 +41,34 @@ struct Rva003AC170Element
 	char m_body[ 220 ];
 };
 
+struct Gen_t_00363a60_k4;
+struct Gen_t_00363a60_p12cd;
+struct Elem000000B4;
+Elem000000B4 *Rva00363AC0(Elem000000B4 *, Elem000000B4 *, Elem000000B4 *);
+struct Gen_t_003a2460_k4;
+struct Gen_t_003a2460_p12cd;
+struct Elem000000B8;
+Elem000000B8 *Rva003A24F0(Elem000000B8 *, Elem000000B8 *, Elem000000B8 *);
+struct Gen_t_003abf20_k4;
+struct Gen_t_003abf20_p12cd;
+struct Elem000000DC;
+Elem000000DC *Rva003ABF80(Elem000000DC *, Elem000000DC *, Elem000000DC *);
+struct Gen_t_00607280_k4;
+struct Gen_t_00607280_p12cd;
+struct Elem000001F0;
+Elem000001F0 *Rva006072E0(Elem000001F0 *, Elem000001F0 *, Elem000001F0 *);
+struct Gen_t_00608af0_k4;
+struct Gen_t_00608af0_p12cd;
+struct Elem00000210;
+Elem00000210 *Rva00608B50(Elem00000210 *, Elem00000210 *, Elem00000210 *);
+struct Gen_t_0013a760_k4;
+struct Gen_t_0013a760_p12cd;
+struct Elem000000BC;
+Elem000000BC *Rva007747E0(Elem000000BC *, Elem000000BC *, Elem000000BC *);
+struct S4Poly00362990;
+struct Gen00606F70;
+struct S4Elem00608D40;
+
 namespace _STL
 {
 struct __false_type
@@ -67,32 +95,66 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
+template <class First, class Second> struct pair;
+template <class Destination, class Source>
+void _Construct(Destination *, const Source &);
+template <class Type> struct RvaConstructionPair;
+template <> struct RvaConstructionPair<Rva00365020Element> { typedef pair<const Gen_t_00363a60_k4, Gen_t_00363a60_p12cd> Type; };
+template <> struct RvaConstructionPair<Rva003A35A0Element> { typedef pair<const Gen_t_003a2460_k4, Gen_t_003a2460_p12cd> Type; };
+template <> struct RvaConstructionPair<Rva003AC170Element> { typedef pair<const Gen_t_003abf20_k4, Gen_t_003abf20_p12cd> Type; };
+template <> struct RvaConstructionPair<Rva00607770Element> { typedef pair<const Gen_t_00607280_k4, Gen_t_00607280_p12cd> Type; };
+template <> struct RvaConstructionPair<Rva00608FE0Element> { typedef pair<const Gen_t_00608af0_k4, Gen_t_00608af0_p12cd> Type; };
+template <> struct RvaConstructionPair<Rva0077CC10Element> { typedef pair<const Gen_t_0013a760_k4, Gen_t_0013a760_p12cd> Type; };
+
 template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+__forceinline void BfmeElementConstruct(Type *destination, const Type &value)
+{
+    typedef typename RvaConstructionPair<Type>::Type Pair;
+    _Construct<Pair, Pair>((Pair *)destination, reinterpret_cast<const Pair &>(value));
+}
 
-Rva003A35A0Element *__cdecl BfmeRva003A35A0Copy(
-	Rva003A35A0Element *first, Rva003A35A0Element *last,
-	Rva003A35A0Element *result, const __false_type &);
+// Retail passes an unused cdecl tag; the cast preserves that stack argument.
+__forceinline Rva00365020Element *BfmeRva00365020Copy(Rva00365020Element *const &first,
+    Rva00365020Element *const &last, Rva00365020Element *const &result, const __false_type &tag)
+{
+    typedef Rva00365020Element *(__cdecl *CopyWithTag)(Rva00365020Element *, Rva00365020Element *, Rva00365020Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva00363AC0)(first, last, result, tag);
+}
 
-Rva0077CC10Element *__cdecl BfmeRva0077CC10Copy(
-	Rva0077CC10Element *first, Rva0077CC10Element *last,
-	Rva0077CC10Element *result, const __false_type &);
+__forceinline Rva003A35A0Element *BfmeRva003A35A0Copy(Rva003A35A0Element *const &first,
+    Rva003A35A0Element *const &last, Rva003A35A0Element *const &result, const __false_type &tag)
+{
+    typedef Rva003A35A0Element *(__cdecl *CopyWithTag)(Rva003A35A0Element *, Rva003A35A0Element *, Rva003A35A0Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva003A24F0)(first, last, result, tag);
+}
 
-Rva00607770Element *__cdecl BfmeRva00607770Copy(
-	Rva00607770Element *first, Rva00607770Element *last,
-	Rva00607770Element *result, const __false_type &);
+__forceinline Rva003AC170Element *BfmeRva003AC170Copy(Rva003AC170Element *const &first,
+    Rva003AC170Element *const &last, Rva003AC170Element *const &result, const __false_type &tag)
+{
+    typedef Rva003AC170Element *(__cdecl *CopyWithTag)(Rva003AC170Element *, Rva003AC170Element *, Rva003AC170Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva003ABF80)(first, last, result, tag);
+}
 
-Rva00608FE0Element *__cdecl BfmeRva00608FE0Copy(
-	Rva00608FE0Element *first, Rva00608FE0Element *last,
-	Rva00608FE0Element *result, const __false_type &);
+__forceinline Rva00607770Element *BfmeRva00607770Copy(Rva00607770Element *const &first,
+    Rva00607770Element *const &last, Rva00607770Element *const &result, const __false_type &tag)
+{
+    typedef Rva00607770Element *(__cdecl *CopyWithTag)(Rva00607770Element *, Rva00607770Element *, Rva00607770Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva006072E0)(first, last, result, tag);
+}
 
-Rva00365020Element *__cdecl BfmeRva00365020Copy(
-	Rva00365020Element *first, Rva00365020Element *last,
-	Rva00365020Element *result, const __false_type &);
+__forceinline Rva00608FE0Element *BfmeRva00608FE0Copy(Rva00608FE0Element *const &first,
+    Rva00608FE0Element *const &last, Rva00608FE0Element *const &result, const __false_type &tag)
+{
+    typedef Rva00608FE0Element *(__cdecl *CopyWithTag)(Rva00608FE0Element *, Rva00608FE0Element *, Rva00608FE0Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva00608B50)(first, last, result, tag);
+}
 
-Rva003AC170Element *__cdecl BfmeRva003AC170Copy(
-	Rva003AC170Element *first, Rva003AC170Element *last,
-	Rva003AC170Element *result, const __false_type &);
+__forceinline Rva0077CC10Element *BfmeRva0077CC10Copy(Rva0077CC10Element *const &first,
+    Rva0077CC10Element *const &last, Rva0077CC10Element *const &result, const __false_type &tag)
+{
+    typedef Rva0077CC10Element *(__cdecl *CopyWithTag)(Rva0077CC10Element *, Rva0077CC10Element *, Rva0077CC10Element *, const __false_type &);
+    return reinterpret_cast<CopyWithTag>(::Rva007747E0)(first, last, result, tag);
+}
 
 // The trailing copies are pinned under per-element names, so one overload
 // set on the tag argument is what lets a single template body reach each.
@@ -170,6 +232,8 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 template <class Type, class Allocator>
 class vector
 {
+public:
+    ~vector();
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
@@ -179,6 +243,21 @@ protected:
 	Type *_M_finish;
 	Type *_M_end_of_storage;
 };
+
+template <> __forceinline void vector<Rva00365020Element, allocator<Rva00365020Element> >::_M_clear()
+{
+    reinterpret_cast<vector<S4Poly00362990, allocator<S4Poly00362990> > *>(this)->~vector();
+}
+
+template <> __forceinline void vector<Rva00607770Element, allocator<Rva00607770Element> >::_M_clear()
+{
+    reinterpret_cast<vector<Gen00606F70, allocator<Gen00606F70> > *>(this)->~vector();
+}
+
+template <> __forceinline void vector<Rva00608FE0Element, allocator<Rva00608FE0Element> >::_M_clear()
+{
+    reinterpret_cast<vector<S4Elem00608D40, allocator<S4Elem00608D40> > *>(this)->~vector();
+}
 
 template <class Type, class Allocator>
 void vector<Type, Allocator>::_M_insert_overflow(

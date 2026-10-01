@@ -14,7 +14,7 @@
 template <class T>
 class StringBase
 {
-public:
+private:
 	StringBase(const StringBase<T> &other);
 	StringBase<T> &operator=(const StringBase<T> &other)
 	{
@@ -25,7 +25,9 @@ public:
 private:
 	~StringBase() { releaseBuffer(); }
 	void releaseBuffer();
+public:
 	void set(const StringBase<T> &other);
+private:
 	void *m_data;
 
 	friend struct Q3SortElem16;
@@ -68,9 +70,17 @@ void __partial_sort(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16 *, Q3SortCompare);
 void __make_heap(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare,
 	Q3SortElem16 *, int *);
-void Q3PopHeap004748F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
-	Q3SortElem16, Q3SortCompare, int *);
-void Q3SortHeap00476250(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare);
+struct Rva004748F0Element
+{
+    int m_a;
+    int m_b;
+    int m_c;
+    AsciiString m_d;
+};
+struct Rva004748F0Compare { void *m_state; };
+void Rva004748F0PopHeap(Rva004748F0Element *, Rva004748F0Element *, Rva004748F0Element *,
+    Rva004748F0Element, Rva004748F0Compare, int *);
+void bfmeSortVOV(void *, void *, void *);
 
 // ?__partial_sort@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z
 __declspec(noinline) void __partial_sort(Q3SortElem16 *first,
@@ -81,8 +91,10 @@ __declspec(noinline) void __partial_sort(Q3SortElem16 *first,
 	__make_heap(first, middle, comp, (Q3SortElem16 *)0, (int *)0);
 	for (Q3SortElem16 *current = middle; current < last; ++current)
 		if (comp(*current, *first))
-			Q3PopHeap004748F0(first, middle, current, *current, comp, (int *)0);
-	Q3SortHeap00476250(first, middle, comp);
+			Rva004748F0PopHeap((Rva004748F0Element *)first, (Rva004748F0Element *)middle,
+                (Rva004748F0Element *)current, *(Rva004748F0Element *)current,
+                reinterpret_cast<const Rva004748F0Compare &>(comp), (int *)0);
+	bfmeSortVOV(first, middle, comp.m_state);
 }
 
 __declspec(noinline) void iter_swap(Q3SortElem16 *, Q3SortElem16 *);
@@ -158,7 +170,7 @@ __declspec(noinline) void iter_swap(Q3SortElem16 *first, Q3SortElem16 *last)
 // Retail 0x004749F0/116 ends at ret 0x00474A63; the partial-sort
 // helper calls it through ILT 0x32646. Adjust_heap is the existing
 // 283-byte body at 0x00474330, reached here through ILT 0x18ABB.
-void Q3AdjustHeap00474330(Q3SortElem16 *, int, int, Q3SortElem16, Q3SortCompare);
+void bfmeAdjustHeap00474330(Rva004748F0Element *, int, int, Rva004748F0Element, Rva004748F0Compare);
 
 void __make_heap(Q3SortElem16 *first, Q3SortElem16 *last,
     Q3SortCompare comp, Q3SortElem16 *, int *)
@@ -168,7 +180,8 @@ void __make_heap(Q3SortElem16 *first, Q3SortElem16 *last,
     int length = last - first;
     int parent = (length - 2) / 2;
     for (;;) {
-        Q3AdjustHeap00474330(first, parent, length, *(first + parent), comp);
+        bfmeAdjustHeap00474330((Rva004748F0Element *)first, parent, length,
+            *(Rva004748F0Element *)(first + parent), reinterpret_cast<const Rva004748F0Compare &>(comp));
         if (parent == 0)
             return;
         --parent;
@@ -211,8 +224,10 @@ inline Q3IteratorCategory Q3IteratorCategoryOf(Q3SortElem16 *const &)
 {
     return Q3IteratorCategory();
 }
-Q3SortElem16 *Q3CopyBackward00473440(Q3SortElem16 *, Q3SortElem16 *,
-    Q3SortElem16 *, const Q3IteratorCategory &, int *);
+struct BfmeElemVOX;
+BfmeElemVOX *bfmeCopyBackVOX(const BfmeElemVOX *, const BfmeElemVOX *, BfmeElemVOX *);
+// Retail passes two unused iterator tags through this cdecl call.
+typedef Q3SortElem16 *(__cdecl *Q3CopyWithTags)(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *, const Q3IteratorCategory &, int *);
 __declspec(noinline) void __unguarded_linear_insert(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
 
 // Full retail191B ends at ret0x0047586E (exclusive0x0047586F).
@@ -220,7 +235,7 @@ void __linear_insert(Q3SortElem16 *first, Q3SortElem16 *last,
     Q3SortElem16 value, Q3SortCompare comp)
 {
     if (comp(value, *first)) {
-        Q3CopyBackward00473440(first, last, last + 1,
+        reinterpret_cast<Q3CopyWithTags>(bfmeCopyBackVOX)(first, last, last + 1,
             Q3IteratorCategoryOf(first), (int *)0);
         *first = value;
     } else {

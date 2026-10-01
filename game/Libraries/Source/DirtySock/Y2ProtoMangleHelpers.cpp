@@ -38,20 +38,25 @@ struct Rva008042B0Http;
 // RETURNS INT.  The definition in Y4DirtySockDebug.c ends `xor eax,eax`, and
 // 0x00805E50 stores that result into a local it never reads -- which is the
 // only reason the return type is visible from this side at all.
-int   Rva007FE780Printf( const char *format, ... );   // 0x007FE780
+extern "C" int Rva007FE780(const char *format, ...);
+#define Rva007FE780Printf Rva007FE780   // 0x007FE780
 void *Rva007F0000Alloc( int size );                   // 0x007F0000
-void  Rva007F0030Free( void *block );                 // 0x007F0030
-void  Rva007FD4E0SocketShutdown( void *socket, int how );  // 0x007FD4E0
-void  Rva007FD3F0SocketClose( void *socket );              // 0x007FD3F0
+void bfmeGo1019C(int block);
+#define Rva007F0030Free(block) bfmeGo1019C((int)(block))                 // 0x007F0030
+struct Rva007FD4E0Socket;
+extern "C" int Rva007FD4E0(Rva007FD4E0Socket *socket, int how);
+#define Rva007FD4E0SocketShutdown(socket, how) Rva007FD4E0((Rva007FD4E0Socket *)(socket), how)  // 0x007FD4E0
+extern "C" int Rva007FD3F0(Rva007FD4E0Socket *socket);
+#define Rva007FD3F0SocketClose(socket) Rva007FD3F0((Rva007FD4E0Socket *)(socket))              // 0x007FD3F0
 void *Rva007FDFF0Connect( const char *host, int timeout );  // 0x007FDFF0
 // RETURNS THE RESPONSE BODY, not void: 0x008054A0 stores its result, tests it
 // for null and hands it to the two parsers.  A one-argument call site cannot
 // show that, which is why the earlier declaration here had it as void.
 const char *Rva00804920Update( Rva008042B0Http *http );      // 0x00804920
-char *Rva007FFB50AddrText( unsigned int addr );             // 0x007FFB50
+extern "C" char *Rva007FFB50AddrText(unsigned int addr);             // 0x007FFB50
 struct Rva00804440SockAddr;
-void  Rva007FE310SocketHost( Rva00804440SockAddr *host, int hostLen,
-		Rva00804440SockAddr *dest, int destLen );           // 0x007FE310
+extern "C" int Rva007FE310(void *host, int hostLen, const void *dest, int destLen);
+#define Rva007FE310SocketHost Rva007FE310           // 0x007FE310
 
 // The receiver of 0x008042B0 / 0x008043C0.  ProtoMangleCreate passes
 // `ref + 0xC0` with size 0x400, so this is an embedded sub-object, not the
@@ -309,16 +314,18 @@ void Rva008043F0Connect( Rva00804150ProtoMangleRef *ref, int myPort, const char 
 
 // 0x007FEA00, the no-argument tick forwarder already converted in
 // Y4DirtySockSocket.c; ProtoMangleCreate seeds its timeout from it.
-unsigned int Rva007FEA00Tick( void );
+extern "C" unsigned int Rva007FEA00(void);
+#define Rva007FEA00Tick Rva007FEA00
 
 extern "C" int Rva007FD5C0( void *socket, const void *address, int length );
 extern "C" int Rva007FDA50( void *socket, char *buffer, int length,
 		int flags, void *from, int *fromLength );
-void *Rva007FD2D0SocketOpen( int family, int type, int protocol );
-int Rva007FDB60SocketInfo( void *socket, int selector, void *buffer,
-		int bufferSize );
-int Rva007FD920Send( void *socket, const char *buffer, int length,
-		int flags, const char *to, int toLength );
+extern "C" Rva007FD4E0Socket *Rva007FD2D0(int family, int type, int protocol);
+#define Rva007FD2D0SocketOpen Rva007FD2D0
+extern "C" int Rva007FDB60(Rva007FD4E0Socket *socket, int selector, void *buffer, int bufferSize);
+#define Rva007FDB60SocketInfo(socket, selector, buffer, size) Rva007FDB60((Rva007FD4E0Socket *)(socket), selector, buffer, size)
+extern "C" int Rva007FD920(Rva007FD4E0Socket *socket, const char *buffer, int length, int flags, void *to, int toLength);
+#define Rva007FD920Send(socket, buffer, length, flags, to, toLength) Rva007FD920((Rva007FD4E0Socket *)(socket), buffer, length, flags, (void *)(to), toLength)
 
 struct Rva00804920Connection
 {
@@ -638,8 +645,8 @@ void ProtoMangleDestroy( Rva00804150ProtoMangleRef *ref )
 // selector 0x62696E64 -- 'bind' as a multi-character literal, the same
 // convention 0x007FDEB0's 'xmap'/'xdns' pair uses -- and a 0x10-byte buffer,
 // which is a sockaddr.  The name is address-derived; the selector is evidence.
-int Rva007FDB60SocketInfo( void *socket, int selector, void *buffer,
-		int bufferSize );  // 0x007FDB60
+extern "C" int Rva007FDB60(Rva007FD4E0Socket *socket, int selector, void *buffer, int bufferSize);
+#define Rva007FDB60SocketInfo(socket, selector, buffer, size) Rva007FDB60((Rva007FD4E0Socket *)(socket), selector, buffer, size)  // 0x007FDB60
 
 // 0x008053C0 is the CONNECT entry, and it logs itself: "protomangle: connecting
 // with sockref 0x%08x\n".  What it does with that sockref is what names +0x04 --
@@ -689,7 +696,8 @@ int Rva00805610HttpCode( Rva00804150ProtoMangleRef *ref )
 // an address.
 int  Rva00805710TagFieldGet( char *dest, int destSize, const char *text,
 		const char *tag, int flags );          // 0x00805710
-unsigned int Rva007FFC10TextAddr( const char *text );  // 0x007FFC10
+extern "C" unsigned int Rva007FFC10(const char *text);
+#define Rva007FFC10TextAddr Rva007FFC10  // 0x007FFC10
 
 // Called directly through the import stub at 0x009F6DEE rather than through
 // __imp__atoi, so this TU did not see <stdlib.h> either.
@@ -742,12 +750,14 @@ int Rva00805960( Rva00804150ProtoMangleRef *ref, const char *text );  // 0x00805
 const char *Rva00805830SkipNewlines( const char *text, const char *find );
 // Three more DirtySock callees, all C++ spellings of bodies converted in
 // Y4DirtySockSocket.c.
-void *Rva007FD2D0SocketOpen( int family, int type, int protocol );
-int   Rva007FD510Bind( void *socket, const void *addr, int addrLen );
-int   Rva007FDB60SocketInfo( void *socket, int selector, void *buffer,
-		int bufferSize );
-int   Rva007FD920Send( void *socket, const char *buffer, int length,
-		int flags, const char *to, int toLength );
+extern "C" Rva007FD4E0Socket *Rva007FD2D0(int family, int type, int protocol);
+#define Rva007FD2D0SocketOpen Rva007FD2D0
+extern "C" int Rva007FD510(Rva007FD4E0Socket *socket, const void *address, int length);
+#define Rva007FD510Bind(socket, address, length) Rva007FD510((Rva007FD4E0Socket *)(socket), address, length)
+extern "C" int Rva007FDB60(Rva007FD4E0Socket *socket, int selector, void *buffer, int bufferSize);
+#define Rva007FDB60SocketInfo(socket, selector, buffer, size) Rva007FDB60((Rva007FD4E0Socket *)(socket), selector, buffer, size)
+extern "C" int Rva007FD920(Rva007FD4E0Socket *socket, const char *buffer, int length, int flags, void *to, int toLength);
+#define Rva007FD920Send(socket, buffer, length, flags, to, toLength) Rva007FD920((Rva007FD4E0Socket *)(socket), buffer, length, flags, (void *)(to), toLength)
 
 // 0x008054A0 IS THE MODULE'S STATE MACHINE, driven by whatever the HTTP
 // sub-object has finished.  It runs at most two steps per call: state 1 reads a
