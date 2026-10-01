@@ -1,20 +1,14 @@
-// ?bfmeCheckGK@BfmeMgrGK@@QAE_NPAVBfmeObjGK@@_NPAM@Z
-// partial score=0.9452296819787986 date=2026-09-23
+// ?bfmeCheckGK@BfmeMgrGK@@QAEDPAVBfmeObjGK@@HH@Z
+// partial score=0.9452 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 // BFME 1.03 RVA 0x003A1A30, 566 bytes.
 //
-// Reached only through the ILT thunk at 0x000481FD, which the matched
-// bfmeTryGK (0x00148800, BfmeConv2065.cpp) calls as
-// g_bfmeMgrGK->bfmeCheckGK(obj, 0, 0). The body proves the real ABI: arg 2 is
-// tested as a byte and arg 3 is an optional float out pointer. `this` is unused.
-// Walks obj's 0xB8-byte records by the distance at obj+0x18 and writes the
-// interpolated point to obj+0x48 (the field bfmeTryGK copies out on success).
-// The record layout (eleven dwords, eleven twelve-byte members at 0x2C, a
-// four-byte member at 0xB0, a dword at 0xB4) agrees with the 0xB8-byte copy
-// constructor at 0x003A1120 (Rva003A1120CopyCtor.cpp); that the vector holds
-// that very type is not proven, so the record keeps this address.
-// Identity beyond the caller's placeholder names is not recovered.
+// Matched caller bfmeTryGK reaches this body through ILT 0x000481FD and names
+// BfmeMgrGK::bfmeCheckGK. The pinned name uses char, BfmeObjGK *, and two int
+// arguments. Retail reads the low byte of arg2 and uses arg3 as an optional
+// float output address. The caller passes zero for both integers. The body does
+// not read `this`.
 
 #include <math.h>
 #include <vector>
@@ -77,10 +71,10 @@ public:
 class BfmeMgrGK
 {
 public:
-	bool bfmeCheckGK(BfmeObjGK *obj, bool notify, float *outDelta);
+	char bfmeCheckGK(BfmeObjGK *obj, int notify, int outDelta);
 };
 
-bool BfmeMgrGK::bfmeCheckGK(BfmeObjGK *obj, bool notify, float *outDelta)
+char BfmeMgrGK::bfmeCheckGK(BfmeObjGK *obj, int notify, int outDelta)
 {
 	if (!obj->m_bfmeFlagGK)
 		return false;
@@ -89,7 +83,7 @@ bool BfmeMgrGK::bfmeCheckGK(BfmeObjGK *obj, bool notify, float *outDelta)
 
 	while (obj->m_bfmeRangeGK - obj->m_float1C >= obj->m_records2C[obj->m_int20].m_float00)
 	{
-		if (notify)
+		if ((unsigned char)notify)
 			reinterpret_cast<Rva003A1A30ViewVtable *>(TheTacticalView)->slot6C(obj->m_records2C[obj->m_int20 + 2].m_dwordB4);
 		obj->m_float1C += obj->m_records2C[obj->m_int20].m_float00;
 		obj->m_int20++;
@@ -130,7 +124,7 @@ bool BfmeMgrGK::bfmeCheckGK(BfmeObjGK *obj, bool notify, float *outDelta)
 	if (outDelta)
 	{
 		float range = obj->m_bfmeRangeGK;
-		*outDelta = fabs(fabs(obj->m_records2C[obj->m_int20].m_float04[0] - range)
+		*(float *)outDelta = fabs(fabs(obj->m_records2C[obj->m_int20].m_float04[0] - range)
 			- fabs(obj->m_records2C[obj->m_int20].m_float04[9] - range));
 	}
 	return true;
