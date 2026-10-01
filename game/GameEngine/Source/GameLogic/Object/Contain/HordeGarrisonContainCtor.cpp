@@ -11,18 +11,23 @@
 // base constructor at 0x0021D820 lays down (through +0x9b7). The +0x08 slot is
 // the Thing pointer the base keeps, and the +0x118 word of that Thing is the
 // model-condition word: the derived constructor sets bit 0x200 in it and, when
-// the bit was clear, reapplies the model through the pinned
-// BfmeOwnerVNI::bfmeApply1VNI reached via ILT 0x0002191D.
+// the bit was clear, reapplies the model through
+// Object::notifyModelConditionChanged, reached via ILT 0x0002191D.
 
 class Thing;
 class ModuleData;
 
 typedef unsigned int UnsignedInt;
 
-class BfmeOwnerVNI
+// upstream layout: .../GameEngine/Include/GameLogic/Object.h
+//
+// Only the member the body calls is declared: the notification is a direct
+// call on the object this constructor was handed (the garrison's m_thing), and
+// its address never depends on a layout, so no Object storage is spelled here.
+class Object
 {
 public:
-	void bfmeApply1VNI();
+	void notifyModelConditionChanged(void);
 };
 
 // The model-condition record: the 40-byte word array starts at Object +0x110, so
@@ -48,7 +53,11 @@ private:
 };
 
 // upstream layout: .../GameEngine/Include/GameLogic/Object/BaseType.h
-class Thing : public BfmeOwnerVNI
+//
+// The base this TU used to declare for the notification call is gone: the
+// notification belongs to the object the constructor is handed, which is an
+// Object, and Object is not spelled with a layout here so it cannot be a base.
+class Thing
 {
 public:
 	unsigned char m_beforeConditionWords[ 0x110 ];
@@ -63,7 +72,7 @@ static __forceinline void rva00248f90SetCondition(Thing *object, int bit)
 	if (object->m_conditionBits.test(bit) == 0)
 	{
 		object->m_conditionBits.set(bit);
-		object->bfmeApply1VNI();
+		reinterpret_cast<Object *>(object)->notifyModelConditionChanged();
 	}
 }
 

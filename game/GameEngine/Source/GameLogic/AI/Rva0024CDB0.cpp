@@ -1,6 +1,20 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: Horde contain member state transition at retail 0x0024CDB0.
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+//
+// Only the member this body calls is declared. Setting a member condition bit
+// reapplies the model through Object::notifyModelConditionChanged, reached via
+// ILT 0x0002191D, so the notification belongs to the Object the member belongs
+// to and the call stays a cast. No Object storage is spelled here, so none is
+// needed. The BfmeRvaCDB0Owner::notify pure virtual below is a different symbol
+// (a vftable slot on this body) and is left alone.
+class Object
+{
+public:
+	void notifyModelConditionChanged(void);				// ILT 0x0002191D
+};
+
 class BfmeRvaCDB0Member
 {
 public:
@@ -9,7 +23,6 @@ public:
 
 	bool check(int value);
 	void set(int value);
-	void notify(void);
 };
 
 class BfmeRvaCDB0Result
@@ -128,7 +141,7 @@ void Rva0024CDB0::update(BfmeRvaCDB0Member *member)
 		if ((status & mask) == 0)
 		{
 			member->m_status |= mask;
-			member->notify();
+			reinterpret_cast<Object *>(member)->notifyModelConditionChanged();
 		}
 	}
 

@@ -17,10 +17,16 @@ public:
 	Rva0021F850Link *m_next;
 };
 
-class BfmeOwnerVNI
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+//
+// Only the member this body calls is declared. The garrisoned state is
+// reapplied through Object::notifyModelConditionChanged, reached via
+// ILT 0x0002191D, so the notification belongs to the Object and the call stays
+// a cast; no Object storage is spelled here, so none is needed.
+class Object
 {
 public:
-	void bfmeApply1VNI();
+	void notifyModelConditionChanged(void);				// ILT 0x0002191D
 };
 
 template<Int NUMBITS>
@@ -47,7 +53,7 @@ public:
 		if (!m_conditionFlags.test(bit))
 		{
 			m_conditionFlags.set(bit);
-			reinterpret_cast<BfmeOwnerVNI *>(this)->bfmeApply1VNI();
+			reinterpret_cast<Object *>(this)->notifyModelConditionChanged();
 		}
 	}
 

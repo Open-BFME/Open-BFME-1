@@ -49,9 +49,11 @@ typedef BitFlags<86> ObjectStatusMaskType;
 
 #define MAKE_OBJECT_STATUS_MASK(bit) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (bit))
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
+	void notifyModelConditionChanged(void);				// ILT 0x0002191D -> Object::notifyModelConditionChanged
 	void setStatus(const ObjectStatusMaskType &status, Bool set = true);
 
 	unsigned char m_pad[0x130];
@@ -62,12 +64,6 @@ class GameLogic
 {
 public:
 	void deselectObject(Object *object, PlayerMask playerMask, Bool affectClient);
-};
-
-class BfmeOwnerVNI
-{
-public:
-	void bfmeApply1VNI();
 };
 
 extern GameLogic *TheGameLogic;
@@ -99,6 +95,6 @@ void MonsterDockUpdate::onApproachReached(Object *docker)
 	if (!owner->m_flags.test(16))
 	{
 		owner->m_flags.set(16);
-		((BfmeOwnerVNI *)owner)->bfmeApply1VNI();
+		owner->notifyModelConditionChanged();
 	}
 }

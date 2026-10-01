@@ -36,10 +36,15 @@ public:
 	Bool test(UnsignedInt index) const;				// ILT 0x0003AB20
 };
 
-class BfmeOwnerVNI
+// The condition-change notifier is Object's own member: the call goes through
+// ILT 0x0002191D, whose thunk jumps to ?notifyModelConditionChanged@Object@@QAEXXZ
+// (0x001BE1C0). The receiver here is the opaque object stand-in, so the class
+// carrying the declaration is named by its defining spelling and the call stays
+// a cast.
+class Object
 {
 public:
-	void bfmeApply1VNI(void);					// ILT 0x0002191D
+	void notifyModelConditionChanged(void);			// ILT 0x0002191D
 };
 
 class BfmeBlockVKQ
@@ -109,12 +114,12 @@ __forceinline void updateCondition(BfmeObjAS *obj, bool enabled)
 	if (enabled) {
 		if (!obj->m_bfmeConditionFlags.test(147)) {
 			obj->m_bfmeFlags120 |= 0x80000;
-			reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI();
+			reinterpret_cast<Object*>(obj)->notifyModelConditionChanged();
 		}
 	} else {
 		if (obj->m_bfmeFlags120 & 0x80000) {
 			obj->m_bfmeFlags120 &= ~0x80000;
-			reinterpret_cast<BfmeOwnerVNI*>(obj)->bfmeApply1VNI();
+			reinterpret_cast<Object*>(obj)->notifyModelConditionChanged();
 		}
 	}
 }

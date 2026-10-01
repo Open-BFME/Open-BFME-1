@@ -16,6 +16,8 @@ public:
 class Object
 {
 public:
+	void notifyModelConditionChanged(void);				// ILT 0x0002191D
+
 	char m_head[4];
 	Object *m_next;
 	char m_gap[0x120];
@@ -59,7 +61,6 @@ class BfmeRvaAA70MemberAction
 {
 public:
 	void set(int value);
-	void notify(void);
 };
 
 class BfmeRvaAA70Owner
@@ -132,7 +133,7 @@ void Rva0024AA70::update(Object *object)
 		if ((status & mask) == 0)
 		{
 			object->m_status |= mask;
-			((BfmeRvaAA70MemberAction *)object)->notify();
+			object->notifyModelConditionChanged();
 		}
 		return;
 	}
@@ -142,7 +143,7 @@ void Rva0024AA70::update(Object *object)
 	if ((flags & mask) == 0)
 	{
 		object->m_flags |= mask;
-		((BfmeRvaAA70MemberAction *)object)->notify();
+		object->notifyModelConditionChanged();
 	}
 	((BfmeRvaAA70Owner *)this)->finish(object);
 	object = object->m_next;
