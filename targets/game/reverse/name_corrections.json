@@ -11058,5 +11058,95 @@
   "after_sha256": "8a7aa2553a111982512ff75d2573589aa255c40c4e0a3cb1e32143b69f2b1257",
   "evidence": "targets/game/reverse/identity_evidence/008d1e70-bank-address-view.md",
   "reason": "The removed bank explicitly labels its owner address-derived and provides only chain-offset behavior, not an EA member identity. No named caller, pin/export or witnessed layout establishes atLevel; retain the independently proven008D1E70 address without a guessed descriptive replacement."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "Dispatch004329D0",
+  "new_name": "Gen000290D2",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "Dispatch004329D0",
+  "new_name": "Gen_005B42F0",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "Dispatch004329D0",
+  "new_name": "Rva001A8820TerrainVisual",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "Dispatch004329D0",
+  "new_name": "Rva00367810VirtualGate",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "Dispatch004329D0",
+  "new_name": "Rva0048EC80Manager",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "g_012F1270",
+  "new_name": "Rva00367810TheVirtualGate",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "g_012F12CC",
+  "new_name": "Rva0048EC80TheManager",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "g_012F1B40",
+  "new_name": "Rva00367810TheVirtualGate",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/ClientUpdate004329D0.cpp",
+  "old_name": "g_012F4C50",
+  "new_name": "Rva012f4ca8",
+  "before_sha256": "54584372956e13cfb82d697569d477e4c771319386c339e57f0d1abe24508426",
+  "after_sha256": "b678d25e90171d1ab068ae7824c4468b45e627809f2695b0706d8a29210c2c1a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census alias: the referenced address is already defined in the ledger under this name (functions.csv / dir32_addresses.csv); the old spelling was a TU-local address placeholder that nothing defines, so the object could never link. Declaration-only change, bytes unchanged."
  }
 ]

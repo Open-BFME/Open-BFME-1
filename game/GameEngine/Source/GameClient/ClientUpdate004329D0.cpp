@@ -198,33 +198,66 @@ public:
     void push(AsciiString,bool);
     char storage[0x6c];
 };
-extern Dispatch004329D0 *g_012F4C84;
-extern Dispatch004329D0 *g_012F4C80;
-extern Dispatch004329D0 *g_012F15F4;
-extern Dispatch004329D0 *g_012F1104;
-extern Dispatch004329D0 *g_012F10F0;
-extern Dispatch004329D0 *g_012F4CA8;
-extern Dispatch004329D0 *g_012F4C50;
-extern Dispatch004329D0 *g_012F142C;
-extern Dispatch004329D0 *g_012F4C5C;
-extern Dispatch004329D0 *g_012ED5C8;
-extern Dispatch004329D0 *g_012F1270;
-extern Dispatch004329D0 *g_012F1B40;
-extern Dispatch004329D0 *g_0130B190;
-extern Dispatch004329D0 *g_012F1600;
-extern Dispatch004329D0 *g_012F076C;
-extern Dispatch004329D0 *g_012F0898;
-extern Dispatch004329D0 *g_012ED748;
-extern Dispatch004329D0 *g_012ED524;
-extern Dispatch004329D0 *g_012EF4FC;
-extern Dispatch004329D0 *g_012F10D0;
-extern Dispatch004329D0 *g_012F7014;
-extern Dispatch004329D0 *g_012F64BC;
-extern Dispatch004329D0 *g_012F12CC;
-extern Dispatch004329D0 *g_012F19E8;
-extern Dispatch004329D0 *g_012F148C;
-extern Dispatch004329D0 *g_012F333C;
-extern Shell *g_012F4B58;
+// The singleton globals 004329D0 reaches carry retail's own variable and type
+// names, because that pair is what the mangled reference spells. None of these
+// classes is given a layout here: every call below still goes through the
+// slot-index view above or through a typed accessor, so a forward declaration
+// is all the spelling needs and no data layout is claimed for them. The
+// struct/class split is load-bearing: MSVC spells a pointer-to-struct `PAU`
+// and a pointer-to-class `PAV`, and retail's own DIR32 names fix which one
+// each of these is.
+class BfmeOwnVVD;
+class Gen_005B42F0;
+class SnowManager;
+class CloudEffectSystem;
+class CloudSystem;
+class Anim2DCollection;
+struct Keyboard0040F780;
+class BfmeGlobal_012f142c;
+class Mouse;
+class GenFallback;
+class Rva00367810VirtualGate;
+struct MovieControl0040F780;
+struct MovieFactory0040E3B0;
+class FadeView;
+class BfmeGlobal_012f076c;
+struct Frame00200420;
+struct Players005999B0;
+struct Engine007629F0;
+class BfmeGhostAH;
+class Gen_00409040Registry;
+class Rva001A8820TerrainVisual;
+class ParticleSystemManager;
+class Rva0048EC80Manager;
+class Gen000290D2;
+struct InGameUI;
+extern BfmeOwnVVD *g_bfmeSingletonVVD;
+extern Gen_005B42F0 *g_bfmeInstanceXE;
+extern SnowManager *TheSnowManager;
+extern CloudEffectSystem *TheCloudEffectSystem;
+extern CloudSystem *TheCloudSystem;
+extern Anim2DCollection *Rva012f4ca8;
+extern Keyboard0040F780 *KeyboardGlobal0040F780;
+extern BfmeGlobal_012f142c *TheBfmeGlobal_012f142c;
+extern Mouse *Mouse0040F780;
+extern GenFallback *GenFallback0012ED5C8;
+extern Rva00367810VirtualGate *Rva00367810TheVirtualGate;
+extern MovieControl0040F780 *Control0040F780;
+extern MovieFactory0040E3B0 *MovieFactoryGlobal0040E3B0;
+extern FadeView *FadeTacticalView;
+extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
+extern Frame00200420 *Clock00200420;
+extern Players005999B0 *PlayerList005999B0;
+extern Engine007629F0 *EngineGlobal007629F0;
+extern BfmeGhostAH *TheBfmeGhostAH;
+extern Gen_00409040Registry *g_012F10D0;
+extern Rva001A8820TerrainVisual *TheTerrainVisual;
+extern ParticleSystemManager *TheParticleSystemManager;
+extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern Gen000290D2 *R2Ptr012F19E8;
+extern InGameUI *TheInGameUI;
+extern HeaderTemplateManager *TheHeaderTemplateManager;
+extern Shell *TheShell;
 extern bool g_012B534C;
 extern unsigned int g_012F1468, g_012B5348;
 struct Player004329D0 {
@@ -248,8 +281,8 @@ public:
     unsigned int m_at00D4, m_at00D8, m_at00DC;
 };
 void ClientUpdate004329D0::update() {
-    ((Calls004329D0 *)g_012F4C84)->rva005B5590();
-    ((Calls004329D0 *)g_012F4C80)->rva005B4D40();
+    ((Calls004329D0 *)g_bfmeSingletonVVD)->rva005B5590();
+    ((Calls004329D0 *)g_bfmeInstanceXE)->rva005B4D40();
     if (g_012B534C) {
         postTimedOp(LoadGameFadeSlot((void *)j_00048b03),&fadeQueueKey);
         postTimedOp(LoadGameFadeSlot((void *)j_00049977),&fadeQueueKey);
@@ -257,40 +290,40 @@ void ClientUpdate004329D0::update() {
         postTimedOp(LoadGameFadeSlot((void *)j_0000743c),&fadeQueueKey);
     }
     g_012B534C = false;
-    if (g_012F15F4) g_012F15F4->v14();
-    if (g_012F1104) g_012F1104->v14();
-    if (g_012F10F0) g_012F10F0->v14();
-    g_012F4CA8->v14();
-    if (g_012F4C50) { g_012F4C50->v14(); g_012F4C50->v28(); }
-    g_012F142C->v14();
-    if (g_012F4C5C) { g_012F4C5C->v14(); g_012F4C5C->v2c(); }
+    if (TheSnowManager) ((Dispatch004329D0 *)TheSnowManager)->v14();
+    if (TheCloudEffectSystem) ((Dispatch004329D0 *)TheCloudEffectSystem)->v14();
+    if (TheCloudSystem) ((Dispatch004329D0 *)TheCloudSystem)->v14();
+    ((Dispatch004329D0 *)Rva012f4ca8)->v14();
+    if (KeyboardGlobal0040F780) { ((Dispatch004329D0 *)KeyboardGlobal0040F780)->v14(); ((Dispatch004329D0 *)KeyboardGlobal0040F780)->v28(); }
+    ((Dispatch004329D0 *)TheBfmeGlobal_012f142c)->v14();
+    if (Mouse0040F780) { ((Dispatch004329D0 *)Mouse0040F780)->v14(); ((Dispatch004329D0 *)Mouse0040F780)->v2c(); }
     bfmeGo924G();
-    if (at<bool>(g_012ED5C8,0xbb6) || at<bool>(g_012ED5C8,0xbb7)) {
-        g_012F1270->v1c();
-        g_012F1270->v14();
+    if (at<bool>(GenFallback0012ED5C8,0xbb6) || at<bool>(GenFallback0012ED5C8,0xbb7)) {
+        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
+        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
         return;
     }
-    g_012F1B40->v14();
-    g_0130B190->v14();
+    ((Dispatch004329D0 *)Control0040F780)->v14();
+    ((Dispatch004329D0 *)MovieFactoryGlobal0040E3B0)->v14();
     Rva0090F050();
-    if (at<int>(g_012ED5C8,0xd08)>0) {
+    if (at<int>(GenFallback0012ED5C8,0xd08)>0) {
         unsigned long now = timeGetTime();
         if (now - g_012F1468 > 3000) {
             unsigned long tick;
-            do { tick = timeGetTime(); } while (tick < at<int>(g_012ED5C8,0xd08) + now);
+            do { tick = timeGetTime(); } while (tick < at<int>(GenFallback0012ED5C8,0xd08) + now);
             g_012F1468 = timeGetTime();
         }
     }
-    bool freezeTime = (g_012F1600->vd4() && !g_012F1600->v74())
-        || ((ScriptEngine *)g_012F076C)->debugFrozen()
-        || ((Rva00336EF0ByteField *)g_012F076C)->get()
-        || ((BfmeGameLogicPause *)g_012F0898)->isGamePaused();
-    int localPlayerIndex = g_012ED748 ? ((PlayerList004329D0 *)g_012ED748)->getLocal()->getIndex() : 0;
+    bool freezeTime = (((Dispatch004329D0 *)FadeTacticalView)->vd4() && !((Dispatch004329D0 *)FadeTacticalView)->v74())
+        || ((ScriptEngine *)TheBfmeGlobal_012f076c)->debugFrozen()
+        || ((Rva00336EF0ByteField *)TheBfmeGlobal_012f076c)->get()
+        || ((BfmeGameLogicPause *)Clock00200420)->isGamePaused();
+    int localPlayerIndex = PlayerList005999B0 ? ((PlayerList004329D0 *)PlayerList005999B0)->getLocal()->getIndex() : 0;
     freezeTime = freezeTime || (g_012B5348 == m_at000C);
-    bool shroud = at<int>(g_012ED524,0x30)==1;
-    if (!freezeTime && !at<bool>(g_012F0898,0x11d)) {
+    bool shroud = at<int>(EngineGlobal007629F0,0x30)==1;
+    if (!freezeTime && !at<bool>(Clock00200420,0x11d)) {
         g_012B5348 = m_at000C;
-        if (shroud) g_012EF4FC->v18(0,0);
+        if (shroud) ((Dispatch004329D0 *)TheBfmeGhostAH)->v18(0,0);
         Drawable004329D0 *draw = (Drawable004329D0 *)v30();
         while (draw) {
             Drawable004329D0 *next = draw->getNext();
@@ -301,7 +334,7 @@ void ClientUpdate004329D0::update() {
                     if (status >= 3 && draw->getClearFrame()!=0) {
                         unsigned int limit = 10;
                         if (((Object004329D0 *)object)->isDead()) limit=25;
-                        if (((Logic004329D0 *)g_012F0898)->getFrame() < limit+draw->getClearFrame()) status=1;
+                        if (((Logic004329D0 *)Clock00200420)->getFrame() < limit+draw->getClearFrame()) status=1;
                     }
                     ((Drawable *)draw)->setDrawableHidden(status>=3);
                 }
@@ -309,56 +342,56 @@ void ClientUpdate004329D0::update() {
             draw->rva0041BE60();
             draw = next;
         }
-        g_012F10D0->v14();
-        if (at<int>(g_012ED524,0x30)==1)
-            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)g_012F0898)->getFrame(),true);
+        ((Dispatch004329D0 *)g_012F10D0)->v14();
+        if (at<int>(EngineGlobal007629F0,0x30)==1)
+            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)Clock00200420)->getFrame(),true);
         else
-            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)g_012F0898)->getFrame(),false);
+            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)Clock00200420)->getFrame(),false);
     }
-    ((GameLogicClientUpdate *)g_012F0898)->deleteLoadScreen();
-    if (!at<bool>(g_012F0898,0x11d)) {
-        ((Dispatch004329D0 *)((char *)g_012F7014+4))->v14();
-        g_012F1270->v14();
+    ((GameLogicClientUpdate *)Clock00200420)->deleteLoadScreen();
+    if (!at<bool>(Clock00200420,0x11d)) {
+        ((Dispatch004329D0 *)((char *)TheTerrainVisual+4))->v14();
+        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
     } else {
-        ((Calls004329D0 *)g_012F1270)->rva0040DE00();
+        ((Calls004329D0 *)Rva00367810TheVirtualGate)->rva0040DE00();
     }
-    if (!freezeTime) at<int>(g_012F64BC,0x98)=localPlayerIndex;
-    g_012F1270->v1c();
-    g_012F12CC->v14();
-    if (!at<bool>(g_012F0898,0x11d)) {
-        g_012F4B58->v14();
+    if (!freezeTime) at<int>(TheParticleSystemManager,0x98)=localPlayerIndex;
+    ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
+    ((Dispatch004329D0 *)Rva0048EC80TheManager)->v14();
+    if (!at<bool>(Clock00200420,0x11d)) {
+        TheShell->v14();
         if (m_at00C5) {
-            if (g_012F4B58) g_012F4B58->v00(1);
-            g_012F4B58=0;
+            if (TheShell) TheShell->v00(1);
+            TheShell=0;
             m_at00C5=false;
             if (m_at00C8>0 && m_at00CC>0 && m_at00D0>0
-                && (m_at00C8!=at<unsigned int>(g_012ED5C8,0x2c)
-                    || m_at00CC!=at<unsigned int>(g_012ED5C8,0x30))) {
+                && (m_at00C8!=at<unsigned int>(GenFallback0012ED5C8,0x2c)
+                    || m_at00CC!=at<unsigned int>(GenFallback0012ED5C8,0x30))) {
                 if (m_at00C6) {
-                    m_at00D4=g_012F1270->v2c();
-                    m_at00D8=g_012F1270->v30();
-                    m_at00DC=g_012F1270->v38();
+                    m_at00D4=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v2c();
+                    m_at00D8=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v30();
+                    m_at00DC=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v38();
                 }
-                if (g_012F1270->v44(m_at00C8,m_at00CC,m_at00D0,g_012F1270->v40())) {
-                    at<unsigned int>(g_012ED5C8,0x2c)=m_at00C8;
-                    at<unsigned int>(g_012ED5C8,0x30)=m_at00CC;
-                    ((HeaderTemplateManager *)g_012F333C)->refreshFonts004329D0();
-                    ((Gen_005a4400 *)g_012F4C5C)->m();
+                if (((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v44(m_at00C8,m_at00CC,m_at00D0,((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v40())) {
+                    at<unsigned int>(GenFallback0012ED5C8,0x2c)=m_at00C8;
+                    at<unsigned int>(GenFallback0012ED5C8,0x30)=m_at00CC;
+                    TheHeaderTemplateManager->refreshFonts004329D0();
+                    ((Gen_005a4400 *)Mouse0040F780)->m();
                     bfmeRun_004647E0();
                 } else m_at00C6=false;
                 m_at00C8=0;
                 m_at00CC=0;
                 m_at00D0=0;
             }
-            g_012F4B58=new Shell;
-            if (g_012F4B58) g_012F4B58->v04();
-            g_012F1B40->v14();
-            g_012F19E8->v14();
-            g_012F148C->v188();
-            g_012F4B58->push(AsciiString("MainMenu.apt"),false);
+            TheShell=new Shell;
+            if (TheShell) TheShell->v04();
+            ((Dispatch004329D0 *)Control0040F780)->v14();
+            ((Dispatch004329D0 *)R2Ptr012F19E8)->v14();
+            ((Dispatch004329D0 *)TheInGameUI)->v188();
+            TheShell->push(AsciiString("MainMenu.apt"),false);
         }
     }
-    g_012F148C->v14();
+    ((Dispatch004329D0 *)TheInGameUI)->v14();
     v80();
 }
 
