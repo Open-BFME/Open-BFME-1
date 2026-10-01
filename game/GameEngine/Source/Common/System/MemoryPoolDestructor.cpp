@@ -8,7 +8,7 @@
 // A flag at +0x3C guards the whole thing -- a pool that was never opened does
 // nothing at all. Otherwise six slots at +0x24 are walked. A live slot whose
 // own flag at +0x48 is set and whose kind at +0x60 is one of four values is
-// first dropped from the sub-object at +0x0C of _TheAIParseDefinitionAI, then
+// first dropped from the sub-object at +0x0C of TheAI, then
 // deleted through slot 0 of its table and the slot cleared. The slot is re-read
 // between the two, so the drop is allowed to have changed it.
 //
@@ -34,14 +34,26 @@ public:
 	void bfmeFlush(void);					// ILT 0x00009787
 };
 
-class BfmeAIRoot
+// 0x012EF214 is retail's TheAI singleton, defined as `AI *TheAI` in
+// game/GameEngine/Source/GameLogic/AI/ai.cpp. The old stand-in was C-linkage, so
+// it emitted an unmangled TheAIParseDefinitionAI; retail's own bytes name the
+// global ?TheAI@@3PAVAI@@A, so the C++ spelling is the one to bind.
+//
+// AI itself is only forward-declared: game/GameEngine/Source/Common/System/
+// game_engine_subsystems.h declares class AI (a SubsystemInterface stub with no
+// members), so declaring a second body for that name here would be a redeclaration
+// and would also change this function's bytes. The defining name is all the
+// mangling of this global needs, and the layout the destructor touches is spelled
+// as the view below -- +0x0C is the member sub-object the two bfme calls go
+// through.
+class AI;
+extern AI *TheAI;
+
+struct BfmeAIView
 {
-public:
 	char m_bfmeHead[0x0C];
 	Rva003D8530Owner *m_bfmeOwner;				// +0x0C
 };
-
-extern "C" BfmeAIRoot *TheAIParseDefinitionAI;			// 0x012EF214
 
 class MemoryPool
 {
@@ -71,7 +83,7 @@ MemoryPool::~MemoryPool()
 				Int kind = entry->m_bfmeKind;
 
 				if (kind == 1 || kind == 2 || kind == 3 || kind == 4)
-					TheAIParseDefinitionAI->m_bfmeOwner->bfmeDrop(entry);
+					reinterpret_cast<BfmeAIView *>(TheAI)->m_bfmeOwner->bfmeDrop(entry);
 			}
 
 			delete m_bfmeSlots[i];
@@ -80,7 +92,7 @@ MemoryPool::~MemoryPool()
 		}
 	}
 
-	TheAIParseDefinitionAI->m_bfmeOwner->bfmeFlush();
+	reinterpret_cast<BfmeAIView *>(TheAI)->m_bfmeOwner->bfmeFlush();
 
 	m_bfmeOpen = false;
 }

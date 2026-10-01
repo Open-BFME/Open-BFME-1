@@ -39,10 +39,16 @@ public:
 	int m_guardEnemyScanRate;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
-class AI
+// AI is only forward-declared: game/GameEngine/Source/Common/System/
+// game_engine_subsystems.h already declares class AI (a SubsystemInterface stub
+// with no members), so a second body here would be a redeclaration. The name is
+// all the global's mangling needs; the +0x14 member the body reads is spelled as
+// the view below (upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h).
+class AI;
+
+struct BfmeAIView
 {
-public:
 	TAiData *getAiData() { return m_data; }
 
 	char m_pad[ 0x14 ];
@@ -99,7 +105,11 @@ private:
 };
 
 extern GameLogic *TheGameLogic;
-extern "C" AI *TheAIParseDefinitionAI;
+// 0x012EF214 is retail's TheAI singleton, defined as `AI *TheAI` in
+// game/GameEngine/Source/GameLogic/AI/ai.cpp. The old stand-in was C-linkage, so
+// it emitted an unmangled TheAIParseDefinitionAI; retail's own bytes name the
+// global ?TheAI@@3PAVAI@@A, so the C++ spelling is the one to bind.
+extern AI *TheAI;
 
 int GetGameLogicRandomValue( int lo, int hi, char *file, int line );
 
@@ -108,7 +118,7 @@ StateReturnType AITNGuardIdleState::onEnter()
 	unsigned int now = TheGameLogic->getFrame();
 	m_nextEnemyScanTime = now + GetGameLogicRandomValue(
 		0,
-		TheAIParseDefinitionAI->getAiData()->m_guardEnemyScanRate,
+		reinterpret_cast<BfmeAIView *>(TheAI)->getAiData()->m_guardEnemyScanRate,
 		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AITNGuard.cpp",
 		0x24A );
 	getMachineOwner()->getAI()->friend_setGoalObject( 0 );
