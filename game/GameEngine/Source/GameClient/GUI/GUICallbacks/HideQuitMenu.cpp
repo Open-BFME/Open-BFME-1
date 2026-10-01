@@ -7,12 +7,12 @@ public:
 };
 
 // Globals filled by DIR32 from retail.
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void *g_quitMenuLayout;
 
 // ?HideQuitMenu@@YAXXZ
 void HideQuitMenu()
 {
 	if (g_quitMenuLayout)
-		g_theWindowManager->hideQuitMenu();
+		g_rva012F19E8WindowManager->hideQuitMenu();
 }
