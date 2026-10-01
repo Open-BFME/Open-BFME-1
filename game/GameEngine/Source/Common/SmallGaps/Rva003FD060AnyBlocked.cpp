@@ -6,13 +6,21 @@ struct Rva003FD060TerrainLogic {
 	virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27(); virtual void s28(); virtual void s29(); virtual void s30(); virtual void s31();
 	virtual int isValid(int id);
 };
-extern Rva003FD060TerrainLogic* TheTerrainLogic;
+class TerrainLogic;
+// The global at 0x012EF4CC is EA's TerrainLogic *TheTerrainLogic; this TU's
+// view of its pointee keeps the vtable layout isValid() is called through.
+extern TerrainLogic* TheTerrainLogic;
+
+static inline Rva003FD060TerrainLogic* terrainLogic()
+{
+	return reinterpret_cast<Rva003FD060TerrainLogic*>(TheTerrainLogic);
+}
 struct Rva003FD060Node { Rva003FD060Node* m_next; char m_pad[0x1c]; int m_id; };
 struct Rva003FD060Owner { int m_0; Rva003FD060Node* m_head; bool anyBlocked() const; };
 bool Rva003FD060Owner::anyBlocked() const
 {
 	for (Rva003FD060Node* n = m_head; n; n = n->m_next) {
-		if (n->m_id != 0x7fffffff && !TheTerrainLogic->isValid(n->m_id))
+		if (n->m_id != 0x7fffffff && !terrainLogic()->isValid(n->m_id))
 			return true;
 	}
 	return false;

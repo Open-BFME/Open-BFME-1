@@ -40,11 +40,19 @@ public:
 	virtual int isValid( int id );
 };
 
-extern Rva001A1DF0TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+// The global at 0x012EF4CC is EA's TerrainLogic *TheTerrainLogic; this TU's
+// view of its pointee keeps the vtable layout isValid() is called through.
+extern TerrainLogic *TheTerrainLogic;
+
+static inline Rva001A1DF0TerrainLogic *terrainLogic()
+{
+	return reinterpret_cast<Rva001A1DF0TerrainLogic *>(TheTerrainLogic);
+}
 
 int __stdcall Rva001A1DF0TerrainCheck( int id )
 {
 	if( id == 0x7fffffff )
 		return 0;
-	return TheTerrainLogic->isValid( id );
+	return terrainLogic()->isValid( id );
 }

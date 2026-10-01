@@ -12,7 +12,15 @@ public:
 	virtual Real bfmeHeightGJ(Real x, Real y, int flags);
 };
 
-extern BfmeTerrainGJ *g_bfmeTerrainGJ;
+class TerrainLogic;
+// The global at 0x012EF4CC is EA's TerrainLogic *TheTerrainLogic; this TU's
+// view of its pointee keeps the BfmeTerrainGJ vtable layout it calls through.
+extern TerrainLogic *TheTerrainLogic;
+
+static inline BfmeTerrainGJ *bfmeTerrainGJ()
+{
+	return reinterpret_cast<BfmeTerrainGJ *>(TheTerrainLogic);
+}
 
 class BfmeOwnerGJ
 {
@@ -23,7 +31,7 @@ public:
 
 Real BfmeOwnerGJ::bfmeMaxGJ(Real x, Real y)
 {
-	Real ground = g_bfmeTerrainGJ->bfmeHeightGJ(x, y, 0);
+	Real ground = bfmeTerrainGJ()->bfmeHeightGJ(x, y, 0);
 	Real mine = bfmeOwnGJ(x, y);
 
 	return (mine > ground) ? mine : ground;
