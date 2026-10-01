@@ -20,7 +20,10 @@ class CameraShakeSystemClass { public: bool IsCameraShaking(); };
 extern CameraShakeSystemClass CameraShakerSystem;
 extern float FollowFactor007446A0;
 class WW3D { public: static unsigned int SyncTime, PreviousSyncTime; };
-extern void *TheTerrainLogic;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. This TU only null-tests it.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 float getHeightAroundPos(float,float);
 class Drawable;
 void drawDrawable(Drawable *,void*);

@@ -73,7 +73,10 @@ class Terrain208A50 { public:
  virtual void slot0();virtual void slot1();virtual void slot2();virtual void slot3();virtual void slot4();virtual void slot5();virtual void slot6();
  virtual float height1C(float,float,int,void*,bool);
 };
-extern Terrain208A50* TheTerrainLogic;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. Uses go through this TU's Terrain208A50 view.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 struct SlowDeathData208A50 {
  char pad00[0x34]; float sinkRate34; char pad38[0x128]; _STL::vector<AsciiString> names160;
  char shadow16C[0x30]; int delay19C; unsigned sentinel1A0; unsigned char mask1A4; char pad1A5; bool flag1A6;
@@ -133,7 +136,7 @@ UpdateSleepTime SlowDeathBehavior::update() {
   obj->setMode(55,1);
   Position208A50 pos; pos.x=obj->position38.x; pos.y=obj->position38.y; pos.z=obj->position38.z;
   pos.z-=d->sinkRate34/m_acceleratedTimeScale;
-  if(TheTerrainLogic->height1C(pos.x,pos.y,obj->getLayer(),0,true)<pos.z) pos.z-=5.7f;
+  if(((Terrain208A50*)TheTerrainLogic)->height1C(pos.x,pos.y,obj->getLayer(),0,true)<pos.z) pos.z-=5.7f;
   obj->setPosition((const Coord3D*)&pos);
   if(drawable && d->flag1A6 && !drawable->flagE4) {
    drawable->setShadowsEnabled(false);

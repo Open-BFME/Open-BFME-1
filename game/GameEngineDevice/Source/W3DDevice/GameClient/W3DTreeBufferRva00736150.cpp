@@ -28,7 +28,10 @@ public:
 	void find(Int id);
 };
 
-extern TerrainLogicP48Owner *TheTerrainLogic;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. Uses go through this TU's TerrainLogicP48Owner view.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern SceneClass *g_Va012F8058;
 
 RenderObjClass *Create_Render_Obj(const char *name);
@@ -107,7 +110,7 @@ void W3DTreeBuffer::rva00736150(Int index, Int request)
 			return;
 	}
 	if (!m_trees[index].m_flagc4 && m_trees[index].m_field80 != 0) {
-		TheTerrainLogic->find(m_trees[index].m_drawableID);
+		((TerrainLogicP48Owner *)TheTerrainLogic)->find(m_trees[index].m_drawableID);
 		return;
 	}
 	if (m_trees[index].m_flagc4 || m_trees[index].m_field80 != 0)

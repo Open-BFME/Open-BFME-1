@@ -64,7 +64,10 @@ class CRCParameterCheck;
 extern GameLogic *TheBfmeGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern void *TheTerrainLogic;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. Only its receiver slot is called here.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern bool Glo012F0239;
 
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);

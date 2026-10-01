@@ -75,7 +75,10 @@ class BuffManager:public Rva0041D290VObject { char bytes[0x19c]; public: BuffMan
 class Rva0041D290DrawModule {public: virtual void v00(); V(01) V(02) V(03) V(04) V(05) V(06) V(07) V(08) V(09) V(0a) V(0b) V(0c) V(0d) V(0e) V(0f) V(10) virtual void v11(unsigned); V(12) V(13) V(14) V(15) V(16) V(17) V(18) V(19) V(1a) V(1b) V(1c) V(1d) V(1e) V(1f) V(20) V(21) V(22) V(23) V(24) V(25) V(26) V(27) V(28) V(29) V(2a) V(2b) V(2c) V(2d) V(2e) V(2f) V(30) V(31) virtual bool v32();};
 class Rva0041D290Client {public: virtual void v00(); V(01) V(02) V(03) V(04) V(05) V(06) V(07) V(08) V(09) V(0a) V(0b) V(0c) V(0d) V(0e) V(0f) V(10) V(11) V(12) V(13) V(14) V(15) V(16) V(17) V(18) V(19) V(1a) V(1b) V(1c) V(1d) V(1e) V(1f) virtual void *v20(unsigned);};
 #undef V
-extern Rva0041D290Client *Rva012ef4cc;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. This TU only needs the Rva0041D290Client view of it.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 class Object;
 class Pathfinder { public: void removeObjectFromPathfindMap(Object*); void addObjectToPathfindMap(Object*); };
 class Rva0041D290Manager {char bytes[0xc];Pathfinder *p;public:Pathfinder *get()const{return p;}};
@@ -305,7 +308,7 @@ void Drawable::xfer(Xfer *x)
  absent=m_ec==0;*x==absent;if(!absent){if(!m_ec)m_ec=new Rva0041D290Ambient;m_ec->event.rva000b2ba0(x);}
  *x==m_290; *x==m_294; *x==m_2a8; *x==m_2ac;
 
- if(x->IsLoading()){unsigned count;*x==count;while(count--){unsigned value;Rva0010BE80((MidVirtualSlot90Receiver*)x,&value);void *v=Rva012ef4cc->v20(value);m_298.push_back(v);}}
+ if(x->IsLoading()){unsigned count;*x==count;while(count--){unsigned value;Rva0010BE80((MidVirtualSlot90Receiver*)x,&value);void *v=((Rva0041D290Client *)TheTerrainLogic)->v20(value);m_298.push_back(v);}}
  else{unsigned count=m_298.size();*x==count;for(void **it=m_298.begin();it!=m_298.end();++it){unsigned value=field<unsigned>(*it,4);Rva0010BE80((MidVirtualSlot90Receiver*)x,&value);}}
  *x==m_c;*x==m_18; *x==m_1c; *x==m_20; *x==m_24; *x==m_28; *x==m_2b4; *x==m_2b8; *x==m_2b9; *x==m_360;
  *x==m_274;*x==m_278;*x==m_2ba; *x==m_351; *x==m_354;

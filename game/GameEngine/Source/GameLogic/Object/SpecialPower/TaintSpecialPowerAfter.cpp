@@ -181,7 +181,10 @@ struct Rva003FD060TerrainLogic
 		(this->*u.fn)(pos, radius, flag);
 	}
 };
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
+// defined in GameLogic/Map/TerrainLogic.cpp. Uses go through this TU's Rva003FD060TerrainLogic view.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 struct TaintSpecialPowerModuleData
 {
@@ -242,8 +245,8 @@ void TaintSpecialPower::after(const Coord3D *loc)
 		TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC *)&point, radius, amount, true);
 	}
 
-	TheTerrainLogic->clearArea001A64F0(loc, radius, 1);
-	TheTerrainLogic->refresh001A3190(loc, radius + 50.0f, 1);
+	((Rva003FD060TerrainLogic *)TheTerrainLogic)->clearArea001A64F0(loc, radius, 1);
+	((Rva003FD060TerrainLogic *)TheTerrainLogic)->refresh001A3190(loc, radius + 50.0f, 1);
 
 	FXList *fx = data->m_taintFX;
 	if (fx != 0 && !fx->bfmeIsBlocked())
