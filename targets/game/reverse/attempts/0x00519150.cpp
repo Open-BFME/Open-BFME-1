@@ -1,5 +1,5 @@
-// ?d_00519150@@YAXXZ
-// partial score=0.9842 date=2026-09-30
+// ?rva00519150@BfmeAptScreenLanLobby@@QAEHXZ
+// partial score=0.9853 date=2026-10-01
 // Retail vtable 0x01105A78 slot 5 (int return); only the tail game slot differs.
 // Retail shares the tail game slot with case 7's game; ours gives it its own.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
@@ -78,6 +78,7 @@ public:
 };
 
 extern LANAPI *TheLAN;
+extern const unsigned short g_Rva01088AF4EmptyWideString[];
 
 class GameTextInterface
 {
@@ -106,44 +107,24 @@ extern int chatSystemColor;
 class BfmeLevelAN
 {
 public:
-    char *bfmeBuildAN(unsigned int, int, int, int, int, int, int, int);
+    char *bfmeBuildAN(unsigned int, const char *, int, int, int, int, int, int);
 };
 
 extern BfmeLevelAN *g_theWindowManager;
 
-class SkirmishScreenState
+class MpGameSetup
 {
 public:
     bool flushPendingUpdates();
 
-    bool callWithInt(int value)
-    {
-        typedef bool (SkirmishScreenState::*Method)(int);
-        union Bits
-        {
-            Method member;
-            void (*code)();
-        } bits;
-        extern void j_00031327();
-        bits.code = j_00031327;
-        return (this->*bits.member)(value);
-    }
-
-    bool callNoArg()
-    {
-        typedef bool (SkirmishScreenState::*Method)();
-        union Bits
-        {
-            Method member;
-            void (*code)();
-        } bits;
-        extern void j_0001e957();
-        bits.code = j_0001e957;
-        return (this->*bits.member)();
-    }
+    bool callWithInt(int value) { return rva00527930(value != 0); }
+    bool callNoArg() { return rva005280A0(); }
 
 private:
     char m_extent[0x134];
+public:
+    bool rva00527930(bool value);
+    bool rva005280A0();
 };
 
 class BfmeQ1072
@@ -189,14 +170,18 @@ class BfmeAptScreenLanLobby
 {
 public:
     bool initLanRva00517D00();
-    bool callSelection(int, GameInfo **);
+    bool callSelection(int row, GameInfo **item)
+    {
+        return rva00516850(row, item);
+    }
+    bool rva00516850(int, GameInfo **);
     int rva00519150();
 
 private:
     char m_head[0x250];
     void *m_actionOwner;
     char m_gap254[8];
-    SkirmishScreenState m_state;
+    MpGameSetup m_state;
     char m_gap390[0x18];
     int m_3a8;
     int m_3ac;
@@ -220,19 +205,7 @@ private:
     } m_tail;
 };
 
-#define g_bfme935GlobC (*(BfmeAptScreenLanLobby **)0x012f4998)
-
-bool BfmeAptScreenLanLobby::callSelection(int row, GameInfo **item)
-{
-    typedef bool (BfmeAptScreenLanLobby::*Method)(int, GameInfo **);
-    union Bits
-    {
-        Method member;
-        void (*code)();
-    } bits;
-    bits.code = j_0003c065;
-    return (this->*bits.member)(row, item);
-}
+extern BfmeAptScreenLanLobby *g_bfme935GlobC;
 
 int BfmeAptScreenLanLobby::rva00519150()
 {
@@ -245,6 +218,7 @@ int BfmeAptScreenLanLobby::rva00519150()
     if (TheLAN)
         TheLAN->slot05();
 
+    GameInfo *games[1];
     switch (m_3a8)
     {
     case 0:
@@ -253,7 +227,7 @@ int BfmeAptScreenLanLobby::rva00519150()
         {
             unsigned int actionOwner = (unsigned int)m_actionOwner;
             g_theWindowManager->bfmeBuildAN(actionOwner,
-            (int)0x011059f8, 0, 0, 0, 0, 0, 0);
+            "StartLobby", 0, 0, 0, 0, 0, 0);
         }
         m_3a8 = 1;
         ((BfmeQ1072 *)this)->bfmeGo1072C(1);
@@ -265,7 +239,7 @@ int BfmeAptScreenLanLobby::rva00519150()
     case 2:
         ((Rva0051A5A0Host *)this)->setup(0);
         m_3a8 = 3;
-        TheLAN->slot22(UnicodeString((const unsigned short *)0x01088af4),
+        TheLAN->slot22(UnicodeString(g_Rva01088AF4EmptyWideString),
             false);
         break;
 
@@ -284,7 +258,7 @@ int BfmeAptScreenLanLobby::rva00519150()
             unsigned int actionOwner = (unsigned int)m_actionOwner;
             m_3a8 = 4;
             g_theWindowManager->bfmeBuildAN(actionOwner,
-                (int)0x011059e4, 0, 0, 0, 0, 0, 0);
+                "EnablePlayGame", 0, 0, 0, 0, 0, 0);
         }
         break;
 
@@ -295,17 +269,17 @@ int BfmeAptScreenLanLobby::rva00519150()
         int selected = -1;
         GadgetListBoxGetSelected(m_customGamesList, &selected);
         {
-            GameInfo *game = 0;
-            if (callSelection(selected, &game))
+            games[0] = 0;
+            if (callSelection(selected, &games[0]))
             {
                 m_3a8 = 8;
                 BfmeNetAddress address;
-                TheLAN->RequestGameJoin((LANGameInfo *)game, &address);
+                TheLAN->RequestGameJoin((LANGameInfo *)games[0], &address);
                 break;
             }
         }
         GadgetListBoxAddEntryText(m_chat,
-            TheGameText->fetch((const char *)0x01102e18, 0),
+            TheGameText->fetch("GUI:GSKickedGameFull", 0),
             chatSystemColor, -1, 0, true);
         break;
     }
@@ -316,8 +290,8 @@ int BfmeAptScreenLanLobby::rva00519150()
         if (game == 0 || game->getLocalSlotNum() == -1)
         {
             MessageBoxOk(
-                TheGameText->fetch((const char *)0x0110267c, 0),
-                TheGameText->fetch((const char *)0x01102e8c, 0), 0);
+                TheGameText->fetch("GUI:GSErrorTitle", 0),
+                TheGameText->fetch("GUI:GSKicked", 0), 0);
             ((BfmeA1061 *)this)->bfmeGo1061A();
             m_3a8 = 0;
         }
@@ -329,8 +303,8 @@ int BfmeAptScreenLanLobby::rva00519150()
     {
         int selected = -1;
         GadgetListBoxGetSelected(m_customGamesList, &selected);
-        GameInfo *game = 0;
-        callSelection(selected, &game);
+        games[0] = 0;
+        callSelection(selected, &games[0]);
     }
 
     if (TheGameLogic->m_gameState == 4 && TheGameLogic->m_gameMode == 1)
@@ -340,8 +314,8 @@ int BfmeAptScreenLanLobby::rva00519150()
     {
         m_tail.m_flag2 = false;
         MessageBoxOk(
-            TheGameText->fetch((const char *)0x010ff624, 0),
-            TheGameText->fetch((const char *)0x010ff638, 0), 0);
+            TheGameText->fetch("GUI:NetworkError", 0),
+            TheGameText->fetch("GUI:SocketError", 0), 0);
         if (g_bfme935GlobC)
             g_bfmeManager->bfmeCall_000290d2();
     }
