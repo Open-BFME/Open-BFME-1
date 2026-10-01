@@ -82,13 +82,19 @@ public:
 
 // ------------------------------------------------------- tail shape A, group 1
 
+class Rva005C8D40Output;
+
+class Rva005C8D40
+{
+public:
+	void fill( Rva005C8D40Output *output, void *context );
+};
+
 class U1FillTargetLow;
 
 class U1SupplierLow
 {
 public:
-	void fill( U1FillTargetLow *rest, void *first );
-
 	char m_pad3C[ 0x3c ];
 	U1Slot2Field *m_f3C;
 	U1Slot2Field *m_f40;
@@ -120,7 +126,7 @@ class U1FillTargetHigh
 {
 };
 
-#define U1_COLLECT_A1( ROW, SUPPLIER, FIELD, GAP, TARGET )                    \
+#define U1_COLLECT_A1( ROW, SUPPLIER, FIELD, GAP, TARGET, FILL_SUPPLIER, FILL_TARGET )                    \
 	class U1Collect_##ROW                                                     \
 	{                                                                         \
 	public:                                                                   \
@@ -134,10 +140,10 @@ class U1FillTargetHigh
 	{                                                                         \
 		U1Slot2Field *f0 = second->FIELD;                                     \
 		m_v0 = f0 ? f0->get( first ) : 0;                                     \
-		second->fill( &m_rest, first );                                       \
+		reinterpret_cast<FILL_SUPPLIER *>( second )->fill( reinterpret_cast<FILL_TARGET *>( &m_rest ), first );                                       \
 	}
 
-#define U1_COLLECT_A2( ROW, SUPPLIER, FIELD0, FIELD1, GAP, TARGET )           \
+#define U1_COLLECT_A2( ROW, SUPPLIER, FIELD0, FIELD1, GAP, TARGET, FILL_SUPPLIER, FILL_TARGET )           \
 	class U1Collect_##ROW                                                     \
 	{                                                                         \
 	public:                                                                   \
@@ -154,10 +160,10 @@ class U1FillTargetHigh
 		m_v0 = f0 ? f0->get( first ) : 0;                                     \
 		U1Slot2Field *f1 = second->FIELD1;                                    \
 		m_v1 = f1 ? f1->get( first ) : 0;                                     \
-		second->fill( &m_rest, first );                                       \
+		reinterpret_cast<FILL_SUPPLIER *>( second )->fill( reinterpret_cast<FILL_TARGET *>( &m_rest ), first );                                       \
 	}
 
-#define U1_COLLECT_A3( ROW, SUPPLIER, FIELD0, FIELD1, FIELD2, GAP, TARGET )   \
+#define U1_COLLECT_A3( ROW, SUPPLIER, FIELD0, FIELD1, FIELD2, GAP, TARGET, FILL_SUPPLIER, FILL_TARGET )   \
 	class U1Collect_##ROW                                                     \
 	{                                                                         \
 	public:                                                                   \
@@ -177,23 +183,23 @@ class U1FillTargetHigh
 		m_v1 = f1 ? f1->get( first ) : 0;                                     \
 		U1Slot2Field *f2 = second->FIELD2;                                    \
 		m_v2 = f2 ? f2->get( first ) : 0;                                     \
-		second->fill( &m_rest, first );                                       \
+		reinterpret_cast<FILL_SUPPLIER *>( second )->fill( reinterpret_cast<FILL_TARGET *>( &m_rest ), first );                                       \
 	}
 
-#define U1_COLLECT_A1_0( ROW, SUPPLIER, FIELD, TARGET )                       	class U1Collect_##ROW                                                     	{                                                                         	public:                                                                   		void collect( void *first, SUPPLIER *second );                                                                                                      		void *m_v0;                                                           		TARGET m_rest;                                                        	};                                                                        	void U1Collect_##ROW::collect( void *first, SUPPLIER *second )            	{                                                                         		U1Slot2Field *f0 = second->FIELD;                                     		m_v0 = f0 ? f0->get( first ) : 0;                                     		second->fill( &m_rest, first );                                       	}
+#define U1_COLLECT_A1_0( ROW, SUPPLIER, FIELD, TARGET, FILL_SUPPLIER, FILL_TARGET )                       	class U1Collect_##ROW                                                     	{                                                                         	public:                                                                   		void collect( void *first, SUPPLIER *second );                                                                                                      		void *m_v0;                                                           		TARGET m_rest;                                                        	};                                                                        	void U1Collect_##ROW::collect( void *first, SUPPLIER *second )            	{                                                                         		U1Slot2Field *f0 = second->FIELD;                                     		m_v0 = f0 ? f0->get( first ) : 0;                                     		reinterpret_cast<FILL_SUPPLIER *>( second )->fill( reinterpret_cast<FILL_TARGET *>( &m_rest ), first );                                       	}
 
-#define U1_COLLECT_A2_0( ROW, SUPPLIER, FIELD0, FIELD1, TARGET )              	class U1Collect_##ROW                                                     	{                                                                         	public:                                                                   		void collect( void *first, SUPPLIER *second );                                                                                                      		void *m_v0;                                                           		void *m_v1;                                                           		TARGET m_rest;                                                        	};                                                                        	void U1Collect_##ROW::collect( void *first, SUPPLIER *second )            	{                                                                         		U1Slot2Field *f0 = second->FIELD0;                                    		m_v0 = f0 ? f0->get( first ) : 0;                                     		U1Slot2Field *f1 = second->FIELD1;                                    		m_v1 = f1 ? f1->get( first ) : 0;                                     		second->fill( &m_rest, first );                                       	}
+#define U1_COLLECT_A2_0( ROW, SUPPLIER, FIELD0, FIELD1, TARGET, FILL_SUPPLIER, FILL_TARGET )              	class U1Collect_##ROW                                                     	{                                                                         	public:                                                                   		void collect( void *first, SUPPLIER *second );                                                                                                      		void *m_v0;                                                           		void *m_v1;                                                           		TARGET m_rest;                                                        	};                                                                        	void U1Collect_##ROW::collect( void *first, SUPPLIER *second )            	{                                                                         		U1Slot2Field *f0 = second->FIELD0;                                    		m_v0 = f0 ? f0->get( first ) : 0;                                     		U1Slot2Field *f1 = second->FIELD1;                                    		m_v1 = f1 ? f1->get( first ) : 0;                                     		reinterpret_cast<FILL_SUPPLIER *>( second )->fill( reinterpret_cast<FILL_TARGET *>( &m_rest ), first );                                       	}
 
-U1_COLLECT_A1_0( 005CBBA0, U1SupplierLow, m_f54, U1FillTargetLow )
-U1_COLLECT_A1_0( 005CC2E0, U1SupplierLow, m_f54, U1FillTargetLow )
-U1_COLLECT_A1( 005CD3D0, U1SupplierLow, m_f54, 4, U1FillTargetLow )
-U1_COLLECT_A1( 005CD8A0, U1SupplierLow, m_f54, 8, U1FillTargetLow )
-U1_COLLECT_A1_0( 005CBC00, U1SupplierHigh, m_fBC, U1FillTargetHigh )
+U1_COLLECT_A1_0( 005CBBA0, U1SupplierLow, m_f54, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
+U1_COLLECT_A1_0( 005CC2E0, U1SupplierLow, m_f54, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
+U1_COLLECT_A1( 005CD3D0, U1SupplierLow, m_f54, 4, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
+U1_COLLECT_A1( 005CD8A0, U1SupplierLow, m_f54, 8, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
+U1_COLLECT_A1_0( 005CBC00, U1SupplierHigh, m_fBC, U1FillTargetHigh, U1SupplierHigh, U1FillTargetHigh )
 
-U1_COLLECT_A2( 005CDD20, U1SupplierLow, m_f48, m_f54, 8, U1FillTargetLow )
-U1_COLLECT_A2_0( 005CC340, U1SupplierHigh, m_fB8, m_fBC, U1FillTargetHigh )
+U1_COLLECT_A2( 005CDD20, U1SupplierLow, m_f48, m_f54, 8, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
+U1_COLLECT_A2_0( 005CC340, U1SupplierHigh, m_fB8, m_fBC, U1FillTargetHigh, U1SupplierHigh, U1FillTargetHigh )
 
-U1_COLLECT_A3( 005CE5D0, U1SupplierLow, m_f44, m_f48, m_f54, 8, U1FillTargetLow )
+U1_COLLECT_A3( 005CE5D0, U1SupplierLow, m_f44, m_f48, m_f54, 8, U1FillTargetLow, Rva005C8D40, Rva005C8D40Output )
 
 // ------------------------------------------------------------- tail shape B
 
