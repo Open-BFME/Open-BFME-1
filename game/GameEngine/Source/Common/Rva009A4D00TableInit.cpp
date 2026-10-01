@@ -75,3 +75,36 @@ void Rva009A4D00Init(void)
 	Rva009A5AA0InstallFilter(g_0134C6D8, g_0134C6D8, g_0134C6D8, 7);
 	bfmeRun_009A75E0();
 }
+
+#include <string.h>
+struct Rva009A6780State;
+struct BfmeS1040;
+// Retail 9A6B8B passes two cdecl words; 9A6780 reads only the first.
+// The second word is retained for the physical caller-compatible code view;
+// this does not establish the original native formal parameter count.
+void Rva009A6780BuildQuantizers(Rva009A6780State*, int);
+void bfmeApply1040(BfmeS1040*, int);
+static __forceinline unsigned rva009A6B40Word(const char *p)
+{
+    unsigned value;
+    memcpy(&value, p, 4);
+    return value;
+}
+// Retail [009A6B40,009A6B9D): compare offset words, reset the verified
+// 64-entry inverse map, then invoke the two existing codec bodies.
+// Receiver ownership is unknown: memcpy reads its object representation
+// without inventing a class layout or an aliasing promise.
+void Rva009A6B40(void *self, int at0008)
+{
+    char *bytes = static_cast<char *>(self);
+    unsigned int index;
+    int selected, current;
+    index = rva009A6B40Word(bytes);
+    selected = rva009A6B40Word(bytes + 0x3c + index * 4);
+    current = rva009A6B40Word(bytes + 0x38);
+    if (selected == current) return;
+    memcpy(bytes + 0x38, bytes + 4, 4);
+    Rva009A6600InitBlocks(self);
+    Rva009A6780BuildQuantizers(static_cast<Rva009A6780State *>(self), at0008);
+    bfmeApply1040(static_cast<BfmeS1040 *>(self), at0008);
+}

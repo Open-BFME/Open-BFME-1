@@ -14,7 +14,11 @@ struct Rva009A6780State {
     unsigned char pad0038[0x158];
     int at0190[2][64],at0390[2][64],at0590[2][64],at0790[2][64];
 };
-void Rva009A6780BuildQuantizers(Rva009A6780State* s)
+// The sole retail direct caller 9A6B8B pushes two cdecl words. The 945-byte
+// body reads entryESP+4 and never reads entryESP+8, so the second word is
+// deliberately unused in this caller-compatible emission view. Original
+// native formal parameter count remains unknown.
+void Rva009A6780BuildQuantizers(Rva009A6780State* s, int)
 {
     int index=s->index;
     double reciprocal=1.0/(g_Rva01141D08[index]*4);
