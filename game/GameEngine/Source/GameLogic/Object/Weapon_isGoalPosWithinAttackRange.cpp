@@ -110,7 +110,6 @@ struct Rva001E6930AI { char m_00[0xc]; void *m_0c; char m_10[4]; Rva001E6930AIDa
 class AI;
 extern AI *TheAI;
 #define ai001E6930 ((Rva001E6930AI*)TheAI)
-extern float g_bfmeOffsetDF;
 extern const float BfmeZeroRange;
 struct Rva001E6930WeaponTemplate
 {
@@ -181,11 +180,11 @@ bool Weapon::isGoalPosWithinAttackRange(const Object *source,const Coord3D *goal
     else
     {
         distSqr=pointGap001E6930(source,goalPos,targetPos);
-        attackRange=getAttackRange(source,targetPos->z-goalPos->z)-g_bfmeOffsetDF;
+        attackRange=getAttackRange(source,targetPos->z-goalPos->z)-2.5f;
     }
     float attackRangeSqr=attackRange*attackRange;
     distSqr += extra*extra;
-    float minAttackRange=m_template->m_minimumAttackRange-g_bfmeOffsetDF;
+    float minAttackRange=m_template->m_minimumAttackRange-2.5f;
     if (minAttackRange<BfmeZeroRange) minAttackRange=BfmeZeroRange;
     float minAttackRangeSqr=minAttackRange*minAttackRange;
     if (s->m_94&0x10) minAttackRangeSqr=BfmeZeroRange;

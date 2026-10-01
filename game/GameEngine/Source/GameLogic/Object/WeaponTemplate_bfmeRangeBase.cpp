@@ -9,7 +9,6 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern float g_bfmeOffsetDF;			// retail 0x01098AD4
 extern const float BfmeZeroRange;		// retail 0x01075350
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -44,7 +43,7 @@ private:
 
 	Real unbonusedRange( const WeaponBonus &bonus, Real heightDifference ) const
 	{
-		Real range = m_attackRange * bonus.getField( WeaponBonus::RANGE ) - g_bfmeOffsetDF;
+		Real range = m_attackRange * bonus.getField( WeaponBonus::RANGE ) - 2.5f;
 		if( m_bfmeMaxHeightDifference052C > BfmeZeroRange
 			&& fabs( heightDifference ) > m_bfmeMaxHeightDifference052C )
 			range = 0.0f;

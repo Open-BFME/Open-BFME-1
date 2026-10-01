@@ -29,7 +29,6 @@ public:
 	Real bfmeGapA951(const BfmePt951 *a, const BfmePt951 *b) const;
 };
 
-extern Real g_bfmeOffsetDF;
 extern const Real BfmeZeroRange;
 
 struct BfmeWeaponTemplateRangeFields
@@ -71,7 +70,7 @@ Bool Weapon::isSourceObjectWithGoalPositionWithinAttackRange(const Object *sourc
 	Real attackRange = getAttackRange(source, otherPos->z - goalPos->z);
 	Real attackRangeSqr = attackRange * attackRange;
 	Real minAttackRange =
-		(*(const BfmeWeaponTemplateRangeFields **)((const char *)this + 4))->m_minimumAttackRange - g_bfmeOffsetDF;
+		(*(const BfmeWeaponTemplateRangeFields **)((const char *)this + 4))->m_minimumAttackRange - 2.5f;
 	if (minAttackRange < BfmeZeroRange)
 		minAttackRange = BfmeZeroRange;
 	Real minAttackRangeSqr = minAttackRange * minAttackRange;
