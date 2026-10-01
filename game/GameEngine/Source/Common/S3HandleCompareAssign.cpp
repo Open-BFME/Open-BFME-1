@@ -1,3 +1,4 @@
+// cl: -Igame/Libraries/Source/WWVegas/WW3D2 -Igame/Libraries/Source/WWVegas/WWLib -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // Eight bodies in two shapes.
 //
 // 0x0054ECB0, 0x0054ECE0, 0x0054F200 and 0x0054F230 compare the dword at +0x04
@@ -20,10 +21,9 @@ struct BfmeHandleBlock
 	unsigned short m_bfmeRefCount;				// +0x04
 };
 
-struct BfmeSharedBlock
-{
-	void bfmeRelease(void);					// retail 0x009EB7A0
-};
+// The release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref, so the block
+// this releases is the real header's type, not a stand-in.
+#include <texture.h>
 
 unsigned int bfmeHashCompareA(unsigned int left, unsigned int right);	// ILT 0x00027BFB
 unsigned int bfmeHashCompareB(unsigned int left, unsigned int right);	// ILT 0x00020AA4
@@ -77,7 +77,7 @@ public:
 	Gen_005D1E50 &operator=(const Gen_005D1E50 &other);
 
 private:
-	BfmeSharedBlock *m_bfmeData;
+	TextureBaseClass *m_bfmeData;
 };
 
 class Gen_005D2040
@@ -86,7 +86,7 @@ public:
 	Gen_005D2040 &operator=(const Gen_005D2040 &other);
 
 private:
-	BfmeSharedBlock *m_bfmeData;
+	TextureBaseClass *m_bfmeData;
 };
 
 class Gen_00749D90
@@ -95,7 +95,7 @@ public:
 	Gen_00749D90 &operator=(const Gen_00749D90 &other);
 
 private:
-	BfmeSharedBlock *m_bfmeData;
+	TextureBaseClass *m_bfmeData;
 };
 
 class Gen_00749DD0
@@ -104,7 +104,7 @@ public:
 	Gen_00749DD0 &operator=(const Gen_00749DD0 &other);
 
 private:
-	BfmeSharedBlock *m_bfmeData;
+	TextureBaseClass *m_bfmeData;
 };
 
 // ?bfmeDiffers@Gen_0054ECB0@@QBE_NABV1@@Z
@@ -150,7 +150,7 @@ Gen_005D1E50 &Gen_005D1E50::operator=(const Gen_005D1E50 &other)
 		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
 
 	if (m_bfmeData)
-		m_bfmeData->bfmeRelease();
+		m_bfmeData->Release_Ref();
 
 	m_bfmeData = other.m_bfmeData;
 
@@ -164,7 +164,7 @@ Gen_005D2040 &Gen_005D2040::operator=(const Gen_005D2040 &other)
 		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
 
 	if (m_bfmeData)
-		m_bfmeData->bfmeRelease();
+		m_bfmeData->Release_Ref();
 
 	m_bfmeData = other.m_bfmeData;
 
@@ -178,7 +178,7 @@ Gen_00749D90 &Gen_00749D90::operator=(const Gen_00749D90 &other)
 		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
 
 	if (m_bfmeData)
-		m_bfmeData->bfmeRelease();
+		m_bfmeData->Release_Ref();
 
 	m_bfmeData = other.m_bfmeData;
 
@@ -192,7 +192,7 @@ Gen_00749DD0 &Gen_00749DD0::operator=(const Gen_00749DD0 &other)
 		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
 
 	if (m_bfmeData)
-		m_bfmeData->bfmeRelease();
+		m_bfmeData->Release_Ref();
 
 	m_bfmeData = other.m_bfmeData;
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /D_STLP_USE_STATIC_LIB
 // stlport
 //
 // Retail 0x006CB080, complete boundary [0x006CB080,0x006CB199).
@@ -8,11 +8,6 @@
 // BaseHeightMap layout and with freeScorchBuffers at 0x006C7E10.
 
 typedef int Int;
-
-enum MipCountType
-{
-	MIP_LEVELS_3 = 3
-};
 
 class DX8VertexBufferClass
 {
@@ -37,20 +32,9 @@ private:
 	unsigned char m_body[0x18];
 };
 
-class BFMETextureRelease
-{
-public:
-	virtual void Delete_This(void);
-	void Release_Ref(void);
-
-	void Add_Ref(void)
-	{
-		++m_refCount;
-	}
-
-private:
-	unsigned short m_refCount;
-};
+// The release leaf at 0x009EB7A0 and its word add-ref partner belong to
+// TextureBaseClass in the real header, so take both from there.
+#include <texture.h>
 
 // Retail 0x006D65B0 initializes this one-pointer owning handle from the scorch
 // texture tag and returns this.  Its MipCountType argument is present in the
@@ -77,7 +61,7 @@ public:
 	}
 
 private:
-	BFMETextureRelease *m_texture;
+	TextureBaseClass *m_texture;
 };
 
 class BaseHeightMapRenderObjClass

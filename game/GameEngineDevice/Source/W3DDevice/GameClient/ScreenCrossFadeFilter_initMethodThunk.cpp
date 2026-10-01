@@ -1,31 +1,23 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // Retail 0x007D3760: ScreenCrossFadeFilter::init, vtable 0x01128A50 slot 0.
 // The constructor at 0x007D3740 installs that table; its slot 2 is the
 // matched CrossFade preRender at 0x007D36B0 and slot 0 reaches this body
 // through ILT 0x00044BCF.  BFME's texture loader returns a four-byte,
 // reference-counted handle rather than the Zero Hour TextureClass pointer.
 
-class TextureClass
-{
-public:
-	void Release_Ref(void);
-};
-
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref(void);
-};
+// The release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref in the real
+// WW3D2 header, so the stage pointer uses that type rather than a stand-in.
+#include <texture.h>
 
 class BFMEWaterTrackTextureHandle
 {
 public:
-	TextureClass *m_texture;
+	TextureBaseClass *m_texture;
 
 	~BFMEWaterTrackTextureHandle(void)
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 	}
 };
 
@@ -49,14 +41,14 @@ public:
 class ShroudTexture
 {
 public:
-	TextureClass *m_texture;
+	TextureBaseClass *m_texture;
 	ShroudFilter *getFilter(void);
 	__forceinline void bind(const BFMEWaterTrackTextureHandle &texture)
 	{
 		if (texture.m_texture)
 			++*(unsigned short *)((char *)texture.m_texture + 4);
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 		m_texture = texture.m_texture;
 	}
 };

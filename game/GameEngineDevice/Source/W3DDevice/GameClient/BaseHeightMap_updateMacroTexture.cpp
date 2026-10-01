@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // BaseHeightMapRenderObjClass::updateMacroTexture, retail 0x006CB8D0: BFME's two-argument form, called
 // on the terrain by reset() and ParseEnvironmentData; it reloads the stage-three texture by name.
 
@@ -27,28 +27,19 @@ public:
 	~AsciiString() {}
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
-class TextureClass
-{
-public:
-	void Release_Ref();
-};
-
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref();
-};
+// The release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref in the real
+// WW3D2 header, so the stage pointer uses that type rather than a stand-in.
+#include <texture.h>
 
 class BFMEWaterTrackTextureHandle
 {
 public:
-	TextureClass *m_texture;
+	TextureBaseClass *m_texture;
 
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 	}
 };
 
@@ -56,12 +47,12 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
 static inline void BFMEAssignWaterTrackTexture(
-	TextureClass *&destination, const BFMEWaterTrackTextureHandle &texture)
+	TextureBaseClass *&destination, const BFMEWaterTrackTextureHandle &texture)
 {
 	if (texture.m_texture)
 		++*(unsigned short *)((char *)texture.m_texture + 4);
 	if (destination)
-		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+		destination->Release_Ref();
 	destination = texture.m_texture;
 }
 
@@ -80,7 +71,7 @@ class ShroudTexture
 public:
 	ShroudFilter *getFilter();
 
-	TextureClass *m_texture;
+	TextureBaseClass *m_texture;
 };
 
 class BaseHeightMapRenderObjClass
@@ -109,10 +100,10 @@ void BaseHeightMapRenderObjClass::updateMacroTexture(
 	}
 
 	ShroudTexture &stageThree = m_stageThreeTexture;
-	TextureClass *&stageThreeTexture = stageThree.m_texture;
+	TextureBaseClass *&stageThreeTexture = stageThree.m_texture;
 	if (stageThreeTexture)
 	{
-		((BFMEWaterTrackTexture *)stageThreeTexture)->Release_Ref();
+		stageThreeTexture->Release_Ref();
 		stageThreeTexture = 0;
 	}
 

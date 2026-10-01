@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // W3DTreeBuffer::freeTreeBuffers, retail 0x00732960: the terrain's +0x3094 child; the twin of
 // W3DShrubBuffer's at 0x0071C2D0, with the texture and type count at +0x2A9904/+0x2A9908.
 
@@ -35,12 +35,9 @@ public:
 	virtual long __stdcall Release_Ref(void);
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
-class TextureClass_732960
-{
-public:
-	void Release_Ref(void);
-};
+// The tree texture's release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref
+// in the real WW3D2 header, so take the type from there.
+#include <texture.h>
 
 class BfmeRadarResetLock_732960
 {
@@ -65,7 +62,7 @@ private:
 	BfmeShaderResource_732960 *m_resource3;
 	BfmeShaderResource_732960 *m_resource4;
 	char m_padding[0x2a9904 - 0xb8];
-	TextureClass_732960 *m_treeTexture;
+	TextureBaseClass *m_treeTexture;
 	Int m_numTreeTypes;
 };
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // Free hierarchy lookup at retail RVA 0x00971810. The asset registry returns
 // a counted reference; conversion verifies its HIER tag before tree access.
 
@@ -8,13 +8,10 @@ extern "C" __declspec(dllimport) char *__cdecl _strlwr(char *string);
 
 class HTreeClass;
 
-// The shared leaf only proves a ref-count release ABI at RVA 0x009EB7A0;
-// it does not identify the HIER prototype as a TextureClass.
-class Rva009EB7A0RefOwner
-{
-public:
-	void Release_Ref();
-};
+// The shared leaf at RVA 0x009EB7A0 is TextureBaseClass::Release_Ref in the real
+// WW3D2 header; the counted owners here release through it. It does not
+// identify the HIER prototype as a TextureClass beyond that leaf.
+#include "texture.h"
 
 // The registry result owns one reference and is returned through hidden storage.
 class Rva009EBCE0AssetReference
@@ -30,7 +27,7 @@ public:
 	~Rva009EBCE0AssetReference()
 	{
 		if ( m_object != 0 )
-			((Rva009EB7A0RefOwner *)m_object)->Release_Ref();
+			((TextureBaseClass *)m_object)->Release_Ref();
 	}
 private:
 	void *m_object;
@@ -63,7 +60,7 @@ public:
 	~Rva00971730HierarchyReference()
 	{
 		if (m_ptr != 0)
-			((Rva009EB7A0RefOwner *)m_ptr)->Release_Ref();
+			((TextureBaseClass *)m_ptr)->Release_Ref();
 	}
 
 	Vtable0113E7B0HierarchyPrototype *m_ptr;

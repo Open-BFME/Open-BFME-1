@@ -31,12 +31,6 @@
 #include "texture.h"
 #include "dx8wrapper.h"
 
-class BFMETextureRelease
-{
-public:
-	void Release_Ref(void);
-};
-
 class BfmeHandleCX
 {
 public:
@@ -52,7 +46,7 @@ public:
 	}
 
 private:
-	BFMETextureRelease *m_bfmeThing;
+	TextureBaseClass *m_bfmeThing;
 };
 
 // This is the existing BFME by-value texture-stage helper at 0x00933540.

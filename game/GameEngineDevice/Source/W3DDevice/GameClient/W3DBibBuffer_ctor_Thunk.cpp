@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // W3DBibBuffer constructor, retail RVA 0x006D73C0 (331 bytes).
 // Identity: TBBib.tga / TBRedBib.tga and the adjacent matched bib methods.
 // BFME replaces the ZH raw texture pointers with owning four-byte handles.
@@ -7,16 +7,14 @@
 // The allocation call goes through ILT RVA 0x00024D66 to 0x006D69D0.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBibBuffer.h
 
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref();
-};
+// The release leaf at RVA 0x009EB7A0 is TextureBaseClass::Release_Ref, so the
+// handle's texture pointer is the real header's type, not a stand-in.
+#include <texture.h>
 
 class BFMEWaterTrackTextureHandle
 {
 public:
-	BFMEWaterTrackTexture *m_texture;
+	TextureBaseClass *m_texture;
 
 	~BFMEWaterTrackTextureHandle()
 	{
@@ -56,7 +54,7 @@ public:
 	}
 
 	ShroudFilter *getFilter();
-	BFMEWaterTrackTexture *m_texture;
+	TextureBaseClass *m_texture;
 };
 
 class W3DBibBuffer
