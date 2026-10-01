@@ -1,5 +1,5 @@
 // ?rva004B0D40@Gen_004B1720@@QAEXXZ
-// partial score=0.9918 date=2026-09-30
+// partial score=0.9959 date=2026-10-01
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 //
@@ -94,7 +94,7 @@ __forceinline Coord2D &Coord2D::Rotate(float angle)
 		fstp sine
 	}
 
-	float new_x = cosine * x - sine * y;
+	float new_x = cosine * x - sine * *(const volatile float *)&y;
 	float new_y = cosine * y;
 	new_y += sine * x;
 	y = new_y;
