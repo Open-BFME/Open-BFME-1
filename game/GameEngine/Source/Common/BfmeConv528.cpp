@@ -1,3 +1,10 @@
+// Retail's global at 0x012F0898 is `GameLogic *TheGameLogic`, defined once in
+// GameLogic/System/GameLogic.cpp.  This TU calls through it using its own
+// file-local view of the object.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 class BfmeThingBTC;
 
 class BfmeSinkBTC
@@ -5,8 +12,6 @@ class BfmeSinkBTC
 public:
 	void bfmeTwoBTC(BfmeThingBTC *what);
 };
-
-extern BfmeSinkBTC *g_bfmeSinkBTC;
 
 class BfmeThingBTC
 {
@@ -19,5 +24,5 @@ public:
 void bfmeGoBTC(BfmeThingBTC *what)
 {
 	what->bfmeOneBTC(what->m_bfmeOwner);
-	g_bfmeSinkBTC->bfmeTwoBTC(what);
+	((BfmeSinkBTC *)TheGameLogic)->bfmeTwoBTC(what);
 }

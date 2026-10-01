@@ -1,5 +1,12 @@
 // Open-BFME: global-offset setter reconstructed from retail RVA 0x001B4980.
 
+// Retail's global at 0x012F0898 is `GameLogic *TheGameLogic`, defined once in
+// GameLogic/System/GameLogic.cpp.  This TU reads the dword at +0x3C through
+// its own file-local view of the object.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 class Rva001B4980Global
 {
 public:
@@ -18,10 +25,8 @@ private:
 	int m_second;
 };
 
-extern Rva001B4980Global *g_Rva001B4980Global;
-
 void Rva001B4980Object::set(int first, int second)
 {
 	m_first = first;
-	m_second = g_Rva001B4980Global->m_value + second;
+	m_second = ((Rva001B4980Global *)TheGameLogic)->m_value + second;
 }

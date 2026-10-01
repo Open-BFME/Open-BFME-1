@@ -1,5 +1,12 @@
 // Open-BFME: nested-field sum reconstructed from retail RVA 0x0020D830.
 
+// Retail's global at 0x012F0898 is `GameLogic *TheGameLogic`, defined once in
+// GameLogic/System/GameLogic.cpp.  This TU reads the dword at +0x3C through
+// its own file-local view of the object.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 class Rva0020D830Nested
 {
 public:
@@ -22,12 +29,10 @@ private:
     int m_sumSecond;
 };
 
-extern Rva0020D830Nested *g_Rva012F0898;
-
 void Rva0020D830Object::update(void)
 {
     int nestedValue = m_nested->m_value;
-    int globalValue = g_Rva012F0898->m_globalValue;
+    int globalValue = ((Rva0020D830Nested *)TheGameLogic)->m_globalValue;
     int sum = globalValue + nestedValue;
     m_sumFirst = sum;
     m_sumSecond = sum;

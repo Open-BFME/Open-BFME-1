@@ -5,14 +5,19 @@
 // remain descriptive because the surrounding binary does not prove a stronger
 // identity.
 
+// Retail's global at 0x012F0898 is `GameLogic *TheGameLogic`, defined once in
+// GameLogic/System/GameLogic.cpp.  This TU reads the frame field at +0x3C
+// through its own file-local view of the object.
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+
 class GameLogicFrameSlice
 {
 public:
 	char         m_lead[ 0x3C ];
 	unsigned int m_frame;
 };
-
-extern GameLogicFrameSlice *TheGameLogic;
 
 class Rva003679D0FrameDeadline
 {
@@ -26,5 +31,5 @@ private:
 
 unsigned char Rva003679D0FrameDeadline::isPending( int index ) const
 {
-	return TheGameLogic->m_frame < m_deadlines[ index ];
+	return ((GameLogicFrameSlice *)TheGameLogic)->m_frame < m_deadlines[ index ];
 }
