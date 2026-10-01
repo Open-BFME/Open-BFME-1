@@ -78,6 +78,7 @@ __forceinline long fast_float2long_round(Real f)
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
 
 class Locomotor;
+class Object;
 
 // Ordinal-only: mangling needs the enum's name, not its enumerators. Retail's
 // range check (Pathfinder::getCell) accepts 2..15 inclusive - LAYER_LAST is
@@ -121,6 +122,13 @@ private:
 class Pathfinder
 {
 public:
+	// Existing matched callbacks at 003E5820/003E5950 prove these typed
+	// member calls. Retail ILTs 24299/4A980/2B9E0 reach 3E0930/3E05B0/
+	// 3D4F90 respectively: ECX=this; 3/2/2 stack words; Bool result in AL.
+	Bool bfmeStepE0930(Object *object, ICoord2D *currentCell, ICoord2D *queryCell);
+	Bool bfmeStepE05B0(Object *object, ICoord2D *currentCell);
+	Bool bfmeStepD4F90(void *parms, PathfindCell *cell);
+
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 	Bool validMovementTerrain(Int layer, const Locomotor *locomotor, const Coord3D *pos);
 	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);

@@ -10858,5 +10858,195 @@
   "after_sha256": "51e3437a233b8abe70dcfa3f7d2cf0bee12feac4d3ebcd719e2018881a48adf9",
   "evidence": "targets/game/reverse/identity_evidence/0x0052ae20-objective-helper-name.md",
   "reason": "The matched callback proves only the helper's int __cdecl(int) ABI. The ledger still uses a generated dump name. The earlier draft inferred bfmeFindNthPred from behavior. No retail export or pin names it. The RVA name records that the identity remains unknown."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "BfmeSubBIA",
+  "new_name": "Rva003E5A50InfoAt08",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "Object",
+  "new_name": "Rva003E5A50InfoAt44",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "Team",
+  "new_name": "Rva003E5A50InfoAt3C",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_obj",
+  "new_name": "m_at04",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_pathfinder",
+  "new_name": "m_at00",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_radius",
+  "new_name": "m_at44",
+  "before_sha256": "81cf931d46a966811b364e99114db5cdf542b7c2bb607ede80154db32e137bbb",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "False pairing of unchanged different-RVA constructor bank with callback; Object/Team/BfmeSubBIA are not offset argument views; native Object remains included. Independent matched callback caller and full224B byte/ABI proof identify the replacement; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "GroundPathPassableStruct",
+  "new_name": "Rva003E5A50Info",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "TCheckMovementInfo",
+  "new_name": "Rva003E5A50InfoAt08",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "groundPathPassableCallback",
+  "new_name": "rva003e5b80",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_allyFixedCount",
+  "new_name": "m_at38",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_hitCount",
+  "new_name": "m_at50",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_info",
+  "new_name": "m_at08",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_limited",
+  "new_name": "m_at2c",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_obj",
+  "new_name": "m_at04",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_parms",
+  "new_name": "m_at00",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_pathfinder",
+  "new_name": "m_at00",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_query",
+  "new_name": "m_at3c",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_rest",
+  "new_name": "m_at0c",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e5b80.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva003E5A50InfoCallback.cpp",
+  "old_name": "m_valid",
+  "new_name": "m_at44",
+  "before_sha256": "87edaa9472d010a13f0f6e1cd60f8c3250f86b263695d67b5dcdcc57ceaeed6f",
+  "after_sha256": "e5450b8d65ab08102419a7c82e6b4f0e2cb89135676c9c777b767198cef34ca9",
+  "evidence": "targets/game/reverse/identity_evidence/Rva003E5A50Info_003E5B80.md",
+  "reason": "The bank guessed GroundPathPassable ownership/member names; independently matched478B caller identifies Rva003E5A50Info::rva003e5b80. Retail proves offset views but no native field-name witness. Retain typed pointer/coordinate operations without speculative semantic names; see proof exact-source-corrections."
  }
 ]
