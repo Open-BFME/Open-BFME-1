@@ -1,5 +1,5 @@
 // ?d_0023b7a0@@YAXXZ
-// partial score=0.987 date=2026-09-18
+// partial score=0.9914 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: HordeContain interface slot 87, retail 0x0023B7A0.
 //
@@ -20,20 +20,18 @@
 //
 // The name key is a function-local static: retail reads the guard byte at
 // 0x012EFAD8, calls nameToKey once, and stores the key at 0x012EFAD4. The
-// unwind action that clears that guard bit is the funclet at 0x00C0DB70,
-// already landed as ?Rva00C0DB70ClearFlag@@YAIXZ.
+// The matched funclet ?Rva00C0DB70ClearFlag@@YAIXZ at 0x00C0DB70 clears that
+// guard bit.
 //
 // Every interface here is opaque apart from the slots this body uses, so the
 // earlier slots are placeholders.
 //
-// This body compiles to retail's 465 bytes and ten of them still differ. Four
-// instructions pick a different scratch register. Retail loads the transform
-// parameter into eax at +0xAE and this build loads it into ecx. Retail then
-// loads the experience tracker into ecx at +0xD8 and the level into edx at
-// +0xE4, and this build swaps that pair. The swap leaves ecx busy until the
-// subtraction, so retail's early load of TheExperienceLevelSystem lands after
-// the two pushes here instead of before them. Every instruction before +0xAE
-// matches retail byte for byte.
+// The compiler emits retail's 465-byte extent. Four non-relocation bytes still
+// differ. Retail loads the replacement experience pointer into ecx at +0xD8
+// and the owner pointer into eax at +0xDE. The draft assigns those pointers to
+// eax and ecx in the opposite order. The level loads at +0xE4 and +0xE7 then
+// use the opposite registers. Copying the owner's logic tag before its call
+// fixed the earlier transform-argument mismatch at +0xAE.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -297,7 +295,8 @@ Object *Rva0023B7A0HordeContainView::rva0023B7A0( const Matrix3DTN *transform )
 			if ( owner->m_bfmeStatus & 0x20000000 )
 				owner->bfmeTransferReplacementState( replacement );
 
-			( (BfmeGlobFEA *)TheBfmeGameLogic )->bfmeCallFEA( replacement, owner->m_bfmeLogicTag );
+			int logicTag = owner->m_bfmeLogicTag;
+			( (BfmeGlobFEA *)TheBfmeGameLogic )->bfmeCallFEA( replacement, logicTag );
 			( (BfmeThingTN *)replacement )->bfmeSetTransformTN( transform );
 			( (BfmeThingCQB *)container )->bfmeGoCQB( replacement );
 
