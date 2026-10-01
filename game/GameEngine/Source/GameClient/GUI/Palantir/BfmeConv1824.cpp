@@ -32,7 +32,9 @@ struct Rva002EE330PlayerList
 	char bfmeHasTF(BfmePlayerTF *player);
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// ThePlayerList (retail 0x012ED748) is PlayerList*; keep the local view, cast at the use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class ControlBar
 {
@@ -63,10 +65,10 @@ void BfmeOwnerTF::bfmeShowTF(int unused)
 
 	if (player != 0)
 	{
-		if (Rva002EE330ThePlayers == 0)
+		if (ThePlayerList == 0)
 			return;
 
-		if (!Rva002EE330ThePlayers->bfmeHasTF(player))
+		if (!((Rva002EE330PlayerList *)ThePlayerList)->bfmeHasTF(player))
 			return;
 	}
 
