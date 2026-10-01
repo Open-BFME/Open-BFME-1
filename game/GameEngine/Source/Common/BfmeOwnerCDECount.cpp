@@ -22,7 +22,8 @@ public:
  virtual void begin(); virtual void slot64(); virtual void slot68();
  virtual CountDebug008FA4B0 &stream(void *, void *);
 };
-extern CountDebug008FA4B0 *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
+#define g_BFMEIndexBufferDebug static_cast<CountDebug008FA4B0 *>(g_Rva00F36E5C)
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int);
 #define NAMED_DEBUG reinterpret_cast<CountDebug008FA4B0 &>(reinterpret_cast<Debug &>(g_BFMEIndexBufferDebug->stream(0,0).text("Geometry for ")) << object->name())
