@@ -58,9 +58,11 @@ struct Melee002705D0GlobalAI {
     Melee002705D0Pathfinder *pathfinder() const { return at00c; }
 };
 struct Melee002705D0GameLogic { unsigned char pad000[0x3c]; unsigned int at03c; };
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Melee002705D0GameLogic *frameView002705D0() { return (Melee002705D0GameLogic *)TheGameLogic; }
 extern Melee002705D0GlobalAI *g002705D0Va012EF214;
 extern Melee002705D0Terrain *g002705D0Va012EF4CC;
-extern Melee002705D0GameLogic *g002705D0Va012F0898;
 extern bool g002705D0Va012F0239;
 extern void *g002705D0Va012ED4FC;
 
@@ -149,9 +151,9 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
             at144=0;
             at321=true;
             at322=false;
-            if (at160>g002705D0Va012F0898->at03c-2) {
+            if (at160>frameView002705D0()->at03c-2) {
                 if (wake()>10 && !at330) setWake(m_object,10);
-                m_queueForPathFrame=g002705D0Va012F0898->at03c+10;
+                m_queueForPathFrame=frameView002705D0()->at03c+10;
                 destroy();
                 return true;
             }

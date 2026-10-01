@@ -10,7 +10,9 @@ class GameMessage { public: const GameMessageArgumentType *getArgument(int) cons
 enum GameWindowMessage { GWM_NONE };
 extern GameWindowMessage rawMouseToWindowMessage(const GameMessage *);
 class BfmeGameLogicPause { public: bool isGamePaused(); };
-extern BfmeGameLogicPause *Logic0040F780;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeGameLogicPause *pauseView005B9C70() { return (BfmeGameLogicPause *)TheGameLogic; }
 class PalantirUIState { public: char pad00[8]; bool flag08; };
 extern PalantirUIState *g_aptPalantirUIState;
 extern char g_bfmeDoneSJA;
@@ -69,7 +71,7 @@ int Rva005B9C70Owner::translate(const GameMessage *msg)
     int returnCode = 0;
     GameWindowMessage firstMessage = rawMouseToWindowMessage(msg);
     if (phase == 1) {
-        if (g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !Logic0040F780->isGamePaused()) {
+        if (g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !pauseView005B9C70()->isGamePaused()) {
             if (!TheShell || !TheShell->active) return 0;
         }
     } else {
@@ -87,7 +89,7 @@ int Rva005B9C70Owner::translate(const GameMessage *msg)
         {
             ICoord2D mousePos=msg->getArgument(0)->pixel;
             if (TheWindowManager) returnCode=TheWindowManager->mouse(firstMessage,&mousePos,0);
-            if (phase && !(g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !Logic0040F780->isGamePaused())) {
+            if (phase && !(g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !pauseView005B9C70()->isGamePaused())) {
                 if (TheShell && TheShell->active) returnCode=1;
                 if (TheInGameUI && !TheInGameUI->getInputEnabled()) returnCode=1;
             }

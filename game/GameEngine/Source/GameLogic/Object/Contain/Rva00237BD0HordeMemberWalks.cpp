@@ -66,7 +66,9 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline BfmeGameLogic *logicView00237BD0() { return (BfmeGameLogic *)TheGameLogic; }
 
 
 class Rva00237BD0Member
@@ -190,7 +192,7 @@ bool Rva00237BD0HordeContain::hasMemberKeyedTo(void *key)
 		if (id != 0)
 		{
 			Rva00237BD0Member *member =
-				(Rva00237BD0Member *)TheGameLogic->findObjectByID(id);
+				(Rva00237BD0Member *)logicView00237BD0()->findObjectByID(id);
 			if (member != 0 && member->m_rva00237BD0Key == key)
 				return true;
 		}
@@ -220,7 +222,7 @@ void Rva00237BD0HordeContain::notifyMembers(void *arg)
 		if (id != 0)
 		{
 			Rva00238AE0Member *member =
-				(Rva00238AE0Member *)TheGameLogic->findObjectByID(id);
+				(Rva00238AE0Member *)logicView00237BD0()->findObjectByID(id);
 			if (member != 0)
 				member->rva00238AE0Notify(arg);
 		}
@@ -237,7 +239,7 @@ bool Rva00237BD0HordeContain::hasLiveIndexedMember()
 	while (entry != m_memberIndex)
 	{
 		UnsignedInt id = entry->m_key;
-		if (id != 0 && TheGameLogic->findObjectByID(id) != 0)
+		if (id != 0 && logicView00237BD0()->findObjectByID(id) != 0)
 			return true;
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);
@@ -269,7 +271,7 @@ void Rva00237BD0HordeContain::removeMembersFromPathfindMap()
 		if (id != 0)
 		{
 			Rva0023C200Member *member =
-				(Rva0023C200Member *)TheGameLogic->findObjectByID(id);
+				(Rva0023C200Member *)logicView00237BD0()->findObjectByID(id);
 			if (member != 0 && !(member->m_bfmeFlags90 & 0x10000000))
 				TheAI->pathfinder()->removeObjectFromPathfindMap((Object *)member);
 		}
@@ -301,7 +303,7 @@ void Rva00237BD0HordeContain::refreshMemberAttributeModifiers()
 		UnsignedInt id = entry->m_key;
 		if (id != 0)
 		{
-			BfmeThingAFB *member = (BfmeThingAFB *)TheGameLogic->findObjectByID(id);
+			BfmeThingAFB *member = (BfmeThingAFB *)logicView00237BD0()->findObjectByID(id);
 			if (member != 0)
 				member->bfmeGoAFB();
 		}

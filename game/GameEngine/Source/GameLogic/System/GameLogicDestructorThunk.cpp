@@ -265,7 +265,8 @@ extern ScriptActionsInterface *TheScriptActions;               // 0x012F0620
 extern ScriptConditionsInterface *TheScriptConditions;         // 0x012F06B0
 extern BfmeJ1023 *g_bfmeJ1023;                                 // 0x012F1044
 extern Manager012EF4F0 *g_012EF4F0;                            // 0x012EF4F0
-extern void *TheBfmeGameLogic;                                 // 0x012F0898
+class GameLogic;
+extern GameLogic *TheGameLogic;                                 // 0x012F0898
 
 struct RvaHashIntFunctor
 {
@@ -561,5 +562,5 @@ GameLogic::~GameLogic(void)
 
 	reinterpret_cast<BfmeHostXY *>(this)->bfmeClearXY();
 	closeWindows();
-	TheBfmeGameLogic = 0;
+	TheGameLogic = 0;
 }

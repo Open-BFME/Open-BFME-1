@@ -77,7 +77,9 @@ class Rva00367E30Logic : public GameLogic
 {
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic *bfmeLogicView0017D2F0() { return (Rva00367E30Logic *)TheGameLogic; }
 
 // ?bfmeCheckAttackView@Pathfinder@@QAEHPAVObject@@PAX@Z, matched at
 // 0x003EA960 in PathfinderAttackViewForwarders.cpp.  It returns a signed
@@ -451,7 +453,7 @@ Object *AIAttackSquadState::chooseVictim(void)
 	// 0 differing bytes of 949, so it is written out rather than left as the
 	// sweep's identity inline.
 	const Int cachedID = owner->dword_3A4;
-	Object *cached = TheBfmeGameLogic->findObjectByID(cachedID);
+	Object *cached = bfmeLogicView0017D2F0()->findObjectByID(cachedID);
 	if (cached != 0 && !(cached->m_privateStatus & 1))
 	{
 		BfmeVecAK *live = victimSquad->bfmeCompact(true);
@@ -490,7 +492,7 @@ Object *AIAttackSquadState::chooseVictim(void)
 				const DamageInfo *di = bmi->getLastDamageInfo();
 				if (di == 0)
 					return 0;
-				return TheBfmeGameLogic->findObjectByID(di->m_sourceID);
+				return bfmeLogicView0017D2F0()->findObjectByID(di->m_sourceID);
 			}
 		}
 		else
@@ -596,7 +598,7 @@ Object *AIAttackSquadState::chooseVictim(void)
 
 		for (Int i = 0; i < count; i++)
 		{
-			Object *cand = TheBfmeGameLogic->findObjectByID(ids[i]);
+			Object *cand = bfmeLogicView0017D2F0()->findObjectByID(ids[i]);
 			if (cand == 0)
 				continue;
 			if (!((BfmeThingEQ *)&relationship)->bfmeAskEQ(cand))

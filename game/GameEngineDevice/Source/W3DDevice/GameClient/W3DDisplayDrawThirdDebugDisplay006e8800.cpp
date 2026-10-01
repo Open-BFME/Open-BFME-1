@@ -119,7 +119,7 @@ class Rva00367E30Logic : public GameLogic
 {
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 extern int g_012F8054;
 extern unsigned char g_012F81A9;
@@ -162,7 +162,7 @@ void W3DDisplay::drawThirdDebugDisplay()
 			}
 
 			int playerIndex = i - 9;
-			player = TheBfmeGameLogic->getPlayerLeaveStatus(playerIndex);
+			player = TheGameLogic->getPlayerLeaveStatus(playerIndex);
 			if (player->notPresent)
 				continue;
 
@@ -172,7 +172,7 @@ void W3DDisplay::drawThirdDebugDisplay()
 			}
 			else if (TheNetwork->isPacketRouter())
 			{
-				int currentFrame = TheBfmeGameLogic->m_frame;
+				int currentFrame = TheGameLogic->m_frame;
 				frame = TheNetwork->getPlayerLatestFrame(playerIndex);
 				frame += 10 - currentFrame;
 				switch (frame)
@@ -233,7 +233,7 @@ void W3DDisplay::drawThirdDebugDisplay()
 					case 9: color = 0xff6e6eff; break;
 					case 0:
 						if ((unsigned int)g_012F8054 + 5 <
-							(unsigned int)TheBfmeGameLogic->m_frame)
+							(unsigned int)TheGameLogic->m_frame)
 							color = 0xffff0000;
 						else
 						{
@@ -255,7 +255,7 @@ void W3DDisplay::drawThirdDebugDisplay()
 			else if (i == 9)
 			{
 				if ((unsigned int)g_012F8054 + 5 <
-					(unsigned int)TheBfmeGameLogic->m_frame)
+					(unsigned int)TheGameLogic->m_frame)
 					color = -1;
 				else
 					color = g_012F81A9 ? -1 : 0xffff0000;

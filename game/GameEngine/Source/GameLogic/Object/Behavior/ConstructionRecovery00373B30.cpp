@@ -143,7 +143,7 @@ private:
 	CastleObjectMap00372BD0 m_objects;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+static inline Rva00367E30Logic *bfmeLogicView00373B30() { return (Rva00367E30Logic *)TheGameLogic; }
 
 struct CastleOwnedObjectVector00372BD0
 {
@@ -229,7 +229,7 @@ void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
 	if (id != ownedEnd) {
 		do {
 			if (*id != 0) {
-				Object *child = TheBfmeGameLogic->findObjectByID(*id);
+				Object *child = bfmeLogicView00373B30()->findObjectByID(*id);
 				if (child != 0) {
 					call1<void>(j_00045827, this, child);
 					if (killOwnedObjects) {

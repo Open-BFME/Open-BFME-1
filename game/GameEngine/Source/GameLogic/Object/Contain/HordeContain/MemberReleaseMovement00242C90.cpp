@@ -109,7 +109,9 @@ struct Rva00367E30Logic
 	Rva00242C90ObjectHash objects;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *bfmeLogicView00242C90() { return (Rva00367E30Logic *)TheGameLogic; }
 extern const float g_bfmeDirectionWeight1285;
 
 class Pathfinder
@@ -220,7 +222,7 @@ void MemberReleaseMovement00242C90::method(Bool enabled) {
   do {
    int memberID=m_memberIndex.m_header->m_next->m_key;
    if(--attempts<0) break;
-   Object *member=TheBfmeGameLogic->findObjectByID((UnsignedInt)memberID);
+   Object *member=bfmeLogicView00242C90()->findObjectByID((UnsignedInt)memberID);
    if(!member) (m_memberIndex.*rva00242c90Member<Rva00242C90Erase>(j_0001eb1e))(memberID);
    else if((member->*rva00242c90Member<Rva00242C90IsClear>(j_00018223))()) {
     Rva00242C90Link *head=m_members.m_head;

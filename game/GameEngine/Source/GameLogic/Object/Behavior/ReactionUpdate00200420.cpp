@@ -133,7 +133,9 @@ class Object { public:
 };
 struct ReactionData00200420 { char pad00[8]; int counts08[3]; float thresholds14[3]; bool flag20,flag21; };
 struct Frame00200420 { char pad00[0x3c]; unsigned frame3C; };
-extern Frame00200420* Clock00200420;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Frame00200420 *frameView00200420() { return (Frame00200420 *)TheGameLogic; }
 class ReactionUpdate00200420 { public:
  int update(); char pad00[0x10]; int count10; float previous14;
  Object* object() { return *(Object**)((char*)this-8); }
@@ -174,7 +176,7 @@ int ReactionUpdate00200420::update() {
     switch(level) { case 0: obj->setBit<3>();break; case 1: obj->setBit<4>();break; case 2: obj->setBit<5>();break; }
     BfmeInterface001BF6B0* interface=obj->queryInterfaceRva001BF6B0();
     if(interface) interface->slot2(0);
-    if(settings->flag21) obj->setDisabledUntil(Disabled00200420,Clock00200420->frame3C+count10);
+    if(settings->flag21) obj->setDisabledUntil(Disabled00200420,frameView00200420()->frame3C+count10);
     ((DrawableApplyPendingThunk*)drawable)->apply(false);
    }
   }

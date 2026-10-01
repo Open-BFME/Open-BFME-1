@@ -86,7 +86,7 @@ class GameLogic : public BfmeGameLogicPause
 {
 };
 
-extern GameLogic * const TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Shell
 {
