@@ -26,7 +26,7 @@
 // Identity is address-derived; the slots ahead of the called ones exist only to
 // place them, and their signatures are invented.
 
-class Gen001336E5C
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00();
@@ -72,28 +72,28 @@ public:
 	virtual void slotA0( void *a );
 };
 
-extern Gen001336E5C *TheGen001336E5C;					///< retail [0x01336E5C]
+extern Rva00889690Obj *g_rva00889690;					///< retail [0x01336E5C]
 
 // ?Rva0005BBB0@@YAXPAX0@Z
 void Rva0005BBB0( void *a, void *b )
 {
-	TheGen001336E5C->slot6C( a, b );
+	g_rva00889690->slot6C( a, b );
 }
 
 // ?Rva0005BBE0@@YAXPAX@Z
 void Rva0005BBE0( void *a )
 {
-	TheGen001336E5C->slotA0( a );
+	g_rva00889690->slotA0( a );
 }
 
 // ?Rva00060820@@YAXPBD@Z
 void Rva00060820( const char *text )
 {
-	TheGen001336E5C->registerCommand( text );
+	g_rva00889690->registerCommand( text );
 }
 
 // ?Rva0006B050@@YAXXZ
 void Rva0006B050( void )
 {
-	TheGen001336E5C->slot90();
+	g_rva00889690->slot90();
 }

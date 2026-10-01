@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: near-twin of bfmeGoVHL (0x0025A930, BfmeConv1363.cpp); this body guards on
 // a passed pointer instead of _bfme_debugReportingEnabled() and reports through the
-// index-buffer debug manager g_BFMEIndexBufferDebug (0x01336E5C) instead of g_bfmeLogVHJ.
+// the debug manager g_rva00889690 (0x01336E5C), the same singleton BfmeConv1363.cpp
+// reaches through the same spelling.
 
 void __cdecl bfmeRecordVHJ(int n);
 
@@ -38,7 +39,7 @@ public:
 	virtual void bfmeSlot6CIBD();
 };
 
-class BfmeLogIBD
+struct Rva00889690Obj
 {
 public:
 	virtual void bfmeOwn00IBD();
@@ -71,7 +72,7 @@ public:
 	virtual class BfmeMsgIBD *bfmeOwn6cIBD(int a, int b);
 };
 
-extern BfmeLogIBD *g_BFMEIndexBufferDebug;
+extern Rva00889690Obj *g_rva00889690;
 
 // ?d_006c07d0@@YAXXZ
 void __cdecl Rva006C07D0(void *param)
@@ -79,7 +80,7 @@ void __cdecl Rva006C07D0(void *param)
 	if (param)
 	{
 		bfmeRecordVHJ(1);
-		g_BFMEIndexBufferDebug->bfmeOwn60IBD();
-		g_BFMEIndexBufferDebug->bfmeOwn6cIBD(0, 0)->bfmeSlot38IBD((const void *)"DX8 error ")->bfmeSlot00IBD(param)->bfmeSlot4cIBD(1);
+		g_rva00889690->bfmeOwn60IBD();
+		g_rva00889690->bfmeOwn6cIBD(0, 0)->bfmeSlot38IBD((const void *)"DX8 error ")->bfmeSlot00IBD(param)->bfmeSlot4cIBD(1);
 	}
 }

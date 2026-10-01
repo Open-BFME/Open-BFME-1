@@ -80,7 +80,7 @@ public:
 	virtual void finish(int severity);
 };
 
-class Gen001336E5C
+struct Rva00889690Obj
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -94,7 +94,7 @@ public:
 	virtual Rva00405E80DebugReport *startReport(void *a, void *b);
 };
 
-extern Gen001336E5C *TheGen001336E5C;
+extern Rva00889690Obj *g_rva00889690;
 extern void __cdecl _bfme_debugRecordCallsite(int kind);
 extern void __cdecl bfmeResolveZones(int sourceZone, int targetZone,
 	UShort *zoneEquivalency18, UShort *zoneListHeadsBB98, UShort *zoneListNext17718, int size);
@@ -192,9 +192,9 @@ void PathfindZoneManager::method00405E80(PathfindCell **map,
 						if (maxZone >= 24000)
 						{
 							_bfme_debugRecordCallsite(1);
-							TheGen001336E5C->beginReport();
+							g_rva00889690->beginReport();
 							Rva00405E80DebugReport *report =
-								TheGen001336E5C->startReport(0, 0);
+								g_rva00889690->startReport(0, 0);
 							report->addMessage("Ran out of pathfind zones.  SERIOUS ERROR! jba.")->finish(1);
                             break;
 						}

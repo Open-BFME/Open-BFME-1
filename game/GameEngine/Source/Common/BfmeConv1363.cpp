@@ -36,7 +36,7 @@ public:
 	virtual void bfmeSlot6CVHJ();
 };
 
-class BfmeLogVHJ
+struct Rva00889690Obj
 {
 public:
 	virtual void bfmeOwn00VHJ();
@@ -69,14 +69,14 @@ public:
 	virtual class BfmeMsgVHJ *bfmeOwn6cVHJ(int a, int b);
 };
 
-extern BfmeLogVHJ *g_bfmeLogVHJ;
+extern Rva00889690Obj *g_rva00889690;
 
 void __stdcall bfmeGoVHL(int a)
 {
 	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
-		g_bfmeLogVHJ->bfmeOwn60VHJ();
-		g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Error! Devastate Power requires either a target object or location")->bfmeSlot4cVHJ(2);
+		g_rva00889690->bfmeOwn60VHJ();
+		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Error! Devastate Power requires either a target object or location")->bfmeSlot4cVHJ(2);
 	}
 }
