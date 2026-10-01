@@ -1,5 +1,5 @@
 // ?bfmeTailA1044@BfmeB1044@@QAEXXZ
-// partial score=0.8 date=2026-09-08
+// partial score=0.8366 date=2026-10-01
 // Identity evidence: the 0x00006E83 thunk jumps to retail 0x004B0850,
 // and BfmeB1044::bfmeGo1044B at 0x004B17E0 selects that thunk for nonzero IDs.
 
@@ -150,7 +150,6 @@ void BfmeB1044::bfmeTailA1044(void)
 	{
 		Coord3D *const point = &locals.point;
 		Coord3D *const position = &locals.position;
-		float *positionZ = &position->z;
 		Drawable *drawable = object->getDrawable();
 		if (drawable != 0)
 		{
@@ -180,13 +179,13 @@ void BfmeB1044::bfmeTailA1044(void)
 				reinterpret_cast<const char *>(object) + 0x38)->x;
 			position->y -= reinterpret_cast<const Coord3D *>(
 				reinterpret_cast<const char *>(object) + 0x38)->y;
-			*positionZ -= reinterpret_cast<const Coord3D *>(
+			position->z -= reinterpret_cast<const Coord3D *>(
 				reinterpret_cast<const char *>(object) + 0x38)->z;
 			volatile float *positionX = &position->x;
 			point->x += *positionX;
 			point->y += position->y;
 		}
-		point->z += bfmeHeight1044(hasContactPoint, positionZ, object);
+		point->z += bfmeHeight1044(hasContactPoint, &position->z, object);
 
 		if (TheTacticalView->worldToScreen(point, &locals.screen))
 		{
