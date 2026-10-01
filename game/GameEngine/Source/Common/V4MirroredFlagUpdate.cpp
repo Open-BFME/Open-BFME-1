@@ -171,7 +171,8 @@ public:
 	int  m_atEB0;
 };
 
-extern Glo012ED5C8Type * Glo012ED5C8;
+class GlobalData;						///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;	///< retail [0x012ED5C8]
 
 bool Rva003BF540::ready( int id )
 {
@@ -247,7 +248,7 @@ bool Rva003BF540::act( Gen003BD8D0Arg * a )
 {
 	if( !a )
 		return false;
-	if( !Glo012ED5C8->m_at8E )
+	if( !((Glo012ED5C8Type *)TheWritableGlobalData)->m_at8E )
 		return true;
 	Gen003BD7D0Node *node = find( m_at34 );
 	if( !node )

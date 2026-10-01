@@ -8,15 +8,18 @@
 typedef int Int;
 typedef bool Bool;
 
-struct GlobalData
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
+extern void __cdecl setPathWithSlash(const char *path);
+
+// TU-local layout view of retail's GlobalData; the real class is not needed here.
+struct ParseCommandLineGlobalData
 {
 	unsigned char m_pad[0xdc0];
 	AsciiString m_modDir;
 	AsciiString m_modBIG;
 };
 
-extern GlobalData *TheWritableGlobalData;
-extern void __cdecl setPathWithSlash(const char *path);
 
 class ArchiveFile;
 
@@ -135,10 +138,10 @@ void parseCommandLine(Int argc, char *argv[])
 			arg++;
 	}
 
-	if (stringNotEmpty(TheWritableGlobalData->m_modBIG))
+	if (stringNotEmpty(((ParseCommandLineGlobalData *)TheWritableGlobalData)->m_modBIG))
 	{
 		ArchiveFile *archiveFile =
-			TheArchiveFileSystem->openArchiveFile(TheWritableGlobalData->m_modBIG.str());
+			TheArchiveFileSystem->openArchiveFile(((ParseCommandLineGlobalData *)TheWritableGlobalData)->m_modBIG.str());
 		if (archiveFile != 0)
 		{
 			loadMod(TheArchiveFileSystem, archiveFile,
@@ -146,10 +149,10 @@ void parseCommandLine(Int argc, char *argv[])
 		}
 	}
 
-	if (stringNotEmpty(TheWritableGlobalData->m_modDir))
+	if (stringNotEmpty(((ParseCommandLineGlobalData *)TheWritableGlobalData)->m_modDir))
 	{
 		TheArchiveFileSystem->loadBigFilesFromDirectory(
-			TheWritableGlobalData->m_modDir, "*.big", true);
-		setPathWithSlash(TheWritableGlobalData->m_modDir.str());
+			((ParseCommandLineGlobalData *)TheWritableGlobalData)->m_modDir, "*.big", true);
+		setPathWithSlash(((ParseCommandLineGlobalData *)TheWritableGlobalData)->m_modDir.str());
 	}
 }

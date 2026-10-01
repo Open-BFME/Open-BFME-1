@@ -77,7 +77,8 @@ struct Rva006C9270GlobalData
 };
 
 extern FirewallHelperClass *TheFirewallHelper;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 
 // Options.apt screen, retail object 0x310 bytes. Only the OptionPreferences
 // member matters here; its map base sits four bytes past the preferences
@@ -114,7 +115,7 @@ void BfmeAptScreenOptions::_bfme_refreshNat( const char *name )
 		{
 		}
 
-		TheWritableGlobalData->m_firewallBehavior = TheFirewallHelper->getFirewallBehavior();
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_firewallBehavior = TheFirewallHelper->getFirewallBehavior();
 
 		AsciiString numstr;
 		numstr.format( AsciiString( "%d" ), TheFirewallHelper->getFirewallBehavior() );

@@ -80,7 +80,8 @@ protected:
 extern double Gen01085F58;
 extern float Gen01121AE4;
 
-extern const BfmeGlobalData0074BEB0 *TheGlobalData0074BEB0;
+class GlobalData;										///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 
 // ?getUVForTileIndex@WorldHeightMap@@IAE_NHFQAM0_N@Z
 Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4],
@@ -95,7 +96,7 @@ Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4],
 		getUVForNdx(tileNdx, &nU, &nV, &xU, &xV, fullTile);
 		U[0] = nU; U[1] = xU; U[2] = xU; U[3] = nU;
 		V[0] = xV; V[1] = xV; V[2] = nV; V[3] = nV;
-		if (TheGlobalData0074BEB0 && !TheGlobalData0074BEB0->m_adjustCliffTextures) {
+		if (((const BfmeGlobalData0074BEB0 *)TheWritableGlobalData) && !((const BfmeGlobalData0074BEB0 *)TheWritableGlobalData)->m_adjustCliffTextures) {
 			return false;
 		}
 		if (nU==Gen01085F58) {

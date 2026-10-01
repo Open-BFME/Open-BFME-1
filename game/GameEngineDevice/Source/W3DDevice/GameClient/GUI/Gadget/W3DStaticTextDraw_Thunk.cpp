@@ -225,7 +225,7 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;					///< retail [0x012F1B40]
-extern GlobalData *TheGlobalData;							///< retail [0x012ED5C8]
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 
 inline Int BitTest(UnsignedInt bits, UnsignedInt mask) { return (bits & mask) != 0; }
 
@@ -272,8 +272,8 @@ static void drawStaticTextText( GameWindow *window,
 		text->setWordWrapCentered( TRUE );
 	else
 		text->setWordWrapCentered( FALSE );
-	if( BitTest( window->winGetStatus(), WIN_STATUS_HOTKEY_TEXT ) && TheGlobalData )
-		text->setUseHotkey( TRUE, TheGlobalData->m_hotKeyTextColor );
+	if( BitTest( window->winGetStatus(), WIN_STATUS_HOTKEY_TEXT ) && TheWritableGlobalData )
+		text->setUseHotkey( TRUE, TheWritableGlobalData->m_hotKeyTextColor );
 	else
 		text->setUseHotkey( FALSE, 0 );
 

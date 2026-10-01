@@ -35,7 +35,8 @@ public:
 	AsciiString m_initialFile;
 };
 
-extern BfmeGlobalData *TheWritableGlobalData;
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 
 class GameMessage
 {
@@ -401,7 +402,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 	TheGameEngine->reset();
 	m_gameMode = 8;
 
-	if (TheWritableGlobalData->m_initialFile.isNotEmpty())
+	if (((BfmeGlobalData *)TheWritableGlobalData)->m_initialFile.isNotEmpty())
 		TheGameEngine->setQuitting(true);
 
 	{

@@ -91,7 +91,8 @@ private:
 	unsigned int m_unk4C;
 };
 
-extern TimingLogGlobalData *TheWritableGlobalData;
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 extern TimingLogThingFactory *TheThingFactory;
 extern TimingView *TheTacticalView;
 
@@ -120,10 +121,10 @@ void TimingLog003851E0::start()
 	char fileName[0x104];
 
 	Rva009EBC00(0);
-	TheWritableGlobalData->m_unk0CF4 = 0;
-	TheWritableGlobalData->m_useFpsLimit = 0;
-	TheWritableGlobalData->m_useShadowVolumes = 0;
-	TheWritableGlobalData->m_useShadowDecals = 0;
+	((TimingLogGlobalData *)TheWritableGlobalData)->m_unk0CF4 = 0;
+	((TimingLogGlobalData *)TheWritableGlobalData)->m_useFpsLimit = 0;
+	((TimingLogGlobalData *)TheWritableGlobalData)->m_useShadowVolumes = 0;
+	((TimingLogGlobalData *)TheWritableGlobalData)->m_useShadowDecals = 0;
 	rva00889690Set();
 	HideControlBar(true);
 
@@ -162,7 +163,7 @@ void TimingLog003851E0::start()
 		fflush((FILE *)m_timingLog);
 	}
 
-	TheWritableGlobalData->m_useShadowVolumes = 0;
+	((TimingLogGlobalData *)TheWritableGlobalData)->m_useShadowVolumes = 0;
 	thePos.x = 50.0f;
 	thePos.y = 50.0f;
 	thePos.z = 0.0f;

@@ -180,7 +180,8 @@ struct BfmeGlobalData
 	unsigned char m_showObjectHealthSecondary; // unnamed second retail flag
 };
 
-extern BfmeGlobalData *TheWritableGlobalData;
+class GlobalData;						///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;	///< retail [0x012ED5C8]
 extern InGameUI *TheInGameUI;
 extern const Real BfmeZeroRange;
 
@@ -237,7 +238,7 @@ typedef void (Drawable::*BfmeRegionDispatchPF)(void *regionWord, Real ratio);
 
 void Drawable::drawHealthBar()
 {
-	BfmeGlobalData *global = TheWritableGlobalData;
+	BfmeGlobalData *global = (BfmeGlobalData *)TheWritableGlobalData;
 	if (!global->m_showObjectHealth)
 		return;
 
@@ -277,7 +278,7 @@ void Drawable::drawHealthBar()
 		object->isKindOf((KindOfType)0x07) ||
 		object->isKindOf((KindOfType)0xa8)))
 	{
-		global = TheWritableGlobalData;
+		global = (BfmeGlobalData *)TheWritableGlobalData;
 		if (!global->m_showObjectHealthSecondary)
 			return;
 		if (!object->isKindOf((KindOfType)8) &&

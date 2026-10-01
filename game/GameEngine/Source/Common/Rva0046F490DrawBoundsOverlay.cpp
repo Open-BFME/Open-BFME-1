@@ -71,7 +71,8 @@ struct Rva006C9270GlobalData
 	Int m_color1214;
 	Int m_color1218;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 
 void Rva0046F490DrawBoundsOverlay(const Coord2D *pos, const Coord2D *size, void *self)
 {
@@ -86,9 +87,9 @@ void Rva0046F490DrawBoundsOverlay(const Coord2D *pos, const Coord2D *size, void 
 		{
 			LocalPlayerTemplateView *t = Rva002EE330ThePlayers->m_localPlayer->m_template04;
 			if (t && t->m_flag118)
-				color = TheWritableGlobalData->m_color1218;
+				color = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_color1218;
 			else
-				color = TheWritableGlobalData->m_color1214;
+				color = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_color1214;
 		}
 
 		if (overlay1 && result.m_arg)

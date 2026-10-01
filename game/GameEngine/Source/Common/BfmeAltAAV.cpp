@@ -126,7 +126,8 @@ struct Rva006C9270GlobalData
 	AsciiString m_pendingFile;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;								///< retail pointee at 0x012ED5C8
+extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 extern void *g_bfmePtrAAV;
 
 #define LANAPI_SLOT(n) virtual void bfmeSlot##n(void);
@@ -216,7 +217,7 @@ void bfmeAltAAV(void)
 	TheLAN->SetLocalIP(AsciiString("127.0.0.1"));
 
 	LANPreferences pref;
-	pref["Map"] = AsciiStringToQuotedPrintable(TheWritableGlobalData->m_pendingFile);
+	pref["Map"] = AsciiStringToQuotedPrintable(((Rva006C9270GlobalData *)TheWritableGlobalData)->m_pendingFile);
 	pref.write();
 
 	UnicodeString userName = pref.getUserName();
