@@ -19,7 +19,11 @@ struct Rva002EE330PlayerList
 {
 	Rva00589320Player *getLocalPlayer();
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; the view above only
+// declares the out-of-line accessor this TU calls.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 // Retail builds the by-value label in the argument slot with the StringBase<char>
 // const char* constructor at 0x00888BC0. The string class forwards its ctors and
@@ -107,12 +111,12 @@ extern class InGameUI *TheInGameUI;
 // BFME drops the null object guard and adds a null local-player guard.
 void Radar::tryInfiltrationEvent( const Object *obj )
 {
-	if( obj->getControllingPlayer() != (Player *)Rva002EE330ThePlayers->getLocalPlayer() )
+	if( obj->getControllingPlayer() != (Player *)((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer() )
 		return;
 
 	createEvent( BFME_OBJECT_POSITION( obj ), BFME_RADAR_EVENT_INFILTRATION );
 
-	Player *player = (Player *)Rva002EE330ThePlayers->getLocalPlayer();
+	Player *player = (Player *)((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer();
 	if( player == NULL )
 		return;
 

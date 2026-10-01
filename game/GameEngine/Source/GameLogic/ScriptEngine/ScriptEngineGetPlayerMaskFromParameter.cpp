@@ -114,7 +114,9 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern PlayerList *g_mgr12ED748;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp.
+extern PlayerList *ThePlayerList;
 
 PlayerMaskType ScriptEngine::unidentified_0034DB40(Parameter *parameter)
 {
@@ -124,7 +126,7 @@ PlayerMaskType ScriptEngine::unidentified_0034DB40(Parameter *parameter)
 
 	PlayerMaskType mask = 0;
 	if (parameter->getCachedPlayerMask()) {
-		Player *player = g_mgr12ED748->getPlayerFromMask(
+		Player *player = ThePlayerList->getPlayerFromMask(
 			(PlayerMaskType)parameter->getCachedPlayerMask());
 		if (player) {
 			mask = player->getPlayerMask();

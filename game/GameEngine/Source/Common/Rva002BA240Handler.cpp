@@ -162,6 +162,8 @@ public:
 
 class Player;
 
+class PlayerList;
+
 class Rva002EE330PlayerList
 {
 private:
@@ -171,7 +173,10 @@ public:
 	Player *m_localPlayer;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp.  The local view class
+// above only describes the members this TU reads.
+extern PlayerList *ThePlayerList;
 extern MessageStream *TheMessageStream;
 extern InGameUI *TheInGameUI;
 
@@ -218,7 +223,7 @@ void Gen002BA240::handle(UnsignedInt id)
 
 		if (drawable && who)
 		{
-			BfmeR1094 *localPlayer = reinterpret_cast<BfmeR1094 *>(Rva002EE330ThePlayers->m_localPlayer);
+			BfmeR1094 *localPlayer = reinterpret_cast<BfmeR1094 *>(((Rva002EE330PlayerList *)ThePlayerList)->m_localPlayer);
 			if (reinterpret_cast<BfmeK1094 *>(who)->bfmeCur1094() == localPlayer)
 			{
 				GameMessage *message = TheMessageStream->appendMessage(0x3ec);

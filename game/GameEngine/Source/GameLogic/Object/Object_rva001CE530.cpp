@@ -123,7 +123,11 @@ public:
 	Player *m_localPlayer;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; the view above only
+// describes the member read below.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class BfmeThingXV
 {
@@ -187,7 +191,7 @@ void Object::rva001CE530()
 		else
 			controller = 0;
 
-		if (controller == Rva002EE330ThePlayers->m_localPlayer &&
+		if (controller == ((Rva002EE330PlayerList *)ThePlayerList)->m_localPlayer &&
 			drawable->m_enabled != 0)
 		{
 			GameMessage *message = TheMessageStream->appendMessage(0x3EC);

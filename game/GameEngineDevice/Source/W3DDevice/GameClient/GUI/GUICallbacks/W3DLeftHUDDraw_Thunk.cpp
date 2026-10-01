@@ -23,6 +23,8 @@ public:
 	Bool hasRadar(void) const;
 };
 
+class PlayerList;
+
 class Rva002EE330PlayerList
 {
 private:
@@ -32,7 +34,10 @@ public:
 	Player *m_localPlayer;
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp.  The local view class
+// above only describes the members this TU reads.
+extern PlayerList *ThePlayerList;
 
 class InGameUI
 {
@@ -123,7 +128,7 @@ struct ICoord2D
 // ?W3DLeftHUDDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void __cdecl W3DLeftHUDDraw(GameWindow *window, WinInstanceData *instData)
 {
-	Player *player = Rva002EE330ThePlayers->m_localPlayer;
+	Player *player = ((Rva002EE330PlayerList *)ThePlayerList)->m_localPlayer;
 	VideoBuffer *video = TheInGameUI->videoBuffer();
 	if (video)
 	{

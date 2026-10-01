@@ -79,7 +79,11 @@ struct Rva005655C0PlayerList
 	Rva005655C0Player *m_localPlayer0c;
 };
 
-extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; Rva005655C0PlayerList
+// above is the TU-local view of the members read below.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern PartitionManager *TheShroudManager;
 
 class Rva006DF550
@@ -114,7 +118,7 @@ bool Rva006DF550::bfmeProbeOffsets(Coord3D *position, float step)
 
 			if (m_polygon1c != 0)
 			{
-				int playerIndex = g_rva005655C0PlayerList->m_localPlayer0c->m_index24;
+				int playerIndex = ((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer0c->m_index24;
 				if (TheShroudManager->getShroudStatusForPlayer(playerIndex,
 						&candidate) == 2)
 					continue;

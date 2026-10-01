@@ -16,7 +16,11 @@ struct BfmePlayerList_AppendInsert
 	BfmePlayer_AppendInsert *m_localPlayer;
 };
 
-extern BfmePlayerList_AppendInsert *ThePlayerList;
+// The real global is defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; the struct above is the
+// TU-local view of the members read below.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class GameMessage
 {
@@ -39,7 +43,7 @@ public:
 
 GameMessage::GameMessage(Type type)
 {
-	m_playerIndex = ThePlayerList->m_localPlayer->m_playerIndex;
+	m_playerIndex = ((BfmePlayerList_AppendInsert *)ThePlayerList)->m_localPlayer->m_playerIndex;
 	m_type = type;
 	m_argList = 0;
 	m_argTail = 0;
