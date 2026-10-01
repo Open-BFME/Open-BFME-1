@@ -3,8 +3,19 @@
 // TU-local retail ABI views preserve the literal-string and vtable call
 // order while keeping all control flow and temporary lifetimes ordinary C++.
 
-typedef int NameKeyType;
 typedef bool Bool;
+typedef int Int;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an enum upstream, not a typedef for int: the enum is part of
+// the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
+// ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
+// body at 0x0008FFC0.  Same underlying type, same code.
+enum NameKeyType
+{
+    NAMEKEY_INVALID = 0,
+    FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 class WindowLayout;
 class GameWindow;
@@ -113,7 +124,10 @@ public:
     virtual void slot52();
     virtual void slot53();
     virtual void slot54();
-    virtual GameWindow *winGetWindowFromId(GameWindow *parent, NameKeyType id);
+    // The id is a plain int in retail's own mangling
+    // (?winGetWindowFromId@GameWindowManager@@UAEPAVGameWindow@@PAV2@H@Z), not
+    // a NameKeyType, so keep this parameter out of the enum.
+    virtual GameWindow *winGetWindowFromId(GameWindow *parent, Int id);
     virtual void slot56();
     virtual void slot57();
     virtual void slot58();

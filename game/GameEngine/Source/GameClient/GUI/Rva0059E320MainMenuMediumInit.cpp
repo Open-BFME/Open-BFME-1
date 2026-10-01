@@ -6,7 +6,17 @@
 
 typedef int Int;
 typedef bool Bool;
-typedef int NameKeyType;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an enum upstream, not a typedef for int: the enum is part of
+// the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
+// ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
+// body at 0x0008FFC0.  Same underlying type, same code.
+enum NameKeyType
+{
+    NAMEKEY_INVALID = 0,
+    FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 extern const char g_bfmeEmptyAscii[];
 
@@ -84,7 +94,10 @@ public:
     virtual void slotc0(); virtual void slotc4(); virtual void slotc8();
     virtual void slotcc(); virtual void slotd0(); virtual void slotd4();
     virtual void slotd8();
-    virtual GameWindow *winGetWindowFromId(GameWindow *parent, NameKeyType id);
+    // The id is a plain int in retail's own mangling
+    // (?winGetWindowFromId@GameWindowManager@@UAEPAVGameWindow@@PAV2@H@Z), not
+    // a NameKeyType, so keep this parameter out of the enum.
+    virtual GameWindow *winGetWindowFromId(GameWindow *parent, Int id);
 };
 
 extern GameWindowManager *TheWindowManager;

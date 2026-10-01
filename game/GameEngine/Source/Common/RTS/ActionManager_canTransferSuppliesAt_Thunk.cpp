@@ -4,7 +4,17 @@
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
-typedef int NameKeyType;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an enum upstream, not a typedef for int: the enum is part of
+// the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
+// ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
+// body at 0x0008FFC0.  Same underlying type, same code.
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 #define NULL 0
 #define FALSE false

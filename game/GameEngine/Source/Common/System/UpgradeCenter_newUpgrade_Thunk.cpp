@@ -2,7 +2,16 @@
 // readable body of ?newUpgrade@UpgradeCenter@@QAEPAVUpgradeTemplate@@ABVAsciiString@@@Z: game/GameEngine/Source/Common/System/Upgrade.cpp
 // Open-BFME5: lift the retail upgrade allocation/link path to standalone C++.
 
-typedef int NameKeyType;
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an enum upstream, not a typedef for int: the enum is part of
+// the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
+// ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
+// body at 0x0008FFC0.  Same underlying type, same code.
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 #include "ascii_string.h"
 
