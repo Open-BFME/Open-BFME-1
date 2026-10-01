@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c7ea7043a1756ceea5e732b7474262ebaead0a004116625b19bff229673c598c",
+  "symbol": "?Rva00894FF0@@YGXPAPAURva00894FF0Node@@@Z",
+  "score_kind": "measured",
+  "score": 0.4688,
+  "source": "// ?Rva00894FF0@@YGXPAPAURva00894FF0Node@@@Z\n// partial score=0.4688 date=2026-10-01\n// cl: /Os\n// Native RVA 0x00894FF0, 32-byte boundary ending RET 4.\n// Emission view: one stack pointer argument. Lexical owner and types unknown.\nextern void (__cdecl *g_bfmeFreeDWF)(void *);\nstruct Rva00894FF0Node {\n    void *m_at000;\n    Rva00894FF0Node *m_at004;\n};\nvoid __stdcall Rva00894FF0(Rva00894FF0Node **arg) {\n    Rva00894FF0Node *owner = *arg;\n    Rva00894FF0Node *node = owner->m_at004;\n    if (node) {\n        Rva00894FF0Node *next = node->m_at004;\n        owner->m_at004 = next;\n    }\n    g_bfmeFreeDWF(node);\n}\n"
+}
