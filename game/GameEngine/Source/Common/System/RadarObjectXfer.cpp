@@ -72,7 +72,8 @@ public:
 	virtual void xferInt(Int *value);
 };
 
-void xferObjectID0010C3C0(Xfer *xfer, UnsignedInt *objectID);
+class MidVirtualSlot90Receiver;
+void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *objectID);
 
 class RadarObject;
 
@@ -129,7 +130,7 @@ void RadarObject::xfer(Xfer *xfer)
 	xfer->xferVersion(&version);
 
 	UnsignedInt objectID = m_object ? m_object->getID() : 0;
-	xferObjectID0010C3C0(xfer, &objectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &objectID);
 	if (xfer->isLoading())
 	{
 		m_object = TheGameLogic->findObjectByID(objectID);

@@ -12048,5 +12048,35 @@
   "after_sha256": "f43dfa1e303f3dcf50347b9f7aab0b32364993a5cde2fd24459d8912a4b86b5f",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/RadarObjectXfer.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/RadarObjectXfer.cpp",
+  "old_name": "xferObjectID0010C3C0",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "222260b86688d0663d467f507219de465576382c1df72f8b4ef258497e049ea3",
+  "after_sha256": "25f9674f3bcf8c5005827decff528b9d1da964fe456eac7bd7e29665b39e963c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfinderXferArrays.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderXferArrays.cpp",
+  "old_name": "bfmeCalcTGC",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "bc5ee5c1888cdc78a1bce2149e7a8f3cd676c1fde6db29d1fbddbe9a836cc5a0",
+  "after_sha256": "305820727c02b511922dfc14b0eebc7acfe20d1f5164309267b2d4ee15caf40d",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/AODHordeContainUpdateFormation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/AODHordeContainUpdateFormation.cpp",
+  "old_name": "bfmeXferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "6894454b05d67f0c39f05744704119847f8e80cfe950e5dfdfc2fe41c816de68",
+  "after_sha256": "9a803a53d124a8dc5ea8c57d8154426a9ed133ecfaa45a79a1c4e0515bacbeaf",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
