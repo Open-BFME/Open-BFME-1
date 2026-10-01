@@ -23,7 +23,10 @@ struct Rva0075B660State
 	bool m_flag;
 };
 
-extern Rva0075B660Logic *TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern Rva0075B660State *TheGameState;
 extern void setFPMode(void);
 
@@ -89,7 +92,8 @@ void Rva00769370ModelConditionInfo::validateTurretInfo(Rva00769260Owner *owner)
 	{
 		Rva00769370TurretInfo &turret = m_turrets[turretSlot];
 		bool canLookup =
-			(TheBfmeGameLogic != 0 && TheBfmeGameLogic->m_flag) ||
+			(TheGameLogic != 0 &&
+				((Rva0075B660Logic *)TheGameLogic)->m_flag) ||
 			(TheGameState != 0 && TheGameState->m_flag);
 		const Rva00769370AsciiView &modelView =
 			reinterpret_cast<const Rva00769370AsciiView &>(model);

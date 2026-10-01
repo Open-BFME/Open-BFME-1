@@ -23,7 +23,10 @@ public:
 class BfmeA1087;
 
 extern BfmeM1087 *g_bfmeM1087;
-extern BfmeB1087 *g_bfmeB1087;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern BfmeN1087 *g_bfmeN1087;
 extern BfmeA1087 *g_bfmeA1087;
 
@@ -38,7 +41,7 @@ public:
 
 void BfmeQ1087::bfmeGo1087A(void)
 {
-	if (g_bfmeM1087->m_bfme58 && g_bfmeB1087->m_bfme93)
+	if (g_bfmeM1087->m_bfme58 && ((BfmeB1087 *)TheGameLogic)->m_bfme93)
 		g_bfmeN1087->bfmeSet1087(g_bfmeN1087->bfmeConv1087(m_bfme17c));
 	else
 		g_bfmeN1087->bfmeSet1087(4);

@@ -82,7 +82,10 @@ struct RegionBox
 
 extern GameClient *TheGameClient;
 extern MouseState *TheMouse;
-extern GameLogicState *TheGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern InGameUI *TheInGameUI;
 
 class Rva0048E480
@@ -139,5 +142,5 @@ void Rva0048E480::update()
 	else
 		box->color = 0xFF000000;
 
-	TheInGameUI->disableTooltipsUntil(TheGameLogic->frame + 2);
+	TheInGameUI->disableTooltipsUntil(((GameLogicState *)TheGameLogic)->frame + 2);
 }

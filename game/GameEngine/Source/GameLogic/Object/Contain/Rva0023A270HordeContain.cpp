@@ -73,7 +73,10 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva0023A270HordeContain
 {
@@ -110,7 +113,7 @@ void Rva0023A270HordeContain::rva0023a270(FXList *fx)
 		UnsignedInt key = entry->m_key;
 		Object *object = (Object *)key;
 		if (key != 0)
-			object = TheBfmeGameLogic->findObjectByID(key);
+			object = ((BfmeGameLogic *)TheGameLogic)->findObjectByID(key);
 		if (fx != 0 && !fx->bfmeIsBlocked())
 			fx->doFXObj(object, 0);
 

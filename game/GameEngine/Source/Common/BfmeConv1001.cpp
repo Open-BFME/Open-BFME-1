@@ -19,7 +19,10 @@ public:
 	BfmeY1001 *bfmeFindB1001(int id);
 };
 
-extern BfmeLook1001 *g_bfmeLook1001;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeA1001
 {
@@ -37,7 +40,7 @@ void BfmeA1001::bfmeGo1001A(void *a)
 	if (!id)
 		return;
 
-	BfmeX1001 *x = g_bfmeLook1001->bfmeFindA1001(id);
+	BfmeX1001 *x = ((BfmeLook1001 *)TheGameLogic)->bfmeFindA1001(id);
 
 	if (x && x->bfmeOwner1001() == a)
 		return;

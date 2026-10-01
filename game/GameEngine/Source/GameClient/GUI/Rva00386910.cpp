@@ -19,7 +19,16 @@ struct Rva00367E30Logic
 	unsigned char m_pad_040[0x10c - 0x40];
 	Int m_mode_10c;
 };
-extern Rva00367E30Logic * volatile TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.  The original
+// declaration was volatile, so the view helper keeps the volatile load.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic * volatile &localGameLogicView()
+{
+	return *(Rva00367E30Logic * volatile *) &TheGameLogic;
+}
 
 class Glo00EF3330
 {
@@ -83,7 +92,7 @@ Int Rva00386910::invoke(Int unused, Bool unusedFlag)
 {
 	_ReadWriteBarrier();
 	Int result = 1;
-	register unsigned int state = TheBfmeGameLogic->m_state_03c;
+	register unsigned int state = localGameLogicView()->m_state_03c;
 	if (state > 6)
 	{
 		{
@@ -94,7 +103,7 @@ Int Rva00386910::invoke(Int unused, Bool unusedFlag)
 			TheTransitionHandler->update();
 		}
 
-		Int mode = TheBfmeGameLogic->m_mode_10c;
+		Int mode = localGameLogicView()->m_mode_10c;
 		if (mode >= 2 && (mode <= 3 || mode == 6))
 		{
 			TheMouse->_bfme_setEngineVisibility(true);

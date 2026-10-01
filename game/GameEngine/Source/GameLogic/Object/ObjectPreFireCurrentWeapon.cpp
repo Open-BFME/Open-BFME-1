@@ -64,7 +64,10 @@ struct Rva00367E30Logic
 	UnsignedInt m_frame;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Object
 {
@@ -109,7 +112,8 @@ void Object::preFireCurrentWeapon(const Object *victim,
 	}
 
 	if (weapon != 0 &&
-		TheBfmeGameLogic->m_frame + 1 >= weapon->getPossibleNextShotFrame())
+		((Rva00367E30Logic *)TheGameLogic)->m_frame + 1 >=
+			weapon->getPossibleNextShotFrame())
 	{
 		if (m_drawable != 0 && (m_statusBits98 & 0x400) == 0)
 		{

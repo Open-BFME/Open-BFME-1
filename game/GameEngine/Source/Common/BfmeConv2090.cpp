@@ -29,7 +29,10 @@ public:
 	BfmeTeamXQ *bfmeFindXQ(void *id);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern TeamFactory *TheTeamFactory;
 
 class BfmeCfgXQ
@@ -71,7 +74,7 @@ int BfmeHostXQ::bfmeStepXQ()
 		return -1;
 
 	BfmeCfgXQ *cfg = m_bfme1CXQ;
-	BfmeObjXQ *obj = TheBfmeGameLogic->bfmeFindXQ(cfg->m_bfme44XQ);
+	BfmeObjXQ *obj = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXQ(cfg->m_bfme44XQ);
 	BfmeTeamXQ *team = TheTeamFactory->bfmeFindXQ(cfg->m_bfme48XQ);
 
 	if (obj)
@@ -101,7 +104,7 @@ int BfmeHost2XQ::bfmeStep2XQ()
 		return -1;
 
 	BfmeCfgXQ *cfg = m_bfme1CXQ;
-	BfmeObjXQ *obj = TheBfmeGameLogic->bfmeFindXQ(cfg->m_bfme44XQ);
+	BfmeObjXQ *obj = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXQ(cfg->m_bfme44XQ);
 	BfmeTeamXQ *team = TheTeamFactory->bfmeFindXQ(cfg->m_bfme48XQ);
 
 	if (obj)

@@ -122,7 +122,10 @@ public:
 	Open26A2FD0Object *find( void *key );
 };
 
-extern Open26A2FD0Logic *TheOpen26A2FD0Logic;
+// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
+// the TU keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva006A2FD0
 {
@@ -137,7 +140,7 @@ char Rva006A2FD0::handle( void *key )
 	if( !key )
 		return 0;
 
-	Open26A2FD0Object *object = TheOpen26A2FD0Logic->find( key );
+	Open26A2FD0Object *object = ((Open26A2FD0Logic *)TheGameLogic)->find( key );
 	unsigned int id = 0;
 	if( object )
 	{

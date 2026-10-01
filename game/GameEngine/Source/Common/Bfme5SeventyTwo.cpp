@@ -79,7 +79,10 @@ public:
 	unsigned char m_bfmeEnabled;				// +0x90
 };
 
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
+// retail 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`; this TU
+// keeps its own offset view and casts at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Gen_005B53D0
 {
@@ -94,10 +97,11 @@ private:
 // ?bfmeExpired@Gen_005B53D0@@QAEEXZ
 unsigned char Gen_005B53D0::bfmeExpired(void)
 {
-	if (m_bfmeStamp > (unsigned int)g_bfmeSwitchCJ->m_bfmeNow)
+	if (m_bfmeStamp > (unsigned int)((BfmeClockCJ *)TheGameLogic)->m_bfmeNow)
 		m_bfmeStamp = 0;
 
-	return m_bfmeStamp + 5 >= (unsigned int)g_bfmeSwitchCJ->m_bfmeNow;
+	return m_bfmeStamp + 5 >=
+		(unsigned int)((BfmeClockCJ *)TheGameLogic)->m_bfmeNow;
 }
 
 class BfmePairEJ
