@@ -11378,5 +11378,45 @@
  "after_sha256": "d75f23610e72b2f10228444dbe1d2c19cb6d7e17d3363b6d4d18d5d26031eeab",
  "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
  "reason": "0x00060C60 stores atoi(args[1]) to GlobalData+0xECC. BFME1 WorldBuilder's full CommandLineParam table pairs -netMinPlayers with a +0xB0C store (game 0x00060F40) and pairs the +0xECC store with -panoramicSlices, a BFME flag with no Zero Hour handler; the game has no -netMinPlayers string and no table entry reaches 0x00060C60. The old name rested only on an unwitnessed field guess, so the body keeps its address."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "new_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "old_name": "parseNoWatchdog",
+ "new_name": "Rva00060980_parse",
+ "before_sha256": "568f74c4dcc804fb2287c9dd5243f7ddd168c50f957dd22cd0e9e206a8b31742",
+ "after_sha256": "bf44efc52a1b2f104935343200839d8c23aab3ea32fe6fe41639a78249adc348",
+ "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
+ "reason": "A TU-local stand-in returning 1. Retail binds -noWatchdog to ILT 0x0001FF9B -> 0x00060980 (matched Rva00060980_parse); the flag has no Zero Hour handler, so EA's name is unknown."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "new_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "old_name": "parseScriptDebug",
+ "new_name": "Rva00060CD0_parse",
+ "before_sha256": "568f74c4dcc804fb2287c9dd5243f7ddd168c50f957dd22cd0e9e206a8b31742",
+ "after_sha256": "bf44efc52a1b2f104935343200839d8c23aab3ea32fe6fe41639a78249adc348",
+ "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
+ "reason": "Retail's CommandLineParam table (0x00EA6F40) binds -scriptDebug2 to ILT 0x00030562 -> 0x00060CD0, not Zero Hour's parseScriptDebug (the -scriptDebug handler, the 0x00060CA0 shape in WorldBuilder's table). The flag has no Zero Hour handler, so the table names the retail body by address."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "new_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "old_name": "parseScriptDebugLite",
+ "new_name": "Rva00060D00_parse",
+ "before_sha256": "568f74c4dcc804fb2287c9dd5243f7ddd168c50f957dd22cd0e9e206a8b31742",
+ "after_sha256": "bf44efc52a1b2f104935343200839d8c23aab3ea32fe6fe41639a78249adc348",
+ "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
+ "reason": "A TU-local stand-in returning 1. Retail binds -scriptDebugLite to ILT 0x00009DA4 -> 0x00060D00 (matched Rva00060D00_parse); the flag has no Zero Hour handler, so EA's name is unknown."
+},
+{
+ "old_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "new_path": "game/GameEngine/Source/Common/ParseCommandLine.cpp",
+ "old_name": "parseWatchdog",
+ "new_name": "Rva00060970_parse",
+ "before_sha256": "568f74c4dcc804fb2287c9dd5243f7ddd168c50f957dd22cd0e9e206a8b31742",
+ "after_sha256": "bf44efc52a1b2f104935343200839d8c23aab3ea32fe6fe41639a78249adc348",
+ "evidence": "targets/game/reverse/identity_evidence/00ea6f40-commandline-params.md",
+ "reason": "A TU-local stand-in returning 1. Retail binds -Watchdog to ILT 0x00017490 -> 0x00060970 (matched Rva00060970_parse); the flag has no Zero Hour handler, so EA's name is unknown."
 }
 ]

@@ -68,13 +68,16 @@ extern Int parseNoAudio(char *args[], int);
 extern Int parseXRes(char *args[], int);
 extern Int parseYRes(char *args[], int);
 extern Int parseWin(char *args[], int);
-extern Int parseScriptDebug(char *args[], int);
+extern Int Rva00060CD0_parse(char *args[], int);
 extern Int parseFullVersion(char *args[], int);
 
-static __declspec(noinline) Int parseScriptDebugLite(char **, Int) { return 1; }
-static __declspec(noinline) Int parsePreferLocalFiles(char **, Int) { return 1; }
-static __declspec(noinline) Int parseWatchdog(char **, Int) { return 1; }
-static __declspec(noinline) Int parseNoWatchdog(char **, Int) { return 1; }
+// The flags Zero Hour has no handler for (and -scriptDebug2 above) bind
+// retail's own bodies: each entry's ILT thunk lands on the body named here
+// (T3CommandLineParsers.cpp, Rva00061150Set.cpp). EA's names are unknown.
+extern Int Rva00060D00_parse(char *args[], int);
+extern int rva00061DE0Set();
+extern Int Rva00060970_parse(char *args[], int);
+extern Int Rva00060980_parse(char *args[], int);
 
 static CommandLineParam params[] =
 {
@@ -84,12 +87,12 @@ static CommandLineParam params[] =
 	{ "-xres", parseXRes },
 	{ "-yres", parseYRes },
 	{ "-win", parseWin },
-	{ "-scriptDebug2", parseScriptDebug },
-	{ "-scriptDebugLite", parseScriptDebugLite },
+	{ "-scriptDebug2", Rva00060CD0_parse },
+	{ "-scriptDebugLite", Rva00060D00_parse },
 	{ "-fullVersion", parseFullVersion },
-	{ "-preferLocalFiles", parsePreferLocalFiles },
-	{ "-Watchdog", parseWatchdog },
-	{ "-noWatchdog", parseNoWatchdog }
+	{ "-preferLocalFiles", (CommandLineHandler)rva00061DE0Set },
+	{ "-Watchdog", Rva00060970_parse },
+	{ "-noWatchdog", Rva00060980_parse }
 };
 
 extern "C" unsigned __cdecl strlen(const char *text);

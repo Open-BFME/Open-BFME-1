@@ -129,3 +129,17 @@ as the sections above found by hand. No flagtable name contradicts a
 ledger name. `-panoramicSlices`, `-scriptDebug2`, `-scriptDebugLite`,
 `-preferLocalFiles`, `-Watchdog` and `-noWatchdog` have no Zero Hour handler,
 so their bodies keep address names.
+
+## ParseCommandLine.cpp's table
+
+`game/GameEngine/Source/Common/ParseCommandLine.cpp` rebuilds this table for
+`parseCommandLine` (0x00063BA0). It bound `-scriptDebug2` to Zero Hour's
+`parseScriptDebug` and the other four BFME flags to TU-local stand-ins
+(`parseScriptDebugLite`, `parsePreferLocalFiles`, `parseWatchdog`,
+`parseNoWatchdog`, each `return 1`). Retail's entries land elsewhere (first
+table): `-scriptDebug2` on 0x00060CD0, `-scriptDebugLite` on 0x00060D00,
+`-preferLocalFiles` on 0x00061DE0, `-Watchdog` on 0x00060970 and
+`-noWatchdog` on 0x00060980, all matched rows. Zero Hour's `parseScriptDebug`
+belongs to `-scriptDebug`, which WorldBuilder's table pairs with the
+0x00060CA0 shape, not 0x00060CD0. The table now names the bodies retail
+binds. Their identities are unknown, so they keep address names.
