@@ -11338,5 +11338,25 @@
   "after_sha256": "55646609e285ad183c7fb8fdb9baa4ff61e0aba0692102cca031c2a504ffeb14",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
- }
+ },
+{
+ "old_path": "game/GameEngine/Source/Common/Bfme/Rva009EF6D0.cpp",
+ "new_path": "game/Libraries/Source/assetmanager/Rva009EF6D0.cpp",
+ "old_name": "copy",
+ "new_name": "Rva009EF6D0",
+ "before_sha256": "5c31dcdde47a63d680bd9418b727f9bc6b8b6628236e6c9916f9ef97b1fed475",
+ "after_sha256": "b05753196664183dd39748ff41fa4d19575cfafdfbdebef9121d93915cf35974",
+ "evidence": "targets/game/reverse/identity_evidence/009ebf90-result-view.md",
+ "reason": "The old pointer-to-registry output was cast to an independently witnessed 20-byte result. Native wrapper and callee operands require one typed result view. The original method declaration is unknown; full-RVA method spelling removes the unproven name while preserving the actual tree-copy operation."
+},
+{
+ "old_path": "targets/game/reverse/functions.csv",
+ "new_path": "targets/game/reverse/functions.csv",
+ "old_name": "copy",
+ "new_name": "Rva009EF6D0",
+ "before_sha256": "a756cdc02868772db9b5a1ea9251f1442d77fd753cd531e87389c327f3f5bc23",
+ "after_sha256": "4297644905407d0416882e62cac0631bc0907c8bbe6c5e6c9add1ccf991ba644",
+ "evidence": "targets/game/reverse/identity_evidence/009ebf90-result-view.md",
+ "reason": "Same-address result ABI correction: 009EBF90 constructs a 20-byte result; 009EF6D0 copies a 12-byte tree to its output plus word/byte fields, rather than returning a registry object. Native method identity remains unknown and retains the full address."
+}
 ]
