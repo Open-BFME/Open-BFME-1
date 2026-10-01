@@ -424,6 +424,7 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;
+extern unsigned int g_dword010EAD50;
 extern unsigned int g_lastPacketRouterStallFrame;
 extern int FRAMES_TO_KEEP;
 
@@ -810,84 +811,33 @@ public:
 	void update(void *conMgr);
 };
 
-__declspec(naked) Bool BFMEConnectionManager::isPlayerConnectedDefaultTimeout(int playerID)
+Bool BFMEConnectionManager::isPlayerConnectedDefaultTimeout(int playerID)
 {
-	__asm {
-		mov eax, dword ptr [esp+04h]
-		cmp eax, dword ptr [ecx+12028h]
-		jne notLocalPlayer
-		mov al, 1
-		ret 4
-notLocalPlayer:
-		push esi
-		mov esi, dword ptr [ecx+eax*4+04h]
-		test esi, esi
-		je connected
-		mov eax, dword ptr [esi+34Ch]
-		test eax, eax
-		jne testTimeout
-		__emit 0FFh
-		__emit 015h
-		__emit 044h
-		__emit 095h
-		__emit 035h
-		__emit 001h
-		mov dword ptr [esi+34Ch], eax
-connected:
-		mov al, 1
-		pop esi
-		ret 4
-testTimeout:
-		__emit 0FFh
-		__emit 015h
-		__emit 044h
-		__emit 095h
-		__emit 035h
-		__emit 001h
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h
-		mov edx, dword ptr [ecx+3Ch]
-		__emit 03Bh
-		__emit 015h
-		__emit 050h
-		__emit 0ADh
-		__emit 00Eh
-		__emit 001h
-		jb earlyFrameTimeout
-		mov edx, dword ptr [esi+34Ch]
-		__emit 08Bh
-		__emit 00Dh
-		__emit 0C8h
-		__emit 0D5h
-		__emit 02Eh
-		__emit 001h
-		mov ecx, dword ptr [ecx+0CBCh]
-		sub eax, edx
-		cmp ecx, eax
-		sbb al, al
-		inc al
-		pop esi
-		ret 4
-earlyFrameTimeout:
-		__emit 08Bh
-		__emit 015h
-		__emit 0C8h
-		__emit 0D5h
-		__emit 02Eh
-		__emit 001h
-		mov ecx, dword ptr [edx+0CBCh]
-		sub eax, dword ptr [esi+34Ch]
-		shl ecx, 2
-		cmp ecx, eax
-		sbb al, al
-		inc al
-		pop esi
-		ret 4
+	if (playerID == m_localSlot)
+		return true;
+
+	Connection *connection = m_connections[playerID];
+	if (!connection)
+		return true;
+
+	if (!connection->m_lastHeardFrom) {
+		connection->m_lastHeardFrom = timeGetTime();
+		return true;
 	}
+
+	unsigned int now = timeGetTime();
+	if (TheGameLogic->frame >= g_dword010EAD50) {
+		unsigned int last = connection->m_lastHeardFrom;
+		unsigned int limit = *reinterpret_cast<volatile unsigned int *>(
+			reinterpret_cast<char *>(TheWritableGlobalData) + 0xCBC);
+		now -= last;
+		return limit >= now ? true : false;
+	}
+
+	unsigned int limit = *reinterpret_cast<unsigned int *>(
+		reinterpret_cast<char *>(TheWritableGlobalData) + 0xCBC) * 4;
+	now -= connection->m_lastHeardFrom;
+	return limit >= now ? true : false;
 }
 
 __declspec(naked) Bool BFMEConnectionManager::isPlayerConnectedForTimeout(int playerID, unsigned int timeout)
