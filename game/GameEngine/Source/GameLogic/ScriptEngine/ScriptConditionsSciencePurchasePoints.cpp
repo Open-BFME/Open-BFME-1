@@ -28,7 +28,11 @@ public:
 	int bfmeNext1089(int a);
 };
 
-extern BfmeD1089 *g_bfmeD1089;
+// Retail 0x00EED748 is ThePlayerList (see game_engine_subsystems.h), so the
+// global is spelled with its defining name; the BfmeD1089 surface below is only
+// the stand-in for the PlayerList methods this body calls.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern BfmeP1089 *g_bfmeP1089;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
@@ -58,7 +62,7 @@ bool ScriptConditions::evaluateSciencePurchasePoints(
 	pointsParm = reinterpret_cast<Parameter *>(
 		g_bfmeP1089->bfmeNext1089(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(pointsParm)) {
-		BfmeR1089 *r = g_bfmeD1089->bfmeLook1089(
+		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089(
 			reinterpret_cast<short *>(&pointsParm));
 
 		if (r && r->m_bfme264 >= n)
@@ -71,7 +75,7 @@ char __stdcall bfmeGo1089B(int a)
 {
 	a = g_bfmeP1089->bfmeNext1089(a);
 	while ((short)a) {
-		BfmeR1089 *r = g_bfmeD1089->bfmeLook1089((short *)&a);
+		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);
 
 		if (r && r->bfmeChk1089())
 			return 1;
@@ -86,7 +90,7 @@ char __stdcall bfmeGo1089C(BfmeT1089 *t, int a)
 	a = g_bfmeP1089->bfmeNext1089(a);
 	n = 0;
 	while ((short)a) {
-		BfmeR1089 *r = g_bfmeD1089->bfmeLook1089((short *)&a);
+		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);
 
 		if (r)
 			n += r->bfmeVal1089();
