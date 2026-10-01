@@ -27,7 +27,7 @@ class GameWindow
 {
 public:
 	void *winGetUserData(void);							///< ILT thunk at 0x00046538
-	void winHide(unsigned char hide);					// matches the pin already in symbols.csv							///< ILT thunk at 0x00027F2A
+	Int winHide(Bool hide);								///< ?winHide@GameWindow@@QAEH_N@Z (returns Int, takes Bool)
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
