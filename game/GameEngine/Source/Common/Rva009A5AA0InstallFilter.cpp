@@ -12,7 +12,7 @@
 extern void __cdecl bfmeInstallCpuDispatchTable(void);
 typedef void (__cdecl *Rva009A5AA0TierInstaller)(int);
 
-extern const unsigned char g_bfmeClampTable[];	// retail 0x01356FE0 (zero point)
+extern unsigned char g_bfmeClampTable[];	// retail 0x01356EE0; zero point at +256
 extern const unsigned int *g_rva01356AA0;
 extern const unsigned int *g_rva01356A98;
 extern const void *g_rva01356A88;
@@ -29,7 +29,7 @@ extern int g_rva012D7A58[64];
 
 void __cdecl Rva009A5AA0InstallFilter(void *firstTable, void *secondTable, void *sourceTable, int tier)
 {
-	unsigned char *clamp = (unsigned char *)g_bfmeClampTable;
+	unsigned char *clamp = g_bfmeClampTable + 256;
 	int i;
 	for (i = -256; i < 512; ++i)
 	{

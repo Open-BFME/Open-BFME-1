@@ -10,7 +10,7 @@
 // length; MSVC unrolls both four deep.  The matching horizontal-edge pair
 // walks columns at 0x009AFA60 (eight) and 0x009AFEC0 (twelve).
 
-extern const unsigned char g_bfmeClampTable[];		// retail 0x01356FE0 (zero point)
+extern unsigned char g_bfmeClampTable[];		// retail 0x01356EE0; zero point at +256
 extern int *g_bfmeFilterLimit;						// retail 0x01356A7C
 
 #define BFME_LIMIT_ADJUST(v, t)		\
@@ -36,8 +36,8 @@ void Rva009AF840FilterVert(int index, unsigned char *ptr, int stride)
 	for (int i = 0; i < 8; ++i) {
 		int v = ((ptr[-2] - ptr[1]) + 3 * (ptr[0] - ptr[-1]) + 4) >> 3;
 		BFME_LIMIT_ADJUST(v, t)
-		ptr[-1] = g_bfmeClampTable[ptr[-1] + v];
-		ptr[0] = g_bfmeClampTable[ptr[0] - v];
+		ptr[-1] = g_bfmeClampTable[ptr[-1] + v + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - v + 256];
 		ptr += stride;
 	}
 }
@@ -49,8 +49,8 @@ void Rva009AFCA0FilterVert(int index, unsigned char *ptr, int stride)
 	for (int i = 0; i < 12; ++i) {
 		int v = ((ptr[-2] - ptr[1]) + 3 * (ptr[0] - ptr[-1]) + 4) >> 3;
 		BFME_LIMIT_ADJUST(v, t)
-		ptr[-1] = g_bfmeClampTable[ptr[-1] + v];
-		ptr[0] = g_bfmeClampTable[ptr[0] - v];
+		ptr[-1] = g_bfmeClampTable[ptr[-1] + v + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - v + 256];
 		ptr += stride;
 	}
 }
@@ -64,8 +64,8 @@ void Rva009AFA60FilterHoriz(int index, unsigned char *ptr, int stride)
 		int v = ((*(const unsigned char *)((-2 * s) + (unsigned int)ptr) - ptr[stride])
 			+ 3 * (ptr[0] - ptr[-stride]) + 4) >> 3;
 		BFME_LIMIT_ADJUST(v, t)
-		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + v];
-		ptr[0] = g_bfmeClampTable[ptr[0] - v];
+		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + v + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - v + 256];
 		++ptr;
 	}
 }
@@ -79,8 +79,8 @@ void Rva009AFEC0FilterHoriz(int index, unsigned char *ptr, int stride)
 		int v = ((*(const unsigned char *)((-2 * s) + (unsigned int)ptr) - ptr[stride])
 			+ 3 * (ptr[0] - ptr[-stride]) + 4) >> 3;
 		BFME_LIMIT_ADJUST(v, t)
-		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + v];
-		ptr[0] = g_bfmeClampTable[ptr[0] - v];
+		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + v + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - v + 256];
 		++ptr;
 	}
 }

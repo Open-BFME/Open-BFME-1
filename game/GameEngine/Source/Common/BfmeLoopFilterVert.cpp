@@ -6,7 +6,7 @@
 // and every write goes through the saturating clamp table at 0x01356FE0.
 // Twin of the horizontal-edge copies at 0x009B3560 and 0x009B3710.
 
-extern const unsigned char g_bfmeClampTable[];			// retail 0x01356FE0 (zero point)
+extern unsigned char g_bfmeClampTable[];			// retail 0x01356EE0; zero point at +256
 
 void Rva009B3650FilterVert(void *, unsigned char *ptr, int stride, const int *bounding)
 {
@@ -45,13 +45,13 @@ steep:
 
 filter:
 		delta = bounding[(value + 4) >> 3];
-		ptr[1] = g_bfmeClampTable[ptr[1] + delta];
-		ptr[2] = g_bfmeClampTable[ptr[2] - delta];
+		ptr[1] = g_bfmeClampTable[ptr[1] + delta + 256];
+		ptr[2] = g_bfmeClampTable[ptr[2] - delta + 256];
 
 		if (flag == 0) {
 			delta >>= 1;
-			ptr[0] = g_bfmeClampTable[ptr[0] + delta];
-			ptr[3] = g_bfmeClampTable[ptr[3] - delta];
+			ptr[0] = g_bfmeClampTable[ptr[0] + delta + 256];
+			ptr[3] = g_bfmeClampTable[ptr[3] - delta + 256];
 		}
 
 		ptr += stride;

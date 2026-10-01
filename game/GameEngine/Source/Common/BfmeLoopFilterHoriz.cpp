@@ -8,7 +8,7 @@
 // Retail carries two byte-identical copies of this routine, at 0x009B3560 and
 // 0x009B3710.  Neither call site names it, so both keep address-derived names.
 
-extern const unsigned char g_bfmeClampTable[];			// retail 0x01356FE0 (zero point)
+unsigned char g_bfmeClampTable[768];			// retail 0x01356EE0; zero point at +256
 
 void Rva009B3560FilterHoriz(void *, unsigned char *ptr, int stride, const int *bounding)
 {
@@ -41,13 +41,13 @@ steep:
 
 filter:
 		delta = bounding[(value + 4) >> 3];
-		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + delta];
-		ptr[0] = g_bfmeClampTable[ptr[0] - delta];
+		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + delta + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - delta + 256];
 
 		if (flag == 0) {
 			int half = delta >> 1;
-			ptr[-2 * stride] = g_bfmeClampTable[ptr[-2 * stride] + half];
-			ptr[stride] = g_bfmeClampTable[ptr[stride] - half];
+			ptr[-2 * stride] = g_bfmeClampTable[ptr[-2 * stride] + half + 256];
+			ptr[stride] = g_bfmeClampTable[ptr[stride] - half + 256];
 		}
 
 		++ptr;
@@ -85,13 +85,13 @@ steep:
 
 filter:
 		delta = bounding[(value + 4) >> 3];
-		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + delta];
-		ptr[0] = g_bfmeClampTable[ptr[0] - delta];
+		ptr[-stride] = g_bfmeClampTable[ptr[-stride] + delta + 256];
+		ptr[0] = g_bfmeClampTable[ptr[0] - delta + 256];
 
 		if (flag == 0) {
 			int half = delta >> 1;
-			ptr[-2 * stride] = g_bfmeClampTable[ptr[-2 * stride] + half];
-			ptr[stride] = g_bfmeClampTable[ptr[stride] - half];
+			ptr[-2 * stride] = g_bfmeClampTable[ptr[-2 * stride] + half + 256];
+			ptr[stride] = g_bfmeClampTable[ptr[stride] - half + 256];
 		}
 
 		++ptr;

@@ -10105,7 +10105,7 @@ name,va
 ?g_bfmeCfgUKD@@3PAUBfmeCfgUKD@@A,0x012ED524
 ?g_bfmeCh1035@@3DA,0x0134ECC8
 ?g_bfmeChatColor@@3HA,0x012B73F8
-?g_bfmeClampTable@@3QBEB,0x01356FE0
+?g_bfmeClampTable@@3PAEA,0x01356EE0
 ?g_bfmeClientETE@@3PAVBfmeClientETE@@A,0x012F1464
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x012F1B40
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x012F1B40
