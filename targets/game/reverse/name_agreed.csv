@@ -247,3 +247,6 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfm
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntry00198A10,SidesInfo,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,SidesList,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field00,m_pBuildList,claude-opus+gemini,agreed,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntry00198A10,SidesInfo,gemini+grok,blocked: game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp: game\GameEngine\Source\GameLogic\Map\BuildListsWriter00198A10.cpp(13) : error C2011,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,SidesList,gemini+grok,blocked: game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp: game\GameEngine\Source\GameLogic\Map\BuildListsWriter00198A10.cpp(13) : error C2011,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field00,m_pBuildList,claude-opus+gemini,blocked: game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp: game\GameEngine\Source\GameLogic\Map\BuildListsWriter00198A10.cpp(13) : error C2011,2026-10-01
