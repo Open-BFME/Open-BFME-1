@@ -18,7 +18,11 @@ public:
 	void bfmeForgetCC(void *owner);
 };
 
-extern BfmeRegistryCC *g_bfmeRegistryCC;			// retail 0x012F1270
+// Retail 0x012F1270 is EA's `Display *TheDisplay` (defined in
+// game/GameEngine/Source/GameClient/Display.cpp).  The registry call is reached
+// through the local view, so the cast happens at the use.
+class Display;
+extern Display *TheDisplay;
 
 class BfmeBaseCC
 {
@@ -43,6 +47,6 @@ BfmeOwnerCC::~BfmeOwnerCC(void)
 {
 	bfmeCleanupCC();
 
-	if (g_bfmeRegistryCC != 0)
-		g_bfmeRegistryCC->bfmeForgetCC(this);
+	if (TheDisplay != 0)
+		((BfmeRegistryCC *)TheDisplay)->bfmeForgetCC(this);
 }

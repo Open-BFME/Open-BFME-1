@@ -53,7 +53,11 @@ public:
 	}
 };
 
-extern void *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  Only the null test is
+// observed here, so the forward declaration is all this TU needs.
+class Display;
+extern Display *TheDisplay;
 extern int g_bfmeGateBT;
 extern volatile int g_bfmeProbeBT;
 extern ShroudTexture g_bfmeCurrentCZ;

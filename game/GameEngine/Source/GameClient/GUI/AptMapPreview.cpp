@@ -79,7 +79,7 @@ public:
 	virtual void bfmeEndBatch();
 };
 
-extern Display * const TheDisplay;
+extern Display *TheDisplay;
 
 class S4Holder0046DBB0
 {

@@ -21,7 +21,11 @@ public:
 	virtual void releaseOwner(void);
 };
 
-extern Rva00491DB0Display *TheDisplay;
+// Retail's 0x012F1270 global is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  The vtable slot reached here
+// is observed through the local view class, so the cast happens at the use.
+class Display;
+extern Display *TheDisplay;
 
 class Rva00491DB0String
 {
@@ -49,5 +53,5 @@ private:
 
 Rva00491DB0DisplayOwner::~Rva00491DB0DisplayOwner()
 {
-	TheDisplay->releaseOwner();
+	((Rva00491DB0Display *)TheDisplay)->releaseOwner();
 }

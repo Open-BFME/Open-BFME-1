@@ -183,7 +183,11 @@ public:
 extern GameTextInterface *TheGameText;
 extern FontLibrary *TheFontLibrary;
 extern GlobalLanguageData *TheGlobalLanguageData;
-extern BFMERetailDisplayVTable *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  The cinematic slots are
+// observed through the local vtable view, so the cast happens at each use.
+class Display;
+extern Display *TheDisplay;
 
 class ScriptActions
 {
@@ -198,7 +202,7 @@ void ScriptActions::doDisplayCinematicText(const AsciiString &displayText,
 	UnicodeString uStr = TheGameText->fetch(displayText);
 	AsciiString aStr;
 	aStr.translate(uStr);
-	TheDisplay->setCinematicText(aStr);
+	((BFMERetailDisplayVTable *)TheDisplay)->setCinematicText(aStr);
 
 	AsciiString fontName = AsciiString::TheEmptyString;
 	char buf[256];
@@ -231,8 +235,8 @@ void ScriptActions::doDisplayCinematicText(const AsciiString &displayText,
 
 	GameFont *font = TheFontLibrary->getFont(&fontName,
 		(Real)TheGlobalLanguageData->adjustFontSize(size), bold);
-	TheDisplay->setCinematicFont(font);
+	((BFMERetailDisplayVTable *)TheDisplay)->setCinematicFont(font);
 
 	Int frames = 5 * timeInSeconds;
-	TheDisplay->setCinematicTextFrames(frames);
+	((BFMERetailDisplayVTable *)TheDisplay)->setCinematicTextFrames(frames);
 }
