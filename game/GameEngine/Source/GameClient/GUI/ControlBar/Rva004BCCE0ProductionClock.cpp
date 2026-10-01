@@ -31,7 +31,7 @@
 
 class GameWindow;
 class Object;
-class BfmeThingLU;
+class ThingTemplate;
 
 class GameWindow
 {
@@ -118,7 +118,7 @@ public:
 	BFME_PUI_SLOT( 06 ) BFME_PUI_SLOT( 07 ) BFME_PUI_SLOT( 08 )
 	BFME_PUI_SLOT( 09 ) BFME_PUI_SLOT( 10 ) BFME_PUI_SLOT( 11 )
 	BFME_PUI_SLOT( 12 ) BFME_PUI_SLOT( 13 ) BFME_PUI_SLOT( 14 )
-	virtual void *slot15( BfmeThingLU *thing ) = 0;
+	virtual void *slot15( ThingTemplate *thing ) = 0;
 	BFME_PUI_SLOT( 16 )
 	virtual void *slot17( void *mask ) = 0;
 	virtual Rva0029BBC0 *slot18( void ) = 0;
@@ -165,7 +165,7 @@ public:
 class BfmeOwnerLU
 {
 public:
-	BfmeThingLU *getThingTemplate( void );
+	ThingTemplate *getThingTemplate( void );
 };
 
 class ControlBar

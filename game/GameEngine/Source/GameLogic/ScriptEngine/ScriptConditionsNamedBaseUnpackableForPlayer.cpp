@@ -14,7 +14,7 @@ class Parameter;
 class Player;
 class Object;
 class Module;
-class BfmeThingLU;
+class ThingTemplate;
 
 class ScriptEngine
 {
@@ -115,7 +115,7 @@ class CommandButtonResolveTarget
 {
 };
 
-typedef BfmeThingLU *(CommandButtonResolveTarget::*ResolveCommandButtonCall)(void);
+typedef ThingTemplate *(CommandButtonResolveTarget::*ResolveCommandButtonCall)(void);
 
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
@@ -161,7 +161,7 @@ Bool ScriptConditions::evaluateNamedBaseUnpackableForPlayer(
 									ResolveCommandButtonCall member;
 								} resolveCommandButton;
 								resolveCommandButton.raw = j_000205cc;
-								BfmeThingLU *thing =
+								ThingTemplate *thing =
 									(reinterpret_cast<CommandButtonResolveTarget *>(
 										const_cast<CommandButton *>(button))->*
 									resolveCommandButton.member)();

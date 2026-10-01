@@ -78500,7 +78500,7 @@ name,address,notes
 ?bfmeResolveKZ@BfmeInnerKZ@@QAEPAVBfmeThingKZ@@XZ,0x000022BB,pin
 ?bfmeResolveKZ@Rva0015A5B0Inner@@QAEPAVRva0015A5B0Thing@@XZ,0x000022BB,pin resolve thunk for Rva0015A5B0Sum override walk
 ?bfmeResolveLP@BfmeInnerLP@@QAEPAVBfmeThingLP@@XZ,0x000022BB,pin
-?bfmeResolveLU@BfmeInnerLU@@QAEPAVBfmeThingLU@@XZ,0x000022BB,pin
+?bfmeResolveLU@Overridable@@QAEPAVThingTemplate@@XZ,0x000022BB,pin
 ?bfmeResolveLW@BfmeInnerLW@@QAEPAVBfmeThingLW@@XZ,0x000022BB,pin
 ?bfmeResolveMD@BfmeInnerMD@@QAEPAVBfmeThingMD@@XZ,0x000022BB,pin
 ?bfmeResolveMR@BfmeInnerMR@@QAEPAVBfmeKeyMR@@XZ,0x000022BB,pin

@@ -1,24 +1,24 @@
-class BfmeThingLU;
+class ThingTemplate;
 
-class BfmeInnerLU
+class Overridable
 {
 public:
-	BfmeThingLU *bfmeResolveLU(void);
+	ThingTemplate *bfmeResolveLU(void);
 };
 
-class BfmeThingLU
+class ThingTemplate
 {
 public:
 	int m_bfmeSpareLU;
-	BfmeInnerLU *m_nextOverride;
+	Overridable *m_nextOverride;
 };
 
 class BfmeOwnerLU
 {
 public:
-	BfmeThingLU *bfmeThingLU(void)
+	ThingTemplate *bfmeThingLU(void)
 	{
-		BfmeThingLU *thing = m_bfmeSlotLU;
+		ThingTemplate *thing = m_bfmeSlotLU;
 
 		if (thing && thing->m_nextOverride)
 			thing = thing->m_nextOverride->bfmeResolveLU();
@@ -26,18 +26,18 @@ public:
 		return thing;
 	}
 
-	BfmeThingLU *getThingTemplate(void);
+	ThingTemplate *getThingTemplate(void);
 
 	unsigned char m_bfmeHeadLU[0x1c];
-	BfmeThingLU *m_bfmeSlotLU;
+	ThingTemplate *m_bfmeSlotLU;
 };
 
-BfmeThingLU *BfmeOwnerLU::getThingTemplate(void)
+ThingTemplate *BfmeOwnerLU::getThingTemplate(void)
 {
 	if (!bfmeThingLU())
 		return 0;
 
-	BfmeThingLU *thing = bfmeThingLU();
+	ThingTemplate *thing = bfmeThingLU();
 
 	if (thing->m_nextOverride)
 		return thing->m_nextOverride->bfmeResolveLU();

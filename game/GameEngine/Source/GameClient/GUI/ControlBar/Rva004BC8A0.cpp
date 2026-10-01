@@ -9,7 +9,7 @@ class GameWindow;
 class Drawable;
 class Object;
 class CommandButton;
-class BfmeThingLU;
+class ThingTemplate;
 
 struct BfmeUpgradeMask
 {
@@ -63,7 +63,7 @@ public:
 	BFME_PUI_SLOT( 06 ) BFME_PUI_SLOT( 07 ) BFME_PUI_SLOT( 08 )
 	BFME_PUI_SLOT( 09 ) BFME_PUI_SLOT( 10 ) BFME_PUI_SLOT( 11 )
 	BFME_PUI_SLOT( 12 ) BFME_PUI_SLOT( 13 ) BFME_PUI_SLOT( 14 )
-	virtual void *slot15( BfmeThingLU *thing ) = 0;
+	virtual void *slot15( ThingTemplate *thing ) = 0;
 	BFME_PUI_SLOT( 16 )
 	virtual void *slot17( BfmeUpgradeMask *mask ) = 0;
 #undef BFME_PUI_SLOT
@@ -87,7 +87,7 @@ struct UpgradeMaskCallTarget {};
 
 typedef void *(GameWindowCallTarget::*GetUserDataCall)( void );
 typedef ProductionUpdateInterface *(ObjectCallTarget::*GetProductionUpdateInterfaceCall)( void );
-typedef BfmeThingLU *(CommandButtonCallTarget::*ResolveCommandButtonCall)( void );
+typedef ThingTemplate *(CommandButtonCallTarget::*ResolveCommandButtonCall)( void );
 typedef void (CommandButtonCallTarget::*FillUpgradeMaskCall)( BfmeUpgradeMask * );
 typedef Bool (UpgradeMaskCallTarget::*AnyOccupiedCall)( void ) const;
 
@@ -140,7 +140,7 @@ void Rva004BC8A0( GameWindow *window )
 		ResolveCommandButtonCall member;
 	} resolveCommandButton;
 	resolveCommandButton.raw = j_000205cc;
-	BfmeThingLU *thing =
+	ThingTemplate *thing =
 		(reinterpret_cast<CommandButtonCallTarget *>( command )->*
 		resolveCommandButton.member)();
 	if( thing == 0 )
