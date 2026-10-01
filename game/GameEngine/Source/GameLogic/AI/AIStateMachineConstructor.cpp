@@ -36,9 +36,11 @@ class StateMachine
 {
   public:
     StateMachine(Object *, AsciiString, bool = false);
-    virtual ~StateMachine();
 
   protected:
+    // retail's StateMachine destructor is protected: ??1StateMachine@@MAE@XZ
+    virtual ~StateMachine();
+
     void defineState(unsigned int, State *, unsigned int, unsigned int,
                      const StateConditionInfo * = 0);
     char m_04[0x40];

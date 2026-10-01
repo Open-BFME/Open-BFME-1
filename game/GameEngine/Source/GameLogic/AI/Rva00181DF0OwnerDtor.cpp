@@ -43,12 +43,16 @@ struct Rva00181DF0Owned
 	virtual ~Rva00181DF0Owned();
 };
 
-struct Rva00031D5ETailBase
+// 0x00031D5E is retail's ILT to the matched StateMachine destructor
+// (??1StateMachine@@MAE@XZ at 0x000A1130); the base is retail's real
+// StateMachine, whose destructor is protected.
+class StateMachine
 {
-	virtual ~Rva00031D5ETailBase();
+protected:
+	virtual ~StateMachine();
 };
 
-class Rva00181DF0Owner : public Rva00031D5ETailBase
+class Rva00181DF0Owner : public StateMachine
 {
 public:
 	virtual ~Rva00181DF0Owner();

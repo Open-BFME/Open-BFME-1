@@ -25,9 +25,11 @@ class StateMachine
 {
 public:
     StateMachine(Object *owner, AsciiString name, bool flag);
-    virtual ~StateMachine();
 
 protected:
+    // retail's StateMachine destructor is protected: ??1StateMachine@@MAE@XZ
+    virtual ~StateMachine();
+
     void defineState(StateID id, State *state, StateID successID,
         StateID failureID, const StateConditionInfo *conditions);
 
