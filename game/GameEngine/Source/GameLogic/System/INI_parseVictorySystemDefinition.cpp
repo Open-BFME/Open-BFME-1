@@ -51,16 +51,18 @@ public:
 	}
 };
 
+struct FieldParse;
+
 class INI
 {
 public:
 	const char *getNextToken(const char *separators = 0);
-	void initFromINI(void *instance, const void *fieldParse);
+	void initFromINI(void *instance, const FieldParse *fieldParse);
 };
 
 class VictorySystem;
 extern VictorySystem *TheVictorySystem;
-extern const char g_0109FC28[]; // VictorySystem field-parse table
+extern const FieldParse g_0109FC28[]; // VictorySystem field-parse table
 
 class Debug
 {

@@ -22,10 +22,12 @@
 #include <list>
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
+struct FieldParse;
+
 class INI
 {
 public:
-	void initFromINI(void *, const void *);
+	void initFromINI(void *, const FieldParse *);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
@@ -72,8 +74,8 @@ private:
 	friend class ControlBarSchemeManager;
 };
 
-extern const unsigned char g_controlBarSchemeImageFieldParse[];
-extern const unsigned char g_controlBarSchemeAnimationFieldParse[];
+extern const FieldParse g_controlBarSchemeImageFieldParse[];
+extern const FieldParse g_controlBarSchemeAnimationFieldParse[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
 class ControlBarSchemeManager

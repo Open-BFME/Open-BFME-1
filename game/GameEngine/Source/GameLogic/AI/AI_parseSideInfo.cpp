@@ -74,11 +74,13 @@ private:
 	char *m_data;
 };
 
+struct FieldParse;
+
 class INI
 {
 public:
 	const char *getNextToken(const char *separators = 0);
-	void initFromINI(void *instance, const void *fieldParse);
+	void initFromINI(void *instance, const FieldParse *fieldParse);
 	static void parseInt(INI *, void *, void *, const void *);
 	static void parseAsciiString(INI *, void *, void *, const void *);
 };

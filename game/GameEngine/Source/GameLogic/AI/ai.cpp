@@ -525,18 +525,13 @@ public:
 
 extern "C" AIParseDefinitionAIShim *TheAIParseDefinitionAI;
 
-// Linked-build debt: the second initFromINI argument is the address of the AI
-// FieldParse table at 0x01094B00 (the row the parseTarget work at retail
-// 0x0014C8E0 identified by content), not a computed value.
-// dir32_addresses.csv records no name for it, so keep the address-derived one.
-// The body only passes the base, so an opaque array of one record is enough.
-extern const char g_01094B00[];
-
-class AIParseDefinitionINIShim
-{
-public:
-	void initFromINI(void *data, const void *fieldParse);
-};
+// The second initFromINI argument is the address of the AI FieldParse table
+// at 0x01094B00 (the row the parseTarget work at retail 0x0014C8E0 identified
+// by content), not a computed value. dir32_addresses.csv records no name for
+// it, so keep the address-derived one. The body only passes the base, so an
+// opaque array of one record is enough. INI::initFromINI itself is declared by
+// Common/INI/INI.h, so this call no longer needs a stand-in class.
+extern const FieldParse g_01094B00[];
 
 void AI::parseAiDataDefinition(INI *ini)
 {
@@ -545,7 +540,7 @@ void AI::parseAiDataDefinition(INI *ini)
 	if (*(int *)((unsigned char *)ini + 8) == 2)
 		TheAIParseDefinitionAI->newOverride();
 	void *data = TheAIParseDefinitionAI->data;
-	((AIParseDefinitionINIShim *)ini)->initFromINI(data, g_01094B00);
+	ini->initFromINI(data, g_01094B00);
 }
 //--------------------------------------------------------------------------------------------------------
 /**

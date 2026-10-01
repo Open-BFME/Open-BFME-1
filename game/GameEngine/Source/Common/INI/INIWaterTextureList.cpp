@@ -68,11 +68,13 @@ public:
 	}
 };
 
+struct FieldParse;
+
 class INI
 {
 public:
 	const char *getNextToken(const char *separators = 0);
-	void initFromINI(void *instance, const void *fieldParse);
+	void initFromINI(void *instance, const FieldParse *fieldParse);
 
 	static void parseWaterTextureListDefinition(INI *ini);
 };
@@ -163,7 +165,7 @@ public:
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern Rva000AF530Table *g_012ED648;
-extern const char g_0108132C[];
+extern const FieldParse g_0108132C[];
 extern void _bfme_debugRecordCallsite(int kind);
 
 void INI::parseWaterTextureListDefinition(INI *ini)

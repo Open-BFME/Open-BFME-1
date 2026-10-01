@@ -5,10 +5,12 @@
 #include <list>
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
+struct FieldParse;
+
 class INI
 {
 public:
-	void initFromINI(void *, const void *);
+	void initFromINI(void *, const FieldParse *);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
@@ -53,8 +55,8 @@ private:
 	friend class ShellMenuSchemeManager;
 };
 
-extern const unsigned char g_shellMenuSchemeImageFieldParse[];
-extern const unsigned char g_shellMenuSchemeLineFieldParse[];
+extern const FieldParse g_shellMenuSchemeImageFieldParse[];
+extern const FieldParse g_shellMenuSchemeLineFieldParse[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager

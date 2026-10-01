@@ -10,11 +10,13 @@
 #include "ascii_string.h"
 #include <list>
 
+struct FieldParse;
+
 class INI
 {
 public:
 	const char *getNextToken( const char *separators = 0 );
-	void initFromINI( void *instance, const void *fieldParse );
+	void initFromINI( void *instance, const FieldParse *fieldParse );
 };
 
 struct Gen_t_0014bd80_p8cd
@@ -47,7 +49,7 @@ public:
 	AINamedListNode *m_namedLists;
 };
 
-extern const char g_010959F4[];
+extern const FieldParse g_010959F4[];
 
 class AI
 {

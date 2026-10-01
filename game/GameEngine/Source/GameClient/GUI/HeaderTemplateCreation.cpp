@@ -40,8 +40,10 @@ public:
 
 typedef char AsciiStringSizeCheck[(sizeof(AsciiString) == 4) ? 1 : -1];
 
+struct FieldParse;
+
 class GameFont;
-extern const unsigned char g_010F9830[];
+extern const FieldParse g_010F9830[];
 
 class HeaderTemplate
 {
@@ -63,7 +65,7 @@ public:
 	HeaderTemplate *newHeaderTemplate( AsciiString name );
 
 	// The owning table uses BFME's Font/Point/Bold offsets at +8/+C/+10.
-	const void *getFieldParse( void ) const
+	const FieldParse *getFieldParse( void ) const
 	{
 		return g_010F9830;
 	}
@@ -79,7 +81,7 @@ class INI
 {
 public:
 	const char *getNextToken( const char *separators = 0 );
-	void initFromINI( void *instance, const void *fieldParse );
+	void initFromINI( void *instance, const FieldParse *fieldParse );
 	static void parseHeaderTemplateDefinition( INI *ini );
 };
 

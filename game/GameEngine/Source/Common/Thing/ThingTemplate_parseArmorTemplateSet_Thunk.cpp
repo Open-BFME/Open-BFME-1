@@ -6,13 +6,15 @@
 #include <vector>
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
+struct FieldParse;
+
 class INI
 {
 public:
-	void initFromINI(void *, const void *);
+	void initFromINI(void *, const FieldParse *);
 };
 
-extern const unsigned char g_armorTemplateSetFieldParse[];
+extern const FieldParse g_armorTemplateSetFieldParse[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ArmorSet.h
 class ArmorTemplateSet
