@@ -15,8 +15,13 @@ class Vector3{public:float X,Y,Z;};
 class DX8Wrapper{public:static void Set_Render_Target(IDirect3DSurface8*,bool);static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned);};
 extern Device *HighlightDevice;
 extern bool HighlightRefresh;
+// Retail spells the global at 0x012ED5C8 `GlobalData *TheWritableGlobalData`;
+// this TU only reads the highlight `active` flag, so it keeps a local view of
+// that field and casts at the uses.
+class GlobalData;
 struct Settings{char p[0xdbd];bool active;};
-extern Settings *HighlightSettings;
+extern GlobalData *TheWritableGlobalData;
+static inline Settings *localHighlightSettings(){return (Settings *)TheWritableGlobalData;}
 unsigned bfmeCurrentCU();void bfmeCopyCuSnap(void*,void*);
 struct Cu {unsigned f[8];};
 class ScreenHilightFilter {
@@ -33,7 +38,7 @@ bool ScreenHilightFilter::preRender(bool &skip,int &mode){
   snap[1]=((Cu*)bfmeCurrentCU())->f[1];snap[3]=((Cu*)bfmeCurrentCU())->f[5];snap[5]=((Cu*)bfmeCurrentCU())->f[7];snap[2]=((Cu*)bfmeCurrentCU())->f[4];snap[4]=((Cu*)bfmeCurrentCU())->f[6];
   bfmeCopyCuSnap((char*)this+0x18,snap);HighlightRefresh=false;
  }
- if(HighlightSettings&&HighlightSettings->active){
+ if(localHighlightSettings()&&localHighlightSettings()->active){
   IDirect3DSurface8 *dest=surface[index+1];
   IDirect3DSurface8 *src=getBackBufferSurface006e(0).p;
   Device *dev=HighlightDevice;

@@ -37,7 +37,10 @@ struct BfmeGlobalDataFlags
 	Int m_firewallPortOverride;
 };
 
-extern BfmeGlobalDataFlags *TheWritableGlobalData;
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// reads the firewall port override, so it keeps the local field view and casts.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class NAT
 {
@@ -52,8 +55,8 @@ void NAT::generatePortNumbers(GameSlot **slotList, Int localSlot)
 {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
 		if (slotList[i] != NULL) {
-			if ((i == localSlot) && (TheWritableGlobalData->m_firewallPortOverride != 0)) {
-				UnsignedShort overridePort = (UnsignedShort)TheWritableGlobalData->m_firewallPortOverride;
+			if ((i == localSlot) && (((BfmeGlobalDataFlags *)TheWritableGlobalData)->m_firewallPortOverride != 0)) {
+				UnsignedShort overridePort = (UnsignedShort)((BfmeGlobalDataFlags *)TheWritableGlobalData)->m_firewallPortOverride;
 				GameSlotConnectInfo temp = slotList[i]->m_connectInfo;
 				temp.m_port = overridePort;
 				slotList[i]->m_connectInfo = temp;

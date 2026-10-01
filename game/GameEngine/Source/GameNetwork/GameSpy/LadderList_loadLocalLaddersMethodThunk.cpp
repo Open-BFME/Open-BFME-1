@@ -56,13 +56,17 @@ namespace rts
 
 typedef std::set<AsciiString, rts::less_than_nocase<AsciiString> > FilenameList;
 
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// calls getPath_UserData on it, so it keeps the local view and casts at the use.
+class GlobalData;
+
 class Rva006C9270GlobalData
 {
 public:
 	AsciiString getPath_UserData() const;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class FileSystem
 {
@@ -88,7 +92,8 @@ private:
 void LadderList::loadLocalLadders()
 {
 	AsciiString dirname;
-	dirname.format(AsciiString("%sLoTRB4MEOnline\\Ladders\\"), TheWritableGlobalData->getPath_UserData().str());
+	dirname.format(AsciiString("%sLoTRB4MEOnline\\Ladders\\"),
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->getPath_UserData().str());
 
 	FilenameList filenameList;
 	TheFileSystem->getFileListInDirectory(dirname, AsciiString("*.ini"), filenameList, true);

@@ -97,7 +97,11 @@ private:
 	unsigned char m_body[0x28];
 };
 
-struct GlobalData
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// reads the scroll amount cutoff, so it keeps a local view and casts at the use.
+class GlobalData;
+
+struct LocalGlobalDataView
 {
 	unsigned char m_body[0xb74];
 	float m_scrollAmountCutoff;
@@ -175,7 +179,7 @@ void W3DView::init()
 	m_2DCamera->Set_Clip_Planes(0.995f, 2.0f);
 
 	m_cameraConstraintValid = false;
-	m_scrollAmountCutoff = TheWritableGlobalData->m_scrollAmountCutoff;
+	m_scrollAmountCutoff = ((LocalGlobalDataView *)TheWritableGlobalData)->m_scrollAmountCutoff;
 	m_field24b4 = 0;
 	zoomLimits->initialize();
 }

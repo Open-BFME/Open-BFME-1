@@ -50,7 +50,11 @@ public:
 
 #pragma comment(linker, "/alternatename:?apply@Rva001F6960@@QAEXPAVS4Sink004135C0@@H@Z=?j_0002e64a@@YAXXZ")
 
-struct GlobalData
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// reads the time of day, so it keeps a local view of that field and casts.
+class GlobalData;
+
+struct LocalGlobalDataView
 {
 	char m_padding[0x218];
 	int m_timeOfDay;
@@ -102,7 +106,7 @@ UpdateSleepTime BuildingBehavior::update()
 			sink->invoke(*name, false, 1, 0, 0);
 			++name;
 		}
-		GlobalData *global = TheWritableGlobalData;
+		LocalGlobalDataView *global = (LocalGlobalDataView *)TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
@@ -117,7 +121,7 @@ UpdateSleepTime BuildingBehavior::update()
 			m_started = true;
 			for (int i = 0; i < 4; ++i)
 			{
-				if (TheWritableGlobalData->m_timeOfDay == 4 && i == 3)
+				if (((LocalGlobalDataView *)TheWritableGlobalData)->m_timeOfDay == 4 && i == 3)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
 				else if (i == 1 || i == 2)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
@@ -143,7 +147,7 @@ UpdateSleepTime BuildingBehavior::update()
 			sink->invoke(*name, false, 1, 0, 0);
 			++name;
 		}
-		GlobalData *global = TheWritableGlobalData;
+		LocalGlobalDataView *global = (LocalGlobalDataView *)TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);

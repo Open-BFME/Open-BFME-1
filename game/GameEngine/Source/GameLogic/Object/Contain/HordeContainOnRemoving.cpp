@@ -194,13 +194,17 @@ public:
 	void broadcast();
 };
 
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// reads the flag at +0xa76, so it keeps the local view and casts at the use.
+class GlobalData;
+
 struct Rva006C9270GlobalData
 {
 	char m_head00[0xa76];
 	Bool m_flagA76;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class OpenContain
 {
@@ -280,7 +284,7 @@ afterFormation:
 	if (*(Bool *)((char *)drawable + 0x3ac) == 0)
 		return;
 
-	if (TheWritableGlobalData->m_flagA76)
+	if (((Rva006C9270GlobalData *)TheWritableGlobalData)->m_flagA76)
 	{
 		Int value = ((HordeContainView *)((char *)this + 0xc4))->slot84(0);
 		((Rva00413FF0GuardedVCall *)drawable)->forward(value);

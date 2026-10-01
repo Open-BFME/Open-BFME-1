@@ -201,7 +201,11 @@ public:
 	UnsignedInt m_frame;
 };
 
-struct GlobalData
+// Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
+// reads the debug AI flag, so it keeps a local view of that field and casts.
+class GlobalData;
+
+struct LocalGlobalDataView
 {
 	char m_pad[0xA88];
 	Int m_debugAI;
@@ -381,7 +385,7 @@ void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 		m_path->appendNode(&point, layer);
 	}
 
-	if (TheWritableGlobalData->m_debugAI == 1)
+	if (((LocalGlobalDataView *)TheWritableGlobalData)->m_debugAI == 1)
 		TheAI->m_pathfinder->setDebugPath(m_path);
 
 	Coord3D direction;
