@@ -64,7 +64,11 @@ public:
 };
 
 template<int N> class BitFlags {public: _STL::bitset<N> bits;};
-extern const BitFlags<116> KINDOFMASK_NONE;
+// The linked build has ONE KINDOFMASK_NONE, defined by Common/System/KindOf.cpp;
+// this is its canonical spelling (?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B),
+// six dwords. Thing::isKindOfMulti's TU-local BitFlags<116> view is kept below
+// and the reads are cast at the use, so the same address is passed.
+extern const BitFlags<192> KINDOFMASK_NONE;
 class Thing
 {
 public:
@@ -376,8 +380,8 @@ void TransportContain::onRemoving(Object* rider) {
  const _STL::list<Object*>& passengers=*(_STL::list<Object*>*)((char*)this+0x18);
  for(_STL::list<Object*>::const_iterator it=passengers.begin();it!=passengers.end();++it) {
   Thing* passenger=(Thing*)*it;
-  if(passenger->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask180(),KINDOFMASK_NONE)) first=true;
-  else if(passenger->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask198(),KINDOFMASK_NONE)) second=true;
+  if(passenger->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask180(),(const BitFlags<116>&)KINDOFMASK_NONE)) first=true;
+  else if(passenger->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask198(),(const BitFlags<116>&)KINDOFMASK_NONE)) second=true;
  }
  if(!first) ((ExitCalls0022E340*)owner)->status(4);
  if(!second) ((ExitCalls0022E340*)owner)->status(5);

@@ -14,7 +14,12 @@ struct Rva0021FC80Mask
     Rva0021FC80Mask() {}
     explicit Rva0021FC80Mask(unsigned int bit) { bits.set(bit); }
 };
-extern const Rva0021FC80Mask Rva012ED8B8NoneMask;
+// The linked build has ONE KINDOFMASK_NONE, defined by Common/System/KindOf.cpp;
+// this is its canonical spelling (?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B) and
+// this address-derived local spelling was an unproven synonym for it.
+// Rva0021FC80Mask above stays as this file's view of the same 24 bytes.
+template<int N> class BitFlags { public: unsigned int m_bits[(N + 31) / 32]; };
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 struct Rva0039FF30Filter
 {
@@ -133,8 +138,8 @@ void Rva0039FF30Filter::setMasks(Rva0021FC80Mask first,
         return;
     }
     reinterpret_cast<RespawnPolicyMember *>(this)->setPolicies(
-        *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask),
-        *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask));
+        *reinterpret_cast<const RespawnPolicy *>(&KINDOFMASK_NONE),
+        *reinterpret_cast<const RespawnPolicy *>(&KINDOFMASK_NONE));
 }
 
 typedef char VerifyMaskSize[sizeof(Rva0021FC80Mask) == 24 ? 1 : -1];

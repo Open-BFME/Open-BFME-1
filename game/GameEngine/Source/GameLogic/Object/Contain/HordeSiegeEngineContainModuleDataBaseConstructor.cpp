@@ -6,7 +6,13 @@
 #include "ascii_string.h"
 
 class KindOfMask { public: std::bitset<181> m_bits; KindOfMask() {} };
-extern const KindOfMask KINDOFMASK_NONE;
+// The linked build has ONE KINDOFMASK_NONE, defined by
+// Common/System/KindOf.cpp; this is its canonical spelling
+// (?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B). The TU-local KindOfMask above
+// stays as this file's view of the same 24 bytes; reads go through a cast.
+template<int N> class BitFlags { public: unsigned int m_bits[(N + 31) / 32]; };
+extern const BitFlags<192> KINDOFMASK_NONE;
+static inline const KindOfMask *kindOfMaskNoneView() { return (const KindOfMask *)&KINDOFMASK_NONE; }
 class EmotionTrackerUpdateName { public: void setPolicies(KindOfMask, KindOfMask); };
 struct BfmeAttributePlainBlock { unsigned int m_values[6]; };
 class BfmeSecondPlainMember { public: void setSecondPlain(BfmeAttributePlainBlock); };
@@ -42,16 +48,16 @@ HordeSiegeEngineContainModuleDataBase::HordeSiegeEngineContainModuleDataBase() {
  m_flag1fa=1; m_flag1fb=0; m_flag1fc=0; m_flag1fd=1; m_flag1fe=0;
  m_zero16c=0; m_zero178=0; m_zero17c=0;
  m_flag1f8=1; m_flag1f9=0;
- m_accept0 = KINDOFMASK_NONE;
- m_accept1 = KINDOFMASK_NONE;
- m_accept2 = KINDOFMASK_NONE;
- m_accept3 = KINDOFMASK_NONE;
- m_accept4 = KINDOFMASK_NONE;
+ m_accept0 = *kindOfMaskNoneView();
+ m_accept1 = *kindOfMaskNoneView();
+ m_accept2 = *kindOfMaskNoneView();
+ m_accept3 = *kindOfMaskNoneView();
+ m_accept4 = *kindOfMaskNoneView();
  m_word208=-1;
- ((EmotionTrackerUpdateName*)((char*)this + 0x114))->setPolicies(KINDOFMASK_NONE,KINDOFMASK_NONE);
+ ((EmotionTrackerUpdateName*)((char*)this + 0x114))->setPolicies(*kindOfMaskNoneView(),*kindOfMaskNoneView());
  ((BfmeSecondPlainMember*)((char*)this + 0x118))->setSecondPlain(*(const BfmeAttributePlainBlock*)&KINDOFMASK_NONE);
  m_flag210=0; m_flag211=0; m_word214=0; m_word218=0;
- ((EmotionTrackerUpdateName*)&m_attribute)->setPolicies(KINDOFMASK_NONE,KINDOFMASK_NONE);
+ ((EmotionTrackerUpdateName*)&m_attribute)->setPolicies(*kindOfMaskNoneView(),*kindOfMaskNoneView());
  m_flag21c=0;
  m_word200=0;
  m_value220=0.7f;

@@ -18,7 +18,12 @@ private:
 	std::bitset<181> m_bits;
 };
 
-extern const KindOfMask KINDOFMASK_NONE;
+// The linked build has ONE KINDOFMASK_NONE, defined by Common/System/KindOf.cpp;
+// this is its canonical spelling (?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B). The
+// TU-local KindOfMask above stays as this file's view of the same 24 bytes.
+template<int N> class BitFlags { public: unsigned int m_bits[(N + 31) / 32]; };
+extern const BitFlags<192> KINDOFMASK_NONE;
+static inline const KindOfMask *kindOfMaskNoneView() { return (const KindOfMask *)&KINDOFMASK_NONE; }
 
 class EmotionTrackerUpdateName
 {
@@ -67,8 +72,8 @@ EmotionTrackerUpdateModuleData::EmotionTrackerUpdateModuleData()
 	  m_value28(0),
 	  m_flag2C(0)
 {
-	m_name0.setPolicies(KINDOFMASK_NONE, KINDOFMASK_NONE);
-	m_name1.setPolicies(KINDOFMASK_NONE, KINDOFMASK_NONE);
-	m_name2.setPolicies(KINDOFMASK_NONE, KINDOFMASK_NONE);
-	m_name3.setPolicies(KINDOFMASK_NONE, KINDOFMASK_NONE);
+	m_name0.setPolicies(*kindOfMaskNoneView(), *kindOfMaskNoneView());
+	m_name1.setPolicies(*kindOfMaskNoneView(), *kindOfMaskNoneView());
+	m_name2.setPolicies(*kindOfMaskNoneView(), *kindOfMaskNoneView());
+	m_name3.setPolicies(*kindOfMaskNoneView(), *kindOfMaskNoneView());
 }
