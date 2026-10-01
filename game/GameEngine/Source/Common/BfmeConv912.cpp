@@ -49,7 +49,7 @@ void BfmeThing912C::bfmeGo912C()
 
 void *__cdecl operator new[](unsigned int n);
 
-class BfmeThing912F
+class RAMFile
 {
 public:
 	virtual void bfmeSlot912F0();
@@ -57,15 +57,15 @@ public:
 	virtual void bfmeDone912F();
 	void *readEntireAndClose();
 	char m_bfmePad[0x10];
-	void *m_bfmeP;
+	void *m_data;
 };
 
-void *BfmeThing912F::readEntireAndClose()
+void *RAMFile::readEntireAndClose()
 {
-	void *s = m_bfmeP;
+	void *s = m_data;
 	if (!s)
 		return operator new[](1);
-	m_bfmeP = 0;
+	m_data = 0;
 	bfmeDone912F();
 	return s;
 }

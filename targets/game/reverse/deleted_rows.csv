@@ -31779,3 +31779,4 @@ _timeGetTime@0,0x007E4810,"Retired authored shadow of native import-library FF25
 ?bfmeSetC@Gen_0018F210@@QAEXH@Z,0x0018F2E0,renamed to ?setRiverStart@Gen_0018F210@@QAEXH@Z by tools/name_lane.py: two models agreed
 ?getName@Gen_000EC5E0@@QBEPAHXZ,0x000EC5E0,renamed to ?getName@Team@@QBEPAHXZ by tools/name_lane.py: two models agreed
 ?isEmpty@Gen_001506E0@@QBE_NXZ,0x001506E0,renamed to ?isEmpty@AIGroup@@QBE_NXZ by tools/name_lane.py: two models agreed
+?readEntireAndClose@BfmeThing912F@@QAEPAXXZ,0x009D1BF0,renamed to ?readEntireAndClose@RAMFile@@QAEPAXXZ by tools/name_lane.py: two models agreed
