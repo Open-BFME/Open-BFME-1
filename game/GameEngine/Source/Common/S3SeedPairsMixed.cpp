@@ -62,13 +62,27 @@ struct BfmeSubObject
 };
 
 
+class FlagPairTarget;
+class Xfer;
+class Gen_002CF710;
+class Gen0016B140 { public: void handle(FlagPairTarget *target); };
+class Gen002B2080 { public: void handle(FlagPairTarget *target); };
+class Gen_00212790 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class Gen_0026A980 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class Gen_002D9BD0 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class DockUpdate
+{
+protected:
+    virtual void xfer(Xfer *target);
+    friend class Gen_002CF710;
+};
+
 class Gen_00295430
 {
 public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
 
 	char m_bfmeHead[0x20];
 	BfmeSubObject m_bfmeItem;				// +0x20
@@ -80,7 +94,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
 
 	char m_bfmeHead[0x20];
 	BfmeSubObject m_bfmeItem;				// +0x20
@@ -92,7 +105,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000183FE
 
 	char m_bfmeHead[0x20];
 	BfmeSubObject m_bfmeItem;				// +0x20
@@ -104,7 +116,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0003BC7D
 
 	char m_bfmeHead[0x18];
 	BfmeSubObject m_bfmeItem;				// +0x18
@@ -116,7 +127,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00033B77
 
 	char m_bfmeHead[0x38];
 	BfmeSubObject m_bfmeItem;				// +0x38
@@ -128,7 +138,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
 
 	char m_bfmeHead[0x50];
 	BfmeSubObject m_bfmeItem;				// +0x50
@@ -140,7 +149,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
 
 	char m_bfmeHead[0x50];
 	BfmeSubObject m_bfmeItem;				// +0x50
@@ -152,7 +160,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001D043
 
 	char m_bfmeHead[0x88];
 	BfmeSubObject m_bfmeItem;				// +0x88
@@ -189,7 +196,7 @@ void Gen_00295430::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -202,7 +209,7 @@ void Gen_002AB430::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -216,7 +223,7 @@ void Gen_002D84E0::bfmeSeed(BfmeSeedTarget *target)
 
 	target->bfmeSeed(&pair);
 	target->bfmeTakeAt8C(&m_bfmeItem);
-	bfmeAccept(target);
+	((Gen_002D9BD0 *)this)->bfmeSeed(target);
 }
 
 // ?bfmeSeed@Gen_00213EA0@@QAEXPAVBfmeSeedTarget@@@Z
@@ -228,7 +235,7 @@ void Gen_00213EA0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen_00212790 *)this)->bfmeSeed(target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -241,7 +248,7 @@ void Gen_002B2CA0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen_0026A980 *)this)->bfmeSeed(target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -254,7 +261,7 @@ void Gen_0016C430::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen0016B140 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -267,7 +274,7 @@ void Gen_0016E140::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen0016B140 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem);
 }
 
@@ -280,7 +287,7 @@ void Gen_002CF710::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((DockUpdate *)this)->DockUpdate::xfer((Xfer *)target);
 	target->bfmeTakeAt78(&m_bfmeItem);
 }
 

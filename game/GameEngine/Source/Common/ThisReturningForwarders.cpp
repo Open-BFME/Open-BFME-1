@@ -1,128 +1,186 @@
-// Fifty-one 12-byte forwarders: save `this`, make one direct no-argument call
-// on it, return `this`.
-//
-//     push esi / mov esi,ecx / call <REL32> / mov eax,esi / pop esi / ret
-//
-// WHAT THE BYTES SHOW.  ecx is read and never reloaded, and the plain `ret`
-// pops nothing: __thiscall with no arguments.  The callee is entered with ecx
-// still holding the same `this` and pops nothing of its own, so it too is a
-// no-argument __thiscall member of the class or of a base of it.  eax is the
-// incoming `this`.
-//
-// WHAT THE BYTES CANNOT SETTLE.  A constructor whose only work is one chained
-// call and a member that ends `return this;` compile to these same twelve
-// bytes -- both spellings were compiled and compare equal.  The member form is
-// written below because it asserts less: it does not claim the callee is a
-// constructor.
-//
-// THE ONLY AXIS IS THE REL32 TARGET.  Fifty-one members over thirty-one
-// distinct callees.  Two runs of sixteen at 0x005E3FD0 and 0x005E5710 sit at a
-// fixed sixteen-byte stride and call the SAME sixteen callees in the SAME
-// order -- one header of non-inlinable forwarders emitted twice.
-//
-// IDENTITY IS NOT RECOVERED.  Names are address-derived; callee pins are
-// additive and address-derived.
+// Forwarders preserve the incoming object around one direct call.
+#include <new>
 
-#define BFME_THIS_FORWARD_CALLEE( ADDR )                                      \
-	class Gen##ADDR                                                           \
-	{                                                                         \
-	public:                                                                   \
-		void perform();                                                       \
-	};
+namespace FXParticleSystem
+{
+template <int N> class DefaultModuleTag;
+template <int N> class DefaultParticleModule;
+template <int N> class DefaultParticleModuleTemplate;
+template <int Category, const char (&Key)[1], const char (&Name)[1],
+    class Module, class ModuleTemplate, class ParticleModule, class ParticleModuleTemplate>
+class ModuleTag;
+template <class Tag>
+class ConcreteModuleClass
+{
+public:
+    static const ConcreteModuleClass &getInstance();
+};
+class BoxEmissionVolumeModule;
+class BoxEmissionVolumeModuleTemplate;
+class ButterflyDrawModule;
+class ButterflyDrawModuleTemplate;
+class CylinderEmissionVolumeModule;
+class CylinderEmissionVolumeModuleTemplate;
+class CylindricalEmissionVelocityModule;
+class CylindricalEmissionVelocityModuleTemplate;
+class HemisphericalEmissionVelocityModule;
+class HemisphericalEmissionVelocityModuleTemplate;
+class LifeEventModule;
+class LifeEventModuleTemplate;
+class LightningDrawModule;
+class LightningDrawModuleTemplate;
+class LightningEmissionModule;
+class LightningEmissionModuleTemplate;
+class LineEmissionVolumeModule;
+class LineEmissionVolumeModuleTemplate;
+class OutwardEmissionVelocityModule;
+class OutwardEmissionVelocityModuleTemplate;
+class ParticleLifeEventModule;
+class ParticleLifeEventModuleTemplate;
+class ParticleTerrainCollisionModule;
+class ParticleTerrainCollisionModuleTemplate;
+class QuadDrawModule;
+class QuadDrawModuleTemplate;
+class RenderObjectDrawModule;
+class RenderObjectDrawModuleTemplate;
+class RenderObjectParticleUpdateModule;
+class RenderObjectParticleUpdateModuleTemplate;
+class RenderObjectUpdateModule;
+class RenderObjectUpdateModuleTemplate;
+class SphereEmissionVolumeModule;
+class SphereEmissionVolumeModuleTemplate;
+class SphericalEmissionVelocityModule;
+class SphericalEmissionVelocityModuleTemplate;
+class StreakDrawModule;
+class StreakDrawModuleTemplate;
+class TerrainCollisionModule;
+class TerrainCollisionModuleTemplate;
+extern const char BOX_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char BOX_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char BUTTERFLY_DRAW_MODULE_KEY[1];
+extern const char BUTTERFLY_DRAW_MODULE_NAME[1];
+extern const char CYLINDER_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char CYLINDER_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char LIFE_EVENT_MODULE_KEY[1];
+extern const char LIFE_EVENT_MODULE_NAME[1];
+extern const char LIGHTNING_DRAW_MODULE_KEY[1];
+extern const char LIGHTNING_DRAW_MODULE_NAME[1];
+extern const char LIGHTNING_EMISSION_MODULE_KEY[1];
+extern const char LIGHTNING_EMISSION_MODULE_NAME[1];
+extern const char LINE_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char LINE_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char OUTWARD_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char OUTWARD_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char QUAD_DRAW_MODULE_KEY[1];
+extern const char QUAD_DRAW_MODULE_NAME[1];
+extern const char RENDEROBJECT_DRAW_MODULE_KEY[1];
+extern const char RENDEROBJECT_DRAW_MODULE_NAME[1];
+extern const char RENDEROBJECT_UPDATE_MODULE_KEY[1];
+extern const char RENDEROBJECT_UPDATE_MODULE_NAME[1];
+extern const char SPHERE_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char SPHERE_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char STREAK_DRAW_MODULE_KEY[1];
+extern const char STREAK_DRAW_MODULE_NAME[1];
+extern const char TERRAIN_COLLISION_MODULE_KEY[1];
+extern const char TERRAIN_COLLISION_MODULE_NAME[1];
+struct OrthoEmissionVelocityModuleTag;
+struct PointEmissionVolumeModuleTag;
+typedef DefaultModuleTag<0> DefaultModuleTag0Tag;
+typedef DefaultModuleTag<1> DefaultModuleTag1Tag;
+typedef DefaultModuleTag<2> DefaultModuleTag2Tag;
+typedef DefaultModuleTag<3> DefaultModuleTag3Tag;
+typedef DefaultModuleTag<6> DefaultModuleTag6Tag;
+typedef DefaultModuleTag<7> DefaultModuleTag7Tag;
+typedef ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> RenderObjectUpdateTag;
+typedef ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > CylindricalEmissionVelocityTag;
+typedef ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > HemisphericalEmissionVelocityTag;
+typedef ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > OutwardEmissionVelocityTag;
+typedef ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > SphericalEmissionVelocityTag;
+typedef ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > BoxEmissionVolumeTag;
+typedef ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > CylinderEmissionVolumeTag;
+typedef ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > LightningEmissionTag;
+typedef ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > LineEmissionVolumeTag;
+typedef ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > SphereEmissionVolumeTag;
+typedef ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > ButterflyDrawTag;
+typedef ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > LightningDrawTag;
+typedef ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > QuadDrawTag;
+typedef ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > RenderObjectDrawTag;
+typedef ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > StreakDrawTag;
+typedef ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> LifeEventTag;
+typedef ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> TerrainCollisionTag;
+typedef OrthoEmissionVelocityModuleTag OrthoEmissionVelocityTag;
+typedef PointEmissionVolumeModuleTag PointEmissionVolumeTag;
+}
 
-#define BFME_THIS_FORWARD( NAME, CALLEE )                                     \
-	class NAME : public CALLEE                                                \
-	{                                                                         \
-	public:                                                                   \
-		NAME *forward();                                                      \
-	};                                                                        \
-	NAME *NAME::forward()                                                     \
-	{                                                                         \
-		perform();                                                            \
-		return this;                                                          \
-	}
 
 
-BFME_THIS_FORWARD_CALLEE( 002DF780 )
-BFME_THIS_FORWARD_CALLEE( 00351260 )
-BFME_THIS_FORWARD_CALLEE( 003A0410 )
-BFME_THIS_FORWARD_CALLEE( 005DEEE0 )
-BFME_THIS_FORWARD_CALLEE( 005DEF70 )
-BFME_THIS_FORWARD_CALLEE( 005DF120 )
-BFME_THIS_FORWARD_CALLEE( 005DF2D0 )
-BFME_THIS_FORWARD_CALLEE( 005DF480 )
-BFME_THIS_FORWARD_CALLEE( 005DF510 )
-BFME_THIS_FORWARD_CALLEE( 005DFD50 )
-BFME_THIS_FORWARD_CALLEE( 005DFFE0 )
-BFME_THIS_FORWARD_CALLEE( 005E0270 )
-BFME_THIS_FORWARD_CALLEE( 005E0500 )
-BFME_THIS_FORWARD_CALLEE( 005E0790 )
-BFME_THIS_FORWARD_CALLEE( 005E0820 )
-BFME_THIS_FORWARD_CALLEE( 005E08B0 )
-BFME_THIS_FORWARD_CALLEE( 005E0A70 )
-BFME_THIS_FORWARD_CALLEE( 005E0B00 )
-BFME_THIS_FORWARD_CALLEE( 005E0CB0 )
-BFME_THIS_FORWARD_CALLEE( 005E0E60 )
-BFME_THIS_FORWARD_CALLEE( 005E1010 )
-BFME_THIS_FORWARD_CALLEE( 005E11C0 )
-BFME_THIS_FORWARD_CALLEE( 005E1370 )
-BFME_THIS_FORWARD_CALLEE( 005E14F0 )
-BFME_THIS_FORWARD_CALLEE( 005E1690 )
-BFME_THIS_FORWARD_CALLEE( 005E1830 )
-BFME_THIS_FORWARD_CALLEE( 005E19B0 )
-BFME_THIS_FORWARD_CALLEE( 005E1B50 )
-BFME_THIS_FORWARD_CALLEE( 00761E10 )
-BFME_THIS_FORWARD_CALLEE( 0088C550 )
-BFME_THIS_FORWARD_CALLEE( 00903090 )
+class Gen_002df780 { public: void *m(); };
+class Template { public: __declspec(nothrow) Template(); };
+class Gen003A0410 { public: __declspec(nothrow) Gen003A0410(); };
+class Rva00761E10 { public: __declspec(nothrow) Rva00761E10(); };
+void __cdecl InitDbghelp();
+void __cdecl W3DRadarResetLock();
 
-BFME_THIS_FORWARD( Rva0007BCD0Forwarder, Gen00903090 )
-BFME_THIS_FORWARD( Rva002DB200Forwarder, Gen003A0410 )
-BFME_THIS_FORWARD( Rva002E2A30Forwarder, Gen002DF780 )
-BFME_THIS_FORWARD( Rva00339580Forwarder, Gen00351260 )
-BFME_THIS_FORWARD( Rva0033B090Forwarder, Gen00351260 )
-BFME_THIS_FORWARD( Rva005E3FD0Forwarder, Gen005DFD50 )
-BFME_THIS_FORWARD( Rva005E3FE0Forwarder, Gen005DFFE0 )
-BFME_THIS_FORWARD( Rva005E3FF0Forwarder, Gen005E0270 )
-BFME_THIS_FORWARD( Rva005E4000Forwarder, Gen005E0500 )
-BFME_THIS_FORWARD( Rva005E4010Forwarder, Gen005E0790 )
-BFME_THIS_FORWARD( Rva005E4020Forwarder, Gen005E0820 )
-BFME_THIS_FORWARD( Rva005E4030Forwarder, Gen005E08B0 )
-BFME_THIS_FORWARD( Rva005E4040Forwarder, Gen005E0A70 )
-BFME_THIS_FORWARD( Rva005E4050Forwarder, Gen005E0B00 )
-BFME_THIS_FORWARD( Rva005E4060Forwarder, Gen005E0CB0 )
-BFME_THIS_FORWARD( Rva005E4070Forwarder, Gen005E0E60 )
-BFME_THIS_FORWARD( Rva005E4080Forwarder, Gen005E1010 )
-BFME_THIS_FORWARD( Rva005E4090Forwarder, Gen005E11C0 )
-BFME_THIS_FORWARD( Rva005E40A0Forwarder, Gen005E1370 )
-BFME_THIS_FORWARD( Rva005E40B0Forwarder, Gen005E14F0 )
-BFME_THIS_FORWARD( Rva005E40C0Forwarder, Gen005E1690 )
-BFME_THIS_FORWARD( Rva005E40D0Forwarder, Gen005E1830 )
-BFME_THIS_FORWARD( Rva005E40E0Forwarder, Gen005E19B0 )
-BFME_THIS_FORWARD( Rva005E40F0Forwarder, Gen005E1B50 )
-BFME_THIS_FORWARD( Rva005E5710Forwarder, Gen005DFD50 )
-BFME_THIS_FORWARD( Rva005E5720Forwarder, Gen005DFFE0 )
-BFME_THIS_FORWARD( Rva005E5730Forwarder, Gen005E0270 )
-BFME_THIS_FORWARD( Rva005E5740Forwarder, Gen005E0500 )
-BFME_THIS_FORWARD( Rva005E5750Forwarder, Gen005E0790 )
-BFME_THIS_FORWARD( Rva005E5760Forwarder, Gen005E0820 )
-BFME_THIS_FORWARD( Rva005E5770Forwarder, Gen005E08B0 )
-BFME_THIS_FORWARD( Rva005E5780Forwarder, Gen005E0A70 )
-BFME_THIS_FORWARD( Rva005E5790Forwarder, Gen005E0B00 )
-BFME_THIS_FORWARD( Rva005E57A0Forwarder, Gen005E0CB0 )
-BFME_THIS_FORWARD( Rva005E57B0Forwarder, Gen005E0E60 )
-BFME_THIS_FORWARD( Rva005E57C0Forwarder, Gen005E1010 )
-BFME_THIS_FORWARD( Rva005E57D0Forwarder, Gen005E11C0 )
-BFME_THIS_FORWARD( Rva005E57E0Forwarder, Gen005E1370 )
-BFME_THIS_FORWARD( Rva005E57F0Forwarder, Gen005E14F0 )
-BFME_THIS_FORWARD( Rva005E5800Forwarder, Gen005E1690 )
-BFME_THIS_FORWARD( Rva005E5810Forwarder, Gen005E1830 )
-BFME_THIS_FORWARD( Rva005E5820Forwarder, Gen005E19B0 )
-BFME_THIS_FORWARD( Rva005E5830Forwarder, Gen005E1B50 )
-BFME_THIS_FORWARD( Rva005F2D70Forwarder, Gen005DF2D0 )
-BFME_THIS_FORWARD( Rva005F36C0Forwarder, Gen005DEEE0 )
-BFME_THIS_FORWARD( Rva005F4FE0Forwarder, Gen005DF510 )
-BFME_THIS_FORWARD( Rva005F6580Forwarder, Gen005DF120 )
-BFME_THIS_FORWARD( Rva005F7970Forwarder, Gen005DF480 )
-BFME_THIS_FORWARD( Rva005F8530Forwarder, Gen005DEF70 )
-BFME_THIS_FORWARD( Rva00765AF0Forwarder, Gen00761E10 )
-BFME_THIS_FORWARD( Rva0088CDC0Forwarder, Gen0088C550 )
+using namespace FXParticleSystem;
+
+#define BFME_THIS_FORWARD(NAME, CALL) \
+    class NAME { public: NAME *forward(); }; \
+    NAME *NAME::forward() { __assume(this != 0); CALL; return this; }
+
+BFME_THIS_FORWARD( Rva0007BCD0Forwarder, (W3DRadarResetLock()) )
+BFME_THIS_FORWARD( Rva002DB200Forwarder, (new (this) Gen003A0410) )
+BFME_THIS_FORWARD( Rva002E2A30Forwarder, (((Gen_002df780 *)this)->m()) )
+BFME_THIS_FORWARD( Rva00339580Forwarder, (new (this) Template) )
+BFME_THIS_FORWARD( Rva0033B090Forwarder, (new (this) Template) )
+BFME_THIS_FORWARD( Rva005E3FD0Forwarder, (ConcreteModuleClass<DefaultModuleTag1Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E3FE0Forwarder, (ConcreteModuleClass<DefaultModuleTag0Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E3FF0Forwarder, (ConcreteModuleClass<DefaultModuleTag3Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4000Forwarder, (ConcreteModuleClass<DefaultModuleTag2Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4010Forwarder, (ConcreteModuleClass<DefaultModuleTag7Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4020Forwarder, (ConcreteModuleClass<LifeEventTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4030Forwarder, (ConcreteModuleClass<RenderObjectUpdateTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4040Forwarder, (ConcreteModuleClass<TerrainCollisionTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4050Forwarder, (ConcreteModuleClass<OrthoEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4060Forwarder, (ConcreteModuleClass<SphericalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4070Forwarder, (ConcreteModuleClass<HemisphericalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4080Forwarder, (ConcreteModuleClass<CylindricalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E4090Forwarder, (ConcreteModuleClass<OutwardEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40A0Forwarder, (ConcreteModuleClass<PointEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40B0Forwarder, (ConcreteModuleClass<LineEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40C0Forwarder, (ConcreteModuleClass<BoxEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40D0Forwarder, (ConcreteModuleClass<SphereEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40E0Forwarder, (ConcreteModuleClass<CylinderEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E40F0Forwarder, (ConcreteModuleClass<LightningEmissionTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5710Forwarder, (ConcreteModuleClass<DefaultModuleTag1Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5720Forwarder, (ConcreteModuleClass<DefaultModuleTag0Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5730Forwarder, (ConcreteModuleClass<DefaultModuleTag3Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5740Forwarder, (ConcreteModuleClass<DefaultModuleTag2Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5750Forwarder, (ConcreteModuleClass<DefaultModuleTag7Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5760Forwarder, (ConcreteModuleClass<LifeEventTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5770Forwarder, (ConcreteModuleClass<RenderObjectUpdateTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5780Forwarder, (ConcreteModuleClass<TerrainCollisionTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5790Forwarder, (ConcreteModuleClass<OrthoEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57A0Forwarder, (ConcreteModuleClass<SphericalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57B0Forwarder, (ConcreteModuleClass<HemisphericalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57C0Forwarder, (ConcreteModuleClass<CylindricalEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57D0Forwarder, (ConcreteModuleClass<OutwardEmissionVelocityTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57E0Forwarder, (ConcreteModuleClass<PointEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E57F0Forwarder, (ConcreteModuleClass<LineEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5800Forwarder, (ConcreteModuleClass<BoxEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5810Forwarder, (ConcreteModuleClass<SphereEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5820Forwarder, (ConcreteModuleClass<CylinderEmissionVolumeTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005E5830Forwarder, (ConcreteModuleClass<LightningEmissionTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F2D70Forwarder, (ConcreteModuleClass<ButterflyDrawTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F36C0Forwarder, (ConcreteModuleClass<DefaultModuleTag6Tag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F4FE0Forwarder, (ConcreteModuleClass<LightningDrawTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F6580Forwarder, (ConcreteModuleClass<QuadDrawTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F7970Forwarder, (ConcreteModuleClass<RenderObjectDrawTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva005F8530Forwarder, (ConcreteModuleClass<StreakDrawTag>::getInstance()) )
+BFME_THIS_FORWARD( Rva00765AF0Forwarder, (new (this) Rva00761E10) )
+BFME_THIS_FORWARD( Rva0088CDC0Forwarder, (InitDbghelp()) )

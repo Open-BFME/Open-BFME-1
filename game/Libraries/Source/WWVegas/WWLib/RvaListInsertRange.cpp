@@ -102,10 +102,21 @@ struct Rva00381D80Element
 	char m_body[ 216 ];
 };
 
+struct Gen_t_00381c30_k4 { int a[1]; };
+struct Gen_t_00381c30_p12cd { int a[3]; };
+
 namespace _STL
 {
+typedef pair<const Gen_t_00381c30_k4, Gen_t_00381c30_p12cd> Rva00381C30Pair;
+
 template <>
-void _Construct(Rva00381D80Element *p, const Rva00381D80Element &value);
+void _Construct(Rva00381C30Pair *p, const Rva00381C30Pair &value);
+
+template <>
+__forceinline void _Construct(Rva00381D80Element *p, const Rva00381D80Element &value)
+{
+    _Construct((Rva00381C30Pair *)p, (const Rva00381C30Pair &)value);
+}
 }
 
 // retail 0x00381D10, an 88-byte helper for the 224-byte list node

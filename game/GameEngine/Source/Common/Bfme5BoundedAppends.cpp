@@ -1,3 +1,54 @@
+class Gen_0064C330;
+class Gen_0064C380;
+class Gen_0064CAA0;
+class Gen_0065DA70;
+class Gen_0065DAC0;
+class Gen_0065DCC0;
+class Gen_0065DD10;
+class Gen_006AB0B0;
+class Gen_006AC5D0;
+class BFMENetworkQueueItem;
+class BFMENetworkQueueItem1;
+class PeerRequest;
+class PeerResponse;
+class ThingRef;
+struct Gen_t_00647b20_k4;
+struct Gen_t_00647b20_p12cd;
+struct Gen_t_004fc4b0_k4;
+struct Gen_t_004fc4b0_p12cd;
+struct Gen_t_0065aa20_k4;
+struct Gen_t_0065aa20_p12cd;
+struct Gen_t_0065aa80_k4;
+struct Gen_t_0065aa80_p12cd;
+
+namespace _STL
+{
+template <class T> class allocator;
+template <class First, class Second> struct pair;
+template <class T, class U> void _Construct(T *destination, const U &source);
+template <class T, class Allocator>
+class deque
+{
+protected:
+    void _M_push_back_aux_v(const T &item);
+    friend class ::Gen_0064C330;
+    friend class ::Gen_0064C380;
+    friend class ::Gen_0064CAA0;
+    friend class ::Gen_0065DA70;
+    friend class ::Gen_0065DAC0;
+    friend class ::Gen_0065DCC0;
+    friend class ::Gen_0065DD10;
+    friend class ::Gen_006AB0B0;
+    friend class ::Gen_006AC5D0;
+};
+}
+typedef _STL::deque<BFMENetworkQueueItem, _STL::allocator<BFMENetworkQueueItem> > BFMENetworkQueueItemDeque;
+typedef _STL::deque<BFMENetworkQueueItem1, _STL::allocator<BFMENetworkQueueItem1> > BFMENetworkQueueItem1Deque;
+typedef _STL::deque<PeerRequest, _STL::allocator<PeerRequest> > PeerRequestDeque;
+typedef _STL::deque<PeerResponse, _STL::allocator<PeerResponse> > PeerResponseDeque;
+typedef _STL::deque<ThingRef, _STL::allocator<ThingRef> > ThingRefDeque;
+void __cdecl gen_00698020(void **destination, void **source);
+
 // Nine bounded appends.
 //
 // Each compares the cursor at +0x10 against the limit at +0x18 minus ONE
@@ -17,35 +68,54 @@ struct BfmeSlotA
 	char m_bfmeBytes[0x194];
 };
 
-void bfmeCopySlotA(BfmeSlotA *dest, void *source);	// retail 0x00002A8B
+typedef _STL::pair<const Gen_t_00647b20_k4, Gen_t_00647b20_p12cd> BfmeSlotAPair;
+__forceinline void bfmeCopySlotA(BfmeSlotA *dest, void *source)
+{
+    _STL::_Construct((BfmeSlotAPair *)dest, *(const BfmeSlotAPair *)source);
+}
 
 struct BfmeSlotB
 {
 	char m_bfmeBytes[0x330];
 };
 
-void bfmeCopySlotB(BfmeSlotB *dest, void *source);	// retail 0x0003BB51
+typedef _STL::pair<const Gen_t_004fc4b0_k4, Gen_t_004fc4b0_p12cd> BfmeSlotBPair;
+__forceinline void bfmeCopySlotB(BfmeSlotB *dest, void *source)
+{
+    _STL::_Construct((BfmeSlotBPair *)dest, *(const BfmeSlotBPair *)source);
+}
 
 struct BfmeSlotC
 {
 	char m_bfmeBytes[0x210];
 };
 
-void bfmeCopySlotC(BfmeSlotC *dest, void *source);	// retail 0x00045877
+typedef _STL::pair<const Gen_t_0065aa20_k4, Gen_t_0065aa20_p12cd> BfmeSlotCPair;
+__forceinline void bfmeCopySlotC(BfmeSlotC *dest, void *source)
+{
+    _STL::_Construct((BfmeSlotCPair *)dest, *(const BfmeSlotCPair *)source);
+}
 
 struct BfmeSlotD
 {
 	char m_bfmeBytes[0x1F0];
 };
 
-void bfmeCopySlotD(BfmeSlotD *dest, void *source);	// retail 0x00026BAC
+typedef _STL::pair<const Gen_t_0065aa80_k4, Gen_t_0065aa80_p12cd> BfmeSlotDPair;
+__forceinline void bfmeCopySlotD(BfmeSlotD *dest, void *source)
+{
+    _STL::_Construct((BfmeSlotDPair *)dest, *(const BfmeSlotDPair *)source);
+}
 
 struct BfmeSlotE
 {
 	char m_bfmeBytes[0x4];
 };
 
-void bfmeCopySlotE(BfmeSlotE *dest, void *source);	// retail 0x0001870F
+__forceinline void bfmeCopySlotE(BfmeSlotE *dest, void *source)
+{
+    gen_00698020((void **)dest, (void **)source);
+}
 
 class Gen_0064C330
 {
@@ -53,7 +123,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0004B646
 
 	char m_bfmeHead[0x10];
 	BfmeSlotA *m_bfmeCursor;				// +0x10
@@ -67,7 +136,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x00005EB1
 
 	char m_bfmeHead[0x10];
 	BfmeSlotB *m_bfmeCursor;				// +0x10
@@ -81,7 +149,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0004B646
 
 	char m_bfmeHead[0x10];
 	BfmeSlotA *m_bfmeCursor;				// +0x10
@@ -95,7 +162,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0004ACAF
 
 	char m_bfmeHead[0x10];
 	BfmeSlotC *m_bfmeCursor;				// +0x10
@@ -109,7 +175,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0001B018
 
 	char m_bfmeHead[0x10];
 	BfmeSlotD *m_bfmeCursor;				// +0x10
@@ -123,7 +188,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0004ACAF
 
 	char m_bfmeHead[0x10];
 	BfmeSlotC *m_bfmeCursor;				// +0x10
@@ -137,7 +201,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0001B018
 
 	char m_bfmeHead[0x10];
 	BfmeSlotD *m_bfmeCursor;				// +0x10
@@ -151,7 +214,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0000B61D
 
 	char m_bfmeHead[0x10];
 	BfmeSlotE *m_bfmeCursor;				// +0x10
@@ -165,7 +227,6 @@ public:
 	void bfmePush(void *item);
 
 private:
-	void bfmeGrow(void *item);				// retail 0x0000B61D
 
 	char m_bfmeHead[0x10];
 	BfmeSlotE *m_bfmeCursor;				// +0x10
@@ -184,7 +245,7 @@ void Gen_0064C330::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((PeerRequestDeque *)this)->_M_push_back_aux_v(*(const PeerRequest *)item);
 	}
 }
 
@@ -199,7 +260,7 @@ void Gen_0064C380::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((PeerResponseDeque *)this)->_M_push_back_aux_v(*(const PeerResponse *)item);
 	}
 }
 
@@ -214,7 +275,7 @@ void Gen_0064CAA0::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((PeerRequestDeque *)this)->_M_push_back_aux_v(*(const PeerRequest *)item);
 	}
 }
 
@@ -229,7 +290,7 @@ void Gen_0065DA70::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((BFMENetworkQueueItemDeque *)this)->_M_push_back_aux_v(*(const BFMENetworkQueueItem *)item);
 	}
 }
 
@@ -244,7 +305,7 @@ void Gen_0065DAC0::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((BFMENetworkQueueItem1Deque *)this)->_M_push_back_aux_v(*(const BFMENetworkQueueItem1 *)item);
 	}
 }
 
@@ -259,7 +320,7 @@ void Gen_0065DCC0::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((BFMENetworkQueueItemDeque *)this)->_M_push_back_aux_v(*(const BFMENetworkQueueItem *)item);
 	}
 }
 
@@ -274,7 +335,7 @@ void Gen_0065DD10::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((BFMENetworkQueueItem1Deque *)this)->_M_push_back_aux_v(*(const BFMENetworkQueueItem1 *)item);
 	}
 }
 
@@ -289,7 +350,7 @@ void Gen_006AB0B0::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((ThingRefDeque *)this)->_M_push_back_aux_v(*(const ThingRef *)item);
 	}
 }
 
@@ -304,6 +365,6 @@ void Gen_006AC5D0::bfmePush(void *item)
 	}
 	else
 	{
-		bfmeGrow(item);
+		((ThingRefDeque *)this)->_M_push_back_aux_v(*(const ThingRef *)item);
 	}
 }

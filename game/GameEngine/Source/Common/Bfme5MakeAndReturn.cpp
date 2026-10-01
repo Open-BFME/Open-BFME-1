@@ -1,3 +1,51 @@
+class Script
+{
+public:
+    Script(const Script &owner);
+private:
+    int m_bfmeFields[0x10];
+};
+
+class StreakLineClass
+{
+public:
+    StreakLineClass(const StreakLineClass &owner);
+private:
+    int m_bfmeFields[0x68];
+};
+
+class MeshClass
+{
+public:
+    MeshClass(const MeshClass &owner);
+private:
+    int m_bfmeFields[0xC6];
+};
+
+class Line3DClass
+{
+public:
+    Line3DClass(const Line3DClass &owner);
+private:
+    int m_bfmeFields[0x52];
+};
+
+class OBBoxRenderObjClass
+{
+public:
+    OBBoxRenderObjClass(const OBBoxRenderObjClass &owner);
+private:
+    int m_bfmeFields[0x53];
+};
+
+class HLodClass
+{
+public:
+    HLodClass(const HLodClass &owner);
+private:
+    int m_bfmeFields[0x5C];
+};
+
 // Six make-and-return bodies.
 //
 // Each is a single new expression: allocate, test the block, construct it with
@@ -15,7 +63,6 @@ class Gen_0035B680;
 class BfmeCreated_0035B680
 {
 public:
-	BfmeCreated_0035B680(Gen_0035B680 *owner);	// retail 0x0002F333
 
 private:
 	int m_bfmeFields[0x10];
@@ -32,7 +79,6 @@ class Gen_0091A5A0;
 class BfmeCreated_0091A5A0
 {
 public:
-	BfmeCreated_0091A5A0(Gen_0091A5A0 *owner);	// retail 0x00919F40
 
 private:
 	int m_bfmeFields[0x68];
@@ -49,7 +95,6 @@ class Gen_0092CEF0;
 class BfmeCreated_0092CEF0
 {
 public:
-	BfmeCreated_0092CEF0(Gen_0092CEF0 *owner);	// retail 0x0092CD00
 
 private:
 	int m_bfmeFields[0xC6];
@@ -66,7 +111,6 @@ class Gen_009513E0;
 class BfmeCreated_009513E0
 {
 public:
-	BfmeCreated_009513E0(Gen_009513E0 *owner);	// retail 0x009510A0
 
 private:
 	int m_bfmeFields[0x52];
@@ -83,7 +127,6 @@ class Gen_00957FB0;
 class BfmeCreated_00957FB0
 {
 public:
-	BfmeCreated_00957FB0(Gen_00957FB0 *owner);	// retail 0x00957F40
 
 private:
 	int m_bfmeFields[0x53];
@@ -100,7 +143,6 @@ class Gen_0097D920;
 class BfmeCreated_0097D920
 {
 public:
-	BfmeCreated_0097D920(Gen_0097D920 *owner);	// retail 0x0097D850
 
 private:
 	int m_bfmeFields[0x5C];
@@ -115,35 +157,35 @@ public:
 // ?bfmeCreate@Gen_0035B680@@QAEPAVBfmeCreated_0035B680@@XZ
 BfmeCreated_0035B680 *Gen_0035B680::bfmeCreate(void)
 {
-	return new BfmeCreated_0035B680(this);
+	return (BfmeCreated_0035B680 *)new Script(*(const Script *)this);
 }
 
 // ?bfmeCreate@Gen_0091A5A0@@QAEPAVBfmeCreated_0091A5A0@@XZ
 BfmeCreated_0091A5A0 *Gen_0091A5A0::bfmeCreate(void)
 {
-	return new BfmeCreated_0091A5A0(this);
+	return (BfmeCreated_0091A5A0 *)new StreakLineClass(*(const StreakLineClass *)this);
 }
 
 // ?bfmeCreate@Gen_0092CEF0@@QAEPAVBfmeCreated_0092CEF0@@XZ
 BfmeCreated_0092CEF0 *Gen_0092CEF0::bfmeCreate(void)
 {
-	return new BfmeCreated_0092CEF0(this);
+	return (BfmeCreated_0092CEF0 *)new MeshClass(*(const MeshClass *)this);
 }
 
 // ?bfmeCreate@Gen_009513E0@@QAEPAVBfmeCreated_009513E0@@XZ
 BfmeCreated_009513E0 *Gen_009513E0::bfmeCreate(void)
 {
-	return new BfmeCreated_009513E0(this);
+	return (BfmeCreated_009513E0 *)new Line3DClass(*(const Line3DClass *)this);
 }
 
 // ?bfmeCreate@Gen_00957FB0@@QAEPAVBfmeCreated_00957FB0@@XZ
 BfmeCreated_00957FB0 *Gen_00957FB0::bfmeCreate(void)
 {
-	return new BfmeCreated_00957FB0(this);
+	return (BfmeCreated_00957FB0 *)new OBBoxRenderObjClass(*(const OBBoxRenderObjClass *)this);
 }
 
 // ?bfmeCreate@Gen_0097D920@@QAEPAVBfmeCreated_0097D920@@XZ
 BfmeCreated_0097D920 *Gen_0097D920::bfmeCreate(void)
 {
-	return new BfmeCreated_0097D920(this);
+	return (BfmeCreated_0097D920 *)new HLodClass(*(const HLodClass *)this);
 }

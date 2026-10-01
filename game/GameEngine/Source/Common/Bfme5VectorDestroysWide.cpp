@@ -13,21 +13,38 @@
 // the two locals is what decides which member is loaded first, and it comes
 // out in source order, so start-then-end loads the wrong one.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+void __cdecl operator delete(void *block);
+static __forceinline void bfmeRelease(void *block, unsigned int bytes);
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+namespace _STL
+{
+template <bool Threads, int Instance>
+class __node_alloc
+{
+    static void _M_deallocate(void *block, unsigned int bytes);
+    friend void ::bfmeRelease(void *block, unsigned int bytes);
+};
+}
+
+class WorkerAIUpdateModuleData
+{
+public:
+    virtual ~WorkerAIUpdateModuleData();
+};
+
+class Rva000FD010 { public: void invoke(); };
+
+static __forceinline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
-		bfmeFreeScalar(block);
+		::operator delete(block);
 	else
-		bfmeDeallocate(block, bytes);
+		_STL::__node_alloc<true, 0>::_M_deallocate(block, bytes);
 }
 
 class BfmeVecElem_000FAFF0
 {
 public:
-	~BfmeVecElem_000FAFF0(void);			// retail 0x0002C3BD
 
 private:
 	char m_bfmePad[0x60];
@@ -47,7 +64,6 @@ private:
 class BfmeVecElem_000FEAF0
 {
 public:
-	~BfmeVecElem_000FEAF0(void);			// retail 0x000312B9
 
 private:
 	char m_bfmePad[0x24];
@@ -151,7 +167,7 @@ void Gen_000FAFF0::bfmeDestroy(void)
 	BfmeVecElem_000FAFF0 *first = m_bfmeStart;
 
 	for (; first != last; ++first)
-		first->~BfmeVecElem_000FAFF0();
+		((WorkerAIUpdateModuleData *)first)->WorkerAIUpdateModuleData::~WorkerAIUpdateModuleData();
 
 	BfmeVecElem_000FAFF0 *start = m_bfmeStart;
 
@@ -166,7 +182,7 @@ void Gen_000FEAF0::bfmeDestroy(void)
 	BfmeVecElem_000FEAF0 *first = m_bfmeStart;
 
 	for (; first != last; ++first)
-		first->~BfmeVecElem_000FEAF0();
+		((Rva000FD010 *)first)->invoke();
 
 	BfmeVecElem_000FEAF0 *start = m_bfmeStart;
 

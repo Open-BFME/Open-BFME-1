@@ -28,6 +28,21 @@ struct Coord3D
 	}
 };
 
+struct BfmeShapeE15;
+struct BfmeVecVNB;
+
+class BfmeObjE15
+{
+public:
+    BfmeShapeE15 *bfmeAtE15(int index);
+};
+
+class BfmeXformVNB
+{
+public:
+    void bfmeApplyVNB(BfmeVecVNB *position, float angle);
+};
+
 struct BfmeGeometryPiece
 {
 	Int m_type;
@@ -39,13 +54,13 @@ struct BfmeGeometryPiece
 	bool m_active;
 	unsigned char m_pad021[3];
 
-	void transformCenter(Coord3D *position, Real angle) const;
+
 };
 
 class BfmeGeometryInfo
 {
 public:
-	const BfmeGeometryPiece *pieceAt(Int index) const;
+
 	Real boxMajorRadius() const;
 	Real boxMinorRadius() const;
 
@@ -58,6 +73,9 @@ private:
 
 	friend class Object;
 };
+
+#define BfmeGeometryPieceAt(geometry, index) ((const BfmeGeometryPiece *)((BfmeObjE15 *)&(geometry))->bfmeAtE15(index))
+#define BfmeTransformCenter(piece, position, angle) (((BfmeXformVNB *)(piece))->bfmeApplyVNB((BfmeVecVNB *)(position), angle))
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -82,10 +100,10 @@ Real Object::bfmeSingleBoxBoundaryDistanceSquared2D(
 	const Object *other,
 	const Coord3D *otherPosition) const
 {
-	const BfmeGeometryPiece *piece = m_geometry.pieceAt(0);
+	const BfmeGeometryPiece *piece = BfmeGeometryPieceAt(m_geometry, 0);
 	Coord3D center;
 	center.set(position);
-	piece->transformCenter(&center, m_orientation);
+	BfmeTransformCenter(piece, &center, m_orientation);
 
 	Vector3 delta(
 		otherPosition->x - center.x,

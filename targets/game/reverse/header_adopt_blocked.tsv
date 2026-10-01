@@ -550,3 +550,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_006CBA30_UpdateTexture.cpp
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringBaseDestructor.cpp	UnicodeString	game\GameEngineDevice\Source\W3DDevice\GameClient\W3DDisplayStringBaseDestructor.cpp(29) : error C2039: 'clear' : is not a member of 'UnicodeString'
 game/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp	UnicodeString	Functions: FAIL 1/1
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainParseBannerCarrierPosition.cpp	AsciiString	Functions: FAIL 1/1
+game/GameEngine/Source/Common/R4TwoMemberDestructors.cpp	StringBase	game\GameEngine\Source\Common\R4TwoMemberDestructors.cpp(70) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'

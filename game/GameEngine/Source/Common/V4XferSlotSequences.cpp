@@ -209,7 +209,6 @@ namespace _STL
 			}
 		}
 
-		InsertResult insert_unique( const Value & value );
 
 	private:
 		typedef _Rb_tree_node<Value> _Node;
@@ -241,6 +240,31 @@ typedef _STL::_Rb_tree<int, _STL::pair<const int, Gen_t_000648f0_p24pod>,
 	_STL::_Select1st<_STL::pair<const int, Gen_t_000648f0_p24pod> >,
 	_STL::less<int>, _STL::allocator<_STL::pair<const int,
 	Gen_t_000648f0_p24pod> > > Gen003BBA40Tree;
+
+struct Rva00064A30Value;
+struct Rva00064A30KeyOfValue;
+
+namespace _STL
+{
+template <class Value> struct _Nonconst_traits;
+template <class Value, class Traits>
+struct _Rb_tree_iterator
+{
+    _Rb_tree_node_base *m_node;
+};
+
+template <>
+class _Rb_tree<unsigned int, Rva00064A30Value, Rva00064A30KeyOfValue,
+    less<unsigned int>, allocator<Rva00064A30Value> >
+{
+public:
+    pair<_Rb_tree_iterator<Rva00064A30Value, _Nonconst_traits<Rva00064A30Value> >,
+        bool> insert_unique(const Rva00064A30Value &value);
+};
+}
+
+typedef _STL::_Rb_tree<unsigned int, Rva00064A30Value, Rva00064A30KeyOfValue,
+    _STL::less<unsigned int>, _STL::allocator<Rva00064A30Value> > Rva00064A30Tree;
 
 class Gen003BBA40Member : public Gen003BBA40Tree
 {
@@ -280,7 +304,7 @@ void Gen003BBA40Member::step( GenXferInterface * xfer )
 			xfer->slot6C( &value.m_10 );
 			xfer->slot6C( &value.m_14 );
 			xfer->slot74( &value.m_18 );
-			insert_unique( *(Gen003BBA40Tree::value_type *) &value );
+			((Rva00064A30Tree *)this)->insert_unique(*(const Rva00064A30Value *)&value);
 		}
 	}
 }
