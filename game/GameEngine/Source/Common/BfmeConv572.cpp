@@ -5,7 +5,7 @@ struct BfmeSubCCA
 	unsigned int m_bfmeFlags;
 };
 
-struct BfmeOwnerCCA
+struct StateMachine
 {
 	unsigned char m_bfmeHead[0x10];
 	BfmeSubCCA *m_owner;
@@ -16,7 +16,7 @@ class BfmeThingCCA
 public:
 	void onExit(void *spare);
 	unsigned char m_bfmeHead[0x1c];
-	BfmeOwnerCCA *m_machine;
+	StateMachine *m_machine;
 };
 
 void BfmeThingCCA::onExit(void *spare)
