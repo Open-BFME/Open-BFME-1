@@ -43,7 +43,7 @@ public:
 	virtual void xferInt(int *);
 };
 
-class BfmePlayerBR
+class Player
 {
 public:
 	unsigned char m_bfmeHeadBR[0x24];
@@ -52,7 +52,7 @@ public:
 
 struct Rva002EE330PlayerList
 {
-	BfmePlayerBR *bfmeFindBR(int id);
+	Player *bfmeFindBR(int id);
 };
 
 extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
@@ -63,7 +63,7 @@ public:
 	void xfer(Xfer *x);
 
 	unsigned char m_bfmeHeadBR[0xc];
-	BfmePlayerBR *m_owner;
+	Player *m_owner;
 };
 
 void BfmeHostBR::xfer(Xfer *x)

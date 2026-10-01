@@ -76897,7 +76897,7 @@ name,address,notes
 ?bfmeFindBN@BfmeRegistryBN@@QAEPAXVAsciiStringBN@@@Z,0x0000D3FA,Open-BFME5 the first registry lookup the resolve at 0x002DE300 makes
 ?bfmeFindBOB@BfmeSubBOB@@QAEPAUBfmeGotBOB@@XZ,0x00048C61,pin
 ?bfmeFindBPA@BfmeThingBPA@@QAEPAUBfmeGotBPA@@PAX@Z,0x0001DB92,pin
-?bfmeFindBR@Rva002EE330PlayerList@@QAEPAVBfmePlayerBR@@H@Z,0x00044F30
+?bfmeFindBR@Rva002EE330PlayerList@@QAEPAVPlayer@@H@Z,0x00044F30
 ?bfmeFindBX@Rva00367E30Logic@@QAEPAVBfmeObjBX@@H@Z,0x0001F253
 ?bfmeFindByIdERO@BfmeLogicERO@@QAEPAVBfmeThingERO@@H@Z,0x0001F253,pin
 ?bfmeFindByIdERP@BfmeLogicERP@@QAEPAVBfmeThingERP@@H@Z,0x0001F253,pin
