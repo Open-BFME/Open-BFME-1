@@ -33,6 +33,10 @@ public:
 	virtual GameMessage *appendMessage( int type ) = 0;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 struct Rva00367E30Logic
 {
 	unsigned char m_unmodelled[ 0x10C ];
@@ -58,11 +62,17 @@ public:
 };
 
 extern MessageStream *TheMessageStream;
-extern Rva00367E30Logic *TheBfmeGameLogic;
 extern Shell40D9 *TheShell;
 extern void *g_bfmeReadyAG;
 extern Rva00579160Manager *Rva00579160TheManager;
 extern BfmeGlob938A *g_bfme938GlobA;
+
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic *bfmeTheLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class BfmeAptScreenMainMenu
 {
@@ -85,7 +95,7 @@ public:
 void BfmeAptScreenMainMenu::_bfme_stopGameMovie( const char *name )
 {
 	(void)name;
-	if ( TheBfmeGameLogic->m_mode != 8 )
+	if ( bfmeTheLogic()->m_mode != 8 )
 		TheMessageStream->appendMessage( 0x1D );
 }
 

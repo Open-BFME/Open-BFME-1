@@ -1,12 +1,16 @@
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 struct Rva00367E30Logic
 {
 	unsigned char m_bfmeHeadAAI[0x3c];
 	int m_bfme3CAAI;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeAIDataAAI
 {
@@ -172,7 +176,7 @@ public:
 
 int BfmeGuardAAI::bfmeUpdateAAI()
 {
-	int frame = TheBfmeGameLogic->m_bfme3CAAI;
+	int frame = ((Rva00367E30Logic *)TheGameLogic)->m_bfme3CAAI;
 	BfmeAIDataAAI *d = TheAI->m_bfme14AAI;
 
 	m_bfme24AAI = frame

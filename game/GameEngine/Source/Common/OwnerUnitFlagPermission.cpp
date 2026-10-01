@@ -9,12 +9,16 @@ public:
 	unsigned char m_bfmeFlagsXR;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 struct Rva00367E30Logic
 {
 	BfmeUnitXR *bfmeFindXR(void *key);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeOwnerXR
 {
@@ -39,7 +43,7 @@ bool BfmeOwnerXR::Rva0025DDB0(void *item)
 	if (key == 0)
 		return true;
 
-	BfmeUnitXR *unit = TheBfmeGameLogic->bfmeFindXR(key);
+	BfmeUnitXR *unit = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXR(key);
 
 	return unit == 0 || (unit->m_bfmeFlagsXR & 1) != 0;
 }

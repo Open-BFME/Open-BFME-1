@@ -46,6 +46,10 @@ public:
 	Object *m_owner;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 class GameLogicFrameSlice
 {
 public:
@@ -53,7 +57,7 @@ public:
 	int m_frame;
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva0016C990State
 {
@@ -73,7 +77,7 @@ int Rva0016C990State::checkReady()
 		return -2;
 
 	int stamp = *(int *)(weapon->m_template + 0x68);
-	if (stamp >= 0 && (unsigned)(weapon->m_2C + stamp) > (unsigned)TheGameLogic->m_frame)
+	if (stamp >= 0 && (unsigned)(weapon->m_2C + stamp) > (unsigned)((GameLogicFrameSlice *)TheGameLogic)->m_frame)
 		return 0;
 	else
 	{

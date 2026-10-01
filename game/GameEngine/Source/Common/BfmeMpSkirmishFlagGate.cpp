@@ -18,13 +18,17 @@ struct BfmeFlagHolder
 	BfmeFlagCandidate *m_current;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 class GameLogicPortraitShim
 {
 public:
 	bool isInMultiplayerOrSkirmishGame();
 };
 
-extern GameLogicPortraitShim *TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 // ?bfmeMpSkirmishFlagGate@@YG_NPAUBfmeFlagHolder@@PAVBfmeFlagCandidate@@@Z
 bool __stdcall bfmeMpSkirmishFlagGate(BfmeFlagHolder *holder, BfmeFlagCandidate *candidate)
@@ -33,7 +37,7 @@ bool __stdcall bfmeMpSkirmishFlagGate(BfmeFlagHolder *holder, BfmeFlagCandidate 
 		return false;
 	if (candidate == holder->m_current)
 		return false;
-	if (TheGameLogic->isInMultiplayerOrSkirmishGame())
+	if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 		return !candidate->m_flagD9;
 	return !candidate->m_flagDA;
 }

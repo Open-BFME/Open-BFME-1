@@ -26,12 +26,16 @@ public:
 	BfmeUnitVK *m_bfmeUnitVK;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 struct Rva00367E30Logic
 {
 	BfmePlayerVK *bfmeFindVK(void *key);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeOwnerVK
 {
@@ -53,7 +57,7 @@ void BfmeOwnerVK::bfmeApplyVK(void)
 		return;
 
 	BfmeSetVK *set = &m_bfmeSetVK;
-	BfmePlayerVK *player = TheBfmeGameLogic->bfmeFindVK(m_bfmeKeyVK);
+	BfmePlayerVK *player = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindVK(m_bfmeKeyVK);
 
 	if (player != 0)
 		unit->m_bfmeListVK.bfmeAddPlayerVK(player, 2);

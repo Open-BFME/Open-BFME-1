@@ -20,13 +20,22 @@ public:
 	int m_tag74;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 class GameLogicFrameSlice
 {
 public:
 	Object *bfmeFind(int id);
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline GameLogicFrameSlice *bfmeTheLogic()
+{
+	return (GameLogicFrameSlice *)TheGameLogic;
+}
 
 struct BfmeMsgObj
 {
@@ -62,7 +71,7 @@ int BfmeLogicFindKindFilter::bfmeAccept(void *a, BfmeFilterMsg *msg, void *c, vo
 	{
 		BfmeMsgObj *mo = msg->m_obj;
 		int id = mo ? mo->m_id20 : 0;
-		obj = TheGameLogic->bfmeFind(id);
+		obj = bfmeTheLogic()->bfmeFind(id);
 		if (obj)
 		{
 			if (obj->isKindOf(KINDOF_FILTER_41))

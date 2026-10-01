@@ -27,13 +27,17 @@ public:
 	BfmeSubXG m_bfmeSubXG;
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 class BfmeLogicXG
 {
 public:
 	void bfmeKillXG(BfmeUnitXG *unit, int reason, int flag);
 };
 
-extern BfmeLogicXG *TheBfmeLogicXG;
+extern GameLogic *TheGameLogic;
 
 class BfmeOuterXG
 {
@@ -64,7 +68,7 @@ void Rva002AFFA0Owner::drop(void *arg)
 		if (((BfmeOuterXG *)((char *)this - 0x20))->m_bfmeUnitXG->m_bfmeHookXG != 0)
 			((BfmeOuterXG *)((char *)this - 0x20))->m_bfmeUnitXG->m_bfmeHookXG->bfmeNoteXG();
 
-		TheBfmeLogicXG->bfmeKillXG(((BfmeOuterXG *)((char *)this - 0x20))->m_bfmeUnitXG, 0xffff, 1);
+		((BfmeLogicXG *)TheGameLogic)->bfmeKillXG(((BfmeOuterXG *)((char *)this - 0x20))->m_bfmeUnitXG, 0xffff, 1);
 		((BfmeOuterXG *)((char *)this - 0x20))->bfmeFinishXG(arg);
 	}
 }

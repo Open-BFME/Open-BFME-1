@@ -19,7 +19,7 @@ public:
     Object *findObjectByID( ObjectID id );
 };
 
-extern GameLogic * volatile TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
@@ -136,7 +136,7 @@ StateReturnType AITNGuardAttackAggressorState::update()
     {
         AITNGuardMachine *guardMachine = m_machine;
         Object *nemesis =
-            (*TheGameLogic).findObjectByID(guardMachine->m_nemesisID);
+            TheGameLogic->findObjectByID(guardMachine->m_nemesisID);
         Player *ownerPlayer = guardMachine->getOwner()->getControllingPlayer();
         if (ownerPlayer != 0)
         {

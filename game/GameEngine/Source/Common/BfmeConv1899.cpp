@@ -5,12 +5,21 @@ public:
 	BfmeObjAS *bfmeParentAS(int which);
 };
 
+// TU-local view of the retail GameLogic; the global itself is the canonical
+// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
+class GameLogic;
+
 struct Rva00367E30Logic
 {
 	BfmeObjAS *bfmeFindAS(int id);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic *bfmeTheLogic()
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class BfmeHostAS
 {
@@ -28,7 +37,7 @@ void BfmeHostAS::bfmeResetAS(void *a, void *b)
 
 	if (id != 0)
 	{
-		BfmeObjAS *o = TheBfmeGameLogic->bfmeFindAS(id);
+		BfmeObjAS *o = bfmeTheLogic()->bfmeFindAS(id);
 
 		if (o != 0)
 		{
