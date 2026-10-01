@@ -82,7 +82,9 @@ public:
 	PlayerMaskType bfmeNext1087(Parameter *);
 };
 
-extern BfmeP1087 *g_bfmeP1087;
+// Retail spells the singleton at 0x012F076C TheScriptEngine (declared below);
+// BfmeP1087 is this TU's view of the reviewed player-mask thunk, so it is cast
+// at the use instead of being a second name for the global.
 
 class ScriptEngine
 {
@@ -147,7 +149,7 @@ Bool ScriptConditions::evaluatePlayerUnitCondition(Condition *pCondition,
 	Int numObjs = types.m_types->prepForPlayerCounting(templates, counts);
 	if (numObjs == 0) return false;
 
-	PlayerMaskType mask = g_bfmeP1087->bfmeNext1087(pPlayerParm);
+	PlayerMaskType mask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(pPlayerParm);
 	Int count = 0;
 	while (mask) {
 		Player *player = ThePlayerList->getEachPlayerFromMask(mask);

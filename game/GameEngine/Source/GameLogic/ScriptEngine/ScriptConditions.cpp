@@ -215,7 +215,9 @@ public:
 	PlayerMaskType bfmeNext1087(Parameter *parameter);
 };
 
-extern BfmeP1087 *g_bfmeP1087;
+// Retail spells the singleton at 0x012F076C TheScriptEngine; BfmeP1087 is this
+// TU's view of the reviewed player-mask thunk, so the global carries its real
+// name and the view is cast at each use.
 
 // BFME keeps Parameter::m_int at +0x08 and embeds the energy counters in the
 // player at +0xA8/+0xAC.  These views keep this predicate from selecting the
@@ -1470,7 +1472,7 @@ Bool ScriptConditions::evaluateEnemySighted(Parameter *pItemParm, Parameter *pAl
 		break;
 	}
 
-	UnsignedShort mask = g_bfmeP1087->bfmeNext1087(pPlayerParm);
+	UnsignedShort mask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(pPlayerParm);
 	while (mask) {
 		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
 		Bool found = (reinterpret_cast<Rva00327D30::PartitionManager *>(ThePartitionManager)->getClosestObject(reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(theObj) + 0x38),
@@ -2246,7 +2248,7 @@ Bool ScriptConditions::evaluatePlayerHasComparisonPercentPower(Parameter *pPlaye
 Bool ScriptConditions::evaluateRva003231E0(Parameter *pPlayerParm, Parameter *pComparisonParm, Parameter *pKWHParm)
 {
 	Int desiredKilowattExcess = reinterpret_cast<BfmeScriptConditionIntParameter *>(pKWHParm)->m_int;
-	PlayerMaskType playerMask = g_bfmeP1087->bfmeNext1087(pPlayerParm);
+	PlayerMaskType playerMask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(pPlayerParm);
 	Parameter *comparisonParameter = pComparisonParm;
 	while (playerMask) {
 		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
@@ -2979,7 +2981,7 @@ Bool ScriptConditions::evaluateRva00323650(Condition *pCondition, Parameter *pSk
 		}
 	}
 	cache->m_customFrame = frame + 5;
-	PlayerMaskType playerMask = g_bfmeP1087->bfmeNext1087(pSkirmishPlayerParm);
+	PlayerMaskType playerMask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(pSkirmishPlayerParm);
 	while (playerMask) {
 		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
 		if (player && player->isSupplySourceSafe(

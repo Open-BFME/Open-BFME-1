@@ -211,7 +211,9 @@ public:
 	PlayerMaskType bfmeNext1087( Parameter *parameter );
 };
 
-extern BfmeP1087 *g_bfmeP1087;
+// Retail spells the singleton at 0x012F076C TheScriptEngine (declared above);
+// BfmeP1087 is this TU's view of the reviewed player-mask thunk, so it is cast
+// at the use instead of being a second name for the global.
 extern char Rva006A16B0Empty[];
 
 // The per-player light-point reader is only known as the thunk at 0x00047D34,
@@ -362,7 +364,7 @@ Bool ScriptConditions::evaluatePlayerHasNumberObjectsWithModelCondition(
 	Parameter *playerParm, Parameter *modelConditionParm,
 	Parameter *comparisonParm, Parameter *countParm)
 {
-	PlayerMaskType mask = g_bfmeP1087->bfmeNext1087(playerParm);
+	PlayerMaskType mask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(playerParm);
 	int limit = countParm->getInt();
 	int count = 0;
 	{

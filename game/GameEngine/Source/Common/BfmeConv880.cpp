@@ -78,7 +78,11 @@ public:
 	void bfmeCallENG();
 };
 
-extern BfmeGlobENG *g_bfmeObjENG;
+// Retail spells the singleton at 0x012F076C TheScriptEngine; this view type
+// keeps the one call this TU makes, so the global is declared under its real
+// name and the view is cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 struct BfmeThingENG
 {
@@ -90,7 +94,7 @@ struct BfmeThingENG
 void BfmeThingENG::bfmeGoENG(void *unused)
 {
 	m_bfmeFlag = 1;
-	g_bfmeObjENG->bfmeCallENG();
+	((BfmeGlobENG *)TheScriptEngine)->bfmeCallENG();
 }
 
 struct BfmeHolderENI

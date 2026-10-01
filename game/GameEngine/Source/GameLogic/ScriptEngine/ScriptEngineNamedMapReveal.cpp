@@ -188,7 +188,11 @@ public:
 	UnsignedShort getPlayerMaskFromAsciiString(const AsciiString &name, Bool *found);
 };
 
-extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;	// 0x012F076C
+// Retail spells the singleton at 0x012F076C TheScriptEngine; the mask resolver
+// above is this TU's view of it, so the global carries its real name and the
+// view is cast at each use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
@@ -226,7 +230,7 @@ void ScriptEngine::doNamedMapReveal(const AsciiString& revealName)
 		return;
 	}
 
-	UnsignedShort playerMask = TheScriptEngine->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
+	UnsignedShort playerMask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
 
 	TheShroudManager->doShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
 }
@@ -252,7 +256,7 @@ void ScriptEngine::undoNamedMapReveal(const AsciiString& revealName)
 		return;
 	}
 
-	UnsignedShort playerMask = TheScriptEngine->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
+	UnsignedShort playerMask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
 
 	TheShroudManager->undoShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
 }

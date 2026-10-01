@@ -75,7 +75,11 @@ private:
 	Template m_conditionTemplates[184];
 };
 
-extern BfmeScriptEngineTemplates *TheScriptEngine;		// 0x012F076C
+// Retail spells the singleton at 0x012F076C TheScriptEngine; the template-table
+// view above keeps the two pinned member bodies, so the global carries its real
+// name and the view is cast at each use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 
 // ?addConditionTemplate@BfmeScriptEngineTemplates@@QAEXPAVTemplate@@@Z
 void BfmeScriptEngineTemplates::addConditionTemplate( Template *tmpl )
@@ -100,7 +104,7 @@ void parseScriptAction( INI *ini )
 	ini->initFromINI( &tmpl, Template::m_fieldParseTable );
 
 	if( TheScriptEngine )
-		TheScriptEngine->addActionTemplate( &tmpl );
+		((BfmeScriptEngineTemplates *)TheScriptEngine)->addActionTemplate( &tmpl );
 }
 
 // ?parseScriptCondition@@YAXPAVINI@@@Z
@@ -111,5 +115,5 @@ void parseScriptCondition( INI *ini )
 	ini->initFromINI( &tmpl, Template::m_fieldParseTable );
 
 	if( TheScriptEngine )
-		TheScriptEngine->addConditionTemplate( &tmpl );
+		((BfmeScriptEngineTemplates *)TheScriptEngine)->addConditionTemplate( &tmpl );
 }

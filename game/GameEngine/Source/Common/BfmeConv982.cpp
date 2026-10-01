@@ -75,12 +75,16 @@ public:
 	virtual void bfmeSend982B(BfmeZ982 *z);
 };
 
-extern BfmeSrc982 *g_bfmeSrc982;
+// Retail spells the singleton at 0x012F076C TheScriptEngine; BfmeSrc982 is
+// this TU's view of it, so the global carries its real name and the view is
+// cast at the use.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 extern BfmeOut982 *g_bfmeOut982;
 
 void __stdcall bfmeGo982B(int a)
 {
-	BfmeY982 *y = g_bfmeSrc982->bfmeGet982B(a);
+	BfmeY982 *y = ((BfmeSrc982 *)TheScriptEngine)->bfmeGet982B(a);
 
 	if (!y)
 		return;
