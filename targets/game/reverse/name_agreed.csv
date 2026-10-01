@@ -214,3 +214,4 @@ game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeStrVUQ,AsciiString,gemi
 game/GameEngine/Source/Common/BfmeConv1653.cpp|type||BfmeOwnVUQ,Script,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeInnerLU,Overridable,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeThingLU,ThingTemplate,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,m_vertexBuffer,claude-fable+grok,applied,2026-10-01

@@ -74,12 +74,12 @@ public:
 	void bfmeGo930D();
 	BfmeOldKB *m_bfmeP;
 	char m_bfmePad[0x44];
-	void *m_bfmeQ;
+	void *m_vertexBuffer;
 };
 
 void BfmeThing930D::bfmeGo930D()
 {
-	bfmeFreeRC(m_bfmeQ);
+	bfmeFreeRC(m_vertexBuffer);
 	BfmeOldKB *s = m_bfmeP;
 	if (s)
 		s->bfmeRelKB();
