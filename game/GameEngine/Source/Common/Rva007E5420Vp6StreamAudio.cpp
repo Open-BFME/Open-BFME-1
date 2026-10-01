@@ -136,7 +136,9 @@ public:
 	virtual int finishAudioSetup();
 };
 
-extern Rva007E5420AudioManager *TheAudio;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class Rva007E5420Vp6Stream
 {
@@ -161,19 +163,19 @@ int Rva007E5420Vp6Stream::setAudio(const AsciiString &name)
 	if (TheAudio)
 	{
 		AudioEventRTS event(name, 2);
-		TheAudio->getInfoForAudioEvent(&event);
+		((Rva007E5420AudioManager *)TheAudio)->getInfoForAudioEvent(&event);
 		if (event.m_eventInfo)
 		{
-			m_audioHandle = TheAudio->addAudioEvent(&event);
-			result = -TheAudio->finishAudioSetup();
+			m_audioHandle = ((Rva007E5420AudioManager *)TheAudio)->addAudioEvent(&event);
+			result = -((Rva007E5420AudioManager *)TheAudio)->finishAudioSetup();
 		}
 
 		AudioEventRTS musicEvent(musicName, 2);
-		TheAudio->getInfoForAudioEvent(&musicEvent);
+		((Rva007E5420AudioManager *)TheAudio)->getInfoForAudioEvent(&musicEvent);
 		if (musicEvent.m_eventInfo)
 		{
-			m_musicHandle = TheAudio->addAudioEvent(&musicEvent);
-			result = -TheAudio->finishAudioSetup();
+			m_musicHandle = ((Rva007E5420AudioManager *)TheAudio)->addAudioEvent(&musicEvent);
+			result = -((Rva007E5420AudioManager *)TheAudio)->finishAudioSetup();
 		}
 	}
 

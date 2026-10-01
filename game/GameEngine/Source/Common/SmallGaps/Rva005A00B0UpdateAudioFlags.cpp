@@ -13,7 +13,8 @@ struct Rva005A00B0AudioClient {
 	virtual void setFlagVolume(float volume, int mask);
 };
 extern Rva005A00B0Transition* TheTransitionHandler;
-extern Rva005A00B0AudioClient* TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager* TheAudio;
 class GameWindowTransitionsHandler
 {
 public:
@@ -75,7 +76,7 @@ void Rva005A00B0Owner::updateAudioFlags()
 			int mask = 1 << i;
 			if (m_flags & mask) {
 				float volume = Rva005A00B0FlagVolume(i);
-				TheAudioClientUpdate->setFlagVolume(volume, mask);
+				((Rva005A00B0AudioClient*)TheAudio)->setFlagVolume(volume, mask);
 			}
 		}
 	}
@@ -86,6 +87,6 @@ void Rva005A0130SetAllFlagVolumes()
 {
 	for (int i = 0; i < 3; ++i) {
 		float volume = Rva005A00B0FlagVolume(i);
-		TheAudioClientUpdate->setFlagVolume(volume, 1 << i);
+		((Rva005A00B0AudioClient*)TheAudio)->setFlagVolume(volume, 1 << i);
 	}
 }

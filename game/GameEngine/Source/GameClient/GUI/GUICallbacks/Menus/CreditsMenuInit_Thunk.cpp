@@ -163,7 +163,9 @@ public:
 	virtual void removeAudioEvent(Int, Int, Int);
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 // ?CreditsMenuInit@@YAXPAVWindowLayout@@PAX@Z
 void CreditsMenuInit(WindowLayout *layout, void *)
@@ -186,8 +188,8 @@ void CreditsMenuInit(WindowLayout *layout, void *)
 	layout->hide(FALSE);
 	TheWindowManager->winSetFocus(parentMainMenu);
 
-	TheAudioClientUpdate->removeAudioEvent(2, 1, 0);
+	((Rva005A00B0AudioClient *)TheAudio)->removeAudioEvent(2, 1, 0);
 	AudioEventRTS event(AsciiString("Credits"), 2);
 	event.setIsLogicalAudio(TRUE);
-	TheAudioClientUpdate->addAudioEvent(&event);
+	((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(&event);
 }

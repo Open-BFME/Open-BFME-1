@@ -145,12 +145,14 @@ public:
 	virtual void slot170();
 };
 
-extern R2GlobalReceiver *R2Ptr012ED668;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 extern R2GlobalReceiver *R2Ptr01306DF0;
 
-void Rva0007C530() { if ( R2Ptr012ED668 ) { R2Ptr012ED668->slot170(); } }
-void Rva002EEA30() { if ( R2Ptr012ED668 ) { R2Ptr012ED668->slot154(); } }
-void Rva002EEA50() { if ( R2Ptr012ED668 ) { R2Ptr012ED668->slot164(); } }
+void Rva0007C530() { if ( TheAudio ) { ((R2GlobalReceiver *)TheAudio)->slot170(); } }
+void Rva002EEA30() { if ( TheAudio ) { ((R2GlobalReceiver *)TheAudio)->slot154(); } }
+void Rva002EEA50() { if ( TheAudio ) { ((R2GlobalReceiver *)TheAudio)->slot164(); } }
 void Rva007B7600() { if ( R2Ptr01306DF0 ) { R2Ptr01306DF0->slot004(); } }
 
 class Rva002D9AC0 : public R2GlobalReceiver

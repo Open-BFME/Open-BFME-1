@@ -120,7 +120,9 @@ public:
 #undef BFME_CLIENT_SLOT
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class BfmeThingCEF
 {
@@ -157,7 +159,7 @@ void BfmeThingEOC::bfmeGoEOC(void *a)
 void BfmeThingEOC::bfmeAfterEOC()
 {
 	BfmeThingEOC *self = this;
-	if (TheAudioClientUpdate == 0)
+	if ((ClientSubsystem *)TheAudio == 0)
 	{
 		return;
 	}
@@ -182,8 +184,8 @@ void BfmeThingEOC::bfmeAfterEOC()
 	}
 	if (event != 0)
 	{
-		TheAudioClientUpdate->updateAudioEvent(self->m_bfmeHandleA, event);
-		TheAudioClientUpdate->updateAudioEvent(self->m_bfmeHandleB, event);
+		((ClientSubsystem *)TheAudio)->updateAudioEvent(self->m_bfmeHandleA, event);
+		((ClientSubsystem *)TheAudio)->updateAudioEvent(self->m_bfmeHandleB, event);
 	}
 	else
 		reinterpret_cast<BfmeThingCEF *>(self)->bfmeOneCEF();

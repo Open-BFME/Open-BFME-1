@@ -149,7 +149,9 @@ public:
 
 #undef BFME_AUDIO_SLOT
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class ArchiveFileSystem
 {
@@ -218,10 +220,10 @@ void Win32CDDrive::refreshInfo( void )
 		m_disk = CD::NO_DISK;
 
 		if (mayRequireUpdate && BFME_FILE_SYSTEM_STATE != 0 &&
-			TheAudioClientUpdate != 0 &&
-			TheAudioClientUpdate->isMusicPlayingFromCD())
+			TheAudio != 0 &&
+			((Rva005A00B0AudioClient *)TheAudio)->isMusicPlayingFromCD())
 		{
-			TheAudioClientUpdate->clearMusicFromCD(1);
+			((Rva005A00B0AudioClient *)TheAudio)->clearMusicFromCD(1);
 			TheArchiveFileSystem->closeArchiveFile(BFME_MUSIC_BIG);
 		}
 	}

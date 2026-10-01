@@ -103,7 +103,9 @@ public:
 
 extern RecorderClass *TheRecorder;
 extern GameLogic *TheBfmeGameLogic;
-extern AudioClientUpdate *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 extern Shell *TheShell;
 extern void *g_obj12F4B50;
 
@@ -144,7 +146,7 @@ Bool _bfme_showScoreScreen(void)
 	{
 		AudioEventRTS audioEvent(AsciiString("ScoreScreenMusic"), 2);
 		audioEvent.stop(1);
-		TheAudioClientUpdate->addAudioEvent(&audioEvent);
+		((AudioClientUpdate *)TheAudio)->addAudioEvent(&audioEvent);
 		TheShell->push(AsciiString("ScoreScreen.apt"), false);
 
 		if (type == 0)

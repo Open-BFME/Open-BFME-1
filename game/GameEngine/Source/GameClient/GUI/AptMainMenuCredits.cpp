@@ -87,7 +87,9 @@ public:
 #undef BFME_VSLOT
 
 extern CreditsManager *TheCredits;
-extern Rva0051D690Audio *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 extern Rva0057F100 *g_obj12F4B58;
 extern GameEngine *TheGameEngine;
@@ -118,7 +120,7 @@ void BfmeAptScreenMainMenu::_bfme_credits( const char *name )
 
 	AudioEventRTS event( AsciiString( "Credits" ), 2 );
 	event.setIsLogicalAudio( true );
-	TheAudioClientUpdate->addAudioEvent( &event );
+	((Rva0051D690Audio *)TheAudio)->addAudioEvent( &event );
 
 	m_state264 = 4;
 	g_obj12F4B58->m_flag59 = 1;

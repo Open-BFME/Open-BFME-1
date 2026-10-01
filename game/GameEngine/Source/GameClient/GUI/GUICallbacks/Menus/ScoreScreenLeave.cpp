@@ -154,7 +154,9 @@ public:
 	int m_gameType;
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 extern CampaignManager *TheLivingWorldLogic;
 extern Rva012F49B4Thing *g_rva012F49B4;
 extern WindowManager *g_theWindowManager;
@@ -180,7 +182,7 @@ void _bfme_leaveScoreScreen()
 	if ( g_obj12F4B50 == 0 )
 		return;
 
-	TheAudioClientUpdate->slot6c( 2, 1, 0 );
+	((ClientSubsystem *)TheAudio)->slot6c( 2, 1, 0 );
 	if ( g_obj12F4B50->m_gameType == 0 )
 	{
 		if ( TheLivingWorldLogic->hasFollowUp() )
@@ -202,6 +204,6 @@ void _bfme_leaveScoreScreen()
 
 	AudioEventRTS event( AsciiString( "Shell2Music" ), (ObjectID)2 );
 	((LwsAudioEventRTS *)&event)->setIsLogicalAudio( false );
-	TheAudioClientUpdate->addAudioEvent( &event );
+	((ClientSubsystem *)TheAudio)->addAudioEvent( &event );
 	g_theWindowManager->returnToShell();
 }

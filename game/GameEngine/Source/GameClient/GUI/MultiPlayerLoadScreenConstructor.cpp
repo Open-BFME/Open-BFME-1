@@ -64,7 +64,9 @@ public:
 	virtual void slot6c( int a, int b, int c );
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+class AudioManager;
+
+extern AudioManager *TheAudio;
 
 class MultiPlayerLoadScreen : public Rva00490470
 {
@@ -105,5 +107,5 @@ MultiPlayerLoadScreen::~MultiPlayerLoadScreen()
 		m_playerSide[ i ] = 0;
 		m_playerLookup[ i ] = -1;
 	}
-	TheAudioClientUpdate->slot6c( 2, 1, 0 );
+	((ClientSubsystem *)TheAudio)->slot6c( 2, 1, 0 );
 }
