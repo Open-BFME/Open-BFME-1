@@ -160,13 +160,17 @@ private:
 
 extern GameLogic *TheGameLogic;
 
-struct GlobalData
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
+struct Rva012ED5C8GlobalData
 {
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;							// +0xA88
 };
 
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class ScriptAction;
 
@@ -448,7 +452,7 @@ void AIPlayer::buildSpecificAITeam( TeamPrototype *teamProto, Bool priorityBuild
 				}
 			}
 		} else {
-			if (TheGlobalData->m_debugAI) {
+			if (((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_debugAI) {
 				AsciiString teamName = teamProto->getName();
 				((StringBase<char> *)&teamName)->concat(" - contains 0 buildable units.", 30);
 				TheScriptEngine->AppendDebugMessage(teamName, false);

@@ -137,7 +137,11 @@ class AsciiString : public StringBase<char>
 {
 };
 
-struct GlobalData
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the fields this body reads are described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
+struct Rva012ED5C8GlobalData
 {
 	unsigned char m_beforeUseFX[ 0xa7f ];
 	Bool m_useFX;
@@ -301,13 +305,13 @@ Bool ParticleSystem::update( Int localPlayerIndex )
 	__int64 end;
 
 	m_updateTime = 0.0f;
-	if( TheWritableGlobalData->m_boolA91 )
+	if( ((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_boolA91 )
 	{
 		QueryPerformanceFrequency( &frequency );
 		QueryPerformanceCounter( &start );
 	}
 
-	if( TheWritableGlobalData->m_useFX == false )
+	if( ((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_useFX == false )
 		return false;
 
 	if( m_delayLeft )
@@ -427,7 +431,7 @@ Bool ParticleSystem::update( Int localPlayerIndex )
 	notify1B0();
 	Bool result = updateParticles();
 
-	if( TheWritableGlobalData->m_boolA91 )
+	if( ((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_boolA91 )
 	{
 		QueryPerformanceCounter( &end );
 		m_updateTime = (Real)( end - start ) * 1000.0f / (Real)frequency;

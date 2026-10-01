@@ -246,7 +246,11 @@ public:
 
 extern InGameUI *TheInGameUI;
 
-struct GlobalData
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
+struct Rva012ED5C8GlobalData
 {
 	char m_pad00[0x218];
 	UnsignedInt m_timeOfDay;
@@ -381,14 +385,14 @@ void StealthUpdate::changeVisualDisguise()
 					clientPlayer->getDefaultTeam()) != 2 &&
 				clientPlayer->isPlayerActive())
 			{
-				if (TheWritableGlobalData->m_timeOfDay == 4)
+				if (((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_timeOfDay == 4)
 					draw->setIndicatorColor(player->getPlayerNightColor());
 				else
 					draw->setIndicatorColor(player->getPlayerColor());
 			}
 			else
 			{
-				if (TheWritableGlobalData->m_timeOfDay == 4)
+				if (((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_timeOfDay == 4)
 					draw->setIndicatorColor(self->getNightIndicatorColor());
 				else
 					draw->setIndicatorColor(self->getIndicatorColor());
@@ -419,7 +423,7 @@ void StealthUpdate::changeVisualDisguise()
 			draw->setOrientation(self->getOrientation());
 			self->bfmeClearYG(flags);
 			draw->updateDrawable();
-			if (TheWritableGlobalData->m_timeOfDay == 4)
+			if (((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_timeOfDay == 4)
 				draw->setIndicatorColor(self->getNightIndicatorColor());
 			else
 				draw->setIndicatorColor(self->getIndicatorColor());

@@ -138,13 +138,17 @@ namespace rts
 typedef _STL::hash_map< AsciiString, UnicodeString, rts::hash<AsciiString>,
 	rts::equal_to<AsciiString> > Rva006AF840RealMap;
 
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
 struct Rva006C9270GlobalData
 {
 	unsigned char m_beforeA72[ 0xa72 ];
 	Bool m_boolA72;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Xfer;
 class SubsystemInterface
@@ -438,7 +442,7 @@ void MilesAudioManager::rva006AF840()
 			subtitle.clear();
 		else if( subtitle.getCharAt( 0 ) == L'*' )
 		{
-			if( TheWritableGlobalData->m_boolA72 )
+			if( ((const Rva006C9270GlobalData *)TheWritableGlobalData)->m_boolA72 )
 			{
 				UnicodeString unmarked( subtitle, 1, subtitle.getLength() - 1 );
 				subtitle.swap( unmarked );

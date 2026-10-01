@@ -41,7 +41,11 @@ extern void j_0003413f();
 extern Rva00711B00 *Rva012F8060;
 extern RTS2DScene *Rva012F805C;
 extern Rva00712F60 *Rva012F8058;
-extern void *Rva012ED5C8;
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only its address is used here (every field goes
+// through the witnessed-offset rvaF helper), so the real class is not redeclared.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern void *Rva012F1484;
 extern void *ApplicationHWnd;
 
@@ -83,8 +87,6 @@ public: Rva006E6C10(); void apply(); void setAndNotify(int);
 };
 extern void *Rva012F1B38;
 
-#define TheGlobalData Rva012ED5C8
-#define TheWritableGlobalData Rva012ED5C8
 #define TheGlobalLanguageData Rva012F1484
 #define TheFontLibrary Rva012F1B38
 #define m_3DInterfaceScene Rva012F8060
@@ -149,17 +151,17 @@ void W3DDisplay::init(void)
     reinterpret_cast<Rva006ED5B0Scene *>(m_2DScene)->Set_Ambient_Light(Vector3(1,1,1));
     m_3DScene = new Rva00712F60;
     int i;
-    for (i=0; i<rvaF<int>(TheGlobalData,0xa58); ++i) {
+    for (i=0; i<rvaF<int>(TheWritableGlobalData,0xa58); ++i) {
         rvaF<LightClass *>(this,0x144 + 4*i) = new LightClass(LightClass::DIRECTIONAL);
         rvaF<LightClass *>(this,0x154 + 4*i) = new LightClass(LightClass::DIRECTIONAL);
     }
     Rva006ED5B0DisplaySlots *d = reinterpret_cast<Rva006ED5B0DisplaySlots *>(this);
-    d->slot94(rvaF<int>(TheGlobalData,0x218));
-    for (i=0; i<rvaF<int>(TheGlobalData,0xa58); ++i) {
+    d->slot94(rvaF<int>(TheWritableGlobalData,0x218));
+    for (i=0; i<rvaF<int>(TheWritableGlobalData,0xa58); ++i) {
         reinterpret_cast<Rva00710FF0 *>(m_3DScene)->store(rvaF<Open2Counted *>(this,0x144+4*i),i);
         reinterpret_cast<Rva00711050 *>(m_3DScene)->store(rvaF<Open2Counted *>(this,0x154+4*i),i);
     }
-    if (rvaF<bool>(TheGlobalData,0xbc5)) bfmeSetSize(1);
+    if (rvaF<bool>(TheWritableGlobalData,0xbc5)) bfmeSetSize(1);
     if ((unsigned char)WW3D::Init(ApplicationHWnd) != 1) throw (unsigned)0xdead0007;
     WW3D::Set_Prelit_Mode(WW3D::PRELIT_MODE_LIGHTMAP_MULTI_PASS);
     Rva00956A70::store(0);
@@ -167,29 +169,29 @@ void W3DDisplay::init(void)
     WW3D::Set_Thumbnail_Enabled(false);
     WW3D::Set_Screen_UV_Bias(true);
     Rva008FE150::store(32);
-    d->slot3c(rvaF<bool>(TheGlobalData,0x29));
+    d->slot3c(rvaF<bool>(TheWritableGlobalData,0x29));
     render164 = new Render2DClass;
     if (TheGameLODManager) {
         if (rvaF<int>(TheGameLODManager,0x16c0)==-1)
             TheGameLODManager->setStaticLODLevel((StaticGameLODLevel)TheGameLODManager->rva0007E0F0());
         else {
-            int reduction=rvaF<int>(TheGlobalData,0x68);
+            int reduction=rvaF<int>(TheWritableGlobalData,0x68);
             if (reduction>0) {
                 WW3D::Set_Texture_Reduction(reduction,6);
                 TheGameLODManager->rva0007C350(reduction);
             }
         }
     }
-    d->slot24(rvaF<unsigned>(TheGlobalData,0x2c));
-    d->slot28(rvaF<unsigned>(TheGlobalData,0x30));
+    d->slot24(rvaF<unsigned>(TheWritableGlobalData,0x2c));
+    d->slot28(rvaF<unsigned>(TheWritableGlobalData,0x30));
     d->slot34(32);
     {
         Rva006ED5B0Guard guard;
         if (WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
             rvaF<unsigned>(TheWritableGlobalData,0x2c)=800;
             rvaF<unsigned>(TheWritableGlobalData,0x30)=600;
-            d->slot24(rvaF<unsigned>(TheGlobalData,0x2c));
-            d->slot28(rvaF<unsigned>(TheGlobalData,0x30));
+            d->slot24(rvaF<unsigned>(TheWritableGlobalData,0x2c));
+            d->slot28(rvaF<unsigned>(TheWritableGlobalData,0x30));
             if (WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
                 WW3D::Shutdown(); WWMath::Shutdown(); throw (unsigned)0xdead0007;
             }
@@ -198,12 +200,12 @@ void W3DDisplay::init(void)
     }
     render164->Set_Coordinate_Range(RectClass(0,0,(float)d->slot2c(),(float)d->slot30()));
     Rva0134FAA0 = new Rva009EB960;
-    Rva00938620(rvaF<AsciiString>(TheGlobalData,0xdc0),rvaF<AsciiString>(TheGlobalData,0xdc4));
-    if (rvaF<bool>(TheGlobalData,0x1278)) Rva009EBC00(0);
+    Rva00938620(rvaF<AsciiString>(TheWritableGlobalData,0xdc0),rvaF<AsciiString>(TheWritableGlobalData,0xdc4));
+    if (rvaF<bool>(TheWritableGlobalData,0x1278)) Rva009EBC00(0);
     Rva006FC970 *p = new Rva006FC970;
     rvaF<Rva006FC970 *>(this,0x180)=p;
     if (p) reinterpret_cast<Rva006ED5B0DisplaySlots *>(p)->slot04();
-    if (rvaF<float>(TheGlobalData,0xc68)!=1.0f) d->slot50(rvaF<float>(TheGlobalData,0xc68),0,1,false);
+    if (rvaF<float>(TheWritableGlobalData,0xc68)!=1.0f) d->slot50(rvaF<float>(TheWritableGlobalData,0xc68),0,1,false);
     { Rva006ED5B0Guard guard; W3DShaderManager::init(); }
     debug274=new Rva006E6C10;
     p28=debug274;
@@ -218,7 +220,7 @@ void W3DDisplay::init(void)
         rvaF<int>(debug274,0x24)=9;
     }
     rvaF<unsigned char>(this,0x140)=1;
-    if (rvaF<bool>(TheGlobalData,0xa92)) rvaF<unsigned>(this,0x2c)=(unsigned)j_0002f9f0;
-    else if (rvaF<bool>(TheGlobalData,0xa93)) rvaF<unsigned>(this,0x2c)=(unsigned)j_00048658;
-    else rvaF<unsigned>(this,0x2c)=rvaF<bool>(TheGlobalData,0xa97) ? (unsigned)j_0003413f : 0;
+    if (rvaF<bool>(TheWritableGlobalData,0xa92)) rvaF<unsigned>(this,0x2c)=(unsigned)j_0002f9f0;
+    else if (rvaF<bool>(TheWritableGlobalData,0xa93)) rvaF<unsigned>(this,0x2c)=(unsigned)j_00048658;
+    else rvaF<unsigned>(this,0x2c)=rvaF<bool>(TheWritableGlobalData,0xa97) ? (unsigned)j_0003413f : 0;
 }

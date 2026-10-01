@@ -58,11 +58,15 @@ class BfmeThingFGC {
   public:
     void bfmeGoFGC(int);
 };
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
 struct Rva006C9270GlobalData {
     char pad_00[0x11f8];
     float m_11f8;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 class RecorderClass {
   public:
     bool isMultiplayer();
@@ -176,7 +180,7 @@ class VictoryConditions {
 void VictoryConditions::update() {
     unsigned frame = TheGameLogic->m_frame;
     updateEndGame();
-    unsigned delay = (int)(TheWritableGlobalData ? TheWritableGlobalData->m_11f8 * 5.0f : 25.0f);
+    unsigned delay = (int)(TheWritableGlobalData ? ((const Rva006C9270GlobalData *)TheWritableGlobalData)->m_11f8 * 5.0f : 25.0f);
     if (!TheRecorder->isMultiplayer())
         return;
     if (m_localSlotNum == -1 && !m_isObserver && TheGameLogic->m_gameMode != 6)

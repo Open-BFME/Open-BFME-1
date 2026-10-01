@@ -16,13 +16,17 @@ struct Coord3D
 	float x, y, z;
 };
 
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
 struct Rva00720D10GlobalData
 {
 	unsigned char m_pad00[0x18];
 	bool m_flag18;
 };
 
-extern Rva00720D10GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 struct Rva00720D10Data
 {
@@ -154,7 +158,7 @@ void W3DShrubBuffer::rva00720D10(unsigned int id, Coord3D location, float scale,
 	float randomScaleAmount, const Rva00720D10Data *data, int shadowKind, const AsciiString &textureName,
 	const AsciiString &nameD)
 {
-	if (!TheGlobalData->m_flag18) return;
+	if (!((const Rva00720D10GlobalData *)TheWritableGlobalData)->m_flag18) return;
 	if (numTrees >= 12000) return;
 	if (!initialized) return;
 	int type = -2;

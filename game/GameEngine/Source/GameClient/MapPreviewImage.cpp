@@ -40,8 +40,11 @@ public:
  bool createDirectory(AsciiString);
 };
 extern FileSystem *TheFileSystem;
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. This opaque TU-local class names the
+// getPath_UserData call target only; the real header's class is not redeclared.
 class GlobalData {public: AsciiString getPath_UserData() const;};
-extern GlobalData *TheGlobalData;
+extern GlobalData *TheWritableGlobalData;
 class GameState {public: AsciiString realMapPathToPortableMapPath(const AsciiString &) const;};
 extern GameState *TheGameState;
 class TextureClass {public: void Release_Ref();};
@@ -103,7 +106,7 @@ static void copyFromBigToDir(const AsciiString &infile,const AsciiString &outfil
  delete [] buffer;
 }
 Image *getMapPreviewImage(AsciiString mapName) {
- if(!TheGlobalData) return 0;
+ if(!TheWritableGlobalData) return 0;
  AsciiString tgaName=mapName;
  AsciiString name;
  AsciiString tempName;
@@ -130,7 +133,7 @@ Image *getMapPreviewImage(AsciiString mapName) {
   if(TheFileSystem->doesFileExist(artName.str())) {tgaName=artName;uv.hi.y=0.0f;uv.lo.y=1.0f;}
   else if(!TheFileSystem->doesFileExist(tgaName.str())) return 0;
   AsciiString mapPreviewDir;
-  mapPreviewDir.format("%sMapPreviews/",TheGlobalData->getPath_UserData().str());
+  mapPreviewDir.format("%sMapPreviews/",TheWritableGlobalData->getPath_UserData().str());
   TheFileSystem->createDirectory(mapPreviewDir);
   mapPreviewDir.concat(name);
   bool success=false;

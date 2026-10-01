@@ -64,15 +64,20 @@ class RecorderClass
 	char pad[0x2a0];
 	unsigned players;
 };
-struct GlobalData
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the fields this body reads are described here;
+// the real class is never redeclared.
+class GlobalData;
+struct Rva012ED5C8GlobalData
 {
 	char pad[0xcb4];
 	unsigned networkRunAheadSlack; // +0xCB4, NetworkRunAheadSlack INI field
 };
+extern GlobalData *TheWritableGlobalData;
 extern MessageStream *TheMessageStream;
 extern Network *TheNetwork;
 extern RecorderClass *TheRecorder;
-extern GlobalData *TheGlobalData;
+
 // VA 0x012A6F38: -1 disables the forced diagnostic frame.
 extern int forcedCRCFrame;
 // VA 0x012ED4E8: allows checks to continue after mismatch details are added.
@@ -117,7 +122,7 @@ void GameLogic::bfme_processLogicCRC(unsigned crc,int player,unsigned frame,Game
 			entry->mask = 0;
 			streams.push_back(entry->stream);
 			// Keep the diagnostic stream window aligned with network slack plus three.
-			if (streams.size()>TheGlobalData->networkRunAheadSlack+3)
+			if (streams.size()>((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->networkRunAheadSlack+3)
 			{
 				streamIt=streams.begin();
 				BfmeByteStream *oldStream = *streamIt;

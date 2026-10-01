@@ -149,8 +149,12 @@ public:
 class AI { public: char m_bytes000[0xc]; Pathfinder *m_pathfinder; Pathfinder *pathfinder() { return m_pathfinder; } };
 extern AI *TheAI;
 
-class GlobalData { public: char m_bytes000[0xba8]; Real m_defaultStructureRubbleHeight; };
-extern GlobalData *TheGlobalData;
+// Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in Common/GlobalData.cpp. Only the field this body reads is described on a
+// TU-local view; the real class is never redeclared.
+class GlobalData;
+struct Rva012ED5C8GlobalData { public: char m_bytes000[0xba8]; Real m_defaultStructureRubbleHeight; };
+extern GlobalData *TheWritableGlobalData;
 
 class ObjectCreationList
 {
@@ -226,7 +230,7 @@ void ActiveBody::setCorrectDamageState(Bool arg)
 		}
 		else
 		{
-			obj->setGeometryInfoZ(TheGlobalData->m_defaultStructureRubbleHeight);
+			obj->setGeometryInfoZ(((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_defaultStructureRubbleHeight);
 		}
 
 		if (m_curDamageState > oldState && m_curDamageState == 3)
@@ -299,7 +303,7 @@ void ActiveBody::setCorrectDamageState(Bool arg)
 		{
 			Real rubbleHeight = getObject()->getTemplate()->getStructureRubbleHeight();
 			if (rubbleHeight <= 0.0f)
-				rubbleHeight = TheGlobalData->m_defaultStructureRubbleHeight;
+				rubbleHeight = ((const Rva012ED5C8GlobalData *)TheWritableGlobalData)->m_defaultStructureRubbleHeight;
 			obj->setGeometryInfoZ(rubbleHeight);
 			TheAI->pathfinder()->removeObjectFromPathfindMap(obj);
 			TheAI->pathfinder()->addObjectToPathfindMap(obj);
