@@ -1,3 +1,4 @@
+#include <stddef.h>
 // cl: /DNDEBUG /MD /EHs-c-
 
 typedef unsigned long RvaDword821D0;
@@ -51,8 +52,8 @@ extern void d_00881d40(void);
 extern void *d_00881d70(unsigned int size);
 extern void *d_00881d90(unsigned int size);
 extern void d_00881db0(void);
-extern void d_00881dc0(void);
-extern void d_00881dd0(void);
+extern size_t rva00881DC0(void *, int);
+extern void *rva00881DD0(void *, size_t);
 extern void *d_00881df0(void *ptr, unsigned int size);
 extern char *d_00881e10(const char *src);
 extern unsigned short *d_00881e60(const unsigned short *src);
@@ -102,8 +103,8 @@ void rva008821d0LoaderPatch(void)
 	rva00882140PatchAllModules("msvcr71.dll", "malloc", (void *)d_00881d70);
 	rva00882140PatchAllModules("msvcr71.dll", "_malloc_dbg", (void *)d_00881d90);
 	rva00882140PatchAllModules("msvcr71.dll", "_msize", (void *)d_00881db0);
-	rva00882140PatchAllModules("msvcr71.dll", "_msize_dbg", (void *)d_00881dc0);
-	rva00882140PatchAllModules("msvcr71.dll", "realloc", (void *)d_00881dd0);
+	rva00882140PatchAllModules("msvcr71.dll", "_msize_dbg", (void *)rva00881DC0);
+	rva00882140PatchAllModules("msvcr71.dll", "realloc", (void *)rva00881DD0);
 	rva00882140PatchAllModules("msvcr71.dll", "_realloc_dbg", (void *)d_00881df0);
 	rva00882140PatchAllModules("msvcr71.dll", "_strdup", (void *)d_00881e10);
 	rva00882140PatchAllModules("msvcr71.dll", "_wcsdup", (void *)d_00881e60);

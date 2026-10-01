@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+#include <stddef.h>
 // CRT heap/import-patch shims at 0x00881D70..0x00882ED0. The loader patch
 // routine (0x008821D0) redirects msvcr71/kernel32 imports at these addresses,
 // so each body is a tiny forwarder: allocate/free through the pluggable
@@ -11,6 +12,7 @@
 extern "C" void *( *__cdecl __gameMemAllocPtr )( unsigned int size, int flags );
 extern "C" void ( *__cdecl __gameMemFreePtr )( void *ptr, int flags );
 extern "C" void *Rva01357214Onexitbegin;
+extern "C" unsigned int (__cdecl *g_rva0130E9B0)(void *);
 extern "C" void *( *__cdecl g_rva0130E9A0 )( void *ptr, unsigned int size, int flags );
 extern "C" void *( __stdcall *g_rva0130E988LoadLibraryA )( const char *name );
 
@@ -127,4 +129,18 @@ void * __stdcall d_00882020( const unsigned short *a, void *b, unsigned long c )
 	void *saved = mod;
 	rva008821d0LoaderPatch();
 	return saved;
+}
+
+// Matched loader installs RVA00881DC0 as _msize_dbg(void*,int).
+// The genuine debug block-type argument is accepted but ignored by this
+// adapter: its resolved pool _GetBlockSize slot takes only the pointer.
+size_t rva00881DC0(void *ptr, int block_type)
+{
+    return g_rva0130E9B0(ptr);
+}
+// Matched loader installs RVA00881DD0 as ordinary realloc(void*,size_t).
+// The pool slot accepts a distinct third allocation-type word, fixed at0.
+void *rva00881DD0(void *ptr, size_t size)
+{
+    return g_rva0130E9A0(ptr, size, 0);
 }
