@@ -2,11 +2,6 @@
 // readable body of ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // readable body of ?startRenderToTexture@W3DShaderManager@@SAXXZ: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
@@ -15,29 +10,6 @@ class Object
 class MemoryPool
 {
 };
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
-class GameMessage
-{
-public:
-    enum Type
-    {
-        Type_Thunk
-    };
-
-    __declspec(dllexport) static AsciiString getCommandTypeAsAsciiString(Type);
-};
-
-__declspec(naked) AsciiString GameMessage::getCommandTypeAsAsciiString(Type)
-{
-    __asm {
-        _emit 0E9h
-        _emit 0E0h
-        _emit 0ABh
-        _emit 004h
-        _emit 000h
-    }
-}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager

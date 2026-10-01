@@ -17,7 +17,7 @@ public:
 	enum Type { MSG_INVALID = 0 };
 	GameMessage(Type type);
 	virtual ~GameMessage() {}
-	AsciiString getCommandTypeAsAsciiString(Type t);
+	static AsciiString getCommandTypeAsAsciiString(Type t);
 
 	// Argument-list mutators: each allocates a new GameMessageArgument (via the
 	// not-yet-converted allocArg(), REL32-pinned in targets/game/reverse/symbols.csv) and

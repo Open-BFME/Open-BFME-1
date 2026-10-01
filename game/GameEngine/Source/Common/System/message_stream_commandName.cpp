@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
-// GameMessage::getCommandTypeAsAsciiString, retail 0x0008B600, 7143 bytes.
+// GameMessage::getCommandTypeAsAsciiString, retail 0x0008B600: 7143 code bytes,
+// one alignment byte and 936 bytes of internal switch tables (8080 total).
 //
 // Static, not a member call: the body ends in a plain `ret`, so the ledger's
 // QAE row name cannot be right -- a thiscall taking the hidden return pointer
@@ -13,17 +14,11 @@
 
 #include "ascii_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
-class GameMessage
-{
-public:
-	enum Type { MSG_INVALID = 0 };
-	static AsciiString getCommandTypeAsAsciiString( Type t );
-};
+#include "message_stream.h"
 
 #define CHECK_IF(v, x) if (t == v) { return x; }
 
-// ?getCommandTypeAsAsciiString@GameMessage@@QAE?AVAsciiString@@W4Type@1@@Z
+// Native static provider; the ILT at 0x00040A1B routes to this body.
 AsciiString GameMessage::getCommandTypeAsAsciiString( GameMessage::Type t )
 {
 	AsciiString commandName;
