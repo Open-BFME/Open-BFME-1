@@ -1,9 +1,9 @@
 // ?Rva005280A0@MpGameSetup@@QAE_NXZ
 // partial score=0.9842 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Igame/GameEngine/Source/GameClient
 
 #include "ascii_string.h"
-#include "../game_window.h"
+#include "game_window.h"
 #include "Common/UnicodeString.h"
 
 class GameTextInterface
