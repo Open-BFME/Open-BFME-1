@@ -37,7 +37,17 @@ public:
 	virtual bool hasAchievedVictory( Player *player );
 };
 
-extern VictoryConditions *TheVictoryConditions;
+// Retail global 0x012F079C is EA's TheVictoryConditions, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp. The
+// extern carries the canonical pointee type so the linked name is
+// ?TheVictoryConditions@@3PAVVictoryConditionsInterface@@A; the TU-local
+// VictoryConditions view above is reached through this cast helper.
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+static inline VictoryConditions *localVictoryConditions()
+{
+	return (VictoryConditions *)TheVictoryConditions;
+}
 
 struct BfmeScoreObject
 {
@@ -123,8 +133,8 @@ __declspec(noinline) bool BfmeScoreEntryLess::operator()(
 	const BfmeScoreEntry *left,
 	const BfmeScoreEntry *right ) const
 {
-	bool leftWon = TheVictoryConditions->hasAchievedVictory( left->m_player );
-	bool rightWon = TheVictoryConditions->hasAchievedVictory( right->m_player );
+	bool leftWon = localVictoryConditions()->hasAchievedVictory( left->m_player );
+	bool rightWon = localVictoryConditions()->hasAchievedVictory( right->m_player );
 	if( (leftWon ^ rightWon) != 0 )
 		return leftWon;
 

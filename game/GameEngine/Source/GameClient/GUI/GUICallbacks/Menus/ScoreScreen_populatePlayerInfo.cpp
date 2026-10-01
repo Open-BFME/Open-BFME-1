@@ -493,7 +493,17 @@ class Display { public:
 };
 extern GameWindowManager* TheWindowManager;
 extern GameText* TheGameText;
-extern VictoryConditions* TheVictoryConditions;
+// Retail global 0x012F079C is EA's TheVictoryConditions, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp. The
+// extern carries the canonical pointee type so the linked name is
+// ?TheVictoryConditions@@3PAVVictoryConditionsInterface@@A; the TU-local
+// VictoryConditions view above is reached through this cast helper.
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+static inline VictoryConditions *localVictoryConditions()
+{
+	return (VictoryConditions *)TheVictoryConditions;
+}
 extern NetworkInterface* TheNetwork;
 extern Rva004E5DF0GameSpyInfo* TheGameSpyInfo;
 extern GameResultsInterface* TheGameResultsQueue;
@@ -746,7 +756,7 @@ void populatePlayerInfo( Player *player, Int pos)
 
 	if ( Rva012F4134 == SCORESCREEN_SKIRMISH && player->isLocalPlayer() )
 	{
-		if (TheGameInfo->isSandbox() || !(TheVictoryConditions->isLocalAlliedDefeat() || TheVictoryConditions->isLocalAlliedVictory()))
+		if (TheGameInfo->isSandbox() || !(localVictoryConditions()->isLocalAlliedDefeat() || localVictoryConditions()->isLocalAlliedVictory()))
 		{
 
 			if (player->isPlayerActive())
@@ -759,9 +769,9 @@ void populatePlayerInfo( Player *player, Int pos)
         SkirmishPreferences prefs;
         SkirmishBattleHonors stats(prefs.getUserName());
         AsciiString side = fact->getSide();
-        Real duration = TheVictoryConditions->getEndFrame() * (1.0f / 5.0f);
+        Real duration = localVictoryConditions()->getEndFrame() * (1.0f / 5.0f);
         stats.setTimePlayed(side, stats.getTimePlayed(side) + duration);
-        if (TheVictoryConditions->isLocalAlliedVictory())
+        if (localVictoryConditions()->isLocalAlliedVictory())
         {
             Bool anyEasy = FALSE, anyMedium = FALSE, anyBrutal = FALSE;
             Int numBrutal = 0;
@@ -825,7 +835,7 @@ void populatePlayerInfo( Player *player, Int pos)
 				GameSpyGameSlot *localSlot = TheGameSpyGame->getGameSpySlot(localSlotNum);
 				if (localSlot)
 				{
-					if (TheVictoryConditions->amIObserver())
+					if (localVictoryConditions()->amIObserver())
 					{
 
 						return;
@@ -912,11 +922,11 @@ void populatePlayerInfo( Player *player, Int pos)
 					}
 
 					Bool sawEndOfGame = FALSE;
-					if (TheVictoryConditions->isLocalAlliedDefeat() || TheVictoryConditions->isLocalAlliedVictory())
+					if (localVictoryConditions()->isLocalAlliedDefeat() || localVictoryConditions()->isLocalAlliedVictory())
 					{
 						sawEndOfGame = TRUE;
 					}
-					if (TheVictoryConditions->isLocalDefeat())
+					if (localVictoryConditions()->isLocalDefeat())
 					{
 						sawEndOfGame = TRUE;
 					}
@@ -942,7 +952,7 @@ void populatePlayerInfo( Player *player, Int pos)
 							TheGameResultsQueue->addRequest(gameResReq);
 						}
 					}
-					if (TheVictoryConditions->getEndFrame() < 125 && TheVictoryConditions->getEndFrame())
+					if (localVictoryConditions()->getEndFrame() < 125 && localVictoryConditions()->getEndFrame())
 					{
  						return;
 					}
@@ -996,7 +1006,7 @@ void populatePlayerInfo( Player *player, Int pos)
 					{
 						++statsView.discons[ptIdx];
 					}
-					else if (TheVictoryConditions->isLocalAlliedDefeat() || !TheVictoryConditions->getEndFrame())
+					else if (localVictoryConditions()->isLocalAlliedDefeat() || !localVictoryConditions()->getEndFrame())
 					{
 						++statsView.losses[ptIdx];
 					}
@@ -1035,7 +1045,7 @@ void populatePlayerInfo( Player *player, Int pos)
 						statsView.winsInARow = 0;
 						statsView.maxDisconsInARow = max(statsView.disconsInARow, statsView.maxDisconsInARow);
 					}
-					else if (TheVictoryConditions->isLocalAlliedVictory())
+					else if (localVictoryConditions()->isLocalAlliedVictory())
 					{
 						statsView.lossesInARow = 0;
 						statsView.desyncsInARow = 0;
@@ -1098,7 +1108,7 @@ void populatePlayerInfo( Player *player, Int pos)
 
 					statsView.lastFPS = TheDisplay->getAverageFPS(); 
 
-					statsView.surrenders[ptIdx] += TheGameInfo->haveWeSurrendered()  || !TheVictoryConditions->getEndFrame();
+					statsView.surrenders[ptIdx] += TheGameInfo->haveWeSurrendered()  || !localVictoryConditions()->getEndFrame();
 
 					AsciiString systemSpec;
 					systemSpec.format("LOD%d", Rva012ED5AC->getIdealStaticGameDetail());
@@ -1110,7 +1120,7 @@ void populatePlayerInfo( Player *player, Int pos)
 					statsView.unitsKilled[ptIdx] += s->getTotalUnitsDestroyed();
 					statsView.unitsLost[ptIdx] += s->getTotalUnitsLost();
 
-					if (!TheGameLogic->sawCRCMismatch() && !gameEndedInDisconnect && !TheVictoryConditions->isLocalAlliedDefeat() && TheVictoryConditions->getEndFrame())
+					if (!TheGameLogic->sawCRCMismatch() && !gameEndedInDisconnect && !localVictoryConditions()->isLocalAlliedDefeat() && localVictoryConditions()->getEndFrame())
 					{
 						updateMPBattleHonors(statsView.battleHonors, stats);
 						updateChallengeMedals(statsView.challengeMedals);

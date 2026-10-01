@@ -48,7 +48,17 @@ public:
 	virtual void showScreen(const AsciiString &eventName, Bool existingWindowState,
 		const AsciiString &screen, const void *table);
 };
-extern VictoryConditions *TheVictoryConditions;
+// Retail global 0x012F079C is EA's TheVictoryConditions, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp. The
+// extern carries the canonical pointee type so the linked name is
+// ?TheVictoryConditions@@3PAVVictoryConditionsInterface@@A; the TU-local
+// VictoryConditions view above is reached through this cast helper.
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+static inline VictoryConditions *localVictoryConditions()
+{
+	return (VictoryConditions *)TheVictoryConditions;
+}
 
 class BfmeDefeatScreenHolder
 {
@@ -96,7 +106,7 @@ void ScriptActions::doLocalDefeat()
 	TheScriptEngine->markMPLocalDefeatWindowShown();
 	m_suppressNewWindows = false;
 	TheGameLogic->closeWindows();
-	if (!m_suppressNewWindows && TheVictoryConditions && !TheVictoryConditions->amIObserver())
+	if (!m_suppressNewWindows && TheVictoryConditions && !localVictoryConditions()->amIObserver())
 	{
 		BfmeDefeatScreenHolder *holder = TheGameClient->m_defeatScreenHolder;
 		if (holder)
@@ -104,7 +114,7 @@ void ScriptActions::doLocalDefeat()
 			AsciiString screen("Gui_DefeatScreen");
 			AsciiString eventName("APT:EndDefeat");
 			GameWindow *existingWindow = holder->m_window;
-			TheVictoryConditions->showScreen(eventName,
+			localVictoryConditions()->showScreen(eventName,
 				existingWindow ? existingWindow->m_existingState : false,
 				screen, BfmeDefeatScreenTable);
 		}

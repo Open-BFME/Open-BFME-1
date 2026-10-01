@@ -152,7 +152,17 @@ struct BfmeGlobFFD
 	virtual char bfmeAsk15FFD();
 };
 
-extern BfmeGlobFFD *g_bfmeObjFFD;
+// Retail global 0x012F079C is EA's TheVictoryConditions, defined once in
+// game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp. The
+// extern carries the canonical pointee type so the linked name is
+// ?TheVictoryConditions@@3PAVVictoryConditionsInterface@@A; the TU-local
+// BfmeGlobFFD slot view above is reached through this cast helper.
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+static inline BfmeGlobFFD *g_bfmeObjFFD_view()
+{
+	return (BfmeGlobFFD *)TheVictoryConditions;
+}
 
 typedef bool Bool;
 
@@ -166,7 +176,7 @@ protected:
 // ?evaluateMultiplayerPlayerDefeat@ScriptConditions@@IAE_NXZ
 Bool ScriptConditions::evaluateMultiplayerPlayerDefeat()
 {
-	return g_bfmeObjFFD->bfmeAsk15FFD() && !g_bfmeObjFFD->bfmeAsk14FFD();
+	return g_bfmeObjFFD_view()->bfmeAsk15FFD() && !g_bfmeObjFFD_view()->bfmeAsk14FFD();
 }
 
 struct BfmeSubFFF
