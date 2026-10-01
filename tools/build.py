@@ -2154,8 +2154,20 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
 
         return resolved, unresolved, covered, sites
 
-    resolved, unresolved, covered, sites = resolve(lib_member)
-    masked = lib_member
+    archive_route = lib_member and any(
+        part.startswith("archive-import-evidence=") for part in row.get("notes", "").split(";"))
+    if archive_route:
+        import archive_import
+        route = archive_import.verify_row(ROOT, row)
+        if compiled[:target_size] != route["raw"] or relocs != route["relocs"]:
+            raise ValueError("extracted archive thunk bytes/relocations differ from its native member")
+        resolved = bytearray(route["bytes"])
+        # Keep raw-object metrics: two opcode bytes and four relocation bytes.
+        # The latter have independent table/initializer proof, not a mask-only pass.
+        unresolved, covered, sites, masked = [], bytearray(b"\0\0\1\1\1\1"), [], True
+    else:
+        resolved, unresolved, covered, sites = resolve(lib_member)
+        masked = lib_member
     if gen_alias and not lib_member and bytes(resolved) != target:
         alt_resolved, alt_unresolved, alt_covered, alt_sites = resolve(True)
         if bytes(alt_resolved) == target:
@@ -2173,6 +2185,8 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
         "relocs": relocs,
         "masked": masked,
         "concrete": target_size - sum(covered),
+        "structural_route": route if archive_route else None,
+        "independently_bound": 4 if archive_route else 0,
         "note": note,
         "rel32": sites,
     }
@@ -2630,6 +2644,33 @@ def compile_rows(rows, sources, *, input_proof=None):
     return source_outputs
 
 
+def verified_patch_eligible(patch, target):
+    """One verdict policy for fresh build patches and publication receipts.
+
+    compile_function alone supplies structural_route after fresh native archive
+    verification. A metadata token or incomplete dictionary grants no exception.
+    """
+    if patch["bytes"] != target:
+        return False
+    if not patch["masked"] or patch["concrete"] >= MIN_LIB_CONCRETE:
+        return True
+    route = patch.get("structural_route")
+    return (isinstance(route, dict) and len(target) == 6
+            and patch["concrete"] == 2 and patch.get("independently_bound") == 4
+            and not patch.get("unresolved")
+            and isinstance(route.get("raw"), bytes) and len(route["raw"]) == 6
+            and route["raw"][:2] == b"\xff\x25"
+            and route.get("bytes") == target and target[:2] == route["raw"][:2]
+            and isinstance(route.get("relocs"), list) and len(route["relocs"]) == 1
+            and isinstance(route["relocs"][0], tuple) and len(route["relocs"][0]) == 3
+            and route["relocs"][0][:2] == (2, 0x0006)
+            and isinstance(route["relocs"][0][2], str) and bool(route["relocs"][0][2])
+            and route["relocs"] == patch.get("relocs")
+            and all(isinstance(route.get(key), str)
+                    and re.fullmatch(r"[0-9a-f]{64}", route[key]) is not None
+                    for key in ("archive_sha256", "member_sha256")))
+
+
 def verify_functions(only=None, selected_rows=None):
     rows = load_function_rows() if selected_rows is None else selected_rows
     if only and selected_rows is None:
@@ -2673,7 +2714,7 @@ def verify_functions(only=None, selected_rows=None):
             target = patch["target"]
             compiled = patch["bytes"]
             thin = patch["masked"] and patch["concrete"] < MIN_LIB_CONCRETE
-            if boundary_row and compiled == target and not thin:
+            if boundary_row and verified_patch_eligible(patch, target):
                 verify_claimed_boundary(row, patch)
         except (ValueError, SystemExit) as unreadable:
             # A row whose body cannot even be READ is red -- it never passed and
@@ -2685,7 +2726,7 @@ def verify_functions(only=None, selected_rows=None):
             print(f"  FAIL {row['name']} ({row['source']})")
             print(f"    {unreadable}")
             continue
-        if compiled == target and not thin:
+        if verified_patch_eligible(patch, target):
             patches.append(patch)
             if patch["note"]:
                 renumbered.append(f"{row['name']} ({row['source']}): {patch['note']}")
@@ -2713,6 +2754,11 @@ def verify_functions(only=None, selected_rows=None):
         raise SystemExit(
             f"add_match boundary request for {name} at 0x{rva:08X} in {source} "
             f"did not select a matched row ({len(missing_boundaries)} missing request(s))")
+
+    structural = [p for p in patches if p.get("structural_route")]
+    if structural:
+        print(f"Archive dispatch routes: {len(structural)} verified "
+              "(each 2 opcode bytes + 4 independently bound address bytes)")
 
     if renumbered:
         # Green, but on a pin the ledger got wrong: say so every time, or the
@@ -2943,11 +2989,12 @@ def in_retail_image(va):
     return low <= va < high
 
 
-def read_dir32_addresses():
-    if not DIR32_ADDRESSES.exists():
-        raise SystemExit(f"DIR32 addresses: {DIR32_ADDRESSES.relative_to(ROOT)} is missing; it is "
+def read_dir32_addresses(path=None):
+    path = Path(path) if path is not None else DIR32_ADDRESSES
+    if not path.exists():
+        raise SystemExit(f"DIR32 addresses: {path} is missing; it is "
                          "tracked, so restore it from git")
-    with DIR32_ADDRESSES.open(newline="") as handle:
+    with path.open(newline="") as handle:
         return {row["name"]: int(row["va"], 16) for row in csv.DictReader(handle)}
 
 

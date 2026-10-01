@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+// cl: /DNDEBUG /MD /EHsc /Iinputs/toolchains/dx81/include /Iinputs/toolchains/vs2003/PROGRA~1/MICROS~1.NET/Vc7/PlatformSDK/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 #include "vector3.h"
 // Retail 0x003A14C0, 829 bytes, cdecl with seven arguments. The original
 // function name is unproved; keep the address in this behavioral name.
@@ -6,19 +6,17 @@
 // operation. Each polynomial term must be a separate local to retain the
 // original x87 expression evaluation order and 0x78-byte frame.
 //
-// Preserve the existing callee pin below, including its legacy spelling.
-// Despite that spelling, it is the Catmull-Rom import route: RVA 0x009FA11F
-// jumps through VA 0x012DBEC0, initially VA 0x00DFA0F5, whose 42-byte body is
-// the vendored d3dx9 init_D3DXVec3CatmullRom and ends in ret 0x18. This proves
-// stdcall with six stack arguments; the inference-only cdecl hint is wrong.
-// The opaque pointer types below are used solely for that established ABI.
-struct BfmeVector3;
-struct Coord3D;
-extern BfmeVector3 *__stdcall bfmeVec3Hermite(BfmeVector3 *, const Coord3D *, const Coord3D *, const Coord3D *, const Coord3D *, float);
+// Native D3DX Catmull-Rom ABI, independently proven by the vendored
+// public thunk and its private dispatch-table entry (not a PE import).
+#include <d3dx8math.h>
 void catmullRom003A14C0(Vector3 *out, const Vector3 *p0, const Vector3 *p1, const Vector3 *p2, const Vector3 *p3, float t, bool imported)
 {
     if (imported) {
-        bfmeVec3Hermite((BfmeVector3*)out, (const Coord3D*)p0, (const Coord3D*)p1, (const Coord3D*)p2, (const Coord3D*)p3, t);
+        D3DXVec3CatmullRom(reinterpret_cast<D3DXVECTOR3 *>(out),
+            reinterpret_cast<const D3DXVECTOR3 *>(p0),
+            reinterpret_cast<const D3DXVECTOR3 *>(p1),
+            reinterpret_cast<const D3DXVECTOR3 *>(p2),
+            reinterpret_cast<const D3DXVECTOR3 *>(p3), t);
         return;
     }
     float t2 = t*t;

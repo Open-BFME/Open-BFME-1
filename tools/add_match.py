@@ -20,6 +20,9 @@ changes the name (`?d_000a8940@@YAXXZ` -> `?addr@SpikeAccessor@@QAEPADXZ`), so
 rows at the same range. With identity and boundary evidence, it can also retire
 a matched wrong identity when the old range lies inside the corrected full
 body. Verification restores the old row if it fails.
+`--replace-archive-import OLD_NAME` is a separate verified provider repair:
+only an existing vendored archive's six-byte private dispatch thunk, table
+field, and independently matched initializer may replace a gen-import row.
 """
 if __name__ == "__main__":
     from target_guard import require_game_cli
@@ -301,12 +304,15 @@ def main():
                         help="retire the scaffold or corrected identity at this address "
                              "and claim it under the new name; the old row is restored "
                              "if verification fails")
+    parser.add_argument("--replace-archive-import", metavar="OLD_NAME",
+                        help="with --replace-rva and --identity-evidence, replace one "
+                             "generated private dispatch thunk with its verified existing archive symbol")
     parser.add_argument("--correct-identity", metavar="OLD_NAME",
                         help="with --replace-rva, retire this matched real-name claim "
                              "when independent evidence proves the replacement identity")
     parser.add_argument("--identity-evidence", metavar="PATH",
                         help="targets/game/reverse/identity_evidence/*.md proof required by "
-                             "--correct-identity")
+                             "--correct-identity or --replace-archive-import")
     parser.add_argument("--boundary-evidence",
                         help="with --replace-rva, record why the claimed extent was wrong; "
                              "a real-identity correction may replace a contained interior "
@@ -323,8 +329,14 @@ def main():
              f"folding, so every body has exactly one identity",
              "python3 tools/one_identity.py prints the evidence; when the existing name is "
              "wrong, replace it with --replace-rva, --correct-identity and --identity-evidence")
-    if bool(args.correct_identity) != bool(args.identity_evidence):
-        fail("--correct-identity and --identity-evidence must be passed together")
+    if args.correct_identity and args.replace_archive_import:
+        fail("--correct-identity and --replace-archive-import are alternatives")
+    if bool(args.correct_identity or args.replace_archive_import) != bool(args.identity_evidence):
+        fail("an identity replacement and --identity-evidence must be passed together")
+    if args.replace_archive_import and (not args.replace_rva or args.replace_existing
+                                       or args.boundary_evidence or args.no_verify):
+        fail("--replace-archive-import requires verified --replace-rva at the same extent; "
+             "no --replace-existing, --boundary-evidence or --no-verify")
     if args.correct_identity and (not args.replace_rva or args.replace_existing):
         fail("--correct-identity requires --replace-rva and cannot be combined with "
              "--replace-existing")
@@ -383,7 +395,8 @@ def main():
         evidence = root / evidence_rel
         if not evidence.is_file() or not evidence.read_text(encoding="utf-8").strip():
             fail(f"--identity-evidence {evidence_rel} is missing or empty")
-        args.notes = f"identity-correction={evidence_rel.as_posix()};{args.notes}"
+        evidence_key = "archive-import-evidence" if args.replace_archive_import else "identity-correction"
+        args.notes = f"{evidence_key}={evidence_rel.as_posix()};{args.notes}"
     functions_csv = root / "targets/game/reverse" / "functions.csv"
     deleted_csv = root / "targets/game/reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
@@ -450,7 +463,22 @@ def main():
         if len(at_rva) != 1:
             fail(f"--replace-rva 0x{old_rva:08X} matches {len(at_rva)} rows; "
                  "it retires exactly one")
-        if args.correct_identity:
+        if args.replace_archive_import:
+            old = at_rva[0]
+            if old["name"] != args.replace_archive_import or rva != old_rva or size != old["size"]:
+                fail("--replace-archive-import must name the exact old row and preserve its extent")
+            import archive_import
+            try:
+                route = archive_import.verify(root, old, name, source_rel, args.notes, rows)
+                for key in ("archive_sha256", "member_sha256"):
+                    token = {"archive_sha256": "archive-import-sha256",
+                             "member_sha256": "archive-import-member-sha256"}[key]
+                    if any(part.startswith(token + "=") for part in args.notes.split(";")):
+                        fail(f"{token} is generated from the verified archive, not a caller override")
+                    args.notes += f";{token}={route[key]}"
+            except (ValueError, OSError, KeyError, IndexError) as error:
+                fail(f"archive-import proof rejected: {error}")
+        elif args.correct_identity:
             old = at_rva[0]
             if (old["name"] != args.correct_identity or old["name"] == name or
                     old["status"] != "matched" or
@@ -544,7 +572,7 @@ def main():
             ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
 
     try:
-        new_source = strip_marker(source_path, name)
+        new_source = None if source_path.suffix.lower() == ".lib" else strip_marker(source_path, name)
 
         if replaced is not None:
             # Drop the old row by CONTENT, not by line number. parse_ledger numbers

@@ -314,8 +314,7 @@ def _payload(row, symbol_map, inventory_cache, *, context=None, result=None):
             result = B.compile_function(row, symbol_map, obj)
     except (OSError, ValueError, SystemExit):
         return None
-    if result["bytes"] != target or (result["masked"] and
-                                      result["concrete"] < B.MIN_LIB_CONCRETE):
+    if not B.verified_patch_eligible(result, target):
         # A stale or manually corrupted object is a miss.  The normal build
         # invocation then decides whether the candidate is genuinely invalid.
         return None
@@ -348,6 +347,12 @@ def _payload(row, symbol_map, inventory_cache, *, context=None, result=None):
         "python": [sys.executable, sys.version, os.name],
         "version": VERSION,
         # A successful record stores the bytes that the ordinary gate compared.
+        "verification": {
+            "raw_concrete": result["concrete"],
+            "independently_bound": result.get("independently_bound", 0),
+            "archive_sha256": (result.get("structural_route") or {}).get("archive_sha256"),
+            "member_sha256": (result.get("structural_route") or {}).get("member_sha256"),
+        },
         "resolved": hashlib.sha256(result["bytes"]).hexdigest(),
         "body": hashlib.sha256(body).hexdigest(),
     }
@@ -492,8 +497,7 @@ def record(manifest):
             result = B.compile_function(row, symbol_map, obj)
         except (OSError, ValueError, SystemExit) as exc:
             raise RuntimeError(f"post-verification evidence cannot be read for {row['name']}: {exc}")
-        if result["bytes"] != target or (result["masked"] and
-                                          result["concrete"] < B.MIN_LIB_CONCRETE):
+        if not B.verified_patch_eligible(result, target):
             raise RuntimeError(f"post-verification evidence failed for {row['name']}")
         payload = _payload(row, symbol_map, inventory_cache, context=context, result=result)
         key = _key(payload)
