@@ -22,7 +22,16 @@ public:
 	void bfmeNotifyEVI(bool flag);
 };
 
-BfmeThingEVI *__fastcall bfmeResolveEVI(BfmeSubEVI *sub);
+// retail resolves the sub-object's final override through the ILT thunk at
+// 0x000022BB, which targets Overridable::getFinalOverride (matching row
+// 0x00087A80).  Spelled with its defining class and signature so the call
+// links; the view classes below stay unrelated to it, the pointer crosses as
+// void so no code is emitted.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride(void) const;
+};
 
 class BfmeHostEVI
 {
@@ -43,7 +52,7 @@ void BfmeHostEVI::bfmeAdvanceEVI(BfmeArgEVI *arg)
 	BfmeThingEVI *thing = arg->m_bfmeThingEVI;
 
 	if (thing != 0 && thing->m_bfmeSubEVI != 0)
-		thing = bfmeResolveEVI(thing->m_bfmeSubEVI);
+		thing = (BfmeThingEVI *)(const void *)((const Overridable *)thing->m_bfmeSubEVI)->getFinalOverride();
 
 	m_bfmeValueEVI = m_bfmeValueEVI - thing->m_bfmeDeltaEVI;
 

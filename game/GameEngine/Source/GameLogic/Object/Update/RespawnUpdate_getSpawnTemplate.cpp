@@ -9,12 +9,13 @@ class Overridable
 public:
 	void *m_vtbl;
 	ThingTemplate *m_nextOverride;
+	// retail walks the override chain through ILT 0x000022BB, which targets
+	// this exact defining name (matching row 0x00087A80).
+	const Overridable *getFinalOverride(void) const;
 };
 
 class ThingTemplate : public Overridable
 {
-public:
-	ThingTemplate *getFinalOverride();
 };
 
 class ThingFactory
@@ -72,7 +73,7 @@ ThingTemplate *RespawnUpdate::getSpawnTemplate()
 			}
 			ThingTemplate *next = t->m_nextOverride;
 			if (next)
-				t = next->getFinalOverride();
+				t = (ThingTemplate *)(const void *)next->getFinalOverride();
 			m_cachedTemplate = t;
 		}
 	}

@@ -8,10 +8,16 @@ typedef int Int;
 
 class Rva0015A5B0Thing;
 
-class Rva0015A5B0Inner
+// retail walks the override chain through ILT 0x000022BB, which targets
+// Overridable::getFinalOverride (matching row 0x00087A80).
+class Overridable
 {
 public:
-	Rva0015A5B0Thing *bfmeResolveKZ();
+	const Overridable *getFinalOverride(void) const;
+};
+
+class Rva0015A5B0Inner
+{
 };
 
 class Rva0015A5B0Thing
@@ -46,7 +52,7 @@ Int Rva0015A5B0List::sumField440() const
 			_ReadWriteBarrier();
 			Rva0015A5B0Thing *thing = *(Rva0015A5B0Thing **)objectData;
 			if (thing && thing->m_inner)
-				thing = thing->m_inner->bfmeResolveKZ();
+				thing = (Rva0015A5B0Thing *)(const void *)((const Overridable *)thing->m_inner)->getFinalOverride();
 			total += thing->m_value440;
 			++it;
 			--remaining;

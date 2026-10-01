@@ -1,9 +1,15 @@
 class BfmeCtxBS;
 
-class BfmeInnerBS
+// retail walks the override chain through ILT 0x000022BB, which targets
+// Overridable::getFinalOverride (matching row 0x00087A80).
+class Overridable
 {
 public:
-	BfmeCtxBS *bfmeGetBS(void);
+	const Overridable *getFinalOverride(void) const;
+};
+
+class BfmeInnerBS
+{
 };
 
 class BfmeCtxBS
@@ -46,7 +52,7 @@ int __cdecl bfmeBindBS(BfmeSrcBS *source, BfmeSlotBS *slot)
 	BfmeCtxBS *ctx = source->m_bfmeCtxBS;
 
 	if (ctx && ctx->m_bfmeInnerBS)
-		ctx = ctx->m_bfmeInnerBS->bfmeGetBS();
+		ctx = (BfmeCtxBS *)(const void *)((const Overridable *)ctx->m_bfmeInnerBS)->getFinalOverride();
 
 	if ((ctx->m_bfmeFlagsBS & 0x100) == 0)
 		return 1;

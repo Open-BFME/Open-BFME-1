@@ -1,9 +1,15 @@
 class BfmeThingMD;
 
-class BfmeInnerMD
+// retail walks the override chain through ILT 0x000022BB, which targets
+// Overridable::getFinalOverride (matching row 0x00087A80).
+class Overridable
 {
 public:
-	BfmeThingMD *bfmeResolveMD(void);
+	const Overridable *getFinalOverride(void) const;
+};
+
+class BfmeInnerMD
+{
 };
 
 class BfmeThingMD
@@ -52,7 +58,7 @@ char BfmeOwnerMD::bfmeCheckMD(void)
 	BfmeThingMD *thing = holder->m_bfmeThingMD;
 
 	if (thing && thing->m_bfmeInnerMD)
-		thing = thing->m_bfmeInnerMD->bfmeResolveMD();
+		thing = (BfmeThingMD *)(const void *)((const Overridable *)thing->m_bfmeInnerMD)->getFinalOverride();
 
 	if (thing->m_bfmeFlagsMD & 0x400000)
 	{

@@ -1,10 +1,18 @@
 // cl: /DNDEBUG /MD
 // Address-derived template-kind dispatch at retail RVA 0x00210BA0.
 
-class BfmeSubInnerEFF
+// retail walks the override chain through ILT 0x000022BB, which targets
+// Overridable::getFinalOverride (matching row 0x00087A80).  The template view
+// below stays unrelated to it; the pointer crosses as void so no code is
+// emitted either way.
+class Overridable
 {
 public:
-	void *bfmeGetFinalOverride();
+	const Overridable *getFinalOverride(void) const;
+};
+
+class BfmeSubInnerEFF
+{
 };
 
 struct Rva00210BA0Template
@@ -56,7 +64,7 @@ void Rva00210BA0Owner::dispatch00210BA0()
 	Rva00210BA0Template *const volatile *templateSlot = &m_object->m_template;
 	Rva00210BA0Template *tmpl = *templateSlot;
 	if( tmpl != 0 && tmpl->m_nextOverride != 0 )
-		tmpl = (Rva00210BA0Template *)tmpl->m_nextOverride->bfmeGetFinalOverride();
+		tmpl = (Rva00210BA0Template *)(const void *)((const Overridable *)tmpl->m_nextOverride)->getFinalOverride();
 	if( (tmpl->m_kindOf & 0x02000000) == 0 )
 		slot19();
 	slot17();
