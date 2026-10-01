@@ -24,7 +24,8 @@ typedef RvaHandle(__stdcall *RvaOpenThreadFn)(RvaDword access, int inherit, RvaD
 extern "C" int __stdcall Thread32First(RvaHandle snapshot, RvaThreadEntry32 *entry);
 extern "C" int __stdcall Thread32Next(RvaHandle snapshot, RvaThreadEntry32 *entry);
 extern "C" __declspec(dllimport) RvaDword __stdcall ResumeThread(RvaHandle thread);
-__declspec(dllimport) void __stdcall bfmeClose1033(int handle);
+extern "C" void (__stdcall *Rva01358CCC)(int handle);
+#define bfmeClose1033 Rva01358CCC
 
 extern "C" void Rva0088E090ResumeOtherThreads(RvaOpenThreadFn openThread, RvaHandle snapshot,
 	RvaDword processId, RvaDword keepThreadId)

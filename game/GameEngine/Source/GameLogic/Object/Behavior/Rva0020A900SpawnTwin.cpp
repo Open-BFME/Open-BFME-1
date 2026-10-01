@@ -8,7 +8,6 @@
 // retail bytes, matching docs/matching.md's near-twin recipe rather than
 // editing the shared header.
 
-extern float g_bfmeZeroCY; // retail 0x01075350 (0.0f)
 extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
 class Rva0020A900Ai
@@ -166,7 +165,7 @@ bool Rva0020A900Host::maySpawnSelfTaskAI(float maxSelfTaskersRatio)
 {
 	if (m_spawnCount == 0)
 		return false;
-	if (maxSelfTaskersRatio == g_bfmeZeroCY)
+	if (maxSelfTaskersRatio == 0.0f)
 		return false;
 
 	Rva0020A900Object *obj = *(Rva0020A900Object **)((char *)this - 0x18);

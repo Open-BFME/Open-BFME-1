@@ -30,8 +30,6 @@ public:
 };
 
 extern TerrainLogic * TheTerrainLogic; // 0x012EF4CC
-extern float g_bfmeADL;                 // 0x0107533C = 0.5f
-extern float g_bfmeDirectionWeight1285; // 0x01075C74 = 10.0f
 
 struct Gen003D6690Flags
 {
@@ -59,9 +57,9 @@ int Rva003D6690::apply( void * unused0, Gen003D6690Flags * src, int cellX, int c
 	if( layer >= 0x11 && layer <= 0x40 )
 		return 0;
 
-	float x = ( cellX + g_bfmeADL ) * g_bfmeDirectionWeight1285;
+	float x = ( cellX + 0.5f ) * 10.0f;
 	m_at04 = x;
-	float y = ( cellY + g_bfmeADL ) * g_bfmeDirectionWeight1285;
+	float y = ( cellY + 0.5f ) * 10.0f;
 	m_at08 = y;
 	m_at0C = TheTerrainLogic->getLayerHeight( x, y,
 		(PathfindLayerEnum)layer, 0, true );

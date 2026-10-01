@@ -27,7 +27,9 @@ public:
 	ObjectPtrHash m_objHash;
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheBfmeGameLogic;
+#define TheGameLogic (reinterpret_cast<GameLogicFrameSlice *>(TheBfmeGameLogic))
 
 struct ContainEntry
 {
@@ -40,6 +42,7 @@ class ControlBar
 public:
 	Object *findContainedObject(GameWindow *win);
 
+	protected:
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
 

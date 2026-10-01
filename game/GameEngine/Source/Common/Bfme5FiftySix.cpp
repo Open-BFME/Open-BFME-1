@@ -1,8 +1,6 @@
 // Three more: a walk that tolerates a null this, a guarded value read, and a
 // global reset.
 
-extern float g_bfmeADL;						// retail 0x0107533C
-
 class BfmeThingEB
 {
 public:
@@ -30,7 +28,7 @@ bool Gen_008D1EB0::bfmeIdle(void) const
 	{
 		BfmeThingEB *thing = node->m_bfmeThing;
 
-		if (thing != 0 && thing->m_bfmeValue < g_bfmeADL)
+		if (thing != 0 && thing->m_bfmeValue < 0.5f)
 			return false;
 
 		node = node->m_bfmeNext;

@@ -16,7 +16,8 @@ public:
 	float m_radius;
 };
 
-extern Rva006E1CD0Obj *Data00EF8048;
+extern int g_get_00710fb0;
+#define Data00EF8048 (reinterpret_cast<Rva006E1CD0Obj *>(g_get_00710fb0))
 
 float __stdcall rva006E1CD0(float x, float y, float z)
 {

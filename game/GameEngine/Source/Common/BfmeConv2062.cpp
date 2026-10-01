@@ -1,4 +1,5 @@
-extern "C" void *bfmeVftCUAb[];
+extern "C" void *__identifier("??_7V3NodeHead@@6B@")[];
+#define bfmeVftCUAb __identifier("??_7V3NodeHead@@6B@")
 
 class BfmeLinkCU;
 

@@ -16,7 +16,8 @@ public:
 	void *bfmeFindND(const UnsignedInt *mask);
 };
 
-extern BfmeThingND *TheUpgradeCenter;
+class UpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
 extern void j_0001df16();
 
 static void *bfmeFindUpgrade(const UnsignedInt *mask)

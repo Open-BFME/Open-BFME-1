@@ -41,7 +41,18 @@ class D3DDeviceInterface
 	D3DDeviceVTable *m_vtable;
 };
 
-extern D3DDeviceInterface *g_w3dMouseD3DDevice;
+struct IDirect3DDevice8;
+extern "C" void __cdecl rva0093D050(
+	IDirect3DSurface9 *, const RECT *, unsigned, IDirect3DSurface9 *, const POINT *);
+
+class DX8Wrapper
+{
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+	friend void __cdecl rva0093D050(
+		IDirect3DSurface9 *, const RECT *, unsigned, IDirect3DSurface9 *, const POINT *);
+};
+#define g_w3dMouseD3DDevice (reinterpret_cast<D3DDeviceInterface *>(DX8Wrapper::D3DDevice))
 extern unsigned number_of_DX8_calls;
 
 extern "C" void __cdecl rva0093D050(

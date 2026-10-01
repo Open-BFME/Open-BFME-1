@@ -4,8 +4,6 @@
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
 
-extern const float BfmeBoundaryZero3D;
-
 struct BfmeBoundaryPoint3D
 {
 	float x;
@@ -52,8 +50,8 @@ float BfmeBoundaryObject3D::bfmeBoundaryDistanceSquared3D(
 	float dz = first->z + zOffset - second->z;
 	float distance = static_cast<float>(sqrt(dx * dx + dy * dy + dz * dz));
 	distance -= radius;
-	if (distance < BfmeBoundaryZero3D)
-		return BfmeBoundaryZero3D;
+	if (distance < 0.0f)
+		return 0.0f;
 	return distance * distance;
 }
 

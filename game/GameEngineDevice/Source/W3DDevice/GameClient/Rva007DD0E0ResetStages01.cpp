@@ -80,14 +80,20 @@ struct Rva006C9270Device
 	virtual long __stdcall SetTextureStageState( unsigned int stage, unsigned int state, unsigned int value );
 };
 
-extern Rva006C9270Device *Rva01340534Device;
+struct IDirect3DDevice8;
+void Rva007DD0E0ResetStages01( void );
 
 class DX8Wrapper
 {
 public:
 	static void Set_DX8_Texture_Stage_State( unsigned int stage, unsigned long state, unsigned int value );
 	static void Invalidate_Cached_Render_States( void );
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+	friend void Rva007DD0E0ResetStages01( void );
 };
+
+#define Rva01340534Device (reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::D3DDevice))
 
 void Rva007DD0E0ResetStages01( void )
 {

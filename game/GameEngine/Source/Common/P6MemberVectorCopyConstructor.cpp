@@ -8,7 +8,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-extern int R2Data010EC768;
+extern "C" int __identifier("??_7Rva003B7740@@6B@");
+#define R2Data010EC768 __identifier("??_7Rva003B7740@@6B@")
 
 struct P6Elem003B1A80
 {

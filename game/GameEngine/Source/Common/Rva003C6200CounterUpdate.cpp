@@ -9,7 +9,9 @@ public:
 };
 
 class Rva003C6200Global;
-extern Rva003C6200Global *Glo012F4B98;
+class Rva002EECE0;
+extern Rva002EECE0 *g_rva002eece0;
+#define Glo012F4B98 (reinterpret_cast<Rva003C6200Global *>(g_rva002eece0))
 
 class Rva003C6200Global
 {

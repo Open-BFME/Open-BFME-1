@@ -147,7 +147,8 @@ public:
 	int m_bfmeBack;						// +0x1DC
 };
 
-extern int g_bfmeTableCV[];					// retail 0x010F77AC
+extern "C" int __identifier("??_7GenBase00479230@@6B@")[];
+#define g_bfmeTableCV __identifier("??_7GenBase00479230@@6B@")					// retail 0x010F77AC
 
 class Gen_00479A30
 {

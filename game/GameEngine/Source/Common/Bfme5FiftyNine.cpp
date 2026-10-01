@@ -25,7 +25,9 @@ public:
 	int m_bfmeLevel;					// +0x170C
 };
 
-extern BfmeStateEE *g_bfmeStateEE;				// retail 0x012ED5AC
+class GameLODManager;
+extern GameLODManager *TheGameLODManager;
+#define g_bfmeStateEE (reinterpret_cast<BfmeStateEE *>(TheGameLODManager))				// retail 0x012ED5AC
 
 class BfmeRowEE
 {

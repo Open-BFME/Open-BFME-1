@@ -118,13 +118,19 @@ struct Rva007D9940Device
 	virtual long __stdcall slot107( unsigned int value );
 };
 
-extern Rva007D9940Device *Rva01340534DeviceB;
+struct IDirect3DDevice8;
+void Rva007D9940ResetStages( void );
 
 class DX8Wrapper
 {
 public:
 	static void Invalidate_Cached_Render_States( void );
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+	friend void Rva007D9940ResetStages( void );
 };
+
+#define Rva01340534DeviceB (reinterpret_cast<Rva007D9940Device *>(DX8Wrapper::D3DDevice))
 
 void Rva007D9940ResetStages( void )
 {

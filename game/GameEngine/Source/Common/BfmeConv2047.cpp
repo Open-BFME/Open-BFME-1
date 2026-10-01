@@ -1,5 +1,3 @@
-extern double g_bfmeSubB3;
-
 class BfmeHostFF
 {
 public:
@@ -43,5 +41,5 @@ void BfmeHostFF::bfmeSetFrameFF(int frame)
 		return;
 	}
 
-	m_bfmeRatioFF = (float)(g_bfmeSubB3 - (double)(frame - a) / (double)(b - a));
+	m_bfmeRatioFF = (float)(1.0 - (double)(frame - a) / (double)(b - a));
 }
