@@ -19,6 +19,8 @@ void j_0002db41();
 class Rva006D2130Elem
 {
 public:
+	void rva0072EAA0();
+
 	__forceinline bool rva00729180()
     {
         union { void (*thunk)(); bool (Rva006D2130Elem::*method)(); } call;
@@ -26,13 +28,28 @@ public:
         return (this->*call.method)();
     }
 	unsigned char extent[0xc4];
-	__forceinline void rva0072EAA0()
+	__forceinline void callRva0072EAA0()
     {
         union { void (*thunk)(); void (Rva006D2130Elem::*method)(); } call;
         call.thunk = &j_0002db41;
         (this->*call.method)();
     }
 };
+
+void Rva006D2130Elem::rva0072EAA0()
+{
+	__asm
+	{
+		push -1
+		push 0104D340h
+		mov eax, fs:[0]
+		push eax
+		mov fs:[0], esp
+		mov ecx, [esp]
+		mov fs:[0], ecx
+		add esp, 0Ch
+	}
+}
 
 extern bool g_aiTargetDispatchSuppressed;
 
@@ -103,7 +120,7 @@ void Rva006D2130::dispatch()
 				{
 					--budget;
 				}
-				elem->rva0072EAA0();
+				elem->callRva0072EAA0();
 
 				++ib;
 			} while (ib < m_innerCount);
