@@ -12,8 +12,9 @@
 // strtok is the retail MSVCR71 import at IAT 0x013594D8 and terminates the
 // token in the caller-owned line buffer. The generator call at ILT 0x0003ADD7
 // is the same one parseInputCallback and
-// Player::getProductionCostChangePercent reach, still unidentified beyond its
-// address.
+// Player::getProductionCostChangePercent reach; that ILT routes to the matched
+// body at 0x0008FFC0, so this TU spells it NameKeyGenerator::nameToKey (the
+// other two TUs still carry the old address-derived shim spelling).
 
 typedef int Int;
 typedef bool Bool;
@@ -35,14 +36,23 @@ public:
 	void *m_data;
 };
 
-class NameKeyGeneratorShim
+// Retail calls NameKeyGenerator::nameToKey here: the ILT thunk at 0x0003ADD7
+// routes to the matched body at 0x0008FFC0, whose mangled name is
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
+// NameKeyType is an enum here, not a typedef of int.
+enum NameKeyType
 {
-public:
-	/// address-derived name -- do not treat as an identity.
-	Int unidentified_0003ADD7(const char *name);		///< ILT thunk at 0x0003ADD7
+	NAMEKEY_INVALID = 0,
 };
 
-extern NameKeyGeneratorShim *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;	///< retail [0x012ED600]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
@@ -72,10 +82,10 @@ Bool parseName(char *token, WinInstanceData *instData, char *line, void *userDat
 	AsciiString *name = &instData->m_name;
 	name->set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
-	if (TheNameKeyGeneratorShim)
+	if (TheNameKeyGenerator)
 	{
 		instData->m_id =
-			TheNameKeyGeneratorShim->unidentified_0003ADD7(name->str());
+			TheNameKeyGenerator->nameToKey(name->str());
 	}
 
 	return true;

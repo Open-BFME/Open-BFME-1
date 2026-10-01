@@ -39,10 +39,17 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+// NameKeyType is an enum, not a typedef of int: retail's mangled callee is
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+};
+
 class NameKeyGenerator
 {
 public:
-	Int nameToKey(const char *name);
+	NameKeyType nameToKey(const char *name);
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;

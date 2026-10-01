@@ -6,13 +6,20 @@ public:
 	BfmeModERK *bfmeFindERK(int key);
 };
 
-class BfmeKeyGenERK
+// NameKeyType is an enum, not a typedef of int: retail's mangled callee is
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
+enum NameKeyType
 {
-public:
-	int bfmeNameToKeyERK(const char *name);
+	NAMEKEY_INVALID = 0,
 };
 
-extern BfmeKeyGenERK *g_bfmeKeyGenERK;
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *g_bfmeKeyGenERK;
 
 void bfmeDoERK(BfmeThingERK *first, BfmeModERK *firstMod,
 	BfmeThingERK *second, BfmeModERK *secondMod);
@@ -20,7 +27,7 @@ void bfmeDoERK(BfmeThingERK *first, BfmeModERK *firstMod,
 void bfmeApplyERK(BfmeThingERK *first, BfmeThingERK *second)
 {
 	static int s_bfmeKeyERK =
-		g_bfmeKeyGenERK->bfmeNameToKeyERK("CastleBehavior");
+		g_bfmeKeyGenERK->nameToKey("CastleBehavior");
 
 	BfmeModERK *firstMod = first->bfmeFindERK(s_bfmeKeyERK);
 	BfmeModERK *secondMod = second->bfmeFindERK(s_bfmeKeyERK);

@@ -18,13 +18,20 @@ public:
 	BfmeStrDataERJ *m_bfmeDataERJ;
 };
 
-class BfmeKeyGenERJ
+// NameKeyType is an enum, not a typedef of int: retail's mangled callee is
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
+enum NameKeyType
 {
-public:
-	int bfmeNameToKeyERJ(const char *name);
+	NAMEKEY_INVALID = 0,
 };
 
-extern BfmeKeyGenERJ *g_bfmeKeyGenERJ;
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *g_bfmeKeyGenERJ;
 
 class BfmePlayerERJ
 {
@@ -71,7 +78,7 @@ extern BfmeTableERJ *g_bfmeTableERJ;
 
 void * __stdcall bfmeLookupERJ(BfmeStrERJ *name)
 {
-	int key = g_bfmeKeyGenERJ->bfmeNameToKeyERJ(name->bfmeTextERJ());
+	int key = g_bfmeKeyGenERJ->nameToKey(name->bfmeTextERJ());
 
 	for (int i = 0; i < g_bfmeTableERJ->m_bfmeCountERJ; ++i)
 	{
