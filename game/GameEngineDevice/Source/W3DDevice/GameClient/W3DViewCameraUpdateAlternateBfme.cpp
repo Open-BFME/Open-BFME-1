@@ -11,10 +11,10 @@ typedef bool Bool;
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
-class BfmeThingBRD
+class ParabolicEase
 {
 public:
-	void bfmeDoBRD(void *, void *, void *);
+	void setEaseTimes(Real, Real, Real);
 
 private:
 	char m_body[8];
@@ -37,7 +37,7 @@ private:
 	Real m_cuaStart;
 	Real m_cuaEnd;
 	char m_padding026C[0x274 - 0x26C];
-	BfmeThingBRD m_cuaEase;
+	ParabolicEase m_cuaEase;
 	Bool m_doingCameraUpdateAlternate;
 };
 
@@ -56,8 +56,8 @@ void W3DView::cameraUpdateAlternate(Real finalValue, Int milliseconds, Real ease
 	view->m_cuaEnd = finalValue;
 	view->m_cuaCurFrame = 0;
 	view->m_doingCameraUpdateAlternate = true;
-	typedef void (BfmeThingBRD::*SetEase)(Real, Real, Real);
-	SetEase setEase = reinterpret_cast<SetEase>(&BfmeThingBRD::bfmeDoBRD);
+	typedef void (ParabolicEase::*SetEase)(Real, Real, Real);
+	SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 	(view->m_cuaEase.*setEase)(easeIn, easeOut, (Real)duration);
 	if (duration == 1) {
 		view->cameraUpdateAlternateOneFrame();

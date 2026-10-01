@@ -29,17 +29,17 @@
 	public:                                                               \
 		NAME();                                                           \
 		char m_lead[ OFFSET ];                                            \
-		Gen0002A1B2 m_sub;                                                \
+		ParabolicEase m_sub;                                              \
 	};                                                                    \
 	NAME::NAME()                                                          \
 	{                                                                     \
-		m_sub.set( 0, 0, 1.0f );                                          \
+		m_sub.setEaseTimes( 0, 0, 1.0f );                                 \
 	}
 
-class Gen0002A1B2
+class ParabolicEase
 {
 public:
-	void set( int a, int b, float c );
+	void setEaseTimes( float a, float b, float c );
 };
 
 // @??0Rva0073AB30@@QAE@XZ 0x0073AB30

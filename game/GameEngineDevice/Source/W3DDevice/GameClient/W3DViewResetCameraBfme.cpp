@@ -34,10 +34,10 @@ extern Real getHeightAroundPos(Real x, Real y);
 extern void j_00046fa1(void);
 extern void j_000312a0(void);
 
-class BfmeThingBRD
+class ParabolicEase
 {
 public:
-	void bfmeDoBRD(void *easeIn, void *easeOut, void *milliseconds);
+	void setEaseTimes(Real easeIn, Real easeOut, Real milliseconds);
 
 	char m_body[8];
 };
@@ -98,7 +98,7 @@ private:
 	Matrix3D m_cameraTransformScratch;
 	Int m_cameraFrames;
 	Int m_cameraFrameStart;
-	BfmeThingBRD m_cameraEase;
+	ParabolicEase m_cameraEase;
 	char m_padding1AC[0x1DC - 0x1AC];
 	Bool m_rotatingCamera;
 	char m_padding1DD[0x204 - 0x1DD];
@@ -191,8 +191,8 @@ void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 			frameCount = 1;
 		m_cameraFrameStart = 0;
 		m_cameraFrames = frameCount;
-		typedef void (BfmeThingBRD::*SetEase)(Real, Real, Real);
-		SetEase setEase = reinterpret_cast<SetEase>(&BfmeThingBRD::bfmeDoBRD);
+		typedef void (ParabolicEase::*SetEase)(Real, Real, Real);
+		SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 		(m_cameraEase.*setEase)(easeIn, easeOut, (Real)milliseconds);
 	}
 	else

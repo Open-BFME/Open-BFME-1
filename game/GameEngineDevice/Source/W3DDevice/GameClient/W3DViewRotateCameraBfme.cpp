@@ -8,10 +8,10 @@ typedef bool Bool;
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
-class BfmeThingBRD
+class ParabolicEase
 {
 public:
-	void bfmeDoBRD(void *, void *, void *);
+	void setEaseTimes(Real, Real, Real);
 
 private:
 	char m_body[8];
@@ -24,7 +24,7 @@ struct RotateCameraInfo
 	Int startTimeMultiplier;
 	Int endTimeMultiplier;
 	Int numHoldFrames;
-	BfmeThingBRD ease;
+	ParabolicEase ease;
 	Bool trackObject;
 	char padding01c9[0x1cc - 0x1c9];
 	Real startAngle;
@@ -72,8 +72,8 @@ void W3DView::rotateCamera(Real rotations, Int milliseconds, Bool flag,
 	view->m_rcInfo.curFrame = 0;
 	view->m_rcInfo.startTimeMultiplier = view->m_timeMultiplier;
 	view->m_rcInfo.endTimeMultiplier = view->m_timeMultiplier;
-	typedef void (BfmeThingBRD::*SetEase)(Real, Real, Real);
-	SetEase setEase = reinterpret_cast<SetEase>(&BfmeThingBRD::bfmeDoBRD);
+	typedef void (ParabolicEase::*SetEase)(Real, Real, Real);
+	SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 	(view->m_rcInfo.ease.*setEase)(easeIn, easeOut, (Real)duration);
 	view->m_field2428 = flag;
 }

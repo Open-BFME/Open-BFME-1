@@ -11,10 +11,10 @@ extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 #define BfmeKTHE (57.295776f)
 
-class BfmeThingBRD
+class ParabolicEase
 {
 public:
-	void bfmeDoBRD(void *, void *, void *);
+	void setEaseTimes(Real, Real, Real);
 
 private:
 	char m_body[8];
@@ -181,7 +181,7 @@ private:
 	Real m_pcStartPitch;
 	Real m_pcEndPitch;
 	char m_padding0244[0x24C - 0x244];
-	BfmeThingBRD m_pcEase;
+	ParabolicEase m_pcEase;
 	Bool m_doingPitchCamera;
 };
 
@@ -203,8 +203,8 @@ void W3DView::pitchCamera(Real finalPitch, Int milliseconds, Real easeIn, Real e
 	view->m_pcEndPitch = view->bfmeSlot134(finalPitch);
 	view->m_pcAngle = view->bfmeSlot133(view->m_cameraPitch);
 	view->m_pcFinalPitch = finalPitch;
-	typedef void (BfmeThingBRD::*SetEase)(Real, Real, Real);
-	SetEase setEase = reinterpret_cast<SetEase>(&BfmeThingBRD::bfmeDoBRD);
+	typedef void (ParabolicEase::*SetEase)(Real, Real, Real);
+	SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 	(view->m_pcEase.*setEase)(easeIn, easeOut, (Real)duration);
 	if (duration == 1) {
 		((Gen0073C890Owner *)view)->updateOneFrame();

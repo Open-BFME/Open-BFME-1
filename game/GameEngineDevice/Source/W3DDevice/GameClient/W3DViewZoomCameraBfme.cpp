@@ -11,10 +11,10 @@ typedef bool Bool;
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
-class BfmeThingBRD
+class ParabolicEase
 {
 public:
-	void bfmeDoBRD(void *, void *, void *);
+	void setEaseTimes(Real, Real, Real);
 
 private:
 	char m_body[8];
@@ -36,7 +36,7 @@ private:
 	Real m_zcStartZoom;
 	Real m_zcEndZoom;
 	char m_padding0218[0x220 - 0x218];
-	BfmeThingBRD m_zcEase;
+	ParabolicEase m_zcEase;
 	Bool m_doingZoomCamera;
 };
 
@@ -56,8 +56,8 @@ void W3DView::zoomCamera(Real finalZoom, Int milliseconds, Real easeIn, Real eas
 	view->m_zcStartZoom = view->m_zoom;
 	view->m_zcEndZoom = finalZoom;
 	view->m_zcCurFrame = 0;
-	typedef void (BfmeThingBRD::*SetEase)(Real, Real, Real);
-	SetEase setEase = reinterpret_cast<SetEase>(&BfmeThingBRD::bfmeDoBRD);
+	typedef void (ParabolicEase::*SetEase)(Real, Real, Real);
+	SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 	(view->m_zcEase.*setEase)(easeIn, easeOut, (Real)duration);
 	if (duration == 1) {
 		view->zoomCameraOneFrame();
