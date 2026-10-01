@@ -14334,7 +14334,6 @@ __imp__ShowCursor@4,0x01359090
 __imp__ShowWindow@8,0x01359094
 __imp__SizeofResource@8,0x01358F2C
 __imp__Sleep@4,0x01358F30
-__imp__SleepIat@4,0x01358F30
 __imp__SuspendThread@4,0x01358F34
 __imp__SysAllocString@4,0x013591A4
 __imp__SysFreeString@4,0x013591A8
@@ -14547,7 +14546,6 @@ __imp__lstrcpynA@12,0x01358F84
 __imp__lstrlenA@4,0x01358F88
 __imp__lstrlenW@4,0x01358F8C
 __imp__malloc,0x0135944C
-__imp__mbslenIat,0x0135930C
 __imp__memchr,0x01359450
 __imp__ntohl@4,0x01359718
 __imp__ntohs@4,0x0135972C
@@ -14599,7 +14597,6 @@ __imp__time,0x013594F0
 __imp__timeBeginPeriod@4,0x0135953C
 __imp__timeEndPeriod@4,0x01359540
 __imp__timeGetTime@0,0x01359544
-__imp__timeGetTimeIat@0,0x01359544
 __imp__tmpnam,0x013594F8
 __imp__tolower,0x013594FC
 __imp__toupper,0x01359500
