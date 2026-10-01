@@ -123,7 +123,7 @@ public:
 	virtual BfmeMsgIBD *slot6c(int first, int second);
 };
 
-extern BfmeLogIBD *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_DX8_ErrorCode(int result)
@@ -131,8 +131,8 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 	if (result != 0)
 	{
 		_bfme_debugRecordCallsite(1);
-		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c(0, 0)->slot38("DX8 error ")
+		reinterpret_cast<BfmeLogIBD *>(g_Rva00F36E5C)->slot60();
+		reinterpret_cast<BfmeLogIBD *>(g_Rva00F36E5C)->slot6c(0, 0)->slot38("DX8 error ")
 			->slot00((const void *)result)->slot4c(1);
 	}
 }
