@@ -29,7 +29,7 @@ private:
 };
 
 // Pinned at 0x009EB7A0: the BFME texture release these buffers call.
-class BFMETextureRelease
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -98,13 +98,13 @@ void W3DShrubBuffer::clearAllTrees()
 	*reinterpret_cast<Int *>(base + 0x1440) = zero;
 	*reinterpret_cast<Real *>(base + 0x144c) = 1.0f;
 	*reinterpret_cast<Real *>(base + 0x1448) = 1.0f;
-	BFMETextureRelease **texture =
-		reinterpret_cast<BFMETextureRelease **>(base + 0x1450);
+	TextureBaseClass **texture =
+		reinterpret_cast<TextureBaseClass **>(base + 0x1450);
 	if (*texture) {
 		(*texture)->Release_Ref();
 		*texture = 0;
 	}
-	texture = reinterpret_cast<BFMETextureRelease **>(base + 0x1454);
+	texture = reinterpret_cast<TextureBaseClass **>(base + 0x1454);
 	if (*texture) {
 		(*texture)->Release_Ref();
 		*texture = 0;

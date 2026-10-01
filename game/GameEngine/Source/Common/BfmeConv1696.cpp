@@ -24,10 +24,10 @@ struct BfmeD3DFM
 	BfmeD3DVtFM *m_bfmeVtFM;
 };
 
-class BfmeTexFM
+class TextureBaseClass
 {
 public:
-	void bfmeReleaseRefFM(void);
+	void Release_Ref(void);
 };
 
 class BfmeSurfaceFM
@@ -44,7 +44,7 @@ public:
 	void bfmeCloseFM(void);
 
 	unsigned char m_bfmeHeadFM[0x34];
-	BfmeTexFM *m_bfmeTexFM;
+	TextureBaseClass *m_bfmeTexFM;
 	BfmeSurfaceFM m_bfmeSurfaceFM;
 	int m_bfmeFlagsFM;
 	unsigned char m_bfmeMidFM[0xa];
@@ -65,7 +65,7 @@ void BfmeRadarFM::bfmeCloseFM(void)
 
 	if (m_bfmeTexFM != 0)
 	{
-		m_bfmeTexFM->bfmeReleaseRefFM();
+		m_bfmeTexFM->Release_Ref();
 		m_bfmeTexFM = 0;
 	}
 

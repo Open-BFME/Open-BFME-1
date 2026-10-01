@@ -4,12 +4,17 @@
 // the new texture as owned by this holder. The constructor at 0x006D6050 and
 // the near-twin constructor at 0x006D5280 establish the same layout.
 
+class TextureBaseClass
+{
+public:
+	void Release_Ref(void);
+};
+
 class Rva006D6050TextureBase
 {
 public:
 	Rva006D6050TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
 	virtual ~Rva006D6050TextureBase();
-	void Release_Ref(void);
 
 	unsigned m_refBits;
 	char m_body[0x34];
@@ -36,7 +41,7 @@ void Rva006D6050::init(unsigned width, unsigned height, unsigned format,
 	if (texture) {
 		++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(texture) + 4);
 		if (m_texture)
-			m_texture->Release_Ref();
+			reinterpret_cast<TextureBaseClass *>(m_texture)->Release_Ref();
 		m_texture = texture;
 		texture->m_refBits |= 0x01000000;
 	}

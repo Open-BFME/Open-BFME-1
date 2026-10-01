@@ -1,9 +1,14 @@
 // Open-BFME5 conversions.
 
+class TextureBaseClass
+{
+public:
+	void Release_Ref();
+};
+
 class BfmeTexVGS
 {
 public:
-	void bfmeReleaseVGS();
 	int m_bfme00;
 	unsigned short m_bfmeRefs;
 };
@@ -22,7 +27,7 @@ void BfmeBufVGS::bfmeSetVGS(int index, BfmeTexVGS **src)
 	if (*src)
 		(*src)->m_bfmeRefs++;
 	if (*p)
-		(*p)->bfmeReleaseVGS();
+		reinterpret_cast<TextureBaseClass *>(*p)->Release_Ref();
 	*p = *src;
 }
 
@@ -40,7 +45,7 @@ void BfmeMeshVGT::bfmeSetVGT(BfmeTexVGS **src, int pass, int stage)
 	if (*src)
 		(*src)->m_bfmeRefs++;
 	if (*p)
-		(*p)->bfmeReleaseVGS();
+		reinterpret_cast<TextureBaseClass *>(*p)->Release_Ref();
 	*p = *src;
 }
 
@@ -65,7 +70,7 @@ void __fastcall BfmeThingVGV::bfmeSetVGV(BfmeTexVGS **src)
 		if (*src)
 			(*src)->m_bfmeRefs++;
 		if (m_bfme04)
-			m_bfme04->bfmeReleaseVGS();
+			reinterpret_cast<TextureBaseClass *>(m_bfme04)->Release_Ref();
 		m_bfme04 = *src;
 		m_bfme01 = 1;
 	}

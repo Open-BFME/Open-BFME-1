@@ -17,6 +17,12 @@
 // the compiler folds the second test away -- precisely because the call in
 // between could have changed it.
 
+class TextureBaseClass
+{
+public:
+	void Release_Ref();
+};
+
 class BfmeTagged
 {
 public:
@@ -34,8 +40,6 @@ public:
 	virtual void bfmeSlot11(void);
 	virtual void bfmeSlot12(void);
 	virtual unsigned int bfmeTag(void);			// slot 13, vtable+0x34
-
-	void bfmeRelease(void);					// retail 0x009EB7A0
 
 	unsigned short m_bfmeRefCount;				// +0x04
 };
@@ -133,7 +137,7 @@ Gen_0090BCF0 &Gen_0090BCF0::operator=(const Gen_0090BCF0 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -146,7 +150,7 @@ Gen_0090BCF0 &Gen_0090BCF0::operator=(const Gen_0090BCF0 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -164,7 +168,7 @@ Gen_0090DB10 &Gen_0090DB10::operator=(const Gen_0090DB10 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -177,7 +181,7 @@ Gen_0090DB10 &Gen_0090DB10::operator=(const Gen_0090DB10 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -195,7 +199,7 @@ Gen_00970800 &Gen_00970800::operator=(const Gen_00970800 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -208,7 +212,7 @@ Gen_00970800 &Gen_00970800::operator=(const Gen_00970800 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -226,7 +230,7 @@ Gen_00970E40 &Gen_00970E40::operator=(const Gen_00970E40 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -239,7 +243,7 @@ Gen_00970E40 &Gen_00970E40::operator=(const Gen_00970E40 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -257,7 +261,7 @@ Gen_00971220 &Gen_00971220::operator=(const Gen_00971220 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -270,7 +274,7 @@ Gen_00971220 &Gen_00971220::operator=(const Gen_00971220 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -288,7 +292,7 @@ Gen_00971600 &Gen_00971600::operator=(const Gen_00971600 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -301,7 +305,7 @@ Gen_00971600 &Gen_00971600::operator=(const Gen_00971600 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -319,7 +323,7 @@ Gen_00971C60 &Gen_00971C60::operator=(const Gen_00971C60 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -332,7 +336,7 @@ Gen_00971C60 &Gen_00971C60::operator=(const Gen_00971C60 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -350,7 +354,7 @@ Gen_00972340 &Gen_00972340::operator=(const Gen_00972340 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -363,7 +367,7 @@ Gen_00972340 &Gen_00972340::operator=(const Gen_00972340 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 
@@ -381,7 +385,7 @@ Gen_009729D0 &Gen_009729D0::operator=(const Gen_009729D0 &other)
 		{
 			if (m_bfmePtr)
 			{
-				m_bfmePtr->bfmeRelease();
+				reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 				m_bfmePtr = 0;
 			}
@@ -394,7 +398,7 @@ Gen_009729D0 &Gen_009729D0::operator=(const Gen_009729D0 &other)
 	}
 
 	if (m_bfmePtr)
-		m_bfmePtr->bfmeRelease();
+		reinterpret_cast<TextureBaseClass *>(m_bfmePtr)->Release_Ref();
 
 	m_bfmePtr = other.m_bfmePtr;
 

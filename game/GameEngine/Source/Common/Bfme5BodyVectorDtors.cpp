@@ -75,10 +75,10 @@ Gen_00490100::~Gen_00490100(void)
 	m_bfmePtr = 0;
 }
 
-class BfmeTextureS
+class TextureBaseClass
 {
 public:
-	void bfmeReleaseRef(void);				// retail 0x009EB7A0
+	void Release_Ref(void);				// retail 0x009EB7A0
 };
 
 class BfmeVecBaseS
@@ -86,15 +86,15 @@ class BfmeVecBaseS
 public:
 	~BfmeVecBaseS(void)
 	{
-		BfmeTextureS **start = m_bfmeStart;
+		TextureBaseClass **start = m_bfmeStart;
 
 		if (start)
-			bfmeRelease(start, sizeof(BfmeTextureS *) * (m_bfmeEnd - start));
+			bfmeRelease(start, sizeof(TextureBaseClass *) * (m_bfmeEnd - start));
 	}
 
-	BfmeTextureS **m_bfmeStart;				// +0x00
-	BfmeTextureS **m_bfmeFinish;				// +0x04
-	BfmeTextureS **m_bfmeEnd;				// +0x08
+	TextureBaseClass **m_bfmeStart;				// +0x00
+	TextureBaseClass **m_bfmeFinish;				// +0x04
+	TextureBaseClass **m_bfmeEnd;				// +0x08
 };
 
 class Gen_00757830 : public BfmeVecBaseS
@@ -106,11 +106,11 @@ public:
 // ??1Gen_00757830@@QAE@XZ
 Gen_00757830::~Gen_00757830(void)
 {
-	BfmeTextureS **last = m_bfmeFinish;
+	TextureBaseClass **last = m_bfmeFinish;
 
-	for (BfmeTextureS **it = m_bfmeStart; it != last; ++it)
+	for (TextureBaseClass **it = m_bfmeStart; it != last; ++it)
 	{
 		if (*it)
-			(*it)->bfmeReleaseRef();
+			(*it)->Release_Ref();
 	}
 }

@@ -7,10 +7,10 @@ public:
 	int m_references;
 };
 
-class Rva0078AFC0Owned
+class TextureBaseClass
 {
 public:
-	void bfmeDestroy(void);
+	void Release_Ref(void);
 };
 
 class Rva0078AFC0OwnedPtr
@@ -18,12 +18,12 @@ class Rva0078AFC0OwnedPtr
 public:
 	~Rva0078AFC0OwnedPtr()
 	{
-		Rva0078AFC0Owned *pointer = m_pointer;
+		TextureBaseClass *pointer = m_pointer;
 		if (pointer != 0)
-			pointer->bfmeDestroy();
+			pointer->Release_Ref();
 	}
 
-	Rva0078AFC0Owned *m_pointer;
+	TextureBaseClass *m_pointer;
 };
 
 class Rva0078AFC0RefPtr

@@ -1,9 +1,14 @@
 // Open-BFME5 conversions.
 
+class TextureBaseClass
+{
+public:
+	void Release_Ref();
+};
+
 class BfmeTexVGX
 {
 public:
-	void bfmeReleaseVGX();
 	int m_bfme00;
 	unsigned short m_bfmeRefs;
 };
@@ -30,7 +35,7 @@ BfmeThingVGX &BfmeThingVGX::bfmeAssignVGX(const BfmeThingVGX &o)
 		if (o.m_bfme00)
 			o.m_bfme00->m_bfmeRefs++;
 		if (m_bfme00)
-			m_bfme00->bfmeReleaseVGX();
+			reinterpret_cast<TextureBaseClass *>(m_bfme00)->Release_Ref();
 		m_bfme00 = o.m_bfme00;
 		m_bfme04 = o.m_bfme04;
 		m_bfme08 = o.m_bfme08;

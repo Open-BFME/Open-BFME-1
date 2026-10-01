@@ -9,7 +9,7 @@
 void __cdecl W3DRadarResetLock();
 char __cdecl bfmeUnlockVJR();
 
-class BfmeTexRel1137
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -47,7 +47,7 @@ public:
 	void bfmeReleaseResources();
 	char m_bfmePad[0x68];
 	BfmeRefBase1137 *m_bfme68;
-	BfmeTexRel1137 *m_bfme6c;
+	TextureBaseClass *m_bfme6c;
 	BfmeIface1137 *m_bfme70;
 };
 
@@ -55,7 +55,7 @@ void BfmeA1137Release::bfmeReleaseResources()
 {
 	W3DResourceResetGuard lock;
 
-	BfmeTexRel1137 *t = m_bfme6c;
+	TextureBaseClass *t = m_bfme6c;
 	if (t)
 	{
 		t->Release_Ref();
