@@ -67,7 +67,10 @@ public:
 	virtual void removeAudioEvent(unsigned int handle);
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The ClientSubsystem view above is TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 struct GateOpenAndCloseBehaviorModuleDataView
 {
@@ -109,7 +112,7 @@ private:
 
 void GateOpenAndCloseBehavior::playSound()
 {
-	TheAudioClientUpdate->removeAudioEvent(m_audioHandle);
+	((ClientSubsystem *)TheAudio)->removeAudioEvent(m_audioHandle);
 	GateOpenAndCloseBehaviorModuleDataView *data = m_moduleData;
 	GateOpenAndCloseBehaviorObjectView *object = m_object;
 	GateOpenAndCloseState state = m_state;
@@ -120,7 +123,7 @@ void GateOpenAndCloseBehavior::playSound()
 		if (data->m_openSound.m_data != 0)
 		{
 			BfmeAudioEventRTS event(data->m_openSound, object->m_id);
-			TheAudioClientUpdate->addAudioEvent(&event);
+			((ClientSubsystem *)TheAudio)->addAudioEvent(&event);
 		}
 		break;
 	case 2:
@@ -128,7 +131,7 @@ void GateOpenAndCloseBehavior::playSound()
 		if (data->m_closeSound.m_data != 0)
 		{
 			BfmeAudioEventRTS event(data->m_closeSound, object->m_id);
-			TheAudioClientUpdate->addAudioEvent(&event);
+			((ClientSubsystem *)TheAudio)->addAudioEvent(&event);
 		}
 		break;
 	}

@@ -114,7 +114,10 @@ public:
 	virtual void bfmeKill1024(int v);
 };
 
-extern BfmeG1024 *g_bfmeG1024;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The BfmeG1024 view above is TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeH1024
 {
@@ -136,8 +139,8 @@ public:
 
 void BfmeC1024::bfmeGo1024C(void)
 {
-	if (g_bfmeG1024 != 0) {
-		g_bfmeG1024->bfmeKill1024(m_bfmeH);
+	if (TheAudio != 0) {
+		((BfmeG1024 *)TheAudio)->bfmeKill1024(m_bfmeH);
 		m_bfmeH = 1;
 	}
 

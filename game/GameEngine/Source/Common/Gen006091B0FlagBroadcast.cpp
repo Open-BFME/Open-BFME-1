@@ -154,7 +154,10 @@ public:
 	virtual void slot3C(Bool value);
 };
 
-extern AudioClient *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The AudioClient view above is TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // Reused verbatim from the matched
 // game/GameEngine/Source/GameLogic/ScriptEngine/LivingWorldManagerRva00615B10.cpp
@@ -215,8 +218,8 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 
 	TheGameLogic->m_field11D = m_bfmeFlag;
 
-	if (TheAudioClientUpdate && m_bfmeFlag)
-		TheAudioClientUpdate->slot3C(true);
+	if (TheAudio && m_bfmeFlag)
+		((AudioClient *)TheAudio)->slot3C(true);
 
 	if (g_bfmeGameCW)
 	{

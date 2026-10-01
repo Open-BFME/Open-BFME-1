@@ -40,7 +40,11 @@ public:
 	void bfmeCall_00041b5a(void);					// retail 0x00041B5A
 };
 
-extern BfmeGlobal_012ed668 *TheBfmeGlobal_012ed668;				// 0x012ED668
+// 0x012ED668 is retail's AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A); the BfmeGlobal_012ed668 view above is
+// TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeGlobal_012f076c
 {
@@ -214,19 +218,19 @@ void Gen_0055bd20(void)
 // ?Gen_006a3790@@YAXXZ
 void Gen_006a3790(void)
 {
-	TheBfmeGlobal_012ed668->bfmeCall_0000b99c();
+	((BfmeGlobal_012ed668 *)TheAudio)->bfmeCall_0000b99c();
 }
 
 // ?Gen_006a37a0@@YAXXZ
 void Gen_006a37a0(void)
 {
-	TheBfmeGlobal_012ed668->bfmeCall_00041b5a();
+	((BfmeGlobal_012ed668 *)TheAudio)->bfmeCall_00041b5a();
 }
 
 // ?Gen_006a37b0@@YAXXZ
 void Gen_006a37b0(void)
 {
-	TheBfmeGlobal_012ed668->bfmeCall_00020f36();
+	((BfmeGlobal_012ed668 *)TheAudio)->bfmeCall_00020f36();
 }
 
 // ?Gen_006be3f0@@YAXXZ

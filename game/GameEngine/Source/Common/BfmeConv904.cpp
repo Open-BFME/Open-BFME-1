@@ -108,7 +108,10 @@ public:
 	virtual bool bfmeCheckMC(void *a);
 };
 
-extern BfmeGlobMC *g_bfmeGlobMC;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The BfmeGlobMC view above is TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeThingMC
 {
@@ -120,8 +123,8 @@ public:
 
 int BfmeThingMC::bfmeGoMC()
 {
-	if (g_bfmeGlobMC) {
-		if (g_bfmeGlobMC->bfmeCheckMC(m_bfmeArg))
+	if (TheAudio) {
+		if (((BfmeGlobMC *)TheAudio)->bfmeCheckMC(m_bfmeArg))
 			return 1;
 	}
 	return 0;

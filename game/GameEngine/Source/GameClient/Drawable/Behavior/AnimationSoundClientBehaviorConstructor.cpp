@@ -82,9 +82,10 @@ public:
 	void rva_004091C0(Rva004091C0Node *node);
 };
 
-class AudioClientUpdate;
-
-extern AudioClientUpdate *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A); only the null test is needed here.
+class AudioManager;
+extern AudioManager *TheAudio;
 class BfmeResetSubsystem;
 extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;
 
@@ -105,7 +106,7 @@ private:
 AnimationSoundClientBehavior::AnimationSoundClientBehavior(Thing *thing, const ModuleData *moduleData)
 	: DrawableModule(thing, moduleData), m_next(0), m_prev(0)
 {
-	if (TheAudioClientUpdate == 0)
+	if (TheAudio == 0)
 	{
 		m_soundScale = 0.0f;
 		return;

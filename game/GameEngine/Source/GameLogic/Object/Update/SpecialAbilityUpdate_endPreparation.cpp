@@ -97,7 +97,10 @@ public:
 	virtual void removeAudioEvent(AudioHandle event);
 };
 
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The ClientSubsystem view above is TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -169,7 +172,7 @@ void SpecialAbilityUpdate::endPreparation()
 {
 	getObject()->setStatus(
 		ObjectStatusMaskType(ObjectStatusMaskType::kInit, 24), false);
-	TheAudioClientUpdate->removeAudioEvent(m_prepSoundLoop.getPlayingHandle());
+	((ClientSubsystem *)TheAudio)->removeAudioEvent(m_prepSoundLoop.getPlayingHandle());
 
 	ModelConditionFlags clear(ModelConditionFlags::kInit, 94);
 	ModelConditionFlags set;

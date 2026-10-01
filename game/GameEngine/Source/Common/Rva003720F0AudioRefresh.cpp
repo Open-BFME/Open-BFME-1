@@ -114,9 +114,16 @@ public:
 	virtual bool isCurrentlyPlaying(AudioHandle handle);
 };
 
-// Root ledger already binds this decorated global at 0x012ED668 to the
-// Rva005A00B0AudioClient type; this TU adds no global pin.
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The Rva005A00B0AudioClient view above is
+// TU-local, so reach it through this cast-only accessor.
+class AudioManager;
+extern AudioManager *TheAudio;
+
+static inline Rva005A00B0AudioClient *localTheAudio(void)
+{
+	return (Rva005A00B0AudioClient *)TheAudio;
+}
 
 class Rva003720F0Owner
 {
@@ -141,12 +148,12 @@ void Rva003720F0Owner::update(Rva003720F0Context *previous,
 		Rva003720F0AsciiString *eventName = &module->m_eventName;
 		if (eventName->m_data != 0)
 		{
-			if (!TheAudioClientUpdate->isCurrentlyPlaying(m_audioHandle))
+			if (!localTheAudio()->isCurrentlyPlaying(m_audioHandle))
 			{
 				Rva003720F0Object *object = m_object;
 				unsigned int ownerID = object->m_id;
 				Rva003720F0EventStorage event(*reinterpret_cast<AsciiString *>(eventName), static_cast<ObjectID>(ownerID));
-				m_audioHandle = TheAudioClientUpdate->addAudioEvent(reinterpret_cast<const AudioEventRTS *>(&event));
+				m_audioHandle = localTheAudio()->addAudioEvent(reinterpret_cast<const AudioEventRTS *>(&event));
 			}
 		}
 		return;
@@ -156,7 +163,7 @@ void Rva003720F0Owner::update(Rva003720F0Context *previous,
 	{
 		if (m_audioHandle >= 5)
 		{
-			TheAudioClientUpdate->removeAudioEvent(m_audioHandle);
+			localTheAudio()->removeAudioEvent(m_audioHandle);
 			m_audioHandle = 1;
 		}
 	}

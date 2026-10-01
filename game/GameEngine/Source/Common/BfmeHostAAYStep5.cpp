@@ -29,7 +29,11 @@ struct Rva005A00B0AudioClient
 	virtual void pauseAmbient(int shouldPause) = 0;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
+// (?TheAudio@@3PAVAudioManager@@A). The Rva005A00B0AudioClient view above is
+// TU-local.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BfmeThingKB;
 class BfmeThingNA;
@@ -73,8 +77,8 @@ void BfmeHostAAY::bfmeStep5AAY()
 		++it;
 	}
 
-	if (TheAudioClientUpdate)
-		TheAudioClientUpdate->pauseAmbient(2);
+	if (TheAudio)
+		((Rva005A00B0AudioClient *)TheAudio)->pauseAmbient(2);
 
 	it = m_objects.begin();
 	while (it != m_objects.end())
