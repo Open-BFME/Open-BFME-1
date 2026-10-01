@@ -244,3 +244,6 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeC,m_riverSta
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetA,setWaterArea,claude-fable+gemini,applied,2026-10-01
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetB,setRiver,claude-fable+gemini,applied,2026-10-01
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_0018F210@|bfmeSetC,setRiverStart,claude-fable+gemini,applied,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntry00198A10,SidesInfo,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,SidesList,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field00,m_pBuildList,claude-opus+gemini,agreed,2026-10-01
