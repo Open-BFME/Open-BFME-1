@@ -29,6 +29,7 @@ from datetime import datetime, timezone
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+import name_lane
 import progress
 
 STATE = "docs/discord-main-progress.json"
@@ -39,10 +40,12 @@ README = "https://github.com/Open-BFME/Open-BFME-1#readme"
 # (key, label, what the bytes are); the denominator is stated beside each value.
 ROWS = (("matched", "Rebuilt from source", f"rebuilt without copying {EXE}"),
         ("cpp", "Game code in C++", "of the game's own code, now C++ (libraries not counted)"),
-        ("linked", "Linking", "of the game's own code linked"))
-CARD_FILL = {"matched": "#2ea043", "cpp": "#388bfd", "linked": "#d29922"}
+        ("linked", "Linking", "of the game's own code linked"),
+        ("names", "Readable names", "declared names (files, types, functions, members, globals, parameters, locals) "
+                                    "that are not placeholders"))
+CARD_FILL = {"matched": "#2ea043", "cpp": "#388bfd", "linked": "#d29922", "names": "#a371f7"}
 # Discord draws each bar as ten square emoji (a wider row wraps on a phone).
-BLOCK = {"matched": "\U0001f7e9", "cpp": "\U0001f7e6", "linked": "\U0001f7e8"}
+BLOCK = {"matched": "\U0001f7e9", "cpp": "\U0001f7e6", "linked": "\U0001f7e8", "names": "\U0001f7ea"}
 REST_BLOCK = "⬛"
 WIDTH = 10
 UP, DOWN, DOT = "▲", "▼", "·"
@@ -65,7 +68,10 @@ def measures(current):
     if not 0 <= cpp <= game <= total or not 0 <= matched <= total or (
             linked is not None and not 0 <= linked <= linked_game <= total):
         raise ValueError("Invalid progress split")
-    return {"matched": (matched, total), "cpp": (cpp, game), "linked": (linked, linked_game)}
+    readable, names = current.get("readable_names"), current.get("declared_names")
+    if names is not None and not 0 <= readable <= names:
+        raise ValueError("Invalid readable-names count")
+    return {"matched": (matched, total), "cpp": (cpp, game), "linked": (linked, linked_game), "names": (readable, names)}
 
 
 def measured(current):
@@ -74,7 +80,7 @@ def measured(current):
 
 
 def detail(current, key, value, denominator, what):
-    text = f"{value:,} / {denominator:,} bytes {what}"
+    text = f"{value:,} / {denominator:,} {'' if key == 'names' else 'bytes '}{what}"
     return f"{text} ({measured(current)})" if key == "linked" else text
 
 
@@ -212,7 +218,8 @@ def main():
     split = progress.real_split(matched, notes, start, size, naked)
     census = progress.census_at(None)
     _, total = progress.real_code_denominator(start, size)
-    current = {"total": total, "census": census,
+    names, placeholders = name_lane.readable()
+    current = {"total": total, "census": census, "declared_names": names, "readable_names": names - placeholders,
                "linked": int(census["linked_bytes"]) if census else None,
                "linked_authored": int(census["linked_authored"]) if census and census.get("linked_authored") else None,
                "linked_game_code": int(census["game_code"]) if census and census.get("game_code") else None,

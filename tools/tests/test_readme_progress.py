@@ -79,9 +79,11 @@ def test_failed_post_does_not_advance_state_or_leak_url(tmp_path, monkeypatch):
     assert not path.exists()
 
 
-def test_discord_posts_three_measures_and_links_the_readme():
-    embed = daily.announcement(sample(), previous(authored=36, generated=14))["embeds"][0]
-    M, C, L = (daily.BLOCK[key] for key in ("matched", "cpp", "linked"))
+def test_discord_posts_four_measures_and_links_the_readme():
+    names = {"declared_names": 200, "readable_names": 142}
+    embed = daily.announcement({**sample(), **names}, previous(authored=36, generated=14, declared_names=200,
+                                                              readable_names=140))["embeds"][0]
+    M, C, L, N = (daily.BLOCK[key] for key in ("matched", "cpp", "linked", "names"))
     R = daily.REST_BLOCK
     assert embed["description"].split("\n") == [
         "**Rebuilt from source: 60.00%**",
@@ -95,6 +97,11 @@ def test_discord_posts_three_measures_and_links_the_readme():
         "**Linking: 10.00%**",
         f"{L * 1}{R * 9}",
         "9 / 90 bytes of the game's own code linked (not measured yet)",
+        "",
+        f"**Readable names: 71.00%**  {UP} 1.00",
+        f"{N * 7}{R * 3}",
+        "142 / 200 declared names (files, types, functions, members, globals, parameters, locals) "
+        "that are not placeholders",
         "",
         f"[What each bar measures, with charts: README]({daily.README})"]
     assert "footer" not in embed and "Whole game" not in embed["description"]
