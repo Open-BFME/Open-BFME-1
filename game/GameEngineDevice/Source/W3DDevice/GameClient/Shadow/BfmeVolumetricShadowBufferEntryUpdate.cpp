@@ -1,7 +1,8 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
 
 #include "matrix4.h"
 #include "rendobj.h"
+#include <d3dx8math.h>
 
 struct BfmeShadowShareBuffer
 {
@@ -86,16 +87,12 @@ public:
 	__declspec(noinline) void Get_Deformed_Vertices(Vector3 *dst);
 };
 
-struct _D3DXMATRIX
-{
-	float m[4][4];
-};
-typedef struct _D3DXMATRIX D3DXMATRIX;
-
-extern "C" Vector3 * __stdcall D3DXVec3TransformCoordArray(
-	Vector3 *dst, unsigned int dstStride,
-	const Vector3 *src, unsigned int srcStride,
-	const D3DXMATRIX *matrix, unsigned int count);
+// D3DX9 array API absent from DX81 headers. Microsoft documents these native
+// types; the Summer2003 archive's @24 public symbol proves stdcall cleanup.
+extern "C" D3DXVECTOR3 * __stdcall D3DXVec3TransformCoordArray(
+ D3DXVECTOR3 *dst, UINT dstStride,
+ const D3DXVECTOR3 *src, UINT srcStride,
+ const D3DXMATRIX *matrix, UINT count);
 
 struct BfmeShadowBufferEntry
 {
@@ -119,8 +116,8 @@ void BfmeShadowBufferEntry::update()
 
 	Matrix4 matrix(m_mesh->Get_Transform());
 	D3DXVec3TransformCoordArray(
-		(Vector3 *)m_allocation0, 0xc,
-		m_mesh->Peek_Model()->Get_Vertex_Array(), 0xc,
+		(D3DXVECTOR3 *)m_allocation0, 0xc,
+		(const D3DXVECTOR3 *)m_mesh->Peek_Model()->Get_Vertex_Array(), 0xc,
 		(D3DXMATRIX *)&matrix.Transpose(),
 		m_mesh->Peek_Model()->Get_Vertex_Count());
 }
