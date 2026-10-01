@@ -1,13 +1,11 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.6619 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x003EA570 (ILT 0x000441C0): the BFME three-argument
-// Pathfinder::isAttackViewBlockedByObstacle(source, goalPos, target) that
-// Weapon::isGoalPosWithinAttackRange calls.  It scans the cells between the
-// source and the goal for the target's ID, then gives walls, wall upgrades and
-// deployed siege towers their own reach tests.  KindOf bit numbers come from
-// the retail KindOf name table at 0x012AA068.
+// Retail body 0x003EA570 is the three-argument Pathfinder overload that
+// Weapon::isGoalPosWithinAttackRange calls through ILT 0x000441C0. The matched
+// Weapon body at 0x001E6930 and that ILT pin identify its name and arguments.
+// This body checks cells along a path, wall range, and siege tower reach. The
+// KindOf bit indexes come from the retail table at 0x012AA068.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -98,11 +96,12 @@ private:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isStructure() const { return ((signed char)m_kindof[0]) < 0; }
-	Bool isWalkOnTopOfWall() const { return (m_kindof[1] & 0x08000000) != 0; }
-	Bool isSiegeTower() const { return (m_kindof[2] & 0x10000000) != 0; }
-	Bool isWallUpgrade() const { return (m_kindof[4] & 0x00200000) != 0; }
+	Bool isStructure() const { return (((unsigned char)m_kindof[0] & 0x80) != 0); }
+	UnsignedInt isWalkOnTopOfWall() const { return (m_kindof[1] & 0x08000000) != 0; }
+	UnsignedInt isSiegeTower() const { return (m_kindof[2] & 0x10000000) != 0; }
+	UnsignedInt wallUpgradeFlags() const { return m_kindof[4]; }
 
+private:
 	unsigned char m_unreconstructed_08[0xC8 - 0x08];
 	UnsignedInt m_kindof[6];
 };
@@ -146,8 +145,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-// The deployed-siege helper object the pinned 0x0002FC7A lookup returns; the
-// pin keeps its historical MemoryPool spelling.
+// ILT 0x0002FC7A records this helper's result as a MemoryPool pointer.
 class MemoryPool
 {
 public:
@@ -221,13 +219,13 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 	if (target->getTemplate()->isWalkOnTopOfWall())
 	{
 		Real range = source->m_unreconstructed_0BC;
-		if (target->getTemplate()->isWallUpgrade())
+		if ((target->getTemplate()->wallUpgradeFlags() & 0x00200000))
 			range = 0.0f;
 		range += 20.0f;
 		Real metric = target->rva001C2380(target->getPosition(), source, &goalPos);
 		if (metric < range * range)
 		{
-			if (target->getTemplate()->isWallUpgrade())
+			if ((target->getTemplate()->wallUpgradeFlags() & 0x00200000))
 				return true;
 			if (rva003E4DA0(source, &goalPos))
 				return true;

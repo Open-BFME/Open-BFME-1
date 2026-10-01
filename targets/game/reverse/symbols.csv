@@ -13033,7 +13033,7 @@ name,address,notes
 ?ShowControlBar@@YAXH@Z,0x00024848,ShowControlBar int
 ?ShowControlBar@@YAX_N@Z,0x00024848,ILT/body ShowControlBar for letterbox
 ?ShowUnderlyingGUIElements@@YAX_NPBD1PAPBD2@Z,0x00047D52,pinharvest x2 (thunk)
-?SiegeDeploySpecialPower_getPool@@YAPAVMemoryPool@@PAVObject@@@Z,0x0002FC7A,Open-BFME5 SiegeDeploySpecialPower pool lookup pin
+?SiegeDeploySpecialPower_getPool@@YAPAVMemoryPool@@PAVObject@@@Z,0x0002FC7A,Open-BFME5 SiegeDeploySpecialPower pool lookup pin route=0x001F8AB0
 ?SignalUIInteraction@@YAXH@Z,0x000348DD
 ?SimpleMatch@Debug@@SA_NPBD0@Z,0x0088A3A0,retail call target from DebugIOFlat::Write (0x890EA1)
 ?Simple_Evaluate_Pivot@HTreeClass@@QBE_NHABVMatrix3D@@PAV2@@Z,0x009539C0,rel32 pin for layout-fixed landing
@@ -76201,8 +76201,8 @@ name,address,notes
 ?bfmeCheckABI@BfmeThingCDE@@QAE_NXZ,0x008F7A10,Open-BFME5 retained check the 0x008F8D00 release consults before deleting
 ?bfmeCheckALT@BfmeHolderLT@@QAEDMMH@Z,0x0004198E,pin
 ?bfmeCheckAN@BfmeThingAN@@QAEHHPAX0@Z,0x00034C93
-?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target
-?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target
+?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target route=0x003E4330
+?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target route=0x003E49F0
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckBLT@BfmeHolderLT@@QAEDMM@Z,0x0003BEA8,pin
 ?bfmeCheckBMC@BfmeSubBMC492@@QAEEPAUBfmePartBMC492@@0@Z,0x00008E68,Rva001DD890 bool owner-dispatch helper
@@ -81105,7 +81105,7 @@ name,address,notes
 ?findMessage@NetCommandList@@QAEPAVNetCommandRef@@GEI@Z,0x00672FC0,BFME synchronized pending-relay lookup: matched ACK-stage-two caller 0x00665700 calls via ILT 0x0002DB96 with command ID/source player/original execution frame; body walks NetCommandList first at +4 and ref next at +4 then tests msg type +0x14 via DoesCommandRequireACommandID and ID +0x10/player +0x0C/frame +8; extends the named two-argument findMessage sibling 0x00672F50
 ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z,0x0002AE23
 ?findModule@Object@@QBEPAVModule@@H@Z,0x0002AE23,callee of DamageFieldNugget::doNugget
-?findModule@Object@@QBEPAVModule@@W4NameKeyType@@@Z,0x0002AE23,TU-scoped public ABI spelling for the protected retail Object::findModule call
+?findModule@Object@@QBEPAVModule@@W4NameKeyType@@@Z,0x0002AE23,TU-scoped public ABI spelling for the protected retail Object::findModule call route=0x001BEE60
 ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@VAsciiString@@@Z,0x0003F436,harvested from parseMultiplayerColorDefinition (thunk)
 ?findMyDrone@AIDockProcessDockState@@QAEPAVObject@@XZ,0x00044EDB,link thunk; called by AIDockProcessDockState::update at 0x0014FCE0
 ?findNameIndex@Rva00359330StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000329FC,retail call target from the 0x00359330 string-record release body
@@ -83214,7 +83214,7 @@ name,address,notes
 ?getFinalOverride@BfmePartitionThingTemplate@@QAEPAV1@XZ,0x000022BB,PartitionFilterThing vtable slot 1 body at 0x001DD770 checks the BFME Thing template override link at +0x04 and calls this proven override-chain ILT
 ?getFinalOverride@BfmeTeamControlOverridable@@QBEPBV1@XZ,0x000022BB,Team.cpp BFME-layout view spelling of the proven Overridable chain-walker ILT
 ?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
-?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
+?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB,route=0x00087A80
 ?getFinalOverride@Rva000F4640Overridable@@QBEPBV1@XZ,0x000022BB,address-derived override view used by Team targetable count; retail call at 0x000F4640 reaches the same const override ILT
 ?getFinalOverride@Rva226790Template@@QAEPAV1@XZ,0x000022BB,address-derived template override-chain ILT thunk
 ?getFinalOverride@Rva226800Overridable@@QAEPAV1@XZ,0x000022BB,Rva226800 template override ILT
@@ -85130,7 +85130,7 @@ name,address,notes
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0EF@@@@Z,0x0004250A,Open-BFME5 MSVC71 BitFlags<69> ILT
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z,0x0004250A,ILT thunk
 ?isAttackViewBlockedByObstacle@BfmeOutOfWeaponRangePathfinder@@QAE_NPBVBfmeOutOfWeaponRangeObject@@PBUCoord3D@@01@Z,0x00023042,outOfWeaponRangeObject retail LOS thunk
-?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z,0x000441C0,retail Weapon body 0x001E6930 passes Pathfinder receiver and source goal target to ILT
+?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z,0x000441C0,retail Weapon body 0x001E6930 passes Pathfinder receiver and source goal target to ILT route=0x003EA570
 ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@01@Z,0x00023042,pin Pathfinder isAttackViewBlockedByObstacle 4-arg pointer overload ILT target
 ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z,0x00049E45
 ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z,0x0000DAAD,ILT thunk used by call site
@@ -85592,7 +85592,7 @@ name,address,notes
 ?name003A72F0@Glo012F1024Item@@QAE?AVAsciiString@@XZ,0x0000CA95,"Full3A72F032B copies member4 viaAscii copy887B60 tohiddenreturn buffer,ret4; no unsupported User identity"
 ?nameAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF90,pin for Rva002E2970 applyNameFlags
 ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@ABVAsciiString@@@Z,0x0004A1DD,pinharvest x4 (thunk)
-?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7,site-decoded x1 (thunk)
+?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7,site-decoded x1 (thunk) route=0x0008FFC0
 ?nameToKey@NameKeyGenerator@@QAEHPBD@Z,0x0003ADD7,UpgradeCenter newUpgrade retail name-key thunk
 ?nameToKey@NameKeyGenerator@@QAEIPBD@Z,0x0003ADD7,ILT thunk to the const char* overload body at 0x0008FFC0
 ?nameToKey@Rva226800NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7,Rva226800 StealthUpdate key ILT
@@ -89941,3 +89941,6 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 ??0?$_String_base@DV?$allocator@D@_STL@@@_STL@@QAE@ABV?$allocator@D@1@I@Z,0x00016527,Open-BFME5 ILT for the _String_base allocator-first reserve ctor (body 0x005C46C0) called by the string-plus-pointer operator+ 0x005CAE30 with (allocator count)
 ?find@Rva0094C5E0Tree@@QAE?AURva0094C5E0Iterator@@ABI@Z,0x0094C5E0,The retail call at 0x0094CB40 passes the tree in ECX and the key by reference. The result iterator goes on the stack. The target is the 71-byte body at this address.
 ??1Rva0094BFD0@@QAE@XZ,0x0094BFD0,The retail call at 0x0094CB40 uses ECX=node+0x10 with no stack arguments. The 12-byte body reads the reference pointer and releases it.
+?rva001C2380@Object@@QBEMPBUCoord3D@@PBV1@0@Z,0x0001D31D,address-derived Object method. The caller at 0x003EA570 passes three pointers and uses its float result. route=0x001C2380
+?rva001F8E20@MemoryPool@@QAEXPAUCoord3D@@@Z,0x00034A0E,address-derived method. The caller at 0x003EA570 passes a Coord3D pointer and uses no result. route=0x001F8E20
+?rva003E4DA0@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z,0x00037196,address-derived Pathfinder method. The caller at 0x003EA570 passes Object and Coord3D pointers and reads EAX. route=0x003E4DA0
