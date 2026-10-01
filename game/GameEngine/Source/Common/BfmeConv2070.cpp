@@ -1,4 +1,5 @@
-extern "C" void *bfmeVftGS[];
+extern "C" void * __identifier("??_7AIPlayer@@6B@")[ ];
+#define bfmeVftGS __identifier("??_7AIPlayer@@6B@")
 
 struct Rva00367E30Logic
 {
@@ -27,7 +28,8 @@ public:
 	BfmeAiDataGS *m_bfmeDataGS;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheBfmeGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 
@@ -103,7 +105,7 @@ BfmeStateGS::BfmeStateGS(BfmeArgGS *a)
 	m_bfme44GS = 10.0f;
 	m_bfme14GS = 2;
 	m_bfme18GS = 2;
-	m_bfme28GS = TheBfmeGameLogic->m_bfmeFrameGS;
+	m_bfme28GS = reinterpret_cast<Rva00367E30Logic *>(TheBfmeGameLogic)->m_bfmeFrameGS;
 	a->m_bfmeFlagGS = 0;
 	m_bfme48GS = 0;
 	m_bfme4cGS = 0;

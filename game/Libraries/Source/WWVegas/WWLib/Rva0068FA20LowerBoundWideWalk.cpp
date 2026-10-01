@@ -15,8 +15,6 @@
 // identity here is address-derived like the twin, so this body is landed
 // under its own address-derived name rather than either stale pin.
 
-extern const char g_bfmeEmptyUnicode[];
-
 struct BfmeWideHeader
 {
 	int ref_count;
@@ -54,7 +52,7 @@ Rva0068FA20Node *Rva0068FA20Tree::_M_lower_bound( const BfmeWideString &key ) co
 
 	BfmeWideHeader *keyData = key.m_data;
 	const unsigned short *empty =
-		reinterpret_cast<const unsigned short *>( g_bfmeEmptyUnicode );
+		reinterpret_cast<const unsigned short *>( L"" );
 	while ( node )
 	{
 		int thatLen = keyData ? keyData->length : 0;

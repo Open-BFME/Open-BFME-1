@@ -88,9 +88,9 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)
 extern void _bfme_debugRecordCallsite(int kind);
-extern const char Rva006A16B0Empty[];
 
 class Rva0007F560Factory : public BfmeThingBPA
 {
@@ -115,7 +115,7 @@ void *Rva0007F560Factory::lookup(const AsciiString &name)
 		if (input->m_data)
 			text = input->m_data->m_text;
 		else
-			text = Rva006A16B0Empty;
+			text = "";
 		report->slot38(text)->slot4C(1);
 	}
 	if (*reinterpret_cast<void **>((unsigned char *)result + 4))
@@ -130,7 +130,7 @@ void *Rva0007F560Factory::lookup(const AsciiString &name)
 		if (input->m_data)
 			text = input->m_data->m_text;
 		else
-			text = Rva006A16B0Empty;
+			text = "";
 		report->slot38(text)->slot4C(1);
 	}
 	return result;

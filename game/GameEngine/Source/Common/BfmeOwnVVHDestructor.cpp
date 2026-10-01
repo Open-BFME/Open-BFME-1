@@ -11,14 +11,16 @@ public:
 	int m_referenceCount;
 };
 
-class BfmeElementA
+class BfmeHandleCX
 {
 public:
-	~BfmeElementA(); // retail ILT 0x00030652
+	~BfmeHandleCX();
 
 private:
 	char m_body[4];
 };
+
+typedef BfmeHandleCX BfmeElementA;
 
 class BfmeOwnVVH
 {

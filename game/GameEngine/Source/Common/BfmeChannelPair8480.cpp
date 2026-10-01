@@ -22,8 +22,8 @@ static void bfmeSetChannels8480(BfmeChannels8480 &channels)
 	channels.m_four = 4;
 }
 
-struct BfmeTable847F90;
-extern const BfmeTable847F90 *const bfmeTable847F90;
+extern "C" const void *const __identifier("??_7?$moneypunct@D$0A@@_STL@@6B@")[];
+#define bfmeTable847F90 __identifier("??_7?$moneypunct@D$0A@@_STL@@6B@")
 
 class BfmeChannelPair847F90
 {
@@ -49,8 +49,8 @@ BfmeChannelPair847F90::BfmeChannelPair847F90(void *source)
 	bfmeSetChannels8480(m_second);
 }
 
-struct BfmeTable848030;
-extern const BfmeTable848030 *const bfmeTable848030;
+extern "C" const void *const __identifier("??_7?$moneypunct@G$00@_STL@@6B@")[];
+#define bfmeTable848030 __identifier("??_7?$moneypunct@G$00@_STL@@6B@")
 
 class BfmeChannelPair848030
 {
@@ -76,8 +76,8 @@ BfmeChannelPair848030::BfmeChannelPair848030(void *source)
 	bfmeSetChannels8480(m_second);
 }
 
-struct BfmeTable8480D0;
-extern const BfmeTable8480D0 *const bfmeTable8480D0;
+extern "C" const void *const __identifier("??_7?$moneypunct@G$0A@@_STL@@6B@")[];
+#define bfmeTable8480D0 __identifier("??_7?$moneypunct@G$0A@@_STL@@6B@")
 
 class BfmeChannelPair8480D0
 {

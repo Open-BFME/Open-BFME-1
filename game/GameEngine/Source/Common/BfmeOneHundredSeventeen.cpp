@@ -2,9 +2,12 @@
 // counts, one flag, a scale and a third pointer.
 
 class BfmeTableUA;
-extern BfmeTableUA g_bfmeFirstUA;
-extern BfmeTableUA g_bfmeSecondUA;
-extern BfmeTableUA g_bfmeThirdUA;
+extern "C" BfmeTableUA __identifier("??_7DamageInfo@@6B@");
+#define g_bfmeFirstUA __identifier("??_7DamageInfo@@6B@")
+extern "C" BfmeTableUA __identifier("??_7DamageInfoInput@@6B@");
+#define g_bfmeSecondUA __identifier("??_7DamageInfoInput@@6B@")
+extern "C" BfmeTableUA __identifier("??_7DamageInfoOutput@@6B@");
+#define g_bfmeThirdUA __identifier("??_7DamageInfoOutput@@6B@")
 
 class Gen_0027AE50
 {

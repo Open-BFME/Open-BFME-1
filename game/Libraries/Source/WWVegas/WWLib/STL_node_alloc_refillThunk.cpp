@@ -9,8 +9,9 @@ extern char *bfmeChunk1150(unsigned int size, int *nobjs);
 namespace _STL
 {
 
-struct _Node_alloc_obj
+class _Node_alloc_obj
 {
+public:
     _Node_alloc_obj *_M_free_list_link;
 };
 

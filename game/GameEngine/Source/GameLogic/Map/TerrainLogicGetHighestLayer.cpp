@@ -85,8 +85,6 @@ public:
 	PathfindLayerEnum getHighestLayerForDestination(const Coord3D *point, Bool onlyHealthyBridges);
 };
 
-extern Real g_bfmeZero1075350;
-
 PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *point, Bool onlyHealthyBridges)
 {
 	PathfindLayerEnum bestLayer = LAYER_GROUND;
@@ -100,7 +98,7 @@ PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *poi
 		if (bridge->isPointOnBridge(point))
 		{
 			Real delta = point->z - bridge->getBridgeHeight(point, 0);
-			if (delta >= g_bfmeZero1075350 &&
+			if (delta >= 0.0f &&
 				fabs(delta) < fabs(bestDistance))
 			{
 				bestLayer = (PathfindLayerEnum)*(int *)((unsigned char *)bridge + 0x88);

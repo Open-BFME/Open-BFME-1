@@ -25,8 +25,6 @@ public:
 	Rva00239600Map m_tree;
 };
 
-extern Real g_bfmeScaleBC;
-
 bool Rva00239600::body()
 {
 	void *owner = *(void **)((char *)this - 0xdc);
@@ -48,7 +46,7 @@ bool Rva00239600::body()
 			Coord2D *position = (Coord2D *)((char *)payload + 0x38);
 			Real dx = ownerPosition.x - position->x;
 			Real dy = ownerPosition.y - position->y;
-			if (dx * dx + dy * dy > g_bfmeScaleBC)
+			if (dx * dx + dy * dy > 100.0f)
 				return false;
 		}
 		++entry;

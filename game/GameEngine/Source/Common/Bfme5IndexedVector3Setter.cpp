@@ -9,7 +9,8 @@ struct BfmeVector3BG
 	int z;
 };
 
-extern int g_bfmeDirtyBG;
+extern unsigned int g_Rva00EEF418;
+#define g_bfmeDirtyBG g_Rva00EEF418
 
 class Gen_0018F210
 {

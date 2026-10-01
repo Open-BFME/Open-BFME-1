@@ -46,7 +46,8 @@ public:
 	virtual BFMEDebugStream008FC660 *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEDebugClass008FC660 *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
+#define g_BFMEIndexBufferDebug reinterpret_cast<BFMEDebugClass008FC660 *>(g_Rva00F36E5C)
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_Surface_ErrorCode008FC660(unsigned result)

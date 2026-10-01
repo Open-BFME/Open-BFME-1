@@ -4,10 +4,11 @@
 // the false-thread free-list table at 0x0130B210.
 
 extern char *bfmeChunk1149(unsigned int size, int *nobjs);
-extern char *g_bfmeFreeList1149[];
 
 namespace _STL
 {
+
+class _Node_alloc_obj;
 
 template <bool __threads, int __inst>
 class __node_alloc
@@ -17,6 +18,10 @@ class __node_alloc
         _Obj *_M_free_list_link;
     };
 
+public:
+    static _Node_alloc_obj * volatile _S_free_list[16];
+
+private:
     static void *_S_refill(unsigned int n);
 
     static unsigned int _S_round_up(unsigned int bytes)
@@ -45,7 +50,7 @@ void *__node_alloc<__threads, __inst>::_S_refill(unsigned int n)
 
     if (1 == locals.nobjs)
         return locals.chunk;
-    locals.my_free_list = (_Obj * volatile *)g_bfmeFreeList1149 + ((n - 1) >> 3);
+    locals.my_free_list = (_Obj * volatile *)_S_free_list + ((n - 1) >> 3);
     locals.result = (_Obj *)locals.chunk;
     *locals.my_free_list = locals.next_obj = (_Obj *)(locals.chunk + n);
     for (locals.i = 1; ; locals.i++) {

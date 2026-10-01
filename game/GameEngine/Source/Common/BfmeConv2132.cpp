@@ -1,5 +1,3 @@
-extern float g_0107C64C;
-
 class BfmeColourABK
 {
 public:
@@ -29,7 +27,7 @@ void BfmeColourABK::bfmeSetABK(int packed)
 	if ((flags & 0x840) == 0)
 		return;
 
-	float f = (float)m_bfme2CABK * g_0107C64C;
+	float f = (float)m_bfme2CABK * 0.003921568859368563f;
 
 	int v = (int)((float)((packed >> 16) & 0xff) * f);
 

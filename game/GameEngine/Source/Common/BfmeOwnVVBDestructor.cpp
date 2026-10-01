@@ -27,14 +27,16 @@ public:
 	BfmeOwnVVBNode *m_next;
 };
 
-class BfmeElemBX
+class BFMERetailAsciiString
 {
 public:
-	~BfmeElemBX();
+	~BFMERetailAsciiString();
 
 private:
 	char m_body[4];
 };
+
+typedef BFMERetailAsciiString BfmeElemBX;
 
 class BfmeOwnVVB
 {

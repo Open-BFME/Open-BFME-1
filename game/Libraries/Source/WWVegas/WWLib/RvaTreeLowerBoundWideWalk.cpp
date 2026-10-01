@@ -5,8 +5,6 @@
 // inline a looping functor into the descent), so the walk is written
 // with the comparison expanded at the one site retail inlines it.
 
-extern const char g_bfmeEmptyUnicode[];
-
 struct BfmeWideHeader
 {
 	int ref_count;
@@ -44,7 +42,7 @@ Rva0054EF10Node *Rva0054EF10Tree::_M_lower_bound( const BfmeWideString &key ) co
 
 	BfmeWideHeader *keyData = key.m_data;
 	const unsigned short *empty =
-		reinterpret_cast<const unsigned short *>( g_bfmeEmptyUnicode );
+		reinterpret_cast<const unsigned short *>( L"" );
 	while ( node )
 	{
 		int thatLen = keyData ? keyData->length : 0;

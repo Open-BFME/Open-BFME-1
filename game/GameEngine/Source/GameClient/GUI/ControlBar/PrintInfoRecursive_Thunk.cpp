@@ -5,12 +5,10 @@
 #include <stdio.h>
 #include "GameClient/GameWindowManager.h"
 
-extern const char Rva006A16B0Empty[];
-
 static const char *RetailAsciiString(const void *stringObject)
 {
 	const char *data = *(const char * const *)stringObject;
-	return data ? data + 8 : Rva006A16B0Empty;
+	return data ? data + 8 : "";
 }
 
 void PrintInfoRecursive(GameWindow *win, FILE *fp)

@@ -113,7 +113,9 @@ public:
 	void set(Rva0036CA00Str *, Rva0036CA00Str *, Rva0036CA00Str *);
 };
 
-extern "C" Rva00386090 *g_012F0898;
+class GameLogic;
+extern GameLogic *TheBfmeGameLogic;
+#define g_012F0898 reinterpret_cast<Rva00386090 *>(TheBfmeGameLogic)
 
 class LivingWorldLogic
 {

@@ -13,9 +13,21 @@ struct BfmeC1104
 	BfmeVt1104 *m_bfmeVt;
 };
 
-extern BfmeC1104 *g_bfmeC1104;
-extern int g_bfmeA1104;
-extern int g_bfmeB1104;
+struct IDirect3DDevice8;
+
+class DX8Wrapper
+{
+	friend void __cdecl bfmeGo1104A(int);
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+	static unsigned int texture_stage_state_changes;
+};
+
+extern unsigned int number_of_DX8_calls;
+#define g_bfmeC1104 reinterpret_cast<BfmeC1104 *>(DX8Wrapper::D3DDevice)
+#define g_bfmeA1104 DX8Wrapper::texture_stage_state_changes
+#define g_bfmeB1104 number_of_DX8_calls
 
 void __cdecl bfmeGo1104A(int a)
 {
