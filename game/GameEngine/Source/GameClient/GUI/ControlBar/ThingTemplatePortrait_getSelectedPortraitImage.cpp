@@ -22,13 +22,13 @@ private:
 	AsciiStringData *m_data;
 };
 
-class MappedImageCollectionPortraitShim
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollectionPortraitShim *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 class ThingTemplatePortraitShim
 {

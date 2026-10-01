@@ -16,13 +16,13 @@ private:
 	char *m_data;
 };
 
-class MappedImageCollection
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 class UpgradeTemplate
 {
@@ -60,8 +60,6 @@ private:
 	int m_nextTemplateMaskBit;
 	bool buttonImagesCached;
 };
-
-#pragma comment(linker, "/alternatename:?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
 
 void UpgradeCenter::reset()
 {

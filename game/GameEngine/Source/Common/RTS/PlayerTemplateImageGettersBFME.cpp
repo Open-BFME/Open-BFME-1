@@ -6,13 +6,13 @@
 class AsciiString;
 class Image;
 
-class MappedImageCollection
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 class PlayerTemplate
 {
