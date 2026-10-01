@@ -42,7 +42,7 @@ public:
 class GameWindow
 {
 public:
-	int winHide( int hide );
+	int winHide( bool hide );
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h

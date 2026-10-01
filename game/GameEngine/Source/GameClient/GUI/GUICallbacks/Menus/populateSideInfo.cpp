@@ -80,7 +80,7 @@ struct ScoreGather
 class GameWindow
 {
 public:
-	int winHide( int hide );
+	int winHide( bool hide );
 	int winGetEnabledTextBorderColor( void );
 	void winSetEnabledTextColors( int color, int borderColor );
 	int winSetEnabledImage( int index, const Image *image );

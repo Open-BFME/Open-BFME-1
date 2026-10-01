@@ -20,7 +20,7 @@ public:
 	virtual void slot08(void);
 	virtual void slot0c(void);
 	int winEnable(Bool enabled);
-	void winHide(Bool hidden);
+	int winHide(Bool hidden);
 };
 
 class WindowLayout

@@ -2070,12 +2070,11 @@ class Rva0049DF00
 public:
 	void call( const Coord3D *location );
 };
+// field_0100[] holds GameWindow*. The 0x478390 body the call sites below used
+// to reach through a cast stand-in (class Rva00478390) is retail's
+// GameWindow::winHide, declared by the real GameClient/GameWindow.h included
+// above as `Int winHide( Bool hide )`; they now name it directly.
 
-class Rva00478390
-{
-public:
-	int call( Bool hide );
-};
 
 struct Rva004A5E30ControlBarView
 {
@@ -2215,7 +2214,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 		{
 			const CommandButton *button = ((const Rva0049C590 *)commandSet)->call( i );
 			if( !button )
-				((Rva00478390 *)field_0100[ i ])->call( true );
+				field_0100[ i ]->winHide( true );
 			else
 				((Rva0049BA80 *)button)->call( object, false );
 			((Rva0049EDE0 *)this)->call( field_0100[ i ], button );
@@ -2234,7 +2233,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 		if( b->getOptions() & 0x80000 )
 		{
 			if( field_0100[ i ] )
-				((Rva00478390 *)field_0100[ i ])->call( true );
+				field_0100[ i ]->winHide( true );
 			continue;
 		}
 		if( contain && b->m_unknown_153 )
@@ -2247,7 +2246,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 		{
 			if( !((Rva000DF810 *)ThePlayerList)->call( object ) )
 			{
-				((Rva00478390 *)field_0100[ i ])->call( true );
+				field_0100[ i ]->winHide( true );
 				continue;
 			}
 			Rva004A5E30PlayerView *playerView = (Rva004A5E30PlayerView *)player;
@@ -2275,7 +2274,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 			continue;
 		if( field_0100[ i ] )
 		{
-			((Rva00478390 *)field_0100[ i ])->call( false );
+			field_0100[ i ]->winHide( false );
 			field_0100[ i ]->winEnable( true );
 			if( b->m_unknown_14d )
 				field_0100[ i ]->winSetStatus( 0x4000000U );
@@ -2290,7 +2289,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 				if( !player->hasScience( (ScienceType)power->getRequiredScience() ) )
 				{
 					if( field_0100[ i ] )
-						((Rva00478390 *)field_0100[ i ])->call( true );
+						field_0100[ i ]->winHide( true );
 				}
 				else
 				{

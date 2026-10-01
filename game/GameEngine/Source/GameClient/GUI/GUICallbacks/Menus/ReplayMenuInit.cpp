@@ -51,7 +51,7 @@ public:
 class GameWindow
 {
 public:
-	void winHide( Bool hide );
+	int winHide( Bool hide );
 
 	char m_pad[ 0x1F4 ];
 	void *m_fieldAt1F4;

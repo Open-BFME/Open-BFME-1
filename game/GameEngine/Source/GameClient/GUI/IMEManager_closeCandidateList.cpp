@@ -8,7 +8,7 @@ void __cdecl operator delete []( void *memory );
 class GameWindow
 {
 public:
-	void close( bool closeWindow );
+	int winHide( bool hide );
 };
 
 class GameWindowManager
@@ -64,7 +64,7 @@ void IMEManager::closeCandidateList( int candidateFlags )
 {
 	if ( m_candidateWindow != 0 )
 	{
-		m_candidateWindow->close( true );
+		m_candidateWindow->winHide( true );
 		TheWindowManager->winUnsetModal( m_candidateWindow );
 	}
 

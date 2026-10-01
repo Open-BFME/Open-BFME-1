@@ -17,7 +17,7 @@ public:
 class GameWindow
 {
 public:
-	void winHide(bool hide);
+	int winHide(bool hide);
 	int winBringToTop(void);
 	int winGetScreenPosition(int *x, int *y);
 	int winGetSize(int *w, int *h);
