@@ -7,11 +7,11 @@
 // resolves each name through TheThingFactory and hands every found template,
 // with the Player, to the helper on the Player subobject at +0x684.
 //
-// ThingFactory::findTemplate is the inline forwarder the Zero Hour header
-// declares (ThingFactory.h: `return findTemplateInternal(name, check)`); BFME's
-// out-of-line lookup at 0x00137E80 takes the name only (RET 4). Calling the
-// lookup directly allocates the element address in ECX/EDX; the inline
-// forwarder is what yields retail's LEA EAX.
+// The inline forwarder the Zero Hour header declares (ThingFactory.h:
+// `return findTemplateInternal(name, check)`) is what yields retail's LEA EAX;
+// BFME's out-of-line lookup is BfmeThingFactory::findTemplate at 0x00137E80 and
+// takes the name only (RET 4). Calling the lookup directly allocates the
+// element address in ECX/EDX instead.
 
 #include "ascii_string.h"
 #include <vector>
@@ -26,9 +26,16 @@ class ThingTemplate;
 
 class ThingFactory
 {
+};
+
+// Retail's factory lookup is BfmeThingFactory::findTemplate (0x00137E80). The
+// TU-local inline forwarder keeps retail's LEA EAX shape and is always inlined,
+// so it needs no name of its own beyond the call it forwards to.
+class BfmeThingFactory
+{
 public:
-	const ThingTemplate *findTemplate(const AsciiString &name) { return findTemplateInternal(name); }
-	ThingTemplate *findTemplateInternal(const AsciiString &name);
+	const ThingTemplate *findTemplateForwarder(const AsciiString &name) { return findTemplate(name); }
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 extern ThingFactory *TheThingFactory;
@@ -61,7 +68,7 @@ void Rva000D9680Player::rva000D9680()
 		int count = names.size();
 		for (int index = 0; index < count; ++index)
 		{
-			const ThingTemplate *resolved = TheThingFactory->findTemplate(names[index]);
+			const ThingTemplate *resolved = ((BfmeThingFactory *)TheThingFactory)->findTemplateForwarder(names[index]);
 			if (resolved)
 				field684.rva000FB3F0(resolved, this);
 		}

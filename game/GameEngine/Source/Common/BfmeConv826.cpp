@@ -1,21 +1,34 @@
 
 class BfmeMgrF1D
 {
-public:
-	void* registerObj(void *field);
 };
 extern BfmeMgrF1D *g_mgr12EF1D8;
+
+class ThingTemplate;
+class AsciiString;
+
+// Both bodies below reach retail 0x00028560, the ILT thunk onto the matched
+// BfmeThingFactory::findTemplate body at 0x00137E80 -- the same address every
+// other caller in this build spells ?findTemplate@BfmeThingFactory. The old
+// `registerObj(void*)` spelling was a guess that no object ever defined.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
 
 class BfmeSub4_78F
 {
 public:
 	void* reg25C()
 	{
-		return g_mgr12EF1D8->registerObj((char*)this + 0x25c);
+		return (void*)((BfmeThingFactory*)g_mgr12EF1D8)->findTemplate(
+			*(const AsciiString *)((char*)this + 0x25c));
 	}
 	void* reg260()
 	{
-		return g_mgr12EF1D8->registerObj((char*)this + 0x260);
+		return (void*)((BfmeThingFactory*)g_mgr12EF1D8)->findTemplate(
+			*(const AsciiString *)((char*)this + 0x260));
 	}
 };
 

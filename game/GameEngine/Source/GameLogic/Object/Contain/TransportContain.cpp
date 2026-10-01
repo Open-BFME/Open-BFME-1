@@ -19,7 +19,8 @@ class ThingFactory
 {
 };
 
-class BFMEThingFactory
+// Retail's factory lookup is BfmeThingFactory::findTemplate (0x00137E80).
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
@@ -118,7 +119,7 @@ void TransportContain::createPayload()
 				return;
 
 			const ThingTemplate *payloadTemplate =
-				((BFMEThingFactory *)TheThingFactory)->findTemplate(*payloadName);
+				((BfmeThingFactory *)TheThingFactory)->findTemplate(*payloadName);
 			if (payloadTemplate == 0)
 				return;
 

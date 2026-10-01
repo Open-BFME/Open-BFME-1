@@ -54,8 +54,14 @@ public:
 
 class ThingFactory
 {
+};
+
+// Retail's factory lookup is BfmeThingFactory::findTemplate (0x00137E80); it
+// returns a const ThingTemplate and takes the name by const reference.
+class BfmeThingFactory
+{
 public:
-	ThingTemplate *findTemplate(const AsciiString &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 extern ThingFactory *TheThingFactory;
@@ -74,7 +80,7 @@ Bool RiderChangeContain::isValidContainerFor(const Object *rider, Bool checkCapa
 		return prep;
 	else
 	{
-		ThingTemplate *found;
+		const ThingTemplate *found;
 		if (prep && *(void **)((char *)this + 0xE8) == 0)
 		{
 			char *owner = *(char **)((char *)this - 0x1C);
@@ -84,7 +90,7 @@ Bool RiderChangeContain::isValidContainerFor(const Object *rider, Bool checkCapa
 			{
 				if (slot->m_data != 0 && slot->m_data->m_length != 0)
 				{
-					found = TheThingFactory->findTemplate(*slot);
+					found = ((BfmeThingFactory *)TheThingFactory)->findTemplate(*slot);
 					if (found != 0)
 					{
 						void *arg = *(void **)((char *)rider + 4);

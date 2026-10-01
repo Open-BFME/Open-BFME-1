@@ -18,8 +18,14 @@ private:
 
 class ThingFactory
 {
+};
+
+// Retail's factory lookup is BfmeThingFactory::findTemplate (0x00137E80); it
+// returns a const ThingTemplate and takes the name by const reference.
+class BfmeThingFactory
+{
 public:
-	ThingTemplate *findTemplate(const AsciiString &);
+	const ThingTemplate *findTemplate(const AsciiString &);
 };
 
 extern ThingFactory *TheThingFactory;
@@ -30,13 +36,13 @@ void handleNameChange(MapObject *mapObj)
 	if (!mapObj->getName().compare("AmericaTankLeopard"))
 	{
 		mapObj->setName("AmericaTankCrusader");
-		const ThingTemplate *thingTemplate = TheThingFactory->findTemplate(mapObj->getName());
+		const ThingTemplate *thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(mapObj->getName());
 		mapObj->setThingTemplate(thingTemplate);
 	}
 	if (!mapObj->getName().compare("AmericaVehicleHumVee"))
 	{
 		mapObj->setName("AmericaVehicleHumvee");
-		const ThingTemplate *thingTemplate = TheThingFactory->findTemplate(mapObj->getName());
+		const ThingTemplate *thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(mapObj->getName());
 		mapObj->setThingTemplate(thingTemplate);
 	}
 }
