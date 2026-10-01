@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c- /Igame/GameEngine/Source/Common/System
+// cl: /DNDEBUG /MD /EHs-c- /Igame /Igame/GameEngine/Source/Common/System
 //
 // Source model for StringBase<wchar_t>::trim(), retail RVA
 // 0x00888ED0, complete body 147 bytes with the final ret at +0x92
@@ -21,32 +21,7 @@ extern "C" {
 
 typedef unsigned short WideChar;
 
-template <typename T>
-class StringBase
-{
-private:
-    struct Header
-    {
-        int ref_count;
-        unsigned short length;
-        unsigned short capacity;
-        unsigned short data[1];
-    };
-
-    Header *m_data;
-
-public:
-    void trim();
-    T *peek() const { return &m_data->data[0]; }
-    T getCharAt(int index) const { return m_data ? m_data->data[index] : 0; }
-private:
-    void ensureUniqueBufferOfSize(int newLen, bool keepData,
-                                  const T *src1, int src1Len,
-                                  const T *src2, int src2Len);
-    void releaseBuffer();
-public:
-    void removeLastChar();
-};
+#include "Libraries/Source/WWVegas/WWLib/string_base.h"
 
 template <>
 void StringBase<WideChar>::trim()

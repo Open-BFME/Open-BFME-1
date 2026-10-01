@@ -15976,7 +15976,6 @@ _ghiThrottleBufferSize,0x012D4CD0
 _ghiThrottleTimeDelay,0x012D4CD4
 _gsiSocketInterface,0x0130E628
 _inflate_mask,0x012C6F70
-_iswspace,0x01359438
 _jpeg_std_message_table,0x0114F490
 _locale_buffer_0084ECA0,0x0130C4E8
 _locale_buffer_0084ECE0,0x0130C0D8

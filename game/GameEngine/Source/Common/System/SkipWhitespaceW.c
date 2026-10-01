@@ -1,14 +1,15 @@
 /* cl: /DNDEBUG /MD */
 
-/* Retail 0x008872B0 -- wchar skipWhitespace, sibling of
- * ?skipWhitespace@@YAPADPAD@Z at 0x00887260.
- *
- * File-static so MSVC uses its private EAX-incoming convention. A global
- * function pointer (not a dllimport prototype) is what keeps the call as
- * `call dword ptr [iswspace]` -- the C++ / dllimport form hoists the IAT
- * into EDI and misses retail's aligned-loop shape. */
+/* Retail 0x008872B0: private EAX-incoming scan, returning its pointer in EAX.
+ * The external pointer below views the native import-library-owned IAT cell;
+ * it allocates no local function-pointer object. Its loads match retail's
+ * FF15 through MSVCR71!iswspace at IAT VA0x01359438. */
 
-int (__cdecl *iswspace)(unsigned short);
+/* Canonical imported IAT cell, declared as an external pointer view only.
+ * C external _imp__iswspace emits canonical COFF __imp__iswspace.
+ * wint_t is unsigned short in the native MSVCR71 ABI. */
+extern int (__cdecl *_imp__iswspace)(unsigned short);
+#define iswspace _imp__iswspace
 
 static unsigned short *skipWhitespace(unsigned short *p)
 {
