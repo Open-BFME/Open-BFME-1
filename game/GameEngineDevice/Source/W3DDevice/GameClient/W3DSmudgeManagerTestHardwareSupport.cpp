@@ -246,19 +246,21 @@ struct RenderStateStruct
 	VertexMaterialClass *material;
 };
 
-class BFMETextureRelease
+// This TU already mirrors TextureBaseClass by name; the release declaration
+// below is the same member signature the shared header declares
+// (game/Libraries/Source/WWVegas/WW3D2/texture.h:78), so the call spells
+// ?Release_Ref@TextureBaseClass@@QAEXXZ (retail 0x9EB7A0). texture.h itself
+// cannot be included here: it pulls refcount.h/wwstring.h, which redefine the
+// W3DMPO/RefCountClass/StringClass mirrors this probe depends on.
+class TextureBaseClass
 {
 public:
 	void Release_Ref(void);
 };
 
-class TextureBaseClass
-{
-};
-
 class StageTextureRef
 {
-	BFMETextureRelease *Texture;
+	TextureBaseClass *Texture;
 
 public:
 	StageTextureRef(void) : Texture(NULL) {}

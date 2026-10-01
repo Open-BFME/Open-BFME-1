@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // stlport
 // Retail 0x00901B00, 1146 bytes. Address-qualified identity: name normalization,
 // cached modified-prototype creation, and final instance naming are witnessed
@@ -11,6 +11,7 @@
 // Container shims below retain the already-landed constructor's ABI spelling;
 // all three local containers are native STLport vector<string> values.
 #include <string.h>
+#include "texture.h"
 #include <string>
 #include <vector>
 
@@ -19,10 +20,6 @@
 // at 0x00754B20; retain the address-owned ILT rather than minting a body name.
 
 class BfmeThingVGK { public: void bfmeGoVGK(const char *); };
-class Rva009EB7A0RefOwner {
-public:
- void Release_Ref();
-};
 class Prototype00901B00 {
 public:
  virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c();
@@ -34,13 +31,13 @@ public:
 class Rva009EBCE0AssetReference {
 public:
  Prototype00901B00 *m_object;
- ~Rva009EBCE0AssetReference() { if (m_object) ((Rva009EB7A0RefOwner *)m_object)->Release_Ref(); }
+ ~Rva009EBCE0AssetReference() { if (m_object) ((TextureBaseClass *)m_object)->Release_Ref(); }
 };
 extern Rva009EBCE0AssetReference Rva009EBCE0_GetPrototype(const char *);
 class Gen008FF1B0 {
 public:
  Gen008FF1B0(void *);
- ~Gen008FF1B0() { if (m_object) ((Rva009EB7A0RefOwner *)m_object)->Release_Ref(); }
+ ~Gen008FF1B0() { if (m_object) ((TextureBaseClass *)m_object)->Release_Ref(); }
  void assign(const Rva009EBCE0AssetReference &r) { bfmeInit((void *)&r); }
  Prototype00901B00 *m_object;
 private:

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // readable body of ?reset@WaterRenderObjClass@@QAEXXZ: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // readable body of ?xfer@WaterRenderObjClass@@MAEXPAVXfer@@@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // readable body of ?replaceSkyboxTexture@WaterRenderObjClass@@QAEXABVAsciiString@@0@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
@@ -110,16 +110,12 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
 
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref(void);
-};
+#include "texture.h"
 
 class BFMEWaterTrackTextureHandle
 {
 public:
-	BFMEWaterTrackTexture *m_texture;
+	TextureBaseClass *m_texture;
 
 	~BFMEWaterTrackTextureHandle(void)
 	{

@@ -14,15 +14,9 @@
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
 void BoxSetTexture(unsigned, TextureBaseClass *&);
-class BFMETextureRelease
-{
-public:
-	void Release_Ref(void);
-};
-
 class BfmeHandleCX
 {
-	BFMETextureRelease *m_texture;
+	TextureBaseClass *m_texture;
 
 public:
 	~BfmeHandleCX(void)

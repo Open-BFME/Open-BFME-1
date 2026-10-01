@@ -1,14 +1,14 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/Compression /Iinputs/reference/shims/sweep
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "texture.h"
 // Retail 009004A0: cdecl six-argument factory; legacy thiscall identity disproven.
 // Proof: targets/game/reverse/identity_evidence/009004A0-cdecl-render-object-factory.md
 // These local interface views preserve the already-landed helper decorations.
 // The unknown factory/object identity stays address-qualified. No shared layout
 // is changed. The prototype allocation and three-pointer containers are directly
 // witnessed by this body and Rva00900FF0Constructor.cpp.
-class Rva009EB7A0RefOwner { public: void Release_Ref(); };
 class BfmeThingVGK { public: void bfmeGoVGK(const char*); };
 class Rva009004A0Object {
 public:
@@ -17,7 +17,7 @@ public:
  virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c();
  virtual void s30(); virtual void s34(); virtual void s38();
  virtual Rva009004A0Object *create();
- void release() { ((Rva009EB7A0RefOwner*)this)->Release_Ref(); }
+ void release() { ((TextureBaseClass*)this)->Release_Ref(); }
  void setName(const char *s) { ((BfmeThingVGK*)this)->bfmeGoVGK(s); }
 };
 class Rva009EBCE0AssetReference {

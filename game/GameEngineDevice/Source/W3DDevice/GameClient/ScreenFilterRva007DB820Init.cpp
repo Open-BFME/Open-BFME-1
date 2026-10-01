@@ -1,7 +1,7 @@
 // Rva007DB820::init at retail RVA 0x007DB1F0 (1035 bytes).
 // Lane 05 scratch reconstruction; the integer alias in the first sample
 // normalization loop preserves retail's [ebx+ecx+8] SIB ordering.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 
 struct Surface;
 struct Texture;
@@ -36,15 +36,7 @@ extern unsigned HighlightPixelSupport;
 int bfmeCheck986B();
 void bfmeCopyCuSnap(void *, void *);
 
-class TextureClass {
-public:
-	void Release_Ref();
-};
-
-class BFMEWaterTrackTexture {
-public:
-	void Release_Ref();
-};
+#include "texture.h"
 
 class BFMEWaterTrackTextureHandle {
 public:
@@ -53,7 +45,7 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 	}
 };
 
@@ -68,7 +60,7 @@ public:
 		if (t.m_texture)
 			++*(unsigned short *)((char *)t.m_texture + 4);
 		if (p)
-			((BFMEWaterTrackTexture *)p)->Release_Ref();
+			p->Release_Ref();
 		p = t.m_texture;
 	}
 };

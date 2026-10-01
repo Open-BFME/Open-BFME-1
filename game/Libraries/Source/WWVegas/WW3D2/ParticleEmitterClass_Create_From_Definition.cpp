@@ -27,12 +27,6 @@
 #include "texture.h"
 
 
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref(void);
-};
-
 class BFMEWaterTrackTextureHandle
 {
 public:
@@ -46,14 +40,14 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 	BFMEWaterTrackTextureHandle &operator=(const BFMEWaterTrackTextureHandle &other)
 	{
 		if (other.m_texture)
 			++*(unsigned short *)((char *)other.m_texture + 4);
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 		m_texture = other.m_texture;
 		return *this;
 	}
