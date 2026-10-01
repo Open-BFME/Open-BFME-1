@@ -35,7 +35,11 @@ public:
 	virtual unsigned int bfmeSlot26ETE();
 };
 
-extern BfmeClientETE *g_bfmeClientETE;
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's slot-26 view is applied at the uses.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BfmeEngineETE
 {
@@ -73,16 +77,16 @@ public:
 
 BfmeMatETE *BfmeHostETE::bfmeGetETE()
 {
-	if (m_bfme304ETE <= g_bfmeClientETE->bfmeSlot26ETE())
+	if (m_bfme304ETE <= ((BfmeClientETE *)TheGameClient)->bfmeSlot26ETE())
 		return &m_bfme198ETE;
 
-	if (m_bfme1fcETE != g_bfmeClientETE->bfmeSlot26ETE())
+	if (m_bfme1fcETE != ((BfmeClientETE *)TheGameClient)->bfmeSlot26ETE())
 	{
 		Matrix3D::Lerp(*reinterpret_cast<const Matrix3D *>(&m_bfme168ETE),
 			*reinterpret_cast<const Matrix3D *>(&m_bfme198ETE), g_bfmeEngineETE->m_bfme38ETE,
 			*reinterpret_cast<Matrix3D *>(&m_bfme1c8ETE));
 
-		m_bfme1fcETE = g_bfmeClientETE->bfmeSlot26ETE();
+		m_bfme1fcETE = ((BfmeClientETE *)TheGameClient)->bfmeSlot26ETE();
 	}
 
 	return &m_bfme1c8ETE;

@@ -74,9 +74,13 @@ public:
 	virtual BfmeLinkRV *first();
 };
 
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's list view is applied at the use.
+class GameClient;
 extern PartitionManager *TheShroudManager;
 extern ControlBar *TheControlBar;
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+extern GameClient *TheGameClient;
 
 void __cdecl bfmeFinishRV(int);
 
@@ -88,7 +92,7 @@ void __stdcall destroyNotify(void *obj)
 		TheShroudManager->notify();
 	TheControlBar->dropA(obj);
 	TheControlBar->dropB(obj);
-	BfmeLinkRV *n = TheGameClientClientUpdate->first();
+	BfmeLinkRV *n = ((ClientFrameSubsystem *)TheGameClient)->first();
 	while (n)
 	{
 		n->release();

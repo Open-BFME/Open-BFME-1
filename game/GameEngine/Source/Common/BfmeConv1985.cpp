@@ -6,7 +6,11 @@ public:
 	char m_bfmeFlagBETH;
 };
 
-extern ClientRoot4120 *TheGameClient;
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's flag view is applied at the uses.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BfmeSubETH
 {
@@ -41,10 +45,10 @@ public:
 
 void BfmeViewETH::bfmeSetAngleETH(float angle)
 {
-	if (TheGameClient->m_bfmeFlagAETH && m_bfmeGateETH)
+	if (((ClientRoot4120 *)TheGameClient)->m_bfmeFlagAETH && m_bfmeGateETH)
 		return;
 
-	if (TheGameClient->m_bfmeFlagBETH && m_bfmeGateETH)
+	if (((ClientRoot4120 *)TheGameClient)->m_bfmeFlagBETH && m_bfmeGateETH)
 		return;
 
 	bfmeNormAngleETH(angle);

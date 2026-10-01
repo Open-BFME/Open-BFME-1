@@ -30,7 +30,11 @@ public:
 	virtual ClientNode4120 *getHead();		///< slot 12 / +0x30
 };
 
-extern ClientRoot4120 *TheGameClient;		///< 0x012F1464
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's head-list view is applied at the use.
+class GameClient;
+extern GameClient *TheGameClient;		// 0x012F1464
 extern int g_bfmeCounter4120;				///< 0x012F12F0
 
 // ?bfmeBumpClientGuard@@YAXXZ
@@ -38,7 +42,7 @@ void bfmeBumpClientGuard()
 {
 	if (!g_bfmeCounter4120)
 	{
-		ClientRoot4120 *client = TheGameClient;
+		ClientRoot4120 *client = (ClientRoot4120 *)TheGameClient;
 		if (client)
 		{
 			ClientNode4120 *n = client->getHead();

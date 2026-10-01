@@ -37,7 +37,11 @@ public:
 	virtual int bfmeNowYB();
 };
 
-extern BfmeClientYB *TheBfmeClientYB;
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's now() view is applied at the use.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BfmeOwnerYB
 {
@@ -62,7 +66,7 @@ void BfmeOwnerYB::bfmeSetYB(int a1, int a2, int a3, void *a4)
 	m_bfmeFirstYB.m_bfmeCYB = a3;
 	m_bfmeFirstYB.m_bfmeBYB = a2;
 
-	m_bfmeTimeYB = TheBfmeClientYB->bfmeNowYB();
+	m_bfmeTimeYB = ((BfmeClientYB *)TheGameClient)->bfmeNowYB();
 	m_bfmeFlagYB = 1;
 	m_bfmeExtraYB = a4;
 }

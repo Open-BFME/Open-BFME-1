@@ -92,10 +92,14 @@ public:
 	unsigned char m_bfmeFlag;				// +0xBC
 };
 
-extern BfmeHolderBP *g_bfmeHolderBP;				// retail 0x012F1464
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's flag view is applied at the use.
+class GameClient;
+extern GameClient *TheGameClient;
 
 // ?bfmeSetFlag@@YGXE@Z
 void __stdcall bfmeSetFlag(unsigned char value)
 {
-	g_bfmeHolderBP->m_bfmeFlag = value;
+	((BfmeHolderBP *)TheGameClient)->m_bfmeFlag = value;
 }

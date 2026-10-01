@@ -14,7 +14,11 @@ public:
 	virtual unsigned int getFrame();	///< slot 26 / +0x68
 };
 
-extern ClientRoot4120 *TheGameClient;	///< 0x012F1464
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and the TU-local view is applied at each use.
+class GameClient;
+extern GameClient *TheGameClient;	///< 0x012F1464
 extern float g_bfmeElapsedScale;		///< 0x0111BB98 (ms per frame)
 extern float g_bfmeZeroDT;				///< 0x01075350, readonly zero float
 
@@ -36,17 +40,17 @@ float Rva006957E0Owner::getElapsedMs()
 	if (m_guard1 || m_guard2)
 	{
 		if (TheGameClient)
-			m_lastFrame = TheGameClient->getFrame();
+			m_lastFrame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 		return g_bfmeElapsedScale;
 	}
 
 	if (!TheGameClient)
 		return g_bfmeElapsedScale;
 
-	unsigned int frame = TheGameClient->getFrame();
+	unsigned int frame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 	float delta = ((float)frame - (float)m_lastFrame) * g_bfmeElapsedScale;
 	delta = (delta < g_bfmeZeroDT) ? 0.0f : delta;
 
-	m_lastFrame = TheGameClient->getFrame();
+	m_lastFrame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 	return delta;
 }

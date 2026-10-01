@@ -32,7 +32,11 @@ public:
 	virtual int bfmeStamp962();
 };
 
-extern BfmeSrc962 *g_bfmeSrc962;
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's stamp view is applied at the use.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BfmeInit962
 {
@@ -55,5 +59,5 @@ void BfmeInit962::bfmeInit962(int a)
 	m_bfmeMode = 2;
 	m_bfmeArg = a;
 	m_bfmeZero = 0;
-	m_bfmeStamp = g_bfmeSrc962->bfmeStamp962();
+	m_bfmeStamp = ((BfmeSrc962 *)TheGameClient)->bfmeStamp962();
 }

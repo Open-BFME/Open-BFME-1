@@ -19,7 +19,11 @@ public:
 	virtual unsigned int getFrame();
 };
 
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
+// The 0x012F1464 global is EA's `GameClient *TheGameClient`, defined once in
+// GameClient.cpp; only the pointee type may differ per TU, so it is forward
+// declared here and this TU's view of getFrame is applied at the use.
+class GameClient;
+extern GameClient *TheGameClient;
 
 class Shadow
 {
@@ -39,7 +43,7 @@ public:
 
 void Shadow::rva00459960( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 )
 {
-	int currentFrame = TheGameClientClientUpdate->getFrame();
+	int currentFrame = ((ClientFrameSubsystem *)TheGameClient)->getFrame();
 	m_opacityStartFrame = currentFrame + offset38;
 	if( offset3C == -1 )
 		m_value3C = offset3C;
