@@ -86,7 +86,7 @@ class Rva00550500Target { public: void startPings(); };
 class WindowManager { public:
  void *_bfme_callAptFunction(unsigned int,const char*,int,const char*,const char*,const char*,const char*,const char*);
 };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 class GameWindow;
 GameWindow *MessageBoxOkCancel(UnicodeString,UnicodeString,void (*)(),void (*)());
 void d_00551db0();
@@ -125,8 +125,8 @@ void BfmeAptScreenOnlineLogin::rva00552C40(bool argument) {
   req.arg.login.field2B7=false;
   TheGameSpyBuddyMessageQueue->addRequest(req);
   ((Rva00548D30WindowGroup*)this)->winEnable(false);
-  { unsigned int level=field34->field250; g_theWindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonLogin",0,0,0,0); }
-  { unsigned int level=field34->field250; g_theWindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonDeleteNickname",0,0,0,0); }
+  { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonLogin",0,0,0,0); }
+  { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonDeleteNickname",0,0,0,0); }
   ((Rva00550500Target*)this)->startPings();
  } else {
   const char *message;

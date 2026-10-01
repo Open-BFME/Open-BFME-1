@@ -91,7 +91,7 @@ public:
 extern GameTextInterface *TheGameText;
 
 class WindowManager { public: void bfme_setAptText(const AsciiString &name, const UnicodeString &text); };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 // Erased eight-byte multiple-inheritance member pointer. The constructor
 // only binds these code addresses; their argument-bearing callbacks are
 // invoked by the existing wrappers, never through this erased carrier.
@@ -352,7 +352,7 @@ BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
   ((void(__fastcall *)(BfmeAptScreenLanLobby *))j_0001d9cb)(this);
   {
    AsciiString name("APT:OnlineOrNetwork");
-   g_theWindowManager->bfme_setAptText(name,TheGameText->fetch("APT:Network"));
+   g_rva012F19E8WindowManager->bfme_setAptText(name,TheGameText->fetch("APT:Network"));
   }
  }
 }

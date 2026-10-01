@@ -3,7 +3,7 @@
 // Retail 0x00464080, 1502 B, SEH frame.  Called from WindowManager::init
 // (WindowManagerInit.cpp) through ILT 0x00039F1D, straight after its sibling
 // registerAptCallbacks0046FD40.  Registers the built-in gadget callbacks on
-// g_theWindowManager (0x012F19E8): the ten gadget class names (retail string
+// g_rva012F19E8WindowManager (0x012F19E8): the ten gadget class names (retail string
 // literals 0x010F7038-0x010F70AC), nine of which share one handler, then
 // DisableComponents, EnableComponents and BinkMovieInit.  It then seeds two
 // .wnd paths in the map at 0x012F19CC and creates the load screen.
@@ -168,7 +168,7 @@ struct AptScreenContext00464080
 
 void * __stdcall createAptScreenLoadScreen( void *context );
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern Rva00461630Map g_rva012F19CCMap;
 extern void *g_rva012F198CLoadScreen;
 
@@ -182,51 +182,51 @@ void registerAptCallbacks00464080()
 {
 	{
 		AsciiString name( "GameWindow" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "HorzSlider" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "ComboBox" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "ImageComboBox" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "CheckBox" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "TextEntry" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "ListBox" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "PushButton" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "BinkMovie" );
-		g_theWindowManager->registerAptCallback( name, j_0000ed59 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_0000ed59 );
 	}
 	{
 		AsciiString name( "View3D" );
-		g_theWindowManager->registerAptCallback( name, j_00031980 );
+		g_rva012F19E8WindowManager->registerAptCallback( name, j_00031980 );
 	}
 	{
 		AsciiString name( "DisableComponents" );
-		g_theWindowManager->bindShown( name, j_00049c47 );
+		g_rva012F19E8WindowManager->bindShown( name, j_00049c47 );
 	}
 	{
 		AsciiString name( "EnableComponents" );
-		g_theWindowManager->bindShown( name, j_0003dca3 );
+		g_rva012F19E8WindowManager->bindShown( name, j_0003dca3 );
 	}
 	{
 		AsciiString name( "BinkMovieInit" );

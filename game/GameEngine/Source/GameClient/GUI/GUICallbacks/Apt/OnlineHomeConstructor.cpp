@@ -223,7 +223,7 @@ public:
 };
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern const char *g_onlineHomeGadgetsImage;
 extern const char *g_onlineHomeGadgetsImageLevelIconMain;
 extern const char *g_d_012b7920;
@@ -260,37 +260,37 @@ BfmeAptScreenOnlineHome::BfmeAptScreenOnlineHome( int context )
 		{
 			AsciiString keyString( "ScrollShroud" );
 			AsciiString imageString( g_onlineHomeGadgetsImage );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 		{
 			AsciiString keyString( "ScrollShroud" );
 			AsciiString imageString( g_onlineHomeGadgetsImageLevelIconMain );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 		{
 			AsciiString keyString( "AptIconGondor" );
 			AsciiString imageString( g_d_012b7920 );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 		{
 			AsciiString keyString( "AptIconIsengard" );
 			AsciiString imageString( g_d_012b7924 );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 		{
 			AsciiString keyString( "AptIconRohan" );
 			AsciiString imageString( g_d_012b7928 );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 		{
 			AsciiString keyString( "AptIconMordor" );
 			AsciiString imageString( g_d_012b792c );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A(
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A(
 				(int)&imageString, (int)&keyString );
 		}
 
@@ -320,7 +320,7 @@ BfmeAptScreenOnlineHome::BfmeAptScreenOnlineHome( int context )
 			FunctorMethod callback = rawFunctorMethod( (unsigned int)j_000316e2 );
 			AsciiString name( "OnlineShell/OnlineHome/tooltipPlayerLevelIcon" );
 			FunctorBinding binding( callback, (FunctorTarget *)this );
-			g_theWindowManager->bfmeBindRva004650F0( name,
+			g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 				Rva0050F8B0FunctorHolder( binding ) );
 		}
 		{
@@ -336,13 +336,13 @@ BfmeAptScreenOnlineHome::BfmeAptScreenOnlineHome( int context )
 		{
 			AsciiString gamesName( "APT:GamesInProgressNum" );
 			AsciiString gamesCopy( games );
-			g_theWindowManager->bfme_setAptText( gamesName, gamesCopy );
+			g_rva012F19E8WindowManager->bfme_setAptText( gamesName, gamesCopy );
 		}
 		games.format( AsciiString( "%d" ), 1 );
 		{
 			AsciiString playersName( "APT:PlayersOnlineNum" );
 			AsciiString playersCopy( games );
-			g_theWindowManager->bfme_setAptText( playersName, playersCopy );
+			g_rva012F19E8WindowManager->bfme_setAptText( playersName, playersCopy );
 		}
 
 	PeerRequest request;

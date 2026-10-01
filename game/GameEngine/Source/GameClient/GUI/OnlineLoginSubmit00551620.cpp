@@ -81,7 +81,7 @@ class Rva00550500Target { public: void startPings(); };
 class WindowManager { public:
  void *_bfme_callAptFunction(unsigned int,const char*,int,const char*,const char*,const char*,const char*,const char*);
 };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 struct LoginContext00551620 { char field000[0x250]; unsigned int field250; };
 class BfmeAptScreenOnlineLogin { public:
  void submitLogin00551620();
@@ -95,9 +95,9 @@ void BfmeAptScreenOnlineLogin::submitLogin00551620() {
  email.translate(bfmeGetTextAt74());
  login.translate(bfmeGetTextAt78());
  password.translate(bfmeGetTextAt7C());
- { unsigned int level=field34->field250; g_theWindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonDeleteNickname",0,0,0,0); }
- { unsigned int level=field34->field250; g_theWindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonLogin",0,0,0,0); }
- { unsigned int level=field34->field250; g_theWindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonServiceTerms",0,0,0,0); }
+ { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonDeleteNickname",0,0,0,0); }
+ { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonLogin",0,0,0,0); }
+ { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonServiceTerms",0,0,0,0); }
  if(!email.isEmpty() && !login.isEmpty() && !password.isEmpty()) {
   fieldA8=login;
   field98=timeGetTime();

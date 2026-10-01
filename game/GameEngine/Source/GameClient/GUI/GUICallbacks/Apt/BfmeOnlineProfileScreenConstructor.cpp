@@ -181,7 +181,7 @@ public:
 	void bfmeGo1024A( int image, int key );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeOnlineProfileScreen;
 extern BfmeOnlineProfileScreen *TheBfmeOnlineProfileSlot;
@@ -238,66 +238,66 @@ BfmeOnlineProfileScreen::BfmeOnlineProfileScreen( void *context )
 		{
 			AsciiString key( "AptGondorImage" );
 			AsciiString image( g_bfmeOnlineProfileImageA );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "AptRohanImage" );
 			AsciiString image( g_bfmeOnlineProfileImageB );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "AptIsengardImage" );
 			AsciiString image( g_bfmeOnlineProfileImageC );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "AptMordorImage" );
 			AsciiString image( g_bfmeOnlineProfileImageD );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "ScrollShroud" );
 			AsciiString image( g_bfmeOnlineProfileImageLevelIconA );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "ScrollShroud" );
 			AsciiString image( g_bfmeOnlineProfileImageLevelIconB );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "ScrollShroud" );
 			AsciiString image( g_bfmeOnlineProfileImageLevelIconC );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 		{
 			AsciiString key( "ScrollShroud" );
 			AsciiString image( g_bfmeOnlineProfileImageLevelIconD );
-			( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+			( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 		}
 
 		{
 			FunctorMethod callback = (FunctorMethod)&BfmeOnlineProfileScreen::_bfme_tooltipCallback;
 			AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconGondor" );
-			( (WindowManager *)g_theWindowManager )->bfmeBindRva004650F0( name,
+			( (WindowManager *)g_rva012F19E8WindowManager )->bfmeBindRva004650F0( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
 		}
 		{
 			FunctorMethod callback = (FunctorMethod)&BfmeOnlineProfileScreen::_bfme_tooltipCallback;
 			AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconRohan" );
-			( (WindowManager *)g_theWindowManager )->bfmeBindRva004650F0( name,
+			( (WindowManager *)g_rva012F19E8WindowManager )->bfmeBindRva004650F0( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
 		}
 		{
 			FunctorMethod callback = (FunctorMethod)&BfmeOnlineProfileScreen::_bfme_tooltipCallback;
 			AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconIsengard" );
-			( (WindowManager *)g_theWindowManager )->bfmeBindRva004650F0( name,
+			( (WindowManager *)g_rva012F19E8WindowManager )->bfmeBindRva004650F0( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
 		}
 		{
 			FunctorMethod callback = (FunctorMethod)&BfmeOnlineProfileScreen::_bfme_tooltipCallback;
 			AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconMordor" );
-			( (WindowManager *)g_theWindowManager )->bfmeBindRva004650F0( name,
+			( (WindowManager *)g_rva012F19E8WindowManager )->bfmeBindRva004650F0( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
 		}
 

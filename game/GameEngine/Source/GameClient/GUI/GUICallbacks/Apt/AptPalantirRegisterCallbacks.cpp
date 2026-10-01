@@ -114,7 +114,7 @@ public:
 #pragma comment(linker, "/alternatename:?registerPalantirCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VPalantirCallbackHolder@@@Z=?j_00026328@@YAXXZ")
 #pragma comment(linker, "/alternatename:?registerPalantirPlayerSide@WindowManager@@QAEXABVBFMERetailAsciiString@@HVPalantirPlayerSideHolder@@@Z=?j_0003a0bc@@YAXXZ")
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // Globals the retail image holds at fixed addresses.  dir32_addresses.csv
 // records the names below for these addresses; none of them is a literal
@@ -153,126 +153,126 @@ void g_0042D09C();		// retail 0x0042D09C, RenderGlobe functor
 
 void d_00565f30()
 {
-	if( g_theWindowManager == 0 || g_bfmeFlagMD != 0 )
+	if( g_rva012F19E8WindowManager == 0 || g_bfmeFlagMD != 0 )
 		return;
 
-	int windowIndex = g_theWindowManager->loadAptWindow(
+	int windowIndex = g_rva012F19E8WindowManager->loadAptWindow(
 		"Apt\\",
 		*reinterpret_cast<AsciiString *>( &TheBfmeObject_00C701F0 ), 0, 0, -1 );
 	g_aptPalantirWindow = windowIndex;
 	if( windowIndex == -1 )
 		return;
 
-	g_theWindowManager->setupPalantir();
+	g_rva012F19E8WindowManager->setupPalantir();
 
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnInitialized" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0041F62C ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnClosed" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_00434022 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnAlert" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_004127BA ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnCommand" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_00401942 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnRollOverBttnCommand" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_00420428 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnSkillUpgrade" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0043B0C5 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnSpell" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0043F6E8 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnSpellStore" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_00441597 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnOptions" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_00448C07 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnBttnHeroSelect" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0044A606 ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnSpellBookUIShown" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0042F01D ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::OnRegionPortraitClosed" );
-		g_theWindowManager->registerAptCallback( name,
+		g_rva012F19E8WindowManager->registerAptCallback( name,
 			reinterpret_cast<BannerAptCallback>( &g_0041CFF3 ) );
 	}
 
 	{
 		const char *playerSide = g_012B7D7C;
 		BFMERetailAsciiString name( playerSide );
-		g_theWindowManager->registerPalantirPlayerSide( name, 0,
+		g_rva012F19E8WindowManager->registerPalantirPlayerSide( name, 0,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00415253 ) ) );
 	}
 
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderRadar" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00444544 ) ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderRadarViewBox" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00419501 ) ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::ClipRadar" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0043E4E6 ) ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderMovie" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0041A0F0 ) ) );
 	}
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderGlobe" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0042D09C ) ) );
 	}
 

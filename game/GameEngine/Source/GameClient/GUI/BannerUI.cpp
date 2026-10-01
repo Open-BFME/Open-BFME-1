@@ -243,7 +243,7 @@ public:
 	bool showAptWindow( int index );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern void DeleteBanner( int id );
 extern void registerBannerAptCallbacks();
 
@@ -300,17 +300,17 @@ void BannerUI::removeMovieBanner( int id )
 
 void BannerUI::hide( bool immediate )
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		m_hidden = immediate;
 		if( immediate )
 		{
-			g_theWindowManager->hideAptWindow( m_windowIndex );
+			g_rva012F19E8WindowManager->hideAptWindow( m_windowIndex );
 			m_movieEntries.clear();
 		}
 		else
 		{
-			g_theWindowManager->showAptWindow( m_windowIndex );
+			g_rva012F19E8WindowManager->showAptWindow( m_windowIndex );
 		}
 	}
 }
@@ -319,7 +319,7 @@ void BannerUI::init()
 {
 	if( TheBannerUI )
 	{
-		m_windowIndex = g_theWindowManager->loadAptWindow(
+		m_windowIndex = g_rva012F19E8WindowManager->loadAptWindow(
 			"Apt\\", "BannerUI.apt", 0, 0, -1 );
 		registerBannerAptCallbacks();
 	}
@@ -333,17 +333,17 @@ void BannerUI::reset()
 
 BannerUI::~BannerUI()
 {
-	if( g_theWindowManager )
+	if( g_rva012F19E8WindowManager )
 	{
 		for( unsigned int location = 0; location < 2; ++location )
 		{
 			BFMERetailAsciiString name;
 			name.format( "BannerUI/~Location%d/Banner/AvailableBttn/", location );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 			name.format( "BannerUI/~Location%d/Banner/WaitingBttn/", location );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 			name.format( "BannerUI/~Location%d/Banner/Background", location );
-			g_theWindowManager->removeAptObject( name );
+			g_rva012F19E8WindowManager->removeAptObject( name );
 		}
 	}
 }

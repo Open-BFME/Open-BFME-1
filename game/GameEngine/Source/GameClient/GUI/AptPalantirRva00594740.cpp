@@ -172,7 +172,7 @@ public:
 	void bfme_setAptText(const AsciiString &name, const UnicodeString &text);
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Rva00563E00
 {
@@ -311,7 +311,7 @@ void AptPalantir::rva00594740(Object *object)
 			static AsciiString aptHeroRank("APT:HeroRank");
 			static AsciiString aptPalantirTimeRemaining("APT:PalantirTimeRemaining");
 			UnicodeString text = TheGameText->fetch(aptPalantirTimeRemaining);
-			g_theWindowManager->bfme_setAptText(aptHeroRank, text);
+			g_rva012F19E8WindowManager->bfme_setAptText(aptHeroRank, text);
 		}
 
 		if (record.float_8 != m_rankProgress)
