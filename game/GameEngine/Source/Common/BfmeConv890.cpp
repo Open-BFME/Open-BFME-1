@@ -414,7 +414,11 @@ struct BfmeGlobFAF
 	virtual void bfmeVirt42FAF(void *x, unsigned int b);
 };
 
-extern BfmeGlobFAF *g_bfmeObjFAF;
+// EA's global at 0x012F7014: one definition lives in
+// GameClient/Terrain/TerrainVisual.cpp. BfmeGlobFAF is this TU's view of that
+// object; the cast at the use keeps the call ABI without minting a second name.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 
 struct BfmeArgFAF
 {
@@ -430,7 +434,7 @@ struct BfmeThingFAF
 
 void BfmeThingFAF::bfmeGoFAF(BfmeArgFAF *a, unsigned int b)
 {
-	g_bfmeObjFAF->bfmeVirt42FAF(a->m_bfmeX, m_bfmeB);
+	reinterpret_cast<BfmeGlobFAF *>(TheTerrainVisual)->bfmeVirt42FAF(a->m_bfmeX, m_bfmeB);
 }
 
 struct BfmeObjFAH

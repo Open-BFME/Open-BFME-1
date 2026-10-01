@@ -83,7 +83,16 @@ public:
 	virtual void getWaterTransform(const WaterHandle *water, Matrix3D *transform) = 0;
 };
 
-extern "C" TerrainVisualDispatch *g_bfmeTerrainVisual;
+// EA's global: one definition lives in GameClient/Terrain/TerrainVisual.cpp.
+// TerrainVisualDispatch is this TU's view of that object; the cast at each use
+// keeps the call ABI without minting a second global name.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+
+static inline TerrainVisualDispatch *bfmeTerrainVisual()
+{
+	return reinterpret_cast<TerrainVisualDispatch *>(TheTerrainVisual);
+}
 
 // BFME damage values expose one virtual xfer, not Zero Hour's three Snapshot
 // slots. The tables at 0x01085DE4/0x01085DE0/0x01085DBC each have one slot:
@@ -268,10 +277,10 @@ void TerrainLogic::setWaterHeight(const WaterHandle *water, Real height, Real da
 	if (water == &g_bfmeGridWaterHandle) {
 
 		Matrix3D &transform = *new (transformRows) Matrix3D;
-		g_bfmeTerrainVisual->getWaterTransform(water, &transform);
+		bfmeTerrainVisual()->getWaterTransform(water, &transform);
 		previousHeight = transform.Get_Z_Translation();
 		transform.Set_Z_Translation(height);
-		g_bfmeTerrainVisual->setWaterTransform(&transform);
+		bfmeTerrainVisual()->setWaterTransform(&transform);
 
 	} else {
 

@@ -322,7 +322,16 @@ void Rva002EEA10GuardedVCall::forward( int a0 )
 		target->v83( a0 );
 }
 
-extern VDispatch3 *g_Va012F7014;
+// EA's global at 0x012F7014: one definition lives in
+// GameClient/Terrain/TerrainVisual.cpp. VDispatch3 is this TU's view of that
+// object; the cast at the use keeps the call ABI without minting a second name.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+
+static inline VDispatch3 *bfmeTerrainVisual()
+{
+	return reinterpret_cast<VDispatch3 *>(TheTerrainVisual);
+}
 
 class Rva001A3190GuardedVCall
 {
@@ -332,7 +341,7 @@ public:
 
 void Rva001A3190GuardedVCall::forward( int a0, int a1, int a2 )
 {
-	VDispatch3 *target = g_Va012F7014;
+	VDispatch3 *target = bfmeTerrainVisual();
 	if ( target != 0 )
 		target->v29( a0, a1, a2 );
 }

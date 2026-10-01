@@ -44,7 +44,17 @@ public:
 	virtual Real getWaterHeight(const WaterHandle *water) = 0;
 };
 
-extern "C" TerrainVisualDispatch *g_bfmeTerrainVisual;
+// EA's global: one definition lives in GameClient/Terrain/TerrainVisual.cpp.
+// TerrainVisualDispatch is this TU's view of that object; the cast at the use
+// keeps the call ABI without minting a second global name.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+
+static inline TerrainVisualDispatch *bfmeTerrainVisual()
+{
+	return reinterpret_cast<TerrainVisualDispatch *>(TheTerrainVisual);
+}
+
 extern "C" WaterHandle g_bfmeGridWaterHandle;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
@@ -64,7 +74,7 @@ Bool TerrainLogic::isUnderwater(Real x, Real y, Real *waterZ, Real *terrainZ)
 
 	Real waterHeight = 0.0f;
 	if (water == &g_bfmeGridWaterHandle) {
-		g_bfmeTerrainVisual->getWaterGridHeight(x, y, &waterHeight);
+		bfmeTerrainVisual()->getWaterGridHeight(x, y, &waterHeight);
 	} else {
 		waterHeight = self->getWaterHeight(water);
 	}
