@@ -220,3 +220,5 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|function||bfme5ParseNamedVa
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|function||bfme5ParseNamedValueB,parseInitialPayload,claude-fable+claude-opus;audited-by=gpt-5.6-sol,blocked: the same name as another placeholder,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,ExperienceLevelSystem,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,AI,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,ExperienceLevelSystem,gemini+grok,blocked: game/GameEngine/Source/Common/BfmeConv1081.cpp: build.sh exited 49,2026-10-01
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,AI,gemini+grok,blocked: game/GameEngine/Source/Common/BfmeConv1081.cpp: build.sh exited 49,2026-10-01
