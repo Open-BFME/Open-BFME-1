@@ -82,7 +82,16 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+// TU-local view of the object at retail 0x012F0898, which is EA's
+// GameLogic *TheGameLogic defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGameLogic *bfmeGameLogic( void )
+{
+	return (BfmeGameLogic *)TheGameLogic;
+}
 
 class BfmeHordeContainOwner
 {
@@ -138,7 +147,7 @@ void BfmeHordeContainOwner::bfmeRefreshMemberExperience( void )
 		UnsignedInt key = entry->m_key;
 		if ( key != 0 )
 		{
-			Object *object = TheGameLogic->findObjectByID( key );
+			Object *object = bfmeGameLogic()->findObjectByID( key );
 			if ( object != 0 )
 				TheExperienceLevelSystem->gainLevel( object, true );
 		}

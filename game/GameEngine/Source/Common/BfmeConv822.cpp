@@ -1,4 +1,10 @@
 
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  BfmeMgrF5F is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class BfmeTargetF5F
 {
 public:
@@ -20,7 +26,10 @@ public:
 	void* find2(int id, void *b1, void *b2, int zero);
 };
 
-extern BfmeMgrF5F *g_bfmeMgr12F0898;
+static inline BfmeMgrF5F *bfmeMgrF5F(void)
+{
+	return (BfmeMgrF5F *)TheGameLogic;
+}
 
 struct BfmeArgF5F
 {
@@ -39,7 +48,7 @@ void BfmeThingF5F::doDispatch(BfmeArgF5F *a, void *b)
 {
 	BfmeTargetF5F *target = m_sub58;
 	if (target) {
-		void *obj = g_bfmeMgr12F0898->find(a->m_id, b, 0);
+		void *obj = bfmeMgrF5F()->find(a->m_id, b, 0);
 		target->call(obj);
 	}
 }
@@ -55,7 +64,7 @@ void BfmeThingF63::doDispatch2(BfmeArgF5F *a, void *b)
 {
 	BfmeTargetF63 *target = m_sub58;
 	if (target) {
-		void *obj = g_bfmeMgr12F0898->find2(a->m_id, b, b, 0);
+		void *obj = bfmeMgrF5F()->find2(a->m_id, b, b, 0);
 		target->call2(obj);
 	}
 }
@@ -64,7 +73,7 @@ void __cdecl bfmeHelper990410(void *arg, double val);
 
 int __cdecl bfmeAction2A4(void *arg)
 {
-	bfmeHelper990410(arg, (double)g_bfmeMgr12F0898->m_frame3C);
+	bfmeHelper990410(arg, (double)bfmeMgrF5F()->m_frame3C);
 	return 1;
 }
 

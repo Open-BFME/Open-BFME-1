@@ -1,5 +1,11 @@
 // Open-BFME5 conversions.
 
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  BfmeStore1024 is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class BfmeV1024;
 
 class BfmeM1024
@@ -213,7 +219,10 @@ public:
 	BfmeRec1024 *bfmeFind1024S(int id);
 };
 
-extern BfmeStore1024 *g_bfmeStore1024;
+static inline BfmeStore1024 *bfmeStore1024(void)
+{
+	return (BfmeStore1024 *)TheGameLogic;
+}
 
 class BfmeF1024
 {
@@ -231,7 +240,7 @@ char BfmeF1024::bfmeGo1024F(void)
 	if (id == 0)
 		return 0;
 
-	BfmeRec1024 *r = g_bfmeStore1024->bfmeFind1024S(id);
+	BfmeRec1024 *r = bfmeStore1024()->bfmeFind1024S(id);
 
 	if (r == 0)
 		return 1;

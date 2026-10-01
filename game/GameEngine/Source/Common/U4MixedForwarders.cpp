@@ -155,10 +155,18 @@ class U4Sink0060D3B0
 public:
 	void push( bool a, bool b );
 };
-extern U4Sink0060D3B0 *g_u4Sink0060D3B0;
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  U4Sink0060D3B0 is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline U4Sink0060D3B0 *u4Sink0060D3B0( void )
+{
+	return (U4Sink0060D3B0 *)TheGameLogic;
+}
 int u4Emit0060D3B0( void )
 {
-	g_u4Sink0060D3B0->push( 1, 0 );
+	u4Sink0060D3B0()->push( 1, 0 );
 	return 3;
 }
 

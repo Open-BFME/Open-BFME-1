@@ -23,17 +23,18 @@ enum ObjectStatusTypes
 
 class Object;
 
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This declaration adds
+// no data or member bodies: it only names the one member this body calls, so
+// both ?TheGameLogic@@3PAVGameLogic@@A and
+// ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z keep retail's spelling.
 class GameLogic
 {
 public:
 	Object *findObjectByID(int id);
 };
 
-class GameLogicFrameSlice
-{
-};
-
-extern GameLogicFrameSlice *TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Thing
 {
@@ -117,7 +118,7 @@ public:
 
 void QueueProductionExitUpdate::releaseLastExit()
 {
-	Object *host = reinterpret_cast<GameLogic *>(TheGameLogic)->findObjectByID(m_lastExitId);
+	Object *host = TheGameLogic->findObjectByID(m_lastExitId);
 	if (!host)
 		return;
 

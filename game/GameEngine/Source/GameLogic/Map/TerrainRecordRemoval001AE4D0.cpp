@@ -71,7 +71,15 @@ class TerrainVisual001AE4D0 { public:
 };
 extern "C" TerrainVisual001AE4D0 *g_bfmeTerrainVisual;
 struct Rva00367E30Logic { char prefix[0x3c]; unsigned int frame; };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Rva00367E30Logic is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *theBfmeGameLogic(void)
+{
+    return (Rva00367E30Logic *)TheGameLogic;
+}
 class TerrainRecordRemoval001AE4D0 {
     char prefix[0x55c];
     TerrainRecord001AE4D0 *begin55c,*end560;
@@ -87,7 +95,7 @@ void TerrainRecordRemoval001AE4D0::removeIntersecting(void *position,BfmeSubYR *
             unsigned int handle=record->field0c;
             record->reset();
             g_bfmeTerrainVisual->slot88(handle);
-            unsigned int frame=TheBfmeGameLogic->frame;
+            unsigned int frame=theBfmeGameLogic()->frame;
             frame18f0=frame;
             break;
         }

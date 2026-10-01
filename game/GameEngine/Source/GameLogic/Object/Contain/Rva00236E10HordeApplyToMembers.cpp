@@ -48,6 +48,9 @@ struct _Rb_global
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
+// TU-local view of the object at retail 0x012F0898, which is EA's
+// GameLogic *TheGameLogic defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
 class BfmeGameLogic
 {
 public:
@@ -63,7 +66,13 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern BfmeGameLogic *TheGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline BfmeGameLogic *bfmeGameLogic(void)
+{
+	return (BfmeGameLogic *)TheGameLogic;
+}
 
 
 enum NameKeyType
@@ -120,7 +129,7 @@ void Rva00236E10HordeContain::applyToMembers(void *arg)
 		if (id != 0)
 		{
 			Rva00236E10Member *member =
-				(Rva00236E10Member *)TheGameLogic->findObjectByID(id);
+				(Rva00236E10Member *)bfmeGameLogic()->findObjectByID(id);
 			if (member != 0)
 				member->rva00236E10Apply(arg);
 		}

@@ -152,7 +152,15 @@ public:
 	virtual void notifyOfAcquiredScience( Int playerIndex, ScienceType science );
 };
 
-extern GameLogicPortraitShim *TheBfmeGameLogic;
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  GameLogicPortraitShim
+// is a TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+static inline GameLogicPortraitShim *theGameLogicPortrait( void )
+{
+	return (GameLogicPortraitShim *)TheGameLogic;
+}
 extern RankInfoStore *TheRankInfoStore;
 extern ScriptEngine *TheScriptEngine;
 
@@ -180,7 +188,7 @@ void Player::resetSciences()
 
 	if ( m_playerTemplate != 0 )
 	{
-		if ( TheBfmeGameLogic->isInMultiplayerOrSkirmishGame() )
+		if ( theGameLogicPortrait()->isInMultiplayerOrSkirmishGame() )
 			m_sciences = m_playerTemplate->getIntrinsicSciences();
 		else
 			m_sciences = m_playerTemplate->getCampaignSciences();

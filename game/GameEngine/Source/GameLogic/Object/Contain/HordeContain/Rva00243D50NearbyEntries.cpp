@@ -114,7 +114,16 @@ public:
 	ObjectPtrHash objects;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Rva00367E30Logic is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static inline Rva00367E30Logic *theBfmeGameLogic(void)
+{
+	return (Rva00367E30Logic *)TheGameLogic;
+}
 
 class Rva00243D50Owner
 {
@@ -132,7 +141,7 @@ void Rva00243D50Owner::processNearbyEntries00243D50(Object *target)
 	for (EntryMap::iterator it = entries.begin(); it != entries.end(); ++it)
 	{
 		int objectID = (*it).first;
-		Object *object = TheBfmeGameLogic->findObjectByID(objectID);
+		Object *object = theBfmeGameLogic()->findObjectByID(objectID);
 
 		if (object)
 		{

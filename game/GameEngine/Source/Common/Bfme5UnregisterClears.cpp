@@ -6,6 +6,12 @@
 // is what puts it in a register for the entry test too; the second reads the
 // member both times.
 
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  BfmeManagerP is a
+// TU-local view of that object, reached here through the canonical global.
+class GameLogic;
+extern GameLogic *TheGameLogic;						// retail 0x012F0898
+
 extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
 
 class BfmeOwnedP
@@ -22,7 +28,10 @@ public:
 	void bfmeRemove(BfmeOwnedP *element);			// retail thunk 0x000218B9 -> 0x004218B9
 };
 
-extern BfmeManagerP *g_bfmeManagerP;				// retail 0x012F0898
+static inline BfmeManagerP *bfmeManagerP(void)
+{
+	return (BfmeManagerP *)TheGameLogic;
+}
 
 inline BfmeOwnedP **bfmeCopyOwned(BfmeOwnedP **destination, BfmeOwnedP **first, BfmeOwnedP **last)
 {
@@ -76,7 +85,7 @@ void Gen_00371120::bfmeClear(void)
 		{
 			bfmeUnregister(element);
 
-			g_bfmeManagerP->bfmeRemove(element);
+			bfmeManagerP()->bfmeRemove(element);
 
 			delete element;
 		}
