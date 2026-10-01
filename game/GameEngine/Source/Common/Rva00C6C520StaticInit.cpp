@@ -14,11 +14,7 @@ public:
 		m_bfmeThing = 0;
 	}
 
-	~BfmeHandleCX(void)
-	{
-		if (m_bfmeThing)
-			--m_bfmeThing->m_bfmeRefs;
-	}
+	~BfmeHandleCX(void);
 
 	BfmeThingCX *m_bfmeThing;
 };

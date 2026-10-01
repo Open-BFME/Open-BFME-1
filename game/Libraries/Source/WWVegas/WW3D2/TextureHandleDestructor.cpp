@@ -27,7 +27,18 @@ public:
 private:
     TextureClass *p;
 };
-BfmeHandleCX::~BfmeHandleCX()
+inline BfmeHandleCX::~BfmeHandleCX()
 {
     if (p) p->Release_Ref();
 }
+
+// Other texture users emit this header inline as a select-any COMDAT. Emit
+// the verified copy with the same linkage, rather than a duplicate strong
+// definition. The anchor is compiler scaffolding, not a retail function.
+#pragma inline_depth(0)
+// ?Rva0005CC00Emit@@YAXPAVBfmeHandleCX@@@Z present-unmatched
+void Rva0005CC00Emit(BfmeHandleCX *handle)
+{
+    handle->~BfmeHandleCX();
+}
+#pragma inline_depth()
