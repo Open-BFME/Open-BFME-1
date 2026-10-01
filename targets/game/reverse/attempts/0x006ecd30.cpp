@@ -1,5 +1,5 @@
 // ?drawImageCore@W3DDisplay@@UAEXPAVImage@@MMMMH@Z
-// partial score=0.98 date=2026-09-27
+// partial score=0.9818 date=2026-09-27
 // 384/384 with 7 non-reloc bytes at +0x64..+0x72: the texture-slot stores (same residue as 0x006EB000).
 // cl: /DNDEBUG /MD /EHsc
 
