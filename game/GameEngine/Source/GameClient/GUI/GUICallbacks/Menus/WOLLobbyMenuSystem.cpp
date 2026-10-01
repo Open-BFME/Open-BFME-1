@@ -345,7 +345,6 @@ struct Rva004FC7C0Global {
   unsigned atBC8, atBCC, atBD0, atBD4;
 };
 #define TheWritableGlobalData ((Rva004FC7C0Global *)TheWritableGlobalData)
-extern const UnicodeString Rva01336E54EmptyUnicode;
 int Rva0009B4B0(int, int);
 
 class Shell {
@@ -566,7 +565,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
     } else if (controlID == buttonEmoteID) {
       UnicodeString txtInput;
       txtInput = GadgetTextEntryGetText(textEntryChat);
-      GadgetTextEntrySetText(textEntryChat, Rva01336E54EmptyUnicode);
+      GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
       ((StringBase<unsigned short> *)&txtInput)->trim();
       if (!txtInput.isEmpty()) {
         TheGameSpyInfo->sendChat(txtInput, FALSE, listboxLobbyPlayers);
@@ -721,7 +720,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
       break;
     UnicodeString txtInput;
     txtInput = GadgetTextEntryGetText(textEntryChat);
-    GadgetTextEntrySetText(textEntryChat, Rva01336E54EmptyUnicode);
+    GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
     ((StringBase<unsigned short> *)&txtInput)->trim();
     if (!txtInput.isEmpty()) {
       if (!handleLobbySlashCommands(txtInput)) {

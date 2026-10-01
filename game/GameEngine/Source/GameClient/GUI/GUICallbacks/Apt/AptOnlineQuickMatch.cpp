@@ -86,7 +86,6 @@ enum {
 };
 enum { PEER_ADD, PEER_UPDATE, PEER_REMOVE, PEER_CLEAR };
 extern const AsciiString Rva01336E50EmptyAscii;
-extern const UnicodeString Rva01336E54EmptyUnicode;
 class PeerResponse {
 public:
   enum {
@@ -431,7 +430,7 @@ public:
   int nat;
   unsigned lastFrame;
   bool disconnected;
-  void setState(SlotState, UnicodeString = Rva01336E54EmptyUnicode,
+  void setState(SlotState, UnicodeString = UnicodeString::TheEmptyString,
                 const GameSlotConnectInfo * = &GameSlotConnectInfo());
   bool isHuman() const;
   void setIP(unsigned n) { connect.ip = n; }

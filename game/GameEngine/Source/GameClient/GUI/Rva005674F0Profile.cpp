@@ -25,10 +25,6 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
     ((StringBase<unsigned short> *)this)->set(*(const StringBase<unsigned short> *)&s);
     return *this;
 }
-extern const UnicodeString BFMEUnicodeEmptyString;
-#pragma comment(                                                                                   \
-    linker,                                                                                        \
-    "/alternatename:?BFMEUnicodeEmptyString@@3VUnicodeString@@B=?TheEmptyString@UnicodeString@@2V1@B")
 class Rva005672C0Map
 {
   public:
@@ -204,7 +200,7 @@ void Rva005674F0Profile::apply(SkirmishPreferences value)
     {
 
         text = honors.getFavoriteSideName();
-        if (text.compare(BFMEUnicodeEmptyString) != 0)
+        if (text.compare(UnicodeString::TheEmptyString) != 0)
             ;
         else
         {

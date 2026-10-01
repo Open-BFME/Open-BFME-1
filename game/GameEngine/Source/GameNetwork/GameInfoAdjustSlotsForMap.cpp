@@ -21,7 +21,6 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) {
       ->set(*(const StringBase<unsigned short> *)&s);
   return *this;
 }
-extern const UnicodeString Rva01336E54EmptyUnicode;
 typedef int Int;
 enum { MAX_SLOTS = 8 };
 enum SlotState {
@@ -190,7 +189,7 @@ void GameInfo::adjustSlotsForMap() {
           GameSlot newSlot;
           GameSlotConnectInfo connectInfo;
           connectInfo.m_port = 0;
-          newSlot.setState(SLOT_OPEN, Rva01336E54EmptyUnicode, &connectInfo);
+          newSlot.setState(SLOT_OPEN, UnicodeString::TheEmptyString, &connectInfo);
           setSlot(i, newSlot);
           ++numPlayerSlots;
         }
@@ -199,7 +198,7 @@ void GameInfo::adjustSlotsForMap() {
           GameSlot newSlot;
           GameSlotConnectInfo connectInfo;
           connectInfo.m_port = 0;
-          newSlot.setState(SLOT_CLOSED, Rva01336E54EmptyUnicode, &connectInfo);
+          newSlot.setState(SLOT_CLOSED, UnicodeString::TheEmptyString, &connectInfo);
           setSlot(i, newSlot);
         }
       }

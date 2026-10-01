@@ -142,7 +142,6 @@ static GameWindow *textEntryDay =				NULL;
 static GameWindow *textEntryYear =				NULL;
 
 static GameSpyLoginPreferences *loginPref;
-extern const UnicodeString BFMEEmptyPlayerName;
 void EnableLoginControls(Bool);
 #include "GameClient/GadgetStaticText.h"
 #include "GameClient/GameWindowTransitions.h"
@@ -218,11 +217,11 @@ void WOLLoginMenuInit( WindowLayout *layout, void *userData )
 	textEntryDay =					TheWindowManager->winGetWindowFromId( NULL,  textEntryDayID);
 	textEntryYear =					TheWindowManager->winGetWindowFromId( NULL,  textEntryYearID);
 
-	GadgetTextEntrySetText(textEntryMonth, BFMEEmptyPlayerName);
+	GadgetTextEntrySetText(textEntryMonth, UnicodeString::TheEmptyString);
 
-	GadgetTextEntrySetText(textEntryDay, BFMEEmptyPlayerName);
+	GadgetTextEntrySetText(textEntryDay, UnicodeString::TheEmptyString);
 
-	GadgetTextEntrySetText(textEntryYear, BFMEEmptyPlayerName);
+	GadgetTextEntrySetText(textEntryYear, UnicodeString::TheEmptyString);
 
 	GameWindowList tabList;
 	tabList.push_front(comboBoxEmail);
@@ -259,7 +258,7 @@ void WOLLoginMenuInit( WindowLayout *layout, void *userData )
 
 		// Read login names from registry...
 		GadgetComboBoxReset(comboBoxEmail);
-		GadgetTextEntrySetText(textEntryPassword, BFMEEmptyPlayerName);
+		GadgetTextEntrySetText(textEntryPassword, UnicodeString::TheEmptyString);
 
 		// look for cached nicks to add
 		AsciiString lastName;

@@ -214,7 +214,6 @@ static GameWindow *textEntryDay =				NULL;
 static GameWindow *textEntryYear =				NULL;
 
 static GameSpyLoginPreferences *loginPref;
-extern const UnicodeString BFMEEmptyPlayerName;
 void EnableLoginControls(Bool);
 void startPings();
 Bool isAgeOkay(AsciiString&,AsciiString&,AsciiString);
@@ -325,9 +324,9 @@ WindowMsgHandledType WOLLoginMenuSystem( GameWindow *window, UnsignedInt msg,
 					else
 					{
 						GadgetCheckBoxSetChecked(checkBoxRememberPassword, false);
-						GadgetTextEntrySetText(textEntryMonth, BFMEEmptyPlayerName);
-						GadgetTextEntrySetText(textEntryDay, BFMEEmptyPlayerName);
-						GadgetTextEntrySetText(textEntryYear, BFMEEmptyPlayerName);
+						GadgetTextEntrySetText(textEntryMonth, UnicodeString::TheEmptyString);
+						GadgetTextEntrySetText(textEntryDay, UnicodeString::TheEmptyString);
+						GadgetTextEntrySetText(textEntryYear, UnicodeString::TheEmptyString);
 
 					}
 				}
@@ -388,9 +387,9 @@ WindowMsgHandledType WOLLoginMenuSystem( GameWindow *window, UnsignedInt msg,
 					else
 					{
 						GadgetCheckBoxSetChecked(checkBoxRememberPassword, false);
-						GadgetTextEntrySetText(textEntryMonth, BFMEEmptyPlayerName);
-						GadgetTextEntrySetText(textEntryDay, BFMEEmptyPlayerName);
-						GadgetTextEntrySetText(textEntryYear, BFMEEmptyPlayerName);
+						GadgetTextEntrySetText(textEntryMonth, UnicodeString::TheEmptyString);
+						GadgetTextEntrySetText(textEntryDay, UnicodeString::TheEmptyString);
+						GadgetTextEntrySetText(textEntryYear, UnicodeString::TheEmptyString);
 					}
 
 				}

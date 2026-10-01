@@ -41,7 +41,6 @@ inline UnicodeString &UnicodeString::operator=(const wchar_t *s) {
     ((StringBase<unsigned short> *)this)->set((const unsigned short *)s);
     return *this;
 }
-extern const UnicodeString Rva01336E54EmptyUnicode;
 extern char *__cdecl BFMEDuplicateString(const char *);
 extern AsciiString _Rva00621350GameInfoMapPath(const AsciiString &, bool);
 extern char *__cdecl strtok_r(char *, const char *, char **);
@@ -388,15 +387,15 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options, Bool useInc
                     switch (*(slotValue.str() + 1)) {
                     case 'E': {
                         GameSlotConnectInfo info;
-                        newSlot[i].setState(SLOT_EASY_AI, Rva01336E54EmptyUnicode, &info);
+                        newSlot[i].setState(SLOT_EASY_AI, UnicodeString::TheEmptyString, &info);
                     } break;
                     case 'M': {
                         GameSlotConnectInfo info;
-                        newSlot[i].setState(SLOT_MED_AI, Rva01336E54EmptyUnicode, &info);
+                        newSlot[i].setState(SLOT_MED_AI, UnicodeString::TheEmptyString, &info);
                     } break;
                     case 'H': {
                         GameSlotConnectInfo info;
-                        newSlot[i].setState(SLOT_BRUTAL_AI, Rva01336E54EmptyUnicode, &info);
+                        newSlot[i].setState(SLOT_BRUTAL_AI, UnicodeString::TheEmptyString, &info);
                     } break;
                     default: {
                         optionsOk = false;
@@ -471,12 +470,12 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options, Bool useInc
                 break;
                 case 'O': {
                     GameSlotConnectInfo info;
-                    newSlot[i].setState(SLOT_OPEN, Rva01336E54EmptyUnicode, &info);
+                    newSlot[i].setState(SLOT_OPEN, UnicodeString::TheEmptyString, &info);
                 } // case 'O':
                 break;
                 case 'X': {
                     GameSlotConnectInfo info;
-                    newSlot[i].setState(SLOT_CLOSED, Rva01336E54EmptyUnicode, &info);
+                    newSlot[i].setState(SLOT_CLOSED, UnicodeString::TheEmptyString, &info);
                 } // case 'X':
                 break;
                 default: {

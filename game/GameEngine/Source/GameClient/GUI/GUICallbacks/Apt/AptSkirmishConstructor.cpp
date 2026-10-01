@@ -20,11 +20,6 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) {
       ->set(*(const StringBase<unsigned short> *)&s);
   return *this;
 }
-extern const UnicodeString BFMEUnicodeEmptyString;
-#pragma comment(                                                               \
-    linker,                                                                    \
-    "/alternatename:?BFMEUnicodeEmptyString@@3VUnicodeString@@B=?TheEmptyString@UnicodeString@@2V1@B")
-
 template <>
 int StringBase<unsigned short>::compare(
     const StringBase<unsigned short> &) const throw();
@@ -317,13 +312,13 @@ static __forceinline void registerRef(BfmeAptScreenSkirmish *screen,
 }
 BfmeAptScreenSkirmish::BfmeAptScreenSkirmish(void *context)
     : _bfme_AptGameWindow(context), field25c(this, 7), field390(), field3ac(),
-      field3c4(BFMEUnicodeEmptyString), field400(0), field404(-1),
+      field3c4(UnicodeString::TheEmptyString), field400(0), field404(-1),
       field408(true), field409(false), field40c(0), field410(0), field414(0),
       field418(0), field41c(0), field420(0), field424(10), field434(true),
       field438() {
   if (!Rva012F4B54Skirmish) {
     Rva012F4B54Skirmish = this;
-    if (field3ac.getUserName().compare(BFMEUnicodeEmptyString) != 0) {
+    if (field3ac.getUserName().compare(UnicodeString::TheEmptyString) != 0) {
       SkirmishBattleHonors value(field3ac.getUserName());
       *(Rva0057D0C0 *)&field3c4 = (const Rva0057D0C0 *)&value;
     }
