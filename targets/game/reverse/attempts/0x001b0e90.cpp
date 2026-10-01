@@ -1,5 +1,7 @@
 // ?create001B0E90@EffectFactory0040A260@@QAEPAUSnapshot0040A260@@PBVThingTemplate@@PAX@Z
-// partial score=0.704 date=2026-09-28
+// partial score=0.1632 date=2026-10-01
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// ?create001B0E90@EffectFactory0040A260@@QAEPAUSnapshot0040A260@@PBVThingTemplate@@PAX@Z
 // The matched call in BuffTransfer0040A260 names this body at RVA 0x001B0E90.
 #include "ascii_string.h"
 
@@ -52,25 +54,6 @@ struct Rva001B0E90ThingTemplateView
 	char m_padding[0x27C];
 	Rva001B0E90Range m_records;
 };
-
-struct Rva001B0E90StringData
-{
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	char m_text[1];
-};
-
-struct Rva001B0E90StringStorage
-{
-	Rva001B0E90StringData *m_data;
-};
-
-inline const char *Rva001B0E90StringText(const AsciiString &string)
-{
-	const Rva001B0E90StringStorage *storage = (const Rva001B0E90StringStorage *)&string;
-	return storage->m_data ? storage->m_data->m_text : (const char *)0x0107388B;
-}
 
 class BfmeAwakenLog
 {
@@ -168,13 +151,15 @@ public:
 	virtual void slot80() = 0;
 	virtual void slot84() = 0;
 	virtual void slot88() = 0;
+	virtual void slot8C() = 0;
 	virtual Snapshot0040A260 *slot90(void *, void *) = 0;
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(Int kind);
 extern bool _bfme_debugReportingEnabled(void);
-extern "C" Rva001B0E90TerrainVisual *g_bfmeTerrainVisual;
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 
 Snapshot0040A260 *EffectFactory0040A260::create001B0E90(const ThingTemplate *thingTemplate, void *context)
 {
@@ -183,8 +168,7 @@ Snapshot0040A260 *EffectFactory0040A260::create001B0E90(const ThingTemplate *thi
 	{
 		AsciiString message;
 		message.format(AsciiString((const char *)0x0109C918),
-			(int)((char *)self->m_records.m_end - (char *)self->m_records.m_begin),
-			Rva001B0E90StringText(self->m_name));
+			self->m_name.str());
 		return 0;
 	}
 
@@ -194,14 +178,14 @@ Snapshot0040A260 *EffectFactory0040A260::create001B0E90(const ThingTemplate *thi
 		if (_bfme_debugReportingEnabled())
 		{
 			_bfme_debugRecordCallsite(1);
-			TheBfmeAwakenDebug->slot60();
-			TheBfmeAwakenDebug->slot6C(0, 0)
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60();
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0)
 				->slot38((const char *)0x0109C910)
-				->slot38(Rva001B0E90StringText(self->m_name))
+				->slot38(self->m_name.str())
 				->slot38((const char *)0x0109C8E8)
 				->slot4C(2);
 		}
 		return 0;
 	}
-	return g_bfmeTerrainVisual->slot90(context, result);
+	return reinterpret_cast<Rva001B0E90TerrainVisual *>(TheTerrainVisual)->slot90(context, result);
 }
