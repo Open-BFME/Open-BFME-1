@@ -1,10 +1,20 @@
 // EA FESL gamebrowser guarded four-argument request at retail 0x007F6050.
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  The local message's
+// user-declared destructor is the only reference to it, so the scope-exit calls
+// are spelled through this neutral declaration instead.  The definition lives in
+// game/gen_small/fun_005.cpp.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH(char *buf, int n) throw();
-	~BfmeMsgVJH() throw();
 	char m_pad[0x34];
 };
 
@@ -141,6 +151,7 @@ void BfmeThingVJR::bfmeGoVJR(int a1, int a2, int a3, int a4) throw()
 	{
 		m_bfme10->sendFour(&msg, a1, a2, a3, a4);
 		m_bfme14->send(&msg, BfmeGameBrowserVJRCallback, this, m_bfme6dc);
+		reinterpret_cast< Gen_007e86c0 * >( &msg )->m();
 		return;
 	}
 	if (m_bfme35)
@@ -153,13 +164,16 @@ void BfmeThingVJR::bfmeGoVJR(int a1, int a2, int a3, int a4) throw()
 			int error = ask->bfmeGet992C();
 			BfmeSinkErrorVJR *sink = m_bfme1cError;
 			sink->sendError(error);
+			reinterpret_cast< Gen_007e86c0 * >( &msg )->m();
 			return;
 		}
 		else
 		{
 			BfmeSinkZeroVJR *sink = m_bfme1cZero;
 			sink->sendZero(0);
+			reinterpret_cast< Gen_007e86c0 * >( &msg )->m();
 			return;
 		}
 	}
+	reinterpret_cast< Gen_007e86c0 * >( &msg )->m();
 }

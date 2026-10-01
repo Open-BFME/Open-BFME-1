@@ -4,13 +4,22 @@
 // The message object and its fixed-buffer constructor are the same retail
 // type recovered in BfmeConv994.cpp.  This method supplies the transaction
 // category and depth, appends the integer transaction id, and submits it.
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  It is defined under
+// this name in game/gen_small/fun_005.cpp, so the post-send cleanups spell it
+// through this neutral declaration rather than a member of the local view.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeC994
 {
 public:
 	BfmeC994(char *buffer, int capacity);
 	void addInt(const char *key, int value);
 	void addString(const char *key, const char *value);
-	void clear();
 
 	char m_beforeCategory[0x1C];
 	int m_category;
@@ -37,7 +46,7 @@ void BfmeSinkSKA::bfmeSendSKA(int category, int transactionId, int depth)
 	message.m_depth = depth;
 	message.addInt("TID", transactionId);
 	submit(&message);
-	message.clear();
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }
 
 // Wire category and field vocabulary identify this as the FESL create-game
@@ -55,5 +64,5 @@ void BfmeSinkSKA::sendCreateGameRequest(int transactionId, int gameId,
 	message.addString("UGID", userGameId);
 	message.addString("SECRET", "0");
 	submit(&message);
-	message.clear();
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

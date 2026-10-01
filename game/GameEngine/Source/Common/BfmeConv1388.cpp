@@ -1,10 +1,19 @@
 // Open-BFME5 conversions.
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  It is defined under
+// this name in game/gen_small/fun_005.cpp, so the call site spells it through
+// this neutral declaration rather than a member of the local message view.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJK
 {
 public:
 	void bfmeInitVJK(char *buf, int n);
-	void bfmeDoneVJK();
 	char m_bfmePad[0x34];
 };
 
@@ -60,5 +69,5 @@ void BfmeThingVJK::bfmeGoVJK(int unused)
 	msg.bfmeInitVJK(m_bfmeBuf, 0x400);
 	m_bfme10->bfmeA50VJK(&msg);
 	m_bfme14->bfmeB08VJK(&msg, 0, 0, m_bfme6dc);
-	msg.bfmeDoneVJK();
+	reinterpret_cast< Gen_007e86c0 * >( &msg )->m();
 }

@@ -259,11 +259,20 @@ struct Gen00809750
 // ??0Gen00809750@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
 Gen00809750::Gen00809750() {}
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  The child message's
+// explicit destructor call is the only reference to it, so it is spelled through
+// this neutral declaration instead.  The definition lives in
+// game/gen_small/fun_005.cpp.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJH
 {
 public:
-	~BfmeMsgVJH();
-
 	char m_pad00[ 0x10 ];
 	void *m_field10;
 	void *m_field14;
@@ -338,7 +347,7 @@ Gen0080ACD0::~Gen0080ACD0()
 				Gen007EFFC0()->release( current->m_field14, 0 );
 			current->m_field14 = 0;
 			current->m_field10 = 0;
-			current->BfmeMsgVJH::~BfmeMsgVJH();
+			reinterpret_cast< Gen_007e86c0 * >( current )->m();
 			Gen0080ACD0::operator delete( current, 0x20 );
 		}
 		++message;

@@ -16,12 +16,21 @@ public:
 	int m_field04;
 };
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  It is defined under
+// this name in game/gen_small/fun_005.cpp, so the post-send cleanup spells it
+// through this neutral declaration rather than a member of the local view.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeC994
 {
 public:
 	BfmeC994( char *buffer, int capacity );
 	void addInt( const char *key, int value );
-	void clear();
 
 	char *m_vft;
 	int m_field04;
@@ -228,7 +237,7 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 				const volatile int *field0c = &player->m_field0c;
 				message.m_field0c = *field0c;
 				sendFeslMessage( &message, "->L", m_field10 );
-				message.clear();
+				reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 			}
 		}
 	}

@@ -10,11 +10,21 @@ public:
 	BfmeC994(char *buffer, int capacity);
 	char m_data[0x34];
 };
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  The local message's
+// user-declared destructor is the only reference to it, so the scope-exit call
+// is spelled through this neutral declaration instead.  The definition lives in
+// game/gen_small/fun_005.cpp.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsg1052 : public BfmeC994
 {
 public:
 	BfmeMsg1052(char *buffer, int capacity) : BfmeC994(buffer, capacity) {}
-	~BfmeMsg1052();
 };
 void Rva00800040JoinI64(const __int64 *parts, unsigned count,
 	char *dest, unsigned destSize, char separator);
@@ -95,4 +105,5 @@ void Rva007F7AE0Owner::request(int a1, int a2, int a3, int a4,
 		idText, stringText);
 	m_async->send(&message, Rva007F7AD0Callback,
 		(Rva007F7980Browser *)this, m_transaction);
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

@@ -9,11 +9,21 @@
 
 typedef __int64 Rva007F6740Int64;
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  The local message's
+// user-declared destructor is the only reference to it, so the scope-exit call
+// is spelled through this neutral declaration instead.  The definition lives in
+// game/gen_small/fun_005.cpp.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeMsgVJH
 {
 public:
 	BfmeMsgVJH( char *buffer, int size ) throw();
-	~BfmeMsgVJH() throw();
 
 	char m_data[ 0x34 ];
 };
@@ -97,4 +107,5 @@ void Rva007F6740Receiver::call( void *context, int a1, int a2, int a3,
 		a7, a8, a14, a13, int64Text, stringText );
 	m_asyncService->send( &message, Rva007F6730Callback, this,
 		m_transaction );
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

@@ -4,10 +4,19 @@
 // (count at +4) for an element whose dword at +0x10 equals the argument, then
 // runs that element's destructor and sized delete (0x38) and nulls the slot.
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies
+// call (store the base vtable 0x01129358 into *this, then ret).  It is defined
+// under this name in game/gen_small/fun_005.cpp, so every call site spells it
+// through this neutral declaration rather than a member of the local view.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeSub1045
 {
 public:
-	void bfmeDone1045();
 	int m_gap00;
 	int m_gap04;
 	int m_gap08;
@@ -46,7 +55,7 @@ char BfmeSubSKA::bfmeTestSKA( int id )
 			{
 				if ( elem->m_id == id )
 				{
-					elem->bfmeDone1045();
+					reinterpret_cast< Gen_007e86c0 * >( elem )->m();
 					bfmeFreeSizedVF( elem, 0x38 );
 					m_array[ i ] = 0;
 					return 1;

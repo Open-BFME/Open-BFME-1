@@ -2,11 +2,21 @@
 
 void sendFeslMessage( void *message, const char *route, void *connection ) throw();
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  The local message's
+// user-declared destructor is the only reference to it, so the scope-exit call
+// is spelled through this neutral declaration instead.  The definition lives in
+// game/gen_small/fun_005.cpp.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class FeslEchoMessage
 {
 public:
 	FeslEchoMessage( char *buffer, int capacity ) throw();
-	~FeslEchoMessage() throw();
 	void addInt( const char *key, int value ) throw();
 	void addString( const char *key, const char *value ) throw();
 
@@ -66,4 +76,5 @@ void FeslEchoNotifier::notifyEcho()
 		message.addString( g_feslSecretKey, m_secret );
 	}
 	sendFeslMessage( &message, g_feslDirectRoute, m_connection );
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

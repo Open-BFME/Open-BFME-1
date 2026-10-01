@@ -2,11 +2,20 @@
 // The factory at 0x007F4810 stores this object at +0x244 of the FESL owner.
 // Its 0x007F4440 method is the slot-zero call on the third interface at +0x0C.
 
+// Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
+// (store the base vtable 0x01129358 into *this, then ret).  It is defined under
+// this name in game/gen_small/fun_005.cpp, so the post-send cleanup spells it
+// through this neutral declaration rather than a member of the local view.
+class Gen_007e86c0
+{
+public:
+	void m();
+};
+
 class BfmeC994
 {
 public:
 	BfmeC994( char *buffer, int size );
-	void clear();
 
 	char pad[ 0x30 ];
 	char tail;
@@ -110,5 +119,5 @@ void Rva007F4440Runner::run( int mode, int, int )
 		( (Gen_007ea670 *)owner )->bfmePlatform(),
 		clientType );
 	primary->getService()->send( &message, (void *)g_00BF4520, primary, 10000 );
-	message.clear();
+	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }
