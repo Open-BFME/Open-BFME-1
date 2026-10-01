@@ -76,7 +76,12 @@ public:
 	virtual void lookAt(void *) = 0;
 };
 
-extern BfmeTacticalView *TheTacticalView;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View *TheTacticalView;
+// TU-local view of that singleton; the witnessed slots are the ones read here.
+static inline BfmeTacticalView *theTacticalView() { return (BfmeTacticalView *)TheTacticalView; }
 
 struct BfmeSubsystem
 {
@@ -164,11 +169,11 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 
 	BfmeDevice *textureDevice = BfmeDeviceGlobal;
 	textureDevice->vt->SetTexture(textureDevice, 0, tex);
-	BfmeTacticalView *originView = TheTacticalView;
+	BfmeTacticalView *originView = theTacticalView();
 	originView->getOrigin(&xpos, &ypos);
-	BfmeTacticalView *widthView = TheTacticalView;
+	BfmeTacticalView *widthView = theTacticalView();
 	width = widthView->getWidth();
-	height = TheTacticalView->getHeight();
+	height = theTacticalView()->getHeight();
 
 	// bottom right
 	v[0].p = D3DXVECTOR4(xpos + width - 0.5f, ypos + height - 0.5f,
@@ -247,7 +252,7 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 			if (m_maxCount >= 60) {
 				m_decrement = true;
 				if (m_doZoomTo && ZoomToValid) {
-					TheTacticalView->lookAt(ZoomToPosition);
+					theTacticalView()->lookAt(ZoomToPosition);
 				} else {
 					continueEffect = false;
 				}

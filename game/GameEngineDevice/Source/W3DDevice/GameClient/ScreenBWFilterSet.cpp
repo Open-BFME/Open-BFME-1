@@ -200,7 +200,11 @@ public:
 	virtual void setFilter(int) = 0;
 };
 
-extern FadeView *TheTacticalView;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View *TheTacticalView;
+static inline FadeView *theTacticalView() { return (FadeView *)TheTacticalView; }
 
 enum FilterModes
 {
@@ -268,8 +272,8 @@ Int Rva007D1020ScreenBWFilter::set(FilterModes mode)
 			else
 			{
 				m_curFadeValue = 0.0f;
-				TheTacticalView->setMode(FM_NULL_MODE);
-				TheTacticalView->setFilter(0);
+				theTacticalView()->setMode(FM_NULL_MODE);
+				theTacticalView()->setFilter(0);
 				m_curFadeFrame = 0;
 				m_fadeDirection = 0;
 			}

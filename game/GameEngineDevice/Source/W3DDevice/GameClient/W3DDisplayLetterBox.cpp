@@ -37,7 +37,12 @@ public:
 	virtual void setZoomLimited(bool limited);
 };
 
-extern TacticalViewFadeShim *TheTacticalViewFadeShim;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View *TheTacticalView;
+// TU-local view of that singleton; the witnessed slot is the one called here.
+static inline TacticalViewFadeShim *theTacticalViewFadeShim() { return (TacticalViewFadeShim *)TheTacticalView; }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
@@ -184,16 +189,16 @@ void W3DDisplay::enableLetterBox(bool enable)
 		{
 			m_letterBoxEnabled = true;
 			m_letterBoxFadeStartTime = timeGetTime();
-			if (TheTacticalViewFadeShim)
-				TheTacticalViewFadeShim->setZoomLimited(false);
+			if (TheTacticalView)
+				theTacticalViewFadeShim()->setZoomLimited(false);
 		}
 	}
 	else if (m_letterBoxEnabled)
 	{
 		m_letterBoxEnabled = false;
 		m_letterBoxFadeStartTime = timeGetTime();
-		if (TheTacticalViewFadeShim)
-			TheTacticalViewFadeShim->setZoomLimited(true);
+		if (TheTacticalView)
+			theTacticalViewFadeShim()->setZoomLimited(true);
 	}
 }
 
@@ -218,6 +223,6 @@ void W3DDisplay::toggleLetterBox()
 {
 	m_letterBoxEnabled = !m_letterBoxEnabled;
 	m_letterBoxFadeStartTime = timeGetTime();
-	if (TheTacticalViewFadeShim)
-		TheTacticalViewFadeShim->setZoomLimited(!m_letterBoxEnabled);
+	if (TheTacticalView)
+		theTacticalViewFadeShim()->setZoomLimited(!m_letterBoxEnabled);
 }

@@ -50,7 +50,11 @@ public:
 #undef VIEW_SLOT
 };
 
-extern Rva007BB060View *TheTacticalView;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View *TheTacticalView;
+static inline Rva007BB060View *theTacticalView() { return (Rva007BB060View *)TheTacticalView; }
 extern Rva007BB060Device *Rva01340534Device;
 extern VertexMaterialClass *Rva01340EC4Material;
 extern unsigned int Rva0133F49CChanged;
@@ -74,9 +78,9 @@ void Rva007BB060()
     if (!device) return;
 
     int x, y;
-    TheTacticalView->getOrigin(&x, &y);
-    int width = TheTacticalView->getWidth();
-    int height = TheTacticalView->getHeight();
+    theTacticalView()->getOrigin(&x, &y);
+    int width = theTacticalView()->getWidth();
+    int height = theTacticalView()->getHeight();
 
     VertexMaterialClass *material = VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
     if (material) material->Add_Ref();

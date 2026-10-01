@@ -43,10 +43,11 @@ struct BfmeDevice
 	BfmeDeviceVtable *v;
 };
 
-class BfmeTacticalView;
-extern BfmeTacticalView *TheTacticalView;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View *TheTacticalView;
 #define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
-#define BfmeTacticalViewGlobal (TheTacticalView)
 #define BfmeCurrentCapsGlobal ((struct BfmeCaps *)DX8Wrapper::CurrentCaps)
 // Retail 0x013071BC. ScreenBWFilter::m_curFadeValue is a different static at
 // 0x013071A8 (Rva007D1E60 postRender); naming both ScreenBWFilter collides.
@@ -78,6 +79,9 @@ public:
 	virtual void slot18();
 	virtual void getOrigin(Int *, Int *);
 };
+
+// TU-local view of the tactical view singleton; the witnessed slots are read here.
+static inline BfmeTacticalView *theTacticalView() { return (BfmeTacticalView *)TheTacticalView; }
 
 struct BfmeCaps
 {
@@ -160,9 +164,9 @@ Bool Rva007D3580::postRender(FilterModes mode, Coord2D &scrollDelta,
 		Real v;
 	} v[4];
 
-	BfmeTacticalViewGlobal->getOrigin(&xpos, &ypos);
-	width = BfmeTacticalViewGlobal->getWidth();
-	height = BfmeTacticalViewGlobal->getHeight();
+	theTacticalView()->getOrigin(&xpos, &ypos);
+	width = theTacticalView()->getWidth();
+	height = theTacticalView()->getHeight();
 
 	v[0].p = D3DXVECTOR4(xpos + width - g_bfmeK1253,
 		ypos + height - g_bfmeK1253, 0.0f, 1.0f);

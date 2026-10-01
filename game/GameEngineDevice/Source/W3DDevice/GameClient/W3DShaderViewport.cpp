@@ -22,7 +22,9 @@ class VertexBufferClass {public:
 };
 extern VertexBufferClass *ShaderQuadBuffer;
 extern int ShaderQuadIndex;
-class View {public:
+// TU-local view of the tactical view singleton; the real class is GameClient/View.h's
+// View, which View.cpp defines as View *TheTacticalView at 0x012F1600.
+class ShaderViewportView {public:
  virtual void unused0();
  virtual void unused1();
  virtual void unused2();
@@ -44,7 +46,9 @@ class View {public:
  virtual void unused18();
  virtual void GetOrigin(int*,int*);
 };
-extern View *ShaderTacticalView;
+class View;
+extern View *TheTacticalView;
+static inline ShaderViewportView *shaderTacticalView() { return (ShaderViewportView *)TheTacticalView; }
 class Display {public:
  virtual void unused0();
  virtual void unused1();
@@ -70,9 +74,9 @@ typedef unsigned long(__stdcall *ReleaseResource)(Resource*);
 void ShaderViewportRva00716AD0(int color,bool useSize,const Coord2D *givenSize) {
  if(!ShaderQuadBuffer)return;
  int x,y;
- ShaderTacticalView->GetOrigin(&x,&y);
- int width=ShaderTacticalView->GetWidth();
- int height=ShaderTacticalView->GetHeight();
+ shaderTacticalView()->GetOrigin(&x,&y);
+ int width=shaderTacticalView()->GetWidth();
+ int height=shaderTacticalView()->GetHeight();
  float displayWidth, displayHeight;
  if (useSize) {
   displayWidth = givenSize->x;

@@ -92,7 +92,11 @@ virtual void pad40();
 virtual void pad41();
 virtual void pad42();
 virtual void pad43();
-virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};extern FadeView *FadeTacticalView;
+virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;extern View *TheTacticalView;
+static inline FadeView *fadeTacticalView(){return (FadeView *)TheTacticalView;}
 extern int Rva007D1AA0FadeDirection,Rva007D1AA0FadeFrames,Rva007D1AA0FadeCurrentFrame;extern float Rva007D1AA0FadeValue;
 enum FilterModes {FM_NULL_MODE};
 class Rva007D1AA0 { protected: virtual int set(FilterModes); };
@@ -105,7 +109,7 @@ int Rva007D1AA0::set(FilterModes mode) {
  }else if(Rva007D1AA0FadeDirection<0){
   int fade=++Rva007D1AA0FadeCurrentFrame;
   if(fade<Rva007D1AA0FadeFrames)Rva007D1AA0FadeValue=1-(float)fade/(float)Rva007D1AA0FadeFrames;
-  else{Rva007D1AA0FadeValue=0;FadeTacticalView->setMode(0);FadeTacticalView->setFilter(0);Rva007D1AA0FadeCurrentFrame=0;Rva007D1AA0FadeDirection=0;}
+  else{Rva007D1AA0FadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);Rva007D1AA0FadeCurrentFrame=0;Rva007D1AA0FadeDirection=0;}
  }
 
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);

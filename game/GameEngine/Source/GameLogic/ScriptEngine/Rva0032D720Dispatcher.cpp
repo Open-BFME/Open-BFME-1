@@ -286,7 +286,12 @@ class Rva012F1600Interface { public:
     virtual void slot28();
     virtual bool slot29();
 };
-extern Rva012F1600Interface* Rva012F1600;
+// 012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+class View;
+extern View* TheTacticalView;
+// Address-qualified view of that singleton for the witnessed vtable call.
+inline Rva012F1600Interface* rva012F1600View() { return (Rva012F1600Interface*)TheTacticalView; }
 class Rva012F079CInterface { public:
     virtual void slot0();
     virtual void slot1();
@@ -891,7 +896,7 @@ bool Rva0032D720::evaluate(Condition* c)
     case 10:
         return evaluateHasUnits(c->getParameter(0));
     case 9:
-        return Rva012F1600->slot29();
+        return rva012F1600View()->slot29();
     case 11:
         return evaluateTeamStateIs(c->getParameter(0), c->getParameter(1));
     case 12:
