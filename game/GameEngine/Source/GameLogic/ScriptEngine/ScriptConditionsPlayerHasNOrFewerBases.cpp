@@ -118,7 +118,11 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads it through a view struct,
+// so the extern carries the canonical type and the view is cast at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheBfmeGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
@@ -131,8 +135,8 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 {
 	int baseCheckFrame;
 	if (TheWritableGlobalData)
-		baseCheckFrame = (int)(TheWritableGlobalData->m_secondsBeforeBaseCheckActive
-			* 5.0f);
+		baseCheckFrame = (int)(((Rva006C9270GlobalData *)TheWritableGlobalData)
+			->m_secondsBeforeBaseCheckActive * 5.0f);
 	else
 		baseCheckFrame = (int)g_010E1F40;
 

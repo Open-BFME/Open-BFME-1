@@ -40,7 +40,11 @@ struct Rva006C9270GlobalData
 	Real m_maxShakeRange;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads it through a view struct,
+// so the extern carries the canonical type and the view is cast at the use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 Real GetGameClientRandomValueReal(Real lo, Real hi, char *file, int line);
 
@@ -70,27 +74,27 @@ void W3DView::shake(const Coord3D *epicenter, CameraShakeType shakeType)
 	switch (shakeType)
 	{
 		case SHAKE_SUBTLE:
-			intensity = TheWritableGlobalData->m_shakeSubtleIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeSubtleIntensity;
 			break;
 
 		case SHAKE_NORMAL:
-			intensity = TheWritableGlobalData->m_shakeNormalIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeNormalIntensity;
 			break;
 
 		case SHAKE_STRONG:
-			intensity = TheWritableGlobalData->m_shakeStrongIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeStrongIntensity;
 			break;
 
 		case SHAKE_SEVERE:
-			intensity = TheWritableGlobalData->m_shakeSevereIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeSevereIntensity;
 			break;
 
 		case SHAKE_CINE_EXTREME:
-			intensity = TheWritableGlobalData->m_shakeCineExtremeIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeCineExtremeIntensity;
 			break;
 
 		case SHAKE_CINE_INSANE:
-			intensity = TheWritableGlobalData->m_shakeCineInsaneIntensity;
+			intensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_shakeCineInsaneIntensity;
 			break;
 	}
 
@@ -102,14 +106,14 @@ void W3DView::shake(const Coord3D *epicenter, CameraShakeType shakeType)
 	dir.z = 0.0f;
 	Real dist = (Real)sqrt(dir.x * dir.x + dir.y * dir.y);
 
-	if (dist > TheWritableGlobalData->m_maxShakeRange)
+	if (dist > ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_maxShakeRange)
 		return;
 
-	intensity *= 1.0f - (dist / TheWritableGlobalData->m_maxShakeRange);
+	intensity *= 1.0f - (dist / ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_maxShakeRange);
 
 	// add intensity and clamp
 	m_shakeIntensity += intensity;
 
-	if (m_shakeIntensity > TheWritableGlobalData->m_maxShakeIntensity)
-		m_shakeIntensity = TheWritableGlobalData->m_maxShakeIntensity;
+	if (m_shakeIntensity > ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_maxShakeIntensity)
+		m_shakeIntensity = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_maxShakeIntensity;
 }

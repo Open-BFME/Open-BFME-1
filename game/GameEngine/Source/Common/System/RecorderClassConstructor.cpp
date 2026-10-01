@@ -96,7 +96,11 @@ public:
 	BfmeAsciiStringState m_pendingFile;
 };
 
-extern BfmeGlobalData *TheGlobalData;
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU views it as BfmeGlobalData, so
+// the extern carries the canonical type and the view is cast at each use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern int OpenBFME5_netCRCInterval;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
@@ -161,10 +165,12 @@ void RecorderClass::bfmeInit(void)
 	gameInfo->clearSlotList();
 	gameInfo->reset();
 
-	if (TheGlobalData->m_pendingFile.isEmpty())
-		gameInfo->setMap(reinterpret_cast<const AsciiString &>(TheGlobalData->m_mapName));
+	if (((BfmeGlobalData *)TheWritableGlobalData)->m_pendingFile.isEmpty())
+		gameInfo->setMap(reinterpret_cast<const AsciiString &>(
+			((BfmeGlobalData *)TheWritableGlobalData)->m_mapName));
 	else
-		gameInfo->setMap(reinterpret_cast<const AsciiString &>(TheGlobalData->m_pendingFile));
+		gameInfo->setMap(reinterpret_cast<const AsciiString &>(
+			((BfmeGlobalData *)TheWritableGlobalData)->m_pendingFile));
 
 	W3DVolumetricShadow *seedView = reinterpret_cast<W3DVolumetricShadow *>(gameInfo);
 	union BfmeSeedBits

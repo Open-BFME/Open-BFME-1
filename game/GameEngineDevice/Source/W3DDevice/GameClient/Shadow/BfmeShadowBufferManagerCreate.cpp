@@ -17,15 +17,19 @@ public:
 	static Bool Has_Stencil(void);
 };
 
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads one flag through a view
+// class, so the extern carries the canonical type and the view is cast.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-class GlobalData
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+class ShadowManagerGlobalDataView
 {
 public:
 	unsigned char m_unreconstructed_00[0x64];
 	Bool m_useShadowVolumes;
 };
-
-extern GlobalData *TheGlobalData;
 
 enum KindOfType { KINDOF_INVALID = 0 };
 
@@ -205,7 +209,7 @@ private:
 BfmeVolumetricShadowBufferOwner *BfmeShadowBufferManager007C3260::createShadow(
 	BfmeShadowResource *resource, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw)
 {
-	if (!DX8Wrapper::Has_Stencil() || !resource || !TheGlobalData->m_useShadowVolumes)
+	if (!DX8Wrapper::Has_Stencil() || !resource || !((ShadowManagerGlobalDataView *)TheWritableGlobalData)->m_useShadowVolumes)
 		return 0;
 
 	BfmeVolumetricShadowBufferOwner *shadow =

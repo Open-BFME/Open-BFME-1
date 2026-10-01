@@ -94,15 +94,20 @@ public:
 	const FXList *findFXList(const char *name) const;
 };
 
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads its +0xAA4 string through
+// a view class, so the extern carries the canonical type and the view is cast.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-class GlobalData
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+class BodyModuleGlobalDataView
 {
 public:
 	unsigned char m_head[0xAA4];
 	BFMERetailAsciiString m_defaultUnitHealingBuffFxList;	///< retail +0xAA4
 };
 
-extern GlobalData *TheGlobalData;
 extern FXListStore *TheFXListStore;
 
 // The ModuleData base is unreconstructed: retail inlines its constructor away
@@ -174,7 +179,10 @@ ActiveBodyModuleData::ActiveBodyModuleData()
 	m_damagedAttributeModifier.releaseBuffer();
 	m_reallyDamagedAttributeModifier.releaseBuffer();
 
-	if (TheGlobalData->m_defaultUnitHealingBuffFxList.isNotEmpty()) {
-		m_healingBuffFx = TheFXListStore->findFXList(TheGlobalData->m_defaultUnitHealingBuffFxList.str());
+	if (((BodyModuleGlobalDataView *)TheWritableGlobalData)
+		->m_defaultUnitHealingBuffFxList.isNotEmpty()) {
+		m_healingBuffFx = TheFXListStore->findFXList(
+			((BodyModuleGlobalDataView *)TheWritableGlobalData)
+				->m_defaultUnitHealingBuffFxList.str());
 	}
 }

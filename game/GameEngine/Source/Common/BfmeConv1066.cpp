@@ -21,7 +21,11 @@ struct BfmeM1066
 	char m_bfmea9f;
 };
 
-extern BfmeM1066 *g_bfmeM1066;
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads one byte at +0xA9F through
+// a view struct, so the extern carries the canonical type and the view is cast.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class BfmeH1066;
 
@@ -56,7 +60,8 @@ void BfmeH1066::bfmeGo1066A(int a)
 
 void BfmeH1066::bfmeGo1066B(int a)
 {
-	char *s = g_bfmeM1066->m_bfmea9f ? g_bfmeLitA1066 : g_bfmeLitB1066;
+	char *s = ((BfmeM1066 *)TheWritableGlobalData)->m_bfmea9f
+		? g_bfmeLitA1066 : g_bfmeLitB1066;
 
 	g_bfmeR1066->bfmeRun1066(m_bfme250, g_bfmeFmtB1066, 1, s, 0, 0, 0, 0);
 	m_bfme258 = 1;

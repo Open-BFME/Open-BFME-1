@@ -98,7 +98,11 @@ private:
 };
 
 class BfmeThingBKF { public: void bfmeGoBKF(); };
-extern Rva006D23C0GlobalData* TheWritableGlobalData;
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU writes flags through a view
+// struct, so the extern carries the canonical type and the view is cast.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 void Rva006D23C0Owner::refreshTerrainState()
 {
@@ -106,7 +110,7 @@ void Rva006D23C0Owner::refreshTerrainState()
 		m_buffer3094->invoke();
 	if (m_buffer3098)
 		m_buffer3094->invoke();
-	TheWritableGlobalData->m_taintOn = false;
+	((Rva006D23C0GlobalData *)TheWritableGlobalData)->m_taintOn = false;
 	if (m_taintBuffer) {
 		delete m_taintBuffer;
 		m_taintBuffer = 0;
@@ -118,8 +122,8 @@ void Rva006D23C0Owner::refreshTerrainState()
 void Rva006D23C0Owner::resetGrid()
 {
 	refreshTerrainState();
-	TheWritableGlobalData->m_38 = false;
-	TheWritableGlobalData->m_44 = false;
+	((Rva006D23C0GlobalData *)TheWritableGlobalData)->m_38 = false;
+	((Rva006D23C0GlobalData *)TheWritableGlobalData)->m_44 = false;
 	for (int x = 0; x < m_width; ++x) {
 		for (int y = 0; y < m_height; ++y)
 			((BfmeThingBKF*)&m_cells[y * m_width + x])->bfmeGoBKF();

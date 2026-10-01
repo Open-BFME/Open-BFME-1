@@ -5,13 +5,17 @@
 typedef int Int;
 typedef unsigned char Bool;
 
-struct GlobalData
+// The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
+// (defined in Common/GlobalData.cpp). This TU reads one flag through a view
+// struct, so the extern carries the canonical type and the view is cast.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+struct ScorchBuffersGlobalDataView
 {
 	char m_unknown[0xdcd];
 	Bool m_useHalfHeightMap;
 };
-
-extern GlobalData *TheWritableGlobalData;
 
 class DX8VertexBufferClass
 {
@@ -53,7 +57,7 @@ private:
 
 void BaseHeightMapRenderObjClass::allocateScorchBuffers(void)
 {
-	if (TheWritableGlobalData->m_useHalfHeightMap) {
+	if (((ScorchBuffersGlobalDataView *)TheWritableGlobalData)->m_useHalfHeightMap) {
 		m_maxScorchVertices = 0xdac0;
 		m_maxScorchIndices = 0x3fffc;
 	} else {
