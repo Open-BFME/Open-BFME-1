@@ -261,3 +261,6 @@ game/GameEngine/Source/Common/BfmeConv572.cpp|type||BfmeOwnerCCA,StateMachine,ge
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeCountReadyPlayers,countReadyPlayers,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeDispatchWindow,dispatchWindow,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,getStartPositionInfo,gemini+grok,agreed,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeCountReadyPlayers,countReadyPlayers,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeDispatchWindow,dispatchWindow,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,getStartPositionInfo,gemini+grok,applied,2026-10-01

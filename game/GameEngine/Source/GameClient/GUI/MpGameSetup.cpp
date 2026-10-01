@@ -96,7 +96,7 @@ class Gen00525EE0Owner
 public:
 	virtual void bfmeSlot0(void) = 0;
 	virtual void bfmeSlot1(void) = 0;
-	virtual void bfmeDispatchWindow(GameWindow *window, bool active) = 0;
+	virtual void dispatchWindow(GameWindow *window, bool active) = 0;
 	virtual void bfmeSlot3(void) = 0;
 	virtual unsigned char bfmeSetPlayerTemplate(GameSlot *slot, int playerTemplate) = 0;
 	virtual bool bfmeSetTeam(GameSlot *slot, int teamNumber) = 0;
@@ -116,15 +116,15 @@ class MpGameSetup
 {
 public:
 	void bfmeRefresh(void);
-	const StartPositionInfo *bfmeGetStartPositionInfo(int slotIndex);
+	const StartPositionInfo *getStartPositionInfo(int slotIndex);
 	void shutdown(void);
-	void bfmeDispatchWindow(GameWindow *window);
+	void dispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
 	int getNextSelectablePlayer(int firstIndex);
 	bool handleStartPositionSelection(int index, int startPosition);
 	bool handlePlayerTemplateSelection(int index);
 	bool handleTeamSelection(int index);
-	unsigned short bfmeCountReadyPlayers(void);
+	unsigned short countReadyPlayers(void);
 
 private:
 	unsigned char m_unmodelled[4];
@@ -196,7 +196,7 @@ void Rva00526660Body::run(int enable, int slotIndex)
 
 	bool currentEnable;
 	currentEnable = *(bool *)&enable;
-	if (m_124 && ((MpGameSetup *)this)->bfmeGetStartPositionInfo(slotIndex) == 0)
+	if (m_124 && ((MpGameSetup *)this)->getStartPositionInfo(slotIndex) == 0)
 		currentEnable = 0;
 
 	bool empty;
@@ -293,8 +293,8 @@ void MpGameSetup::shutdown(void)
 }
 
 // Restore the owner background state before dispatching the active window.
-// ?bfmeDispatchWindow@MpGameSetup@@QAEXPAVGameWindow@@@Z
-void MpGameSetup::bfmeDispatchWindow(GameWindow *window)
+// ?dispatchWindow@MpGameSetup@@QAEXPAVGameWindow@@@Z
+void MpGameSetup::dispatchWindow(GameWindow *window)
 {
 	if (m_backgroundVisible)
 	{
@@ -303,7 +303,7 @@ void MpGameSetup::bfmeDispatchWindow(GameWindow *window)
 		if (m_owner->bfmeShouldRestoreBackground())
 			m_owner->bfmeRestoreBackground();
 	}
-	m_owner->bfmeDispatchWindow(window, true);
+	m_owner->dispatchWindow(window, true);
 }
 
 // Prefer the local slot, except that a hosting observer is represented by the
@@ -466,8 +466,8 @@ bool MpGameSetup::handleTeamSelection(int index)
 }
 
 // Count the ready, playable human slots in the validated game record.
-// ?bfmeCountReadyPlayers@MpGameSetup@@QAEGXZ
-unsigned short MpGameSetup::bfmeCountReadyPlayers(void)
+// ?countReadyPlayers@MpGameSetup@@QAEGXZ
+unsigned short MpGameSetup::countReadyPlayers(void)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -496,8 +496,8 @@ unsigned short MpGameSetup::bfmeCountReadyPlayers(void)
 }
 
 // Resolve the selected slot's start-position record in the current map.
-// ?bfmeGetStartPositionInfo@MpGameSetup@@QAEPBUStartPositionInfo@@H@Z
-const StartPositionInfo *MpGameSetup::bfmeGetStartPositionInfo(int slotIndex)
+// ?getStartPositionInfo@MpGameSetup@@QAEPBUStartPositionInfo@@H@Z
+const StartPositionInfo *MpGameSetup::getStartPositionInfo(int slotIndex)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;

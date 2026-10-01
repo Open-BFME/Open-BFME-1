@@ -135,7 +135,7 @@ struct StartPositionInfo;
 class MpGameSetup
 {
 public:
-	const StartPositionInfo *bfmeGetStartPositionInfo(Int index);
+	const StartPositionInfo *getStartPositionInfo(Int index);
 };
 
 class SkirmishScreenOwner
@@ -184,7 +184,7 @@ void SkirmishScreenState::rva005294F0(Int index)
 		return;
 
 	Bool allowObservers = !slot->isAI() && !(m_flags120 & 4);
-	Gen005293E0Object *startPos = (Gen005293E0Object *)((MpGameSetup *)this)->bfmeGetStartPositionInfo(index);
+	Gen005293E0Object *startPos = (Gen005293E0Object *)((MpGameSetup *)this)->getStartPositionInfo(index);
 	Int selectedData = -1;
 	GadgetComboBoxGetSelectedPos(m_playerTemplateCombos[index], &newIndex);
 	if (newIndex >= 0)

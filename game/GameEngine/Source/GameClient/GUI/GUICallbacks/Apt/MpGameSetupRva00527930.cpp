@@ -196,13 +196,13 @@ class MpGameSetup
 {
 public:
 	Bool rva00527930(Bool arg);
-	void bfmeDispatchWindow(GameWindow *window);
+	void dispatchWindow(GameWindow *window);
 	Bool rva005280A0(void);
 
 private:
 	void dispatchText(const UnicodeString &text)
 	{
-		bfmeDispatchWindow((GameWindow *)&text);
+		dispatchWindow((GameWindow *)&text);
 	}
 
 	UnsignedByte m_unmodelled00[4];
