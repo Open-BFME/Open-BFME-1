@@ -1,5 +1,5 @@
 // ?d_00417710@@YAXXZ
-// partial score=0.953 date=2026-09-28
+// partial score=1.0 date=2026-10-01
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Drawable::startAmbientSound(BodyDamageType, Bool), retail 0x00417710, 681 bytes.
@@ -200,7 +200,8 @@ void Drawable::startAmbientSound(BodyDamageType dt, Bool onlyIfPermanent)
 			m_ambientSoundAlternate->m_event.setEventName(alternateInfo->m_audioName);
 			m_ambientSoundAlternate->m_event.setAudioEventInfo(alternateInfo);
 			m_ambientSoundAlternate->m_event.setDrawableID(getID());
-			m_ambientSoundAlternate->m_event.setPlayingHandle(TheAudio->addAudioEvent(&m_ambientSoundAlternate->m_event));
+			AudioHandle alternateHandle = TheAudio->addAudioEvent(&m_ambientSoundAlternate->m_event);
+			m_ambientSoundAlternate->m_event.setPlayingHandle(alternateHandle);
 		}
 	}
 }
