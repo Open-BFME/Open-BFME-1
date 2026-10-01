@@ -71,7 +71,13 @@ struct Rva003FD060TerrainLogic
 	virtual Real bfmeHeightABE(Real x, Real y, Int layer, Int normal, Int clip);
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline Rva003FD060TerrainLogic *localTerrainLogic()
+{
+	return (Rva003FD060TerrainLogic *)TheTerrainLogic;
+}
 extern const Real g_bfmeDirectionWeight1285;
 
 static __forceinline Real bfmeFloatFromBits(Int bits)
@@ -113,7 +119,7 @@ void Pathfinder::Rva003E4190(Object *object)
 
 	register Int yBits = *(volatile Int *)&worldPosition.y;
 	_ReadWriteBarrier();
-	if (fabs(TheTerrainLogic->bfmeHeightABE(worldPosition.x, bfmeFloatFromBits(yBits),
+	if (fabs(localTerrainLogic()->bfmeHeightABE(worldPosition.x, bfmeFloatFromBits(yBits),
 		cellLayer, 0, 1) - worldPosition.z) < g_bfmeDirectionWeight1285)
 		object->setLayer((PathfindLayerEnum)currentCell->getLayer());
 
@@ -132,7 +138,7 @@ void Pathfinder::Rva003E4190(Object *object)
 				if (candidate != 0 && candidate->getLayer() == layerNumber &&
 					candidate->getType() != 5)
 				{
-					if (fabs(TheTerrainLogic->bfmeHeightABE(worldPosition.x,
+					if (fabs(localTerrainLogic()->bfmeHeightABE(worldPosition.x,
 						bfmeFloatFromBits(yBits),
 						layerNumber, 0, 1) - worldPosition.z) < g_bfmeDirectionWeight1285)
 					{

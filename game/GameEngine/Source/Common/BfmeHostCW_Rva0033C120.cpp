@@ -78,8 +78,8 @@ public:
 	virtual float getGroundHeight(float x, float y, Coord3D *normal = 0) = 0;
 };
 
-struct Rva003FD060TerrainLogic;
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 class BfmeHostCW
 {

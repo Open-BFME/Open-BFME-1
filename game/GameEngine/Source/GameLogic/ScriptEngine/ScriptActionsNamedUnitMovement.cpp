@@ -124,7 +124,13 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern TerrainLogicByValue *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline TerrainLogicByValue *localTerrainLogic()
+{
+	return (TerrainLogicByValue *)TheTerrainLogic;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
@@ -153,7 +159,7 @@ void ScriptActions::doNamedFollowWaypoints(const AsciiString &unitName,
 		return;
 	}
 
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath(&pos,
+	Waypoint *way = localTerrainLogic()->getClosestWaypointOnPath(&pos,
 		waypointPathLabel);
 	if (!way) {
 		return;
@@ -180,7 +186,7 @@ void ScriptActions::doNamedFollowWaypointsExact(
 		return;
 	}
 
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath(&pos,
+	Waypoint *way = localTerrainLogic()->getClosestWaypointOnPath(&pos,
 		waypointPathLabel);
 	if (!way) {
 		return;
@@ -214,7 +220,7 @@ void ScriptActions::doNamedFaceWaypoint(const AsciiString &unitName, const Ascii
 	Object *obj = TheScriptEngine->getUnitNamed(unitName);
 	if (obj)
 	{
-		Waypoint *waypoint = ((TerrainLogicByValue *)TheTerrainLogic)->getWaypointByName(waypointName);
+		Waypoint *waypoint = localTerrainLogic()->getWaypointByName(waypointName);
 		if (waypoint)
 		{
 			AIUpdateInterface *ai = obj->m_ai;

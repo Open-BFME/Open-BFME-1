@@ -57,7 +57,8 @@ class CRCParameterCheck;
 extern GameLogic *TheBfmeGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern void *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern bool Glo012F0239;
 
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);

@@ -44,13 +44,14 @@ enum PathfindLayerEnum
     LAYER_FIRST_BRIDGE = 16
 };
 
+// TU-local view: this body declares only the one callee reached through the
+// global, which is defined once by game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp.
 class TerrainLogic
 {
 public:
     PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *);
 };
-struct Rva003FD060TerrainLogic;
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 class LocomotorSet
 {
@@ -157,8 +158,8 @@ bool AISkirmishPlayer::checkBridges(Object *unit, Waypoint *way)
 int Pathfinder::findBrokenBridge(const void *locomotorSetPointer, const Coord3D *from, const Coord3D *to)
 {
     const LocomotorSet &locomotorSet = *(const LocomotorSet *)locomotorSetPointer;
-    PathfindLayerEnum destinationLayer = ((TerrainLogic *)TheTerrainLogic)->getLayerForDestination(0, to);
-    PathfindLayerEnum fromLayer = ((TerrainLogic *)TheTerrainLogic)->getLayerForDestination(0, from);
+    PathfindLayerEnum destinationLayer = TheTerrainLogic->getLayerForDestination(0, to);
+    PathfindLayerEnum fromLayer = TheTerrainLogic->getLayerForDestination(0, from);
     ICoord2D cell;
     worldToCell(from, &cell);
     PathfindCell *parentCell = getCell(fromLayer, cell.x, cell.y);

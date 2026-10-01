@@ -185,7 +185,13 @@ public:
 	virtual float getGroundHeight(float x, float y, Coord3D *normal) const = 0;
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline Rva003FD060TerrainLogic *localTerrainLogic()
+{
+	return (Rva003FD060TerrainLogic *)TheTerrainLogic;
+}
 
 class View
 {
@@ -257,7 +263,7 @@ int ObjectBroadcastEventToEnemies(lua_State *state)
 		position.x = object->m_position.x;
 		position.y = object->m_position.y;
 		position.z = object->m_position.z;
-		position.z = TheTerrainLogic->getGroundHeight(
+		position.z = localTerrainLogic()->getGroundHeight(
 			position.x, position.y, 0);
 		TheTacticalView->setBroadcastPoint(&position, radiusBits,
 			-256, 0);

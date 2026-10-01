@@ -164,7 +164,14 @@ public:
 	}
 };
 
-extern Rva012EF4CCTerrain *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline Rva012EF4CCTerrain *localTerrainLogic()
+{
+	return (Rva012EF4CCTerrain *)TheTerrainLogic;
+}
+
 extern GameLogicPortraitShim *TheGameLogic;
 extern PlayerList *ThePlayerList;
 extern char *TheWritableGlobalData;
@@ -211,22 +218,22 @@ void DevastateSpecialPowerInterface::doSpecialPowerAtLocation(const Coord3D *tar
 
 	DevastateSpecialPowerModuleData *data = getModuleData();
 	money = 0.0f;
-	TheTerrainLogic->m_queryScratch = 0.1f;
+	localTerrainLogic()->m_queryScratch = 0.1f;
 
-	BfmeX1035 *thing = (BfmeX1035 *)((BfmeA1275 *)TheTerrainLogic)->bfmeGo1275(
+	BfmeX1035 *thing = (BfmeX1035 *)((BfmeA1275 *)localTerrainLogic())->bfmeGo1275(
 		(int)target, data->m_queryKind, 0, 2);
 
 	while (thing != 0)
 	{
 		if (*(unsigned char *)((char *)thing + 0x18) == 0)
-			TheTerrainLogic->rva001AE4A0(thing, (int)target);
+			localTerrainLogic()->rva001AE4A0(thing, (int)target);
 
 		FXList *fx = data->m_fx;
 
 		if (fx != 0 && !fx->bfmeIsBlocked())
 			fx->doFXPos((const Coord3D *)thing, 0, 0.0f, 0);
 
-		UnsignedInt amount = (UnsignedInt)((TerrainLogicP48Owner *)TheTerrainLogic)->onMatch(
+		UnsignedInt amount = (UnsignedInt)((TerrainLogicP48Owner *)localTerrainLogic())->onMatch(
 			(TerrainLogicP48Rec *)thing, 0x1869f);
 		UnsignedInt scale = (UnsignedInt)player->getSupplyBoxValue();
 		float reward = (float)(amount * scale);
@@ -244,11 +251,11 @@ void DevastateSpecialPowerInterface::doSpecialPowerAtLocation(const Coord3D *tar
 				* data->m_bountyScale;
 		}
 
-		thing = (BfmeX1035 *)((BfmeA1275 *)TheTerrainLogic)->bfmeGo1275(
+		thing = (BfmeX1035 *)((BfmeA1275 *)localTerrainLogic())->bfmeGo1275(
 			(int)target, data->m_queryKind, 0, 2);
 	}
 
-	TheTerrainLogic->m_queryScratch = 0.0f;
+	localTerrainLogic()->m_queryScratch = 0.0f;
 
 	int deposit = (int)devastateMin(money, data->m_bountyCap);
 

@@ -44,7 +44,13 @@ struct Rva003FD060TerrainLogic
 	virtual void getExtent(Region3D *region) = 0;
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline Rva003FD060TerrainLogic *localTerrainLogic()
+{
+	return (Rva003FD060TerrainLogic *)TheTerrainLogic;
+}
 
 static const Real DRAWABLE_OVERSCAN = 75.0f;
 
@@ -106,7 +112,7 @@ void W3DView::getAxisAlignedViewRegion(Region3D &axisAlignedRegion)
 	// low and high regions will be based of the extent of the map
 	Region3D mapExtent;
 	Real safeValue = 999999;
-	TheTerrainLogic->getExtent( &mapExtent );
+	localTerrainLogic()->getExtent( &mapExtent );
 	axisAlignedRegion.lo.z = mapExtent.lo.z - safeValue;
 	axisAlignedRegion.hi.z = mapExtent.hi.z + safeValue;
 

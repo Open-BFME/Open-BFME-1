@@ -61,7 +61,13 @@ struct Rva003FD060TerrainLogic
 	virtual void getExtent(Region3D *region) = 0;
 };
 
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+static __forceinline Rva003FD060TerrainLogic *localTerrainLogic()
+{
+	return (Rva003FD060TerrainLogic *)TheTerrainLogic;
+}
 
 extern Real g_bfmeDefaultBU;
 extern const Real BfmeZeroRange;
@@ -129,7 +135,7 @@ struct GetRegionFrameBlock
 void Rva0073B290View::getRegion(Region3D &region)
 {
 	GetRegionFrameBlock L;
-	TheTerrainLogic->getExtent( &L.mapExtent );
+	localTerrainLogic()->getExtent( &L.mapExtent );
 
 	CameraClass *camera = m_3DCamera;
 	camera->Update_Frustum();
