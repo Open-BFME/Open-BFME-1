@@ -191,7 +191,14 @@ struct KindOfMaskType
 	}
 };
 
-extern const KindOfMaskType KINDOFMASK_NONE;
+// The one linked KINDOFMASK_NONE is Common/System/KindOf.cpp's
+// `const BitFlags<192>`, so that is the spelling this reference must carry
+// (a class template's forward declaration mangles exactly as the defining
+// TU's own template does).  KindOfMaskType above is this TU's view of the
+// same 24-byte mask, so the use reinterprets the address.
+template <int NUMBITS>
+class BitFlags;
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 extern void d_009f2ae0();
 
@@ -328,7 +335,8 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 					PartitionFilterOnMap mapFilter;
 					PartitionFilterPlayer playerFilter(m_player, true);
 					PartitionFilterAcceptByKindOf kindFilter(
-						KindOfMaskType(KindOfMaskType::kInit, 34), KINDOFMASK_NONE);
+						KindOfMaskType(KindOfMaskType::kInit, 34),
+						*reinterpret_cast<const KindOfMaskType *>(&KINDOFMASK_NONE));
 
 					PartitionFilter *partitionFilters =
 						kindFilter.link(playerFilter.link(&mapFilter));
