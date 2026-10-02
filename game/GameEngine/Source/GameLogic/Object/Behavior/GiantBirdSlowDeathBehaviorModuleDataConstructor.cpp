@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// This constructor also emits the exact 30-byte scalar-deleting wrapper
+// at 0x001FFF20, whose ILT 0x0001CE0E call reaches the complete destructor
+// at 0x001FFF50. Keep it here so the separate wrapper forcing TU does not
+// emit a competing, vptr-only constructor for this class.
 // Retail 001FFE40: initializes the 24-byte block, then clears it again in the body.
 // Base ILT 76DA routes to SlowDeathBehaviorModuleData constructor 002093F0.
 // AudioEventRTS is 0x70 bytes; ILT 25306 routes to its two-argument ctor B2CC0.
