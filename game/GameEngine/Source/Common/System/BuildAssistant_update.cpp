@@ -1,7 +1,10 @@
-// Retail 0x000FEBE0 / 748 B. Address-qualified sell-list processing body.
+// BuildAssistant::update, retail 0x000FEBE0 / 748 B.
+// Slot 5 (SubsystemInterface::update) of BuildAssistant's table 0x010860D8,
+// installed by the constructor GameEngine::init hands to
+// initSubsystem<BuildAssistant>; evidence:
+// targets/game/reverse/identity_evidence/000febe0-buildassistant-update.md.
 // Follows the ZH BuildAssistant sell-list flow but BFME refunds immediately,
 // displays GUI:AddCash, reports the damage source, then kills or resets the object.
-// No semantic method name is claimed: the established update method is separate.
 // Canonical Object/Thing/Coord3D layout; list and hash lookup use STLport.
 // RefundValue+0x47C and GlobalData sellPercentage+0xC30 are name_oracle witnesses.
 // Object+0x258 and Player+0x1C4 remain unnamed raw fields.
@@ -212,23 +215,24 @@ class ObjectSellInfo { public:
     unsigned int m_sellFrame;
 };
 typedef _STL::list<ObjectSellInfo *> ObjectSellList;
-class SellList000FEBE0 { public:
-    void process();
-    char field00[0x10];
-    ObjectSellList field10;
+class BuildAssistant { public:
+    virtual void update();
+    unsigned char m_unreconstructed_04[0x10 - 0x04];
+    ObjectSellList m_sellList;   ///< retail this+0x10
 };
-void SellList000FEBE0::process() {
+// ?update@BuildAssistant@@UAEXXZ
+void BuildAssistant::update() {
     ObjectSellInfo *sellInfo;
     Object *obj;
     ObjectSellList::iterator it, thisIterator;
-    for(it=field10.begin();it!=field10.end();) {
+    for(it=m_sellList.begin();it!=m_sellList.end();) {
         sellInfo=*it;
         thisIterator=it;
         ++it;
         obj=TheGameLogic->findObjectByID(sellInfo->m_id);
         if(!obj) {
             delete sellInfo;
-            field10.erase(thisIterator);
+            m_sellList.erase(thisIterator);
             continue;
         }
         Player *player=obj->getControllingPlayer();
@@ -259,6 +263,6 @@ void SellList000FEBE0::process() {
             ((Rva001CE3F0*)obj)->apply();
         else obj->kill(Damage000FEBE0,Death000FEBE0);
         delete sellInfo;
-        field10.erase(thisIterator);
+        m_sellList.erase(thisIterator);
     }
 }
