@@ -32,13 +32,19 @@ struct LuaDrawableState
 	LuaDrawableLink *m_drawable;
 };
 
-extern LuaDrawableState *g_obj12F060C;
+// Retail VA 0x012F060C is the LuaScriptEngine slot (data_rows.csv:
+// ?TheLuaScriptEngine@@3PAVLuaScriptEngine@@A); this file views it as the
+// local LuaDrawableState layout it needs.
+class LuaScriptEngine;
+
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 int CurDrawableSetTransitionAnimState(lua_State *state)
 {
-	if (g_obj12F060C->m_drawable != 0) {
+	if (reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable != 0) {
 		if (lua_gettop(state) > 0) {
-			g_obj12F060C->m_drawable->m_transitionAnimState.set(lua_tostring(state, 1));
+			reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable
+				->m_transitionAnimState.set(lua_tostring(state, 1));
 			return 0;
 		}
 	}
