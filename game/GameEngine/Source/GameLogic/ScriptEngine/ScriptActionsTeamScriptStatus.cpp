@@ -138,7 +138,12 @@ extern ScriptEngine *TheScriptEngine;
 // cleans the stack itself afterward, unlike the thiscall bfmeSet1026 its two
 // siblings use -- see Object/Update/Rva002EFB20Helper.cpp for the body, which
 // is a cdecl helper of its own and not a FlammableUpdate method.
-extern "C" void __cdecl bfmeCall_002efb20(void *obj, Bool flag);
+namespace Rva002EFB20
+{
+// ?helper@Rva002EFB20@@YAXPAX_N@Z, the defining declaration; the body lives in
+// game/GameEngine/Source/GameLogic/Object/Update/Rva002EFB20Helper.cpp
+void __cdecl helper(void *obj, Bool flag);
+}
 
 class ScriptActions
 {
@@ -217,7 +222,7 @@ void ScriptActions::d_002f5100(
 			{
 				continue;
 			}
-			bfmeCall_002efb20(obj, enabled);
+			Rva002EFB20::helper(obj, enabled);
 		}
 	}
 }
