@@ -70,7 +70,15 @@ extern "C" const char *g_012B78F0[];
 extern "C" const char *g_012B78C8[];
 class Gen_uw_00025c1b;
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
-extern "C" int *g_bfmeLimitsDF;
+// RankPointValue.h (SAGE upstream) declares `extern RankPoints
+// *TheRankPointValues`; this TU's include environment has no copy of it, so the
+// type is declared locally with the m_ranks shape the body reads. The mangled
+// name of the pointer is what retail references at 0x012F401C.
+struct RankPoints
+{
+    int m_ranks[10];
+};
+extern RankPoints *TheRankPointValues;
 bool Rva004D8F50(int);
 class GameTextInterface {
 public:
@@ -97,7 +105,7 @@ void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
     if(side < 0 || side >= 4) side = 1;
     int points = bfmeRankPointsFromStats((Gen_uw_00025c1b*)&stats,side);
     int rank = 0;
-    for(;rank < 10; ++rank) if(points < g_bfmeLimitsDF[rank+1]) break;
+    for(;rank < 10; ++rank) if(points < TheRankPointValues->m_ranks[rank+1]) break;
     AsciiString key("TOOLTIP:");
     AsciiString name;
     if(Rva004D8F50(side)) name.set(g_012B78F0[rank]);
