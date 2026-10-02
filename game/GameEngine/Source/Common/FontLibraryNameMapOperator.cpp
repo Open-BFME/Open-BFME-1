@@ -22,11 +22,14 @@ template <> struct less<AsciiString>
 };
 }
 
-class Rva00476440Object
+class RefCounted
 {
 public:
-	void Release_Ref();
+	virtual void release(unsigned int count);
+	int m_references;
 };
+
+class Rva00476440;
 
 class Rva00476440Ref
 {
@@ -36,9 +39,13 @@ public:
 	~Rva00476440Ref()
 	{
 		if (m_value != 0)
-			m_value->Release_Ref();
+		{
+			RefCounted *owner = (RefCounted *)m_value;
+			if (--owner->m_references <= 0)
+				owner->release(1);
+		}
 	}
-	Rva00476440Object *m_value;
+	Rva00476440 *m_value;
 };
 
 typedef _STL::map<AsciiString, Rva00476440Ref,

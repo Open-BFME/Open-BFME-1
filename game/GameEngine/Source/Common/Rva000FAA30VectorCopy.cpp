@@ -21,4 +21,5 @@ extern void j_0004845f();
 #pragma comment(linker, "/alternatename:??0Rva000FAA30Elem@@QAE@ABU0@@Z=?j_0004845f@@YAXXZ")
 #pragma comment(linker, "/alternatename:?get_allocator@?$vector@URva000FAA30Elem@@V?$allocator@URva000FAA30Elem@@@_STL@@@_STL@@QBE?AV?$allocator@URva000FAA30Elem@@@2@XZ=?j_0002013a@@YAXXZ")
 
-template class _STL::vector<Rva000FAA30Elem>;
+template _STL::vector<Rva000FAA30Elem>::vector(
+    const _STL::vector<Rva000FAA30Elem> &other);

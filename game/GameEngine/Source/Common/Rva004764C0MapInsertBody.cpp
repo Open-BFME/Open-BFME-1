@@ -11,11 +11,14 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>
 
-class FontDefaultSettings
+class RefCounted
 {
 public:
-	void Release_Ref();
+	virtual void release(unsigned int count);
+	int m_references;
 };
+
+class FontDefaultSettings;
 
 class FontDefaultSettingsRef
 {
@@ -28,7 +31,11 @@ public:
 	~FontDefaultSettingsRef()
 	{
 		if (m_value != 0)
-			m_value->Release_Ref();
+		{
+			RefCounted *settings = (RefCounted *)m_value;
+			if (--settings->m_references <= 0)
+				settings->release(1);
+		}
 	}
 	FontDefaultSettings *m_value;
 };
