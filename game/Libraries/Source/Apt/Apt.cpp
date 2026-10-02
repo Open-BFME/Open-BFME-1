@@ -1,5 +1,48 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
+// The Apt allocator-hook pair pointer at VA 0x01337A30, and the Apt GC-root
+// registry vector pointer at VA 0x01337810.  Evidence:
+// build/report_0x01337A30.md, sections "0x01337A30 -- Apt operator-new/delete
+// pair pointer" and "0x01337810 -- the Apt GC root registry vector".
+//
+// 0x01337A30 holds a POINTER to the two-slot table, not the table: RVA
+// 0x0089487A initialises it to 0x01337828, the address of the global operator
+// new hook, so pool->m_alloc is *(0x01337828) and pool->m_free is
+// *(0x0133782C) (the global operator delete).  Only slot +4 is ever called, at
+// 276 sites, e.g. RVA 0x00891B80 (`?release@Rva00891B80@@QAEXXZ`) and RVA
+// 0x00891BC0.  The setter RVA 0x00891C40 and clearer RVA 0x00891C50 confirm an
+// externally driven API.
+//
+// 0x01337810 points at a heap-allocated twelve-byte {int capacity; int count;
+// void **items;} object built by `??0Gen_008A3070@@QAE@H@Z` at RVA 0x008948BC
+// out of this module's bootstrap.  Every Apt value-class constructor appends
+// `this` to it in the inlined form `mov esi,[0x1337810]; ebx=[esi]; ecx=esi+4;
+// edi=[ecx]; cmp edi,ebx; jl <append>`, and the overflow path clears
+// 0x40000000 of the new value's flag word instead of appending -- so the list
+// is the GC root list.
+//
+// Both names are address-derived: the report found no RTTI (the vftable at
+// 0x01135D68 has a null COL), no string literal, no export and no ea_evidence
+// name row for this library, and it is owned by the Apt library rather than
+// GameEngine (docs/naming_evidence.md).  The class spellings are the proven
+// shapes already claiming these VAs in targets/game/reverse/dir32_addresses.csv,
+// so referencing files need only the variable renamed.
+
+struct BfmeStringPool3AF0
+{
+    void *m_alloc;
+    void (__cdecl *m_free)(void *storage);
+};
+
+struct Rva00899560Pool
+{
+    int m_capacity, m_count;
+    void **m_items;
+};
+
+BfmeStringPool3AF0 *g_rva01337A30AllocPair = 0;
+Rva00899560Pool *g_rva01337810GcRoots = 0;
+
 extern int g_bfme1017I;
 extern int g_013377E0;
 extern int g_013377E4;

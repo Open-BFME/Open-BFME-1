@@ -148,6 +148,17 @@ public:
 	bool m_enabled;
 };
 
+// The client LivingWorld singleton cell at VA 0x012F7048, published by the
+// matched constructor `??0Rva006092D0State@@QAE@XZ` (RVA 0x0060A000), whose
+// single store in all of retail's `.text` is `mov [0x12F7048], esi` with esi
+// the ctor's this.  Evidence: build/report_0x012F7048.md, section
+// "0x012F7048 -- client LivingWorld singleton".  Retail holds zero here; the
+// name is address-derived because nothing in the image, exports.csv or
+// ea_evidence.csv names the global (docs/naming_evidence.md).  The class
+// Rva006092D0State is proven: it is the class of the matched ctor/dtor and of
+// the matched `?rva00609360@Rva006092D0State@@QAEXPAX@Z` below.
+Rva006092D0State *g_rva012F7048LivingWorld = 0;
+
 class Glo012F1028Type
 {
 public:
