@@ -13,9 +13,21 @@ struct Rva00803080Request
 	int m_04;
 	int m_08;
 	int m_0C;
-
-	static void operator delete( void *block, unsigned int size );
 };
+
+// Retail 0x007F0190 is the class free the FESL teardown calls with both the
+// block and its 0x10 stride, but its body only ever reads the block from
+// [esp + 4]; it is the one-argument operator delete defined at that address in
+// game/GameEngine/Source/Common/S3AllocatorOperatorNewDelete.cpp, so the call
+// spells that defining name and is cast to the cdecl two-argument shape the
+// caller pushes (the same convention as the Rva0086xxxxForward forwarders).
+class Gen007F0190
+{
+public:
+	static void operator delete( void *block );
+};
+
+typedef void ( __cdecl *Rva007F0190Delete )( void *block, unsigned int size );
 
 struct Rva007EAServiceList
 {
@@ -47,7 +59,8 @@ void Rva00803080::clear()
 
 	if( m_0C )
 	{
-		Rva00803080Request::operator delete( m_0C, sizeof( Rva00803080Request ) );
+		Rva007F0190Delete del = (Rva007F0190Delete)&Gen007F0190::operator delete;
+		del( m_0C, sizeof( Rva00803080Request ) );
 		m_0C = 0;
 	}
 

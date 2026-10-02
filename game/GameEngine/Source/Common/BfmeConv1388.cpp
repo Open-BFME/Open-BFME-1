@@ -10,10 +10,13 @@ public:
 	void m();
 };
 
-class BfmeMsgVJK
+// Retail 0x007E8850 is the (char*, int) constructor of the real BfmeC994
+// message class (see game/GameEngine/Source/Common/BfmeConv994.cpp), so the
+// local view spells it that way instead of an invented init method.
+class BfmeC994
 {
 public:
-	void bfmeInitVJK(char *buf, int n);
+	BfmeC994(char *buf, int n);
 	char m_bfmePad[0x34];
 };
 
@@ -40,7 +43,7 @@ public:
 	virtual void bfmeA44VJK() throw();
 	virtual void bfmeA48VJK() throw();
 	virtual void bfmeA4CVJK() throw();
-	virtual void bfmeA50VJK(class BfmeMsgVJK *m) throw();
+	virtual void bfmeA50VJK(class BfmeC994 *m) throw();
 };
 
 class BfmeBVJK
@@ -48,7 +51,7 @@ class BfmeBVJK
 public:
 	virtual void bfmeB00VJK() throw();
 	virtual void bfmeB04VJK() throw();
-	virtual void bfmeB08VJK(class BfmeMsgVJK *m, int x, int y, int z) throw();
+	virtual void bfmeB08VJK(class BfmeC994 *m, int x, int y, int z) throw();
 };
 
 class BfmeThingVJK
@@ -65,8 +68,7 @@ public:
 
 void BfmeThingVJK::bfmeGoVJK(int unused)
 {
-	BfmeMsgVJK msg;
-	msg.bfmeInitVJK(m_bfmeBuf, 0x400);
+	BfmeC994 msg(m_bfmeBuf, 0x400);
 	m_bfme10->bfmeA50VJK(&msg);
 	m_bfme14->bfmeB08VJK(&msg, 0, 0, m_bfme6dc);
 	reinterpret_cast< Gen_007e86c0 * >( &msg )->m();

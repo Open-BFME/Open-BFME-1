@@ -1,13 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: BroadcastStealthUpdateModuleData dtor. dual different members SEH.
 
-class BroadcastStealthUpdateModuleDataMemberA
-{
-public:
-	~BroadcastStealthUpdateModuleDataMemberA();
-private:
-	unsigned char m_pad[4];
-};
+// The +0x28 member is destroyed by the inlined StringBase<char> destructor,
+// i.e. a direct call to StringBase<char>::releaseBuffer at 0x00887940, so the
+// member is the real AsciiString (four bytes, no added data) rather than an
+// invented class with an undefined destructor.
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class AttributeModifierAuraUpdateModuleDataMemberD
 {
@@ -30,7 +28,7 @@ class __declspec(novtable) BroadcastStealthUpdateModuleData : public BroadcastSt
 public:
 	virtual ~BroadcastStealthUpdateModuleData();
 private:
-	BroadcastStealthUpdateModuleDataMemberA m_a;
+	AsciiString m_a;
 	AttributeModifierAuraUpdateModuleDataMemberD m_b;
 };
 
