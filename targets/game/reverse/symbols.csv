@@ -86126,7 +86126,6 @@ name,address,notes
 ?receiveGrant@StealthUpdate@@QAEX_NI@Z,0x00040DC2,ILT to the two-argument StealthUpdate receiveGrant body at 0x002AD380; OpenContain::markAllPassengersDetected passes false and one frame
 ?recenterTurret@TurretAI@@QAEXXZ,0x0003B679,ILT thunk to 0x18C8D0; pinned from AIUpdateInterface::recenterTurret @0x26EA10
 ?records003C3BA0@Transfer003C3D90@@QAEXPAVXfer@@@Z,0x003C3BA0,Address-derived body ABI; Aligned call 003C3E81 passes xfer with ecx owner; ret 4 and callee_protos confirm thiscall
-?recurse@Gen_009431F0@@QAEXPAX0HHHHHHHH@Z,0x009441D0,address-derived recursive quadtree helper called by 0x00944360
 ?refresh003CAD90@Glo012F1028Sub@@QAEXXZ,0x00040016,Reviewed full3CAD9088B rebuild/notify then reset counters; replaces misleading clear alias in this draft
 ?refresh@Gen0060BE20@@AAEXXZ,0x00025CED,refresh ILT used by exact Living World eye tower gate at 0x0060BE20
 ?refresh@Q1Receiver0134FAAC@@QAEXXZ,0x009EFF50,Q1 receiver refresh helper used by the 0x009F1A60 body
