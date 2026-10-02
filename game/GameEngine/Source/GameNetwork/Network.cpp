@@ -18,6 +18,12 @@
 #include "GameNetwork/Transport.h"
 #include "GameNetwork/Udp.h"
 
+// Native Network.cpp owns this singleton (Zero Hour Network.cpp:98).
+// Matched BFME createTheNetwork stores its constructed pointer at RVA
+// 0x0068236A into VA 0x012F7714, then invokes init through that pointer.
+// Retail .data starts with four zero bytes at this cell.
+NetworkInterface *TheNetwork = 0;
+
 class Network : public NetworkInterface
 {
 public:
