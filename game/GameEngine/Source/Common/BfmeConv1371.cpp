@@ -1,17 +1,14 @@
 // Open-BFME5 conversions.
 
-class BfmeUniVIA
-{
-public:
-	void bfmeSetVIA(const BfmeUniVIA &o);
-	char m_bfmePad[4];
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
+// The three leading members are StringBase<char> values copied by
+// StringBase<char>::set (0x00887C90); only the scalar tail is copied directly.
 struct BfmeElemVIA
 {
-	BfmeUniVIA m_bfme00;
-	BfmeUniVIA m_bfme04;
-	BfmeUniVIA m_bfme08;
+	StringBase<char> m_bfme00;
+	StringBase<char> m_bfme04;
+	StringBase<char> m_bfme08;
 	char m_bfme0c;
 	char m_bfmePad0d[3];
 	int m_bfme10;
@@ -28,9 +25,9 @@ BfmeElemVIA *__cdecl bfmeCopyVIA(BfmeElemVIA *first, BfmeElemVIA *last, BfmeElem
 		int i = n;
 		do
 		{
-			dest->m_bfme00.bfmeSetVIA(first->m_bfme00);
-			dest->m_bfme04.bfmeSetVIA(first->m_bfme04);
-			dest->m_bfme08.bfmeSetVIA(first->m_bfme08);
+			dest->m_bfme00.set(first->m_bfme00);
+			dest->m_bfme04.set(first->m_bfme04);
+			dest->m_bfme08.set(first->m_bfme08);
 			dest->m_bfme0c = first->m_bfme0c;
 			dest->m_bfme10 = first->m_bfme10;
 			dest->m_bfme14 = first->m_bfme14;
