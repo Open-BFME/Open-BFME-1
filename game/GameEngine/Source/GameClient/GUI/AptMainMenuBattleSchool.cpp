@@ -11,7 +11,17 @@ public:
 	unsigned char m_bfmeFlagBQ;
 };
 
-extern Rva0051D690Shell *g_obj12F4B58;
+// The retail shell singleton at 0x012F4B58 has the one identity
+// ?TheShell@@3PAVShell@@A, so the reference carries its defining class name;
+// this TU's own view of the object stays above and is selected by a cast.
+class Shell;
+
+extern Shell *TheShell;
+
+static inline Rva0051D690Shell *localShell()
+{
+	return (Rva0051D690Shell *)TheShell;
+}
 
 struct Rva005A00B0AudioClient
 {
@@ -58,15 +68,15 @@ public:
 
 void AptMainMenu::BattleSchool( void *unused )
 {
-	if( g_obj12F4B58 != 0 )
-		g_obj12F4B58->m_bfmeFlagBQ = 0;
+	if( TheShell != 0 )
+		localShell()->m_bfmeFlagBQ = 0;
 
 	localAudioClient()->bfmeStopBQ( 8 );
 
 	TheTransitionHandler->setGroup( AsciiString( "MainMenuToBattleSchool" ) );
 
-	if( g_obj12F4B58 != 0 )
-		g_obj12F4B58->restore();
+	if( TheShell != 0 )
+		localShell()->restore();
 
 	m_bfmeStateBQ = 0;
 }

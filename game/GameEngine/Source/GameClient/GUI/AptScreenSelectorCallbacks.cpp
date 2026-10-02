@@ -43,7 +43,9 @@ struct Rva00367E30Logic
 	int m_mode;
 };
 
-class Shell40D9
+// TU-local view of the retail shell singleton, whose one identity is
+// ?TheShell@@3PAVShell@@A at 0x012F4B58.
+class Shell
 {
 public:
 	unsigned char m_unmodelled[ 0x50 ];
@@ -62,7 +64,7 @@ public:
 };
 
 extern MessageStream *TheMessageStream;
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 extern void *g_bfmeReadyAG;
 extern Rva00579160Manager *Rva00579160TheManager;
 // ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in

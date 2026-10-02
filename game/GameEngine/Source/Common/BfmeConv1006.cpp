@@ -13,7 +13,11 @@ public:
 };
 
 extern BfmeRun1006 *g_bfmeRun1006;
-extern BfmeStop1006 *g_bfmeStop1006;
+// retail 0x012F4B58: the shell singleton, whose one identity is
+// ?TheShell@@3PAVShell@@A.  The view above is this TU's own layout of it, so
+// the reference carries the defining name and the view is selected by a cast.
+class Shell;
+extern Shell *TheShell;
 extern char g_bfmeFlag1006;
 
 class BfmeA1006
@@ -35,7 +39,7 @@ void BfmeA1006::bfmeGo1006A()
 		return;
 
 	if (!g_bfmeRun1006) {
-		g_bfmeStop1006->bfmeStop1006();
+		((BfmeStop1006 *)TheShell)->bfmeStop1006();
 		g_bfmeFlag1006 = 1;
 		return;
 	}
@@ -71,7 +75,6 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 extern BfmeObj1006 *g_bfmeObj1006;
-extern BfmeAux1006 *g_bfmeAux1006;
 
 class BfmeB1006
 {
@@ -91,7 +94,7 @@ void BfmeB1006::bfmeGo1006B(int unused)
 
 	if (p && !p->m_bfmeFlag) {
 		p->m_bfmeFlag = 1;
-		g_bfmeAux1006->m_bfmeFlag = 1;
+		((BfmeAux1006 *)TheShell)->m_bfmeFlag = 1;
 		((BfmeHub1006 *)g_rva012F19E8WindowManager)->bfmeDo1006();
 	}
 

@@ -11,7 +11,9 @@ public:
 	int m_gameMode;
 };
 
-class Shell40D9
+// Retail 0x012F4B58's one identity is ?TheShell@@3PAVShell@@A, so this
+// TU's view of the shell singleton is spelled with its defining class name.
+class Shell
 {
 public:
 	char m_pad[0x59];
@@ -24,7 +26,7 @@ public:
 class GameLogic;
 
 extern GameLogic *TheGameLogic;
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 
 class BfmeWalkNode40D9
 {

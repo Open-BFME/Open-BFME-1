@@ -14,12 +14,14 @@ typedef bool Bool;
 
 extern void j_0004393c();
 
-class Rva0051D690Shell
+// TU-local view of the retail shell singleton, whose one identity is
+// ?TheShell@@3PAVShell@@A at 0x012F4B58.
+class Shell
 {
 public:
 	void giveBackViaThunk()
 	{
-		typedef void (Rva0051D690Shell::*MemberThunk)();
+		typedef void (Shell::*MemberThunk)();
 		union
 		{
 			void (*function)();
@@ -76,7 +78,7 @@ public:
 	virtual void addAudioEvent( AudioEventRTS *event );
 };
 
-extern Rva0051D690Shell *g_obj12F4B58;
+extern Shell *TheShell;
 struct Rva005A00B0Transition;
 extern Rva005A00B0Transition *TheTransitionHandler;
 // The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
@@ -103,8 +105,8 @@ void Rva0051D590::first()
 	m_shellMusicActive = 1;
 	reinterpret_cast<TransitionHandler *>( TheTransitionHandler )->setGroup( AsciiString( "MainMenuToSubMenu" ), 0 );
 
-	if ( g_obj12F4B58 != 0 )
-		g_obj12F4B58->giveBackViaThunk();
+	if ( TheShell != 0 )
+		TheShell->giveBackViaThunk();
 
 	AudioEventRTS event( AsciiString( "Shell2Music" ), (ObjectID)2 );
 	((LwsAudioEventRTS *)&event)->setIsLogicalAudio( false );

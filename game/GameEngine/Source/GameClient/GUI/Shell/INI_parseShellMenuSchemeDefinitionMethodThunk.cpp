@@ -29,14 +29,16 @@ public:
 	static const FieldParse m_shellMenuSchemeFieldParseTable[];
 };
 
-class BfmeShell
+// TU-local view of the retail shell singleton; 0x012F4B58's one identity is
+// ?TheShell@@3PAVShell@@A.
+class Shell
 {
 public:
 	unsigned char m_pad[0x60];
 	BfmeShellMenuSchemeManager *m_schemeManager;
 };
 
-extern BfmeShell *TheShell;
+extern Shell *TheShell;
 
 class INI
 {

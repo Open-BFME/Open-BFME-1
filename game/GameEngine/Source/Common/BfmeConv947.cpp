@@ -85,7 +85,11 @@ public:
 };
 
 extern BfmeObj947C *g_bfme947ObjC;
-extern BfmeAux947C *g_bfme947AuxC;
+// retail 0x012F4B58: the one identity of that address is the shell singleton
+// ?TheShell@@3PAVShell@@A.  The view above is this TU's own layout of it, so
+// the reference carries the defining name and the view is selected by a cast.
+class Shell;
+extern Shell *TheShell;
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
@@ -104,7 +108,7 @@ void bfmeGo947C(void)
 			return;
 		p->m_bfmeFlag = 1;
 		g_bfme947ObjC->m_bfmeVal = 0;
-		g_bfme947AuxC->m_bfmeFlag = 1;
+		((BfmeAux947C *)TheShell)->m_bfmeFlag = 1;
 		((BfmeGlob947C *)g_rva012F19E8WindowManager)->bfmeTailB947C();
 	} else {
 		bfmeTailA947C();
