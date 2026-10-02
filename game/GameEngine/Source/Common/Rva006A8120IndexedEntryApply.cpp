@@ -18,6 +18,13 @@ struct Rva0069C300Element
 	int m_field1;
 };
 
+namespace _STL
+{
+	template <> void __cdecl _Construct<Rva0069C300Element, Rva0069C300Element>(
+		Rva0069C300Element *destination,
+		const Rva0069C300Element &source);
+}
+
 typedef _STL::vector<Rva0069C300Element> Rva006A8120Vector;
 
 struct Rva006A8120Record
