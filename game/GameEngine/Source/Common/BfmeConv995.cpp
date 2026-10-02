@@ -72,7 +72,12 @@ public:
 	virtual void bfmeRelease995(void *p);
 };
 
-extern BfmeLog995 *g_bfmeLog995;
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeLog995 is
+// this TU's view of the same object, so the uses cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeDrop995 *g_bfmeDrop995;
 extern int g_bfmeVal995B;
 extern void *g_bfmeHeld995B;
@@ -80,7 +85,7 @@ extern char g_bfmeFmt995B[];
 
 void bfmeGo995B(void)
 {
-	g_bfmeLog995->bfmeLog995(g_bfmeVal995B, g_bfmeFmt995B, 0, 0, 0, 0, 0, 0);
+	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_bfmeVal995B, g_bfmeFmt995B, 0, 0, 0, 0, 0, 0);
 
 	if (g_bfmeHeld995B) {
 		g_bfmeDrop995->bfmeRelease995(g_bfmeHeld995B);
@@ -115,7 +120,7 @@ void BfmeC995::bfmeGo995C(int unused)
 	if (m_bfmeState != 0xa)
 		return;
 
-	g_bfmeLog995->bfmeLog995(m_bfmeOwner->m_bfmeId, g_bfmeFmtA995C, 1,
+	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(m_bfmeOwner->m_bfmeId, g_bfmeFmtA995C, 1,
 			g_bfmeFmtB995C, 0, 0, 0, 0);
 
 	m_bfmeState = 1;

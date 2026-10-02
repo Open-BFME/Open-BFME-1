@@ -88,7 +88,12 @@ public:
 	void bfmeStoreZF(const AsciiStringZF &key, const UnicodeStringZF &value);
 };
 
-extern BfmePalantirZF *g_bfmePalantirZF;			// retail 0x012F19E8
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmePalantirZF is
+// this TU's view of the same object, so the use casts.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmeProductionCountZF@@YAXHH@Z
 void bfmeProductionCountZF(int slot, int count)
@@ -108,5 +113,5 @@ void bfmeProductionCountZF(int slot, int count)
 		value.set(blank, 1);
 	}
 
-	g_bfmePalantirZF->bfmeStoreZF(key, value);
+	((BfmePalantirZF *)g_rva012F19E8WindowManager)->bfmeStoreZF(key, value);
 }

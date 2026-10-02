@@ -9,7 +9,13 @@ public:
 	void bfmeStop1066(int a);
 };
 
-extern BfmeR1066 *g_bfmeR1066;
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeR1066 is this
+// TU's view of the same object, so the uses cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern char g_bfmeFmtA1066[];
 extern char g_bfmeFmtB1066[];
 extern char g_bfmeLitA1066[];
@@ -50,10 +56,10 @@ void BfmeH1066::bfmeGo1066A(int a)
 {
 	if (m_bfme25a)
 		return;
-	g_bfmeR1066->bfmeRun1066(bfmeConv1066(this), g_bfmeFmtA1066, 0, 0, 0, 0, 0, 0);
+	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(bfmeConv1066(this), g_bfmeFmtA1066, 0, 0, 0, 0, 0, 0);
 	m_bfme25a = 1;
 	if (!m_bfme25b) {
-		g_bfmeR1066->bfmeStop1066(0);
+		((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeStop1066(0);
 		m_bfme25b = 1;
 	}
 }
@@ -63,7 +69,7 @@ void BfmeH1066::bfmeGo1066B(int a)
 	char *s = ((BfmeM1066 *)TheWritableGlobalData)->m_bfmea9f
 		? g_bfmeLitA1066 : g_bfmeLitB1066;
 
-	g_bfmeR1066->bfmeRun1066(m_bfme250, g_bfmeFmtB1066, 1, s, 0, 0, 0, 0);
+	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(m_bfme250, g_bfmeFmtB1066, 1, s, 0, 0, 0, 0);
 	m_bfme258 = 1;
 	if (m_bfme259) {
 		m_bfme25a = 1;

@@ -78,12 +78,9 @@ public:
 
 class WindowManager;
 
-extern WindowManager *g_theWindowManager;		// retail 0x012F19E8
-
-static inline BfmePalantirZC *localWindowManagerZC(void)
-{
-	return (BfmePalantirZC *)g_theWindowManager;
-}
+// retail 0x012F19E8; the single definition is
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // ?bfmeMultiplierZC@@YADM@Z
 char bfmeMultiplierZC(float multiplier)
@@ -97,7 +94,7 @@ char bfmeMultiplierZC(float multiplier)
 	else
 		value.set(L" ", wcslen(L" "));
 
-	localWindowManagerZC()->bfmeStoreZC(s_bfmeKeyZC, value);
+	((BfmePalantirZC *)g_rva012F19E8WindowManager)->bfmeStoreZC(s_bfmeKeyZC, value);
 
 	return 1;
 }

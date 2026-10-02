@@ -75,7 +75,12 @@ public:
 	void bfmeLog1021(int a, char *fmt, int b, int c, int d, int e, int f, int g);
 };
 
-extern BfmeLog1021 *g_bfmeLog1021;
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeLog1021 is
+// this TU's view of the same object, so the uses cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmt1021B[];
 
 class BfmeB1021
@@ -89,7 +94,7 @@ public:
 
 void BfmeB1021::bfmeGo1021B(void)
 {
-	g_bfmeLog1021->bfmeLog1021(m_bfmeId, g_bfmeFmt1021B, 0, 0, 0, 0, 0, 0);
+	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(m_bfmeId, g_bfmeFmt1021B, 0, 0, 0, 0, 0, 0);
 }
 
 class BfmeE1021
@@ -175,5 +180,5 @@ extern char g_bfmeFmt1021G[];
 
 void bfmeGo1021G(int i)
 {
-	g_bfmeLog1021->bfmeLog1021(g_bfmeMsg1021, g_bfmeFmt1021G, 1, g_bfmeTab1021[i], 0, 0, 0, 0);
+	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(g_bfmeMsg1021, g_bfmeFmt1021G, 1, g_bfmeTab1021[i], 0, 0, 0, 0);
 }

@@ -9,7 +9,13 @@ public:
 	void bfmeOpen1071(BfmeX1071 *a);
 };
 
-extern BfmeR1071 *g_bfmeR1071;
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeR1071 is this
+// TU's view of the same object, so the uses cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern BfmeX1071 *g_bfmeX1071;
 extern char g_bfmeFmtD1071[];
 extern char g_bfmeFmtP1071[];
@@ -25,7 +31,7 @@ void bfmeGo1071A(int a, char b)
 	char buf[0x10] = "";
 
 	sprintf(buf, g_bfmeFmtD1071, a);
-	g_bfmeR1071->bfmeRun1071(g_bfmeX1071, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
+	((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071(g_bfmeX1071, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGo1071B(char a)
@@ -33,13 +39,13 @@ void bfmeGo1071B(char a)
 	if (a) {
 		if (!g_bfmeF1071) {
 			g_bfmeH1071 = 1;
-			g_bfmeR1071->bfmeOpen1071(g_bfmeX1071);
+			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeOpen1071(g_bfmeX1071);
 			g_bfmeF1071 = 1;
 			g_bfmeH1071 = 0;
 		}
 	} else {
 		if (!g_bfmeF1071 && !g_bfmeH1071) {
-			g_bfmeR1071->bfmeRun1071(g_bfmeX1071, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
+			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071(g_bfmeX1071, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
 			g_bfmeH1071 = 1;
 		}
 	}

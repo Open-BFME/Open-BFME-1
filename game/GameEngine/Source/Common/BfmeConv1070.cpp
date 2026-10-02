@@ -8,7 +8,13 @@ public:
 	void bfmeRun1070(BfmeX1070 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1070 *g_bfmeR1070;
+// The global at 0x012F19E8 is EA's
+// `WindowManager *g_rva012F19E8WindowManager` (defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeR1070 is this
+// TU's view of the same object, so the uses cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern BfmeX1070 *g_bfmeX1070;
 extern char g_bfmeFmtA1070[];
 extern char g_bfmeFmtB1070[];
@@ -64,14 +70,14 @@ public:
 
 void BfmeQ1070::bfmeGo1070A(void)
 {
-	if (!g_bfmeR1070 || !m_bfme3a8)
+	if (!g_rva012F19E8WindowManager || !m_bfme3a8)
 		return;
 	m_bfme3a8 = 0;
 	m_bfmeSub.bfmeSlot1070S_1();
 	if (g_bfmeG1070)
 		g_bfmeG1070->bfmeSlot1070G_13();
 	g_bfmeT1070->bfmeTail1070();
-	g_bfmeR1070->bfmeRun1070(m_bfme250, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0);
+	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(m_bfme250, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0);
 }
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
@@ -88,5 +94,5 @@ void bfmeGo1070B(float a)
 	else if (n > 100)
 		n = 100;
 	sprintf(buf, g_bfmeFmtD1070, n);
-	g_bfmeR1070->bfmeRun1070(g_bfmeX1070, g_bfmeFmtB1070, 1, buf, 0, 0, 0, 0);
+	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(g_bfmeX1070, g_bfmeFmtB1070, 1, buf, 0, 0, 0, 0);
 }

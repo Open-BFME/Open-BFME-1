@@ -106,7 +106,9 @@ public:
 	void unidentified_0002e9a1( int a );
 };
 
-extern WindowManager *g_theWindowManager;
+// retail 0x012F19E8; the single definition is
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp
+extern WindowManager *g_rva012F19E8WindowManager;
 
 void __cdecl Rva00892A00Query( void **firstResult, void **secondResult );
 
@@ -135,7 +137,7 @@ void Rva00470360::fitWindow004703F0( int )
 		int width;
 		int height;
 		Rva00892A00Query( (void **)&width, (void **)&height );
-		float *scale = g_theWindowManager->vslot28();
+		float *scale = g_rva012F19E8WindowManager->vslot28();
 		width = (int)( width * scale[ 0 ] );
 		height = (int)( height * scale[ 1 ] );
 		m_window->winSetSize( width, height );
@@ -145,8 +147,8 @@ void Rva00470360::fitWindow004703F0( int )
 		if ( !m_registered )
 		{
 			TheWindowManager->vslotb0( m_window );
-			g_theWindowManager->showAptWindow( m_window->m_aptIndex );
-			g_theWindowManager->unidentified_0002e9a1( m_window->m_aptIndex );
+			g_rva012F19E8WindowManager->showAptWindow( m_window->m_aptIndex );
+			g_rva012F19E8WindowManager->unidentified_0002e9a1( m_window->m_aptIndex );
 			m_registered = true;
 		}
 		m_window->vslot30();

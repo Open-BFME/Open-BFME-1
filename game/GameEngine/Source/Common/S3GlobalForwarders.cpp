@@ -72,13 +72,18 @@ public:
 
 extern BfmeGlobal_012f142c *TheBfmeGlobal_012f142c;				// 0x012F142C
 
+// 0x012F19E8 is retail's `WindowManager *g_rva012F19E8WindowManager`
+// (?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); the
+// BfmeGlobal_012f19e8 view below is TU-local and reached through a cast.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;				// 0x012F19E8
+
 class BfmeGlobal_012f19e8
 {
 public:
 	void bfmeCall_000290d2(void);					// retail 0x000290D2
 };
-
-extern BfmeGlobal_012f19e8 *TheBfmeGlobal_012f19e8;				// 0x012F19E8
 
 class BfmeGlobal_012f4b70
 {
@@ -194,7 +199,7 @@ void Gen_0042e730(void)
 // ?Gen_0046ecf0@@YAXXZ
 void Gen_0046ecf0(void)
 {
-	TheBfmeGlobal_012f19e8->bfmeCall_000290d2();
+	((BfmeGlobal_012f19e8 *)g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 }
 
 // ?Gen_0046ed60@@YAXXZ
@@ -212,7 +217,7 @@ void Gen_0046ed70(void)
 // ?Gen_0055bd20@@YAXXZ
 void Gen_0055bd20(void)
 {
-	TheBfmeGlobal_012f19e8->bfmeCall_000290d2();
+	((BfmeGlobal_012f19e8 *)g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 }
 
 // ?Gen_006a3790@@YAXXZ
