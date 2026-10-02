@@ -17,8 +17,6 @@ private:
 	char *m_buffer;
 };
 
-extern "C" const char Rva011139E4_W3D_Extension[];
-
 class BFMEChunkInput
 {
 public:
@@ -76,7 +74,7 @@ extern void *Open_W3D_File(void *a, void *b, const char *filename);
 void Rva00971CE0AggregatePrototype::Load_Aggregate()
 {
 	StringClass filename(m_name, false);
-	filename += Rva011139E4_W3D_Extension;
+	filename += ".w3d";
 
 	BFMEChunkInput *file = (BFMEChunkInput *)Open_W3D_File(
 		(void *)(const char *)filename,

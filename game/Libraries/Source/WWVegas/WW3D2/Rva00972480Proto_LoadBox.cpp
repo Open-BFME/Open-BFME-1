@@ -12,8 +12,6 @@
 
 #include <string.h>
 
-extern "C" volatile unsigned int Rva011139E4_W3D_Extension;
-
 class BFMEChunkInput
 {
 public:
@@ -62,9 +60,10 @@ void Rva00972480Proto::Load_Box()
 	strcpy(filename, m_name);
 	char *dot = strchr(filename, '.');
 	if (dot != 0) {
-		*reinterpret_cast<volatile unsigned int *>(dot) = Rva011139E4_W3D_Extension;
+		*reinterpret_cast<volatile unsigned int *>(dot) =
+			*reinterpret_cast<const volatile unsigned int *>(".w3d");
 		*(reinterpret_cast<volatile unsigned char *>(dot) + 4) =
-			*(reinterpret_cast<volatile unsigned char *>(&Rva011139E4_W3D_Extension) + 4);
+			*(reinterpret_cast<const volatile unsigned char *>(".w3d") + 4);
 	}
 
 	file = (BFMEChunkInput *)Open_W3D_File(
