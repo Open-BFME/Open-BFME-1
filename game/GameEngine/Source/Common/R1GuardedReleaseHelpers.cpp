@@ -20,10 +20,22 @@
 // apart (0x05 vs 0x0B); nothing else in the bytes distinguishes them.
 //
 // IDENTITY IS NOT RECOVERED, except for TextureClass::Release_Ref, which is the
-// ledger's own name for the body one REL32 reaches.  Everything else is named
-// from an address, and the callee pins are address-derived and additive.
+// ledger's own name for the body one REL32 reaches, and the 0x006BA220 body,
+// which the ledger already names `?release@Gen0002857E@@QAEXXZ` and which is
+// defined by game/GameEngine/Source/Common/Gen0002857ERelease.cpp.  Everything
+// else is named from an address, and the callee pins are address-derived and
+// additive.
 
 class TextureClass { public: void Release_Ref(); };
+
+// Declared by the same mangled name its defining TU uses, so the guarded calls
+// below link.  This TU only needs the class as a pointer type; the layout lives
+// with the definition in Gen0002857ERelease.cpp.
+class Gen0002857E
+{
+public:
+	void release();
+};
 
 #define BFME_RELEASE_CALLEE( ADDR )                                       \
 	class Gen##ADDR                                                       \
@@ -32,7 +44,6 @@ class TextureClass { public: void Release_Ref(); };
 		void handle();                                                    \
 	};
 
-BFME_RELEASE_CALLEE( 006BA220 )
 BFME_RELEASE_CALLEE( 00958BF0 )
 BFME_RELEASE_CALLEE( 0089C880 )
 
@@ -63,7 +74,7 @@ BFME_MEMBER_POINTER_STEP( Rva00161140 )
 
 // -------------------------------------------------- call, then always clear
 
-#define BFME_CALL_THEN_CLEAR( NAME, CALLEE )                              \
+#define BFME_CALL_THEN_CLEAR( NAME, CALLEE, METHOD )                      \
 	class NAME                                                            \
 	{                                                                     \
 	public:                                                               \
@@ -73,12 +84,12 @@ BFME_MEMBER_POINTER_STEP( Rva00161140 )
 	void NAME::go()                                                       \
 	{                                                                     \
 		if( m_target )                                                    \
-			m_target->handle();                                           \
+			m_target->METHOD();                                           \
 		m_target = 0;                                                     \
 	}
 
-BFME_CALL_THEN_CLEAR( Rva00691080, Gen006BA220 )
-BFME_CALL_THEN_CLEAR( Rva00691180, Gen006BA220 )
+BFME_CALL_THEN_CLEAR( Rva00691080, Gen0002857E, release )
+BFME_CALL_THEN_CLEAR( Rva00691180, Gen0002857E, release )
 
 // -------------------------------------------------- call and clear together
 
