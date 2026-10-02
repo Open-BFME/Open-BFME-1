@@ -71,7 +71,7 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00238BC0HordeContainInterface
 {
@@ -126,7 +126,7 @@ BfmeRvaA760ProbeInterface *filter ) const
 		if ( key != 0 )
 		{
 			BfmeRvaA760Object *object =
-				TheBfmeGameLogic->findObjectByID( key );
+				TheGameLogic->findObjectByID( key );
 			if ( object != 0
 				&& probe->accepts( object, countOwner->getCount() ) )
 				++count;

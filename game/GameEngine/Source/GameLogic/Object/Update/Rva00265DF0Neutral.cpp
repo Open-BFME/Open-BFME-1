@@ -27,9 +27,9 @@ public:
 };
 
 // The game logic global at retail 0x012F0898
-// (?TheBfmeGameLogic@@3PAVGameLogic@@A), the same object other retail TUs
-// reach through `extern GameLogic *TheBfmeGameLogic;`.
-extern GameLogic *TheBfmeGameLogic;
+// (?TheGameLogic@@3PAVGameLogic@@A), the same object other retail TUs
+// reach through `extern GameLogic *TheGameLogic;`.
+extern GameLogic *TheGameLogic;
 
 class Object
 {
@@ -95,7 +95,7 @@ int Rva00265DF0Owner::run()
 		FindObjectByIDCall asMember;
 	} findObjectCast;
 	findObjectCast.asVoid = (void *)j_0001f253;
-	Object *target = (TheBfmeGameLogic->*findObjectCast.asMember)(m_targetObjectID);
+	Object *target = (TheGameLogic->*findObjectCast.asMember)(m_targetObjectID);
 
 	Object *ownerObject = *reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(this) - 8);
 	Rva00265DF0AI *ai = ownerObject->m_ai;

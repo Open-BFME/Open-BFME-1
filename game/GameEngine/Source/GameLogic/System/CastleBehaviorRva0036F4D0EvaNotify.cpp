@@ -176,7 +176,7 @@ private:
 	Rva0036F4D0Map m_map108;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern Eva *TheEva;
 extern Radar *TheRadar;
@@ -204,7 +204,7 @@ void CastleBehavior::playEvaEventsForCastlePacking()
 	if (localPlayer == 0)
 		return;
 
-	Object *object = TheBfmeGameLogic->findObjectByID(m_ata0);
+	Object *object = TheGameLogic->findObjectByID(m_ata0);
 	CastleMemberBehaviorModule *module;
 	if (object != 0)
 	{
@@ -257,7 +257,7 @@ void CastleBehavior::playEvaEventsForCastlePacking()
 		return;
 
 	UnsignedInt expiry = TheEva->m_at64 + it->second.a[0];
-	if (expiry < TheBfmeGameLogic->m_frame)
+	if (expiry < TheGameLogic->m_frame)
 		return;
 
 	EvaMessage event = module != 0 ?

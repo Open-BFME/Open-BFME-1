@@ -243,7 +243,8 @@ struct Rva00367E30Logic
 {
     Bool isGamePaused();
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeGameLogicPause
 {
@@ -274,7 +275,7 @@ typedef std::map<AsciiString, HotKey> Rva005B3AD0HotKeyMap;
 
 Bool BfmeTransitionMD::dispatch(AsciiString *key, Bool shiftOnly)
 {
-    if (((BfmeGameLogicPause *)TheBfmeGameLogic)->isGamePaused())
+    if (((BfmeGameLogicPause *)TheGameLogic)->isGamePaused())
         return false;
 
     unsigned char *uiFlags = (unsigned char *)TheInGameUI;

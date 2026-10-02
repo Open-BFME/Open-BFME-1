@@ -22,7 +22,7 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 
 class DestroyEnvironmentUpdateModuleData
@@ -56,7 +56,6 @@ public:
 	virtual UpdateSleepTime update();
 };
 
-#pragma comment(linker, "/alternatename:?TheBfmeGameLogic@@3PAVGameLogic@@A=?TheBfmeGameLogic@@3PAURva00367E30Logic@@A")
 #pragma comment(linker, "/alternatename:?bfmeFindModule@@YAPAVBfmeDestroyable@@XZ=?d_0028ccd0@@YAXXZ")
 
 // ?update@DestroyEnvironmentUpdate@@UAE?AW4UpdateSleepTime@@XZ
@@ -80,7 +79,7 @@ UpdateSleepTime DestroyEnvironmentUpdate::update()
 			return UPDATE_SLEEP_FOREVER;
 	}
 
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	unsigned int elapsed = logic->m_frame - *(unsigned int *)(self + 0x10);
 	unsigned int startDelay = data->m_startDelay;
 	if (elapsed < startDelay)

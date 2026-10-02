@@ -84,7 +84,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class SpecialAbilityUpdate
 {
@@ -105,7 +105,7 @@ Bool SpecialAbilityUpdate::checkTarget(Object *target)
 
 	if (target->m_containedBy != 0)
 	{
-		Object *producer = TheBfmeGameLogic->findObjectByID(target->m_producerID);
+		Object *producer = TheGameLogic->findObjectByID(target->m_producerID);
 		if (producer == 0)
 			goto fail;
 

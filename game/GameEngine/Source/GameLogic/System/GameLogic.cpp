@@ -8229,7 +8229,6 @@ public:
     void rva0038B430(unsigned a0,int a1,unsigned a2,Rva0038DA10Message* a3,bool a4,BfmeByteStream* a5) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(unsigned,int,unsigned,Rva0038DA10Message*,bool,BfmeByteStream*); } fn; fn.entry=&j_00038361; (this->*fn.method)(a0,a1,a2,a3,a4,a5); }
     void rva00397540(Rva0038DA10Message* a0,void* a1) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(Rva0038DA10Message*,void*); } fn; fn.entry=&j_0003ff67; (this->*fn.method)(a0,a1); } void rva0038A6F0() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_0003004e; (this->*fn.method)(); } void rva0038AE90() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_00015028; (this->*fn.method)(); }
 };
-extern Rva0038DA10GameLogic* g012F0898;
 extern Rva0038DA10Script* g012F076C;
 // 012F1600 is EA's tactical view singleton; GameClient/View.h declares TheTacticalView.
 extern Rva0038DA10CommandList *g012ED5F0, *g012ED5EC;
@@ -8290,8 +8289,8 @@ void Rva0038DA10GameLogic::update(int phase) {
     bool first=(phase==1);
     LatchRestore<bool> latch(inUpdate,true);
     if (g012F08A0.rva00 && first) g012F08A0.rva0038C1E0();
-    if (first && frame==2 && g012F706C->rva0060D3D0() && g012F0898->rva00382B00()) {
-        for (Rva0038DA10Object* o=g012F0898->objects;o;o=o->next) {
+    if (first && frame==2 && g012F706C->rva0060D3D0() && ((Rva0038DA10GameLogic *)TheGameLogic)->rva00382B00()) {
+        for (Rva0038DA10Object* o=((Rva0038DA10GameLogic *)TheGameLogic)->objects;o;o=o->next) {
             Rva00278830* u=o->rva204;
             if (u && u->rva00278830()) u->rva0026F080();
         }
@@ -8350,7 +8349,7 @@ void Rva0038DA10GameLogic::update(int phase) {
                     ++i; ++next;
                     if (phase==3 && i==updates[p].size()/2) break;
                     Rva0038DA10Module* u=updates[p][i];
-                    if (!u || u->getWake()>g012F0898->getFrame()) continue;
+                    if (!u || u->getWake()>((Rva0038DA10GameLogic *)TheGameLogic)->getFrame()) continue;
                     Rva0038DA10SleepTime sleep=RVA0038DA10_SLEEP_NONE;
                     Rva0038DA10Mask dis=u->getObject()->disabled();
                     if (!dis.any() || dis.anyIntersectionWith(u->interface.slot04())) {
@@ -8359,7 +8358,7 @@ void Rva0038DA10GameLogic::update(int phase) {
                         else { sleep=u->interface.slot00(); if(sleep<RVA0038DA10_SLEEP_NONE) sleep=RVA0038DA10_SLEEP_NONE; }
                         current=0;
                     }
-                    u->setWake(g012F0898->getFrame()+sleep);
+                    u->setWake(((Rva0038DA10GameLogic *)TheGameLogic)->getFrame()+sleep);
                 }
                 if (phase>3) {
                     for (unsigned j=updates[p].size();j>0;) {

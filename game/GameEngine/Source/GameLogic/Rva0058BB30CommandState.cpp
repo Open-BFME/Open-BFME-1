@@ -15,7 +15,8 @@ public:
 	int m_mode_10c;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class Glo012F1028Type
 {
@@ -87,7 +88,7 @@ private:
 
 void __fastcall Rva0058BB30CommandState::refresh()
 {
-	register int mode = TheBfmeGameLogic->m_mode_10c;
+	register int mode = ((Rva00367E30Logic *)TheGameLogic)->m_mode_10c;
 	register Rva0058BB30CommandState &record = *this;
 	// The first two mode tests intentionally dereference the known global before
 	// the later flag pair's explicit null check; this is the retail branch order.

@@ -30,7 +30,7 @@ public:
 	Object *findObjectByID(Int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;   // 0x012F0898
+extern GameLogic *TheGameLogic;   // 0x012F0898
 
 class Rva0049C2E0
 {
@@ -79,7 +79,7 @@ void Rva0049C2E0::method(Int p1, bool p2)
 		}
 		case 0x2e:
 			((const Rva0049BA80 *)this)->call(
-				((GameLogic *)TheBfmeGameLogic)->findObjectByID(p1), p2);
+				((GameLogic *)TheGameLogic)->findObjectByID(p1), p2);
 			return;
 		default:
 			return;
@@ -91,5 +91,5 @@ void Rva0049C2E0::method(Int p1, bool p2)
 	}
 
 	((const Rva0049BA80 *)this)->call(
-		((GameLogic *)TheBfmeGameLogic)->findObjectByID(p1), p2);
+		((GameLogic *)TheGameLogic)->findObjectByID(p1), p2);
 }

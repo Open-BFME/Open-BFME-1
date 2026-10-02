@@ -48,7 +48,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class FXList
 {
@@ -69,7 +69,7 @@ bool FXList::bfmeIsBlocked()
 		return false;
 
 	PlayTimeList *times = &m_playTimes;
-	register UnsignedInt frame = TheBfmeGameLogic->m_frame;
+	register UnsignedInt frame = TheGameLogic->m_frame;
 	PlayTimeList::iterator node = times->begin();
 
 	while (node != times->end())

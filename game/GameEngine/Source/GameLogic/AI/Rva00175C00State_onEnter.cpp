@@ -17,7 +17,7 @@ public:
     int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct Rva00175C00AIUpdate
 {
@@ -66,7 +66,7 @@ StateReturnType Rva00175C00State::onEnter()
     if (!((Rva00175C00GetGoalObject)j_0000e570)(m_machine))
         return STATE_SUCCESS;
 
-    m_goalFrame = TheBfmeGameLogic->m_frame;
+    m_goalFrame = TheGameLogic->m_frame;
     if ((m_machine->m_owner->m_statusFlag & 8) ||
         m_machine->m_owner->m_ai->m_playerIdle)
         m_goalFrame += 7;

@@ -96,7 +96,7 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 template <int N>
 class Rva00239C90MemberViewSlots : public Rva00239C90MemberViewSlots<N - 1>
@@ -150,7 +150,7 @@ void Rva00239C90Interface::rva00239c90(
 		if (key != 0)
 		{
 			BfmeRvaA760Object *member =
-				TheBfmeGameLogic->findObjectByID(key);
+				TheGameLogic->findObjectByID(key);
 			if (member != 0
 				&& (filter == 0 || filter->accepts(member,
 					(int)owner->getControllingPlayer())))

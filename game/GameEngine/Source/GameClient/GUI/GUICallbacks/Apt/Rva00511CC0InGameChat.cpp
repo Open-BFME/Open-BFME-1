@@ -12,7 +12,7 @@
 // the body stores it at InGameChat+0x25c, creates InGameChat.apt, localizes
 // the selected Chat:* label, and writes APT:InGameChatReceivers.
 //
-// TheBfmeGameLogic is a real extern object, not an absolute-address cast:
+// TheGameLogic is a real extern object, not an absolute-address cast:
 // only a named symbol lets MSVC 7.1 hoist its first load above the
 // mov fs:[0],esp of the EH prologue, as retail does at +0x0e.
 
@@ -206,7 +206,8 @@ public:
 	void *m_field118;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class GameInfo
 {
@@ -301,7 +302,7 @@ enum InGameChatType
 
 void rva00511CC0(int chatType)
 {
-	if (TheBfmeGameLogic->m_field10C == 3)
+	if (((Rva00367E30Logic *)TheGameLogic)->m_field10C == 3)
 		return;
 
 	if (TheInGameUI->slot154())
@@ -310,7 +311,7 @@ void rva00511CC0(int chatType)
 	if (TheDisconnectMenu != 0)
 		return;
 
-	if (TheBfmeGameLogic != 0 && TheBfmeGameLogic->m_field118 != 0)
+	if (TheGameLogic != 0 && ((Rva00367E30Logic *)TheGameLogic)->m_field118 != 0)
 		return;
 
 	if (chatType != INGAME_CHAT_BUDDIES)

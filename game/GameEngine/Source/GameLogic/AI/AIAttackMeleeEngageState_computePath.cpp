@@ -61,7 +61,7 @@ public:
 };
 class AI { public: char pad00[0xc]; void *m_pathfinder; };
 class CRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
 // retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
@@ -170,9 +170,9 @@ Bool AIAttackMeleeEngageState::computePath()
     }
     if (!ai->m_path && !ai->flag31e)
         forceRepath = true;
-    if (!forceRepath && TheBfmeGameLogic->m_field3C - frame58 < 5)
+    if (!forceRepath && TheGameLogic->m_field3C - frame58 < 5)
         return true;
-    frame58 = TheBfmeGameLogic->m_field3C;
+    frame58 = TheGameLogic->m_field3C;
     if (CALL(Rva000A1490,m_machine,j_0000e570)())
     {
         Rva00177A90Object *source = m_machine->m_owner;
@@ -204,12 +204,12 @@ Bool AIAttackMeleeEngageState::computePath()
                 flag4d = false;
             return true;
         }
-        if (TheBfmeGameLogic->m_field1A0 > 0 && !forceRepath && TheCRCParameterCheck)
+        if (TheGameLogic->m_field1A0 > 0 && !forceRepath && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "masiwar called by AIAttackMeleeEngageState::computePath [1]");
         if (!forceRepath && CALL(Rva001E6930,weapon,j_0003a4e5)(source,&m_goalPosition,victim,&position5c,0.0f))
             return true;
-        if (TheBfmeGameLogic->m_field1A0 > 0 && TheCRCParameterCheck)
+        if (TheGameLogic->m_field1A0 > 0 && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "AIAttackFireDuringApproachState::computePath[2] will call FindMeleeEngagmentLocation with %f,%f (m_goalPosition:%f,%f = m_prevVictimPosition:%f, %f;)",
                 (double)m_goalPosition.x,(double)m_goalPosition.y,
@@ -228,7 +228,7 @@ Bool AIAttackMeleeEngageState::computePath()
                 return true;
             }
             flag74 = true;
-            frame70 = TheBfmeGameLogic->m_field3C + 50;
+            frame70 = TheGameLogic->m_field3C + 50;
             return true;
         }
         void *pathfinder = TheAI->m_pathfinder;

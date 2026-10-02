@@ -65,17 +65,17 @@ public:
 	int m_field10C;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern NetworkInterface *TheNetwork;
 
 // ?Rva00382D40Query@@YGHHH@Z
 int __stdcall Rva00382D40Query(int, int)
 {
 	int result = 1;
-	int mode = TheBfmeGameLogic->m_field10C;
+	int mode = TheGameLogic->m_field10C;
 	if ((mode == 1 || mode == 5) && (TheNetwork == 0 || TheNetwork->slot44()))
 		result = 3;
-	else if (TheBfmeGameLogic->m_field3C >= 6)
+	else if (TheGameLogic->m_field3C >= 6)
 		result = 3;
 	return result;
 }

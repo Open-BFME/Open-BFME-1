@@ -25,7 +25,7 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -76,7 +76,7 @@ StateReturnType Rva00173620State::update()
 {
 	if (m_checkForPath)
 	{
-		if (TheBfmeGameLogic->m_frame > m_okToRepathTimes)
+		if (TheGameLogic->m_frame > m_okToRepathTimes)
 			return STATE_FAILURE;
 
 		Object *owner = m_machine->m_owner;

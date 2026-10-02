@@ -31,7 +31,7 @@ public:
     ObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva002E0E30Owner
 {
@@ -96,8 +96,8 @@ void Rva002E0E30::rva002E0E30Handle(int key, void *argument2,
             if (objectID != 0)
             {
                 ObjectPtrHash::iterator object =
-                    TheBfmeGameLogic->m_objectHash.find(objectID);
-                if (object != TheBfmeGameLogic->m_objectHash.end())
+                    TheGameLogic->m_objectHash.find(objectID);
+                if (object != TheGameLogic->m_objectHash.end())
                 {
                     Object *resolved = (*object).second;
                     if (resolved != 0)

@@ -50,7 +50,7 @@ public:
 };
 
 extern AI *TheAI;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva0023BE60Receiver {
 public:
@@ -82,7 +82,7 @@ bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 	int i = 0;
 	if (count > 0) {
 		ObjectID ownerId = owner->id;
-		GameLogic *logic = TheBfmeGameLogic;
+		GameLogic *logic = TheGameLogic;
 		do {
 			ObjectID id = nearby[i];
 			if (id == ownerId)

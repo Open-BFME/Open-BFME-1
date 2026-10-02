@@ -29,12 +29,12 @@ public:
 // GameClient.cpp; only the pointee type may differ per TU, so it is forward
 // declared here and this TU's id view is applied at the use.
 class GameClient;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern GameClient *TheGameClient;
 
 bool __cdecl bfmeCheckAN(void)
 {
-	BfmeObjAN *object = TheBfmeGameLogic->bfmeFindAN(((ClientRoot4120 *)TheGameClient)->m_bfmeIdAN);
+	BfmeObjAN *object = TheGameLogic->bfmeFindAN(((ClientRoot4120 *)TheGameClient)->m_bfmeIdAN);
 
 	if (object)
 		return object->m_bfmeStateAN->m_bfmeCountAN > 0;

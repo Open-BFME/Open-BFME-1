@@ -54,7 +54,7 @@ public:
 };
 class AI { public: char pad00[0xc]; void *m_pathfinder; };
 class CRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
 class TerrainLogic;
@@ -119,10 +119,10 @@ bool Rva00170680ApproachPath::computePath()
         return true;
     if (!ai->m_path && !ai->flag31e)
         forceRepath = true;
-    if (!forceRepath && TheBfmeGameLogic->m_frame - frame50 < 5)
+    if (!forceRepath && TheGameLogic->m_frame - frame50 < 5)
         return true;
-    frame50 = TheBfmeGameLogic->m_frame;
-    Rva00170680Object *victim = CALL(Rva0009A510,TheBfmeGameLogic,j_0001f253)(objectID68);
+    frame50 = TheGameLogic->m_frame;
+    Rva00170680Object *victim = CALL(Rva0009A510,TheGameLogic,j_0001f253)(objectID68);
     if (victim)
     {
         Rva00170680Object *source = machine->m_owner;
@@ -132,13 +132,13 @@ bool Rva00170680ApproachPath::computePath()
         if (!weapon)
             return false;
         position54 = victim->m_position;
-        if (TheBfmeGameLogic->m_desyncLogFrameCount > 0 && !forceRepath && TheCRCParameterCheck)
+        if (TheGameLogic->m_desyncLogFrameCount > 0 && !forceRepath && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "masiwar called by AIAttackFireDuringApproachState::computePath [1]");
         if (!forceRepath && CALL(Rva001E6930,weapon,j_0003a4e5)(source,&m_goalPosition,victim,&position54,0.0f))
             return true;
         m_goalPosition = position54;
-        if (TheBfmeGameLogic->m_desyncLogFrameCount > 0 && TheCRCParameterCheck)
+        if (TheGameLogic->m_desyncLogFrameCount > 0 && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "AIAttackFireDuringApproachState::computePath will call FindMeleeEngagmentLocation with m_goalPosition=%f,%f",
                 (double)m_goalPosition.x,(double)m_goalPosition.y);

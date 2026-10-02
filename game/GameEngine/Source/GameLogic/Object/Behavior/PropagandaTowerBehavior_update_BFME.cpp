@@ -75,7 +75,7 @@ public:
 	ObjectTracker *next;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00203660PropagandaTowerBehavior
 {
@@ -123,7 +123,7 @@ UpdateSleepTime Rva00203660PropagandaTowerBehavior::update()
 		return UPDATE_SLEEP_NONE;
 	}
 
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
+	UnsignedInt now = TheGameLogic->m_frame;
 	UnsignedInt lastScan = *reinterpret_cast<UnsignedInt *>(secondaryThis + 0x14);
 	if (now - lastScan >= moduleData->m_scanDelayInFrames)
 	{
@@ -136,7 +136,7 @@ UpdateSleepTime Rva00203660PropagandaTowerBehavior::update()
 	while (current != 0)
 	{
 		ObjectTracker *next = current->next;
-		Object *affected = TheBfmeGameLogic->findObjectByID(current->objectID);
+		Object *affected = TheGameLogic->findObjectByID(current->objectID);
 		if (affected != 0 &&
 			(affected->isKindOf(KINDOF_SCORE) ||
 			 affected->isKindOf(KINDOF_SCORE_CREATE) ||

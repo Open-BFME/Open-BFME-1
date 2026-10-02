@@ -177,7 +177,7 @@ private:
 	Team *m_team;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern ThingFactory *TheThingFactory;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern UpgradeCenter *TheUpgradeCenter;
@@ -246,7 +246,7 @@ private:
 
 UpdateSleepTime ObjectCreationUpgrade::update()
 {
-	if (m_2C && TheBfmeGameLogic->getFrame() > m_28)
+	if (m_2C && TheGameLogic->getFrame() > m_28)
 	{
 		const ObjectCreationUpgradeModuleData *data = getObjectCreationUpgradeModuleData();
 		if (data != 0 && !isStringEmpty(data->m_thingToSpawn))

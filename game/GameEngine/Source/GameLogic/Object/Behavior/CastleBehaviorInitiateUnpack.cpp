@@ -147,7 +147,7 @@ private:
 	OwnedObjectTree m_ownedObjects;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_000084d6(void);
@@ -196,7 +196,7 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 
 	m_ownedObjects.clear();
 
-	if (TheBfmeGameLogic->m_packUnpackGate > 0)
+	if (TheGameLogic->m_packUnpackGate > 0)
 	{
 		void *crcParameterCheck = TheCRCParameterCheck;
 		if (!crcParameterCheck)
@@ -228,7 +228,7 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 
 		((DebugLogFunction)j_0003a17a)(TheCRCParameterCheck,
 			"CAMP: Frame %d: Castle %s(%d) ::initiateUnpack() called by %s",
-			TheBfmeGameLogic->m_frame,
+			TheGameLogic->m_frame,
 			castleName, castleID, callerName);
 	}
 }

@@ -32,7 +32,7 @@ private:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -166,7 +166,7 @@ UpdateSleepTime DynamicShroudClearingRangeUpdate::update( void )
 
 	Object *me = getObject();
 	const DynamicShroudClearingRangeUpdateModuleData *md = getDynamicShroudClearingRangeUpdateModuleData();
-	unsigned int currentFrame = TheBfmeGameLogic->getFrame();
+	unsigned int currentFrame = TheGameLogic->getFrame();
 
 	if ( ! m_decalsCreated )
 	{

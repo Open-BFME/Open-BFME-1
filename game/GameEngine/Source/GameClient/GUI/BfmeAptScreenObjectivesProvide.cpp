@@ -39,7 +39,7 @@ public:
 	Int m_gameMode;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // The retail REL32 at +0x4A lands on 0x0052AE20, whose ledger row is still
 // the byte dump ?d_0052ae20@@YAXXZ.  The call site proves the ABI: one dword
@@ -72,7 +72,7 @@ void BfmeAptScreenObjectives::bfmeProvideObjectiveStatus(
 		return;
 	if (setting)
 		return;
-	if (TheBfmeGameLogic->m_gameMode == 7)
+	if (TheGameLogic->m_gameMode == 7)
 		return;
 
 	Int objective = ((Rva0052AE20Fn)d_0052ae20)(index);

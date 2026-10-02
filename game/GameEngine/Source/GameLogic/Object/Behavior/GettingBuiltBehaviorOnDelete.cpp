@@ -40,7 +40,7 @@ public:
 	Object *findObjectByID(int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class AudioClientUpdate
 {
@@ -100,7 +100,7 @@ private:
 
 void GettingBuiltBehavior::onDelete()
 {
-	if (BfmeY982 *target = (BfmeY982 *)TheBfmeGameLogic->findObjectByID(
+	if (BfmeY982 *target = (BfmeY982 *)TheGameLogic->findObjectByID(
 		(int)m_object->m_producerID))
 	{
 		BfmeY982 *production = ((BfmeConv982Thunk)&__identifier(

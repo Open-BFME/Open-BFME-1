@@ -70,7 +70,7 @@ public:
 	Object *findObjectByID(int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva002B8890DozerAIUpdate
 {
@@ -102,7 +102,7 @@ Object *Rva002B8890DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget(
 				Object *bestTower = 0;
 				for (int i = 0; i < 4; ++i)
 				{
-					Object *tower = TheBfmeGameLogic->findObjectByID(bbi->getTowerID((BridgeTowerType)i));
+					Object *tower = TheGameLogic->findObjectByID(bbi->getTowerID((BridgeTowerType)i));
 					if (tower)
 					{
 						Coord3D tmp;

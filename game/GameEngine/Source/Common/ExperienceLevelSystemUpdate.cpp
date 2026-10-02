@@ -37,7 +37,7 @@ public:
 	ObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct PendingExperienceLevel
 {
@@ -66,7 +66,7 @@ void ExperienceLevelSystem::update()
 	for ( _STL::list<PendingExperienceLevel>::iterator it = m_pending.begin();
 		it != m_pending.end(); ++it )
 	{
-		Object *object = TheBfmeGameLogic->findObjectByID( (*it).m_objectID );
+		Object *object = TheGameLogic->findObjectByID( (*it).m_objectID );
 		if ( object && !(object->m_privateStatus & 1) )
 			((Gen0002B7F6 *)this)->call(
 				(*it).m_level, object, (*it).m_showEffect );

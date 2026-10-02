@@ -90,7 +90,7 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00237E50MemberView
 {
@@ -190,7 +190,7 @@ Object *Rva00237E50Owner::rva00237E50()
 		UnsignedInt key = entry->m_key;
 		if (key != 0)
 		{
-			Object *object = TheBfmeGameLogic->findObjectByID( key );
+			Object *object = TheGameLogic->findObjectByID( key );
 			if (object != 0)
 			{
 				Weapon *weapon = rva00237E50GetWeapon( object );

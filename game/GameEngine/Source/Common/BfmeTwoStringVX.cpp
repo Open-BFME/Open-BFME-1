@@ -74,7 +74,7 @@ public:
 	void bfmeStopMovie(void);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Display *TheDisplay;
 
 class Rva00490350Base
@@ -125,7 +125,7 @@ Gen_00491580::Gen_00491580(const AsciiStringVX &first,
 // ??1Gen_00491580@@UAE@XZ
 Gen_00491580::~Gen_00491580(void)
 {
-	TheBfmeGameLogic->m_bfmeResetFlag = 0;
+	TheGameLogic->m_bfmeResetFlag = 0;
 
 	TheDisplay->slotEC();
 	TheDisplay->bfmeStopMovie();

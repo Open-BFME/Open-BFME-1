@@ -15,7 +15,7 @@
 //   this+0x270  a 12-byte cache compared with ??9?$BitFlags@$0FG@@@QBE_NABV0@@Z
 //               (ILT 0x00022C5A -> 0x001C2920); BitFlags<86> == ObjectStatusMaskType
 //   Object+0x90 m_status (name_oracle layout witness, confidence 1.00)
-//   0x012F0898  TheBfmeGameLogic; +0x3C is the frame counter, the same slot
+//   0x012F0898  TheGameLogic; +0x3C is the frame counter, the same slot
 //               ?_bfme_getFramesBehindPacketRouter@Network@@UAEHXZ reads
 //   0x012F060C  TheLuaScriptEngine is the defining global for this shared slot
 //
@@ -73,7 +73,7 @@ private:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern LuaScriptEngine *TheLuaScriptEngine;
 
 // The two change dispatchers the ledger already holds at 0x002E7410 and
@@ -111,7 +111,7 @@ private:
 // ?refreshCachedFlags@Rva00272CD0Updater@@QAEXXZ  retail 0x00272CD0, 232 bytes
 void Rva00272CD0Updater::refreshCachedFlags()
 {
-	UnsignedInt frame = TheBfmeGameLogic->getFrame();
+	UnsignedInt frame = TheGameLogic->getFrame();
 	Object *object = m_object;
 
 	if (frame < 2)

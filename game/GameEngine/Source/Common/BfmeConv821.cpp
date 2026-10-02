@@ -109,7 +109,7 @@ public:
 	bool find(const AsciiString &name, int slot, const CommandButton *&button) const;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeObj412
 {
@@ -137,7 +137,7 @@ void BfmeObj412::call(void *b, void *c)
 	for (int i = 0; i < 20; ++i)
 	{
 		const CommandButton *button;
-		if (!TheBfmeGameLogic || !((const GameLogicFindControlBarOverrideILT *)TheBfmeGameLogic)->find(m_name, i, button))
+		if (!TheGameLogic || !((const GameLogicFindControlBarOverrideILT *)TheGameLogic)->find(m_name, i, button))
 			button = m_button[i];
 		if (button)
 		{

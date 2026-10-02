@@ -32,7 +32,7 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // Named factory 0x0011C6C0 reaches callback 0x00264AC0 and table
 // RVA 0x00CB6BB8; the names below are witnessed at their exact offsets.
@@ -108,13 +108,13 @@ UpdateSleepTime RousingSpeechUpdate::update()
 		RousingSpeechUpdateModuleData *moduleData =
 			*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c);
 		*reinterpret_cast<unsigned int *>(secondary + 0xdc) =
-			moduleData->m_speechDuration + TheBfmeGameLogic->m_frame;
+			moduleData->m_speechDuration + TheGameLogic->m_frame;
 		secondary[0xe0] = 1;
 	}
 
 	RousingSpeechUpdateModuleData *data =
 		*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c);
-	if (TheBfmeGameLogic->m_frame < *reinterpret_cast<unsigned int *>(secondary + 0xdc) &&
+	if (TheGameLogic->m_frame < *reinterpret_cast<unsigned int *>(secondary + 0xdc) &&
 		!(*reinterpret_cast<float *>(secondary + 0xe4) >= data->m_bonusRadius))
 	{
 		if (data->m_createWave != 0)

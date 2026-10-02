@@ -221,7 +221,7 @@ struct MovieControl0040F780;
 struct MovieFactory0040E3B0;
 class FadeView;
 class BfmeGlobal_012f076c;
-struct Frame00200420;
+class GameLogic;
 struct Players005999B0;
 struct Engine007629F0;
 class GhostObjectManager;
@@ -246,7 +246,7 @@ extern MovieControl0040F780 *Control0040F780;
 extern MovieFactory0040E3B0 *MovieFactoryGlobal0040E3B0;
 extern FadeView *FadeTacticalView;
 extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
-extern Frame00200420 *Clock00200420;
+extern GameLogic *TheGameLogic;
 extern Players005999B0 *PlayerList005999B0;
 extern Engine007629F0 *EngineGlobal007629F0;
 extern GhostObjectManager *TheGhostObjectManager;
@@ -318,11 +318,11 @@ void ClientUpdate004329D0::update() {
     bool freezeTime = (((Dispatch004329D0 *)FadeTacticalView)->vd4() && !((Dispatch004329D0 *)FadeTacticalView)->v74())
         || ((ScriptEngine *)TheBfmeGlobal_012f076c)->debugFrozen()
         || ((Rva00336EF0ByteField *)TheBfmeGlobal_012f076c)->get()
-        || ((BfmeGameLogicPause *)Clock00200420)->isGamePaused();
+        || ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused();
     int localPlayerIndex = PlayerList005999B0 ? ((PlayerList004329D0 *)PlayerList005999B0)->getLocal()->getIndex() : 0;
     freezeTime = freezeTime || (g_012B5348 == m_at000C);
     bool shroud = at<int>(EngineGlobal007629F0,0x30)==1;
-    if (!freezeTime && !at<bool>(Clock00200420,0x11d)) {
+    if (!freezeTime && !at<bool>(TheGameLogic,0x11d)) {
         g_012B5348 = m_at000C;
         if (shroud) ((Dispatch004329D0 *)TheGhostObjectManager)->v18(0,0);
         Drawable004329D0 *draw = (Drawable004329D0 *)v30();
@@ -335,7 +335,7 @@ void ClientUpdate004329D0::update() {
                     if (status >= 3 && draw->getClearFrame()!=0) {
                         unsigned int limit = 10;
                         if (((Object004329D0 *)object)->isDead()) limit=25;
-                        if (((Logic004329D0 *)Clock00200420)->getFrame() < limit+draw->getClearFrame()) status=1;
+                        if (((Logic004329D0 *)TheGameLogic)->getFrame() < limit+draw->getClearFrame()) status=1;
                     }
                     ((Drawable *)draw)->setDrawableHidden(status>=3);
                 }
@@ -345,12 +345,12 @@ void ClientUpdate004329D0::update() {
         }
         ((Dispatch004329D0 *)g_012F10D0)->v14();
         if (at<int>(EngineGlobal007629F0,0x30)==1)
-            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)Clock00200420)->getFrame(),true);
+            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)TheGameLogic)->getFrame(),true);
         else
-            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)Clock00200420)->getFrame(),false);
+            ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)TheGameLogic)->getFrame(),false);
     }
-    ((GameLogicClientUpdate *)Clock00200420)->deleteLoadScreen();
-    if (!at<bool>(Clock00200420,0x11d)) {
+    ((GameLogicClientUpdate *)TheGameLogic)->deleteLoadScreen();
+    if (!at<bool>(TheGameLogic,0x11d)) {
         ((Dispatch004329D0 *)((char *)TheTerrainVisual+4))->v14();
         ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
     } else {
@@ -359,7 +359,7 @@ void ClientUpdate004329D0::update() {
     if (!freezeTime) at<int>(TheParticleSystemManager,0x98)=localPlayerIndex;
     ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
     ((Dispatch004329D0 *)Rva0048EC80TheManager)->v14();
-    if (!at<bool>(Clock00200420,0x11d)) {
+    if (!at<bool>(TheGameLogic,0x11d)) {
         TheShell->v14();
         if (m_at00C5) {
             if (TheShell) TheShell->v00(1);
