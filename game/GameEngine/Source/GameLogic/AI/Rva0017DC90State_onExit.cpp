@@ -59,7 +59,7 @@ private:
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *obstacle);
+	void ignoreObstacle(const Object *obstacle);
 
 	Locomotor *getCurLocomotor() const
 	{

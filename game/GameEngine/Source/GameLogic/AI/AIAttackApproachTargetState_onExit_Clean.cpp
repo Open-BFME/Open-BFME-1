@@ -29,7 +29,7 @@ class AIUpdateInterface;
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *obstacle);                 // ILT thunk at 0x0000315C
+	void ignoreObstacle(const Object *obstacle);                 // ILT thunk at 0x0000315C
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
