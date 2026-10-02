@@ -1,21 +1,14 @@
 extern "C" const void *bfmeVftRva007F6D60Member2C[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva007F6D60Member2C=??_7Rva007F6D60Member2C@@6B@")
 
-struct Rva7F4CC0Child
+class SnapshotDupReplica
 {
-	Rva7F4CC0Child();
-	__forceinline void normalize()
-	{
-		second = 0;
-		third = 0;
-		first = 0;
-		table = (unsigned int)bfmeVftRva007F6D60Member2C;
-	}
+	public:
+	SnapshotDupReplica();
+	virtual void crc() {}
 
-	volatile unsigned int table;
-	volatile unsigned int first;
-	volatile unsigned int second;
-	volatile unsigned int third;
+	private:
+	int m_reserved;
 };
 
 struct Rva7F4CC0Primary
@@ -29,13 +22,21 @@ struct Rva7F4CC0Primary
 	bool enabled;
 };
 
-struct Rva7F4CC0ConstructorThunk : Rva7F4CC0Primary, Rva7F4CC0Child
+struct Rva7F4CC0ConstructorThunk : Rva7F4CC0Primary
 {
 	Rva7F4CC0ConstructorThunk();
+
+	SnapshotDupReplica m_replica;
+	volatile unsigned int second;
+	volatile unsigned int third;
 };
 
 // ?d_007f4cc0@@YAXXZ
-Rva7F4CC0ConstructorThunk::Rva7F4CC0ConstructorThunk()
+	Rva7F4CC0ConstructorThunk::Rva7F4CC0ConstructorThunk() : m_replica()
 {
-	Rva7F4CC0Child::normalize();
+	volatile unsigned int *replica = (volatile unsigned int *)&m_replica;
+	replica[2] = 0;
+	replica[3] = 0;
+	replica[1] = 0;
+	replica[0] = (unsigned int)bfmeVftRva007F6D60Member2C;
 }

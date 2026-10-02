@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
-class BfmeItemVOF
+class BfmeThingVID
 {
 public:
-	int bfmeItemSizeVOF();
+	int bfmeSizeVID();
 	char m_bfmePad00[0x24];
 };
 
@@ -14,7 +14,7 @@ public:
 	char m_bfmePad00[0x44];
 	int m_bfme44;
 	char m_bfmePad48[4];
-	BfmeItemVOF *m_bfme4c;
+	BfmeThingVID *m_bfme4c;
 };
 
 int BfmeThingVOF::bfmeSizeVOF()
@@ -29,7 +29,7 @@ int BfmeThingVOF::bfmeSizeVOF()
 
 		do
 		{
-			total += ((BfmeItemVOF *)((char *)m_bfme4c + off))->bfmeItemSizeVOF();
+			total += ((BfmeThingVID *)((char *)m_bfme4c + off))->bfmeSizeVID();
 			++i;
 			off += 0x24;
 		} while (i < m_bfme44);

@@ -16,11 +16,12 @@ struct BfmePad44VMS
 	char n[2];
 };
 
+void __stdcall bfmeInsertRangeV50(char *pos, char *first, char *last, char *tag);
+
 class BfmeStrVMS
 {
 public:
 	void bfmeFwdVMS(int a, int b, int c);
-	void bfmeImplVMS(int a, int b, int c);
 };
 
 void BfmeStrVMS::bfmeFwdVMS(int a, int b, int c)
@@ -42,6 +43,6 @@ void BfmeStrVMS::bfmeFwdVMS(int a, int b, int c)
 		mov ecx, dword ptr a
 		push ecx
 		mov ecx, this
-		call bfmeImplVMS
+		call bfmeInsertRangeV50
 	}
 }

@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
-class BfmeItemVOG
+struct NodeCompressedMotionStruct
 {
 public:
-	int bfmeItemSizeVOG();
+	int Get_Channel_Memory_Usage();
 	char m_bfmePad00[0x1c];
 };
 
@@ -14,7 +14,7 @@ public:
 	char m_bfmePad00[0x44];
 	int m_bfme44;
 	char m_bfmePad48[8];
-	BfmeItemVOG *m_bfme50;
+	NodeCompressedMotionStruct *m_bfme50;
 };
 
 int BfmeThingVOG::bfmeSizeVOG()
@@ -29,7 +29,7 @@ int BfmeThingVOG::bfmeSizeVOG()
 
 		do
 		{
-			total += ((BfmeItemVOG *)((char *)m_bfme50 + off))->bfmeItemSizeVOG();
+			total += ((NodeCompressedMotionStruct *)((char *)m_bfme50 + off))->Get_Channel_Memory_Usage();
 			++i;
 			off += 0x1c;
 		} while (i < m_bfme44);
