@@ -1,10 +1,9 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva00630D00UStr
 {
-public:
-	Rva00630D00UStr &operator=(const Rva00630D00UStr &other);
-
 private:
 	void *m_item;
 };
@@ -39,7 +38,8 @@ Rva000F96A0 &Rva000F96A0::operator=(const Rva000F96A0 &other)
 	m_08 = other.m_08;
 	m_0C = other.m_0C;
 	m_10 = other.m_10;
-	m_14 = other.m_14;
+	((StringBase<unsigned short> *)&m_14)->set(
+		*(const StringBase<unsigned short> *)&other.m_14);
 	m_18 = other.m_18;
 	return *this;
 }

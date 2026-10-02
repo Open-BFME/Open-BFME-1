@@ -8,15 +8,16 @@
 #include "Common/INI.h"
 #include "GameNetwork/GameInfo.h"
 
-class StringBaseNarrowBU
+class BFMEPlayerTemplateAsciiString
 {
-protected:
-	~StringBaseNarrowBU(void);
+public:
+	~BFMEPlayerTemplateAsciiString(void);
 
-	char *m_bfmeNarrowBU;
+private:
+	void *m_data;
 };
 
-class AsciiStringBU : public StringBaseNarrowBU
+class AsciiStringBU : public BFMEPlayerTemplateAsciiString
 {
 public:
 	~AsciiStringBU(void)

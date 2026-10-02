@@ -18,22 +18,12 @@ struct Coord3D
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-    friend class BfmeAsciiStringArg;
-
-private:
-    BfmeStringArgBase(const BfmeStringArgBase &);
-    ~BfmeStringArgBase();
-};
-
 class BfmeAsciiStringArg
 {
 public:
     BfmeAsciiStringArg(const AsciiString &that)
     {
-        ((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-            *(const BfmeStringArgBase *)&that);
+        ((AsciiString *)this)->AsciiString::AsciiString(that);
     }
     ~BfmeAsciiStringArg();
 

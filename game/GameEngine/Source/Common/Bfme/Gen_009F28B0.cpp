@@ -21,12 +21,14 @@ struct Gen_009F28B0Value
 	}
 };
 
+struct Rva009F5970StateInit;
+
 struct T_009f4fb0
 {
-	void m(void);
+	void m(Rva009F5970StateInit *value);
 };
 
-typedef void (T_009f4fb0::*T_009F28B0Method)(Gen_009F28B0Value *value);
+typedef void (T_009f4fb0::*T_009F28B0Method)(Rva009F5970StateInit *value);
 
 class Gen_009F28B0
 {
@@ -42,5 +44,5 @@ void Gen_009F28B0::m(void)
 {
 	T_009f4fb0 *target = m_target;
 	(target->*(T_009F28B0Method)&T_009f4fb0::m)(
-		&Gen_009F28B0Value());
+		(Rva009F5970StateInit *)&Gen_009F28B0Value());
 }

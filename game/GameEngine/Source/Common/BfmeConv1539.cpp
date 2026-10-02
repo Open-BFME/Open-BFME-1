@@ -1,6 +1,16 @@
 // Open-BFME5 conversions.
 
-void bfmeFreeVOL(void *p, unsigned n);
+class BfmeOwnerVOL;
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::BfmeOwnerVOL;
+	static void __cdecl _M_deallocate(void *p, unsigned int n);
+};
+}
 
 class BfmeItemVOL
 {
@@ -37,7 +47,7 @@ void BfmeOwnerVOL::bfmeClearVOL()
 
 			pv->m_bfme00 = nx;
 			nx->m_bfme04 = pv;
-			bfmeFreeVOL(p, 0xc);
+			_STL::__node_alloc<true, 0>::_M_deallocate(p, 0xc);
 			p = nx;
 			if (v != 0)
 				v->bfmeDropVOL(1);

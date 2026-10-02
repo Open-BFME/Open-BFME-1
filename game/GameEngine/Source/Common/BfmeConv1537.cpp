@@ -1,6 +1,16 @@
 // Open-BFME5 conversions.
 
-void bfmeFreeVOK(void *p, unsigned n);
+class BfmeOwnerVOK;
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::BfmeOwnerVOK;
+	static void __cdecl _M_deallocate(void *p, unsigned int n);
+};
+}
 
 class BfmeItemVOK
 {
@@ -37,7 +47,7 @@ void BfmeOwnerVOK::bfmeClearVOK()
 
 			pv->m_bfme00 = nx;
 			nx->m_bfme04 = pv;
-			bfmeFreeVOK(p, 0xc);
+			_STL::__node_alloc<true, 0>::_M_deallocate(p, 0xc);
 			p = nx;
 			if (v != 0)
 				v->bfmeDropVOK(1);
