@@ -68,7 +68,7 @@ protected:
 	void executeActions(ScriptAction *head);
 };
 
-extern "C" __declspec(dllimport) double __cdecl bfmeMathVE(double value);
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 int GetGameClientRandomValue(int low, int high, char *file, int line);
 #define g_bfmeK1266C 5.0f
 
@@ -106,7 +106,7 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 10: Rva00343780(action); break;
 		case 20: {
 			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
-			float value = (float)bfmeMathVE((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
+			float value = (float)ceil((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
 			counter->value = fast_float2long_round(value);
 			counter->milliseconds = true; counter->countdown = true;
 			break;
@@ -122,7 +122,7 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 134: setPriorityDefault(action); break;
 		case 154: {
 			ScriptCounter *counter = bfmeCounter(action->getParameter(1)->m_string);
-			float value = (float)bfmeMathVE((double)(action->getParameter(0)->m_real * g_bfmeK1266C));
+			float value = (float)ceil((double)(action->getParameter(0)->m_real * g_bfmeK1266C));
 			counter->value += fast_float2long_round(value);
 			break;
 		}
@@ -133,7 +133,7 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 415: {
 			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 			if (counter) {
-				float value = (float)bfmeMathVE((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
+				float value = (float)ceil((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
 				counter->value = fast_float2long_round(value); counter->milliseconds = true;
 			}
 			break;
