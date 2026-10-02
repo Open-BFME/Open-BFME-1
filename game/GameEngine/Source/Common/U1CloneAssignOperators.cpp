@@ -58,19 +58,36 @@ public:
 	virtual U1Clonable *clone();
 };
 
-#define U1_CLONE_ASSIGN( ROW )                                                \
-	class U1Tail_##ROW                                                        \
-	{                                                                         \
-	public:                                                                   \
-		U1Tail_##ROW &operator=( const U1Tail_##ROW &rhs );                   \
-	};                                                                        \
+// Use the defining translation units' names for the three tail assignments.
+namespace FXParticleSystem
+{
+	class Y3AssignTail_005CBEE0
+	{
+	public:
+		Y3AssignTail_005CBEE0 &operator=( const Y3AssignTail_005CBEE0 &rhs );
+	};
+}
+
+class Y3Assign_005CD820
+{
+public:
+	Y3Assign_005CD820 &operator=( const Y3Assign_005CD820 &rhs );
+};
+
+class Y3Assign_005CE550
+{
+public:
+	Y3Assign_005CE550 &operator=( const Y3Assign_005CE550 &rhs );
+};
+
+#define U1_CLONE_ASSIGN( ROW, TAIL )                                          \
 	class U1Assign_##ROW                                                      \
 	{                                                                         \
 	public:                                                                   \
 		U1Assign_##ROW &operator=( const U1Assign_##ROW &rhs );               \
                                                                               \
 		U1Clonable *m_held;                                                   \
-		U1Tail_##ROW m_tail;                                                  \
+		TAIL m_tail;                                                         \
 	};                                                                        \
 	U1Assign_##ROW &U1Assign_##ROW::operator=( const U1Assign_##ROW &rhs )    \
 	{                                                                         \
@@ -82,6 +99,6 @@ public:
 		return *this;                                                         \
 	}
 
-U1_CLONE_ASSIGN( 005CD380 )
-U1_CLONE_ASSIGN( 005CDCD0 )
-U1_CLONE_ASSIGN( 005CEC60 )
+U1_CLONE_ASSIGN( 005CD380, FXParticleSystem::Y3AssignTail_005CBEE0 )
+U1_CLONE_ASSIGN( 005CDCD0, Y3Assign_005CD820 )
+U1_CLONE_ASSIGN( 005CEC60, Y3Assign_005CE550 )
