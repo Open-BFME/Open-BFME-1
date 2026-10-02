@@ -158,7 +158,12 @@ public:
 	void bfmeTailNC(int r);
 };
 
-extern BfmeGlobNC *g_bfmeGlobNC;
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through the local BfmeGlobNC struct above.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+
 int __stdcall bfmeFindNC(void *k);
 
 void __stdcall bfmeGoNC(BfmeArgNC *a)
@@ -166,7 +171,7 @@ void __stdcall bfmeGoNC(BfmeArgNC *a)
 	void *k = a->m_bfmeKey;
 	int r = bfmeFindNC(k);
 	if (r != -1)
-		g_bfmeGlobNC->bfmeTailNC(r);
+		((BfmeGlobNC *)TheLivingWorldLogic)->bfmeTailNC(r);
 }
 
 struct BfmeObjND

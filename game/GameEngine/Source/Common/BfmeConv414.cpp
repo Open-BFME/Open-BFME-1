@@ -206,7 +206,17 @@ public:
 };
 
 extern BfmeOneAQA *g_bfmeOneAQA;
-extern BfmeTwoAQA *g_bfmeTwoAQA;
+
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through the local BfmeTwoAQA struct above.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+
+static __forceinline BfmeTwoAQA *glo012F1028()
+{
+	return (BfmeTwoAQA *)TheLivingWorldLogic;
+}
 
 void BfmeSubAQA::bfmeStopTwoAQA(void)
 {
@@ -249,8 +259,8 @@ void __stdcall bfmeGoAQA(void *what)
 {
 	if (g_bfmeOneAQA != 0)
 		g_bfmeOneAQA->bfmeStopAQA();
-	if (g_bfmeTwoAQA->m_bfmeSub != 0)
-		g_bfmeTwoAQA->m_bfmeSub->bfmeStopTwoAQA();
-	g_bfmeTwoAQA->bfmeSendAQA(what);
-	g_bfmeTwoAQA->bfmeFinishAQA();
+	if (glo012F1028()->m_bfmeSub != 0)
+		glo012F1028()->m_bfmeSub->bfmeStopTwoAQA();
+	glo012F1028()->bfmeSendAQA(what);
+	glo012F1028()->bfmeFinishAQA();
 }

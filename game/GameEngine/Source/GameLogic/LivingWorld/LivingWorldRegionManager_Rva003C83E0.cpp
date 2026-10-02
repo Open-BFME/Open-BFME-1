@@ -18,7 +18,16 @@ class Rva003C83E0State { };
 class Rva003C83E0Gate { };
 class Rva003C83E0ResetSink { };
 
-extern Rva003C83E0Campaign *Glo012F1028;
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through the local Rva003C83E0Campaign struct above.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+
+static __forceinline Rva003C83E0Campaign *glo012F1028()
+{
+    return (Rva003C83E0Campaign *)TheLivingWorldLogic;
+}
 extern Rva003C83E0State *g_bfmeStateDF;
 extern Rva003C83E0Gate *g_bfmeGameCW;
 extern Rva003C83E0ResetSink *Glo012F4B98;
@@ -71,14 +80,14 @@ static __forceinline void callResetSink(Rva003C83E0ResetSink *sink)
 void LivingWorldRegionManager::rva003C83E0(int force)
 {
     if (callFlag(g_bfmeStateDF, j_00048c4d)
-        || callFlag(Glo012F1028, j_0000ea7f))
+        || callFlag(glo012F1028(), j_0000ea7f))
         return;
 
-    Rva003C83E0Pair pair = Glo012F1028->m_pair;
+    Rva003C83E0Pair pair = glo012F1028()->m_pair;
     if (callFlag(g_bfmeGameCW, j_000485d1)
-        && callFlag(Glo012F1028, j_00025a77))
+        && callFlag(glo012F1028(), j_00025a77))
     {
-        if (!Glo012F1028->m_at1C)
+        if (!glo012F1028()->m_at1C)
             return;
 
         typedef void (LivingWorldRegionManager::*Update)(LivingWorldRegion *, int);

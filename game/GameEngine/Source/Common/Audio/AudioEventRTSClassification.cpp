@@ -40,9 +40,14 @@ public:
 	void *findOwnerByID(ObjectID id);
 };
 
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through the local LivingWorldOwnerLookup struct above.
+class LivingWorldLogic;
+
 extern GameClient *TheGameClient;
 extern GameLogic *TheGameLogic;
-extern LivingWorldOwnerLookup *TheLivingWorldOwnerLookup;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 struct AudioEventInfo
 {
@@ -125,8 +130,8 @@ bool AudioEventRTS::isDead() const
 	case 2:
 		return TheGameLogic->findObjectByID(m_ownerID) == 0;
 	case 5:
-		return TheLivingWorldOwnerLookup == 0 ||
-			TheLivingWorldOwnerLookup->findOwnerByID(m_ownerID) == 0;
+		return TheLivingWorldLogic == 0 ||
+			((LivingWorldOwnerLookup *)TheLivingWorldLogic)->findOwnerByID(m_ownerID) == 0;
 	default:
 		return false;
 	}

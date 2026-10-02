@@ -73,7 +73,12 @@ public:
 	BfmeCreate1106 *m_create;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through a local struct instead of the real class definition.
+class LivingWorldLogic;
+
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeK1106
 {
@@ -91,7 +96,7 @@ void BfmeK1106::bfmeDrop1106(void)
 	BfmeK1106 *self = this;
 	reinterpret_cast<BfmeK1105 *>(self)->bfmeDrop1105();
 
-	BfmeCreate1106 *creator = Glo012F1028->m_create;
+	BfmeCreate1106 *creator = ((Glo012F1028Type *)TheLivingWorldLogic)->m_create;
 	BfmeEntry1106 *entry = self->m_begin;
 	if (entry != self->m_end)
 	{

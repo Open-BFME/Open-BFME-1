@@ -51,10 +51,13 @@ public:
 	virtual void appendMessage(unsigned int type) = 0;
 };
 
-class CampaignManager;
 class GameLogic;
 class MessageStream;
-extern CampaignManager *TheLivingWorldLogic;
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp); this TU
+// only needs its address.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern GameLogic *TheGameLogic;
 extern MessageStream *TheMessageStream;
 

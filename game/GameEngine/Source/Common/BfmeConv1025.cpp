@@ -205,7 +205,12 @@ int BfmeH1025::bfmeVal1025(void)
 	return total;
 }
 
-extern BfmeH1025 *g_bfmeH1025;
+// The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
+// views it through the local BfmeH1025 struct above.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+
 extern char g_bfmeFmt1025[];
 extern "C" __declspec(dllimport) void __cdecl sprintf(int a, char *f, int b);
 
@@ -214,10 +219,11 @@ void __stdcall bfmeGo1025G(int unused, int b, char skip)
 	if (skip != 0)
 		return;
 
-	if (g_bfmeH1025 == 0)
+	if (TheLivingWorldLogic == 0)
 		return;
 
-	sprintf(b, g_bfmeFmt1025, g_bfmeH1025->bfmeVal1025());
+	sprintf(b, g_bfmeFmt1025,
+		((BfmeH1025 *)TheLivingWorldLogic)->bfmeVal1025());
 }
 
 class BfmeT1025
