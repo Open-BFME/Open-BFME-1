@@ -2,14 +2,14 @@
 // Open-BFME5: the five MultiPlay*Mult INI parse callbacks and the five setters
 // they call.  Retail, per callback:
 //
-//     token = ini->getNextTokenOrNull( ini->getSepsColon() )   ; [ini+0x41C]
+//     token = ini->getNextTokenOrNull( ini->getSepsColon<0>() )   ; [ini+0x41C]
 //     while token:
-//         v = ini->getNextToken( ini->getSepsColon() )
+//         v = ini->getNextToken( ini->getSepsColon<0>() )
 //         if v:
 //             value = INI::scanReal( v )
 //             eight `push "MPn" / push token / call [__imp__strcmpi]` tests,
 //             each storing value through the setter
-//             token = ini->getNextTokenOrNull( ini->getSepsColon() )
+//             token = ini->getNextTokenOrNull( ini->getSepsColon<0>() )
 //
 // THE KEYWORDS AND THE OFFSET COME FROM THE SAME TABLE ROW.  All five appear in
 // the GlobalData FieldParse table -- the block that also carries TutorialMap,
@@ -52,7 +52,10 @@ class INI
 public:
 	const char *getNextToken( const char *seps );
 	const char *getNextTokenOrNull( const char *seps );
-	const char *getSepsColon( void ) const { return m_sepsColon; }
+	// Keep this TU's layout-view accessor out of the ordinary INI getter COMDAT.
+	// A member-template instantiation preserves the inlining shape and the name;
+	// no retail template identity is claimed for this reconstruction helper.
+	template<int> const char *getSepsColon( void ) const { return m_sepsColon; }
 	static Real scanReal( const char *token );
 
 	char m_unreconstructed_000[ 0x41c ];
@@ -109,10 +112,10 @@ public:
 void parseMultiPlayMoneyMult( INI *ini, void *, void *store, const void * )
 {
 	MultiPlayMults *mults = (MultiPlayMults *)store;
-	const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
+	const char *token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 	while ( token )
 	{
-		const char *valueToken = ini->getNextToken( ini->getSepsColon() );
+		const char *valueToken = ini->getNextToken( ini->getSepsColon<0>() );
 		if ( valueToken )
 		{
 			Real value = INI::scanReal( valueToken );
@@ -133,7 +136,7 @@ void parseMultiPlayMoneyMult( INI *ini, void *, void *store, const void * )
 			else if ( !_strcmpi( token, "MP8" ) )
 				mults->setMoneyMult( 8, value );
 
-			token = ini->getNextTokenOrNull( ini->getSepsColon() );
+			token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 		}
 	}
 }
@@ -142,10 +145,10 @@ void parseMultiPlayMoneyMult( INI *ini, void *, void *store, const void * )
 void parseMultiPlayUnitXPMult( INI *ini, void *, void *store, const void * )
 {
 	MultiPlayMults *mults = (MultiPlayMults *)store;
-	const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
+	const char *token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 	while ( token )
 	{
-		const char *valueToken = ini->getNextToken( ini->getSepsColon() );
+		const char *valueToken = ini->getNextToken( ini->getSepsColon<0>() );
 		if ( valueToken )
 		{
 			Real value = INI::scanReal( valueToken );
@@ -166,7 +169,7 @@ void parseMultiPlayUnitXPMult( INI *ini, void *, void *store, const void * )
 			else if ( !_strcmpi( token, "MP8" ) )
 				mults->setUnitXPMult( 8, value );
 
-			token = ini->getNextTokenOrNull( ini->getSepsColon() );
+			token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 		}
 	}
 }
@@ -175,10 +178,10 @@ void parseMultiPlayUnitXPMult( INI *ini, void *, void *store, const void * )
 void parseMultiPlayBuildingXPMult( INI *ini, void *, void *store, const void * )
 {
 	MultiPlayMults *mults = (MultiPlayMults *)store;
-	const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
+	const char *token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 	while ( token )
 	{
-		const char *valueToken = ini->getNextToken( ini->getSepsColon() );
+		const char *valueToken = ini->getNextToken( ini->getSepsColon<0>() );
 		if ( valueToken )
 		{
 			Real value = INI::scanReal( valueToken );
@@ -199,7 +202,7 @@ void parseMultiPlayBuildingXPMult( INI *ini, void *, void *store, const void * )
 			else if ( !_strcmpi( token, "MP8" ) )
 				mults->setBuildingXPMult( 8, value );
 
-			token = ini->getNextTokenOrNull( ini->getSepsColon() );
+			token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 		}
 	}
 }
@@ -208,10 +211,10 @@ void parseMultiPlayBuildingXPMult( INI *ini, void *, void *store, const void * )
 void parseMultiPlayUnitSpeedMult( INI *ini, void *, void *store, const void * )
 {
 	MultiPlayMults *mults = (MultiPlayMults *)store;
-	const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
+	const char *token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 	while ( token )
 	{
-		const char *valueToken = ini->getNextToken( ini->getSepsColon() );
+		const char *valueToken = ini->getNextToken( ini->getSepsColon<0>() );
 		if ( valueToken )
 		{
 			Real value = INI::scanReal( valueToken );
@@ -232,7 +235,7 @@ void parseMultiPlayUnitSpeedMult( INI *ini, void *, void *store, const void * )
 			else if ( !_strcmpi( token, "MP8" ) )
 				mults->setUnitSpeedMult( 8, value );
 
-			token = ini->getNextTokenOrNull( ini->getSepsColon() );
+			token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 		}
 	}
 }
@@ -241,10 +244,10 @@ void parseMultiPlayUnitSpeedMult( INI *ini, void *, void *store, const void * )
 void parseMultiPlayBuildingSpeedMult( INI *ini, void *, void *store, const void * )
 {
 	MultiPlayMults *mults = (MultiPlayMults *)store;
-	const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
+	const char *token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 	while ( token )
 	{
-		const char *valueToken = ini->getNextToken( ini->getSepsColon() );
+		const char *valueToken = ini->getNextToken( ini->getSepsColon<0>() );
 		if ( valueToken )
 		{
 			Real value = INI::scanReal( valueToken );
@@ -265,8 +268,7 @@ void parseMultiPlayBuildingSpeedMult( INI *ini, void *, void *store, const void 
 			else if ( !_strcmpi( token, "MP8" ) )
 				mults->setBuildingSpeedMult( 8, value );
 
-			token = ini->getNextTokenOrNull( ini->getSepsColon() );
+			token = ini->getNextTokenOrNull( ini->getSepsColon<0>() );
 		}
 	}
 }
-
