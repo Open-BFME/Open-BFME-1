@@ -32,7 +32,12 @@ public:
 // defined in GameLogic/Map/TerrainLogic.cpp. Uses go through this TU's TerrainLogicP48Owner view.
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern SceneClass *g_Va012F8058;
+// Retail global 0x012F8058 is W3DDisplay::m_3DScene
+// (?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A, defined in W3DDisplay's own TU).
+// RTS3DScene is forward declared: the two scene calls go through scene.h's
+// SceneClass view, which is what the retail call sites do.
+class RTS3DScene;
+class W3DDisplay { public: static RTS3DScene *m_3DScene; };
 
 RenderObjClass *Create_Render_Obj(const char *name);
 void Rva00739B30(RenderObjClass *object, bool geometry);
@@ -124,7 +129,7 @@ void W3DTreeBuffer::rva00736150(Int index, Int request)
 	}
 	m_trees[index].m_fieldd8 = Create_Render_Obj(m_treeTypes[type].m_modelName.str());
 	Rva00739B30(m_trees[index].m_fieldd8, false);
-	g_Va012F8058->Add_Render_Object(m_trees[index].m_fieldd8);
+	reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene)->Add_Render_Object(m_trees[index].m_fieldd8);
 	Matrix3D transform = m_trees[index].m_fieldd8->Get_Transform();
 	transform[0][3] = m_trees[index].m_location.x;
 	transform[1][3] = m_trees[index].m_location.y;
@@ -140,7 +145,7 @@ void W3DTreeBuffer::rva00736150(Int index, Int request)
 	if (m_treeTypes[type].m_field58 != -2) {
 		m_trees[index].m_fielddc = Create_Render_Obj(m_treeTypes[m_trees[index].m_fieldd0].m_data->m_modelName.str());
 		Rva00739B30(m_trees[index].m_fielddc, false);
-		g_Va012F8058->Add_Render_Object(m_trees[index].m_fielddc);
+		reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene)->Add_Render_Object(m_trees[index].m_fielddc);
 		transform = m_trees[index].m_fielddc->Get_Transform();
 		transform[0][3] = m_trees[index].m_location.x;
 		transform[1][3] = m_trees[index].m_location.y;

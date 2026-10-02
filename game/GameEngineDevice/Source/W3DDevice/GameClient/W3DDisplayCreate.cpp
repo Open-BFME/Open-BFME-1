@@ -76,13 +76,17 @@ private:
 	volatile unsigned int m_increaseFrameCount;
 };
 
+// Retail global 0x012F8058 is W3DDisplay::m_3DScene
+// (?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A, defined in W3DDisplay's own TU).
+// Only the pointer's type is needed here: RTS3DScene is forward declared, and
+// the body that mints the light is reached through this TU's existing view.
+class RTS3DScene;
+
 class RTS3DSceneLightPulseShim
 {
 public:
 	W3DDynamicLightPulseShim *getADynamicLight();
 };
-
-extern RTS3DSceneLightPulseShim *g_lightPulseScene;
 
 void __cdecl W3DRadarResetLock(void);
 char __cdecl bfmeUnlock1179(void);
@@ -134,6 +138,7 @@ private:
 class W3DDisplay
 {
 public:
+	static RTS3DScene *m_3DScene;
 	virtual void createLightPulse(const Coord3D *position, const RGBColor *color,
 		float innerRadius, float attenuationWidth, unsigned int increaseTime,
 		unsigned int decayTime);
@@ -147,7 +152,7 @@ void W3DDisplay::createLightPulse(const Coord3D *position, const RGBColor *color
 {
 	if (innerRadius + attenuationWidth < 21.0f)
 		return;
-	W3DDynamicLightPulseShim *light = g_lightPulseScene->getADynamicLight();
+	W3DDynamicLightPulseShim *light = reinterpret_cast<RTS3DSceneLightPulseShim *>(m_3DScene)->getADynamicLight();
 	light->setEnabled(true);
 	light->Set_Ambient(Vector3(color->red, color->green, color->blue));
 	light->Set_Diffuse(Vector3(color->red, color->green, color->blue));
