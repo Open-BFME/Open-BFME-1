@@ -1,15 +1,18 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/shims
 // Open-BFME: S4Made0090F650::S4Made0090F650, retail 0x0090F650, 48 bytes.
 //
 // No base and no vftable: six zeroed words, then the global at 0x012D6E2C, then
 // four ones. The zero and the 1.0f are each materialised once and reused, which
 // is what groups the stores the way retail has them.
 
+// 0x012D6E2C is retail's ShaderClass::_PresetAdditiveSpriteShader: MSVC 7.1
+// mangles that static member as ?_PresetAdditiveSpriteShader@ShaderClass@@2V1@A
+// (`1` is the type backreference for ShaderClass), which is the defining name.
+// Retail COPIES the four bytes stored there -- `mov ecx,[012D6E2C]` -- so the
+// field at +0x18 holds that preset's shader bits.
+#include "shader.h"
+
 typedef float Real;
-
-class BfmeShared012D6E2C;
-
-extern BfmeShared012D6E2C *TheBfmeShared012D6E2C;
 
 class S4Made0090F650
 {
@@ -23,7 +26,7 @@ private:
 	void *m_d;						// +0x0C
 	void *m_e;						// +0x10
 	void *m_f;						// +0x14
-	BfmeShared012D6E2C *m_shared;				// +0x18
+	unsigned int m_shared;				// +0x18
 	Real m_x;						// +0x1C
 	Real m_y;						// +0x20
 	Real m_z;						// +0x24
@@ -38,7 +41,7 @@ S4Made0090F650::S4Made0090F650()
 	m_d = 0;
 	m_e = 0;
 	m_f = 0;
-	m_shared = TheBfmeShared012D6E2C;
+	m_shared = ShaderClass::_PresetAdditiveSpriteShader.Get_Bits();
 	m_x = 1.0f;
 	m_y = 1.0f;
 	m_z = 1.0f;
