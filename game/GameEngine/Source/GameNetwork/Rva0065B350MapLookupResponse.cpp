@@ -12,6 +12,7 @@ typedef struct in_addr IN_ADDR;
 #include <map>
 #include <string>
 #include <stdlib.h>
+#include <string.h>
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 
 // The response deque has a independently witnessed 1F0-byte stride. This
@@ -19,7 +20,7 @@ typedef struct in_addr IN_ADDR;
 struct Rva0065B350Response {
     int word0;
     PSPlayerStats player;
-    char opaque1C8[0xC];
+    int word1C8, word1CC, word1D0;
     int word1D4, word1D8;
     char opaque1DC[0x14];
 };
@@ -34,12 +35,13 @@ public:
 class BfmeQueueEUG;
 extern BfmeQueueEUG *g_bfmeQueueEUG;
 class Gen_00654130 { public: void bfmeErase(void *); };
-struct Rva0065B350Payload { int word0, word4; };
+struct Rva0065B350Payload { int word0, word4, word8; };
 class Rva0065B350 {
 public:
     char opaque0[0x5C];
     _STL::map<void *, void *> values;
     int handle(void *, int, const char *, int, int);
+    int method0065B100(void *, int, const char *, int, int);
     int handleLadderRankResponse(void *, int, const char *, int, int);
     int handleXKResponse(void *, int, const char *, int, int);
 };
@@ -94,4 +96,40 @@ extern "C" int __cdecl bfmeCbXK(int key, int status, char *text, __int64 timesta
     return static_cast<Rva0065B350 *>(context)->handleXKResponse(
         reinterpret_cast<void *>(key), status, text,
         reinterpret_cast<const int *>(&timestamp)[0], reinterpret_cast<const int *>(&timestamp)[1]);
+}
+
+// Retail466B: final jump at +0x1D0; native method spelling unknown.
+int Rva0065B350::method0065B100(void *key, int status,
+    const char *text, int, int)
+{
+    _STL::map<void *, void *>::iterator found = values.find(key);
+    if (found == values.end() || !found->second || status) {
+        reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
+        return 1;
+    }
+
+    AsciiString value(text);
+    value.trim();
+    char *delimiter = const_cast<char *>(strstr(value.str(), ","));
+    if (!delimiter || !delimiter[1]) {
+        reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
+        return 1;
+    }
+    *delimiter = '\0';
+    int firstValue = atoi(value.str());
+    int secondValue = atoi(delimiter + 1);
+    if (!firstValue || !secondValue) {
+        reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
+        return 1;
+    }
+
+    Rva0065B350Response response;
+    response.word0 = 3;
+    response.word1CC = firstValue;
+    response.word1D0 = secondValue;
+    response.word1C8 = static_cast<Rva0065B350Payload *>(found->second)->word8;
+    if (g_bfmeQueueEUG)
+        reinterpret_cast<Rva0065B350QueueView *>(g_bfmeQueueEUG)->slot18(response);
+    reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
+    return 1;
 }
