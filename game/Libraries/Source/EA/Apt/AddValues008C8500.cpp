@@ -119,7 +119,9 @@ struct Rva00899560Pool
 };
 
 extern Rva008C3B60Node *Rva008C3B60Head;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// 0x01337810: the Apt GC-root registry vector pointer, defined in
+// game/Libraries/Source/Apt/Apt.cpp. The view type here is this TU's own.
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 
 class Rva008A9B00
@@ -146,7 +148,7 @@ static __forceinline Rva008C3B60Node *CreateStringRva008C6C20()
     if (node)
     {
         Rva008C3B60Head = node->m_next;
-        g_rva8CD130IdleHook->add(node);
+        g_rva01337810GcRoots->add(node);
         if (node->m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);
         return node;

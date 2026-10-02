@@ -64,7 +64,9 @@ public:
     Rva8CD130String m_string;
     Rva008A9B00 *m_next;
 };
-struct BfmeRegistryKind1
+// 0x01337810: the Apt GC-root registry vector pointer, defined in
+// game/Libraries/Source/Apt/Apt.cpp. The view type below is this TU's own.
+struct Rva00899560Pool
 {
     int m_capacity, m_count;
     void **m_entries;
@@ -78,7 +80,7 @@ struct BfmeRegistryKind1
         ++*pcount;
     }
 };
-extern "C" BfmeRegistryKind1 *g_bfmeRegistryVNF;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern Rva008A9B00 *g_rva008AAFD0Free;
 struct Stack008C7950
 {
@@ -104,7 +106,7 @@ void IntegerString008C7F70(Stack008C7950 *state)
         Rva008A9B00 *result = g_rva008AAFD0Free;
         if (result) {
             g_rva008AAFD0Free = result->m_next;
-            g_bfmeRegistryVNF->addOrClear(result);
+            g_rva01337810GcRoots->addOrClear(result);
             if (result->m_string.m_data != &g_bfmeDefaultString1284)
                 reinterpret_cast<BfmeStrVKK *>(&result->m_string)->bfmeTruncVKK(0);
         } else result = new Rva008A9B00;

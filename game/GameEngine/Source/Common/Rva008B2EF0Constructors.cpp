@@ -17,7 +17,9 @@ struct Rva00899560Pool
     inline void addPooled(Rva00899560Value *value);
 };
 
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// 0x01337810: the Apt GC-root registry vector pointer, defined in
+// game/Libraries/Source/Apt/Apt.cpp. The view type here is this TU's own.
+extern Rva00899560Pool *g_rva01337810GcRoots;
 
 struct Rva00899560Value
 {
@@ -31,7 +33,7 @@ struct Rva00899560Value
         if (type != 0x1c && type != 0xa)
         {
             m_flags = flags | 0x40000000;
-            g_rva8CD130IdleHook->addPooled(this);
+            g_rva01337810GcRoots->addPooled(this);
         }
         else
         {

@@ -48,7 +48,9 @@ public:
 class BfmeG1211 { public: void bfmeStep1211C(); };
 struct Rva008CE1E0Registry { int m_capacity, m_count; };
 struct Rva00899560Pool;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// 0x01337810: the Apt GC-root registry vector pointer, defined in
+// game/Libraries/Source/Apt/Apt.cpp. Incomplete here, so the uses below cast.
+extern Rva00899560Pool *g_rva01337810GcRoots;
 struct Rva008CE1E0State { int m_count, m_unknown04; Rva008CE1E0Value **m_values; };
 struct Rva008CE1E0Context { char m_gap00[8]; void *m_scope08; };
 // 0x008B8E10 landed as BfmeN1242::rva008B8E10(int, BfmeE1242 *) (thiscall,
@@ -92,6 +94,6 @@ void rva008CE1E0StoreMember(Rva008CE1E0State *state, Rva008CE1E0Context *context
     }
     state->m_count -= 3;
     int count = state->m_count;
-    if (((Rva008CE1E0Registry *)g_rva8CD130IdleHook)->m_count != 0 && count == 0)
-        ((BfmeG1211 *)g_rva8CD130IdleHook)->bfmeStep1211C();
+    if (((Rva008CE1E0Registry *)g_rva01337810GcRoots)->m_count != 0 && count == 0)
+        ((BfmeG1211 *)g_rva01337810GcRoots)->bfmeStep1211C();
 }

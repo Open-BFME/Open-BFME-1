@@ -53,7 +53,9 @@ public:
     EAStringC m_string;
     Rva008A9B00 *m_next;
 };
-struct Rva008A9E20Registry {
+// 0x01337810: the Apt GC-root registry vector pointer, defined in
+// game/Libraries/Source/Apt/Apt.cpp. The view type below is this TU's own.
+struct Rva00899560Pool {
     int m_capacity, m_count;
     void **m_entries;
     __forceinline void add(Rva008A9B00 *obj) {
@@ -63,7 +65,7 @@ struct Rva008A9E20Registry {
         ++m_count;
     }
 };
-extern Rva008A9E20Registry *g_registry01337810;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern Rva008A9B00 *g_free01338478;
 // 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
 // Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
@@ -87,7 +89,7 @@ Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
     Rva008A9B00 *obj = g_free01338478;
     if (obj) {
         g_free01338478 = obj->m_next;
-        g_registry01337810->add(obj);
+        g_rva01337810GcRoots->add(obj);
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);
     } else {
