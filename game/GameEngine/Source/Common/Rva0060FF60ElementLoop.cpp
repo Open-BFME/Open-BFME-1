@@ -3,7 +3,7 @@
 class Rva0060A470Element
 {
 public:
-	void update();
+	bool update();
 };
 
 class Rva0060FF60Vector
