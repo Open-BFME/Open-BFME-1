@@ -1,5 +1,21 @@
 class BfmeAgentAR;
 
+// Retail ILT 0x000044C1 (targets/game/reverse/functions.csv, gen-thunk row
+// ?j_000044c1@@YAXXZ) is a 5-byte `jmp 0x6b2080`, i.e. RVA 0x002B2080, which
+// the ledger matches as
+// ?handle@Gen002B2080@@QAEXPAVFlagPairTarget@@@Z
+// (game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp). Only the one
+// member is spelled here, so no layout of that class is imported; the caller
+// passes its own `this` and the same pointer the ILT took, exactly as retail
+// does (ecx + one pushed argument, `ret 4` on the callee side).
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeInfoAR
 {
 	unsigned char m_bfmeFlagAR;
@@ -59,7 +75,6 @@ class BfmeHostAR
 public:
 	void bfmeSendAR(BfmeAgentAR *ag);
 
-	void bfmeHighAR(BfmeAgentAR *ag);
 	void bfmeLowAR(BfmeAgentAR *ag);
 
 	unsigned char m_bfmeHeadAR[0x20];
@@ -79,7 +94,7 @@ void BfmeHostAR::bfmeSendAR(BfmeAgentAR *ag)
 	ag->bfmeFillAR(&info);
 
 	if (info.m_bfmeLevelAR >= 2)
-		bfmeHighAR(ag);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)ag);
 	else
 		bfmeLowAR(ag);
 

@@ -14,12 +14,20 @@ struct XferVersion
 class BfmeSeedTarget;
 class BroadcastStealthUpdate;
 
-class Gen_001ED0C0
-{
-	friend class BroadcastStealthUpdate;
+// Retail ILT 0x000044C1 (targets/game/reverse/functions.csv, gen-thunk row
+// ?j_000044c1@@YAXXZ) is a 5-byte `jmp 0x6b2080`, i.e. RVA 0x002B2080, which
+// the ledger matches as
+// ?handle@Gen002B2080@@QAEXPAVFlagPairTarget@@@Z
+// (game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp). Only the one
+// member is spelled here, so no layout of that class is imported; the caller
+// passes its own `this` and the same pointer the ILT took, exactly as retail
+// does (ecx + one pushed argument, `ret 4` on the callee side).
+class FlagPairTarget;
 
-private:
-	void bfmeAccept(BfmeSeedTarget *target);
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
 };
 
 class BfmeSubAccept_00029DAC
@@ -97,7 +105,7 @@ private:
 // ?xfer@BroadcastStealthUpdate@@MAEXPAVXfer@@@Z
 void BroadcastStealthUpdate::xfer(Xfer *xfer)
 {
-	((Gen_001ED0C0 *)this)->bfmeAccept((BfmeSeedTarget *)xfer);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)xfer);
 	if (xfer->isLightCRC())
 		return;
 
