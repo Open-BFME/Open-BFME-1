@@ -133,6 +133,7 @@ AIMeleeReAcquireState::AIMeleeReAcquireState( StateMachine *machine )
 	m_field24 = 0;
 }
 
+namespace {
 class AIAttackAimAtTargetState : public State
 {
 public:
@@ -155,7 +156,9 @@ AIAttackAimAtTargetState::AIAttackAimAtTargetState(
 	m_reserved26 = false;
 	m_setLocomotor = setLocomotor;
 }
+}
 
+namespace {
 class AIAttackFireWeaponState : public State
 {
 public:
@@ -173,6 +176,7 @@ AIAttackFireWeaponState::AIAttackFireWeaponState(
 	  m_notify( notify ),
 	  m_finished( false )
 {
+}
 }
 
 class AIWaitUntilFinishedFiringState : public State

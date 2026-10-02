@@ -374,10 +374,13 @@ void emitAttackStateMachineDependencies()
 {
 	Bool (*volatile keepCondition)(State *, void *) = inWeaponRangeObject;
 	StateMachine *machine = NULL;
-	AIAttackState *attack = NULL;
 	(void)keepCondition;
-	(void)newInstance(AIAttackAimAtTargetState)(machine, FALSE, FALSE);
-	(void)newInstance(AIAttackFireWeaponState)(machine, attack);
+	// Retain this TU's matched delete wrappers without emitting duplicate state
+	// constructor definitions owned by AIAttackActionStates.cpp.
+	AIAttackAimAtTargetState::operator delete(
+		0, AIAttackAimAtTargetState::AIAttackAimAtTargetState_GLUE_NOT_IMPLEMENTED);
+	AIAttackFireWeaponState::operator delete(
+		0, AIAttackFireWeaponState::AIAttackFireWeaponState_GLUE_NOT_IMPLEMENTED);
 	(void)newInstance(AIAttackPursueTargetState)(machine, FALSE, FALSE, FALSE);
 	(void)newInstance(AIAttackApproachTargetState)(machine, FALSE, FALSE, FALSE);
 	(void)newInstance(ContinueState)(machine);

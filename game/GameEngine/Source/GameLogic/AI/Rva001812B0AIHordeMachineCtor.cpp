@@ -53,6 +53,7 @@ private:
 	unsigned char m_storage[ 0x6c ];
 };
 
+namespace {
 class AIAttackFireWeaponState : public State
 {
 public:
@@ -70,6 +71,7 @@ AIAttackFireWeaponState::AIAttackFireWeaponState(
 	  m_notify( notify ),
 	  m_finished( false )
 {
+}
 }
 
 class AIWaitUntilFinishedFiringState : public State
