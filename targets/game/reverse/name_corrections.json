@@ -13768,5 +13768,25 @@
   "after_sha256": "785be92497385bbf36f727a6f6596d69cb1ecbacbfb014f4b9eafc8ec56c55f6",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/OpenContainAddOrRemoveObjFromWorld.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/OpenContainAddOrRemoveObjFromWorld.cpp",
+  "old_name": "Drawable",
+  "new_name": "Gen_00411DD0",
+  "before_sha256": "9dc79e37fda6ffd7c65b867b0b8bcd2d02275ba4e77f792970aa9cecd1de4684",
+  "after_sha256": "894a020b700da57d5a0a5cdf06daa8229561a9c402a35246e8ae6a04783d2459",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/OpenContainFinishUpdate.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/OpenContainFinishUpdate.cpp",
+  "old_name": "Drawable",
+  "new_name": "Gen_00411DD0",
+  "before_sha256": "a754f7dff7d58194f97be85bc8781443c7f8ac8f763d2f0d3706dad7b8f4fda8",
+  "after_sha256": "64520f0473870c0a15203a1bb53fbcfb2b4026344c786162e40e59098ce3e430",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

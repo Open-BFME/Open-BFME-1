@@ -8,10 +8,14 @@
 
 typedef bool Bool;
 
-class Drawable
+// Spellable stand-in for the retail owner of the matched setter
+// ?bfmeSet@Gen_00411DD0@@QAEX_N@Z (0x00411DD0, defined in
+// game/GameEngine/Source/Common/S3ValueSetters.cpp).  Declared under its
+// defining name so this call resolves instead of linking to nothing.
+class Gen_00411DD0
 {
 public:
-	void rva00411DD0(Bool value);
+	void bfmeSet(Bool value);
 };
 
 class Object
@@ -21,7 +25,7 @@ public:
 	OBJECT_SLOT(00) OBJECT_SLOT(01) OBJECT_SLOT(02) OBJECT_SLOT(03)
 	OBJECT_SLOT(04) OBJECT_SLOT(05) OBJECT_SLOT(06) OBJECT_SLOT(07)
 	OBJECT_SLOT(08) OBJECT_SLOT(09)
-	virtual Drawable *getDrawable();
+	virtual Gen_00411DD0 *getDrawable();
 #undef OBJECT_SLOT
 };
 
@@ -94,7 +98,7 @@ void OpenContain::finishUpdate()
 		return;
 
 	dispatch(object, false);
-	object->getDrawable()->rva00411DD0(true);
+	object->getDrawable()->bfmeSet(true);
 
 	Object *owner = TheGameLogic->findObjectByID(m_secondObjectID);
 	if (owner != 0)

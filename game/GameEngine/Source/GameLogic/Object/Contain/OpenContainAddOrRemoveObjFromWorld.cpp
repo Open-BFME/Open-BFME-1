@@ -7,10 +7,14 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class Drawable
+// Spellable stand-in for the retail owner of the matched setter
+// ?bfmeSet@Gen_00411DD0@@QAEX_N@Z (0x00411DD0, defined in
+// game/GameEngine/Source/Common/S3ValueSetters.cpp).  Declared under its
+// defining name so this call resolves instead of linking to nothing.
+class Gen_00411DD0
 {
 public:
-	void rva00411DD0(Bool hidden);
+	void bfmeSet(Bool hidden);
 };
 
 class Object;
@@ -126,7 +130,7 @@ public:
 	virtual void slot10() = 0; virtual void slot14() = 0;
 	virtual void slot18() = 0; virtual void slot1C() = 0;
 	virtual void slot20() = 0; virtual void slot24() = 0;
-	virtual Drawable *getDrawable() const = 0;
+	virtual Gen_00411DD0 *getDrawable() const = 0;
 
 	void rva001CA2E0();
 	void leaveGroup();
@@ -163,7 +167,7 @@ void OpenContain::addOrRemoveObjFromWorld(Object *obj, Bool add, Bool unused)
 		obj->rva001CA2E0();
 
 		if (obj->getDrawable())
-			obj->getDrawable()->rva00411DD0(false);
+			obj->getDrawable()->bfmeSet(false);
 
 		TheAI->m_pathfinder->addObjectToPathfindMap(obj);
 	}
@@ -173,7 +177,7 @@ void OpenContain::addOrRemoveObjFromWorld(Object *obj, Bool add, Bool unused)
 		((BfmeThingXV *)obj)->bfmeStopXV();
 
 		if (obj->getDrawable())
-			obj->getDrawable()->rva00411DD0(true);
+			obj->getDrawable()->bfmeSet(true);
 
 		TheAI->m_pathfinder->removeObjectFromPathfindMap(obj);
 	}
