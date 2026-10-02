@@ -8,6 +8,8 @@
 #include <stl/_numpunct.h>
 #include <stl/_ostreambuf_iterator.h>
 
+void __cdecl __adjust_float_buffer(char *, char *, char);
+
 _STLP_BEGIN_NAMESPACE
 
 // The retail instantiation was compiled without exposing this specialization's
@@ -16,8 +18,6 @@ _STLP_BEGIN_NAMESPACE
 template <>
 char *_STLP_CALL __find<char *, char>(char *, char *, const char &,
 	const random_access_iterator_tag &);
-
-void _STLP_CALL __adjust_float_buffer(char *, char *, char);
 
 ptrdiff_t _STLP_CALL __insert_grouping(char *, char *,
 	const string &, char, char, char, int);
@@ -31,7 +31,7 @@ OutputIter _STLP_CALL __put_float(char *input, char *input_end,
 	OutputIter out, ios_base &stream, char fill, char decimal_point,
 	char separator, const string &grouping)
 {
-	__adjust_float_buffer(input, input_end, decimal_point);
+	::__adjust_float_buffer(input, input_end, decimal_point);
 	if (!grouping.empty())
 	{
 		string new_grouping = grouping;

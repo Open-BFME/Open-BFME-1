@@ -1,9 +1,12 @@
 // Clean recovery of the STLport-style deque block advance at 0x0069E880.
 // The retiring element is reference counted; the exhausted 128-byte block is
 // returned to the retail small-block allocator before the next map slot wins.
+// stlport
+
+#include <stl/_config.h>
+#include <stl/_alloc.h>
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *value);
-extern void rva379ec0SmallDeallocate(void *block, unsigned int bytes);
 
 class Rva0069E880Reference
 {
@@ -42,7 +45,7 @@ extern "C" Rva0069E880Reference **__fastcall Rva0069E880DequeAdvance(Rva0069E880
 	((Rva0069E880ReferenceHolder *)self->current)->~Rva0069E880ReferenceHolder();
 
 	if (self->block != 0) {
-		rva379ec0SmallDeallocate(self->block, 128);
+		_STL::__node_alloc<true, 0>::deallocate(self->block, 128);
 	}
 	++self->mapCursor;
 	self->block = *self->mapCursor;

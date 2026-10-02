@@ -3,21 +3,18 @@
 // Retail identifies this 16-byte STLport vector growth body by its payload
 // shape and its pinned construct, allocation, and clear calls.
 
+class PSResponse;
+
 struct Gen_t_0036a520_p16cd
 {
 	char m_body[0x10];
 };
 
-struct Elem16
-{
-	char m_body[0x10];
-};
-
-void __cdecl gen003685C0(
-	Elem16 *destination, const Elem16 *value);
-
 namespace _STL
 {
+template <class Destination, class Value>
+void __cdecl _Construct(Destination *destination, const Value &value);
+
 struct __false_type
 {
 };
@@ -38,9 +35,9 @@ public:
 template <class Type>
 __forceinline void construct(Type *destination, const Type &value)
 {
-	gen003685C0(
-		reinterpret_cast<Elem16 *>(destination),
-		reinterpret_cast<const Elem16 *>(&value));
+	_Construct(
+		reinterpret_cast<PSResponse *>(destination),
+		reinterpret_cast<const PSResponse &>(value));
 }
 
 template <class Type>
