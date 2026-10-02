@@ -1,3 +1,18 @@
+// cl: /DNDEBUG /Iinputs/reference/shims/sweep /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/NameKeyGenerator.h"
+#include "../../../../inputs/reference/shims/gameclientxfer/GameLogic/GameLogic.h"
+
+class Module;
+class BfmeHostERP;
+#define OBJECT_TU_MEMBERS \
+protected: \
+	Module *findModule(NameKeyType key) const; \
+	friend class BfmeHostERP;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class BfmeIfaceERP
 {
 public:
@@ -37,28 +52,11 @@ public:
 class BfmeThingERP
 {
 public:
-	BfmeModERP *bfmeFindERP(int key);
-
 	unsigned char m_bfmeHeadERP[0x344];
 	unsigned char m_bfmeFlagsERP;
 };
 
-class BfmeLogicERP
-{
-public:
-	BfmeThingERP *bfmeFindByIdERP(int id);
-};
-
-class GameLogic;
 extern GameLogic *TheGameLogic;
-
-class BfmeKeyGenERP
-{
-public:
-	int bfmeNameToKeyERP(const char *name);
-};
-
-extern BfmeKeyGenERP *g_bfmeKeyGenERP;
 
 class BfmeNodeERP
 {
@@ -98,14 +96,14 @@ void BfmeHostERP::bfmeSweepERP()
 		if (node->m_bfmeIdERP == 0)
 			continue;
 
-		BfmeThingERP *thing = ((BfmeLogicERP *)TheGameLogic)->bfmeFindByIdERP(node->m_bfmeIdERP);
+		BfmeThingERP *thing = (BfmeThingERP *)TheGameLogic->findObjectByID(node->m_bfmeIdERP);
 
 		if (thing != 0 && (thing->m_bfmeFlagsERP & 1) == 0)
 		{
 			static int s_bfmeKeyERP =
-				g_bfmeKeyGenERP->bfmeNameToKeyERP("SiegeDeploySpecialPower");
+				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
 
-			BfmeModERP *mod = thing->bfmeFindERP(s_bfmeKeyERP);
+			BfmeModERP *mod = (BfmeModERP *)((Object *)thing)->findModule((NameKeyType)s_bfmeKeyERP);
 
 			if (mod != 0)
 			{

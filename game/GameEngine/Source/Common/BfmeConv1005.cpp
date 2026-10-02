@@ -1,10 +1,19 @@
 // Open-BFME5 conversions.
+// cl: /DNDEBUG /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/StateMachine.h"
+#define OBJECT_TU_MEMBERS void bfmeWakeAutoPickup(int runFromButtonNumber);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
-class BfmeItem1005
+class BfmeItem1005;
+
+// ILT 0x00007513 routes to the body owned by BfmeConv916.cpp.
+class BfmeThing916D
 {
 public:
-	void bfmeDoC1005(int a);
-	void bfmeDoD1005(int a);
+	void bfmeGo916D(void *a);
 };
 
 struct BfmeNode1005
@@ -27,13 +36,13 @@ public:
 void BfmeList1005::bfmeGoC1005(int a)
 {
 	for (BfmeNode1005 *n = m_bfmeHead->m_bfmeNext; n != m_bfmeHead; n = n->m_bfmeNext)
-		n->m_bfmeItem->bfmeDoC1005(a);
+		((Object *)n->m_bfmeItem)->bfmeWakeAutoPickup(a);
 }
 
 void BfmeList1005::bfmeGoD1005(int a)
 {
 	for (BfmeNode1005 *n = m_bfmeHead->m_bfmeNext; n != m_bfmeHead; n = n->m_bfmeNext)
-		n->m_bfmeItem->bfmeDoD1005(a);
+		((BfmeThing916D *)n->m_bfmeItem)->bfmeGo916D((void *)a);
 }
 
 class BfmeMgr1005
@@ -66,9 +75,6 @@ struct BfmeGoal1005
 class BfmeHold1005
 {
 public:
-	BfmeGoal1005 *bfmeGoalE1005();
-	BfmeGoal1005 *bfmeGoalF1005();
-
 	char m_bfmePad[0x10];
 	int m_bfmeUnit;
 };
@@ -92,7 +98,7 @@ int BfmeE1005::bfmeGoE1005()
 	m_bfmeSlot = 0;
 
 	int u = h->m_bfmeUnit;
-	BfmeGoal1005 *g = h->bfmeGoalE1005();
+	BfmeGoal1005 *g = (BfmeGoal1005 *)((StateMachine *)h)->getGoalObject();
 
 	if (g) {
 		BfmeMgr1005 *m = g->m_bfmeMgr;
@@ -115,7 +121,7 @@ int BfmeE1005::bfmeGoF1005()
 	m_bfmeSlot = 0;
 
 	int u = h->m_bfmeUnit;
-	BfmeGoal1005 *g = h->bfmeGoalF1005();
+	BfmeGoal1005 *g = (BfmeGoal1005 *)((StateMachine *)h)->getGoalObject();
 
 	if (g) {
 		BfmeMgr1005 *m = g->m_bfmeMgr;
