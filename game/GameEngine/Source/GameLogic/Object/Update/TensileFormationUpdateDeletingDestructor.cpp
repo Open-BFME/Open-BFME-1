@@ -7,9 +7,12 @@ public:
 	virtual ~TensileFormationUpdate();
 };
 
-__declspec(noinline) TensileFormationUpdate::~TensileFormationUpdate() {}
-
 void Force_TensileFormationUpdate_Deleting_Destructor(TensileFormationUpdate *update)
 {
+	// Emit the deleting wrapper here while leaving the complete destructor external.
+	if (false)
+	{
+		TensileFormationUpdate value;
+	}
 	delete update;
 }
