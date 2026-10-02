@@ -87,12 +87,6 @@ public:
 	int m_value;
 };
 
-class Rva002D5F70
-{
-public:
-	void method(void);
-};
-
 class Rva002D6150
 {
 public:
@@ -195,11 +189,6 @@ int Rva002D5570::method(void) const
 int Rva002D5ED0::method(void) const
 {
 	return m_value;
-}
-
-// ?method@Rva002D5F70@@QAEXXZ
-void Rva002D5F70::method(void)
-{
 }
 
 // ?method@Rva002D6150@@QBEHXZ

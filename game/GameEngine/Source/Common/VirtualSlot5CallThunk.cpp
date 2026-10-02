@@ -31,69 +31,6 @@ void VirtualSlot5CallThunk::invokeOne()
     invoke(1);
 }
 
-struct VirtualSlot8CallThunk
-{
-    virtual void slot0();
-    virtual void slot1();
-    virtual void slot2();
-    virtual void slot3();
-    virtual void slot4();
-    virtual void slot5();
-    virtual void slot6();
-    virtual void slot7();
-    virtual void invoke(int value);
-
-    void invokeZero();
-    void invokeZeroAlternate();
-    void invokeZeroThird();
-    void invokeZeroFourth();
-    void invokeZeroFifth();
-    void invokeZeroSixth();
-    void invokeZeroSeventh();
-};
-
-// ?d_001fb260@@YAXXZ
-void VirtualSlot8CallThunk::invokeZero()
-{
-    invoke(0);
-}
-
-// ?d_001fbb80@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroAlternate()
-{
-    invoke(0);
-}
-
-// ?d_002043e0@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroThird()
-{
-    invoke(0);
-}
-
-// ?d_0020a810@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroFourth()
-{
-    invoke(0);
-}
-
-// ?d_0027ffa0@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroFifth()
-{
-    invoke(0);
-}
-
-// ?d_002899f0@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroSixth()
-{
-    invoke(0);
-}
-
-// ?d_002d7a50@@YAXXZ
-void VirtualSlot8CallThunk::invokeZeroSeventh()
-{
-    invoke(0);
-}
-
 struct VirtualSlot2CallThunk
 {
     virtual void slot0();

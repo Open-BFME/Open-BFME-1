@@ -14838,5 +14838,105 @@
   "after_sha256": "fc97fd0947d04d30067bd38393e7f553b5e922291a2eeed6e436029e96b35bf5",
   "evidence": "targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md",
   "reason": "VirtualSlot11SecondArgumentCallThunk::invokeSecond* were shape names for four unowned 13-byte forwards (object symbols of ?d_/?dup_ rows). Each body is now placed by its table: slot 12 bodies become <Class>::doSpecialPowerAtObject, and slot 13 bodies keep their address on the proven owner because slot 13's name is unproven. The checker pairs the removed shape name with one of the new address names."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002D3DD0Empty.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "b_002d3dd0",
+  "new_name": "rva00212D20",
+  "before_sha256": "de0523e0564108b92b3f4be31705a786c6f7924be519c001466f86cfea825b41",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002D4CF0Return.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "b_002d4cf0",
+  "new_name": "rva00212D20",
+  "before_sha256": "8c4932e7f1a346f935106c2c7af6809f6ff95cf512458d79978900c654fca11f",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002DA300Empty.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "empty",
+  "new_name": "rva001FB260",
+  "before_sha256": "9721e2e378f8bbe48e0239270ce041bbf0d1bd4fb351b838ef0de4b510608146",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002DA300Empty.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "empty",
+  "new_name": "rva00212D20",
+  "before_sha256": "9721e2e378f8bbe48e0239270ce041bbf0d1bd4fb351b838ef0de4b510608146",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "invokeZero",
+  "new_name": "rva001FBB80",
+  "before_sha256": "7a6e45760caa6d4f11a816ba04450744eeb95d9908036bfee2e8a095e24694f5",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeMuxSlot7Overrides.cpp",
+  "old_name": "invokeZeroSeventh",
+  "new_name": "rva001FBB80",
+  "before_sha256": "7a6e45760caa6d4f11a816ba04450744eeb95d9908036bfee2e8a095e24694f5",
+  "after_sha256": "a950138656b52ac47f0555ff0e7f8568636c4dfca0ba241b678864e14d60ba1b",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "method",
+  "new_name": "rva002D5F70",
+  "before_sha256": "592249f0e1ee411ba95dce509dbdea206fe4ab9b56ba83fa6e9ece52509fd95e",
+  "after_sha256": "27dccc870b56a1af411a07415dcea9437d43113c65618fe91901fef94466fc1f",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "b_002d4cf0",
+  "new_name": "rva002D4CF0",
+  "before_sha256": "5af55559a286f72e634fc7a4311052834a066afd5e374ef5f02d337af5b8e051",
+  "after_sha256": "9ec0fcab95842be4168ddb67b1e2ac2610f24caaf57f7c2c157a852f6c75211c",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "empty",
+  "new_name": "rva002DA300",
+  "before_sha256": "85dfe6ede0a09d52bb3166563a26363bd1dcb8b7e199702232c0cd7759db29e5",
+  "after_sha256": "0eeb1078d32d0025435ad390f5198e0bec721776c09a65e8a81c86cab3f5baf5",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "b_002d3dd0",
+  "new_name": "rva002D3DD0",
+  "before_sha256": "ff4918eabf1603fa999a6c740ea60099100115c4f448c2aabeca5ef1b145ab40",
+  "after_sha256": "e93a342627321e8718e3ff7eb7790d4fe27cda705c56039e178f07b901f7477e",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
  }
 ]

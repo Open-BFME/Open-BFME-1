@@ -1,0 +1,168 @@
+// cl: /DNDEBUG /MD /EHsc
+// UpgradeMux slot 7 bodies that are trivial: slot 8 with false (the inverse
+// of attemptUpgrade's final setUpgradeExecuted(true)) or empty. Slot 7 is a
+// BFME-only virtual; its name is unproven, so each override keeps its address
+// on its proven owner. Owner, table and ILT stub for every body:
+// targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
+
+typedef bool Bool;
+
+class UpgradeMux
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07();
+protected:
+	virtual void setUpgradeExecuted(Bool executed);
+};
+
+// 0x001FB260: slot 7 of FireWeaponWhenDamagedBehavior's table 0x010A3DE8 (ILT 0x0003F049)
+class FireWeaponWhenDamagedBehavior : public UpgradeMux
+{
+protected:
+	virtual void rva001FB260();
+};
+
+void FireWeaponWhenDamagedBehavior::rva001FB260()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x001FBB80: slot 7 of FireWeaponWhenDeadBehavior's table 0x010A3F40 (ILT 0x0000A7A4)
+class FireWeaponWhenDeadBehavior : public UpgradeMux
+{
+protected:
+	virtual void rva001FBB80();
+};
+
+void FireWeaponWhenDeadBehavior::rva001FBB80()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x002043E0: slot 7 of ReplenishUnitsBehavior's table 0x010A5AC0 (ILT 0x0000F245)
+class ReplenishUnitsBehavior : public UpgradeMux
+{
+protected:
+	virtual void rva002043E0();
+};
+
+void ReplenishUnitsBehavior::rva002043E0()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x0020A810: slot 7 of SpawnBehavior's table 0x010A6B70 (ILT 0x0000CD8D)
+class SpawnBehavior : public UpgradeMux
+{
+protected:
+	virtual void rva0020A810();
+};
+
+void SpawnBehavior::rva0020A810()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x00212D20: slot 7 of DetachableRiderBody's table 0x010A7FC0 (ILT 0x0001C71A)
+class DetachableRiderBody : public UpgradeMux
+{
+protected:
+	virtual void rva00212D20();
+};
+
+void DetachableRiderBody::rva00212D20()
+{
+}
+
+// 0x0027FFA0: slot 7 of AttributeModifierAuraUpdate's table 0x010BAD08 (ILT 0x00033703)
+class AttributeModifierAuraUpdate : public UpgradeMux
+{
+protected:
+	virtual void rva0027FFA0();
+};
+
+void AttributeModifierAuraUpdate::rva0027FFA0()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x002899F0: slot 7 of BroadcastStealthUpdate's table 0x010BCAF0 (ILT 0x00020AC7)
+class BroadcastStealthUpdate : public UpgradeMux
+{
+protected:
+	virtual void rva002899F0();
+};
+
+void BroadcastStealthUpdate::rva002899F0()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x002D3DD0: slot 7 of CastleUpgrade's table 0x010CC1B0 (ILT 0x0003AECC)
+class CastleUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002D3DD0();
+};
+
+void CastleUpgrade::rva002D3DD0()
+{
+}
+
+// 0x002D4CF0: slot 7 of DelayedUpgrade's table 0x010CC700 (ILT 0x00025BA3)
+class DelayedUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002D4CF0();
+};
+
+void DelayedUpgrade::rva002D4CF0()
+{
+}
+
+// 0x002D5F70: slot 7 of LevelUpUpgrade's table 0x010CCE50 (ILT 0x000319FD)
+class LevelUpUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002D5F70();
+};
+
+void LevelUpUpgrade::rva002D5F70()
+{
+}
+
+// 0x002D7A50: slot 7 of RadarUpgrade's table 0x010CDA50 (ILT 0x0003B200)
+class RadarUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002D7A50();
+};
+
+void RadarUpgrade::rva002D7A50()
+{
+	setUpgradeExecuted(false);
+}
+
+// 0x002D8220: slot 7 of SubObjectsUpgrade's table 0x010CDEB0 (ILT 0x00047EBF)
+class SubObjectsUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002D8220();
+};
+
+void SubObjectsUpgrade::rva002D8220()
+{
+}
+
+// 0x002DA300: slot 7 of WeaponBonusUpgrade's table 0x010CE5B8 (ILT 0x00011E73)
+class WeaponBonusUpgrade : public UpgradeMux
+{
+protected:
+	virtual void rva002DA300();
+};
+
+void WeaponBonusUpgrade::rva002DA300()
+{
+}
