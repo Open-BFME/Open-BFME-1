@@ -1,7 +1,6 @@
 // ?updateAudioFlags@Rva005A00B0Owner@@QAEXXZ
 // stlport
 #include <list>
-struct Rva005A00B0Transition { char m_pad[0x30]; int m_pending; };
 struct Rva005A00B0AudioClient {
 	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
 	virtual void s8(); virtual void s9(); virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15();
@@ -12,14 +11,23 @@ struct Rva005A00B0AudioClient {
 	virtual void s48(); virtual void s49(); virtual void s50(); virtual void s51(); virtual void s52(); virtual void s53();
 	virtual void setFlagVolume(float volume, int mask);
 };
-extern Rva005A00B0Transition* TheTransitionHandler;
 class AudioManager;
 extern AudioManager* TheAudio;
+// Retail defines this singleton once, in
+// game/GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp, as
+// GameWindowTransitionsHandler *TheTransitionHandler, so this TU names the
+// pointer with that class: ?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A
+// at 0x012F3330.  The +0x30 word this file tests has no proven name in
+// GameWindowTransitionsHandler.cpp (it is left unnamed there), so it stays
+// address-named here.
 class GameWindowTransitionsHandler
 {
 public:
+	unsigned char m_padding0[0x30];
+	int m_unknown30;
 	void rva0048B690(void *destination);
 };
+extern GameWindowTransitionsHandler* TheTransitionHandler;
 
 struct Rva0059FF70Group
 {
@@ -71,7 +79,7 @@ float __cdecl Rva005A00B0FlagVolume(int index)
 struct Rva005A00B0Owner { char m_pad[0x18]; int m_flags; void updateAudioFlags(); };
 void Rva005A00B0Owner::updateAudioFlags()
 {
-	if (TheTransitionHandler && TheTransitionHandler->m_pending <= 0) {
+	if (TheTransitionHandler && TheTransitionHandler->m_unknown30 <= 0) {
 		for (int i = 0; i < 3; ++i) {
 			int mask = 1 << i;
 			if (m_flags & mask) {

@@ -13398,5 +13398,15 @@
   "after_sha256": "299ef2f48b3e3b51c1b39258e2911bd628f29dac67d6f21f66d69455ede26eea",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/SmallGaps/Rva005A00B0UpdateAudioFlags.cpp",
+  "new_path": "game/GameEngine/Source/Common/SmallGaps/Rva005A00B0UpdateAudioFlags.cpp",
+  "old_name": "m_pending",
+  "new_name": "m_unknown30",
+  "before_sha256": "b9f4b2a11642331ba56babd8946b66309eb0e826e45b7285835035636615b2ec",
+  "after_sha256": "bbc356b32f2b00379e2239d3e8f326816dff7587d18e51fc809203a6abd5d7ef",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

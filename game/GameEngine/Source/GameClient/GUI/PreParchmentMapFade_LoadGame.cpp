@@ -4,13 +4,18 @@
 // 0x003BE290 (104B). Load-game parchment fade: setGroup("PreParchmentMapFade_LoadGame", 0)
 // on TheTransitionHandler, poke TheShell and TheWindowManager, else poll isFinished.
 
-class TransitionHandler
+// Retail defines this singleton once, in
+// game/GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp, as
+// GameWindowTransitionsHandler *TheTransitionHandler.  Reference it by that
+// class name so the mangled global is ?TheTransitionHandler@@3PAV
+// GameWindowTransitionsHandler@@A, the one recorded at 0x012F3330.
+class GameWindowTransitionsHandler
 {
 public:
-	void setGroup(AsciiString name, int immediate);
+	void setGroup(AsciiString name, bool immediate);
 	bool isFinished(void);
 };
-extern TransitionHandler *TheTransitionHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 // Retail global 0x012F4B58 is EA's shell singleton, defined once under the
 // canonical spelling (Shell *TheShell).
