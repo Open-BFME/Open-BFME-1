@@ -9,13 +9,9 @@
 // 12-byte definition, or a Real into a 16-byte one. Written apart, that the
 // pair share a registration routine at all was not visible from either file.
 //
-// The registration routine is declared twice on purpose. Its third parameter
-// is typed to the definition each body allocates, so the two declarations
-// mangle differently -- ...PAVRva000940F0Definition@@ and
-// ...PAVRva00094470Definition@@ -- and the ledger autopins BOTH spellings to
-// the same ILT at 0x00023344. One retail function under two names, which a
-// single declaration cannot express while each body keeps its own definition
-// type.
+// Both parsers call ILT 0x00023344 -> RVA 0x00094010. Use the single
+// declaration owned by Rva00094010Register.cpp; the routine passes the
+// definition pointer through without accessing its scalar-specific layout.
 
 #include "PreRTS.h"
 #include "Common/INI.h"
@@ -39,7 +35,6 @@ private:
 };
 
 void Rva00094010Register( INI *ini, const AsciiString &name, Rva000940F0Definition *definition );
-void Rva00094010Register( INI *ini, const AsciiString &name, Rva00094470Definition *definition );
 
 class Rva000940F0
 {
@@ -67,5 +62,6 @@ void Rva00094470::parseDefinition( INI *ini, void *, void *, const void * )
 {
 	const char *name = ini->getNextToken();
 	Real value = INI::scanReal( ini->getNextToken() );
-	Rva00094010Register( ini, name, new Rva00094470Definition( name, value ) );
+	Rva00094010Register( ini, name, reinterpret_cast<Rva000940F0Definition *>(
+		new Rva00094470Definition( name, value ) ) );
 }
