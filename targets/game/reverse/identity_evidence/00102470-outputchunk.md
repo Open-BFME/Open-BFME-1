@@ -1,0 +1,11 @@
+# OutputChunk deleting destructor identity
+
+Retail lotrbfme.exe SHA2561fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75.
+
+Matched DataChunkOutput::openDataChunk atRVA001041F0 (216 bytes) creates the writer stack node: allocates0x10 atentry+0x53, writes vptrVA01086318 atinstructionRVA00104251 (entry+0x61) to[allocated+0], links the node+4 to writer headthis+0x18, installs that head, and writes ID+8. Its later writes store the chunk file position at+0x0C. This is the OutputChunk used by the named and verified writer, independently of any destructor placeholder. The existing native provider declares its public virtual destructor.
+
+Raw vtableVA01086318 first DWORD isVA0044737F. That5-byte ILT routes toRVA00102470. The31-byte body tests flag bit0 (mask1) at[esp+4], savesECX=this, writes the samevptr, calls global operator delete at00881EB0 when flagged, returns this inEAX, and ret4 atentry+0x1C. FollowingCC padding and the Ghidra31-byte boundary agree. No member/pool cleanup is emitted. This proves the scalar deleting destructor identity; it does not establish a separate complete-destructor address or make any inheritance claim.
+
+The existing ScalarDeletingDestructors.cpp macro already emits this exact shape through an empty public virtual destructor. Replace only its address-placeholder class nameRva00102470Deleting with OutputChunk in the same source and correct the31-byte row via add_match identity correction. All sibling macros/rows remain unchanged; the independent constructor placeholderRva00102460 and its row remain unchanged. No new destructor pin, header, vtable alias, or standalone constructor identity is introduced.
+
+The existing OutputChunk declaration in DataChunkOutput.cpp also makes its destructor inline-empty, preserving the retail inlined vptr teardown in that TU's implicit deleting wrapper. Without that definition the unresolved destructor would merely become a non-retail out-of-line wrapper call. Both final TU copies retain the exact31-byte wrapper with only the OutputChunk vtable and scalar operator-delete relocations. Independent UI peer review confirmed raw PE route/boundary/ABI, both current object copies, and all45 sibling macro rows unchanged. No separate complete-destructor address is claimed.

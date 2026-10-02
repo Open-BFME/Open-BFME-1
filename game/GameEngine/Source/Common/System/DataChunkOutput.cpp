@@ -93,7 +93,8 @@ class OutputStream;
 class OutputChunk
 {
 public:
-	virtual ~OutputChunk();
+	// Retail slot zero inlines the empty teardown before optional deletion.
+	virtual ~OutputChunk() {}
 	OutputChunk *next;
 	unsigned int id;
 	int filepos;
