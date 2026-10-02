@@ -1,20 +1,23 @@
-// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/tunneltracker /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Open-BFME: CaveContain::changeTeamOnAllConnectedCaves, retail 0x00219E80, 225 bytes.
 // Ghidra/gen-dump listed 222 and omitted the trailing ret 8 (C2 08 00).
 // ZH twin: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Contain/CaveContain.cpp
+#define __PLACEMENT_VEC_NEW_INLINE
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <list>
+#include <vector>
+#include "Lib/BaseType.h"
+#include "GameLogic/CaveSystem.h"
 
-typedef int ObjectID;
 typedef bool Bool;
 
 class Object;
 class Team;
 
-typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
+typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
 
 class CaveInterface
 {
@@ -82,7 +85,7 @@ private:
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID id)
+	Object *findObjectByID(int id)
 	{
 		if (id == 0)
 			return 0;
@@ -102,30 +105,18 @@ extern GameLogic *TheBfmeGameLogic;
 class BfmeK1101
 {
 public:
-	const _STL::list<ObjectID> *getContainerList() const
+	const _STL::list<int> *getContainerList() const
 	{
 		return &m_tunnelIDs;
 	}
 
 private:
 	void *m_vtable;
-	_STL::list<ObjectID> m_tunnelIDs;
+	_STL::list<int> m_tunnelIDs;
 };
 
-class BfmeJ1101
-{
-public:
-	BfmeK1101 *bfmeFind1101(int key);
-};
-
-// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
-// (?TheCaveSystem@@3PAVCaveSystem@@A). CaveSystem is declared by
-// game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
-// forward-declared here and this TU's own view of it, BfmeJ1101, is reached
-// through a cast rather than a second CaveSystem definition in this TU.
-class CaveSystem;
-
-extern CaveSystem *TheCaveSystem;
+// Retail ILT 0x0002F52C reaches CaveSystem::getTunnelTrackerForCaveIndex
+// at 0x00378340. The header supplies its proven receiver and return ABI.
 
 class CaveContain
 {
@@ -140,9 +131,10 @@ private:
 // ?changeTeamOnAllConnectedCaves@CaveContain@@QAEXPAVTeam@@_N@Z
 void CaveContain::changeTeamOnAllConnectedCaves(Team *newTeam, Bool setOriginalTeams)
 {
-	BfmeK1101 *myTracker = ((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(m_caveIndex);
-	const _STL::list<ObjectID> *allCaves = myTracker->getContainerList();
-	for (_STL::list<ObjectID>::const_iterator iter = allCaves->begin(); iter != allCaves->end(); ++iter)
+	BfmeK1101 *myTracker = reinterpret_cast<BfmeK1101 *>(
+		TheCaveSystem->getTunnelTrackerForCaveIndex(m_caveIndex));
+	const _STL::list<int> *allCaves = myTracker->getContainerList();
+	for (_STL::list<int>::const_iterator iter = allCaves->begin(); iter != allCaves->end(); ++iter)
 	{
 		Object *currentCave = TheBfmeGameLogic->findObjectByID(*iter);
 		if (currentCave)
