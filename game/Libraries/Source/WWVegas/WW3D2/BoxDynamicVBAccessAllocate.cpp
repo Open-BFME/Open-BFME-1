@@ -55,8 +55,8 @@ extern unsigned short BfmeDynamicSortingVertexArrayOffset;
 extern unsigned short BfmeDynamicSortingVertexArraySize;
 extern SortingVertexBufferClass *BfmeDynamicSortingVertexArray;
 
-extern bool BfmeDynamicDX8VertexBufferInUse[21];
-extern unsigned short BfmeDynamicDX8VertexBufferOffset[21];
+extern bool BfmeDynamicDX8VertexBufferInUse[];
+extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
 extern unsigned short BfmeDynamicDX8VertexBufferSize[21];
 extern BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[21];
 extern unsigned BfmeDynamicFVFTable[21];
@@ -76,6 +76,9 @@ class BoxDynamicVBAccessClass
 	void bfmeAllocateSorting();
 };
 
+// RVA 0091F040 is verified under Allocate_Sorting_Dynamic_Buffer in
+// BoxDynamicVBAccess_AllocateSorting.cpp; this older helper is unclaimed.
+// ?bfmeAllocateDynamic@BoxDynamicVBAccessClass@@AAEXXZ present-unmatched
 void BoxDynamicVBAccessClass::bfmeAllocateDynamic()
 {
 	unsigned new_count;

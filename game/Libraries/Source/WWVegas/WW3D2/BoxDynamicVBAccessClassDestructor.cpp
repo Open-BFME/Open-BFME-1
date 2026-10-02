@@ -20,7 +20,11 @@
 
 typedef unsigned short UnsignedShort;
 
-enum { BFME_MAX_DYNAMIC_BUFFERS = 21 };
+// Retail initialization at RVA 0091DA30 clears fifteen flags and offsets:
+// its FVF cursor runs from VA 013467F0 to 01346BB0 in steps of 0x40.
+// The destructor below proves each data address and width; data_rows.csv
+// verifies their zero-initialized retail extents.
+enum { BFME_MAX_DYNAMIC_BUFFERS = 15 };
 
 class BfmeDynamicVertexBuffer
 {
@@ -37,10 +41,10 @@ public:
 	}
 };
 
-extern bool BfmeDynamicDX8VertexBufferInUse[BFME_MAX_DYNAMIC_BUFFERS];		// 0x01346740
-extern UnsignedShort BfmeDynamicDX8VertexBufferOffset[BFME_MAX_DYNAMIC_BUFFERS];	// 0x01346794
-extern UnsignedShort BfmeDynamicSortingVertexArrayOffset;			// 0x013467E4
-extern bool BfmeDynamicSortingVertexArrayInUse;					// 0x013467D8
+bool BfmeDynamicDX8VertexBufferInUse[BFME_MAX_DYNAMIC_BUFFERS] = {};		// 0x01346740
+UnsignedShort BfmeDynamicDX8VertexBufferOffset[BFME_MAX_DYNAMIC_BUFFERS] = {};	// 0x01346794
+UnsignedShort BfmeDynamicSortingVertexArrayOffset = 0;			// 0x013467E4
+bool BfmeDynamicSortingVertexArrayInUse = false;					// 0x013467D8
 
 enum { BFME_BUFFER_TYPE_DYNAMIC_DX8 = 2 };
 
