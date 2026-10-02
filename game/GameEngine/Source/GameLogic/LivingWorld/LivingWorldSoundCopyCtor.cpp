@@ -111,7 +111,19 @@ public:
 };
 
 extern AudioManager *TheAudio;
-extern BfmeSwitchDR *g_bfmeSwitchDR;
+
+// The retail global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp;
+// BfmeSwitchDR above is this TU's view of the object, cast at each use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline const BfmeSwitchDR *livingWorldCampaignManagerSwitchView()
+{
+	return (const BfmeSwitchDR *)TheLivingWorldCampaignManager;
+}
 
 class BfmeThingNA
 {
@@ -171,10 +183,10 @@ void LivingWorldSound::Rva0061C060()
 
 	if ( m_flags & 0x80 )
 	{
-		if ( g_bfmeSwitchDR->m_bfmeUseHigh )
+		if ( livingWorldCampaignManagerSwitchView()->m_bfmeUseHigh )
 			return;
 	}
-	else if ( ( m_flags & 0x100 ) != 0 && !g_bfmeSwitchDR->m_bfmeUseHigh )
+	else if ( ( m_flags & 0x100 ) != 0 && !livingWorldCampaignManagerSwitchView()->m_bfmeUseHigh )
 	{
 		return;
 	}

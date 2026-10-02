@@ -68,7 +68,18 @@ public:
 	void setCampaign(AsciiString *name);
 };
 
-extern Glo012F1024Type *TheLivingWorldCampaignManager;
+// The retail global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp.
+// This TU keeps its own view of the object and casts at the use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline Glo012F1024Type *localTheLivingWorldCampaignManager()
+{
+	return reinterpret_cast<Glo012F1024Type *>(TheLivingWorldCampaignManager);
+}
 
 class Glo012F1028Sub
 {
@@ -119,16 +130,16 @@ void Rva003C1A50::start(unsigned char mordor)
 	Glo012ED5C8Type *gd = localTheWritableGlobalData();
 	AsciiString *slot = &gd->m_at94;
 	if (stringLive(slot->data()))
-		TheLivingWorldCampaignManager->setCampaign(slot);
+		localTheLivingWorldCampaignManager()->setCampaign(slot);
 	else if (mordor)
 	{
 		AsciiString name("MordorCampaign");
-		TheLivingWorldCampaignManager->setCampaign(&name);
+		localTheLivingWorldCampaignManager()->setCampaign(&name);
 	}
 	else
 	{
 		AsciiString name("GondorCampaign");
-		TheLivingWorldCampaignManager->setCampaign(&name);
+		localTheLivingWorldCampaignManager()->setCampaign(&name);
 	}
 
 	gd = localTheWritableGlobalData();

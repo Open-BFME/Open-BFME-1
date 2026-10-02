@@ -19,7 +19,18 @@ public:
 	bool m_bfmeRingCampaign;
 };
 
-extern BfmeCampaignSwitch977 *g_bfmeSwitchDR;
+// The retail global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp;
+// BfmeCampaignSwitch977 above is this TU's view of the object, cast at the use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline const BfmeCampaignSwitch977 *livingWorldCampaignManagerView977()
+{
+	return (const BfmeCampaignSwitch977 *)TheLivingWorldCampaignManager;
+}
 
 #include "ascii_string.h"
 
@@ -54,7 +65,7 @@ void __stdcall bfmeUpdateMaxPowerCommand(void *)
 {
 	void *command;
 	{
-		bool ringCampaign = g_bfmeSwitchDR->m_bfmeRingCampaign;
+		bool ringCampaign = livingWorldCampaignManagerView977()->m_bfmeRingCampaign;
 		const char *name = ringCampaign
 			? "NonCommand_MaxRingPower" : "NonCommand_MaxEvenstarPower";
 		AsciiString label(name);

@@ -464,7 +464,12 @@ public:
 // GameEngine::init stores 0x012F1024 then pushes "TheLivingWorldCampaignManager".
 // TheCampaignManager is a separate GameClient global at 0x012F4CB0. doDefeat and
 // doLocalDefeat write m_victorious on the living-world manager, not the ZH one.
-extern BfmeCampaignManagerVictorious *TheLivingWorldCampaignManager;	///< retail 0x012F1024
+// The global itself is EA's `LivingWorldCampaignManager *TheLivingWorldCampaignManager`,
+// defined once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp;
+// BfmeCampaignManagerVictorious above is this TU's view of the object, cast at each use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;	///< retail 0x012F1024
 
 class BfmeVictoryConditionsVtbl
 {
@@ -1017,7 +1022,7 @@ void ScriptActions::doDefeat( void )
 				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
 		}
 	}
-	TheLivingWorldCampaignManager->m_victorious = FALSE;
+	((BfmeCampaignManagerVictorious *)TheLivingWorldCampaignManager)->m_victorious = FALSE;
 	((BfmeScriptEngineVtbl_30 *)TheScriptEngine)->startEndGameTimer();
 }
 
@@ -1046,7 +1051,7 @@ void ScriptActions::doLocalDefeat( void )
 				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
 		}
 	}
-	TheLivingWorldCampaignManager->m_victorious = FALSE;
+	((BfmeCampaignManagerVictorious *)TheLivingWorldCampaignManager)->m_victorious = FALSE;
 	((BfmeScriptEngineVtbl_38 *)TheScriptEngine)->startCloseWindowTimer();
 }
 

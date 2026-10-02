@@ -78,7 +78,18 @@ public:
 	bool m_byte1c;
 };
 
-extern BfmeCampaignManagerVictorious *TheLivingWorldCampaignManager;
+// The retail global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp;
+// BfmeCampaignManagerVictorious above is this TU's view of the object, cast at the use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline const BfmeCampaignManagerVictorious *livingWorldCampaignManagerView()
+{
+	return (const BfmeCampaignManagerVictorious *)TheLivingWorldCampaignManager;
+}
 
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
@@ -303,7 +314,7 @@ void Rva0058DBC0Owner::rva0058DDD0()
 			m_lastCount00 = value;
 		}
 
-		int limit = m_lastCount00 + ( TheLivingWorldCampaignManager->m_byte1c
+		int limit = m_lastCount00 + ( livingWorldCampaignManagerView()->m_byte1c
 			? ownerUpdateGlobalData()->m_int0E74 : ownerUpdateGlobalData()->m_int0E70 );
 
 		if( m_countAnim20.get() )

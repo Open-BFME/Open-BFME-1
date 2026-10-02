@@ -9,9 +9,8 @@
 // name here is the binary's own - the same way INIArmyIcon.cpp got
 // ParseArmyIconBlock next door.
 //
-// TheLivingWorldCampaignManager at 0x012F1024 is the global
-// INILivingWorldPlayerArmy.cpp already reaches, under the stand-in class name
-// that file gave it so the one global keeps one decorated name.
+// TheLivingWorldCampaignManager at 0x012F1024 is the global this TU reaches
+// under EA's own class name, so the one global keeps one decorated name.
 //
 // The campaign record is 0x20 bytes and nothing here reads a member; it is
 // built from the name, filled by the field table, given the pass at 0x003A73C0
@@ -78,7 +77,18 @@ public:
 	void addCampaign( LivingWorldCampaign *campaign );
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;	// 0x012F1024
+// The global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// LivingWorldCampaignManager.cpp; BfmeLivingWorldCampaignManager above is this
+// TU's view of the object, so the one global keeps one decorated name.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;	// 0x012F1024
+
+static inline BfmeLivingWorldCampaignManager *livingWorldCampaignManagerView()
+{
+	return (BfmeLivingWorldCampaignManager *)TheLivingWorldCampaignManager;
+}
 
 // ?ParseLivingWorldCampaignBlock@@YAXPAVINI@@@Z
 void ParseLivingWorldCampaignBlock( INI *ini )
@@ -97,5 +107,5 @@ void ParseLivingWorldCampaignBlock( INI *ini )
 
 	campaign.indexMissions();
 
-	TheLivingWorldCampaignManager->addCampaign( &campaign );
+	livingWorldCampaignManagerView()->addCampaign( &campaign );
 }

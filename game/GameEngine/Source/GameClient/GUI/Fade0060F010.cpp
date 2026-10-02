@@ -87,7 +87,18 @@ public:
 	Bool m_evilCampaign;
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+// The retail global at 0x012F1024 is EA's
+// `LivingWorldCampaignManager *TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp;
+// BfmeLivingWorldCampaignManager above is this TU's view of the object, cast at each use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline BfmeLivingWorldCampaignManager *livingWorldCampaignManagerView()
+{
+	return (BfmeLivingWorldCampaignManager *)TheLivingWorldCampaignManager;
+}
 
 class BfmeGameCW : public Rva003C48E0PrimaryBase,
 	public Rva003C48E0XferInterface
@@ -259,7 +270,7 @@ void Rva003C48E0::rva003C48E0()
 	union { void (*raw)(void); LoadFunction member; } loadFunction;
 	loadFunction.raw = j_000353b4;
 	int version = (this->*loadFunction.member)( &xfer );
-	TheLivingWorldCampaignManager->transfer( &xfer );
+	livingWorldCampaignManagerView()->transfer( &xfer );
 	m_field28->transfer( &xfer );
 	typedef int (GameLogic::*LogicFunction)( Xfer * );
 	union { void (*raw)(void); LogicFunction member; } logicFunction;
@@ -325,7 +336,7 @@ unsigned fade0060F010( float, Bool )
 
 	if( TheLivingWorldCampaignManager != 0 )
 	{
-		if( TheLivingWorldCampaignManager->m_evilCampaign )
+		if( livingWorldCampaignManagerView()->m_evilCampaign )
 			region = makeDelayedWorldTextEvent( 2,
 				"LW:DefeatedMissionTextEvil" );
 		else

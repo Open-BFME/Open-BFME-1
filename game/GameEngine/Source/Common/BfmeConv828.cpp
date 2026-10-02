@@ -13,7 +13,14 @@ struct BfmeObj1024
 	unsigned char pad[0x1d];
 	char m_flag1D;
 };
-extern BfmeObj1024 *g_obj12F1024;
+// 0x012F1024 is retail's LivingWorldCampaignManager singleton (defined once in
+// GameLogic/LivingWorld/LivingWorldCampaignManager.cpp). This TU reaches only
+// the slot it writes through its own view of the object, so the global keeps the
+// canonical spelling and the view is taken by casting; bytes are unchanged.
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+static inline BfmeObj1024 *obj12F1024() { return (BfmeObj1024 *)TheLivingWorldCampaignManager; }
 
 class BfmeMgrF07
 {
@@ -68,7 +75,7 @@ void BfmeThing152::resetAll()
 	m_flag8 = 0;
 	((BfmeMgr089_152 *)TheGameLogic)->reset();
 	clear();
-	g_obj12F1024->m_flag1D = 1;
+	obj12F1024()->m_flag1D = 1;
 	mgr12F076C()->vfn13();
 }
 
