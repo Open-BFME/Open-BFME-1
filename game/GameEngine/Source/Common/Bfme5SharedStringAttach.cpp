@@ -14,7 +14,11 @@ struct Bfme5FreeTable
 	void (__cdecl *m_bfmeF1)(void *);
 };
 
-extern Bfme5FreeTable *g_bfme5FreeTable;
+// The allocator-pair pointer and intrusive-list head have one definition each.
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 // The shared empty EA string block at 0x012D5298 is defined once, as
 // EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
 // this TU only bumps its leading unsigned short, so it views the block through
@@ -41,18 +45,16 @@ public:
 	Bfme5AttachNodeA *m_bfmeNext;
 };
 
-extern Bfme5AttachNodeA *g_bfme5AttachListA;
-
 void Bfme5AttachNodeA::bfmeAttach(void)
 {
-	m_bfmeNext = g_bfme5AttachListA;
-	g_bfme5AttachListA = this;
+	m_bfmeNext = (Bfme5AttachNodeA *)g_rva01338478NodeHead;
+	g_rva01338478NodeHead = (Rva008C3B60Node *)this;
 
 	if (m_bfmeStr.cmp(0x21)) {
 		unsigned short *h = m_bfmeStr.m_bfmeData;
 
 		if (--*h == 0)
-			g_bfme5FreeTable->m_bfmeF1(h);
+			((Bfme5FreeTable *)g_rva01337A30AllocPair)->m_bfmeF1(h);
 
 		m_bfmeStr.m_bfmeData = bfme5SharedEmptyRef();
 		++*bfme5SharedEmptyRef();
@@ -70,18 +72,16 @@ public:
 	Bfme5AttachNodeB *m_bfmeNext;
 };
 
-extern Bfme5AttachNodeB *g_bfme5AttachListB;
-
 void Bfme5AttachNodeB::bfmeAttach(void)
 {
-	m_bfmeNext = g_bfme5AttachListB;
-	g_bfme5AttachListB = this;
+	m_bfmeNext = (Bfme5AttachNodeB *)g_rva01338478NodeHead;
+	g_rva01338478NodeHead = (Rva008C3B60Node *)this;
 
 	if (m_bfmeStr.cmp(0x21)) {
 		unsigned short *h = m_bfmeStr.m_bfmeData;
 
 		if (--*h == 0)
-			g_bfme5FreeTable->m_bfmeF1(h);
+			((Bfme5FreeTable *)g_rva01337A30AllocPair)->m_bfmeF1(h);
 
 		m_bfmeStr.m_bfmeData = bfme5SharedEmptyRef();
 		++*bfme5SharedEmptyRef();
