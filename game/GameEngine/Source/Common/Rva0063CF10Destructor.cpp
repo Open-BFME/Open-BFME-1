@@ -1,8 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: the destructor at 0x0063CF10 (352 B), a ThreadClass-derived
-// class (base dtor already pinned by the Watchdog destructor, ILT
-// 0x009DB530, empty inline vtable-restore).  Reverse member unwind: a
-// CriticalSectionClass::LockClass holder at +0xA8 (delete, no null store),
+// Open-BFME7: the destructor at 0x0063CF10 (352 B).  The class holds a
+// ThreadClass member (destructor already pinned by the Watchdog
+// destructor, ILT 0x009DB530, empty inline vtable-restore) declared first so
+// the compiler-generated reverse unwind destroys it last, matching retail's
+// trailing `mov ecx,esi; call 0x009DB530`.  It is modelled as a member, not
+// a base: retail's own destructor is the non-virtual
+// ??1Rva0063CF10@@QAE@XZ, while MSVC 7.1 makes a destructor virtual as soon
+// as a virtual one is inherited, which re-mangles this body to
+// ??1Rva0063CF10@@UAE@XZ and inserts a vptr store; a member of a
+// non-polymorphic class keeps that destructor call direct.  Reverse member
+// unwind: a CriticalSectionClass::LockClass holder at +0xA8 (delete, no null
+// store),
 // a real CriticalSectionClass member at +0xA0 (already matched), five
 // BigBlockReleases-style vector holders (elemsize 8, threshold 128) at
 // +0x90/+0x84/+0x78/+0x6C/+0x60.  Member types are opaque address-derived
@@ -34,7 +42,7 @@ public:
 class ThreadClass
 {
 public:
-	~ThreadClass();
+	virtual ~ThreadClass();
 };
 
 class CriticalSectionClass
@@ -85,13 +93,16 @@ struct Rva0063CF10VectorHolder
 	char *m_cap;
 };
 
-class Rva0063CF10 : public ThreadClass
+class Rva0063CF10
 {
 public:
 	~Rva0063CF10();
 
 private:
-	unsigned char m_unreconstructed00[ 0x60 ];
+	// Retail's ThreadClass subobject; its opaque tail is folded into the
+	// padding below, so only the vptr slot is real here.
+	ThreadClass m_base;
+	unsigned char m_unreconstructed01[ 0x60 - 4 ];
 	Rva0063CF10VectorHolder m_vector60;
 	Rva0063CF10VectorHolder m_vector6C;
 	Rva0063CF10VectorHolder m_vector78;
