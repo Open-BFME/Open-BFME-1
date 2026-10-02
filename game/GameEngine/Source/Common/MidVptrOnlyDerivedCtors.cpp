@@ -1,4 +1,4 @@
-// cl: /DNDEBUG
+// cl: /DNDEBUG -Igame/GameEngine/Source/Common -Igame/Libraries/Source/WWVegas/WWLib
 // 26 identical 18-byte __thiscall constructors:
 //
 //     push esi / mov esi,ecx / call <REL32> / mov dword ptr [esi],<DIR32>
@@ -46,6 +46,21 @@
 // 0x007898C0, 0x0079D360), which is why the compiler emits that slot too.
 // The base class itself keeps the stand-in name, because the ctor really is
 // retail's 0x00944940 body and the pin spells it that way.
+// GenBase009A1A30's body is retail's 0x009A1A30, which the ledger carries as
+// ??0SubsystemInterface@@QAE@XZ (game/GameEngine/Source/Common/System/
+// SubsystemInterface.cpp), so the eight classes that derive from it derive from
+// the real header instead of a TU-local stand-in.  Its subobject is the same
+// eight bytes -- vptr plus the four-byte AsciiString m_name -- and the derived
+// classes add no members, so every constructor keeps its retail offsets and its
+// 18-byte shape.  The base's own vftable slot 0 is its destructor, so the
+// derived classes leave `handle` as the only virtual they add of their own.
+// This comes before refcount.h so <vector>/<utility> reach <new> first, and
+// __PLACEMENT_VEC_NEW_INLINE (the spelling other BFME TUs use) keeps <new> from
+// defining a second placement operator new[] that always.h has already defined.
+#define __PLACEMENT_VEC_NEW_INLINE
+typedef bool Bool;
+#include "System/subsystem_interface.h"
+
 #include "../../../Libraries/Source/WWVegas/WWLib/refcount.h"
 
 #define BFME_VPTR_BASE( NAME )                                            \
@@ -125,8 +140,22 @@ BFME_VPTR_BASE( GenBase0046E5E0 )
 BFME_VPTR_BASE( GenBase00479230 )
 BFME_VPTR_BASE( GenBase004B2C80 )
 BFME_VPTR_BASE( GenBase008AD3F0 )
-BFME_VPTR_BASE( GenBase009A1A30 )
 BFME_VPTR_BASE( GenBase009CA9E0 )
+
+// The eight that ran retail's 0x009A1A30 now derive from the real
+// SubsystemInterface. init/reset/update stay pure, as retail's bodies for them are
+// not in this TU; the classes are only ever constructed, never instantiated, so
+// the abstractness costs nothing and the constructor keeps its 18 bytes.
+#define BFME_VPTR_DERIVED_SUBSYSTEM( NAME )                                 \
+	class NAME : public SubsystemInterface                                 \
+	{                                                                     \
+	public:                                                               \
+		NAME();                                                           \
+		virtual void handle();                                            \
+	};                                                                    \
+	NAME::NAME()                                                          \
+	{                                                                     \
+	}
 
 // ??0GenBase00944940@@QAE@XZ -- the base of the four Rva* below.  Its own vftable
 // (0x011135AC) starts with the same RefCountClass::Delete_This thunk, so it adds
@@ -138,17 +167,17 @@ public:
 	GenBase00944940();
 };
 
-BFME_VPTR_DERIVED( Rva0006B0D0, GenBase009A1A30 )
-BFME_VPTR_DERIVED( Rva000C3FF0, GenBase009A1A30 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva0006B0D0 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva000C3FF0 )
 BFME_VPTR_DERIVED( Rva002DCE70, GenBase002DF2B0 )
-BFME_VPTR_DERIVED( Rva002ED840, GenBase009A1A30 )
-BFME_VPTR_DERIVED( Rva00322090, GenBase009A1A30 )
-BFME_VPTR_DERIVED( Rva00324490, GenBase009A1A30 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva002ED840 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva00322090 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva00324490 )
 BFME_VPTR_DERIVED( Rva003BB2E0, GenBase003BB1E0 )
 BFME_VPTR_DERIVED( Rva003BB310, GenBase003BB1E0 )
-BFME_VPTR_DERIVED( Rva0048CD10, GenBase009A1A30 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva0048CD10 )
 BFME_VPTR_DERIVED( Rva005166B0, GenBase00479230 )
-BFME_VPTR_DERIVED( Rva0063FCF0, GenBase009A1A30 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva0063FCF0 )
 BFME_VPTR_DERIVED( Rva006709F0, GenBase004B2C80 )
 BFME_VPTR_DERIVED( Rva00670A10, GenBase004B2C80 )
 BFME_VPTR_DERIVED( Rva006BA440, GenBase00101E20 )
@@ -159,7 +188,7 @@ BFME_VPTR_DERIVED_INHERITED( Rva00711B00, GenBase00944940 )
 BFME_VPTR_DERIVED_INHERITED( Rva00789650, GenBase00944940 )
 BFME_VPTR_DERIVED( Rva0078ABB0, GenBase0046E5E0 )
 BFME_VPTR_DERIVED_INHERITED( Rva0079D030, GenBase00944940 )
-BFME_VPTR_DERIVED( Rva0081C500, GenBase009A1A30 )
+BFME_VPTR_DERIVED_SUBSYSTEM( Rva0081C500 )
 BFME_VPTR_DERIVED( Rva008BD2B0, GenBase008AD3F0 )
 BFME_VPTR_DERIVED( Rva008FEB20, GenBase009EB7D0 )
 BFME_VPTR_DERIVED( Rva00972880, GenBase009EB7D0 )

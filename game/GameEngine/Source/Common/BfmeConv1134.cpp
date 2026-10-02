@@ -1,16 +1,21 @@
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
+
+// The base is the real SubsystemInterface, not a TU-local stand-in: retail runs
+// 0x009A1A30 here, which is ??0SubsystemInterface@@QAE@XZ, and the header's
+// `AsciiString m_name` at +0x04 is the same four bytes the old
+// `char *m_bfme00 / int m_bfme04` placeholder pair stood for. The paired
+// destructor TU (BfmeConv1134Destructor.cpp) already spells BfmeA1134 that way.
+#include "string_base.h"
+
+#include "ascii_string.h"
+
+typedef bool Bool;
+#include "System/subsystem_interface.h"
 
 extern "C" char g_bfmeV1134[];
 
-class BfmeBase1134
-{
-public:
-	BfmeBase1134(void) throw();
-	char *volatile m_bfme00;
-	int m_bfme04;
-};
-
-class BfmeA1134 : public BfmeBase1134
+class BfmeA1134 : public SubsystemInterface
 {
 public:
 	BfmeA1134(void);
@@ -63,7 +68,8 @@ public:
 
 BfmeA1134::BfmeA1134(void)
 {
-	m_bfme00 = g_bfmeV1134;
+	// this class's own vftable goes over the base's, at the same slot (+0x00)
+	*(void *volatile *)this = g_bfmeV1134;
 	m_bfme08 = 0;
 	m_bfme0c = 0;
 	m_bfme10 = 0;
