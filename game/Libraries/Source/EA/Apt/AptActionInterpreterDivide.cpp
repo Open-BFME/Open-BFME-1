@@ -2,14 +2,15 @@
 // Open-BFME7: near-twin of Rva008C72D0LessThanZero.cpp's _FunctionRva008C72D0
 // (0x008C72D0, 221 B) and AptActionInterpreterLessThan.cpp, retail
 // 0x008C7060, 210 bytes. Same SWF-version-7 undefined-operand fast path
-// reading g_bfmeFallbackDB, then both operands converted through bfmeF1239,
+// reading g_bfmeFallbackDB, then both operands converted through AptValue::toNumber,
 // but this opcode computes underValue / topValue and boxes the float result
 // through the already-matched d_008a4cd0 (pinned _bfmeMakeF1239) rather than
 // d_008996b0's bool box; a division-by-zero (topValue == BfmeZeroRange)
 // falls back to the same g_bfmeFallbackDB sentinel reloaded fresh.
 //
 // IDENTITY: address-derived. Real opcode name not recovered (ActionScript
-// divide); the callee set (Rva00892370Get x1, bfmeF1239 x2, bfmeMakeF1239 x1)
+// divide); the callee set (Rva00892370Get x1, AptValue::toNumber x2,
+// bfmeMakeF1239 x1)
 // matches the sibling near-twins.
 
 class AptValue
@@ -17,6 +18,7 @@ class AptValue
 public:
 	virtual void AddRef();
 	virtual void Release();
+	float toNumber();
 
 	bool isUndefined() const
 	{
@@ -30,12 +32,6 @@ public:
 
 private:
 	unsigned int m_valueBits;
-};
-
-class BfmeE1239 : public AptValue
-{
-public:
-	float bfmeF1239();
 };
 
 class AptActionInterpreter
@@ -55,7 +51,7 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 extern const float BfmeZeroRange;
-unsigned int Rva00892370Get();
+int Rva00892370Get();
 void __cdecl d_008a4cd0(void);
 
 // ?_FunctionRva008C7060@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
@@ -73,8 +69,8 @@ void AptActionInterpreter::_FunctionRva008C7060(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 
 		if (topValue == BfmeZeroRange)
 			result = g_bfmeFallbackDB;
@@ -112,8 +108,8 @@ void AptActionInterpreter::_FunctionRva008C6FA0(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 
 		result = ((AptValue *(__cdecl *)(float))d_008a4cd0)(underValue * topValue);
 	}

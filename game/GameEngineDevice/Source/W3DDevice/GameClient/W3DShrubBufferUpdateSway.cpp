@@ -32,8 +32,8 @@ struct BreezeInfo
 	Short m_breezeVersion;
 };
 
-extern Real bfmeCosVNB(Real);
-extern Real bfmeSinVNB(Real);
+extern Real Cos(Real);
+extern Real Sin(Real);
 extern Int GetGameClientRandomValue(Int, Int, char *, Int);
 extern Real GetGameClientRandomValueReal(Real, Real, char *, Int);
 
@@ -62,10 +62,10 @@ void W3DShrubBuffer::updateSway(const BreezeInfo& info)
 	Int i = 0;
 	char *sway = (char *)this + 0x1e33e8;
 	for (; i < 100; ) {
-		Real factor = bfmeCosVNB((Real)i * 0.06220976f);
+		Real factor = Cos((Real)i * 0.06220976f);
 		Real angle = info.m_lean + (info.m_intensity * factor);
-		Real S = bfmeSinVNB(angle);
-		Real C = bfmeCosVNB(angle);
+		Real S = Sin(angle);
+		Real C = Cos(angle);
 
 		*(Real *)(sway - 0x04) = info.m_directionVecX * S;
 		*(Real *)sway = info.m_directionVecY * S;
