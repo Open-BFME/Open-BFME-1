@@ -1,4 +1,7 @@
 // Open-BFME5 conversions.
+// stlport
+
+#include "Thing/GameLogicObjectLookup.h"
 
 class BfmeMgr978
 {
@@ -48,19 +51,9 @@ struct BfmeX978
 	BfmeMgr978 *m_bfmeMgr;
 };
 
-class BfmeThing978;
-
-class BfmeLook978
-{
-public:
-	BfmeX978 *bfmeFind978D(BfmeThing978 *t);
-};
-
 // Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
-// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeLook978 above is this TU's
-// own view of that address, so the call below casts at the use.
-class GameLogic;
-
+// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  The lookup call uses the
+// matched GameLogic::findObjectByID body through its retail ILT.
 extern GameLogic *TheGameLogic;
 
 class BfmeD978
@@ -71,15 +64,16 @@ public:
 	char m_bfmePad[0x1c];
 	BfmeSink978 *m_bfmeSink;
 	char m_bfmePad2[4];
-	BfmeThing978 *m_bfmeThing;
+	ObjectID m_bfmeThing;
 };
 
 void BfmeD978::bfmeGo978D(int unused)
 {
-	BfmeThing978 *t = m_bfmeThing;
+	ObjectID t = m_bfmeThing;
 
 	if (t) {
-		BfmeX978 *x = ((BfmeLook978 *)TheGameLogic)->bfmeFind978D(t);
+		BfmeX978 *x = reinterpret_cast<BfmeX978 *>(
+			TheGameLogic->findObjectByID(t));
 
 		if (x) {
 			BfmeMgr978 *m = x->m_bfmeMgr;

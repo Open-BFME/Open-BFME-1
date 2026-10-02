@@ -26,7 +26,12 @@ struct BfmeReferenceResolveState
 	int m_resolvedCount;
 };
 
-extern BfmeBool bfmeTryResolveReference(BfmeReferenceOwner *owner,
+class Object;
+struct Coord3D;
+void doSetRallyPoint(Object *object, const Coord3D &location);
+// The retail ILT resolves to the matched doSetRallyPoint object symbol, while
+// this call site uses four cdecl slots and consumes EAX.
+typedef BfmeBool (__cdecl *BfmeTryResolveReferenceCall)(BfmeReferenceOwner *owner,
 	BfmeReferenceResolveState *state, int firstOption, int secondOption);
 
 Bool bfmeResolveReferenceIfEnabled(BfmeReferenceOwner *owner,
@@ -38,7 +43,7 @@ Bool bfmeResolveReferenceIfEnabled(BfmeReferenceOwner *owner,
 
 	if ((value->m_flags & 0x10) == 0)
 		goto done;
-	if (bfmeTryResolveReference(owner, state, 0, 0))
+	if (reinterpret_cast<BfmeTryResolveReferenceCall>(&doSetRallyPoint)(owner, state, 0, 0))
 		++state->m_resolvedCount;
 done:
 	return true;

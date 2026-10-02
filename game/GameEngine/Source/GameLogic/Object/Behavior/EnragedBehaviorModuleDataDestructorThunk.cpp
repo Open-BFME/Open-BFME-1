@@ -1,11 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // Open-BFME5: EnragedBehaviorModuleData dtor. PropagandaTower SEH pattern.
 
-class EnragedBehaviorModuleDataMember
-{
-public:
-	~EnragedBehaviorModuleDataMember();
-};
+#include <vector>
+#include "ascii_string.h"
+
+extern template _STL::vector<AsciiString>::~vector();
 
 class EnragedBehaviorModuleDataBase
 {
@@ -20,7 +20,7 @@ class __declspec(novtable) EnragedBehaviorModuleData : public EnragedBehaviorMod
 public:
 	virtual ~EnragedBehaviorModuleData();
 private:
-	EnragedBehaviorModuleDataMember m_member;
+	_STL::vector<AsciiString> m_member;
 };
 
 // ??1EnragedBehaviorModuleData@@UAE@XZ
