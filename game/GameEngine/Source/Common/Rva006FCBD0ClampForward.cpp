@@ -2,7 +2,7 @@
 
 typedef float Real;
 
-void Rva00739900Forward( void *object, Real value );
+unsigned char Rva00739900Forward( void *object, volatile int value );
 
 void __stdcall Rva006FCBD0ClampForward( void *object, Real value )
 {
@@ -13,6 +13,6 @@ void __stdcall Rva006FCBD0ClampForward( void *object, Real value )
 
 	if( object != 0 )
 	{
-		Rva00739900Forward( object, value );
+		Rva00739900Forward( object, *(volatile int *)&value );
 	}
 }

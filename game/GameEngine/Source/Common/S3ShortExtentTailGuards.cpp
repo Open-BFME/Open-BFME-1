@@ -21,6 +21,33 @@
 // names them.
 
 class Object;
+template <int NUMBITS> class BitFlags;
+typedef BitFlags<192> UpgradeMaskType;
+
+// The BFME member is declared in UpgradeMux_wouldUpgrade.cpp. Keep this
+// matching class view so the call below names that body's public method.
+class UpgradeMux
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	virtual void slot6() = 0;
+	virtual void slot7() = 0;
+	virtual void slot8() = 0;
+	virtual void slot9() = 0;
+	virtual void getUpgradeActivationMasks(UpgradeMaskType &activation,
+		UpgradeMaskType &conflicting) const = 0;
+	virtual void slot11() = 0;
+	virtual bool requiresAllActivationUpgrades() const = 0;
+
+	bool wouldUpgrade(const UpgradeMaskType &keyMask) const;
+
+	bool m_upgradeExecuted;
+};
 
 // ---- 0x00249C10 -------------------------------------------------------------
 
@@ -84,9 +111,6 @@ class Gen_002d60a0
 {
 public:
 	bool bfmeCheck(Object *object);
-
-private:
-	bool bfmeDefer(Object *object);					// ILT 0x0000204F
 };
 
 // ?bfmeCheck@Gen_002d60a0@@QAE_NPAVObject@@@Z
@@ -97,5 +121,5 @@ bool Gen_002d60a0::bfmeCheck(Object *object)
 	if (owner->m_bfmeHeld->m_bfmeInner->m_bfme0028 >= owner->m_bfmeLimit->m_bfme0074)
 		return false;
 
-	return bfmeDefer(object);
+	return ((UpgradeMux *)this)->wouldUpgrade(*(UpgradeMaskType *)object);
 }

@@ -8,13 +8,25 @@
 struct Coord3D;
 class Object;
 class Weapon;
+class Rva003EEB50;
+typedef int Int;
+typedef bool Bool;
+typedef unsigned char UByte;
+enum PathfindLayerEnum { LAYER_GROUND = 1 };
 
 class Pathfinder
 {
+	friend class Rva003EEB50;
+
 public:
-	bool checkForTarget( const Object * obj, int cellX, int cellY,
+	UByte bfmeInnerE6E90(void *, void *, void *, void *, void *, void *,
+		void **, Int);
+
+protected:
+	void adjustCoordToCell(Int, Int, Int, Coord3D &, PathfindLayerEnum);
+	Bool checkForTarget(const Object * obj, Int cellX, Int cellY,
 		const Weapon * weapon, const Object * victim, const Coord3D * victimPos,
-		int iRadius, bool center, Coord3D * dest );
+		Int iRadius, Bool center, Coord3D * dest);
 };
 
 class Rva003EEB50
