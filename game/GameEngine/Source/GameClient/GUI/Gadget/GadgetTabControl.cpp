@@ -299,39 +299,6 @@ void GadgetTabControlShowSubPane( GameWindow *tabControl, Int whichPane)
 	tabData->subPanes[tabData->activeTab]->winHide( false );
 }
 
-void GadgetTabControlCreateSubPanes( GameWindow *tabControl )///< Create User Windows attached to userData as Panes
-{//These two funcs are called after all the Editor set data is updated
-	TabControlData *tabData = (TabControlData *)tabControl->winGetUserData();
-	Int width, height, x, y;
-	GadgetTabControlComputeSubPaneSize(tabControl, &width, &height, &x, &y);
-
-	for( Int paneIndex = 0; paneIndex < NUM_TAB_PANES; paneIndex++ )
-	{
-		if( (tabData->subPanes[paneIndex] == NULL) )//This one is blank
-		{
-			tabData->subPanes[paneIndex] = TheWindowManager->winCreate( tabControl,
-																																	WIN_STATUS_NONE, x, y,
-																																	width, height,
-																																	PassSelectedButtonsToParentSystem,
-																																	NULL);
-			WinInstanceData *instData = tabData->subPanes[paneIndex]->winGetInstanceData();
-			BitSet( instData->m_style, GWS_TAB_PANE  );
-			char buffer[20];
-			sprintf( buffer, "Pane %d", paneIndex );
-			instData->m_decoratedNameString = buffer;
-			//set enabled status to that of Parent
-			tabData->subPanes[paneIndex]->winEnable( BitTest(tabControl->winGetStatus(), WIN_STATUS_ENABLED) );
-		}
-		else//this one exists, tabCount will control keeping extra panes perma-hidden
-		{
-			tabData->subPanes[paneIndex]->winSetSize( width, height );
-			tabData->subPanes[paneIndex]->winSetPosition( x, y );
-		}
-	}
-
-	GadgetTabControlShowSubPane( tabControl, tabData->activeTab );
-}
-
 void GadgetTabControlResizeSubPanes( GameWindow *tabControl )
 {
 	TabControlData *tabData = (TabControlData *)tabControl->winGetUserData();
