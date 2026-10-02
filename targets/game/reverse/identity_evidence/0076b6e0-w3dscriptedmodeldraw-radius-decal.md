@@ -17,8 +17,9 @@ ILT 0x000285EC -> constructor RVA 0x00773360.
 
 The constructor calls matched `DrawableModule::DrawableModule` through ILT
 0x00002874 at 0x0077338A, then installs the primary table VA 0x01123D38
-at `[esi]` (0x00773398) and secondary table VA 0x01123848 at `[esi+0x0C]`
-(0x0077338F). The constructor's independent name is supplied by the native
+at `[esi]` (0x00773398) and final secondary table VA 0x01123C68 at `[esi+0x0C]`
+(0x0077339E). Before those derived stores, the constructor briefly writes
+the abstract base interface table 0x01123848 at +0x0C (0x0077338F). The constructor's independent name is supplied by the native
 factory registration, not a presumed destructor identity. The existing
 `getModuleNameKey@W3DScriptedModelDraw` body at 0x00773950 also uses the
 same native module-name string.
