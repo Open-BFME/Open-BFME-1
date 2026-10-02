@@ -61,10 +61,11 @@ private:
 	char m_bfme_body[4];
 };
 
-extern GameInfo *TheSkirmishGameInfo;			// 0x012F7094
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;		// 0x012F7094
 
-class Network;
-extern Network *TheNetwork;				// 0x012F7714
+class NetworkInterface;
+extern NetworkInterface *TheNetwork;			// 0x012F7714
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

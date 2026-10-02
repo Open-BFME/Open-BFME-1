@@ -55,17 +55,6 @@ Rva003500C0::~Rva003500C0()
 		delete m_held;                                                    \
 	}
 
-#define BFME_DELETE_ARGUMENT( NAME, CALLEE )                              \
-	class CALLEE                                                          \
-	{                                                                     \
-	public:                                                               \
-		~CALLEE();                                                        \
-	};                                                                    \
-	void NAME( CALLEE *held )                                             \
-	{                                                                     \
-		delete held;                                                      \
-	}
-
 // The callee class is a real header type here (CriticalSectionClass::LockClass),
 // so no local stand-in is declared for it; only the owning class is local.
 #define BFME_DELETE_MEMBER_TYPED( NAME, CALLEE )                           \
@@ -81,9 +70,21 @@ Rva003500C0::~Rva003500C0()
 	}
 
 // @??1Rva00590790@@QAE@XZ 0x00590790
-BFME_DELETE_MEMBER( Rva00590790, Gen0003FA7B )
+// ILT 0x0003FA7B reaches the matched UpgradeMuxData destructor at 0x0058C4C0.
+BFME_DELETE_MEMBER( Rva00590790, UpgradeMuxData )
 // @??1Rva0063B130@@QAE@XZ 0x0063B130
 BFME_DELETE_MEMBER_TYPED( Rva0063B130, CriticalSectionClass::LockClass )
 
 // @?Rva007889D0@@YAXPAVGen0002AB5D@@@Z 0x007889D0
-BFME_DELETE_ARGUMENT( Rva007889D0, Gen0002AB5D )
+class Gen0002AB5D;
+class Rva00787C20
+{
+public:
+	~Rva00787C20();
+};
+
+void Rva007889D0(Gen0002AB5D *held)
+{
+	// Keep the ledger's argument spelling; ILT 0x0002AB5D reaches this owner.
+	delete (Rva00787C20 *)held;
+}
