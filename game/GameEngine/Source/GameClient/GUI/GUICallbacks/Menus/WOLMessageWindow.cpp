@@ -96,20 +96,6 @@ void WOLMessageWindowInit( WindowLayout *layout, void *userData )
 } // WOLMessageWindowInit
 
 //-------------------------------------------------------------------------------------------------
-/** WOLMessage Window shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLMessageWindowShutdown( WindowLayout *layout, void *userData )
-{
-
-	// hide menu
-	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
-
-	// our shutdown is complete
-	TheShell->shutdownComplete( layout );
-}  // WOLMessageWindowShutdown
-
-
-//-------------------------------------------------------------------------------------------------
 /** WOLMessage Window update method */
 //-------------------------------------------------------------------------------------------------
 void WOLMessageWindowUpdate( WindowLayout * layout, void *userData)
