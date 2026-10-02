@@ -16878,5 +16878,15 @@
   "after_sha256": "9030a8ea297cf978f25696169b791dea56a74cbb546991dc4667def1cf08390c",
   "evidence": "targets/game/reverse/identity_evidence/00418200-exclusion-argument.md",
   "reason": "Native SubObjectsUpgrade passes ExcludeSubobjects vector address from FieldParse-proven data+88. Old indicator-color identity came from unproven Zero Hour shape analogy; opaque address-derived owner retains proven ABI without asserting a color interpretation."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002f9ff0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva002F9FF0.cpp",
+  "old_name": "ScriptActions",
+  "new_name": "Rva002F9FF0",
+  "before_sha256": "ba4e0b74fd91c1ec9d731b2f32d7ee99bbdbe4dd3ba016089c916355ed5c5018",
+  "after_sha256": "4da00ad3e9075113c381ab58758940d8619e7052d812a7a2ea4295cafbd28848",
+  "evidence": "targets/game/reverse/identity_evidence/002f9ff0-nearest-enemy-command.md",
+  "reason": "The retained bank guessed the exact method spelling from script action semantics. The template proves action behavior but no original C++ method spelling; use an honest address-derived owner for this body, without introducing a member declaration into a shared ScriptActions header."
  }
 ]
