@@ -27,21 +27,25 @@ public:
 	BfmeEntryERJ m_entries[1];
 };
 
+// Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
+// declaration is enough.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
 class SidesList;
+
+// Retail global at 0x012EF428, ?TheSidesList@@3PAVSidesList@@A.
 extern SidesList *TheSidesList;
-#define g_bfmeTableERJ ((BfmeTableERJ *)TheSidesList)
 
 // The only reachable evidence is the global table and its anonymous cleanup
 // body; no named caller or owning vtable class has been proven for this RVA.
 void rva0034f950ReleaseBfmeTable(void)
 {
-	if (g_bfmeTableERJ != 0)
+	if (TheSidesList != 0)
 	{
-		for (int index = 0; index < g_bfmeTableERJ->m_count; ++index)
+		for (int index = 0; index < ((BfmeTableERJ *)TheSidesList)->m_count; ++index)
 		{
 			Rva0034F950OwnedValue *value =
-				(Rva0034F950OwnedValue *)g_bfmeTableERJ->bfmeAtERJ(index)->m_value;
-			g_bfmeTableERJ->bfmeAtERJ(index)->m_value = 0;
+				(Rva0034F950OwnedValue *)((BfmeTableERJ *)TheSidesList)->bfmeAtERJ(index)->m_value;
+			((BfmeTableERJ *)TheSidesList)->bfmeAtERJ(index)->m_value = 0;
 
 			if (value != 0)
 				delete value;

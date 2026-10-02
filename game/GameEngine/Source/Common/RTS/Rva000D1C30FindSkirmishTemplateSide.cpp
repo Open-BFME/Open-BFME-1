@@ -20,6 +20,8 @@ struct BfmeSkirmishSide
 	char m_suffix[0x10];
 };
 
+// TU-local layout view of the 0x012EF428 singleton, kept for the member call
+// shape.  The global itself is declared with its canonical retail type below.
 class BfmeSidesList
 {
 public:
@@ -35,7 +37,13 @@ public:
 	}
 };
 
-extern BfmeSidesList *TheSidesList;
+// Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
+// declaration is enough.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
+class SidesList;
+
+// Retail global at 0x012EF428, ?TheSidesList@@3PAVSidesList@@A.
+extern SidesList *TheSidesList;
 // The key global at 0x012A7938; the Zero Hour twin reads TheKey_playerFaction here.
 extern const StaticNameKey TheKey_playerFaction;
 
@@ -67,13 +75,13 @@ private:
 // Owner stays address-derived; retail's unwind funclets destroy both locals through ~AsciiString (ILT 0x0000D828).
 Bool Rva000D1C30Owner::findSkirmishTemplateSide(int *index)
 {
-	int count = TheSidesList->m_numSkirmishSides;
+	int count = ((BfmeSidesList *)TheSidesList)->m_numSkirmishSides;
 	AsciiString compareSide(m_compareSide);
 
 	for (int i = 0; i < count; ++i)
 	{
 		AsciiString sideName =
-			TheSidesList->getSkirmishSideInfo(i)->m_dict.getAsciiString(TheKey_playerFaction.key());
+			((BfmeSidesList *)TheSidesList)->getSkirmishSideInfo(i)->m_dict.getAsciiString(TheKey_playerFaction.key());
 		const PlayerTemplate *tmpl = ThePlayerTemplateStore->findPlayerTemplate(
 			TheNameKeyGenerator->nameToKey(sideName.str()));
 		if (tmpl != 0 && tmpl->m_side.compare(compareSide) == 0)

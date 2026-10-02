@@ -48,11 +48,14 @@ public:
 	int forward(AsciiString name, int extra);
 };
 
-class BfmeTableERJ : public Rva0019C520Owner
-{
-};
+// Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
+// declaration is enough.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
+class SidesList;
 
-extern BfmeTableERJ *g_bfmeTableERJ;
+// Retail global at 0x012EF428, ?TheSidesList@@3PAVSidesList@@A.  The member
+// call shape is taken through the TU-local ABI view below.
+extern SidesList *TheSidesList;
 
 void MapObject::verifyValidTeam()
 {
@@ -61,7 +64,7 @@ void MapObject::verifyValidTeam()
 		TheKey_originalOwner.key(), &exists);
 	if (exists)
 	{
-		if (!g_bfmeTableERJ->forward(teamName, 0))
+		if (!((Rva0019C520Owner *)TheSidesList)->forward(teamName, 0))
 			getProperties()->remove(TheKey_originalOwner.key());
 	}
 }

@@ -9,8 +9,13 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
-class BfmeTableERJ;
-extern BfmeTableERJ *g_bfmeTableERJ;
+// Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
+// declaration is enough.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
+class SidesList;
+
+// Retail global at 0x012EF428, ?TheSidesList@@3PAVSidesList@@A.
+extern SidesList *TheSidesList;
 
 class BfmeIndexedMapConsumer;
 class BfmeIndexedMapOwner
@@ -65,7 +70,7 @@ void Rva00374F20Receiver::instantiateBuildListObjects(bool state)
 	int index = 0;
 	BuildListInfo info;
 
-	while (reinterpret_cast<BfmeIndexedMapOwner *>(g_bfmeTableERJ)->bfmeFindAndUse(
+	while (reinterpret_cast<BfmeIndexedMapOwner *>(TheSidesList)->bfmeFindAndUse(
 		key, index, reinterpret_cast<BfmeIndexedMapConsumer *>(&info)))
 	{
 		++index;

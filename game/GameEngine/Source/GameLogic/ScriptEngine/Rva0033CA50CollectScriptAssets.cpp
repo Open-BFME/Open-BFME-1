@@ -2,7 +2,7 @@
 // Retail 0x0033CA50 (200 bytes), a __thiscall with two pass-through arguments,
 // called once from GameLogic::startNewGame.  It hands every script to the
 // matched asset collector at 0x00351040: first the pooled script lists of each
-// side in g_bfmeTableERJ (the side table BfmeConv1954.cpp reads), then the
+// side in TheSidesList (the side table BfmeConv1954.cpp reads), then the
 // chains hanging off the receiver's pointer vector at +0x0C.  The receiver and
 // the method are not proven, so both keep the address.
 
@@ -67,9 +67,13 @@ public:
 	BfmeEntryERJ m_bfmeEntriesERJ[1];
 };
 
+// Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
+// declaration is enough.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
 class SidesList;
+
+// Retail global at 0x012EF428, ?TheSidesList@@3PAVSidesList@@A.
 extern SidesList *TheSidesList;
-#define g_bfmeTableERJ ((BfmeTableERJ *)TheSidesList)
 
 struct Rva0033CA50Chain
 {
@@ -93,9 +97,9 @@ private:
 // ?rva0033CA50@Rva0033CA50Owner@@QAEXPAX0@Z
 void Rva0033CA50Owner::rva0033CA50(void *assets, void *context)
 {
-	for (Int i = 0; i < g_bfmeTableERJ->m_bfmeCountERJ; ++i)
+	for (Int i = 0; i < ((BfmeTableERJ *)TheSidesList)->m_bfmeCountERJ; ++i)
 	{
-		Rva0033CA50ScriptPool *pool = g_bfmeTableERJ->bfmeAtERJ(i)->m_bfmeValueERJ;
+		Rva0033CA50ScriptPool *pool = ((BfmeTableERJ *)TheSidesList)->bfmeAtERJ(i)->m_bfmeValueERJ;
 		if (pool == 0)
 			continue;
 

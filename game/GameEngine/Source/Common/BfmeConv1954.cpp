@@ -58,6 +58,7 @@ struct BfmeEntryERJ
 	unsigned char m_bfmeTailERJ[12];
 };
 
+// TU-local view of the same object, kept for the member call shape.
 class BfmeTableERJ
 {
 public:
@@ -74,18 +75,22 @@ public:
 	BfmeEntryERJ m_bfmeEntriesERJ[1];
 };
 
-extern BfmeTableERJ *g_bfmeTableERJ;
+// Retail's side-table global at 0x012EF428, spelled canonically so this TU links
+// against the definition.  The definition lives in
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h.
+class SidesList;
+extern SidesList *TheSidesList;
 
 void * __stdcall bfmeLookupERJ(BfmeStrERJ *name)
 {
 	int key = g_bfmeKeyGenERJ->nameToKey(name->bfmeTextERJ());
 
-	for (int i = 0; i < g_bfmeTableERJ->m_bfmeCountERJ; ++i)
+	for (int i = 0; i < ((BfmeTableERJ *)TheSidesList)->m_bfmeCountERJ; ++i)
 	{
 		BfmePlayerERJ *player = ((BfmePlayersERJ *)ThePlayerList)->bfmeNthERJ(i);
 
 		if (player != 0 && player->m_bfmeKeyERJ == key)
-			return g_bfmeTableERJ->bfmeAtERJ(i)->m_bfmeValueERJ;
+			return ((BfmeTableERJ *)TheSidesList)->bfmeAtERJ(i)->m_bfmeValueERJ;
 	}
 
 	return 0;
