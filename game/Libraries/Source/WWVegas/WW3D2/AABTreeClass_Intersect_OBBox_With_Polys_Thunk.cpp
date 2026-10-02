@@ -26,23 +26,30 @@ public:
 	const Vector3 *V[3];
 };
 
-class AABoxCollisionTestData;
+// the box the test data owns; declared by
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/obbox.h,
+// only a reference to it is needed here
+class OBBoxClass;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/inttest.h
 class OBBoxIntersectionTestClass
 {
 public:
 	unsigned char m_unreconstructed_00[4];
-	AABoxCollisionTestData *getCollisionData()
+	OBBoxClass *getCollisionData()
 	{
-		return reinterpret_cast<AABoxCollisionTestData *>(m_unreconstructed_00 + 4);
+		return reinterpret_cast<OBBoxClass *>(m_unreconstructed_00 + 4);
 	}
 };
 
-namespace CollisionMath
+// declared by inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/colmath.h
+// as `static bool Intersection_Test(const OBBoxClass &, const TriClass &)`. Only that one
+// declaration is repeated here, so the call spells retail's symbol instead of a stand-in.
+class CollisionMath
 {
-	bool Collide(AABoxCollisionTestData &, TriClass &);
-}
+public:
+	static bool Intersection_Test(const OBBoxClass &box, const TriClass &tri);
+};
 
 template <class T> class VectorStorage
 {
@@ -103,7 +110,7 @@ bool AABTreeClass::Intersect_OBBox_With_Polys(
 			Vector3 normal;
 			triangle.N = &normal;
 			triangle.Compute_Normal();
-			if (CollisionMath::Collide(*boxTest.getCollisionData(), triangle))
+			if (CollisionMath::Intersection_Test(*boxTest.getCollisionData(), triangle))
 				return true;
 		}
 	}
