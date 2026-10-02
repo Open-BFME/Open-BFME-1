@@ -163,7 +163,7 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern void rva004BD400(GameWindow *, UnicodeString);
+extern void j_0003a52b();
 
 
 GameWindow *GameWindowManager::gogoGadgetRadioButton(Rva0047DEC0Desc *desc,
@@ -184,6 +184,6 @@ GameWindow *GameWindowManager::gogoGadgetRadioButton(Rva0047DEC0Desc *desc,
 	assignDefaultGadgetLook(radioButton, defaultFont, defaultVisual);
 	UnicodeString text = winTextLabelToText(desc->m_instData30->m_textLabelString);
 	if (text.getLength())
-		rva004BD400(radioButton, text);
+		((void (__cdecl *)(GameWindow *, UnicodeString))j_0003a52b)(radioButton, text);
 	return radioButton;
 }

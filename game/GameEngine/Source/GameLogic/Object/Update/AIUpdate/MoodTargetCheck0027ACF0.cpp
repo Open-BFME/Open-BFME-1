@@ -59,6 +59,7 @@ class BfmePathfinderMethods
 public:
 	bool check(const Object *, const Coord3D *, const Weapon *, int);
 };
+void j_00032b46();
 
 class AI
 {
@@ -258,7 +259,13 @@ bool AIUpdateInterface::rva0027ACF0MoodTargetCheck()
             if(candidate && candidate != victim && !candidate->isKindOf((KindOfType)7))
             {
                 BfmePathfinderMethods *pathfinder = TheAI->m_pathfinder;
-                if(pathfinder->check(object, (Coord3D*)((char*)candidate+0x38),
+                typedef bool (BfmePathfinderMethods::*PathfinderCheckFunction)(
+                    const Object *, const Coord3D *, const Weapon *, int);
+                union { void (*raw)(void); PathfinderCheckFunction member; }
+                    pathfinderCheck;
+                pathfinderCheck.raw = j_00032b46;
+                if((pathfinder->*pathfinderCheck.member)(
+                    object, (Coord3D*)((char*)candidate+0x38),
                     (const Weapon*)((AssistedTargetingObjectShim*)object)->find(0),0))
                 {
                     friend_setGoalObject(candidate);

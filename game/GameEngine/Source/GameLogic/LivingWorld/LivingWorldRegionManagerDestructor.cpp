@@ -3,6 +3,8 @@
 // RVA 0x003CA480: vtable 0x010EE010 matches the constructor at 0x003C8880.
 #include <vector>
 
+void j_00018a2f();
+
 class Gen_dtor_003c9b30
 {
 public:
@@ -29,10 +31,14 @@ private:
 
 LivingWorldRegionManager::~LivingWorldRegionManager()
 {
+	typedef void (Gen_dtor_003c9b30::*DestructorCall)();
+	union { void (*raw)(void); DestructorCall member; } destructorCall;
+	destructorCall.raw = j_00018a2f;
+
     for (unsigned int i = 0; i < m_campaigns28.size(); ++i) {
         Gen_dtor_003c9b30 *campaign = m_campaigns28[i];
         if (campaign) {
-            campaign->Gen_dtor_003c9b30::~Gen_dtor_003c9b30();
+            (campaign->*destructorCall.member)();
             ::operator delete(campaign);
         }
     }
