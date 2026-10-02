@@ -24,4 +24,5 @@ public:
 	Vector3 Offset;
 };
 
-template class VectorClass<Rva0097ADF0Node>;
+template bool VectorClass<Rva0097ADF0Node>::Resize(
+	int newsize, const Rva0097ADF0Node *array);
