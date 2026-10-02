@@ -28,7 +28,7 @@ S4_MEMBER( Gen_uwm_0002c868, 1 );
 S4_MEMBER( Gen_uwm_00022c2d, 1 );
 S4_MEMBER( Gen_uwm_0002a8ba, 1 );
 S4_MEMBER( Gen_uwm_00041745, 1 );
-S4_MEMBER( Gen_uwm_0000e746, 0x14 );
+S4_MEMBER( Rva00146BA0ArrayItem, 0x14 );
 
 class S4Base0077C1F0 : public Inner01073744
 {
@@ -63,7 +63,7 @@ private:
 	AsciiString m_atec;
 	Gen_uwm_00041745 m_atf0;
 	char m_padf1[ 0x43 ];
-	Gen_uwm_0000e746 m_items[ 2 ];
+	Rva00146BA0ArrayItem m_items[ 2 ];
 };
 
 // ??1S4Base0077C1F0@@UAE@XZ

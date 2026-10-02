@@ -13338,5 +13338,15 @@
   "after_sha256": "d1d619fb10394f6f8c1fa3f45f06a768784612d980390ab61c7e62902325f56a",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "False pairing: T_007ea120 stays in the file; Rva007EA0A0Owner is a new declaration of the matched ledger owner of 0x007EA0A0 (functions.csv), whose notify the teardown now calls. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S4Base0077C1F0Destructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/S4Base0077C1F0Destructor.cpp",
+  "old_name": "Gen_uwm_0000e746",
+  "new_name": "Rva00146BA0ArrayItem",
+  "before_sha256": "181107c32c8a0c68cc1fe0edadaec6ad6a31ca2913ed7f8ade56bc3fc47ab111",
+  "after_sha256": "6f64a7b4303f332dde4d28ef9e4974be68aaaff148dbe01c76292d39be7e6830",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
