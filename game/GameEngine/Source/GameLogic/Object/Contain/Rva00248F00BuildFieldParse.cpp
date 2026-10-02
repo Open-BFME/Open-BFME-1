@@ -1,9 +1,20 @@
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
+
 // Retail 0x00248F00 is the field-parse builder that the module-data factory
 // 0x00116140 hands to initFromINIMultiProc, and ModuleFactory::init registers
 // that factory under "HordeGarrisonContain". It extends OpenContain's builder
 // (ILT 0x00019772) with two tables. The module-data class name is not in the
 // image, so the owner stays address-derived; the vocabulary is
 // WideBuildFieldParse.cpp's.
+//
+// The receiver is spelled WideMulti because this file's own matched row is
+// ?buildFieldParse@Rva00248F00@@SAXAAVWideMulti@@@Z; renaming the parameter
+// type would rename the enclosing body and unmatch that row. The appender these
+// bodies call is retail's MultiIniFieldParse::add at 0x00850920, so the calls go
+// through the defining class.
+
+#include "Common/INI.h"
 
 class WideFieldParse
 {
@@ -16,8 +27,6 @@ public:
 
 class WideMulti
 {
-public:
-	void add( const WideFieldParse *fields, unsigned int extraOffset );
 };
 
 class Gen00019772
@@ -38,6 +47,7 @@ public:
 void Rva00248F00::buildFieldParse( WideMulti &p )
 {
 	Gen00019772::buildFieldParse( p );
-	p.add( WideTbl00248F00A, 0 );
-	p.add( WideTbl00248F00B, 0 );
+	MultiIniFieldParse &m = reinterpret_cast<MultiIniFieldParse &>( p );
+	m.add( reinterpret_cast<const FieldParse *>( WideTbl00248F00A ), 0 );
+	m.add( reinterpret_cast<const FieldParse *>( WideTbl00248F00B ), 0 );
 }

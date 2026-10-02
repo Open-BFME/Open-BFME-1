@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
 // Seventy-six 30-byte __cdecl statics of the shape
 //
 //     push esi / mov esi,[esp+8] / push esi / call REL32 / add esp,4
@@ -21,6 +23,13 @@
 //     static void X::buildFieldParse( MultiIniFieldParse &p )
 //     { Base::buildFieldParse( p ); p.add( theFieldParseTable, 0 ); }
 //
+// The receiver stays spelled WideMulti because every member body here is
+// matched under a name carrying it
+// (?buildFieldParse@Rva00115A80@@SAXAAVWideMulti@@@Z and 75 siblings);
+// respelling the parameter type would rename the enclosing bodies and unmatch
+// all 76 rows. The appender they call is retail's MultiIniFieldParse::add at
+// 0x00850920, so the call goes through the defining class.
+//
 // THE VARYING AXIS IS THE FIRST REL32 -- the base class's buildFieldParse.
 // Seventy-six members over seventeen distinct base callees.  The table address
 // also varies, but it is a DIR32 site: it is read from retail, not asserted.
@@ -38,15 +47,17 @@ public:
 	unsigned int m_offset;
 };
 
+// MultiIniFieldParse comes from the real Common/INI.h; WideMulti stays an
+// empty stand-in so the enclosing bodies keep their matched names.
+#include "Common/INI.h"
+
 class WideMulti
 {
-public:
-	void add( const WideFieldParse *fields, unsigned int extraOffset );
 };
 
 #define WIDE_FIELD_PARSE_BASE( ADDR )                                     	class Gen##ADDR                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};
 
-#define WIDE_FIELD_PARSE( NAME, BASE )                                    	extern const WideFieldParse WideTbl##NAME[];                          	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};                                                                    	void Rva##NAME::buildFieldParse( WideMulti &p )                       	{                                                                     		Gen##BASE::buildFieldParse( p );                                  		p.add( WideTbl##NAME, 0 );                                        	}
+#define WIDE_FIELD_PARSE( NAME, BASE )                                    	extern const WideFieldParse WideTbl##NAME[];                          	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};                                                                    	void Rva##NAME::buildFieldParse( WideMulti &p )                       	{                                                                     		Gen##BASE::buildFieldParse( p );                                  		reinterpret_cast<MultiIniFieldParse &>( p ).add(                   		reinterpret_cast<const FieldParse *>( WideTbl##NAME ), 0 );      	}
 
 WIDE_FIELD_PARSE_BASE( 00004052 )
 WIDE_FIELD_PARSE_BASE( 00005245 )

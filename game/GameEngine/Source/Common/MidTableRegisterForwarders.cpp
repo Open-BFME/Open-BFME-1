@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
 // 102 identical 17-byte __cdecl forwarders:
 //
 //     mov ecx,[esp+4] / push 0 / push <DIR32> / call 0x00850920 / ret
@@ -16,18 +18,27 @@
 // the gate's DIR32 consistency check sees one symbol per address.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+//
+// The appender these bodies call at 0x00850920 is
+// MultiIniFieldParse::add(const FieldParse*, unsigned), so the call goes
+// through the defining class, taken from the real Common/INI.h. The receiver
+// stays spelled Gen00850920 because every forwarder here is matched under a
+// name carrying it (?Rva00122E10@@YAXPAVGen00850920@@@Z and 101 siblings);
+// respelling the parameter type would rename the enclosing bodies and unmatch
+// all 102 rows.
+
+#include "Common/INI.h"
 
 class Gen00850920
 {
-public:
-	void handle( const void *table, int flags );
 };
 
 #define BFME_TABLE_REGISTER( NAME, TABLE )                                \
 	extern int TABLE;                                                     \
 	void NAME( Gen00850920 *receiver )                                    \
 	{                                                                     \
-		receiver->handle( &TABLE, 0 );                                    \
+		reinterpret_cast<MultiIniFieldParse *>( receiver )->add(           \
+			reinterpret_cast<const FieldParse *>( &TABLE ), 0 );           \
 	}
 
 BFME_TABLE_REGISTER( Rva00123810, g_table_00123810 )

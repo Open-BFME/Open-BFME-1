@@ -1,6 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME6: 0x0022A450. Call the base WideMulti builder, once-fill two
-// extra FieldParse records, then append that table.
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
+// Open-BFME6: 0x0022A450. Call the base builder, once-fill two extra
+// FieldParse records, then append that table.
+#include "Common/INI.h"
 
 class WideFieldParse
 {
@@ -11,10 +13,13 @@ public:
 	const void *m_userData;
 };
 
+// The receiver spelling stays WideMulti because this file's own matched row
+// is ?buildFieldParse@Rva0022A450@@SAXAAVWideMulti@@@Z; renaming the
+// parameter type would rename the enclosing body and unmatch the row. The
+// appender it calls is retail's MultiIniFieldParse::add at 0x00850920, so the
+// call goes through the defining class.
 class WideMulti
 {
-public:
-	void add(const WideFieldParse *fields, unsigned int extraOffset);
 };
 
 class Rva0022B3B0
@@ -37,7 +42,6 @@ static unsigned s_onceA450;
 static WideFieldParse s_tableA450[2];
 static unsigned s_tailA450[2];
 
-// ?buildFieldParse@Rva0022A450@@SAXAAVWideMulti@@@Z
 void Rva0022A450::buildFieldParse(WideMulti &p)
 {
 	Rva0022B3B0::buildFieldParse(p);
@@ -55,5 +59,6 @@ void Rva0022A450::buildFieldParse(WideMulti &p)
 		s_tailA450[0] = 0;
 		s_tailA450[1] = 0;
 	}
-	p.add(s_tableA450, 0);
+	reinterpret_cast<MultiIniFieldParse &>(p).add(
+		reinterpret_cast<const FieldParse *>(s_tableA450), 0);
 }

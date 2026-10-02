@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
 // Thirty-three 35-byte __cdecl statics that append TWO tables instead of one:
 //
 //     push esi / mov esi,[esp+8]
@@ -25,6 +27,14 @@
 //
 // IDENTITY IS NOT RECOVERED.  Names are address-derived; the tables are
 // undefined externs whose only role is to make cl emit `push offset`.
+//
+// The receiver stays spelled WideMulti because every member body here is
+// matched under a name carrying it; respelling the parameter type would rename
+// the enclosing bodies and unmatch those rows. The appender they call is
+// retail's MultiIniFieldParse::add at 0x00850920, so the call goes through the
+// defining class, taken from the real Common/INI.h.
+
+#include "Common/INI.h"
 
 class WideFieldParse
 {
@@ -37,11 +47,9 @@ public:
 
 class WideMulti
 {
-public:
-	void add( const WideFieldParse *fields, unsigned int extraOffset );
 };
 
-#define WIDE_FIELD_PARSE_PAIR( NAME, FIRST, SECOND )                      	extern const WideFieldParse WideTblA##NAME[];                         	extern const WideFieldParse WideTblB##NAME[];                         	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};                                                                    	void Rva##NAME::buildFieldParse( WideMulti &p )                       	{                                                                     		p.add( WideTblA##NAME, FIRST );                                   		p.add( WideTblB##NAME, SECOND );                                  	}
+#define WIDE_FIELD_PARSE_PAIR( NAME, FIRST, SECOND )                      	extern const WideFieldParse WideTblA##NAME[];                         	extern const WideFieldParse WideTblB##NAME[];                         	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};                                                                    	void Rva##NAME::buildFieldParse( WideMulti &p )                       	{                                                                     		MultiIniFieldParse &m = reinterpret_cast<MultiIniFieldParse &>( p ); 	m.add( reinterpret_cast<const FieldParse *>( WideTblA##NAME ), FIRST );	m.add( reinterpret_cast<const FieldParse *>( WideTblB##NAME ), SECOND );	}
 
 WIDE_FIELD_PARSE_PAIR( 001246A0, 8, 0 )
 WIDE_FIELD_PARSE_PAIR( 001FAB70, 8, 0 )

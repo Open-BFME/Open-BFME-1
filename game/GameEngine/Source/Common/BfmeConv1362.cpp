@@ -1,4 +1,14 @@
-// Open-BFME5 conversions.
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
+// Open-BFME5 conversions. The appender this body calls at 0x00850920 is
+// MultiIniFieldParse::add(const FieldParse*, unsigned), so the call goes
+// through the defining class, taken from the real Common/INI.h.
+//
+// The receiver stays spelled BfmeMultiVHI because this file's own matched row is
+// ?bfmeGoVHI@@YAXPAVBfmeMultiVHI@@@Z; renaming the parameter type would rename
+// the enclosing body and unmatch that row.
+
+#include "Common/INI.h"
 
 struct BfmeParseVHI;
 
@@ -9,15 +19,14 @@ const BfmeParseVHI *bfmeGetParseCVHI();
 
 class BfmeMultiVHI
 {
-public:
-	void bfmeAddVHI(const BfmeParseVHI *p, unsigned n);
 };
 
 void __cdecl bfmeGoVHI(BfmeMultiVHI *m)
 {
-	m->bfmeAddVHI(g_bfmeParseAVHI, 0);
-	m->bfmeAddVHI(g_bfmeParseBVHI, 8);
-	m->bfmeAddVHI(bfmeGetParseCVHI(), 0x84);
+	MultiIniFieldParse *p = reinterpret_cast<MultiIniFieldParse *>(m);
+	p->add(reinterpret_cast<const FieldParse *>(g_bfmeParseAVHI), 0);
+	p->add(reinterpret_cast<const FieldParse *>(g_bfmeParseBVHI), 8);
+	p->add(reinterpret_cast<const FieldParse *>(bfmeGetParseCVHI()), 0x84);
 }
 
 bool __cdecl _bfme_debugReportingEnabled();

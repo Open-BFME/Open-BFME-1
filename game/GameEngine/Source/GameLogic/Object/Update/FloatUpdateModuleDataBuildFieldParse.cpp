@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
 
 // FloatUpdateModuleData::buildFieldParse, retail 0x00294F70, 17 bytes.
 //
@@ -11,13 +12,15 @@
 // MultiIniFieldParse::add. The table at 0x010BF35C holds one row, "Enabled"
 // parsed by INI::parseBool into the member at +0x08, then a null row.
 //
-// The receiver is spelled WideMulti and its rows WideFieldParse because that is
-// how targets/game/reverse/symbols.csv spells the add at 0x00850920 this body calls. The
-// table is written out here rather than declared external, the way
-// Rva0022A450Parse.cpp writes its own, because the operand is a relocation and
-// the byte check masks it.
+// The receiver is spelled WideMulti because this file's own matched row is
+// ?buildFieldParse@FloatUpdateModuleData@@SAXAAVWideMulti@@@Z; renaming the
+// parameter type would rename the enclosing body and unmatch that row. The
+// appender this body calls is retail's MultiIniFieldParse::add at 0x00850920,
+// so the call goes through the defining class. The table is written out here
+// rather than declared external, the way Rva0022A450Parse.cpp writes its own,
+// because the operand is a relocation and the byte check masks it.
 
-class INI;
+#include "Common/INI.h"
 
 class WideFieldParse
 {
@@ -30,14 +33,6 @@ public:
 
 class WideMulti
 {
-public:
-	void add(const WideFieldParse *fields, unsigned int extraOffset);
-};
-
-class INI
-{
-public:
-	static void parseBool(INI *ini, void *instance, void *store, const void *userData);
 };
 
 class FloatUpdateModuleData
@@ -55,5 +50,6 @@ static const WideFieldParse s_floatUpdateFieldParse[] =
 // ?buildFieldParse@FloatUpdateModuleData@@SAXAAVWideMulti@@@Z
 void FloatUpdateModuleData::buildFieldParse(WideMulti &p)
 {
-	p.add(s_floatUpdateFieldParse, 0);
+	reinterpret_cast<MultiIniFieldParse &>(p).add(
+		reinterpret_cast<const FieldParse *>(s_floatUpdateFieldParse), 0);
 }

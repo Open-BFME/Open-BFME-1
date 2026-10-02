@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /MD /EHsc -D_OPERATOR_NEW_DEFINED_ -D_STLP_USE_STATIC_LIB -D_STLP_NO_EXCEPTIONS -Iinputs/reference/shims/ini_bfme -Iinputs/reference/shims/sweep -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include -Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// stlport
 // Four more INI field-parse builders, found by re-running the proven bodies of
 // WideBuildFieldParse.cpp and WideBuildFieldParsePair.cpp as a GRAMMAR rather
 // than as byte strings: `push esi / mov esi,[esp+8]`, then any sequence of
@@ -18,6 +20,14 @@
 //
 // IDENTITY IS NOT RECOVERED.  Names are address-derived; the tables are
 // undefined externs whose only role is to make cl emit `push offset`.
+//
+// The receiver stays spelled WideMulti because every member body here is
+// matched under a name carrying it; respelling the parameter type would rename
+// the enclosing bodies and unmatch those rows. The appender they call is
+// retail's MultiIniFieldParse::add at 0x00850920, so the call goes through the
+// defining class, taken from the real Common/INI.h.
+
+#include "Common/INI.h"
 
 class WideFieldParse
 {
@@ -30,9 +40,12 @@ public:
 
 class WideMulti
 {
-public:
-	void add( const WideFieldParse *fields, unsigned int extraOffset );
 };
+
+// Every body below appends through this one spelling of retail's appender.
+#define WIDE_MULTI_APPEND( P, TBL, EXTRA ) \
+	reinterpret_cast<MultiIniFieldParse &>( P ).add( \
+		reinterpret_cast<const FieldParse *>( TBL ), EXTRA )
 
 class Gen00012355
 {
@@ -57,8 +70,8 @@ public:
 
 void Rva0013E170::buildFieldParse( WideMulti &p )
 {
-	p.add( WideTblA0013E170, 0 );
-	p.add( WideTblB0013E170, 224 );
+	WIDE_MULTI_APPEND( p, WideTblA0013E170, 0 );
+	WIDE_MULTI_APPEND( p, WideTblB0013E170, 224 );
 }
 
 extern const WideFieldParse WideTblA00212CD0[];
@@ -73,8 +86,8 @@ public:
 void Rva00212CD0::buildFieldParse( WideMulti &p )
 {
 	Gen00012355::buildFieldParse( p );
-	p.add( WideTblA00212CD0, 92 );
-	p.add( WideTblB00212CD0, 0 );
+	WIDE_MULTI_APPEND( p, WideTblA00212CD0, 92 );
+	WIDE_MULTI_APPEND( p, WideTblB00212CD0, 0 );
 }
 
 extern const WideFieldParse WideTblA00378170[];
@@ -89,9 +102,9 @@ public:
 
 void Rva00378170::buildFieldParse( WideMulti &p )
 {
-	p.add( WideTblA00378170, 0 );
-	p.add( WideTblB00378170, 0 );
-	p.add( WideTblC00378170, 0 );
+	WIDE_MULTI_APPEND( p, WideTblA00378170, 0 );
+	WIDE_MULTI_APPEND( p, WideTblB00378170, 0 );
+	WIDE_MULTI_APPEND( p, WideTblC00378170, 0 );
 }
 
 extern const WideFieldParse WideTblA00753A80[];
@@ -104,6 +117,6 @@ public:
 
 void Rva00753A80::buildFieldParse( WideMulti &p )
 {
-	p.add( WideTblA00753A80, 0 );
+	WIDE_MULTI_APPEND( p, WideTblA00753A80, 0 );
 	Gen00022584::buildFieldParse( p );
 }
