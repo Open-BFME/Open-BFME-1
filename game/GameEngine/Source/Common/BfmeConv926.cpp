@@ -87,27 +87,3 @@ int BfmeThing926D::bfmeGo926D(void *a)
 	return 0;
 }
 
-extern char g_bfme926Obj[];
-
-struct BfmeA926E
-{
-	char m_bfmePad[0x34];
-	void *m_bfmeVal;
-};
-
-class BfmeThing926E
-{
-public:
-	void bfmeGo926E(void *a);
-};
-
-void BfmeThing926E::bfmeGo926E(void *a)
-{
-	BfmeA926E *s = *(BfmeA926E **)((char *)this - 0xc);
-	BfmeKey926C *k = *(BfmeKey926C **)((char *)this - 8);
-	BfmeObj926C *o = k->bfmeFind926C();
-	// retail calls 0x0002F1CB, Player::iterateObjects (const, five-byte void
-	// thunk over the matched int body at 0x000CDCF0).
-	((const Player *)o)->iterateObjects((ObjectIterateFunc)(void *)g_bfme926Obj,
-		s->m_bfmeVal);
-}

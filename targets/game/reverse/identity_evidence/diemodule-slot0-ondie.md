@@ -20,7 +20,7 @@ slot.
 |---|---|---|---|---|---|
 | CrushDie | 0x00254B90 | 0x010B2BB8 | 0x00035A08 (1) | 0x00254CF0 | `?d_00254cf0@@YAXXZ` (dump, not converted) |
 | DestroyDie | 0x00254F80 | 0x010B2D08 | 0x0001E718 (1) | 0x002550A0 | `?bfmeGo1025S@BfmeS1025@@QAEXH@Z` |
-| HeroDie | 0x00255670 | 0x010B3064 | 0x00041CA9 (1) | 0x00255790 | `?bfmeGo926E@BfmeThing926E@@QAEXPAX@Z` (not renamed: shares private views with its file) |
+| HeroDie | 0x00255670 | 0x010B3064 | 0x00041CA9 (1) | 0x00255790 | `?bfmeGo926E@BfmeThing926E@@QAEXPAX@Z` |
 | KeepObjectDie | 0x00255870 | 0x010B315C | 0x00045F3E (1) | 0x00255990 | `?run@Rva00255990Owner@@QAEXPAX@Z` |
 | UpgradeDie | 0x002560E0 | 0x010B3444 | 0x0003CD35 (1) | 0x00256240 | `?d_00256240@@YAXXZ` (dump, not converted) |
 
