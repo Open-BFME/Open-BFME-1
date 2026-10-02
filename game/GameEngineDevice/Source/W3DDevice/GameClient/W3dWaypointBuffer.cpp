@@ -118,19 +118,6 @@ W3DWaypointBuffer::W3DWaypointBuffer(void)
 }
 
 //=============================================================================
-// W3DWaypointBuffer::~W3DWaypointBuffer
-//=============================================================================
-/** Destructor. Releases w3d assets. */
-//=============================================================================
-// ??1W3DWaypointBuffer@@ present-unmatched
-W3DWaypointBuffer::~W3DWaypointBuffer(void)
-{
-	REF_PTR_RELEASE( m_waypointNodeRobj );
-	REF_PTR_RELEASE( m_texture );
-	REF_PTR_RELEASE( m_line );
-}
-
-//=============================================================================
 // W3DWaypointBuffer::freeBibBuffers
 //=============================================================================
 /** Frees the index and vertex buffers. */
@@ -552,5 +539,4 @@ void W3DWaypointBuffer::drawWaypoints(RenderInfoClass &rinfo)
 
 	}
 }
-
 

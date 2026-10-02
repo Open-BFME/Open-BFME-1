@@ -232,21 +232,3 @@ Int GameWindowManager::winIsAlNum( Int c )
 	return GameIsAlNum( c );
 
 }  // end WinIsAlNum
-
-// GameWindowManager::winFindFont =============================================
-/** Get a font */
-//=============================================================================
-// ?winFindFont@GameWindowManager@@UAEPAVGameFont@@VAsciiString@@H_N@Z present-unmatched
-GameFont *GameWindowManager::winFindFont( AsciiString fontName, 
-																					Int pointSize, 
-																					Bool bold )
-{
-
-	assert( TheFontLibrary );
-	if( TheFontLibrary )
-		return TheFontLibrary->getFont( fontName, pointSize, bold );
-
-	return NULL;
-
-}  // end WinFindFont
-
