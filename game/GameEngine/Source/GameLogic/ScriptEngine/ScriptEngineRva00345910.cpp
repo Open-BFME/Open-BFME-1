@@ -13,9 +13,6 @@ typedef bool Bool;
 class Parameter
 {
 public:
-	const AsciiString &getString() const { return m_string; }
-	float getReal() const { return m_real; }
-
 	unsigned char m_pad00[0xc];
 	float m_real;
 	AsciiString m_string;
@@ -89,21 +86,21 @@ extern ScriptEngine *TheScriptEngine;
 
 void ScriptEngine::Rva00345910(ScriptAction *action, Bool flag)
 {
-	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
+	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 	if (counter == 0)
 		return;
 
 	float result = 0.0f;
-	float paramValue = action->getParameter(2)->getReal();
+	float paramValue = action->getParameter(2)->m_real;
 	if (flag)
 	{
-		Rva000F72D0FrameCachedValue *cached = TheScriptEngine->unidentified44(action->getParameter(1)->getString(), false);
+		Rva000F72D0FrameCachedValue *cached = TheScriptEngine->unidentified44(action->getParameter(1)->m_string, false);
 		if (cached)
 			result = cached->valueThunk(paramValue);
 	}
 	else
 	{
-		BfmeThingFBA *thing = TheScriptEngine->unidentified6c(action->getParameter(1)->getString());
+		BfmeThingFBA *thing = TheScriptEngine->unidentified6c(action->getParameter(1)->m_string);
 		if (thing)
 			result = thing->bfmeGoFBAThunk(*(void **)&paramValue);
 	}
