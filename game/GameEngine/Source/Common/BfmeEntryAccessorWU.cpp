@@ -56,6 +56,10 @@ struct BfmeEntryWU
 	int m_bfmeC;						// +0x0C
 };
 
+// View of the language object this TU reads its override from.  The global
+// itself is retail's TheGlobalLanguageData, a GlobalLanguage* (0x012F1484);
+// that class is declared by Common/System/game_engine_subsystems.h, so this is
+// only the layout of the one member read here, reached through a cast.
 class BfmeGlobalWU
 {
 public:
@@ -63,7 +67,8 @@ public:
 	BfmeEntryWU m_bfmeOverride;				// +0x100
 };
 
-extern BfmeGlobalWU *g_bfmeGlobalWU;				// retail 0x012F1484
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;			// retail 0x012F1484
 
 class Gen_00442460
 {
@@ -79,7 +84,7 @@ BfmeEntryWU Gen_00442460::bfmeEntryWU(void) const
 {
 	BfmeEntryWU entry(m_bfmeSlot);
 
-	const BfmeEntryWU *override = &g_bfmeGlobalWU->m_bfmeOverride;
+	const BfmeEntryWU *override = &reinterpret_cast<BfmeGlobalWU *>( TheGlobalLanguageData )->m_bfmeOverride;
 
 	if (override->m_bfmeText.bfmeFilledWU())
 	{

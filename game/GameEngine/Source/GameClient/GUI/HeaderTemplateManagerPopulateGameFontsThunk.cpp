@@ -40,6 +40,12 @@ struct HeaderTemplateNode
 	HeaderTemplate *m_template;								///< retail this+0x08
 };
 
+// View of the one member read off the language singleton here.  The global
+// itself is retail's TheGlobalLanguageData, a GlobalLanguage*; that class is
+// declared by Common/System/game_engine_subsystems.h and by the upstream
+// GameClient/GlobalLanguage.h, so only the member this TU calls is spelled out
+// and it is reached through a cast.  adjustFontSize is called through the ILT
+// thunk at 0x00004E67, so no name for it is emitted here.
 class GlobalLanguageData
 {
 public:
@@ -53,7 +59,8 @@ public:
 	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);	///< ILT thunk at 0x0000ABC3
 };
 
-extern GlobalLanguageData *TheGlobalLanguageData;			///< retail [0x012F1484]
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;				///< retail [0x012F1484]
 extern FontLibrary *TheFontLibrary;							///< retail [0x012F1B38]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HeaderTemplate.h
@@ -71,7 +78,7 @@ void HeaderTemplateManager::populateGameFonts(void)
 	while (it != m_headerTemplateList)
 	{
 		HeaderTemplate *hTemplate = it->m_template;
-		Real pointSize = (Real)TheGlobalLanguageData->adjustFontSize(hTemplate->m_point);
+		Real pointSize = (Real)reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(hTemplate->m_point);
 		GameFont *font = TheFontLibrary->getFont(&hTemplate->m_fontName, pointSize, hTemplate->m_bold);
 
 		hTemplate->m_font = font;

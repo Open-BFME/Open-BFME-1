@@ -81,6 +81,11 @@ public:
 	}
 };
 
+// View of the language object this TU reads the digit separator from.  The
+// global itself is retail's TheGlobalLanguageData, a GlobalLanguage*
+// (0x012F1484); that class is declared by
+// Common/System/game_engine_subsystems.h, so this is only the layout of the
+// one member read here, reached through a cast.
 class GlobalLanguageAI
 {
 private:
@@ -91,7 +96,8 @@ public:
 	AsciiStringAI m_comma;
 };
 
-extern GlobalLanguageAI *g_bfmeGlobalWR;
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 
 class BfmeTableAI
 {
@@ -115,7 +121,7 @@ AsciiStringAI BfmeTableAI::bfmeLookupAI( AsciiStringAI key )
 
 		digit.set( value );
 		if( index % 3 == 0 && index != 0 && numeric )
-		digit.concat( g_bfmeGlobalWR->m_comma );
+		digit.concat( reinterpret_cast<GlobalLanguageAI *>( TheGlobalLanguageData )->m_comma );
 		digit.concat( result.str(), result.getLength() );
 		result.set( digit );
 	}

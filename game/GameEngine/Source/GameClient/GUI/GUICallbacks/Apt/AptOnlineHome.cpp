@@ -114,8 +114,13 @@ extern unsigned int g_012F4A10[8];
 extern unsigned int g_012F4A30[8];
 extern unsigned int g_012F4A50[8];
 extern unsigned int g_012F4A70[8];
-class GlobalLanguageData;
-extern GlobalLanguageData *TheGlobalLanguageData;
+// retail 0x012F1484 is TheGlobalLanguageData, a GlobalLanguage* (see
+// game/GameEngine/Source/GameClient/GlobalLanguage.cpp, which defines it).
+// Only the base of the language object is read here, so the forward
+// declaration is all this TU needs; the class itself is declared by
+// Common/System/game_engine_subsystems.h and by the upstream header.
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 extern void j_0003cc54();
 extern void j_00022976();
 extern void j_00008b9d();

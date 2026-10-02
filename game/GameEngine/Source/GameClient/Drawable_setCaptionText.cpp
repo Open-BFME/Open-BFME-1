@@ -99,6 +99,11 @@ public:
 	void filterLine( UnicodeString &line );
 };
 
+// View of the language singleton's one member used here.  The global itself is
+// retail's TheGlobalLanguageData, a GlobalLanguage*; that class is declared by
+// Common/System/game_engine_subsystems.h and by the upstream
+// GameClient/GlobalLanguage.h.  adjustFontSize is reached through the ILT thunk
+// at 0x00004E67 by address, so this view emits no name for it.
 class GlobalLanguageData
 {
 public:
@@ -168,7 +173,8 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern LanguageFilter *TheLanguageFilter;
 extern FontLibrary *TheFontLibrary;
 extern InGameUI *TheInGameUI;
-extern GlobalLanguageData *TheGlobalLanguageData;
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 
 #define DRAWABLE_CAPTION_GLOBAL(type, global) \
 	(static_cast<type *>( global ))
@@ -200,7 +206,7 @@ void Drawable::setCaptionText( const UnicodeString &captionText )
 			GameFont *font =
 				(DRAWABLE_CAPTION_GLOBAL( FontLibrary, TheFontLibrary )->*getFontCall.memberFunction)(
 					&(DRAWABLE_CAPTION_GLOBAL( InGameUI, TheInGameUI )->*fontNameCall.memberFunction)(),
-					(Real)(DRAWABLE_CAPTION_GLOBAL( GlobalLanguageData, TheGlobalLanguageData )
+					(Real)(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )
 						->*adjustCall.memberFunction)(
 							DRAWABLE_CAPTION_GLOBAL( InGameUI, TheInGameUI )
 								->getDrawableCaptionPointSize() ),

@@ -68,6 +68,11 @@ public:
 	virtual void freeDisplayString( DisplayString *string );
 };
 
+// View of the language singleton's one member used here.  The global itself is
+// retail's TheGlobalLanguageData, a GlobalLanguage*; that class is declared by
+// Common/System/game_engine_subsystems.h and by the upstream
+// GameClient/GlobalLanguage.h.  adjustFontSize is reached through the ILT thunk
+// at 0x00004E67 by address, so this view emits no name for it.
 class GlobalLanguageData
 {
 public:
@@ -309,7 +314,8 @@ static __forceinline void constructCenter( Drawable *drawable, Coord3D *center )
 extern DisplayStringManager *TheDisplayStringManager;
 extern FontLibrary *TheFontLibrary;
 extern InGameUI *TheInGameUI;
-extern GlobalLanguageData *TheGlobalLanguageData;
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 extern GameTextInterface *TheGameText;
 // Retail 0x012F1600 is the tactical-view singleton defined once in
 // GameClient/View.cpp; this TU only needs the vtable slice of it.
@@ -352,7 +358,7 @@ void Drawable::drawConstructPercent()
 		m_constructDisplayString->setFont(
 			(DRAWABLE_CONSTRUCT_GLOBAL( FontLibrary, TheFontLibrary )->*getFontCall.memberFunction)(
 				&(DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->*fontNameCall.memberFunction)(),
-				(Real)(DRAWABLE_CONSTRUCT_GLOBAL( GlobalLanguageData, TheGlobalLanguageData )->*adjustCall.memberFunction)(
+				(Real)(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->*adjustCall.memberFunction)(
 					DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->getDrawableCaptionPointSize() ),
 				DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, TheInGameUI )->isDrawableCaptionBold() ) );
 	}
