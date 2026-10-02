@@ -8,11 +8,14 @@ public:
     virtual void invoke(void) = 0;
 };
 
-extern Rva00898D60Target *g_Rva013379BC;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern Rva00898D60Target *g_Rva01337A20;
 
 void Rva00898D60Invoke(void)
 {
-    g_Rva013379BC->invoke();
+    reinterpret_cast<Rva00898D60Target *>(g_bfmeFallbackDB)->invoke();
     g_Rva01337A20->invoke();
 }

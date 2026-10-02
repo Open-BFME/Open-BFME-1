@@ -309,9 +309,10 @@ struct Rva0089BBF0Matrix
 // name mangles with; the value stored is the object this body builds, cast
 // to that pointer.  No member of any of these types is touched here.
 
-// Defining name at 0x00F379BC: a global int (BfmeConv568.cpp reads it as
-// one), holding the kind-3 registry value as an address.
-extern int bfmeTheCBC;
+// Defining name at 0x00F379BC: the fallback value database pointer, defined
+// as AptValue * by Bfme5AppendFallback8CAFF0.cpp
+// (?g_bfmeFallbackDB@@3PAVAptValue@@A), holding the kind-3 registry value.
+extern AptValue *g_bfmeFallbackDB;
 // Defining name at 0x00F37A04: a global int holding the 0x3C0-byte value.
 extern int g_bfmeB1038;
 // Defining name at 0x00F37A20: pointer to Rva00898D60Target, the class the
@@ -377,7 +378,7 @@ static __forceinline Rva008A9B00 *rva0089BBF0CreateString()
 void Rva0089BBF0InitGlobals()
 {
 	BfmeDerivedKind3 *kind3 = new BfmeDerivedKind3();
-	bfmeTheCBC = (int)kind3;
+	g_bfmeFallbackDB = (AptValue *)kind3;
 	Rva008D2B10 *d2b10 = new Rva008D2B10();
 	g_bfmeB1038 = (int)d2b10;
 	BfmeDerivedKindB *kindB = new BfmeDerivedKindB();

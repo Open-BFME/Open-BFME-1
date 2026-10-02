@@ -68,7 +68,9 @@ struct Rva008A1110Value : Rva00899560Value {
 };
 
 extern Rva008A1110Value *g_free013387D0;
-extern Rva008A1110Value *g_fallback013379BC;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+extern AptValue *g_bfmeFallbackDB;
 __forceinline Rva008A1110Value *makeInteger008A9C30(int value) {
     Rva008A1110Value *obj = g_free013387D0;
     if (obj) {
@@ -84,7 +86,7 @@ Rva008A1110Value *findStringValue008A9C30(Rva8CD130Value *value, int count) {
     Rva8CD130String needle;
     int start = 0;
     value->getName(&text);
-    if (!count) return g_fallback013379BC;
+    if (!count) return (Rva008A1110Value *)g_bfmeFallbackDB;
     Rva8CD130Value *top = (Rva8CD130Value *)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
     top->getName(&needle);
     if (count == 2) {

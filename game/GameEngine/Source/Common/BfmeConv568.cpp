@@ -13,11 +13,15 @@ public:
 	BfmeSubCBC *m_bfmeSub;
 };
 
-extern int bfmeTheCBC;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A);
+// this body returns the stored pointer in eax.
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 int bfmeGoCBC(BfmeThingCBC *what)
 {
 	what->bfmeStepCBC(what->m_bfmeSub->m_bfmeVal + 1);
 	what->m_bfmeSub->m_bfmeFlags &= 0xFDFFFFFFu;
-	return bfmeTheCBC;
+	return reinterpret_cast<int>(g_bfmeFallbackDB);
 }

@@ -75,7 +75,10 @@ public:
 
 struct Rva8D0D80Context { void *m_zero; void *m_owner; void *m_scope; };
 extern char g_rva8D0D80CreateTag;
-extern Rva8D0D80Value *g_bfmeFallbackDB;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 void rva8D0D80BuildObject(Rva8D0D80State *state, Rva8D0D80Context *context)
 {
@@ -115,7 +118,7 @@ void rva8D0D80BuildObject(Rva8D0D80State *state, Rva8D0D80Context *context)
 	else
 	{
 		state->popValues(count + count);
-		Rva8D0D80Value *fallback = g_bfmeFallbackDB;
+		Rva8D0D80Value *fallback = reinterpret_cast<Rva8D0D80Value *>(g_bfmeFallbackDB);
 		state->m_stack[state->m_count++] = fallback;
 		if (!((unsigned char)(fallback->m_flags >> 30) & 1))
 			fallback->addRef();

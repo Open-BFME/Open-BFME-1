@@ -63,15 +63,18 @@ extern Value008B02A0 **g_bfmeArr1233;
 // int (the stack depth) is read here, so the rest of the layout stays out of this TU.
 struct Rva008AE770Stack { int count; };
 extern struct Rva008AE770Stack Rva008AE770TheStack;
-extern Rva00899F00Base *g_bfmeFallbackDB;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern void *global01337A04;
 extern char key01338734[],key01338738[],key01338740[],key01338744[];
 Rva00899F00Base *aptRelativeRect008B02A0(Value008B02A0 *self,int argc) {
- if(argc>1) return g_bfmeFallbackDB;
+ if(argc>1) return (Rva00899F00Base *)g_bfmeFallbackDB;
  Value008B02A0 *other=self;
  if(argc==1) {
   other=g_bfmeArr1233[Rva008AE770TheStack.count-1];
-  if((unsigned char)~(other->m_flags>>15)&1) return g_bfmeFallbackDB;
+  if((unsigned char)~(other->m_flags>>15)&1) return (Rva00899F00Base *)g_bfmeFallbackDB;
  }
  Rva00899F00Base *result=new Rva00899F00Base(0x1b,8);
  Rect008B02A0 rect;

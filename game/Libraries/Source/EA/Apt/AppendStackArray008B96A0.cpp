@@ -39,7 +39,10 @@ extern Value008B96A0 **g_bfmeArr1233;
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeResult1233;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 void *appendStackArray008B96A0(BfmeN1242 *source,int count) {
     if (((Value008B96A0 *)source)->isType(0x16)) {
         for (int i=0;i<count;++i) {
@@ -48,5 +51,5 @@ void *appendStackArray008B96A0(BfmeN1242 *source,int count) {
         }
         return AptInteger::Create(source->field28);
     }
-    return g_bfmeResult1233;
+    return g_bfmeFallbackDB;
 }

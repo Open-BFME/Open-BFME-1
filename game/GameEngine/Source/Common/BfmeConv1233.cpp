@@ -40,7 +40,10 @@ extern BfmeAlloc1233 *g_bfmeAlloc1233;
 extern BfmeE1233 **g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeResult1233;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 extern "C" void bfmeHandler1233(void);
 extern "C" void bfmeReport1233(void *a, void *b, int c, void (*d)(void));
@@ -61,5 +64,5 @@ void *bfmeVisit1233(BfmeN1233 *a, int n)
 		++g_bfmeEmpty1233.m_bfme00;
 		g_bfmeStr1233.m_bfme00 = &g_bfmeEmpty1233;
 	}
-	return g_bfmeResult1233;
+	return g_bfmeFallbackDB;
 }

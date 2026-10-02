@@ -81,13 +81,16 @@ struct Value008B4700 {
     float m_f28, m_f2C, m_f30, m_f34, m_f38, m_f3C, m_f40, m_f44;
 };
 struct Owner008B4700 { char pad00[0x20]; Value008B4700 *m_f20; };
-extern Rva00899F00Base *g_bfmeFallbackDB;
+// 0x013379BC is the fallback value database pointer, defined as AptValue *
+// by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern int key01338668, key01338670, key01338568, key0133856C, key01338514, key01338518, key013384F4, key013384F8;
 
 Rva00899F00Base *aptGetChannels008B4700(Owner008B4700 *self, int argc)
 {
     if (argc > 0)
-        return g_bfmeFallbackDB;
+        return (Rva00899F00Base *)g_bfmeFallbackDB;
     Value008B4700 *v = self->m_f20;
     if (v->m_flags & 0x8000)
     {
@@ -104,5 +107,5 @@ Rva00899F00Base *aptGetChannels008B4700(Owner008B4700 *self, int argc)
     table->add((Rva8D0D80String *)&key013384F8, (Rva8D0D80Value *)pooledInteger((int)(v->m_f38 * 255.0f)));
     return result;
     }
-    return g_bfmeFallbackDB;
+    return (Rva00899F00Base *)g_bfmeFallbackDB;
 }
