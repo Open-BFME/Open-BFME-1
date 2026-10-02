@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -334,4 +334,80 @@ void GadgetTabControlFixupSubPaneList( GameWindow *tabControl )
 			child = child->winGetPrev();
 		}
 	}
+}
+
+// BFME's factory consumes a 52-byte record, not the ZH scalar argument list.
+// Slots not assigned by this caller retain their constructor's zero values.
+#include "string_base.h"
+struct Rva004BDE80CreateData {
+    GameWindow *slot_00;
+    unsigned slot_04;
+    int slot_08, slot_0c, slot_10, slot_14, slot_18;
+    GameWinSystemFunc slot_1c;
+    unsigned slot_20, slot_24, slot_28, slot_2c;
+    WinInstanceData *slot_30;
+    Rva004BDE80CreateData() : slot_00(0), slot_04(0), slot_08(0),
+        slot_0c(0), slot_10(0), slot_14(0), slot_18(0), slot_1c(0),
+        slot_20(0), slot_24(0), slot_28(0), slot_2c(0), slot_30(0) {}
+};
+class Rva004BDE80ManagerView {
+public:
+    virtual void slot_00();
+    virtual void slot_04();
+    virtual void slot_08();
+    virtual void slot_0c();
+    virtual void slot_10();
+    virtual void slot_14();
+    virtual void slot_18();
+    virtual void slot_1c();
+    virtual void slot_20();
+    virtual void slot_24();
+    virtual void slot_28();
+    virtual void slot_2c();
+    virtual void slot_30();
+    virtual void slot_34();
+    virtual void slot_38();
+    virtual void slot_3c();
+    virtual void slot_40();
+    virtual void slot_44();
+    virtual void slot_48();
+    virtual void slot_4c();
+    virtual void slot_50();
+    virtual void slot_54();
+    virtual void slot_58();
+    virtual void slot_5c();
+    virtual void slot_60();
+    virtual void slot_64();
+    virtual void slot_68();
+    virtual void slot_6c();
+    virtual void slot_70();
+    virtual GameWindow *slot_74(Rva004BDE80CreateData *record);
+};
+void GadgetTabControlCreateSubPanes(GameWindow *tabControl)
+{
+    TabControlData *tabData = (TabControlData *)tabControl->winGetUserData();
+    Int width, height, x, y;
+    GadgetTabControlComputeSubPaneSize(tabControl, &width, &height, &x, &y);
+    for (Int paneIndex = 0; paneIndex < NUM_TAB_PANES; paneIndex++) {
+        if (tabData->subPanes[paneIndex] == NULL) {
+            Rva004BDE80CreateData record;
+            record.slot_00 = tabControl;
+            record.slot_04 = WIN_STATUS_NONE;
+            record.slot_08 = x;
+            record.slot_0c = y;
+            record.slot_1c = PassSelectedButtonsToParentSystem;
+            tabData->subPanes[paneIndex] =
+                ((Rva004BDE80ManagerView *)TheWindowManager)->slot_74(&record);
+            WinInstanceData *instData = tabData->subPanes[paneIndex]->winGetInstanceData();
+            BitSet(instData->m_style, GWS_TAB_PANE);
+            char buffer[20];
+            sprintf(buffer, "Pane %d", paneIndex);
+            ((StringBase<char> *)&instData->m_decoratedNameString)->set(buffer, strlen(buffer));
+            tabData->subPanes[paneIndex]->winEnable(BitTest(tabControl->winGetStatus(), WIN_STATUS_ENABLED));
+        } else {
+            tabData->subPanes[paneIndex]->winSetSize(width, height);
+            tabData->subPanes[paneIndex]->winSetPosition(x, y);
+        }
+    }
+    GadgetTabControlShowSubPane(tabControl, tabData->activeTab);
 }
