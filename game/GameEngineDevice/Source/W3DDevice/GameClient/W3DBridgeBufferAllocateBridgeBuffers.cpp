@@ -1,6 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 
+// BFME's index-buffer constructor takes the count in a full 32-bit slot, and
+// BFME's index_count field is a full 32-bit slot: use the BFME declaration of
+// DX8IndexBufferClass rather than the Zero Hour one the include path finds.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
 // BFME's bridge allocation uses a 0x20 vertex-buffer object.  The shared
 // WW3D declaration is the 0x1c Zero Hour view, so keep the retail tail local
 // to this TU while retaining the real constructor and base layout.
@@ -33,7 +38,7 @@ void W3DBridgeBuffer::allocateBridgeBuffers(void)
         }
     }
     m_vertexBridge=::new DX8VertexBufferClass(DX8_FVF_XYZNDUV1,8004,DX8VertexBufferClass::USAGE_DYNAMIC);
-    m_indexBridge=::new DX8IndexBufferClass(16004, DX8IndexBufferClass::USAGE_DYNAMIC);
+    m_indexBridge=::new DX8IndexBufferClass((unsigned)16004, DX8IndexBufferClass::USAGE_DYNAMIC);
     m_vertexMaterial=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
     m_curNumBridgeVertices=0;
     m_curNumBridgeIndices=0;

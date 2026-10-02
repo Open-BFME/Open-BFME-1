@@ -30,6 +30,12 @@
 // a same-directory quoted include (assetmgr.h etc.). See shim header comment.
 #include "WW3D2/Shader.h"
 
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include "W3DDevice/GameClient/W3DStatusCircle.h"
 
 #include <stdio.h>
@@ -80,21 +86,9 @@ static ShaderClass detailOpaqueShader(SC_ALPHA);
 Bool W3DStatusCircle::m_needUpdate;
 Int W3DStatusCircle::m_diffuse=255; // blue.
 
-// BFME's DX8 buffer objects are four bytes larger than the vendored Zero Hour
-// views, and BFME passes the index count at full width.  These standalone
-// views keep the allocation size and constructor ABI used by the retail body;
-// the pinned constructor aliases resolve their calls to the real DX8 classes.
-class BfmeDX8IndexBuffer
-{
-public:
-	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
-
-	BfmeDX8IndexBuffer(unsigned count, UsageType usage);
-
-private:
-	unsigned char m_bfmeBody[0x18];
-};
-
+// BFME's DX8 vertex-buffer objects are four bytes larger than the vendored Zero
+// Hour views.  This standalone view keeps the allocation size used by the retail
+// body; the pinned constructor alias resolves its calls to the real class.
 class BfmeDX8VertexBuffer
 {
 public:
@@ -221,8 +215,8 @@ Int W3DStatusCircle::initData(void)
 
 	m_numTriangles = NUM_TRI;
 	resources->m_indexBuffer = reinterpret_cast<DX8IndexBufferClass *>(
-		::new BfmeDX8IndexBuffer(m_numTriangles * 3,
-			BfmeDX8IndexBuffer::USAGE_DEFAULT));
+		::new DX8IndexBufferClass((unsigned)(m_numTriangles * 3),
+			DX8IndexBufferClass::USAGE_DEFAULT));
 
 	// Fill up the IB
 	DX8IndexBufferClass::WriteLockClass lockIdxBuffer(resources->m_indexBuffer);

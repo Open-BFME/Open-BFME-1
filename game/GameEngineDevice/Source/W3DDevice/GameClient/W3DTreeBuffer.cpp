@@ -58,6 +58,12 @@ enum
 //-----------------------------------------------------------------------------
 //         Includes                                                      
 //-----------------------------------------------------------------------------
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include "W3DDevice/GameClient/W3DTreeBuffer.h"
 
 #include <stdio.h>
@@ -342,17 +348,6 @@ private:
 	unsigned char m_bfmeBody[0x20];
 };
 
-class BfmeDX8IndexBuffer
-{
-public:
-	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
-
-	BfmeDX8IndexBuffer(unsigned short count, UsageType usage);
-
-private:
-	unsigned char m_bfmeBody[0x18];
-};
-
 class BfmeShaderResource;
 
 class Rva006D6050
@@ -512,7 +507,7 @@ struct BFMETreeAllocateView
 {
 	char m_unreconstructed_000000[4];
 	BfmeDX8VertexBuffer *m_vertexTree[20];
-	BfmeDX8IndexBuffer *m_indexTree[20];
+	DX8IndexBufferClass *m_indexTree[20];
 	BfmeShaderResource *m_resource0;
 	BfmeShaderResource *m_resource1;
 	BfmeShaderResource *m_resource2;
@@ -1389,7 +1384,7 @@ void W3DTreeBuffer::allocateTreeBuffers(void)
 	Int zero = 0;
 	for (i = 0; i < self->m_numBuffers; ++i) {
 		self->m_vertexTree[i] = new BfmeDX8VertexBuffer(0x152, 0x7534, BfmeDX8VertexBuffer::USAGE_DYNAMIC, 0);
-		self->m_indexTree[i] = new BfmeDX8IndexBuffer(0xea64, BfmeDX8IndexBuffer::USAGE_DYNAMIC);
+		self->m_indexTree[i] = new DX8IndexBufferClass((unsigned)0xea64, DX8IndexBufferClass::USAGE_DYNAMIC);
 		self->m_curNumTreeVertices[i] = 0;
 		self->m_curNumTreeIndices[i] = 0;
 	}

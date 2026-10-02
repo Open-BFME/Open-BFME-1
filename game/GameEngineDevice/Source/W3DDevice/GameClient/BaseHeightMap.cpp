@@ -51,6 +51,12 @@
 //         Includes                                                      
 //-----------------------------------------------------------------------------
 
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1983,7 +1989,7 @@ void BaseHeightMapRenderObjClass::freeScorchBuffers(void)
 void BaseHeightMapRenderObjClass::allocateScorchBuffers(void)
 {
 	m_vertexScorch=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,MAX_SCORCH_VERTEX,DX8VertexBufferClass::USAGE_DEFAULT));
-	m_indexScorch=NEW_REF(DX8IndexBufferClass,(MAX_SCORCH_INDEX));
+	m_indexScorch=NEW_REF(DX8IndexBufferClass,((unsigned)MAX_SCORCH_INDEX, DX8IndexBufferClass::USAGE_DEFAULT));
 	m_scorchTexture=NEW ScorchTextureClass;
 	m_scorchesInBuffer = 0; // If we just allocated the buffers, we got no scorches in the buffer.
 	m_curNumScorchVertices=0;

@@ -48,6 +48,12 @@
 //-----------------------------------------------------------------------------
 //         Includes                                                      
 //-----------------------------------------------------------------------------
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include "W3DDevice/GameClient/W3DBibBuffer.h"
 
 #include <stdio.h>
@@ -285,7 +291,7 @@ void W3DBibBuffer::freeBibBuffers(void)
 void W3DBibBuffer::allocateBibBuffers(void)
 {
 	m_vertexBib=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,m_vertexBibSize+4,DX8VertexBufferClass::USAGE_DYNAMIC));
-	m_indexBib=NEW_REF(DX8IndexBufferClass,(m_indexBibSize+4, DX8IndexBufferClass::USAGE_DYNAMIC));
+	m_indexBib=NEW_REF(DX8IndexBufferClass,((unsigned)(m_indexBibSize+4), DX8IndexBufferClass::USAGE_DYNAMIC));
 	m_curNumBibVertices=0;
 	m_curNumBibIndices=0;
 }

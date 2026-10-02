@@ -49,6 +49,12 @@
 //			  and alpha.
 //-----------------------------------------------------------------------------
 
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include "W3DDevice/GameClient/heightmap.h"
 #include "W3DDevice/GameClient/W3DWaterTracks.h"
 #include "W3DDevice/GameClient/W3DShaderManager.h"
@@ -808,7 +814,7 @@ void WaterTracksRenderSystem::ReAcquireResources(void)
 
 	Int idxCount=(m_stripSizeY-1)*(m_stripSizeX*2+2) - 2;
 
-	m_indexBuffer=NEW_REF(DX8IndexBufferClass,(idxCount));
+	m_indexBuffer=NEW_REF(DX8IndexBufferClass,((unsigned)idxCount, DX8IndexBufferClass::USAGE_DEFAULT));
 
 	// Fill up the IB
 	{
@@ -1177,7 +1183,7 @@ extern void *bfmeGoEMEb(void *);
 extern void Rva009EBAC0(int);
 class Rva009EB960;
 extern Rva009EB960 *Rva0134FAA0;
-#define FirstUpdateSubsystem ((void *)Rva0134FAA0)
+static inline void *FirstUpdateSubsystemView() { return (void *)Rva0134FAA0; }
 extern const char Rva006A16B0Empty[];
 
 struct Rva001408C0Target;
@@ -1309,7 +1315,7 @@ void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)
 		}
 		file->close();
 	}
-	if (FirstUpdateSubsystem)
+	if (FirstUpdateSubsystemView())
 		Rva009EBAC0((int)&assets);
 }
 

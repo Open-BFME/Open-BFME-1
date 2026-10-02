@@ -47,6 +47,11 @@
 #include "WW3D2/Camera.h"
 #include "WW3D2/Light.h"
 #define MESH_RENDER_SNAPSHOT_ENABLED
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8wrapper.h"
 #undef MESH_RENDER_SNAPSHOT_ENABLED
 #include "WW3D2/DX8Wrapper.h"
@@ -4086,21 +4091,10 @@ private:
 	unsigned char m_bfmeBody[ 0x20 ];
 };
 
-class BfmeDX8IndexBuffer
-{
-public:
-	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
-
-	BfmeDX8IndexBuffer(unsigned short count, UsageType usage);
-
-private:
-	unsigned char m_bfmeBody[ 0x18 ];
-};
-
 struct BfmeVolumetricShadowManagerBuffers
 {
 	BfmeDX8VertexBuffer *m_vertexBuffer;			///< retail this+0x00
-	BfmeDX8IndexBuffer *m_indexBuffer;			///< retail this+0x04
+	DX8IndexBufferClass *m_indexBuffer;			///< retail this+0x04
 };
 
 Bool W3DVolumetricShadowManager::ReAcquireResources(void)
@@ -4111,7 +4105,7 @@ Bool W3DVolumetricShadowManager::ReAcquireResources(void)
 		self->m_vertexBuffer = ::new BfmeDX8VertexBuffer(2, 30000, BfmeDX8VertexBuffer::USAGE_DYNAMIC, 0);
 
 	if (self->m_indexBuffer == NULL)
-		self->m_indexBuffer = ::new BfmeDX8IndexBuffer(30000, BfmeDX8IndexBuffer::USAGE_DYNAMIC);
+		self->m_indexBuffer = ::new DX8IndexBufferClass((unsigned)30000, DX8IndexBufferClass::USAGE_DYNAMIC);
 
 	return TRUE;
 }

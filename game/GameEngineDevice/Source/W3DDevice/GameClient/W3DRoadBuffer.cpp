@@ -48,6 +48,12 @@
 //-----------------------------------------------------------------------------
 //         Includes                                                      
 //-----------------------------------------------------------------------------
+// BFME's index_count is a full 32-bit slot and its index-buffer constructor
+// takes the count at full width; use the BFME declaration of DX8IndexBufferClass
+// rather than the Zero Hour one the include path would otherwise find.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
+
 #include "W3DDevice/GameClient/W3DRoadBuffer.h"
 
 #include <stdio.h>
@@ -199,7 +205,7 @@ void RoadType::loadTexture(AsciiString path, Int ID)
 	m_roadTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_REPEAT);
 
 	m_vertexRoad=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,TheGlobalData->m_maxRoadVertex+4, (s_dynamic?DX8VertexBufferClass::USAGE_DYNAMIC:DX8VertexBufferClass::USAGE_DEFAULT)));
-	m_indexRoad=NEW_REF(DX8IndexBufferClass,(TheGlobalData->m_maxRoadIndex+4, (s_dynamic?DX8IndexBufferClass::USAGE_DYNAMIC:DX8IndexBufferClass::USAGE_DEFAULT)));
+	m_indexRoad=NEW_REF(DX8IndexBufferClass,((unsigned)(TheGlobalData->m_maxRoadIndex+4), (s_dynamic?DX8IndexBufferClass::USAGE_DYNAMIC:DX8IndexBufferClass::USAGE_DEFAULT)));
 	m_numRoadVertices=0;
 	m_numRoadIndices=0;
 

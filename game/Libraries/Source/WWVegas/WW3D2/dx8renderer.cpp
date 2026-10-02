@@ -44,6 +44,8 @@
 //#define ENABLE_STRIPING
 
 #include "../WWLib/wwstring.h"
+// BFME's index-buffer constructor takes the count in a full 32-bit slot.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
 #define MUTEX_H
 #include "dx8renderer.h"
 #include "dx8wrapper.h"
@@ -1410,7 +1412,7 @@ void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& sp
 		}
 		else {
 			index_buffer=NEW_REF(DX8IndexBufferClass,(
-				ib_size,
+				(unsigned)ib_size,
 				(DX8Wrapper::Get_Current_Caps()->Support_NPatches() && WW3D::Get_NPatches_Level()>1) ? DX8IndexBufferClass::USAGE_NPATCHES : DX8IndexBufferClass::USAGE_DEFAULT));
 		}
 	}

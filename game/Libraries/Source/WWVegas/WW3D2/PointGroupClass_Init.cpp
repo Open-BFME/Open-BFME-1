@@ -94,8 +94,8 @@ void Rva00917280Init(void)
 		}
 	}
 
-	Tris = NEW_REF(DX8IndexBufferClass, (MAX_TRI_IB_SIZE));
-	Quads = NEW_REF(DX8IndexBufferClass, (MAX_QUAD_IB_SIZE));
+	Tris = NEW_REF(DX8IndexBufferClass, ((unsigned)MAX_TRI_IB_SIZE, DX8IndexBufferClass::USAGE_DEFAULT));
+	Quads = NEW_REF(DX8IndexBufferClass, ((unsigned)MAX_QUAD_IB_SIZE, DX8IndexBufferClass::USAGE_DEFAULT));
 	SortingTris = NEW_REF(SortingIndexBufferClass, (MAX_TRI_IB_SIZE));
 	SortingQuads = NEW_REF(SortingIndexBufferClass, (MAX_QUAD_IB_SIZE));
 
