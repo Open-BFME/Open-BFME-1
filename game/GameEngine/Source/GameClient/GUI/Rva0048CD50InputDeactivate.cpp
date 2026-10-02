@@ -10,7 +10,7 @@ extern "C" {
 		void *context );
 }
 
-extern void *Rva0048CD50WindowHandle;
+extern void *ApplicationHWnd;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
@@ -50,7 +50,7 @@ void Rva0048CD50Input::deactivate()
 		ImmNotifyIME( m_context, 0x15, 4, 0 );
 		ImmSetOpenStatus( m_context, 0 );
 	}
-	ImmAssociateContext( Rva0048CD50WindowHandle, 0 );
+	ImmAssociateContext( ApplicationHWnd, 0 );
 	m_active = 0;
 	if( m_window && (m_window->winGetStatus() & 2) )
 		notifyWindow();

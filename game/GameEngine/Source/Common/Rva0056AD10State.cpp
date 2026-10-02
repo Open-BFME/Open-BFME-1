@@ -1,6 +1,4 @@
-// The 0x012F1028 global's class; its name is the retail-defining spelling
-// ?Glo012F1028@@3PAVGlo012F1028Type@@A.  It must not be extern "C": the
-// unmangled spelling could never link.
+// Local view of the fields read from LivingWorldLogic at 0x012F1028.
 class Glo012F1028Type
 {
 public:
@@ -15,7 +13,8 @@ struct BfmeState56AD10B
 	int m_mode;
 };
 
-extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;			// 0x012F1028
 
 // Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
 // spelling is ?TheGameLogic@@3PAVGameLogic@@A.  BfmeState56AD10B above is this
@@ -36,7 +35,8 @@ private:
 
 int Rva0056AD10::resolveMode() const
 {
-	if ( !( Glo012F1028->m_firstFlag && Glo012F1028->m_secondFlag ) && m_state == 3 )
+	if ( !( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic )->m_firstFlag &&
+		reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic )->m_secondFlag ) && m_state == 3 )
 	{
 		if ( TheGameLogic == 0 || ((BfmeState56AD10B *)TheGameLogic)->m_mode != 2 )
 			return 0;

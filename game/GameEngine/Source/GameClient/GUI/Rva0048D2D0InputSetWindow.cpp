@@ -6,7 +6,7 @@ extern "C" {
 	void *__stdcall ImmAssociateContext( void *window, void *context );
 }
 
-extern void *Rva0048CD50WindowHandle;
+extern void *ApplicationHWnd;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
@@ -49,7 +49,7 @@ void Rva0048D2D0Input::setWindow( GameWindow *window )
 			enterWindow();
 		if( !m_associated ) {
 			ImmSetOpenStatus( m_context, 1 );
-			ImmAssociateContext( Rva0048CD50WindowHandle, m_context );
+			ImmAssociateContext( ApplicationHWnd, m_context );
 		}
 		m_window = window;
 	}
