@@ -1,4 +1,9 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// CostModifierUpgrade::rva002D4770: UpgradeMux slot 7 at retail 0x002D4770. Slot 7 is a BFME-only
+// virtual with no Zero Hour twin, WorldBuilder label or name table, so the
+// method keeps its address; the TU-local UpgradeMux view names the slot after
+// this body so the override still adjusts `this` to the UpgradeMux base. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
 typedef bool Bool;
 
@@ -102,7 +107,7 @@ public:
 	virtual Bool isSubObjectsUpgrade() = 0;
 	virtual void forceRefreshUpgrade() = 0;
 	virtual void postUpgradeCheck() = 0;
-	virtual void upgradeRemovalImplementation() = 0;
+	virtual void rva002D4770() = 0;
 	virtual void setUpgradeExecuted(Bool) = 0;
 	virtual void upgradeImplementation() = 0;
 	virtual void getUpgradeActivationMasks() const = 0;
@@ -129,7 +134,7 @@ class UpgradeModule : public ObjectModule,
 class CostModifierUpgrade : public UpgradeModule
 {
 	protected:
-	virtual void upgradeRemovalImplementation();
+	virtual void rva002D4770();
 };
 
 template <class T>
@@ -144,8 +149,8 @@ inline const T &min(const T &left, const T &right)
 	return left < right ? left : right;
 }
 
-// ?upgradeRemovalImplementation@CostModifierUpgrade@@MAEXXZ
-void CostModifierUpgrade::upgradeRemovalImplementation()
+// ?rva002D4770@CostModifierUpgrade@@MAEXXZ
+void CostModifierUpgrade::rva002D4770()
 {
 	if (!isAlreadyUpgraded())
 		return;

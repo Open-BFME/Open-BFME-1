@@ -1,11 +1,16 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// GarrisonUpgrade::rva002D54A0: UpgradeMux slot 7 at retail 0x002D54A0. Slot 7 is a BFME-only
+// virtual with no Zero Hour twin, WorldBuilder label or name table, so the
+// method keeps its address; the TU-local UpgradeMux view names the slot after
+// this body so the override still adjusts `this` to the UpgradeMux base. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 //
-// GarrisonUpgrade::upgradeRemovalImplementation, retail 0x002D54A0 (142 B).
+// Retail 0x002D54A0 (142 B).
 // The GarrisonUpgrade constructor (0x002D5280) installs the UpgradeMux vtable
 // 0x010CCA40 at +0x10; its slot 7 (+0x1c) reaches this body through ILT
-// 0x00031E5D, the slot CommandSetUpgrade and CostModifierUpgrade land as
-// upgradeRemovalImplementation. Slot 8 (+0x20) is setUpgradeExecuted.
+// 0x00031E5D (CommandSetUpgrade 0x002D4470 and CostModifierUpgrade 0x002D4770
+// fill the same slot). Slot 8 (+0x20) is setUpgradeExecuted.
 //
 // Bit 252 of Object's 40-byte model-condition mask at +0x110 (word +0x12c,
 // bit 28) is UPGRADE_GARRISON in the shipped ModelCondition name table at
@@ -168,7 +173,7 @@ public:
 	virtual void slot04();
 	virtual void slot05();
 	virtual void slot06();
-	virtual void upgradeRemovalImplementation();
+	virtual void rva002D54A0();
 	virtual void setUpgradeExecuted(Bool enabled);
 
 };
@@ -189,11 +194,11 @@ class UpgradeModule : public BehaviorModule,
 class GarrisonUpgrade : public UpgradeModule
 {
 protected:
-	virtual void upgradeRemovalImplementation();
+	virtual void rva002D54A0();
 };
 
-// ?upgradeRemovalImplementation@GarrisonUpgrade@@MAEXXZ
-void GarrisonUpgrade::upgradeRemovalImplementation()
+// ?rva002D54A0@GarrisonUpgrade@@MAEXXZ
+void GarrisonUpgrade::rva002D54A0()
 {
 	Object *object = m_object;
 

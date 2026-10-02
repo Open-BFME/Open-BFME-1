@@ -1,4 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// CommandSetUpgrade::rva002D4470: UpgradeMux slot 7 at retail 0x002D4470. Slot 7 is a BFME-only
+// virtual with no Zero Hour twin, WorldBuilder label or name table, so the
+// method keeps its address; the TU-local UpgradeMux view names the slot after
+// this body so the override still adjusts `this` to the UpgradeMux base. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 // CommandSetUpgrade's BFME slot-7 removal hook at retail 0x002D4470.
 // The secondary UpgradeMux vtable proves the slot identity.
 
@@ -62,7 +67,7 @@ public:
 	virtual Bool isSubObjectsUpgrade() = 0;
 	virtual void forceRefreshUpgrade() = 0;
 	virtual void postUpgradeCheck() = 0;
-	virtual void upgradeRemovalImplementation() = 0;
+	virtual void rva002D4470() = 0;
 	virtual void setUpgradeExecuted(Bool) = 0;
 	virtual void upgradeImplementation() = 0;
 	virtual void getUpgradeActivationMasks() const = 0;
@@ -92,10 +97,10 @@ class UpgradeModule : public ObjectModule,
 class CommandSetUpgrade : public UpgradeModule
 {
 protected:
-	virtual void upgradeRemovalImplementation();
+	virtual void rva002D4470();
 };
 
-void CommandSetUpgrade::upgradeRemovalImplementation()
+void CommandSetUpgrade::rva002D4470()
 {
 	if (!isAlreadyUpgraded())
 		return;

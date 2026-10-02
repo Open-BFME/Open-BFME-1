@@ -14658,5 +14658,65 @@
   "after_sha256": "83cea2fa1935563a3015f739e81099f4e342ea85556c8182cdd60389fdf99c73",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
   "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradeRemovalImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradeRva002D4470.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4470",
+  "before_sha256": "9b659357c2a083eee393960365bc3fa1e590a0ca642849940e2bdfab2d6bb677",
+  "after_sha256": "c70397b6bce6eb58ff7ecbd8b418ddacbe72613ccd2826b1c044b03b2c952a33",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeRemoval.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeRva002D4770.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4770",
+  "before_sha256": "c01cefb8bcb6d17b89e0cd2a8ce7736049cd3282b9c30a39f9974b8bb4abf755",
+  "after_sha256": "3bf0cbf43a13582ad83587bd51b0f95bb459487d149f2c9298b125a839974259",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/GarrisonUpgradeRemovalImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/GarrisonUpgradeRva002D54A0.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D54A0",
+  "before_sha256": "ac8179d9e9aec005794334f4ba0625c1a0a42c649571b5aff07822c4fd2a508f",
+  "after_sha256": "e6ede1703e27ad137d1998d4854af728a70b7146aa7cb413943bf58bcce66757",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D54A0",
+  "before_sha256": "6776a6c30f731dfbc1dc3419954e3e8e4db98b62a602e91ae70d2c537e2349b9",
+  "after_sha256": "919b09c632e59eca37dd795e7c0f288084185bea10bbc2cc725b7ec899278c60",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4470",
+  "before_sha256": "917d6f33bb705bf77838721e4d6335ff4a64f4c89905a767a78f757e7ffb205e",
+  "after_sha256": "7f0751a371ad5486c6549423fe3f0a041061c35e4339ab34d6367074c55bf9de",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4770",
+  "before_sha256": "ca74be5d9abd216de9dcd61f209f20d4d9719b67c04f3d508d5dc800e58508d5",
+  "after_sha256": "14bc5718d75f2e5e1d4bc194d2822b7397d029dbc3562f6cf33d37b3a87acea8",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
  }
 ]
