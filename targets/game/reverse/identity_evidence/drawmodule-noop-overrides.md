@@ -58,3 +58,34 @@ extents. Compile the unmodified upstream inline bodies in
 orphaned standalone placeholder files and only the relevant definition in the
 shared no-op TU. No guessed members, header edits, pins, or baseline expansion
 are required.
+
+
+## W3DLaserDraw: the same three override slots
+
+The constructor/registration chain is independently proven in the linked
+interface census: registry `006C0112`, factory `006BF150`, ctor `00757E70`,
+primary table VA `01122A00` stored at `00757EAC`. Primary slot 2 goes through
+ILT `00045629` to `00757B40`, returning VA `0111D298`, literal W3DLaserDraw.
+Thus this class owns the following unique entries:
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | Public virtual method |
+|---|---|---|---|---|
+| 11 | `00D22A2C` | `00038A3C` | `00757B50` | void releaseShadows() |
+| 12 | `00D22A30` | `00022C5F` | `00757B60` | void allocateShadows() |
+| 36 | `00D22A90` | `000150F5` | `00757BA0` | void reactToGeometryChange() |
+
+Each stub VA occurs exactly once in a bytewise whole-image dword scan, at its
+listed slot. Each target is exactly C3 followed by CC. These are distinct
+class overrides, not shared/inherited functions. The same locally proven
+slot blocks above apply: the Laser table has its already-matched doDrawModule
+in slot 9 and the proven typed getter block in slots 38-45.
+
+The unmodified ZH W3DLaserDraw.h public section explicitly defines empty
+releaseShadows, allocateShadows and reactToGeometryChange (lines 82-87), each
+non-const, void, without arguments. It supplies the exact names and ABI:
+`?releaseShadows@W3DLaserDraw@@UAEXXZ`,
+`?allocateShadows@W3DLaserDraw@@UAEXXZ`, and
+`?reactToGeometryChange@W3DLaserDraw@@UAEXXZ`. The new TU includes that header
+and emits those definitions through qualified-call anchors. Remove only the
+three replaced definitions from their shared placeholder TUs; all unrelated
+bodies stay in place. Extents remain one byte and no callee pins change.

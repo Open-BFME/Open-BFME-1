@@ -347,7 +347,3 @@ void Rva00758560Noop()
 {
 }
 
-// ?Rva00757BA0Noop@@YAXXZ
-void Rva00757BA0Noop()
-{
-}
