@@ -103,18 +103,73 @@ public:
 
 class Rva007F7980Browser;
 
-class Rva00802DF0Element
+struct Rva00802DF0Source
 {
-public:
-	void set( const Rva007F4E50Region *record, Rva007F7980Browser *browser ); // 0x00802DF0
-	char m_pad[ 0x1C ];
+	int m_field0;
+	char m_pad004[ 8 ];
+	char m_name[ 0x80 ];
+	char m_text[ 1 ];
 };
 
-class Rva00802810Element
+class Rva00800290Buffer
 {
 public:
-	void set( const Rva007F4EF0Lobby *record, Rva007F7980Browser *browser );  // 0x00802810
-	char m_pad[ 0x40 ];
+	void reset();
+	void addPadded( int size );
+	void addString( const char *text );
+	void allocate();
+	void append( const char *text );
+
+	char *m_ptr;
+	int m_size;
+};
+
+class Rva00802DF0Owner
+{
+public:
+	void set( Rva00802DF0Source *source, int value );
+
+	int m_field0;
+	int m_field4;
+	int m_field8;
+	Rva00800290Buffer m_name;
+	Rva00800290Buffer m_text;
+};
+
+struct BfmeSrcVCB
+{
+	int m_bfme00;
+	int m_bfme04;
+	int m_bfme08;
+	int m_bfme0c;
+	int m_bfme10;
+	int m_bfme14;
+	char m_bfmeTextA[ 0x80 ];
+	char m_bfmeTextB[ 4 ];
+};
+
+class BfmeBufVCB
+{
+public:
+	void bfmeAppendVCB( const char *s );
+	char m_bfmePad[ 8 ];
+};
+
+class BfmeThingVCB
+{
+public:
+	void bfmeInitVCB( BfmeSrcVCB *s, int a );
+	char m_bfmePad[ 4 ];
+	int m_bfme04;
+	int m_bfme08;
+	BfmeBufVCB m_bfmeBufA;
+	BfmeBufVCB m_bfmeBufB;
+	char m_bfmePad2[ 0x10 ];
+	int m_bfme2c;
+	int m_bfme30;
+	int m_bfme34;
+	int m_bfme38;
+	int m_bfme3c;
 };
 
 class Rva007F7980Listener
@@ -155,10 +210,10 @@ void Rva007F7980Browser::onRegion( Rva007E8810Message *msg )
 	Rva007F4E50Region record( msg );
 
 	int index = m_regionIndex++;
-	Rva00802DF0Element *slot = ( index >= m_regions.m_count )
+	Rva00802DF0Owner *slot = ( index >= m_regions.m_count )
 		? 0
-		: (Rva00802DF0Element *)( (char *)m_regions.m_array + index * 0x1C );
-	slot->set( &record, this );
+		: (Rva00802DF0Owner *)( (char *)m_regions.m_array + index * 0x1C );
+	slot->set( (Rva00802DF0Source *)&record, (int)this );
 	if( m_regionIndex >= m_regions.m_count )
 		m_listener->onRegionCountDone( 0 );
 }
@@ -173,10 +228,10 @@ void Rva007F7980Browser::onLobby( Rva007E8810Message *msg )
 	Rva007F4EF0Lobby record( msg );
 
 	int index = m_lobbyIndex++;
-	Rva00802810Element *slot = ( index >= m_lobbies.m_count )
+	BfmeThingVCB *slot = ( index >= m_lobbies.m_count )
 		? 0
-		: (Rva00802810Element *)( (char *)m_lobbies.m_array + index * 0x40 );
-	slot->set( &record, this );
+		: (BfmeThingVCB *)( (char *)m_lobbies.m_array + index * 0x40 );
+	slot->bfmeInitVCB( (BfmeSrcVCB *)&record, (int)this );
 	if( m_lobbyIndex >= m_lobbies.m_count )
 		m_listener->onLobbyCountDone( 0 );
 }
