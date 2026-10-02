@@ -1,34 +1,33 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /Igame/Libraries/Source/WWVegas/WWLib
 
-class Rva0036CA00Str
-{
-public:
-	void clear();
-
-private:
-	void *m_item;
-};
+// The ten four-byte members are narrow strings: every `call` in this body goes
+// to 0x00887940, the char StringBase release body matched in
+// Libraries/Source/string/StringBase.cpp. AsciiString::clear() forwards to
+// StringBase<char>::clear(), which is the out-of-line releaseBuffer, so the
+// real header gives the call without any stand-in method. Same convention as
+// Rva006F9900Find.cpp and Bfme7NarrowStringChainDestructors.cpp.
+#include "ascii_string.h"
 
 class Rva0013A820
 {
-	Rva0036CA00Str m_00;
-	Rva0036CA00Str m_04;
-	Rva0036CA00Str m_08;
-	Rva0036CA00Str m_0C;
-	Rva0036CA00Str m_10;
+	AsciiString m_00;
+	AsciiString m_04;
+	AsciiString m_08;
+	AsciiString m_0C;
+	AsciiString m_10;
 	int m_14;
 	int m_18;
-	Rva0036CA00Str m_1C;
-	Rva0036CA00Str m_20;
+	AsciiString m_1C;
+	AsciiString m_20;
 	int m_24;
-	Rva0036CA00Str m_28;
+	AsciiString m_28;
 	int m_2C;
 	int m_30;
 	int m_34;
 	int m_38;
-	Rva0036CA00Str m_3C;
+	AsciiString m_3C;
 	int m_40;
-	Rva0036CA00Str m_44;
+	AsciiString m_44;
 
 public:
 	void reset();

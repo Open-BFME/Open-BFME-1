@@ -8,8 +8,9 @@
 // begin() returns the native two-word STLport iterator.  Each node holds an
 // AsciiString key at +4 and a mapped object pointer at +8.  Iterator increment
 // passes the +4 key to the AsciiString bucket helper at 0x00611CA0.  The mapped
-// object call reaches 0x0061C3C0 through ILT 0x0001B2AC.  Its public method
-// spelling is not recovered and therefore remains address-derived.
+// object call reaches 0x0061C3C0 through ILT 0x0001B2AC, which is the body
+// matched as BfmeThingNA::bfmeUpdateDNA in Common/BfmeThingNAStateUpdates.cpp,
+// so that is the spelling used here.
 //
 // Evidence checkpoint: t=3min model=gpt-5.6-sol-ultra
 // campaign=luna36h-20260907 lane=expand08.
@@ -21,13 +22,17 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-class Rva0061C1D0Object
+// Retail 0x0061C3C0 is matched as BfmeThingNA::bfmeUpdateDNA in
+// Common/BfmeThingNAStateUpdates.cpp, and the sibling iterator bodies at
+// 0x00615900 / 0x00615A70 / 0x00615B10 already name this map's value type
+// BfmeThingNA, so the call is spelled with that class and member.
+class BfmeThingNA
 {
 public:
-	void rva0061c3c0();
+	void bfmeUpdateDNA();
 };
 
-typedef _STL::hash_map<AsciiString, Rva0061C1D0Object *,
+typedef _STL::hash_map<AsciiString, BfmeThingNA *,
 	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > Rva00615C20Map;
 
 class BfmeLivingWorldManager
@@ -45,6 +50,6 @@ void BfmeLivingWorldManager::rva00615c20()
 	for (Rva00615C20Map::iterator it = m_objects.begin();
 		it != m_objects.end(); ++it)
 	{
-		it->second->rva0061c3c0();
+		it->second->bfmeUpdateDNA();
 	}
 }

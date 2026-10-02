@@ -1,7 +1,13 @@
 // cl: /Od
 // Open-BFME5 conversions.
 
-extern "C" void __cdecl bfmeSwapC1151(int *a, int *b);
+// Retail 0x0082D010 is the cdecl whole-record swap matched as
+// ?bfmeSwap82D010@@YAXPAUBfmeSlot82D010@@0@Z in BfmeSlotSwap82D010.cpp, so
+// this call site spells it with that name and passes slot pointers. The slot is
+// only ever forwarded by address here, so an incomplete declaration of the
+// record type is enough.
+struct BfmeSlot82D010;
+void __cdecl bfmeSwap82D010(BfmeSlot82D010 *left, BfmeSlot82D010 *right);
 
 class BfmeA1151
 {
@@ -35,5 +41,6 @@ void BfmeA1151::bfmeSwap1151(BfmeA1151 *o)
 	*self = *theirs;
 	*theirs = second;
 
-	bfmeSwapC1151(&m_bfme08, &o->m_bfme08);
+	bfmeSwap82D010(reinterpret_cast< BfmeSlot82D010 * >(&m_bfme08),
+		reinterpret_cast< BfmeSlot82D010 * >(&o->m_bfme08));
 }

@@ -38,10 +38,14 @@ void BfmeHostSA::bfmeGoSA(BfmeThingSA *r)
 
 class BfmeThingSB;
 
-class BfmeSinkSB
+// The target at 0x00809E00 is matched as BfmeThingSKA::bfmeGoSKA(int, int)
+// (Common/BfmeConv1293.cpp), so this call site spells the receiver that way.
+// The 32-bit getter results are passed straight through, which is what retail
+// does: the pushes are the raw eax/ebx the getter returned.
+class BfmeThingSKA
 {
 public:
-	void bfmeUseSB(void *a, void *b);
+	void bfmeGoSKA(int a, int b);
 };
 
 class BfmeHostSB
@@ -49,12 +53,12 @@ class BfmeHostSB
 public:
 	void bfmeGoSB(BfmeThingSB *r);
 	char m_bfmePad[0x18];
-	BfmeSinkSB *m_bfmeSink;
+	BfmeThingSKA *m_bfmeSink;
 };
 
 void BfmeHostSB::bfmeGoSB(BfmeThingSB *r)
 {
 	void *a = reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"TID", 0 );
 	void *b = reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"PID", 0 );
-	m_bfmeSink->bfmeUseSB(a, b);
+	m_bfmeSink->bfmeGoSKA(static_cast< int >((long)a), static_cast< int >((long)b));
 }
