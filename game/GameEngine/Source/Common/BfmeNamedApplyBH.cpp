@@ -31,7 +31,15 @@ public:
 	void *bfmeFindBH(AsciiStringBH name) throw();
 };
 
-extern BfmeRegistryBH *g_bfmeRegistryBH;		// retail 0x012ED80C
+// retail 0x012ED80C is the game's TheSpecialPowerStore, so the global must carry
+// that name and its pointee type.  SpecialPowerStore itself is declared by
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h; only the address
+// of the global is referenced here, so a forward declaration of the pointee is
+// enough and the registry view below is still reached by cast (which emits
+// nothing).
+class SpecialPowerStore;
+
+extern SpecialPowerStore *TheSpecialPowerStore;	// retail 0x012ED80C
 
 class BfmeSubBH
 {
@@ -57,7 +65,7 @@ public:
 void BfmeApplierBH::bfmeAddBH(void *owner, const AsciiStringBH &name,
 		BfmeTargetBH *target)
 {
-	void *found = g_bfmeRegistryBH->bfmeFindBH(name);
+	void *found = ((BfmeRegistryBH *)TheSpecialPowerStore)->bfmeFindBH(name);
 
 	if (found != 0)
 		bfmeApplyBH(owner, found, &target->m_bfmeSubBH);
