@@ -22,13 +22,15 @@ private:
 	Gen_dtor_0034dd90 *m_owned;
 };
 
+void __cdecl j_0001cdcd();
+
 void BfmeOwnedStringState::resetOwnedObject()
 {
 	m_name.~AsciiString();
 	Gen_dtor_0034dd90 *owned = m_owned;
 	m_reset = 1;
 	if (owned != 0) {
-		owned->Gen_dtor_0034dd90::~Gen_dtor_0034dd90();
+		reinterpret_cast<void (__fastcall *)(Gen_dtor_0034dd90 *)>(j_0001cdcd)(owned);
 		operator delete(owned);
 		m_owned = 0;
 	}
