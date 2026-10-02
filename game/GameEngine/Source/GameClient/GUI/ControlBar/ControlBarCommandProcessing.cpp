@@ -104,32 +104,6 @@ void selectObjectOfType( Object* obj, void* selectObjectsInfo )
 
 
 //-------------------------------------------------------------------------------------------------
-/** Process a button transition message from the window system that should be for one of
-	* our GUI commands */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarProcessCommandTransitionUIThunk.cpp
-// ?processCommandTransitionUI@ControlBar@@ present-unmatched
-CBCommandStatus ControlBar::processCommandTransitionUI( GameWindow *control, GadgetGameMessage gadgetMessage )
-{
-	// sanity, we won't process messages if we have no source object
-	if( m_currContext != CB_CONTEXT_MULTI_SELECT &&
-			(m_currentSelectedDrawable == NULL || 
-			 m_currentSelectedDrawable->getObject() == NULL) )
-	{
-
-		if( m_currContext != CB_CONTEXT_NONE && 
-				m_currContext != CB_CONTEXT_OBSERVER_INFO && 
-				m_currContext != CB_CONTEXT_OBSERVER_LIST)
-			switchToContext( CB_CONTEXT_NONE, NULL );
-		return CBC_COMMAND_NOT_USED;
-
-	}  // end if
-
-	return CBC_COMMAND_USED;
-
-}
-
-//-------------------------------------------------------------------------------------------------
 /** Process a button selected message from the window system that should be for one of
 	* our GUI commands */
 //-------------------------------------------------------------------------------------------------
@@ -913,4 +887,3 @@ CBCommandStatus ControlBar::processCommandUI( GameWindow *control,
 	return CBC_COMMAND_USED;
 
 }  // end processCommandUI
-
