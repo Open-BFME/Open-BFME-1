@@ -22,6 +22,8 @@ public:
 	Bool bfmeWorldLineHasNoHit(const Coord3D *startPosition, const Coord3D *endPosition);
 };
 
+extern void j_0004acbe();
+
 // ?bfmeWorldLineHasNoHit@Pathfinder@@QAE_NPBUCoord3D@@0@Z
 Bool Pathfinder::bfmeWorldLineHasNoHit(const Coord3D *startPosition,
 	const Coord3D *endPosition)
@@ -30,5 +32,9 @@ Bool Pathfinder::bfmeWorldLineHasNoHit(const Coord3D *startPosition,
 	ICoord2D endCell;
 	worldToCell(startPosition, &startCell);
 	worldToCell(endPosition, &endCell);
-	return bfmeWalkWorldCells(startCell, endCell, 1, &startPosition) == 0;
+	typedef int (Pathfinder::*Call)(const ICoord2D &, const ICoord2D &, int,
+		const Coord3D **);
+	union { void (*raw)(); Call member; } call;
+	call.raw = j_0004acbe;
+	return (this->*call.member)(startCell, endCell, 1, &startPosition) == 0;
 }

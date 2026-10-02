@@ -29,6 +29,8 @@ private:
 	Rva003677B0Entry *m_last;
 };
 
+extern void j_0003fe09();
+
 class Rva003677B0IndexedEntries
 {
 public:
@@ -48,6 +50,9 @@ void Rva003677B0IndexedEntries::finish( int index )
 	if( entry.m_state == 3 )
 	{
 		entry.m_state = 4;
-		entry.finish( &entry.m_value, false );
+		typedef void (Rva003677B0Entry::*Call)(void *, bool);
+		union { void (*raw)(); Call member; } call;
+		call.raw = j_0003fe09;
+		(entry.*call.member)( &entry.m_value, false );
 	}
 }

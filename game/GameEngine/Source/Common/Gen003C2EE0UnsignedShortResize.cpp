@@ -3,6 +3,7 @@
 // stlport
 
 typedef unsigned int size_t_;
+extern void j_000417f9();
 
 namespace Gen003C2EE0Stl
 {
@@ -60,8 +61,14 @@ void vector<Type, Allocator>::resize(unsigned int newSize, Type value)
 	if (newSize < (unsigned int)(oldFinish - _M_start))
 		erase(_M_start + newSize, oldFinish);
 	else
-		_M_fill_insert(oldFinish,
+	{
+		typedef void (vector<Type, Allocator>::*Call)(
+			Type *, unsigned int, const Type &);
+		union { void (*raw)(); Call member; } call;
+		call.raw = ::j_000417f9;
+		(this->*call.member)(oldFinish,
 			newSize - (unsigned int)(oldFinish - _M_start), value);
+	}
 }
 }
 
