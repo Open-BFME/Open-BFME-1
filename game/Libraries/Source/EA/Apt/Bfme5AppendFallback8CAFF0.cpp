@@ -6,7 +6,7 @@ public:
 	unsigned m_flags;
 };
 
-extern AptValue *g_bfmeFallbackDB;
+AptValue *g_bfmeFallbackDB = 0;
 
 struct BfmeStack8CAFF0
 {

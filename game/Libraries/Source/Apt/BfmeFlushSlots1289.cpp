@@ -6,7 +6,8 @@ struct BfmeSlotState1289
 	unsigned int m_flags;
 };
 
-extern int g_bfmeFallbackDB;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 class BfmeSlotDispatcher1281
 {
@@ -58,7 +59,7 @@ void BfmeSlotDispatcher1281::bfmeFlushSlots1289()
 		bfmeRouteEncoded1281(m_entries123c[i]);
 
 	if (m_reset1264 == 1) {
-		m_value125c = g_bfmeFallbackDB;
+		m_value125c = reinterpret_cast<int>(g_bfmeFallbackDB);
 		m_reset1264 = 0;
 	}
 	m_count1238 = 0;

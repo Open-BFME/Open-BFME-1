@@ -8,7 +8,8 @@ public:
 	virtual void release(void);
 };
 
-extern int g_bfmeFallbackDB;					// retail 0x013379BC
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;				// retail 0x013379BC
 
 class Gen_008C6BC0
 {
@@ -51,7 +52,7 @@ void Gen_008C6BC0::bfmeReset(void)
 			if (*(volatile int *)((unsigned)m_bfmeArr + index * 4) != 0)
 				((BfmeSlotEL *)m_bfmeArr[index])->release();
 
-			m_bfmeArr[index] = g_bfmeFallbackDB;
+			m_bfmeArr[index] = reinterpret_cast<int>(g_bfmeFallbackDB);
 			++index;
 		} while (index < count);
 	}

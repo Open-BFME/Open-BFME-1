@@ -68,7 +68,8 @@ BfmeHolderDB Gen_00895650::bfmeGet(void) const
 	return m_bfmeHolder;
 }
 
-extern int g_bfmeFallbackDB;					// retail 0x013379BC
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;				// retail 0x013379BC
 
 class Gen_008B8E50
 {
@@ -93,7 +94,7 @@ int Gen_008B8E50::bfmeAt(int index) const
 			return value;
 	}
 
-	return g_bfmeFallbackDB;
+	return reinterpret_cast<int>(g_bfmeFallbackDB);
 }
 
 class BfmeNodeDB
