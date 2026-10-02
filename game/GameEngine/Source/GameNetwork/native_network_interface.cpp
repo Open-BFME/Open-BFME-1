@@ -8,13 +8,25 @@ extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *
 extern "C" const void *bfmeVftNetwork[];
 #pragma comment(linker, "/alternatename:_bfmeVftNetwork=??_7Network@@6B@")
 
+// The first thing this constructor does is run the base constructor at
+// 0x009A1A30, which the ledger carries as ??0SubsystemInterface@@QAE@XZ and
+// whose body is game/GameEngine/Source/Common/System/SubsystemInterface.cpp:
+// a public __thiscall no-argument constructor, i.e. `this` in ecx and no stack
+// traffic. C++ cannot spell that name here -- naming it as a member call
+// would need BFMENativeNetwork to derive from the real SubsystemInterface,
+// which is a different class -- so the extern below carries the mangled name
+// itself. __thiscall is rejected beside extern "C" (C4234) and __stdcall
+// appends its own `@0` to the name, so neither spells this symbol; with no
+// arguments __cdecl, __stdcall and __thiscall all encode the same call, and
+// `this` is already in ecx.
+extern "C" void __identifier("??0SubsystemInterface@@QAE@XZ")( void );
+
 class BFMENativeNetwork
 {
 public:
 	void *construct();
 	int getFramePacingStatus();
 	int getFrameAdvanceCount();
-	void baseConstruct();
 
 private:
 	void *m_vtable;
@@ -36,7 +48,7 @@ private:
 
 void *BFMENativeNetwork::construct()
 {
-	baseConstruct();
+	__identifier("??0SubsystemInterface@@QAE@XZ")();
 	m_vtable = (void *)bfmeVftNetwork;
 	m_connectionManager = 0;
 	m_state = 0;
