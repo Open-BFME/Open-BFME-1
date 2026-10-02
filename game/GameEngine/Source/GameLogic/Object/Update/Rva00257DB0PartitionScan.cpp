@@ -196,6 +196,12 @@ public:
 		PartitionFilter *, Bool);
 };
 
+class BfmeWideForwardC
+{
+public:
+	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
+};
+
 extern PartitionManager *ThePartitionManager;
 
 struct Rva00257DB0Data
@@ -225,10 +231,10 @@ void Rva002581B0Owner::callAt00257DB0()
 	Object *object = m_object;
 	Rva00257DB0Data *data = m_data;
 
-	BfmeWideResult iterator = ThePartitionManager->iterate(
-		&m_positionB0, data->m_range258, ITER_FASTEST,
-		PartitionFilterRelationship(object, 1, false).link(
-			Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(object))), true);
+	BfmeWideResult iterator = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+		(int)&m_positionB0, *(int *)&data->m_range258, (int)ITER_FASTEST,
+		(int)PartitionFilterRelationship(object, 1, false).link(
+			Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(object))), 1);
 
 	_STL::list<int> preferred;
 	Object *other;

@@ -60,7 +60,7 @@ public:
 	void toLower() { StringBase<char>::toLower(); }
 	void format(AsciiString format, ...);
 
-private:
+protected:
 	void releaseBuffer();
 };
 
