@@ -3,13 +3,15 @@ struct BfmeThingDBE
 	void *m_bfmeX;
 };
 
-int bfmeTailDBE(BfmeThingDBE *a);
+extern "C" int ciGetUserBasicInfoA(void *, const char *, const char **, const char **);
 
-int bfmeGoDBE(BfmeThingDBE *a)
+extern "C" int chatGetBasicUserInfoNoWaitA(void *chat, const char *nick,
+	const char **user, const char **address)
 {
+	BfmeThingDBE *a = (BfmeThingDBE *)chat;
 	if (a == 0)
 		return 0;
 	if (a->m_bfmeX == 0)
 		return 0;
-	return bfmeTailDBE(a);
+	return ciGetUserBasicInfoA(a, nick, user, address);
 }
