@@ -24,16 +24,20 @@ public:
 	static void _Deinit();
 };
 
-extern BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[];
+// Retail RVA 0091DAA0 walks fifteen slots: VA 013467F0 through
+// 01346BB0 in 0x40-byte steps, indexing pointer/word arrays once per slot.
+// The tail accesses the sorting pointer at VA 013467DC and word capacity
+// at VA 013467E0. All five storage extents are initially zero in retail.
+BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[15] = {};
 extern unsigned int BfmeDynamicFVFTable[];
 extern bool BfmeDynamicDX8VertexBufferInUse[];
-extern unsigned short BfmeDynamicDX8VertexBufferSize[];
+unsigned short BfmeDynamicDX8VertexBufferSize[15] = {};
 extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
-extern BfmeDynElemXZ BfmeDynamicVBSlots[];
+BfmeDynElemXZ BfmeDynamicVBSlots[15] = {};
 
-extern SortingVertexBufferClass *BfmeDynamicSortingVertexArray;
+SortingVertexBufferClass *BfmeDynamicSortingVertexArray = 0;
 extern bool BfmeDynamicSortingVertexArrayInUse;
-extern unsigned short BfmeDynamicSortingVertexArraySize;
+unsigned short BfmeDynamicSortingVertexArraySize = 0;
 extern unsigned short BfmeDynamicSortingVertexArrayOffset;
 
 void DynamicVBAccessClass::_Deinit()

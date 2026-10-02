@@ -57,8 +57,8 @@ extern SortingVertexBufferClass *BfmeDynamicSortingVertexArray;
 
 extern bool BfmeDynamicDX8VertexBufferInUse[];
 extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
-extern unsigned short BfmeDynamicDX8VertexBufferSize[21];
-extern BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[21];
+extern unsigned short BfmeDynamicDX8VertexBufferSize[];
+extern BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[];
 extern unsigned BfmeDynamicFVFTable[21];
 extern unsigned char *BfmeCurrentCaps;
 
