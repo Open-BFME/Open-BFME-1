@@ -13888,5 +13888,15 @@
   "after_sha256": "855aa53cfe858b365fa67535c571003c77ccaa40be9cc556dc94b6b7018971ae",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00841180.cpp",
+  "new_path": "game/Libraries/Source/STLport/Rva00841180VirtualDispatch.cpp",
+  "old_name": "invoke",
+  "new_name": "Rva008411A0Base",
+  "before_sha256": "ae2b2a752e0b98f19184d549f4d07c7dbca8c63550c98adf5fc2e9c35b4a295a",
+  "after_sha256": "187c8c68f76af18ca452bdb56ae83b7f9fd2ce53324ac0ac46311072b15677bc",
+  "evidence": "targets/game/reverse/identity_evidence/rva00841180-dispatch.md",
+  "reason": "False token pairing: removed bank generic slot declaration aligns with an unrelated sibling address-derived virtual-base destructor. No original name is established or discarded."
  }
 ]
