@@ -70,7 +70,14 @@ struct Rva008A9F70Registry {
     }
 };
 extern Rva008A9F70Registry *g_registry01337810;
-extern Rva008A9B00 *g_free01338478;
+// The Apt global node free list at 0x01338478, defined once by
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This body keeps its own
+// view of a node (Rva008A9B00) and reaches the next link through it.
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+static __forceinline Rva008A9B00 *&rva01338478FreeHead() {
+    return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 // 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
 // Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
 // so the reinterpret_cast below compiles to the same mov.
@@ -118,9 +125,9 @@ Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
     sprintf(buffer, "%d", code);
     {
     BfmeStrVKI result(buffer);
-    Rva008A9B00 *obj = g_free01338478;
+    Rva008A9B00 *obj = rva01338478FreeHead();
     if (obj) {
-        g_free01338478 = obj->m_next;
+        rva01338478FreeHead() = obj->m_next;
         g_registry01337810->add(obj);
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);

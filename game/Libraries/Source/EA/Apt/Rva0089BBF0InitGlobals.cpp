@@ -271,7 +271,16 @@ public:
 };
 
 extern Rva00899560Pool *g_rva8CD130IdleHook;
-extern Rva008A9B00 *Rva008C3B60Head;
+// The Apt global node free list at 0x01338478, defined once by
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This body keeps its own
+// view of a node (Rva008A9B00) and reaches the next link through it, so the
+// cell is read and written as Rva008A9B00 * in place.
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+static __forceinline Rva008A9B00 *&rva01338478FreeHead()
+{
+	return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 
 extern void __cdecl d_0089abc0();
 
@@ -360,10 +369,10 @@ static __forceinline void rva0089BBF0ResetBits6to13(BfmeA1029 *value)
 
 static __forceinline Rva008A9B00 *rva0089BBF0CreateString()
 {
-	Rva008A9B00 *string = Rva008C3B60Head;
+	Rva008A9B00 *string = rva01338478FreeHead();
 	if (string != 0)
 	{
-		Rva008C3B60Head = string->m_next;
+		rva01338478FreeHead() = string->m_next;
 		g_rva8CD130IdleHook->addOrClear(string);
 		if (string->m_block != &g_default012D5298)
 			((BfmeStrVKK *)&string->m_block)->bfmeTruncVKK(0);

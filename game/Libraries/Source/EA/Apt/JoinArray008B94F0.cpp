@@ -100,7 +100,14 @@ struct BfmeRegistryKind1
 
 extern "C" BfmeRegistryKind1 *g_bfmeRegistryVNF;
 
-extern Rva008A9B00 *g_rva008AAFD0Free;
+// The Apt global node free list at 0x01338478, defined once by
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This body keeps its own
+// view of a node (Rva008A9B00) and reaches the next link through it.
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+static __forceinline Rva008A9B00 *&rva01338478FreeHead() {
+    return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 
 
 class Rva8CD130String;
@@ -128,9 +135,9 @@ void *joinArray008B94F0(Value008B94F0 *src, int count)
         } else {
             ((BfmeStringWriter1284 *)src)->bfmeBuildString1284((BfmeString1284 *)&output,(int)",");
         }
-        Rva008A9B00 *obj = g_rva008AAFD0Free;
+        Rva008A9B00 *obj = rva01338478FreeHead();
         if (obj) {
-            g_rva008AAFD0Free = obj->m_next;
+            rva01338478FreeHead() = obj->m_next;
             g_bfmeRegistryVNF->addOrClear(obj);
             if (obj->m_block != &g_default012D5298)
                 ((BfmeStrVKK *)&obj->m_block)->bfmeTruncVKK(0);

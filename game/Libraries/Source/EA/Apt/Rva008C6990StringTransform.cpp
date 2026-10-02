@@ -87,7 +87,14 @@ struct Rva00899560Pool
     }
 };
 extern Rva00899560Pool *g_rva8CD130IdleHook;
-extern Rva008A9B00 *Rva008C3B60Head;
+// The Apt global node free list at 0x01338478, defined once by
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This body keeps its own
+// view of a node (Rva008A9B00) and reaches the next link through it.
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+static __forceinline Rva008A9B00 *&rva01338478FreeHead() {
+    return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 extern Rva8CD130Value **g_bfmeArr1233;
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
 struct Rva008AE770Stack { int m_count; };
@@ -96,10 +103,10 @@ extern void d_008c5360();
 
 Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count)
 {
-    Rva008A9B00 *result = Rva008C3B60Head;
+    Rva008A9B00 *result = rva01338478FreeHead();
     if (result)
     {
-        Rva008C3B60Head = result->m_next;
+        rva01338478FreeHead() = result->m_next;
         g_rva8CD130IdleHook->addPooled(result);
         if (result->m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&result->m_data)->bfmeTruncVKK(0);

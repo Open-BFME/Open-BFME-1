@@ -99,11 +99,18 @@ public:
     StringBlock008B3C40 *field08;
     Rva008A9B00 *field0C;
 };
-extern Rva008A9B00 *Rva01338478FreeHead;
+// The Apt global node free list at 0x01338478, defined once by
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This TU keeps its own
+// view of a node (Rva008A9B00) and reaches the next link through it.
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+static __forceinline Rva008A9B00 *&rva01338478FreeHead() {
+    return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 static __forceinline Rva008A9B00 *pooledString() {
-    Rva008A9B00 *v = Rva01338478FreeHead;
+    Rva008A9B00 *v = rva01338478FreeHead();
     if (v) {
-        Rva01338478FreeHead = v->field0C;
+        rva01338478FreeHead() = v->field0C;
         g_rva8CD130IdleHook->addPooled(v);
         if (v->field08 != &g_default012D5298)
             ((BfmeStrVKK *)&v->field08)->bfmeTruncVKK(0);
