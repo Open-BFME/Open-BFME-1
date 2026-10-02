@@ -1,3 +1,7 @@
+// LevelUpUpgrade::upgradeImplementation at retail 0x002D6050: slot 9 of the UpgradeMux table
+// 0x010CCE50, reached only through ILT 0x00030C9C. LevelUpUpgrade's registered
+// constructor 0x002D5F10 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 class BfmeCZD
 {
 public:
@@ -22,13 +26,13 @@ public:
 	int m_bfmeSecondZD;
 };
 
-class BfmeOwnerZD
+class LevelUpUpgrade
 {
-public:
-	void bfmeAdjustZD(void);
+protected:
+	virtual void upgradeImplementation();
 };
 
-void BfmeOwnerZD::bfmeAdjustZD(void)
+void LevelUpUpgrade::upgradeImplementation()
 {
 	BfmeAZD *a = *(BfmeAZD **)((char *)this - 0xc);
 	BfmeBZD *b = *(BfmeBZD **)((char *)this - 8);
