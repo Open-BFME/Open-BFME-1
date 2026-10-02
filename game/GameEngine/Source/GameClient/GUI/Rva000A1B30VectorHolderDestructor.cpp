@@ -1,16 +1,16 @@
 // Fuzzy twin (tools/fuzzy_twin_scan.py) of Rva007873C0VectorHolderDestructor.cpp: the
 // same base-vtable-restore + node-alloc vector free, for 12-byte elements with the
 // vector at +0x10 and the BfmeBaseVUQ vtable at 0x01073744. Address-derived names.
-// cl: /DNDEBUG /MD /EHsc /O2
+// cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
+// stlport
 
-extern int bfmeVtable000A1B30[];
-void __cdecl bfmeFreeLarge000A1B30(void *memory);
-void __cdecl bfmeFreeSmall000A1B30(void *memory, unsigned int bytes);
+#include <memory>
+#include "../../Common/System/snapshot.h"
 
 class Rva000A1B30Base
 {
 public:
-	~Rva000A1B30Base() { m_table = bfmeVtable000A1B30; }
+	~Rva000A1B30Base() { ((Snapshot *)this)->Snapshot::~Snapshot(); }
 	void *m_table;
 };
 
@@ -24,10 +24,7 @@ public:
 		Element *begin = m_begin;
 		if (begin != 0) {
 			unsigned int bytes = (unsigned int)(m_capacityEnd - begin) * sizeof(Element);
-			if (bytes > 0x80)
-				bfmeFreeLarge000A1B30(begin);
-			else
-				bfmeFreeSmall000A1B30(begin, bytes);
+			_STL::__node_alloc<true, 0>::deallocate(begin, bytes);
 		}
 	}
 

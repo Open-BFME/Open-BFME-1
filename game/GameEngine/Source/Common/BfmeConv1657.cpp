@@ -1,26 +1,24 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+// Keep the by-value entry type while calling the real StringBase cleanup
+// bodies at RVAs 0x00887940 (narrow) and 0x008881D0 (wide).
 class BfmeStrNVUY
 {
 public:
 	BfmeStrNVUY(const BfmeStrNVUY &other);
-	~BfmeStrNVUY() { bfmeClearNVUY(); }
+	~BfmeStrNVUY() { ((StringBase<char> *)this)->clear(); }
 	char *m_bfme00;
-
-private:
-	void bfmeClearNVUY();
 };
 
 class BfmeStrWVUY
 {
 public:
 	BfmeStrWVUY() { m_bfme00 = 0; }
-	~BfmeStrWVUY() { bfmeClearWVUY(); }
-	void bfmeTranslateVUY(const BfmeStrNVUY &text);
+	~BfmeStrWVUY() { ((StringBase<unsigned short> *)this)->clear(); }
 	unsigned short *m_bfme00;
-
-private:
-	void bfmeClearWVUY();
 };
 
 class BfmeOwnVUY
@@ -38,7 +36,7 @@ char BfmeOwnVUY::bfmeApplyVUY(BfmeStrNVUY text)
 {
 	BfmeStrWVUY wide;
 
-	wide.bfmeTranslateVUY(text);
+	((UnicodeString *)&wide)->translate(*(const AsciiString *)&text);
 
 	return bfmeSlot4VUY(&wide);
 }
