@@ -72,7 +72,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-bool DoesCommandRequireACommandID(NetCommandType type);
+Int DoesCommandRequireACommandID(NetCommandType type);
 UnsignedShort GenerateNextCommandID();
 
 class BFMEDisconnectManager
@@ -91,7 +91,7 @@ void BFMEDisconnectManager::sendDisconnectScreenOff(Int slot, void *conMgr)
 	message->setNewFrame(TheGameLogic->getFrame());
 	ConnectionManager *connectionManager = (ConnectionManager *)conMgr;
 	message->setPlayerID(connectionManager->getLocalPlayerID());
-	if (DoesCommandRequireACommandID(message->getNetCommandType()))
+	if ((UnsignedByte)DoesCommandRequireACommandID(message->getNetCommandType()))
 		message->m_id = GenerateNextCommandID();
 	connectionManager->sendLocalCommand(message, 0xFF);
 	message->detach();
