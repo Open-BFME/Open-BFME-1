@@ -1,8 +1,10 @@
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class HAnimClass;
 
 HAnimClass *Get_HAnim(const char *name);
 
-extern char g_bfmeEmptyERC[];
+extern const char g_bfmeEmptyAscii[];
 
 struct BfmeStrDataERC
 {
@@ -15,15 +17,9 @@ struct BfmeStrDataERC
 class BfmeStrERC
 {
 public:
-	BfmeStrERC(const BfmeStrERC &other);
-
-	~BfmeStrERC() { releaseBuffer(); }
-
-	void bfmeConcatERC(const char *text, int length);
-
 	const char *bfmeTextERC() const
 	{
-		return m_bfmeDataERC ? m_bfmeDataERC->m_bfmeTextERC : g_bfmeEmptyERC;
+		return m_bfmeDataERC ? m_bfmeDataERC->m_bfmeTextERC : g_bfmeEmptyAscii;
 	}
 
 	int bfmeLenERC() const
@@ -32,9 +28,6 @@ public:
 	}
 
 	BfmeStrDataERC *m_bfmeDataERC;
-
-private:
-	void releaseBuffer();
 };
 
 void __stdcall bfmeAnimERC(BfmeStrERC *name, void *owner, HAnimClass **out)
@@ -42,10 +35,10 @@ void __stdcall bfmeAnimERC(BfmeStrERC *name, void *owner, HAnimClass **out)
 	if (owner == 0)
 		return;
 
-	BfmeStrERC full = *name;
+	AsciiString full = *(const AsciiString *)name;
 
-	full.bfmeConcatERC(".", 1);
-	full.bfmeConcatERC(name->bfmeTextERC(), name->bfmeLenERC());
+	full.StringBase<char>::concat(".", 1);
+	full.StringBase<char>::concat(name->bfmeTextERC(), name->bfmeLenERC());
 
-	*out = Get_HAnim(full.bfmeTextERC());
+	*out = Get_HAnim(((const BfmeStrERC *)&full)->bfmeTextERC());
 }
