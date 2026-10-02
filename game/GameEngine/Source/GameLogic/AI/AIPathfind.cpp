@@ -1674,59 +1674,9 @@ UnsignedInt PathfindCell::costToHierGoal( PathfindCell *goal )
 	return cost;
 }
 
-// ?costSoFar@PathfindCell@@QAEIPAV1@@Z present-unmatched
-UnsignedInt PathfindCell::costSoFar( PathfindCell *parent )
-{
-	DEBUG_ASSERTCRASH(m_info, ("Has to have info."));
-	// very first node in path - no turns, no cost
-	if (parent == NULL)
-		return 0;
-
-	// add in number of turns in path so far
-	ICoord2D prevDir;
-	Int cost;
-
-	prevDir.x = parent->getXIndex() - m_info->m_pos.x;
-	prevDir.y = parent->getYIndex() - m_info->m_pos.y;
-
-	// diagonal moves cost a bit more than orthogonal ones
-	if (prevDir.x == 0 || prevDir.y == 0)
-		cost = parent->getCostSoFar() + COST_ORTHOGONAL;
-	else
-		cost = parent->getCostSoFar() + COST_DIAGONAL;
-	if (getPinched()) {
-		cost += 1*COST_DIAGONAL;
-	}
-
-#if 1
-	// Increase cost of turns.
-	Int numTurns = 0;
-	PathfindCell *prevCell = parent->getParentCell();
-	if (prevCell) {
-		ICoord2D dir;
-		dir.x = prevCell->getXIndex() - parent->getXIndex();
-		dir.y = prevCell->getYIndex() - parent->getYIndex();
-		
-		// count number of direction changes
-		if (dir.x != prevDir.x || dir.y != prevDir.y)
-		{
-			Int dot = dir.x * prevDir.x + dir.y * prevDir.y;
-			if (dot > 0)
-				numTurns=4;				// 45 degree turn
-			else if (dot == 0)
-				numTurns = 8;		// 90 degree turn
-			else
-				numTurns = 16;		// 135 degree turn
-		}
-	}
-
-	return cost + numTurns;
-#else
-	return cost;
-#endif
-
-}
-
+// The verified BFME costSoFar body at RVA 003F6D20 lives in
+// ../Pathfinder/PathfindCell_costSoFar.cpp. Its compact cell/info layout
+// differs from this Zero Hour layout, so only that provider may emit it.
 
 inline Bool typesMatch(const PathfindCell &targetCell, const PathfindCell &sourceCell) {
 	PathfindCell::CellType targetType = targetCell.getType();
