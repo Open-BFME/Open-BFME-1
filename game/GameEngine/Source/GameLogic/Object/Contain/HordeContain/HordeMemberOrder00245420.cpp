@@ -6,14 +6,9 @@
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &p) : Coord3DBase(p) {}
-inline Coord3DBase& Coord3DBase::operator=(const Coord3DBase &p) {
+inline Coord3D& Coord3D::operator=(const Coord3D &p) {
     struct Raw { unsigned x,y,z; };
     *(Raw*)this=*(const Raw*)&p;
-    return *this;
-}
-inline Coord3D& Coord3D::operator=(const Coord3D &p) {
-    Coord3DBase *base=this;
-    *base=p;
     return *this;
 }
 
