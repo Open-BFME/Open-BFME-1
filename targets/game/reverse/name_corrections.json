@@ -14308,5 +14308,35 @@
   "after_sha256": "b408d0468d43010ef672a6142f824ff21989ba267ebc6e5e04a046fdf14af551",
   "evidence": "targets/game/reverse/identity_evidence/rva005e2d20.md",
   "reason": "False pairing: NAME is the removed bank macro parameter, not a class identity. Existing Rva005DDD60 is independently named by this body retail state-0 cleanup route."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7cc0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7CC0.cpp",
+  "before_sha256": "68d215c8d829feb20ea48edee37a65b3c89676bcb7d6ecac8d7b998016050bd2",
+  "after_sha256": "143c170c9e39cabb0ffd7375e514a9d4ea5e88ea6cc7e48d453837055f115a3e",
+  "evidence": "targets/game/reverse/identity_evidence/001f7cc0-clickreaction-owner.md",
+  "old_name": "clearAndSetModelConditionFlags",
+  "new_name": "rva001F7CC0",
+  "reason": "False declaration pairing: this is the old bank callee stub, retained verbatim by name in OBJECT_TU_MEMBERS and the final call; it is not the callback identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7cc0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7CC0.cpp",
+  "before_sha256": "68d215c8d829feb20ea48edee37a65b3c89676bcb7d6ecac8d7b998016050bd2",
+  "after_sha256": "143c170c9e39cabb0ffd7375e514a9d4ea5e88ea6cc7e48d453837055f115a3e",
+  "evidence": "targets/game/reverse/identity_evidence/001f7cc0-clickreaction-owner.md",
+  "old_name": "unused08",
+  "new_name": "rva001F7CC0",
+  "reason": "False declaration pairing: old Object-vtable filler is replaced by the canonical Object header, not renamed into the callback."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7cc0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7CC0.cpp",
+  "before_sha256": "68d215c8d829feb20ea48edee37a65b3c89676bcb7d6ecac8d7b998016050bd2",
+  "after_sha256": "143c170c9e39cabb0ffd7375e514a9d4ea5e88ea6cc7e48d453837055f115a3e",
+  "evidence": "targets/game/reverse/identity_evidence/001f7cc0-clickreaction-owner.md",
+  "old_name": "method",
+  "new_name": "rva001F7CC0",
+  "reason": "The old bank explicitly uses an opaque method placeholder and has the wrong zero-argument ABI. The proven owner gets an address-preserving method spelling with its witnessed Boolean argument."
  }
 ]

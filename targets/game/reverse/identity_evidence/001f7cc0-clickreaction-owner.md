@@ -30,6 +30,47 @@ and its suggested hidden-this cleanup are incorrect; RET 4 cleans the
 explicit argument.
 
 The native method name and formal interface spelling remain unresolved.
-Existing mask callees have competing synthetic/template declarations, and
-the bank does not reproduce retail's redundant inline bitset initialization.
-This is owner/ABI evidence only; no source, pin or identity rename lands.
+The original bank did not reproduce the redundant inline bitset initialization.
+The implementation evidence below resolves that code-generation blocker while
+retaining an address-qualified method name.
+
+## Clean implementation at 208 bytes
+
+The final source uses ClickReactionBehavior::rva001F7CC0(bool), with a
+32-byte primary-prefix view and the witnessed secondary interface at +0x20.
+The member body therefore receives the same adjusted receiver as retail;
+Object is at full+8 and the cleared state dword is full+0x28. This is a
+partial emission view, not a claim to know the original interface name.
+The constructor/table/getter chain above was independently redecoded from
+retail before this conversion.
+
+Canonical Common/BitFlags.h with native STLport bitset<320> reproduces the
+mask stores without hand-written copies. Default construction, then clear(),
+then setting bits 154 through 159 generates the repeated stores exactly.
+The state reset must precede construction of the masks in source. MSVC then
+schedules its immediate zero store late, exactly as retail does at +0xA7.
+Placing the reset after mask construction instead uses EAX and is four bytes
+short. The corrected Boolean argument controls the final Drawable call;
+RET 4 does not clean an implicit this pointer.
+
+The canonical Object header supplies virtual getDrawable at slot 10. The
+existing typed clearAndSetModelConditionFlags(BitFlags<320> const&,
+BitFlags<320> const&) pin routes via ILT 0x000095ED to 0x001C7720; its source
+copies the current ten-word mask and applies both incoming pointer arguments.
+The existing Drawable::applyPendingModelConditionFlags(bool) pin routes via
+ILT 0x0002D439 to matched body 0x0041AA90. No callee is renamed or newly pinned.
+Probe reports exact 208-byte instructions with two relocations; the scoped
+build verifies their targets as well.
+
+## Bank-to-source name-check pairings
+
+The retired bank's clearAndSetModelConditionFlags declaration was a callee
+stub, not the callback's identity. The final source retains that exact callee
+name through OBJECT_TU_MEMBERS and its call, using the canonical Object type.
+The bank's unused08 was an anonymous filler in its Object-vtable view; the
+canonical Object header replaces that whole view. Neither name became the
+new callback name. The checker's alignment pairs these unrelated declarations
+with rva001F7CC0 when the bank disappears. Its third pairing, method to
+rva001F7CC0, simply replaces an explicitly opaque placeholder with the required
+address-preserving spelling. The old bank itself disclaims lexical identity.
+Snapshot-bound name_corrections entries document these three pairings.
