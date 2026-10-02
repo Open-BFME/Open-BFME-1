@@ -16,7 +16,13 @@ extern BfmeX1060 *g_bfmeX1060;
 
 class BfmeR1060;
 
-extern BfmeR1060 *g_bfmeR1060;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. BfmeR1060 is this
+// TU's forward-declared view of the pointee; cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // The APT/level-path builder the call below reaches (retail 0x004675F0) is a
 // member of the level-path builder class; BfmeLevelAN is this TU's view of the
@@ -34,7 +40,7 @@ void bfmeGo1060B(void)
 	int v = g_bfmeP1060->m_bfme54;
 	char *s = --v ? g_bfmeLitA1060 : g_bfmeLitB1060;
 
-	((BfmeLevelAN *)g_bfmeR1060)->bfmeBuildAN((unsigned int)g_bfmeX1060,
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)g_bfmeX1060,
 		(int)g_bfmeLitC1060, 1, (int)s, 0, 0, 0, 0);
 }
 

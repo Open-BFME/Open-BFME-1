@@ -50,7 +50,14 @@ public:
 	void bfmeStoreZG(const AsciiStringZG &key, const UnicodeStringZG &value);
 };
 
-extern BfmePalantirZG *g_bfmePalantirZG;			// retail 0x012F19E8
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the store() through it, so the pointee stays the local BfmePalantirZG view
+// and the access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmePlayerTableZG@@YGXHHABVUnicodeStringZG@@@Z
 void __stdcall bfmePlayerTableZG(int row, int column, const UnicodeStringZG &value)
@@ -59,5 +66,5 @@ void __stdcall bfmePlayerTableZG(int row, int column, const UnicodeStringZG &val
 
 	key.format(AsciiStringZG("PlayerTable:%d:%d"), row, column);
 
-	g_bfmePalantirZG->bfmeStoreZG(key, value);
+	((BfmePalantirZG *)g_rva012F19E8WindowManager)->bfmeStoreZG(key, value);
 }

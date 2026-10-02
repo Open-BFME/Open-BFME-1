@@ -72,7 +72,14 @@ public:
 	void bfmeLog1057(int a, char *f, int n, char *t, int p, int q, int r, int s);
 };
 
-extern BfmeLog1057 *g_bfmeLog1057;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the log() through it, so the pointee stays the local BfmeLog1057 view and the
+// access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeFmt1057[];
 extern char g_bfmeArg1057[];
 
@@ -97,7 +104,7 @@ public:
 
 void BfmeB1057::bfmeGo1057B(int unused)
 {
-	g_bfmeLog1057->bfmeLog1057(m_bfmeP->m_bfmeId, g_bfmeFmt1057, 1, g_bfmeArg1057, 0, 0, 0, 0);
+	((BfmeLog1057 *)g_rva012F19E8WindowManager)->bfmeLog1057(m_bfmeP->m_bfmeId, g_bfmeFmt1057, 1, g_bfmeArg1057, 0, 0, 0, 0);
 	m_bfmeState = 1;
 	m_bfmeFlag = 0;
 }

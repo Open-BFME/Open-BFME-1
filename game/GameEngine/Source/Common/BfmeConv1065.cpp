@@ -26,7 +26,14 @@ public:
 	void bfmeRun1065(BfmeX1065 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1065 *g_bfmeR1065;
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the run()/slot calls through it, so the pointee stays the local BfmeR1065 view
+// and the access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeX1065 *g_bfmeX1065;
 extern char g_bfmeFmtD1065[];
 extern char g_bfmeFmtF1065[];
@@ -48,7 +55,7 @@ public:
 void BfmeH1065::bfmeGo1065B(int a, int b)
 {
 	sprintf((char *)&a, g_bfmeFmtD1065, a + 1);
-	g_bfmeR1065->bfmeRun1065(bfmeConv1065(this), g_bfmeFmtF1065, 2, (char *)&a,
+	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065(bfmeConv1065(this), g_bfmeFmtF1065, 2, (char *)&a,
 		g_bfmeTbl1065[b], 0, 0, 0);
 }
 
@@ -58,6 +65,6 @@ void bfmeGo1065C(int a)
 {
 	char buf[0x10];
 
-	_snprintf(buf, 0x10, g_bfmeFmtG1065, a * g_bfmeR1065->bfmeSlot1065R_11()->m_bfme04);
-	g_bfmeR1065->bfmeRun1065(g_bfmeX1065, g_bfmeFmtH1065, 1, buf, 0, 0, 0, 0);
+	_snprintf(buf, 0x10, g_bfmeFmtG1065, a * ((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeSlot1065R_11()->m_bfme04);
+	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065(g_bfmeX1065, g_bfmeFmtH1065, 1, buf, 0, 0, 0, 0);
 }

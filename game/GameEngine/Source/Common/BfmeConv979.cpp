@@ -24,7 +24,15 @@ public:
 // recovered, so the view is cast at each use.
 class GameLogic;
 extern GameLogic *TheGameLogic;
-extern BfmeActA979 *g_bfmeActA979;
+
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the call through it, so the pointee stays the local BfmeActA979 view and the
+// access is cast at the use.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern Shell *TheShell;
 
 char bfmeGo979A(void)
@@ -33,7 +41,7 @@ char bfmeGo979A(void)
 			|| !TheShell->showShellMap(true))
 		return 1;
 
-	g_bfmeActA979->bfmeDo979A(1);
+	((BfmeActA979 *)g_rva012F19E8WindowManager)->bfmeDo979A(1);
 	return 0;
 }
 
