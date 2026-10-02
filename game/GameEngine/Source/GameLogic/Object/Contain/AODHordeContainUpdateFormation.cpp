@@ -70,13 +70,8 @@ public:
 	UnsignedInt m_status;
 };
 
-class BfmeAIUpdateInterface;
-
 class BfmeUpdateObject
 {
-public:
-	BfmeAIUpdateInterface *getAIUpdateInterface();
-
 private:
 	unsigned char m_pad00[0x38];
 	Coord3D m_position;
@@ -86,12 +81,23 @@ private:
 	friend class BfmeAODHordeContainOwner;
 };
 
-class BfmeAIUpdateInterface
+// Retail ILT 0x21017 reaches 0x1BE010: thiscall, EAX result, no arguments.
+// Keep the existing address-derived identity and its four-byte integer ABI.
+class Rva001BE010 { public: int get(); };
+
+// ILTs 0x230AB/0x24F7D reach 0x1B7E90/0x1B8010. Both consume one
+// pointer (ret 4) and return a float in ST0, matching these existing owners.
+class BfmeSub1CC_EC3
 {
 public:
-	float getFormationMovementSpeed(BfmeUpdateObject *object);
-	float getFormationMovementStep(BfmeUpdateObject *object);
+	float effectiveMaxSpeed(void *object);
+	float queryDivMin40(void *object);
 };
+
+// ILT 0x38D61 reaches the existing 0x22FFA0 bounded-history body;
+// ILT 0x3DF41 reaches 0x22F960. Neither adjusts the incoming this pointer.
+class BfmePositionHistory { public: void bfmePushPosition(const Coord3D *position); };
+class Rva0022F960BfmeAODHordeContainOwner { public: void updatePathPositions(); };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -165,8 +171,6 @@ public:
 	void xfer(BfmeXfer *xfer);
 	void updateAODFormation();
 	void bfmeBaseXfer(BfmeXfer *xfer);
-	void addPathPosition(const Coord3D *position);
-	void updatePathPositions();
 	void updateFormationMembers();
 
 private:
@@ -261,11 +265,12 @@ void BfmeAODHordeContainOwner::updateAODFormation()
 	BfmeAODHordeContainOwner *owner = this;
 	float movementSpeed = 20.0f;
 	float movementStep = 2.0f;
-	BfmeAIUpdateInterface *ai = object->getAIUpdateInterface();
+	BfmeSub1CC_EC3 *ai = reinterpret_cast<BfmeSub1CC_EC3 *>(
+		reinterpret_cast<Rva001BE010 *>(object)->get());
 	if (ai != 0)
 	{
-		movementSpeed = ai->getFormationMovementSpeed(object);
-		movementStep = ai->getFormationMovementStep(object);
+		movementSpeed = ai->effectiveMaxSpeed(object);
+		movementStep = ai->queryDivMin40(object);
 	}
 
 	volatile Coord3D position;
@@ -279,9 +284,9 @@ void BfmeAODHordeContainOwner::updateAODFormation()
 	*(volatile unsigned int *)&position.z = positionZ;
 	float dz = position.z - owner->m_firstFlowPosition.z;
 	if (sqrt(dx * dx + dy * dy + dz * dz) > movementStep)
-		owner->addPathPosition((const Coord3D *)&position);
+		reinterpret_cast<BfmePositionHistory *>(owner)->bfmePushPosition((const Coord3D *)&position);
 
-	owner->updatePathPositions();
+	reinterpret_cast<Rva0022F960BfmeAODHordeContainOwner *>(owner)->updatePathPositions();
 	if ((object->m_modelConditionFlags & 0x1000) != 0)
 		owner->m_largeUnitTailOff += movementSpeed;
 	owner->updateFormationMembers();
