@@ -6,14 +6,6 @@
 
 #include "coord3d.h"
 
-inline Coord3D &Coord3D::operator+=(const Coord3DBase &that)
-{
-	x = *(volatile float *)&x + that.x;
-	y += that.y;
-	z = *(volatile float *)&z + that.z;
-	return *this;
-}
-
 class BfmeHandleERU;
 
 class BfmeHandleERUOwner
@@ -102,7 +94,11 @@ void Rva005FDC70Owner::method()
 	if (source == 0)
 		source = (Rva005C34D0Owner *)bfmeNullSystemZA();
 	particle->m_at04.z = source->Rva005C34D0();
-	particle->m_at10 += particle->m_at04;
+	Coord3D &position = particle->m_at10;
+	const Coord3DBase &delta = particle->m_at04;
+	position.x = *(volatile float *)&position.x + delta.x;
+	position.y += delta.y;
+	position.z = *(volatile float *)&position.z + delta.z;
 	particle->m_at10.x *= m_scale;
 	particle->m_at10.y *= m_scale;
 	particle->m_at10.z *= m_scale;
@@ -114,7 +110,8 @@ void Rva005FDC70Owner::method()
 	float *vector = (float *)dispatch->dispatch();
 	if (vector != 0)
 	{
-		float x = vector[0] + particle->m_at1C.x;
+		float vectorX = *(volatile float *)vector;
+		float x = vectorX + particle->m_at1C.x;
 		particle->m_at1C.x = x + particle->m_at10.x;
 		float y = vector[1] + particle->m_at1C.y;
 		particle->m_at1C.y = y + particle->m_at10.y;
