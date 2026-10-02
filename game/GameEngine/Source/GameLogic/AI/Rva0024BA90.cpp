@@ -165,7 +165,12 @@ public:
 	void notify(void *value);
 };
 
-extern BfmeRvaBA90GlobalB *g_bfmeRvaBA90GlobalB;
+// 0x012ED5EC is retail's TheMessageStream (class declared by
+// Common/MessageStream.h); this TU's message-list view stays local and the call
+// site below reinterprets the real global rather than declaring a second name.
+class MessageStream;
+extern MessageStream *TheMessageStream;
+
 extern BfmeRvaBA90GlobalC *g_bfmeRvaBA90GlobalC;
 // Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
 // (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
@@ -191,7 +196,7 @@ void Rva0024BA90::update(BfmeRvaBA90Member *member)
 		if (count == expected)
 		{
 			BfmeRvaBA90GlobalBResult *value =
-				g_bfmeRvaBA90GlobalB->fetch(0x3ec);
+				((BfmeRvaBA90GlobalB *)TheMessageStream)->fetch(0x3ec);
 			value->consume(member->m_index);
 			g_bfmeRvaBA90GlobalC->notify(ai);
 		}

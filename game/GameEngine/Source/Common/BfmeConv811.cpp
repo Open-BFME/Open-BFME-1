@@ -87,7 +87,13 @@ public:
 	virtual void bfmeVirt58EGE();
 };
 
-extern BfmeObjEGE *g_bfmeObjEGE;
+// The global at retail 0x012ED5EC is MessageStream *TheMessageStream, defined
+// once in game/GameEngine/Source/Common/MessageStream.cpp (class declared by
+// Common/MessageStream.h).  BfmeObjEGE above stays as this TU's local view of
+// the pointee, so the two uses cast.
+class MessageStream;
+
+extern MessageStream *TheMessageStream;
 
 // The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
 // game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
@@ -99,7 +105,7 @@ extern InGameUI *TheInGameUI;
 
 void bfmeGoEGEa()
 {
-	BfmeResEGE *r = g_bfmeObjEGE->bfmeGet13EGE(0x3eb);
+	BfmeResEGE *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
 	r->bfmeUseEGE(1);
 	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }
@@ -195,7 +201,7 @@ bool BfmeThingEGF::bfmeGoEGFb()
 
 void bfmeGoEGEb()
 {
-	BfmeResEGE *r = g_bfmeObjEGE->bfmeGet13EGE(0x3eb);
+	BfmeResEGE *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
 	r->bfmeUseEGE(1);
 	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }

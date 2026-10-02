@@ -113,7 +113,14 @@ public:
 };
 
 extern InGameUI *TheInGameUI;
-extern BfmeMessageStream *TheMessageStream;
+
+// Retail declares `MessageStream *TheMessageStream` in
+// game/GameEngine/Source/Common/MessageStream.cpp (mangled
+// ?TheMessageStream@@3PAVMessageStream@@A); BfmeMessageStream above stays as
+// this TU's view of the pointee, so the call below casts.
+class MessageStream;
+
+extern MessageStream *TheMessageStream;
 
 // 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slot used
 // here is read through the TU-local TacticalViewShim view.
@@ -154,7 +161,7 @@ static CommandStatus doAttackMoveCommand(const CommandButton *command, const ICo
 	Coord3D world;
 	((TacticalViewShim *)TheTacticalView)->screenToTerrain(mouse, &world, false);
 
-	GameMessage *msg = TheMessageStream->appendMessage((GameMessage::Type)0x42F);
+	GameMessage *msg = ((BfmeMessageStream *)TheMessageStream)->appendMessage((GameMessage::Type)0x42F);
 	msg->appendLocationArgument(world);
 
 	PickAndPlayInfo info;

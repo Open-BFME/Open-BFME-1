@@ -59,7 +59,13 @@ public:
 	virtual GameMessage *appendMessage(UnsignedInt type) = 0;
 };
 
-extern BfmeMessageStream *TheMessageStream;
+// Retail declares `MessageStream *TheMessageStream` in
+// game/GameEngine/Source/Common/MessageStream.cpp (mangled
+// ?TheMessageStream@@3PAVMessageStream@@A); BfmeMessageStream above stays as
+// this TU's view of the pointee, so the call below casts.
+class MessageStream;
+
+extern MessageStream *TheMessageStream;
 
 class Network
 {
@@ -107,6 +113,6 @@ void Network::quitGame(void)
 	if (m_conMgr != 0)
 		m_conMgr->sendRequestPlayerLeaveCommand();
 
-	TheMessageStream->appendMessage(BFME_MSG_CLEAR_GAME_DATA);
+	((BfmeMessageStream *)TheMessageStream)->appendMessage(BFME_MSG_CLEAR_GAME_DATA);
 	m_localStatus = NETLOCALSTATUS_LEFT;
 }

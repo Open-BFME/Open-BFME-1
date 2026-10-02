@@ -83,7 +83,14 @@ public:
 // undefined symbol at the same address.
 class InGameUI;
 
-extern BfmeMessageStream *TheMessageStream;
+// TheMessageStream is the same shape of problem: retail declares
+// `MessageStream *TheMessageStream` in
+// game/GameEngine/Source/Common/MessageStream.cpp (mangled
+// ?TheMessageStream@@3PAVMessageStream@@A), so the TU names the canonical type
+// and reaches slot 0x34 through its own view.
+class MessageStream;
+
+extern MessageStream *TheMessageStream;
 extern InGameUI *TheInGameUI;
 
 // TU-local view of vtable slot 0xE8, reached through the canonical global.
@@ -92,13 +99,19 @@ static inline BfmeInGameUI *LocalTheInGameUI()
 	return (BfmeInGameUI *)TheInGameUI;
 }
 
+// TU-local view of the message stream, reached through the canonical global.
+static inline BfmeMessageStream *LocalTheMessageStream()
+{
+	return (BfmeMessageStream *)TheMessageStream;
+}
+
 // ?BeaconWindowInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
 WindowMsgHandledType BeaconWindowInput( GameWindow *window, UnsignedInt msg,
 																			 WindowMsgData mData1, WindowMsgData mData2 )
 {
 	if (msg == GWM_CHAR && mData1 == KEY_ESC)
 	{
-		GameMessage *message = TheMessageStream->appendMessage( 0x3EB );
+		GameMessage *message = LocalTheMessageStream()->appendMessage( 0x3EB );
 		message->appendBooleanArgument( true );
 
 		LocalTheInGameUI()->deselectAllDrawables(); // there should only be one beacon and nothing else selected
