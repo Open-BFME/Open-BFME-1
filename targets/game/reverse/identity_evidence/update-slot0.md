@@ -133,3 +133,60 @@ start helper private. Do not add a second identity or an alias pin merely
 to bypass these declarations. The current update placeholder is untouched;
 this section records its independently proven identity and the remaining
 repair, not a newly verified conversion. No candidate source was written.
+
+## Direct BFME label and WorldBuilder alignment
+
+BFME1's ShareExperienceBehavior update table at RVA `00CA60A8` contains ILT
+`00015F0F` -> `002058F0` in slot zero and the same disabled-mask ILT
+`0004985F` -> `0011A130` in slot one. Body `002058F0` pushes literal VA
+`010A61B0` at `0020591F`: the retail bytes spell exactly
+`ShareExperienceBehavior::update`. Its registered constructor `00205740`
+stores the table at +0x10 at `002057AD`; the stub pointer occurs exactly once.
+This is a direct BFME spelling anchor, independently of the generated name.
+
+Both WorldBuilders retain that function label as well. The following are
+RVAs (both image bases are 00400000):
+
+| Image | Constructor | +0x10 vptr store | Update table | Slot 0 body | Label | Slot 1 body |
+|---|---|---|---|---|---|---|
+| BFME2 Worldbuilder.exe | 00DB48E0 | 00DB493D | 01ADD45C | 00DB4AB0 | 01ADD55C | 0087E3A0 |
+| RotWK Worldbuilder.exe | 00DC5ED0 | 00DC5F2D | 01B37BFC | 00DC60A0 | 01B37CFC | 008811D0 |
+
+The label references are `00DB4AF9` and `00DC60E9` (PUSH instructions).
+Each labeled body pointer occurs once. Both constructors store the behavior
+interface at +0x0C using table addresses exactly 12 bytes after the update
+table, so these update tables contain three slots. Their second slot copies
+a four-byte disabled mask to a hidden caller output pointer, returns that
+pointer, and ends `ret 4`; this agrees with BFME1's second slot and the Zero
+Hour `getDisabledTypesToProcess() const` declaration. Thus **WB slot 0 maps
+to BFME1 slot 0, and WB slot 1 maps to BFME1 slot 1**. The additional WB third
+slot does not shift these two slots; no identity for that extra slot is
+claimed. In all three images the labeled update returns 3fffffff with no
+stack arguments. The ZH interface supplies the public virtual non-const
+`UpdateSleepTime update()` signature; the family alignment supplies the
+exact method spelling even for BFME-only owners.
+
+## AODCrushCollide::update (00216100, 72 bytes)
+
+The registry's literal `AODCrushCollide` at `00C8FC78`, registration site
+`0012FBC6`, and instance factory `0011EC20` establish the owner independently.
+The factory calls ILT `0000F7DB` -> constructor `00215C50`; its final store
+at `00215C9D` installs table VA `010A99F0` at complete-object +0x10.
+Slot zero is ILT `00048400` -> body `00216100`, and slot one is the common
+`0004985F` disabled-mask accessor. The slot-zero stub pointer occurs exactly
+once, at table RVA `00CA99F0`. Therefore this is the same update family as
+the directly labeled ShareExperienceBehavior table, with a distinct override.
+
+The body tests a byte at interface +1C, compares a frame at +14, conditionally
+clears Object+114 bit 100 and calls the already typed
+`Object::notifyModelConditionChanged` through ILT `0002191D` -> `001BE1C0`.
+It returns 1 on the active path and 3fffffff on the inactive path, ending at
+`00216148` exclusive (RET at `00216147`, then INT3). The earlier RET at
+`00216140` is not the end of the body. No stack arguments are consumed.
+
+Replace the opaque `Rva00216100TimedCondition::update00216100` row with
+`?update@AODCrushCollide@@UAE?AW4UpdateSleepTime@@XZ`. Preserve the existing
+address-kept state view and its field spellings; this correction claims no
+new field identities. A TU-scoped declaration describes the incoming update
+interface receiver, not the complete object's layout. Include the surviving
+UpdateModule header for its actual return type rather than inventing an enum.
