@@ -15048,5 +15048,15 @@
   "after_sha256": "e72f3359141a83aa3a20c3aa58cb06a702ac7718e8becb1a19a4d1fdbf0e2e95",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "bfmeTeardown002D55F0 was a shape name on the address-derived owner Rva002D55F0Owner. The body is slot 7 (ILT 0x00028B69, sole image ref) of GeometryUpgrade's UpgradeMux table 0x010CCC48 (registered ctor 0x002D5790), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "reset",
+  "new_name": "rva001EE810",
+  "before_sha256": "f09209a0805cc9dfb811c850391c71ae2b188b4ef21e277a1a5d0b097d38700b",
+  "after_sha256": "4e7c1689b410f9d10265eee5c2f806dd456346f060a1e6f51b470500fccd51b7",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "reset was a shape name on the address-derived class Rva001EE810. The body is slot 7 (ILT 0x00049C60, sole image ref) of AutoHealBehavior's UpgradeMux table 0x010A1C20 (registered ctor 0x001EE950), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
  }
 ]

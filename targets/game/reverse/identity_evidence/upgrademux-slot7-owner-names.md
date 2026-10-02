@@ -41,3 +41,4 @@ are empty overrides (`ret`).
 | DynamicPortalBehaviour | 0x001F8B80 | 0x010A3868 | 0x00025A09 | 0x001F8DD0 | 62 | `?bfmeCloseZJ@BfmeOwnerZJ@@QAEXXZ` | slot 8 with false, then module teardown |
 | TooltipUpgrade | 0x002D93E0 | 0x010CE1A0 | 0x00036750 | 0x002D9570 | 69 | `?bfmeGoUYA@BfmeThingUYA@@QAEXXZ` | clears the two strings slot 9 (0x002D9510) applies, then slot 8 with false |
 | GeometryUpgrade | 0x002D5790 | 0x010CCC48 | 0x00028B69 | 0x002D55F0 | 269 | `?bfmeTeardown002D55F0@Rva002D55F0Owner@@QAEXXZ` | tears down what slot 9 (0x002D5980) sets up |
+| AutoHealBehavior | 0x001EE950 | 0x010A1C20 | 0x00049C60 | 0x001EE810 | 15 | `?reset@Rva001EE810@@QAEXXZ` | clears the +0xC field and calls slot 8 with false |

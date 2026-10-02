@@ -1,4 +1,4 @@
-// Three void __thiscall members that clear one field and dispatch through their
+// Two void __thiscall members (AutoHealBehavior's 0x001EE810 moved to its own TU) that clear one field and dispatch through their
 // own vftable:
 //
 //     mov eax,[ecx] / push <K> / mov <field>,0 / call dword ptr [eax+<SLOT>] /
@@ -28,31 +28,6 @@
 // IDENTITY IS NOT RECOVERED.  Names are address-derived, the virtual functions
 // ahead of the called slot are placeholders that exist only to put it at the
 // proven index, and the leading char arrays reproduce a proven field offset.
-
-class Rva001EE810
-{
-public:
-	virtual void slot0();
-	virtual void slot1();
-	virtual void slot2();
-	virtual void slot3();
-	virtual void slot4();
-	virtual void slot5();
-	virtual void slot6();
-	virtual void slot7();
-	virtual void slot8( int value );
-
-	void reset();
-
-	char m_lead[ 8 ];
-	int m_value;
-};
-
-void Rva001EE810::reset()
-{
-	m_value = 0;
-	slot8( 0 );
-}
 
 class Rva00220700
 {
