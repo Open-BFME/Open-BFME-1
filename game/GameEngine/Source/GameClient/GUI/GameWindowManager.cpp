@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/gamewindowlist /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/gamewindowlist /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // readable body of ??0ScoreScaleUpTransition@@QAE@XZ: game/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -36,6 +36,14 @@
 #define BFME_STLP_NODE_ALLOC 1
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
+// BFME's AsciiString (game/Libraries/Source/WWVegas/WWLib/ascii_string.h) is
+// StringBase<char>-derived and declares its C-string constructor inline over
+// StringBase<char>, which is exactly the call retail makes at 0x00888BC0 when
+// it builds the by-value argument of INI::load below. Block the Zero Hour
+// standalone AsciiString so this TU sees the real class and its real
+// StringBase<char> base.
+#define ASCIISTRING_H
+#include "ascii_string.h"
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/Debug.h"
@@ -111,41 +119,14 @@ typedef Transition *(*WindowTransitionFactory)( void );
 typedef std::hash_map<NameKeyType, WindowTransitionFactory,
 	rts::hash<NameKeyType>, rts::equal_to<NameKeyType> > WindowTransitionMap;
 
-// BFME's INI object is 0x848 bytes; the ZH Common/INI.h selected by the rest
-// of this TU describes a different, 0x2438-byte object.  These declarations
-// retain the BFME ABI for this loader without changing the established ZH
-// declarations used by the other functions in this file.
-template <typename T> class StringBase
-{
-friend class WindowTransitionAsciiString;
-
-private:
-	StringBase( void );
-	StringBase( const StringBase<T> &that );
-	StringBase( const T *text );
-	void releaseBuffer( void );
-
-public:
-};
-
-class WindowTransitionAsciiString
-{
-public:
-	WindowTransitionAsciiString( const char *text )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( text );
-	}
-	WindowTransitionAsciiString( const WindowTransitionAsciiString &that )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that );
-	}
-	~WindowTransitionAsciiString( void );
-
-private:
-	char *m_text;
-};
-
+// BFME's INI object is 0x848 bytes (retail's frame at 0x0048B8D0 is 0x84c),
+// while the Zero Hour Common/INI.h this TU includes describes a different,
+// 0x2438-byte object.  Only the storage for the automatic object needs the
+// compact layout, so this view carries it and nothing else; the loader call
+// below goes through the real INI declaration, and the string it passes is the
+// real AsciiString from ascii_string.h.
+// Only the load type travels by value here, so keep the enumerator this TU has
+// always spelled; the call below converts it to the real INILoadType.
 enum WindowTransitionINILoadType
 {
 	WINDOW_TRANSITION_INI_LOAD_OVERWRITE = 1
@@ -157,8 +138,6 @@ class WindowTransitionINI
 public:
 	WindowTransitionINI( void );
 	~WindowTransitionINI( void );
-	void loadFile( WindowTransitionAsciiString filename,
-		WindowTransitionINILoadType loadType, Xfer *xfer );
 
 private:
 	char m_unported[0x848];
@@ -275,8 +254,8 @@ void GameWindowTransitionsHandler::load( void )
 	m_transitionMap[TheNameKeyGenerator->nameToKey( "SOUNDFADE" )] = createSoundFadeTransition;
 	m_transitionMap[TheNameKeyGenerator->nameToKey( "FREEZE_POST_LOAD_SOUNDS" )] = createFreezePostLoadSoundsTransition;
 
-	ini.loadFile( WindowTransitionAsciiString( "Data\\INI\\WindowTransitions.ini" ),
-		(WindowTransitionINILoadType)WINDOW_TRANSITION_INI_LOAD_OVERWRITE, NULL );
+	reinterpret_cast<INI&>(ini).load( AsciiString( "Data\\INI\\WindowTransitions.ini" ),
+		(INILoadType)WINDOW_TRANSITION_INI_LOAD_OVERWRITE, NULL );
 }
 
 // PUBLIC DATA ////////////////////////////////////////////////////////////////////////////////////
