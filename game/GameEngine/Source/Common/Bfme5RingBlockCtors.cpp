@@ -14,7 +14,7 @@
 typedef bool Bool;
 
 void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
-void *bfmeNewAlloc(unsigned int bytes);				// retail 0x00881F30
+void *operator new(unsigned int bytes);				// retail 0x00881F30
 
 struct BfmeRingBlock
 {
@@ -90,7 +90,7 @@ Gen_00127680::Gen_00127680(int first, int second)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeNewAlloc(0x84);
+	m_bfmeBlock = (BfmeRingBlock *)::operator new(0x84);
 
 	m_bfmeCount = 0;
 
@@ -105,7 +105,7 @@ Gen_0012A720::Gen_0012A720(void)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeNewAlloc(0x84);
+	m_bfmeBlock = (BfmeRingBlock *)::operator new(0x84);
 
 	m_bfmeCount = 0;
 

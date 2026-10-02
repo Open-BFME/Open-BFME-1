@@ -8,6 +8,8 @@
 // The public spelling of this no-argument helper is not recovered, so the
 // method name remains address-derived.
 
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texture.h"
+
 #define Matrix4x4 Matrix4
 #include "winbase_shim.h"
 #include "rendobj.h"
@@ -28,16 +30,6 @@ extern GlobalData *TheWritableGlobalData;
 
 
 
-// BFME's TextureBaseClass release is the matched out-of-line 0x009EB7A0
-// method.  The ZH header exposes a different inline refcount implementation,
-// so retain the same ABI hider already used by W3DShaderManager's owning
-// texture handles.
-class BFMETextureRelease
-{
-public:
-	void Release_Ref(void);
-};
-
 class BfmeHandleCX
 {
 public:
@@ -49,11 +41,11 @@ public:
 
 	operator TextureBaseClass *&(void)
 	{
-		return *(TextureBaseClass **)&m_texture;
+		return m_texture;
 	}
 
 private:
-	BFMETextureRelease *m_texture;
+	TextureBaseClass *m_texture;
 };
 
 // This is the already matched by-value getter ABI at 0x006C5690.  The object

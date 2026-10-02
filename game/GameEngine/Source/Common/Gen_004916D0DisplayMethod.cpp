@@ -32,22 +32,12 @@ private:
 	void *m_data;
 };
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-	~BfmeStringArgBase();
-};
-
 class BfmeAsciiStringArg
 {
 public:
 	BfmeAsciiStringArg(const BFMERetailAsciiString &that)
 	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
+		((AsciiString *)this)->AsciiString::AsciiString(*(const AsciiString *)&that);
 	}
 	~BfmeAsciiStringArg();
 

@@ -62,10 +62,14 @@ public:
 class GameLogic
 {
 public:
-	Bool _bfme_isInMultiplayerOrSkirmishGame();
-
 	unsigned char m_unreconstructed[0x9C];
 	GameDifficulty m_gameDifficulty;				///< retail this+0x9C, stored by matched GameLogic::prepareNewGame
+};
+
+class GameLogicPortraitShim
+{
+public:
+	Bool isInMultiplayerOrSkirmishGame();
 };
 
 class UpgradeCenter
@@ -112,7 +116,7 @@ void Player::friend_applyDifficultyBonusesForObject(Object *obj, Bool apply)
 		return;
 
 	AsciiString name;
-	if (TheGameLogic->_bfme_isInMultiplayerOrSkirmishGame() && m_ai)
+	if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame() && m_ai)
 	{
 		switch (m_ai->getAIDifficulty())
 		{

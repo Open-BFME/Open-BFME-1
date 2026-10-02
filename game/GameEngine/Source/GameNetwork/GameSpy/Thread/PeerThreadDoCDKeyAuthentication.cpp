@@ -3,6 +3,11 @@
 
 #include "PreRTS.h"
 
+extern "C"
+{
+#include "GameSpy/Peer/Peer.h"
+}
+
 #include "Common/Registry.h"
 #include "Common/StackDump.h"
 #include "Common/UserPreferences.h"
