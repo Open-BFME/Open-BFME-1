@@ -12,12 +12,16 @@ public:
 	BfmeTextCW m_bfmeFirstCW;
 };
 
-extern BfmeHoldCW *g_bfmeHoldCW;
+// Retail spells this singleton `BfmeGameCW *g_bfmeGameCW`
+// (?g_bfmeGameCW@@3PAVBfmeGameCW@@A) at 0x012F706C; this TU reads three
+// adjacent members of it, so the retail pointer is reinterpreted here.
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 extern BfmeTextCW g_bfmeDefaultCW;
 
 BfmeTextCW * __stdcall bfmeSelectCW(int which)
 {
-	BfmeHoldCW *hold = g_bfmeHoldCW;
+	BfmeHoldCW *hold = (BfmeHoldCW *)g_bfmeGameCW;
 
 	switch (which)
 	{

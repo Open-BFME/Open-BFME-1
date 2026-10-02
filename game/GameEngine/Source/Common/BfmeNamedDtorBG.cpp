@@ -12,7 +12,11 @@ public:
 	void bfmeRemoveCA(const char *name);
 };
 
-extern "C" BfmeHostCA *g_bfmeGameCW;
+// Retail spells the singleton `BfmeGameCW *g_bfmeGameCW`
+// (?g_bfmeGameCW@@3PAVBfmeGameCW@@A); bfmeRemoveCA is matched on BfmeHostCA
+// (0x00616320), so only the pointer's spelling changes here.
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 // Defined in BfmeNamedCtorBG.cpp (its own row keeps this file's row from
 // counting as an orphan-inducing duplicate class); undefined here so the
@@ -46,5 +50,5 @@ __declspec(noinline) AsciiString BfmeNamedBG::bfmeGetKeyBG() const
 
 BfmeNamedBG::~BfmeNamedBG()
 {
-	g_bfmeGameCW->bfmeRemoveCA(bfmeGetKeyBG().str());
+	((BfmeHostCA *)g_bfmeGameCW)->bfmeRemoveCA(bfmeGetKeyBG().str());
 }

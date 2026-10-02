@@ -1,4 +1,8 @@
-extern "C" char *g_bfmeGameCW;
+// Retail spells the singleton `BfmeGameCW *g_bfmeGameCW`
+// (?g_bfmeGameCW@@3PAVBfmeGameCW@@A). This TU only calls one member on it
+// through its own BfmeGameCZ view, so the class is only forward-declared.
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class BfmeSlotCZ
 {

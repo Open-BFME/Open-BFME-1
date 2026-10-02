@@ -61,7 +61,11 @@ public:
 
 class Rva006092D0State;
 
-extern "C" BfmeLivingWorldManager *g_bfmeGameCW;
+// Retail spells the singleton `BfmeGameCW *g_bfmeGameCW`
+// (?g_bfmeGameCW@@3PAVBfmeGameCW@@A); rva006157c0 is matched on
+// BfmeLivingWorldManager (0x006157C0), so only the pointer's spelling changes.
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 extern "C" Rva006092D0State *g_bfmeStateDF;
 
 class Rva006092D0State
@@ -111,7 +115,7 @@ Rva006092D0State::Rva006092D0State() :
 	m_dword6c = 0;
 	g_bfmeStateDF = this;
 	if (g_bfmeGameCW != 0)
-		g_bfmeGameCW->rva006157c0();
+		((BfmeLivingWorldManager *)g_bfmeGameCW)->rva006157c0();
 	m_curve.m_points.clear();
 	m_curve.set(0.0f, 0.0f, 0, 0);
 	m_curve.set(1.0f, 1.0f, 0, 0);
