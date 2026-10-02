@@ -52,7 +52,6 @@ public:
 class GameLogic
 {
 public:
-	int getFrame() const { return m_frame; }
 	char m_pad[0x3c];
 	int m_frame;
 };
@@ -91,7 +90,7 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, 
 	if (source)
 		temporaryWeapon->m_sourceId = source->m_id;
 	temporaryWeapon->loadAmmoNow(source);
-	temporaryWeapon->m_when = TheGameLogic->getFrame() + 1;
+	temporaryWeapon->m_when = TheGameLogic->m_frame + 1;
 	temporaryWeapon->privateFireWeapon(source, &source->m_position, 0, 0, pos, 0, 0, 0, 0);
 	temporaryWeapon->deleteInstance();
 }
@@ -104,7 +103,7 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, 
 	if (source)
 		temporaryWeapon->m_sourceId = source->m_id;
 	temporaryWeapon->loadAmmoNow(source);
-	temporaryWeapon->m_when = TheGameLogic->getFrame() + 1;
+	temporaryWeapon->m_when = TheGameLogic->m_frame + 1;
 	temporaryWeapon->privateFireWeapon(source, &source->m_position, target, target->m_id, 0, 0, 0, 0, 0);
 	temporaryWeapon->deleteInstance();
 }

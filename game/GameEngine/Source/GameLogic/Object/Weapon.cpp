@@ -1563,31 +1563,7 @@ void WeaponStore::handleProjectileDetonation(const WeaponTemplate* wt, const Obj
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/WeaponStore_createAndFireTempWeapon.cpp
-// ?createAndFireTempWeapon@WeaponStore@@ present-unmatched
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate* wt, const Object *source, const Coord3D* pos)
-{
-	if (wt == NULL)
-		return;
-	Weapon* w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
-	w->loadAmmoNow(source);
-	w->fireWeapon(source, pos);
-	w->deleteInstance();
-}
-
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/WeaponStore_createAndFireTempWeapon.cpp
-// ?createAndFireTempWeapon@WeaponStore@@ present-unmatched
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate* wt, const Object *source, Object *target)
-{
-	//CRCDEBUG_LOG(("WeaponStore::createAndFireTempWeapon() for %s\n", DescribeObject(source)));
-	if (wt == NULL)
-		return;
-	Weapon* w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
-	w->loadAmmoNow(source);
-	w->fireWeapon(source, target);
-	w->deleteInstance();
-}
+// Retail temporary-weapon overloads live in WeaponStore_createAndFireTempWeapon.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VAsciiString@@@Z
