@@ -133,7 +133,8 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
-int __fastcall getListboxBottomEntry(ListboxData *listData);
+int __cdecl getListboxBottomEntry(ListboxData *listData);
+typedef int (__fastcall *GetListboxBottomEntryCall)(ListboxData *listData);
 bool GadgetListBoxIsFull(GameWindow *window);
 void GadgetListBoxSetBottomVisibleEntry(GameWindow *window, Int newPos);
 
@@ -167,7 +168,7 @@ Int GadgetListBoxAddEntryText(GameWindow *listbox, UnicodeString text,
 	if (bottomData == 0)
 		oldBottomIndex = 0;
 	else
-		oldBottomIndex = getListboxBottomEntry(bottomData);
+		oldBottomIndex = ((GetListboxBottomEntryCall)getListboxBottomEntry)(bottomData);
 
 	index = TheWindowManager->winSendSystemMsg(listbox, 0x4011,
 		(WindowMsgData)&addInfo, (WindowMsgData)color);

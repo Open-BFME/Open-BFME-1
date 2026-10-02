@@ -86,7 +86,7 @@ public:
 
 extern GameEngine *TheGameEngine;
 
-extern BfmeVector3 *__stdcall bfmeVec3Hermite(
+extern "C" BfmeVector3 *__stdcall D3DXVec3CatmullRom(
 	BfmeVector3 *result,
 	const Coord3D *position0,
 	const Coord3D *tangent0,
@@ -183,7 +183,7 @@ int BfmeCalc919G::bfmeCalc919G()
 
 	m_lastFrameStamp = frameStamp;
 	BfmeVector3 interpolated;
-	bfmeVec3Hermite( &interpolated, &m_position0, &m_tangent0,
+	D3DXVec3CatmullRom( &interpolated, &m_position0, &m_tangent0,
 		&m_position1, &m_tangent1, factor );
 	cachedMatrix->m[ 3 ] = interpolated.x;
 	cachedMatrix->m[ 7 ] = interpolated.y;

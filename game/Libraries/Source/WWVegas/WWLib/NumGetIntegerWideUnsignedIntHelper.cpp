@@ -36,7 +36,7 @@ namespace _STL
 	class basic_streambuf
 	{
 	public:
-		int sbumpc();
+		unsigned short sbumpc();
 	};
 
 	template <class CharT, class Traits>
