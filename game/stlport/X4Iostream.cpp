@@ -77,6 +77,11 @@ _STLP_DECLSPEC ostream cout(0);
 _STLP_DECLSPEC ostream cerr(0);
 _STLP_DECLSPEC ostream clog(0);
 
+// BFME wide stream lifetime helpers: _$E13/_$E14 -> 0x00C6D960/0x00C70D90,
+// _$E16/_$E17 -> 0x00C6D980/0x00C70DB0, _$E19/_$E20 ->
+// 0x00C6D9A0/0x00C70D10, _$E22/_$E23 -> 0x00C6D9C0/0x00C70D30.
+// Native declarations below emit each 26-byte initializer and 28-byte cleanup;
+// ledger object-symbol notes preserve the TU-local compiler helper identities.
 _STLP_DECLSPEC wistream wcin(0);
 _STLP_DECLSPEC wostream wcout(0);
 _STLP_DECLSPEC wostream wcerr(0);
