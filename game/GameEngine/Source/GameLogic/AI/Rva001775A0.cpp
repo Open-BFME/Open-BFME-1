@@ -101,7 +101,7 @@ public:
 	virtual StateReturnType onEnter();
 };
 
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a();
 typedef void (__cdecl *Rva001775A0CritterLog)(void *, const char *, ...);
@@ -155,7 +155,7 @@ StateReturnType Rva001775A0::method()
 		{
 			if (((BfmeF1024 *)machine)->bfmeGo1024F() == 0)
 			{
-				if (g_012F0239 && g_012ED4FC)
+				if (Glo012F0239 && g_012ED4FC)
 					((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
 						"CritterDesync: setAdjustDestination(FALSE) 33");
 
@@ -174,7 +174,7 @@ StateReturnType Rva001775A0::method()
 							m_field54 = goal->m_position;
 							owner->m_ai->destroyPath();
 
-							if (g_012F0239 && g_012ED4FC)
+							if (Glo012F0239 && g_012ED4FC)
 								((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
 									"CritterDesync: ComputePath22");
 

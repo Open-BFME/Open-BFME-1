@@ -85,7 +85,7 @@ private:
 };
 
 extern AI *TheAI;
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 
 extern void j_0001b919(void);
@@ -187,7 +187,7 @@ StateReturnType Rva00178C30State::onEnter()
 	}
 
 	m_goalPosition = owner->m_position;
-	if (g_012F0239 && g_012ED4FC)
+	if (Glo012F0239 && g_012ED4FC)
 	{
 		((Rva00178C30CritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: setAdjustDestination(TRUE) 37");

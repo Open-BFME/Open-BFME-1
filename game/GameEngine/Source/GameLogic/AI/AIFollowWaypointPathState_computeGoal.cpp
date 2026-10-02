@@ -70,7 +70,7 @@
 #include "GameLogic/Module/JetAIUpdate.h"
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/Module/StealthUpdate.h"
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a(void);
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *);
@@ -146,14 +146,14 @@ void AIFollowWaypointPathState::computeGoal(Bool useGroupOffsets)
 	(reinterpret_cast<Follow17A600DistanceSlot *>(ai)->*distanceSetter)(calcExtraPathDistance());
 	if (*(const Int *)((const char *)m_currentWaypoint + 0x4c) > 0) {
 		// We are in the middle of a path, so don't set the final goal location yet.
-		if (g_012F0239 && g_012ED4FC)
+		if (Glo012F0239 && g_012ED4FC)
 		{
 			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: setAdjustDestination(FALSE) 51");
 		}
 		setAdjustsDestination(false);
 	} else {
-		if (g_012F0239 && g_012ED4FC)
+		if (Glo012F0239 && g_012ED4FC)
 		{
 			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: setAdjustDestination(TRUE) 52");
@@ -193,7 +193,7 @@ void AIFollowWaypointPathState::computeGoal(Bool useGroupOffsets)
 
 
 	if (!extent.isInRegionNoZ(&m_goalPosition)) {
-		if (g_012F0239 && g_012ED4FC)
+		if (Glo012F0239 && g_012ED4FC)
 		{
 			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: setAdjustDestination(FALSE) 53");

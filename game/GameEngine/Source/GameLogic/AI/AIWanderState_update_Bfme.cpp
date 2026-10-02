@@ -260,7 +260,7 @@ protected:
 };
 
 extern AI *TheAI;
-extern "C" unsigned char bfmeRetailCritterDesyncFlag;
+extern bool Glo012F0239;
 extern "C" void *bfmeRetailCritterDesyncSink;
 
 typedef void (__cdecl *DebugLogFunction)(void *, const char *);
@@ -336,7 +336,7 @@ StateReturnType AIWanderState::update()
 		}
 
 		computeGoal(0);
-		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
+		if (Glo012F0239 && bfmeRetailCritterDesyncSink)
 			((DebugLogFunction)j_0003a17a)(bfmeRetailCritterDesyncSink, "CritterDesync: ComputePath39");
 		computePath();
 		return STATE_CONTINUE;

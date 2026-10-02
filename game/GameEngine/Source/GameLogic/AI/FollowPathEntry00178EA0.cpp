@@ -23,7 +23,7 @@ template<class T> struct PathVector00178EA0 {
     unsigned size() const { return unsigned(finish-start); }
     const T &operator[](unsigned i) const { return *(begin()+i); }
 };
-extern bool gFollowPathEntry00178EA0Debug;
+extern bool Glo012F0239;
 extern void *gFollowPathEntry00178EA0Logger;
 extern void j_0003a17a();
 extern void j_0000a9d4();
@@ -104,7 +104,7 @@ int FollowPathEntry00178EA0::run() {
     ai->at194=0;
     if (at004==7) {
         ai->at328=true; ai->at326=false;
-        if(gFollowPathEntry00178EA0Debug && gFollowPathEntry00178EA0Logger)
+        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
             PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(FALSE) 39");
         at04c=false; at054=true;
     }
@@ -118,11 +118,11 @@ int FollowPathEntry00178EA0::run() {
         const Coord3D *following=(ai->*pointRoute.fn)(at050+2);
         if(following) offset+=40.0f;
         ai->extra(offset);
-        if(gFollowPathEntry00178EA0Debug && gFollowPathEntry00178EA0Logger)
+        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
             PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(FALSE) 40");
         at04c=false;
     } else {
-        if(gFollowPathEntry00178EA0Debug && gFollowPathEntry00178EA0Logger)
+        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
             PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(m_adjustFinal=%s) 41",at054?"TRUE":"FALSE");
         at04c=at054;
         ai->extra(0.0f);

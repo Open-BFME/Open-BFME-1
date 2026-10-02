@@ -26,7 +26,9 @@
 // every global are the same either way.  One address-derived class per row is
 // written here because that asserts nothing about the other four.
 
-extern bool TheS3Flag;
+// VA 0x012F0239 is one byte in retail's zero-filled .data tail. Keep the
+// existing address-derived symbols.csv name; no EA identity is established.
+bool Glo012F0239 = false;
 extern void *TheS3Sink;
 extern void Gen0003A17A( void *sink, const char *text );
 
@@ -40,7 +42,7 @@ extern void Gen0003A17A( void *sink, const char *text );
 	};                                                                    \
 	bool NAME::step()                                                     \
 	{                                                                     \
-		if( TheS3Flag && TheS3Sink )                                      \
+		if( Glo012F0239 && TheS3Sink )                                    \
 			Gen0003A17A( TheS3Sink, TEXT );                               \
 		if( m_countdown > 0 )                                             \
 		{                                                                 \
@@ -89,7 +91,7 @@ public:
 
 bool Rva0016B2C0::step()
 {
-	if( TheS3Flag && TheS3Sink )
+	if( Glo012F0239 && TheS3Sink )
 		Gen0003A17A( TheS3Sink, "CritterDesync: ComputePath3" );
 
 	Intermediate0016B2C0 *it = m_intermediate;

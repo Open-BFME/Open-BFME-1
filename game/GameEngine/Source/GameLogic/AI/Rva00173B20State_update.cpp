@@ -36,7 +36,7 @@ public:
 	virtual StateReturnType update();
 };
 
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a(void);
 typedef void (__cdecl *Rva00173B20CritterDesyncLog)(void *, const char *);
@@ -62,7 +62,7 @@ StateReturnType Rva00173B20State::update()
 		AIUpdateInterface *ai = obj->m_ai;
 		if (ai->m_path && !ai->m_waitingForPath)
 		{
-			if (g_012F0239 && g_012ED4FC)
+			if (Glo012F0239 && g_012ED4FC)
 				((Rva00173B20CritterDesyncLog)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: setAdjustDestination(TRUE) 8");
 			m_adjustDestinations = 1;

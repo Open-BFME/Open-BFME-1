@@ -252,13 +252,13 @@ static AIUpdateInterface *bfmeRetailAIUpdate( const Object *obj )
 // sink pointer, and a cdecl two-argument logger, all reached only when the
 // passthrough branch is taken. The flag it finally writes is the
 // m_adjustDestinations byte, which retail keeps at state+0x4c.
-extern "C" unsigned char bfmeRetailCritterDesyncFlag;			///< 0x012F0239
+extern bool Glo012F0239;			///< 0x012F0239
 extern "C" void *bfmeRetailCritterDesyncSink;					///< 0x012ED4FC
 extern "C" void bfmeRetailCritterDesyncLog( void *sink, const char *msg );
 
 static void bfmeRetailSetAdjustsDestinationFalse( State *state )
 {
-	if( bfmeRetailCritterDesyncFlag )
+	if( Glo012F0239 )
 	{
 		if( bfmeRetailCritterDesyncSink )
 			bfmeRetailCritterDesyncLog( bfmeRetailCritterDesyncSink, "CritterDesync: setAdjustDestination(FALSE) 2" );
@@ -981,7 +981,7 @@ StateReturnType AIDockMoveToExitState::onEnter( void )
 	{
 		ai->ignoreObstacle( bfmeRetailMachine( this )->getGoalObject() );
 
-		if( bfmeRetailCritterDesyncFlag )
+		if( Glo012F0239 )
 		{
 			if( bfmeRetailCritterDesyncSink )
 				bfmeRetailCritterDesyncLog( bfmeRetailCritterDesyncSink, "CritterDesync: setAdjustDestination(FALSE) 1" );

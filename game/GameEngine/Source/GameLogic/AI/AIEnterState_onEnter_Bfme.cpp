@@ -119,7 +119,7 @@ struct BFMEObjectAI
 };
 
 extern BFMEActionManager *TheActionManager;
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0000e570();
 extern void j_0003a17a();
@@ -162,7 +162,7 @@ StateReturnType AIEnterState::onEnter()
 	void *locomotor = *(void **)((char *)ai + 0x1cc);
 	if (locomotor)
 		*(unsigned int *)((char *)locomotor + 0x40) |= 2;
-	if (g_012F0239 && g_012ED4FC)
+	if (Glo012F0239 && g_012ED4FC)
 		((BFMECritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: setAdjustDestination(FALSE) 57");
 	m_adjustDestinations = 0;

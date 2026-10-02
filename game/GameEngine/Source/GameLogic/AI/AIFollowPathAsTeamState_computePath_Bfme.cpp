@@ -80,7 +80,7 @@ protected:
 	Bool getAdjustsDestination() const;
 };
 
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a(void);
 
@@ -94,7 +94,7 @@ protected:
 
 Bool AIFollowPathAsTeamState::computePath()
 {
-	if (g_012F0239 && g_012ED4FC)
+	if (Glo012F0239 && g_012ED4FC)
 	{
 		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: ComputePath33");
@@ -119,7 +119,7 @@ Bool AIFollowPathAsTeamState::computePath()
 		}
 	}
 
-	if (g_012F0239 && g_012ED4FC)
+	if (Glo012F0239 && g_012ED4FC)
 	{
 		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: ComputePath34");

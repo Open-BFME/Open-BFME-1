@@ -689,7 +689,7 @@ struct BfmeGuardReturnStateView
 extern GameLogic *TheBfmeGameLogic;
 extern Int GetGameLogicRandomValue(Int minimum, Int maximum, char *file, Int line);
 extern Real g_bfmeK1266C;
-extern unsigned char g_012F0239;
+extern bool Glo012F0239;
 extern void *g_012ED4FC;
 extern void j_0000314d();
 extern void j_000065e1();
@@ -773,7 +773,7 @@ doEnter:
 	setGoalPositionCast.asVoid = (void *)j_0000314d;
 	(self->m_machine->*setGoalPositionCast.asMember)(&goal);
 
-	if (g_012F0239 && g_012ED4FC)
+	if (Glo012F0239 && g_012ED4FC)
 	{
 		typedef void (__cdecl *CritterDesyncLog)(void *, const char *);
 		((CritterDesyncLog)j_0003a17a)(g_012ED4FC,
