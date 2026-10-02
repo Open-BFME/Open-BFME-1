@@ -8,15 +8,14 @@ struct BfmePlayer001DD100
 	int getPlayerIndex( void ) const { return m_playerIndex; }
 };
 
-class BfmeD1025
+class PlayerList
 {
 public:
-	unsigned short bfmeLookup1025( int playerIndex, int flags, int extra );
+	unsigned short getPlayersWithRelationship( int playerIndex, int flags, bool extra );
 };
 
-class PlayerList;
 extern PlayerList *ThePlayerList;
-static inline BfmeD1025 *thePlayersView() { return (BfmeD1025 *)ThePlayerList; }
+static inline PlayerList *thePlayersView() { return ThePlayerList; }
 
 class Rva001DD100PlayerMaskQuery
 {
@@ -33,7 +32,7 @@ private:
 
 unsigned int Rva001DD100PlayerMaskQuery::queryMask( void ) const
 {
-	unsigned int result = thePlayersView()->bfmeLookup1025(
+	unsigned int result = thePlayersView()->getPlayersWithRelationship(
 		m_player->getPlayerIndex(), m_flags | 1, 0 );
 	if( !m_match )
 	{

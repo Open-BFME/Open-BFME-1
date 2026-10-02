@@ -1,7 +1,11 @@
-class BfmeSinkAV
+class BfmeSinkAV;
+
+class Object;
+
+class AIGroup
 {
 public:
-	void bfmeAddAV(void *item);
+	void add(Object *member);
 };
 
 class BfmeVecAV
@@ -14,5 +18,5 @@ public:
 void __stdcall bfmeEachAV(BfmeVecAV *range, BfmeSinkAV *sink)
 {
 	for (void **it = range->m_bfmeBeginAV; it != range->m_bfmeEndAV; ++it)
-		sink->bfmeAddAV(*it);
+		((AIGroup *)sink)->add((Object *)*it);
 }
