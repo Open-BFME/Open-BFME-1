@@ -2,8 +2,6 @@
 // The owning type's identity is not recovered.  The 25th virtual slot and
 // the field at +0x2F8 are the layout facts required by the retail body.
 
-extern float g_bfmeDefaultBR; // retail 0x01075350
-
 class Gen_00945670
 {
 public:
@@ -42,7 +40,7 @@ private:
 
 float Gen_00945670::process()
 {
-	if (value() > g_bfmeDefaultBR)
+	if (value() > 0.0f)
 		return value();
 	return m_fallback;
 }
