@@ -574,25 +574,9 @@ UnsignedInt NetPacket::GetPacketRouterAckCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
-// ?GetDisconnectChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetDisconnectChatCommandSize(NetCommandMsg *msg) {
-	Int msglen = 0;
-	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(msg);
+// GetDisconnectChatCommandSize is owned by NetPacket_commandSizes.cpp; its BFME body
+// replaces the old Zero Hour implementation.
 
-	++msglen;
-	msglen += sizeof(UnsignedByte);
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	++msglen;
-	msglen += sizeof(UnsignedByte);
-
-	++msglen; // the 'D'
-	msglen += sizeof(UnsignedByte); // string msglength
-	UnsignedByte textmsglen = cmdMsg->getText().getLength();
-	msglen += textmsglen * sizeof(UnsignedShort);
-
-	return msglen;
-}
 
 // ?GetDisconnectVoteCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetDisconnectVoteCommandSize(NetCommandMsg *msg) {
@@ -612,28 +596,9 @@ UnsignedInt NetPacket::GetDisconnectVoteCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
-// ?GetChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetChatCommandSize(NetCommandMsg *msg) {
-	Int msglen = 0;
-	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg);
+// GetChatCommandSize is owned by NetPacket_commandSizes.cpp; its BFME body
+// replaces the old Zero Hour implementation.
 
-	++msglen;
-	msglen += sizeof(UnsignedByte);
-	msglen += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	++msglen;
-	msglen += sizeof(UnsignedByte);
-	msglen += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-
-	++msglen; // the 'D'
-	msglen += sizeof(UnsignedByte); // string msglength
-	UnsignedByte textmsglen = cmdMsg->getText().getLength();
-	msglen += textmsglen * sizeof(UnsignedShort);
-	msglen += sizeof(Int); // playerMask
-
-	return msglen;
-}
 
 // ?GetProgressMessageSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetProgressMessageSize(NetCommandMsg *msg) {
@@ -703,43 +668,13 @@ UnsignedInt NetPacket::GetWrapperCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
-// ?GetFileCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetFileCommandSize(NetCommandMsg *msg) {
-	NetFileCommandMsg *filemsg = (NetFileCommandMsg *)msg;
-	UnsignedInt msglen = 0;
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'T' and command type
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'P' and player ID
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedShort); // 'C' and command ID
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'R' and relay
+// GetFileCommandSize is owned by NetPacket_commandSizes.cpp; its BFME body
+// replaces the old Zero Hour implementation.
 
-	++msglen; // 'D'
 
-	msglen += filemsg->getPortableFilename().getLength() + 1; // PORTABLE filename and the terminating 0
-	msglen += sizeof(UnsignedInt); // file data length
-	msglen += filemsg->getFileLength(); // the file data
+// GetFileAnnounceCommandSize is owned by NetPacket_commandSizes.cpp; its BFME body
+// replaces the old Zero Hour implementation.
 
-	return msglen;
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
-// ?GetFileAnnounceCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetFileAnnounceCommandSize(NetCommandMsg *msg) {
-	NetFileAnnounceCommandMsg *filemsg = (NetFileAnnounceCommandMsg *)msg;
-	UnsignedInt msglen = 0;
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'T' and command type
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'P' and player ID
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedShort); // 'C' and command ID
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // 'R' and relay
-
-	++msglen; // 'D'
-
-	msglen += filemsg->getPortableFilename().getLength() + 1; // PORTABLE filename and the terminating 0
-	msglen += sizeof(UnsignedShort); // m_fileID
-	msglen += sizeof(UnsignedByte); // m_playerMask
-
-	return msglen;
-}
 
 // ?GetFileProgressCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetFileProgressCommandSize(NetCommandMsg *msg) {
