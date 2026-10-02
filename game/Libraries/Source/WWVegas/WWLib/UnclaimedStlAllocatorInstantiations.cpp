@@ -16,7 +16,6 @@
 // which T is not witnessed, so each element type is named for its address.
 #define _STLP_NO_EXCEPTIONS 1
 #include <memory>
-#include <vector>
 
 struct Rva0081D580Element { char m_bytes[ 4 ]; };
 struct Rva0081D5B0Element { char m_bytes[ 4 ]; };
@@ -60,8 +59,25 @@ template void _STL::allocator<Rva009ECFC0Element>::deallocate( Rva009ECFC0Elemen
 template Rva009ED060Element *_STL::allocator<Rva009ED060Element>::allocate( size_t, const void * ) const;
 template Rva009F2FE0Element *_STL::allocator<Rva009F2FE0Element>::allocate( size_t, const void * ) const;
 
-// 0x009F35B0 (45 bytes): _Vector_base<T>::~_Vector_base for an eight-byte T
-// (sar 3 / shl 3 of end_of_storage - start), freeing through the same
-// operator delete / __node_alloc split.  Same boundary evidence as above.
+// 0x009F35B0 (45 bytes): frees a {start, finish, end_of_storage} block of
+// eight-byte elements (sar 3 / shl 3 of end_of_storage - start) through the
+// same operator delete / __node_alloc split.  These bytes are both STLport's
+// ~_Vector_base<T> and, for a trivially destructible T, ~vector<T>; nothing
+// references this copy to pick one, so it is spelled as an address-derived
+// storage block.  Same boundary evidence as above.
 struct Rva009F35B0Element { char m_bytes[ 8 ]; };
-template _STL::_Vector_base<Rva009F35B0Element, _STL::allocator<Rva009F35B0Element> >::~_Vector_base();
+
+struct Rva009F35B0VectorStorage
+{
+	Rva009F35B0Element *m_start;
+	Rva009F35B0Element *m_finish;
+	Rva009F35B0Element *m_end_of_storage;
+
+	~Rva009F35B0VectorStorage();
+};
+
+Rva009F35B0VectorStorage::~Rva009F35B0VectorStorage()
+{
+	if ( m_start )
+		_STL::allocator<Rva009F35B0Element>().deallocate( m_start, m_end_of_storage - m_start );
+}
