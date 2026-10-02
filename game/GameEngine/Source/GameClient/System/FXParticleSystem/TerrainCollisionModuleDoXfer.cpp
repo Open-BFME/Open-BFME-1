@@ -37,6 +37,8 @@ protected:
 	bool m_bool1D;
 };
 
+namespace
+{
 class TerrainCollisionModuleInfo
 {
 public:
@@ -62,6 +64,7 @@ protected:
 	bool m_bool14;
 	unsigned int m_unmodelled18;
 };
+}
 
 class TerrainCollisionModule
 	: public Rva005FD050Base00,

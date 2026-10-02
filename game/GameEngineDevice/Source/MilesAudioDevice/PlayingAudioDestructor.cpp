@@ -36,10 +36,12 @@ class Rva00691200Obj : public Rva00691200Pad, public Rva00691200RefBase
 {
 };
 
+namespace
+{
 class Rva00691200Holder
 {
 public:
-	~Rva00691200Holder()
+	__forceinline ~Rva00691200Holder()
 	{
 		Rva00691200Obj *object = m_pointer;
 		if (object)
@@ -52,6 +54,7 @@ public:
 
 	Rva00691200Obj *m_pointer;
 };
+}
 
 class Rva00690FF0Handle
 {

@@ -40,6 +40,7 @@ struct GeometryRecord
 	int m_second;
 	int m_third;
 	AsciiString m_name;
+	~GeometryRecord();
 };
 
 class Xfer;
