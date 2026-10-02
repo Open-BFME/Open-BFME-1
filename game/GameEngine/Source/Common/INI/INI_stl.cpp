@@ -1421,12 +1421,8 @@ void INI::parseSpecialPowerTemplate( INI* ini, void * /*instance*/, void *store,
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseIndexList@INI@@ present-unmatched
-void INI::parseIndexList( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	ConstCharPtrArray nameList = (ConstCharPtrArray)userData;
-	*(Int *)store = scanIndexList(ini->getNextToken(), nameList);
-} 
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a single string token, check for that token in the index list
@@ -1436,18 +1432,8 @@ void INI::parseIndexList( INI* ini, void * /*instance*/, void *store, const void
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseByteSizedIndexList@INI@@ present-unmatched
-void INI::parseByteSizedIndexList( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	ConstCharPtrArray nameList = (ConstCharPtrArray)userData;
-	Int value = scanIndexList(ini->getNextToken(), nameList);
-	if (value < 0 || value > 255)
-	{
-		DEBUG_CRASH(("Bad index list INI::parseByteSizedIndexList"));
-		throw ERROR_BUG;
-	}
-	*(Byte *)store = (Byte)value;
-} 
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a single string token, check for that token in the index list
@@ -1457,12 +1443,8 @@ void INI::parseByteSizedIndexList( INI* ini, void * /*instance*/, void *store, c
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseLookupList@INI@@ present-unmatched
-void INI::parseLookupList( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	ConstLookupListRecArray lookupList = (ConstLookupListRecArray)userData;
-	*(Int *)store = scanLookupList(ini->getNextToken(), lookupList);
-}
+// The retail definition is owned by ini_parsers.cpp.
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////////////////////////
