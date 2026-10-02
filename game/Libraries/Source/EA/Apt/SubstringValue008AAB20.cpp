@@ -10,43 +10,43 @@ struct BfmeStringPool3AF0 {
 };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
-class Rva8CD130String {
+class EAStringC {
 public:
-    __forceinline Rva8CD130String() {
+    __forceinline EAStringC() {
         m_data = &g_bfmeDefaultString1284;
         ++m_data->m_refCount;
     }
-    __forceinline ~Rva8CD130String() {
+    __forceinline ~EAStringC() {
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
     }
-    __forceinline Rva8CD130String &operator=(const Rva8CD130String &source) {
+    __forceinline EAStringC &operator=(const EAStringC &source) {
         ++source.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
         m_data = source.m_data;
         return *this;
     }
-    // 0089FBC0: receiver is handle; hidden result + two signed indices;
-    // +29 initializes [entry+4], returns that address in EAX; +3D ret12.
-    Rva8CD130String substring0089FBC0(int start, int count);
+    EAStringC utf8Mid0089FBC0(int start, int count) const;
+    int bfmeUtf8Length() const;
     BfmeStringData3AF0 *m_data;
 };
+class Rva8CD130String;
 class Rva8CD130Value { public: void getName(Rva8CD130String *output); };
 class AptValue { public: int toInteger() const; };
-class EAStringC { public: int bfmeUtf8Length() const; };
 class BfmeStrVKK { public: void bfmeTruncVKK(unsigned n); };
 extern AptValue **g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *(__cdecl *WideAllocPtr)(unsigned int);
+struct Rva008C3B60Node;
 class Rva008A9B00 {
 public:
     __declspec(nothrow) Rva008A9B00();
     __forceinline void *operator new(unsigned int bytes) { return WideAllocPtr(bytes); }
     void *m_unknown00;
     unsigned int m_flags;
-    Rva8CD130String m_string;
+    EAStringC m_string;
     Rva008A9B00 *m_next;
 };
 // 0x01337810: the Apt GC-root registry vector pointer, defined in
@@ -62,7 +62,7 @@ struct Rva00899560Pool {
     }
 };
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008A9B00 *g_free01338478;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 // 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
 // Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
 // so the reinterpret_cast below compiles to the same mov.
@@ -70,9 +70,9 @@ extern AptValue *g_bfmeFallbackDB;
 
 __forceinline Rva008A9B00 *acquire008AAB20() {
     Rva008A9B00 *result;
-    Rva008A9B00 *obj = g_free01338478;
+    Rva008A9B00 *obj = (Rva008A9B00 *)g_rva01338478NodeHead;
     if (obj) {
-        g_free01338478 = obj->m_next;
+        g_rva01338478NodeHead = (Rva008C3B60Node *)obj->m_next;
         g_rva01337810GcRoots->add(obj);
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);
@@ -85,16 +85,16 @@ __forceinline Rva008A9B00 *acquire008AAB20() {
 }
 
 Rva008A9B00 *substringValue008AAB20(Rva8CD130Value *value, int count) {
-    Rva8CD130String text;
+    EAStringC text;
     int start = -1;
     int length = 9999999;
     if (!count) return (Rva008A9B00 *)g_bfmeFallbackDB;
     if (count >= 1) start = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1]->toInteger();
     if (count >= 2) length = g_bfmeArr1233[Rva008AE770TheStack.field00 - 2]->toInteger();
-    value->getName(&text);
-    int total = ((EAStringC *)&text)->bfmeUtf8Length();
+    value->getName((Rva8CD130String *)&text);
+    int total = text.bfmeUtf8Length();
     if (start < 0) start += total;
     Rva008A9B00 *obj = acquire008AAB20();
-    obj->m_string = text.substring0089FBC0(start, length);
+    obj->m_string = text.utf8Mid0089FBC0(start, length);
     return obj;
 }
