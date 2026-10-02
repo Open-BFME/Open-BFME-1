@@ -128,11 +128,11 @@ struct Payload70 { unsigned char m_bytes[0x70]; };
 // The array element at +0x364 (two of 0x14 bytes): its constructor and
 // destructor are the pinned 0x0002FB80 / 0x0000E746 thunks the eh vector
 // constructor iterator receives.
-class Rva0077CDE0ArrElem
+class Rva00146BA0ArrayItem
 {
 public:
-	Rva0077CDE0ArrElem();
-	~Rva0077CDE0ArrElem();
+	Rva00146BA0ArrayItem();
+	~Rva00146BA0ArrayItem();
 
 private:
 	unsigned char m_data[0x14];
@@ -210,7 +210,7 @@ private:
 	Map18 m_unknown340;
 	Map20 m_unknown34c;
 	std::vector<void *> m_vector_358;
-	Rva0077CDE0ArrElem m_bfmeBVA[2];
+	Rva00146BA0ArrayItem m_bfmeBVA[2];
 
 	unsigned int m_scalar038c;
 	unsigned int m_scalar0390;
