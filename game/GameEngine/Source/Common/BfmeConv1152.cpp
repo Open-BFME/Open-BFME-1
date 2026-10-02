@@ -3,6 +3,10 @@
 
 extern "C" void __cdecl bfmeCopy1152(char *d0, char *d1, char *s0, char *s1);
 
+// retail callee at 0x006434C0, reached through the ILT thunk at 0x000132CD;
+// declaration only, the body is game/gen_small/fun_004.cpp
+struct Gen_006434c0 { void m(); };
+
 class BfmeR1152
 {
 public:
@@ -14,7 +18,6 @@ class BfmeS1152
 {
 public:
 	void bfmeReplace1152(unsigned int pos, unsigned int count, BfmeR1152 *src);
-	void bfmeThrow1152(void);
 	char *m_begin;
 	char *m_end;
 };
@@ -34,7 +37,7 @@ void BfmeS1152::bfmeReplace1152(unsigned int pos, unsigned int count, BfmeR1152 
 	int frameSlot4;
 
 	if (pos > (unsigned int)(m_end - m_begin))
-		bfmeThrow1152();
+		((Gen_006434c0 *)this)->m();
 
 	tailLen = (unsigned int)(m_end - m_begin) - pos;
 	// The shorter of the two is taken by address, not by value: retail keeps the

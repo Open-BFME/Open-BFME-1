@@ -1,9 +1,12 @@
 // cl: /Od
 
+// retail callee at 0x006434C0, reached through the ILT thunk at 0x000132CD;
+// declaration only, the body is game/gen_small/fun_004.cpp
+struct Gen_006434c0 { void m(); };
+
 class BfmeStrV36
 {
 public:
-	void bfmeThrowV36();
 	void bfmeAppendV36(char *a, char *b, char *tag);
 
 	char *b;
@@ -24,7 +27,7 @@ void __stdcall bfmeAppendRangeV36(BfmeStrV36 *other, int pos, int n)
 		cmp dword ptr [ebp+0x0C], edx
 		jbe skip_throw
 		mov ecx, dword ptr [ebp-0x64]
-		call BfmeStrV36::bfmeThrowV36
+		call Gen_006434c0::m
 	skip_throw:
 		mov eax, dword ptr [ebp+8]
 		mov ecx, dword ptr [ebp+8]
