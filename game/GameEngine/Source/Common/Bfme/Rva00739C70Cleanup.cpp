@@ -27,13 +27,29 @@ public:
 	virtual unsigned long __stdcall Release();
 };
 
+// The three calls made through the pointer at +0x0C are pinned under this
+// spelling (clear 0x008FC7D0, methodA 0x008FC710, methodB 0x008FC660); it is a
+// second view of the very same bytes W3DRadarResetSurface owns, used only so the
+// emitted call names keep their existing pins.
 class Member0C00739C70
 {
 public:
 	VirtualReleaser00739E00 *m_obj;
 
-	~Member0C00739C70();
 	void clear();
+	TextureBaseClass *methodA( int arg, int a, int b, int c, int d );
+	TextureBaseClass *methodB( int arg, int a );
+};
+
+// Retail's destructor for this sub-object lives at 0x008FC5B0 and is defined as
+// W3DRadarResetSurface::~W3DRadarResetSurface, so the member that owns it is
+// spelled with that class name.
+class W3DRadarResetSurface
+{
+public:
+	VirtualReleaser00739E00 *m_obj;
+
+	~W3DRadarResetSurface();
 	void reset()
 	{
 		if ( m_obj )
@@ -42,8 +58,6 @@ public:
 			m_obj = 0;
 		}
 	}
-	TextureBaseClass *methodA( int arg, int a, int b, int c, int d );
-	TextureBaseClass *methodB( int arg, int a );
 };
 
 class Rva00739C70
@@ -57,18 +71,25 @@ public:
 	// address while keeping this small predicate attached to the proven object.
 	bool rva_00739E50();
 
-	int               m_int0;
-	int               m_int4;
-	TexturePtr        m_ptr08;
-	Member0C00739C70  m_member0c;
-	int               m_flags;
+	int                  m_int0;
+	int                  m_int4;
+	TexturePtr           m_ptr08;
+	// Both views alias the same four bytes at +0x0C; retail has one class there
+	// and only the split spelling is ours.
+	W3DRadarResetSurface m_member0c;
+	int                  m_flags;
+
+	Member0C00739C70 &calls()
+	{
+		return *reinterpret_cast<Member0C00739C70 *>( &m_member0c );
+	}
 };
 
 void Rva00739C70::cleanup()
 {
 	if ( m_flags & 1 )
 	{
-		m_member0c.clear();
+		calls().clear();
 		m_flags &= ~1;
 	}
 }
@@ -89,18 +110,18 @@ TextureBaseClass *Rva00739C70::update( int arg )
 	TextureBaseClass *result = 0;
 	if ( m_flags & 1 )
 	{
-		m_member0c.clear();
+		calls().clear();
 		m_flags &= ~1;
 	}
 	if ( m_member0c.m_obj )
 	{
 		if ( !( m_flags & 0xC ) )
 		{
-			result = m_member0c.methodA( arg, 0, 0, m_int0, m_int4 );
+			result = calls().methodA( arg, 0, 0, m_int0, m_int4 );
 		}
 		else
 		{
-			result = m_member0c.methodB( arg, 1 );
+			result = calls().methodB( arg, 1 );
 		}
 		m_flags |= 1;
 	}
