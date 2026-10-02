@@ -194,24 +194,6 @@ float Region2D::height() const
     return y_max - y_min;
 }
 
-Region3D::Region3D()
-{
-}
-
-Region3D::Region3D(const Region3D &that)
-{
-    x_min = that.x_min;
-    y_min = that.y_min;
-    z_min = that.z_min;
-    x_max = that.x_max;
-    y_max = that.y_max;
-    z_max = that.z_max;
-}
-
-Region3D::~Region3D()
-{
-}
-
 Region3D &Region3D::operator=(const Region3D &that)
 {
     struct Region3DBase {
