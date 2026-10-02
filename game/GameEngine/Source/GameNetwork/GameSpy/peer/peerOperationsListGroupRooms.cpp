@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Existing matched C++ providers at 00857250 and 00863B40, respectively.
+// The caller's cdecl stack arguments match these declarations exactly.
+void bfmeCallAll250(void *);
+struct BfmeTableAT;
+void bfmeSetNameAT(BfmeTableAT *, int, const char *);
+
+extern "C" {
 typedef void *PEER;
 typedef int PEERBool;
 typedef void *PEERCBType;
@@ -96,7 +103,6 @@ void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 	void *param, int blocking);
 void piSetAutoMatchStatus(PEER peer, int status);
 void piSetChannelCallbacks(PEER peer, void *callbacks);
-void piStartedEnteringRoom(PEER peer, int roomType, const char *channel);
 static void piJoinRoomEnterChannelCallbackA(void *chat, int success,
 	int result, const char *channel, void *param);
 void chatEnterChannelA(void *chat, const char *channel, const char *password,
@@ -119,7 +125,6 @@ void piCreateStagingRoomEnumUsersCallbackA(void *chat, int success,
 void piCreateStagingRoomEnterChannelCallbackA(void *chat, int success,
 	int result, const char *channel, void *param);
 int piConnectTitle(PEER peer);
-void piDisconnectTitle(PEER peer);
 unsigned int current_time(void);
 const char *chatGetNickA(void *chat);
 __declspec(dllimport) int strcmpi(const char *left, const char *right);
@@ -301,7 +306,7 @@ void piConnectConnectCallback(void *chat, int success,
 	{
 		if (!piConnectTitle(peer))
 		{
-			piDisconnectTitle(peer);
+			bfmeCallAll250(peer);
 			success = 0;
 		}
 	}
@@ -725,7 +730,7 @@ PEERBool piNewCreateStagingRoomOperation(PEER peer, const char *name,
 		operation->password = goastrdup(password);
 
 	piSetChannelCallbacks(peer, channelCallbacks);
-	piStartedEnteringRoom(peer, 2, room);
+	bfmeSetNameAT((BfmeTableAT *)peer, 2, room);
 	chatEnterChannelA(connection->chat, room, 0, channelCallbacks,
 		piCreateStagingRoomEnterChannelCallbackA, operation, 0);
 
@@ -755,7 +760,7 @@ PEERBool piNewJoinRoomOperation(PEER peer, int roomType,
 	operation->roomType = roomType;
 
 	piSetChannelCallbacks(peer, channelCallbacks);
-	piStartedEnteringRoom(peer, roomType, channel);
+	bfmeSetNameAT((BfmeTableAT *)peer, roomType, channel);
 	chatEnterChannelA(connection->chat, channel, password, channelCallbacks,
 		piJoinRoomEnterChannelCallbackA, operation, 0);
 	return 1;
@@ -849,3 +854,5 @@ void piCreateStagingRoomEnterChannelCallbackA(void *chat, int success,
 		operation->callbackParam, operation->ID);
 	piRemoveOperation(peer, operation);
 }
+
+} // extern "C"
