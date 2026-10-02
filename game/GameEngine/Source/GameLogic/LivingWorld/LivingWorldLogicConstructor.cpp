@@ -123,6 +123,8 @@ class LivingWorldLogic : public SubsystemInterface, public Snapshot
 {
 public:
 	LivingWorldLogic();
+	// The retail destructor is provided by LivingWorldLogicDestructor.cpp.
+	virtual ~LivingWorldLogic();
 	virtual void init();
 	virtual void reset();
 	virtual void update();
