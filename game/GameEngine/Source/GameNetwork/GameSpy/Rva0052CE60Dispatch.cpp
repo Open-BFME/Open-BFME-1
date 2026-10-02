@@ -27,7 +27,7 @@ public:
 	virtual void slot50(int);
 };
 
-GameSpyInfo *TheGameSpyInfo;
+extern GameSpyInfo *TheGameSpyInfo;
 
 void rva0052CE60(int a)
 {

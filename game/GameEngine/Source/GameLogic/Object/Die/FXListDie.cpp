@@ -67,43 +67,7 @@ FXListDie::~FXListDie( void )
 
 }
 
-//-------------------------------------------------------------------------------------------------
-/** The die callback. */
-//-------------------------------------------------------------------------------------------------
-// ?onDie@FXListDie@@ present-unmatched
-void FXListDie::onDie( const DamageInfo *damageInfo )
-{
-	if (!isUpgradeActive())
-		return;
-	if (!isDieApplicable(damageInfo))
-		return;
-	const FXListDieModuleData* d = getFXListDieModuleData();
-
-	UpgradeMaskType activation, conflicting;
-	getUpgradeActivationMasks( activation, conflicting );
-	Object *obj = getObject();
-	if( obj->getObjectCompletedUpgradeMask().testForAny( conflicting ) )
-	{
-		return;
-	}
-	if( obj->getControllingPlayer() && obj->getControllingPlayer()->getCompletedUpgradeMask().testForAny( conflicting ) )
-	{
-		return;
-	}
-
-	if (d->m_defaultDeathFX)
-	{
-		if (d->m_orientToObject)
-		{
-			Object *damageDealer = TheGameLogic->findObjectByID( damageInfo->in.m_sourceID );
-			FXList::doFXObj(getFXListDieModuleData()->m_defaultDeathFX, getObject(), damageDealer);
-		}
-		else
-		{
-			FXList::doFXPos(getFXListDieModuleData()->m_defaultDeathFX, getObject()->getPosition());
-		}
-	}
-}
+// The matched onDie definition lives in FXListDieOnDie.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

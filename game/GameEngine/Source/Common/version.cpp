@@ -39,7 +39,7 @@
 Version *TheVersion = NULL;	///< The Version singleton
 
 // ??0Version@@ present-unmatched
-Version::Version()
+inline Version::Version()
 {
 	m_major = 1;
 	m_minor = 0;

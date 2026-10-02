@@ -415,22 +415,7 @@ Bool AssaultTransportAIUpdate::isAttackPointless() const
 	return FALSE;
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?isMemberWounded@AssaultTransportAIUpdate@@ present-unmatched
-Bool AssaultTransportAIUpdate::isMemberWounded( const Object *member ) const
-{
-	const AssaultTransportAIUpdateModuleData *data = getAssaultTransportAIUpdateModuleData();
-	BodyModuleInterface *body = member->getBodyModule();
-	if( body )
-	{
-		Real ratio = body->getHealth() / body->getMaxHealth();
-		if( ratio < data->m_membersGetHealedAtLifeRatio )
-		{
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
+// The matched isMemberWounded definition lives in AssaultTransportAIUpdate_isMemberWoundedTwin.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?isMemberHealthy@AssaultTransportAIUpdate@@ present-unmatched
@@ -555,4 +540,3 @@ void AssaultTransportAIUpdate::loadPostProcess( void )
  // extend base class
 	AIUpdateInterface::loadPostProcess();
 }  // end loadPostProcess
-
