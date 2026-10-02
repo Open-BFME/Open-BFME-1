@@ -150,27 +150,7 @@ Int TerrainTracksRenderObjClass::freeTerrainTracksResources(void)
 	return 0;
 }
 
-//=============================================================================
-// TerrainTracksRenderObjClass::init
-//=============================================================================
-/** Setup size settings and allocate W3D texture */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassInit.cpp
-// ?init@TerrainTracksRenderObjClass@@QAEXMMPBD@Z present-unmatched
-void TerrainTracksRenderObjClass::init( Real width, Real length, const Char *texturename)
-{	
-	freeTerrainTracksResources();	//free old data and ib/vb
-
-	m_boundingSphere.Init(Vector3(0,0,0),400*MAP_XY_FACTOR);
-	m_boundingBox.Center.Set(0.0f, 0.0f, 0.0f);
-	m_boundingBox.Extent.Set(400.0f*MAP_XY_FACTOR, 400.0f*MAP_XY_FACTOR, 1.0f);
-	m_width=width;
-	m_length=length;
-	//no sense culling these things since they have very irregular shape and fade
-	//out over time.
-	Set_Force_Visible(TRUE);
-	m_stageZeroTexture=WW3DAssetManager::Get_Instance()->Get_Texture(texturename);
-}
+// Exact BFME track-object init is provided by TerrainTracksRenderObjClassInit.cpp.
 
 //=============================================================================
 // TerrainTracksRenderObjClass::addCapEdgeToTrack
