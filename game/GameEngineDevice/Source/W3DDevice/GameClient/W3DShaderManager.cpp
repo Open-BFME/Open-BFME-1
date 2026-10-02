@@ -1007,47 +1007,8 @@ Int ScreenCrossFadeFilter::init(void)
 	return TRUE;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ScreenCrossFadeFilterUpdateFadeLevelThunk.cpp
-// ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ present-unmatched
-Bool ScreenCrossFadeFilter::updateFadeLevel(void)
-{
-	if (m_fadeDirection > 0)
-	{	//turning effect on
-		m_curFadeFrame++;
-		Int fade = m_curFadeFrame;
-
-		if (fade<m_fadeFrames)
-		{
-			m_curFadeValue = (Real)fade/(Real)m_fadeFrames;
-		}
-		else
-		{
-			m_curFadeFrame = 0;
-			m_curFadeValue = 1.0f;
-			m_fadeDirection = 0;
-			return false;
-		}
-	}
-	else
-	if (m_fadeDirection < 0)
-	{	//turning effect off
-		Int fade = m_curFadeFrame;
-		if (fade<m_fadeFrames)
-		{
-			m_curFadeValue = 1.0f - (Real)fade/(Real)m_fadeFrames;
-			m_curFadeFrame++;
-		}
-		else
-		{	m_curFadeValue = 0.0f;
-			TheTacticalView->setViewFilterMode(FM_NULL_MODE);
-			TheTacticalView->setViewFilter(FT_NULL_FILTER);
-			m_curFadeFrame = 0;
-			m_fadeDirection = 0;
-			return false;
-		}
-	}
-	return true;
-}
+// The byte-verified updateFadeLevel definition belongs to
+// ScreenCrossFadeFilterUpdateFadeLevelThunk.cpp.
 
 Bool ScreenCrossFadeFilter::preRender(Bool &skipRender, CustomScenePassModes &scenePassMode)
 {

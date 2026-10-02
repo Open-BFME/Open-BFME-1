@@ -142,42 +142,8 @@ void W3DSnowManager::update(void)
 	extraTail();
 }
 
-void W3DSnowManager::extraAfterFmod(void)
-{
-	const WeatherSetting *ov = walkSnowOverride(TheWeatherSetting.ptr);
-	if (ov->m_flag58 == 0)
-		return;
-
-	if (m_98 != 0)
-	{
-		int state = m_98;
-		int frame;
-		int state94 = 2;
-		if (state == 1 || state == 3)
-			--m_4c;
-		sibling();
-		if (m_94 == state94)
-		{
-			frame = g_bfmeGlo012F0FE0->m_frame;
-			if (frame != state94)
-			{
-				m_98 = 3;
-				ov = walkSnowOverride(TheWeatherSetting.ptr);
-				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
-				m_94 = frame;
-			}
-		}
-	}
-	else
-	{
-		int frame = g_bfmeGlo012F0FE0->m_frame;
-		if (frame == 2 && m_94 != 2)
-		{
-			m_94 = frame;
-			copyFromOverride();
-		}
-	}
-}
+// The byte-verified extraAfterFmod definition belongs to
+// W3DSnowManagerExtraAfterFmod.cpp.
 
 // ?extraTail@W3DSnowManager@@QAEXXZ present-unmatched (retail 0x00723B60 via thunk
 // 0x000092AF, still held by the ?d_00723b60 gen-dump row)

@@ -4,20 +4,20 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class ScreenCrossFadeFilter
 {
+    friend class ScreenCrossFadeFilterUpdateFadeLevelShim;
+
 protected:
     bool updateFadeLevel();
+    static float m_curFadeValue;
+    static int m_fadeDirection;
+    static int m_fadeFrames;
+    static int m_curFadeFrame;
 };
 
 class ScreenCrossFadeFilterUpdateFadeLevelShim
 {
 public:
     bool update();
-
-private:
-    static float m_curFadeValue;
-    static int m_fadeDirection;
-    static int m_fadeFrames;
-    static int m_curFadeFrame;
 };
 
 class TacticalViewFadeShim
@@ -84,30 +84,30 @@ bool ScreenCrossFadeFilter::updateFadeLevel()
 
 bool ScreenCrossFadeFilterUpdateFadeLevelShim::update()
 {
-    if (m_fadeDirection > 0) {
-        ++m_curFadeFrame;
-        int fade = m_curFadeFrame;
+    if (ScreenCrossFadeFilter::m_fadeDirection > 0) {
+        ++ScreenCrossFadeFilter::m_curFadeFrame;
+        int fade = ScreenCrossFadeFilter::m_curFadeFrame;
 
-        if (fade < m_fadeFrames) {
-            m_curFadeValue = (float)fade / (float)m_fadeFrames;
+        if (fade < ScreenCrossFadeFilter::m_fadeFrames) {
+            ScreenCrossFadeFilter::m_curFadeValue = (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
         } else {
-            m_curFadeFrame = 0;
-            m_curFadeValue = 1.0f;
-            m_fadeDirection = 0;
+            ScreenCrossFadeFilter::m_curFadeFrame = 0;
+            ScreenCrossFadeFilter::m_curFadeValue = 1.0f;
+            ScreenCrossFadeFilter::m_fadeDirection = 0;
             return false;
         }
-    } else if (m_fadeDirection < 0) {
-        int fade = m_curFadeFrame;
+    } else if (ScreenCrossFadeFilter::m_fadeDirection < 0) {
+        int fade = ScreenCrossFadeFilter::m_curFadeFrame;
 
-        if (fade < m_fadeFrames) {
-            m_curFadeValue = 1.0f - (float)fade / (float)m_fadeFrames;
-            ++m_curFadeFrame;
+        if (fade < ScreenCrossFadeFilter::m_fadeFrames) {
+            ScreenCrossFadeFilter::m_curFadeValue = 1.0f - (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
+            ++ScreenCrossFadeFilter::m_curFadeFrame;
         } else {
-            m_curFadeValue = 0.0f;
+            ScreenCrossFadeFilter::m_curFadeValue = 0.0f;
             ((TacticalViewFadeShim *)TheTacticalView)->setViewFilterMode(0);
             ((TacticalViewFadeShim *)TheTacticalView)->setViewFilter(0);
-            m_curFadeFrame = 0;
-            m_fadeDirection = 0;
+            ScreenCrossFadeFilter::m_curFadeFrame = 0;
+            ScreenCrossFadeFilter::m_fadeDirection = 0;
             return false;
         }
     }
