@@ -1,5 +1,5 @@
 // ?_bfme_showEndGameScreen@VictoryConditions@@UAEXABVAsciiString@@_N00@Z
-// partial score=0.99 date=2026-09-15
+// partial score=0.9966 date=2026-09-15
 // ?_bfme_showEndGameScreen@VictoryConditions@@UAEXABVAsciiString@@_N00@Z
 // cl: /DNDEBUG /MD /EHsc
 

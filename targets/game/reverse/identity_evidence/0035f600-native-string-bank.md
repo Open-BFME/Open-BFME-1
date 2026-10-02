@@ -1,0 +1,9 @@
+# RVA 0x0035F600: native-string bank correction
+
+The preferred bank fabricates `UnicodeString::m_pad[4]`, making the four-byte native string eight bytes. This is not supported by the canonical `game/Libraries/Source/WWVegas/WWLib/unicode_string.h`, the one-pointer string representation, or the retail releaseBuffer call at 0x008881D0. A one-byte saved-ESP near miss using that invented layout must not be treated as a clean conversion.
+
+Starting from that bank and adopting canonical AsciiString, UnicodeString and StringBase produces 295 bytes with fourteen non-relocation differences. The instruction sequence is unchanged; stack allocation shrinks from retail 12 to 8 bytes, and the Unicode return temporary shares a dead argument slot. Defining the native Unicode destructor inline in the TU preserves its retail direct StringBase<unsigned short>::releaseBuffer call. No shared-header change was made.
+
+Twelve bounded alternatives covering named/reference/full-expression result lifetimes and native AsciiString versus the bank's label wrapper did not improve the native-layout candidate. The preferred higher-score bank remains for historical comparison; the corrected-layout source is archived separately. This evidence does not approve the bank's GameTextLabel type name or its guessed end-game method name.
+
+Existing vtable/caller evidence anchors the owner to VictoryConditions (vtable VA 0x010E8D90 slot 18). No strict full-method-name witness was established in this session; the corrected candidate uses `VictoryConditions::rva0035F600`. Retail prologue is at 0x0035F600 and RET16 ends at +0x127, followed by INT3. Direct targets were checked with callees.py: ILT 0x0000BDCA -> 0x0046CBF0, ILT 0x00015235 -> 0x004675F0, and native char/wide StringBase construction and destruction. This is bank evidence, not a new source or identity claim.
