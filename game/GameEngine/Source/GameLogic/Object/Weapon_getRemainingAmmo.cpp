@@ -9,10 +9,14 @@ typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 typedef bool Bool;
 
-class ObjectFilter
+// This view matches the retail definition in BfmeConv1961.cpp. The
+// 0x000413B2 thunk used here routes to BfmeHostERT::bfmeQueryERT.
+class BfmeHostERT
 {
 public:
-	Bool isValid() const;
+	char bfmeQueryERT();
+
+	int m_bfmeIndexERT;
 };
 
 class BfmeAmmoProvider
@@ -34,7 +38,7 @@ public:
 	virtual void slot52(); virtual void slot53(); virtual void slot54(); virtual void slot55();
 	virtual void slot56(); virtual void slot57(); virtual void slot58(); virtual void slot59();
 	virtual void slot60(); virtual void slot61(); virtual void slot62(); virtual void slot63();
-	virtual UnsignedInt getRemainingAmmo(const ObjectFilter *descriptor);
+	virtual UnsignedInt getRemainingAmmo(const BfmeHostERT *descriptor);
 };
 
 class Object
@@ -60,7 +64,7 @@ class WeaponTemplate
 {
 public:
 	char m_padding[0x4e8];
-	ObjectFilter m_ammoDescriptor;
+	BfmeHostERT m_ammoDescriptor;
 };
 
 enum WeaponStatus
@@ -89,8 +93,8 @@ extern "C" void _ReadWriteBarrier(void);
 
 UnsignedInt Weapon::getRemainingAmmo(Bool countReloadingAsEmpty) const
 {
-	const WeaponTemplate *weaponTemplate = m_template;
-	if (weaponTemplate->m_ammoDescriptor.isValid())
+	WeaponTemplate *weaponTemplate = m_template;
+	if (weaponTemplate->m_ammoDescriptor.bfmeQueryERT())
 	{
 		Object *owner = TheGameLogic->findObjectByID(m_ownerID);
 		BfmeAmmoProvider *provider = owner ? owner->getAmmoProvider() : 0;
