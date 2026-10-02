@@ -45,8 +45,14 @@ public:
 };
 
 extern Gen_01306F18 *g_01306F18;
-extern Gen_01307178 *g_01307178;
 extern Gen_01306DF0 *g_01306DF0;
+
+// 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
+// spelled by its defining name here.  No header declares the class, so only a
+// forward declaration is needed: the body this TU calls is still ledger-named
+// Gen_01307178 (the 0x0000F9B6 thunk to 0x007C1180), and that view is kept.
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShadow.h
 class W3DShadowManager
@@ -63,7 +69,7 @@ Bool W3DShadowManager::ReAcquireResources( void )
 	if (g_01306F18 && !g_01306F18->ReAcquireResources())
 		ok = FALSE;
 
-	if (g_01307178 && !g_01307178->ReAcquireResources())
+	if ((Gen_01307178 *)TheW3DShadowHelperManager && !((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources())
 		ok = FALSE;
 
 	if (g_01306DF0 && !g_01306DF0->ReAcquireResources())

@@ -63,14 +63,21 @@ public:
 class GenGamma { public: S3_H(0004AB42) S3_H(000131E2) S3_H(0001FE8D) S3_H(00048C70) S3_H(0000C919) };
 
 extern GenAlpha *TheAlpha;
-extern GenBeta  *TheBeta;
 extern GenGamma *TheGamma;
+
+// 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
+// spelled by its defining name here.  No header declares the class, so only a
+// forward declaration is needed: the five bodies this TU calls are still
+// ledger-named GenBeta, and that view is kept through the casts below.
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 
 #define S3_TRIPLE( NAME, A, B, C )                                        \
 	void NAME()                                                           \
 	{                                                                     \
 		if( TheAlpha ) TheAlpha->h##A();                                  \
-		if( TheBeta )  TheBeta->h##B();                                   \
+		if( TheW3DShadowHelperManager )                                   \
+			((GenBeta *)TheW3DShadowHelperManager)->h##B();               \
 		if( TheGamma ) TheGamma->h##C();                                  \
 	}
 
