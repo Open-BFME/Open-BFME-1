@@ -15,11 +15,8 @@ typedef int Int;
 class Parameter
 {
 public:
-	Int getInt() const { return m_int; }
-	float getReal() const { return m_real; }
-	const AsciiString &getString() const { return m_string; }
-
-private:
+	// Retail inlines these field reads in this caller. Direct access avoids
+	// emitting getter COMDATs that compete with other Parameter layouts.
 	char m_unknown[8];
 	Int m_int;
 	float m_real;
@@ -95,14 +92,14 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 	Bool copyCounter, Bool seconds)
 {
 	ScriptCounter *counter = bfmeCounter(
-		action->getParameter(0)->getString());
+		action->getParameter(0)->m_string);
 	if (!counter)
 		return;
 
 	if (copyCounter)
 	{
 		const ScriptCounter *source = reinterpret_cast<const ScriptCounter *>(
-			((Open2Lookup344B20 *)this)->findFlag(action->getParameter(1)->getString()));
+			((Open2Lookup344B20 *)this)->findFlag(action->getParameter(1)->m_string));
 		if (source)
 		{
 			counter->m_value = source->m_value;
@@ -115,8 +112,8 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 		float value;
 		if (random)
 		{
-			value = action->getParameter(1)->getReal();
-			float randomValue = action->getParameter(2)->getReal();
+			value = action->getParameter(1)->m_real;
+			float randomValue = action->getParameter(2)->m_real;
 			if (random == 1)
 				value = GetGameLogicRandomValueReal(value, randomValue,
 					"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp",
@@ -127,7 +124,7 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 					0x70d);
 		}
 		else
-			value = action->getParameter(1)->getReal();
+			value = action->getParameter(1)->m_real;
 		counter->m_value = rva00345a50FloatToLong(
 			(float)ceil((double)(value * 5.0f)));  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 		counter->m_isMillisecondTimer = true;
@@ -137,8 +134,8 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 	Int value;
 	if (random)
 	{
-		value = action->getParameter(1)->getInt();
-		Int randomValue = action->getParameter(2)->getInt();
+		value = action->getParameter(1)->m_int;
+		Int randomValue = action->getParameter(2)->m_int;
 		if (random == 1)
 			value = GetGameLogicRandomValue(value, randomValue,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp",
@@ -149,7 +146,7 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 				0x727);
 	}
 	else
-		value = action->getParameter(1)->getInt();
+		value = action->getParameter(1)->m_int;
 	counter->m_value = value;
 	counter->m_isMillisecondTimer = false;
 }
