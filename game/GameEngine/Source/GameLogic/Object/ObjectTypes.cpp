@@ -47,13 +47,6 @@ struct BfmeThingFactory { const ThingTemplate *findTemplate(const AsciiString &n
 
 //-------------------------------------------------------------------------------------------------
 // ??0ObjectTypes@@ present-unmatched
-ObjectTypes::ObjectTypes()
-{
-	// Nada
-}
-
-//-------------------------------------------------------------------------------------------------
-// ??0ObjectTypes@@ present-unmatched
 ObjectTypes::ObjectTypes(const AsciiString& listName) : m_listName(listName)
 {
 	// Nada

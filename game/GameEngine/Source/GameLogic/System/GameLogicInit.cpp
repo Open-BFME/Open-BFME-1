@@ -167,7 +167,7 @@ public:
 
 	void setDefaults(Bool loadingSaveGame);
 
-	void resetPlayerLeaveStatus(void)
+	void resetPlayerLeaveStatusForInit(void)
 	{
 		for (int index = 0; index < 8; ++index)
 		{
@@ -291,6 +291,6 @@ void GameLogic::init(void)
 	m_field44 = 0;
 	m_list4C.clear();
 
-	TheGameLogic->resetPlayerLeaveStatus();
+	TheGameLogic->resetPlayerLeaveStatusForInit();
 	m_field290 = 2;
 }
