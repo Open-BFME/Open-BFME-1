@@ -1,4 +1,12 @@
 class BfmeMsgXI;
+class AttributeModifierPoolUpdate;
+
+#define OBJECT_TU_MEMBERS \
+	private: \
+	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const; \
+	friend class BfmeOwnerXI;
+#include "object.h"
+#undef OBJECT_TU_MEMBERS
 
 class BfmeKindXI
 {
@@ -167,8 +175,6 @@ class BfmeOwnerXI
 public:
 	void bfmeSendXI(BfmeMsgXI *msg);
 
-	BfmeTargetXI *bfmeFindXI();
-
 	unsigned char m_bfmeHeadXI[0x1fc];
 	BfmeHubXI *m_bfmeHubXI;
 };
@@ -198,7 +204,8 @@ void BfmeOwnerXI::bfmeSendXI(BfmeMsgXI *msg)
 		}
 	}
 
-	BfmeTargetXI *other = bfmeFindXI();
+	BfmeTargetXI *other = (BfmeTargetXI *)
+		((const Object *)this)->findAttributeModifierPoolUpdate();
 
 	if (other != 0)
 		other->bfmeUseXI(msg);

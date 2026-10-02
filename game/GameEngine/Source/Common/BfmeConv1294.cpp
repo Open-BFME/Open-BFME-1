@@ -1,10 +1,13 @@
 // Open-BFME5 conversions.
 
-class BfmeSetterSLA
-{
-public:
-	void bfmeSetSLA(void *p, int v);
-};
+template <int NUMBITS>
+class BitFlags;
+
+#define OBJECT_TU_MEMBERS void setStatus(const BitFlags<86> &objectStatus, bool set);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
+class BfmeSetterSLA;
 
 class BfmeThingSLA
 {
@@ -16,13 +19,17 @@ public:
 void BfmeThingSLA::bfmeOneSLA()
 {
 	BfmeSetterSLA *s = *(BfmeSetterSLA **)((char *)this - 8);
-	s->bfmeSetSLA(*(char **)((char *)this - 0xc) + 0x70, 1);
-	s->bfmeSetSLA(*(char **)((char *)this - 0xc) + 0x7c, 0);
+	((Object *)s)->setStatus(
+		*(BitFlags<86> *)(*(char **)((char *)this - 0xc) + 0x70), true);
+	((Object *)s)->setStatus(
+		*(BitFlags<86> *)(*(char **)((char *)this - 0xc) + 0x7c), false);
 }
 
 void BfmeThingSLA::bfmeTwoSLA()
 {
 	BfmeSetterSLA *s = *(BfmeSetterSLA **)((char *)this - 8);
-	s->bfmeSetSLA(*(char **)((char *)this - 0xc) + 0x70, 0);
-	s->bfmeSetSLA(*(char **)((char *)this - 0xc) + 0x7c, 1);
+	((Object *)s)->setStatus(
+		*(BitFlags<86> *)(*(char **)((char *)this - 0xc) + 0x70), false);
+	((Object *)s)->setStatus(
+		*(BitFlags<86> *)(*(char **)((char *)this - 0xc) + 0x7c), true);
 }
