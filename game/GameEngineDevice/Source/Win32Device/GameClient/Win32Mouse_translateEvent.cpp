@@ -5,7 +5,7 @@
 
 #include "Common/Debug.h"
 
-extern HWND ApplicationHWnd;
+HWND ApplicationHWnd = NULL;
 
 typedef unsigned int UnsignedInt;
 typedef short Short;
