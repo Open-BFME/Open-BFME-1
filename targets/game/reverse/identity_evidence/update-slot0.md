@@ -426,3 +426,40 @@ an alias to CommandLine.cpp's unrelated parseNoLogOrCrash constant body.
 Replace that row with a dedicated owner TU; retain CommandLine.cpp for its
 actual command-line functions. No field, callee name, or inherited identity
 is inferred from the constant value. No shared header or pin changes.
+
+## ContestableContain update (0021D4A0)
+
+Registered literal `ContestableContain` at `00C90A18`, registration `0012D126`,
+and factory `001165C0` (call `001165FE` via ILT `00033D48`) identify constructor
+`0021BEE0`. Its final +10 vptr store at `0021BF1E` installs VA `010AB2E8`.
+Slot zero uniquely contains ILT `000192D6` -> `0021D4A0`; slot one contains
+the common `0004985F` -> `0011A130`. The proven labeled/aligned update family
+therefore fixes this as public virtual non-const `ContestableContain::update`,
+returning UpdateSleepTime. The body is a distinct override, not its inherited
+GarrisonContain implementation. RETs at `0021D4EB` and `0021D4F8`, followed by
+INT3 at `0021D4F9`, bound its 89 bytes.
+
+The constructor calls at `0021BF0A` via `00037FAB` -> `00248F90`, the matched
+HordeGarrisonContain constructor; that constructor calls at `00248FB9` via
+`0001934E` -> `0021D820`, the matched GarrisonContain constructor. The new TU
+preserves this inheritance chain as storage-free declaration views above the
+real GarrisonContain header; no complete BFME derived layout is asserted.
+
+Replace untyped thunk casts with the existing callee declarations:
+
+- `0001B8C4` -> `0021F920`, matched GarrisonContain::update, receives the
+  unchanged update-interface ECX and returns the four-byte enum. Its 158-byte
+  interval ends at RET `0021F9BD` then INT3.
+- `0002F919` -> `0021BCA0`, existing ContestableContain::updateContestStatus,
+  receives complete-object ECX (update receiver -10). Its 92-byte interval
+  ends at RET `0021BCFB` then INT3; no stack arguments.
+- `000480CC` -> `0021D180`, existing opaque Rva0021D180::body, also receives
+  complete-object ECX, has no stack arguments, and ends at RET `0021D2F6`
+  then INT3 after 375 bytes. No historical helper name is proposed.
+
+The headers' +14 update receiver is handled explicitly when reconstructing
+retail primary pointers; raw list/cache offsets remain unchanged relative
+to the incoming interface receiver. The secondary predicate retains its
+address-derived view and receives no new semantic name. Exact verification
+covers the replacement's complete 89-byte extent with no new pins or header
+edits. Remove only the superseded one-body Rva0021D4A0ContestableState.cpp.
