@@ -2372,35 +2372,8 @@ Bool NetPacket::isRoomForProgressMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room for this player disconnect command in this packet.
  */
-Bool NetPacket::isRoomForDisconnectVoteMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetDisconnectVoteCommandMsg *cmdMsg = (NetDisconnectVoteCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
+// isRoomForDisconnectVoteMessage is defined in NetPacket_isRoomForFrameFamily.cpp.
 
-	++len; // the 'D'
-	len += sizeof(UnsignedByte); // slot number
-	len += sizeof(UnsignedInt); // vote frame
-
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 // ?addDisconnectChatCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectChatCommand(NetCommandRef *msg) {
@@ -2802,34 +2775,8 @@ Bool NetPacket::isRoomForPacketRouterQueryMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room for this player disconnect command in this packet.
  */
-Bool NetPacket::isRoomForDisconnectPlayerMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetDisconnectPlayerCommandMsg *cmdMsg = (NetDisconnectPlayerCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
+// isRoomForDisconnectPlayerMessage is defined in NetPacket_isRoomForFrameFamily.cpp.
 
-	++len; // the 'D'
-	len += sizeof(UnsignedByte); // slot number
-	len += sizeof(UnsignedInt);	// disconnectFrame
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 
 /**
@@ -3002,36 +2949,8 @@ Bool NetPacket::isRoomForRunAheadMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room for this DestroyPlayer command in this packet.
  */
-Bool NetPacket::isRoomForDestroyPlayerMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetDestroyPlayerCommandMsg *cmdMsg = (NetDestroyPlayerCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
+// isRoomForDestroyPlayerMessage is defined in NetPacket_isRoomForFrameFamily.cpp.
 
-	++len; // for 'D'
-	len += sizeof(UnsignedInt);
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 /**
  * Add a run ahead metrics command to the packet. Returns true if successful.
@@ -3302,36 +3221,8 @@ Bool NetPacket::addFrameCommand(NetCommandRef *msg) {
 /**
  * Returns true if there is enough room in this packet for this frame message.
  */
-Bool NetPacket::isRoomForFrameMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetFrameCommandMsg *cmdMsg = (NetFrameCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
+// isRoomForFrameMessage is defined in NetPacket_isRoomForFrameFamily.cpp.
 
-	++len; // for 'D'
-	len += sizeof(UnsignedShort);
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 // ?isFrameRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isFrameRepeat(NetCommandRef *msg) {
