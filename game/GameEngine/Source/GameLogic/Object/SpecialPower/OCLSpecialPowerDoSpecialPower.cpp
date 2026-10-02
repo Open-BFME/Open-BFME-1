@@ -1,11 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// OCLSpecialPowerInterface::doSpecialPower, retail RVA 0x00262DA0 -- what the
+// OCLSpecialPower::doSpecialPower, retail RVA 0x00262DA0 -- what the
 // OCLSpecialPower module does when its power fires.
 //
-// Identity: ??0OCLSpecialPower@@ stores vftable 0x00CB6010 at object offset
-// +0x10, and this body is that table's doSpecialPower slot (the slot the shared
-// base body 0x0026A550 occupies in every other power's table).  `this` is
+// Identity: OCLSpecialPower's registered constructor 0x002628E0 stores the
+// SpecialPowerModuleInterface table 0x010B6010 at +0x10, and this body is that
+// table's slot 11 (ILT 0x0000B00A, whose VA appears once in the image), the
+// slot Object::doSpecialPower (0x001C3790) calls as doSpecialPower. The shared
+// base body 0x0026A550 holds the same slot in every non-overriding power's table.
+// Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md  `this` is
 // therefore the SpecialPowerModuleInterface sub-object; -0x08 is the Object and
 // -0x10 the OCLSpecialPower module, whose findOCL is already named at
 // 0x00262BC0.
@@ -33,35 +36,33 @@ struct ObjectFields
 };
 
 class Object;
-class OCLSpecialPowerInterface;
+class OCLSpecialPower;
 
+// Polymorphic so the derived override below shares its vptr at +0 and the
+// direct base call takes `this` unadjusted.
 class SpecialPowerModuleInterface
 {
 public:
+	virtual void slot00();
 	void doSpecialPowerAtLocation( const Coord3D *loc, unsigned int commandOptions );
 };
 
 class ObjectCreationList
 {
 	private:
-	friend class OCLSpecialPowerInterface;
+	friend class OCLSpecialPower;
 	Object *createInternal( const Object *primaryObj, const Coord3D *primary,
 		const Coord3D *secondary, float angle, unsigned int lifetimeFrames ) const;
 };
 
-class OCLSpecialPower
+class OCLSpecialPower : public SpecialPowerModuleInterface
 {
 public:
+	virtual void doSpecialPower( unsigned int commandOptions );
 	const ObjectCreationList *findOCL() const;
 };
 
-class OCLSpecialPowerInterface : public SpecialPowerModuleInterface
-{
-public:
-	void doSpecialPower( unsigned int commandOptions );
-};
-
-void OCLSpecialPowerInterface::doSpecialPower( unsigned int commandOptions )
+void OCLSpecialPower::doSpecialPower( unsigned int commandOptions )
 {
 	ObjectFields *owner = *(ObjectFields **)( (char *)this - 8 );
 	if ( owner->m_disabledMask == 0 )

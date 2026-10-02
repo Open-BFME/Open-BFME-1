@@ -30,7 +30,10 @@ BFME's `Object::doSpecialPower` (0x001C3790) matches Zero Hour's
 `[edx+0x30]` with (obj, commandOptions). Slot 12 (+0x30) is
 `doSpecialPowerAtObject(Object *, UnsignedInt)`.
 
-Every slot-11 body ends `ret 4` and every slot-12 body ends `ret 8`. Zero
+Every slot-11 body ends `ret 4`. The slot-12 bodies end `ret 8`, except two that
+tail-jump to slot 13 with their own two stack arguments in place
+(DevastateSpecialPower 0x0025A910 and PlayerHealSpecialPower 0x00263B80:
+`add [esp+4],0x38` turns obj into &obj->position, then `jmp [eax+0x34]`). Zero
 Hour declares both `public:` virtuals in SpecialPowerModule and its
 subclasses, so they mangle `?doSpecialPower@<C>@@UAEXI@Z` and
 `?doSpecialPowerAtObject@<C>@@UAEXPAVObject@@I@Z`. The matched rows
