@@ -267,7 +267,12 @@ public:
 	char m_unmodelled_0000[0xbb9];
 	Bool m_loadScreenRender;
 };
-extern VideoPlayer *TheVideoPlayer;
+// retail global 0x0130B190, defined by
+// game/GameEngine/Source/GameClient/VideoPlayer.cpp under its defining
+// spelling ?TheVideoPlayer@@3PAVVideoPlayerInterface@@A; the slot model below
+// supplies open().
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
 extern Display *TheDisplay;
 extern GameEngine *TheGameEngine;
 extern GlobalData *TheWritableGlobalData;
@@ -344,7 +349,7 @@ static WindowLayout *s_blankLayout = 0;					///< retail [0x012F4184]
 // VideoPlayer::open uses vtable slot 12. Retail body 0x0081C7B0 releases the title and returns with ret 8.
 void PlayMovieAndBlock(AsciiString movieTitle)
 {
-	VideoStreamInterface *videoStream = ((ScoreScreenVideoPlayerSlots *)TheVideoPlayer)->open(movieTitle, 0);
+	VideoStreamInterface *videoStream = reinterpret_cast<ScoreScreenVideoPlayerSlots *>(TheVideoPlayer)->open(movieTitle, 0);
 	if (videoStream != 0)
 	{
 		if (!((ScoreScreenStreamSlot14 *)videoStream)->slot14(

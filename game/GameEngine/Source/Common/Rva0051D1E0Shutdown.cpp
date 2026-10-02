@@ -160,7 +160,13 @@ public:
 extern WindowManager *g_rva012F19E8WindowManager;
 extern Shell *TheShell;
 extern Display *TheDisplay;
-extern VideoPlayer *TheVideoPlayer;
+// TheVideoPlayer is retail global 0x0130B190, defined by
+// game/GameEngine/Source/GameClient/VideoPlayer.cpp under its defining
+// spelling ?TheVideoPlayer@@3PAVVideoPlayerInterface@@A.  TheVideoPlayer.h is
+// not included here, so the type stays a forward declaration and the slot call
+// keeps going through the local VideoPlayer model.
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
 extern GameLogic *TheBfmeGameLogic;
 extern Gen_00609320 *g_bfmeStateDF;
 extern MessageStream *TheMessageStream;
@@ -174,7 +180,7 @@ int Rva0051D1E0Shutdown(Bool mode, void *unused, Bool enabled)
         g_rva012F19E8WindowManager->unidentified_000144bb(-1);
         TheShell->hide(true);
         TheDisplay->m_displayFlag = true;
-        TheVideoPlayer->slot17();
+        reinterpret_cast<VideoPlayer *>(TheVideoPlayer)->slot17();
         TheBfmeGameLogic->bfmeFallback961(0, 0);
         g_bfmeStateDF->slot04(result);
         GameMessage *message = TheMessageStream->appendMessage(0x1f);
