@@ -158,11 +158,6 @@ int Rva00217E20::get( void ) const
 	return m_value;
 }
 
-// ?Rva00218080@@YA_NXZ
-bool __cdecl Rva00218080( void )
-{
-	return true;
-}
 
 class Rva00218180
 {
