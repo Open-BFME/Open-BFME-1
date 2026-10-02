@@ -20,7 +20,10 @@ enum ObjectID
 {
 	INVALID_ID = 0
 };
-typedef int NameKeyType;
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0
+};
 
 class ModuleData
 {
@@ -66,7 +69,8 @@ protected:
 	const AsciiString &getName() const { return m_name; } \
 	Object *getNextObject() const { return m_next; } \
 	bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; } \
-	Module *findModule(NameKeyType key) const;
+	friend class GateOpenAndCloseBehavior; \
+	protected: Module *findModule(NameKeyType key) const;
 #include "../object.h"
 #undef OBJECT_TU_MEMBERS
 

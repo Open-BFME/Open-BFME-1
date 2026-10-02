@@ -39,6 +39,8 @@ class PartitionFilterThing : public PartitionFilter
 public:
 	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
 		: m_thingTemplate(thingTemplate), m_match(match) { }
+
+protected:
 	virtual Bool allow(Object *object);
 
 private:
@@ -51,6 +53,8 @@ class PartitionFilterPlayer : public PartitionFilter
 public:
 	PartitionFilterPlayer(const Player *player, Bool match)
 		: m_player(player), m_match(match) { }
+
+protected:
 	virtual Bool allow(Object *object);
 
 private:
