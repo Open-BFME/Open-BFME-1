@@ -5,7 +5,8 @@
 class StringClass
 {
 public:
-	void Format(const char *format, ...);
+	// Retail's StringClass::Format returns the formatted length; the caller ignores it.
+	int Format(const char *format, ...);
 	StringClass &operator=(const char *text);
 
 private:
