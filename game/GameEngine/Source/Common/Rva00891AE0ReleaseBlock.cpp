@@ -11,10 +11,10 @@ struct BfmeStringPool3AF0
     void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 void bfmeRva00891AE0ReleaseBlock(BfmeStringData3AF0 *block)
 {
     if (--block->m_refCount == 0)
-        g_bfmeStringPool1284->free(block);
+        g_rva01337A30AllocPair->free(block);
 }
