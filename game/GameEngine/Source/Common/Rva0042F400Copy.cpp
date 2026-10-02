@@ -1,21 +1,10 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob1
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-// Retail's AsciiString adds no members of its own to StringBase<char> and this
-// file only copies one, which retail encodes as a direct call to the base copy
-// ctor at 0x00887B60. This TU is compiled /Ob0, so nothing here may rely on a
-// forwarder being inlined away: the member is spelled as the base it copies.
-template <typename T>
-class StringBase
-{
-public:
-	StringBase(const StringBase<T> &src);
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	void *m_data;
-};
-
-typedef StringBase<char> AsciiString;
+// AsciiString adds no members to StringBase<char>; its inline copy constructor
+// calls the retail StringBase copy constructor at 0x00887B60.
 
 class Rva0042F400
 {

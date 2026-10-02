@@ -1,10 +1,9 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva00630D00UStr
 {
-public:
-	Rva00630D00UStr &operator=(const Rva00630D00UStr &other);
-
 private:
 	void *m_item;
 };
@@ -26,5 +25,6 @@ void Rva005A0430::copy()
 {
 	m_08 = 0;
 	m_09 = 0;
-	m_30 = m_2C;
+	reinterpret_cast<StringBase<unsigned short> *>(&m_30)->set(
+		*reinterpret_cast<const StringBase<unsigned short> *>(&m_2C));
 }

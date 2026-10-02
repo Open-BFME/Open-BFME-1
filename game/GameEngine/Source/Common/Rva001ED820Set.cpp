@@ -1,10 +1,8 @@
 // cl: /O2 /Ob0
 
-class RetailLayoutString
-{
-public:
-	void set(const char *text, int length);
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+typedef StringBase<char> RetailLayoutString;
 
 class Rva001ED820
 {
