@@ -5,7 +5,8 @@ is 0x007AA86D inside 0x007AA820. At 0x007AA86A that caller pushes EDI and
 at 0x007AA86B sets ECX = ESI, preserving its complete receiver for this helper.
 It calls this path when byte [EDI+4] is set; otherwise it processes pairs of
 12-byte vertices from [EDI+0x54], using count [EDI+0x58]. The caller traverses
-a node list whose sentinel is receiver +0x2AC. These are native object/layout
+a node list whose sentinel pointer is stored at receiver +0x2AC (the load at
+0x007AA826). The sentinel itself is an allocated node, not an embedded field. These are native object/layout
 facts; they do not recover a C++ owner or original helper spelling.
 
 The caller is reached through ILT 0x000243B6 by matched address-qualified
