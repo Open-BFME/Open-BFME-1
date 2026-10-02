@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc -Igame/Libraries/Source/WWVegas/WW3D2 -Igame/Libraries/Source/WWVegas/WWMath -Igame/Libraries/Source/WWVegas/WWLib -Igame/Libraries/Source/WWVegas/WWDebug -Igame/Libraries/Source/WWVegas/WWSaveLoad -Iinputs/reference/shims/sweep
 // readable body of ?Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ: game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
 // readable body of ?Get_Value@RingRenderObjClass@@UBEMXZ: game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
 // readable body of ?Prepare_LOD@RingRenderObjClass@@UAEXAAVCameraClass@@@Z: game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
@@ -7,9 +7,13 @@
 // slice is anchored by the real Ring vftable at 0x00D3AD28 and the unique
 // RingRenderObjClass::Get_Cost entry at slot 75.
 
+// Retail 0x0113BD7C is RenderObjClass::AT_MIN_LOD (FLT_MAX, defined in
+// rendobj.cpp); the real header names it.  0x0113BD80 is AT_MAX_LOD (-1.0f)
+// beside it, but was not in this job's name list, so it keeps its extern.
+#include "rendobj.h"
+
 class CameraClass;
 
-extern float g_Va0113BD7C;
 extern float g_Va0113BD80;
 
 #define BFME_VIRTUAL_EIGHT(a, b, c, d, e, f, g, h) \
@@ -77,7 +81,7 @@ void RingRenderObjClass::Prepare_LOD(CameraClass &camera)
 float RingRenderObjClass::Get_Value(void) const
 {
 	if (CurrentLOD == 0) {
-		return g_Va0113BD7C;
+		return RenderObjClass::AT_MIN_LOD;
 	}
 
 	float polygon_count = (float)Get_Num_Polys();

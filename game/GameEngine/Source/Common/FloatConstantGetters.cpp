@@ -1,3 +1,5 @@
+// cl: -Igame/Libraries/Source/WWVegas/WW3D2 -Igame/Libraries/Source/WWVegas/WWMath -Igame/Libraries/Source/WWVegas/WWLib -Igame/Libraries/Source/WWVegas/WWDebug -Igame/Libraries/Source/WWVegas/WWSaveLoad -Iinputs/reference/shims/sweep
+
 // 17 seven-byte functions with one shape:
 //
 //     fld dword ptr [<address>] / ret
@@ -23,11 +25,17 @@
 // them as externals claims only what the bytes show, that the load comes from a
 // fixed address, and the patcher fills the address from retail either way.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+// 0x0113BD7C is not an anonymous global: it is retail's
+// RenderObjClass::AT_MIN_LOD (FLT_MAX, defined in rendobj.cpp), and
+// 0x0113BD80 is AT_MAX_LOD (-1.0f) beside it, but only 0x0113BD7C was in this
+// job's name list, so 0x0113BD80 keeps its address-derived extern.
+//
+// IDENTITY IS NOT RECOVERED.  Every other name is derived from an address.
+
+#include "rendobj.h"
 
 extern float g_Va0112E8AC;
 extern float g_Va0112E8B0;
-extern float g_Va0113BD7C;
 extern float g_Va0113BD80;
 extern float g_Va01307200;
 extern float g_Va01340574;
@@ -89,7 +97,7 @@ float Rva00694C80GetFloat( void )
 
 float Rva006CF590GetFloat( void )
 {
-	return g_Va0113BD7C;
+	return RenderObjClass::AT_MIN_LOD;
 }
 
 float Rva006CF5A0GetFloat( void )
