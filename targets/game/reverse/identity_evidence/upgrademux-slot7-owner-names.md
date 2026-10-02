@@ -40,3 +40,4 @@ are empty overrides (`ret`).
 | MaxHealthUpgrade | 0x002D63A0 | 0x010CD158 | 0x0000AD44 | 0x002D6510 | 46 | `?update@Rva002D6510@@QAEXXZ` | max-health change of slot 9 (0x002D64D0), reversed |
 | DynamicPortalBehaviour | 0x001F8B80 | 0x010A3868 | 0x00025A09 | 0x001F8DD0 | 62 | `?bfmeCloseZJ@BfmeOwnerZJ@@QAEXXZ` | slot 8 with false, then module teardown |
 | TooltipUpgrade | 0x002D93E0 | 0x010CE1A0 | 0x00036750 | 0x002D9570 | 69 | `?bfmeGoUYA@BfmeThingUYA@@QAEXXZ` | clears the two strings slot 9 (0x002D9510) applies, then slot 8 with false |
+| GeometryUpgrade | 0x002D5790 | 0x010CCC48 | 0x00028B69 | 0x002D55F0 | 269 | `?bfmeTeardown002D55F0@Rva002D55F0Owner@@QAEXXZ` | tears down what slot 9 (0x002D5980) sets up |

@@ -1,7 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME: carved body at retail 0x002D55F0 (269 B). Sole caller is an ILT
-// thunk, so identity remains address-derived; the receiver ('this') is an
+// GeometryUpgrade::rva002D55F0, retail 0x002D55F0 (269 B): slot 7 of the
+// UpgradeMux table 0x010CCC48, which GeometryUpgrade's registered constructor
+// 0x002D5790 stores at +0x10; the only route is ILT 0x00028B69, whose VA
+// appears once in the image. Slot 7 is a BFME-only virtual that undoes slot 9
+// (GeometryUpgrade::upgradeImplementation, 0x002D5980); its name is unproven,
+// so the method keeps its address. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
+// The receiver ('this') is the UpgradeMux sub-object, an
 // interior pointer whose sibling fields sit at NEGATIVE offsets (-0x8, -0xC,
 // -0x10), so those are read with raw pointer arithmetic rather than modelled
 // as real members. Callees are pinned/landed: BfmeBaseZJ::bfmeClearZJ,
@@ -128,16 +134,18 @@ public:
 	BfmeStrF9 *m_finish1;
 };
 
-class Rva002D55F0Owner : public BfmeOwnerVtbl
+class GeometryUpgrade : public BfmeOwnerVtbl
 {
+protected:
+	virtual void rva002D55F0();
+
 public:
-	void bfmeTeardown002D55F0();
 
 	unsigned char m_pad04[8];
 	BfmeStrF9 m_inlineName;
 };
 
-void Rva002D55F0Owner::bfmeTeardown002D55F0()
+void GeometryUpgrade::rva002D55F0()
 {
 	if (!canTeardown())
 		return;

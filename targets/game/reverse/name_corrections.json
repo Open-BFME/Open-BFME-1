@@ -15028,5 +15028,25 @@
   "after_sha256": "e753e9df645a52f8b222480fb4f6204c5fbb52402a73ae78ea94159eee8d7676",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva002D55F0Teardown.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/GeometryUpgradeRva002D55F0.cpp",
+  "old_name": "bfmeTeardown002D55F0",
+  "new_name": "rva002D55F0",
+  "before_sha256": "4f2fb0cc4624b17c95174a160a397a100512cc9c3ba000a0f4172a87fe12ad61",
+  "after_sha256": "7a52f69ae98d71b1b2477fb0b2859cea310d0743ce0281b9a25d7140e4791a03",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "bfmeTeardown002D55F0 was a shape name on the address-derived owner Rva002D55F0Owner. The body is slot 7 (ILT 0x00028B69, sole image ref) of GeometryUpgrade's UpgradeMux table 0x010CCC48 (registered ctor 0x002D5790), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeTeardown002D55F0",
+  "new_name": "rva002D55F0",
+  "before_sha256": "b652e93fab77c6046ff16678bf77f8e3098710cf70138eba0455d76ac6dc108b",
+  "after_sha256": "e72f3359141a83aa3a20c3aa58cb06a702ac7718e8becb1a19a4d1fdbf0e2e95",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "bfmeTeardown002D55F0 was a shape name on the address-derived owner Rva002D55F0Owner. The body is slot 7 (ILT 0x00028B69, sole image ref) of GeometryUpgrade's UpgradeMux table 0x010CCC48 (registered ctor 0x002D5790), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
  }
 ]
