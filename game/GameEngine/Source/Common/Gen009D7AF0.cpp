@@ -1,15 +1,9 @@
-// cl: /DNDEBUG /MD /O2
+// cl: /DNDEBUG /MD /O2 /D_STLP_USE_STATIC_LIB
+// stlport
 
 void __cdecl gen009D73D0(void *dest, void *src);
 
-namespace _STL
-{
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int size);
-};
-}
+#include <memory>
 
 struct BfmeHashPair
 {
@@ -71,7 +65,8 @@ public:
 		static_cast<Owner *>(this)->bfmeResize(m_count + 1);
 		unsigned int bucket = Hash()(value.key) % m_buckets.size();
 		BfmeHashNode *head = static_cast<BfmeHashNode *>(m_buckets[bucket]);
-		BfmeHashNode *node = static_cast<BfmeHashNode *>(_STL::__new_alloc::allocate(sizeof(BfmeHashNode)));
+		// Retail 009D7B3D calls pool helper 0082E540 with a 12-byte node.
+		BfmeHashNode *node = static_cast<BfmeHashNode *>(_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeHashNode)));
 		node->next = 0;
 		gen009D73D0(&node->pair, const_cast<BfmeHashPair *>(&value));
 		node->next = head;
