@@ -8,14 +8,19 @@ struct BfmeStringData3AF0
 	unsigned short m_refs;
 };
 
-struct BfmeStringPool3AF0
+// The Apt allocator-hook pair pointer at VA 0x01337A30, defined once by
+// game/Libraries/Source/Apt/Apt.cpp.  Slot +4 is the deallocator this TU calls;
+// the view below is the TU-local spelling of that second slot.
+struct BfmeStringPool3AF0;
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+struct Rva01337A30PoolView
 {
 	void *m_pad;
 	void (__cdecl *m_destroy)(BfmeStringData3AF0 *);
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 struct Rva00892640Item
 {
@@ -45,7 +50,7 @@ Rva00892640Item &Rva00892640Item::operator=(
 	BfmeStringData3AF0 *old = m_handle;
 	--old->m_refs;
 	if (old->m_refs == 0)
-		g_bfmeStringPool1284->m_destroy(old);
+		((Rva01337A30PoolView *)g_rva01337A30AllocPair)->m_destroy(old);
 	m_handle = other.m_handle;
 	m_extra = other.m_extra;
 	return *this;
@@ -56,7 +61,7 @@ Rva00892640Item::~Rva00892640Item()
 	BfmeStringData3AF0 *old = m_handle;
 	--old->m_refs;
 	if (old->m_refs == 0)
-		g_bfmeStringPool1284->m_destroy(old);
+		((Rva01337A30PoolView *)g_rva01337A30AllocPair)->m_destroy(old);
 }
 
 extern Rva00892640Item *Rva00892640CopyItems(

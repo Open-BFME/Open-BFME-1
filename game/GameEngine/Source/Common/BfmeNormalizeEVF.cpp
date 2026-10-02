@@ -12,13 +12,17 @@ struct BfmeHdrVKI
 	unsigned short m_flags;
 };
 
+// The Apt allocator-hook pair pointer at VA 0x01337A30, defined once by
+// game/Libraries/Source/Apt/Apt.cpp.  Slot +4 is the deallocator this TU calls;
+// the view below is the TU-local spelling of that second slot.
+struct BfmeStringPool3AF0;
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
 struct BfmeStringPoolVKI
 {
 	void *m_unused;
 	void (__cdecl *free)(void *);
 };
-
-extern BfmeStringPoolVKI *g_bfmeStringPool1284;
 
 class BfmeStrVKI
 {
@@ -34,7 +38,7 @@ public:
 	{
 		BfmeHdrVKI *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			((BfmeStringPoolVKI *)g_rva01337A30AllocPair)->free(data);
 	}
 
 	BfmeStrVKI &operator=(const BfmeStrVKI &other)
@@ -43,7 +47,7 @@ public:
 
 		BfmeHdrVKI *old = m_data;
 		if (--old->m_refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			((BfmeStringPoolVKI *)g_rva01337A30AllocPair)->free(old);
 
 		m_data = other.m_data;
 		return *this;

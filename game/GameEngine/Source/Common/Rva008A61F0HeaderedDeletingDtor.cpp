@@ -23,7 +23,17 @@ public:
 	~Q4Base00D35D68() { }
 };
 
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// The Apt allocator-hook pair pointer at VA 0x01337A30, defined once by
+// game/Libraries/Source/Apt/Apt.cpp.  Slot +4 is the deallocator this TU calls;
+// the view below is the TU-local spelling of that second slot.
+struct BfmeStringPool3AF0;
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+struct Rva01337A30PoolView
+{
+	void *m_alloc;
+	void (__cdecl *m_release)(void *);
+};
 
 struct Rva008A6410RefCount
 {
@@ -38,7 +48,7 @@ class Rva008A6410Ref
 		Rva008A6410RefCount *ref = m_reference;
 		--ref->m_count;
 		if (ref->m_count == 0)
-			Rva01337A30ReleaseTable[1](ref);
+			((Rva01337A30PoolView *)g_rva01337A30AllocPair)->m_release(ref);
 	}
 
 	private:

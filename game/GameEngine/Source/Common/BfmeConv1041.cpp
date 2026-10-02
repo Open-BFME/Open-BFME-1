@@ -80,7 +80,11 @@ struct BfmeAlloc1041
 	void (__cdecl *m_bfmeFree)(BfmeRc1041 *r);
 };
 
-extern BfmeAlloc1041 *g_bfmeAlloc1041;
+// The Apt allocator-hook pair pointer at VA 0x01337A30, defined once by
+// game/Libraries/Source/Apt/Apt.cpp.  Slot +4 is the deallocator this TU calls;
+// the view above is the TU-local spelling of that second slot.
+struct BfmeStringPool3AF0;
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class BfmeF1041
 {
@@ -99,7 +103,7 @@ BfmeF1041 *BfmeF1041::bfmeGo1041F(BfmeF1041 *o)
 	r->m_bfmeCount--;
 
 	if (r->m_bfmeCount == 0)
-		g_bfmeAlloc1041->m_bfmeFree(r);
+		((BfmeAlloc1041 *)g_rva01337A30AllocPair)->m_bfmeFree(r);
 
 	m_bfmeRc = o->m_bfmeRc;
 	return this;

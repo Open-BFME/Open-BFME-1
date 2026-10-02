@@ -13488,5 +13488,25 @@
   "after_sha256": "67af62aa748d658631be9d172edfb40f97f82ed4b116df3f0e12d3fcee3c984c",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva00893CE0ContainerResize.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00893CE0ContainerResize.cpp",
+  "old_name": "BfmeStringPool3AF0",
+  "new_name": "Rva01337A30PoolView",
+  "before_sha256": "8d544d1c63327ea8bdd7d61185fa4f24e113dffe509356c936158b0f96dfcf11",
+  "after_sha256": "70cb8d0ea4e304aa499a6c9b4cacac8a742664b8e2b586162cd95ca39cd2f874",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva00895050InlineContainerSwap.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00895050InlineContainerSwap.cpp",
+  "old_name": "BfmeStringPool3AF0",
+  "new_name": "Rva01337A30PoolView",
+  "before_sha256": "355dcf3d58c990672111a94276a15c4c6d6fde15ce710ec9a522d0ead504df7c",
+  "after_sha256": "e865c9bbcd2866557c2e7441f45f88926cfd14362de5c2da533eda20b887d82e",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

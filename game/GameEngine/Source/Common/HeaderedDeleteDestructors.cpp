@@ -77,7 +77,17 @@ struct Rva008B01E0ReferenceCount
 	unsigned short m_count;
 };
 
-extern void ( __cdecl **Rva01337A30ReleaseTable )( void * );
+// The Apt allocator-hook pair pointer at VA 0x01337A30, defined once by
+// game/Libraries/Source/Apt/Apt.cpp.  Slot +4 is the deallocator this TU calls;
+// the view below is the TU-local spelling of that second slot.
+struct BfmeStringPool3AF0;
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+struct Rva01337A30PoolView
+{
+	void *m_alloc;
+	void ( __cdecl *m_free )( void *storage );
+};
 
 class Rva008B01E0Reference
 {
@@ -87,7 +97,7 @@ public:
 		Rva008B01E0ReferenceCount *reference = m_reference;
 		--reference->m_count;
 		if( reference->m_count == 0 )
-			Rva01337A30ReleaseTable[ 1 ]( reference );
+			( (Rva01337A30PoolView *)g_rva01337A30AllocPair )->m_free( reference );
 	}
 
 private:
