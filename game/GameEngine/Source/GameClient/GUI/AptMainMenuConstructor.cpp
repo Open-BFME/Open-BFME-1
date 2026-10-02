@@ -165,7 +165,15 @@ public:
 	unsigned char m_resolutionChangePending;
 };
 
-extern ClientRoot4120 *TheGameClient;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  ClientRoot4120 is a
+// TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientRoot4120 *theClientRoot4120( void )
+{
+	return (ClientRoot4120 *)TheGameClient;
+}
 
 class GameTextInterface
 {
@@ -307,7 +315,7 @@ BfmeAptScreenMainMenu::BfmeAptScreenMainMenu( void *context )
 	: _bfme_AptGameWindow( context ),
 	m_b258( false ), m_b259( false ), m_b25a( false ), m_b25b( false ),
 	m_b25c( false ), m_b25d( false ), m_b25e( false ),
-	m_i264( TheGameClient != 0 && TheGameClient->m_resolutionChangePending != 0
+	m_i264( theClientRoot4120() != 0 && theClientRoot4120()->m_resolutionChangePending != 0
 		? 8 : 0 ),
 	m_ttd()
 {

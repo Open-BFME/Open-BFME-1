@@ -124,7 +124,15 @@ public:
 	virtual void allocateShadows();
 };
 
-extern ClientRoot4120 *TheGameClient;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  ClientRoot4120 is a
+// TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientRoot4120 *theClientRoot4120( void )
+{
+	return (ClientRoot4120 *)TheGameClient;
+}
 
 // Slots 21-22 follow the Zero Hour twin's TheTerrainVisual calls.
 class TerrainVisualDispatch
@@ -286,7 +294,7 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 		{
 			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field68 = requestedTextureReduction;
 			if (TheGameClient)
-				TheGameClient->adjustLOD(0);
+				theClientRoot4120()->adjustLOD(0);
 		}
 
 		if (m_currentStaticLOD == STATIC_GAME_LOD_UNKNOWN
@@ -295,8 +303,8 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 		{
 			if (TheGameClient)
 			{
-				TheGameClient->releaseShadows();
-				TheGameClient->allocateShadows();
+				theClientRoot4120()->releaseShadows();
+				theClientRoot4120()->allocateShadows();
 			}
 		}
 

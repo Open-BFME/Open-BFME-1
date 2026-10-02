@@ -182,7 +182,15 @@ public:
 	virtual void s60(); virtual void s64();
 	virtual unsigned int now( void );
 };
-extern U4Clock006038C0 *g_u4Clock006038C0;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  U4Clock006038C0 is a
+// TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline U4Clock006038C0 *u4Clock006038C0( void )
+{
+	return (U4Clock006038C0 *)TheGameClient;
+}
 struct U4Timer006038C0
 {
 	char m_pad00[ 0x31 ];
@@ -198,7 +206,7 @@ void U4Timer006038C0::start( unsigned int duration )
 	if ( duration > 0 )
 	{
 		m_active = 1;
-		m_begin = g_u4Clock006038C0->now();
+		m_begin = u4Clock006038C0()->now();
 		m_end = m_begin + duration;
 		m_rate = 1.0f;
 	}

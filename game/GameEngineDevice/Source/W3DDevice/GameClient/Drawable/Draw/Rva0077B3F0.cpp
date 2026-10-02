@@ -176,7 +176,15 @@ struct Rva0077B3F0Data
 extern Rva0077B3F0Terrain *g_va012EF4CC;
 extern Rva0077B3F0Manager *g_va012F64BC;
 extern U32 g_va012F8064;
-extern Rva0077B3F0Client *g_va012F1464;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  Rva0077B3F0Client is a
+// TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline Rva0077B3F0Client *rva0077B3F0Client()
+{
+    return (Rva0077B3F0Client *)TheGameClient;
+}
 
 // Retain the reference-return min shape: retail selects either argument home
 // or H+214 by address before loading the unsigned scalar.
@@ -295,7 +303,7 @@ void Rva0077B3F0::method(const Matrix3D *transform)
         p034->slot54(mtx);
         if (b210)
         {
-            U32 now = g_va012F1464->slot68();
+            U32 now = rva0077B3F0Client()->slot68();
             U32 delta = now - u21c;
             u21c = now;
             u218 = rva0077B3F0Min(u218 + delta,u214);
@@ -311,7 +319,7 @@ void Rva0077B3F0::method(const Matrix3D *transform)
     {
         for (Rva0077B3F0Node *n=p08c->p008; n!=p08c; n=rva0082B870(n))
         {
-            Rva0077B3F0Drawable *child = g_va012F1464->slot2C(n->value010);
+            Rva0077B3F0Drawable *child = rva0077B3F0Client()->slot2C(n->value010);
             if (child)
             {
                 if (p008->p068 && child->p068)

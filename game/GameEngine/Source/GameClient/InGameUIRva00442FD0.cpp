@@ -177,7 +177,15 @@ public:
 };
 #undef VIEW_SLOT
 
-extern ClientRoot4120 *TheGameClient;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  ClientRoot4120 is a
+// TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline ClientRoot4120 *theClientRoot4120( void )
+{
+	return (ClientRoot4120 *)TheGameClient;
+}
 extern View *TheTacticalView;
 extern int Rva00459060(bool forceAttackMode);
 
@@ -226,7 +234,7 @@ Int InGameUI::rva00442fd0(Bool (*callback)(Drawable *draw, void *userData), void
 		}
 	}
 
-	for (draw = TheGameClient->firstDrawable(); draw; draw = draw->getNextDrawable())
+	for (draw = theClientRoot4120()->firstDrawable(); draw; draw = draw->getNextDrawable())
 	{
 		if (onlyDrawableToTest)
 		{

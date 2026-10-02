@@ -107,14 +107,22 @@ static inline Rva001077D0GameLogic *g_rva001077D0GameLogic()
 	return (Rva001077D0GameLogic *)TheGameLogic;
 }
 
-extern Rva001077D0FrameSource *g_rva001077D0FrameSource;
+// Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
+// game/GameEngine/Source/GameClient/GameClient.cpp.  Rva001077D0FrameSource is
+// a TU-local view of that object reached through the canonical global.
+class GameClient;
+extern GameClient *TheGameClient;
+static inline Rva001077D0FrameSource *rva001077D0FrameSource( void )
+{
+	return (Rva001077D0FrameSource *)TheGameClient;
+}
 extern Rva001077D0TerrainLogic *g_rva001077D0TerrainLogic;
 extern float g_rva001077D0RefreshDelay;
 
 void Rva001077D0Radar::update()
 {
 	unsigned currentFrame =
-		g_rva001077D0FrameSource->getFrame();
+		rva001077D0FrameSource()->getFrame();
 	dirty = 1;
 
 	for (int i = 0; i < 64; ++i)
