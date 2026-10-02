@@ -23,12 +23,17 @@
 // `xor edi,edi` / `cmp eax,edi`).  Declaring `item` as the find result extends
 // its live range across the guard and reproduces retail exactly.
 
-class BfmeItemEQV
+class BfmeItemEQV;
+class AsciiString;
+
+// ILT 0x0002F289 reaches the verified LivingWorldSound constructor.
+class LivingWorldSound
 {
 public:
-	BfmeItemEQV(void *key);
+	LivingWorldSound(const AsciiString &name);
 
-	unsigned char m_bfmeBodyEQV[0x34];
+private:
+	unsigned char m_layout0061BF00[0x34];
 };
 
 class BfmeMapEQV
@@ -56,7 +61,8 @@ BfmeItemEQV *BfmeLivingWorldManager::rva006155e0(void *key)
 	if (item != 0)
 		return *map->bfmeAtEQV(key);
 
-	item = new BfmeItemEQV(key);
+	item = reinterpret_cast<BfmeItemEQV *>(
+		new LivingWorldSound(*static_cast<const AsciiString *>(key)));
 
 	*map->bfmeAtEQV(key) = item;
 
