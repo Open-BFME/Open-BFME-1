@@ -41,5 +41,3 @@ LivingWorldCampaignManager::LivingWorldCampaignManager(void) :
 	m_name08.clear();
 	m_name0C.clear();
 }
-
-LivingWorldCampaignManager::~LivingWorldCampaignManager() {}

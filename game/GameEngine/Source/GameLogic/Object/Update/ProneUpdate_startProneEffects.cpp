@@ -77,7 +77,7 @@ public:
 		}
 	}
 
-	void clearModelConditionState(ModelConditionFlagType bit)
+	__forceinline void clearModelConditionStateForProneUpdate(ModelConditionFlagType bit)
 	{
 		if (m_conditionFlags.test(bit))
 		{
@@ -114,6 +114,6 @@ void ProneUpdate::startProneEffects()
 void ProneUpdate::stopProneEffects()
 {
 	Object *me = getObject();
-	me->clearModelConditionState( MODELCONDITION_PRONE );
+	me->clearModelConditionStateForProneUpdate( MODELCONDITION_PRONE );
 	me->clearStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_NO_ATTACK ) );
 }

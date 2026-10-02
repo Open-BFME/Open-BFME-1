@@ -71,6 +71,14 @@ class ThingTemplate : public Overridable
 };
 
 typedef std::map<const ThingTemplate *, Int> AttackPriorityMap;
+typedef _STL::pair<const ThingTemplate * const, Int> AttackPriorityValue;
+typedef _STL::_Rb_tree<const ThingTemplate *, AttackPriorityValue,
+	_STL::_Select1st<AttackPriorityValue>, _STL::less<const ThingTemplate *>,
+	_STL::allocator<AttackPriorityValue> > AttackPriorityTree;
+namespace _STL
+{
+template <> AttackPriorityTree::~_Rb_tree();
+}
 
 class AttackPriorityInfo
 {

@@ -62,6 +62,7 @@ class ShareExperienceBehavior : public UpdateModule,
 {
 public:
     ShareExperienceBehavior(Thing *, const ModuleData *);
+    virtual ~ShareExperienceBehavior();
 };
 
 // ??0ShareExperienceBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
