@@ -50,11 +50,19 @@ private:
 	bool m_held;
 };
 
+extern void j_00008549();
+template <class Function>
+__forceinline Function rva006A20D0Thunk()
+{
+	union { void (*raw)(); Function member; } fn;
+	fn.raw = j_00008549;
+	return fn.member;
+}
+
 class MilesAudioManager
 {
 public:
 	virtual Bool isCurrentlyPlaying(AudioHandle handle);
-	Bool rva006A20D0(AudioHandle handle, void *out1, void *out2);
 	void Rva006A2800(AudioHandle handle, const Coord3D *position);
 
 private:
@@ -65,7 +73,8 @@ private:
 Bool MilesAudioManager::isCurrentlyPlaying(AudioHandle handle)
 {
 	MilesAudioScopedMutex lock(m_mutex);
-	return rva006A20D0(handle, 0, 0);
+	return (this->*rva006A20D0Thunk<Bool (MilesAudioManager::*)(AudioHandle, void *, void *)>())(
+		handle, 0, 0);
 }
 
 // Retail 0x006A2800 shares this owner's mutex and playing-list search with
@@ -74,6 +83,7 @@ void MilesAudioManager::Rva006A2800(AudioHandle handle, const Coord3D *position)
 {
 	MilesAudioScopedMutex lock(m_mutex);
 	AudioEventRTS *event = 0;
-	if (rva006A20D0(handle, &event, 0) && event)
+	if ((this->*rva006A20D0Thunk<Bool (MilesAudioManager::*)(AudioHandle, void *, void *)>())(
+		handle, &event, 0) && event)
 		event->setPosition(position);
 }
