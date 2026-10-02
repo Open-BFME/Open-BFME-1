@@ -4995,18 +4995,10 @@ void Pathfinder::debugShowSearch(  Bool pathFound  )
 #endif
 }
 
-// ?chooseBestLocomotorForPosition@Pathfinder@@QAEPAVLocomotor@@W4PathfindLayerEnum@@PAVLocomotorSet@@PBUCoord3D@@@Z present-unmatched
-Locomotor* Pathfinder::chooseBestLocomotorForPosition(PathfindLayerEnum layer, LocomotorSet* locomotorSet, const Coord3D* pos )
-{
-	Int x = REAL_TO_INT_FLOOR(pos->x/PATHFIND_CELL_SIZE);
-	Int y = REAL_TO_INT_FLOOR(pos->y/PATHFIND_CELL_SIZE);
-	PathfindCell* cell = getCell(layer, x, y );
-	// off the map? call it CELL_CLEAR...
-	PathfindCell::CellType celltype = cell ? cell->getType() : PathfindCell::CELL_CLEAR;
-
-	LocomotorSurfaceTypeMask acceptableSurfaces = validLocomotorSurfacesForCellType(celltype);
-	return locomotorSet->findLocomotor(acceptableSurfaces);
-}
+// BFME chooseBestLocomotorForPosition is verified at RVA 003D5CA0 in
+// ../Pathfinder/PathfinderChooseBestLocomotor.cpp. Retail uses the packed
+// BFME cell layout and the surface-mask table at VA 012B49FC; this Zero
+// Hour implementation must not compete with that provider.
 
 /*static*/ LocomotorSurfaceTypeMask Pathfinder::validLocomotorSurfacesForCellType(PathfindCell::CellType t)
 {
