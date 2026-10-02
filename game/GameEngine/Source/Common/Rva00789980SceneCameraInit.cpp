@@ -19,6 +19,8 @@ extern "C" double cos(double value);
 // allocates 0x108, so m_tail below restores that proven extent.
 #include "scene.h"
 
+namespace
+{
 class Rva00789650 : public SimpleSceneClass
 {
 public:
@@ -29,6 +31,7 @@ private:
 	// 0x98. The remaining 0x70 is the BFME tail the upstream header lacks.
 	unsigned char m_tail[0x70];
 };
+}
 
 
 #include "camera.h"

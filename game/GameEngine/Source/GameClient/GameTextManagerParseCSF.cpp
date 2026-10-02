@@ -46,6 +46,7 @@ struct StringInfo
 {
 	AsciiString label;
 	UnicodeString text;
+	~StringInfo();
 };
 
 struct CSFHeader

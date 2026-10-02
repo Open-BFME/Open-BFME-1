@@ -52,11 +52,6 @@ public:
 	{
 		((StringBase<char> *)this)->concat(&source, 1);
 	}
-	Bool endsWith(const char *suffix) const
-	{
-		return ((const StringBase<char> *)this)->endsWith(
-			suffix, (Int)strlen(suffix));
-	}
 	const char *str() const
 	{
 		return m_data ? (const char *)m_data + 8 :
@@ -230,7 +225,7 @@ void ScriptActions::doDisplayCinematicText(const AsciiString &displayText,
 	Int size = atoi(fontSize.str());
 
 	Bool bold = false;
-	if (fontType.endsWith("[Bold]"))
+	if (((const StringBase<char> *)&fontType)->endsWith("[Bold]", 6))
 		bold = true;
 
 	GameFont *font = TheFontLibrary->getFont(&fontName,

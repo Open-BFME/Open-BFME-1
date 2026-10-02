@@ -19,6 +19,11 @@
 #include <fstream>
 
 template <>
+_STL::locale
+_STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::pubimbue(
+	const _STL::locale &);
+
+template <>
 _STL::basic_fstream<char, _STL::char_traits<char> >::basic_fstream(
 	const char *__s, _STL::ios_base::openmode __m) :
 	_STL::basic_ios<char, _STL::char_traits<char> >(),
