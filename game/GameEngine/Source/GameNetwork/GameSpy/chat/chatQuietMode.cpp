@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD
 // Upstream: GameSpy Chat SDK chatMain.c, 2007 release.
 
+// The matched providers at 00872930 and 00872680 currently retain these
+// C++ ledger spellings. Their cdecl pointer/int ABI matches the Chat callers.
+struct BfmeArg929F;
+class BfmeRoomXM;
+void bfmeGo929F(BfmeArg929F *);
+void bfmeWalkXM(BfmeRoomXM *, int, int);
+
+extern "C" {
 typedef void *CHAT;
 
 typedef struct ciConnection
@@ -15,9 +23,7 @@ typedef struct ciConnection
 } ciConnection;
 
 void ciSocketSendf(void *socket, const char *format, ...);
-void ciClearAllUsers(CHAT chat);
 int ciAddUNQUIETFilter(CHAT chat, const char *channel);
-void ciEnumJoinedChannels(CHAT chat, void *callback, void *param);
 int ciAddLISTFilter(CHAT chat, void *callbackEach, void *callbackAll,
 	void *param);
 int ciAddJOINFilter(CHAT chat, const char *channel, void *callback,
@@ -64,8 +70,9 @@ void chatSetQuietMode(CHAT chat, int quiet)
 	connection->quiet = quiet;
 	if (!quiet)
 	{
-		ciClearAllUsers(chat);
-		ciEnumJoinedChannels(chat, ciSetQuietModeEnumJoinedChannelsA, 0);
+		bfmeGo929F((BfmeArg929F *)chat);
+		bfmeWalkXM((BfmeRoomXM *)chat,
+			(int)&ciSetQuietModeEnumJoinedChannelsA, 0);
 	}
 }
 
@@ -236,3 +243,5 @@ void chatSendUserMessageA(CHAT chat, const char *user,
 	else if (type == 4)
 		ciSocketSendf(&connection->chatSocket, "ATM %s :%s", user, message);
 }
+
+} // extern "C"
