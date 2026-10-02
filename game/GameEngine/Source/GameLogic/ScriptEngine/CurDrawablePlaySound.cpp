@@ -28,7 +28,13 @@ struct LuaDrawableState
 	LuaDrawableLink *m_drawable;
 };
 
-extern LuaDrawableState *g_obj12F060C;
+// Retail's global at 0x012F060C is EA's `LuaScriptEngine *TheLuaScriptEngine`
+// (defined once in GameEngine/Source/Common/RTS/Team_updateState.cpp), so the
+// extern must be spelled with the real class to mangle to
+// ?TheLuaScriptEngine@@3PAVLuaScriptEngine@@A.  LuaDrawableState above is only
+// the offset view read here, so the cast stays at the use.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 #include "ascii_string.h"
 
@@ -59,7 +65,7 @@ extern AudioManager *TheAudio;
 // ?CurDrawablePlaySound@@YAHPAUlua_State@@@Z
 int CurDrawablePlaySound(lua_State *state)
 {
-	LuaDrawableLink *selection = g_obj12F060C->m_drawable;
+	LuaDrawableLink *selection = reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable;
 	Drawable *drawable;
 	if (selection == 0
 		|| (drawable = selection->m_drawable) == 0
