@@ -22,38 +22,6 @@ void __stdcall bfmeGo1034A(int a, int b)
 		x->m_bfmeSub.bfmeAdd1034(b);
 }
 
-class BfmeZ1034
-{
-public:
-	void bfmeSet1034(char on);
-};
-
-struct BfmeW1034
-{
-	char m_bfmePad[0x204];
-	BfmeZ1034 *m_bfmeZ;
-};
-
-struct BfmeV1034
-{
-	char m_bfmePad[0x70];
-	char m_bfmeFlag;
-};
-
-class BfmeC1034
-{
-public:
-	void bfmeGo1034C(void);
-};
-
-void BfmeC1034::bfmeGo1034C(void)
-{
-	BfmeZ1034 *z = (*(BfmeW1034 **)((char *)this - 8))->m_bfmeZ;
-
-	if (z != 0)
-		z->bfmeSet1034((char)((*(BfmeV1034 **)((char *)this - 0xc))->m_bfmeFlag == 0));
-}
-
 char bfmeTest1034(int a);
 
 class BfmeD1034
