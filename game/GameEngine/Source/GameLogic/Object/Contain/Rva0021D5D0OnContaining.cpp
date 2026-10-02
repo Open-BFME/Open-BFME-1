@@ -1,5 +1,8 @@
 // ?onContaining@Rva0021D5D0Secondary@@QAEXPAVObject@@_N@Z
-// cl: /O2 /DNDEBUG /MD /EHsc
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Igame/GameEngine/Source /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include "GameLogic/Module/UpdateModule.h"
 typedef bool Bool;
 
 class Object
@@ -35,11 +38,15 @@ public:
 	void body();
 };
 
-class Rva00202DF0Face;
-class Rva00202DF0Head
+// ILT 0x000157DA reaches the matched UpdateModule::setWakeFrame at 0x002B2040.
+// Keep the header's protected signature and enum value through a local view.
+class Rva0021D5D0WakeAccess : public UpdateModule
 {
 public:
-	void apply(Rva00202DF0Face *object, int delay);
+	__forceinline void wake(Object *object)
+	{
+		setWakeFrame(object, UPDATE_SLEEP_NONE);
+	}
 };
 
 class GameLogic
@@ -106,6 +113,6 @@ void Rva0021D5D0Secondary::onContaining(Object *object, Bool selected)
 			((Gen0021CE60 *)primary())->handle((int)node->m_object);
 	}
 
-	((Rva00202DF0Head *)primary())->apply((Rva00202DF0Face *)host, 1);
+	((Rva0021D5D0WakeAccess *)primary())->wake(host);
 	setNextFrame(TheBfmeGameLogic->m_frame);
 }
