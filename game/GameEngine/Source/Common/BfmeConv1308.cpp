@@ -2,8 +2,14 @@
 
 class BfmeGetterTCA
 {
+};
+
+// Retail body at 0x007E8900 is BfmeThingRF::bfmeGoRF; declared here (no real
+// header owns it) so this call spells its defining mangled name.
+class BfmeThingRF
+{
 public:
-	void *bfmeGetTCA(void *a, void *b);
+	void *bfmeGoRF(void *key, void *fallback);
 };
 
 class BfmeSinkTCA
@@ -22,7 +28,7 @@ public:
 
 void BfmeHostTCA::bfmeGoTCA(BfmeGetterTCA *r)
 {
-	m_bfmeSink->bfmeUseTCA(r->bfmeGetTCA((void *)"TID", 0));
+	m_bfmeSink->bfmeUseTCA(reinterpret_cast<BfmeThingRF *>(r)->bfmeGoRF((void *)"TID", 0));
 }
 
 class BfmeBaseTCB

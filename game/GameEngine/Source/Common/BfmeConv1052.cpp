@@ -120,8 +120,14 @@ char BfmeF1052::bfmeSetSlot1052(GameSlot *slot, int state,
 
 class BfmeI1052
 {
+};
+
+// Retail body at 0x007E8900 is BfmeThingRF::bfmeGoRF; declared here (no real
+// header owns it) so this call spells its defining mangled name.
+class BfmeThingRF
+{
 public:
-	int bfmeFind1052(char *n, int f);
+	void *bfmeGoRF(void *name, void *fallback);
 };
 
 extern char g_bfmeName1052[];
@@ -135,7 +141,7 @@ public:
 
 void BfmeH1052::bfmeGo1052H(BfmeI1052 *p)
 {
-	bfmeDo1052(0, p, p->bfmeFind1052(g_bfmeName1052, 0));
+	bfmeDo1052(0, p, (int)(long)reinterpret_cast<BfmeThingRF *>(p)->bfmeGoRF(g_bfmeName1052, 0));
 }
 
 extern "C" void bfmeHook1052(void);

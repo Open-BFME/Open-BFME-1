@@ -3,7 +3,6 @@
 class BfmeMsgVHE
 {
 public:
-	int bfmeGetVHE(void *k, int d);
 	void bfmeSetVHE(void *k, int v);
 	int m_bfme00;
 	int m_bfme04;
@@ -13,12 +12,20 @@ public:
 	int m_bfme1c;
 };
 
+// Retail body at 0x007E8900 is BfmeThingRF::bfmeGoRF; declared here (no real
+// header owns it) so this call spells its defining mangled name.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF(void *key, void *fallback);
+};
+
 extern int g_bfmeKeyVHE;
 
 void __stdcall bfmeCopyVHE(BfmeMsgVHE *dst, BfmeMsgVHE *src)
 {
 	dst->m_bfme1c = src->m_bfme1c;
-	int v = src->bfmeGetVHE(&g_bfmeKeyVHE, -1);
+	int v = (int)(long)reinterpret_cast<BfmeThingRF *>(src)->bfmeGoRF(&g_bfmeKeyVHE, (void *)-1);
 	if (v != -1)
 		dst->bfmeSetVHE(&g_bfmeKeyVHE, v);
 	dst->m_bfme04 = src->m_bfme04;

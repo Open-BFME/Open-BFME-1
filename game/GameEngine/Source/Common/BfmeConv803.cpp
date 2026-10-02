@@ -16,15 +16,22 @@ void __stdcall bfmeGoEBJ(BfmeObjEBJ *o, void *b)
 class BfmeObjEBK
 {
 public:
-	void bfmeOneEBK(void *x, int n);
 	void bfmeTwoEBK(void *x, void *b);
+};
+
+// Retail body at 0x007E8900 is BfmeThingRF::bfmeGoRF; declared here (no real
+// header owns it) so this call spells its defining mangled name.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF(void *key, void *fallback);
 };
 
 extern void *g_bfmeXEBK;
 
 void __stdcall bfmeGoEBKa(BfmeObjEBK *o)
 {
-	o->bfmeOneEBK(g_bfmeXEBK, 0);
+	reinterpret_cast<BfmeThingRF *>(o)->bfmeGoRF(g_bfmeXEBK, 0);
 }
 
 void __stdcall bfmeGoEBKb(BfmeObjEBK *o, void *b)
