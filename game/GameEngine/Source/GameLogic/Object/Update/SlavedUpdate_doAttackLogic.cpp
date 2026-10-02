@@ -220,8 +220,8 @@ private:
     Coord3D m_guardPointOffset;
 };
 
-extern Real bfmeCosVNB(Real value);
-extern Real bfmeSinVNB(Real value);
+extern Real Cos(Real value);
+extern Real Sin(Real value);
 extern int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
 // ?doAttackLogic@SlavedUpdate@@QAEXPBVObject@@@Z
@@ -259,8 +259,8 @@ void SlavedUpdate::doAttackLogic(const Object *target)
             0x14a);
 
         m_guardPointOffset.zero();
-        m_guardPointOffset.x += data->m_attackWanderRange * bfmeCosVNB(randomDirection);
-        m_guardPointOffset.y += data->m_attackWanderRange * bfmeSinVNB(randomDirection);
+        m_guardPointOffset.x += data->m_attackWanderRange * Cos(randomDirection);
+        m_guardPointOffset.y += data->m_attackWanderRange * Sin(randomDirection);
 
         attackPosition.x += m_guardPointOffset.x;
         attackPosition.y += m_guardPointOffset.y;
