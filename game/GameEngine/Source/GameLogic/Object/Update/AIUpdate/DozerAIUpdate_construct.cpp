@@ -32,6 +32,8 @@ class Object;
 class Player;
 class Team;
 class ThingTemplate;
+class BuildAssistant;
+class ThingFactory;
 class Thing { public: void setOrientation(Real); };
 
 template <Int NUMBITS>
@@ -486,8 +488,8 @@ static __forceinline Rva002B7C80Money *bfmeGetMoney(Player *player)
 	return (Rva002B7C80Money *)((char *)player + 0x48);
 }
 
-extern Rva002B7C80BuildAssistant *TheBuildAssistant;
-extern Rva002B7C80ThingFactory *TheThingFactory;
+extern BuildAssistant *TheBuildAssistant;
+extern ThingFactory *TheThingFactory;
 // A typed external singleton is significant here: the old absolute-address
 // macro scheduled the Coord3D y store before the terrain vtable load.
 // The declaration recovers the
@@ -514,9 +516,10 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *buildTemplat
 	if (isRebuild == false &&
 		((Rva002B7C80Player *)owningPlayer)->getPlayerType() != 1)
 	{
-		if (TheBuildAssistant->canMakeUnit(getObject(), buildTemplate, -1) != 0)
+		if (((Rva002B7C80BuildAssistant *)TheBuildAssistant)->canMakeUnit(
+				getObject(), buildTemplate, -1) != 0)
 			return 0;
-		if (TheBuildAssistant->isLocationLegalToBuild(
+		if (((Rva002B7C80BuildAssistant *)TheBuildAssistant)->isLocationLegalToBuild(
 				buildPosition, buildTemplate, buildOrientation, 0x17, getObject(), 0) != 0)
 			return 0;
 	}
@@ -525,7 +528,8 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *buildTemplat
 	if (isRebuild)
 		statusBits.set(21);
 
-	Object *constructedObject = bfmeNewObject(TheThingFactory, buildTemplate,
+	Object *constructedObject = bfmeNewObject(
+		(Rva002B7C80ThingFactory *)TheThingFactory, buildTemplate,
 		((Rva002B7C80Player *)owningPlayer)->getDefaultTeam(), statusBits, 0);
 	bfmeSetProducer(constructedObject, getObject());
 	bfmeSetBuilder(constructedObject, getObject());
