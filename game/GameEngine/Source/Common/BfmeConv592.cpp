@@ -1,8 +1,15 @@
 class BfmeThingCFE;
+class Object;
+
+class GarrisonContain
+{
+public:
+	virtual void onContaining(Object *object, bool wasSelected);
+};
+
 class BfmeSubCFE
 {
 public:
-	void bfmeAddCFE(void *what, int value);
 };
 
 class BfmeThingCFE
@@ -46,6 +53,6 @@ void BfmeThingCFE::bfmeGoCFE(void *what)
 	if (bfmeAskCFE(what))
 	{
 		bfmeStepCFE();
-		m_bfmeSub.bfmeAddCFE(what, 0);
+		((GarrisonContain *)&m_bfmeSub)->GarrisonContain::onContaining((Object *)what, false);
 	}
 }

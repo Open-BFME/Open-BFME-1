@@ -1,6 +1,17 @@
 // cl: /Od
-// A run given as a pair of ends passed on as a start and a length, built
-// without optimisation. The callee is pinned by address; nothing here names it.
+// The retail 0x3DA4B ILT reaches the matched STLport find_last_not_of body at
+// 0x00654BE0. This passes a pair of ends as the start and length, built without
+// optimisation.
+
+// stlport
+#include <string>
+
+namespace _STL
+{
+	template <> basic_string<char, char_traits<char>, allocator<char> >::size_type
+	basic_string<char, char_traits<char>, allocator<char> >::find_last_not_of(
+		const char *, size_type, size_type) const;
+}
 
 struct BfmeRangePJ
 {
@@ -12,11 +23,11 @@ class BfmeThingPJ
 {
 public:
 	void bfmeGoPJ(const BfmeRangePJ *span, void *what);
-
-	void bfmeDoPJ(char *at, void *what, int many);
 };
 
 void BfmeThingPJ::bfmeGoPJ(const BfmeRangePJ *span, void *what)
 {
-	bfmeDoPJ(span->m_bfmeAt, what, span->m_bfmeEnd - span->m_bfmeAt);
+	((const _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > *)this)
+		->find_last_not_of(span->m_bfmeAt, (unsigned int)what,
+			(unsigned int)(span->m_bfmeEnd - span->m_bfmeAt));
 }

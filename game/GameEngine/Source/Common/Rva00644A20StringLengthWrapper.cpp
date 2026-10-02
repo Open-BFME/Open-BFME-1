@@ -8,7 +8,7 @@
 class BfmeThingPE
 {
 public:
-	void bfmeDoPE(char *at, void *what, int many);
+	unsigned int bfmeDoPE(const char *at, unsigned int what, unsigned int many);
 };
 
 class Rva00644A20Owner : public BfmeThingPE
@@ -20,5 +20,5 @@ public:
 // ?d_00644a20@@YAXXZ
 void Rva00644A20Owner::forwardString(char *at, void *what)
 {
-	bfmeDoPE(at, what, strlen(at));
+	bfmeDoPE(at, (unsigned int)what, strlen(at));
 }
