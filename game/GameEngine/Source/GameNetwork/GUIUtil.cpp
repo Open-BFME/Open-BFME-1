@@ -11,7 +11,8 @@
 #include "GameNetwork/GameInfo.h"
 #include "Common/NameKeyGenerator.h"
 
-extern int g_Va012F49D4;
+class SkirmishScreenState;
+extern SkirmishScreenState *TheSkirmishScreenState;
 
 class Rva006237C0GameInfoView
 {
@@ -30,7 +31,7 @@ void EnableAcceptControls(Bool Enabled, GameInfo *myGame, GameWindow *comboPlaye
                           GameWindow *comboTeam[], GameWindow *buttonAccept[], GameWindow *buttonStart,
                           GameWindow *buttonMapStartPosition[], Int slotNum)
 {
-	if (g_Va012F49D4)
+	if (TheSkirmishScreenState)
 		return;
 
 	Rva006237C0GameInfoView *game =

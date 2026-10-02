@@ -19,7 +19,8 @@
 #include "GameNetwork/LANAPICallbacks.h"
 #include "GameClient/ChallengeGenerals.h"
 
-extern int g_Va012F49D4;
+class SkirmishScreenState;
+extern SkirmishScreenState *TheSkirmishScreenState;
 
 // Local view of the map-cache record: fields through the BFME official-map byte.
 struct BfmeWolMapMetaData {
@@ -55,7 +56,7 @@ void UpdateSlotList( GameInfo *myGame, GameWindow *comboPlayer[],
 										GameWindow *comboTeam[], GameWindow *buttonAccept[],
 										GameWindow *buttonStart, GameWindow *buttonMapStartPosition[] )
 {
-	if (g_Va012F49D4)
+	if (TheSkirmishScreenState)
 		return;
 	if(!AreSlotListUpdatesEnabled())
 		return;

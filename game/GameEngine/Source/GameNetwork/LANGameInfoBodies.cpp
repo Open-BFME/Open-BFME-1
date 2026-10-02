@@ -227,7 +227,8 @@ public:
 
 extern LANAPI *TheLAN;
 extern void LANEnableStartButton(Bool enabled);
-extern int g_Va012F49D4;
+class SkirmishScreenState;
+extern SkirmishScreenState *TheSkirmishScreenState;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
@@ -347,7 +348,7 @@ void LANGameInfo::resetAccepted(void)
 	{
 		TheLAN->ResetGameStartTimer();
 		if (TheLAN->GetMyGame() == this && TheLAN->AmIHost() &&
-			g_Va012F49D4 == 0)
+			TheSkirmishScreenState == 0)
 			LANEnableStartButton(true);
 	}
 
