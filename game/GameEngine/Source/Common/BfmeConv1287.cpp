@@ -1,14 +1,19 @@
 // Open-BFME5 conversions.
-// The complete getter at 0x007E8900 returns a signed decimal integer, and this
-// matched caller requests the TID and PID fields before forwarding both to the
-// 0x00809100 sink.  The older void-pointer declarations preserved the same
-// 32-bit machine ABI but did not describe the values the retail code handles.
+// The complete getter at 0x007E8900 is BfmeThingRF::bfmeGoRF (see
+// BfmeConv908.cpp) and returns a signed decimal integer, and this matched
+// caller requests the TID and PID fields before forwarding both to the
+// 0x00809100 sink.  Retail's own mangled names for bfmeGoSA/bfmeGoSB take a
+// BfmeThingSA* and a BfmeThingSB*, so those parameter spellings stay and the
+// field lookups go through BfmeThingRF, exactly as the sibling GameNetwork
+// conversions do.
 
-class BfmeThingSA
+class BfmeThingRF
 {
 public:
-	int bfmeGetSA(const char *key, int fallback);
+	void *bfmeGoRF(void *key, void *defaultValue);
 };
+
+class BfmeThingSA;
 
 class BfmeSinkSA
 {
@@ -26,16 +31,12 @@ public:
 
 void BfmeHostSA::bfmeGoSA(BfmeThingSA *r)
 {
-	int tid = r->bfmeGetSA("TID", 0);
-	int pid = r->bfmeGetSA("PID", 0);
+	int tid = (int)(long)reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"TID", 0 );
+	int pid = (int)(long)reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"PID", 0 );
 	m_bfmeSink->bfmeUseSA(tid, pid);
 }
 
-class BfmeThingSB
-{
-public:
-	void *bfmeGetSB(void *a, void *b);
-};
+class BfmeThingSB;
 
 class BfmeSinkSB
 {
@@ -53,7 +54,7 @@ public:
 
 void BfmeHostSB::bfmeGoSB(BfmeThingSB *r)
 {
-	void *a = r->bfmeGetSB((void *)"TID", 0);
-	void *b = r->bfmeGetSB((void *)"PID", 0);
+	void *a = reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"TID", 0 );
+	void *b = reinterpret_cast< BfmeThingRF * >( r )->bfmeGoRF( (void *)"PID", 0 );
 	m_bfmeSink->bfmeUseSB(a, b);
 }
