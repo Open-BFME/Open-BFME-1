@@ -1171,23 +1171,9 @@ void PathfindCell::reset( )
 /**
  * Reset the pathfinding values in the cell.
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindCell_startPathfind.cpp
-// ?startPathfind@PathfindCell@@QAE_NPAV1@@Z present-unmatched
-Bool PathfindCell::startPathfind( PathfindCell *goalCell  ) 
-{ 
-	DEBUG_ASSERTCRASH(m_info, ("Has to have info."));
-	m_info->m_nextOpen = NULL;
-	m_info->m_prevOpen = NULL;
-	m_info->m_pathParent = NULL;
-	m_info->m_costSoFar = 0;		// start node, no cost to get here
-	m_info->m_totalCost = 0;
-	if (goalCell) {
-		m_info->m_totalCost = costToGoal( goalCell );
-	}
-	m_info->m_open = TRUE;
-	m_info->m_closed = FALSE;
-	return true;
-}
+// Retail startPathfind is provided by PathfindCellInfoRecord.cpp (0x003F6940).
+// BFME unlinks the info record before clearing costs and flags; goal is unused.
+
 /**
  * Set the parent pointer.
  */
