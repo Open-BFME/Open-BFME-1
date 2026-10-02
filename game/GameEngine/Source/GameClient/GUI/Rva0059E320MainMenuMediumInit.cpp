@@ -23,10 +23,14 @@ extern const char g_bfmeEmptyAscii[];
 template <typename T>
 class StringBase
 {
+    friend class AsciiString;
+
+private:
+    void releaseBuffer();
+
 public:
     void set(const StringBase<T> &source);
     void concat(const T *text, Int length);
-    void releaseBuffer();
 };
 
 class AsciiString

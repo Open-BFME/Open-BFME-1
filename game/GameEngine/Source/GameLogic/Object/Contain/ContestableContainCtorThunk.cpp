@@ -42,7 +42,7 @@ private:
 	Coord3D m_garrisonPoint[3][40];
 };
 
-struct Gen_t_0021b400_p8cd { int a[2]; Gen_t_0021b400_p8cd(); Gen_t_0021b400_p8cd(const Gen_t_0021b400_p8cd&); ~Gen_t_0021b400_p8cd(); Gen_t_0021b400_p8cd& operator=(const Gen_t_0021b400_p8cd&); };
+struct Gen_t_0021b400_p8cd { int a[2]; Gen_t_0021b400_p8cd(); Gen_t_0021b400_p8cd(const Gen_t_0021b400_p8cd&); Gen_t_0021b400_p8cd& operator=(const Gen_t_0021b400_p8cd&); };
 bool operator==(const Gen_t_0021b400_p8cd&, const Gen_t_0021b400_p8cd&);
 bool operator<(const Gen_t_0021b400_p8cd&, const Gen_t_0021b400_p8cd&);
 

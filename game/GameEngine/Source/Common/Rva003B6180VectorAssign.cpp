@@ -18,12 +18,17 @@
 namespace _STL
 {
 
-struct Rva003B20C0Element
+struct __declspec(novtable) Rva003B20C0Element
 {
 	virtual ~Rva003B20C0Element();
 	char m_payload[32];
 };
 
-template class vector<Rva003B20C0Element>;
+extern template void _Destroy<Rva003B20C0Element *>(
+	Rva003B20C0Element *, Rva003B20C0Element *);
+
+template vector<Rva003B20C0Element> &
+	vector<Rva003B20C0Element>::operator=(
+		const vector<Rva003B20C0Element> &);
 
 }
