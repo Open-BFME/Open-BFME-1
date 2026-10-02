@@ -43,10 +43,9 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 
-// Retail's 0x00892370 body is the global dword getter defined once in
-// game/GameEngine/Source/Common/GlobalDwordGetters.cpp as
-// ?Rva00892370Get@@YAHXZ, so the reference has to carry its `int` return.
-int Rva00892370Get();
+// AptGetSwfVersion is defined in GlobalDwordGetters.cpp and returns
+// the SWF version read by the retail undefined-value guard.
+unsigned int AptGetSwfVersion();
 
 void AptActionInterpreter::_FunctionRva008C7BF0(
 	AptActionInterpreter *interpreter, LocalContextT *)
@@ -54,7 +53,7 @@ void AptActionInterpreter::_FunctionRva008C7BF0(
 	AptValue *value = interpreter->m_stack[interpreter->m_stackTop - 1];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& value->isUndefined()
 		&& (result = g_bfmeFallbackDB) != 0)
 	{

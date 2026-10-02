@@ -142,14 +142,14 @@ struct TraceStateRva008C7D30
     Rva8CD130Value **m_values;
 };
 
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 
 void TraceRva008C7D30(TraceStateRva008C7D30 *state)
 {
     Rva8CD130Value *value = state->m_values[state->m_count - 1];
     Rva8CD130String text;
     Rva008C3B60Node *fallback;
-    if (Rva00892370Get() == 7 && value->isUndefined())
+    if (AptGetSwfVersion() == 7 && value->isUndefined())
     {
         fallback = CreateStringRva008C7D30();
         // The global holds a string block, whose characters begin at +8.

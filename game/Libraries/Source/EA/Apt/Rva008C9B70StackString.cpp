@@ -101,7 +101,7 @@ struct Stack008C9B70
     Value008C9B70 **m_entries;
 };
 
-extern int Rva00892370Get();
+extern unsigned int AptGetSwfVersion();
 class Rva008B2EA0Node
 {
 public:
@@ -129,7 +129,7 @@ void stackString008C9B70(Stack008C9B70 *state)
     Value008C9B70 *value = state->m_entries[state->m_count - 1];
     unsigned kind = value->type();
     if ((kind == 1 || kind == 42) && !value->isUndefined()) return;
-    if (Rva00892370Get() == 7 && value->isUndefined())
+    if (AptGetSwfVersion() == 7 && value->isUndefined())
     {
         Rva008A9B00 *result = makeString008C9B70();
         reinterpret_cast<Rva008B2EA0Node *>(result)->append(g_stringBlock01338724 + 1);

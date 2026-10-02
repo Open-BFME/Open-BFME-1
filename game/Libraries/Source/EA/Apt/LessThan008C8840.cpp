@@ -21,7 +21,7 @@ public:
     __forceinline const StringHandle008C8840 &text() const { return *(const StringHandle008C8840 *)&(((m_valueBits & 63)==1 ? this : m_indirectValue)->m_payload08); }
 };
 class AptBoolean : public AptValue { public: static AptBoolean *Create(bool); };
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 void d_008c4a30();
 extern AptValue *g_bfmeFallbackDB;
 struct Stack008C8840 {
@@ -42,7 +42,7 @@ struct Stack008C8840 {
 void LessThan008C8840(Stack008C8840 *state) {
     AptValue *under=state->m_values[state->m_count-2];
     AptValue *top=state->m_values[state->m_count-1];
-    if (Rva00892370Get()==7 && (top->isUndefined() || under->isUndefined())) {
+    if (AptGetSwfVersion()==7 && (top->isUndefined() || under->isUndefined())) {
         state->pop(2); state->push(g_bfmeFallbackDB); return;
     }
     int comparison;

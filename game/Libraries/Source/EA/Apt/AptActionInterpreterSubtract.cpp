@@ -37,7 +37,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 void __cdecl d_008a4cd0(void);
 
 // ?_FunctionRva008C6EE0@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
@@ -48,7 +48,7 @@ void AptActionInterpreter::_FunctionRva008C6EE0(
 	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
 		&& (result = g_bfmeFallbackDB) != 0)
 	{

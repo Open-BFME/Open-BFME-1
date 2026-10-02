@@ -9,7 +9,7 @@
 // falls back to the same g_bfmeFallbackDB sentinel reloaded fresh.
 //
 // IDENTITY: address-derived. Real opcode name not recovered (ActionScript
-// divide); the callee set (Rva00892370Get x1, AptValue::toNumber x2,
+// divide); the callee set (AptGetSwfVersion x1, AptValue::toNumber x2,
 // bfmeMakeF1239 x1)
 // matches the sibling near-twins.
 
@@ -51,7 +51,7 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 extern const float BfmeZeroRange;
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 void __cdecl d_008a4cd0(void);
 
 // ?_FunctionRva008C7060@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
@@ -62,7 +62,7 @@ void AptActionInterpreter::_FunctionRva008C7060(
 	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
 		&& (result = g_bfmeFallbackDB) != 0)
 	{
@@ -101,7 +101,7 @@ void AptActionInterpreter::_FunctionRva008C6FA0(
 	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
 		&& (result = g_bfmeFallbackDB) != 0)
 	{

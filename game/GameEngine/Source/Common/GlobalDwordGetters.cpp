@@ -15,8 +15,8 @@
 // the build checks that every reference to a given symbol resolves to one
 // address, so a global shared by two bodies is checked to be one global.
 //
-// IDENTITY IS NOT RECOVERED, for the globals any more than for the functions --
-// except where a global's defining spelling is already proven elsewhere.  0x012F4C64
+// Most globals and functions retain address-derived names; AptGetSwfVersion
+// is pinned in symbols.csv. The global at 0x012F4C64
 // is the slot LookAtTranslator's constructor publishes itself into
 // (game/GameEngine/Source/GameClient/MessageStream/LookAtTranslator_ctor.cpp), and
 // that ctor is matched at retail, so the global is `TheLookAtTranslator` and is
@@ -284,7 +284,7 @@ int Rva0088CDE0Get( void )
 	return g_Va01336E80;
 }
 
-int Rva00892370Get( void )
+unsigned int AptGetSwfVersion( void )
 {
 	return g_Va01337824;
 }

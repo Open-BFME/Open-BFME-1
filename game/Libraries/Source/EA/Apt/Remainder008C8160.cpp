@@ -40,7 +40,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 AptValue *Rva008A4EA0MakeFloat(float);
 extern const float BfmeZeroRange;
 extern "C" double fmod(double, double);
@@ -54,7 +54,7 @@ void AptActionInterpreter::_FunctionRva008C8160(
 	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
 		&& (result = g_bfmeFallbackDB) != 0)
 	{

@@ -180,7 +180,7 @@ class AptValue { public: int toInteger() const; float toNumber(); };
 class AptInteger { public: static AptInteger *Create(int); };
 AptValue *Rva008A4EA0MakeFloat(float);
 extern AptValue *g_bfmeFallbackDB;
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 Rva008B2EA0Node *rva008B2EA0Create();
 struct Stack008C8500 {
     int m_count, m_capacity;
@@ -200,7 +200,7 @@ struct Stack008C8500 {
 void AddValues008C8500(Stack008C8500 *state) {
     Rva8CD130Value *under=state->m_values[state->m_count-2];
     Rva8CD130Value *top=state->m_values[state->m_count-1];
-    int version=Rva00892370Get();
+    int version=AptGetSwfVersion();
     if (top->isString() || under->isString()) {
         if(version==7) {
             Rva008B2EA0Node *created=rva008B2EA0Create();

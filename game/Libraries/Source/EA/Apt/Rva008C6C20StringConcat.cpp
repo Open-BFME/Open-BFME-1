@@ -177,7 +177,7 @@ struct Rva008C7C80State
     Rva8CD130Value **m_values;
 };
 
-extern int Rva00892370Get();
+extern unsigned int AptGetSwfVersion();
 extern Rva008B2EA0Node *rva008B2EA0Create();
 
 // ?Rva008C7C80@@YAXPAURva008C7C80State@@@Z
@@ -185,7 +185,7 @@ void Rva008C7C80(Rva008C7C80State *state)
 {
     Rva8CD130Value *first = state->m_values[state->m_count - 2];
     Rva8CD130Value *second = state->m_values[state->m_count - 1];
-    if (Rva00892370Get() == 7)
+    if (AptGetSwfVersion() == 7)
     {
         Rva008C3B60Node *created = (Rva008C3B60Node *)rva008B2EA0Create();
         ((Rva008B2EA0Node *)created)->append(g_stringBlock01338724 + 1);

@@ -8,7 +8,7 @@
 // != 0) rather than the 0x008C72D0 twin's is-both-nonzero test.
 //
 // IDENTITY: address-derived. Real opcode name not recovered; the callee set
-// (Rva00892370Get x1, AptValue::toNumber x2, d_008996b0 x1) matches both twins.
+// (AptGetSwfVersion x1, AptValue::toNumber x2, d_008996b0 x1) matches both twins.
 
 class AptValue
 {
@@ -46,7 +46,7 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 extern const float BfmeZeroRange;
-int Rva00892370Get();
+unsigned int AptGetSwfVersion();
 void __cdecl d_008996b0(void);
 
 // ?_FunctionRva008C73B0@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
@@ -57,7 +57,7 @@ void AptActionInterpreter::_FunctionRva008C73B0(
 	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
 	AptValue *result;
 
-	if (Rva00892370Get() == 7
+	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
 		&& (result = g_bfmeFallbackDB) != 0)
 	{
