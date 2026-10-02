@@ -8,10 +8,10 @@ public:
 	void m();
 };
 
-class BfmeMsgVJH
+class BfmeC994
 {
 public:
-	BfmeMsgVJH(char *buf, int n) throw();
+	BfmeC994(char *buf, int n) throw();
 	char m_pad[0x34];
 };
 
@@ -82,7 +82,7 @@ public:
 	virtual void v34();
 	virtual void v38();
 	virtual void v3c();
-	virtual void send(BfmeMsgVJH *msg, int request, int id, int state);
+	virtual void send(BfmeC994 *msg, int request, int id, int state);
 };
 
 class Rva007F5C30Notifier
@@ -90,7 +90,7 @@ class Rva007F5C30Notifier
 public:
 	virtual void v00();
 	virtual void v04();
-	virtual void send(BfmeMsgVJH *msg, void (__stdcall *callback)(),
+	virtual void send(BfmeC994 *msg, void (__stdcall *callback)(),
 		void *owner, int value);
 };
 
@@ -142,7 +142,7 @@ void BfmeThingVJS::bfmeGoVJS(int id, int requesting, int state) throw()
 	else
 		((Rva00802290Owner *)hp)->reset();
 
-	BfmeMsgVJH msg(m_bfmeBuf, 0x400);
+	BfmeC994 msg(m_bfmeBuf, 0x400);
 	m_bfme10->send(&msg, requesting, id, state);
 	m_bfme14->send(&msg, 0, this, m_bfme6dc);
 	((Gen_007e86c0 *)&msg)->m();

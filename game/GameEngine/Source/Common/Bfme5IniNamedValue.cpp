@@ -1,13 +1,9 @@
 // Open-BFME5 conversions: an INI field parser that takes a name and an
 // optional count.
 
-extern "C" unsigned int __cdecl strlen(const char *s);
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class RetailLayoutString
-{
-public:
-	void set(const char *s, int n);
-};
+extern "C" unsigned int __cdecl strlen(const char *s);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
@@ -22,7 +18,7 @@ class Bfme5NamedValueA
 {
 public:
 	char m_bfmePad[0x22c];
-	RetailLayoutString m_bfmeName;
+	StringBase<char> m_bfmeName;
 	int m_bfmeValue;
 };
 
@@ -41,7 +37,7 @@ class Bfme5NamedValueB
 {
 public:
 	char m_bfmePad[0x22c];
-	RetailLayoutString m_bfmeName;
+	StringBase<char> m_bfmeName;
 	int m_bfmeValue;
 };
 
