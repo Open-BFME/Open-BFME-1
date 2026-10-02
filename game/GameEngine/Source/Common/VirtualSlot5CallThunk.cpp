@@ -383,51 +383,6 @@ void VirtualSlot2ArgumentCallOwner::invokeArgument(VirtualSlot2ArgumentThunk *ta
     target->invoke();
 }
 
-struct VirtualSlot11SecondArgumentCallThunk
-{
-    virtual void slot0();
-    virtual void slot1();
-    virtual void slot2();
-    virtual void slot3();
-    virtual void slot4();
-    virtual void slot5();
-    virtual void slot6();
-    virtual void slot7();
-    virtual void slot8();
-    virtual void slot9();
-    virtual void slot10();
-    virtual void invoke(int value);
-
-    void invokeSecond(int unused, int value);
-    void invokeSecondAlternate(int unused, int value);
-    void invokeSecondThird(int unused, int value);
-    void invokeSecondFourth(int unused, int value);
-};
-
-// ?d_00259760@@YAXXZ
-void VirtualSlot11SecondArgumentCallThunk::invokeSecond(int, int value)
-{
-    invoke(value);
-}
-
-// ?d_00263fc0@@YAXXZ
-void VirtualSlot11SecondArgumentCallThunk::invokeSecondAlternate(int, int value)
-{
-    invoke(value);
-}
-
-// ?d_0026b0a0@@YAXXZ
-void VirtualSlot11SecondArgumentCallThunk::invokeSecondThird(int, int value)
-{
-    invoke(value);
-}
-
-// ?d_0026cd20@@YAXXZ
-void VirtualSlot11SecondArgumentCallThunk::invokeSecondFourth(int, int value)
-{
-    invoke(value);
-}
-
 struct ProducedValue
 {
     int value;
