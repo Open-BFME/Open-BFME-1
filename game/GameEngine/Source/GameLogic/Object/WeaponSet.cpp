@@ -596,22 +596,8 @@ void WeaponSet::weaponSetOnWeaponBonusChange(const Object *source)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isAnyWithinTargetPitch@WeaponSet@@ABE_NPBVObject@@0@Z present-unmatched here - matched copy lives in WeaponSet_pitchAndReload_Thunk.cpp where WEAPONSLOT_COUNT is BFME's 4
-Bool WeaponSet::isAnyWithinTargetPitch(const Object* obj, const Object* victim) const
-{
-	if (!m_hasPitchLimit)
-		return true;
-
-	for( Int i = 0; i < WEAPONSLOT_COUNT;	i++ )
-	{
-		const Weapon* weapon = m_weapons[ i ];
-		if (weapon && weapon->isWithinTargetPitch(obj, victim))
-		{
-			return true;
-		}
-	}
-	return false;
-}
+// isAnyWithinTargetPitch is provided by WeaponSet_pitchAndReload_Thunk.cpp.
+// Its verified BFME body walks four weapon slots; this ZH layout has three.
 
 //-------------------------------------------------------------------------------------------------
 // ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@W4WeaponSlotType@@@Z present-unmatched

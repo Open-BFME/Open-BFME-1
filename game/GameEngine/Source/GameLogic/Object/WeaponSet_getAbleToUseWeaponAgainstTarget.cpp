@@ -157,9 +157,7 @@ public:
 		const Object *victim, CommandSourceType pos, WeaponSlotType commandSource) const;
 
 	const Coord3D *getPosition() const { return &m_position; }
-	ContainModuleInterface *getContain() const { return m_contain; }
 	AIUpdateInterface *getAI() const { return m_ai; }
-	const Object *getContainedBy() const { return m_containedBy; }
 
 	char m_pad_08[0x38 - 8];
 	Coord3D m_position;
@@ -269,8 +267,8 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 		targetAntiMask = 2;
 	}
 
-	const Object *containedBy = source->getContainedBy();
-	ContainModuleInterface *contain = containedBy ? containedBy->getContain() : 0;
+	const Object *containedBy = source->m_containedBy;
+	ContainModuleInterface *contain = containedBy ? containedBy->m_contain : 0;
 
 	if ((source->m_flags94 & 0x10) && !((int)attackType & 8))
 	{
@@ -371,7 +369,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 		}
 	}
 
-	ContainModuleInterface *passengerContain = source->getContain();
+	ContainModuleInterface *passengerContain = source->m_contain;
 	if (passengerContain && passengerContain->isPassengerAllowedToFire())
 	{
 		const ContainedItemsList *items = passengerContain->getContainedItemsList();
