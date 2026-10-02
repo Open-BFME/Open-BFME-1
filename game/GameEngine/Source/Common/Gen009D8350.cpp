@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /O2
+// cl: /DNDEBUG /MD /O2 /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 // Clean C++ conversion of the character-range hash insert at retail RVA 0x009D8350.
 
 struct BfmeCharRange
@@ -8,15 +10,6 @@ struct BfmeCharRange
 };
 
 void __cdecl gen009D8190(void *dest, const void *src);
-
-namespace _STL
-{
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int size);
-};
-}
 
 struct BfmeRangeNode
 {
@@ -45,7 +38,7 @@ unsigned char *Gen009D7B80::bfmeInsert(const BfmeCharRange *value)
 	bfmeResize(m_count + 1);
 	unsigned int bucket = bfmeBucket(value);
 	BfmeRangeNode *head = m_begin[bucket];
-	BfmeRangeNode *node = static_cast<BfmeRangeNode *>(_STL::__new_alloc::allocate(sizeof(BfmeRangeNode)));
+	BfmeRangeNode *node = static_cast<BfmeRangeNode *>(_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeRangeNode)));
 	node->next = 0;
 	gen009D8190(node->pair, value);
 	node->next = head;
