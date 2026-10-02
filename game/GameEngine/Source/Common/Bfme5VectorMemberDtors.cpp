@@ -167,7 +167,7 @@ class BFMERetailAsciiString
 {
 public:
 	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString(void) { releaseBuffer(); }
+	~BFMERetailAsciiString(void);
 	void releaseBuffer(void);
 
 	void *m_data;

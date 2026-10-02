@@ -221,7 +221,8 @@ void ScriptActions::doUnitGuardNearestKindof(const AsciiString &unitName,
 					distance.y = object->m_position.y;
 					distance.z = object->m_position.z;
 					distance.sub(&theUnit->m_position);
-					Real objectDistance = distance.length();
+					Real objectDistance = (Real)sqrt(distance.x * distance.x +
+						distance.y * distance.y + distance.z * distance.z);
 					if (!closestObject || objectDistance < closestDistance)
 					{
 						closestObject = object;

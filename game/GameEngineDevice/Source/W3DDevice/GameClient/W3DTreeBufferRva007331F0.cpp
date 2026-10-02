@@ -135,7 +135,9 @@ Bool Rva007331F0::method(void *key, const Coord3D *direction, Real height)
     record->field8c = 0;
 
     Coord3D position;
-    position.set(record->location.X, record->location.Y, record->location.Z);
+    position.x = record->location.X;
+    position.y = record->location.Y;
+    position.z = record->location.Z;
     FXList *fx = typeData->fx;
     if (fx && !fx->bfmeIsBlocked())
         fx->doFXPos(&position, 0, 0.0f, 0);

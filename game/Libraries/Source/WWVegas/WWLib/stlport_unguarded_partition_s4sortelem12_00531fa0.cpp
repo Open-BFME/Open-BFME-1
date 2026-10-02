@@ -27,7 +27,7 @@ private:
 	Header *m_bfmeData;
 
 public:
-	int compareNoCase(const StringBase<T> &other) const
+	int bfmeCompareNoCase(const StringBase<T> &other) const
 	{
 		const int otherLength = other.m_bfmeData
 			? other.m_bfmeData->m_bfmeLength : 0;
@@ -74,7 +74,7 @@ struct S4Cmp00531FA0
 			{
 				if (right.m_bfmeObj == 0)
 					goto retFalse;
-				const bool namesLess = left.m_bfmeObj->m_bfmeName.compareNoCase(
+				const bool namesLess = left.m_bfmeObj->m_bfmeName.bfmeCompareNoCase(
 					right.m_bfmeObj->m_bfmeName) < 0;
 				return namesLess;
 			}

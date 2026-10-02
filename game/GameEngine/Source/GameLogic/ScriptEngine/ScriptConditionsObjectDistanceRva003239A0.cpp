@@ -58,7 +58,7 @@ bool ScriptConditions::evaluateRva003239A0ObjectDistance(Condition *condition)
         Coord3D delta;
         delta.set(&first->m_position);
         delta.sub(&second->m_position);
-        float distance = delta.length();
+        float distance = (float)sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
         Parameter *value = condition->getParameter(3);
         float threshold = ((Rva003239A0ParameterView *)value)->m_real;
         Parameter *comparison = condition->getParameter(2);
