@@ -201,9 +201,9 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 
 	for( int index = 0; index < 17; ++index )
 	{
-		BFMERetailAsciiString name;
+		AsciiString name;
 		name.format( "Palantir/HeroSelectUI/Hero%d/", index + 1 );
-		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder(
 				FunctorBindingSingle( rawFunctorMethod( index ), self ),
 				(Rva0058D070FunctorSingleWrapper *)0 ) );
