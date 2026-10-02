@@ -2318,9 +2318,14 @@ def record(census, rows, rerun=False, fresh=False):
     def currency_guard():
         if isinstance(rows, LedgerRows):
             rows.validate()
-        if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
-                or stale_objects(present, by_object):
-            raise SystemExit("link_census: source inputs or objects changed during judgment; nothing recorded")
+        changed = subprocess.run(["git", "diff", "--name-only", commit, "--", *CENSUS_INPUTS], cwd=ROOT,
+                                 capture_output=True, text=True).stdout.split()
+        stale = [] if changed else stale_objects(present, by_object)
+        if changed or stale:
+            # Name the input: a bare refusal cost several hour-long reruns (2026-10-02).
+            what = (f"changed: {changed[:5]}" if changed
+                    else f"stale objects: {[o.name for o in stale[:5]]} ({len(stale)})")
+            raise SystemExit(f"link_census: source inputs or objects changed during judgment; nothing recorded ({what})")
     clean, files, blocking, clean_prev, prepared = write_status(log, rows, present, {"date": census["when"], "commit": commit},
                                                          kept, publish=False, facts=facts, currency_guard=currency_guard)
     before = linked_figures(clean_prev)
@@ -2332,9 +2337,13 @@ def record(census, rows, rerun=False, fresh=False):
         history[-1].update(figure)
     else:
         history.append({**history_row(census, commit), **figure})
-    if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
-            or stale_objects(present, by_object):
-        raise SystemExit("link_census: source inputs or objects changed during judgment; nothing recorded")
+    changed = subprocess.run(["git", "diff", "--name-only", commit, "--", *CENSUS_INPUTS], cwd=ROOT,
+                             capture_output=True, text=True).stdout.split()
+    stale = [] if changed else stale_objects(present, by_object)
+    if changed or stale:
+        what = (f"changed: {changed[:5]}" if changed
+                else f"stale objects: {[o.name for o in stale[:5]]} ({len(stale)})")
+        raise SystemExit(f"link_census: source inputs or objects changed during judgment; nothing recorded ({what})")
     prepared["accept"]()
     write_history(history)
     print(f"link_census: LINKED {figure['linked_bytes']:,} bytes ({figure['linked_bytes_prev_rule']:,} before "
