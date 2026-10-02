@@ -1,11 +1,8 @@
-// cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
-// Quaternion routines, verbatim from the Generals reference
-// (Libraries/Source/WWVegas/WWMath/quat.cpp). Only functions located in the
-// binary are defined here. Trackball, Build_Quaternion(Matrix3D)
-// and Randomize are absent/drifted in lotrbfme.exe and were dropped.
-// project_to_sphere is kept (its only caller, Trackball, was dropped) by
-// removing its `static` storage class so the compiler still emits it; the
-// body is unchanged so its bytes are identical.
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+// Quaternion routines from the GeneralsMD WWMath source. Randomize and
+// Trackball retain their already-verified retail extents at 0x008DC270 and
+// 0x008DC980, so their source no longer needs the duplicate vendored object.
+// project_to_sphere keeps external linkage for its existing retail ledger row.
 #include "quat.h"
 #include "matrix3d.h"
 #include "matrix4.h"
@@ -472,4 +469,54 @@ float project_to_sphere(float r, float x, float y)
 	}
 
 	return z;
+}
+
+void Quaternion::Randomize(void)
+{
+	X = ((float) (rand() & 0xFFFF)) / 65536.0f;
+	Y = ((float) (rand() & 0xFFFF)) / 65536.0f;
+	Z = ((float) (rand() & 0xFFFF)) / 65536.0f;
+	W = ((float) (rand() & 0xFFFF)) / 65536.0f;
+
+	Normalize();
+}
+
+Quaternion Trackball(float x0, float y0, float x1, float y1, float sphsize)
+{
+	Vector3	a;
+	Vector3	p1;
+	Vector3	p2;
+	Vector3	d;
+
+	float phi,t;
+
+	if ((x0 == x1) && (y0 == y1)) {
+		return Quaternion(0.0f, 0.0f, 0.0f, 1.0f);	// Zero rotation
+	}
+
+
+	// Compute z coordinates for projection of p1 and p2 to
+	// deformed sphere
+	p1[0] = x0;
+	p1[1] = y0;
+	p1[2] = project_to_sphere(sphsize, x0, y0);
+
+	p2[0] = x1;
+	p2[1] = y1;
+	p2[2] = project_to_sphere(sphsize, x1, y1);
+
+
+	// Find their cross product
+	Vector3::Cross_Product(p2,p1,&a);
+
+	// Compute how much to rotate
+	d = p1 - p2;
+	t = d.Length() / (2.0f * sphsize);
+
+	// Avoid problems with out of control values
+	if (t >  1.0f) t =  1.0f;
+	if (t < -1.0f) t = -1.0f;
+	phi = 2.0f * WWMath::Asin(t);
+
+	return Axis_To_Quat(a, phi);
 }
