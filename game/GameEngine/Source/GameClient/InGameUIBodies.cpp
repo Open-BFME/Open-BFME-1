@@ -483,7 +483,11 @@ public:
 
 extern BfmeSelectionTranslator *TheSelectionTranslator;
 extern Radar *TheRadar;
-extern TacticalViewFadeShim *TheTacticalViewFadeShim;
+// Retail spells this global `View *TheTacticalView` (0x012F1600); the
+// TU-local slot shim is only reached through a cast, as everywhere else.
+class View;
+extern View *TheTacticalView;
+static inline TacticalViewFadeShim *tacticalViewFadeShim() { return (TacticalViewFadeShim *)TheTacticalView; }
 extern PartitionManager *TheShroudManager;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
@@ -750,13 +754,13 @@ void InGameUI::handleRadiusCursor()
 
 	if (!radarOn || !TheRadar->screenPixelToWorld(mousePos, &pos))
 	{
-		TheTacticalViewFadeShim->screenToTerrain(mousePos, &pos, false);
+		tacticalViewFadeShim()->screenToTerrain(mousePos, &pos, false);
 
 		if (TheShroudManager && ThePlayerList)
 		{
 			Int playerIndex = ThePlayerList->m_localPlayer->m_playerIndex;
 			if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &pos) != SHROUD_CLEAR)
-				TheTacticalViewFadeShim->screenToTerrain(mousePos, &pos, true);
+				tacticalViewFadeShim()->screenToTerrain(mousePos, &pos, true);
 		}
 	}
 
@@ -824,9 +828,9 @@ int InGameUI::selectMatchingAcrossScreen( void )
 	ICoord2D origin;
 	ICoord2D size;
 	IRegion2D region;
-	TheTacticalViewFadeShim->getOrigin(&origin.x, &origin.y);
-	size.x = TheTacticalViewFadeShim->getWidth();
-	size.y = TheTacticalViewFadeShim->getHeight();
+	tacticalViewFadeShim()->getOrigin(&origin.x, &origin.y);
+	size.x = tacticalViewFadeShim()->getWidth();
+	size.y = tacticalViewFadeShim()->getHeight();
 	buildRegion(&origin, &size, &region);
 	Int numSelected = selectMatchingAcrossRegion(&region);
 	if (numSelected == -1)

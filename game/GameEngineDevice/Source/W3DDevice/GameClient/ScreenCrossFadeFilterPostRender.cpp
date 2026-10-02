@@ -88,7 +88,11 @@ public:
 	virtual void getOrigin(Int *, Int *) = 0;
 };
 
-extern BfmeTacticalView *TheTacticalView;
+// Retail spells this global `View *TheTacticalView` (0x012F1600); the TU-local
+// slot shim is only reached through a cast.
+class View;
+extern View *TheTacticalView;
+static inline BfmeTacticalView *tacticalView() { return (BfmeTacticalView *)TheTacticalView; }
 
 class TextureBaseClass
 {
@@ -176,9 +180,9 @@ Bool ScreenCrossFadeFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 		radius = 0.5f / radius;
 	}
 
-	TheTacticalView->getOrigin(&xpos, &ypos);
-	width = TheTacticalView->getWidth();
-	height = TheTacticalView->getHeight();
+	tacticalView()->getOrigin(&xpos, &ypos);
+	width = tacticalView()->getWidth();
+	height = tacticalView()->getHeight();
 
 	// bottom right
 	v[0].p = D3DXVECTOR4(xpos + width - 0.5f,
