@@ -75,7 +75,7 @@ enum GameWindowMessage
 };
 
 // ?rawMouseToWindowMessage@@YA?AW4GameWindowMessage@@PBVGameMessage@@@Z
-static GameWindowMessage rawMouseToWindowMessage( const GameMessage *msg )
+GameWindowMessage rawMouseToWindowMessage( const GameMessage *msg )
 {
 	GameWindowMessage gwm = GWM_NONE;
 
@@ -144,10 +144,7 @@ static GameWindowMessage rawMouseToWindowMessage( const GameMessage *msg )
 
 }  // end rawMouseToWindowMessage
 
-// The translator is static, so something has to reference it or the TU emits
-// nothing. Retail reads its argument off the stack rather than out of a
-// register, which is what a static gets once its address escapes, so this hands
-// the address out rather than calling it.
+// Expose the translator address through the existing accessor.
 typedef GameWindowMessage (*RawMouseToWindowMessageType)( const GameMessage * );
 
 RawMouseToWindowMessageType WindowXlat_getRawMouseToWindowMessage( void )
