@@ -14,10 +14,10 @@ public:
 	void run();
 };
 
-class BfmeThingCIC
+class BfmeC994
 {
 public:
-	void bfmeGoCIC(void *name, void *value);
+	void addString( const char *key, const char *value );
 };
 
 class BfmeThingCIB
@@ -41,8 +41,8 @@ void __stdcall rva007F2C10Serialize(Rva007F2C10Msg *msg, int key, int ownerType,
 	void *global = g_bfme0130A6A8;
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_tag = 0x72616e6b;
-	((BfmeThingCIC *)msg)->bfmeGoCIC((void *)"TXN", global);
-	((BfmeThingCIC *)msg)->bfmeGoCIC((void *)"key", (void *)key);
+	((BfmeC994 *)msg)->addString("TXN", (const char *)global);
+	((BfmeC994 *)msg)->addString("key", (const char *)key);
 	((BfmeThingCIB *)msg)->bfmeGoCIB((void *)"ownerType", (void *)ownerType);
 	((BfmeThingCIB *)msg)->bfmeGoCIB((void *)"minRank", (void *)minRank);
 	((BfmeThingCIB *)msg)->bfmeGoCIB((void *)"maxRank", (void *)maxRank);
@@ -53,7 +53,7 @@ void __stdcall rva007F2C10Serialize(Rva007F2C10Msg *msg, int key, int ownerType,
 	{
 		char buffer[32];
 		sprintf(buffer, "keys.%d", i);
-		((BfmeThingCIC *)msg)->bfmeGoCIC(buffer, (void *)keys[i]);
+		((BfmeC994 *)msg)->addString(buffer, (const char *)keys[i]);
 	}
 
 	((BfmeThingCIB *)msg)->bfmeGoCIB((void *)"keys.[]", (void *)count);

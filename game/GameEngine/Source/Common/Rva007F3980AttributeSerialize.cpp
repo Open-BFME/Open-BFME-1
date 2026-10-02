@@ -8,7 +8,7 @@
 // ___security_cookie load/check pair.
 
 class Rva007E8AC0 { public: void run(); };
-class BfmeThingCIC { public: void bfmeGoCIC(void*, void*); };
+class BfmeC994 { public: void addString( const char *key, const char *value ); };
 class BfmeThingCIB { public: void bfmeGoCIB(void*, void*); };
 class Rva007E8810Message { public: void addInt64(const char*, __int64); };
 
@@ -43,7 +43,7 @@ void __stdcall rva007F3980Serialize(Rva007F3980Msg *msg, __int64 clubId,
 	void *txn = (void *)bfmeRva0130A710Slot.m_04;
 	((Rva007E8AC0*)msg)->run();
 	msg->m_tag = 0x636c7562;
-	((BfmeThingCIC*)msg)->bfmeGoCIC((void *)"TXN", txn);
+	((BfmeC994*)msg)->addString("TXN", (const char *)txn);
 	((Rva007E8810Message*)msg)->addInt64("clubId", clubId);
 	((Rva007E8810Message*)msg)->addInt64("userId", userId);
 	((BfmeThingCIB*)msg)->bfmeGoCIB((void *)"attributes.[]", (void *)(int)count);
@@ -52,10 +52,10 @@ void __stdcall rva007F3980Serialize(Rva007F3980Msg *msg, __int64 clubId,
 	{
 		char buffer[64] = "";
 		sprintf(buffer, "attributes.%d.key", i);
-		((BfmeThingCIC*)msg)->bfmeGoCIC(buffer, (void *)(int)pairs[i].key);
+		((BfmeC994*)msg)->addString(buffer, (const char *)(int)pairs[i].key);
 
 		sprintf(buffer, "attributes.%d.value", i);
-		((BfmeThingCIC*)msg)->bfmeGoCIC(buffer, (void *)(int)pairs[i].value);
+		((BfmeC994*)msg)->addString(buffer, (const char *)(int)pairs[i].value);
 	}
 }
 

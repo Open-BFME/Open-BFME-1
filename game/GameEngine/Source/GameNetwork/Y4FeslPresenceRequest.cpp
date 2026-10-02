@@ -28,10 +28,10 @@ public:
 	void run();                                                   // 0x007E8AC0
 };
 
-class BfmeThingCIC
+class BfmeC994
 {
 public:
-	void bfmeGoCIC( void *one, void *two );                       // 0x007E8A10
+	void addString( const char *key, const char *value );                       // 0x007E8A10
 };
 
 class Rva007E8810Message
@@ -53,28 +53,28 @@ void __stdcall Rva007FB0E0( Rva007E8810Message *msg, const char *rsrc, int show,
 	msg->m_category = 'PSET';
 	msg->m_depth = 3;
 	if( rsrc )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"RSRC", (void *)rsrc );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "RSRC", (const char *)rsrc );
 	switch( show )
 	{
 		case 2:
-			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"CHAT" );
+			reinterpret_cast< BfmeC994 * >( msg )->addString( "SHOW", "CHAT" );
 			break;
 		case 3:
-			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"AWAY" );
+			reinterpret_cast< BfmeC994 * >( msg )->addString( "SHOW", "AWAY" );
 			break;
 		case 4:
-			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"XA" );
+			reinterpret_cast< BfmeC994 * >( msg )->addString( "SHOW", "XA" );
 			break;
 		case 5:
-			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"DND" );
+			reinterpret_cast< BfmeC994 * >( msg )->addString( "SHOW", "DND" );
 			break;
 		case 6:
-			reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SHOW", (void *)"GAME" );
+			reinterpret_cast< BfmeC994 * >( msg )->addString( "SHOW", "GAME" );
 			break;
 	}
-	reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"STAT", (void *)stat );
+	reinterpret_cast< BfmeC994 * >( msg )->addString( "STAT", (const char *)stat );
 	if( prod )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"PROD", (void *)prod );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "PROD", (const char *)prod );
 	if( attributes )
 	{
 		char attr[ 4 ] = "";
@@ -85,14 +85,14 @@ void __stdcall Rva007FB0E0( Rva007E8810Message *msg, const char *rsrc, int show,
 			strcat( attr, "J" );
 		if( attributes & 4 )
 			strcat( attr, "P" );
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"ATTR", (void *)attr );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "ATTR", (const char *)attr );
 	}
 	if( sess )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"SESS", (void *)sess );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "SESS", (const char *)sess );
 	if( titl )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TITL", (void *)titl );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "TITL", (const char *)titl );
 	if( tiid )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"TIID", (void *)tiid );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "TIID", (const char *)tiid );
 	if( extr )
-		reinterpret_cast< BfmeThingCIC * >( msg )->bfmeGoCIC( (void *)"EXTR", (void *)extr );
+		reinterpret_cast< BfmeC994 * >( msg )->addString( "EXTR", (const char *)extr );
 }

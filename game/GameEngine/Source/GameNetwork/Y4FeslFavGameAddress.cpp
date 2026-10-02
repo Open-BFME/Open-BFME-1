@@ -5,6 +5,7 @@ class BfmeC994
 {
 public:
 	BfmeC994( char *buffer, int capacity );
+	void addString( const char *key, const char *value );
 	char *m_vft;
 	int m_04;
 	int m_08;
@@ -20,11 +21,7 @@ public:
 	char m_30;
 };
 
-class BfmeThingCIC
-{
-public:
-	void bfmeGoCIC( void *one, void *two );
-};
+
 
 class Gen_007e86c0
 {
@@ -200,8 +197,8 @@ void LanTheaterEmulator::notifyAddress( Rva00809500Entry *entry )
 	message.m_04 = sink->m_value04;
 	message.m_08 = sink->m_value08;
 	message.m_0c = sink->m_value0c;
-	reinterpret_cast< BfmeThingCIC * >( &message )->bfmeGoCIC(
-		(void *)"IP",
+	reinterpret_cast< BfmeC994 * >( &message )->addString(
+		"IP",
 		address );
 	Rva007F93E0( &message, (void *)"->L", m_field10 );
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();

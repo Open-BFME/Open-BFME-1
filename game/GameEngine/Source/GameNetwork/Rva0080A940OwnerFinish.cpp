@@ -15,6 +15,7 @@ class BfmeC994
 {
 public:
 	BfmeC994( char *buffer, int capacity );
+	void addString( const char *key, const char *value );
 
 	void *m_vft;
 	int m_field04;
@@ -37,11 +38,7 @@ public:
 	void bfmeGoCIB( void *key, void *value );
 };
 
-class BfmeThingCIC
-{
-public:
-	void bfmeGoCIC( void *key, void *value );
-};
+
 
 class Rva007EA650FieldAddress
 {
@@ -201,12 +198,12 @@ bool Rva0080A940Owner::finish()
 				request.m_field04 = entry.m_field04;
 				request.m_field08 = entry.m_field08;
 				request.m_field0c = entry.m_field0c;
-				reinterpret_cast< BfmeThingCIC * >( &request )
-					->bfmeGoCIC( (void *)"I", addressText );
+				reinterpret_cast< BfmeC994 * >( &request )
+					->addString( "I", addressText );
 				reinterpret_cast< BfmeThingCIB * >( &request )->bfmeGoCIB(
 					(void *)"GID", (void *)found->m_sequence );
-				reinterpret_cast< BfmeThingCIC * >( &request )->bfmeGoCIC(
-					(void *)"FAV-GAME-UID", m_favGameUid );
+				reinterpret_cast< BfmeC994 * >( &request )->addString(
+					"FAV-GAME-UID", m_favGameUid );
 				Rva007F93E0( &request, (void *)"->L", m_field10 );
 				++result;
 			}

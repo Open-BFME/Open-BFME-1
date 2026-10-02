@@ -19,10 +19,10 @@ public:
 	void bfmeGoCIB(void *key, void *value);
 };
 
-class BfmeThingCIC
+class BfmeC994
 {
 public:
-	void bfmeGoCIC(void *key, void *value);
+	void addString( const char *key, const char *value );
 };
 
 class Rva007E8980
@@ -103,31 +103,31 @@ void Rva007F1800Search::serialize(Rva007E8810Message *message, int maxRecords,
 		{
 			sprintf(date, "%02d/%02d/%4d", query->m_createDateStart->m_day,
 				query->m_createDateStart->m_month, query->m_createDateStart->m_year);
-			((BfmeThingCIC *)message)->bfmeGoCIC((void *)"createDateStart",
+			((BfmeC994 *)message)->addString("createDateStart",
 				date);
 		}
 		if (query->m_createDateEnd)
 		{
 			sprintf(date, "%02d/%02d/%4d", query->m_createDateEnd->m_day,
 				query->m_createDateEnd->m_month, query->m_createDateEnd->m_year);
-			((BfmeThingCIC *)message)->bfmeGoCIC((void *)"createDateEnd", date);
+			((BfmeC994 *)message)->addString("createDateEnd", date);
 		}
 		if (query->m_updateDateStart)
 		{
 			sprintf(date, "%02d/%02d/%4d", query->m_updateDateStart->m_day,
 				query->m_updateDateStart->m_month, query->m_updateDateStart->m_year);
-			((BfmeThingCIC *)message)->bfmeGoCIC((void *)"updateDateStart", date);
+			((BfmeC994 *)message)->addString("updateDateStart", date);
 		}
 		if (query->m_updateDateEnd)
 		{
 			sprintf(date, "%02d/%02d/%4d", query->m_updateDateEnd->m_day,
 				query->m_updateDateEnd->m_month, query->m_updateDateEnd->m_year);
-			((BfmeThingCIC *)message)->bfmeGoCIC((void *)"updateDateEnd", date);
+			((BfmeC994 *)message)->addString("updateDateEnd", date);
 		}
 	}
 	if (query->m_name)
-		((BfmeThingCIC *)message)->bfmeGoCIC((void *)"name",
-			(void *)query->m_name);
+		((BfmeC994 *)message)->addString("name",
+			(const char *)query->m_name);
 	((Rva007E8980 *)message)->go((int)(void *)"nameCaseSensitive",
 		query->m_nameCaseSensitive);
 	((Rva007E8980 *)message)->go((int)(void *)"nameWildcardMatch",
@@ -154,11 +154,11 @@ void Rva007F1800Search::serialize(Rva007E8810Message *message, int maxRecords,
 	{
 		char key[64] = { 0 };
 		sprintf(key, "searchAttributes.%d.name", i);
-		((BfmeThingCIC *)message)->bfmeGoCIC((void *)key,
-			(void *)query->m_attributes[i].m_value->m_name);
+		((BfmeC994 *)message)->addString((const char *)key,
+			(const char *)query->m_attributes[i].m_value->m_name);
 		sprintf(key, "searchAttributes.%d.value", i);
-		((BfmeThingCIC *)message)->bfmeGoCIC((void *)key,
-			(void *)query->m_attributes[i].m_value->m_value);
+		((BfmeC994 *)message)->addString((const char *)key,
+			(const char *)query->m_attributes[i].m_value->m_value);
 		sprintf(key, "searchAttributes.%d.type", i);
 		((BfmeThingCIB *)message)->bfmeGoCIB((void *)key,
 			(void *)query->m_attributes[i].m_type);

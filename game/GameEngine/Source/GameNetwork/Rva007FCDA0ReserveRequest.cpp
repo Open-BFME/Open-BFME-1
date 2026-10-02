@@ -9,10 +9,10 @@ public:
 	void run();                                                   // 0x007E8AC0
 };
 
-class BfmeThingCIC
+class BfmeC994
 {
 public:
-	void bfmeGoCIC( void *one, void *two );                       // 0x007E8A10
+	void addString( const char *key, const char *value );                       // 0x007E8A10
 };
 
 class BfmeThingCIB
@@ -42,12 +42,12 @@ void __stdcall Rva007FCDA0ReserveRequest(Rva007E8810Message *message,
 	message->m_depth = 3;
 	text[0] = 0;
 	Rva00800040JoinI64(ids, count, text, sizeof(text), ';');
-	reinterpret_cast< BfmeThingCIC * >( message )->bfmeGoCIC( (void *)"UIDS", (void *)text );
+	reinterpret_cast< BfmeC994 * >( message )->addString( "UIDS", (const char *)text );
 	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"TIMO", (void *)timeout );
 	switch (action)
 	{
-	case 0: reinterpret_cast< BfmeThingCIC * >( message )->bfmeGoCIC( (void *)"ACTION", (void *)"HLD" ); break;
-	case 1: reinterpret_cast< BfmeThingCIC * >( message )->bfmeGoCIC( (void *)"ACTION", (void *)"REL" ); break;
-	case 2: reinterpret_cast< BfmeThingCIC * >( message )->bfmeGoCIC( (void *)"ACTION", (void *)"RAL" ); break;
+	case 0: reinterpret_cast< BfmeC994 * >( message )->addString( "ACTION", "HLD" ); break;
+	case 1: reinterpret_cast< BfmeC994 * >( message )->addString( "ACTION", "REL" ); break;
+	case 2: reinterpret_cast< BfmeC994 * >( message )->addString( "ACTION", "RAL" ); break;
 	}
 }

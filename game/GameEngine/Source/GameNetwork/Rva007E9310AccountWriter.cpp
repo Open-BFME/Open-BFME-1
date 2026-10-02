@@ -16,10 +16,10 @@ class Rva007E8980
 public:
     void go(int key, unsigned char value);
 };
-class BfmeThingCIC
+class BfmeC994
 {
 public:
-    void bfmeGoCIC(void *key, void *value);
+    void addString( const char *key, const char *value );
 };
 class Rva007E9310Identifier
 {
@@ -44,16 +44,16 @@ void Rva007E9310AccountWriter::write(Rva007E8810Message *message,
     const char *txn = g_Rva0130A50CTxn;
     ((Rva007E8AC0 *)message)->run();
     message->m_category = 'acct';
-    ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"TXN", (void *)txn);
+    ((BfmeC994 *)message)->addString("TXN", (const char *)txn);
     ((Rva007E8980 *)message)->go((int)"returnEncryptedInfo", returnEncryptedInfo);
     if (encryptedInfo && *encryptedInfo) {
-        ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"encryptedInfo", (void *)encryptedInfo);
+        ((BfmeC994 *)message)->addString("encryptedInfo", (const char *)encryptedInfo);
     } else {
-        ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"name", (void *)name);
-        ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"password", (void *)password);
+        ((BfmeC994 *)message)->addString("name", (const char *)name);
+        ((BfmeC994 *)message)->addString("password", (const char *)password);
     }
     char *identifier = m_identifier.get();
-    ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"machineId", (void *)(identifier + 0x183));
+    ((BfmeC994 *)message)->addString("machineId", (const char *)(identifier + 0x183));
     identifier = m_identifier.get();
-    ((BfmeThingCIC *)message)->bfmeGoCIC((void *)"macAddr", (void *)(identifier + 0x1E3));
+    ((BfmeC994 *)message)->addString("macAddr", (const char *)(identifier + 0x1E3));
 }
