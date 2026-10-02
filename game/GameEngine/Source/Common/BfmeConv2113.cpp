@@ -21,7 +21,16 @@ public:
 	Glo012F1028Sub *m_bfmeSub;
 };
 
-Glo012F1028Type *Glo012F1028 = 0;
+// 0x012F1028 is EA's `TheLivingWorldLogic` (build/report_0x012F1028.md,
+// section "0x012F1028 -- TheLivingWorldLogic": the literal pushed at the
+// GameEngine::init initSubsystem<LivingWorldLogic> site, RVA 0x00079DB3, and
+// the "LivingWorldLogic" literal the class vtable's name() returns at
+// 0x010EDC08). Its definition moved to the class's own TU,
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp, which
+// owns the data row for that address; this file only reads it, through the
+// pin ?Glo012F1028@@3PAVGlo012F1028Type@@A @ 0x012F1028 that the other 34
+// referencing TUs also use. Nothing here is respelled.
+extern Glo012F1028Type *Glo012F1028;
 
 class BfmeRewindZU
 {

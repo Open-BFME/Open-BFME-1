@@ -16,7 +16,17 @@ public:
     AsciiString m_string18C;
     AsciiString m_string190;
 };
-BfmeGameCW *g_bfmeGameCW;
+// 0x012F706C is EA's `TheLivingWorldManager` (build/report_0x012F1028.md,
+// section "0x012F706C -- TheLivingWorldManager": the literal pushed at the
+// GameEngine::init initSubsystem<LivingWorldManager> site, RVA 0x00079CAC,
+// the "LivingWorldManager" literal the class vtable's name() returns at
+// 0x01116C28, and EA's own assert text "TheLivingWorldManager==NULL").
+// Its definition moved to the class's own TU,
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp, which
+// owns the data row for that address; this file only reads it, through the pin
+// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A @ 0x012F706C that the other 23 referencing
+// TUs also use. Nothing here is respelled.
+extern BfmeGameCW *g_bfmeGameCW;
 extern AsciiString Rva01336E50EmptyString;
 
 class Rva003A48B0Owner
