@@ -15,7 +15,13 @@ protected:
 	unsigned char m_head[0x20];
 };
 
-extern int g_AIFaceStateVTable;
+// Retail's vftable for AIFaceState is 0x0109AD20, recorded in
+// dir32_addresses.csv as ??_7AIFaceState@@6B@ and emitted by
+// AIStateMachineConstructor.cpp, which declares class AIFaceState (AIStateMachine.h:
+//1314 upstream) and builds states 0x24/0x25/0x3B on it. The stand-in name below
+// resolved nothing; __identifier spells the compiler-emitted symbol so this
+// reference links to that real definition.
+extern "C" const char __identifier("??_7AIFaceState@@6B@")[];
 
 // Retail's AIStateMachine builds its face states (0x24, 0x25 and 0x3B) as
 // 0x30-byte objects on vtable 0x0109AD20, whose name slot returns "AIFaceState"
@@ -44,6 +50,6 @@ Rva00180320AIFaceState::Rva00180320AIFaceState(StateMachine *machine, int obj) :
 	m_canTurnInPlace = false;
 	m_shouldLookForTargets = true;
 	m_initialSleepOffset = 0xFFFF;
-	m_vftable = &g_AIFaceStateVTable;
+	m_vftable = (int *)__identifier("??_7AIFaceState@@6B@");
 	m_obj = obj;
 }

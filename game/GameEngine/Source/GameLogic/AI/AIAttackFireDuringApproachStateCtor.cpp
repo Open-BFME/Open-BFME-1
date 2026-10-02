@@ -12,7 +12,13 @@ public:
 	AIInternalMoveToState( void *machine, AsciiString name );
 };
 
-extern int g_AIAttackFireDuringApproachStateVTable;
+// Retail's vftable for this class is 0x0109A640, pinned in symbols.csv as
+// ??_7AIAttackFireDuringApproachState@@6B@ and confirmed by this constructor and
+// by the class's key function ??_GAIAttackFireDuringApproachState@@MAEPAXI@Z at
+// 0x00185410 (AITargetMovementDeletingDestructors.cpp), which is the TU that
+// emits it.  The stand-in name below resolved nothing; __identifier spells the
+// compiler-emitted symbol so the reference links to that real definition.
+extern "C" const char __identifier("??_7AIAttackFireDuringApproachState@@6B@")[];
 
 class AIAttackFireDuringApproachState : public AIInternalMoveToState
 {
@@ -36,7 +42,7 @@ AIAttackFireDuringApproachState::AIAttackFireDuringApproachState( StateMachine *
 	: AIInternalMoveToState( machine, AsciiString( "AIAttackFireDuringApproachState" ) )
 {
 	m_field50 = 0;
-	m_vftable = &g_AIAttackFireDuringApproachStateVTable;
+	m_vftable = (int *)__identifier("??_7AIAttackFireDuringApproachState@@6B@");
 	m_field54 = 0;
 	m_field58 = 0;
 	m_field5C = 0;

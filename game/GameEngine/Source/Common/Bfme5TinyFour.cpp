@@ -2,14 +2,21 @@
 // flag cleared together, an emptiness test that answers through the carry, and
 // a flag written into a singleton.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// The shared default this body falls back on is retail's 0x01336E50, which
+// WWLib's ascii_string.h records as `AsciiString::TheEmptyString` (exported as
+// ?TheEmptyString@AsciiString@@2V1@B, RVA 0x00F36E50) and which
+// dir32_addresses.csv and symbols.csv both place at 0x01336E50.  The
+// address-derived g_bfmeDefaultBP that stood here resolved nothing; the header
+// included above already declares the real one, and this body only returns its
+// address, through void * because the member is const.
 class BfmeThingBP
 {
 public:
 	char m_bfmeHead[0x54];					// +0x00
 	int m_bfmeField;					// +0x54
 };
-
-extern int g_bfmeDefaultBP[2];					// retail 0x01336E50
 
 class Gen_003C63A0
 {
@@ -29,7 +36,11 @@ int *Gen_003C63A0::bfmeField(void) const
 	if (thing)
 		return &thing->m_bfmeField;
 
-	return g_bfmeDefaultBP;
+	// retail 0x01336E50: AsciiString::TheEmptyString, the shared default the
+	// field address falls back on.
+	const void *sharedDefault = &AsciiString::TheEmptyString;
+
+	return (int *)sharedDefault;
 }
 
 class BfmeClockBP

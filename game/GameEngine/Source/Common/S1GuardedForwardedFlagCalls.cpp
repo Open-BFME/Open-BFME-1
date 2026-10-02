@@ -61,15 +61,25 @@ public:
 BFME_GUARDED_FORWARD_MEMBER( Rva0048D1B0, GameWindow, winHide, 0x3050, false )
 BFME_GUARDED_FORWARD_MEMBER( Rva0048D1D0, GameWindow, winHide, 0x3050, true )
 
-extern Gen0000C955 *Data00EF49FC;
+// Retail's 0x012F49FC is EA's `BfmeAptScreenOnlineCustomMatch
+// *TheBfmeOnlineCustomMatch`: dir32_addresses.csv pins that spelling at that VA
+// (from the matched dtor 0x00538CE0, whose body clears it when `this` matches)
+// and OnlineCustomMatchDestructor.cpp and NAT_establishConnectionPaths.cpp both
+// reference it under that name. The address-derived Data00EF49FC that stood
+// here resolved nothing. Only the pointee type may differ per TU, so the class
+// is forward declared and this TU's 0x0000C955 callee view is applied at the
+// use.
+class BfmeAptScreenOnlineCustomMatch;
+extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 
 #define BFME_GUARDED_FORWARD_GLOBAL( NAME, VALUE )                        \
 	void NAME();                                                          \
 	void NAME()                                                           \
 	{                                                                     \
-		if ( Data00EF49FC )                                               \
+		Gen0000C955 *target = (Gen0000C955 *)TheBfmeOnlineCustomMatch;      \
+		if ( target )                                                     \
 		{                                                                 \
-			Data00EF49FC->handle( VALUE );                                \
+			target->handle( VALUE );                                       \
 		}                                                                 \
 	}
 
