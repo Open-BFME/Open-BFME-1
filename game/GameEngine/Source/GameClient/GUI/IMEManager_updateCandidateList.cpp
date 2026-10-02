@@ -26,19 +26,7 @@ extern "C"
 	void *memset(void *destination, int value, unsigned int size);
 }
 
-#include "string_base.h"
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString();
-	~UnicodeString();
-
-	void set(const unsigned short *text)
-	{
-		StringBase<unsigned short>::set(text);
-	}
-};
+#include "unicode_string.h"
 
 class GameWindow
 {
@@ -160,7 +148,8 @@ void IMEManager::updateCandidateList(int candidateFlags)
 						// dwCount offsets follow the fixed six-DWORD header.
 						unsigned long *offsets = reinterpret_cast<unsigned long *>(clist + 1);
 						char *string = buffer + offsets[j];
-						m_candidateString[j].set((unsigned short *)string);
+						reinterpret_cast<StringBase<unsigned short> *>(
+							&m_candidateString[j])->set((unsigned short *)string);
 					}
 				}
 			}
