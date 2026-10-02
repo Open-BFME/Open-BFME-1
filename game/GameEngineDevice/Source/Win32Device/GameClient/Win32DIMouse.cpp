@@ -55,7 +55,11 @@
 // the real one ordinary external linkage restores the retail call shape without
 // touching the shim (a shim edit forces the full gate, which is red).
 #define DirectInput8Create _bfme_dinput8create_dllimport_unused
+// USER32 imports use C linkage in retail (ClipCursor, LoadCursorA,
+// ReleaseCapture and SetCapture); the local dinput shim omits that linkage.
+extern "C" {
 #include <dinput.h>
+}
 #undef DirectInput8Create
 extern "C" HRESULT WINAPI DirectInput8Create( HINSTANCE, DWORD, REFIID, void **, IUnknown * );
 
