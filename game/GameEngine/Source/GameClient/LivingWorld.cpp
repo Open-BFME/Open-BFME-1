@@ -87,9 +87,8 @@ public:
 	void rva00615900(const Coord2D &point);
 };
 
-class BfmeGameCW
-{
-};
+class LivingWorldLogic;
+class LivingWorldManager;
 
 class Mouse
 {
@@ -166,8 +165,10 @@ public:
 	Rva003C9470Owner *m_at28;
 };
 
-extern Glo012F1028Type *Glo012F1028;
-extern BfmeGameCW *g_bfmeGameCW;
+// Canonical singleton definitions at VA 0x012F1028 and VA 0x012F706C.
+// Cast to this TU's existing layout and method views at each use.
+extern LivingWorldLogic *TheLivingWorldLogic;
+extern LivingWorldManager *TheLivingWorldManager;
 extern Mouse *TheMouse;
 
 // ?rva00609360@Rva006092D0State@@QAEXPAX@Z
@@ -182,7 +183,7 @@ void Rva006092D0State::rva00609360(void *source)
 	{
 	case 1:
 	{
-		Rva003C9470Owner *owner = Glo012F1028->m_at28;
+		Rva003C9470Owner *owner = ((Glo012F1028Type *)TheLivingWorldLogic)->m_at28;
 		void *value = owner->m_value08;
 		if (value == 0)
 			return;
@@ -194,8 +195,8 @@ void Rva006092D0State::rva00609360(void *source)
 		slot68(1);
 		TheMouse->slot38(0);
 		slot30(2, 0);
-		if (g_bfmeGameCW != 0)
-			((BfmeHostDA *)g_bfmeGameCW)->bfmeStopDA();
+		if (TheLivingWorldManager != 0)
+			((BfmeHostDA *)TheLivingWorldManager)->bfmeStopDA();
 		return;
 	}
 
@@ -204,7 +205,7 @@ void Rva006092D0State::rva00609360(void *source)
 		Rva000643F0Triple copyPoint;
 
 			slot20(source, &point);
-			Gen003BDF20Element *value = ((Rva003BDF20 *)Glo012F1028)->find(8);
+			Gen003BDF20Element *value = ((Rva003BDF20 *)TheLivingWorldLogic)->find(8);
 			if (value != 0)
 			{
 				int *result = ((BfmeW1105 *)((char *)value + 0x0C))->bfmeGo1105C(0);
@@ -227,12 +228,12 @@ void Rva006092D0State::rva00609360(void *source)
 
 			slot64(&point);
 			slot30(1, 0);
-			if (g_bfmeGameCW != 0)
+			if (TheLivingWorldManager != 0)
 			{
 				Coord2D position;
 				position.x = point.x;
 				position.y = point.y;
-				((BfmeLivingWorldManager *)g_bfmeGameCW)->rva00615900(position);
+				((BfmeLivingWorldManager *)TheLivingWorldManager)->rva00615900(position);
 			}
 			return;
 		}
