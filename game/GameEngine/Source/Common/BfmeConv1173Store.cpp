@@ -17,10 +17,11 @@
 //
 // The host vector has pointer/count fields at +0x2b8/+0x2bc. Retail callers
 // explicitly pass this host in ECX to 0x007F76D0, whose body ignores ECX.
-// This neutral receiver view preserves that observed call-site contract; it
-// does not establish a public member identity or replace the existing bfmeAt
-// row. Likewise, the Player accessor name below is a neutral receiver view
-// of a message-field helper also used by the existing GameRecord view.
+// VC7.1 represents this nonvirtual member pointer as one code pointer. The
+// local union views retain the observed ECX receiver while referencing the
+// existing bfmeAt definition; both conventions pop the same two arguments.
+// The Player's message-field helper uses the defining GameRecord view, which
+// reads only the shared message offset +8.
 
 class Rva007FBC30GameKey
 {
@@ -32,13 +33,17 @@ public:
 class Rva007F5010Player : public Rva007FBC30GameKey
 {
 public:
-	bool rva007FBFB0( const char *key, char *dest, unsigned int destSize );
-
 	void *m_msg;
 	int m_pid;
 	char m_name[ 0x80 ];
 	unsigned int m_uidLow;
 	unsigned int m_uidHigh;
+};
+
+class Rva007FBEF0GameRecord
+{
+public:
+	bool Rva007FBFB0( const char *key, char *dest, unsigned int destSize );
 };
 
 class BfmeSlotCZ
@@ -55,11 +60,11 @@ public:
 	int m_bfmeCount;
 };
 
+int *__stdcall bfmeAt( BfmeVecCZ *vector, int index );
+
 class Rva00802550Host
 {
 public:
-	int *rva007F76D0( BfmeVecCZ *vector, int index );
-
 	char m_opaquePrefix[ 0x2b8 ];
 	BfmeVecCZ m_bfmeVector;
 };
@@ -117,9 +122,15 @@ void BfmeSlot1173::measure( Rva007F5010Player *record )
 	( (Rva00800290Buffer *)&m_arena )->addPadded( count * 4 );
 	for( i = 0; i < count; i++ )
 	{
-		slot = m_host->rva007F76D0( vector, i );
+		union
+		{
+			int *(__stdcall *function)( BfmeVecCZ *, int );
+			int *(Rva00802550Host::*member)( BfmeVecCZ *, int );
+		} lookup;
+		lookup.function = &bfmeAt;
+		slot = (m_host->*lookup.member)( vector, i );
 		buf[ 0 ] = 0;
-		if( record->rva007FBFB0( (const char *)slot, buf, 0x40 ) )
+		if( reinterpret_cast<Rva007FBEF0GameRecord *>(record)->Rva007FBFB0( (const char *)slot, buf, 0x40 ) )
 			( (Rva00800290Buffer *)&m_arena )->addString( buf );
 	}
 }
@@ -145,9 +156,15 @@ void BfmeSlot1173::bfmeStore1173( void *recordValue, int hostValue )
 	m_keys = (char **)m_arena.claim( count * 4, true );
 	for( i = 0; i < count; i++ )
 	{
-		key = (char *)m_host->rva007F76D0( vector, i );
+		union
+		{
+			int *(__stdcall *function)( BfmeVecCZ *, int );
+			int *(Rva00802550Host::*member)( BfmeVecCZ *, int );
+		} lookup;
+		lookup.function = &bfmeAt;
+		key = (char *)(m_host->*lookup.member)( vector, i );
 		buf[ 0 ] = 0;
-		if( !record->rva007FBFB0( key, buf, 0x40 ) )
+		if( !reinterpret_cast<Rva007FBEF0GameRecord *>(record)->Rva007FBFB0( key, buf, 0x40 ) )
 			m_keys[ i ] = 0;
 		else
 			m_keys[ i ] = m_arena.append( buf );
