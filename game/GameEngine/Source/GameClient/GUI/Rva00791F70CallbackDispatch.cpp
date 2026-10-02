@@ -5,8 +5,7 @@ class Rva00791F70CallbackHost;
 typedef void (__cdecl *Rva00791F70Callback)(
 	Rva00791F70CallbackHost *, int, int, int );
 
-void rva00791F70DefaultDispatch(
-	Rva00791F70CallbackHost *, int, int, int );
+void j_0003c281();
 
 class Rva00791F70CallbackHost
 {
@@ -24,5 +23,5 @@ void Rva00791F70CallbackHost::dispatch(
 	if( m_callback )
 		m_callback( this, first, second, third );
 	else
-		rva00791F70DefaultDispatch( this, first, second, third );
+		((Rva00791F70Callback)&j_0003c281)( this, first, second, third );
 }
