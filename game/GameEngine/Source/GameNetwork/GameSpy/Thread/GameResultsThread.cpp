@@ -487,3 +487,10 @@ void deque<GameResultsResponse, allocator<GameResultsResponse> >::_M_push_back_a
 	this->_M_finish._M_cur = this->_M_finish._M_first;
 }
 }
+
+// 0x009EEA50: the front-side twin of _M_reserve_map_at_back (0x009EEA20),
+// directly after it; it calls this deque's _M_reallocate_map with add_at_front.
+namespace _STL
+{
+template void deque<GameResultsResponse, allocator<GameResultsResponse> >::_M_reserve_map_at_front(size_t);
+}
