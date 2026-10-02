@@ -19,7 +19,12 @@ public:
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeSinkAAA *g_bfmeSinkAAA;
+
+// Retail global 0x012F33F8; the canonical mangled spelling is
+// ?TheControlBar@@3PAVControlBar@@A, so the pointee must be the real
+// ControlBar and only the call needs the TU-local view of it.
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 class BfmeThingAAA
 {
@@ -38,5 +43,5 @@ void BfmeThingAAA::bfmeGoAAA(int at)
 	void *what = m_bfmeSlots[at].m_bfmeWhat;
 	if (what == 0)
 		return;
-	g_bfmeSinkAAA->bfmeSendAAA(what, ((BfmeModeAAA *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
+	((BfmeSinkAAA *)TheControlBar)->bfmeSendAAA(what, ((BfmeModeAAA *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
 }

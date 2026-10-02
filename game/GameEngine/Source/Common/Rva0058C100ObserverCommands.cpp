@@ -9,17 +9,21 @@ public:
 	void execute( int value, void *command );
 };
 
-extern Rva0058C100CommandManager *g_rva0058C100CommandManager;
+// Retail global 0x012F33F8; the canonical mangled spelling is
+// ?TheControlBar@@3PAVControlBar@@A, so the pointee must be the real
+// ControlBar and only the calls need the TU-local view of it.
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 void __stdcall rva0058C100ObserveNext( void * )
 {
 	void *command;
 	{
 		AsciiString name( "NonCommand_ObserveNextPlayer" );
-		command = g_rva0058C100CommandManager->find( &name );
+		command = ((Rva0058C100CommandManager *)TheControlBar)->find( &name );
 	}
 	if( command )
-		g_rva0058C100CommandManager->execute( 0, command );
+		((Rva0058C100CommandManager *)TheControlBar)->execute( 0, command );
 }
 
 void __stdcall rva0058C1A0ObservePrior( void * )
@@ -27,8 +31,8 @@ void __stdcall rva0058C1A0ObservePrior( void * )
 	void *command;
 	{
 		AsciiString name( "NonCommand_ObservePriorPlayer" );
-		command = g_rva0058C100CommandManager->find( &name );
+		command = ((Rva0058C100CommandManager *)TheControlBar)->find( &name );
 	}
 	if( command )
-		g_rva0058C100CommandManager->execute( 0, command );
+		((Rva0058C100CommandManager *)TheControlBar)->execute( 0, command );
 }

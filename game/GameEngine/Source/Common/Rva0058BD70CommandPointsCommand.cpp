@@ -22,7 +22,11 @@ public:
 	void bfmeDo977B(int a, void *x);
 };
 
-extern BfmeMgr977 *TheControlBar;			// 0x012F33F8
+// Retail global 0x012F33F8; the canonical mangled spelling is
+// ?TheControlBar@@3PAVControlBar@@A, so the pointee must be the real
+// ControlBar and only the calls need the TU-local view of it.
+class ControlBar;
+extern ControlBar *TheControlBar;			// 0x012F33F8
 
 class Glo012F1028Type
 {
@@ -70,9 +74,9 @@ void Gen0058BD70::handle(int unused)
 	void *command;
 	{
 		BFMERetailAsciiString label(name);
-		command = TheControlBar->bfmeFind977B((BfmeB977 *)&label);
+		command = ((BfmeMgr977 *)TheControlBar)->bfmeFind977B((BfmeB977 *)&label);
 	}
 
 	if (command)
-		TheControlBar->bfmeDo977B(0, command);
+		((BfmeMgr977 *)TheControlBar)->bfmeDo977B(0, command);
 }
