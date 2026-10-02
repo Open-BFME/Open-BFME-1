@@ -8,15 +8,19 @@ class StateMachine;
 // 0x00018B92 ILT. Its vtable 0x010960D0 holds ??_GAIPickUpCrateState,
 // AIPickUpCrateState::onEnter and AIPickUpCrateState::update. AIStateMachine
 // and the attack-move state machines inline this same sequence.
-class Rva0014F280StateBase
+//
+// That base ctor is AIInternalMoveToState's, reached through the 5-byte base
+// ctor thunk at 0x00032182, so the shim is spelled with the real class name and
+// its real (StateMachine*, AsciiString) signature.
+class AIInternalMoveToState
 {
 public:
-	Rva0014F280StateBase( void *machine, AsciiString name );
+	AIInternalMoveToState( StateMachine *machine, AsciiString name );
 };
 
 extern int g_AIPickUpCrateStateVTable;
 
-class AIPickUpCrateState : public Rva0014F280StateBase
+class AIPickUpCrateState : public AIInternalMoveToState
 {
 public:
 	AIPickUpCrateState( StateMachine *machine );
@@ -28,7 +32,7 @@ private:
 };
 
 AIPickUpCrateState::AIPickUpCrateState( StateMachine *machine )
-	: Rva0014F280StateBase( machine,
+	: AIInternalMoveToState( machine,
 		AsciiString( "AIAttackPickUpCrateState" ) )
 {
 	m_vftable = &g_AIPickUpCrateStateVTable;

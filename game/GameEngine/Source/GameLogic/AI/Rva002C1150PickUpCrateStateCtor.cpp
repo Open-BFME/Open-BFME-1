@@ -11,15 +11,19 @@ class StateMachine;
 // name slot and base slots but has its own deleting destructor (0x002C11A0) and
 // overrides slots 4 to 6. The class name is not recovered; the body sits among
 // the GiantBird states.
-class Rva0014F280StateBase
+//
+// That base ctor is AIInternalMoveToState's, reached through the 5-byte base
+// ctor thunk at 0x00032182, so the shim is spelled with the real class name and
+// its real (StateMachine*, AsciiString) signature.
+class AIInternalMoveToState
 {
 public:
-	Rva0014F280StateBase( void *machine, AsciiString name );
+	AIInternalMoveToState( StateMachine *machine, AsciiString name );
 };
 
 extern int g_Rva010C7D30StateVTable;
 
-class Rva002C1150PickUpCrateState : public Rva0014F280StateBase
+class Rva002C1150PickUpCrateState : public AIInternalMoveToState
 {
 public:
 	Rva002C1150PickUpCrateState( StateMachine *machine );
@@ -31,7 +35,7 @@ private:
 };
 
 Rva002C1150PickUpCrateState::Rva002C1150PickUpCrateState( StateMachine *machine )
-	: Rva0014F280StateBase( machine,
+	: AIInternalMoveToState( machine,
 		AsciiString( "AIAttackPickUpCrateState" ) )
 {
 	m_delayCounter = 0;
