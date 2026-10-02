@@ -1,7 +1,10 @@
 // cl: /EHsc
 
 extern void ( __cdecl *g_Va01337830 )( void *storage, unsigned int size );
-extern void __cdecl Rva00897330NotifyFree( void *storage );
+class BfmeItemDX;
+
+// ?bfmeRemove@@YAXPAVBfmeItemDX@@@Z  (retail 0x00897330)
+extern void __cdecl bfmeRemove( BfmeItemDX *item );
 
 class Rva00892ED0Base
 {
@@ -10,7 +13,7 @@ public:
 
 	static void operator delete( void *storage, unsigned int size )
 	{
-		Rva00897330NotifyFree( storage );
+		bfmeRemove( (BfmeItemDX *)storage );
 		g_Va01337830( (char *)storage - 8, size + 8 );
 	}
 };

@@ -10,9 +10,10 @@ public:
 };
 class BfmeItemDX;
 void bfmePush(BfmeItemDX *);
+// ?bfmeRemove@@YAXPAVBfmeItemDX@@@Z  (retail 0x00897330)
+void bfmeRemove(BfmeItemDX *);
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 extern void (__cdecl *g_Va01337830)(void *, unsigned);
-void Rva00897330NotifyFree(void *);
 class ArrayValue008B9C60 : public AptValue {
 public:
     ArrayValue008B9C60();
@@ -24,7 +25,7 @@ public:
         return p;
     }
     void operator delete(void *p, unsigned n) {
-        Rva00897330NotifyFree(p);
+        bfmeRemove((BfmeItemDX *)p);
         g_Va01337830((char *)p - 8, n + 8);
     }
 };

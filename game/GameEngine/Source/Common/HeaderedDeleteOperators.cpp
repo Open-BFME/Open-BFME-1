@@ -23,7 +23,10 @@
 
 extern void ( __cdecl *g_Va01337830 )( void *storage, unsigned int size );
 
-void __cdecl Rva00897330NotifyFree( void *storage );
+class BfmeItemDX;
+
+// ?bfmeRemove@@YAXPAVBfmeItemDX@@@Z  (retail 0x00897330)
+void __cdecl bfmeRemove( BfmeItemDX *item );
 
 #define BFME_HEADERED_DELETE_OPERATOR( NAME )                                 \
 	class NAME                                                                \
@@ -33,7 +36,7 @@ void __cdecl Rva00897330NotifyFree( void *storage );
 	};                                                                        \
 	void NAME::operator delete( void *storage, unsigned int size )            \
 	{                                                                         \
-		Rva00897330NotifyFree( storage );                                     \
+		bfmeRemove( (BfmeItemDX *)storage );                                     \
 		g_Va01337830( (char *)storage - 8, size + 8 );                        \
 	}
 

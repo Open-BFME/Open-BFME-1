@@ -39,12 +39,15 @@ typedef void ( __cdecl *Q2PairDispatchFn )( char *first, char *second );
 
 extern Q2PairDispatchFn g_Q2PairDispatch;			///< retail 0x01337830
 
-void Gen00897330( char *block );
+class BfmeItemDX;
+
+// ?bfmeRemove@@YAXPAVBfmeItemDX@@@Z  (retail 0x00897330)
+void bfmeRemove( BfmeItemDX *block );
 
 #define Q2_INDIRECT_PAIR_DISPATCH( NAME )                                 \
 	void NAME( char *a, char *b )                                         \
 	{                                                                     \
-		Gen00897330( a );                                                 \
+		bfmeRemove( (BfmeItemDX *)a );                                    \
 		g_Q2PairDispatch( a - 8, b + 8 );                                 \
 	}
 
