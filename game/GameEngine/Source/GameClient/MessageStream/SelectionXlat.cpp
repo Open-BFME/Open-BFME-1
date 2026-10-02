@@ -61,6 +61,12 @@
 #include "GameClient/SelectionXlat.h"
 #include "GameClient/TerrainVisual.h"
 
+namespace _STL
+{
+extern template _Vector_base<Object *, allocator<Object *> >::_Vector_base(
+	size_t, const allocator<Object *> &);
+}
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
