@@ -24,7 +24,8 @@ public:
 };
 
 class BfmeStateGW;
-extern BfmeStateGW *g_bfmeStateGW;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 BfmeStateGW *bfmeHide(BfmeThingGW *thing)
 {
@@ -33,7 +34,7 @@ BfmeStateGW *bfmeHide(BfmeThingGW *thing)
 	{
 		thing->m_bfmeOwner->m_bfmeFlags &= ~0x2000000;
 	}
-	return g_bfmeStateGW;
+	return (BfmeStateGW *)g_bfmeFallbackDB;
 }
 
 BfmeStateGW *bfmeShow(BfmeThingGW *thing)
@@ -43,5 +44,5 @@ BfmeStateGW *bfmeShow(BfmeThingGW *thing)
 	{
 		thing->m_bfmeOwner->m_bfmeFlags |= 0x2000000;
 	}
-	return g_bfmeStateGW;
+	return (BfmeStateGW *)g_bfmeFallbackDB;
 }

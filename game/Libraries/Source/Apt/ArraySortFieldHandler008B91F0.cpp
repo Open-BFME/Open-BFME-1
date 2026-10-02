@@ -6,7 +6,8 @@ extern "C" int __cdecl compareValues008B90F0(unsigned *, unsigned *);
 struct BfmeBuf1233 { unsigned short refs, length; };
 struct BfmeStr1233 { BfmeBuf1233 *block; };
 extern BfmeStr1233 g_bfmeStr1233;
-extern void *g_bfmeResult1233;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 struct Value008B91F0 {
     void *vptr;
     unsigned flags;
@@ -21,7 +22,7 @@ struct Value008B91F0 {
             unsigned v = field20[index] & ~1u;
             if (v) return v;
         }
-        return (unsigned)g_bfmeResult1233;
+        return (unsigned)g_bfmeFallbackDB;
     }
 };
 

@@ -19,7 +19,8 @@ extern BfmeE1242 **g_bfmeArr1242;
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeResult1242;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 extern "C" void bfmeMove1242(void *d, const void *s, unsigned int n);
 extern "C" void *bfmeMake1242(int n);
@@ -50,5 +51,5 @@ void *bfmeInsert1242(BfmeN1242 *a, int k)
 		}
 		return bfmeMake1242(a->m_bfme28);
 	}
-	return g_bfmeResult1242;
+	return g_bfmeFallbackDB;
 }

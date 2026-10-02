@@ -58,7 +58,8 @@ public:
 extern Value008B9CC0 **g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeResult1233;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 void *aptArrayConcat(Value008B9CC0 *self,int count) {
     if (self->isType(0x16)) {
         Rva008B9C90HeaderedDeleting *source=(Rva008B9C90HeaderedDeleting *)self;
@@ -75,5 +76,5 @@ void *aptArrayConcat(Value008B9CC0 *self,int count) {
         }
         return out;
     }
-    return g_bfmeResult1233;
+    return g_bfmeFallbackDB;
 }

@@ -96,7 +96,7 @@ struct Stack008C7950
     }
 };
 
-extern Value008C7950 *g_bfmeFallbackDB;
+extern AptValue *g_bfmeFallbackDB;
 void IntegerString008C7F70(Stack008C7950 *state)
 {
     Value008C7950 *value = state->m_entries[state->m_count - 1];
@@ -115,6 +115,6 @@ void IntegerString008C7F70(Stack008C7950 *state)
         state->push(result);
     } else {
         state->pop();
-        state->push(g_bfmeFallbackDB);
+        state->push((Value008C7950 *)g_bfmeFallbackDB);
     }
 }

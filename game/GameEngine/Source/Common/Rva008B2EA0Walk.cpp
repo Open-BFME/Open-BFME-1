@@ -1,6 +1,7 @@
 // cl: /O2 /DNDEBUG /MD
 
-extern void *g_rva008B2EA0Fallback;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 class Rva008B2EA0Inner
 {
@@ -53,7 +54,7 @@ void *rva008B2EA0Walk(Rva008B2EA0Obj *obj)
 	void *extra;
 
 	if ((obj->m_flags & 0x3f) != 0x20)
-		return g_rva008B2EA0Fallback;
+		return g_bfmeFallbackDB;
 
 	node = rva008B2EA0Create();
 	node->append((char *)g_rva008B2EA0Base + 8);

@@ -37,7 +37,8 @@ struct Manager008C3F10 {
     void remove008A1C20(Rva008C3F10Value *);
 };
 extern Manager008C3F10 *g_manager013377D8;
-extern Rva008C3F10Value *g_value013379BC;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern unsigned char g_byte0133781C;
 extern Registry008C3F10 *g_registry01337814;
 // Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
@@ -67,8 +68,8 @@ void Rva008C3F10Value::cleanup(char mode) {
     if ((field60&0xc0000)==0x40000 || invalid()) return;
     ((Rva008A0E00Owner *)((char *)g_manager013377D8+0x14))->remove(this);
     ((Rva008A0E00Owner *)((char *)g_manager013377D8+0xa28))->remove(this);
-    if (g_manager013377D8->field125C==this) g_manager013377D8->field125C=g_value013379BC;
-    if (g_manager013377D8->field1260==this) g_manager013377D8->field1260=g_value013379BC;
+    if (g_manager013377D8->field125C==this) g_manager013377D8->field125C=(Rva008C3F10Value *)g_bfmeFallbackDB;
+    if (g_manager013377D8->field1260==this) g_manager013377D8->field1260=(Rva008C3F10Value *)g_bfmeFallbackDB;
     ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x820))->remove((BfmeRef008A4B20 *)this);
     if (g_byte0133781C)
         ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x924))->remove((BfmeRef008A4B20 *)this);

@@ -11,7 +11,8 @@ public:
 	int m_bfme28;
 };
 
-extern void *g_bfmeResult1234;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 void *bfmeReverse1234(BfmeN1234 *a)
 {
@@ -26,5 +27,5 @@ void *bfmeReverse1234(BfmeN1234 *a)
 		}
 		return a;
 	}
-	return g_bfmeResult1234;
+	return g_bfmeFallbackDB;
 }
