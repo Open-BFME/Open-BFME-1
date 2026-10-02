@@ -12,7 +12,14 @@ public:
 	virtual void reserved19(), reserved20(), reserved21(), reserved22(), reserved23(), reserved24(), reserved25(), reserved26();
 	virtual void xferReal(float *value);
 	virtual void reserved28(), reserved29(), reserved30(), reserved31(), reserved32(), reserved33(), reserved34(), reserved35();
-	virtual void xferEnum(const char **names, void *value, int count);
+	// Retail 0x0010C4D0 pushes ONE .rdata address (0x010890F0) followed by the
+	// 4-byte value pointer and the literal 4: the same
+	// xferEnum(const char *name, void *data, unsigned int size) shape as
+	// XferScienceElement.cpp's receiver->xferEnum("ScienceType", science, 4).
+	// The .rdata word at 0x010890F0 is not a pointer array at all: it is the
+	// string literal "GameClientRandomVariable::DistributionType", the enum
+	// type name. So there is no names-table global to link against.
+	virtual void xferEnum(const char *name, void *data, unsigned int size);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
@@ -34,7 +41,7 @@ public:
 	float m_high;
 };
 
-extern const char *BfmeXferDistributionTypeNames[];
+
 
 Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 {
@@ -60,7 +67,7 @@ Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 
 	xfer.xferReal(&locals.low);
 	xfer.xferReal(&locals.high);
-	xfer.xferEnum(BfmeXferDistributionTypeNames, &type, 4);
+	xfer.xferEnum("GameClientRandomVariable::DistributionType", &type, 4);
 
 	if (!xfer.isSaving()) {
 		var.setRange(locals.low, locals.high, type);

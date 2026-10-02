@@ -61,14 +61,19 @@ struct Gen_0023c9c0_Kind
 };
 
 // The registry global at 0x012EF1D8 is EA's `TheThingFactory`; only the
-// findTemplate member is reached from this body.
+// findTemplate member is reached from this body.  It is defined by
+// game/GameEngine/Source/Common/Thing/ThingFactory.cpp:66 as a section-3 data
+// symbol (symbols.csv:13278 pins `?TheThingFactory@@3PAVThingFactory@@A` at
+// 0x012EF1D8).  `Rva0020AA00TheRegistry` was one of 28 invented spellings at
+// that address that nothing defines.
 class ThingTemplate;
+class ThingFactory;
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate( const AsciiString &name );
 };
-extern BfmeThingFactory *Rva0020AA00TheRegistry;
+extern ThingFactory *TheThingFactory;
 
 // The caller-owned name list: retail reads +0x00/+0x04 as begin/end, a
 // 4-byte (AsciiString) stride.
@@ -120,7 +125,8 @@ Bool Gen_0023c9c0_View::bfme( Gen_0023c9c0_Obj *other, void *mustBeNull,
 	for ( AsciiString *it = names->m_begin; it != names->m_end; ++it )
 	{
 		Gen_0023c9c0_Kind *found = (Gen_0023c9c0_Kind *)
-			Rva0020AA00TheRegistry->findTemplate( *it );
+			reinterpret_cast<BfmeThingFactory *>( TheThingFactory )
+				->findTemplate( *it );
 		if ( found && found->m_id == id )
 			return true;
 	}
