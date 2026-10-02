@@ -1,5 +1,6 @@
-// Three more: a record pushed into the next slot, a pair of vectors handed in
-// at once, and an owner lookup that answers through one accessor.
+// A record pushed into the next slot and an owner lookup through one accessor.
+// The former 0x0094AC70 body now has its proven LightEnvironmentClass::Reset
+// identity in WW3D2/lightenvironment.cpp.
 
 class BfmeRecHE
 {
@@ -24,42 +25,6 @@ void Gen_008D2C80::bfmePush(void)
 {
 	m_bfmeSlots[m_bfmeCount] = m_bfmeCurrent;
 	++m_bfmeCount;
-}
-
-class BfmeVecHF
-{
-public:
-	int m_bfmeX;
-	int m_bfmeY;
-	int m_bfmeZ;
-};
-
-class Gen_0094AC70
-{
-public:
-	void bfmeSetPair(const BfmeVecHF *a, const BfmeVecHF *b);
-private:
-	unsigned char m_bfmeFlag;					// +0x000
-	unsigned char m_bfmeGap[3];					// +0x001
-	int m_bfmeState;							// +0x004
-	BfmeVecHF m_bfmeA;							// +0x008
-	int m_bfmeGap2[84];							// +0x014
-	BfmeVecHF m_bfmeB;							// +0x164
-};
-
-void Gen_0094AC70::bfmeSetPair(const BfmeVecHF *a, const BfmeVecHF *b)
-{
-	m_bfmeState = 0;
-
-	m_bfmeA.m_bfmeX = a->m_bfmeX;
-	m_bfmeA.m_bfmeY = a->m_bfmeY;
-	m_bfmeA.m_bfmeZ = a->m_bfmeZ;
-
-	m_bfmeB.m_bfmeX = b->m_bfmeX;
-	m_bfmeB.m_bfmeY = b->m_bfmeY;
-	m_bfmeB.m_bfmeZ = b->m_bfmeZ;
-
-	m_bfmeFlag = 0;
 }
 
 class BfmeThingHD;

@@ -10,7 +10,7 @@
 // class name; the address is kept in the type name.
 //
 // The vtable-looking constant 0x013069D0 that tools/vtable_lookup.py finds
-// is not a vtable: every ctor/Add_Light/Pre_Render_Update/bfmeSetPair call
+// is not a vtable: every ctor/Add_Light/Pre_Render_Update/Reset call
 // loads it directly into ecx, so it is the fixed storage address of the
 // function-local `static LightEnvironmentClass` -- MSVC's guarded static
 // init (0x01306C68 bit 0, then atexit) confirms it.
@@ -80,22 +80,6 @@ public:
 };
 extern DX8MeshRendererClass *TheDX8MeshRenderer;
 
-// The Reset-shaped call retail makes on the static light environment is
-// already pinned under this opaque class/method pair (Bfme5EightyEight.cpp);
-// its ABI is two BfmeVecHF const-pointers, not the canonical
-// LightEnvironmentClass::Reset(const Vector3&,const Vector3&) references.
-class BfmeVecHF
-{
-public:
-	float x, y, z;
-};
-
-class Gen_0094AC70
-{
-public:
-	void bfmeSetPair(const BfmeVecHF *a, const BfmeVecHF *b);
-};
-
 // BFME layout: AmbientLight is this+0x8 (a vtable/pad004-sized object
 // precedes it), the shared update/render list is this+0x60, and the light
 // list is this+0x90.  Only the members this body reads are declared.
@@ -131,9 +115,7 @@ void Rva00789E60Scene::Customized_Render(RenderInfoClass &rinfo)
 		static LightEnvironmentClass lenv;
 
 		Vector3 zero(0, 0, 0);
-		reinterpret_cast<Gen_0094AC70 *>(&lenv)->bfmeSetPair(
-			reinterpret_cast<const BfmeVecHF *>(&zero),
-			reinterpret_cast<const BfmeVecHF *>(&AmbientLight));
+		lenv.Reset(zero, AmbientLight);
 
 		for (it.First(&LightList); !it.Is_Done(); it.Next()) {
 			lenv.Add_Light(*(LightClass *)it.Peek_Obj());

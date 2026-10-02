@@ -222,16 +222,7 @@ void LightEnvironmentClass::OutputLightStruct::Init
 **
 ************************************************************************************************/
 
-// ??0LightEnvironmentClass@@QAE@XZ present-unmatched
-LightEnvironmentClass::LightEnvironmentClass(void) :
-	LightCount(0),
-	ObjectCenter(0,0,0),
-	OutputAmbient(0,0,0),
-	FillLight(),
-	FillIntensity(0.0f)
-{
-}
-
+// The BFME constructor is defined in LightEnvironmentClassConstructor.cpp.
 
 // ??1LightEnvironmentClass@@QAE@XZ present-unmatched
 LightEnvironmentClass::~LightEnvironmentClass(void)
@@ -239,12 +230,15 @@ LightEnvironmentClass::~LightEnvironmentClass(void)
 }
 
 
-// ?Reset@LightEnvironmentClass@@QAEXABVVector3@@0@Z present-unmatched
 void LightEnvironmentClass::Reset(const Vector3 & object_center,const Vector3 & ambient)
 {
-	LightCount = 0;
-	ObjectCenter = object_center;
-	OutputAmbient = ambient;
+	// BFME adds a leading flag before the shared Zero Hour layout.
+	LightEnvironmentClass *bfme = reinterpret_cast<LightEnvironmentClass *>(
+		reinterpret_cast<char *>(this) + 4);
+	bfme->LightCount = 0;
+	bfme->ObjectCenter = object_center;
+	bfme->OutputAmbient = ambient;
+	*reinterpret_cast<unsigned char *>(this) = 0;
 }
 
 

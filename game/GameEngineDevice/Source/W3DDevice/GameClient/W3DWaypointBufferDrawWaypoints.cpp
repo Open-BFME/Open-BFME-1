@@ -77,20 +77,12 @@ public:
 	void Set_Points(unsigned int num_points, Vector3 *locs);
 };
 
-// The 0x0094A880 body is matched as the public void member function
-// Gen_0094a880::m (functions.csv, 1-byte body), so call that member.
-class Gen_0094a880
-{
-public:
-	void m(void);
-};
-
 // Size 0x228 from LightEnvironmentClassConstructor.cpp (retail 0x0094AAF0).
 class LightEnvironmentClass
 {
 public:
 	LightEnvironmentClass(void);
-	~LightEnvironmentClass(void) { reinterpret_cast<Gen_0094a880 *>(this)->m(); }
+	~LightEnvironmentClass(void);
 	void Reset(const Vector3 &object_center, const Vector3 &scene_ambient);
 	void Pre_Render_Update(const Matrix3D &camera_tm);
 
