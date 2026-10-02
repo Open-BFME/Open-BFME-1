@@ -81,7 +81,7 @@ public:
 	virtual Bool isSubObjectsUpgrade() = 0;
 	virtual void forceRefreshUpgrade() = 0;
 	virtual void postUpgradeCheck() = 0;
-	virtual void rva002D4770() = 0;
+	virtual void removeUpgrade() = 0;
 	virtual void setUpgradeExecuted(Bool) = 0;
 };
 

@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 // Retail 0x002D49E0: the ADD counterpart of the already-landed
-// CostModifierUpgrade::rva002D4770 (0x002D4770, UpgradeMux slot 7,
+// CostModifierUpgrade::removeUpgrade (0x002D4770, UpgradeMux slot 7,
 // CostModifierUpgradeRva002D4770.cpp). Same Player/ModuleData
 // class layout and the same multiple-inheritance "this" adjustment
 // (UpgradeMux is not CostModifierUpgrade's first base, so calling the
@@ -111,7 +111,7 @@ public:
 	virtual Bool isSubObjectsUpgrade() = 0;
 	virtual void forceRefreshUpgrade() = 0;
 	virtual void postUpgradeCheck() = 0;
-	virtual void rva002D4770() = 0;
+	virtual void removeUpgrade() = 0;
 	virtual void setUpgradeExecuted(Bool) = 0;
 	virtual void upgradeImplementation() = 0;
 	virtual void getUpgradeActivationMasks() const = 0;

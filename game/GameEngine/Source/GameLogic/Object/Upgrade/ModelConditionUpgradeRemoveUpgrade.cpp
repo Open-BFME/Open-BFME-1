@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
-// ModelConditionUpgrade::rva002D6930 (UpgradeMux slot 7) at retail 0x002D6930, 180 bytes.
+// ModelConditionUpgrade::removeUpgrade (UpgradeMux slot 7) at retail 0x002D6930, 180 bytes.
 // The vtable at 0x010CD378 puts this body in slot 7. The constructor at
 // 0x002D66D0 installs that vtable for ModelConditionUpgrade.
-// Slot 7 is a BFME-only virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
+// Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot),
+// a virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
 // never calls; slot 9 is upgradeImplementation (0x002D6840), which this
-// body undoes. The real name is unproven, so the method keeps its address.
+// body undoes.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
 typedef unsigned int UnsignedInt;
@@ -42,10 +44,10 @@ struct BfmeModelConditionUpgradeDataAAN
 class ModelConditionUpgrade
 {
 protected:
-	virtual void rva002D6930();
+	virtual void removeUpgrade();
 };
 
-void ModelConditionUpgrade::rva002D6930()
+void ModelConditionUpgrade::removeUpgrade()
 {
 	BfmeModelConditionUpgradeDataAAN *data =
 		*(BfmeModelConditionUpgradeDataAAN **)((char *)this - 0xc);

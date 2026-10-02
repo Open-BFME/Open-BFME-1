@@ -1,8 +1,9 @@
 // StealthUpgrade, UpgradeMux table 0x010CDD58 (stored at +0x10 by the registered constructor
 // 0x002D8000):
 //   slot 9 -> 0x002D8170 StealthUpgrade::upgradeImplementation (ILT 0x0000E304, sole image ref)
-//   slot 7 -> 0x002D81B0 StealthUpgrade::rva002D81B0 (ILT 0x000361B5, sole image ref); slot 7 is a
-//            BFME-only virtual that undoes slot 9; its name is unproven.
+//   slot 7 -> 0x002D81B0 StealthUpgrade::removeUpgrade (ILT 0x000361B5, sole image ref); slot 7 is
+//            EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), undoing slot 9.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Slot 9 is the upgradeImplementation call in UpgradeMux::attemptUpgrade
 // (0x002D9AD0). Evidence:
 // targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
@@ -47,7 +48,7 @@ class StealthUpgrade
 {
 protected:
 	virtual void upgradeImplementation();
-	virtual void rva002D81B0();
+	virtual void removeUpgrade();
 };
 
 void StealthUpgrade::upgradeImplementation()
@@ -56,7 +57,7 @@ void StealthUpgrade::upgradeImplementation()
 	object->setStatus(MAKE_OBJECT_STATUS_MASK(18), true);
 }
 
-void StealthUpgrade::rva002D81B0()
+void StealthUpgrade::removeUpgrade()
 {
 	Object *object = *reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 8);
 	object->setStatus(MAKE_OBJECT_STATUS_MASK(18), false);

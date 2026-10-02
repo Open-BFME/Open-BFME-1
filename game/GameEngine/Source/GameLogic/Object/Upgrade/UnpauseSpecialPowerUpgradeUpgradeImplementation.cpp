@@ -2,8 +2,9 @@
 // UnpauseSpecialPowerUpgrade, UpgradeMux table 0x010CE350 (stored at +0x10 by the registered constructor
 // 0x002D9760):
 //   slot 9 -> 0x002D9890 UnpauseSpecialPowerUpgrade::upgradeImplementation (ILT 0x000437B6, sole image ref)
-//   slot 7 -> 0x002D9910 UnpauseSpecialPowerUpgrade::rva002D9910 (ILT 0x000145D8, sole image ref); slot 7 is a
-//            BFME-only virtual that undoes slot 9; its name is unproven.
+//   slot 7 -> 0x002D9910 UnpauseSpecialPowerUpgrade::removeUpgrade (ILT 0x000145D8, sole image ref); slot 7 is
+//            EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), undoing slot 9.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Slot 9 is the upgradeImplementation call in UpgradeMux::attemptUpgrade
 // (0x002D9AD0). Evidence:
 // targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
@@ -69,7 +70,7 @@ class UnpauseSpecialPowerUpgrade
 {
 protected:
 	virtual void upgradeImplementation();
-	virtual void rva002D9910();
+	virtual void removeUpgrade();
 };
 
 struct Rva002D9890Global
@@ -84,7 +85,7 @@ struct Rva002D9890Global
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-void UnpauseSpecialPowerUpgrade::rva002D9910()
+void UnpauseSpecialPowerUpgrade::removeUpgrade()
 {
     Rva002D9910Owner *owner = *(Rva002D9910Owner **)((char *)this - 8);
     for (Rva002D9910Element **it = owner->m_elements; *it != 0; ++it)

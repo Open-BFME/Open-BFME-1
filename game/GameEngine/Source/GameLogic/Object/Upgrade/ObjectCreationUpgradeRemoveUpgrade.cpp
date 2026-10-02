@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// ObjectCreationUpgrade::rva002D71D0 (UpgradeMux slot 7) at retail 0x002D71D0, 224 bytes.
+// ObjectCreationUpgrade::removeUpgrade (UpgradeMux slot 7) at retail 0x002D71D0, 224 bytes.
 // The ObjectCreationUpgrade vtable at 0x010CD620 reaches this body in slot 7.
-// Slot 7 is a BFME-only virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
+// Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot),
+// a virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
 // never calls; slot 9 is upgradeImplementation (0x002D6E60), which this
-// body undoes. The real name is unproven, so the method keeps its address.
+// body undoes.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
 enum NameKeyType
@@ -77,13 +79,13 @@ public:
     virtual void slot18();
 
 protected:
-    virtual void rva002D71D0();
+    virtual void removeUpgrade();
 
 public:
     virtual void setUpgradeExecuted(bool executed);
 };
 
-void ObjectCreationUpgrade::rva002D71D0()
+void ObjectCreationUpgrade::removeUpgrade()
 {
     setUpgradeExecuted(false);
 

@@ -1,9 +1,10 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
-// GarrisonUpgrade::rva002D54A0: UpgradeMux slot 7 at retail 0x002D54A0. Slot 7 is a BFME-only
-// virtual with no Zero Hour twin, WorldBuilder label or name table, so the
-// method keeps its address; the TU-local UpgradeMux view names the slot after
-// this body so the override still adjusts `this` to the UpgradeMux base. Evidence:
+// GarrisonUpgrade::removeUpgrade: UpgradeMux slot 7 at retail 0x002D54A0. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot); the TU-local UpgradeMux view
+// declares slot 7 under that name so the override keeps its this-adjustment.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
+// and
 // targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 //
 // Retail 0x002D54A0 (142 B).
@@ -173,7 +174,7 @@ public:
 	virtual void slot04();
 	virtual void slot05();
 	virtual void slot06();
-	virtual void rva002D54A0();
+	virtual void removeUpgrade();
 	virtual void setUpgradeExecuted(Bool enabled);
 
 };
@@ -194,11 +195,11 @@ class UpgradeModule : public BehaviorModule,
 class GarrisonUpgrade : public UpgradeModule
 {
 protected:
-	virtual void rva002D54A0();
+	virtual void removeUpgrade();
 };
 
-// ?rva002D54A0@GarrisonUpgrade@@MAEXXZ
-void GarrisonUpgrade::rva002D54A0()
+// ?removeUpgrade@GarrisonUpgrade@@MAEXXZ
+void GarrisonUpgrade::removeUpgrade()
 {
 	Object *object = m_object;
 

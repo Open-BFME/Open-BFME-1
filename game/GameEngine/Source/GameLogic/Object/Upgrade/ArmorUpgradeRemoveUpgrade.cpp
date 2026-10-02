@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
-// ArmorUpgrade::rva002D2D20 (UpgradeMux slot 7) at retail 0x002D2D20, 213 bytes.
+// ArmorUpgrade::removeUpgrade (UpgradeMux slot 7) at retail 0x002D2D20, 213 bytes.
 // ArmorUpgrade's constructor at 0x002D2AB0 installs the vtable at
 // 0x010CBA40, whose slot 7 points to this body through ILT 0x0000986D.
-// Slot 7 is a BFME-only virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
+// Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot),
+// a virtual that UpgradeMux::attemptUpgrade (0x002D9AD0)
 // never calls; slot 9 is upgradeImplementation (0x002D2C20), which this
-// body undoes. The real name is unproven, so the method keeps its address.
+// body undoes.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
 typedef unsigned int UnsignedInt;
@@ -90,10 +92,10 @@ struct ArmorUpgradeModuleData
 class ArmorUpgrade
 {
 protected:
-	virtual void rva002D2D20();
+	virtual void removeUpgrade();
 };
 
-void ArmorUpgrade::rva002D2D20()
+void ArmorUpgrade::removeUpgrade()
 {
 	Object *object = *(Object **)((char *)this - 8);
 
