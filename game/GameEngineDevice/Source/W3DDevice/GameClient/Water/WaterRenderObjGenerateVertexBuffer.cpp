@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // WaterRenderObjClass::generateVertexBuffer, retail 0x0079EAB0, 797 bytes.
 // Donor: EA Generals Zero Hour W3DWater.cpp generateVertexBuffer (GPLv3), the
 // class's Zero Hour home; the body shape (pool/usage/fvf defaults, the
@@ -30,15 +30,12 @@
 //    registers across the inner loop; spelling the scale as the literal below
 //    is what makes MSVC 7.1 hoist it that way (see the constant's comment).
 
+#define Matrix4x4 Matrix4
+#include "dx8wrapper.h"
+
 typedef int Int;
 typedef float Real;
-typedef unsigned int DWORD;
-typedef long HRESULT;
 typedef bool Bool;
-
-#define NULL 0
-#define S_OK 0
-#define FAILED(hr) ((HRESULT)(hr) < 0)
 
 /// The retail scale both texture coordinates are multiplied by.  Retail reads
 /// the float ?g_bfmeK1266A@@3MB at 0x01075338, whose image value is 3.0f -- the
@@ -48,9 +45,6 @@ typedef bool Bool;
 /// shape docs/shape_levers.md records as "an x87 product loads its operands in
 /// the wrong order: make the constant a literal".
 #define WATER_UV_SCALE 3.0f
-
-/// retail [0x01340534]; only the slots this body dispatches on are named.
-extern struct BfmeRetailWaterDevice *g_retailWaterDevice;
 
 /// Retail dispatches the vertex-buffer factory on vtable slot 0x68 with the
 /// six arguments listed above; the leading slots are unnamed because nothing
@@ -149,7 +143,7 @@ HRESULT WaterRenderObjClass::generateVertexBuffer(Int sizeX, Int sizeY, Int vert
 	{	// Create vertex buffer.  Retail reads the global device once and keeps
 		// it in a register across the whole argument sequence, so the local
 		// copy is the witnessed shape, not a convenience.
-		BfmeRetailWaterDevice *device = g_retailWaterDevice;
+		BfmeRetailWaterDevice *device = reinterpret_cast<BfmeRetailWaterDevice *>(DX8Wrapper::_Get_D3D_Device8());
 		if (FAILED(hr = device->CreateVertexBuffer(self->m_numVertices * vertexSize,
 			usage, fvf, pool, &self->m_vertexBufferD3D, 0)))
 			return hr;
