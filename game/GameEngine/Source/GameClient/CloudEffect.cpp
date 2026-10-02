@@ -92,7 +92,10 @@ public:
 };
 
 extern CloudEffect TheCloudEffectSaved;			// 0x012F1108
-extern CloudEffect TheCloudEffectActive;		// 0x012F1198
+// 0x012F1198 is the destination global Rva0040B7D0Assign.cpp defines as
+// g_rva0040b7d0_dst (dir32_addresses.csv); spelling it TheCloudEffectActive
+// claimed a second name on an address nothing defines.
+extern CloudEffect g_rva0040b7d0_dst;			// 0x012F1198
 // A different pointer from the one CloudBreakEffect.cpp reaches at 0x012F10F0:
 // this block pokes 0x012F1104. Spelled apart rather than sharing that name,
 // which would claim one global at two addresses.
@@ -101,12 +104,12 @@ extern CloudEffectSystem *TheCloudEffectSystem;	// 0x012F1104
 // ?parseCloudEffect@@YAXPAVINI@@@Z
 void parseCloudEffect( INI *ini )
 {
-	TheCloudEffectActive = TheCloudEffectSaved;
-	ini->initFromINI( &TheCloudEffectActive, CloudEffect::m_fieldParseTable );
+	g_rva0040b7d0_dst = TheCloudEffectSaved;
+	ini->initFromINI( &g_rva0040b7d0_dst, CloudEffect::m_fieldParseTable );
 
 	const INILoadType loadType = retailLoadType( ini );
 	if( loadType != INI_LOAD_CREATE_OVERRIDES && loadType != INI_LOAD_BFME_TYPE_4 )
-		TheCloudEffectSaved = TheCloudEffectActive;
+		TheCloudEffectSaved = g_rva0040b7d0_dst;
 
 	if( TheCloudEffectSystem )
 		TheCloudEffectSystem->settingsChanged();

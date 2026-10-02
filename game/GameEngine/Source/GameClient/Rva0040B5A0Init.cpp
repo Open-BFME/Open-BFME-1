@@ -13,8 +13,10 @@ struct Triple
 	int a, b, c;
 };
 
-extern AsciiString g_s08;
+struct CloudEffect;	// defined in Rva0040B7D0Assign.cpp, the global below
+
 extern AsciiString g_s0C;
+extern CloudEffect g_rva0040b7d0_dst;	// 0x012F1198, CloudEffect's first member
 extern AsciiString g_s10;
 extern float g_f14;
 extern float g_msToSec;
@@ -93,7 +95,7 @@ public:
 
 void Rva0040B5A0::init()
 {
-	m_08.set(g_s08);
+	m_08.set(*reinterpret_cast<const AsciiString *>(&g_rva0040b7d0_dst));
 	m_0C.set(g_s0C);
 	m_10.set(g_s10);
 	m_14 = g_msToSec * g_f14;
