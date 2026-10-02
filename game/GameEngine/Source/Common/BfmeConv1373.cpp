@@ -18,14 +18,17 @@ extern "C" void lua_pushnumber(lua_State *L, double n);
 void __cdecl bfmePushStrVHR(BfmeLuaVHR *L, const char *s);
 void __cdecl bfmePushUserVHR(BfmeLuaVHR *L, void *u, int tag);
 void *__cdecl bfmeToUserVIF(BfmeLuaVHR *L, int n);
-void __cdecl bfmeSetTopVIF(BfmeLuaVHR *L, int n);
+
+// 0x0098FDE0 is lua_settop (game/Libraries/Source/Lua/lapi.c, vendored lua-4.0.1).
+struct lua_State;
+extern "C" void __cdecl lua_settop(lua_State *state, int index);
 
 extern "C" __declspec(dllimport) void *__cdecl fopen(const char *name, const char *mode);
 
 int __cdecl bfmeOpenVIF(BfmeLuaVHR *L)
 {
 	BfmeTagVIF *tag = (BfmeTagVIF *)bfmeToUserVIF(L, -1);
-	bfmeSetTopVIF(L, -2);
+	lua_settop((lua_State *)L, -2);
 	void *fp = fopen(bfmeCheckStrVHR(L, 1, 0), bfmeCheckStrVHR(L, 2, 0));
 	if (fp)
 	{

@@ -27,7 +27,10 @@ struct BfmeStrHolder43D
 };
 
 void __cdecl bfmeHelper996070(void *field, void *arg1, void *arg2, const char *name);
-void __cdecl bfmeHelper98FDE0(void *field, int zero);
+
+// 0x0098FDE0 is lua_settop (game/Libraries/Source/Lua/lapi.c, vendored lua-4.0.1).
+struct lua_State;
+extern "C" void __cdecl lua_settop(lua_State *state, int index);
 
 struct BfmeThing43D
 {
@@ -42,14 +45,14 @@ void BfmeThing43D::doDispatch8(void *arg1, void *arg2, BfmeStrHolder43D *nameHol
 {
 	const char *str = nameHolder->str();
 	bfmeHelper996070(m_field8, arg1, arg2, str);
-	bfmeHelper98FDE0(m_field8, 0);
+	lua_settop((lua_State *)m_field8, 0);
 }
 
 void BfmeThing43D::doDispatchC(void *arg1, void *arg2, BfmeStrHolder43D *nameHolder)
 {
 	const char *str = nameHolder->str();
 	bfmeHelper996070(m_fieldC, arg1, arg2, str);
-	bfmeHelper98FDE0(m_fieldC, 0);
+	lua_settop((lua_State *)m_fieldC, 0);
 }
 
 extern "C" const float bfmeConst1075350;
