@@ -6,7 +6,9 @@
 // the surrounding VNI construction path; this constructor only runs the tree
 // member's initialization.
 
-void *bfmeAllocNode(unsigned int bytes);
+// stlport
+#define _STLP_USE_STATIC_LIB 1
+#include <memory>
 
 struct Rva003C2F40Node
 {
@@ -28,7 +30,7 @@ struct Rva003C2F40Tree
 Rva003C2F40Tree::Rva003C2F40Tree()
 {
 	m_header = 0;
-	m_header = (Rva003C2F40Node *)bfmeAllocNode(0x2c);
+	m_header = (Rva003C2F40Node *)_STL::__node_alloc<true, 0>::allocate(0x2c);
 	m_count = 0;
 	m_header->m_color = 0;
 	m_header->m_parent = 0;

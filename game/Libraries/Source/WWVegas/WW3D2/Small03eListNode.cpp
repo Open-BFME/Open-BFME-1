@@ -20,11 +20,13 @@ public:
 	int m_pad;
 };
 
-void *bfmeAllocNode(unsigned int bytes); // retail 0x0082E540
+// stlport
+#define _STLP_USE_STATIC_LIB 1
+#include <memory>
 
 void *Rva00943DB0Box::insert(int *src)
 {
-	Rva00943DB0Node *n = (Rva00943DB0Node *)bfmeAllocNode(8);
+	Rva00943DB0Node *n = (Rva00943DB0Node *)_STL::__node_alloc<true, 0>::allocate(8);
 	Rva00943DB0Node *c = (Rva00943DB0Node *)((char *)n + 4);
 	if (c != 0)
 		c->m_head = *src;

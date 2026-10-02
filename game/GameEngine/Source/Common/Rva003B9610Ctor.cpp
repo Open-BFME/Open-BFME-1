@@ -4,7 +4,9 @@
 // The tree is a member so its push 0x14 sits after the dword store; the
 // allocator is a direct cdecl so the call is E8 not FF15.
 
-void *bfmeAllocNode(unsigned int bytes);
+// stlport
+#define _STLP_USE_STATIC_LIB 1
+#include <memory>
 
 template <typename T>
 class StringBase
@@ -38,7 +40,7 @@ struct Rva003B9610TreeBase
 	Rva003B9610TreeBase()
 	{
 		header = 0;
-		header = (Rva003B9610Node *)bfmeAllocNode(0x14);
+		header = (Rva003B9610Node *)_STL::__node_alloc<true, 0>::allocate(0x14);
 	}
 };
 

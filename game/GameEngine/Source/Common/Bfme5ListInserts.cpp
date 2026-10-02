@@ -15,9 +15,10 @@
 // constructor, and the first argument slot is that pointer, which is why the
 // function returns it and cleans twelve bytes.
 
-void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
+// stlport
+#define _STLP_USE_STATIC_LIB 1
+#include <memory>
 
-inline void * __cdecl operator new(unsigned int, void *where) { return where; }
 
 
 struct BfmeValue_000CF2F0 { void *m_bfmeA; void *m_bfmeB; };
@@ -113,7 +114,7 @@ private:
 // ?bfmeInsert_000CF2F0@@YG?AVBfmeIterator_000CF2F0@@PAUBfmeNode_000CF2F0@@ABUBfmeValue_000CF2F0@@@Z
 BfmeIterator_000CF2F0 __stdcall bfmeInsert_000CF2F0(BfmeNode_000CF2F0 *position, const BfmeValue_000CF2F0 &value)
 {
-	BfmeNode_000CF2F0 *node = (BfmeNode_000CF2F0 *)bfmeAllocNode(sizeof(BfmeNode_000CF2F0));
+	BfmeNode_000CF2F0 *node = (BfmeNode_000CF2F0 *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeNode_000CF2F0));
 
 	new (&node->m_bfmeValue) BfmeValue_000CF2F0(value);
 
@@ -129,7 +130,7 @@ BfmeIterator_000CF2F0 __stdcall bfmeInsert_000CF2F0(BfmeNode_000CF2F0 *position,
 // ?bfmeInsert_0010E2D0@@YG?AVBfmeIterator_0010E2D0@@PAUBfmeNode_0010E2D0@@ABUBfmeValue_0010E2D0@@@Z
 BfmeIterator_0010E2D0 __stdcall bfmeInsert_0010E2D0(BfmeNode_0010E2D0 *position, const BfmeValue_0010E2D0 &value)
 {
-	BfmeNode_0010E2D0 *node = (BfmeNode_0010E2D0 *)bfmeAllocNode(sizeof(BfmeNode_0010E2D0));
+	BfmeNode_0010E2D0 *node = (BfmeNode_0010E2D0 *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeNode_0010E2D0));
 
 	new (&node->m_bfmeValue) BfmeValue_0010E2D0(value);
 
@@ -145,7 +146,7 @@ BfmeIterator_0010E2D0 __stdcall bfmeInsert_0010E2D0(BfmeNode_0010E2D0 *position,
 // ?bfmeInsert_00151AB0@@YG?AVBfmeIterator_00151AB0@@PAUBfmeNode_00151AB0@@ABUBfmeValue_00151AB0@@@Z
 BfmeIterator_00151AB0 __stdcall bfmeInsert_00151AB0(BfmeNode_00151AB0 *position, const BfmeValue_00151AB0 &value)
 {
-	BfmeNode_00151AB0 *node = (BfmeNode_00151AB0 *)bfmeAllocNode(sizeof(BfmeNode_00151AB0));
+	BfmeNode_00151AB0 *node = (BfmeNode_00151AB0 *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeNode_00151AB0));
 
 	new (&node->m_bfmeValue) BfmeValue_00151AB0(value);
 
@@ -161,7 +162,7 @@ BfmeIterator_00151AB0 __stdcall bfmeInsert_00151AB0(BfmeNode_00151AB0 *position,
 // ?bfmeInsert_00251010@@YG?AVBfmeIterator_00251010@@PAUBfmeNode_00251010@@ABUBfmeValue_00251010@@@Z
 BfmeIterator_00251010 __stdcall bfmeInsert_00251010(BfmeNode_00251010 *position, const BfmeValue_00251010 &value)
 {
-	BfmeNode_00251010 *node = (BfmeNode_00251010 *)bfmeAllocNode(sizeof(BfmeNode_00251010));
+	BfmeNode_00251010 *node = (BfmeNode_00251010 *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeNode_00251010));
 
 	new (&node->m_bfmeValue) BfmeValue_00251010(value);
 
@@ -177,7 +178,7 @@ BfmeIterator_00251010 __stdcall bfmeInsert_00251010(BfmeNode_00251010 *position,
 // ?bfmeInsert_00440480@@YG?AVBfmeIterator_00440480@@PAUBfmeNode_00440480@@ABUBfmeValue_00440480@@@Z
 BfmeIterator_00440480 __stdcall bfmeInsert_00440480(BfmeNode_00440480 *position, const BfmeValue_00440480 &value)
 {
-	BfmeNode_00440480 *node = (BfmeNode_00440480 *)bfmeAllocNode(sizeof(BfmeNode_00440480));
+	BfmeNode_00440480 *node = (BfmeNode_00440480 *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeNode_00440480));
 
 	new (&node->m_bfmeValue) BfmeValue_00440480(value);
 

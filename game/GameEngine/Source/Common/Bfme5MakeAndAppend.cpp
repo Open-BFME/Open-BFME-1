@@ -13,9 +13,10 @@
 
 typedef bool Bool;
 
-void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
+// stlport
+#define _STLP_USE_STATIC_LIB 1
+#include <memory>
 
-inline void * __cdecl operator new(unsigned int, void *where) { return where; }
 
 class BfmeMade
 {
@@ -70,7 +71,7 @@ void Gen_0040D4A0::bfmeAdd(void)
 	thing->m_bfmeKind = 4;
 
 	BfmeListHead *head = m_bfmeList;
-	BfmeListNode *node = (BfmeListNode *)bfmeAllocNode(sizeof(BfmeListNode));
+	BfmeListNode *node = (BfmeListNode *)_STL::__node_alloc<true, 0>::allocate(sizeof(BfmeListNode));
 
 	new (&node->m_bfmeValue) BfmeMade *(thing);
 
