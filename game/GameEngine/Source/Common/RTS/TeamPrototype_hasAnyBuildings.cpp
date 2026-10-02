@@ -55,12 +55,12 @@ public:
 };
 
 typedef BitFlags<192> KindOfMaskType;
-typedef BitFlags<126> KindOfMask126;
+typedef BitFlags<116> KindOfMask116;
 
 // The one linked KINDOFMASK_NONE is game/GameEngine/Source/Common/System/KindOf.cpp's
 // `const BitFlags<192>`, so this reference must carry that spelling or it names a
-// symbol nothing defines.  isKindOfMulti is declared here with the TU-local 126-bit
-// view, so the use casts the address back to that view (an address load either way).
+// symbol nothing defines.  isKindOfMulti uses Thing.cpp's 116-bit signature; the
+// local Team mask is still passed by address through that same four-dword view.
 extern const BitFlags<192> KINDOFMASK_NONE;
 
 class BfmeOverridable
@@ -97,8 +97,8 @@ public:
 class Thing
 {
 public:
-	Bool isKindOfMulti(const KindOfMask126 &mustBeSet,
-		const KindOfMask126 &mustBeClear) const;
+	Bool isKindOfMulti(const KindOfMask116 &mustBeSet,
+		const KindOfMask116 &mustBeClear) const;
 };
 
 class Team
@@ -156,8 +156,8 @@ Bool Team::hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag)
 
 		kindOf.m_bits[0] |= 0x80u;
 		if (((Thing *)iter.cur())->isKindOfMulti(
-			*reinterpret_cast<const KindOfMask126 *>(&kindOf),
-			*reinterpret_cast<const KindOfMask126 *>(&KINDOFMASK_NONE)))
+			*reinterpret_cast<const KindOfMask116 *>(&kindOf),
+			*reinterpret_cast<const KindOfMask116 *>(&KINDOFMASK_NONE)))
 			return true;
 	}
 	return false;

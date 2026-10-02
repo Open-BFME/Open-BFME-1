@@ -8,6 +8,8 @@
 struct Coord3D { float x, y, z; };
 typedef unsigned int ObjectID;
 
+extern void j_00027ab6();
+
 class Overridable {
 public:
 	const Overridable *getFinalOverride() const;
@@ -68,7 +70,15 @@ bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 	ObjectID nearby[16];
 	Rva003E4680Pathfinder *pathfinder = TheAI->pathfinder;
 	Object *owner = objectAt8;
-	int count = pathfinder->rva003E4680(target, &target->position, nearby);
+	union
+	{
+		void (*asFunction)();
+		int (Rva003E4680Pathfinder::*asMember)(Object *, const Coord3D *,
+			ObjectID *);
+	} route;
+	route.asFunction = j_00027ab6;
+	int count = (pathfinder->*route.asMember)(target, &target->position,
+		nearby);
 	int i = 0;
 	if (count > 0) {
 		ObjectID ownerId = owner->id;

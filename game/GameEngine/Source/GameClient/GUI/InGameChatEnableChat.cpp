@@ -4,6 +4,8 @@
 // send button.  Movie at +0x250; a cached GameWindow at +0x260 is given focus
 // when enabling.
 
+extern void j_00015235();
+
 class WindowManager
 {
 public:
@@ -67,13 +69,20 @@ void BfmeAptScreenInGameChat::_bfme_enableChat( bool enable )
 
 	m_busy = false;
 	m_enabled = enable;
+	union
+	{
+		void (*asFunction)();
+		void (WindowManager::*asMember)(int, const char *, int,
+			const void *, const void *, int, int, int);
+	} route;
+	route.asFunction = j_00015235;
 
 	const char *entry = enable ? "EnableChatEntryField" : "DisableChatEntryField";
-	g_rva012F19E8WindowManager->unidentified_00015235(
+	(g_rva012F19E8WindowManager->*route.asMember)(
 		m_movie, entry, 0, 0, 0, 0, 0, 0 );
 
 	const char *send = enable ? "EnableSendButton" : "DisableSendButton";
-	g_rva012F19E8WindowManager->unidentified_00015235(
+	(g_rva012F19E8WindowManager->*route.asMember)(
 		m_movie, send, 0, 0, 0, 0, 0, 0 );
 
 	if( m_entryWindow && enable )
