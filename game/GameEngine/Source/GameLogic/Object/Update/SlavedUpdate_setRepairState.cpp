@@ -75,11 +75,6 @@ class ParticleSystem
 {
 public:
 	void setPosition(const Coord3D *position);
-	__forceinline void setLifetimeRange(Real min, Real max) {
-        typedef void (ParticleSystem::*LifetimeCall)(Real,Real);
-        LifetimeCall call = reinterpret_cast<LifetimeCall>(&BfmeThingBJF::bfmeGoBJF);
-        (this->*call)(min,max);
-    }
 };
 
 extern ParticleSystem *Make00001B18();
@@ -318,7 +313,9 @@ void SlavedUpdate::setRepairState(RepairStates repairState)
 
 					weldingSys->setPosition(&pos);
 					Real time = (Real)(m_framesToWait * 5);
-					weldingSys->setLifetimeRange(time, time);
+					typedef void (ParticleSystem::*LifetimeCall)(Real,Real);
+					LifetimeCall call = reinterpret_cast<LifetimeCall>(&BfmeThingBJF::bfmeGoBJF);
+					(weldingSys.operator->()->*call)(time,time);
 					AudioEventRTS soundToPlay =
 						TheAudio->getMiscAudio()->m_repairSparks;
 					soundToPlay.setPosition(&pos);
@@ -336,4 +333,3 @@ void SlavedUpdate::setRepairState(RepairStates repairState)
 	}
 	}
 }
-
