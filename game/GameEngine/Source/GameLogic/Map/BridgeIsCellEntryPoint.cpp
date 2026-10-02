@@ -1,47 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Bridge::isCellEntryPoint, retail 0x001A2950 (510 bytes, ret 8).
 // Zero Hour's TerrainLogic.cpp body; BFME adds an out parameter that receives
 // the z of the entry line's first corner (fromLeft.z or toLeft.z).
 
-#include <math.h>
-
-typedef float Real;
-typedef bool Bool;
-
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
-
-struct Region2D
-{
-	Coord2D lo;
-	Coord2D hi;
-};
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	Coord3D(void) {}
-	Coord3D(const Coord3D &that) : x(that.x), y(that.y), z(that.z) {}
-
-	Real length(void) const { return (Real)sqrt(x * x + y * y + z * z); }
-
-	void normalize(void)
-	{
-		Real len = length();
-		if (len != 0)
-		{
-			x /= len;
-			y /= len;
-			z /= len;
-		}
-	}
-};
+#include "basetype.h"
 
 struct BridgeInfo
 {
@@ -75,7 +37,16 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryZ)
 	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
 	endVector.y = m_bridgeInfo.fromRight.y - m_bridgeInfo.fromLeft.y;
 	endVector.z = m_bridgeInfo.fromRight.z - m_bridgeInfo.fromLeft.z;
-	endVector.normalize();
+	{
+		Real len = (Real)sqrt(endVector.x * endVector.x +
+			endVector.y * endVector.y + endVector.z * endVector.z);
+		if (len != 0)
+		{
+			endVector.x /= len;
+			endVector.y /= len;
+			endVector.z /= len;
+		}
+	}
 	endVector.x *= PATHFIND_CELL_SIZE;
 	endVector.y *= PATHFIND_CELL_SIZE;
 
@@ -83,29 +54,50 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryZ)
 	bridgeVector.x = m_bridgeInfo.to.x - m_bridgeInfo.from.x;
 	bridgeVector.y = m_bridgeInfo.to.y - m_bridgeInfo.from.y;
 	bridgeVector.z = m_bridgeInfo.to.z - m_bridgeInfo.from.z;
-	bridgeVector.normalize();
+	{
+		Real len = (Real)sqrt(bridgeVector.x * bridgeVector.x +
+			bridgeVector.y * bridgeVector.y + bridgeVector.z * bridgeVector.z);
+		if (len != 0)
+		{
+			bridgeVector.x /= len;
+			bridgeVector.y /= len;
+			bridgeVector.z /= len;
+		}
+	}
 	bridgeVector.x *= PATHFIND_CELL_SIZE/2;
 	bridgeVector.y *= PATHFIND_CELL_SIZE/2;
 
-	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	Coord3D fromLeft;
+	fromLeft.x = m_bridgeInfo.fromLeft.x;
+	fromLeft.y = m_bridgeInfo.fromLeft.y;
+	fromLeft.z = m_bridgeInfo.fromLeft.z;
 	fromLeft.x -= bridgeVector.x;
 	fromLeft.y -= bridgeVector.y;
 	fromLeft.x += endVector.x;
 	fromLeft.y += endVector.y;
 
-	Coord3D fromRight = m_bridgeInfo.fromRight;
+	Coord3D fromRight;
+	fromRight.x = m_bridgeInfo.fromRight.x;
+	fromRight.y = m_bridgeInfo.fromRight.y;
+	fromRight.z = m_bridgeInfo.fromRight.z;
 	fromRight.x -= bridgeVector.x;
 	fromRight.y -= bridgeVector.y;
 	fromRight.x -= endVector.x;
 	fromRight.y -= endVector.y;
 
-	Coord3D toLeft = m_bridgeInfo.toLeft;
+	Coord3D toLeft;
+	toLeft.x = m_bridgeInfo.toLeft.x;
+	toLeft.y = m_bridgeInfo.toLeft.y;
+	toLeft.z = m_bridgeInfo.toLeft.z;
 	toLeft.x += bridgeVector.x;
 	toLeft.y += bridgeVector.y;
 	toLeft.x += endVector.x;
 	toLeft.y += endVector.y;
 
-	Coord3D toRight = m_bridgeInfo.toRight;
+	Coord3D toRight;
+	toRight.x = m_bridgeInfo.toRight.x;
+	toRight.y = m_bridgeInfo.toRight.y;
+	toRight.z = m_bridgeInfo.toRight.z;
 	toRight.x += bridgeVector.x;
 	toRight.y += bridgeVector.y;
 	toRight.x -= endVector.x;
