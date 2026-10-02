@@ -10,10 +10,17 @@
 //   pop ecx
 //   ret
 
-extern "C" void __cdecl BfmeNodeAllocLockAcquire(void *mutex);
-
 namespace _STL
 {
+
+template <int Instance>
+struct _STLP_mutex_spin
+{
+	enum { __low_max = 30, __high_max = 1000 };
+	static unsigned __max;
+	static unsigned __last;
+	static void __cdecl _M_do_lock(volatile long *lock);
+};
 
 class NodeAllocMutex
 {
@@ -24,7 +31,7 @@ public:
 // ?_M_acquire_lock@NodeAllocMutex@_STL@@QAEXXZ
 void NodeAllocMutex::_M_acquire_lock(void)
 {
-	BfmeNodeAllocLockAcquire(this);
+	_STLP_mutex_spin<0>::_M_do_lock((volatile long *)this);
 }
 
 }  // namespace _STL
