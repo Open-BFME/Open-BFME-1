@@ -84,7 +84,11 @@ public:
 };
 
 extern Display *TheDisplay;
-extern Glo012F7048Shim *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  Glo012F7048Shim above is
+// this TU's local view of the same pointee, so the casts are byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 // 0x012F1600 is retail's `View *TheTacticalView` (View.cpp); the slots used
 // here are read through the TU-local TacticalViewFadeShim view.
 class View;
@@ -105,13 +109,13 @@ bool Rva006956D0Owner::getScreenCenterWorld(Coord3D *out)
 	switch (m_mode)
 	{
 	case 1:
-		if (g_bfmeStateDF)
+		if (g_rva012F7048LivingWorld)
 		{
 			if (TheDisplay)
 			{
 				center.x = (int)(TheDisplay->getWidth() / 2);
 				center.y = (int)(TheDisplay->getHeight() / 2);
-				g_bfmeStateDF->mapScreenToWorld(&center, out);
+				((Glo012F7048Shim *)g_rva012F7048LivingWorld)->mapScreenToWorld(&center, out);
 				return true;
 			}
 		}

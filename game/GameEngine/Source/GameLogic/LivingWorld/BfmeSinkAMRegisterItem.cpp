@@ -80,7 +80,11 @@ public:
     virtual void vslot0A(RenderObjClass *robj);
     char bfmeRunESM(BfmeCoordESM pos, float *height);
 };
-extern BfmeHostESM *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  The local ESM view
+// above keeps the witnessed slots; the cast is byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class AudioEventRTS
 {
@@ -173,10 +177,10 @@ void BfmeSinkAM::registerItem(int handle, Gen_003BEA30 *item, int variant)
             const Coord2D *pos = (const Coord2D *)item;
             float height;
             Matrix3D transform(true);
-            g_bfmeStateDF->bfmeRunESM(BfmeCoordESM(pos->x, pos->y), &height);
+            ((BfmeHostESM *)g_rva012F7048LivingWorld)->bfmeRunESM(BfmeCoordESM(pos->x, pos->y), &height);
             transform.Set_Translation(Vector3(pos->x, pos->y, height + m_fieldBC));
             marker->getRenderObject()->vslot15(transform);
-            g_bfmeStateDF->vslot0A(marker->getRenderObject());
+            ((BfmeHostESM *)g_rva012F7048LivingWorld)->vslot0A(marker->getRenderObject());
             marker->m_field94 = Vector3(1.0f, 1.0f, 1.0f);
             marker->m_field28 = 1;
             ((BfmeThingDY *)marker)->bfmeSetDY(30, 0);

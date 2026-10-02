@@ -31,8 +31,11 @@ extern Keyboard *TheKeyboard;
 class GlobalData { public: unsigned char m_pad[0x90]; unsigned char m_flag90; };
 extern GlobalData *TheWritableGlobalData;
 extern volatile float g_01075954;
-class Gen_00609320;
-extern Gen_00609320 *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  Rva003BBE50CallJ378F8 is
+// this TU's local view of the same pointee, so the cast is byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 struct Rva003BBE50PairBase {
     Rva003BBE50PairBase() {}
     Rva003BBE50PairBase(const Rva003BBE50PairBase &other) : m_first(other.m_first), m_second(other.m_second) {}
@@ -69,7 +72,7 @@ unsigned char Rva003BBE50Owner::step(unsigned char enabled)
         Rva000643F0Triple output;
         union { void (*raw)(); Rva003BBE50Invoke member; } stateCall;
         stateCall.raw = j_000378f8;
-        (reinterpret_cast<Rva003BBE50CallJ378F8 *>(g_bfmeStateDF)->*stateCall.member)(
+        (reinterpret_cast<Rva003BBE50CallJ378F8 *>(g_rva012F7048LivingWorld)->*stateCall.member)(
             *reinterpret_cast<Rva003BBE50PairBase *>(
                 reinterpret_cast<const Rva000643F0Value *>(&value)->copyTo(&output)),
             (*reinterpret_cast<volatile float *>(&value.m_0c)) * const_cast<const float &>(g_01075954));

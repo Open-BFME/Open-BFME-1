@@ -13418,5 +13418,65 @@
   "after_sha256": "8c5a001bfa659af56d57e74ba44ee2013cd9b30f13f6255388bb43cad32c59e0",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "BfmeCell was a local stand-in with no ledger row; the matched bfmeAdd at 0x001B1240 that retail calls through the BfmeCell pin is owned by Gen_001B1240, so the stand-in takes that owner's name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003C7B60CreateRenderObject.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003C7B60CreateRenderObject.cpp",
+  "old_name": "BfmeHostESM",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "6b068525858d0bfd324aceb6b0c41ce6a14f0c763291918c6e1edb4a2b2a1849",
+  "after_sha256": "b20b2a51a0ede9ff5843be612e8137210975b704d5ab43b363e67d34395566f6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U4Sink0060D3B0_push.cpp",
+  "new_path": "game/GameEngine/Source/Common/U4Sink0060D3B0_push.cpp",
+  "old_name": "Glo012F7048Type",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "210a728525051dceac9a8e625334b7f952bc0efb248df44bac0452f2320d7dfd",
+  "after_sha256": "ce67a418627eb13d4cdf1cd346f4a7c44640ac344e01f94766d8f887aeb6f12c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirOnButtonAlert.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirOnButtonAlert.cpp",
+  "old_name": "PalantirUIState",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "f4673ebc78a7f18a4ac95315cd20fcd8bb2b76a31f1de54fadbef0156b24e571",
+  "after_sha256": "2cf5ff84342420204cfae3e48ca755e933e6006c87baeef0dd0239616fc3f6b3",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/LivingWorld/BfmeSinkAMRegisterItem.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/BfmeSinkAMRegisterItem.cpp",
+  "old_name": "BfmeHostESM",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "b2ffbe052703e2828fe106ecb687fb3c41bbad9dadaedbd1f30b154127a5fb93",
+  "after_sha256": "c0de59503164df213b63780a95f6ad354993ac85816a416421e22e8cf7a16aaa",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0060A470ElementUpdate.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0060A470ElementUpdate.cpp",
+  "old_name": "BfmeHostESM",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "3052972ac52ad8da59c7e78901503d62dc8189da849381cbdff789c0b313eaf9",
+  "after_sha256": "78db3f956dbe4bc18abd4cd289272a177e2cff28a4af121da30c8441a78cce57",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/MilesAudioDevice/Rva006956D0ScreenCenter.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/Rva006956D0ScreenCenter.cpp",
+  "old_name": "Glo012F7048Shim",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "dfce8f930514c7af47acd7a6972a86a08aded5126ea270519c1d18f008514011",
+  "after_sha256": "75f9b45fa724b4812cc637238fd9519f101787c5456b8c0495b17c1d96fe5ebb",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

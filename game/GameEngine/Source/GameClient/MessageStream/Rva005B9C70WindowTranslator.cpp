@@ -14,7 +14,12 @@ class GameLogic;
 extern GameLogic *TheGameLogic;
 static inline BfmeGameLogicPause *pauseView005B9C70() { return (BfmeGameLogicPause *)TheGameLogic; }
 class PalantirUIState { public: char pad00[8]; bool flag08; };
-extern PalantirUIState *g_aptPalantirUIState;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  The local view above
+// keeps the witnessed +0x08 flag read; the cast is byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+static inline PalantirUIState *palantirView005B9C70() { return (PalantirUIState *)g_rva012F7048LivingWorld; }
 extern char g_bfmeDoneSJA;
 extern bool bfmeIsSet();
 class Shell { public: char pad00[0x58]; bool active; };
@@ -71,7 +76,7 @@ int Rva005B9C70Owner::translate(const GameMessage *msg)
     int returnCode = 0;
     GameWindowMessage firstMessage = rawMouseToWindowMessage(msg);
     if (phase == 1) {
-        if (g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !pauseView005B9C70()->isGamePaused()) {
+        if (palantirView005B9C70() && palantirView005B9C70()->flag08 && !pauseView005B9C70()->isGamePaused()) {
             if (!TheShell || !TheShell->active) return 0;
         }
     } else {
@@ -89,7 +94,7 @@ int Rva005B9C70Owner::translate(const GameMessage *msg)
         {
             ICoord2D mousePos=msg->getArgument(0)->pixel;
             if (TheWindowManager) returnCode=TheWindowManager->mouse(firstMessage,&mousePos,0);
-            if (phase && !(g_aptPalantirUIState && g_aptPalantirUIState->flag08 && !pauseView005B9C70()->isGamePaused())) {
+            if (phase && !(palantirView005B9C70() && palantirView005B9C70()->flag08 && !pauseView005B9C70()->isGamePaused())) {
                 if (TheShell && TheShell->active) returnCode=1;
                 if (TheInGameUI && !TheInGameUI->getInputEnabled()) returnCode=1;
             }

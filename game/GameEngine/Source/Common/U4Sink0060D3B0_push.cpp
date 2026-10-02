@@ -92,9 +92,11 @@ public:
 	unsigned char m_pad4[4];
 	unsigned char m_flag8;
 };
-class Glo012F7048Type;
-extern Glo012F7048Type *Glo012F7048;
-#define Glo012F7048Ptr ((class Glo012F7048 *)Glo012F7048)
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  The local view above
+// keeps the witnessed slots; the cast is byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class ScriptActions
 {
@@ -113,7 +115,7 @@ public:
 };
 class ScriptActionsInterface;
 extern ScriptActionsInterface *TheScriptActions;
-#define TheScriptActions ((ScriptActions *)TheScriptActions)
+static inline ScriptActions *TheScriptActionsView() { return (ScriptActions *)TheScriptActions; }
 
 class AudioManager
 {
@@ -348,7 +350,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 
 	TheAudio->a94setup();
 
-	class Glo012F7048 *state7048 = Glo012F7048Ptr;
+	class Glo012F7048 *state7048 = (class Glo012F7048 *)g_rva012F7048LivingWorld;
 	if (state7048)
 	{
 		if (state7048->m_flag8)
@@ -359,7 +361,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 	if (statsCollector)
 		statsCollector->writeFileEnd();
 
-	ScriptActions *scriptActions = TheScriptActions;
+	ScriptActions *scriptActions = TheScriptActionsView();
 	if (scriptActions)
 		scriptActions->closeWindows(false);
 

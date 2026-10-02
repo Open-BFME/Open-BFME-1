@@ -74,7 +74,11 @@ public:
 	virtual void bfmeFinishAAY();
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  Gen_00609320 above is
+// this TU's local view of the same pointee, so cast at the use.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class BfmeHostAAY
 {
@@ -130,8 +134,8 @@ void BfmeHostAAY::bfmeShutdownAAY()
 	if (TheGameLogic != 0)
 		((Rva00367E30Logic *)TheGameLogic)->bfmeResetAAY();
 
-	if (g_bfmeStateDF != 0)
-		g_bfmeStateDF->bfmeFinishAAY();
+	if (g_rva012F7048LivingWorld != 0)
+		((Gen_00609320 *)g_rva012F7048LivingWorld)->bfmeFinishAAY();
 
 	m_bfme288AAY = 0;
 }

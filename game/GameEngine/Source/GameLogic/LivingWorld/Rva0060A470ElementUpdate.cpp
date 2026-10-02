@@ -83,8 +83,11 @@ public:
     virtual void slot24();
     virtual void slot28(Rva0060A470Target *);
 };
-class BfmeHostESM;
-extern BfmeHostESM *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  The cast into the local
+// view is byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern HAnimClass *Get_HAnim(const char *);
 class Rva0060A470Element {
 public:
@@ -112,7 +115,7 @@ bool Rva0060A470Element::update()
         reinterpret_cast<BfmeAnimationHolder *>(ptr4)->applyRotationPayload(
             float14 * 0.01745329238474369f);
         if (ptr4->ptr8) {
-            reinterpret_cast<Rva0060A470GlobalView *>(g_bfmeStateDF)->slot28(ptr4->ptr8);
+            reinterpret_cast<Rva0060A470GlobalView *>(g_rva012F7048LivingWorld)->slot28(ptr4->ptr8);
             if (byte10) {
                 AsciiString name(stringC);
                 name.concat(".");

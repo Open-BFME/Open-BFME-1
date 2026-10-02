@@ -472,7 +472,11 @@ struct Rva005B6BA0StreamView {
  virtual GameMessage *appendMessage(GameMessage::Type);
  virtual GameMessage *insertMessage(GameMessage::Type, GameMessage *);
 };
-extern const void *Rva005B6BA0Global012F7048;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  Declared here under the
+// canonical name and type so the linked build has one mangled symbol.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessage *msg)
 {
 	GameMessageDisposition disp = KEEP_MESSAGE;
@@ -571,7 +575,7 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 /*GameMessage *metaMsg =*/ ((Rva005B6BA0StreamView *)TheMessageStream)->appendMessage(map->m_meta);
 					//DEBUG_LOG(("Frame %d: MetaEventTranslator::translateGameMessage() normal: %s\n", TheGameLogic->getFrame(), findGameMessageNameByType(map->m_meta)));
 				}
-				if (*((const bool *)Rva005B6BA0Global012F7048 + 8)) break;
+				if (*((const bool *)g_rva012F7048LivingWorld + 8)) break;
 				disp = DESTROY_MESSAGE;
 				break;
 			}

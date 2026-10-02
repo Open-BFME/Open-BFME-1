@@ -38,7 +38,11 @@ public:
 };
 
 extern AptPalantir *TheAptPalantir;
-extern PalantirUIState *g_aptPalantirUIState;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  PalantirUIState above is
+// this TU's local view of the same pointee, so cast at the use.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 extern char g_aptPalantirHeroPrefix[];
@@ -73,12 +77,12 @@ void aptPalantirOnButtonAlert( char *command )
 		}
 
 		case '2':
-			if( !g_aptPalantirUIState->m_busy )
+			if( !((PalantirUIState *)g_rva012F7048LivingWorld)->m_busy )
 			{
 				if( TheAptPalantir->m_alertVisible )
 					TheAptPalantir->dismissAlert();
-				g_aptPalantirUIState->setInteractive( true );
-				g_aptPalantirUIState->showSelection( 1, false );
+				((PalantirUIState *)g_rva012F7048LivingWorld)->setInteractive( true );
+				((PalantirUIState *)g_rva012F7048LivingWorld)->showSelection( 1, false );
 				setAptPalantirAlertVisible( 2, false );
 			}
 			break;

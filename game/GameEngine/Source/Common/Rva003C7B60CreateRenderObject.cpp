@@ -69,7 +69,11 @@ class GlobalData;
 // Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
 // file only reaches through it for a byte probe.
 extern GlobalData *TheWritableGlobalData;
-extern BfmeHostESM *g_bfmeStateDF;
+// The client LivingWorld singleton cell at VA 0x012F7048, defined once by
+// game/GameEngine/Source/GameClient/LivingWorld.cpp.  The local views above
+// keep the witnessed slots; the casts are byte-neutral.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern const char g_bfmeEmptyAscii[];
 RenderObjClass *Create_Render_Obj(const char *name);
 void Rva00739B30(RenderObjClass *object, bool geometry);
@@ -114,8 +118,8 @@ void Rva003C7B60Owner::create(
                 position.Z = m_holder->m_field08;
             transform.Set_Translation(position);
             renderView->setTransform(transform);
-            g_bfmeStateDF->bfmeMarkESM((BfmeThingESM *)object, flag);
-            ((Rva003C7B60RegistryView *)g_bfmeStateDF)->slot0a(object);
+            ((BfmeHostESM *)g_rva012F7048LivingWorld)->bfmeMarkESM((BfmeThingESM *)object, flag);
+            ((Rva003C7B60RegistryView *)g_rva012F7048LivingWorld)->slot0a(object);
         }
         *result = object;
     }
