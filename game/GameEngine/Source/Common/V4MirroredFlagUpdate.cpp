@@ -152,7 +152,8 @@ public:
   (this->*route.member)(value, one);
  }
 };
-extern "C" char *g_bfmeGameCW;
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Gen003BF540Owner
 {
@@ -200,7 +201,7 @@ void Rva003BF540::select( int id )
 // tail-dispatches the returned result.
 void Gen003BD7D0Node::enter()
 {
-	activate( g_bfmeGameCW + 0x168, 1, 3 );
+	activate( (char *)g_bfmeGameCW + 0x168, 1, 3 );
 	unsigned int index = 0;
 	if( m_items.size() > 0 )
 	{
@@ -223,7 +224,7 @@ void Gen003BD7D0Node::enter()
 // the global registration first, then notify it with flag zero for each item.
 void Gen003BD7D0Node::leave()
 {
-	activate( g_bfmeGameCW + 0x168, 0, 0 );
+	activate( (char *)g_bfmeGameCW + 0x168, 0, 0 );
 	unsigned int index = 0;
 	if( m_items.size() > 0 )
 	{

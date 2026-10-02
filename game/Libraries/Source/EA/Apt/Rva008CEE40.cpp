@@ -137,7 +137,8 @@ struct Rva00899560Pool
 	}
 };
 
-extern Rva008D2A30Node *Rva008D2A30Head;
+class Rva008D2A80;
+extern Rva008D2A80 *g_rva008D2A80;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
@@ -157,11 +158,11 @@ struct Rva008CEE40Boolean
 	__forceinline static Rva008CEE40Boolean *Create(Bool value)
 	{
 		Rva008CEE40Boolean *object =
-			(Rva008CEE40Boolean *)Rva008D2A30Head;
+			(Rva008CEE40Boolean *)g_rva008D2A80;
 
 		if (object != 0)
 		{
-			Rva008D2A30Head = (Rva008D2A30Node *)object->m_next;
+			g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 			object->m_value = value;
 			return object;

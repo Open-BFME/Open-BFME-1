@@ -21,7 +21,7 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
-extern void ( __cdecl *g_Va01337830 )( void *storage, unsigned int size );
+extern void ( __cdecl *TheBfmeFree )( void *storage, unsigned int size );
 
 class BfmeItemDX;
 
@@ -37,7 +37,7 @@ void __cdecl bfmeRemove( BfmeItemDX *item );
 	void NAME::operator delete( void *storage, unsigned int size )            \
 	{                                                                         \
 		bfmeRemove( (BfmeItemDX *)storage );                                     \
-		g_Va01337830( (char *)storage - 8, size + 8 );                        \
+		TheBfmeFree( (char *)storage - 8, size + 8 );                         \
 	}
 
 BFME_HEADERED_DELETE_OPERATOR( Rva00891650HeaderedDelete )
