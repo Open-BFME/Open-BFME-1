@@ -115,14 +115,17 @@ void Display::rva002ED2E0(Real left, Real top, Real right, Real bottom)
 	*(Real *)((unsigned char *)this + 0x104) = (Real)getHeight() * bottom;
 }
 
-struct BfmeGameLODManager
+// retail 0x012ED5AC is ?TheGameLODManager@@3PAVGameLODManager@@A; this TU keeps
+// its own view of the object and reads the witnessed field at +0x16C4.
+class GameLODManager
 {
+public:
 	unsigned char m_unreconstructed[0x16c4];
 	int m_staticLODLevel;
 };
 
 extern Display *TheDisplay;
-extern BfmeGameLODManager *TheGameLODManager;
+extern GameLODManager *TheGameLODManager;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions

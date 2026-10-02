@@ -49,7 +49,16 @@ static inline BfmeG1144 *volatile localG1144(void)
 	return reinterpret_cast<BfmeG1144 *>(TheWritableGlobalData);
 }
 
-extern "C" BfmeH1144 *volatile g_bfmeH1144;
+// The global at 0x012ED5AC is retail's TheGameLODManager, defined as
+// ?TheGameLODManager@@3PAVGameLODManager@@A. This TU keeps its own view of the
+// object and casts at each use.
+class GameLODManager;
+extern GameLODManager *TheGameLODManager;
+
+static inline BfmeH1144 *volatile localH1144(void)
+{
+	return reinterpret_cast<BfmeH1144 *>(TheGameLODManager);
+}
 
 class BfmeA1144
 {
@@ -90,7 +99,7 @@ void BfmeA1144::bfmeGo1144(void)
 	m_bfme0f5 = localG1144()->m_bfme065;
 	m_bfme0f6 = localG1144()->m_bfme047;
 	m_bfme0f7 = (char)(localG1144()->m_bfme028 == 0);
-	m_bfme114 = g_bfmeH1144->m_bfme170c;
+	m_bfme114 = localH1144()->m_bfme170c;
 	m_bfme0f8 = localG1144()->m_bfme044;
 	m_bfme0f9 = localG1144()->m_bfme08c;
 	m_bfme0fc = localG1144()->m_bfme1f4;

@@ -76,7 +76,10 @@ public:
 	int m_bfmeLevel;
 };
 
-extern BfmeStateEE *g_bfmeStateEE;
+// retail 0x012ED5AC is ?TheGameLODManager@@3PAVGameLODManager@@A; this TU
+// keeps its own view of the object and casts at the read.
+class GameLODManager;
+extern GameLODManager *TheGameLODManager;
 
 class BfmeRowFC
 {
@@ -105,7 +108,7 @@ private:
 
 int Gen_00752FF0::bfmeThird(void) const
 {
-	int level = g_bfmeStateEE->m_bfmeLevel - 1;
+	int level = reinterpret_cast<BfmeStateEE *>(TheGameLODManager)->m_bfmeLevel - 1;
 	BfmeHolderFC *holder = m_bfmeHolder;
 	if (level < 0)
 		level = 0;
