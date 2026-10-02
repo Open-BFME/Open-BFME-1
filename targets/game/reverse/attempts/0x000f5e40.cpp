@@ -5,7 +5,8 @@
 // Retail 0x000F5E40, 1293 bytes, ret 0xC.
 // The matched ScriptActions::doTeamRecruitUnitsFromTeam (0x00303AC0) calls it
 // through ILT 0x0000B866 on the destination team with (ObjectTypes*, count,
-// source Team*) and reads an Int back. For each named type whose template
+// source Team*) and discards EAX at both call sites. The body's exits return
+// zero or its recruitment count in EAX. For each named type whose template
 // carries KindOf bit 109, the first behavior module whose slot 13 answers a
 // data block names two templates at +0x23C; the body then finds one member of
 // each among the source prototype's team instances, moves both to the
