@@ -152,7 +152,10 @@ class GameLogic;
 // reads it through a local view of the pause/mode fields only.
 extern GameLogic *TheGameLogic;
 extern Shell *TheShell;
-extern BfmeOtherYH *g_bfmeOtherYH;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern void *g_obj12F49E4;
 extern const void *BfmeAptScreenObjectivesVftable[];
 extern const void *BfmeAptScreenObjectivesSecondaryVftable[];
@@ -188,8 +191,8 @@ AptPlayerStatus::~AptPlayerStatus()
 		if (TheShell)
 			TheShell->hide(false);
 
-		if (g_bfmeOtherYH)
-			g_bfmeOtherYH->bfmeRefreshYH(0);
+		if (g_rva012F19E8WindowManager)
+			((BfmeOtherYH *)g_rva012F19E8WindowManager)->bfmeRefreshYH(0);
 
 		AsciiString callback("AptPlayerStatus::InitGadgets");
 		_bfme_closeAptScreen(callback);

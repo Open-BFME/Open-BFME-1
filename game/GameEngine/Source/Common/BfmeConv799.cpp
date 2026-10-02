@@ -7,7 +7,10 @@ public:
 	void bfmeShowDZF(void *a, const char *msg, int b, void *p, int c, int d, int e, int f);
 };
 
-extern BfmeUiDZF *g_bfmeUiDZF;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern void *g_bfmeArgDZF;
 
 extern "C" unsigned char bfmeFmtStrDZF[];
@@ -21,27 +24,27 @@ void bfmeGoDZFa(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	g_bfmeUiDZF->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFa, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFa, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFb(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	g_bfmeUiDZF->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFb, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFb, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFc(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	g_bfmeUiDZF->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFc, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFc, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFd(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	g_bfmeUiDZF->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFd, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFd, 1, buf, 0, 0, 0, 0);
 }
 

@@ -137,15 +137,18 @@ public:
 	void bfmeTwoMD();
 };
 
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern char g_bfmeFlagMD;
 extern int g_bfmeValMD;
-extern BfmeObjMD *g_bfmeObjMD;
 
 void bfmeGoMD(void)
 {
 	if (g_bfmeFlagMD) {
-		g_bfmeObjMD->bfmeOneMD(g_bfmeValMD);
-		g_bfmeObjMD->bfmeTwoMD();
+		((BfmeObjMD *)g_rva012F19E8WindowManager)->bfmeOneMD(g_bfmeValMD);
+		((BfmeObjMD *)g_rva012F19E8WindowManager)->bfmeTwoMD();
 	}
 }
 
@@ -202,12 +205,11 @@ public:
 extern int g_bfmeAMG;
 extern int g_bfmeBMG;
 extern int g_bfmeFlagMG;
-extern BfmeObjMG *g_bfmeObjMG;
 
 void __stdcall bfmeGoMG(int a)
 {
 	g_bfmeAMG = -1;
 	g_bfmeBMG = -1;
 	if (g_bfmeFlagMG)
-		g_bfmeObjMG->bfmeDoMG();
+		((BfmeObjMG *)g_rva012F19E8WindowManager)->bfmeDoMG();
 }

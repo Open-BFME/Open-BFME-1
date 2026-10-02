@@ -8,7 +8,10 @@ public:
 	void bfmeRun1072(BfmeX1072 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1072 *g_bfmeR1072;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern char g_bfmeFmtA1072[];
 extern char g_bfmeFmtB1072[];
 extern char g_bfmeFmtC1072[];
@@ -44,17 +47,17 @@ void BfmeQ1072::bfmeGo1072A(int a, int b)
 
 	sprintf(buf1, g_bfmeFmtA1072, m_bfme80[a]);
 	sprintf(buf2, g_bfmeFmtA1072, b);
-	g_bfmeR1072->bfmeRun1072(m_bfme5c, g_bfmeFmtB1072, 2, buf1, buf2, 0, 0, 0);
+	((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme5c, g_bfmeFmtB1072, 2, buf1, buf2, 0, 0, 0);
 }
 
 int BfmeQ1072::bfmeGo1072B(void)
 {
 	if (m_bfme258 == 1) {
 		if (g_bfmeD1072) {
-			g_bfmeR1072->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitA1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitA1072, 0, 0, 0, 0);
 			m_bfme258 = 3;
 		} else {
-			g_bfmeR1072->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitB1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitB1072, 0, 0, 0, 0);
 			m_bfme258 = 2;
 		}
 	}
@@ -64,11 +67,11 @@ int BfmeQ1072::bfmeGo1072B(void)
 void BfmeQ1072::bfmeGo1072C(char a)
 {
 	if ((a & 1) && !(m_bfme3d4 & 1)) {
-		g_bfmeR1072->bfmeRun1072(m_bfme250, g_bfmeFmtD1072, 0, 0, 0, 0, 0, 0);
+		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtD1072, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 1;
 	}
 	if ((a & 2) && !(m_bfme3d4 & 2)) {
-		g_bfmeR1072->bfmeRun1072(m_bfme250, g_bfmeFmtE1072, 0, 0, 0, 0, 0, 0);
+		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtE1072, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
 }

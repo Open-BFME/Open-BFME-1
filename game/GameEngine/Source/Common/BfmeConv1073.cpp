@@ -8,7 +8,10 @@ public:
 	void bfmeRun1073(BfmeX1073 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1073 *g_bfmeR1073;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern BfmeX1073 *g_bfmeX1073;
 extern char g_bfmeFmtA1073[];
 extern char g_bfmeFmtB1073[];
@@ -29,11 +32,11 @@ public:
 void BfmeQ1073::bfmeGo1073A(char a)
 {
 	if ((a & 1) && (m_bfme3d4 & 1)) {
-		g_bfmeR1073->bfmeRun1073(m_bfme250, g_bfmeFmtA1073, 0, 0, 0, 0, 0, 0);
+		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, g_bfmeFmtA1073, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 &= ~1;
 	}
 	if ((a & 2) && (m_bfme3d4 & 2)) {
-		g_bfmeR1073->bfmeRun1073(m_bfme250, g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
+		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 &= ~2;
 	}
 }
@@ -56,5 +59,5 @@ void bfmeGo1073B(BfmeN1073 *n, float b, float c)
 	_snprintf(buf2, 0x10, g_bfmeFmtF1073, c);
 	q = n->m_bfme00;
 	s = q ? q + 8 : g_bfmeLit1073;
-	g_bfmeR1073->bfmeRun1073(g_bfmeX1073, g_bfmeFmtG1073, 3, s, buf1, buf2, 0, 0);
+	((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(g_bfmeX1073, g_bfmeFmtG1073, 3, s, buf1, buf2, 0, 0);
 }

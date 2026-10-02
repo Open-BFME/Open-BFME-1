@@ -4,7 +4,10 @@ public:
 	void bfmeShowEAA(void *a, const char *msg, int n, void *p, const char *s, int c, int d, int e);
 };
 
-extern BfmeUiEAA *g_bfmeUiEAA;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern void *g_bfmeArgEAA;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buf, const char *fmt, int v);
@@ -22,28 +25,28 @@ extern "C" unsigned char bfmeMsgEAAd[];
 void bfmeGoEAAa(int a, bool flag)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrEAA, a + 1);
-	g_bfmeUiEAA->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAa, 2, &a,
+	((BfmeUiEAA *)g_rva012F19E8WindowManager)->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAa, 2, &a,
 		flag ? (const char *)bfmeOnEAA : (const char *)bfmeOffEAA, 0, 0, 0);
 }
 
 void bfmeGoEAAb(int a, bool flag)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrEAA, a + 1);
-	g_bfmeUiEAA->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAb, 2, &a,
+	((BfmeUiEAA *)g_rva012F19E8WindowManager)->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAb, 2, &a,
 		flag ? (const char *)bfmeOnEAB : (const char *)bfmeOffEAB, 0, 0, 0);
 }
 
 void bfmeGoEAAc(int a, bool flag)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrEAA, a + 1);
-	g_bfmeUiEAA->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAc, 2, &a,
+	((BfmeUiEAA *)g_rva012F19E8WindowManager)->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAc, 2, &a,
 		flag ? (const char *)bfmeOnEAA : (const char *)bfmeOffEAA, 0, 0, 0);
 }
 
 void bfmeGoEAAd(int a, bool flag)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrEAA, a + 1);
-	g_bfmeUiEAA->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAd, 2, &a,
+	((BfmeUiEAA *)g_rva012F19E8WindowManager)->bfmeShowEAA(g_bfmeArgEAA, (const char *)bfmeMsgEAAd, 2, &a,
 		flag ? (const char *)bfmeOnEAA : (const char *)bfmeOffEAA, 0, 0, 0);
 }
 

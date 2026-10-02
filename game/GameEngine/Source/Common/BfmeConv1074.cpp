@@ -28,7 +28,10 @@ public:
 	void bfmeRun1074(BfmeX1074 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1074 *g_bfmeR1074;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern BfmeX1074 *g_bfmeY1074;
 extern BfmeX1074 *g_bfmeV1074;
 extern char g_bfmeFmtF1074[];
@@ -43,11 +46,11 @@ void bfmeGo1074A(float a, float b)
 {
 	char buf1[0x10];
 	char buf2[0x10];
-	BfmeFl1074 *p = g_bfmeR1074->bfmeSlot1074R_11();
+	BfmeFl1074 *p = ((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeSlot1074R_11();
 
 	_snprintf(buf1, 0x10, g_bfmeFmtF1074, a * p->m_bfme00);
 	_snprintf(buf2, 0x10, g_bfmeFmtF1074, b * p->m_bfme04);
-	g_bfmeR1074->bfmeRun1074(g_bfmeY1074, g_bfmeFmtH1074, 2, buf1, buf2, 0, 0, 0);
+	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(g_bfmeY1074, g_bfmeFmtH1074, 2, buf1, buf2, 0, 0, 0);
 }
 
 void bfmeGo1074B(int a, int b, int c)
@@ -59,6 +62,6 @@ void bfmeGo1074B(int a, int b, int c)
 	_snprintf(buf1, 0x10, g_bfmeFmtD1074, a);
 	_snprintf(buf2, 0x10, g_bfmeFmtJ1074, b);
 	_snprintf(buf3, 0x10, g_bfmeFmtJ1074, c);
-	g_bfmeR1074->bfmeRun1074(bfmeMk1074(g_bfmeV1074, g_bfmeV1074), g_bfmeFmtK1074, 3,
+	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(bfmeMk1074(g_bfmeV1074, g_bfmeV1074), g_bfmeFmtK1074, 3,
 		buf1, buf2, buf3, 0, 0);
 }

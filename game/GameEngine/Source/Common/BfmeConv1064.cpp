@@ -8,7 +8,10 @@ public:
 	void bfmeRun1064(BfmeX1064 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
 };
 
-extern BfmeR1064 *g_bfmeR1064;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern char g_bfmeFmtA1064[];
 extern char g_bfmeFmtB1064[];
 extern char g_bfmeFmtC1064[];
@@ -32,7 +35,7 @@ void BfmeQ1064::bfmeGo1064A(void)
 {
 	if (m_bfme3a8 == 3) {
 		if (bfmeChk1064()) {
-			g_bfmeR1064->bfmeRun1064(m_bfme250, g_bfmeFmtA1064, 0, 0, 0, 0, 0, 0);
+			((BfmeR1064 *)g_rva012F19E8WindowManager)->bfmeRun1064(m_bfme250, g_bfmeFmtA1064, 0, 0, 0, 0, 0, 0);
 			m_bfme3a8 = 4;
 		} else {
 			m_bfme3a8 = 1;
@@ -46,7 +49,7 @@ void BfmeQ1064::bfmeSet1064B(char a)
 		return;
 	m_bfme295 = a;
 	m_bfme294 = 0;
-	g_bfmeR1064->bfmeRun1064(m_bfme250, a ? g_bfmeFmtB1064 : g_bfmeFmtC1064, 0, 0, 0, 0, 0, 0);
+	((BfmeR1064 *)g_rva012F19E8WindowManager)->bfmeRun1064(m_bfme250, a ? g_bfmeFmtB1064 : g_bfmeFmtC1064, 0, 0, 0, 0, 0, 0);
 }
 
 extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, char *f, int a);
@@ -65,5 +68,5 @@ void bfmeGo1064C(int a, int b)
 
 	_snprintf(buf, 0x10, g_bfmeFmtD1064, a);
 	x = bfmeMk1064(g_bfmeV1064, g_bfmeV1064);
-	g_bfmeR1064->bfmeRun1064(x, g_bfmeFmtE1064, 2, buf, g_bfmeTbl1064[b], 0, 0, 0);
+	((BfmeR1064 *)g_rva012F19E8WindowManager)->bfmeRun1064(x, g_bfmeFmtE1064, 2, buf, g_bfmeTbl1064[b], 0, 0, 0);
 }

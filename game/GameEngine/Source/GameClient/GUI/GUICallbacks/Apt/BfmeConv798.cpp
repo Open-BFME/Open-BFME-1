@@ -4,7 +4,10 @@ public:
 	void bfmeShowDZE(void *a, const char *msg, int b, void *p, int c, int d, int e, int f);
 };
 
-extern BfmeUiDZE *g_bfmeUiDZE;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+
 extern void *g_bfmeArgDZE;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buf, const char *fmt, int v);
@@ -18,24 +21,24 @@ extern "C" unsigned char bfmeMsgDZEd[];
 void bfmeGoDZEa(int a)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrDZE, a + 1);
-	g_bfmeUiDZE->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEa, 1, &a, 0, 0, 0, 0);
+	((BfmeUiDZE *)g_rva012F19E8WindowManager)->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEa, 1, &a, 0, 0, 0, 0);
 }
 
 void bfmeGoDZEb(int a)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrDZE, a + 1);
-	g_bfmeUiDZE->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEb, 1, &a, 0, 0, 0, 0);
+	((BfmeUiDZE *)g_rva012F19E8WindowManager)->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEb, 1, &a, 0, 0, 0, 0);
 }
 
 void bfmeGoDZEc(int a)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrDZE, a + 1);
-	g_bfmeUiDZE->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEc, 1, &a, 0, 0, 0, 0);
+	((BfmeUiDZE *)g_rva012F19E8WindowManager)->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEc, 1, &a, 0, 0, 0, 0);
 }
 
 void bfmeGoDZEd(int a)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrDZE, a + 1);
-	g_bfmeUiDZE->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEd, 1, &a, 0, 0, 0, 0);
+	((BfmeUiDZE *)g_rva012F19E8WindowManager)->bfmeShowDZE(g_bfmeArgDZE, (const char *)bfmeMsgDZEd, 1, &a, 0, 0, 0, 0);
 }
 

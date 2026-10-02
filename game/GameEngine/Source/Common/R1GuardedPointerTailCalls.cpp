@@ -197,8 +197,10 @@ class Glo00EF19E8
 public:
 	void h0046B2B0( int value );
 };
-extern Glo00EF19E8 *g_Glo00EF19E8;
-void Rva00584E20() { if( g_Glo00EF19E8 ) registerAptLivingWorldUICallbacks(); }
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+void Rva00584E20() { if( g_rva012F19E8WindowManager ) registerAptLivingWorldUICallbacks(); }
 
 // ---------------------------------------------------------------- shape (f)
 // two members ANDed together, free callee
