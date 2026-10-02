@@ -6,21 +6,32 @@
 // +0x70 it forwards the two arguments together with the two no-argument
 // accessor results to the six-argument member at ILT 0x00036EA3.
 // The same chain (Drawable+0xfc -> +0x204 -> +0x1cc -> override -> +0x70) is
-// read by the landed Drawable::calcPhysicsXform at 0x004213F0, but the owner
-// and callee identities here stay on the BfmeOwnerRC family pins.
+// read by the landed Drawable::calcPhysicsXform at 0x004213F0. The accessors
+// use their ledger owners; the six-argument target still has only its dump
+// identity, d_00413a40 (ILT 0x00036EA3).
 //
 // Two shapes are load-bearing: the +0x204 read goes through an inline
 // accessor inside the null ternary (retail keeps the xor eax,eax null arm
 // instead of jump-threading it), and the kind read goes through a nullable
 // accessor plus a one-level inline override walk (retail's register
 // assignment: this=EDI, holder=EBX, first accessor result=ESI).
-class BfmeThingRC;
+#define THING_TU_MEMBERS const Coord3D *getUnitDirectionVector2D() const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
-class BfmeInnerRC
+class Overridable
 {
 public:
-	BfmeThingRC *bfmeResolveRC(void);
+	const Overridable *getFinalOverride() const;
 };
+
+class BFMERopeDrawable
+{
+public:
+	const Coord3D *getPosition() const;
+};
+
+extern void d_00413a40();
 
 class BfmeThingRC
 {
@@ -28,12 +39,12 @@ public:
 	BfmeThingRC *getFinalRC()
 	{
 		if (m_bfmeInnerRC)
-			return m_bfmeInnerRC->bfmeResolveRC();
+			return (BfmeThingRC *)m_bfmeInnerRC->getFinalOverride();
 		return this;
 	}
 
 	unsigned char m_bfmeHeadRC[4];
-	BfmeInnerRC *m_bfmeInnerRC;
+	Overridable *m_bfmeInnerRC;
 	unsigned char m_bfmeGapRC[0x68];
 	int m_bfmeKindRC;
 };
@@ -73,10 +84,6 @@ class BfmeOwnerRC
 public:
 	char Rva0041EFD0(void *first, void *second);
 
-	void *bfmeGetARC(void);
-	void *bfmeGetBRC(void);
-	char bfmeSendRC(BfmeUnitRC *unit, BfmeHolderRC *holder, void *a, void *b, void *first, void *second);
-
 	unsigned char m_bfmeHeadRC[0xfc];
 	BfmeUnitRC *m_bfmeUnitRC;
 };
@@ -94,10 +101,18 @@ char BfmeOwnerRC::Rva0041EFD0(void *first, void *second)
 		{
 			if (holder->getThingRC()->m_bfmeKindRC == 1)
 			{
-				void *a = bfmeGetARC();
-				void *b = bfmeGetBRC();
+				const Coord3D *a = ((const BFMERopeDrawable *)this)->getPosition();
+				const Coord3D *b = ((const Thing *)this)->getUnitDirectionVector2D();
 
-				return bfmeSendRC(unit, holder, a, b, first, second);
+				// The dump exports a free-function spelling, but retail uses
+				// thiscall with six stack arguments. Keep that ABI at the call.
+				union {
+					void (*function)();
+					char (BfmeOwnerRC::*method)(BfmeUnitRC *, BfmeHolderRC *,
+						const Coord3D *, const Coord3D *, void *, void *);
+				} target;
+				target.function = d_00413a40;
+				return (this->*target.method)(unit, holder, a, b, first, second);
 			}
 		}
 	}
