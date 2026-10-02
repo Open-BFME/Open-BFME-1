@@ -28,10 +28,21 @@ public:
 	char m_slot;
 };
 
+// retail 0x0024B7E0 pushes the slot pointer before calling 0x009F2660, which
+// tail-jumps to ?bfmeAddEQR@BfmeHostEQR@@QAEXPAXBfmeThingEQR@@@Z (a void* one).
+// The matched ledger row names the callee ?m@Gen_009f2660@@QAEXXZ, so the
+// call is made through that exact symbol with the forwarded argument.
+class Gen_009f2660
+{
+public:
+	void m(void);
+};
+
+typedef void (Gen_009f2660::*Gen009f2660WithSlot)(void *);
+
 class BfmeRvaB7E0Manager
 {
 public:
-	void notifyReady(void *slot);
 	void notifyNotReady(void *slot);
 };
 
@@ -59,7 +70,8 @@ void Rva0024B7E0::dispatch(BfmeRvaB7E0Object *object, Bool flag)
 		{
 			if (ai->isReady() == true)
 			{
-				((BfmeRvaB7E0Manager *)ThePartitionManager)->notifyReady(
+				(((Gen_009f2660 *)ThePartitionManager)
+					->*(Gen009f2660WithSlot)&Gen_009f2660::m)(
 					(void *)&object->m_slot);
 			}
 		}

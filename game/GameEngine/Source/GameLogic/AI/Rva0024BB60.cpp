@@ -45,11 +45,17 @@ public:
 	void dispatch(BfmeRvaBB60Object *object, int value);
 };
 
-class BfmeRvaBB60Manager
+// retail 0x0024BB60 pushes the value before calling 0x009F2660, which
+// tail-jumps to ?bfmeAddEQR@BfmeHostEQR@@QAEXPAXBfmeThingEQR@@@Z (a void* one).
+// The matched ledger row names the callee ?m@Gen_009f2660@@QAEXXZ, so the call
+// is made through that exact symbol with the forwarded argument.
+class Gen_009f2660
 {
 public:
-	void notify(void *value);
+	void m(void);
 };
+
+typedef void (Gen_009f2660::*Gen009f2660WithSlot)(void *);
 
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
@@ -70,7 +76,8 @@ void Rva0024BB60::notifyMember(BfmeRvaBB60Object *object)
 	else
 		value = 0;
 
-	((BfmeRvaBB60Manager *)ThePartitionManager)->notify(value);
+	(((Gen_009f2660 *)ThePartitionManager)
+		->*(Gen009f2660WithSlot)&Gen_009f2660::m)(value);
 	object->action(0x14);
 	object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 3), false);
 }
