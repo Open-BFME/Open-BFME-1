@@ -33,10 +33,10 @@ class Player
 {
 };
 
-class BfmeH1040
+class BfmeOwnerXI
 {
 public:
-	void bfmeAdd1040(void *message);
+	void bfmeSendXI(BfmeMsgXI *message);
 };
 
 class AttributeModifierPoolUpdate;
@@ -140,7 +140,7 @@ void Rva00239C90Interface::rva00239c90(
 		BfmeRvaA760Object *member = *it;
 		if (filter == 0 || filter->accepts(member,
 			(int)owner->getControllingPlayer()))
-			((BfmeH1040 *)member)->bfmeAdd1040(message);
+			((BfmeOwnerXI *)member)->bfmeSendXI(message);
 	}
 
 	BfmeMemberIndexNode *entry = m_memberIndex->m_left;
@@ -154,7 +154,7 @@ void Rva00239C90Interface::rva00239c90(
 			if (member != 0
 				&& (filter == 0 || filter->accepts(member,
 					(int)owner->getControllingPlayer())))
-				((BfmeH1040 *)member)->bfmeAdd1040(message);
+				((BfmeOwnerXI *)member)->bfmeSendXI(message);
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);

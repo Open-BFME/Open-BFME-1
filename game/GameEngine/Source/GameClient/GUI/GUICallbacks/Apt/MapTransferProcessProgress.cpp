@@ -46,12 +46,20 @@ class WindowManager
 {
 public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
-	void unidentified_00015235( int movie, const char *function, int argumentCount,
-		const void *argument1, const void *argument2, int unused1, int unused2,
-		int unused3 );
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;
+
+// The 0x00015235 ILT is the established APT dispatcher call target. Its
+// matched body is owned as BfmeLevelAN::bfmeBuildAN; its eight stack words
+// are passed unchanged here, with pointer-valued script arguments carried in
+// the body's integer parameter slots.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN( unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8 );
+};
 
 class BfmeAptScreenMapTransfer
 {
@@ -82,6 +90,6 @@ void BfmeAptScreenMapTransfer::processProgress(
 	char percentText[ 64 ];
 	sprintf( slotText, "%d", slot );
 	sprintf( percentText, "%d", percentage );
-	g_rva012F19E8WindowManager->unidentified_00015235(
-		0x0B, "SetBarTo", 2, slotText, percentText, 0, 0, 0 );
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(
+		0x0B, (int)"SetBarTo", 2, (int)slotText, (int)percentText, 0, 0, 0 );
 }
