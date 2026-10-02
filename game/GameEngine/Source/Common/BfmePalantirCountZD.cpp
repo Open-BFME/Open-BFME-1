@@ -1,10 +1,20 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/stringinline
 //
 // Open-BFME5: the palantir count update at retail 0x00565940, 252 bytes.
 // A negative count blanks the property; a negative total prints the count
 // alone; otherwise the pair is printed as "count/total".
 
 extern "C" __declspec(dllimport) unsigned int wcslen(const unsigned short *text);
+
+#include "StringInline.h"
+
+// The format call used to be spelled through the TU-local stand-in
+// UnicodeStringZD, naming retail's callee
+// ?format@UnicodeStringZD@@QAAXVUnicodeStringZD@@ZZ -- a name retail has no
+// body for.  UnicodeString::format (0x00889190, matched in
+// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
+// it comes from the by-value string model and is named through the real class.
+// The stand-in class itself stays: it is the type this TU's store view takes.
 
 class StringBaseNarrowZD
 {
@@ -64,8 +74,6 @@ public:
 	~UnicodeStringZD(void)
 	{
 	}
-
-	void __cdecl format(UnicodeStringZD text, ...);
 };
 
 // TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
@@ -91,9 +99,9 @@ char bfmePalantirCountZD(int count, int total)
 	if (count >= 0)
 	{
 		if (total >= 0)
-			value.format(UnicodeStringZD(L"%d/%d"), total, count);
+			((UnicodeString &)value).format((UnicodeString)L"%d/%d", total, count);
 		else
-			value.format(UnicodeStringZD(L"%d"), count);
+			((UnicodeString &)value).format((UnicodeString)L"%d", count);
 	}
 	else
 		value.set(L" ", wcslen(L" "));

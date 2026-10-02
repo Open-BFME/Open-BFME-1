@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/stringinline
 //
 // Open-BFME5: the palantir resource-multiplier update at retail 0x00565A80,
 // 232 bytes.  A multiplier of exactly one is shown as a blank; anything else
@@ -6,6 +6,16 @@
 // set/wcslen idiom.
 
 extern "C" __declspec(dllimport) unsigned int wcslen(const unsigned short *text);
+
+#include "StringInline.h"
+
+// The format call used to be spelled through the TU-local stand-in
+// UnicodeStringZC, naming retail's callee
+// ?format@UnicodeStringZC@@QAAXVUnicodeStringZC@@ZZ -- a name retail has no
+// body for.  UnicodeString::format (0x00889190, matched in
+// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
+// it comes from the by-value string model and is named through the real class.
+// The stand-in class itself stays: it is the type this TU's store view takes.
 
 class StringBaseNarrowZC
 {
@@ -65,8 +75,6 @@ public:
 	~UnicodeStringZC(void)
 	{
 	}
-
-	void __cdecl format(UnicodeStringZC text, ...);
 };
 
 // TU-local view of the retail WindowManager; the global below is the real class.
@@ -90,7 +98,7 @@ char bfmeMultiplierZC(float multiplier)
 	UnicodeStringZC value;
 
 	if (multiplier != 1.0f)
-		value.format(UnicodeStringZC(L"x%g"), multiplier);
+		((UnicodeString &)value).format((UnicodeString)L"x%g", multiplier);
 	else
 		value.set(L" ", wcslen(L" "));
 

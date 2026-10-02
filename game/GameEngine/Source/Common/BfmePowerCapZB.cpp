@@ -1,6 +1,16 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/stringinline
 //
 // Open-BFME5: the second palantir property update at retail 0x00565BB0, 175 bytes.
+
+#include "StringInline.h"
+
+// The format call used to be spelled through the TU-local stand-in
+// UnicodeStringZB, naming retail's callee
+// ?format@UnicodeStringZB@@QAAXVUnicodeStringZB@@ZZ -- a name retail has no
+// body for.  UnicodeString::format (0x00889190, matched in
+// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
+// it comes from unicode_string.h and is named through the real class.  The
+// stand-in class itself stays: it is the type this TU's store view takes.
 
 class StringBaseNarrowZB
 {
@@ -57,8 +67,6 @@ public:
 	~UnicodeStringZB(void)
 	{
 	}
-
-	void __cdecl format(UnicodeStringZB text, ...);
 };
 
 class BfmePalantirZB
@@ -84,7 +92,9 @@ void bfmePowerCapZB(int cap)
 
 	UnicodeStringZB value;
 
-	value.format(UnicodeStringZB(L"%d"), cap);
+	UnicodeString &bfmeFmtZB = (UnicodeString &)value;
+
+	bfmeFmtZB.format((UnicodeString)L"%d", cap);
 
 	bfmePalantirZBView()->bfmeStoreZB(s_bfmeKeyZB, value);
 }

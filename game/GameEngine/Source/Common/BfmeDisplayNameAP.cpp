@@ -1,8 +1,19 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/stringinline
 //
 // Open-BFME5: the numbered display name at retail 0x00451240, 212 bytes.  A
 // count above one is appended in brackets, and the append reads both the
 // characters and the length behind a single null test.
+
+#include "StringInline.h"
+
+// The format call used to be spelled through the TU-local stand-in
+// UnicodeStringAP, naming retail's callee
+// ?format@UnicodeStringAP@@QAAXVUnicodeStringAP@@ZZ -- a name retail has no
+// body for.  UnicodeString::format (0x00889190, matched in
+// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
+// it comes from the by-value string model and is named through the real class.
+// The stand-in class itself stays: it is these methods' return type, so retail
+// mangles the enclosing bodies with it.
 
 class StringBaseWideAP
 {
@@ -43,8 +54,6 @@ public:
 	{
 	}
 
-	void __cdecl format(UnicodeStringAP text, ...);
-
 	const unsigned short *bfmeTextAP(void) const
 	{
 		return (m_bfmeWideAP != 0) ? m_bfmeWideAP + 4 : L"";
@@ -77,7 +86,7 @@ UnicodeStringAP BfmeEntryAP::bfmeDisplayNameAP(void)
 	{
 		UnicodeStringAP suffix;
 
-		suffix.format(UnicodeStringAP(L" (%d)"), count);
+		((UnicodeString &)suffix).format((UnicodeString)L" (%d)", count);
 
 		name.bfmeConcatAP(suffix.bfmeTextAP(), suffix.bfmeLengthAP());
 	}
