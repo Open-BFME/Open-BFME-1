@@ -14458,5 +14458,15 @@
   "old_name": "v0",
   "new_name": "rva001F7B10",
   "reason": "The old v0 was an unnamed filler; the observed secondary slot1 is now represented by its exact address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Drawable_mangleCustomAudioName_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DrawableVisualState.cpp",
+  "old_name": "DynamicAudioEventInfo",
+  "new_name": "Rva00417330Holder",
+  "before_sha256": "2e3c66da80420c9ee0148c9b5ed4b1da7ee8a10ff49255ec78b0e0d83762d409",
+  "after_sha256": "528d4e0cf8fd05c8b7d669ea2c92ec3f39b1a2047a091b6212193d135492de1c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00417330-holder-abi.md",
+  "reason": "The old parameter was a raw DynamicAudioEventInfo pointer. Retail xfer copies it with InterlockedIncrement and the callee releases it with InterlockedDecrement plus virtual deletion, independently proving a by-value holder. The name checker pairs the old pointee name with the new parameter holder, whose source identity is unproven and therefore retains the address. This corrects the argument type rather than renaming an established pointee."
  }
 ]

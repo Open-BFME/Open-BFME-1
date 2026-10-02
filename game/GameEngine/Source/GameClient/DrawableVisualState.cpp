@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??0DrawableIconInfo@@QAE@XZ: game/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ?clear@DrawableIconInfo@@QAEXXZ: game/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ??1DrawableIconInfo@@MAE@XZ: game/GameEngine/Source/GameClient/Drawable.cpp
@@ -13,7 +13,56 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-class AsciiString;
+#include "Common/AsciiString.h"
+
+inline AsciiString::~AsciiString()
+{
+    ((StringBase<char> *)this)->StringBase<char>::~StringBase();
+}
+
+template<class T>
+inline void StringBase<T>::concat(const StringBase<T> &other)
+{
+    concat(other.str(), other.getLength());
+}
+
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *);
+extern void j_0001d002();
+
+// The BFME parameter is an intrusive holder, not Zero Hour's raw pointer.
+// Drawable::xfer increments the outgoing pointee+4; this body releases it.
+// See identity_evidence/0x00417330-holder-abi.md.
+class Rva00417330AudioInfo
+{
+public:
+    virtual ~Rva00417330AudioInfo();
+    long m_refCount;
+    AsciiString m_audioName;
+
+    void override_00417330(const AsciiString &name)
+    {
+        union
+        {
+            void (*raw)();
+            void (Rva00417330AudioInfo::*member)(const AsciiString &);
+        } target;
+        target.raw = j_0001d002;
+        (this->*target.member)(name);
+    }
+
+    void release()
+    {
+        if (InterlockedDecrement(&m_refCount) <= 0)
+            delete this;
+    }
+};
+
+class Rva00417330Holder
+{
+public:
+    Rva00417330AudioInfo *p;
+    ~Rva00417330Holder() { if (p) p->release(); }
+};
 class Anim2DTemplate;
 class Anim2DCollection;
 
@@ -170,6 +219,8 @@ class Drawable
 {
 public:
 	DrawableIconInfo *getIconInfo();
+	UnsignedInt getID() const { return m_id; }
+	void mangleCustomAudioName(Rva00417330Holder audio) const;
 	void clearEmoticon() { if (m_iconInfo) killIcon(ICON_EMOTICON); }
 	void killIcon(Int iconType) { if (m_iconInfo) m_iconInfo->killIcon(iconType); }
 
@@ -196,7 +247,9 @@ private:
 	UnsignedInt m_sustainedColorTime;			// this+0x080
 	Real m_amplitude;					// this+0x084
 	Real m_frequency;					// this+0x088
-	char m_pad08c[0x110 - 0x08c];
+	char m_pad08c[0x100 - 0x08c];
+	UnsignedInt m_id;					// this+0x100, witnessed getID
+	char m_pad104[0x110 - 0x104];
 	UnsignedInt m_status;					// this+0x110, bit 1 is shadows
 	char m_pad114[0x140 - 0x114];
 	unsigned char m_secondMaterialPassOpacity;				// this+0x140
@@ -391,4 +444,14 @@ void Drawable::drawEmoticon()
             clearEmoticon();
         }
     }
+}
+
+// RVA 0x00417330, 205 bytes. GeneralsMD Drawable.cpp supplies the name and
+// operation; BFME's caller and EH cleanup prove the by-value holder ABI.
+void Drawable::mangleCustomAudioName(Rva00417330Holder audio) const
+{
+    AsciiString customizedName;
+    customizedName.format(AsciiString(" CUSTOM %d "), (int)getID());
+    customizedName.concat(audio.p->m_audioName);
+    audio.p->override_00417330(customizedName);
 }

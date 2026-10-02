@@ -33,9 +33,17 @@ address-qualified holder and receiver. The initial direct m_id read produced
 (or a named local ID before format) produces EXACT 205/205 modulo all twelve
 relocation slots. This is a probe result, not a claimed strict-gate conversion.
 
-Integration remains separate: the named lift's declared home Drawable.cpp
-uses the Zero Hour raw-pointer overload and four-byte-header AsciiString
-model. The exact body needs the by-value BFME holder and eight-byte-header
-StringBase model. No shared header, game source, symbol pin or ledger identity
-has been changed. Preserve the exact bank until that typed interface can be
-integrated and independently byte-gated without weakening existing claims.
+Integration uses the established BFME class home DrawableVisualState.cpp.
+The target brief explicitly prefers an already-matched BFME class home when
+the readable-body comment names a Zero Hour-layout TU that cannot hold the
+body. This file only forward-declared AsciiString, so it can include the
+canonical BFME stringbaseascii/StringBase headers without changing any shared
+header. Splitting its padding exposes the independently witnessed m_id at
++0x100; all later offsets remain unchanged.
+
+The new method keeps the Zero Hour-witnessed mangleCustomAudioName name and
+const receiver, with the address-qualified Rva00417330Holder parameter whose
+lifetime retail proves. add_match --correct-identity tombstones the raw-pointer
+claim. The old naked lift is removed. The strict scoped build passes all
+12 functions in DrawableVisualState.cpp, the string/constant checks and all
+12 DIR32 references. No new symbol pin is required.
