@@ -2101,21 +2101,8 @@ void PathfindZoneManager::freeZones()
 	m_zonesAllocated = 0;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_freeBlocks.cpp
-// ?freeBlocks@PathfindZoneManager@@AAEXXZ present-unmatched
-void PathfindZoneManager::freeBlocks() 
-{
-	if (m_blockOfZoneBlocks) {
-		delete [] m_blockOfZoneBlocks;
-		m_blockOfZoneBlocks = NULL;
-	}
-	if (m_zoneBlocks) {
-		delete [] m_zoneBlocks;
-		m_zoneBlocks = NULL;
-	}
-	m_zoneBlockExtent.x = 0;
-	m_zoneBlockExtent.y = 0;
-}
+// Retail freeBlocks is provided by PathfindZoneManager_freeBlocks.cpp (0x00403760).
+// allocateBlocks calls that BFME-layout cleanup through ILT 0x00026E72.
 
 /* Allocate zone equivalency arrays large enough to hold m_maxZone entries.  If the arrays are already
 large enough, just return. */
