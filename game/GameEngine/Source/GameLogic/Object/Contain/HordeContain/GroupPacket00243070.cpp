@@ -12,7 +12,10 @@
 extern void j_0003b570(); extern void j_0002b7e2(); extern void j_00024d70();
 extern void j_00048c43(); extern void j_00015f69();
 class Route00243070 {};
-extern Route00243070 *g00243070Va012EF214;
+// 0x012EF214 is retail's `AI *TheAI`; Route00243070 stays as this TU's view of
+// it, cast at each use.
+class AI;
+extern AI *TheAI;
 typedef _STL::hash_map<unsigned,Object*,_STL::hash<unsigned>,_STL::equal_to<unsigned> > Hash00243070;
 struct Logic00243070 {
  char pad[0xb0]; Hash00243070 at0b0;
@@ -47,7 +50,7 @@ void GroupPacket00243070::run(void *target,int source,void *value) {
  for(_STL::list<Object*>::const_iterator it=members->begin();it!=members->end();++it) snapshot.push_back(*it);
  typedef Route00243070 *(Route00243070::*Create)();
  union {void(*fn)();Create call;} create={j_0003b570};
- Route00243070 *group=(g00243070Va012EF214->*create.call)();
+ Route00243070 *group=((Route00243070*)TheAI->*create.call)();
  for(_STL::list<Object*>::iterator it=snapshot.begin();it!=snapshot.end();++it) slot0a0(*it);
  for(_STL::set<unsigned>::iterator it=at030.begin();it!=at030.end();++it) {
   Object *obj=((Logic00243070*)TheGameLogic)->find(*it);
@@ -69,5 +72,5 @@ void GroupPacket00243070::run(void *target,int source,void *value) {
  (group->*apply.call)(&packet,source);
  typedef void (Route00243070::*Destroy)(Route00243070*);
  union {void(*fn)();Destroy call;} destroy={j_00015f69};
- (g00243070Va012EF214->*destroy.call)(group);
+ ((Route00243070*)TheAI->*destroy.call)(group);
 }

@@ -12,8 +12,10 @@ namespace _STL { template<> __declspec(noinline) _List_base<Object*,allocator<Ob
 extern void j_0000f30d(); extern void j_0003b570(); extern void j_0001f253();
 extern void j_0002b7e2(); extern void j_0003756a(); extern void j_00015f69();
 class Route002432C0 {};
-struct Hub002432C0 {};
-extern Hub002432C0 *g002432C0Va012EF214;
+// 0x012EF214 is retail's `AI *TheAI`; Route002432C0 stays as this TU's view of
+// it, cast at each use.
+class AI;
+extern AI *TheAI;
 // The global at 0x012F0898 is retail's `GameLogic *TheGameLogic`; the member-call
 // below goes through this TU's Route002432C0 view, cast at the use.
 class GameLogic;
@@ -45,7 +47,7 @@ void GroupEntry002432C0::run(Object *target,int source) {
  for(_STL::list<Object*>::const_iterator it=members->begin();it!=members->end();++it) snapshot.push_back(*it);
  typedef Route002432C0 *(Route002432C0::*Create)();
  union { void (*fn)(); Create call; } create={j_0003b570};
- Route002432C0 *group=(((Route002432C0*)g002432C0Va012EF214)->*create.call)();
+ Route002432C0 *group=(((Route002432C0*)TheAI)->*create.call)();
  for(_STL::list<Object*>::iterator it=snapshot.begin();it!=snapshot.end();++it) slot0a0(*it);
  for(_STL::set<unsigned>::iterator it=at030.begin();it!=at030.end();++it) {
   typedef Object *(Route002432C0::*Find)(unsigned);
@@ -62,5 +64,5 @@ void GroupEntry002432C0::run(Object *target,int source) {
  (group->*enter.call)(target,source);
  typedef void (Route002432C0::*Destroy)(Route002432C0*);
  union { void (*fn)(); Destroy call; } destroy={j_00015f69};
- (((Route002432C0*)g002432C0Va012EF214)->*destroy.call)(group);
+ (((Route002432C0*)TheAI)->*destroy.call)(group);
 }
