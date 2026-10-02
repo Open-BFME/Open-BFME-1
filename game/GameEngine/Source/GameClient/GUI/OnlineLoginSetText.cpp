@@ -26,7 +26,7 @@ public:
 
 class GameWindow;
 
-void bfmeSetControlEnabled( GameWindow *window, bool enabled );
+void GadgetCheckBoxSetChecked( GameWindow *window, bool enabled );
 void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
 
 class BfmeAptScreenOnlineLogin
@@ -47,7 +47,7 @@ bool BfmeAptScreenOnlineLogin::bfmeSetTextAt7C(
 	if( m_textEntry )
 	{
 		if( m_dependentControl && updateEnabled )
-			bfmeSetControlEnabled( m_dependentControl, !text.isEmpty() );
+			GadgetCheckBoxSetChecked( m_dependentControl, !text.isEmpty() );
 
 		GadgetTextEntrySetText( m_textEntry, text );
 		textWasSet = true;
