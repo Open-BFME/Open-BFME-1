@@ -11,7 +11,7 @@
 // walks columns at 0x009AFA60 (eight) and 0x009AFEC0 (twelve).
 
 extern unsigned char g_bfmeClampTable[];		// retail 0x01356EE0; zero point at +256
-extern int *g_bfmeFilterLimit;						// retail 0x01356A7C
+int *g_bfmeFilterLimit = 0;						// retail 0x01356A7C
 
 #define BFME_LIMIT_ADJUST(v, t)		\
 	{								\
