@@ -2,10 +2,11 @@
 extern "C" __declspec(dllimport) void * __cdecl memmove( void *destination, const void *source, unsigned int count );
 
 // Retail fixes the record stride at 20 bytes and the name field at +8.  The
-// direct call from that field to AsciiString's established destructor body is
-// what identifies the otherwise address-derived owned type.  The two integer
-// links and the compacted four-byte index range are likewise named only for
-// the operations visible in this body; the original owner identity is absent.
+// direct call from that field is StringBase<char>::releaseBuffer at
+// 0x00887940, reached by the base clear() in the canonical string header.
+// AsciiString's out-of-line destructor is instead the jump at 0x0005EE90.
+// The two integer links and the compacted four-byte index range are named
+// only for the operations visible here; the original owner identity is absent.
 
 #include "ascii_string.h"
 
@@ -61,7 +62,7 @@ struct Rva00359330Record
 	                                                                      \
 			record->m_previous = m_freeHead;                               \
 			m_freeHead = index;                                            \
-			record->m_name.~AsciiString();                                 \
+			record->m_name.StringBase<char>::clear();                       \
 	                                                                      \
 			int *position = m_nameIndexesBegin + nameIndex;                \
 			int *next = position + 1;                                      \
