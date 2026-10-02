@@ -96,7 +96,9 @@ public:
 
 extern Rva00889690Obj *g_rva00889690;
 extern void _bfme_debugRecordCallsite(int kind);
-extern void BFME_DX8_Thread_Assert(void);
+// Retail RVA 00905B10 releases the DX8 synchronization lock and returns AL.
+// Use its existing matched provider (BfmeConv1179.cpp); callers ignore the byte.
+extern char bfmeUnlock1179(void);
 
 static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 {
@@ -302,7 +304,7 @@ IndexBufferClass::WriteLockClass::~WriteLockClass()
 		break;
 	}
 	index_buffer->Release_Ref();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -351,7 +353,7 @@ IndexBufferClass::AppendLockClass::~AppendLockClass()
 		break;
 	}
 	index_buffer->Release_Ref();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -426,7 +428,7 @@ DX8IndexBufferClass::DX8IndexBufferClass(unsigned index_count_,UsageType usage)
 		// If it still fails it is fatal
 		BFME_DX8_ErrorCode(ret);
 	}
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -435,7 +437,7 @@ DX8IndexBufferClass::~DX8IndexBufferClass()
 {
 	W3DRadarResetLock();
 	index_buffer->Release();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -556,7 +558,7 @@ DynamicIBAccessClass::WriteLockClass::~WriteLockClass()
 		break;
 	}
 	DynamicIBAccess->IndexBuffer->Release_Ref();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------

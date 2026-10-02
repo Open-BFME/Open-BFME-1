@@ -53,7 +53,9 @@
 #include <D3dx8core.h>
 
 extern void W3DRadarResetLock(void);
-extern void BFME_DX8_Thread_Assert(void);
+// Retail RVA 00905B10 releases the DX8 synchronization lock and returns AL.
+// Use its existing matched provider (BfmeConv1179.cpp); callers ignore the byte.
+extern char bfmeUnlock1179(void);
 extern void rva008fd2a0(void);
 
 // BFME's retail DX8 error path writes through the game debug stream rather
@@ -356,7 +358,7 @@ VertexBufferClass::AppendLockClass::~AppendLockClass()
 		break;
 	}
 	VertexBuffer->Release_Ref();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -489,7 +491,7 @@ DX8VertexBufferClass::~DX8VertexBufferClass()
 #endif
 	W3DRadarResetLock();
 	VertexBuffer->Release();
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 // ----------------------------------------------------------------------------
@@ -540,7 +542,7 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 		&VertexBuffer,
 		NULL);
 	if (SUCCEEDED(ret)) {
-		BFME_DX8_Thread_Assert();
+		bfmeUnlock1179();
 		return;
 	}
 
@@ -569,7 +571,7 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 
 	// If it still fails it is fatal
 	BFME_DX8_ErrorCode(ret);
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 
 	/* Old Code
 	DX8CALL(CreateVertexBuffer(
