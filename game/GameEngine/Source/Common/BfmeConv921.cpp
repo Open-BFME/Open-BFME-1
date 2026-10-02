@@ -1,15 +1,20 @@
 // Open-BFME5 conversions.
 
-class BfmeTail921A
+#include "../GameLogic/command_source_type.h"
+
+class Object;
+
+// ILT 0x00007BCB routes to the matched AI command at 0x00240780.
+class AICommandInterface
 {
 public:
-	void bfmeTail921A(void *a, void *b);
+	void aiBfmeObjectCommand3E(Object *object, CommandSourceType commandSource);
 };
 
 struct BfmeSub921A
 {
 	char m_bfmePad[0x20];
-	BfmeTail921A m_bfmeTail;
+	AICommandInterface m_bfmeTail;
 };
 
 struct BfmeObj921A
@@ -29,7 +34,7 @@ void BfmeThing921A::bfmeGo921A(void *a, void *b)
 	BfmeObj921A *o = *(BfmeObj921A **)((char *)this - 0xdc);
 	BfmeSub921A *s = o->m_bfmeSub;
 	if (s)
-		s->m_bfmeTail.bfmeTail921A(a, b);
+		s->m_bfmeTail.aiBfmeObjectCommand3E((Object *)a, (CommandSourceType)(int)b);
 }
 
 class BfmeC921D
@@ -143,18 +148,23 @@ struct BfmeA921G
 	char m_bfmeFlag;
 };
 
+// ILT 0x0004287A routes to this ledger-owned empty method at 0x0022CDD0.
+struct Gen_0022cdd0
+{
+	void m();
+};
+
 class BfmeThing921G
 {
 public:
 	void bfmeGo921G();
-	void bfmeOne921G();
 	char m_bfmePad[0x1ed];
 	char m_bfmeOut;
 };
 
 void BfmeThing921G::bfmeGo921G()
 {
-	bfmeOne921G();
+	((Gen_0022cdd0 *)this)->m();
 	BfmeA921G *a = *(BfmeA921G **)((char *)this - 0x30);
 	m_bfmeOut = (a->m_bfmeFlag == 0);
 }

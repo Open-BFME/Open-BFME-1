@@ -17,10 +17,24 @@ public:
 	Overridable *m_nextOverride;
 };
 
-class BfmePred490
+class Object;
+
+// ILT 0x00033915 -> HealContain::doHeal at 0x002203C0.
+class HealContain
+{
+	friend class Gen_00220490;
+protected:
+	bool doHeal(Object *obj, unsigned int framesForFullHeal);
+};
+
+enum UpdateSleepTime;
+
+// The defining update body receives the secondary-interface this pointer,
+// just like this caller. A qualified call keeps it non-virtual here.
+class OpenContain
 {
 public:
-	char bfmeCheck(void *obj, void *ctx);
+	virtual UpdateSleepTime update();
 };
 
 class BfmeVirt490
@@ -34,13 +48,12 @@ public:
 class Gen_00220490
 {
 public:
-	void bfmePrep();
 	int bfmeWalk();
 };
 
 int Gen_00220490::bfmeWalk()
 {
-	bfmePrep();
+	((OpenContain *)this)->OpenContain::update();
 	void *ctx = *(void **)((char *)this - 0xC);
 	BfmeNode490 *sent = *(BfmeNode490 **)((char *)this + 0x28);
 	BfmeNode490 *n = sent->next;
@@ -50,8 +63,8 @@ int Gen_00220490::bfmeWalk()
 		{
 			void *obj = n->value;
 			n = n->next;
-			if (((BfmePred490 *)((char *)this - 0x10))->bfmeCheck(
-				obj, *(void **)((char *)ctx + 0x168)) == 1)
+			if (((HealContain *)((char *)this - 0x10))->doHeal(
+				(Object *)obj, *(unsigned int *)((char *)ctx + 0x168)) == 1)
 			{
 				void *arg = *(void **)((char *)obj + 4);
 				if (arg != 0)
