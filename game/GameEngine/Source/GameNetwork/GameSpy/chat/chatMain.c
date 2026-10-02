@@ -207,7 +207,8 @@ typedef struct ciServerMessageType
 	void (*handler)(CHAT chat, const ciServerMessage *message);
 } ciServerMessageType;
 
-extern int numServerMessageTypes;
+// Retail .data at VA 012C8AE0 contains the 54-entry dispatch count.
+int numServerMessageTypes = 54;
 extern ciServerMessageType serverMessageTypes[];
 
 void ciSocketThink(void *chatSocket);
@@ -785,7 +786,8 @@ typedef struct ciConnectDoitConnection
 #define ASSERT_NICK() assert(nick != NULL); assert(nick[0] != '\0'); assert(strlen(nick) < MAX_NICK)
 #define strzcpy(dest, src, len) { strncpy(dest, src, (len)); (dest)[(len) - 1] = '\0'; }
 
-extern int ciVersionID;
+// Retail .data at VA 012C88E0 supplies CRYPT des protocol version 1.
+int ciVersionID = 1;
 void SocketStartUp(void);
 void SocketShutDown(void);
 CHATBool ciInitChannels(CHAT chat);
