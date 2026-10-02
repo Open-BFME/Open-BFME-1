@@ -9,14 +9,12 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 
-extern const char g_bfmeEmptyAscii[];
+#include "../GameClient/System/FXParticleSystem/fx_particle_system_category.h"
 
-namespace FXParticleSystem
-{
-template <int N> class DefaultModuleTag;
-template <class Tag> class ConcreteModuleClass;
-extern ConcreteModuleClass<DefaultModuleTag<1> > *defaultModuleTag1RegistryHead;
-}
+extern template FXParticleSystem::CategoryModuleClass<1> *
+	FXParticleSystem::CategoryModuleClass<1>::s_firstList;
+
+extern const char g_bfmeEmptyAscii[];
 
 class INI
 {
@@ -83,7 +81,9 @@ void Rva005C7A30Parse::parse(INI *ini, void *data, void *, const void *)
 {
 	const char *token = ini->getNextToken(0);
 	BFMERetailAsciiString name(token);
-	Rva005C7A30Factory *factory = reinterpret_cast<Rva005C7A30Factory *>(FXParticleSystem::defaultModuleTag1RegistryHead);
+	Rva005C7A30Factory *factory = reinterpret_cast<Rva005C7A30Factory *>(
+		const_cast<FXParticleSystem::CategoryModuleClass<1> *>(
+			FXParticleSystem::CategoryModuleClass<1>::getFirst()));
 
 	for (;;)
 	{
@@ -98,4 +98,3 @@ void Rva005C7A30Parse::parse(INI *ini, void *data, void *, const void *)
 		((Rva005C7A30ModuleTemplate *)old)->destroy(1);
 	*reinterpret_cast<void **>((char *)data + 0xA4) = created;
 }
-

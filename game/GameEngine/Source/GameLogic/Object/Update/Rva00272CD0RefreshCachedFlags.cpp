@@ -17,7 +17,7 @@
 //   Object+0x90 m_status (name_oracle layout witness, confidence 1.00)
 //   0x012F0898  TheBfmeGameLogic; +0x3C is the frame counter, the same slot
 //               ?_bfme_getFramesBehindPacketRouter@Network@@UAEHXZ reads
-//   0x012F060C  g_bfmeOwnerBR, the singleton both change dispatchers hang off
+//   0x012F060C  TheLuaScriptEngine is the defining global for this shared slot
 //
 // Load-bearing: the two stack temporaries must be DECLARED condition-first,
 // status-second. Retail hoists `mov ecx,0xa` above the frame branch and copies
@@ -28,6 +28,7 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
 class Object;
+class LuaScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ModelConditionFlags.h
 class ModelConditionFlags
@@ -73,9 +74,10 @@ private:
 };
 
 extern GameLogic *TheBfmeGameLogic;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 // The two change dispatchers the ledger already holds at 0x002E7410 and
-// 0x002E7530. Both run with this = g_bfmeOwnerBR (0x012F060C) and walk
+// 0x002E7530. Both run with this = the object at 0x012F060C and walk
 // neighbouring vectors (+0x98, +0xA4) of that one object; no base-class
 // relationship between the two ledger class names is claimed.
 class BfmeBlockVKQ;
@@ -92,8 +94,6 @@ class BfmeOwnerBR
 public:
 	void bfmeGo7530(BfmeMaskYN *fresh, BfmeMaskYN *cached, Object *object);
 };
-
-extern BfmeOwnerBR *g_bfmeOwnerBR;
 
 class Rva00272CD0Updater
 {
@@ -128,7 +128,7 @@ void Rva00272CD0Updater::refreshCachedFlags()
 	{
 		// The ledger names the two methods on different address-derived classes
 		// although both run on the one object at 0x012F060C.
-		reinterpret_cast<Rva002E7410 *>(g_bfmeOwnerBR)->dispatch(
+		reinterpret_cast<Rva002E7410 *>(TheLuaScriptEngine)->dispatch(
 			(BfmeBlockVKQ *)&conditions,
 			(BfmeBlockVKQ *)&m_cachedModelConditionFlags248,
 			object);
@@ -137,7 +137,7 @@ void Rva00272CD0Updater::refreshCachedFlags()
 
 	if (m_cachedStatus270 != status)
 	{
-		g_bfmeOwnerBR->bfmeGo7530(
+		reinterpret_cast<BfmeOwnerBR *>(TheLuaScriptEngine)->bfmeGo7530(
 			(BfmeMaskYN *)&status,
 			(BfmeMaskYN *)&m_cachedStatus270,
 			object);
