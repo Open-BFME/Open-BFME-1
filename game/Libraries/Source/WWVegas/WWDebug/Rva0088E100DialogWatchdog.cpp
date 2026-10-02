@@ -20,9 +20,11 @@ struct Rva0088E100Context
 extern "C"
 {
 	// Written by the dialog driver at 0x0088E1A0 and by the timer callback.
-	extern long g_Rva013373BCTimerTicks;
-	extern unsigned char g_Rva013373C0DialogClosed;
-	extern long g_Rva013373C4DialogGeneration;
+	// Retail watchdog RVA 0x0088E100 reads these as dword/byte/dword;
+	// the initial retail .data values are zero over their 4/1/4-byte extents.
+	long g_Rva013373BCTimerTicks = 0;
+	unsigned char g_Rva013373C0DialogClosed = 0;
+	long g_Rva013373C4DialogGeneration = 0;
 
 	__declspec(dllimport) void __stdcall Sleep(RvaDword milliseconds);
 
