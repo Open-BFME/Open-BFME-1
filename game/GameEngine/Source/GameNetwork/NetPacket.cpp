@@ -2048,68 +2048,10 @@ void NetPacket::FillBufferWithFrameResendRequestMessage(UnsignedByte *buffer, Ne
 }
 
 
-/**
- * Constructor
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_init.cpp
-// ??0NetPacket@@ present-unmatched
-NetPacket::NetPacket() {
-	init();
-}
+// Retail constructors/destructor live in NetPacket_init.cpp.
+// The upstream pooled layout cannot define BFME's de-pooled lifetime methods.
 
-/**
- * Constructor given raw transport data.
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_init.cpp
-// ??0NetPacket@@ present-unmatched
-NetPacket::NetPacket(TransportMessage *msg) {
-	init();
-	m_packetLen = msg->length;
-	memcpy(m_packet, msg->data, MAX_PACKET_SIZE);
-	m_numCommands = -1;
-	m_addr = msg->addr;
-	m_port = msg->port;
-}
-
-/**
- * Destructor
- */
-// ??1NetPacket@@MAE@XZ present-unmatched
-NetPacket::~NetPacket() {
-	if (m_lastCommand != NULL) {
-		m_lastCommand->deleteInstance();
-		m_lastCommand = NULL;
-	}
-}
-
-/**
- * Initialize all the member variable values.
- */
-void NetPacket::init() {
-	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
-	BfmeNetPacketAddress dest;
-	self->m_dest = dest;
-	self->m_numCommands = 0;
-	self->m_packetLen = 0;
-	self->m_packet[0] = 0;
-
-	self->m_lastPlayerID = 0;
-	self->m_lastFrame = 0;
-	self->m_lastCommandID = 0;
-	self->m_lastCommandType = 0;
-	self->m_lastRelay = 0;
-
-	self->m_lastCommand = NULL;
-}
-
-// ?reset@NetPacket@@QAEXXZ present-unmatched
-void NetPacket::reset() {
-	if (m_lastCommand != NULL) {
-		m_lastCommand->deleteInstance();
-		m_lastCommand = NULL;
-	}
-	init();
-}
+// Retail init/reset live in NetPacket_init.cpp.
 
 /**
  * Set the address to which this packet is to be sent.

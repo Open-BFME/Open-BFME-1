@@ -125,16 +125,27 @@ public:
 	UnsignedByte m_lastRelay;						// this+0x1FC
 };
 
-// 0x00679650, 103 bytes. The address pair is zeroed field-wise -- dword at
-// +0x1E4 then a word at +0x1E8 -- before init() assigns the same pair as a
-// whole struct, so both shapes are in retail one after the other. The
-// field-wise half is NetPacketAddress's own constructor, which is why it sits
-// between the vptr store and anything this body writes.
-NetPacket::NetPacket() {
-	init();
+// Retail init body, also inlined into constructors and reset.
+inline void NetPacket::init() {
+	NetPacketAddress dest;
+	m_dest = dest;
+	m_numCommands = 0;
+	m_packetLen = 0;
+	m_packet[0] = 0;
+
+	m_lastPlayerID = 0;
+	m_lastFrame = 0;
+	m_lastCommandID = 0;
+	m_lastCommandType = 0;
+	m_lastRelay = 0;
+
+	m_lastCommand = 0;
 }
 
-// 0x00679730, 174 bytes. Same prefix as the default constructor above; what
+// The default constructor's exact inline copy is owned by
+// NetPacket_ConstructBigCommandPacketList.cpp.
+
+// 0x00679730, 174 bytes. Same prefix as the default constructor; what
 // follows is the address pair lifted out of the transport message, the
 // 476-byte payload copy and the -1 command count. The reference runs those in
 // the other order -- length and copy first, address last -- and retail's
@@ -156,22 +167,6 @@ NetPacket::~NetPacket() {
 		delete m_lastCommand;
 		m_lastCommand = 0;
 	}
-}
-
-void NetPacket::init() {
-	NetPacketAddress dest;
-	m_dest = dest;
-	m_numCommands = 0;
-	m_packetLen = 0;
-	m_packet[0] = 0;
-
-	m_lastPlayerID = 0;
-	m_lastFrame = 0;
-	m_lastCommandID = 0;
-	m_lastCommandType = 0;
-	m_lastRelay = 0;
-
-	m_lastCommand = 0;
 }
 
 // Reset reuses init after releasing the retained previous-command reference.

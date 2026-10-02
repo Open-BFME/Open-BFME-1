@@ -121,7 +121,8 @@ public:
 	UnsignedByte m_lastRelay;
 };
 
-void NetPacket::init()
+// Inline retail init; the canonical matched copy lives in NetPacket_init.cpp.
+inline void NetPacket::init()
 {
 	NetPacketAddress dest;
 	m_dest = dest;
@@ -138,7 +139,8 @@ void NetPacket::init()
 	m_lastCommand = 0;
 }
 
-NetPacket::NetPacket()
+// Retail default constructor; emitted here as the factory's inline helper.
+inline NetPacket::NetPacket()
 {
 	init();
 }
