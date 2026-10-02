@@ -52,7 +52,7 @@ public:
  char gap2[0x10];bool didDisconnect;char gap3[3];
  bool isHuman()const;
  bool isAI()const;
- bool disconnected()const{return isHuman()&&didDisconnect;}
+ bool disconnectedForLadderResults()const{return isHuman()&&didDisconnect;}
  int getTeamNumber()const{return team;}
 };
 extern void j_00016dd8();
@@ -141,7 +141,7 @@ AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket()
    ++numPlayers;
    if(TheVictoryConditions->hasAchievedVictory(p[i]))winningTeam=getSlot(i)->getTeamNumber();
    GameSlot*slot=getSlot(i);
-   if(!slot->disconnected()){
+   if(!slot->disconnectedForLadderResults()){
     if(slot->getTeamNumber()!=lastTeamAtGameEnd||numTeamsAtGameEnd==0){lastTeamAtGameEnd=slot->getTeamNumber();++numTeamsAtGameEnd;}
    }
   }
@@ -168,7 +168,7 @@ AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket()
    int buildingsLost=keeper->getTotalBuildingsLost();
    int buildingsBuilt=keeper->getTotalBuildingsBuilt();
    int earnings=keeper->getTotalMoneyEarned();
-   bool disconnected=slot->disconnected();
+   bool disconnected=slot->disconnectedForLadderResults();
    AsciiString playerStr;
    playerStr.format(",player%d=%s,playerID%d=%d,locale%d=%d",playerID,playerName.str(),playerID,gsPlayerID,playerID,stats.locale);
    results.concat(playerStr);

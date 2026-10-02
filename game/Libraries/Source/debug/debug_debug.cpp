@@ -2393,7 +2393,7 @@ static BOOL (CALLBACK * volatile EnumThreadWndProcAnchor)(HWND, LPARAM) = EnumTh
 // And finally for a little list of C/C++ runtime replacement functions.
 
 // Abort process due to fatal heap error
-void __cdecl _heap_abort(void)
+inline void __cdecl _heap_abort(void)
 {
   DCRASH_RELEASE("Fatal heap error.");
 }

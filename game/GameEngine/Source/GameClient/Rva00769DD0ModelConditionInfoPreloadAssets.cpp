@@ -68,7 +68,7 @@ typedef _STL::set<Rva00769DD0Key, _STL::less<Rva00769DD0Key>,
 class AssetList
 {
 public:
-	AssetList &operator <<(const AsciiString &name)
+	AssetList &insertPrototypeName(const AsciiString &name)
 	{
 		if (m_prototypes.insert((Rva00769DD0Key)bfmeGoEMEb((void *)name.str())).second)
 			m_changed = true;
@@ -174,23 +174,23 @@ void Rva00769DD0ModelConditionInfo::preloadAssets(AssetList *assets, void *conte
 
 		if (extra)
 		{
-			*assets << current;
-			*assets << (current + "_n");
-			*assets << (current + "_nr");
-			*assets << (current + "_ne");
-			*assets << (current + "_nd");
-			*assets << (current + "_r");
-			*assets << (current + "_e");
-			*assets << (current + "_d");
+			assets->insertPrototypeName(current);
+			assets->insertPrototypeName(current + "_n");
+			assets->insertPrototypeName(current + "_nr");
+			assets->insertPrototypeName(current + "_ne");
+			assets->insertPrototypeName(current + "_nd");
+			assets->insertPrototypeName(current + "_r");
+			assets->insertPrototypeName(current + "_e");
+			assets->insertPrototypeName(current + "_d");
 		}
 		else
 		{
-			*assets << current;
+			assets->insertPrototypeName(current);
 		}
 	}
 
 	if (!m_unknown34.isEmpty())
-		*assets << m_unknown34;
+		assets->insertPrototypeName(m_unknown34);
 
 	for (Rva00769DD0Node *node = m_sentinel->m_next; node != m_sentinel;
 		node = node->m_next)
@@ -220,5 +220,5 @@ void Rva00769DD0ModelConditionInfo::preloadAssets(AssetList *assets, void *conte
 	}
 
 	if (!m_unknownBC.isEmpty())
-		*assets << (m_unknownBC + ".tga");
+		assets->insertPrototypeName(m_unknownBC + ".tga");
 }
