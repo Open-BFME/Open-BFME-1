@@ -20,6 +20,7 @@ extern "C" const void *bfmeVftRva005EA560_V3Slot2[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot2=??_7Rva005EA560@@6BV3Slot2@@@")
 
 struct Rva005E5E60Sys;
+extern void j_000151fe();
 
 class Rva005E5E60CtorShim
 {
@@ -32,7 +33,9 @@ class Rva005E5E60Allocation
 public:
 	__forceinline Rva005E5E60Allocation(Rva005E5E60Sys &sys, const void *source)
 	{
-		((Rva005E5E60CtorShim *)this)->construct(sys, source);
+		typedef void (Rva005E5E60CtorShim::*CtorCall)(Rva005E5E60Sys &, const void *);
+		union { void (*raw)(); CtorCall method; } ctor = { j_000151fe };
+		(((Rva005E5E60CtorShim *)this)->*ctor.method)(sys, source);
 		*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EA560_V3Slot0N;
 		*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)bfmeVftRva005EA560_V3Slot1;
 		*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)bfmeVftRva005EA560_V3Slot2;
