@@ -5,8 +5,11 @@
 // element is deleted through its vftable, a borrowed one gives its reference
 // back and keeps what the release returns. Neither arm tests the element for
 // null, so the source never did.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// stlport
 
-extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
+#define _STLP_LINK_TIME_INSTANTIATION
+#include <vector>
 
 class BfmeRefAB
 {
@@ -84,8 +87,6 @@ public:
 class BfmeSinkAB
 {
 public:
-	void bfmeTake(BfmeVecAB *vector);			// retail thunk 0x00014E1B -> 0x00414E1B
-
 	int m_bfmeFields[3];					// +0x00
 };
 
@@ -125,7 +126,8 @@ void Gen_003CFC90::bfmeRelease(void)
 
 	m_bfmeSecond.bfmeClear();
 
-	m_bfmeSink.bfmeTake(&m_bfmeFirst);
+	*reinterpret_cast<_STL::vector<void *> *>(&m_bfmeSink) =
+		*reinterpret_cast<const _STL::vector<void *> *>(&m_bfmeFirst);
 
 	bfmeDrop(m_bfmeExtra);
 }

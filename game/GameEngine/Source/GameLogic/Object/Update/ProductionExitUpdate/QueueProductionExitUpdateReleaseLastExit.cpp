@@ -75,7 +75,7 @@ public:
 	// fronts 0x00162CD0, which builds an 86-bit ObjectStatusMaskType, so the member
 	// is Object::clearStatus(ObjectStatusTypes) -- not clearModelConditionState.
 	void clearStatus(ObjectStatusTypes flag);
-	void setMode(int a, int b);
+	void setStatusBit(int bit, bool set);
 	void unidentified_000F20F0(int a, int b);
 
 	HostAI *getAltAI() const
@@ -147,8 +147,8 @@ void QueueProductionExitUpdate::releaseLastExit()
 	Object *overrideObj = bfmeQueryRallyOverride(creationObject, q);
 	if (overrideObj)
 	{
-		host->setMode(0x4D, 1);
-		host->setMode(3, 1);
+		host->setStatusBit(0x4D, true);
+		host->setStatusBit(3, true);
 		host->unidentified_000F20F0(3, 1);
 		host->getAICommand()->aiMoveToObject(overrideObj, CMD_FROM_AI);
 	}
