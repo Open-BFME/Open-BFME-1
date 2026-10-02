@@ -193,18 +193,6 @@ int Rva0022EE60Dword::method() const
 	return m_value;
 }
 
-class Rva0022EF20PointerAdjust
-{
-public:
-	char *method() const;
-};
-
-// ?method@Rva0022EF20PointerAdjust@@QBEPADXZ
-char *Rva0022EF20PointerAdjust::method() const
-{
-	return (char *)this - 0x20;
-}
-
 class Rva0022EF40Opaque
 {
 public:
