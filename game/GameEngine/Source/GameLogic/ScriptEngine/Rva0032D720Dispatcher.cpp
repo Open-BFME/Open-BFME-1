@@ -10,6 +10,7 @@
 // The raw/member union is the existing ScriptActions_d_002f5ca0.cpp construct.
 #include "PreRTS.h"
 #include "GameLogic/Scripts.h"
+#include "GameLogic/VictoryConditions.h"
 // BFME call declarations reused from the landed sources cited below. The ZH
 // ScriptConditions header lacks BFME-only arms and differs in two prototypes.
 // This TU models no ScriptConditions fields or virtual layout through this class;
@@ -292,6 +293,10 @@ class View;
 extern View* TheTacticalView;
 // Address-qualified view of that singleton for the witnessed vtable call.
 inline Rva012F1600Interface* rva012F1600View() { return (Rva012F1600Interface*)TheTacticalView; }
+// 0x012F079C is EA's TheVictoryConditions singleton. The global's defining
+// spelling is `VictoryConditionsInterface *TheVictoryConditions`
+// (GameLogic/VictoryConditions.h); the class below is only the address-qualified
+// view of the witnessed vtable slots, reached through the real global.
 class Rva012F079CInterface { public:
     virtual void slot0();
     virtual void slot1();
@@ -309,7 +314,7 @@ class Rva012F079CInterface { public:
     virtual bool slot13();
     virtual bool slot14();
 };
-extern Rva012F079CInterface* Rva012F079C;
+inline Rva012F079CInterface* rva012F079CView() { return (Rva012F079CInterface*)TheVictoryConditions; }
 
 class Rva0032D720Virtual {
 public:
@@ -1007,9 +1012,9 @@ bool Rva0032D720::evaluate(Condition* c)
     case 141:
         return rva00329C20(c->getParameter(0), c->getParameter(1));
     case 44:
-        return Rva012F079C->slot13();
+        return rva012F079CView()->slot13();
     case 45:
-        return Rva012F079C->slot14();
+        return rva012F079CView()->slot14();
     case 46:
         return evaluateMultiplayerPlayerDefeat();
     case 36:
