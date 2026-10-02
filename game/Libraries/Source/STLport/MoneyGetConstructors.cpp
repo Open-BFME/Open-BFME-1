@@ -5,5 +5,17 @@
 // Both starts follow INT3 padding; RET 4 ends each 30-byte body.
 #include <locale>
 
+typedef _STL::istreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> >
+	BfmeMoneyWideIterator;
+
+// Keep the class instantiation from emitting the wide long-double overload
+// owned by stlport_money_get_wide_long_double.cpp.
+namespace _STL {
+template <>
+BfmeMoneyWideIterator money_get<wchar_t, BfmeMoneyWideIterator>::do_get(
+	BfmeMoneyWideIterator, BfmeMoneyWideIterator, bool,
+	ios_base &, ios_base::iostate &, long double &) const;
+}
+
 template class _STL::money_get<char, _STL::istreambuf_iterator<char, _STL::char_traits<char> > >;
 template class _STL::money_get<wchar_t, _STL::istreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> > >;
