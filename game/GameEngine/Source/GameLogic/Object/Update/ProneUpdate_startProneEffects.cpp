@@ -94,9 +94,10 @@ private:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 class ProneUpdate
 {
-	private:
+protected:
 	void startProneEffects(void);
 	void stopProneEffects(void);
+private:
 
 	Object *getObject(void) const { return m_object; }
 

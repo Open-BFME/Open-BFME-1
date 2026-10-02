@@ -37,9 +37,10 @@ class ProneUpdate
 public:
 	void goProne( const DamageInfo *damageInfo );
 
-private:
+protected:
 	void startProneEffects();				// ILT thunk at 0x00042884
 
+private:
 	const ProneUpdateModuleData *getProneUpdateModuleData() const
 	{
 		return m_moduleData;

@@ -358,3 +358,30 @@ pinned only to ILT `000122AB`; independently resolving that E9 reaches the
 existing matched `Gen001C9AC0::handle(int)` row at `001C9AC0`. Both use a
 nonvirtual thiscall with one integer argument. The updated caller uses that
 same existing body directly; neither spelling proves a historical class name.
+
+## ProneUpdate helper access correction (002A0030 / 002A0090)
+
+The earlier ProneUpdate deferral identified a concrete declaration defect,
+not a code-generation mismatch. The surviving GeneralsMD ProneUpdate.h puts
+both `startProneEffects()` and `stopProneEffects()` below `protected:`.
+They are nonvirtual, non-const, void methods with no arguments; the correct
+MSVC 7.1 suffix is `IAEXXZ`, not the local shim's former `AAEXXZ`.
+
+Independent callers fix the methods to their retail bodies:
+
+- Matched `ProneUpdate::goProne` at `002A0120` calls ILT `00042884` at
+  `002A0161` -> `002A0030` on entering prone state, exactly as its ZH twin.
+  This 73-byte helper sets the prone model-condition bit and no-attack status,
+  ending with RET `002A0078` and INT3 at `002A0079`.
+- The registered, unique ProneUpdate update-slot body `002A00F0` calls
+  ILT `0004908F` at `002A0100` -> `002A0090` when the counter reaches zero,
+  exactly where the ZH update calls `stopProneEffects`. This 75-byte helper
+  clears the same condition/status and ends RET `002A00DA`, then INT3.
+
+Both existing sources already reproduce those bodies. Their only direct
+callees are `Object::notifyModelConditionChanged` via `0002191D` -> `001BE1C0`
+and `Object::setStatus` via `000307E7` -> `001C7370`, and remain unchanged.
+Correct the helper declarations and ledger access mangling, and update the
+start-helper declaration in the goProne caller. No shared header, helper body,
+field offset, or pin changes. Verify each helper independently at its original
+extent; the pair is one small set/clear-pattern declaration batch.
