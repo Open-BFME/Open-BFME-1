@@ -14,35 +14,18 @@
 // game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
 // one, so it comes from ascii_string.h and is named through the real class.
 
-class StringBaseNarrowZT
-{
-protected:
-	StringBaseNarrowZT(void)
-	{
-		m_bfmeNarrowZT = 0;
-	}
-
-	StringBaseNarrowZT(const char *text);
-
-	StringBaseNarrowZT(const StringBaseNarrowZT &other);
-
-	~StringBaseNarrowZT(void);
-
-	char *m_bfmeNarrowZT;
-};
-
-class AsciiStringZT : public StringBaseNarrowZT
+class AsciiStringZT : public AsciiString
 {
 public:
 	AsciiStringZT(void)
 	{
 	}
 
-	AsciiStringZT(const char *text) : StringBaseNarrowZT(text)
+	AsciiStringZT(const char *text) : AsciiString(text)
 	{
 	}
 
-	AsciiStringZT(const AsciiStringZT &other) : StringBaseNarrowZT(other)
+	AsciiStringZT(const AsciiStringZT &other) : AsciiString(other)
 	{
 	}
 
@@ -52,7 +35,8 @@ public:
 
 	const char *bfmeTextZT(void) const
 	{
-		return (m_bfmeNarrowZT != 0) ? m_bfmeNarrowZT + 8 : "";
+		char *buffer = *reinterpret_cast<char *const *>(this);
+		return (buffer != 0) ? buffer + 8 : "";
 	}
 };
 

@@ -41,6 +41,7 @@ namespace BfmePoolGlue { extern "C" void __cdecl free(void *); }
 protected: \
 	virtual ~ARGCLASS(); \
 public: \
+	ARGCLASS(); \
 	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
 public: \
 	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
@@ -55,7 +56,13 @@ private: \
 	virtual MemoryPool *getObjectMemoryPool() { return ARGCLASS::getClassMemoryPool(); } \
 public:
 
+// GameFont's matched constructor and destructor live in GameFontDestructor.cpp.
+// Declare the constructor here and suppress only the header's inline dtor copy.
+#pragma push_macro("EMPTY_DTOR")
+#undef EMPTY_DTOR
+#define EMPTY_DTOR(ARGCLASS)
 #include "GameClient/GameFont.h"
+#pragma pop_macro("EMPTY_DTOR")
 
 // PUBLIC DATA ////////////////////////////////////////////////////////////////////////////////////
 FontLibrary *TheFontLibrary = NULL;
