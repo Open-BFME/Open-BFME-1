@@ -3204,45 +3204,8 @@ void W3DRoadBuffer::rotateAbout(Vector2 *ptP, Vector2 center, Real angle)
 //         Public Functions                                                
 //-----------------------------------------------------------------------------
 
-//=============================================================================
-// W3DRoadBuffer::~W3DRoadBuffer
-//=============================================================================
-/** Destructor. Releases w3d assets. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferDestructor.cpp
-// ??1W3DRoadBuffer@@QAE@XZ present-unmatched
-W3DRoadBuffer::~W3DRoadBuffer(void)
-{
-	freeRoadBuffers();
-	REF_PTR_RELEASE(m_map);
-}
-
-//=============================================================================
-// W3DRoadBuffer::W3DRoadBuffer
-//=============================================================================
-/** Constructor.  */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferConstructor.cpp
-// ??0W3DRoadBuffer@@QAE@XZ present-unmatched
-W3DRoadBuffer::W3DRoadBuffer(void)	:
-	m_roads(NULL),
-	m_numRoads(0),
-	m_initialized(false),
-	m_map(NULL),
-#ifdef LOAD_TEST_ASSETS
-	m_maxUID(0),
-#endif // LOAD_TEST_ASSETS
-	m_lightsIterator(NULL),
-	m_maxRoadSegments(500),
-	m_maxRoadTypes(8),
-	m_maxRoadVertex(1000),
-	m_maxRoadIndex(2000),
-	m_curRoadType(0)
-
-{
-	allocateRoadBuffers();
-}
-
+// BFME constructor/destructor live in W3DRoadBufferLifetime.cpp.
+// The Zero Hour bodies omitted BFME flags and its trailing texture handle.
 
 //=============================================================================
 // W3DRoadBuffer::freeRoadBuffers
