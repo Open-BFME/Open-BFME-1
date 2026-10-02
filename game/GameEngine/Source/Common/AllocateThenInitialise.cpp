@@ -28,6 +28,19 @@
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
 // pins are address-derived and additive.
 
+// gen005C2930 is bfmeJoinZS: the address 0x005C2930 is matched in
+// functions.csv as ?bfmeJoinZS@@YAXPAVBfmeNodeZK@@PAPAVBfmeOwnerZK@@@Z, defined
+// by game/GameEngine/Source/Common/BfmeOneHundredSixtyOne.cpp.  The one
+// initialiser site that reaches it hands it void pointers, so the arguments are
+// cast to the declared parameter types; pointer casts emit no code.
+class BfmeNodeZK;
+class BfmeOwnerZK;
+
+void bfmeJoinZS( BfmeNodeZK *node, BfmeOwnerZK **holder );
+
+#define BFME_JOIN_ZS( STORAGE, ARGUMENT ) \
+	bfmeJoinZS( (BfmeNodeZK *)( STORAGE ), (BfmeOwnerZK **)( ARGUMENT ) )
+
 #define BFME_BLOCK_ALLOCATOR( ADDR )                                      \
 	void *gen##ADDR( unsigned int size );                                 \
 
@@ -98,7 +111,7 @@ BFME_BLOCK_INITIALISER( 0056CE40 )
 BFME_BLOCK_INITIALISER( 005875A0 )
 BFME_BLOCK_INITIALISER( 005A84D0 )
 BFME_BLOCK_INITIALISER( 005B2C50 )
-BFME_BLOCK_INITIALISER( 005C2930 )
+
 BFME_BLOCK_INITIALISER( 00605630 )
 BFME_BLOCK_INITIALISER( 006271A0 )
 BFME_BLOCK_INITIALISER( 00632690 )
@@ -172,7 +185,7 @@ BFME_ALLOCATE_THEN_INITIALISE( rva0056D5B0, gen0082E540, gen0056CE40, 68, 8 )
 BFME_ALLOCATE_THEN_INITIALISE( rva00587720, gen0082E540, gen005875A0, 80, 16 )
 BFME_ALLOCATE_THEN_INITIALISE( rva005A8820, gen0082E540, gen005A84D0, 56, 16 )
 BFME_ALLOCATE_THEN_INITIALISE( rva005B2D60, gen0082E540, gen005B2C50, 28, 16 )
-BFME_ALLOCATE_THEN_INITIALISE( rva005C4010, gen0082E540, gen005C2930, 20, 8 )
+BFME_ALLOCATE_THEN_INITIALISE( rva005C4010, gen0082E540, BFME_JOIN_ZS, 20, 8 )
 BFME_ALLOCATE_THEN_INITIALISE( rva00605870, gen0082E540, gen00605630, 112, 16 )
 BFME_ALLOCATE_THEN_INITIALISE( rva00627240, gen0082E540, gen006271A0, 36, 8 )
 BFME_ALLOCATE_THEN_INITIALISE( rva00633300, gen0082E540, gen00632690, 52, 16 )

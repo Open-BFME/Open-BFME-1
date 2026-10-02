@@ -41,6 +41,20 @@
 #define BFME_ELEMENT_TYPE( TYPE, SIZE )                                      \
 	struct TYPE { char m_bytes[ SIZE ]; };
 
+// gen005C2930 is bfmeJoinZS: the address 0x005C2930 is matched in
+// functions.csv as ?bfmeJoinZS@@YAXPAVBfmeNodeZK@@PAPAVBfmeOwnerZK@@@Z, defined
+// by game/GameEngine/Source/Common/BfmeOneHundredSixtyOne.cpp.  The two walks
+// that reach it pass Elem12 cursors, so the argument types are cast to the
+// declared parameter types; a pointer-to-pointer reinterpret emits no code, so
+// the walk bodies are unchanged.
+class BfmeNodeZK;
+class BfmeOwnerZK;
+
+void bfmeJoinZS( BfmeNodeZK *node, BfmeOwnerZK **holder );
+
+#define BFME_JOIN_ZS( SLOT, SOURCE ) \
+	bfmeJoinZS( (BfmeNodeZK *)( SLOT ), (BfmeOwnerZK **)( SOURCE ) )
+
 #define BFME_ELEMENT_CALLEE( TYPE, ADDR )                                    \
 	void gen##ADDR( TYPE *slot, const TYPE *source );
 
@@ -163,7 +177,7 @@ BFME_ELEMENT_CALLEE( Elem16, 00474090 )
 BFME_ELEMENT_CALLEE( Elem12, 0052EBB0 )
 BFME_ELEMENT_CALLEE( Elem8, 005721B0 )
 BFME_ELEMENT_CALLEE( Elem12, 00582750 )
-BFME_ELEMENT_CALLEE( Elem12, 005C2930 )
+
 BFME_ELEMENT_CALLEE( Elem16, 00610930 )
 BFME_ELEMENT_CALLEE( Elem36, 0061ABC0 )
 BFME_ELEMENT_CALLEE( Elem8, 0069C300 )
@@ -257,7 +271,7 @@ BFME_ELEMENT_COPY_WALK( Elem12, rva003AF460CopyWalk, gen003A92A0 )
 BFME_ELEMENT_COPY_WALK( Elem12, rva003AF6F0CopyWalk, gen003A94D0 )
 BFME_ELEMENT_COPY_WALK( Elem12, rva003B1610CopyWalk, gen003AB630 )
 BFME_ELEMENT_COPY_WALK( Elem12, rva0052EC20CopyWalk, gen0052EBB0 )
-BFME_ELEMENT_COPY_WALK( Elem12, rva006FA1F0CopyWalk, gen005C2930 )
+BFME_ELEMENT_COPY_WALK( Elem12, rva006FA1F0CopyWalk, BFME_JOIN_ZS )
 BFME_ELEMENT_COPY_WALK( Elem12, rva00754B80CopyWalk, gen00754B20 )
 BFME_ELEMENT_COPY_WALK( Elem12, rva008FF9D0CopyWalk, gen00754B20 )
 BFME_ELEMENT_COPY_WALK( Elem12, rva001D7060CopyWalk, gen001D7000 )
@@ -276,7 +290,7 @@ BFME_ELEMENT_FILL_WALK( Elem12, rva003AF730FillWalk, gen003A94D0 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva003B1650FillWalk, gen003AB630 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva0052EC60FillWalk, gen0052EBB0 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva00582800FillWalk, gen00582750 )
-BFME_ELEMENT_FILL_WALK( Elem12, rva006FA230FillWalk, gen005C2930 )
+BFME_ELEMENT_FILL_WALK( Elem12, rva006FA230FillWalk, BFME_JOIN_ZS )
 BFME_ELEMENT_FILL_WALK( Elem12, rva00754BC0FillWalk, gen00754B20 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva008FF9A0FillWalk, gen00754B20 )
 BFME_ELEMENT_COPY_WALK( Elem16, rva00069A50CopyWalk, gen000699F0 )
