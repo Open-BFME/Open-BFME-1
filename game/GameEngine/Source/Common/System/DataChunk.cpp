@@ -613,92 +613,10 @@ void DataChunkTableOfContents::write( OutputStream &s )
 	}
 }
 
-// read the table of m_contents from a binary m_tmp_file stream
-// TODO: Should this reset the symbol table?
-// Append symbols to table
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsRead.cpp
-// ?read@DataChunkTableOfContents@@QAEXAAVChunkInputStream@@@Z present-unmatched
-void DataChunkTableOfContents::read( ChunkInputStream &s)
-{
-	Int count, i;
-	UnsignedInt maxID = 0;
-	unsigned char len;
-	Mapping *m;
-
-	Byte tag[4]={'x','x', 'x', 'x'};	// Chunky height map. jba.
-	s.read(tag,sizeof(tag));
-	if (tag[0] != 'C' || tag[1] != 'k' || tag[2] != 'M' || tag[3] != 'p') {
-		return;	 // Don't throw, may happen with legacy files.
-	}
-
-	// get number of symbols in table
-	s.read( (char *)&count, sizeof(Int) );
-
-	for( i=0; i<count; i++ )
-	{
-		// allocate new id mapping
-		m = newInstance(Mapping);
-
-		// read string length
-		s.read( (char *)&len, sizeof(unsigned char) );
-
-		// allocate and read in string
-		if (len>0) {
-			char *str = m->name.getBufferForRead(len);
-			s.read( str, len );
-			str[len] = '\000';
-		}
-
-		// read id
-		s.read( (char *)&m->id, sizeof(UnsignedInt) );
-
-		// prepend to list
-		m->next = this->m_list;
-		this->m_list = m;
-
-		this->m_listLength++;
-
-		// track max ID used
-		if (m->id > maxID)
-			maxID = m->id;
-	}
-	m_headerOpened = count > 0 && !s.eof();
-
-	// adjust next ID so no ID's are reused
-	this->m_nextID = max( this->m_nextID, maxID+1 );
-}
-
-//----------------------------------------------------------------------
-// DataChunkInput
-//----------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputCtorThunk.cpp
-// ??0DataChunkInput@@QAE@PAVChunkInputStream@@@Z present-unmatched
-DataChunkInput::DataChunkInput( ChunkInputStream *pStream ) : m_file( pStream ), 
-																										m_userData(NULL), 
-																										m_currentObject(NULL),
-																										m_chunkStack(NULL),
-																										m_parserList(NULL)
-{
-	// read table of m_contents
-	m_contents.read(*m_file);
-
-	// store location of first data chunk
-	m_fileposOfFirstChunk = m_file->tell();
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/DataChunkInputDestructor.cpp
-// ??1DataChunkInput@@QAE@XZ present-unmatched
-DataChunkInput::~DataChunkInput()
-{
-	clearChunkStack();
-
-	UserParser *p, *next;
-	for (p=m_parserList; p; p=next) {
-		next = p->next;
-		p->deleteInstance();
-	}
-
-}
+// DataChunkTableOfContents::read and DataChunkInput's constructor/destructor
+// are provided by DataChunkTableOfContents.cpp, DataChunkInputCtorThunk.cpp,
+// and DataChunkInput.cpp. Their retail-verified BFME layouts supersede the
+// reference definitions formerly emitted here.
 
 // register a user parsing function for a given DataChunk label
 // ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z present-unmatched
