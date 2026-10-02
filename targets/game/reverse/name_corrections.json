@@ -13648,5 +13648,15 @@
   "after_sha256": "d90f0bc70ab109e26bd601257f737a8c8ec891d2f4695547c6b509e62f4bf52c",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleTemplateWriteINI.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleTemplateWriteINI.cpp",
+  "old_name": "b_005ee1d0",
+  "new_name": "Rva005EE1D0Finish",
+  "before_sha256": "a7f7d76cae807a83658baaf17b7b405fd8df97094709118d483bfb9b0b021ea0",
+  "after_sha256": "851469035d1cda9a7afac0ba1980abc3f37c322f0ed787430c282c6d8581ef23",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

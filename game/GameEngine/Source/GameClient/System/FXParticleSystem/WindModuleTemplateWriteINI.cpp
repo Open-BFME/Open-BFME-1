@@ -161,9 +161,9 @@ __forceinline void writeStreamText(File &file, const StreamText &text)
 void u1Call_005C7110(void *stream, void *flags, void *name, void **value);
 
 // The category-7 header writer at 0x005FF160 and the shared INI tail at
-// 0x005EE1D0; both are reached through their ?b_<rva> pins and called cdecl.
+// 0x005EE1D0; both are reached through their retail addresses and called cdecl.
 void b_005ff160();
-void b_005ee1d0();
+void Rva005EE1D0Finish(File *file, unsigned int *indent);
 
 extern const float BfmeZeroRange;
 
@@ -261,6 +261,6 @@ void DefaultModuleTemplate<7>::writeINI(File &file, unsigned int flags) const
 
 	writeStreamText(file,
 		reinterpret_cast<StreamTextAccessor *>(&stream)->getText());
-	reinterpret_cast<FinishWriteFunction>(::b_005ee1d0)(&file, &flags);
+	reinterpret_cast<FinishWriteFunction>(::Rva005EE1D0Finish)(&file, &flags);
 }
 }

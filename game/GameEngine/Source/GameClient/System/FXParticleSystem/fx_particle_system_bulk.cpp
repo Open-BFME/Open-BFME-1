@@ -448,9 +448,14 @@ void u4Next005F5120(INI *ini, void *instance, void *store, const void *value);
 void u4Next005F8AE0(INI *ini, void *instance, void *store, const void *value);
 void u4Then005F7A30(INI *ini, void *instance, void *store, const void *value);
 
-class U1Tail_005CEC60 {
+// The tail member assignment this TU calls (the call at the end of
+// ParticleSystemTemplateTailAssignShim::operator=, row 0x005CF100) is retail's
+// body at 0x005CE550, which game/GameEngine/Source/Common/Y3CloneAssignPairs.cpp
+// defines as `Y3Assign_005CE550`.  Declared here under that name, and never
+// defined, so the reference carries the same mangled symbol retail linked.
+class Y3Assign_005CE550 {
 public:
-    U1Tail_005CEC60 &operator=(const U1Tail_005CEC60 &that);
+    Y3Assign_005CE550 &operator=(const Y3Assign_005CE550 &that);
 };
 
 // GameClientRandomVariable xfer helper (version + distribution/min/max); lives in
@@ -548,7 +553,7 @@ private:
 
     Clonable *m_first;
     Clonable *m_second;
-    U1Tail_005CEC60 m_tail;
+    Y3Assign_005CE550 m_tail;
 };
 
 ParticleSystemTemplateTailAssignShim &ParticleSystemTemplateTailAssignShim::operator=(const ParticleSystemTemplateTailAssignShim &that)
