@@ -1,6 +1,6 @@
+// cl: /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *addend);
-
-void __cdecl bfmeDeallocEU(void *block, unsigned int size);
+#include <stl/_alloc.h>
 
 class BfmeRefEU
 {
@@ -47,5 +47,5 @@ void BfmeListEU::bfmeEraseEU(void)
 	next->m_bfmePrevEU = prev;
 	if (node->m_bfmeValueEU != 0)
 		node->m_bfmeValueEU->bfmeReleaseEU();
-	bfmeDeallocEU(node, 12);
+	_STL::__node_alloc<true, 0>::deallocate(node, 12);
 }

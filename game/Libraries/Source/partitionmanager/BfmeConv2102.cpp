@@ -1,6 +1,23 @@
-struct Gen009F5040Node
+struct Gen009F5040Node;
+
+class BfmeThingZU;
+
+struct BfmeReachZU
 {
-	void bfmeUnhookYQ();
+	BfmeThingZU *m_bfmeBack;
+};
+
+class BfmeThingZU
+{
+public:
+	void bfmeUnhookZU(void);
+
+	unsigned char m_bfmeHead[8];
+	BfmeReachZU *m_bfmeFirstOn;
+	BfmeThingZU *m_bfmeFirstBack;
+	unsigned char m_bfmeGap[8];
+	BfmeReachZU *m_bfmeSecondOn;
+	BfmeThingZU *m_bfmeSecondBack;
 };
 
 class BfmeThingYQ
@@ -34,7 +51,7 @@ void Gen009F5040::bfmeDropYQ(BfmeThingYQ *t)
 
 	remove(n);
 	t->bfmeClearYQ(0);
-	n->bfmeUnhookYQ();
+	reinterpret_cast<BfmeThingZU *>(n)->bfmeUnhookZU();
 
 	::operator delete(n);
 }
