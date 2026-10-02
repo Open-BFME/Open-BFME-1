@@ -34,6 +34,25 @@
 		CALLEE( a, b, 0, c );                                                \
 	}
 
+// 0x00342CE0 IS DEFINED UNDER ITS OWN NAME in
+// game/GameEngine/Source/Common/S4UnguardedInsertionSort.cpp, whose two
+// parameters are `int *first` and a one-dword by-value range.  The forwarder
+// here must therefore name `s4uis00342CE0`, and it calls it through a cast to
+// the four-dword shape this file's own argument pushes produce -- the cast is
+// what keeps the caller's `add esp,0x10` while the emitted symbol is the
+// defining one.  Only the struct is forward-declared: its layout lives in the
+// defining TU.
+#define BFME_ZERO_THIRD_S4UIS_DECL( ADDR )                                      \
+	struct S4Range##ADDR;                                                       \
+	void s4uis##ADDR( int *first, S4Range##ADDR range );
+
+#define BFME_ZERO_THIRD_S4UIS_FORWARDER( NAME, ADDR )                           \
+	void NAME( void *a, void *b, void *c )                                      \
+	{                                                                           \
+		reinterpret_cast<void ( __cdecl * )( void *, void *, void *, void * )>( \
+			&s4uis##ADDR )( a, b, 0, c );                                       \
+	}
+
 #define BFME_ZERO_TAIL_CALLEE( ADDR )                                        \
 	void gen##ADDR( void *a, void *b, void *c, int zero, int alsoZero );
 
@@ -76,7 +95,7 @@ BFME_ZERO_THIRD_CALLEE( 002E0730 )
 BFME_ZERO_THIRD_CALLEE( 002E0D70 )
 BFME_ZERO_THIRD_CALLEE( 002EA750 )
 BFME_ZERO_THIRD_CALLEE( 002EADF0 )
-BFME_ZERO_THIRD_CALLEE( 00342CE0 )
+BFME_ZERO_THIRD_S4UIS_DECL( 00342CE0 )
 BFME_ZERO_THIRD_CALLEE( 00363B80 )
 BFME_ZERO_THIRD_CALLEE( 00364980 )
 BFME_ZERO_THIRD_CALLEE( 003CDC60 )
@@ -98,7 +117,7 @@ BFME_ZERO_THIRD_FORWARDER( rva002E0B70ZeroThirdForwarder, gen002E0730 )
 BFME_ZERO_THIRD_FORWARDER( rva002E10F0ZeroThirdForwarder, gen002E0D70 )
 BFME_ZERO_THIRD_FORWARDER( rva002EABA0ZeroThirdForwarder, gen002EA750 )
 BFME_ZERO_THIRD_FORWARDER( rva002EAEC0ZeroThirdForwarder, gen002EADF0 )
-BFME_ZERO_THIRD_FORWARDER( rva00344A00ZeroThirdForwarder, gen00342CE0 )
+BFME_ZERO_THIRD_S4UIS_FORWARDER( rva00344A00ZeroThirdForwarder, 00342CE0 )
 BFME_ZERO_THIRD_FORWARDER( rva003647B0ZeroThirdForwarder, gen00363B80 )
 BFME_ZERO_THIRD_FORWARDER( rva00365500ZeroThirdForwarder, gen00364980 )
 BFME_ZERO_THIRD_FORWARDER( rva003CE400ZeroThirdForwarder, gen003CDC60 )
