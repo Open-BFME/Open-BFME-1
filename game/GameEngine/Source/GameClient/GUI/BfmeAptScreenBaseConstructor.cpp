@@ -27,17 +27,20 @@ struct BfmeAptScreenContext
 	void *callbackExtra;
 };
 
+extern "C" const void *__identifier("??_7GameWindow@@6B@")[];
+
 class BfmeAptScreenBase
 {
 public:
 	BfmeAptScreenBase( void *context );
-	virtual void slot0();
 
 private:
+	const void **m_bfmeVft;
 	BfmeAptScreenBaseLayout<WinInstanceData> m_layout;
 };
 
 BfmeAptScreenBase::BfmeAptScreenBase( void *context )
+	: m_bfmeVft( __identifier("??_7GameWindow@@6B@") )
 {
 	const BfmeAptScreenContext *ctx = (const BfmeAptScreenContext *)context;
 	int zero = 0;
