@@ -1,12 +1,17 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWDebug
+
 // Open-BFME5 conversions.
 
-class BfmePoolTRB
-{
-public:
-	void bfmeFreeTRB(void *p);
-};
+// ?bfmeFreeTRB@BfmePoolTRB@@QAEXPAX@Z was a TU-local spelling of retail's
+// ?Free_Object_Memory@?$ObjectPoolClass@VGridLinkClass@@$0BAA@@@QAEXPAVGridLinkClass@@@Z
+// at 0x008DDA50: dis_retail 0x008DDED0 shows bfmeDelTRB pushing the object and
+// loading 0x0133D1AC into ecx before that call, so pool and member are the real
+// mempool.h template, forward-declared GridLinkClass.
+#include "../../../Libraries/Source/WWVegas/WWLib/mempool.h"
 
-extern BfmePoolTRB g_bfmePoolTRB;
+class GridLinkClass;
+
+extern ObjectPoolClass<GridLinkClass,256> g_bfmePoolTRB;
 
 class BfmeThingTRB
 {
@@ -19,7 +24,7 @@ void *BfmeThingTRB::bfmeDelTRB(unsigned char flags)
 {
 	bfmeDtorTRB();
 	if ((flags & 1) && this)
-		g_bfmePoolTRB.bfmeFreeTRB(this);
+		g_bfmePoolTRB.Free_Object_Memory((GridLinkClass *)this);
 	return this;
 }
 
