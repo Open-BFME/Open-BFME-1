@@ -282,51 +282,6 @@ void TunnelTracker::healObjects(Real frames)
 	iterateContained(healObject, &frames, FALSE);
 }
 
-// ------------------------------------------------------------------------
-	// heal one object within the tunnel network system
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/TunnelTracker_healObject.cpp
-// ?healObject@TunnelTracker@@ present-unmatched
-void TunnelTracker::healObject( Object *obj, void *frames)
-{
-	
-	//get the number of frames to heal
-	Real *framesForFullHeal = (Real*)frames;
-
-	// setup the healing damageInfo structure with all but the amount
-	DamageInfo healInfo;
-	healInfo.in.m_damageType = DAMAGE_HEALING;
-	healInfo.in.m_deathType = DEATH_NONE;
-	//healInfo.in.m_sourceID = getObject()->getID();
-
-	// get body module of the thing to heal
-	BodyModuleInterface *body = obj->getBodyModule();
-
-	// if we've been in here long enough ... set our health to max
-	if( TheGameLogic->getFrame() - obj->getContainedByFrame() >= *framesForFullHeal )
-	{
-	
-		// set the amount to max just to be sure we're at the top
-		healInfo.in.m_amount = body->getMaxHealth();
-		
-		// set max health
-		body->attemptHealing( &healInfo );
-
-	}  // end if
-	else
-	{
-		//
-		// given the *whole* time it would take to heal this object, lets pretend that the
-		// object is at zero health ... and give it a sliver of health as if it were at 0 health
-		// and would be fully healed at 'framesForFullHeal'
-		//
-		healInfo.in.m_amount = body->getMaxHealth() / *framesForFullHeal;
-
-		// do the healing
-		body->attemptHealing( &healInfo );
-
-	}  // end else
-}
-
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------

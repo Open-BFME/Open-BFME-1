@@ -56,7 +56,9 @@
 // BFME's RunwayInfo is 0x88, ZH's 0x84: retail's push_back advances the finish
 // pointer by 0x88. The extra word is unidentified, so it goes after the last ZH
 // member, where it cannot shift an offset the other matched bodies here rely on.
-#define m_inUseByForLanding m_inUseByForLanding, m_bfmeRunwayTail
+// Declare its destructor in this TU's header view so calls resolve to the
+// separately owned BFME body instead of emitting a second implicit destructor.
+#define m_inUseByForLanding m_inUseByForLanding; ~RunwayInfo(void); ObjectID m_bfmeRunwayTail
 #include "GameLogic/Module/FlightDeckBehavior.h"
 #undef m_inUseByForLanding
 #include "GameLogic/Module/JetAIUpdate.h"

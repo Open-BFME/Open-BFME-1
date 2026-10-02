@@ -144,24 +144,6 @@ void WindowVideo::setWindowState( WindowVideoStates state )
 //-----------------------------------------------------------------------------
 // WindowVideoManager PUBLIC FUNCTIONS ////////////////////////////////////////
 //-----------------------------------------------------------------------------
-// ?WindowVideoManager::WindowVideoManager present-unmatched
-WindowVideoManager::WindowVideoManager( void )
-{
-	WindowVideoMap::iterator it = m_playingVideos.begin();
-	while(it != m_playingVideos.end())
-	{
-		WindowVideo *winVid = it->second;
-		if(winVid)
-			delete winVid;
-		it++;
-	}
-	m_playingVideos.clear();
-	
-	m_stopAllMovies = FALSE;
-	m_pauseAllMovies = FALSE;
-
-}
-
 // ?WindowVideoManager::~WindowVideoManager present-unmatched
 WindowVideoManager::~WindowVideoManager( void )
 {
