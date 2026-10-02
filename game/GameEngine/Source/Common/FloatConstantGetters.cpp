@@ -18,22 +18,30 @@
 // here: at these settings MSVC loads even 0.0f and 1.0f from the pool, which is
 // what retail does too.
 //
-// The remaining four loads use fixed data objects. Two addresses are in
+// Other loads use fixed data objects. Two addresses are in
 // .data; two are .rdata IEEE values 7FA00000 (NaN) and 7F800000 (infinity)
 // that VC7.1 cannot spell with float literals. The infinity object below
 // uses an explicitly typed union and a verified static integer initializer.
-// The other objects remain external declarations at their retail addresses.
+// Both NaN and infinity are now defined here; the two mutable zero cells
+// below preserve their independent .data addresses.
 //
 // 0x0113BD7C is not an anonymous global: it is retail's
 // RenderObjClass::AT_MIN_LOD (FLT_MAX, defined in rendobj.cpp), and
 // 0x0113BD80 is AT_MAX_LOD (-1.0f) beside it, but only 0x0113BD7C was in this
-// job's name list, so 0x0113BD80 keeps its address-derived extern.
+// job's original name list; the -1 getters now use the canonical member too.
 //
 // IDENTITY IS NOT RECOVERED.  Every other name is derived from an address.
 
 #include "rendobj.h"
 
-extern float g_Va0112E8AC;
+// The adjacent retail NaN retains its exact payload bits. Like infinity,
+// this union float-member read relies on the verified VC7.1 behavior.
+union Rva0112E8ACValue
+{
+    unsigned int bits;
+    float value;
+};
+extern const Rva0112E8ACValue g_Va0112E8AC = { 0x7FA00000u };
 // Retail VA 0x0112E8B0 is the IEEE binary32 +infinity bits 0x7F800000.
 // VC7.1 cannot spell this float with a literal. Its supported union-punning
 // behavior lets consumers load the float view of a statically initialized
@@ -44,13 +52,13 @@ union Rva0112E8B0Value
     float value;
 };
 extern const Rva0112E8B0Value g_Va0112E8B0 = { 0x7F800000u };
-extern float g_Va0113BD80;
-extern float g_Va01307200;
-extern float g_Va01340574;
+// Mutable retail .data cells; each corresponding getter loads one dword.
+float g_Va01307200 = 0.0f;
+float g_Va01340574 = 0.0f;
 
 float Rva000B4A70GetFloat( void )
 {
-	return g_Va0112E8AC;
+	return g_Va0112E8AC.value;
 }
 
 float Rva0020DB40GetFloat( void )
@@ -110,7 +118,7 @@ float Rva006CF590GetFloat( void )
 
 float Rva006CF5A0GetFloat( void )
 {
-	return g_Va0113BD80;
+	return RenderObjClass::AT_MAX_LOD;
 }
 
 float Rva006DAB40GetFloat( void )
@@ -130,5 +138,5 @@ float Rva007CC3C0GetFloat( void )
 
 float Rva009558E0GetFloat( void )
 {
-	return g_Va0113BD80;
+	return RenderObjClass::AT_MAX_LOD;
 }
