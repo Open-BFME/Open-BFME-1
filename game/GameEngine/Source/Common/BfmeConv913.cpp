@@ -13,6 +13,13 @@ struct BfmeNode913D
 	void *m_bfmeKey;
 };
 
+struct BfmeNodeDI
+{
+	BfmeNodeDI *m_bfmeNext;
+	int m_bfmeGap;
+	void *m_bfmeKey;
+};
+
 struct BfmeList913D
 {
 	BfmeNode913D *m_bfmeHead;
@@ -21,6 +28,16 @@ struct BfmeList913D
 struct BfmeHolder913D
 {
 	BfmeList913D *m_bfmeList;
+};
+
+class Gen_002227A0
+{
+public:
+	bool bfmeContains(void *key) const;
+
+private:
+	int m_bfmeHead[6];
+	BfmeNodeDI *m_bfmeList;
 };
 
 class BfmeThing913D
@@ -94,7 +111,6 @@ public:
 	virtual void bfmeSlot91365();
 	virtual BfmeHolder913D *bfmeGet913D();
 	char bfmeGo913D(void *k);
-	char bfmeAdd913D(void *k);
 };
 
 char BfmeThing913D::bfmeGo913D(void *k)
@@ -103,7 +119,7 @@ char BfmeThing913D::bfmeGo913D(void *k)
 	for (BfmeNode913D *n = l->m_bfmeHead; n != (BfmeNode913D *)l; n = n->m_bfmeNext)
 		if (n->m_bfmeKey == k)
 			return 1;
-	return bfmeAdd913D(k);
+	return ((Gen_002227A0 *)this)->bfmeContains(k);
 }
 
 class BfmeRes913E

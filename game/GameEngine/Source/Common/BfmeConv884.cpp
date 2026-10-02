@@ -32,10 +32,11 @@ bool BfmeThingESB::bfmeGoESB(BfmeObjESA *o)
 	return m_bfmeP == ((Object *)o)->getControllingPlayer();
 }
 
-class BfmeGlobESC
+class BfmePlayerListHuntView
 {
 public:
-	unsigned short bfmeLookESC(int k, int n, int f);
+	unsigned short getPlayersWithRelationship(int playerIndex,
+		int whichPlayerTypes, bool exact);
 };
 
 // Both bodies read retail's global at 0x012ED748, which is PlayerList.cpp's
@@ -57,7 +58,8 @@ int BfmeThingESCa::bfmeGoESCa()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return ((BfmeGlobESC *)ThePlayerList)->bfmeLookESC(s->m_bfmeK, 4, 0);
+	return ((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+		s->m_bfmeK, 4, false);
 }
 
 struct BfmeThingESCb
@@ -72,5 +74,6 @@ int BfmeThingESCb::bfmeGoESCb()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return ((BfmeGlobESC *)ThePlayerList)->bfmeLookESC(s->m_bfmeK, 4, 0);
+	return ((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+		s->m_bfmeK, 4, false);
 }
