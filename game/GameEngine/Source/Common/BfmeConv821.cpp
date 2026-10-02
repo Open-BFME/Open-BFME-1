@@ -1,35 +1,3 @@
-
-class BfmeSub204_2C0
-{
-public:
-	void doCall(int dummy);
-};
-
-struct BfmeOwner2C0
-{
-	unsigned char pad[0x204];
-	BfmeSub204_2C0 *m_sub204;
-};
-
-struct BfmeThing2C0
-{
-	void doAction();
-};
-
-struct BfmeParent2C0
-{
-	BfmeOwner2C0 *m_owner;
-	unsigned char pad[4];
-	BfmeThing2C0 sub;
-};
-
-void BfmeThing2C0::doAction()
-{
-	BfmeParent2C0 *p = (BfmeParent2C0*)((char*)this - 8);
-	if (p->m_owner->m_sub204)
-		p->m_owner->m_sub204->doCall(0);
-}
-
 class BfmeTarget78E
 {
 public:

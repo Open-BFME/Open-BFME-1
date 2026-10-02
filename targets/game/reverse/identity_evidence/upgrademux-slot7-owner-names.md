@@ -45,3 +45,4 @@ are empty overrides (`ret`).
 | WeaponSetUpgrade | 0x002DA4E0 | 0x010CE710 | 0x0001FD48 | 0x002DA630 | 32 | `?bfmeGoTEB@BfmeThingTEB@@QAEXXZ` | calls a different Object callee than slot 9 (0x002DA610) with the same constant 3, then slot 8 with false |
 | AttributeModifierUpgrade | 0x002D2EB0 | 0x010CBBC0 | 0x0001C698 | 0x002D3000 | 45 | `?bfmeGo1040F@BfmeF1040@@QAEXXZ` | passes the +0x70 module-data field to a different Object callee than slot 9 (0x002D2FD0) does, then slot 8 with false |
 | AudioLoopUpgrade | 0x002D32B0 | 0x010CBD08 | 0x000417E0 | 0x002D34B0 | 48 | `?bfmeGo1024C@BfmeC1024@@QAEXXZ` | kills the audio handle slot 9 (0x002D33E0) starts |
+| LocomotorSetUpgrade | 0x002D6160 | 0x010CCFA8 | 0x00037F01 | 0x002D62C0 | 21 | `?doAction@BfmeThing2C0@@QAEXXZ` | calls the Object +0x204 interface with 0 where slot 9 (0x002D6290) passes the data flag |

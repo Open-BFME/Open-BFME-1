@@ -15118,5 +15118,15 @@
   "after_sha256": "80f10f4f0a85a9d24fcd3670eff74c24a9d3ee6915fd781c1bf59271bf6a0681",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "doAction",
+  "new_name": "rva002D62C0",
+  "before_sha256": "d7cc80b9a59537d2da801847909fce7979cafa6431d1a45acb8c093b7ca7903b",
+  "after_sha256": "4fdf84d2886383c6cb7094cd0e06d07aa379bef318d2ed9fcb8db36ce9bf9cfd",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "doAction was a shape name on the address-derived BfmeThing2C0. The body is slot 7 (ILT 0x00037F01, sole image ref) of LocomotorSetUpgrade's UpgradeMux table 0x010CCFA8 (registered ctor 0x002D6160), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
  }
 ]
