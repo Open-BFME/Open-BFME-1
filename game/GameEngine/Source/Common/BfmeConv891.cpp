@@ -49,7 +49,12 @@ public:
 	char bfmeCallFBB(void *x, void *a, void *y);
 };
 
-extern BfmeGlobFBB *g_bfmeObjFBB;
+// The retail global at 0x012ED700 is EA's `ActionManager *TheActionManager`
+// (see game/GameEngine/Source/Common/System/game_engine_subsystems.h). This TU
+// previously spelled it ?g_bfmeObjFBB@@3PAVBfmeGlobFBB@@A; it now references the
+// one canonical spelling and reads through this TU-local view of the pointee.
+class ActionManager;
+extern ActionManager *TheActionManager;
 
 struct BfmeThingFBB
 {
@@ -63,7 +68,7 @@ struct BfmeThingFBB
 
 bool BfmeThingFBB::bfmeGoFBB(void *a)
 {
-	return g_bfmeObjFBB->bfmeCallFBB(m_bfme8, a, m_bfme10) == m_bfmeC;
+	return ((BfmeGlobFBB *)TheActionManager)->bfmeCallFBB(m_bfme8, a, m_bfme10) == m_bfmeC;
 }
 
 class BfmeObjFBC

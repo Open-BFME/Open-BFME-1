@@ -112,7 +112,12 @@ public:
 	bool canEnterObject(const Object *obj, const Object *objectToEnter, CommandSourceType commandSource, CanEnterType mode, bool *out);
 };
 
-extern BFMEActionManager *TheActionManager;
+// Retail: 0x012ED700 is EA's ActionManager *TheActionManager (see
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h). The member
+// this TU calls is proven on BFMEActionManager, so declare the canonical
+// singleton and cast at the use.
+class ActionManager;
+extern ActionManager *TheActionManager;
 
 void iterRel001DCF20(Object *obj, void *userData);
 
@@ -146,7 +151,7 @@ unsigned char Gen_001DCF50::canEnter(Object *target)
 			{
 				if (contain->query08())
 				{
-					if (TheActionManager->canEnterObject(m_obj, obj, CMD_FROM_AI, CHECK_CAPACITY, 0))
+					if (((BFMEActionManager *)TheActionManager)->canEnterObject(m_obj, obj, CMD_FROM_AI, CHECK_CAPACITY, 0))
 					{
 						if (m_flag)
 							return true;

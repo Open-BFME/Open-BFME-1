@@ -6,7 +6,12 @@ public:
 	char bfmeCheck1026(int k, int a, int b);
 };
 
-extern BfmeQ1026 *g_bfmeQ1026;
+// The retail global at 0x012ED700 is EA's `ActionManager *TheActionManager`
+// (see game/GameEngine/Source/Common/System/game_engine_subsystems.h). This TU
+// previously spelled it ?g_bfmeQ1026@@3PAVBfmeQ1026@@A; it now references the
+// one canonical spelling and reads through this TU-local view of the pointee.
+class ActionManager;
+extern ActionManager *TheActionManager;
 
 class BfmeLst1026
 {
@@ -27,7 +32,7 @@ public:
 
 void BfmeA1026::bfmeGo1026A(int a, int b)
 {
-	if (g_bfmeQ1026->bfmeCheck1026(m_bfmeKey, a, b) != 0)
+	if (((BfmeQ1026 *)TheActionManager)->bfmeCheck1026(m_bfmeKey, a, b) != 0)
 		m_bfmeList.bfmeAdd1026(a, b);
 }
 

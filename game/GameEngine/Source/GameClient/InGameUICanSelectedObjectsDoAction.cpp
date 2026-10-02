@@ -53,7 +53,10 @@ class BFMEActionManager { public:
  bool rva000C6820(const Object*,const Object*,CommandSourceType);
  bool rva000C4390(const Object*,const Object*,CommandSourceType);
 };
-extern BFMEActionManager *TheActionManager;
+// Retail: 0x012ED700 is EA's ActionManager *TheActionManager (see
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h); the members
+// reached through it here keep their proven per-class spellings, so cast.
+extern ActionManager *TheActionManager;
 struct DrawableListNode { DrawableListNode *next,*prev; Drawable *value; };
 class DrawableList { public:
  class const_iterator { DrawableListNode *node; public:
@@ -150,7 +153,7 @@ bool InGameUI::canSelectedObjectsDoAction(ActionType action,const Object *target
    case 2: success=((Rva000C4D80Manager*)TheActionManager)->evaluate(other->getObject(),target,0); break;
    case 20: success=((ActionManager*)TheActionManager)->rvaC50C0DockPredicate(other->getObject(),target,0,true); break;
    case 3: success=((ActionManager*)TheActionManager)->rvaC50C0DockPredicate(other->getObject(),target,0,false); break;
-   case 4: success=TheActionManager->rva000C46A0(other->getObject(),target,CMD_FROM_PLAYER); break;
+   case 4: success=((BFMEActionManager*)TheActionManager)->rva000C46A0(other->getObject(),target,CMD_FROM_PLAYER); break;
    case 5:
     success=((ActionManager*)TheActionManager)->canGetHealedAt(other->getObject(),target,CMD_FROM_PLAYER);
     if(success) { ContainModuleInterface *contain=target->m_contain; if(contain && contain->isHealContain()) success=false; }
@@ -161,25 +164,25 @@ bool InGameUI::canSelectedObjectsDoAction(ActionType action,const Object *target
     if(success && !other->isKindOf((KindOfType)15) && (currentRepairer==INVALID_ID || currentRepairer==other->getObject()->m_id)) success=false;
     break;
    }
-   case 15: success=TheActionManager->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,COMBATDROP_INTO,0); break;
+   case 15: success=((BFMEActionManager*)TheActionManager)->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,COMBATDROP_INTO,0); break;
    case 8: {
     bool special;
-    success=TheActionManager->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,additionalChecking?CHECK_CAPACITY:DONT_CHECK_CAPACITY,&special);
+    success=((BFMEActionManager*)TheActionManager)->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,additionalChecking?CHECK_CAPACITY:DONT_CHECK_CAPACITY,&special);
     if(success && special) success=false;
     break;
    }
    case 9: {
     bool special;
-    success=TheActionManager->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,additionalChecking?CHECK_CAPACITY:DONT_CHECK_CAPACITY,&special);
+    success=((BFMEActionManager*)TheActionManager)->canEnterObject(other->getObject(),target,CMD_FROM_PLAYER,additionalChecking?CHECK_CAPACITY:DONT_CHECK_CAPACITY,&special);
     if(success && !special) success=false;
     break;
    }
    case 1: return false;
    case 10: success=((ActionManager*)TheActionManager)->canHijackVehicle(other->getObject(),target,CMD_FROM_PLAYER); break;
    case 11: success=((ActionManager*)TheActionManager)->canConvertObjectToCarBomb(other->getObject(),target,CMD_FROM_PLAYER); break;
-   case 16: success=TheActionManager->rva000C4080(other->getObject(),target,CMD_FROM_PLAYER); break;
+   case 16: success=((BFMEActionManager*)TheActionManager)->rva000C4080(other->getObject(),target,CMD_FROM_PLAYER); break;
    case 12: success=((ActionManager*)TheActionManager)->canCaptureBuilding(other->getObject(),target,CMD_FROM_PLAYER); break;
-   case 17: success=TheActionManager->rva000C6820(other->getObject(),target,CMD_FROM_PLAYER); break;
+   case 17: success=((BFMEActionManager*)TheActionManager)->rva000C6820(other->getObject(),target,CMD_FROM_PLAYER); break;
    case 13: success=((Rva000C41C0ActionManager*)TheActionManager)->canMakeObjectDefector(other->getObject(),target,CMD_FROM_PLAYER); break;
    case 18: success=((ActionManager*)TheActionManager)->queryRva000C5EF0(other->getObject(),const_cast<Object*>(target),0); break;
    case 14: {
@@ -190,7 +193,7 @@ bool InGameUI::canSelectedObjectsDoAction(ActionType action,const Object *target
     if(contain && exit && contain->rva00447A40Slot10() && exit->rva00447A40Slot6()) success=true; else success=(obj->isKindOf((KindOfType)68) && obj->isLocallyControlled());
     break;
    }
-   case 19: success=TheActionManager->rva000C4390(other->getObject(),target,CMD_FROM_PLAYER); break;
+   case 19: success=((BFMEActionManager*)TheActionManager)->rva000C4390(other->getObject(),target,CMD_FROM_PLAYER); break;
   }
   if(success) { if(rule==SELECTION_ANY) return true; ++qualify; }
  }

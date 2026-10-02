@@ -10,14 +10,15 @@
 class Object;
 #include "../../GameLogic/command_source_type.h"
 
-class BFMEActionManager;
-extern BFMEActionManager* TheActionManager;
-
 class ActionManager
 {
 public:
 	bool canResumeConstructionOf(const Object*, const Object*, CommandSourceType);
 };
+
+// Retail: 0x012ED700 is EA's ActionManager *TheActionManager (see
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h).
+extern ActionManager* TheActionManager;
 
 struct Rva002C8560Iface
 {
@@ -44,7 +45,7 @@ void Rva002C8560Owner::resumeTask(Object* obj, CommandSourceType cmdSource)
 
 	CommandSourceType src = cmdSource;
 	Object* self = m_object;
-	if (((ActionManager*)TheActionManager)->canResumeConstructionOf(self, obj, src) == false)
+	if (TheActionManager->canResumeConstructionOf(self, obj, src) == false)
 		return;
 
 	m_iface.newTask(0, obj);

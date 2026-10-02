@@ -33,7 +33,11 @@ public:
 	bool bfmeCheckYX(BfmeObjYX *o, BfmeThingYX *t, int mode);
 };
 
-extern BFMEActionManager *TheActionManager;
+// Retail: 0x012ED700 is EA's ActionManager *TheActionManager (see
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h). This TU only
+// needs its 0x012ED700-facing view, so declare the canonical symbol and cast.
+class ActionManager;
+extern ActionManager *TheActionManager;
 
 class BfmeSubYX
 {
@@ -87,7 +91,7 @@ void BfmeHostYX::bfmeApplyYX(BfmeThingYX *t, int mode)
 {
 	BfmeObjYX *o = m_bfme08YX;
 
-	if (!TheActionManager->bfmeCheckYX(o, t, mode))
+	if (!((BFMEActionManager *)TheActionManager)->bfmeCheckYX(o, t, mode))
 		return;
 
 	if ((bfmeFinalYX(o->m_nextOverride)->m_bfmeC8YX & 0x8000) == 0)
