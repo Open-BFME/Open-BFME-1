@@ -114,11 +114,15 @@ struct BfmeResultA
 	}
 };
 
-class PartitionManager
+// Retail forwards this filter head through the manager's +0x0C source.
+class BfmeResultForwardB
 {
 public:
-	// Retail forwards this filter head through the manager's +0x0C source.
-	BfmeResultA iterateAllAt002622D0(PartitionFilter *filter);
+	BfmeResultA bfmeForwardResultB(int value);
+};
+
+class PartitionManager
+{
 };
 
 extern PartitionManager *ThePartitionManager;
@@ -156,8 +160,9 @@ public:
 
 Bool Rva002622D0Owner::collectAt002622D0(Rva002622D0Entries *out)
 {
-	BfmeResultA iterator = ThePartitionManager->iterateAllAt002622D0(
-			PartitionFilterRelationship(m_object, 4, false).link(
+	BfmeResultA iterator =
+		((BfmeResultForwardB *)ThePartitionManager)->bfmeForwardResultB(
+			(int)PartitionFilterRelationship(m_object, 4, false).link(
 				&PartitionFilterAcceptByKindOf(
 					Rva002622D0KindOfMask(
 						Rva002622D0KindOfMask::kInit, 114),
