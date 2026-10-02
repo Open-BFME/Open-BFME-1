@@ -116,6 +116,9 @@ public:
 	void finish(void *arg);
 };
 
+extern void j_0003f42c();
+extern void j_00016e55();
+
 class GiantBirdAIUpdate
 {
 public:
@@ -174,8 +177,12 @@ void GiantBirdAIUpdate::followWaypointPathRva002C2C10(const Waypoint *way,
 		Coord3D goal = path[path.size() - 1];
 		getStateMachine()->setGoalPosition(&goal);
 	}
-	getStateMachine()->step2(&path);
+	union { void (*entry)(); void (BfmeSub30_7F0::*member)(void *); } step2Call;
+	step2Call.entry = j_00016e55;
+	(getStateMachine()->*step2Call.member)(&path);
 	// retail 0x0003F42C stores the argument at this+0x48
-	reinterpret_cast<Rva002BC470StateAction *>(this)->finish((void *)cmdSource);
+	union { void (*entry)(); void (Rva002BC470StateAction::*member)(void *); } finishCall;
+	finishCall.entry = j_0003f42c;
+	(reinterpret_cast<Rva002BC470StateAction *>(this)->*finishCall.member)((void *)cmdSource);
 	getStateMachine()->setState(asTeam ? 0x3F8 : 0x3F7);
 }

@@ -98,8 +98,6 @@ public:
 	unsigned char m_unreconstructed_00[0x70];
 };
 
-extern void __stlp_deallocate_small(void *node, unsigned int bytes);
-
 template <class T>
 class BridgeScaffoldAllocator : public _STL::allocator<T>
 {
@@ -117,7 +115,7 @@ public:
 	void deallocate(T *node, unsigned int count) const
 	{
 		if (node)
-			__stlp_deallocate_small(node, count * sizeof(T));
+			_STL::__node_alloc<true, 0>::deallocate(node, count * sizeof(T));
 	}
 };
 

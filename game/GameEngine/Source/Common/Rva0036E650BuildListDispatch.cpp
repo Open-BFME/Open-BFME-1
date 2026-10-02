@@ -42,6 +42,8 @@ public:
 };
 
 extern ThingFactory *TheThingFactory;
+extern void j_00017a12();
+extern void j_00028560();
 
 class BfmeResGH
 {
@@ -115,6 +117,11 @@ void Rva0036E650BuildListDispatch(
 	void *first,
 	void *second)
 {
+	union { void (*entry)(); ThingTemplate *(ThingFactory::*member)(const AsciiString &); } findTemplateCall;
+	findTemplateCall.entry = j_00028560;
+	union { void (*entry)(); void (BfmeResGH::*member)(void *, void *); } bfmeTwoGHCall;
+	bfmeTwoGHCall.entry = j_00017a12;
+
 	for (Rva0036E650NameMap::iterator it = owner->m_names.begin();
 		it != owner->m_names.end(); ++it)
 	{
@@ -126,9 +133,9 @@ void Rva0036E650BuildListDispatch(
 		{
 			++index;
 			AsciiString name = info.getTemplateName();
-			ThingTemplate *found = TheThingFactory->findTemplate(name);
+			ThingTemplate *found = (TheThingFactory->*findTemplateCall.member)(name);
 			if (found)
-				reinterpret_cast<BfmeResGH *>(found)->bfmeTwoGH(first, second);
+				(reinterpret_cast<BfmeResGH *>(found)->*bfmeTwoGHCall.member)(first, second);
 		}
 	}
 
@@ -137,8 +144,8 @@ void Rva0036E650BuildListDispatch(
 	{
 		const unsigned int begin = (unsigned int)owner->m_begin;
 		AsciiStringBN name = *(const AsciiStringBN *)(begin + index * sizeof(AsciiStringBN));
-		ThingTemplate *found = TheThingFactory->findTemplate(name.m_name);
+		ThingTemplate *found = (TheThingFactory->*findTemplateCall.member)(name.m_name);
 		if (found)
-			reinterpret_cast<BfmeResGH *>(found)->bfmeTwoGH(first, second);
+			(reinterpret_cast<BfmeResGH *>(found)->*bfmeTwoGHCall.member)(first, second);
 	}
 }

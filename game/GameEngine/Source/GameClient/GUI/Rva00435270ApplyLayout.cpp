@@ -83,6 +83,8 @@ public:
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern void _bfme_debugRecordCallsite( Int kind );
+extern void j_0001ce9f();
+extern void j_00007356();
 
 class Rva00435270Layout
 {
@@ -126,8 +128,12 @@ void Rva00435270Layout::apply( void )
 {
 	if( !isReady() )
 		return;
-	refresh();
-	setRect( m_left4C, m_top50, m_right54, m_bottom58, m_owner2C, 1 );
+	union { void (*entry)(); void (Rva00435270Layout::*member)(); } refreshCall;
+	refreshCall.entry = j_0001ce9f;
+	(this->*refreshCall.member)();
+	union { void (*entry)(); void (Rva00435270Layout::*member)(Real, Real, Real, Real, Int, Int); } setRectCall;
+	setRectCall.entry = j_00007356;
+	(this->*setRectCall.member)(m_left4C, m_top50, m_right54, m_bottom58, m_owner2C, 1);
 	setRange( 0, (Int)m_top50, (Int)m_split60 );
 	setRange( 1, (Int)m_split60, (Int)m_split68 );
 	setRange( 2, (Int)m_split68, (Int)m_bottom58 );

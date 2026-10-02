@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <stdio.h>
 
 struct Rva00832180Unk
 {
@@ -31,9 +32,6 @@ struct U2Elem8
 
 extern void *Rva0083F3B0Duplicate(const U2Elem8 *src, int count);
 
-extern void *g_global;						// 0x013592F0
-extern void (__cdecl *g_call)(void *, void *);		// 0x013593C8
-
 namespace _STL
 {
 
@@ -58,7 +56,7 @@ protected:
 	void _M_check_exception_mask()
 	{
 		if (_M_iostate & _M_exception_mask)
-			g_call((void *)"ios failure", (char *)g_global + 0x40);
+			fputs("ios failure", stderr);
 	}
 
 public:
