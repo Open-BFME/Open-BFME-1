@@ -238,7 +238,6 @@ void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
 void msleep(unsigned int milliseconds);
-void bfmePiThinkFromEsi(int opID);
 int piIsOperationFinished(PEER peer, int opID);
 int PeerOperationsComplete(PEER peer, int opID);
 int piIsCallbackFinished(PEER peer, int opID);
@@ -449,7 +448,7 @@ void peerShutdown(PEER peer)
 		{
 			connection->stayInTitleRoom = 0;
 			bfmePiDisconnectCleanupFromEsi();
-			bfmePiThinkFromEsi(-1);
+			piThink(peer, -1);
 		}
 		connection->disconnectedCallback = callback;
 	}
@@ -585,7 +584,7 @@ void peerChangeNickA(PEER peer, const char *newNick, void *callback,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -619,7 +618,7 @@ void peerGetPlayerGlobalKeysA(PEER peer, const char *nick, int num,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -670,7 +669,7 @@ void dup_008593A0(PEER peer, int roomType, int num, const char **keys,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -719,7 +718,7 @@ void peerConnectA(PEER peer, const char *nick, int profileID,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -741,7 +740,7 @@ void peerDisconnect(PEER peer)
 	{
 		connection->stayInTitleRoom = 0;
 		bfmePiDisconnectCleanupFromEsi();
-		bfmePiThinkFromEsi(-1);
+		piThink(peer, -1);
 	}
 
 	if (connection->shutdown && connection->callbackDepth == 0)
@@ -789,7 +788,7 @@ void peerConnectLoginA(PEER peer, int namespaceID, const char *email,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -823,7 +822,7 @@ void peerGetRoomKeysA(PEER peer, int roomType, const char *nick, int num,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -890,7 +889,7 @@ void peerGetPlayerIPA(PEER peer, const char *nick, void *callback,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -939,7 +938,7 @@ void peerGetPlayerProfileIDA(PEER peer, const char *nick, void *callback,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -988,7 +987,7 @@ void peerGetPlayerInfoA(PEER peer, const char *nick, void *callback,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -1046,7 +1045,7 @@ void peerJoinGroupRoom(PEER peer, int groupID, void *callback, void *param,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -1116,7 +1115,7 @@ void peerJoinTitleRoomA(PEER peer, const char *password, void *callback,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -1172,7 +1171,7 @@ void peerCreateStagingRoomWithSocketA(PEER peer, const char *name,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -1223,7 +1222,7 @@ void peerStartAutoMatchWithSocketA(PEER peer, int maxPlayers,
 		do
 		{
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(peer, opID);
 		}
 		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
@@ -1843,7 +1842,6 @@ void Rva00858100StopAutoMatchIfTitled(PEER peer)
 int piGetNextID(PEER);
 void piAddJoinRoomCallback(PEER,int,int,int,void*,void*,int);
 void msleep(unsigned);
-void bfmePiThinkFromEsi(int);
 int PeerOperationsComplete(PEER,int);
 int piIsCallbackFinished(PEER,int);
 void peerShutdown(PEER);

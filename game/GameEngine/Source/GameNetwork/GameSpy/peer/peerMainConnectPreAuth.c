@@ -34,7 +34,7 @@ int piGetNextID(PEER peer);
 void piAddConnectCallback(PEER peer, PEERBool success, int failureReason,
 	void *callback, void *param, int ID);
 void msleep(unsigned int milliseconds);
-void bfmePiThinkFromEsi(int ID);
+void piThink(int ID);
 int PeerOperationsComplete(PEER peer, int ID);
 int piIsCallbackFinished(PEER peer, int ID);
 void peerShutdown(PEER peer);
@@ -74,7 +74,7 @@ void peerConnectPreAuthA(PEER peer, const char *authtoken,
 	if (blocking) {
 		do {
 			msleep(1);
-			bfmePiThinkFromEsi(opID);
+			piThink(opID);
 		} while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
