@@ -1,9 +1,26 @@
 // cl: /O2 /Ob0
+// stlport
+
+#include <deque>
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
-void bfmeNote1029( int index, char value );
+void bfmeGo1071A( int index, char value );
+
+struct Gen_t_005914e0_p12cd
+{
+	int a[ 3 ];
+	Gen_t_005914e0_p12cd();
+	Gen_t_005914e0_p12cd( const Gen_t_005914e0_p12cd &other );
+	~Gen_t_005914e0_p12cd();
+	Gen_t_005914e0_p12cd &operator=( const Gen_t_005914e0_p12cd &other );
+};
+
+bool operator==( const Gen_t_005914e0_p12cd &a, const Gen_t_005914e0_p12cd &b );
+bool operator<( const Gen_t_005914e0_p12cd &a, const Gen_t_005914e0_p12cd &b );
+
+template <> void _STL::deque<Gen_t_005914e0_p12cd>::clear();
 
 class Rva00596AE0Member
 {
@@ -18,8 +35,6 @@ public:
 class Rva00596AE0Queue
 {
 public:
-	void clear();
-
 private:
 	char m_storage[ 4 ];
 };
@@ -52,14 +67,14 @@ void Rva00596AE0::reset()
 {
 	for ( int i = 0; i < 6; ++i )
 	{
-		bfmeNote1029( i, 0 );
+		bfmeGo1071A( i, 0 );
 		m_flags[ i ] = 0;
 	}
 
 	if ( m_member != 0 )
 		m_member->release();
 
-	m_queue.clear();
+	((_STL::deque<Gen_t_005914e0_p12cd> *)&m_queue)->clear();
 	m_ready = 1;
 	_ReadWriteBarrier();
 	m_active = 0;

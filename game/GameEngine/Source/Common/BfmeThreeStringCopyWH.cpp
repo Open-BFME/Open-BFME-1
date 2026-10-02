@@ -4,20 +4,12 @@
 // 98 bytes.  Members are inline forwarding wrappers over the retail string,
 // the shape the landed constructor at 0x0014ADC0 uses.
 
-class AsciiStringWH
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+class BfmeStrWH : private AsciiString
 {
 public:
-	AsciiStringWH(const AsciiStringWH &other);
-	~AsciiStringWH(void);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeStrWH : private AsciiStringWH
-{
-public:
-	BfmeStrWH(const BfmeStrWH &other) : AsciiStringWH(other) {}
+	BfmeStrWH(const BfmeStrWH &other) : AsciiString(other) {}
 	~BfmeStrWH(void) {}
 };
 
