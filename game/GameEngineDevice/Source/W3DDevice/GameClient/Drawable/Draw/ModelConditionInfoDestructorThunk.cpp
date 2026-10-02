@@ -3,6 +3,7 @@
 #include "ascii_string.h"
 #include <memory>
 #include <bitset>
+#include <vector>
 // Open-BFME: ModelConditionInfo has a 0x128-byte BFME layout.  Its callers
 // enter through ILT 0x0002306F at retail body RVA 0x0013C3F0; the historical
 // ledger row began fourteen bytes late, after the compiler's SEH prologue.
@@ -126,11 +127,12 @@ struct Rva00774B60Tail
 
 };
 extern void j_0003ab11();
-class ModelConditionInfo
+struct ModelConditionInfo
 {
 public:
 	~ModelConditionInfo();
 	ModelConditionInfo();
+	ModelConditionInfo(const ModelConditionInfo &);
 	void clear();
 
 private:
@@ -213,4 +215,61 @@ void ModelConditionInfo::clear()
 	m_atC0.wordD8 = 255;
 	m_atC0.wordE8 = 20.0f;
 	m_atC0.byteEE = 1;
+}
+
+// Existing ILT bindings; typed ABIs and native STLport specialization are
+// documented in identity_evidence/0x0077C000-vector.md.
+extern void j_00039676();
+extern void j_00043937();
+extern void j_0000cf04();
+namespace _STL {
+template<>
+__forceinline void _Construct(ModelConditionInfo *destination, const ModelConditionInfo &value)
+{
+	union { void (*raw)(); void (*typed)(ModelConditionInfo *, const ModelConditionInfo &); } call;
+	call.raw = j_00039676;
+	call.typed(destination, value);
+}
+template<>
+__forceinline void vector<ModelConditionInfo>::_M_clear()
+{
+	union { void (*raw)(); void (vector<ModelConditionInfo>::*typed)(); } call;
+	call.raw = j_0000cf04;
+	(this->*call.typed)();
+}
+}
+
+namespace _STL {
+// Native _vector.h algorithm, with retail's outlined suffix-copy call.
+template<>
+void vector<ModelConditionInfo>::_M_insert_overflow(pointer position,
+	const ModelConditionInfo &value, const __false_type &, size_type fillLength, bool atEnd)
+{
+	const size_type oldSize = size();
+	const size_type newSize = oldSize + (max)(oldSize, fillLength);
+	pointer newStart = this->_M_end_of_storage.allocate(newSize);
+	pointer newFinish = newStart;
+	newFinish = __uninitialized_copy(this->_M_start, position, newStart, __false_type());
+	if (fillLength == 1) {
+		_Construct(newFinish, value);
+		++newFinish;
+	} else {
+		newFinish = __uninitialized_fill_n(newFinish, fillLength, value, __false_type());
+	}
+	if (!atEnd) {
+		// The empty dispatch tag has no value to initialize.
+		__false_type tag;
+		union { void (*raw)(); ModelConditionInfo *(*typed)(ModelConditionInfo *, ModelConditionInfo *, ModelConditionInfo *, const __false_type &); } call;
+		call.raw = j_00043937;
+		newFinish = call.typed(position, this->_M_finish, newFinish, tag);
+	}
+	_M_clear();
+	_M_set(newStart, newFinish, newStart + newSize);
+}
+}
+
+void ModelConditionInfoVectorInsertOverflowAnchor(
+	_STL::vector<ModelConditionInfo> &items, const ModelConditionInfo &value)
+{
+	items.insert(items.begin(), value);
 }

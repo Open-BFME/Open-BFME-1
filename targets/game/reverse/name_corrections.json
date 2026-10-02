@@ -14478,5 +14478,15 @@
   "after_sha256": "89186c8909d8a52dca3e3c36dc1bf7cbe5294ca84e15897564d618b92b5f5348",
   "evidence": "targets/game/reverse/identity_evidence/0x00776330-constructor.md",
   "reason": "False declaration pairing: the local AsciiString definition was replaced by its canonical header, preserving all AsciiString fields. Rva00776330Pointer is a new unrelated vector allocator-proxy storage type. No existing name is downgraded."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfoVectorInsertOverflowThunk.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfoDestructorThunk.cpp",
+  "old_name": "bfme_ModelConditionInfoVectorInsertOverflow_77C000",
+  "new_name": "rva00774B60Clear",
+  "before_sha256": "10915ac18f30f3284400d404179899a4c32e8e2932829d6db68e3d9635fa15a2",
+  "after_sha256": "fa989150c71ca662bd4e183840928cffe104dbba0265e43f4e7b703affba93b7",
+  "evidence": "targets/game/reverse/identity_evidence/0x0077C000-vector.md",
+  "reason": "False cross-file pairing: the removed naked C emission anchor is replaced by native vector<ModelConditionInfo>::_M_insert_overflow with its full template identity. The address-named clear adapter already existed in the destination before this change and is unrelated."
  }
 ]
