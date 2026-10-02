@@ -65,6 +65,7 @@ class CivilianSpawnUpdate : public UpdateModule
 {
 public:
     CivilianSpawnUpdate(Thing *, const ModuleData *);
+    virtual ~CivilianSpawnUpdate();
 
 private:
     unsigned int m_spawnFrame;

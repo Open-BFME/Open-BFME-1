@@ -51,6 +51,7 @@ class AIInternalMoveToState : public State
 {
 public:
 	AIInternalMoveToState(StateMachine *machine, AsciiString name);
+	virtual ~AIInternalMoveToState();
 
 private:
 	BFMEAIPosition m_goalPosition;

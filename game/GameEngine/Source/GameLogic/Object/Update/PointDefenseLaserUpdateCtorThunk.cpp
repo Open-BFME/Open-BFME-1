@@ -62,6 +62,7 @@ class PointDefenseLaserUpdate : public UpdateModule,
 {
 public:
     PointDefenseLaserUpdate(Thing *, const ModuleData *);
+    virtual ~PointDefenseLaserUpdate();
 
 private:
     unsigned int m_bestTargetID;

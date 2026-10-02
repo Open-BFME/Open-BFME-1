@@ -62,6 +62,7 @@ class SmartBombTargetHomingUpdate : public UpdateModule,
 {
 public:
     SmartBombTargetHomingUpdate(Thing *, const ModuleData *);
+    virtual ~SmartBombTargetHomingUpdate();
 
 private:
     unsigned int m_targetX;
