@@ -13,9 +13,43 @@ typedef int Int;
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
-// upstream layout: the 44-byte S4 value initialized by retail 0x00754590.
-// Its special members are the already-proven incremental-link thunks used by
-// the target body, so this TU emits no duplicate helper implementation.
+class BfmeSubESD
+{
+public:
+	void bfmeAssignESD(void *a, void *b, void **spare);
+
+	BfmeSubESD &operator=(const BfmeSubESD &other)
+	{
+		if (&other != this)
+		{
+			void *spare;
+
+			bfmeAssignESD(other.m_bfmeAESD, other.m_bfmeBESD, &spare);
+		}
+
+		return *this;
+	}
+
+	void *m_bfmeAESD;
+	void *m_bfmeBESD;
+	void *m_bfmeCESD;
+};
+
+class BfmeRecESD
+{
+public:
+	BfmeRecESD &operator=(const BfmeRecESD &other);
+
+	BfmeSubESD m_bfmeXESD;
+	BfmeSubESD m_bfmeYESD;
+	BfmeSubESD m_bfmeZESD;
+	int m_bfme24ESD;
+	int m_bfme28ESD;
+};
+
+// The constructor and destructor use the matched S4 rows. Retail assignment
+// ILT 0x00046CC2 resolves to the matched BfmeRecESD::operator= body at
+// 0x00755610, so keep that owner's type on the call below.
 class S4Elem007746E0
 {
 public:
@@ -85,5 +119,5 @@ void __cdecl Rva007751A0ParseS4(INI *ini, Rva007751A0Owner *owner,
 		value.m_second.assign("",
 			"");
 
-	owner->m_value = value;
+	*((BfmeRecESD *)&owner->m_value) = *((const BfmeRecESD *)&value);
 }

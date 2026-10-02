@@ -63,7 +63,7 @@ public:
     virtual BfmeThingBUD *slotA4();
 };
 class Drawable {
-public: void replaceModelConditionState(const ModelConditionFlags &, bool, unsigned int);
+public: void replaceModelConditionState(const ModelConditionFlags &, unsigned int, unsigned int);
 };
 class AIUpdateInterface { public: virtual void friend_notifyStateMachineChanged(); };
 class ObjectSMCHelper { public: void setModelConditionState(int, unsigned int); };

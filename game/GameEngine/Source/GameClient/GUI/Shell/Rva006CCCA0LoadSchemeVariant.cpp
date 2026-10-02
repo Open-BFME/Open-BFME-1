@@ -1,5 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/drawable /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
+
+#include "GameClient/Drawable.h"
 
 template <typename T> struct StringInlineData
 {
@@ -29,12 +31,6 @@ public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
 	int compare( const AsciiString &other ) const;
-};
-
-class BfmeDrawableWithID
-{
-public:
-	unsigned int bfmeGetID(void);
 };
 
 class Rva006F9840Element
@@ -128,7 +124,7 @@ void Rva006CCCA0Mgr::setRva006CCCA0( void *rawHandle, AsciiString name )
 		{
 			while ( true )
 			{
-				unsigned int id = ((BfmeDrawableWithID *)rawHandle)->bfmeGetID();
+				unsigned int id = ((Drawable *)rawHandle)->getID();
 				Rva006F9840Element *element = node.operator->();
 				if ( id == element->m_id )
 				{

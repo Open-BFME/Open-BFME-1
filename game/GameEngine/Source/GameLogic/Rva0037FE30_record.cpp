@@ -68,6 +68,11 @@ public:
 
 #include "ascii_string.h"
 
+class Player;
+#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
+#include "Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class ExperienceTracker
 {
 public:
@@ -132,12 +137,6 @@ class BfmeThingAIA
 {
 public:
 	Bool bfmeAskAIA(int kind);
-};
-
-class BfmeK1094
-{
-public:
-	BfmeR1094 *bfmeCur1094();
 };
 
 class Arg1
@@ -208,13 +207,13 @@ void Rva0037FE30::record(Arg1 *arg1, ObjectView *obj, Bool flag)
 		tracker->m_flag24 = 1;
 		if (((BfmeThingAIA *)o)->bfmeAskAIA(0x59))
 		{
-			BfmeR1094 *cur = ((BfmeK1094 *)o)->bfmeCur1094();
+			BfmeR1094 *cur = (BfmeR1094 *)((Object *)o)->getControllingPlayer();
 			cur->m_add.bfmeAddA(1);
 			return;
 		}
 		if (!(o->m_flags94 & 0x20))
 		{
-			BfmeR1094 *cur = ((BfmeK1094 *)o)->bfmeCur1094();
+			BfmeR1094 *cur = (BfmeR1094 *)((Object *)o)->getControllingPlayer();
 			cur->m_add.bfmeAddB(1);
 		}
 	}
