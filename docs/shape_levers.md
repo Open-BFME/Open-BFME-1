@@ -1618,3 +1618,13 @@ decision. Native STLport lists and the existing `Player.cpp` declarations
 retain the exact shape. The scoped gate verified all 408 claims in that TU.
 The final Money call needs a direct receiver expression: saving its pointer
 in a local moves the receiver LEA before the argument pushes.
+
+### Native member declarations can settle a destructor register mirror
+
+Waypoint::~Waypoint (0x001ABA80, 235 bytes) retained a 26-byte ESI/EDI
+mirror through local, helper, and compiler-flag variants. Reusing the already
+matched constructors’ native AsciiString and STLport map declarations, then
+calling map.clear(), matched the destructor exactly. The handwritten bank
+encoded the right instruction stream but hid the native type structure from
+the compiler. Check verified sibling declarations before exhausting more
+register-allocation spellings. See identity_evidence/001aba80-waypoint-native-destructor.md.

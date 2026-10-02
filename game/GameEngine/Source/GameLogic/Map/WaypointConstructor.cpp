@@ -173,3 +173,25 @@ Waypoint::Waypoint()
 	if (TheTerrainLogic)
 		TheTerrainLogic->m_map550.clear();
 }
+
+// Waypoint::~Waypoint, retail 0x001ABA80 (235 bytes). Native string and
+// map declarations preserve the constructor layout and retail allocation.
+// Address-only ILT to the RET at 0x00403860. Retail passes this as a
+// cdecl stack argument; the thunk declaration itself carries no signature.
+void __cdecl j_0002e8a2();
+Waypoint::~Waypoint()
+{
+	Waypoint *self = this;
+
+	if (self->m_next)
+		self->m_next->m_prev = self->m_prev;
+	if (self->m_prev)
+		self->m_prev->m_next = self->m_next;
+	else
+		g_waypointListHead = self->m_next;
+
+	if (TheTerrainLogic)
+		TheTerrainLogic->m_map550.clear();
+
+	((void (__cdecl *)(void *))j_0002e8a2)(self);
+}
