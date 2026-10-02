@@ -31,10 +31,12 @@ struct Rva00249E10Object
 	int m_flag;
 };
 
-class BfmeGlob940E
+class Object;
+
+class GameLogic
 {
 public:
-	void bfmeCall940E(void *object);
+	void destroyObject(Object *object);
 };
 
 class Rva00249E10Owner
@@ -48,9 +50,7 @@ public:
 
 extern void j_0002a05e(void);
 
-class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheGameLogic ((BfmeGlob940E *)TheGameLogic)
 
 void Rva00249E10Owner::clearList()
 {
@@ -70,7 +70,7 @@ void Rva00249E10Owner::clearList()
 			(Rva00249E10Object *)node->m_object;
 		node = node->m_next;
 		object->m_flag = 0;
-		TheGameLogic->bfmeCall940E(object);
+		TheGameLogic->destroyObject(reinterpret_cast<Object *>(object));
 	}
 
 	node = m_list->m_next;
