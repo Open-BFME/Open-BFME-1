@@ -6,8 +6,11 @@
 
 extern void j_000423b6(void);
 
-struct Rva00579160Manager {};
-extern Rva00579160Manager *Rva00579160TheManager;
+// The manager singleton the 0x00579160 check runs against lives at retail VA
+// 0x012F19E8, the one WindowManager* slot GameClient/GUI/WindowManager.cpp
+// defines; spell it as that definition so the object links.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class Mouse;
 typedef Mouse Rva005A63D0Mouse;
@@ -44,8 +47,8 @@ int Rva005A6790Object::setValue(int value)
 {
 	int old = m_value;
 	m_value = value;
-	typedef bool (__fastcall *Check)(Rva00579160Manager *);
-	if (((Check)j_000423b6)(Rva00579160TheManager))
+	typedef bool (__fastcall *Check)(WindowManager *);
+	if (((Check)j_000423b6)(g_rva012F19E8WindowManager))
 	{
 		Rva005A63D0Mouse *mouse = TheMouse;
 		int cursorValue = m_value;
