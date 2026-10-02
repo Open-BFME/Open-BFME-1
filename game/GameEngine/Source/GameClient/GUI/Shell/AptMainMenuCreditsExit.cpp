@@ -79,7 +79,14 @@ public:
 #undef BFME_VSLOT
 
 extern CreditsManager *TheCredits;
-extern Rva0051D690Shell *g_obj12F4B58;
+// Retail's global at 0x012F4B58 is EA's shell singleton, `Shell *TheShell`
+// (?TheShell@@3PAVShell@@A), defined once in
+// game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp.  Rva0051D690Shell above
+// is this TU's view of the pointee, so the global is forward declared with its
+// real type and the casts at the uses are the whole translation.
+class Shell;
+extern Shell *TheShell;
+
 extern Rva0051D690Audio *TheAudioClientUpdate;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 // Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
@@ -111,15 +118,15 @@ void BfmeAptScreenMainMenu::_bfme_creditsExit( const char *name )
 		delete TheCredits;
 		TheCredits = 0;
 	}
-	if ( !g_obj12F4B58 || !g_obj12F4B58->check() )
+	if ( !TheShell || !((Rva0051D690Shell *)TheShell)->check() )
 	{
 		TheAudioClientUpdate->slot6c( 2, 1, 0 );
-		g_obj12F4B58->restore();
+		((Rva0051D690Shell *)TheShell)->restore();
 	}
 	TheTransitionHandler->reverse( AsciiString( "MainMenuToCreditsScreen" ) );
 	m_state264 = 0;
 	m_name27C.~AsciiString();
-	g_obj12F4B58->m_flag59 = 0;
+	((Rva0051D690Shell *)TheShell)->m_flag59 = 0;
 	TheGameEngine->setFramesPerSecondLimit(
 		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_framesPerSecondLimit );
 }

@@ -97,13 +97,15 @@ public:
 
 extern Shell *TheShell;
 
+// The shell singleton, retail 0x012F4B58: EA's `Shell *TheShell`
+// (?TheShell@@3PAVShell@@A), defined once in
+// game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp.  The view below is
+// this TU's look at the same object, cast at the use.
 class Rva0051D690Shell
 {
 public:
 	bool check();
 };
-
-extern Rva0051D690Shell *g_obj12F4B58;
 
 class Rva0051D690Audio
 {
@@ -286,7 +288,7 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 		if( m_flag280 )
 			g_theWindowManager->bfme_hideBackground( showBackground );
 
-		if( !g_obj12F4B58 || !g_obj12F4B58->check() )
+		if( !TheShell || !((Rva0051D690Shell *)TheShell)->check() )
 			((Rva0051D690Audio *)TheAudio)->slot6c( 2, 1, 0 );
 	}
 }

@@ -100,7 +100,14 @@ public:
 	void setGroup(AsciiString name);
 };
 
-extern Rva0051D690Shell *g_obj12F4B58;
+// Retail's global at 0x012F4B58 is EA's shell singleton, `Shell *TheShell`
+// (?TheShell@@3PAVShell@@A), defined once in
+// game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp.  Rva0051D690Shell above
+// is this TU's view of the pointee, so the global is forward declared with its
+// real type and the casts at the uses are the whole translation.
+class Shell;
+extern Shell *TheShell;
+
 extern Rva0051D690Audio *TheAudioClientUpdate;
 // Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
 // defined once in Common/GlobalData.cpp.  Rva0051D690GlobalData above is this
@@ -124,10 +131,10 @@ private:
 void Rva0051D690::apply()
 {
 	m_flag25b = 0;
-	if (g_obj12F4B58 && !g_obj12F4B58->check())
+	if (TheShell && !((Rva0051D690Shell *)TheShell)->check())
 	{
 		TheAudioClientUpdate->slot6c(2, 1, 0);
-		g_obj12F4B58->restore();
+		((Rva0051D690Shell *)TheShell)->restore();
 	}
 	TheTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
 }
