@@ -53,6 +53,10 @@ public:
 	int secondaryValueAt(int index, const Object *object) const;
 };
 
+// Matched modifier-pool accumulators load this store from retail VA 0x012F07E4.
+// The image contains a four-byte, loader-zero pointer at that address.
+AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore = 0;
+
 int AttributeModifierDefinitionStore::indexOf(int key) const
 {
 	AttributeModifierDefinition **cursor = m_definitions.m_begin;
