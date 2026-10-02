@@ -1,3 +1,7 @@
+// AudioLoopUpgrade::upgradeImplementation at retail 0x002D33E0: slot 9 of the UpgradeMux table
+// 0x010CBD08, reached only through ILT 0x0004617D. AudioLoopUpgrade's registered
+// constructor 0x002D32B0 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 class BfmeBufERR;
 
 class BfmeAudioERR
@@ -61,16 +65,16 @@ public:
 	unsigned int m_bfmeCountERR;
 };
 
-class BfmeHostERR
+class AudioLoopUpgrade
 {
+protected:
+	virtual void upgradeImplementation();
 public:
-	void bfmeUpdateERR();
-
-	unsigned char m_bfmeHeadERR[0xc];
+	unsigned char m_bfmeHeadERR[0x8]; // +0x04, after the vptr
 	int m_bfmeHandleERR;
 };
 
-void BfmeHostERR::bfmeUpdateERR()
+void AudioLoopUpgrade::upgradeImplementation()
 {
 	BfmeAudioERR *audio = (BfmeAudioERR *)TheAudio;
 	BfmeNodeERR *node = *(BfmeNodeERR **)((char *)this - 0x1c);
