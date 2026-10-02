@@ -52,6 +52,7 @@ build/import_binding/<build.py object stem>/receipt.json.
 import argparse
 import collections
 import csv
+import hashlib
 import json
 import os
 import re
@@ -395,6 +396,136 @@ def owned_iat_problem(symbol, slots):
             f"({', '.join(map(hex, slots))}); it must remain undefined for the native import library")
 
 
+def weak_import_records(obj):
+    """Actually relocated source weak imports, with validated direct auxiliaries."""
+    try:
+        data = obj.read_bytes()
+        if data[:2] != b"\x4c\x01":
+            return {}
+        candidates = {index for index, name, _, storage, _ in coff_symbols(data)
+                      if storage == WEAK_EXTERNAL and name.startswith("__imp_")}
+        if not candidates:
+            return {}
+        import link_census
+        import reloc_ledger
+        records = {r["index"]: r for r in link_census._coff_symbols(data)}
+        sections, _ = reloc_ledger.parse_coff(data)
+        used = {index for section in sections for _, index, _ in section["relocs"]} & candidates
+        table, _ = struct.unpack_from("<II", data, 8)
+        routes = {}
+        for index in sorted(used):
+            record = records[index]
+            symbol = record["name"]
+            if record["section"] != 0 or record["value"] != 0 or record["aux"] != 1:
+                raise Refused(f"{symbol}: malformed weak import record")
+            tag, search = struct.unpack_from("<II", data, table + 18 * (index + 1))
+            default = records.get(tag)
+            if search not in (1, 2, 3) or default is None or tag == index:
+                raise Refused(f"{symbol}: invalid weak import auxiliary/default/search")
+            if default["storage"] != EXTERNAL or not -1 <= default["section"] <= len(sections):
+                raise Refused(f"{symbol}: unsupported weak import default (weak chains remain unproved)")
+            routes[symbol] = {"index": index, "tag": tag, "search": search,
+                              "default": {k: default[k] for k in ("name", "storage", "section", "value")},
+                              "object_sha256": hashlib.sha256(data).hexdigest()}
+        if routes and obj.read_bytes() != data:
+            raise Refused("source weak import object changed during inspection")
+        return routes
+    except (OSError, ValueError, KeyError, IndexError, struct.error) as exc:
+        raise Refused(f"cannot inspect source weak imports: {exc}") from exc
+
+
+def weak_import_routes(obj, imports, sites):
+    """Defaults are route metadata; only library or matched-site evidence names
+    the expected native import. Unrelocated declarations claim no IAT route."""
+    records = weak_import_records(obj)
+    if not records:
+        return {}
+    try:
+        actual_sites = sites() if callable(sites) else sites
+    except (OSError, ValueError, KeyError, IndexError, struct.error) as exc:
+        raise Refused(f"cannot inspect source weak import sites: {exc}") from exc
+    routes = {}
+    for symbol, record in records.items():
+        actual = set(actual_sites.get(symbol, ()))
+        if symbol in imports.imp:
+            expected = imports.imp[symbol]
+            slot = imports.by_import[expected]
+            if actual and actual != {slot}:
+                raise Refused(f"{symbol}: weak import has conflicting matched DIR32 sites")
+            origin = "library"
+        else:
+            if actual and not (actual & imports.slots.keys()):
+                continue  # A source-local non-IAT function-pointer route.
+            if len(actual) != 1 or next(iter(actual)) not in imports.slots:
+                raise Refused(f"{symbol}: weak import has no single object-local retail IAT witness")
+            slot = next(iter(actual))
+            expected, origin = imports.slots[slot], "matched DIR32"
+        routes[symbol] = {**record, "expected": expected, "slot": slot, "expected_from": origin}
+    if routes and any(hashlib.sha256(obj.read_bytes()).hexdigest() != r["object_sha256"] for r in routes.values()):
+        raise Refused("source weak import object changed during route inspection")
+    return routes
+
+
+def file_digest(path):
+    """Hash inputs incrementally, including the matched-row ledger."""
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def weak_selection_inputs(source, obj):
+    """Inputs whose unchanged bytes bind the pending native weak-import proof."""
+    libs = libraries()
+    paths = [obj, ROOT / source, build.EXE, build.FUNCTIONS, *libs]
+    try:
+        return libs, {str(path): file_digest(path) for path in paths}
+    except OSError as exc:
+        raise Refused(f"weak import proof input unavailable: {exc}") from exc
+
+
+def weak_selected_proof(obj, imports, routes, work, libs, inputs):
+    """Audit each required weak primary against this link's MAP and PE IAT.
+    Missing primaries never borrow the auxiliary default's selected address."""
+    import selected_import_audit as audit
+    import pefile
+    paths = [work / "after.dll", work / "after.map"]
+    native = None
+    try:
+        if str(obj) not in inputs:
+            raise Refused("weak import proof lacks this source object's identity")
+        before = {**inputs, **{str(path): file_digest(path) for path in paths}}
+        if any(file_digest(path) != digest for path, digest in inputs.items()):
+            raise Refused("weak import proof input changed during link")
+        library_cells, _ = audit.oracle(imports.slots, libs)
+        native = pefile.PE(str(paths[0]), fast_load=True)
+        native.parse_data_directories(directories=[pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_IMPORT"]])
+        selected = audit.map_symbols(paths[1].read_text(encoding="latin-1").splitlines())
+        slots = audit.pe_slots(native)
+        bindings = []
+        for symbol, route in routes.items():
+            expected = tuple(route["expected"])
+            if route["expected_from"] == "library":
+                identities = library_cells.get(symbol, set())
+                if identities != {expected}:
+                    bindings.append({"symbol": symbol, "expected": list(expected), "proved": False,
+                                     "reason": "fresh library identity is missing, ambiguous, or differs from the required import"})
+                    continue
+            else:
+                identities = {expected} if any(expected in values for values in library_cells.values()) else set()
+            bindings.append(audit.audit_binding(symbol, {symbol: identities}, {}, selected, slots, None))
+        after = {path: file_digest(path) for path in before}
+        if before != after:
+            raise Refused("weak import proof input changed during audit")
+        return {"input_sha256": before, "input_hash_equality": True, "bindings": bindings}
+    except (OSError, ValueError, KeyError, IndexError, struct.error, pefile.PEFormatError) as exc:
+        raise Refused(f"weak import selected proof unavailable: {exc}") from exc
+    finally:
+        if native is not None:
+            native.close()
+
+
 def read_rsp(path):
     return [Path(line.strip().strip('"')) for line in Path(path).read_text(encoding="utf-8").splitlines()
             if line.strip()]
@@ -438,6 +569,8 @@ def measure(objects, imports, found):
     for path in objects:
         if not path.exists():
             continue
+        source_owned = path.resolve() in source_objects
+        routes = weak_import_routes(path, imports, lambda: site_witnesses(path, by_object.get(path.name, ()))) if source_owned else {}
         undefined, defined = object_facts(path)
         classes = {}
         sites = None
@@ -455,7 +588,6 @@ def measure(objects, imports, found):
             seen[verdict[0]].add(symbol)
             if verdict[0] != names[symbol][0]:
                 detail[symbol + " @ " + path.name] = list(verdict)
-        source_owned = path.resolve() in source_objects
         static_defined = static_iat_symbols(path) if source_owned else set()
         if source_owned and (static_defined or any(s.startswith("__imp_") for s in defined)):
             if sites is None:
@@ -465,6 +597,12 @@ def measure(objects, imports, found):
                 refs["owned-iat"] += 1
                 seen["owned-iat"].add(symbol)
                 detail[symbol + " @ " + path.name] = ["owned-iat", owned_iat_problem(symbol, slots), None]
+        if source_owned:
+            for symbol, route in routes.items():
+                classes[symbol] = "unproved-weak-import"
+                refs["unproved-weak-import"] += 1
+                seen["unproved-weak-import"].add(symbol)
+                detail[symbol + " @ " + path.name] = ["unproved-weak-import", route, route["slot"]]
         thunks = sorted(defined & imports.thunk.keys())
         for t in thunks:
             dup.append((path.name, t))
@@ -484,7 +622,11 @@ def load_context():
 def cmd_measure(args):
     imports, found = load_context()
     objects = read_rsp(args.objects) if args.objects else list(census_objects())
-    result = measure(objects, imports, found)
+    try:
+        result = measure(objects, imports, found)
+    except Refused as why:
+        print(f"import_binding: REFUSED measurement: {why}")
+        return 1
     bad_objects = sum(1 for o in result["objects"].values()
                       if o["duplicate_thunks"] or any(c != "correct" for c in o["imports"].values()))
     result["objects_scanned"] = sum(1 for o in objects if o.exists())
@@ -539,6 +681,10 @@ def plan(source, obj, imports, found):
     (symbol -> canonical __imp_ name, identifiers) or 'own' (a duplicate thunk
     definition -> its address-owned name)."""
     rows = tu_rows(source)
+    routes = weak_import_routes(obj, imports, lambda: site_witnesses(obj, rows))
+    if routes:
+        raise Refused("; ".join(f"{symbol}: weak import route requires selected native IAT proof; cannot rewrite automatically"
+                                for symbol in routes))
     undefined, defined = object_facts(obj)
     sites = site_witnesses(obj, rows)
     steps, refused = [], []
@@ -646,12 +792,20 @@ def fresh_object(source):
     return (obj if ok else None), (text or "")
 
 
-def verify_object(source, obj, imports, found, steps):
+def verify_object(source, obj, imports, found, steps, weak_proof=None):
     """[problem] for the rebuilt object: every import correct and witnessed
     as its retail slot where a matched body reads it, no source-owned IAT cell
     or duplicate thunk, and each owned name defined."""
     problems = []
     rows = tu_rows(source)
+    routes = weak_import_routes(obj, imports, lambda: site_witnesses(obj, rows))
+    bindings = {r["symbol"]: r for r in (weak_proof or {}).get("bindings", ())}
+    for symbol, route in routes.items():
+        proof = bindings.get(symbol, {})
+        if ((weak_proof or {}).get("input_hash_equality") is not True or not proof.get("proved")
+                or (weak_proof or {}).get("input_sha256", {}).get(str(obj)) != route["object_sha256"]
+                or tuple(proof.get("expected", ())) != tuple(route["expected"])):
+            problems.append(f"{symbol}: unproved weak import route ({proof.get('reason', 'no selected native IAT proof')})")
     undefined, defined = object_facts(obj)
     sites = site_witnesses(obj, rows)
     problems.extend(owned_iat_problem(symbol, slots)
@@ -854,6 +1008,7 @@ def cmd_check(args):
     source = canonical_source(args.source)
     imports, found = load_context()
     work = work_dir(source)
+    work.mkdir(parents=True, exist_ok=True)
     steps = json.loads((work / "plan.json").read_text(encoding="utf-8")) if (work / "plan.json").exists() else []
     receipt = {"source": source, "steps": steps}
     gate = subprocess.run([sys.executable, str(ROOT / "tools" / "build.py"), source], cwd=ROOT,
@@ -861,15 +1016,64 @@ def cmd_check(args):
     receipt["byte_gate"] = {"exit": gate.returncode, "tail": gate.stdout.strip().splitlines()[-6:]}
     failures = [] if gate.returncode == 0 else [f"byte gate exit {gate.returncode}"]
     obj = build.obj_path(ROOT / source)
-    failures += verify_object(source, obj, imports, found, [s for s in steps if s[0] == "own"])
-    ok, text, linked, stubbed = strict_link(obj, imports, work, "after")
+    owned_steps = [s for s in steps if s[0] == "own"]
+    routes, weak_proof, preparation_error = {}, None, None
+    try:
+        records = weak_import_records(obj)
+        witness_inputs = {str(path): file_digest(path) for path in (build.EXE, build.FUNCTIONS)} if records else {}
+        routes = weak_import_routes(obj, imports, lambda: site_witnesses(obj, tu_rows(source)))
+        if any(file_digest(path) != digest for path, digest in witness_inputs.items()):
+            raise Refused("weak import witness inputs changed during route inspection")
+        if any(file_digest(obj) != record["object_sha256"] for record in records.values()):
+            raise Refused("source weak import object changed before link")
+        if routes:
+            libs, inputs = weak_selection_inputs(source, obj)
+            if any(inputs[path] != digest for path, digest in witness_inputs.items()):
+                raise Refused("weak import witness inputs changed before link")
+            if any(inputs[str(obj)] != route["object_sha256"] for route in routes.values()):
+                raise Refused("source weak import object changed before link")
+            # These are this source's disposable outputs, not historical controls.
+            for path in (work / "after.dll", work / "after.map"):
+                path.unlink(missing_ok=True)
+        else:
+            failures += verify_object(source, obj, imports, found, owned_steps)
+    except (OSError, Refused) as why:
+        preparation_error = str(why)
+        failures.append(preparation_error)
+    if preparation_error is None:
+        ok, text, linked, stubbed = strict_link(obj, imports, work, "after")
+    else:
+        ok, text, linked, stubbed = False, "not run: " + preparation_error, [], []
     receipt["strict_link"] = {"ok": ok, "output": text, "imports": linked, "stubbed_non_imports": len(stubbed)}
     failures += link_verdict(ok, linked, imports)
+    if routes:
+        try:
+            if ok:
+                weak_proof = weak_selected_proof(obj, imports, routes, work, libs, inputs)
+            else:
+                weak_proof = {"input_hash_equality": False, "bindings": []}
+            failures += verify_object(source, obj, imports, found, owned_steps, weak_proof=weak_proof)
+        except Refused as why:
+            failures.append(str(why))
+            weak_proof = {"input_hash_equality": False, "bindings": [], "error": str(why)}
+        receipt["weak_import_routes"] = routes
+        receipt["weak_import_proof"] = weak_proof
     before = work / "before.obj"
     if before.exists():  # the control: the unrepaired object must NOT link strictly
         bok, btext, _, _ = strict_link(before, imports, work, "before")
-        receipt["before_strict_link"] = {"ok": bok, "output": btext,
-                                         "binding_problems": verify_object(source, before, imports, found, [])}
+        try:
+            control_problems = verify_object(source, before, imports, found, [])
+        except Refused as why:
+            control_problems = [str(why)]
+        receipt["before_strict_link"] = {"ok": bok, "output": btext, "binding_problems": control_problems}
+    if weak_proof and weak_proof.get("input_hash_equality"):
+        try:
+            if any(file_digest(path) != digest
+                   for path, digest in weak_proof["input_sha256"].items()):
+                raise Refused("weak import proof input changed before receipt")
+        except (OSError, Refused) as why:
+            failures.append(str(why))
+            weak_proof["input_hash_equality"] = False
     receipt["pass"] = not failures
     receipt["failures"] = failures
     (work / "receipt.json").write_text(json.dumps(receipt, indent=1), encoding="utf-8")
@@ -880,7 +1084,7 @@ def cmd_check(args):
         control = receipt["before_strict_link"]
         misbound = len(control["binding_problems"])
         print(f"  control: unrepaired object {'links' if control['ok'] else 'fails'} strictly"
-              + (f", {misbound} import(s) bound to the wrong slot or undefined" if misbound else ""))
+              + (f", {misbound} import binding problem(s)" if misbound else ""))
     print(f"  receipt: {work / 'receipt.json'}")
     return 0 if not failures else 1
 
