@@ -1,7 +1,7 @@
 # 0x007CC430 is MaskTextureShader::set(int)
 
 The native shader registration, matched dispatcher and independently named reset
-slot establish identity. The 1,267-byte SEH rendering body remains a dump.
+slot establish identity. The 1,267-byte SEH rendering body is now recovered as native C++ in the canonical TU.
 All code addresses are retail RVAs; explicitly labelled VAs include image base
 0x00400000. Values/instructions were cross-checked with retail-1.03-unpacked PE
 and Capstone; Ghidra's `6E A7 44 00` search independently finds VA `0x011288BC`.
@@ -49,7 +49,10 @@ matched implementations of the same interface slot.
 
 The proven spelling is `?set@MaskTextureShader@@EAEHH@Z`, a private virtual
 returning int and taking int. Native final RET 4 at `0x007CC920`, followed by
-INT3 at `0x007CC923`, establishes 1,267 bytes. No row, pin or production source
-is changed here. Future clean conversion belongs in the existing canonical
-`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp` TU,
-whose readable MaskTextureShader::set body is currently present-unmatched.
+INT3 at `0x007CC923`, establishes 1,267 bytes. The clean conversion uses the existing canonical
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp` TU.
+The strict scoped gate verifies all 45 matched bodies in that TU, including this
+1,267-byte body, its relocation targets, 12 string literals and 34 float constants.
+It preserves the witnessed owned texture-handle lifetime and native View calls
+without changing shared headers or adding pins. Identity remains established by
+the independent registration and dispatcher evidence above.

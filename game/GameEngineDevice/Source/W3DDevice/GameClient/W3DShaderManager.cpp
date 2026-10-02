@@ -1692,10 +1692,26 @@ Int MaskTextureShader::init(void)
 	return TRUE;
 }
 
-// ?set@MaskTextureShader@@EAEHH@Z present-unmatched
+// BFME View slots witnessed by this body; reuse the canonical View type.
+template<class T> __forceinline T &maskRetailMethod(View *view, unsigned slot)
+{ return *(T *)&(*(void ***)view)[slot]; }
+class ScreenCrossFadeFilterUpdateFadeLevelShim
+{
+	static Real m_curFadeValue;
+public:
+	__forceinline static Real valueRva01307200() { return m_curFadeValue; }
+};
+typedef void (View::*MaskOriginFn)(Int *, Int *);
+typedef Int (View::*MaskDimensionFn)();
+typedef Bool (View::*MaskScreenToTerrainFn)(const ICoord2D *, Coord3D *, Bool);
+BfmeHandleCX __cdecl bfmeCurrent();
+namespace {
+__forceinline void bfmeFlatSetTransform(D3DTRANSFORMSTATETYPE type, const Matrix4x4 &m);
+__forceinline D3DXMATRIX bfmeFlatMultiply(const D3DXMATRIX &a, const D3DXMATRIX &b);
+}
 Int MaskTextureShader::set(Int pass)
 {
-	Real fadeLevel=ScreenCrossFadeFilter::getCurrentFadeValue();
+	Real fadeLevel=ScreenCrossFadeFilterUpdateFadeLevelShim::valueRva01307200();
 
 	//Use the current fade level to scale the mask texture
 	Real radius = (1.0f-fadeLevel)*2.0f;
@@ -1709,7 +1725,7 @@ Int MaskTextureShader::set(Int pass)
 	REF_PTR_RELEASE(vmat);	//no need to keep a reference since it's a preset.
 
 	//For now we're always going to project the texture coming from the crossfade effect
-	DX8Wrapper::Set_Texture(0, ScreenCrossFadeFilter::getCurrentMaskTexture());
+	BoxSetTexture(0, bfmeCurrent());
 	ShaderClass shader=ShaderClass::_PresetOpaqueShader;
 	shader.Set_Primary_Gradient(ShaderClass::GRADIENT_DISABLE);
 	DX8Wrapper::Set_Shader(shader);
@@ -1717,8 +1733,8 @@ Int MaskTextureShader::set(Int pass)
 	Matrix4x4 curView;
 	DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW, curView);
 
-	DX8Wrapper::Set_DX8_Texture_Stage_State(0,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
-	DX8Wrapper::Set_DX8_Texture_Stage_State(0,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);	
+	BFME_SET_TSS_LATE(0,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+	BFME_SET_TSS_LATE(0,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 
 	D3DXMATRIX inv;
 	float det;
@@ -1734,12 +1750,12 @@ Int MaskTextureShader::set(Int pass)
 	if (TheTacticalView)
 	{	Int xpos,ypos;
 
-		TheTacticalView->getOrigin(&xpos,&ypos);
+		(TheTacticalView->*maskRetailMethod<MaskOriginFn>(TheTacticalView,0x4c/4))(&xpos, &ypos);
 
 		ICoord2D screenPos;
-		screenPos.x=(Real)TheTacticalView->getWidth()*0.5f;
-		screenPos.y=(Real)TheTacticalView->getHeight()*0.5f;
-		TheTacticalView->screenToTerrain(&screenPos,&centerPos);
+		screenPos.x=(Real)(TheTacticalView->*maskRetailMethod<MaskDimensionFn>(TheTacticalView,0x3c/4))()*0.5f;
+		screenPos.y=(Real)(TheTacticalView->*maskRetailMethod<MaskDimensionFn>(TheTacticalView,0x44/4))()*0.5f;
+		(TheTacticalView->*maskRetailMethod<MaskScreenToTerrainFn>(TheTacticalView,0x164/4))(&screenPos, &centerPos, 0);
 	}
 
 	D3DXMatrixTranslation(&offset, -centerPos.x, -centerPos.y,0);
@@ -1754,14 +1770,14 @@ Int MaskTextureShader::set(Int pass)
 	{	Real widthScale = 1.0f/(worldTexelWidth*128.0f);
 		Real heightScale = 1.0f/(worldTexelHeight*128.0f);
 		D3DXMatrixScaling(&scale, widthScale, heightScale, 1);
-		*((D3DXMATRIX *)&curView) = ((inv * offset) * scale)*offsetTextureCenter;
+		*((D3DXMATRIX *)&curView) = bfmeFlatMultiply(bfmeFlatMultiply(bfmeFlatMultiply(inv, offset), scale), offsetTextureCenter);
 	}
 	else
 	{	D3DXMatrixScaling(&scale, 0, 0, 1);	//scaling by 0 will set uv coordinates to 0,0
-		*((D3DXMATRIX *)&curView) = ((inv * offset) * scale);
+		*((D3DXMATRIX *)&curView) = bfmeFlatMultiply(bfmeFlatMultiply(inv, offset), scale);
 	}
 
-	DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE0, *((Matrix4x4*)&curView));
+	bfmeFlatSetTransform(D3DTS_TEXTURE0, *((Matrix4x4*)&curView));
 
 	return TRUE;
 }
