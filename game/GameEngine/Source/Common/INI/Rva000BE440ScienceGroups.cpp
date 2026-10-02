@@ -35,6 +35,13 @@ extern ScienceStore *TheScienceStore;
 typedef _STL::vector<ScienceType> ScienceVec;
 typedef _STL::vector<ScienceVec> ScienceGroupVec;
 
+// This STLport specialization is owned by ScienceGroupVectorFillInsert.cpp.
+// Keep its declaration here so this caller references that body instead of
+// emitting a second copy.
+template <>
+void _STL::vector<ScienceVec, _STL::allocator<ScienceVec> >::_M_fill_insert(
+    ScienceVec *position, unsigned int count, const ScienceVec &value);
+
 class Rva000BE440Store
 {
   public:
