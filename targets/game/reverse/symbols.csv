@@ -81293,7 +81293,6 @@ name,address,notes
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
 ?forward00769C30@Rva00766AA0Owner@@QAE_NPAURva00766AA0Buffer@@VAsciiString@@PAPAX2@Z,0x00766AA0,full3386B receiver body via ILT12C92: nullable output buffer at arg1 with writes through+48; byvalue narrow string arg2 cleaned887940; two pointer outputs arg3/4; boolAL and ret16; proof00769c30-string-forwarder.md
 ?forward4125F0@Drawable@@QAEXH_N@Z,0x00039BAD,Reviewed18B 4125F0 forwards Drawable3BC to34B 409850 signed slot1..5 and bool action passed to74B409790
-?forward@Rva00265A00ScavengerDispatch@@QAEXH@Z,0x00041BCD,address-derived forwarding target read from retail RVA 0x00265A00
 ?forward@Rva003BCA50@@QAEXABVAsciiString@@ABVRva0076F980Mid@@IIIEEE@Z,0x000094C6,body 0x003BCA50 (ILT jmp); called at 0x003AE650+0xA5 thiscall with 8 dword args; body ret 0x20 and tail-jumps via ILT 0x0001A901 to matched LivingWorldRegionManager::rva003C8C60 with the same typed ABI
 ?forward@Rva006C8890Target@@QAEXPBUCoord3D@@MPAX@Z,0x006C8890,point radius context ABI from complete callee and independent consumers; evidence=targets/game/reverse/identity_evidence/00730d30-terrain-forwarders.md
 ?forward@Rva007E32A0State@@QAE_NHHHPAHH@Z,0x0003F80F,assigned body call target for Rva007E32A0State
