@@ -418,18 +418,9 @@ void (*bfme_force_dict_accessors_anchor)(const Dict &, Int) = &bfme_force_dict_a
 
 // Table construction uses the retail inline provider in DataChunkOutput.cpp.
 
-// ??1DataChunkTableOfContents@@QAE@XZ present-unmatched
-DataChunkTableOfContents::~DataChunkTableOfContents()
-{
-	Mapping *m, *next;
-
-	// free all list elements
-	for( m=m_list; m; m=next )
-	{
-		next = m->next;
-		m->deleteInstance();
-	}
-}
+// Table destruction uses the native inline providers in DataChunkInput.cpp
+// and DataChunkOutputDestructor.cpp, whose retail parents delete list nodes
+// through their virtual deleting destructor.
 
 // convert name to integer identifier
 UnsignedInt DataChunkTableOfContents::getID( const AsciiString& name )		
