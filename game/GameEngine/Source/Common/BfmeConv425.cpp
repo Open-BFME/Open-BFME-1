@@ -1,7 +1,13 @@
-class BfmeOneATC
+class WindowManager
 {
 public:
-	void bfmeStopATC(int what);
+	void bfme_hideBackground(bool hide);
+
+private:
+	char m_bfmePrefix[0x1B8];
+	int m_bfmePendingBackgroundKind;
+	int m_bfmeRememberedBackgroundKind;
+	int m_bfmeBackgroundMovie;
 };
 
 struct BfmeTwoATC
@@ -11,8 +17,8 @@ struct BfmeTwoATC
 };
 
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
-// BfmeOneATC above is this TU's view of the pointee, so the member call casts.
-class WindowManager;
+// This local declaration matches the WindowManager ABI slice of the method
+// owner and lets the call use its exact member name.
 extern WindowManager *g_rva012F19E8WindowManager;
 
 // Retail global 0x012F4B58; EA's own name for this pointer is
@@ -36,7 +42,7 @@ void BfmeThingATC::bfmeGoATC()
 	if (m_bfmeState == 2)
 	{
 		m_bfmeState = 0;
-		((BfmeOneATC *)g_rva012F19E8WindowManager)->bfmeStopATC(0);
+		g_rva012F19E8WindowManager->bfme_hideBackground(false);
 		((BfmeTwoATC *)TheShell)->m_bfmeFlag = true;
 		return;
 	}

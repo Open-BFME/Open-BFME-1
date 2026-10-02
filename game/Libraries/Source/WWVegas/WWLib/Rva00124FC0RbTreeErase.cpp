@@ -22,14 +22,13 @@ class Rva00124FC0RbTree
 {
 public:
 	void erase(Rva00124FC0RbTreeNode *node);
-	void eraseViaThunk(Rva00124FC0RbTreeNode *node);
 };
 
 void Rva00124FC0RbTree::erase(Rva00124FC0RbTreeNode *node)
 {
 	while (node != 0)
 	{
-		eraseViaThunk(node->m_right);
+		erase(node->m_right);
 		Rva00124FC0RbTreeNode *left = node->m_left;
 		_STL::__node_alloc<false, 0>::_M_deallocate(node, sizeof(Rva00124FC0RbTreeNode));
 		node = left;

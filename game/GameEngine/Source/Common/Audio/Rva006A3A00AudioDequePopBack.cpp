@@ -27,11 +27,24 @@ public:
 
 typedef Rva006A3A00AudioHandle *Rva006A3A00AudioHandleRef;
 
+class ThingRef;
+
+class Open269E810DequeFull
+{
+public:
+	void _M_pop_back_aux();
+
+	char m_pad[0x10];
+	ThingRef *_M_cur;
+	ThingRef *_M_first;
+	ThingRef *_M_last;
+	ThingRef **_M_node;
+};
+
 class Rva006A3A00AudioDeque
 {
 public:
 	void releaseLast();
-	void _M_pop_back_aux();
 
 private:
 	char m_pad[0x10];
@@ -50,5 +63,5 @@ void Rva006A3A00AudioDeque::releaseLast()
 			(*m_cur)->releaseRef();
 	}
 	else
-		_M_pop_back_aux();
+		((Open269E810DequeFull *)this)->_M_pop_back_aux();
 }

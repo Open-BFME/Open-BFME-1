@@ -1,12 +1,9 @@
 // Open-BFME5 conversions.
+// cl: /Iinputs/reference/shims/bfmeobjectlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
 
-struct BfmeObj926C;
-
-class BfmeKey926C
-{
-public:
-	BfmeObj926C *bfmeFind926C();
-};
+#include "PreRTS.h"
+#include "GameLogic/Object.h"
 
 class BfmeSub942D
 {
@@ -32,9 +29,9 @@ public:
 
 void BfmeThing942D::bfmeGo942D(void *a)
 {
-	BfmeKey926C *k = *(BfmeKey926C **)((char *)this - 0x18);
-	if (!k->bfmeFind926C())
+	Object *k = *(Object **)((char *)this - 0x18);
+	if (!k->getControllingPlayer())
 		return;
-	BfmeObj926C *o = (*(BfmeKey926C **)((char *)this - 0x18))->bfmeFind926C();
+	Player *o = (*(Object **)((char *)this - 0x18))->getControllingPlayer();
 	bfmeVirt942D(((BfmeSub942D *)((char *)o + 0x684))->bfmeCall942D(a));
 }
