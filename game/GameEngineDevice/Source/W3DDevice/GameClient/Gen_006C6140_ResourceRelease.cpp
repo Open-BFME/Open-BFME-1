@@ -11,7 +11,7 @@ extern void j_0004a07f(void);
 class WaterRenderObjClass
 {
 public:
-	void ReleaseResources(void)
+	void invokeReleaseResourcesThunk(void)
 	{
 		typedef void (WaterRenderObjClass::*MemberThunk)(void);
 		union {
@@ -69,7 +69,7 @@ private:
 void Gen006C6140Owner::releaseResources(void)
 {
 	if (TheWaterRenderObj != 0)
-		TheWaterRenderObj->ReleaseResources();
+		TheWaterRenderObj->invokeReleaseResourcesThunk();
 	if (m_treeBuffer != 0)
 		m_treeBuffer->freeTreeBuffers();
 	if (m_propBuffer != 0)
