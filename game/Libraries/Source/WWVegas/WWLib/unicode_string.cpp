@@ -67,7 +67,7 @@ UnicodeString &UnicodeString::operator+=(const UnicodeString &that)
     return *this;
 }
 
-UnicodeString::~UnicodeString()
+inline UnicodeString::~UnicodeString()
 {
     ((StringBase<wchar_t> *)this)->releaseBuffer();
 }
