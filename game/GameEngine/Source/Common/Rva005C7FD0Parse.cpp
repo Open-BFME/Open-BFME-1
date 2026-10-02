@@ -4,6 +4,10 @@
 // the factory-list walk, virtual replacement, and the destination offset below.
 // The original owner name remains unclaimed until a caller or field table proves it.
 
+#include "../GameClient/System/FXParticleSystem/fx_particle_system_category.h"
+
+extern template class FXParticleSystem::CategoryModuleClass<6>;
+
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
@@ -15,7 +19,6 @@ namespace FXParticleSystem
 {
 template <int N> class DefaultModuleTag;
 template <class Tag> class ConcreteModuleClass;
-extern ConcreteModuleClass<DefaultModuleTag<6> > *defaultModuleTag6RegistryHead;
 }
 
 class INI
@@ -83,7 +86,7 @@ void Rva005C7FD0Parse::parse(INI *ini, void *data, void *, const void *)
 {
 	const char *token = ini->getNextToken(0);
 	BFMERetailAsciiString name(token);
-	Rva005C7FD0Factory *factory = reinterpret_cast<Rva005C7FD0Factory *>(FXParticleSystem::defaultModuleTag6RegistryHead);
+	Rva005C7FD0Factory *factory = const_cast<Rva005C7FD0Factory *>(reinterpret_cast<const Rva005C7FD0Factory *>(FXParticleSystem::CategoryModuleClass<6>::getFirst()));
 
 	for (;;)
 	{
@@ -98,4 +101,3 @@ void Rva005C7FD0Parse::parse(INI *ini, void *data, void *, const void *)
 		((Rva005C7FD0ModuleTemplate *)old)->destroy(1);
 	*reinterpret_cast<void **>((char *)data + 0xB8) = created;
 }
-

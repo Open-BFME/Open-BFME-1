@@ -10,7 +10,7 @@
 
 // The shared empty AsciiString sentinel (targets/game/reverse/symbols.csv
 // pins _g_bfmeEmptyAscii at retail 0x0107388B); a null StringBase reads it.
-extern "C" const char g_bfmeEmptyAscii[];
+extern const char g_bfmeEmptyAscii[];
 
 template <typename T> class StringBase
 {
