@@ -89,8 +89,8 @@ class WindowManager
 public:
 	void bfmeRva0046E170();
 
-	// Out of line at 0x0046CB50 (WindowManager_findAptMovieIndex.cpp); retail inlines it here.
-	Int findAptMovieIndex(const AsciiString &movie)
+	// TU-local lookup for this body's file-to-window map.
+	Int lookupFileWindowIndex(const AsciiString &movie)
 	{
 		Rva00469D20Map::iterator it = m_fileToWindow.find(movie);
 		if (it == m_fileToWindow.end())
@@ -125,7 +125,7 @@ void WindowManager::bfmeRva0046E170()
 		if (focus == -1)
 		{
 			AsciiString path;
-			path.format("/_level%d", findAptMovieIndex(AsciiString("AptLevel0.apt")));
+			path.format("/_level%d", lookupFileWindowIndex(AsciiString("AptLevel0.apt")));
 		}
 		else
 		{

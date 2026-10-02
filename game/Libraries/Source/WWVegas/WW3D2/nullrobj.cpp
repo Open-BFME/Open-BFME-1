@@ -64,12 +64,6 @@ Null3DObjClass & Null3DObjClass::operator = (const Null3DObjClass & that)
 	RenderObjClass::operator = (that); return *this; 
 }
 
-// ?Null3DObjClass::Class_ID present-unmatched
-int Null3DObjClass::Class_ID(void) const													
-{ 
-	return CLASSID_NULL; 
-}
-
 RenderObjClass * Null3DObjClass::Clone(void) const									
 { 
 	return NEW_REF( Null3DObjClass, (*this)); 
