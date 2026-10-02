@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0
 
-extern "C" void __cdecl gameTextRelease(void *);
+void __cdecl operator delete[](void *);
 
 class Rva00061BD0
 {
@@ -13,5 +13,5 @@ public:
 void Rva00061BD0::release()
 {
 	void *ptr = m_ptr;
-	gameTextRelease(ptr);
+	::operator delete[](ptr);
 }
