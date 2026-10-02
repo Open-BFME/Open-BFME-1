@@ -1,11 +1,8 @@
 // Open-BFME5 conversions.
 
-class BfmeStrVMX
-{
-public:
-	void bfmeSetVMX(const BfmeStrVMX &o);
-	char *m_bfme00;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+typedef StringBase<char> BfmeStrVMX;
 
 class BfmeOwnedVMX
 {
@@ -37,9 +34,9 @@ public:
 
 void BfmeRecVMX::bfmeAssignVMX(BfmeRecVMX *o)
 {
-	m_bfme04.bfmeSetVMX(o->m_bfme04);
-	m_bfme08.bfmeSetVMX(o->m_bfme08);
-	m_bfme0c.bfmeSetVMX(o->m_bfme0c);
+	m_bfme04.set(o->m_bfme04);
+	m_bfme08.set(o->m_bfme08);
+	m_bfme0c.set(o->m_bfme0c);
 	m_bfme14 = o->m_bfme14;
 	m_bfme15 = o->m_bfme15;
 	m_bfme17 = o->m_bfme17;

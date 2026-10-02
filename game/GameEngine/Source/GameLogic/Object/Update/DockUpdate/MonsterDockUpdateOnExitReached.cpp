@@ -83,7 +83,7 @@ public:
 	virtual void slot09();
 	virtual void slot10();
 	virtual void onExitReached(Object *docker);
-	void cancelDock(Object *docker);
+	virtual void cancelDock(Object *docker);
 };
 
 class MonsterDockUpdate : public DockUpdate

@@ -4,14 +4,14 @@
 // game/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp: same
 // cellX/cellY/cellRadius conversion from a Coord3D position + radius via
 // ceil/floor and PartitionManager's m_impl (offset 0xC), but this variant
-// forwards two extra passthrough int args and calls
-// ShroudManagerImpl008FBA40::revealVariant (still a dump at 0x008FA070,
-// pinned as Rva008F77E0ShroudImpl::revealVariant) with 6 args instead of
-// PartitionManager's doShroudReveal/undoShroudReveal wrappers.
-// IDENTITY IS NOT RECOVERED: class/method names are address-derived; field
+// forwards two extra passthrough int args to BfmeOwnerXO::bfmeSendXO at
+// 0x008FA070 with 6 args instead of PartitionManager's doShroudReveal/
+// undoShroudReveal wrappers.
+// IDENTITY OF THIS PARTITION MANAGER METHOD IS NOT RECOVERED: its local
+// manager and implementation views remain address-derived. Their field
 // layout (mode@0, region@4, defaultCellSize@0x1C, inverseCellSize@0x20,
-// m_impl@0xC) matches ShroudManagerImpl008FBA40/PartitionManager exactly
-// per targets/game/reverse/symbols.csv note on 0x008FA070.
+// m_impl@0xC) matches ShroudManagerImpl008FBA40/PartitionManager exactly;
+// the retail call target is ledger-matched as BfmeOwnerXO::bfmeSendXO.
 
 typedef float Real;
 typedef int Int;
@@ -46,8 +46,7 @@ struct Region3D
 	Coord3D hi;
 };
 
-// ?revealVariant@Rva008F77E0ShroudImpl@@QAEXHHHHHI@Z (still a dump at
-// 0x008FA070; declared here only to reproduce the call's mangled name)
+// Layout view of the implementation fields read by this caller.
 class Rva008F77E0ShroudImpl
 {
 public:
@@ -55,9 +54,13 @@ public:
 	Region3D region;
 	Real defaultCellSize;
 	Real inverseCellSize;
+};
 
-	void revealVariant(Int cellX, Int cellY, Int cellRadius, Int a4, Int a5,
-		UnsignedInt playerMask);
+class BfmeOwnerXO
+{
+public:
+	void bfmeSendXO(void *a1, void *a2, Int a3, Int a4, void *a5,
+		UnsignedInt a6);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
@@ -87,5 +90,7 @@ void Rva008F77E0PartitionManager::revealVariantFromPosition(
 		m_impl->inverseCellSize);
 	Int cellX = shroudFloatToLong(xInCells);
 
-	m_impl->revealVariant(cellX, cellY, cellRadius, a4, a5, playerMask);
+	reinterpret_cast<BfmeOwnerXO *>(m_impl)->bfmeSendXO(
+		reinterpret_cast<void *>(cellX), reinterpret_cast<void *>(cellY),
+		cellRadius, a4, reinterpret_cast<void *>(a5), playerMask);
 }

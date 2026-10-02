@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
 public:
@@ -9,14 +11,7 @@ private:
 	void *m_item;
 };
 
-class Rva00630D00UStr
-{
-public:
-	Rva00630D00UStr &operator=(const Rva00630D00UStr &other);
-
-private:
-	void *m_item;
-};
+typedef StringBase<unsigned short> Rva00630D00UStr;
 
 struct Rva000F9B50Pod
 {
@@ -73,7 +68,7 @@ Rva000F9B50 &Rva000F9B50::operator=(const Rva000F9B50 &other)
 	m_4C = other.m_4C;
 	m_50 = other.m_50;
 	m_54 = other.m_54;
-	m_58 = other.m_58;
+	m_58.set(other.m_58);
 	m_5C = other.m_5C;
 	return *this;
 }

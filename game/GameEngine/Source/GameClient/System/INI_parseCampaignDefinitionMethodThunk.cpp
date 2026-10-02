@@ -30,6 +30,7 @@
 #include "PreRTS.h"
 #include "Common/INI.h"
 #include "GameClient/CampaignManager.h"
+#include "string_base.h"
 
 // The retail callee at 0x005BCBF0 is generic in the ledger.  Its raw
 // prologue/epilogue and this caller prove the ABI, but not the historical
@@ -53,12 +54,11 @@ class RetailLayoutString
 {
 public:
 	RetailLayoutString() : m_data(0) {}
-	~RetailLayoutString() { releaseBuffer(); }
+	~RetailLayoutString() { ((StringBase<char> *)this)->clear(); }
 	void set(const char *text, int length);
 	const char *str() const;
 
 private:
-	void releaseBuffer();
 	void *m_data;
 };
 

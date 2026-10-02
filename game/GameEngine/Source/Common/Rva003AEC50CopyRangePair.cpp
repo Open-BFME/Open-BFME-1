@@ -6,14 +6,9 @@
 // Two retail sites (0x003AEC50, 0x003B3460) share this exact shape; both are
 // instantiated below from the one struct/function pair.
 
-class Rva003AEC50Str
-{
-public:
-	void set(const Rva003AEC50Str &other);
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-private:
-	void *m_data;
-};
+typedef StringBase<char> Rva003AEC50Str;
 
 struct Rva003AEC50Entry
 {

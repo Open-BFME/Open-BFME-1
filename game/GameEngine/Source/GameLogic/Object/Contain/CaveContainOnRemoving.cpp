@@ -17,9 +17,9 @@
 // and proves that it receives the same secondary pointer.  The primary
 // OpenContain vtable calls doUnloadSound through slot +0x54 after the compiler
 // adjusts back to the complete object.  Object vtable 0x0109EE58 proves
-// getDrawable at +0x28.  The two still-unidentified direct helpers retain
-// owner- and RVA-derived member names, preserving their proven receivers and
-// ABI without inventing semantics.
+// getDrawable at +0x28.  The remaining unidentified direct helper retains its
+// owner- and RVA-derived member name. The call at 0x00411DD0 uses its ledger
+// spelling, Gen_00411DD0::bfmeSet.
 //
 // campaign=luna36h-20260907;lane=expand03;model=gpt-5.6-sol-ultra
 
@@ -40,6 +40,11 @@ struct Coord3D
 
 class Team;
 class Drawable;
+class Gen_00411DD0
+{
+public:
+	void bfmeSet(Bool hidden);
+};
 
 class Thing
 {
@@ -99,12 +104,6 @@ private:
 };
 
 typedef char ObjectLayoutMustReach240[(sizeof(Object) == 0x240) ? 1 : -1];
-
-class Drawable
-{
-public:
-	void rva00411DD0(Bool hidden);
-};
 
 class OpenContainPrimaryBase
 {
@@ -294,7 +293,7 @@ void CaveContain::onRemoving(Object *obj)
 	obj->setPosition(getObject()->getPosition());
 
 	if (obj->getDrawable() != 0)
-		obj->getDrawable()->rva00411DD0(false);
+		reinterpret_cast<Gen_00411DD0 *>(obj->getDrawable())->bfmeSet(false);
 
 	doUnloadSound();
 

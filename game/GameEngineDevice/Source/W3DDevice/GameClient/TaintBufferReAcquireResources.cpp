@@ -54,7 +54,8 @@ public:
 class Rva006D6050
 {
 public:
-	void init(int width, int height, int format, int mipLevels, int pool, int renderTarget);
+	void init(unsigned int width, unsigned int height, unsigned int format,
+		unsigned int mipLevels, unsigned int pool, unsigned int renderTarget);
 };
 
 class Gen_00920a60
