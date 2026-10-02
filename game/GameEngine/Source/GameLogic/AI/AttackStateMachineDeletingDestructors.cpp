@@ -36,7 +36,7 @@ class AIAttackThenIdleStateMachine : public StateMachine
 	friend void forceAIAttackThenIdleStateMachineDeletingDestructor();
 
 protected:
-	virtual ~AIAttackThenIdleStateMachine() {}
+	virtual ~AIAttackThenIdleStateMachine();
 };
 
 void forceAIAttackThenIdleStateMachineDeletingDestructor()

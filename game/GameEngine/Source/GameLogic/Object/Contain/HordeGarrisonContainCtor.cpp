@@ -136,6 +136,7 @@ class HordeGarrisonContain : public GarrisonContain
 {
 public:
 	HordeGarrisonContain(Thing *, const ModuleData *);
+	virtual ~HordeGarrisonContain();
 
 private:
 	int m_unmodelled_9b8;
