@@ -20,24 +20,32 @@ class LivingWorldCampaignManager;
 
 extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
-class Gen003BFC20Owner
+// ILTs 0x00040016 and 0x0002DE89 reach the matched Glo012F1028Sub
+// bodies at 0x003CAD90 and 0x003CAD20.
+class Glo012F1028Sub
 {
 public:
 	virtual void vslot0();
 	virtual void vslot1();
-	void clear();
-	void notify();
+	void refresh003CAD90();
+	void bfmeNotify();
+};
+
+// ILT 0x0000A754 reaches the matched niladic member at 0x003BEC30.
+class Rva003BEED0
+{
+public:
+	void finish();
 };
 
 class Rva003BFC20
 {
 public:
 	void run();
-	void finish();
 
 private:
 	char m_pad00[ 0x20 ];
-	Gen003BFC20Owner *m_at20;
+	Glo012F1028Sub *m_at20;
 	char m_pad24[ 0x3D - 0x24 ];
 	bool m_at3D;
 	char m_pad3E[ 0x70 - 0x3E ];
@@ -57,8 +65,8 @@ void Rva003BFC20::run()
 	if( !self->m_at3D )
 		return;
 	self->m_at20->vslot1();
-	self->m_at20->clear();
-	self->m_at20->notify();
+	self->m_at20->refresh003CAD90();
+	self->m_at20->bfmeNotify();
 	if( !self->m_at70 )
 		return;
 	unsigned char flag = (unsigned char)self->m_at78;
@@ -66,7 +74,7 @@ void Rva003BFC20::run()
 	if( flag )
 	{
 		((Glo012F1024Type *)TheLivingWorldCampaignManager)->step();
-		self->finish();
+		((Rva003BEED0 *)self)->finish();
 	}
 	self->m_at78 = false;
 	self->m_atC8 = true;
