@@ -13,10 +13,10 @@ public:
 	void m();
 };
 
-class BfmeMsgVJH
+class BfmeC994
 {
 public:
-	BfmeMsgVJH(char *buf, int n) throw();
+	BfmeC994(char *buf, int n) throw();
 	char m_pad[0x34];
 };
 
@@ -71,13 +71,13 @@ public:
 	virtual void v1c() throw();
 	virtual void v20() throw();
 	virtual void v24() throw();
-	virtual void sendList0(BfmeMsgVJH *msg, int zero, BfmePairVJU *output,
+	virtual void sendList0(BfmeC994 *msg, int zero, BfmePairVJU *output,
 		int count, int value) throw();
-	virtual void sendList1(BfmeMsgVJH *msg, BfmePairVJU *output,
+	virtual void sendList1(BfmeC994 *msg, BfmePairVJU *output,
 		int count) throw();
-	virtual void sendList2(BfmeMsgVJH *msg, int pairValue,
+	virtual void sendList2(BfmeC994 *msg, int pairValue,
 		BfmePairVJU *output, int count) throw();
-	virtual void sendFinal(BfmeMsgVJH *msg, int zero) throw();
+	virtual void sendFinal(BfmeC994 *msg, int zero) throw();
 };
 
 class BfmeBrowserNotifyVJU
@@ -85,7 +85,7 @@ class BfmeBrowserNotifyVJU
 public:
 	virtual void v00() throw();
 	virtual void v04() throw();
-	virtual void send(BfmeMsgVJH *msg, void (__stdcall *callback)(),
+	virtual void send(BfmeC994 *msg, void (__stdcall *callback)(),
 		void *owner, int value) throw();
 };
 
@@ -117,7 +117,7 @@ public:
 
 void BfmeThingVJU::bfmeGoVJU() throw()
 {
-	BfmeMsgVJH msg(m_bfmeBuf, 0x400);
+	BfmeC994 msg(m_bfmeBuf, 0x400);
 	m_bfme10->sendFinal(&msg, 1);
 	m_bfme14->send(&msg, 0, this, m_bfme6dc);
 

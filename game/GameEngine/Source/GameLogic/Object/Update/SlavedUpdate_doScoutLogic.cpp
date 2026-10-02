@@ -221,7 +221,7 @@ private:
     Coord3D m_guardPointOffset;
 };
 
-extern Real bfmeCosVNB(Real value);
+extern Real Cos(Real value);
 extern Real bfmeSinVNB(Real value);
 extern int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
@@ -259,7 +259,7 @@ void SlavedUpdate::doScoutLogic(const Coord3D *mastersDestination)
             0x189);
 
         m_guardPointOffset.zero();
-        m_guardPointOffset.x += data->m_scoutWanderRange * bfmeCosVNB(randomDirection);
+        m_guardPointOffset.x += data->m_scoutWanderRange * Cos(randomDirection);
         m_guardPointOffset.y += data->m_scoutWanderRange * bfmeSinVNB(randomDirection);
 
         scoutPosition.x += m_guardPointOffset.x;

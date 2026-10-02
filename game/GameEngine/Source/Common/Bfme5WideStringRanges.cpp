@@ -14,13 +14,13 @@
 // copier's return value is what the step is applied to, so the destination is
 // read once before the branch and used on both paths.
 
-void *bfmeNewAlloc(unsigned int bytes);				// retail 0x00881F30
+void *__cdecl operator new(unsigned int bytes);				// retail 0x00881F30
 void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
 
 inline void *bfmeAllocate(unsigned int bytes)
 {
 	if (bytes > 0x80)
-		return bfmeNewAlloc(bytes);
+		return ::operator new(bytes);
 
 	return bfmeAllocNode(bytes);
 }

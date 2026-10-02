@@ -48,10 +48,10 @@ public:
 	int m_n;
 };
 
-class Rva00802040Arr
+class Rva00801600
 {
 public:
-	__forceinline Rva00802040Arr() : m_a( 0 ), m_n( 0 ) {}
+	__forceinline Rva00801600() : m_a( 0 ), m_n( 0 ) {}
 	void allocate( int n );
 	__forceinline Rva00802680Owner *at( int index )
 	{
@@ -95,7 +95,7 @@ public:
 	V2ZeroPair m_08;
 	Rva007F78E0Block m_10;
 	Rva007F78E0Block m_18;
-	Rva00802040Arr m_20;
+	Rva00801600 m_20;
 	int m_28;
 	int m_2c;
 	char m_30;

@@ -5,30 +5,10 @@
 
 #include <list>
 #include <string>
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 typedef int Int;
 typedef bool Bool;
-
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-
-	struct Data
-	{
-		int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		T m_text[1];
-	};
-
-	Data *m_data;
-};
 
 class AsciiString : private StringBase<char>
 {
@@ -36,16 +16,14 @@ public:
 	AsciiString() : StringBase<char>() {}
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() { releaseBuffer(); }
+	~AsciiString() {}
 
 	const char *str() const
 	{
-		const StringBase<char>::Data *data = m_data;
-		return data ? data->m_text : "";
+		const StringBase<char>::Header *data = m_data;
+		return data ? data->data : "";
 	}
 
-private:
-	void releaseBuffer();
 };
 
 class GameSpyConfigInterface

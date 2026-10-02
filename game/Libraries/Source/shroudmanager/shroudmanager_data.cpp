@@ -45,12 +45,17 @@ public:
 	void method();
 };
 
+class BfmeHostXO
+{
+public:
+	void bfmeFlushXO();
+};
+
 class BfmeThingCDE
 {
 public:
 	bool bfmeCheckABI();
 	void bfmeDtorCDE();
-	void d_008f7990();
 
 	void *m_owner;
 	CDEProvider *m_ptr4;
@@ -74,7 +79,6 @@ public:
 	unsigned char m_bfmeDC;
 };
 
-#pragma comment(linker, "/alternatename:?d_008f7990@BfmeThingCDE@@QAEXXZ=?d_008f7990@@YAXXZ")
 // 0x009F6D76 is the MSVC 7.1 CRT's own array-destruction helper, published by
 // libc.lib's ..\build\intel\st_obj\ehvecdtr.obj under the reserved front-end
 // name ??_M@YGXPAXIHP6EX0@Z@Z (see
@@ -92,7 +96,7 @@ extern void __cdecl operator delete[](void *);
 
 bool BfmeThingCDE::bfmeCheckABI()
 {
-	d_008f7990();
+	reinterpret_cast<BfmeHostXO *>(this)->bfmeFlushXO();
 
 	if (m_ptr8 == 0)
 		return false;
@@ -132,7 +136,7 @@ bool BfmeThingCDE::bfmeCheckABI()
 
 void BfmeThingCDE::bfmeDtorCDE()
 {
-	d_008f7990();
+	reinterpret_cast<BfmeHostXO *>(this)->bfmeFlushXO();
 	if (m_ptr4 != 0)
 		m_ptr4->f3(0);
 	if (m_ptr8 != 0)
