@@ -156,7 +156,9 @@ extern "C" int ciAddCallback_(CHAT chat, int type, void *callback,
 extern "C" int ciAddNICKFilter(CHAT chat, const char *oldNick,
 	const char *newNick, void *callback, void *param);
 extern "C" chatChannelCallbacks *ciGetChannelCallbacks(CHAT chat, const char *channel);
-extern "C" void bfmeCiThinkFromEsi(int ID);
+// Retail ciThink reads the CHAT out of ESI (already live in every caller here)
+// and takes only the ID as a pushed argument.
+extern "C" void ciThink(int ID);
 extern "C" void msleep(unsigned int milliseconds);
 extern "C" int ciCheckFiltersForID(CHAT chat, int ID);
 extern "C" int ciCheckCallbacksForID(CHAT chat, int ID);
@@ -409,7 +411,7 @@ extern "C" void chatChangeNickA(CHAT chat, const char *newNick,
 			{
 				do
 				{
-					bfmeCiThinkFromEsi(ID);
+					ciThink(ID);
 					msleep(10);
 				}
 				while (ciCheckForID(chat, ID));
@@ -424,7 +426,7 @@ extern "C" void chatChangeNickA(CHAT chat, const char *newNick,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));

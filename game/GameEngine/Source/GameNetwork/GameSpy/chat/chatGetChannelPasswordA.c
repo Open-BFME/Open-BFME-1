@@ -12,7 +12,9 @@ const char *ciGetChannelPassword(CHAT chat, const char *channel);
 int ciGetNextID(CHAT chat);
 int ciAddCallback_(CHAT chat, int type, void *callback, void *callbackParams,
 	void *param, int ID, const char *channel, unsigned int callbackParamsSize);
-void bfmeCiThinkFromEsi(int ID);
+/* retail ciThink reads the CHAT from ESI (already live here) and takes only the
+   ID as a pushed argument. */
+void ciThink(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
 int ciCheckCallbacksForID(CHAT chat, int ID);
@@ -55,7 +57,7 @@ void chatGetChannelPasswordA(CHAT chat, const char *channel, void *callback,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));

@@ -26,7 +26,9 @@ void ciChannelListUsers(
 	CHAT chat, const char *channel, void *callback, void *param);
 int ciAddNAMESFilter(
 	CHAT chat, const char *channel, void *callback, void *param);
-void bfmeCiThinkFromEsi(int ID);
+/* retail ciThink reads the CHAT from ESI (already live here) and takes only the
+   ID as a pushed argument. */
+void ciThink(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
 int ciCheckCallbacksForID(CHAT chat, int ID);
@@ -84,7 +86,7 @@ void chatEnumUsersA(
 
 	if (blocking) {
 		do {
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		} while (ciCheckForID(chatHandle, ID));
 	}

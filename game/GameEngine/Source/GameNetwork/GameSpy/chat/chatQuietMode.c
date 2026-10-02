@@ -30,7 +30,9 @@ int ciAddCDKEYFilter(CHAT chat, void *callback, void *param);
 const char *ciGetChannelTopic(CHAT chat, const char *channel);
 int ciAddTOPICFilter(CHAT chat, const char *channel, void *callback,
 	void *param);
-void bfmeCiThinkFromEsi(int ID);
+/* retail ciThink reads the CHAT from ESI (already live here) and takes only the
+   ID as a pushed argument. */
+void ciThink(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
 int ciCheckCallbacksForID(CHAT chat, int ID);
@@ -85,7 +87,7 @@ void chatEnumChannelsA(CHAT chat, const char *filter, void *callbackEach,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));
@@ -111,7 +113,7 @@ void chatEnterChannelA(CHAT chat, const char *channel, const char *password,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));
@@ -149,7 +151,7 @@ void chatAuthenticateCDKeyA(CHAT chat, const char *cdkey, void *callback,
 			{
 				do
 				{
-					bfmeCiThinkFromEsi(ID);
+					ciThink(ID);
 					msleep(10);
 				}
 				while (ciCheckForID(chat, ID));
@@ -164,7 +166,7 @@ void chatAuthenticateCDKeyA(CHAT chat, const char *cdkey, void *callback,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));
@@ -207,7 +209,7 @@ void chatGetChannelTopicA(CHAT chat, const char *channel, void *callback,
 	{
 		do
 		{
-			bfmeCiThinkFromEsi(ID);
+			ciThink(ID);
 			msleep(10);
 		}
 		while (ciCheckForID(chat, ID));
