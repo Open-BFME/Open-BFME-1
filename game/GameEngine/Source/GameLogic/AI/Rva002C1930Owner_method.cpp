@@ -1,5 +1,7 @@
 // ?method@Rva002C1930Owner@@QAEXPAX00@Z
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "Common/StateMachine.h"
 //
 // Retail RVA 0x002C1930 (205 bytes), thiscall taking (void *arg1, void*, void*)
 // and returning void.  Lives in the GiantBird AI-state cluster (landed
@@ -20,12 +22,6 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-struct Coord3D
-{
-	float x, y, z;
-	void normalize();
-};
-
 class Object
 {
 public:
@@ -37,14 +33,6 @@ class AIUpdateInterface
 {
 public:
 	Object *getCurrentVictim() const;
-};
-
-// pinned callee: ?bfmeGetHM@BfmeHolderHM@@QAEPAVBfmeItemHM@@XZ
-class BfmeItemHM;
-class BfmeHolderHM
-{
-public:
-	BfmeItemHM *bfmeGetHM();
 };
 
 // pinned callee: ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z
@@ -85,7 +73,7 @@ public:
 	void method( void *arg1, void *arg2, void *arg3 );
 
 	unsigned char m_unreconstructed_00[0xc];
-	BfmeHolderHM *m_fallbackMachine0c;          // +0xc
+	StateMachine *m_fallbackMachine0c;           // +0xc
 	unsigned char m_unreconstructed_10[0x3cc - 0x10];
 	UnsignedInt m_flags3cc;                     // +0x3cc
 };
@@ -108,10 +96,10 @@ void Rva002C1930Owner::method( void *arg1, void * /*arg2*/, void * /*arg3*/ )
 
 	if ( !victim )
 	{
-		BfmeHolderHM *fallback = m_fallbackMachine0c;
+		StateMachine *fallback = m_fallbackMachine0c;
 		if ( !fallback )
 			return;
-		victim = (Object *)fallback->bfmeGetHM();
+		victim = fallback->getGoalObject();
 		if ( !victim )
 			return;
 	}

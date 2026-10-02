@@ -37,10 +37,10 @@
 // builds it in place (`sub esp,0x28`).  So the two spellings are declared side by
 // side, both 40 bytes, and this comment is what ties them together.
 //
-// Drawable::replaceModelConditionState was itself spelled two ways -- (flags,
-// UnsignedInt, UnsignedInt) in one file and (flags, Bool, UnsignedInt) in the
-// other.  targets/game/reverse/symbols.csv pins both, and the Bool spelling is the one on the
-// ILT at 0x0001343F that both bodies actually call, so that is the one kept.
+// Drawable::replaceModelConditionState has a Bool alias pinned to its ILT at
+// 0x0001343F; its matched body at 0x0041CCD0 takes two UnsignedInt arguments.
+// The local declaration follows the body owner while reads of forceReplace use
+// its 32-bit x86 argument slot to retain the retail caller shape.
 //
 // The Object layout the four settle between them:
 //
@@ -90,7 +90,7 @@ class Drawable
 {
 public:
 	void replaceModelConditionState(const ModelConditionFlags &flags,
-		Bool forceReplace, UnsignedInt value);
+		UnsignedInt forceReplace, UnsignedInt value);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
@@ -180,12 +180,13 @@ void Object::replaceModelConditionFlags(const ModelConditionFlags &flags,
 	ModelConditionFlags oldFlags = m_modelConditionFlags;
 	m_modelConditionFlags = flags;
 
-	if (oldFlags != m_modelConditionFlags || forceReplace)
+	if (oldFlags != m_modelConditionFlags ||
+		(*(UnsignedInt *)(void *)&forceReplace & 0xff))
 	{
 		if (m_drawable)
 		{
 			m_drawable->replaceModelConditionState(m_modelConditionFlags,
-				forceReplace, 0);
+				*(UnsignedInt *)(void *)&forceReplace, 0);
 		}
 	}
 }

@@ -8,8 +8,8 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-// The descriptor validity call uses the existing ObjectFilter ABI and ILT
-// identity at 0x000413B2; the alias preserves the bank's field spelling.
+// The descriptor validity call is BfmeHostERT::bfmeQueryERT at 0x0039E780;
+// 0x000413B2 is its ILT.
 #pragma comment(linker, "/alternatename:?bfmeAmmoReady@Weapon@@QBE_NXZ=?j_0001b9a0@@YAXXZ")
 
 typedef bool Bool;
@@ -32,12 +32,13 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class ObjectFilter
+class BfmeHostERT
 {
 public:
-	Bool isValid() const;
+	char bfmeQueryERT();
+	int m_bfmeIndexERT;
 };
-typedef ObjectFilter BfmeAmmoDescriptor;
+typedef BfmeHostERT BfmeAmmoDescriptor;
 
 class WeaponTemplate
 {
@@ -89,7 +90,7 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 	{
 		if (now < m_whenWeCanFireAgain)
 		{
-			if (!tmpl->m_ammo.isValid())
+			if (!tmpl->m_ammo.bfmeQueryERT())
 				return m_status;
 		}
 
@@ -101,14 +102,14 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 		if (now < m_whenWeCanFireAgain)
 			return OUT_OF_AMMO;
 		WeaponTemplate *templateForAmmo = m_template;
-		if (!templateForAmmo->m_ammo.isValid() || !bfmeAmmoReady())
+		if (!templateForAmmo->m_ammo.bfmeQueryERT() || !bfmeAmmoReady())
 			return OUT_OF_AMMO;
 		return READY_TO_FIRE;
 	}
 
 	if (now < m_whenWeCanFireAgain)
 	{
-		if (!tmpl->m_ammo.isValid())
+		if (!tmpl->m_ammo.bfmeQueryERT())
 			return m_status;
 	}
 

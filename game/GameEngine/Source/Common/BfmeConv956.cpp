@@ -1,4 +1,7 @@
 // Open-BFME5 conversions.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "GameLogic/Module/AIUpdate.h"
 
 class BfmeProbe956
 {
@@ -111,7 +114,6 @@ public:
 	virtual void bfmeV95956();
 	virtual bool bfmeBusy956();
 
-	int bfmeKind956();
 };
 
 struct BfmeObj956
@@ -144,7 +146,9 @@ char bfmeReadyB956(BfmeState956 *state, void *user)
 {
 	BfmeAI956 *ai = state->m_bfmeOwner->m_bfmeObj->m_bfmeAI;
 
-	return ai != 0 && !ai->bfmeBusy956() && ai->bfmeKind956() != 14 && ai->bfmeKind956() != 47;
+	return ai != 0 && !ai->bfmeBusy956()
+		&& ((AIUpdateInterface *)ai)->getAIStateType() != 14
+		&& ((AIUpdateInterface *)ai)->getAIStateType() != 47;
 }
 
 // Retail Object::getControllingPlayer (0x001BE3F0): the pointer this body
@@ -169,21 +173,9 @@ struct BfmeTune956
 	float m_bfmeScale;
 };
 
-// 0x012EF214 is retail's TheAI singleton (the pin records its RVA 0x00EEF214);
-// retail's own bytes name the global ?TheAI@@3PAVAI@@A. The +0x14 member below
-// is retail's m_aiData, following m_pathfinder at +0x0C and the group list, and
-// BfmeTune956 is the TAiData view the +0xC4 scale read goes through. This TU has
-// no AI.h in its include closure, so the class is renamed in place rather than
-// pulled in -- BfmeGlob956 was a placeholder, not a game name.
-class AI
-{
-public:
-	char m_bfmePad[0x14];
-	BfmeTune956 *m_bfmeTune;
-};
-
-extern AI *TheAI;
-
+// The included AI header supplies the actual TheAI global and class name.
+// Retail's BFME m_aiData pointer is at +0x14; BfmeTune956 views its scale at
+// +0x88 inside the pointed-to data.
 struct BfmeSrc956
 {
 	char m_bfmePad[0x6c];
@@ -201,7 +193,8 @@ float BfmeScale956::bfmeGo956()
 	if ((*(Object **)((char *)this - 0x338))->getControllingPlayer()
 			&& (*(Object **)((char *)this - 0x338))->getControllingPlayer()->m_bfmeMode == 1) {
 		BfmeSrc956 *s = *(BfmeSrc956 **)((char *)this - 0x33c);
-		return s->m_bfmeBase * TheAI->m_bfmeTune->m_bfmeScale;
+		return s->m_bfmeBase *
+			(*(BfmeTune956 **)((char *)TheAI + 0x14))->m_bfmeScale;
 	}
 
 	BfmeSrc956 *s = *(BfmeSrc956 **)((char *)this - 0x33c);
