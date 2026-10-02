@@ -620,43 +620,7 @@ void Mouse::parseIni(void)
 //-------------------------------------------------------------------------------------------------
 /** Initialize the mouse */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/Input/Mouse_init.cpp
-// ?init@Mouse@@ present-unmatched
-void Mouse::init( void )
-{
-	if (TheGlobalData && TheGlobalData->m_winCursors)
-		m_currentRedrawMode = RM_WINDOWS;
-
-	// device info
-	m_numButtons = 2;  // by default just have 2 buttons
-	m_numAxes = 2;  // by default a normal mouse moves in a 2d plane
-	m_forceFeedback = FALSE;
-	mouseNotifyResolutionChange();
-	m_tooltipString.clear();	// redundant
-	m_displayTooltip = FALSE;
-
-	// initialize all the mouse io data
-	memset( m_mouseEvents, 0, sizeof( m_mouseEvents ) );
-	memset( &m_currMouse, 0, sizeof( m_currMouse ) );
-	memset( &m_prevMouse, 0, sizeof( m_prevMouse ) );
-
-	m_minX = 0;
-	m_maxX = 799;
-	m_minY = 0;
-	m_maxY = 599;
-
-	m_inputFrame = 0;
-	m_deadInputFrame =0;
-
-	m_inputMovesAbsolute = FALSE;
-	m_eventsThisFrame = 0;
-
-	m_currentCursor = ARROW;
-
- 	// allocate a new display string
-	m_cursorTextDisplayString = TheDisplayStringManager->newDisplayString();
-
-}  // end init
+// Retail implementation: Mouse_init.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Tell mouse system display resolution changed. */
@@ -902,102 +866,12 @@ void Mouse::resetTooltipDelay( void )
 //-------------------------------------------------------------------------------------------------
 /** Draw the mouse tooltip if one is set */
 //-------------------------------------------------------------------------------------------------
-// ?drawTooltip@Mouse@@ present-unmatched
-void Mouse::drawTooltip( void )
-{
-	if (TheScriptEngine->getFade()!=ScriptEngine::FADE_NONE) {
-		return;
-	}
-
-	/// @todo: Still need to put in display logic so it puts the tool tips in a visable position on the edge of the screen
-	if( m_displayTooltip && TheDisplay && m_tooltipDisplayString && (m_tooltipDisplayString->getTextLength() > 0) && !m_isTooltipEmpty)
-	{
-		Int width, xPos;
-		Int height, yPos;
-		m_tooltipDisplayString->getSize(&width,&height);
-		xPos = m_currMouse.pos.x + 20;
-		yPos = m_currMouse.pos.y;// + 20;
-
-		if( xPos + width + 4 > m_maxX ) // +4 for spill
-		{
-			//xPos = m_maxX - width;
-			xPos -= 20 + width;
-		}
-		if( yPos + height + 4 > m_maxY ) // +4 for spill
-		{
-			//yPos = m_maxY - height;
-			yPos -= /*40 +*/ height;
-		}
-
-		Int boxWidth = (m_tooltipAnimateBackground)?(min(width, m_highlightPos)):width;
-
-#define GMC(x) GameMakeColor(x.red, x.green, x.blue, x.alpha)
-#define COLOR(x) GMC(m_tooltipColor##x)
-		TheDisplay->drawFillRect(xPos, yPos, boxWidth + 2,height + 2, GMC(m_tooltipBackColor));//GameMakeColor(0,0,0,125));
-		TheDisplay->drawOpenRect(xPos, yPos, boxWidth + 2,height + 2, 1.0, COLOR(Border));//GameMakeColor(20,20,20,255));
-
-		// build clip rect
-		IRegion2D clipRegion;
-		clipRegion.lo.x = xPos+2;
-		clipRegion.lo.y = yPos+1;
-		clipRegion.hi.x = xPos+2+m_highlightPos;
-		clipRegion.hi.y = yPos+1+height;
-		m_tooltipDisplayString->setClipRegion(&clipRegion);
-		m_tooltipDisplayString->draw(xPos +2, yPos +1, GMC(m_tooltipTextColor), COLOR(Shadow));//GameMakeColor(220,220,220,255),GameMakeColor(20,20,20,125));
-
-		// highlight section
-		const Int HIGHLIGHT_WIDTH = 15;
-		clipRegion.lo.x = xPos+2+m_highlightPos-HIGHLIGHT_WIDTH;
-		clipRegion.lo.y = yPos+1;
-		clipRegion.hi.x = xPos+2+m_highlightPos;
-		clipRegion.hi.y = yPos+1+height;
-		m_tooltipDisplayString->setClipRegion(&clipRegion);
-		m_tooltipDisplayString->draw(xPos +2, yPos +1, COLOR(Highlight), COLOR(Shadow));//GameMakeColor(255,255,0,255),GameMakeColor(20,20,20,125));
-
-		// get ready for the next part of the anim
-		if (m_highlightPos < width + HIGHLIGHT_WIDTH)
-		{
-			UnsignedInt now = timeGetTime();
-			m_highlightPos = (width*(now-m_highlightUpdateStart))/m_tooltipFillTime;
-		}
-	}  // end if
-
-
-}  // end drawTooltip
+// Retail implementation: Mouse_drawTooltip.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Draw the cursor text at the mouse position.  Note that this is *NOT* the tooltip text */
 // ------------------------------------------------------------------------------------------------
-// ?drawCursorText@Mouse@@ present-unmatched
-void Mouse::drawCursorText( void )
-{
-
-	// sanity
-	if( m_cursorTextDisplayString == NULL )
-		return;
-
-	// get the colors to draw the text in an acceptable format
-	Color color, dropColor;
-	color = GameMakeColor( m_cursorTextColor.red, 
-												 m_cursorTextColor.green, 
-												 m_cursorTextColor.blue, 
-												 m_cursorTextColor.alpha );
-	dropColor = GameMakeColor( m_cursorTextDropColor.red, 
-														 m_cursorTextDropColor.green, 
-														 m_cursorTextDropColor.blue, 
-														 m_cursorTextDropColor.alpha );
-
-	// get the size of the text to draw
-	Int width, height;
-	m_cursorTextDisplayString->getSize( &width, &height );
-
-	// draw the text around the cursor position
-	Int x, y;
-	x = m_currMouse.pos.x - width / 2;
-	y = m_currMouse.pos.y - height / 2;
-	m_cursorTextDisplayString->draw( x, y, color, dropColor );
-
-}  // end drawCursorText
+// Retail implementation: Mouse_drawCursorText.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
