@@ -14248,5 +14248,15 @@
   "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
   "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
   "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot includes preceding cleanup-only commit."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003c22e0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003C22E0.cpp",
+  "old_name": "frameE",
+  "new_name": "rva003c22e0",
+  "before_sha256": "c16c544c4c2bc229c7e37894f056863a8b21fedcf3bf08284d53b18e535a0bfd",
+  "after_sha256": "7fa31b2a2f2184b1cc5931a8a41d5d6829080a107daca1a9e25f1ed8b307fb8a",
+  "evidence": "targets/game/reverse/identity_evidence/rva003c22e0.md",
+  "reason": "False pairing during bank removal: frameE was an unused declaration with no definition or RVA claim; the bank already defined this exact body as rva003c22e0. The matched caller names only ILT 0001D688. No established definition was renamed."
  }
 ]
