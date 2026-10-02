@@ -11,6 +11,9 @@
 
 _STLP_BEGIN_NAMESPACE
 
+// PeerDefs.cpp owns the retail range assignment called by this writer.
+template <> string &string::assign(const char *, const char *);
+
 extern "C" __declspec(dllimport) char *__cdecl _ecvt(
 	double, int, int *, int *);
 extern "C" __declspec(dllimport) char *__cdecl _fcvt(
@@ -21,6 +24,11 @@ extern "C" __declspec(dllimport) int __cdecl _finite(double);
 void __cdecl _Stl_put_inf_nan(char *, double, int);
 
 void __cdecl __format_float_scientific(char *, const char *, int, int,
+	bool, int, int);
+
+// Retail passes the unused long-double flag in an eighth cdecl stack slot.
+// Keep that call shape while referencing the defining seven-argument symbol.
+typedef void (__cdecl *ScientificFloatCall)(char *, const char *, int, int,
 	bool, int, int, bool);
 
 void __cdecl __format_float_fixed(string &, const char *, int, int, bool,
@@ -43,7 +51,7 @@ static inline void bfmeFormatFloat(string &buffer, const char *digits,
 		switch (flags & ios_base::floatfield)
 		{
 		case ios_base::scientific:
-			__format_float_scientific(staticBuffer, digits, decimal, negative,
+			((ScientificFloatCall)__format_float_scientific)(staticBuffer, digits, decimal, negative,
 				value == 0, flags, precision, isLong);
 			buffer = staticBuffer;
 			break;
@@ -76,7 +84,7 @@ static inline void bfmeFormatFloat(string &buffer, const char *digits,
 			if (decimal < -3 || decimal > precision)
 			{
 				precision = significant - 1;
-				__format_float_scientific(staticBuffer, digits, decimal,
+				((ScientificFloatCall)__format_float_scientific)(staticBuffer, digits, decimal,
 					negative, value == 0, flags, precision, isLong);
 				buffer = staticBuffer;
 			}
