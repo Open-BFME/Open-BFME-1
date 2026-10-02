@@ -26,7 +26,9 @@ public:
 	int m_bfme04;
 };
 
-extern BfmeG1217 *g_bfme1217;
+struct Rva00899560Pool;
+
+extern Rva00899560Pool *g_rva01337810GcRoots;
 
 void bfmeGo1217(BfmeA1217 *a, const unsigned char **b)
 {
@@ -42,7 +44,7 @@ void bfmeGo1217(BfmeA1217 *a, const unsigned char **b)
 		--a->m_bfme00;
 	}
 	if (n == 1) {
-		g = g_bfme1217;
+		g = (BfmeG1217 *)g_rva01337810GcRoots;
 		if (g->m_bfme04)
 			g->bfmeStep1217C();
 	}

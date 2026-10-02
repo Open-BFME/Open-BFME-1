@@ -25,7 +25,9 @@ public:
 	int m_bfme04;
 };
 
-extern BfmeG1214 *g_bfme1214;
+struct Rva00899560Pool;
+
+extern Rva00899560Pool *g_rva01337810GcRoots;
 
 class Rva8CD130State;
 struct Rva8CD130Context;
@@ -50,7 +52,7 @@ void bfmeGo1214(BfmeA1214 *a, const unsigned char **b)
 		e->bfmeV1214();
 	bfmeStep1214A(a, b);
 	rva8CD130NamedDispatch((Rva8CD130State *)a, (Rva8CD130Context *)b);
-	g = g_bfme1214;
+	g = (BfmeG1214 *)g_rva01337810GcRoots;
 	if (g->m_bfme04 && a->m_bfme00 == 0)
 		g->bfmeStep1214C();
 }

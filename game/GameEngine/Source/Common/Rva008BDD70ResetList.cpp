@@ -46,18 +46,24 @@ public:
 	void bfmeStep1211C(void);
 };
 
-struct Rva00899560Pool
+// Local view of the pool global's layout at 0x01337810; the canonical
+// declaration of that global is `struct Rva00899560Pool *g_rva01337810GcRoots`
+// (defined once in game/Libraries/Source/Apt/Apt.cpp), so only the view lives
+// here and every use casts.
+struct Rva008BDD70IdleHookView
 {
 	char m_pad00[4];
 	int m_at04;
 };
+
+struct Rva00899560Pool;
 
 struct Rva008AE770Stack
 {
 	int m_at00;
 };
 
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern Rva008AE770Stack Rva008AE770TheStack;
 
 class Rva008BDD70Owner
@@ -132,8 +138,8 @@ void BfmeD1046::bfmeReset1046(int n)
 			entry->m_flags &= 0xffffc03f;
 			((Rva008C3F10Value *)entry)->cleanup(1);
 		}
-		if (g_rva8CD130IdleHook->m_at04 != 0 && Rva008AE770TheStack.m_at00 == 0)
-			((BfmeG1211 *)g_rva8CD130IdleHook)->bfmeStep1211C();
+		if (((Rva008BDD70IdleHookView *)g_rva01337810GcRoots)->m_at04 != 0 && Rva008AE770TheStack.m_at00 == 0)
+			((BfmeG1211 *)g_rva01337810GcRoots)->bfmeStep1211C();
 		entry = next;
 	}
 }

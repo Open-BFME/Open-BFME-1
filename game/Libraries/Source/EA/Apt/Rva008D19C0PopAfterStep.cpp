@@ -2,8 +2,13 @@
 // cl: /DNDEBUG /MD /EHsc
 struct Rva008D19C0Value { virtual void s0(); virtual void release(); unsigned int m_bits; };
 struct Rva008D19C0Stack { int m_count; int m_4; Rva008D19C0Value** m_values; };
+// Local view of the pool global's layout at 0x01337810; the canonical
+// declaration of that global is `struct Rva00899560Pool *g_rva01337810GcRoots`
+// (defined once in game/Libraries/Source/Apt/Apt.cpp), so only the view lives
+// here and every use casts.
 class Rva8CD130IdleHook { public: int m_unused; int m_enabled; void run(); };
-extern Rva8CD130IdleHook *g_rva8CD130IdleHook;
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern "C" void __cdecl bfmeStep1211A(Rva008D19C0Stack* stack, int arg);
 extern "C" void __cdecl bfmeStep1212A(Rva008D19C0Stack* stack, int arg);
 void aptPopAfter008D19C0(Rva008D19C0Stack* stack, int arg)
@@ -14,8 +19,8 @@ void aptPopAfter008D19C0(Rva008D19C0Stack* stack, int arg)
 	if (!(flags & 1))
 		top->release();
 	stack->m_count--;
-	if (g_rva8CD130IdleHook->m_enabled && stack->m_count == 0)
-		g_rva8CD130IdleHook->run();
+	if (((Rva8CD130IdleHook *)g_rva01337810GcRoots)->m_enabled && stack->m_count == 0)
+		((Rva8CD130IdleHook *)g_rva01337810GcRoots)->run();
 }
 
 void aptPopAfter008D1A50(Rva008D19C0Stack* stack, int arg)
@@ -26,6 +31,6 @@ void aptPopAfter008D1A50(Rva008D19C0Stack* stack, int arg)
 	if (!(flags & 1))
 		top->release();
 	stack->m_count--;
-	if (g_rva8CD130IdleHook->m_enabled && stack->m_count == 0)
-		g_rva8CD130IdleHook->run();
+	if (((Rva8CD130IdleHook *)g_rva01337810GcRoots)->m_enabled && stack->m_count == 0)
+		((Rva8CD130IdleHook *)g_rva01337810GcRoots)->run();
 }
