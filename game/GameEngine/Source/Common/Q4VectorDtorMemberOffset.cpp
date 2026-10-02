@@ -23,19 +23,19 @@
 // under two different element sizes and size 0x10 under two different offsets,
 // so the two really are independent and neither stands in for the other.
 //
-// IDENTITY IS NOT RECOVERED.  `m_lead` and `m_trail` place the destroyed
-// member at the observed offset inside an element of the observed size; the
-// one-byte stand-in for the member itself is a placeholder, since nothing in
-// these bytes fixes its size.
+// ELEMENT IDENTITY IS NOT RECOVERED.  `m_lead` and `m_trail` place the
+// destructor call at the observed offset; the BFMEPlayerTemplateAsciiString
+// spelling is the matched name available for 0x00887940, not a claim about the
+// subobject's size or the enclosing vector element's identity.
 
 #include <vector>
 
-struct Mem00887940
+struct BFMEPlayerTemplateAsciiString
 {
-	~Mem00887940();
+	~BFMEPlayerTemplateAsciiString();
 };
 
-#define Q4_STRING_ELEM( T, SIZE, OFFSET )                                 	struct T                                                              	{                                                                     		char m_lead[ OFFSET ];                                            		Mem00887940 m_owned;                                              		char m_trail[ SIZE - OFFSET - 1 ];                                	};                                                                    	template class _STL::vector<T >;
+#define Q4_STRING_ELEM( T, SIZE, OFFSET )                                 	struct T                                                              	{                                                                     		char m_lead[ OFFSET ];                                            		BFMEPlayerTemplateAsciiString m_owned;                                              		char m_trail[ SIZE - OFFSET - 1 ];                                	};                                                                    	template class _STL::vector<T >;
 
 Q4_STRING_ELEM( Gen000FF7D0, 0x10, 0xc )
 Q4_STRING_ELEM( Gen00294280, 0x8, 0x4 )

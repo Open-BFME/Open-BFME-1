@@ -85,7 +85,8 @@ class GameTextInterface { public:
 };
 extern GameTextInterface *TheGameText;
 class Rva00548D30WindowGroup { public: void winEnable(bool); };
-class Rva00550500Target { public: void startPings(); };
+class Rva00550500Target;
+namespace Rva00550500 { void startPings(); }
 class BfmeAptScreenOnlineLogin { public:
  void submitNewLogin00551060();
  UnicodeString bfmeGetTextAt74() const;
@@ -114,7 +115,8 @@ void BfmeAptScreenOnlineLogin::submitNewLogin00551060() {
   TheGameSpyInfo->setLocalPassword(password);
   TheGameSpyBuddyMessageQueue->addRequest(req);
   ((Rva00548D30WindowGroup*)this)->winEnable(false);
-  ((Rva00550500Target*)this)->startPings();
+  ((void (__fastcall *)(Rva00550500Target *))&Rva00550500::startPings)(
+      (Rva00550500Target *)this);
  } else {
   if(email.isEmpty() && login.isEmpty() && password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
   else if(email.isEmpty() && login.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailNickname"));

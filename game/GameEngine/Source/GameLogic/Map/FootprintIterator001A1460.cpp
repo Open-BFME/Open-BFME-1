@@ -71,9 +71,6 @@ public:
 	GeometryInfo(const GeometryInfo &that);				///< 0x000FFD10
 	virtual ~GeometryInfo();								///< 0x000FFCA0
 
-	// 0x0087E8D0: true when the shape list holds exactly one GEOMETRY_BOX.
-	Bool rva0087E8D0() const;
-
 	Real getBoundingCircleRadius() const { return m_boundingCircleRadius; }
 
 private:
@@ -83,6 +80,12 @@ private:
 	Real m_boundingCircleRadius;						///< +0x10
 	Real m_boundingSphereRadius;						///< +0x14
 	unsigned char m_unmodelled18[0x44];
+};
+
+class BfmeThingTemplateShadowSelector
+{
+public:
+	Bool usePluralShadowName() const;
 };
 
 // The single-box radii accessors (BfmeGeometryInfo_boxRadii.cpp), reached
@@ -118,7 +121,7 @@ FootprintIterator001A1460::FootprintIterator001A1460(const GeometryInfo &geom,
 	Real angle, const Coord3D *pos)
 	: m_geom(geom), m_angle(angle), m_pos(*pos)
 {
-	if (geom.rva0087E8D0())
+	if (((const BfmeThingTemplateShadowSelector &)geom).usePluralShadowName())
 	{
 		const BfmeGeometryInfo &box = (const BfmeGeometryInfo &)geom;
 		Real halfsizeX = box.boxMajorRadius();
