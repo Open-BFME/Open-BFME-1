@@ -63,8 +63,8 @@ public:
 
 // The address pair vtable slot 55 hands back, and what a LANPlayer and a game
 // slot store. BfmeTransportAddress below is the same pair packed to six bytes,
-// which is the spelling ?queueSend@BfmeTransportQueueShim@@ is pinned under, so
-// both names have to stay.
+// which is what NetPacketAddress below spells -- so the two are the same object
+// seen at the same offsets, and Transport::queueSend takes it by pointer.
 struct BfmeNetAddress
 {
 	UnsignedInt m_ip;
@@ -140,16 +140,23 @@ public:
 	BfmeTransportAddress m_address;
 };
 
+// The pair retail's Transport::queueSend reads through a pointer: ip at +0x00,
+// port at +0x04 (mov edi,[ecx] / mov cx,[ecx+4] at 0x00683858). BfmeTransportAddress
+// above is the same pair, packed to the six bytes the slot and LANPlayer
+// layouts store, so the two are the same object seen at the same offsets.
+#pragma pack(push, 1)
+struct NetPacketAddress
+{
+	UnsignedInt m_ip;
+	unsigned short m_port;
+};
+#pragma pack(pop)
+
 class Transport
 {
 public:
 	void update( void );
-};
-
-class BfmeTransportQueueShim
-{
-public:
-	Bool queueSend(const BfmeTransportAddress *address,
+	Bool queueSend(NetPacketAddress *address,
 		const unsigned char *data, Int length);
 };
 
@@ -343,15 +350,15 @@ protected:
 	unsigned char m_unreconstructed_3e[0x40 - 0x3E];
 	LANGameInfo *m_currentGame;								///< +0x40
 	unsigned char m_bfmeHoleBeforeTransport[8];
-	BfmeTransportQueueShim * volatile m_transport;						///< +0x4C
+	Transport * volatile m_transport;						///< +0x4C
 	UnsignedInt m_broadcastAddr;								///< +0x50
 };
 
 // ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z
 void LANAPI::sendMessage( LANMessage *msg, UnsignedInt ip )
 {
-	BfmeTransportAddress *address =
-		reinterpret_cast<BfmeTransportAddress *>(ip);
+	NetPacketAddress *address =
+		reinterpret_cast<NetPacketAddress *>(ip);
 	if (address != 0 && (address->m_ip != 0 || address->m_port != 0))
 	{
 		m_transport->queueSend(address,
@@ -373,14 +380,15 @@ void LANAPI::sendMessage( LANMessage *msg, UnsignedInt ip )
 			BfmeGameSlot *slot = gameInfo->getSlot(i);
 			if (slot != 0 && slot->isHuman())
 			{
-				m_transport->queueSend(&slot->m_address,
+				m_transport->queueSend(
+					reinterpret_cast<NetPacketAddress *>(&slot->m_address),
 					reinterpret_cast<const unsigned char *>(msg), sizeof(LANMessage));
 			}
 		}
 	}
 	else
 	{
-		BfmeTransportAddress address;
+		NetPacketAddress address;
 		for (unsigned short port = 8086; port < 8094; ++port)
 		{
 			address.m_ip = m_broadcastAddr;
