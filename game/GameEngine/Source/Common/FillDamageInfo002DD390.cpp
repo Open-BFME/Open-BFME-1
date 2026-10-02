@@ -10,7 +10,6 @@ extern "C" float sqrt(float value);
 #pragma intrinsic(fabs, sqrt)
 
 extern const float BfmeZeroRange;
-extern const float Rva0109BF40ZeroRange;
 
 struct Coord3D
 {
@@ -112,9 +111,9 @@ bool FillDamageInfo002DD390::fill(IdRecord002DD390 *record, Object *thing, BFMED
 		delta.z -= thing->m_cachedPos.z;
 	}
 
-	if (fabs(delta.x) < Rva0109BF40ZeroRange &&
-		fabs(delta.y) < Rva0109BF40ZeroRange &&
-		fabs(delta.z) < Rva0109BF40ZeroRange)
+	if (fabs(delta.x) < 0.0001f &&
+		fabs(delta.y) < 0.0001f &&
+		fabs(delta.z) < 0.0001f)
 		delta.z = 1.0f;
 
 	out->m_delta30 = delta;
