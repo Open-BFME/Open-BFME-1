@@ -60,20 +60,6 @@ BoneFXDamage::~BoneFXDamage( void )
 }  // end ~BoneFXDamage
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage_onObjectCreated_Thunk.cpp
-// ?onObjectCreated@BoneFXDamage@@ present-unmatched
-void BoneFXDamage::onObjectCreated()
-{
-	static NameKeyType key_BoneFXUpdate = NAMEKEY("BoneFXUpdate");
-	BoneFXUpdate* bfxu = (BoneFXUpdate*)getObject()->findUpdateModule(key_BoneFXUpdate);
-	if (bfxu == NULL)
-	{
-		DEBUG_ASSERTCRASH(bfxu != NULL, ("BoneFXDamage requires BoneFXUpdate"));
-		throw INI_INVALID_DATA;
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 /** Switching damage states */
 //-------------------------------------------------------------------------------------------------
 void BoneFXDamage::onBodyDamageStateChange( const DamageInfo *damageInfo, 

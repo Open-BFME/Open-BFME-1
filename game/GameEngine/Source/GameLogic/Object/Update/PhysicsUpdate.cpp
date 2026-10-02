@@ -112,42 +112,6 @@ static Real heightToSpeed(Real height)
 } 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorModuleDataCtorThunk.cpp
-// ??0PhysicsBehaviorModuleData@@QAE@XZ present-unmatched
-PhysicsBehaviorModuleData::PhysicsBehaviorModuleData()
-{
-	m_mass = DEFAULT_MASS;
-	m_shockResistance = 0.0f;
-	m_shockMaxYaw = DEFAULT_SHOCK_YAW;
-	m_shockMaxPitch = DEFAULT_SHOCK_PITCH;
-	m_shockMaxRoll = DEFAULT_SHOCK_ROLL;
-	
-	m_forwardFriction = DEFAULT_FORWARD_FRICTION;
-	m_lateralFriction = DEFAULT_LATERAL_FRICTION;
-	m_ZFriction = DEFAULT_Z_FRICTION;
-	m_aerodynamicFriction = DEFAULT_AERO_FRICTION;
-	m_centerOfMassOffset = 0.0f;
-	m_allowBouncing = false;
-	m_allowCollideForce = true;
-	m_killWhenRestingOnGround = false;
-	m_minFallSpeedForDamage = heightToSpeed(40.0f);
-	m_fallHeightDamageFactor = 1.0f;	// was 10. now is 1.
-	/*
-		thru some bizarre editing mishap, we have been double-apply pitch/roll/yaw rates
-		to objects for, well, a long time, it looks like. I have corrected that problem
-		in the name of efficiency, but to maintain the same visual appearance without having
-		to edit every freaking INI in the world at this point, I am just multiplying 
-		all the results by a factor so that the effect is the same (but with less execution time).
-		I have put this factor into INI in the unlikely event we ever need to change it,
-		but defaulting it to 2 is, in fact, the right thing for now... (srj)
-	*/
-	m_pitchRollYawFactor = 2.0f;
-	m_vehicleCrashesIntoBuildingWeaponTemplate = TheWeaponStore->findWeaponTemplate("VehicleCrashesIntoBuildingWeapon");
-	m_vehicleCrashesIntoNonBuildingWeaponTemplate = TheWeaponStore->findWeaponTemplate("VehicleCrashesIntoNonBuildingWeapon");
-
-}
-
-//-------------------------------------------------------------------------------------------------
 static void parseHeightToSpeed( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	// don't bother trying to remember how far we've fallen; instead,

@@ -63,7 +63,7 @@ class ExperienceLevelSystem : public SubsystemInterface
 public:
 	virtual ~ExperienceLevelSystem();
 	void cleanup();
-	virtual void init() {}
+	virtual void init();
 	virtual void reset() {}
 	virtual void update() {}
 
