@@ -3,7 +3,7 @@
 typedef void *BfmeWindowHandle;
 typedef void *BfmeMenuHandle;
 
-extern BfmeWindowHandle Rva012ED238Global;
+extern BfmeWindowHandle ApplicationHWnd;
 
 extern "C" __declspec(dllimport) BfmeMenuHandle __stdcall GetSystemMenu(
 	BfmeWindowHandle window, int revert);
@@ -12,6 +12,6 @@ extern "C" __declspec(dllimport) unsigned int __stdcall EnableMenuItem(
 
 void bfmeDisableSystemMenuClose_00382DD0()
 {
-	BfmeMenuHandle menu = GetSystemMenu(Rva012ED238Global, 0);
+	BfmeMenuHandle menu = GetSystemMenu(ApplicationHWnd, 0);
 	EnableMenuItem(menu, 0xF060, 0);
 }

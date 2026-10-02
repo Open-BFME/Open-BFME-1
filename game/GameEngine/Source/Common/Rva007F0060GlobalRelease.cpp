@@ -12,13 +12,16 @@ struct Rva007F0060Allocator
 	void (__cdecl *m_release)( Rva007F0060Allocator *, int );
 };
 
-extern Rva007F0060Allocator *g_Rva0130A5B0;
+struct Rva007F00B0Allocator;
+extern Rva007F00B0Allocator *g_Rva0130A5B0;
 
 void Rva007F0060()
 {
-	if( g_Rva0130A5B0 )
+	Rva007F0060Allocator *allocator =
+		reinterpret_cast<Rva007F0060Allocator *>( g_Rva0130A5B0 );
+	if( allocator )
 	{
-		g_Rva0130A5B0->m_release( g_Rva0130A5B0, 0 );
+		allocator->m_release( allocator, 0 );
 		g_Rva0130A5B0 = 0;
 	}
 }
