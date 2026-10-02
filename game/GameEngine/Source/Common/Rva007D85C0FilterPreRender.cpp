@@ -1,25 +1,20 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
 //
 // Retail 0x007D74D0: Rva007D85C0::preRender.
 
-struct IDirect3DSurface8;
+#include "vector3.h"
 
-struct Vector3
-{
-	float X;
-	float Y;
-	float Z;
-};
+struct IDirect3DSurface8;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
 	static void Set_Render_Target(IDirect3DSurface8 *renderTarget, bool useDefaultDepthBuffer);
+	// Retail 0x00904250: BFME's seven-argument Clear (see WW3D2/DX8Wrapper_Clear.cpp).
+	static void Clear(bool clear_color, bool clear_z, bool clear_stencil,
+		const Vector3 &color, float dest_alpha, float z, unsigned int stencil);
 };
-
-void __cdecl bfmeClear7(bool clear_color, bool clear_z, bool clear_stencil,
-	const Vector3 &color, float dest_alpha, float z, unsigned int stencil);
 
 unsigned __cdecl bfmeCurrentCU();
 void __cdecl bfmeCopyCuSnap(void *vec, void *snap);
@@ -46,9 +41,10 @@ private:
 
 bool Rva007D85C0::preRender(bool &skipRender, int &scenePassMode)
 {
+	// The real class Vector3 is not a POD, so the shared 24-byte local stays a
+	// union of ints and is viewed as a Vector3 only where the caller needs one.
 	union {
 		int snap[6];
-		Vector3 color;
 	} local;
 	skipRender = false;
 	if (g_bfmeDirtyCU)
@@ -63,10 +59,10 @@ bool Rva007D85C0::preRender(bool &skipRender, int &scenePassMode)
 		g_bfmeDirtyCU = 0;
 	}
 	DX8Wrapper::Set_Render_Target(m_28, true);
-	local.color.X = 0.0f;
-	local.color.Y = 0.0f;
-	local.color.Z = 0.0f;
-	bfmeClear7(true, false, false, local.color, 0.0f, 1.0f, 0);
+	reinterpret_cast<Vector3 *>(&local)->X = 0.0f;
+	reinterpret_cast<Vector3 *>(&local)->Y = 0.0f;
+	reinterpret_cast<Vector3 *>(&local)->Z = 0.0f;
+	DX8Wrapper::Clear(true, false, false, *reinterpret_cast<const Vector3 *>(&local), 0.0f, 1.0f, 0);
 	m_0C = 1;
 	return true;
 }

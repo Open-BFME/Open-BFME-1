@@ -1,21 +1,15 @@
-// cl: /O2
+// cl: /O2 /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
 
-struct Rva0078B280Color
+#include "vector3.h"
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
+class DX8Wrapper
 {
-	Rva0078B280Color() : m_red(0.0f), m_green(0.0f), m_blue(0.0f) {}
-	float m_red;
-	float m_green;
-	float m_blue;
+public:
+	// Retail 0x00904250: BFME's seven-argument Clear (see WW3D2/DX8Wrapper_Clear.cpp).
+	static void Clear(bool clear_color, bool clear_z, bool clear_stencil,
+		const Vector3 &color, float dest_alpha, float z, unsigned int stencil);
 };
-
-void __cdecl bfmeClear0078B280(
-	int clearColor,
-	int clearDepth,
-	int clearStencil,
-	const Rva0078B280Color &color,
-	int depth,
-	int stencil,
-	int rectangleCount);
 
 class Rva0078B280Renderer
 {
@@ -37,8 +31,16 @@ void Rva0078B280Renderer::bfmeAdvanceStencil(void)
 		if (m_stencilGeneration != 1)
 			return;
 
-		bfmeClear0078B280(0, 0, 1, Rva0078B280Color(), 0, 0, 0);
+		Vector3 color;
+		color.X = 0.0f;
+		color.Y = 0.0f;
+		color.Z = 0.0f;
+		DX8Wrapper::Clear(false, false, true, color, 0.0f, 0.0f, 0);
 	} else {
-		bfmeClear0078B280(0, 1, 1, Rva0078B280Color(), 0, 0, 0);
+		Vector3 color;
+		color.X = 0.0f;
+		color.Y = 0.0f;
+		color.Z = 0.0f;
+		DX8Wrapper::Clear(false, true, true, color, 0.0f, 0.0f, 0);
 	}
 }
