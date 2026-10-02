@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl HordeContainFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT thunk in front of this class's buildFieldParse body,
+// 0x0043DE29 = `jmp 0x00620160`, which the ledger owns as
+// ?j_0003de29@@YAXXZ (game/gen_small/gthunks_069.cpp). The body it jumps to
+// (RVA 0x00220160) is still unclaimed, so name the thunk: nothing defines a
+// HordeContainFieldParse symbol at link time.
+extern "C" void __cdecl __identifier("?j_0003de29@@YAXXZ")(MultiIniFieldParse &parse);
 
 class HordeContain
 {
@@ -43,6 +48,6 @@ ModuleData *HordeContain::friend_newModuleData(INI *ini)
 {
 	HordeContainModuleData *data = new HordeContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &HordeContainFieldParse);
+		ini->initFromINIMultiProc(data, &__identifier("?j_0003de29@@YAXXZ"));
 	return (ModuleData *)data;
 }

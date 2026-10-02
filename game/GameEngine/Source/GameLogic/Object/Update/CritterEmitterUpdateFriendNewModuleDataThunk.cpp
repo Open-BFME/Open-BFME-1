@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl CritterEmitterUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail does not push this class's buildFieldParse body; it pushes the ILT
+// thunk in front of it, 0x004215DA = `jmp 0x005FAB70`, which the ledger owns
+// as ?j_000215da@@YAXXZ (game/gen_small/gthunks_036.cpp). The body the thunk
+// jumps to (RVA 0x001FAB70) is still unclaimed, so name the thunk, not a
+// body: nothing defines a CritterEmitterUpdateFieldParse symbol at link time.
+extern "C" void __cdecl __identifier("?j_000215da@@YAXXZ")(MultiIniFieldParse &parse);
 
 class CritterEmitterUpdate
 {
@@ -43,6 +48,6 @@ ModuleData *CritterEmitterUpdate::friend_newModuleData(INI *ini)
 {
 	CritterEmitterUpdateModuleData *data = new CritterEmitterUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &CritterEmitterUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &__identifier("?j_000215da@@YAXXZ"));
 	return (ModuleData *)data;
 }

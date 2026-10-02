@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl GiantBirdSlowDeathBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT thunk in front of this class's buildFieldParse body,
+// 0x0043C268 = `jmp 0x005FFB10`, which the ledger owns as
+// ?j_0003c268@@YAXXZ (game/gen_small/gthunks_067.cpp). The body it jumps to
+// (RVA 0x001FFB10) is still unclaimed, so name the thunk: nothing defines a
+// GiantBirdSlowDeathBehaviorFieldParse symbol at link time.
+extern "C" void __cdecl __identifier("?j_0003c268@@YAXXZ")(MultiIniFieldParse &parse);
 
 class GiantBirdSlowDeathBehavior
 {
@@ -43,6 +48,6 @@ ModuleData *GiantBirdSlowDeathBehavior::friend_newModuleData(INI *ini)
 {
 	GiantBirdSlowDeathBehaviorModuleData *data = new GiantBirdSlowDeathBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &GiantBirdSlowDeathBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, &__identifier("?j_0003c268@@YAXXZ"));
 	return (ModuleData *)data;
 }
