@@ -1,5 +1,5 @@
 // ?AddSubInternalFPF@@YAXEPAUInternalFPF@@00@Z
-// partial score=0.9977603583426652 date=2026-09-22
+// partial score=0.9978 date=2026-09-22
 // cl: /O2 /GS /MD /GR- /EHsc- -Iinputs/vendor/nbench
 // AddSubInternalFPF at RVA 0x00879900. Identity: landed DoEmFloatIteration
 // at 0x0087A3B0 calls this body twice; BYTEmark source and helper sequence agree.
