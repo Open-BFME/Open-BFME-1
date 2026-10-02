@@ -6130,95 +6130,10 @@ Path *Pathfinder::getAircraftPath( const Object *obj, const Coord3D *to )
 
 
 
-/** 
- * Process some path requests in the pathfind queue.
- */
-//DECLARE_PERF_TIMER(processPathfindQueue)
-// ?processPathfindQueue@Pathfinder@@QAEXXZ present-unmatched
-void Pathfinder::processPathfindQueue(void)
-{
-	//USE_PERF_TIMER(processPathfindQueue)
-	if (!m_isMapReady) {
-		return;
-	}
-#ifdef DEBUG_QPF
-#if defined _DEBUG || defined _INTERNAL
-	Int startTimeMS = ::GetTickCount();
-	__int64 startTime64;
-	double timeToUpdate=0.0f;
-	__int64 endTime64,freq64;
-	QueryPerformanceFrequency((LARGE_INTEGER *)&freq64);
-	QueryPerformanceCounter((LARGE_INTEGER *)&startTime64);
-#endif
-#endif
-
-
-
-	if (  
-#ifdef forceRefreshCalling
-#pragma message("AHHHH!, forced calls to pathzonerefresh still in code...  notify M Lorenzen")
-    s_stopForceCalling==FALSE || 
-#endif
-    m_zoneManager.needToCalculateZones()) 
-  {
-		m_zoneManager.calculateZones(m_map, m_layers, m_extent);
-		return;
-	}
-
-	// Get the current logical extent.
-	Region3D terrainExtent;
-	TheTerrainLogic->getExtent( &terrainExtent );
-	IRegion2D bounds;
-	bounds.lo.x = REAL_TO_INT_FLOOR(terrainExtent.lo.x / PATHFIND_CELL_SIZE_F);
-	bounds.hi.x = REAL_TO_INT_FLOOR(terrainExtent.hi.x / PATHFIND_CELL_SIZE_F);
-	bounds.lo.y = REAL_TO_INT_FLOOR(terrainExtent.lo.y / PATHFIND_CELL_SIZE_F);
-	bounds.hi.y = REAL_TO_INT_FLOOR(terrainExtent.hi.y / PATHFIND_CELL_SIZE_F);
-	bounds.hi.x--;
-	bounds.hi.y--;
-	m_logicalExtent = bounds;
-
-	m_cumulativeCellsAllocated = 0;	// Number of pathfind cells examined.
-#ifdef DEBUG_QPF
-	Int pathsFound = 0;
-#endif
-	while (m_cumulativeCellsAllocated < PATHFIND_CELLS_PER_FRAME && 
-		m_queuePRTail!=m_queuePRHead) {
-		Object *obj = TheGameLogic->findObjectByID(m_queuedPathfindRequests[m_queuePRHead]);
-		m_queuedPathfindRequests[m_queuePRHead] = INVALID_ID;
-		if (obj) {
-			AIUpdateInterface *ai = obj->getAIUpdateInterface();
-			if (ai) {
-				ai->doPathfind(this);
-#ifdef DEBUG_QPF
-				pathsFound++;
-#endif
-			}
-		}
-		m_queuePRHead = m_queuePRHead+1;
-		if (m_queuePRHead >= PATHFIND_QUEUE_LEN) {
-			m_queuePRHead = 0;
-		}
-	}
-	if (pathsFound>0) {
-#ifdef DEBUG_QPF
-#if defined _DEBUG || defined _INTERNAL
-		QueryPerformanceCounter((LARGE_INTEGER *)&endTime64);
-		timeToUpdate = ((double)(endTime64-startTime64) / (double)(freq64));
-		if (timeToUpdate>0.01f) 
-		{
-			DEBUG_LOG(("%d Pathfind queue: %d paths, %d cells", TheGameLogic->getFrame(), pathsFound, m_cumulativeCellsAllocated));
-			DEBUG_LOG(("Time %f (%f)", timeToUpdate, (::GetTickCount()-startTimeMS)/1000.0f));
-			DEBUG_LOG(("\n"));
-		}
-#endif
-#endif
-	}
-#if defined _DEBUG || defined _INTERNAL
-	doDebugIcons();
-#endif
-
-}
-
+// BFME processPathfindQueue is verified at RVA 003DC190 in
+// ../Pathfinder/PathfinderProcessPathfindQueue.cpp. The Zero Hour body here
+// used a different request budget and zone refresh; it must not emit a
+// competing definition of the retail method.
 
 // ?checkChangeLayers@Pathfinder@@IAEXPAVPathfindCell@@@Z present-unmatched
 void Pathfinder::checkChangeLayers(PathfindCell *parentCell)
