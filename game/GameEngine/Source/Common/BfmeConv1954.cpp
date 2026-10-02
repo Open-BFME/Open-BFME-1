@@ -1,4 +1,10 @@
-extern char g_bfmeEmptyERJ[];
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+#include "Common/PlayerList.h"
+
+// Shared empty string at retail VA 0x0107388B.
+extern const char g_bfmeEmptyAscii[];
 
 struct BfmeStrDataERJ
 {
@@ -12,38 +18,17 @@ class BfmeStrERJ
 public:
 	const char *bfmeTextERJ() const
 	{
-		return m_bfmeDataERJ ? m_bfmeDataERJ->m_bfmeTextERJ : g_bfmeEmptyERJ;
+		return m_bfmeDataERJ ? m_bfmeDataERJ->m_bfmeTextERJ : g_bfmeEmptyAscii;
 	}
 
 	BfmeStrDataERJ *m_bfmeDataERJ;
 };
-
-// NameKeyType is an enum, not a typedef of int: retail's mangled callee is
-// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-};
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
-
-extern NameKeyGenerator *g_bfmeKeyGenERJ;
 
 class BfmePlayerERJ
 {
 public:
 	unsigned char m_bfmeHeadERJ[0x20];
 	int m_bfmeKeyERJ;
-};
-
-class BfmePlayersERJ
-{
-public:
-	BfmePlayerERJ *bfmeNthERJ(int index);
 };
 
 // Retail's player-list global at 0x012ED748, spelled canonically so this TU
@@ -83,11 +68,11 @@ extern SidesList *TheSidesList;
 
 void * __stdcall bfmeLookupERJ(BfmeStrERJ *name)
 {
-	int key = g_bfmeKeyGenERJ->nameToKey(name->bfmeTextERJ());
+	int key = TheNameKeyGenerator->nameToKey(name->bfmeTextERJ());
 
 	for (int i = 0; i < ((BfmeTableERJ *)TheSidesList)->m_bfmeCountERJ; ++i)
 	{
-		BfmePlayerERJ *player = ((BfmePlayersERJ *)ThePlayerList)->bfmeNthERJ(i);
+		BfmePlayerERJ *player = (BfmePlayerERJ *)ThePlayerList->getNthPlayer(i);
 
 		if (player != 0 && player->m_bfmeKeyERJ == key)
 			return ((BfmeTableERJ *)TheSidesList)->bfmeAtERJ(i)->m_bfmeValueERJ;

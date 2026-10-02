@@ -1,8 +1,9 @@
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 // stlport
 // STLport 4.5.3 stdio_istreambuf::pbackfail (src/stdio_streambuf.cpp).
 
-#include "stlport_prefix.h"
+// The library prefix force-instantiates unrelated stream templates, including
+// wide pubimbue, whose definition belongs to stlport_wide_streambuf_pubimbue.cpp.
 #include <stdio_streambuf>
 
 namespace _SgI {
