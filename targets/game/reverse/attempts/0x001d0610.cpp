@@ -1,5 +1,5 @@
 // ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z
-// partial score=1.0 date=2026-09-27
+// partial score=1.0 date=2026-10-02
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/bfmeobjectlayout /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Object::updateObjValuesFromMapProperties -- BFME 1.03 RVA 001D0610 / 1951 B.
@@ -25,7 +25,6 @@
 #include "GameLogic/Object.h"
 
 inline AsciiString::~AsciiString(){((StringBase<char>*)this)->StringBase<char>::~StringBase();}
-template<class T> inline void StringBase<T>::clear(){releaseBuffer();}
 template<class T> inline bool StringBase<T>::isEmpty() const {return !m_data || m_data->length==0;}
 
 template<class T> __forceinline T& rva001D0610Field(void *p, int off) { return *(T*)((char*)p+off); }
@@ -317,7 +316,7 @@ virtual Rva001D0610Drawable *slot28();
  Rva001D0610Drawable* drawable(){return rva001D0610Field<Rva001D0610Drawable*>(this,0x80);}
  bool rva001C98C0()const;
  void selectable(bool b){rva001D0610Field<bool>(this,0x340)=b;if(drawable())drawable()->rva00411F80(b);}
- void condition(int bit,bool set){ BitFlags<320> &flags=rva001D0610Field<BitFlags<320> >(this,0x110);
+ __forceinline void condition(int bit,bool set){ BitFlags<320> &flags=rva001D0610Field<BitFlags<320> >(this,0x110);
  if(set){if(flags.test(bit))return;flags.set(bit);}else{if(!flags.test(bit))return;flags.set(bit,0);}
  if(drawable())drawable()->rva0041CCD0(flags,0,0);if(ai())ai()->rva0026ED10();}
 
