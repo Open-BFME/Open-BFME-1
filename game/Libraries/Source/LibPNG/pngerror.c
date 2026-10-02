@@ -103,14 +103,6 @@ png_format_buffer(png_structp png_ptr, png_charp buffer, png_const_charp message
 }
 
 void
-png_chunk_error(png_structp png_ptr, png_const_charp message)
-{
-   char msg[16+64];
-   png_format_buffer(png_ptr, msg, message);
-   png_error(png_ptr, msg);
-}
-
-void
 png_chunk_warning(png_structp png_ptr, png_const_charp message)
 {
    char msg[16+64];
@@ -180,6 +172,5 @@ png_get_error_ptr(png_structp png_ptr)
 {
    return ((png_voidp)png_ptr->error_ptr);
 }
-
 
 

@@ -69,18 +69,7 @@ GameMessageParser::GameMessageParser()
 // The exact retail message-taking constructor is emitted by GameMessageParserCtorThunk.cpp.
 
 //----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameMessageParserDtor.cpp
-// ??1GameMessageParser@@MAE@XZ present-unmatched
-GameMessageParser::~GameMessageParser() 
-{
-	GameMessageParserArgumentType *temp = NULL;
-	while (m_first != NULL) {
-		temp = m_first->getNext();
-		m_first->deleteInstance();
-		m_first = temp;
-	}
-}
-
+// Definition lives in game/GameEngine/Source/GameNetwork/GameMessageParserDtor.cpp.
 //----------------------------------------------------------------------------
 void GameMessageParser::addArgType(GameMessageArgumentDataType type, Int argCount) 
 {
@@ -107,4 +96,3 @@ GameMessageParserArgumentType::GameMessageParserArgumentType(GameMessageArgument
 GameMessageParserArgumentType::~GameMessageParserArgumentType() 
 {
 }
-
