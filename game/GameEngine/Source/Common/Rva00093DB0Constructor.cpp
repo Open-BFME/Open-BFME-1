@@ -1,16 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 // Address-derived owner of the three self-linked STLport headers at retail
 // 0x00093DB0.  The first header reserves an 0x18-byte red-black node; the two
 // trailing headers reserve the 0x0c-byte list-node shape used by their maps.
-
-namespace _STL
-{
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int bytes);
-};
-}
 
 struct Rva00093DB0Node18
 {
@@ -32,7 +25,7 @@ public:
 	Rva00093DB0Tree18(void)
 	{
 		m_first = 0;
-		m_first = (Rva00093DB0Node18 *)_STL::__new_alloc::allocate(0x18);
+		m_first = (Rva00093DB0Node18 *)_STL::__node_alloc<true, 0>::allocate(0x18);
 		m_count = 0;
 		m_first->m_colour = 0;
 		m_first->m_parent = 0;
@@ -52,7 +45,7 @@ public:
 	{
 		m_first = 0;
 		Rva00093DB0Node0C *node =
-			(Rva00093DB0Node0C *)_STL::__new_alloc::allocate(0x0c);
+			(Rva00093DB0Node0C *)_STL::__node_alloc<true, 0>::allocate(0x0c);
 		node->m_left = node;
 		node->m_right = node;
 		m_first = node;
