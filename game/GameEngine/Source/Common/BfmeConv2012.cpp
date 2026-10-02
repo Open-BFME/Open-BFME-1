@@ -39,10 +39,14 @@ public:
 	BfmeStringData3AF0 *m_data;
 };
 
-class BfmeHostEAW
+class BfmeHostEAW;
+
+class Rva8CD130String;
+
+class Rva8CD130Value
 {
 public:
-	void bfmeFillEAW(BfmeStrEAW *out);
+	void getName(Rva8CD130String *out);
 };
 
 extern void (__cdecl *g_bfmeCompareEAW)(const char *a, const char *b);
@@ -51,7 +55,7 @@ char __stdcall bfmeReportEAW(void *unused, BfmeStrEAW *other, BfmeHostEAW *host)
 {
 	BfmeStrEAW text;
 
-	host->bfmeFillEAW(&text);
+	((Rva8CD130Value *)host)->getName((Rva8CD130String *)&text);
 
 	g_bfmeCompareEAW(other->strEAW(), text.strEAW());
 

@@ -38,15 +38,12 @@ struct Rva00899770String
 	}
 };
 
-struct BfmeStr1233
-{
-	Rva00899770Block *m_block;
-};
+class Rva8CD130String;
 
-class BfmeE1233
+class Rva8CD130Value
 {
 public:
-	void bfmeName1233(BfmeStr1233 *a);
+	void getName(Rva8CD130String *a);
 };
 
 class Rva00899770
@@ -58,6 +55,6 @@ public:
 void Rva00899770::exportString(char *out)
 {
 	Rva00899770String value;
-	((BfmeE1233 *)this)->bfmeName1233((BfmeStr1233 *)&value);
+	((Rva8CD130Value *)this)->getName((Rva8CD130String *)&value);
 	strcpy(out, (const char *)value.m_block->m_text);
 }

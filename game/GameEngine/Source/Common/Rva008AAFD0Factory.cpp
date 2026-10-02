@@ -43,15 +43,14 @@ public:
 	void bfmeTruncVKK(unsigned n);
 };
 
-struct BfmeStr1233
-{
-	Rva00891B80Block *m_block;
-};
+class BfmeE1233;
 
-class BfmeE1233
+class Rva8CD130String;
+
+class Rva8CD130Value
 {
 public:
-	void bfmeName1233(BfmeStr1233 *a);
+	void getName(Rva8CD130String *a);
 };
 
 class Rva008A9B00
@@ -104,7 +103,7 @@ extern Rva008A9B00 *g_rva008AAFD0Free;
 Rva008A9B00 *rva008AAFD0Make(BfmeE1233 *src)
 {
 	BfmeUtf8String008A01F0 local;
-	src->bfmeName1233((BfmeStr1233 *)&local);
+	((Rva8CD130Value *)src)->getName((Rva8CD130String *)&local);
 	local.map();
 
 	Rva008A9B00 *obj = g_rva008AAFD0Free;

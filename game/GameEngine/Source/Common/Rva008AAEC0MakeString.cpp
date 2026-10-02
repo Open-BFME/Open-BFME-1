@@ -44,15 +44,14 @@ public:
 	AptStringBlock *m_data;
 };
 
-struct BfmeStr1233
-{
-	AptStringBlock *m_data;
-};
+class BfmeE1233;
 
-class BfmeE1233
+class Rva8CD130String;
+
+class Rva8CD130Value
 {
 public:
-	void bfmeName1233(BfmeStr1233 *out);
+	void getName(Rva8CD130String *out);
 };
 
 class BfmeStrVKK
@@ -103,7 +102,7 @@ struct AptValueRegistry
 Rva008A9B00 *rva8AAEC0MakeString(BfmeE1233 *source)
 {
 	BfmeUtf8String008A00C0 name;
-	source->bfmeName1233((BfmeStr1233 *)&name);
+	((Rva8CD130Value *)source)->getName((Rva8CD130String *)&name);
 	name.map();
 
 	Rva008A9B00 *object = g_aptStringFreeList;

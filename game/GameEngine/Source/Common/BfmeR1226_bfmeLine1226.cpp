@@ -32,15 +32,12 @@ public:
 	BfmeStringBlock1226 *m_block;
 };
 
-struct BfmeStr1233
-{
-	BfmeStringBlock1226 *m_block;
-};
+class Rva8CD130String;
 
-class BfmeE1233
+class Rva8CD130Value
 {
 public:
-	void bfmeName1233(BfmeStr1233 *out);
+	void getName(Rva8CD130String *out);
 	virtual void slot00();
 	virtual void release();
 };
@@ -51,16 +48,16 @@ public:
 	void bfmeLine1226(char *text);
 
 	char m_padding00[0x7c];
-	BfmeE1233 *m_pending;
+	Rva8CD130Value *m_pending;
 };
 
 void BfmeR1226::bfmeLine1226(char *text)
 {
-	BfmeE1233 *pending = m_pending;
+	Rva8CD130Value *pending = m_pending;
 	if (pending != 0)
 	{
 		BfmeString1226 name;
-		pending->bfmeName1233((BfmeStr1233 *)&name);
+		pending->getName((Rva8CD130String *)&name);
 		g_bfmeCallback1226("<WARNING> Actionscript un-caught exception encountered during \"%s\"\n", text);
 		g_bfmeCallback1226("<WARNING> Actionscript error message: \"%s\"\n",
 			(char *)name.m_block + 8);

@@ -100,8 +100,14 @@ public:
 
 class BfmeHostEAW
 {
+};
+
+class Rva8CD130String;
+
+class Rva8CD130Value
+{
 public:
-	void bfmeFillEAW(BfmeStrEAW *out);
+	void getName(Rva8CD130String *out);
 };
 
 class BfmeStrVKK
@@ -171,7 +177,7 @@ extern AptValue **g_bfmeArr1233;
 Rva008C3B60Node *rva008AA130(BfmeHostEAW *first, int count)
 {
 	EAStringC result;
-	first->bfmeFillEAW((BfmeStrEAW *)&result);
+	((Rva8CD130Value *)first)->getName((Rva8CD130String *)&result);
 	int index = 0;
 	if (count > 0)
 	{
@@ -181,7 +187,7 @@ Rva008C3B60Node *rva008AA130(BfmeHostEAW *first, int count)
 				BfmeStrEAW text;
 				AptValue *value = g_bfmeArr1233[
 					Rva008AE770TheStack.m_count - index - 1];
-				value->bfmeFillEAW(&text);
+				((Rva8CD130Value *)value)->getName((Rva8CD130String *)&text);
 				((BfmeStrVKJ *)&result)->bfmeAssignVKJ(
 					*(const BfmeStrVKJ *)&text);
 			}
