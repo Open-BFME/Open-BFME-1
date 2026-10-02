@@ -91,7 +91,10 @@ private:
 };
 
 class BfmeThingTC { public: void bfmeBaseTC(); };
-extern "C" const void *_bfmeVftTC[];
+// Retail table 0x011051EC is the vftable of Rva011051ECSkirmishField, the
+// defining name recorded for that address in dir32_addresses.csv.
+extern "C" const void *__identifier("??_7Rva011051ECSkirmishField@@6B@")[];
+#define g_bfmeRva011051ECVt __identifier("??_7Rva011051ECSkirmishField@@6B@")
 
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;   // 0x012F4988
@@ -106,7 +109,7 @@ public:
 	InGameChatSlot()
 	{
 		((BfmeThingTC *)this)->bfmeBaseTC();
-		m_bfmeVft = (void *)_bfmeVftTC;
+		m_bfmeVft = (void *)g_bfmeRva011051ECVt;
 		m_bfmeWhat = (void *)4;
 	}
 	~InGameChatSlot();
