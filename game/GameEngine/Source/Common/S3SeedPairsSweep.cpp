@@ -21,6 +21,18 @@
 // where `this` is dead.  That is the compiler's choice, not the source's, so
 // the offsets below are declared plainly and the shape falls out.
 
+// The accept this body calls on its own `this` is retail's shared flag-pair
+// dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT 0x000044C1, declared
+// here under its real spelling so the reference resolves; the definition lives
+// in game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp.
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeSeedPair
 {
 	unsigned char m_bfmeFirst;
@@ -218,8 +230,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -230,8 +240,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmeItem1;				// +0x21
@@ -243,8 +251,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x24];
 	char m_bfmeItem0;				// +0x24
 	char m_bfmePad1[0x3];
@@ -257,8 +263,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -269,8 +273,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -283,8 +285,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -400,8 +400,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x28];
 	char m_bfmeItem0;				// +0x28
 	char m_bfmePad1[0x3];
@@ -430,8 +428,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -442,8 +438,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -454,8 +448,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -468,8 +460,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmeItem1;				// +0x21
@@ -481,8 +471,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -503,8 +491,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -885,7 +871,7 @@ void Gen_001ED5F0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt68(&m_bfmeItem0);
 }
 
@@ -898,7 +884,7 @@ void Gen_001F6900::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);
 }
@@ -912,7 +898,7 @@ void Gen_001F7A70::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 	target->bfmeTakeAt78(&m_bfmeItem1);
 }
@@ -926,7 +912,7 @@ void Gen_001FADA0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt6C(&m_bfmeItem0);
 }
 
@@ -939,7 +925,7 @@ void Gen_00200380::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt6C(&m_bfmeItem1);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 }
@@ -953,7 +939,7 @@ void Gen_00203DF0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt6C(&m_bfmeItem0);
 	target->bfmeTakeAt78(&m_bfmeItem1);
 	target->bfmeTakeAt78(&m_bfmeItem2);
@@ -1068,7 +1054,7 @@ void Gen_0026A980::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt74(&m_bfmeItem0);
 	target->bfmeTakeAt78(&m_bfmeItem1);
 	target->bfmeTakeAt74(&m_bfmeItem2);
@@ -1097,7 +1083,7 @@ void Gen_002815B0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 }
 
@@ -1110,7 +1096,7 @@ void Gen_0028C760::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt74(&m_bfmeItem0);
 }
 
@@ -1123,7 +1109,7 @@ void Gen_0028C980::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);
 }
@@ -1137,7 +1123,7 @@ void Gen_0028D3C0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt8C(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);
 }
@@ -1151,7 +1137,7 @@ void Gen_00291DC0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt74(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem3);
 	target->bfmeTakeAt74(&m_bfmeItem1);
@@ -1171,7 +1157,7 @@ void Gen_0029FFA0::bfmeSeed(BfmeSeedTarget *target)
 	pair.m_bfmeSecond = 1;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 }
 

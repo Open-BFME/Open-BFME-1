@@ -15,6 +15,18 @@
 // pending __cdecl cleanup; matching it means tracking the stack delta rather
 // than the literal displacement.
 
+// The accept this body calls on its own `this` is retail's shared flag-pair
+// dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT 0x000044C1, declared
+// here under its real spelling so the reference resolves; the definition lives
+// in game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp.
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeVersionBlock
 {
 	unsigned char m_bfmeKind;
@@ -161,8 +173,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -175,8 +185,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 	char m_bfmePad1[0x3];
@@ -189,8 +197,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x24];
 	char m_bfmeItem0;				// +0x24
 };
@@ -247,8 +253,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x24];
 	char m_bfmeItem0;				// +0x24
 	char m_bfmePad1[0x3];
@@ -494,7 +498,7 @@ void Gen_001F7FE0::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	target->bfmeTakeAt8C(&m_bfmeItem0);
 	if ( version.m_bfmeVersion >= 2 )
@@ -514,7 +518,7 @@ void Gen_00201B00::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&version);
 	if ( version.m_bfmeVersion >= 2 )
 	{
-		bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	}
 	if ( version.m_bfmeVersion >= 3 )
@@ -535,7 +539,7 @@ void Gen_0020D2B0::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&version);
 	if ( version.m_bfmeVersion >= 2 )
 	{
-		bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	}
 	target->bfmeTakeAt8C(&m_bfmeItem0);
@@ -614,7 +618,7 @@ void Gen_00281CD0::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	target->bfmeTakeAt74(&m_bfmeItem0);
 	target->bfmeTakeAt8C(&m_bfmeItem1);

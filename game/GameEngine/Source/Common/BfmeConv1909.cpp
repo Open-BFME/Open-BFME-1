@@ -1,5 +1,17 @@
 class BfmeAgentBD;
 
+// The one call this body makes into the seed family is retail's shared
+// flag-pair dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT
+// 0x000044C1 -- declared here under its real spelling so the reference
+// resolves (see game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp).
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeInfoBD
 {
 	unsigned char m_bfmeFlagBD;
@@ -62,7 +74,7 @@ class BfmeHostBD
 {
 public:
 	void bfmeSaveBD(BfmeAgentBD *ag);
-	void bfmeBeginBD(BfmeAgentBD *ag);
+	
 
 	unsigned char m_bfmeHeadBD[0x20];
 	unsigned char m_bfmeSlotABD[4];
@@ -74,7 +86,7 @@ public:
 
 void BfmeHostBD::bfmeSaveBD(BfmeAgentBD *ag)
 {
-	bfmeBeginBD(ag);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)ag);
 
 	if (ag->bfmeSkipBD() != 0)
 		return;

@@ -10,14 +10,24 @@ typedef unsigned int UnsignedInt;
 class BfmeSeedTarget;
 class Rva00286C40Self;
 
+// The inherited accept this body calls is retail's shared flag-pair dispatcher
+// `Gen002B2080::handle(FlagPairTarget *)` at ILT 0x000044C1, declared here under
+// its real spelling so the reference resolves (the definition lives in
+// game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp).
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 class Gen_001ED0C0
 {
 public:
 	friend class Rva00286C40Self;
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);
-
 	unsigned char m_pad00[0x24];
 };
 
@@ -103,7 +113,7 @@ public:
 
 void Rva00286C40Self::Rva00286C40(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 	if (target->slot04())
 		return;
 

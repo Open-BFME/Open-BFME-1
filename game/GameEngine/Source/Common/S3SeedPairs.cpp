@@ -12,6 +12,18 @@
 // over the sub-objects at this+0x24 and this+0x28. The last of the three is
 // formed with add edi,0x28 rather than a lea, because edi is dead afterwards.
 
+// The accept this body calls on its own `this` is retail's shared flag-pair
+// dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT 0x000044C1, declared
+// here under its real spelling so the reference resolves; the definition lives
+// in game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp.
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeSeedPair
 {
 	unsigned char m_bfmeFirst;
@@ -63,27 +75,18 @@ class Gen_0020CDE0
 {
 public:
 	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
 };
 
 class Gen_00282EA0
 {
 public:
 	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
 };
 
 class Gen_0028A260
 {
 public:
 	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
 };
 
 class Gen_0015BBD0
@@ -130,7 +133,7 @@ void Gen_0020CDE0::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 
 	if (pair.m_bfmeSecond >= 2)
-		bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 }
 
 // ?bfmeSeed@Gen_00282EA0@@QAEXPAVBfmeSeedTarget@@@Z
@@ -144,7 +147,7 @@ void Gen_00282EA0::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 
 	if (pair.m_bfmeSecond >= 2)
-		bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 }
 
 // ?bfmeSeed@Gen_0028A260@@QAEXPAVBfmeSeedTarget@@@Z
@@ -158,7 +161,7 @@ void Gen_0028A260::bfmeSeed(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 
 	if (pair.m_bfmeSecond >= 2)
-		bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 }
 
 // ?bfmeSeed@Gen_0015BBD0@@QAEXPAVBfmeSeedTarget@@@Z

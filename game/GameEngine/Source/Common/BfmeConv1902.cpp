@@ -1,3 +1,15 @@
+// The one call this body makes into the seed family is retail's shared
+// flag-pair dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT
+// 0x000044C1 -- declared here under its real spelling so the reference
+// resolves (see game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp).
+class FlagPairTarget;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 struct BfmeInfoAV
 {
 	unsigned char m_bfmeFlagAV;
@@ -49,7 +61,7 @@ class BfmeHostAV
 {
 public:
 	void bfmeSaveAV(BfmeAgentAV *ag);
-	void bfmeBeginAV(BfmeAgentAV *ag);
+	
 
 	unsigned char m_bfmeHeadAV[0x24];
 	unsigned char m_bfmeGateAV[4];
@@ -60,7 +72,7 @@ public:
 
 void BfmeHostAV::bfmeSaveAV(BfmeAgentAV *ag)
 {
-	bfmeBeginAV(ag);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)ag);
 
 	if (ag->bfmeSkipAV() != 0)
 		return;
