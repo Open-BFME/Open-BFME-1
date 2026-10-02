@@ -71,3 +71,14 @@ a bare `ret`, EmotionSystem's empty update.
 
 - 0x0037CAC0: `?update@BuildAssistant@@UAEXXZ` -> `?update@EmotionSystem@@UAEXXZ`
 - 0x000FEBE0: `?process@SellList000FEBE0@@QAEXXZ` -> `?update@BuildAssistant@@UAEXXZ`
+
+## Independent re-derivation (sol/w3 a5f5283c00)
+
+A separate session reached the same identity for 0x000FEBE0. Facts it adds:
+
+- Table 0x010860D8 slot 5 is at VA 0x010860EC and holds ILT 0x0043FE72,
+  whose bytes `E9 69 ED 0B 00` target VA 0x004FEBE0.
+- The matched GameLogic::update (0x0038DA10) loads TheBuildAssistant
+  (global VA 0x012ED83C) at VA 0x0078E12C and calls virtual +0x14 at
+  0x0078E134 with no explicit arguments: a native caller of this slot.
+- Extent: plain `ret` at +0x2EB, INT3 at +0x2EC (748 bytes).
