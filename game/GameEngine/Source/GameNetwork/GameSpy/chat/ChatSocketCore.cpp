@@ -104,7 +104,8 @@ int __stdcall bind(unsigned int socket, const ciSocketAddress *address, int addr
 int __stdcall connect(unsigned int socket, const ciSocketAddress *address, int addressLength);
 void GSISocketSelect(unsigned int socket, int *readFlag, int *writeFlag, int *exceptFlag);
 void gs_crypt(unsigned char *buffer, int length, gs_crypt_key *key);
-extern unsigned int gsiSocketInterface;
+// Retail VA 0130E628 holds the four-byte interface address, initially zero.
+unsigned int gsiSocketInterface = 0;
 
 static CHATBool ciBufferInit(ciBuffer *buffer)
 {
