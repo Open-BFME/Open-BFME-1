@@ -92,6 +92,7 @@ class PartitionFilterPlayer : public PartitionFilter
 public:
 	PartitionFilterPlayer(const Player *player, Bool match)
 		: m_player(player), m_match(match) {}
+protected:
 	virtual Bool allow(Object *object);
 private:
 	const Player *m_player;

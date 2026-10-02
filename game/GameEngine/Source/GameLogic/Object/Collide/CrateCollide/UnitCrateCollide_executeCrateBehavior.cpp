@@ -155,7 +155,8 @@ public:
 
 #undef BFME_AUDIO_SLOT
 
-extern AudioManager *TheAudioClientUpdate;
+class ClientSubsystem;
+extern ClientSubsystem *TheAudioClientUpdate;
 
 struct UnitCrateCollideModuleData
 {
@@ -204,9 +205,9 @@ Bool UnitCrateCollide::executeCrateBehavior( Object *other )
 	}
 
 	//Play a crate pickup sound.
-	AudioEventRTS soundToPlay = TheAudioClientUpdate->getMiscAudio()->m_crateFreeUnit;
+	AudioEventRTS soundToPlay = ((AudioManager *)TheAudioClientUpdate)->getMiscAudio()->m_crateFreeUnit;
 	soundToPlay.setObjectID( other->getID() );
-	TheAudioClientUpdate->addAudioEvent(&soundToPlay);
+	((AudioManager *)TheAudioClientUpdate)->addAudioEvent(&soundToPlay);
 
 	return true;
 }

@@ -62,7 +62,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
-extern int _g_rva005c5100ThrowInfo;
+extern "C" char g_rva005c5100ThrowInfo;
 
 class Rva001B6070Owner
 {
@@ -118,7 +118,7 @@ void Rva001B74D0Owner::xferSelfAndCurLocoPtr(Xfer *xfer, void **output)
 			{
 				XferException error;
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, &_g_rva005c5100ThrowInfo);
+				_CxxThrowException(&error, &g_rva005c5100ThrowInfo);
 			}
 		}
 	}
