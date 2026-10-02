@@ -7,19 +7,19 @@
 // The retail body has the BFME allocator threshold and move/copy shape, but
 // no stock STLport max_size / _M_throw_length_error path.
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(void *dest, const void *src, unsigned int count);
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *dest, const void *src, unsigned int count);
+
+void *__cdecl operator new(unsigned int bytes);          // retail 0x00881F30
+void __cdecl operator delete(void *p);                   // retail 0x00881EB0
 
 namespace _STL
 {
 
-void *__cdecl vectorLargeAllocate(unsigned int bytes);   // retail 0x00881F30
-void *__cdecl vectorSmallAllocate(unsigned int bytes);   // retail 0x0082E540
-void __cdecl vectorLargeDeallocate(void *p);              // retail 0x00881EB0
-
 template <bool threads, int inst>
 class __node_alloc
 {
-public:
+	template <class T> friend class allocator;
+	static void *_M_allocate(unsigned int bytes);          // retail 0x0082E540
 	static void _M_deallocate(void *p, unsigned int bytes); // retail 0x0082E5F0
 };
 
@@ -37,9 +37,9 @@ public:
 		{
 			unsigned int bytes = n * sizeof(T);
 			if (bytes > 128)
-				result = (T *)vectorLargeAllocate(bytes);
+				result = (T *)::operator new(bytes);
 			else
-				result = (T *)vectorSmallAllocate(bytes);
+				result = (T *)__node_alloc<true, 0>::_M_allocate(bytes);
 		}
 		else
 		{
@@ -54,7 +54,7 @@ public:
 		if (p != 0)
 		{
 			if (bytes > 128)
-				vectorLargeDeallocate(p);
+				::operator delete(p);
 			else
 				__node_alloc<true, 0>::_M_deallocate(p, bytes);
 		}
@@ -74,7 +74,7 @@ struct forward_iterator_tag : public input_iterator_tag {};
 inline void *__copy_trivial(const void *first, const void *last, void *result)
 {
 	return (last == first) ? result :
-		((char *)BfmeMemMove(result, first, ((const char *)last - (const char *)first))) +
+		((char *)memmove(result, first, ((const char *)last - (const char *)first))) +
 		((const char *)last - (const char *)first);
 }
 
