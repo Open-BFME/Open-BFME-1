@@ -27,6 +27,8 @@ public:
 	virtual ~Gen_dtor_00695260();
 };
 
+extern void j_0001ae2e();
+
 struct SelfPair006A1650
 {
 	SelfPair006A1650( void *value, void *owner ) : m_value( value ), m_owner( owner ) { }
@@ -47,6 +49,9 @@ SelfPair006A1650 *Rva006A1650Maker::make( SelfPair006A1650 *result, void *argume
 	argument = &local;
 	result->m_value = ((Gen0069CBC0 *)this)->evaluate( &argument );
 	result->m_owner = this;
-	((Gen_dtor_00695260 *)&local)->Gen_dtor_00695260::~Gen_dtor_00695260();
+	typedef void (Gen_dtor_00695260::*DestructorCall)();
+	union { void (*raw)(void); DestructorCall member; } destructor;
+	destructor.raw = j_0001ae2e;
+	(((Gen_dtor_00695260 *)&local)->*destructor.member)();
 	return result;
 }

@@ -1,8 +1,15 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
 // Open-BFME7: parseEmotionType (retail 0x0037AD00 72 B; a gap claimed through its
-// exception literal).  The next token is converted through the cdecl name
-// lookup at 0x004448AF and stored into the field the store argument points at;
-// a missing token throws INIException(3 "Emotion type expected.").  Address-derived names.
+// exception literal).  The next token uses the matched
+// BitFlags<117>::getSingleBitFromName helper at 0x0037A9D0 (ILT 0x000448AF)
+// and is stored into the field the store argument points at;
+// a missing token throws INIException(3 "Emotion type expected.").
+
+#include "Common/BitFlags.h"
+
+template<>
+int BitFlags<117>::getSingleBitFromName(const char *name);
 
 typedef int Int;
 
@@ -23,8 +30,6 @@ public:
 	const char *getNextToken( const char *seps = 0 );
 };
 
-Int __cdecl Rva0037AD00LookupEmotionType( const char *name );
-
 class Rva0037AD00
 {
 public:
@@ -36,7 +41,7 @@ void Rva0037AD00::parseEmotionType( INI *ini, void *, void *store, const void * 
 {
 	const char *token = ini->getNextToken();
 	if( token )
-		*(Int *)store = Rva0037AD00LookupEmotionType( token );
+		*(Int *)store = BitFlags<117>::getSingleBitFromName( token );
 	else
 		throw INIException( 3, "Emotion type expected." );
 }
