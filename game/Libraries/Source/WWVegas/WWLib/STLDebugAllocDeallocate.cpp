@@ -12,7 +12,20 @@
 
 #pragma intrinsic(memset)
 extern "C" void* __cdecl memset(void *, int, unsigned int);
-extern "C" void __cdecl bfme_debugAllocInnerDeallocate_82AD90(void *, unsigned int);
+
+// STLport's raw new-based allocator; retail's out-of-line body for
+// deallocate(void*, size_t) is matched as
+// ?deallocate@__new_alloc@_STL@@SAXPAXI@Z from
+// game/GameEngine/Source/Common/UserPreferences.cpp, so this TU names the
+// allocator itself instead of an address-derived extern.
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void deallocate(void *memory, unsigned int bytes);
+};
+}
 
 struct __alloc_header {
   unsigned int __magic: 16;
@@ -41,5 +54,5 @@ bfme_DebugAllocDeallocate_82B780(void *__p, unsigned int __n)
 
   __real_p->__magic = __deleted_magic;
   memset((char*)__p, __shred_byte, __n);
-  bfme_debugAllocInnerDeallocate_82AD90(__real_p, __real_n);
+  _STL::__new_alloc::deallocate(__real_p, __real_n);
 }

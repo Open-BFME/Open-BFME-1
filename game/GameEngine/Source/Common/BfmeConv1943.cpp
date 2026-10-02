@@ -1,13 +1,10 @@
-class StringBaseG
-{
-public:
-	~StringBaseG() { releaseBuffer(); }
-
-	void *m_bfmeBufDQ;
-
-private:
-	void releaseBuffer();
-};
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+// The wide string this body destroys is the retail UnicodeString object: its
+// destructor (retail 0x0005EEA0, matched from
+// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is what reaches
+// ?releaseBuffer@?$StringBase@G@@AAEXXZ at 0x008881D0, so the real
+// unicode_string.h is used instead of a TU-local StringBase stand-in.
+#include "unicode_string.h"
 
 class GameTextInterface
 {
@@ -22,7 +19,7 @@ public:
 	virtual void bfmeSlot07GT();
 	virtual void bfmeSlot08GT();
 	virtual void bfmeSlot09GT();
-	virtual StringBaseG bfmeFetchDQ(const char *label, char *found);
+	virtual UnicodeString bfmeFetchDQ(const char *label, char *found);
 };
 
 extern GameTextInterface *TheGameText;
@@ -52,7 +49,7 @@ public:
 	virtual void bfmeSlot19UI();
 	virtual void bfmeSlot20UI();
 	virtual void bfmeSlot21UI();
-	virtual void bfmeShowDQ(StringBaseG *text, int mode);
+	virtual void bfmeShowDQ(UnicodeString *text, int mode);
 };
 
 extern InGameUI *TheInGameUI;
@@ -79,7 +76,7 @@ void BfmeHostDQ::bfmeTickDQ()
 		return;
 
 	char found;
-	StringBaseG text = TheGameText->bfmeFetchDQ("LW:ClickToBegin", &found);
+	UnicodeString text = TheGameText->bfmeFetchDQ("LW:ClickToBegin", &found);
 
 	if (found != 0)
 		TheInGameUI->bfmeShowDQ(&text, 10);

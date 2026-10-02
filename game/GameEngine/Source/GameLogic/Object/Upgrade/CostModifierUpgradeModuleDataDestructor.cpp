@@ -2,12 +2,22 @@
 // stlport
 // Five-member destructor at retail 0x002D4C00.
 
+class Gen002D4C00Vector;
+
+// STLport's free-list node allocator.  Retail's out-of-line body for
+// _M_deallocate is matched as
+// ?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z from
+// game/Libraries/Source/WWVegas/WWLib/node_alloc_M_deallocateThunk.cpp: the
+// <true, 0> instantiation of a template whose _M_deallocate is private, exactly
+// as _alloc.h declares it.  The vector destructor is the friend that inlines
+// the public deallocate() and calls through to it.
 namespace _STL
 {
 	template <bool threads, int instance>
 	class __node_alloc
 	{
-	public:
+		friend class ::Gen002D4C00Vector;
+
 		static void _M_deallocate(void *memory, unsigned int bytes);
 	};
 }
@@ -74,7 +84,7 @@ public:
 			if (bytes > 0x80)
 				::operator delete(m_start);
 			else
-				_STL::__node_alloc<false, 0>::_M_deallocate(m_start, bytes);
+				_STL::__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
 		}
 	}
 

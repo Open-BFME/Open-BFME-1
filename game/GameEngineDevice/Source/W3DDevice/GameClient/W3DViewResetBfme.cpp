@@ -90,6 +90,18 @@ private:
 
 #define BFME_W3D_SLOT(n) virtual void slot##n() = 0;
 
+// Retail 0x0045CB70, the first thing 0x0073AC90 calls, is
+// ?bfmeGoEBF@BfmeThingEBF@@QAEXXZ (matched from
+// game/GameEngine/Source/Common/BfmeConv802.cpp).  It receives the caller's own
+// pointer in ecx -- esi already holds the W3DView `this` -- and only touches
+// +0x74 of it, so the call is made on the same object the caller already holds.
+// Spelling it as a member of W3DView would carry a name nothing defines.
+class BfmeThingEBF
+{
+public:
+	void bfmeGoEBF();
+};
+
 class W3DView
 {
 public:
@@ -137,11 +149,8 @@ public:
 	BFME_W3D_SLOT(107) BFME_W3D_SLOT(108) BFME_W3D_SLOT(109)
 	virtual void setGuardBandBias(const Coord2D *gb) = 0; // slot 110, +0x1B8
 
-	// 0x0045CB70 calls two EBF helpers and clears this object's +0x74 flag.
-	// The BFME constructor proves this is the W3DView owner, but it does not
-	// prove that EBF is a distinct base subobject.  Keep the call as a direct
-	// neutral member and pin its body, rather than inventing an inheritance cast.
-	void bfmeGoEBF();
+	// 0x0045CB70 calls two EBF helpers and clears this object's +0x74 flag; it
+	// is the inherited BfmeThingEBF base (see above), not a member of W3DView.
 
 private:
 	char m_body0004[0x138 - 4];
@@ -164,7 +173,7 @@ private:
 // ?reset@W3DView@@UAEXXZ
 void W3DView::reset()
 {
-	bfmeGoEBF();
+	reinterpret_cast<BfmeThingEBF *>(this)->bfmeGoEBF();
 	m_field24AC = 0;
 	setTimeMultiplier(1);
 	m_zoomLimits.resetState();
