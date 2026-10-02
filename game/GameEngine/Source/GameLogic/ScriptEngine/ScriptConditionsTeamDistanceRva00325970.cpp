@@ -10,10 +10,8 @@ typedef int Int;
 class Parameter
 {
 public:
-	Int getInt() const { return m_int; }
-	Real getReal() const { return m_real; }
-	const AsciiString &getString() const { return m_string; }
-private:
+	// This caller reads these fields directly in retail. Keeping its layout
+	// view free of accessors avoids emitting competing Parameter COMDATs.
 	char m_beforeInt[8];
 	Int m_int;
 	Real m_real;
@@ -75,8 +73,8 @@ protected:
 
 Bool ScriptConditions::evaluateDistanceBetweenTeamsRva00325970(Condition *condition)
 {
-	Team *first = TheScriptEngine->getTeamNamed(condition->getParameter(0)->getString(), false);
-	Team *second = TheScriptEngine->getTeamNamed(condition->getParameter(1)->getString(), false);
+	Team *first = TheScriptEngine->getTeamNamed(condition->getParameter(0)->m_string, false);
+	Team *second = TheScriptEngine->getTeamNamed(condition->getParameter(1)->m_string, false);
 	if (!first || !second || !first->hasAnyObjects(false) || !second->hasAnyObjects(false))
 		return false;
 	Coord3D firstPosition;
@@ -88,8 +86,8 @@ Bool ScriptConditions::evaluateDistanceBetweenTeamsRva00325970(Condition *condit
 	firstPosition.z -= q->z;
 	Real distance = (Real)sqrt(firstPosition.z * firstPosition.z +
 		firstPosition.y * firstPosition.y + firstPosition.x * firstPosition.x);
-	Real threshold = condition->getParameter(3)->getReal();
-	switch (condition->getParameter(2)->getInt()) {
+	Real threshold = condition->getParameter(3)->m_real;
+	switch (condition->getParameter(2)->m_int) {
 	case 0: if (distance < threshold) return true; break;
 	case 1: if (distance <= threshold) return true; break;
 	case 2: if (distance == threshold) return true; break;
