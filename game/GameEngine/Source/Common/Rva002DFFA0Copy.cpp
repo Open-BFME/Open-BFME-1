@@ -1,18 +1,11 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob1
 
-class BfmeSubB
-{
-public:
-	BfmeSubB(const BfmeSubB &other);
-
-private:
-	void *m_item;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva002DFFA0
 {
 	int m_00;
-	BfmeSubB m_04;
+	AsciiString m_04;
 	char m_08;
 
 public:
