@@ -1708,7 +1708,8 @@ def main(argv=None):
         import census_receipts
         _INPUT_RECEIPTS = census_receipts.Receipts(OUT / "compile_inputs.json")
         _INPUT_RECEIPTS.path.unlink(missing_ok=True)
-        build.compile_rows(rows, compile_sources(rows), input_proof=_INPUT_RECEIPTS)
+        source_outputs = build.compile_rows(rows, compile_sources(rows), input_proof=_INPUT_RECEIPTS)
+        _refresh_missing_search_root_receipts(rows, source_outputs, _INPUT_RECEIPTS)
         _INPUT_RECEIPTS.save()
         print(f"link_census: compile {time.time() - started:.0f}s", flush=True)
     verify_data_objects()
@@ -2235,24 +2236,62 @@ def object_current(source, obj, *, inventory_cache=None, allow_fresh=True):
     return receipts is not None and receipts.current(source, obj)
 
 
+def _refresh_missing_search_root_receipts(rows, source_outputs, receipts):
+    """Recompile cache-hit TUs whose broad search roots need a fresh proof.
+
+    compile_rows skips objects with current sidecars, so their successful
+    object/input pair would otherwise be absent from compile_inputs.json. A
+    checkout-root inventory can change during link_status.tmp staging even
+    when none of those TU's actual inputs changed. Refresh only the small set
+    of such cache hits; the preprocessor receipt then lets judgment check the
+    real opened inputs without relying on that mutable directory inventory.
+    """
+    import census_receipts
+
+    missing = []
+    recorded = getattr(receipts, "entries", {})
+    for source, output in source_outputs.items():
+        if (str(output.resolve()) not in recorded
+                and census_receipts.needs_fresh_receipt(output)):
+            missing.append((source, output))
+    if not missing:
+        return
+    print(f"link_census: refreshing input proofs for {len(missing):,} mutable-root cache hit(s)", flush=True)
+    for _, output in missing:
+        build._deps_sidecar(output).unlink(missing_ok=True)
+    build.compile_rows(rows, [source for source, _ in missing], input_proof=receipts)
+
+
 def stale_objects(present, sources):
-    """Check only selected source objects, sharing each include inventory."""
+    """Check source objects, using fresh proofs across mutable broad roots."""
+    receipts = input_receipts()
+    if receipts is not None:
+        import census_receipts
+        entries = getattr(receipts, "entries", {})
+        receipt_objects = [obj for obj in present if obj in sources
+                           and str(obj.resolve()) in entries
+                           and census_receipts.needs_fresh_receipt(obj)]
+    else:
+        receipt_objects = []
+    receipt_set = set(receipt_objects)
     inventory_cache = {}
     uncached = [obj for obj in present if obj in sources
+                and obj not in receipt_set
                 and not object_current(sources[obj], obj, inventory_cache=inventory_cache,
                                        allow_fresh=False)]
     if not build._inventory_cache_still_current(inventory_cache):
         raise SystemExit("link_census: include search directories changed while checking objects; retry")
-    receipts = input_receipts()
     if receipts is None:
         return uncached
     def check(obj):
         return receipts.current(sources[obj], obj)
     # The fresh proof runs cl /E, so honor BUILD_POOL and bound Wine fanout.
-    # The reusable-cache inventory above remains one serial shared snapshot.
-    workers = min(8, build._pool_size(), max(1, len(uncached)))
+    # Checkout-root and external-root receipts skip the broad inventory; all
+    # other objects share one serial cache snapshot before receipt fallbacks.
+    to_check = receipt_objects + uncached
+    workers = min(8, build._pool_size(), max(1, len(to_check)))
     with concurrent.futures.ThreadPoolExecutor(workers) as pool:
-        stale = [obj for obj, current in zip(uncached, pool.map(check, uncached)) if not current]
+        stale = [obj for obj, current in zip(to_check, pool.map(check, to_check)) if not current]
     if not build._inventory_cache_still_current(inventory_cache):
         raise SystemExit("link_census: include search directories changed while checking objects; retry")
     return stale

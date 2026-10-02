@@ -23,24 +23,20 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def _has_external_search_root(output):
-    """Whether the reusable sidecar depends on a directory above this tree.
-
-    STLport's MSVC headers expand native includes to ``<../include/...>``. The
-    candidate made from ``/I.`` is a real search root, but it can change while
-    the census compiles other TUs. Keep the fresh preprocessor receipt for
-    these objects as a fallback if that inventory changes later in the run.
-    """
+def _search_root_keys(output):
     try:
         meta = json.loads(build._deps_sidecar(output).read_text())
         keys = meta.get("search_roots", [])
     except (OSError, ValueError, TypeError):
-        return False
+        return []
     if not isinstance(keys, list):
-        return False
-    for key in keys:
-        if not isinstance(key, str):
-            continue
+        return []
+    return [key for key in keys if isinstance(key, str)]
+
+
+def _has_external_search_root(output):
+    """Whether the reusable sidecar depends on a directory above this tree."""
+    for key in _search_root_keys(output):
         root = build._root_from_key(key)
         if root is None:
             return True
@@ -49,6 +45,32 @@ def _has_external_search_root(output):
         except (OSError, RuntimeError, ValueError):
             return True
     return False
+
+
+def _has_checkout_root_search_root(output):
+    """Whether the sidecar inventories the whole checkout as an /I root.
+
+    link_census stages link_status.tmp under the checkout while judging. That
+    transient file changes this broad inventory even though it is not a C/C++
+    input. Keep a fresh preprocessor proof for such TUs so judgment can check
+    actual opened inputs instead of treating every checkout file as an input.
+    """
+    checkout = build.ROOT.resolve()
+    for key in _search_root_keys(output):
+        root = build._root_from_key(key)
+        if root is not None:
+            try:
+                if root.resolve() == checkout:
+                    return True
+            except (OSError, RuntimeError):
+                continue
+    return False
+
+
+def needs_fresh_receipt(output):
+    """Whether a mutable broad search root needs a fresh input proof."""
+    return (_has_external_search_root(output)
+            or _has_checkout_root_search_root(output))
 
 
 def _normal_cache_current(source, output):
@@ -192,9 +214,9 @@ class Receipts:
 
     def after(self, source, output, command, env, before, compiler_output):
         sidecar = build._deps_sidecar(output)
-        external_search = sidecar.exists() and _has_external_search_root(output)
+        mutable_search = sidecar.exists() and needs_fresh_receipt(output)
         if before is None:
-            if sidecar.exists() and not external_search and _normal_cache_current(source, output):
+            if sidecar.exists() and not mutable_search and _normal_cache_current(source, output):
                 return  # No fresh proof captured; use the normal cache gate.
             raise SystemExit(f"census input proof unavailable: {source}")
         try:
@@ -215,12 +237,11 @@ class Receipts:
             # compile. Do not leave that receipt able to bless this object.
             build._deps_sidecar(output).unlink(missing_ok=True)
             raise SystemExit(f"census input proof failed: {source}: {error}") from error
-        # A normal sidecar inventories directory names, including any
-        # higher-priority parent include roots. Preserve a fresh PP receipt for
-        # roots above the checkout because another parallel compile can change
-        # them after this callback, invalidating that inventory without changing
-        # the inputs this object actually used.
-        if sidecar.exists() and not external_search and _normal_cache_current(source, output):
+        # A normal sidecar inventories directory names, including the entire
+        # checkout for /I. and any higher-priority parent include roots. Those
+        # roots can gain unrelated files during judgment, so keep the fresh PP
+        # proof for such objects even when the sidecar itself remains current.
+        if sidecar.exists() and not mutable_search and _normal_cache_current(source, output):
             return  # Captured proof agreed; keep the normal cache semantics.
         self.entries[str(output.resolve())] = {"source": str(source.resolve()),
                                                "object": digest(output), "input": before,

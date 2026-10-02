@@ -92,6 +92,18 @@ class LinkCensusSearchRootTests(unittest.TestCase):
             (self.root / "new-header.h").write_text("// possible include shadow\n")
             self.assertNotEqual(build._directory_inventory(self.root), before)
 
+    def test_checkout_inventory_includes_root_cod_and_judgment_temp_files(self):
+        with patch.object(build, "ROOT", self.root):
+            before = build._directory_inventory(self.root)
+            (self.root / "mission_objective.cod").write_text("assembly listing\n")
+            after_cod = build._directory_inventory(self.root)
+            self.assertNotEqual(after_cod, before)
+
+            temporary = self.root / "targets" / "game" / "reverse" / "link_status.tmp"
+            temporary.parent.mkdir(parents=True)
+            temporary.write_text("staged judgment output\n")
+            self.assertNotEqual(build._directory_inventory(self.root), after_cod)
+
     def test_explicit_include_from_omitted_tree_is_uncacheable(self):
         metadata = self.root / ".agents"
         metadata.mkdir()
