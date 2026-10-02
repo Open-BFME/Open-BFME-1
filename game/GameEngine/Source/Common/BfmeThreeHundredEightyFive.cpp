@@ -13,6 +13,14 @@ public:
 
 class BfmeThingAEB;
 
+// 0x007F9590 is a matched body under this class name; it is the callee of
+// the owner register below.
+class Gen_007f9590
+{
+public:
+	void m(int a);
+};
+
 class BfmeOwnerAEB
 {
 public:
@@ -41,7 +49,7 @@ void BfmeThingAEB::bfmeStartAEB(BfmeOwnerAEB *owner)
 	m_bfmeOn = true;
 	m_bfmeOwner = owner;
 	m_bfmeSink = owner->m_bfmeSink;
-	owner->bfmeAddAEB(this);
+	((Gen_007f9590 *)owner)->m((int)this);
 	m_bfmeSink->bfmeAttachAEB(m_bfmeLink);
 	if (!m_bfmeDone)
 		m_bfmeOwner->m_bfmeInner.bfmeFireAEB();

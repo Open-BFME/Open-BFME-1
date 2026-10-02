@@ -16,6 +16,14 @@ public:
 	void bfmeSetGM(void *value);
 };
 
+// 0x007F9590 is a matched body under this class name; it is the callee of
+// the derived-object pointer below.
+class Gen_007f9590
+{
+public:
+	void m(int a);
+};
+
 class BfmeSinkGM
 {
 public:
@@ -40,7 +48,7 @@ void BfmeOwnerGM::bfmeFlushGM(void)
 	if (m_bfmeDirtyGM == 0)
 		return;
 
-	m_bfmeDerivedGM->bfmeSetGM(m_bfmeSinkGM);
+	((Gen_007f9590 *)m_bfmeDerivedGM)->m((int)m_bfmeSinkGM);
 	m_bfmeSinkGM->bfmeTakeGM(m_bfmeDerivedGM);
 
 	m_bfmeDirtyGM = 0;

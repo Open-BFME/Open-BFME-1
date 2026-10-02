@@ -19,6 +19,14 @@ public:
 
 class Rva00803080;
 
+// 0x007F9590 is a matched body under this class name; the objects it is
+// called on are the Rva007F9B80 instances allocated below.
+class Gen_007f9590
+{
+public:
+	void m(int a);
+};
+
 class Rva007EAServiceList
 {
 public:
@@ -87,7 +95,7 @@ void Rva007EAA70Owner::prepare()
 	else
 		adj = 0;
 	m_268->attach(adj);
-	m_26C->setPeer(m_268);
+	((Gen_007f9590 *)m_26C)->m((int)m_268);
 	m_26C->m_24 = Rva007FBC00();
 	void *svc = m_26C;
 	if (svc)
@@ -115,7 +123,7 @@ void Rva007EAB40Owner::prepare()
 	else
 		adj = 0;
 	m_284->attach(adj);
-	m_288->setPeer(m_284);
+	((Gen_007f9590 *)m_288)->m((int)m_284);
 	m_288->m_24 = Rva007FD060();
 	void *svc = m_288;
 	if (svc)
