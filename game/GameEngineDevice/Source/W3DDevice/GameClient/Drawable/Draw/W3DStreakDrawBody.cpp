@@ -36,6 +36,8 @@ public:
 
 class BfmeStreakObject
 {
+public:
+	void bfmeSetWG(unsigned int index, const Vector3 *value, float amount);
 };
 
 class Gen_009559f0
@@ -68,14 +70,6 @@ class Rva00955BC0
 {
 public:
 	void set(const Rva00955BC0Vec *value);
-};
-
-extern void d_00955a00(void);
-
-class Gen_00955a00Call
-{
-public:
-	void setPoint(unsigned int at, const Vector3 &point, float width);
 };
 
 class W3DStreakDrawModuleData
@@ -154,17 +148,9 @@ void W3DStreakDraw::streakBody0077D6B0()
 				}
 				pointWidth.value = distance + pointWidth.value;
 
-				typedef void (Gen_00955a00Call::*SetPoint)(
-					unsigned int, const Vector3 &, float);
-				union
-				{
-					void (*raw)(void);
-					SetPoint member;
-				} setPointCall;
-				setPointCall.raw = ::d_00955a00;
-				(reinterpret_cast<Gen_00955a00Call *>(m_streak)->*setPointCall.member)(
+				m_streak->bfmeSetWG(
 					reinterpret_cast<Gen_009559f0 *>(m_streak)->m() - 1,
-					*position, pointWidth.value);
+					position, pointWidth.value);
 				if (data->m_length / (float)(unsigned int)data->m_segmentCount < distance)
 				{
 					reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
