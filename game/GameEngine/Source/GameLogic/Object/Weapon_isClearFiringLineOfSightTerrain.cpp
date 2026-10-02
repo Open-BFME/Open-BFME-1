@@ -31,12 +31,6 @@ public:
 		return &m_position;
 	}
 
-	const GeometryInfo &getGeometryInfo(void) const
-	{
-		return m_geometry;
-	}
-
-private:
 	unsigned char m_unreconstructed_00[0x38];
 	Coord3D m_position;
 	unsigned char m_unreconstructed_44[0xAC - 0x44];
@@ -69,13 +63,13 @@ public:
 bool Weapon::isClearFiringLineOfSightTerrain(const Object *source, const Coord3D &victimPos) const
 {
 	Coord3D origin = *source->getPosition();
-	origin.z += source->getGeometryInfo().getMaxHeightAbovePosition();
+	origin.z += source->m_geometry.getMaxHeightAbovePosition();
 	return TheTerrainLogic->isClearLineOfSight(origin, victimPos);
 }
 
 bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object *source, const Coord3D &goalPos, const Coord3D &victimPos) const
 {
 	Coord3D origin = goalPos;
-	origin.z += source->getGeometryInfo().getMaxHeightAbovePosition();
+	origin.z += source->m_geometry.getMaxHeightAbovePosition();
 	return TheTerrainLogic->isClearLineOfSight(origin, victimPos);
 }

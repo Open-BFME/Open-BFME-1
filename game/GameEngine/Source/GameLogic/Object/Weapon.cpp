@@ -3146,17 +3146,7 @@ Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Object*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
-// ?isClearFiringLineOfSightTerrain@Weapon@@ present-unmatched
-Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Coord3D& victimPos) const
-{
-	Coord3D origin;
-	origin = *source->getPosition();
-	//CRCDEBUG_LOG(("Weapon::isClearFiringLineOfSightTerrain(Coord3D) for %s\n", DescribeObject(source).str()));
-	//DUMPCOORD3D(&origin);
-	getFiringLineOfSightOrigin(source, origin);
-	return ThePartitionManager->isClearLineOfSightTerrain(NULL, origin, NULL, victimPos);
-}
+// Retail coordinate terrain LOS overload lives in Weapon_isClearFiringLineOfSightTerrain.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -3177,19 +3167,7 @@ Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coo
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 /** Determine whether if source was at goalPos whether it would have clear line of sight. */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
-// ?isClearGoalFiringLineOfSightTerrain@Weapon@@ present-unmatched
-Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coord3D& goalPos, const Coord3D& victimPos) const
-{
-	Coord3D origin=goalPos;
-	//CRCDEBUG_LOG(("Weapon::isClearGoalFiringLineOfSightTerrain(Coord3D) for %s\n", DescribeObject(source).str()));
-	//DUMPCOORD3D(&origin);
-	getFiringLineOfSightOrigin(source, origin);
-	//CRCDEBUG_LOG(("Weapon::isClearFiringLineOfSightTerrain() - victimPos is (%g,%g,%g) (%X,%X,%X)\n",
-	//	victimPos.x, victimPos.y, victimPos.z,
-	//	AS_INT(victimPos.x),AS_INT(victimPos.y),AS_INT(victimPos.z)));
-	return ThePartitionManager->isClearLineOfSightTerrain(NULL, origin, NULL, victimPos);
-}
+// Retail coordinate terrain LOS overload lives in Weapon_isClearFiringLineOfSightTerrain.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //Kris: Patch 1.01 - November 10, 2003
