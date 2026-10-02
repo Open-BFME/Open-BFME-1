@@ -17,7 +17,8 @@
 struct Coord3D { Coord3D(); ~Coord3D(); float x,y,z; };
 class BezierSegment { public: BezierSegment(Coord3D points[4]); float getApproximateLength(float) const; void getSegmentPoints(int,_STL::vector<Coord3D>*) const; Coord3D points[4]; };
 class Terrain0029A150 { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c(); virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c(); virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c(); virtual float height(const Coord3D*,const Coord3D*); };
-extern Terrain0029A150* g_terrain0029A150;
+class TerrainLogic;
+extern TerrainLogic* TheTerrainLogic;
 struct Config0029A150 { char pad00[8]; float at08,at0c,at10,at14; char pad18[0x14]; float at2c,at30,at34,at38,at3c; bool at40,at41,at42; char pad43; float at44,at48; };
 inline const float& maximum0029A150(const float& a,const float& b) { return a>b?a:b; }
 class PhysicsBehavior { public: unsigned char rva0029A150(int recalculate,float height); char pad00[4]; Config0029A150* at04; char pad08[0x18]; _STL::vector<Coord3D> at20; Coord3D at2c,at38; float at44,at48; int at4c,at50,at54; };
@@ -41,7 +42,7 @@ unsigned char PhysicsBehavior::rva0029A150(int recalculate,float height) {
   points[1].z=(points[3].z-points[0].z)*data->at44+points[0].z;
   points[2].z=(points[3].z-points[0].z)*data->at48+points[0].z;
  } else {
-  float ground=g_terrain0029A150->height(&points[0],&points[3]);
+  float ground=reinterpret_cast<Terrain0029A150*>(TheTerrainLogic)->height(&points[0],&points[3]);
   float h1=at54==0?data->at08:data->at2c;
   float h2=at54==0?data->at0c:data->at30;
   h1*=height; h2=h2*factor*height;
