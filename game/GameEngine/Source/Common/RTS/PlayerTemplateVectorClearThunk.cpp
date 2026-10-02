@@ -13,4 +13,9 @@
 #include "Common/GameCommon.h"
 #include "Common/PlayerTemplate.h"
 
-template class std::vector<PlayerTemplate>;
+template std::_Vector_base<PlayerTemplate, std::allocator<PlayerTemplate> >::~_Vector_base();
+template PlayerTemplate *std::allocator<PlayerTemplate>::allocate(
+	unsigned int, const void *) const;
+template void std::_STLP_alloc_proxy<PlayerTemplate *, PlayerTemplate,
+	std::allocator<PlayerTemplate> >::deallocate(PlayerTemplate *, size_t);
+template void std::vector<PlayerTemplate>::_M_clear();

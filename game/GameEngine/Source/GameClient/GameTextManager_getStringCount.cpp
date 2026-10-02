@@ -28,7 +28,7 @@ public:
 class GameTextManager
 {
 	protected:
-	Bool readLine(Char *buffer, Int max, File *file)
+	Bool readLineForMapStringCount(Char *buffer, Int max, File *file)
 	{
 		Int ok = 0;
 		while (max && file->read(buffer, 1) == 1)
@@ -71,7 +71,7 @@ Bool GameTextManager::getStringCount(File *file, Int &textCount)
 
 	while (1)
 	{
-		if (!readLine(m_buffer, sizeof(m_buffer) - 1, file))
+		if (!readLineForMapStringCount(m_buffer, sizeof(m_buffer) - 1, file))
 			break;
 
 		removeLeadingAndTrailing(m_buffer);

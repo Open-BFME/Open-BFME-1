@@ -17,7 +17,7 @@ public:
 		set(other);
 		return *this;
 	}
-	__forceinline int compareNoCase(const StringBase<T> &other) const
+	__forceinline int compareNoCaseQ3Local(const StringBase<T> &other) const
 	{
 		int otherLength = other.m_data ? other.m_data->m_length : 0;
 		const T *otherData = other.m_data ? other.m_data->m_data : (const T *)"";
@@ -71,8 +71,8 @@ struct Q3SortCompare
 	__forceinline bool operator()(const Q3SortElem4 &left, const Q3SortElem4 &right) const
 	{
 		if (left.m_base.startsWithUnderscore() && right.m_base.startsWithUnderscore())
-			return left.m_base.compareNoCase(right.m_base) > 0;
-		return left.m_base.compareNoCase(right.m_base) < 0;
+			return left.m_base.compareNoCaseQ3Local(right.m_base) > 0;
+		return left.m_base.compareNoCaseQ3Local(right.m_base) < 0;
 	}
 };
 
@@ -84,9 +84,9 @@ void Gen009CCE50(Q3SortElem4 *last, Q3SortElem4 val, Q3SortCompare comp)
 	{
 		bool take;
 		if (val.m_base.startsWithUnderscore() && next->m_base.startsWithUnderscore())
-			take = val.m_base.compareNoCase(next->m_base) > 0;
+			take = val.m_base.compareNoCaseQ3Local(next->m_base) > 0;
 		else
-			take = val.m_base.compareNoCase(next->m_base) < 0;
+			take = val.m_base.compareNoCaseQ3Local(next->m_base) < 0;
 		if (!take)
 			break;
 		*last = *next;

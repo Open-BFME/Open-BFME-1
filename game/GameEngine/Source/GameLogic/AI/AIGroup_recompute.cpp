@@ -128,7 +128,7 @@ class AIGroup
 public:
 	bool getCenter(Coord3D *center);
 	void recompute(void);
-	friend class PathDeleteArgument;
+	friend class AIGroupRecomputePathDeleteArgument;
 
 private:
 	char m_bfmeHead[0x04];
@@ -146,15 +146,15 @@ private:
 	void *m_pathState30;
 };
 
-class PathDeleteArgument
+class AIGroupRecomputePathDeleteArgument
 {
 public:
-	PathDeleteArgument(Path *path, AIGroup *group) : m_path(path), m_group(group) { }
+	AIGroupRecomputePathDeleteArgument(Path *path, AIGroup *group) : m_path(path), m_group(group) { }
 	operator void *(void) const { return m_path; }
 	// The conversion temporary is intentional.  MSVC destroys this by-value
 	// argument before popping operator delete's cdecl stack argument, placing
 	// these four reset stores before retail's `add esp, 4`.
-	~PathDeleteArgument()
+	~AIGroupRecomputePathDeleteArgument()
 	{
 		m_group->m_groundPath = 0;
 		m_group->m_pathState1C = 0;
@@ -178,7 +178,7 @@ void AIGroup::recompute(void)
 	{
 		Path *p = m_groundPath;
 		reinterpret_cast<BFMEDeletablePath *>(p)->destroy();
-		operator delete(PathDeleteArgument(p, this));
+		operator delete(AIGroupRecomputePathDeleteArgument(p, this));
 		m_pathState28 = 10.0f;
 		m_pathState2C = 0;
 		m_pathState30 = 0;
