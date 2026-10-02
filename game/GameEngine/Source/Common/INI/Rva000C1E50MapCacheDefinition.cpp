@@ -116,6 +116,13 @@ struct Rva000C0D00Value
 
 namespace _STL
 {
+// INIMapCache.cpp owns this tree eraser. Reuse it without instantiating a
+// second copy of the separately owned pair destructor.
+extern template void _Rb_tree<AsciiString, pair<const AsciiString, Coord3D>,
+	_Select1st<pair<const AsciiString, Coord3D> >, less<AsciiString>,
+	allocator<pair<const AsciiString, Coord3D> > >::_M_erase(
+	_Rb_tree_node<pair<const AsciiString, Coord3D> > *);
+
 template <> class map<AsciiString, Rva000C0D00Value, Rva000C0D00Less,
 	allocator<pair<const AsciiString, Rva000C0D00Value> > >
 {
@@ -221,48 +228,7 @@ public:
 
 #pragma comment(linker, "/alternatename:??1Rva000C0B90MapMetaDataReader@@QAE@XZ=?j_0003404f@@YAXXZ")
 
-void parseSupplyPositionCoord3D( INI* ini, void * instance, void * /*store*/, const void* /*userData*/ )
-{
-	Rva000C0B90MapMetaDataReader *mmdr = (Rva000C0B90MapMetaDataReader *)instance;
-	Coord3D coord3d;
-	INI::parseCoord3D(ini, NULL, &coord3d,NULL );
-	mmdr->m_supplyPositions.push_front(coord3d);
-}
-
-void parseTechPositionsCoord3D( INI* ini, void * instance, void * /*store*/, const void* /*userData*/ )
-{
-	Rva000C0B90MapMetaDataReader *mmdr = (Rva000C0B90MapMetaDataReader *)instance;
-	Coord3D coord3d;
-	INI::parseCoord3D(ini, NULL, &coord3d,NULL );
-	mmdr->m_techPositions.push_front(coord3d);
-}
-
-const FieldParse MapMetaDataReader::m_mapFieldParseTable[] =
-{
-	{ "isOfficial", INI::parseBool, NULL, offsetof( MapMetaDataReader, m_isOfficial ) },
-	{ "isMultiplayer", INI::parseBool, NULL, offsetof( MapMetaDataReader, m_isMultiplayer ) },
-	{ "extentMin", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_extent.lo ) },
-	{ "extentMax", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_extent.hi ) },
-	{ "numPlayers", INI::parseInt, NULL, offsetof( MapMetaDataReader, m_numPlayers ) },
-	{ "fileSize", INI::parseUnsignedInt, NULL, offsetof( MapMetaDataReader, m_filesize ) },
-	{ "fileCRC", INI::parseUnsignedInt, NULL, offsetof( MapMetaDataReader, m_CRC ) },
-	{ "timestampLo", INI::parseInt, NULL, offsetof( MapMetaDataReader, m_timestamp.m_lowTimeStamp ) },
-	{ "timestampHi", INI::parseInt, NULL, offsetof( MapMetaDataReader, m_timestamp.m_highTimeStamp ) },
-	{ "displayName", INI::parseAsciiString, NULL, offsetof( MapMetaDataReader, m_asciiDisplayName ) },
-	{ "nameLookupTag", INI::parseAsciiString, NULL, offsetof( MapMetaDataReader, m_asciiNameLookupTag ) },
-	{ "supplyPosition", parseSupplyPositionCoord3D, NULL, NULL },
-	{ "techPosition", parseTechPositionsCoord3D, NULL, NULL },
-	{ "Player_1_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) },
-	{ "Player_2_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 1 },
-	{ "Player_3_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 2 },
-	{ "Player_4_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 3 },
-	{ "Player_5_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 4 },
-	{ "Player_6_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 5 },
-	{ "Player_7_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 6 },
-	{ "Player_8_Start", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_waypoints ) + sizeof(Coord3D) * 7 },
-	{ "InitialCameraPosition", INI::parseCoord3D, NULL, offsetof( MapMetaDataReader, m_initialCameraPosition ) },
-	{ NULL, NULL, NULL, 0 }
-};
+// INIMapCache.cpp defines the parse table and its two coordinate callbacks.
 
 class Rva000C1E50
 {
