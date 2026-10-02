@@ -16,7 +16,13 @@ struct BfmeHolderRG
 	BfmeMakerRG *m_bfmeMaker;
 };
 
-BfmeMakerRG *bfmeMakeRG();
+// Retail's bytes prove this call targets the factory body defined as
+// ?bfme5MakeObj18@@YAPAUBfme5Obj18@@XZ in
+// game/GameEngine/Source/Common/Bfme5FactoryStubs.cpp; the returned object is
+// opaque here, so the pointer is reinterpreted at the call site.
+struct Bfme5Obj18;
+
+struct Bfme5Obj18 * __cdecl bfme5MakeObj18(void);
 
 class BfmeThingRG
 {
@@ -30,6 +36,6 @@ void BfmeThingRG::bfmeRunRG()
 {
 	BfmeHolderRG *holder = m_bfmeHolder;
 	if (holder->m_bfmeMaker == 0)
-		holder->m_bfmeMaker = bfmeMakeRG();
+		holder->m_bfmeMaker = (BfmeMakerRG *)bfme5MakeObj18();
 	m_bfmeHolder->m_bfmeMaker->bfmeDoRG();
 }
