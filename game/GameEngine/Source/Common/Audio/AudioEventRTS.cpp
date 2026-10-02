@@ -690,26 +690,16 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Audio/AudioEventRTSGetPlayerIndexThunk.cpp
-// ?getPlayerIndex@AudioEventRTS@@ present-unmatched
-Int AudioEventRTS::getPlayerIndex( void ) const
-{
-	if (m_ownerType == OT_Object) {
-		Object *obj = TheGameLogic->findObjectByID(m_objectID);
-		if (obj) {
-			return obj->getControllingPlayer()->getPlayerIndex();
-		}
-	} else if (m_ownerType == OT_Drawable) {
-		Drawable *draw = TheGameClient->findDrawableByID(m_drawableID);
-		if (draw) {
-			Object *obj = draw->getObject();
-			if (obj) {
-				return obj->getControllingPlayer()->getPlayerIndex();
-			}
-		}
-	}
-
-	return m_playerIndex;
+// BFME getPlayerIndex is owned by AudioEventRTSGetPlayerIndexThunk.cpp at
+// RVA 0x000B4290. Preserve the original header helpers that the upstream
+// getter used to emit: five 7-byte Drawable::getObject rows and the 4-byte
+// Player::getPlayerIndex row at 0x002C7D30 still belong to this TU.
+// Typed member pointers request emission without altering either helper.
+namespace {
+typedef Object *(Drawable::*Rva000C3DC0GetObjectPointer)();
+Rva000C3DC0GetObjectPointer Rva000C3DC0GetObject = &Drawable::getObject;
+typedef PlayerIndex (Player::*Rva002C7D30GetPlayerIndexPointer)() const;
+Rva002C7D30GetPlayerIndexPointer Rva002C7D30GetPlayerIndex = &Player::getPlayerIndex;
 }
 
 //-------------------------------------------------------------------------------------------------
