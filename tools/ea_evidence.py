@@ -21,6 +21,10 @@ WorldBuilder functions and writes what each partner says to targets/game/reverse
   name   route flagtable (strong): a command-line handler's name read from the game's and BFME1
          WorldBuilder's CommandLineParam tables (tools/ea_flagtable.py). Merged into every
          rewrite here; a flagtable name replaces a label name at its address.
+  name   route wbslot (strong): a WorldBuilder label's virtual override named in the game through
+         the aligned vtable slot of the same class's table (tools/ea_wbslot.py, run on --wb2-exe
+         and on ROTWK_WORLDBUILDER when set). Merged into every rewrite; an agreeing label name at
+         its address stays (no wbslot row is added) and a disagreeing one stops the rewrite.
 
 Pairing: seeds, then anchored alignment -- both builds keep an object's functions in source order
 but link objects in a different order, so between two pairs that step forward together by at most
@@ -54,6 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import build  # noqa: E402
 import ea_flagtable  # noqa: E402
+import ea_wbslot  # noqa: E402
 
 REVERSE = ROOT / "targets/game/reverse"
 OUT = REVERSE / "ea_evidence.csv"
@@ -480,9 +485,12 @@ def main():
     placed = files(G, p1, p2, wb_files(W1), wb_files(W2), zh_files())
     rows = [(g, "name", *v) for g, v in named.items()] + [(g, "file", f, route, "") for g, (f, route) in placed.items()]
     flag_rows, _ = ea_flagtable.derive()   # not WorldBuilder pairings; a rewrite must keep them
-    ea_flagtable.write_csv(ea_flagtable.merge(
-        [dict(rva=f"0x{g:08X}", kind=k, value=v, route=r, basis=b) for g, k, v, r, b in rows], flag_rows))
+    slot_rows, _ = ea_wbslot.derive([args.wb2_exe] + ea_wbslot.env_paths("ROTWK_WORLDBUILDER"))
+    ea_flagtable.write_csv(ea_wbslot.merge(ea_flagtable.merge(
+        [dict(rva=f"0x{g:08X}", kind=k, value=v, route=r, basis=b) for g, k, v, r, b in rows], flag_rows),
+        slot_rows))
     rows += [(rva, "name", n, ea_flagtable.ROUTE, ea_flagtable.BASIS) for rva, n, _ in flag_rows]
+    rows += [(rva, "name", n, ea_wbslot.ROUTE, ea_wbslot.BASIS) for rva, n, _ in slot_rows]
     by = collections.Counter((r[1], r[3]) for r in rows)
     print(f"wrote {OUT.relative_to(ROOT)}: {len(named):,} names, {len(placed):,} files; {dict(sorted(by.items()))}")
 

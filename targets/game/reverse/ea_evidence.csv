@@ -8871,6 +8871,7 @@ rva,kind,value,route,basis
 0x002D71D0,file,GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgrade.cpp,zh,
 0x002D72F0,file,GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgrade.cpp,retail-run,
 0x002D75B0,file,GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgrade.cpp,zh,
+0x002D7A50,name,RadarUpgrade::removeUpgrade,wbslot,strong
 0x002D7AA0,file,GameEngine/Source/GameLogic/Object/Upgrade/RadarUpgrade.cpp,zh,
 0x002D7B10,file,GameEngine/Source/GameLogic/Object/Upgrade/RadarUpgrade.cpp,retail-run,
 0x002D7BA0,file,GameEngine/Source/GameLogic/Object/Upgrade/RadarUpgrade.cpp,retail-run,
@@ -8894,7 +8895,9 @@ rva,kind,value,route,basis
 0x002D9D00,file,GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModule.cpp,zh,
 0x002D9DF0,file,GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModule.cpp,zh,
 0x002D9FF0,file,GameEngine/Source/Common/Thing/Module.cpp,zh,
+0x002DA300,name,WeaponBonusUpgrade::removeUpgrade,wbslot,strong
 0x002DA320,file,GameEngine/Source/GameLogic/Object/Upgrade/WeaponBonusUpgrade.cpp,zh,
+0x002DA450,name,WeaponBonusUpgrade::upgradeImplementation,wbslot,strong
 0x002DA4E0,file,GameEngine/Source/GameLogic/Object/Upgrade/WeaponSetUpgrade.cpp,zh,
 0x002DAD60,file,GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,zh,
 0x002DB880,file,GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp,wb1,
