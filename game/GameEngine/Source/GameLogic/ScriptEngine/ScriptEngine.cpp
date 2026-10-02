@@ -43,16 +43,17 @@ __forceinline long bfmeTimerFloatToLong(float value)
 class Parameter
 {
 public:
-	int getInt() const { return m_int; }
-	float getReal() const { return m_real; }
-	const AsciiString &getString() const { return m_string; }
-
-private:
 	char m_unknown[8];
 	int m_int;
 	float m_real;
 	AsciiString m_string;
 };
+
+// Preserve retail's full-width integer load before the short conversion.
+static __forceinline int rva00336B20Int(const Parameter *parameter)
+{
+	return parameter->m_int;
+}
 
 class Condition
 {
@@ -147,20 +148,20 @@ AsciiString ScriptEngine::getStats( Real *curTimePtr, Real *script1Time, Real *s
 void ScriptEngine::setSway(ScriptAction *pAction)
 {
 	++m_breezeInfo.m_breezeVersion;
-	m_breezeInfo.m_direction = pAction->getParameter(0)->getReal();
+	m_breezeInfo.m_direction = pAction->getParameter(0)->m_real;
 	m_breezeInfo.m_directionVec.x = sinf(m_breezeInfo.m_direction);
 	m_breezeInfo.m_directionVec.y = cosf(m_breezeInfo.m_direction);
-	m_breezeInfo.m_intensity = pAction->getParameter(1)->getReal();
-	m_breezeInfo.m_lean = pAction->getParameter(2)->getReal();
-	m_breezeInfo.m_breezePeriod = (short)pAction->getParameter(3)->getInt();
+	m_breezeInfo.m_intensity = pAction->getParameter(1)->m_real;
+	m_breezeInfo.m_lean = pAction->getParameter(2)->m_real;
+	m_breezeInfo.m_breezePeriod = (short)rva00336B20Int(pAction->getParameter(3));
 	if (m_breezeInfo.m_breezePeriod < 1)
 		m_breezeInfo.m_breezePeriod = 1;
-	m_breezeInfo.m_randomness = pAction->getParameter(4)->getReal();
+	m_breezeInfo.m_randomness = pAction->getParameter(4)->m_real;
 }
 
 bool ScriptEngine::evaluateTimer(Condition *condition)
 {
-	ScriptCounter *counter = bfmeCounter(condition->getParameter(0)->getString());
+	ScriptCounter *counter = bfmeCounter(condition->getParameter(0)->m_string);
 	if (!counter->m_isCountdownTimer)
 		return false;
 	return counter->m_value < 1;
@@ -169,14 +170,14 @@ bool ScriptEngine::evaluateTimer(Condition *condition)
 void ScriptEngine::setTimer(ScriptAction *action,
 	bool millisecondTimer, bool random)
 {
-	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
+	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 	if (millisecondTimer)
 	{
 		Parameter *amount = action->getParameter(1);
-		float value = amount->getReal();
+		float value = amount->m_real;
 		if (random)
 		{
-			float randomValue = action->getParameter(2)->getReal();
+			float randomValue = action->getParameter(2)->m_real;
 			value = (float)GetGameLogicRandomValue((int)value, (int)randomValue,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp",
 				2244);
@@ -188,10 +189,10 @@ void ScriptEngine::setTimer(ScriptAction *action,
 	else
 	{
 		Parameter *amount = action->getParameter(1);
-		int value = amount->getInt();
+		int value = amount->m_int;
 		if (random)
 		{
-			int randomValue = action->getParameter(2)->getInt();
+			int randomValue = action->getParameter(2)->m_int;
 			value = GetGameLogicRandomValue(value, randomValue,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp",
 				2252);
@@ -204,12 +205,12 @@ void ScriptEngine::setTimer(ScriptAction *action,
 
 void ScriptEngine::pauseTimer(ScriptAction *action)
 {
-	bfmeCounter(action->getParameter(0)->getString())->m_isCountdownTimer = false;
+	bfmeCounter(action->getParameter(0)->m_string)->m_isCountdownTimer = false;
 }
 
 void ScriptEngine::restartTimer(ScriptAction *action)
 {
-	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
+	ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 	if (counter->m_value > 0)
 		counter->m_isCountdownTimer = true;
 }
@@ -217,11 +218,11 @@ void ScriptEngine::restartTimer(ScriptAction *action)
 void ScriptEngine::adjustTimer(ScriptAction *action,
 	bool millisecondTimer, bool add)
 {
-	ScriptCounter *counter = bfmeCounter(action->getParameter(1)->getString());
+	ScriptCounter *counter = bfmeCounter(action->getParameter(1)->m_string);
 	if (millisecondTimer)
 	{
 		Parameter *amount = action->getParameter(0);
-		float value = amount->getReal();
+		float value = amount->m_real;
 		if (!add)
 			value = -value;
 		counter->m_value += bfmeTimerFloatToLong(
@@ -230,7 +231,7 @@ void ScriptEngine::adjustTimer(ScriptAction *action,
 	else
 	{
 		Parameter *amount = action->getParameter(0);
-		int value = amount->getInt();
+		int value = amount->m_int;
 		if (!add)
 			value = -value;
 		counter->m_value += value;
