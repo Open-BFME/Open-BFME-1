@@ -816,21 +816,6 @@ void Shell::reverseAnimatewindow( void )
 		m_animateWindowManager->reverseAnimateWindow();
 }
 
-// ?isAnimReversed@Shell@@QAE_NXZ present-unmatched here - matched copy lives in Shell_isAnimReversed_Thunk.cpp with BFME's GlobalData offset
-Bool Shell::isAnimReversed( void )
-{
-	if(!m_animateWindowManager)
-	{
-		DEBUG_CRASH(("We called registerWithAnimateManager and we don't have an Animate Manager created"));
-		return TRUE;
-	}
-	if (TheGlobalData->m_animateWindows)
-		return m_animateWindowManager->isReversed();
-	else
-		return TRUE;
-}
-
-
 void Shell::loadScheme( AsciiString name )
 {
 	if(!m_schemeManager)

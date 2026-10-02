@@ -749,28 +749,6 @@ void AIGuardRetaliateReturnState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AIGuardRetaliateReturnState@@ present-unmatched
-StateReturnType AIGuardRetaliateReturnState::onEnter( void )
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	m_nextReturnScanTime = now + GameLogicRandomValue(0, TheAI->getAiData()->m_guardEnemyReturnScanRate);
-
-// no, no, no, don't do this in onEnter, unless you like really slow maps. (srj)
-//	if (getGuardMachine()->lookForInnerTarget()) 
-//		return STATE_FAILURE; // early termination because we found a target.
-
-	m_goalPosition = *getGuardMachine()->getPositionToGuard();
-
-	AIUpdateInterface *ai = getMachineOwner()->getAIUpdateInterface(); 
-	if (ai && ai->isDoingGroundMovement()) 
-	{
-		TheAI->pathfinder()->adjustDestination(getMachineOwner(), ai->getLocomotorSet(), &m_goalPosition);
-	}
-	setAdjustsDestination(true);
-	return AIInternalMoveToState::onEnter();
-}
-
-//--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 // ?onExit@AIGuardRetaliateReturnState@@ present-unmatched
 void AIGuardRetaliateReturnState::onExit( StateExitType status )
