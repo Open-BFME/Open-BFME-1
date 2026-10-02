@@ -1,7 +1,11 @@
 // ?aptMathRound@@YAPAVAptValue@@PAXH@Z
 // cl: /DNDEBUG /MD /EHsc
 class AptValue { public: float toNumber(); };
-class AptInteger { public: static AptValue* Create(int value); };
+// 0x008A11E0 is matched in functions.csv as AptInteger::Create returning
+// AptInteger* (Libraries/Source/EA/Apt/AptIntegerCreate.cpp), so the local
+// declaration spells that return type and the uses cast, as the other Apt
+// translation units do.
+class AptInteger { public: static AptInteger* Create(int value); };
 extern AptValue* g_bfmeFallbackDB;
 extern AptValue** g_bfmeArr1233;
 struct Rva008AE770Stack { int m_count; };
@@ -15,8 +19,8 @@ AptValue* aptMathRound(void* self, int argc)
 	float v = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
 	if (v > BfmeZeroRange) {
 		v += g_bfmeK1253;
-		return AptInteger::Create((int)v);
+		return (AptValue*)AptInteger::Create((int)v);
 	}
 	v -= g_bfmeK1253;
-	return AptInteger::Create((int)v);
+	return (AptValue*)AptInteger::Create((int)v);
 }

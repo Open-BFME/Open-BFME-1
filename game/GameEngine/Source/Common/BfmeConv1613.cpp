@@ -9,12 +9,23 @@ inline void operator delete(void *block, void *where)
 {
 }
 
-class BfmeStrVTF
+struct BfmeEntVTF;
+
+// 0x00887B60 is matched in functions.csv as the private
+// StringBase<char>::StringBase(const StringBase<char> &)
+// (game/Libraries/Source/string/StringBase.cpp), the body retail calls through
+// AsciiString's inline copy ctor whenever a string field is copied. It is
+// declared TU-locally at that spelling; the enclosing struct is the friend that
+// owns the field, so it may copy it.
+template <typename T>
+class StringBase
 {
-public:
-	BfmeStrVTF(const BfmeStrVTF &other);
-	~BfmeStrVTF();
-	char *m_bfme00;
+	friend struct BfmeEntVTF;
+
+private:
+	StringBase(const StringBase &src);
+
+	T *m_data;
 };
 
 struct BfmeEntVTF
@@ -28,7 +39,7 @@ struct BfmeEntVTF
 	int m_bfme00;
 	int m_bfme04;
 	int m_bfme08;
-	BfmeStrVTF m_bfme0c;
+	StringBase<char> m_bfme0c;
 };
 
 void bfmeConstructVTF(BfmeEntVTF *dest, const BfmeEntVTF *source)

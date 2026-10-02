@@ -67,6 +67,10 @@ public:
 	U1Cached *m_cached;
 };
 
+// 0x005C21D0 is matched in functions.csv as U1Sub::apply; it hands the subobject
+// back as a reference, so the declaration here matches that return type and the
+// call sites below discard it. The class is redeclared TU-locally; only the
+// declaration lives here.
 class U1Sub
 {
 public:
