@@ -14168,5 +14168,15 @@
   "after_sha256": "2cfe93cf5ee0a5041d73bf2418562b5ec49e9886b1e7d0bfd88b01b8022670e3",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/ObjectGetAbleToAttackSpecificObjectBFME.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/ObjectGetAbleToAttackSpecificObjectBFME.cpp",
+  "old_name": "bfmeFindTargetGate",
+  "new_name": "rva002B21E0FindWallUpgradeUpdate",
+  "before_sha256": "9849d4db2191c15a9f73a081cca2869f04f9f478de11ed1f859d643e29f74968",
+  "after_sha256": "7d95930262d9fb26a476157f3bda24897b24deb96e4a6d9f46e9738e0f19266f",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The caller's private placeholder for the ILT 0x00003A49 target becomes the ledger name of the matched owner at 0x002B21E0, which that thunk reaches; the call bytes are unchanged."
  }
 ]

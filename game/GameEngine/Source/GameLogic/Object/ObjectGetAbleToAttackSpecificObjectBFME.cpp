@@ -59,9 +59,9 @@ public:
 	virtual Bool bfmeAllowsAttack() const;
 };
 
-class BfmeTargetGateModule;
+class Module;
 
-BfmeTargetGateModule *bfmeFindTargetGate(const Object *target);
+Module *rva002B21E0FindWallUpgradeUpdate(const Object *target);
 
 class BfmeAttackQuery
 {
@@ -194,7 +194,7 @@ CanAttackResult Object::getAbleToAttackSpecificObject(AbleToAttackType attackTyp
 	const ThingTemplate *targetTemplate = target->getFinalTemplate();
 	if ((targetTemplate->m_kindOf[4] & 0x00200000) != 0)
 	{
-		BfmeTargetGateModule *module = bfmeFindTargetGate(target);
+		Module *module = rva002B21E0FindWallUpgradeUpdate(target);
 		if (module)
 		{
 			const BfmeTargetGate *gate = reinterpret_cast<const BfmeTargetGate *>(
