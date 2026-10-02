@@ -43,7 +43,10 @@ public:
     char pad00[0xb3c]; float minLowEnergyProductionSpeed,maxLowEnergyProductionSpeed,lowEnergyPenaltyModifier,multipleFactory;
     char padB4C[0x394]; Gen_00083240 populationModifiers; //+0xEE0
 };
-class GameLogic { public: bool _bfme_isInMultiplayerOrSkirmishGame(); };
+class GameLogic;
+// Retail's mode predicate lives at 0x00382C20 and is defined once as
+// GameLogicPortraitShim::isInMultiplayerOrSkirmishGame.
+class GameLogicPortraitShim { public: bool isInMultiplayerOrSkirmishGame(); };
 class PlayerList { public: int unidentified_000df510(bool); };
 // The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData; it is
 // defined once in game/GameEngine/Source/Common/GlobalData.cpp. The class
@@ -101,7 +104,7 @@ int ThingTemplate::calcTimeToBuild(const Player *player,int overrideTime) const
             }
         }
     }
-    if(TheGameLogic->_bfme_isInMultiplayerOrSkirmishGame()) {
+    if(((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame()) {
         int players=ThePlayerList->unidentified_000df510(false);
         float modifier;
         if(kindOfWord0&0x80) modifier=TheWritableGlobalData->populationModifiers.bfmeGet200(players);
