@@ -97,12 +97,17 @@ public:
 	bool test( int x, int y ) const;
 };
 
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). Only getStaticDiffuse is needed, so
+// the class stays opaque and the call is made through a cast at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+
 class BfmeA1087
 {
 public:
 	int getStaticDiffuse( int x, int y );
 };
-extern BfmeA1087 *g_bfmeA1087;
 
 class WorldHeightMap
 {
@@ -239,7 +244,7 @@ void W3DTerrainBackground::doTesselatedUpdate( const IRegion2D &partialRange, Wo
 	for (j=minY; j<=maxY; j++) {
 		for (i=minX; i<=maxX; i++) {
 			if (m_map->getFlipState(i, j)) {
-				Int diffuse = g_bfmeA1087->getStaticDiffuse(i,j);
+				Int diffuse = ((BfmeA1087 *)TheTerrainRenderObject)->getStaticDiffuse(i,j);
 				Vector3 pos;
 				Int k = i<limitX?i:limitX;
 				Int l = j<limitY?j:limitY;

@@ -8,7 +8,11 @@ public:
 	void bfmeAdd1059(BfmeA1059 *a, int b);
 };
 
-extern BfmeG1059 *g_bfmeG1059;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). The add hook is called on it, so the
+// class stays opaque and the cast happens at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class BfmeH1059
 {
@@ -36,7 +40,7 @@ public:
 
 void BfmeA1059::bfmeGo1059A(int a)
 {
-	g_bfmeG1059->bfmeAdd1059(this, a);
+	((BfmeG1059 *)TheTerrainRenderObject)->bfmeAdd1059(this, a);
 	bfmeUse1059(a);
 	((BfmeH1059 *)TheTerrainVisual)->bfmeV1059E(a);
 }

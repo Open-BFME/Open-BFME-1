@@ -157,7 +157,12 @@ public:
 	void bfmeInvoke(void *first, void *second);
 };
 
-extern Gen_006CDF70Target *TheBfmeTarget_006CDF70;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). 0x006CDF70 reaches Gen006C6EC0Terrain's
+// query through ILT 0x0002f6fd on that global; the class stays opaque here and
+// the cast happens at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 void bfmeDispatch_006CDF70(void *first, void *second);
 
@@ -196,8 +201,8 @@ void __stdcall bfmeDispatch_002EDAC0(void *item)
 // ?bfmeDispatch_006CDF70@@YAXPAX0@Z
 void bfmeDispatch_006CDF70(void *first, void *second)
 {
-	if (TheBfmeTarget_006CDF70)
-		TheBfmeTarget_006CDF70->bfmeInvoke(first, second);
+	if (TheTerrainRenderObject)
+		((Gen_006CDF70Target *)TheTerrainRenderObject)->bfmeInvoke(first, second);
 }
 
 // ?bfmeDispatch_009EBA60@@YAXPAX0@Z

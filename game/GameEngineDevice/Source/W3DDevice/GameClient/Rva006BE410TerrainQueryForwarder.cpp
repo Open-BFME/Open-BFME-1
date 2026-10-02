@@ -2,11 +2,16 @@
 
 typedef bool Bool;
 
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). The member-thunk receiver is the
+// same pointer; the class stays opaque here, so the cast carries the call.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+
 class BfmeA1087
 {
 };
 
-extern BfmeA1087 *g_bfmeA1087;
 extern void d_0002f6fd(void);
 
 class Rva006BE410TerrainQueryForwarder
@@ -24,5 +29,5 @@ Bool Rva006BE410TerrainQueryForwarder::query( float first, float second )
 		MemberThunk member;
 	} thunk;
 	thunk.function = d_0002f6fd;
-	return (g_bfmeA1087->*thunk.member)( first, second );
+	return ((BfmeA1087 *)TheTerrainRenderObject->*thunk.member)( first, second );
 }

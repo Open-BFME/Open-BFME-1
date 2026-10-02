@@ -143,11 +143,15 @@ public:
 	virtual void bfmeVirt139EDC(void *a);
 };
 
-extern BfmeObjEDC *g_bfmeObjEDC;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). The virtual is called on it, so the
+// class stays opaque and the cast happens at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 void bfmeGoEDC(void *a)
 {
-	BfmeObjEDC *o = g_bfmeObjEDC;
+	BfmeObjEDC *o = (BfmeObjEDC *)TheTerrainRenderObject;
 	if (o)
 		o->bfmeVirt139EDC(a);
 }

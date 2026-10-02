@@ -3,8 +3,11 @@
 #define Matrix4x4 Matrix4
 #include "W3DDevice/Common/W3DRadar.h"
 
-class BfmeA1087;
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). This lane only needs the shroud grid
+// out of it, so the object stays opaque and the cast happens at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 struct Rva006C23B0Grid
 {
@@ -114,7 +117,7 @@ struct Rva006C23B0RadarPoint
 
 void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 {
-	BfmeA1087ShroudView *terrain = (BfmeA1087ShroudView *)g_bfmeA1087;
+	BfmeA1087ShroudView *terrain = (BfmeA1087ShroudView *)TheTerrainRenderObject;
 	Rva006C23B0Grid *grid = terrain ? terrain->getShroud() : 0;
 	if (grid == 0)
 		return;

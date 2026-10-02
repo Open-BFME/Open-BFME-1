@@ -159,7 +159,11 @@ public:
 	virtual float bfmeCallYS(void *a, void *b, BfmeVec3YS *out);
 };
 
-extern BfmeSourceYS *g_bfmeSourceYS;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). The line-of-sight query is called on
+// it, so the class stays opaque and the cast happens at the one use.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 float __stdcall bfmeGetYS(void *a, void *b, BfmeVec3YS *out)
 {
@@ -170,9 +174,9 @@ float __stdcall bfmeGetYS(void *a, void *b, BfmeVec3YS *out)
 		out->m_bfmeZYS = 1.0f;
 	}
 
-	if (g_bfmeSourceYS != 0)
+	if (TheTerrainRenderObject != 0)
 	{
-		return g_bfmeSourceYS->bfmeCallYS(a, b, out);
+		return ((BfmeSourceYS *)TheTerrainRenderObject)->bfmeCallYS(a, b, out);
 	}
 
 	return g_bfmeZeroYS;

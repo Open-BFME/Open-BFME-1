@@ -100,7 +100,12 @@ public:
 // The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
 // once in game/GameEngine/Source/Common/GlobalData.cpp.
 extern GlobalData *TheWritableGlobalData;
-extern Rva006E8E60TerrainAbi *TheTerrainRenderObject;
+// Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
+// (W3DDevice/GameClient/BaseHeightMap.h). The terrain object's vtable slot at
+// +0x220 is adjustTerrainLOD, reached through the novtable ABI mirror above, so
+// the class stays opaque and the cast happens at the two uses.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);
@@ -147,7 +152,7 @@ void W3DDisplay::calculateTerrainLOD(void)
 
 		TheWritableGlobalData->m_terrainLOD = curLOD;
 		*reinterpret_cast<volatile unsigned char *>(reinterpret_cast<unsigned char *>(W3DDisplay::m_3DScene) + 0x128) = 1;
-		TheTerrainRenderObject->adjustTerrainLOD(0);
+		((Rva006E8E60TerrainAbi *)TheTerrainRenderObject)->adjustTerrainLOD(0);
 
 		volatile double frequency = (double)freq64;
 
@@ -188,5 +193,5 @@ void W3DDisplay::calculateTerrainLOD(void)
 
 	TheWritableGlobalData->m_terrainLOD = goodLOD;
 	*reinterpret_cast<volatile unsigned char *>(reinterpret_cast<unsigned char *>(W3DDisplay::m_3DScene) + 0x128) = 0;
-	TheTerrainRenderObject->adjustTerrainLOD(0);
+	((Rva006E8E60TerrainAbi *)TheTerrainRenderObject)->adjustTerrainLOD(0);
 }
