@@ -130,10 +130,16 @@ struct ShroudManagerImpl008FBA40CellObject
 	int playerState[16];
 };
 
+// retail 0x008F7EC0, defined in game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp
+class Rva008F7EC0
+{
+public:
+	void method();
+};
+
 class BfmeThingCDE
 {
 public:
-	void d_008f7ec0();
 	void d_008f7990();
 
 	char unknown00[0x10];
@@ -429,7 +435,7 @@ void ShroudManagerImpl008FBA40::configure(Region3D newRegion, Real cellSize)
 	for (BfmeThingCDE *node = reinterpret_cast<BfmeThingCDE *>(nodes);
 		node != 0; node = node->next)
 	{
-		node->d_008f7ec0();
+		reinterpret_cast<Rva008F7EC0 *>(node)->method();
 		node->d_008f7990();
 		reinterpret_cast<PartitionData *>(node)->makeDirty();
 	}

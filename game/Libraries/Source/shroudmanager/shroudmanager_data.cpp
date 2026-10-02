@@ -2,8 +2,9 @@
 // ?bfmeDtorCDE@BfmeThingCDE@@QAEXXZ
 //
 // The node at 0x008F7EC0 clears the same 0x10-byte entries that this
-// destructor passes to the array-delete helper. Its Ghidra body has no
-// source row, so the member call uses an address pin for that helper.
+// destructor passes to the array-delete helper. Its body is matched as
+// ?method@Rva008F7EC0@@QAEXXZ at 0x008F7EC0 (Rva008F7EC0Sweep.cpp), so the
+// call uses that name.
 
 class CDEVirtualBase
 {
@@ -37,13 +38,19 @@ public:
 	void *m_14;
 };
 
+// retail 0x008F7EC0, defined in game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp
+class Rva008F7EC0
+{
+public:
+	void method();
+};
+
 class BfmeThingCDE
 {
 public:
 	bool bfmeCheckABI();
 	void bfmeDtorCDE();
 	void d_008f7990();
-	void d_008f7ec0();
 
 	void *m_owner;
 	CDEProvider *m_ptr4;
@@ -68,7 +75,6 @@ public:
 };
 
 #pragma comment(linker, "/alternatename:?d_008f7990@BfmeThingCDE@@QAEXXZ=?d_008f7990@@YAXXZ")
-#pragma comment(linker, "/alternatename:?d_008f7ec0@BfmeThingCDE@@QAEXXZ=?d_008f7ec0@@YAXXZ")
 // 0x009F6D76 is the MSVC 7.1 CRT's own array-destruction helper, published by
 // libc.lib's ..\build\intel\st_obj\ehvecdtr.obj under the reserved front-end
 // name ??_M@YGXPAXIHP6EX0@Z@Z (see
@@ -135,7 +141,7 @@ void BfmeThingCDE::bfmeDtorCDE()
 		m_ptr8->f0();
 		m_ptr8 = 0;
 	}
-	d_008f7ec0();
+	reinterpret_cast<Rva008F7EC0 *>(this)->method();
 	if (m_array != 0)
 	{
 		void *cookie = (char *)m_array - 4;

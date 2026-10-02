@@ -290,10 +290,16 @@ private:
 	char m_bfmePadding69[3];					// +0x69
 };
 
+// retail 0x008F7EC0, defined in game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp
+class Rva008F7EC0
+{
+public:
+	void method();
+};
+
 class BfmeThingCDE
 {
 public:
-	void d_008f7ec0();
 	char m_bfmeHead[0x10];					// +0x00
 	BfmeThingCDE *m_bfmeNext;					// +0x10
 };
@@ -359,7 +365,7 @@ void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
 		BfmeThingCDE *node = m_bfmeNodes;
 		while (node != 0)
 		{
-			node->d_008f7ec0();
+			reinterpret_cast<Rva008F7EC0 *>(node)->method();
 			reinterpret_cast<BfmeHostXO *>(node)->bfmeFlushXO();
 			reinterpret_cast<PartitionData *>(node)->makeDirty();
 			node = node->m_bfmeNext;
