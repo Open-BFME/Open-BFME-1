@@ -14010,33 +14010,63 @@
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  },
  {
-  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
-  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
-  "old_name": "BfmeDirtyBase",
-  "new_name": "Rva0000B9CECleanup",
-  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
-  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
-  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
-  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_008018a0",
+  "new_name": "Rva00801420VtableReseat",
+  "before_sha256": "54450ef9899991b9c99560c27142a20895f20b21d1a1dea00daf85408b91098d",
+  "after_sha256": "b15fdeb4e710bdbb5f9f43b12f0fab5d76e677570e7231385110f2bb6cc12745",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
  },
  {
-  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
-  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
-  "old_name": "BfmeDirtyBase",
-  "new_name": "Rva007EB6C0Cleanup",
-  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
-  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
-  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
-  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_00802360",
+  "new_name": "Rva00802200VtableReseat",
+  "before_sha256": "0f54475d13a1ab9ffbe42c86603f53fbad22efa8505ece0f1b9dc2e2aa1504ee",
+  "after_sha256": "a0a43f72bcbed69d29dfc09dfe6a7bfd742c6b8510a23a28fcd0a5ce7dff2bb5",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
  },
  {
-  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
-  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
-  "old_name": "BfmeDirtyBase",
-  "new_name": "Rva007FA650Cleanup",
-  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
-  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
-  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
-  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_00802450",
+  "new_name": "Rva00802280VtableReseat",
+  "before_sha256": "487687eb49a02bf94df1c042053dfb3f0c9883e77f7879a814aaef44bf8dca25",
+  "after_sha256": "d3f578bd3e1be7873e8db21d33e50b9c6205673548949bda8eed4934255536d4",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_00802a70",
+  "new_name": "Rva00802870VtableReseat",
+  "before_sha256": "364fc9b283cc0cb381113918e4f169649be1d69676488370564403ed4a038fa2",
+  "after_sha256": "30f7c5e53a8b2d08509b214969cc39a1876566fbefe7dcd95ae40e7a6d64909a",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_00802ea0",
+  "new_name": "Rva00802E30VtableReseat",
+  "before_sha256": "afb010cbd47b3f7d3457ce7df577ef8da4707c155694ce1e2e15c06c1007f8b7",
+  "after_sha256": "2856f1f6872153ed79c2d962bb0d63ddfe05366e39783681a8ab8641ab9b361d",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "T2EmptyDtor_00806460",
+  "new_name": "Rva008062F0VtableReseat",
+  "before_sha256": "abe581f63b14223dd23bb002bebd1c9154abf6765853a572e9afa7d01926226a",
+  "after_sha256": "3e9bbd3284192fc12c63b320473080d41c4bf91084304153b569c6c75882a4c9",
+  "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
+  "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
  }
 ]
