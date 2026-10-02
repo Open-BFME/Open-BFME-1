@@ -407,19 +407,9 @@ void AudioEventRTS::setAudioEventInfo( const AudioEventInfo *eventInfo ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getAudioEventInfo@AudioEventRTS@@ present-unmatched
-const AudioEventInfo *AudioEventRTS::getAudioEventInfo( void ) const
-{
-	if (m_eventInfo) {
-		if (m_eventInfo->m_audioName == m_eventName) {
-			return m_eventInfo;
-		} else {
-			m_eventInfo = NULL;
-		}
-	}
-
-	return m_eventInfo;
-}
+// BFME's matched MilesAudioManagerStopChain.cpp uses the +0x08 event-info
+// pointer directly. This unverified ZH getter also checked the event name and
+// cleared the pointer; do not emit it over the BFME inline definition.
 
 //-------------------------------------------------------------------------------------------------
 void AudioEventRTS::setPlayingHandle( AudioHandle handle )
