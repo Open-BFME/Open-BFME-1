@@ -147,7 +147,7 @@ protected:
             return false;
         return counter->m_value < 1;
     }
-    __forceinline Bool evaluateCondition(Condition *condition)
+    __forceinline Bool evaluateConditionForList(Condition *condition)
     {
         switch (condition->getConditionType())
         {
@@ -190,7 +190,7 @@ Bool ScriptEngine::evaluateConditions(Script *script, Team *thisTeam, Player *pl
         Bool andTerm = true;
         while (condition)
         {
-            if (!evaluateCondition(condition))
+            if (!evaluateConditionForList(condition))
             {
                 andTerm = false;
                 break;

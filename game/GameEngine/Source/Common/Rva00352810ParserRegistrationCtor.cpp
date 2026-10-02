@@ -27,7 +27,9 @@ public:
 class BfmeParserRegistrationVE
 {
 public:
-    BfmeParserRegistrationVE(DataChunkInput *table, AsciiString *name,
+    // Keep this inline TU copy distinct from the separately owned EA constructor.
+    template <typename T>
+    __forceinline BfmeParserRegistrationVE(T *table, AsciiString *name,
         AsciiString *label)
     {
         m_vftable = _bfmeVftVE;

@@ -62,6 +62,7 @@ public:
 	virtual void slot04(void);
 	virtual void slot08(void);
 	virtual void slot0c(void);
+	virtual ~W3DShrubBuffer(void);
 
 	W3DShrubBuffer(Bool useSmallBuffers);
 	void clearAllTrees(void);

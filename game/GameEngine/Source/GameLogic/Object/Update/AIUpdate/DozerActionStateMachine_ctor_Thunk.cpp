@@ -38,6 +38,8 @@ private:
 	unsigned char m_fields[ 0x20 ];
 };
 
+namespace {
+
 class DozerActionPickActionPosState : public State
 {
 public:
@@ -52,6 +54,8 @@ private:
 	DozerTask m_task;
 	int m_failedAttempts;
 };
+
+}
 
 class DozerActionMoveToActionPosState : public State
 {
