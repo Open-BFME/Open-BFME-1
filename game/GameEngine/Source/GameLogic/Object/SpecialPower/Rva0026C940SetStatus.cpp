@@ -25,7 +25,7 @@ typedef BitFlags<86> ObjectStatusMaskType;
 
 #define MAKE_OBJECT_STATUS_MASK(k) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (k))
 
-extern const float g_bfmeK1258B;
+extern const float g_rva01075350;
 
 class Object
 {
@@ -70,7 +70,7 @@ void Rva0026C940Owner::apply(int a, int b, int c, int d, int e)
 	BfmeAIUpdateInterface *ai = rva0026C940Object(this)->getAIUpdateInterface();
 	if (ai != 0)
 	{
-		if (ai->getFormationMovementSpeed(rva0026C940Object(this)) == g_bfmeK1258B)
+		if (ai->getFormationMovementSpeed(rva0026C940Object(this)) == g_rva01075350)
 			return;
 	}
 	bfmeSend1011(a, b, c, d, e);

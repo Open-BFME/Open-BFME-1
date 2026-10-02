@@ -39,7 +39,7 @@ extern "C" __declspec(dllimport) double __cdecl floor( double );
 
 extern const Real g_pathfindCellSize;
 extern const Real g_pathfindDoubleCellSize;
-extern const Real g_pathfindLevelLimit;
+extern const float g_rva01075350;
 extern const Real g_pathfindCellCenterBias;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
@@ -185,7 +185,7 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 	}
 
 	if ((object->getTemplate() == 0 ? object->getTemplate() :
-		object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+		object->getTemplate()->getFinalOverride())->m_level > g_rva01075350) {
 		diameter = (object->getTemplate() == 0 ? object->getTemplate() :
 		object->getTemplate()->getFinalOverride())->m_level;
 	}

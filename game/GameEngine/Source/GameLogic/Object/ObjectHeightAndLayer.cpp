@@ -42,7 +42,7 @@ class Object;
 
 // The shared 0.0f at retail 0x01075350; both height bodies compare against it
 // rather than against an immediate.
-extern Real g_bfmeZeroCY;
+extern const float g_rva01075350;
 // BFME's 0.1 significance threshold.
 extern Real g_bfmeScaleBK;
 
@@ -136,11 +136,11 @@ Real Object::bfmeGetNonnegativePreferredLocomotorHeight() const
 		if (locomotor != 0)
 		{
 			Real height = locomotor->getPreferredHeight();
-			if (height > g_bfmeZeroCY)
+			if (height > g_rva01075350)
 				return height;
 		}
 	}
-	return g_bfmeZeroCY;
+	return g_rva01075350;
 }
 
 // ?bfmeHasSignificantPreferredLocomotorHeight@Object@@QBEHXZ
@@ -155,7 +155,7 @@ Int Object::bfmeHasSignificantPreferredLocomotorHeight() const
 		if (locomotor)
 		{
 			Real height = locomotor->getPreferredHeight();
-			if (height > g_bfmeZeroCY && height > g_bfmeScaleBK)
+			if (height > g_rva01075350 && height > g_bfmeScaleBK)
 				return true;
 		}
 	}

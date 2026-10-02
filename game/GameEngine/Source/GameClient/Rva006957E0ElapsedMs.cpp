@@ -20,7 +20,7 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;	///< 0x012F1464
 extern float g_bfmeElapsedScale;		///< 0x0111BB98 (ms per frame)
-extern float g_bfmeZeroDT;				///< 0x01075350, readonly zero float
+extern const float g_rva01075350;				///< 0x01075350, readonly zero float
 
 class Rva006957E0Owner
 {
@@ -49,7 +49,7 @@ float Rva006957E0Owner::getElapsedMs()
 
 	unsigned int frame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 	float delta = ((float)frame - (float)m_lastFrame) * g_bfmeElapsedScale;
-	delta = (delta < g_bfmeZeroDT) ? 0.0f : delta;
+	delta = (delta < g_rva01075350) ? 0.0f : delta;
 
 	m_lastFrame = ((ClientRoot4120 *)TheGameClient)->getFrame();
 	return delta;

@@ -56,7 +56,7 @@ extern GenTable GenTable0012ED5E0;
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
-extern float R3FieldZero01075350;
+extern const float g_rva01075350;
 extern float R3FieldSampleScale010F653C;
 extern float R3FieldSlope1096CF4;
 extern float R3FieldDiagonal10861AC;
@@ -98,7 +98,7 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 		GenKey0012A79E0.fetch( &found ) );
 	if( !found )
 		setting = ((R3FieldGlobals *)TheWritableGlobalData)->m_default;
-	if( setting == R3FieldZero01075350 )
+	if( setting == g_rva01075350 )
 		return;
 
 	float low = GenTable0012ED5E0.lookup(
@@ -125,7 +125,7 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 	{
 		for( int outputY = 0; outputY < m_height; ++outputY )
 		{
-			float value = R3FieldZero01075350;
+			float value = g_rva01075350;
 			for( int x = outputX * 4; x < outputX * 4 + 4; ++x )
 			{
 				for( int y = outputY * 4; y < outputY * 4 + 4; ++y )
@@ -198,7 +198,7 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 float Rva0045A000::sample( float x, float y )
 {
 	if( !m_ready )
-		return R3FieldZero01075350;
+		return g_rva01075350;
 
 	float scale = g_bfmeDefaultBU / m_scale;
 	float offset = (float)m_state * g_bfmeDirectionWeight1285;

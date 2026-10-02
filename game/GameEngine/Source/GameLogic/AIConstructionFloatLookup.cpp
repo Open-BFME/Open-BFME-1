@@ -31,18 +31,18 @@ private:
 	BfmeLookupTree m_bfmeTree;
 };
 
-extern float g_bfmeMissingFloat;
+extern const float g_rva01075350;
 
 float Gen_001418F0::bfmeFindFloat(const void *key)
 {
 	BfmeLookupIterator found;
 	if (m_bfmeTree.m_bfmeSize == 0)
-		return g_bfmeMissingFloat;
+		return g_rva01075350;
 	else
 	{
 		m_bfmeTree.bfmeFind(found, key);
 		if (found.m_bfmeNode == m_bfmeTree.m_bfmeHeader)
-			return g_bfmeMissingFloat;
+			return g_rva01075350;
 		else
 			return found.m_bfmeNode->m_bfmeValue;
 	}

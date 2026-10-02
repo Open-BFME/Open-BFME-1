@@ -81,7 +81,7 @@ int __cdecl bfmeAction2A4(void *arg)
 	return 1;
 }
 
-extern "C" const float bfmeConst1075350;
+extern const float g_rva01075350;
 
 struct BfmeSub78_2B1
 {
@@ -99,7 +99,7 @@ extern BfmeObj2B1 *g_obj12F060C;
 
 int __cdecl bfmeAction2B1(void *arg)
 {
-	float val = bfmeConst1075350;
+	float val = g_rva01075350;
 	if (g_obj12F060C->m_sub78)
 		val = g_obj12F060C->m_sub78->f10;
 	lua_pushnumber(reinterpret_cast<lua_State *>(arg), (double)val);

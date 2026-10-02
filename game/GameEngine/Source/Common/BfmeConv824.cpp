@@ -55,7 +55,7 @@ void BfmeThing43D::doDispatchC(void *arg1, void *arg2, BfmeStrHolder43D *nameHol
 	lua_settop((lua_State *)m_fieldC, 0);
 }
 
-extern "C" const float bfmeConst1075350;
+extern const float g_rva01075350;
 
 class BfmeBaseA97
 {
@@ -78,7 +78,7 @@ void BfmeBaseA97::checkAndDispatch(void *a, void *b)
 	if (vfn1(a, b)) {
 		handleMatch(a, b);
 	}
-	if (m_f60 > bfmeConst1075350) {
+	if (m_f60 > g_rva01075350) {
 		vfn6(a, (char*)b + 0x38);
 	}
 }

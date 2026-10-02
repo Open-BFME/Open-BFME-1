@@ -14,7 +14,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
 extern float g_bfmeDefaultBU; // retail 0x01075334, 1.0f
-extern float g_bfmeDefaultBR; // retail 0x01075350, 0.0f
+extern const float g_rva01075350; // retail 0x01075350, 0.0f
 
 struct Gen_t_006a7170_p8pod
 {
@@ -121,8 +121,8 @@ void Rva006A8280Owner::apply(void *key, float value)
 		{
 			if (value > g_bfmeDefaultBU)
 				value = g_bfmeDefaultBU;
-			else if (value < g_bfmeDefaultBR)
-				value = g_bfmeDefaultBR;
+			else if (value < g_rva01075350)
+				value = g_rva01075350;
 
 			item = m_vector._M_start;
 			if (item != m_vector._M_finish)

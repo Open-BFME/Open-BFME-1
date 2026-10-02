@@ -14,7 +14,7 @@
 
 extern float GetGameClientRandomValueReal( float low, float high,
 	char *file, int line );
-extern const float Rva00C75350Zero;
+extern const float g_rva01075350;
 extern const float Rva00C75334One;
 
 struct Coord3D
@@ -40,13 +40,13 @@ extern "C" Coord3D *Rva005FAD00FillUnitVector( Coord3D *out )
 		components.z = GetGameClientRandomValueReal(
 			-1.0f, 1.0f, kRetailFile, 33 );
 	}
-	while ( components.x == Rva00C75350Zero &&
-		components.y == Rva00C75350Zero &&
-		components.z == Rva00C75350Zero );
+	while ( components.x == g_rva01075350 &&
+		components.y == g_rva01075350 &&
+		components.z == g_rva01075350 );
 
 	float length = (float)sqrt( components.x * components.x +
 		components.y * components.y + components.z * components.z );
-	if ( length != Rva00C75350Zero )
+	if ( length != g_rva01075350 )
 	{
 		float inverseLength = Rva00C75334One / length;
 		components.x *= inverseLength;

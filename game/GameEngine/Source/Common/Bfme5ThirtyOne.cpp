@@ -58,7 +58,7 @@ public:
 	BfmeVecCY m_bfmeVector;					// +0x2C
 };
 
-extern float g_bfmeZeroCY;					// retail 0x01075350
+extern const float g_rva01075350;					// retail 0x01075350
 
 class Gen_0075F3D0
 {
@@ -80,7 +80,7 @@ float Gen_0075F3D0::bfmeRatio(void) const
 	if (owner != 0 && m_bfmeIndex >= 0)
 		return owner->m_bfmeVector.bfmeAt(m_bfmeIndex).m_bfmeRatio;
 
-	return g_bfmeZeroCY;
+	return g_rva01075350;
 }
 
 class BfmeVec2CY

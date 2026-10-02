@@ -1,4 +1,4 @@
-extern const float g_bfmeZeroYS;
+extern const float g_rva01075350;
 
 struct BfmeVec3YS
 {
@@ -179,5 +179,5 @@ float __stdcall bfmeGetYS(void *a, void *b, BfmeVec3YS *out)
 		return ((BfmeSourceYS *)TheTerrainRenderObject)->bfmeCallYS(a, b, out);
 	}
 
-	return g_bfmeZeroYS;
+	return g_rva01075350;
 }

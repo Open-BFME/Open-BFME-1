@@ -2,7 +2,7 @@
 
 extern "C" double __cdecl sin(double a);
 
-extern const float g_bfmeZero1267;
+extern const float g_rva01075350;
 extern const float g_bfmeK1267A;
 extern const float g_bfmeK1267B;
 
@@ -48,7 +48,7 @@ BfmeVec1267 *BfmeA1267::bfmeGet1267()
 	float s;
 	BfmeVec1267 *r;
 
-	if (m_bfme40 != g_bfmeZero1267 && m_bfme3c != g_bfmeZero1267) {
+	if (m_bfme40 != g_rva01075350 && m_bfme3c != g_rva01075350) {
 	r = &m_bfme44;
 	r->m_bfme00 = m_bfme28.m_bfme00;
 	r->m_bfme04 = m_bfme28.m_bfme04;

@@ -1,5 +1,5 @@
 
-extern "C" const float bfmeConst1075350;
+extern const float g_rva01075350;
 
 class BfmeBaseDF9
 {
@@ -22,7 +22,7 @@ void BfmeBaseDF9::checkAndDispatch(void *a, void *b)
 	if (vfn1(a, b)) {
 		handleMatch(a, b);
 	}
-	if (m_f58 > bfmeConst1075350) {
+	if (m_f58 > g_rva01075350) {
 		vfn6(a, (char*)b + 0x38);
 	}
 }
@@ -55,7 +55,7 @@ void BfmeBaseD33::checkAndDispatch(void *a, void *b)
 		if (vfn1(a, b)) {
 			vfn13(a, b);
 		}
-		if (m_f5c > bfmeConst1075350) {
+		if (m_f5c > g_rva01075350) {
 			vfn6(a, (char*)b + 0x38);
 		}
 	}

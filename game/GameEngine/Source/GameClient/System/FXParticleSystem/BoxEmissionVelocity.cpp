@@ -6,7 +6,7 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 #include <math.h>
 
-extern const float Rva00C75350Zero;
+extern const float g_rva01075350;
 extern const float Rva00C75334One;
 
 struct Rva005F86C0Coord3DBase {
@@ -29,7 +29,7 @@ public:
     }
     __forceinline void normalize() {
         float len = length();
-        if (len != Rva00C75350Zero) {
+        if (len != g_rva01075350) {
             float inverse_length = Rva00C75334One / len;
             x *= inverse_length;
             y *= inverse_length;

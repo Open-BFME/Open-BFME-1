@@ -20,7 +20,7 @@ struct Coord3D
 	float z;
 };
 
-extern float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct Rva0016F770Coord3D
 {
@@ -211,7 +211,7 @@ StateReturnType GiantBirdFollowWaypointPathState::update()
 	unsigned char farFromGoal = (unsigned char)(dx * dx + dy * dy + dz * dz < height * height);
 	int pending = ai->m_pending46c;
 
-	if (pending != BfmeZeroRange || farFromGoal)
+	if (pending != g_rva01075350 || farFromGoal)
 	{
 		((Thing *)object)->setPosition(&goal);
 		if (!updateWaypointGoal())

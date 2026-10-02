@@ -41,7 +41,7 @@ public:
 };
 
 extern float g_bfmeOffsetDF;					// retail 0x01098AD4
-extern float g_bfmeZeroCY;					// retail 0x01075350
+extern const float g_rva01075350;					// retail 0x01075350
 
 class Gen_001E1950
 {
@@ -58,8 +58,8 @@ float Gen_001E1950::bfmeValue(void) const
 {
 	float value = m_bfmeThing->m_bfmeValue - g_bfmeOffsetDF;
 
-	if (value < g_bfmeZeroCY)
-		value = g_bfmeZeroCY;
+	if (value < g_rva01075350)
+		value = g_rva01075350;
 
 	return value;
 }

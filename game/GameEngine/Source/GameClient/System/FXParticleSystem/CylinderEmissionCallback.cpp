@@ -4,7 +4,7 @@
 // reaches this body through ILT 0x0002ED1B. The original method name and
 // the semantic type of the copied third word are not established.
 extern "C" double __cdecl sqrt(double value);
-extern const float Rva00C75350Zero;
+extern const float g_rva01075350;
 extern const float Rva00C75334One;
 
 namespace FXParticleSystem {
@@ -40,7 +40,7 @@ Rva005F93F0Coord3D Rva005F93F0CylinderCallbackView::Rva005F93F0CylinderCallback(
     float x = input->x;
     float y = input->y;
     float length = (float)sqrt(y * y + x * x);
-    if (length != Rva00C75350Zero) {
+    if (length != g_rva01075350) {
         float inverseLength = Rva00C75334One / length;
         x = x * inverseLength;
         y = y * inverseLength;

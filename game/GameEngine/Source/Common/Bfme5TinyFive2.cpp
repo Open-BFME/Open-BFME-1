@@ -23,7 +23,7 @@ public:
 	float m_bfmeValue;					// +0x44
 };
 
-extern float g_bfmeDefaultBR;					// retail 0x01075350
+extern const float g_rva01075350;					// retail 0x01075350
 
 class Gen_0043B230
 {
@@ -43,7 +43,7 @@ float Gen_0043B230::bfmeValue(void) const
 	if (thing)
 		return thing->m_bfmeValue;
 
-	return g_bfmeDefaultBR;
+	return g_rva01075350;
 }
 
 class Gen_002A5970

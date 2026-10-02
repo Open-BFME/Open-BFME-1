@@ -12,13 +12,13 @@ public:
 };
 
 extern BfmeSrcUDB *g_bfmeObjUDB;
-extern float g_bfmeKUDB;
+extern const float g_rva01075350;
 
 float __stdcall bfmeGoUDB(int a, int b)
 {
 	if (g_bfmeObjUDB)
 		return g_bfmeObjUDB->bfmeCallUDB(a, b);
-	return g_bfmeKUDB;
+	return g_rva01075350;
 }
 
 class BfmeSrcUDC

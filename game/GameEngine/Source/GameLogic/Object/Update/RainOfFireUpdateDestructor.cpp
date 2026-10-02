@@ -80,7 +80,7 @@ public:
 #undef DISPLAY_SLOT
 
 extern Display *TheDisplay;
-extern float BfmeZeroRange;
+extern const float g_rva01075350;
 extern double g_bfmeSubB3;
 
 class GlobalData
@@ -116,11 +116,11 @@ RainOfFireUpdate::~RainOfFireUpdate()
 
 	if (data != 0 && TheDisplay != 0)
 	{
-		TheDisplay->slot39(g_bfmeSubB3 - data->m_initialDelay * BfmeZeroRange);
+		TheDisplay->slot39(g_bfmeSubB3 - data->m_initialDelay * g_rva01075350);
 	}
 
 	if (TheWritableGlobalData != 0)
 	{
-		TheWritableGlobalData->m_field48 = m_f2c * BfmeZeroRange;
+		TheWritableGlobalData->m_field48 = m_f2c * g_rva01075350;
 	}
 }

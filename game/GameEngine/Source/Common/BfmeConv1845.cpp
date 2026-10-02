@@ -1,4 +1,4 @@
-extern const float g_bfmeZeroXJ;
+extern const float g_rva01075350;
 
 struct BfmeSubXJ
 {
@@ -32,9 +32,9 @@ public:
 
 void BfmeOwnerXJ::bfmeStepXJ(void *a, BfmeThingXJ *b)
 {
-	if (m_bfmeValueXJ == g_bfmeZeroXJ && bfmeTestXJ(a, b))
+	if (m_bfmeValueXJ == g_rva01075350 && bfmeTestXJ(a, b))
 		bfmeApplyXJ(a, b);
 
-	if (m_bfmeValueXJ > g_bfmeZeroXJ)
+	if (m_bfmeValueXJ > g_rva01075350)
 		bfmeDoneXJ(a, &b->m_bfmeSubXJ);
 }

@@ -7,7 +7,7 @@
 // effect shims: their retail entries are incremental-link thunks, so the
 // resolver selects the same thunk encoded by this body.
 
-extern "C" const float bfmeConst1075350; // retail 0x01075350
+extern const float g_rva01075350; // retail 0x01075350
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
@@ -83,7 +83,7 @@ void Object::attemptDamage(DamageInfo *damageInfo)
 	}
 
 	if ((m_privateStatus & 1) == 0
-		|| damageInfo->m_damageAmount > bfmeConst1075350)
+		|| damageInfo->m_damageAmount > g_rva01075350)
 	{
 		reinterpret_cast<ObjectAttemptDamageHook *>(this)->apply(damageInfo);
 	}

@@ -1,4 +1,4 @@
-extern "C" const float bfmeKDSM;
+extern const float g_rva01075350;
 
 class BfmeSubDSK
 {
@@ -49,14 +49,14 @@ float BfmeThingDSK::bfmeGoDSM()
 {
 	if (bfmeAskDSK())
 		return m_bfmeSub->bfmeRunDSM();
-	return bfmeKDSM;
+	return g_rva01075350;
 }
 
 float BfmeThingDSK::bfmeGoDSN()
 {
 	if (bfmeAskDSK())
 		return m_bfmeSub->bfmeRunDSN();
-	return bfmeKDSM;
+	return g_rva01075350;
 }
 
 void BfmeThingDSK::bfmeGoDSP()

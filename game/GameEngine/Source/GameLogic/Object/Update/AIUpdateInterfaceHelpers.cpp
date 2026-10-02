@@ -88,7 +88,7 @@ enum UpdateSleepTime
 
 #define UPDATE_SLEEP(numFrames)				((UpdateSleepTime)(numFrames))
 
-extern "C" const float g_zeroLocomotorSpeed;
+extern const float g_rva01075350;
 
 extern void __cdecl operator delete(void *block);
 extern void j_0000ca68();
@@ -283,7 +283,7 @@ Real AIUpdateInterface::getCurLocomotorSpeed()
 	if (m_locomotorController != 0)
 		return m_locomotorController->getFormationMovementSpeed(getObject());
 
-	return g_zeroLocomotorSpeed;
+	return g_rva01075350;
 }
 
 // ?setQueueForPathTime@AIUpdateInterface@@QAEXH@Z

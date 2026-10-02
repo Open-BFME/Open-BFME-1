@@ -151,7 +151,7 @@ extern float g_bfmeDirectionWeight1285;
 extern float g_bfmeInvalidScore1285;
 // AptInput reaches the same singleton through two independently witnessed class slices.
 extern void *g_bfmeHolderBU;
-extern float g_bfmeMinimumScore1285;
+extern const float g_rva01075350;
 extern void *g_bfmeExtra1282;
 extern BfmeRoute1285 g_bfmeRouteTable1282[7];
 extern int g_bfmeRouteKeys1282[1];
@@ -266,7 +266,7 @@ BfmeNode1285 *bfmeFindDirectional1285(
 
 			float score = bfmeDirectionalScore1285(direction, referenceFirst,
 				referenceSecond, candidateFirst, candidateSecond);
-			if (score >= g_bfmeMinimumScore1285 && score < bestScore) {
+			if (score >= g_rva01075350 && score < bestScore) {
 				bestScore = score;
 				bestNode = candidate;
 			}

@@ -19,7 +19,7 @@ enum PathfindLayerEnum
 
 extern const Real g_pathfindCellSize;
 extern const Real g_pathfindDoubleCellSize;
-extern const Real g_pathfindLevelLimit;
+extern const float g_rva01075350;
 extern const Real g_pathfindCellCenterBias;
 
 class BfmeOverridable
@@ -208,7 +208,7 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter(
 	}
 
 	if ((object->getTemplate() == 0 ? object->getTemplate() :
-		object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+		object->getTemplate()->getFinalOverride())->m_level > g_rva01075350) {
 		diameter = (object->getTemplate() == 0 ? object->getTemplate() :
 		object->getTemplate()->getFinalOverride())->m_level;
 	}

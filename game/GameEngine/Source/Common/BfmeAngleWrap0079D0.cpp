@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
 extern void __cdecl ji_009f70cc(void);
-extern float g_bfmeAngleZero;
+// Retail VA 0x01075350 is four readonly zero bytes. Both x87 comparisons
+// below use DWORD operands; no EA variable name is proven.
+extern const float g_rva01075350 = 0.0f;
 extern float g_bfmeAngleTwoPi;
 extern double g_bfmeAngleTwoPiDouble;
 
@@ -10,7 +12,7 @@ double __cdecl Rva0079D0A0(float angle)
 {
     __asm {
         fld dword ptr [esp + 4]
-        fcomp dword ptr [g_bfmeAngleZero]
+        fcomp dword ptr [g_rva01075350]
         fnstsw ax
         test ah, 5
         jp positive
@@ -38,7 +40,7 @@ double __cdecl Rva0079D0F0(void *pair)
         fld dword ptr [eax]
         fpatan
         fst dword ptr [esp + 4]
-        fcomp dword ptr [g_bfmeAngleZero]
+        fcomp dword ptr [g_rva01075350]
         fnstsw ax
         test ah, 5
         jp positive_pair

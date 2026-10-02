@@ -77,7 +77,7 @@ __forceinline long fast_float2long_round( float value )
 
 extern const Real g_pathfindCellSize;
 extern const Real g_pathfindDoubleCellSize;
-extern const Real g_pathfindLevelLimit;
+extern const float g_rva01075350;
 extern const Real g_pathfindCellCenterBias;
 
 // Template view read by getRadiusAndCenter (PathfindGetRadiusAndCenterE30.cpp).
@@ -230,7 +230,7 @@ void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &ce
 	}
 
 	if ((object->getTemplate() == 0 ? object->getTemplate() :
-		object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+		object->getTemplate()->getFinalOverride())->m_level > g_rva01075350) {
 		diameter = (object->getTemplate() == 0 ? object->getTemplate() :
 		object->getTemplate()->getFinalOverride())->m_level;
 	}

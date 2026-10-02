@@ -11,7 +11,7 @@ class AsciiString
 {
 };
 
-extern "C" const Real bfmeKEZC;
+extern const float g_rva01075350;
 
 struct BfmeResEZC
 {
@@ -41,5 +41,5 @@ Real Player::getProductionTimeChangePercent(const AsciiString &buildTemplateName
 		(void *)&buildTemplateName);
 	if (productionTimeChange)
 		return productionTimeChange->m_bfmeF;
-	return bfmeKEZC;
+	return g_rva01075350;
 }

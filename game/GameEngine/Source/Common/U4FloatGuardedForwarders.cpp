@@ -54,7 +54,7 @@ struct U4Vec3
 	float m_y;
 	float m_z;
 };
-extern const float g_u4Sentinel;
+extern const float g_rva01075350;
 
 void u4Next005F5120( INI *ini, void *instance, void *store, const void *userData );
 void u4Next005F8AE0( INI *ini, void *instance, void *store, const void *userData );
@@ -102,14 +102,14 @@ void u4Next005F8AE0( INI *ini, void *instance, void *store, const void *userData
 void u4Guard005F5120( INI *ini, void *instance, void *store, const void *userData )
 {
 	const U4Vec3 *v = (const U4Vec3 *)userData;
-	if ( v->m_x != g_u4Sentinel )
+	if ( v->m_x != g_rva01075350 )
 		u4Next005F5120( ini, instance, store, v );
 }
 
 void u4Guard005F8AE0( INI *ini, void *instance, void *store, const void *userData )
 {
 	const U4Vec3 *v = (const U4Vec3 *)userData;
-	if ( v->m_x != g_u4Sentinel || v->m_y != g_u4Sentinel || v->m_z != g_u4Sentinel )
+	if ( v->m_x != g_rva01075350 || v->m_y != g_rva01075350 || v->m_z != g_rva01075350 )
 		u4Next005F8AE0( ini, instance, store, v );
 }
 

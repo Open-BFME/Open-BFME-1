@@ -3,7 +3,7 @@
 // argument is present and its float at +0x1c is the zero constant, ask
 // vtable+0x64 about the kind at +0x10 and on success dispatch vtable+0x54.
 
-extern float g_bfmeZeroCY;
+extern const float g_rva01075350;
 
 class BfmeZeroFloatArg
 {
@@ -52,7 +52,7 @@ void ToggleHiddenSpecialAbilityUpdate::maybeApply(void *arg, BfmeZeroFloatArg *o
 {
 	if (other != 0)
 	{
-		if (other->m_value != g_bfmeZeroCY)
+		if (other->m_value != g_rva01075350)
 		{
 			if (acceptKind(other->m_kind))
 				apply(arg);
