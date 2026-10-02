@@ -46,8 +46,8 @@ public:
     virtual void slotC(); virtual void slot10(); virtual void slot14();
     virtual void slot18(const Response0065B500 &);
 };
-class BfmeQueueEUG;
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+class GameSpyPSMessageQueueInterface;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 class Gen_00654130 { public: void bfmeErase(void *); };
 class Rva0065B350 {
 public:
@@ -101,7 +101,7 @@ int Rva0065B350::handleXKResponse(void *key, int status, const char *text, int, 
         response.rohan = rohan;
         response.isengard = isengard;
         response.mordor = mordor;
-        if (g_bfmeQueueEUG) reinterpret_cast<Queue0065B500 *>(g_bfmeQueueEUG)->slot18(response);
+        if (TheGameSpyPSMessageQueue) reinterpret_cast<Queue0065B500 *>(TheGameSpyPSMessageQueue)->slot18(response);
         else {
             delete rohan;
             delete gondor;

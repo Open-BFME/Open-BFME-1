@@ -129,7 +129,8 @@ private:
 extern GameTextInterface *TheGameText;
 extern MultiplayerSettings *TheMultiplayerSettings;
 extern PlayerTemplateStore *ThePlayerTemplateStore;
-extern int g_Va012F49D4;
+class SkirmishScreenState;
+extern SkirmishScreenState *TheSkirmishScreenState;
 
 extern void GadgetComboBoxReset( GameWindow *comboBox );
 extern Int GadgetComboBoxAddEntry( GameWindow *comboBox, UnicodeString text, Color color );
@@ -140,7 +141,7 @@ extern void GadgetComboBoxSetSelectedPos( GameWindow *comboBox, Int item, Bool d
 void PopulatePlayerTemplateComboBox( Int comboBox, GameWindow *comboArray[],
 	GameInfo *myGame, Bool allowObservers )
 {
-	if( g_Va012F49D4 )
+	if( TheSkirmishScreenState )
 		return;
 
 	Int numPlayerTemplates = ThePlayerTemplateStore->getPlayerTemplateCount();

@@ -96,9 +96,9 @@ class GameSpyPSMessageQueue {public:
  char prefix[0x64];int localID;
  int getLocalPlayerID(){return localID;}
 };
-class BfmeQueueEUG;extern BfmeQueueEUG*g_bfmeQueueEUG;
-#define TheGameSpyPSMessageQueue ((GameSpyPSMessageQueue*)g_bfmeQueueEUG)
-#define MESSAGE_QUEUE TheGameSpyPSMessageQueue
+class GameSpyPSMessageQueueInterface;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
+static inline GameSpyPSMessageQueue *MESSAGE_QUEUEView() { return (GameSpyPSMessageQueue *)TheGameSpyPSMessageQueue; }
 class GameSpyPSMessageQueueInterface {public:static PSPlayerStats parsePlayerKVPairs(std::string);};
 class PSThreadClass {public:char prefix[0x50];bool loginOK,done;int m_opCount;bool m_sawLocalData;
  void decrOpCount(){--m_opCount;}int getOpCount(){return m_opCount;}bool sawLocalPlayerData(){return m_sawLocalData;}void gotLocalPlayerData(){m_sawLocalData=true;}
@@ -120,26 +120,26 @@ void getPersistentDataCallback(int localid, int profileid, persisttype_t type,
 	{
 		resp.responseType = PSResponse::PSRESPONSE_COULDNOTCONNECT;
 		resp.player.id = profileid;
-		TheGameSpyPSMessageQueue->addResponse(resp);
+		MESSAGE_QUEUEView()->addResponse(resp);
 		if (!t->getOpCount() && !t->sawLocalPlayerData())
 		{
 			// we haven't gotten stats for ourselves - try again
 			PSRequest req;
 			req.requestType = PSRequest::PSREQUEST_READPLAYERSTATS;
-			req.player.id = MESSAGE_QUEUE->getLocalPlayerID();
-			TheGameSpyPSMessageQueue->addRequest(req);
+			req.player.id = MESSAGE_QUEUEView()->getLocalPlayerID();
+			MESSAGE_QUEUEView()->addRequest(req);
 		}
 		return;
 	}
 
-	if (profileid == MESSAGE_QUEUE->getLocalPlayerID())
+	if (profileid == MESSAGE_QUEUEView()->getLocalPlayerID())
 	{
 		t->gotLocalPlayerData();
 
 		// check if we have discons we should update on the server
 		UserPreferences pref;
 		AsciiString userPrefFilename;
-		userPrefFilename.format("LoTRB4MEOnline\\MiscPref%d.ini", MESSAGE_QUEUE->getLocalPlayerID());
+		userPrefFilename.format("LoTRB4MEOnline\\MiscPref%d.ini", MESSAGE_QUEUEView()->getLocalPlayerID());
 		pref.load(userPrefFilename);
 		Int addedInDesyncs2 = pref.getInt("0", 0);
 		if (addedInDesyncs2 < 0)
@@ -166,15 +166,15 @@ void getPersistentDataCallback(int localid, int profileid, persisttype_t type,
 
 			PSRequest req;
 			req.requestType = PSRequest::PSREQUEST_UPDATEPLAYERSTATS;
-			req.email = ((BFMENetwork*)MESSAGE_QUEUE)->copyState6C();
-			req.nick = ((BFMENetwork*)MESSAGE_QUEUE)->copyState78();
-			req.password = ((BFMENetwork*)MESSAGE_QUEUE)->copyState84();
+			req.email = ((BFMENetwork*)MESSAGE_QUEUEView())->copyState6C();
+			req.nick = ((BFMENetwork*)MESSAGE_QUEUEView())->copyState78();
+			req.password = ((BFMENetwork*)MESSAGE_QUEUEView())->copyState84();
 			req.player = GameSpyPSMessageQueueInterface::parsePlayerKVPairs((len)?data:"");
 			req.player.id = profileid;
 			req.addDesync = FALSE;
 			req.addDiscon = FALSE;
 			req.lastHouse = 0;
-			TheGameSpyPSMessageQueue->addRequest(req);
+			MESSAGE_QUEUEView()->addRequest(req);
 		}
 	}
 
@@ -182,18 +182,18 @@ void getPersistentDataCallback(int localid, int profileid, persisttype_t type,
 	resp.player = GameSpyPSMessageQueueInterface::parsePlayerKVPairs((len)?data:"");
 	resp.player.id = profileid;
 
-	if (resp.player.dateCreated.size() == 0 && profileid == MESSAGE_QUEUE->getLocalPlayerID())
+	if (resp.player.dateCreated.size() == 0 && profileid == MESSAGE_QUEUEView()->getLocalPlayerID())
 	{
 		((BfmeStampVSE *)&resp.player)->bfmeStampVSE();
 		PSRequest req;
 		req.requestType = PSRequest::PSREQUEST_UPDATEPLAYERSTATS;
-		req.email = ((BFMENetwork *)MESSAGE_QUEUE)->copyState6C();
-		req.nick = ((BFMENetwork *)MESSAGE_QUEUE)->copyState78();
-		req.password = ((BFMENetwork *)MESSAGE_QUEUE)->copyState84();
+		req.email = ((BFMENetwork *)MESSAGE_QUEUEView())->copyState6C();
+		req.nick = ((BFMENetwork *)MESSAGE_QUEUEView())->copyState78();
+		req.password = ((BFMENetwork *)MESSAGE_QUEUEView())->copyState84();
 		req.player = resp.player;
 		req.player.id = profileid;
-		TheGameSpyPSMessageQueue->addRequest(req);
+		MESSAGE_QUEUEView()->addRequest(req);
 	}
 
-	TheGameSpyPSMessageQueue->addResponse(resp);
+	MESSAGE_QUEUEView()->addResponse(resp);
 }

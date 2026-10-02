@@ -164,7 +164,8 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -197,7 +198,7 @@ void ScriptActions::doBuildBaseBuilding(const AsciiString &buildingType,
 		return;
 
 	ThingTemplate *templateValue =
-		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
+		(ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 
@@ -240,7 +241,7 @@ void ScriptActions::doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 		return;
 
 	ThingTemplate *templateValue =
-		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
+		(ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 
@@ -283,7 +284,7 @@ void ScriptActions::doBuildBuildingOnFoundation(const AsciiString &buildingType,
 		return;
 
 	ThingTemplate *templateValue =
-		(ThingTemplate *)TheThingFactory->findTemplate(buildingType);
+		(ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(buildingType);
 	if (!templateValue)
 		return;
 	if (!player->canAffordBuild(templateValue))
