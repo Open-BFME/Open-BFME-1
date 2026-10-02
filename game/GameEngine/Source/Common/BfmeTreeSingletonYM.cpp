@@ -5,6 +5,9 @@
 // it to itself; the object is re-read from its own address before each store,
 // which is what the repeated loads of 0x012ED534 are.
 
+extern "C" int __cdecl atexit(void (__cdecl *function)(void));
+void bfmeForward_00C6FC90(void);
+
 namespace _STL {
 
 class __new_alloc
@@ -38,9 +41,9 @@ public:
 		m_bfmeNode->m_bfmeParent = 0;
 		m_bfmeNode->m_bfmeLeft = m_bfmeNode;
 		m_bfmeNode->m_bfmeRight = m_bfmeNode;
+		// The matched retail callback forwards to this singleton's tree destructor.
+		atexit(bfmeForward_00C6FC90);
 	}
-
-	~BfmeTreeYM(void);
 
 	BfmeNodeYM *m_bfmeNode;					// +0x00
 	int m_bfmeCount;					// +0x04

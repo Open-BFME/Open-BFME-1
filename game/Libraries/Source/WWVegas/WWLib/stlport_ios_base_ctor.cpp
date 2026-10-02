@@ -49,6 +49,8 @@ class ios_base
 {
 protected:
 	ios_base();
+
+public:
 	virtual ~ios_base();
 
 private:
