@@ -149,13 +149,22 @@ class BoundaryValidator:
             return True, "ok"
         return False, f"{convention} must pop {want}B, this body pops {got}B"
 
-    def validate(self, names, rva, size):
+    def validate(self, names, rva, size, sizes=None):
         """Verdict for one address and every name claiming it.
 
         Arity is per name, so a shared address keeps only the names whose
         convention its body can actually satisfy; an address that keeps none is
         not work. C1 and C2 are properties of the address itself and refuse it
         outright.
+
+        `size` is the length to measure the ADDRESS with, which is what C2 and
+        the C3 reads need. `sizes` maps a name to the compiled length of its own
+        source body, and exists so the size advisory can name a candidate this
+        verdict actually keeps: one body carries many drifted names and C3 drops
+        the highest-ranked ones, so quoting the caller's single `size` printed
+        one candidate's length beside another's (28 of 849 collapsed items, up to
+        1,220 B out) and sent the next session reconciling a difference its
+        source does not have.
         """
         verdict = {"rva": rva, "size": size, "extent": self.sizes.get(rva),
                    "names": list(names), "refuted": {}, "reject": None,
@@ -174,9 +183,6 @@ class BoundaryValidator:
         if reject:
             verdict["reject"] = f"C2 {reject}"
             return verdict
-        if verdict["extent"] and verdict["extent"] != size:
-            verdict["warnings"].append(
-                f"source claims {size}B, retail body is {verdict['extent']}B")
         kept = []
         for name in names:
             arity_ok, why = self.check_arity(name, rva, served)
@@ -187,4 +193,12 @@ class BoundaryValidator:
         verdict["names"] = kept
         if not kept:
             verdict["reject"] = "C3 every name's arity is refuted by this body"
+            return verdict
+        # Emitted last, and about a name this verdict keeps: the advisory is the
+        # one number a worker reconciles against retail, so it has to be the
+        # length of the source they are actually handed.
+        reported = (sizes or {}).get(kept[0], size)
+        if verdict["extent"] and verdict["extent"] != reported:
+            verdict["warnings"].append(
+                f"source claims {reported}B, retail body is {verdict['extent']}B")
         return verdict

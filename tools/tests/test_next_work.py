@@ -435,6 +435,15 @@ def test_structural_queue_is_collapsed_and_validated(ranked):
     drifted = [c for c in queue if c["extent"] and c["extent"] != c["size"]]
     assert drifted, "no candidate disagrees with retail on size — suspicious"
     assert all(c["warnings"] for c in drifted)
+    # ...and the advisory must name THAT candidate's length, not the length of a
+    # name C3 refuted off the same address. 0x00594AD0 shipped both numbers to
+    # the queue at once: "188B source" over "source claims 177B".
+    mismatched = [c for c in drifted
+                  if f"source claims {c['size']}B, retail body is {c['extent']}B"
+                  not in c["warnings"]]
+    assert not mismatched, [
+        (c["candidate_rva"], c["function"], c["size"], c["warnings"])
+        for c in mismatched[:3]]
     print(f"PASS structural queue: {meta['served']} address(es) carrying "
           f"{meta['names']} name(s), {meta['refuted']} refuted by arity, "
           f"{meta['rejected']} address(es) refused")

@@ -849,7 +849,10 @@ def collapse_and_validate(candidates, validator=None):
     the extent there would retune the selection weights as a side effect.
 
     Group order is the queue's own ranking, so the representative is the best
-    candidate at that address under whichever order the caller asked for.
+    candidate at that address under whichever order the caller asked for. The
+    per-name lengths go with the names for the same reason: C3 can drop the name
+    the ranking put first, and the size advisory has to describe the candidate
+    that is left rather than the one that was refused.
     Returns (items, meta); `validator` is injected by the replay tests.
     """
     groups = {}
@@ -877,7 +880,8 @@ def collapse_and_validate(candidates, validator=None):
             refuted += len(group)
             continue
         verdict = validator.validate([c["function"] for c in group], rva,
-                                     group[0]["size"])
+                                     group[0]["size"],
+                                     {c["function"]: int(c["size"]) for c in group})
         refuted += len(verdict["refuted"])
         if verdict["reject"]:
             reasons[verdict["reject"]] = reasons.get(verdict["reject"], 0) + 1

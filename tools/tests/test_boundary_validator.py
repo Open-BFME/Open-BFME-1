@@ -140,9 +140,49 @@ def test_collision_collapse_serves_each_address_once():
     for item in items:
         assert item["function"] == item["functions"][0], item
         assert item["source"] and item["size"] > 0, item
+    # The size advisory is the one length a session reconciles against retail,
+    # so it must be the served candidate's. C3 drops the name the ranking put
+    # first, and that name's length used to survive in the warning: 28 of these
+    # 849 items quoted another candidate, by 3 to 1,220 bytes.
+    for item in items:
+        extent = item["extent"]
+        if not extent or extent == item["size"]:
+            continue
+        assert (f"source claims {item['size']}B, retail body is {extent}B"
+                in item["warnings"]), item
     print(f"PASS collision-collapse: {len(queue)} candidates over {len(addresses)} "
           f"addresses -> {meta['served']} served carrying {meta['names']} name(s), "
           f"{meta['refuted']} refuted, {meta['rejected']} addresses refused")
+
+
+def test_the_size_advisory_names_a_candidate_the_body_keeps():
+    """One body, two drifted names, and the higher-ranked one refuted by arity.
+
+    The advisory used to be written from the ranking's first name, so it told
+    the next session to reconcile 51B against retail while handing it a 99B
+    source. Written last, from a name the verdict keeps, it describes the work
+    that was actually queued.
+    """
+    read = fake_image({0x1400: bytes([0x55, 0x8B, 0xEC, 0xC2, 0x08, 0x00])})
+    known = boundary_validator.BoundaryValidator(read, {0x1400: 6})
+    refuted, kept = "?f@C@@QAEXH@Z", "?g@C@@QAEXHH@Z"
+
+    # Without the lengths, the caller still gets the one number it passed.
+    plain = known.validate([refuted, kept], 0x1400, 51)
+    assert plain["warnings"] == ["source claims 51B, retail body is 6B"], plain
+
+    items, meta = next_work.collapse_and_validate(
+        [{"function": refuted, "candidate_rva": "0x1400", "size": 51,
+          "source": "game/refuted.cpp"},
+         {"function": kept, "candidate_rva": "0x1400", "size": 99,
+          "source": "game/kept.cpp"}], known)
+    assert meta["served"] == 1 and meta["refuted"] == 1, meta
+    item, = items
+    assert item["function"] == kept and item["size"] == 99, item
+    assert item["warnings"] == ["source claims 99B, retail body is 6B"], item
+    # The address is what C2 and C3 measured; the advisory is not the boundary.
+    assert item["command"].endswith(f"--rva 0x1400 --size 6 --source game/kept.cpp"), item
+    print("PASS the size advisory names the kept candidate, not the refused one")
 
 
 def test_absence_of_evidence_never_refuses():
@@ -240,6 +280,7 @@ def main():
     test_recorded_dead_ends_are_refused()
     test_byte_verified_boundaries_are_not_refused()
     test_collision_collapse_serves_each_address_once()
+    test_the_size_advisory_names_a_candidate_the_body_keeps()
     test_absence_of_evidence_never_refuses()
     test_positive_evidence_refuses()
     test_a_refuted_address_is_corrected_to_the_body_the_inventory_names()
