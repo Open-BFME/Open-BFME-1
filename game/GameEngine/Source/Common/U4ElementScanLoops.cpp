@@ -79,11 +79,25 @@ struct U4Elem
 	unsigned char m_flag;
 };
 
-class U4Filter
+// The "filter" the scan hands to each element is not a filter at all: it is
+// Zero Hour's BitFlags<304> mask, and the per-element call is
+// BitFlags<304>::testForAll, whose body is game/GameEngine/Source/Common/
+// BitFlags304TestForAll.cpp (retail 0x00606BF0).  Retail loads the mask into
+// ECX and pushes the element pointer as its `const BitFlags &`, which is why
+// the element's leading 0x28 bytes are flag words.
+//
+// ?testForAll@?$BitFlags@$0BDA@@@QBE_NABV1@@Z		retail 0x00606BF0
+template <size_t NUMBITS>
+class BitFlags
 {
 public:
-	bool accepts( const U4Elem *e ) const;
+	bool testForAll( const BitFlags &that ) const;
 };
+
+// The scan's second argument, still named for its address only: its body is
+// never recovered here, so it stays incomplete and the call site casts it to
+// the BitFlags<304> it actually is.
+class U4Filter;
 
 struct U4Scan
 {
@@ -101,7 +115,8 @@ bool U4Scan::firstFlagged( int *out, const U4Filter *filter ) const
 	const U4Elem *e = m_elems.end();
 	for ( ; p != e; ++p )
 	{
-		if ( filter->accepts( p ) && p->m_flag )
+		if ( ((const BitFlags<304> *)filter)->testForAll( *(const BitFlags<304> *)p )
+			&& p->m_flag )
 		{
 			*out = p->m_value;
 			return true;
@@ -116,7 +131,7 @@ const U4MapVal *U4Scan::firstMapped( const U4MapKey &key, const U4Filter *filter
 	const U4Elem *e = m_elems.end();
 	for ( ; p != e; ++p )
 	{
-		if ( filter->accepts( p ) )
+		if ( ((const BitFlags<304> *)filter)->testForAll( *(const BitFlags<304> *)p ) )
 		{
 			U4MapType::const_iterator it = p->m_map.find( key );
 			if ( it != p->m_map.end() )

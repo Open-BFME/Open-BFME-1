@@ -9,11 +9,24 @@ struct U4Elem
 	void *m_named[0x1C8 / 4];
 };
 
-class U4Filter
+// The mask the scan applies to each record is not a filter object: it is Zero
+// Hour's BitFlags<304>, and the per-element call is BitFlags<304>::testForAll,
+// whose body is game/GameEngine/Source/Common/BitFlags304TestForAll.cpp
+// (retail 0x00606BF0).  Retail loads the mask into ECX and pushes the element
+// pointer as its `const BitFlags &`.
+//
+// ?testForAll@?$BitFlags@$0BDA@@@QBE_NABV1@@Z		retail 0x00606BF0
+template <size_t NUMBITS>
+class BitFlags
 {
 public:
-	bool accepts(const U4Elem *element) const;
+	bool testForAll( const BitFlags &that ) const;
 };
+
+// The scan's second argument, still named for its address only: its body is
+// never recovered here, so it stays incomplete and the call site casts it to
+// the BitFlags<304> it actually is.
+class U4Filter;
 
 class U4Scan
 {
@@ -34,7 +47,8 @@ const char *U4Scan::firstNamed(void *out, const U4Filter *filter) const
 
 	for (; p != end; ++p)
 	{
-		if (filter->accepts(p) && p->m_named[index] != 0)
+		if (((const BitFlags<304> *)filter)->testForAll(*(const BitFlags<304> *)p)
+			&& p->m_named[index] != 0)
 			return static_cast<const char *>(p->m_named[index]) + 4;
 	}
 
