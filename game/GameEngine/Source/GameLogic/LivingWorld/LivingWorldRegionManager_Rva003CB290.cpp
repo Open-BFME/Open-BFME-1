@@ -8,9 +8,9 @@
 // composition used by the manager's other members.  The method name remains
 // address-derived: the callback does not provide a canonical source spelling.
 //
-// All string calls use the verified Rva003BAD00Owner ABI: AsciiString is passed
-// by reference and the second argument is a 32-bit value.  The two generated
-// manager routes are called through their existing ILT thunks with TU-local
+// The Rva003BAD00Owner ledger definition takes two 32-bit arguments. The
+// caller forwards each AsciiString address in its first argument. The two
+// generated manager routes use their existing ILT thunks with TU-local
 // typed member-pointer views; no new pin, vtable, or alias is introduced.
 
 #include "ascii_string.h"
@@ -44,12 +44,19 @@ public:
 	unsigned char m_at78;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// Canonical datum at 0x012F1028; keep the measured field view above.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
-class Rva003BF540
+class Rva003BDEC0
 {
 public:
 	bool allowed();
+};
+
+class Rva003BD830Owner
+{
+public:
 	bool anyReady() const;
 };
 
@@ -59,24 +66,25 @@ public:
 	bool isOpen() const;
 };
 
-class BfmeGameCW
-{
-};
-
-extern BfmeGameCW *g_bfmeGameCW;
+// Canonical datum at 0x012F706C.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class Gen_00609320
 {
 public:
-	unsigned char bfmeDisabled() const;
+	// The body returns int; this caller tests only AL, so narrow at the use.
+	int bfmeDisabled() const;
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// Canonical datum at 0x012F7048, defined in GameClient/LivingWorld.cpp.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class Rva003BAD00Owner
 {
 public:
-	void notify08(const AsciiString &key, int value);
+	void notify08(int key, int value);
 };
 
 class BfmeW1108
@@ -141,14 +149,26 @@ void LivingWorldRegionManager::rva003CB290()
 
 	if (localWritableGlobalData()->m_flag8E == 0
 		|| localWritableGlobalData()->m_flag8F != 0
-		|| Glo012F1028->m_at34 != 0)
+		|| ((Glo012F1028Type *)TheLivingWorldLogic)->m_at34 != 0)
 	{
-		owner->notify08(AsciiString("MouseoverEffectFlareupOwned"), 1);
-		owner->notify08(AsciiString("MouseoutEffectFlareupOwned"), 1);
-		owner->notify08(AsciiString("MouseoverEffectFlareupContested"), 1);
-		owner->notify08(AsciiString("MouseoutEffectFlareupContested"), 1);
+		{
+			AsciiString key("MouseoverEffectFlareupOwned");
+			owner->notify08((int)&key, 1);
+		}
+		{
+			AsciiString key("MouseoutEffectFlareupOwned");
+			owner->notify08((int)&key, 1);
+		}
+		{
+			AsciiString key("MouseoverEffectFlareupContested");
+			owner->notify08((int)&key, 1);
+		}
+		{
+			AsciiString key("MouseoutEffectFlareupContested");
+			owner->notify08((int)&key, 1);
+		}
 
-		if (((Rva0060D480CampaignGate *)g_bfmeGameCW)->isOpen())
+		if (((Rva0060D480CampaignGate *)TheLivingWorldManager)->isOpen())
 			rva003C8B90();
 		callManagerInt(this, j_00016248, 0);
 
@@ -156,23 +176,41 @@ void LivingWorldRegionManager::rva003CB290()
 		return;
 	}
 
-	if (!((Rva0060D480CampaignGate *)g_bfmeGameCW)->isOpen()
-		|| !((Rva003BF540 *)Glo012F1028)->allowed()
-		|| g_bfmeStateDF->bfmeDisabled()
-		|| Glo012F1028->m_at34 != 0
-		|| ((Rva003BF540 *)Glo012F1028)->anyReady())
+	if (!((Rva0060D480CampaignGate *)TheLivingWorldManager)->isOpen()
+		|| !((Rva003BDEC0 *)TheLivingWorldLogic)->allowed()
+		|| (unsigned char)((Gen_00609320 *)g_rva012F7048LivingWorld)->bfmeDisabled()
+		|| ((Glo012F1028Type *)TheLivingWorldLogic)->m_at34 != 0
+		|| ((Rva003BD830Owner *)TheLivingWorldLogic)->anyReady())
 	{
-		if (Glo012F1028->m_at78 != 0)
+		if (((Glo012F1028Type *)TheLivingWorldLogic)->m_at78 != 0)
 		{
-			owner->notify08(AsciiString("FriendlyBordersEffect"), 1);
-			owner->notify08(AsciiString("EnemyBordersEffect"), 1);
+			{
+				AsciiString key("FriendlyBordersEffect");
+				owner->notify08((int)&key, 1);
+			}
+			{
+				AsciiString key("EnemyBordersEffect");
+				owner->notify08((int)&key, 1);
+			}
 		}
 		else
 		{
-			owner->notify08(AsciiString("MouseoverEffectFlareupOwned"), 1);
-			owner->notify08(AsciiString("MouseoutEffectFlareupOwned"), 1);
-			owner->notify08(AsciiString("MouseoverEffectFlareupContested"), 1);
-			owner->notify08(AsciiString("MouseoutEffectFlareupContested"), 1);
+			{
+				AsciiString key("MouseoverEffectFlareupOwned");
+				owner->notify08((int)&key, 1);
+			}
+			{
+				AsciiString key("MouseoutEffectFlareupOwned");
+				owner->notify08((int)&key, 1);
+			}
+			{
+				AsciiString key("MouseoverEffectFlareupContested");
+				owner->notify08((int)&key, 1);
+			}
+			{
+				AsciiString key("MouseoutEffectFlareupContested");
+				owner->notify08((int)&key, 1);
+			}
 		}
 
 		((BfmeW1108 *)owner)->bfmeGo1108B();

@@ -2280,36 +2280,7 @@ Bool NetPacket::addDisconnectScreenOffCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
-Bool NetPacket::isRoomForDisconnectScreenOffMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetDisconnectScreenOffCommandMsg *cmdMsg = (NetDisconnectScreenOffCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
-
-	++len; // for 'D'
-	len += sizeof(UnsignedInt); // for the disconnect frame
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
+// isRoomForDisconnectScreenOffMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
@@ -2393,36 +2364,7 @@ Bool NetPacket::addDisconnectFrameCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
-Bool NetPacket::isRoomForDisconnectFrameMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetDisconnectFrameCommandMsg *cmdMsg = (NetDisconnectFrameCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
-
-	++len; // for 'D'
-	len += sizeof(UnsignedInt); // for the disconnect frame
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
+// isRoomForDisconnectFrameMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // ?addFileCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addFileCommand(NetCommandRef *msg) {
@@ -2717,34 +2659,7 @@ Bool NetPacket::addFileProgressCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
-Bool NetPacket::isRoomForFileProgressMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetFileProgressCommandMsg *cmdMsg = (NetFileProgressCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedShort);
-	}
-
-	++len; // 'D'
-	len += sizeof(UnsignedShort); // m_fileID
-	len += sizeof(Int); // m_progress
-
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
+// isRoomForFileProgressMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addWrapperCommand.cpp
 // ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
