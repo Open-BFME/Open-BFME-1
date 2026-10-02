@@ -1,3 +1,6 @@
+// stlport
+#include <map>
+
 struct PrefMapNodeShim
 {
 	char m_unreconstructed00[0x10];
@@ -9,8 +12,6 @@ struct Rva0036E560Map
 	char m_unreconstructed00[8];
 	PrefMapNodeShim *m_begin;
 };
-
-PrefMapNodeShim *prefMapIncrement(PrefMapNodeShim *node);
 
 class Rva0036E560PointerVector
 {
@@ -56,7 +57,8 @@ bool Rva0036E560PointerSet::containsPointer(void *value) const
 	{
 		if (value == node->m_value)
 			return true;
-		node = prefMapIncrement(node);
+		node = (PrefMapNodeShim *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)node);
 	}
 
 	for (unsigned int i = 0; i < m_first.size(); ++i)

@@ -1,4 +1,7 @@
+// stlport
 // Open-BFME5 conversions.
+
+#include <map>
 
 struct BfmeE1115
 {
@@ -35,8 +38,6 @@ struct BfmeArg1115
 	int m_bfme74;
 };
 
-BfmeNode1115 *__cdecl bfmeNext1115(BfmeNode1115 *p);
-
 class BfmeW1115
 {
 public:
@@ -68,7 +69,8 @@ void BfmeW1115::bfmeGo1115A(BfmeArg1115 *g)
 				r = r->m_bfme00;
 				lh = p->m_bfme14;
 			}
-			p = bfmeNext1115(p);
+			p = (BfmeNode1115 *)_STL::_Rb_global<bool>::_M_increment(
+				(_STL::_Rb_tree_node_base *)p);
 			h = s->m_bfmeHead;
 		}
 		s++;
@@ -98,11 +100,11 @@ void BfmeW1115::bfmeGo1115B(BfmeArg1115 *g)
 				r = r->m_bfme00;
 				lh = p->m_bfme14;
 			}
-			p = bfmeNext1115(p);
+			p = (BfmeNode1115 *)_STL::_Rb_global<bool>::_M_increment(
+				(_STL::_Rb_tree_node_base *)p);
 			h = s->m_bfmeHead;
 		}
 		s++;
 		i--;
 	} while (i);
 }
-
