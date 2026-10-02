@@ -38,6 +38,12 @@ StringBase<unsigned short>. These BFME virtual/callee facts refute the old
 GameSpyGroupRoom/UnicodeString identity rationale.
 
 The final RET 8 starts at 0x000DA3D8 and ends at 0x000DA3DB, followed by
-INT3: 395 bytes. No clean body or guessed name is introduced. A future
-opaque reconstruction can use the proven Xfer/table contracts; ECX passed
-by the caller does not itself prove that this was an authentic Player member.
+INT3: 395 bytes. The verified opaque rva000da250 reconstruction uses these
+proven Xfer/table contracts and matches all 395 bytes after relocation
+resolution. ECX passed by the caller does not itself prove that this was an
+authentic Player member. Its generic begin dependency has one opaque ABI
+owner, documented in 000d0a30-opaque-begin-abi.md, and the native inline
+hash_map begin wrapper preserves the retail aggregate-return temporary.
+The exact source SHA256 is 848bcab6f89497f579e758e3828311bd18e326614c151c718d22e002e642ee9d.
+Fresh strict production gates verify both the 395-byte body and 78-byte
+dependency; this is source verification, not a fresh whole-program link.
