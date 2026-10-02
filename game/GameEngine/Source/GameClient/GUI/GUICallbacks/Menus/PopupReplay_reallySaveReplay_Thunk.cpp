@@ -204,7 +204,7 @@ typedef void (*GameWinMsgBoxFunc)(void);
 
 extern GameTextInterface *TheGameText;
 extern RecorderClass *TheRecorder;
-extern FileSystem *TheLocalFileSystem;
+extern FileSystem *TheFileSystem;
 extern GameWindowManager *TheWindowManager;
 extern std::string LastReplayFileName;
 extern void PopulateReplayFileListbox(GameWindow *listbox);
@@ -254,7 +254,7 @@ void reallySaveReplay(void)
     if (oldFilename == filename)
         return;
 
-    if (TheLocalFileSystem->doesFileExist(filename.str()))
+    if (TheFileSystem->doesFileExist(filename.str()))
     {
         if (DeleteFileA(filename.str()) == 0)
         {

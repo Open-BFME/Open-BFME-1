@@ -114,7 +114,7 @@ public:
 	File *openFile( const char *name, int access );	// retail 0x009C8860
 };
 
-extern FileSystem *TheOpen2FileSystem;
+extern FileSystem *TheFileSystem;
 
 template <typename T>
 class StringBase
@@ -162,14 +162,14 @@ static File *Open2OpenPastSeparators( const AsciiString &name )
 {
 	const char *text = name.str();
 
-	File *file = TheOpen2FileSystem->openFile( text, 1 );
+	File *file = TheFileSystem->openFile( text, 1 );
 	while( file == 0 )
 	{
 		text = strchr( text, '\\' );
 		if( text == 0 )
 			return 0;
 		++text;
-		file = TheOpen2FileSystem->openFile( text, 1 );
+		file = TheFileSystem->openFile( text, 1 );
 	}
 	return file;
 }

@@ -47,7 +47,7 @@ public:
 	File *openFile(const char *name, int access);
 };
 
-extern FileSystem *TheOpen2FileSystem;
+extern FileSystem *TheFileSystem;
 
 // This helper is static in Open2Conv007.cpp.  MSVC's private-register ABI is
 // encoded by the declaration's internal linkage; the exact decorated name is
@@ -56,14 +56,14 @@ extern FileSystem *TheOpen2FileSystem;
 static File *Open2OpenPastSeparators(const AsciiString &name) throw()
 {
 	const char *text = name.str();
-	File *file = TheOpen2FileSystem->openFile(text, 1);
+	File *file = TheFileSystem->openFile(text, 1);
 	while (file == 0)
 	{
 		text = ::strchr(text, '\\');
 		if (text == 0)
 			return 0;
 		++text;
-		file = TheOpen2FileSystem->openFile(text, 1);
+		file = TheFileSystem->openFile(text, 1);
 	}
 	return file;
 }

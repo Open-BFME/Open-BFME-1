@@ -14,14 +14,14 @@ public:
  void rva00788A30(const AsciiString &filename);
  AsciiString m_name;
 };
-extern FileSystem *Rva0134CB48FileSystem;
+extern FileSystem *TheFileSystem;
 
 void Rva00789010Owner::enumerateGeometry()
 {
  FilenameList files;
  AsciiString directory(m_name);
  ((StringBase<char> *)&directory)->concat("_geometry/", 10);
- Rva0134CB48FileSystem->getFileListInDirectory(directory, AsciiString("*.ru"), files, false);
+ TheFileSystem->getFileListInDirectory(directory, AsciiString("*.ru"), files, false);
  for (FilenameList::iterator it = files.begin(); it != files.end(); ++it)
   rva00788A30(*it);
 }

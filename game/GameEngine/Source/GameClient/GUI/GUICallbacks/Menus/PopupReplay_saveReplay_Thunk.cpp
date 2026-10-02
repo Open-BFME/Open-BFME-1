@@ -122,7 +122,7 @@ typedef void (*GameWinMsgBoxFunc)(void);
 
 extern GameTextInterface *TheGameText;
 extern RecorderClass *TheRecorder;
-extern FileSystem *TheLocalFileSystem;
+extern FileSystem *TheFileSystem;
 namespace PopupReplayState
 {
 extern GameWindow *messageBoxWin;
@@ -153,7 +153,7 @@ void saveReplay(UnicodeString filename)
     const char *pathText = fullPath.str();
     replayPath.assign(pathText, pathText + strlen(pathText));
     messageBoxWin = 0;
-    if (TheLocalFileSystem->doesFileExist(fullPath.str()))
+    if (TheFileSystem->doesFileExist(fullPath.str()))
     {
         MessageBoxYesNo(TheGameText->fetch("GUI:OverwriteReplayTitle"),
             TheGameText->fetch("GUI:OverwriteReplay"), reallySaveReplay, 0);
