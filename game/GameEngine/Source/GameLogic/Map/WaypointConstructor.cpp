@@ -22,7 +22,13 @@ enum { WAYPOINT_ID_AUTO = 0x7ffffffe };
 
 class Waypoint;
 extern Waypoint *g_waypointListHead;		// 0x012EF4D0
-extern int g_Va012ACC30;			// 0x012ACC30, next auto-assigned waypoint id
+// 0x012ACC30, next auto-assigned waypoint id.  Retail defines the dword as the
+// static member Rva001A1A30::s_value (see TinyGlobalStores.cpp).
+class Rva001A1A30
+{
+public:
+	static int s_value;
+};
 
 struct Gen_t_001a6d20_p4pod
 {
@@ -106,11 +112,11 @@ Waypoint::Waypoint(int id, AsciiString name, const Coord3D *pLoc,
 	m_linkSource = 0;
 
 	if (g_waypointListHead == 0)
-		g_Va012ACC30 = 0x40000000;
+		Rva001A1A30::s_value = 0x40000000;
 	if (m_id == WAYPOINT_ID_AUTO)
 	{
-		m_id = g_Va012ACC30;
-		++g_Va012ACC30;
+		m_id = Rva001A1A30::s_value;
+		++Rva001A1A30::s_value;
 	}
 
 	m_next = g_waypointListHead;
@@ -149,11 +155,11 @@ Waypoint::Waypoint()
 	m_linkSource = 0;
 
 	if (g_waypointListHead == 0)
-		g_Va012ACC30 = 0x40000000;
+		Rva001A1A30::s_value = 0x40000000;
 	if (m_id == WAYPOINT_ID_AUTO)
 	{
-		m_id = g_Va012ACC30;
-		++g_Va012ACC30;
+		m_id = Rva001A1A30::s_value;
+		++Rva001A1A30::s_value;
 	}
 
 	m_next = g_waypointListHead;

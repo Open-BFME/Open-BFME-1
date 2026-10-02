@@ -79,7 +79,12 @@ public:
 };
 
 extern "C" void __cdecl bfmeXferIntAX(Xfer *xfer, Int *value);
-extern int g_Va012ACC30;
+// retail defines 0x012ACC30 as Rva001A1A30::s_value (see TinyGlobalStores.cpp)
+class Rva001A1A30
+{
+public:
+	static int s_value;
+};
 
 class PolygonTrigger;
 
@@ -257,9 +262,9 @@ void TerrainLogic::xferTerrainState(Xfer *xfer)
 		xfer->xferReal(&m_waterToUpdate[i].currentHeight);
 	}
 
-	Int globalValue = g_Va012ACC30;
+	Int globalValue = Rva001A1A30::s_value;
 	bfmeXferIntAX(xfer, &globalValue);
-	g_Va012ACC30 = globalValue;
+	Rva001A1A30::s_value = globalValue;
 
 	if (xfer->isLoading())
 	{
