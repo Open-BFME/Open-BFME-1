@@ -410,7 +410,7 @@ char * __write_formatted_time(char* buf, char format, char modifier,
 time_base::dateorder _STLP_CALL
 __get_date_order(_Locale_time* time)
 {
-  const char * fmt = _Locale_d_fmt(time);
+  const char * fmt = ::Rva0084ECA0(time);
   char first, second, third;
 
   while (*fmt != 0 && *fmt != '%') ++fmt;

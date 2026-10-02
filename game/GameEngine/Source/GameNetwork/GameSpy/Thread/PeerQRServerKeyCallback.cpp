@@ -32,6 +32,7 @@ private:
     StringBase(const StringBase&);
     ~StringBase();
     void set(const StringBase&);
+public:
     void set(const T *, int);
 };
 class AsciiString : private StringBase<char> {
