@@ -14068,5 +14068,25 @@
   "after_sha256": "3e9bbd3284192fc12c63b320473080d41c4bf91084304153b569c6c75882a4c9",
   "evidence": "targets/game/reverse/identity_evidence/vtable-reseat-dtors-unproven-owner.md",
   "reason": "A lone vftable re-seat destructor is ~V or a trivially-destructible descendant of V; the T2EmptyDtor owner name was unproven (and that TU marks the destructor absent from retail), so the body returns to an address-derived name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeTransportContain.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeTransportContain.cpp",
+  "old_name": "HordeTransportContainBase",
+  "new_name": "Rva0024CAE0Owner",
+  "before_sha256": "bc8184cceffd8437a432f1d1a7c4e7b1b1f26e453d5fe00f57c147ac618357b4",
+  "after_sha256": "b95a26a6fdcffed0ee0f46e92d4e08e77d7a66fa82b4d8344ccd64583466964e",
+  "evidence": "targets/game/reverse/identity_evidence/0x0024cd10-callee-declarations.md",
+  "reason": "Replace a declaration-only speculative shared base with the existing matched callee owner; the old comment explicitly denied callee identities. Retail ILT routes establish exact provider correspondence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeTransportContain.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeTransportContain.cpp",
+  "old_name": "HordeTransportContainBase",
+  "new_name": "Rva0024C940Owner",
+  "before_sha256": "bc8184cceffd8437a432f1d1a7c4e7b1b1f26e453d5fe00f57c147ac618357b4",
+  "after_sha256": "b95a26a6fdcffed0ee0f46e92d4e08e77d7a66fa82b4d8344ccd64583466964e",
+  "evidence": "targets/game/reverse/identity_evidence/0x0024cd10-callee-declarations.md",
+  "reason": "Replace a declaration-only speculative shared base with the existing matched callee owner; the old comment explicitly denied callee identities. Retail ILT routes establish exact provider correspondence."
  }
 ]

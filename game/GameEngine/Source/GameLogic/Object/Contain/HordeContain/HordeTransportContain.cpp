@@ -14,21 +14,29 @@
 //
 // `this` is the UpdateModule sub-object at +0x10, so the two calls the tick
 // makes on the object start reach HordeTransportContain through its primary
-// base.  Neither callee (0x0024CAE0, 0x0024C940) has an identity yet.
+// base. The direct calls route through ILTs 0x0000F510 and 0x0003CBD7
+// to the matched address-derived owners at 0x0024CAE0 and 0x0024C940.
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
-class HordeTransportContainBase
+class Rva0024CAE0Owner
 {
 public:
-	void first(void);
-	void second(void);
+	void maintainNestedRiders(void);
 };
+
+class Rva0024C940Owner
+{
+public:
+	void processNestedRiders(void);
+};
+
+enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };
 
 class TransportContain
 {
 public:
-	void update(void);
+	virtual UpdateSleepTime update(void);
 };
 
 class HordeTransportContain
@@ -47,19 +55,19 @@ void HordeTransportContain::update(void)
 	{
 		if (m_framesUntilNextCall == -1000)
 		{
-			HordeTransportContainBase *self =
-				(HordeTransportContainBase *)((char *)this - 0x10);
+			Rva0024CAE0Owner *self =
+				(Rva0024CAE0Owner *)((char *)this - 0x10);
 			m_framesUntilNextCall =
 				GetGameLogicRandomValue(3, 5, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeTransportContain.cpp", 0x350);
-			self->first();
+			self->maintainNestedRiders();
 		}
 		if (m_framesUntilNextCall <= 0)
 		{
-			((HordeTransportContainBase *)((char *)this - 0x10))->second();
+			((Rva0024C940Owner *)((char *)this - 0x10))->processNestedRiders();
 			m_framesUntilNextCall =
 				GetGameLogicRandomValue(0, 4, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeTransportContain.cpp", 0x35d);
 		}
 		--m_framesUntilNextCall;
 	}
-	((TransportContain *)this)->update();
+	((TransportContain *)this)->TransportContain::update();
 }
