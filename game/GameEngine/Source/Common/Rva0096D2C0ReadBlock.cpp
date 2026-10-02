@@ -1,7 +1,11 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2
+#include "chunkio.h"
+
+// Address-derived stand-in for retail's ChunkLoadClass, kept because the
+// matched body's own mangled name embeds this spelling. The Read call below
+// goes through the real ChunkLoadClass declaration from chunkio.h.
 class BfmeChunkVFC
 {
-public:
-	unsigned int bfmeReadVFC(void *buffer, unsigned int bytes);
 };
 
 struct Rva0096D2C0Record
@@ -23,7 +27,7 @@ private:
 
 bool Rva0096D2C0Owner::readBlock(BfmeChunkVFC *loader, Rva0096D2C0Record *record)
 {
-	if (loader->bfmeReadVFC(&record->m_value78, 16) != 16)
+	if (reinterpret_cast<ChunkLoadClass *>(loader)->Read(&record->m_value78, 16) != 16)
 		return false;
 
 	*m_destination = record->m_value78;
