@@ -22,29 +22,6 @@ class ExperienceLevel;
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
-{
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
-};
-
 typedef void (__cdecl *BfmeObjectVisitor)(Object *, void *);
 
 // The team seen as its member list: one entry that runs a visitor over every
@@ -98,7 +75,7 @@ public:
 	virtual void slot14() = 0;
 	virtual void slot15() = 0;
 	virtual void slot16() = 0;
-	virtual Team *getTeamNamed(BfmeAsciiStringArg, Bool) = 0;
+	virtual Team *getTeamNamed(AsciiString, Bool) = 0;
 	virtual void slot18() = 0;
 	virtual void slot19() = 0;
 	virtual void slot20() = 0;
