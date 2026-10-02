@@ -16,7 +16,25 @@ enum VeterancyLevel { LEVEL_REGULAR = 0 };
 
 #include "ascii_string.h"
 
-AsciiString getVetUpgradeName(VeterancyLevel level);		///< retail body at 0x0010AD90
+// Zero Hour Upgrade.cpp keeps this helper static. Internal linkage is
+// required for retail's return-buffer allocation and inline strlen schedule.
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(strlen)
+inline AsciiString &AsciiString::operator=(const char *s) {
+    StringBase<char>::set(s, s ? strlen(s) : 0);
+    return *this;
+}
+template <typename T> inline void StringBase<T>::concat(const T *s) {
+    concat(s, s ? strlen(s) : 0);
+}
+extern const char *TheVeterancyNames[];
+__declspec(noinline) static AsciiString getVetUpgradeName(VeterancyLevel v) {
+    AsciiString tmp;
+    tmp = "Upgrade_Veterancy_";
+    tmp.concat(TheVeterancyNames[v]);
+    return tmp;
+}
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
