@@ -140,16 +140,18 @@ inline Q3SortElem4 *Q3CopyBackward003CEC30(Q3SortElem4 *first,
 	return (Q3SortElem4 *)((char *)result - bytes);
 }
 
-#define BFME_FINAL_INSERTION( NAME, INSERT, UNGUARDED )                        \
+// Each row's unguarded-insertion callee has its own DECL / CALL macro below, so
+// a callee whose real signature differs (see BFME_DECL_SORT_ZV) can be named as
+// its definition names it without changing what any body here does.
+#define BFME_FINAL_INSERTION( NAME, INSERT, UNGUARDED_DECL, UNGUARDED_CALL )   \
 	void INSERT( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp );  \
-	void UNGUARDED( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortElem4 *,      \
-		Q3SortCompare comp );                                                  \
+	UNGUARDED_DECL                                                              \
 	void NAME( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp )     \
 	{                                                                          \
 		if ( last - first > 16 )                                               \
 		{                                                                      \
 			INSERT( first, first + 16, comp );                                 \
-			UNGUARDED( first + 16, last, (Q3SortElem4 *)0, comp );             \
+			UNGUARDED_CALL;                                                    \
 		}                                                                      \
 		else                                                                   \
 		{                                                                      \
@@ -157,14 +159,36 @@ inline Q3SortElem4 *Q3CopyBackward003CEC30(Q3SortElem4 *first,
 		}                                                                      \
 	}
 
-BFME_FINAL_INSERTION( Rva00453EF0, Gen004539D0, Gen00453090 )
-BFME_FINAL_INSERTION( Rva00453F50, Gen00453A80, Gen00453180 )
-BFME_FINAL_INSERTION( Rva00754740, Gen00754430, Gen007537C0 )
-BFME_FINAL_INSERTION( Rva009CD6F0, Gen009CD4F0, Gen009CD1A0 )
-BFME_FINAL_INSERTION( Rva00347CD0, Gen00344970, Gen00342CE0 )
-BFME_FINAL_INSERTION( Rva003CFA00, Gen003CEC30, Gen003CDC60 )
-BFME_FINAL_INSERTION( Rva00483DA0, Gen00483B90, Gen0047E480 )
-BFME_FINAL_INSERTION( Rva00513980, Gen00513410, Gen00511B90 )
+// A macro argument may not contain a top-level comma, so the declaration and
+// the call site are separate macros: both only wrap a bare callee name.
+#define BFME_DECL_QUARTET( NAME )                                               \
+	void NAME( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortElem4 *,            \
+		Q3SortCompare comp );
+#define BFME_CALL_QUARTET( NAME )                                               \
+	NAME( first + 16, last, (Q3SortElem4 *)0, comp );
+
+// 0x0047E480 is not an anonymous body: the ledger's defining name is
+// ?bfmeSortZV@@YAXPAH00P6ADHH@Z@Z, declared and defined by name in
+// game/GameEngine/Source/Common/BfmeConv1886.cpp.  Its parameters are int*
+// element pointers and a comparator POINTER, where the other unguarded-insertion
+// callees here take Q3SortElem4* and the comparator BY VALUE; every one of them
+// is still one dword in the same stack slot, so the casts below push exactly
+// the same bytes.
+#define BFME_DECL_SORT_ZV                                                       \
+	void bfmeSortZV( int *first, int *last, int *hint,                          \
+		char (__cdecl *comp)(int, int) );
+#define BFME_CALL_SORT_ZV                                                       \
+	bfmeSortZV( (int *)(first + 16), (int *)last, (int *)0,                    \
+		*(char (__cdecl **)(int, int))&comp );
+
+BFME_FINAL_INSERTION( Rva00453EF0, Gen004539D0, BFME_DECL_QUARTET( Gen00453090 ), BFME_CALL_QUARTET( Gen00453090 ) )
+BFME_FINAL_INSERTION( Rva00453F50, Gen00453A80, BFME_DECL_QUARTET( Gen00453180 ), BFME_CALL_QUARTET( Gen00453180 ) )
+BFME_FINAL_INSERTION( Rva00754740, Gen00754430, BFME_DECL_QUARTET( Gen007537C0 ), BFME_CALL_QUARTET( Gen007537C0 ) )
+BFME_FINAL_INSERTION( Rva009CD6F0, Gen009CD4F0, BFME_DECL_QUARTET( Gen009CD1A0 ), BFME_CALL_QUARTET( Gen009CD1A0 ) )
+BFME_FINAL_INSERTION( Rva00347CD0, Gen00344970, BFME_DECL_QUARTET( Gen00342CE0 ), BFME_CALL_QUARTET( Gen00342CE0 ) )
+BFME_FINAL_INSERTION( Rva003CFA00, Gen003CEC30, BFME_DECL_QUARTET( Gen003CDC60 ), BFME_CALL_QUARTET( Gen003CDC60 ) )
+BFME_FINAL_INSERTION( Rva00483DA0, Gen00483B90, BFME_DECL_SORT_ZV, BFME_CALL_SORT_ZV )
+BFME_FINAL_INSERTION( Rva00513980, Gen00513410, BFME_DECL_QUARTET( Gen00511B90 ), BFME_CALL_QUARTET( Gen00511B90 ) )
 
 // ?Gen003CEC30@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z
 void Gen003CEC30(Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp)

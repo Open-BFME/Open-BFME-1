@@ -84,7 +84,6 @@ BFME_ZERO_THIRD_CALLEE( 00453090 )
 BFME_ZERO_THIRD_CALLEE( 00453180 )
 BFME_ZERO_THIRD_CALLEE( 004742C0 )
 BFME_ZERO_THIRD_CALLEE( 00474A90 )
-BFME_ZERO_THIRD_CALLEE( 0047E480 )
 BFME_ZERO_THIRD_CALLEE( 00511B90 )
 BFME_ZERO_THIRD_CALLEE( 0052FF20 )
 BFME_ZERO_THIRD_CALLEE( 00530050 )
@@ -107,7 +106,21 @@ BFME_ZERO_THIRD_FORWARDER( rva00453A60ZeroThirdForwarder, gen00453090 )
 BFME_ZERO_THIRD_FORWARDER( rva00453B10ZeroThirdForwarder, gen00453180 )
 BFME_ZERO_THIRD_FORWARDER( rva004748A0ZeroThirdForwarder, gen004742C0 )
 BFME_ZERO_THIRD_FORWARDER( rva004758D0ZeroThirdForwarder, gen00474A90 )
-BFME_ZERO_THIRD_FORWARDER( rva004833F0ZeroThirdForwarder, gen0047E480 )
+
+// 0x0047E480 is not an anonymous body: the ledger's defining name is
+// ?bfmeSortZV@@YAXPAH00P6ADHH@Z@Z, declared and defined by name in
+// game/GameEngine/Source/Common/BfmeConv1886.cpp.  Same four arguments at the
+// same widths (int*, int*, int*, comparator pointer), so the forwarder that
+// calls it is unchanged.  The forwarder's own parameters are void*, so the
+// casts below are compile-time only: the four pushed dwords are identical.
+void bfmeSortZV( int *first, int *last, int *hint,
+	char (__cdecl *comp)(int, int) );
+#define BFME_ZERO_THIRD_SORT_ZV( A, B, ZERO, C )                              \
+	bfmeSortZV( (int *)(A), (int *)(B), (int *)(ZERO),                         \
+		(char (__cdecl *)(int, int))(C) )
+
+BFME_ZERO_THIRD_FORWARDER( rva004833F0ZeroThirdForwarder,                        \
+	BFME_ZERO_THIRD_SORT_ZV )
 BFME_ZERO_THIRD_FORWARDER( rva00512500ZeroThirdForwarder, gen00511B90 )
 BFME_ZERO_THIRD_FORWARDER( rva00531790ZeroThirdForwarder, gen0052FF20 )
 BFME_ZERO_THIRD_FORWARDER( rva00531840ZeroThirdForwarder, gen00530050 )
