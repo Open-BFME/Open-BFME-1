@@ -60,9 +60,18 @@ private:
 	bool m_flag8C;
 };
 
+// The state reset body is matched under this proven owner name in
+// AttributeModifierDefinition_reset.cpp; this TU keeps its constructor's
+// address-derived owner spelling for the constructor ledger row.
+class AttributeModifierDefinition
+{
+public:
+	void reset( int mode );
+};
+
 Rva00369860State::Rva00369860State() :
 	m_unreconstructed84( 0 ),
 	m_unreconstructed88( 0 )
 {
-	reset( 0 );
+	reinterpret_cast<AttributeModifierDefinition *>( this )->reset( 0 );
 }

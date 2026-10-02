@@ -22,6 +22,14 @@ struct S4Cmp00573A30
 		const S4SortElem12 &right) const { return left.m_bfmeKey < right.m_bfmeKey; }
 };
 
+// The matched adjust_heap provider at 0x00571B70 uses this ABI-equivalent
+// comparator spelling. Its state pointer and key comparison match the view
+// above, while keeping sort_heap's ledger-owned specialization unchanged.
+struct S4Cmp00574DF0
+{
+	void *m_bfmeState;
+};
+
 namespace _STL
 {
 
@@ -37,7 +45,8 @@ void sort_heap(RandomAccessIterator first, RandomAccessIterator last,
 	{
 		S4SortElem12 val = *(last - 1);
 		*(last - 1) = *first;
-		__adjust_heap(first, 0, (last - 1) - first, val, comp);
+		__adjust_heap(first, 0, (last - 1) - first, val,
+			*reinterpret_cast<S4Cmp00574DF0 *>(&comp));
 		--last;
 	}
 }

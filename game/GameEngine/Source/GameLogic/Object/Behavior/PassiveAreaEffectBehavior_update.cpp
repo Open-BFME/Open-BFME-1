@@ -20,6 +20,7 @@ enum UpdateSleepTime
 };
 
 class Object;
+class CountermeasuresBehaviorInterface;
 
 class StructureCompletionInterface
 {
@@ -41,7 +42,7 @@ class Object
 {
 public:
 	// Existing Object getter pin at retail ILT RVA 0x000351D9.
-	StructureCompletionInterface *getStructureCompletionInterface();
+	const CountermeasuresBehaviorInterface *getCountermeasuresBehaviorInterface() const;
 };
 
 class PassiveAreaEffectBehaviorModuleData
@@ -108,7 +109,8 @@ UpdateSleepTime PassiveAreaEffectBehavior::update()
 		*reinterpret_cast<PassiveAreaEffectBehaviorModuleData **>(secondaryThis - 0x0c);
 	Object *object = *reinterpret_cast<Object **>(secondaryThis - 0x08);
 
-	StructureCompletionInterface *completion = object->getStructureCompletionInterface();
+	StructureCompletionInterface *completion =
+		(StructureCompletionInterface *)object->getCountermeasuresBehaviorInterface();
 	if (completion != 0)
 	{
 		if (completion->slot10())
