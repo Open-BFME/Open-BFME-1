@@ -1,5 +1,5 @@
-// cl: /MD /Gz /Os /DPNG_NO_READ_USER_TRANSFORM /DPNG_NO_WRITE_USER_TRANSFORM /DPNG_NO_READ_bKGD /DPNG_NO_READ_BACKGROUND /DPNG_NO_CONSOLE_IO /DPNG_NO_READ_cHRM /Igame/Libraries/Source/Compression/ZLib
-/* libpng 1.0.5 (October 15, 1999) -- pristine upstream source, matching the
+// cl: /MD /Gz /Os /TP /DPNG_NO_READ_USER_TRANSFORM /DPNG_NO_WRITE_USER_TRANSFORM /DPNG_NO_READ_bKGD /DPNG_NO_READ_BACKGROUND /DPNG_NO_CONSOLE_IO /DPNG_NO_READ_cHRM /Igame/Libraries/Source/Compression/ZLib
+/* libpng 1.0.5 (October 15, 1999) -- upstream source with retail call bindings, matching the
    version banner in lotrbfme.exe.  Statically linked; reads zlib.h from the
    vendored zlib 1.1.4 next door.  Retail linked the DLL CRT (/MD) and built
    PNGAPI __stdcall (/Gz); nothing at all matches without /Gz.
@@ -29,7 +29,25 @@
    0x00AAD683, inputs/vendor/d3dx9/d3dx9.lib).  zlib.h spells the same call
    plain `deflate`, which /Gz decorates to __deflate@8 -- a name retail never
    defines.  Declare the real entry point; same ABI, same compiled bytes. */
-extern int __stdcall d3dx_deflate(z_streamp strm, int flush);
+extern "C" int __stdcall d3dx_deflate(z_streamp strm, int flush);
+extern "C" int __stdcall d3dx_deflateReset(z_streamp strm);
+extern "C" int __stdcall d3dx_deflateInit2_(z_streamp strm, int level,
+   int method, int window_bits, int mem_level, int strategy,
+   const char *version, int stream_size);
+
+/* The write callback, diagnostics and allocator use C++ entries in the same
+   archive (retail 0x00A638A7, 0x00A62C3E, 0x00A62C5C and 0x00AABED8).
+   /TP permits their namespace spellings; png.h keeps this TU's
+   own public and internal functions under their existing C linkage. */
+namespace D3DX
+{
+   struct png_struct_def;
+   void __stdcall png_write_data(png_struct_def *png_ptr, png_bytep data,
+      png_size_t length);
+   void __stdcall png_error(png_struct_def *png_ptr, const char *message);
+   void __stdcall png_warning(png_struct_def *png_ptr, const char *message);
+   void *__stdcall png_malloc(png_struct_def *png_ptr, unsigned long size);
+}
 
 /* Place a 32-bit number into a buffer in PNG byte order.  We work
  * with unsigned numbers for convenience, although one supported
@@ -101,10 +119,10 @@ png_write_chunk_start(png_structp png_ptr, png_bytep chunk_name,
 
    /* write the length */
    png_save_uint_32(buf, length);
-   png_write_data(png_ptr, buf, (png_size_t)4);
+   D3DX::png_write_data((D3DX::png_struct_def *)png_ptr, buf, (png_size_t)4);
 
    /* write the chunk name */
-   png_write_data(png_ptr, chunk_name, (png_size_t)4);
+   D3DX::png_write_data((D3DX::png_struct_def *)png_ptr, chunk_name, (png_size_t)4);
    /* reset the crc and run it over the chunk name */
    png_reset_crc(png_ptr);
    png_calculate_crc(png_ptr, chunk_name, (png_size_t)4);
@@ -122,7 +140,7 @@ png_write_chunk_data(png_structp png_ptr, png_bytep data, png_size_t length)
    if (data != NULL && length > 0)
    {
       png_calculate_crc(png_ptr, data, length);
-      png_write_data(png_ptr, data, length);
+      D3DX::png_write_data((D3DX::png_struct_def *)png_ptr, data, length);
    }
 }
 
@@ -135,7 +153,7 @@ png_write_chunk_end(png_structp png_ptr)
    /* write the crc */
    png_save_uint_32(buf, png_ptr->crc);
 
-   png_write_data(png_ptr, buf, (png_size_t)4);
+   D3DX::png_write_data((D3DX::png_struct_def *)png_ptr, buf, (png_size_t)4);
 }
 
 /* Simple function to write the signature.  If we have already written
@@ -148,7 +166,7 @@ void
 png_write_sig(png_structp png_ptr)
 {
    /* write the rest of the 8 byte signature */
-   png_write_data(png_ptr, &png_sig[png_ptr->sig_bytes],
+   D3DX::png_write_data((D3DX::png_struct_def *)png_ptr, &png_sig[png_ptr->sig_bytes],
       (png_size_t)8 - png_ptr->sig_bytes);
 }
 
@@ -175,12 +193,12 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
             case 4:
             case 8:
             case 16: png_ptr->channels = 1; break;
-            default: png_error(png_ptr,"Invalid bit depth for grayscale image");
+            default: D3DX::png_error((D3DX::png_struct_def *)png_ptr,"Invalid bit depth for grayscale image");
          }
          break;
       case PNG_COLOR_TYPE_RGB:
          if (bit_depth != 8 && bit_depth != 16)
-            png_error(png_ptr, "Invalid bit depth for RGB image");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid bit depth for RGB image");
          png_ptr->channels = 3;
          break;
       case PNG_COLOR_TYPE_PALETTE:
@@ -190,32 +208,32 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
             case 2:
             case 4:
             case 8: png_ptr->channels = 1; break;
-            default: png_error(png_ptr, "Invalid bit depth for paletted image");
+            default: D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid bit depth for paletted image");
          }
          break;
       case PNG_COLOR_TYPE_GRAY_ALPHA:
          if (bit_depth != 8 && bit_depth != 16)
-            png_error(png_ptr, "Invalid bit depth for grayscale+alpha image");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid bit depth for grayscale+alpha image");
          png_ptr->channels = 2;
          break;
       case PNG_COLOR_TYPE_RGB_ALPHA:
          if (bit_depth != 8 && bit_depth != 16)
-            png_error(png_ptr, "Invalid bit depth for RGBA image");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid bit depth for RGBA image");
          png_ptr->channels = 4;
          break;
       default:
-         png_error(png_ptr, "Invalid image color type specified");
+         D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid image color type specified");
    }
 
    if (compression_type != PNG_COMPRESSION_TYPE_BASE)
    {
-      png_warning(png_ptr, "Invalid compression type specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid compression type specified");
       compression_type = PNG_COMPRESSION_TYPE_BASE;
    }
 
    if (filter_type != PNG_FILTER_TYPE_BASE)
    {
-      png_warning(png_ptr, "Invalid filter type specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid filter type specified");
       filter_type = PNG_FILTER_TYPE_BASE;
    }
 
@@ -223,7 +241,7 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
    if (interlace_type != PNG_INTERLACE_NONE &&
       interlace_type != PNG_INTERLACE_ADAM7)
    {
-      png_warning(png_ptr, "Invalid interlace type specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid interlace type specified");
       interlace_type = PNG_INTERLACE_ADAM7;
    }
 #else
@@ -283,9 +301,10 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
       png_ptr->zlib_window_bits = 15;
    if (!(png_ptr->flags & PNG_FLAG_ZLIB_CUSTOM_METHOD))
       png_ptr->zlib_method = 8;
-   deflateInit2(&png_ptr->zstream, png_ptr->zlib_level,
+   d3dx_deflateInit2_(&png_ptr->zstream, png_ptr->zlib_level,
       png_ptr->zlib_method, png_ptr->zlib_window_bits,
-      png_ptr->zlib_mem_level, png_ptr->zlib_strategy);
+      png_ptr->zlib_mem_level, png_ptr->zlib_strategy,
+      ZLIB_VERSION, sizeof(z_stream));
    png_ptr->zstream.next_out = png_ptr->zbuf;
    png_ptr->zstream.avail_out = (uInt)png_ptr->zbuf_size;
 
@@ -312,11 +331,11 @@ png_write_PLTE(png_structp png_ptr, png_colorp palette, png_uint_32 num_pal)
      {
        if (png_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
          {
-           png_error(png_ptr, "Invalid number of colors in palette");
+           D3DX::png_error((D3DX::png_struct_def *)png_ptr, "Invalid number of colors in palette");
          }
        else
          {
-           png_warning(png_ptr, "Invalid number of colors in palette");
+           D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid number of colors in palette");
            return;
          }
    }
@@ -379,7 +398,7 @@ png_write_sRGB(png_structp png_ptr, int srgb_intent)
 
    png_debug(1, "in png_write_sRGB\n");
    if(srgb_intent >= PNG_sRGB_INTENT_LAST)
-         png_warning(png_ptr,
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr,
             "Invalid sRGB rendering intent specified");
    buf[0]=(png_byte)srgb_intent;
    png_write_chunk(png_ptr, png_sRGB, buf, (png_size_t)1);
@@ -406,7 +425,7 @@ png_write_sBIT(png_structp png_ptr, png_color_8p sbit, int color_type)
           sbit->green == 0 || sbit->green > maxbits ||
           sbit->blue == 0 || sbit->blue > maxbits)
       {
-         png_warning(png_ptr, "Invalid sBIT depth specified");
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid sBIT depth specified");
          return;
       }
       buf[0] = sbit->red;
@@ -418,7 +437,7 @@ png_write_sBIT(png_structp png_ptr, png_color_8p sbit, int color_type)
    {
       if (sbit->gray == 0 || sbit->gray > png_ptr->usr_bit_depth)
       {
-         png_warning(png_ptr, "Invalid sBIT depth specified");
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid sBIT depth specified");
          return;
       }
       buf[0] = sbit->gray;
@@ -429,7 +448,7 @@ png_write_sBIT(png_structp png_ptr, png_color_8p sbit, int color_type)
    {
       if (sbit->alpha == 0 || sbit->alpha > png_ptr->usr_bit_depth)
       {
-         png_warning(png_ptr, "Invalid sBIT depth specified");
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid sBIT depth specified");
          return;
       }
       buf[size++] = sbit->alpha;
@@ -454,7 +473,7 @@ png_write_cHRM(png_structp png_ptr, double white_x, double white_y,
    if (white_x < 0 || white_x > 0.8 || white_y < 0 || white_y > 0.8 ||
        white_x + white_y > 1.0)
    {
-      png_warning(png_ptr, "Invalid cHRM white point specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid cHRM white point specified");
       return;
    }
    itemp = (png_uint_32)(white_x * 100000.0 + 0.5);
@@ -465,7 +484,7 @@ png_write_cHRM(png_structp png_ptr, double white_x, double white_y,
    if (red_x < 0 || red_x > 0.8 || red_y < 0 || red_y > 0.8 ||
        red_x + red_y > 1.0)
    {
-      png_warning(png_ptr, "Invalid cHRM red point specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid cHRM red point specified");
       return;
    }
    itemp = (png_uint_32)(red_x * 100000.0 + 0.5);
@@ -476,7 +495,7 @@ png_write_cHRM(png_structp png_ptr, double white_x, double white_y,
    if (green_x < 0 || green_x > 0.8 || green_y < 0 || green_y > 0.8 ||
        green_x + green_y > 1.0)
    {
-      png_warning(png_ptr, "Invalid cHRM green point specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid cHRM green point specified");
       return;
    }
    itemp = (png_uint_32)(green_x * 100000.0 + 0.5);
@@ -487,7 +506,7 @@ png_write_cHRM(png_structp png_ptr, double white_x, double white_y,
    if (blue_x < 0 || blue_x > 0.8 || blue_y < 0 || blue_y > 0.8 ||
        blue_x + blue_y > 1.0)
    {
-      png_warning(png_ptr, "Invalid cHRM blue point specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid cHRM blue point specified");
       return;
    }
    itemp = (png_uint_32)(blue_x * 100000.0 + 0.5);
@@ -512,7 +531,7 @@ png_write_tRNS(png_structp png_ptr, png_bytep trans, png_color_16p tran,
    {
       if (num_trans <= 0 || num_trans > (int)png_ptr->num_palette)
       {
-         png_warning(png_ptr,"Invalid number of transparent colors specified");
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr,"Invalid number of transparent colors specified");
          return;
       }
       /* write the chunk out as it is */
@@ -534,7 +553,7 @@ png_write_tRNS(png_structp png_ptr, png_bytep trans, png_color_16p tran,
    }
    else
    {
-      png_warning(png_ptr, "Can't write tRNS with an alpha channel");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Can't write tRNS with an alpha channel");
    }
 }
 #endif
@@ -556,7 +575,7 @@ png_write_bKGD(png_structp png_ptr, png_color_16p back, int color_type)
 #endif
          back->index > png_ptr->num_palette)
       {
-         png_warning(png_ptr, "Invalid background palette index");
+         D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid background palette index");
          return;
       }
       buf[0] = back->index;
@@ -590,7 +609,7 @@ png_write_hIST(png_structp png_ptr, png_uint_16p hist, int num_hist)
    {
       png_debug2(3, "num_hist = %d, num_palette = %d\n", num_hist,
          png_ptr->num_palette);
-      png_warning(png_ptr, "Invalid number of histogram entries specified");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid number of histogram entries specified");
       return;
    }
 
@@ -634,7 +653,7 @@ png_check_keyword(png_structp png_ptr, png_charp key, png_charpp new_key)
 
    png_debug1(2, "Keyword to be checked is '%s'\n", key);
 
-   *new_key = (png_charp)png_malloc(png_ptr, (png_uint_32)(key_len + 1));
+   *new_key = (png_charp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr, (png_uint_32)(key_len + 1));
 
    /* Replace non-printing characters with a blank and print a warning */
    for (kp = key, dp = *new_key; *kp != '\0'; kp++, dp++)
@@ -734,7 +753,7 @@ png_write_tEXt(png_structp png_ptr, png_charp key, png_charp text,
    png_debug(1, "in png_write_tEXt\n");
    if (key == NULL || (key_len = png_check_keyword(png_ptr, key, &new_key))==0)
    {
-      png_warning(png_ptr, "Empty keyword in tEXt chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Empty keyword in tEXt chunk");
       return;
    }
 
@@ -775,7 +794,7 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
 
    if (key == NULL || (key_len = png_check_keyword(png_ptr, key, &new_key))==0)
    {
-      png_warning(png_ptr, "Empty keyword in zTXt chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Empty keyword in zTXt chunk");
       return;
    }
 
@@ -793,9 +812,9 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
 #if !defined(PNG_NO_STDIO)
       char msg[50];
       sprintf(msg, "Unknown zTXt compression type %d", compression);
-      png_warning(png_ptr, msg);
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, msg);
 #else
-      png_warning(png_ptr, "Unknown zTXt compression type");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Unknown zTXt compression type");
 #endif
       compression = PNG_TEXT_COMPRESSION_zTXt;
    }
@@ -830,9 +849,9 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
       {
          /* error */
          if (png_ptr->zstream.msg != NULL)
-            png_error(png_ptr, png_ptr->zstream.msg);
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, png_ptr->zstream.msg);
          else
-            png_error(png_ptr, "zlib error");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "zlib error");
       }
       /* check to see if we need more room */
       if (!png_ptr->zstream.avail_out && png_ptr->zstream.avail_in)
@@ -849,18 +868,18 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
                png_charpp old_ptr;
 
                old_ptr = output_ptr;
-               output_ptr = (png_charpp)png_malloc(png_ptr,
+               output_ptr = (png_charpp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
                   (png_uint_32)(max_output_ptr * sizeof (png_charpp)));
                png_memcpy(output_ptr, old_ptr, old_max * sizeof (png_charp));
                png_free(png_ptr, old_ptr);
             }
             else
-               output_ptr = (png_charpp)png_malloc(png_ptr,
+               output_ptr = (png_charpp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
                   (png_uint_32)(max_output_ptr * sizeof (png_charp)));
          }
 
          /* save the data */
-         output_ptr[num_output_ptr] = (png_charp)png_malloc(png_ptr,
+         output_ptr[num_output_ptr] = (png_charp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
             (png_uint_32)png_ptr->zbuf_size);
          png_memcpy(output_ptr[num_output_ptr], png_ptr->zbuf,
             png_ptr->zbuf_size);
@@ -882,9 +901,9 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
       {
          /* we got an error */
          if (png_ptr->zstream.msg != NULL)
-            png_error(png_ptr, png_ptr->zstream.msg);
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, png_ptr->zstream.msg);
          else
-            png_error(png_ptr, "zlib error");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "zlib error");
       }
 
       /* check to see if we need more room */
@@ -903,18 +922,18 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
 
                old_ptr = output_ptr;
                /* This could be optimized to realloc() */
-               output_ptr = (png_charpp)png_malloc(png_ptr,
+               output_ptr = (png_charpp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
                   (png_uint_32)(max_output_ptr * sizeof (png_charpp)));
                png_memcpy(output_ptr, old_ptr, old_max * sizeof (png_charp));
                png_free(png_ptr, old_ptr);
             }
             else
-               output_ptr = (png_charpp)png_malloc(png_ptr,
+               output_ptr = (png_charpp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
                   (png_uint_32)(max_output_ptr * sizeof (png_charp)));
          }
 
          /* save off the data */
-         output_ptr[num_output_ptr] = (png_charp)png_malloc(png_ptr,
+         output_ptr[num_output_ptr] = (png_charp)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
             (png_uint_32)png_ptr->zbuf_size);
          png_memcpy(output_ptr[num_output_ptr], png_ptr->zbuf,
             png_ptr->zbuf_size);
@@ -955,7 +974,7 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
    png_write_chunk_end(png_ptr);
 
    /* reset zlib for another zTXt or the image data */
-   deflateReset(&png_ptr->zstream);
+   d3dx_deflateReset(&png_ptr->zstream);
 }
 #endif
 
@@ -971,7 +990,7 @@ png_write_oFFs(png_structp png_ptr, png_uint_32 x_offset,
 
    png_debug(1, "in png_write_oFFs\n");
    if (unit_type >= PNG_OFFSET_LAST)
-      png_warning(png_ptr, "Unrecognized unit type for oFFs chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Unrecognized unit type for oFFs chunk");
 
    png_save_uint_32(buf, x_offset);
    png_save_uint_32(buf + 4, y_offset);
@@ -995,7 +1014,7 @@ png_write_pCAL(png_structp png_ptr, png_charp purpose, png_int_32 X0,
 
    png_debug1(1, "in png_write_pCAL (%d parameters)\n", nparams);
    if (type >= PNG_EQUATION_LAST)
-      png_warning(png_ptr, "Unrecognized equation type for pCAL chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Unrecognized equation type for pCAL chunk");
 
    purpose_len = png_check_keyword(png_ptr, purpose, &new_purpose) + 1;
    png_debug1(3, "pCAL purpose length = %d\n", purpose_len);
@@ -1003,7 +1022,7 @@ png_write_pCAL(png_structp png_ptr, png_charp purpose, png_int_32 X0,
    png_debug1(3, "pCAL units length = %d\n", units_len);
    total_len = purpose_len + units_len + 10;
 
-   params_len = (png_uint_32p)png_malloc(png_ptr, (png_uint_32)(nparams
+   params_len = (png_uint_32p)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr, (png_uint_32)(nparams
       *sizeof(png_uint_32)));
 
    /* Find the length of each parameter, making sure we don't count the
@@ -1049,7 +1068,7 @@ png_write_pHYs(png_structp png_ptr, png_uint_32 x_pixels_per_unit,
 
    png_debug(1, "in png_write_pHYs\n");
    if (unit_type >= PNG_RESOLUTION_LAST)
-      png_warning(png_ptr, "Unrecognized unit type for pHYs chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Unrecognized unit type for pHYs chunk");
 
    png_save_uint_32(buf, x_pixels_per_unit);
    png_save_uint_32(buf + 4, y_pixels_per_unit);
@@ -1073,7 +1092,7 @@ png_write_tIME(png_structp png_ptr, png_timep mod_time)
        mod_time->day    > 31 || mod_time->day    < 1 ||
        mod_time->hour   > 23 || mod_time->second > 60)
    {
-      png_warning(png_ptr, "Invalid time specified for tIME chunk");
+      D3DX::png_warning((D3DX::png_struct_def *)png_ptr, "Invalid time specified for tIME chunk");
       return;
    }
 
@@ -1099,13 +1118,13 @@ png_write_start_row(png_structp png_ptr)
                             png_ptr->usr_bit_depth + 7) >> 3) + 1);
 
    /* set up row buffer */
-   png_ptr->row_buf = (png_bytep)png_malloc(png_ptr, (png_uint_32)buf_size);
+   png_ptr->row_buf = (png_bytep)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr, (png_uint_32)buf_size);
    png_ptr->row_buf[0] = PNG_FILTER_VALUE_NONE;
 
    /* set up filtering buffer, if using this filter */
    if (png_ptr->do_filter & PNG_FILTER_SUB)
    {
-      png_ptr->sub_row = (png_bytep)png_malloc(png_ptr,
+      png_ptr->sub_row = (png_bytep)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
          (png_ptr->rowbytes + 1));
       png_ptr->sub_row[0] = PNG_FILTER_VALUE_SUB;
    }
@@ -1114,26 +1133,26 @@ png_write_start_row(png_structp png_ptr)
    if (png_ptr->do_filter & (PNG_FILTER_AVG | PNG_FILTER_UP | PNG_FILTER_PAETH))
    {
      /* set up previous row buffer */
-      png_ptr->prev_row = (png_bytep)png_malloc(png_ptr, (png_uint_32)buf_size);
+      png_ptr->prev_row = (png_bytep)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr, (png_uint_32)buf_size);
       png_memset(png_ptr->prev_row, 0, buf_size);
 
       if (png_ptr->do_filter & PNG_FILTER_UP)
       {
-         png_ptr->up_row = (png_bytep )png_malloc(png_ptr,
+         png_ptr->up_row = (png_bytep )D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
             (png_ptr->rowbytes + 1));
          png_ptr->up_row[0] = PNG_FILTER_VALUE_UP;
       }
 
       if (png_ptr->do_filter & PNG_FILTER_AVG)
       {
-         png_ptr->avg_row = (png_bytep)png_malloc(png_ptr,
+         png_ptr->avg_row = (png_bytep)D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
             (png_ptr->rowbytes + 1));
          png_ptr->avg_row[0] = PNG_FILTER_VALUE_AVG;
       }
 
       if (png_ptr->do_filter & PNG_FILTER_PAETH)
       {
-         png_ptr->paeth_row = (png_bytep )png_malloc(png_ptr,
+         png_ptr->paeth_row = (png_bytep )D3DX::png_malloc((D3DX::png_struct_def *)png_ptr,
             (png_ptr->rowbytes + 1));
          png_ptr->paeth_row[0] = PNG_FILTER_VALUE_PAETH;
       }
@@ -1234,9 +1253,9 @@ png_write_finish_row(png_structp png_ptr)
       if (ret != Z_OK && ret != Z_STREAM_END)
       {
          if (png_ptr->zstream.msg != NULL)
-            png_error(png_ptr, png_ptr->zstream.msg);
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, png_ptr->zstream.msg);
          else
-            png_error(png_ptr, "zlib error");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "zlib error");
       }
       /* check to see if we need more room */
       if (!(png_ptr->zstream.avail_out) && ret == Z_OK)
@@ -1254,7 +1273,7 @@ png_write_finish_row(png_structp png_ptr)
          png_ptr->zstream.avail_out);
    }
 
-   deflateReset(&png_ptr->zstream);
+   d3dx_deflateReset(&png_ptr->zstream);
 }
 
 #if defined(PNG_WRITE_INTERLACING_SUPPORTED)
@@ -2057,9 +2076,9 @@ png_write_filtered_row(png_structp png_ptr, png_bytep filtered_row)
       if (ret != Z_OK)
       {
          if (png_ptr->zstream.msg != NULL)
-            png_error(png_ptr, png_ptr->zstream.msg);
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, png_ptr->zstream.msg);
          else
-            png_error(png_ptr, "zlib error");
+            D3DX::png_error((D3DX::png_struct_def *)png_ptr, "zlib error");
       }
 
       /* see if it is time to write another IDAT */
