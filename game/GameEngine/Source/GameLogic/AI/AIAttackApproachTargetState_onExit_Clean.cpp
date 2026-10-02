@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
 // readable body of ?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: convert AIAttackApproachTargetState::onExit to clean C++.
 //
@@ -12,17 +13,11 @@ typedef float Real;
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "PreRTS.h"
+#include "Common/Thing.h"
 
 enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 
-class Object;
 class AIUpdateInterface;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
@@ -30,13 +25,6 @@ class AIUpdateInterface
 {
 public:
 	void ignoreObstacle(const Object *obstacle);                 // ILT thunk at 0x0000315C
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	void setPosition(const Coord3D *position);        // ILT thunk at 0x0003A1A7
 };
 
 template <Int N>
@@ -209,7 +197,7 @@ void BfmeAIAttackApproachTargetState::onExit(StateExitType status)
 			Real dy = self->m_goalPosition.y -
 				((BFMEApproachTargetObject *)obj)->m_position.y;
 			if (dx * dx + dy * dy < 10.0f * 10.0f * 0.125f)
-				obj->setPosition(&self->m_goalPosition);
+				reinterpret_cast<Thing *>(obj)->setPosition(&self->m_goalPosition);
 		}
 
 		((BFMEApproachTargetAI *)ai)->clearFieldAt1D8();
