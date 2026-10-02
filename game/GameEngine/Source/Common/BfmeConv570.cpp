@@ -1,3 +1,8 @@
+// cl: /Igame /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
+// WW3D::Set_Texture_Reduction is the matched body at 0x008FE0E0 (WW3D2/ww3d.cpp);
+// the real header declares it, so include it rather than respelling a stand-in.
+#include "WW3D2/ww3d.h"
+
 // TU-local VIEW of the real GlobalData, kept only for its offsets.
 class BfmeGlobalCBE
 {
@@ -13,7 +18,6 @@ class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
 void *bfmeNowCBE();
-void bfmeSetCBE(void *what, int value);
 
 void __stdcall bfmeGoCBE(void *spare)
 {
@@ -21,6 +25,6 @@ void __stdcall bfmeGoCBE(void *spare)
 	{
 		void *cur = ((BfmeGlobalCBE *)TheWritableGlobalData)->m_bfmeCur;
 		if (bfmeNowCBE() != cur)
-			bfmeSetCBE(cur, 6);
+			WW3D::Set_Texture_Reduction((int)cur, 6);
 	}
 }
