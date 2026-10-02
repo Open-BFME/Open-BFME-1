@@ -6,10 +6,12 @@
 // key-map member, installs the base vftable, deletes the chained override at
 // +0x04 through its virtual destructor, and clears the link.
 
-class LargeGroupAudioKeyMap
+// The +0x0C member's retail destructor body is defined as LGA_MemberObj at
+// 0x003D4490, so this local view uses that exact linker identity.
+class LGA_MemberObj
 {
 public:
-	~LargeGroupAudioKeyMap(void);
+	~LGA_MemberObj(void);
 
 private:
 	void *m_bfmeData[3];
@@ -38,7 +40,7 @@ public:
 	virtual ~LargeGroupAudioUnusedKnownKeys(void);
 
 private:
-	LargeGroupAudioKeyMap m_bfmeKeys;
+	LGA_MemberObj m_bfmeKeys;
 };
 
 // ??1LargeGroupAudioUnusedKnownKeys@@UAE@XZ
