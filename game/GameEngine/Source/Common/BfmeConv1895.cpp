@@ -29,14 +29,20 @@ public:
 	BfmeNodeAH *m_bfmeNextAH;
 };
 
+// The ghost manager singleton at 0x012EF4FC is defined once, as
+// `GhostObjectManager *TheGhostObjectManager`, in
+// game/GameEngine/Source/GameLogic/Object/GhostObject.cpp.  This TU only
+// reads a word at +0x04 of it, through its own local view.
+class GhostObjectManager;
+
+extern GhostObjectManager *TheGhostObjectManager;
+
 class BfmeGhostAH
 {
 public:
 	unsigned char m_bfmeHeadAH[4];
 	int m_bfmeIndexAH;
 };
-
-extern BfmeGhostAH *TheBfmeGhostAH;
 
 class BfmeOwnerAH
 {
@@ -53,7 +59,7 @@ public:
 
 void BfmeOwnerAH::bfmeClearAH()
 {
-	int index = TheBfmeGhostAH->m_bfmeIndexAH;
+	int index = ((BfmeGhostAH *)TheGhostObjectManager)->m_bfmeIndexAH;
 	BfmeNodeAH *node = m_bfmeListsAH[index];
 
 	if (node == 0)

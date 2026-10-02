@@ -224,7 +224,7 @@ class BfmeGlobal_012f076c;
 struct Frame00200420;
 struct Players005999B0;
 struct Engine007629F0;
-class BfmeGhostAH;
+class GhostObjectManager;
 class Gen_00409040Registry;
 class Rva001A8820TerrainVisual;
 class ParticleSystemManager;
@@ -249,7 +249,7 @@ extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
 extern Frame00200420 *Clock00200420;
 extern Players005999B0 *PlayerList005999B0;
 extern Engine007629F0 *EngineGlobal007629F0;
-extern BfmeGhostAH *TheBfmeGhostAH;
+extern GhostObjectManager *TheGhostObjectManager;
 extern Gen_00409040Registry *g_012F10D0;
 extern Rva001A8820TerrainVisual *TheTerrainVisual;
 extern ParticleSystemManager *TheParticleSystemManager;
@@ -324,7 +324,7 @@ void ClientUpdate004329D0::update() {
     bool shroud = at<int>(EngineGlobal007629F0,0x30)==1;
     if (!freezeTime && !at<bool>(Clock00200420,0x11d)) {
         g_012B5348 = m_at000C;
-        if (shroud) ((Dispatch004329D0 *)TheBfmeGhostAH)->v18(0,0);
+        if (shroud) ((Dispatch004329D0 *)TheGhostObjectManager)->v18(0,0);
         Drawable004329D0 *draw = (Drawable004329D0 *)v30();
         while (draw) {
             Drawable004329D0 *next = draw->getNext();

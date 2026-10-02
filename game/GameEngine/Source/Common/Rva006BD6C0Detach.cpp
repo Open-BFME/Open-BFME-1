@@ -17,7 +17,12 @@ public:
 	void handleNode(Rva006BDB00Node *node);
 };
 
-extern Rva006BDB00 *g_012EF4FC;
+// The global at 0x012EF4FC is EA's `GhostObjectManager *TheGhostObjectManager`,
+// defined once in game/GameEngine/Source/GameLogic/Object/GhostObject.cpp.
+// This TU sees it only through its own local view.
+class GhostObjectManager;
+
+extern GhostObjectManager *TheGhostObjectManager;
 
 class Rva006BD6C0
 {
@@ -27,6 +32,6 @@ public:
 
 void Rva006BD6C0::detach(void)
 {
-	if (g_012EF4FC != 0)
-		g_012EF4FC->handleNode((Rva006BDB00Node *)((char *)this - 4));
+	if (TheGhostObjectManager != 0)
+		((Rva006BDB00 *)TheGhostObjectManager)->handleNode((Rva006BDB00Node *)((char *)this - 4));
 }
