@@ -16,6 +16,7 @@ struct Rva008981E0Value {
 	int aptIsType27();
 	int aptIsType28();
 	int aptHasAll();
+	int aptIsType1Or42();
 };
 int Rva008981E0Value::aptIsType9()
 {
@@ -44,4 +45,14 @@ int Rva008981E0Value::aptIsType28()
 int Rva008981E0Value::aptHasAll()
 {
 	return (int)m_flags >= m_count;
+}
+int Rva008981E0Value::aptIsType1Or42()
+{
+	if (m_type == 1 || m_type == 42)
+	{
+		bool notPooled = !m_pooled;
+		if (!notPooled)
+			return 1;
+	}
+	return 0;
 }
