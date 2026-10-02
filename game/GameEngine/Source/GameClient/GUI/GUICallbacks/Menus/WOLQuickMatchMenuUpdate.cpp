@@ -523,6 +523,7 @@ public:
   }
 };
 extern void j_0003b746();
+namespace {
 class Rva505C80WindowVisibilityThunk {
 public:
   __forceinline void updateVisibility() {
@@ -535,6 +536,7 @@ public:
     (this->*f.member)();
   }
 };
+}
 class Rva00506720Windows {
 public:
   char opaque00[0x294];

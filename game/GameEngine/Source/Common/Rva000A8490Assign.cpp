@@ -1,19 +1,19 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 
-class Rva0036CA00Str
-{
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
+#include "string_base.h"
+#include <vector>
 
-private:
-	void *m_item;
-};
+struct Gen_t_000a7cb0_p4pod;
+struct ParticleSysBoneInfo;
+
+// The two ILTs reach these existing vector assignments; keep their bodies
+// in their owning translation units.
+extern template class _STL::vector<Gen_t_000a7cb0_p4pod>;
+extern template class _STL::vector<ParticleSysBoneInfo>;
 
 class Rva000A8490Mid10
 {
-public:
-	Rva000A8490Mid10 &operator=(const Rva000A8490Mid10 &other);
-
 private:
 	int m_00;
 	int m_04;
@@ -22,9 +22,6 @@ private:
 
 class Rva000A8490Mid24
 {
-public:
-	Rva000A8490Mid24 &operator=(const Rva000A8490Mid24 &other);
-
 private:
 	int m_00;
 };
@@ -32,8 +29,8 @@ private:
 class Rva000A8490
 {
 	virtual void handle();
-	Rva0036CA00Str m_04;
-	Rva0036CA00Str m_08;
+	StringBase<char> m_04;
+	StringBase<char> m_08;
 	char m_0C;
 	Rva000A8490Mid10 m_10;
 	char m_1C;
@@ -46,12 +43,14 @@ public:
 
 Rva000A8490 &Rva000A8490::operator=(const Rva000A8490 &other)
 {
-	m_04 = other.m_04;
-	m_08 = other.m_08;
+	m_04.set(other.m_04);
+	m_08.set(other.m_08);
 	m_0C = other.m_0C;
-	m_10 = other.m_10;
+	*reinterpret_cast<_STL::vector<Gen_t_000a7cb0_p4pod> *>(&m_10) =
+		*reinterpret_cast<const _STL::vector<Gen_t_000a7cb0_p4pod> *>(&other.m_10);
 	m_1C = other.m_1C;
 	m_20 = other.m_20;
-	m_24 = other.m_24;
+	*reinterpret_cast<_STL::vector<ParticleSysBoneInfo> *>(&m_24) =
+		*reinterpret_cast<const _STL::vector<ParticleSysBoneInfo> *>(&other.m_24);
 	return *this;
 }
