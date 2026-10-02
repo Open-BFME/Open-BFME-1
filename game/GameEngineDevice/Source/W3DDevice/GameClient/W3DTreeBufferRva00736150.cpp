@@ -41,7 +41,7 @@ class W3DDisplay { public: static RTS3DScene *m_3DScene; };
 
 RenderObjClass *Create_Render_Obj(const char *name);
 void Rva00739B30(RenderObjClass *object, bool geometry);
-void Rva00739900Forward(void *object, Real value);
+unsigned char Rva00739900Forward(void *object, volatile int value);
 
 struct Rva00736150TypeData
 {
@@ -154,9 +154,9 @@ void W3DTreeBuffer::rva00736150(Int index, Int request)
 		m_trees[index].m_fielddc->Set_Transform(transform);
 	}
 	if (m_trees[index].m_fieldd8 != 0)
-		Rva00739900Forward(m_trees[index].m_fieldd8, 1.0f);
+		Rva00739900Forward(m_trees[index].m_fieldd8, 0x3f800000);
 	if (m_trees[index].m_fielddc != 0)
-		Rva00739900Forward(m_trees[index].m_fielddc, 0.0f);
+		Rva00739900Forward(m_trees[index].m_fielddc, 0);
 	if (m_treeTypes[type].m_data->m_effect != 0) {
 		Coord3D position;
 		position.x = m_trees[index].m_location.x;

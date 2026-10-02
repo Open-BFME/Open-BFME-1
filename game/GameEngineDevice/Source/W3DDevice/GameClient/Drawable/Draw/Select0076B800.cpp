@@ -38,8 +38,10 @@ virtual void refresh();
 class BfmeCalc919G { public: int bfmeCalc919G(); };
 struct Coord3D; class Matrix3D; class Object;
 class BFMERopeDrawableGetPositionShim { public: const Coord3D* get() const; };
-class FXList { public: static void doFXPos(const FXList*,const Coord3D*,const Matrix3D*,float,const Coord3D*); };
-void bfmeLinkRelation(void*,Object*,int);
+class FXList { public:
+ static void doFXObj(const FXList*,const Object*,const Object*);
+ static void doFXPos(const FXList*,const Coord3D*,const Matrix3D*,float,const Coord3D*);
+};
 class Rva0075BA30Owner { friend class Select0076B800; float getCurrentAnimFraction() const; };
 class Rva00766A70W3DScriptedModelDraw { friend class Select0076B800; void apply(void*,int,int,int,int); };
 class Cleanup0076B550 { public: void stopParticles(bool); };
@@ -71,7 +73,7 @@ bool Select0076B800::select(State0076B800* state,bool force,int flags) {
  if(m_curState==state) {
   if(state && state->p44) {
    Drawable0076B800* d=p08;
-   if(d->m_object) bfmeLinkRelation(state->p44,d->m_object,0);
+   if(d->m_object) FXList::doFXObj((const FXList*)state->p44,d->m_object,0);
    else FXList::doFXPos((FXList*)state->p44,((BFMERopeDrawableGetPositionShim*)d)->get(),(Matrix3D*)((BfmeCalc919G*)d)->bfmeCalc919G(),0.0f,0);
   }
   if((p58!=p5c && b171)||(p4c!=p50 && b170)) secondary.refresh();

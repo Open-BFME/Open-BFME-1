@@ -4,51 +4,39 @@
 //     mov eax,[g_aptPalantirWindow] / mov ecx,[g_rva012F19E8WindowManager]
 //     push 0 x6 / push offset "..." / push eax / call REL32 / ret
 //
-// WHAT THE BYTES SHOW.  Eight arguments go on the stack and NOTHING pops them
-// before `ret`, so the callee cleans: a __thiscall member with eight stack
-// arguments (`ret 0x20` at 0x004675F0, reached through the incremental-link
-// thunk at 0x00015235).  Its receiver is a global pointer variable read with
-// `mov ecx,[abs]`; the first argument is a SECOND global pointer variable read
-// with `mov eax,[abs]`; the second argument is a string literal; the remaining
-// six are literal zero.
+// WHAT THE BYTES SHOW.  Eight dwords go on the stack and the callee cleans
+// (`ret 0x20` at 0x004675F0, reached through the incremental-link thunk at
+// 0x00015235).  The matched owner is BfmeLevelAN::bfmeBuildAN.  The local view
+// below keeps its exact decorated name and dword-sized argument ABI; casts at
+// the call preserve the pointer-sized values found in these wrappers.
 //
 // Both globals and the callee are the SAME in all twenty members.  THE ONLY
 // VARYING FIELD IS THE STRING, and it is a DIR32 site -- so it is not merely
 // masked, it is independently verified against the binary by the gate's
-// string-ref pass.  The strings are UI event names: ShowCommandInterface,
-// HideCommandInterface, ShowRankInterface, ... SampleHelpBoxTextWidth.
+// string-ref pass.
 //
 // The zero arguments are spelled `int` because `push 0` cannot distinguish an
 // int, a bool, a char or a null pointer at this width; `int` asserts the least
 // structure of those.
 //
-// IDENTITY IS NOT RECOVERED.  The class names, the member name and the two
-// global names are inventions; only the string literals are retail's own.
-
-class WideCall;
-
-class WideRunner
+class BfmeLevelAN
 {
 public:
-	void run( WideCall *target, const char *name, int a, int b, int c, int d, int e, int f );
+	char *bfmeBuildAN( unsigned int level, int p2, int p3, int p4, int p5, int p6,
+		int p7, int p8 );
 };
 
 // Retail's first-argument global at 0x012B7D80 is the AptPalantir window index,
 // `int g_aptPalantirWindow` (defined in GUI/GUICallbacks/Apt/AptPalantir.cpp).
-// The runner takes it as the call target, so it is cast to the TU-local
-// WideCall view at the use; the load is `mov eax,[abs]` either way.
+// This is the first dword passed by each wrapper.
 extern int g_aptPalantirWindow;
-static inline WideCall *wideCallTarget()
-{
-	return (WideCall *)g_aptPalantirWindow;
-}
 // Retail's runner receiver global at 0x012F19E8 is EA's WindowManager singleton
-// (defined in GameClient/GUI/WindowManager.cpp); the TU-local WideRunner view
+// (defined in GameClient/GUI/WindowManager.cpp); the TU-local BfmeLevelAN view
 // below is reached by casting the canonical global.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-#define WIDE_RUN_NAMED( NAME, TEXT )                                      	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void go();                                                 	};                                                                    	void Rva##NAME::go()                                                  	{                                                                     		((WideRunner *)g_rva012F19E8WindowManager)->run( wideCallTarget(), TEXT, 0, 0, 0, 0, 0, 0 );         	}
+#define WIDE_RUN_NAMED( NAME, TEXT )                                      	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void go();                                                 	};                                                                    	void Rva##NAME::go()                                                  	{                                                                     		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN( (unsigned int)g_aptPalantirWindow, (int)TEXT, 0, 0, 0, 0, 0, 0 );         	}
 
 WIDE_RUN_NAMED( 00563DA0, "ShowCommandInterface" )
 WIDE_RUN_NAMED( 00563DD0, "HideCommandInterface" )
