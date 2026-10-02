@@ -1,18 +1,14 @@
 // cl: /O2 /Ob0
+// stlport
 
-class Rva00647920String
-{
-public:
-	Rva00647920String(const Rva00647920String &other);
-
-private:
-	char m_pad[0x0C];
-};
+#include <string>
+extern template class _STL::basic_string<char, _STL::char_traits<char>,
+	_STL::allocator<char> >;
 
 class Rva00770220
 {
 	int m_00;
-	Rva00647920String m_04;
+	_STL::string m_04;
 	int m_10;
 	int m_14;
 	int m_18;
