@@ -109,19 +109,6 @@ void WOLCustomScoreScreenInit( WindowLayout *layout, void *userData )
 } // WOLCustomScoreScreenInit
 
 //-------------------------------------------------------------------------------------------------
-/** WOL Status Menu shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLCustomScoreScreenShutdown( WindowLayout *layout, void *userData )
-{
-	// hide menu
-	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
-
-	// our shutdown is complete
-	TheShell->shutdownComplete( layout );
-}  // WOLCustomScoreScreenShutdown
-
-
-//-------------------------------------------------------------------------------------------------
 /** WOL Status Menu update method */
 //-------------------------------------------------------------------------------------------------
 void WOLCustomScoreScreenUpdate( WindowLayout * layout, void *userData)

@@ -28,11 +28,11 @@ public:
 	PathNode *getNext(void) const { return m_next; }
 	PathNode *getPrevious(void) const { return m_previous; }
 	PathNode *getNextOptimized(void) const { return m_nextOptimized; }
-	void setNextOptimized(PathNode *node) { m_nextOptimized = node; }
 	const Coord3D *getPosition(void) const { return &m_position; }
 	PathfindLayerEnum getLayer(void) const { return m_layer; }
 
 private:
+	friend class Path;
 	PathNode *m_next;
 	PathNode *m_previous;
 	PathNode *m_nextOptimized;
@@ -181,7 +181,7 @@ void Path::optimizeGroundPath(Int pathDiameter)
 
 			if (isPassable)
 			{
-				anchor->setNextOptimized(node);
+				anchor->m_nextOptimized = node;
 				anchor = node;
 				optimizedSegment = true;
 				break;
@@ -190,7 +190,7 @@ void Path::optimizeGroundPath(Int pathDiameter)
 
 		if (optimizedSegment == false)
 		{
-			anchor->setNextOptimized(anchor->getNext());
+			anchor->m_nextOptimized = anchor->getNext();
 			anchor = anchor->getNext();
 		}
 	}
@@ -203,7 +203,7 @@ void Path::optimizeGroundPath(Int pathDiameter)
 			Real dx = node->getPosition()->x - anchor->getPosition()->x;
 			Real dy = node->getPosition()->y - anchor->getPosition()->y;
 			if (dx * dx + dy * dy < 390.0f)
-				anchor->setNextOptimized(node->getNextOptimized());
+				anchor->m_nextOptimized = node->getNextOptimized();
 		}
 	}
 

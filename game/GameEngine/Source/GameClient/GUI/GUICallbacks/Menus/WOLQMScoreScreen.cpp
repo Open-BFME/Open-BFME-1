@@ -110,23 +110,6 @@ void WOLQMScoreScreenInit( WindowLayout *layout, void *userData )
 } // WOLQMScoreScreenInit
 
 //-------------------------------------------------------------------------------------------------
-/** WOL Status Menu shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLQMScoreScreenShutdown( WindowLayout *layout, void *userData )
-{
-
-	// hide menu
-	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
-
-	// our shutdown is complete
-	TheShell->shutdownComplete( layout );
-
-	//progressLayout = NULL;
-
-}  // WOLQMScoreScreenShutdown
-
-
-//-------------------------------------------------------------------------------------------------
 /** WOL Status Menu update method */
 //-------------------------------------------------------------------------------------------------
 void WOLQMScoreScreenUpdate( WindowLayout * layout, void *userData)

@@ -53,22 +53,27 @@ public:
 		if( m_ptr )
 			m_ptr->Release_Ref();
 	}
-	// ??4AudioEventInfoRef@@QAEAAV0@ABV0@@Z absent-from-retail
-	AudioEventInfoRef &operator=( const AudioEventInfoRef &rhs )
-	{
-		if( this != &rhs )
-		{
-			if( rhs.m_ptr )
-				rhs.m_ptr->Add_Ref();
-			if( m_ptr )
-				m_ptr->Release_Ref();
-			m_ptr = rhs.m_ptr;
-		}
-		return *this;
-	}
+	// The matching owner defines operator= at 0x000B0F00. This TU-local inline
+	// helper preserves the assignment sequence in rva000BD640 without another
+	// definition of that external symbol.
+	AudioEventInfoRef &operator=( const AudioEventInfoRef &rhs );
 
 	AudioEventInfo *m_ptr;
 };
+
+static __forceinline AudioEventInfoRef &copyAudioEventInfoRef(
+	AudioEventInfoRef *self, const AudioEventInfoRef &rhs)
+{
+	if( self != &rhs )
+	{
+		if( rhs.m_ptr )
+			rhs.m_ptr->Add_Ref();
+		if( self->m_ptr )
+			self->m_ptr->Release_Ref();
+		self->m_ptr = rhs.m_ptr;
+	}
+	return *self;
+}
 
 class Rva005A00B0AudioClient
 {
@@ -150,7 +155,7 @@ void INI::rva000BD640( INI *ini, void *, void *store, const void * )
 		}
 		else
 		{
-			info = theAudioClient()->findSound( AsciiString( token ) );
+			copyAudioEventInfoRef( &info, theAudioClient()->findSound( AsciiString( token ) ) );
 			if( info.m_ptr == 0 )
 				throw INIException( 3, "Invalid Sound '%s'", token );
 		}
