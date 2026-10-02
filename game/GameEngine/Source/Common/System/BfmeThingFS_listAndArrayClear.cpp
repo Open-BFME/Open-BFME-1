@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 // Open-BFME: two-pass list clear plus cookie-array teardown, retail 0x000FD0B0.
 //
@@ -6,6 +6,15 @@
 // owned pointer at +8 is destroyed, then each node is returned to the small
 // allocator.  The sentinel is then reset to self-links and the cookie-prefixed
 // 0xC-element array at this+8 is torn down with the EH vector destructor.
+//
+// The array elements are the real Coord3D (12 bytes, the 0xC stride the
+// teardown passes to ??_M@YGXPAXIHP6EX0@Z@Z).  Retail hands the vector
+// destructor the dtor at 0x0041364C, and that address is Coord3D::~Coord3D
+// (functions.csv row ??1Coord3D@@QAE@XZ, RVA 0x0001364C, a one-byte `ret`
+// defined in game/Libraries/Source/WWVegas/WWMath/coord3d.cpp), so the
+// element reference must spell that class rather than a TU-local one.
+
+#include "coord3d.h"
 
 // Retail frees these arrays through operator delete[] (??_V@YAXPAX@Z,
 // 0x00881EF0). Without the declaration cl falls back to scalar
@@ -26,17 +35,10 @@ struct BfmeListNode
 	BfmeOwnedPtr *value;
 };
 
-class BfmeArrayElem
-{
-public:
-	~BfmeArrayElem(void);
-	char m_bytes[0xC];
-};
-
 class BfmeListAndArray
 {
 	char m_prefix[8];
-	BfmeArrayElem *m_array;
+	Coord3D *m_array;
 	int m_arrayTail;
 	BfmeListNode *m_list;
 
