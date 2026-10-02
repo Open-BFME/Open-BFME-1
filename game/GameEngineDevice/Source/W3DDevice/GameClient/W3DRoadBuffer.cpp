@@ -141,34 +141,8 @@ static Bool s_dynamic = false;
 //         Private Class                                               
 //-----------------------------------------------------------------------------
 
-//=============================================================================
-// RoadType constructor
-//=============================================================================
-/** Nulls index & vertex data. */
-//=============================================================================
-// ??0RoadType@@QAE@XZ present-unmatched
-RoadType::RoadType(void):
-m_roadTexture(NULL),
-m_vertexRoad(NULL),
-m_indexRoad(NULL),
-m_stackingOrder(0),
-m_uniqueID(-1)
-{
-}
-
-//=============================================================================
-// RoadType destructor
-//=============================================================================
-/** Frees index & vertex data. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/RoadTypeDestructor.cpp
-// ??1RoadType@@QAE@XZ present-unmatched
-RoadType::~RoadType(void)
-{
-	REF_PTR_RELEASE(m_roadTexture);
-	REF_PTR_RELEASE(m_vertexRoad);
-	REF_PTR_RELEASE(m_indexRoad);
-}
+// BFME RoadType construction and teardown live in RoadTypeDestructor.cpp;
+// the upstream copies omit its texture-path member and additional state.
 
 //=============================================================================
 // RoadType applyTexture
