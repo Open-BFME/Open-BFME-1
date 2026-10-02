@@ -6,13 +6,21 @@ struct Q3SortElem8
 
 typedef bool ( *Q3SortElementLess )( const Q3SortElem8 &, const Q3SortElem8 & );
 
+struct Gen8ByteElement
+{
+	int m_00;
+	int m_04;
+};
+
+typedef bool ( *Gen8ByteElementLess )( const Gen8ByteElement &, const Gen8ByteElement & );
+
 struct Q3SortCompare
 {
 	Q3SortElementLess m_compare;
 };
 
-Q3SortElem8 *GenPartition00261010( Q3SortElem8 *first, Q3SortElem8 *last,
-	Q3SortElem8 value, Q3SortElementLess comp );
+Gen8ByteElement *GenPartition00261010( Gen8ByteElement *first, Gen8ByteElement *last,
+	Gen8ByteElement value, Gen8ByteElementLess comp );
 void gen00261920( void *first, void *middle, void *last, int zero, void *comp );
 void gen002616d0( void *first, void *last, void *comp );
 
@@ -46,9 +54,11 @@ void Gen00261AE0( Q3SortElem8 *first, Q3SortElem8 *last,
 		}
 
 		--depthLimit;
-		Q3SortElem8 *cut = GenPartition00261010( first, last,
-			*GenMedian00261AE0( first, first + ( last - first ) / 2,
-				last - 1, comp.m_compare ), comp.m_compare );
+		Q3SortElem8 *cut = (Q3SortElem8 *)GenPartition00261010(
+			(Gen8ByteElement *)first, (Gen8ByteElement *)last,
+			*(const Gen8ByteElement *)GenMedian00261AE0( first,
+				first + ( last - first ) / 2, last - 1, comp.m_compare ),
+			(Gen8ByteElementLess)comp.m_compare );
 		Gen00261AE0( cut, last, (Q3SortElem8 *)0, depthLimit, comp );
 		last = cut;
 	}
