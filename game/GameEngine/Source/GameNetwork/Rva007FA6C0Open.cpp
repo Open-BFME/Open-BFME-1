@@ -13,7 +13,10 @@ Rva007E9B70Obj *Rva007E9B70Get();
 
 struct Rva00806580Record;
 
-int Rva00806710(Rva00806580Record *record, const char *host, unsigned a, unsigned b);
+// 0x00806710 takes its port as an unsigned short (the ledger row
+// ?Rva00806710@@YAHPAURva00806580Record@@PBDIG@Z, 'G' = unsigned short), so the
+// call passes the full dword in edx and the callee reads only the low half.
+int Rva00806710(Rva00806580Record *record, const char *host, unsigned a, unsigned short b);
 void Rva00806A70(Rva00806580Record *record, int flag);
 
 struct Rva007FA6C0Arg

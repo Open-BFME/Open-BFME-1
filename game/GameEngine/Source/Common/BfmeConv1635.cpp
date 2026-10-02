@@ -1,14 +1,14 @@
 // Open-BFME5 conversions.
 
-class BfmeStrVUF
-{
-public:
-	~BfmeStrVUF() { bfmeClearVUF(); }
-	char *m_bfme00;
+// The member at +0 is a narrow string: the destructor calls the ONE narrow
+// release, 0x00887940 (StringBase<char>::releaseBuffer, private, hence AAEXXZ
+// in the ledger) exactly once, which is what an inline AsciiString destructor
+// emits.  Spelled that way here too, as in Bfme7NarrowStringChainDestructors.cpp;
+// the former bfme* spelling called a name no object defines.
 
-private:
-	void bfmeClearVUF();
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+typedef AsciiString BfmeStrVUF;
 
 class BfmeSinkVUF
 {

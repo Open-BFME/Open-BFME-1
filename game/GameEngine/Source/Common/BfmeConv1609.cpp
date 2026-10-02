@@ -1,5 +1,11 @@
 // Open-BFME5 conversions.
 
+// The +0 member is a narrow string copied through the ONE narrow copy
+// constructor, 0x00887B60 (StringBase<char>'s, which the ledger's ICF group
+// also spells BuddyInfo / FXNugget-list).  AsciiString's copy constructor is
+// inline and forwards to exactly that body, which is what retail call sites do.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *value) throw();
 
 inline void *operator new(unsigned int size, void *where)
@@ -11,13 +17,7 @@ inline void operator delete(void *block, void *where)
 {
 }
 
-class BfmeStrVTC
-{
-public:
-	BfmeStrVTC(const BfmeStrVTC &other);
-	~BfmeStrVTC();
-	char *m_bfme00;
-};
+typedef AsciiString BfmeStrVTC;
 
 class BfmeTargetVTC
 {
