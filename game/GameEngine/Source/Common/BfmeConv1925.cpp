@@ -293,11 +293,16 @@ bool BfmeUnitCN::bfmeDoneCN()
 	return false;
 }
 
+class Rva0017EC10State
+{
+public:
+	virtual void process(Object *object);
+};
+
 class BfmeHostCN
 {
 public:
 	int bfmeTickCN();
-	void bfmeBeginCN(BfmeUnitCN *u);
 
 	unsigned char m_bfmeHeadCN[0x1c];
 	BfmeOwnerCN *m_bfmeOwnerCN;
@@ -313,7 +318,7 @@ int BfmeHostCN::bfmeTickCN()
 	if (u == 0)
 		return -2;
 
-	bfmeBeginCN(u);
+	((Rva0017EC10State *)this)->Rva0017EC10State::process((Object *)u);
 
 	if (m_bfmeFirstCN <= TheBfmeGameLogicCN()->m_bfmeFrameCN)
 	{
