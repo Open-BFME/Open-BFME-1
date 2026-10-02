@@ -1,6 +1,9 @@
-// Retail 0x0025F2D0..0x0025F5F6 is the 806-byte slot-11 action on the
-// GrabPassengerSpecialPower secondary interface at primary +0x10. The
-// original method name is not independently known, so it remains address-derived.
+// GrabPassengerSpecialPower::doSpecialPower, retail 0x0025F2D0..0x0025F5F6 (806 B):
+// slot 11 of the SpecialPowerModuleInterface table 0x010B56D8, which the
+// registered GrabPassengerSpecialPower constructor 0x0025F0E0 stores at +0x10.
+// The body is reached only through ILT 0x00006195 (VA appears once in the image).
+// Object::doSpecialPower (0x001C3790) calls slot 11 as doSpecialPower.
+// Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmekindof /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -150,17 +153,17 @@ struct Rva0025F2D0Data
 	Bool m_queryTerrainPoint;
 };
 
-class Rva0025F2D0SecondaryAction
+class GrabPassengerSpecialPower
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08();
 	virtual void slot0C(); virtual void slot10(); virtual void slot14();
 	virtual void slot18(); virtual void slot1C(); virtual void slot20();
 	virtual void slot24(); virtual void slot28();
-	virtual void actionAt0025F2D0(UnsignedInt options);
+	virtual void doSpecialPower(UnsignedInt options);
 };
 
-void Rva0025F2D0SecondaryAction::actionAt0025F2D0(UnsignedInt options)
+void GrabPassengerSpecialPower::doSpecialPower(UnsignedInt options)
 {
 	Object *object = *reinterpret_cast<Object **>(
 		reinterpret_cast<unsigned char *>(this) - 8);

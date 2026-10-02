@@ -3,9 +3,12 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-// Retail 0026CF90: WeaponChangeSpecialPowerModule secondary interface at +10.
-// Constructor 26CC80 installs 010B8A50; slot11 -> ILT45C8C -> this body.
-// Address-bearing interface view preserves the retail adjusted-this ABI.
+// WeaponChangeSpecialPowerModule::doSpecialPower, retail 0x0026CF90: slot 11 of
+// the SpecialPowerModuleInterface table 0x010B8A50, which the registered
+// constructor 0x0026CC80 stores at +0x10; reached only through ILT 0x00045C8C
+// (VA appears once in the image). Object::doSpecialPower (0x001C3790) calls
+// slot 11 as doSpecialPower. `this` is the interface sub-object.
+// Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md
 template<int N> class BitFlags {
     _STL::bitset<N> bits;
 public:
@@ -22,7 +25,7 @@ class BfmeOwnFDH { public: char bfmeAskFDH(int); };
 class BfmeRvaBA00Object { public: void action(int); };
 class BfmeObjE10 { public: void actionA(int); };
 class BfmeItemRY { public: void bfmeDoRY(void*,void*); };
-class Rva00265A00ScavengerDispatch { public: void forward(int); };
+class SpecialPowerModule { public: virtual void doSpecialPower(unsigned); };
 enum DisabledType {};
 class Object { public:
     void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
@@ -45,16 +48,17 @@ struct Data0026CF90 {
 };
 class GameLogic { public: char pad00[0x3c]; unsigned field3C; };
 extern GameLogic* TheGameLogic;
-struct WeaponChange0026CF90Interface {
-    void basePower(unsigned n) { reinterpret_cast<Rva00265A00ScavengerDispatch*>(this)->forward(n); }
-    void execute(unsigned);
+struct WeaponChangeSpecialPowerModule {
+    // The base SpecialPowerModule::doSpecialPower (0x0026A550), called directly.
+    void basePower(unsigned n) { reinterpret_cast<SpecialPowerModule*>(this)->SpecialPowerModule::doSpecialPower(n); }
+    virtual void doSpecialPower(unsigned);
 };
 struct StringHeader0026CF90 { int refs; unsigned short length,capacity; };
 static inline bool stringNotEmpty(const AsciiString& value) {
     const StringHeader0026CF90* p=*reinterpret_cast<const StringHeader0026CF90* const*>(&value);
     return p && p->length;
 }
-void WeaponChange0026CF90Interface::execute(unsigned options) {
+void WeaponChangeSpecialPowerModule::doSpecialPower(unsigned options) {
     Object0026CF90* object=reinterpret_cast<Object0026CF90**>(this)[-2];
     if(object) {
         Data0026CF90* data=reinterpret_cast<Data0026CF90**>(this)[-3];
