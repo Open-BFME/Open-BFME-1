@@ -18,17 +18,17 @@ public:
 	virtual void bfmeWriteVCSF(void *what);
 };
 
-class BfmeSubCSF
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSF();
+	bool isMobile() const;
 };
 
 class BfmeThingCSF
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSF *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSF *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -38,7 +38,7 @@ public:
 
 void BfmeThingCSF::bfmeGoCSF(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCSF())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSF();
 		m_bfmeOut->bfmeWriteVCSF(one);

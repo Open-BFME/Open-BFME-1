@@ -18,17 +18,17 @@ public:
 	virtual void bfmeWriteVCSE(void *what);
 };
 
-class BfmeSubCSE
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSE();
+	bool isMobile() const;
 };
 
 class BfmeThingCSE
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSE *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSE *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -38,7 +38,7 @@ public:
 
 void BfmeThingCSE::bfmeGoCSE(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCSE())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSE();
 		m_bfmeVal = two;

@@ -1,10 +1,12 @@
 class BfmeAESR;
 
-class BfmeSubESR
+class ObjectIsMobileBody
 {
 public:
-	char bfmeReadyESR();
+	bool isMobile() const;
 };
+
+class BfmeSubESR;
 
 class BfmeOwnerESR
 {
@@ -38,7 +40,7 @@ public:
 	void bfmeStartESR(BfmeAESR *a, int value);
 
 	unsigned char m_bfmeHeadESR[8];
-	BfmeSubESR *m_bfme08ESR;
+	ObjectIsMobileBody *m_bfme08ESR;
 	unsigned char m_bfmeMid1ESR[0x24];
 	BfmeTargetESR *m_bfme30ESR;
 	unsigned char m_bfmeMid2ESR[0x14];
@@ -59,11 +61,11 @@ void BfmeHostESR::bfmeStartESR(BfmeAESR *a, int value)
 	if (m_bfme32bESR != 0)
 		return;
 
-	if (!m_bfme08ESR->bfmeReadyESR())
+	if (!m_bfme08ESR->isMobile())
 		return;
 
 	if (m_bfme1ccESR != 0)
-		m_bfme1ccESR->bfmeDetachESR(m_bfme08ESR);
+		m_bfme1ccESR->bfmeDetachESR(reinterpret_cast<BfmeSubESR *>(m_bfme08ESR));
 
 	m_bfme30ESR->bfmeSlot05ESR();
 	m_bfme30ESR->bfmeSlot14ESR(a);

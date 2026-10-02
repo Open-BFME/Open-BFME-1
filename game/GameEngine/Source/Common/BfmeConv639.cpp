@@ -18,17 +18,17 @@ public:
 	virtual void bfmeWriteVCSD(void *what);
 };
 
-class BfmeSubCSD
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSD();
+	bool isMobile() const;
 };
 
 class BfmeThingCSD
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSD *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSD *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -38,7 +38,7 @@ public:
 
 void BfmeThingCSD::bfmeGoCSD(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCSD())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSD();
 		m_bfmeVal = two;

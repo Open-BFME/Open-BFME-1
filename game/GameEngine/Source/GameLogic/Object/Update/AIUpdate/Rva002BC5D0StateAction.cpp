@@ -7,10 +7,10 @@
 
 typedef int Int;
 
-class BfmeSubCSA_2BC5D0
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSA();
+	bool isMobile() const;
 };
 
 class Rva002BC470StateAction_2BC5D0
@@ -52,7 +52,7 @@ public:
 
 private:
 	unsigned char m_unreconstructed000[8];
-	BfmeSubCSA_2BC5D0 *m_object;
+	ObjectIsMobileBody *m_object;
 	unsigned char m_unreconstructed00c[0x24];
 	StateMachine_2BC5D0 *m_sink;
 	unsigned char m_unreconstructed034[0x42c];
@@ -61,7 +61,7 @@ private:
 
 void Rva002BC5D0StateAction::run(void *first, void *second, unsigned char third)
 {
-	if (first && m_object->bfmeAskCSA())
+	if (first && m_object->isMobile())
 	{
 		((Rva002BC470StateAction_2BC5D0 *)this)->finish(second);
 		((Rva002BC5D0Sink *)m_sink)->beginAction();

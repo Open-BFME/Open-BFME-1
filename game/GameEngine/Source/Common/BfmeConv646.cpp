@@ -18,10 +18,10 @@ public:
 	virtual void bfmeWriteVCTC(void *what);
 };
 
-class BfmeSubCTC
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCTC();
+	bool isMobile() const;
 };
 
 class BfmeThingCTC
@@ -29,7 +29,7 @@ class BfmeThingCTC
 public:
 	void bfmeGoCTC(void *one, void *two);
 	unsigned char m_bfmeHead[8];
-	BfmeSubCTC *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCTC *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -43,7 +43,7 @@ public:
 
 void BfmeThingCTC::bfmeGoCTC(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCTC())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCTC();
 		m_bfmeOut->bfmeWriteVCTC(one);

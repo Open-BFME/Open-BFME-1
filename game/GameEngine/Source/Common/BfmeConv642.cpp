@@ -19,17 +19,17 @@ public:
 	void bfmeWriteNCSG(void *what);
 };
 
-class BfmeSubCSG
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSG();
+	bool isMobile() const;
 };
 
 class BfmeThingCSG
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSG *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSG *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -39,7 +39,7 @@ public:
 
 void BfmeThingCSG::bfmeGoCSG(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCSG())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSG();
 		m_bfmeVal = two;
