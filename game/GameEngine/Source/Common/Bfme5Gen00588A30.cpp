@@ -1,9 +1,9 @@
 // Open-BFME5: clean C++ recovery of the retail indexed-state reset at 0x00588A30.
 
-void bfmeResetIndexed38(int index, int value);
-void bfmeResetIndexed48(int index);
-void bfmeResetIndexed49(int index, int value);
-void bfmeResetIndexed44(int index, int value);
+void bfmeButtonStateEAF(char index, int state);
+void bfmeAutoAbilityOffEAE(char index);
+void bfmeFlashEAA(char index, char on);
+void bfmeProductionCountZF(int slot, int count);
 
 class Gen_00588A30
 {
@@ -28,25 +28,25 @@ void Gen_00588A30::bfmeReset(int index)
 
 	if (active38 != 0)
 	{
-		bfmeResetIndexed38(index, 0);
+		bfmeButtonStateEAF((char)index, 0);
 		*reinterpret_cast<int *>(state + 0x38) = 0;
 	}
 
 	if (state[0x48] != 0)
 	{
-		bfmeResetIndexed48(index);
+		bfmeAutoAbilityOffEAE((char)index);
 		state[0x48] = 0;
 	}
 
 	if (state[0x49] != 0)
 	{
-		bfmeResetIndexed49(index, 0);
+		bfmeFlashEAA((char)index, 0);
 		state[0x49] = 0;
 	}
 
 	if (*reinterpret_cast<int *>(state + 0x44) != 0)
 	{
-		bfmeResetIndexed44(index, 0);
+		bfmeProductionCountZF(index, 0);
 		*reinterpret_cast<int *>(state + 0x44) = 0;
 	}
 }
