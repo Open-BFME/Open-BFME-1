@@ -13,10 +13,12 @@
 // address-derived name ?buildFieldParse@Gen00019772@@SAXAAVWideMulti@@@Z for
 // that thunk, so the base is called by that name rather than a guessed one.
 //
-// The receiver is spelled WideMulti and its rows WideFieldParse because that is
-// how targets/game/reverse/symbols.csv spells the add at 0x00850920 this body calls.
+// buildFieldParse's own mangled name carries WideMulti, so its parameter keeps
+// that spelling; the add at 0x00850920 is called through the defining name
+// MultiIniFieldParse::add.
 
 class INI;
+struct FieldParse;
 
 class WideFieldParse
 {
@@ -27,10 +29,16 @@ public:
 	unsigned int m_offset;
 };
 
-class WideMulti
+class WideMulti;
+
+// The register call at 0x00850920 is MultiIniFieldParse::add, which retail's
+// own INI.h declares as void add(const FieldParse *f, unsigned int e).
+// No game header carries a body for MultiIniFieldParse, so the TU-scoped
+// declaration below follows W3DModelDrawModuleData_buildFieldParse.cpp.
+class MultiIniFieldParse
 {
 public:
-	void add(const WideFieldParse *fields, unsigned int extraOffset);
+	void add(const FieldParse *fields, unsigned int extraOffset);
 };
 
 class INI
@@ -69,5 +77,6 @@ static const WideFieldParse s_garrisonContainFieldParse[] =
 void GarrisonContainModuleData::buildFieldParse(WideMulti &p)
 {
 	Gen00019772::buildFieldParse(p);
-	p.add(s_garrisonContainFieldParse, 0);
+	reinterpret_cast<MultiIniFieldParse &>(p).add(
+		reinterpret_cast<const FieldParse *>(s_garrisonContainFieldParse), 0);
 }

@@ -14,9 +14,10 @@
 // MSVC pushes the offset 8 before it calls getFieldParse, which is why the
 // constant sits above the call in retail rather than beside the table pointer.
 //
-// The receiver is spelled WideMulti and its rows WideFieldParse because that is
-// how targets/game/reverse/symbols.csv spells the add at 0x00850920 this body calls. The
-// die-mux getter keeps the FieldParse spelling its own ledger row uses.
+// buildFieldParse's own mangled name carries WideMulti, so its parameter keeps
+// that spelling; the add at 0x00850920 is called through the defining name
+// MultiIniFieldParse::add. The die-mux getter keeps the FieldParse spelling its
+// own ledger row uses.
 
 class INI;
 struct FieldParse;
@@ -30,10 +31,16 @@ public:
 	unsigned int m_offset;
 };
 
-class WideMulti
+class WideMulti;
+
+// The register call at 0x00850920 is MultiIniFieldParse::add, which retail's
+// own INI.h declares as void add(const FieldParse *f, unsigned int e).
+// No game header carries a body for MultiIniFieldParse, so the TU-scoped
+// declaration below follows W3DModelDrawModuleData_buildFieldParse.cpp.
+class MultiIniFieldParse
 {
 public:
-	void add(const WideFieldParse *fields, unsigned int extraOffset);
+	void add(const FieldParse *fields, unsigned int extraOffset);
 };
 
 class INI
@@ -63,6 +70,7 @@ static const WideFieldParse s_heroDieFieldParse[] =
 // ?buildFieldParse@HeroDieModuleData@@SAXAAVWideMulti@@@Z
 void HeroDieModuleData::buildFieldParse(WideMulti &p)
 {
-	p.add((const WideFieldParse *)DieMuxData::getFieldParse(), 8);
-	p.add(s_heroDieFieldParse, 0);
+	MultiIniFieldParse &parse = reinterpret_cast<MultiIniFieldParse &>(p);
+	parse.add(DieMuxData::getFieldParse(), 8);
+	parse.add(reinterpret_cast<const FieldParse *>(s_heroDieFieldParse), 0);
 }
