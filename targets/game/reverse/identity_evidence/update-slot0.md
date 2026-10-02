@@ -104,3 +104,32 @@ The RET ends the 21-byte body and INT3 follows. The old
 no recovered identity and an integer return type. Replace it with
 `?update@DeletionUpdate@@UAE?AW4UpdateSleepTime@@XZ` in DeletionUpdate.cpp,
 using the real headers, and remove the old orphaned local-view implementation.
+
+## ProneUpdate::update (002A00F0, 27 bytes; rename deferred)
+
+The literal at `00C901B4` is `ProneUpdate`; registration `0012ECEF` selects
+instance factory `0011AD30`. Its call at `0011AD6B` uses constructor ILT
+`000425DC` -> `0029FE70`. The constructor's final +0x10 store at `0029FEAD`
+installs table VA `010C1324`. Slot zero is ILT `0002701B` -> `002A00F0`,
+whose stub pointer occurs exactly once, at table RVA `00CC1324`. Slot one is
+the common disabled-mask ILT `0004985F` -> `0011A130`.
+
+`GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h` declares
+public virtual non-const `UpdateSleepTime update()`; its source twin at
+`Source/GameLogic/Object/Update/ProneUpdate.cpp:78` decrements positive
+`m_proneFrames`, calls `stopProneEffects` only on reaching zero, and returns
+`UPDATE_SLEEP_NONE` (1). Retail reads the count at interface ECX+0x10
+(complete-object +0x20, independently witnessed by name_oracle), adjusts ECX
+by -0x10 for the nonvirtual effect-helper call, and returns 1. The RET at
+`002A010A` ends the 27-byte body; INT3 begins at `002A010B`.
+
+The only callee, ILT `0004908F` -> `002A0090`, is the matched
+`ProneUpdate::stopProneEffects`. Its current source and ledger incorrectly
+use a private (`AAE`) declaration, while the Zero Hour header declares both
+`startProneEffects` and `stopProneEffects` protected (`IAE`). A rename using
+the real header therefore needs a coordinated callee-declaration repair.
+The shared helper TU emits both methods, and `goProne` also declares the
+start helper private. Do not add a second identity or an alias pin merely
+to bypass these declarations. The current update placeholder is untouched;
+this section records its independently proven identity and the remaining
+repair, not a newly verified conversion. No candidate source was written.
