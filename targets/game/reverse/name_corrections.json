@@ -16858,5 +16858,25 @@
   "evidence": "targets/game/reverse/identity_evidence/0x00801cb0-native-child-contracts.md",
   "new_name": "Rva007F4DA0",
   "reason": "False pairing: the removed attempt wrapper represented only the 007E86B0 base constructor, while the new derived child preserves the independently matched constructor and vtable stores from 007F4DA0."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/DrawableIndicatorColor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DrawableIndicatorColor.cpp",
+  "old_name": "Drawable",
+  "new_name": "Rva00418200Owner",
+  "before_sha256": "54739a3ec686994c217a34c184994d1d7c45fe049de886d50ee10af1a9c5cde0",
+  "after_sha256": "c96fc905a768f3aa24794a44a20aa754afed50f31048fb85f46ba8bad3d7f011",
+  "evidence": "targets/game/reverse/identity_evidence/00418200-exclusion-argument.md",
+  "reason": "Native SubObjectsUpgrade passes ExcludeSubobjects vector address from FieldParse-proven data+88. Old indicator-color identity came from unproven Zero Hour shape analogy; opaque address-derived owner retains proven ABI without asserting a color interpretation."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "Drawable",
+  "new_name": "Rva00418200Owner",
+  "before_sha256": "7789fba40c55cd1d4722d624c168946fbfdb47ac1b25b2bfc41d84362021ea27",
+  "after_sha256": "9030a8ea297cf978f25696169b791dea56a74cbb546991dc4667def1cf08390c",
+  "evidence": "targets/game/reverse/identity_evidence/00418200-exclusion-argument.md",
+  "reason": "Native SubObjectsUpgrade passes ExcludeSubobjects vector address from FieldParse-proven data+88. Old indicator-color identity came from unproven Zero Hour shape analogy; opaque address-derived owner retains proven ABI without asserting a color interpretation."
  }
 ]

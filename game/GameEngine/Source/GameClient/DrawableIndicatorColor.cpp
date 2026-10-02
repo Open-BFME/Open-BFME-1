@@ -1,12 +1,8 @@
-// ?bfmeApplyIndicatorColor@Drawable@@QAEXI@Z
+// ?method@Rva00418200Owner@@QAEXI@Z
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: standalone conversion, TU-scoped Drawable field/vtable shim.
-// Guarded by a per-instance flag at +0x31a; skips the KindOf gate entirely
-// when TheGameLogic reports inactive, otherwise requires a bound Object
-// that isAnyKindOf(bits 119, 179); on pass, loops the module list at +0x150
-// pushing the colour through ObjectDrawInterface::replaceIndicatorColor,
-// matching Zero Hour's Drawable::setIndicatorColor loop shape (vtable
-// slots +0x9c getObjectDrawInterface / +0x74 replaceIndicatorColor).
+// Native126B address-derived provider. Argument is forwarded as one word;
+// SubObjectsUpgrade passes its ExcludeSubobjects vector address, not color.
+// Identity evidence: targets/game/reverse/identity_evidence/00418200-exclusion-argument.md
 
 // Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
 // game_logic.cpp); this TU only reads a member through a local view type, so
@@ -66,26 +62,26 @@ class BfmeObjectDrawInterfaceD
 	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
 	virtual void slot28();
 public:
-	virtual void replaceIndicatorColor(unsigned int color); // vtable +0x74
+	virtual void slot29(unsigned int argument); // vtable +0x74
 };
 
-class Drawable
+class Rva00418200Owner
 {
 public:
-	void bfmeApplyIndicatorColor(unsigned int color);
+	void method(unsigned int argument);
 
 	unsigned char m_pad_000[0xfc];
 	Thing *m_object;
 	unsigned char m_pad_100[0x150 - 0x100];
 	BfmeDrawModuleD **m_modules;
 	unsigned char m_pad_154[0x31a - 0x154];
-	bool m_indicatorEnabled;
+	bool field031a;
 };
 
-// ?bfmeApplyIndicatorColor@Drawable@@QAEXI@Z
-void Drawable::bfmeApplyIndicatorColor(unsigned int color)
+// ?method@Rva00418200Owner@@QAEXI@Z
+void Rva00418200Owner::method(unsigned int argument)
 {
-	if (!m_indicatorEnabled)
+	if (!field031a)
 		return;
 
 	Thing *thing = m_object;
@@ -104,6 +100,6 @@ void Drawable::bfmeApplyIndicatorColor(unsigned int color)
 		BfmeObjectDrawInterfaceD *di =
 			reinterpret_cast<BfmeObjectDrawInterfaceD *>((*dm)->getObjectDrawInterface());
 		if (di)
-			di->replaceIndicatorColor(color);
+			di->slot29(argument);
 	}
 }

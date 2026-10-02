@@ -1,0 +1,5 @@
+# RVA00418200 identity correction evidence
+
+The previously matched provider `Drawable::bfmeApplyIndicatorColor(unsigned)` was reconstructed by shape analogy to Zero Hour, not a BFME named caller. BFME SubObjectsUpgrade native full body 002D8D90..002D91F1 supplies the ADDRESS of its module data+88 in the sole native parameter slot. Shipped FieldParse table VA010CE0A8 identifies +88 as ExcludeSubobjects, using the same vector<AsciiString> parser8541E0 as ShowSubObjects+70/HideSubObjects+7C. RecolorHouse+A8 guards this call. This refutes interpreting the parameter as a numeric color or RGBColor pointer.
+
+Provider126B native00418200..0041827D retains native one-word thiscall RET4 and opaque forwarding to objectdraw interface slot74. Guardbyte+31A and KindOf bits119/179 are byte evidence only; semantic field/method names cannot be asserted. Retain honest address owner Rva00418200Owner::method(unsigned) until downstream semantics are proven. This identity rehome preserves start/extent/layout/behavior and emits identical bytes. No second name may remain at the RVA.
