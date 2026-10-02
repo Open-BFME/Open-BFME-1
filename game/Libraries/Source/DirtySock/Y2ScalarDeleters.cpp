@@ -43,7 +43,6 @@ struct BfmeDirtyBase
 // This constructor forces MSVC to emit the base's vtable and its generated
 // scalar deleting destructor; the retail scalar body at 0x007E9060 calls the
 // shared base destructor at 0x007EB6C0 and the global operator delete.
-// ??0BfmeDirtyBase@@QAE@XZ present-unmatched
 BfmeDirtyBase::BfmeDirtyBase() {}
 __declspec(noinline) BfmeDirtyBase::~BfmeDirtyBase() {}
 

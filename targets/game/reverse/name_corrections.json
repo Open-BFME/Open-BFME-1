@@ -14008,5 +14008,35 @@
   "after_sha256": "408aeb5b07f735654bff293e1d33a3fa8b8e4d9f473ca9b3bb4d008d20b77f3c",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
+  "old_name": "BfmeDirtyBase",
+  "new_name": "Rva0000B9CECleanup",
+  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
+  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
+  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
+  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
+  "old_name": "BfmeDirtyBase",
+  "new_name": "Rva007EB6C0Cleanup",
+  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
+  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
+  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
+  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/UnclaimedVptrTailJumpDtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/VptrCleanupDeletingDestructors.cpp",
+  "old_name": "BfmeDirtyBase",
+  "new_name": "Rva007FA650Cleanup",
+  "before_sha256": "a8b42b75f6c7bdeee66acaacabc1dc71afc89cb95a982b68a79de08fb9a050ce",
+  "after_sha256": "83d5569d0ebaf48258eb776c595b3f09090b9c1556645fb4fd7aeeb1bdab0aff",
+  "evidence": "targets/game/reverse/identity_evidence/unclaimed-vftable-owner-rework.md",
+  "reason": "The lane file was deleted when its rows moved to the vftable owners' existing destructors in VptrCleanupDeletingDestructors.cpp; BfmeDirtyBase stays in Y2ScalarDeleters.cpp and the owner file spells the same jump target as a Cleanup class. Not a rename of any identity."
  }
 ]

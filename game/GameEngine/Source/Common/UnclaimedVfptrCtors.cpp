@@ -7,8 +7,10 @@
 // .rdata address (the vftable) at +0 and returns.  MSVC 7.1 emits exactly
 // these nine bytes for `C::C() {}` (precedent: TinyVfptrCtors.cpp).  The
 // gate takes the DIR32 site from retail, so the vftable address is not
-// reconstructed here.  Constructors whose vftable already carries a real
-// class name in dir32_addresses.csv are left out: they belong to that class.
+// reconstructed here.  Only constructors whose vftable has no owner class
+// anywhere in the ledger (no matched slot-0 deleting destructor and no
+// dir32_addresses.csv name) are kept here; a vftable with an owner gives its
+// constructor to that class.
 //
 // Every body here sat in a .text gap no ledger row covered.  Both ends are
 // proven by the retail layout: the start is 16-byte aligned directly after an
@@ -33,34 +35,9 @@
 	{ \
 	}
 
-BFME_VFPTR_CTOR( Rva007E9050VfptrCtor )
-BFME_VFPTR_CTOR( Rva007E92B0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007E9CD0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007EB1B0VfptrCtor )
 BFME_VFPTR_CTOR( Rva007EB730VfptrCtor )
 BFME_VFPTR_CTOR( Rva007EFF30VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F0C70VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F1DA0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F2640VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F2F40VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F37E0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F41D0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F4870VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F48F0VfptrCtor )
 BFME_VFPTR_CTOR( Rva007F5540VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F8700VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F8710VfptrCtor )
 BFME_VFPTR_CTOR( Rva007F8F60VfptrCtor )
-BFME_VFPTR_CTOR( Rva007F8FC0VfptrCtor )
 BFME_VFPTR_CTOR( Rva007F9130VfptrCtor )
-BFME_VFPTR_CTOR( Rva007FA660VfptrCtor )
-BFME_VFPTR_CTOR( Rva007FA960VfptrCtor )
-BFME_VFPTR_CTOR( Rva007FADE0VfptrCtor )
-BFME_VFPTR_CTOR( Rva007FBC10VfptrCtor )
-BFME_VFPTR_CTOR( Rva007FD070VfptrCtor )
 BFME_VFPTR_CTOR( Rva008011C0VfptrCtor )
-BFME_VFPTR_CTOR( Rva00801410VfptrCtor )
-BFME_VFPTR_CTOR( Rva008021E0VfptrCtor )
-BFME_VFPTR_CTOR( Rva00802270VfptrCtor )
-BFME_VFPTR_CTOR( Rva00802800VfptrCtor )
-BFME_VFPTR_CTOR( Rva00802DE0VfptrCtor )
