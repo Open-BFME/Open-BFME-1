@@ -1,9 +1,10 @@
+extern "C" char *__cdecl strncpy(char *destination, const char *source,
+	unsigned int count);
+
 struct BfmeSubBLF
 {
 	unsigned char m_bfmeHead[4];
 };
-
-void bfmeDoBLF(BfmeSubBLF *sub, void *what, int many);
 
 class BfmeThingBLF
 {
@@ -15,5 +16,5 @@ public:
 
 void BfmeThingBLF::bfmeGoBLF(void *what)
 {
-	bfmeDoBLF(&m_bfmeSub, what, 0x20);
+	strncpy((char *)&m_bfmeSub, (const char *)what, 0x20);
 }
