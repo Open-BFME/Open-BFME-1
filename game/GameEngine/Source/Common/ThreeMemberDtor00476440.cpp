@@ -23,6 +23,8 @@ protected:
 	int m_refs;
 };
 
+namespace {
+
 class Rva00476440RefPtr
 {
 public:
@@ -34,6 +36,8 @@ public:
 private:
 	Mem004CRefCounted *m_ptr;
 };
+
+}
 
 class Mem0001FD66
 {

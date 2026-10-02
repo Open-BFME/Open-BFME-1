@@ -47,7 +47,7 @@ public:
 		return *(Object **)((const unsigned char *)this + 0x10);
 	}
 
-	UnsignedInt friend_getNextIdleMoodTargetFrame() const
+	UnsignedInt getNextIdleMoodTargetFrameForTurretState() const
 	{
 		const Object *obj = getOwner();
 		const AIUpdateInterface *ai = obj->m_ai;
@@ -105,5 +105,5 @@ StateReturnType Rva0018D4F0State::update()
 	turret->friend_checkForIdleMoodTarget();
 
 	return frameToSleepTime(
-		turret->friend_getNextIdleMoodTargetFrame(), m_timestamp);
+		turret->getNextIdleMoodTargetFrameForTurretState(), m_timestamp);
 }

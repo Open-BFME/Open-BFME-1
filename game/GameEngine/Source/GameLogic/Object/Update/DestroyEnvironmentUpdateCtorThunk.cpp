@@ -66,6 +66,7 @@ private:
 class DestroyEnvironmentUpdate : public UpdateModule
 {
 public:
+    virtual ~DestroyEnvironmentUpdate();
     DestroyEnvironmentUpdate(Thing *, const ModuleData *);
 
 private:
