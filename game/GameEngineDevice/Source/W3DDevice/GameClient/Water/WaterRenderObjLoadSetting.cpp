@@ -6,7 +6,13 @@ typedef char Char;
 typedef float Real;
 
 extern const char g_bfmeEmptyAscii[];
-extern "C" unsigned char bfmeObjDAB[];
+
+// The retail global is an array of WaterSetting objects (element size 0x7C, six
+// elements, base 0x012F1608) defined by Rva00C6B810StaticInit.cpp.  Only the
+// symbol name matters here: this body reads the elements through its own
+// layout-compatible stand-in, so an incomplete declaration is enough.
+class WaterSetting;
+extern WaterSetting WaterSettings[];
 
 class TextureClass
 {
@@ -171,45 +177,45 @@ void Rva007A2830WaterRenderObjClass::loadSetting(
 	BFMEAssignWaterTrackTexture(
 		setting->skyTexture,
 		BFMEGetWaterTrackTexture(
-			((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_skyTextureFile.str(), 0, 0));
+			((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_skyTextureFile.str(), 0, 0));
 	BFMEAssignWaterTrackTexture(
 		setting->waterTexture.m_texture,
 		BFMEGetWaterTrackTexture(
-			((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterTextureFile.str(), 0, 0));
+			((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterTextureFile.str(), 0, 0));
 
-	setting->skyTexelsPerUnit = ((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_skyTexelsPerUnit;
+	setting->skyTexelsPerUnit = ((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_skyTexelsPerUnit;
 	SurfaceClass::SurfaceDescription surfaceDesc;
 	setting->waterTexture.getSurfaceLevel().Get_Description(surfaceDesc);
 	setting->skyTexelsPerUnit /= (Real)surfaceDesc.Width;
 
-	setting->waterRepeatCount = ((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterRepeatCount;
-	setting->uScrollPerMs = ((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_uScrollPerMs;
-	setting->vScrollPerMs = ((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vScrollPerMs;
+	setting->waterRepeatCount = ((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterRepeatCount;
+	setting->uScrollPerMs = ((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_uScrollPerMs;
+	setting->vScrollPerMs = ((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vScrollPerMs;
 
 	setting->vertex00Diffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex00Diffuse.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex00Diffuse.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex00Diffuse.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex00Diffuse.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex00Diffuse.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex00Diffuse.blue;
 	setting->vertex01Diffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex01Diffuse.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex01Diffuse.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex01Diffuse.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex01Diffuse.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex01Diffuse.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex01Diffuse.blue;
 	setting->vertex10Diffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex10Diffuse.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex10Diffuse.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex10Diffuse.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex10Diffuse.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex10Diffuse.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex10Diffuse.blue;
 	setting->vertex11Diffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex11Diffuse.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex11Diffuse.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_vertex11Diffuse.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex11Diffuse.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex11Diffuse.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_vertex11Diffuse.blue;
 	setting->waterDiffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterDiffuseColor.alpha << 24) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterDiffuseColor.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterDiffuseColor.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_waterDiffuseColor.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterDiffuseColor.alpha << 24) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterDiffuseColor.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterDiffuseColor.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_waterDiffuseColor.blue;
 	setting->transparentWaterDiffuse =
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.alpha << 24) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.red << 16) |
-		(((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.green << 8) |
-		((Rva007A2830WaterSetting *)bfmeObjDAB)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.blue;
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.alpha << 24) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.red << 16) |
+		(((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.green << 8) |
+		((Rva007A2830WaterSetting *)WaterSettings)[(unsigned int)timeOfDay].m_transparentWaterDiffuse.blue;
 }
