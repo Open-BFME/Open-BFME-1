@@ -29,7 +29,7 @@ class SkyboxTextureSet
 {
 public:
 	SkyboxTextureSet();
-	virtual ~SkyboxTextureSet() {}
+	virtual ~SkyboxTextureSet();
 
 	static const FieldParse m_fieldParseTable[];
 

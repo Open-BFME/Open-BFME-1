@@ -321,7 +321,8 @@ static void gameTooltip(GameWindow *window,
 		}
 		if (slot && slot->isHuman())
 		{
-			tmp.format(TheGameText->fetch("TOOLTIP:GameInfoPlayer"), slot->getName().str(), slot->getWins(), slot->getLosses());
+			// Retail's getLosses body is a direct load from m_losses at this+0x5c.
+			tmp.format(TheGameText->fetch("TOOLTIP:GameInfoPlayer"), slot->getName().str(), slot->getWins(), *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(slot) + 0x5c));
 			tooltip.concat(tmp);
 			++numPlayers;
 		}

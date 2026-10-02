@@ -52,7 +52,7 @@ public:
  char gap2[0x10];bool didDisconnect;char gap3[3];
  bool isHuman()const;
  bool isAI()const;
- bool disconnected()const{return isHuman()&&didDisconnect;}
+ bool disconnected()const;
  int getTeamNumber()const{return team;}
 };
 extern void j_00016dd8();
@@ -116,7 +116,7 @@ AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket(bool forceDisco
    ++numHumans;
    if(TheVictoryConditions->hasAchievedVictory(p))winningTeam=getSlot(i)->getTeamNumber();
    GameSlot*slot=getSlot(i);
-   if(!slot->disconnected()){
+   if(!(slot->isHuman()&&slot->didDisconnect)){
     if(slot->getTeamNumber()!=lastTeamAtGameEnd||numTeamsAtGameEnd==0){lastTeamAtGameEnd=slot->getTeamNumber();++numTeamsAtGameEnd;}
    }
   }else if(slots[i].isAI())++numAIs;
@@ -139,7 +139,7 @@ AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket(bool forceDisco
    AsciiString authToken=((Rva006380C0StringOwner*)slot)->value();
    AsciiString playerName=slot->isHuman()?((Rva00505D10StringOwner*)slot)->value():"AIPlayer";
    int gsPlayerID=slot->getProfileID();
-   bool disconnected=slot->disconnected();
+   bool disconnected=slot->isHuman()&&slot->didDisconnect;
    AsciiString result="loss";
    AsciiString side="USA";
    if(forceDisconnect)result="discon";

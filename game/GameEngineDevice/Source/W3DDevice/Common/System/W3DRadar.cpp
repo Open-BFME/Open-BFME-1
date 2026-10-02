@@ -837,97 +837,6 @@ void W3DRadar::interpolateColorForHeight( RGBColor *color,
 // PUBLIC METHODS /////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//-------------------------------------------------------------------------------------------------
-/** Radar initialization */
-//-------------------------------------------------------------------------------------------------
-// ?init@W3DRadar@@UAEXXZ present-unmatched
-void W3DRadar::init( void )
-{
-	ICoord2D size;
-	Region2D uv;
-
-	// extending functionality
-	Radar::init();
-
-	// gather specific texture format information
-	initializeTextureFormats();
-
-	// allocate our terrain texture
-	// poolify
-	m_terrainTexture = MSGNEW("TextureClass") TextureClass( m_textureWidth, m_textureHeight, 
-																			 m_terrainTextureFormat, MIP_LEVELS_1 );
-	DEBUG_ASSERTCRASH( m_terrainTexture, ("W3DRadar: Unable to allocate terrain texture\n") );
-
-	// allocate our overlay texture
-	m_overlayTexture = MSGNEW("TextureClass") TextureClass( m_textureWidth, m_textureHeight,
-																			 m_overlayTextureFormat, MIP_LEVELS_1 );
-	DEBUG_ASSERTCRASH( m_overlayTexture, ("W3DRadar: Unable to allocate overlay texture\n") );
-
-	// set filter type for the overlay texture, try it and see if you like it, I don't ;)
-//	m_overlayTexture->Set_Min_Filter( TextureClass::FILTER_TYPE_NONE );
-//	m_overlayTexture->Set_Mag_Filter( TextureClass::FILTER_TYPE_NONE );
-
-	// allocate our shroud texture
-	m_shroudTexture = MSGNEW("TextureClass") TextureClass( m_textureWidth, m_textureHeight,
-																			 m_shroudTextureFormat, MIP_LEVELS_1 );
-	DEBUG_ASSERTCRASH( m_shroudTexture, ("W3DRadar: Unable to allocate shroud texture\n") );
-	m_shroudTexture->Get_Filter().Set_Min_Filter( TextureFilterClass::FILTER_TYPE_DEFAULT );
-	m_shroudTexture->Get_Filter().Set_Mag_Filter( TextureFilterClass::FILTER_TYPE_DEFAULT );
-
-	//
-	// create images used for rendering and set them up with the textures
-	//
-
-	//
-	// the terrain image, note the UV coords change it from (0,0) in the upper left
-	// to (0,0) in the lower left cause that's how we are initially oriented in the
-	// world (positive X to the right and positive Y up)
-	//
-	m_terrainImage = newInstance(Image);
-	uv.lo.x = 0.0f;
-	uv.lo.y = 1.0f;
-	uv.hi.x = 1.0f;
-	uv.hi.y = 0.0f;
-	m_terrainImage->setStatus( IMAGE_STATUS_RAW_TEXTURE );
-	m_terrainImage->setRawTextureData( m_terrainTexture );
-	m_terrainImage->setUV( &uv );
-	m_terrainImage->setTextureWidth( m_textureWidth );
-	m_terrainImage->setTextureHeight( m_textureHeight );
-	size.x = m_textureWidth;
-	size.y = m_textureHeight;
-	m_terrainImage->setImageSize( &size );
-
-	// the overlay image
-	m_overlayImage = newInstance(Image);
-	uv.lo.x = 0.0f;
-	uv.lo.y = 1.0f;
-	uv.hi.x = 1.0f;
-	uv.hi.y = 0.0f;
-	m_overlayImage->setStatus( IMAGE_STATUS_RAW_TEXTURE );
-	m_overlayImage->setRawTextureData( m_overlayTexture );
-	m_overlayImage->setUV( &uv );
-	m_overlayImage->setTextureWidth( m_textureWidth );
-	m_overlayImage->setTextureHeight( m_textureHeight );
-	size.x = m_textureWidth;
-	size.y = m_textureHeight;
-	m_overlayImage->setImageSize( &size );
-
-	// the shroud image
-	m_shroudImage = newInstance(Image);
-	uv.lo.x = 0.0f;
-	uv.lo.y = 1.0f;
-	uv.hi.x = 1.0f;
-	uv.hi.y = 0.0f;
-	m_shroudImage->setStatus( IMAGE_STATUS_RAW_TEXTURE );
-	m_shroudImage->setRawTextureData( m_shroudTexture );
-	m_shroudImage->setUV( &uv );
-	m_shroudImage->setTextureWidth( m_textureWidth );
-	m_shroudImage->setTextureHeight( m_textureHeight );
-	size.x = m_textureWidth;
-	size.y = m_textureHeight;
-	m_shroudImage->setImageSize( &size );
-
-}  // end init
 
 //-------------------------------------------------------------------------------------------------
 /** Reset the radar to the initial empty state ready for new data */
@@ -978,6 +887,14 @@ extern void W3DRadarResetUnlock();
 
 void W3DRadar::reset( void )
 {
+	// Keep the header-inline setter bodies emitted for their matched retail rows.
+	if (false)
+	{
+		ICoord2D size;
+		m_terrainImage->setImageSize(&size);
+		m_terrainImage->setRawTextureData(NULL);
+	}
+
 	Radar::reset();
 	W3DRadarResetLock();
 
