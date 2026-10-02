@@ -1,11 +1,12 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class BfmeStrVUV
 {
 public:
 	BfmeStrVUV(const BfmeStrVUV &other);
-	~BfmeStrVUV() { bfmeClearVUV(); }
-	void bfmeClearVUV();
+	~BfmeStrVUV() { reinterpret_cast<AsciiString *>(this)->~AsciiString(); }
 
 	const char *bfmeTextVUV() const
 	{
