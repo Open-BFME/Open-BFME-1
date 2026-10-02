@@ -1,3 +1,13 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#define HEAP_ZERO_MEMORY 8
+extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
+extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
+extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
+#include "dx8wrapper.h"
+
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: the W3D texture-stage reset at 0x006C9270 (559 B no
 // arguments).  Stages 0 and 1 get the default colour/alpha operation states
@@ -90,11 +100,16 @@ struct Rva006C9270Device
 	virtual long __stdcall SetTextureStageState( unsigned int stage, unsigned int state, unsigned int value );
 };
 
-extern Rva006C9270Device *Rva01340534Device;
-extern unsigned int Rva01340594DX8Calls;
-extern unsigned int Rva01340568StageChanges;
-extern unsigned int Rva01340560TextureChanges;
-extern Rva006C9270Texture *Rva0133F478Textures[];
+// Header-declared storage shared with DX8Wrapper::Set_DX8_Texture:
+// DIR32 witnesses map Textures to VA 0x0133F478 and the counters to
+// 0x01340560/0x01340568. Preserve this retail device-slot layout view.
+struct Rva006C9270DX8Access : DX8Wrapper
+{
+ static Rva006C9270Texture **TextureSlots()
+ { return reinterpret_cast<Rva006C9270Texture **>(Textures); }
+ static void RecordStageChange() { ++texture_stage_state_changes; }
+ static void RecordTextureChange() { ++texture_changes; }
+};
 
 // TU-local layout view of the 0x012ED5C8 global, not the real header's body.
 struct Rva006C9270GlobalData
@@ -108,38 +123,33 @@ struct Rva006C9270GlobalData
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
-class DX8Wrapper
-{
-public:
-	static void Set_DX8_Texture_Stage_State_Body( unsigned int stage, unsigned long state, unsigned int value );
-	static void Set_DX8_Render_State( unsigned long state, unsigned int value );
-};
+
 
 static __forceinline void Rva006C9270DeviceStageState( unsigned int stage, unsigned int state, unsigned int value )
 {
-	Rva01340534Device->SetTextureStageState( stage, state, value );
-	Rva01340594DX8Calls++;
-	Rva01340568StageChanges++;
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState( stage, state, value );
+	number_of_DX8_calls++;
+	Rva006C9270DX8Access::RecordStageChange();
 }
 
 static __forceinline void Rva006C9270SetTexture( unsigned int stage, Rva006C9270Texture *texture )
 {
 	if( stage >= 8 )
 	{
-		Rva01340534Device->SetTexture( stage, texture );
-		Rva01340594DX8Calls++;
+		reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture( stage, texture );
+		number_of_DX8_calls++;
 		return;
 	}
-	if( Rva0133F478Textures[ stage ] == texture )
+	if( Rva006C9270DX8Access::TextureSlots()[ stage ] == texture )
 		return;
-	if( Rva0133F478Textures[ stage ] )
-		Rva0133F478Textures[ stage ]->Release();
-	Rva0133F478Textures[ stage ] = texture;
+	if( Rva006C9270DX8Access::TextureSlots()[ stage ] )
+		Rva006C9270DX8Access::TextureSlots()[ stage ]->Release();
+	Rva006C9270DX8Access::TextureSlots()[ stage ] = texture;
 	if( texture )
 		texture->AddRef();
-	Rva01340534Device->SetTexture( stage, texture );
-	Rva01340594DX8Calls++;
-	Rva01340560TextureChanges++;
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture( stage, texture );
+	number_of_DX8_calls++;
+	Rva006C9270DX8Access::RecordTextureChange();
 }
 
 // ?Rva006C9270ResetTextureStages@@YAXXZ
