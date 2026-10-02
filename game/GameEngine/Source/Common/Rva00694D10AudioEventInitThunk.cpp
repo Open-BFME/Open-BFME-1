@@ -1,4 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/turretai /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#include "PreRTS.h"
+#include "Common/AudioEventRTS.h"
 //
 // Address-derived body: retail 0x00694D10, size 27. Ghidra names this only as
 // a dump; the real name is not proven. Bytes decode to a small "init" method
@@ -19,14 +23,14 @@ struct Rva00694D10Fields
 	int m_bfmeZero;					///< +0x70
 	bool m_bfmeFlag;					///< +0x74
 
-	void bfmeCopyAudioEvent( const void *event );	///< thiscall(this, event); pinned to 0x00047B27 (AudioEventRTS copy ctor ILT)
 	Rva00694D10Fields *bfmeInit( const void *event );
 };
 
 // ?bfmeInit@Rva00694D10Fields@@QAEPAU1@PBX@Z
 Rva00694D10Fields *Rva00694D10Fields::bfmeInit( const void *event )
 {
-	bfmeCopyAudioEvent( event );
+	__assume(this != 0);
+	::new ((void *)this) AudioEventRTS(*static_cast<const AudioEventRTS *>(event));
 	m_bfmeZero = 0;
 	m_bfmeFlag = false;
 	return this;

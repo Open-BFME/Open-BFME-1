@@ -5,10 +5,11 @@
 extern "C" unsigned char *__identifier("??_7Rva011051ECSkirmishField@@6B@")[];
 #define g_bfmeRva011051ECVt __identifier("??_7Rva011051ECSkirmishField@@6B@")
 
+extern "C" void __identifier("?j_00021ffd@@YAXXZ")(void);
+
 class BfmeThingTC
 {
 public:
-	void bfmeBaseTC();
 	BfmeThingTC *bfmeInitTC(void *what);
 	void *m_bfmeVft;
 	unsigned char m_bfmeGap[8];
@@ -17,7 +18,7 @@ public:
 
 BfmeThingTC *BfmeThingTC::bfmeInitTC(void *what)
 {
-	bfmeBaseTC();
+	__identifier("?j_00021ffd@@YAXXZ")();
 	m_bfmeWhat = what;
 	m_bfmeVft = g_bfmeRva011051ECVt;
 	return this;

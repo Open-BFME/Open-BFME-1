@@ -10,11 +10,11 @@ public:
 	int m_bfmeVal;
 };
 
-void bfmeNotifyDDE();
+extern "C" void __identifier("?j_0000adfd@@YAXXZ")(void);
 
 int BfmeThingDDE::bfmeGoDDE()
 {
 	if (m_bfmeFlag && m_bfmeSub != 0)
-		bfmeNotifyDDE();
+		__identifier("?j_0000adfd@@YAXXZ")();
 	return m_bfmeVal;
 }
