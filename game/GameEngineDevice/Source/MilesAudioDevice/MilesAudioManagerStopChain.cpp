@@ -94,7 +94,16 @@ class AsciiString : public StringBase<char>
 };
 
 extern const AsciiString Rva01336E50EmptyString;
-extern float g_Va0112E8B0;
+// Retail VA 0x0112E8B0 is the IEEE binary32 +infinity bits 0x7F800000.
+// VC7.1 cannot spell this float with a literal. Its supported union-punning
+// behavior lets consumers load the float view of a statically initialized
+// four-byte object; both TUs declare the same object type, with no alias.
+union Rva0112E8B0Value
+{
+    unsigned int bits;
+    float value;
+};
+extern const Rva0112E8B0Value g_Va0112E8B0;
 // Retail VA 0x0111BB98: bytes 55 55 05 42. The fcomp dword in
 // RVA 0x006ABDA0 + 0xF9 proves this four-byte delay threshold.
 float g_bfmeElapsedScale = 33.333332061767578125f;
@@ -594,7 +603,7 @@ void MilesAudioManager::rva006AE250(PlayingAudioRef *playing)
 	if ((*playing)->m_audioEventRTS->hasMoreLoops())
 	{
 		(*playing)->m_audioEventRTS->advanceNextPlayPortion();
-		(*playing)->m_audioEventRTS->rva000B2860(34.3333321f, g_Va0112E8B0);
+		(*playing)->m_audioEventRTS->rva000B2860(34.3333321f, g_Va0112E8B0.value);
 		(*playing)->m_audioEventRTS->m_44 = true;
 		rva006ABDA0(playing);
 	}

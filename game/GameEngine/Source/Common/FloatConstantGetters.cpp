@@ -18,12 +18,11 @@
 // here: at these settings MSVC loads even 0.0f and 1.0f from the pool, which is
 // what retail does too.
 //
-// The remaining 4 are spelled as external globals instead.  Two land in .data,
-// which a pooled literal never does, so they are mutable globals.  The other
-// two land in .rdata on 7fa00000 and 7f800000 -- a quiet NaN and positive
-// infinity -- which are constants no C++ float literal can spell; declaring
-// them as externals claims only what the bytes show, that the load comes from a
-// fixed address, and the patcher fills the address from retail either way.
+// The remaining four loads use fixed data objects. Two addresses are in
+// .data; two are .rdata IEEE values 7FA00000 (NaN) and 7F800000 (infinity)
+// that VC7.1 cannot spell with float literals. The infinity object below
+// uses an explicitly typed union and a verified static integer initializer.
+// The other objects remain external declarations at their retail addresses.
 //
 // 0x0113BD7C is not an anonymous global: it is retail's
 // RenderObjClass::AT_MIN_LOD (FLT_MAX, defined in rendobj.cpp), and
@@ -35,7 +34,16 @@
 #include "rendobj.h"
 
 extern float g_Va0112E8AC;
-extern float g_Va0112E8B0;
+// Retail VA 0x0112E8B0 is the IEEE binary32 +infinity bits 0x7F800000.
+// VC7.1 cannot spell this float with a literal. Its supported union-punning
+// behavior lets consumers load the float view of a statically initialized
+// four-byte object; both TUs declare the same object type, with no alias.
+union Rva0112E8B0Value
+{
+    unsigned int bits;
+    float value;
+};
+extern const Rva0112E8B0Value g_Va0112E8B0 = { 0x7F800000u };
 extern float g_Va0113BD80;
 extern float g_Va01307200;
 extern float g_Va01340574;
@@ -92,7 +100,7 @@ float Rva0045C070GetFloat( void )
 
 float Rva00694C80GetFloat( void )
 {
-	return g_Va0112E8B0;
+	return g_Va0112E8B0.value;
 }
 
 float Rva006CF590GetFloat( void )

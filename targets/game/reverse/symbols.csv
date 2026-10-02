@@ -81383,7 +81383,6 @@ name,address,notes
 ?g_Rva01088AF4EmptyWideString@@3QBGB,0x01088AF4,empty wide literal the AptMapPreview constructor at 0x00520670 pushes four times; retail .rdata holds four zero bytes there ahead of L"UserDataLeafName" at 0x01088AF8; twin of ?g_Rva0107301CEmptyString@@3QBDB
 ?g_Rva0109B558StateSecondaryVTable@@3HA,0x0109B558,Direct retail shared secondary state table at VA 0x0109B558 written at this+0x24 by Inner/Outer/Attack; address-qualified identity distinct from primary Inner 0x0109B560
 ?g_Rva012F340C@@3PCVDrawable@@C,0x012F340C,Address-derived drawable selection cache read at switchToContext0049E780+4D and written at+72; full1254B real C++ body witnesses data VA
-?g_Va0112E8B0@@3MA,0x0112E8B0,float global loaded by 0x006AE250
 ?g_Va012F8064@@3HA,0x012F8064,pin stale-stamp dispatcher global
 ?g_Va01336E50@@3V?@D@@A,0x01336E50,AsciiString::TheEmptyString copied by 0x006AEE00
 ?g_Va013385F8@@3EA,0x013385F8,Neutral Apt lookup key; absolute data VA from target899C20 operand+0C
