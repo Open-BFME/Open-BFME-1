@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
+// stlport
 //
 // Open-BFME5: the list-owning constructor at retail 0x0014C7A0, 137 bytes.
 //
@@ -7,15 +8,7 @@
 // the receiver ahead of the pushed argument, the same shape as the landed
 // constructor at 0x0014ADC0.
 
-namespace _STL {
-
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int n);
-};
-
-}
+#include <memory>
 
 class AsciiStringWF
 {
@@ -45,7 +38,8 @@ public:
 	{
 		m_bfmeNode = 0;
 
-		BfmeNodeWF *node = (BfmeNodeWF *)_STL::__new_alloc::allocate(0x10);
+		// Retail 0014C7ED calls the pool helper 0082E540 with 16 bytes.
+		BfmeNodeWF *node = (BfmeNodeWF *)_STL::__node_alloc<true, 0>::allocate(0x10);
 
 		node->m_bfmeNext = node;
 		node->m_bfmePrev = node;
