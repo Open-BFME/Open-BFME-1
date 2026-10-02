@@ -8,7 +8,6 @@ template <class T>
 class StringBase
 {
 public:
-	StringBase(const StringBase<T> &other);
 	~StringBase(void);
 	void set(const StringBase<T> &other);
 	int compareNoCase(const StringBase<T> &other) const;
@@ -19,8 +18,10 @@ public:
 	}
 
 	private:
+	StringBase(const StringBase<T> &other);
 	void releaseBuffer(void);
 	friend class AsciiString;
+	friend struct Q3SortElem4;
 
 	T *m_data;
 };

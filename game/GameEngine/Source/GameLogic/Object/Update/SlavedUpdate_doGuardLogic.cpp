@@ -20,7 +20,7 @@ struct Coord3D
 };
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
-Real bfmeCosVNB(Real value);
+Real Cos(Real value);
 Real bfmeSinVNB(Real value);
 
 enum WeaponSlotType
@@ -125,7 +125,7 @@ void SlavedUpdate::doGuardLogic(Coord3D *pinnedPosition)
             0x1a7);
 
         m_guardPointOffset.zero();
-        m_guardPointOffset.x += bfmeCosVNB(randomDirection) * data->m_guardWanderRange;
+        m_guardPointOffset.x += Cos(randomDirection) * data->m_guardWanderRange;
         m_guardPointOffset.y += bfmeSinVNB(randomDirection) * data->m_guardWanderRange;
 
         pinnedPosition->x += m_guardPointOffset.x;

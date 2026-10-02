@@ -19,10 +19,15 @@
 
 typedef __int64 FeslInt64;
 
+class W3DVideoBuffer
+{
+public:
+	virtual bool valid( void );
+};
+
 class Rva007E8810Message
 {
 public:
-	bool hasError( void );                                            // 0x007E88A0
 	int getError( void );                                             // 0x007E88B0
 
 	char m_head[ 0x28 ];
@@ -114,7 +119,7 @@ void Rva007F65E0Owner::handleGameLobbyReply( Rva007E8810Message *msg, int flag )
 	bool done = false;
 	int gid = game.m_gid;
 	int lid = game.m_lid;
-	if( msg->hasError() )
+	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
 		m_listener->notify( lid, gid, msg->getError() );
 	if( Rva00802A90Owner *lobby = findGameLobby( lid ) )
 	{

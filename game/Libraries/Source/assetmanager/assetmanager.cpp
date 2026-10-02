@@ -1,11 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Retail 0x009EBEC0: return a counted AssetRegistry lookup by value.
 
-class CountedAsset
-{
-public:
-	void Release_Ref();
-};
+#include "../WWVegas/WW3D2/texture.h"
 
 class AssetReference
 {
@@ -27,7 +23,7 @@ public:
 	}
 	AssetReference &operator=( const AssetReference &that )
 	{
-		CountedAsset *object = that.m_object;
+		TextureBaseClass *object = that.m_object;
 		if ( object )
 		{
 			++*(unsigned short *)((char *)object + 4);
@@ -41,7 +37,7 @@ public:
 	}
 
 private:
-	CountedAsset *m_object;
+	TextureBaseClass *m_object;
 };
 
 class AssetRegistry
