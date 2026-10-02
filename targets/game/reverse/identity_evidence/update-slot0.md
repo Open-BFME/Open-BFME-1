@@ -190,3 +190,29 @@ address-kept state view and its field spellings; this correction claims no
 new field identities. A TU-scoped declaration describes the incoming update
 interface receiver, not the complete object's layout. Include the surviving
 UpdateModule header for its actual return type rather than inventing an enum.
+
+## ShareExperienceBehavior::update (002058F0, 72 bytes)
+
+In addition to the literal/slot proof above, the registered module literal
+`ShareExperienceBehavior` at `00C904BC`, registration `0012E56B`, and factory
+`00116BF0` identify the owner. The factory call at `00116C2B` uses ILT
+`0001C3FF` -> constructor `00205740`. Its final +0x10 store at `002057AD`
+installs table `00CA60A8`, and the sole absolute occurrence of slot-zero
+stub VA `00415F0F` is that table entry. This is a distinct concrete override,
+not a shared inherited body. Both WorldBuilder labels independently give the
+same class and method spelling at the aligned slot (see the table above).
+
+The 72-byte retail function conditionally emits a diagnostic carrying its
+own `ShareExperienceBehavior::update` label, then returns 3fffffff. Its RET
+at `00205937` is followed by INT3. It does not consume arguments or use the
+incoming receiver; the old free-function reconstruction's byte match could
+therefore not distinguish its calling convention. The interface supplies
+public virtual non-const `UpdateSleepTime update()`, mangled
+`?update@ShareExperienceBehavior@@UAE?AW4UpdateSleepTime@@XZ`.
+
+Keep the existing diagnostic interface views and literal. Use the named
+callees printed by callees.py: `_bfme_debugReportingEnabled` at `008896D0`
+and `_bfme_debugRecordCallsite(int)` at `008896A0`. These are already matched;
+no helper pin is added. Move only this method from BfmeConv1362.cpp into the
+owner's Behavior TU; other functions still need that Common file and its
+local diagnostic declarations.
