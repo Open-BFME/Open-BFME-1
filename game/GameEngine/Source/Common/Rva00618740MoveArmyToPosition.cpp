@@ -58,11 +58,18 @@ static inline BfmeStateDF *localGlo012F7048(void)
 
 struct BfmeSubENE;
 
+// The type-6 helper this body calls is already matched at RVA 0x0008AC10 as
+// ?bfmeGoENE@BfmeThingENE@@QAEPAUBfmeSubENE@@PAX@Z; declare it under that
+// owner so the call resolves at link time.
+struct BfmeThingENE
+{
+	BfmeSubENE *bfmeGoENE(void *opaqueBits);
+};
+
 class GameMessage
 {
 public:
 	virtual ~GameMessage();
-	BfmeSubENE *rva0008ac10(void *opaqueBits);
 	void appendLocationArgument(const Coord3D &arg);
 
 private:
@@ -121,7 +128,7 @@ Bool Rva00618600Poly::rva00618740(UnsignedInt source)
 	Coord3D location;
 	localGlo012F7048()->buildFramePoint(reinterpret_cast<void *>(sourceArg), &location);
 	GameMessage *message = TheMessageStream->appendMessage(1103);
-	message->rva0008ac10(m_source);
+	reinterpret_cast<BfmeThingENE *>(message)->bfmeGoENE(m_source);
 	message->appendLocationArgument(location);
 	return true;
 }
