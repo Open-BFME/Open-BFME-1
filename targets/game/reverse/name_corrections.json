@@ -14258,5 +14258,25 @@
   "after_sha256": "7fa31b2a2f2184b1cc5931a8a41d5d6829080a107daca1a9e25f1ed8b307fb8a",
   "evidence": "targets/game/reverse/identity_evidence/rva003c22e0.md",
   "reason": "False pairing during bank removal: frameE was an unused declaration with no definition or RVA claim; the bank already defined this exact body as rva003c22e0. The matched caller names only ILT 0001D688. No established definition was renamed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007897d0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00789900Destructor.cpp",
+  "old_name": "BaseSentinel007897D0",
+  "new_name": "Rva00789740View",
+  "before_sha256": "254a236f7e4796857131a9baf7386e5d738bddb5dd0d3651cbb1381d9f2d8945",
+  "after_sha256": "7cc939a418c968c21d064d64ddf52512cbf555bb8117982cc06be73a4d50bdc2",
+  "evidence": "targets/game/reverse/identity_evidence/rva007897d0.md",
+  "reason": "False pairing: the old single sentinel corresponds to the existing VirtualMinusOneConstructorThunk binding, whereas the new view models the independently decoded 00789740 string-plus-sentinel cleanup. The added view is not a renaming of the old sentinel."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007897d0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00789900Destructor.cpp",
+  "old_name": "Owner007897D0",
+  "new_name": "Rva00789900Init",
+  "before_sha256": "254a236f7e4796857131a9baf7386e5d738bddb5dd0d3651cbb1381d9f2d8945",
+  "after_sha256": "7cc939a418c968c21d064d64ddf52512cbf555bb8117982cc06be73a4d50bdc2",
+  "evidence": "targets/game/reverse/identity_evidence/rva007897d0.md",
+  "reason": "Reuse the existing address-derived constructor owner, independently established by shared vtable 01126CCC and its scalar-deleting route. Both names retain an address; no descriptive EA identity is removed."
  }
 ]
