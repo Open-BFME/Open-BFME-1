@@ -1,5 +1,14 @@
 // Open-BFME5 conversions.
 
+// Keep the retail ILT entry points, using the same member-pointer call form
+// as the other matched callers. Their routes are, respectively:
+// Object::getControllingPlayer, GameLogic::findObjectByID,
+// PlayerList::getEachPlayerFromMask, and ScriptEngine::unidentified_0034DB40.
+extern void j_00020824(void);
+extern void j_0001f253(void);
+extern void j_0002ee60(void);
+extern void j_000230b5(void);
+
 class BfmeR1094;
 
 struct BfmeW1094
@@ -37,20 +46,14 @@ struct BfmeE1094
 
 class BfmeK1094
 {
-public:
-	BfmeR1094 *bfmeCur1094(void);
 };
 
 class BfmeB1094
 {
-public:
-	BfmeK1094 *bfmeFind1094(int a);
 };
 
 class BfmeD1094
 {
-public:
-	BfmeR1094 *bfmeLook1094(short *h);
 };
 
 class BfmeP1094
@@ -83,7 +86,6 @@ public:
 	virtual void bfmeSlot1094P_24(void);
 	virtual void bfmeSlot1094P_25(void);
 	virtual BfmeE1094 * bfmeSlot1094P_26(int a);
-	int bfmeNext1094(int a);
 };
 
 class GameLogic;
@@ -105,6 +107,15 @@ extern ScriptEngine *TheScriptEngine;
 
 char __stdcall bfmeGo1094A(int a, int b)
 {
+	typedef BfmeK1094 *(BfmeB1094::*FindObject)(int);
+	typedef BfmeR1094 *(BfmeK1094::*ControllingPlayer)(void) const;
+	typedef BfmeR1094 *(BfmeD1094::*EachPlayer)(short *);
+	typedef int (BfmeP1094::*PlayerMask)(int);
+	union { void (*raw)(void); FindObject member; } findObject = { j_0001f253 };
+	union { void (*raw)(void); ControllingPlayer member; } controllingPlayer = { j_00020824 };
+	union { void (*raw)(void); EachPlayer member; } eachPlayer = { j_0002ee60 };
+	union { void (*raw)(void); PlayerMask member; } playerMask = { j_000230b5 };
+
 	BfmeE1094 *e = ((BfmeP1094 *)TheScriptEngine)->bfmeSlot1094P_26(a);
 	BfmeW1094 *w;
 	BfmeK1094 *k;
@@ -116,14 +127,14 @@ char __stdcall bfmeGo1094A(int a, int b)
 	w = e->m_bfme200->bfmeSlot1094F_15();
 	if (!w)
 		return 0;
-	k = ((BfmeB1094 *)TheGameLogic)->bfmeFind1094(w->m_bfme08);
+	k = (((BfmeB1094 *)TheGameLogic)->*findObject.member)(w->m_bfme08);
 	if (!k)
 		return 0;
-	a = ((BfmeP1094 *)TheScriptEngine)->bfmeNext1094(b);
+	a = (((BfmeP1094 *)TheScriptEngine)->*playerMask.member)(b);
 	while ((short)a) {
-		BfmeR1094 *r = ((BfmeD1094 *)ThePlayerList)->bfmeLook1094((short *)&a);
+		BfmeR1094 *r = (((BfmeD1094 *)ThePlayerList)->*eachPlayer.member)((short *)&a);
 
-		if (k->bfmeCur1094() == r)
+		if ((k->*controllingPlayer.member)() == r)
 			return 1;
 	}
 	return 0;

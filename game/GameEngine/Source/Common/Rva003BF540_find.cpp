@@ -40,18 +40,31 @@ public:
 class Gen_00609320
 {
 public:
-	unsigned char bfmeDisabled() const;
+	int bfmeDisabled() const;
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// VA 0x012F7048 is defined by LivingWorld.cpp with this pointee spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+// The ILTs at 0x0000EA7F and 0x0000B63B reach these ledger-owned members.
+class Rva003BD830Owner
+{
+public:
+	bool anyReady() const;
+};
+
+class Rva003BDEC0
+{
+public:
+	bool anyMatching( int mask );
+};
 
 class Rva003BF540
 {
 public:
 	Gen003BD7D0Node *find( int id );
 	bool test();
-	bool anyReady() const;
-	bool anyMatching( int mask );
 
 private:
 	char m_pad00[ 0x0C ];
@@ -85,11 +98,12 @@ bool Rva003BF540::test()
 	}
 	else
 	{
-		if( anyReady() )
+		if( reinterpret_cast<const Rva003BD830Owner *>( this )->anyReady() )
 			goto no;
-		if( g_bfmeStateDF->bfmeDisabled() )
+		if( static_cast<unsigned char>( reinterpret_cast<const Gen_00609320 *>(
+			g_rva012F7048LivingWorld )->bfmeDisabled() ) )
 			goto no;
-		if( anyMatching( 4 ) )
+		if( reinterpret_cast<Rva003BDEC0 *>( this )->anyMatching( 4 ) )
 			goto no;
 		return m_at78 ? false : true;
 no:
