@@ -2447,39 +2447,8 @@ Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
 // The matched addCommand dispatcher names its retail BFME body.
 
 
-Bool NetPacket::isRoomForWrapperMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetWrapperCommandMsg *cmdMsg = (NetWrapperCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedShort);
-	}
+// isRoomForWrapperMessage is defined in NetPacketCommandBodies.cpp.
 
-	++len; // 'D'
-	len += sizeof(UnsignedShort); // wrapped command ID
-	len += sizeof(UnsignedInt); // chunk number
-	len += sizeof(UnsignedInt); // number of chunks
-	len += sizeof(UnsignedInt); // total data length
-	len += sizeof(UnsignedInt); // data length of this chunk
-	len += sizeof(UnsignedInt); // offset of this chunk
-	len += cmdMsg->getDataLength(); // for the data of this chunk
-
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
 
 /**
  * Add a TimeOutGameStart  to the packet. Returns true if successful.
@@ -3076,27 +3045,8 @@ Bool NetPacket::isRoomForDisconnectPlayerMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room in the packet for this command.
  */
-Bool NetPacket::isRoomForDisconnectKeepAliveMessage(NetCommandRef *msg) {
-	Int len = 0;
-	NetDisconnectKeepAliveCommandMsg *cmdMsg = (NetDisconnectKeepAliveCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
+// isRoomForDisconnectKeepAliveMessage is defined in NetPacket_isRoomForKeepAlive.cpp.
 
-	++len; // For the 'D'
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 /**
  * Add a keep alive command to the packet. Returns true if successful.
@@ -3110,27 +3060,8 @@ Bool NetPacket::isRoomForDisconnectKeepAliveMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room in the packet for this command.
  */
-Bool NetPacket::isRoomForKeepAliveMessage(NetCommandRef *msg) {
-	Int len = 0;
-	NetKeepAliveCommandMsg *cmdMsg = (NetKeepAliveCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
+// isRoomForKeepAliveMessage is defined in NetPacket_isRoomForKeepAlive.cpp.
 
-	++len; // For the 'D'
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
 
 /**
  * Add a run ahead command to the packet. Returns true if successful.
