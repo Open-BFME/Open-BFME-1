@@ -3,7 +3,7 @@
 
 // Everything a Player knows about its rank and its sciences:
 //
-//   0x00036057  addScience               forward to the shim that owns the set
+//   0x000D5380  addScience               the science set add (other TU)
 //   0x000CBDC0  getRankLevelCap          how high this player may climb
 //   0x000D5640  setScienceAvailability   move a science between the two vectors
 //   0x000D7CA0  resetRank                put rank, points and sciences back
@@ -38,7 +38,8 @@
 // written out as the concrete type they were and the typedef is gone.
 //
 // addScience keeps its private access: the row mangles AAE, and moving it into
-// the public section would rename it out of existence.
+// the public section would rename it out of existence. It is declared here only
+// so that the definition lives with the rest of the science set.
 #include <limits.h>
 #include <vector>
 
@@ -153,14 +154,6 @@ public:
 	Int current(void);
 };
 
-// The owner of the science set addScience forwards to; nothing here identifies
-// it beyond the call shape, so it keeps its shim name.
-class PlayerAddScienceShim
-{
-public:
-	bool add(ScienceType science);
-};
-
 class Player;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
@@ -210,11 +203,13 @@ private:
 	int m_rankLevelMirror;					// this+0x6A0
 };
 
-// ?addScience@Player@@AAE_NW4ScienceType@@@Z
-bool Player::addScience(ScienceType science)
-{
-	return ((PlayerAddScienceShim *)this)->add(science);
-}
+// ?addScience@Player@@AAE_NW4ScienceType@@@Z is declared above and defined once,
+// by game/GameEngine/Source/Common/RTS/Player_addScience_bfme.cpp, which owns the
+// 438-byte body at retail 0x000D5380. The forwarding placeholder that used to sit
+// here duplicated that symbol non-COMDAT (LNK2005) and called a
+// PlayerAddScienceShim::add nothing defines, so it is gone: this TU references
+// addScience nowhere. The five-byte 0x00036057 ILT entry is
+// ?Rva00036057PlayerAddScienceThunk@@YAXXZ in PlayerAddScienceIncrementalThunk.cpp.
 
 // ?getRankLevelCap@Player@@QAEHXZ
 // Local living-world campaign uses min(Rva003BCC10::current, the rank count).
