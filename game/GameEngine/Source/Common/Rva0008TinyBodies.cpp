@@ -322,10 +322,6 @@ void d_00195450(void)
 {
 }
 
-// ?d_000a71f0@@YAXXZ
-void d_000a71f0(void)
-{
-}
 
 // ?d_00233c00@@YAXXZ
 void d_00233c00(void)

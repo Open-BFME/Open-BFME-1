@@ -1,8 +1,6 @@
 // Address-qualified identities for isolated carved one-byte RET bodies.
 // Their callers prove the boundaries but not stable semantic ownership.
 
-void rva000A71E0Noop() {}
-void rva000A7200Noop() {}
 void rva000A72B0Noop() {}
 void rva000A72D0Noop() {}
 void rva000A72E0Noop() {}

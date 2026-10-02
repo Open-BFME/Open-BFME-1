@@ -207,3 +207,32 @@ inferred from the empty bodies. The dedicated TU includes that header and
 forces its inline definitions to emit using qualified-call anchors. Replace
 the three address placeholders at unchanged one-byte extents and remove only
 their orphan standalone TUs. No new pin, member, or shared header is needed.
+
+
+## TerrainTypeCollection lifecycle overrides
+
+GameEngine::init allocates `0x0C` bytes at `000795E0`, calls ILT `000484AF`
+-> ctor `000A71C0` at `000795F7`, pushes VA `01076548` (TheTerrainTypes)
+at `0007960E`, and passes typed global VA `012ED640` at `0007961C` to
+registration ILT `000147EA` -> `00073490` at `00079621`. The ZH header
+Common/TerrainTypes.h declares `extern TerrainTypeCollection *TheTerrainTypes`;
+its GameEngine registration constructs exactly that class. Constructor
+`000A71C0` calls SubsystemInterface `009A1A30` at `000A71C3` and installs
+primary VA `01080EE0` at `000A71C8`, establishing the introducing owner.
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | Explicit ZH method |
+|---|---|---|---|---|
+| 1 | `00C80EE4` | `0002E672` | `000A71E0` | init |
+| 4 | `00C80EF0` | `00002649` | `000A71F0` | reset |
+| 5 | `00C80EF4` | `0001AD84` | `000A7200` | update |
+
+Each absolute stub VA occurs exactly once in a bytewise whole-image pointer
+scan, at the listed slot. All bodies are C3 then CC, proving their one-byte
+extents. Common slots 2/3 and the already-established lifecycle alignment
+agree with the census. The public section of ZH Common/TerrainTypes.h:225-227
+explicitly defines these empty overrides. They are virtual by inheritance,
+non-const, void, with no arguments, and therefore use
+`?init@TerrainTypeCollection@@UAEXXZ`, `?reset@TerrainTypeCollection@@UAEXXZ`,
+and `?update@TerrainTypeCollection@@UAEXXZ`. The new header-emission TU
+replaces only these three address placeholders; unrelated shared-TU bodies
+remain. No inferred data field or callee pin is introduced.
