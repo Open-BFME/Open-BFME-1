@@ -1,12 +1,14 @@
 // cl: /O2 /Ob0
 
+// Two narrow string heads plus a dword. Retail copies each string head through
+// the shared StringBase<char>::set body (0x00887C90) and then the dword; the
+// head is declared opaquely here so nothing but that proven member call is
+// assumed about it.
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
-public:
-	Rva0036CA00Str(const Rva0036CA00Str &other);
-
-private:
-	void *m_item;
+	int m_head;
 };
 
 class Rva0036CA00
@@ -20,8 +22,8 @@ public:
 };
 
 Rva0036CA00::Rva0036CA00(const Rva0036CA00 &other)
-	: m_00(other.m_00)
-	, m_04(other.m_04)
-	, m_08(other.m_08)
 {
+	reinterpret_cast<StringBase<char> *>(&m_00)->set(*reinterpret_cast<const StringBase<char> *>(&other.m_00));
+	reinterpret_cast<StringBase<char> *>(&m_04)->set(*reinterpret_cast<const StringBase<char> *>(&other.m_04));
+	m_08 = other.m_08;
 }
