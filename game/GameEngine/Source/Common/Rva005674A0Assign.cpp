@@ -1,37 +1,31 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 
-class Rva005672C0Map
-{
-public:
-	Rva005672C0Map &operator=(const Rva005672C0Map &other);
+#include <map>
+#include <list>
+#include "unicode_string.h"
 
-private:
-	int m_pad[3];
-};
+enum NameKeyType {};
 
-class Rva00630D00UStr
-{
-public:
-	Rva00630D00UStr &operator=(const Rva00630D00UStr &other);
+typedef _STL::pair<const NameKeyType, float> NameKeyFloatPair;
+typedef _STL::_Rb_tree<NameKeyType, NameKeyFloatPair,
+	_STL::_Select1st<NameKeyFloatPair>, _STL::less<NameKeyType>,
+	_STL::allocator<NameKeyFloatPair> > Rva005672C0Map;
+typedef _STL::list<UnicodeString> Rva005673A0Vec;
 
-private:
-	void *m_item;
-};
-
-class Rva005673A0Vec
-{
-public:
-	Rva005673A0Vec &operator=(const Rva005673A0Vec &other);
-
-private:
-	int m_pad[4];
-};
+// ILTs 0x00013403 and 0x0002099B reach the existing container assignments
+// at 0x005672C0 and 0x005673A0. Reference their owners without instantiating
+// another set of container methods in this TU.
+extern template class _STL::_Rb_tree<NameKeyType, NameKeyFloatPair,
+	_STL::_Select1st<NameKeyFloatPair>, _STL::less<NameKeyType>,
+	_STL::allocator<NameKeyFloatPair> >;
+extern template class _STL::list<UnicodeString>;
 
 class Rva005674A0
 {
 	int m_00;
 	Rva005672C0Map m_04;
-	Rva00630D00UStr m_10;
+	UnicodeString m_10;
 	Rva005673A0Vec m_14;
 
 public:
@@ -41,7 +35,8 @@ public:
 Rva005674A0 &Rva005674A0::operator=(const Rva005674A0 *other)
 {
 	m_04 = *(other ? &other->m_04 : 0);
-	m_10 = *(Rva00630D00UStr *)((char *)other + 0x10);
+	((StringBase<unsigned short> *)&m_10)->set(
+		*(const StringBase<unsigned short> *)((const char *)other + 0x10));
 	m_14 = *(Rva005673A0Vec *)((char *)other + 0x14);
 	return *this;
 }

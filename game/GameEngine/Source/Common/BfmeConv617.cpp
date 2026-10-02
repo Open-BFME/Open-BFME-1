@@ -1,3 +1,22 @@
+class DockUpdateInterface;
+#define OBJECT_TU_MEMBERS DockUpdateInterface *getDockUpdateInterface();
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
+class StateMachine
+{
+public:
+	Object *getGoalObject();
+};
+
+enum StateReturnType {};
+
+class AIInternalMoveToState
+{
+public:
+	virtual StateReturnType update();
+};
+
 class BfmeTwoCKE
 {
 public:
@@ -9,16 +28,9 @@ public:
 	virtual void bfmeRunCKE(void *value, void *buf);
 };
 
-class BfmeOneCKE
-{
-public:
-	BfmeTwoCKE *bfmeTwoCKE();
-};
-
 class BfmeSubCKE
 {
 public:
-	BfmeOneCKE *bfmeOneCKE();
 	unsigned char m_bfmeHead[0x10];
 	void *m_bfmeVal;
 };
@@ -26,7 +38,6 @@ public:
 class BfmeThingCKE
 {
 public:
-	int bfmeTailCKE();
 	int bfmeGoCKE();
 	unsigned char m_bfmeHead[0x1c];
 	BfmeSubCKE *m_bfmeSub;
@@ -36,12 +47,12 @@ public:
 
 int BfmeThingCKE::bfmeGoCKE()
 {
-	BfmeOneCKE *one = m_bfmeSub->bfmeOneCKE();
+	Object *one = ((StateMachine *)m_bfmeSub)->getGoalObject();
 	if (one == 0)
 		return -2;
-	BfmeTwoCKE *two = one->bfmeTwoCKE();
+	BfmeTwoCKE *two = (BfmeTwoCKE *)one->getDockUpdateInterface();
 	if (two == 0)
 		return -2;
 	two->bfmeRunCKE(m_bfmeSub->m_bfmeVal, m_bfmeBuf);
-	return bfmeTailCKE();
+	return ((AIInternalMoveToState *)this)->AIInternalMoveToState::update();
 }
