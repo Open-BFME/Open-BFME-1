@@ -5,7 +5,10 @@
 
 typedef bool Bool;
 
-extern "C" void *bfmeVft1050B[];
+// retail 0x01128450: the shadow resources' vftable. Retail links the
+// reference against the defining symbol, so spell it with __identifier
+// instead of a stand-in name that nothing defines.
+extern "C" void *__identifier("??_7Rva007B0400Owner@@6B@")[];
 
 class BfmeB1050
 {
@@ -56,7 +59,7 @@ Bool BfmeB1159::initialize(void)
 		initialized->m_bfme5c = 0;
 		initialized->m_bfme60 = 20.0f;
 		initialized->m_bfme64 = 0;
-		initialized->m_bfmeVfptr = bfmeVft1050B;
+		initialized->m_bfmeVfptr = __identifier("??_7Rva007B0400Owner@@6B@");
 	}
 	else
 	{
@@ -78,7 +81,7 @@ Bool BfmeB1159::initialize(void)
 		initialized->m_bfme5c = 0;
 		initialized->m_bfme60 = 20.0f;
 		initialized->m_bfme64 = 0;
-		initialized->m_bfmeVfptr = bfmeVft1050B;
+		initialized->m_bfmeVfptr = __identifier("??_7Rva007B0400Owner@@6B@");
 	}
 	else
 	{
