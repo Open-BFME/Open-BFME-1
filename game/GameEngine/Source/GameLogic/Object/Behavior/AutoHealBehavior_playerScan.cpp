@@ -24,7 +24,7 @@ public:
 class Thing
 {
 public:
-	Bool isAnyKindOf(const BitFlags<69> &mask) const;
+	Bool isAnyKindOf(const BitFlags<116> &mask) const;
 };
 
 class AIUpdateInterface
@@ -119,7 +119,7 @@ public:
 
 struct AutoHealPlayerScanHelper
 {
-	BitFlags<69> m_kindOfToTest;
+	BitFlags<116> m_kindOfToTest;
 	Object *m_theHealer;
 	ObjectPointerList *m_objectList;
 	Bool m_bfmeFlag20;

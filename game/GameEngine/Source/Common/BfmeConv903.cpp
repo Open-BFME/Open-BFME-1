@@ -12,9 +12,26 @@ public:
 	bool bfmeTestLB(BfmeThingLB *b);
 };
 
+// Retail spelling of the kind-of test called below (body at 0x00132AE0 via
+// the ILT at 0x0004250A, ledgered as
+// ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z). BfmeOwnerLB/BfmeThingLB
+// above stay spelled as they are: the ledger pins
+// ?bfmeGoLB@@YAHPAVBfmeOwnerLB@@PAUBfmeThingLB@@@Z on them, so renaming
+// either class would rename a defined function. The call passes the same
+// single pointer; only the callee name changes. No body is declared here.
+template <int N>
+class BitFlags;
+
+class Thing
+{
+public:
+	bool isAnyKindOf(const BitFlags<116> &mask) const;
+};
+
 int bfmeGoLB(BfmeOwnerLB *a, BfmeThingLB *b)
 {
-	if (a->bfmeTestLB(b)) {
+	if (reinterpret_cast<const Thing *>(a)->isAnyKindOf(
+		reinterpret_cast<const BitFlags<116> &>(*b))) {
 		b->m_bfmeFlag = 1;
 		return 0;
 	}

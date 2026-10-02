@@ -94,6 +94,14 @@ public:
 	virtual bool isGarrisonable();
 };
 
+// Forward of the retail kind-of mask the defining spelling names
+// (?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z, pinned via the ILT at
+// 0x0004250A onto the body at 0x00132AE0). The mask below is still built as
+// BfmeKindOfMask (identical stack construction); only its address is passed
+// on as the BitFlags<116> the ledger records. No body is declared here.
+template <int N>
+class BitFlags;
+
 // The five faction kinds isNonFactionStructure excludes, built on the stack as a
 // six-dword mask.
 class BfmeKindOfMask
@@ -132,6 +140,10 @@ class Thing
 {
 public:
 	const ThingTemplate *getTemplate() const;
+	// Retail spelling of the kind-of test (body at 0x00132AE0, called via the
+	// ILT at 0x0004250A); the argument is the BfmeKindOfMask temporary below,
+	// passed by address.
+	Bool isAnyKindOf(const BitFlags<116> &mask) const;
 
 protected:
 	virtual ~Thing();
@@ -214,8 +226,8 @@ Bool Object::isNonFactionStructure(void) const
 		tmplate = (const ThingTemplate *)tmplate->bfmeFinalOverride();
 	return (*reinterpret_cast<const unsigned char *>(&tmplate->m_kindOf[0])
 			& (1u << KINDOF_STRUCTURE_BIT)) != 0 &&
-		!reinterpret_cast<const BfmeKindOfTester *>(this)->isAnyKindOf(
-			BfmeKindOfMask(61, 62, 63, 64, 134));
+		!static_cast<const Thing *>(this)->isAnyKindOf(
+			reinterpret_cast<const BitFlags<116> &>(BfmeKindOfMask(61, 62, 63, 64, 134)));
 }
 
 // ?bfmeResetSafeOcclusionFrame@Object@@QAEXXZ

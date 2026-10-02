@@ -33,10 +33,20 @@ private:
 	std::bitset<192> m_bits;
 };
 
-class BfmeKindOfTester
+// Forward of the retail kind-of mask the defining spelling names
+// (?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z, pinned via the ILT at
+// 0x0004250A onto the body at 0x00132AE0). The mask below is still built as
+// BfmeKindOfMask (identical stack construction); only its address is passed
+// on as the BitFlags<116> the ledger records. No body is declared here.
+template <int N>
+class BitFlags;
+
+class Thing
 {
 public:
-	Bool isAnyKindOf(const BfmeKindOfMask &mask) const;
+	// Retail spelling of the kind-of test; the argument is the BfmeKindOfMask
+	// local below, passed by address.
+	Bool isAnyKindOf(const BitFlags<116> &mask) const;
 };
 
 class BfmeGroupAI
@@ -75,7 +85,8 @@ void AIGroup::add(Object *member)
 
 	BfmeKindOfMask validNonAIKindofs;
 	BfmeGroupAI *ai = member->getAI();
-	if (ai == 0 && !reinterpret_cast<const BfmeKindOfTester *>(member)->isAnyKindOf(validNonAIKindofs))
+	if (ai == 0 && !reinterpret_cast<const Thing *>(member)->isAnyKindOf(
+		reinterpret_cast<const BitFlags<116> &>(validNonAIKindofs)))
 		return;
 
 	m_memberList.push_back(member);
