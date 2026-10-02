@@ -1,4 +1,6 @@
-class BfmeSubCGE;
+// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Iinputs/reference/shims/sweep
+#include "../../../Libraries/Source/WWVegas/WW3D2/part_emt.h"
+
 class BfmeThingCGE
 {
 public:
@@ -16,17 +18,17 @@ public:
 	virtual void bfmeStepCGE();
 	int bfmeGoCGE();
 	unsigned char m_bfmeGap[0x10];
-	BfmeSubCGE *m_bfmeSub;
+	ParticleEmitterDefClass *m_bfmeSub;
 };
-
-int bfmeMakeCGE(BfmeSubCGE *sub);
 
 int BfmeThingCGE::bfmeGoCGE()
 {
 	if (!bfmeAskCGE())
 		bfmeStepCGE();
-	BfmeSubCGE *sub = m_bfmeSub;
-	if (sub == 0)
+	// Retail calls ParticleEmitterClass::Create_From_Definition (0x0097F5D0),
+	// the static member taking the definition by const reference.
+	ParticleEmitterDefClass *def = m_bfmeSub;
+	if (def == 0)
 		return 0;
-	return bfmeMakeCGE(sub);
+	return (int)ParticleEmitterClass::Create_From_Definition(*def);
 }
