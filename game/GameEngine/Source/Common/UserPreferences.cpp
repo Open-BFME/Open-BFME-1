@@ -1052,56 +1052,6 @@ LadderPreferences::~LadderPreferences()
 {
 }
 
-// ?loadProfile@LadderPreferences@@QAE_NH@Z present-unmatched
-Bool LadderPreferences::loadProfile( Int profileID )
-{
-	clear();
-	m_ladders.clear();
-	AsciiString userPrefFilename;
-	userPrefFilename.format("GeneralsOnline\\Ladders%d.ini", profileID);
-	Bool success = load(userPrefFilename);
-	if (!success)
-		return success;
-
-	// parse out our ladders
-	for (LadderPreferences::iterator it = begin(); it != end(); ++it)
-	{
-		LadderPref p;
-		AsciiString ladName = it->first;
-		AsciiString ladData = it->second;
-
-		DEBUG_LOG(("Looking at [%s] = [%s]\n", ladName.str(), ladData.str()));
-
-		const char *ptr = ladName.reverseFind(':');
-		DEBUG_ASSERTCRASH(ptr, ("Did not find ':' in ladder name - skipping"));
-		if (!ptr)
-			continue;
-
-		p.port = atoi( ptr + 1 );
-		for (Int i=0; i<strlen(ptr); ++i)
-		{
-			ladName.removeLastChar();
-		}
-		p.address = QuotedPrintableToAsciiString(ladName);
-
-		ptr = ladData.reverseFind(':');
-		DEBUG_ASSERTCRASH(ptr, ("Did not find ':' in ladder data - skipping"));
-		if (!ptr)
-			continue;
-
-		p.lastPlayDate = atoi( ptr + 1 );
-		for (i=0; i<strlen(ptr); ++i)
-		{
-			ladData.removeLastChar();
-		}
-		p.name = QuotedPrintableToUnicodeString(ladData);
-
-		m_ladders[p.lastPlayDate] = p;
-	}
-
-	return true;
-}
-
 // ?write@LadderPreferences@@UAE_NXZ present-unmatched
 bool LadderPreferences::write( void )
 {

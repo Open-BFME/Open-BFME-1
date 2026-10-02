@@ -29,13 +29,14 @@ private:
     StringBase() : m_data(0) {}
     StringBase(const StringBase<T> &source);
     StringBase(const T *source);
-    void set(const StringBase<T> &source);
     void releaseBuffer();
 
 protected:
     Header *m_data;
 
 public:
+    void set(const StringBase<T> &source);
+
     __forceinline const T *reverseFind(T c) const
     {
         const T *start = m_data ? &m_data->data[0] : (const T *)Rva006A16B0Empty;
