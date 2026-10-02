@@ -30,11 +30,17 @@ private:
 	Rva0048B0E0CriticalSection *m_section;
 };
 
+// ILT 0x0004B18C reaches the matched transition wait body at 0x0048A6A0.
+class Rva0048A6A0TransitionWait
+{
+public:
+	void waitForTransition(void);
+};
+
 class Rva0048B0E0TransitionHandler
 {
 public:
 	void update(void);
-	void waitForTransition(void);
 
 private:
 	unsigned char m_padding0[0x34];
@@ -49,7 +55,7 @@ void Rva0048B0E0TransitionHandler::update(void)
 	if (!m_updating)
 	{
 		m_updating = true;
-		waitForTransition();
+		((Rva0048A6A0TransitionWait *)this)->waitForTransition();
 		m_updating = false;
 	}
 }
