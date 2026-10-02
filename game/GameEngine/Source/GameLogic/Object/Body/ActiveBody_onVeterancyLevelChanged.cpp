@@ -162,9 +162,6 @@ extern InGameUI *TheInGameUI;
 
 class ControlBar
 {
-public:
-	void markUIDirty(void) { m_UIDirty = true; }
-
 private:
 	unsigned char m_unmodelled_000[0x24];
 	Bool m_UIDirty;						// +0x24
@@ -262,14 +259,14 @@ void ActiveBody::onVeterancyLevelChanged( VeterancyLevel oldLevel, VeterancyLeve
 			if( checkOwner == obj )
 			{
 				//Our selected object has been promoted!
-				TheControlBar->markUIDirty();
+				*reinterpret_cast<Bool *>(reinterpret_cast<char *>(TheControlBar) + 0x24) = true;
 			}
 			else
 			{
 				const Object *containedBy = obj->getContainedBy();
 				//But only if the contained by object is containing me!
 				if( containedBy && TheInGameUI->getSelectCount() == 1 && checkOwner == containedBy )
-					TheControlBar->markUIDirty();
+					*reinterpret_cast<Bool *>(reinterpret_cast<char *>(TheControlBar) + 0x24) = true;
 			}
 		}
 	}
