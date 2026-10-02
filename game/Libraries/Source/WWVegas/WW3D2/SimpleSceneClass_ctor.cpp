@@ -73,6 +73,8 @@ public:
     Vector3 FogColor;
     float FogStart;
     float FogEnd;
+private:
+    // Match scene.h: these hooks use private-virtual (EAEX) provider names.
     virtual void Customized_Render(RenderInfoClass &info) = 0;
     virtual void Pre_Render_Processing(RenderInfoClass &info);
     virtual void Post_Render_Processing(RenderInfoClass &info);
