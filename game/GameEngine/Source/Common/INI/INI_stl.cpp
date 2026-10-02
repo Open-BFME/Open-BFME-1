@@ -562,34 +562,16 @@ void INI::readLine( void )
 /** Parse real from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parsePositiveNonZeroReal@INI@@ present-unmatched
-void INI::parsePositiveNonZeroReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	*(Real *)store = scanReal(token);
-	if (*(Real *)store <= 0.0f)
-	{
-		DEBUG_CRASH(("invalid Real value %f -- expected > 0\n",*(Real*)store));
-		throw INI_INVALID_DATA;
-	}
+// The retail definition is owned by ini_parsers.cpp.
 
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a degree value (0 to 360) and store the radian value of that degree
 	* in a Real */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseAngleReal@INI@@ present-unmatched
-void INI::parseAngleReal( INI *ini, void * /*instance*/, 
-																			void *store, const void *userData )
-{
-	const char *token = ini->getNextToken();
+// The retail definition is owned by ini_parsers.cpp.
 
-	const Real RADS_PER_DEGREE = PI / 180.0f;
-	*(Real *)store = scanReal( token ) * RADS_PER_DEGREE;
-
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an angular velocity in degrees-per-sec and store the rads-per-frame value of that degree
@@ -877,14 +859,8 @@ void INI::parseMappedImage( INI *ini, void * /*instance*/, void *store, const vo
 	* to location 'store' as a number from 0.0 to 1.0 */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parsePercentToReal@INI@@ present-unmatched
-void INI::parsePercentToReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken(ini->getSepsPercent());
-	Real *theReal = (Real *)store;
-	*theReal = scanPercentToReal(token);
+// The retail definition is owned by ini_parsers.cpp.
 
-}  // end parsePercentToReal
 
 //-------------------------------------------------------------------------------------------------
 /** 'store' points to an 32 bit unsigned integer.  We will zero that integer, parse each token
