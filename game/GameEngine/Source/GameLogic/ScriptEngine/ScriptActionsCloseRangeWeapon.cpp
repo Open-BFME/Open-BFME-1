@@ -19,22 +19,13 @@ class Object;
 class Module;
 class Team;
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
 // Both lookups take the name by value through this wrapper.
 class BfmeAsciiStringArg
 {
 public:
 	BfmeAsciiStringArg(const AsciiString &that)
 	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
+		((AsciiString *)this)->AsciiString::AsciiString(that);
 	}
 
 	~BfmeAsciiStringArg();

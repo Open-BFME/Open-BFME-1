@@ -126,7 +126,10 @@ public:
 };
 
 void *Rva007F93E0( void *message, void *route, void *owner );
-char * __cdecl ji_009f70ba( char *dest, const char *src, unsigned count );
+// The landed 0x009F70BA import thunk is defined as a no-argument jump stub;
+// its caller supplies strncpy's three arguments on the stack.
+void __cdecl ji_009f70ba();
+typedef char *(__cdecl *Rva009F70BACopy)(char *dest, const char *src, unsigned count);
 
 void Rva007E8640Copy(char *dest, unsigned int capacity, const char *source);
 
@@ -142,7 +145,7 @@ private:
 
 void Rva00808900Owner::copy(char *source)
 {
-	ji_009f70ba(m_dest, source, 0x20);
+	reinterpret_cast<Rva009F70BACopy>(&ji_009f70ba)(m_dest, source, 0x20);
 }
 
 class Rva00808AC0Owner
@@ -157,7 +160,7 @@ private:
 
 void Rva00808AC0Owner::copy(char *source)
 {
-	ji_009f70ba(m_dest, source, 0x80);
+	reinterpret_cast<Rva009F70BACopy>(&ji_009f70ba)(m_dest, source, 0x80);
 }
 
 class Rva00808AF0Owner
@@ -190,7 +193,8 @@ void LanTheaterEmulator::notifyAddress( Rva00809500Entry *entry )
 	Rva00809500Sink *sink = reinterpret_cast< Rva00809010Finder * >( this )->find( entry );
 	message.m_1c = entry->m_length;
 	message.m_20 = (int)0xC0000000;
-	ji_009f70ba( message.m_10, entry->m_text, message.m_14 );
+	reinterpret_cast<Rva009F70BACopy>(&ji_009f70ba)(
+		message.m_10, entry->m_text, message.m_14 );
 	char address[ 0x20 ];
 	reinterpret_cast< Rva007E8760Addr * >( sink )->format( address, sizeof( address ) );
 	message.m_04 = sink->m_value04;
