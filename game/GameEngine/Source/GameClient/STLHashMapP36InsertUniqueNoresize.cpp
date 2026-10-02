@@ -10,6 +10,7 @@
 // exceptions and STLport's try around the construct is gone.
 
 typedef int Int;
+struct Gen_t_0042dd00_p12cd;
 
 namespace _STL
 {
@@ -38,6 +39,10 @@ struct pair
 
 	pair(const T1 &a, const T2 &b) : first(a), second(b) {}
 };
+
+template <>
+struct pair<const Int, ::Gen_t_0042dd00_p12cd>;
+typedef pair<const Int, ::Gen_t_0042dd00_p12cd> RetailConstructPair;
 
 template <class T>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
@@ -126,7 +131,8 @@ private:
 	{
 		_Node *n = (_Node *)vectorSmallAllocate(sizeof(_Node));
 		n->_M_next = 0;
-		_Construct(&n->_M_val, obj);
+		_Construct((RetailConstructPair *)&n->_M_val,
+			(const RetailConstructPair &)obj);
 		return n;
 	}
 
