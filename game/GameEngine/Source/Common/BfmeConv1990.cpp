@@ -1,8 +1,10 @@
-class BfmeReqEUG
+// The constructor/destructor ILTs at 0x0002E38E/0x0001658B route to
+// PSRequest's matched bodies at 0x0065AB40/0x000A5490.
+class PSRequest
 {
 public:
-	BfmeReqEUG();
-	~BfmeReqEUG();
+	PSRequest();
+	~PSRequest();
 
 	int m_bfmeKindEUG;
 	unsigned char m_bfmeBodyEUG[0x20c];
@@ -18,14 +20,14 @@ public:
 	virtual void bfmeSlot1EUG();
 	virtual void bfmeSlot2EUG();
 	virtual void bfmeSlot3EUG();
-	virtual void bfmeAddEUG(BfmeReqEUG *req);
+	virtual void bfmeAddEUG(PSRequest *req);
 };
 
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
 void bfmeRequestEUG()
 {
-	BfmeReqEUG req;
+	PSRequest req;
 
 	req.m_bfmeKindEUG = 10;
 

@@ -1,3 +1,4 @@
+// stlport
 // A vector destructor whose base folds in.
 //
 // Empty in source. The vector member releases its block by size, and the base
@@ -8,15 +9,13 @@
 // which has a destructor; the state never returns to -1 because the base needs
 // nothing unwound.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+#include <memory>
 
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
-	if (bytes > 0x80)
-		bfmeFreeScalar(block);
-	else
-		bfmeDeallocate(block, bytes);
+	// STLport's inline dispatch calls the matched operator delete (0x00881EB0)
+	// or __node_alloc<true, 0>::_M_deallocate (0x0082E5F0).
+	_STL::__node_alloc<true, 0>::deallocate(block, bytes);
 }
 
 class BfmeVecMemberY

@@ -4,21 +4,21 @@
 // The leading eight bytes are a plain by-reference struct copy; the flag
 // parameter lands last even though it is declared before the second string.
 
-class AsciiStringWI
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// Keep the entry point's existing parameter type while using the real
+// StringBase<char> copy constructor and releaseBuffer through AsciiString.
+class AsciiStringWI;
+
+class BfmeStrWI
 {
 public:
-	AsciiStringWI(const AsciiStringWI &other);
-	~AsciiStringWI(void);
+	BfmeStrWI(const AsciiStringWI &other)
+		: m_bfmeData(reinterpret_cast<const AsciiString &>(other)) {}
+	~BfmeStrWI(void) {}
 
 private:
-	char *m_bfmeData;
-};
-
-class BfmeStrWI : private AsciiStringWI
-{
-public:
-	BfmeStrWI(const AsciiStringWI &other) : AsciiStringWI(other) {}
-	~BfmeStrWI(void) {}
+	AsciiString m_bfmeData;
 };
 
 struct BfmePairWI
