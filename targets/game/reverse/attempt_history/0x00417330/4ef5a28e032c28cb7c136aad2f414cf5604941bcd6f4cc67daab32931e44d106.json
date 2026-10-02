@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4ef5a28e032c28cb7c136aad2f414cf5604941bcd6f4cc67daab32931e44d106",
+  "symbol": "?mangle@Rva00417330Drawable@@QBEXVRva00417330Holder@@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?mangle@Rva00417330Drawable@@QBEXVRva00417330Holder@@@Z\n// partial score=1.0 date=2026-10-02\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib\n#include \"Common/AsciiString.h\"\ninline AsciiString::~AsciiString() { ((StringBase<char>*)this)->StringBase<char>::~StringBase(); }\ntemplate<class T> inline void StringBase<T>::concat(const StringBase<T>& other) { concat(other.str(),other.getLength()); }\nextern \"C\" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *);\nextern void j_0001d002();\nclass Rva00417330AudioInfo {\npublic:\n virtual ~Rva00417330AudioInfo();\n long refs;\n AsciiString name;\n void override_00417330(const AsciiString& name) {\n  union { void (*raw)(); void (Rva00417330AudioInfo::*member)(const AsciiString&); } target;\n  target.raw = j_0001d002;\n  (this->*target.member)(name);\n }\n void release() { if(InterlockedDecrement(&refs)<=0) delete this; }\n};\nclass Rva00417330Holder {\npublic:\n Rva00417330AudioInfo *p;\n ~Rva00417330Holder() { if(p) p->release(); }\n};\nclass Rva00417330Drawable {\npublic:\n char pad[0x100]; unsigned id;\n unsigned getID() const { return id; }\n void mangle(Rva00417330Holder audio) const;\n};\nvoid Rva00417330Drawable::mangle(Rva00417330Holder audio) const {\n AsciiString name;\n name.format(AsciiString(\" CUSTOM %d \"),(int)getID());\n name.concat(audio.p->name);\n audio.p->override_00417330(name);\n}\n"
+}
