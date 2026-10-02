@@ -12,14 +12,18 @@ struct BfmeTripleZP
 class BfmeLocalZP
 {
 public:
-	BfmeLocalZP();
-
 	void *m_bfmeAZP;
 	void *m_bfmeBZP;
 	void *m_bfmeCZP;
 	void *m_bfmeDZP;
 	unsigned char m_bfmeTailZP[4];
 };
+
+// Retail calls this five-byte ILT before copying the three source pointers.
+// The thunk's ledger owner is address-derived; this typed fastcall pointer
+// preserves the constructor's this-in-ECX call sequence.
+extern "C" void __cdecl __identifier("?j_0000a628@@YAXXZ")();
+typedef void (__fastcall *BfmeLocalZPConstructorThunk)(BfmeLocalZP *self);
 
 int __cdecl rva000cbd40(void *first, void *second);
 
@@ -32,6 +36,8 @@ public:
 void *BfmeTail926C::bfmeMakeZP(BfmeTripleZP *source)
 {
 	BfmeLocalZP local;
+	((BfmeLocalZPConstructorThunk)&__identifier(
+		"?j_0000a628@@YAXXZ"))(&local);
 
 	local.m_bfmeAZP = source->m_bfmeAZP;
 	local.m_bfmeBZP = source->m_bfmeBZP;

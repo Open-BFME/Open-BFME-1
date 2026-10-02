@@ -8,9 +8,10 @@ extern "C" int __identifier("??_7Rva0059FB40TailDtor@@6B@");
 
 class BfmeBaseBC
 {
-public:
-	BfmeBaseBC(void);
 };
+
+extern "C" void __cdecl __identifier("?j_0001b522@@YAXXZ")();
+typedef void (__fastcall *BfmeBaseBCConstructorThunk)(BfmeBaseBC *self);
 
 class BfmeOwnBC : public BfmeBaseBC
 {
@@ -31,6 +32,8 @@ public:
 
 BfmeOwnBC::BfmeOwnBC(void)
 {
+	((BfmeBaseBCConstructorThunk)&__identifier(
+		"?j_0001b522@@YAXXZ"))(static_cast<BfmeBaseBC *>(this));
 	m_bfmeVfBC = &__identifier("??_7Rva0059FB40TailDtor@@6B@");
 	m_bfmeCBC = 0x1e;
 	m_bfmeBBC = 0;

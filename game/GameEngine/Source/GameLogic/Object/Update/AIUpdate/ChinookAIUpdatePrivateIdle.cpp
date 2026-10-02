@@ -22,9 +22,16 @@ struct ContainedItemsList
 
 class BfmeInnerRQ
 {
-public:
-	void bfmeSetRQ(int object, int commandSource);
 };
+
+extern "C" void __cdecl __identifier("?j_0000a5dd@@YAXXZ")();
+struct BfmeSetRQArguments
+{
+	int object;
+	int commandSource;
+};
+typedef void (__fastcall *BfmeSetRQThunk)(BfmeInnerRQ *self, int registerValue,
+	BfmeSetRQArguments arguments);
 
 #include "../../object.h"
 
@@ -78,7 +85,13 @@ void ChinookAIUpdate::privateIdle(CommandSourceType commandSource)
 		{
 			BfmeInnerRQ *aiCommand = reinterpret_cast<BfmeInnerRQ *>(
 				reinterpret_cast<unsigned char *>(rider->m_ai) + 0x20);
-			aiCommand->bfmeSetRQ(reinterpret_cast<int>(getOwningObject()), commandSource);
+			// ILT 0xA5DD routes to AICommandInterface::aiExit: this in ECX,
+			// then object and command source on the stack. The duplicate owner
+			// in EDX is volatile at that target and preserves the fastcall shape.
+			const int owner = reinterpret_cast<int>(getOwningObject());
+			BfmeSetRQArguments arguments = {owner, commandSource};
+			((BfmeSetRQThunk)&__identifier("?j_0000a5dd@@YAXXZ"))(
+				aiCommand, owner, arguments);
 		}
 	}
 }

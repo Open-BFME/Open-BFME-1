@@ -27,8 +27,12 @@ public:
 	virtual void slot10();
 	virtual void slot14();
 
-	BfmeY982 *bfmeConv982B();
 };
+
+// This five-byte ILT is owned by the address-derived thunk name in the
+// function ledger. Keep the thiscall signature used by the retail call site.
+extern "C" BfmeY982 *__cdecl __identifier("?j_0000de9f@@YAXXZ")();
+typedef BfmeY982 *(__fastcall *BfmeConv982Thunk)(BfmeY982 *self);
 
 class GameLogic
 {
@@ -99,7 +103,8 @@ void GettingBuiltBehavior::onDelete()
 	if (BfmeY982 *target = (BfmeY982 *)TheBfmeGameLogic->findObjectByID(
 		(int)m_object->m_producerID))
 	{
-		BfmeY982 *production = target->bfmeConv982B();
+		BfmeY982 *production = ((BfmeConv982Thunk)&__identifier(
+			"?j_0000de9f@@YAXXZ"))(target);
 		if (production != 0)
 			production->slot14();
 	}
