@@ -92,10 +92,25 @@ public:
 	__declspec(noinline) void m_008F7380( Int tag, SubsystemRefreshProc3 refresh );
 };
 
-class Gen_012ED5C0
+// The ledger's defining name for the 8-byte forwarder at 0x00880E10 is
+// `?m@Gen_00880e10@@QAEXXZ` -- a zero-parameter member, which matches the
+// forwarder itself: it only reloads ecx from [ecx+0x0C] and tail-jumps, and
+// the argument is already sitting in the caller's outgoing slot when it gets
+// there. Retail's call site proves the argument: 0x000DF3C0 stores
+// d_001072f0 at [esp+4] and then tail-jumps here, and the target 0x008811B0
+// reads that slot into [ecx+0x2C] and returns with `ret 4`.
+//
+// So the declaration keeps the ledger's zero-parameter signature and the call
+// site below reinterprets the member pointer, which is what puts the one
+// stored argument back into the outgoing slot and still references the
+// defining symbol exactly. Declaring the parameter instead would mangle to
+// `?m@Gen_00880e10@@QAEXP6AXXZ@Z`, which nothing in the ledger defines.
+// (A default argument does not help: MSVC encodes the parameter type in the
+// mangled name whether or not it has a default.)
+class Gen_00880e10
 {
 public:
-	void m_00880E10( SubsystemRefreshProc refresh );
+	void m( void );
 };
 
 // The retail forwarder method names remain address-derived. The
@@ -122,7 +137,7 @@ public:
 };
 
 extern ShroudManager *TheShroudManager;
-extern Gen_012ED5C0 *g_012ED5C0;
+extern Gen_00880e10 *g_012ED5C0;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList : public SubsystemInterface, public Snapshot
@@ -163,8 +178,10 @@ void PlayerList::setLocalPlayer( Player *player )
 	if (TheShroudManager)
 		TheShroudManager->m_008F7380(player->m_playerIndex, d_001072a0);
 
+	// Retail's tail call to the 0x00880E10 forwarder, with the one argument
+	// it consumes stored at [esp+4] on the way in; see the class comment.
 	if (g_012ED5C0)
-		g_012ED5C0->m_00880E10(d_001072f0);
+		( (g_012ED5C0->*( (void (Gen_00880e10::*)( SubsystemRefreshProc ) ) &Gen_00880e10::m )) )( d_001072f0 );
 }
 
 //-----------------------------------------------------------------------------
