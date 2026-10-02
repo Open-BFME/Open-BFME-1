@@ -33,7 +33,7 @@ extern void rva0003059ETarget(void);
 extern void rva000328C6Target(void);
 extern void rva00034711Target(void);
 extern void rva00035B6BTarget(void);
-extern void rva00035FF8Target(void);
+extern void dup_00784b10(void);
 extern void rva0003713CTarget(void);
 extern void rva00038B77Target(void);
 extern void rva0003A382Target(void);
@@ -80,7 +80,6 @@ extern void rva0004B510Target(void);
 #pragma comment(linker, "/alternatename:?rva000328C6Target@@YAXXZ=??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
 #pragma comment(linker, "/alternatename:?rva00034711Target@@YAXXZ=??0StructureToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
 #pragma comment(linker, "/alternatename:?rva00035B6BTarget@@YAXXZ=?W3DCommandBarTopDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z")
-#pragma comment(linker, "/alternatename:?rva00035FF8Target@@YAXXZ=?dup_00784b10@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0003713CTarget@@YAXXZ=??0OptionPreferences@@QAE@XZ")
 #pragma comment(linker, "/alternatename:?rva00038B77Target@@YAXXZ=?addWaypointLink@TerrainLogic@@IAEXHH@Z")
 #pragma comment(linker, "/alternatename:?rva0003A382Target@@YAXXZ=??0HijackerUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
@@ -245,7 +244,7 @@ void j_00035B6B(void)
 
 void j_00035FF8(void)
 {
-	rva00035FF8Target();
+	dup_00784b10();
 }
 
 void j_0003713C(void)

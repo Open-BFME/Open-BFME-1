@@ -1,15 +1,10 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 struct BfmeBlockVKC
 {
 	int m_bfmeArr[10];
-};
-
-class BfmeUniVKC
-{
-public:
-	void bfmeSetVKC(const BfmeUniVKC &o);
-	void *m_bfme00;
 };
 
 class BfmeThingVKC
@@ -35,7 +30,7 @@ public:
 	int m_bfme30;
 	int m_bfme34;
 	int m_bfme38;
-	BfmeUniVKC m_bfme3c;
+	StringBase<char> m_bfme3c;
 	int m_bfme40;
 	char m_bfme44;
 	char m_bfmePad45[3];
@@ -46,7 +41,7 @@ public:
 	BfmeBlockVKC m_bfme7c;
 	BfmeBlockVKC m_bfmea4;
 	BfmeBlockVKC m_bfmecc;
-	BfmeUniVKC m_bfmef4;
+	StringBase<char> m_bfmef4;
 };
 
 void BfmeThingVKC::bfmeCopyVKC(const BfmeThingVKC &o)
@@ -67,7 +62,7 @@ void BfmeThingVKC::bfmeCopyVKC(const BfmeThingVKC &o)
 	m_bfme30 = o.m_bfme30;
 	m_bfme34 = o.m_bfme34;
 	m_bfme38 = o.m_bfme38;
-	m_bfme3c.bfmeSetVKC(o.m_bfme3c);
+	m_bfme3c.set(o.m_bfme3c);
 	m_bfme40 = o.m_bfme40;
 	m_bfme44 = o.m_bfme44;
 	m_bfme48 = o.m_bfme48;
@@ -77,5 +72,5 @@ void BfmeThingVKC::bfmeCopyVKC(const BfmeThingVKC &o)
 	m_bfmea4 = o.m_bfmea4;
 	m_bfme7c = o.m_bfme7c;
 	m_bfmecc = o.m_bfmecc;
-	m_bfmef4.bfmeSetVKC(o.m_bfmef4);
+	m_bfmef4.set(o.m_bfmef4);
 }

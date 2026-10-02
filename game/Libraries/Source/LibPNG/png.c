@@ -27,6 +27,9 @@
 
 PNG_GET_HEADER
 
+/* Retail's matching CRC routine is exported by D3DX under this name. */
+uLong ZEXPORT d3dx_crc32 OF((uLong crc, const Bytef *buf, uInt len));
+
 /* Version information for C files.  This had better match the version
  * string defined in png.h.
  */
@@ -172,7 +175,7 @@ png_zfree(voidpf png_ptr, voidpf ptr)
 void
 png_reset_crc(png_structp png_ptr)
 {
-   png_ptr->crc = crc32(0, Z_NULL, 0);
+   png_ptr->crc = d3dx_crc32(0, Z_NULL, 0);
 }
 
 /* Calculate the CRC over a section of data.  We can only pass as
@@ -198,7 +201,7 @@ png_calculate_crc(png_structp png_ptr, png_bytep ptr, png_size_t length)
    }
 
    if (need_crc)
-      png_ptr->crc = crc32(png_ptr->crc, ptr, (uInt)length);
+      png_ptr->crc = d3dx_crc32(png_ptr->crc, ptr, (uInt)length);
 }
 
 /* Allocate the memory for an info_struct for the application.  We don't
