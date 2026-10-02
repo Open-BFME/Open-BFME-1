@@ -177,7 +177,7 @@ static __declspec(noinline) Rva008C3B60Node *StringConcatRva008C6C20(
 class AptValue { public: int toInteger() const; float toNumber(); };
 class AptInteger { public: static AptInteger *Create(int); };
 AptValue *Rva008A4EA0MakeFloat(float);
-extern Rva8CD130Value *g_bfmeFallbackDB;
+extern AptValue *g_bfmeFallbackDB;
 int Rva00892370Get();
 Rva008B2EA0Node *rva008B2EA0Create();
 struct Stack008C8500 {
@@ -210,7 +210,7 @@ void AddValues008C8500(Stack008C8500 *state) {
         state->pop(2); state->push((Rva8CD130Value *)result);
     } else if ((top->isType(7) || under->isType(7)) && !top->isType(6) && !under->isType(6)) {
         if(version==7 && (top->isUndefined() || under->isUndefined())) {
-            state->pop(2); state->push(g_bfmeFallbackDB); return;
+            state->pop(2); state->push((Rva8CD130Value *)g_bfmeFallbackDB); return;
         }
         int right=((AptValue *)top)->toInteger();
         int left=((AptValue *)under)->toInteger();
@@ -218,7 +218,7 @@ void AddValues008C8500(Stack008C8500 *state) {
         state->push((Rva8CD130Value *)AptInteger::Create(left+right));
     } else {
         if(version==7 && (top->isUndefined() || under->isUndefined())) {
-            state->pop(2); state->push(g_bfmeFallbackDB); return;
+            state->pop(2); state->push((Rva8CD130Value *)g_bfmeFallbackDB); return;
         }
         float right=((AptValue *)top)->toNumber();
         float left=((AptValue *)under)->toNumber();

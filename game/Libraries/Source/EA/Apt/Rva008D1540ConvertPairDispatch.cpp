@@ -39,7 +39,7 @@ public:
     Rva8CD130Value **m_stack;
 };
 struct Rva008D1540Context { void *m_unknown00; void *m_unknown04; void *m_scope08; };
-extern Rva8CD130Value *g_bfmeFallbackDB;
+extern AptValue *g_bfmeFallbackDB;
 
 void rva008D1540ConvertPairDispatch(Rva8D0D80State *state, Rva008D1540Context *context)
 {
@@ -62,7 +62,7 @@ void rva008D1540ConvertPairDispatch(Rva8D0D80State *state, Rva008D1540Context *c
         if (!((unsigned char)(result->m_flags >> 30) & 1)) result->addRef();
         result->release();
     } else {
-        Rva8CD130Value *fallback = g_bfmeFallbackDB;
+        Rva8CD130Value *fallback = (Rva8CD130Value *)g_bfmeFallbackDB;
         state->m_stack[state->m_count++] = fallback;
         if (!((unsigned char)(fallback->m_flags >> 30) & 1)) fallback->addRef();
     }

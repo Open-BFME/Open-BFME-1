@@ -78,7 +78,8 @@ struct Rva8CF1B0Record
 	const char *m_name;
 };
 
-extern Rva8CF1B0Value *g_bfmeFallbackDB;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 void rva8CF1B0ProcessRecord(Rva8CF1B0State *state, Rva8CF1B0Cursor *cursor)
 {
@@ -117,7 +118,7 @@ void rva8CF1B0ProcessRecord(Rva8CF1B0State *state, Rva8CF1B0Cursor *cursor)
 			cursor->m_context, record->m_secondSize);
 		if ((record->m_flags & 4) != 0)
 		{
-			state->m_slots[record->m_slot] = g_bfmeFallbackDB;
+			state->m_slots[record->m_slot] = (Rva8CF1B0Value *)g_bfmeFallbackDB;
 			pending->release();
 		}
 		else

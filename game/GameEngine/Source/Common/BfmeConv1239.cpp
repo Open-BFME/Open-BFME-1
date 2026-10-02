@@ -18,7 +18,8 @@ public:
 	BfmeE1239 **m_bfme08;
 };
 
-extern BfmeE1239 *g_bfmeResult1239;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern const float g_bfmeK1239;
 
 extern "C" int bfmeQuery1239(void);
@@ -34,7 +35,7 @@ void bfmeGo1239(BfmeA1239 *a)
 
 	v = 0;
 	if (bfmeQuery1239() == 7 && ((unsigned char)(~(e->m_bfme04 >> 15)) & 1))
-		v = g_bfmeResult1239;
+		v = (BfmeE1239 *)g_bfmeFallbackDB;
 
 	if (!v) {
 		if ((e->m_bfme04 & 0x3f) == 7 && !((unsigned char)(~(e->m_bfme04 >> 15)) & 1))

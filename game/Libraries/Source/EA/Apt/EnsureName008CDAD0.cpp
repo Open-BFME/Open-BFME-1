@@ -24,13 +24,14 @@ struct Rva008CDAD0State {
  char m_18[0x24]; int m_3C; int m_40; Rva008CDAD0Value **m_44;
 };
 struct Rva008CDAD0Context { unsigned m_00; void *m_04; void *m_08; };
-extern Rva008A9B00 *g_bfmeFallbackDB;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 void ensureName008CDAD0(Rva008CDAD0State *state,Rva008CDAD0Context *context) {
  Rva008CDAD0Value *value=state->m_08[state->m_00-1];
  if(state->m_owner.size()>0) {
   Rva008CDAD0Value *found=(Rva008CDAD0Value *)((Rva008AE770Stack *)state)->createString(state->topOwner(),(int)context->m_08,value->name(),0,1,0);
   if(found->invalid()&1) {
-   ((Rva008CF3C0State *)state)->append(state->m_owner.top(),context->m_08,(Rva008CF3C0String *)value->name(),g_bfmeFallbackDB,0,1,0);
+   ((Rva008CF3C0State *)state)->append(state->m_owner.top(),context->m_08,(Rva008CF3C0String *)value->name(),(Rva008A9B00 *)g_bfmeFallbackDB,0,1,0);
   }
   state->m_44[state->m_3C]=value;
   ++state->m_3C;
@@ -38,7 +39,7 @@ void ensureName008CDAD0(Rva008CDAD0State *state,Rva008CDAD0Context *context) {
  } else {
   Rva008CDAD0Value *found=(Rva008CDAD0Value *)((Rva008AE770Stack *)state)->createString(context->m_04,(int)context->m_08,value->name(),0,1,0);
   if(found->invalid()&1) {
-   ((Rva008CF3C0State *)state)->append(context->m_04,context->m_08,(Rva008CF3C0String *)value->name(),g_bfmeFallbackDB,0,1,0);
+   ((Rva008CF3C0State *)state)->append(context->m_04,context->m_08,(Rva008CF3C0String *)value->name(),(Rva008A9B00 *)g_bfmeFallbackDB,0,1,0);
   }
  }
  value=state->m_08[state->m_00-1];
