@@ -1,8 +1,8 @@
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// stlport
 // Open-BFME5 conversions.
 
-inline void *operator new(unsigned int, void *p) { return p; }
-
-void *bfmeAlloc1046(int n);
+#include <memory>
 
 struct BfmeVal1046
 {
@@ -32,7 +32,7 @@ public:
 void BfmeA1046::bfmeGo1046A(int v)
 {
 	BfmeNode1046 *h = m_bfmeHead;
-	BfmeNode1046 *n = (BfmeNode1046 *)bfmeAlloc1046(0xc);
+	BfmeNode1046 *n = (BfmeNode1046 *)_STL::__node_alloc<true, 0>::allocate(0xc);
 
 	new (&n->m_bfmeV) BfmeVal1046(v);
 
@@ -65,8 +65,10 @@ struct BfmeC1046
 	int m_bfme1eec;
 };
 
-void bfmeStepA1046(BfmeSubA1046 *p);
-void bfmeStepB1046(BfmeSubB1046 *p);
+struct _SBServerList;
+struct _SBQueryEngine;
+extern "C" void SBServerListDisconnect(_SBServerList *p);
+extern "C" void SBEngineHaltUpdates(_SBQueryEngine *p);
 
 void bfmeGo1046B(BfmeC1046 *p)
 {
@@ -74,8 +76,8 @@ void bfmeGo1046B(BfmeC1046 *p)
 		return;
 
 	p->m_bfme1eec = 0;
-	bfmeStepA1046(&p->m_bfmeSubA);
-	bfmeStepB1046(&p->m_bfmeSubB);
+	SBServerListDisconnect((_SBServerList *)&p->m_bfmeSubA);
+	SBEngineHaltUpdates((_SBQueryEngine *)&p->m_bfmeSubB);
 }
 
 class BfmeQ1046
@@ -94,7 +96,7 @@ struct BfmeE1046
 	BfmeQ1046 *m_bfmeQ;
 };
 
-extern void (__cdecl *g_bfmeFree1046)(void *p, int n);
+extern void (__cdecl *TheBfmeFree)(void *p, unsigned int n);
 
 class BfmeD1046
 {
@@ -115,7 +117,7 @@ void BfmeD1046::bfmeGo1046D(void)
 	if (p != 0) {
 		p->m_bfmeQ->m_bfme50 = 0;
 		p->m_bfmeQ->bfmeStop1046();
-		g_bfmeFree1046(p, 4);
+		TheBfmeFree(p, 4);
 	}
 
 	m_bfmeP = 0;
@@ -130,6 +132,6 @@ void BfmeD1046::bfmeGo1046E(void)
 	if (p != 0) {
 		p->m_bfmeQ->m_bfme50 = 0;
 		p->m_bfmeQ->bfmeStop1046();
-		g_bfmeFree1046(p, 4);
+		TheBfmeFree(p, 4);
 	}
 }
