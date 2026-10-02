@@ -66,6 +66,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+# Run as a script this module is __main__; link_check and others then
+# `import link_census` and would get a SECOND copy whose ObjectFacts/RetailTruth
+# classes differ from ours, so isinstance() against them failed for every fact:
+# write_index stored weak_truth=None and an empty weak inventory, and the final
+# currency guard refused every census ("truth fingerprint None -> ...",
+# 2026-10-02). One module object under both names keeps one set of classes.
+sys.modules.setdefault("link_census", sys.modules[__name__])
 import build  # noqa: E402
 
 OUT = ROOT / "build" / "link_census"
