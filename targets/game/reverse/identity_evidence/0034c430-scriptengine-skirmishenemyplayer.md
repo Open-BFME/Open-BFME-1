@@ -42,3 +42,33 @@ load encoding. The existing ScriptEngine header is a partial class and must
 be adopted/extended coherently before a native member conversion; no
 duplicate class, shared-header change, pin or production reconstruction is
 introduced by this evidence-only commit.
+
+## Native conversion, 2026-10-02
+
+The bank as served emitted 66 bytes, despite its earlier 68/69 description.
+A bounded two-trial source search started with that exact stash, then restored
+GeneralsMD's result lifetime: assign each candidate to `enemy`, clear `enemy`
+after a failed test, and return that same variable after the scan. This gives
+69 bytes with all four relocation sites aligned. It also puts the null-current-
+player return after the ESI epilogue and keeps both count reads in EDX.
+
+The native TU adopts the existing `scriptenginevtable` ScriptEngine header and
+Zero Hour PlayerList header. It reads BFME's proven current-player offset
+explicitly rather than using the reference class's different data layout. The
+Player +0x2C test remains an offset, without inventing a shared field name.
+The matched `Rva000C9420::call` spelling is reused for the no-argument thiscall
+current-enemy helper, preserving its EAX result. The matched native
+`PlayerList::getNthPlayer(int)` handles the other call. No new pins are needed.
+
+Independent retail-byte checks again confirmed table VA 0x010E7A78 contains
+0x00406E6F, whose E9 reaches VA 0x0074C430. Callee ILTs 0x00415438 and
+0x00444F30 reach VA 0x004C9420 and 0x004DF240 respectively. The first returns
+zero or tail-dispatches AI slot +0x30; the second bounds-checks a single stack
+index against 32 and returns a pointer with `ret 4`. RETs at body +0x41 and
++0x44 followed by INT3 at +0x45 independently retain the 69-byte extent.
+
+The bank's `BfmeSubAAT::bfmeCheckAAT` was an invented helper name. Its call
+reaches the already matched `Rva000C9420::call` body through ILT 0x00015438,
+so this conversion reuses that existing declaration rather than creating a
+second identity. The name-regression pairing is recorded for these exact
+source snapshots; it does not rename the existing callee.

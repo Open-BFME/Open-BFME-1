@@ -1590,3 +1590,17 @@ For exact codegen, retain the module-data pointer before checking the volatile
 default-FX field, then inline the blocked check and direct object/position FX
 calls through the recovered thunks. The body passed scoped `add_match.py` byte
 verification.
+
+## Preserve the scan result through the loop (2026-10-02)
+
+`ScriptEngine::getSkirmishEnemyPlayer` at 0x0034C430 was banked as a
+register/global-load problem. The served body actually compiled to 66 of 69
+bytes, saved ESI before the null-current-player guard, and used EAX for the
+player count. Restoring the GeneralsMD twin's result lifetime fixed all three:
+keep the initial `enemy` result; scan only when it is null; assign each candidate
+to that same variable; set `enemy = NULL` after a failed candidate test; and
+return `enemy` after the loop. EAX must then retain the result while EDX holds
+the count, and the separate no-current-player return falls after the ESI
+epilogue. The bank's separate candidate local and shared final return had
+removed that lifetime. The existing ScriptEngine and PlayerList headers retain
+the exact 69-byte shape; no compiler switches or assembly are needed.

@@ -14568,5 +14568,15 @@
   "after_sha256": "7aa31e8e104293c2de62a071f064a81a55064ed9a43e394b5c7ed0b05676d5ee",
   "evidence": "targets/game/reverse/identity_evidence/subsystem-lifecycle-slots.md",
   "reason": "False cross-body pairing: the removed address-named b_0042def0 is now the proven FXListStore::update at 0x0042DEF0, emitted from the upstream header. The checker pairs it with the new TU first emission anchor for init at 0x0042DED0; that anchor is not a retail identity or replacement method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0034c430.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineGetSkirmishEnemyPlayer.cpp",
+  "old_name": "BfmeSubAAT",
+  "new_name": "Rva000C9420",
+  "before_sha256": "4b1c25d8cc9ae2de72abbd4d820ce33e63268ebfd5c21c8075e4fb207aa3d991",
+  "after_sha256": "c6b988d1ee285b9cc9d1fcfe303776e805f14de2d5c718863ac1c334443e2cec",
+  "evidence": "targets/game/reverse/identity_evidence/0034c430-scriptengine-skirmishenemyplayer.md",
+  "reason": "The bank invented BfmeSubAAT::bfmeCheckAAT for ILT 0x00015438. Retail E9 reaches 0x000C9420, already matched as Rva000C9420::call; reuse that proven callee spelling and ABI rather than a second identity."
  }
 ]
