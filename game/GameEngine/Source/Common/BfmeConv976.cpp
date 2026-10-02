@@ -41,7 +41,13 @@ public:
 
 extern BfmeGameCW *g_bfmeGameCW;
 extern BfmeProbe976 *g_bfmeProbe976;
-extern BfmeEndC976 *g_bfmeEndC976;
+
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own vtable view (BfmeEndC976) and is cast at the use.
+class ParticleSystemManager;
+
+extern ParticleSystemManager *TheParticleSystemManager;
 
 void bfmeGo976C(void)
 {
@@ -50,7 +56,7 @@ void bfmeGo976C(void)
 	BfmeProbe976 *p = g_bfmeProbe976;
 
 	if (p && !p->m_bfmeTab->m_bfmeAsk(p))
-		g_bfmeEndC976->bfmeEnd976C();
+		((BfmeEndC976 *)TheParticleSystemManager)->bfmeEnd976C();
 }
 
 class BfmeDev976

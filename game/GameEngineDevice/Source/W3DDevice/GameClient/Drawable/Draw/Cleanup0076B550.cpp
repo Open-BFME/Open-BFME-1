@@ -17,7 +17,11 @@ class BfmeHandleERU { public:
  }
 };
 class BfmeMgrERU { public: BfmeHandleERU bfmeGetERU(int); };
-extern BfmeMgrERU* g_bfmeMgrERU;
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own handle-list view (BfmeMgrERU) and is cast at the use.
+class ParticleSystemManager;
+extern ParticleSystemManager* TheParticleSystemManager;
 struct Record0076B550 { int id; int at04; AsciiString name; int at0c; bool at10; };
 struct Node0076B550 { Node0076B550* next; Node0076B550* previous; Record0076B550 value; };
 class Cleanup0076B550 { public:
@@ -29,7 +33,7 @@ void Cleanup0076B550::stopParticles(bool preserve) {
  while(it!=node) {
   bool skip=false;
   if(preserve) { Record0076B550 copy=it->value; if(copy.at0c) skip=true; }
-  BfmeHandleERU handle=g_bfmeMgrERU->bfmeGetERU(it->value.id);
+  BfmeHandleERU handle=((BfmeMgrERU*)TheParticleSystemManager)->bfmeGetERU(it->value.id);
   if(!skip && handle.m_bfmePtrERU) {
    handle.m_bfmePtrERU->bfmeStopERU();
    Node0076B550* next=it->next;

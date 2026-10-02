@@ -10,13 +10,18 @@ public:
 	virtual void bfmeTail939A();
 };
 
-extern BfmeGlob939A *g_bfme939GlobA;
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own vtable view (BfmeGlob939A) and is cast at the use.
+class ParticleSystemManager;
+
+extern ParticleSystemManager *TheParticleSystemManager;
 void bfmeCall939A(void);
 
 void bfmeGo939A(void)
 {
 	bfmeCall939A();
-	g_bfme939GlobA->bfmeTail939A();
+	((BfmeGlob939A *)TheParticleSystemManager)->bfmeTail939A();
 }
 
 class Object;

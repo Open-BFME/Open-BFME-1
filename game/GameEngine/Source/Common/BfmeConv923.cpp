@@ -5,13 +5,18 @@ struct BfmeSub923A
 	int m_bfmeVal;
 };
 
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own tail-call view (BfmeGlob923A) and is cast at the use.
+class ParticleSystemManager;
+
 class BfmeGlob923A
 {
 public:
 	void bfmeTail923A(BfmeSub923A *s, void *a);
 };
 
-extern BfmeGlob923A *g_bfme923GlobA;
+extern ParticleSystemManager *TheParticleSystemManager;
 
 class BfmeThing923A
 {
@@ -23,7 +28,7 @@ public:
 
 void BfmeThing923A::bfmeGo923A(void *a, void *b)
 {
-	g_bfme923GlobA->bfmeTail923A(&m_bfmeSub, a);
+	((BfmeGlob923A *)TheParticleSystemManager)->bfmeTail923A(&m_bfmeSub, a);
 }
 
 class BfmeSub923B

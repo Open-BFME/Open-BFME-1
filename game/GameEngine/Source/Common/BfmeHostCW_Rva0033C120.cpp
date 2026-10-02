@@ -57,6 +57,9 @@ public:
 	BfmeParticleSystemHandle createParticleSystem(const ParticleSystemTemplate *tmpl, bool createSlaves);
 };
 
+// The template lookup goes through the same manager global; this TU keeps its
+// own lookup view (BfmeMgrERD) and casts at the use, so only the global's
+// spelling is the canonical ParticleSystemManager one.
 class BfmeMgrERD
 {
 public:
@@ -64,7 +67,6 @@ public:
 };
 
 extern ParticleSystemManager *TheParticleSystemManager;
-extern BfmeMgrERD *g_bfmeMgrERD;
 
 class BFMERetailTerrainHeightView
 {
@@ -101,7 +103,7 @@ void BfmeHostCW::rva0033C120(const char *name)
 	{
 		const BfmeStrERD &text = BfmeStrERD(name);
 
-		tmpl = (const ParticleSystemTemplate *)g_bfmeMgrERD->bfmeFindERD(text);
+		tmpl = (const ParticleSystemTemplate *)((BfmeMgrERD *)TheParticleSystemManager)->bfmeFindERD(text);
 	}
 
 	if (tmpl != 0)

@@ -13,13 +13,18 @@ private:
 	void releaseBuffer();
 };
 
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own template-lookup view (BfmeMgrERD) and is cast at the use.
+class ParticleSystemManager;
+
 class BfmeMgrERD
 {
 public:
 	BfmeTmplERD *bfmeFindERD(const BfmeStrERD &name);
 };
 
-extern BfmeMgrERD *g_bfmeMgrERD;
+extern ParticleSystemManager *TheParticleSystemManager;
 
 class BfmeSysERD
 {
@@ -36,7 +41,7 @@ BfmeSysERD * __stdcall bfmeMakeERD(const char *name)
 	{
 		const BfmeStrERD &text = BfmeStrERD(name);
 
-		tmpl = g_bfmeMgrERD->bfmeFindERD(text);
+		tmpl = ((BfmeMgrERD *)TheParticleSystemManager)->bfmeFindERD(text);
 	}
 
 	if (tmpl == 0)

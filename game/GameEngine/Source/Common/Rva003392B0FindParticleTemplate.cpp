@@ -8,16 +8,21 @@
 
 #include "ascii_string.h"
 
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own lookup view and is cast at the use.
+class ParticleSystemManager;
+
 class Rva003392B0TemplateStore
 {
 public:
 	void *findTemplate( const AsciiString &name );
 };
 
-extern Rva003392B0TemplateStore *TheParticleSystemManager;
+extern ParticleSystemManager *TheParticleSystemManager;
 
 void *__stdcall Rva003392B0FindParticleTemplate( const char *name )
 {
 	AsciiString tmp( name );
-	return TheParticleSystemManager->findTemplate( tmp );
+	return ((Rva003392B0TemplateStore *)TheParticleSystemManager)->findTemplate( tmp );
 }

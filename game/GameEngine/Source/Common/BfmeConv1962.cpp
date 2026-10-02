@@ -1,3 +1,8 @@
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
+// only the global's spelling matters to the link, so the pointee keeps this
+// TU's own handle-list view (BfmeMgrERU) and is cast at the use.
+class ParticleSystemManager;
+
 class BfmeThingERU
 {
 public:
@@ -22,7 +27,7 @@ public:
 	BfmeHandleERU bfmeGetERU(int id);
 };
 
-extern BfmeMgrERU *g_bfmeMgrERU;
+extern ParticleSystemManager *TheParticleSystemManager;
 
 class BfmeHostERU
 {
@@ -40,7 +45,7 @@ void BfmeHostERU::bfmeClearERU()
 
 	if (id != 0 && m_bfmeActiveERU != 0)
 	{
-		BfmeHandleERU handle = g_bfmeMgrERU->bfmeGetERU(id);
+		BfmeHandleERU handle = ((BfmeMgrERU *)TheParticleSystemManager)->bfmeGetERU(id);
 
 		if (handle.m_bfmePtrERU != 0)
 		{

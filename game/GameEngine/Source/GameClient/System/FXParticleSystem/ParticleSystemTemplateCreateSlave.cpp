@@ -70,6 +70,12 @@ public:
 	}
 };
 
+// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager
+// in the global namespace, so the manager view below is cast to it at the use.
+class ParticleSystemManager;
+
+extern ParticleSystemManager *TheParticleSystemManager;
+
 namespace FXParticleSystem {
 
 class ParticleSystemTemplate;
@@ -89,8 +95,6 @@ public:
 	unsigned char m_pad[0x9c];
 	TemplateMap m_templates;
 };
-
-extern ParticleSystemManager *TheParticleSystemManager;
 
 class ParticleSystemTemplate
 {
@@ -115,14 +119,14 @@ TrackingPtr<ParticleSystem> ParticleSystemTemplate::createSlaveSystem(bool creat
 		if (nameData != 0 && *(const unsigned short *)((const char *)nameData + 4) != 0)
 		{
 			ParticleSystemTemplate *resolvedTemplate = 0;
-			ParticleSystemManager *manager = TheParticleSystemManager;
+			ParticleSystemManager *manager = (ParticleSystemManager *)TheParticleSystemManager;
 			TemplateMap *templates = &manager->m_templates;
 			TemplateMap::Node *node = templates->find((const AsciiString *)slaveSystemNameAddress);
 			if (node)
 				resolvedTemplate = node->value;
 			m_slaveTemplate = resolvedTemplate;
 			if (m_slaveTemplate)
-				slave = TheParticleSystemManager->createParticleSystem(m_slaveTemplate, createSlaves);
+				slave = ((ParticleSystemManager *)TheParticleSystemManager)->createParticleSystem(m_slaveTemplate, createSlaves);
 		}
 	}
 	return slave;
