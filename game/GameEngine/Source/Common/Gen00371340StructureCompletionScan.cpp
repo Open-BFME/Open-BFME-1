@@ -8,6 +8,13 @@
 
 typedef int ObjectID;
 
+class ProjectileUpdateInterface;
+
+#define OBJECT_TU_MEMBERS \
+	ProjectileUpdateInterface *getProjectileUpdateInterface() const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
@@ -32,7 +39,6 @@ public:
 	virtual void unused1();
 	virtual void unused2();
 	virtual bool isComplete();
-	BfmeY982 *bfmeConv982B();
 
 	Gen00371340Template *m_template;
 	unsigned char m_unmodelled_08[0xcc - 8];
@@ -104,7 +110,8 @@ bool Gen_00371340::hasIncompleteStructure(BfmeY982 *argument)
 					if ((templateValue->m_kindOf & 0x200000) != 0)
 						goto next_object;
 
-					BfmeY982 *completion = object->bfmeConv982B();
+					BfmeY982 *completion = (BfmeY982 *)
+						((Object *)object)->getProjectileUpdateInterface();
 					if (completion != 0 && !completion->isComplete())
 						return true;
 					logic = (Gen00371340GameLogic *)TheGameLogic;

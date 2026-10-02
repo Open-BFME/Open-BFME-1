@@ -49,7 +49,13 @@ public:
 	virtual void slot25() = 0;
 	virtual Object *getUnitNamed(Parameter *parameter) = 0;
 
-	int resolvePlayerMask(void *parameter, int flags);
+};
+
+class BfmeScriptEngine_getPlayerMaskFromAsciiString
+{
+public:
+	PlayerMaskType getPlayerMaskFromAsciiString(const AsciiString &name,
+		bool *matchedAll);
 };
 
 class Player
@@ -206,8 +212,9 @@ void ScriptActions::doSelectObject(Parameter *player, Parameter *object)
 	Object *selectedObject = TheScriptEngine->getUnitNamed(object);
 	if (selectedObject)
 	{
-		PlayerMaskType playerMask = (PlayerMaskType)
-			TheScriptEngine->resolvePlayerMask(&player->m_string, 0);
+		PlayerMaskType playerMask =
+			((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+				->getPlayerMaskFromAsciiString(player->m_string, 0);
 		if (playerMask)
 		{
 			do

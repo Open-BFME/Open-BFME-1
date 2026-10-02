@@ -16,17 +16,21 @@ public:
 
 class Module;
 
-class Object
+enum DamageType
 {
-public:
-    Module *findModule(NameKeyType key) const;
+    BFME_DAMAGE_TYPE_8 = 8
 };
 
-class BfmeDrop987
+enum DeathType
 {
-public:
-    void bfmeClear987(int damageType, int deathType);
+    BFME_DEATH_TYPE_0 = 0
 };
+
+#define OBJECT_TU_MEMBERS \
+	Module *findModule(NameKeyType key) const; \
+	void kill(DamageType damageType, DeathType deathType);
+#include "../object.h"
+#undef OBJECT_TU_MEMBERS
 
 class BfmeItemRY
 {
@@ -95,12 +99,11 @@ void ObjectCreationUpgrade::upgradeImplementation()
     if (slaveWatcher == 0)
         return;
 
-    BfmeDrop987 *slave =
-        (BfmeDrop987 *)TheGameLogic->findObjectByID(slaveWatcher->m());
+    Object *slave = TheGameLogic->findObjectByID(slaveWatcher->m());
     if (slave == 0)
         return;
 
-    slave->bfmeClear987(8, 0);
+    slave->kill((DamageType)8, (DeathType)0);
 
     if (data->m_firstInvokeArgument != -1)
     {
