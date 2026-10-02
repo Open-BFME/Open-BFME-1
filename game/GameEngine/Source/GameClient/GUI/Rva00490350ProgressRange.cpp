@@ -5,7 +5,7 @@
 // siblings establish the previous-handler link at +0x04 and the range at
 // +0x08/+0x0C; their endpoint callbacks are the same slot used below.
 
-extern float g_01076C24;
+extern const float g_01076C24;
 
 class Rva00490350Base
 {

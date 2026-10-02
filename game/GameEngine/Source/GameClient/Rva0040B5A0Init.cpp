@@ -48,7 +48,7 @@ extern int g_i98;
 extern AsciiString g_s9C;
 extern float g_012F11CC;
 extern float g_010F0ADC;
-extern float g_01076C24;
+extern const float g_01076C24;
 
 float Cos(float);
 float Sin(float);

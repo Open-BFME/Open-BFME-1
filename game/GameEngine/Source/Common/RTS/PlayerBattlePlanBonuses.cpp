@@ -213,7 +213,7 @@ struct BattlePlanBonuses
 	KindOfMaskType m_invalidKindOf;
 };
 
-extern float g_01076C24;
+extern const float g_01076C24;
 extern float g_bfmeDefaultBU;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h

@@ -2,7 +2,7 @@
 
 #define BFME_AT(TYPE, ADDRESS) (*(TYPE *)(ADDRESS))
 
-extern float g_01076C24;
+extern const float g_01076C24;
 
 int Rva00490250IntegerLerp( int a, int b, int t )
 {
