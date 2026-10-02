@@ -127,7 +127,7 @@ public:
 		volatile int m_value;
 	};
 
-	static __forceinline AptInteger *Create(int value)
+	static __forceinline AptInteger *CreateFromStringLength(int value)
 	{
 		AptInteger *object = (AptInteger *)g_rva008D2A10;
 
@@ -150,7 +150,7 @@ void rva8C77F0PushStringLength(Rva8C77F0State *state)
 	Rva8CD130String name;
 	top->getName(&name);
 
-	Rva8CD130Value *result = (Rva8CD130Value *)AptInteger::Create(name.m_data->m_length);
+	Rva8CD130Value *result = (Rva8CD130Value *)AptInteger::CreateFromStringLength(name.m_data->m_length);
 
 	Rva8CD130Value *old = state->m_stack[state->m_count - 1];
 	if (!old->maxRefCountHit())

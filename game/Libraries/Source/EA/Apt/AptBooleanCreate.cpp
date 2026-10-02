@@ -40,9 +40,9 @@ struct Rva00899560Pool
 // ?g_rva008D2A80@@3PAVRva008D2A80@@A, defined by Rva008D2A80Link.cpp.
 class Rva008D2A80;
 extern Rva008D2A80 *g_rva008D2A80;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-extern const char vtable01135D68[];
+extern "C" const char __identifier("??_7Rva00899560Value@@6B@")[];
 // 0x011360A8 is Rva008995E0Value's vftable, emitted as a COMDAT by
 // Rva008995E0AptBoolValueCtor.cpp; the stand-in name declared here resolved
 // nothing.  __identifier spells the compiler-emitted symbol, and the array
@@ -76,7 +76,7 @@ AptBoolean *AptBoolean::Create(bool value)
     if (object != 0)
     {
         g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
-        g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+        g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
         object->m_value = value;
         return object;
     }
@@ -85,9 +85,9 @@ AptBoolean *AptBoolean::Create(bool value)
 
     if (object != 0)
     {
-        *(void **)object = (void *)vtable01135D68;
+        *(void **)object = (void *)__identifier("??_7Rva00899560Value@@6B@");
         object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
-        g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+        g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
         *(void **)object = (void *)__identifier("??_7Rva008995E0Value@@6B@");
         object->m_value = value;
         return object;
