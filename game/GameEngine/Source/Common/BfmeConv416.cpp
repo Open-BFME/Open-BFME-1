@@ -14,10 +14,11 @@ public:
 	virtual void *bfmeTakeARB();
 };
 
-class BfmeGotARB
+// The RVA 0x43C8E thunk targets BfmeThingYY::bfmeClearYY.
+class BfmeThingYY
 {
 public:
-	void bfmeDropARB(int what);
+	void bfmeClearYY(unsigned int bit);
 };
 
 class BfmeThingARB
@@ -37,7 +38,7 @@ void BfmeThingARB::bfmeGoARB()
 	m_bfmeOne = 0;
 	m_bfmeTwo = 0;
 	m_bfmeThree = 0;
-	BfmeGotARB *got = (BfmeGotARB *)m_bfmeSub->bfmeTakeARB();
+	BfmeThingYY *got = (BfmeThingYY *)m_bfmeSub->bfmeTakeARB();
 	if (got != 0)
-		got->bfmeDropARB(4);
+		got->bfmeClearYY(4);
 }

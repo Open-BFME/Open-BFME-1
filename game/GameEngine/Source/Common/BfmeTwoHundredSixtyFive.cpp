@@ -1,6 +1,6 @@
 // cl: /Od
 // A run given as a pair of ends passed on as a start and a length, built
-// without optimisation. The callee is pinned by address; nothing here names it.
+// without optimisation. It forwards to BfmeThingPE::bfmeDoPE.
 
 struct BfmeRangePE
 {
@@ -13,10 +13,10 @@ class BfmeThingPE
 public:
 	void bfmeGoPE(const BfmeRangePE *span, void *what);
 
-	void bfmeDoPE(char *at, void *what, int many);
+	unsigned int bfmeDoPE(const char *at, unsigned int what, unsigned int many);
 };
 
 void BfmeThingPE::bfmeGoPE(const BfmeRangePE *span, void *what)
 {
-	bfmeDoPE(span->m_bfmeAt, what, span->m_bfmeEnd - span->m_bfmeAt);
+	bfmeDoPE(span->m_bfmeAt, (unsigned int)what, span->m_bfmeEnd - span->m_bfmeAt);
 }

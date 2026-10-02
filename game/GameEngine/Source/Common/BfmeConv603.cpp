@@ -10,10 +10,19 @@ class GameLogic;
 
 extern GameLogic *TheGameLogic;
 
+class BfmeThingCHE;
+
+// The RVA 0x4A70 thunk targets this protected AISkirmishPlayer method.
+class AISkirmishPlayer
+{
+protected:
+	void acquireEnemy();
+	friend class BfmeThingCHE;
+};
+
 class BfmeThingCHE
 {
 public:
-	void bfmeUpdateCHE();
 	int bfmeGoCHE();
 	unsigned char m_bfmeHead[0x98];
 	unsigned int m_bfmeNext;
@@ -26,7 +35,7 @@ int BfmeThingCHE::bfmeGoCHE()
 	if (now >= m_bfmeNext)
 	{
 		m_bfmeNext = now + 0x19;
-		bfmeUpdateCHE();
+		((AISkirmishPlayer *)this)->acquireEnemy();
 	}
 	return m_bfmeCached;
 }
