@@ -1,3 +1,7 @@
+// ObjectCreationUpgrade::upgradeImplementation at retail 0x002D6E60: slot 9 of the UpgradeMux table
+// 0x010CD620, reached only through ILT 0x0001E4F7. ObjectCreationUpgrade's registered
+// constructor 0x002D6D90 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 // This TU's own view of the dword at +0x3C of retail's GameLogic.
 // ?TheGameLogic@@3PAVGameLogic@@A -- retail 0x012F0898, defined once in
 // GameLogic/System/GameLogic.cpp.  The view below is this TU's layout of it.
@@ -26,12 +30,12 @@ public:
 	float m_bfmeDelayIS;
 };
 
-class BfmeUpdIS
+class ObjectCreationUpgrade
 {
+protected:
+	virtual void upgradeImplementation();
 public:
-	void bfmeSleepIS(void);
-
-	unsigned char m_bfmeHeadIS[8];
+	unsigned char m_bfmeHeadIS[4]; // +0x04, after the vptr
 	BfmeWakeIS m_bfmeWakeIS;
 	BfmeDataIS *m_bfmeDataIS;
 	void *m_bfmeObjIS;
@@ -40,7 +44,7 @@ public:
 	char m_bfmeDoneIS;
 };
 
-void BfmeUpdIS::bfmeSleepIS(void)
+void ObjectCreationUpgrade::upgradeImplementation()
 {
 	if (m_bfmeDoneIS)
 		return;
