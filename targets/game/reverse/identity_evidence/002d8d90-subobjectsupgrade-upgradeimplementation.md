@@ -51,3 +51,19 @@ tables, most slot-9 bodies still carry address-derived names
 `Rva002D6840FlagPairUpgrade::applyFlagPair`, ...). Each can be named
 `<Class>::upgradeImplementation` once its table's constructor is independently
 named.
+
+## Independent re-derivation (sol/w4 24aa53e943)
+
+A separate session reached the same identity. Facts it adds:
+
+- The shared upgrade routine 0x002D9AD0 dispatches this slot natively: after
+  wouldUpgrade (0x002D9ADC) and the FX call (0x002D9AEE) it calls
+  `[vptr+0x24]` at 0x002D9AF5, then the executed-state setter at 0x002D9AFE.
+- DelayedUpgrade's table 0x010CC700 has the same slot order; its slot 9
+  (VA 0x010CC724) routes ILT 0x0042F44B to the matched
+  `DelayedUpgrade::upgradeImplementation` (0x002D4E90). Slots 10 and 11 are
+  shared `getUpgradeActivationMasks` / `performUpgradeFX`.
+- In the body, `[EBP-0x0C]` (0x002D8DB3) and `[EBP-8]` (0x002D8DFE) hold the
+  complete module's data and Thing pointers (+4/+8), consistent with entry at
+  the +0x10 subobject.
+- Extent: `ret` at 0x002D91F1, INT3 at 0x002D91F2 (1122 bytes).
