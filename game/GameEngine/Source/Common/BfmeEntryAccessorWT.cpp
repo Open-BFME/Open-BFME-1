@@ -5,38 +5,30 @@
 // global override when that override's buffer is non-empty, and returns the
 // local by value.  One of four identical siblings.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// Buffer view for retail's inlined word-length test; AsciiString owns it.
 struct BfmeBufferWT
 {
 	int m_bfmeRef;						// +0x00
 	short m_bfmeLength;					// +0x04
 };
 
-class AsciiStringWT
+class BfmeStrWT : private AsciiString
 {
 public:
-	AsciiStringWT(const AsciiStringWT &other);
-	~AsciiStringWT(void);
-
-	void set(const AsciiStringWT &other);
-
-protected:
-	BfmeBufferWT *m_bfmeData;				// +0x00
-};
-
-class BfmeStrWT : private AsciiStringWT
-{
-public:
-	BfmeStrWT(const BfmeStrWT &other) : AsciiStringWT(other) {}
+	BfmeStrWT(const BfmeStrWT &other) : AsciiString(other) {}
 	~BfmeStrWT(void) {}
 
 	void bfmeSetWT(const BfmeStrWT &other)
 	{
-		set(other);
+		StringBase<char>::set(other);
 	}
 
 	bool bfmeFilledWT(void) const
 	{
-		return m_bfmeData != 0 && m_bfmeData->m_bfmeLength != 0;
+		const BfmeBufferWT *data = *reinterpret_cast<BfmeBufferWT *const *>(this);
+		return data != 0 && data->m_bfmeLength != 0;
 	}
 };
 
