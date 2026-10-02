@@ -3,14 +3,16 @@
 // constructor at 0x0090C280, then apply the owner input at +0x3c.
 // The class layout and initialization sequence are identical to the matched
 // BfmeConv2069.cpp sibling; its apply method lives at 0x0090C9E0.
-extern char *g_bfme927Vft;
+// Retail stores this vftable at 0x0113A56C; the defining mangled name is
+// ??_7Rva0090C2F0Inner@@6B@, which C++ cannot spell, so take it verbatim.
+extern "C" char *__identifier("??_7Rva0090C2F0Inner@@6B@");
 
 class BfmeThingGR
 {
 public:
 	BfmeThingGR()
 	{
-		m_bfmeVftGR = &g_bfme927Vft;
+		m_bfmeVftGR = &__identifier("??_7Rva0090C2F0Inner@@6B@");
 		m_bfmeFlagGR = 0;
 		m_bfmeA0GR = 0;
 		m_bfmeA1GR = 0;

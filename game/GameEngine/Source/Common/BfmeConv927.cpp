@@ -155,7 +155,9 @@ struct BfmeSub927E
 	BfmeVt927E *m_bfmeVt;
 };
 
-extern char g_bfme927Vft[];
+// Retail stores this vftable at 0x0113A56C; the defining mangled name is
+// ??_7Rva0090C2F0Inner@@6B@, which C++ cannot spell, so take it verbatim.
+extern "C" char __identifier("??_7Rva0090C2F0Inner@@6B@")[];
 
 class BfmeThing927E
 {
@@ -169,7 +171,7 @@ public:
 void *BfmeThing927E::bfmeGo927E(unsigned int flags)
 {
 	BfmeSub927E *s = m_bfmeSub;
-	m_bfmeVft = g_bfme927Vft;
+	m_bfmeVft = __identifier("??_7Rva0090C2F0Inner@@6B@");
 	if (s)
 		s->m_bfmeVt->m_bfmeFn(s);
 	if (flags & 1)
