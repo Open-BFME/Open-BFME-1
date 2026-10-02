@@ -102,7 +102,24 @@ public:
 // ShroudManager owner is anchored by its constructor tag; 0x012ED5C0 remains
 // unnamed. Their declarations preserve the incoming argument widths so the
 // compiler emits the target's `ret 4`/`ret 8`.
-struct T_008f8c30 { void m( Int tag, SubsystemRefreshProc3 refresh ); };
+//
+// 0x008F7380 tail-jumps to 0x008F8C30, whose body is
+// ?set@Rva008F8C30@@QAEXHH@Z (Rva008F8C30Set.cpp, 17 bytes): a thiscall that
+// reads both arguments from the stack, stores them at +0x64 and +0x6C and
+// returns `ret 8`.  The caller here pushes the callback's address as a plain
+// four-byte value, so the second parameter is a plain `int`, matching that
+// mangling.  The class mirrors the one Rva008F8C30Set.cpp declares; only the
+// method is called here.
+class Rva008F8C30
+{
+	char m_lead[0x64];
+	int m_64;
+	char m_mid[4];
+	int m_6c;
+
+public:
+	void set( int a, int b );
+};
 
 extern ShroudManager *TheShroudManager;
 extern Gen_012ED5C0 *g_012ED5C0;
@@ -125,7 +142,7 @@ private:
 // ?m_008F7380@ShroudManager@@QAEXHP6AXHHH@Z@Z
 __declspec(noinline) void ShroudManager::m_008F7380( Int tag, SubsystemRefreshProc3 refresh )
 {
-	((T_008f8c30 *)*(void **)((char *)this + 12))->m( tag, refresh );
+	((Rva008F8C30 *)*(void **)((char *)this + 12))->set( tag, (int)(void *)refresh );
 }
 
 //-----------------------------------------------------------------------------
