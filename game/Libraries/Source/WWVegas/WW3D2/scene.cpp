@@ -130,16 +130,7 @@ protected:
  * HISTORY:                                                                                    *
  *   12/10/98   GTH : Created.                                                                 *
  *=============================================================================================*/
-SceneClass::SceneClass(void) : 
-	AmbientLight(0.5f,0.5f,0.5f),
-	PolyRenderMode(FILL),
-	ExtraPassPolyRenderMode(EXTRA_PASS_DISABLE),
-	FogEnabled(false),
-	FogColor(0,0,0),
-	FogStart(0.0f),
-	FogEnd(1000.0f)	// Arbitrary default value
-{
-}
+// Retail SceneClass constructor (0x00942F30) is emitted by SimpleSceneClass_ctor.cpp.
 
 
 /***********************************************************************************************

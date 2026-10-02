@@ -40,7 +40,8 @@ public:
     virtual void Set_Fog_Color(const Vector3 &color);
     virtual const Vector3 &Get_Fog_Color();
     virtual void Set_Fog_Range(float start, float end);
-    virtual void Get_Fog_Range(float *start, float *end);
+    // Inline definitions match scene.h; the constructor emits their retail vtable slots.
+    virtual void Get_Fog_Range(float *start, float *end) { *start = FogStart; *end = FogEnd; }
     // scene.h RegType. Only the parameter type reaches the mangled name
     // (W4RegType@SceneClass@@); retail's switch has five cases, upstream three.
     enum RegType
@@ -51,7 +52,7 @@ public:
     };
     virtual void Register(RenderObjClass *obj, RegType for_what) = 0;
     virtual void Unregister(RenderObjClass *obj, RegType for_what) = 0;
-    virtual float Compute_Point_Visibility(RenderInfoClass &info, const Vector3 &point);
+    virtual float Compute_Point_Visibility(RenderInfoClass &info, const Vector3 &point) { return 1.0f; }
     // BFME adds three pure virtuals that upstream scene.h lacks. Retail
     // SceneClass's vftable (0x0113CEC8) holds _purecall (0x00C8C500) at slots
     // 17/18/19, between Compute_Point_Visibility and Save; SimpleSceneClass's
@@ -76,8 +77,8 @@ public:
 private:
     // Match scene.h: these hooks use private-virtual (EAEX) provider names.
     virtual void Customized_Render(RenderInfoClass &info) = 0;
-    virtual void Pre_Render_Processing(RenderInfoClass &info);
-    virtual void Post_Render_Processing(RenderInfoClass &info);
+    virtual void Pre_Render_Processing(RenderInfoClass &info) {}
+    virtual void Post_Render_Processing(RenderInfoClass &info) {}
 };
 
 struct Rva00943FF0Bounds { float v[6]; };
