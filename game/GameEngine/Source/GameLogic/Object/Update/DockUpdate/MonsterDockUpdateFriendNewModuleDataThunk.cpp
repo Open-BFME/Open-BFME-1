@@ -7,17 +7,18 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class MultiIniFieldParse;
+
 class MonsterDockUpdateModuleData
 {
 public:
 	MonsterDockUpdateModuleData();
 	virtual ~MonsterDockUpdateModuleData();
+	static void buildFieldParse(MultiIniFieldParse &parse);
 
 private:
 	unsigned char m_pad[0x14];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +31,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl MonsterDockUpdateFieldParse(MultiIniFieldParse &parse);
-
 class MonsterDockUpdate
 {
 public:
@@ -43,6 +42,6 @@ ModuleData *MonsterDockUpdate::friend_newModuleData(INI *ini)
 {
 	MonsterDockUpdateModuleData *data = new MonsterDockUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &MonsterDockUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &MonsterDockUpdateModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
