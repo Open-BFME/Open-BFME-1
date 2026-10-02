@@ -1,3 +1,17 @@
+// The relationship query this body makes is Object::getRelationship, the 5-byte
+// thunk at 0x0004A719.  Object's real layout lives in one header, which hands a
+// TU the non-virtual members it needs through OBJECT_TU_MEMBERS; spelling the
+// member there (instead of a TU-local stand-in) is what puts retail's mangled
+// name on the call.  The opaque field reads below stay on the local layouts.
+enum Relationship
+{
+	Relationship_BfmeConv600
+};
+
+#define OBJECT_TU_MEMBERS Relationship getRelationship(const Object *) const;
+
+#include "../GameLogic/Object/object.h"
+
 class BfmeOtherCGG
 {
 public:
@@ -16,7 +30,7 @@ public:
 
 void *BfmeThingCGG::bfmeGoCGG(BfmeOtherCGG *other, bool flag)
 {
-	if (other->bfmeKindCGG(m_bfmeVal) == 2 && !flag)
+	if (reinterpret_cast<Object *>(other)->getRelationship(reinterpret_cast<const Object *>(m_bfmeVal)) == 2 && !flag)
 		return 0;
 	return m_bfmePtr;
 }
