@@ -21,7 +21,13 @@ struct BfmeVtUKA
 	long (__stdcall *m_bfmeCallUKA)(BfmeThingUKA *self, void *a);
 };
 
-void __stdcall bfmeReportUKA(long hr, BfmeThingUKA *o, BfmeGuidUKA *iid);
+// COM support library (comsupp.lib, MSVC 7.1) diagnostic helper: retail calls
+// 0x00AFD550 with the failing HRESULT, the object and the interface IID.
+struct IUnknown;
+struct _GUID;
+
+extern void __stdcall _com_issue_errorex(long hr, IUnknown *o,
+	const _GUID &iid);
 
 class BfmeThingUKA
 {
@@ -34,7 +40,8 @@ long BfmeThingUKA::bfmeGoUKA(void *a)
 {
 	long hr = m_bfmeVt->m_bfmeCallUKA(this, a);
 	if (hr < 0)
-		bfmeReportUKA(hr, this, &g_bfmeIidUKA);
+		_com_issue_errorex(hr, (IUnknown *)this,
+			reinterpret_cast<const _GUID &>(g_bfmeIidUKA));
 	return hr;
 }
 
