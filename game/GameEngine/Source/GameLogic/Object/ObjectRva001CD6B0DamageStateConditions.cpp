@@ -74,12 +74,6 @@ class Object
 {
 public:
 	void clearAndSetModelConditionFlags(const PinnedModelConditionFlags &clr, const PinnedModelConditionFlags &set);
-	// Out of line at 0x001B6E60; inlined here, so retail builds the clear mask before zeroing the empty set.
-	void clearModelConditionFlags(const ModelConditionFlags &clr)
-	{
-		ModelConditionFlags empty;
-		clearAndSetModelConditionFlags((const PinnedModelConditionFlags &)(clr), (const PinnedModelConditionFlags &)(empty));
-	}
 	void rva001CD6B0(BodyDamageType newState, Int variant);
 
 	char m_pad000[0x80];
@@ -89,6 +83,12 @@ public:
 	char m_pad138[0x1dc - 0x138];
 	ObjectSMCHelper *m_smcHelper;					// +0x1dc
 };
+
+static __forceinline void clearModelConditionFlagsInline(Object *object, const ModelConditionFlags &clr)
+{
+	ModelConditionFlags empty;
+	object->clearAndSetModelConditionFlags((const PinnedModelConditionFlags &)(clr), (const PinnedModelConditionFlags &)(empty));
+}
 
 void Object::rva001CD6B0(BodyDamageType newState, Int variant)
 {
@@ -152,7 +152,7 @@ void Object::rva001CD6B0(BodyDamageType newState, Int variant)
 	}
 	else
 	{
-		clearModelConditionFlags(ModelConditionFlags(ModelConditionFlags::kInit, 0x83, 0x84, 0x85, 0x86));
+		clearModelConditionFlagsInline(this, ModelConditionFlags(ModelConditionFlags::kInit, 0x83, 0x84, 0x85, 0x86));
 	}
 }
 
