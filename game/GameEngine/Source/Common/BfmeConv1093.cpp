@@ -26,14 +26,24 @@ public:
 class PlayerList;
 
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
-extern BfmeP1093 *g_bfmeP1093;
+
+// Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
+// links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
+// definition; the reads go through this TU's own view of the object.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeP1093 *bfmeViewP1093(void)
+{
+	return (BfmeP1093 *)TheScriptEngine;
+}
 
 char __stdcall bfmeGo1093A(int a, int b)
 {
 	int h;
 
-	a = g_bfmeP1093->bfmeNext1093(a);
-	h = g_bfmeP1093->bfmeNext1093(b);
+	a = bfmeViewP1093()->bfmeNext1093(a);
+	h = bfmeViewP1093()->bfmeNext1093(b);
 	while ((short)a) {
 		BfmeR1093 *r = ((BfmeD1093 *)ThePlayerList)->bfmeLook1093((short *)&a);
 

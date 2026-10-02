@@ -56,11 +56,20 @@ public:
 	virtual BfmeX1027 *bfmeFind1027(int a);
 };
 
-extern BfmeU1027 *g_bfmeU1027;
+// Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
+// links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
+// definition; the reads go through this TU's own view of the object.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeU1027 *bfmeViewU1027(void)
+{
+	return (BfmeU1027 *)TheScriptEngine;
+}
 
 void __stdcall bfmeGo1027A(int a)
 {
-	BfmeX1027 *x = g_bfmeU1027->bfmeFind1027(a);
+	BfmeX1027 *x = bfmeViewU1027()->bfmeFind1027(a);
 
 	if (x == 0)
 		return;
@@ -76,7 +85,7 @@ void __stdcall bfmeGo1027A(int a)
 
 void __stdcall bfmeGo1027B(int a)
 {
-	BfmeX1027 *x = g_bfmeU1027->bfmeFind1027(a);
+	BfmeX1027 *x = bfmeViewU1027()->bfmeFind1027(a);
 
 	if (x == 0)
 		return;

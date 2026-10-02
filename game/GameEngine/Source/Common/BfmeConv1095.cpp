@@ -57,12 +57,22 @@ public:
 	BfmeZ1095B *bfmeGet1095(int a);
 };
 
-extern BfmeP1095 *g_bfmeP1095;
 extern BfmeQ1095A *g_bfmeQ1095;
+
+// Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
+// links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
+// definition; the reads go through this TU's own view of the object.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeP1095 *bfmeViewP1095(void)
+{
+	return (BfmeP1095 *)TheScriptEngine;
+}
 
 void __stdcall bfmeGo1095A(int a, int b)
 {
-	a = g_bfmeP1095->bfmeFirst1095(a, 0);
+	a = bfmeViewP1095()->bfmeFirst1095(a, 0);
 	while ((short)a) {
 		BfmeR1095 *r = ((BfmeD1095A *)ThePlayerList)->bfmeLook1095((short *)&a);
 

@@ -95,12 +95,22 @@ public:
 };
 
 extern BfmeT1019 *g_bfmeT1019;
-extern BfmeU1019 *g_bfmeU1019;
 void bfmeFirst1019(void);
+
+// Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
+// links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
+// definition; the tick goes through this TU's own view of the object.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeU1019 *bfmeViewU1019(void)
+{
+	return (BfmeU1019 *)TheScriptEngine;
+}
 
 void bfmeGo1019F(void)
 {
 	bfmeFirst1019();
 	g_bfmeT1019->m_bfmeFlag = 1;
-	g_bfmeU1019->bfmeTick1019();
+	bfmeViewU1019()->bfmeTick1019();
 }

@@ -61,7 +61,16 @@ public:
 	int apply(const ThingTemplate *, ObjectTypes *, int, Team *);
 };
 
-extern BfmeScriptEngineVtbl_44_50 *TheScriptEngine;
+// Retail's ScriptEngine global at 0x012F076C is ?TheScriptEngine@@3PAVScriptEngine@@A
+// (defined in game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp); the
+// TU-local vtable view above is reached through this cast helper.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+static inline BfmeScriptEngineVtbl_44_50 *bfmeViewScriptEngine()
+{
+	return (BfmeScriptEngineVtbl_44_50 *)TheScriptEngine;
+}
+
 extern BfmeThingFactory *TheThingFactory;
 extern void j_000043f9();
 
@@ -81,17 +90,17 @@ void __stdcall d_002f5ca0(const AsciiString &teamName,
 	int count, const AsciiString &objectTypeName,
 	const AsciiString &otherTeamName)
 {
-	Team *team = TheScriptEngine->getTeamNamed(teamName, true);
+	Team *team = bfmeViewScriptEngine()->getTeamNamed(teamName, true);
 	if (!team)
 		return;
 
-	Team *otherTeam = TheScriptEngine->getTeamNamed(otherTeamName, false);
+	Team *otherTeam = bfmeViewScriptEngine()->getTeamNamed(otherTeamName, false);
 	if (!otherTeam)
 		return;
 
 	const ThingTemplate *thingTemplate =
 		TheThingFactory->findTemplate(objectTypeName);
-	ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectTypeName);
+	ObjectTypes *objectTypes = bfmeViewScriptEngine()->getObjectTypes(objectTypeName);
 	bfmeApplyTeamObjectAction(team, thingTemplate, objectTypes, count,
 		otherTeam);
 }

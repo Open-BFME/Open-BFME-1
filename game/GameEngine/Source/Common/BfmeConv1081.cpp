@@ -47,7 +47,16 @@ public:
 	virtual BfmeE1081 * bfmeSlot1081_26(int a);
 };
 
-extern BfmeP1081 *g_bfmeP1081;
+// Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
+// links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
+// definition; the slot reads go through this TU's own view of the object.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeP1081 *bfmeViewP1081(void)
+{
+	return (BfmeP1081 *)TheScriptEngine;
+}
 
 class BfmeF1081;
 
@@ -62,7 +71,7 @@ extern ExperienceLevelSystem *g_bfmeJ1081;
 
 void __stdcall bfmeGo1081A(int a, int b)
 {
-	BfmeE1081 *e = g_bfmeP1081->bfmeSlot1081_26(a);
+	BfmeE1081 *e = bfmeViewP1081()->bfmeSlot1081_26(a);
 	BfmeF1081 *f;
 
 	if (!e)
@@ -90,12 +99,12 @@ extern AI *g_bfmeQ1081;
 
 char __stdcall bfmeGo1081B(int a, int b)
 {
-	BfmeE1081 *e = g_bfmeP1081->bfmeSlot1081_26(a);
+	BfmeE1081 *e = bfmeViewP1081()->bfmeSlot1081_26(a);
 	BfmeE1081 *f;
 
 	if (!e)
 		return 0;
-	f = g_bfmeP1081->bfmeSlot1081_26(b);
+	f = bfmeViewP1081()->bfmeSlot1081_26(b);
 	if (!f)
 		return 0;
 	{

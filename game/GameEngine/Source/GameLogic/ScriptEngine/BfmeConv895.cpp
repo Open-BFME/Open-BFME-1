@@ -119,11 +119,19 @@ struct BfmeObjFFC
 	BfmeHoldFFC *m_bfmeS;
 };
 
-extern BfmeGlobFFC *g_bfmeObjFFC;
+// Retail's ScriptEngine global at 0x012F076C is ?TheScriptEngine@@3PAVScriptEngine@@A
+// (defined in game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp); the
+// TU-local BfmeGlobFFC slot view above is reached through this cast helper.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+static inline BfmeGlobFFC *bfmeViewFFC()
+{
+	return (BfmeGlobFFC *)TheScriptEngine;
+}
 
 void __stdcall bfmeGoFFC(void *a)
 {
-	BfmeObjFFC *o = g_bfmeObjFFC->bfmeVirt26FFC(a);
+	BfmeObjFFC *o = bfmeViewFFC()->bfmeVirt26FFC(a);
 	if (o)
 	{
 		BfmeHoldFFC *s = o->m_bfmeS;
