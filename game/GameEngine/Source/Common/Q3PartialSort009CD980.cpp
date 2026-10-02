@@ -77,3 +77,14 @@ void Gen009CD980(Q3SortElem4 *first, Q3SortElem4 *middle,
 	}
 	bfmeSortVOU(first, middle, *(void **)&compare);
 }
+
+// 0x009CDA80 (31 bytes), directly before the named Q3 introsort caller at
+// 0x009CDAA0: the STLport partial_sort(first, middle, last, comp) wrapper
+// shape, forwarding to __partial_sort above with a null value-type tag.  It
+// sat in an unclaimed gap (16-aligned after int3 padding, ret then int3) and
+// nothing calls it, so the instantiation is not witnessed: address name.
+void Rva009CDA80PartialSort(Q3SortElem4 *first, Q3SortElem4 *middle,
+	Q3SortElem4 *last, Q3SortCompare compare)
+{
+	Gen009CD980(first, middle, last, 0, compare);
+}
