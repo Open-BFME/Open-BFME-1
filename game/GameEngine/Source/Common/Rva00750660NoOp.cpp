@@ -1,6 +1,0 @@
-// ?d_00750660@@YAXXZ
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-
-void d_00750660()
-{
-}
