@@ -83,9 +83,18 @@ extern Display *TheDisplay;
 
 class S4Holder0046DBB0
 {
-public:
-	void take0046DEF0(const AsciiString &name);
 };
+
+// 0x0046DEF0 (`add ecx,0x30; jmp`) is the matched member
+// ?invoke@Rva0046DEF0@@QAEXXZ of MemberOffsetTailThunks.cpp; it takes the
+// registration name, so the call casts it to that signature.
+class Rva0046DEF0
+{
+public:
+	void invoke();
+};
+
+typedef void ( Rva0046DEF0::*Rva0046DEF0TakeName )( const AsciiString &name );
 
 extern S4Holder0046DBB0 *g_s4Holder;
 #pragma comment(linker, "/alternatename:?g_s4Holder@@3PAVS4Holder0046DBB0@@A=?g_s4Holder@@3PAUS4Holder0046DBB0@@A")
@@ -127,7 +136,8 @@ void AptMapPreview::bfmeReset(void)
 {
 	{
 		AsciiString name("AptMapPreview::Picture");
-		g_s4Holder->take0046DEF0(name);
+		( reinterpret_cast<Rva0046DEF0 *>( g_s4Holder )->*
+			reinterpret_cast<Rva0046DEF0TakeName>( &Rva0046DEF0::invoke ) )( name );
 	}
 	{
 		AsciiString name("AptMapPreview::MapGadgetInit");
