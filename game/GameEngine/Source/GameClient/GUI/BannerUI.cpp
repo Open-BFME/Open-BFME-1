@@ -17,6 +17,7 @@
 #define BFME_STLP_NODE_ALLOC 1
 #include "PreRTS.h"
 #include "Common/INI.h"
+#include "Common/SubsystemInterface.h"
 #include <algorithm>
 #include <vector>
 
@@ -75,15 +76,6 @@ private:
 	BannerMovieEntry *m_capacity;
 };
 
-class BannerSubsystemBase
-{
-public:
-	virtual ~BannerSubsystemBase();
-
-private:
-	void *m_name;
-};
-
 class BannerTypeStoreMember
 {
 public:
@@ -134,7 +126,14 @@ BannerTimerMember::~BannerTimerMember()
 {
 }
 
-class BannerUI : public BannerSubsystemBase
+// BannerUI's base is retail's SubsystemInterface, not a local stand-in: this
+// destructor ends by calling the 14-byte body at 0x009A1A40 on `this`
+// (??1SubsystemInterface@@UAE@XZ, matched from
+// game/GameEngine/Source/Common/System/SubsystemInterface.cpp), and the first
+// derived member follows the base at +0x08, which is SubsystemInterface's
+// width (vptr + m_name). The base is taken from the header the defining
+// destructor itself compiles against so the call spells that name and links.
+class BannerUI : public SubsystemInterface
 {
 public:
 	static const FieldParse m_fieldParseTable[];
