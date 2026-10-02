@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// CommandSetUpgrade::upgradeImplementation at retail 0x002D4310: slot 9 of the UpgradeMux table
+// 0x010CC330, reached only through ILT 0x00017AE9. CommandSetUpgrade's registered
+// constructor 0x002D41A0 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 //
 // Open-BFME5: the label-propagating notifier at retail 0x002D4310, 109 bytes.
 // A secondary-base body: both objects it works on are read from slots ahead of
@@ -51,14 +55,14 @@ class ControlBar;
 
 extern ControlBar *TheControlBar;				// retail 0x012F33F8
 
-class Gen_002D4310
+class CommandSetUpgrade
 {
-public:
-	void bfmeApplyXC(void);
+protected:
+	virtual void upgradeImplementation();
 };
 
-// ?bfmeApplyXC@Gen_002D4310@@QAEXXZ
-void Gen_002D4310::bfmeApplyXC(void)
+// ?upgradeImplementation@CommandSetUpgrade@@MAEXXZ
+void CommandSetUpgrade::upgradeImplementation()
 {
 	BfmeTargetXC *target = *(BfmeTargetXC **)((char *)this - 8);
 	BfmeOwnerXC *owner = *(BfmeOwnerXC **)((char *)this - 0xC);
