@@ -4,7 +4,8 @@
 // the debug manager g_rva00889690 (0x01336E5C), the same singleton BfmeConv1363.cpp
 // reaches through the same spelling.
 
-void __cdecl bfmeRecordVHJ(int n);
+// ?_bfme_debugRecordCallsite@@YAXH@Z -- game/GameEngine/Source/Common/Debug_recordCallsite.cpp
+extern void _bfme_debugRecordCallsite(int n);
 
 class BfmeMsgIBD
 {
@@ -79,7 +80,7 @@ void __cdecl Rva006C07D0(void *param)
 {
 	if (param)
 	{
-		bfmeRecordVHJ(1);
+		_bfme_debugRecordCallsite(1);
 		g_rva00889690->bfmeOwn60IBD();
 		g_rva00889690->bfmeOwn6cIBD(0, 0)->bfmeSlot38IBD((const void *)"DX8 error ")->bfmeSlot00IBD(param)->bfmeSlot4cIBD(1);
 	}

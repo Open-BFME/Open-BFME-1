@@ -1,7 +1,8 @@
 // Open-BFME5 conversions.
 
 bool __cdecl _bfme_debugReportingEnabled();
-void __cdecl bfmeRecordVHJ(int n);
+// ?_bfme_debugRecordCallsite@@YAXH@Z -- game/GameEngine/Source/Common/Debug_recordCallsite.cpp
+extern void _bfme_debugRecordCallsite(int n);
 
 class BfmeMsgVHJ
 {
@@ -75,7 +76,7 @@ void __stdcall bfmeGoVHL(int a)
 {
 	if (_bfme_debugReportingEnabled())
 	{
-		bfmeRecordVHJ(1);
+		_bfme_debugRecordCallsite(1);
 		g_rva00889690->bfmeOwn60VHJ();
 		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Error! Devastate Power requires either a target object or location")->bfmeSlot4cVHJ(2);
 	}
