@@ -65,17 +65,17 @@ class ExperienceLevelCollection : public _STL::list<ExperienceLevel>
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-class GameLogicShim
+class GameLogicPortraitShim
 {
 public:
-	Bool unidentified_0001e0ab();
+	Bool isInMultiplayerOrSkirmishGame();
 };
 
 // Retail 0x0037D0D0 (43 bytes): whether a level applies to the current game
 // mode.
 static Bool rva0037D0D0IsLevelForGameMode(const ExperienceLevel *level)
 {
-	return ((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab() ?
+	return ((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame() ?
 		!level->m_singlePlayerOnly : !level->m_multiPlayerOnly;
 }
 
