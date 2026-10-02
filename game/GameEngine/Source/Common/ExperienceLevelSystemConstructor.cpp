@@ -73,3 +73,8 @@ ExperienceLevelSystem::ExperienceLevelSystem()
 		AsciiString("NOTFOUND_DEFAULT_ScalarTable"));
 	m_defaultLevel->m_scalars.push_back(1.0f);
 }
+
+// GameEngine::init pushes the retail name at RVA 0x00079C3A and this cell
+// at 0x00079C48; initSubsystem<ExperienceLevelSystem> stores the constructed
+// pointer through that reference at RVA 0x000746B9. Retail .data starts zero.
+ExperienceLevelSystem *TheExperienceLevelSystem = 0;
