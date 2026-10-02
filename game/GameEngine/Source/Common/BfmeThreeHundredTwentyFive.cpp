@@ -5,7 +5,20 @@ struct BfmeLinkRW
 	void *m_bfmeWhat;
 };
 
-void *bfmeAllocRW(unsigned int bytes);
+// Retail's callee at 0x0082E540 is the STLport node allocator's public
+// allocate entry, defined by
+// game/Libraries/Source/WWVegas/WWLib/STL_new_alloc_allocateThunk.cpp.
+// Spelled with the defining name so this TU links.
+namespace _STL
+{
+
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int n);
+};
+
+}
 
 class BfmeListRW
 {
@@ -18,7 +31,7 @@ public:
 void BfmeListRW::bfmePushRW(void *what)
 {
 	BfmeLinkRW *end = *m_bfmeRoot;
-	BfmeLinkRW *link = (BfmeLinkRW *)bfmeAllocRW(0xc);
+	BfmeLinkRW *link = (BfmeLinkRW *)_STL::__new_alloc::allocate(0xc);
 	void **slot = &link->m_bfmeWhat;
 	if (slot != 0)
 		*slot = what;

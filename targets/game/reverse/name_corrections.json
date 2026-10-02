@@ -15148,5 +15148,15 @@
   "after_sha256": "d84262e88e047f2945ebdfaea0205191695a5335fbd0268f9a49e220eaf4bd22",
   "evidence": "targets/game/reverse/identity_evidence/rubblerise-wrapper-rehome-false-pair.txt",
   "reason": "False source-rehome pairing: destination type predates this repair and is unchanged; RubbleRiseElement remains declared and used in the unchanged retained complete-destructor TU. Only the scalar-wrapper ledger row moves."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/Rva784C30DeallocateThunk.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva784C30DeallocateThunk.cpp",
+  "old_name": "rva784C30SmallDeallocate",
+  "new_name": "rva784C30Deallocate",
+  "before_sha256": "b46ee3985affbc101d86559717f1877eedac16231ee8a97209eae207e8a6e890",
+  "after_sha256": "3a16437d6ab8ea21a5e41ecf6b1bface48177d5fa63f16680761928104963692",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

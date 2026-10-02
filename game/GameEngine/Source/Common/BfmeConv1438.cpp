@@ -15,8 +15,12 @@ class BfmeStrVMR
 {
 public:
 	void bfmeFwdVMR(int a, int b, int c);
-	void bfmeImplVMR(int a, int b, int c);
 };
+
+// Retail's callee at 0x00830410, defined by
+// game/GameEngine/Source/Common/BfmeConv1492.cpp. Spelled with the defining
+// name so this TU links.
+void __stdcall bfmeInsertRangeV49(char *pos, char *first, char *last, char *tag);
 
 void BfmeStrVMR::bfmeFwdVMR(int a, int b, int c)
 {
@@ -36,6 +40,6 @@ void BfmeStrVMR::bfmeFwdVMR(int a, int b, int c)
 		mov ecx, dword ptr a
 		push ecx
 		mov ecx, this
-		call bfmeImplVMR
+		call bfmeInsertRangeV49
 	}
 }
