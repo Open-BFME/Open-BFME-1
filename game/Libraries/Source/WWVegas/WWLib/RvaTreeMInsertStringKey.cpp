@@ -48,9 +48,12 @@ inline bool operator<( const AsciiString &left, const AsciiString &right )
 	return left.compare( right ) < 0;
 }
 
+namespace
+{
 inline bool operator<( const BfmeWideString &left, const BfmeWideString &right )
 {
 	return left.compare( right ) < 0;
+}
 }
 
 // The comparator retail used here is not named anywhere the bytes reach; what

@@ -220,15 +220,6 @@ static DecalPolyClass _DecalPoly1;
 // The donor keeps this body for that reason -- it declares its own base. Folding
 // it here would need the shared refcount.h to initialise 0, which is wrong for
 // the other fourteen. Do not re-screen this expecting one instruction of work.
-DecalMeshClass::DecalMeshClass(MeshClass * parent,DecalSystemClass * system) :
-	Parent(parent),
-	DecalSystem(system)
-{
-	WWASSERT(Parent != NULL);
-	WWASSERT(DecalSystem != NULL);
-}
-
-
 /***********************************************************************************************
  * DecalMeshClass::~DecalMeshClass -- Destructor                                               *
  *                                                                                             *

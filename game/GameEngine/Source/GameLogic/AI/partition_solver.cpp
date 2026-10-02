@@ -104,6 +104,11 @@ inline vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::vector(
 	}
 	this->_M_finish = __result;
 }
+
+template <>
+vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >&
+vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::operator=(
+	const vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >&);
 }
 
 static Bool greater_than(PairObjectIDAndUInt a, PairObjectIDAndUInt b)

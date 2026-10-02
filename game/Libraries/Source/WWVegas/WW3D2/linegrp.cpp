@@ -81,19 +81,6 @@ LineGroupClass::LineGroupClass(void) :
 {
 }
 
-// ?LineGroupClass::~LineGroupClass present-unmatched
-LineGroupClass::~LineGroupClass(void)
-{
-	REF_PTR_RELEASE(StartLineLoc);
-	REF_PTR_RELEASE(EndLineLoc);
-	REF_PTR_RELEASE(LineDiffuse);
-	REF_PTR_RELEASE(TailDiffuse);
-	REF_PTR_RELEASE(ALT);
-	REF_PTR_RELEASE(LineSize);
-	REF_PTR_RELEASE(LineUCoord);
-	REF_PTR_RELEASE(Texture);
-}
-
 void LineGroupClass::Set_Arrays(
 	ShareBufferClass<Vector3> *startlocs,
 	ShareBufferClass<Vector3> *endlocs,
