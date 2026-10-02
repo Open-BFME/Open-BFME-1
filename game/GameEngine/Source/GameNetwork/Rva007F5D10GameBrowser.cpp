@@ -54,10 +54,20 @@ public:
 	void *getPtr( void *key, void *fallback );
 };
 
+// 0x007E88A0 is DEFINED in the ledger as ?valid@W3DVideoBuffer@@UAE_NXZ, and
+// the matched ?videoBufferValue@Rva007F5A70Owner@@QAEHPAVW3DVideoBuffer@@@Z at
+// 0x007F5A80 calls it directly on a W3DVideoBuffer*, so the qualified
+// non-virtual call below is the spelling that mangles to the defining name.
+// No game/ header declares W3DVideoBuffer.
+class W3DVideoBuffer
+{
+public:
+	virtual bool valid( void );                                       // 0x007E88A0
+};
+
 class Rva007E8810Message
 {
 public:
-	bool hasError();
 	int getError();
 };
 
@@ -170,11 +180,11 @@ void Rva007F5D10GameBrowser::handlePendingActiveReply( Rva007E8810Message *messa
 			"\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowser.cpp",
 			0x421 );
 	}
-	if ( !message->hasError() )
+	if ( !((W3DVideoBuffer *)message)->W3DVideoBuffer::valid() )
 		player->setHpState( 4 );
 
 	m_listener->notifyPendingActive( id, message->getError() );
-	if ( message->hasError() )
+	if ( ((W3DVideoBuffer *)message)->W3DVideoBuffer::valid() )
 	{
 		m_listener->notifyActive( id );
 		m_hosts->resetHpState( player );

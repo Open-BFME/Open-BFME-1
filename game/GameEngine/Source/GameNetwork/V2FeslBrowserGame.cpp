@@ -4,10 +4,19 @@
 // The browser's vtable slot 21 looks up a game element, and the listener's
 // slot 9 receives the game and lobby identifiers after the record is stored.
 
-class Rva007E8810Message
+// 0x007E88A0 is DEFINED in the ledger as ?valid@W3DVideoBuffer@@UAE_NXZ, and
+// the matched ?videoBufferValue@Rva007F5A70Owner@@QAEHPAVW3DVideoBuffer@@@Z at
+// 0x007F5A80 calls it directly on a W3DVideoBuffer*, so the qualified
+// non-virtual call below is the spelling that mangles to the defining name.
+// No game/ header declares W3DVideoBuffer.
+class W3DVideoBuffer
 {
 public:
-	bool hasError();
+	virtual bool valid( void );                                       // 0x007E88A0
+};
+
+class Rva007E8810Message
+{
 };
 
 class Rva007FBEF0GameRecord
@@ -79,7 +88,7 @@ void Rva007F7980Browser::onGame(Rva007E8810Message *message)
 	Rva007FBEF0GameRecord record(message);
 	int lid = record.m_lid;
 	int gid = record.m_gid;
-	if (message->hasError())
+	if (((W3DVideoBuffer *)message)->W3DVideoBuffer::valid())
 		return;
 	Rva00802B30Element *element = findGame(lid);
 	if (element != 0)
