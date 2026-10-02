@@ -84,10 +84,14 @@ void piGetPlayerInfoCallbackA(void *chat, int success, const char *nick,
 	const char *user, const char *address, void *param);
 void chatGetBasicUserInfoA(void *chat, const char *nick, void *callback,
 	void *param, int blocking);
-void piChangeNickCallbackA(void);
+/* Matched peerOperations.c providers: 0085FCD0 and 00860020.
+   Operation constructors pass these addresses as Chat completion callbacks. */
+void piChangeNickCallback(void *chat, int success, const char *oldNick,
+ const char *newNick, void *param);
 void chatChangeNickA(void *chat, const char *newNick, void *callback,
 	void *param, int blocking);
-void piAuthenticateCDKeyCallbackA(void);
+void piAuthenticateCDKeyCallback(void *chat, int result, const char *message,
+ void *param);
 void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 	void *param, int blocking);
 void piSetAutoMatchStatus(PEER peer, int status);
@@ -578,7 +582,7 @@ PEERBool piNewChangeNickOperation(PEER peer, const char *newNick,
 		return 0;
 
 	chatChangeNickA(connection->chat, newNick,
-		piChangeNickCallbackA, operation, 0);
+		piChangeNickCallback, operation, 0);
 	return 1;
 }
 
@@ -592,7 +596,7 @@ PEERBool piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
 		return 0;
 
 	chatAuthenticateCDKeyA(connection->chat, cdkey,
-		piAuthenticateCDKeyCallbackA, operation, 0);
+		piAuthenticateCDKeyCallback, operation, 0);
 	return 1;
 }
 
