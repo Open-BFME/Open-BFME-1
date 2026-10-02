@@ -13,29 +13,21 @@ extern "C" double cos(double value);
 
 #include "matrix3d.h"
 
-// The existing GenBase00944940 alias calls the verified SimpleSceneClass
-// constructor. The current scene.h view is 0x98 bytes; retail allocates 0x108.
-// This opaque storage view retains that proven extent and ambient slot +0x18.
-class GenBase00944940
-{
-public:
-	GenBase00944940();
-	virtual ~GenBase00944940() {}
-	virtual void slot02();
-	virtual void slot03();
-	virtual void slot04();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void Set_Ambient_Light(const Vector3 &color);
-};
+// The real scene.h SimpleSceneClass supplies the constructor retail calls at
+// 0x00944940, so the base is spelled by its defining name and resolves instead
+// of the GenBase00944940 stand-in.  scene.h's view is 0x98 bytes while retail
+// allocates 0x108, so m_tail below restores that proven extent.
+#include "scene.h"
 
-class Rva00789650 : public GenBase00944940
+class Rva00789650 : public SimpleSceneClass
 {
 public:
 	Rva00789650() {}
 
 private:
-	unsigned char m_body[0x104];
+	// retail allocates 0x108 for this object; scene.h's SimpleSceneClass is
+	// 0x98. The remaining 0x70 is the BFME tail the upstream header lacks.
+	unsigned char m_tail[0x70];
 };
 
 
