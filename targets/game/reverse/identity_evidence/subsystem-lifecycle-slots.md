@@ -236,3 +236,35 @@ non-const, void, with no arguments, and therefore use
 and `?update@TerrainTypeCollection@@UAEXXZ`. The new header-emission TU
 replaces only these three address placeholders; unrelated shared-TU bodies
 remain. No inferred data field or callee pin is introduced.
+
+
+## ObjectCreationListStore lifecycle overrides
+
+GameEngine::init allocates `0x20` bytes at `0007999E`, calls constructor ILT
+`0000D116` -> `001DAD50` at `000799B5`, pushes VA `010763F8` (the literal
+TheObjectCreationListStore) at `000799CC`, then passes typed global VA
+`012EF70C` at `000799DA` to registration ILT `000378A8` -> `00073FD0` at
+`000799DF`. ZH GameEngine.cpp likewise constructs ObjectCreationListStore;
+GameLogic/ObjectCreationList.h declares that exact global type. Constructor
+`001DAD50` calls SubsystemInterface `009A1A30` at `001DAD6E`, then installs
+primary VA `0109F9DC` at `001DAD75`.
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | Explicit ZH method |
+|---|---|---|---|---|
+| 1 | `00C9F9E0` | `0002CE7B` | `001DA830` | init |
+| 4 | `00C9F9EC` | `0004471F` | `001DA840` | reset |
+| 5 | `00C9F9F0` | `00035364` | `001DA850` | update |
+
+Whole-image bytewise pointer scans find each stub VA exactly once, at the
+listed table entry. Each target is C3 followed immediately by CC, so these
+are three distinct one-byte overrides. The common subsystem slots 2/3 and
+independently established lifecycle alignment agree with the census. ZH
+GameLogic/ObjectCreationList.h:195-197 explicitly defines the public empty
+init/reset/update twins. They are virtual by inheritance, non-const, void,
+with no arguments; the full manglings are
+`?init@ObjectCreationListStore@@UAEXXZ`,
+`?reset@ObjectCreationListStore@@UAEXXZ`, and
+`?update@ObjectCreationListStore@@UAEXXZ`. Include the existing header and
+emit its inline bodies through qualified-call anchors. Remove only the
+three orphan placeholder TUs after replacing their rows. No header or pin
+changes are needed, and unchanged one-byte extents are verified separately.
