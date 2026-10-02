@@ -27,12 +27,20 @@ struct Rva007F3980Pair
 };
 
 extern "C" int __cdecl sprintf(char *buffer, const char *format, ...);
-extern void *g_bfme0130A714;
+// Layout view of the static at 0x0130A710; +4 holds its second constructor argument.
+class Rva007F01F0
+{
+public:
+	int m_00;
+	int m_04;
+	int m_08;
+};
+extern Rva007F01F0 bfmeRva0130A710Slot;
 
 void __stdcall rva007F3980Serialize(Rva007F3980Msg *msg, __int64 clubId,
 	__int64 userId, Rva007F3980Pair *pairs, int count)
 {
-	void *txn = g_bfme0130A714;
+	void *txn = (void *)bfmeRva0130A710Slot.m_04;
 	((Rva007E8AC0*)msg)->run();
 	msg->m_tag = 0x636c7562;
 	((BfmeThingCIC*)msg)->bfmeGoCIC((void *)"TXN", txn);
