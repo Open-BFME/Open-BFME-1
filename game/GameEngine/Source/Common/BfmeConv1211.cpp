@@ -10,15 +10,18 @@ public:
 
 extern BfmeG1211 *g_bfme1211;
 
+class Rva8CD130State;
+struct Rva8CD130Context;
+
 extern "C" void bfmeStep1211A(int *a, void *b);
-extern "C" void bfmeStep1211B(int *a, void *b);
+void rva8CD130NamedDispatch(Rva8CD130State *state, Rva8CD130Context *context);
 
 void bfmeGo1211(int *a, void *b)
 {
 	BfmeG1211 *g;
 
 	bfmeStep1211A(a, b);
-	bfmeStep1211B(a, b);
+	rva8CD130NamedDispatch((Rva8CD130State *)a, (Rva8CD130Context *)b);
 	g = g_bfme1211;
 	if (g->m_bfme04 && *a == 0)
 		g->bfmeStep1211C();

@@ -27,8 +27,11 @@ public:
 
 extern BfmeG1214 *g_bfme1214;
 
+class Rva8CD130State;
+struct Rva8CD130Context;
+
 extern "C" void bfmeStep1214A(BfmeA1214 *a, const unsigned char **b);
-extern "C" void bfmeStep1214B(BfmeA1214 *a, const unsigned char **b);
+void rva8CD130NamedDispatch(Rva8CD130State *state, Rva8CD130Context *context);
 
 void bfmeGo1214(BfmeA1214 *a, const unsigned char **b)
 {
@@ -46,7 +49,7 @@ void bfmeGo1214(BfmeA1214 *a, const unsigned char **b)
 	if (!((unsigned char)(e->m_bfme04 >> 30) & 1))
 		e->bfmeV1214();
 	bfmeStep1214A(a, b);
-	bfmeStep1214B(a, b);
+	rva8CD130NamedDispatch((Rva8CD130State *)a, (Rva8CD130Context *)b);
 	g = g_bfme1214;
 	if (g->m_bfme04 && a->m_bfme00 == 0)
 		g->bfmeStep1214C();
