@@ -1,5 +1,5 @@
 // ?ControlBarSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
-// partial score=0.438 date=2026-09-28
+// Retail-proven ControlBarSystem, 1459 bytes; recovered with an explicit pointer lifetime.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // ControlBarSystem, retail 0x004C0560 (1459 B). Home: game/GameEngine/Source/GameClient/GUI/GUICallbacks/.
 // IDENTITY PROVEN: FunctionLexicon entry at VA 0x012A9648 pairs literal "ControlBarSystem"
@@ -7,20 +7,13 @@
 // String model: WWLib ascii_string/unicode_string as in ControlBarVisibility.cpp. Real extern globals.
 // Control flow read from retail: no common tail; slider-track tests 8 ids then
 // processContextSensitiveButtonClick decides HANDLED/IGNORED; BFME HideSaveLoadMenu/rva00569D80.
-// Residue (probe 1457/1459 B, shape 0.926): retail msg=ebp, zero=ebx (prologue/CREATE/EDIT),
-// -1=esi (statics only); ours msg=ebx, -1=ebp, no zero register. Retail also caches TheGameLogic
-// in edi across the else-chain and skips its reload after isInMultiplayerGame (callee memory
-// effects known) but not after isPlayerActive; a visible noinline isInMultiplayerGame body gives
-// that knowledge but also ecx-preservation knowledge retail lacks (1447 B, shape 0.928).
+// Retail caches TheGameLogic after the placement-button ID test. A failed
+// isInMultiplayerGame predicate retains that receiver; a failed player-active
+// predicate refreshes it. The explicit branch and labels retain this lifetime
+// while the external callee declaration keeps the ordinary caller ABI.
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-template <> inline const char *StringBase<char>::str() const {
-    return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const {
-    return m_data ? m_data->data : (const unsigned short *)L"";
-}
 template <> inline StringBase<unsigned short>::~StringBase() { releaseBuffer(); }
 inline UnicodeString::UnicodeString(const UnicodeString& s) {
     ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&s);
@@ -106,10 +99,10 @@ extern PlayerList *ThePlayerList;
 class ScriptEngine
 {
 public:
-    Bool isGameEnding( void ) { return m_endGameTimer >= 0; }
+    Bool isGameEnding( void ) { return m_rva17080 >= 0; }
 private:
     unsigned char m_unreconstructed_00[0x17080];
-    Int m_endGameTimer;
+    Int m_rva17080;
 };
 extern ScriptEngine *TheScriptEngine;
 
@@ -253,17 +246,28 @@ WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
             if( controlID == buttonCommunicator )
             {
             }
-            else if( controlID == beaconPlacementButtonID && TheGameLogic->isInMultiplayerGame() &&
-                ThePlayerList->getLocalPlayer()->isPlayerActive() )
+            else
             {
-                const CommandButton *commandButton = TheControlBar->findCommandButton( AsciiString("Command_PlaceBeacon") );
-                TheInGameUI->setGUICommand( commandButton );
-            }
-            else if( controlID == beaconDeleteButtonID && TheGameLogic->isInMultiplayerGame() )
-            {
-                TheMessageStream->appendMessage( GameMessage::MSG_REMOVE_BEACON );
-            }
-            else if( controlID == beaconClearTextButtonID && TheGameLogic->isInMultiplayerGame() )
+                GameLogic *logic;
+                if( controlID == beaconPlacementButtonID )
+                {
+                    logic = TheGameLogic;
+                    if( !logic->isInMultiplayerGame() )
+                        goto rva004C09DD;
+                    if( ThePlayerList->getLocalPlayer()->isPlayerActive() )
+                    {
+                        const CommandButton *commandButton = TheControlBar->findCommandButton( AsciiString("Command_PlaceBeacon") );
+                        TheInGameUI->setGUICommand( commandButton );
+                        goto rva004C0AFB;
+                    }
+                }
+                logic = TheGameLogic;
+            rva004C09DD:
+                if( controlID == beaconDeleteButtonID && logic->isInMultiplayerGame() )
+                {
+                    TheMessageStream->appendMessage( GameMessage::MSG_REMOVE_BEACON );
+                }
+            else if( controlID == beaconClearTextButtonID && logic->isInMultiplayerGame() )
             {
                 static NameKeyType textID = NAMEKEY("ControlBar.wnd:EditBeaconText");
                 GameWindow *win = TheWindowManager->winGetWindowFromId( 0, textID );
@@ -294,6 +298,8 @@ WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
             {
                 TheControlBar->processContextSensitiveButtonClick( control, (GadgetGameMessage)msg );
             }
+            }
+        rva004C0AFB:
             break;
         }
 
