@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c- /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHs-c- /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/iniexception
 // stlport
 //
 // The FieldParse table at VA 0x010813F8 owns AudioEventInfo's
@@ -28,19 +28,7 @@ private:
 typedef int (__cdecl *LookupFn)( const char *, const char * );
 extern "C" LookupFn g_lookup;
 
-class INIException
-{
-public:
-	INIException( Int code, const char *message, ... );
-	INIException( const INIException &other );
-
-private:
-	char *m_failureMessage;
-	Int m_argCount;
-};
-
-extern void __declspec(noreturn) __stdcall _CxxThrowException( void *object, void *throwInfo );
-extern int g_INIExceptionThrowInfo;
+#include "Common/INIException.h"
 extern const char *const g_012A8280[];
 
 struct Gen_t_000b0910_p8pod
@@ -87,13 +75,11 @@ void AudioEventInfo::parseVolumeSliderMultiplier( INI *ini, void *, void *store,
 
 slider_error:
 	{
-		INIException error( 3, "Slider:slidername expected after VolumeSliderMultiplier" );
-		_CxxThrowException( &error, &g_INIExceptionThrowInfo );
+		throw INIException( 3, "Slider:slidername expected after VolumeSliderMultiplier" );
 	}
 
 multiplier_error:
 	{
-		INIException error( 3, "Multiplier:number expected after VolumeSliderMultiplier = Slider:slidername" );
-		_CxxThrowException( &error, &g_INIExceptionThrowInfo );
+		throw INIException( 3, "Multiplier:number expected after VolumeSliderMultiplier = Slider:slidername" );
 	}
 }

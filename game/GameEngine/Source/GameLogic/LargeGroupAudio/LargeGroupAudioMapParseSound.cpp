@@ -48,10 +48,6 @@ private:
 	std::vector<SoundKeyPair *> m_sounds;
 };
 
-extern void __declspec( noreturn ) __stdcall _CxxThrowException(
-	void *, void * ) throw();
-
-extern int g_INIExceptionThrowInfo;
 extern const FieldParse g_010EE088[];
 
 // ?parseSound@LargeGroupAudioMap@@SAXPAVINI@@PAX1PBX@Z
@@ -73,8 +69,7 @@ void __cdecl LargeGroupAudioMap::parseSound(
 			continue;
 		if ( ( (const Rva003D3250 *)sound )->equals( (const Rva003D3250 *)*it ) )
 		{
-			INIException error( 3, "LargeGroupAudio: You cannot use the same key list for two Sound blocks within the same LargeGroupAudioMap" );
-			_CxxThrowException( &error, &g_INIExceptionThrowInfo );
+			throw INIException( 3, "LargeGroupAudio: You cannot use the same key list for two Sound blocks within the same LargeGroupAudioMap" );
 		}
 	}
 }

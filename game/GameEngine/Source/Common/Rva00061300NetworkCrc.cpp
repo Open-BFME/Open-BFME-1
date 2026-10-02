@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/iniexception
 // Open-BFME5: register the network CRC debug switch and reject the two
 // mutually-exclusive CRC command-line modes.
 
@@ -7,8 +7,7 @@ typedef unsigned int UnsignedInt;
 extern UnsignedInt TheCommandLineFlags;
 extern bool g_bfmeOnAPB;
 extern bool g_bfmeDoneAPB;
-extern "C" char _bfmeTagAPB;
-extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
+#include "Common/INIException.h"
 
 struct Rva00889690Obj
 {
@@ -53,17 +52,6 @@ public:
 
 extern Rva00889690Obj *g_rva00889690;
 
-class INIException
-{
-public:
-	INIException(int code, const char *message, ...);
-	INIException(const INIException &other);
-
-private:
-	int m_code;
-	const char *m_message;
-};
-
 int Rva00061300NetworkCrc(void)
 {
 	g_bfmeOnAPB = true;
@@ -71,8 +59,7 @@ int Rva00061300NetworkCrc(void)
 	g_rva00889690->registerCommand("debug.add l + NETWORK_CRC");
 	if (g_bfmeDoneAPB)
 	{
-		INIException error(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");
-		_CxxThrowException(&error, &_bfmeTagAPB);
+		throw INIException(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");
 	}
 	return 1;
 }

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /O2 /Ob1 /EHsc
+// cl: /DNDEBUG /MD /O2 /Ob1 /EHsc /Iinputs/reference/shims/iniexception
 // stlport
 // Open-BFME5: W3DModelDrawModuleData LodOptions field parser at 0x00753930 (261B).
 // Reads LOW/MEDIUM/HIGH then initFromINI into object+0x15c+idx*20.
@@ -58,20 +58,9 @@ public:
 	void initFromINI(void *store, const FieldParse *fields);
 };
 
-class INIException
-{
-public:
-	INIException(Int code, const char *msg, ...);
-	INIException(const INIException &other);
-
-private:
-	const char *m_msg;
-	Int m_code;
-};
+#include "Common/INIException.h"
 
 extern const FieldParse TheLodOptionsFieldParse[];
-extern int g_INIExceptionThrowInfo;
-__declspec(noreturn) void __stdcall _CxxThrowException(void *object, void *throwInfo);
 
 class W3DModelDrawModuleData
 {
@@ -92,8 +81,7 @@ void W3DModelDrawModuleData::parseLodOptions(INI *ini, void *object, void *, con
 		idx = 2;
 	else
 	{
-		INIException error(1, "Expected LOW, MEDIUM, or HIGH");
-		_CxxThrowException(&error, &g_INIExceptionThrowInfo);
+		throw INIException(1, "Expected LOW, MEDIUM, or HIGH");
 	}
 	ini->initFromINI((char *)object + 0x15c + idx * 20, TheLodOptionsFieldParse);
 }

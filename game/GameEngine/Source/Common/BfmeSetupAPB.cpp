@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/iniexception
 
 // ?bfmeSetupAPB@@YAHXZ 0x00061380
 // The retail body updates g_bfmeFlagsAPB at 0x012A6FA0, marks the second CRC
@@ -10,19 +10,7 @@ typedef unsigned int UnsignedInt;
 extern UnsignedInt g_bfmeFlagsAPB;
 extern bool g_bfmeOnAPB;
 extern bool g_bfmeDoneAPB;
-extern "C" char _bfmeTagAPB;
-extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
-
-class INIException
-{
-public:
-	INIException(int code, const char *message, ...);
-	INIException(const INIException &other);
-
-private:
-	int m_code;
-	const char *m_message;
-};
+#include "Common/INIException.h"
 
 int bfmeSetupAPB(void)
 {
@@ -30,8 +18,7 @@ int bfmeSetupAPB(void)
 	g_bfmeFlagsAPB |= 0x20000;
 	if (g_bfmeOnAPB)
 	{
-		INIException error(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");
-		_CxxThrowException(&error, &_bfmeTagAPB);
+		throw INIException(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");
 	}
 	return 1;
 }
