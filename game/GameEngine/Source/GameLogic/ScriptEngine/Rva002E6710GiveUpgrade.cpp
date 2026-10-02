@@ -16,17 +16,17 @@ unsigned Rva00990030Lookup(lua_State *state, int index);
 
 class BFMERetailAsciiString;
 
-class BfmeStringLiteralBase
+class BFMEPlayerTemplateAsciiString
 {
 	friend class BFMERetailAsciiString;
-	private:
-	BfmeStringLiteralBase(const char *text);
+	public:
+	BFMEPlayerTemplateAsciiString(const char *text);
 };
 
-class BFMERetailAsciiString : private BfmeStringLiteralBase
+class BFMERetailAsciiString : private BFMEPlayerTemplateAsciiString
 {
 public:
-	BFMERetailAsciiString(const char *text) : BfmeStringLiteralBase(text) {}
+	BFMERetailAsciiString(const char *text) : BFMEPlayerTemplateAsciiString(text) {}
 	~BFMERetailAsciiString() { releaseBuffer(); }
 
 private:
@@ -51,7 +51,7 @@ public:
 class GameLogic
 {
 public:
-	Object *bfmeFind1011(int id);
+	Object *findObjectByID(int id);
 };
 
 extern GameLogic *TheGameLogic;
@@ -69,7 +69,7 @@ int Rva002E6710GiveUpgrade(lua_State *state)
 	if (!id && lua_type(state, 1) != 1)
 		return 0;
 
-	Object *object = TheGameLogic->bfmeFind1011(id);
+	Object *object = TheGameLogic->findObjectByID(id);
 	if (!object)
 		return 0;
 
