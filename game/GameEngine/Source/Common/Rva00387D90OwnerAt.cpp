@@ -6,10 +6,8 @@ class BFMERetailAsciiString
 {
 public:
 	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	~BFMERetailAsciiString();
 	void *m_buffer;
-private:
-	void releaseBuffer();
 };
 
 class Rva00387D90String : public BFMERetailAsciiString

@@ -1,22 +1,9 @@
 // Open-BFME5 conversions.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWMath/coord2d.h"
 
-class BfmeStrVVC
-{
-public:
-	~BfmeStrVVC() { bfmeClearVVC(); }
-	char *m_bfme00;
-
-private:
-	void bfmeClearVVC();
-};
-
-class BfmeElemVVC
-{
-public:
-	~BfmeElemVVC();
-	int m_bfme00;
-	int m_bfme04;
-};
+typedef AsciiString BfmeStrVVC;
+typedef Coord2D BfmeElemVVC;
 
 class BfmeOwnVVC
 {
