@@ -10,16 +10,13 @@ public:
     static AsciiString TheEmptyString;
 };
 
-enum ObjectID
-{
-    INVALID_OBJECT_ID = 0
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
-    void init(const AsciiString &, ObjectID);
+    // ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z (0x000B2CC0); the two-arg
+    // positional ctor retail's ILT 0x00025306 routes to.
+    AudioEventRTS(const AsciiString &, int);
 
 private:
     void *m_vtable;
@@ -92,10 +89,9 @@ private:
 
 // ??0GiantBirdSlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
 GiantBirdSlowDeathBehavior::GiantBirdSlowDeathBehavior(Thing *thing, const ModuleData *moduleData)
-    : SlowDeathBehavior(thing, moduleData)
+    : SlowDeathBehavior(thing, moduleData), m_deathSound(AsciiString::TheEmptyString, 0)
 {
     unsigned int zero = 0;
-    m_deathSound.init(AsciiString::TheEmptyString, (ObjectID)zero);
     m_acceleratedTimeScale = zero;
     m_unknownD0 = zero;
     m_unknownD4 = (unsigned char)zero;
