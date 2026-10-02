@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: MaxHealthUpgradeModuleData dtor. SEH member@+0x8 pin 0x1B97D.
 
-class UnpauseSpecialPowerUpgradeModuleDataMember
+// The +0x08 member's destructor is the body matched as this name; the
+// 0x0001B97D ILT fronts it. Spelled as the defining name so the reference
+// links.
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~UnpauseSpecialPowerUpgradeModuleDataMember();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 };
 
 class MaxHealthUpgradeModuleDataBase
@@ -20,7 +23,7 @@ class __declspec(novtable) MaxHealthUpgradeModuleData : public MaxHealthUpgradeM
 public:
 	virtual ~MaxHealthUpgradeModuleData();
 private:
-	UnpauseSpecialPowerUpgradeModuleDataMember m_member;
+	AttributeModifierAuraUpdateModuleDataMemberD m_member;
 };
 
 // ??1MaxHealthUpgradeModuleData@@UAE@XZ

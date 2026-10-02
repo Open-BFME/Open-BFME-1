@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: AutoHealBehaviorModuleData dtor. SEH member@+0x8 pin 0x1B97D.
 
-class UnpauseSpecialPowerUpgradeModuleDataMember
+// The +0x08 member's destructor is the body matched as this name; the
+// 0x0001B97D ILT fronts it. Spelled as the defining name so the reference
+// links.
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~UnpauseSpecialPowerUpgradeModuleDataMember();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 };
 
 class AutoHealBehaviorModuleDataBase
@@ -20,7 +23,7 @@ class __declspec(novtable) AutoHealBehaviorModuleData : public AutoHealBehaviorM
 public:
 	virtual ~AutoHealBehaviorModuleData();
 private:
-	UnpauseSpecialPowerUpgradeModuleDataMember m_member;
+	AttributeModifierAuraUpdateModuleDataMemberD m_member;
 };
 
 // ??1AutoHealBehaviorModuleData@@UAE@XZ

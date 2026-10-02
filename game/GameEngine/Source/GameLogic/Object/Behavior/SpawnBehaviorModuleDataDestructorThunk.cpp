@@ -9,10 +9,13 @@ private:
 	unsigned char m_pad[0x38];
 };
 
-class SpawnBehaviorModuleDataMemberB
+// The +0x58 member's destructor is the body matched as this name; the
+// 0x0001B97D ILT fronts it. Spelled as the defining name so the reference
+// links.
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~SpawnBehaviorModuleDataMemberB();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 private:
 	unsigned char m_pad[0x4];
 };
@@ -31,7 +34,7 @@ public:
 	virtual ~SpawnBehaviorModuleData();
 private:
 	SpawnBehaviorModuleDataMemberA m_a;
-	SpawnBehaviorModuleDataMemberB m_b;
+	AttributeModifierAuraUpdateModuleDataMemberD m_b;
 };
 
 // ??1SpawnBehaviorModuleData@@UAE@XZ

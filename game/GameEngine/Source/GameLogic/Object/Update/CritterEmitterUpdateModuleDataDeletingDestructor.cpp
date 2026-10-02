@@ -11,10 +11,13 @@ struct CritterEmitterPod { int data[2]; };
 
 #include "ascii_string.h"
 
-class CritterEmitterUpdateModuleDataInner
+// The +0x08 member's destructor is the body matched as this name; the
+// 0x0001B97D ILT fronts it. Spelled as the defining name so the reference
+// links.
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~CritterEmitterUpdateModuleDataInner();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 private:
 	unsigned char m_pad[0x9c];
 };
@@ -40,7 +43,7 @@ class CritterEmitterUpdateModuleDataBase : public CritterEmitterUpdateModuleData
 public:
 	virtual ~CritterEmitterUpdateModuleDataBase() {}
 private:
-	CritterEmitterUpdateModuleDataInner m_08;
+	AttributeModifierAuraUpdateModuleDataMemberD m_08;
 };
 
 class CritterEmitterUpdateModuleData : public CritterEmitterUpdateModuleDataBase
