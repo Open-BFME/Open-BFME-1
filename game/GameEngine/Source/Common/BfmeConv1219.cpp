@@ -1,11 +1,11 @@
 // Open-BFME5 conversions.
 
-class BfmeE1219
+class AptValue
 {
 public:
 	virtual void bfmeV1219A();
 	virtual void bfmeV1219B();
-	char bfmeChk1219();
+	bool rva00898480Check();
 	unsigned m_bfme04;
 };
 
@@ -14,7 +14,7 @@ class BfmeA1219
 public:
 	int m_bfme00;
 	int m_bfme04;
-	BfmeE1219 **m_bfme08;
+	AptValue **m_bfme08;
 };
 
 class BfmeG1219
@@ -32,7 +32,7 @@ extern Rva00899560Pool *g_rva01337810GcRoots;
 void bfmeGo1219(BfmeA1219 *a, const unsigned char **b)
 {
 	const unsigned char *p;
-	BfmeE1219 *e;
+	AptValue *e;
 	BfmeG1219 *g;
 
 	p = (const unsigned char *)(((unsigned int)*b + 3) & 0xfffffffc);
@@ -41,7 +41,7 @@ void bfmeGo1219(BfmeA1219 *a, const unsigned char **b)
 	if (!((unsigned char)(e->m_bfme04 >> 30) & 1))
 		e->bfmeV1219B();
 	--a->m_bfme00;
-	if (!e->bfmeChk1219())
+	if (!e->rva00898480Check())
 		*b += *(const int *)p;
 	g = (BfmeG1219 *)g_rva01337810GcRoots;
 	if (g->m_bfme04 && a->m_bfme00 == 0)
