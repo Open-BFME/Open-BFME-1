@@ -20,8 +20,8 @@ public:
 	bool act(Gen003BD8D0Arg *arg);
 };
 
-class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 struct Rva003C9DD0Item
 {
@@ -56,7 +56,7 @@ bool Rva003C9DD0Owner::collect(_STL::vector<Rva003C9DD0Item *> &out)
 	_STL::vector<Rva003C9DD0Item *> &items = m_holder->m_items;
 	for (unsigned int i = 0; i < items.size(); ++i)
 	{
-		if (items[i]->m_activeA8 && ((Rva003BF540 *)Glo012F1028)->act((Gen003BD8D0Arg *)items[i]))
+		if (items[i]->m_activeA8 && ((Rva003BF540 *)TheLivingWorldLogic)->act((Gen003BD8D0Arg *)items[i]))
 			out.push_back(items[i]);
 	}
 
