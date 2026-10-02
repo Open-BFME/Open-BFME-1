@@ -1,18 +1,15 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // Constructor paired with the polymorphic member destructor at retail
 // 0x004B1670. The last member is the inline BFME buffer constructor.
 
+// Retail's base here is SubsystemInterface: the constructor at 0x004B18B0
+// calls 0x009A1A30 (??0SubsystemInterface@@QAE@XZ) and Gen_004B1670's vtable
+// at 0x010FD1D8 inherits slots 2, 3, 6, 7 and 8 of SubsystemInterface's own
+// vtable at 0x01141640 unchanged. Use the real header, not a stand-in base.
+#include "PreRTS.h"
+#include "System/subsystem_interface.h"
+
 void *bfmeAllocNode(unsigned int bytes);             // retail 0x0082E540
-
-class BfmeBase1134
-{
-public:
-	BfmeBase1134(void);
-	virtual ~BfmeBase1134(void);
-
-private:
-	int m_bfmeField;
-};
 
 struct BfmeTailT
 {
@@ -44,7 +41,7 @@ public:
 	int m_bfmeValue;
 };
 
-class Gen_004B1670 : public BfmeBase1134
+class Gen_004B1670 : public SubsystemInterface
 {
 public:
 	Gen_004B1670(void);
@@ -71,7 +68,7 @@ private:
 
 // ??0Gen_004B1670@@QAE@XZ
 Gen_004B1670::Gen_004B1670(void) :
-	BfmeBase1134(),
+	SubsystemInterface(),
 	m_bfme08(0),
 	m_bfmeVectorStart(0),
 	m_bfmeVectorFinish(0),

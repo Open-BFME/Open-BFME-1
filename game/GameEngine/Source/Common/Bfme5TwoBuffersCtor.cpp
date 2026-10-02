@@ -37,15 +37,11 @@ struct Gen_005878D0FirstValue
 typedef _STL::map<int, Gen_005878D0FirstValue> Gen_00587D40FirstMap;
 typedef _STL::map<int, BfmeSplitValue> Gen_00587D40SecondMap;
 
-class BfmeBase1134
-{
-public:
-	BfmeBase1134(void);
-	virtual ~BfmeBase1134(void);
-
-private:
-	int m_bfme04;
-};
+// Retail's base here is SubsystemInterface: the constructor calls
+// 0x009A1A30 (??0SubsystemInterface@@QAE@XZ) and Gen_00587D40's vtable at
+// 0x0110BA30 inherits slots 2, 3, 6, 7 and 8 of SubsystemInterface's own
+// vtable at 0x01141640 unchanged. Use the real header, not a stand-in base.
+#include "Common/SubsystemInterface.h"
 
 struct BfmeBuffer1134
 {
@@ -65,7 +61,7 @@ struct BfmeBuffer1134
 	int m_bfmeLength;
 };
 
-class Gen_00587D40 : public BfmeBase1134
+class Gen_00587D40 : public SubsystemInterface
 {
 public:
 	Gen_00587D40(void);
