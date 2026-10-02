@@ -18,14 +18,14 @@ struct Coord3D { float x, y, z; };
 class Object;
 class FXList {
 public:
-    bool bfmeIsBlocked() const;
+    bool bfmeIsBlocked();
     void doFXObj(const Object *, const Object *) const;
     void doFXPos(const Coord3D *, const Matrix3D *, float, const Coord3D *) const;
 };
 struct Rva00767DB0Value {
     int at00, at04, at08;
     AsciiString at0c;
-    const FXList *at10;
+    FXList *at10;
 };
 struct Rva00767DB0Drawable {
     char pad00[0xfc];
@@ -106,12 +106,12 @@ void Rva00767DB0::invoke(Rva00767DB0Value value)
             pos.x = matrix[0][3];
             pos.y = matrix[1][3];
             pos.z = matrix[2][3];
-            const FXList *fx = value.at10;
+            FXList *fx = value.at10;
             if (fx && !fx->bfmeIsBlocked())
                 fx->doFXPos(&pos, &matrix, 0.0f, 0);
         } else {
             Object *object = readAt08()->readAtfc();
-            const FXList *fx = value.at10;
+            FXList *fx = value.at10;
             if (!fx->bfmeIsBlocked())
                 fx->doFXObj(object, 0);
         }

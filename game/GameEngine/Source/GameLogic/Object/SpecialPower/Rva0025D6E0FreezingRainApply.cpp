@@ -81,6 +81,14 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// Retail ILT 0x00011F77 (body 0x0042DAA0) proves the predicate checked here
+// is FXList::bfmeIsBlocked; the receiver is respelled at the call site.
+class FXList
+{
+public:
+	bool bfmeIsBlocked();
+};
+
 class Rva0025D7E0FreezingRainDispatch
 {
 public:
@@ -108,7 +116,7 @@ void Rva0025D7E0FreezingRainDispatch::apply(Coord3D *subject)
 		point.y = (extent.lo.y + extent.hi.y) * g_bfmeK1253;
 		point.z = subject->z;
 		BfmeThingCOF *containedBy = object->containedBy;
-		if (containedBy != 0 && !containedBy->bfmeAskCOF())
+		if (containedBy != 0 && !((FXList *)containedBy)->bfmeIsBlocked())
 			containedBy->bfmeRunCOF(&point, 0, 0, 0);
 	}
 }

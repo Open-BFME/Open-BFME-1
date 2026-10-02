@@ -14,7 +14,7 @@ public:
 	static void doFXObj(const FXList *fxList, const Object *primary, const Object *secondary);
 	static void doFXPos(const FXList *fxList, const Coord3D *position,
 		const Matrix3D *transform, float speed, const Coord3D *secondary);
-	bool bfmeIsBlocked(void) const;
+	bool bfmeIsBlocked(void);
 	void doFXObj(const Object *primary, const Object *secondary) const;
 	void doFXPos(const Coord3D *position, const Matrix3D *transform,
 		float speed, const Coord3D *secondary) const;
@@ -25,8 +25,9 @@ void FXList::doFXObj(const FXList *fxList, const Object *primary, const Object *
 {
 	if (fxList)
 	{
-		if (!fxList->bfmeIsBlocked())
-			fxList->doFXObj(primary, secondary);
+		FXList *self = const_cast<FXList *>(fxList);
+		if (!self->bfmeIsBlocked())
+			self->doFXObj(primary, secondary);
 	}
 }
 
@@ -36,7 +37,8 @@ void FXList::doFXPos(const FXList *fxList, const Coord3D *position,
 {
 	if (fxList)
 	{
-		if (!fxList->bfmeIsBlocked())
-			fxList->doFXPos(position, transform, speed, secondary);
+		FXList *self = const_cast<FXList *>(fxList);
+		if (!self->bfmeIsBlocked())
+			self->doFXPos(position, transform, speed, secondary);
 	}
 }

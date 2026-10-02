@@ -25,6 +25,14 @@ public:
 	void bfmeApplyEQW(BfmeThingEQW *thing, int mode);
 };
 
+// Retail ILT 0x00011F77 (body 0x0042DAA0) proves the predicate checked here
+// is FXList::bfmeIsBlocked; the receiver is respelled at the call site.
+class FXList
+{
+public:
+	bool bfmeIsBlocked();
+};
+
 class BfmeOwnerEQW
 {
 public:
@@ -48,7 +56,7 @@ void BfmeHostEQW::bfmeGoEQW(BfmeThingEQW *thing)
 	BfmeOwnerEQW *owner = m_bfmeOwnerEQW;
 	BfmeSubEQW *sub = owner->m_bfmeSubEQW;
 
-	if (sub != 0 && !sub->bfmeCheckEQW())
+	if (sub != 0 && !((FXList *)sub)->bfmeIsBlocked())
 		sub->bfmeApplyEQW(thing, 0);
 
 	if ((owner->m_bfmeFlagsEQW & 0x40) != 0)
