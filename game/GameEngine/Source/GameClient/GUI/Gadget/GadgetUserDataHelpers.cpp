@@ -38,7 +38,7 @@ public:
 	void *winGetUserData(void);
 	void winSetUserData(void *data);
 	unsigned int winGetStatus(void);
-	void winSetStatus(unsigned int status);
+	unsigned int _bfme_winSetStatus(unsigned int status);
 	bool winIsHidden(void);
 	int winHide(bool hide);
 };
@@ -105,7 +105,7 @@ public:
 	void set(int value);
 };
 
-void f_00881ef0(void *memory);
+void __cdecl operator delete[](void *memory);
 extern void *__cdecl operator new[](unsigned int size);
 
 void j_000272fa(void);
@@ -132,7 +132,7 @@ void GadgetListBoxSetColumnWidths(GameWindow *listbox, int count, int *widths)
 		return;
 
 	data->m_columns = (unsigned short)count;
-	f_00881ef0(data->m_columnWidth);
+	::operator delete[](data->m_columnWidth);
 	data->m_columnWidth = new int[count];
 
 	if (widths != 0)
@@ -199,7 +199,7 @@ void Rva004BCB20(GameWindow *window, int value)
 			window->winSetUserData(data);
 		}
 		data->m_value = value;
-		window->winSetStatus(0x02000000);
+		window->_bfme_winSetStatus(0x02000000);
 	}
 }
 
