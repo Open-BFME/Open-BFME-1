@@ -82568,7 +82568,7 @@ name,address,notes
 ?g_w3dMouseCursorAnims@@3PAPAXA,0x012F8530,W3DMouse cursor animation table
 ?g_w3dMouseCursorImages@@3PAPAXA,0x012F86C0,W3DMouse polygon cursor image table
 ?g_w3dMouseCursorModels@@3PAPAXA,0x012F85F8,W3DMouse cursor model table
-?g_w3dMouseCursorTextures@@3PAY0BF@PAVTextureClass@@A,0x012F8798,W3DMouse 50 by 21 cursor texture table
+?g_w3dMouseCursorTextures@@3PAY0BF@VBfmeHandleCX@@A,0x012F8798,route-type-correction=00C6C4A0 native1050 four-byte owning handle cells; mouse rawpointer member atoffset0
 ?g_w3dMouseD3DDevice@@3PAVD3DDeviceInterface@@A,0x01340534,W3DMouse destructor Direct3D device global
 ?g_w3dMouseDrawTarget@@3PAVW3DMouseDrawInterface@@A,0x012F4C5C,W3DMouse polling draw target
 ?g_w3dMouseIsThread@@3_NA,0x012F8788,W3DMouse polling-thread active flag
@@ -90305,3 +90305,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ?method@Rva00418200Owner@@QAEXI@Z,0x00418200,native126B thiscall RET4; SubObjectsUpgrade passes ExcludeSubobjects vector address; identity_evidence/00418200-exclusion-argument.md
 ?Rva008FF6A0@@YAXPAVRenderObjClass@@ABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@1H@Z,0x008FF6A0,native281B cdecl four words bareRET008FF7B8; recursive forwarding RenderObj pointer two STLport string references index; independent raw ABI review
 ?method@Rva000D0A30@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@W4Rva000D6C60Mapped@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@W4Rva000D6C60Mapped@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva000D6C60Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva000D6C60Mapped@@@_STL@@@2@@_STL@@XZ,0x0000CFE5,retail ILT route=0x000D0A30; sole opaque begin ABI owner; evidence=targets/game/reverse/identity_evidence/000d0a30-opaque-begin-abi.md
+??0BfmeHandleCX@@QAE@XZ,0x000110D6,route=0x0044F3C0; native00C6C4A0 array ctor pointer; thiscall four-byte texture handle null initialization returns this

@@ -167,7 +167,16 @@ private:
 	int m_currentFrames;
 };
 
-extern TextureClass *g_w3dMouseCursorTextures[50][21];
+// Four-byte owning texture handle. Retail static lifetime at 00C6C4A0
+// constructs 1050 cells; its destructor routes through 00030652 to 0005CC00.
+class BfmeHandleCX
+{
+public:
+	BfmeHandleCX();
+	~BfmeHandleCX();
+	TextureClass *rva00000000; // pointer at offset zero
+};
+extern BfmeHandleCX g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
 extern MouseThreadClass g_rva012F9808Object;
@@ -186,11 +195,11 @@ W3DMouse::W3DMouse() : m_camera(0)
 	{
 		for (int frame = 0; frame < 21; ++frame)
 		{
-			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame];
+			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame].rva00000000;
 			if (texture)
 			{
 				texture->Release_Ref();
-				g_w3dMouseCursorTextures[cursor][frame] = 0;
+				g_w3dMouseCursorTextures[cursor][frame].rva00000000 = 0;
 			}
 		}
 		g_w3dMouseCursorModels[cursor] = 0;
@@ -219,11 +228,11 @@ void W3DMouse::freeD3DAssets()
 	{
 		for (int frame = 0; frame < 21; ++frame)
 		{
-			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame];
+			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame].rva00000000;
 			if (texture)
 			{
 				texture->Release_Ref();
-				g_w3dMouseCursorTextures[cursor][frame] = noTexture;
+				g_w3dMouseCursorTextures[cursor][frame].rva00000000 = noTexture;
 			}
 		}
 	}
@@ -233,17 +242,17 @@ bool W3DMouse::releaseD3DCursorTextures(Mouse::MouseCursor cursor)
 {
 	D3DSurfaceInterface *noSurface = 0;
 	TextureClass *noTexture = 0;
-	if (cursor != NONE && g_w3dMouseCursorTextures[cursor][0] != 0)
+	if (cursor != NONE && g_w3dMouseCursorTextures[cursor][0].rva00000000 != 0)
 	{
 		for (int frame = 0; frame < 21; ++frame)
 		{
 			m_currentD3DSurface[frame] = noSurface;
 
-			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame];
+			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame].rva00000000;
 			if (texture)
 			{
 				texture->Release_Ref();
-				g_w3dMouseCursorTextures[cursor][frame] = noTexture;
+				g_w3dMouseCursorTextures[cursor][frame].rva00000000 = noTexture;
 			}
 		}
 	}
