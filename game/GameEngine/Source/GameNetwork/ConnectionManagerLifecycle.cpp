@@ -41,7 +41,7 @@ public:
  ~ConnectionManager();
  virtual void init();
  virtual void reset();
- virtual void update(bool isInGame, bool phase);
+ virtual void update(bool isInGame);
  Connection *m_connections[8];
  char m_commandHistoryStorage[0x12000];
  Transport *m_transport;

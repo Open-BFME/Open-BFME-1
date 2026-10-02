@@ -7,7 +7,7 @@
 
 #include <map>
 
-extern "C" int (__cdecl *__imp__atoi)( const char * );
+extern "C" int (__cdecl *_imp__atoi)( const char * );
 
 // The empty AsciiString fallback, retail 0x0107388B
 // (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
@@ -109,7 +109,8 @@ struct GameSpyInfo
 	__forceinline void clearAdditionalDisconnects() { m_vtbl->clearAdditionalDisconnects( this ); }
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // ?GetAdditionalDisconnectsFromUserFile@@YAXPAVPSPlayerStats@@@Z
 void GetAdditionalDisconnectsFromUserFile( PSPlayerStats *stats )
@@ -117,11 +118,11 @@ void GetAdditionalDisconnectsFromUserFile( PSPlayerStats *stats )
 	if ( !stats || stats->id == 0 )
 		return;
 
-	if ( TheGameSpyInfo->getAdditionalDisconnects() > 0
+	if ( reinterpret_cast<GameSpyInfo *>( TheGameSpyInfo )->getAdditionalDisconnects() > 0
 		&& !readAdditionalDisconnectsFromUserFile( stats->id ) )
-		TheGameSpyInfo->clearAdditionalDisconnects();
+		reinterpret_cast<GameSpyInfo *>( TheGameSpyInfo )->clearAdditionalDisconnects();
 
-	if ( TheGameSpyInfo->getAdditionalDisconnects() < 1 )
+	if ( reinterpret_cast<GameSpyInfo *>( TheGameSpyInfo )->getAdditionalDisconnects() < 1 )
 		return;
 
 	UserPreferences pref;
@@ -131,26 +132,26 @@ void GetAdditionalDisconnectsFromUserFile( PSPlayerStats *stats )
 
 	if ( pref.m_map.find( "0" ) != pref.m_map.m_end )
 	{
-		stats->desyncs[ 2 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "0" ) ) ) );
+		stats->desyncs[ 2 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "0" ) ) ) );
 	}
 	if ( pref.m_map.find( "1" ) != pref.m_map.m_end )
 	{
-		stats->desyncs[ 3 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "1" ) ) ) );
+		stats->desyncs[ 3 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "1" ) ) ) );
 	}
 	if ( pref.m_map.find( "2" ) != pref.m_map.m_end )
 	{
-		stats->desyncs[ 4 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "2" ) ) ) );
+		stats->desyncs[ 4 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "2" ) ) ) );
 	}
 	if ( pref.m_map.find( "3" ) != pref.m_map.m_end )
 	{
-		stats->discons[ 2 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "3" ) ) ) );
+		stats->discons[ 2 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "3" ) ) ) );
 	}
 	if ( pref.m_map.find( "4" ) != pref.m_map.m_end )
 	{
-		stats->discons[ 3 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "4" ) ) ) );
+		stats->discons[ 3 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "4" ) ) ) );
 	}
 	if ( pref.m_map.find( "5" ) != pref.m_map.m_end )
 	{
-		stats->discons[ 4 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "5" ) ) ) );
+		stats->discons[ 4 ] += (unsigned)abs( (*_imp__atoi)( prefStr( pref.m_map.find( "5" ) ) ) );
 	}
 }

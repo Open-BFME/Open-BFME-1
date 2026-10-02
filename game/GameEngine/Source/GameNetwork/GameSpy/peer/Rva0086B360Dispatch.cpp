@@ -77,7 +77,7 @@ extern "C"
 }
 
 extern int __cdecl bfmeMask(BfmeThingBW *thing);
-extern __declspec(dllimport) int __cdecl strcmpi(const char *left, const char *right);
+extern __declspec(dllimport) int __cdecl _strcmpi(const char *left, const char *right);
 
 #define PI_UTM_MATCH(text) (strncmp(piUTMCommand, text, 2) == 0)
 
@@ -122,7 +122,7 @@ extern "C" static __declspec(noinline) void piProcessUTM(PEER peer, piPlayer *pl
 		other = piFindPlayerByIP(peer, IP);
 		if (!other)
 			return;
-		if (strcmpi((const char *)player, (const char *)other) == 0)
+		if (_strcmpi((const char *)player, (const char *)other) == 0)
 			return;
 		if (inRoom && !player->inRoom[roomType])
 			return;

@@ -68,6 +68,12 @@
 
 #include "WWDownload/Registry.h"
 
+namespace _STL
+{
+template unsigned int __default_constructed<unsigned int>(unsigned int *);
+template unsigned int __default_constructed_aux<unsigned int>(unsigned int *, const __true_type &);
+}
+
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes
@@ -264,7 +270,7 @@ Int GetAdditionalDisconnectsFromUserFile(Int playerID)
 	return fileCount;
 }
 
-void GetAdditionalDisconnectsFromUserFile(PSPlayerStats *stats)
+inline void GetAdditionalDisconnectsFromUserFile(PSPlayerStats *stats)
 {
 	if (!stats || stats->id == 0) {
 		return;
