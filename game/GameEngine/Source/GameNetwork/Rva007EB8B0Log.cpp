@@ -17,12 +17,22 @@ extern "C"
 	int __cdecl vsprintf(char *buf, const char *fmt, char *args);
 }
 
+class BfmeBufVLR
+{
+public:
+	void bfmeSetSizeVLR(int size);
+	int m_bfme00;
+	int m_bfme04;
+	int m_bfme08;
+	char *m_bfme0c;
+	volatile int m_bfme10;
+};
+
 class Rva007EB8B0Log
 {
 public:
 	virtual void setFields_007EB760(int valueAt08, int valueAt04);
 	virtual void emit(char *buf);
-	void bfmeSetSizeVLR(int size);
 
 	int m_04;
 	int m_08;
@@ -33,7 +43,7 @@ public:
 void Rva007EB8B0(Rva007EB8B0Log *self, unsigned int need, const char *fmt, ...)
 {
 	if (need > (unsigned int)self->m_10 || !self->m_0C)
-		self->bfmeSetSizeVLR((int)need);
+		reinterpret_cast<BfmeBufVLR *>(self)->bfmeSetSizeVLR((int)need);
 	vsprintf(self->m_0C, fmt, (char *)(&fmt + 1));
 	self->emit(self->m_0C);
 	if (self->m_0C[self->m_10 - 1])

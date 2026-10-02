@@ -10,7 +10,7 @@ public:
 	static unsigned int decrement(unsigned int *value);	// retail 0x00894D90
 };
 
-void bfmeFreeBW(void *block);
+void bfmeDropA(void *block);
 
 class BfmeElemBW
 {
@@ -19,7 +19,7 @@ public:
 	{
 		if (m_bfmeBlockBW != 0 &&
 			Rva00894D90Accessor::decrement((unsigned int *)m_bfmeBlockBW) == 0)
-			bfmeFreeBW(m_bfmeBlockBW);
+			bfmeDropA(m_bfmeBlockBW);
 	}
 
 	__declspec(dllimport) static void operator delete(void *block, unsigned int size);

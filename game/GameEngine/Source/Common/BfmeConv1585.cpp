@@ -1,5 +1,7 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 extern "C" unsigned int __cdecl strlen(const char *text);
 
 extern "C" __declspec(dllimport) int __stdcall AIL_enumerate_3D_providers(int *next,
@@ -8,7 +10,6 @@ extern "C" __declspec(dllimport) int __stdcall AIL_enumerate_3D_providers(int *n
 class BfmeStrVSK
 {
 public:
-	void bfmeSetVSK(const char *text, int length);
 	char *m_bfme00;
 };
 
@@ -50,7 +51,7 @@ void BfmeAudioVSK::bfmeEnumVSK()
 		else
 			length = 0;
 
-		entry->m_bfme00.bfmeSetVSK(name, length);
+		reinterpret_cast<StringBase<char> &>(entry->m_bfme00).set(name, length);
 	}
 
 	m_bfme954 = count;
