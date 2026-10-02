@@ -12,6 +12,12 @@ same. Confirmed negative results receive a short retry window.
   python tools/finish_measure.py [--min-score 0.9] [--limit N]   # fill the cache
   python tools/finish_measure.py --report                          # author score vs measured
   python tools/finish_measure.py --one RVA STASH                   # resolve a manual probe
+  python tools/finish_measure.py --help
+
+No other argument is accepted. An unrecognised one used to fall through to the
+bulk pass, so `--help` -- or a mistyped flag -- started one compiler run per
+unmeasured body (350 probes, ~0 of them measurable without Wine) before
+printing the pass's result; `--help` and bad input now measure nothing.
 
 quality: 1.0 for EXACT, else 1 - (differing bytes + 2 x size error) / retail
 size, floored at 0; 0 for a confirmed source or missing-symbol failure.
@@ -433,24 +439,86 @@ def measure_one(rva, path):
     return 0
 
 
+USAGE = """\
+usage: finish_measure.py [--min-score SCORE] [--limit N]   # fill the cache
+       finish_measure.py --report [--min-score SCORE]      # author score vs measured
+       finish_measure.py --one RVA STASH                   # resolve a manual probe
+       finish_measure.py --help
+
+  --min-score SCORE  author-score admission floor, default 0.9
+  --limit N          how many unmeasured bodies to measure, default all of them
+  --report           print the comparison from the cache; measures nothing
+  --one RVA STASH    measure one banked body and print its probe command"""
+VALUE_OPTIONS = {"--min-score": float, "--limit": int}
+
+
+def parse_args(args):
+    """argv -> ((mode, options), error); `mode` is help, one, report or bulk.
+
+    An argument this tool does not implement used to reach the bulk pass, so
+    `--help` (or a mistyped flag) started one compiler run per unmeasured body
+    -- 350 probes on a 2026-10-02 audit host, before printing "0 of 350
+    measured". Decide the mode first, refuse the rest, measure nothing on the
+    way. Pure, so the dispatch is testable without a compiler.
+    """
+    if any(arg in ("-h", "--help") for arg in args):
+        return ("help", {}), ""
+    values, flags, operands, error = {}, [], [], ""
+    args = list(args)
+    while args and not error:
+        arg = args.pop(0)
+        name, separator, inline = arg.partition("=")
+        if name not in VALUE_OPTIONS:
+            (operands if not arg.startswith("-") else flags).append(arg)
+            continue
+        if separator:
+            value = inline
+        elif args and not args[0].startswith("-"):
+            value = args.pop(0)
+        else:
+            error = f"{name} needs a value"
+            continue
+        try:
+            values[name] = VALUE_OPTIONS[name](value)
+        except ValueError:
+            error = f"invalid value for {name}: {value!r}"
+    if error:
+        return (None, {}), error
+    floor = values.get("--min-score", 0.9)
+    if "--one" in flags:
+        if flags != ["--one"] or len(operands) != 2:
+            return (None, {}), "--one takes exactly RVA and STASH"
+        if values:
+            return (None, {}), f"--one takes no other option ({' '.join(sorted(values))})"
+        try:
+            rva = int(operands[0], 0)
+        except ValueError:
+            return (None, {}), f"invalid RVA {operands[0]!r}"
+        return ("one", {"rva": rva, "stash": operands[1]}), ""
+    unknown = [flag for flag in flags if flag != "--report"] + operands
+    if unknown:
+        return (None, {}), f"unrecognised argument(s): {' '.join(unknown)}"
+    if "--report" in flags:
+        if "--limit" in values:
+            return (None, {}), "--limit does not apply to --report; it measures nothing"
+        return ("report", {"floor": floor}), ""
+    return ("bulk", {"floor": floor, "limit": values.get("--limit", 10 ** 6)}), ""
+
+
 def main(argv=None):
     sys.path.insert(0, str(ROOT / "tools"))
+    (mode, options), error = parse_args(sys.argv[1:] if argv is None else argv)
+    if error:
+        print(f"finish_measure: {error}\n{USAGE}", file=sys.stderr)
+        return 2
+    if mode == "help":
+        print(USAGE)
+        return 0
+    if mode == "one":
+        return measure_one(options["rva"], options["stash"])
     import eligibility
-    args = list(sys.argv[1:] if argv is None else argv)
-    if "--one" in args:
-        if len(args) != 3 or args[0] != "--one":
-            print("usage: finish_measure.py --one RVA STASH", file=sys.stderr)
-            return 2
-        try:
-            rva = int(args[1], 0)
-        except ValueError:
-            print(f"finish_measure: invalid RVA {args[1]!r}", file=sys.stderr)
-            return 2
-        return measure_one(rva, args[2])
-    floor = float(args[args.index("--min-score") + 1]) if "--min-score" in args else 0.9
-    limit = int(args[args.index("--limit") + 1]) if "--limit" in args else 10 ** 6
-    bodies = [(eligibility.rva_of(row), path, score) for row, path, score in eligibility.finish_bodies(floor)]
-    if "--report" in args:
+    bodies = [(eligibility.rva_of(row), path, score) for row, path, score in eligibility.finish_bodies(options["floor"])]
+    if mode == "report":
         cache = load()
         rows = [(score, current(cache, rva, path), rva) for rva, path, score in bodies]
         measured = [(s, e, r) for s, e, r in rows if e]
@@ -461,9 +529,10 @@ def main(argv=None):
         print(f"  no longer compile: {broken}   EXACT already: {exact}   author score > measured by 0.2+: {over}")
         for s, e, r in sorted(measured, key=lambda t: t[0] - t[1]["quality"], reverse=True)[:15]:
             print(f"  0x{r:08X} author {s:.3f} measured {e['quality']:.3f} diffs={e.get('diffs', '-')} first=+{e.get('first', '-')}")
-        return
-    cache = ensure([(rva, path) for rva, path, _ in bodies], budget=limit)
+        return 0
+    cache = ensure([(rva, path) for rva, path, _ in bodies], budget=options["limit"])
     print(f"finish_measure: {sum(1 for rva, path, _ in bodies if current(cache, rva, path))} of {len(bodies)} measured")
+    return 0
 
 
 if __name__ == "__main__":

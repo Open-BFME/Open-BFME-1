@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import finish_measure  # noqa: E402
 import experiment_store  # noqa: E402
+import eligibility  # noqa: E402
 
 
 @pytest.fixture
@@ -234,3 +235,162 @@ def test_one_rejects_stale_compiler_dependencies_and_failed_probes(tmp_path, mon
     output = capsys.readouterr()
     assert "compiler unavailable" in output.err
     assert "probe:" not in output.out
+
+
+# --------------------------------------------------------------------------
+# Argument parsing: nothing reaches a compiler before the mode is decided.
+# --help and every rejected argument used to fall through to the bulk pass,
+# which spends one probe per unmeasured body.
+# --------------------------------------------------------------------------
+
+@pytest.fixture
+def no_measurement(monkeypatch):
+    """Make every entry point that can spend a compiler run loud about it."""
+    def forbidden(*args, **kwargs):
+        print("MEASUREMENT_REACHED", file=sys.stderr)
+        raise AssertionError("argument parsing must decide before any measurement")
+    for name in ("ensure", "measure", "measure_one", "save"):
+        monkeypatch.setattr(finish_measure, name, forbidden)
+    monkeypatch.setattr(eligibility, "finish_bodies", forbidden)
+    return forbidden
+
+
+@pytest.mark.parametrize("flag", ["--help", "-h"])
+def test_help_prints_usage_and_never_measures(flag, no_measurement, capsys):
+    assert finish_measure.main([flag]) == 0
+    output = capsys.readouterr()
+    assert "usage: finish_measure.py" in output.out
+    assert "--one RVA STASH" in output.out and "--report" in output.out
+    assert output.err == ""
+
+
+@pytest.mark.parametrize("argv,offending", [
+    (["--hepl"], "--hepl"),                       # a typo, not a flag
+    (["-x"], "-x"),
+    (["0x00000010"], "0x00000010"),               # a stray positional used to measure all 350
+    (["--min_score", "0.9"], "--min_score"),      # underscore spelling
+    (["--report-all"], "--report-all"),
+    (["--min-score"], "--min-score"),             # value missing: was an IndexError traceback
+    (["--limit"], "--limit"),
+    (["--min-score", "high"], "high"),
+    (["--limit", "many"], "many"),
+    (["--report", "--limit", "3"], "--limit"),
+    (["--one"], "--one"),
+    (["--one", "0x10"], "RVA and STASH"),
+    (["--one", "notanrva", "stash.cpp"], "notanrva"),
+    (["--one", "0x10", "stash.cpp", "--min-score", "0.5"], "--min-score"),
+    (["--report", "--one", "0x10", "stash.cpp"], "RVA and STASH"),
+])
+def test_unsupported_argument_is_refused_without_measuring(argv, offending, no_measurement, capsys):
+    assert finish_measure.main(argv) == 2
+    output = capsys.readouterr()
+    assert offending in output.err
+    assert "usage: finish_measure.py" in output.err
+    assert output.out == ""
+
+
+def test_parse_args_keeps_the_documented_bulk_and_report_arguments():
+    assert finish_measure.parse_args([]) == (("bulk", {"floor": 0.9, "limit": 10 ** 6}), "")
+    assert finish_measure.parse_args(["--min-score", "0.95", "--limit", "3"]) == (
+        ("bulk", {"floor": 0.95, "limit": 3}), "")
+    assert finish_measure.parse_args(["--limit=3"]) == (("bulk", {"floor": 0.9, "limit": 3}), "")
+    assert finish_measure.parse_args(["--report"]) == (("report", {"floor": 0.9}), "")
+    assert finish_measure.parse_args(["--report", "--min-score=0.5"]) == (("report", {"floor": 0.5}), "")
+    assert finish_measure.parse_args(["--one", "0x10", "banked.cpp"]) == (
+        ("one", {"rva": 16, "stash": "banked.cpp"}), "")
+
+
+def test_the_default_bulk_pass_still_measures_every_unmeasured_body(monkeypatch, capsys):
+    calls = {}
+    def finish_bodies(floor):
+        calls["floor"] = floor
+        return []
+    def ensure(bodies, budget):
+        calls["budget"] = budget
+        return {}
+    monkeypatch.setattr(eligibility, "finish_bodies", finish_bodies)
+    monkeypatch.setattr(finish_measure, "ensure", ensure)
+    assert finish_measure.main([]) == 0
+    assert calls == {"floor": 0.9, "budget": 10 ** 6}
+    assert "0 of 0 measured" in capsys.readouterr().out
+    assert finish_measure.main(["--min-score", "0.95", "--limit", "3"]) == 0
+    assert calls == {"floor": 0.95, "budget": 3}
+
+
+def test_report_still_reads_the_cache_and_measures_nothing(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(finish_measure, "CACHE", tmp_path / "cache.json")
+    monkeypatch.setattr(eligibility, "finish_bodies", lambda floor: [])
+    monkeypatch.setattr(finish_measure, "ensure", lambda *a, **kw: pytest.fail("--report must not measure"))
+    assert finish_measure.main(["--report"]) == 0
+    assert "0 of 0 finish stashes measured" in capsys.readouterr().out
+    assert not finish_measure.CACHE.exists()
+
+
+CLI_DRIVER = """\
+import sys
+from pathlib import Path
+sys.path.insert(0, {tools!r})
+import eligibility
+import finish_measure as f
+
+def forbidden(*args, **kwargs):
+    print("MEASUREMENT_REACHED", file=sys.stderr)
+    raise SystemExit(9)
+
+eligibility.finish_bodies = lambda floor: []      # a ledger walk, not a compile
+f.ensure = f.measure = f.measure_one = f.save = forbidden
+f.CACHE = Path({cache!r})
+raise SystemExit(f.main())
+"""
+
+
+def run_cli(tmp_path, *argv):
+    """The real command line in a subprocess: real sys.argv, real exit code.
+
+    Every side effect is replaced by a loud stub, so a parser that regressed
+    into the bulk pass fails the test instead of spending 350 compiler runs.
+    """
+    cache = tmp_path / "finish_measured.json"
+    driver = tmp_path / "cli.py"
+    driver.write_text(CLI_DRIVER.format(
+        tools=str(Path(finish_measure.__file__).parent), cache=str(cache)))
+    result = subprocess.run([sys.executable, str(driver), *argv],
+                            capture_output=True, text=True, timeout=60)
+    return result, cache
+
+
+@pytest.mark.parametrize("argv,code,needle", [
+    (("--help",), 0, "usage: finish_measure.py"),
+    (("-h",), 0, "usage: finish_measure.py"),
+    (("--report",), 0, "0 of 0 finish stashes measured"),
+    (("--hepl",), 2, "--hepl"),
+    (("--min_score", "0.9"), 2, "--min_score"),
+    (("0x00000010",), 2, "0x00000010"),
+    (("--min-score",), 2, "needs a value"),
+    (("--limit",), 2, "needs a value"),
+    (("--min-score", "high"), 2, "high"),
+    (("--limit", "many"), 2, "many"),
+    (("--report", "--limit", "3"), 2, "--limit"),
+    (("--one",), 2, "RVA and STASH"),
+    (("--one", "0x10"), 2, "RVA and STASH"),
+    (("--one", "notanrva", "banked.cpp"), 2, "notanrva"),
+    (("--one", "0x10", "banked.cpp", "--min-score", "0.5"), 2, "--min-score"),
+])
+def test_the_command_line_never_falls_through_to_the_measurement_pass(tmp_path, argv, code, needle):
+    result, cache = run_cli(tmp_path, *argv)
+    assert result.returncode == code, result.stderr
+    assert needle in result.stdout + result.stderr
+    assert "MEASUREMENT_REACHED" not in result.stderr, result.stderr
+    assert not cache.exists()
+
+
+@pytest.mark.parametrize("argv", [
+    (),                                              # no argument: the documented bulk pass
+    ("--min-score", "0.5", "--limit", "1"),          # bounded bulk pass
+    ("--one", "0x10", "banked.cpp"),                 # one manual probe
+])
+def test_the_documented_arguments_still_reach_their_pass(tmp_path, argv):
+    result, cache = run_cli(tmp_path, *argv)
+    assert result.returncode == 9, result.stderr      # the stub's own exit code
+    assert "MEASUREMENT_REACHED" in result.stderr
+    assert not cache.exists()
