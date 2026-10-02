@@ -31,7 +31,10 @@ public:
 		unsigned char secondSelector, unsigned char firstSelector);
 };
 
-extern BfmeDrawableEventManager *g_bfmeDrawableEventManager;
+// Retail defines this global in BaseHeightMap.cpp as BaseHeightMapRenderObjClass *.
+// The forwardDrawableEvent call is reached through the TU-local view above.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class BfmeDrawableEventForwarder
 {
@@ -57,7 +60,7 @@ void BfmeDrawableEventForwarder::forwardOnce(int, int, int)
 		BfmeDrawableEventRecord *record = forwarder->m_record;
 		if (record)
 		{
-			g_bfmeDrawableEventManager->forwardDrawableEvent(
+			reinterpret_cast<BfmeDrawableEventManager *>(TheTerrainRenderObject)->forwardDrawableEvent(
 				drawable->getID(), record->m_position,
 				record->m_secondSelector, record->m_firstSelector);
 		}

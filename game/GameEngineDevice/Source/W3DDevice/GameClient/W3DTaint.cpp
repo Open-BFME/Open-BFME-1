@@ -82,8 +82,10 @@ public:
 	void fillTaintSurface(unsigned char alpha, SurfaceClass *surface);
 };
 
-class HeightMapRenderObjClass;
-extern HeightMapRenderObjClass *TheTerrainRenderObject;
+// Incomplete here on purpose: this TU only reaches the global through a cast.
+// Retail defines it in BaseHeightMap.cpp as BaseHeightMapRenderObjClass.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class Rva00727E00Map
 {

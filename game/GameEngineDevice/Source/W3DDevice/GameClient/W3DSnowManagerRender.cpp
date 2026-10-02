@@ -52,8 +52,10 @@ struct Rva00725710Map {
     int originX,originY;
 };
 struct Rva00725710Terrain { char pad00[0x2FF4]; Rva00725710Map *map; };
-class HeightMapRenderObjClass;
-extern HeightMapRenderObjClass *TheTerrainRenderObject;
+// Incomplete here on purpose: this TU only reaches the global through a cast.
+// Retail defines it in BaseHeightMap.cpp as BaseHeightMapRenderObjClass.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 class View;
 extern View *TheTacticalView;
 // The 70 preceding vtable entries are unmodelled; retail calls +0x118.

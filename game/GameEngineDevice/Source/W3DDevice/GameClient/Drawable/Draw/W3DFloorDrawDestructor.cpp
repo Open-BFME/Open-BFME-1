@@ -31,7 +31,10 @@ public:
 	void loadSchemeVariant( void *rawHandle, AsciiString name );
 };
 
-extern Rva006CCCA0Owner *TheBfmeGlobal_012f7fe0;
+// Retail defines this global in BaseHeightMap.cpp as BaseHeightMapRenderObjClass *.
+// The loadSchemeVariant call is reached through the TU-local view above.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class Rva00759350TailDtor
 {
@@ -58,7 +61,7 @@ W3DFloorDraw::~W3DFloorDraw()
 		void *drawable = m_drawable;
 		if ( drawable )
 		{
-			TheBfmeGlobal_012f7fe0->loadSchemeVariant(
+			reinterpret_cast<Rva006CCCA0Owner *>(TheTerrainRenderObject)->loadSchemeVariant(
 				drawable,
 				*(const AsciiString *)((const char *)m_moduleData + 8) );
 		}

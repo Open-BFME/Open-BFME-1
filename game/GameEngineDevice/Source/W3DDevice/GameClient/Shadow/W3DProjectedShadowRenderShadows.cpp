@@ -263,7 +263,10 @@ struct TerrainDispatch007B6D30 {
 };
 class DX8MeshRendererClass { public: void *vptr; CameraClass *camera04; void Flush(); };
 extern DX8MeshRendererClass *TheDX8MeshRenderer;
-extern TerrainDispatch007B6D30 *terrain012F7FE0;
+// Retail defines this global in BaseHeightMap.cpp as BaseHeightMapRenderObjClass *.
+// The bounds call is reached through the TU-local dispatch view above.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern void *device01340534;
 extern const FrustumClass *shadowCameraFrustum;
 static int drawStartX, drawStartY, drawEdgeX, drawEdgeY;
@@ -287,10 +290,10 @@ int W3DProjectedShadowManager::renderShadows(RenderInfoClass &rinfo)
  static SphereClass sphere;
  int projectionCount=0;
  if (!m_shadowList && !m_decalList && !m_simpleDecalList && !m_1c) return projectionCount;
- if (!device01340534 || !terrain012F7FE0) return projectionCount;
+ if (!device01340534 || !TheTerrainRenderObject) return projectionCount;
  {
  Rect007B6D30 rect;
- terrain012F7FE0->bounds238(&rect);
+ reinterpret_cast<TerrainDispatch007B6D30 *>(TheTerrainRenderObject)->bounds238(&rect);
  drawStartX=rect.x0-4; drawStartY=rect.y0-4;
  drawEdgeX=rect.x1+4; drawEdgeY=rect.y1+4;
  }
