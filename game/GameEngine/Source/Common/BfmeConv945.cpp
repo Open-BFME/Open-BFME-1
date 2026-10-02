@@ -15,11 +15,22 @@ struct BfmeNode946
 	BfmeVec945A m_bfmeVec;
 };
 
-void *bfmeAlloc946(unsigned int n);
+// retail node allocation is STLport's static-lib __new_alloc::allocate at
+// 0x0082E540 (the sibling conv_* files spell it the same way).
+namespace _STL
+{
+
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int n);
+};
+
+}
 
 BfmeNode946 **__stdcall bfmeGo946A(BfmeNode946 **out, BfmeNode946 *pos, BfmeVec945A *val)
 {
-	BfmeNode946 *n = (BfmeNode946 *)bfmeAlloc946(0x14);
+	BfmeNode946 *n = (BfmeNode946 *)_STL::__new_alloc::allocate(0x14);
 	BfmeVec945A *dst = &n->m_bfmeVec;
 	if (dst) {
 		dst->m_bfmeX = val->m_bfmeX;
@@ -37,7 +48,7 @@ BfmeNode946 **__stdcall bfmeGo946A(BfmeNode946 **out, BfmeNode946 *pos, BfmeVec9
 
 BfmeNode946 **__stdcall bfmeGo946B(BfmeNode946 **out, BfmeNode946 *pos, BfmeVec945A *val)
 {
-	BfmeNode946 *n = (BfmeNode946 *)bfmeAlloc946(0x14);
+	BfmeNode946 *n = (BfmeNode946 *)_STL::__new_alloc::allocate(0x14);
 	BfmeVec945A *dst = &n->m_bfmeVec;
 	if (dst) {
 		dst->m_bfmeX = val->m_bfmeX;
