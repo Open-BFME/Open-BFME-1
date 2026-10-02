@@ -608,13 +608,7 @@ RenderObjClass * RenderObjClass::Get_Sub_Object_By_Name(const char * name, int *
  * HISTORY:                                                                                    *
  *   3/4/99     GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?RenderObjClass::Add_Sub_Object_To_Bone present-unmatched
-// BFME: retail takes a third parameter and passes it through to the (int) overload.
-int RenderObjClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, const Vector3 * offset)
-{
-	int bindex = Get_Bone_Index(bname);
-	return Add_Sub_Object_To_Bone(subobj,bindex,offset);
-}
+// Exact named-bone forwarding provider: RenderObjClass_Add_Sub_Object_To_Bone_Thunk.cpp.
 
 
 /***********************************************************************************************
@@ -657,11 +651,7 @@ int RenderObjClass::Remove_Sub_Objects_From_Bone(int boneindex)
  * HISTORY:                                                                                    *
  *   3/4/99     NH : Created.                                                                  *
  *=============================================================================================*/
-// ?RenderObjClass::Remove_Sub_Objects_From_Bone present-unmatched
-int RenderObjClass::Remove_Sub_Objects_From_Bone(const char * bname)
-{
-	return Remove_Sub_Objects_From_Bone(Get_Bone_Index(bname));
-}
+// Exact named-bone forwarding provider: RenderObjClass_Remove_Sub_Objects_From_Bone_Thunk.cpp.
 
 
 /***********************************************************************************************
