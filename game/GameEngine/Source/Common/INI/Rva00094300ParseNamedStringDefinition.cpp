@@ -20,9 +20,9 @@ private:
 	char m_unreconstructed[ 16 ];
 };
 
-class Rva00094470Definition;
+class Rva000940F0Definition;
 
-void Rva00094010Register( INI *ini, const AsciiString &name, Rva00094470Definition *definition );
+void Rva00094010Register( INI *ini, const AsciiString &name, Rva000940F0Definition *definition );
 
 class Rva00094300
 {
@@ -35,7 +35,7 @@ void Rva00094300::parseDefinition( INI *ini, void *, void *, const void * )
 {
 	const char *name = ini->getNextToken();
 	volatile const char *value = ini->getNextToken();
-	Rva00094010Register( ini, AsciiString( name ), reinterpret_cast<Rva00094470Definition *>( new BfmeRecVVJ(
+	Rva00094010Register( ini, AsciiString( name ), reinterpret_cast<Rva000940F0Definition *>( new BfmeRecVVJ(
 		reinterpret_cast<const BfmeStrVVJ &>( AsciiString( name ) ),
 		reinterpret_cast<const BfmeStrVVJ &>( AsciiString( const_cast<const char *>( value ) ) ) ) ) );
 }
