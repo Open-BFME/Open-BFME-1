@@ -5,7 +5,22 @@ struct Rva00891B80Block
 	unsigned short m_ref;
 };
 
-extern Rva00891B80Block g_default012D5298;
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is
+// named here through a file-local view cast at each use so the DIR32 target is
+// the one retail address.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+static inline Rva00891B80Block *rva012D5298Block()
+{
+	return (Rva00891B80Block *)&g_rva012D5298Empty;
+}
 
 struct Rva00891B80Pool
 {
@@ -21,8 +36,8 @@ class BfmeUtf8String008A01F0
 public:
 	BfmeUtf8String008A01F0()
 	{
-		m_block = &g_default012D5298;
-		++g_default012D5298.m_ref;
+		m_block = rva012D5298Block();
+		++rva012D5298Block()->m_ref;
 	}
 
 	~BfmeUtf8String008A01F0()
@@ -111,7 +126,7 @@ Rva008A9B00 *formatStringValue008B72B0(Rva008B6880 *src)
     if (obj) {
         g_rva008AAFD0Free = obj->m_next;
         g_bfmeRegistryVNF->addOrClear(obj);
-        if (obj->m_block != &g_default012D5298)
+        if (obj->m_block != rva012D5298Block())
             ((BfmeStrVKK *)&obj->m_block)->bfmeTruncVKK(0);
     } else {
         Rva008A9B00 *fresh = new Rva008A9B00();

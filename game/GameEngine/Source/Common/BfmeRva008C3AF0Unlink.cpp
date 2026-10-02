@@ -68,7 +68,22 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is
+// named here through a file-local view cast at each use so the DIR32 target is
+// the one retail address.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+static inline BfmeStringData3AF0 *rva012D5298Block()
+{
+	return (BfmeStringData3AF0 *)&g_rva012D5298Empty;
+}
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 extern BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
@@ -118,8 +133,8 @@ void __cdecl bfmeClearHash3AF0(void)
 		if (--data->m_refCount == 0)
 			g_bfmeStringPool1284->free(data);
 
-		++g_bfmeDefaultString1284.m_refCount;
-		*slot = &g_bfmeDefaultString1284;
+		++rva012D5298Block()->m_refCount;
+		*slot = rva012D5298Block();
 		++slot;
 	} while ((int)slot < (int)(void *)&Rva008AE770TheStack);
 }

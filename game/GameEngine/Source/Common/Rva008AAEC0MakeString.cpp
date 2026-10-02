@@ -18,7 +18,22 @@ class Rva008A9B00;
 
 struct AptValueRegistry;
 
-extern AptStringBlock g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is
+// named here through a file-local view cast at each use so the DIR32 target is
+// the one retail address.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+static inline AptStringBlock *rva012D5298Block()
+{
+	return (AptStringBlock *)&g_rva012D5298Empty;
+}
 extern AptStringPool *g_pool01337A30;
 extern AptValueRegistry *g_bfmeRegistryVNF;
 extern void *(__cdecl *g_aptAllocate)(unsigned int);
@@ -28,8 +43,8 @@ class BfmeUtf8String008A00C0
 public:
 	BfmeUtf8String008A00C0()
 	{
-		++g_bfmeDefaultString1284.m_refs;
-		m_data = &g_bfmeDefaultString1284;
+		++rva012D5298Block()->m_refs;
+		m_data = rva012D5298Block();
 	}
 
 	~BfmeUtf8String008A00C0()
@@ -110,7 +125,7 @@ Rva008A9B00 *rva8AAEC0MakeString(BfmeE1233 *source)
 	{
 		g_aptStringFreeList = object->m_next;
 		g_bfmeRegistryVNF->addOrClear(object);
-		if (object->m_string != &g_bfmeDefaultString1284)
+		if (object->m_string != rva012D5298Block())
 			((BfmeStrVKK *)&object->m_string)->bfmeTruncVKK(0);
 	}
 	else

@@ -15,7 +15,7 @@
 // already pinned g_bfmeRouteKeys1282 -- and 0x01338660): if either is
 // present, return false immediately. Otherwise, for every entry i whose
 // data pointer is neither null nor the shared empty-string sentinel
-// (g_bfmeDefaultString1284, the same VA already pinned as
+// (g_rva012D5298Empty, the same VA already pinned as
 // g_bfmeEmptyString1285 in the find() sibling), call the still-dump
 // BfmeTab1024::bfmeFind1024 (pinned ?bfmeFind1024@BfmeTab1024@@QAEHH@Z,
 // called with entry i's address reinterpreted as its int argument) and
@@ -46,7 +46,17 @@ class BfmeString0089CBA0
 	BfmeStringData0089CBA0 *m_data;
 };
 
-extern "C" char g_bfmeDefaultString1284[];
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  Here the
+// only use is an address comparison, so the canonical declaration is taken as
+// is and the DIR32 target is the one retail address.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 int bfmeCompareVSC(const char *left, const char *right);
 
 class BfmeTab1024
@@ -87,7 +97,7 @@ bool BfmeStringList0089CBA0::Rva0089D4C0()
 	for (int i = 0; i < m_count; ++i)
 	{
 		BfmeStringEntry0089CBA0 *outer = m_array + i;
-		if (outer->m_data == 0 || (void *)outer->m_data == (void *)g_bfmeDefaultString1284)
+		if (outer->m_data == 0 || (void *)outer->m_data == (void *)&g_rva012D5298Empty)
 			continue;
 
 		if (!((BfmeTab1024 *)this)->bfmeFind1024((int)outer))
@@ -98,7 +108,7 @@ bool BfmeStringList0089CBA0::Rva0089D4C0()
 			BfmeStringEntry0089CBA0 *inner = m_array + j;
 			if (inner->m_data == 0)
 				break;
-			if ((void *)inner->m_data == (void *)g_bfmeDefaultString1284)
+			if ((void *)inner->m_data == (void *)&g_rva012D5298Empty)
 				continue;
 
 			if (inner->m_data == outer->m_data)

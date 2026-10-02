@@ -2,11 +2,17 @@
 // Address-derived Apt handler at 0x008CD210. The top stack value supplies
 // a name; an empty name clears context +8, otherwise it resolves the name.
 struct Rva8CD130StringBlock { unsigned short m_refs; unsigned short m_length; };
-extern Rva8CD130StringBlock g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is
+// named here through a file-local view cast at each use so the DIR32 target is
+// the one retail address.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+static inline Rva8CD130StringBlock *rva012D5298Block() { return (Rva8CD130StringBlock *)&g_rva012D5298Empty; }
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 class Rva8CD130String {
 public:
- Rva8CD130String() { m_block=&g_bfmeDefaultString1284; ++g_bfmeDefaultString1284.m_refs; }
+ Rva8CD130String() { m_block=rva012D5298Block(); ++rva012D5298Block()->m_refs; }
  ~Rva8CD130String() { Rva8CD130StringBlock *block=m_block; --block->m_refs; if(block->m_refs==0) Rva01337A30ReleaseTable[1](block); }
  Rva8CD130StringBlock *m_block;
 };

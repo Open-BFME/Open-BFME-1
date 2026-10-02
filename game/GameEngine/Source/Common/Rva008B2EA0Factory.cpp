@@ -53,7 +53,22 @@ public:
 	void bfmeTruncVKK(unsigned int length);
 };
 
-extern AptStringBlock g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, with its
+// proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is
+// named here through a file-local view cast at each use so the DIR32 target is
+// the one retail address.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+static inline AptStringBlock *rva012D5298Block()
+{
+	return (AptStringBlock *)&g_rva012D5298Empty;
+}
 extern AptValueRegistry *g_bfmeRegistryVNF;
 extern Rva008A9B00 *g_aptStringFreeList;
 
@@ -66,7 +81,7 @@ Rva008B2EA0Node *rva008B2EA0Create()
 	{
 		g_aptStringFreeList = object->m_next;
 		g_bfmeRegistryVNF->addOrClear(object);
-		if (object->m_string != &g_bfmeDefaultString1284)
+		if (object->m_string != rva012D5298Block())
 			((BfmeStrVKK *)&object->m_string)->bfmeTruncVKK(0);
 	}
 	else
