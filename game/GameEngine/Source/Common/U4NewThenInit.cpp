@@ -90,18 +90,22 @@ public:
 	char m_body[ 0x74 ];
 };
 
-struct U4Store0060CD80
+// retail 0x012F706C: the map-info singleton, whose COFF name is
+// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv).  The only member this TU
+// needs is the EyeTower block parked at +0x28C.
+class BfmeGameCW
 {
+public:
 	char m_pad[ 0x28C ];
 	U4Thing0060CD80 *m_thing;
 };
 
-extern U4Store0060CD80 *g_u4Store0060CD80;
+extern BfmeGameCW *g_bfmeGameCW;
 extern const FieldParse g_u4FieldParse0060CD80[];
 
 void parseEyeTower( INI *ini )
 {
 	U4Thing0060CD80 *thing = new U4Thing0060CD80;
 	ini->initFromINI( thing, g_u4FieldParse0060CD80 );
-	g_u4Store0060CD80->m_thing = thing;
+	g_bfmeGameCW->m_thing = thing;
 }

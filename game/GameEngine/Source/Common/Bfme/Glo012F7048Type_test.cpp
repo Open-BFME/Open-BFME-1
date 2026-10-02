@@ -7,14 +7,17 @@
 
 typedef bool Bool;
 
-class BfmeGlobal012F706C
+// retail 0x012F706C: the singleton whose COFF name is
+// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv); only the byte at +0x288 is
+// read here.
+class BfmeGameCW
 {
 public:
 	unsigned char m_unmodelled_000[0x288];
 	Bool m_flag;						// +0x288
 };
 
-extern BfmeGlobal012F706C *TheBfmeGlobal012F706C;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Glo012F7048Type
 {
@@ -24,5 +27,5 @@ public:
 
 Bool Glo012F7048Type::test(void)
 {
-	return TheBfmeGlobal012F706C->m_flag;
+	return g_bfmeGameCW->m_flag;
 }

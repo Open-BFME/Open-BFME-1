@@ -13298,5 +13298,15 @@
   "after_sha256": "cf17182a9db0f8144249323564ce8ef98fe5a6682c9c4a4c3dcc25e2d49bd1e3",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U4CompareAndTailPoke.cpp",
+  "new_path": "game/GameEngine/Source/Common/U4CompareAndTailPoke.cpp",
+  "old_name": "poke",
+  "new_name": "rva006159c0",
+  "before_sha256": "a445d181c9f6d7bea04db75729cbf4dc1ffe707dd5f33abbde5b5b5012880b51",
+  "after_sha256": "99f146ca333e95c2cadcdf989f015b14a404db91695531d4c755cc06e1c5dd5c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

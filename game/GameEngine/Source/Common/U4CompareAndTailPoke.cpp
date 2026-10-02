@@ -69,12 +69,20 @@ bool __stdcall u4Less00605320( const U4Item00605320 &a, const U4Item00605320 &b 
 	return a.m_f08 < b.m_f08;
 }
 
-class U4Global006094C0
+// retail 0x012F706C: the singleton whose COFF name is
+// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv).  Nothing of its own layout
+// is read here.
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
+
+// The guarded tail call lands on retail 0x006159C0, already matched as
+// ?rva006159c0@BfmeLivingWorldManager@@QAEXXZ, whose sole matched caller is
+// this very body at 0x006094C0 (functions.csv row for 0x006159C0).
+class BfmeLivingWorldManager
 {
 public:
-	void poke( void );
+	void rva006159c0( void );
 };
-extern U4Global006094C0 *g_u4Global006094C0;
 
 class U4Self006094C0
 {
@@ -89,6 +97,6 @@ public:
 void U4Self006094C0::run( void )
 {
 	act( 0, 0 );
-	if ( g_u4Global006094C0 != 0 )
-		g_u4Global006094C0->poke();
+	if ( g_bfmeGameCW != 0 )
+		reinterpret_cast< BfmeLivingWorldManager * >( g_bfmeGameCW )->rva006159c0();
 }
