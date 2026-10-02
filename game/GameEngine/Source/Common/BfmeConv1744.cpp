@@ -3,8 +3,6 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 
-void __cdecl bfmeSendAT(void *first, void *second);
-
 void __cdecl bfmeRepeatAT(void *first, void *second)
 {
 	if (TheAudio == 0)
@@ -14,7 +12,7 @@ void __cdecl bfmeRepeatAT(void *first, void *second)
 
 	do
 	{
-		bfmeSendAT(first, second);
+		bfmeRepeatAT(first, second);
 		--count;
 	}
 	while (count != 0);

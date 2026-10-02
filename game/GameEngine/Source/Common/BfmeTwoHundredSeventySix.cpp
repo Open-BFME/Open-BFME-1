@@ -2,8 +2,12 @@
 // Two runs, this record's own and the one the caller brought, passed on as four
 // ends. Built without optimisation; the frame holds more than this body names.
 // The callee is pinned by address.
+// stlport
 
-void bfmeDoPQ(char *first, char *last, char *otherFirst, char *otherLast);
+#include <string>
+
+extern template int _STL::basic_string<char>::_M_compare(
+	const char *, const char *, const char *, const char *);
 
 struct BfmeThingPQ
 {
@@ -17,5 +21,6 @@ void BfmeThingPQ::bfmeGoPQ(const BfmeThingPQ *other)
 {
 	unsigned char spare[0x10];
 
-	bfmeDoPQ(m_bfmeAt, m_bfmeEnd, other->m_bfmeAt, other->m_bfmeEnd);
+	_STL::basic_string<char>::_M_compare(
+		m_bfmeAt, m_bfmeEnd, other->m_bfmeAt, other->m_bfmeEnd);
 }
