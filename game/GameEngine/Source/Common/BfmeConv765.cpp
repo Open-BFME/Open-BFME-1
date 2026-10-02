@@ -1,7 +1,10 @@
+// cl: /DNDEBUG /MD /EHs-c-
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include <new>
+
 class BfmeOtherDRC
 {
 public:
-	void bfmeCallDRC(int *cell);
 };
 
 class BfmeThingDRC
@@ -15,6 +18,7 @@ public:
 BfmeOtherDRC *BfmeThingDRC::bfmeGoDRC(BfmeOtherDRC *other, int row, int col)
 {
 	volatile int tmp = 0;
-	other->bfmeCallDRC(&m_bfmeGrid[row][col]);
+	__assume(other != 0);
+	new (other) AsciiString(*(const AsciiString *)&m_bfmeGrid[row][col]);
 	return other;
 }
