@@ -16,7 +16,6 @@ struct Rva005655C0PlayerList
 // Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
 class PlayerList;
 extern PlayerList *ThePlayerList;
-extern const char Rva006A16B0Empty[];
 
 void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
 	unsigned char preserveText)
@@ -34,7 +33,7 @@ void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
 		((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer != 0) {
 		char *storage = ((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer->m_nameStorage;
 		const char *text = storage != 0 ? storage + 8 :
-			Rva006A16B0Empty;
+			"";
 		char character;
 		do {
 			character = *text++;

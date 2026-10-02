@@ -96,7 +96,6 @@ public:
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 static inline Rva00367810Campaign *Rva00367810TheCampaignView() { return (Rva00367810Campaign *)TheLivingWorldLogic; }
-extern const char Rva006A16B0Empty[];
 
 extern void j_00026fc1();
 extern void j_0003fe09();
@@ -156,7 +155,7 @@ void Rva00367810Entry::update()
 	case 0:
 		message.format( AsciiString( "Auto-Summoning army %s into battle" ),
 			m_name != 0 ? (const char *)m_name + 8 :
-			Rva006A16B0Empty );
+			"" );
 		rva00367810Notify( message, Rva00367810TheCampaignView() );
 		if( m_state == 0 )
 		{
