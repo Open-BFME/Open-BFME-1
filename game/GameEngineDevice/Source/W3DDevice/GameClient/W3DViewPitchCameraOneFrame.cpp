@@ -3,8 +3,9 @@
 //
 // Ported from the Zero Hour twin (GeneralsMD/.../W3DView.cpp
 // W3DView::pitchCameraOneFrame) with one BFME-only addition: the blended
-// pitch is scaled by an extra global float (g_01075954, already pinned in
-// targets/game/reverse/symbols.csv) before landing in a field the ZH source doesn't have
+// pitch is scaled by an extra degrees-to-radians float constant (retail
+// 0x01075954, exactly float(pi/180)) before landing in a field the ZH source
+// doesn't have
 // at all -- probably a camera-effects-pitch-to-radians factor. TU-scoped,
 // address-derived W3DView layout for the same reason as
 // W3DViewZoomCameraOneFrame.cpp (BFME's W3DView has fields ahead of these
@@ -37,7 +38,13 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
-extern Real g_01075954;						// @ 0x01075954
+
+// Retail @ 0x01075954 holds 35 fa 8e 3c -- exactly float(pi/180) -- in read-only
+// .rdata, immediately before the ASCII literal "Function curve tangent angle
+// value...".  That is a compiler constant pool entry, not a written global, so
+// the scale factor is a TU-local constant here; spelling it as an extern made
+// this object reference a name nothing defines.
+static const Real s_01075954PitchToRadians = 0.017453292f;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
@@ -71,7 +78,7 @@ void W3DView::pitchCameraOneFrame(void)
 	{
 		// not just holding; do the camera adjustment
 		Real factor = m_pcEase(((Real)m_pcCurFrame) / m_pcNumFrames);
-		m_cameraPitchFX = WWMath::Lerp(m_pcStartPitch, m_pcEndPitch, factor) * g_01075954;
+		m_cameraPitchFX = WWMath::Lerp(m_pcStartPitch, m_pcEndPitch, factor) * s_01075954PitchToRadians;
 	}
 
 	if (m_pcCurFrame >= m_pcNumFrames) {
@@ -80,7 +87,7 @@ void W3DView::pitchCameraOneFrame(void)
 		__asm { fld dword ptr [esi + 240h] }
 		m_doingPitchCamera = false;
 		__asm {
-			fmul dword ptr [g_01075954]
+			fmul dword ptr [s_01075954PitchToRadians]
 			fstp dword ptr [esi + 6ch]
 		}
 	}

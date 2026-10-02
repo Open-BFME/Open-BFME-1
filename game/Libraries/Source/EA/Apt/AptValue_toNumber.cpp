@@ -8,7 +8,13 @@
 
 extern "C" float Rva008921B0Atof(const char *text);
 extern const float BfmeZeroRange;
-extern const float g_bfmeDefaultBU;
+
+// The true/false value is retail's 1.0f literal at VA 0x01075334 (bytes
+// 00 00 80 3f, in a .rdata pool of float literals: 1.0f, 3.0f, 0.5f, 4.0f),
+// so it is spelled as the compiler constant here.  Declaring it as an extern
+// float global made this object reference ?g_bfmeDefaultBU@@3MA, a name
+// nothing in the tree defines; the compiler emits the same __real@3f800000
+// COMDAT literal at the same retail operand.
 
 struct AptStringData
 {
@@ -61,7 +67,7 @@ float AptValue::toNumber()
 		}
 
 		case 5:
-			return m_boolean ? g_bfmeDefaultBU : BfmeZeroRange;
+			return m_boolean ? 1.0f : BfmeZeroRange;
 
 		case 7:
 			return static_cast<float>(m_integer);
@@ -70,6 +76,6 @@ float AptValue::toNumber()
 			return m_float;
 
 		default:
-			return (this != g_bfmeFallbackDB) ? g_bfmeDefaultBU : BfmeZeroRange;
+			return (this != g_bfmeFallbackDB) ? 1.0f : BfmeZeroRange;
 	}
 }
