@@ -55,10 +55,20 @@ public:
 	Int bfmeVisit(BfmeObjectVisitor, void *);
 };
 
-extern void __cdecl bfmeTeamGiveExperienceLevelVisitor(Object *, void *);
-extern void __cdecl bfmeTeamGiveExperiencePointsVisitor(Object *, void *);
-extern void __cdecl bfmeTeamSetExperiencePointsVisitor(Object *, void *);
-extern void __cdecl bfmeTeamRefreshExperienceVisitor(Object *, void *);
+// The visitor pointers in these actions are retail ILTs 0x25301,
+// 0x1ACB7, 0xA95C and 0x29CD, reaching the existing providers below.
+// Each is cdecl and returns 1 in EAX. BfmeInnerIterable::bfmeVisit casts
+// its opaque callback slot back to an int-returning callback before calling
+// it; it supplies two dwords, of which the refresh callback uses only one.
+class BfmeAgentBS;
+class BfmeInfoBS;
+struct BfmeObjectD120;
+struct BfmeObjectD150;
+struct BfmeOwnerBHE;
+extern int __cdecl bfmeApplyBS(BfmeAgentBS *, BfmeInfoBS *);
+extern int __cdecl bfmeRva0037D120AddExperience(BfmeObjectD120 *, int);
+extern int __cdecl bfmeRva0037D150Apply(BfmeObjectD150 *, int);
+extern int __cdecl bfmeGoBHE(BfmeOwnerBHE *);
 
 class ExperienceLevelSystem
 {
@@ -139,8 +149,8 @@ void ScriptActions::doTeamGiveExperienceLevel(
 	}
 
 	BfmeInnerIterable *members = (BfmeInnerIterable *)team;
-	members->bfmeVisit(bfmeTeamGiveExperienceLevelVisitor, level);
-	members->bfmeVisit(bfmeTeamRefreshExperienceVisitor, 0);
+	members->bfmeVisit(reinterpret_cast<BfmeObjectVisitor>(bfmeApplyBS), level);
+	members->bfmeVisit(reinterpret_cast<BfmeObjectVisitor>(bfmeGoBHE), 0);
 }
 
 // ?doTeamGiveExperiencePoints@ScriptActions@@IAEXABVAsciiString@@H@Z
@@ -153,7 +163,7 @@ void ScriptActions::doTeamGiveExperiencePoints(
 	}
 
 	((BfmeInnerIterable *)team)->bfmeVisit(
-		bfmeTeamGiveExperiencePointsVisitor, (void *)points);
+		reinterpret_cast<BfmeObjectVisitor>(bfmeRva0037D120AddExperience), (void *)points);
 }
 
 // ?doTeamSetExperiencePoints@ScriptActions@@IAEXABVAsciiString@@H@Z
@@ -166,6 +176,6 @@ void ScriptActions::doTeamSetExperiencePoints(
 	}
 
 	BfmeInnerIterable *members = (BfmeInnerIterable *)team;
-	members->bfmeVisit(bfmeTeamSetExperiencePointsVisitor, (void *)points);
-	members->bfmeVisit(bfmeTeamRefreshExperienceVisitor, 0);
+	members->bfmeVisit(reinterpret_cast<BfmeObjectVisitor>(bfmeRva0037D150Apply), (void *)points);
+	members->bfmeVisit(reinterpret_cast<BfmeObjectVisitor>(bfmeGoBHE), 0);
 }
