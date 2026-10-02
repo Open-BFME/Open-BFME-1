@@ -10837,7 +10837,7 @@
   "before_sha256": "f7e5d09f1cbf930ac788454f477de0f8a34230a240809a07b39ad4de302464bb",
   "after_sha256": "d2b55bf8e53365558121bbc7b5b9e7ba359746f86886b4d7d44fffbbd6e4b1ec",
   "evidence": "targets/game/reverse/identity_evidence/00905140-gen-handle.md",
-  "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank\u2019s RefCountPtr<TextureClass> return."
+  "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank’s RefCountPtr<TextureClass> return."
  },
  {
   "old_path": "targets/game/reverse/attempts/0x00410f90.cpp",
@@ -14188,5 +14188,65 @@
   "after_sha256": "6a225825a37c9842cc168de89eac323410eb65746c0dcae556c112bb7cbc1c4d",
   "evidence": "targets/game/reverse/identity_evidence/0x001ebbc0-update-callees.md",
   "reason": "False pairing: flags shim becomes the existing BitFlags<17> typedef; independently proven Object field accessor uses its existing address-derived provider identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "chatKickUserA",
+  "new_name": "dup_00861510",
+  "before_sha256": "fd77e5150aa358d86dacafd178f651737a52ca7942917d4d717cabad4a777819",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot is the individual source-language-move commit."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "piOperationsCleanup",
+  "new_name": "Rva0085EFA0",
+  "before_sha256": "fd77e5150aa358d86dacafd178f651737a52ca7942917d4d717cabad4a777819",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot is the individual source-language-move commit."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "piSendStateChanged",
+  "new_name": "Rva008667A0",
+  "before_sha256": "fd77e5150aa358d86dacafd178f651737a52ca7942917d4d717cabad4a777819",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot is the individual source-language-move commit."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "chatKickUserA",
+  "new_name": "dup_00861510",
+  "before_sha256": "6c685c1e33f9c8824fc08c11b5d9ad0b9e25420a544043a9850110d7d7d41367",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot includes preceding cleanup-only commit."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "piOperationsCleanup",
+  "new_name": "Rva0085EFA0",
+  "before_sha256": "6c685c1e33f9c8824fc08c11b5d9ad0b9e25420a544043a9850110d7d7d41367",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot includes preceding cleanup-only commit."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.c",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerMainBlockingOperations.cpp",
+  "old_name": "piSendStateChanged",
+  "new_name": "Rva008667A0",
+  "before_sha256": "6c685c1e33f9c8824fc08c11b5d9ad0b9e25420a544043a9850110d7d7d41367",
+  "after_sha256": "9395c12a6ad0426812f877a91fb2e70b01da0d9bc45dcff4f54eff1e1556cba4",
+  "evidence": "targets/game/reverse/identity_evidence/peer-main-provider-bindings.md",
+  "reason": "Existing-provider external declaration binding only; independently decoded retail call and exact provider signature identify the target. No implementation or ledger identity renamed. Snapshot includes preceding cleanup-only commit."
  }
 ]
