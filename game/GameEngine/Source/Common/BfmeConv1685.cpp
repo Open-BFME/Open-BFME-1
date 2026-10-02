@@ -1,10 +1,22 @@
+// cl: /O2 /DNDEBUG /MD
+// The call at +0x1E is the reference-replacement body at 0x0091FC90, defined by
+// game/GameEngine/Source/Common/Rva0091FC90ReferenceSet.cpp under its real
+// mangled name.  Its receiver layout is this file's BfmeTargetEW (the pointer
+// both classes keep at +0x9C), so the target is cast to the owning class rather
+// than a bfmeSetReferenceEW nothing defines.
+
 class BfmeRefEW;
+
+class Rva0091FC90Reference;
+class Rva0091FC90Owner
+{
+public:
+	void setReference(Rva0091FC90Reference *reference);
+};
 
 class BfmeTargetEW
 {
 public:
-	void bfmeSetReferenceEW(BfmeRefEW *reference);
-
 	unsigned char m_bfmeHeadEW[0x9c];
 	int m_bfmeLockEW;
 };
@@ -33,5 +45,5 @@ void BfmeOwnerEW::bfmeApplyEW(void)
 	if (target->m_bfmeLockEW != 0)
 		return;
 
-	target->bfmeSetReferenceEW(reference);
+	((Rva0091FC90Owner *)target)->setReference((Rva0091FC90Reference *)reference);
 }
