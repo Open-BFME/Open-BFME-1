@@ -29,7 +29,6 @@ public:
 // BfmeR1253 is only the slot view used at the call sites below.
 class View;
 extern View *TheTacticalView;
-extern const float g_bfmeK1253;
 
 class BfmeA1253
 {
@@ -42,7 +41,7 @@ public:
 
 void BfmeA1253::bfmeDraw1253(BfmeVec1253 p)
 {
-	p.m_bfme08 = p.m_bfme08 - *(volatile float *)&m_bfme28 * g_bfmeK1253;
+	p.m_bfme08 = p.m_bfme08 - *(volatile float *)&m_bfme28 * 0.5f;
 	((BfmeR1253 *)TheTacticalView)->bfmeMark1253(&p, m_bfme24, 0xccaaffff, 0);
 	p.m_bfme08 = p.m_bfme08 + m_bfme28;
 	((BfmeR1253 *)TheTacticalView)->bfmeMark1253(&p, m_bfme24, 0xccaaffff, 0);

@@ -8,7 +8,8 @@ extern void j_00037e34();
 extern void j_0000d3b9();
 extern void j_0003a17a();
 extern bool Glo012F0239;
-extern void *TheCRCParameterCheck;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 
 enum StateReturnType
 {

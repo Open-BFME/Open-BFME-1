@@ -114,7 +114,6 @@ public:
 class InGameUI;
 
 extern InGameUI *TheInGameUI;		// retail 0x012F148C
-extern const float g_bfmeK1256;
 
 class BfmeQ1256
 {
@@ -163,7 +162,7 @@ void BfmeA1256::bfmeDraw1256(BfmeS1256 *a, int b)
 	q = &m_bfme08->m_bfme38;
 	v.m_bfme00 = q->m_bfme00;
 	v.m_bfme04 = q->m_bfme04;
-	v.m_bfme08 = *(volatile float *)&q->m_bfme08 + g_bfmeK1256;
+	v.m_bfme08 = *(volatile float *)&q->m_bfme08 + 10.0f;
 	c = ((BfmeQ1256 *)((Object *)a)->getControllingPlayer())->m_bfme1c4 | 0xe6000000;
 	((BfmeR1256 *)TheInGameUI)->bfmeMark1256(b, &v, c);
 }
