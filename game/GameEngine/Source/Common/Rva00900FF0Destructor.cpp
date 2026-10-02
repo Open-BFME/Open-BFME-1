@@ -104,19 +104,11 @@ struct Rva00900FF0VectorHolder
 	Rva00900FF0Elem4 *m_endOfStorage;
 };
 
-class StringClass
-{
-public:
-	~StringClass()
-	{
-		Free_String();
-	}
-
-	void Free_String( void );
-
-private:
-	char *m_buffer;
-};
+// m_str14/m_str18 are real StringClass members.  A TU-local stand-in spelled
+// Free_String public, so it referenced ?Free_String@StringClass@@QAEXXZ; retail
+// mangles the private WWLib member ?Free_String@StringClass@@AAEXXZ (declared
+// private in wwstring.h, matched at 0x009DB7A0).  Use the real header.
+#include "../../../Libraries/Source/WWVegas/WWLib/wwstring.h"
 
 class BfmeThingUB
 {

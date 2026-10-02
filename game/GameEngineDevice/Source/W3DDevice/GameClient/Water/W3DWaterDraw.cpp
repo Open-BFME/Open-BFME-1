@@ -10,6 +10,13 @@
 // ww3d.h comes first: it defines MESH_RENDER_SNAPSHOT_ENABLED, which is what
 // puts the StringClass temporaries retail shows into the inline
 // DX8Wrapper::Set_Shader and Set_DX8_Texture_Stage_State bodies.
+// StringClass must keep WWLib's real access specifiers: retail mangles its
+// private Free_String as ?Free_String@StringClass@@AAEXXZ (matched at
+// 0x009DB7A0), while parsing wwstring.h under the private->public below would
+// spell every reference ?Free_String@StringClass@@QAEXXZ. Nothing here reaches
+// a private member -- the inline ~StringClass the snapshot temporaries run is
+// inside the class -- so parse the header first, honestly.
+#include "wwstring.h"
 #define private public
 #define protected public
 #include "game/Libraries/Source/WWVegas/WW3D2/ww3d.h"

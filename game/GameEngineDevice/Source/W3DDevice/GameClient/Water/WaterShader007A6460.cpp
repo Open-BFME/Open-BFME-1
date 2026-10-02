@@ -1,6 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /I.
 // BFME RVA 0x007A6460. Whole-body reconstruction from retail and ZH setupJbaWaterShader.
 // BFME adds one settings pointer; ret 4. No EH, 0x154-byte local frame.
+// StringClass must keep WWLib's real access specifiers: retail mangles its
+// private Free_String as ?Free_String@StringClass@@AAEXXZ (matched at
+// 0x009DB7A0), while parsing wwstring.h under the private->public below would
+// spell every reference -- including the ones the inline dx8wrapper.h bodies
+// emit -- ?Free_String@StringClass@@QAEXXZ. Parse the header first, honestly.
+#include "wwstring.h"
 #define private public
 #define protected public
 #include "game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h"
