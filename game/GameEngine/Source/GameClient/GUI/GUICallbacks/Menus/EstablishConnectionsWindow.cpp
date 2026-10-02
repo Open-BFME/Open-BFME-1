@@ -119,7 +119,11 @@ public:
 	virtual GameWindow *winGetWindowFromId( GameWindow *parent, NameKeyType id );
 };
 
-class BfmeEstablishGameSpyGame
+// The pointer this TU reads at 0x012F7198 is retail's staging-room global
+// `GameSpyStagingRoom *TheGameSpyGame'
+// (?TheGameSpyGame@@3PAVGameSpyStagingRoom@@A), so the class is spelled with its
+// defining name; only the byte at this+0x43c is modelled here.
+class GameSpyStagingRoom
 {
 public:
 	char m_padding[0x43c];
@@ -138,7 +142,7 @@ static inline BfmeEstablishWindowManager *localWindowManager()
 {
 	return (BfmeEstablishWindowManager *)TheWindowManager;
 }
-extern BfmeEstablishGameSpyGame *TheGameSpyGame;
+extern GameSpyStagingRoom *TheGameSpyGame;
 extern void ShowUnderlyingGUIElements( bool show, const char *layoutFilename,
 	const char *parentName, const char **gadgetsToHide,
 	const char **perPlayerGadgetsToHide );

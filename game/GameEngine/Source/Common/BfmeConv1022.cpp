@@ -176,7 +176,12 @@ void BfmeI1022::bfmeGo1022I(void)
 	}
 }
 
-class BfmeK1022
+// The global this TU reaches at 0x012F7198 is retail's staging-room pointer
+// `GameSpyStagingRoom *TheGameSpyGame'
+// (?TheGameSpyGame@@3PAVGameSpyStagingRoom@@A), so the type is named with its
+// defining spelling to keep the extern's mangled name exact; only the slots
+// this body calls are modelled, and their names are address-derived.
+class GameSpyStagingRoom
 {
 public:
 	virtual void bfmeVK01022();
@@ -185,7 +190,7 @@ public:
 	virtual void bfmeSend1022(int n);
 };
 
-extern BfmeK1022 *g_bfmeK1022;
+extern GameSpyStagingRoom *TheGameSpyGame;
 
 class BfmeJ1022
 {
@@ -204,7 +209,7 @@ void BfmeJ1022::bfmeGo1022J(int unused)
 
 	if (m_bfmeFlag != 0) {
 		m_bfmeFlag = 0;
-		g_bfmeK1022->bfmeSend1022(0);
+		TheGameSpyGame->bfmeSend1022(0);
 	}
 }
 

@@ -19,7 +19,12 @@ public:
 	virtual void slot20();
 };
 
-class Rva004C84C0B
+// The global this TU reads at 0x012F7198 is retail's staging-room pointer
+// `GameSpyStagingRoom *TheGameSpyGame'
+// (?TheGameSpyGame@@3PAVGameSpyStagingRoom@@A), so the type is named with its
+// defining spelling to keep the extern's mangled name exact; only the flag byte
+// at this+0x43c is modelled.
+class GameSpyStagingRoom
 {
 public:
 	char m_pad[0x43c];
@@ -27,7 +32,7 @@ public:
 };
 
 extern Rva004C84C0Obj *g_rva004C84C0A;
-extern Rva004C84C0B *g_rva004C84C0B;
+extern GameSpyStagingRoom *TheGameSpyGame;
 extern void *g_rva004C84C0_12b6a34;
 extern void *g_rva004C84C0_12b6a38;
 extern char g_rva004C84C0_12b6a3c;
@@ -54,7 +59,7 @@ void rva004C84C0Teardown(void)
 	p = g_rva004C84C0A;
 	if (p)
 		p->slot04(1);
-	if (!g_rva004C84C0B->m_flag43c)
+	if (!TheGameSpyGame->m_flag43c)
 	{
 		g_rva004C84C0A = 0;
 		ShowUnderlyingGUIElements(
