@@ -5,34 +5,23 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <list>
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
 
 typedef bool Bool;
-typedef int ObjectID;
-
-class Object;
-
-typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
-
-class GameLogic
-{
-public:
-	Object *findObjectByID(ObjectID id)
-	{
-		if (id == 0)
-			return 0;
-
-		ObjectPtrHash::iterator it = m_objHash.find(id);
-		if (it == m_objHash.end())
-			return 0;
-		return (*it).second;
-	}
-
-private:
-	char m_pad000[0xB0];
-	ObjectPtrHash m_objHash;
-};
 
 extern GameLogic *TheGameLogic;
+
+static __forceinline Object *__fastcall findObjectByIDInline(GameLogic *logic, ObjectID id)
+{
+	if (id == 0)
+		return 0;
+
+	ObjectPtrHash *objHash = (ObjectPtrHash *)((char *)logic + 0xB0);
+	ObjectPtrHash::iterator it = objHash->find(id);
+	if (it == objHash->end())
+		return 0;
+	return (*it).second;
+}
 
 class Object
 {
@@ -59,7 +48,7 @@ Bool SpawnBehavior::canAnySlavesAttack()
 	SpawnBehavior *self = this;
 	for (_STL::list<ObjectID>::iterator it = self->m_spawnIDs.begin(); it != self->m_spawnIDs.end(); ++it)
 	{
-		Object *obj = TheGameLogic->findObjectByID(*it);
+		Object *obj = findObjectByIDInline(TheGameLogic, *it);
 		if (obj)
 		{
 			if (obj->isAbleToAttack())

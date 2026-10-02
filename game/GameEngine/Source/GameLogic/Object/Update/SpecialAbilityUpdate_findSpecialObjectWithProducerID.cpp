@@ -5,8 +5,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <list>
-
-typedef int ObjectID;
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
 
 class Object
 {
@@ -27,29 +26,19 @@ private:
 	ObjectID m_producerID;
 };
 
-typedef _STL::hash_map<ObjectID, Object *> ObjectPtrHash;
-
-class GameLogic
-{
-public:
-	Object *findObjectByID(ObjectID id)
-	{
-		if (id == 0)
-			return 0;
-
-		ObjectPtrHash::iterator it = m_objHash.find(id);
-		if (it == m_objHash.end())
-			return 0;
-
-		return (*it).second;
-	}
-
-private:
-	char m_pad[0xb0];
-	ObjectPtrHash m_objHash;
-};
-
 extern GameLogic *TheGameLogic;
+
+static __forceinline Object *__fastcall findObjectByIDInline(GameLogic *logic, ObjectID id)
+{
+	if (id == 0)
+		return 0;
+
+	ObjectPtrHash *objHash = (ObjectPtrHash *)((char *)logic + 0xB0);
+	ObjectPtrHash::iterator it = objHash->find(id);
+	if (it == objHash->end())
+		return 0;
+	return (*it).second;
+}
 
 class SpecialAbilityUpdate
 {
@@ -69,7 +58,7 @@ Object *SpecialAbilityUpdate::findSpecialObjectWithProducerID(const Object *targ
 	for (i = m_specialObjectIDList.begin();
 		i != m_specialObjectIDList.end(); ++i)
 	{
-		specialObject = TheGameLogic->findObjectByID(*i);
+		specialObject = findObjectByIDInline(TheGameLogic, *i);
 		if (specialObject)
 		{
 			if (specialObject->getProducerID() == target->getID())
