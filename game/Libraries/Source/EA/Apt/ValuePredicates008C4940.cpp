@@ -39,7 +39,7 @@ int ValuePredicates008C4940::isType11_008C49C0() {
     return 0;
 }
 struct StringData008C49E0 { unsigned short refs,length,capacity,flags; };
-int bfmeCompareVSC(const char *,const char *);
+extern "C" int __cdecl _strcmpi(const char *,const char *);
 class StringEqual008C49E0 {
 public:
     StringData008C49E0 *m_data;
@@ -48,5 +48,5 @@ public:
 unsigned char StringEqual008C49E0::equals(const StringEqual008C49E0 &other) const {
     if(m_data->length != other.m_data->length) return false;
     if(m_data == other.m_data) return true;
-    return bfmeCompareVSC((const char *)(m_data+1),(const char *)(other.m_data+1))==0;
+    return _strcmpi((const char *)(m_data+1),(const char *)(other.m_data+1))==0;
 }
