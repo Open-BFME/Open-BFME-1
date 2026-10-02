@@ -1207,45 +1207,54 @@ def _write_deps_sidecar(source, output, fingerprint, stdout_text, is_cl,
     tmp.replace(_deps_sidecar(output))
 
 
+def _compile_receipt_preflight(source, output):
+    """Shared receipt checks that precede any compiler/tool discovery."""
+    sidecar = _deps_sidecar(output)
+    if not output.exists() or not sidecar.exists():
+        return None
+    try:
+        meta = json.loads(sidecar.read_text())
+    except (OSError, ValueError):
+        return None
+    if (not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict)
+            or not isinstance(meta.get("source"), str) or not meta["source"]):
+        return None
+    if not all(cache_path_is_valid(path) and isinstance(digest, str) and digest
+               for path, digest in meta["deps"].items()):
+        return None
+    if not isinstance(meta.get("retry_dirs", []), list) or not all(
+            isinstance(path, str) for path in meta.get("retry_dirs", [])):
+        return None
+    is_cl = source.suffix.lower() != ".asm"
+    if meta.get("version") not in (None, 2):
+        return None
+    if not is_cl and meta.get("version") is None:
+        try:
+            text = source.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            return None
+        if re.search(r"^\s*include\s", text, re.IGNORECASE | re.MULTILINE):
+            return None  # Old assembler receipts did not prove include bytes.
+    legacy_header_free = is_cl and meta.get("version") is None
+    if legacy_header_free and meta.get("deps") != {}:
+        return None
+    retry_dirs = meta.get("retry_dirs", [])
+    if retry_dirs:
+        current = [d.relative_to(ROOT).as_posix() for d in _SWEEP_INCLUDE_DIRS if d.exists()]
+        if retry_dirs != current:
+            return None
+    return meta, is_cl, legacy_header_free, retry_dirs
+
+
 def compile_is_current(source, output, *, check_command=True, inventory_cache=None):
     """Reuse only when command, source, included headers and search paths agree.
     This is what makes skipping a TU in the full gate safe — the old behavior
     (recompile everything / trust BUILD_RECOMPILE_ONLY blindly) either burned
     ~17 min per gate or could re-verify a stale obj after a header edit."""
-    sidecar = _deps_sidecar(output)
-    if not output.exists() or not sidecar.exists():
+    receipt = _compile_receipt_preflight(source, output)
+    if receipt is None:
         return False
-    try:
-        meta = json.loads(sidecar.read_text())
-    except (OSError, ValueError):
-        return False
-    if (not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict)
-            or not isinstance(meta.get("source"), str) or not meta["source"]):
-        return False
-    if not all(cache_path_is_valid(path) and isinstance(digest, str) and digest
-               for path, digest in meta["deps"].items()):
-        return False
-    if not isinstance(meta.get("retry_dirs", []), list) or not all(
-            isinstance(path, str) for path in meta.get("retry_dirs", [])):
-        return False
-    is_cl = source.suffix.lower() != ".asm"
-    if meta.get("version") not in (None, 2):
-        return False
-    if not is_cl and meta.get("version") is None:
-        try:
-            text = source.read_text(encoding="utf-8", errors="replace")
-        except OSError:
-            return False
-        if re.search(r"^\s*include\s", text, re.IGNORECASE | re.MULTILINE):
-            return False  # Old assembler receipts did not prove include bytes.
-    legacy_header_free = is_cl and meta.get("version") is None
-    if legacy_header_free and meta.get("deps") != {}:
-        return False
-    retry_dirs = meta.get("retry_dirs", [])
-    if retry_dirs:
-        current = [d.relative_to(ROOT).as_posix() for d in _SWEEP_INCLUDE_DIRS if d.exists()]
-        if retry_dirs != current:
-            return False
+    meta, is_cl, legacy_header_free, retry_dirs = receipt
     if check_command:
         command, env = compiler_command(source, output)
         if meta.get("cmd") != _cmd_fingerprint(command, env):
@@ -2562,6 +2571,29 @@ def _stale_chunk(pairs):
     return stale
 
 
+def _warm_stale_paths(pairs):
+    """Convert only paths reached by valid receipts, in the parent process."""
+    reachable = False
+    for source, output in pairs:
+        if _compile_receipt_preflight(source, output) is not None:
+            compiler_command(source, output)
+            reachable = True
+    if reachable and os.name != "nt":
+        wine_path(ROOT)  # _portable uses this while fingerprinting the command.
+    with _WINE_PATH_LOCK:
+        return dict(_WINE_PATH_CACHE)
+
+
+def _stale_paths_init(paths):
+    """Seed only canonical path conversions; all currentness checks stay local."""
+    if not isinstance(paths, dict) or not all(
+            isinstance(key, str) and isinstance(value, str)
+            and re.match(r"^[A-Za-z]:\\", value) for key, value in paths.items()):
+        raise SystemExit("invalid parent Wine path snapshot")
+    with _WINE_PATH_LOCK:
+        _WINE_PATH_CACHE.update(paths)
+
+
 def stale_sources(sources, source_outputs, workers=1):
     """Sources whose object is not provably current (compile_is_current).
 
@@ -2572,7 +2604,10 @@ def stale_sources(sources, source_outputs, workers=1):
     pairs = [(source, source_outputs[source]) for source in sources]
     if workers <= 1 or len(pairs) < 200:
         return _stale_chunk(pairs)
-    with concurrent.futures.ProcessPoolExecutor(workers, mp_context=multiprocessing.get_context("spawn")) as pool:
+    paths = _warm_stale_paths(pairs)
+    with concurrent.futures.ProcessPoolExecutor(
+            workers, mp_context=multiprocessing.get_context("spawn"),
+            initializer=_stale_paths_init, initargs=(paths,)) as pool:
         return [source for part in pool.map(_stale_chunk, [pairs[i::workers] for i in range(workers)])
                 for source in part]
 
