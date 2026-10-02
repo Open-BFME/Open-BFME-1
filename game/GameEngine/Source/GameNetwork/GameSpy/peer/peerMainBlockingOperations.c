@@ -191,7 +191,7 @@ void piQRThink(PEER peer);
 __declspec(noinline) void piDisconnect(PEER peer);
 void bfmePiDisconnect(PEER peer);
 void chatDisconnect(void *chat);
-void piOperationsReset(PEER peer);
+void piClearOperations(PEER peer);
 void piCallbacksThink(PEER peer, int opID);
 static void piThink(PEER peer, int opID);
 static unsigned int piGetPrivateIP(void);
@@ -238,7 +238,8 @@ void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
 void msleep(unsigned int milliseconds);
-int piIsOperationFinished(PEER peer, int opID);
+/* Retail 0085F040 compares the second cdecl word with operation +0x0C.
+   The same matched provider already serves the other blocking loops here. */
 int PeerOperationsComplete(PEER peer, int opID);
 int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
@@ -410,7 +411,7 @@ static void piDisconnectCleanup(PEER peer)
 	connection->nick[0] = '\0';
 	connection->connecting = 0;
 	connection->connected = 0;
-	piOperationsReset(peer);
+	piClearOperations(peer);
 	piRoomsCleanup(peer);
 	piPlayersCleanup(peer);
 	piPingCleanup(peer);
@@ -586,7 +587,7 @@ void peerChangeNickA(PEER peer, const char *newNick, void *callback,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -620,7 +621,7 @@ void peerGetPlayerGlobalKeysA(PEER peer, const char *nick, int num,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -824,7 +825,7 @@ void peerGetRoomKeysA(PEER peer, int roomType, const char *nick, int num,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -891,7 +892,7 @@ void peerGetPlayerIPA(PEER peer, const char *nick, void *callback,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -940,7 +941,7 @@ void peerGetPlayerProfileIDA(PEER peer, const char *nick, void *callback,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -989,7 +990,7 @@ void peerGetPlayerInfoA(PEER peer, const char *nick, void *callback,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -1047,7 +1048,7 @@ void peerJoinGroupRoom(PEER peer, int groupID, void *callback, void *param,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -1117,7 +1118,7 @@ void peerJoinTitleRoomA(PEER peer, const char *password, void *callback,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -1173,7 +1174,7 @@ void peerCreateStagingRoomWithSocketA(PEER peer, const char *name,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
@@ -1224,7 +1225,7 @@ void peerStartAutoMatchWithSocketA(PEER peer, int maxPlayers,
 			msleep(1);
 			piThink(peer, opID);
 		}
-		while (!piIsOperationFinished(peer, opID) ||
+		while (!PeerOperationsComplete(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
