@@ -13,11 +13,12 @@
 // differ only in how they start the track -- one calls slot 27 before building
 // the event, the other hands the finished event to slot 25.
 //
-// Two globals here are one object each under two pinned names, which is only
-// visible with the three bodies together:
-//   TheAudio (0x00EED668) and TheAudioClientUpdate are the same pointer;
-//   ThePlayerList (0x00EED748) and g_rva005655C0PlayerList likewise.
-// Each body keeps the spelling its own relocation resolves, so both names stay.
+// One global here is one object: this TU used to spell the audio pointer at
+// 0x012ED668 under two names, and retail has just the one --
+//   TheAudio (0x012ED668), an AudioManager*;
+// so the two music bodies drive the same vftable as the speech body, and the
+// music entries are slot 25 (+0x64) setMusicEvent and slot 27 (+0x6C)
+// startMusic on AudioManager above.
 
 typedef bool Bool;
 typedef int Int;
@@ -129,26 +130,10 @@ public:
 // above and the reference mangles to ?ThePlayerList@@3PAVPlayerList@@A.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
+// The music entries below slot 17 are the same object too: the reference
+// mangles to ?TheAudio@@3PAVAudioManager@@A, which is the one name retail
+// carries for 0x012ED668.
 class AudioManager
-{
-public:
-	virtual void slot00() = 0; virtual void slot01() = 0;
-	virtual void slot02() = 0; virtual void slot03() = 0;
-	virtual void slot04() = 0; virtual void slot05() = 0;
-	virtual void slot06() = 0; virtual void slot07() = 0;
-	virtual void slot08() = 0; virtual void slot09() = 0;
-	virtual void slot10() = 0; virtual void slot11() = 0;
-	virtual void slot12() = 0; virtual void slot13() = 0;
-	virtual void slot14() = 0; virtual void slot15() = 0;
-	virtual void slot16() = 0;
-	virtual void addAudioEvent(AudioEventRTS *event) = 0;
-};
-
-// The same vtable as AudioManager, under the name TheAudioClientUpdate's
-// relocation resolves. addAudioEvent stays at slot 17 (+0x44); the two music
-// entries are setMusicEvent at slot 25 (+0x64) and startMusic at slot 27
-// (+0x6C).
-class ClientSubsystem
 {
 public:
 	virtual void slot00() = 0; virtual void slot01() = 0;
@@ -182,7 +167,6 @@ public:
 
 extern PlayerList *ThePlayerList;
 extern AudioManager *TheAudio;
-extern ClientSubsystem *TheAudioClientUpdate;
 extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -217,7 +201,7 @@ void ScriptActions::doMusicTrackChange(const AsciiString &trackName,
 	const AsciiString &scriptName, Int stackValue)
 {
 	Int fadein = !fadeout;
-	TheAudioClientUpdate->startMusic(0, stackValue, fadein);
+	TheAudio->startMusic(0, stackValue, fadein);
 
 	if (playCount < 1 && playCount != -1)
 		playCount = 1;
@@ -234,7 +218,7 @@ void ScriptActions::doMusicTrackChange(const AsciiString &trackName,
 			((BFMEScriptEngineFlagLookup *)TheScriptEngine)->joinRva0033DB00(scriptName);
 	}
 
-	((ClientSubsystem *)TheAudioClientUpdate)->addAudioEvent(&event);
+	TheAudio->addAudioEvent(&event);
 }
 
 void Rva002F44E0AudioPushMusicAction::execute(const AsciiString &trackName,
@@ -257,5 +241,5 @@ void Rva002F44E0AudioPushMusicAction::execute(const AsciiString &trackName,
 	}
 
 	int fadein = !fadeout;
-	TheAudioClientUpdate->setMusicEvent(&event, fadein);
+	TheAudio->setMusicEvent(&event, fadein);
 }
