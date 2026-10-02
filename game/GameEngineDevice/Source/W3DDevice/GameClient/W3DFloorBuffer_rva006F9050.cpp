@@ -27,8 +27,12 @@ private:
 	int m_numRefs;
 };
 
-// Pinned at 0x009EB7A0: the BFME texture release these buffers call.
-class BFMETextureRelease
+// The release these buffers call is retail 0x009EB7A0, owned by
+// game/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp as
+// ?Release_Ref@TextureBaseClass@@QAEXXZ; spell the class so the reference
+// resolves at link.  Upstream layout: inputs/reference/CnC_Generals_Zero_Hour/
+// GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -38,7 +42,7 @@ struct BaseHeightMapFloorElement
 {
 	virtual ~BaseHeightMapFloorElement();
 	char m_pad04[0x1c];
-	BFMETextureRelease *m_texture;
+	TextureBaseClass *m_texture;
 	RefCountClass *m_renderObject;
 	void *m_field28;
 	char m_pad2c[0x1c];
@@ -77,7 +81,7 @@ void W3DFloorBuffer::rva006F9050()
 			renderObject->Release_Ref();
 			element->m_renderObject = 0;
 		}
-		BFMETextureRelease *texture = element->m_texture;
+		TextureBaseClass *texture = element->m_texture;
 		if (texture) {
 			texture->Release_Ref();
 			element->m_texture = 0;

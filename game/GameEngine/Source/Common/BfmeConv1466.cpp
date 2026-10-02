@@ -1,6 +1,9 @@
 // cl: /Od
 
-void *bfmeImplV26(int a, int b, int c, int d, char ch);
+// Retail calls 0x0082D6D0 here, which the ledger owns as
+// ?bfmeRSearchV33@@YAPAPADPAPADPAD111@Z and BfmeConv1473.cpp defines with
+// exactly this signature; spell it that way so the reference resolves.
+char **bfmeRSearchV33(char **out, char *last1, char *first1, char *last2, char *first2);
 
 void *bfmeFwdV26(int a, int b, int c, int d, int e, int f, char ch)
 {
@@ -38,7 +41,7 @@ void *bfmeFwdV26(int a, int b, int c, int d, int e, int f, char ch)
 		mov dword ptr [ecx], edx
 		lea eax, [ebp-4]
 		push eax
-		call bfmeImplV26
+		call bfmeRSearchV33
 		add esp, 0x18
 		mov ecx, dword ptr [ebp-4]
 		mov dword ptr [ebp-0x38], ecx
