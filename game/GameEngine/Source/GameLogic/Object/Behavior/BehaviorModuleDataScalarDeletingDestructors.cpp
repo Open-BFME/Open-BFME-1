@@ -9,6 +9,4 @@
     void Delete##ModuleName(ModuleName *object) { delete object; }
 
 DECLARE_MODULE_DELETING_DESTRUCTOR(ClearanceTestingSlowDeathBehaviorModuleData)
-DECLARE_MODULE_DELETING_DESTRUCTOR(PassiveAreaEffectBehaviorModuleData)
-DECLARE_MODULE_DELETING_DESTRUCTOR(EnragedBehaviorModuleData)
 DECLARE_MODULE_DELETING_DESTRUCTOR(ShareExperienceBehaviorModuleData)

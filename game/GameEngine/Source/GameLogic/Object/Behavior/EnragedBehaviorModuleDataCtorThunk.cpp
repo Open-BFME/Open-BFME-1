@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// This constructor also emits the exact scalar-deleting wrapper at 0x00203F00
+// (30 bytes), calling the complete destructor at 0x00203F30 through
+// ILT 0x0003A6DE. Keep that wrapper here; a separate default-construction
+// forcing declaration would emit a competing, vptr-only constructor.
 // stlport
 // Open-BFME5: EnragedBehavior module-data constructor.
 //

@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// This constructor also emits the exact scalar-deleting wrapper at 0x00202840
+// (30 bytes), calling the complete destructor at 0x00202870 through
+// ILT 0x0002F0C2. Keep that wrapper here; a separate default-construction
+// forcing declaration would emit a competing, vptr-only constructor.
 // Open-BFME5: PassiveAreaEffectBehavior module-data constructor.
 //
 // The named friend_newModuleData factory at retail 0x00117650 allocates 0x24
