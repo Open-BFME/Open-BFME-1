@@ -5,7 +5,6 @@ void * __cdecl operator new(unsigned int n);
 extern "C" void *__identifier("??_7Rva004C5EA0VptrZeroRefObject@@6B@");
 #define g_bfmeRva010FE034Vt __identifier("??_7Rva004C5EA0VptrZeroRefObject@@6B@")
 extern "C" void *__identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@");
-#define g_bfmeRva010FE04CVt __identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@")
 extern "C" void *__identifier("??_7Rva001DDC90Poly@@6B@");
 #define g_bfmeRva0109FB98Vt __identifier("??_7Rva001DDC90Poly@@6B@")
 
@@ -80,7 +79,7 @@ Bfme5RefHolderE::Bfme5RefHolderE(Bfme5RefPair *s)
 
 	if (q) {
 		q->m_bfmeRefCount = 0;
-		q->m_bfmeVptr = &g_bfmeRva010FE04CVt;
+		q->m_bfmeVptr = &__identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@");
 
 		Bfme5RefY *r0 = s->m_bfmeA;
 
