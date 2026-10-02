@@ -1,5 +1,12 @@
 // Open-BFME5 conversions.
 
+extern const float g_bfmeDefaultBU;
+extern const float BfmeZeroRange;
+extern const float g_0112100C;
+#pragma comment(linker, "/alternatename:?g_0112100C@@3PB=__real@3727c5ac")
+#pragma comment(linker, "/alternatename:?g_0112100C@@3MB=__real@3727c5ac")
+
+
 class BfmeThingTBAFields
 {
 public:
@@ -156,7 +163,7 @@ void BfmeThingTBA::bfmeThreeTBA()
 		}
 	}
 	fraction = (float)(from->m_bfme5c - m_bfme4c) / (float)to->m_bfme5c;
-	if (fraction > *(const float *)0x01075334)
+	if (fraction > g_bfmeDefaultBU)
 	{
 		bfmeTwoTBA();
 		return;
@@ -166,7 +173,7 @@ void BfmeThingTBA::bfmeThreeTBA()
 	{
 		m_bfme98 = 3;
 		float blend = (fraction - m_bfme54) /
-			(*(const float *)0x01075334 - m_bfme54);
+			(g_bfmeDefaultBU - m_bfme54);
 		m_bfme38f = m_bfme5cf - (m_bfme5cf - m_bfme58f) * blend;
 		m_bfme10f = m_bfme64 - (m_bfme64 - m_bfme60) * blend;
 		return;
@@ -180,15 +187,15 @@ void BfmeThingTBA::bfmeThreeTBA()
 		return;
 	}
 
-	if (fraction <= *(const float *)0x01075350)
+	if (fraction <= BfmeZeroRange)
 	{
 		bfmeTwoTBA();
 		return;
 	}
 
 	m_bfme98 = 1;
-	float blend = m_bfme50 > *(const float *)0x0112100C ?
-		fraction / m_bfme50 : *(const float *)0x01075334;
+	float blend = m_bfme50 > g_0112100C ?
+		fraction / m_bfme50 : g_bfmeDefaultBU;
 	m_bfme38f = m_bfme58f + (m_bfme5cf - m_bfme58f) * blend;
 	m_bfme10f = m_bfme60 + (m_bfme64 - m_bfme60) * blend;
 }
