@@ -56,17 +56,17 @@ public:
 	virtual ~LifeEventModuleInfoBase() {}
 };
 
-class __declspec(novtable) LifeEventModuleInfo : public LifeEventModuleInfoBase
+class __declspec(novtable) LifeEventModuleTemplateInfo : public LifeEventModuleInfoBase
 {
 public:
-	virtual ~LifeEventModuleInfo() {}
+	virtual ~LifeEventModuleTemplateInfo() {}
 
 private:
 	BFMERetailAsciiString m_buffer;
 };
 
 class __declspec(novtable) LifeEventModuleTemplate
-	: public CategoryModuleTemplate<8>, public LifeEventModuleInfo
+	: public CategoryModuleTemplate<8>, public LifeEventModuleTemplateInfo
 {
 public:
 	virtual ~LifeEventModuleTemplate();

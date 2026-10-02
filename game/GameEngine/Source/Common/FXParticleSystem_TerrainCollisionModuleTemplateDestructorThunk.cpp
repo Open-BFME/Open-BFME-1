@@ -58,17 +58,17 @@ public:
 	virtual ~TerrainCollisionModuleInfoBase() {}
 };
 
-class __declspec(novtable) TerrainCollisionModuleInfo : public TerrainCollisionModuleInfoBase
+class __declspec(novtable) TerrainCollisionModuleTemplateInfo : public TerrainCollisionModuleInfoBase
 {
 public:
-	virtual ~TerrainCollisionModuleInfo() {}
+	virtual ~TerrainCollisionModuleTemplateInfo() {}
 private:
 	BFMERetailAsciiString m_buffer;
 };
 
 class __declspec(novtable) TerrainCollisionModuleTemplate
 	: public CategoryModuleTemplate<8>,
-	  public TerrainCollisionModuleInfo
+	  public TerrainCollisionModuleTemplateInfo
 {
 public:
 	virtual ~TerrainCollisionModuleTemplate();

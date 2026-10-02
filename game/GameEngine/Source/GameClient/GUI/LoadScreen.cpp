@@ -1988,21 +1988,6 @@ MapTransferLoadScreen::MapTransferLoadScreen( void )
 	m_timeoutText = NULL;
 }
 	
-// ??1MapTransferLoadScreen@@ present-unmatched
-MapTransferLoadScreen::~MapTransferLoadScreen( void )
-{
-	for(Int i = 0; i < MAX_SLOTS; ++i)
-	{
-		m_progressBars[i] = NULL;
-		m_playerNames[i] = NULL;
-		m_progressText[i]= NULL;
-		m_playerLookup[i] = -1;
-		m_oldProgress[i] = -1;
-	}
-	m_fileNameText = NULL;
-	m_timeoutText = NULL;
-}
-
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@MapTransferLoadScreen@@ present-unmatched
 void MapTransferLoadScreen::init( GameInfo *game )
@@ -2161,4 +2146,3 @@ void MapTransferLoadScreen::setCurrentFilename(AsciiString filename)
 		GadgetStaticTextSetText(m_fileNameText, txt);
 	}
 }
-

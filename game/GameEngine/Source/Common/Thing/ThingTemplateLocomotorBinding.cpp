@@ -12,6 +12,15 @@
 
 class LocomotorTemplate;
 
+// This vector base constructor is supplied by the matched WWLib thunk. Keep
+// this TU from emitting a competing STLport instantiation.
+namespace _STL
+{
+template <>
+_Vector_base<const LocomotorTemplate *, allocator<const LocomotorTemplate *> >::_Vector_base(
+	unsigned int, const allocator<const LocomotorTemplate *> &);
+}
+
 enum LocomotorSetType
 {
 	LOCOMOTORSET_INVALID = -1

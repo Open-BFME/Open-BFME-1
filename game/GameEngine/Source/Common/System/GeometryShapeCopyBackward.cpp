@@ -50,7 +50,7 @@ struct GeometryShape
 		m_majorRadius = other.m_majorRadius;
 		m_unmodelled00c = other.m_unmodelled00c;
 		m_unmodelled10 = other.m_unmodelled10;
-		m_name = other.m_name;
+		m_name.set(other.m_name);
 		m_enabled = other.m_enabled;
 		return *this;
 	}

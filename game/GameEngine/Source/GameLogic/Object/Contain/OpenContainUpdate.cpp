@@ -21,7 +21,7 @@ class Object
 {
 public:
 	void notifyModelConditionChanged();
-	__forceinline void clearAndSetModelConditionState(ModelConditionFlagType clearFlags,
+	__forceinline void openContainUpdateClearAndSetModelConditionState(ModelConditionFlagType clearFlags,
 		ModelConditionFlagType setFlags)
 	{
 		if (m_conditionFlags & clearFlags)
@@ -107,7 +107,7 @@ UpdateSleepTime OpenContain::update()
 	{
 		--m_doorCloseCountdown;
 		if (m_doorCloseCountdown == 0)
-			m_object->clearAndSetModelConditionState(
+			m_object->openContainUpdateClearAndSetModelConditionState(
 				MODELCONDITION_DOOR_1_OPENING,
 				MODELCONDITION_DOOR_1_CLOSING);
 	}
