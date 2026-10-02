@@ -80,25 +80,20 @@ void BfmeThingTFC::bfmeGoTFC()
 	m_bfmeSink->bfmeUseTFC(m_bfmeSecond, m_bfmeFirst);
 }
 
-class BfmeHolderTFD
-{
-public:
-	void bfmeMakeTFD(void *p);
-	void bfmeRunTFD();
-	void *m_bfmeHeld;
-};
+// The holder is a real header type: CriticalSectionClass::LockClass, whose
+// constructor takes a CriticalSectionClass& and whose destructor runs at scope
+// exit.  m_bfmeField is the CriticalSectionClass it locks.
+#include "../../../Libraries/Source/WWVegas/WWLib/mutex.h"
 
 class BfmeThingTFD
 {
 public:
 	void bfmeGoTFD();
 	char m_bfmePad[0xa0];
-	int m_bfmeField;
+	CriticalSectionClass m_bfmeCritical;
 };
 
 void BfmeThingTFD::bfmeGoTFD()
 {
-	BfmeHolderTFD h;
-	h.bfmeMakeTFD(&m_bfmeField);
-	h.bfmeRunTFD();
+	CriticalSectionClass::LockClass h( m_bfmeCritical );
 }

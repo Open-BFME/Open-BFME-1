@@ -23,6 +23,8 @@
 // takes one pointer and is typed __cdecl because the caller pops nothing
 // here and the argument sits at [esp+4] on entry.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/mutex.h"
+
 class Rva003500C0
 {
 public:
@@ -64,10 +66,24 @@ Rva003500C0::~Rva003500C0()
 		delete held;                                                      \
 	}
 
+// The callee class is a real header type here (CriticalSectionClass::LockClass),
+// so no local stand-in is declared for it; only the owning class is local.
+#define BFME_DELETE_MEMBER_TYPED( NAME, CALLEE )                           \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		~NAME();                                                          \
+		CALLEE *m_held;                                                   \
+	};                                                                    \
+	NAME::~NAME()                                                         \
+	{                                                                     \
+		delete m_held;                                                    \
+	}
+
 // @??1Rva00590790@@QAE@XZ 0x00590790
 BFME_DELETE_MEMBER( Rva00590790, Gen0003FA7B )
 // @??1Rva0063B130@@QAE@XZ 0x0063B130
-BFME_DELETE_MEMBER( Rva0063B130, Gen009DB4D0 )
+BFME_DELETE_MEMBER_TYPED( Rva0063B130, CriticalSectionClass::LockClass )
 
 // @?Rva007889D0@@YAXPAVGen0002AB5D@@@Z 0x007889D0
 BFME_DELETE_ARGUMENT( Rva007889D0, Gen0002AB5D )

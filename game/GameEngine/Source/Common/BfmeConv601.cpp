@@ -1,28 +1,27 @@
+// The owned object is a CriticalSectionClass::LockClass sentry: it is deleted
+// here, so the destructor reached is the sentry's (mutex.h).
+#include "../../../Libraries/Source/WWVegas/WWLib/mutex.h"
+
 class BfmeRefCHC
 {
-public:
-	void bfmeDtorCHC();
 };
 
 class BfmeThingCHC
 {
 public:
 	void bfmeGoCHC(BfmeRefCHC *what);
-	BfmeRefCHC *m_bfmeRef;
+	CriticalSectionClass::LockClass *m_bfmeRef;
 };
-
-void bfmeFreeCHC(void *what);
 
 void BfmeThingCHC::bfmeGoCHC(BfmeRefCHC *what)
 {
-	BfmeRefCHC *cur = m_bfmeRef;
-	if (what != cur)
+	CriticalSectionClass::LockClass *cur = m_bfmeRef;
+	if (what != (BfmeRefCHC *)cur)
 	{
 		if (cur != 0)
 		{
-			cur->bfmeDtorCHC();
-			bfmeFreeCHC(cur);
+			delete cur;
 		}
-		m_bfmeRef = what;
+		m_bfmeRef = (CriticalSectionClass::LockClass *)what;
 	}
 }
