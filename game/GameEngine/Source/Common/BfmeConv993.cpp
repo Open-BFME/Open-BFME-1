@@ -117,7 +117,10 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 extern BfmeAskB993 *g_bfmeAskB993;
-extern int g_bfmeVal993B;
+// Retail 0x012B7D80; canonical spelling `int g_aptPalantirWindow`
+// (?g_aptPalantirWindow@@3HA), defined in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp.
+extern int g_aptPalantirWindow;
 extern char g_bfmeStrA993B[];
 extern char g_bfmeStrB993B[];
 extern char g_bfmeFmt993B[];
@@ -126,5 +129,5 @@ void bfmeGo993B(void)
 {
 	char *s = g_bfmeAskB993->bfmeAsk993B() ? g_bfmeStrA993B : g_bfmeStrB993B;
 
-	((BfmeLog993 *)g_rva012F19E8WindowManager)->bfmeLog993B(g_bfmeVal993B, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);
+	((BfmeLog993 *)g_rva012F19E8WindowManager)->bfmeLog993B(g_aptPalantirWindow, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);
 }
