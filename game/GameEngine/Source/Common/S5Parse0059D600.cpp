@@ -25,7 +25,11 @@ public:
 	int m_0C;
 };
 
-extern "C" int g_bfmeV1140B;
+// The vtable address the record is stamped with is the one
+// dir32_addresses.csv records for
+// ??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@; that vftable is
+// compiler-emitted, so it is spelled here by its decorated name.
+extern "C" int __identifier("??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@");
 extern const FieldParse s5Table0059D600;
 
 struct S5Built0059D600 : public Rva00489210
@@ -42,7 +46,7 @@ struct S5Built0059D600 : public Rva00489210
 	S5Built0059D600()
 	{
 		m_14 = 30;
-		m_00 = &g_bfmeV1140B;
+		m_00 = (volatile int *)&__identifier("??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@");
 		m_10 = 0;
 		m_18 = 0;
 		m_1C = 0;

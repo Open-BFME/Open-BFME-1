@@ -48,7 +48,10 @@ BfmeA1140::BfmeA1140(void)
 	m_bfme04 = 0x16;
 }
 
-extern "C" char g_bfmeV1140B[];
+// The vtable address this constructor stamps is the one dir32_addresses.csv
+// records for ??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@; that
+// vftable is compiler-emitted, so it is spelled here by its decorated name.
+extern "C" int __identifier("??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@");
 
 class BfmeBase1140B
 {
@@ -80,7 +83,7 @@ BfmeB1140::BfmeB1140(void)
 {
 	m_bfme10 = 0;
 	m_bfme14 = 0x1e;
-	m_bfme00 = g_bfmeV1140B;
+	m_bfme00 = (char *)&__identifier("??_7Rva0059D400MultiTailDtor@@6BRva0001AA9BMultiBase@@@");
 	m_bfme18 = 0;
 	m_bfme1c = 0;
 	m_bfme20 = 0;
