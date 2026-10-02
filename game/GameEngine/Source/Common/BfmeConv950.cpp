@@ -1,6 +1,13 @@
 // Open-BFME5 conversions.
 
-void *bfmeAlloc950B(unsigned int n);
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int n);
+};
+}
 
 struct BfmeNode950B
 {
@@ -25,7 +32,7 @@ public:
 BfmeList950B::BfmeList950B()
 {
 	m_bfmeHead = 0;
-	m_bfmeHead = (BfmeNode950B *)bfmeAlloc950B(0x14);
+	m_bfmeHead = (BfmeNode950B *)_STL::__new_alloc::allocate(0x14);
 	m_bfme04 = 0;
 	m_bfmeHead->m_bfmeFlag = 0;
 	m_bfmeHead->m_bfme04 = 0;

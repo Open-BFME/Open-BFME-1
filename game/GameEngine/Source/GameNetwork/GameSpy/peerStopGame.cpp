@@ -25,7 +25,7 @@ public:
 	int m_bfmeB44;						// +0xB44
 };
 
-void Rva00863C00(Rva00866770Owner *peer);			// retail 0x00863C00
+extern "C" void piSetLocalFlags(Rva00866770Owner *peer);	// retail 0x00863C00
 void Rva008667A0(Rva00866770Owner *peer);			// retail 0x008667A0
 
 extern "C" void piStopReporting(Rva00866770Owner *peer);	// retail 0x00866770
@@ -35,7 +35,7 @@ extern "C" void peerStopGame(Rva00866770Owner *peer)
 {
 	peer->m_bfmeB44 = 0;
 
-	Rva00863C00(peer);
+	piSetLocalFlags(peer);
 
 	if (peer->m_bfmeAF0)
 	{

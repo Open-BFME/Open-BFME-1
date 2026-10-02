@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class Rva0036CA00Str
 {
 public:
@@ -46,5 +48,5 @@ void Rva00386090::set(Rva0036CA00Str *a)
 		return;
 	}
 	m_6d = 0;
-	m_70.clear();
+	reinterpret_cast<AsciiString &>(m_70).clear();
 }

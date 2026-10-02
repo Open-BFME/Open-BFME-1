@@ -1,5 +1,15 @@
 void __cdecl operator delete(void *);
-void __cdecl rva423670SmallDeallocate(void *block, unsigned int bytes);
+struct Rva423670RecordStorage;
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend struct ::Rva423670RecordStorage;
+	static void _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 struct Rva423670Record
 {
@@ -23,7 +33,7 @@ void Rva423670RecordStorage::deallocate()
 		if (bytes > 128) {
 			operator delete(begin);
 		} else {
-			rva423670SmallDeallocate(begin, bytes);
+			_STL::__node_alloc<true, 0>::_M_deallocate(begin, bytes);
 		}
 	}
 }
