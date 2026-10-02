@@ -14,10 +14,6 @@ public:
     __declspec(noinline) virtual ~QuadDrawModuleInfo();
 };
 
-QuadDrawModuleInfo::~QuadDrawModuleInfo()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this four-byte class.
 QuadDrawModuleInfo *MakeQuadDrawModuleInfoArray(int count)

@@ -18,10 +18,6 @@ private:
     unsigned char m_data[0x2C];
 };
 
-LightningDrawModuleInfo::~LightningDrawModuleInfo()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x30-byte class.
 LightningDrawModuleInfo *MakeLightningDrawModuleInfoArray(int count)

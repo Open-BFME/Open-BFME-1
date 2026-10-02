@@ -17,10 +17,6 @@ private:
     unsigned char m_data[8];
 };
 
-StreakDrawModuleTemplate::~StreakDrawModuleTemplate()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x0C-byte class.
 StreakDrawModuleTemplate *MakeStreakDrawModuleTemplateArray(int count)

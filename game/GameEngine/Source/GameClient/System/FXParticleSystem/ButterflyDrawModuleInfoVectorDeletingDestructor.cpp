@@ -14,10 +14,6 @@ public:
     __declspec(noinline) virtual ~ButterflyDrawModuleInfo();
 };
 
-ButterflyDrawModuleInfo::~ButterflyDrawModuleInfo()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this four-byte class.
 ButterflyDrawModuleInfo *MakeButterflyDrawModuleInfoArray(int count)

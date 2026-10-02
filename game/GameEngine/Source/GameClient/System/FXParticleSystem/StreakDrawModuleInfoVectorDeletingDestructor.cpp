@@ -14,10 +14,6 @@ public:
     __declspec(noinline) virtual ~StreakDrawModuleInfo();
 };
 
-StreakDrawModuleInfo::~StreakDrawModuleInfo()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this four-byte class.
 StreakDrawModuleInfo *MakeStreakDrawModuleInfoArray(int count)

@@ -18,10 +18,6 @@ private:
     unsigned char m_data[0x40];
 };
 
-DefaultUpdateModuleInfo::~DefaultUpdateModuleInfo()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x44-byte class.
 DefaultUpdateModuleInfo *MakeDefaultUpdateModuleInfoArray(int count)

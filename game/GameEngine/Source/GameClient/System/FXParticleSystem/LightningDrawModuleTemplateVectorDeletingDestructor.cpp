@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class LightningDrawModuleTemplate
 {
 public:
+    LightningDrawModuleTemplate();
     virtual ~LightningDrawModuleTemplate();
 
 private:
