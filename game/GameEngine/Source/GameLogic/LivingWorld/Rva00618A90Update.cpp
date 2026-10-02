@@ -6,8 +6,8 @@
 #include "Common/Override.h"
 
 class Rva003BF540 { public: bool test(); };
-class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern bool __cdecl Rva007397E0(void *, float, float, float);
 struct Rva00618A90Data : Overridable {
     unsigned int wordC;
@@ -40,7 +40,7 @@ void Rva00615D50Object::rva00618a90()
 {
     Rva00618A90Holder *holder = ptrC;
     if (holder->ptr8 && float18 != 0.0f) {
-        if (reinterpret_cast<Rva003BF540 *>(Glo012F1028)->test()) {
+        if (reinterpret_cast<Rva003BF540 *>(TheLivingWorldLogic)->test()) {
             float angle = float14 + 0.15f;
             float14 = angle;
             float base = data4->float10;
