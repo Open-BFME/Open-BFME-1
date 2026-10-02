@@ -1,13 +1,6 @@
-namespace _STL
-{
-
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int n);
-};
-
-}
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 
 struct BfmeNodeZY
 {
@@ -23,7 +16,7 @@ public:
 	{
 		m_bfmeNodeZY = 0;
 
-		BfmeNodeZY *n = (BfmeNodeZY *)_STL::__new_alloc::allocate(12);
+		BfmeNodeZY *n = (BfmeNodeZY *)_STL::__node_alloc<true, 0>::allocate(12);
 
 		n->m_bfmeNextZY = n;
 		n->m_bfmePrevZY = n;
