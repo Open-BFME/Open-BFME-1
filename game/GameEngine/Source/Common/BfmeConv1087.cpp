@@ -124,8 +124,14 @@ public:
 };
 
 extern BfmeC1087 *g_bfmeC1087;
-extern BfmeD1087 *g_bfmeD1087;
 extern BfmeP1087 *g_bfmeP1087;
+
+// Retail's global at 0x012ED748 is PlayerList.cpp's `PlayerList *ThePlayerList`
+// (mangled ?ThePlayerList@@3PAVPlayerList@@A), so the reference carries the
+// real name; BfmeD1087 stays this TU's offset view of the pointee and is
+// reached by a no-op pointer cast.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 char __stdcall bfmeGo1087B(int a, int b)
 {
@@ -135,7 +141,7 @@ char __stdcall bfmeGo1087B(int a, int b)
 		return 0;
 	b = g_bfmeP1087->bfmeNext1087(a);
 	while ((short)b) {
-		BfmeR1087 *r = g_bfmeD1087->bfmeLook1087((short *)&b);
+		BfmeR1087 *r = ((BfmeD1087 *)ThePlayerList)->bfmeLook1087((short *)&b);
 
 		if (r) {
 			int m = r->m_bfme24;

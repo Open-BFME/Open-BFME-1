@@ -55,7 +55,12 @@ struct Rva002EE330PlayerList
 	Player *bfmeFindBR(int id);
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// Retail's global at 0x012ED748 is PlayerList.cpp's `PlayerList *ThePlayerList`
+// (mangled ?ThePlayerList@@3PAVPlayerList@@A), so the reference carries the
+// real name; Rva002EE330PlayerList stays this TU's offset view of the pointee
+// and is reached by a no-op pointer cast.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class BfmeHostBR
 {
@@ -84,5 +89,5 @@ void BfmeHostBR::xfer(Xfer *x)
 
 	x->xferInt(&id);
 
-	m_owner = Rva002EE330ThePlayers->bfmeFindBR(id);
+	m_owner = ((Rva002EE330PlayerList *)ThePlayerList)->bfmeFindBR(id);
 }

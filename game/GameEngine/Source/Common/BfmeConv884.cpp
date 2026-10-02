@@ -38,8 +38,12 @@ public:
 	unsigned short bfmeLookESC(int k, int n, int f);
 };
 
-extern BfmeGlobESC *g_bfmeObjESCa;
-extern BfmeGlobESC *g_bfmeObjESCb;
+// Both bodies read retail's global at 0x012ED748, which is PlayerList.cpp's
+// `PlayerList *ThePlayerList` (mangled ?ThePlayerList@@3PAVPlayerList@@A), so
+// both references carry that one name. BfmeGlobESC is this TU's local view of
+// the pointee; cast at each use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 struct BfmeThingESCa
 {
@@ -53,7 +57,7 @@ int BfmeThingESCa::bfmeGoESCa()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return g_bfmeObjESCa->bfmeLookESC(s->m_bfmeK, 4, 0);
+	return ((BfmeGlobESC *)ThePlayerList)->bfmeLookESC(s->m_bfmeK, 4, 0);
 }
 
 struct BfmeThingESCb
@@ -68,5 +72,5 @@ int BfmeThingESCb::bfmeGoESCb()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return g_bfmeObjESCb->bfmeLookESC(s->m_bfmeK, 4, 0);
+	return ((BfmeGlobESC *)ThePlayerList)->bfmeLookESC(s->m_bfmeK, 4, 0);
 }

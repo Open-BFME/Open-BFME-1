@@ -89,7 +89,13 @@ public:
 class GameLogic;
 
 extern GameLogic *TheGameLogic;				// retail 0x012F0898
-extern BfmeD1094 *g_bfmeD1094;
+
+// retail 0x012ED748: EA's `PlayerList *ThePlayerList`, defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp, so the reference carries
+// the defining name ?ThePlayerList@@3PAVPlayerList@@A. BfmeD1094 is this TU's
+// local view of the pointee; cast at the use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 // retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
 // game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeP1094 is
@@ -115,7 +121,7 @@ char __stdcall bfmeGo1094A(int a, int b)
 		return 0;
 	a = ((BfmeP1094 *)TheScriptEngine)->bfmeNext1094(b);
 	while ((short)a) {
-		BfmeR1094 *r = g_bfmeD1094->bfmeLook1094((short *)&a);
+		BfmeR1094 *r = ((BfmeD1094 *)ThePlayerList)->bfmeLook1094((short *)&a);
 
 		if (k->bfmeCur1094() == r)
 			return 1;

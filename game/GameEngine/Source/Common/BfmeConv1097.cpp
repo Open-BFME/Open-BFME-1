@@ -52,9 +52,15 @@ public:
 	int bfmeFirst1097(int a, int b);
 };
 
-extern BfmeD1097 *g_bfmeD1097;
 extern ScriptEngine *TheScriptEngine;
 extern BfmeS1097 *g_bfmeS1097;
+
+// retail 0x012ED748: EA's `PlayerList *ThePlayerList`, defined once in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp, so the reference carries
+// the defining name ?ThePlayerList@@3PAVPlayerList@@A. BfmeD1097 is this TU's
+// local view of the pointee; cast at the use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 void __stdcall bfmeGo1097A(int a, char b)
 {
@@ -64,7 +70,7 @@ void __stdcall bfmeGo1097A(int a, char b)
 
 	if (!(short)h)
 		return;
-	r = g_bfmeD1097->bfmeGet1097(h);
+	r = ((BfmeD1097 *)ThePlayerList)->bfmeGet1097(h);
 	if (!r)
 		return;
 	if (b) {
