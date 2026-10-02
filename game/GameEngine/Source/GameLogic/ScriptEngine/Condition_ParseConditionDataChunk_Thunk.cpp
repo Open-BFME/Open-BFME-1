@@ -169,6 +169,8 @@ public:
 class Condition : public MemoryPoolObject
 {
 public:
+	virtual ~Condition();
+
 	enum ConditionType
 	{
 		CONDITION_FALSE = 0,
