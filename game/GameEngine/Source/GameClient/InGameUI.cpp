@@ -8292,29 +8292,6 @@ void InGameUI::removeMilitarySubtitle( void )
 
 #undef BFME_SUBTITLE
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?areSelectedObjectsControllable@InGameUI@@QBE_NXZ present-unmatched
-Bool InGameUI::areSelectedObjectsControllable() const
-{
-	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
-
-	// loop through all the selected drawables
-	const Drawable *draw;
-	for( DrawableListCIt it = selected->begin(); it != selected->end(); ++it )
-	{
-		// get this drawable
-		draw = *it;
-
-		// All selected objects will have the same local controller, so 
-		// simply return the first one.
-		return draw->getObject()->isLocallyControlled();
-	}
-
-	// Nothing selected...
-	return FALSE;
-}
-
 //------------------------------------------------------------------------------
 //Resets the camera to default zoom and orientation.
 //------------------------------------------------------------------------------

@@ -1,0 +1,13 @@
+# InGameUI::areSelectedObjectsControllable identity at RVA 0x0043EC00
+
+The 39-byte matched body at RVA 0x0043EC00 in `game/GameEngine/Source/Common/BfmeConv901.cpp` is `Bool InGameUI::areSelectedObjectsControllable() const`. The prior free-function claim `?bfmeGoJB@@YA_NXZ` gives this body the wrong class and calling convention.
+
+The Zero Hour reference defines this exact const member in `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameClient/InGameUI.cpp:4140`. Line 4142 obtains `TheInGameUI->getAllSelectedDrawables()`. Lines 4146 through 4153 return the first selected drawable's object's `isLocallyControlled()` result. Line 4157 returns false when the selection is empty. The reference declaration is in `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h:492`.
+
+Retail disassembly of RVA 0x0043EC00 loads `TheInGameUI` from VA 0x012F148C, invokes vtable slot 0xFC, loads the list sentinel, and compares its first node with the sentinel. A nonempty list supplies the drawable at node offset 8 and its object at drawable offset 0xFC. The body tail-jumps to RVA 0x0001FF91, whose five-byte ILT thunk jumps to `Object::isLocallyControlled()` at RVA 0x001BE570. An empty list returns false with `xor al, al; ret`. These operations match the reference method, including its use of the singleton instead of `this`.
+
+Retail's caller at RVA 0x00458FC0 loads the singleton into ECX at offset 0 before its call at offset 9 to the ILT thunk at RVA 0x000221E2. That thunk jumps to RVA 0x0043EC00. This establishes a member-call contract independently of the owner's use of the singleton. `targets/game/reverse/symbols.csv` already pins `?bfmeGoJB@InGameUI@@QBE_NXZ` to RVA 0x0043EC00 with the note that the selection guard is called by `Rva00458FC0`. The pin establishes the existing const-member spelling; the reference behavior establishes the descriptive identity.
+
+The correction preserves the function body and its exact 39-byte extent. It changes the local declaration and definition signature to the reference const member. It adds no alias, forwarder, or pin. The original body must remain byte-identical under the sanctioned identity-correction gate. A changed instruction, a thunk routed elsewhere, or a caller lacking the witnessed ECX member contract would refute this correction.
+
+Raw retail probes and verification outputs are retained locally under `build/rlink/`: `retail_owner.txt`, `retail_caller.txt`, `retail_selection_thunk.txt`, `retail_control_thunk.txt`, and the identity and source gate logs recorded in `build/worker-final.md`.

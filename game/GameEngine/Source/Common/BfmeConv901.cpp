@@ -141,11 +141,17 @@ public:
 // game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
 // referenced here; BfmeGlobJB above stays as this TU's local view of the
 // pointee, so the use casts.
-class InGameUI;
+typedef bool Bool;
+
+class InGameUI
+{
+public:
+	Bool areSelectedObjectsControllable() const;
+};
 
 extern InGameUI *TheInGameUI;
 
-bool bfmeGoJB(void)
+Bool InGameUI::areSelectedObjectsControllable() const
 {
 	BfmeListJB *l = ((BfmeGlobJB *)TheInGameUI)->bfmeGetJB()->m_bfmeList;
 	if (l->m_bfmeHead != l)
