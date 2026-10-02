@@ -13988,5 +13988,15 @@
   "after_sha256": "bcd287480ccc70a8be35e51d4cfcfd145c11e3a9704dfa1c37e22c1e9e8c1ae2",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002e9590.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseScriptedEvent.cpp",
+  "old_name": "BfmeThingVKT",
+  "new_name": "Gen_002df780",
+  "before_sha256": "3843afac78a1f9599ba897f6295dd947db0744d07dfa32d349108849130e543a",
+  "after_sha256": "a4cc93366c181da52d11b0640714ce98889e779440f415e64dc7e22af544519c",
+  "evidence": "targets/game/reverse/identity_evidence/002e9590-lua-scripted-event-parser.md",
+  "reason": "The deleted bank type is an inline union/thunk adapter to ILT 0x00025E1E, not a provider identity. The clean source declares the independently existing Gen_002df780::m provider at 0x002DF780 directly. This snapshot records the hook pairing of removed adapter and existing callee; no provider rename or authentic type spelling is asserted."
  }
 ]
