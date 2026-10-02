@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
 public:
@@ -29,6 +31,7 @@ void Rva00383B40::set(int index, Rva0036CA00Str *str, int value)
 	if (index < 0 || index >= 8)
 		return;
 	m_slots[index].flag = 0;
-	m_slots[index].str = *str;
+	reinterpret_cast<StringBase<char> &>(m_slots[index].str).set(
+		reinterpret_cast<const StringBase<char> &>(*str));
 	m_slots[index].value = value;
 }

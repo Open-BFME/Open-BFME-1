@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
 public:
@@ -25,8 +27,10 @@ Rva003A4040 &Rva003A4040::operator=(const Rva003A4040 &other)
 {
 	m_00 = other.m_00;
 	m_04 = other.m_04;
-	m_08 = other.m_08;
-	m_0C = other.m_0C;
+	reinterpret_cast<StringBase<char> &>(m_08).set(
+		reinterpret_cast<const StringBase<char> &>(other.m_08));
+	reinterpret_cast<StringBase<char> &>(m_0C).set(
+		reinterpret_cast<const StringBase<char> &>(other.m_0C));
 	m_10 = other.m_10;
 	return *this;
 }

@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
 public:
@@ -23,6 +25,8 @@ public:
 void Rva0073D400::set(const Rva0036CA00Str &a, const Rva0036CA00Str &b)
 {
 	m_2429 = 1;
-	m_242C = a;
-	m_2430 = b;
+	reinterpret_cast<StringBase<char> &>(m_242C).set(
+		reinterpret_cast<const StringBase<char> &>(a));
+	reinterpret_cast<StringBase<char> &>(m_2430).set(
+		reinterpret_cast<const StringBase<char> &>(b));
 }
