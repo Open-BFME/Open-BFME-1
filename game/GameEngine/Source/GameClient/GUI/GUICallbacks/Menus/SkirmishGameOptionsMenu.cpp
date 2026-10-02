@@ -214,13 +214,6 @@ SkirmishPreferences::~SkirmishPreferences()
 {
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/SkirmishPreferences_getSlotList.cpp
-// ?getSlotList@SkirmishPreferences@@ present-unmatched
-AsciiString SkirmishPreferences::getSlotList(void)
-{
-	return getAsciiString("SlotList", AsciiString::TheEmptyString);
-}
-
 // byte-exact reconstruction: game/GameEngine/Source/Common/SkirmishPreferences_setSlotList.cpp
 // ?setSlotList@SkirmishPreferences@@ present-unmatched
 void SkirmishPreferences::setSlotList(void)

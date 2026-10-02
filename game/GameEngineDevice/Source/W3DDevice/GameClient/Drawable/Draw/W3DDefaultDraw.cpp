@@ -107,26 +107,6 @@ void W3DDefaultDraw::reactToTransformChange( const Matrix3D *oldMtx,
 }
 
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1W3DDefaultDraw@@MAE@XZ present-unmatched
-W3DDefaultDraw::~W3DDefaultDraw(void)
-{
-#ifdef LOAD_TEST_ASSETS
-	if (TheW3DShadowManager && m_shadow)
-	{	
-		TheW3DShadowManager->removeShadow(m_shadow);
-		m_shadow = NULL;
-	}
-	if (m_renderObject)
-	{
-		W3DDisplay::m_3DScene->Remove_Render_Object(m_renderObject);
-  	REF_PTR_RELEASE(m_renderObject);
-		m_renderObject = NULL;
-	}
-#endif
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?setShadowsEnabled@W3DDefaultDraw@@UAEX_N@Z present-unmatched
 void W3DDefaultDraw::setShadowsEnabled(Bool enable)
 {

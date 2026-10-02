@@ -25,11 +25,7 @@ struct Coord3D
 	Real z;
 };
 
-struct Region3D
-{
-	Coord3D lo;
-	Coord3D hi;
-};
+struct Region3D;
 
 class TerrainLogic
 {
@@ -49,14 +45,14 @@ public:
 // ?findClosestEdgePoint@TerrainLogic@@UBE?AUCoord3D@@PBU2@@Z
 Coord3D TerrainLogic::findClosestEdgePoint( const Coord3D *closestTo ) const
 {
-	Region3D mapExtent;
-	getExtent( &mapExtent );
+	Real mapExtent[6];
+	getExtent( (Region3D *)mapExtent );
 
 	Real distances[4];
-	distances[0] = fabs( closestTo->y - mapExtent.lo.y );//top
-	distances[1] = fabs( closestTo->x - mapExtent.hi.x );//right
-	distances[2] = fabs( closestTo->y - mapExtent.hi.y );//bottom
-	distances[3] = fabs( closestTo->x - mapExtent.lo.x );//left
+	distances[0] = fabs( closestTo->y - mapExtent[1] );//top
+	distances[1] = fabs( closestTo->x - mapExtent[3] );//right
+	distances[2] = fabs( closestTo->y - mapExtent[4] );//bottom
+	distances[3] = fabs( closestTo->x - mapExtent[0] );//left
 	Real bestDistance = distances[0];
 	Int bestDistanceIndex = 0;
 	for( Int lameIndex = 1; lameIndex < 4; lameIndex++ )
@@ -70,13 +66,13 @@ Coord3D TerrainLogic::findClosestEdgePoint( const Coord3D *closestTo ) const
 
 	Coord3D retVal = *closestTo;
 	if( bestDistanceIndex == 0 )
-		retVal.y = mapExtent.lo.y;
+		retVal.y = mapExtent[1];
 	else if( bestDistanceIndex == 1 )
-		retVal.x = mapExtent.hi.x;
+		retVal.x = mapExtent[3];
 	else if( bestDistanceIndex == 2 )
-		retVal.y = mapExtent.hi.y;
+		retVal.y = mapExtent[4];
 	else
-		retVal.x = mapExtent.lo.x;
+		retVal.x = mapExtent[0];
 
 	retVal.z = getGroundHeight( retVal.x, retVal.y );
 	return retVal;

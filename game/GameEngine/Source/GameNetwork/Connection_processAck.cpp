@@ -47,7 +47,7 @@ public:
 class NetCommandList
 {
 public:
-	NetCommandRef *getFirstMessage() { return m_first; }
+	NetCommandRef *firstMessageForAck() { return m_first; }
 	// Out of line in retail: the ack path reaches it through a plain call.
 	void removeMessage(NetCommandRef *msg);
 
@@ -129,7 +129,7 @@ NetCommandRef *Connection::processAck(NetCommandMsg *msg) {
 
 // ?processAck@Connection@@QAEPAVNetCommandRef@@GEI@Z
 NetCommandRef *Connection::processAck(UnsignedShort commandID, UnsignedByte originalPlayerID, UnsignedInt originalExecutionFrame) {
-	NetCommandRef *pendingCommandRef = m_netCommandList->getFirstMessage();
+	NetCommandRef *pendingCommandRef = m_netCommandList->firstMessageForAck();
 	while ((pendingCommandRef != 0) && ((pendingCommandRef->getCommand()->m_id != commandID) ||
 		(pendingCommandRef->getCommand()->m_playerID != originalPlayerID) ||
 		(pendingCommandRef->getCommand()->m_executionFrame != originalExecutionFrame))) {

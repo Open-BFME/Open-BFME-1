@@ -62,7 +62,7 @@ public:
 	inline UnicodeString *asUnicodeString() { return (UnicodeString *)&m_value; }
 	void setNameAndType(NameKeyType key, DataType type);
 
-		inline void clear()
+		inline void clearForReleaseData()
 		{
 			switch (getType())
 			{
@@ -105,7 +105,7 @@ void Dict::releaseData()
 		{
 			DictPair *src = m_data->peek();
 			for (Int i = 0; i < m_data->m_numPairsUsed; ++i, ++src)
-				src->clear();
+				src->clearForReleaseData();
 			free(m_data);
 		}
 		m_data = 0;
