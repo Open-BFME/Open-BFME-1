@@ -27,7 +27,8 @@ public:
 	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal = 0) const;
 };
 
-extern Rva002C3FE0TerrainLogic *TheTerrainLogic;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 extern void j_000309f4(void);
 
@@ -118,7 +119,8 @@ private:
 
 Bool Rva002C3FE0Owner::method(const Coord3D *position, Real maxHeight)
 {
-	Real ground = TheTerrainLogic->getGroundHeight(position->x, position->y, 0);
+	Real ground = reinterpret_cast<Rva002C3FE0TerrainLogic *>(TheTerrainLogic)->
+		getGroundHeight(position->x, position->y, 0);
 	if (ground > maxHeight)
 		return false;
 	Object *owner = *(Object **)((char *)m_object1c + 0x10);

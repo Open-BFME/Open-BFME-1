@@ -44,13 +44,15 @@ public:
 	Int m_refCount;
 };
 
+class TerrainLogic;
+
 class Rva00733FD0TerrainLogic
 {
 public:
 	void clear(Int key);
 };
 
-extern Rva00733FD0TerrainLogic *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern void j_0001d0ac(void);
 
 struct Rva00733FD0Tree
@@ -156,7 +158,8 @@ void Rva00733FD0W3DTreeBuffer::removeTreeAtIndex(const Int index)
 					clearCast.function = j_0001d0ac;
 					Int key = *(Int *)(reinterpret_cast<unsigned char *>(this) +
 						index * 0xE8 + 0x208);
-					(TheTerrainLogic->*clearCast.member)(key);
+					(reinterpret_cast<Rva00733FD0TerrainLogic *>(TheTerrainLogic)->*
+						clearCast.member)(key);
 				}
 				*(volatile Int *)(reinterpret_cast<unsigned char *>(this) +
 					index * 0xE8 + 0x278) = 0;

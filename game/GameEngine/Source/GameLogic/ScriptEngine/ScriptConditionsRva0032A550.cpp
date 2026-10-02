@@ -36,7 +36,8 @@ struct Rva00324540
 	Int m_maxCount;
 };
 
-int rva0032a490(Object *object, Rva00324540 *context);
+struct Rva0032A490Context;
+int rva0032a490(Object *object, Rva0032A490Context *context);
 
 class Parameter
 {
@@ -124,7 +125,8 @@ Bool ScriptConditions::rva0032A550(Parameter *pPlayerParm, Parameter *pCompariso
 	{
 		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
 		if (player)
-			player->iterateObjects((ObjectIterateFunc)rva0032a490, &context);
+			player->iterateObjects((ObjectIterateFunc)rva0032a490,
+				reinterpret_cast<Rva0032A490Context *>(&context));
 	}
 
 	Int count = context.m_count;

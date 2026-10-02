@@ -46,6 +46,7 @@ public:
 	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
 		: m_tThing(thingTemplate), m_match(match) {}
 
+protected:
 	virtual Bool allow(Object *object);
 
 private:

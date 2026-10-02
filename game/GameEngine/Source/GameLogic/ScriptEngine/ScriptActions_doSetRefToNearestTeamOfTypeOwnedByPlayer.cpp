@@ -95,6 +95,7 @@ public:
 	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
 		: m_thingTemplate(thingTemplate), m_match(match) {}
 
+protected:
 	virtual Bool allow(Object *object);
 
 private:
