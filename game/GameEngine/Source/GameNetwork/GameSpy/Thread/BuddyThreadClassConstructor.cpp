@@ -28,11 +28,14 @@ private:
 
 class BFMENetworkLock;
 
-class BFMENetworkThreadBase
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h
+// The base of BuddyThreadClass is the WWLib thread base; its one-argument
+// constructor is defined once, in ThreadClassLifecycle.cpp.
+class ThreadClass
 {
 public:
-	BFMENetworkThreadBase(const char *name);
-	virtual ~BFMENetworkThreadBase();
+	ThreadClass(const char *name);
+	virtual ~ThreadClass();
 	virtual void Execute();
 	virtual void Thread_Function() = 0;
 
@@ -74,7 +77,7 @@ public:
 
 #pragma comment(linker, "/alternatename:??1BuddyOwnedLock@@QAE@XZ=??1LockClass@CriticalSectionClass@@QAE@XZ")
 
-class BuddyThreadClass : public BFMENetworkThreadBase
+class BuddyThreadClass : public ThreadClass
 {
 public:
 	BuddyThreadClass(BFMENetworkLock *lock);
@@ -98,7 +101,7 @@ private:
 };
 
 BuddyThreadClass::BuddyThreadClass(BFMENetworkLock *lock) :
-	BFMENetworkThreadBase(0),
+	ThreadClass(0),
 	m_networkLock(lock),
 	m_criticalSection()
 {
