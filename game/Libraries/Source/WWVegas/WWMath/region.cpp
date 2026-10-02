@@ -222,16 +222,6 @@ Region3D &Region3D::operator=(const Region3D &that)
     return *this;
 }
 
-float Region3D::width() const
-{
-    return x_max - x_min;
-}
-
-float Region3D::height() const
-{
-    return y_max - y_min;
-}
-
 float Region3D::depth() const
 {
     return z_max - z_min;
@@ -280,16 +270,6 @@ bool Region3D::isInRegionWithZ(const Coord3D *point) const
         point->y < y_max &&
         z_min < point->z &&
         point->z < z_max;
-}
-
-void Region3D::zero()
-{
-    ((unsigned int *)this)[0] = 0;
-    ((unsigned int *)this)[1] = 0;
-    ((unsigned int *)this)[2] = 0;
-    ((unsigned int *)this)[3] = 0;
-    ((unsigned int *)this)[4] = 0;
-    ((unsigned int *)this)[5] = 0;
 }
 
 Debug &operator<<(Debug &debug, const Region3D &region)
