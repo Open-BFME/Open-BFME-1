@@ -9,29 +9,32 @@
 // a word -- the G in the decoration.
 //
 // The branch tests the FIRST argument against 2 and picks between two
-// argument-less members on this. Both are only known by address, so they are
-// pinned here.
+// argument-less members on this. The sorting-array path uses the verified
+// Allocate_Sorting_Dynamic_Buffer provider at RVA 0091F040.
 
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 
-struct BfmeDynamicVBSlot
+// Match the existing slot-storage owner in DynamicVBAccessClassDeinitBFME.cpp.
+class BfmeDynElemXZ
 {
-	char m_bfmeBody[0x40];
+public:
+	void bfmeResetXZ(unsigned int fvf, int flag);
+	unsigned char m_bfmePadXZ[0x40];
 };
 
-extern BfmeDynamicVBSlot BfmeDynamicVBSlots[];				// 0x013467F0
+extern BfmeDynElemXZ BfmeDynamicVBSlots[];				// 0x013467F0
 
 class BoxDynamicVBAccessClass
 {
 public:
 	BoxDynamicVBAccessClass(UnsignedInt type, UnsignedInt fvf, UnsignedShort count, UnsignedInt start);
+	void Allocate_Sorting_Dynamic_Buffer(void); // verified provider at RVA 0091F040
 
 private:
 	void bfmeAllocateSorting(void);					// retail 0x0091F5B0
-	void bfmeAllocateDynamic(void);					// retail 0x0091F040
 
-	BfmeDynamicVBSlot *m_bfmeSlot;					// +0x00
+	BfmeDynElemXZ *m_bfmeSlot;					// +0x00
 	UnsignedInt m_bfmeType;						// +0x04
 	UnsignedInt m_bfmeFVF;						// +0x08
 	UnsignedInt m_bfmeStart;					// +0x0C
@@ -52,5 +55,5 @@ BoxDynamicVBAccessClass::BoxDynamicVBAccessClass(UnsignedInt type, UnsignedInt f
 	if (type == 2)
 		bfmeAllocateSorting();
 	else
-		bfmeAllocateDynamic();
+		Allocate_Sorting_Dynamic_Buffer();
 }

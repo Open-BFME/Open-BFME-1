@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// BoxDynamicVBAccessClass allocate helpers. Reloc names are swapped vs
-// Generals: bfmeAllocateDynamic is the sorting-array path (retail 0x0091F040,
-// 274B) and bfmeAllocateSorting is the DX8 per-slot path (retail 0x0091F5B0,
-// 384B). The matched ctor at 0x0091F730 calls them that way (type==2 ->
-// sorting helper). Vendored DX8/Sorting VB classes are 4 bytes short of the
-// retail 0x20 allocation, so this TU uses standalone views.
+// BoxDynamicVBAccessClass DX8 per-slot allocator at retail RVA 0091F5B0
+// (384 bytes). The matched constructor at RVA 0091F730 calls this when
+// type == 2; the sorting-array path is owned by
+// BoxDynamicVBAccess_AllocateSorting.cpp at RVA 0091F040.
+// The reference vertex-buffer layout is four bytes shorter than the retail
+// 0x20-byte allocation, so this TU retains its standalone ABI views.
 
 class BfmeDynamicVertexBuffer
 {
@@ -72,46 +72,11 @@ class BoxDynamicVBAccessClass
 	unsigned short m_vertexBufferOffset;
 	BfmeDynamicVertexBuffer *m_vertexBuffer;
 
-	void bfmeAllocateDynamic();
 	void bfmeAllocateSorting();
 };
 
-// RVA 0091F040 is verified under Allocate_Sorting_Dynamic_Buffer in
-// BoxDynamicVBAccess_AllocateSorting.cpp; this older helper is unclaimed.
-// ?bfmeAllocateDynamic@BoxDynamicVBAccessClass@@AAEXXZ present-unmatched
-void BoxDynamicVBAccessClass::bfmeAllocateDynamic()
-{
-	unsigned new_count;
-	unsigned short offset = BfmeDynamicSortingVertexArrayOffset;
-	new_count = (unsigned)m_vertexCount + (unsigned)offset;
-	SortingVertexBufferClass *buffer = BfmeDynamicSortingVertexArray;
-	BfmeDynamicSortingVertexArrayInUse = 1;
-	if (new_count > (unsigned)BfmeDynamicSortingVertexArraySize)
-	{
-		if (buffer != 0)
-		{
-			buffer->Release_Ref();
-			buffer = 0;
-			BfmeDynamicSortingVertexArray = 0;
-		}
-		BfmeDynamicSortingVertexArraySize = (unsigned short)new_count;
-		if ((unsigned short)new_count < 0x1388)
-			BfmeDynamicSortingVertexArraySize = 0x1388;
-	}
-	if (buffer == 0)
-	{
-		buffer = new SortingVertexBufferClass(BfmeDynamicSortingVertexArraySize);
-		offset = 0;
-		BfmeDynamicSortingVertexArray = buffer;
-		BfmeDynamicSortingVertexArrayOffset = offset;
-	}
-	if (buffer != 0)
-		buffer->Add_Ref();
-	if (m_vertexBuffer != 0)
-		m_vertexBuffer->Release_Ref();
-	m_vertexBuffer = buffer;
-	m_vertexBufferOffset = offset;
-}
+// The sorting-array path at RVA 0091F040 is owned by
+// BoxDynamicVBAccess_AllocateSorting.cpp.
 
 void BoxDynamicVBAccessClass::bfmeAllocateSorting()
 {
