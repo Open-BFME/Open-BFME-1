@@ -4,6 +4,16 @@
 // A function-local static holds the property key; the value is formatted from
 // the argument, or set to a single space when the argument is negative.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through the TU-local stand-in pair
+// (StringBaseYW/AsciiStringYW), which named retail's callee
+// ?format@AsciiStringYW@@QAAXV1@ZZ -- a name retail has no body for.
+// AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseYW
 {
 protected:
@@ -38,8 +48,6 @@ public:
 	{
 	}
 
-	void __cdecl format(AsciiStringYW text, ...);
-
 	void set(const char *text, int length);
 };
 
@@ -66,7 +74,7 @@ void bfmeSetPalantirYW(int count)
 	AsciiStringYW value;
 
 	if (count >= 0)
-		value.format(AsciiStringYW("%d"), count);
+		((AsciiString &)value).format(AsciiString("%d"), count);
 	else
 		value.set(" ", 1);
 

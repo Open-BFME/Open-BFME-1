@@ -3,11 +3,18 @@
 // Open-BFME5: the frame label at retail 0x00664680, 153 bytes.  A negative
 // frame is wrapped into the positive range before it is printed.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowAH/AsciiStringAH), which named retail's callee
+// ?format@StringBaseNarrowAH@@QAAXVAsciiStringAH@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowAH
 {
-public:
-	void __cdecl format(class AsciiStringAH text, ...);
-
 protected:
 	StringBaseNarrowAH(void)
 	{
@@ -66,7 +73,7 @@ AsciiStringAH BfmeFrameAH::bfmeLabelAH(void)
 	if (frame < 0)
 		frame += 0x10000;
 
-	label.format(AsciiStringAH("%d(%d)"), frame, m_bfmeCountAH);
+	((AsciiString &)label).format(AsciiString("%d(%d)"), frame, m_bfmeCountAH);
 
 	return label;
 }

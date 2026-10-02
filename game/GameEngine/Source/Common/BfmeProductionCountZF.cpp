@@ -4,11 +4,20 @@
 // 210 bytes.  Unlike its siblings the property key is built per call, and the
 // blank value comes from a stack character rather than from a literal.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through the TU-local stand-in pair
+// (StringBaseNarrowZF/AsciiStringZF), which named retail's callee
+// ?format@StringBaseNarrowZF@@QAAXVAsciiStringZF@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+// The stand-ins below keep their layout and role: they hold the key local
+// and give BfmePalantirZF its by-value argument.
+
 class StringBaseNarrowZF
 {
-public:
-	void __cdecl format(class AsciiStringZF text, ...);
-
 protected:
 	StringBaseNarrowZF(void)
 	{
@@ -100,7 +109,7 @@ void bfmeProductionCountZF(int slot, int count)
 {
 	AsciiStringZF key;
 
-	key.format(AsciiStringZF("APT:PalantirCommand%dProductionCount"), slot + 1);
+	((AsciiString &)key).format(AsciiString("APT:PalantirCommand%dProductionCount"), slot + 1);
 
 	UnicodeStringZF value;
 

@@ -4,11 +4,18 @@
 // number is printed into a key and the lookup writes its own result straight
 // into our caller's return slot.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowAI/AsciiStringAI), which named retail's callee
+// ?format@StringBaseNarrowAI@@QAAXVAsciiStringAI@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowAI
 {
-public:
-	void __cdecl format(class AsciiStringAI text, ...);
-
 protected:
 	StringBaseNarrowAI(void)
 	{
@@ -61,7 +68,7 @@ AsciiStringAI BfmeTableAI::bfmeNumberedAI(int number)
 {
 	AsciiStringAI key;
 
-	key.format(AsciiStringAI("%d"), number);
+	((AsciiString &)key).format(AsciiString("%d"), number);
 
 	return bfmeLookupAI(key);
 }

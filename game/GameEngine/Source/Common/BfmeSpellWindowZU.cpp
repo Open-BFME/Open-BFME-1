@@ -3,11 +3,18 @@
 // Open-BFME5: the spell-window name at retail 0x0058BA80, 141 bytes.
 // A free function returning the built string by value.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in pair
+// (StringBaseNarrowZU/AsciiStringZU), which named retail's callee
+// ?format@StringBaseNarrowZU@@QAAXVAsciiStringZU@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowZU
 {
-public:
-	void __cdecl format(class AsciiStringZU text, ...);
-
 protected:
 	StringBaseNarrowZU(void)
 	{
@@ -53,7 +60,7 @@ AsciiStringZU bfmeSpellWindowZU(int slot)
 {
 	AsciiStringZU name;
 
-	name.format(AsciiStringZU("SpellBookUI/Spell%d"), slot + 1);
+	((AsciiString &)name).format(AsciiString("SpellBookUI/Spell%d"), slot + 1);
 
 	return name;
 }
