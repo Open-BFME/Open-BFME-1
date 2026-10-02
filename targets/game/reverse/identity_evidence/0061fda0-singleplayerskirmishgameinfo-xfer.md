@@ -41,13 +41,23 @@ So the table 0x011171C8 belongs to SinglePlayerSkirmishGameInfo, and its slot-3
 override is `SinglePlayerSkirmishGameInfo::xfer`. The mangled form copies the
 twin's: `?xfer@SinglePlayerSkirmishGameInfo@@MAEXPAVXfer@@@Z`.
 
-## Related rows this note does not change
+## Constructor names (corrected in a follow-up commit)
 
-The constructor at 0x00619720 is currently `??0SkirmishGameInfo@@QAE@XZ` and the
-one at 0x00075C10 is `??0Open2SlotOwner75C10@@QAE@XZ`. By the table above these
-names are swapped: 0x00075C10 builds SkirmishGameInfo (its `new` lands in
-0x012F7094, the global that `SkirmishBattleHonors::write`'s pin note calls
-TheSkirmishGameInfo) and 0x00619720 builds SinglePlayerSkirmishGameInfo. The
-dir32 rows `??_7SkirmishGameInfo@@6BSnapshot@@@ -> 0x011171C8` and
-`??_7Open2SlotOwner75C10@@6BSnapshot@@@ -> 0x01075E7C` inherit the same swap.
-Correcting them is a separate change.
+The xfer rename left the constructor names swapped: 0x00619720 was
+`??0SkirmishGameInfo@@QAE@XZ` and 0x00075C10 was `??0Open2SlotOwner75C10@@QAE@XZ`.
+The table above shows the reverse. 0x00075C10 builds SkirmishGameInfo: its `new`
+lands in 0x012F7094, the global the ledger already calls TheSkirmishGameInfo,
+and its Snapshot table holds `SkirmishGameInfo::xfer`. 0x00619720 builds
+SinglePlayerSkirmishGameInfo. The follow-up commit renames:
+
+- 0x00619720 -> `??0SinglePlayerSkirmishGameInfo@@QAE@XZ`
+  (SinglePlayerSkirmishGameInfoCtor.cpp)
+- 0x00075C10 -> `??0SkirmishGameInfo@@QAE@XZ` (SkirmishGameInfoCtor.cpp, split out
+  of Open2Twins008.cpp)
+- dir32 `??_7SkirmishGameInfo@@6B{GameInfo,Snapshot}@@@` (0x011171DC/0x011171C8)
+  -> `??_7SinglePlayerSkirmishGameInfo@@...`, and
+  `??_7Open2SlotOwner75C10@@6B{GameInfo,Snapshot}@@@` (0x01075E90/0x01075E7C)
+  -> `??_7SkirmishGameInfo@@...`
+
+The opaque caller pin `??0Rva00003409Open2SlotOwner@@QAE@XZ` (0x00075C10) is left
+as it is.

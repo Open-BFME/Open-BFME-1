@@ -2853,8 +2853,8 @@ name,va
 ??_7Open2Module28AC90@@6B@,0x010BCF30
 ??_7Open2Module28AC90@@6BBehaviorModuleInterface@@@,0x010BCF40
 ??_7Open2Module28AC90@@6BObjectModule@@@,0x010BD004
-??_7Open2SlotOwner75C10@@6BGameInfo@@@,0x01075E90
-??_7Open2SlotOwner75C10@@6BSnapshot@@@,0x01075E7C
+??_7SkirmishGameInfo@@6BGameInfo@@@,0x01075E90
+??_7SkirmishGameInfo@@6BSnapshot@@@,0x01075E7C
 ??_7Open2Store880FC0@@6BSnapshot@@@,0x01132B44
 ??_7Open2Store880FC0@@6BSubsystemInterface@@@,0x01132B54
 ??_7Open2Store8F75D0@@6BSnapshot@@@,0x01138D08
@@ -4954,8 +4954,8 @@ name,va
 ??_7SimpleSceneIterator@@6B@,0x0113CF34
 ??_7SineLinearOffsetTextureMapperClass@@6B@,0x0113E428
 ??_7SkirmishBattleHonors@@6B@,0x01080460
-??_7SkirmishGameInfo@@6BGameInfo@@@,0x011171DC
-??_7SkirmishGameInfo@@6BSnapshot@@@,0x011171C8
+??_7SinglePlayerSkirmishGameInfo@@6BGameInfo@@@,0x011171DC
+??_7SinglePlayerSkirmishGameInfo@@6BSnapshot@@@,0x011171C8
 ??_7SkirmishPreferences@@6B@,0x010806B0
 ??_7SkirmishScreenState@@6B@,0x01106C80
 ??_7SkyboxTextureSet@@6B@,0x01082BE4
