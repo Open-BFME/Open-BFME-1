@@ -1,7 +1,13 @@
 // Open-BFME5 conversions.
 
 void bfmeSetTextureVDA(unsigned n, void *tex);
-void bfmeDrawTrianglesVDA(unsigned short a, unsigned short b, unsigned short c, unsigned short d);
+
+// upstream layout: game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
+class DX8Wrapper
+{
+public:
+	static void Draw_Triangles(unsigned short, unsigned short, unsigned short, unsigned short);
+};
 
 class BfmeThingVDA
 {
@@ -27,7 +33,7 @@ void BfmeThingVDA::bfmeDrawVDA(char skip)
 		return;
 	if (!skip)
 		bfmeSetTextureVDA(0, &m_bfmeTex);
-	bfmeDrawTrianglesVDA(m_bfmef4, m_bfme100, m_bfmefc, m_bfmef8);
+	DX8Wrapper::Draw_Triangles(m_bfmef4, m_bfme100, m_bfmefc, m_bfmef8);
 }
 
 void bfmeFreeVDB(void *p);

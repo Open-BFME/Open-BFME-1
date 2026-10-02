@@ -3,7 +3,13 @@
 class BfmeTexVHA;
 
 void __cdecl bfmeSetTexVHA(unsigned i, BfmeTexVHA *&t);
-void __cdecl bfmeDrawTriVHA(unsigned short a, unsigned short b, unsigned short c, unsigned short d);
+
+// upstream layout: game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
+class DX8Wrapper
+{
+public:
+	static void Draw_Triangles(unsigned short, unsigned short, unsigned short, unsigned short);
+};
 
 class BfmeThingVHA
 {
@@ -29,7 +35,7 @@ void BfmeThingVHA::bfmeDrawVHA(bool flag)
 		return;
 	if (!flag)
 		bfmeSetTexVHA(0, m_bfme20);
-	bfmeDrawTriVHA(m_bfme38, m_bfme44, m_bfme40, m_bfme3c);
+	DX8Wrapper::Draw_Triangles(m_bfme38, m_bfme44, m_bfme40, m_bfme3c);
 }
 
 class BfmeMsgVHC
