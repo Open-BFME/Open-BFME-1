@@ -1,6 +1,11 @@
 // cl: /Od
+// stlport
 
-void bfmeDoPQ(char *a, char *b, char *c, char *d);
+#include <string>
+
+typedef _STL::basic_string<char> StlString;
+extern template int _STL::basic_string<char>::_M_compare(
+	const char *, const char *, const char *, const char *);
 
 class BfmeVecV35
 {
@@ -94,7 +99,7 @@ void __stdcall bfmeCopyOverlapV35(int dstOff, int dstN, BfmeVecV35 *other, int s
 		mov edx, dword ptr [ecx]
 		add edx, dword ptr [ebp+8]
 		push edx
-		call bfmeDoPQ
+		call StlString::_M_compare
 		add esp, 0x10
 	}
 }
