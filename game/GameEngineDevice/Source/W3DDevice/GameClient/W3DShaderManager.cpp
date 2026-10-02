@@ -4539,3 +4539,71 @@ void FlatTerrainShaderPixelShader::reset(void)
 
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
+
+
+#include "matpass.h"
+// Native derived owner is unproven; its constructor and virtual role are witnessed.
+class Rva007CBB30 : public MaterialPassClass
+{
+public:
+    virtual void Install_Materials() const;
+    unsigned methodRva007CBB70();
+    int m_at38;
+    float m_at3c;
+    int m_at40;
+    float m_at44;
+};
+typedef char MaterialPassExtentRva007CBB30[sizeof(MaterialPassClass)==0x38 ? 1 : -1];
+class BfmeRefEAX;
+extern BfmeRefEAX *g_bfmeAEAX;
+extern BfmeRefEAX *g_bfmeBEAX;
+typedef HRESULT (__stdcall *MaterialCreateDeclarationFn)(IDirect3DDevice8 *, const BfmeVertexElement *, BfmeRefEAX **);
+typedef HRESULT (__stdcall *MaterialSetObjectFn)(IDirect3DDevice8 *, BfmeRefEAX *);
+typedef HRESULT (__stdcall *MaterialSetConstantFn)(IDirect3DDevice8 *, unsigned, const void *, unsigned);
+#define MATERIAL_SET_OBJECT(slot_, value_) \
+    { IDirect3DDevice8 *device_ = DX8Wrapper::_Get_D3D_Device8(); \
+      (*(MaterialSetObjectFn **)device_)[(slot_)/4](device_, value_); number_of_DX8_calls++; }
+#define MATERIAL_SET_CONSTANT(reg_, data_, count_) \
+    { if(memcmp(data_, &DX8Wrapper::Vertex_Shader_Constants[reg_],sizeof(Vector4)*(count_))!=0) { \
+      memcpy(&DX8Wrapper::Vertex_Shader_Constants[reg_],data_,sizeof(Vector4)*(count_)); \
+      IDirect3DDevice8 *device_ = DX8Wrapper::_Get_D3D_Device8(); \
+      (*(MaterialSetConstantFn **)device_)[0x178/4](device_,reg_,data_,count_); number_of_DX8_calls++; } }
+extern __declspec(align(4)) unsigned char Rva013071A0[4];
+extern unsigned Rva013071A4;
+extern Vector4 Rva0130718C;
+typedef char ShaderExtentRva007CBD90[sizeof(ShaderClass)==4 ? 1 : -1];
+void Rva007CBB30::Install_Materials() const
+{
+    if (g_bfmeBEAX == 0) {
+        BfmeVertexElement declaration[] = {
+            {0,0,2,0,0,0}, {0,12,2,0,3,0}, {0xff,0,17,0,0,0}
+        };
+        IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
+        (*(MaterialCreateDeclarationFn **)device)[0x158/4](device,declaration,&g_bfmeBEAX);
+        BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\unlitnormalextrusion.vso",(DWORD *)&g_bfmeAEAX);
+    }
+    if (!(Rva013071A4 & 1)) {
+        Rva013071A4 |= 1;
+        new (Rva013071A0) ShaderClass(0x105833);
+    }
+    unsigned color = const_cast<Rva007CBB30 *>(this)->methodRva007CBB70();
+    DX8Wrapper::Set_Shader(*(ShaderClass *)Rva013071A0);
+    DX8Wrapper::Apply_Render_State_Changes();
+    BFME_SET_TSS(0,D3DTSS_COLORARG1,3);
+    BFME_SET_TSS_LATE(0,D3DTSS_COLOROP,2);
+    BFME_SET_RS(D3DRS_TEXTUREFACTOR,color);
+    MATERIAL_SET_OBJECT(0x15c,g_bfmeBEAX);
+    MATERIAL_SET_OBJECT(0x170,g_bfmeAEAX);
+    D3DXMATRIX world,view,projection,result;
+    DX8Wrapper::_Get_DX8_Transform(D3DTS_WORLD,*(Matrix4x4 *)&world);
+    DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW,*(Matrix4x4 *)&view);
+    DX8Wrapper::_Get_DX8_Transform(D3DTS_PROJECTION,*(Matrix4x4 *)&projection);
+    D3DXMatrixMultiply(&result,&view,&projection);
+    D3DXMatrixMultiply(&result,&world,&result);
+    D3DXMatrixTranspose(&result,&result);
+    MATERIAL_SET_CONSTANT(4,&result,4);
+    Rva0130718C.X = m_at3c;
+    MATERIAL_SET_CONSTANT(8,&Rva0130718C,1);
+}
+#undef MATERIAL_SET_OBJECT
+#undef MATERIAL_SET_CONSTANT
