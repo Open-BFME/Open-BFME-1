@@ -11,28 +11,9 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 
 #include "ascii_string.h"
 
-// Reconstruction aliases for the same one-word StringBase<char> layout.  The
-// distinct names select the already-verified retail copy and const-char
-// constructor bodies without claiming historical class spellings.
-class AsciiStringVZ
-{
-public:
-	AsciiStringVZ(const AsciiStringVZ &other);
-	~AsciiStringVZ();
-
-	char *m_data;
-};
-
-class AsciiStringYI
-{
-public:
-	AsciiStringYI(const char *text);
-	~AsciiStringYI();
-
-	char *m_data;
-};
-
-extern const char g_bfmeEmptyAE[];
+// Retail RVA 0x00887B60/0x00888BC0 and 0x00887940 are the
+// StringBase<char> constructors and releaseBuffer reached by AsciiString.
+extern const char g_bfmeEmptyAscii[];
 
 class Rva00087750Counted
 {
@@ -46,7 +27,7 @@ public:
 	}
 
 	long m_refCount;
-	AsciiStringVZ m_name;
+	AsciiString m_name;
 };
 
 class Rva00087750Ref
@@ -122,7 +103,7 @@ public:
 	virtual void slot60(); virtual void slot61(); virtual void slot62(); virtual void slot63();
 	virtual void slot64(); virtual void slot65(); virtual void slot66(); virtual void slot67();
 	virtual void slot68(); virtual void slot69();
-	virtual Rva00087750Ref findAudioEventInfo(const AsciiStringYI &name) const;
+	virtual Rva00087750Ref findAudioEventInfo(const AsciiString &name) const;
 };
 
 extern AudioManager *TheAudio;
@@ -132,15 +113,16 @@ void Gen003BB8F0Free(GenXferInterface *xfer, void *fieldValue)
 	Rva00087750Ref *field = static_cast<Rva00087750Ref *>(fieldValue);
 	Rva00087750Ref saved(*field);
 
-	const AsciiStringVZ &source = saved.m_ptr
+	const AsciiString &source = saved.m_ptr
 		? saved.m_ptr->m_name
-		: *reinterpret_cast<const AsciiStringVZ *>(&AsciiString::TheEmptyString);
-	AsciiStringVZ name(source);
+		: *reinterpret_cast<const AsciiString *>(&AsciiString::TheEmptyString);
+	AsciiString name(source);
 
 	xfer->slot68(&name);
 	if (xfer->isLoading())
 	{
-		const char *text = name.m_data ? name.m_data + 8 : g_bfmeEmptyAE;
+		const char *data = *reinterpret_cast<const char *const *>(&name);
+		const char *text = data ? data + 8 : g_bfmeEmptyAscii;
 		*field = TheAudio->findAudioEventInfo(text);
 	}
 }
