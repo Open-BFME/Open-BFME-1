@@ -8,15 +8,23 @@ struct BfmeRangePI
 	char *m_bfmeEnd;			// 0x4
 };
 
+// The helper the run below calls is retail's BfmeS1155::bfmeFind1155 (its
+// three arguments are pushed and its this comes from the caller's this).
+class BfmeS1155
+{
+public:
+	unsigned int bfmeFind1155(const char *s, unsigned int pos, unsigned int n);
+};
+
 class BfmeThingPI
 {
 public:
 	void bfmeGoPI(const BfmeRangePI *span, void *what);
-
-	void bfmeDoPI(char *at, void *what, int many);
 };
 
 void BfmeThingPI::bfmeGoPI(const BfmeRangePI *span, void *what)
 {
-	bfmeDoPI(span->m_bfmeAt, what, span->m_bfmeEnd - span->m_bfmeAt);
+	reinterpret_cast<BfmeS1155 *>(this)->bfmeFind1155(
+		span->m_bfmeAt, reinterpret_cast<unsigned int>(what),
+		(unsigned int)(span->m_bfmeEnd - span->m_bfmeAt));
 }
