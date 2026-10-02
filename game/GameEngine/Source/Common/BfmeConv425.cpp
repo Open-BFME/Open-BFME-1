@@ -14,7 +14,14 @@ struct BfmeTwoATC
 // BfmeOneATC above is this TU's view of the pointee, so the member call casts.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeTwoATC *g_bfmeTwoATC;
+
+// Retail global 0x012F4B58; EA's own name for this pointer is
+// `Shell *TheShell`, defined once in
+// game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp.  BfmeTwoATC above is
+// this TU's view of the pointee, so the flag stores cast at the use.
+class Shell;
+
+extern Shell *TheShell;
 
 class BfmeThingATC
 {
@@ -30,8 +37,8 @@ void BfmeThingATC::bfmeGoATC()
 	{
 		m_bfmeState = 0;
 		((BfmeOneATC *)g_rva012F19E8WindowManager)->bfmeStopATC(0);
-		g_bfmeTwoATC->m_bfmeFlag = true;
+		((BfmeTwoATC *)TheShell)->m_bfmeFlag = true;
 		return;
 	}
-	g_bfmeTwoATC->m_bfmeFlag = true;
+	((BfmeTwoATC *)TheShell)->m_bfmeFlag = true;
 }

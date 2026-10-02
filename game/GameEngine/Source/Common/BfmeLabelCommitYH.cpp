@@ -47,7 +47,13 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // view and casts at the use.
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;		// retail 0x012ED5C8
-extern BfmeThingYH *g_bfmeThingYH;				// retail 0x012F4B58
+// Retail global 0x012F4B58; EA's own name for this pointer is
+// `Shell *TheShell`, defined once in
+// game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp.  BfmeThingYH above
+// is this TU's view of the pointee, so the call casts at the use.
+class Shell;
+
+extern Shell *TheShell;						// retail 0x012F4B58
 extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D
 
 // ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z
@@ -59,7 +65,7 @@ void __cdecl bfmeCommitYH(AsciiStringYH label)
 
 	slot->set(label);
 
-	g_bfmeThingYH->bfmeNotifyYH();
+	((BfmeThingYH *)TheShell)->bfmeNotifyYH();
 
 	if (g_rva012F19E8WindowManager != 0)
 		((BfmeOtherYH *)g_rva012F19E8WindowManager)->bfmeRefreshYH(0);
