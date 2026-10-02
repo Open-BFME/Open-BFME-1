@@ -10,6 +10,7 @@ namespace FXParticleSystem
 class LineEmissionVolumeInfo
 {
 public:
+	LineEmissionVolumeInfo();
 	virtual ~LineEmissionVolumeInfo();
 
 private:

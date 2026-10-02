@@ -16,7 +16,7 @@ struct Q3SortCompare
 	void *m_state;
 
 	bool operator()(const Q3SortElem8 &left,
-		const Q3SortElem8 &right) const
+		const Q3SortElem8 &right) const volatile
 	{
 		return left.m_b > right.m_b;
 	}

@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class SphereEmissionVolumeInfo
 {
 public:
+    SphereEmissionVolumeInfo();
     virtual ~SphereEmissionVolumeInfo();
 
 private:

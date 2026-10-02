@@ -125,35 +125,12 @@ private:
 	Int m_entryToClear;								///< retail this+0x50
 };
 
-// ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z
-void AIEnterState::onExit(StateExitType status)
-{
-	Object *obj = getMachineOwner();
-	AIInternalMoveToState::onExit(status);
+// Keep the compiler-emitted accessor aliases used by this TU's matched rows.
+static AIUpdateInterface* (Object::* volatile s_keepGetAI)() const = &Object::getAI;
+static ContainModuleInterface* (Object::* volatile s_keepGetContain)() const = &Object::getContain;
+static Locomotor* (AIUpdateInterface::* volatile s_keepGetCurLocomotor)() const =
+	&AIUpdateInterface::getCurLocomotor;
+static Object* (AIInternalMoveToState::* volatile s_keepGetMachineOwner)() const =
+	&AIInternalMoveToState::getMachineOwner;
 
-	// tell the pathfinder to stop ignoring the object
-	AIUpdateInterface *ai = obj->getAI();
-	if (ai)
-	{
-		ai->ignoreObstacle(0);
-		if (ai->getCurLocomotor())
-		{
-			ai->getCurLocomotor()->setAllowInvalidPosition(false);
-		}
-	}
-
-	// use this, rather than getMachineGoalObject, in case the goal
-	// is killed while we were waiting...
-	if (m_entryToClear != 0)
-	{
-		Object *goal = TheGameLogic->findObjectByID(m_entryToClear);
-		if (goal)
-		{
-			ContainModuleInterface *contain = goal->getContain();
-			if (contain)
-			{
-				contain->onObjectWantsToEnterOrExit(obj, WANTS_TO_EXIT);
-			}
-		}
-	}
-}
+// ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z is defined by AIStates.cpp.

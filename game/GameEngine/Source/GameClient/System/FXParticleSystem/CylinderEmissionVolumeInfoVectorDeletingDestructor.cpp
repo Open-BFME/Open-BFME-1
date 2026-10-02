@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class CylinderEmissionVolumeInfo
 {
 public:
+    CylinderEmissionVolumeInfo();
     virtual ~CylinderEmissionVolumeInfo();
 
 private:

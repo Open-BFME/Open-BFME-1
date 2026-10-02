@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class EmissionVolumeInfo
 {
 public:
+    EmissionVolumeInfo();
     virtual ~EmissionVolumeInfo();
 private:
     unsigned char m_data[0x04];
