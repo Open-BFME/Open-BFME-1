@@ -65,16 +65,6 @@ void IRegion2D::expandBy(const ICoord2D &point)
     }
 }
 
-int IRegion2D::width() const
-{
-    return x_max - x_min;
-}
-
-int IRegion2D::height() const
-{
-    return y_max - y_min;
-}
-
 IRegion3D::IRegion3D()
 {
 }
