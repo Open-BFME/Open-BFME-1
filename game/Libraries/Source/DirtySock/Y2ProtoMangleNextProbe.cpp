@@ -23,7 +23,7 @@ struct Rva00805960Probe {
     char m_tag[0x40];
 };
 int Rva00805710TagFieldGet(char *, int, const char *, const char *, int);
-unsigned Rva007FFC10TextAddr(const char *);
+extern "C" int Rva007FFC10(const char *);
 
 int Rva00805A70NextProbe(Rva00805960Probe *probe,
     Rva00804150ProtoMangleRef *ref, const char *text)
@@ -38,7 +38,7 @@ int Rva00805A70NextProbe(Rva00805960Probe *probe,
     probe->m_serial = -1;
     probe->m_serial = Rva00805710TagFieldGet(strParm, sizeof(strParm), text, "targetIP", 1);
     if (probe->m_serial >= 0) {
-        probe->m_peerAddr = Rva007FFC10TextAddr(strParm);
+        probe->m_peerAddr = Rva007FFC10(strParm);
         if (probe->m_peerAddr != 0)
             ++fields;
     }
