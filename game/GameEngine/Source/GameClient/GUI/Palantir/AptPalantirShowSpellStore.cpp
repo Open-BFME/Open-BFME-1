@@ -61,7 +61,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class AptPalantir
 {
@@ -86,7 +86,7 @@ void AptPalantir::showSpellStore()
 		WinInstanceData *instance = button->winGetInstanceData();
 		if( instance )
 		{
-			int windowMode = g_theWindowManager->m_windowMode;
+			int windowMode = g_rva012F19E8WindowManager->m_windowMode;
 			GameWindow *owner = instance->m_owner;
 			TheWindowManager->winSendSystemMsg( owner,
 				0x4008 + ( windowMode == 2 ),
