@@ -18,17 +18,17 @@ public:
 	virtual void bfmeWriteVCSA(void *what);
 };
 
-class BfmeSubCSA
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSA();
+	bool isMobile() const;
 };
 
 class BfmeThingCSA
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSA *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSA *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -38,7 +38,7 @@ public:
 
 void BfmeThingCSA::bfmeGoCSA(void *what)
 {
-	if (m_bfmeSub->bfmeAskCSA())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSA();
 		m_bfmeVal = what;

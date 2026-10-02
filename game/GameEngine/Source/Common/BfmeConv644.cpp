@@ -19,13 +19,13 @@ public:
 	void bfmeWriteNCTA(void *what);
 };
 
-class BfmeSubCTA;
+class ObjectIsMobileBody;
 
 class BfmeThingCTA
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCTA *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCTA *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -33,15 +33,15 @@ public:
 	void bfmeGoCTA(void *one, void *two);
 };
 
-class BfmeSubCTA
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCTA();
+	bool isMobile() const;
 };
 
 void BfmeThingCTA::bfmeGoCTA(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCTA())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCTA();
 		m_bfmeOut->bfmeWriteNCTA(one);

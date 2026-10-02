@@ -19,17 +19,17 @@ public:
 	void bfmeWriteNCSH(void *what);
 };
 
-class BfmeSubCSH
+class ObjectIsMobileBody
 {
 public:
-	bool bfmeAskCSH();
+	bool isMobile() const;
 };
 
 class BfmeThingCSH
 {
 public:
 	unsigned char m_bfmeHead[8];
-	BfmeSubCSH *m_bfmeSub;
+	ObjectIsMobileBody *m_bfmeSub;
 	unsigned char m_bfmeGap[0x24];
 	BfmeOutCSH *m_bfmeOut;
 	unsigned char m_bfmeGap2[0x14];
@@ -39,7 +39,7 @@ public:
 
 void BfmeThingCSH::bfmeGoCSH(void *one, void *two)
 {
-	if (m_bfmeSub->bfmeAskCSH())
+	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCSH();
 		m_bfmeVal = two;

@@ -7,10 +7,15 @@ typedef int Int;
 class BfmeSubCSA
 {
 public:
-	bool bfmeAskCSA();
-
 	unsigned char m_unreconstructed000[0x344];
 	unsigned char m_flags344;
+};
+
+// Object's mobility test (0x001C9270), under its ledger name.
+class ObjectIsMobileBody
+{
+public:
+	bool isMobile() const;
 };
 
 class Waypoint;
@@ -53,7 +58,7 @@ private:
 
 void Rva002BC400StateAction::run(void *first, unsigned char second, void *third)
 {
-	if ((m_object->m_flags344 & 1) == 0 && m_object->bfmeAskCSA())
+	if ((m_object->m_flags344 & 1) == 0 && ((const ObjectIsMobileBody *)m_object)->isMobile())
 	{
 		m_sink->beginAction();
 		m_sink->setGoalWaypoint((const Waypoint *)first);
