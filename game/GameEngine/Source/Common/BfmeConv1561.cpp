@@ -2,6 +2,16 @@
 
 class BfmeCellVRA;
 
+// Retail's per-cell shroud update body lives on the shroud manager element:
+// game/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp
+class ShroudManagerImpl008FBA40;
+
+class ShroudManagerImpl008FBA40Element
+{
+public:
+	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager, int index);
+};
+
 class BfmePartVRA
 {
 public:
@@ -11,7 +21,6 @@ public:
 class BfmeCellVRA
 {
 public:
-	void bfmeTouchVRA(BfmePartVRA *owner, int index);
 	char m_bfmePad00[0x68];
 };
 
@@ -45,7 +54,10 @@ char BfmeShroudVRA::bfmeUpdateVRA(int x, int y, int radius)
 				BfmeCellVRA *p;
 
 				for (p = first; p != end; ++p)
-					p->bfmeTouchVRA(m_bfme00, index);
+					reinterpret_cast<ShroudManagerImpl008FBA40Element *>(p)
+					->updatePlayerCells008FC300(
+						reinterpret_cast<ShroudManagerImpl008FBA40 *>(m_bfme00),
+						index);
 			}
 
 			mask >>= 1;

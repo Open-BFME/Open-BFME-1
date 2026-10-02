@@ -2,10 +2,19 @@
 
 class BfmeMgrVNR;
 
+// Retail's per-cell shroud update body lives on the shroud manager element:
+// game/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp
+class ShroudManagerImpl008FBA40;
+
+class ShroudManagerImpl008FBA40Element
+{
+public:
+	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager, int idx);
+};
+
 class BfmeCellVNR
 {
 public:
-	void bfmeCellUpdateVNR(BfmeMgrVNR *m, int idx);
 	char m_bfmePad00[0x68];
 };
 
@@ -29,7 +38,9 @@ void BfmeMgrVNR::bfmeUpdateVNR(int idx)
 
 		while (p != e)
 		{
-			p->bfmeCellUpdateVNR(this, idx);
+			reinterpret_cast<ShroudManagerImpl008FBA40Element *>(p)
+				->updatePlayerCells008FC300(
+					reinterpret_cast<ShroudManagerImpl008FBA40 *>(this), idx);
 			++p;
 		}
 	}
