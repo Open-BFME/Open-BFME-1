@@ -10,7 +10,7 @@ struct BfmeQ1206
 	int m_bfme14;
 };
 
-extern "C" BfmeQ1206 g_bfmeD1206;
+extern "C" BfmeQ1206 g_bfmeD1206 = {0};
 
 class BfmeA1206
 {
