@@ -29,7 +29,11 @@ struct Rva00899560Pool {
   else { m_items[count]=v; ++count; }
  }
 };
-extern Rva008CD8E0Integer *Rva013387D0Head;
+// The pooled-integer free head at 0x013387D0 is the defining Rva008D2A10 list
+// (see game/GameEngine/Source/Common/Rva008D2A10Link.cpp); it has no header,
+// so forward-declare it and spell the reference with its defining type.
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
@@ -37,9 +41,9 @@ extern "C" const void *bfmeVftAptInteger[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 __forceinline Rva8CD130Value *integerOne008CD8E0() {
- Rva008CD8E0Integer *v=Rva013387D0Head;
+ Rva008CD8E0Integer *v=(Rva008CD8E0Integer *)g_rva008D2A10;
  if(v) {
-  Rva013387D0Head=v->m_next;
+  g_rva008D2A10=(Rva008D2A10 *)v->m_next;
   g_rva8CD130IdleHook->add(v);
   v->m_value=1;
   return (Rva8CD130Value *)v;

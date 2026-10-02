@@ -13378,5 +13378,25 @@
   "after_sha256": "bd3a3cebf2768b5f7e6be2eb4411fb302d440e3268a03263af905f400d7d8dfb",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Link census: the matched row ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ (functions.csv, 0x001CF980) spells its result type Rva001CF980Result, so the callers' return type must match to link; BfmeRes920D was a stand-in for the same opaque result. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008C77F0PushStringLength.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008C77F0PushStringLength.cpp",
+  "old_name": "AptInteger",
+  "new_name": "Rva008D2A10",
+  "before_sha256": "fffba0b39659251814b98ba7398be730211982868bb6d34e33036122cea19370",
+  "after_sha256": "299ef2f48b3e3b51c1b39258e2911bd628f29dac67d6f21f66d69455ede26eea",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008C77F0PushStringLength.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008C77F0PushStringLength.cpp",
+  "old_name": "AptValue",
+  "new_name": "Rva008D2A10",
+  "before_sha256": "fffba0b39659251814b98ba7398be730211982868bb6d34e33036122cea19370",
+  "after_sha256": "299ef2f48b3e3b51c1b39258e2911bd628f29dac67d6f21f66d69455ede26eea",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

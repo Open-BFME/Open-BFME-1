@@ -36,9 +36,13 @@ struct Rva00899560Pool
 	}
 };
 
-// Retail AptInteger::Create reads the adjacent pool head at 0x013387D0;
-// AptBoolean and the Rva008D2A30 chain use the distinct 0x013387D4 head.
-extern Rva008D2A30Node *Rva013387D0Head;
+// Retail AptInteger::Create reads the adjacent pool head at 0x013387D0, which is
+// the defining Rva008D2A10 list (game/GameEngine/Source/Common/Rva008D2A10Link.cpp);
+// it has no header, so forward-declare it and spell the reference with its
+// defining type.  AptBoolean and the Rva008D2A30 chain use the distinct
+// 0x013387D4 head.
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
@@ -67,11 +71,11 @@ public:
 
 AptInteger *AptInteger::Create(int value)
 {
-	AptInteger *object = (AptInteger *)Rva013387D0Head;
+	AptInteger *object = (AptInteger *)g_rva008D2A10;
 
 	if (object != 0)
 	{
-		Rva013387D0Head = (Rva008D2A30Node *)object->m_next;
+		g_rva008D2A10 = (Rva008D2A10 *)object->m_next;
 		g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 		object->m_value = value;
 		return object;

@@ -35,12 +35,16 @@ struct Rva008A4C00Value : Rva00899560Value {
     union { float m_value; Rva008A4C00Value *m_next; };
     __forceinline Rva008A4C00Value(float value) : Rva00899560Value(6), m_value(value) {}
 };
-extern Rva008A1110Value *Rva013387D0;
+// The pooled-integer free head at 0x013387D0 is the defining Rva008D2A10 list
+// (see game/GameEngine/Source/Common/Rva008D2A10Link.cpp); it has no header,
+// so forward-declare it and spell the reference with its defining type.
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 extern Rva008A4C00Value *Rva008AF330Head;
 static __forceinline Rva008A1110Value *makeInteger(int value) {
-    Rva008A1110Value *object = Rva013387D0;
+    Rva008A1110Value *object = (Rva008A1110Value *)g_rva008D2A10;
     if (object) {
-        Rva013387D0 = object->m_next;
+        g_rva008D2A10 = (Rva008D2A10 *)object->m_next;
         g_rva8CD130IdleHook->addPooled(object);
         object->m_value = value;
         return object;
