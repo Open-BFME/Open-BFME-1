@@ -4,39 +4,21 @@
 // 115 bytes: four words and a flag copied inline, then a wide string and a
 // narrow one.
 
-class UnicodeStringWK
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+// Retail calls the StringBase copy/release bodies through inline string
+// forwarders; keep the wide forwarders visible just like AsciiString's.
+inline UnicodeString::UnicodeString(const UnicodeString &other)
 {
-public:
-	UnicodeStringWK(const UnicodeStringWK &other);
-	~UnicodeStringWK(void);
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&other);
+}
 
-private:
-	unsigned short *m_bfmeData;
-};
-
-class AsciiStringWK
+inline UnicodeString::~UnicodeString()
 {
-public:
-	AsciiStringWK(const AsciiStringWK &other);
-	~AsciiStringWK(void);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeWideWK : private UnicodeStringWK
-{
-public:
-	BfmeWideWK(const UnicodeStringWK &other) : UnicodeStringWK(other) {}
-	~BfmeWideWK(void) {}
-};
-
-class BfmeStrWK : private AsciiStringWK
-{
-public:
-	BfmeStrWK(const AsciiStringWK &other) : AsciiStringWK(other) {}
-	~BfmeStrWK(void) {}
-};
+	((StringBase<unsigned short> *)this)->releaseBuffer();
+}
 
 class Gen_000F9C60
 {
@@ -48,8 +30,8 @@ public:
 	int m_bfmeC;						// +0x08
 	int m_bfmeD;						// +0x0C
 	bool m_bfmeFlag;					// +0x10
-	BfmeWideWK m_bfmeText;					// +0x14
-	BfmeStrWK m_bfmeName;					// +0x18
+	UnicodeString m_bfmeText;					// +0x14
+	AsciiString m_bfmeName;					// +0x18
 };
 
 // ??0Gen_000F9C60@@QAE@ABV0@@Z
