@@ -2,14 +2,27 @@
 // Converted from game/gen_asm/d_005e97b0.asm (?d_00609fa0@@YAXXZ).
 // Empty STLport __copy of m_24 onto m_20, then two sets on the +0x18 member.
 
+// Retail 0x00609FA0 calls the STLport range copy through the ILT at
+// 0x0001E6A5, which enters the matched body at 0x000B98F0: the
+// GarrisonContain::StationPointData* instantiation of __copy
+// (game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain*).  The
+// call spells that real instantiation instead of a local non-template
+// namesake; the copied range is empty here, so the arguments are only cast
+// to the pointer view of the member.
+namespace GarrisonContain
+{
+struct StationPointData;
+}
+
 namespace _STL
 {
 struct random_access_iterator_tag
 {
 };
 
-char *__cdecl __copy(char *first, char *last, char *result,
-	const random_access_iterator_tag &, int *);
+template <class InputIterator, class OutputIterator, class Distance>
+OutputIterator __copy(InputIterator first, InputIterator last,
+	OutputIterator result, const random_access_iterator_tag &, Distance *);
 }
 
 class Rva0006AB10Curve
@@ -35,7 +48,9 @@ void Rva00609FA0Host::reset()
 	char *dst = self->m_20;
 	char *src = self->m_24;
 	_STL::random_access_iterator_tag tag;
-	self->m_24 = _STL::__copy(src, src, dst, tag, none);
+	self->m_24 = (char *)_STL::__copy((GarrisonContain::StationPointData *)src,
+		(GarrisonContain::StationPointData *)src,
+		(GarrisonContain::StationPointData *)dst, tag, none);
 	Rva0006AB10Curve *curve = (Rva0006AB10Curve *)((char *)self + 0x18);
 	curve->set(0.0f, 0.0f, 0, 0);
 	curve->set(1.0f, 1.0f, 0, 0);

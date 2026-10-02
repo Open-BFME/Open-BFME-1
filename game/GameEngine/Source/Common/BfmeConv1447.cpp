@@ -1,6 +1,9 @@
 // Open-BFME5 conversions.
 
-void bfmeFreeVMN(void *p);
+// Retail 0x009A3200 frees every node through the global
+// ?Release_Ref@...-free allocator at 0x00881EB0, which is the game's
+// operator delete(void *) defined in game/Libraries/Source/WWVegas/WWLib/
+// mem_ops.cpp, so the call is spelled with the real operator.
 
 struct BfmeNodeVMN
 {
@@ -28,7 +31,7 @@ void BfmeTableVMN::bfmeClearVMN()
 		{
 			BfmeNodeVMN *n = p->m_bfme30;
 
-			bfmeFreeVMN(p);
+			::operator delete(p);
 			p = n;
 		}
 	}
@@ -38,7 +41,7 @@ void BfmeTableVMN::bfmeClearVMN()
 	{
 		BfmeNodeVMN *n = p->m_bfme30;
 
-		bfmeFreeVMN(p);
+		::operator delete(p);
 		p = n;
 	}
 }

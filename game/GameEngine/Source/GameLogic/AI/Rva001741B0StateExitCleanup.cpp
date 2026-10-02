@@ -30,6 +30,22 @@ struct StateMachine
 	Object *m_owner;
 };
 
+// Retail 0x001741B0 leaves through the ILT at 0x00029311, which enters the
+// matched state-exit body at 0x00172D80 owned by
+// game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExitShim.cpp.
+// The call is spelled with that owner and its exit enum instead of a local
+// namesake, so the object references a body the link can resolve.
+enum StateExitType
+{
+	STATE_EXIT_NORMAL = 0
+};
+
+class AIInternalMoveToStateOnExitShim
+{
+public:
+	void onExit( StateExitType status );
+};
+
 class Rva00172D80StateBase
 {
 public:
@@ -48,7 +64,7 @@ public:
 
 void Rva001741B0State::onExit( int status )
 {
-	Rva00172D80StateBase::onExit( status );
+	((AIInternalMoveToStateOnExitShim *)this)->onExit( (StateExitType)status );
 
 	Object *owner = m_machine->m_owner;
 	if( owner )

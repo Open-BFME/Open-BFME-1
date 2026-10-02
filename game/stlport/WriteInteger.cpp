@@ -5,7 +5,12 @@ extern "C" __declspec(dllimport) void *__cdecl memmove(void *, const void *, uns
 
 namespace _STL {
 
-char *__cdecl __write_integer_backward(char *buf, int flags, long x);
+// Retail 0x00835940 is the signed long instantiation of the STLport
+// formatter (game/Libraries/Source/STLport/WriteIntegerBackward.cpp), so
+// the declaration keeps the upstream template shape and the call below
+// deduces Integer = long.
+template <class Integer>
+char *__cdecl __write_integer_backward(char *buf, int flags, Integer value);
 
 char *__cdecl __write_integer(char *buf, int flags, long x)
 {
