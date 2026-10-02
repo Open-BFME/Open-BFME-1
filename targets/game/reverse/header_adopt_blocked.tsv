@@ -554,3 +554,4 @@ game/GameEngine/Source/Common/R4TwoMemberDestructors.cpp	StringBase	game\GameEng
 game/GameEngine/Source/Common/BfmeConv1613.cpp	StringBase	game\GameEngine\Source\Common\BfmeConv1613.cpp(28) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 game/GameEngine/Source/Common/BfmeConv1595.cpp	StringBase	game\GameEngine\Source\Common\BfmeConv1595.cpp(13) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 game/GameEngine/Source/Common/Rva00466730Reset.cpp	StringBase	game\GameEngine\Source\Common\Rva00466730Reset.cpp(29) : error C2248: 'StringBase<T>::releaseBuffer' : cannot access private member declared in class 'StringBase<T>'
+game/GameEngine/Source/Common/BfmeConv508.cpp	StringBase	game\GameEngine\Source\Common\BfmeConv508.cpp(38) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
