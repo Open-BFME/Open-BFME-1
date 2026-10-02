@@ -17,6 +17,8 @@
 #include "StringInline.h"
 #include <hash_map>
 
+bool operator==( const AsciiString &left, const AsciiString &right );
+
 class FunctorWrapperHead
 {
 public:
@@ -79,8 +81,8 @@ namespace rts
 	};
 
 	template <> struct equal_to<AsciiString>
+		: _STL::equal_to<AsciiString>
 	{
-		int operator()( const AsciiString &left, const AsciiString &right ) const;
 	};
 }
 

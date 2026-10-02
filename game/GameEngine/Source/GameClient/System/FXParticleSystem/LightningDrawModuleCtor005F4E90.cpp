@@ -17,15 +17,18 @@ public:
 	float maximum;
 };
 
-class T1A1_005DD290
+class BfmeListCU;
+
+class BfmeHolderCU
 {
 public:
-	T1A1_005DD290( void *first, void *second );
-	virtual void primarySlot();
-	virtual ~T1A1_005DD290();
+	BfmeHolderCU( BfmeListCU **first, void *second );
 
 private:
 	unsigned int m_storage[ 4 ];
+
+protected:
+	virtual ~BfmeHolderCU();
 };
 
 class ParticleModuleInterface005F2CA0
@@ -35,7 +38,7 @@ public:
 };
 
 class __declspec( novtable ) ParticleModule005F2CA0
-	: public T1A1_005DD290,
+	: public BfmeHolderCU,
 	  public ParticleModuleInterface005F2CA0
 {
 public:

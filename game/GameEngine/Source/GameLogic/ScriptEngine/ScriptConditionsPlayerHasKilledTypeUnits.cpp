@@ -22,8 +22,6 @@ public:
 class AsciiStringVector
 {
 public:
-	AsciiString operator[](Int index) const;
-
 	const AsciiString *m_begin;
 	const AsciiString *m_end;
 	const AsciiString *m_capacity;
@@ -34,10 +32,7 @@ class ObjectTypes
 public:
 	virtual ~ObjectTypes() {}
 
-	__forceinline AsciiString getNthInList(Int index) const
-	{
-		return m_objectTypes[index];
-	}
+	AsciiString getNthInList(Int index) const;
 
 	__forceinline UnsignedInt getListSize(void) const
 	{
