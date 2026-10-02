@@ -571,37 +571,22 @@ void INI::parseUnsignedShort( INI* ini, void * /*instance*/, void *store, const 
 /** Parse integer from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseInt@INI@@ present-unmatched
-void INI::parseInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	*(Int *)store = scanInt(token);
+// The retail definition is owned by ini_parsers.cpp.
 
-} 
 
 //-------------------------------------------------------------------------------------------------
 /** Parse unsigned integer from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseUnsignedInt@INI@@ present-unmatched
-void INI::parseUnsignedInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	*(UnsignedInt *)store = scanUnsignedInt(token);
+// The retail definition is owned by ini_parsers.cpp.
 
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Parse real from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseReal@INI@@ present-unmatched
-void INI::parseReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	*(Real *)store = scanReal(token);
+// The retail definition is owned by ini_parsers.cpp.
 
-} 
 
 //-------------------------------------------------------------------------------------------------
 /** Parse real from buffer and assign at location 'store' */
@@ -657,11 +642,8 @@ void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/,
 	* be in the form of a string "Yes" or "No" (case is ignored) */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseBool@INI@@ present-unmatched
-void INI::parseBool( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	*(Bool*)store = INI::scanBool(ini->getNextToken());
-}
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse Bool from buffer; if true, or in MASK, otherwise and out MASK. The buffer token must
