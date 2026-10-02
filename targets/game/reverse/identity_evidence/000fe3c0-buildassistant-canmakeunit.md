@@ -38,3 +38,22 @@ records the identity. No ledger row changes.
 with a BFME third argument whose type the converter must establish from the
 callers. 0x000FDBF0 (slot 17), which it calls, is
 `BuildAssistant::isPossibleToMakeUnit`.
+
+## Independent re-derivation (sol/w3 7851e26ee4)
+
+A separate session reached the same identity from the subsystem
+registration rather than the slot map. Facts it adds:
+
+- GameEngine::init calls ILT 0x000463A8 -> constructor 0x000FDA80 at VA
+  0x00479B22, pushes literal 0x01076388 (`TheBuildAssistant`) at 0x00479B36
+  and global 0x012ED83C at 0x00479B44 before initSubsystem at 0x00479B49.
+  The constructor stores table 0x010860D8 at VA 0x004FDAA5.
+- Extent: final `ret 0x0C` at +0x198, INT3 at +0x19B (411 bytes).
+- The third argument is an integer identifier: -1 selects the template path,
+  other values use the record at Player+0x684. The limit check compares the
+  object count with ThingTemplate+0x480 and then counts queued production
+  through the Player::iterateObjects callback.
+- Conversion blockers it recorded: the callback at 0x000FC2A0 still has an
+  int-return synthetic-object declaration where the Player walk expects
+  `void(Object*, void*)`, and BuildAssistant's header needs the BFME
+  three-argument declaration.
