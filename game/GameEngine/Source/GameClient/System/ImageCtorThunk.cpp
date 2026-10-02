@@ -22,7 +22,7 @@ class Image : public ImageBase
 {
 public:
 	Image( void );
-	virtual ~Image() {}
+	virtual ~Image();
 
 protected:
 	AsciiString m_name;

@@ -41,7 +41,7 @@ public:
 		return (float)sqrt( x * x + y * y + z * z );
 	}
 
-	__forceinline void normalize()
+	__forceinline void normalizeSphereEmissionVelocity()
 	{
 		float len = length();
 		if ( len != BfmeZeroRange )
@@ -127,7 +127,7 @@ Coord3D SphereEmissionVolumeModule::getVelocity(
 	const Coord3D *position, float speed, float)
 {
 	Coord3D velocity = *position;
-	velocity.normalize();
+	velocity.normalizeSphereEmissionVelocity();
 	velocity.scale( speed );
 	return velocity;
 }

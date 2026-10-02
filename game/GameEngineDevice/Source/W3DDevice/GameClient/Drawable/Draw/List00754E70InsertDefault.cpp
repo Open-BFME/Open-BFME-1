@@ -37,6 +37,13 @@
 
 class Object;
 
+namespace _STL
+{
+	template <>
+	_Vector_base<Object *, allocator<Object *> >::_Vector_base(
+		size_t, const allocator<Object *> &);
+}
+
 struct Node00754E70
 {
 	Node00754E70 *next;

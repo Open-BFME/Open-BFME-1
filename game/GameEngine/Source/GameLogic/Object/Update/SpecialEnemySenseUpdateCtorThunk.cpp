@@ -46,6 +46,7 @@ class SpecialEnemySenseUpdate : public UpdateModule
 {
 public:
     SpecialEnemySenseUpdate(Thing *, const ModuleData *);
+    virtual ~SpecialEnemySenseUpdate();
 };
 
 // ??0SpecialEnemySenseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
