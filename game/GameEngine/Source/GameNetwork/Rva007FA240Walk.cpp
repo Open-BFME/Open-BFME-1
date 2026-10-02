@@ -30,10 +30,21 @@ struct Rva007EB810Diag
 
 extern Rva007EB810Diag *Rva007EB810Get();
 
+// The message constructor at 0x007E8810 is defined under the class name
+// Rva007E8810 (functions.csv row 5402, body in
+// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), while the destructor
+// and the other members of the same retail class are defined and pinned
+// under the Rva007E8810Message spelling.  Rva007E8810 therefore carries only
+// the constructor call the object file already emitted.
+class Rva007E8810
+{
+public:
+	Rva007E8810() throw();
+};
+
 class Rva007E8810Message
 {
 public:
-	Rva007E8810Message() throw();
 	~Rva007E8810Message() throw();
 	void setError(int code);
 };
@@ -138,7 +149,7 @@ void Rva007FA2C0::helper(void *slot, int line) throw()
 		{
 			Rva007EB810Get()->log(0, "--- timeout of Nonblock request\n");
 			Rva007E8810Message *msg = (Rva007E8810Message *)buf;
-			msg->Rva007E8810Message::Rva007E8810Message();
+			((Rva007E8810 *)msg)->Rva007E8810::Rva007E8810();
 			msg->setError(line);
 			s->m_0C(msg, s->m_10);
 			clearSlot(s);

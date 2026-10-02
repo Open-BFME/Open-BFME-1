@@ -27,13 +27,25 @@ public:
 	virtual void handle();
 };
 
-class Rva007E8810Message : public SnapshotDupReplica
+// The message constructor at 0x007E8810 is defined under the class name
+// Rva007E8810 (functions.csv row 5402, body in
+// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), while the destructor
+// and the other members of the same retail class are defined and pinned
+// under the Rva007E8810Message spelling.  Rva007E8810 therefore carries only
+// the constructor call the object file already emitted.
+class Rva007E8810
 {
 public:
-	Rva007E8810Message();
+	Rva007E8810();
+};
+
+class Rva007E8810Message
+{
+public:
 	~Rva007E8810Message();
 	int getInt( const char *key, int defaultValue );
 
+	void *m_vtable;
 	int m_04;
 	int m_08;
 	int m_0c;
@@ -133,6 +145,8 @@ public:
 int Rva00803890Owner::dispatch( Rva00809500Entry *entry )
 {
 	Rva007E8810Message message;
+	Rva007E8810 *ctor = (Rva007E8810 *)&message;
+	ctor->Rva007E8810::Rva007E8810();
 	message.m_10 = entry->m_08;
 	message.m_14 = entry->m_0c;
 	message.m_20 = entry->m_04;

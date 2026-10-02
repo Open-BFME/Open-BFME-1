@@ -22,10 +22,21 @@ extern void *bfmeGo929C();
 void rva007FF100Encode( unsigned int length, const char *source,
 	void *destination );
 
+// The message constructor at 0x007E8810 is defined under the class name
+// Rva007E8810 (functions.csv row 5402, body in
+// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), while every other
+// member of the same retail class is defined and pinned under the
+// Rva007E8810Message spelling.  Rva007E8810 therefore carries only the
+// constructor call the object file already emitted.
+class Rva007E8810
+{
+public:
+	Rva007E8810();
+};
+
 class Rva007E8810Message
 {
 public:
-	Rva007E8810Message();
 	~Rva007E8810Message();
 	void addInt( const char *key, int value );
 	void addString( const char *key, const char *value );
@@ -98,6 +109,8 @@ int Rva007FA2C0::onAccept( void *rawArg )
 
 	{
 	Rva007E8810Message message;
+	Rva007E8810 *ctor = (Rva007E8810 *)&message;
+	ctor->Rva007E8810::Rva007E8810();
 	message.m_04 = arg->m_04;
 	message.m_08 = arg->m_08;
 	message.m_0C = arg->m_0C;

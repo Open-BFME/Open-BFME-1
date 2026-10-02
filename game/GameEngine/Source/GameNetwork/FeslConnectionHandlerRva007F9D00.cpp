@@ -41,10 +41,22 @@ Rva007EB810Diag *Rva007EB810Get();
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
 #pragma intrinsic(memcpy)
 
+// The message constructor at 0x007E8810 is defined under the class name
+// Rva007E8810 (targets/game/reverse/functions.csv row 5402, body in
+// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), while every other
+// member of the same retail class is defined and pinned under the
+// Rva007E8810Message spelling.  Both spellings therefore appear here: the
+// class below keeps the member spellings, and Rva007E8810 carries only the
+// constructor call the object file already emitted.
+class Rva007E8810
+{
+public:
+	Rva007E8810();
+};
+
 class Rva007E8810Message
 {
 public:
-	Rva007E8810Message();
 	~Rva007E8810Message();
 	void setError(int code);
 
@@ -123,6 +135,8 @@ private:
 void FeslConnectionHandler::rva007F9D00(Rva00800E50Header *header)
 {
 	Rva007E8810Message message;
+	Rva007E8810 *ctor = (Rva007E8810 *)&message;
+	ctor->Rva007E8810::Rva007E8810();
 	message.m_10 = (char *)header->m_text;
 	message.m_14 = header->m_textLength;
 	message.m_20 = header->m_flags;
