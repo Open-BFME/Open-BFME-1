@@ -43,7 +43,14 @@ public:
 	void *bfmeLookupBN(const AsciiStringBN &name) throw();
 };
 
-extern BfmeRegistryBN *g_bfmeRegistryBN;		// retail 0x012EF738
+// Retail global 0x012EF738 is EA's WeaponStore singleton, defined once in
+// game/GameEngine/Source/GameLogic/Object/Weapon.cpp; this TU keeps its own
+// BfmeRegistryBN view and applies it at the use. Only ever used as a pointee,
+// so a forward declaration is enough (the definition lives in
+// Common/System/game_engine_subsystems.h).
+class WeaponStore;
+
+extern WeaponStore *TheWeaponStore;		// retail 0x012EF738
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
 // Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeOtherBN view of it.
@@ -69,7 +76,7 @@ void BfmeResolverBN::bfmeResolveBN(void)
 {
 	bfmeRefreshBN();
 
-	m_bfmeFirstBN = g_bfmeRegistryBN->bfmeFindBN(m_bfmeNameBN);
+	m_bfmeFirstBN = ((BfmeRegistryBN *)TheWeaponStore)->bfmeFindBN(m_bfmeNameBN);
 
 	if (!m_bfmeOtherNameBN.bfmeEmptyBN())
 		m_bfmeSecondBN = ((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(m_bfmeOtherNameBN);

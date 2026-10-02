@@ -128,7 +128,14 @@ public:
 	Weapon *allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType slot) const;
 };
 
-extern BfmeWeaponStore *TheWeaponStore;
+// Retail global 0x012EF738 is EA's WeaponStore singleton, defined once in
+// game/GameEngine/Source/GameLogic/Object/Weapon.cpp; this TU keeps its own
+// BfmeWeaponStore view of it. Only ever used as a pointee, so a forward
+// declaration is enough (the definition lives in
+// Common/System/game_engine_subsystems.h).
+class WeaponStore;
+
+extern WeaponStore *TheWeaponStore;
 
 class WeaponTemplateSet
 {
@@ -203,10 +210,10 @@ void WeaponSet::updateWeaponSet(const Object *obj)
 
 			if (set->m_template[i])
 			{
-				WeaponTemplate *found = TheWeaponStore->findWeaponTemplatePrivate(set->m_template[i]->getNameKey());
+				WeaponTemplate *found = ((BfmeWeaponStore *)TheWeaponStore)->findWeaponTemplatePrivate(set->m_template[i]->getNameKey());
 				if (found)
 				{
-					m_weapons[i] = TheWeaponStore->allocateNewWeapon(found, (WeaponSlotType)i);
+					m_weapons[i] = ((BfmeWeaponStore *)TheWeaponStore)->allocateNewWeapon(found, (WeaponSlotType)i);
 					m_weapons[i]->m_ownerId = obj->m_id;
 					((BfmeWeapon *)m_weapons[i])->loadAmmoNow(obj);
 					m_filledWeaponSlotMask |= (1 << i);

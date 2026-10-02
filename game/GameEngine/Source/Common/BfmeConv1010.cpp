@@ -73,7 +73,15 @@ public:
 	BfmeHeld1010 *bfmeMake1010(void *a, int n);
 };
 
-extern BfmeMake1010 *g_bfmeMake1010;
+// Retail global at 0x012EF738 is EA's WeaponStore singleton, defined once in
+// game/GameEngine/Source/GameLogic/Object/Weapon.cpp; this TU calls through its
+// own BfmeMake1010 view, so the view is applied at the use and the global
+// itself keeps the canonical spelling. Only ever used as a pointee, so a
+// forward declaration is enough (the definition lives in
+// Common/System/game_engine_subsystems.h).
+class WeaponStore;
+
+extern WeaponStore *TheWeaponStore;
 
 class BfmeC1010
 {
@@ -96,7 +104,7 @@ void BfmeC1010::bfmeGo1010C(void *a)
 	if (h)
 		h->bfmeRelease1010(1);
 
-	m_bfmeHeld = g_bfmeMake1010->bfmeMake1010(a, 0);
+	m_bfmeHeld = ((BfmeMake1010 *)TheWeaponStore)->bfmeMake1010(a, 0);
 	m_bfmeHeld->m_bfmeVal = m_bfmeOwner->m_bfmeVal;
 	m_bfmeHeld->bfmeAttach1010(m_bfmeOwner);
 }

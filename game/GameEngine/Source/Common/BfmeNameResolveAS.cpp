@@ -32,7 +32,14 @@ public:
 	void *bfmeFindAS(AsciiStringAS name);
 };
 
-extern BfmeRegistryAS *g_bfmeRegistryAS;		// retail 0x012EF738
+// Retail global at 0x012EF738 is EA's WeaponStore singleton, defined once in
+// game/GameEngine/Source/GameLogic/Object/Weapon.cpp; this TU keeps its own
+// BfmeRegistryAS view and applies it at the use. Only ever used as a pointee,
+// so a forward declaration is enough (the definition lives in
+// Common/System/game_engine_subsystems.h).
+class WeaponStore;
+
+extern WeaponStore *TheWeaponStore;
 
 class BfmeResolverAS
 {
@@ -51,5 +58,5 @@ void BfmeResolverAS::bfmeResolveAS(void)
 {
 	bfmeRefreshAS();
 
-	m_bfmeResultAS = g_bfmeRegistryAS->bfmeFindAS(m_bfmeNameAS);
+	m_bfmeResultAS = ((BfmeRegistryAS *)TheWeaponStore)->bfmeFindAS(m_bfmeNameAS);
 }
