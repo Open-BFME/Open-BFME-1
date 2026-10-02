@@ -15,7 +15,8 @@ class AIInternalMoveToState
 public:
 	virtual StateReturnType onEnter();
 	virtual void onExit(StateExitType);
-	virtual StateReturnType update();
+	// AIMoveOutOfTheWayState jumps to this ILT, not directly to its target.
+	__declspec(noinline) virtual StateReturnType update();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
@@ -37,12 +38,6 @@ public:
 	StateReturnType update();
 };
 
-class AIMoveOutOfTheWayStateUpdateShim
-{
-public:
-	StateReturnType update();
-};
-
 StateReturnType AIInternalMoveToState::onEnter()
 {
 	return ((AIInternalMoveToStateOnEnterShim *)this)->onEnter();
@@ -55,5 +50,5 @@ StateReturnType AIInternalMoveToState::update()
 
 StateReturnType AIMoveOutOfTheWayState::update()
 {
-	return ((AIMoveOutOfTheWayStateUpdateShim *)this)->update();
+	return ((AIInternalMoveToState *)this)->AIInternalMoveToState::update();
 }
