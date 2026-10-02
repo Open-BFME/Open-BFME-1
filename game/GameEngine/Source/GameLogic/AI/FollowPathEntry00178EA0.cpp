@@ -26,10 +26,23 @@ template<class T> struct PathVector00178EA0 {
 extern bool gFollowPathEntry00178EA0Debug;
 extern void *gFollowPathEntry00178EA0Logger;
 extern void j_0003a17a();
-extern void j_00021e27();
 extern void j_0000a9d4();
 extern void j_0000ebab();
 extern void j_0003251f();
+
+enum StateReturnType
+{
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+// Declared only to spell the callee ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ
+// (0x00021E27, its retail thunk, defined in AIInternalMoveToStateThunks.cpp).
+class AIInternalMoveToState
+{
+public:
+	virtual StateReturnType onEnter();
+};
+
 class FollowPathEntry00178EA0Path {
 public:
     char pad000[0x44]; PathVector00178EA0<Coord3D> points;
@@ -75,9 +88,7 @@ public:
     char pad020[4]; Coord3D at024; char pad030[0x4c-0x30];
     bool at04c; char pad04d[3]; int at050; bool at054;
 int hub() {
-    typedef int (FollowPathEntry00178EA0::*Method)();
-    union { void (*raw)(); Method method; } call;
-    call.raw=j_00021e27; return (this->*call.method)();
+    return ((AIInternalMoveToState *)this)->AIInternalMoveToState::onEnter();
 } int run();
 };
 #define PATH_LOG ((void (__cdecl *)(void*,const char*,...))j_0003a17a)

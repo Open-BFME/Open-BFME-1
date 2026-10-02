@@ -7,9 +7,21 @@
 extern void j_00037e34();
 extern void j_0000d3b9();
 extern void j_0003a17a();
-extern void j_00021e27();
 extern bool Glo012F0239;
 extern void *TheCRCParameterCheck;
+
+enum StateReturnType
+{
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+// Declared only to spell the callee ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ
+// (0x00021E27, its retail thunk, defined in AIInternalMoveToStateThunks.cpp).
+class AIInternalMoveToState
+{
+public:
+	virtual StateReturnType onEnter();
+};
 
 class Rva0017DA80Receiver {};
 template<class T> __forceinline T member(void (*f)())
@@ -48,7 +60,7 @@ public:
 
 typedef int (Rva0017DA80Receiver::*Check)();
 typedef Rva0017DA80Target *(Rva0017DA80Receiver::*GetTarget)();
-typedef int (Rva0017DA80Receiver::*Enter)();
+
 
 class Rva0017DA80
 {
@@ -77,5 +89,5 @@ int Rva0017DA80::m()
 			"CritterDesync: setAdjustDestination(FALSE) 58");
 
 	m_4c = false;
-	return CALL(Enter, this, j_00021e27)();
+	return ((AIInternalMoveToState *)this)->AIInternalMoveToState::onEnter();
 }
