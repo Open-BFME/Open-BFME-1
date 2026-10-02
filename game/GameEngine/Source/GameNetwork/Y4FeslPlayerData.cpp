@@ -15,8 +15,13 @@
 class BfmeC994
 {
 public:
-	void addInt( const char *key, int value );
 	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
 };
 
 class GetterWord
@@ -114,8 +119,8 @@ void BfmeThingUNC::rva00809330( BfmeC994 *message, int gid )
 {
 	Rva00809330Sender const *sender = m_owner->m_sender;
 
-	message->addInt( "LID", -2 );
-	message->addInt( "GID", gid );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"LID", (void *)-2 );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"GID", (void *)gid );
 
 	Rva00809330Attributes *attributes = &m_owner->m_gameAttributes;
 	int count = attributes->m_count;
@@ -135,11 +140,11 @@ void BfmeThingUNC::rva00809400( BfmeC994 *message, int gid,
 {
 	GetterWord pid = player->get();
 
-	message->addInt( "LID", -2 );
-	message->addInt( "GID", gid );
-	message->addInt( "PID", pid.m_value );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"LID", (void *)-2 );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"GID", (void *)gid );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"PID", (void *)pid.m_value );
 	message->addString( "NAME", player->name() );
-	message->addInt( "UID", 0 );
+	reinterpret_cast< BfmeThingCIB * >( message )->bfmeGoCIB( (void *)"UID", (void *)0 );
 
 	const Rva00809400Attributes *attributes = &m_owner->m_playerAttributes;
 	int count = attributes->m_count;

@@ -40,6 +40,14 @@ private:
 	unsigned char m_bfmePad[3];
 };
 
+class BfmeSeedTarget;
+
+class Gen_002D9B90
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+};
+
 class DamageModuleInterface
 {
 public:
@@ -71,7 +79,8 @@ private:
 void FireWeaponWhenDamagedBehavior::xfer(Xfer *xfer)
 {
 	UpdateModule::xfer(xfer);
-	UpgradeMux::upgradeMuxXfer(xfer);
+	reinterpret_cast<Gen_002D9B90 *>(reinterpret_cast<char *>(this) + 0x20)->bfmeSeed(
+		reinterpret_cast<BfmeSeedTarget *>(xfer));
 	if (xfer->IsLightCRC())
 		return;
 
