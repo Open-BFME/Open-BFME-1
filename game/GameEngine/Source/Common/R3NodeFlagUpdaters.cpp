@@ -1,3 +1,9 @@
+// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB
+// stlport
+// Use the class headers: <fstream> also emits an unrelated locale initializer.
+#include <ios>
+#include <stl/_fstream.h>
+
 // Six __thiscall members that ask a sub-object a question, and if the answer is
 // zero go on to OR two bits into a flag word belonging to a second object whose
 // position is read out of a third, then tail-jump when the new flags intersect
@@ -37,23 +43,9 @@
 // offset for a given owner.  The NOTIFY target (0x0083E8F0) and the node
 // layout are constant across all six.
 //
-// IDENTITY IS NOT RECOVERED.  Callees are declared-only members of classes
-// named for their address, so the pins are address-derived and additive; the
-// `int` return of CHECK is only "something eax-sized that is compared against
-// zero", and the node's three named fields are the only ones the bytes reach.
-
-// The node: only the three fields the bytes touch are named.
-class Gen0083E8F0
-{
-public:
-	void handle();
-	char m_pad00[8];
-	int m_08;
-	char m_pad0C[8];
-	int m_14;
-	char m_pad18[0x58 - 0x18];
-	int m_58;
-};
+// The close callees identify the narrow and wide STLport file buffers.
+// The locator reaches basic_ios, whose inline setstate supplies the same
+// failbit/badbit update and ios_base::_M_throw_failure tail call.
 
 // [this+0] points at this; +4 of it is the node's byte offset from `this`.
 struct Gen0084ACC0Locator
@@ -62,21 +54,22 @@ struct Gen0084ACC0Locator
 	int m_04;
 };
 
-class Gen00842870 { public: int check(); };
-class Gen00842A00 { public: int check(); };
+typedef _STL::basic_filebuf<char, _STL::char_traits<char> > Gen00842870;
+typedef _STL::basic_filebuf<unsigned short, _STL::char_traits<unsigned short> > Gen00842A00;
 
-#define BFME_NODE_FLAG_UPDATE_BODY                                        \
-	{                                                                     \
-		if ( m_sub.check() )                                              \
-			return;                                                       \
-		Gen0083E8F0 *node =                                               \
-			(Gen0083E8F0 *)( (char *)this + m_locator->m_04 );            \
-		int flags = node->m_08 | 4;                                       \
-		if ( node->m_58 == 0 )                                            \
-			flags |= 1;                                                   \
-		node->m_08 = flags;                                               \
-		if ( node->m_14 & flags )                                         \
-			node->handle();                                               \
+// The matched explicit instantiations in FilebufInstantiations.cpp own these
+// bodies; this TU only calls them.
+template <> Gen00842870 *Gen00842870::close();
+template <> Gen00842A00 *Gen00842A00::close();
+
+#define BFME_NODE_FLAG_UPDATE_BODY                                      \
+	{                                                                   \
+		if ( m_sub.close() )                                            \
+			return;                                                     \
+		_STL::basic_ios<char, _STL::char_traits<char> > *node =           \
+			reinterpret_cast<_STL::basic_ios<char, _STL::char_traits<char> > *>( \
+				(char *)this + m_locator->m_04 );                        \
+		node->setstate(_STL::ios_base::failbit);                          \
 	}
 
 #define BFME_NODE_FLAG_UPDATER_AT4( NAME, CHECK )                         \
