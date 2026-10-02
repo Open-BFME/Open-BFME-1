@@ -542,23 +542,6 @@ GameSpyPeerMessageQueue::~GameSpyPeerMessageQueue()
 	endThread();
 }
 
-// ?startThread@GameSpyPeerMessageQueue@@ present-unmatched
-void GameSpyPeerMessageQueue::startThread( void )
-{
-	if (!m_thread)
-	{
-		m_thread = NEW PeerThreadClass;
-		m_thread->Execute();
-	}
-	else
-	{
-		if (!m_thread->Is_Running())
-		{
-			m_thread->Execute();
-		}
-	}
-}
-
 // ?endThread@GameSpyPeerMessageQueue@@ present-unmatched
 void GameSpyPeerMessageQueue::endThread( void )
 {

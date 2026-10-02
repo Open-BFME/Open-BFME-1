@@ -1,5 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME GameSpyPeerMessageQueue::startThread at retail 0x0064D780.
+
+#include "mutex.h"
 
 class PeerThreadClass;
 
@@ -8,18 +10,6 @@ class BFMENetworkLock
 public:
 	void *m_handle;
 	unsigned int m_refCount;
-};
-
-class BFMEAutoLockRef
-{
-public:
-	BFMEAutoLockRef(BFMENetworkLock *lock, unsigned int timeout);
-	~BFMEAutoLockRef();
-
-private:
-	BFMENetworkLock *m_lock;
-	bool m_failed;
-	char m_padding[3];
 };
 
 class BFMEPeerThreadView
@@ -44,7 +34,7 @@ private:
 	PeerThreadClass *m_thread;
 	unsigned int m_serialAuth;
 	BFMENetworkLock m_lock;
-	BFMEAutoLockRef *m_lockRef;
+	MutexClass::LockClass *m_lockRef;
 };
 
 void GameSpyPeerMessageQueue::startThread()
@@ -52,7 +42,8 @@ void GameSpyPeerMessageQueue::startThread()
 	if (m_thread)
 		return;
 
-	BFMEAutoLockRef *lock_ref = new BFMEAutoLockRef(&m_lock, -1);
+	MutexClass::LockClass *lock_ref = new MutexClass::LockClass(
+		*reinterpret_cast<MutexClass *>(&m_lock), -1);
 	if (lock_ref != m_lockRef)
 	{
 		if (m_lockRef)
