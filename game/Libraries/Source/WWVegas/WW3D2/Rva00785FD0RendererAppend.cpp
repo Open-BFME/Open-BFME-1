@@ -47,7 +47,8 @@ struct Rva00785FD0Renderer
 	Rva00785FD0Vertex *reserved;
 };
 
-void __fastcall j_0001569f(void *renderer);
+// Retail passes the renderer in ECX; the ledger thunk has a void signature.
+void j_0001569f(void);
 
 void * __fastcall rva0078C300RendererAppend(Rva00785FD0Renderer *renderer, int count)
 {
@@ -56,11 +57,11 @@ void * __fastcall rva0078C300RendererAppend(Rva00785FD0Renderer *renderer, int c
 		return 0;
 
 	if (renderer->pending || renderer->changed)
-		j_0001569f(renderer);
+		reinterpret_cast<void (__fastcall *)(void *)>(j_0001569f)(renderer);
 
 	if (renderer->vertexOffset + renderer->vertexCount + vertexCount > 0x4e20)
 	{
-		j_0001569f(renderer);
+		reinterpret_cast<void (__fastcall *)(void *)>(j_0001569f)(renderer);
 		renderer->vertexOffset = 0;
 	}
 

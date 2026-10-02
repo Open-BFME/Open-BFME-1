@@ -43,14 +43,15 @@ private:
 // Retail global 0x012D7180 (targets/game/reverse/dir32_addresses.csv).
 extern int g_bfmeBlendSrc;
 
-void __fastcall j_0001569f(void *renderer);
+// Retail passes the renderer in ECX; the ledger thunk has a void signature.
+void j_0001569f(void);
 void Rva00933810StencilStateA(void);
 void Rva00933B80StencilBlendA(void);
 void Rva00933BF0StencilBlendB(void);
 
 void Rva00785FD0Renderer::Rva0078C440(void)
 {
-    j_0001569f(this);
+    reinterpret_cast<void (__fastcall *)(void *)>(j_0001569f)(this);
     DX8Wrapper::Set_Transform(D3DTS_VIEW, m_view);
     DX8Wrapper::Set_Transform(D3DTS_PROJECTION, m_projection);
 
