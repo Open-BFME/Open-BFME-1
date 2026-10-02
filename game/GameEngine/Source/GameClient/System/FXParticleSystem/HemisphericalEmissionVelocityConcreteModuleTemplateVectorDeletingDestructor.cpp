@@ -19,6 +19,7 @@ class ModuleTag;
 template<class Tag> class ConcreteModuleTemplate
 {
 public:
+    ConcreteModuleTemplate();
     virtual ~ConcreteModuleTemplate();
 private:
     unsigned char m_data[0x14];

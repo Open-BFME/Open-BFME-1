@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class LifeEventModuleTemplate
 {
 public:
+    LifeEventModuleTemplate();
     virtual ~LifeEventModuleTemplate();
 
 private:

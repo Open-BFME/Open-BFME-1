@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class RenderObjectDrawModuleInfo
 {
 public:
+    RenderObjectDrawModuleInfo();
     virtual ~RenderObjectDrawModuleInfo();
 
 private:

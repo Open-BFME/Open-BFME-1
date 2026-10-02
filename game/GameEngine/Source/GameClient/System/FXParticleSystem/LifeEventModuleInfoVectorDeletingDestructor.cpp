@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class LifeEventModuleInfo
 {
 public:
+    LifeEventModuleInfo();
     virtual ~LifeEventModuleInfo();
 
 private:
