@@ -37,7 +37,7 @@ struct ModuleData0024AE60 {
     int field228;
 };
 class AIUpdateInterface { public:
-    void ignoreObstacle(Object *);
+    void ignoreObstacle(const Object *);
     const LocomotorSet &getLocomotorSet() const {return *(const LocomotorSet *)((char *)this+0x1A8);}
     void ignoreUntil0024AE60(unsigned int frame) {*(unsigned int *)((char *)this+0x178)=frame;}
 };
@@ -82,7 +82,7 @@ extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheGameLogic0024AE60 ((GameLogic0024AE60 *)TheGameLogic)
+static inline GameLogic0024AE60 *TheGameLogic0024AE60View() { return (GameLogic0024AE60 *)TheGameLogic; }
 class Rva00266340 {public: bool is() const;};
 class Rva00227B60ContainDispatch {public: void dispatch(Object *,bool);};
 class Rva0024C2A0Owner {public: void processNested(Object *,void *);};
@@ -124,7 +124,7 @@ void SiegeExit0024AE60::release(Object *rider,void *argument)
         TheAI->pathfinder()->addObjectToPathfindMap(rider);
         if (ai) {
             ai->ignoreObstacle(0);
-            ai->ignoreUntil0024AE60(TheGameLogic0024AE60->frame+5);
+            ai->ignoreUntil0024AE60(TheGameLogic0024AE60View()->frame+5);
             TheAI->pathfinder()->adjustToPossibleDestination(rider,ai->getLocomotorSet(),&destination);
             std::vector<Coord3D> path;
             path.push_back(destination);
@@ -147,7 +147,7 @@ void SiegeExit0024AE60::release(Object *rider,void *argument)
             TheAI->pathfinder()->addObjectToPathfindMap(rider);
             if (ai) {
                 ai->ignoreObstacle(0);
-                ai->ignoreUntil0024AE60(TheGameLogic0024AE60->frame+5);
+                ai->ignoreUntil0024AE60(TheGameLogic0024AE60View()->frame+5);
                 ((AICommandInterface *)((char *)ai+0x20))->aiHunt(CMD_FROM_AI);
             }
         } else {
@@ -171,7 +171,7 @@ void SiegeExit0024AE60::release(Object *rider,void *argument)
             TheAI->pathfinder()->addObjectToPathfindMap(rider);
             AIUpdateInterface *ai=rider->ai();
             if (ai) {
-                ai->ignoreUntil0024AE60(TheGameLogic0024AE60->frame+15);
+                ai->ignoreUntil0024AE60(TheGameLogic0024AE60View()->frame+15);
                 ai->ignoreObstacle(0);
                 ((AICommandInterface *)((char *)ai+0x20))->aiHunt(CMD_FROM_AI);
             }

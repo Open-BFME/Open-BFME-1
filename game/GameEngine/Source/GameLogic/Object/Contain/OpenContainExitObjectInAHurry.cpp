@@ -91,7 +91,7 @@ public:
     virtual void slot194() = 0; virtual void slot198() = 0;
     virtual void doQuickExit(const std::vector<Coord3D> *path) = 0;
 
-	void ignoreObstacle(Object *object);
+	void ignoreObstacle(const Object *object);
 
 	const LocomotorSet &getLocomotorSet() const
 	{
@@ -256,7 +256,7 @@ class GameLogic;
 extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern GameLogic *TheGameLogic;
-#define TheBfmeGameLogic ((Rva002289F0GameLogic *)TheGameLogic)
+static inline Rva002289F0GameLogic *TheBfmeGameLogicView() { return (Rva002289F0GameLogic *)TheGameLogic; }
 
 void OpenContain::exitObjectInAHurry(Object *exitObject)
 {
@@ -320,7 +320,7 @@ void OpenContain::exitObjectInAHurry(Object *exitObject)
 			}
 
 			ai->ignoreObstacle(0);
-			{ UnsignedInt frame = TheBfmeGameLogic->m_frame + 5; *(UnsignedInt *)((char *)ai + 0x178) = frame; }
+			{ UnsignedInt frame = TheBfmeGameLogicView()->m_frame + 5; *(UnsignedInt *)((char *)ai + 0x178) = frame; }
 			TheAI->pathfinder()->adjustToPossibleDestination(exitObj,ai->getLocomotorSet(),&endPosition);
 		}
 

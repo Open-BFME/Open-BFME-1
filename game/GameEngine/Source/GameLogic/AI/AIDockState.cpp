@@ -38,7 +38,7 @@ class DockUpdateInterface;
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *obstacle);
+	void ignoreObstacle(const Object *obstacle);
 
 	unsigned char m_pad[0x328];
 	unsigned char m_canPathThroughUnits;

@@ -99,7 +99,7 @@ class AIUpdateInterface : public Rva002284D0AISlots<96>
 public:
 	virtual Bool isIdle() const = 0;
 
-	void ignoreObstacle(Object *object);
+	void ignoreObstacle(const Object *object);
 
 	const LocomotorSet &getLocomotorSet() const
 	{
@@ -264,7 +264,7 @@ class GameLogic;
 extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern GameLogic *TheGameLogic;
-#define TheBfmeGameLogic ((Rva002284D0GameLogic *)TheGameLogic)
+static inline Rva002284D0GameLogic *TheBfmeGameLogicView() { return (Rva002284D0GameLogic *)TheGameLogic; }
 
 void OpenContain::exitObjectViaDoor(Object *exitObject, ExitDoorType)
 {
@@ -326,7 +326,7 @@ void OpenContain::exitObjectViaDoor(Object *exitObject, ExitDoorType)
 			}
 
 			ai->ignoreObstacle(exitObj);
-			{ UnsignedInt frame = TheBfmeGameLogic->m_frame + 5; *(UnsignedInt *)((char *)ai + 0x178) = frame; }
+			{ UnsignedInt frame = TheBfmeGameLogicView()->m_frame + 5; *(UnsignedInt *)((char *)ai + 0x178) = frame; }
 			TheAI->pathfinder()->adjustToPossibleDestination(exitObj,ai->getLocomotorSet(),&endPosition);
 		}
 

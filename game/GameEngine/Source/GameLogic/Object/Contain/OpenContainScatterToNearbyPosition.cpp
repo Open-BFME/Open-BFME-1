@@ -59,7 +59,7 @@ public:
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle( Object *object );
+	void ignoreObstacle( const Object *object );
 };
 
 class BfmeOpenScatterTerrainLogic

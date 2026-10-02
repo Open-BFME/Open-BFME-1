@@ -97,7 +97,7 @@ protected:
     void playMoveVoiceResponse(const Coord3D *position);
 
 public:
-    void ignoreObstacle(Object *obj);
+    void ignoreObstacle(const Object *obj);
 
     unsigned char m_unmodelled_04[4];
     Object *m_object;                           // +0x08

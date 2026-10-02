@@ -36,7 +36,7 @@ class AIUpdateInterface
 public:
 	WhichTurretType getWhichTurretForCurWeapon() const;
 	Real getCurLocomotorSpeed();
-	void ignoreObstacle(Object *obstacle);
+	void ignoreObstacle(const Object *obstacle);
 	void requestPath(Coord3D *destination, Bool isFinalGoal);
 	void requestAttackPath(ObjectID targetObjectId, const Coord3D *targetPosition);
 
