@@ -16,6 +16,7 @@
 // which T is not witnessed, so each element type is named for its address.
 #define _STLP_NO_EXCEPTIONS 1
 #include <memory>
+#include <vector>
 
 struct Rva0081D580Element { char m_bytes[ 4 ]; };
 struct Rva0081D5B0Element { char m_bytes[ 4 ]; };
@@ -58,3 +59,9 @@ template Rva009ECF90Element *_STL::allocator<Rva009ECF90Element>::allocate( size
 template void _STL::allocator<Rva009ECFC0Element>::deallocate( Rva009ECFC0Element *, size_t ) const;
 template Rva009ED060Element *_STL::allocator<Rva009ED060Element>::allocate( size_t, const void * ) const;
 template Rva009F2FE0Element *_STL::allocator<Rva009F2FE0Element>::allocate( size_t, const void * ) const;
+
+// 0x009F35B0 (45 bytes): _Vector_base<T>::~_Vector_base for an eight-byte T
+// (sar 3 / shl 3 of end_of_storage - start), freeing through the same
+// operator delete / __node_alloc split.  Same boundary evidence as above.
+struct Rva009F35B0Element { char m_bytes[ 8 ]; };
+template _STL::_Vector_base<Rva009F35B0Element, _STL::allocator<Rva009F35B0Element> >::~_Vector_base();
