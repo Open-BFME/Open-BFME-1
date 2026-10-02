@@ -1904,7 +1904,9 @@ def alias_blockers(present, facts, rows, judge=None):
         defined.update(copy[0] for copy in copies)
     by_alias = {"wrong": collections.defaultdict(set), "unknown": collections.defaultdict(set)}
     for (alias, target), verdict in verdicts.items():
-        if verdict in by_alias:
+        # an unknown directive whose target nothing defines (cl.exe's
+        # member-template fallback) cannot bind a call: inert, not charged
+        if verdict == "wrong" or (verdict == "unknown" and target in defined):
             by_alias[verdict][alias].add(f"{alias}={target}")
     wrong_by_alias, unknown_by_alias = by_alias["wrong"], by_alias["unknown"]
     charged, unjudged = {}, {}

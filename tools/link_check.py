@@ -424,7 +424,9 @@ def check_object(obj, index, truth, source=None, judge=None):
         pairs = [(name, target) for target in targets[name]]
         if any(verdicts[pair][0] == "wrong" for pair in pairs):
             continue
-        for pair in pairs:
+        # a directive whose target nothing defines (cl.exe's member-template
+        # fallback) cannot bind the call: it is inert, not an unproven binding
+        for pair in [(name, target) for target in targets[name] if resolves(target)]:
             if verdicts[pair][0] == "unknown":
                 unknown_why["=".join(pair)] = verdicts[pair][1]
     duplicates = sorted(name for name in mine if duplicate(name, position, name in set(defined), own, index))
@@ -720,8 +722,9 @@ def near_rows(index, judge, most=None, under="", every=False, skipped=None):
     address (alias_guard.Judge.respell) is a C++ definition that passes the
     alias check. A file relying on an alias nothing can judge (alias_unknown)
     is not near. A respelling that would put a second real name on a body,
-    or call into another top-level tree's row (alias_guard.two_real_names),
-    skips its file unless `every`; `skipped` (a Counter) counts the skips.
+    or turn a real call name into another tree's placeholder
+    (alias_guard.two_real_names), skips its file unless `every`; `skipped`
+    (a Counter) counts the skips.
     Largest first: [{source, bytes, fixes: [(name, row name, note)]}]."""
     rows = []
     skipped = collections.Counter() if skipped is None else skipped
@@ -742,7 +745,7 @@ def near_rows(index, judge, most=None, under="", every=False, skipped=None):
             fixes.append((name, target, "; ".join(filter(None, (guard, note)))))
         else:
             if guarded and not every:
-                skipped["two real names, one body"] += 1
+                skipped["a real name would be lost or doubled"] += 1
                 continue
             rows.append({"source": source, "bytes": index["bytes"].get(source, 0), "fixes": fixes})
     rows.sort(key=lambda row: (-row["bytes"], row["source"]))
@@ -762,8 +765,8 @@ def near(argv):
     ap.add_argument("--shared", action="store_true",
                     help="rank respellings by the near files' bytes they appear in (a shared declaration fix)")
     ap.add_argument("--all", action="store_true",
-                    help="also serve files whose respelling puts two real names on one body or calls into another "
-                         "top-level tree (run tools/one_identity.py first)")
+                    help="also serve files whose respelling puts two real names on one body or turns a real call "
+                         "name into another tree's placeholder (run tools/one_identity.py first)")
     args = ap.parse_args(argv)
     index = load_index()
     census = index["meta"].get("commit", "")

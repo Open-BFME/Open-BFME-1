@@ -200,13 +200,15 @@ def fake_git(monkeypatch, files, upstream, baseline, renamed=None):
     renamed = renamed or {}
 
     def run(*args):
+        if args[0] == "rev-parse":
+            return SimpleNamespace(stdout="", returncode=0)
         if args[0] == "diff":
             return SimpleNamespace(stdout="".join(f"R100\t{renamed[path]}\t{path}\n" if path in renamed
                                                   else f"M\t{path}\n" for path in files), returncode=0)
         ref, path = args[1].split(":", 1)
         if path.endswith("baseline.txt"):
             return SimpleNamespace(stdout=baseline["text"], returncode=0)
-        table = upstream if ref == G.UPSTREAM else files
+        table = upstream if ref in (G.UPSTREAM, "HEAD") else files   # HEAD is origin/master here
         return SimpleNamespace(stdout=table.get(path, ""), returncode=0 if path in table else 128)
     monkeypatch.setattr(G, "git", run)
     monkeypatch.setattr(G, "BASELINE", SimpleNamespace(exists=lambda: True,
@@ -220,7 +222,7 @@ def test_staged_fails_on_an_unknown_alias_new_since_origin_master(monkeypatch, c
     files, upstream, baseline = {"game/x.cpp": old}, {"game/x.cpp": old}, {"text": ""}
     fake_git(monkeypatch, files, upstream, baseline)
     assert G.staged(lambda: j) == 0                       # already on origin/master: reported, not blocking
-    assert "already on origin/master" in capsys.readouterr().err
+    assert "already upstream" in capsys.readouterr().err
     files["game/x.cpp"] = old + new
     assert G.staged(lambda: j) == 1
     err = capsys.readouterr().err
@@ -263,30 +265,41 @@ def test_address_derived_names():
         assert not G.address_derived(name), name
 
 
-def test_respell_guard_two_real_names_or_another_tree(monkeypatch):
+def test_respell_guard_two_real_names_or_a_lost_real_name(monkeypatch):
     rows = [row("?valid@W3DVideoBuffer@@UAE_NXZ", 0x7E88A0,
                 source="game/GameEngineDevice/Source/W3DDevice/GameClient/W3DVideoBuffer.cpp", notes="seen twice"),
-            row("?real@Thing@@QAEXXZ", 0x500, source="game/GameEngine/Source/A.cpp")]
+            row("?real@Thing@@QAEXXZ", 0x500, source="game/GameEngine/Source/A.cpp"),
+            row("?bfmeGet@Gen_0096D080@@QAEPAXXZ", 0x900, source="game/Libraries/Source/WWVegas/WW3D2/G.cpp")]
     hasError = "?hasError@Rva007E8810Message@@QAE_NXZ"
-    j = judge(monkeypatch, {hasError: 0x7E88A0, "?named@Other@@QAEXXZ": 0x500, "?Rva00000500Call@@YAXXZ": 0x500},
+    peek = "?Peek_Texture@TextureClass@@QAEPAXXZ"
+    j = judge(monkeypatch, {hasError: 0x7E88A0, "?named@Other@@QAEXXZ": 0x500, "?Rva00000500Call@@YAXXZ": 0x500,
+                            peek: 0x900, "?Rva00000900Call@@YAXXZ": 0x900},
               rows, notes={hasError: ["V2 lane: ICF-folded with ?valid@W3DVideoBuffer@@UAE_NXZ"]})
     caller = "game/GameEngine/Source/GameNetwork/V2FeslMessage.cpp"
+    # a placeholder call respelled to another tree's real row: served, the tree only noted
     target, note, guard = j.respell(hasError, caller)
-    assert target == "?valid@W3DVideoBuffer@@UAE_NXZ"
-    assert "two real names, one body: run tools/one_identity.py first" in guard and "game/GameEngineDevice" in guard
+    assert target == "?valid@W3DVideoBuffer@@UAE_NXZ" and guard == ""
+    assert "the row is in game/GameEngineDevice" in note
     assert "row notes: seen twice" in note and "ICF-folded with" in note
-    assert "both are real names" in j.respell("?named@Other@@QAEXXZ", "game/GameEngine/Source/B.cpp")[2]
+    # two real names, same tree or not
+    assert "two real names, one body" in j.respell("?named@Other@@QAEXXZ", "game/GameEngine/Source/B.cpp")[2]
     assert j.respell("?Rva00000500Call@@YAXXZ", "game/GameEngine/Source/B.cpp")[2] == ""
+    # a real call name turned into another tree's placeholder loses the name
+    assert "another tree's placeholder" in j.respell(peek, "game/GameEngine/Source/C.cpp")[2]
+    assert j.respell(peek, "game/Libraries/Source/WWVegas/WW3D2/C.cpp")[2] == ""        # same tree
+    assert j.respell("?Rva00000900Call@@YAXXZ", "game/GameEngine/Source/C.cpp")[2] == ""
     blank = {"duplicates": [], "losers": [], "wrong_selected": [], "alias_target": [], "addresses": 0,
              "linked": False}
     index = {"blockers": {caller: {**blank, "unresolved": [hasError]},
-                          "game/GameEngine/Source/B.cpp": {**blank, "unresolved": ["?Rva00000500Call@@YAXXZ"]}},
-             "bytes": {caller: 100, "game/GameEngine/Source/B.cpp": 50}}
+                          "game/GameEngine/Source/B.cpp": {**blank, "unresolved": ["?named@Other@@QAEXXZ"]},
+                          "game/GameEngine/Source/C.cpp": {**blank, "unresolved": [peek]}},
+             "bytes": {caller: 100, "game/GameEngine/Source/B.cpp": 50, "game/GameEngine/Source/C.cpp": 20}}
     skipped = __import__("collections").Counter()
-    assert [r["source"] for r in C.near_rows(index, j, skipped=skipped)] == ["game/GameEngine/Source/B.cpp"]
-    assert skipped == {"two real names, one body": 1}
+    assert [r["source"] for r in C.near_rows(index, j, skipped=skipped)] == [caller]
+    assert skipped == {"a real name would be lost or doubled": 2}
     rows = C.near_rows(index, j, every=True)
-    assert rows[0]["source"] == caller and "run tools/one_identity.py first" in rows[0]["fixes"][0][2]
+    assert [r["source"] for r in rows] == [caller, "game/GameEngine/Source/B.cpp", "game/GameEngine/Source/C.cpp"]
+    assert "run tools/one_identity.py first" in rows[1]["fixes"][0][2]
 
 
 def test_link_check_does_not_count_a_call_through_an_unknown_alias(tmp_path, monkeypatch):
@@ -310,3 +323,55 @@ def test_queue_serves_an_unknown_alias_as_its_own_kind():
                           "alias_unknown": ["?U@@YAXXZ=?B@@YAXXZ"]}}
     rows = C.queue_rows({"meta": {"commit": "c"}, "blockers": blockers, "bytes": {"a.cpp": 50}})
     assert rows[0]["kind"] == "alias_unknown" and "pin" in rows[0]["hint"]
+
+
+def test_an_inert_fallback_directive_beside_an_ok_alias_is_not_charged(tmp_path, monkeypatch):
+    """cl.exe's member-template fallback names a target nothing defines: link.exe cannot bind
+    through it, so a call it shares with a hand-written ok alias is not an unknown binding."""
+    j = judge(monkeypatch, {"?A@@YAXXZ": 0x500}, [row("?Real@@YAXXZ", 0x500)])
+    target = coff(tmp_path / "t.obj", [("?Real@@YAXXZ", 0, 1, 2)])
+    user = coff(tmp_path / "u.obj", [("?A@@YAXXZ", 0, 0, 2)],
+                "/alternatename:?A@@YAXXZ=?Real@@YAXXZ /alternatename:?A@@YAXXZ=?Nowhere@@YAXXZ")
+    objects = [target, user]
+    facts = [L.object_facts(o, NoTruth()) for o in objects]
+    index = C.index_tables(objects, facts, {"exceptions": {}, "owners": {}})
+    index["excuses"] = {"runtime": set(), "imported": {}, "stubs": {}}
+    assert j.verdict("?A@@YAXXZ", "?Nowhere@@YAXXZ")[0] == "unknown"
+    assert not any(C.check_object(user, index, NoTruth(), judge=j).values())
+    census_facts = [([], ["?Real@@YAXXZ"], [], []), ([], [], ["?A@@YAXXZ"], [])]
+    _, charged, unjudged, stats = L.alias_blockers(objects, census_facts, [], judge=j)
+    assert charged == {} and unjudged == {} and stats["unknown"] == 1
+
+
+def test_staged_falls_back_when_origin_master_or_the_upstream_copy_is_missing(monkeypatch, capsys):
+    j = judge(monkeypatch, {}, [row("?B@@YAXXZ", 0x600)])
+    old = '#pragma comment(linker, "/alternatename:?Old@@YAXXZ=?B@@YAXXZ")\n'
+    new = '#pragma comment(linker, "/alternatename:?New@@YAXXZ=?B@@YAXXZ")\n'
+    refs = {"HEAD": {"game/moved.cpp": old}}
+
+    def run(*args):
+        if args[0] == "rev-parse":
+            return SimpleNamespace(stdout="", returncode=0 if args[-1].split("^")[0] in refs else 1)
+        if args[0] == "diff":
+            return SimpleNamespace(stdout="M\tgame/moved.cpp\n" if "--diff-filter=ACMR" in args else "",
+                                   returncode=0)
+        ref, path = args[1].split(":", 1)
+        table = {"": {"game/moved.cpp": old + new}}.get(ref, refs.get(ref, {}))
+        if path.endswith("baseline.txt"):
+            return SimpleNamespace(stdout="", returncode=0)
+        return SimpleNamespace(stdout=table.get(path, ""), returncode=0 if path in table else 128)
+    monkeypatch.setattr(G, "git", run)
+    monkeypatch.setattr(G, "BASELINE", SimpleNamespace(exists=lambda: True,
+                                                       relative_to=lambda root: Path("targets/baseline.txt")))
+    # no origin/master, no @{upstream}: HEAD is the base, so only ?New is new
+    assert G.staged(lambda: j) == 1
+    err = capsys.readouterr().err
+    assert "judging new aliases against HEAD" in err and "?Old@@" not in err.split("cannot be judged, so")[1]
+    # origin/master exists but lacks the file (renamed in an unpushed commit): HEAD's copy is the base
+    refs[G.UPSTREAM] = {}
+    assert G.staged(lambda: j) == 1
+    err = capsys.readouterr().err
+    assert "no copy on origin/master; judging its new aliases against HEAD's" in err
+    assert "?Old@@" not in err.split("cannot be judged, so")[1]
+    refs["HEAD"]["game/moved.cpp"] = old + new
+    assert G.staged(lambda: j) == 0

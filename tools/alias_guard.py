@@ -269,7 +269,10 @@ class Judge:
                     notes.append(f"row notes: {owners[0]['notes']}")
                 for pin_note in self._pin_notes.get(name, ()):
                     notes.append(f"pin notes: {pin_note}")
-                return chosen, "; ".join(notes), two_real_names(name, chosen, owners[0]["source"], caller)
+                guard, tree_note = two_real_names(name, chosen, owners[0]["source"], caller)
+                if tree_note:
+                    notes.insert(0, tree_note)
+                return chosen, "; ".join(notes), guard
         return None, f"no C++ row at 0x{address:08X}", ""
 
 
@@ -295,17 +298,23 @@ def tree(path):
 
 
 def two_real_names(name, chosen, row_source, caller=None):
-    """Why respelling the call `name` to the row `chosen` (whose source is
-    `row_source`) from `caller` needs tools/one_identity.py first, else "".
-    Two real names on one body are an over-claim (one is wrong), and a call
-    into another top-level tree's row by its address alone is how a folded
-    or misplaced pin launders a name (hasError called as W3DVideoBuffer::valid)."""
-    why = []
-    if not address_derived(name) and not address_derived(chosen):
-        why.append("both are real names")
-    if caller and row_source and tree(row_source) != tree(caller):
-        why.append(f"the row is in {tree(row_source)}, the caller in {tree(caller)}")
-    return f"two real names, one body: run tools/one_identity.py first ({'; '.join(why)})" if why else ""
+    """(guard, note) for respelling the call `name` to the row `chosen`
+    (whose source is `row_source`) from `caller`. The guard, set when
+    tools/one_identity.py must settle the body first: both names are real
+    (two real names on one body are an over-claim; one is wrong), or a real
+    call name would become another top-level tree's placeholder (the real
+    name is lost: Peek_Texture called as Gen_0096D080::bfmeGet). A row in
+    another tree is otherwise only noted: a placeholder call respelled to
+    it loses nothing (hasError@Rva007E8810Message as W3DVideoBuffer::valid,
+    whose pin note says ICF-folded)."""
+    real_call, real_row = not address_derived(name), not address_derived(chosen)
+    elsewhere = bool(caller and row_source and tree(row_source) != tree(caller))
+    note = f"the row is in {tree(row_source)}, the caller in {tree(caller)}" if elsewhere else ""
+    if real_call and real_row:
+        return "two real names, one body: run tools/one_identity.py first", note
+    if real_call and elsewhere:
+        return ("a real name respelled to another tree's placeholder: run tools/one_identity.py first", note)
+    return "", note
 
 
 def read_baseline(text=None):
@@ -349,12 +358,32 @@ def judge_all(found, judge):
             for source, aliases in sorted(found.items()) for alias, target in aliases]
 
 
-def upstream_aliases(path, old_path=None):
-    """{(alias, target)} origin/master's copy of `path` (or of the path it was
-    renamed from) declares; empty for a file new since then."""
-    for candidate in dict.fromkeys(filter(None, (path, old_path))):
-        shown = git("show", f"{UPSTREAM}:{candidate}")
+def upstream_ref():
+    """origin/master, else the branch's @{upstream}, else HEAD (with a warning)."""
+    for ref in (UPSTREAM, "@{upstream}", "HEAD"):
+        if git("rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}").returncode == 0:
+            if ref != UPSTREAM:
+                print(f"alias_guard: {UPSTREAM} cannot be read; judging new aliases against {ref}", file=sys.stderr)
+            return ref
+    return None
+
+
+def upstream_aliases(path, ref, renamed=None):
+    """{(alias, target)} `ref`'s copy of `path` declares, found under the path
+    it was renamed from since `ref` (`renamed`). A file absent there but
+    present at HEAD was added or renamed in an unpushed commit whose own hook
+    judged it: HEAD's copy is the base (with a warning). Empty for a file
+    new in this commit."""
+    for candidate in dict.fromkeys(filter(None, (path, (renamed or {}).get(path)))):
+        if ref is not None:
+            shown = git("show", f"{ref}:{candidate}")
+            if shown.returncode == 0:
+                return set(source_aliases(shown.stdout))
+    if ref != "HEAD":
+        shown = git("show", f"HEAD:{path}")
         if shown.returncode == 0:
+            print(f"alias_guard: {path} has no copy on {ref}; judging its new aliases against HEAD's",
+                  file=sys.stderr)
             return set(source_aliases(shown.stdout))
     return set()
 
@@ -363,13 +392,8 @@ def staged(judge_factory=Judge):
     """Commit hook: a wrong alias in a staged source, or anywhere when a
     ledger is staged, fails unless the baseline lists it; an unknown one
     fails unless origin/master's copy of its file already declares it."""
-    changes = git("diff", "--cached", "--name-status", "-M", "--diff-filter=ACMR").stdout.split("\n")
-    renamed, names = {}, []
-    for line in filter(None, changes):
-        fields = line.split("\t")
-        names.append(fields[-1])
-        if fields[0].startswith("R") and len(fields) == 3:
-            renamed[fields[2]] = fields[1]
+    names = [line.split("\t")[-1] for line in
+             git("diff", "--cached", "--name-status", "--diff-filter=ACMR").stdout.split("\n") if line]
     ledger_staged = any(path in LEDGERS for path in names)
     found = {}
     if ledger_staged:
@@ -390,10 +414,19 @@ def staged(judge_factory=Judge):
     results = judge_all(found, judge_factory())
     bad = [r for r in results if r[3] == "wrong" and key(*r[:3]) not in baseline]
     unknown = [r for r in results if r[3] == "unknown"]
-    upstream = {source: upstream_aliases(source, renamed.get(source)) for source in {r[0] for r in unknown}}
+    upstream = {}
+    if unknown:
+        ref = upstream_ref()
+        renamed = {}  # renames since `ref`, in this commit or an unpushed one
+        if ref is not None:
+            for line in git("diff", "--cached", "--name-status", "-M", ref).stdout.split("\n"):
+                fields = line.split("\t")
+                if fields[0].startswith("R") and len(fields) == 3:
+                    renamed[fields[2]] = fields[1]
+        upstream = {source: upstream_aliases(source, ref, renamed) for source in {r[0] for r in unknown}}
     new_unknown = [r for r in unknown if (r[1], r[2]) not in upstream[r[0]]]
     if len(unknown) > len(new_unknown):
-        print(f"alias_guard: {len(unknown) - len(new_unknown)} alias(es) already on {UPSTREAM} cannot be judged "
+        print(f"alias_guard: {len(unknown) - len(new_unknown)} alias(es) already upstream cannot be judged "
               "(no single pinned body for the alias or no address for the target); pin them so the census can "
               "check them", file=sys.stderr)
     if new_unknown:
