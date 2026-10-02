@@ -13,7 +13,22 @@
 // scratch register, confirmed empirically). The second loop folds the two
 // planes into the eight-row reconstruction and writes the output rows.
 
-extern "C" int Vp6FilterEdgeTagTable[];
+// Retain the name and int[] type used by all four matched filter bodies.
+// Retail VA 0x012D8158: each reads a dword at base + selector*4 (e.g.
+// RVA 0x009C236A). These 64 signed entries end at the independent table
+// at VA 0x012D8258, referenced by the load at RVA 0x009B4050.
+extern "C" {
+int Vp6FilterEdgeTagTable[64] = {
+	-12, -11, -10, -10, -9, -9, -9, -9,
+	-6, -6, -6, -6, -6, -6, -6, -6,
+	-4, -4, -4, -4, -4, -4, -4, -4,
+	-2, -2, -2, -2, -2, -2, -2, -2,
+	-2, -2, -2, -2, -2, -2, -2, -2,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0
+};
+}
 extern "C" unsigned char Vp6FilterConst8840[];
 extern "C" unsigned char Vp6FilterConst8850[];
 extern "C" unsigned char Vp6FilterConst8860[];
