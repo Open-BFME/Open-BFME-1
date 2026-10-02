@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-struct BfmeFloatRect
+class RectClass
 {
+public:
 	void set(float newLeft, float newTop, float newRight, float newBottom)
 	{
 		left = newLeft;
@@ -16,7 +17,7 @@ struct BfmeFloatRect
 	float bottom;
 };
 
-class BfmeRender2D
+class Render2DClass
 {
 private:
 	unsigned char m_unmodelled_00[0x54];
@@ -28,7 +29,7 @@ public:
 		m_texturingEnabled = 0;
 	}
 
-	void addRect006e(const BfmeFloatRect &rect, int color);
+	void Add_Quad(const RectClass &rect, unsigned long color);
 };
 
 struct BfmeClipRegion
@@ -44,7 +45,7 @@ class W3DDisplay
 {
 private:
 	unsigned char m_unmodelled_04[0x160];
-	BfmeRender2D *m_render2D;
+	Render2DClass *m_render2D;
 	BfmeClipRegion m_clipRegion;
 	unsigned char m_clippingEnabled;
 
@@ -57,7 +58,7 @@ void W3DDisplay::drawFillRect(float x, float y, float width, float height, int c
 {
 	m_render2D->disableTexturing();
 
-	BfmeFloatRect rect;
+	RectClass rect;
 	float right;
 	float bottom;
 	if (m_clippingEnabled) {
@@ -83,5 +84,5 @@ void W3DDisplay::drawFillRect(float x, float y, float width, float height, int c
 		rect.set(x, y, x + width, y + height);
 	}
 
-	m_render2D->addRect006e(rect, color);
+	m_render2D->Add_Quad(rect, color);
 }
