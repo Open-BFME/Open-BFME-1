@@ -1,5 +1,5 @@
 // ?bfmeSetupXA@BfmePoolXA@@QAEXPAVBfmeSpecXA@@@Z
-// partial score=0.97 date=2026-09-08
+// partial score=0.9658 date=2026-09-08
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int n);
