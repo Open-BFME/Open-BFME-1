@@ -2,9 +2,11 @@
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <map>
 
 #include "Common/INIException.h"
+#include "Common/NameKeyGenerator.h"
 
 // LivingWorldObject registry callback: docs/ini_schema.md identifies614F50.
 // FieldParse atVA01116D18 proves ObjectType+0xC, DefaultFlashValue+0x10,
@@ -13,35 +15,6 @@
 // See docs/living_world_parser_boundary.md for old-claim retirement evidence.
 // The one-level inline override lookup is intentional: retail passes its
 // returned pointer in EAX on both branches before invoking clone0060F620.
-typedef int NameKeyType;
-
-struct FieldParse;
-
-class INI
-{
-public:
-	const char *getNextToken( const char *seps = 0 );
-	void initFromINI( void *what, const FieldParse *parseTable );
-
-	int getLoadType() const
-	{
-		return m_loadType;
-	}
-
-private:
-	int m_unmodelled00;
-	int m_unmodelled04;
-	int m_loadType;
-};
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
-
-extern NameKeyGenerator *TheNameKeyGenerator;
-
 class Overridable
 {
 public:
@@ -71,7 +44,11 @@ public:
 	float m_flashVariation;
 };
 
-typedef _STL::map<NameKeyType, BfmeLivingWorldMapObject *>
+// Retail uses the compact INI load-type field at +8; the upstream INI
+// header includes a read buffer absent from this BFME layout.
+// Keep the existing integer-key map instantiation while using the real
+// enum-return NameKeyGenerator declaration for its external call.
+typedef _STL::map<int, BfmeLivingWorldMapObject *>
 	BfmeLivingWorldNameMap;
 
 class BfmeLivingWorldManager
@@ -93,8 +70,8 @@ void parseLivingWorldObject00614F50( INI *ini )
 		throw INIException( 3, "TheLivingWorldManager==NULL" );
 
 	bool isOverride = false;
-	NameKeyType storageKey;
-	NameKeyType nameKey = TheNameKeyGenerator->nameToKey(
+	int storageKey;
+	int nameKey = TheNameKeyGenerator->nameToKey(
 		ini->getNextToken());
 	storageKey = nameKey;
 	BfmeLivingWorldMapObject *object;
@@ -109,7 +86,7 @@ void parseLivingWorldObject00614F50( INI *ini )
 			object = found->second;
 			if( object != 0 )
 			{
-				if( ini->getLoadType() == 2 )
+				if( reinterpret_cast<const int *>(ini)[2] == 2 )
 				{
 					object = manager->rva0060F620Clone(
 						(BfmeLivingWorldMapObject *)object->getFinalOverride());
@@ -122,7 +99,7 @@ void parseLivingWorldObject00614F50( INI *ini )
 	if( !isOverride )
 	{
 		object = new BfmeLivingWorldMapObject;
-		if( ini->getLoadType() == 2 )
+		if( reinterpret_cast<const int *>(ini)[2] == 2 )
 			object->m_isOverride = 1;
 	}
 
