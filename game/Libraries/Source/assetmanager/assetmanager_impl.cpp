@@ -77,7 +77,7 @@ extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
 	CRITICAL_SECTION *lock);
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
-extern volatile bool g_q1Flag0134FAA8;
+volatile bool g_q1Flag0134FAA8 = false;
 
 class Q1ReceiverLockGuard
 {
