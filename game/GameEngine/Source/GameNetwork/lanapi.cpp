@@ -119,49 +119,6 @@ void LANAPI::init( void )
 	m_hostName = computerName;
 }
 
-// ?reset@LANAPI@@UAEXXZ present-unmatched
-void LANAPI::reset( void )
-{
-	if (m_inLobby)
-	{
-		LANMessage msg;
-		fillInLANMessage( &msg );
-		msg.LANMessageType = LANMessage::MSG_REQUEST_LOBBY_LEAVE;
-		sendMessage(&msg);
-	}
-	m_transport->update();
-
-	LANGameInfo *theGame = m_games;
-	LANGameInfo *deletableGame = NULL;
-
-	while (theGame)
-	{
-		deletableGame = theGame;
-		theGame = theGame->getNext();
-		delete deletableGame;
-	}
-
-	LANPlayer *thePlayer = m_lobbyPlayers;
-	LANPlayer *deletablePlayer = NULL;
-
-	while (thePlayer)
-	{
-		deletablePlayer = thePlayer;
-		thePlayer = thePlayer->getNext();
-		delete deletablePlayer;
-	}
-
-	m_games = NULL;
-	m_lobbyPlayers = NULL;
-	m_directConnectRemoteIP = 0;
-	m_pendingAction = ACT_NONE;
-	m_expiration = 0;
-	m_inLobby = true;
-	m_isInLANMenu = TRUE;
-	m_currentGame = NULL;
-	
-}
-
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/LANAPI_RequestAccept_Thunk.cpp
 // ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::sendMessage(LANMessage *msg, UnsignedInt ip /* = 0 */)

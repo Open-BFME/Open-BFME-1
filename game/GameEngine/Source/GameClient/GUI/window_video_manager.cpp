@@ -84,36 +84,6 @@
 //-----------------------------------------------------------------------------
 // WindowVideo PUBLIC FUNCTIONS ///////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-// ?WindowVideo::WindowVideo present-unmatched
-WindowVideo::WindowVideo( void )
-{
-	
-	m_playType = WINDOW_PLAY_MOVIE_ONCE;
-	m_win = NULL;
-	m_videoBuffer = NULL;
-	m_videoStream = NULL;
-	m_movieName.clear();
-	m_state = WINDOW_VIDEO_STATE_STOP;
-
-}
-
-// ?WindowVideo::~WindowVideo present-unmatched
-WindowVideo::~WindowVideo( void )
-{
-	// Don't Delete the window, only set it's video buffer to NULL
-	if(m_win)
-		m_win->winGetInstanceData()->setVideoBuffer( NULL );
-	m_win = NULL;
-	
-	delete m_videoBuffer;
-	m_videoBuffer = NULL;
-
-	if ( m_videoStream )
-		m_videoStream->close();
-	m_videoStream = NULL;
-
-}
-	
 // ?WindowVideo::init present-unmatched
 void WindowVideo::init( GameWindow *win, AsciiString movieName, 
 												WindowVideoPlayType playType,

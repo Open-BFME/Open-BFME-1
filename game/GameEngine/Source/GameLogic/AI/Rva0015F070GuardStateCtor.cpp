@@ -53,7 +53,7 @@ public:
 		m_center.zero();
 	}
 
-	virtual bool shouldExit( const StateMachine *machine ) const { return false; }
+	virtual bool shouldExit( const StateMachine *machine ) const;
 
 private:
 	int m_conditionsToConsider;

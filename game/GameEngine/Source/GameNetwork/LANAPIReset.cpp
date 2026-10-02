@@ -22,7 +22,7 @@ struct LANMessage
 class Transport
 {
 public:
-	void update();
+	Bool update();
 };
 
 class LANGameInfo

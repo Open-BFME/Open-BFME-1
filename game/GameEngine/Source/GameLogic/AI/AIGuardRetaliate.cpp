@@ -269,66 +269,6 @@ static Bool hasAttackedMeAndICanReturnFire( State *thisState, void* /*userData*/
 }
 
 //-- ExitConditions -------------------------------------------------------------------------------
-/**
- * This returns true if the conditions specified have been met, false otherwise.
- */
-// ?shouldExit@GuardRetaliateExitConditions@@ present-unmatched
-Bool GuardRetaliateExitConditions::shouldExit(const StateMachine* machine) const
-{
-	if (!machine->getGoalObject()) 
-	{
-		if (m_conditionsToConsider & ATTACK_ExitIfNoUnitFound) 
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	if (m_conditionsToConsider & ATTACK_ExitIfExpiredDuration) 
-	{
-		if (TheGameLogic->getFrame() >= m_attackGiveUpFrame)
-		{
-			return true;
-		} 
-	}
-	
-	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius) 
-	{
-		Coord3D deltaAggressor, myRange;
-		Coord3D objPos = *machine->getGoalObject()->getPosition();
-		Coord3D myPos = *machine->getOwner()->getPosition();
-		deltaAggressor.x = objPos.x - m_center.x;
-		deltaAggressor.y = objPos.y - m_center.y;
-		deltaAggressor.z = 0; // BGC - when we search for a target we don't account for Z, so why should we here?
-													// changing this fixed a crash where a GLARebelInfantry would be in GuardReturnState, find
-													// a target that is within range, then not be able to attack because its actually out of range.
-													// then it would look for a new target, get the same one, and proceed in an infinite recursive
-													// loop that eventually blew the stack.
-	
-		Real guardRangeSqr = sqr( AIGuardRetaliateMachine::getStdGuardRange( machine->getOwner() ) );
-		myRange.x = myPos.x - m_center.x;
-		myRange.y = myPos.y - m_center.y;
-		myRange.z = 0;
-
-		if( deltaAggressor.lengthSqr() > m_radiusSqr )
-		{
-			//The aggressor is too far away now... give up retaliation.
-			return TRUE;
-		} 
-		if( myRange.lengthSqr() > guardRangeSqr )
-		{
-			//Never go beyond standard guard radius.
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
-
 //-- AIGuardRetaliateMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 // Zero Hour-layout source; the BFME byte-exact constructor is in
