@@ -9,20 +9,13 @@
 extern "C" __declspec(dllimport) char *__cdecl strncpy( char *dest, const char *src, unsigned int count );
 extern "C" unsigned int __cdecl strlen( const char *str );
 
-class Rva0052DD50AsciiString
-{
-public:
-	void set( const char *str, int len );
-
-private:
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 struct Rva0052DD50ListRow
 {
-	Rva0052DD50AsciiString name;
-	Rva0052DD50AsciiString truncatedName;
-	Rva0052DD50AsciiString extra;
+	StringBase<char> name;
+	StringBase<char> truncatedName;
+	StringBase<char> extra;
 	int field0C;
 	int field10;
 	int field14;
@@ -68,7 +61,7 @@ void Rva0052DD50CopyListRow( const Rva0052DD50ListSource *src, Rva0052DD50ListRo
 	dst->field0C = src->fieldF8;
 	dst->field10 = src->fieldFC;
 	const char *extra = src->extra;
-	Rva0052DD50AsciiString *extraSlot = &dst->extra;
+	StringBase<char> *extraSlot = &dst->extra;
 	extraSlot->set( extra, extra ? (int)strlen( extra ) : 0 );
 	dst->field1C = src->field10C;
 	dst->field2C = src->field110;
