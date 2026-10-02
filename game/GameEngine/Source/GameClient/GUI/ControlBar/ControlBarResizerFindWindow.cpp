@@ -4,7 +4,7 @@
 #include "PreRTS.h"
 #include "GameClient/ControlBarResizer.h"
 
-AsciiString::~AsciiString()
+inline AsciiString::~AsciiString()
 {
     ((StringBase<char> *)this)->releaseBuffer();
 }
