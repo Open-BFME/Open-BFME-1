@@ -29,7 +29,7 @@ extern "C" __declspec(dllimport) int __stdcall VirtualProtect(
 	void *, unsigned long, unsigned long, unsigned long *);
 
 extern void d_0088e8d0();
-extern void *g_rva0088e970Found;
+void *g_rva0088e970Found = 0;
 
 typedef unsigned short Rva0088e970Word;
 typedef unsigned int Rva0088e970Dword;
