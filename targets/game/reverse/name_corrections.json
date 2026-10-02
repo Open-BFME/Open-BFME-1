@@ -13688,5 +13688,15 @@
   "after_sha256": "5f950814b35e964dd657afe40ac5b3dcec4e89a31113c6e96ae7da0b6d6e2480",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DWaypointBufferDrawWaypoints.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DWaypointBufferDrawWaypoints.cpp",
+  "old_name": "Gen_uw_0094a880",
+  "new_name": "Gen_0094a880",
+  "before_sha256": "42f3e276e01bfe66c7368f663784ff3c8d241340faf4412d9d908373c7dd0445",
+  "after_sha256": "871a368b34edaaf5f39c47ee631e733d585eb0aa31dd4135a7637d8391c15ba3",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
