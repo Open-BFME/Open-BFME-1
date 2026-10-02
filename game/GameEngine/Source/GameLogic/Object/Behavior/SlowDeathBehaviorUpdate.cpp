@@ -12,7 +12,7 @@
 struct Coord3D;
 struct Position208A50 { float x,y,z; };
 class Rva00170C70BitSet { public: Rva00170C70BitSet(void*,unsigned); unsigned words[10]; };
-class BfmeThingVKP { public: void bfmeSetVKP(int,int); };
+template<int N> class BitFlags;
 class S4Sink004135C0 { public: void invoke(const AsciiString&,int,int,int,int); };
 class BfmeHostEX { public: void bfmeSetEX(float); };
 class Thing { public: virtual void slot0(); float getHeightAboveTerrain() const; bool isSignificantlyAboveTerrain() const; void setPosition(const Coord3D*); };
@@ -57,6 +57,7 @@ class Object : public Thing { public:
  char pad04[0x34]; Position208A50 position38; char pad44[0xcc]; unsigned words110[10];
  char pad138[0x6c]; unsigned status1A4; char pad1A8[0x54]; Module208A50* module1FC;
  void notifyModelConditionChanged(); void setDisabled(DisabledType); void setMode(int,int); int getLayer() const;
+ void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
  __forceinline void clear5() { if(*(unsigned char*)words110 & 32) { words110[0]&=~32u;notifyModelConditionChanged(); } }
  __forceinline void set5() { if(!(*(unsigned char*)words110 & 32)) { words110[0]|=32;notifyModelConditionChanged(); } }
 };
@@ -110,7 +111,7 @@ UpdateSleepTime SlowDeathBehavior::update() {
   ++m_sinkFrame; ++m_midpointFrame; ++m_destructionFrame; ++frame3C;
   if(frame24) ++frame24;
   if(!(obj->getHeightAboveTerrain()>0.0f)) {
-   ((BfmeThingVKP*)obj)->bfmeSetVKP((int)&Rva00170C70BitSet(0,113),(int)&Rva00170C70BitSet(0,114));
+   obj->clearAndSetModelConditionFlags((const BitFlags<320>&)Rva00170C70BitSet(0,113),(const BitFlags<320>&)Rva00170C70BitSet(0,114));
    m_flags|=8;
   }
  }

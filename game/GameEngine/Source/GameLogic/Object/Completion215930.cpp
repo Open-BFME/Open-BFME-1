@@ -3,9 +3,7 @@
 // secondary interface at owner+0x10. The semantic owner is not established.
 // Owner-0x10 uses the existing BfmeOwnFCB receiver; -8 holds Object and -0xC
 // holds the data block whose +0x48 field supplies the optional FXList.
-// Keep the clear-flags wrapper inline: retail constructs its three-bit mask
-// before constructing the empty set mask. The raw BfmeThingVKP signature is
-// retained from the existing callee claim; its two ints carry mask addresses.
+// The inline clear-flags wrapper passes two ten-word masks to Object.
 // stlport
 #include <bitset>
 template<int N> class BitFlags { _STL::bitset<N> bits; public:
@@ -14,9 +12,13 @@ template<int N> class BitFlags { _STL::bitset<N> bits; public:
  BitFlags(BogusInitType,int,int,int);
  BitFlags(BogusInitType,int i) { bits.set(i); }
 };
-class Object { public: void setStatus(const BitFlags<86>&,bool); };
-class BfmeThingVKP { public: void bfmeSetVKP(int,int);
- void clear(const BitFlags<304>& flags) { bfmeSetVKP((int)&flags,(int)&BitFlags<304>()); } };
+class Object { public:
+ void setStatus(const BitFlags<86>&,bool);
+ void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
+ void clear(const BitFlags<304>& flags) {
+  clearAndSetModelConditionFlags((const BitFlags<320>&)flags,(const BitFlags<320>&)BitFlags<304>());
+ }
+};
 class FXList { public: bool bfmeIsBlocked(); void doFXObj(const Object *,const Object *) const; };
 class BfmeOwnFCB { public:
  void bfmeAfterFCB();
@@ -64,7 +66,7 @@ void Completion215930::complete(int unused,bool play)
  base->refreshRva00215650();
  float value=base->value54();
  if (value == value18()) {
-  ((BfmeThingVKP *)object())->clear(BitFlags<304>(BitFlags<304>::kInit,0x42,0x43,0x44));
+  object()->clear(BitFlags<304>(BitFlags<304>::kInit,0x42,0x43,0x44));
   object()->setStatus(BitFlags<86>(BitFlags<86>::kInit,2),false);
   object()->setStatus(BitFlags<86>(BitFlags<86>::kInit,21),false);
  }

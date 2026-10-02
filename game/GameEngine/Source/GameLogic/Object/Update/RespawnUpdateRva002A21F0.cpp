@@ -9,22 +9,14 @@
 // Include the game Module header before UpdateModule: the generic sweep
 // Module shim has different base offsets. Native game accessors reproduce
 // retail module-data +4, Object +8, and UpdateModule extent 0x20.
-// Existing BfmeThingVKP::bfmeSetVKP is the one ledger identity at 0x001C7720.
-// Its two integer ABI slots carry addresses of 40-byte condition masks.
-// This caller reuses that exact signature without claiming another identity.
+// The Object update receives two references to ten-word condition masks.
 #include "Lib/BaseType.h"
 #include "Common/DisabledTypes.h"
-#define OBJECT_TU_MEMBERS bool clearDisabled(DisabledType);
+#define OBJECT_TU_MEMBERS bool clearDisabled(DisabledType); void clearAndSetModelConditionFlags(const BitFlags<320> &, const BitFlags<320> &);
 #include "GameEngine/Source/GameLogic/Object/object.h"
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
-
-class BfmeThingVKP
-{
-public:
-    void bfmeSetVKP(int, int);
-};
 
 #include "GameEngine/Include/Common/Module.h"
 #include "GameEngine/Include/GameLogic/Module/UpdateModule.h"
@@ -55,15 +47,15 @@ void RespawnUpdate::rva002A21F0()
     {
         {
             _STL::bitset<304> empty;
-            reinterpret_cast<BfmeThingVKP *>(object)->bfmeSetVKP(
-                reinterpret_cast<int>(&data->m_mask0C),
-                reinterpret_cast<int>(&empty));
+            object->clearAndSetModelConditionFlags(
+                reinterpret_cast<const BitFlags<320> &>(data->m_mask0C),
+                reinterpret_cast<const BitFlags<320> &>(empty));
         }
         {
             _STL::bitset<304> empty;
-            reinterpret_cast<BfmeThingVKP *>(object)->bfmeSetVKP(
-                reinterpret_cast<int>(&data->m_mask34),
-                reinterpret_cast<int>(&empty));
+            object->clearAndSetModelConditionFlags(
+                reinterpret_cast<const BitFlags<320> &>(data->m_mask34),
+                reinterpret_cast<const BitFlags<320> &>(empty));
         }
         object->clearDisabled(static_cast<DisabledType>(4));
         setWakeFrame(object, UPDATE_SLEEP_FOREVER);

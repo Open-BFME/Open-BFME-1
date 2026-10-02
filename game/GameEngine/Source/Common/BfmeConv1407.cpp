@@ -1,47 +1,44 @@
-// Open-BFME5 conversions.
+// Object's two-mask model-condition update at retail RVA 0x001C7720.
 
-class BfmeBlockVKP
+template <int N> class BitFlags;
+
+class ModelConditionFlags
 {
 public:
-	bool bfmeCmpVKP(const BfmeBlockVKP &o);
-	void bfmeApplyVKP(int a, int b);
-	int m_bfmeArr[10];
+	bool operator!=(const ModelConditionFlags &other) const;
+	void clearAndSet(const ModelConditionFlags &clear, const ModelConditionFlags &set);
+	unsigned int m_bits[10];
 };
 
-class BfmeNotifyVKP
+class Drawable
 {
 public:
-	void bfmeNotifyVKP(BfmeBlockVKP *b, int x, int y);
+	void replaceModelConditionState(const ModelConditionFlags &flags,
+		unsigned int forceReplace, unsigned int value);
 };
 
-class BfmeUpdVKP
+class AIUpdateInterface
 {
 public:
-	void bfmeUpdateVKP();
+	virtual void friend_notifyStateMachineChanged();
 };
 
-class BfmeThingVKP
-{
-public:
-	void bfmeSetVKP(int a, int b);
-	char m_bfmePad00[0x80];
-	BfmeNotifyVKP *m_bfme80;
-	char m_bfmePad84[0x8c];
-	BfmeBlockVKP m_bfme110;
-	char m_bfmePad138[0xcc];
-	BfmeUpdVKP *m_bfme204;
-};
+#define BFME_HAVE_MODELCONDITIONFLAGS 1
+#define OBJECT_TU_MEMBERS void clearAndSetModelConditionFlags(const BitFlags<320> &, const BitFlags<320> &);
+#include "../GameLogic/Object/object.h"
 
-void BfmeThingVKP::bfmeSetVKP(int a, int b)
+void Object::clearAndSetModelConditionFlags(const BitFlags<320> &clear,
+	const BitFlags<320> &set)
 {
-	BfmeBlockVKP *cur = &m_bfme110;
-	BfmeBlockVKP tmp = m_bfme110;
-	cur->bfmeApplyVKP(a, b);
-	if (tmp.bfmeCmpVKP(*cur))
+	ModelConditionFlags *cur = &m_modelConditionFlags;
+	ModelConditionFlags oldFlags = m_modelConditionFlags;
+	cur->clearAndSet(reinterpret_cast<const ModelConditionFlags &>(clear),
+		reinterpret_cast<const ModelConditionFlags &>(set));
+	if (oldFlags != *cur)
 	{
-		if (m_bfme80)
-			m_bfme80->bfmeNotifyVKP(cur, 0, 0);
-		if (m_bfme204)
-			m_bfme204->bfmeUpdateVKP();
+		if (m_drawable)
+			m_drawable->replaceModelConditionState(*cur, 0, 0);
+		if (m_ai)
+			m_ai->AIUpdateInterface::friend_notifyStateMachineChanged();
 	}
 }
