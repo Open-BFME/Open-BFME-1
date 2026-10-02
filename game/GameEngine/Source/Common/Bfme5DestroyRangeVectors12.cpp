@@ -19,7 +19,15 @@ inline void bfmeRelease(void *block, unsigned int bytes)
 
 struct BfmeElem12 { int m_bfmeWords[3]; };
 
-void __cdecl bfmeDestroyRange12(BfmeElem12 *first, BfmeElem12 *last, char *tag);		// retail 0x00014AA1
+class AsciiString;
+
+namespace _STL
+{
+struct __false_type;
+
+template <class T>
+void __destroy_aux(T first, T last, const __false_type &tag);
+}
 
 class Gen_006FA4E0
 {
@@ -48,7 +56,8 @@ void Gen_006FA4E0::bfmeDestroy(void)
 {
 	char tag;
 
-	bfmeDestroyRange12(m_bfmeStart, m_bfmeFinish, &tag);
+	_STL::__destroy_aux((AsciiString *)m_bfmeStart,
+		(AsciiString *)m_bfmeFinish, (const _STL::__false_type &)tag);
 
 	BfmeElem12 *start = m_bfmeStart;
 
@@ -61,7 +70,8 @@ void Gen_006FA5B0::bfmeDestroy(void)
 {
 	char tag;
 
-	bfmeDestroyRange12(m_bfmeStart, m_bfmeFinish, &tag);
+	_STL::__destroy_aux((AsciiString *)m_bfmeStart,
+		(AsciiString *)m_bfmeFinish, (const _STL::__false_type &)tag);
 
 	BfmeElem12 *start = m_bfmeStart;
 
