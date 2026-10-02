@@ -97,11 +97,11 @@ public:
 	{
 		if (fx)
 		{
-			if (!fx->bfmeIsBlocked())
+			if (!const_cast<FXList *>(fx)->bfmeIsBlocked())
 				fx->doFXObj(primary, secondary);
 		}
 	}
-	bool bfmeIsBlocked(void) const;
+	bool bfmeIsBlocked(void);
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 

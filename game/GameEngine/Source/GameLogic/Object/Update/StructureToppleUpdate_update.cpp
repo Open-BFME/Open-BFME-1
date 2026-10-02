@@ -10,7 +10,7 @@
 class FXList
 {
 public:
-	Bool bfmeIsBlocked() const;
+	Bool bfmeIsBlocked();
 	void doFXObj(const Object *, const Object *) const;
 };
 

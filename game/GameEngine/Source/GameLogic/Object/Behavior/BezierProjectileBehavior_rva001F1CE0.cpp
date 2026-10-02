@@ -27,10 +27,18 @@ public:
 
 class BfmeThingDI;
 
+// bfmeRunCOF keeps its pinned spelling at ILT 0x0001BB21; the culling
+// predicate the callers reach through ILT 0x00011F77 is FXList::bfmeIsBlocked
+// (body 0x0042DAA0), so that call is spelled with the FXList class.
+class FXList
+{
+public:
+	Bool bfmeIsBlocked();
+};
+
 class BfmeThingCOF
 {
 public:
-	Bool bfmeAskCOF();
 	void bfmeRunCOF(void *a, void *b, void *c, void *d);
 };
 
@@ -118,7 +126,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 	if (*(int *)((char *)this + 0x58) == 0)
 	{
 		BfmeThingCOF *effect = data->m_effect94;
-		if (effect != 0 && !effect->bfmeAskCOF())
+		if (effect != 0 && !((FXList *)effect)->bfmeIsBlocked())
 			effect->bfmeRunCOF(&object->m_position, 0, 0, 0);
 
 		BfmeThingCOF *ocl = data->m_effect9C;
@@ -131,7 +139,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 	else
 	{
 		BfmeThingCOF *effect = data->m_effect98;
-		if (effect != 0 && !effect->bfmeAskCOF())
+		if (effect != 0 && !((FXList *)effect)->bfmeIsBlocked())
 			effect->bfmeRunCOF(&object->m_position, 0, 0, 0);
 
 		effect = data->m_effectA0;

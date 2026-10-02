@@ -56,7 +56,7 @@ class Object
 class FXList
 {
   public:
-	bool bfmeIsBlocked() const;
+	bool bfmeIsBlocked();
 	void doFXObj(const Object *, const Object *) const;
 };
 class GameLogic
@@ -303,7 +303,7 @@ unsigned StateTransition002A32D0::update()
 			(object->*c.m)(data->flags34);
 		}
 		const FXList *fx = data->fx88;
-		if (fx && !fx->bfmeIsBlocked())
+		if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked())
 			fx->doFXObj(object, 0);
 		object->setDisabledUntil(Disabled4, TheGameLogic->m_frame + data->m_f94);
 		m_f2c = 4;

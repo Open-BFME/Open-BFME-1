@@ -34,10 +34,10 @@ public:
 };
 class FXList {
 public:
-    bool bfmeIsBlocked() const;
+    bool bfmeIsBlocked();
     void doFXObj(const Object *, const Object *) const;
     static void doFXObj(const FXList *fx, const Object *obj, const Object *victim) {
-        if (fx && !fx->bfmeIsBlocked()) fx->doFXObj(obj, victim);
+        if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked()) fx->doFXObj(obj, victim);
     }
 };
 class ObjectCreationList {

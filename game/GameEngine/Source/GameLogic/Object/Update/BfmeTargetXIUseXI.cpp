@@ -98,10 +98,10 @@ public:
 class FXList
 {
 public:
-	Bool bfmeIsBlocked() const;
+	Bool bfmeIsBlocked();
 	void doFXObjChecked( const Object *primary, const Object *secondary = 0 ) const
 	{
-		if( !bfmeIsBlocked() )
+		if( !const_cast<FXList *>(this)->bfmeIsBlocked() )
 			doFXObj( primary, secondary );
 	}
 	void doFXObj( const Object *primary, const Object *secondary ) const;

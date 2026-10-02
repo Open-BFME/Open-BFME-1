@@ -73,7 +73,7 @@ class BfmeConditionFlags
 class FXList
 {
   public:
-	bool bfmeIsBlocked() const;
+	bool bfmeIsBlocked();
 	void doFXObj(const Object *, const Object *) const;
 };
 struct Rva002A30D0Data
@@ -145,7 +145,7 @@ void LevelState002A30D0::apply()
 		}
 		obj->clearAndSetModelConditionFlags(BfmeConditionFlags(), d->flags);
 		const FXList *fx = d->fx;
-		if (fx && !fx->bfmeIsBlocked())
+		if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked())
 			fx->doFXObj(obj, 0);
 		obj->setDisabled(Disabled4);
 		obj->setEffectivelyDead(true);

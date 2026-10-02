@@ -222,7 +222,7 @@ extern GameLogic *TheBfmeGameLogic;
 class FXList
 {
 public:
-	Bool cullAt0042DAA0();
+	Bool bfmeIsBlocked();
 	static void doFXObj(const FXList *, const Object *, const Object *);
 	void doFXPos(const Coord3D *, const Matrix3D *, Real, const Coord3D *) const;
 };
@@ -333,6 +333,6 @@ void DominateEnemySpecialPower::actionAt0025AEE0()
 	}
 
 	FXList *endFX = data->m_endFX;
-	if (endFX != 0 && !endFX->cullAt0042DAA0())
+	if (endFX != 0 && !endFX->bfmeIsBlocked())
 		endFX->doFXPos(&m_queryPosition, 0, 0.0f, 0);
 }

@@ -74,7 +74,7 @@ public:
 class FXList
 {
 public:
-	bool bfmeIsBlocked() const;
+	bool bfmeIsBlocked();
 	void doFXPos(const Coord3D *position, const Matrix3D *transform,
 		float speed, const Coord3D *secondary) const;
 };

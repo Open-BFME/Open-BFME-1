@@ -16,7 +16,7 @@ class Object;
 class FXList
 {
 public:
-	Bool bfmeIsBlocked() const;
+	Bool bfmeIsBlocked();
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
@@ -56,7 +56,7 @@ Bool DamageFX::doDamageFX(DamageType t, Real damageAmount, const Object *source,
 	if (fx == 0)
 		return false;
 
-	if (!fx->bfmeIsBlocked())
+	if (!const_cast<FXList *>(fx)->bfmeIsBlocked())
 		fx->doFXObj(victim, source);
 
 	return true;
