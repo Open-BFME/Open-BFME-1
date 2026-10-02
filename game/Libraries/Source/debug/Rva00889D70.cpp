@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-extern void *__cdecl Rva0088EB30(unsigned int);
+extern void *__cdecl DebugAllocMemory(unsigned int);
 
 struct Rva00889D70Node
 {
@@ -35,7 +35,7 @@ bool Rva00889D70Class::d_00889d70(void *arg1, void *arg2)
 		while (slot->next);
 	}
 
-	Rva00889D70Node *node = (Rva00889D70Node *)Rva0088EB30(0xC);
+	Rva00889D70Node *node = (Rva00889D70Node *)DebugAllocMemory(0xC);
 	node->next = 0;
 	node->arg1 = arg1;
 	node->arg2 = arg2;
