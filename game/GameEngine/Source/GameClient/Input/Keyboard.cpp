@@ -704,28 +704,8 @@ void Keyboard::initKeyNames( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/KeyboardCtor.cpp
-// ??0Keyboard@@ present-unmatched
-Keyboard::Keyboard( void )
-{
-
-	memset( m_keys, 0, sizeof( m_keys ) );
-	memset( m_keyStatus, 0, sizeof( m_keyStatus ) );
-	m_modifiers = KEY_STATE_NONE;
-	m_shift2Key = KEY_NONE;
-
-	memset( m_keyNames, 0, sizeof( m_keyNames ) );
-	m_inputFrame = 0;
-
-}  // end Keyboard
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1Keyboard@@ present-unmatched
-Keyboard::~Keyboard( void )
-{
-
-}  // end ~Keyboard
+// The matched constructor is defined in Input/KeyboardCtor.cpp.
+// The upstream constructor and empty destructor here were unmatched copies.
 
 //-------------------------------------------------------------------------------------------------
 /** Initialzie the keyboard */
