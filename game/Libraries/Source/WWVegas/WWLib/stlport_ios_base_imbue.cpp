@@ -13,7 +13,7 @@ class locale
 public:
 	locale(const locale &x);
 	~locale();
-	locale &operator=(const locale &x);
+	const locale &operator=(const locale &x);	// stl/_locale.h:135 exact signature
 
 private:
 	void *_M_impl;
