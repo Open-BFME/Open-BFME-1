@@ -76,12 +76,11 @@ public:
 
 extern Rva0060EE80State *g_bfmeStateDF;
 
-struct Rva0060EE80Global
-{
-	unsigned char m_prefix[0x20];
-};
+// Incomplete: the campaign manager this pointer names is defined elsewhere;
+// the TU only needs the object address.
+class Glo012F1028Type;
 
-extern Rva0060EE80Global *g_rva0060EE80Global;
+extern Glo012F1028Type *Glo012F1028;
 
 class Mouse
 {
@@ -115,7 +114,7 @@ void Rva0060EE80Manager::rva0060ee80()
 	{
 	Rva0060EE80Coord3D point;
 	g_bfmeStateDF->buildFramePoint(
-		reinterpret_cast<unsigned char *>(g_rva0060EE80Global) + 0x20,
+		reinterpret_cast<unsigned char *>(Glo012F1028) + 0x20,
 		&point);
 
 	AsciiString text;
