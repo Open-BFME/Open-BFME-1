@@ -2215,223 +2215,22 @@ Bool NetPacket::isRoomForFrameResendRequestMessage(NetCommandRef *msg) {
 // isRoomForDisconnectFrameMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // ?addFileCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addFileCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForFileMessage(msg)) {
-		NetFileCommandMsg *cmdMsg = (NetFileCommandMsg *)(msg->getCommand());
+// addFileCommand is defined in NetPacketCommandBodies.cpp.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		AsciiString filename = cmdMsg->getPortableFilename();		// PORTABLE
-		strcpy((char *)(m_packet + m_packetLen), filename.str());
-		m_packetLen += filename.getLength() + 1;
-
-		UnsignedInt fileLength = cmdMsg->getFileLength();
-		memcpy(m_packet + m_packetLen, &fileLength, sizeof(fileLength));
-		m_packetLen += sizeof(fileLength);
-
-		memcpy(m_packet + m_packetLen, cmdMsg->getFileData(), fileLength);
-		m_packetLen += fileLength;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-		return TRUE;
-	}
-	return FALSE;
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForFileMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::isRoomForFileMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetFileCommandMsg *cmdMsg = (NetFileCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedShort);
-	}
+// isRoomForFileMessage is defined in NetPacket_isRoomForFileAndChat.cpp.
 
-	++len; // 'D'
-	len += cmdMsg->getPortableFilename().getLength() + 1; // PORTABLE filename + the terminating 0
-	len += sizeof(UnsignedInt); // filedata length
-	len += cmdMsg->getFileLength();
-
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
 
 // ?addFileAnnounceCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addFileAnnounceCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForFileAnnounceMessage(msg)) {
-		NetFileAnnounceCommandMsg *cmdMsg = (NetFileAnnounceCommandMsg *)(msg->getCommand());
+// addFileAnnounceCommand is defined in NetPacketCommandBodies.cpp.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		AsciiString filename = cmdMsg->getPortableFilename();	// PORTABLE
-		strcpy((char *)(m_packet + m_packetLen), filename.str());
-		m_packetLen += filename.getLength() + 1;
-
-		UnsignedShort fileID = cmdMsg->getFileID();
-		memcpy(m_packet + m_packetLen, &fileID, sizeof(fileID));
-		m_packetLen += sizeof(fileID);
-
-		UnsignedByte playerMask = cmdMsg->getPlayerMask();
-		memcpy(m_packet + m_packetLen, &playerMask, sizeof(playerMask));
-		m_packetLen += sizeof(playerMask);
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		DEBUG_LOG(("Adding file announce message for fileID %d, ID %d to packet\n",
-			cmdMsg->getFileID(), cmdMsg->getID()));
-		return TRUE;
-	}
-	DEBUG_LOG(("No room to add file announce message to packet\n"));
-	return FALSE;
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForFileAnnounceMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
-	Int len = 0;
-	Bool needNewCommandID = FALSE;
-	NetFileAnnounceCommandMsg *cmdMsg = (NetFileAnnounceCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedShort);
-	}
+// isRoomForFileAnnounceMessage is defined in NetPacket_isRoomForFileAndChat.cpp.
 
-	++len; // 'D'
-	len += cmdMsg->getPortableFilename().getLength() + 1; // PORTABLE filename + the terminating 0
-	len += sizeof(UnsignedShort); // m_fileID
-	len += sizeof(UnsignedByte); // m_playerMask
-
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addFileProgressCommand.cpp
 // ?addFileProgressCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
