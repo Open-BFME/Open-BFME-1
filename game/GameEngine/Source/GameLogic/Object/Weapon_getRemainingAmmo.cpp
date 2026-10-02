@@ -46,13 +46,15 @@ public:
 	BfmeAmmoProvider *m_contain;
 };
 
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
 class GameLogic
 {
 public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *g_bfmeAmmoGameLogic;
+extern GameLogic *TheGameLogic;
 
 class WeaponTemplate
 {
@@ -90,7 +92,7 @@ UnsignedInt Weapon::getRemainingAmmo(Bool countReloadingAsEmpty) const
 	const WeaponTemplate *weaponTemplate = m_template;
 	if (weaponTemplate->m_ammoDescriptor.isValid())
 	{
-		Object *owner = g_bfmeAmmoGameLogic->findObjectByID(m_ownerID);
+		Object *owner = TheGameLogic->findObjectByID(m_ownerID);
 		BfmeAmmoProvider *provider = owner ? owner->getAmmoProvider() : 0;
 		if (provider)
 		{

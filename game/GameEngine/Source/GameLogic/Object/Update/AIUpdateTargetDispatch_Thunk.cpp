@@ -43,7 +43,12 @@ public:
 };
 
 extern bool g_aiTargetDispatchSuppressed;
-extern GameLogicFrameSlice *TheGameLogic;
+
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This TU keeps its
+// own GameLogicFrameSlice view of the pointee and casts at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 void AIUpdateTargetDispatch::attackTarget(Thing *target, int, int)
 {
@@ -54,7 +59,7 @@ void AIUpdateTargetDispatch::attackTarget(Thing *target, int, int)
 		return;
 	if (g_aiTargetDispatchSuppressed)
 		return;
-	if (m_expireFrame > TheGameLogic->m_frame)
+	if (m_expireFrame > reinterpret_cast<GameLogicFrameSlice *>(TheGameLogic)->m_frame)
 		return;
 	if (m_flag304 || m_flag305)
 		return;

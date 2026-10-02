@@ -87,12 +87,10 @@ public:
 	virtual void *bfmeGetUDE() = 0;
 };
 
-// Holder for the GameLogic singleton's dir32 spelling in this TU.
-class BfmeMgrUDE
-{
-};
-
-extern BfmeMgrUDE *g_bfmeMgrUDE;
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; Thing/GameLogicObjectLookup.h
+// above already declares the real GameLogic view this TU calls through.
+extern GameLogic *TheGameLogic;
 
 class BfmeThingUDE
 {
@@ -105,7 +103,7 @@ public:
 void *BfmeThingUDE::bfmeGoUDE()
 {
 	BfmeRecUDE *r = reinterpret_cast<BfmeRecUDE *>(
-		reinterpret_cast<GameLogic *>(g_bfmeMgrUDE)->findObjectByID(m_bfmeKey));
+		TheGameLogic->findObjectByID(m_bfmeKey));
 	if (r)
 		return r->bfmeGetUDE();
 	return 0;

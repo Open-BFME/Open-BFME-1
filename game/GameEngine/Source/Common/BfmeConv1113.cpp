@@ -27,13 +27,10 @@ struct BfmeNode1113
 	int m_bfme10;
 };
 
-// The GameLogic singleton is still spelled with this TU's holder type; the
-// dir32 record for ?g_bfmeB1113@@3PAVBfmeB1113@@A keeps that spelling.
-class BfmeB1113
-{
-};
-
-extern BfmeB1113 *g_bfmeB1113;
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; Thing/GameLogicObjectLookup.h
+// above already declares the real GameLogic view this TU calls through.
+extern GameLogic *TheGameLogic;
 
 BfmeNode1113 *__cdecl bfmeNext1113(BfmeNode1113 *p);
 
@@ -62,7 +59,7 @@ char BfmeW1113::bfmeGo1113A(int a)
 	p = h->m_bfme08;
 	while (p != h) {
 		BfmeK1113 *k = reinterpret_cast<BfmeK1113 *>(
-			reinterpret_cast<GameLogic *>(g_bfmeB1113)->findObjectByID(p->m_bfme10));
+			TheGameLogic->findObjectByID(p->m_bfme10));
 
 		if (k->bfmeChk1113(a))
 			return 1;

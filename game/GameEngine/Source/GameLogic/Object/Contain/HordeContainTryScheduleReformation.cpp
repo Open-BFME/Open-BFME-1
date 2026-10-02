@@ -55,7 +55,11 @@ public:
 	UnsignedInt m_refreshThreshold;
 };
 
-extern BfmeHordeGlobalData *TheBfmeHordeGlobalData;
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This TU keeps its
+// own BfmeHordeGlobalData view of the pointee and casts at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeHordeContainOwner
 {
@@ -94,7 +98,8 @@ void BfmeHordeContainOwner::bfmeTryScheduleReformation(
 		&& m_owner->m_refreshInterface->bfmeBlocksFormationRefresh() )
 		return;
 
-	BfmeHordeGlobalData *globalData = TheBfmeHordeGlobalData;
+	BfmeHordeGlobalData *globalData =
+		reinterpret_cast<BfmeHordeGlobalData *>(TheGameLogic);
 	BfmeHordeOwner *owner = m_owner;
 	UnsignedInt threshold = globalData->m_refreshThreshold;
 	UnsignedInt refreshValue = owner->bfmeGetFormationRefreshValue();

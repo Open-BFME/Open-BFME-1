@@ -33,7 +33,11 @@ private:
 	Gen00373E30Tree m_map;
 };
 
-extern void *TheGameLogic;
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this TU only reads
+// the frame word through it.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 void Gen_00373E30::bfmeInsertMask(const Gen00373E30Mask *mask)
 {

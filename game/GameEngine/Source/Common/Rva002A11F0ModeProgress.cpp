@@ -1,12 +1,17 @@
 extern float g_bfmeDefaultBU;
 extern const float BfmeZeroRange;
 
-struct GameLogic
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This TU keeps its
+// own frame-word view of the pointee and casts at the use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+struct GameLogicFrameView
 {
 	char unused[0x3c];
 	unsigned int frame;
 };
-extern GameLogic *TheBfmeGameLogic;
 
 struct Rva002A11F0ModeProgress
 {
@@ -33,7 +38,7 @@ float Rva002A11F0ModeProgress::value(int *out) const
 		return BfmeZeroRange;
 	case 3:
 		if (m_38 > 0)
-			return ((float)TheBfmeGameLogic->frame - m_34) / m_38;
+			return ((float)reinterpret_cast<GameLogicFrameView *>(TheGameLogic)->frame - m_34) / m_38;
 		return BfmeZeroRange;
 	case 4:
 		return BfmeZeroRange;

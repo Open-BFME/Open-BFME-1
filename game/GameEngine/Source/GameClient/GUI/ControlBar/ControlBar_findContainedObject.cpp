@@ -27,9 +27,11 @@ public:
 	ObjectPtrHash m_objHash;
 };
 
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This TU keeps its
+// own GameLogicFrameSlice view of the pointee and casts at the use.
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
-#define TheGameLogic (reinterpret_cast<GameLogicFrameSlice *>(TheBfmeGameLogic))
+extern GameLogic *TheGameLogic;
 
 struct ContainEntry
 {
@@ -45,6 +47,11 @@ public:
 	protected:
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
+
+static inline GameLogicFrameSlice *theGameLogic()
+{
+	return reinterpret_cast<GameLogicFrameSlice *>(TheGameLogic);
+}
 
 #pragma optimize("t", on)
 Object *ControlBar::findContainedObject(GameWindow *win)
@@ -64,8 +71,8 @@ Object *ControlBar::findContainedObject(GameWindow *win)
 	if (!id)
 		return 0;
 
-	ObjectPtrHash::iterator it = TheGameLogic->m_objHash.find(id);
-	if (it == TheGameLogic->m_objHash.end())
+	ObjectPtrHash::iterator it = theGameLogic()->m_objHash.find(id);
+	if (it == theGameLogic()->m_objHash.end())
 		goto contained_not_found;
 	return (*it).second;
 

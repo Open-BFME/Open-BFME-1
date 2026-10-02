@@ -42,12 +42,10 @@ public:
 	void *m_bfmeKeyTM;
 };
 
-// Holder for the GameLogic singleton's dir32 spelling in this TU.
-struct Rva00367E30Logic
-{
-};
-
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
+// in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; Thing/GameLogicObjectLookup.h
+// above already declares the real GameLogic view this TU calls through.
+extern GameLogic *TheGameLogic;
 
 class BfmeOwnerTM
 {
@@ -58,8 +56,7 @@ public:
 
 void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 {
-	Rva00367E30Logic *logic = TheBfmeGameLogic;
-	GameLogic *gamelogic = reinterpret_cast<GameLogic *>(logic);
+	GameLogic *gamelogic = TheGameLogic;
 	BfmeActorTM *actor = reinterpret_cast<BfmeActorTM *>(
 		gamelogic->findObjectByID(reinterpret_cast<int>(msg->m_bfmeKeyTM)));
 
