@@ -1,23 +1,19 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc-
-//
-// Retail 0x0037F0F0 is the ExperienceLevelSystem lookup reached through
-// ILT 0x00027953.  ExperienceLevelMin001B20D0.cpp supplies the direct caller
-// and its member-call ABI: (void *, int, int *), returning an int.
-//
-// The first callee returns an STLport list view.  Its sentinel is the first
-// dword, and each node exposes the value at +8. The value's +4 pointer
-// may redirect through BfmeSubBOB::bfmeFindBOB; the selected record's level
-// key is at +0xCC and its experience result at +0x10.
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// Retail 0x0037F0F0, the ExperienceLevelSystem lookup reached through ILT 0x00027953; ExperienceLevelMin001B20D0.cpp
+// holds the direct caller (void *, int, int *). Each list node's value at +8 may redirect through
+// its +4 Overridable chain; the selected record's level key is at +0xCC and its experience result at +0x10.
 
-struct BfmeGotBOB;
+#include "Common/GameMemory.h"
+#include "Common/Overridable.h"
+
+// Retail keeps the recursive override walk as a call.
+#pragma inline_depth(0)
 
 class BfmeSubBOB
 {
 public:
-	BfmeGotBOB *bfmeFindBOB();
-
 	int m_vtable;
-	BfmeSubBOB *m_nested;
+	Overridable *m_nested;
 };
 
 struct Rva0037F0F0Record
@@ -75,9 +71,9 @@ int ExperienceLevelSystem::bfmeQuery0037F0F0(
 			BfmeSubBOB *redirect = value->m_redirect;
 			if (redirect != 0)
 			{
-				BfmeSubBOB *nested = redirect->m_nested;
+				Overridable *nested = redirect->m_nested;
 				if (nested != 0)
-					selected = (Rva0037F0F0Record *)nested->bfmeFindBOB();
+					selected = (Rva0037F0F0Record *)nested->friend_getFinalOverride();
 				else
 					selected = (Rva0037F0F0Record *)redirect;
 			}

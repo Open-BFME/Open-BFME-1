@@ -1,20 +1,18 @@
-// cl: /MD /O2 /EHsc- /GR-
+// cl: /MD /O2 /EHsc- /GR- /DNDEBUG /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
-class BfmeSubBOB;
+#include "Common/GameMemory.h"
+#include "Common/Overridable.h"
+
+// Retail keeps the recursive override walk as a call.
+#pragma inline_depth(0)
 
 struct BfmeGotBOB
 {
 public:
 	int m_vtable;
-	BfmeSubBOB *m_bob;
+	Overridable *m_bob;
 	int m_pad[2];
 	int m_order;
-};
-
-class BfmeSubBOB
-{
-public:
-	BfmeGotBOB *bfmeFindBOB(void);
 };
 
 class BfmeCompareBOB
@@ -37,9 +35,9 @@ bool BfmeCompareBOB::lessThan(BfmeCompareBOB *other)
 	BfmeGotBOB *left;
 	if (item != 0)
 	{
-	BfmeSubBOB *bob = item->m_bob;
+	Overridable *bob = item->m_bob;
 		if (bob != 0)
-			left = bob->bfmeFindBOB();
+			left = (BfmeGotBOB *)bob->friend_getFinalOverride();
 		else
 			left = item;
 	}
@@ -50,9 +48,9 @@ bool BfmeCompareBOB::lessThan(BfmeCompareBOB *other)
 	BfmeGotBOB *right;
 	if (item != 0)
 	{
-		BfmeSubBOB *bob = item->m_bob;
+		Overridable *bob = item->m_bob;
 		if (bob != 0)
-			right = bob->bfmeFindBOB();
+			right = (BfmeGotBOB *)bob->friend_getFinalOverride();
 		else
 			right = item;
 	}
@@ -72,9 +70,9 @@ bool BfmeCompareBOB::greaterThan(BfmeCompareBOB *other)
 	BfmeGotBOB *left;
 	if (item != 0)
 	{
-		BfmeSubBOB *bob = item->m_bob;
+		Overridable *bob = item->m_bob;
 		if (bob != 0)
-			left = bob->bfmeFindBOB();
+			left = (BfmeGotBOB *)bob->friend_getFinalOverride();
 		else
 			left = item;
 	}
@@ -85,9 +83,9 @@ bool BfmeCompareBOB::greaterThan(BfmeCompareBOB *other)
 	BfmeGotBOB *right;
 	if (item != 0)
 	{
-		BfmeSubBOB *bob = item->m_bob;
+		Overridable *bob = item->m_bob;
 		if (bob != 0)
-			right = bob->bfmeFindBOB();
+			right = (BfmeGotBOB *)bob->friend_getFinalOverride();
 		else
 			right = item;
 	}
