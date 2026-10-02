@@ -71,7 +71,7 @@ extern "C" __declspec(dllimport) int __stdcall WideCharToMultiByte(
 	int *usedDefaultCharacter);
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const WideChar *text);
 
-extern "C" void *__cdecl bfmeArrayNew(unsigned int bytes);
+void *__cdecl operator new[](unsigned int bytes);
 void __cdecl operator delete(void *block);
 void __cdecl operator delete[](void *block);
 
@@ -86,7 +86,7 @@ _STL::string WideCharStringToMultiByte(const WideChar *orig)
 	int len = WideCharToMultiByte(kUtf8CodePage, 0, orig, wcslen(orig), 0, 0, 0, 0) + 1;
 	if (len > 0)
 	{
-		char *dest = (char *)bfmeArrayNew(len);
+		char *dest = (char *)operator new[](len);
 		WideCharToMultiByte(kUtf8CodePage, 0, orig, -1, dest, len, 0, 0);
 		dest[len - 1] = 0;
 		ret.assign(dest, dest + strlen(dest));
