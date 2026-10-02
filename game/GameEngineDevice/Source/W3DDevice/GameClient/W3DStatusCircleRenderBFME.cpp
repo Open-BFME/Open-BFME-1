@@ -105,7 +105,7 @@ extern unsigned ScreenRenderStates[];
 extern unsigned ScreenCurrentShader;
 extern Device *ScreenDevice;
 extern unsigned ScreenStateChanges;
-extern unsigned ScreenTotalChanges;
+extern unsigned number_of_DX8_calls;
 
 class DX8Wrapper
 {
@@ -216,7 +216,7 @@ public:
 		} \
 		ScreenRenderStates[(state_)] = (value_); \
 		ScreenDevice->v->SetRenderState(ScreenDevice, (state_), (value_)); \
-		++ScreenTotalChanges; \
+		++number_of_DX8_calls; \
 		++ScreenStateChanges; \
 	} \
 } while (0)

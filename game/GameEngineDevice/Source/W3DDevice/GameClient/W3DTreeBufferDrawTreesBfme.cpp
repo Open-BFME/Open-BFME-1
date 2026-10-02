@@ -189,7 +189,7 @@ class W3DShaderManager {
 public:
   static int setShroudTex(int);
 };
-extern unsigned Rva01340594DX8Calls;
+extern unsigned number_of_DX8_calls;
 extern unsigned BaseHeightMapScorchStageChanges;
 extern bool Rva0133F451Snapshot;
 extern unsigned Rva01340EC0Shader, Rva0133F49CChanged;
@@ -223,7 +223,7 @@ public:
     }
     current = value;
     D3DDevice->v->SetTextureStageState(D3DDevice, stage, state, value);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
     ++BaseHeightMapScorchStageChanges;
   }
   static void Apply_Render_State_Changes();
@@ -233,7 +233,7 @@ public:
                              unsigned short);
   static void GetTransform(unsigned which, Rva00737B70Matrix &matrix) {
     D3DDevice->v->GetTransform(D3DDevice, which, &matrix);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
   static __forceinline void VertexConstant(int reg, const void *data,
                                            int count) {
@@ -242,7 +242,7 @@ public:
       return;
     memcpy(dst, data, count * 16);
     D3DDevice->v->SetVertexShaderConstant(D3DDevice, reg, data, count);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
   static void PixelConstant(int reg, const void *data, int count) {
     void *dst = &Pixel_Shader_Constants[reg];
@@ -250,19 +250,19 @@ public:
       return;
     memcpy(dst, data, count * 16);
     D3DDevice->v->SetPixelShaderConstant(D3DDevice, reg, data, count);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
   static void SetFVF(unsigned shader) {
     D3DDevice->v->SetFVF(D3DDevice, shader);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
   static void SetDeclaration(unsigned declaration) {
     D3DDevice->v->SetVertexDeclaration(D3DDevice, declaration);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
   static void SetPixelShader(unsigned shader) {
     D3DDevice->v->SetPixelShader(D3DDevice, shader);
-    ++Rva01340594DX8Calls;
+    ++number_of_DX8_calls;
   }
 };
 void BoxSetTexture(unsigned, TextureBaseClass *&);
@@ -570,7 +570,7 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
     if (pixelShader) {
       IDirect3DDevice8 *device = DX8Wrapper::D3DDevice;
       device->v->SetPixelShader(device, pixelShader);
-      ++Rva01340594DX8Calls;
+      ++number_of_DX8_calls;
     }
     if (g_bfmeGlobCC0 && g_bfmeGlobCC0->v28()) {
       int kind = g_bfmeGlobCC0->fielda8;

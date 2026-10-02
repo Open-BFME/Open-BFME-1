@@ -196,7 +196,7 @@ struct BfmeE1054
 };
 
 extern int g_bfmeCount1054;
-extern int g_bfmeHits1054;
+extern unsigned int number_of_DX8_calls;
 
 void bfmeGo1054E(int a, int b)
 {
@@ -205,5 +205,5 @@ void bfmeGo1054E(int a, int b)
 	BfmeE1054 *p = reinterpret_cast<BfmeE1054 *>(DX8Wrapper::_Get_D3D_Device8());
 
 	p->m_bfmeVt->m_bfmeFn(p, a, b);
-	g_bfmeHits1054++;
+	number_of_DX8_calls++;
 }

@@ -50,7 +50,6 @@ private:
 extern unsigned int number_of_DX8_calls;
 #define Rva012D6D90Byte WW3D::IsTexturingEnabled
 #define Rva01340534DeviceGlobal (reinterpret_cast<Rva01340534Device *>(DX8Wrapper::D3DDevice))
-#define Rva01340594DX8Calls number_of_DX8_calls
 #define Rva01340560TextureChanges DX8Wrapper::texture_changes
 #define Rva0133F478Textures (reinterpret_cast<Rva006C9270Texture **>(DX8Wrapper::Textures))
 
@@ -61,7 +60,7 @@ static __forceinline void Rva0090C280SetTexture(unsigned int stage,
 	{
 		Rva01340534DeviceGlobal->lpVtbl->SetTexture(
 			Rva01340534DeviceGlobal, stage, texture);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 		return;
 	}
 	if (Rva0133F478Textures[stage] != texture)
@@ -74,7 +73,7 @@ static __forceinline void Rva0090C280SetTexture(unsigned int stage,
 			texture->lpVtbl->AddRef(texture);
 		Rva01340534DeviceGlobal->lpVtbl->SetTexture(
 			Rva01340534DeviceGlobal, stage, texture);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 		++Rva01340560TextureChanges;
 	}
 }

@@ -122,7 +122,7 @@ public:
 
 extern Rva006C9270Device *Rva01340534Device;
 extern Rva006C9270Texture *Rva0133F478Textures[];
-extern unsigned int Rva01340594DX8Calls;
+extern unsigned int number_of_DX8_calls;
 extern unsigned int Rva01340560TextureChanges;
 
 static __forceinline void Set_DX8_Texture(unsigned int stage, Rva006C9270Texture *texture)
@@ -130,7 +130,7 @@ static __forceinline void Set_DX8_Texture(unsigned int stage, Rva006C9270Texture
 	if (stage >= 8)
 	{
 		Rva01340534Device->SetTexture(stage, texture);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 		return;
 	}
 
@@ -142,7 +142,7 @@ static __forceinline void Set_DX8_Texture(unsigned int stage, Rva006C9270Texture
 	if (Rva0133F478Textures[stage] != 0)
 		Rva0133F478Textures[stage]->AddRef();
 	Rva01340534Device->SetTexture(stage, texture);
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 	++Rva01340560TextureChanges;
 }
 

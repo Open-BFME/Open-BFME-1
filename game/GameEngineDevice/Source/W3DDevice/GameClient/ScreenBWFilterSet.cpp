@@ -103,7 +103,6 @@ extern bool ScreenSnapshot;
 extern unsigned int ScreenRenderStates[];
 extern BfmeDevice *ScreenDevice;
 extern unsigned int ScreenStateChanges;
-extern unsigned int ScreenTotalChanges;
 extern unsigned int number_of_DX8_calls;
 
 class DX8Wrapper
@@ -129,7 +128,7 @@ public:
 		}
 		ScreenRenderStates[state] = value;
 		ScreenDevice->v->SetRenderState(ScreenDevice, state, value);
-		++ScreenTotalChanges;
+		++number_of_DX8_calls;
 		++ScreenStateChanges;
 	}
 

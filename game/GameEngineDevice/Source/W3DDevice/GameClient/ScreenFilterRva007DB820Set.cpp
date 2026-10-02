@@ -30,7 +30,7 @@ extern unsigned ScreenOpaqueShader, ScreenCurrentShader;
 extern bool ScreenSnapshot;
 extern unsigned ScreenRenderStates[];
 extern Device *ScreenDevice;
-extern unsigned ScreenStateChanges,ScreenTotalChanges;
+extern unsigned ScreenStateChanges,number_of_DX8_calls;
 class DX8Wrapper {
 public:
  static void Apply_Render_State_Changes();
@@ -40,7 +40,7 @@ public:
   if(ScreenSnapshot){StringClass s(0,true);Get_DX8_Render_State_Value_Name(s,state,value);}
   ScreenRenderStates[state]=value;
   ScreenDevice->v->SetRenderState(ScreenDevice,state,value);
-  ++ScreenTotalChanges; ++ScreenStateChanges;
+  ++number_of_DX8_calls; ++ScreenStateChanges;
  }
 };
 class FadeView{public:

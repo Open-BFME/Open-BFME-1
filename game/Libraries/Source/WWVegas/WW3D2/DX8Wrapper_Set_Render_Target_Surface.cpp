@@ -31,6 +31,8 @@ struct IDirect3DDevice8
 	IDirect3DDevice8Vtbl *lpVtbl;
 };
 
+extern unsigned int number_of_DX8_calls;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
@@ -44,7 +46,6 @@ private:
 	static IDirect3DSurface8 *DefaultRenderTarget;
 	static IDirect3DSurface8 *DefaultDepthBuffer;
 	static bool IsRenderToTexture;
-	static unsigned int D3DCallCount;
 };
 
 // ?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@_N@Z
@@ -53,9 +54,9 @@ void DX8Wrapper::Set_Render_Target(IDirect3DSurface8 *renderTarget, bool useDefa
 	if (renderTarget == 0 || renderTarget == DefaultRenderTarget) {
 		if (DefaultRenderTarget != 0) {
 			D3DDevice->lpVtbl->SetRenderTarget(D3DDevice, 0, DefaultRenderTarget);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 			D3DDevice->lpVtbl->SetDepthStencilSurface(D3DDevice, DefaultDepthBuffer);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 			DefaultRenderTarget->lpVtbl->Release(DefaultRenderTarget);
 			DefaultRenderTarget = 0;
 			if (DefaultDepthBuffer != 0) {
@@ -75,11 +76,11 @@ void DX8Wrapper::Set_Render_Target(IDirect3DSurface8 *renderTarget, bool useDefa
 	} else if (renderTarget != CurrentRenderTarget) {
 		if (DefaultDepthBuffer == 0) {
 			D3DDevice->lpVtbl->GetDepthStencilSurface(D3DDevice, &DefaultDepthBuffer);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 		}
 		if (DefaultRenderTarget == 0) {
 			D3DDevice->lpVtbl->GetRenderTarget(D3DDevice, 0, &DefaultRenderTarget);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 		}
 
 		if (CurrentRenderTarget != 0) {
@@ -95,12 +96,12 @@ void DX8Wrapper::Set_Render_Target(IDirect3DSurface8 *renderTarget, bool useDefa
 		CurrentRenderTarget->lpVtbl->AddRef(CurrentRenderTarget);
 		if (useDefaultDepthBuffer) {
 			D3DDevice->lpVtbl->SetRenderTarget(D3DDevice, 0, CurrentRenderTarget);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 			D3DDevice->lpVtbl->SetDepthStencilSurface(D3DDevice, DefaultDepthBuffer);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 		} else {
 			D3DDevice->lpVtbl->SetRenderTarget(D3DDevice, 0, CurrentRenderTarget);
-			++D3DCallCount;
+			++number_of_DX8_calls;
 		}
 	}
 

@@ -68,7 +68,7 @@ struct Device
 extern Device *ScreenDevice;
 extern unsigned ScreenTextureStageStates[8][32];
 extern bool ScreenSnapshot;
-extern unsigned ScreenNumberOfCalls;
+extern unsigned number_of_DX8_calls;
 extern unsigned ScreenTextureStageStateChanges;
 
 class DX8Wrapper
@@ -83,7 +83,7 @@ public:
 		if (stage >= 8)
 		{
 			ScreenDevice->v->SetTextureStageState(ScreenDevice, stage, state, value);
-			++ScreenNumberOfCalls;
+			++number_of_DX8_calls;
 			return;
 		}
 		if (ScreenTextureStageStates[stage][state] == value)
@@ -95,7 +95,7 @@ public:
 		}
 		ScreenTextureStageStates[stage][state] = value;
 		ScreenDevice->v->SetTextureStageState(ScreenDevice, stage, state, value);
-		++ScreenNumberOfCalls;
+		++number_of_DX8_calls;
 		++ScreenTextureStageStateChanges;
 	}
 };

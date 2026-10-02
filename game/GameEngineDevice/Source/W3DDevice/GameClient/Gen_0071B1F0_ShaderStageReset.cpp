@@ -58,7 +58,7 @@ extern Device *ScreenDevice;
 extern unsigned ScreenRenderStates[];
 extern unsigned ScreenTextureStageStates[8][32];
 extern bool ScreenSnapshot;
-extern unsigned ScreenNumberOfCalls;
+extern unsigned number_of_DX8_calls;
 extern unsigned ScreenRenderStateChanges;
 extern unsigned ScreenTextureStageStateChanges;
 
@@ -75,14 +75,14 @@ public:
 		if (stage>=MAX_TEXTURE_STAGES)
 		{
 			ScreenDevice->v->SetTextureStageState(ScreenDevice,stage,state,value);
-			++ScreenNumberOfCalls;
+			++number_of_DX8_calls;
 			return;
 		}
 		if (ScreenTextureStageStates[stage][state]==value) return;
 		if (ScreenSnapshot) { StringClass s(0,true); Get_DX8_Texture_Stage_State_Value_Name(s,state,value); }
 		ScreenTextureStageStates[stage][state]=value;
 		ScreenDevice->v->SetTextureStageState(ScreenDevice,stage,state,value);
-		++ScreenNumberOfCalls; ++ScreenTextureStageStateChanges;
+		++number_of_DX8_calls; ++ScreenTextureStageStateChanges;
 	}
 };
 

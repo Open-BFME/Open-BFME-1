@@ -87,6 +87,8 @@ __declspec(noinline) void bfmeDebugTouch009588e0(void)
 		Rva00959410Dispatch->invoke();
 }
 
+extern unsigned int number_of_DX8_calls;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
@@ -95,7 +97,6 @@ public:
 
 private:
 	static IDirect3DDevice8 *D3DDevice;
-	static unsigned D3DCallCount;
 };
 
 // ?Begin_Scene_Inner@DX8Wrapper@@SAXXZ
@@ -103,6 +104,6 @@ void DX8Wrapper::Begin_Scene_Inner(void)
 {
 	bfmeDebugTouch009588e0();
 	D3DDevice->lpVtbl->BeginScene(D3DDevice);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 	bfmeDebugTouch009588e0();
 }

@@ -27,20 +27,19 @@ protected:
 extern unsigned int number_of_DX8_calls;
 #define g_bfmeC1104 reinterpret_cast<BfmeC1104 *>(DX8Wrapper::D3DDevice)
 #define g_bfmeA1104 DX8Wrapper::texture_stage_state_changes
-#define g_bfmeB1104 number_of_DX8_calls
 
 void __cdecl bfmeGo1104A(int a)
 {
 	g_bfmeC1104->m_bfmeVt->m_bfme114(g_bfmeC1104, a, 6, 2);
-	g_bfmeB1104++;
+	number_of_DX8_calls++;
 	g_bfmeA1104++;
 	g_bfmeC1104->m_bfmeVt->m_bfme114(g_bfmeC1104, a, 5, 2);
-	g_bfmeB1104++;
+	number_of_DX8_calls++;
 	g_bfmeA1104++;
 	g_bfmeC1104->m_bfmeVt->m_bfme114(g_bfmeC1104, a, 0xa, 0);
-	g_bfmeB1104++;
+	number_of_DX8_calls++;
 	g_bfmeA1104++;
 	g_bfmeC1104->m_bfmeVt->m_bfme114(g_bfmeC1104, a, 7, 1);
-	g_bfmeB1104++;
+	number_of_DX8_calls++;
 	g_bfmeA1104++;
 }

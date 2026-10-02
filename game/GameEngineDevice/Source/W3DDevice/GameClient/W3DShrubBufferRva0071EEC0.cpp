@@ -208,7 +208,7 @@ class W3DShaderManager
 // DX8Wrapper::Set_Shader. Not recorded in dir32_addresses.csv, so it keeps an
 // address-derived name.
 extern const ShaderClass g_012BAF40;
-extern unsigned Rva01340594DX8Calls;
+extern unsigned number_of_DX8_calls;
 class DX8Wrapper
 {
 	friend class W3DShrubBuffer;
@@ -225,7 +225,7 @@ class DX8Wrapper
 	static void GetTransform(unsigned which, Rva0071EEC0Matrix &matrix)
 	{
 		D3DDevice->v->GetTransform(D3DDevice, which, &matrix);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 	static void VertexConstant(int reg, const void *data, int count)
 	{
@@ -234,7 +234,7 @@ class DX8Wrapper
 			return;
 		memcpy(dst, data, count * 16);
 		D3DDevice->v->SetVertexShaderConstant(D3DDevice, reg, data, count);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 	static void PixelConstant(int reg, const void *data, int count)
 	{
@@ -243,22 +243,22 @@ class DX8Wrapper
 			return;
 		memcpy(dst, data, count * 16);
 		D3DDevice->v->SetPixelShaderConstant(D3DDevice, reg, data, count);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 	static void SetFVF(unsigned shader)
 	{
 		D3DDevice->v->SetFVF(D3DDevice, shader);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 	static void SetDeclaration(unsigned declaration)
 	{
 		D3DDevice->v->SetVertexDeclaration(D3DDevice, declaration);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 	static void SetPixelShader(unsigned shader)
 	{
 		D3DDevice->v->SetPixelShader(D3DDevice, shader);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 };
 void BoxSetTexture(unsigned, TextureBaseClass *&);

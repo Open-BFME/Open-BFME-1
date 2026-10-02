@@ -7,7 +7,7 @@
 // The four DX8Wrapper entry points that reach straight through a Direct3D
 // vtable: the swap-chain and surface creators at 0x00905620 and 0x00904CE0,
 // the front-buffer grab at 0x00904FF0 and the display-mode search at
-// 0x009021C0. Each bumps D3DCallCount once per call it makes.
+// 0x009021C0. Each bumps number_of_DX8_calls once per call it makes.
 //
 // They sit outside dx8wrapper.cpp because each needs the raw COM layout, and
 // they sit together because they need the SAME one -- three of them index the
@@ -114,6 +114,8 @@ enum
 	D3DPOOL_SCRATCH = 3
 };
 
+extern unsigned int number_of_DX8_calls;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
@@ -131,7 +133,6 @@ protected:
 
 private:
 	static IDirect3DDevice8 *D3DDevice;
-	static unsigned D3DCallCount;
 	static D3DPRESENT_PARAMETERS _PresentParameters;
 };
 
@@ -154,7 +155,7 @@ IDirect3DSwapChain8 *DX8Wrapper::Create_Additional_Swap_Chain(void *render_windo
 
 	IDirect3DSwapChain8 *swap_chain = 0;
 	D3DDevice->lpVtbl->CreateAdditionalSwapChain(D3DDevice, &params, &swap_chain);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 	return swap_chain;
 }
 
@@ -167,7 +168,7 @@ IDirect3DSurface9 *DX8Wrapper::_Create_DX8_Surface(
 	IDirect3DSurface9 *surface = 0;
 	D3DDevice->lpVtbl->CreateOffscreenPlainSurface(
 		D3DDevice, width, height, format, pool, &surface, 0);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 	return surface;
 }
 
@@ -178,15 +179,15 @@ IDirect3DSurface9 *DX8Wrapper::_Get_DX8_Front_Buffer()
 {
 	D3DDISPLAYMODE mode;
 	D3DDevice->lpVtbl->GetDisplayMode(D3DDevice, 0, &mode);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 
 	IDirect3DSurface9 *fb = 0;
 	D3DDevice->lpVtbl->CreateOffscreenPlainSurface(
 		D3DDevice, mode.Width, mode.Height, D3DFMT_A8R8G8B8, D3DPOOL_SCRATCH, &fb, 0);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 
 	D3DDevice->lpVtbl->GetFrontBufferData(D3DDevice, 0, fb);
-	++D3DCallCount;
+	++number_of_DX8_calls;
 	return fb;
 }
 
