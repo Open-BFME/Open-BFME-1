@@ -9,7 +9,7 @@
 
 #include "ascii_string.h"
 
-extern const char Rva006A16B0Empty[];
+extern const char g_bfmeEmptyAscii[];
 
 struct Coord3D
 {
@@ -56,47 +56,9 @@ public:
 		int one, int oneAgain);
 };
 
-// This is the existing state singleton spelling used by the matched caller;
-// the extra vtable slots below are the independently observed +0x7c lookup
-// dispatch used only by this helper.
-class Gen_00609320
-{
-public:
-	virtual void slot00() = 0;
-	virtual void slot04() = 0;
-	virtual void slot08() = 0;
-	virtual void slot0C() = 0;
-	virtual void slot10() = 0;
-	virtual void slot14() = 0;
-	virtual void slot18() = 0;
-	virtual void slot1C() = 0;
-	virtual void slot20() = 0;
-	virtual void slot24() = 0;
-	virtual void slot28() = 0;
-	virtual void slot2C() = 0;
-	virtual void slot30() = 0;
-	virtual void slot34() = 0;
-	virtual void slot38() = 0;
-	virtual void slot3C() = 0;
-	virtual void slot40() = 0;
-	virtual void slot44() = 0;
-	virtual void slot48() = 0;
-	virtual void slot4C() = 0;
-	virtual void slot50() = 0;
-	virtual void slot54() = 0;
-	virtual void slot58() = 0;
-	virtual void slot5C() = 0;
-	virtual void slot60() = 0;
-	virtual void slot64() = 0;
-	virtual void slot68() = 0;
-	virtual void slot6C() = 0;
-	virtual void slot70() = 0;
-	virtual void slot74() = 0;
-	virtual void slot78() = 0;
-	virtual BfmeThingESM *lookup(const char *name, int zero) = 0;
-};
-
-extern Gen_00609320 *g_bfmeStateDF;
+// The singleton at 0x012F7048 is defined in GameClient/LivingWorld.cpp.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class BfmeStateLookup
 {
@@ -202,13 +164,13 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8160(Coord3D *position)
 				if (text != 0)
 					text += 8;
 				else
-					text = Rva006A16B0Empty;
+					text = g_bfmeEmptyAscii;
 
 				BfmeThingESM *thing = m_state->lookup(text, 0);
 
 				if (thing != 0)
 				{
-					char ok = ((BfmeHostESM *)g_bfmeStateDF)->bfmeDoESM(
+					char ok = ((BfmeHostESM *)g_rva012F7048LivingWorld)->bfmeDoESM(
 						thing, BfmePairESM(position->x, position->y), 0, 1, 1);
 
 					--thing->m_refCount;

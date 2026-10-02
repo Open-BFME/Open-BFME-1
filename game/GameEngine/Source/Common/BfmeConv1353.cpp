@@ -1,5 +1,7 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 extern "C" unsigned strlen(const char *s);
 #pragma intrinsic(strlen)
 
@@ -12,7 +14,6 @@ struct BfmeBufVGD
 class BfmeLayoutVGD
 {
 public:
-	void bfmeSetVGD(const char *s, int n);
 	BfmeBufVGD *m_bfmeBuf;
 };
 
@@ -27,7 +28,7 @@ public:
 void BfmeThingVGE::bfmeGoVGE(const char *s)
 {
 	BfmeLayoutVGD *p = &m_bfmeStr;
-	p->bfmeSetVGD(s, s ? strlen(s) : 0);
+	reinterpret_cast<StringBase<char> *>(p)->set(s, s ? strlen(s) : 0);
 }
 
 class BfmeThingVGF
@@ -43,13 +44,13 @@ public:
 void BfmeThingVGF::bfmeGoVGF(const char *s)
 {
 	BfmeLayoutVGD *p = &m_bfmeStr;
-	p->bfmeSetVGD(s, s ? strlen(s) : 0);
+	reinterpret_cast<StringBase<char> *>(p)->set(s, s ? strlen(s) : 0);
 }
 
 void BfmeThingVGF::bfmeGoVGG(const char *s, int i)
 {
 	BfmeLayoutVGD *p = &m_bfmeList[i];
-	p->bfmeSetVGD(s, s ? strlen(s) : 0);
+	reinterpret_cast<StringBase<char> *>(p)->set(s, s ? strlen(s) : 0);
 }
 
 class BfmeThingVGH
@@ -64,16 +65,12 @@ void BfmeThingVGH::bfmeGoVGH(const char *s)
 {
 	if (m_bfmeStr.m_bfmeBuf && m_bfmeStr.m_bfmeBuf->m_bfme04)
 		return;
-	m_bfmeStr.bfmeSetVGD(s, s ? strlen(s) : 0);
+	reinterpret_cast<StringBase<char> *>(&m_bfmeStr)->set(s, s ? strlen(s) : 0);
 }
 
 extern "C" __declspec(dllimport) unsigned __cdecl wcslen(const unsigned short *s);
 
-class BfmeWideVGI
-{
-public:
-	void bfmeSetVGI(const unsigned short *s, int n);
-};
+class BfmeWideVGI;
 
 class BfmeThingVGI
 {
@@ -86,7 +83,7 @@ public:
 void BfmeThingVGI::bfmeGoVGI(BfmeWideVGI *out)
 {
 	const unsigned short *p = m_bfmeBuf;
-	out->bfmeSetVGI(p, p ? wcslen(p) : 0);
+	reinterpret_cast<StringBase<unsigned short> *>(out)->set(p, p ? wcslen(p) : 0);
 }
 
 class BfmeThingVGJ
@@ -113,6 +110,6 @@ int __cdecl bfmeGoVGJ(BfmeArgVGJ *a)
 {
 	const char *s = a->m_bfme04;
 	BfmeLayoutVGD *p = &((BfmeThingVGJ *)TheWritableGlobalData)->m_bfmeStr;
-	p->bfmeSetVGD(s, s ? strlen(s) : 0);
+	reinterpret_cast<StringBase<char> *>(p)->set(s, s ? strlen(s) : 0);
 	return 2;
 }

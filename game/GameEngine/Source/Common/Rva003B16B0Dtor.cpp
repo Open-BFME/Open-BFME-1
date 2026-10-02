@@ -3,16 +3,24 @@
 // 325 bytes. Installs vtable 0x010EC850 then destroys members +CC down to +4.
 // Layout is the assignment sibling at 0x003B6680.
 
+#include "ascii_string.h"
+
+// Keep this member view local: the retail-named destructor has a ledger
+// owner elsewhere. Use StringBase cleanup without adding initialization to
+// the existing constructor-emission helper below.
+namespace
+{
 class BFMERetailAsciiString
 {
-	void releaseBuffer();
 	void *m_data;
 
 public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	~BFMERetailAsciiString()
+	{
+		reinterpret_cast<StringBase<char> *>(this)->clear();
+	}
 };
-
-#include "ascii_string.h"
+}
 
 struct Gen003A99D0;
 struct Gen003A9A90;
