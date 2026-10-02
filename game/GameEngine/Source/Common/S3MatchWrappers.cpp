@@ -1,7 +1,7 @@
-// Thirteen 23-byte bodies with one shape:
+// Four wrappers from a family of thirteen 23-byte bodies with one shape:
 //
 //     push both stack arguments back in the order they arrived
-//     call a member of this class -- ecx is never set, so it is still the
+//     call the shared predicate -- ecx is never set, so it is still the
 //         incoming this and the call needs no instruction to say so
 //     test al,al / setne al
 //
@@ -11,18 +11,26 @@
 // test al,al / setne al. Spelling it `!= 0` instead gives MSVC a different
 // idiom, neg al / sbb eax,eax / neg eax, and a byte more.
 //
-// Four of the thirteen reach 0x002DF120 and nine reach 0x002DF100, both
-// through their own incremental-link thunks, so each wrapper gets its own
-// declaration of the callee and its own pin -- the shared target does not make
-// them the same class. Every name is derived from its own address.
+// The shared predicates are defined as Rva002DF120::test and
+// Rva002DF100::test. The wrappers below reach them through ILTs 0x0001D813
+// and 0x0002DB69 respectively; the casts preserve the incoming this pointer.
+
+class Rva002DF120
+{
+public:
+	unsigned char test(void *first, void *second);
+};
+
+class Rva002DF100
+{
+public:
+	unsigned char test(void *first, void *second);
+};
 
 class Gen_002da6b0
 {
 public:
 	bool bfmeMatch(void *first, void *second);
-
-private:
-	unsigned char bfmeMatchRaw(void *first, void *second);		// ILT 0x0001D813
 };
 
 class Gen_002da6d0
@@ -56,9 +64,6 @@ class Gen_002dcc60
 {
 public:
 	bool bfmeMatch(void *first, void *second);
-
-private:
-	unsigned char bfmeMatchRaw(void *first, void *second);		// ILT 0x0002DB69
 };
 
 class Gen_002dd290
@@ -101,18 +106,12 @@ class Gen_002de840
 {
 public:
 	bool bfmeMatch(void *first, void *second);
-
-private:
-	unsigned char bfmeMatchRaw(void *first, void *second);		// ILT 0x0002DB69
 };
 
 class Gen_002dec00
 {
 public:
 	bool bfmeMatch(void *first, void *second);
-
-private:
-	unsigned char bfmeMatchRaw(void *first, void *second);		// ILT 0x0001D813
 };
 
 class Gen_002df4c0
@@ -136,24 +135,23 @@ private:
 // ?bfmeMatch@Gen_002da6b0@@QAE_NPAX0@Z
 bool Gen_002da6b0::bfmeMatch(void *first, void *second)
 {
-	return bfmeMatchRaw(first, second);
+	return ((Rva002DF120 *)this)->test(first, second);
 }
 
 // ?bfmeMatch@Gen_002dcc60@@QAE_NPAX0@Z
 bool Gen_002dcc60::bfmeMatch(void *first, void *second)
 {
-	return bfmeMatchRaw(first, second);
+	return ((Rva002DF100 *)this)->test(first, second);
 }
 
 // ?bfmeMatch@Gen_002de840@@QAE_NPAX0@Z
 bool Gen_002de840::bfmeMatch(void *first, void *second)
 {
-	return bfmeMatchRaw(first, second);
+	return ((Rva002DF100 *)this)->test(first, second);
 }
 
 // ?bfmeMatch@Gen_002dec00@@QAE_NPAX0@Z
 bool Gen_002dec00::bfmeMatch(void *first, void *second)
 {
-	return bfmeMatchRaw(first, second);
+	return ((Rva002DF120 *)this)->test(first, second);
 }
-
