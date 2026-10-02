@@ -21,7 +21,10 @@
 // two constants in the source rather than one computed value.
 //
 // The count member is the ledger's own `Gen_00064730::m`, so it needs no pin; the
-// indexed accessor at 0x00064800 is still a gen dump and is pinned.
+// indexed accessor at 0x00064800 is the ledger's
+// `?bfmeGo1105C@BfmeW1105@@QAEPAHH@Z`
+// (game/GameEngine/Source/Common/BfmeConv1105.cpp), so the same call is spelled
+// with that class and name and its int* result is read at +0x18 here.
 //
 // IDENTITY IS NOT RECOVERED.  Every other name is derived from an address.
 
@@ -36,7 +39,12 @@ class Gen_00064730
 {
 public:
 	int                   m();
-	Gen003BBA00Element *  at( int index );
+};
+
+class BfmeW1105
+{
+public:
+	int *bfmeGo1105C( int index );
 };
 
 class Rva003BBA00
@@ -51,6 +59,7 @@ bool Rva003BBA00::refresh()
 	Gen_00064730 *entries = (Gen_00064730 *)( (char *)this + 0xC );
 	if( entries->m() < 2 )
 		return true;
-	m_at18 = entries->at( 0 )->m_at18;
+	int *entry = ( (BfmeW1105 *)entries )->bfmeGo1105C( 0 );
+	m_at18 = ( (Gen003BBA00Element *)entry )->m_at18;
 	return false;
 }
