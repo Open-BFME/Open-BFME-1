@@ -326,24 +326,3 @@ CrateTemplate::~CrateTemplate()
 {
 	m_possibleCrates.clear();
 }
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/CrateTemplate_parseCrateCreationEntryMethodThunk.cpp
-// ?parseCrateCreationEntry@CrateTemplate@@SAXPAVINI@@PAX1PBX@Z present-unmatched
-void CrateTemplate::parseCrateCreationEntry( INI* ini, void *instance, void *, const void*  )
-{
-	CrateTemplate *self = (CrateTemplate *)instance;
-
-	const char *token = ini->getNextToken();
-	AsciiString crateName = token;
-
-	token = ini->getNextToken();
-	Real crateValue;
-	if (sscanf( token, "%f", &crateValue ) != 1)
-		throw INI_INVALID_DATA;
-
-	crateCreationEntry newEntry;
-	newEntry.crateName = crateName;
-	newEntry.crateChance = crateValue;
-
-	self->m_possibleCrates.push_back( newEntry );
-}

@@ -650,28 +650,6 @@ void StreakLineClass::Set_Texture_Reduction_Factor(float trf)
 
  
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/SegmentedLineClass_RenderSegLineBFME.cpp
-// ?Render_Seg_Line@StreakLineClass@@ present-unmatched
-void StreakLineClass::Render_Seg_Line(RenderInfoClass & rinfo)
-{
-	// Line must have at least two points to be valid
-	if (PointLocations.Count() < 2) return;
-
-	SphereClass bounding_sphere;
-	Get_Obj_Space_Bounding_Sphere(bounding_sphere);			
- 
-//	LineRenderer.Set_Width(rand()%3);
-
-	LineRenderer.Render(
-		rinfo,
-		Transform,
-		PointLocations.Count(),
-		&(PointLocations[0]),
-		bounding_sphere
-		);
-}
-
-
 // ?Render_Streak_Line@StreakLineClass@@ present-unmatched
 void StreakLineClass::Render_Streak_Line(RenderInfoClass & rinfo)
 {

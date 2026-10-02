@@ -346,15 +346,6 @@ void AIDockMachine::xfer( Xfer *xfer )
 	xfer->xferInt(&m_approachPosition);
 }  // end xfer
 
-// ------------------------------------------------------------------------------------------------
-/** Load post process */
-// ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AIDockMachine@@ present-unmatched
-void AIDockMachine::loadPostProcess( void )
-{
-	StateMachine::loadPostProcess();
-}  // end loadPostProcess
-
 // State transition conditions ----------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 /* static */ Bool AIDockMachine::ableToAdvance( State *thisState, void* userData )

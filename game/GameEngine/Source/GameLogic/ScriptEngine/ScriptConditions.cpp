@@ -107,17 +107,17 @@ public:
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
-class ObjectTypesTemp
+class ScriptConditionsObjectTypesTemp
 {
 public:
 	ObjectTypes* m_types;
 
-	ObjectTypesTemp() : m_types(NULL)
+	ScriptConditionsObjectTypesTemp() : m_types(NULL)
 	{
 		m_types = newInstance(ObjectTypes);
 	}
 
-	~ObjectTypesTemp()
+	~ScriptConditionsObjectTypesTemp()
 	{
 		if (m_types)
 			m_types->deleteInstance();
@@ -699,7 +699,7 @@ Bool ScriptConditions::evaluatePlayerHasUnitTypeInArea(Condition *pCondition, Pa
 		if (pCondition->getCustomData()==1) return true;
 	}
 
-	ObjectTypesTemp types;
+	ScriptConditionsObjectTypesTemp types;
 	objectTypesFromParam(pTypeParm, types.m_types);
 
 	Int count = 0;
@@ -931,7 +931,7 @@ Bool ScriptConditions::evaluateNamedAttackedByType(Parameter *pUnitParm, Paramet
 	if( attackerTemplate )
 	{
 		//New system... we don't care if the attacker is alive or dead... we just want the type right?
-		ObjectTypesTemp types;
+		ScriptConditionsObjectTypesTemp types;
 		objectTypesFromParam(pTypeParm, types.m_types);
 		if( types.m_types->isInSet( attackerTemplate ) )
 		{
@@ -947,7 +947,7 @@ Bool ScriptConditions::evaluateNamedAttackedByType(Parameter *pUnitParm, Paramet
 		{
 			return FALSE;
 		}
-		ObjectTypesTemp types;
+		ScriptConditionsObjectTypesTemp types;
 		objectTypesFromParam(pTypeParm, types.m_types);
 		if( types.m_types->isInSet( pAttacker->getTemplate()->getName() ) )
 		{
@@ -969,7 +969,7 @@ Bool ScriptConditions::evaluateTeamAttackedByType(Parameter *pTeamParm, Paramete
 		return FALSE;
 	}
 
-	ObjectTypesTemp types;
+	ScriptConditionsObjectTypesTemp types;
 	objectTypesFromParam(pTypeParm, types.m_types);
 
 	for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList(); !iter.done(); iter.advance()) {
@@ -989,7 +989,7 @@ Bool ScriptConditions::evaluateTeamAttackedByType(Parameter *pTeamParm, Paramete
 			continue;
 		}
 
-		ObjectTypesTemp types;
+		ScriptConditionsObjectTypesTemp types;
 		objectTypesFromParam(pTypeParm, types.m_types);
 
 		const ThingTemplate *attackerTemplate = lastDamageInfo->in.m_sourceTemplate;
@@ -1127,7 +1127,7 @@ Bool ScriptConditions::evaluateBuiltByPlayer(Condition *pCondition, Parameter* p
 		return false;
 	}
 
-	ObjectTypesTemp types;
+	ScriptConditionsObjectTypesTemp types;
 	objectTypesFromParam(pTypeParm, types.m_types);
 
 	std::vector<Int> counts;
@@ -1509,7 +1509,7 @@ Bool ScriptConditions::evaluateTypeSighted(Parameter *pItemParm, Parameter *pTyp
 		return false;
 	}
 
-	ObjectTypesTemp types;
+	ScriptConditionsObjectTypesTemp types;
 	objectTypesFromParam(pTypeParm, types.m_types);
 
 	// and only stuff that is not dead
@@ -2775,7 +2775,7 @@ Bool ScriptConditions::evaluateSkirmishPlayerHasPrereqsToBuild( Parameter *pSkir
 		return FALSE;
 	}
 
-	ObjectTypesTemp types;
+	ScriptConditionsObjectTypesTemp types;
 	objectTypesFromParam(pObjectTypeParm, types.m_types);
 
 	return types.m_types->canBuildAny(player);
@@ -3116,7 +3116,7 @@ Bool ScriptConditions::evaluatePlayerLostObjectType(Parameter *pPlayerParm, Para
 		return FALSE;
 	}
 	
-	ObjectTypesTemp objs;
+	ScriptConditionsObjectTypesTemp objs;
 	objectTypesFromParam(pTypeParm, objs.m_types);
 
 	std::vector<Int> counts;
