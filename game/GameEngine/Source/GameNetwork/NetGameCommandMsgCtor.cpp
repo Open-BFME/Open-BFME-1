@@ -58,6 +58,7 @@ class NetGameCommandMsg : public NetCommandMsg
 {
 public:
 	NetGameCommandMsg();
+	virtual ~NetGameCommandMsg();
 
 	UnsignedInt m_gameMessageFields[5];			// this+0x1C .. +0x2F
 };

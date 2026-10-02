@@ -23,7 +23,7 @@ class PlayerList
 public:
 	UnsignedInt getPlayersMask();
 
-	Player *getNthPlayer(Int i)
+	Player *playerAtIndexForMask(Int i)
 	{
 		if (i < 0 || i >= 32)
 			return 0;
@@ -41,7 +41,7 @@ UnsignedInt PlayerList::getPlayersMask()
 	UnsignedInt mask = 0;
 	for (Int playerIndex = 0; playerIndex < m_playerCount; ++playerIndex)
 	{
-		Player *player = getNthPlayer(playerIndex);
+		Player *player = playerAtIndexForMask(playerIndex);
 		if (player)
 			mask |= player->getPlayerMask();
 	}
