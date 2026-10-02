@@ -68,3 +68,16 @@ The old no-vtable verdict is superseded by these concrete subobject
 routes, but a unique concrete owner remains unresolved. There is no clean candidate to bank; conversion still needs full
 BFME field/callee/SEH reconstruction. No production function rename, pin,
 source body or byte credit is changed in this evidence-only commit.
+
+## Owner resolved by the SiegeEngineContain note
+
+`0022c560-siegeenginecontain-exitobjectviadoor.md` closes the owner question
+this note left open. The missing link is RiderChangeContain's base:
+constructor 0x00229FB0 calls ILT 0x00449378 -> **0x0022BC50**
+(SiegeEngineContain's constructor) at 0x00229FBF, before it installs its own
+tables. The chain is TransportContain <- SiegeEngineContain <-
+RiderChangeContain. Table 0x010AD1FC (TransportContain) keeps OpenContain's
+0x002284D0 in slot 2, and 0x010ACD98 (SiegeEngineContain) is the first to
+hold 0x0022C560. So SiegeEngineContain introduces the body and
+RiderChangeContain inherits it. The owner is SiegeEngineContain, not
+RiderChangeContain.
