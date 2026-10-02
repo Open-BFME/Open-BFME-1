@@ -11,8 +11,6 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-extern const Real g_bfmeK1253;
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
@@ -62,7 +60,7 @@ private:
 
 void BfmeCellGrid::rva001B1AD0(Int index, void *parameters)
 {
-	Real base = *(volatile Real *)&m_cellSize * g_bfmeK1253 + m_offset;
+	Real base = *(volatile Real *)&m_cellSize * 0.5f + m_offset;
 
 	for (UnsignedInt y = 0; y < (UnsignedInt)m_height; ++y)
 	{
@@ -78,7 +76,7 @@ void BfmeCellGrid::rva001B1AD0(Int index, void *parameters)
 			{
 				position.x = (Real)x * m_cellSize + base;
 				position.z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->getGroundHeight(
-					position.x, position.y, 0) + g_bfmeK1253;
+					position.x, position.y, 0) + 0.5f;
 				m_cells[cellIndex].rva001DE2A0(&position, m_cellSize,
 					index, parameters);
 			}
