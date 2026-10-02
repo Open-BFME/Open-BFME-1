@@ -7,6 +7,11 @@
 
 #include "../../../../game/Libraries/Source/WWVegas/WWMath/coord2d.h"
 
+// Retail's guard global is `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A); window_layout.h is the
+// GameClient header that already declares that class and the extern.
+#include "window_layout.h"
+
 extern void __cdecl operator delete(void *value) throw();
 
 class SubsystemInterface
@@ -46,6 +51,10 @@ public:
 	~AsciiString() {}
 };
 
+// Slot view for 0x012F19E8's own class: that global's ledgered type
+// (?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, data_rows.csv) and its
+// ctor are WindowManager's, so this view keeps that spelling. The guard
+// global TheWindowManager is a GameWindowManager (window_layout.h above).
 class WindowManager
 {
 public:
@@ -74,7 +83,6 @@ public:
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern WindowManager *TheWindowManager;
 extern const void *Rva00597FC0ClientVftable[];
 extern const void *Rva00597FC0ClientSecondaryVftable[];
 
@@ -312,6 +320,6 @@ Rva00597FC0Client::~Rva00597FC0Client()
 		delete m_10;
 
 	m_10 = 0;
-	TheWindowManager->slot30(m_0c);
+	TheWindowManager->winDestroy( static_cast<GameWindow *>(m_0c));
 	m_0c = 0;
 }
