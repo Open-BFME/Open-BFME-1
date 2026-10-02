@@ -49,8 +49,6 @@ extern const Real g_0107FAA8;
 
 #define Rva009A2420MoveThreshold g_0107FAA8
 
-extern const Real BfmeShadowZLimit;
-
 class Rva009A2420CollisionNode
 {
 public:
@@ -103,7 +101,7 @@ unsigned int Rva009A2420CollisionNode::getMovementScore(bool allowCache)
 		distance = deltaY;
 	if (distance > Rva009A2420MoveThreshold)
 	{
-		score = 11 - (int)((distance - Rva009A2420MoveThreshold) * BfmeShadowZLimit);
+		score = 11 - (int)((distance - Rva009A2420MoveThreshold) * -0.01f);
 		if (score > 10000)
 			score = 10000;
 	}
