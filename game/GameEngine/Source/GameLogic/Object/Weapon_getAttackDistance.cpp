@@ -13,9 +13,7 @@ class Object
 {
 public:
 	const Coord3D *getPosition() const { return &m_position; }
-	Real getBoundingCircleRadius() const { return m_boundingCircleRadius; }
 
-private:
 	char m_fields[0x38];
 	Coord3D m_position;
 	char m_geometryFields[0x7c];
@@ -37,8 +35,8 @@ Real Weapon::getAttackDistance(const Object *source, const Object *victim,
 	{
 		Real range = getAttackRange(source,
 			victim->getPosition()->z - source->getPosition()->z);
-		range += source->getBoundingCircleRadius();
-		range += victim->getBoundingCircleRadius();
+		range += source->m_boundingCircleRadius;
+		range += victim->m_boundingCircleRadius;
 		return range;
 	}
 

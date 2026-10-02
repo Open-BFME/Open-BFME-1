@@ -2366,24 +2366,7 @@ Real Weapon::getAttackRange(const Object *source) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getAttackDistance@Weapon@@QBEMPBVObject@@0PBUCoord3D@@@Z present-unmatched
-Real Weapon::getAttackDistance(const Object *source, const Object *victimObj, const Coord3D* victimPos) const
-{ 
-	Real range = getAttackRange(source);
-
-	if (victimObj != NULL)
-	{
-	#ifdef ATTACK_RANGE_IS_2D
-		range += source->getGeometryInfo().getBoundingCircleRadius();
-		range += victimObj->getGeometryInfo().getBoundingCircleRadius();
-	#else
-		range += source->getGeometryInfo().getBoundingSphereRadius();
-		range += victimObj->getGeometryInfo().getBoundingSphereRadius();
-	#endif
-	}
-
-	return range;
-}
+// Retail height-adjusted attack distance lives in Weapon_getAttackDistance.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/ObjectSetStatusThunk.cpp
