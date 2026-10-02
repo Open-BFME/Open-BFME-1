@@ -11,11 +11,20 @@ struct BfmePad44VMP
 	char n[2];
 };
 
+// Tag type of the retail callee at 0x008314E0, spelled as its defining name.
+struct BfmeRangeTag;
+
+class Rva008314E0String
+{
+public:
+	Rva008314E0String &replaceRange(char *first, char *last, char *sourceFirst,
+		char *sourceLast, const BfmeRangeTag &tag);
+};
+
 class BfmeStrVMP
 {
 public:
 	void bfmeFwdVMP(int a, int b, int c, int d);
-	void bfmeImplVMP(int a, int b, int c, int d);
 };
 
 void BfmeStrVMP::bfmeFwdVMP(int a, int b, int c, int d)
@@ -39,6 +48,6 @@ void BfmeStrVMP::bfmeFwdVMP(int a, int b, int c, int d)
 		mov edx, dword ptr a
 		push edx
 		mov ecx, this
-		call bfmeImplVMP
+		call Rva008314E0String::replaceRange
 	}
 }

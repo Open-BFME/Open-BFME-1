@@ -2,10 +2,19 @@
 
 unsigned bfmeStrlenV51(char *s);
 
+// Tag type of the retail callee at 0x008314E0, spelled as its defining name.
+struct BfmeRangeTag;
+
+class Rva008314E0String
+{
+public:
+	Rva008314E0String &replaceRange(char *first, char *last, char *sourceFirst,
+		char *sourceLast, const BfmeRangeTag &tag);
+};
+
 class BfmeStrV51
 {
 public:
-	void bfmeInsertV51(char *a, char *b, char *c, char *d, char *e);
 	char *b;
 	char *e;
 	char *c;
@@ -38,6 +47,6 @@ void __stdcall bfmeWrapInsertV51(char *pos, char *first, char *last)
 		mov eax, dword ptr [ebp+0x8]
 		push eax
 		mov ecx, dword ptr [ebp-0x94]
-		call BfmeStrV51::bfmeInsertV51
+		call Rva008314E0String::replaceRange
 	}
 }
