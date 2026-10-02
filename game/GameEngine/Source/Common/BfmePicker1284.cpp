@@ -100,7 +100,7 @@ struct BfmePickWorld1284
 	BfmePickEntry1284 *m_entries81c;
 };
 
-extern BfmePickWorld1284 *g_bfmeHolderBU;
+BfmePickWorld1284 *g_bfmeHolderBU = 0;
 
 class BfmePicker1284
 {
