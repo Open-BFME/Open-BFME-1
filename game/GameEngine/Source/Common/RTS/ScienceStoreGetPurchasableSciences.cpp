@@ -80,43 +80,13 @@ class ScienceStore
 public:
 	Bool playerHasPrereqsForScience( const Player *player, ScienceType st ) const;
 
-	Int getSciencePurchaseCost( ScienceType st ) const
-	{
-		const ScienceInfo *si = findScienceInfo( st );
-		if ( si )
-		{
-			// The game-mode word at TheGameLogic+0x10C, read exactly as the
-			// landed getSciencePurchaseCost (0x000E6D70) reads it.
-			const Int mode = *reinterpret_cast<const Int *>( reinterpret_cast<const char *>( TheGameLogic ) + 0x10c );
-			if ( mode == 1 || mode == 5 || mode == 2 ||
-				( mode == 3 && TheRecorder && TheRecorder->isMultiplayer() ) )
-			{
-				return si->m_sciencePurchasePointCostMP;
-			}
-			return si->m_sciencePurchasePointCost;
-		}
-		else
-		{
-			return 0;
-		}
-	}
+	Int getSciencePurchaseCost( ScienceType st ) const;
 
 	void getPurchasableSciences( const Player *player, ScienceVec &purchasable,
 		ScienceVec &potentiallyPurchasable ) const;
 
 private:
-	const ScienceInfo *findScienceInfo( ScienceType st ) const
-	{
-		for ( ScienceInfoVec::const_iterator it = m_sciences.begin(); it != m_sciences.end(); ++it )
-		{
-			const ScienceInfo *si = (const ScienceInfo *)( *it )->getFinalOverride();
-			if ( si->m_science == st )
-			{
-				return si;
-			}
-		}
-		return 0;
-	}
+	const ScienceInfo *findScienceInfo( ScienceType st ) const;
 
 	Bool rva000E7C20SciencePrereqMemo( const Player *player, ScienceType st,
 		void *memo ) const;
@@ -138,7 +108,31 @@ void ScienceStore::getPurchasableSciences( const Player *player, ScienceVec &pur
 	{
 		const ScienceInfo *si = (const ScienceInfo *)( *it )->getFinalOverride();
 
-		if ( getSciencePurchaseCost( si->m_science ) == 0 )
+		ScienceType science = si->m_science;
+		Int purchaseCost = 0;
+		for ( ScienceInfoVec::const_iterator costIt = m_sciences.begin();
+			costIt != m_sciences.end(); ++costIt )
+		{
+			const ScienceInfo *costInfo =
+				(const ScienceInfo *)( *costIt )->getFinalOverride();
+			if ( costInfo->m_science == science )
+			{
+				// The game-mode word at TheGameLogic+0x10C, read exactly as the
+				// landed getSciencePurchaseCost (0x000E6D70) reads it.
+				const Int mode = *reinterpret_cast<const Int *>( reinterpret_cast<const char *>( TheGameLogic ) + 0x10c );
+				if ( mode == 1 || mode == 5 || mode == 2 ||
+					( mode == 3 && TheRecorder && TheRecorder->isMultiplayer() ) )
+				{
+					purchaseCost = costInfo->m_sciencePurchasePointCostMP;
+				}
+				else
+				{
+					purchaseCost = costInfo->m_sciencePurchasePointCost;
+				}
+				break;
+			}
+		}
+		if ( purchaseCost == 0 )
 		{
 			// 0 means "cannot be purchased"
 			continue;
