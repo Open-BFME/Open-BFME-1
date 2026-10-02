@@ -90,7 +90,17 @@ public:
 	virtual void slot0C();
 	virtual void unidentified_00000010(Bool a);
 };
-extern Glo012F7048Type *Glo012F7048;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU calls it
+// through the local Glo012F7048Type view, so the view stays and the global uses
+// the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+static inline Glo012F7048Type *localGlo012F7048(void)
+{
+	return reinterpret_cast<Glo012F7048Type *>(g_rva012F7048LivingWorld);
+}
 
 class GameWindowTransitionsHandler
 {
@@ -121,7 +131,7 @@ int soloMordorFadeLoadGame(int, bool)
 	TheShell->hide(true);
 	if (localTheGameLogic()->m_gameMode != 8)
 		localTheGameLogic()->clearGameData(false, false);
-	Glo012F7048->unidentified_00000010(true);
+	localGlo012F7048()->unidentified_00000010(true);
 	TheTransitionHandler->setGroup(AsciiString("SoloMordorFade_LoadGame"));
 	TheMouse->setCursor(0x28);
 	return 2;

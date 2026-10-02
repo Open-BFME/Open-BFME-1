@@ -28,7 +28,17 @@ public:
     virtual void m23();
     virtual void dispatch(void *, float, int);
 };
-extern "C" Rva003BB970Manager *g_bfmeStateDF;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU calls it
+// through the local Rva003BB970Manager view, so the view stays and the global
+// uses the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+static inline Rva003BB970Manager *localGlo012F7048(void)
+{
+    return reinterpret_cast<Rva003BB970Manager *>(g_rva012F7048LivingWorld);
+}
 extern const float g_01075954;
 class Rva003BB970Input
 {
@@ -41,7 +51,7 @@ public:
 };
 unsigned char Rva003BB970Input::emit(void)
 {
-    Rva003BB970Manager *state = g_bfmeStateDF;
+    Rva003BB970Manager *state = localGlo012F7048();
     state->dispatch(m_position, m_value * g_01075954, m_count);
     return 1;
 }

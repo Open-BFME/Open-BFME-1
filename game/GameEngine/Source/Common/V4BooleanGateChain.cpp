@@ -38,7 +38,17 @@ public:
 	int  m_at04;
 };
 
-extern Glo012F7048Type * Glo012F7048;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU reads it
+// through the local Glo012F7048Type view, so the view stays and the global uses
+// the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State * g_rva012F7048LivingWorld;
+
+static inline Glo012F7048Type * localGlo012F7048(void)
+{
+	return reinterpret_cast<Glo012F7048Type *>( g_rva012F7048LivingWorld );
+}
 
 class Gen003BDF20Element;
 
@@ -60,9 +70,9 @@ public:
 };
 bool Rva003BDEC0::allowed()
 {
-	if( Glo012F7048->m_at04 == 0 )
+	if( localGlo012F7048()->m_at04 == 0 )
 		goto yes;
-	if( Glo012F7048->test() )
+	if( localGlo012F7048()->test() )
 		goto no;
 	if( m_at78 )
 		goto no;

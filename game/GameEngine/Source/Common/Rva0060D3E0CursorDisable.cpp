@@ -40,7 +40,17 @@ public:
 	virtual void setEnabled( Bool enabled ) = 0;
 };
 
-extern Glo012F7048CursorGate *Glo012F7048;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU reads
+// it through the local Glo012F7048CursorGate view, so the view stays and the
+// global uses the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+static inline Glo012F7048CursorGate *localGlo012F7048(void)
+{
+	return reinterpret_cast<Glo012F7048CursorGate *>(g_rva012F7048LivingWorld);
+}
 
 class Rva0060D3E0CursorDisable
 {
@@ -56,5 +66,5 @@ void Rva0060D3E0CursorDisable::apply( void )
 {
 	m_enabled = false;
 	((BfmeVirtualCursorMouse0060D3E0 *)TheMouse)->setCursor( 0x28 );
-	Glo012F7048->setEnabled( false );
+	localGlo012F7048()->setEnabled( false );
 }

@@ -167,7 +167,12 @@ public:
 // here is read through the TU-local GloTacticalView00696040 view.
 class View;
 extern View *TheTacticalView;
-extern Glo012F7048Shim *g_bfmeStateDF;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU calls it
+// through the local Glo012F7048Shim view, so the view stays and the global uses
+// the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class Rva00696040Checker
 {
@@ -189,8 +194,8 @@ bool Rva00696040Checker::check( void *param )
 			return !((GloTacticalView00696040 *)TheTacticalView)->testPoint( param, &pt );
 		return false;
 	case 1:
-		if ( g_bfmeStateDF )
-			return g_bfmeStateDF->testPoint( param, &pt );
+		if ( g_rva012F7048LivingWorld )
+			return ((Glo012F7048Shim *)g_rva012F7048LivingWorld)->testPoint( param, &pt );
 		return false;
 	default:
 		return true;

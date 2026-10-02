@@ -105,7 +105,18 @@ public:
 	virtual const BfmeVec3FW *bfmeCenterFW();
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU calls it
+// through the local Gen_00609320 view, so the view stays and the global uses
+// the canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+static inline Gen_00609320 *localGlo012F7048(void)
+{
+	return reinterpret_cast<Gen_00609320 *>(g_rva012F7048LivingWorld);
+}
+
 extern View *TheTacticalView;
 
 class BfmeHostFW
@@ -141,7 +152,7 @@ void BfmeHostFW::bfmeGetPosFW(BfmeVec3FW *out)
 
 		case 1:
 		{
-			Gen_00609320 *s = g_bfmeStateDF;
+			Gen_00609320 *s = localGlo012F7048();
 
 			if (s != 0)
 			{

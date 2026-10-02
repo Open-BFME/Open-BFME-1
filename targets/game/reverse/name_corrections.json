@@ -13478,5 +13478,15 @@
   "after_sha256": "75f9b45fa724b4812cc637238fd9519f101787c5456b8c0495b17c1d96fe5ebb",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/MilesAudioDevice/Rva006962A0PreferenceProduct.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/Rva006962A0PreferenceProduct.cpp",
+  "old_name": "Glo012F7048Shim",
+  "new_name": "Rva006092D0State",
+  "before_sha256": "2a6ed9cb288a5be4d2fa3898d0e0949ace95b5a28a24c6a263c2b77978059ff7",
+  "after_sha256": "67af62aa748d658631be9d172edfb40f97f82ed4b116df3f0e12d3fcee3c984c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

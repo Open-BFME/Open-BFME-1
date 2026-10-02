@@ -44,7 +44,17 @@ public:
 	virtual void buildFramePoint(void *source, Coord3D *point) = 0;
 };
 
-extern "C" BfmeStateDF *g_bfmeStateDF;
+// Retail global at 0x012F7048 is Rva006092D0State *
+// g_rva012F7048LivingWorld (defined once in LivingWorld.cpp).  This TU calls it
+// through the local BfmeStateDF view, so the view stays and the global uses the
+// canonical spelling.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+
+static inline BfmeStateDF *localGlo012F7048(void)
+{
+	return reinterpret_cast<BfmeStateDF *>(g_rva012F7048LivingWorld);
+}
 
 struct BfmeSubENE;
 
@@ -109,7 +119,7 @@ Bool Rva00618600Poly::rva00618740(UnsignedInt source)
 		return false;
 
 	Coord3D location;
-	g_bfmeStateDF->buildFramePoint(reinterpret_cast<void *>(sourceArg), &location);
+	localGlo012F7048()->buildFramePoint(reinterpret_cast<void *>(sourceArg), &location);
 	GameMessage *message = TheMessageStream->appendMessage(1103);
 	message->rva0008ac10(m_source);
 	message->appendLocationArgument(location);
