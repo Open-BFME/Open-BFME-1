@@ -5,39 +5,13 @@
 // global override when that override's buffer is non-empty, and returns the
 // local by value.  One of four identical siblings.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// Keep retail's direct word comparison; getLength() materializes an int.
 struct BfmeBufferWR
 {
-	int m_bfmeRef;						// +0x00
-	short m_bfmeLength;					// +0x04
-};
-
-class AsciiStringWR
-{
-public:
-	AsciiStringWR(const AsciiStringWR &other);
-	~AsciiStringWR(void);
-
-	void set(const AsciiStringWR &other);
-
-protected:
-	BfmeBufferWR *m_bfmeData;				// +0x00
-};
-
-class BfmeStrWR : private AsciiStringWR
-{
-public:
-	BfmeStrWR(const BfmeStrWR &other) : AsciiStringWR(other) {}
-	~BfmeStrWR(void) {}
-
-	void bfmeSetWR(const BfmeStrWR &other)
-	{
-		set(other);
-	}
-
-	bool bfmeFilledWR(void) const
-	{
-		return m_bfmeData != 0 && m_bfmeData->m_bfmeLength != 0;
-	}
+	int m_bfmeRef;
+	short m_bfmeLength;
 };
 
 struct BfmeEntryWR
@@ -50,7 +24,7 @@ struct BfmeEntryWR
 	{
 	}
 
-	BfmeStrWR m_bfmeText;					// +0x00
+	AsciiString m_bfmeText;					// +0x00
 	int m_bfmeA;						// +0x04
 	bool m_bfmeB;						// +0x08
 	int m_bfmeC;						// +0x0C
@@ -86,9 +60,10 @@ BfmeEntryWR Gen_0043FC50::bfmeEntryWR(void) const
 
 	const BfmeEntryWR *override = &reinterpret_cast<BfmeGlobalWR *>( TheGlobalLanguageData )->m_bfmeOverride;
 
-	if (override->m_bfmeText.bfmeFilledWR())
+	const BfmeBufferWR *buffer = *reinterpret_cast<BfmeBufferWR *const *>(&override->m_bfmeText);
+	if (buffer != 0 && buffer->m_bfmeLength != 0)
 	{
-		entry.m_bfmeText.bfmeSetWR(override->m_bfmeText);
+		static_cast<StringBase<char> &>(entry.m_bfmeText).set(override->m_bfmeText);
 
 		entry.m_bfmeA = override->m_bfmeA;
 		entry.m_bfmeB = override->m_bfmeB;

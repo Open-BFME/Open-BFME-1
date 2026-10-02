@@ -5,39 +5,13 @@
 // global override when that override's buffer is non-empty, and returns the
 // local by value.  One of four identical siblings.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// Keep retail's direct word comparison; getLength() materializes an int.
 struct BfmeBufferWS
 {
 	int m_bfmeRef;						// +0x00
 	short m_bfmeLength;					// +0x04
-};
-
-class AsciiStringWS
-{
-public:
-	AsciiStringWS(const AsciiStringWS &other);
-	~AsciiStringWS(void);
-
-	void set(const AsciiStringWS &other);
-
-protected:
-	BfmeBufferWS *m_bfmeData;				// +0x00
-};
-
-class BfmeStrWS : private AsciiStringWS
-{
-public:
-	BfmeStrWS(const BfmeStrWS &other) : AsciiStringWS(other) {}
-	~BfmeStrWS(void) {}
-
-	void bfmeSetWS(const BfmeStrWS &other)
-	{
-		set(other);
-	}
-
-	bool bfmeFilledWS(void) const
-	{
-		return m_bfmeData != 0 && m_bfmeData->m_bfmeLength != 0;
-	}
 };
 
 struct BfmeEntryWS
@@ -50,7 +24,7 @@ struct BfmeEntryWS
 	{
 	}
 
-	BfmeStrWS m_bfmeText;					// +0x00
+	AsciiString m_bfmeText;					// +0x00
 	int m_bfmeA;						// +0x04
 	bool m_bfmeB;						// +0x08
 	int m_bfmeC;						// +0x0C
@@ -86,9 +60,10 @@ BfmeEntryWS Gen_0043FD60::bfmeEntryWS(void) const
 
 	const BfmeEntryWS *override = &reinterpret_cast<BfmeGlobalWS *>( TheGlobalLanguageData )->m_bfmeOverride;
 
-	if (override->m_bfmeText.bfmeFilledWS())
+	const BfmeBufferWS *buffer = *reinterpret_cast<BfmeBufferWS *const *>(&override->m_bfmeText);
+	if (buffer != 0 && buffer->m_bfmeLength != 0)
 	{
-		entry.m_bfmeText.bfmeSetWS(override->m_bfmeText);
+		static_cast<StringBase<char> &>(entry.m_bfmeText).set(override->m_bfmeText);
 
 		entry.m_bfmeA = override->m_bfmeA;
 		entry.m_bfmeB = override->m_bfmeB;
