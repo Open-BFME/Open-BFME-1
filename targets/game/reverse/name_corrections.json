@@ -13798,5 +13798,15 @@
   "after_sha256": "42e4136b822260eb35fa3f8e08a6aa4042f1b2fe1f1558fb9ebfcfced4009071",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseModelConditionEvent.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseModelConditionEvent.cpp",
+  "old_name": "XmlNameSlotList",
+  "new_name": "Gen_0035ef50",
+  "before_sha256": "308398ed1b8143b2f911da37ab5ca33765d11b64035b87d9c89020296d332a46",
+  "after_sha256": "20c138f24e93a118fcde0cfd49ad81985cbaf9963ba9017e43630bfe75e1e297",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

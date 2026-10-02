@@ -109,8 +109,16 @@ extern void _bfme_debugRecordCallsite( Int kind );
 class XmlNameSlotList
 {
 public:
-	Int count();
 	Int finish();
+};
+
+// The element count getter at 0x0035EF50, under its ledger name
+// (?m@Gen_0035ef50@@QAEHXZ); same thiscall int body as the former
+// XmlNameSlotList::count().
+class Gen_0035ef50
+{
+public:
+	Int m();
 };
 
 class BfmeLexEAN
@@ -229,7 +237,7 @@ void LuaScriptEngine::rva002E9680ParseModelConditionEvent(BfmeLexEAN *parser)
 
 	AsciiString name;
 
-	for (Int i = 0; i < ((XmlNameSlotList *)parser)->count(); ++i)
+	for (Int i = 0; i < ((Gen_0035ef50 *)parser)->m(); ++i)
 	{
 		Int nameCompare = strcmp((const char *)((Rva0035EF60 *)parser)->get(i), "Name");
 		if (nameCompare == 0)
