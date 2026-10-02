@@ -1,4 +1,12 @@
-// Open-BFME5 conversions.
+// DevastateSpecialPower::doSpecialPower at retail 0x0025A930 (75 B): slot 11 of
+// the SpecialPowerModuleInterface table 0x010B4608, which the registered
+// DevastateSpecialPower constructor 0x0025A7C0 stores at +0x10. It is reached
+// only through ILT 0x0000E0D4, whose VA appears once in the image.
+// Object::doSpecialPower (0x001C3790) calls slot 11 (+0x2C); the body ends `ret 4`
+// and never reads `this`. Its only work is a debug report, "Error! Devastate
+// Power requires either a target object or location": the power must be
+// fired at an object or a location.
+// Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md
 
 bool __cdecl _bfme_debugReportingEnabled();
 // ?_bfme_debugRecordCallsite@@YAXH@Z -- game/GameEngine/Source/Common/Debug_recordCallsite.cpp
@@ -72,7 +80,15 @@ public:
 
 extern Rva00889690Obj *g_rva00889690;
 
-void __stdcall bfmeGoVHL(int a)
+typedef unsigned int UnsignedInt;
+
+class DevastateSpecialPower
+{
+public:
+	virtual void doSpecialPower(UnsignedInt commandOptions);
+};
+
+void DevastateSpecialPower::doSpecialPower(UnsignedInt)
 {
 	if (_bfme_debugReportingEnabled())
 	{
