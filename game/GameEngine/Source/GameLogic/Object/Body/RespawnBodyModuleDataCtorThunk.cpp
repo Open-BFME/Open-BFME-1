@@ -40,6 +40,11 @@ class RespawnBodyModuleData : public RespawnBodyModuleDataBase
 public:
     RespawnBodyModuleData();
 
+    // Retail scalar wrapper 0x214AC0 calls complete-destructor ILT 0x1BE1E
+    // (target 0x212BB0). Keep that out-of-line call instead of emitting an
+    // implicit destructor from this constructor-only layout view.
+    virtual ~RespawnBodyModuleData();
+
 private:
     RespawnPolicyMember m_policy;
     bool m_enabled;
