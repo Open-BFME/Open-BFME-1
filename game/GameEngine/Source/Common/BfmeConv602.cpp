@@ -1,4 +1,7 @@
-extern "C" unsigned char bfmeVftCIA[];
+// bfmeVftCIA is ??_7Gen_000B5240@@6B@ at 0x010827DC, the vftable of the
+// Gen_000B5240 class (see dir32_addresses.csv).
+extern "C" unsigned char __identifier("??_7Gen_000B5240@@6B@")[];
+#define bfmeVftCIA __identifier("??_7Gen_000B5240@@6B@")
 
 struct BfmeThingCIA
 {
