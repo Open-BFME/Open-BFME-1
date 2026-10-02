@@ -31916,3 +31916,9 @@ _timeGetTime@0,0x007E4810,"Retired authored shadow of native import-library FF25
 ?self@Rva008F7BC0Self@@QAEPAV1@XZ,0x008F7BC0,address-derived this-returner withdrawn before push: vector-ctor operand in BfmeThingCDE::initializeArray (dir32 name ??0Element@@QAE@XZ)
 ?self@Rva0096A910Self@@QAEPAV1@XZ,0x0096A910,address-derived this-returner withdrawn before push: vector-ctor operand in AABTreeClass::operator= (dir32 name ??0CullNodeStruct@AABTreeClass@@QAE@XZ)
 ?self@Rva00979690Self@@QAEPAV1@XZ,0x00979690,address-derived this-returner withdrawn before push: vector-ctor operand in VectorClass<ModelNodeClass>::operator=/Resize (pinned ctor)
+?Rva00831F70Noop@@YAXXZ,0x00831F70,withdrawn before push: slot 2 of ??_7_Locale_impl@_STL@@6B@ so a vendored STLport member (review of ed4aa26dcc)
+?Rva0088F9F0Noop@@YAXXZ,0x0088F9F0,withdrawn before push: slot 4 of ??_7DebugIOOds@@6B@ = DebugIOOds::EmergencyFlush by slot order (review of ed4aa26dcc); real name not yet landed
+?Rva0088FCD0Noop@@YAXXZ,0x0088FCD0,superseded before push by ?EmergencyFlush@DebugIONet@@UAEXXZ (slot 4 of ??_7DebugIONet@@6B@)
+?Rva009471D0Noop@@YAXXZ,0x009471D0,withdrawn before push: slot 6 of the DX8SkinFVFCategoryContainer table = inline Render_Delayed_Procedural_Material_Passes; that name is already claimed at 0x007C1560 so needs an identity review
+?body@Rva00944BB0Body@@QAEXH@Z,0x00944BB0,superseded before push by ?Log@DX8RigidFVFCategoryContainer@@UAEX_N@Z (slot 3 of its table)
+?body@Rva00944C20Body@@QAEXH@Z,0x00944C20,superseded before push by ?Log@DX8SkinFVFCategoryContainer@@UAEX_N@Z (slot 3 of its table)

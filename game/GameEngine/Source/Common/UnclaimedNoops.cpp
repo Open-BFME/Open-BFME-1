@@ -30,7 +30,6 @@ void Rva0081D450Noop() {}
 void Rva0081D460Noop() {}
 void Rva0081D510Noop() {}
 void Rva0081D5F0Noop() {}
-void Rva00831F70Noop() {}
 void Rva00831F80Noop() {}
 void Rva00850CC0Noop() {}
 void Rva00850CD0Noop() {}
@@ -45,8 +44,6 @@ void Rva0087ADE0Noop() {}
 void Rva00880C20Noop() {}
 void Rva00880FA0Noop() {}
 void Rva00883CB0Noop() {}
-void Rva0088F9F0Noop() {}
-void Rva0088FCD0Noop() {}
 void Rva0088FF50Noop() {}
 void Rva00891310Noop() {}
 void Rva008915A0Noop() {}
@@ -117,7 +114,6 @@ void Rva0093C970Noop() {}
 void Rva0093CA00Noop() {}
 void Rva0093CE40Noop() {}
 void Rva0093D450Noop() {}
-void Rva009471D0Noop() {}
 void Rva0094BCA0Noop() {}
 void Rva0094BCD0Noop() {}
 void Rva0094C0B0Noop() {}

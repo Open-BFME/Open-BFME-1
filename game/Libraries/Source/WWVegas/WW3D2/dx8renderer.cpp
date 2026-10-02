@@ -805,7 +805,6 @@ DX8RigidFVFCategoryContainer::~DX8RigidFVFCategoryContainer()
 
 // ----------------------------------------------------------------------------
 
-// ?Log@DX8RigidFVFCategoryContainer@@UAEX_N@Z present-unmatched
 void DX8RigidFVFCategoryContainer::Log(bool only_visible)
 {
 #ifdef ENABLE_CATEGORY_LOG
@@ -1464,7 +1463,6 @@ DX8SkinFVFCategoryContainer::~DX8SkinFVFCategoryContainer()
 
 // ----------------------------------------------------------------------------
 
-// ?Log@DX8SkinFVFCategoryContainer@@UAEX_N@Z present-unmatched
 void DX8SkinFVFCategoryContainer::Log(bool only_visible)
 {
 #ifdef ENABLE_CATEGORY_LOG

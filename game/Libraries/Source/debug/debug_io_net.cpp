@@ -83,7 +83,6 @@ void DebugIONet::Write(StringType type, const char *src, const char *str)
     WriteFile(m_pipe,str,len,&dummy,NULL);
 }
 
-// ?EmergencyFlush@DebugIONet@@UAEXXZ present-unmatched
 void DebugIONet::EmergencyFlush(void)
 {
 }
