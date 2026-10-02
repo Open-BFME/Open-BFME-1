@@ -16,7 +16,8 @@
 //
 // That is why 177 bytes here against 110 there for the same source.
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(void *dest, const void *src, unsigned int count);
+// Retail IAT VA 0x0135945C imports MSVCR71!memmove.
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *dest, const void *src, unsigned int count);
 
 namespace _STL
 {
@@ -90,7 +91,7 @@ public:
 inline void *__copy_trivial(const void *first, const void *last, void *result)
 {
 	return (last == first) ? result :
-		((char *)BfmeMemMove(result, first, ((const char *)last - (const char *)first))) +
+		((char *)memmove(result, first, ((const char *)last - (const char *)first))) +
 		((const char *)last - (const char *)first);
 }
 
