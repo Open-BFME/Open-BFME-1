@@ -14088,5 +14088,25 @@
   "after_sha256": "b95a26a6fdcffed0ee0f46e92d4e08e77d7a66fa82b4d8344ccd64583466964e",
   "evidence": "targets/game/reverse/identity_evidence/0x0024cd10-callee-declarations.md",
   "reason": "Replace a declaration-only speculative shared base with the existing matched callee owner; the old comment explicitly denied callee identities. Retail ILT routes establish exact provider correspondence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv602.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv602.cpp",
+  "old_name": "bfmeInitCIA",
+  "new_name": "Rva000B5450Thing",
+  "before_sha256": "64d1804db69e10839b5f2684194c74149819e836c83c9273f643eec08c080882",
+  "after_sha256": "063eda170698bf03e05e514306fcc24096f09eed6894d0be25628bdbb42c694c",
+  "evidence": "targets/game/reverse/identity_evidence/000b5450-Rva000B5450Thing-constructor.md",
+  "reason": "The matched caller constructs this object with new and allocation EH cleanup. Retail calls the matched AudioEventInfo base constructor, installs the existing derived vftable and returns this with ret 4. The old ordinary-member identity cannot satisfy that constructor contract; the address-derived constructor spelling is already pinned in symbols.csv."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeThingCIA",
+  "new_name": "Rva000B5450Thing",
+  "before_sha256": "25925e50101a12bddba8f869983feafb1158248f66b0a4705b4d272384d76fa0",
+  "after_sha256": "3d0372a5527ba18692064cc1a5262711baf76a36ae5920870a6c8c1d0ecaf636",
+  "evidence": "targets/game/reverse/identity_evidence/000b5450-Rva000B5450Thing-constructor.md",
+  "reason": "The matched caller constructs this object with new and allocation EH cleanup. Retail calls the matched AudioEventInfo base constructor, installs the existing derived vftable and returns this with ret 4. The old ordinary-member identity cannot satisfy that constructor contract; the address-derived constructor spelling is already pinned in symbols.csv."
  }
 ]

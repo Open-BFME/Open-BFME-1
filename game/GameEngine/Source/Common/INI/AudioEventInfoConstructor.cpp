@@ -11,7 +11,7 @@
 
 // Retail 0x000B0D10: AudioEventInfo's default constructor.
 // The vtable at 0x010818CC, the matched copy constructor at 0x000B5B10, the
-// destructor at 0x000B0DF0, and BfmeThingCIA::bfmeInitCIA at 0x000B5450
+// destructor at 0x000B0DF0, and Rva000B5450Thing's constructor at 0x000B5450
 // identify this body as AudioEventInfo's constructor.
 // This TU keeps the byte layout local so MSVC preserves the retail stores.
 
