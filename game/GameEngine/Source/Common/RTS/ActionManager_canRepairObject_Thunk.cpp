@@ -23,6 +23,18 @@ enum ObjectShroudStatus
 	OBJECTSHROUD_FOGGED = 3
 };
 
+// Retail mangles KindOfType unsigned (W4KindOfType); VC7.1 picks the signed
+// underlying type only when an enumerator is negative.
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+#define THING_TU_MEMBERS \
+	Bool isKindOf( KindOfType kind ) const;
+#include "../Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class Player
 {
 public:
@@ -49,11 +61,7 @@ public:
 	Bool testStatus(Int status) const;
 };
 
-class BFMEActionThing
-{
-public:
-	Bool isKindOf(Int kind) const;
-};
+
 
 class Rva000C4A70
 {
@@ -136,26 +144,26 @@ Bool ActionManager::canRepairObject(const Object *obj, const Object *objectToRep
 		!((const Rva000C4A70 *)objectToRepair)->field())
 		return false;
 
-	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x16))
+	if (((const Thing *)objectToRepair)->isKindOf( (KindOfType)0x16 ))
 		return false;
-	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x18))
+	if (((const Thing *)objectToRepair)->isKindOf( (KindOfType)0x18 ))
 		return false;
 	if (((const BFMEActionObject *)obj)->testStatus(2))
 		return false;
 	if (((const BFMEActionObject *)objectToRepair)->testStatus(2))
 		return false;
-	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x26) == 1)
+	if (((const Thing *)objectToRepair)->isKindOf( (KindOfType)0x26 ) == 1)
 		return false;
-	if (!((const BFMEActionThing *)obj)->isKindOf(0x0e))
+	if (!((const Thing *)obj)->isKindOf( (KindOfType)0x0e ))
 		return false;
-	if (!((const BFMEActionThing *)objectToRepair)->isKindOf(7))
+	if (!((const Thing *)objectToRepair)->isKindOf( (KindOfType)7 ))
 		return false;
 
 	BodyModuleInterface *body = objectToRepair->m_body200;
 	if (body->getHealth() == body->getMaxHealth())
 		return false;
 
-	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x95))
+	if (((const Thing *)objectToRepair)->isKindOf( (KindOfType)0x95 ))
 		return false;
 
 	StructureCompletionInterface *completion =

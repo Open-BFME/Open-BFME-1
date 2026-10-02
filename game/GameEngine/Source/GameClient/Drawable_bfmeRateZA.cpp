@@ -4,6 +4,18 @@ struct BfmeReqZA
 	int m_bfme0CZA;
 };
 
+// Retail mangles KindOfType unsigned (W4KindOfType); VC7.1 picks the signed
+// underlying type only when an enumerator is negative.
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+#define THING_TU_MEMBERS \
+	bool isKindOf( KindOfType kind ) const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class LocomotorOverridable
 {
 public:
@@ -41,7 +53,6 @@ static __forceinline LocomotorOverridable *bfmeFinalZA(LocomotorOverridable *p)
 class Drawable
 {
 public:
-	bool isKindOf(int kind) const;
 	float bfmeRateZA(BfmeReqZA *r);
 
 	unsigned char m_bfmeHeadZA[4];
@@ -56,7 +67,7 @@ float Drawable::bfmeRateZA(BfmeReqZA *r)
 
 	if (k != 7
 		&& (bfmeFinalZA(m_bfme04ZA)->m_bfmeCCZA & 0x8000000) != 0
-		&& !isKindOf(0x95)
+		&& !((const Thing *)this)->isKindOf((KindOfType)0x95)
 		&& k != 4
 		&& k != 5)
 		return BfmeZeroRange;

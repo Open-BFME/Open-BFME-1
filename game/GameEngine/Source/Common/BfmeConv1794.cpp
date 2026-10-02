@@ -1,3 +1,15 @@
+// Retail mangles KindOfType unsigned (W4KindOfType); VC7.1 picks the signed
+// underlying type only when an enumerator is negative.
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+#define THING_TU_MEMBERS \
+	bool isKindOf( KindOfType kind ) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class BfmeThingHF;
 
 class BfmeInnerHF
@@ -18,8 +30,6 @@ public:
 class BfmeActorHF
 {
 public:
-	char bfmeCanHF(int what);
-
 	unsigned char m_bfmeHeadHF[0x74];
 	void *m_bfmeKeyHF;
 };
@@ -71,7 +81,7 @@ void BfmeOwnerHF::bfmeApplyHF(BfmeActorHF *actor, int spare)
 
 	if (thing->m_bfmeFlagsHF & 0x4000)
 	{
-		if (actor && actor->bfmeCanHF(7))
+		if (actor && ((const Thing *)actor)->isKindOf((KindOfType)7))
 		{
 			BfmeSlotHF *slot = unit->m_bfmeSlotHF;
 

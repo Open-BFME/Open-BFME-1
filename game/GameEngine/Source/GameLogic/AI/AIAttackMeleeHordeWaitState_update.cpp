@@ -12,6 +12,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
+// Retail mangles this unsigned enumeration as W4KindOfType.
 enum KindOfType
 {
 	KINDOF_MELEE_HORDE_TARGET = 92
@@ -92,7 +93,7 @@ class Thing
 {
 public:
 	float bfmeRelativeAngleTo(const Coord3D *position) const;
-	Bool bfmeIsKindOf(KindOfType kind) const;
+	Bool isKindOf(KindOfType kind) const;
 	void setOrientation(float angle);
 
 	const Coord3D *getPosition() const { return &m_cachedPos; }
@@ -200,7 +201,7 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 			int maximumDistance = 40;
 			// This template KindOfType test is distinct from the Object+0x94
 			// resolver flag above.
-			if (candidateVictim->bfmeIsKindOf(KINDOF_MELEE_HORDE_TARGET) &&
+			if (candidateVictim->isKindOf(KINDOF_MELEE_HORDE_TARGET) &&
 				attacker->getLayer() != 1)
 				maximumDistance = 60;
 

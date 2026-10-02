@@ -19,9 +19,11 @@ enum Relationship
 	ENEMIES = 2
 };
 
+// Retail mangles KindOfType unsigned (W4KindOfType), so no enumerator is
+// negative here: an enum VC7.1 sees a negative value in mangles as signed int.
 enum KindOfType
 {
-	KINDOF_INVALID = -1
+	KINDOF_INVALID = 0
 };
 
 #include "../../GameLogic/command_source_type.h"
@@ -37,11 +39,11 @@ public:
 	Int getPlayerIndex() const;
 };
 
-class Thing
-{
-public:
+#define THING_TU_MEMBERS \
+	Bool isKindOf( KindOfType kind ) const; \
 	Bool isAboveTerrainOrWater() const;
-};
+#include "../Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {
@@ -64,11 +66,7 @@ public:
 	Bool testStatus( Int status ) const;
 };
 
-class BFMEActionThing
-{
-public:
-	Bool isKindOf( Int kind ) const;
-};
+
 
 class Rva000C4D80Module
 {
@@ -127,16 +125,16 @@ Bool Rva000C4D80Manager::evaluate( Object *obj, const Object *target, Int comman
 		return false;
 	if( ((const BFMEActionObject *)target)->testStatus( 0x13 ) )
 		return false;
-	if( ((const BFMEActionThing *)obj)->isKindOf( 0xC ) )
+	if( ((const Thing *)obj)->isKindOf( (KindOfType)0xC ) )
 	{
 		if( !((const Thing *)obj)->isAboveTerrainOrWater() )
 			return false;
-		if( !((const BFMEActionThing *)target)->isKindOf( 0x23 ) )
+		if( !((const Thing *)target)->isKindOf( (KindOfType)0x23 ) )
 			return false;
 	}
 	else
 	{
-		if( !((const BFMEActionThing *)target)->isKindOf( 0x1F ) )
+		if( !((const Thing *)target)->isKindOf( (KindOfType)0x1F ) )
 			return false;
 	}
 
