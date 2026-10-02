@@ -1,5 +1,19 @@
 // Open-BFME5 conversions.
 
+// The per-cell touch target at 0x008FC3B0 is owned by the ShroudManager pimpl
+// element class (see game/GameEngine/Source/Common/RTS/
+// ShroudManagerImpl008FBA40.cpp, ledger row 0x008FC3B0).  No header declares
+// it, so this TU forward-declares it and the call below passes the same
+// objects the retail body does; the VRB stand-ins above keep their own
+// identities (bfmeCellRangeVRB at 0x008F7D10 is a different body).
+class ShroudManagerImpl008FBA40;
+
+class ShroudManagerImpl008FBA40Element
+{
+public:
+	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager, int index);
+};
+
 class BfmeCellVRB;
 
 class BfmePartVRB
@@ -11,7 +25,6 @@ public:
 class BfmeCellVRB
 {
 public:
-	void bfmeTouchVRB(BfmePartVRB *owner, int index);
 	char m_bfmePad00[0x68];
 };
 
@@ -45,7 +58,8 @@ char BfmeShroudVRB::bfmeUpdateVRB(int x, int y, int radius)
 				BfmeCellVRB *p;
 
 				for (p = first; p != end; ++p)
-					p->bfmeTouchVRB(m_bfme00, index);
+					reinterpret_cast<ShroudManagerImpl008FBA40Element *>(p)->updatePlayerCells008FC3B0(
+						reinterpret_cast<ShroudManagerImpl008FBA40 *>(m_bfme00), index);
 			}
 
 			mask >>= 1;
