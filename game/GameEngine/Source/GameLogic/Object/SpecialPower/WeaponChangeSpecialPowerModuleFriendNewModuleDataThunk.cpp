@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl WeaponChangeSpecialPowerModuleFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at WeaponChangeSpecialPowerModule pushes 0x0043FD3C here (see
+// ?friend_newModuleData@WeaponChangeSpecialPowerModule@@SAPAVModuleData@@PAVINI@@@Z), and the only symbol the
+// build defines at that address is the five-byte ILT thunk ?j_0003fd3c@@YAXXZ, which
+// game/gen_small/gthunks_071.cpp implements as a `jmp` to the module-data
+// class's static field-parse builder.  The old
+// `extern "C" WeaponChangeSpecialPowerModuleFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
+void j_0003fd3c();
 
 class WeaponChangeSpecialPowerModule
 {
@@ -43,6 +50,7 @@ ModuleData *WeaponChangeSpecialPowerModule::friend_newModuleData(INI *ini)
 {
 	WeaponChangeSpecialPowerModuleModuleData *data = new WeaponChangeSpecialPowerModuleModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &WeaponChangeSpecialPowerModuleFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003fd3c));
 	return (ModuleData *)data;
 }

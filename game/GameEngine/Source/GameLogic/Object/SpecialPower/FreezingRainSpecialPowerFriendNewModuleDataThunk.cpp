@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl FreezingRainSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at FreezingRainSpecialPower pushes 0x0044157E here (see
+// ?friend_newModuleData@FreezingRainSpecialPower@@SAPAVModuleData@@PAVINI@@@Z), and the only symbol the
+// build defines at that address is the five-byte ILT thunk ?j_0004157e@@YAXXZ, which
+// game/gen_small/gthunks_073.cpp implements as a `jmp` to the module-data
+// class's static field-parse builder.  The old
+// `extern "C" FreezingRainSpecialPowerFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
+void j_0004157e();
 
 class FreezingRainSpecialPower
 {
@@ -43,6 +50,7 @@ ModuleData *FreezingRainSpecialPower::friend_newModuleData(INI *ini)
 {
 	FreezingRainSpecialPowerModuleData *data = new FreezingRainSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &FreezingRainSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0004157e));
 	return (ModuleData *)data;
 }

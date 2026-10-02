@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SpecialDisguiseUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at SpecialDisguiseUpdate pushes 0x0044331A here (see
+// ?friend_newModuleData@SpecialDisguiseUpdate@@SAPAVModuleData@@PAVINI@@@Z), and the only symbol the
+// build defines at that address is the five-byte ILT thunk ?j_0004331a@@YAXXZ, which
+// game/gen_small/gthunks_075.cpp implements as a `jmp` to the module-data
+// class's static field-parse builder.  The old
+// `extern "C" SpecialDisguiseUpdateFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
+void j_0004331a();
 
 class SpecialDisguiseUpdate
 {
@@ -43,6 +50,7 @@ ModuleData *SpecialDisguiseUpdate::friend_newModuleData(INI *ini)
 {
 	SpecialDisguiseUpdateModuleData *data = new SpecialDisguiseUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SpecialDisguiseUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0004331a));
 	return (ModuleData *)data;
 }

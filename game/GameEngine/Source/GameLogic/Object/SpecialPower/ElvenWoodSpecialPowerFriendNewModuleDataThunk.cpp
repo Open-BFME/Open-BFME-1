@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ElvenWoodSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at ElvenWoodSpecialPower pushes 0x00439176 here (see
+// ?friend_newModuleData@ElvenWoodSpecialPower@@SAPAVModuleData@@PAVINI@@@Z), and the only symbol the
+// build defines at that address is the five-byte ILT thunk ?j_00039176@@YAXXZ, which
+// game/gen_small/gthunks_063.cpp implements as a `jmp` to the module-data
+// class's static field-parse builder.  The old
+// `extern "C" ElvenWoodSpecialPowerFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
+void j_00039176();
 
 class ElvenWoodSpecialPower
 {
@@ -43,6 +50,7 @@ ModuleData *ElvenWoodSpecialPower::friend_newModuleData(INI *ini)
 {
 	ElvenWoodSpecialPowerModuleData *data = new ElvenWoodSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ElvenWoodSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00039176));
 	return (ModuleData *)data;
 }

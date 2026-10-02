@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ToggleHiddenSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at ToggleHiddenSpecialAbilityUpdate pushes 0x0040955C here
+// (see ?friend_newModuleData@ToggleHiddenSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z),
+// and the only symbol the build defines at that address is the five-byte ILT
+// thunk ?j_0000955c@@YAXXZ, which game/gen_small/gthunks_009.cpp implements as
+// a `jmp` to the module-data class's static field-parse builder.  The old
+// `extern "C" ToggleHiddenSpecialAbilityUpdateFieldParse` was invented in this
+// TU and nothing defines it; the thunk is retail's real spelling of this operand.
+void j_0000955c();
 
 class ToggleHiddenSpecialAbilityUpdate
 {
@@ -43,6 +50,7 @@ ModuleData *ToggleHiddenSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	ToggleHiddenSpecialAbilityUpdateModuleData *data = new ToggleHiddenSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ToggleHiddenSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0000955c));
 	return (ModuleData *)data;
 }

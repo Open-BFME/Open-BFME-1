@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ProductionSpeedBonusFieldParse(MultiIniFieldParse &parse);
+// Retail's factory at ProductionSpeedBonus pushes 0x0042D713 here (see
+// ?friend_newModuleData@ProductionSpeedBonus@@SAPAVModuleData@@PAVINI@@@Z), and the only symbol the
+// build defines at that address is the five-byte ILT thunk ?j_0002d713@@YAXXZ, which
+// game/gen_small/gthunks_050.cpp implements as a `jmp` to the module-data
+// class's static field-parse builder.  The old
+// `extern "C" ProductionSpeedBonusFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
+void j_0002d713();
 
 class ProductionSpeedBonus
 {
@@ -43,6 +50,7 @@ ModuleData *ProductionSpeedBonus::friend_newModuleData(INI *ini)
 {
 	ProductionSpeedBonusModuleData *data = new ProductionSpeedBonusModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ProductionSpeedBonusFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0002d713));
 	return (ModuleData *)data;
 }
