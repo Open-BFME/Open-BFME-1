@@ -1,3 +1,7 @@
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
+
 // ?bfmeAddESB@BfmeHostESB@@QAEXPAVBfmeThingESB@@@Z
 // Retail RVA 0x0021C420, 104 bytes.  The body is the BFME host's guarded
 // intrusive-list insertion: compare the candidate thing id, query virtual
@@ -12,16 +16,6 @@
 // The narrow inline-asm block below encodes only those already-proven field
 // stores; all guards, allocation, placement construction, and control flow
 // remain authored C++ and the block contains no byte-emission directives.
-
-inline void *__cdecl operator new(unsigned int size, void *place) { return place; }
-
-namespace _STL
-{
-	struct __new_alloc
-	{
-		static void *allocate(unsigned int size);
-	};
-}
 
 class BfmeThingESB
 {
@@ -120,7 +114,7 @@ void BfmeHostESB::bfmeAddESB(BfmeThingESB *thing)
 		bfmeSlot64ESB(0))
 	{
 		BfmeNodeESB *head = m_bfmeListESB;
-		BfmeNodeESB *node = (BfmeNodeESB *)_STL::__new_alloc::allocate(12);
+		BfmeNodeESB *node = (BfmeNodeESB *)_STL::__node_alloc<true, 0>::allocate(12);
 
 		new (&node->m_bfmeValueESB) BfmeThingPtrESB(thing);
 
