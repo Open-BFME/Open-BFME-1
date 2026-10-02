@@ -131,7 +131,12 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 // the use sites rather than declaring the global under a local type.
 class View;
 extern View *TheTacticalView;
-extern void *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU reads only the
+// height vtable slot, so the reference carries the canonical spelling and the
+// local vtable slice is cast at each use.
+class Display;
+extern Display *TheDisplay;
 extern AptPalantir *TheAptPalantir;
 extern BannerUI *TheBannerUI;
 
@@ -152,7 +157,7 @@ void HideControlBar( bool immediate )
 		if( window )
 		{
 			reinterpret_cast<BFMEViewVTable *>( TheTacticalView )->setHeight(
-				reinterpret_cast<BFMEDisplayVTable *>( TheDisplay )->getHeight() );
+				reinterpret_cast<BFMEDisplayVTable *>( static_cast<void *>( TheDisplay ) )->getHeight() );
 		}
 
 		if( immediate )
@@ -234,7 +239,7 @@ void ShowControlBar(bool immediate)
             if (window) {
                 TheControlBar->switchControlBarStage(CONTROL_BAR_STAGE_DEFAULT);
                 reinterpret_cast<BFMEViewVTable *>(TheTacticalView)->setHeight(
-                    (int)((unsigned int)reinterpret_cast<BFMEDisplayVTable *>(TheDisplay)->getHeight() * 0.80f));
+                    (int)((unsigned int)reinterpret_cast<BFMEDisplayVTable *>(static_cast<void *>(TheDisplay))->getHeight() * 0.80f));
                 if (TheControlBar->m_animateWindowManager && !immediate) {
                     reinterpret_cast<Rva004C0E10AnimationView *>(TheControlBar->m_animateWindowManager)->reset();
                     TheControlBar->m_animateWindowManager->registerGameWindow(

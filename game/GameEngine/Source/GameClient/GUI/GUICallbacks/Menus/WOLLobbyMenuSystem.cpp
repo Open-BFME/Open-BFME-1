@@ -331,7 +331,13 @@ public:
   virtual unsigned int getWidth() = 0;
   virtual unsigned int getHeight() = 0;
 };
-extern Rva004FC7C0Display *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU only reads the
+// width/height vtable slots, so the reference carries the canonical spelling
+// and the observed vtable slice stays a TU-local view cast at each use.
+class Display;
+extern Display *TheDisplay;
+static inline Rva004FC7C0Display *lobbyTheDisplay() { return (Rva004FC7C0Display *)TheDisplay; }
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
@@ -667,10 +673,10 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
       rcMenu->winGetSize(&rcSize.x, &rcSize.y);
       rcPos.x = rc->mouseX;
       rcPos.y = rc->mouseY;
-      if (rc->mouseX + rcSize.x > TheDisplay->getWidth())
-        rcPos.x = TheDisplay->getWidth() - rcSize.x;
-      if (rc->mouseY + rcSize.y > TheDisplay->getHeight())
-        rcPos.y = TheDisplay->getHeight() - rcSize.y;
+      if (rc->mouseX + rcSize.x > lobbyTheDisplay()->getWidth())
+        rcPos.x = lobbyTheDisplay()->getWidth() - rcSize.x;
+      if (rc->mouseY + rcSize.y > lobbyTheDisplay()->getHeight())
+        rcPos.y = lobbyTheDisplay()->getHeight() - rcSize.y;
       rcMenu->winSetPosition(rcPos.x, rcPos.y);
       GameSpyRCMenuData *rcData = new GameSpyRCMenuData;
       rcData->m_id = profileID;

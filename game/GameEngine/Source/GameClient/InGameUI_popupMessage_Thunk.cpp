@@ -151,12 +151,17 @@ public:
 };
 
 extern BfmeGameText *TheGameText;
-extern BfmeDisplay *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU only reads the
+// width/height vtable slots, so the reference carries the canonical spelling
+// and the observed vtable slice stays a TU-local view cast at each use.
+class Display;
+extern Display *TheDisplay;
 extern BfmeWindowManager *TheWindowManager;
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheBfmeGameLogic ((BfmeGameLogicPause *)TheGameLogic)
+static inline BfmeGameLogicPause *TheBfmeGameLogicView() { return (BfmeGameLogicPause *)TheGameLogic; }
 
 void UpdateDiplomacyBriefingText( const AsciiString &newText, Bool clear );
 
@@ -195,9 +200,9 @@ void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
 	else if( y < 0 )
 		y = 0;
 
-	self->m_popupMessageData->x = TheDisplay->getWidth() *
+	self->m_popupMessageData->x = ((BfmeDisplay *)TheDisplay)->getWidth() *
 		( (Real)x * 0.01f );
-	self->m_popupMessageData->y = TheDisplay->getHeight() *
+	self->m_popupMessageData->y = ((BfmeDisplay *)TheDisplay)->getHeight() *
 		( (Real)y * 0.01f );
 	if( width < 50 )
 		width = 50;
@@ -207,7 +212,7 @@ void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
 	self->m_popupMessageData->pauseMusic = pauseMusic;
 
 	if( pause )
-		TheBfmeGameLogic->setGamePaused( TRUE, pauseMusic == FALSE, TRUE );
+		TheBfmeGameLogicView()->setGamePaused( TRUE, pauseMusic == FALSE, TRUE );
 
 	self->m_popupMessageData->layout =
 		TheWindowManager->winCreateLayout( BFMERetailAsciiString( "InGamePopupMessage.wnd" ) );

@@ -64,7 +64,11 @@ class Display {public:
  virtual unsigned GetWidth();
  virtual unsigned GetHeight();
 };
-extern Display *ShaderDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU only reads the
+// width/height vtable slots, so it uses a TU-local view class named for the
+// real one and references the singleton under its canonical spelling.
+extern Display *TheDisplay;
 extern Resource *ShaderQuadDevice;
 typedef long(__stdcall *SetFVF)(Resource*,unsigned);
 typedef long(__stdcall *GetStream)(Resource*,unsigned,Resource**,unsigned*,unsigned*);
@@ -82,9 +86,9 @@ void ShaderViewportRva00716AD0(int color,bool useSize,const Coord2D *givenSize) 
   displayWidth = givenSize->x;
   displayHeight = givenSize->y;
  }
- else if (ShaderDisplay) {
-  displayWidth = (float)ShaderDisplay->GetWidth();
-  displayHeight = (float)ShaderDisplay->GetHeight();
+ else if (TheDisplay) {
+  displayWidth = (float)TheDisplay->GetWidth();
+  displayHeight = (float)TheDisplay->GetHeight();
  }
  else {
   displayWidth = 1;

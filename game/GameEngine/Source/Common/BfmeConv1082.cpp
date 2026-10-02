@@ -115,7 +115,14 @@ public:
 	void bfmeStop1082(void);
 };
 
-extern BfmeC1082 *g_bfmeC1082;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU only drives the
+// movie-playback path, so the reference carries the canonical spelling and the
+// observed vtable slice stays a TU-local view cast at each use.
+class Display;
+extern Display *TheDisplay;
+
+static inline BfmeC1082 *bfmeConv1082TheDisplay() { return (BfmeC1082 *)TheDisplay; }
 
 class BfmeQ1082
 {
@@ -139,8 +146,8 @@ void BfmeQ1082::bfmeGo1082A(void)
 		m_bfme20 = 1;
 	}
 	((BfmeB1082 *)TheGameLogic)->m_bfme74 = 0;
-	g_bfmeC1082->bfmeSlot1082C_59();
-	g_bfmeC1082->bfmeStop1082();
+	bfmeConv1082TheDisplay()->bfmeSlot1082C_59();
+	bfmeConv1082TheDisplay()->bfmeStop1082();
 	m_bfme08 = 0;
 }
 

@@ -41,7 +41,13 @@ public:
 	Rva00367810VirtualGateTable *m_table;
 };
 
-extern Rva00367810VirtualGate *Rva00367810TheVirtualGate;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. Every read below goes through
+// the TU-local view type, so the helper casts once.
+class Display;
+extern Display *TheDisplay;
+
+static inline Rva00367810VirtualGate *rva00367810TheVirtualGateView() { return (Rva00367810VirtualGate *)TheDisplay; }
 
 class Rva00367810GameLogic
 {
@@ -87,12 +93,12 @@ public:
 
 class CampaignManager;
 extern CampaignManager *TheLivingWorldLogic;
+static inline Rva00367810Campaign *Rva00367810TheCampaignView() { return (Rva00367810Campaign *)TheLivingWorldLogic; }
 extern const char Rva006A16B0Empty[];
 
 extern void j_00026fc1();
 extern void j_0003fe09();
 
-#define Rva00367810TheCampaign ((Rva00367810Campaign *)TheLivingWorldLogic)
 
 static __forceinline void rva00367810Notify(
 	const AsciiString &message, Rva00367810Campaign *campaign )
@@ -148,7 +154,7 @@ void Rva00367810Entry::update()
 		message.format( AsciiString( "Auto-Summoning army %s into battle" ),
 			m_name != 0 ? (const char *)m_name + 8 :
 			Rva006A16B0Empty );
-		rva00367810Notify( message, Rva00367810TheCampaign );
+		rva00367810Notify( message, Rva00367810TheCampaignView() );
 		if( m_state == 0 )
 		{
 			m_state = 2;
@@ -208,7 +214,7 @@ private:
 
 void Rva00367810Entries::update()
 {
-	Rva00367810VirtualGate *gate = Rva00367810TheVirtualGate;
+	Rva00367810VirtualGate *gate = rva00367810TheVirtualGateView();
 	if( gate->m_table->m_test( gate ) )
 		return;
 	if( !rva00367810TheGameLogicView()->isLivingWorld() )

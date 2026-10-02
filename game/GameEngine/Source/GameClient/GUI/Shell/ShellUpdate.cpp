@@ -72,7 +72,12 @@ public:
 };
 
 extern ImageCollection *TheMappedImageCollection;
-extern BfmeThingVMZ *TheDisplay;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp. This TU only drives the
+// movie-playback path, so the reference carries the canonical spelling and the
+// observed instance layout stays a TU-local view cast at each use.
+class Display;
+extern Display *TheDisplay;
 // Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler.
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
@@ -135,9 +140,9 @@ void Shell::update()
 		const Image *image = TheMappedImageCollection->findImageByName(imageName);
 		if (image)
 		{
-			BfmeThingVMZ *display = TheDisplay;
+			BfmeThingVMZ *display = (BfmeThingVMZ *)TheDisplay;
 			display->m_imageDrawActive = 1;
-			TheDisplay->bfmeGo2VMZ((Int)image, 0, 0, 0, 0x3F800000, 0x3F800000);
+			((BfmeThingVMZ *)TheDisplay)->bfmeGo2VMZ((Int)image, 0, 0, 0, 0x3F800000, 0x3F800000);
 			TheTransitionHandler->setGroup(AsciiString("FadeInGameMovie"));
 			TheTransitionHandler->update();
 		}
