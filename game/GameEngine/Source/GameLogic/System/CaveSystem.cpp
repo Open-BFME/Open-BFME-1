@@ -130,31 +130,8 @@ void CaveSystem::update()
 {
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/System/CaveSystem_canSwitchIndexToIndex.cpp
-// ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z present-unmatched
-Bool CaveSystem::canSwitchIndexToIndex( Int oldIndex, Int newIndex )
-{
-	// When I grant permission, you need to do it.  ie call Unregister and then re-register with the new number
-	TunnelTracker *oldTracker = NULL;
-	TunnelTracker *newTracker = NULL;
-	if( m_tunnelTrackerVector.size() > oldIndex )
-	{
-		oldTracker = m_tunnelTrackerVector[oldIndex];
-		if( oldTracker && oldTracker->getContainCount() > 0 )
-			return FALSE;// You can't switch a connection if one of the two is non empty
-	}
-	if( m_tunnelTrackerVector.size() > newIndex )
-	{
-		newTracker = m_tunnelTrackerVector[newIndex];
-		if( newTracker && newTracker->getContainCount() > 0 )
-			return FALSE;// You can't switch a connection if one of the two is non empty
-	}
-
-	// Both are either empty or non-existent, so go ahead.  
-	// (Remember non-exist is only a valid case because you are going to do the switch now.)
-
-	return TRUE;
-}
+// ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z is defined by
+// CaveSystem_canSwitchIndexToIndex.cpp.
 
 void CaveSystem::registerNewCave( Int theIndex )
 {

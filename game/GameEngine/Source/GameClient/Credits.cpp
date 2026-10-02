@@ -492,17 +492,4 @@ void CreditsManager::addText( AsciiString text )
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
-// ?getUnicodeString@CreditsManager@@ present-unmatched
-UnicodeString CreditsManager::getUnicodeString(AsciiString str)
-{
-	UnicodeString uStr;
-	if(str.compare("<BLANK>") == 0)
-		return UnicodeString::TheEmptyString;
-
-	if(str.find(':'))
-		uStr = TheGameText->fetch(str);
-	else
-		uStr.translate(str);
-
-	return uStr;
-}
+// ?getUnicodeString@CreditsManager@@ is defined by CreditsGetUnicodeString.cpp.
