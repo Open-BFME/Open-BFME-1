@@ -11,11 +11,12 @@ public:
 	static bool Has_Stencil(void);
 };
 
-int g_bfmeFirstEB;
-int g_bfmeSecondEB;
-int g_bfmeThirdEB;
-int g_bfmeFourthEB;
-int g_bfmeFifthEB;
+// Shared storage is defined in Rva00933810StencilReset.cpp.
+extern int g_bfmeFirstEB;
+extern int g_bfmeSecondEB;
+extern int g_bfmeThirdEB;
+extern int g_bfmeFourthEB;
+extern int g_bfmeFifthEB;
 int g_bfmeResetZ;
 int g_bfmeBlendSrc;
 int g_bfmeBlendDst;
