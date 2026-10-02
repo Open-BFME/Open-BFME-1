@@ -18,7 +18,14 @@ class GameTextInterface;
 class GameSpyInfo;
 extern GameTextInterface *TheGameText;
 extern GameSpyInfo *TheGameSpyInfo;
-extern "C" int *g_bfmeLimitsDF;
+// The rank thresholds are the first member of the shared rank-point table,
+// retail 0x012F401C (TheRankPointValues).
+struct RankPoints
+{
+	int m_ranks[11];
+};
+
+extern RankPoints *TheRankPointValues;
 class TextSlots005578A0 { public:
 #define S(n) virtual void slot##n();
  S(0) S(1) S(2) S(3) S(4) S(5) S(6) S(7) S(8) S(9)
@@ -52,16 +59,16 @@ void OnlineRankProgress005578A0::write(int side,char *output,bool skip)
  case 3: if(skip) return; name.translate(((TextSlots005578A0*)TheGameText)->fetch("Apt:Mordor",0)); category=2; break;
  }
  PSPlayerStats stats=((StatsSlots005578A0*)TheGameSpyInfo)->stats();
- typedef int (__cdecl *RankPoints)(PSPlayerStats*,int);
- int points=((RankPoints)j_00022976)(&stats,category);
+ typedef int (__cdecl *RankPointsFn)(PSPlayerStats*,int);
+ int points=((RankPointsFn)j_00022976)(&stats,category);
  int rank=1;
- while(rank<10 && points>=g_bfmeLimitsDF[rank]) ++rank;
+ while(rank<10 && points>=TheRankPointValues->m_ranks[rank]) ++rank;
  typedef int (__cdecl *NextPoints)(PSPlayerStats,int);
  int remaining=((NextPoints)j_0000132f)(stats,category);
  int percentage;
  if(remaining==0) percentage=100;
  else {
-  int width=g_bfmeLimitsDF[rank]-g_bfmeLimitsDF[rank-1];
+  int width=TheRankPointValues->m_ranks[rank]-TheRankPointValues->m_ranks[rank-1];
   percentage=(width-remaining)*100/width;
  }
  int bounded=clamp005578A0(0,percentage,100);

@@ -92,14 +92,21 @@ bool Gen_001EFA70::bfmeHasAny(void) const
 	return bfmeSize() > 0;
 }
 
-extern int *g_bfmeLimitsDF;					// retail 0x012F401C
+// The rank thresholds are the first member of the shared rank-point table,
+// retail 0x012F401C (TheRankPointValues).
+struct RankPoints
+{
+	int m_ranks[11];
+};
+
+extern RankPoints *TheRankPointValues;				// retail 0x012F401C
 
 // ?bfmeBand@@YAHH@Z
 int __cdecl bfmeBand(int value)
 {
 	int index = 1;
 
-	while (index < 10 && value >= g_bfmeLimitsDF[index])
+	while (index < 10 && value >= TheRankPointValues->m_ranks[index])
 		++index;
 
 	return index;

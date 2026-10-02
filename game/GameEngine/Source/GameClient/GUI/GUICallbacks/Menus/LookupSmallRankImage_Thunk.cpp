@@ -16,9 +16,8 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/RankPointValue.h
-class RankPoints
+struct RankPoints
 {
-public:
 	Int m_ranks[11];
 };
 

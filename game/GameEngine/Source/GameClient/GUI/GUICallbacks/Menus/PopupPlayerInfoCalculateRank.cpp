@@ -2,7 +2,7 @@
 // Open-BFME: CalculateRank, retail 0x004DA530, 194 bytes. Converted from
 // gen-dump d_004da530. Apt Online QuickMatch names this body. BFME keeps the
 // ZH wins/losses weighted sum and max(0,) clip but drops duration, disconnect,
-// and campaign honor terms. TheRankPointValues lives at g_bfmeLimitsDF
+// and campaign honor terms. The rank-point table lives at retail 0x012F401C
 // (m_winMultiplier +0x28, m_lostMultiplier +0x2C).
 
 struct BfmeNode1110
@@ -30,13 +30,13 @@ struct RankPoints
 	float m_lostMultiplier;
 };
 
-extern RankPoints *g_bfmeLimitsDF;
+extern RankPoints *TheRankPointValues;
 
 BfmeNode1110 *__cdecl bfmeNext1110( BfmeNode1110 *node );
 
 int CalculateRank( const PSPlayerStats &stats )
 {
-	if ( stats.id == 0 || !g_bfmeLimitsDF )
+	if ( stats.id == 0 || !TheRankPointValues )
 		return 0;
 
 	int numGames = 0;
@@ -48,7 +48,7 @@ int CalculateRank( const PSPlayerStats &stats )
 		node = bfmeNext1110( node );
 		header = stats.wins;
 	}
-	int rankPoints = (int)( (float)numGames * g_bfmeLimitsDF->m_winMultiplier );
+	int rankPoints = (int)( (float)numGames * TheRankPointValues->m_winMultiplier );
 
 	numGames = 0;
 	header = stats.losses;
@@ -59,7 +59,7 @@ int CalculateRank( const PSPlayerStats &stats )
 		node = bfmeNext1110( node );
 		header = stats.losses;
 	}
-	rankPoints = (int)( (float)numGames * g_bfmeLimitsDF->m_lostMultiplier + (float)rankPoints );
+	rankPoints = (int)( (float)numGames * TheRankPointValues->m_lostMultiplier + (float)rankPoints );
 
 	int zero = 0;
 	return *( rankPoints < 0 ? &zero : &rankPoints );

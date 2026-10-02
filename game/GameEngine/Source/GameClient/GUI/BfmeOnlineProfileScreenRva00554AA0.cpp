@@ -151,7 +151,14 @@ class WindowManager {
 extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern GameSpyInfoInterface *TheGameSpyInfo;
-extern "C" int *g_bfmeLimitsDF;
+// The rank thresholds are the first member of the shared rank-point table,
+// retail 0x012F401C (TheRankPointValues).
+struct RankPoints
+{
+	int m_ranks[11];
+};
+
+extern RankPoints *TheRankPointValues;
 extern int g_bfmePeerReqE4, g_bfmePeerReqE8;
 extern const char *g_bfmeOnlineProfileImageLevelIconA;
 extern const char *g_bfmeOnlineProfileImageLevelIconB;
@@ -222,7 +229,7 @@ static __forceinline unsigned int countTail(PerGeneralMap &map, int key) {
 static __forceinline int rank(PSPlayerStats &stats, int side) {
     int points = ((int(__cdecl *)(PSPlayerStats *, int))j_00022976)(&stats, side);
     int result = 1;
-    while (result < 10 && points >= g_bfmeLimitsDF[result])
+    while (result < 10 && points >= TheRankPointValues->m_ranks[result])
         ++result;
     return result;
 }

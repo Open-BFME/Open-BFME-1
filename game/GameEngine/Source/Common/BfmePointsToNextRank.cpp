@@ -12,19 +12,26 @@ public:
 
 int bfmeRankPointsFromStats( Gen_uw_00025c1b *stats, int points );
 
-extern int *g_bfmeLimitsDF;
+// The rank thresholds are the first member of the shared rank-point table,
+// retail 0x012F401C (TheRankPointValues).
+struct RankPoints
+{
+	int m_ranks[11];
+};
+
+extern RankPoints *TheRankPointValues;
 
 int __cdecl bfmePointsToNextRank( Gen_uw_00025c1b stats )
 {
 	int value = bfmeRankPointsFromStats( &stats, stats.m_points );
 	int index = 1;
-	while ( index < 10 && value >= g_bfmeLimitsDF[ index ] )
+	while ( index < 10 && value >= TheRankPointValues->m_ranks[ index ] )
 		++index;
 	if ( index >= 10 )
 		return 0;
 	int zero;
 	int diff;
-	diff = g_bfmeLimitsDF[ index ] - value;
+	diff = TheRankPointValues->m_ranks[ index ] - value;
 	zero = 0;
 	int *result = diff < 0 ? &zero : &diff;
 	return *result;

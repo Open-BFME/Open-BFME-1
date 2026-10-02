@@ -20,7 +20,14 @@ template<class T> inline void StringBase<T>::concat(const StringBase<T>& s) { in
 class Gen_uw_00025c1b { public: ~Gen_uw_00025c1b(); char field00[0x1c4]; };
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
 int bfmeBand(int);
-extern "C" int *g_bfmeLimitsDF;
+// The rank thresholds are the first member of the shared rank-point table,
+// retail 0x012F401C (TheRankPointValues).
+struct RankPoints
+{
+	int m_ranks[11];
+};
+
+extern RankPoints *TheRankPointValues;
 extern const char *RankLabels00554510Good[];
 extern const char *RankLabels00554510Evil[];
 class GameSpyInfoInterface { public:
@@ -90,12 +97,12 @@ void __stdcall rankTooltip00554510(const char *name) {
   faction=TheGameText->fetch("Apt:Gondor");
   int points=bfmeRankPointsFromStats(&stats,1);
   rank=1;
-  while(rank<10 && points>=g_bfmeLimitsDF[rank]) ++rank;
+  while(rank<10 && points>=TheRankPointValues->m_ranks[rank]) ++rank;
  } else if(strcmp(name,"OnlineShell/OnlineProfile/tooltipPlayerLevelIconRohan")==0) {
   faction=TheGameText->fetch("Apt:Rohan");
   int points=bfmeRankPointsFromStats(&stats,0);
   rank=1;
-  while(rank<10 && points>=g_bfmeLimitsDF[rank]) ++rank;
+  while(rank<10 && points>=TheRankPointValues->m_ranks[rank]) ++rank;
  } else if(strcmp(name,"OnlineShell/OnlineProfile/tooltipPlayerLevelIconIsengard")==0) {
   faction=TheGameText->fetch("Apt:Isengard");
   rank=bfmeBand(bfmeRankPointsFromStats(&stats,3));

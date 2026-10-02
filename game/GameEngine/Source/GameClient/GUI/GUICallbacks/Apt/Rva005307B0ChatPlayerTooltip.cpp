@@ -196,9 +196,8 @@ public:
 };
 extern Mouse *TheMouse;
 
-class RankPoints
+struct RankPoints
 {
-public:
 	Int m_ranks[10];
 };
 extern RankPoints *TheRankPointValues;
