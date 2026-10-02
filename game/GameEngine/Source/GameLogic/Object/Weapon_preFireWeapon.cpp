@@ -16,23 +16,14 @@ class Matrix3D;
 class WeaponBonus
 {
 public:
-	WeaponBonus()
-	{
-		m_field[0] = 1.0f;
-		m_field[1] = 1.0f;
-		m_field[2] = 1.0f;
-		m_field[3] = 1.0f;
-		m_field[4] = 1.0f;
-		m_field[5] = 1.0f;
-	}
-
 	float m_field[6];
 };
 
 class FXList
 {
 public:
-	bool isEmpty() const;
+	// ILT 0x00011F77 reaches the matched culling body at 0x0042DAA0.
+	bool bfmeIsBlocked();
 	void doFXPos(const Coord3D *primary, const Matrix3D *mtx, float speed,
 			const Coord3D *secondary) const;
 };
@@ -77,8 +68,9 @@ class Weapon;
 class WeaponTemplate
 {
 public:
-	void notifyPreFire(Weapon *weapon, const Object *source,
-		const Object *victim, const Coord3D *position);
+	// Retail 0x001E6310 consumes arguments 1 and 3 and returns with ret 16.
+	// Its existing provider carries the two unused words as int.
+	void notifyPreFire(Weapon *weapon, int, const Object *victim, int);
 
 	unsigned char m_pad000[0x58];
 	float m_weaponSpeed;
@@ -153,6 +145,12 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 		m_status = PRE_ATTACK;
 
 	WeaponBonus bonus;
+	bonus.m_field[0] = 1.0f;
+	bonus.m_field[1] = 1.0f;
+	bonus.m_field[2] = 1.0f;
+	bonus.m_field[3] = 1.0f;
+	bonus.m_field[4] = 1.0f;
+	bonus.m_field[5] = 1.0f;
 	computeBonus(source, 0, bonus);
 
 	WeaponTemplate *weaponTemplate = m_template;
@@ -173,7 +171,8 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 		m_leechWeaponRangeActive = TheGameLogic->getFrame() + leechRangeDuration + leechTimingExtra;
 	}
 
-	weaponTemplate->notifyPreFire(this, source, victim, position);
+	weaponTemplate->notifyPreFire(this, reinterpret_cast<int>(source), victim,
+		reinterpret_cast<int>(position));
 
 	FXList *fireFX = weaponTemplate->m_fireFX;
 	float weaponSpeed = weaponTemplate->m_weaponSpeed;
@@ -182,7 +181,7 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 	const Coord3D *primaryFXPosition = source->getDrawable()->getPosition();
 	if (fireFX)
 	{
-		if (!fireFX->isEmpty())
+		if (!fireFX->bfmeIsBlocked())
 			fireFX->doFXPos(primaryFXPosition, sourceTransform, weaponSpeed, secondaryFXPosition);
 	}
 }

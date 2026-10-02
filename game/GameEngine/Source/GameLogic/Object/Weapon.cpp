@@ -1844,29 +1844,7 @@ Weapon::~Weapon()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon/Weapon_computeBonus.cpp
-// ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z present-unmatched
-void Weapon::computeBonus(const Object *source, WeaponBonusConditionFlags extraBonusFlags, WeaponBonus& bonus) const
-{
-	bonus.clear();
-	WeaponBonusConditionFlags flags = source->getWeaponBonusCondition();
-	//CRCDEBUG_LOG(("Weapon::computeBonus() - flags are %X for %s\n", flags, DescribeObject(source).str()));
-	flags |= extraBonusFlags;
-	
-	if( source->getContainedBy() )
-	{
-		// We may be able to add in our container's flags
-		const ContainModuleInterface *theirContain = source->getContainedBy()->getContain();
-		if( theirContain && theirContain->isWeaponBonusPassedToPassengers() )
-			flags |= theirContain->getWeaponBonusPassedToPassengers();
-	}
-
-	if (TheGlobalData->m_weaponBonusSet)
-		TheGlobalData->m_weaponBonusSet->appendBonuses(flags, bonus);
-	const WeaponBonusSet* extra = m_template->getExtraBonus();
-	if (extra)
-		extra->appendBonuses(flags, bonus);
-}
+// Retail Weapon::computeBonus is defined in Weapon_computeBonus.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME's WeaponBonus carries SIX fields where the reference enum stops at five

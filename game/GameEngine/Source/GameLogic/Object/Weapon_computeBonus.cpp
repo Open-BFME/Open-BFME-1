@@ -13,9 +13,9 @@
 // the weapon's own at +0x4A8 of the template at this+4. Either can be absent
 // and each is tested on its own.
 //
-// The reset is a member on the bonus rather than an assignment from a fresh
-// one: an assignment builds a temporary in the frame first, which retail has no
-// room for.
+// Reset the six fields directly: assigning a fresh temporary would add stack
+// storage absent from retail. A named clear helper would collide with the
+// older five-field reference copies under the same symbol.
 
 typedef unsigned int UnsignedInt;
 typedef float Real;
@@ -24,16 +24,6 @@ typedef float Real;
 class WeaponBonus
 {
 public:
-	void clear()
-	{
-		m_bfmeA = 1.0f;
-		m_bfmeB = 1.0f;
-		m_bfmeC = 1.0f;
-		m_bfmeD = 1.0f;
-		m_bfmeE = 1.0f;
-		m_bfmeF = 1.0f;
-	}
-
 	Real m_bfmeA, m_bfmeB, m_bfmeC, m_bfmeD, m_bfmeE, m_bfmeF;
 };
 
@@ -86,7 +76,12 @@ private:
 void Weapon::computeBonus(const Object *source, UnsignedInt extra,
 		WeaponBonus &bonus) const
 {
-	bonus.clear();
+	bonus.m_bfmeA = 1.0f;
+	bonus.m_bfmeB = 1.0f;
+	bonus.m_bfmeC = 1.0f;
+	bonus.m_bfmeD = 1.0f;
+	bonus.m_bfmeE = 1.0f;
+	bonus.m_bfmeF = 1.0f;
 
 	UnsignedInt mask = source->m_bfmeBonusMask | extra;
 
