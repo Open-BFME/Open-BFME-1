@@ -1,4 +1,8 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// GarrisonUpgrade::upgradeImplementation at retail 0x002D53F0: slot 9 of the UpgradeMux table
+// 0x010CCA40, reached only through ILT 0x00009A3E. GarrisonUpgrade's registered
+// constructor 0x002D5280 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -100,12 +104,13 @@ public:
 	virtual int slot02(unsigned int) = 0;
 };
 
-class Rva002D53F0 {
-public:
-	void dispatch();
+class GarrisonUpgrade
+{
+protected:
+	virtual void upgradeImplementation();
 };
 
-void Rva002D53F0::dispatch()
+void GarrisonUpgrade::upgradeImplementation()
 {
  Object *owner = *reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 8);
  BehaviorModule **module = owner->m_behaviors;
