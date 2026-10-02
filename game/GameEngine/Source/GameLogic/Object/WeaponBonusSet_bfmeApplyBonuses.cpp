@@ -9,12 +9,6 @@ extern Real g_bfmeDefaultBU;
 class WeaponBonus
 {
 public:
-	void appendBonuses(WeaponBonus &bonus) const
-	{
-		for (int i = 0; i < 6; ++i)
-			bonus.m_field[i] += m_field[i] - g_bfmeDefaultBU;
-	}
-
 	Real m_field[6];
 };
 
@@ -39,7 +33,8 @@ void WeaponBonusSet::bfmeApplyBonuses(UnsignedInt mask, WeaponBonus &bonus) cons
 		{
 			if (mask & (one << i))
 			{
-				m_bfmeBonuses[i].appendBonuses(bonus);
+				for (int j = 0; j < 6; ++j)
+					bonus.m_field[j] += m_bfmeBonuses[i].m_field[j] - g_bfmeDefaultBU;
 			}
 		}
 	}

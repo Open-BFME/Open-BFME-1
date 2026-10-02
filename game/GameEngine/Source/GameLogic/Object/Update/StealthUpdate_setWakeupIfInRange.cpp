@@ -26,13 +26,6 @@ public:
 	{
 	}
 
-	void sub( const Coord3DBase *that )
-	{
-		x -= that->x;
-		y -= that->y;
-		z -= that->z;
-	}
-
 	Real length() const
 	{
 		return (Real)sqrt( x * x + y * y + z * z );
@@ -81,7 +74,9 @@ int setWakeupIfInRange( Object *obj, void *userData )
 	Coord3D srcpos = *obj->getPosition();
 	Coord3D dstpos = *victim->getPosition();
 
-	srcpos.sub( &dstpos );
+	srcpos.x -= dstpos.x;
+	srcpos.y -= dstpos.y;
+	srcpos.z -= dstpos.z;
 	if ( srcpos.length() > vision )
 		goto done;
 

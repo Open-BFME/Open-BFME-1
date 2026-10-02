@@ -46,6 +46,7 @@ class SlaveWatcherBehavior : public UpdateModule
 {
 public:
     SlaveWatcherBehavior(Thing *, const ModuleData *);
+    virtual ~SlaveWatcherBehavior();
 
 private:
     unsigned int m_objectID20;

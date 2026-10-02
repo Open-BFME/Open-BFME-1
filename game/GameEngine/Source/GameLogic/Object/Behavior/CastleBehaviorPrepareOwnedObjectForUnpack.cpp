@@ -55,21 +55,10 @@ public:
 	void setDisabled(DisabledType type);
 	void notifyModelConditionChanged(void);
 	void setStatus(const ObjectStatusMaskType &status, Bool set);
-	void setModelConditionState(ModelConditionFlagType state);
 
 	unsigned char m_unmodelled_000[0x110];
 	ModelConditionFlags m_modelConditionFlags;
 };
-
-// ?setModelConditionState@Object@@ present-unmatched
-inline void Object::setModelConditionState(ModelConditionFlagType state)
-{
-	if (!m_modelConditionFlags.test(state))
-	{
-		m_modelConditionFlags.set(state);
-		notifyModelConditionChanged();
-	}
-}
 
 class CastleBehavior
 {
@@ -89,7 +78,11 @@ void CastleBehavior::prepareOwnedObjectForUnpack(Object *object)
 	object->setProducer(m_object);
 	object->setDisabled(DISABLED_UNMANNED);
 
-	object->setModelConditionState(MODELCONDITION_PACKING_TYPE_2);
+	if (!object->m_modelConditionFlags.test(MODELCONDITION_PACKING_TYPE_2))
+	{
+		object->m_modelConditionFlags.set(MODELCONDITION_PACKING_TYPE_2);
+		object->notifyModelConditionChanged();
+	}
 
 	object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit,
 		OBJECT_STATUS_UNDER_CONSTRUCTION), true);
