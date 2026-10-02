@@ -250,7 +250,9 @@ void W3DShrubBuffer::pushAsideTree(DrawableID id, const Coord3D *pusherPos,
 
 			tree->m_pushAsideSource = pusherID;
 			Coord3D delta;
-			delta.set(tree->m_location.X, tree->m_location.Y, tree->m_location.Z);
+			delta.x = tree->m_location.X;
+			delta.y = tree->m_location.Y;
+			delta.z = tree->m_location.Z;
 			delta.sub(pusherPos);
 			if (pusherDirection->x * delta.y - pusherDirection->y * delta.x > 0.0f) {
 				tree->m_pushAsideCos = -pusherDirection->y;
