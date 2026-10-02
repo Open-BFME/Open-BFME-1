@@ -3994,7 +3994,7 @@ const AudioEventInfo * Drawable::getBaseSoundAmbientInfo() const
 /** 
  * Produce a unique-across-entire-level name for this audio event
  */
-// byte-exact reconstruction: game/GameEngine/Source/Common/Drawable_mangleCustomAudioName_Thunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableVisualState.cpp
 // ?mangleCustomAudioName@Drawable@@QBEXPAVDynamicAudioEventInfo@@@Z present-unmatched
 void Drawable::mangleCustomAudioName( DynamicAudioEventInfo * audioToMangle ) const
 {
