@@ -4,15 +4,15 @@
 // Full bodies: 009A6DA0/67, 009A6DF0/206, 009A6F20/73.
 // The factory is called by matched bfmeInitCodecJX; free routes through
 // 009A5980 to matched 009A58E0. Integration entries below are not claimed.
-void bfmeTwoBZB(void *what);
+void bfmeGo930C(void *what);
 struct Rva009A6DA0Buffer {
  unsigned char pad[0x180];
  void *at180; void *at184; void *at188; void *at18C;
 };
 static void Rva009A6DA0ReleaseBuffers(Rva009A6DA0Buffer *self) {
- if(self->at188) bfmeTwoBZB(self->at188);
+ if(self->at188) bfmeGo930C(self->at188);
  self->at188=0; self->at180=0;
- if(self->at18C) bfmeTwoBZB(self->at18C);
+ if(self->at18C) bfmeGo930C(self->at18C);
  self->at18C=0; self->at184=0;
 }
 // Absent-from-retail integration entry; only the private helper is a candidate.
@@ -20,15 +20,15 @@ void ReleaseCodecBufferPair(Rva009A6DA0Buffer *self) { Rva009A6DA0ReleaseBuffers
 
 class Bucket { public: enum BucketMagicEnum { Zero = 0 }; static void *operator new(unsigned int n, BucketMagicEnum m); };
 static int Rva009A6DF0InitializeBuffers(Rva009A6DA0Buffer *self) {
- if(self->at188) bfmeTwoBZB(self->at188);
+ if(self->at188) bfmeGo930C(self->at188);
  self->at188=0; self->at180=0;
- if(self->at18C) bfmeTwoBZB(self->at18C);
+ if(self->at18C) bfmeGo930C(self->at18C);
  self->at18C=0; self->at184=0;
  self->at188=Bucket::operator new(160,Bucket::Zero);
  if(!self->at188) {
- if(self->at188) bfmeTwoBZB(self->at188);
+ if(self->at188) bfmeGo930C(self->at188);
  self->at188=0; self->at180=0;
- if(self->at18C) bfmeTwoBZB(self->at18C);
+ if(self->at18C) bfmeGo930C(self->at18C);
  self->at18C=0; self->at184=0;
  return 0;
  }
