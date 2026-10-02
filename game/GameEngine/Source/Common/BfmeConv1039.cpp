@@ -15,7 +15,11 @@ struct BfmeQ1039
 	BfmeRec1039 *m_bfmeEnd;
 };
 
-void bfmeGrow1039(BfmeQ1039 *q, int n);
+// Retail's callee at 0x009959C0 is Lua 4.0.1's luaD_checkstack, vendored in
+// game/Libraries/Source/Lua/ldo.c (declared in ldo.h). BfmeQ1039 is this TU's
+// view of lua_State; only that one call is needed here, so no Lua header is
+// pulled into this TU.
+extern "C" void luaD_checkstack(void *state, int n);
 
 void bfmeGo1039E(BfmeQ1039 *q, int v)
 {
@@ -23,7 +27,7 @@ void bfmeGo1039E(BfmeQ1039 *q, int v)
 	q->m_bfmeCur->m_bfmeVal = v;
 
 	if (q->m_bfmeCur == q->m_bfmeEnd)
-		bfmeGrow1039(q, 1);
+		luaD_checkstack(q, 1);
 
 	q->m_bfmeCur++;
 }
