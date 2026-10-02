@@ -49,19 +49,6 @@ float		WWMath::Random_Float(void)
 
 
 /*
-** Force link some modules from this library.
-*/
-void Do_Force_Links(void)
-{
-	FORCE_LINK(curve);
-	FORCE_LINK(hermitespline);
-	FORCE_LINK(catmullromspline);
-	FORCE_LINK(cardinalspline);
-	FORCE_LINK(tcbspline);
-}
-
-
-/*
 ** The table-driven WWMath::Fast_Sin/Fast_Cos/Fast_Acos helpers are declared inline in
 ** wwmath.h, but the retail image carries them as standalone out-of-line functions.
 ** Taking their addresses here forces MSVC to emit those COMDAT bodies in this translation
