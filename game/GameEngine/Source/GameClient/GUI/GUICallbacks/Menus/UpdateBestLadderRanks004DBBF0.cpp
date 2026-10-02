@@ -98,8 +98,11 @@ public:
 
 extern GameSpyInfo *TheGameSpyInfo;
 
-// 0x012F76F0 (TheGameSpyPSMessageQueue); +0x10 is addRequest.
-class BfmeQueueEUG
+// 0x012F76F0 (TheGameSpyPSMessageQueue); +0x10 is addRequest. The retail
+// header names this type GameSpyPSMessageQueueInterface; no game header
+// declares it, so the local stand-in carries that name to give the global
+// below retail's exact mangling.
+class GameSpyPSMessageQueueInterface
 {
 public:
 	virtual void slot00( void );
@@ -109,13 +112,13 @@ public:
 	virtual void addRequest( const PSRequest &req );
 };
 
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 extern Int g_bfmePeerReqE4;
 extern Int g_bfmePeerReqE8;
 
 void UpdateBestLadderRanks004DBBF0( PSPlayerStats *stats )
 {
-	if ( !TheGameSpyInfo || !g_bfmeQueueEUG )
+	if ( !TheGameSpyInfo || !TheGameSpyPSMessageQueue )
 		return;
 
 	Int best1v1;
@@ -143,5 +146,5 @@ void UpdateBestLadderRanks004DBBF0( PSPlayerStats *stats )
 	newStats.id = stats->id;
 	newStats.best2v2LadderRank = best2v2;
 	req.player = newStats;
-	g_bfmeQueueEUG->addRequest( req );
+	TheGameSpyPSMessageQueue->addRequest( req );
 }

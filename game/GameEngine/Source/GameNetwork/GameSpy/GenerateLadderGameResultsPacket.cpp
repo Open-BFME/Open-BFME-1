@@ -116,12 +116,15 @@ extern GameLogic*TheGameLogic;
 
 class GameState{public:AsciiString realMapPathToPortableMapPath(const AsciiString&)const;};
 class PSPlayerStats{public:char prefix[0x148];int locale;char tail[0x78];~PSPlayerStats();};
-class GameSpyPSMessageQueue{public:
+// The retail header names this type GameSpyPSMessageQueueInterface; no game
+// header declares it, so the local stand-in carries that name to give the
+// global below retail's exact mangling.
+class GameSpyPSMessageQueueInterface{public:
  virtual void v0();virtual void v1();virtual void v2();virtual void v3();virtual void v4();virtual void v5();virtual void v6();virtual void v7();virtual void v8();
  virtual PSPlayerStats findPlayerStatsByID(int);
 };
 extern GameState*TheGameState;
-extern GameSpyPSMessageQueue*TheGameSpyPSMessageQueue;
+extern GameSpyPSMessageQueueInterface*TheGameSpyPSMessageQueue;
 AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket()
 {
  int i;

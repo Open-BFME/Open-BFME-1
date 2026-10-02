@@ -198,8 +198,7 @@ public:
 
 extern GameSpyInfo *TheGameSpyInfo;
 extern ImageCollection *TheMappedImageCollection;
-class BfmeQueueEUG;
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
 extern Int GadgetListBoxGetColumnWidth(GameWindow *listbox, Int column);
 extern Int GadgetListBoxAddEntryImage(GameWindow *listbox, const Image *image,
@@ -252,8 +251,7 @@ Int insertPlayerInListbox(GameWindow *listbox, const PlayerInfo &info, Int color
 
 	Int side;
 	Int rank;
-	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(
-		g_bfmeQueueEUG)->findPlayerStatsByID(player.m_profileID);
+	PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(player.m_profileID);
 	side = bfmePickBestRankSide(reinterpret_cast<Gen_uw_00025c1b *>(&stats));
 	rank = bfmeBandChecked(bfmeRankPointsFromStats(
 		reinterpret_cast<Gen_uw_00025c1b *>(&stats), side));

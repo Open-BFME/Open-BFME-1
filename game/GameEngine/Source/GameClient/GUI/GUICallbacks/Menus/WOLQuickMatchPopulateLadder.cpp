@@ -201,7 +201,10 @@ public:
 	~PSPlayerStats();
 };
 typedef char Rva0062A7D0StatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
-class BfmeQueueEUG
+// The retail header names this type GameSpyPSMessageQueueInterface; no game
+// header declares it, so the local stand-in carries that name to give the
+// global below retail's exact mangling.
+class GameSpyPSMessageQueueInterface
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
@@ -209,7 +212,7 @@ public:
 	virtual void slot08();
 	virtual PSPlayerStats findPlayerStatsByID(int id);
 };
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
 bool Rva0062A7D0Owner::method()
 {
@@ -221,7 +224,7 @@ bool Rva0062A7D0Owner::method()
 		goto failed;
 
 	{
-		PSPlayerStats stats = g_bfmeQueueEUG->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
 		int totalWins = 0;
 		for (Rva0062A7D0Wins::const_iterator it = stats.wins.begin(); it != stats.wins.end(); ++it)
 			totalWins += it->second;
