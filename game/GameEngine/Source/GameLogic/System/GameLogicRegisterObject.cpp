@@ -155,11 +155,6 @@ public:
     _STL::vector<UpdateModule *> phaseUpdates[4];
     _STL::vector<UpdateModule *> sleeping;
 
-    void addObjectToLookupTable(Object *obj)
-    {
-        if (obj)
-            lookup[obj->getID()] = obj;
-    }
 };
 
 extern GameLogic *TheBfmeGameLogic;
@@ -167,7 +162,8 @@ extern GameLogic *TheBfmeGameLogic;
 void GameLogic::registerObject(Object *obj)
 {
     ((BfmeLinkXN *)obj)->bfmeInsertXN((BfmeLinkXN **)&objList, (BfmeLinkXN **)&objTail);
-    addObjectToLookupTable(obj);
+    if (obj)
+        lookup[obj->getID()] = obj;
     unsigned now = TheBfmeGameLogic->getFrame();
     if (now == 0)
         now = 1;

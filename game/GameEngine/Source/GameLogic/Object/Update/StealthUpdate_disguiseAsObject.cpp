@@ -94,14 +94,7 @@ public:
 	}
 };
 
-class ControlBar
-{
-public:
-	void markUIDirty()
-	{
-		*(Bool *)((char *)this + 0x24) = 1;
-	}
-};
+class ControlBar;
 
 extern ControlBar *TheControlBar;
 
@@ -190,5 +183,5 @@ void StealthUpdate::disguiseAsObject(const Object *target)
 
 	Drawable *draw = self->getDrawable();
 	if (draw && draw->isSelected())
-		TheControlBar->markUIDirty();
+		*(Bool *)((char *)TheControlBar + 0x24) = 1;
 }
