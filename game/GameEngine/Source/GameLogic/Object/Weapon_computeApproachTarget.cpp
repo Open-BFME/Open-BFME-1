@@ -109,18 +109,15 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
+class Weapon;
+
 class WeaponTemplate
 {
 public:
-	Real getMinimumAttackRange() const
-	{
-		// RATIONALIZE_ATTACK_RANGE: undersize by 1/4 of a pathfind cell
-		const Real UNDERSIZE = 10.0f*0.25f;
-		Real r = m_minimumAttackRange - UNDERSIZE;
-		if (r < 0.0f) r = 0.0f;
-		return r;
-	}
+	Real getMinimumAttackRange() const;
+
 private:
+	friend class Weapon;
 	char m_unreconstructed_00[0x18];
 	Real m_minimumAttackRange;						///< +0x18
 };
@@ -136,9 +133,14 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Region3D
+struct WeaponApproachPoint
 {
-	Coord3D lo, hi;
+	Real x, y, z;
+};
+
+struct WeaponApproachExtent
+{
+	WeaponApproachPoint lo, hi;
 };
 
 // upstream layout: inputs/reference/shims/sweep/GameLogic/TerrainLogic.h (getExtent at
@@ -154,7 +156,7 @@ public:
 	virtual void unreconstructed_slot14( void );
 	virtual void unreconstructed_slot18( void );
 	virtual void unreconstructed_slot1c( void );
-	virtual void getExtent( Region3D *extent ) const;
+	virtual void getExtent( WeaponApproachExtent *extent ) const;
 };
 extern TerrainLogic *TheTerrainLogic;
 
@@ -168,7 +170,7 @@ extern TerrainLogic *TheTerrainLogic;
 // call site to take that shape. The ledger row stays on Weapon.cpp.
 static void clipToTerrainExtent(Coord3D& approachTargetPos)
 {
-	Region3D bounds;
+	WeaponApproachExtent bounds;
 	TheTerrainLogic->getExtent(&bounds);
 	if (approachTargetPos.x < bounds.lo.x+PATHFIND_CELL_SIZE_F) {	 
 		approachTargetPos.x = bounds.lo.x+PATHFIND_CELL_SIZE_F;
@@ -211,7 +213,9 @@ Bool Weapon::computeApproachTarget(const Object *source, const Object *target, c
 	}
 
 	Real dist = dir.length();
-	Real minAttackRange = m_template->getMinimumAttackRange();
+	const Real UNDERSIZE = 10.0f*0.25f;
+	Real minAttackRange = m_template->m_minimumAttackRange - UNDERSIZE;
+	if (minAttackRange < 0.0f) minAttackRange = 0.0f;
 	if (minAttackRange > 10.0f && dist < minAttackRange)
 	{
 		// We aret too close, so move away from the target.

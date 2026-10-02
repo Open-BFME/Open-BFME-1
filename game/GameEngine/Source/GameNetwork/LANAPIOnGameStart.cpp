@@ -180,11 +180,6 @@ public:
 		return ((Rva0068D3E0Arr *)this)->at(index);
 	}
 
-	Bool amIHost(void)
-	{
-		return ((BfmeThing935B *)this)->bfmeGo935B() != 0;
-	}
-
 	UnsignedInt getSeed(void) const
 	{
 		return m_bfmeSeed4C;
@@ -220,7 +215,8 @@ public:
 	void clearGameData(Bool showScoreScreen, Bool unused);
 };
 
-extern BfmeGameLogicPause *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class MapMetaData;
 
@@ -385,7 +381,7 @@ void LANAPI::OnGameStart(void)
 		option.format("%d", m_currentGame->getLANSlot(
 			m_currentGame->getLocalSlotNum())->getColor());
 		pref["Color"] = option;
-		if (m_currentGame->amIHost())
+		if (((BfmeThing935B *)m_currentGame)->bfmeGo935B() != 0)
 			pref["Map"] = AsciiStringToQuotedPrintable(m_currentGame->getMap());
 		pref.write();
 
@@ -411,7 +407,7 @@ void LANAPI::OnGameStart(void)
 		}
 
 		TheNetwork->parseUserList(m_currentGame);
-		TheBfmeGameLogic->clearGameData(false, false);
+		((BfmeGameLogicPause *)TheGameLogic)->clearGameData(false, false);
 
 		Bool filesOk = DoAnyMapTransfers(m_currentGame);
 

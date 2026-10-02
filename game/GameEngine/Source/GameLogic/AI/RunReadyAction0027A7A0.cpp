@@ -48,7 +48,8 @@ class Object { public:
 };
 __forceinline void markKilled(Object *object) { if(!object->conditions.test(115)) { object->conditions.set(115); object->notifyModelConditionChanged(); } }
 typedef _STL::vector<int> ObjectIDs;
-class VectorSwap00272AA0 { public: void swap(ObjectIDs&); };
+struct Gen_t_00272aa0_p12cd;
+typedef _STL::vector<Gen_t_00272aa0_p12cd> RetailObjectIDs;
 typedef _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> > ObjectHash;
 class GameLogic { public:
  
@@ -383,7 +384,7 @@ void BfmeObjectAI::bfmeRunReadyAction()
    if(other) { other->kill((DamageType)8,(DeathType)0); markKilled(other); }
   }
   bool moved=false;
-  if(third.size()<first.size()) { ((VectorSwap00272AA0*)&third)->swap(first); moved=true; }
+  if(third.size()<first.size()) { ((RetailObjectIDs&)third).swap((RetailObjectIDs&)first); moved=true; }
   for(ObjectIDs::iterator it=first.begin();it!=first.end();++it) {
    Object *other=TheBfmeGameLogic->findObjectByID(*it);
    if(other) { other->kill((DamageType)8,(DeathType)0); markKilled(other); }

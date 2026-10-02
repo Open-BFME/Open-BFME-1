@@ -7,6 +7,11 @@
 #include "PreRTS.h"
 #include <vector>
 
+namespace _STL
+{
+template <> vector<ICoord2D>::~vector();
+}
+
 // The retail byte-vector teardown evaluates the capacity delta before testing
 // the start pointer.  Keep that source-level order explicit; STLport's vector
 // base destructor tests the pointer first and therefore emits a different
