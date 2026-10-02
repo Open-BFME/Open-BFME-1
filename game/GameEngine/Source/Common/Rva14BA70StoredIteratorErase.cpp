@@ -1,4 +1,20 @@
-void __cdecl rva423670SmallDeallocate(void *block, unsigned int size);
+// The node is handed back to STLport's __node_alloc<true,0>::_M_deallocate
+// (0x0082E5F0), spelled the way Q2NodePoolReleases.cpp and BigBlockReleases.cpp
+// spell it; the previous placeholder invented rva423670SmallDeallocate, which
+// nothing defines.
+
+struct Rva14BA70StoredIterator;
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend struct ::Rva14BA70StoredIterator;
+private:
+	static void _M_deallocate(void *p, unsigned int n);
+};
+}
 
 struct Rva14BA70ListNode
 {
@@ -27,5 +43,5 @@ void Rva14BA70StoredIterator::eraseCurrent()
     Rva14BA70ListNode *previous = node->previous;
     previous->next = next;
     next->previous = previous;
-    rva423670SmallDeallocate(node, 12);
+    _STL::__node_alloc<true, 0>::_M_deallocate(node, 12);
 }

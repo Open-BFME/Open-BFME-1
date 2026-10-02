@@ -15208,5 +15208,15 @@
   "after_sha256": "da44ea512eccc235924cd628e5e0413f19c461f9304ca04bd7521134a0704354",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva000EB280Set.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva000EB280Set.cpp",
+  "old_name": "m_item",
+  "new_name": "m_str",
+  "before_sha256": "bf7921fd13205754a8431230c6288d8065f70019553e8ff32d80ac0495ca6d4b",
+  "after_sha256": "6388854e2147c64a20c83b10a71d34d2014a6c6223a4ee795205372d900f682a",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

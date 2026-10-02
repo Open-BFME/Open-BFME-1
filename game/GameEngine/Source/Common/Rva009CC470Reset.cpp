@@ -1,18 +1,16 @@
 // cl: /O2 /Ob0
+//
+// The two dwords at +0 and +4 are AsciiStrings: retail releases each with
+// StringBase<char>::releaseBuffer at 0x00887940, which the shared header's
+// inline clear() calls.  The previous placeholder declared a local
+// Rva0036CA00Str::clear that nothing defines.
 
-class Rva0036CA00Str
-{
-public:
-	void clear();
-
-private:
-	void *m_item;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva009CC470
 {
-	Rva0036CA00Str m_00;
-	Rva0036CA00Str m_04;
+	AsciiString m_00;
+	AsciiString m_04;
 	int m_08;
 	int m_0C;
 
