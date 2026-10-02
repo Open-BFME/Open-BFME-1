@@ -6,13 +6,13 @@
 #include "Lib/BaseType.h"
 #include "Common/GameType.h"
 
-extern "C" __declspec(dllimport) double BfmeFloorER(double);
-extern "C" __declspec(dllimport) double bfmeMathVE(double);
+extern "C" __declspec(dllimport) double floor(double);
+extern "C" __declspec(dllimport) double ceil(double);
 
 #undef REAL_TO_INT_FLOOR
-#define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)BfmeFloorER((double)(x))) )
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))) )
 #undef REAL_TO_INT_CEIL
-#define REAL_TO_INT_CEIL(x) (fast_float2long_round((Real)bfmeMathVE((double)(x))) )
+#define REAL_TO_INT_CEIL(x) (fast_float2long_round((Real)ceil((double)(x))) )
 
 class GlobalData
 {
