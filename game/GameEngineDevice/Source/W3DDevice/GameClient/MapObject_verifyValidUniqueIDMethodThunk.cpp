@@ -54,8 +54,9 @@ public:
     AsciiString name;
 };
 class MapObject;
-struct MapObjectList { MapObject *first; };
-extern MapObjectList *BfmeTheMapObjectListHolder;
+// retail 0x012ED5DC: the one global pointer defined as `int *` in
+// Common/Rva00087480Get.cpp; this TU reads its first pointer slot.
+extern int *g_rva00087480;
 class MapObject {
 public:
     void *vtable;
@@ -76,7 +77,7 @@ void MapObject::verifyValidUniqueID()
 {
     bool exists;
     AsciiString uniqueID = properties.getAsciiString(TheKey_uniqueID.key(), &exists);
-    MapObject *obj = BfmeTheMapObjectListHolder->first;
+    MapObject *obj = *reinterpret_cast<MapObject **>(g_rva00087480);
     int highestIndex = -1;
     while (obj) {
         if (obj == this) { obj = obj->next; continue; }
