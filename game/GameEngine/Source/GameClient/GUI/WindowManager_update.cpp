@@ -240,8 +240,9 @@ public:
 extern GameTextInterface *TheGameText;
 
 // Retail 0x00892210: tests a field of the singleton at 0x013377D8 and returns
-// a byte (the caller tests al).  Existing pin.
-char bfmeFallback977C();
+// a byte (the caller tests al).  Defining spelling, matched in
+// game/GameEngine/Source/Common/Bfme5TinySix3.cpp.
+int __cdecl bfmeIsSet(void);
 // Retail 0x008922A0: copies a path string into the caller's buffer.
 void bfmeGo929E(void *buffer);
 
@@ -339,7 +340,7 @@ void WindowManager::update()
 	m_at1AE = false;
 	m_at1A8 = now;
 
-	if (!bfmeFallback977C())
+	if (!(unsigned char)bfmeIsSet())
 		return;
 
 	const UnicodeString *mouseString = reinterpret_cast<const UnicodeString *>(
