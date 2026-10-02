@@ -59,21 +59,6 @@ LANGameSlot::LANGameSlot()
 }
 
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/LANGameSlot_getUser_Thunk.cpp
-// ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ present-unmatched
-LANPlayer * LANGameSlot::getUser( void )
-{
-	if (isHuman())
-	{
-		m_user.setIP(getIP());
-		m_user.setLastHeard(getLastHeard());
-		m_user.setName(getName());
-		m_user.setNext(NULL);
-		return &m_user;
-	}
-	return NULL;
-}
-
 // Various tests
 // ?isUser@LANGameSlot@@ present-unmatched
 Bool LANGameSlot::isUser( LANPlayer *user )

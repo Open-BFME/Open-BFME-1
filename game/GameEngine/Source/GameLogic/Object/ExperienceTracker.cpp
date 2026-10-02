@@ -73,17 +73,6 @@ ExperienceTracker::~ExperienceTracker()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getExperienceValue@ExperienceTracker@@ present-unmatched
-Int ExperienceTracker::getExperienceValue( const Object* killer ) const
-{
-	// No experience for killing an ally, cheater.
-	if( killer->getRelationship( m_parent ) == ALLIES )
-		return 0;
-
-	return m_parent->getTemplate()->getExperienceValue(m_currentLevel);
-}
-
-//-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ExperienceTrackerProgression.cpp
 // ?isTrainable@ExperienceTracker@@ present-unmatched
 Bool ExperienceTracker::isTrainable() const

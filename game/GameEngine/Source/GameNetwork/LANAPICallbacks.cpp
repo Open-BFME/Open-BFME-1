@@ -334,7 +334,9 @@ void LANAPI::OnGameOptions( UnsignedInt playerIP, Int playerSlot, AsciiString op
 			}
 			else if (key == "Host")
 			{
-				slot->setHost(munkee.str()+1);
+				LANPlayer *user = slot->getUser();
+				if (user)
+					user->setHost(munkee.str()+1);
 				return;
 			}
 		}

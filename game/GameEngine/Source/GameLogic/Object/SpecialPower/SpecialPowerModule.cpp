@@ -325,67 +325,6 @@ Bool SpecialPowerModule::isReady() const
 }  // end isReady
 
 //-------------------------------------------------------------------------------------------------
-/** Get the percentage ready a special power is to use
-	* 1.0f = ready now
-	* 0.5f = 50% ready
-	* 0.2f = 20% ready
-	* etc ... */
-//-------------------------------------------------------------------------------------------------
-// Matched via game/masm_dumps/SpecialPowerModule_getPercentReady.asm @ 0x00268A90 (210B)
-// Retail: early [this+0x14] flag returns 0.0; no ZH 0.99999 paused-at-ready path
-Real SpecialPowerModule::getPercentReady() const
-{
-	if( m_pausedCount > 0 && m_pausedPercent == 1.0f )
-	{
-			//Don't consider it ready if paused.
-		return 0.99999f;
-	}
-
-#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-	if( TheGlobalData->m_specialPowerUsesDelay == FALSE ) 
-		return 1.0f;
-#endif
-	
-	// easy case ... is ready
-	if( isReady() )
-		return 1.0f;
-
-	if( m_pausedCount > 0 )
-	{
-		return m_pausedPercent;
-	}
-
-	// get the module data
-	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
-
-	// sanity
-	if( modData->m_specialPowerTemplate == NULL )
-		return 0.0f;
-
-	UnsignedInt readyFrame = m_availableOnFrame;
-
-	//unless
-	const Object* obj = getObject();
-	if ( obj )
-	{
-		Player *player = getObject()->getControllingPlayer();
-		if ( player )
-		{
-			if ( modData->m_specialPowerTemplate->isSharedNSync())
-			{
-				readyFrame = player->getOrStartSpecialPowerReadyFrame( getSpecialPowerTemplate() );
-			}
-		}
-	}
-
-	// calculate the percent	
-	Real percent = 1.0f - ((readyFrame - TheGameLogic->getFrame()) / 
-												 (Real)modData->m_specialPowerTemplate->getReloadTime());
-
-	return percent;
-}
-
-//-------------------------------------------------------------------------------------------------
 // A special power module that is only supposed to be fired via scripts. An example of this
 // are the various cargo plane units we have. Scripters can launch specials from them after
 // specifying a waypoint path for them to follow them.

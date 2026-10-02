@@ -46,6 +46,10 @@
 //#pragma optimize("", off)
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
+
+// Keep the TU's matched inline float-ceil wrapper emitted after its caller moved to its own TU.
+static float (__cdecl * volatile s_retailFloatCeil)(float) = ceil;
+
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 SupplyWarehouseDockUpdateModuleData::SupplyWarehouseDockUpdateModuleData( void )
@@ -354,19 +358,6 @@ void SupplyWarehouseDockUpdate::setDockCrippled( Bool setting )
 	}
 
 	DockUpdate::setDockCrippled( setting );
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/promoted__setCashValue_SupplyWarehouseDockUpdate_QAEXH_Z_002CFA50.cpp
-// ?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z present-unmatched
-void SupplyWarehouseDockUpdate::setCashValue( Int cashValue )
-{
-	// A script can tell us our set value, and we need to figure out the boxes needed to provide that.
-	m_boxesStored = ceil(cashValue / (float)TheGlobalData->m_baseValuePerSupplyBox);
-	Drawable *draw = getObject()->getDrawable();
-	if( draw )
-	{
-		draw->updateDrawableSupplyStatus( getSupplyWarehouseDockUpdateModuleData()->m_startingBoxesData, m_boxesStored );
-	}
 }
 
 // ------------------------------------------------------------------------------------------------
