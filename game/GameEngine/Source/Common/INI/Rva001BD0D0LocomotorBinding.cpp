@@ -26,6 +26,18 @@
 
 enum LocomotorSetType { LOCOMOTORSET_INVALID = -1 };
 class LocomotorTemplate;
+
+// This constructor has a ledgered retail thunk in
+// LocomotorTemplateVectorBaseConstructorThunk.cpp.  Keep the header's inline
+// template body available for layout and the other vector operations, but use
+// that external specialization for this constructor.
+namespace _STL
+{
+template <>
+_Vector_base<LocomotorTemplate const *, allocator<LocomotorTemplate const *> >::_Vector_base(
+    size_t, const allocator<LocomotorTemplate const *> &);
+}
+
 typedef std::map<LocomotorSetType, std::vector<const LocomotorTemplate *> > LocomotorTemplateMap;
 class AIUpdateModuleData
 {

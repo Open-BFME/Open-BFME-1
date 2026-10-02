@@ -23,6 +23,7 @@ class Gen006E2310 : public BfmeA1134
 {
 public:
 	Gen006E2310( void );
+	virtual ~Gen006E2310( void );
 
 private:
 	unsigned char m_unmodelled[0xa8];

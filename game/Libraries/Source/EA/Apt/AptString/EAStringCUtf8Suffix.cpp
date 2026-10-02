@@ -26,7 +26,7 @@ extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 class EAStringC
 {
 public:
-	EAStringC()
+	__forceinline EAStringC(int)
 	{
 		m_data = &g_emptyStringData;
 		++g_emptyStringData.m_refCount;
@@ -104,6 +104,6 @@ EAStringC EAStringC::utf8Suffix0089FAC0(int start) const
 	buffer += 8;
 	const unsigned char *first = utf8Advance0089FAC0(buffer, effectiveStart);
 	if (first == 0)
-		return EAStringC();
+		return EAStringC(0);
 	return Mid((int)(first - buffer));
 }

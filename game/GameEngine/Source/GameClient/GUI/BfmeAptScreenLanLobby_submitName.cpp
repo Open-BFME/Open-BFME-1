@@ -20,10 +20,7 @@ public:
 		StringBase<unsigned short>::set(other);
 	}
 
-	void trim()
-	{
-		StringBase<unsigned short>::trim();
-	}
+	void trim();
 
 	bool isEmpty() const
 	{

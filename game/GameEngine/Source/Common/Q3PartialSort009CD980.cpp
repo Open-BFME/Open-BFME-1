@@ -44,13 +44,6 @@ struct Q3SortElem4
 // compare.
 struct Q3SortCompare
 {
-	bool operator()(const Q3SortElem4 &left, const Q3SortElem4 &right) const
-	{
-		if (left.m_base.str()[0] == '_' && right.m_base.str()[0] == '_')
-			return left.m_base.compareNoCase(right.m_base) > 0;
-
-		return left.m_base.compareNoCase(right.m_base) < 0;
-	}
 };
 
 struct BfmeElemVOU
@@ -70,7 +63,12 @@ void Gen009CD980(Q3SortElem4 *first, Q3SortElem4 *middle,
 	q3MakeHeap(first, middle, compare, (Q3SortElem4 *)0, (int *)0);
 	for (Q3SortElem4 *i = middle; i < last; ++i)
 	{
-		if (compare(*i, *first))
+		bool shouldPop;
+		if (i->m_base.str()[0] == '_' && first->m_base.str()[0] == '_')
+			shouldPop = i->m_base.compareNoCase(first->m_base) > 0;
+		else
+			shouldPop = i->m_base.compareNoCase(first->m_base) < 0;
+		if (shouldPop)
 		{
 			bfmePopHeapVOU((BfmeElemVOU *)first, (BfmeElemVOU *)middle,
 				(BfmeElemVOU *)i, *(BfmeElemVOU *)i,
