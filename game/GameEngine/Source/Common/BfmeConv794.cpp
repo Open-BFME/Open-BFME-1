@@ -8,15 +8,21 @@
 extern "C" unsigned char bfmeVftDXG[];
 extern void (__cdecl *g_bfmeFreeDXG)(void *what);
 
+// retail 0x00893990: the cleanup bfmeGoDXG runs on itself.
+class Gen_00893990
+{
+public:
+	void bfmeCleanup();
+};
+
 struct BfmeThingDXG
 {
 	void *bfmeGoDXG(unsigned char flags);
-	void bfmeDtorDXG();
 };
 
 void *BfmeThingDXG::bfmeGoDXG(unsigned char flags)
 {
-	bfmeDtorDXG();
+	((Gen_00893990 *)this)->bfmeCleanup();
 	if (flags & 1)
 		g_bfmeFreeDXG(this);
 	return this;
