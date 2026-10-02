@@ -5,8 +5,9 @@
 // its full 271-byte body and both aligned caller sites establish its ABI.
 // The 0x00410C90 callback is a 30-byte cdecl body: test Object, virtual getDrawable,
 // OR drawable status with 0x40, return 1; its second callback argument is unused.
-// Player::iterateObjects is declared with the integer predicate/result ABI
-// established by the matched body at 0x000CDCF0 (retail call via ILT 0x0002F1CB).
+// Player::iterateObjects is declared with the void-predicate/int-result ABI
+// established by the matched body at 0x000CDCF0 (retail call via ILT 0x0002F1CB);
+// the predicate return value is discarded and the int result compared to 1.
 // The source-visible message and castle-ID locals preserve retail's evaluation
 // order; removing them also causes the compiler to hoist constant 1 into EBX.
 // Coord3D retains the struct ABI of the existing Radar/Eva callee contracts;
@@ -90,7 +91,7 @@ class Object
 class Player
 {
   public:
-    int iterateObjects(int (*)(Object *, void *), void *) const;
+    int iterateObjects(void (*)(Object *, void *), void *) const;
 };
 
 class PlayerList
@@ -197,7 +198,7 @@ void Drawable::notify00419F00()
                 context.m_drawable = this;
                 context.m_field04 = message;
 
-                if (p->iterateObjects((int (*)(Object *, void *))bfmeDrawableFilter00419E40,
+                if (p->iterateObjects((void (*)(Object *, void *))bfmeDrawableFilter00419E40,
                                       &context) == 1)
                 {
                     Object *nearby = object->nearest004182A0();
