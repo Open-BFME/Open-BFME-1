@@ -14,9 +14,15 @@ public:
 
 typedef BitFlags<45> Rva003C9530Status;
 
-struct BfmeObj923G;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-extern BfmeObj923G *__stdcall bfmeFind923G( void *owner );
+class LivingWorldRegion;
+
+class LivingWorldRegionManager
+{
+public:
+    LivingWorldRegion *rva003C8A50( const AsciiString &regionName );
+};
 
 extern void d_003c9470();
 
@@ -46,7 +52,9 @@ public:
 bool Rva003C9530Owner::updateStatus( Rva003C9530Key *key,
                                      Rva003C9530Status *status )
 {
-    Object *object = reinterpret_cast<Object *>( bfmeFind923G( key ) );
+    Object *object = reinterpret_cast<Object *>(
+        reinterpret_cast<LivingWorldRegionManager *>( this )->rva003C8A50(
+            *reinterpret_cast<const AsciiString *>( key ) ) );
     if( object == 0 )
         return false;
 

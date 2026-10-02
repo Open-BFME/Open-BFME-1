@@ -155,8 +155,16 @@ virtual Rva003C9470ResultPair *getPair();
 	int m_refCount;
 };
 
-struct BfmeObj923G;
-extern BfmeObj923G *__stdcall bfmeFind923G(void *owner);
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+class LivingWorldRegion;
+
+class LivingWorldRegionManager
+{
+public:
+	LivingWorldRegion *rva003C8A50(const AsciiString &regionName);
+};
+
 extern void j_00034982();
 
 class Rva003C9470Key
@@ -176,7 +184,8 @@ private:
 bool Rva003C9470Owner::fallback(Rva003C9470Key *key,
 	Rva003C9470Output *output)
 {
-	Rva003C6F60Object *object = (Rva003C6F60Object *)bfmeFind923G(key);
+	Rva003C6F60Object *object = (Rva003C6F60Object *)
+		((LivingWorldRegionManager *)this)->rva003C8A50(*(const AsciiString *)key);
 	if (object == 0)
 		return false;
 
