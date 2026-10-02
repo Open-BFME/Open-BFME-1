@@ -107,3 +107,20 @@ float InactiveBody::estimateDamage(DamageInfoInput &damageInfo) const
 
 	return amount;
 }
+
+// BodyModuleInterface slot 1; see bodymodule-slot1-attempthealing.md.
+void InactiveBody::attemptHealing(DamageInfo *damageInfo)
+{
+	if (!damageInfo) {
+		return;
+	}
+
+	if (damageInfo->m_damageType != 7) {
+		attemptDamage(damageInfo);
+		return;
+	}
+
+	damageInfo->m_actualDamageDealt = 0.0f;
+	damageInfo->m_actualDamageClipped = 0.0f;
+	damageInfo->m_noEffect = true;
+}

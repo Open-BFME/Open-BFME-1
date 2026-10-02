@@ -44,39 +44,3 @@ int BfmeThingCC::bfmeAskCC(void)
 
 	return m_bfmeOwner->bfmeDoCC();
 }
-
-struct BfmeItemCD
-{
-	unsigned char m_bfmeHead[0x10];		// 0x00
-	int m_bfmeKind;				// 0x10
-	unsigned char m_bfmeGap[0x3c];		// 0x14
-	int m_bfmeFirst;			// 0x50
-	int m_bfmeSecond;			// 0x54
-	unsigned char m_bfmeDone;		// 0x58
-};
-
-
-class BfmeThingCD
-{
-public:
-	virtual void bfmeDoCD(BfmeItemCD *item) = 0;
-
-	void bfmeGoCD(BfmeItemCD *item);
-};
-
-void BfmeThingCD::bfmeGoCD(BfmeItemCD *item)
-{
-	if (item == 0)
-		return;
-
-	if (item->m_bfmeKind != 7)
-	{
-		bfmeDoCD(item);
-
-		return;
-	}
-
-	item->m_bfmeFirst = 0;
-	item->m_bfmeSecond = 0;
-	item->m_bfmeDone = 1;
-}
