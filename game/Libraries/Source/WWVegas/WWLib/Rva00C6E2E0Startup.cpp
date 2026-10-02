@@ -1,9 +1,8 @@
 // cl: /O2 /MD /Igame/Libraries/Source/WWVegas/WWLib
 #include "mpmath.h"
-
-extern digit g_bfmeRva0134F9A0Buffer[64];
+#include "int.h"
 
 void bfmeRva00C6E2E0InitializeMultiprecisionBuffer()
 {
-    XMP_Init(g_bfmeRva0134F9A0Buffer, 0, 64);
+    XMP_Init(Int<64>::Remainder, 0, 64);
 }
