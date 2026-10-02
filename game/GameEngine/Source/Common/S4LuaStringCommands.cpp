@@ -76,13 +76,14 @@ struct S4Registry
 	S4Holder *m_holder;
 };
 
-extern S4Registry *g_s4Registry;
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 #define S4_LUA_STRING_COMMAND( NAME, A, B )                                    \
 	int s4lua##NAME( lua_State *L )                                            \
 	{                                                                          \
 		S4Sink004135C0 *s;                                                     \
-		S4Holder *h = g_s4Registry->m_holder;                                  \
+		S4Holder *h = reinterpret_cast<S4Registry *>(TheLuaScriptEngine)->m_holder;                                  \
 		if ( h == 0 || ( s = h->m_sink ) == 0 || lua_gettop( L ) <= 0 )        \
 			return 0;                                                          \
 		AsciiString name( lua_tostring( L, 1 ) );                              \

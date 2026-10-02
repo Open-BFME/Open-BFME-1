@@ -331,7 +331,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern LuaScriptEngine *TheLuaScriptEngine;
+LuaScriptEngine *TheLuaScriptEngine = 0;
 extern PartitionManager *ThePartitionManager;
 extern GameLogic *TheGameLogic;
 
