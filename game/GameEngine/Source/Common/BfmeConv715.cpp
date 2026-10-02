@@ -1,7 +1,9 @@
-extern "C" unsigned char bfmeVftDJD1[];
-extern "C" unsigned char bfmeVftDJD2[];
-extern "C" unsigned char bfmeVftDJD3[];
-extern "C" unsigned char bfmeVftDJD4[];
+// Existing vftables at VA 01073744, 0110F978, 01110898 and 0111126C,
+// respectively, as recorded in dir32_addresses.csv.
+extern "C" unsigned char __identifier("??_7Snapshot@@6B@")[];
+extern "C" unsigned char __identifier("??_7PolymorphicVptrBase0110F978@@6B@")[];
+extern "C" unsigned char __identifier("??_7Rva005D4F30Poly@@6B@")[];
+extern "C" unsigned char __identifier("??_7V3NodeHead@@6B@")[];
 
 struct GenNode_006fa270
 {
@@ -36,11 +38,11 @@ struct BfmeThingDJD
 void __fastcall bfmeGoDJD(BfmeThingDJD *p)
 {
 	BfmeSub1DJD *a = p ? &p->m_bfme1 : 0;
-	a->m_bfmeVft = bfmeVftDJD1;
+	a->m_bfmeVft = __identifier("??_7Snapshot@@6B@");
 	BfmeSub2DJD *b = p ? &p->m_bfme2 : 0;
-	b->m_bfmeVft = bfmeVftDJD2;
+	b->m_bfmeVft = __identifier("??_7PolymorphicVptrBase0110F978@@6B@");
 	BfmeSub3DJD *c = p ? &p->m_bfme3 : 0;
-	c->m_bfmeVft = bfmeVftDJD3;
-	p->m_bfmeVft = bfmeVftDJD4;
+	c->m_bfmeVft = __identifier("??_7Rva005D4F30Poly@@6B@");
+	p->m_bfmeVft = __identifier("??_7V3NodeHead@@6B@");
 	p->m_bfmeBase.unlink();
 }

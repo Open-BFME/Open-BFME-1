@@ -1,7 +1,9 @@
-extern "C" unsigned char bfmeVftDJF1[];
-extern "C" unsigned char bfmeVftDJF2[];
-extern "C" unsigned char bfmeVftDJF3[];
-extern "C" unsigned char bfmeVftDJF4[];
+// Existing vftables at VA 01073744, 0110F9E8, 0111089C and 0111126C,
+// respectively, as recorded in dir32_addresses.csv.
+extern "C" unsigned char __identifier("??_7Snapshot@@6B@")[];
+extern "C" unsigned char __identifier("??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@")[];
+extern "C" unsigned char __identifier("??_7Rva005D4F40Poly@@6B@")[];
+extern "C" unsigned char __identifier("??_7V3NodeHead@@6B@")[];
 
 struct GenNode_006fa270
 {
@@ -36,11 +38,11 @@ struct BfmeThingDJF
 void __fastcall bfmeGoDJF(BfmeThingDJF *p)
 {
 	BfmeSub1DJF *a = p ? &p->m_bfme1 : 0;
-	a->m_bfmeVft = bfmeVftDJF1;
+	a->m_bfmeVft = __identifier("??_7Snapshot@@6B@");
 	BfmeSub2DJF *b = p ? &p->m_bfme2 : 0;
-	b->m_bfmeVft = bfmeVftDJF2;
+	b->m_bfmeVft = __identifier("??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@");
 	BfmeSub3DJF *c = p ? &p->m_bfme3 : 0;
-	c->m_bfmeVft = bfmeVftDJF3;
-	p->m_bfmeVft = bfmeVftDJF4;
+	c->m_bfmeVft = __identifier("??_7Rva005D4F40Poly@@6B@");
+	p->m_bfmeVft = __identifier("??_7V3NodeHead@@6B@");
 	p->m_bfmeBase.unlink();
 }
