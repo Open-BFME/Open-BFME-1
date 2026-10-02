@@ -10,10 +10,12 @@ struct BfmeRvaCoord3D
 	~BfmeRvaCoord3D() {}
 };
 
-class BfmeRvaTransform
+struct BfmeRva48D00Coord;
+
+class Rva00248D00
 {
 public:
-	void transform(const BfmeRvaCoord3D *, BfmeRvaCoord3D *);
+	void transform(const BfmeRva48D00Coord *, BfmeRva48D00Coord *);
 };
 
 class Rva00248DB0
@@ -25,9 +27,9 @@ public:
 BfmeRvaCoord3D *Rva00248DB0::getPosition(void)
 {
 	static BfmeRvaCoord3D position;
-	((BfmeRvaTransform *)((char *)this - 0x20))->transform(
-		(BfmeRvaCoord3D *)(*(char **)((char *)this - 0x1c) + 0x190),
-		&position);
+	((Rva00248D00 *)((char *)this - 0x20))->transform(
+		(BfmeRva48D00Coord *)(*(char **)((char *)this - 0x1c) + 0x190),
+		(BfmeRva48D00Coord *)&position);
 	return &position;
 }
 
@@ -40,9 +42,9 @@ public:
 BfmeRvaCoord3D *Rva00248E10::getPosition(void)
 {
 	static BfmeRvaCoord3D position;
-	((BfmeRvaTransform *)((char *)this - 0x20))->transform(
-		(BfmeRvaCoord3D *)(*(char **)((char *)this - 0x1c) + 0x184),
-		&position);
+	((Rva00248D00 *)((char *)this - 0x20))->transform(
+		(BfmeRva48D00Coord *)(*(char **)((char *)this - 0x1c) + 0x184),
+		(BfmeRva48D00Coord *)&position);
 	return &position;
 }
 
@@ -55,8 +57,8 @@ public:
 BfmeRvaCoord3D *Rva00248E70::getPosition(void)
 {
 	static BfmeRvaCoord3D position;
-	((BfmeRvaTransform *)((char *)this - 0x20))->transform(
-		(BfmeRvaCoord3D *)(*(char **)((char *)this - 0x1c) + 0x19c),
-		&position);
+	((Rva00248D00 *)((char *)this - 0x20))->transform(
+		(BfmeRva48D00Coord *)(*(char **)((char *)this - 0x1c) + 0x19c),
+		(BfmeRva48D00Coord *)&position);
 	return &position;
 }

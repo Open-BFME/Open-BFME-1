@@ -13818,5 +13818,15 @@
   "after_sha256": "2cb9d0f26b1f4f4476f605ec5417151e010cc37389b1c5fa4968c149e78a5b9b",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva00248DB0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva00248DB0.cpp",
+  "old_name": "BfmeRvaTransform",
+  "new_name": "Rva00248D00",
+  "before_sha256": "054b742b394719c356101da3804c37ec14a9a76cedeb19874d09fcf47b42c12d",
+  "after_sha256": "79ddd0ddb7f229db616e03f723fce937ad1a28eeb0327bbecc4dc64676316258",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "BfmeRvaTransform was a local cast target with no ledger row; retail reaches the matched transform at 0x00248D00 through ILT 0x00024A8C, and the ledger names its owner Rva00248D00."
  }
 ]
