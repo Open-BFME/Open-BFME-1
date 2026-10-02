@@ -3,7 +3,7 @@
 // DefectorSpecialPower::doSpecialPowerAtObject, retail RVA 0x0025A0E0.
 // The Defector vtable routes this override through the special-power interface.
 // The retail body rejects a disabled owner, a null target, and a null owner,
-// then tail-calls SpecialPowerModuleInterface::doSpecialPowerAtObject.
+// then tail-calls SpecialPowerModule::doSpecialPowerAtObject (0x0026A5B0).
 
 class Object;
 
@@ -13,10 +13,10 @@ struct ObjectFields
 	int m_disabledMask;
 };
 
-class SpecialPowerModuleInterface
+class SpecialPowerModule
 {
 public:
-	void doSpecialPowerAtObject(Object *target, unsigned int commandOptions);
+	virtual void doSpecialPowerAtObject(Object *target, unsigned int commandOptions);
 };
 
 class DefectorSpecialPower
@@ -41,5 +41,5 @@ void DefectorSpecialPower::doSpecialPowerAtObject(Object *target,
 	const Object *self = getObject();
 	if (self == 0)
 		return;
-	((SpecialPowerModuleInterface *)this)->doSpecialPowerAtObject(target, commandOptions);
+	((SpecialPowerModule *)this)->SpecialPowerModule::doSpecialPowerAtObject(target, commandOptions);
 }

@@ -27,13 +27,13 @@ struct Rva00265A00Record
 
 typedef unsigned int UnsignedInt;
 
-// The trailing call goes through ILT 0x00041BCD to 0x0026A550, the base
-// doSpecialPower that every non-overriding power's slot 11 holds; it is spelled
-// with that row's ledger name.
-class SpecialPowerModuleInterface
+// The trailing call goes through ILT 0x00041BCD to 0x0026A550,
+// SpecialPowerModule::doSpecialPower, the base body every non-overriding
+// power's slot 11 holds; a qualified call makes it direct.
+class SpecialPowerModule
 {
 public:
-	void doSpecialPower( UnsignedInt commandOptions );
+	virtual void doSpecialPower( UnsignedInt commandOptions );
 };
 
 class ScavengerSpecialPower
@@ -47,5 +47,5 @@ void ScavengerSpecialPower::doSpecialPower( UnsignedInt value )
 	Rva00265A00Record *record = *(Rva00265A00Record **)( (char *)this - 0x0c );
 	Rva00265A00Owner *owner = *(Rva00265A00Owner **)( (char *)this - 0x08 );
 	owner->lookup( record->m_key )->touch();
-	reinterpret_cast<SpecialPowerModuleInterface *>( this )->doSpecialPower( value );
+	reinterpret_cast<SpecialPowerModule *>( this )->SpecialPowerModule::doSpecialPower( value );
 }
