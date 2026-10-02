@@ -11,7 +11,7 @@ extern "C" {
 	int CommTCPUnlisten(CommTCPRef *ref);
 }
 
-int Rva007FE780Printf(const char *format, ...);
+extern "C" int Rva007FE780(const char *format, ...);
 
 struct CommTCPRef
 {
@@ -33,6 +33,6 @@ int CommTCPUnlisten(CommTCPRef *ref)
 // Always fails: "Resolve functionality not supported by CommTCP".
 int CommTCPResolve()
 {
-	Rva007FE780Printf("Resolve functionality not supported by CommTCP\n");
+	Rva007FE780("Resolve functionality not supported by CommTCP\n");
 	return -1;
 }

@@ -42,7 +42,7 @@ void *Rva007F0000Alloc(int size);
 extern void Rva00815780(void);
 extern void Rva00815890(void);
 
-int Rva007FE780Printf(const char *format, ...);
+extern "C" int Rva007FE780(const char *format, ...);
 
 struct CommSRPRef
 {
@@ -121,7 +121,7 @@ struct CommSRPRef *Rva00815300( int maxPacket, int recvCount,
 // Always fails: "Resolve functionality not supported by CommSRP".
 int CommSRPResolve()
 {
-	Rva007FE780Printf("Resolve functionality not supported by CommSRP\n");
+	Rva007FE780("Resolve functionality not supported by CommSRP\n");
 	return -1;
 }
 
@@ -137,11 +137,11 @@ int CommSRPSend(void *ref, const void *buffer, int length, int flags)
 	}
 	if ((*(int *)((char *)ref + 0xB8) + *(int *)((char *)ref + 0xB0)) %
 	        *(int *)((char *)ref + 0xB4) == *(int *)((char *)ref + 0xBC)) {
-		Rva007FE780Printf("CommSRPSend: input queue full\n");
+		Rva007FE780("CommSRPSend: input queue full\n");
 		return 0;
 	}
 	if (length > *(int *)((char *)ref + 0xB0) - 0x0B) {
-		Rva007FE780Printf("CommSRP: Oversized packet send (%d bytes)\n", length);
+		Rva007FE780("CommSRP: Oversized packet send (%d bytes)\n", length);
 		return -6;
 	}
 	if (length == 0) {
@@ -204,7 +204,7 @@ int CommSRPListen(void *ref, const char *text)
 	}
 	result = Rva007FD510(*(void **)((char *)ref + 0x7C), bindAddress, 0x10);
 	if (result < 0) {
-		Rva007FE780Printf("CommSRPListen: Error %d binding socket\\n", result);
+		Rva007FE780("CommSRPListen: Error %d binding socket\\n", result);
 		Rva007FD3F0(*(void **)((char *)ref + 0x7C));
 		Rva008154F0(ref, 0);
 		return -5;
@@ -268,7 +268,7 @@ int CommSRPConnect(void *ref, const char *text)
 	socketAddress[3] = (unsigned char)bindPort;
 	result = Rva007FD510(*(void **)((char *)ref + 0x7C), socketAddress, 0x10);
 	if (result < 0) {
-		Rva007FE780Printf("CommSRPConnect: Error %d binding socket\n", result);
+		Rva007FE780("CommSRPConnect: Error %d binding socket\n", result);
 		return -5;
 	}
 	*(unsigned short *)((char *)ref + 0x80) = 2;
