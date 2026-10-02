@@ -39,7 +39,7 @@ template <class CharT, class Traits>
 class basic_streambuf
 {
 public:
-    int sbumpc();
+    CharT sbumpc();
 };
 
 template <class CharT, class Traits>

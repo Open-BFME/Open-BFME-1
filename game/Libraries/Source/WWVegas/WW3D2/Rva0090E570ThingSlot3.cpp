@@ -104,6 +104,16 @@ extern "C" long __stdcall D3DXFilterTexture(IDirect3DTexture9 *texture, const vo
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 // BFME's SurfaceClass holds only the D3D9 surface; Format is the raw D3DFORMAT.
+struct BfmeItemDC;
+class BfmeThingDC
+{
+public:
+	BfmeThingDC(BfmeItemDC *item);
+
+private:
+	BfmeItemDC *m_bfmeItem;
+};
+
 class SurfaceClass
 {
 public:
@@ -113,14 +123,13 @@ public:
 		unsigned int Height;
 	};
 
-	SurfaceClass(IDirect3DSurface9 *d3d_surface);
 	~SurfaceClass();
 	void Get_Description(SurfaceDescription &surface_desc);
 	void *Lock(int *pitch, bool discard);
 	void Unlock(void);
 
-private:
-	IDirect3DSurface9 *D3DSurface;
+	// Same one-pointer storage as the SurfaceClass D3D9 field.
+	BfmeThingDC m_surfaceOwner;
 };
 
 // Rva0090C2F0InnerLoad.cpp
@@ -174,7 +183,7 @@ void Rva0090E570Thing::derivedSlot3(void)
 			TheBfmeAwakenDebug->slot6c(0, 0)->slot38("DX8 error ")->slot00(result)->slot4c(1);
 		}
 
-		SurfaceClass surf(surface);
+		SurfaceClass surf = { (BfmeItemDC *)surface };
 		if (surface)
 			surface->Release();
 

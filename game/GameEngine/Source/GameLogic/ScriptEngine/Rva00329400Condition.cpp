@@ -15,6 +15,7 @@ class ObjectTypesTemp { public: ObjectTypes*m_types; ObjectTypesTemp():m_types(0
 class Player { public: char unknown00[0x24]; int m_playerIndex; int getPlayerIndex() const { return m_playerIndex; } void countObjectsByThingTemplate(int,const ThingTemplate*const*,bool,int*,bool)const; };
 class PlayerList { public: Player*getEachPlayerFromMask(unsigned short&); };
 class ScriptEngine { public: unsigned short unidentified_0034DB40(Parameter*); int getObjectCount(int,const AsciiString&)const; void setObjectCount(int,const AsciiString&,int); };
+class BfmeThingBTE { public: void bfmeGoBTE(int,void*,void*); };
 extern PlayerList *ThePlayerList;
 extern ScriptEngine *TheScriptEngine;
 class ScriptConditions { friend class Rva00329400Condition; protected: static void objectTypesFromParam(Parameter*,ObjectTypes*); };
@@ -35,7 +36,7 @@ bool Rva00329400Condition::evaluate(Parameter*players,Parameter*type)
    int total=0;
    for(_STL::vector<int>::const_iterator i=counts.begin();i!=counts.end();++i)total+=*i;
    int previous=TheScriptEngine->getObjectCount(player->getPlayerIndex(),type->text);
-   if(total!=previous){TheScriptEngine->setObjectCount(player->getPlayerIndex(),type->text,total);if(total<previous)return true;}
+   if(total!=previous){((BfmeThingBTE*)TheScriptEngine)->bfmeGoBTE(player->getPlayerIndex(),(void*)&type->text,(void*)total);if(total<previous)return true;}
   }
  }
  return false;

@@ -131,10 +131,8 @@ struct Rva00528B60Combo
 };
 
 // Sibling SkirmishScreenState methods matched under address-derived owners.
-// 0x00526660 (ILT 0x0001C8D2) reads its first argument as a byte, and retail
-// pushes the whole WouldMapTransfer bool dword unextended, so the first
-// parameter is a bool: the pin ?run@Rva00526660Body@@QAEX_NH@Z is that alias.
-class Rva00526660Body { public: void run(Bool enable, int slotIndex); };
+// Retail's ledger owner spells the two-word helper as run(int, int).
+class Rva00526660Body { public: void run(int enable, int slotIndex); };
 class Rva00525080SkirmishScreenState { public: void rva00525080(int index, int state); };
 class Rva00523460Owner { public: void rva00523460(int index, int data); };
 
@@ -195,7 +193,7 @@ void SkirmishScreenState::refreshGameSlot(Int index)
 		else
 		{
 			Bool willTransfer = WouldMapTransfer(m_game);
-			((Rva00526660Body *)this)->run(willTransfer, -1);
+			((Rva00526660Body *)this)->run(*(int *)&willTransfer, -1);
 		}
 	}
 	else if (m_game->amIHost())

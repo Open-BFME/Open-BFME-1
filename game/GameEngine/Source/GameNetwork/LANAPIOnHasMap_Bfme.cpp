@@ -85,7 +85,6 @@ protected:
 	StringBaseWideAP(void);
 	StringBaseWideAP(const StringBaseWideAP &other);
 	StringBaseWideAP(const unsigned short *text);
-	~StringBaseWideAP(void);
 
 	unsigned short *m_bfmeWideAP;
 };
@@ -95,7 +94,10 @@ class UnicodeStringAP : public StringBaseWideAP
 public:
 	UnicodeStringAP(void) {}
 	UnicodeStringAP(const UnicodeStringAP &other) : StringBaseWideAP(other) {}
-	~UnicodeStringAP(void) {}
+	__forceinline ~UnicodeStringAP(void)
+	{
+		((StringBase<unsigned short> *)this)->clear();
+	}
 
 	const unsigned short *bfmeTextAP(void) const
 	{
