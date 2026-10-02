@@ -13,7 +13,12 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern void *g_bfmeArgEAC;
+
+// The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
+// TU only pushes its address as the show/list interface argument, so the int is
+// cast at the use and the pushed bytes stay identical.
+extern int g_aptPalantirWindow;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buf, const char *fmt, int v);
 extern "C" unsigned char bfmeFmtStrEAC[];
@@ -26,12 +31,12 @@ void bfmeGoEACa(int a)
 	if (a >= 1 || a <= 100)
 	{
 		sprintf((char *)&a, (const char *)bfmeFmtStrEAC, a);
-		((BfmeUiEAC *)g_rva012F19E8WindowManager)->bfmeShowEAC(g_bfmeArgEAC, (const char *)bfmeMsgEACa, 1, &a, 0, 0, 0, 0);
+		((BfmeUiEAC *)g_rva012F19E8WindowManager)->bfmeShowEAC((void *)g_aptPalantirWindow, (const char *)bfmeMsgEACa, 1, &a, 0, 0, 0, 0);
 	}
 }
 
 void bfmeGoEACb(int a, int i)
 {
 	sprintf((char *)&a, (const char *)bfmeFmtStrEAC, a + 1);
-	((BfmeUiEAC *)g_rva012F19E8WindowManager)->bfmeListEAC(g_bfmeArgEAC, (const char *)bfmeMsgEACb, 2, &a, bfmeTabEAC[i], 0, 0, 0);
+	((BfmeUiEAC *)g_rva012F19E8WindowManager)->bfmeListEAC((void *)g_aptPalantirWindow, (const char *)bfmeMsgEACb, 2, &a, bfmeTabEAC[i], 0, 0, 0);
 }

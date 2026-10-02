@@ -34,7 +34,11 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeX1065 *g_bfmeX1065;
+// The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
+// TU only pushes its address as the run() interface argument, so the int is
+// cast at the use and the pushed bytes stay identical.
+extern int g_aptPalantirWindow;
 extern char g_bfmeFmtD1065[];
 extern char g_bfmeFmtF1065[];
 extern char g_bfmeFmtG1065[];
@@ -66,5 +70,5 @@ void bfmeGo1065C(int a)
 	char buf[0x10];
 
 	_snprintf(buf, 0x10, g_bfmeFmtG1065, a * ((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeSlot1065R_11()->m_bfme04);
-	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065(g_bfmeX1065, g_bfmeFmtH1065, 1, buf, 0, 0, 0, 0);
+	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065((BfmeX1065 *)g_aptPalantirWindow, g_bfmeFmtH1065, 1, buf, 0, 0, 0, 0);
 }

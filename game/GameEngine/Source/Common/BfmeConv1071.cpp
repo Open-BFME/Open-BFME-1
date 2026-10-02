@@ -16,7 +16,12 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern BfmeX1071 *g_bfmeX1071;
+// The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
+// TU only pushes its address as the run() interface argument, so the int is
+// cast at the use and the pushed bytes stay identical.
+extern int g_aptPalantirWindow;
+
 extern char g_bfmeFmtD1071[];
 extern char g_bfmeFmtP1071[];
 extern char g_bfmeFmtQ1071[];
@@ -31,7 +36,7 @@ void bfmeGo1071A(int a, char b)
 	char buf[0x10] = "";
 
 	sprintf(buf, g_bfmeFmtD1071, a);
-	((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071(g_bfmeX1071, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
+	((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGo1071B(char a)
@@ -39,13 +44,13 @@ void bfmeGo1071B(char a)
 	if (a) {
 		if (!g_bfmeF1071) {
 			g_bfmeH1071 = 1;
-			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeOpen1071(g_bfmeX1071);
+			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeOpen1071((BfmeX1071 *)g_aptPalantirWindow);
 			g_bfmeF1071 = 1;
 			g_bfmeH1071 = 0;
 		}
 	} else {
 		if (!g_bfmeF1071 && !g_bfmeH1071) {
-			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071(g_bfmeX1071, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
+			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
 			g_bfmeH1071 = 1;
 		}
 	}

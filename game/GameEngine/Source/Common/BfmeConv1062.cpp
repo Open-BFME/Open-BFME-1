@@ -58,7 +58,12 @@ extern char g_bfmeLit3_1062[];
 extern char g_bfmeLitC1062[];
 
 class BfmeX1062;
-extern BfmeX1062 *g_bfmeX1062;
+
+// The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
+// TU only pushes its address as the run() interface argument, so the int is
+// cast at the use and the pushed bytes stay identical.
+extern int g_aptPalantirWindow;
 
 class BfmeR1062
 {
@@ -91,5 +96,5 @@ void bfmeGo1062D(void)
 			s = g_bfmeLit3_1062;
 			break;
 	}
-	bfmeR1062View()->bfmeRun1062(g_bfmeX1062, g_bfmeLitC1062, 1, s, 0, 0, 0, 0);
+	bfmeR1062View()->bfmeRun1062((BfmeX1062 *)g_aptPalantirWindow, g_bfmeLitC1062, 1, s, 0, 0, 0, 0);
 }

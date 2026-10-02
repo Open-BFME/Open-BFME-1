@@ -12,7 +12,12 @@ extern char g_bfmeLitB1060[];
 extern char g_bfmeLitC1060[];
 
 class BfmeX1060;
-extern BfmeX1060 *g_bfmeX1060;
+
+// The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
+// TU only pushes its address as the level-path builder's window argument, so
+// the int is cast at the use and the pushed bytes stay identical.
+extern int g_aptPalantirWindow;
 
 class BfmeR1060;
 
@@ -40,7 +45,7 @@ void bfmeGo1060B(void)
 	int v = g_bfmeP1060->m_bfme54;
 	char *s = --v ? g_bfmeLitA1060 : g_bfmeLitB1060;
 
-	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)g_bfmeX1060,
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)g_aptPalantirWindow,
 		(int)g_bfmeLitC1060, 1, (int)s, 0, 0, 0, 0);
 }
 
