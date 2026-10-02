@@ -1,5 +1,8 @@
 extern void *(*WideAllocPtr)(unsigned int bytes);
-void Gen00897300(void *block);
+// Defining name at 0x00897300: void __cdecl bfmePush(BfmeItemDX *), defined in
+// game/GameEngine/Source/Common/Bfme5FiftyFour.cpp.
+class BfmeItemDX;
+void __cdecl bfmePush(BfmeItemDX *item);
 
 class BfmeNestedBE
 {
@@ -11,7 +14,7 @@ public:
 	{
 		char *raw = (char *)WideAllocPtr(bytes + 8);
 		char *block = raw + 8;
-		Gen00897300(block);
+		bfmePush((BfmeItemDX *)block);
 		return block;
 	}
 

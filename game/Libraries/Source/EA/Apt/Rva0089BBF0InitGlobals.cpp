@@ -30,7 +30,10 @@
 // word at +4.
 
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-void Gen00897300(void *block);
+// Defining name at 0x00897300: void __cdecl bfmePush(BfmeItemDX *), defined in
+// game/GameEngine/Source/Common/Bfme5FiftyFour.cpp.
+class BfmeItemDX;
+void __cdecl bfmePush(BfmeItemDX *item);
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
@@ -60,7 +63,7 @@ struct Rva0089BBF0HeaderedNew : public Delete
 	{
 		char *raw = (char *)Rva008C5D70Alloc(bytes + 8);
 		char *block = raw + 8;
-		Gen00897300(block);
+		bfmePush((BfmeItemDX *)block);
 		return block;
 	}
 };

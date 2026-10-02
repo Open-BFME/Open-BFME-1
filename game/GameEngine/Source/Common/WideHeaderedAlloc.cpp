@@ -35,9 +35,12 @@
 
 extern void * (*WideAllocPtr)( unsigned int bytes );
 
-void Gen00897300( void *block );
+// Defining name at 0x00897300: void __cdecl bfmePush(BfmeItemDX *), defined in
+// game/GameEngine/Source/Common/Bfme5FiftyFour.cpp.
+class BfmeItemDX;
+void __cdecl bfmePush( BfmeItemDX *item );
 
-#define WIDE_ALLOC( NAME )                                                	void *Rva##NAME( unsigned int bytes )                                 	{                                                                     		char *block = (char *)WideAllocPtr( bytes + 8 ) + 8;                 		Gen00897300( block );                                             		return block;                                                     	}
+#define WIDE_ALLOC( NAME )                                                	void *Rva##NAME( unsigned int bytes )                                 	{                                                                     		char *block = (char *)WideAllocPtr( bytes + 8 ) + 8;                 		bfmePush( (BfmeItemDX *)block );                                   		return block;                                                     	}
 
 WIDE_ALLOC( 00897640 )
 WIDE_ALLOC( 008A3130 )
