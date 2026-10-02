@@ -10,7 +10,7 @@ struct Rva007EB810Diag
 	virtual void fail(const char *expr, const char *file, int line);
 };
 
-extern Rva007EB810Diag *g_Va0130A5A0;
+Rva007EB810Diag *g_Va0130A5A0 = 0;
 
 extern "C"
 {
