@@ -16,7 +16,12 @@ public:
 	Bfme5UniHeader *m_bfmeData;
 };
 
-extern const UnicodeString g_bfme5EmptyUnicode;
+// Retail's pushed object at 0x01336E50 is WWLib's exported
+// ?TheEmptyString@AsciiString@@2V1@B (ascii_string.h:18), whose one definition
+// is the const out-of-line copy in
+// game/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate_initTimes.cpp.
+// The name here was address-derived; the local view is the TU's UnicodeString.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Bfme5PanelOwner
 {
@@ -50,5 +55,5 @@ void Bfme5Panel::bfmeClear(void)
 	}
 
 	if (m_bfmeText.m_bfmeData && m_bfmeText.m_bfmeData->m_bfmeLength != 0)
-		m_bfmeText.set(g_bfme5EmptyUnicode);
+		m_bfmeText.set((const UnicodeString &)AsciiString::TheEmptyString);
 }

@@ -10,7 +10,17 @@ struct Rva006C9270GlobalData
 
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
-extern float g_bfmeKRW;
+
+// Retail's operand at 0x01090DDC is the class-static scale constant defined
+// (const, 0.5f) in game/GameEngine/Source/Common/S3CachedThresholdTest.cpp;
+// dir32_addresses.csv places ?value@BfmeCachedThresholdScaleHolder@@2MB at the
+// same address the placeholder g_bfmeKRW named, so the reference is respelled
+// to the defining name. The declaration below only has to forward-declare it.
+class BfmeCachedThresholdScaleHolder
+{
+public:
+	static const float value;
+};
 
 class BfmeOwnerRW
 {
@@ -33,5 +43,5 @@ int BfmeOwnerRW::bfmeCheckRW(void)
 		m_bfmeFlagsRW |= 2;
 	}
 
-	return *(volatile float *)&( (Rva006C9270GlobalData *)TheWritableGlobalData )->m_bfmeScaleRW * g_bfmeKRW < m_bfmeCachedRW;
+	return *(volatile float *)&( (Rva006C9270GlobalData *)TheWritableGlobalData )->m_bfmeScaleRW * BfmeCachedThresholdScaleHolder::value < m_bfmeCachedRW;
 }
