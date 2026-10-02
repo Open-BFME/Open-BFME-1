@@ -80,37 +80,3 @@ void BfmePrimaryFV::bfmeAdvanceFV(volatile int delta)
 	m_shadow->m_value5c->m_value20 = -scaled_second;
 }
 
-class BfmeLogicFV
-{
-public:
-	unsigned char m_bfmeHeadFV[0x3c];
-	int m_bfmeFrameFV;
-};
-
-class GameLogic;
-extern GameLogic *TheGameLogic;
-
-class BfmeSecondFV
-{
-public:
-	int bfmeStepFV(void);
-
-	unsigned char m_bfmeHeadFV[0x10];
-	int m_bfmeStampFV;
-};
-
-int BfmeSecondFV::bfmeStepFV(void)
-{
-	char *base = (char *)this;
-
-	if (*(void **)(base - 0xc) == 0)
-		return 0x3fffffff;
-
-	int delta = ((BfmeLogicFV *)TheGameLogic)->m_bfmeFrameFV - m_bfmeStampFV;
-
-	if (delta == 0)
-		((BfmePrimaryFV *)(base - 0x10))->bfmeResetFV();
-
-	((BfmePrimaryFV *)(base - 0x10))->bfmeAdvanceFV(delta);
-	return 1;
-}

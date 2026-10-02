@@ -260,3 +260,31 @@ The new address-kept Host/Maker/Sub views preserve exactly those same fields
 and virtual slots, without promoting the structural role to an EA identity.
 The snapshot-specific correction entries cover these view renames only;
 they do not exempt any future layout or identity change.
+
+## PartTheHeavensUpdate::update (00299D30, 56 bytes)
+
+Registered literal `PartTheHeavensUpdate` at `00C9060C`, registration
+`0012DF92`, and instance factory `0011C530` independently identify the owner.
+The factory call at `0011C56B` uses ILT `00024EC9` -> constructor `002999D0`.
+Its final +0x10 store at `00299A10` installs table VA `010C0718`. Slot zero
+is ILT `00032E5C` -> `00299D30`; that stub VA occurs exactly once, at table
+RVA `00CC0718`. Slot one is common `0004985F` -> `0011A130`, so the direct
+BFME spelling and the WB 0->0 update-family alignment above apply.
+
+The body receives the +0x10 update subobject, tests its module-data pointer
+at receiver-C, subtracts the timestamp at receiver+10 from the game frame,
+and calls two existing primary-receiver helpers with ECX adjusted by -10.
+It returns 3fffffff at early RET `00299D40` or 1 at final RET `00299D67`;
+INT3 starts at `00299D68`, proving 56 bytes and no stack arguments.
+The signature is public virtual non-const `UpdateSleepTime update()`,
+`?update@PartTheHeavensUpdate@@UAE?AW4UpdateSleepTime@@XZ`.
+
+Callee `000076E9` -> `00299BB0` already has the matched address-derived
+`DecalCreate00299BB0::create()` identity (nonvirtual void thiscall, no stack
+arguments). Use it rather than the old bfmeResetFV pin alias. Callee
+`0003BDD6` -> `00299A80` remains the matched
+`BfmePrimaryFV::bfmeAdvanceFV(int)` body in the original Common source;
+its opaque name and typed ABI are retained without inventing a method name.
+No new pin is required. Preserve the prior field-view spellings and receiver
+arithmetic; only the update owner, virtual status, return type, and first
+callee's existing ledger spelling change.
