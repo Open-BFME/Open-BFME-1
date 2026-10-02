@@ -7,7 +7,8 @@
 // exact semantic owner is not named by those generated siblings, so this
 // source keeps the operation's identity address-derived.
 
-extern char *(__cdecl *g_bfmeStrStrVMZ)(const char *text, const char *find);
+extern "C" __declspec(dllimport) char *__cdecl strstr(
+	const char *text, const char *find);
 
 struct Rva003BFB80StringHeader
 {
@@ -64,7 +65,7 @@ public:
 bool Rva003BFB80Owner::rva003BFB80(
 	Rva003BFB80String *source, Rva003BFB80String *output)
 {
-	if (g_bfmeStrStrVMZ(rva003BFB80Text(source),
+	if (strstr(rva003BFB80Text(source),
 		":AutoSummon") != 0)
 	{
 		((StringBase<char> *)output)->set(
