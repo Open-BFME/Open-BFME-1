@@ -31911,8 +31911,6 @@ _timeGetTime@0,0x007E4810,"Retired authored shadow of native import-library FF25
 ?self@Rva0094E150Self@@QAEPAV1@XZ,0x0094E150,address-derived this-returner withdrawn before push: neighbours are STLport/vendored/inputs-reference rows so the library identity may be recoverable
 ?self@Rva009E0250Self@@QAEPAV1@XZ,0x009E0250,address-derived this-returner withdrawn before push: neighbours are STLport/vendored/inputs-reference rows so the library identity may be recoverable
 ?self@Rva0090C7D0Self@@QAEPAV1@XZ,0x0090C7D0,address-derived this-returner withdrawn before push: symbols.csv pins ?Unlock@Rva0090C710SurfaceLockView@@QAEXXZ here (W3DShroud::render caller)
-?self@Rva00898180Self@@QAEPAV1@XZ,0x00898180,address-derived this-returner withdrawn before push: code references the address from SpecialAbilityUpdate::startPacking/startPreparation
-?self@Rva00898120Self@@QAEPAV1@XZ,0x00898120,address-derived this-returner withdrawn before push: code references the address from 0x002A8540
 ?self@Rva009E22C0Self@@QAEPAV1@XZ,0x009E22C0,address-derived this-returner withdrawn before push: vector-ctor operand in IndexClass<int;INIEntry*>::Increase_Table_Size: a NodeElement default ctor
 ?self@Rva009E22D0Self@@QAEPAV1@XZ,0x009E22D0,address-derived this-returner withdrawn before push: vector-ctor operand in IndexClass<int;INISection*>::Increase_Table_Size: a NodeElement default ctor
 ?self@Rva008F7BC0Self@@QAEPAV1@XZ,0x008F7BC0,address-derived this-returner withdrawn before push: vector-ctor operand in BfmeThingCDE::initializeArray (dir32 name ??0Element@@QAE@XZ)
