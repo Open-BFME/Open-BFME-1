@@ -237,40 +237,7 @@ Animatable3DObjClass & Animatable3DObjClass::operator = (const Animatable3DObjCl
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Animatable3DObjClass::Release present-unmatched
-void Animatable3DObjClass::Release( void ) 
-{
-	switch (CurMotionMode) {
-
-		case BASE_POSE:
-			break;
-
-		case SINGLE_ANIM:
-			if ( ModeAnim.Motion != NULL ) {
-				ModeAnim.Motion->Release_Ref();
-				ModeAnim.Motion = NULL;
-			}
-			break;
-
-		case DOUBLE_ANIM:
-			if ( ModeInterp.Motion0 != NULL ) {
-				ModeInterp.Motion0->Release_Ref();
-				ModeInterp.Motion0 = NULL;
-			}
-
-			if ( ModeInterp.Motion1 != NULL ) {
-				ModeInterp.Motion1->Release_Ref();
-				ModeInterp.Motion1 = NULL;
-			}
-			break;
-
-		case MULTIPLE_ANIM:
-			break;
-
-		default:
-			break;
-	}
-}
+// Exact BFME release behavior: Animatable3DObjClass_Release_Thunk.cpp.
 
 /***********************************************************************************************
  * Animatable3DObjClass::Render -- Update this object for rendering                            *
