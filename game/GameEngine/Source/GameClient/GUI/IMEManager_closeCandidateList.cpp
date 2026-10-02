@@ -1,7 +1,9 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 // The retail body at 0x0048D530 matches IMEManager::closeCandidateList from
 // the upstream BFME family. The candidate window sits at +0x304C, the array
 // of UnicodeString values sits at +0x3040, and the count sits at +0x303C.
+
+#include "unicode_string.h"
 
 void __cdecl operator delete []( void *memory );
 
@@ -37,13 +39,6 @@ public:
 	virtual int winUnsetModal( GameWindow *window );
 };
 
-class Rva0048D530CandidateString
-{
-public:
-	~Rva0048D530CandidateString();
-	char m_data[4];
-};
-
 extern GameWindowManager *TheWindowManager;
 
 class IMEManager
@@ -54,7 +49,7 @@ class IMEManager
 private:
 	char m_padding303c[0x303c];
 	int m_candidateCount;
-	Rva0048D530CandidateString *m_candidateString;
+	UnicodeString *m_candidateString;
 	char m_padding3044[8];
 	GameWindow *m_candidateWindow;
 };

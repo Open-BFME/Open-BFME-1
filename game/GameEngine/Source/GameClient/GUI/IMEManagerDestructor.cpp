@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME IMEManager destructor, retail 0x0048D8B0 (216 bytes).
 //
 // The owner is established by the IMEManager constructor's 0x010F9978 vtable,
@@ -6,6 +6,8 @@
 // CreateIMEManagerInterface/delete path.  The candidate fields below are the
 // offsets read by this body; the long composition buffers are intentionally
 // represented by one opaque span because this destructor does not inspect them.
+
+#include "unicode_string.h"
 
 typedef bool Bool;
 typedef int Int;
@@ -75,16 +77,6 @@ public:
 	virtual Bool isComposing() = 0;
 };
 
-// The candidate element is the same 4-byte UnicodeString view used by the
-// exact closeCandidateList body at 0x0048D530.  Its nonvirtual destructor lets
-// MSVC emit the retail array-destruction helper for m_candidateString.
-class Rva0048D530CandidateString
-{
-public:
-	~Rva0048D530CandidateString();
-	char m_data[4];
-};
-
 class IMEManager : public IMEManagerInterface
 {
 public:
@@ -100,7 +92,7 @@ private:
 	Bool m_composing;                                  // +0x1c
 	char m_padding1d[0x303c - 0x1d];
 	int m_candidateCount;                              // +0x303c
-	Rva0048D530CandidateString *m_candidateString;    // +0x3040
+	UnicodeString *m_candidateString;                   // +0x3040
 	char m_padding3044[8];
 	GameWindow *m_candidateWindow;                     // +0x304c
 	GameWindow *m_statusWindow;                        // +0x3050
