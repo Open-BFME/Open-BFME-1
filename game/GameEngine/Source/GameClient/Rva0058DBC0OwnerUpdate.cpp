@@ -62,8 +62,6 @@ extern PlayerList *ThePlayerList;
 class Glo012F1028Type
 {
 public:
-	int j_0000353f();
-
 	unsigned char m_before2c[ 0x2c ];
 	bool m_byte2c;
 	bool m_byte2d;
@@ -125,6 +123,7 @@ extern void j_0000762b();
 extern void j_00004e3f();
 extern void j_0003deb0();
 extern void j_00029cbc();
+extern void j_0000353f();
 
 class Rva0058DDD0Call
 {
@@ -302,7 +301,11 @@ void Rva0058DBC0Owner::rva0058DDD0()
 	}
 	else
 	{
-		int value = Glo012F1028->j_0000353f();
+		typedef int ( Rva0058DDD0Call::*Function )();
+		union { void ( *raw )(); Function member; } function;
+		function.raw = j_0000353f;
+		int value = ( reinterpret_cast<Rva0058DDD0Call *>( Glo012F1028 )
+			->*function.member )();
 		if( value != m_lastCount00 )
 		{
 			if( value > m_lastCount00 )

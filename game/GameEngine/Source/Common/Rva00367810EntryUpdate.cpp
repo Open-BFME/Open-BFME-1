@@ -100,6 +100,7 @@ extern const char Rva006A16B0Empty[];
 
 extern void j_00026fc1();
 extern void j_0003fe09();
+extern void j_0001d1c9();
 
 
 static __forceinline void rva00367810Notify(
@@ -219,7 +220,10 @@ void Rva00367810Entries::update()
 	Rva00367810VirtualGate *gate = rva00367810TheVirtualGateView();
 	if( gate->m_table->m_test( gate ) )
 		return;
-	if( !rva00367810TheGameLogicView()->isLivingWorld() )
+	typedef bool ( Rva00367810GameLogic::*LivingWorldPredicate )();
+	union { void ( *raw )(); LivingWorldPredicate member; } livingWorld;
+	livingWorld.raw = j_0001d1c9;
+	if( !( rva00367810TheGameLogicView()->*livingWorld.member )() )
 		return;
 
 	for( unsigned int index = 0; index < m_entries.size(); ++index )

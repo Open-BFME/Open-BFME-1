@@ -35,7 +35,8 @@
 class AudioEventRTS;
 extern AudioEventRTS BfmeTheEmptyAudioEvent;
 
-void *__stdcall Q1Selector0000286A( int ordinal );
+extern void j_0000286a();
+typedef union { void (*raw)(); void *(__stdcall *typed)( int ); } Q1SelectorFunction;
 
 // The independently carved boundary immediately before this family is a
 // one-byte return. No semantic identity is asserted beyond its address.
@@ -47,7 +48,9 @@ void Rva00417110()
 	void *NAME();                                                         \
 	void *NAME()                                                          \
 	{                                                                     \
-		void *selected = Q1Selector0000286A( ORDINAL );                       \
+		Q1SelectorFunction selector;                                        \
+		selector.raw = j_0000286a;                                          \
+		void *selected = selector.typed( ORDINAL );                         \
 		return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;           \
 	}
 
@@ -62,26 +65,30 @@ Q1_SELECT_OR_FALLBACK( Rva004171E0, 0x5E )
 
 void *__stdcall Rva00417260( int selector )
 {
+	Q1SelectorFunction function;
+	function.raw = j_0000286a;
 	void *selected;
 	switch ( selector )
 	{
-		case 1: selected = Q1Selector0000286A( 0x58 ); break;
-		case 2: selected = Q1Selector0000286A( 0x59 ); break;
-		case 3: selected = Q1Selector0000286A( 0x5A ); break;
-		default: selected = Q1Selector0000286A( 0x57 ); break;
+		case 1: selected = function.typed( 0x58 ); break;
+		case 2: selected = function.typed( 0x59 ); break;
+		case 3: selected = function.typed( 0x5A ); break;
+		default: selected = function.typed( 0x57 ); break;
 	}
 	return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;
 }
 
 void *__stdcall Rva004172A0( int selector )
 {
+	Q1SelectorFunction function;
+	function.raw = j_0000286a;
 	void *selected;
 	switch ( selector )
 	{
-		case 1: selected = Q1Selector0000286A( 0x5C ); break;
-		case 2: selected = Q1Selector0000286A( 0x5D ); break;
-		case 3: selected = Q1Selector0000286A( 0x5E ); break;
-		default: selected = Q1Selector0000286A( 0x5B ); break;
+		case 1: selected = function.typed( 0x5C ); break;
+		case 2: selected = function.typed( 0x5D ); break;
+		case 3: selected = function.typed( 0x5E ); break;
+		default: selected = function.typed( 0x5B ); break;
 	}
 	return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;
 }
