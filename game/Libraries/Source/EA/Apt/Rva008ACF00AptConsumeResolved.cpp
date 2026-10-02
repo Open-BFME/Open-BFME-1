@@ -1,9 +1,8 @@
 // ?aptConsumeResolved008ACF00@@YAPAVAptValue@@PAX@Z
 // cl: /DNDEBUG /MD /EHsc
 class AptValue;
-class Rva8CD3F0Value;
-void __cdecl rva8CD3F0ResolveValue(void* a, void* b, Rva8CD3F0Value* c, Rva8CD3F0Value** out);
 class Rva8CCCE0Value;
+void __cdecl rva8CCCE0ResolveValue(void* a, void* b, Rva8CCCE0Value* c, Rva8CCCE0Value** out);
 class Rva8CD490Target { public: void consume(Rva8CCCE0Value* v); };
 extern AptValue* g_bfmeFallbackDB;
 struct Rva008ACF00Holder { char m_pad[0x50]; char* m_owner; };
@@ -15,8 +14,8 @@ struct Rva008ACF00Value {
 };
 AptValue* aptConsumeResolved008ACF00(void* self)
 {
-	Rva8CD3F0Value* resolved = 0;
-	rva8CD3F0ResolveValue(self, 0, (Rva8CD3F0Value*)self, &resolved);
+	Rva8CCCE0Value* resolved = 0;
+	rva8CCCE0ResolveValue(self, 0, (Rva8CCCE0Value*)self, &resolved);
 	Rva008ACF00Value* v = (Rva008ACF00Value*)resolved;
 	if (v) {
 		int type = v->m_type;
