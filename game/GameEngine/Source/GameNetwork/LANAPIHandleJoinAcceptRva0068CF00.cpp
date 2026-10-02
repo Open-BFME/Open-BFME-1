@@ -1,6 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/vendor/stlport
 // Join-accept packet handler at 0x0068CF00, 818 retail bytes.
 // LANAPI::update calls its ILT with a packet and sender address.
+
+#include <stl/_config.h>
+#undef _STLP_DEFAULT_CONSTRUCTOR_BUG
+#include <map>
 
 
 typedef int Int;
@@ -89,10 +93,27 @@ public:
 	AsciiString(const AsciiString &other)
 		: StringBase<char>(*(const StringBase<char> *)&other) {}
 	~AsciiString(void) {}
+	Int compare(const AsciiString &other) const;
 };
 
 typedef char BfmeUnicodeStringSizeCheck[sizeof(UnicodeString) == 4 ? 1 : -1];
 typedef char BfmeAsciiStringSizeCheck[sizeof(AsciiString) == 4 ? 1 : -1];
+
+class Rva0007DF70MapLess
+{
+public:
+	bool operator()(const AsciiString &left, const AsciiString &right) const
+	{
+		return left.compare(right) < 0;
+	}
+};
+
+namespace _STL
+{
+template <> struct less<AsciiString> : public Rva0007DF70MapLess
+{
+};
+}
 
 struct BfmeNetAddress
 {
@@ -176,6 +197,7 @@ class GameInfo
 public:
 	void enterGame(void);
 	void setMapForwarder(AsciiString mapName);
+	GameSlot *getSlot(Int slot);
 
 protected:
 	void *m_vptr;
@@ -204,7 +226,6 @@ public:
 	~LANGameInfo(void);
 
 	void setSlot(Int slot, LANGameSlot slotInfo);
-	GameSlot *getSlot(Int slot);
 	void setName(UnicodeString name);
 
 	Int getSeed(void) const { return m_seed; }
@@ -238,13 +259,7 @@ private:
 	Rva0068D3E0Slot m_items[8];
 };
 
-class PreferenceMap
-{
-public:
-	AsciiString &operator[](const AsciiString &key);
-private:
-	UnsignedByte m_data[12];
-};
+typedef _STL::map<AsciiString, AsciiString> PreferenceMap;
 
 class UserPreferences
 {

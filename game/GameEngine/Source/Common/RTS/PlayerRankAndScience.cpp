@@ -84,7 +84,7 @@ public:
 		return *this;
 	}
 
-	static const UnicodeString TheEmptyString;
+	static UnicodeString TheEmptyString;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
@@ -154,6 +154,8 @@ public:
 	Int current(void);
 };
 
+class LivingWorldLogic;
+
 class Player;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
@@ -168,7 +170,7 @@ extern RankInfoStore *TheRankInfoStore;
 extern GameTextInterface *TheGameText;
 extern PlayerList *ThePlayerList;
 extern GameLogic *TheGameLogic;
-extern Rva003BCC10 *TheLivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
@@ -223,7 +225,7 @@ Int Player::getRankLevelCap(void)
 	if (this == list->m_local && TheGameLogic->_bfme_isInLivingWorldCampaign())
 	{
 		slot[1] = TheRankInfoStore->getRankLevelCount();
-		slot[0] = TheLivingWorldLogic->current();
+		slot[0] = ((Rva003BCC10 *)TheLivingWorldLogic)->current();
 		return *((slot[0] < slot[1]) ? &slot[0] : &slot[1]);
 	}
 
