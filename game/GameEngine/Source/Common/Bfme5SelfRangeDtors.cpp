@@ -65,7 +65,8 @@ Gen_003BA860::~Gen_003BA860(void)
 		bfmeRelease(start, sizeof(BfmeElem8P) * (m_bfmeEnd - start));
 }
 
-extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void *__cdecl memmove(
+	void *destination, const void *source, unsigned int bytes);
 
 
 class BfmeOwnedP
@@ -81,7 +82,7 @@ inline BfmeOwnedP **bfmeCopySlots(BfmeOwnedP **destination, BfmeOwnedP **first, 
 
 	int bytes = (char *)last - (char *)first;
 
-	return (BfmeOwnedP **)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (BfmeOwnedP **)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeVecOfPtr

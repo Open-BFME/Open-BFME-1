@@ -81,6 +81,8 @@ public:
 		CanEnterType, bool *);
 };
 
+class ActionManager;
+
 class BFMEContainPosition : public BFMEVirtualSlots<81>
 {
 public:
@@ -121,7 +123,7 @@ struct BFMEObjectAI
 	}
 };
 
-extern BFMEActionManager *TheActionManager;
+extern ActionManager *TheActionManager;
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern void j_0000e570();
@@ -150,7 +152,7 @@ StateReturnType Rva0017DB30State::onEnter()
 
 	if (goal)
 	{
-		if (!TheActionManager->canEnterObject(
+		if (!reinterpret_cast<BFMEActionManager *>(TheActionManager)->canEnterObject(
 			obj, goal,
 			((BFMEAIUpdateCommandSource *)((BFMEObjectAI *)obj)->getAI())->getLastCommandSource(),
 			(CanEnterType)zero, (bool *)zero))

@@ -85,7 +85,8 @@ public:
 		const volatile ObjectStatusMaskType &, void * );
 };
 
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern void j_000434c3();
 extern void j_0004494a();
 extern void j_0001e9d4();
@@ -140,13 +141,13 @@ Object *SpecialAbilityUpdate::createSpecialObject()
 		((SpecialAbilityCleanupCall)j_000434c3)( this );
 	}
 
-	const ThingTemplate *thingTemplate = TheThingFactory->findTemplate(
+	const ThingTemplate *thingTemplate = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(
 		data->m_specialObjectName );
 	if ( thingTemplate )
 	{
 		ObjectStatusMaskType statusMask;
 		specialObject = ((ThingFactoryNewObjectCall)j_0004494a)(
-			TheThingFactory, &statusMask, (ThingTemplate *)thingTemplate,
+			reinterpret_cast<BfmeThingFactory *>(TheThingFactory), &statusMask, (ThingTemplate *)thingTemplate,
 			getObject()->getTeam(), statusMask, 0 );
 		if ( specialObject )
 		{
