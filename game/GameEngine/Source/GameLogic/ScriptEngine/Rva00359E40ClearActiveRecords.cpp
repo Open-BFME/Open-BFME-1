@@ -7,10 +7,23 @@ struct Rva00359E40Version;
 
 void __cdecl operator delete(void *block);
 
+extern void j_00028ec0();
+
 class BfmeNodeY
 {
 public:
-	~BfmeNodeY();
+	~BfmeNodeY()
+	{
+		typedef void (BfmeNodeY::*Destructor)(void);
+		union
+		{
+			void (__cdecl *raw)(void);
+			Destructor member;
+		} thunk;
+		thunk.raw = ::j_00028ec0;
+		(this->*thunk.member)();
+	}
+
 	BfmeNodeY *m_next;
 };
 
