@@ -16818,5 +16818,25 @@
   "after_sha256": "35aab9313ab928471ad6f957a09387988ae43116a4665bf3be22f6e54cda133f",
   "evidence": "targets/game/reverse/identity_evidence/000c0b90-map-reader.md",
   "reason": "False positional pairing: existing PlayerPosition element identity remains; bank string becomes canonical AsciiString at20/24. New containing array lifetime atB0 is neither old type; proof records independently distinct member offsets and callbacks."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00558be0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchInitGadget.cpp",
+  "old_name": "GameWindow",
+  "new_name": "Rva004B5AA0",
+  "before_sha256": "48e3644167fe0673e99129bc8c0a55f9dafd4d26cc64b04c423e4d99134dcdc6",
+  "after_sha256": "8b538cc945c3272fe1e7bb806308d656ed36d7fa9629b6282dd946a4b3624975",
+  "evidence": "targets/game/reverse/identity_evidence/0x00558be0-bank-type-pairings.md",
+  "reason": "False matcher pairing: GameWindow remains declared and used; Rva004B5AA0 is a distinct already matched four-argument callee at ILT00026BE8, not the two-output winGetSize callee."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00558be0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchInitGadget.cpp",
+  "old_name": "OnlineQuickMatchGadgetState",
+  "new_name": "Rva00558BE0Gadget",
+  "before_sha256": "48e3644167fe0673e99129bc8c0a55f9dafd4d26cc64b04c423e4d99134dcdc6",
+  "after_sha256": "8b538cc945c3272fe1e7bb806308d656ed36d7fa9629b6282dd946a4b3624975",
+  "evidence": "targets/game/reverse/identity_evidence/0x00558be0-bank-type-pairings.md",
+  "reason": "The bank invented a combined five-method class using alternatename directives to five existing ledger identities. The new empty address-owned storage view claims only this+0x5c, while calls retain each actual ledger callee identity."
  }
 ]

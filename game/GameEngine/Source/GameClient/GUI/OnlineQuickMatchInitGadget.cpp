@@ -1,14 +1,15 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stringinline
 // stlport
 #include <algorithm>
 #include <vector>
+#include "StringInline.h"
 //
 // AptOnlineQuickMatch::InitGadgets callback, retail 0x00558FB0 (244 bytes).
 // The selector strings are the five OnlineQuickMatch gadget names in BFME's
 // retail string table.  The callback stores each supplied window in the
 // embedded gadget state and refreshes the screen's window-manager layout.
 
-class GameWindow {};
+class GameWindow { public: void winGetSize(int *, int *); };
 
 extern "C" int __cdecl strcmp(const char *left, const char *right);
 
@@ -28,6 +29,7 @@ class QuickMatchPreferences
 {
 public:
 	virtual ~QuickMatchPreferences();
+	int getColor();
 
 private:
 	unsigned char m_unmodelled[0x10];
@@ -141,13 +143,71 @@ private:
 	} m_gadgets;
 };
 
-class OnlineQuickMatchColorSetup
+class Image;
+
+class ImageCollection
+{
+public:
+	const Image *findImageByName(const AsciiString &name);
+};
+
+extern ImageCollection *TheMappedImageCollection;
+
+class MultiplayerColorDefinition
+{
+public:
+	int getColor() const
+	{
+		return *(const int *)((const char *)this + 0x10);
+	}
+};
+
+class MultiplayerSettings
+{
+public:
+	MultiplayerColorDefinition *getColor(int which);
+	int getNumColors()
+	{
+		if (m_numColors == 0)
+			m_numColors = *(int *)((char *)this + 0x34);
+		return m_numColors;
+	}
+
+private:
+	unsigned char m_padding[0x3c];
+	int m_numColors;
+};
+
+extern MultiplayerSettings *TheMultiplayerSettings;
+
+class GlobalData
+{
+private:
+	unsigned char m_padding[0x2c];
+
+public:
+	int m_xResolution;
+};
+
+extern GlobalData *TheWritableGlobalData;
+
+class Rva004B5AA0 { public: int m(const Image *, int, int, int); };
+class Rva004B5B30 { public: void set(int); };
+class BfmeThing925C { public: void bfmeGo925C(); };
+class BfmeThing925D { public: void bfmeGo925D(void *); };
+class BfmeThing926A { public: void bfmeGo926A(void *, void *); };
+class Rva00558BE0Gadget {};
+
+class OnlineQuickMatchColorSetup : public BfmeAptGameWindow
 {
 public:
 	void setup();
+private:
+	QuickMatchPreferences m_preferences;
+	unsigned char m_betweenPreferencesAndGadget[0x08];
+	Rva00558BE0Gadget m_gadget;
 };
 
-#pragma comment(linker, "/alternatename:?setup@OnlineQuickMatchColorSetup@@QAEXXZ=?j_00005f3d@@YAXXZ")
 
 void BfmeAptScreenOnlineQuickMatch::_bfme_onInitGadget(
 	const char *name, void *, GameWindow *window)
@@ -187,4 +247,41 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_onInitGadget(
 	}
 
 	TheWindowManager->refreshLayout(m_layout);
+}
+
+// Retail 0x00558BE0: ILT 0x00005F3D target; complete 341-byte RET extent.
+// Function-local static image initialization is required for the retail guard
+// and inline-forwarding AsciiString temporary lifetime and stack allocation.
+void OnlineQuickMatchColorSetup::setup()
+{
+	MultiplayerColorDefinition *color;
+	GameWindow *window;
+	int width;
+	int height;
+	int colorCount;
+
+	colorCount = TheMultiplayerSettings->getNumColors();
+
+	((BfmeThing925C *)&m_gadget)->bfmeGo925C();
+	window = *(GameWindow **)&m_gadget;
+	window->winGetSize(&width, &height);
+
+	int scale = TheWritableGlobalData->m_xResolution;
+	int colorWidth = (width - (scale * 0x20 / 0x400)) * 0x400 / scale;
+
+	for (int i = 0; i < colorCount; ++i)
+	{
+		color = TheMultiplayerSettings->getColor(i);
+		if (color != 0)
+		{
+			static const Image *whiteBox = TheMappedImageCollection->findImageByName(AsciiString("AptWhiteBox"));
+
+			int row = ((Rva004B5AA0 *)&m_gadget)->m(
+				whiteBox, colorWidth, 0x14, color->getColor());
+			((BfmeThing926A *)&m_gadget)->bfmeGo926A((void *)row, (void *)i);
+		}
+	}
+
+	((Rva004B5B30 *)&m_gadget)->set(colorCount * 0x1e);
+	((BfmeThing925D *)&m_gadget)->bfmeGo925D((void *)m_preferences.getColor());
 }
