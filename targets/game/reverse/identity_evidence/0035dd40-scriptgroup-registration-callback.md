@@ -26,7 +26,7 @@ object with its new list/context, corroborating the ScriptGroup dispatch role.
 The upstream `ScriptGroup::ParseGroupDataChunk` is static and has a different
 ABI, so its name is not borrowed for this member.
 
-Final RET 4 at RVA `0x0035DEA8` and INT3 at `0x0035DEAB` establish 363 bytes.
+Final RET 8 at RVA `0x0035DEA8` and INT3 at `0x0035DEAB` establish 363 bytes.
 The ECX/stack/caller-cleanup contract of `0x0035A060` still needs genuine parent
 code generation before a clean conversion can be claimed. No new callee pin or
 cast-to-address adapter is introduced.
