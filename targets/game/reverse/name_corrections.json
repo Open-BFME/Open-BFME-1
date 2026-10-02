@@ -13828,5 +13828,35 @@
   "after_sha256": "79ddd0ddb7f229db616e03f723fce937ad1a28eeb0327bbecc4dc64676316258",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "BfmeRvaTransform was a local cast target with no ledger row; retail reaches the matched transform at 0x00248D00 through ILT 0x00024A8C, and the ledger names its owner Rva00248D00."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/DownloadManagerResetRva0062E8B0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/DownloadManagerResetRva0062E8B0.cpp",
+  "old_name": "bfmeStartOnline",
+  "new_name": "Rva0062EA60StartOnline",
+  "before_sha256": "1dabf62ca1cf335edd0689fba28f21d0e1a1b89e1505fc842fb5eeba7665af81",
+  "after_sha256": "4831371eeec63314288c1909b50621138adcaeb8835d9c6c60380fe6604d3604",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/HTTPThinkWrapperBFME.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/HTTPThinkWrapperBFME.cpp",
+  "old_name": "bfmeStartOnline",
+  "new_name": "Rva0062EA60StartOnline",
+  "before_sha256": "5041b09f508280edcffa6115caea1527f5356adb3073373b78b558db0c4b8c0a",
+  "after_sha256": "ed44425c76a5176a599a49f86060a2a18884ba7f85425260c69ed0af020f283b",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/GameSpy/MainMenuHTTPBufferRva0062EE00.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/MainMenuHTTPBufferRva0062EE00.cpp",
+  "old_name": "bfmeStartOnline",
+  "new_name": "Rva0062EA60StartOnline",
+  "before_sha256": "09d2bbe2d24d97bd09fd2f6fee6b56d86bcc61fe0e27fd11cb765bee498e4695",
+  "after_sha256": "98054cd61b47144f2539d570d80883d6b01186569068eb7cde1df37b3c43e6c4",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

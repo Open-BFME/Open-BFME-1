@@ -12,7 +12,8 @@ extern int g_rva012F7164ChecksLeft;
 extern char *g_rva012F7170OnlineBuffer;
 extern bool g_rva012F7178ReleaseLayout;
 void Rva004C5490();
-void bfmeStartOnline();
+// Defined by the matched retail body at 0x0062EA60 (Rva0062EA60StartOnline.cpp).
+extern void Rva0062EA60StartOnline();
 
 GHTTPBool rva0062EE00MainMenuOnlineCallback(GHTTPRequest request, GHTTPResult result,
 	char *buffer, __int64 bufferLen, void *param)
@@ -35,6 +36,6 @@ GHTTPBool rva0062EE00MainMenuOnlineCallback(GHTTPRequest request, GHTTPResult re
 		g_rva012F7178ReleaseLayout = false;
 	}
 	if (!g_rva012F7164ChecksLeft)
-		bfmeStartOnline();
+		Rva0062EA60StartOnline();
 	return GHTTPTrue;
 }
