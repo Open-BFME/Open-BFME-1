@@ -6,11 +6,21 @@
 
 #include <list>
 
-class BfmeXCQE
+class BfmeXCQE;
+
+// Retail ILT 0x12E3B reaches 0x410BA0, an int-returning thiscall query.
+// This caller consumes AL; retain that byte truncation at the call site.
+class Gen_00410BA0
 {
 public:
-	char bfmeKindCQE(void);
-	void bfmeRunCQE(int value);
+	int bfmeBusy(void) const;
+};
+
+// ILT 0x8337 reaches 0x411DD0: byte boolean argument, ret 4, no result.
+class Gen_00411DD0
+{
+public:
+	void bfmeSet(bool value);
 };
 
 class BfmeDrop987
@@ -137,13 +147,13 @@ void Rva0024CAE0Owner::maintainNestedRiders(void)
 		{
 			Object *object = *nestedIt;
 			BfmeXCQE *state = object->getState();
-			if (state == 0 || state->bfmeKindCQE())
+			if (state == 0 || (char)((Gen_00410BA0 *)state)->bfmeBusy())
 			{
 				result->removeNested(object);
 				m_notifier.notifyRemoved(object, 0);
 				((BfmeDrop987 *)object)->bfmeClear987(8, 0);
 				if (state != 0)
-					state->bfmeRunCQE(1);
+					((Gen_00411DD0 *)state)->bfmeSet(true);
 			}
 		}
 	}
