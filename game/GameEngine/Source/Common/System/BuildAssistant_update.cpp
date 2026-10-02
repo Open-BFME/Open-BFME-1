@@ -196,16 +196,13 @@ class InGameUI { public:
 };
 extern InGameUI *TheInGameUI;
 class BFMEReportDamageSource { public: void report(Object *, int); };
-typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
-class GameLogic { public:
-    Object *findObjectByID(int id);
-    char field00[0xb0];
-    ObjectPtrHash fieldB0;
-};
-Object *GameLogic::findObjectByID(int id) {
+#include "../Thing/GameLogicObjectLookup.h"
+// Caller-visible copy of the retail lookup at RVA 0x0009A510; the ledger
+// owner is SelectionAll00595230.cpp. Inline linkage avoids a strong duplicate.
+inline Object *GameLogic::findObjectByID(int id) {
     if(id==0) return 0;
-    ObjectPtrHash::iterator it=fieldB0.find(id);
-    if(it==fieldB0.end()) return 0;
+    ObjectPtrHash::iterator it=m_objHash.find(id);
+    if(it==m_objHash.end()) return 0;
     return (*it).second;
 }
 extern GameLogic *TheGameLogic;

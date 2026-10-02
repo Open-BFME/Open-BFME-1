@@ -1,28 +1,27 @@
 // stlport
 #include <list>
 #include <hash_map>
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
 // Retail RVA 0x00595230. The dump claimed 524 bytes but cuts add esp,0x14
 // at +0x20B; that instruction ends at +0x20E and the ret makes 527 bytes.
 // Address-derived owner: receiver+4 is the list sentinel and +8 the first
 // 24-byte selection entry. Seventeen entries are examined. Object m_id +0x74,
 // m_privateStatus +0x344 and Drawable m_object +0xFC are name-oracle witnesses.
-// GameLogic hash layout/definition comes from GameLogicFindObjectByID.cpp;
+// The shared GameLogic ABI fixes the hash buckets at this+0xB4/+0xB8.
 // VC7.1 outlines the first lookup and inlines the second, exactly as retail.
+// This TU owns the byte-verified 82-byte lookup at RVA 0x0009A510.
 struct Coord3D;
 class Object;
 class Drawable;
 struct Node00595230 { Node00595230 *next,*prev; Drawable *value; };
 typedef std::list<Drawable *> List00595230;
 class GameMessage { public: void appendBooleanArgument(bool); void appendObjectIDArgument(unsigned); };
-class GameLogic { public:
- Object *findObjectByID(int);
- char prefix[0xb0];
- _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> > objects;
-};
-Object *GameLogic::findObjectByID(int id) {
+// Zero Hour GameLogic.h preserves this older BFME hash-map body in a comment.
+// Inline linkage lets identical caller-visible copies coalesce at link time.
+inline Object *GameLogic::findObjectByID(int id) {
  if(id==0) return 0;
- _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> >::iterator it=objects.find(id);
- if(it==objects.end()) return 0;
+ ObjectPtrHash::iterator it=m_objHash.find(id);
+ if(it==m_objHash.end()) return 0;
  return (*it).second;
 }
 extern GameLogic *TheGameLogic;
