@@ -16838,5 +16838,25 @@
   "after_sha256": "8b538cc945c3272fe1e7bb806308d656ed36d7fa9629b6282dd946a4b3624975",
   "evidence": "targets/game/reverse/identity_evidence/0x00558be0-bank-type-pairings.md",
   "reason": "The bank invented a combined five-method class using alternatename directives to five existing ledger identities. The new empty address-owned storage view claims only this+0x5c, while calls retain each actual ledger callee identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00801cb0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00801CB0.cpp",
+  "old_name": "Rva7F4CC0Child",
+  "before_sha256": "f94b456d2b91ccd1ae5d6ea55109c74c43c1f8f3301b6445220c8bb254c5c815",
+  "after_sha256": "37d8f3df0a5e0b246cc457835a512b1ef2637168a5bd05e894224833c172c4a1",
+  "evidence": "targets/game/reverse/identity_evidence/0x00801cb0-native-child-contracts.md",
+  "new_name": "Rva007E8760Addr",
+  "reason": "False pairing: the removed attempt wrapper represented only the 007E86B0 base constructor, while the new parse receiver preserves the independently matched 007E86D0 address ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00801cb0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00801CB0.cpp",
+  "old_name": "Rva7F4CC0Child",
+  "before_sha256": "f94b456d2b91ccd1ae5d6ea55109c74c43c1f8f3301b6445220c8bb254c5c815",
+  "after_sha256": "37d8f3df0a5e0b246cc457835a512b1ef2637168a5bd05e894224833c172c4a1",
+  "evidence": "targets/game/reverse/identity_evidence/0x00801cb0-native-child-contracts.md",
+  "new_name": "Rva007F4DA0",
+  "reason": "False pairing: the removed attempt wrapper represented only the 007E86B0 base constructor, while the new derived child preserves the independently matched constructor and vtable stores from 007F4DA0."
  }
 ]
