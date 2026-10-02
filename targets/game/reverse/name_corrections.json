@@ -14808,5 +14808,25 @@
   "after_sha256": "ba77689fabbde90baf029c283e0f4876c7d1893302798870b1392592c76a9094",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
   "reason": "TU-local UpgradeMux view: slot 7 (BFME-only virtual, reached by vcall index so bytes are unchanged) was spelled with the unproven name upgradeRemovalImplementation. It now uses the address-keeping token of the class's slot-7 body, matching b0dffe2492."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/PlayerHealSpecialPowerAtObject.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/PlayerHealSpecialPowerRva00263CA0.cpp",
+  "old_name": "doSpecialPowerAtObject",
+  "new_name": "rva00263CA0",
+  "before_sha256": "59d7b4ccff3f2a723e3ec7c1433f00d5e6267c8b031b5181b6b9db834f1ee1cd",
+  "after_sha256": "47cb3573c16a526cff3dc2dd29c9cfe9fc846159c6ad34127367ff6e2bd1f501",
+  "evidence": "targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md",
+  "reason": "0x00263CA0 is slot 13 of PlayerHealSpecialPower's SpecialPowerModuleInterface table 0x010B6390, not slot 12. Object::doSpecialPowerAtObject (0x001C37F0) calls slot 12 (+0x30), and PlayerHeal's own slot-12 body 0x00263B80 forwards the target's +0x38 position to slot 13. The body uses that argument as a location. The owner stays proven; slot 13's name is unproven, so the method keeps its address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "doSpecialPowerAtObject",
+  "new_name": "rva00263CA0",
+  "before_sha256": "7a2b548f99bfa6cdc457def53688a40983a5186da032e9799ef77910f3fe8d39",
+  "after_sha256": "b57d8a623ca312931161414c68236c9e59da7e7f2e9904e1bf7299e474bb6ae6",
+  "evidence": "targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md",
+  "reason": "0x00263CA0 is slot 13 of PlayerHealSpecialPower's SpecialPowerModuleInterface table 0x010B6390, not slot 12. Object::doSpecialPowerAtObject (0x001C37F0) calls slot 12 (+0x30), and PlayerHeal's own slot-12 body 0x00263B80 forwards the target's +0x38 position to slot 13. The body uses that argument as a location. The owner stays proven; slot 13's name is unproven, so the method keeps its address."
  }
 ]
