@@ -15,35 +15,28 @@
 // game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
 // one, so it comes from ascii_string.h and is named through the real class.
 
-class StringBaseNarrowAB
-{
-protected:
-	StringBaseNarrowAB(void)
-	{
-		m_bfmeNarrowAB = 0;
-	}
-
-	StringBaseNarrowAB(const char *text);
-
-	StringBaseNarrowAB(const StringBaseNarrowAB &other);
-
-	~StringBaseNarrowAB(void);
-
-	char *m_bfmeNarrowAB;
-};
-
-class AsciiStringAB : public StringBaseNarrowAB
+// The string this builder hands back is an AsciiString: retail's scope-exit
+// release at 0x0081C7E0 calls 0x00887940, the one narrow StringBase release,
+// and the bytes read the label through the 8-byte StringBase header offset with
+// the null-string fallback. So AsciiStringAB derives from the real AsciiString
+// instead of a TU-local one-pointer stand-in whose destructor spelled
+// ??1StringBaseNarrowAB@@IAE@XZ -- a name nothing defines. The inline base
+// destructor chains to ?releaseBuffer@?$StringBase@D@@AAEXXZ, which
+// StringBase.cpp defines, and str() is the same narrow read the stand-in spelled
+// by hand. The class name is kept, so the signature and every compiled byte stay
+// put.
+class AsciiStringAB : public AsciiString
 {
 public:
 	AsciiStringAB(void)
 	{
 	}
 
-	AsciiStringAB(const char *text) : StringBaseNarrowAB(text)
+	AsciiStringAB(const char *text) : AsciiString(text)
 	{
 	}
 
-	AsciiStringAB(const AsciiStringAB &other) : StringBaseNarrowAB(other)
+	AsciiStringAB(const AsciiStringAB &other) : AsciiString(other)
 	{
 	}
 
@@ -53,7 +46,7 @@ public:
 
 	const char *bfmeTextAB(void) const
 	{
-		return (m_bfmeNarrowAB != 0) ? m_bfmeNarrowAB + 8 : "";
+		return str();
 	}
 };
 
@@ -69,5 +62,5 @@ public:
 void BfmeHookAB::bfmeMakeNameAB(AsciiStringAB &out)
 {
 	if (m_bfmeFuncAB != 0)
-		((AsciiString &)out).format(AsciiString("Data/%s/Movies/"), m_bfmeFuncAB().bfmeTextAB());
+		out.format(AsciiString("Data/%s/Movies/"), m_bfmeFuncAB().bfmeTextAB());
 }

@@ -7,11 +7,12 @@
 // AsciiString/object-pointer hash map at manager+0x194.  The same map layout
 // is independently established by 0x006157C0 and 0x00615C20.
 //
-// Each mapped object is called through ILT 0x0000EA6B to body 0x0061C2A0.
-// Its public type and method spelling are not recovered, so both remain
-// address-derived and use the same neutral mapped type as the adjacent map
-// traversals.  Iterator increment passes the node AsciiString at +4 to the
-// bucket helper at 0x00611CA0.
+// Each mapped object is called through ILT 0x0000EA6B to body 0x0061C2A0, which
+// the ledger owns as ?bfmeUpdateBNA@BfmeThingNA@@QAEXXZ
+// (game/GameEngine/Source/Common/BfmeThingNAStateUpdates.cpp), so the map's value
+// type and its method are spelled through that proven identity rather than the
+// address-derived placeholder this file used to reference.  Iterator increment
+// passes the node AsciiString at +4 to the bucket helper at 0x00611CA0.
 //
 // First exact probe: 129/129 bytes with four relocations, t=4min.
 // campaign=luna36h-20260907 lane=expand08 model=gpt-5.6-sol-ultra.
@@ -25,13 +26,16 @@
 
 void HideControlBar(bool immediate);
 
-class Rva0061C1D0Object
+// The mapped value type. Only the one method this file calls is needed and that
+// method is real (see the header comment), so no layout is invented here; the
+// map's iterator only ever holds a pointer to it.
+class BfmeThingNA
 {
 public:
-	void rva0061c2a0();
+	void bfmeUpdateBNA();
 };
 
-typedef _STL::hash_map<AsciiString, Rva0061C1D0Object *,
+typedef _STL::hash_map<AsciiString, BfmeThingNA *,
 	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > Rva006159C0Map;
 
 class BfmeLivingWorldManager
@@ -53,6 +57,6 @@ void BfmeLivingWorldManager::rva006159c0()
 	for (Rva006159C0Map::iterator it = m_objects.begin();
 		it != m_objects.end(); ++it)
 	{
-		it->second->rva0061c2a0();
+		it->second->bfmeUpdateBNA();
 	}
 }
