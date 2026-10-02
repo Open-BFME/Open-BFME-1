@@ -28,7 +28,12 @@ public:
 	float m_bfmeB4;
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeGameCW view above is TU-local and reached through a cast.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class Rva006FD090Owner
 {
@@ -90,7 +95,7 @@ void Rva006FD090Owner::slot08(float source, Vector3 *result)
 	sum.X = second.X + first.X;
 	sum.Y = second.Y + first.Y;
 	sum.Z = second.Z + first.Z;
-	source = g_bfmeGameCW->m_bfmeB4;
+	source = ((BfmeGameCW *)TheLivingWorldManager)->m_bfmeB4;
 
 	result->X = projectX(m_renderObject->Get_Position(), sum, source);
 	result->Y = projectY(m_renderObject->Get_Position(), sum, source);

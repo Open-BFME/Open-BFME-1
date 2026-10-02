@@ -21,8 +21,12 @@ public:
 	void bfmeDrop(int handle);				// retail thunk 0x00010FFA -> 0x003C6D40
 };
 
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;				// retail 0x012F706C
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeSinkAM view above is TU-local and reached through a cast.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;		// retail 0x012F706C
 
 class BfmeVecAM
 {
@@ -68,7 +72,7 @@ void Gen_003BEBA0::bfmeRemove(BfmeItemAM *entry)
 	if (!entry)
 		return;
 
-	reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->bfmeDrop(entry->m_bfmeHandle);
+	reinterpret_cast<BfmeSinkAM *>(TheLivingWorldManager)->bfmeDrop(entry->m_bfmeHandle);
 
 	for (unsigned int index = 0; index < m_bfmeVector.bfmeSize(); ++index)
 	{

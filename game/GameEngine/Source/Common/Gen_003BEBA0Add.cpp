@@ -46,8 +46,12 @@ public:
 	void registerItem(int handle, Gen_003BEA30 *item, int variant);
 };
 
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeSinkAM view above is TU-local and reached through a cast.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class BfmeCounterAM
 {
@@ -76,6 +80,6 @@ void Gen_003BEBA0::add(BfmePairWI pair, const AsciiStringWI &first, bool flag,
 {
 	Gen_003BEA30 *item = new Gen_003BEA30(pair, m_counter->allocId(), first,
 		flag, second);
-	reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->registerItem(item->m_bfmeKind, item, 1);
+	reinterpret_cast<BfmeSinkAM *>(TheLivingWorldManager)->registerItem(item->m_bfmeKind, item, 1);
 	m_vec.push_back(item);
 }

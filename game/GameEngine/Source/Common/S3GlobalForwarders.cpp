@@ -125,7 +125,12 @@ public:
 	void bfmeCall_0000386e(void);					// retail 0x0000386E
 };
 
-extern BfmeGlobal_012f706c *TheBfmeGlobal_012f706c;				// 0x012F706C
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeGlobal_012f706c view above is TU-local and reached through a cast.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;				// 0x012F706C
 
 class BfmeGlobal_012f7fe0
 {
@@ -253,5 +258,5 @@ void Gen_006be400(void)
 // ?Gen_006fd020@@YAXXZ
 void Gen_006fd020(void)
 {
-	TheBfmeGlobal_012f706c->bfmeCall_0000386e();
+	((BfmeGlobal_012f706c *)TheLivingWorldManager)->bfmeCall_0000386e();
 }

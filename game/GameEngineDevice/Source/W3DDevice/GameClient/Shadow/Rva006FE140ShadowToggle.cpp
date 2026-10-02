@@ -4,7 +4,7 @@
 // Identity: "this" calls the already-landed Gen_006091B0::bfmeSetEnabled(bool)
 // and BfmeThingEMH::bfmeGoEMHa/bfmeGoEMHb(void) (both taking ecx=this with no
 // mismatch), so this object shares layout with those callees' "this". The
-// g_bfmeGameCW singleton (0x012F706C, already named) is used only as the
+// TheLivingWorldManager singleton (0x012F706C, already named) is used only as the
 // implicit "this" for two BfmeLivingWorldManager particle-system calls; a
 // second global at 0x01306EEC (TheW3DShadowManager; called as the implicit
 // "this" for the landed W3DShadowManager::setTimeOfDay/setLightPosition) is
@@ -17,19 +17,23 @@ typedef unsigned char Bool;
 typedef float Real;
 
 extern void j_00044968(void); // Gen_006091B0::bfmeSetEnabled(bool), ecx=this
-extern void j_000342a7(void); // BfmeLivingWorldManager::rva00617e30(void), ecx=g_bfmeGameCW
-extern void j_0001e312(void); // BfmeLivingWorldManager::rva00617c60(void), ecx=g_bfmeGameCW
+extern void j_000342a7(void); // BfmeLivingWorldManager::rva00617e30(void), ecx=TheLivingWorldManager
+extern void j_0001e312(void); // BfmeLivingWorldManager::rva00617c60(void), ecx=TheLivingWorldManager
 extern void j_0003e42d(void); // W3DShadowManager::setTimeOfDay(TimeOfDay), ecx=g_bfmeTheShadowManager
 extern void j_0002412c(void); // BfmeThingEMH::bfmeGoEMHb(void), ecx=this
 extern void j_0004248d(void); // BfmeThingEMH::bfmeGoEMHa(void), ecx=this
 extern void j_00031840(void); // W3DShadowManager::setLightPosition(int,float,float,float), ecx=g_bfmeTheShadowManager
 
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
-#define g_bfmeGameCW ((void *)g_bfmeGameCW)
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// it is used only as the implicit "this" of the two landed
+// BfmeLivingWorldManager methods, reached through reinterpret_casts.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 class W3DShadowManager;
 extern W3DShadowManager *TheW3DShadowManager;
-#define g_bfmeTheShadowManager ((void *)TheW3DShadowManager)
+static inline void *g_bfmeTheShadowManagerView() { return (void *)TheW3DShadowManager; }
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 #define TheWritableGlobalData ((unsigned char *)TheWritableGlobalData)
@@ -90,24 +94,24 @@ void Rva006FE140Owner::rva006fe140(Bool enable)
 	CallOn<void>(this, j_00044968, enable);
 
 	if (enable)
-		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeGameCW), j_000342a7);
+		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(TheLivingWorldManager), j_000342a7);
 	else
-		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeGameCW), j_0001e312);
+		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(TheLivingWorldManager), j_0001e312);
 
-	if (g_bfmeTheShadowManager == 0)
+	if (g_bfmeTheShadowManagerView() == 0)
 		return;
 
-	if (*(UnsignedByte *)((unsigned char *)g_bfmeGameCW + 0x164) == 0)
+	if (*(UnsignedByte *)((unsigned char *)TheLivingWorldManager + 0x164) == 0)
 		return;
 
 	if (!enable) {
 		Int timeOfDay = *(Int *)(TheWritableGlobalData + 0x218);
-		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeTheShadowManager),
+		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeTheShadowManagerView()),
 			j_0003e42d, timeOfDay);
 		CallOn<void>(this, j_0002412c);
 	} else {
 		CallOn<void>(this, j_0004248d);
-		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeTheShadowManager),
+		CallOn<void>(reinterpret_cast<Rva006FE140Owner *>(g_bfmeTheShadowManagerView()),
 			j_00031840, 0, m_lightX, m_lightY, m_lightZ);
 	}
 }

@@ -25,7 +25,12 @@ public:
 	bool m_bfmeOver;					// +0x288
 };
 
-extern BfmeGameCW *g_bfmeGameCW;				// retail 0x012F706C
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeGameCW view above is TU-local and reached through a cast.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;		// retail 0x012F706C
 
 class Gen_00609320
 {
@@ -40,7 +45,7 @@ private:
 // ?bfmeDisabled@Gen_00609320@@QBEHXZ
 int Gen_00609320::bfmeDisabled(void) const
 {
-	if (!m_bfmeQuiet && !g_bfmeGameCW->m_bfmeOver)
+	if (!m_bfmeQuiet && !((BfmeGameCW *)TheLivingWorldManager)->m_bfmeOver)
 		return 0;
 
 	return 1;

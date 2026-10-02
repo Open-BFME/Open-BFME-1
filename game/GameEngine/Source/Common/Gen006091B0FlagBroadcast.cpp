@@ -15,7 +15,7 @@
 // (bfmeRun_00589680, already landed in S3GuardedDelegates3.cpp), mirrors the
 // new flag into TheGameLogic+0x11D, and -- only when transitioning to true
 // and TheAudioClientUpdate exists -- pokes its vslot 0x3C with a literal
-// TRUE. Finally, when g_bfmeGameCW exists, it is reinterpreted as the
+// TRUE. Finally, when TheLivingWorldManager exists, it is reinterpreted as the
 // already-landed BfmeLivingWorldManager (same singleton: both classes read
 // TheGameLogic-family offset +0x288 as a bool, see
 // LivingWorldManagerRva00615B10.cpp and Bfme5TinyTwentyNine.cpp) and one of
@@ -23,7 +23,7 @@
 // classified against {0,1,5,7} and the result (0/1) is handed to the
 // already-landed Rva0060D5D0Noop stdcall no-op as a tail call.
 //
-// UNRECOVERED: retail loads g_bfmeGameCW/Glo012F4B98/TheGameLogic into ECX
+// UNRECOVERED: retail loads TheLivingWorldManager/Glo012F4B98/TheGameLogic into ECX
 // immediately before three of these calls even though every one of those
 // three callees (bfmeRun_00589680, Rva0060D5D0Noop x2) is already proven to
 // ignore its incoming register/stack argument entirely -- most likely those
@@ -172,9 +172,9 @@ public:
 extern "C" void __stdcall Rva0060D5D0Noop(void *);
 
 // The class both this view and Bfme5TinyTwentyNine.cpp's BfmeGameCW read the
-// same singleton at +0x288 through, so g_bfmeGameCW is the same object as
+// same singleton at +0x288 through, so TheLivingWorldManager is the same object as
 // the BfmeLivingWorldManager the two rva006159xx methods above already prove.
-// Retail reloads g_bfmeGameCW into ECX immediately before each tail call to
+// Retail reloads TheLivingWorldManager into ECX immediately before each tail call to
 // the already-landed Rva0060D5D0Noop stdcall no-op, which never touches
 // ECX -- the same identical-code-folded-thiscall-member shape as
 // Glo012F4B98Type::run above, so route through a member here too.
@@ -184,7 +184,13 @@ public:
 	void poke(int value);
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp);
+// the BfmeGameCW and BfmeLivingWorldManager views above are TU-local and
+// reached through casts.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 #pragma comment(linker, "/alternatename:?poke@BfmeGameCW@@QAEXH@Z=?Rva0060D5D0Noop@@YGXPAX@Z")
 
@@ -221,9 +227,9 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 	if (TheAudio && m_bfmeFlag)
 		((AudioClient *)TheAudio)->slot3C(true);
 
-	if (g_bfmeGameCW)
+	if (TheLivingWorldManager)
 	{
-		BfmeLivingWorldManager *manager = (BfmeLivingWorldManager *)g_bfmeGameCW;
+		BfmeLivingWorldManager *manager = (BfmeLivingWorldManager *)TheLivingWorldManager;
 		if (m_bfmeFlag)
 			manager->rva00615b10();
 		else
@@ -231,6 +237,6 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 
 		int state = TheGameLogic->m_field10C;
 		int value = (state == 0 || state == 7 || state == 1 || state == 5) ? 1 : 0;
-		g_bfmeGameCW->poke(value);
+		((BfmeGameCW *)TheLivingWorldManager)->poke(value);
 	}
 }
