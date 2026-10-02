@@ -29,3 +29,9 @@ void CRCParameterCheck::clear()
 	CRCParameterList &parameters = m_parameters;
 	parameters.erase( parameters.m_first, parameters.m_last );
 }
+
+// GameEngine::init stores the 16-byte CRCParameterCheck constructor result
+// at VA 0x012ED4FC (RVA 0x0007933A). GameLogic::getCRC loads that cell at
+// 0x003831A8 and sends it to the xfer body naming "CRCParameterCheck".
+// The retail .data cell is four zero bytes before initialization.
+CRCParameterCheck *TheCRCParameterCheck = 0;
