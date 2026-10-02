@@ -5,7 +5,12 @@
 #include "PreRTS.h"
 #include "Common/LocalFileSystem.h"
 #include "Common/ArchiveFileSystem.h"
-extern void *g_bfmeVftTXB[];
+// The table restored here is retail's one-slot vtable at 0x011439F8, the
+// ??_7Rva009C85B0@@6B@ COMDAT emitted for the vfptr ctor in
+// game/GameEngine/Source/Common/TinyVfptrCtors.cpp.  Spelled with
+// __identifier so the reference binds to the defining name.
+extern "C" void *__identifier("??_7Rva009C85B0@@6B@")[];
+#define g_bfmeVftTXB __identifier("??_7Rva009C85B0@@6B@")
 
 class Rva009C85C0Owner
 {
