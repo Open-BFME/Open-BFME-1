@@ -108,15 +108,14 @@ void BfmeA1038::bfmeGo1038A(void)
 		((BfmeB1038 *)((char *)this - 0x20))->bfmeDone1038();
 }
 
-class BfmeLog1038
+struct Rva007EB810Diag
 {
-public:
-	virtual void bfmeV01038();
-	virtual void bfmeSay1038(char *m);
+	virtual void v0();
+	virtual void report(const char *message);
 };
 
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *h);
-BfmeLog1038 *bfmeGetLog1038(void);
+Rva007EB810Diag *Rva007EB810Get(void);
 extern char g_bfmeMsg1038[];
 
 class BfmeD1038
@@ -131,7 +130,7 @@ public:
 void BfmeD1038::bfmeGo1038D(void)
 {
 	if (ReleaseMutex(m_bfmeHandle) == 0)
-		bfmeGetLog1038()->bfmeSay1038(g_bfmeMsg1038);
+		Rva007EB810Get()->report(g_bfmeMsg1038);
 }
 
 class BfmeY1038

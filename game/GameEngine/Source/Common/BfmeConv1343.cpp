@@ -6,16 +6,15 @@ extern char g_bfmeMsgAUUA[];
 extern char g_bfmeMsgBUUA[];
 extern char g_bfmeMsgCUUA[];
 
-class BfmeLogUUA
+struct Rva007EB810Diag
 {
-public:
-	virtual void bfmeV0UUA() = 0;
-	virtual void bfmeV1UUA() = 0;
-	virtual void bfmeV2UUA() = 0;
-	virtual void bfmeWarnUUA(const char *msg, const char *file, int line) = 0;
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void fail(const char *expr, const char *file, int line);
 };
 
-BfmeLogUUA *bfmeGetLogUUA(void);
+Rva007EB810Diag *Rva007EB810Get(void);
 
 class BfmeThingUUA
 {
@@ -32,9 +31,9 @@ void BfmeThingUUA::bfmeGoUUA()
 {
 	m_bfmeVft = g_bfmeVftUUA;
 	if (m_bfmeRef)
-		bfmeGetLogUUA()->bfmeWarnUUA(g_bfmeMsgAUUA, g_bfmeFileUUA, 0x45);
+		Rva007EB810Get()->fail(g_bfmeMsgAUUA, g_bfmeFileUUA, 0x45);
 	if (m_bfmeQueue)
-		bfmeGetLogUUA()->bfmeWarnUUA(g_bfmeMsgBUUA, g_bfmeFileUUA, 0x46);
+		Rva007EB810Get()->fail(g_bfmeMsgBUUA, g_bfmeFileUUA, 0x46);
 	if (m_bfmePending)
-		bfmeGetLogUUA()->bfmeWarnUUA(g_bfmeMsgCUUA, g_bfmeFileUUA, 0x47);
+		Rva007EB810Get()->fail(g_bfmeMsgCUUA, g_bfmeFileUUA, 0x47);
 }

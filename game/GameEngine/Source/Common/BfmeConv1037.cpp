@@ -42,15 +42,14 @@ void __stdcall bfmeGo1037F(int a, int b, int c)
 		g->bfmeDo1037(b, c);
 }
 
-class BfmeLog1037
+struct Rva007EB810Diag
 {
-public:
-	virtual void bfmeV01037();
-	virtual void bfmeSay1037(char *m);
+	virtual void v0();
+	virtual void report(const char *message);
 };
 
 extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int t);
-BfmeLog1037 *bfmeGetLog1037(void);
+Rva007EB810Diag *Rva007EB810Get(void);
 extern char g_bfmeMsg1037[];
 
 class BfmeH1037
@@ -65,7 +64,7 @@ public:
 void BfmeH1037::bfmeGo1037H(void)
 {
 	if (WaitForSingleObject(m_bfmeHandle, -1) != 0)
-		bfmeGetLog1037()->bfmeSay1037(g_bfmeMsg1037);
+		Rva007EB810Get()->report(g_bfmeMsg1037);
 }
 
 class BfmeI1037

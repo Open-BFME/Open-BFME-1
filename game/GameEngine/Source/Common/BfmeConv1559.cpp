@@ -1,15 +1,14 @@
 // Open-BFME5 conversions.
 
-class BfmeLogVPE
+struct Rva007EB810Diag
 {
-public:
-	virtual void bfmeSlot0VPE();
-	virtual void bfmeSlot1VPE();
-	virtual void bfmeSlot2VPE();
-	virtual void bfmeAssertVPE(const char *cond, const char *file, int line);
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void fail(const char *expr, const char *file, int line);
 };
 
-BfmeLogVPE *bfmeGetLogVPE();
+Rva007EB810Diag *Rva007EB810Get(void);
 
 struct BfmeSlotVPE
 {
@@ -45,6 +44,6 @@ BfmeSlotVPE *BfmeMgrVPE::bfmeAllocSlotVPE()
 		}
 	}
 
-	bfmeGetLogVPE()->bfmeAssertVPE("false", "\\views\\feslbuild_main\\jabba\\fesl\\source\\transactor.cpp", 0x2ac);
+	Rva007EB810Get()->fail("false", "\\views\\feslbuild_main\\jabba\\fesl\\source\\transactor.cpp", 0x2ac);
 	return 0;
 }

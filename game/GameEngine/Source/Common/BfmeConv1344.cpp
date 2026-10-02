@@ -22,16 +22,15 @@ void BfmeThingUVA::bfmeGoUVA(const char *a, const char *b, const char *c)
 extern char g_bfmeFileUVB[];
 extern char g_bfmeMsgUVB[];
 
-class BfmeLogUVB
+struct Rva007EB810Diag
 {
-public:
-	virtual void bfmeV0UVB() = 0;
-	virtual void bfmeV1UVB() = 0;
-	virtual void bfmeV2UVB() = 0;
-	virtual void bfmeWarnUVB(const char *msg, const char *file, int line) = 0;
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void fail(const char *expr, const char *file, int line);
 };
 
-BfmeLogUVB *bfmeGetLogUVB(void);
+Rva007EB810Diag *Rva007EB810Get(void);
 
 struct BfmeRecUVB
 {
@@ -55,6 +54,6 @@ int bfmeGoUVB(BfmeRecUVB *r, char *out)
 		bfmeCopyUVB(out + 1, 0x13, r->m_bfmeText);
 		return 1;
 	}
-	bfmeGetLogUVB()->bfmeWarnUVB(g_bfmeMsgUVB, g_bfmeFileUVB, 0x2e);
+	Rva007EB810Get()->fail(g_bfmeMsgUVB, g_bfmeFileUVB, 0x2e);
 	return 0;
 }
