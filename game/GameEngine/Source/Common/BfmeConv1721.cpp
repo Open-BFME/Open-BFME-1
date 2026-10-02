@@ -1,11 +1,15 @@
-class GameLogic
+// This TU's own view of the dword at +0x3C of retail's GameLogic.
+// ?TheGameLogic@@3PAVGameLogic@@A -- retail 0x012F0898, defined once in
+// GameLogic/System/GameLogic.cpp.  The view below is this TU's layout of it.
+class RvaBfmeConv1721GameLogic
 {
 public:
 	unsigned char m_bfmeHeadIS[0x3c];
 	int m_bfmeFrameIS;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeWakeIS
 {
@@ -41,7 +45,7 @@ void BfmeUpdIS::bfmeSleepIS(void)
 	if (m_bfmeDoneIS)
 		return;
 
-	m_bfmeFrameIS = TheBfmeGameLogic->m_bfmeFrameIS - (int)(m_bfmeDataIS->m_bfmeDelayIS * -5.0f);
+	m_bfmeFrameIS = ((RvaBfmeConv1721GameLogic *)TheGameLogic)->m_bfmeFrameIS - (int)(m_bfmeDataIS->m_bfmeDelayIS * -5.0f);
 	m_bfmeDoneIS = 1;
 	m_bfmeWakeIS.bfmeSetWakeIS(m_bfmeObjIS, 1);
 }

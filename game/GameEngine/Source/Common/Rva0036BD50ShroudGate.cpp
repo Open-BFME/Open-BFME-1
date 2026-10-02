@@ -5,11 +5,15 @@
 
 struct Coord3D { float x, y, z; };
 
+// This TU's own view of the dword at +0x10C of retail's GameLogic.
+// ?TheGameLogic@@3PAVGameLogic@@A -- retail 0x012F0898, defined once in
+// GameLogic/System/GameLogic.cpp.  The view above is this TU's layout of it.
 struct Rva00367E30Logic {
     char pad[0x10C];
     int mode;
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 enum CellShroudStatus { CELLSHROUD_CLEAR, CELLSHROUD_FOGGED, CELLSHROUD_SHROUDED };
 class PartitionManager {
@@ -48,7 +52,7 @@ public:
 
 void Rva0036BD50Module::check(int)
 {
-    Rva00367E30Logic *logic = TheBfmeGameLogic;
+    Rva00367E30Logic *logic = (Rva00367E30Logic *)TheGameLogic;
     if (!logic)
         return;
     int mode = logic->mode;
