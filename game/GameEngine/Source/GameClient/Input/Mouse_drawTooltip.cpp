@@ -72,6 +72,14 @@ extern ScriptEngine *TheScriptEngine;
 class Display;
 extern Display *TheDisplay;
 
+// Retail's 0x012F1484 global is EA's GlobalLanguage *TheGlobalLanguageData,
+// defined once in game/GameEngine/Source/GameClient/GlobalLanguage.cpp. Only
+// this name and the witnessed offsets below are needed, so the class is left
+// incomplete rather than redeclared with a TU-local layout.
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
+
+// TU-local layout view of the three fields this body reads.
 struct BfmeGlobalWR
 {
 	unsigned char m_pad0[0xB8];
@@ -79,8 +87,6 @@ struct BfmeGlobalWR
 	int m_fontSize;
 	bool m_fontBold;
 };
-
-extern BfmeGlobalWR *g_bfmeGlobalWR;
 
 void bfmeGo995B(void);
 void bfmeGo1074A(float a, float b);
@@ -192,12 +198,15 @@ void Mouse::drawTooltip()
 			bool fontBold;
 			const AsciiString *globalName;
 
-			if (g_bfmeGlobalWR != 0 &&
-				!(globalName = &g_bfmeGlobalWR->m_fontName)->isEmpty())
+			if (reinterpret_cast<BfmeGlobalWR *>(TheGlobalLanguageData) != 0 &&
+				!(globalName = &reinterpret_cast<BfmeGlobalWR *>(
+					TheGlobalLanguageData)->m_fontName)->isEmpty())
 			{
 				fontName.set(*globalName);
-				fontSize = g_bfmeGlobalWR->m_fontSize;
-				fontBold = g_bfmeGlobalWR->m_fontBold;
+				fontSize = reinterpret_cast<BfmeGlobalWR *>(
+					TheGlobalLanguageData)->m_fontSize;
+				fontBold = reinterpret_cast<BfmeGlobalWR *>(
+					TheGlobalLanguageData)->m_fontBold;
 			}
 			else
 			{

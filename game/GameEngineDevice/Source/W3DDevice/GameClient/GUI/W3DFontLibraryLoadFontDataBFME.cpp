@@ -93,13 +93,19 @@ public:
 	int m_extra_setting;
 };
 
+// Retail's 0x012F1484 global is EA's GlobalLanguage *TheGlobalLanguageData
+// (defined in game/GameEngine/Source/GameClient/GlobalLanguage.cpp). Only the
+// name and one witnessed offset are needed, so the class is forward-declared
+// and the field is read through this TU-local layout view.
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
+
+// TU-local layout view of the single field this body reads.
 struct BFMEGlobalLanguage
 {
 	unsigned char m_pad00[0x14];
 	char *m_unicode_name_data;
 };
-
-extern BFMEGlobalLanguage *g_bfmeGlobalWR;
 extern const char g_bfmeEmptyAscii[];
 
 static __forceinline const char *BFME_String_Data(char *data)
@@ -133,10 +139,11 @@ bool W3DFontLibrary::loadFontData(GameFont *font)
 	font->height = font_chars->m_char_height;
 
 	FontCharsClass *unicode_font;
-	if (g_bfmeGlobalWR)
+	if (TheGlobalLanguageData)
 	{
 		unicode_font = BFME_Get_Font_Chars(
-			BFME_String_Data(g_bfmeGlobalWR->m_unicode_name_data),
+			BFME_String_Data(reinterpret_cast<BFMEGlobalLanguage *>(
+				TheGlobalLanguageData)->m_unicode_name_data),
 			font->pointSize, font->bold ? true : false, font->m_extra_setting);
 	}
 	else

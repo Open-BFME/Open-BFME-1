@@ -231,7 +231,12 @@ public:
 
 extern Display *TheDisplay;
 extern FontLibraryBFMERetail *TheFontLibrary;
-extern void *Rva012F1484;
+// Retail's 0x012F1484 global is EA's GlobalLanguage *TheGlobalLanguageData
+// (defined in game/GameEngine/Source/GameClient/GlobalLanguage.cpp). Only the
+// address is read here, through a witnessed-offset layout cast, so the class
+// stays incomplete instead of being redeclared with a TU-local body.
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 extern Glo012F1028Type *Glo012F1028;
 extern float g_010FA1F8;
 extern float g_010FA1FC;
@@ -375,7 +380,7 @@ void MilesAudioManager::rva00695B80(const UnicodeString &text)
 	if (m_b58 == 0)
 	{
 		Rva00695B80FontOptions *fontOptions =
-			(Rva00695B80FontOptions *)Rva012F1484;
+			(Rva00695B80FontOptions *)TheGlobalLanguageData;
 		if (fontOptions != 0)
 		{
 			GameFont *font;
