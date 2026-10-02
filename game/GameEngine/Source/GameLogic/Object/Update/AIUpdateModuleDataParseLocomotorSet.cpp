@@ -22,6 +22,13 @@ class LocomotorTemplate;
 typedef std::vector<const LocomotorTemplate *> LocomotorTemplateVector;
 typedef std::map<LocomotorSetType, LocomotorTemplateVector> LocomotorTemplateMap;
 
+namespace _STL
+{
+template <>
+_Vector_base<const LocomotorTemplate *, allocator<const LocomotorTemplate *> >::_Vector_base(
+	unsigned int, const allocator<const LocomotorTemplate *> &);
+}
+
 class INI
 {
 public:

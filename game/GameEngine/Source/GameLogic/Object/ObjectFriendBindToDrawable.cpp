@@ -37,15 +37,7 @@ public:
 			m_bits[(UnsignedInt)bit >> 5] &= ~(1 << ((UnsignedInt)bit & 31));
 	}
 
-	bool operator!=(const ModelConditionFlags &other) const
-	{
-		for (UnsignedInt i = 0; i < 10; ++i)
-		{
-			if (m_bits[i] != other.m_bits[i])
-				return true;
-		}
-		return false;
-	}
+	bool operator!=(const ModelConditionFlags &other) const;
 
 	UnsignedInt m_bits[10];
 };
@@ -163,7 +155,16 @@ void Object::friend_bindToDrawable(Drawable *draw)
 
 		ModelConditionFlags old = m_conditionFlags;
 		m_conditionFlags.clearAndSet(clr, set);
-		if (old != m_conditionFlags)
+		bool conditionChanged = false;
+		for (UnsignedInt i = 0; i < 10; ++i)
+		{
+			if (old.m_bits[i] != m_conditionFlags.m_bits[i])
+			{
+				conditionChanged = true;
+				break;
+			}
+		}
+		if (conditionChanged)
 		{
 			if (m_drawable)
 				m_drawable->replaceModelConditionState(m_conditionFlags, false, 0);

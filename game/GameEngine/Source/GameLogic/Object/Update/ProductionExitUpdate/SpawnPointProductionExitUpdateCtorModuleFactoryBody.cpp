@@ -72,6 +72,7 @@ class SpawnPointProductionExitUpdate : public UpdateModule, public ExitInterface
 {
 public:
     SpawnPointProductionExitUpdate(Thing *, const ModuleData *);
+    virtual ~SpawnPointProductionExitUpdate();
 
 private:
     enum { MAX_SPAWN_POINTS = 10 };

@@ -247,25 +247,6 @@ CampaignManager::CampaignManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/CampaignManagerDestructorThunk.cpp
-// ??1CampaignManager@@QAE@XZ present-unmatched
-CampaignManager::~CampaignManager( void )
-{
-	m_currentCampaign = NULL;
-	m_currentMission = NULL;
-
-	CampaignListIt it = m_campaignList.begin();
-
-	while(it != m_campaignList.end())
-	{
-		Campaign *campaign = *it;
-		it = m_campaignList.erase( it );
-		if(campaign)
-			campaign->deleteInstance();
-	}
-}
-
-//-----------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/promoted__init_CampaignManager_QAEXXZ_005BB8C0.cpp
 // ?init@CampaignManager@@QAEXXZ present-unmatched
 void CampaignManager::init( void )
