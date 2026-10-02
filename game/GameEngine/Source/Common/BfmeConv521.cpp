@@ -5,6 +5,12 @@ struct BfmeVecBTA
 	int m_bfmeZ;
 };
 
+class BfmeThingEOC
+{
+public:
+	void bfmeAfterEOC();
+};
+
 class BfmeThingBTA
 {
 public:
@@ -17,5 +23,5 @@ public:
 void BfmeThingBTA::bfmeGoBTA(const BfmeVecBTA *src)
 {
 	m_bfmeVec = *src;
-	bfmeStepBTA();
+	reinterpret_cast<BfmeThingEOC *>(this)->bfmeAfterEOC();
 }

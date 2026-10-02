@@ -9,10 +9,12 @@ class BuddyMessage
 };
 
 void *__cdecl operator new(unsigned int);
-void __cdecl constructBuddyMessageAt(void *dest, BuddyMessage const &src);
 
 namespace _STL
 {
+template <class Type, class Ref>
+void __cdecl _Construct(Type *dest, Ref const &src);
+
 // Retail takes this node from STLport's node pool, not ::operator new: the
 // call at this site is __node_alloc<true,0>::_M_allocate (0x0082E540), which
 // buckets by (n-1)>>3 into the free-list array at 0x0130B1C0.  Shape copied
@@ -58,7 +60,7 @@ _List_node<Type> *list<Type, Allocator>::_M_create_node(Type const &x)
 {
 	_List_node<Type> *node =
 		(_List_node<Type> *)_Node_alloc::allocate(0x20);
-	constructBuddyMessageAt((char *)node + 8, (BuddyMessage const &)x);
+	_Construct((BuddyMessage *)((char *)node + 8), x);
 	return node;
 }
 
