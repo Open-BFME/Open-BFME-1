@@ -35,7 +35,10 @@ struct Rva00899560Pool
 	}
 };
 
-extern Rva008D2A30Node *Rva008D2A30Head;
+// Retail's pooled-node head is the global at 0x013387D4,
+// ?g_rva008D2A80@@3PAVRva008D2A80@@A, defined by Rva008D2A80Link.cpp.
+class Rva008D2A80;
+extern Rva008D2A80 *g_rva008D2A80;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(__cdecl *Rva008C5D70Alloc)(UnsignedInt bytes);
 
@@ -144,10 +147,10 @@ struct Rva00899800Boolean
 	__forceinline static Rva00899800Boolean *createFalse()
 	{
 		Rva00899800Boolean *object =
-			(Rva00899800Boolean *)Rva008D2A30Head;
+			(Rva00899800Boolean *)g_rva008D2A80;
 		if (object != 0)
 		{
-			Rva008D2A30Head = (Rva008D2A30Node *)object->m_next;
+			g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 			object->m_value = 0;
 			return object;
@@ -170,10 +173,10 @@ struct Rva00899800Boolean
 	__forceinline static Rva00899800Boolean *createTrue()
 	{
 		Rva00899800Boolean *object =
-			(Rva00899800Boolean *)Rva008D2A30Head;
+			(Rva00899800Boolean *)g_rva008D2A80;
 		if (object != 0)
 		{
-			Rva008D2A30Head = (Rva008D2A30Node *)object->m_next;
+			g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 			object->m_value = 1;
 			return object;
