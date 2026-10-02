@@ -520,52 +520,22 @@ void INI::readLine( void )
 /** Parse UnsignedByte from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseUnsignedByte@INI@@ present-unmatched
-void INI::parseUnsignedByte( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	Int value = scanInt(token);
-	if (value < 0 || value > 255)
-	{
-		DEBUG_CRASH(("Bad value INI::parseUnsignedByte"));
-		throw ERROR_BUG;
-	}
-	*(Byte *)store = (Byte)value;
-} 
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse signed short from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseShort@INI@@ present-unmatched
-void INI::parseShort( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	Int value = scanInt(token);
-	if (value < -32768 || value > 32767)
-	{
-		DEBUG_CRASH(("Bad value INI::parseShort"));
-		throw ERROR_BUG;
-	}
-	*(Short *)store = (Short)value;
-} 
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse unsigned short from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseUnsignedShort@INI@@ present-unmatched
-void INI::parseUnsignedShort( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	Int value = scanInt(token);
-	if (value < 0 || value > 65535)
-	{
-		DEBUG_CRASH(("Bad value INI::parseUnsignedShort"));
-		throw ERROR_BUG;
-	}
-	*(UnsignedShort *)store = (UnsignedShort)value;
-} 
+// The retail definition is owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /** Parse integer from buffer and assign at location 'store' */
