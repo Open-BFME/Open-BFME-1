@@ -1,3 +1,11 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib
+
+// The 0x38 slot is a SurfaceClass: retail calls 0x008FC7D0, SurfaceClass::Unlock,
+// on the ADDRESS of that slot, and that body reads its D3D surface pointer from
+// offset 0.  Only the one-pointer local view is needed for the layout, so the
+// slot keeps its local type and the real class is named at the call.
+#include "surfaceclass.h"
+
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);
 
@@ -33,8 +41,6 @@ public:
 class BfmeSurfaceFM
 {
 public:
-	void bfmeUnlockFM(void);
-
 	BfmeD3DFM *m_bfmeD3DFM;
 };
 
@@ -59,7 +65,7 @@ void BfmeRadarFM::bfmeCloseFM(void)
 
 	if ((m_bfmeFlagsFM & 1) != 0)
 	{
-		m_bfmeSurfaceFM.bfmeUnlockFM();
+		reinterpret_cast<SurfaceClass *>(&m_bfmeSurfaceFM)->Unlock();
 		m_bfmeFlagsFM &= ~1;
 	}
 
