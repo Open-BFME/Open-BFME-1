@@ -13,12 +13,29 @@
 typedef bool Bool;
 #include "System/subsystem_interface.h"
 
-extern "C" char g_bfmeV1134[];
-
+// Retail's constructor stores 0x010F0AE0 over the base's vptr at +0x0A. That
+// address is this class's own vftable, `??_7BfmeA1134@@6B@`, which no C++
+// spelling can name and which the only emitter, the paired destructor TU
+// (BfmeConv1134Destructor.cpp), already defines as a COMDAT. The old
+// `extern "C" char g_bfmeV1134[]` stood in for it with a name nothing defines,
+// so this object never linked.
+//
+// Declaring a virtual member here and taking its address makes MSVC 7.1 emit
+// the standard *external-vftable reference* `??_9@$BBI@AE` instead of a local
+// copy, and link.exe rewrites it to whatever `??_7BfmeA1134@@6B@` resolves to in
+// the TU that defines the vftable. The store then stays where retail has it.
+// Letting the compiler place the implicit vptr store itself does not work: the
+// `volatile` members make /O2 sink it to the end of the ctor (byte-identical
+// everything else, but the store lands at +0xB4 instead of +0x0A).
+//
+// bfmeSlot0 is this class's first vftable slot; its body is not recovered, and
+// nothing here needs it: the address is taken only to name the vftable, and
+// no definition, ledger row or second definition of the vftable is added.
 class BfmeA1134 : public SubsystemInterface
 {
 public:
 	BfmeA1134(void);
+	virtual void bfmeSlot0();
 	volatile int m_bfme08;
 	volatile int m_bfme0c;
 	volatile int m_bfme10;
@@ -68,8 +85,14 @@ public:
 
 BfmeA1134::BfmeA1134(void)
 {
-	// this class's own vftable goes over the base's, at the same slot (+0x00)
-	*(void *volatile *)this = g_bfmeV1134;
+	// this class's own vftable goes over the base's, at the same slot (+0x00).
+	// The union is this repo's convention for naming a __thiscall entity from a
+	// raw address; here it names the vftable, through the external-vftable
+	// reference described above.
+	typedef void (BfmeA1134::*Slot0)();
+	union { void (*raw)(void); Slot0 member; } fn;
+	fn.member = &BfmeA1134::bfmeSlot0;
+	*(void *volatile *)this = (void *)fn.raw;
 	m_bfme08 = 0;
 	m_bfme0c = 0;
 	m_bfme10 = 0;
