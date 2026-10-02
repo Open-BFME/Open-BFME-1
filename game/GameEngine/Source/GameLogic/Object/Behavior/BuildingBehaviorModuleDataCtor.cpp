@@ -1,4 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// This constructor also emits the public scalar-deleting wrapper at
+// 0x001F6D10 (30 bytes): vtable 0x010A2C88 slot zero routes through
+// ILT 0x00019F0B, and its complete-destructor call uses ILT 0x00016A13.
+// Keeping it here avoids a separate forcing TU emitting an incorrect
+// vptr-only default constructor for the same class.
+//
 // Open-BFME5: ModuleFactory's data-create proc 0x001146F0 allocates 0x24 and
 // runs this body, which identifies BuildingBehaviorModuleData.
 //
