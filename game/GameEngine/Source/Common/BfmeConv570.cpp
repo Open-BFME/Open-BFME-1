@@ -17,14 +17,19 @@ public:
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
-void *bfmeNowCBE();
+// retail calls 0x008FD440, the body the ledger defines as
+// ?Rva008FD440Get@@YAHXZ (Common/GlobalDwordGetters.cpp): a six-byte getter
+// that reads the dword at 0x0133F460 and returns it.  It is compared against
+// the member at +0x68 as a 32-bit value, so the call is spelled with that
+// defining name and its int return.
+int Rva008FD440Get();
 
 void __stdcall bfmeGoCBE(void *spare)
 {
 	if (TheWritableGlobalData != 0)
 	{
 		void *cur = ((BfmeGlobalCBE *)TheWritableGlobalData)->m_bfmeCur;
-		if (bfmeNowCBE() != cur)
+		if ((void *)Rva008FD440Get() != cur)
 			WW3D::Set_Texture_Reduction((int)cur, 6);
 	}
 }
