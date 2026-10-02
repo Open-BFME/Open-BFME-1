@@ -1,4 +1,4 @@
-# Module slot 4: BeaconClientUpdate::getModuleNameKey
+# Module slot 4: getModuleNameKey identity corrections
 
 Retail SHA-256: `1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75`.
 Addresses below are RVAs unless marked VA. Findings were checked with pefile
@@ -54,3 +54,39 @@ placement delete and a different emission anchor's cleanup. It is intentionally
 not edited: only these two wrongly associated ledger rows move. The old
 getClassMemoryPool symbol ceases to claim this retail address. No new callee
 pin, speculative member name, or header modification is required.
+
+
+## W3DLaserDraw duplicate pool claim and cleanup
+
+The independent registered factory/constructor chain and literal getter are
+in [the DrawModule census](drawmodule-interface-accessors.md): registration
+`006C0112`, factory `006BF150`, ctor `00757E70`, primary table VA `01122A00`
+at `00757EAC`, slot-2 literal getter `00757B40` returning W3DLaserDraw.
+Slot 4 at `00D22A10` holds ILT VA `00402FA9`, resolving to `00757BE0`.
+A bytewise whole-image scan finds that absolute stub pointer only once.
+ZH W3DLaserDraw.h invokes the same MAKE_STANDARD_MODULE_MACRO_WITH_MODULE_DATA
+for this class, establishing the full public virtual const NameKeyType twin:
+`?getModuleNameKey@W3DLaserDraw@@UBE?AW4NameKeyType@@XZ`.
+
+The retail 104-byte body tests guard VA `01304BB4`, calls the same
+NameKeyGenerator::nameToKey route `0003ADD7` -> `0008FFC0` with receiver
+TheNameKeyGenerator VA `012ED600` and exactly the W3DLaserDraw literal, then
+stores its enum in VA `01304BB0`. The two epilogues return at `00757C34` and
+`00757C47`; INT3 begins at `00757C48`. This is the name-key initializer,
+not a private static pool getter. The ledger already has the correct name
+but also assigns getClassMemoryPool to these same bytes. Retail has no ICF;
+retire and tombstone only that false duplicate. Keep the correct name and
+verify its unmodified inline body in a dedicated header-emission TU.
+
+Retail's handler immediate at `00757BEE` points to `00C4EA4E`, whose FuncInfo
+is `00E3E444`. Its unwind map has state 0 -> -1 with action `00C4EA40`.
+That action clears guard bit 0 at VA `01304BB4` and returns at `00C4EA4D`
+(14 bytes). The new COFF parent has its handler relocation at offset 15;
+the corresponding unwind map names `$L33714` for state 0 -> -1. Move opaque
+`uw_00c4ea40` to the dedicated TU and correct its parent and local symbol
+using this state evidence, never adjacency. Both parent and cleanup pass
+byte verification; the EH state check must prove the cleanup label.
+
+The old W3DLaserDraw.cpp still provides other live rows and stays unchanged.
+No new pin is needed. Removing one false identity reduces the existing
+one_identity.surplus baseline from 2508 to 2507; this strictly shrinks it.
