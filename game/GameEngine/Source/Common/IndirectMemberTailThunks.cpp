@@ -56,7 +56,6 @@ BFME_POINTER_TAIL_CALLEE( 001E1760 )
 BFME_POINTER_TAIL_CALLEE( 001E1770 )
 BFME_POINTER_TAIL_CALLEE( 001E1780 )
 BFME_POINTER_TAIL_CALLEE( 001E1790 )
-BFME_POINTER_TAIL_CALLEE( 0041D090 )
 BFME_POINTER_TAIL_CALLEE( 004503C0 )
 BFME_POINTER_TAIL_CALLEE( 00478C70 )
 BFME_POINTER_TAIL_CALLEE( 0055C1C0 )
@@ -80,7 +79,42 @@ BFME_POINTER_TAIL_THUNK( Rva0014E620, Gen000A1490, 28 )
 BFME_POINTER_TAIL_THUNK( Rva0016A960, Gen001E1760, 4 )
 BFME_POINTER_TAIL_THUNK( Rva0016A970, Gen001E1780, 4 )
 BFME_POINTER_TAIL_THUNK( Rva0016A980, Gen001E1790, 4 )
-BFME_POINTER_TAIL_THUNK_HEAD( Rva001B0CA0, Gen0041D090 )
+// Retail 0x0041D090 is a MATCHED body, not an address-derived stand-in:
+// functions.csv carries it as ?get@BFMERopeDrawableGetPositionShim@@QBEPBUCoord3D@@XZ
+// (game/GameEngine/Source/GameClient/BFMERopeDrawableInterpolatedPosition.cpp),
+// so this thunk names that class and member exactly.
+// Only the NAME of Coord3D reaches the mangled name, so an incomplete
+// forward declaration is all this thunk needs.  The leading keyword is
+// load-bearing: MSVC7.1 emits a pointee's const (`PBU`) for a struct-keyword
+// type and drops it (`PBV`) for a class-keyword one, and retail's callee is
+// ?get@BFMERopeDrawableGetPositionShim@@QBEPBUCoord3D@@XZ (the `U`).
+// WWMath/coord3d.h must NOT be included here: its Coord3D is
+// `class Coord3D : public Coord3DBase` and so mangles `PBV` instead.  The two
+// other real declarations of Coord3D (WWLib/basetype.h, WWMath/coord.h) are
+// struct-keyword, but neither header is self-contained on this include path.
+struct Coord3D;
+
+// No header carries the rope-position shim, so forward-declare it by the
+// name the ledger matched it under.
+class BFMERopeDrawableGetPositionShim
+{
+public:
+	const Coord3D *get() const;
+};
+
+class Rva001B0CA0
+{
+public:
+	void invoke();
+	BFMERopeDrawableGetPositionShim *m_receiver;
+};
+
+// The shim's result is discarded here; retail's 7-byte body is a bare
+// tail-jump, so there is nowhere to put it.
+void Rva001B0CA0::invoke()
+{
+	m_receiver->get();
+}
 BFME_POINTER_TAIL_THUNK( Rva00450550, Gen004503C0, 12 )
 BFME_POINTER_TAIL_THUNK_HEAD( Rva004B5A00, Gen00478C70 )
 BFME_POINTER_TAIL_THUNK( Rva0052CC90, Gen0055C1C0, 52 )
