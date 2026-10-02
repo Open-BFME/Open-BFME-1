@@ -43,7 +43,10 @@ struct Rva00899560Pool
 // referenced by its own class name (forward declared, never defined here).
 class Rva008D29A0;
 extern Rva008D29A0 *g_rva008D29A0;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// Both retail loads (RVA 008A4CDE and 008A4D3E) read VA 01337810,
+// the GC-root registry pointer defined and data-verified in Apt.cpp.
+// AptBooleanCreate uses this same canonical four-byte provider.
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 extern const char vtable01135D68[], vtable01136698[];
 
@@ -71,7 +74,7 @@ AptValue * __cdecl Rva008A4EA0MakeFloat(float value)
 	if (object != 0)
 	{
 		g_rva008D29A0 = (Rva008D29A0 *)object->m_next;
-		g_rva8CD130IdleHook->addPooled((Rva008D2950Node *)object);
+		g_rva01337810GcRoots->addPooled((Rva008D2950Node *)object);
 		object->m_value = value;
 		return object;
 	}
@@ -82,7 +85,7 @@ AptValue * __cdecl Rva008A4EA0MakeFloat(float value)
 	{
 		*(void **)object = (void *)vtable01135D68;
 		object->m_flags = (object->m_flags & 0xf0008006) | 0x40008006;
-		g_rva8CD130IdleHook->addPooled((Rva008D2950Node *)object);
+		g_rva01337810GcRoots->addPooled((Rva008D2950Node *)object);
 		*(void **)object = (void *)vtable01136698;
 		object->m_value = value;
 		return object;
