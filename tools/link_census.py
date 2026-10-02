@@ -1031,6 +1031,92 @@ def truth_inputs_fingerprint():
     return digest.hexdigest()
 
 
+def _truth_fingerprint_sort_key(value):
+    """Comparable stable key for hashable values in maps and sets."""
+    if value is None:
+        return ("none", "")
+    if type(value) is bool:
+        return ("bool", value)
+    if type(value) is int:
+        return ("int", value)
+    if type(value) is float:
+        return ("float", value.hex())
+    if type(value) is str:
+        return ("str", value)
+    if type(value) is bytes:
+        return ("bytes", value)
+    if type(value) is tuple:
+        return ("tuple", tuple(_truth_fingerprint_sort_key(item) for item in value))
+    if type(value) is frozenset:
+        return ("frozenset", tuple(sorted(_truth_fingerprint_sort_key(item) for item in value)))
+    raise TypeError(f"unsupported truth fingerprint key: {type(value).__name__}")
+
+
+def _truth_fingerprint_sorted(values):
+    try:
+        return sorted(values)
+    except TypeError:
+        return sorted(values, key=_truth_fingerprint_sort_key)
+
+
+def _truth_fingerprint_update(digest, value):
+    """Feed a recursively canonical encoding into a hash without large copies.
+
+    Truth includes a list of PE section dictionaries. Sorting only the outer
+    truth maps left those nested dictionaries to ``repr``, whose key order is
+    an implementation detail rather than part of the section table. Preserve
+    sequence order (section order is meaningful), but canonicalize every
+    mapping and set recursively. Streaming the encoding keeps the large name
+    maps from being copied into another equally large nested list.
+    """
+    if isinstance(value, dict):
+        digest.update(b"D")
+        digest.update(len(value).to_bytes(8, "big"))
+        for key in _truth_fingerprint_sorted(value):
+            _truth_fingerprint_update(digest, key)
+            _truth_fingerprint_update(digest, value[key])
+        return
+    if isinstance(value, list):
+        digest.update(b"L")
+        digest.update(len(value).to_bytes(8, "big"))
+        for item in value:
+            _truth_fingerprint_update(digest, item)
+        return
+    if isinstance(value, tuple):
+        digest.update(b"T")
+        digest.update(len(value).to_bytes(8, "big"))
+        for item in value:
+            _truth_fingerprint_update(digest, item)
+        return
+    if isinstance(value, (set, frozenset)):
+        digest.update(b"S" if isinstance(value, set) else b"Z")
+        digest.update(len(value).to_bytes(8, "big"))
+        for item in _truth_fingerprint_sorted(value):
+            _truth_fingerprint_update(digest, item)
+        return
+    if value is None:
+        digest.update(b"N")
+        return
+    if type(value) is bool:
+        digest.update(b"B1" if value else b"B0")
+        return
+    if type(value) is int:
+        encoded = str(value).encode()
+        digest.update(b"I" + len(encoded).to_bytes(8, "big") + encoded)
+        return
+    if type(value) is float:
+        digest.update(b"F" + value.hex().encode())
+        return
+    if type(value) is str:
+        encoded = value.encode("utf-8")
+        digest.update(b"s" + len(encoded).to_bytes(8, "big") + encoded)
+        return
+    if type(value) is bytes:
+        digest.update(b"b" + len(value).to_bytes(8, "big") + value)
+        return
+    raise TypeError(f"unsupported truth fingerprint value: {type(value).__name__}")
+
+
 def truth_fingerprint(truth):
     if not isinstance(truth, RetailTruth) or getattr(truth, "_weak_rows_current", True) is False:
         return None
@@ -1038,12 +1124,8 @@ def truth_fingerprint(truth):
         digest = hashlib.sha256(truth.image)
         for name in ("ledger", "pinned", "slots", "import_routes", "shared", "sections"):
             value = getattr(truth, name, {})
-            if isinstance(value, dict):
-                value = sorted((key, sorted(items) if isinstance(items, (set, list, tuple)) else items)
-                               for key, items in value.items())
-            elif isinstance(value, set):
-                value = sorted(value)
-            digest.update(repr(value).encode())
+            digest.update(name.encode() + b"\0")
+            _truth_fingerprint_update(digest, value)
         digest.update(getattr(truth, "_weak_inputs", policy_fingerprint()).encode())
         truth._weak_fingerprint = digest.hexdigest()
     return truth._weak_fingerprint
@@ -2045,8 +2127,20 @@ def write_status(log, rows, present, meta, kept, *, publish=True, facts=None, cu
             if currency_guard is not None:
                 currency_guard()
             validate_fact_snapshots(present, facts)
-            if policy_fingerprint(fresh=True) != policy or truth_fingerprint(RetailTruth(rows)) != index.get("weak_truth"):
-                raise MissingObject("truth inputs changed during census; nothing recorded")
+            fresh_policy = policy_fingerprint(fresh=True)
+            fresh_truth = truth_fingerprint(RetailTruth(rows))
+            if fresh_policy != policy or fresh_truth != index.get("weak_truth"):
+                # Say which input moved: a bare refusal cost several hour-long reruns (2026-10-02).
+                why = []
+                if fresh_policy != policy:
+                    why.append("policy tools changed")
+                if fresh_truth is None:
+                    why.append("truth fingerprint unavailable (ledger rows no longer current)")
+                elif fresh_truth != index.get("weak_truth"):
+                    why.append(f"truth fingerprint {str(index.get('weak_truth'))[:12]} -> {fresh_truth[:12]}")
+                    if truth_inputs_fingerprint() != index.get("truth_inputs", truth_inputs_fingerprint()):
+                        why.append("truth input files changed (exe/ledger/policy)")
+                raise MissingObject("truth inputs changed during census; nothing recorded: " + "; ".join(why))
         guard()
         # Serialization can be slow. Stage outputs privately, then repeat all
         # byte/truth guards before replacing any accepted artifact.
