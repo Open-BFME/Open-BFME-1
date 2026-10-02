@@ -62,8 +62,8 @@ through the UpgradeModuleInterface pointer: the non-member helper 0x002D9A70
 0x0003A2E7, from 0x001C36B0 (`Object::bfmeResetAllUpgrades`, which walks the behaviours'
 upgrade interfaces). BFME2 WorldBuilder has the matching helper at RVA 0x007E7AA0
 (VA 0x00BE7AA0). It calls its slots 7 (the inserted virtual) and 8 (removeUpgrade), then 9
-(setUpgradeExecuted) with false, and the Object function at RVA 0x008D9290 (VA 0x00CD9290, the
-counterpart of Object::removeUpgrade) calls it at 0x008D93D4 and 0x008D9450. CommandSetUpgrade's slot 6 body also calls slot 7, at 0x002D43AB.
+(setUpgradeExecuted) with false. Two Object functions call it: RVA 0x008D9290 (VA 0x00CD9290, the
+counterpart of Object::removeUpgrade) at 0x008D93D4, and RVA 0x008D93F0 at 0x008D9450. CommandSetUpgrade's slot 6 body also calls slot 7, at 0x002D43AB.
 
 The overrides are declared `protected: virtual void removeUpgrade()`, mangling
 `?removeUpgrade@<Owner>@@MAEXXZ`. That access is inferred from Zero Hour's own pattern for an
