@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the RGB-color formatter at retail RVA 0x009D98B0.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeRGBColorFormat[];
+// The format is retail's pooled .rdata literal at 0x01144498, passed inline.
 
 struct BfmeRGBColor
 {
@@ -24,7 +24,7 @@ Gen009D98B0 *Gen009D98B0::bfmeEmit(const BfmeRGBColor *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeRGBColorFormat, value->r, value->g, value->b);
+	bfmeAppend(this, "r:%1.3f,g:%1.3f,b:%1.3f [rgb]\n", value->r, value->g, value->b);
 	m_pending = false;
 	return this;
 }

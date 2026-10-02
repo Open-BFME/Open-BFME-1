@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the 3D-coordinate formatter at retail RVA 0x009D9620.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeCoord3DFormat[];
+// The format is retail's pooled .rdata literal at 0x01144348, passed inline.
 
 struct BfmeCoord3D
 {
@@ -24,7 +24,7 @@ Gen009D9620 *Gen009D9620::bfmeEmit(const BfmeCoord3D *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeCoord3DFormat, value->x, value->y, value->z);
+	bfmeAppend(this, "x:%1.6f,y:%1.6f,z:%1.6f [coord3d]\n", value->x, value->y, value->z);
 	m_pending = false;
 	return this;
 }
