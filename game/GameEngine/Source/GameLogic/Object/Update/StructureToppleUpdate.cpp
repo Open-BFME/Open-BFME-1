@@ -305,7 +305,9 @@ public:
 };
 
 extern Int bfmeStructureToppleRandom(Int, Int, char *, Int);
-extern Real bfmeStructureToppleRandomReal(Real, Real, char *, Int);
+// retail calls the shared random helper through the ILT thunk at 0x0002CCA5,
+// whose defining name is ?Rva0002CCA5GetGameLogicRandomValueRealThunk@@YAMMMPADH@Z
+extern Real Rva0002CCA5GetGameLogicRandomValueRealThunk(Real, Real, char *, Int);
 extern Real bfmeStructureToppleNormalizeAngle(Real);
 extern void j_00011f77();
 extern void j_0001bb21();
@@ -379,7 +381,7 @@ void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
 		}
 		else if (attacker == 0)
 		{
-			toppleAngle = bfmeStructureToppleRandomReal(
+			toppleAngle = Rva0002CCA5GetGameLogicRandomValueRealThunk(
 				0.0f, 2 * 3.14159265359f,
 				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
 				151);
@@ -393,7 +395,7 @@ void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
 			self->toppleDirection.y = buildingPos->y - attackerPos->y;
 			toppleAngle =
 				((const BfmeStructureToppleCoord2DCall *)&self->toppleDirection)->toAngle();
-			toppleAngle += bfmeStructureToppleRandomReal(
+			toppleAngle += Rva0002CCA5GetGameLogicRandomValueRealThunk(
 				-3.14159265359f / 8, 3.14159265359f / 8,
 				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
 				164);
