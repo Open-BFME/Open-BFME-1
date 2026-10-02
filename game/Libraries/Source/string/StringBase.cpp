@@ -306,7 +306,7 @@ const T *StringBase<T>::reverseFind(T c) const
 }
 
 template <>
-int StringBase<char>::compare(const StringBase<char> &str) const
+inline int StringBase<char>::compare(const StringBase<char> &str) const
 {
     const int len = str.m_data ? str.m_data->length : 0;
     const char *data = str.m_data ? &str.m_data->data[0] : "";
@@ -314,7 +314,7 @@ int StringBase<char>::compare(const StringBase<char> &str) const
 }
 
 template <>
-int StringBase<char>::compare(const char *str, int len) const
+inline int StringBase<char>::compare(const char *str, int len) const
 {
     const int myLen = m_data ? m_data->length : 0;
     const char *data = m_data ? &m_data->data[0] : "";

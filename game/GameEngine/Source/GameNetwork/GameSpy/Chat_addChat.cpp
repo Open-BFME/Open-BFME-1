@@ -31,7 +31,7 @@
 #include "Common/UnicodeString.h"
 #include <string.h>
 #pragma intrinsic(memcmp)
-template <> __declspec(noinline) int StringBase<char>::compare(const StringBase<char>& other) const {
+template <> inline __declspec(noinline) int StringBase<char>::compare(const StringBase<char>& other) const {
     const int len = other.m_data ? other.m_data->length : 0;
     const char *data = other.m_data ? other.m_data->data : "";
     const int myLen = m_data ? m_data->length : 0;

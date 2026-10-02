@@ -10,7 +10,7 @@ AsciiString::~AsciiString()
 }
 
 template <>
-int StringBase<char>::compare(const char *text, int length) const
+inline int StringBase<char>::compare(const char *text, int length) const
 {
     const int ownLength = m_data ? m_data->length : 0;
     const char *ownText = m_data ? m_data->data : "";
@@ -21,7 +21,7 @@ int StringBase<char>::compare(const char *text, int length) const
 }
 
 template <>
-int StringBase<char>::compare(const StringBase<char> &text) const
+inline int StringBase<char>::compare(const StringBase<char> &text) const
 {
     const int length = text.m_data ? text.m_data->length : 0;
     const char *data = text.m_data ? text.m_data->data : "";
