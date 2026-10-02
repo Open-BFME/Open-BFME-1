@@ -158,7 +158,10 @@ class BfmeKindOfMask {
  _STL::bitset<176> bits;
 public: BfmeKindOfMask(int a,int b) { bits.set(a); bits.set(b); }
 };
-class BfmeKindOfTester { public: bool isAnyKindOf(const BfmeKindOfMask&) const; };
+// The kind-of test is the real Common/Thing.h member (already in this TU's
+// include chain): ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z, the
+// ledger's body at 0x00132AE0.  The mask is still built as BfmeKindOfMask
+// (identical stack construction); only its address is passed on.
 struct AreaData00202490 { char pad00[8]; float radius08; char pad0C[0x14]; char sub20; };
 class PassiveAreaEffectBehavior { public:
  void collectTargets00202490();
@@ -180,7 +183,8 @@ void PassiveAreaEffectBehavior::collectTargets00202490() {
  Object* other;
  while(iterator.next(other)) {
   if(other==object) continue;
-  if(((BfmeKindOfTester*)other)->isAnyKindOf(BfmeKindOfMask(47,150))) continue;
+  if(reinterpret_cast<const Thing *>(other)->isAnyKindOf(
+		reinterpret_cast<const KindOfMaskType &>(BfmeKindOfMask(47,150)))) continue;
   ObjectID id=other->m_id;
   if(_STL::find(ids24.begin(),ids24.end(),id)==ids24.end()) ids24.push_front(id);
  }

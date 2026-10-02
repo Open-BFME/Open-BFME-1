@@ -2048,18 +2048,17 @@ private:
 	std::bitset<192> m_bits;
 };
 
-class BfmeKindOfTester
-{
-public:
-	Bool isAnyKindOf( const BfmeKindOfMask &mask ) const;	///< retail 0x00132ae0
-};
-
 //-------------------------------------------------------------------------------------------------
 // ?isFactionStructure@Object@@QBE_NXZ
 Bool Object::isFactionStructure(void) const
 {
-	return reinterpret_cast<const BfmeKindOfTester *>(this)->isAnyKindOf(
-		BfmeKindOfMask( 61, 62, 63, 64, 134 ) );
+	// The kind-of test is the real Common/Thing.h member (already in this TU's
+	// include chain): ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z, the
+	// ledger's body at 0x00132AE0.  The mask is still built as BfmeKindOfMask
+	// (identical stack construction); only its address is passed on.
+	return reinterpret_cast<const Thing *>(this)->isAnyKindOf(
+		reinterpret_cast<const KindOfMaskType &>(
+			BfmeKindOfMask( 61, 62, 63, 64, 134 ) ) );
 }
 
 //-------------------------------------------------------------------------------------------------

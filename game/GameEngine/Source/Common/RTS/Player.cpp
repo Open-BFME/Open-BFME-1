@@ -2378,12 +2378,6 @@ private:
 	std::bitset<192> m_bits;
 };
 
-class BfmeKindOfTester
-{
-public:
-	Bool isAnyKindOf(const BfmeKindOfMask &mask) const;
-};
-
 class BfmeShroudManagerHuntView
 {
 public:
@@ -2683,8 +2677,8 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 
 				BfmeKindOfMask disqualifyingKindofs(14, 16, 90);
 
-				if (((BfmeKindOfTester *)obj)->isAnyKindOf(
-						disqualifyingKindofs)) {
+				if (((Thing *)obj)->isAnyKindOf(
+						reinterpret_cast<const KindOfMaskType &>(disqualifyingKindofs))) {
 					continue;	// Harvesters, dozers etc.
 				}
 				if (*(unsigned char *)((char *)obj + 0x94) & 0x20) {
