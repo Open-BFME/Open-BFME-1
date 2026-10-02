@@ -1,4 +1,11 @@
-void __cdecl rva220840Callback();
+// Retail's invoke (0x00220840) pushes 0x006207F0 as the callback argument of
+// the vtable+0xFC dispatch. That address is the matched body
+// ?bfmeGoFCD@@YAXPAVBfmeObjFCD@@PAUBfmePairFCD@@@Z at RVA 0x002207F0
+// (game/GameEngine/Source/Common/BfmeConv892.cpp), so the callback is named
+// with the ledger's defined spelling instead of an address-derived extern.
+class BfmeObjFCD;
+struct BfmePairFCD;
+void __cdecl bfmeGoFCD(BfmeObjFCD *o, BfmePairFCD *p);
 
 struct Rva220840Request
 {
@@ -25,7 +32,7 @@ struct Rva220840DispatchThunk
 	virtual void slotd0(); virtual void slotd4(); virtual void slotd8(); virtual void slotdc();
 	virtual void slote0(); virtual void slote4(); virtual void slote8(); virtual void slotec();
 	virtual void slotf0(); virtual void slotf4(); virtual void slotf8();
-	virtual void dispatch(void (__cdecl *callback)(), Rva220840Request *request, int mode);
+	virtual void dispatch(void (__cdecl *callback)(BfmeObjFCD *, BfmePairFCD *), Rva220840Request *request, int mode);
 
 	bool invoke(unsigned int first, unsigned int second);
 };
@@ -37,6 +44,6 @@ bool Rva220840DispatchThunk::invoke(unsigned int first, unsigned int second)
 	request.second = second;
 	request.first = first;
 	request.handled = false;
-	dispatch(rva220840Callback, &request, 1);
+	dispatch(bfmeGoFCD, &request, 1);
 	return !request.handled;
 }
