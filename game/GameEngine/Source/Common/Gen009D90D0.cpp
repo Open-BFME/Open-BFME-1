@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the unconditional peer attach helper at retail RVA 0x009D90D0.
 
+#include "System/xfer.h"
+
 class BfmePeer
 {
 public:
@@ -20,14 +22,13 @@ public:
 	virtual void bfmeAccept(void *value);
 	virtual void bfmeFinish();
 
-	void bfmeReset(BfmePeer *peer);
 	Gen009D6E10 *bfmeAttachAlways(BfmePeer *peer);
 };
 
 Gen009D6E10 *Gen009D6E10::bfmeAttachAlways(BfmePeer *peer)
 {
 	bfmeAccept(peer->bfmeValue());
-	bfmeReset(peer);
+	reinterpret_cast<Xfer *>(this)->Xfer::operator==(*reinterpret_cast<Snapshot *>(peer));
 	bfmeFinish();
 	return this;
 }
