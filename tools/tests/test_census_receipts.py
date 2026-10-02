@@ -102,6 +102,66 @@ def test_capture_timeout_kills_the_hung_compilers_descendants(tmp_path, monkeypa
             os.kill(pid, 9)
 
 
+@pytest.mark.skipif(not hasattr(os, 'pread'), reason='the fatal-error watch needs os.pread')
+def test_capture_kills_a_compiler_spinning_after_a_fatal_error(tmp_path, monkeypatch):
+    # Wine 11's cl.exe -E can print C1083 and then never exit. The capture
+    # must not wait out the whole timeout for it.
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setenv('BFME_PREPROCESS_TIMEOUT', '60')
+    monkeypatch.setattr(build, 'COMPILER_FATAL_GRACE', 0.5)
+    hung = tmp_path / 'hung.py'
+    hung.write_text(
+        'import os, time\n'
+        'os.write(1, b"#line 1 \\"unit.cpp\\"\\n")\n'
+        'os.write(2, b"Note: including file: a.h\\n" * 5000)\n'
+        'os.write(2, b"dx8wrapper.h(51) : fatal error C1083: Cannot open include file: \'d3d8.h\'\\n")\n'
+        'time.sleep(60)\n')
+    started = time.monotonic()
+    result = proofs.capture_preprocessor([sys.executable, str(hung)], dict(os.environ))
+    assert time.monotonic() - started < 15
+    assert result.returncode == 125
+    assert b"fatal error C1083: Cannot open include file: 'd3d8.h'" in result.stderr
+    assert result.stderr.endswith(b'after a fatal error; killed\n')
+
+
+def test_capture_keeps_a_fatal_error_that_exits_on_its_own(tmp_path, monkeypatch):
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setattr(build, 'COMPILER_FATAL_GRACE', 5)
+    compiler = tmp_path / 'compiler.py'
+    compiler.write_text(
+        'import os, sys, time\n'
+        'os.write(2, b"unit.cpp(1) : fatal error C1189: #error :  boom\\n")\n'
+        'time.sleep(1)\n'
+        'sys.exit(2)\n')
+    result = proofs.capture_preprocessor([sys.executable, str(compiler)], dict(os.environ))
+    assert result.returncode == 2
+    assert result.stderr == b'unit.cpp(1) : fatal error C1189: #error :  boom\n'
+
+
+@pytest.mark.skipif(not hasattr(os, 'pread'), reason='the fatal-error watch needs os.pread')
+def test_actual_compile_spinning_after_a_fatal_error_fails_instead_of_stalling(tmp_path, monkeypatch):
+    # The same WineHQ 11 hang hits cl.exe -c; build.py then takes its ordinary
+    # failure path (here the sweep-include retry it starts on C1083).
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setattr(build, 'COMPILER_FATAL_GRACE', 0.5)
+    hung = tmp_path / 'hung.py'
+    hung.write_text(
+        'import os, subprocess, sys, time\n'
+        'subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"])\n'
+        'os.write(1, b"unit.cpp\\r\\nNote: including file: a.h\\r\\n")\n'
+        'os.write(2, b"dx8wrapper.h(51) : fatal error C1083: Cannot open include file: \'d3d8.h\'\\r\\n")\n'
+        'time.sleep(60)\n')
+    started = time.monotonic()
+    result = build.run_compiler([sys.executable, str(hung)], dict(os.environ))
+    assert time.monotonic() - started < 15
+    assert result.returncode == 125
+    assert result.stdout.splitlines() == [
+        'unit.cpp', 'Note: including file: a.h',
+        "dx8wrapper.h(51) : fatal error C1083: Cannot open include file: 'd3d8.h'",
+        '', 'compiler still running 0.5 s after a fatal error; killed']
+    assert any('Cannot open include file' in line for line in result.stdout.splitlines())
+
+
 @pytest.mark.parametrize('value', ['0', '-5', 'ten'])
 def test_preprocess_timeout_override_must_be_positive(monkeypatch, value):
     monkeypatch.setenv('BFME_PREPROCESS_TIMEOUT', value)
@@ -149,7 +209,11 @@ def fixture(tmp_path, monkeypatch):
         return SimpleNamespace(returncode=0, stdout='Note: including file: ' + str(header))
     monkeypatch.setattr(build.subprocess, 'run', run)
     # Input-proof unit tests replace the compiler with the same byte transcript
-    # as before. Real regular-file capture is exercised separately below.
+    # as before. Real regular-file capture is exercised separately above.
+    monkeypatch.setattr(build, 'run_compiler', lambda cmd, env:
+                        build.subprocess.run(cmd, cwd=build.ROOT, env=env,
+                                             stdout=build.subprocess.PIPE,
+                                             stderr=build.subprocess.STDOUT, text=True))
     monkeypatch.setattr(proofs, 'capture_preprocessor', lambda cmd, env:
                         build.subprocess.run(cmd, cwd=build.ROOT, env=env,
                                              stdout=build.subprocess.PIPE,

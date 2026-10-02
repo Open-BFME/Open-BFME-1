@@ -11,6 +11,12 @@ name: Daily link census
 # census refuses to record over a stale one, so a restored cache can make a run
 # faster, never wrong. Wine: WineHQ 11 (Ubuntu 24.04's own Wine 9.0 hangs cl.exe
 # on a few files) with a default WoW64 prefix, as on the maintainers' host.
+# WineHQ 11's cl.exe can still print a fatal error (C1083 before build.py's
+# sweep-include retry) and then spin forever; build.watch_compiler kills such a
+# compiler, and the census step has its own timeout so a stall of any other
+# kind still leaves time to save the objects compiled so far. A cold compile
+# takes about 3 h on the 4-core runner and the link about 45 min; a restored
+# cache leaves mostly the link.
 #
 # Manual runs record nothing unless `record` is set; the daily schedule is added
 # once a dry run has passed on the hosted runner.
@@ -82,6 +88,7 @@ jobs:
           key: ${{ steps.cache.outputs.prefix }}${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: ${{ steps.cache.outputs.prefix }}
       - name: Census (compile what changed, link, record, publish the queue)
+        timeout-minutes: 315     # leaves the job time to save the objects compiled so far
         run: |
           wineserver -p   # one wineserver for every cl.exe, not one per launch
           python3 tools/link_census.py --build --history

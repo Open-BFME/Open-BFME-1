@@ -8,14 +8,18 @@ import csv
 import functools
 import hashlib
 import json
+import locale
 import multiprocessing
 import os
 import re
 import shutil
+import signal
 import struct
 import subprocess
 import sys
+import tempfile
 import threading
+import time
 from pathlib import Path
 
 from coffar import RELOC_WIDTH, read_archive
@@ -1477,6 +1481,107 @@ def first_cl_error(text):
     return "(unrecognized compiler output)"
 
 
+# After a fatal error (C1xxx) MSVC has nothing left to do but exit. Under
+# WineHQ 11 on the hosted census runner, cl.exe -c and -E on a TU whose base
+# include path lacks a header (BaseHeightMap_loadRoadsAndBridges.cpp: C1083
+# for d3d8.h, before the sweep-include retry) print C1083 and then spin at
+# 100% CPU forever; four of them stalled the census's whole BUILD_POOL=4 for
+# hours. A compiler still running this long after printing a fatal error is
+# killed and reported as that failure.
+COMPILER_FATAL_GRACE = 10  # seconds
+_COMPILER_FATAL = re.compile(rb"\bfatal error C1\d{3}\b")
+_COMPILER_POLL = 0.5  # seconds between checks of a running compiler
+
+
+def _kill_compiler_tree(process):
+    # The compiler runs in its own session, so its process group is the whole
+    # tree it launched (Wine's loader, cl.exe and anything they spawned) and
+    # nothing else: a wineserver started beforehand (`wineserver -p`) or one
+    # that daemonized itself has left the group and keeps serving.
+    if os.name == "posix":
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    else:
+        process.kill()
+    process.wait()
+
+
+def _reported_fatal(handle, scanned):
+    """(fatal error printed?, bytes scanned) for a compiler's output file.
+
+    os.pread leaves the shared file offset alone: the compiler is still
+    writing through the same open file description.
+    """
+    size = os.fstat(handle.fileno()).st_size
+    start = max(0, scanned - 32)  # a message split across two reads
+    chunk = os.pread(handle.fileno(), size - start, start) if size > start else b""
+    return bool(_COMPILER_FATAL.search(chunk)), size
+
+
+def watch_compiler(command, env, *, merge_output, timeout=None, timeout_note=b""):
+    """Run one compiler process; return a CompletedProcess with bytes output.
+
+    Output goes through regular files: Wine services can inherit the
+    compiler's standard handles and outlive its launcher, so a pipe's EOF may
+    never come. merge_output sends stderr into stdout (stderr is then empty).
+    A compiler still running COMPILER_FATAL_GRACE seconds after printing a
+    fatal error returns 125, and one still running after `timeout` seconds
+    returns 124 with `timeout_note` as its stderr; either way its whole process
+    tree is killed first.
+    """
+    watch_fatal = hasattr(os, "pread")  # POSIX hosts, where Wine runs cl.exe
+    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        process = subprocess.Popen(command, cwd=ROOT, env=env, stdout=stdout,
+                                   stderr=subprocess.STDOUT if merge_output else stderr,
+                                   start_new_session=True)
+        diagnostics = stdout if merge_output else stderr
+        started = time.monotonic()
+        fatal_at = None
+        scanned = 0
+        try:
+            while True:
+                elapsed = time.monotonic() - started
+                if timeout is not None and elapsed >= timeout:
+                    _kill_compiler_tree(process)
+                    return subprocess.CompletedProcess(command, 124, b"", timeout_note)
+                wait = _COMPILER_POLL if timeout is None else min(_COMPILER_POLL, timeout - elapsed)
+                try:
+                    returncode = process.wait(timeout=wait)
+                    break
+                except subprocess.TimeoutExpired:
+                    pass
+                if not watch_fatal:
+                    continue
+                if fatal_at is None:
+                    fatal, scanned = _reported_fatal(diagnostics, scanned)
+                    if fatal:
+                        fatal_at = time.monotonic()
+                elif time.monotonic() - fatal_at >= COMPILER_FATAL_GRACE:
+                    _kill_compiler_tree(process)
+                    returncode = 125
+                    note = (b"\ncompiler still running %g s after a fatal error; killed\n"
+                            % COMPILER_FATAL_GRACE)
+                    diagnostics.seek(0, os.SEEK_END)
+                    diagnostics.write(note)
+                    break
+        except BaseException:
+            _kill_compiler_tree(process)
+            raise
+        stdout.seek(0)
+        stderr.seek(0)
+        return subprocess.CompletedProcess(command, returncode, stdout.read(), stderr.read())
+
+
+def run_compiler(command, env):
+    """watch_compiler with merged output decoded as subprocess's text=True would."""
+    result = watch_compiler(command, env, merge_output=True)
+    text = result.stdout.decode(locale.getpreferredencoding(False))
+    return subprocess.CompletedProcess(command, result.returncode,
+                                       text.replace("\r\n", "\n").replace("\r", "\n"))
+
+
 def try_compile_source(source, output, *, input_proof=None):
     """Compile `source` to `output`. Return (ok, filtered_output, returncode).
 
@@ -1497,14 +1602,7 @@ def try_compile_source(source, output, *, input_proof=None):
     code = 1
     for attempt in range(3):
         before = input_proof.before(source, output, command, env) if input_proof else None
-        result = subprocess.run(
-            command + (["-showIncludes"] if is_cl else []),
-            cwd=ROOT,
-            env=env,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-        )
+        result = run_compiler(command + (["-showIncludes"] if is_cl else []), env)
         stdout = result.stdout or ""
         filtered = "\n".join(l for l in stdout.splitlines()
                              if not l.startswith("Note: including file:"))
@@ -2612,6 +2710,36 @@ def stale_sources(sources, source_outputs, workers=1):
                 for source in part]
 
 
+PROGRESS_MIN_TUS = 100     # smaller compiles finish before a line would help
+PROGRESS_SECONDS = 300     # at most one progress line per five minutes
+
+
+def _compile_progress(total):
+    """A tick() that prints `Compile progress: done/total` now and then.
+
+    A cold link census compiles ~22,000 TUs for hours; without these lines its
+    log is silent from `Lib members:` to the link, and a stalled pool looks
+    the same as a working one.
+    """
+    started = time.monotonic()
+    state = {"done": 0, "printed": started}
+
+    def report(now):
+        print(f"Compile progress: {state['done']:,}/{total:,} TU(s) in {now - started:.0f}s",
+              flush=True)
+
+    def tick():
+        state["done"] += 1
+        now = time.monotonic()
+        if total >= PROGRESS_MIN_TUS and (now - state["printed"] >= PROGRESS_SECONDS
+                                          or state["done"] == total):
+            state["printed"] = now
+            report(now)
+    if total >= PROGRESS_MIN_TUS:
+        report(started)
+    return tick
+
+
 def compile_rows(rows, sources, *, input_proof=None):
     """Compile every source whose object is not current; return {source: object}.
     The compile phase of verify_functions, callable on its own (link_census)."""
@@ -2666,18 +2794,21 @@ def compile_rows(rows, sources, *, input_proof=None):
         lock(lock_file, exclusive=True,
              wait_notice="waiting for build lock (another clone is running a full build)...")
     try:
+        tick = _compile_progress(len(to_compile))
         if pool_size == 1 or len(to_compile) <= 1:
             for s in to_compile:
                 if input_proof is None:
                     compile_source(s, source_outputs[s])
                 else:
                     compile_source(s, source_outputs[s], input_proof=input_proof)
+                tick()
         else:
             with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
                 kwargs = {} if input_proof is None else {"input_proof": input_proof}
                 futures = {pool.submit(compile_source, s, source_outputs[s], **kwargs): s for s in to_compile}
                 for future in concurrent.futures.as_completed(futures):
                     future.result()
+                    tick()
     finally:
         if lock_file is not None:
             unlock(lock_file)

@@ -9,9 +9,6 @@ import json
 import os
 from pathlib import Path
 import re
-import signal
-import subprocess
-import tempfile
 import uuid
 
 import build
@@ -61,47 +58,15 @@ def preprocess_timeout():
     return seconds
 
 
-def _kill_tree(process):
-    # The compiler runs in its own session, so its process group is the whole
-    # tree it launched (Wine's loader, cl.exe and anything they spawned) and
-    # nothing else: a wineserver started beforehand (`wineserver -p`) or one
-    # that daemonized itself has left the group and keeps serving.
-    if os.name == "posix":
-        try:
-            os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-    else:
-        process.kill()
-    process.wait()
-
-
 def capture_preprocessor(command, env):
-    # Wine services can inherit the compiler's standard handles and outlive
-    # its launcher. Regular files preserve the exact binary output without
-    # making the direct child's completion depend on those services' EOF.
-    # cl.exe -E can spin forever under Wine after reporting C1083; a timeout
-    # kills the whole process tree and turns the hang into the ordinary
-    # failed-preprocess path.
+    # cl.exe -E can spin forever under Wine after reporting C1083. A fatal
+    # error that does not end the process, or a process still running at the
+    # timeout, has its whole process tree killed and takes the ordinary
+    # failed-preprocess path (build.watch_compiler).
     timeout = preprocess_timeout()
-    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
-        process = subprocess.Popen(command, cwd=build.ROOT, env=env,
-                                   stdout=stdout, stderr=stderr,
-                                   start_new_session=True)
-        try:
-            returncode = process.wait(timeout=timeout)
-        except subprocess.TimeoutExpired:
-            _kill_tree(process)
-            return subprocess.CompletedProcess(
-                command, 124, b"",
-                b"preprocessor timed out after %g s (BFME_PREPROCESS_TIMEOUT)" % timeout)
-        except BaseException:
-            _kill_tree(process)
-            raise
-        stdout.seek(0)
-        stderr.seek(0)
-        return subprocess.CompletedProcess(command, returncode,
-                                           stdout.read(), stderr.read())
+    return build.watch_compiler(
+        command, env, merge_output=False, timeout=timeout,
+        timeout_note=b"preprocessor timed out after %g s (BFME_PREPROCESS_TIMEOUT)" % timeout)
 
 
 def snapshot(source, command, env):
