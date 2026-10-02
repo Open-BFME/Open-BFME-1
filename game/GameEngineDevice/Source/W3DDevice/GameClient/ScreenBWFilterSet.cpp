@@ -1,9 +1,12 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x007D1020, 1206 bytes.  The vtable at 0x0112898C is installed by
 // the ScreenBWFilter constructor at 0x007D0CB0; slot 5 is this set method.
 
 #include <string.h>
 #include "d3dx8math.h"
+// Retail keeps ShaderClass::_PresetOpaqueShader (0x012D6E08) beside the screen
+// filter's own shader cache word; shader.h declares the real identity.
+#include "shader.h"
 
 typedef int Int;
 typedef float Real;
@@ -95,7 +98,6 @@ struct BfmeDevice
 extern VertexMaterialClass *ScreenMaterial;
 extern unsigned int TheBoxTextureDirtyMask;
 extern bool ScreenShaderDirty;
-extern unsigned int ScreenOpaqueShader;
 extern unsigned int ScreenCurrentShader;
 extern bool ScreenSnapshot;
 extern unsigned int ScreenRenderStates[];
@@ -290,9 +292,9 @@ Int Rva007D1020ScreenBWFilter::set(FilterModes mode)
 		if (vmat)
 			vmat->Release_Ref();
 
-		if (ScreenShaderDirty || ScreenOpaqueShader != ScreenCurrentShader)
+		if (ScreenShaderDirty || ShaderClass::_PresetOpaqueShader.Get_Bits() != ScreenCurrentShader)
 		{
-			ScreenCurrentShader = ScreenOpaqueShader;
+			ScreenCurrentShader = ShaderClass::_PresetOpaqueShader.Get_Bits();
 			TheBoxTextureDirtyMask |= 0x8000;
 			StringClass s;
 		}

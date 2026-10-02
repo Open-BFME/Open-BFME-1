@@ -1,10 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x007D1AA0, 760 bytes. Same shape family as the landed twin
 // Rva007DB820::set (0x007DAE30, also 760 B, ScreenFilterRva007DB820Set.cpp):
 // fade ladder (fade direction/frames/current-frame/value globals), then
 // the shared Get_Preset/ScreenMaterial swap, ScreenShaderDirty check,
 // BoxSetTexture, and two inlined Set_DX8_Render_State calls. Original
 // filter class name unknown; landed neighbours 0x007D1E60/0x007D1E80.
+// Retail keeps ShaderClass::_PresetOpaqueShader (0x012D6E08) beside the screen
+// filter's own shader cache word; shader.h declares the real identity.
+#include "shader.h"
 class StringClass {
  char *m_Buffer;
  static char *m_EmptyString; static char m_NullChar;
@@ -30,7 +33,7 @@ struct Device{DeviceVtable *v;};
 extern VertexMaterialClass *ScreenMaterial;
 extern unsigned TheBoxTextureDirtyMask;
 extern bool ScreenShaderDirty;
-extern unsigned ScreenOpaqueShader, ScreenCurrentShader;
+extern unsigned ScreenCurrentShader;
 extern bool ScreenSnapshot;
 extern unsigned ScreenRenderStates[];
 extern Device *ScreenDevice;
@@ -118,7 +121,7 @@ int Rva007D1AA0::set(FilterModes mode) {
  ScreenMaterial=vmat;
  TheBoxTextureDirtyMask|=0x4000;
  if(vmat)vmat->Release_Ref();
- if(ScreenShaderDirty||ScreenOpaqueShader!=ScreenCurrentShader){ScreenCurrentShader=ScreenOpaqueShader;TheBoxTextureDirtyMask|=0x8000;StringClass s;}
+ if(ScreenShaderDirty||ShaderClass::_PresetOpaqueShader.Get_Bits()!=ScreenCurrentShader){ScreenCurrentShader=ShaderClass::_PresetOpaqueShader.Get_Bits();TheBoxTextureDirtyMask|=0x8000;StringClass s;}
  {TextureHandle tex;BoxSetTexture(0,(TextureBaseClass*&)tex.p);}
  DX8Wrapper::Apply_Render_State_Changes();
  DX8Wrapper::Set_DX8_Render_State(23,8);

@@ -1,6 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x007D47A0, ScreenDefaultFilter vtable 0x01128A84 slot 5.
 // Slot 3 resolves through 0x43FDC8 to matched ScreenDefaultFilter::postRender.
+#include "shader.h"
 class StringClass {
  char *m_Buffer;
  static char *m_EmptyString; static char m_NullChar;
@@ -26,7 +27,9 @@ struct Device{DeviceVtable *v;};
 extern VertexMaterialClass *ScreenMaterial;
 extern unsigned TheBoxTextureDirtyMask;
 extern bool ScreenShaderDirty;
-extern unsigned ScreenOpaqueShader, ScreenCurrentShader;
+// Retail keeps ShaderClass::_PresetOpaqueShader (0x012D6E08) beside the screen
+// filter's own shader cache word; the header declares the real identity.
+extern unsigned ScreenCurrentShader;
 extern bool ScreenSnapshot;
 extern unsigned ScreenRenderStates[];
 extern Device *ScreenDevice;
@@ -52,7 +55,7 @@ int ScreenDefaultFilter::set(FilterModes mode) {
  ScreenMaterial=vmat;
  TheBoxTextureDirtyMask|=0x4000;
  if(vmat)vmat->Release_Ref();
- if(ScreenShaderDirty||ScreenOpaqueShader!=ScreenCurrentShader){ScreenCurrentShader=ScreenOpaqueShader;TheBoxTextureDirtyMask|=0x8000;StringClass s;}
+ if(ScreenShaderDirty||ShaderClass::_PresetOpaqueShader.Get_Bits()!=ScreenCurrentShader){ScreenCurrentShader=ShaderClass::_PresetOpaqueShader.Get_Bits();TheBoxTextureDirtyMask|=0x8000;StringClass s;}
  {TextureHandle tex;BoxSetTexture(0,(TextureBaseClass*&)tex.p);}
  DX8Wrapper::Apply_Render_State_Changes();
  DX8Wrapper::Set_DX8_Render_State(23,8);

@@ -7,6 +7,7 @@
 #include "wwstring.h"
 #include "vertmaterial.h"
 #include "texture.h"
+#include "shader.h"
 
 struct Rva007BB060TextureRef
 {
@@ -59,7 +60,7 @@ extern Rva007BB060Device *Rva01340534Device;
 extern VertexMaterialClass *Rva01340EC4Material;
 extern unsigned int Rva0133F49CChanged;
 extern bool Rva012D6DFCShaderDirty;
-extern unsigned int Rva012D6E08Shader;
+// 0x012D6E08 is ShaderClass::_PresetOpaqueShader; shader.h declares the identity.
 extern unsigned int Rva01340EC0Shader;
 
 class DX8Wrapper { private: static void Apply_Render_State_Changes(); friend void Rva007BB060(); };
@@ -88,8 +89,8 @@ void Rva007BB060()
     Rva01340EC4Material = material;
     Rva0133F49CChanged |= 0x4000;
     if (material) material->Release_Ref();
-    if (Rva012D6DFCShaderDirty || Rva012D6E08Shader != Rva01340EC0Shader) {
-        Rva01340EC0Shader = Rva012D6E08Shader;
+    if (Rva012D6DFCShaderDirty || ShaderClass::_PresetOpaqueShader.Get_Bits() != Rva01340EC0Shader) {
+        Rva01340EC0Shader = ShaderClass::_PresetOpaqueShader.Get_Bits();
         Rva0133F49CChanged |= 0x8000;
         StringClass text;
     }
