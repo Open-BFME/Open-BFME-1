@@ -1657,20 +1657,8 @@ UnsignedInt PathfindCell::costToGoal( PathfindCell *goal )
 	return cost;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindCell_costToHierGoal.cpp
-// ?costToHierGoal@PathfindCell@@QAEIPAV1@@Z present-unmatched
-UnsignedInt PathfindCell::costToHierGoal( PathfindCell *goal )
-{
-	if( !m_info )
-	{
-		DEBUG_CRASH( ("Has to have info.") );
-		return 100000; //...patch hack 1.01
-	}
-	Int dx = m_info->m_pos.x - goal->getXIndex();
-	Int dy = m_info->m_pos.y - goal->getYIndex();
-	Int cost = REAL_TO_INT_FLOOR(COST_ORTHOGONAL*sqrt(dx*dx + dy*dy) + 0.5f);
-	return cost;
-}
+// Retail costToHierGoal is provided by PathfindCellInfoRecord.cpp (0x003F6CA0).
+// Its BFME info-record layout and unconditional reads differ from this ZH body.
 
 // The verified BFME costSoFar body at RVA 003F6D20 lives in
 // ../Pathfinder/PathfindCell_costSoFar.cpp. Its compact cell/info layout
