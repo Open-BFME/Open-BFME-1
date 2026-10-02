@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // 95B twin of ??1Gen0045AFE0@@UAE@XZ (Gen0045AFE0Destructor.cpp): identical
 // SEH-wrapped shape (AsciiString release, chained-base ~Gen0045AFE0Base
@@ -6,16 +6,11 @@
 // ??_7BfmeBaseVUH@@6B@ at 0x0107FCB0), but the AsciiString/tail member sits
 // 0x24 bytes further into the object (+0x30 instead of +0xc), so this
 // derived class carries 0x24 extra bytes of padding ahead of it.
+// The member is AsciiString: retail releases it with
+// `lea ecx,[esi+0x30] / call 0x00887940`, StringBase<char>::releaseBuffer.
 // Address-derived name pending a caller/vtable that names the real class.
 
-class Gen00887940
-{
-public:
-	~Gen00887940();
-
-private:
-	void *m_data[3];
-};
+#include "ascii_string.h"
 
 class Rva000C3980Base
 {
@@ -39,7 +34,7 @@ public:
 
 private:
 	char m_pad[0x24];
-	Gen00887940 m_tail;
+	AsciiString m_tail;
 };
 
 Rva000C3980::~Rva000C3980()

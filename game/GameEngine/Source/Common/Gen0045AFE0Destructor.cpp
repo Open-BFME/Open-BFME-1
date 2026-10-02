@@ -1,13 +1,12 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+//
+// The tail member is the narrow string retail releases through
+// StringBase<char>::releaseBuffer (0x00887940): the body does
+// `lea ecx,[esi+0x0c] / call 0x00887940`, so the member is AsciiString and
+// its (inline, empty) destructor is exactly that call. The address-derived
+// Gen00887940 stand-in named a symbol nothing defined.
 
-class Gen00887940
-{
-public:
-	~Gen00887940();
-
-private:
-	void *m_data[3];
-};
+#include "ascii_string.h"
 
 class Gen0045AFE0Base
 {
@@ -30,7 +29,7 @@ public:
 	virtual ~Gen0045AFE0();
 
 private:
-	Gen00887940 m_tail;
+	AsciiString m_tail;                                        ///< +0x0c
 };
 
 Gen0045AFE0::~Gen0045AFE0()

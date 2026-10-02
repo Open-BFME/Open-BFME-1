@@ -1,13 +1,16 @@
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+//
 // Open-BFME5 conversions.
+//
+// BfmeStrVUG is the narrow string retail releases at 0x00887940 -- the body
+// does `lea ecx,[esi+0x0c] / call 0x00887940`, i.e. StringBase<char>:
+// releaseBuffer through AsciiString's inline destructor. The Bfme* method name
+// it used to carry (bfmeClearVUG) names a symbol nothing defines.
 
-class BfmeStrVUG
+#include "ascii_string.h"
+
+class BfmeStrVUG : public AsciiString
 {
-public:
-	~BfmeStrVUG() { bfmeClearVUG(); }
-	char *m_bfme00;
-
-private:
-	void bfmeClearVUG();
 };
 
 class BfmeSubVUG
