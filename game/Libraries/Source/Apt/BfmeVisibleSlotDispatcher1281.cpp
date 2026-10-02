@@ -1,12 +1,14 @@
 class BfmeNodeDX;
 
+struct BfmePickWorld1284;			// retail global 0x013377D8, defined in BfmePicker1284.cpp
+extern BfmePickWorld1284 *g_bfmeHolderBU;
+
+// the 0x008A0C30 slot's owner is Gen_008A0C30 (functions.csv), not the global's type
 class Gen_008A0C30
 {
 public:
 	bool bfmeAllows(BfmeNodeDX *node) const;
 };
-
-extern Gen_008A0C30 *g_bfmeHolderBU;
 
 class BfmeNodeDX
 {
@@ -35,7 +37,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchVisible1281(int, void *tail)
 	for (int index = 0; index < 512 && visited != m_secondaryCount; ++index) {
 		BfmeNodeDX *entry = m_secondary[index];
 		if (entry != 0) {
-			if (!g_bfmeHolderBU->bfmeAllows(entry)) {
+			if (!reinterpret_cast<Gen_008A0C30 *>(g_bfmeHolderBU)->bfmeAllows(entry)) {
 				entry->bfmeEmit1281(0x40, tail, 0);
 				++visited;
 			}

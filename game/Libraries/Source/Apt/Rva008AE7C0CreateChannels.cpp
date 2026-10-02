@@ -19,7 +19,8 @@ class BfmeRef008A4B20;
 class BfmePtrTable64_008A4B20 { public: void add(BfmeRef008A4B20*); };
 class Rva008ACFC0RegisteredObject;
 class Rva008ACFC0PointerRegistry { public: void add(Rva008ACFC0RegisteredObject*); };
-extern char *g_bfmeHolderBU;
+struct BfmePickWorld1284;			// retail 0x013377D8 global, defined in BfmePicker1284.cpp
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern unsigned char flag0133781C,flag0133781D;
 struct Item008AE7C0 { int m_f0; };
 struct Array008AE7C0 { int m_f0,m_f4,m_f8,m_fC; Item008AE7C0 **m_f10; };
@@ -86,8 +87,8 @@ AptValue *aptCreateChannels008AE7C0(Owner008AE7C0 *self,int argc) {
   ((BfmeSlotState1289*)result)->bfmeSetAxis1289(0,x,0);
   ((BfmeSlotState1289*)result)->bfmeSetAxis1289(1,y,0);
   if(flag0133781C && flag0133781D) {
-   ((BfmePtrTable64_008A4B20*)(g_bfmeHolderBU+0x924))->add((BfmeRef008A4B20*)result);
-   ((Rva008ACFC0PointerRegistry*)(g_bfmeHolderBU+0xa28))->add((Rva008ACFC0RegisteredObject*)result);
+   ((BfmePtrTable64_008A4B20*)((char *)g_bfmeHolderBU+0x924))->add((BfmeRef008A4B20*)result);
+   ((Rva008ACFC0PointerRegistry*)((char *)g_bfmeHolderBU+0xa28))->add((Rva008ACFC0RegisteredObject*)result);
   }
  }
  return g_bfmeFallbackDB;

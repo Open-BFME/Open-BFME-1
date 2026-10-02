@@ -29,7 +29,9 @@ public:
 	float m_field24;
 };
 
-struct Rva008AED50Holder
+// retail global 0x013377D8 (defined in BfmePicker1284.cpp); this TU sees it
+// through the members it touches.
+struct BfmePickWorld1284
 {
 	unsigned char m_gap0[0x1240];
 	Rva008AED50Obj *m_target;              // +0x1240
@@ -44,7 +46,7 @@ struct Rva008AED50Holder
 	int m_baseY;                             // +0x1278
 };
 
-extern Rva008AED50Holder *g_bfmeHolderBU;    // retail 0x013377D8
+extern BfmePickWorld1284 *g_bfmeHolderBU;     // retail 0x013377D8
 extern AptValue **g_bfmeArgBase;              // retail 0x01338750
 struct Rva008AE770Stack { int m_count; };     // retail 0x01338748
 extern Rva008AE770Stack Rva008AE770TheStack;

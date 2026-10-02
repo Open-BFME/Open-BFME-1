@@ -26,15 +26,15 @@ public:
 	void add(Rva008ACFC0RegisteredObject *value);
 };
 
-class Rva008AD350Holder
+// retail global 0x013377D8 (defined in BfmePicker1284.cpp); this TU sees it
+// through the members it touches.
+struct BfmePickWorld1284
 {
-private:
 	char m_padding00[0xA28];
-public:
 	Rva008AD000 m_members;
 };
 
-extern Rva008AD350Holder *g_bfmeHolderBU;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern unsigned int g_bfmeHashMasks008AD350[];
 
 struct BfmeHeader008AD350

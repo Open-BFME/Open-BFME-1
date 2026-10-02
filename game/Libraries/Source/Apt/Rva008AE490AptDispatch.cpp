@@ -89,9 +89,10 @@ public:
 	int bfmeTest1220(int *value, int zero);
 };
 
-class Rva008A18C0Holder
+// retail global 0x013377D8 (defined in BfmePicker1284.cpp); this TU sees it
+// through the members it touches.
+struct BfmePickWorld1284
 {
-public:
 	void rva008A18C0();
 };
 
@@ -106,7 +107,7 @@ extern Rva8CD130Value **g_bfmeArr1233;
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
-extern Rva008A18C0Holder *g_bfmeHolderBU;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 int rva008AE490(void *context, int value)
 {
@@ -142,7 +143,7 @@ int rva008AE490(void *context, int value)
 			reinterpret_cast<int>(&secondName), reinterpret_cast<int>(context), 1, -1,
 			0, 0, 0, 0, reinterpret_cast<int>(fourth));
 		{
-			typedef void (Rva008A18C0Holder::*HolderThunk)();
+			typedef void (BfmePickWorld1284::*HolderThunk)();
 			union
 			{
 				void (*raw)(void);

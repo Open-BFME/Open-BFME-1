@@ -22,15 +22,16 @@ public:
 	__declspec(noinline) void bfmeDrop(BfmeObj4310 *obj);
 };
 
-class BfmeHolder4310
+// retail global 0x013377D8 (see game/GameEngine/Source/Common/BfmePicker1284.cpp);
+// this TU sees the object through the members it touches.
+struct BfmePickWorld1284
 {
-public:
 	char m_bfmePad[0x126c];
 	BfmeObj4310 *m_bfmeCurrent;				// +0x126c
 };
 
 extern BfmeTracker4310 *g_bfmeTracker4310;			// retail 0x013377F8
-extern BfmeHolder4310 *g_bfmeHolderBU;				// retail 0x013377D8
+extern BfmePickWorld1284 *g_bfmeHolderBU;			// retail 0x013377D8
 
 class BfmeNodeEA;
 void __cdecl bfmeUnlink(BfmeNodeEA *node);			// retail 0x008BD280

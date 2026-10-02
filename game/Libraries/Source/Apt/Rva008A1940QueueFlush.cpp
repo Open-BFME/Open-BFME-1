@@ -54,8 +54,10 @@ struct Rva008A1940Interpreter {
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern unsigned Rva008A5250LastKey;
-struct Rva008A1940Holder { char gap00[0x1268]; Rva008A1940Value *field1268; Rva008A1940Value *get() { return field1268; } };
-extern Rva008A1940Holder *g_bfmeHolderBU;
+// retail global 0x013377D8 (defined in BfmePicker1284.cpp); this TU sees it
+// through the members it touches.
+struct BfmePickWorld1284 { char gap00[0x1268]; Rva008A1940Value *field1268; Rva008A1940Value *get() { return field1268; } };
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 class AptInteger { public: static AptInteger *Create(int); };
 class BfmeR1226 { public: void bfmeAdd1226(void *, void *, int); void bfmeLine1226(char *); };
 class Rva008CF740Value;

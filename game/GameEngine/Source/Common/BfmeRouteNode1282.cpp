@@ -68,7 +68,9 @@ struct BfmeNodeDetail1282
 	BfmeFlagList1282 *m_flags;
 };
 
-struct BfmeManager1282
+// retail global 0x013377D8 (defined in BfmePicker1284.cpp); this TU sees it
+// through the members it touches.
+struct BfmePickWorld1284
 {
 	char m_padding000[0x14];
 	Rva008ACFC0PointerRegistry m_all;
@@ -77,7 +79,7 @@ struct BfmeManager1282
 	Rva008AD000 m_secondary;
 };
 
-extern BfmeManager1282 *g_bfmeHolderBU;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern void *g_bfmeExtra1282;
 extern unsigned char g_bfmeDispatchEnabled1281;
 extern unsigned char g_bfmeSecondaryEnabled1282;
