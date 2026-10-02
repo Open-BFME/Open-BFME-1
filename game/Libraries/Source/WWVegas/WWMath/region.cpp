@@ -174,16 +174,6 @@ bool Region2D::isInside(const Coord2D &point) const
         point.y < y_max;
 }
 
-float Region2D::width() const
-{
-    return x_max - x_min;
-}
-
-float Region2D::height() const
-{
-    return y_max - y_min;
-}
-
 Region3D &Region3D::operator=(const Region3D &that)
 {
     struct Region3DBase {
