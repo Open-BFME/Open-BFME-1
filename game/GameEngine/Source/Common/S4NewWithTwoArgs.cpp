@@ -30,24 +30,29 @@
 // three bytes longer, which is the whole 96-to-99 spread.  The allocator is
 // 0x00881F30 in all four -- the ledger's `operator new`.
 //
-// IDENTITY IS NOT RECOVERED.  Each class is named after the body that allocates
-// it and is sized only to the byte count the `push` shows; its constructor is
-// DECLARED, never defined, and pinned to the address its REL32 resolves to
-// through the ILT thunk in the way.  The two arguments are spelled `int`
-// because the bytes move them as untyped dwords and show nothing else.
+// The constructor owners and signatures are recovered in the matching module
+// constructor TUs. Keep the factory signatures until their ledger identities
+// are updated, but reference those constructors by their defined names.
 
-#define S4_NEW_TWO_ARGS( NAME, DWORDS )                                        \
-	struct S4New##NAME                                                         \
+class Thing;
+class ModuleData;
+
+#define S4_NEW_TWO_ARGS( NAME, TYPE, DWORDS )                                  \
+	struct S4New##NAME;                                                        \
+	class TYPE                                                                \
 	{                                                                          \
+	public:                                                                    \
 		int m_storage[ DWORDS ];                                               \
-		S4New##NAME( int a, int b );                                           \
+		TYPE( Thing *, const ModuleData * );                                  \
 	};                                                                         \
 	S4New##NAME *s4new##NAME( int a, int b )                                   \
 	{                                                                          \
-		return new S4New##NAME( a, b );                                        \
+		return reinterpret_cast<S4New##NAME *>(                               \
+			new TYPE( reinterpret_cast<Thing *>(a),                           \
+				reinterpret_cast<const ModuleData *>(b) ) );                  \
 	}
 
-S4_NEW_TWO_ARGS( 001142A0, 15 )
-S4_NEW_TWO_ARGS( 00117DC0, 9 )
-S4_NEW_TWO_ARGS( 0011A680, 209 )
-S4_NEW_TWO_ARGS( 0011A720, 213 )
+S4_NEW_TWO_ARGS( 001142A0, GettingBuiltBehavior, 15 )
+S4_NEW_TWO_ARGS( 00117DC0, DelayedWeaponSetUpgradeUpdate, 9 )
+S4_NEW_TWO_ARGS( 0011A680, HordeAIUpdate, 209 )
+S4_NEW_TWO_ARGS( 0011A720, HordeWorkerAIUpdate, 213 )

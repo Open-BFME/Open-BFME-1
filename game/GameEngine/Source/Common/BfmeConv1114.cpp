@@ -5,12 +5,20 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include <map>
+#include "Thing/GameLogicObjectLookup.h"
 
-class Object;
+class Player;
+#define OBJECT_TU_MEMBERS \
+	bool hasUpgradeMask(unsigned int bit) const; \
+	bool isLocallyControlled() const; \
+	void notifyRva001C8830(Player *player);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > BfmeObjectMap1114;
 
-class GameLogic
+class BfmeB1114
 {
 public:
 	char m_bfmePad[0xb0];
@@ -19,17 +27,11 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class BfmeK1114
-{
-public:
-	char bfmeChk1114(int a);
-};
-
 struct BfmeL1114
 {
 	BfmeL1114 *m_bfme00;
 	char m_bfmePad[4];
-	BfmeK1114 *m_bfme08;
+	Object *m_bfme08;
 };
 
 struct BfmeNode1114
@@ -40,20 +42,12 @@ struct BfmeNode1114
 	int m_bfme10;
 };
 
-class BfmeB1114
-{
-public:
-	BfmeK1114 *bfmeFind1114(int a);
-};
-
 // 0x012F0898 is retail's `GameLogic *TheGameLogic`; this TU's local view type
 // is BfmeB1114, so cast at the use.
 static __forceinline BfmeB1114 *bfmeGlobalLogic1114()
 {
 	return (BfmeB1114 *)TheGameLogic;
 }
-
-BfmeNode1114 *__cdecl bfmeNext1114(BfmeNode1114 *p);
 
 class BfmeW1114
 {
@@ -72,7 +66,7 @@ char BfmeW1114::bfmeGo1114A(int a)
 	BfmeNode1114 *p;
 
 	while (q != h1) {
-		if (q->m_bfme08->bfmeChk1114(a))
+		if (q->m_bfme08->hasUpgradeMask(a))
 			return 1;
 		q = q->m_bfme00;
 		h1 = *(BfmeL1114 **)((char *)this - 0xac);
@@ -80,53 +74,23 @@ char BfmeW1114::bfmeGo1114A(int a)
 	h = m_bfme30;
 	p = h->m_bfme08;
 	while (p != h) {
-		BfmeK1114 *k = bfmeGlobalLogic1114()->bfmeFind1114(p->m_bfme10);
+		Object *k = TheGameLogic->findObjectByID(p->m_bfme10);
 
-		if (k && k->bfmeChk1114(a))
+		if (k && k->hasUpgradeMask(a))
 			return 1;
-		p = bfmeNext1114(p);
+		p = reinterpret_cast<BfmeNode1114 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = m_bfme30;
 	}
 	return 0;
 }
 
-class Drawable;
-
-class BfmeTargetJB
+class Drawable
 {
-public:
-	bool bfmeTailJB(void);
+private:
+	friend class BfmeW1114;
+	void applyPendingModelConditionFlags(bool pending);
 };
-
-class Object : public BfmeTargetJB
-{
-public:
-	void notifyRva001C8830(Player *player);
-};
-
-class BfmeObjectDrawableDispatch
-{
-public:
-	virtual void slot00(void);
-	virtual void slot01(void);
-	virtual void slot02(void);
-	virtual void slot03(void);
-	virtual void slot04(void);
-	virtual void slot05(void);
-	virtual void slot06(void);
-	virtual void slot07(void);
-	virtual void slot08(void);
-	virtual void slot09(void);
-	virtual Drawable *getDrawable(void);
-};
-
-class DrawableApplyPendingThunk
-{
-public:
-	void apply(bool pending);
-};
-
-#pragma comment(linker, "/alternatename:?apply@DrawableApplyPendingThunk@@QAEX_N@Z=?j_0002d439@@YAXXZ")
 
 void BfmeW1114::bfmeGo1114C(Player *player)
 {
@@ -139,9 +103,9 @@ void BfmeW1114::bfmeGo1114C(Player *player)
 		if (object)
 		{
 			object->notifyRva001C8830(player);
-			Drawable *drawable = ((BfmeObjectDrawableDispatch *)object)->getDrawable();
-			if (drawable && object->bfmeTailJB())
-				((DrawableApplyPendingThunk *)drawable)->apply(false);
+			Drawable *drawable = object->getDrawable();
+			if (drawable && object->isLocallyControlled())
+				drawable->applyPendingModelConditionFlags(false);
 		}
 
 		node = node->m_bfme00;
@@ -157,20 +121,21 @@ void BfmeW1114::bfmeGo1114C(Player *player)
 		Object *object = 0;
 		if (id)
 		{
-			BfmeObjectMap1114::iterator iterator = TheGameLogic->m_bfmeObjects.find(id);
-			if (iterator != TheGameLogic->m_bfmeObjects.end())
+			BfmeObjectMap1114::iterator iterator = bfmeGlobalLogic1114()->m_bfmeObjects.find(id);
+			if (iterator != bfmeGlobalLogic1114()->m_bfmeObjects.end())
 				object = (*iterator).second;
 		}
 
 		if (object)
 		{
 			object->notifyRva001C8830(player);
-			Drawable *drawable = ((BfmeObjectDrawableDispatch *)object)->getDrawable();
-			if (drawable && object->bfmeTailJB())
-				((DrawableApplyPendingThunk *)drawable)->apply(false);
+			Drawable *drawable = object->getDrawable();
+			if (drawable && object->isLocallyControlled())
+				drawable->applyPendingModelConditionFlags(false);
 		}
 
-		tree = bfmeNext1114(tree);
+		tree = reinterpret_cast<BfmeNode1114 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(tree)));
 		root = m_bfme30;
 	}
 }
