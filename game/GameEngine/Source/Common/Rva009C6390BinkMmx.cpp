@@ -5,7 +5,7 @@
 // register-level implementation stays in inline assembly.
 
 // The MMX paths round with the 64-bit table at 0x012D88D0; g_bfmeBinkRound is the SSE one.
-extern const unsigned short Rva012D88D0Round[4];	// retail 0x012D88D0
+__declspec(align(16)) extern const unsigned short Rva012D88D0Round[4] = {64, 64, 64, 64};	// retail 0x012D88D0
 
 // ?rva009C6390BinkMmx@@YAXPBXPAXHHHH0@Z
 void __cdecl rva009C6390BinkMmx(const void *source, void *destination,
