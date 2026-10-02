@@ -39,11 +39,17 @@ public:
 	bool m_at1C;
 };
 
-extern Glo012F1024Type * Glo012F1024;
+// retail 0x012F1024 is EA's `LivingWorldCampaignManager
+// *TheLivingWorldCampaignManager`, defined once in
+// GameLogic/LivingWorld/LivingWorldCampaignManager.cpp.  In the linked build
+// this TU must spell the global exactly that way or nothing defines it; the
+// view above is kept for its offsets only and the cast happens at the use.
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager * TheLivingWorldCampaignManager;
 
 void __stdcall Rva003BDB40( StringBase< char > * out )
 {
-	if( Glo012F1024->m_at1C )
+	if( ((Glo012F1024Type *)TheLivingWorldCampaignManager)->m_at1C )
 		out->set( "GUI:EvilCampaign", 0x10 );
 	else
 		out->set( "GUI:GoodCampaign", 0x10 );

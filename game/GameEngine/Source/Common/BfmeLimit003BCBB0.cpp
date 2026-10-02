@@ -23,13 +23,19 @@ public:
 // in Common/GlobalData.cpp.  In the linked build this TU must spell the global
 // exactly that way or nothing defines it.
 class GlobalData;
-extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
+// retail 0x012F1024 is EA's `LivingWorldCampaignManager
+// *TheLivingWorldCampaignManager`, defined once in
+// GameLogic/LivingWorld/LivingWorldCampaignManager.cpp.  In the linked build
+// this TU must spell the global exactly that way or nothing defines it; the
+// view above is kept for its offsets only and the cast happens at the use.
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;	// retail 0x012F1024
 extern GlobalData *   TheWritableGlobalData;			// retail 0x012ED5C8
 
 // retail 0x003BCBB0
 int __cdecl bfmeLimit003BCBB0(void)
 {
-	BfmeSwitchDR *state = g_bfmeSwitchDR;
+	BfmeSwitchDR *state = (BfmeSwitchDR *)TheLivingWorldCampaignManager;
 	int high = state != 0 ? state->m_bfmeUseHigh : 0;
 	if (state != 0 && high != 0)
 		return ((BfmeBaseDS003BCBB0 *)TheWritableGlobalData)->m_bfmeHigh;
