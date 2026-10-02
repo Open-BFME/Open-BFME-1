@@ -29,7 +29,7 @@ int piNewConnectOperation(PEER peer, int type, const char *nick, int namespaceID
 	const char *email, const char *profilenick, const char *uniquenick,
 	const char *password, const char *authtoken, const char *partnerchallenge,
 	void *callback, void *param, int ID);
-void bfmePiDisconnectCleanupFromEsi(void);
+void piDisconnectCleanup(void);
 int piGetNextID(PEER peer);
 void piAddConnectCallback(PEER peer, PEERBool success, int failureReason,
 	void *callback, void *param, int ID);
@@ -64,7 +64,7 @@ void peerConnectPreAuthA(PEER peer, const char *authtoken,
 		if (!piNewConnectOperation(peer, 3, 0, 0, 0, 0, 0, 0,
 				authtoken, partnerchallenge, connectCallback, param, opID)) {
 			success = 0;
-			bfmePiDisconnectCleanupFromEsi();
+			piDisconnectCleanup();
 		}
 	}
 
