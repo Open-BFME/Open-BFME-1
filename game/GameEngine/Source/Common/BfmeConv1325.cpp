@@ -41,7 +41,9 @@ void *BfmeThingTWA::bfmeDelTWA(unsigned char flags)
 	return this;
 }
 
-extern void *g_bfmeVftATWB[];
+// 0x0112B5C4 is the vftable Rva007F6D60ChildConstructor.cpp emits (ledger
+// dir32 row ??_7Rva007F6D60Child@@6B@); g_bfmeVftATWB was a stand-in spelling.
+extern "C" void *__identifier("??_7Rva007F6D60Child@@6B@")[];
 extern void *g_bfmeVftBTWB[];
 
 class BfmeStrTWB
@@ -74,7 +76,7 @@ public:
 
 void *BfmeThingTWB::bfmeDelTWB(unsigned char flags)
 {
-	m_bfmeVft = g_bfmeVftATWB;
+	m_bfmeVft = __identifier("??_7Rva007F6D60Child@@6B@");
 	m_bfme08 = 0;
 	((Gen_007e86c0 *)&m_bfmeA)->m();
 	((Gen_007e86c0 *)&m_bfmeB)->m();
