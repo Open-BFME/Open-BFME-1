@@ -3,11 +3,13 @@
 
 extern void *g_bfmeTableSWA[];
 
-void bfmeWriteSWA(void *sink, int a, int b, void *tag);
+// Defines bfmeFormatToBuffer88A640 (RVA 0x88A640), matched in
+// game/GameEngine/Source/Common/BfmeFormatBuffer88A640.cpp.
+void bfmeFormatToBuffer88A640(const char *format, ...);
 
 void bfmeGoSWA(int a, int b, int c)
 {
-	bfmeWriteSWA(g_bfmeTableSWA[0], b, c, g_bfmeTableSWA[a]);
+	bfmeFormatToBuffer88A640((const char *)g_bfmeTableSWA[0], b, c, g_bfmeTableSWA[a]);
 }
 
 class BfmeThingSWA
