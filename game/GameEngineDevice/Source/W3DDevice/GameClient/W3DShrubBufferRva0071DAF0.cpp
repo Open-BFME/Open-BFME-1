@@ -67,7 +67,9 @@ public:
 	virtual BfmeAwakenLog *v6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail diagnostic loads use VA 0x01336E5C, owned by this shared pointer cell.
+// See targets/game/reverse/identity_evidence/rva00f36e5c-pointer-provider.md.
+extern void *g_Rva00F36E5C;
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
 
@@ -114,8 +116,8 @@ void W3DShrubBuffer::rva0071DAF0()
 		(unsigned)((BfmeThingGN*)&texture1450)->bfmeAskGN() > 1024) {
 		if (_bfme_debugReportingEnabled()) {
 			_bfme_debugRecordCallsite(1);
-			TheBfmeAwakenDebug->v60();
-			TheBfmeAwakenDebug->v6c(0, 0)->v38(
+			static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v60();
+			static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v6c(0, 0)->v38(
 				"Combined shrub texture is bigger than 1024x1024. This will cause errors and significant slowdown on most graphics cards and has to be fixed!")->v4c(2);
 		}
 	}
@@ -123,8 +125,8 @@ void W3DShrubBuffer::rva0071DAF0()
 		(unsigned)((BfmeThingGN*)&texture1454)->bfmeAskGN() > 1024) {
 		if (_bfme_debugReportingEnabled()) {
 			_bfme_debugRecordCallsite(1);
-			TheBfmeAwakenDebug->v60();
-			TheBfmeAwakenDebug->v6c(0, 0)->v38(
+			static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v60();
+			static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v6c(0, 0)->v38(
 				"Combined shrub shadow texture is bigger than 1024x1024. This will cause errors and significant slowdown on most graphics cards and has to be fixed!")->v4c(2);
 		}
 	}
