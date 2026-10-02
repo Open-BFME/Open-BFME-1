@@ -53,10 +53,10 @@
 // seven times.  The six virtuals are placeholders sized to the retail tables;
 // the three overrides exist only so each class owns a table at all.
 
-class Q4Sub00C9CC70
+class Q3EhMember0089C900
 {
 public:
-	~Q4Sub00C9CC70();
+	~Q3EhMember0089C900();
 };
 
 class Q4Base00D35D68
@@ -72,7 +72,7 @@ public:
 	~Q4Base00D35D68() { }
 };
 
-#define Q4_TABLE_DTOR( NAME )                                             	class NAME : public Q4Base00D35D68                                    	{                                                                     	public:                                                               		virtual void v3();                                                		virtual void v4();                                                		virtual void v5();                                                		~NAME();                                                          		char m_gap0[ 8 - 4 ];                                             		Q4Sub00C9CC70 m_sub;                                              		char m_gap1[ 0x18 - 9 ];                                          		int m_flag;                                                       	};                                                                    	NAME::~NAME()                                                         	{                                                                     		notify( 0, 0 );                                                   		m_flag = 0;                                                       	}
+#define Q4_TABLE_DTOR( NAME )                                             	class NAME : public Q4Base00D35D68                                    	{                                                                     	public:                                                               		virtual void v3();                                                		virtual void v4();                                                		virtual void v5();                                                		~NAME();                                                          		char m_gap0[ 8 - 4 ];                                             		Q3EhMember0089C900 m_sub;                                              		char m_gap1[ 0x18 - 9 ];                                          		int m_flag;                                                       	};                                                                    	NAME::~NAME()                                                         	{                                                                     		notify( 0, 0 );                                                   		m_flag = 0;                                                       	}
 
 Q4_TABLE_DTOR( Rva0089A010 )
 Q4_TABLE_DTOR( Rva0089A4E0 )

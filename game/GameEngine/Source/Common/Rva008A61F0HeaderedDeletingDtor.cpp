@@ -4,10 +4,10 @@
 // scalar deleting destructor at 0x008A6410. The class owns two ref-counted
 // strings before the common Q4 teardown.
 
-class Q4Sub00C9CC70
+class Q3EhMember0089C900
 {
 public:
-	~Q4Sub00C9CC70();
+	~Q3EhMember0089C900();
 };
 
 class Q4Base00D35D68
@@ -58,7 +58,7 @@ public:
 	}
 
 	char m_gap0[8 - 4];
-	Q4Sub00C9CC70 m_sub;
+	Q3EhMember0089C900 m_sub;
 	char m_gap1[0x18 - 9];
 	int m_flag;
 };
