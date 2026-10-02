@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/drawable /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // BFME script-action handler at retail RVA 0x002EFA10, fuzzy twin (ratio 0.902)
 // of ScriptActions::doCameraTetherNamed (0x002EDB50, ScriptActions_doCameraTetherNamed.cpp).
 // Same getUnitNamed/setCameraLock/setCameraLockDrawableID/snapToCameraLock shape, but
@@ -10,16 +10,10 @@
 // callee (bfmeGetID @ 0x00009B01) to the twin.
 
 typedef bool Bool;
-typedef unsigned int ObjectID;
-typedef unsigned int DrawableID;
 
 #include "ascii_string.h"
-
-class BfmeDrawableWithID
-{
-public:
-	DrawableID bfmeGetID(void);
-};
+#include "Common/GameType.h"
+#include "GameClient/Drawable.h"
 
 class Object
 {
@@ -34,7 +28,7 @@ public:
 	virtual void slot07(void) = 0;
 	virtual void slot08(void) = 0;
 	virtual void slot09(void) = 0;
-	virtual BfmeDrawableWithID *getDrawable(void) const = 0;
+	virtual Drawable *getDrawable(void) const = 0;
 
 private:
 	char m_pad[0x70];
@@ -155,7 +149,7 @@ void Rva002EFA10Owner::doCameraTether(const AsciiString &unit, Bool snapToUnit, 
 	if (theObj)
 	{
 		((BfmeTacticalView *)TheTacticalView)->setCameraLock(theObj->m_id);
-		((BfmeTacticalView *)TheTacticalView)->setCameraLockDrawableID(theObj->getDrawable()->bfmeGetID());
+		((BfmeTacticalView *)TheTacticalView)->setCameraLockDrawableID(theObj->getDrawable()->getID());
 		if (snapToUnit)
 			((BfmeTacticalView *)TheTacticalView)->snapToCameraLock();
 		((BfmeTacticalView *)TheTacticalView)->twoArguments(1, *(int *)&play);
