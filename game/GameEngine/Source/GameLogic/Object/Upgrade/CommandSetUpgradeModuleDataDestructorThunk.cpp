@@ -14,13 +14,13 @@ private:
 	unsigned int m_04;
 };
 
-class CommandSetUpgradeModuleDataBase
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	virtual ~CommandSetUpgradeModuleDataBase();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 
 private:
-	unsigned char m_data[0x64];
+	unsigned char m_data[0x68];
 };
 
 class BFMERetailAsciiString
@@ -41,7 +41,7 @@ public:
 	virtual ~CommandSetUpgradeModuleDataIntermediateBase() {}
 
 private:
-	CommandSetUpgradeModuleDataBase m_base;
+	AttributeModifierAuraUpdateModuleDataMemberD m_base;
 };
 
 class __declspec(novtable) CommandSetUpgradeModuleData

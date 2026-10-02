@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
-class BfmeBlockVKO
+class ModelConditionFlags
 {
 public:
-	bool bfmeCmpVKO(const BfmeBlockVKO &o);
+	bool operator!=(const ModelConditionFlags &o) const;
 	int m_bfmeArr[10];
 };
 
@@ -11,7 +11,7 @@ class BfmeXVKO
 {
 public:
 	char m_bfmePad[0x250];
-	BfmeBlockVKO m_bfme250;
+	ModelConditionFlags m_bfme250;
 };
 
 class BfmeAVKO
@@ -55,7 +55,7 @@ public:
 	char m_bfmePad04[4];
 	BfmeAVKO *m_bfme08;
 	char m_bfmePad0c[0x74];
-	BfmeBlockVKO m_bfme80;
+	ModelConditionFlags m_bfme80;
 };
 
 void BfmeThingVKO::bfmeGoVKO()
@@ -63,8 +63,8 @@ void BfmeThingVKO::bfmeGoVKO()
 	BfmeXVKO *p = m_bfme08->bfmeA28VKO();
 	if (p)
 	{
-		BfmeBlockVKO tmp = p->m_bfme250;
-		if (tmp.bfmeCmpVKO(m_bfme80))
+		ModelConditionFlags tmp = p->m_bfme250;
+		if (tmp != m_bfme80)
 		{
 			bfmeV44VKO();
 			m_bfme80 = tmp;
