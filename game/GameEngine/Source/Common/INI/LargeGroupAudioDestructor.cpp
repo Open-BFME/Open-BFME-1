@@ -1,4 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
+
+// The first base of this dtor's owner is SubsystemInterface: its destructor
+// body is the 14 bytes at 0x009A1A40 that ??1SubsystemInterface@@UAE@XZ owns.
+// SubsystemInterface is vptr + m_name, eight bytes, which is what leaves the
+// second base's vptr at +0x08 and the first vector at +0x0C.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+#include "PreRTS.h"
+
+#include "subsystem_interface.h"
 
 namespace _STL
 {
@@ -16,16 +25,6 @@ void __cdecl operator delete( void *memory );
 void Gen0082E5F0( void *memory, unsigned int bytes );
 
 #pragma comment(linker, "/alternatename:?bfmeRelease@Gen_003CFC90@@QAEXXZ=?j_0004a5a7@@YAXXZ")
-
-class Rva004948B0Base
-{
-public:
-	virtual ~Rva004948B0Base();
-	virtual void bfmeSubsystemSlot();
-
-private:
-	void *m_name;
-};
 
 class HordeContainModuleDataBase
 {
@@ -66,7 +65,7 @@ public:
 	void bfmeRelease();
 };
 
-class LargeGroupAudio : public Rva004948B0Base,
+class LargeGroupAudio : public SubsystemInterface,
 	public HordeContainModuleDataBase
 {
 public:

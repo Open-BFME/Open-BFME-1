@@ -1,16 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 
-// BFME's base here is not Zero Hour's Snapshot: retail's base destructor call
-// goes to the 14-byte body at 0x009A1A40 (the one ??1SubsystemInterface@@UAE@XZ
-// folds onto), while Snapshot's own body at 0x0006B180/0x009A1A40 is claimed by
-// a different name.  Address-derived local name so the call has one of its own.
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
-class BfmeModuleDataSnapshotBase
-{
-public:
-	virtual void anchor();
-	~BfmeModuleDataSnapshotBase();
-};
+// BFME's base here is SubsystemInterface itself, not Zero Hour's Snapshot: the
+// base destructor call goes to the 14-byte body at 0x009A1A40, which is
+// ??1SubsystemInterface@@UAE@XZ.  SubsystemInterface is vptr + m_name, i.e.
+// eight bytes, so the render object this body deletes sits at +0x08.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+#include "PreRTS.h"
+
+#include "subsystem_interface.h"
 
 class Gen_dtor_009eb9e0
 {
@@ -18,14 +15,13 @@ public:
 	~Gen_dtor_009eb9e0();
 };
 
-class Rva009EB960 : public BfmeModuleDataSnapshotBase
+class Rva009EB960 : public SubsystemInterface
 {
 public:
 	virtual ~Rva009EB960();
 
 private:
-	void *m_debugName;
-	Gen_dtor_009eb9e0 *m_renderObject;
+	Gen_dtor_009eb9e0 *m_renderObject;			// +0x08
 };
 
 Rva009EB960::~Rva009EB960()

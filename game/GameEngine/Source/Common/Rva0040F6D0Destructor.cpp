@@ -1,8 +1,15 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Destructor of the 0x0040EE10 owner. Body is the two cleanups (stop-movie
 // then delete-views), then UnicodeString + two AsciiString members, then the
-// SubsystemInterface base.
+// SubsystemInterface base -- the real class, since the base destructor body at
+// 0x009A1A40 is ??1SubsystemInterface@@UAE@XZ.  Its vptr + m_name make it eight
+// bytes, which is what puts the first pad at +0x08.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+
+#include "PreRTS.h"
+
+#include "subsystem_interface.h"
 
 #include "string_base.h"
 
@@ -17,16 +24,7 @@ public:
 	char m_bytes[N];
 };
 
-class BfmeBase1134
-{
-public:
-	virtual ~BfmeBase1134();
-
-private:
-	int m_bfme04;
-};
-
-class BfmeObjEE : public BfmeBase1134
+class BfmeObjEE : public SubsystemInterface
 {
 public:
 	virtual ~BfmeObjEE();

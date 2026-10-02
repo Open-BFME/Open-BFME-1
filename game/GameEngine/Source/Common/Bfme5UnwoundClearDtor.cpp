@@ -1,11 +1,21 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GR- /EHsc- /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 // A destructor that deletes what its vector holds, empties it and then lets
 // the vector member go away.
+//
+// The base whose destructor it chains to at the end is SubsystemInterface: the
+// body at 0x009A1A40 is ??1SubsystemInterface@@UAE@XZ.  Its vptr + m_name make
+// it eight bytes, so the vector member stays at +0x08.
 //
 // The unwind state word tells the parts apart: it holds 1 while the body runs
 // -- the delete walk and the clear -- drops to 0 for the member's own
 // destructor, which is the release of the block by size, and returns to -1
 // before the base destructor. The most-derived vftable goes in at the entry
 // because the base is polymorphic.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+
+#include "PreRTS.h"
+
+#include "subsystem_interface.h"
 
 extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
@@ -62,16 +72,7 @@ public:
 	BfmeOwnedAA **m_bfmeEnd;				// +0x08
 };
 
-class BfmeBaseAA
-{
-public:
-	virtual ~BfmeBaseAA(void);				// retail 0x009A1A40
-
-private:
-	int m_bfmeField;					// +0x04
-};
-
-class Gen_0039C6D0 : public BfmeBaseAA
+class Gen_0039C6D0 : public SubsystemInterface
 {
 public:
 	virtual ~Gen_0039C6D0(void);
