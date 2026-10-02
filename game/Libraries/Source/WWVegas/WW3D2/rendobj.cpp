@@ -170,22 +170,7 @@ static inline bool Check_Is_Transform_Identity(const Matrix3D& m)
  * HISTORY:                                                                                    * 
  *   11/04/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?RenderObjClass::RenderObjClass present-unmatched
-RenderObjClass::RenderObjClass(void) :
-	Bits(DEFAULT_BITS),
-	Transform(1),
-	NativeScreenSize(WW3D::Get_Default_Native_Screen_Size()),
-	Scene(NULL),
-	Container(NULL),
-	User_Data(NULL),
-	RenderHook(NULL),
-	ObjectScale(1.0),
-	ObjectColor(0),
-	CachedBoundingSphere(Vector3(0,0,0),1.0f),
-	CachedBoundingBox(Vector3(0,0,0),Vector3(1,1,1)),
-	IsTransformIdentity(false)
-{
-}
+// The exact retail default constructor is provided by RenderObjClassCtor_Thunk.cpp.
 
 /***********************************************************************************************
  * RenderObjClass::RenderObjClass -- copy constructor                                          *
