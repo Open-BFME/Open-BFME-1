@@ -11,7 +11,7 @@ public:
 	virtual void bfmeDropTDA(void *p, int f) = 0;
 };
 
-BfmeSinkTDA *bfmeGetTDA(void);
+void *bfmeGo929C(void);
 
 class BfmeThingTDA
 {
@@ -25,7 +25,7 @@ public:
 void BfmeThingTDA::bfmeGoTDA()
 {
 	m_bfmeVft = g_bfmeVftTDA;
-	bfmeGetTDA()->bfmeDropTDA(m_bfmeItem, 0);
+	((BfmeSinkTDA *)bfmeGo929C())->bfmeDropTDA(m_bfmeItem, 0);
 }
 
 struct BfmeCallsTDB;

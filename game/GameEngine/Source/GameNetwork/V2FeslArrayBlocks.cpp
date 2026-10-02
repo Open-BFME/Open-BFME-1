@@ -8,8 +8,8 @@
 //
 // WHAT THE BYTES SHOW.  Every row here reaches its storage through the same
 // __cdecl getter at RVA 0x007EFFC0 that game/GameEngine/Source/Common/
-// S3PolymorphicArrayClear.cpp already names Gen007EFFC0, and drives the object
-// it returns through its vtable.  Two slots are used:
+// S3PolymorphicArrayClear.cpp reaches, and drives the object it returns
+// through its vtable.  Two slots are used:
 //     [vptr+0x08]  entered __thiscall with (size, 0) and its eax kept as a
 //                  pointer -- an ALLOCATE
 //     [vptr+0x0C]  entered __thiscall with (block, flag) and no result used -- a
@@ -17,7 +17,7 @@
 //                  already spells as `release`
 // This file therefore refines that file's placeholder `v2` into an allocating
 // slot; it does not contradict it, and it does not land over it.  The class
-// name GenAlloc is kept so the existing Gen007EFFC0 pin resolves; the slots are
+// name GenAlloc is kept so the existing allocator pin resolves; the slots are
 // virtual calls and need no symbol at all.
 //
 // The BLOCK objects are all two fields, a pointer at +0 and a count at +4.  The
@@ -44,7 +44,7 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C(void);
 
 // The two array objects game/GameEngine/Source/Common/S3PolymorphicArrayClear.cpp
 // already claims a `clear` on, redeclared here so their existing symbols resolve.
@@ -121,7 +121,7 @@ void Rva007F6CF0Block::clear()
 {
 	if( m_data )
 	{
-		Gen007EFFC0()->release( m_data, 0 );
+		((GenAlloc *)bfmeGo929C())->release( m_data, 0 );
 		m_data = 0;
 	}
 	m_count = 0;
@@ -140,7 +140,7 @@ void Rva007F7860Block::clear()
 {
 	if( m_data )
 	{
-		Gen007EFFC0()->release( m_data, 0 );
+		((GenAlloc *)bfmeGo929C())->release( m_data, 0 );
 		m_data = 0;
 	}
 	m_count = 0;
@@ -149,7 +149,7 @@ void Rva007F7860Block::clear()
 void Rva007F7860Block::allocate( int count )
 {
 	clear();
-	m_data = Gen007EFFC0()->allocate( count * 8, 0 );
+	m_data = ((GenAlloc *)bfmeGo929C())->allocate( count * 8, 0 );
 	m_count = count;
 }
 
@@ -169,7 +169,7 @@ void Rva007F78E0Block::clear()
 	{
 		for( int i = 0; i < m_count; ++i )
 			m_data[ i ].Gen_dtor_007f6d20::~Gen_dtor_007f6d20();
-		Gen007EFFC0()->release( m_data, 0 );
+		((GenAlloc *)bfmeGo929C())->release( m_data, 0 );
 		m_data = 0;
 	}
 	m_count = 0;
@@ -178,7 +178,7 @@ void Rva007F78E0Block::clear()
 void Rva007F78E0Block::allocate( int count )
 {
 	clear();
-	m_data = (Gen_dtor_007f6d20 *)Gen007EFFC0()->allocate( count * 8, 0 );
+	m_data = (Gen_dtor_007f6d20 *)((GenAlloc *)bfmeGo929C())->allocate( count * 8, 0 );
 	for( int i = 0; i < count; ++i )
 		new ( &m_data[ i ] ) Gen_dtor_007f6d20;
 	m_count = count;
@@ -195,7 +195,7 @@ public:
 void Rva007F77B0Block::allocate( int count )
 {
 	clear();
-	m_array = Gen007EFFC0()->allocate( count * 0x1C, 0 );
+	m_array = ((GenAlloc *)bfmeGo929C())->allocate( count * 0x1C, 0 );
 	for( int i = 0; i < count; ++i )
 		new ( (char *)m_array + i * 0x1C ) Rva00802E70Element;
 	m_count = count;
@@ -210,7 +210,7 @@ public:
 void Rva007F7810Block::allocate( int count )
 {
 	clear();
-	m_array = Gen007EFFC0()->allocate( count * 0x40, 0 );
+	m_array = ((GenAlloc *)bfmeGo929C())->allocate( count * 0x40, 0 );
 	for( int i = 0; i < count; ++i )
 		new ( (char *)m_array + i * 0x40 ) Rva00802D00Element;
 	m_count = count;
@@ -263,7 +263,7 @@ public:
 
 void Rva007F9610Holder::release()
 {
-	Gen007EFFC0()->release( m_block, 1 );
+	((GenAlloc *)bfmeGo929C())->release( m_block, 1 );
 	m_b = 0;
 	m_a = 0;
 	m_block = 0;

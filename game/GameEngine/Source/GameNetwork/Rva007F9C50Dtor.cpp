@@ -11,7 +11,7 @@ public:
 	virtual void release(void *block, int flags);
 };
 
-extern GenAlloc *Gen007EFFC0();
+extern void *bfmeGo929C(void);
 
 void bfmeDeleteVMP(void *block, unsigned size);
 
@@ -85,7 +85,7 @@ Rva007F9C50::~Rva007F9C50() throw()
 		edi -= 0x1C;
 		if (esi)
 		{
-			Gen007EFFC0()->release(esi->c, 1);
+			((GenAlloc *)bfmeGo929C())->release(esi->c, 1);
 			esi->b = 0;
 			esi->a = 0;
 			esi->c = 0;

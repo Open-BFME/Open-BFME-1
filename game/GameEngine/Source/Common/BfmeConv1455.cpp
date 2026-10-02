@@ -9,7 +9,7 @@ public:
 	virtual void bfmeFreeVMP(void *p, int f);
 };
 
-BfmePoolVMP *bfmeGetPoolVMP();
+void *bfmeGo929C(void);
 void bfmeDeleteVMP(void *p, unsigned n);
 
 struct BfmeBufVMP
@@ -38,7 +38,7 @@ void BfmeCtxVMP::bfmeResetVMP()
 
 	if (b != 0)
 	{
-		bfmeGetPoolVMP()->bfmeFreeVMP(b->m_bfme08, 1);
+		((BfmePoolVMP *)bfmeGo929C())->bfmeFreeVMP(b->m_bfme08, 1);
 		b->m_bfme04 = 0;
 		b->m_bfme00 = 0;
 		b->m_bfme08 = 0;

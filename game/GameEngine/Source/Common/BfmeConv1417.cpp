@@ -12,7 +12,7 @@ public:
 	virtual void bfmeDelVLR(void *p, int f);
 };
 
-BfmePoolVLR *bfmeGetPoolVLR();
+void *bfmeGo929C(void);
 
 class BfmeBufVLR
 {
@@ -29,11 +29,11 @@ void BfmeBufVLR::bfmeSetSizeVLR(int size)
 {
 	if (m_bfme0c != 0)
 	{
-		bfmeGetPoolVLR()->bfmeDelVLR(m_bfme0c, 0);
+		((BfmePoolVLR *)bfmeGo929C())->bfmeDelVLR(m_bfme0c, 0);
 		m_bfme0c = 0;
 		m_bfme10 = 0;
 	}
 	m_bfme10 = (size & ~7) + 0x80;
-	m_bfme0c = (char *)bfmeGetPoolVLR()->bfmeNewVLR(m_bfme10, 0);
+	m_bfme0c = (char *)((BfmePoolVLR *)bfmeGo929C())->bfmeNewVLR(m_bfme10, 0);
 	memset(m_bfme0c, 0, m_bfme10);
 }

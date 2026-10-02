@@ -50,7 +50,7 @@ public:
 	virtual void bfmeDropTQD(void *p, int f) = 0;
 };
 
-BfmeSinkTQD *bfmeGetTQD(void);
+void *bfmeGo929C(void);
 void bfmeFreeTQD(void *p, int n);
 
 class BfmeThingTQD
@@ -65,7 +65,7 @@ public:
 void *BfmeThingTQD::bfmeDelTQD(unsigned char flags)
 {
 	m_bfmeVft = g_bfmeVftTQD;
-	bfmeGetTQD()->bfmeDropTQD(m_bfmeItem, 0);
+	((BfmeSinkTQD *)bfmeGo929C())->bfmeDropTQD(m_bfmeItem, 0);
 	if (flags & 1)
 		bfmeFreeTQD(this, 0x14);
 	return this;

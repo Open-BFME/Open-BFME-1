@@ -41,7 +41,7 @@ public:
 	virtual void bfmeFree1015(int h, int f);
 };
 
-BfmeMgr1015 *bfmeGetMgr1015(void);
+void *bfmeGo929C(void);
 
 class BfmeL1015
 {
@@ -57,7 +57,7 @@ public:
 void BfmeL1015::bfmeGo1015L(void)
 {
 	if (m_bfmeH != 0)
-		bfmeGetMgr1015()->bfmeFree1015(m_bfmeH, 0);
+		((BfmeMgr1015 *)bfmeGo929C())->bfmeFree1015(m_bfmeH, 0);
 
 	m_bfmeH = 0;
 	m_bfmeCount = 0;
