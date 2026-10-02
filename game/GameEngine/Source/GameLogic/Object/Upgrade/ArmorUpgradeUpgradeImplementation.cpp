@@ -8,7 +8,7 @@
 //
 // The body mirrors the slot-7 body 0x002D2D20 (ArmorUpgradeRva002D2D20.cpp): it
 // first calls the module helper at 0x002D9F30, then applies the armor set flag
-// with the kill/ignore senses swapped relative to slot 7, and tail-calls
+// with the KillArmorUpgrade sense swapped relative to slot 7, and tail-calls
 // notifyModelConditionChanged.
 
 typedef unsigned int UnsignedInt;
@@ -16,8 +16,6 @@ typedef int ArmorSetType;
 
 extern UnsignedInt g_012B2C98[];
 
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeClearZJ@BfmeBaseZJ@@QAEXXZ=?j_00041970@@YAXXZ")
 
 class BodyModuleInterface
 {
@@ -34,8 +32,8 @@ public:
 	virtual void slot09();
 	virtual void slot10();
 	virtual void slot11();
-	virtual void clearArmorSetFlag(ArmorSetType flag);
-	virtual void setArmorSetFlag(ArmorSetType flag);
+	virtual void setArmorSetFlag(ArmorSetType flag);	// +0x30 (ActiveBody 0x0020FB70: or)
+	virtual void clearArmorSetFlag(ArmorSetType flag);	// +0x34 (ActiveBody 0x0020FB90: and-not)
 };
 
 class Object
@@ -119,7 +117,7 @@ void ArmorUpgrade::upgradeImplementation()
 
 	if (data->killArmorUpgrade)
 	{
-		body->setArmorSetFlag(data->armorSetFlag);
+		body->clearArmorSetFlag(data->armorSetFlag);
 
 		UnsignedInt condition =
 			g_012B2C98[data->armorSetFlag];
@@ -131,7 +129,7 @@ void ArmorUpgrade::upgradeImplementation()
 	}
 	else
 	{
-		body->clearArmorSetFlag(data->armorSetFlag);
+		body->setArmorSetFlag(data->armorSetFlag);
 
 		UnsignedInt condition =
 			g_012B2C98[data->armorSetFlag];

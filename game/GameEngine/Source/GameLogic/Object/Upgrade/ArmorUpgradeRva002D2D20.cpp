@@ -30,8 +30,8 @@ public:
 	virtual void slot09();
 	virtual void slot10();
 	virtual void slot11();
-	virtual void clearArmorSetFlag(ArmorSetType flag);
-	virtual void setArmorSetFlag(ArmorSetType flag);
+	virtual void setArmorSetFlag(ArmorSetType flag);	// +0x30 (ActiveBody 0x0020FB70: or)
+	virtual void clearArmorSetFlag(ArmorSetType flag);	// +0x34 (ActiveBody 0x0020FB90: and-not)
 };
 
 class Object
@@ -110,7 +110,7 @@ void ArmorUpgrade::rva002D2D20()
 	{
 		if (!data->killArmorUpgrade)
 		{
-			body->setArmorSetFlag(data->armorSetFlag);
+			body->clearArmorSetFlag(data->armorSetFlag);
 
 			UnsignedInt condition =
 				g_012B2C98[data->armorSetFlag];
@@ -122,7 +122,7 @@ void ArmorUpgrade::rva002D2D20()
 		}
 		else
 		{
-			body->clearArmorSetFlag(data->armorSetFlag);
+			body->setArmorSetFlag(data->armorSetFlag);
 
 			UnsignedInt condition =
 				g_012B2C98[data->armorSetFlag];
