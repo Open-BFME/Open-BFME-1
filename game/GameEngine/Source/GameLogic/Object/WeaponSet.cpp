@@ -981,19 +981,7 @@ Bool WeaponSet::isOutOfAmmo() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?findAmmoPipShowingWeapon@WeaponSet@@QBEPBVWeapon@@XZ present-unmatched
-const Weapon* WeaponSet::findAmmoPipShowingWeapon() const
-{
-	for( Int i = 0; i < WEAPONSLOT_COUNT;	i++ )
-	{
-		const Weapon *weapon = m_weapons[ i ];
-		if (weapon && weapon->isShowsAmmoPips())
-		{
-			return weapon;
-		}
-	}
-	return NULL;
-}
+// Retail four-slot ammo-pip selector lives in WeaponSet_findAmmoPipShowingWeapon.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME WeaponSet carries a 4th weapon slot (ZH WEAPONSLOT_COUNT=3; retail loop inits i=3 and

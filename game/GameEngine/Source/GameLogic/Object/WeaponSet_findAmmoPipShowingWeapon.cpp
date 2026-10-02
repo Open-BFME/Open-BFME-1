@@ -10,12 +10,6 @@ public:
 class Weapon
 {
 public:
-	bool isShowsAmmoPips() const
-	{
-		return m_template->m_isShowsAmmoPips;
-	}
-
-private:
 	void *m_vtable;
 	WeaponTemplate *m_template;
 };
@@ -35,7 +29,7 @@ const Weapon *WeaponSet::findAmmoPipShowingWeapon() const
 	for (int slotIndex = 0; slotIndex < 4; ++slotIndex)
 	{
 		Weapon *weapon = m_weapons[slotIndex];
-		if (weapon != 0 && weapon->isShowsAmmoPips())
+		if (weapon != 0 && weapon->m_template->m_isShowsAmmoPips)
 			return weapon;
 	}
 
