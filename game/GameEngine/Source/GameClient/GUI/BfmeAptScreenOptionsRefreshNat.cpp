@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
 // BfmeAptScreenOptions::_bfme_refreshNat, retail 0x00560030, 466 bytes. The
 // already matched constructor at 0x00563370 binds thunk 0x00032768 to the
 // selector string "AptOptions::RefreshNat", and that thunk jumps to this body.
@@ -8,6 +9,8 @@
 // OptionPreferences map at this+0x264 under the two keys writeFirewallBehavior
 // uses. Retail calls getFirewallBehavior twice rather than reading the global
 // back, and it never writes m_firewallPortAllocationDelta.
+
+#include <map>
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 template <typename T> class StringBase
@@ -43,11 +46,18 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
-class PreferenceMap
+namespace _STL
 {
-public:
-	AsciiString &operator[]( const AsciiString &key );
+template <> struct less<AsciiString>
+{
+	bool operator()( const AsciiString &left, const AsciiString &right ) const;
 };
+}
+
+typedef _STL::map<AsciiString, AsciiString, _STL::less<AsciiString>,
+	_STL::allocator<_STL::pair<const AsciiString, AsciiString> > > PreferenceMap;
+
+extern template AsciiString &PreferenceMap::operator[]( const AsciiString & );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FirewallHelper.h
 class FirewallHelperClass

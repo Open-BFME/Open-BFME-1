@@ -1,11 +1,13 @@
 // cl: /DNDEBUG /MD
+// stlport
 //
 // Retail 0x003E0370: the one-cell movement/occupancy check used by the BFME
 // Pathfinder walk.  The four arguments are the object being moved, the cell,
 // the movement payload, and the last object id seen by the caller.
 
+#include "../../Common/Thing/GameLogicObjectLookup.h"
+
 typedef int Int;
-typedef int ObjectID;
 
 enum KindOfType { KINDOF_FIRST = 0 };
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
@@ -34,19 +36,6 @@ public:
 	void *m_ai;					// 0x204
 };
 
-// The BFME object lookup is the renamed 1011 helper used by the neighbouring
-// landed Pathfinder bodies.  Its retail return type is BfmeX1011; the cell
-// helper consumes the same pointer as an Object.
-class BfmeX1011;
-class BfmeLook1011
-{
-public:
-	BfmeX1011 *bfmeFind1011( Int id );
-};
-
-// The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
-// view of the object.
-class GameLogic;
 extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -145,7 +134,7 @@ bool Pathfinder::bfmeStepE0370( Object *object, PathfindCell *cell, ICoord2D *wa
 		return true;
 
 	*lastUnitID = posUnit;
-	Object *unit = (Object *)((BfmeLook1011 *)TheGameLogic)->bfmeFind1011( posUnit );
+	Object *unit = TheGameLogic->findObjectByID( posUnit );
 	if (unit == 0)
 		return true;
 
