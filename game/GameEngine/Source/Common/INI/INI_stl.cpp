@@ -1720,14 +1720,7 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?getNextSubToken@INI@@ present-unmatched
-const char* INI::getNextSubToken(const char* expected)
-{
-	const char* token = getNextToken(getSepsColon());
-	if (stricmp(token, expected) != 0)
-		throw INI_INVALID_DATA;
-	return getNextToken(getSepsColon());
-}
+// The retail definition is owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /**
