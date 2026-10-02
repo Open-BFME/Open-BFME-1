@@ -4,15 +4,18 @@
 // pops a frame label or number and runs that frame's actions on the calling instance.
 
 struct Rva008CAAE0StringBlock { unsigned short m_refs; };
-extern Rva008CAAE0StringBlock g_bfmeDefaultString1284;
-extern void (__cdecl **g_bfmeStringPool1284)(void *);
+namespace EAStringC { class StringDataC; }
+extern EAStringC::StringDataC g_rva012D5298Empty;
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva008CAAE0String
 {
 public:
 	Rva008CAAE0String()
 	{
-		m_block = &g_bfmeDefaultString1284;
+		m_block = reinterpret_cast<Rva008CAAE0StringBlock *>(
+			&g_rva012D5298Empty);
 		++m_block->m_refs;
 	}
 	~Rva008CAAE0String()
@@ -20,7 +23,8 @@ public:
 		Rva008CAAE0StringBlock *block = m_block;
 		--block->m_refs;
 		if (block->m_refs == 0)
-			g_bfmeStringPool1284[1](block);
+			reinterpret_cast<void (__cdecl **)(void *)>(
+				g_rva01337A30AllocPair)[1](block);
 	}
 	Rva008CAAE0StringBlock *m_block;
 };
