@@ -1,8 +1,9 @@
-// TooltipUpgrade::rva002D9570 at retail 0x002D9570: slot 7 of the UpgradeMux table 0x010CE1A0, reached
+// TooltipUpgrade::removeUpgrade at retail 0x002D9570: slot 7 of the UpgradeMux table 0x010CE1A0, reached
 // only through ILT 0x00036750 (its VA appears once in the image). TooltipUpgrade's registered
-// constructor 0x002D93E0 stores that table. Slot 7 is a BFME-only virtual that
-// undoes slot 9 (upgradeImplementation); its name is unproven, so the method
-// keeps its address. Evidence:
+// constructor 0x002D93E0 stores that table. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), which undoes
+// slot 9 (upgradeImplementation). Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md and
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
 // Open-BFME5 conversions.
@@ -66,10 +67,10 @@ public:
 	virtual void bfmeW7UYA() = 0;
 	virtual void bfmeFinishUYA(int f) = 0;
 protected:
-	virtual void rva002D9570();
+	virtual void removeUpgrade();
 };
 
-void TooltipUpgrade::rva002D9570()
+void TooltipUpgrade::removeUpgrade()
 {
 	if (!bfmeCheckUYA())
 		return;

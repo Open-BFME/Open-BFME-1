@@ -1,11 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// GeometryUpgrade::rva002D55F0, retail 0x002D55F0 (269 B): slot 7 of the
+// GeometryUpgrade::removeUpgrade, retail 0x002D55F0 (269 B): slot 7 of the
 // UpgradeMux table 0x010CCC48, which GeometryUpgrade's registered constructor
 // 0x002D5790 stores at +0x10; the only route is ILT 0x00028B69, whose VA
-// appears once in the image. Slot 7 is a BFME-only virtual that undoes slot 9
-// (GeometryUpgrade::upgradeImplementation, 0x002D5980); its name is unproven,
-// so the method keeps its address. Evidence:
+// appears once in the image. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), which undoes slot 9
+// (GeometryUpgrade::upgradeImplementation, 0x002D5980). Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md and
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 // The receiver ('this') is the UpgradeMux sub-object, an
 // interior pointer whose sibling fields sit at NEGATIVE offsets (-0x8, -0xC,
@@ -137,7 +138,7 @@ public:
 class GeometryUpgrade : public BfmeOwnerVtbl
 {
 protected:
-	virtual void rva002D55F0();
+	virtual void removeUpgrade();
 
 public:
 
@@ -145,7 +146,7 @@ public:
 	BfmeStrF9 m_inlineName;
 };
 
-void GeometryUpgrade::rva002D55F0()
+void GeometryUpgrade::removeUpgrade()
 {
 	if (!canTeardown())
 		return;

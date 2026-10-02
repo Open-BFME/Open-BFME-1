@@ -1,10 +1,11 @@
-// AudioLoopUpgrade::rva002D34B0 at retail 0x002D34B0 (48 B): slot 7 of the
+// AudioLoopUpgrade::removeUpgrade at retail 0x002D34B0 (48 B): slot 7 of the
 // UpgradeMux table 0x010CBD08, which AudioLoopUpgrade's registered constructor
 // 0x002D32B0 stores at its +0x20 sub-object. The only route is ILT 0x000417E0,
-// whose VA appears once in the image. Slot 7 is a BFME-only virtual that undoes
+// whose VA appears once in the image. Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot),
+// which undoes
 // slot 9 (AudioLoopUpgrade::upgradeImplementation, 0x002D33E0, which starts the
-// loop): this body kills the playing handle and resets it to 1. Its name is
-// unproven, so the method keeps its address.
+// loop): this body kills the playing handle and resets it to 1.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
 class BfmeG1024
@@ -49,14 +50,14 @@ public:
 class AudioLoopUpgrade
 {
 protected:
-	virtual void rva002D34B0();
+	virtual void removeUpgrade();
 
 public:
 	char m_bfmePad[0x8];	// +0x04, after the vptr
 	int m_bfmeH;
 };
 
-void AudioLoopUpgrade::rva002D34B0()
+void AudioLoopUpgrade::removeUpgrade()
 {
 	if (TheAudio != 0) {
 		((BfmeG1024 *)TheAudio)->bfmeKill1024(m_bfmeH);

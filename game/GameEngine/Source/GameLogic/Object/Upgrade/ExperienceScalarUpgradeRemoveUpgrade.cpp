@@ -1,8 +1,10 @@
 // cl: /O2 /Ob0
-// ExperienceScalarUpgrade::rva002D5120 at retail 0x002D5120: slot 7 of the UpgradeMux table
+// ExperienceScalarUpgrade::removeUpgrade at retail 0x002D5120: slot 7 of the UpgradeMux table
 // 0x010CC890, reached only through ILT 0x0000AC04. ExperienceScalarUpgrade's registered
 // constructor 0x002D4FD0 stores that table. Evidence:
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
+// Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot):
+// targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 
 struct Rva002D5120Obj
 {
@@ -25,10 +27,10 @@ struct Rva002D5120Other
 class ExperienceScalarUpgrade
 {
 protected:
-	virtual void rva002D5120();
+	virtual void removeUpgrade();
 };
 
-void ExperienceScalarUpgrade::rva002D5120()
+void ExperienceScalarUpgrade::removeUpgrade()
 {
 	Rva002D5120Obj *obj = (*(Rva002D5120Holder **)((char *)this - 8))->m_obj;
 	if (obj)

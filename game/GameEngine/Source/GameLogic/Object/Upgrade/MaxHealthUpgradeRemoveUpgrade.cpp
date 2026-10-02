@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-// MaxHealthUpgrade::rva002D6510 at retail 0x002D6510: slot 7 of the UpgradeMux table
+// MaxHealthUpgrade::removeUpgrade at retail 0x002D6510: slot 7 of the UpgradeMux table
 // 0x010CD158, reached only through ILT 0x0000AD44. MaxHealthUpgrade's registered
 // constructor 0x002D63A0 stores that table. Evidence:
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
+// Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot):
+// targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 
 class Rva002D6510Value
 {
@@ -52,10 +54,10 @@ public:
 class MaxHealthUpgrade
 {
 protected:
-	virtual void rva002D6510();
+	virtual void removeUpgrade();
 };
 
-void MaxHealthUpgrade::rva002D6510()
+void MaxHealthUpgrade::removeUpgrade()
 {
 	Rva002D6510Owner *owner = *(Rva002D6510Owner **)((char *)this - 8);
 	Rva002D6510Source *source = *(Rva002D6510Source **)((char *)this - 0x0C);

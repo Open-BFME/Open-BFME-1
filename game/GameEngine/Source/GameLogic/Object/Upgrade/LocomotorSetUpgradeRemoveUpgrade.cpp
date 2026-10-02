@@ -1,10 +1,10 @@
-// LocomotorSetUpgrade::rva002D62C0 at retail 0x002D62C0 (21 B): slot 7 of the
+// LocomotorSetUpgrade::removeUpgrade at retail 0x002D62C0 (21 B): slot 7 of the
 // UpgradeMux table 0x010CCFA8, which LocomotorSetUpgrade's registered
 // constructor 0x002D6160 stores at +0x10. The only route is ILT 0x00037F01, whose
-// VA appears once in the image. Slot 7 is a BFME-only virtual that undoes slot
-// 9 (LocomotorSetUpgrade::upgradeImplementation, 0x002D6290): it calls the
+// VA appears once in the image. Slot 7 is EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot),
+// which undoes slot 9 (LocomotorSetUpgrade::upgradeImplementation, 0x002D6290): it calls the
 // Object's +0x204 interface with 0 where slot 9 passes the module-data flag.
-// Its name is unproven, so the method keeps its address.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 // Moved from BfmeConv821.cpp.
 
@@ -29,10 +29,10 @@ struct BfmeParent2C0
 class LocomotorSetUpgrade
 {
 protected:
-	virtual void rva002D62C0();
+	virtual void removeUpgrade();
 };
 
-void LocomotorSetUpgrade::rva002D62C0()
+void LocomotorSetUpgrade::removeUpgrade()
 {
 	BfmeParent2C0 *p = (BfmeParent2C0 *)((char *)this - 8);
 	if (p->m_owner->m_sub204)

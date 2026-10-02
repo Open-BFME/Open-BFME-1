@@ -1,8 +1,9 @@
-// DynamicPortalBehaviour::rva001F8DD0 at retail 0x001F8DD0: slot 7 of the UpgradeMux table 0x010A3868, reached
+// DynamicPortalBehaviour::removeUpgrade at retail 0x001F8DD0: slot 7 of the UpgradeMux table 0x010A3868, reached
 // only through ILT 0x00025A09 (its VA appears once in the image). DynamicPortalBehaviour's registered
-// constructor 0x001F8B80 stores that table. Slot 7 is a BFME-only virtual that
-// undoes slot 9 (upgradeImplementation); its name is unproven, so the method
-// keeps its address. Evidence:
+// constructor 0x001F8B80 stores that table. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), which undoes
+// slot 9 (upgradeImplementation). Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md and
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
 class BfmeTargetZJ
@@ -46,10 +47,10 @@ public:
 	virtual void bfmeHideZJ(int how);
 
 protected:
-	virtual void rva001F8DD0();
+	virtual void removeUpgrade();
 };
 
-void DynamicPortalBehaviour::rva001F8DD0()
+void DynamicPortalBehaviour::removeUpgrade()
 {
 	bfmeHideZJ(0);
 

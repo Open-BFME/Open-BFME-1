@@ -1,8 +1,9 @@
-// AttributeModifierUpgrade::rva002D3000 at retail 0x002D3000: slot 7 of the UpgradeMux table 0x010CBBC0, reached only
+// AttributeModifierUpgrade::removeUpgrade at retail 0x002D3000: slot 7 of the UpgradeMux table 0x010CBBC0, reached only
 // through ILT 0x0001C698 (its VA appears once in the image). AttributeModifierUpgrade's registered
-// constructor 0x002D2EB0 stores that table. Slot 7 is a BFME-only virtual that undoes
-// slot 9 (AttributeModifierUpgrade::upgradeImplementation); its name is unproven, so the method
-// keeps its address.
+// constructor 0x002D2EB0 stores that table. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot), which undoes
+// slot 9 (AttributeModifierUpgrade::upgradeImplementation).
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
 class BfmeG1040
@@ -30,10 +31,10 @@ public:
 	virtual void bfmeVF71040();
 	virtual void bfmeFin1040(int n);
 protected:
-	virtual void rva002D3000();
+	virtual void removeUpgrade();
 };
 
-void AttributeModifierUpgrade::rva002D3000()
+void AttributeModifierUpgrade::removeUpgrade()
 {
 	if (bfmeAsk1040() == 0)
 		return;
