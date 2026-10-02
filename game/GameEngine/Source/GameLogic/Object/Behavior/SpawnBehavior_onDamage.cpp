@@ -18,17 +18,6 @@ typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID id)
-	{
-		if (id == 0)
-			return 0;
-		ObjectPtrHash::iterator it = m_objHash.find(id);
-		if (it == m_objHash.end())
-			return 0;
-		return (*it).second;
-	}
-
-private:
 	char m_pad000[0xB0];
 	ObjectPtrHash m_objHash;
 };
@@ -111,7 +100,14 @@ void SpawnBehavior::onDamage(DamageInfo *info)
 {
 	for (_STL::list<ObjectID>::iterator iter = m_spawnIDs.begin(); iter != m_spawnIDs.end(); iter++)
 	{
-		Object *currentSpawn = TheGameLogic->findObjectByID((*iter));
+		ObjectID spawnID = *iter;
+		Object *currentSpawn = 0;
+		if (spawnID != 0)
+		{
+			ObjectPtrHash::iterator found = TheGameLogic->m_objHash.find(spawnID);
+			if (found != TheGameLogic->m_objHash.end())
+				currentSpawn = (*found).second;
+		}
 		if (currentSpawn)
 		{
 			for (BehaviorModule **update = currentSpawn->getBehaviorModules(); *update; ++update)

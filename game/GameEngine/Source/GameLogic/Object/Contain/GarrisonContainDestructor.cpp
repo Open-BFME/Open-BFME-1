@@ -10,6 +10,8 @@
 // recovered layout in the proper source family so the SEH cleanup and base
 // destructor remain tied to the real class.
 
+#include "../../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
+
 class OpenContainPrimaryBase
 {
 public:
@@ -51,16 +53,6 @@ public:
 
 private:
 	unsigned char m_pad[0x3c4];
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-class Coord3D
-{
-public:
-	~Coord3D() {}
-
-private:
-	float m_value[3];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
