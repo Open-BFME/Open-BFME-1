@@ -26,7 +26,8 @@ struct Rva00899770Pool
 	void (__cdecl *free)(void *);
 };
 
-extern Rva00899770Pool *g_pool01337A30;
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct Rva00899770String
 {
@@ -42,7 +43,7 @@ struct Rva00899770String
 	{
 		Rva00899770Block *block = m_block;
 		if (--block->m_ref == 0)
-			g_pool01337A30->free(block);
+			((Rva00899770Pool *)g_rva01337A30AllocPair)->free(block);
 	}
 };
 

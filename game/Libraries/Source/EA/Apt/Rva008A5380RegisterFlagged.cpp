@@ -12,7 +12,8 @@ extern AptValue* g_bfmeFallbackDB;
 extern AptValue** g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern char* Rva008A5380Holder;
+struct BfmePickWorld1284;
+extern BfmePickWorld1284* g_bfmeHolderBU;
 
 AptValue* aptRegisterFlagged008A5380(void* self, int argc)
 {
@@ -23,7 +24,7 @@ AptValue* aptRegisterFlagged008A5380(void* self, int argc)
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;
-		char* table = Rva008A5380Holder + 0x820;
+		char* table = (char*)g_bfmeHolderBU + 0x820;
 		if (!((Rva008A4BD0*)table)->has((int)v))
 			((BfmePtrTable64_008A4B20*)table)->add((BfmeRef008A4B20*)v);
 	}
@@ -41,7 +42,7 @@ AptValue* aptRegisterFlagged008A5440(void* self, int argc)
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;
-		char* table = Rva008A5380Holder + 0x924;
+		char* table = (char*)g_bfmeHolderBU + 0x924;
 		if (!((Rva008A4BD0*)table)->has((int)v))
 			((BfmePtrTable64_008A4B20*)table)->add((BfmeRef008A4B20*)v);
 	}
