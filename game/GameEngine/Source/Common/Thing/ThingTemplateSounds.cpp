@@ -5,15 +5,8 @@
 //   getSound   0x00416FA0  one sound by index, empty event if the slot is unfilled
 //   hasSound95 0x00417220  is slot 0x5F filled
 //
-// Both call one private helper through the same ILT (0x0000286A), and they sat in
-// two files in two different directories describing that helper and the class
-// twice.
-//
-// The two declarations of the helper agreed on everything, including that it is
-// private (ABE) -- the part a merge can quietly get wrong. They spelled it two
-// ways that happen to mean the same thing: hasSound95 declared it before any
-// access specifier and relied on `class` defaulting to private, while getSound
-// wrote `private:`. One declaration now.
+// Both calls route through ILT 0x0000286A to the matched
+// ThingTemplate::getPerUnitFx implementation at 0x00416F20.
 //
 // A THIRD accessor, bfmeGetAudioEventInfo57 (0x004172E0), belongs to this group
 // by every other measure -- it is 0x340 away in the image, calls the same helper
@@ -43,15 +36,12 @@ enum { BFME_SOUND_SLOT_5F = 0x5F };
 // which bfmeGetAudioEventInfo57 falls back to as well.
 extern AudioEventRTS BfmeTheEmptyAudioEvent;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
 	const AudioEventRTS *getSound(Int index) const;
 	Int hasSound95() const;
-
-private:
-	const AudioEventRTS *bfmeLookupSound(Int index) const;	// ILT 0x0000286A
+	void *getPerUnitFx(Int index) const;
 };
 
 // ?getSound@ThingTemplate@@QBEPBVAudioEventRTS@@H@Z
@@ -60,7 +50,7 @@ private:
 // the name with identity=real.
 const AudioEventRTS *ThingTemplate::getSound(Int index) const
 {
-	const AudioEventRTS *sound = bfmeLookupSound(index);
+	const AudioEventRTS *sound = (const AudioEventRTS *)getPerUnitFx(index);
 	if (!sound)
 		sound = &BfmeTheEmptyAudioEvent;
 	return sound;
@@ -71,5 +61,5 @@ const AudioEventRTS *ThingTemplate::getSound(Int index) const
 // The neg/sbb/neg is what this compiler emits turning a pointer test into an Int.
 Int ThingTemplate::hasSound95() const
 {
-	return bfmeLookupSound(BFME_SOUND_SLOT_5F) != 0;
+	return getPerUnitFx(BFME_SOUND_SLOT_5F) != 0;
 }
