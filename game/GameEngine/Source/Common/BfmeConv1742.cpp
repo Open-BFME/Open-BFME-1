@@ -6,7 +6,12 @@ public:
 };
 
 extern const char g_bfmeEmptyAscii[];
-extern void *(__cdecl *g_lookup)(void *, void *);
+
+// The comparator reaches MSVCR71's case-insensitive compare through the import
+// slot at 0x0135933C; targets/game/reverse/symbols.csv pins that slot as
+// __imp___stricmp, so the reference must be spelled _stricmp (dllimport) to
+// land on it -- the placeholder g_lookup named nothing that existed.
+extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *, const char *);
 
 class BfmeStrAQ
 {
@@ -27,5 +32,5 @@ public:
 
 bool __stdcall bfmeLessAQ(BfmeHolderAQ *left, void *right)
 {
-	return (int)g_lookup((void *)left->m_bfmeStrAQ->bfmeStrAQ(), right) < 0;
+	return _stricmp(left->m_bfmeStrAQ->bfmeStrAQ(), (const char *)right) < 0;
 }
