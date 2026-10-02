@@ -69,7 +69,10 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this TU's
+// GameLogic class above is its view of that layout and mangles identically.
+extern GameLogic *TheGameLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
@@ -149,7 +152,7 @@ int BfmeCalc919G::bfmeCalc919G()
 		goto return_cached;
 
 	unsigned int updateFrame = m_updateFrame;
-	unsigned int logicFrame = TheBfmeGameLogic->m_frame;
+	unsigned int logicFrame = TheGameLogic->m_frame;
 	if( updateFrame < logicFrame - 2 )
 	{
 		if( m_ready == 0 )

@@ -112,7 +112,9 @@ struct BFMETreePushView
 	BFMETreePushType m_treeTypes[64];
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`; the
+// real GameLogic.h (included above) already declares it, so no local
+// declaration of TheBfmeGameLogic is needed.
 
 //=============================================================================
 // W3DShrubBuffer::cull
@@ -237,7 +239,7 @@ void W3DShrubBuffer::pushAsideTree(DrawableID id, const Coord3D *pusherPos,
 		BFMETreeCullTree *tree = &self->m_trees[i];
 		if (tree->m_drawableID == id) {
 			UnsignedInt lastFrame = tree->m_lastFrameUpdated;
-			tree->m_lastFrameUpdated = TheBfmeGameLogic->getFrame();
+			tree->m_lastFrameUpdated = TheGameLogic->getFrame();
 			if (tree->m_pushAsideSource == pusherID) {
 				if (tree->m_lastFrameUpdated - lastFrame < 3)
 					return;

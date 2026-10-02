@@ -238,7 +238,11 @@ public:
 	void bfmeDo1025(void *h);
 };
 
-extern BfmeStore1025 *g_bfmeStore1025;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. The call below
+// goes through this TU's BfmeStore1025 view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeS1025
 {
@@ -252,5 +256,5 @@ void BfmeS1025::bfmeGo1025S(int a)
 	BfmeOwner1025 *o = *(BfmeOwner1025 **)((char *)this - 0xc);
 
 	if (o->m_bfmeTab.bfmeTest1025(h, a) != 0)
-		g_bfmeStore1025->bfmeDo1025(*(void **)((char *)this - 8));
+		((BfmeStore1025 *)TheGameLogic)->bfmeDo1025(*(void **)((char *)this - 8));
 }

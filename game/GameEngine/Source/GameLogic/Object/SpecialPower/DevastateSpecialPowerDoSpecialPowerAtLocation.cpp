@@ -172,7 +172,11 @@ static __forceinline Rva012EF4CCTerrain *localTerrainLogic()
 	return (Rva012EF4CCTerrain *)TheTerrainLogic;
 }
 
-extern GameLogicPortraitShim *TheGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. The method
+// below is reached through this TU's GameLogicPortraitShim view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
 extern char *TheWritableGlobalData;
 
@@ -240,7 +244,7 @@ void DevastateSpecialPowerInterface::doSpecialPowerAtLocation(const Coord3D *tar
 
 		if (reward > 0.0f)
 		{
-			if (TheGameLogic->isInMultiplayerOrSkirmishGame())
+			if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 			{
 				int playerCount = ThePlayerList->unidentified_000df510(false);
 				float factor = ((Gen_00083240 *)(TheWritableGlobalData + 0xee0))->bfmeGet0(playerCount);

@@ -27,7 +27,10 @@ public:
 	void bfmeUseYV(int mode, void *entry);
 };
 
-extern GameLogic *g_bfmeObserverYV;			// retail 0x012F0898
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this TU's
+// GameLogic class above is its view of that layout and mangles identically.
+extern GameLogic *TheGameLogic;
 extern ControlBar *g_bfmeRegistryYV;			// retail 0x012F33F8
 
 // ?bfmeOptionsYV@@YGXH@Z
@@ -35,8 +38,8 @@ void __stdcall bfmeOptionsYV(int unused)
 {
 	AsciiStringYV *name;
 
-	if (g_bfmeObserverYV != 0
-			&& (g_bfmeObserverYV->m_gameMode == 1 || g_bfmeObserverYV->m_gameMode == 5))
+	if (TheGameLogic != 0
+			&& (TheGameLogic->m_gameMode == 1 || TheGameLogic->m_gameMode == 5))
 	{
 		static AsciiStringYV s_bfmeMultiplayerYV("NonCommand_MultiplayerOptions");
 

@@ -114,7 +114,10 @@ public:
 	void *findOwnerByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this TU's
+// GameLogic class above is its view of that layout and mangles identically.
+extern GameLogic *TheGameLogic;
 extern GameClient *TheGameClient;
 extern void *Glo012F1028;
 
@@ -146,7 +149,7 @@ void AudioEventRTS::resolveOwnerPosition(Coord3D *pos, bool *found)
 
 	case 2:
 		{
-			Object *object = TheBfmeGameLogic->findObjectByID(m_ownerID);
+			Object *object = TheGameLogic->findObjectByID(m_ownerID);
 			if (object != 0)
 			{
 				m_found = 1;

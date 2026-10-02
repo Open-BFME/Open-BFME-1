@@ -132,7 +132,11 @@ inline ExperienceTracker *bfmeGetExperienceTracker(const Object *obj)
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 
-extern GameLogicPortraitShim *TheBfmeGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU keeps
+// its own view classes and casts the pointer at each use.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class PlayerList;
 extern PlayerList *Rva002EE330ThePlayers;
 extern GlobalData *TheWritableGlobalData;
@@ -247,7 +251,7 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 	Rva00027D6DMoney *ownerPlayerMoney = ownerPlayer->getMoney();
 	value *= getSupplyCenterDockUpdateModuleData()->m_10;
 
-	if (((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab())
+	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
 		Int playerCount = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
 		Real scale = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerCount);

@@ -338,6 +338,12 @@ public:
   virtual void slot20();
   virtual bool getResponse(PeerResponse &);
 };
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. Declare it
+// with that spelling; the fields are read through this TU-local view.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class Rva004FD9B0Logic {
 public:
   char opaque00[0x3c];
@@ -347,7 +353,6 @@ public:
   bool isInShellGame() { return gameMode == 4; }
   unsigned getFrame() { return frame; }
 };
-extern Rva004FD9B0Logic *TheGameLogic;
 
 #include "Common/NameKeyGenerator.h"
 #include "GameClient/MessageBox.h"
@@ -625,7 +630,8 @@ enum QMStatus {
 };
 // ECX is the layout; the single stack argument is unused (ret 4).
 void Rva00506720Layout::update(void *userData) {
-  if (TheGameLogic->isInShellGame() && TheGameLogic->getFrame() == 1) {
+  Rva004FD9B0Logic *const gameLogic = (Rva004FD9B0Logic *)TheGameLogic;
+  if (gameLogic->isInShellGame() && gameLogic->getFrame() == 1) {
     SignalUIInteraction(SHELL_SCRIPT_HOOK_GENERALS_ONLINE_ENTERED_FROM_GAME);
   }
 

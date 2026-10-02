@@ -11,7 +11,9 @@
 class DX8Wrapper { public: static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned); };
 class GlobalData; class GameLogic; class BfmeGameCW;
 extern GlobalData* TheWritableGlobalData;
-extern GameLogic* TheBfmeGameLogic;
+// The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
+extern GameLogic* TheGameLogic;
 extern BfmeGameCW* g_bfmeGameCW;
 extern unsigned char g_006fc8d0;
 extern float g_Va012F8268[2],g_Va012F825C[2],g_Va012F8270,g_Va012F8264,g_Va012BAC4C,g_Va012F8274;
@@ -59,7 +61,7 @@ void Rva006FDE50SceneRender::render() {
   fieldec=(g_Va012F8270-a)*field144+a;
   float b=g_Va012F825C[index];
   field88=(g_Va012F8264-b)*field144+b;
-  if(!paused(TheBfmeGameLogic)) fielde4+=fielde8;
+  if(!paused(TheGameLogic)) fielde4+=fielde8;
   if(fielde4>g_Va012BAC4C && fielde8!=0.0f) {
    fielde4=g_Va012BAC4C; fielde8=0;
    if(g_bfmeGameCW) disable(g_bfmeGameCW);
