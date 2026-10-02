@@ -249,7 +249,7 @@ static __forceinline BfmeLook1011R0015F420 *theGameLogicView()
 {
 	return (BfmeLook1011R0015F420 *)TheGameLogic;
 }
-extern "C" AIRootR0015F420 *TheAIParseDefinitionAI;		// 0x012EF214
+extern AI *TheAI;
 
 class Rva0015EBE0State
 {
@@ -319,7 +319,7 @@ Int SelfR0015F420::run(void)
 
 	Real range = AIRootR0015F420::getAdjustedVisionRangeForObject(obj, 3);
 
-	UnsignedInt frames = TheAIParseDefinitionAI->getAiData()->m_field3C;
+	UnsignedInt frames = static_cast<AIRootR0015F420 *>(TheAI)->getAiData()->m_field3C;
 	if (obj->getCurrentWeapon() &&
 		static_cast<Weapon0015F420 *>(obj->getCurrentWeapon())->getTemplate()->get())
 		frames += frames >> 1;
