@@ -15,11 +15,18 @@ public:
 	virtual bool bfmeContains(int value) = 0;
 };
 
+class GameInfo;
+
+class MpGameSetup
+{
+public:
+	void bfmeSetSecondGame(GameInfo *game);
+};
+
 class Gen00038951
 {
 public:
 	void bfmeRefresh(void);
-	void handle(int value);
 
 private:
 	unsigned char m_unmodelled[4];
@@ -28,9 +35,10 @@ private:
 	int m_second;
 };
 
-// The retail body calls the same object's already pinned handle(int) ILT after
-// validating both stored IDs through slot 9 of the owner interface.  Neither
-// class exposes a retail spelling, so both names remain address-derived.
+// Retail validates both stored IDs through slot 9 of the owner interface.  The
+// final call routes through ILT 0x00038951 to the matched
+// MpGameSetup::bfmeSetSecondGame body; the pointer cast keeps its one-word
+// thiscall argument shape.
 // ?bfmeRefresh@Gen00038951@@QAEXXZ
 void Gen00038951::bfmeRefresh(void)
 {
@@ -41,5 +49,5 @@ void Gen00038951::bfmeRefresh(void)
 		m_second = 0;
 
 	if (m_first)
-		handle(m_first);
+		((MpGameSetup *)this)->bfmeSetSecondGame((GameInfo *)m_first);
 }

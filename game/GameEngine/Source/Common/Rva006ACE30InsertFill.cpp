@@ -1,22 +1,20 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // Retail 0x006ACE30. Same +0x9C scale / +0xA0 tree / +0x188 48-byte buffer
 // as Rva006ABB80::reset and 0x006B0C50. insert_unique the name; if it was
 // new and the scale is not 1.0f, fill the buffer with 0x02.
 
-#include "string_base.h"
+#include <set>
+#include "ascii_string.h"
 
-class Rva006AEE00Tree
+typedef _STL::_Rb_tree<AsciiString, AsciiString, _STL::_Identity<AsciiString>,
+	_STL::less<AsciiString>, _STL::allocator<AsciiString> > Rva006AEE00Tree;
+
+namespace _STL
 {
-public:
-	struct InsertResult
-	{
-		void *m_node;
-		char m_ok;
-		unsigned char m_pad[3];
-	};
-
-	void insert_unique(InsertResult *out, const StringBase<char> &key);
-};
+template <> pair<Rva006AEE00Tree::iterator, bool>
+Rva006AEE00Tree::insert_unique(const AsciiString &key);
+}
 
 class Rva006ACE30
 {
@@ -32,9 +30,9 @@ public:
 
 void Rva006ACE30::insertFill(const StringBase<char> &name)
 {
-	Rva006AEE00Tree::InsertResult r;
-	m_tree.insert_unique(&r, name);
-	if (r.m_ok && m_scaleBits != 0x3F800000)
+	typedef _STL::pair<Rva006AEE00Tree::iterator, bool> InsertResult;
+	InsertResult r = m_tree.insert_unique((const AsciiString &)name);
+	if (r.second && m_scaleBits != 0x3F800000)
 	{
 		__asm
 		{

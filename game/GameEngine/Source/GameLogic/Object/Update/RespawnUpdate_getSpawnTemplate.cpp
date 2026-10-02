@@ -1,37 +1,17 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
 
-#include "ascii_string.h"
+#include "PreRTS.h"
+#include "Common/ThingTemplate.h"
+#include "Common/ThingFactory.h"
 
-class ThingTemplate;
-
-class Overridable
+class BfmeThingFactory
 {
 public:
-	void *m_vtbl;
-	ThingTemplate *m_nextOverride;
-	// retail walks the override chain through ILT 0x000022BB, which targets
-	// this exact defining name (matching row 0x00087A80).
-	const Overridable *getFinalOverride(void) const;
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-class ThingTemplate : public Overridable
-{
-};
-
-class ThingFactory
-{
-public:
-	ThingTemplate *findTemplate(const AsciiString &name);
-};
-
-extern ThingFactory *TheThingFactory;
-
-class Object
-{
-public:
-	void *m_vtbl;
-	ThingTemplate *m_template;
-};
+class Object;
 
 class RespawnUpdateModuleData
 {
@@ -58,7 +38,8 @@ ThingTemplate *RespawnUpdate::getSpawnTemplate()
 {
 	if (m_cachedTemplate == (ThingTemplate *)-1)
 	{
-		ThingTemplate *t = TheThingFactory->findTemplate(m_moduleData->m_spawnTemplateName);
+		ThingTemplate *t = (ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(
+			m_moduleData->m_spawnTemplateName);
 		m_cachedTemplate = t;
 		if (!t)
 		{
@@ -71,7 +52,8 @@ ThingTemplate *RespawnUpdate::getSpawnTemplate()
 				m_cachedTemplate = t;
 				return t;
 			}
-			ThingTemplate *next = t->m_nextOverride;
+			// Overridable keeps its private m_nextOverride immediately after the +0 vptr.
+			const Overridable *next = *(const Overridable *const *)((const char *)t + 4);
 			if (next)
 				t = (ThingTemplate *)(const void *)next->getFinalOverride();
 			m_cachedTemplate = t;

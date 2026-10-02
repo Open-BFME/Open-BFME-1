@@ -1,3 +1,9 @@
+// cl: /DNDEBUG /MD /EHsc /Ob0 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+
+#include "PreRTS.h"
+#include "Common/Player.h"
+
 class BfmeSubEVI;
 
 class BfmeThingEVI
@@ -27,12 +33,6 @@ public:
 // 0x00087A80).  Spelled with its defining class and signature so the call
 // links; the view classes below stay unrelated to it, the pointer crosses as
 // void so no code is emitted.
-class Overridable
-{
-public:
-	const Overridable *getFinalOverride(void) const;
-};
-
 class BfmeHostEVI
 {
 public:
@@ -57,5 +57,5 @@ void BfmeHostEVI::bfmeAdvanceEVI(BfmeArgEVI *arg)
 	m_bfmeValueEVI = m_bfmeValueEVI - thing->m_bfmeDeltaEVI;
 
 	if (m_bfmeSinkEVI != 0)
-		m_bfmeSinkEVI->bfmeNotifyEVI(m_bfmeValueEVI < m_bfmeLimitEVI);
+		((Player *)m_bfmeSinkEVI)->onPowerBrownOutChange(m_bfmeValueEVI < m_bfmeLimitEVI);
 }

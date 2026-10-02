@@ -1,3 +1,9 @@
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+
+#include "PreRTS.h"
+#include "Common/StateMachine.h"
+
 class BfmeItemHM;
 
 class BfmeSourceHM
@@ -42,8 +48,6 @@ public:
 class BfmeHolderHM
 {
 public:
-	BfmeItemHM *bfmeGetHM(void);
-
 	unsigned char m_bfmeHeadHM[0x10];
 	BfmeItemHM *m_bfmeFirstHM;
 };
@@ -60,7 +64,7 @@ public:
 int BfmeOwnerHM::bfmeCheckHM(void)
 {
 	BfmeItemHM *first = m_bfmeHolderHM->m_bfmeFirstHM;
-	BfmeItemHM *second = m_bfmeHolderHM->bfmeGetHM();
+	BfmeItemHM *second = (BfmeItemHM *)((StateMachine *)m_bfmeHolderHM)->getGoalObject();
 
 	if (!first || !second)
 		return -2;
