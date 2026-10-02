@@ -544,7 +544,7 @@ void StreakLineClass::Render(RenderInfoClass & rinfo)
 	unsigned int sort_level = SORT_LEVEL_NONE;
 
 	if (!WW3D::Is_Sorting_Enabled())	
-		sort_level=reinterpret_cast<SegLineRendererClass *>(reinterpret_cast<char *>(this) + 0x104)->Get_Shader().Guess_Sort_Level();	
+		sort_level=reinterpret_cast<SegLineRendererClass *>(reinterpret_cast<char *>(this) + 0x104)->Get_Shader().Guess_Sort_Level();
 
 	if (WW3D::Are_Static_Sort_Lists_Enabled() && sort_level!=SORT_LEVEL_NONE) {		
 		
