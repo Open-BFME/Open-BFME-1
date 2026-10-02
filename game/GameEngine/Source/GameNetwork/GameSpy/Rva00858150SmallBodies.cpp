@@ -6,9 +6,8 @@
 // socket at +0x1C through ciSocketSendf, guarded on the connected flag at +0.
 // IDENTITY IS NOT RECOVERED for the owner; every name is derived from an
 // address. The format strings ride as literals the gate verifies against
-// retail ("MODE %s -b %s", "SETGROUP %s %s", "KICK %s %s :%s"); the
-// g_Rva0107301CEmptyString fallback for the null KICK reason is the same
-// empty-string global the Rva0084DBStringAndCodePage TU uses.
+// retail ("MODE %s -b %s", "SETGROUP %s %s", "KICK %s %s :%s").
+// The null KICK reason falls back to the empty-string literal.
 //
 // WHAT THE BYTES SHOW for each body is spelled above it. Retail loads the
 // two/three stack arguments with arg2 (eax) before arg1 (edx); the source
@@ -17,7 +16,6 @@
 typedef void *CHAT;
 
 extern "C" void ciSocketSendf(void *socket, const char *format, ...);
-extern const char g_Rva0107301CEmptyString[];
 
 class Rva00866770Owner
 {
@@ -85,6 +83,6 @@ void dup_00861510(void *chat, const char *a, const char *b, const char *c)
 	if (!chat || !connection->m_connected)
 		return;
 	if (!c)
-		c = g_Rva0107301CEmptyString;
+		c = "";
 	ciSocketSendf(&connection->m_chatSocket, "KICK %s %s :%s", a, b, c);
 }

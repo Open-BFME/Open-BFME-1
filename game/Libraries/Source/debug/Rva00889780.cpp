@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
 extern "C" __declspec(dllimport) char * __cdecl strncpy(char *, const char *, unsigned int);
-extern const char g_Rva0107301CEmptyString[];
 
 class Rva00889780Class
 {
@@ -15,7 +14,7 @@ public:
 
 void Rva00889780Class::d_00889780( const char *arg1, int arg2 )
 {
-	strncpy( m_str, arg1 ? arg1 : g_Rva0107301CEmptyString, 0x0F );
+	strncpy( m_str, arg1 ? arg1 : "", 0x0F );
 	m_str[0x0F] = 0;
 	m_field9E80 = arg2;
 }

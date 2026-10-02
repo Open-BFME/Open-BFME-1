@@ -1,6 +1,5 @@
 // Open-BFME: constant virtual dispatch reconstructed from retail RVA 0x0088D910.
 
-extern const char g_Rva0107301CEmptyString[];
 
 class Rva0088D910Object
 {
@@ -32,6 +31,6 @@ public:
 
 Rva0088D910Object *Rva0088D910Object::invoke(int unused)
 {
-    dispatch(g_Rva0107301CEmptyString, 10);
+    dispatch("", 10);
     return this;
 }

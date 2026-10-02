@@ -1,6 +1,5 @@
 // cl: /O2 /Ob0
 
-extern const char g_Rva0107301CEmptyString[];
 
 class Rva007F0210
 {
@@ -16,6 +15,6 @@ Rva007F0210 &Rva007F0210::set(int a, int b)
 {
 	m_00 = a;
 	m_08 = b;
-	m_04 = (int)g_Rva0107301CEmptyString;
+	m_04 = (int)"";
 	return *this;
 }

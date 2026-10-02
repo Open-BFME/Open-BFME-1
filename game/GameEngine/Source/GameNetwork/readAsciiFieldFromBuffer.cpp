@@ -11,14 +11,11 @@
 
 typedef unsigned char UnsignedByte;
 
-// The empty NUL-terminated literal in retail .rdata, pinned as
-// ?g_Rva0107301CEmptyString@@3QBDB (targets/game/reverse/symbols.csv).
-extern const char g_Rva0107301CEmptyString[];
 
 extern "C" UnsignedByte *readAsciiFieldFromBuffer(UnsignedByte *buffer,
 	StringBase<char> *out, UnsignedByte *end)
 {
-	out->set(g_Rva0107301CEmptyString, 0);
+	out->set("", 0);
 
 	if (end != 0)
 	{

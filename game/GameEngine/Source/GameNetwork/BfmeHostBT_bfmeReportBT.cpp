@@ -2,7 +2,6 @@
 
 typedef unsigned char Byte;
 
-extern const char g_Rva0107301CEmptyString[];
 
 class Rva00800290Buffer
 {
@@ -79,7 +78,7 @@ void BfmeHostBT::bfmeReportBT(int first, int second)
 			slot->unused08 = 0;
 			slot->unused0c = 0;
 			slot->unused10 = 0;
-			slot->text.append(g_Rva0107301CEmptyString);
+			slot->text.append("");
 			ids->idB = 0;
 			ids->idA = 0;
 			*(Byte *)((char *)ids + 0x48) = 0;
