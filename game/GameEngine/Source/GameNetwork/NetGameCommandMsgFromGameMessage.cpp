@@ -67,6 +67,7 @@ class NetGameCommandMsg : public NetCommandMsg
 {
 public:
 	NetGameCommandMsg(GameMessage *msg);
+	virtual ~NetGameCommandMsg();
 	void addArgument(GameMessageArgumentDataType type, GameMessageArgumentType arg);
 
 private:

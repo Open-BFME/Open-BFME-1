@@ -55,6 +55,7 @@ class LightningDrawModuleTemplate : public CategoryModuleTemplate<6>,
 {
 public:
     LightningDrawModuleTemplate();
+    virtual ~LightningDrawModuleTemplate();
 };
 
 // ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@XZ

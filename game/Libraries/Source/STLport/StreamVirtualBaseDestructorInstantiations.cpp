@@ -13,6 +13,10 @@
 #include <istream>
 #include <ostream>
 
+template <>
+_STL::locale
+_STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::pubimbue(const _STL::locale &);
+
 template class _STL::basic_ostream<char, _STL::char_traits<char> >;
 template class _STL::basic_istream<wchar_t, _STL::char_traits<wchar_t> >;
 template class _STL::basic_ostream<wchar_t, _STL::char_traits<wchar_t> >;

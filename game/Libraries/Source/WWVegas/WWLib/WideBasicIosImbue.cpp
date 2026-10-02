@@ -23,5 +23,9 @@ public:
 
 #include <istream>
 
+template <>
+_STL::locale
+_STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::pubimbue(const _STL::locale &);
+
 template _STL::locale _STL::basic_ios<wchar_t, _STL::char_traits<wchar_t> >::imbue(
 	const _STL::locale&);

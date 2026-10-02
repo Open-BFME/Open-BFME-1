@@ -16,6 +16,7 @@ struct GeometryRecord
 		  m_name(other.m_name)
 	{
 	}
+	~GeometryRecord();
 	int m_first;
 	int m_second;
 	int m_third;
