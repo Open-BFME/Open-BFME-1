@@ -99,6 +99,8 @@ enum
 class SimpleSceneIterator : public SceneIterator
 {
 public:
+	// Retail destructor is provided by SimpleSceneIteratorDeletingDestructor.cpp.
+	virtual ~SimpleSceneIterator();
 	virtual void					First(void);
 	virtual void					Next(void);
 	virtual bool					Is_Done(void);
