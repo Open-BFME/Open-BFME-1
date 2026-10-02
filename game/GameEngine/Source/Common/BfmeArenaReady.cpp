@@ -1,6 +1,6 @@
 // ?bfmeArenaReady@@YAXXZ
 
-extern char *g_bfmeArenaCursor;
+char *g_bfmeArenaCursor = 0;
 
 struct BfmeArenaVec4
 {
