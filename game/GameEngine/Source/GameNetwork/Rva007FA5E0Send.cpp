@@ -11,7 +11,15 @@ public:
 	char m_gap24[4];
 	void *m_28;
 	void *m_2C;
-	bool valid();
+};
+
+// 0x007E88A0 is W3DVideoBuffer::valid (m_texture != NULL, the word at +0x24).
+// The FESL arg valid() predicate is the linker's ICF fold of that exact body,
+// so the call has to carry the defining name to resolve.
+class W3DVideoBuffer
+{
+public:
+	virtual bool valid();
 };
 
 class Rva007FA5E0Id
@@ -54,7 +62,7 @@ private:
 
 int Rva007FA2C0::send(Rva007FA5E0Arg *arg)
 {
-	if (arg->valid())
+	if (((W3DVideoBuffer *)arg)->W3DVideoBuffer::valid())
 		return -103;
 	void *want = arg->m_2C;
 	if (want != m_6A8->id())
