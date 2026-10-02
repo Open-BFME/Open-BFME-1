@@ -8,11 +8,12 @@ public:
     virtual void release(int mode);
 };
 
-extern Rva007EB710Object *Rva007EB710Global;
+struct Rva007EB810Diag;
+extern Rva007EB810Diag *g_Va0130A5A0;
 
 void Rva007EB710GlobalRelease()
 {
-    if (Rva007EB710Global)
-        Rva007EB710Global->release(1);
-    Rva007EB710Global = 0;
+    if (g_Va0130A5A0)
+        reinterpret_cast<Rva007EB710Object *>(g_Va0130A5A0)->release(1);
+    g_Va0130A5A0 = 0;
 }

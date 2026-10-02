@@ -11,13 +11,14 @@ public:
     virtual void release(int value);
 };
 
-extern Rva007EB830Target *g_Va0130A5A0;
+struct Rva007EB810Diag;
+extern Rva007EB810Diag *g_Va0130A5A0;
 
 void Rva007EB830Release(void)
 {
     if (g_Va0130A5A0 != 0)
     {
-        g_Va0130A5A0->release(1);
+        reinterpret_cast<Rva007EB830Target *>(g_Va0130A5A0)->release(1);
     }
     g_Va0130A5A0 = 0;
 }
