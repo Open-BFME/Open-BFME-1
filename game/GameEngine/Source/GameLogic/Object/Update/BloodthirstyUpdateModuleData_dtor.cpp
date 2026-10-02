@@ -7,8 +7,7 @@
 // installed vtable slot as BaseUpgradeModuleDataDestructorThunk.cpp's
 // ~BaseUpgradeModuleData, but the trailing members are two AudioEventRTS
 // (ILT 0x00026F35, see Audio/AudioEventRTSCopyAndLifetime.cpp) plus a small non-trivial
-// member whose destructor is pinned as
-// ??1AttributeModifierAuraUpdateModuleDataMemberC@@QAE@XZ.
+// AttributeHandleStandIn (matched at 0x0039D550; ILT 0x0001A401 routes there).
 
 class BaseUpgradeModuleDataPrimaryBase
 {
@@ -19,13 +18,13 @@ private:
 	unsigned int m_04;
 };
 
-class AttributeModifierAuraUpdateModuleDataMemberC
+class AttributeHandleStandIn
 {
 public:
-	~AttributeModifierAuraUpdateModuleDataMemberC();
+	~AttributeHandleStandIn();
 
 private:
-	unsigned int m_data[2];
+	unsigned int m_handle;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
@@ -45,7 +44,8 @@ public:
 	virtual ~BloodthirstyUpdateModuleData();
 
 private:
-	AttributeModifierAuraUpdateModuleDataMemberC m_08;
+	AttributeHandleStandIn m_08;
+	unsigned int m_0c;
 	AudioEventRTS m_10;
 	AudioEventRTS m_80;
 };
