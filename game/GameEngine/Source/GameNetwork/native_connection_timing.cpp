@@ -47,6 +47,17 @@ public:
 	~UnicodeString() {}
 	void format(UnicodeString pattern, ...);
 	const unsigned short *str( void ) const;
+
+	// The empty UnicodeString every retail client copies from.  Retail exports
+	// exactly one name for the datum at 0x01336E54,
+	// ?TheEmptyString@UnicodeString@@2V1@B (exports.csv:1340), which is what
+	// WWLib's UnicodeString::TheEmptyString mangles to when it is const
+	// (unicode_string.h:12); MSVC writes the trailing A only for a non-const
+	// static member (measured: 'static C M' -> ?M@C@@2VC@@A, 'static const C M'
+	// -> ?M@C@@2VC@@B), so the const here is what names retail's symbol and
+	// drops the TU-local ?BFMEEmptyPlayerName alias from
+	// ConnectionManager::getPlayerName.
+	static const UnicodeString TheEmptyString;
 };
 
 
@@ -78,8 +89,6 @@ static inline int compareFilePaths(const AsciiString &left, const AsciiString &r
 typedef std::map<unsigned short, AsciiString> FileCommandMap;
 typedef std::map<unsigned short, unsigned char> FileMaskMap;
 typedef std::map<unsigned short, int> FileProgressMap;
-
-extern const UnicodeString BFMEEmptyPlayerName;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
@@ -4362,5 +4371,5 @@ UnicodeString ConnectionManager::getPlayerName(int slot)
 		return m_localPlayerName;
 	if (m_connections[slot])
 		return m_connections[slot]->m_playerName;
-	return BFMEEmptyPlayerName;
+	return UnicodeString::TheEmptyString;
 }
