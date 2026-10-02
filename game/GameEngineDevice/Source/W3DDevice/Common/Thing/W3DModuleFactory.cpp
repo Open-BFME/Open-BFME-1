@@ -108,32 +108,29 @@ public: \
 //-------------------------------------------------------------------------------------------------
 /** Initialize method */
 //-------------------------------------------------------------------------------------------------
-// ?init@W3DModuleFactory@@ present-unmatched
-void W3DModuleFactory::init( void )
-{
+// ?init@W3DModuleFactory@@ is defined by W3DModuleFactory_init.cpp.
+// These private helper bodies are ledger-owned separately from the factory
+// initializer. Keep their definitions reachable without defining a second
+// W3DModuleFactory::init in this object.
+typedef ModuleData *(*BFMEW3DNewDataProc)(INI *);
+static BFMEW3DNewDataProc volatile s_keepFactoryDataProcs[] = {
+	&W3DLaserDraw::friend_newModuleData,
+	&W3DOverlordTankDraw::friend_newModuleData,
+	&W3DTreeDraw::friend_newModuleData,
+	&W3DPropDraw::friend_newModuleData,
+	&W3DDependencyModelDraw::friend_newModuleData,
+	&W3DProjectileStreamDraw::friend_newModuleData,
+	&W3DModelDraw::friend_newModuleData,
+	&W3DTruckDraw::friend_newModuleData
+};
 
-	// extending functionality
-	ModuleFactory::init();
+typedef Module *(*BFMEW3DNewInstanceProc)(Thing *, const ModuleData *);
+static BFMEW3DNewInstanceProc volatile s_keepFactoryInstanceProcs[] = {
+	&W3DDebrisDraw::friend_newModuleInstance,
+	&W3DProjectileStreamDraw::friend_newModuleInstance,
+	&W3DRopeDraw::friend_newModuleInstance
+};
 
-	// add the specific module templates we need for the draw methods
-	addModule( W3DDefaultDraw );
-	addModule( W3DDebrisDraw );
-	addModule( W3DModelDraw );
-	addModule( W3DLaserDraw );
-	addModule( W3DOverlordTankDraw );
-	addModule( W3DOverlordTruckDraw );
-	addModule( W3DOverlordAircraftDraw );
-	addModule( W3DProjectileStreamDraw );
-	addModule( W3DPoliceCarDraw );
-	addModule( W3DRopeDraw );
-	addModule( W3DScienceModelDraw );
-	addModule( W3DSupplyDraw );
-	addModule( W3DDependencyModelDraw );
-	addModule( W3DTankDraw );
-	addModule( W3DTruckDraw );
-	addModule( W3DTracerDraw );
-	addModule( W3DTankTruckDraw );
-	addModule( W3DTreeDraw );
-	addModule( W3DPropDraw );
-
-}  // end init
+typedef Int (*BFMEW3DInterfaceMaskProc)(void);
+static BFMEW3DInterfaceMaskProc volatile s_keepDrawInterfaceMask =
+	&DrawModule::getInterfaceMask;
