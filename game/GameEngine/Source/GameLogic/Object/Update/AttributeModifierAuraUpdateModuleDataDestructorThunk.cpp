@@ -1,27 +1,19 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // Open-BFME5: AttributeModifierAuraUpdateModuleData dtor.
 // Four staggered members @+0x08/+0x0c/+0x24/+0x28.
 
-class AttributeModifierAuraUpdateModuleDataMemberA
-{
-public:
-	~AttributeModifierAuraUpdateModuleDataMemberA();
-private:
-	unsigned char m_pad[4];
-};
+#include <vector>
+#include "ascii_string.h"
 
-class AttributeModifierAuraUpdateModuleDataMemberB
-{
-public:
-	~AttributeModifierAuraUpdateModuleDataMemberB();
-private:
-	unsigned char m_pad[4];
-};
+// ILT 0x00026AB2 reaches the shared vector destructor at 0x000658A0.
+extern template _STL::vector<AsciiString>::~vector();
 
-class AttributeModifierAuraUpdateModuleDataMemberC
+// ILT 0x0001A401 reaches AttributeHandleStandIn's destructor at 0x0039D550.
+class AttributeHandleStandIn
 {
 public:
-	~AttributeModifierAuraUpdateModuleDataMemberC();
+	~AttributeHandleStandIn();
 private:
 	unsigned char m_pad[4];
 };
@@ -48,10 +40,10 @@ class __declspec(novtable) AttributeModifierAuraUpdateModuleData
 public:
 	virtual ~AttributeModifierAuraUpdateModuleData();
 private:
-	AttributeModifierAuraUpdateModuleDataMemberA m_a;
-	AttributeModifierAuraUpdateModuleDataMemberB m_b;
-	unsigned char m_gap[0x14];
-	AttributeModifierAuraUpdateModuleDataMemberC m_c;
+	AsciiString m_a;
+	_STL::vector<AsciiString> m_b;
+	unsigned char m_gap[0x0c];
+	AttributeHandleStandIn m_c;
 	AttributeModifierAuraUpdateModuleDataMemberD m_d;
 };
 
