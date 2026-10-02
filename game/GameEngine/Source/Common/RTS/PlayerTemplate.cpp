@@ -557,13 +557,8 @@ const PlayerTemplate* PlayerTemplateStore::findPlayerTemplate(NameKeyType nameke
 }
 
 //-----------------------------------------------------------------------------
-const PlayerTemplate* PlayerTemplateStore::getNthPlayerTemplate(Int i) const
-{
-	if (i >= 0 && i < m_playerTemplates.size())
-		return &m_playerTemplates[i];
-
-	return NULL;
-}
+// getNthPlayerTemplate is emitted by the retail-proven
+// PlayerTemplateStoreGetAllSideStrings.cpp provider.
 
 //-------------------------------------------------------------------------------------------------
 // @todo: PERF_EVALUATE Get a perf timer on this. 
