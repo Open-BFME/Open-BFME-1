@@ -3,7 +3,7 @@
 // special-key table when the modifier bits are set and the code is small.
 // cl: /DNDEBUG /MD /EHsc
 class AptValue;
-class AptInteger { public: static AptValue* Create(int value); };
+class AptInteger { public: static AptInteger* Create(int value); };
 extern "C" int __cdecl toupper(int);
 extern unsigned int Rva008A5250LastKey;
 extern const int Rva008A5250KeyTable[0x14];
@@ -13,7 +13,7 @@ AptValue* aptKeyCode()
 	int code = key >> 17;
 	if ((key & 0x3fc) && code < 0x14)
 		code = Rva008A5250KeyTable[code];
-	return AptInteger::Create(code);
+	return (AptValue*)AptInteger::Create(code);
 }
 
 // ?aptKeyValue@@YAPAVAptValue@@XZ
@@ -37,5 +37,5 @@ AptValue* aptKeyValue()
 	}
 	if (code < 0x14)
 		code = Rva008A5250KeyTable[code];
-	return AptInteger::Create(code);
+	return (AptValue*)AptInteger::Create(code);
 }

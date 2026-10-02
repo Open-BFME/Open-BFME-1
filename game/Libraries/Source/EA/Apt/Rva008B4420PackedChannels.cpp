@@ -4,7 +4,7 @@ class AptValue;
 class AptInteger
 {
 public:
-    static AptValue *Create(int value);
+    static AptInteger *Create(int value);
 };
 
 class Rva008AC9E0
@@ -31,7 +31,7 @@ AptValue *aptPackedChannels008B4420(Rva008B4420Owner *self, int argc)
         packed <<= 16;
         packed |= (int)getter->get(9) << 8;
         packed |= (int)getter->get(10);
-        result = AptInteger::Create(packed);
+        result = (AptValue *)AptInteger::Create(packed);
     }
     else
         result = g_bfmeFallbackDB;
