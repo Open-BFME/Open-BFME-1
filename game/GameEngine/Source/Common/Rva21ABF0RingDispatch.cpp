@@ -23,6 +23,12 @@ struct Rva21ABF0List
 class Rva21ABF0Worker
 {
 public:
+};
+
+extern void j_00003288(void);
+
+struct Rva21ABF0WorkerCallView
+{
 	void visit(void *value);
 };
 
@@ -111,7 +117,14 @@ void Rva21ABF0RingDispatch::dispatchAll(void)
 	while (node != m_ring) {
 		void *value = node->value;
 		node = node->next;
-		((Rva21ABF0Worker *)((char *)this - 0x20))->visit(value);
+		union
+		{
+			void *asVoid;
+			void (Rva21ABF0WorkerCallView::*asMember)(void *);
+		} call;
+		call.asVoid = reinterpret_cast<void *>(j_00003288);
+		(reinterpret_cast<Rva21ABF0WorkerCallView *>(
+			(char *)this - 0x20)->*call.asMember)(value);
 	}
 
 	finish();
@@ -141,7 +154,14 @@ void Rva21ABF0RingDispatch::finish(void)
 		do {
 			void *value = node->value;
 			node = node->next;
-			worker->visit(value);
+			union
+			{
+				void *asVoid;
+				void (Rva21ABF0WorkerCallView::*asMember)(void *);
+			} call;
+			call.asVoid = reinterpret_cast<void *>(j_00003288);
+			(reinterpret_cast<Rva21ABF0WorkerCallView *>(worker)->*
+				call.asMember)(value);
 		} while (node != list->end());
 
 	} while (++pass < 2);

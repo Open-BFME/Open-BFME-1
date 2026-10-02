@@ -10,7 +10,6 @@ class Rva001E4090;
 class Rva002DF100
 {
 public:
-	unsigned char testOne(void *value);
 	virtual void slot0();
 	virtual void slot1();
 	virtual void slot2();
@@ -24,6 +23,14 @@ public:
 	virtual class Holder001E4090 *slot10();
 	virtual Rva001E4090 *slot11();
 };
+
+extern void j_0000baeb(void);
+
+struct Rva001E4090WorkerCallView
+{
+	unsigned char testOne(void *value);
+};
+
 
 class Holder001E4090
 {
@@ -62,7 +69,14 @@ bool Rva001E4090::allows(void *first, void *second)
 	for (Node001E4090 *at = head->next; at != m_head; at = at->next)
 	{
 		Rva002DF100 *item = at->item;
-		if (!item->testOne(second))
+		union
+		{
+			void *asVoid;
+			unsigned char (Rva001E4090WorkerCallView::*asMember)(void *);
+		} call;
+		call.asVoid = reinterpret_cast<void *>(j_0000baeb);
+		if (!(reinterpret_cast<Rva001E4090WorkerCallView *>(item)->*
+			call.asMember)(second))
 			continue;
 		if (item->slot7())
 		{

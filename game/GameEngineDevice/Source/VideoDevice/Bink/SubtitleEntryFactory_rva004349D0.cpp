@@ -17,11 +17,15 @@ class GameFont;
 
 class FontLibrary
 {
-public:
-	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);
 };
 
 extern FontLibrary *TheFontLibrary;
+extern void j_0000abc3(void);
+
+struct SubtitleEntryGetFontCallView
+{
+	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);
+};
 
 class SubtitleEntry
 {
@@ -58,7 +62,15 @@ SubtitleEntry *rva004349D0CreateSubtitleEntry(AsciiString *fontName,
 	Int pointSize, const UnicodeString &text, UnsignedInt color, Int style,
 	Int alignment, Int line, Int startFrame, Int endFrame)
 {
-	GameFont *font = TheFontLibrary->getFont(fontName, (Real)pointSize, false);
+	union
+	{
+		void *asVoid;
+		GameFont *(SubtitleEntryGetFontCallView::*asMember)(
+			AsciiString *, Real, Bool);
+	} call;
+	call.asVoid = reinterpret_cast<void *>(j_0000abc3);
+	GameFont *font = (reinterpret_cast<SubtitleEntryGetFontCallView *>(
+		TheFontLibrary)->*call.asMember)(fontName, (Real)pointSize, false);
 	return new Rva00434810SubtitleEntry(font, text, color, style, alignment,
 		line, startFrame, endFrame);
 }

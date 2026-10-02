@@ -24,7 +24,13 @@ union Rva006AD590Slot
 struct BfmeSubPE
 {
 	int *m_bfmeFirst;
-	int *bfmeFindPE(int k);
+};
+
+extern void j_00025cca(void);
+
+struct AudioManagerBfmeFindPECallView
+{
+	int *find(int key);
 };
 
 class Rva006AD590Info
@@ -56,7 +62,14 @@ class Rva006AD590Entry
 public:
 	Rva006AD590Slot *find(int key)
 	{
-		int *r = m_map.bfmeFindPE(key);
+		union
+		{
+			void *asVoid;
+			int *(AudioManagerBfmeFindPECallView::*asMember)(int);
+		} call;
+		call.asVoid = reinterpret_cast<void *>(j_00025cca);
+		int *r = (reinterpret_cast<AudioManagerBfmeFindPECallView *>(
+			&m_map)->*call.asMember)(key);
 		if (r == m_map.m_bfmeFirst)
 			return 0;
 		return (Rva006AD590Slot *)((char *)r + 0x14);
