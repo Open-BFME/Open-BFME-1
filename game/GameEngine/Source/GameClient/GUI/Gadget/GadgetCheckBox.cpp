@@ -123,18 +123,9 @@ public:
 	virtual void winPrevTab( GameWindow *window ) = 0;   // slot 0x98
 };
 
-class BfmeKeyboardModifiers
-{
-public:
-	char m_pad[8];
-	unsigned char m_flagsAt8;
-};
-
-extern BfmeKeyboardModifiers *TheBfmeKeyboardModifiers;
-
 static Bool bfmeShiftHeld( void )
 {
-	return BitTest( TheBfmeKeyboardModifiers->m_flagsAt8, 0x10 );
+	return BitTest( (UnsignedByte)TheKeyboard->getModifierFlags(), 0x10 );
 }
 
 
