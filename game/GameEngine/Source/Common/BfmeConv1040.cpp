@@ -162,39 +162,3 @@ void BfmeK1040::bfmeGo1040K(void)
 	LeaveCriticalSection(&m_bfmeCs);
 }
 
-class BfmeG1040
-{
-public:
-	void bfmeStep1040(void);
-};
-
-class BfmeH1040
-{
-public:
-	void bfmeAdd1040(void *p);
-};
-
-class BfmeF1040
-{
-public:
-	virtual char bfmeAsk1040();
-	virtual void bfmeVF11040();
-	virtual void bfmeVF21040();
-	virtual void bfmeVF31040();
-	virtual void bfmeVF41040();
-	virtual void bfmeVF51040();
-	virtual void bfmeVF61040();
-	virtual void bfmeVF71040();
-	virtual void bfmeFin1040(int n);
-	void bfmeGo1040F(void);
-};
-
-void BfmeF1040::bfmeGo1040F(void)
-{
-	if (bfmeAsk1040() == 0)
-		return;
-
-	((BfmeG1040 *)((char *)this - 0x10))->bfmeStep1040();
-	(*(BfmeH1040 **)((char *)this - 8))->bfmeAdd1040(*(char **)((char *)this - 0xc) + 0x70);
-	bfmeFin1040(0);
-}

@@ -42,3 +42,6 @@ are empty overrides (`ret`).
 | TooltipUpgrade | 0x002D93E0 | 0x010CE1A0 | 0x00036750 | 0x002D9570 | 69 | `?bfmeGoUYA@BfmeThingUYA@@QAEXXZ` | clears the two strings slot 9 (0x002D9510) applies, then slot 8 with false |
 | GeometryUpgrade | 0x002D5790 | 0x010CCC48 | 0x00028B69 | 0x002D55F0 | 269 | `?bfmeTeardown002D55F0@Rva002D55F0Owner@@QAEXXZ` | tears down what slot 9 (0x002D5980) sets up |
 | AutoHealBehavior | 0x001EE950 | 0x010A1C20 | 0x00049C60 | 0x001EE810 | 15 | `?reset@Rva001EE810@@QAEXXZ` | clears the +0xC field and calls slot 8 with false |
+| WeaponSetUpgrade | 0x002DA4E0 | 0x010CE710 | 0x0001FD48 | 0x002DA630 | 32 | `?bfmeGoTEB@BfmeThingTEB@@QAEXXZ` | calls a different Object callee than slot 9 (0x002DA610) with the same constant 3, then slot 8 with false |
+| AttributeModifierUpgrade | 0x002D2EB0 | 0x010CBBC0 | 0x0001C698 | 0x002D3000 | 45 | `?bfmeGo1040F@BfmeF1040@@QAEXXZ` | passes the +0x70 module-data field to a different Object callee than slot 9 (0x002D2FD0) does, then slot 8 with false |
+| AudioLoopUpgrade | 0x002D32B0 | 0x010CBD08 | 0x000417E0 | 0x002D34B0 | 48 | `?bfmeGo1024C@BfmeC1024@@QAEXXZ` | kills the audio handle slot 9 (0x002D33E0) starts |

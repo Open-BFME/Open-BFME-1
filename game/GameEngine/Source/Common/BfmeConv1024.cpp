@@ -89,65 +89,6 @@ void BfmeB1024::bfmeGo1024B(void)
 	}
 }
 
-class BfmeG1024
-{
-public:
-	virtual void bfmeVG01024();
-	virtual void bfmeVG11024();
-	virtual void bfmeVG21024();
-	virtual void bfmeVG31024();
-	virtual void bfmeVG41024();
-	virtual void bfmeVG51024();
-	virtual void bfmeVG61024();
-	virtual void bfmeVG71024();
-	virtual void bfmeVG81024();
-	virtual void bfmeVG91024();
-	virtual void bfmeVG101024();
-	virtual void bfmeVG111024();
-	virtual void bfmeVG121024();
-	virtual void bfmeVG131024();
-	virtual void bfmeVG141024();
-	virtual void bfmeVG151024();
-	virtual void bfmeVG161024();
-	virtual void bfmeVG171024();
-	virtual void bfmeVG181024();
-	virtual void bfmeKill1024(int v);
-};
-
-// Retail's audio global, at 0x012ED668, is AudioManager *TheAudio
-// (?TheAudio@@3PAVAudioManager@@A). The BfmeG1024 view above is TU-local.
-class AudioManager;
-extern AudioManager *TheAudio;
-
-class BfmeH1024
-{
-public:
-	void bfmeAdd1024(int a, int b);
-
-	char m_bfmePad[8];
-	int m_bfmeVal;
-};
-
-class BfmeC1024
-{
-public:
-	void bfmeGo1024C(void);
-
-	char m_bfmePad[0xc];
-	int m_bfmeH;
-};
-
-void BfmeC1024::bfmeGo1024C(void)
-{
-	if (TheAudio != 0) {
-		((BfmeG1024 *)TheAudio)->bfmeKill1024(m_bfmeH);
-		m_bfmeH = 1;
-	}
-
-	((BfmeH1024 *)((char *)this - 0x20))->bfmeAdd1024(
-		((BfmeH1024 *)((char *)this - 0x20))->m_bfmeVal, 0x3fffffff);
-}
-
 class BfmeTab1024
 {
 public:

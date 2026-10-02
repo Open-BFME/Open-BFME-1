@@ -15058,5 +15058,65 @@
   "after_sha256": "4e7c1689b410f9d10265eee5c2f806dd456346f060a1e6f51b470500fccd51b7",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "reset was a shape name on the address-derived class Rva001EE810. The body is slot 7 (ILT 0x00049C60, sole image ref) of AutoHealBehavior's UpgradeMux table 0x010A1C20 (registered ctor 0x001EE950), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1024.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/AudioLoopUpgradeRva002D34B0.cpp",
+  "old_name": "bfmeGo1024C",
+  "new_name": "rva002D34B0",
+  "before_sha256": "1abd7ffc7589c0ad7ceaaaa4ec8de2eaf1bb83fccd3171a04f5d6e05f9a2cf04",
+  "after_sha256": "4e1a41fde49a4655d90942a5826cae084bd599551b942503d93e7fc9afab08bd",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1040.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/AttributeModifierUpgradeRva002D3000.cpp",
+  "old_name": "bfmeGo1040F",
+  "new_name": "rva002D3000",
+  "before_sha256": "cb3489ecda20bff051f1326d36154c1ccdd9e97541f55e867ebd439b5ce5c2b0",
+  "after_sha256": "466e11e45fcce644d2768112855809ec43d2656db423b6efaa30543c1cee36b6",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1311.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/WeaponSetUpgradeRva002DA630.cpp",
+  "old_name": "bfmeGoTEB",
+  "new_name": "rva002DA630",
+  "before_sha256": "c3539746647d79ca0651635ed1df22f05cf9a2be2da7486878ecd7a66dd4bdff",
+  "after_sha256": "6c0568302f33944ee76738a56f6ec95c9305b57bd3c0a308fdc7b0294dff2c48",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGo1040F",
+  "new_name": "rva002D3000",
+  "before_sha256": "2142cf72347a887ca82084453687b0c5998c98f9cd5811c3010e63810a593894",
+  "after_sha256": "2e513d01b8403c1d76e30c437b9aa309d4e13f8279a1a2895b82fb9cc7efed09",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGo1024C",
+  "new_name": "rva002D34B0",
+  "before_sha256": "4fd08a51c621e277ed28b8f61c6aae5a7724545d49eb6ce4ba5ca84df812c677",
+  "after_sha256": "321d584e361963f70b9fac9325d9943a126211df5809e4dd13531b18a084bff5",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGoTEB",
+  "new_name": "rva002DA630",
+  "before_sha256": "53cffd61fded42e99a54878e534dd13fd90c6ef36bbd472114967e5c1627011d",
+  "after_sha256": "80f10f4f0a85a9d24fcd3670eff74c24a9d3ee6915fd781c1bf59271bf6a0681",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old names were shape placeholders (bfmeGoTEB, bfmeGo1040F, bfmeGo1024C) on address-derived classes. Each body is slot 7 (ILT sole image ref) of an UpgradeMux table that the class's registered constructor stores, so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
  }
 ]
