@@ -2,21 +2,19 @@
 // virtual stop notification, a letterbox hide, a guarded singleton callback,
 // and a final virtual state notification.
 
-void HideControlBar(int immediate);
+void HideControlBar(bool immediate);
 
-// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
-// (dir32_addresses.csv); only the member j_0001d6c4 is pinned under the local
-// view's name, so the global carries its real type and the view is applied at
-// the call.
-class BfmeGameCW;
+// Retail 0x012F706C is LivingWorldManager *TheLivingWorldManager.  The
+// shutdown call uses ILT 0x0001D6C4 to the matched body at 0x00617DB0.
+class LivingWorldManager;
 
-class BfmeSingletonH
+class BfmeHostAAY
 {
 public:
-	void j_0001d6c4();
+	void bfmeShutdownAAY();
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
 // once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
@@ -52,10 +50,10 @@ public:
 void BfmeOneAQA::bfmeStopAQA(void)
 {
 	stop(0, 1);
-	HideControlBar(1);
+	HideControlBar(true);
 
-	if (g_bfmeGameCW != 0)
-		reinterpret_cast<BfmeSingletonH *>(g_bfmeGameCW)->j_0001d6c4();
+	if (TheLivingWorldManager != 0)
+		reinterpret_cast<BfmeHostAAY *>(TheLivingWorldManager)->bfmeShutdownAAY();
 
 	BfmeStateDO *state = reinterpret_cast<BfmeStateDO *>(TheLivingWorldLogic);
 	if (state != 0)
