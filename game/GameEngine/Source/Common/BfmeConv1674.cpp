@@ -1,3 +1,5 @@
+#include "../GameClient/window_layout.h"
+
 class BfmeWindowERC;
 
 class BfmeWindowManagerERC
@@ -69,7 +71,6 @@ extern GameWindowManager *TheWindowManager;
 class BfmeWindowERC
 {
 public:
-	int bfmeBringToTopERC(void);
 	int bfmeActivateERC(void);
 
 	unsigned char m_bfmeHeadERC[8];
@@ -78,7 +79,7 @@ public:
 
 int BfmeWindowERC::bfmeActivateERC(void)
 {
-	int returnCode = bfmeBringToTopERC();
+	int returnCode = ((GameWindow *)this)->winBringToTop();
 	if (returnCode != 0)
 		return returnCode;
 	m_bfmeStatusERC |= 1;
