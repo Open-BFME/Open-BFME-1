@@ -15,8 +15,12 @@ struct S4Cmp002E0CD0
 	bool operator()(S4SortElem12, S4SortElem12) const;
 };
 
-void Gen002E07A0(S4SortElem12 *first, int hole, int len, S4SortElem12 value,
-	S4Cmp002E0CD0 comp);
+namespace _STL
+{
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __adjust_heap(RandomAccessIterator first, Distance hole, Distance len,
+	Tp value, Compare comp);
+}
 
 void gen002E0CD0(S4SortElem12 *first, S4SortElem12 *last, S4Cmp002E0CD0 comp)
 {
@@ -26,7 +30,7 @@ void gen002E0CD0(S4SortElem12 *first, S4SortElem12 *last, S4Cmp002E0CD0 comp)
 	int parent = (len - 2) / 2;
 	for (;;)
 	{
-		Gen002E07A0(first, parent, len, first[parent], comp);
+		_STL::__adjust_heap(first, parent, len, first[parent], comp);
 		if (parent == 0)
 			return;
 		--parent;
