@@ -259,21 +259,3 @@ void HeaderTemplateManager::headerNotifyResolutionChange( void )
 //-----------------------------------------------------------------------------
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp
-// ?populateGameFonts@HeaderTemplateManager@@AAEXXZ present-unmatched
-void HeaderTemplateManager::populateGameFonts( void )
-{
-	HeaderTemplateListIt it = m_headerTemplateList.begin();
-	while(it != m_headerTemplateList.end())
-	{
-		HeaderTemplate *hTemplate = *it;
-		Real pointSize = TheGlobalLanguageData->adjustFontSize(hTemplate->m_point);
-		GameFont *font = TheFontLibrary->getFont(hTemplate->m_fontName, pointSize,hTemplate->m_bold);
-		DEBUG_ASSERTCRASH(font,("HeaderTemplateManager::populateGameFonts - Could not find font %s %d",hTemplate->m_fontName, hTemplate->m_point));
-
-		hTemplate->m_font = font;
-		
-		++it;
-	}
-}

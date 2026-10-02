@@ -16,7 +16,7 @@ class ThingTemplate;
 class Team;
 class Object;
 
-struct ObjectStatusMaskType
+struct GarrisonContainObjectStatusMaskView
 {
 	_STL::bitset<86> m_bits;
 };
@@ -64,10 +64,10 @@ extern void j_0004494a();
 
 static __forceinline Object *bfmeNewObject(BfmeThingFactory *factory,
 	const ThingTemplate *thingTemplate, Team *team,
-	const ObjectStatusMaskType &status, UnsignedInt unknown)
+	const GarrisonContainObjectStatusMaskView &status, UnsignedInt unknown)
 {
 	typedef Object *(BfmeThingFactory::*Function)(const ThingTemplate *, Team *,
-		const ObjectStatusMaskType &, UnsignedInt);
+		const GarrisonContainObjectStatusMaskView &, UnsignedInt);
 	union { void (*raw)(); Function member; } function;
 	function.raw = j_0004494a;
 	return (factory->*function.member)(thingTemplate, team, status, unknown);
@@ -109,7 +109,7 @@ void GarrisonContain::onObjectCreated()
 	Object *object = m_object;
 	for (int i = 0; i < count; ++i)
 	{
-		ObjectStatusMaskType status;
+		GarrisonContainObjectStatusMaskView status;
 		Team *team = object->getControllingPlayer()->m_defaultTeam;
 		Object *payload = bfmeNewObject((BfmeThingFactory *)TheThingFactory, rosterTemplate,
 			team, status, 0);

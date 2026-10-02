@@ -305,6 +305,8 @@ private:
 	UnsignedInt m_base;
 };
 
+namespace
+{
 class PartitionFilterWouldCollide : public PartitionFilter
 {
 public:
@@ -335,6 +337,7 @@ private:
 	Real m_angle;
 	Bool m_desired;
 };
+}
 
 enum DistanceCalculationType
 {

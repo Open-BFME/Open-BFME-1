@@ -58,6 +58,7 @@ class DefaultModuleTemplate : public CategoryModuleTemplate<Category>, public De
 {
 public:
 	DefaultModuleTemplate(const DefaultModuleTemplate &that);
+	virtual ~DefaultModuleTemplate();
 };
 
 template <int Category>
