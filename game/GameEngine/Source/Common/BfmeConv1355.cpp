@@ -14,8 +14,13 @@ public:
 	static unsigned int decrement(unsigned int *value);
 };
 
-unsigned __cdecl bfmeIncVGO(unsigned *p);
-void __cdecl bfmeDropVGO(void *p);
+class Rva00894D80Accessor
+{
+public:
+	static unsigned int increment(unsigned int *value);
+};
+
+__declspec(noinline) void bfmeDropA(void *p);
 
 class BfmeRefVGO
 {
@@ -29,10 +34,10 @@ BfmeRefVGO &BfmeRefVGO::bfmeAssignVGO(const BfmeRefVGO &o)
 	if (&o != this)
 	{
 		if (m_bfmeP && Rva00894D90Accessor::decrement(m_bfmeP) == 0)
-			bfmeDropVGO(m_bfmeP);
+			bfmeDropA(m_bfmeP);
 		m_bfmeP = o.m_bfmeP;
 		if (m_bfmeP)
-			bfmeIncVGO(m_bfmeP);
+			Rva00894D80Accessor::increment(m_bfmeP);
 	}
 	return *this;
 }
