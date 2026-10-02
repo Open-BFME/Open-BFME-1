@@ -130,14 +130,12 @@ public:
 	Coord3D m_position;
 };
 
-class StructureCollapsePosition
-{
-};
+class BfmePosTP;
 
-class StructureCollapseRetailObject
+class BfmeHostTP
 {
 public:
-	void setPosition(const StructureCollapsePosition &position, Bool unknown);
+	void bfmeSetPositionTP(const BfmePosTP *position, Bool unknown);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
@@ -157,9 +155,8 @@ void ScriptActions::doUnitTeleportToWaypoint(const AsciiString &unitName,
 		Waypoint *waypoint = TheTerrainLogic->getWaypointByName(waypointName);
 		if (waypoint)
 		{
-			const StructureCollapsePosition *position =
-				(const StructureCollapsePosition *)&waypoint->m_position;
-			((StructureCollapseRetailObject *)object)->setPosition(*position, false);
+			const BfmePosTP *position = (const BfmePosTP *)&waypoint->m_position;
+			((BfmeHostTP *)object)->bfmeSetPositionTP(position, false);
 		}
 	}
 }
