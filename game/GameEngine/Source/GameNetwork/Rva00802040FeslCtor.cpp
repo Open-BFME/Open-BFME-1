@@ -1,7 +1,7 @@
 // cl: /GX-
 // FESL browser owner ctor @ 0x802040 (138B). V2ZeroPair +8; twin Buf +0x10/+0x18;
-// Arr2 +0x20 allocate(a->m_08) sibling of matched 0x801BD0; Buf::set from
-// owner+0x2AC/+0x2B4. Member ctors supply the early eax-zeros; body zeros
+// Arr2 +0x20 allocate(a->m_08) sibling of matched 0x801BD0; Block::allocate
+// from owner+0x2AC/+0x2B4. Member ctors supply the early eax-zeros; body zeros
 // +28/+30/+55/+2C after the lea trio.
 
 // The owner at 0x802040 installs vtable 0x0112C4A8 and its matched sibling
@@ -35,11 +35,14 @@ struct V2ZeroPair
 	int m_b;
 };
 
-class Rva00802040Buf
+// The two stride-8 blocks at owner+0x10/+0x18 are set by the matched
+// allocator at 0x7F7F50, i.e. ?allocate@Rva007F78E0Block@@QAEXH@Z (see
+// V2FeslArrayBlocks.cpp); the argument reaches it as a plain int.
+class Rva007F78E0Block
 {
 public:
-	__forceinline Rva00802040Buf() : m_p( 0 ), m_n( 0 ) {}
-	void set( void *p );
+	__forceinline Rva007F78E0Block() : m_p( 0 ), m_n( 0 ) {}
+	void allocate( int count );
 
 	void *m_p;
 	int m_n;
@@ -90,8 +93,8 @@ public:
 
 	Rva00802040OwnerSrc *m_04;
 	V2ZeroPair m_08;
-	Rva00802040Buf m_10;
-	Rva00802040Buf m_18;
+	Rva007F78E0Block m_10;
+	Rva007F78E0Block m_18;
 	Rva00802040Arr m_20;
 	int m_28;
 	int m_2c;
@@ -145,6 +148,6 @@ Rva00802040Owner::Rva00802040Owner( Rva00802040Src *a, Rva00802040OwnerSrc *b )
 	m_08.m_a = (int)a->m_b8;
 	m_08.m_b = (int)a->m_b4;
 	m_20.allocate( a->m_08 );
-	m_10.set( m_04->m_2ac );
-	m_18.set( m_04->m_2b4 );
+	m_10.allocate( (int)m_04->m_2ac );
+	m_18.allocate( (int)m_04->m_2b4 );
 }
