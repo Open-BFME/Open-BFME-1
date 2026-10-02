@@ -39,8 +39,9 @@ public:
 	virtual void bfmeByteBG(unsigned char *dst);
 };
 
-extern "C" void __cdecl bfmeXferOneBG(BfmeAgentBG *ag, void *dst);
-extern "C" void __cdecl bfmeXferTwoBG(BfmeAgentBG *ag, void *dst);
+extern void j_00008ca1(void);
+extern void j_00034815(void);
+typedef void (__cdecl *BfmeXferCall)(BfmeAgentBG *, void *);
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
@@ -156,8 +157,8 @@ void BfmeHostBG::bfmeSaveBG(BfmeAgentBG *ag)
 {
 	ag->bfmeMarkBG(m_bfmeSlotHBG);
 
-	bfmeXferOneBG(ag, m_bfmeSlotABG);
-	bfmeXferTwoBG(ag, m_bfmeSlotBBG);
+	((BfmeXferCall)j_00008ca1)(ag, m_bfmeSlotABG);
+	((BfmeXferCall)j_00034815)(ag, m_bfmeSlotBBG);
 
 	ag->bfmeByteBG(&m_bfmeSlotCBG);
 	ag->bfmeByteBG(&m_bfmeSlotDBG);

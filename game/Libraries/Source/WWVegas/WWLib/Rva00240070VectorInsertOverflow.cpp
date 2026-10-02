@@ -19,9 +19,6 @@ class allocator
 {
 };
 
-void *__cdecl vectorLargeAllocate(unsigned int bytes);
-void *__cdecl vectorSmallAllocate(unsigned int bytes);
-
 template <class Destination, class Source>
 void __cdecl _Construct(Destination *destination, const Source &value);
 
@@ -53,13 +50,19 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count,
 	return result;
 }
 
+template <class Type, class Allocator>
+class vector;
+
 template <bool Threads, int Instance>
 class __node_alloc
 {
+	template <class Type, class Allocator>
+	friend class vector;
+	static void *_M_allocate(unsigned int bytes);
+
 public:
 	static void _M_deallocate(void *address, unsigned int bytes);
 };
-
 template <class Type, class Allocator>
 class vector
 {
@@ -98,9 +101,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	{
 		unsigned int bytes = length * sizeof(Type);
 		if (bytes > 128)
-			newStart = (Type *)vectorLargeAllocate(bytes);
+			newStart = (Type *)::operator new(bytes);
 		else
-			newStart = (Type *)vectorSmallAllocate(bytes);
+			newStart = (Type *)__node_alloc<true, 0>::_M_allocate(bytes);
 	}
 	else
 	{
