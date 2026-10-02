@@ -1,13 +1,23 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeStr1279A[];
-extern char g_bfmeStr1279B[];
-
-class BfmeQ1279
+// The copy this file used to spell bfmeCopy1279@BfmeQ1279 sits at 0x007E8A80,
+// whose ledger row and defining body are BfmeConv1339.cpp's
+// ?bfmeGoUPB@BfmeThingUPB@@QAEDPAXPAD0@Z. Name the call by that spelling so
+// the link resolves; the byte shape (three cdecl args, result discarded) is
+// unchanged.
+class BfmeThingUPB
 {
 public:
-	void bfmeCopy1279(char *s, char *dst, int n);
+	char bfmeGoUPB(void *s, char *dst, void *n);            // 0x007E8A80
 };
+
+// BfmeQ1279 stays the ctor's parameter type: it is spelled in
+// ?bfmeA1279@@QAE@PAVBfmeQ1279@@@Z and in
+// GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp.
+class BfmeQ1279;
+
+extern char g_bfmeStr1279A[];
+extern char g_bfmeStr1279B[];
 
 class BfmeA1279
 {
@@ -21,6 +31,6 @@ public:
 BfmeA1279::BfmeA1279(BfmeQ1279 *a)
 {
 	m_bfme00 = a;
-	a->bfmeCopy1279(g_bfmeStr1279A, m_bfme04, 0x100);
-	m_bfme00->bfmeCopy1279(g_bfmeStr1279B, m_bfme104, 0x100);
+	reinterpret_cast< BfmeThingUPB * >( a )->bfmeGoUPB(g_bfmeStr1279A, m_bfme04, (void *)0x100);
+	reinterpret_cast< BfmeThingUPB * >( m_bfme00 )->bfmeGoUPB(g_bfmeStr1279B, m_bfme104, (void *)0x100);
 }
