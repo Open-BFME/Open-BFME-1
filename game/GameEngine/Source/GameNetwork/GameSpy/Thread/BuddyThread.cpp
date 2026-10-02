@@ -174,11 +174,7 @@ GameSpyBuddyMessageQueue::GameSpyBuddyMessageQueue()
 	m_thread = NULL;
 }
 
-// ??1GameSpyBuddyMessageQueue@@UAE@XZ present-unmatched
-GameSpyBuddyMessageQueue::~GameSpyBuddyMessageQueue()
-{
-	endThread();
-}
+// The matched destructor is defined in GameResultsQueueDestructorThunk.cpp.
 
 void GameSpyBuddyMessageQueue::startThread( void )
 {

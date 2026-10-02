@@ -34,14 +34,16 @@
 //
 // The two dword-payload records now use caller-proven type-8/type-9 message
 // identities. Their getter ILTs resolve to the same bodies used by the matched
-// leave-frame and replay-range handlers. The other address-derived identities
-// remain unrecovered.
+// leave-frame and replay-range handlers. The remaining getter pairs resolve to
+// NetDisconnectPlayerCommandMsg (0x00673C70/0x00673CA0),
+// NetDisconnectVoteCommandMsg (0x00673D30/0x00673D40), and
+// NetFileProgressCommandMsg (0x00674080/0x006740A0).
 
-class Rva00677280Msg
+class NetDisconnectPlayerCommandMsg
 {
 public:
-	unsigned char fetchA();
-	unsigned int fetchB();
+	unsigned char getDisconnectSlot();
+	unsigned int getDisconnectFrame();
 	char           m_pad0[ 0x0c ];
 	unsigned char  m_type;
 	char           m_pad1[ 3 ];
@@ -53,14 +55,14 @@ public:
 class Rva00677280Ref
 {
 public:
-	Rva00677280Msg *m_msg;
+	NetDisconnectPlayerCommandMsg *m_msg;
 	char m_pad[ 8 ];
 	unsigned char m_relay;
 };
 
 void Rva00677280( unsigned char *buffer, Rva00677280Ref *ref )
 {
-	Rva00677280Msg *msg = ref->m_msg;
+	NetDisconnectPlayerCommandMsg *msg = ref->m_msg;
 	buffer[ 0 ] = 'T';
 	buffer[ 1 ] = msg->m_player;
 	buffer[ 2 ] = 'R';
@@ -70,15 +72,15 @@ void Rva00677280( unsigned char *buffer, Rva00677280Ref *ref )
 	buffer[ 6 ] = 'C';
 	*(unsigned short *)( buffer + 7 ) = msg->m_id;
 	buffer[ 9 ] = 'D';
-	buffer[ 10 ] = msg->fetchA();
-	*(unsigned int *)( buffer + 11 ) = msg->fetchB();
+	buffer[ 10 ] = msg->getDisconnectSlot();
+	*(unsigned int *)( buffer + 11 ) = msg->getDisconnectFrame();
 }
 
-class Rva006772F0Msg
+class NetDisconnectVoteCommandMsg
 {
 public:
-	unsigned char fetchA();
-	unsigned int fetchB();
+	unsigned char getSlot();
+	unsigned int getVoteFrame();
 	char           m_pad0[ 0x0c ];
 	unsigned char  m_type;
 	char           m_pad1[ 3 ];
@@ -90,14 +92,14 @@ public:
 class Rva006772F0Ref
 {
 public:
-	Rva006772F0Msg *m_msg;
+	NetDisconnectVoteCommandMsg *m_msg;
 	char m_pad[ 8 ];
 	unsigned char m_relay;
 };
 
 void Rva006772F0( unsigned char *buffer, Rva006772F0Ref *ref )
 {
-	Rva006772F0Msg *msg = ref->m_msg;
+	NetDisconnectVoteCommandMsg *msg = ref->m_msg;
 	buffer[ 0 ] = 'T';
 	buffer[ 1 ] = msg->m_player;
 	buffer[ 2 ] = 'R';
@@ -107,15 +109,15 @@ void Rva006772F0( unsigned char *buffer, Rva006772F0Ref *ref )
 	buffer[ 6 ] = 'C';
 	*(unsigned short *)( buffer + 7 ) = msg->m_id;
 	buffer[ 9 ] = 'D';
-	buffer[ 10 ] = msg->fetchA();
-	*(unsigned int *)( buffer + 11 ) = msg->fetchB();
+	buffer[ 10 ] = msg->getSlot();
+	*(unsigned int *)( buffer + 11 ) = msg->getVoteFrame();
 }
 
-class Rva00677450Msg
+class NetFileProgressCommandMsg
 {
 public:
-	unsigned short fetchA();
-	unsigned int fetchB();
+	unsigned short getFileID();
+	int getProgress();
 	char           m_pad0[ 0x0c ];
 	unsigned char  m_type;
 	char           m_pad1[ 3 ];
@@ -127,14 +129,14 @@ public:
 class Rva00677450Ref
 {
 public:
-	Rva00677450Msg *m_msg;
+	NetFileProgressCommandMsg *m_msg;
 	char m_pad[ 8 ];
 	unsigned char m_relay;
 };
 
 void Rva00677450( unsigned char *buffer, Rva00677450Ref *ref )
 {
-	Rva00677450Msg *msg = ref->m_msg;
+	NetFileProgressCommandMsg *msg = ref->m_msg;
 	buffer[ 0 ] = 'T';
 	buffer[ 1 ] = msg->m_player;
 	buffer[ 2 ] = 'R';
@@ -144,8 +146,8 @@ void Rva00677450( unsigned char *buffer, Rva00677450Ref *ref )
 	buffer[ 6 ] = 'C';
 	*(unsigned short *)( buffer + 7 ) = msg->m_id;
 	buffer[ 9 ] = 'D';
-	*(unsigned short *)( buffer + 10 ) = msg->fetchA();
-	*(unsigned int *)( buffer + 12 ) = msg->fetchB();
+	*(unsigned short *)( buffer + 10 ) = msg->getFileID();
+	*(unsigned int *)( buffer + 12 ) = msg->getProgress();
 }
 
 class BFMENetInformPlayerLeaveFrameCommandMsg

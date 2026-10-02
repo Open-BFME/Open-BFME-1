@@ -202,62 +202,8 @@ private:
 	UnsignedInt m_lastLargeUnitFrame;
 };
 
-// AOD's flow simulation only follows live treaded objects; the base horde hook
-// at the same virtual slot is empty, and the derived hook refreshes its cached
-// position only when the tracked object changes.
-void AODHordeContainInterfaceView::bfmeTrackLargeUnit(Object *, Object *unit)
-{
-	if (unit == 0 || (unit->m_status & 1) != 0)
-		return;
-
-	BfmeLocomotorTemplate *locomotor = unit->m_locomotorTemplate;
-	if (locomotor != 0 && locomotor->m_override != 0)
-		locomotor = (BfmeLocomotorTemplate *)((const Overridable *)locomotor->m_override)
-			->getFinalOverride();
-
-	if (locomotor->m_appearance == 2 && unit->m_id != m_trackedLargeUnit)
-	{
-		m_trackedLargeUnit = unit->m_id;
-		reinterpret_cast<BfmeAODHordeContainOwner *>(
-			reinterpret_cast<unsigned char *>(this) - 0xe4)->refreshTrackedLargeUnit();
-		m_lastLargeUnitFrame = TheGameLogic->m_frame;
-	}
-}
-
-void BfmeAODHordeContainOwner::refreshTrackedLargeUnit()
-{
-	Object *unit = TheGameLogic->findObjectByID((int)m_trackedLargeUnit);
-	if (unit == 0)
-	{
-		m_trackedLargeUnit = 0;
-		return;
-	}
-
-	m_trackedPosition = unit->m_position;
-	m_largeUnitHeightFactor = 17.0f;
-	m_largeUnitHeight = unit->m_geometry.getMaxHeightAbovePosition();
-}
-
-int BfmeAODHordeContainOwner::bfmeGetMemberIndex(int memberID)
-{
-	BfmeMemberIndexIterator i = m_memberIndices.find(memberID);
-	if (i.m_node != m_memberIndices.m_header)
-		return i.m_node->m_index;
-	return 0;
-}
-
-void BfmeAODHordeContainOwner::xfer(BfmeXfer *xfer)
-{
-	BfmeXferVersion version = { 1, 1 };
-	xfer->xferVersion(&version);
-	bfmeBaseXfer(xfer);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_trackedLargeUnit);
-	xfer->xferLargeUnitValue(&m_largeUnitTailOff);
-	xfer->xferTrackedFrame(&m_lastLargeUnitFrame);
-	if (m_trackedLargeUnit != 0)
-		refreshTrackedLargeUnit();
-	xfer->xferTrackedPosition(&m_trackedPosition);
-}
+// The matched tracking and transfer bodies live in
+// AODHordeContain_trackLargeUnit.cpp.
 
 void BfmeAODHordeContainOwner::updateAODFormation()
 {
