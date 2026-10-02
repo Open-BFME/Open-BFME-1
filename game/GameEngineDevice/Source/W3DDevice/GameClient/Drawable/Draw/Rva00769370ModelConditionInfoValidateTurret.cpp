@@ -6,8 +6,8 @@
 // owning method address-derived until a named caller proves the source name.
 //
 // The stack argument is the retail pointer-key lookup owner.  Its exact body
-// is Rva00769260Owner::lookup, and the two singleton views below intentionally
-// reuse the proven data-symbol spellings from isPausedOrLoading.cpp.
+// is Rva00769260Owner::lookup; TheGameLogic keeps its proven spelling and
+// TheGameState is spelled as the real EA class its defining TU uses.
 
 #include "StringInline.h"
 
@@ -25,9 +25,13 @@ struct Rva0075B660State
 
 // Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
 // the TU keeps its own offset view and casts at each use.
+// TheGameState is defined by NetCommandMsg_text.cpp as `GameState
+// *TheGameState` (VA 0x012EF190), so spell the reference with the real class
+// and keep the local offset view as a cast.
 class GameLogic;
+class GameState;
 extern GameLogic *TheGameLogic;
-extern Rva0075B660State *TheGameState;
+extern GameState *TheGameState;
 extern void setFPMode(void);
 
 class Rva00769260Owner
@@ -94,7 +98,7 @@ void Rva00769370ModelConditionInfo::validateTurretInfo(Rva00769260Owner *owner)
 		bool canLookup =
 			(TheGameLogic != 0 &&
 				((Rva0075B660Logic *)TheGameLogic)->m_flag) ||
-			(TheGameState != 0 && TheGameState->m_flag);
+			(TheGameState != 0 && ((Rva0075B660State *)TheGameState)->m_flag);
 		const Rva00769370AsciiView &modelView =
 			reinterpret_cast<const Rva00769370AsciiView &>(model);
 
