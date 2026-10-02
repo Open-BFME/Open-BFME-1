@@ -1021,35 +1021,8 @@ void WaterRenderObjClass::reset( void )
 		m_waterTrackSystem->reset();
 } 
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
-// ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z present-unmatched
-void WaterRenderObjClass::enableWaterGrid(Bool state)
-{
-	m_doWaterGrid = state;
-
-	m_drawingRiver = false;
-	m_disableRiver = false;
-
-	if (state && m_meshData == NULL)
-	{	//water type has changed, must allocate necessary assets for new water.
-		//contains the current deformed water surface z(height) values.  With 1 vertex invisible border
-		//around surface to speed up normal calculations.
-		m_meshDataSize = (m_gridCellsX+1+2)*(m_gridCellsY+1+2);
-		m_meshData=NEW WaterMeshData[ m_meshDataSize ];
-		memset(m_meshData,0,sizeof(WaterMeshData)*(m_gridCellsX+1+2)*(m_gridCellsY+1+2));
-		reset();
-
-		//Release existing grid data
-		SAFE_RELEASE(m_vertexBufferD3D);
-		SAFE_RELEASE(m_indexBufferD3D);
-
-		//Create new grid data
-		if (FAILED(generateIndexBuffer(m_gridCellsX+1,m_gridCellsY+1)))
-			return;
-		if (FAILED(generateVertexBuffer(m_gridCellsX+1,m_gridCellsY+1,sizeof(MaterMeshVertexFormat),false)))
-			return;
-	}
-}
+// enableWaterGrid is defined by UpdateInitializationThunks.cpp; its retail
+// implementation is in WaterRenderObjEnableWaterGrid.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Update phase for water if we need it.  This called once per client frame reguardless

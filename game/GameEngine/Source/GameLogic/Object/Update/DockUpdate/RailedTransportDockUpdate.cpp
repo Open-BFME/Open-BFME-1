@@ -447,7 +447,8 @@ void RailedTransportDockUpdate::doPushOutDocking( void )
 // ------------------------------------------------------------------------------------------------
 /** Iterate callback for the finding the first contained object */
 // ------------------------------------------------------------------------------------------------
-static void getFirstContain( Object *obj, void *userData )
+// Retain this matched helper after moving its only local caller to its owner.
+void getFirstContain( Object *obj, void *userData )
 {
 	Object **firstContain = (Object **)userData;
 
@@ -463,77 +464,8 @@ static void getFirstContain( Object *obj, void *userData )
 // ------------------------------------------------------------------------------------------------
 /** Start the next object contained by us as "unloading and coming out" */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
-// ?unloadNext@RailedTransportDockUpdate@@IAEXXZ present-unmatched
-void RailedTransportDockUpdate::unloadNext( void )
-{
-	Object *us = getObject();
-
-	// by default, setup our unloading process to be done with no objects being considered
-	m_unloadingObjectID = INVALID_ID;
-
-	//
-	// if our unload count is zero we can't unload any more until we receive a command to
-	// unload another one or everything we've got
-	//
-	if( m_unloadCount == 0 )
-		return;
-
-	// better be an open container
-	ContainModuleInterface *contain = us->getContain();
-	OpenContain *openContain = contain ? contain->asOpenContain() : NULL;
-	DEBUG_ASSERTCRASH( openContain, ("Unloading next from railed transport, but '%s' has no open container\n",
-										 us->getTemplate()->getName().str()) );
-
-	// get the first contained object
-	Object *unloader = NULL;
-	openContain->iterateContained( getFirstContain, &unloader, FALSE );
-	if( unloader )
-	{
-
-		// remove us from the container
-		openContain->removeFromContain( unloader );
-
-		// set position of the loader to our position
-		unloader->setPosition( us->getPosition() );
-	
-		// orient unloader to the same angle as us so we can drive out the front
-		unloader->setOrientation( us->getOrientation() );
-
-		// mark us as HELD so physics or anything else can't mess with our position
-		unloader->setDisabled( DISABLED_HELD );
-
-		//
-		// get the dock point that we're going to go to ... that is where we came in
-		// at the DOCKEND point
-		//
-		Coord3D dockPosition;
-		getExitPosition( unloader, &dockPosition );
-
-		// get unloader position
-		const Coord3D *unloaderPos = unloader->getPosition();
-
-		// how far is it from our current position to the dock position
-		Coord3D v;
-		v.x = dockPosition.x - unloaderPos->x;
-		v.y = dockPosition.y - unloaderPos->y;
-		v.z = dockPosition.z - unloaderPos->z;
-		Real mag = v.length();
-
-		// now that we know how far we must go, now much distance should we travel every frame
-		const RailedTransportDockUpdateModuleData *modData = getRailedTransportDockUpdateModuleData();
-		m_pushOutsideDistancePerFrame = mag / modData->m_pushOutsideDurationInFrames;
-		
-		// set this as our current unloader
-		m_unloadingObjectID = unloader->getID();
-	
-		// we've now used an unload (if we're keeping count for single exits)
-		if( m_unloadCount != UNLOAD_ALL )
-			--m_unloadCount;
-						
-	}  // end if
-
-}  // end unloadNext
+// unloadNext is defined by UpdateInitializationThunks.cpp; its retail body
+// is in RailedTransportDockUpdateUnloadNextShim.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

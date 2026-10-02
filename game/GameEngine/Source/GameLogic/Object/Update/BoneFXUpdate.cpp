@@ -271,30 +271,8 @@ UpdateSleepTime BoneFXUpdate::update( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate_initTimes.cpp
-void BoneFXUpdate::initTimes() {
-	Int i;
-	const BoneFXUpdateModuleData *d = getBoneFXUpdateModuleData();
-	Int now = TheGameLogic->getFrame();
-
-	for (i = 0; i < BONE_FX_MAX_BONES; ++i) {
-		if (d->m_fxList[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) {
-			m_nextFXFrame[m_curBodyState][i] = now + REAL_TO_INT(d->m_fxList[m_curBodyState][i].gameLogicDelay.getValue());
-		} else {
-			m_nextFXFrame[m_curBodyState][i] = -1;
-		}
-		if (d->m_OCL[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) {
-			m_nextOCLFrame[m_curBodyState][i] = now + REAL_TO_INT(d->m_OCL[m_curBodyState][i].gameLogicDelay.getValue());
-		} else {
-			m_nextOCLFrame[m_curBodyState][i] = -1;
-		}
-		if (d->m_particleSystem[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) {
-			m_nextParticleSystemFrame[m_curBodyState][i] = now + REAL_TO_INT(d->m_particleSystem[m_curBodyState][i].gameClientDelay.getValue());
-		} else {
-			m_nextParticleSystemFrame[m_curBodyState][i] = -1;
-		}
-	}
-}
+// initTimes is defined by UpdateInitializationThunks.cpp; its retail body
+// is in BoneFXUpdate_initTimes.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
