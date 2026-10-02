@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 // BFME COUNTER_SECONDS (script_conditions.cpp template 112).
-// Retail 0x00325D00, 243 bytes. Seconds scaled by LOGICFRAMES_PER_SECOND=5.
+// Retail 0x00325D00, 268 bytes including the comparison table. Seconds scaled by LOGICFRAMES_PER_SECOND=5.
 //
 // Integer narrowing is BaseType.h fast_float2long_round: MSVC 7.1 C casts
 // emit _ftol2 (no /QIfist) or fistp qword plus sub esp,8 (/QIfist). Retail
@@ -23,11 +23,8 @@ __forceinline long fast_float2long_round(float f)
 class Parameter
 {
 public:
-	int getInt() const { return m_integer; }
-	float getReal() const { return m_real; }
-	const AsciiString &getString() const { return m_string; }
-
-private:
+	// These reads are inlined in retail; direct field access keeps this
+	// caller's layout from emitting competing getter COMDATs.
 	char m_unknown[8];
 	int m_integer;
 	float m_real;
@@ -77,14 +74,14 @@ bool ScriptConditions::evaluateCounterSeconds(Condition *pCondition)
 	int count = 0;
 
 	ScriptCounter *counter =
-		TheScriptEngine->getCounter(cond->getParameter(0)->getString());
+		TheScriptEngine->getCounter(cond->getParameter(0)->m_string);
 	if (counter)
 		count = counter->m_value;
 
 	value = (int)fast_float2long_round(
-		(float)ceil((double)(cond->getParameter(2)->getReal() * 5.0f)));
+		(float)ceil((double)(cond->getParameter(2)->m_real * 5.0f)));
 
-	switch (cond->getParameter(1)->getInt()) {
+	switch (cond->getParameter(1)->m_integer) {
 	case 0:
 		return count < value;
 	case 1:
