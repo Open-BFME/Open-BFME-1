@@ -27,8 +27,16 @@ public:
         return *this;
     }
     __forceinline const char *text() const { return reinterpret_cast<const char *>(m_data)+8; }
-    void rva0089EEF0(unsigned, unsigned);
     BfmeStringData3AF0 *m_data;
+};
+// Rva8CD130String is this TU's handle-only view of the Apt string; the range
+// removal it calls at 0x0089EEF0 is defined by EAStringC (see
+// game/Libraries/Source/EA/Apt/AptString/EAStringCRemoveRange.cpp), so the
+// call is spelled through the defining owner rather than the stand-in view.
+// The handle is one pointer wide in both views, so the cast carries no change.
+class EAStringC {
+public:
+    int rva0089EEF0(int start, int count);
 };
 class Rva8CD130Value {
 public:
@@ -85,7 +93,7 @@ void rva008D16A0Dispatch(Rva008AE770Stack *state, Rva008D16A0Context *context) {
             (*(const char *)(length+block+5)=='s' || *(const char *)(length+block+7)=='S') && *(const char *)(length+block+4)=='.')) {
             top->getName(&value);
             shortened=name;
-            if (shortened.m_data->m_length>=4) shortened.rva0089EEF0(shortened.m_data->m_length-4,4);
+            if (shortened.m_data->m_length>=4) reinterpret_cast<EAStringC *>(&shortened)->rva0089EEF0(shortened.m_data->m_length-4,4);
             Rva8CD130Value *resolved=reinterpret_cast<Rva8CD130Value *>(state->createString(
                 context->m_unknown04,context->m_unknown08,reinterpret_cast<BfmeStrVKI *>(&value),1,1,0));
             int type=resolved->m_flags&0x3f;
