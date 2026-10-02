@@ -4,7 +4,7 @@
 
 #include "vector3.h"
 
-#define g_01075954 (0.0174532924f)
+extern const float g_01075954;
 extern const float BfmeZeroRange;
 #define g_bfmeDefaultEG (1.57079637f)
 #define g_010AEBB8 (10000.0f)
@@ -19,9 +19,9 @@ struct BfmeVecBC
 void bfmeFillBC(BfmeVecBC *out, int a, int b)
 {
 	Vector3 direction;
-	float first = *(const float *)&a * g_01075954 + g_bfmeDefaultEG;
+	float first = *(volatile const float *)&a * g_01075954 + g_bfmeDefaultEG;
 	float firstSine = (float)sin(first);
-	float second = *(const float *)&b * g_01075954;
+	float second = *(volatile const float *)&b * g_01075954;
 	direction.X = -(float)cos(second) * firstSine;
 	direction.Y = -(float)sin(second) * firstSine;
 	direction.Z = -(float)cos(first);

@@ -30,7 +30,7 @@ class Keyboard { public: bool isShift(); };
 extern Keyboard *TheKeyboard;
 class GlobalData { public: unsigned char m_pad[0x90]; unsigned char m_flag90; };
 extern GlobalData *TheWritableGlobalData;
-extern volatile float g_01075954;
+extern const float g_01075954;
 // The client LivingWorld singleton cell at VA 0x012F7048, defined once by
 // game/GameEngine/Source/GameClient/LivingWorld.cpp.  Rva003BBE50CallJ378F8 is
 // this TU's local view of the same pointee, so the cast is byte-neutral.
@@ -75,7 +75,7 @@ unsigned char Rva003BBE50Owner::step(unsigned char enabled)
         (reinterpret_cast<Rva003BBE50CallJ378F8 *>(g_rva012F7048LivingWorld)->*stateCall.member)(
             *reinterpret_cast<Rva003BBE50PairBase *>(
                 reinterpret_cast<const Rva000643F0Value *>(&value)->copyTo(&output)),
-            (*reinterpret_cast<volatile float *>(&value.m_0c)) * const_cast<const float &>(g_01075954));
+            (*reinterpret_cast<volatile float *>(&value.m_0c)) * g_01075954);
     }
     return 0;
 }

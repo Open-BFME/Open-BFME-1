@@ -21,7 +21,7 @@ extern AsciiString g_s10;
 extern float g_f14;
 extern float g_msToSec;
 extern int g_i18;
-extern float g_degToRad;
+extern const float g_01075954;
 extern AsciiString g_s20;
 extern int g_i24;
 extern float g_f28;
@@ -99,7 +99,7 @@ void Rva0040B5A0::init()
 	m_0C.set(g_s0C);
 	m_10.set(g_s10);
 	m_14 = g_msToSec * g_f14;
-	m_18 = (float)g_i18 * g_degToRad;
+	m_18 = (float)g_i18 * g_01075954;
 	m_20.set(g_s20);
 	m_24 = g_i24;
 	m_28 = (float)(g_f28 * g_dScale);

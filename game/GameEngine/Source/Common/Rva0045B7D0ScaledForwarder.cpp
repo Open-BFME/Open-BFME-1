@@ -5,7 +5,10 @@
 // The retail call shape and the matching BFME virtual slot establish this
 // address-derived owner while the binary exposes no stable public class name.
 
-extern float g_01075954;
+// Shared float at VA 0x01075954: retail .rdata holds 35 fa 8e 3c.
+// The fmul dword below and the other matched callers prove its four-byte
+// size. No EA symbol is proven, so the canonical name retains the address.
+extern const float g_01075954 = 0.01745329238474369049072265625f;
 
 class Rva0045B7D0Base
 {

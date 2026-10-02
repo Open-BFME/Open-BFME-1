@@ -41,10 +41,8 @@ extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalD
 
 // Retail @ 0x01075954 holds 35 fa 8e 3c -- exactly float(pi/180) -- in read-only
 // .rdata, immediately before the ASCII literal "Function curve tangent angle
-// value...".  That is a compiler constant pool entry, not a written global, so
-// the scale factor is a TU-local constant here; spelling it as an extern made
-// this object reference a name nothing defines.
-static const Real s_01075954PitchToRadians = 0.017453292f;
+// value...". Rva0045B7D0ScaledForwarder.cpp owns this shared constant.
+extern const float g_01075954;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
@@ -78,7 +76,7 @@ void W3DView::pitchCameraOneFrame(void)
 	{
 		// not just holding; do the camera adjustment
 		Real factor = m_pcEase(((Real)m_pcCurFrame) / m_pcNumFrames);
-		m_cameraPitchFX = WWMath::Lerp(m_pcStartPitch, m_pcEndPitch, factor) * s_01075954PitchToRadians;
+		m_cameraPitchFX = WWMath::Lerp(m_pcStartPitch, m_pcEndPitch, factor) * g_01075954;
 	}
 
 	if (m_pcCurFrame >= m_pcNumFrames) {
@@ -87,7 +85,7 @@ void W3DView::pitchCameraOneFrame(void)
 		__asm { fld dword ptr [esi + 240h] }
 		m_doingPitchCamera = false;
 		__asm {
-			fmul dword ptr [s_01075954PitchToRadians]
+			fmul dword ptr [g_01075954]
 			fstp dword ptr [esi + 6ch]
 		}
 	}
