@@ -426,24 +426,13 @@ PlayerTemplate &PlayerTemplateAssignShim::assign(const PlayerTemplate &that)
 // ??0PlayerTemplate@@QAE@XZ exact retail body is emitted by
 // PlayerTemplateCtorThunk.cpp.
 //-----------------------------------------------------------------------------
-// ?getHeadWaterMarkImage@PlayerTemplate@@QBEPBVImage@@XZ present-unmatched
-const Image *PlayerTemplate::getHeadWaterMarkImage( void ) const
-{
-	return TheMappedImageCollection->findImageByName(m_headWaterMark);
-}
+// getHeadWaterMarkImage uses the retail BFME layout in PlayerTemplateImageGettersBFME.cpp.
 
 //-----------------------------------------------------------------------------
-// ?getFlagWaterMarkImage@PlayerTemplate@@QBEPBVImage@@XZ present-unmatched
-const Image *PlayerTemplate::getFlagWaterMarkImage( void ) const
-{
-	return TheMappedImageCollection->findImageByName(m_flagWaterMark);
-}
+// getFlagWaterMarkImage uses the retail BFME layout in PlayerTemplateImageGettersBFME.cpp.
 
 //-----------------------------------------------------------------------------
-const Image *PlayerTemplate::getSideIconImage( void ) const
-{
-	return TheMappedImageCollection->findImageByName(m_sideIconImage);
-}
+// getSideIconImage uses the retail BFME layout in PlayerTemplateImageGettersBFME.cpp.
 
 //-----------------------------------------------------------------------------
 // ?getGeneralImage@PlayerTemplate@@QBEPBVImage@@XZ absent-from-retail
@@ -453,11 +442,7 @@ const Image *PlayerTemplate::getGeneralImage( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// ?getEnabledImage@PlayerTemplate@@QBEPBVImage@@XZ present-unmatched
-const Image *PlayerTemplate::getEnabledImage( void ) const
-{
-	return TheMappedImageCollection->findImageByName(m_enabledImage);
-}
+// getEnabledImage uses the retail BFME layout in PlayerTemplateImageGettersBFME.cpp.
 
 //-----------------------------------------------------------------------------
 //const Image *PlayerTemplate::getDisabledImage( void ) const
