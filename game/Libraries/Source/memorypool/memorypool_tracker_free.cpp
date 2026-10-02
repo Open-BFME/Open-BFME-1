@@ -6,8 +6,8 @@
 // 0xFFFFFD66 plus the block pointer. The bucket table, slot ring, disabled
 // flag and lock use that TU's witnessed owner layout.
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358D18Enter(void *lock);
-extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave(void *lock);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *lock);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *lock);
 extern "C" __declspec(dllimport) void *__stdcall GetProcessHeap(void);
 extern "C" __declspec(dllimport) int __stdcall HeapFree(
 	void *heap, unsigned long flags, void *block);
@@ -46,7 +46,7 @@ void Rva008838F0Owner::rva008839B0(int type, void *block)
 		return;
 
 	if (m_lock != 0)
-		Rva01358D18Enter(m_lock);
+		EnterCriticalSection(m_lock);
 
 	Rva008838F0Node **link = &m_buckets[(unsigned int)block % 0x2b7b];
 	while (*link != 0 && (*link)->m_key != (unsigned int)block)
@@ -56,13 +56,13 @@ void Rva008838F0Owner::rva008839B0(int type, void *block)
 	if (node == 0)
 	{
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return;
 	}
 	if (node->m_freeCheckpoint >= 0)
 	{
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return;
 	}
 
@@ -91,5 +91,5 @@ void Rva008838F0Owner::rva008839B0(int type, void *block)
 		m_slotIndex = 0;
 
 	if (m_lock != 0)
-		Rva01358E74Leave(m_lock);
+		LeaveCriticalSection(m_lock);
 }

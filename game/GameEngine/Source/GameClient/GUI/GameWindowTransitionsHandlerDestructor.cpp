@@ -8,6 +8,7 @@
 
 // stlport
 #define _STLP_USE_STATIC_LIB 1
+#include <hash_map>
 #include <list>
 
 typedef int Int;
@@ -32,16 +33,29 @@ public:
 	~TransitionGroup( void );
 };
 
-// The retail transition map's first member starts at this+0x08 and occupies
-// 0x14 bytes.  Its destructor is the existing ICF body reached by ILT 0x99C6.
-class Rva0048B1A0TransitionMap
+class BFMETransitionGroup
 {
 public:
-	~Rva0048B1A0TransitionMap( void );
-
-private:
-	unsigned char m_storage[0x14];
+	~BFMETransitionGroup( void );
 };
+
+// The retail transition map's first member starts at this+0x08 and occupies
+// 0x14 bytes.  Its destructor is the existing ICF body reached by ILT 0x99C6.
+struct Gen_t_0048b1a0_p12cd
+{
+	int a[3];
+	Gen_t_0048b1a0_p12cd();
+	Gen_t_0048b1a0_p12cd(const Gen_t_0048b1a0_p12cd &);
+	~Gen_t_0048b1a0_p12cd();
+	Gen_t_0048b1a0_p12cd &operator=(const Gen_t_0048b1a0_p12cd &);
+};
+bool operator==(const Gen_t_0048b1a0_p12cd &, const Gen_t_0048b1a0_p12cd &);
+bool operator<(const Gen_t_0048b1a0_p12cd &, const Gen_t_0048b1a0_p12cd &);
+typedef _STL::pair<const int, Gen_t_0048b1a0_p12cd> TgPair_hash_int_p12cd_0048b1a0;
+typedef _STL::hashtable<TgPair_hash_int_p12cd_0048b1a0, int,
+	_STL::hash<int>, _STL::_Select1st<TgPair_hash_int_p12cd_0048b1a0>,
+	_STL::equal_to<int>, _STL::allocator<TgPair_hash_int_p12cd_0048b1a0> >
+	TransitionMap;
 
 extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection( void *criticalSection );
 
@@ -53,7 +67,7 @@ public:
 private:
 	typedef std::list<TransitionGroup *> TransitionGroupList;
 
-	Rva0048B1A0TransitionMap m_transitionMap;
+	TransitionMap m_transitionMap;
 	TransitionGroupList m_transitionGroupList;
 	TransitionGroup *m_currentGroup;
 	TransitionGroup *m_pendingGroup;
@@ -102,7 +116,7 @@ GameWindowTransitionsHandler::~GameWindowTransitionsHandler( void )
 	while (it != m_transitionGroupList.end())
 	{
 		TransitionGroup *g = *it;
-		delete g;
+		delete reinterpret_cast<BFMETransitionGroup *>(g);
 		it = m_transitionGroupList.erase(it);
 	}
 }
