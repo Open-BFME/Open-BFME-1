@@ -1,3 +1,9 @@
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Igame/GameEngine/Source /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include "GameLogic/Module/UpdateModule.h"
+#include "GameLogic/LogicRandomValue.h"
+
 class BfmeConditionFlags
 {
 	public:
@@ -27,14 +33,20 @@ struct BfmeConditionChoiceOwner
 	BfmeConditionChoice *m_bfmeEnd;
 };
 
-extern "C" const char g_bfmeD8F0Source[];
-int StructureCollapseRandom(int low, int high, const char *source, int line);
+// Retail ILT 0x000157DA reaches the matched UpdateModule wake-frame helper.
+class Rva0028D8F0WakeAccess : public UpdateModule
+{
+public:
+	__forceinline void wake(Object *object, int delay)
+	{
+		setWakeFrame(object, (UpdateSleepTime)delay);
+	}
+};
 
 class Gen_0028D8F0
 {
 public:
 	void bfmeSelectCondition(void);
-	void bfmeComplete(Object *object, int value);
 
 private:
 	char m_bfmeFields[4];
@@ -54,13 +66,14 @@ void Gen_0028D8F0::bfmeSelectCondition(void)
 	if (count < 1)
 		return;
 
-	bool alternate = StructureCollapseRandom(0, count - 1,
-		g_bfmeD8F0Source, 276) != 0;
+	bool alternate = GetGameLogicRandomValue(0, count - 1,
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\DetachableRiderUpdate.cpp", 276) != 0;
 	BfmeConditionFlags clear = {};
 	m_bfmeAlternate = alternate;
 	object->clearAndSetModelConditionFlags(clear,
 		owner->m_bfmeBegin[alternate].m_flags);
 	object->bfmeSetConditionState(4);
 	m_bfmeActive = 1;
-	bfmeComplete(object, owner->m_bfmeBegin[m_bfmeAlternate].m_bfmeValue);
+	((Rva0028D8F0WakeAccess *)this)->wake(
+		object, owner->m_bfmeBegin[m_bfmeAlternate].m_bfmeValue);
 }
