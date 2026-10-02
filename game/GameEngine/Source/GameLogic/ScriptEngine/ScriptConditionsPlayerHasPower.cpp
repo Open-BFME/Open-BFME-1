@@ -43,8 +43,13 @@ public:
 	int bfmeNext1090(int a);
 };
 
+// 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
+// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
+// BfmeP1090 surface below is only the stand-in for the methods this body calls,
+// so the real global is reinterpreted at the call sites.
+class ScriptEngine;
 extern PlayerList *ThePlayerList;
-extern BfmeP1090 *g_bfmeP1090;
+extern ScriptEngine *TheScriptEngine;
 
 class Parameter;
 
@@ -57,7 +62,7 @@ protected:
 
 char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 {
-	a = g_bfmeP1090->bfmeNext1090(a);
+	a = reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(a);
 	while ((short)a) {
 		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
 
@@ -69,7 +74,7 @@ char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 
 char __stdcall bfmeGo1090B(int a)
 {
-	a = g_bfmeP1090->bfmeNext1090(a);
+	a = reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(a);
 	while ((short)a) {
 		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
 
@@ -87,7 +92,7 @@ char __stdcall bfmeGo1090B(int a)
 bool ScriptConditions::evaluatePlayerHasPower(Parameter *playerParm)
 {
 	playerParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1090->bfmeNext1090(reinterpret_cast<int>(playerParm)));
+		reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(playerParm)) {
 		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090(
 			reinterpret_cast<short *>(&playerParm));

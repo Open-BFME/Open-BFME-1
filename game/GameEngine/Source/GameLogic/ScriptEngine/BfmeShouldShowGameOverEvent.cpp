@@ -54,15 +54,20 @@ public:
 	void *m_bfme0290;					// +0x290
 };
 
+// 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
+// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
+// BfmeGameOverGateB surface is the stand-in for the predicate this body calls,
+// so the real global is reinterpreted at the call site.
+class ScriptEngine;
 extern PlayerList *ThePlayerList;					// 0x012ED748
-extern BfmeGameOverGateB *TheScriptEngine;			// 0x012F076C
+extern ScriptEngine *TheScriptEngine;				// 0x012F076C
 extern GameLogic *TheGameLogic;					// 0x012F0898
 
 // ?BfmeShouldShowGameOverEvent@@YA_NXZ
 BfmeByteBool BfmeShouldShowGameOverEvent(void)
 {
 	if (reinterpret_cast<BfmeGameOverGateA *>(ThePlayerList)->bfmeIsSet() ||
-		TheScriptEngine->bfmeIsSet())
+		reinterpret_cast<BfmeGameOverGateB *>(TheScriptEngine)->bfmeIsSet())
 		return 1;
 
 	GameLogic *logic = TheGameLogic;

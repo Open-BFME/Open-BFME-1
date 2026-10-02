@@ -121,8 +121,13 @@ public:
 	int bfmeNext1088(int a);
 };
 
+// 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
+// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
+// BfmeP1088 surface above is only the stand-in for the vtable slots and the
+// resolver this body calls, so the real global is reinterpreted at each call.
+class ScriptEngine;
 extern PlayerList *ThePlayerList;
-extern BfmeP1088 *g_bfmeP1088;
+extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
@@ -149,20 +154,20 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
 	ObjectID sourceID = INVALID_ID;
 
 	if (pUnitParm) {
-		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
+		Object *pUnit = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
 		if (!pUnit)
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
 		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->isSpecialPowerTriggered(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
+			if (reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->isSpecialPowerTriggered(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -176,20 +181,20 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
 	ObjectID sourceID = INVALID_ID;
 
 	if (pUnitParm) {
-		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
+		Object *pUnit = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
 		if (!pUnit)
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
 		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->isSpecialPowerMidway(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
+			if (reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->isSpecialPowerMidway(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -203,20 +208,20 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
 	ObjectID sourceID = INVALID_ID;
 
 	if (pUnitParm) {
-		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
+		Object *pUnit = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
 		if (!pUnit)
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
 		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->isSpecialPowerComplete(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
+			if (reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->isSpecialPowerComplete(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -230,20 +235,20 @@ Bool ScriptConditions::evaluateUpgradeFromUnitComplete(
 	ObjectID sourceID = INVALID_ID;
 
 	if (pUnitParm) {
-		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
+		Object *pUnit = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
 		if (!pUnit)
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
 	while (playerMask) {
 		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->isUpgradeComplete(playerIndex, pUpgradeParm->getString(), true, sourceID))
+			if (reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->isUpgradeComplete(playerIndex, pUpgradeParm->getString(), true, sourceID))
 				return true;
 		}
 	}

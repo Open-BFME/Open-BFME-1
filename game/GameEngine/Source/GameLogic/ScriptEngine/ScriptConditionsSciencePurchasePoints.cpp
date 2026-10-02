@@ -31,9 +31,14 @@ public:
 // Retail 0x00EED748 is ThePlayerList (see game_engine_subsystems.h), so the
 // global is spelled with its defining name; the BfmeD1089 surface below is only
 // the stand-in for the PlayerList methods this body calls.
+// 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
+// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
+// BfmeP1089 surface below is only the stand-in for the methods this body calls,
+// so the real global is reinterpreted at the call sites.
+class ScriptEngine;
 class PlayerList;
 extern PlayerList *ThePlayerList;
-extern BfmeP1089 *g_bfmeP1089;
+extern ScriptEngine *TheScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
@@ -60,7 +65,7 @@ bool ScriptConditions::evaluateSciencePurchasePoints(
 	int n = pointsParm->getInt();
 
 	pointsParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1089->bfmeNext1089(reinterpret_cast<int>(playerParm)));
+		reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(pointsParm)) {
 		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089(
 			reinterpret_cast<short *>(&pointsParm));
@@ -73,7 +78,7 @@ bool ScriptConditions::evaluateSciencePurchasePoints(
 
 char __stdcall bfmeGo1089B(int a)
 {
-	a = g_bfmeP1089->bfmeNext1089(a);
+	a = reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(a);
 	while ((short)a) {
 		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);
 
@@ -87,7 +92,7 @@ char __stdcall bfmeGo1089C(BfmeT1089 *t, int a)
 {
 	int n;
 
-	a = g_bfmeP1089->bfmeNext1089(a);
+	a = reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(a);
 	n = 0;
 	while ((short)a) {
 		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);

@@ -170,7 +170,6 @@ BFME_VCALL_MEMBER( Rva007E3A50VCall, 0x2C, v0 )
 
 class ScriptEngine;
 extern ScriptEngine *TheScriptEngine;
-#define g_Va012F076C (reinterpret_cast<VDispatch *>(TheScriptEngine))
 class VictoryConditionsInterface;
 extern VictoryConditionsInterface *TheVictoryConditions;
 #define g_Va012F079C (reinterpret_cast<VDispatch *>(TheVictoryConditions))
@@ -231,7 +230,7 @@ void Rva002EFAD0VCall( void )
 
 void Rva002F0550VCall( void )
 {
-	g_Va012F076C->v21();
+	reinterpret_cast<VDispatch *>(TheScriptEngine)->v21();
 }
 
 void Rva002F06C0VCall( void )
