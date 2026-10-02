@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// The constructor also emits the public scalar-deleting wrapper at
+// 0x00291E80 (30 bytes), which calls the complete destructor at 0x00291EB0
+// through ILT 0x000295AF. Keeping that wrapper here preserves the proven
+// layout and avoids a separate forcing TU defining a vptr-only constructor.
 // The byte-verified ModuleFactory friend allocator fixes this class at 0x30
 // bytes. Its clean destructor proves the two member subobjects at +0x18/+0x1C.
 
