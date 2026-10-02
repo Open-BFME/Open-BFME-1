@@ -3,13 +3,18 @@
 class BfmeStrV54
 {
 public:
-	void bfmeThrowV54();
 	void bfmeThrow2V54();
 	void bfmeInsertV54(char *a, char *b, char *c, char *d, char *e);
 	char *b;
 	char *e;
 	char *c;
 };
+
+// The range-check helper retail reaches through the 0x000132CD thunk, whose
+// body is the one-byte function at 0x006434C0; that body is the
+// ?m@Gen_006434c0@@QAEXXZ gen-shim in game/gen_small/fun_004.cpp, so the call
+// has to name that class, not a private stand-in.
+struct Gen_006434c0 { void m(); };
 
 void __stdcall bfmeReplaceV54(unsigned pos, unsigned n, char *other)
 {
@@ -25,7 +30,7 @@ void __stdcall bfmeReplaceV54(unsigned pos, unsigned n, char *other)
 		cmp dword ptr [ebp+0x8], edx
 		jbe L1
 		mov ecx, dword ptr [ebp-0xB4]
-		call BfmeStrV54::bfmeThrowV54
+		call Gen_006434c0::m
 	L1:
 		mov eax, dword ptr [ebp-0xB4]
 		mov ecx, dword ptr [ebp-0xB4]

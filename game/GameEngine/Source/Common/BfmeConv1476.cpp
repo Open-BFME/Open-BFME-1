@@ -5,11 +5,15 @@ void bfmeDoPQ(char *a, char *b, char *c, char *d);
 class BfmeVecV35
 {
 public:
-	void bfmeThrowV35();
-
 	char *b;
 	char *e;
 };
+
+// The range-check helper retail reaches through the 0x000132CD thunk, whose
+// body is the one-byte function at 0x006434C0; that body is the
+// ?m@Gen_006434c0@@QAEXXZ gen-shim in game/gen_small/fun_004.cpp, so the call
+// has to name that class, not a private stand-in.
+struct Gen_006434c0 { void m(); };
 
 void __stdcall bfmeCopyOverlapV35(int dstOff, int dstN, BfmeVecV35 *other, int srcOff, int srcN)
 {
@@ -32,7 +36,7 @@ void __stdcall bfmeCopyOverlapV35(int dstOff, int dstN, BfmeVecV35 *other, int s
 		jbe skip_grow
 	grow:
 		mov ecx, dword ptr [ebp-0x24]
-		call BfmeVecV35::bfmeThrowV35
+		call Gen_006434c0::m
 	skip_grow:
 		mov eax, dword ptr [ebp+0x10]
 		mov ecx, dword ptr [ebp+0x10]

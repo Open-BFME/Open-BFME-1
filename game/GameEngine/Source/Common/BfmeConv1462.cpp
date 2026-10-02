@@ -6,13 +6,18 @@ class BfmeStrV22
 {
 public:
 	BfmeStrV22 *bfmeInsertV22(unsigned pos, char *s);
-	void bfmeGrowV22();
 	void bfmeLenErrV22();
 	void bfmeImplV22(char *a, char *b, char *c, char *d);
 
 	char *b;
 	char *e;
 };
+
+// The range-check helper retail reaches through the 0x000132CD thunk, whose
+// body is the one-byte function at 0x006434C0; that body is the
+// ?m@Gen_006434c0@@QAEXXZ gen-shim in game/gen_small/fun_004.cpp, so the call
+// has to name that class, not a private stand-in.
+struct Gen_006434c0 { void m(); };
 
 BfmeStrV22 *BfmeStrV22::bfmeInsertV22(unsigned pos, char *s)
 {
@@ -28,7 +33,7 @@ BfmeStrV22 *BfmeStrV22::bfmeInsertV22(unsigned pos, char *s)
 		cmp dword ptr pos, edx
 		jbe skip_grow
 		mov ecx, this
-		call bfmeGrowV22
+		call Gen_006434c0::m
 	skip_grow:
 		mov eax, dword ptr s
 		push eax
