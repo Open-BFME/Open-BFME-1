@@ -91,6 +91,21 @@ bool VectorClass<T>::Resize(int newsize, T const *array)
 
 	template bool VectorClass<ShaderClass>::Resize(int, ShaderClass const *);
 
+// WWMath Vector4, forward declaration only: the element type is never
+// dereferenced here, it only has to carry its own name into the mangling.
+// The real class is declared in game/Libraries/Source/WWVegas/WWMath/vector4.h;
+// this header is not included because the TU's own VectorClass<T> (above)
+// already occupies the name.
+
+// Declared, never defined here: retail 0x009131E0 (550 bytes) is
+// ?Resize@?$VectorClass@VVector4@@@@UAE_NHPBVVector4@@@Z, the already-matched
+// body carried by
+// game/Libraries/Source/WWVegas/WWLib/VectorClassResizeNothrowDelete.cpp.
+// An explicit specialization declaration keeps this TU from emitting a second
+// copy of it and binds every call below to that retail body.
+class Vector4;
+template <> bool VectorClass<Vector4>::Resize(int newsize, Vector4 const *array);
+
 // Six 47-byte bodies with one shape:
 //
 //     if (!allocate(a, b)) return false;
@@ -161,17 +176,18 @@ private:
 	int m_bfme0010;							// +0x10
 };
 
-class Gen_0094e310
+// Retail 0x0094E310 lowers a high-water mark held at +0x10 to the element
+// count at +0x08 once the vector has been resized. That offset pair is the
+// VectorClass<T> layout itself (VectorMax at +0x08, the base ends at 0x10),
+// and the call it makes goes to retail 0x009131E0 --
+// ?Resize@?$VectorClass@VVector4@@@@UAE_NHPBVVector4@@@Z -- so this is a
+// VectorClass<Vector4> whose member resizes itself in place. Same shape as
+// Gen_00930d00 below, with VVector4 in place of VShaderClass.
+class Gen_0094e310 : public VectorClass<Vector4>
 {
 public:
 	bool bfmeReserve(int first, int second);
 
-private:
-	bool bfmeAllocate(int first, int second);			// retail 0x009131E0
-
-	char m_bfmeHead[0x08];
-	int m_bfme0008;							// +0x08
-	char m_bfmeMid[0x10 - 0x0C];
 	int m_bfme0010;							// +0x10
 };
 
@@ -247,10 +263,10 @@ bool Gen_009408d0::bfmeReserve(int first, int second)
 // ?bfmeReserve@Gen_0094e310@@QAE_NHH@Z
 bool Gen_0094e310::bfmeReserve(int first, int second)
 {
-	if (bfmeAllocate(first, second))
+	if (VectorClass<Vector4>::Resize(first, (Vector4 const *)second))
 	{
-		if (m_bfme0008 < m_bfme0010)
-			m_bfme0010 = m_bfme0008;
+		if (VectorMax < m_bfme0010)
+			m_bfme0010 = VectorMax;
 
 		return true;
 	}
