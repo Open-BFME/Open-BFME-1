@@ -1,16 +1,20 @@
-// cl: /O2 /Ob0 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /Ob1 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "unicode_string.h"
 
-class SubtitleEntryUnicodeBase
+// Retail inlines the UnicodeString forwarding members and calls the
+// StringBase<unsigned short> copy and release bodies directly.
+inline UnicodeString::UnicodeString(const UnicodeString &other)
 {
-public:
-	SubtitleEntryUnicodeBase(const UnicodeString &other);
-	~SubtitleEntryUnicodeBase();
+	((StringBase<unsigned short> *)this)
+		->StringBase<unsigned short>::StringBase(
+			*(const StringBase<unsigned short> *)&other);
+}
 
-private:
-	void *m_data;
-};
+inline UnicodeString::~UnicodeString()
+{
+	((StringBase<unsigned short> *)this)->releaseBuffer();
+}
 
 class SubtitleEntry
 {
@@ -22,7 +26,7 @@ protected:
 	virtual ~SubtitleEntry();
 
 private:
-	SubtitleEntryUnicodeBase m_text;
+	UnicodeString m_text;
 	unsigned int m_color;
 	int m_style;
 	int m_alignment;

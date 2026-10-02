@@ -1,20 +1,16 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: HordeSiegeEngineContainModuleData dtor.
 
-class HordeSiegeEngineContainModuleDataMemberA
-{
-public:
-	~HordeSiegeEngineContainModuleDataMemberA();
-private:
-	unsigned char m_pad[0x8];
-};
+#include "ascii_string.h"
 
-class HordeSiegeEngineContainModuleDataMemberB
+// The matched constructor at 0x0022CB80 identifies the handle at +0x224,
+// the separate word at +0x228, and the AsciiString at +0x22C.
+class AttributeHandleStandIn
 {
 public:
-	~HordeSiegeEngineContainModuleDataMemberB();
+	~AttributeHandleStandIn();
 private:
-	unsigned char m_pad[4];
+	unsigned int m_bfmeHandle;
 };
 
 class HordeSiegeEngineContainModuleDataBase
@@ -30,8 +26,9 @@ class __declspec(novtable) HordeSiegeEngineContainModuleData : public HordeSiege
 public:
 	virtual ~HordeSiegeEngineContainModuleData();
 private:
-	HordeSiegeEngineContainModuleDataMemberA m_a;
-	HordeSiegeEngineContainModuleDataMemberB m_b;
+	AttributeHandleStandIn m_a;
+	unsigned int m_228;
+	AsciiString m_b;
 };
 
 // ??1HordeSiegeEngineContainModuleData@@UAE@XZ
