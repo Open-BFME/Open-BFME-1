@@ -136,23 +136,6 @@ SelectionInfo::SelectionInfo() :
 { }
 
 //-------------------------------------------------------------------------------------------------
-// ??0PickDrawableStruct@@QAE@XZ present-unmatched
-PickDrawableStruct::PickDrawableStruct() : drawableListToFill(NULL)
-{
-	//Added By Sadullah Nader
-	//Initializations inserted
-	drawableListToFill = FALSE;
-	//
-	forceAttackMode = TheInGameUI->isInForceAttackMode();
-	UnsignedInt pickType = getPickTypesForContext(forceAttackMode);
-	translatePickTypesToKindof(pickType, kindofsToMatch);
-	if (!forceAttackMode)
-	{
-		kindofsToMatch.set(KINDOF_ALWAYS_SELECTABLE);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 /**
  * Given a list of currently selected things and a list of things that are currently under 
  * the selection (pointer or drag), generate some useful information about each.

@@ -73,7 +73,7 @@ template<> void HashBTable::_M_initialize_buckets(unsigned int);
 class Gen_000D1730 : public BfmeBaseVUQ {
 public:
     Gen_000D1730() : m_field(0) {}
-    virtual ~Gen_000D1730() {}
+    virtual ~Gen_000D1730();
     virtual void bfmePure000D1730() {}
     int m_field;
     _STL::vector<int> m_vector;

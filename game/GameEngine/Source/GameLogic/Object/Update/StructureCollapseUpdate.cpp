@@ -213,25 +213,6 @@ void StructureCollapseUpdate::beginStructureCollapse(const DamageInfo *damageInf
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?onDie@StructureCollapseUpdate@@UAEXPBVDamageInfo@@@Z present-unmatched
-void StructureCollapseUpdate::onDie( const DamageInfo *damageInfo )
-{
-	const StructureCollapseUpdateModuleData* d = getStructureCollapseUpdateModuleData();
-	if (!d->m_dieMuxData.isDieApplicable(getObject(), damageInfo))
-		return;
-
-	AIUpdateInterface *ai = getObject()->getAIUpdateInterface();
-	if (ai)
-		ai->markAsDead();
-
-	// deselect this object for all players.
-	TheGameLogic->deselectObject(getObject(), PLAYERMASK_ALL, TRUE);
-
-	beginStructureCollapse(damageInfo);
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp
 // ?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime StructureCollapseUpdate::update( void )

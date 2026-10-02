@@ -201,14 +201,5 @@ bool setUnsignedIntInRegistry( HKEY root, RegistryString path, RegistryString ke
 	return (returnValue == ERROR_SUCCESS);
 }
 
-bool SetStringInRegistry( RegistryString path, RegistryString key, RegistryString val )
-{
-	RegistryString fullPath =
-		"SOFTWARE\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour";
-	fullPath.append(path);
-
-	if (setStringInRegistry( (HKEY)0x80000002, fullPath, key, val))
-		return true;
-
-	return setStringInRegistry( (HKEY)0x80000001, fullPath, key, val );
-}
+// Defined by RegistrySetStringPublic.cpp.
+bool SetStringInRegistry( RegistryString path, RegistryString key, RegistryString val );
