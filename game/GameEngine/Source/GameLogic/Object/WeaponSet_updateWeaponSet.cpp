@@ -22,8 +22,11 @@ class WeaponTemplateSet;
 class Object;
 class GameLogic;
 
-class WeaponSetFlags
+// Existing address-derived provider: ILT 0x000209FA -> RVA 0x001BEF20.
+class Rva001BEF20FieldAddress
 {
+public:
+	char *get();
 };
 
 class BfmeOverridable
@@ -38,16 +41,15 @@ public:
 	Overridable *m_nextOverride;
 };
 
-class BfmeThingTemplate
-{
-public:
-	const WeaponTemplateSet *findWeaponTemplateSet(const WeaponSetFlags &flags) const;
-};
+template <size_t NUMBITS> class BitFlags;
+typedef BitFlags<17> WeaponSetFlags;
 
 class ThingTemplate
 {
 public:
 	virtual ~ThingTemplate();
+	// ILT 0x00021044 reaches the existing 0x001467E0 provider.
+	const WeaponTemplateSet *findWeaponTemplateSet(const WeaponSetFlags &flags) const;
 
 	Overridable *m_nextOverride;
 };
@@ -72,7 +74,6 @@ typedef BitFlags<304> ModelConditionFlags;
 class Object
 {
 public:
-	const WeaponSetFlags &getWeaponSetFlags() const;
 	void clearModelConditionFlags(const ModelConditionFlags &clr);
 
 	int m_vptr;
@@ -104,16 +105,11 @@ public:
 	Bool m_isDamageWeapon;
 };
 
-class BfmeWeapon
-{
-public:
-	void loadAmmoNow(const Object *obj);
-};
-
 class Weapon
 {
 public:
 	virtual ~Weapon();
+	void loadAmmoNow(const Object *obj);
 
 	WeaponTemplate *m_template;
 	Int m_ownerId;
@@ -181,7 +177,9 @@ void WeaponSet::updateWeaponSet(const Object *obj)
 		finalTmpl = tmpl;
 	}
 
-	const WeaponTemplateSet *set = ((const BfmeThingTemplate *)finalTmpl)->findWeaponTemplateSet(obj->getWeaponSetFlags());
+	const WeaponSetFlags &flags = *reinterpret_cast<const WeaponSetFlags *>(
+		reinterpret_cast<Rva001BEF20FieldAddress *>(const_cast<Object *>(obj))->get());
+	const WeaponTemplateSet *set = finalTmpl->findWeaponTemplateSet(flags);
 	if (set && set != m_curWeaponTemplateSet)
 	{
 		if (!set->m_isWeaponLockSharedAcrossSets)
@@ -215,7 +213,7 @@ void WeaponSet::updateWeaponSet(const Object *obj)
 				{
 					m_weapons[i] = ((BfmeWeaponStore *)TheWeaponStore)->allocateNewWeapon(found, (WeaponSlotType)i);
 					m_weapons[i]->m_ownerId = obj->m_id;
-					((BfmeWeapon *)m_weapons[i])->loadAmmoNow(obj);
+					m_weapons[i]->loadAmmoNow(obj);
 					m_filledWeaponSlotMask |= (1 << i);
 					m_totalAntiMask |= m_weapons[i]->m_template->m_antiMask;
 					m_totalDamageTypeMask |= (1 << m_weapons[i]->m_template->m_damageType);

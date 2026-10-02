@@ -342,6 +342,13 @@ typedef const ThingTemplate *(WeaponTemplateSet::*BfmeWeaponTemplateGetter)() co
 static volatile BfmeWeaponTemplateGetter bfmeWeaponTemplateGetter =
 	&WeaponTemplateSet::friend_getThingTemplate;
 
+// These existing matched helpers previously had their only emission use in
+// the unledgered reference updateWeaponSet body. Keep their ledger coverage.
+static const WeaponTemplate *(WeaponTemplateSet::* volatile rva0013D140Getter)(WeaponSlotType) const =
+	&WeaponTemplateSet::getNth;
+static _STL::bitset<38> &(_STL::bitset<38>::* volatile rva00666C80Setter)(size_t, int) =
+	&_STL::bitset<38>::_Unchecked_set;
+
 static inline bool bfmeWeaponNameIsNotEmpty(const BFMERetailAsciiString &name)
 {
 	void *data = name.m_data;
@@ -463,54 +470,7 @@ void WeaponSet::loadPostProcess( void )
 }  // end loadPostProcess
 
 //-------------------------------------------------------------------------------------------------
-// ?updateWeaponSet@WeaponSet@@QAEXPBVObject@@@Z present-unmatched
-void WeaponSet::updateWeaponSet(const Object* obj)
-{
-	const WeaponTemplateSet* set = obj->getTemplate()->findWeaponTemplateSet(obj->getWeaponSetFlags());
-	DEBUG_ASSERTCRASH(set, ("findWeaponSet should never return null"));
-	if (set && set != m_curWeaponTemplateSet)
-	{
-		if( ! set->isWeaponLockSharedAcrossSets() )
-		{
-			DEBUG_ASSERTLOG(!isCurWeaponLocked(), ("changing WeaponSet while Weapon is Locked... implicit unlock occurring!\n"));
-			releaseWeaponLock(LOCKED_PERMANENTLY);	// release all locks. sorry!
-			m_curWeapon = PRIMARY_WEAPON;
-		}
-		m_filledWeaponSlotMask = 0;
-		m_totalAntiMask = 0;
-		m_totalDamageTypeMask.clear();
-		m_hasPitchLimit = false;
-		m_hasDamageWeapon = false;
-		for (Int i = WEAPONSLOT_COUNT - 1; i >= PRIMARY_WEAPON ; --i)
-		{
-			if (m_weapons[i] != NULL)
-			{
-				m_weapons[i]->deleteInstance();
-				m_weapons[i] = NULL;
-			}
-
-			if (set->getNth((WeaponSlotType)i))
-			{
-				m_weapons[i] = TheWeaponStore->allocateNewWeapon(set->getNth((WeaponSlotType)i), (WeaponSlotType)i);
-				m_weapons[i]->loadAmmoNow(obj);	// start 'em all with full clips.
-				m_filledWeaponSlotMask |= (1 << i);
-				m_totalAntiMask |= m_weapons[i]->getAntiMask();
-				m_totalDamageTypeMask.set(m_weapons[i]->getDamageType());
-				if (m_weapons[i]->isPitchLimited())
-					m_hasPitchLimit = true;
-				if (m_weapons[i]->isDamageWeapon())
-					m_hasDamageWeapon = true;
-
-				// no, do NOT do this; always start with the cur weapon being primary, even if there is no primary
-				// weapon. this is by design, to allow us to have units that have only "spell" weapons and no
-				// "normal" weapons. (srj)
-				// m_curWeapon = (WeaponSlotType)i;
-			}
-		}
-		m_curWeaponTemplateSet = set;
-		//DEBUG_LOG(("WeaponSet::updateWeaponSet -- changed curweapon to %s\n",getCurWeapon()->getName().str()));
-	}
-}
+// Retail four-slot updateWeaponSet lives in WeaponSet_updateWeaponSet.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ ModelConditionFlags WeaponSet::getModelConditionForWeaponSlot(WeaponSlotType wslot, WeaponSetConditionType a)

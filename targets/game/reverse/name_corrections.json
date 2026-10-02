@@ -14178,5 +14178,15 @@
   "after_sha256": "7d95930262d9fb26a476157f3bda24897b24deb96e4a6d9f46e9738e0f19266f",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The caller's private placeholder for the ILT 0x00003A49 target becomes the ledger name of the matched owner at 0x002B21E0, which that thunk reaches; the call bytes are unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/WeaponSet_updateWeaponSet.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/WeaponSet_updateWeaponSet.cpp",
+  "old_name": "WeaponSetFlags",
+  "new_name": "Rva001BEF20FieldAddress",
+  "before_sha256": "285620343dce9cc117b0c3529c27cf61c80967e16a700a0f1e64ded7fb48b257",
+  "after_sha256": "6a225825a37c9842cc168de89eac323410eb65746c0dcae556c112bb7cbc1c4d",
+  "evidence": "targets/game/reverse/identity_evidence/0x001ebbc0-update-callees.md",
+  "reason": "False pairing: flags shim becomes the existing BitFlags<17> typedef; independently proven Object field accessor uses its existing address-derived provider identity."
  }
 ]
