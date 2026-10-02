@@ -1604,3 +1604,17 @@ the count, and the separate no-current-player return falls after the ESI
 epilogue. The bank's separate candidate local and shared final return had
 removed that lifetime. The existing ScriptEngine and PlayerList headers retain
 the exact 69-byte shape; no compiler switches or assembly are needed.
+
+## Keep the twin's redundant null guard in a loop (2026-10-02)
+
+`Player::killPlayer` at 0x000CE170 was banked at 187 bytes versus retail 184:
+the compiler inserted two two-byte inner-loop pads, while retail had only
+one byte before the second outer loop. The GeneralsMD twin checks
+`if (!team) continue;` inside each iterator loop even though the loop condition
+already establishes a non-null team. Restoring that check in **both** loops
+removes both unwanted pads and restores the single retail NOP. Neither check
+survives as executable instructions, but they change the earlier alignment
+decision. Native STLport lists and the existing `Player.cpp` declarations
+retain the exact shape. The scoped gate verified all 408 claims in that TU.
+The final Money call needs a direct receiver expression: saving its pointer
+in a local moves the receiver LEA before the argument pushes.

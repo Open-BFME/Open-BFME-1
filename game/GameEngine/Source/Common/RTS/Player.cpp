@@ -2700,56 +2700,62 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 }
 
 //=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/Player_killPlayer_Thunk.cpp
-// ?killPlayer@Player@@QAEXXZ present-unmatched
+// Player::killPlayer, retail RVA 0x000CE170 (184 bytes).
+// BFME offsets come from the native body; the ZH Player layout differs.
+// Keep the twin's redundant inner null checks: VC7.1 uses them while deciding
+// loop alignment before eliminating them from the executable instructions.
+class Rva000CE170PlayerListDispatch
+{
+public:
+#define RVA000CE170_SLOT(n) virtual void slot##n() = 0
+    RVA000CE170_SLOT(00); RVA000CE170_SLOT(04); RVA000CE170_SLOT(08);
+    RVA000CE170_SLOT(0C); RVA000CE170_SLOT(10); RVA000CE170_SLOT(14);
+    RVA000CE170_SLOT(18); RVA000CE170_SLOT(1C); RVA000CE170_SLOT(20);
+    RVA000CE170_SLOT(24); RVA000CE170_SLOT(28);
+#undef RVA000CE170_SLOT
+    virtual void rvaSlot2C() = 0;
+};
+
 void Player::killPlayer(void)
 {
-	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it) {
-		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
-			Team *team = iter.cur();
-			if (!team) {
-				continue;
-			}
-			team->evacuateTeam(); // force containers on team to dump contents
-		}
-	}
+    BfmePlayerTeamFields *self = (BfmePlayerTeamFields *)this;
+    for (PlayerTeamList::iterator it = self->m_playerTeamPrototypes.begin();
+         it != self->m_playerTeamPrototypes.end(); ++it)
+    {
+        BfmePlayerTeamPrototypeInstances *prototype =
+            (BfmePlayerTeamPrototypeInstances *)*it;
+        for (Team *team = (Team *)prototype->m_teamInstanceList; team;
+             team = (Team *)((BfmeTeamInstanceLink *)team)->_bfme_nextInInstanceList())
+        {
+            if (!team) continue;
+            team->evacuateTeam();
+        }
+    }
 
-	m_isPlayerDead = TRUE; // this is so OCLs don't ever again spawn useful units for us.
+    *(Bool *)((char *)this + 0x680) = TRUE;
 
-	for (it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it) {
-		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
-			Team *team = iter.cur();
-			if (!team) {
-				continue;
-			}
-			team->killTeam();
-		}
-	}
-	if (TheGameLogic->isInSinglePlayerGame()) {
-		if (getPlayerType()==PLAYER_COMPUTER) {
-			// This is an AI player in a solo mission - leave him alive so he can be used later. jba.
-			m_isPlayerDead = FALSE; // this is so we can later spawn useful units for us.
-			return;
-		}
-	}
-	if (isLocalPlayer() && !TheGameLogic->isInShellGame())
-	{
-		becomingLocalPlayer(TRUE); // recalc disguises, etc
-		if (TheControlBar )
-		{
-			if (isPlayerActive())
-			{
-				TheControlBar->setControlBarSchemeByPlayer(this);
-			}
-			else
-			{
-				TheControlBar->setControlBarSchemeByPlayerTemplate(ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY("FactionObserver")));
-			}
-		}
+    for (PlayerTeamList::iterator it = self->m_playerTeamPrototypes.begin();
+         it != self->m_playerTeamPrototypes.end(); ++it)
+    {
+        BfmePlayerTeamPrototypeInstances *prototype =
+            (BfmePlayerTeamPrototypeInstances *)*it;
+        for (Team *team = (Team *)prototype->m_teamInstanceList; team;
+             team = (Team *)((BfmeTeamInstanceLink *)team)->_bfme_nextInInstanceList())
+        {
+            if (!team) continue;
+            team->killTeam();
+        }
+    }
 
-	}
+    if (TheGameLogic->isInSinglePlayerGame() && *(int *)((char *)this + 0x2c) == 1)
+    {
+        *(Bool *)((char *)this + 0x680) = FALSE;
+        return;
+    }
 
-	m_money.withdraw(m_money.countMoney()); // force $$$ to 0 on death
+    ((Rva000CE170PlayerListDispatch *)ThePlayerList)->rvaSlot2C();
+    ((Money *)((char *)this + 0x48))->withdraw(
+        *(UnsignedInt *)((char *)this + 0x4c), TRUE);
 }
 
 //=============================================================================

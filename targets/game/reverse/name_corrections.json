@@ -14578,5 +14578,25 @@
   "after_sha256": "c6b988d1ee285b9cc9d1fcfe303776e805f14de2d5c718863ac1c334443e2cec",
   "evidence": "targets/game/reverse/identity_evidence/0034c430-scriptengine-skirmishenemyplayer.md",
   "reason": "The bank invented BfmeSubAAT::bfmeCheckAAT for ILT 0x00015438. Retail E9 reaches 0x000C9420, already matched as Rva000C9420::call; reuse that proven callee spelling and ABI rather than a second identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000ce170.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/Player.cpp",
+  "before_sha256": "20052d9cd302a8e7a2e81e2df9e04846939ba6d780d192f5a63bbce2079d53ff",
+  "after_sha256": "39d009f744adf8831c059ef209551421e35047dd534248fe781a126a886a1f35",
+  "evidence": "targets/game/reverse/identity_evidence/000ce170-player-killplayer-native.md",
+  "old_name": "PLAYER_LIST_SLOT",
+  "new_name": "RVA000CE170_SLOT",
+  "reason": "Bank macro names anonymous vtable padding only. Native scoped macro keeps that padding with the body address; no semantic slot identity is replaced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000ce170.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/Player.cpp",
+  "before_sha256": "20052d9cd302a8e7a2e81e2df9e04846939ba6d780d192f5a63bbce2079d53ff",
+  "after_sha256": "39d009f744adf8831c059ef209551421e35047dd534248fe781a126a886a1f35",
+  "evidence": "targets/game/reverse/identity_evidence/000ce170-player-killplayer-native.md",
+  "old_name": "evacuateTeam",
+  "new_name": "j_0004494a",
+  "reason": "False pairing between removed bank Team::evacuateTeam declaration and unrelated pre-existing declaration in destination Player.cpp. New body still calls team->evacuateTeam() using the native Team header; no method rename occurs."
  }
 ]
