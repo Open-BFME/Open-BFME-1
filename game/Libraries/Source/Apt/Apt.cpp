@@ -43,10 +43,13 @@ struct Rva00899560Pool
 BfmeStringPool3AF0 *g_rva01337A30AllocPair = 0;
 Rva00899560Pool *g_rva01337810GcRoots = 0;
 
-extern int g_bfme1017I;
-extern int g_013377E0;
-extern int g_013377E4;
-extern int g_013377EC;
+// The 34-byte store body below writes four independent dwords at retail
+// VA 0x013377DC/0x013377E0/0x013377E4/0x013377EC. Each is initially zero;
+// data_rows.csv verifies the scalar widths and initial bytes.
+int g_bfme1017I = 0;
+int g_013377E0 = 0;
+int g_013377E4 = 0;
+int g_013377EC = 0;
 
 // Retail RVA 0x00892170, 34 bytes. EA file evidence places this body in Apt.cpp;
 // its original function name and the meanings of these globals are unproved.
