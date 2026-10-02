@@ -2,7 +2,14 @@
 // retail RVA 0x00784480.  The owning type's original identity is not recovered;
 // the address-derived wrapper records the observed layout without inventing it.
 
-extern float g_bfmeDefaultBU; // retail 0x01075334
+// Retail reads the constant 1.0f out of the compiler's own float literal pool
+// at image VA 0x01075334, whose neighbours 0x01075338 (3.0f) and 0x0107533C
+// (0.5f, dir32 name __real@3f000000) hold the rest of the run.  It is a code
+// literal, not a game datum, so it is defined here rather than left
+// unresolved: the previous `extern float g_bfmeDefaultBU` was one of thirteen
+// invented placeholder spellings that address carried, none of them defined.
+static const float bfmeOneFloat = 1.0f;
+
 extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
 class BfmeThingIH
@@ -44,9 +51,9 @@ void Gen_00784480::update(BfmeThingIH &thing)
 		return;
 
 	unsigned int first = (unsigned int)thing.bfmeGetIH();
-	float first_scale = g_bfmeDefaultBU / (float)first;
+	float first_scale = bfmeOneFloat / (float)first;
 	unsigned int second = (unsigned int)((BfmeThingIJ *)&thing)->bfmeGetIJ();
-	float second_scale = g_bfmeDefaultBU / (float)second;
+	float second_scale = bfmeOneFloat / (float)second;
 
 	m_initialized = 1;
 	m_first0 *= first_scale;
