@@ -21,7 +21,7 @@ public:
 	Glo012F1028Sub *m_bfmeSub;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+Glo012F1028Type *Glo012F1028 = 0;
 
 class BfmeRewindZU
 {
