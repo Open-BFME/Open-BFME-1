@@ -46,7 +46,8 @@ public:
 	void registerItem(int handle, Gen_003BEA30 *item, int variant);
 };
 
-extern BfmeSinkAM *g_bfmeSinkAM;
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class BfmeCounterAM
 {
@@ -75,6 +76,6 @@ void Gen_003BEBA0::add(BfmePairWI pair, const AsciiStringWI &first, bool flag,
 {
 	Gen_003BEA30 *item = new Gen_003BEA30(pair, m_counter->allocId(), first,
 		flag, second);
-	g_bfmeSinkAM->registerItem(item->m_bfmeKind, item, 1);
+	reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->registerItem(item->m_bfmeKind, item, 1);
 	m_vec.push_back(item);
 }

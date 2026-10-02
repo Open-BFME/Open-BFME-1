@@ -16,7 +16,7 @@ public:
     AsciiString m_string18C;
     AsciiString m_string190;
 };
-extern BfmeGameCW *g_bfmeGameCW;
+BfmeGameCW *g_bfmeGameCW;
 extern AsciiString Rva01336E50EmptyString;
 
 class Rva003A48B0Owner

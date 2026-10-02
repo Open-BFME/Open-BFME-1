@@ -5,7 +5,8 @@
 #include "GameEngine/Source/Common/System/xfer.h"
 class Gen_003BEA30;
 class BfmeSinkAM { public: void registerItem(int,Gen_003BEA30 *,int); };
-extern BfmeSinkAM *g_bfmeSinkAM;
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 class LivingWorldRegion {
 public:
     char m_00[4]; AsciiString m_04;
@@ -30,7 +31,7 @@ void LivingWorldRegionManager::transfer003C9EF0(Xfer *xfer) {
             *xfer==name;
             LivingWorldRegion *region=rva003C8A50(name);
             if(region) {
-                g_bfmeSinkAM->registerItem(region->m_AC,(Gen_003BEA30*)region->m_E0,0);
+                reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->registerItem(region->m_AC,(Gen_003BEA30*)region->m_E0,0);
                 m_14.push_back(region);
             }
         }

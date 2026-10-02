@@ -12,7 +12,8 @@
 #include "camera.h"
 #include "aabox.h"
 #include <math.h>
-extern "C" void* g_bfmeGameCW;
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 extern void j_000460a1();
 extern void j_00042843();
 struct Rva006FE730Config {

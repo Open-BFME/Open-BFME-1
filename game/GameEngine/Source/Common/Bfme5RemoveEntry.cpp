@@ -21,7 +21,8 @@ public:
 	void bfmeDrop(int handle);				// retail thunk 0x00010FFA -> 0x003C6D40
 };
 
-extern BfmeSinkAM *g_bfmeSinkAM;				// retail 0x012F706C
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;				// retail 0x012F706C
 
 class BfmeVecAM
 {
@@ -67,7 +68,7 @@ void Gen_003BEBA0::bfmeRemove(BfmeItemAM *entry)
 	if (!entry)
 		return;
 
-	g_bfmeSinkAM->bfmeDrop(entry->m_bfmeHandle);
+	reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->bfmeDrop(entry->m_bfmeHandle);
 
 	for (unsigned int index = 0; index < m_bfmeVector.bfmeSize(); ++index)
 	{
