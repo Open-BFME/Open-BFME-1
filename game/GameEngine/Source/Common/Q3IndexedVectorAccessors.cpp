@@ -32,7 +32,7 @@
 
 struct Q3IndexedItem { char m_bytes[ 0x70 ]; };
 
-extern Q3IndexedItem g_q3IndexedFallback;
+Q3IndexedItem g_q3IndexedFallback;
 
 struct Q3IndexedVector
 {
