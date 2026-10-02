@@ -60,10 +60,15 @@ extern "C"
 	int __stdcall Thread32First(RvaHandle snapshot, RvaThreadEntry32 *entry);
 	int __stdcall Thread32Next(RvaHandle snapshot, RvaThreadEntry32 *entry);
 
-	__declspec(dllimport) void __stdcall bfmeClose1033(int handle);
+	// Retail calls IAT VA 0x01358CCC at RVA 0x0088E220/0x0088E32A:
+	// KERNEL32!CloseHandle; WinBase.h declares BOOL WINAPI CloseHandle(HANDLE).
+	__declspec(dllimport) int __stdcall CloseHandle(RvaHandle handle);
 
-	extern const char *g_rva0088E000MessageText;
-	extern const char *g_rva0088E000WindowText;
+	// Driver stores at RVA 0x0088E2B4/0x0088E2B9 and dialog-procedure
+	// loads at RVA 0x0088E064/0x0088E072 prove these four-byte pointers.
+	// Both are initially null at retail VA 0x01336EAC/0x01336EB0.
+	const char *g_rva0088E000MessageText = 0;
+	const char *g_rva0088E000WindowText = 0;
 	extern unsigned char g_Rva012D4FD0AssertCrashTemplate[];
 	extern long g_Rva013373BCTimerTicks;
 	extern unsigned char g_Rva013373C0DialogClosed;
@@ -95,7 +100,7 @@ extern "C" int Rva0088E1A0ShowAssertCrashDialog(const char *windowText, const ch
 			{
 				RvaHandle thread = openThread(2, 0, entry.th32ThreadID);
 				SuspendThread(thread);
-				bfmeClose1033((int)thread);
+				CloseHandle(thread);
 			}
 		} while (Thread32Next(snapshot, &entry));
 	}
@@ -136,6 +141,6 @@ extern "C" int Rva0088E1A0ShowAssertCrashDialog(const char *windowText, const ch
 	if (openThread != 0 && watchdogRanFirst == 0)
 		Rva0088E090ResumeOtherThreads(openThread, snapshot, processId, threadId);
 
-	bfmeClose1033((int)snapshot);
+	CloseHandle(snapshot);
 	return result;
 }
