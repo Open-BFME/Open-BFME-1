@@ -1,12 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class BfmeDtorMemberD
+typedef unsigned int UnsignedInt;
+
+class AttributeHandleStandIn
 {
 public:
-	~BfmeDtorMemberD();
+	~AttributeHandleStandIn();
 
 private:
-	int m_handle;
+	UnsignedInt m_bfmeHandle;
 };
 
 class FXNugget
@@ -16,8 +18,8 @@ public:
 
 private:
 	int m_flags;
-	BfmeDtorMemberD m_sourceAttribute;
-	BfmeDtorMemberD m_victimAttribute;
+	AttributeHandleStandIn m_sourceAttribute;
+	AttributeHandleStandIn m_victimAttribute;
 };
 
 FXNugget::~FXNugget()

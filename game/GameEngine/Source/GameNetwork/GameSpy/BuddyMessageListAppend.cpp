@@ -26,12 +26,14 @@ public:
 	UnicodeString m_message;
 };
 
-void __cdecl constructBuddyMessageAt(void *dest, const BuddyMessage &source);
 void *__cdecl bfmeAllocNode(unsigned int size);
 void __cdecl bfmeDeallocate(void *memory, unsigned int size);
 
 namespace _STL
 {
+	template <class T, class U>
+	void _Construct(T *dest, const U &source);
+
 	struct _List_node_base
 	{
 		_List_node_base *_M_next;
@@ -116,7 +118,7 @@ namespace _STL
 		_Node *_M_create_node(const T &value)
 		{
 			_Node *node = (_Node *)bfmeAllocNode(sizeof(_Node));
-			constructBuddyMessageAt(&node->_M_data, value);
+			_STL::_Construct(&node->_M_data, value);
 			return node;
 		}
 	};
