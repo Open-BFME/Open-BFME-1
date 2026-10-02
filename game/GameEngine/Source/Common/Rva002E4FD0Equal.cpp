@@ -1,8 +1,12 @@
 // Open-BFME5: clean C++ conversion of the eleven-word aggregate comparison.
 
-struct Rva002E4FD0Tail
+class T4Host002E4D60
 {
-	bool equals(const Rva002E4FD0Tail *other) const;
+public:
+	bool equals(const T4Host002E4D60 &other) const;
+
+private:
+	int m_val[10];
 };
 
 class Rva002E4FD0Value
@@ -13,7 +17,7 @@ public:
 private:
 	int m_kind;
 	int m_values[10];
-	Rva002E4FD0Tail m_tail;
+	T4Host002E4D60 m_tail;
 };
 
 int Rva002E4FD0Value::equals(const Rva002E4FD0Value *other) const
@@ -25,7 +29,7 @@ int Rva002E4FD0Value::equals(const Rva002E4FD0Value *other) const
 			}
 		}
 
-		if (m_tail.equals(&other->m_tail)) {
+		if (m_tail.equals(other->m_tail)) {
 			return true;
 		}
 	}
@@ -33,9 +37,13 @@ int Rva002E4FD0Value::equals(const Rva002E4FD0Value *other) const
 	return false;
 }
 
-struct Rva002E5030Tail
+class T4Host002E4D20
 {
-	bool equals(const Rva002E5030Tail *other) const;
+public:
+	bool equals(const T4Host002E4D20 &other) const;
+
+private:
+	int m_val[3];
 };
 
 class Rva002E5030Value
@@ -46,7 +54,7 @@ public:
 private:
 	int m_kind;
 	int m_values[3];
-	Rva002E5030Tail m_tail;
+	T4Host002E4D20 m_tail;
 };
 
 int Rva002E5030Value::equals(const Rva002E5030Value *other) const
@@ -58,7 +66,7 @@ int Rva002E5030Value::equals(const Rva002E5030Value *other) const
 			}
 		}
 
-		if (m_tail.equals(&other->m_tail)) {
+		if (m_tail.equals(other->m_tail)) {
 			return true;
 		}
 	}
