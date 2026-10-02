@@ -1,6 +1,7 @@
+void j_0001abd1();
+
 struct BfmeSubBJC
 {
-	void bfmeDoBJC(void *what);
 	unsigned char m_bfmeHead[4];
 };
 
@@ -14,6 +15,7 @@ public:
 
 void *BfmeThingBJC::bfmeGoBJC(void *what)
 {
-	m_bfmeSub.bfmeDoBJC(what);
+	// Keep the pointer word on the stack while fastcall supplies the subobject in ECX.
+	reinterpret_cast<void (__fastcall *)(BfmeSubBJC *, float)>(j_0001abd1)(&m_bfmeSub, *reinterpret_cast<float *>(&what));
 	return what;
 }

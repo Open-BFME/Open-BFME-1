@@ -1,3 +1,5 @@
+void j_0002d538();
+
 class BfmeSubBJA
 {
 public:
@@ -14,7 +16,6 @@ public:
 class BfmeThingBJA
 {
 public:
-	bool bfmeAskBJA();
 	void bfmeGoBJA();
 	unsigned char m_bfmeHead[0x4c];
 	BfmeSubBJA *m_bfmeSub;
@@ -22,6 +23,6 @@ public:
 
 void BfmeThingBJA::bfmeGoBJA()
 {
-	if (bfmeAskBJA())
+	if (reinterpret_cast<bool (__fastcall *)(BfmeThingBJA *)>(j_0002d538)(this))
 		m_bfmeSub->bfmeRunBJA();
 }
