@@ -56,7 +56,8 @@ public:
 };
 
 extern PlayerList *ThePlayerList;              // retail [0x012ED748]
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the canonical pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 class GlobalData;
 
 // Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
@@ -88,11 +89,11 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
         return;
     if (!ThePlayerList)
         return;
-    if (!TheBfmeGameLogic)
+    if (!TheGameLogic)
         return;
 
     m_field = field;
-    if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
+    if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
     {
         const volatile int *multiplier = &m_value14;
         int count = ThePlayerList->unidentified_000df510(true);

@@ -38,7 +38,8 @@ public:
 };
 
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the canonical pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 
 struct BfmeGameLogicIndicator
 {
@@ -63,7 +64,7 @@ void Drawable::setIndicatorColor(UnsignedInt color)
 {
 	m_indicatorColor = color;
 	Thing *object = getObject();
-	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheBfmeGameLogic)->m_unreconstructed_114
+	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheGameLogic)->m_unreconstructed_114
 		|| (object && object->isAnyKindOf(KindOfMaskType(KindOfMaskType::kInit, 119, 179)));
 	bfmeSetIndicatorOn(indicatorOn);
 }

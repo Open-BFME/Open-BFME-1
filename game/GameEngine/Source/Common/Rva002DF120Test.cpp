@@ -70,7 +70,8 @@ public:
 	bool accepts(Object *object, Player *player);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the canonical pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 extern const float g_bfmeDirectionWeight1285;
 
 class Rva002DF120 : public Rva002DF100
@@ -97,7 +98,7 @@ unsigned char Rva002DF120::test(void *first, void *second)
 	if (!testOne(first))
 		return 0;
 
-	Object *found = TheBfmeGameLogic->findObjectByID(
+	Object *found = TheGameLogic->findObjectByID(
 		((Rva002DF120MatchContext *)first)->m_id);
 	if (found == 0)
 		return testOne(first);
