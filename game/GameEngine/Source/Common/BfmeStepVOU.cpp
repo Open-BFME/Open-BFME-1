@@ -14,7 +14,7 @@ class StringBase
 {
 public:
 	void set(const StringBase<T> &other);
-	__forceinline int compareNoCase(const StringBase<T> &other) const
+	__forceinline int compareNoCaseForVOUOrdering(const StringBase<T> &other) const
 	{
 		int otherLength = other.m_data ? other.m_data->m_length : 0;
 		const T *otherData = other.m_data ? other.m_data->m_data : (const T *)Rva006A16B0Empty;
@@ -74,8 +74,8 @@ struct BfmeCompVOU
 	{
 		if (left.m_base.startsWithUnderscore()
 			&& right.m_base.startsWithUnderscore())
-			return left.m_base.compareNoCase(right.m_base) > 0;
-		return left.m_base.compareNoCase(right.m_base) < 0;
+			return left.m_base.compareNoCaseForVOUOrdering(right.m_base) > 0;
+		return left.m_base.compareNoCaseForVOUOrdering(right.m_base) < 0;
 	}
 };
 

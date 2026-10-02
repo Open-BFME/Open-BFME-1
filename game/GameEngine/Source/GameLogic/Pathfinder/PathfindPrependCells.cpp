@@ -105,7 +105,7 @@ public:
 			return m_info->m_pathParent->m_cell;
 		return 0;
 	}
-	void clearParentCell(void) { m_info->m_pathParent = 0; }
+	void clearParentCellForPrepend(void) { m_info->m_pathParent = 0; }
 	UnsignedShort getXIndex(void) const { return (UnsignedShort)m_info->m_x; }
 	UnsignedShort getYIndex(void) const { return (UnsignedShort)m_info->m_y; }
 	CellType getType(void) const { return (CellType)m_type; }
@@ -271,7 +271,7 @@ void Pathfinder::prependCells(Path *path, const Coord3D *fromPos, PathfindCell *
 			path->setBlockedByAlly(true);
 		}
 		if (prevCell) {
-			prevCell->clearParentCell();
+			prevCell->clearParentCellForPrepend();
 		}
 		prevCell = cell;
 	}
