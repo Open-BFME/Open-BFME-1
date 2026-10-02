@@ -88,7 +88,9 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern int GameSpyColor[];
 
 void __stdcall GameSpyAddText( UnicodeString message, GameSpyColors color )
@@ -100,13 +102,13 @@ void __stdcall GameSpyAddText( UnicodeString message, GameSpyColors color )
 	{
 	case GSCOLOR_DEFAULT:
 		// The cast preserves retail's by-value UnicodeString stack layout.
-		TheGameSpyInfo->addText( **(UnicodeString **)&message, GameSpyColor[ GSCOLOR_DEFAULT ], 0 );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addText( **(UnicodeString **)&message, GameSpyColor[ GSCOLOR_DEFAULT ], 0 );
 		break;
 	case GSCOLOR_CURRENTROOM:
-		TheGameSpyInfo->addText( **(UnicodeString **)&message, GameSpyColor[ 24 ], 0 );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addText( **(UnicodeString **)&message, GameSpyColor[ 24 ], 0 );
 		break;
 	case GSCOLOR_ROOM:
-		TheGameSpyInfo->handleText( **(UnicodeString **)&message );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->handleText( **(UnicodeString **)&message );
 		break;
 	}
 }

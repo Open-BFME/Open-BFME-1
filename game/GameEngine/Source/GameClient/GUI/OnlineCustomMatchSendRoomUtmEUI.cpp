@@ -95,12 +95,14 @@ public:
 #undef GAMESPY_SLOT
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // ?Rva0053DEA0SendRoomUtmEUI@@YAXXZ
 void Rva0053DEA0SendRoomUtmEUI( void )
 {
-	if( TheGameSpyPeerMessageQueue && TheGameSpyInfo && TheGameSpyInfo->amIHost() )
+	if( TheGameSpyPeerMessageQueue && TheGameSpyInfo && reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->amIHost() )
 	{
 		PeerRequest req;
 		req.peerRequestType = 14;

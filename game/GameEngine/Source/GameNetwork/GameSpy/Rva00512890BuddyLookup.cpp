@@ -99,12 +99,14 @@ public:
 	virtual BuddyInfoMap *getBuddyRequestMap(void) = 0;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // ?Rva00512890@@YGHHAAVUnicodeString@@@Z
 int __stdcall Rva00512890(Int profileID, UnicodeString &result)
 {
-	BuddyInfoMap *buddies = TheGameSpyInfo->getBuddyMap();
+	BuddyInfoMap *buddies = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap();
 	for (BuddyInfoMap::const_iterator it = buddies->begin(); it != buddies->end(); ++it)
 	{
 		Gen_004E9FD0 info = it->second;
@@ -117,7 +119,7 @@ int __stdcall Rva00512890(Int profileID, UnicodeString &result)
 		}
 	}
 
-	buddies = TheGameSpyInfo->getBuddyRequestMap();
+	buddies = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
 	for (BuddyInfoMap::const_iterator it = buddies->begin(); it != buddies->end(); ++it)
 	{
 		Gen_004E9FD0 info = it->second;
