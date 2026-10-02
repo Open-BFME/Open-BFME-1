@@ -28,3 +28,17 @@ void Rva0094CB40::erase(const unsigned &key) {
  m_14=static_cast<Rva0094CB40Node*>(tree->head->left);
  m_1c=true;
 }
+
+// Retail 0x0094C6C0: hidden-result forwarding to the tree find at 0x0094C5E0.
+// The wrapper's owner is not established; its address identifies the ABI view.
+class Rva0094C6C0
+{
+    Rva0094C5E0Tree m_tree;
+public:
+    Rva0094C5E0Iterator find(const unsigned &key);
+};
+
+Rva0094C5E0Iterator Rva0094C6C0::find(const unsigned &key)
+{
+    return m_tree.find(key);
+}
