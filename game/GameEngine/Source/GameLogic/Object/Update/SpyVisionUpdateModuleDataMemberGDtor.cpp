@@ -8,16 +8,16 @@
 
 #include <vector>
 
-struct Mem00887940
+struct BFMEPlayerTemplateAsciiString
 {
-	~Mem00887940();
+	~BFMEPlayerTemplateAsciiString();
 	void *m_data;
 };
 
 struct SpyVisionMemberGElem
 {
-	Mem00887940 m_a;
-	Mem00887940 m_b;
+	BFMEPlayerTemplateAsciiString m_a;
+	BFMEPlayerTemplateAsciiString m_b;
 	int m_pad;
 };
 

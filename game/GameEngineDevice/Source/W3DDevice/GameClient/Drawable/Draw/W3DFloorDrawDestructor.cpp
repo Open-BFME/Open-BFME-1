@@ -13,7 +13,12 @@ protected:
 	StringInlineData<T> *m_data;
 
 	StringBase() : m_data( 0 ) {}
+
+private:
 	StringBase( const StringBase<T> &other );
+	friend class AsciiString;
+
+protected:
 	~StringBase();
 };
 
