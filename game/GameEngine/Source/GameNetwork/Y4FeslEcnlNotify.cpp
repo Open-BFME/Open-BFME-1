@@ -31,7 +31,14 @@ struct Rva00809500Sink
 	int m_f0c;
 };
 
-Rva00809500Sink *__stdcall Rva00809010Find( Rva00809500Entry *entry );
+// 0x00809010 is a thiscall member of Rva00809010Finder (its matched body
+// dereferences this+0x18), and the ledger's five callers prove that name.
+// Retail calls it with ecx untouched, so `this` is already in place.
+class Rva00809010Finder
+{
+public:
+	Rva00809500Sink *find( Rva00809500Entry *entry );
+};
 
 class BfmeSinkSKA
 {
@@ -58,7 +65,7 @@ void Rva00809BF0Owner::notify( Rva00809500Entry *entry )
 	Rva007E8810Message *msg;
 
 	msg = (Rva007E8810Message *)entry;
-	sink = Rva00809010Find( entry );
+	sink = reinterpret_cast< Rva00809010Finder * >( this )->find( entry );
 	if ( sink == 0 )
 	{
 		m_sink->bfmeSendSKA( 'ECNL', msg->getInt( "TID", 0 ), 'ngam' );

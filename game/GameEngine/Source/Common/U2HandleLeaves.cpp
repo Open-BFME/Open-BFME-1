@@ -72,7 +72,14 @@ struct Rva00809500Sink
 	void accept(Rva00809500Entry *entry);
 };
 
-extern Rva00809500Sink *__stdcall Rva00809010Find(Rva00809500Entry *entry);
+// 0x00809010 is a thiscall member of Rva00809010Finder (its matched body
+// dereferences this+0x18), and the ledger's five callers prove that name.
+// Retail enters the call with ecx untouched, so `this` is already in place.
+class Rva00809010Finder
+{
+public:
+	Rva00809500Sink *find(Rva00809500Entry *entry);
+};
 
 struct Rva00809500Owner
 {
@@ -81,7 +88,7 @@ struct Rva00809500Owner
 
 void Rva00809500Owner::give(Rva00809500Entry *entry)
 {
-	Rva00809500Sink *sink = Rva00809010Find(entry);
+	Rva00809500Sink *sink = reinterpret_cast<Rva00809010Finder *>(this)->find(entry);
 	if (sink != 0)
 		sink->accept(entry);
 }
