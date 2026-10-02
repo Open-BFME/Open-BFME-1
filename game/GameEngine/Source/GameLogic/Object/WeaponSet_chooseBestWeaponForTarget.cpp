@@ -112,6 +112,21 @@ public:
 	int m_reloadType;
 };
 
+// Existing opaque providers at the retail targets of ILTs 0x00048324 and
+// 0x00032123. Their meaning is not renamed here; both use Weapon's ECX.
+class Gen_001E1950
+{
+public:
+	float bfmeValue() const;
+};
+
+struct BfmeOtherMG;
+class BfmeThingMG
+{
+public:
+	unsigned char bfmeTellMG(BfmeOtherMG *other, void *what);
+};
+
 class Weapon
 {
 public:
@@ -119,8 +134,6 @@ public:
 	bool isWithinTargetPitch(const Object *source, const Object *victim) const;
 	bool bfmeCanAffect(const Object *source, const Object *victim) const;
 	float bfmeEstimate(const Object *source, const Object *victim) const;
-	float bfmeClampedRange() const;
-	bool bfmeSpecialOk(const Object *source, const Object *victim) const;
 
 	int m_vptr;
 	WeaponTemplate *m_template;
@@ -272,7 +285,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 			damage = 0.0f;
 
 		float attackRange = weapon->bfmeEstimate(obj, victim);
-		float minRange = weapon->bfmeClampedRange();
+		float minRange = reinterpret_cast<const Gen_001E1950 *>(weapon)->bfmeValue();
 
 		bool weaponIsReady = (status == READY_TO_FIRE || status == (WeaponStatus)4);
 		if (obj->m_ai && obj->m_ai->isWeaponSlotOnTurretAndAimingAtTarget((WeaponSlotType)i, victim))
@@ -309,7 +322,9 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		switch (criteria)
 		{
 		case PREFER_SPECIAL:
-			if (weapon->bfmeSpecialOk(obj, victim))
+			if (reinterpret_cast<BfmeThingMG *>(weapon)->bfmeTellMG(
+				reinterpret_cast<BfmeOtherMG *>(const_cast<Object *>(obj)),
+				const_cast<Object *>(victim)))
 			{
 				currentDecision = i;
 				bestDamage = damage;
