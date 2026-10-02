@@ -112,9 +112,8 @@ private:
 };
 
 // Local definition of the already-identified moveMouse ABI keeps the compiler
-// aware that this helper preserves ecx in its compiled body. The helper's
-// own retail row remains owned by Mouse.cpp; this TU only supplies its layout
-// shim while compiling processMouseEvent.
+// aware that this helper preserves ecx in its compiled body. This exact
+// emission also owns the retail moveMouse row at 0x005A4230 (129 bytes).
 struct BfmeMousePositionLayout
 {
 	UnsignedByte pad0[0x4d10];

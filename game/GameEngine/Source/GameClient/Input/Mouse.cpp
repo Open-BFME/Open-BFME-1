@@ -144,32 +144,7 @@ struct BfmeMouseLayout
 	UnsignedInt inputFrame;								///< retail this+0x4D98
 };
 
-void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
-{
-	BfmeMouseLayout *self = (BfmeMouseLayout *)this;
-
-	if( relOrAbs == MOUSE_MOVE_RELATIVE )
-	{
-		self->currPos.x += x;
-		self->currPos.y += y;
-	}
-	else
-	{
-		self->currPos.x = x;
-		self->currPos.y = y;
-	}
-
-	if( self->currPos.x > self->maxX )
-		self->currPos.x = self->maxX;
-	else if( self->currPos.x < self->minX )
-		self->currPos.x = self->minX;
-
-	if( self->currPos.y > self->maxY )
-		self->currPos.y = self->maxY;
-	else if( self->currPos.y < self->minY )
-		self->currPos.y = self->minY;
-
-}  // end moveMouse
+// Retail helper is provided by Mouse_processMouseEvent.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Get the current information for the mouse from the device */
@@ -431,32 +406,7 @@ void Mouse::processMouseEvent( Int index )
 //-------------------------------------------------------------------------------------------------
 /** Check for mouse drag */
 //-------------------------------------------------------------------------------------------------
-// ?checkForDrag@Mouse@@ present-unmatched
-void Mouse::checkForDrag( void )
-{
-
-	if( m_currMouse.leftState && 
-			(	(m_prevMouse.leftEvent == GWM_LEFT_DOWN) ||
-				(m_prevMouse.leftEvent == GWM_LEFT_DRAG) ) )
-	{
-		m_currMouse.leftEvent = GWM_LEFT_DRAG;
-	}
-
-	if( m_currMouse.rightState && 
-			(	(m_prevMouse.rightEvent == GWM_RIGHT_DOWN) ||
-				(m_prevMouse.rightEvent == GWM_RIGHT_DRAG) ) )
-	{
-		m_currMouse.rightEvent = GWM_RIGHT_DRAG;
-	}
-
-	if( m_currMouse.middleState && 
-			(	(m_prevMouse.middleEvent == GWM_MIDDLE_DOWN) ||
-				(m_prevMouse.middleEvent == GWM_MIDDLE_DRAG) ) )
-	{
-		m_currMouse.middleEvent = GWM_MIDDLE_DRAG;
-	}
-
-}  // end checkForDrag
+// Retail helper is provided by Mouse_processMouseEvent.cpp.
 
 
 //-------------------------------------------------------------------------------------------------
