@@ -56,7 +56,11 @@ public:
 class WorkerAIUpdate
 {
 public:
-	Int isSupplyTruckBrainActiveAndBusy();
+	Int readyToLeaveSupplyTruckBrainActiveAndBusy()
+	{
+		return (m_workerMachine->getCurrentStateID() == AS_SUPPLY_TRUCK)
+			&& (m_supplyTruckStateMachine->getCurrentStateID() == ST_BUSY);
+	}
 
 private:
 	unsigned char m_unreconstructed_00[0x41c];
@@ -64,12 +68,6 @@ private:
 	BrainStateMachine *m_dozerMachine;
 	BrainStateMachine *m_supplyTruckStateMachine;
 };
-
-Int WorkerAIUpdate::isSupplyTruckBrainActiveAndBusy()
-{
-	return (m_workerMachine->getCurrentStateID() == AS_SUPPLY_TRUCK)
-		&& (m_supplyTruckStateMachine->getCurrentStateID() == ST_BUSY);
-}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine
@@ -86,5 +84,5 @@ Bool WorkerStateMachine::supplyTruckSubMachineReadyToLeave(State *thisState, voi
 		return false;
 
 	return !supplyTruckSubMachineWantsToEnter(thisState, 0)
-		&& update->isSupplyTruckBrainActiveAndBusy();
+		&& update->readyToLeaveSupplyTruckBrainActiveAndBusy();
 }

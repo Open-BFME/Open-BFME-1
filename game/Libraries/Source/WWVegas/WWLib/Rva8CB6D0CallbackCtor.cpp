@@ -64,6 +64,7 @@ class Rva8CB6D0Derived : public Rva00899F00Base
 {
 public:
 	Rva8CB6D0Derived(Rva8CB6D0Callback *callback);
+	virtual ~Rva8CB6D0Derived();
 
 private:
 	Rva8CB6D0Callback	*_callback;	// retail this+0x20

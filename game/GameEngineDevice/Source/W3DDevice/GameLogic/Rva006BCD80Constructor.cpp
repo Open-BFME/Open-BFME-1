@@ -13,6 +13,10 @@ struct DrawableInfo;
 
 class W3DRenderObjectSnapshot : public BfmeBaseVUQ
 {
+public:
+	virtual ~W3DRenderObjectSnapshot();
+
+private:
 	W3DRenderObjectSnapshot( RenderObjClass *parentRobj, DrawableInfo *drawInfo, bool cloneParentRobj );
 	void update( RenderObjClass *robj, DrawableInfo *drawInfo, bool cloneParentRobj );
 

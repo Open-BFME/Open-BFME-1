@@ -17,10 +17,6 @@ private:
 	unsigned char m_data[0x94];
 };
 
-ParticleSystemInfo::~ParticleSystemInfo()
-{
-}
-
 // These helpers are not retail claims; they force MSVC 7.1 to materialize the
 // compiler-generated vector-deleting destructor used by the retail vtable.
 ParticleSystemInfo *MakeParticleSystemInfoArray(int count)

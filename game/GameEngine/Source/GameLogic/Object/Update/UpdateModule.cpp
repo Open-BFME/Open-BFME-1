@@ -72,20 +72,6 @@ UpdateSleepTime UpdateModule::frameToSleepTime(
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/UpdateModule_getWakeFrame.cpp
-// ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime UpdateModule::getWakeFrame() const
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	UnsignedInt nextCallFrame = m_nextCallFrameAndPhase >> 2;
-	if (nextCallFrame > now)
-		return UPDATE_SLEEP(nextCallFrame - now);
-	else
-		return UPDATE_SLEEP_NONE;
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
 void UpdateModule::setWakeFrame(Object* obj, UpdateSleepTime wakeDelay)
 {
 	UnsignedInt now = TheGameLogic->getFrame();
@@ -202,7 +188,6 @@ void UpdateModule::loadPostProcess( void )
 	BehaviorModule::loadPostProcess();
 
 }  // end loadPostProcess
-
 
 
 

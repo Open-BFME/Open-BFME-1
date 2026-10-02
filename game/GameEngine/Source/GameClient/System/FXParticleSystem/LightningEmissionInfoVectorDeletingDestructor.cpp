@@ -8,6 +8,7 @@ void __cdecl operator delete[](void* block);
 class FXParticleSystem {
 public:
 	struct LightningEmissionInfo {
+		LightningEmissionInfo();
 		virtual ~LightningEmissionInfo();
 		char m_body[0x8c - 4];
 		static void operator delete[](void* block) { ::operator delete[](block); }
