@@ -150,35 +150,6 @@
 
 NAT *TheNAT = NULL;
 
-// ??0NAT@@QAE@XZ present-unmatched
-NAT::NAT() 
-{
-	//Added By Sadullah Nader
-	//Initializations inserted
-	m_beenProbed = FALSE;
-	m_connectionPairIndex = 0;
-	m_connectionRound = 0;
-	m_localIP = 0;
-	m_localNodeNumber = 0;
-	m_manglerAddress = 0;
-	m_manglerRetries = 0;
-	m_numNodes = 0;
-	m_numRetries = 0;
-	m_previousSourcePort = 0;
-	for(Int i = 0; i < MAX_SLOTS; i++)
-		m_sourcePorts[i] = 0;
-	m_spareSocketPort = 0;
-	m_startingPortNumber = 0;
-	m_targetNodeNumber = 0;
-	//
-	m_transport = NULL;
-	m_slotList = NULL;
-	m_roundTimeout = 0;
-
-	m_maxNumRetriesAllowed = 10;
-	m_packetID = 0x7f00;
-}
-
 // ??1NAT@@UAE@XZ present-unmatched
 NAT::~NAT() {
 }

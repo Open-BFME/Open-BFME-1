@@ -103,50 +103,6 @@
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 
-// GameWindow::GameWindow =====================================================
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowDefaultConstructorThunk.cpp
-// ??0GameWindow@@QAE@XZ present-unmatched
-GameWindow::GameWindow( void )
-{
-	m_status = WIN_STATUS_NONE;
-
-	m_size.x = 0;
-	m_size.y = 0;
-
-	m_region.lo.x = 0;
-	m_region.lo.y = 0;
-	m_region.hi.x = 0;
-	m_region.hi.y = 0;
-
-	m_cursorX = 0;
-	m_cursorY = 0;
-
-	m_userData = 0;
-
-	m_inputData = NULL;
-
-	winSetDrawFunc( TheWindowManager->getDefaultDraw() );
-	winSetInputFunc( TheWindowManager->getDefaultInput() );
-	winSetSystemFunc( TheWindowManager->getDefaultSystem() );
-	// We use to set the default tooltip func to TheWindowManager->getDefaultTooltip()
-	// but I removed this so that we can set in GUI edit a text string that will be the
-	// default tool tip for a control.
-	winSetTooltipFunc( NULL );
-
-	m_next = NULL;
-	m_prev = NULL;
-	m_parent = NULL;
-	m_child = NULL;
-
-	m_nextLayout = NULL;
-	m_prevLayout = NULL;
-	m_layout = NULL;
-
-	m_editData = NULL;
-
-}  // end GameWindow
-
 // GameWindow::~GameWindow ====================================================
 //=============================================================================
 // byte-exact reconstruction: game/GameEngine/Source/Common/GameWindowDestructorThunk.cpp
