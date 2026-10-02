@@ -27,12 +27,23 @@ struct S4SortElem12
 	int m_bfmeA;
 };
 
-void bfmeAdjustHeap00531C50(S4SortElem12 *first, int holeIndex, int len,
-	S4SortElem12 value, void *comp);
+struct S4Cmp00532740
+{
+	int m_bfmeSlot;
+};
+
+namespace _STL
+{
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
+	Distance len, Tp value, Compare comp);
+}
 
 void bfmePopHeap00531A40(S4SortElem12 *first, S4SortElem12 *last,
 	S4SortElem12 *result, S4SortElem12 value, void *comp, int *)
 {
 	*result = *first;
-	bfmeAdjustHeap00531C50(first, 0, last - first, value, comp);
+	_STL::__adjust_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00532740>(
+		first, 0, last - first, value,
+		*reinterpret_cast<S4Cmp00532740 *>(&comp));
 }

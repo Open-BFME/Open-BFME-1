@@ -4,9 +4,9 @@
 // STLport __pop_heap shape over a twelve-byte element, but the element field
 // order here matches game/GameEngine/Source/Common/S4MakeHeap12.cpp's
 // S4SortElem12 (int m_a; AsciiString m_name; char m_flag;) instead of the
-// (char; AsciiString; int) layout the 0x00531A40 twin uses.  __adjust_heap
-// callee is the already-pinned ?Gen002E07A0@@YAXPAUS4SortElem12@@HHU1@
-// US4Cmp002E0CD0@@@Z (ILT thunk 0x0002C0CA).
+// (char; AsciiString; int) layout the 0x00531A40 twin uses.  Its adjust-heap
+// call uses the matched _STL::__adjust_heap<S4SortElem12 *, int,
+// S4SortElem12, S4Cmp002E0CD0> specialization at 0x002E07A0.
 
 #include "string_base.h"
 
@@ -36,12 +36,17 @@ struct S4Cmp002E0CD0
 	bool operator()(S4SortElem12, S4SortElem12) const;
 };
 
-void Gen002E07A0(S4SortElem12 *first, int hole, int len, S4SortElem12 value,
-	S4Cmp002E0CD0 comp);
+namespace _STL
+{
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __adjust_heap(RandomAccessIterator first, Distance hole, Distance len,
+	Tp value, Compare comp);
+}
 
 void Rva002E0BC0PopHeap(S4SortElem12 *first, S4SortElem12 *last,
 	S4SortElem12 *result, S4SortElem12 value, S4Cmp002E0CD0 comp, int *)
 {
 	*result = *first;
-	Gen002E07A0(first, 0, last - first, value, comp);
+	_STL::__adjust_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp002E0CD0>(
+		first, 0, last - first, value, comp);
 }
