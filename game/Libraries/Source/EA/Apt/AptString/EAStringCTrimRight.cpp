@@ -19,7 +19,8 @@ struct BfmeAllocVKJ
 	void (__cdecl *free)(void *);
 };
 
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class EAStringC
 {
@@ -54,7 +55,7 @@ class EAStringC
 	{
 		StringDataC *data = m_pData;
 		if (--data->m_uRefCount == 0)
-			g_bfmeAllocVKJ->free(data);
+			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free(data);
 	}
 
 	__forceinline EAStringC &operator=(const EAStringC &other)
@@ -62,11 +63,11 @@ class EAStringC
 		++other.m_pData->m_uRefCount;
 		StringDataC *oldData = m_pData;
 		if (--oldData->m_uRefCount == 0)
-			g_bfmeAllocVKJ->free(oldData);
+			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free(oldData);
 		m_pData = other.m_pData;
 		return *this;
 	}
-	EAStringC rva0089F010(int count) const;
+	EAStringC Left(int count) const;
 	EAStringC &rva0089F530(const char *pStrText);
 };
 
@@ -98,7 +99,7 @@ EAStringC &EAStringC::rva0089F530(const char *pStrText)
 		++uTrim;
 	}
 	EAStringC result;
-	result = rva0089F010(static_cast<int>(uSize - uTrim));
+	result = Left(static_cast<int>(uSize - uTrim));
 	*this = result;
 	return *this;
 }

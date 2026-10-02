@@ -18,7 +18,8 @@ struct BfmeAllocVKJ
 	void (__cdecl *free)( void * );
 };
 
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class EAStringC
 {
@@ -28,7 +29,7 @@ public:
 	// own EAStringData view of it and casts at the use.
 	class StringDataC;
 
-	EAStringC();
+	inline EAStringC();
 	EAStringC( const EAStringC &other ) : m_pData( other.m_pData )
 	{
 		++m_pData->m_refCount;
@@ -37,14 +38,14 @@ public:
 	{
 		EAStringData *data = m_pData;
 		if (--data->m_refCount == 0)
-			g_bfmeAllocVKJ->free( data );
+			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free( data );
 	}
 	EAStringC &operator=( const EAStringC &other )
 	{
 		++other.m_pData->m_refCount;
 		EAStringData *oldData = m_pData;
 		if (--oldData->m_refCount == 0)
-			g_bfmeAllocVKJ->free( oldData );
+			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free( oldData );
 		m_pData = other.m_pData;
 		return *this;
 	}
@@ -63,7 +64,7 @@ private:
 
 extern EAStringC::StringDataC g_rva012D5298Empty;
 
-EAStringC::EAStringC()
+inline EAStringC::EAStringC()
 	: m_pData( (EAStringData *)&g_rva012D5298Empty )
 {
 	++m_pData->m_refCount;
