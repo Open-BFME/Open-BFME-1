@@ -28,8 +28,8 @@ float float24; bool field28;
 };
 struct DrawGroupInfo;
 extern DrawGroupInfo *TheDrawGroupInfo;
-class Rva0048EC80Manager;
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+class DisplayStringManager;
+extern DisplayStringManager *TheDisplayStringManager;
 class Rva00410F90 {
 public:
 void method();
@@ -46,7 +46,7 @@ if(((Group00410F90 *)TheDrawGroupInfo)->field20) xPos += asInt(((Group00410F90 *
 else { int delta=field3cc; delta-=field3c4; xPos += delta*((Group00410F90 *)TheDrawGroupInfo)->float1c; }
 if(((Group00410F90 *)TheDrawGroupInfo)->field28) yPos += asInt(((Group00410F90 *)TheDrawGroupInfo)->float24);
 else { int lo=field3c4; yPos += (field3cc-lo)*((Group00410F90 *)TheDrawGroupInfo)->float24; }
-Numeral00410F90* str = ((Manager00410F90 *)Rva0048EC80TheManager)->numeral(groupNum);
+Numeral00410F90* str = ((Manager00410F90 *)TheDisplayStringManager)->numeral(groupNum);
 str->colors(color,((Group00410F90 *)TheDrawGroupInfo)->field10);
 str->draw(xPos,yPos,((Group00410F90 *)TheDrawGroupInfo)->field14,((Group00410F90 *)TheDrawGroupInfo)->field18);
 }

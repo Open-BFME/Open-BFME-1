@@ -26,7 +26,7 @@ public:
 	virtual void slot3C(int *width, int *height);
 };
 
-class Rva00510DC0DisplayManager
+class DisplayStringManager
 {
 public:
 	virtual void slot00();
@@ -72,7 +72,7 @@ extern "C" __declspec(dllimport) int __cdecl _snprintf(
 	char *, unsigned int, const char *, ...);
 
 extern Rva00510DC0DisplayView *Rva00510DC0Display;
-extern Rva00510DC0DisplayManager *Rva00510DC0DisplayManagerGlobal;
+extern DisplayStringManager *TheDisplayStringManager;
 extern WindowManager *g_theWindowManager;
 extern FontLibraryBFMERetail *Rva00510DC0FontLibraryGlobal;
 extern int Rva00510DC0DisplayWidth;
@@ -97,7 +97,7 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	if (font == 0)
 		return;
 
-	display = Rva00510DC0DisplayManagerGlobal->newDisplayString();
+	display = TheDisplayStringManager->newDisplayString();
 	Rva00510DC0Display = display;
 	display->setFont(font);
 	Rva00510DC0Display->setText(*text);

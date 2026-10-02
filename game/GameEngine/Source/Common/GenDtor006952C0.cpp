@@ -17,7 +17,7 @@ struct Gen_t_004353c0_p8cd
 
 template class _STL::vector<Gen_t_004353c0_p8cd>;
 
-class Rva0048EC80Manager
+class DisplayStringManager
 {
 public:
 	virtual void slot00();
@@ -33,7 +33,7 @@ public:
 	virtual void release(void *item);
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+extern DisplayStringManager *TheDisplayStringManager;
 
 class BfmeItemKA
 {
@@ -62,14 +62,14 @@ private:
 
 Gen0000D33C::~Gen0000D33C()
 {
-	Rva0048EC80Manager *manager = Rva0048EC80TheManager;
+	DisplayStringManager *manager = TheDisplayStringManager;
 	if (manager != 0)
 	{
 		for (int i = 0; i < m_count; ++i)
-			Rva0048EC80TheManager->release(m_items[i]);
+			TheDisplayStringManager->release(m_items[i]);
 
 		if (m_owned != 0)
-			Rva0048EC80TheManager->release(m_owned);
+			TheDisplayStringManager->release(m_owned);
 	}
 
 	BfmeItemKA **items = m_items;
