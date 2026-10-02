@@ -54,7 +54,12 @@ struct Refresh0023FA80GlobalAI {
     Refresh0023FA80Pathfinder *pathfinder() const { return at00c; }
 };
 struct Refresh0023FA80GameLogic { unsigned char pad000[0x3c]; unsigned int at03c; };
-extern Refresh0023FA80GlobalAI *g0023FA80Va012EF214;
+// 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
+// ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. Refresh0023FA80GlobalAI
+// stays as this TU's offset view of it.
+class AI;
+extern AI *TheAI;
+static inline Refresh0023FA80GlobalAI *aiView0023FA80() { return (Refresh0023FA80GlobalAI *)TheAI; }
 // Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
 // GameLogic.cpp).  This TU reads it through its own Refresh0023FA80GameLogic view.
 class GameLogic;
@@ -143,12 +148,12 @@ int FormationRefresh0023FA80::run() {
     } else {
         typedef int (Refresh0023FA80Route::*LayerCall)(Refresh0023FA80Object *, Coord3D);
         union { void (*address)(); LayerCall member; } layerCall = { j_00040f52 };
-        int layer = (((Refresh0023FA80Route *)g0023FA80Va012EF214->pathfinder())->*layerCall.member)(obj,obj->at038);
+        int layer = (((Refresh0023FA80Route *)aiView0023FA80()->pathfinder())->*layerCall.member)(obj,obj->at038);
         if (layer != obj->layer()) {
             obj->setLayer(layer);
             for (Refresh0023FA80Node *node=at028->next; node!=at028; node=node->next) {
                 Refresh0023FA80Object *member=node->object;
-                int memberLayer = (((Refresh0023FA80Route *)g0023FA80Va012EF214->pathfinder())->*layerCall.member)(member,member->at038);
+                int memberLayer = (((Refresh0023FA80Route *)aiView0023FA80()->pathfinder())->*layerCall.member)(member,member->at038);
                 member->setLayer(memberLayer);
             }
             at0d8 = true;
@@ -167,7 +172,7 @@ int FormationRefresh0023FA80::run() {
         if (at0d8) return 1;
         at0d9=false;
         if (!ai->blocked()) {
-            Refresh0023FA80Pathfinder *finder=g0023FA80Va012EF214->pathfinder();
+            Refresh0023FA80Pathfinder *finder=aiView0023FA80()->pathfinder();
             typedef void (Refresh0023FA80Route::*UpdateCall)(Refresh0023FA80Object *, const Coord3D *, int, const char *, int);
             union { void (*address)(); UpdateCall member; } updateCall = { j_000294e2 };
             (((Refresh0023FA80Route *)finder)->*updateCall.member)(obj,&obj->at038,obj->layer(),

@@ -82,7 +82,11 @@ extern TerrainLogic *TheTerrainLogic;
 class Object;
 class Pathfinder { public: void removeObjectFromPathfindMap(Object*); void addObjectToPathfindMap(Object*); };
 class Rva0041D290Manager {char bytes[0xc];Pathfinder *p;public:Pathfinder *get()const{return p;}};
-extern Rva0041D290Manager *Rva012ef214;
+// 0x012EF214 is retail's TheAI singleton (`extern AI *TheAI`, the class from
+// Common/System/game_engine_subsystems.h). Rva0041D290Manager stays as this
+// TU's offset view of it; the references below are the real global.
+class AI;
+extern AI *TheAI;
 typedef _STL::vector<void*> Rva0041D290Vector;
 enum Rva0041D290Decal {RvaDecalZero};
 class Rva00410F10Allocation;
@@ -321,7 +325,7 @@ void Drawable::xfer(Xfer *x)
   if(version.data[1]>=3){*x==m_352;}
   if(x->IsLoading()&&m_9c){
    void *t=field<void*>(m_9c,4);if(t&&field<Rva0041D290Override*>(t,4))t=field<Rva0041D290Override*>(t,4)->rva00087a80();
-   if(field<unsigned>(t,0xd8)&0x200000){bool found=false;for(Rva0041D290DrawModule **m=m_f0;*m;++m)found|=(*m)->v32();if(found){Rva012ef214->get()->removeObjectFromPathfindMap(m_9c);Rva012ef214->get()->addObjectToPathfindMap(m_9c);}}
+   if(field<unsigned>(t,0xd8)&0x200000){bool found=false;for(Rva0041D290DrawModule **m=m_f0;*m;++m)found|=(*m)->v32();if(found){((Rva0041D290Manager*)TheAI)->get()->removeObjectFromPathfindMap(m_9c);((Rva0041D290Manager*)TheAI)->get()->addObjectToPathfindMap(m_9c);}}
   }
  }
 }

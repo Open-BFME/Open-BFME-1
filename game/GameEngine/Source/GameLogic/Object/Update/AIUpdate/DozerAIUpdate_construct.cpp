@@ -494,7 +494,11 @@ extern Rva002B7C80ThingFactory *TheThingFactory;
 // retail order without forced instructions or volatile field changes.
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern Rva002B7C80AI *TheAI;
+// 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
+// ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. Rva002B7C80AI stays as
+// this TU's offset view of it.
+class AI;
+extern AI *TheAI;
 #define BFME_DEFAULT_HEALTH 1.0f
 
 // ?construct@DozerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
@@ -541,7 +545,7 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *buildTemplat
 	Coord3D groundPosition = *buildPosition;
 	groundPosition.z = ((Rva002B7C80TerrainLogicPre *)TheTerrainLogic)->getGroundHeight(buildPosition->x, buildPosition->y);
 	bfmeSetPosition(constructedObject, &groundPosition);
-	bfmeAddObject(TheAI->pathfinder(), constructedObject);
+	bfmeAddObject(((Rva002B7C80AI*)TheAI)->pathfinder(), constructedObject);
 	bfmeOnStructureCreated((Rva002B7C80Player *)owningPlayer,
 		getObject(), constructedObject);
 

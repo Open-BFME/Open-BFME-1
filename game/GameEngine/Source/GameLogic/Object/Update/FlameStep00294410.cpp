@@ -214,7 +214,11 @@ struct FlamePrimary00294410 { char pad00[0x34]; int at34; void stopSound() { if(
 class BfmeE1081;
 class BfmeD1081 { public: char bfmeDo1081(BfmeE1081*,char*,char*,int); };
 struct PathSystem00294410 { char pad00[12]; BfmeD1081* at0c; BfmeD1081* getPathfinder() { return at0c; } };
-extern PathSystem00294410* g_path00294410;
+// 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
+// ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. PathSystem00294410
+// stays as this TU's offset view of it.
+class AI;
+extern AI *TheAI;
 class BfmeMarksYE { public: void bfmeSetYE(unsigned char,unsigned char); };
 class Rva002918E0Object { public: void set(unsigned char); };
 enum UpdateSleepTime { SLEEP1=1 };
@@ -249,7 +253,7 @@ int FlameStep00294410::update() {
         Coord3D candidate; candidate.set((float)x,(float)y,pos->z);
         float dx=pos->x-candidate.x,dy=pos->y-candidate.y;
         float bx=pos->x-best.x,by=pos->y-best.y;
-        if(dx*dx+dy*dy<bx*bx+by*by && g_path00294410->getPathfinder()->bfmeDo1081((BfmeE1081*)obj,(char*)pos,(char*)&candidate,0)) best=candidate;
+        if(dx*dx+dy*dy<bx*bx+by*by && ((PathSystem00294410*)TheAI)->getPathfinder()->bfmeDo1081((BfmeE1081*)obj,(char*)pos,(char*)&candidate,0)) best=candidate;
        }
       }
      }

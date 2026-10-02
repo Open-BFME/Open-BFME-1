@@ -79,7 +79,10 @@ public:
  Pathfinder *pathfinder() const {return m_pathfinder;}
 };
 
-extern "C" AI *_TheAIParseDefinitionAI;
+// 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
+// ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. The local AI view above
+// is this TU's offset-only view; the reference below is the real global.
+extern AI *TheAI;
 
 class TerrainLogic
 {
@@ -403,7 +406,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 	}
 
 	reinterpret_cast<GameLogicColorIndexView *>(TheGameLogic)->applyObjectColorIndex383930(produced, creationObject->getColorIndex());
-	_TheAIParseDefinitionAI->pathfinder()->addObjectToPathfindMap(produced);
+	TheAI->pathfinder()->addObjectToPathfindMap(produced);
 
 	Object *host = TheGameLogic->findObjectByID(m_lastExitId);
 	if (host)
@@ -426,7 +429,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 	{
 		Coord3D tmp;
 		getNaturalRallyPoint(tmp, true);
-		_TheAIParseDefinitionAI->pathfinder()->snapPosition(produced, &tmp);
+		TheAI->pathfinder()->snapPosition(produced, &tmp);
 		std::vector<Coord3D> exitPath;
 		exitPath.push_back(tmp);
 
@@ -448,7 +451,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 			tmp = m_rallyPoint;
 			if (!ai->isGiantBird())
 			{
-				if (_TheAIParseDefinitionAI->pathfinder()->adjustDestination(
+				if (TheAI->pathfinder()->adjustDestination(
 					produced, ai->getLocomotorSet(), &tmp, 0))
 					exitPath.push_back(tmp);
 			}
@@ -462,7 +465,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 		{
 			produced->clearDisabled(DISABLED_HELD);
 			ai->aiFollowExitProductionPath(&exitPath, creationObject, CMD_FROM_AI);
-			_TheAIParseDefinitionAI->pathfinder()->moveAlliesAwayFromDestination(produced, tmp);
+			TheAI->pathfinder()->moveAlliesAwayFromDestination(produced, tmp);
 		}
 		else
 		{
@@ -474,7 +477,7 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 	{
 		Coord3D tmp;
 		getNaturalRallyPoint(tmp, true);
-		_TheAIParseDefinitionAI->pathfinder()->snapPosition(produced, &tmp);
+		TheAI->pathfinder()->snapPosition(produced, &tmp);
 		if (!reinterpret_cast<Thing *>(produced)->isKindOf(KINDOF_VEHICLE))
 			produced->setPosition(&tmp);
 		m_lastExitId = produced->getId74();

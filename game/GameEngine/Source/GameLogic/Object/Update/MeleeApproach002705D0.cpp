@@ -61,7 +61,12 @@ struct Melee002705D0GameLogic { unsigned char pad000[0x3c]; unsigned int at03c; 
 class GameLogic;
 extern GameLogic *TheGameLogic;
 static inline Melee002705D0GameLogic *frameView002705D0() { return (Melee002705D0GameLogic *)TheGameLogic; }
-extern Melee002705D0GlobalAI *g002705D0Va012EF214;
+// 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
+// ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. Melee002705D0GlobalAI
+// stays as this TU's offset view of it.
+class AI;
+extern AI *TheAI;
+static inline Melee002705D0GlobalAI *aiView002705D0() { return (Melee002705D0GlobalAI *)TheAI; }
 extern Melee002705D0Terrain *g002705D0Va012EF4CC;
 extern bool g002705D0Va012F0239;
 extern void *g002705D0Va012ED4FC;
@@ -110,9 +115,9 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
         delta.x=oldPosition.x-destination->x;
         delta.y=oldPosition.y-destination->y;
         delta.z=0.0f;
-        if (!flag && sqrt(delta.x*delta.x+delta.y*delta.y)>g002705D0Va012EF214->at014->at094) {
+        if (!flag && sqrt(delta.x*delta.x+delta.y*delta.y)>aiView002705D0()->at014->at094) {
             delta.normalize();
-            Melee002705D0Data *data=g002705D0Va012EF214->at014;
+            Melee002705D0Data *data=aiView002705D0()->at014;
             delta.x*=data->at094;
             delta.y*=data->at094;
         }
@@ -129,9 +134,9 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
     Melee002705D0Object *adjustObject=m_object;
     typedef bool (Melee002705D0Route::*AdjustCall)(Melee002705D0Object *, void *, Coord3D *);
     union { void (*address)(); AdjustCall member; } adjustCall={j_0002f3c9};
-    if ((((Melee002705D0Route *)g002705D0Va012EF214->pathfinder())->*adjustCall.member)(adjustObject,at1a8,&pos)) {
+    if ((((Melee002705D0Route *)aiView002705D0()->pathfinder())->*adjustCall.member)(adjustObject,at1a8,&pos)) {
         Melee002705D0Object *owner=m_object;
-        Melee002705D0Pathfinder *finder=g002705D0Va012EF214->pathfinder();
+        Melee002705D0Pathfinder *finder=aiView002705D0()->pathfinder();
         typedef void (Melee002705D0Route::*UpdateCall)(Melee002705D0Object *,const Coord3D *,int,const char *,int);
         union { void (*address)(); UpdateCall member; } updateCall={j_000294e2};
         (((Melee002705D0Route *)finder)->*updateCall.member)(owner,&pos,g002705D0Va012EF4CC->layer(owner,&pos),
@@ -158,7 +163,7 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
                 return true;
             }
             at31e=true;
-            g002705D0Va012EF214->pathfinder()->queue(m_object->at074);
+            aiView002705D0()->pathfinder()->queue(m_object->at074);
             return true;
         }
     }
