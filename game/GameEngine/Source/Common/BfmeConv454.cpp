@@ -1,8 +1,6 @@
-struct BfmeSubBFF
-{
-	void bfmeStepBFF();
-	unsigned char m_bfmeHead[4];
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+typedef StringBase<unsigned short> BfmeSubBFF;
 
 class BfmeThingBFF
 {
@@ -18,6 +16,6 @@ public:
 
 void BfmeThingBFF::bfmeGoBFF()
 {
-	m_bfmeSub.bfmeStepBFF();
+	m_bfmeSub.removeLastChar();
 	bfmeTailBFF();
 }
