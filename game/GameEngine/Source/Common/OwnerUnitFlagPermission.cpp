@@ -2,20 +2,14 @@
 // Permission gate: refuse when the owner's own check fails, otherwise allow
 // unless the stored key resolves to a unit whose low flag bit is clear.
 
+// stlport
+#include "Thing/GameLogicObjectLookup.h"
+
 class BfmeUnitXR
 {
 public:
 	unsigned char m_bfmeHeadXR[0x344];
 	unsigned char m_bfmeFlagsXR;
-};
-
-// TU-local view of the retail GameLogic; the global itself is the canonical
-// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
-class GameLogic;
-
-struct Rva00367E30Logic
-{
-	BfmeUnitXR *bfmeFindXR(void *key);
 };
 
 extern GameLogic *TheGameLogic;
@@ -27,7 +21,7 @@ public:
 	bool bfmeCheckXR(void *item);
 
 	unsigned char m_bfmeHeadXR[0x8c];
-	void *m_bfmeKeyXR;
+	ObjectID m_bfmeKeyXR;
 };
 
 // The return type must be bool so the first exit reuses al from the test, and
@@ -38,12 +32,12 @@ bool BfmeOwnerXR::Rva0025DDB0(void *item)
 	if (!bfmeCheckXR(item))
 		return false;
 
-	void *key = m_bfmeKeyXR;
+	ObjectID key = m_bfmeKeyXR;
 
 	if (key == 0)
 		return true;
 
-	BfmeUnitXR *unit = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXR(key);
+	BfmeUnitXR *unit = (BfmeUnitXR *)TheGameLogic->findObjectByID(key);
 
 	return unit == 0 || (unit->m_bfmeFlagsXR & 1) != 0;
 }
