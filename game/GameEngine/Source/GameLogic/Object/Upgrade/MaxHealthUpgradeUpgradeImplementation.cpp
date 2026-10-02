@@ -1,3 +1,7 @@
+// MaxHealthUpgrade::upgradeImplementation at retail 0x002D64D0: slot 9 of the UpgradeMux table
+// 0x010CD158, reached only through ILT 0x0000F155. MaxHealthUpgrade's registered
+// constructor 0x002D63A0 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 // Address-derived virtual forwarding helper at 0x002D64D0.
 // cl: /O2 /DNDEBUG /DWIN32 /MD
 
@@ -44,15 +48,13 @@ public:
 	int m_value;
 };
 
-class Rva002D64D0Owner
+class MaxHealthUpgrade
 {
-public:
-	void forwardValue();
-
-private:
+protected:
+	virtual void upgradeImplementation();
 };
 
-void Rva002D64D0Owner::forwardValue()
+void MaxHealthUpgrade::upgradeImplementation()
 {
 	Rva002D64D0Source *source = *reinterpret_cast<Rva002D64D0Source **>(reinterpret_cast<char *>(this) - 8);
 	Rva002D64D0Data *data = *reinterpret_cast<Rva002D64D0Data **>(reinterpret_cast<char *>(this) - 12);
