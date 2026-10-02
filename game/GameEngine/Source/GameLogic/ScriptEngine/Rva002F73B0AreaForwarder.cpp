@@ -1,6 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-#include "StringInline.h"
+#include "ascii_string.h"
 
 // Open-BFME: two-argument member overload reconstructed from retail RVA
 // 0x002F73B0.  ScriptActions vtable and load-postprocess xrefs prove that this
@@ -9,28 +9,6 @@
 // recovered, so this translation-unit-local declaration remains address-derived.
 
 typedef bool Bool;
-
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
-class BfmeAsciiStringArg
-{
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
-};
 
 class ScriptEngineAreaLookup
 {
@@ -57,7 +35,7 @@ public:
 	virtual void _slot19() = 0;
 	virtual void _slot20() = 0;
 	virtual void _slot21() = 0;
-	virtual void *getArea(BfmeAsciiStringArg areaName) = 0;
+	virtual void *getArea(AsciiString areaName) = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h

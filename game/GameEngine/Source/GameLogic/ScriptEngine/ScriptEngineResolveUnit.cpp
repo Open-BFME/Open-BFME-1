@@ -1,8 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x0034CA20, 80 bytes.  A script unit parameter may carry an object
 // id; otherwise the name is resolved through BFME's by-value lookup slot.
 
-#include "StringInline.h"
+#include "ascii_string.h"
 
 typedef int ObjectID;
 
@@ -15,29 +15,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
-class BfmeAsciiStringArg
-{
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-
-	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
-};
 
 class ScriptActionParameter
 {
@@ -78,7 +55,7 @@ public:
 	virtual void slot24() = 0;
 	virtual void slot25() = 0;
 	virtual void slot26() = 0;
-	virtual Object *getUnitNamedByValue(BfmeAsciiStringArg name) = 0;
+	virtual Object *getUnitNamedByValue(AsciiString name) = 0;
 };
 
 class ScriptEngine

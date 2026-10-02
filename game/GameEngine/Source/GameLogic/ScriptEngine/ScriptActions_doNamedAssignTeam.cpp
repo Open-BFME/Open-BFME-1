@@ -5,29 +5,6 @@
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
-{
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
-};
-
 class Team;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -78,7 +55,7 @@ public:
 	virtual void slot14() = 0;
 	virtual void slot15() = 0;
 	virtual void slot16() = 0;
-	virtual Team *getTeamNamed(BfmeAsciiStringArg name, bool exact) = 0;
+	virtual Team *getTeamNamed(AsciiString name, bool exact) = 0;
 	virtual void slot18() = 0;
 	virtual void slot19() = 0;
 	virtual void slot20() = 0;
