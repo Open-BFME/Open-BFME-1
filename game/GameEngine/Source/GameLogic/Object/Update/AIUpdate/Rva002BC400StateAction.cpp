@@ -42,6 +42,17 @@ public:
 	void finish(void *argument);
 };
 
+// The call target at 0x0003F42C is emitted under this thunk's ledger name.
+extern void j_0003f42c();
+
+typedef void (Rva002BC470StateAction::*Rva002BC470FinishCall)(void *);
+
+union Rva002BC470FinishPointer
+{
+	Rva002BC470FinishCall member;
+	void (*function)();
+};
+
 class Rva002BC400StateAction
 {
 public:
@@ -62,7 +73,9 @@ void Rva002BC400StateAction::run(void *first, unsigned char second, void *third)
 	{
 		m_sink->beginAction();
 		m_sink->setGoalWaypoint((const Waypoint *)first);
-		((Rva002BC470StateAction *)this)->finish(third);
+		Rva002BC470FinishPointer finishCall;
+		finishCall.function = j_0003f42c;
+		(((Rva002BC470StateAction *)this)->*finishCall.member)(third);
 		m_sink->signalAction(0x3f9 + (second != 0));
 	}
 }

@@ -13,6 +13,17 @@ public:
 	int m_entryCount;
 };
 
+// Retail routes this call through the address-derived thunk at 0x00034EC3.
+extern void j_00034ec3();
+
+typedef void (Rva00736AF0Context::*Rva00736AF0DispatchCall)(int, void *);
+
+union Rva00736AF0DispatchPointer
+{
+	Rva00736AF0DispatchCall member;
+	void (*function)();
+};
+
 extern "C" bool __fastcall Rva00736AF0LookupDispatch( Rva00736AF0Context *self, void *, void *owner, void *request )
 {
 	if ( owner == 0 ) {
@@ -38,6 +49,8 @@ extern "C" bool __fastcall Rva00736AF0LookupDispatch( Rva00736AF0Context *self, 
 	return false;
 
 dispatch:
-	self->dispatch( i, request );
+	Rva00736AF0DispatchPointer dispatchCall;
+	dispatchCall.function = j_00034ec3;
+	(self->*dispatchCall.member)( i, request );
 	return true;
 }
