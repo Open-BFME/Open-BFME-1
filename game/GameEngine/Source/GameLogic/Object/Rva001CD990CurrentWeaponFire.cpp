@@ -53,10 +53,10 @@ public:
 		const void *optionalTarget, Bool optionalFlag);
 };
 
-class BfmeItem1005
+class BfmeThing916D
 {
 public:
-	void bfmeDoD1005(Int value);
+	void bfmeGo916D(void *value);
 };
 
 // The retail ILT is the source-of-truth symbol for the incomplete tracker
@@ -99,7 +99,7 @@ void Rva001CD990Object::fireCurrentWeapon(const Object *target,
 		m_firingTracker->rva001B3510(weapon, targetID, 0, 0);
 
 	if (weapon->m_template->m_statusSentinel == -1)
-		((BfmeItem1005 *)this)->bfmeDoD1005(1);
+		((BfmeThing916D *)this)->bfmeGo916D((void *)1);
 
 	m_privateStatus &= (unsigned char)~2;
 }

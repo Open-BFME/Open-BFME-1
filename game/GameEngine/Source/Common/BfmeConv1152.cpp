@@ -1,7 +1,8 @@
 // cl: /Od
 // Open-BFME5 conversions.
+// stlport
 
-extern "C" void __cdecl bfmeCopy1152(char *d0, char *d1, char *s0, char *s1);
+#include <string>
 
 // retail callee at 0x006434C0, reached through the ILT thunk at 0x000132CD;
 // declaration only, the body is game/gen_small/fun_004.cpp
@@ -43,5 +44,6 @@ void BfmeS1152::bfmeReplace1152(unsigned int pos, unsigned int count, BfmeR1152 
 	// The shorter of the two is taken by address, not by value: retail keeps the
 	// pair of `lea`s and the pointer spill that a value-returning min folds away.
 	chosen = (tailLen < count) ? &tailLen : &count;
-	bfmeCopy1152(m_begin + pos, m_begin + pos + *chosen, src->m_begin, src->m_end);
+	_STL::basic_string<char>::_M_compare(
+		m_begin + pos, m_begin + pos + *chosen, src->m_begin, src->m_end);
 }

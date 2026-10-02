@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Open-BFME5: WorkerAIUpdate::canAcceptNewRepair, retail 0x002C99C0.
 //
@@ -9,18 +9,17 @@
 // at 0x002B87E0.
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <hash_map>
+#include "Common/Thing.h"
+#include "Common/ThingTemplate.h"
+#include "GameClient/TerrainRoads.h"
+#include "GameLogic/Module/BridgeTowerBehavior.h"
 
-typedef int ObjectID;
 typedef bool Bool;
 
-enum KindOfType
-{
-	KINDOF_BRIDGE_TOWER = 0x18
-};
-
 class Object;
-typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
+typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
 
 class GameLogic
 {
@@ -43,12 +42,6 @@ private:
 };
 
 extern GameLogic *TheGameLogic;
-
-class Thing
-{
-public:
-	bool isKindOf(KindOfType kind) const;
-};
 
 class Object : public Thing
 {
@@ -111,15 +104,6 @@ private:
 	DozerTaskInfo m_task[3];
 };
 
-struct Rva002B7240Source
-{
-public:
-	virtual void unused(void) = 0;
-	virtual ObjectID getBridgeID(void) = 0;
-};
-
-Rva002B7240Source *Rva002B7240Lookup(ObjectID id);
-
 Bool WorkerAIUpdate::canAcceptNewRepair(Object *obj)
 {
 	if (obj == 0)
@@ -134,13 +118,13 @@ Bool WorkerAIUpdate::canAcceptNewRepair(Object *obj)
 		if (currentRepair == obj)
 			return false;
 
-		if (((Thing *)currentRepair)->isKindOf(KINDOF_BRIDGE_TOWER) &&
-			((Thing *)obj)->isKindOf(KINDOF_BRIDGE_TOWER))
+		if (((Thing *)currentRepair)->isKindOf((KindOfType)0x18) &&
+			((Thing *)obj)->isKindOf((KindOfType)0x18))
 		{
-			Rva002B7240Source *currentTowerInterface =
-				Rva002B7240Lookup((ObjectID)(unsigned long)currentRepair);
-			Rva002B7240Source *newTowerInterface =
-				Rva002B7240Lookup((ObjectID)(unsigned long)obj);
+			BridgeTowerBehaviorInterface *currentTowerInterface =
+				BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject(currentRepair);
+			BridgeTowerBehaviorInterface *newTowerInterface =
+				BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject(obj);
 
 			if (currentTowerInterface == 0 || newTowerInterface == 0)
 				return false;

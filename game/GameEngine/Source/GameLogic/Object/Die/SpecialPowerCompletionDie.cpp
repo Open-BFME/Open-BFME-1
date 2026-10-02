@@ -95,7 +95,7 @@ class SpecialPowerCompletionDie : public DieModule
 public:
 	SpecialPowerCompletionDie( Thing *, const ModuleData * );
 
-	void notifyScriptEngine( void );		///< ILT 0x00017981
+	virtual ~SpecialPowerCompletionDie();	///< ILT 0x00017981
 
 	virtual void onDie( const DamageInfo *damageInfo );
 };
@@ -114,5 +114,5 @@ void SpecialPowerCompletionDie::onDie( const DamageInfo *damageInfo )
 {
 	if (!isDieApplicable(damageInfo))
 		return;
-	notifyScriptEngine();
+	this->SpecialPowerCompletionDie::~SpecialPowerCompletionDie();
 }
