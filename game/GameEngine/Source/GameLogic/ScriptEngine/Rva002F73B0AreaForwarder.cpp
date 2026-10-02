@@ -7,6 +7,13 @@
 // virtual reapplies a saved human-impassable-area state through the three-
 // argument target at 0x002F7340.  The original method spelling is not
 // recovered, so this translation-unit-local declaration remains address-derived.
+//
+// The by-value area-name parameter is retail's AsciiString: at 0x002F7340 the
+// callee builds it in place at [esp] and calls 0x00887B60, which the ledger
+// defines as ??0?$StringBase@D@@AAE@ABV0@@Z. The canonical shim's AsciiString
+// has exactly that layout (one data pointer) and that inline forwarder, so the
+// local BfmeStringArgBase/BfmeAsciiStringArg pair is gone; the previous
+// TU-local copy ctor was the one spelling nothing defined.
 
 typedef bool Bool;
 

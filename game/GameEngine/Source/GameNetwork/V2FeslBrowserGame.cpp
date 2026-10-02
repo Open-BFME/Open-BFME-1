@@ -30,10 +30,18 @@ public:
 	char m_ugid[0x25];
 };
 
-class Rva00802B30Element
+// 0x00802B30 is DEFINED in the ledger as
+// ?bfmeFindZP@BfmeOwnerZP@@QAEXPAVBfmeKeyZP@@@Z (game/Libraries/.../
+// BfmeConv1882.cpp), so the element the vtable hands back is spelled with the
+// owner's real class and method name here. The record argument is passed
+// through unchanged: only the pointee's cv-qualification differs from the
+// ledger's BfmeKeyZP*, which is not part of the emitted code.
+class BfmeKeyZP;
+
+class BfmeOwnerZP
 {
 public:
-	void store(const Rva007FBEF0GameRecord *record);
+	void bfmeFindZP(BfmeKeyZP *key);
 };
 
 class Rva007F7980Listener
@@ -75,7 +83,7 @@ public:
 	virtual void slot18();
 	virtual void slot19();
 	virtual void slot20();
-	virtual Rva00802B30Element *findGame(int lid);
+	virtual BfmeOwnerZP *findGame(int lid);
 
 	char m_head[0x18];
 	Rva007F7980Listener *m_listener;
@@ -90,8 +98,8 @@ void Rva007F7980Browser::onGame(Rva007E8810Message *message)
 	int gid = record.m_gid;
 	if (((W3DVideoBuffer *)message)->W3DVideoBuffer::valid())
 		return;
-	Rva00802B30Element *element = findGame(lid);
+	BfmeOwnerZP *element = findGame(lid);
 	if (element != 0)
-		element->store(&record);
+		element->bfmeFindZP((BfmeKeyZP *)&record);
 	m_listener->gameReady(lid, gid);
 }
