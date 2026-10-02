@@ -29,7 +29,9 @@ public:
 #undef GS_SLOT
 };
 class GameSpyInfo;
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // BFME layout independently used by matched GameSpyInfo::updatePlayerInfo636C60.
 // The third AsciiString is absent in the Zero Hour PlayerInfo declaration.

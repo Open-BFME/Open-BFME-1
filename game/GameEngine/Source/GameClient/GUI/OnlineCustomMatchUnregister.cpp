@@ -72,7 +72,9 @@ public:
 
 void _bfme_closeAptScreen( const AsciiString &name );
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineCustomMatch : public BfmeAptGameWindow, public BfmeAptScreenSecondary
 {
@@ -96,7 +98,7 @@ void BfmeAptScreenOnlineCustomMatch::unregisterInitGadgets()
 	{
 		if( TheGameSpyInfo )
 		{
-			TheGameSpyInfo->releaseStagingObject( staging );
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->releaseStagingObject( staging );
 			m_stagingObject = 0;
 		}
 	}

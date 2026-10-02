@@ -46,7 +46,9 @@ public:
 	GameWindow *m_fifthWindow;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern Shell *TheShell;
 extern unsigned char g_012F4801;
 extern const char *g_012F4804;
@@ -55,7 +57,7 @@ void Rva505C80WindowVisibilityThunk::updateAt00505B40()
 {
 	if (!m_gate->winIsHidden())
 	{
-		GameSpyInfo *info = TheGameSpyInfo;
+		GameSpyInfo *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo);
 		void **vtable = *reinterpret_cast<void ***>(info);
 		g_012F4801 = 1;
 		reinterpret_cast<void (__fastcall *)(GameSpyInfo *)>(vtable[7])(info);
