@@ -265,9 +265,8 @@ public:
 };
 
 class GameSpyInfo;
-class GameSpyConfig;
 extern GameSpyInfo *TheGameSpyInfo;
-extern GameSpyConfig *TheGameSpyConfig;
+extern GameSpyConfigInterface *TheGameSpyConfig;
 extern GameWindowManager *TheWindowManager;
 extern Color GameSpyColor[];
 static GameWindow *listboxLobbyPlayers;

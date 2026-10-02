@@ -118,7 +118,7 @@ public:
 	void rva005397D0PopulateGroupRoomListbox();
 };
 
-class GameSpyConfig
+class GameSpyConfigInterface
 {
 public:
 	virtual void s00() = 0; virtual void s01() = 0; virtual void s02() = 0;
@@ -129,7 +129,7 @@ public:
 	virtual unsigned char slot14() = 0;
 };
 
-extern GameSpyConfig *TheGameSpyConfig;
+extern GameSpyConfigInterface *TheGameSpyConfig;
 
 class BfmeAptScreenOnlineCustomMatch
 {
