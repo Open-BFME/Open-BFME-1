@@ -1,3 +1,13 @@
+#include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
+
+class Module;
+#define OBJECT_TU_MEMBERS \
+protected: \
+	Module *findModule(NameKeyType key) const; \
+	friend class BfmeHostERI;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class BfmeStateERI
 {
 public:
@@ -5,35 +15,25 @@ public:
 	unsigned char m_bfmeFlagsERI;
 };
 
-class BfmeBERI
+// ILT 0x000022BB reaches Overridable::getFinalOverride at 0x00087A80.
+class Overridable
 {
 public:
-	BfmeStateERI *bfmeStateERI();
+	const Overridable *getFinalOverride() const;
 };
 
 class BfmeAERI
 {
 public:
 	unsigned char m_bfmeHeadERI[4];
-	BfmeBERI *m_bfmeBERI;
+	Overridable *m_bfmeBERI;
 };
 
-class BfmeModuleERI
+// ILT 0x00040DC2 reaches StealthUpdate::markAsDetected at 0x002AD380.
+class StealthUpdate
 {
 public:
-	void bfmeSetERI(int mode, int flag);
-};
-
-enum NameKeyType;
-class Module;
-
-// The module lookup below is retail's Object::findModule (ILT thunk 0x0002AE23),
-// a protected member, so only the friend may call it here.
-class Object
-{
-protected:
-	Module *findModule(NameKeyType key) const;
-	friend class BfmeHostERI;
+	void markAsDetected(unsigned int frames, bool propagate);
 };
 
 class BfmeThingERI
@@ -51,13 +51,8 @@ public:
 	BfmeThingERI *m_bfmeThingERI;
 };
 
-class BfmeKeyGenERI
-{
-public:
-	int bfmeNameToKeyERI(const char *name);
-};
-
-extern BfmeKeyGenERI *g_bfmeKeyGenERI;
+// NameKeyGenerator.cpp defines the singleton at retail VA 0x012ED600.
+extern NameKeyGenerator *TheNameKeyGenerator;
 
 class BfmeHostERI
 {
@@ -82,22 +77,22 @@ void BfmeHostERI::bfmeSweepERI()
 
 		if (a != 0)
 		{
-			BfmeBERI *b = a->m_bfmeBERI;
+			Overridable *b = a->m_bfmeBERI;
 
 			if (b != 0)
-				st = b->bfmeStateERI();
+				st = (BfmeStateERI *)b->getFinalOverride();
 		}
 
 		if ((st->m_bfmeFlagsERI & 2) == 0)
 			continue;
 
 		static int s_bfmeKeyERI =
-			g_bfmeKeyGenERI->bfmeNameToKeyERI("StealthUpdate");
+			TheNameKeyGenerator->nameToKey("StealthUpdate");
 
-		BfmeModuleERI *mod = (BfmeModuleERI *)((Object *)thing)->findModule(
+		StealthUpdate *mod = (StealthUpdate *)((Object *)thing)->findModule(
 			(NameKeyType)s_bfmeKeyERI);
 
 		if (mod != 0)
-			mod->bfmeSetERI(0, 1);
+			mod->markAsDetected(0, true);
 	}
 }
