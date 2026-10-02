@@ -1,12 +1,16 @@
 // cl: /DNDEBUG /MD
 // Address-derived reconstruction of retail 0x0073C700.
 
-class Gen0002A1B2
+typedef float Real;
+
+class ParabolicEase
 {
 public:
-	void set(int first, int second, float duration);
+	void setEaseTimes(Real easeInTime, Real easeOutTime, Real duration);
 
-	char m_body[8];
+private:
+	Real m_in;
+	Real m_out;
 };
 
 class Rva0073C700
@@ -18,7 +22,7 @@ public:
 	int m_04;
 	int m_08;
 	int m_0c;
-	Gen0002A1B2 m_ease;
+	ParabolicEase m_ease;
 	int m_18;
 	int m_1c;
 	int m_20;
@@ -60,7 +64,8 @@ void Rva0073C700::configure(int value, int duration, int first, int second, int 
 	m_1c = 0;
 	m_20 = 0;
 	m_28 = 1;
-	m_ease.set(first, second, (float)duration);
+	m_ease.setEaseTimes(*reinterpret_cast<Real *>(&first),
+		*reinterpret_cast<Real *>(&second), (Real)duration);
 	m_0c = stored;
 	m_24 = 1;
 }
