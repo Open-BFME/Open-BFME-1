@@ -175,3 +175,35 @@ FXListStore TU. They are different bodies: the old RVA `0042DEF0` becomes
 `FXListStore::update`, while that anchor emits init at `0042DED0`. The exact
 source-snapshot entry in name_corrections.json records this false pairing,
 not a descriptive-to-opaque rename of a retail method.
+
+
+## ActionManager lifecycle overrides
+
+GameEngine::init allocates 8 bytes at `0007A25F` and calls constructor ILT
+`0001C76F` at `0007A276`, resolving to `000C3FF0`. The registration sequence
+pushes VA `01076130` (literal `TheActionManager`) at `0007A28A`, typed global
+storage VA `012ED700` at `0007A298`, then calls ILT `00012E86` -> `000757E0`
+at `0007A29D`. The unmodified ZH GameEngine.cpp registration likewise creates
+ActionManager. The header declares `extern ActionManager *TheActionManager`.
+Constructor `000C3FF0` calls SubsystemInterface constructor `009A1A30` at
+`000C3FF3`, then installs VA `01083B90` at `000C3FF8`. This is a concrete
+owner table, not an inherited callback assigned to an arbitrary subsystem.
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | ZH twin |
+|---|---|---|---|---|
+| 1 | `00C83B94` | `0002383F` | `000C4010` | ActionManager::init |
+| 4 | `00C83BA0` | `00043EBE` | `000C4020` | ActionManager::reset |
+| 5 | `00C83BA4` | `00043E64` | `000C4030` | ActionManager::update |
+
+Whole-image bytewise scans find each absolute stub pointer exactly once, at
+the listed slot. All three complete bodies are RET followed immediately by
+INT3. The table shares common slots 2/3 (`009A1A50`/`00067930`) with the
+mechanical census above; substantive independent lifecycle twins already
+anchor slots 1/4/5. ZH `Common/ActionManager.h:69-71` explicitly defines all
+three public non-const virtual void/no-argument empty overrides. Their ABI is
+`?init@ActionManager@@UAEXXZ`, `?reset@ActionManager@@UAEXXZ`, and
+`?update@ActionManager@@UAEXXZ`. These names are direct lexical twins, not
+inferred from the empty bodies. The dedicated TU includes that header and
+forces its inline definitions to emit using qualified-call anchors. Replace
+the three address placeholders at unchanged one-byte extents and remove only
+their orphan standalone TUs. No new pin, member, or shared header is needed.
