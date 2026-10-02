@@ -109,7 +109,12 @@ public:
 	void bfmeCommit();
 };
 
-extern Gen_005A4470 *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  Declared here under its defining name; the
+// bfmeCommit call casts to this TU's view of the layout so the callee keeps
+// the pinned Gen_005A4470 mangling.
+class Mouse;
+extern Mouse *TheMouse;
 
 class Shell
 {
@@ -195,7 +200,7 @@ BfmeAptScreenQuitMenu::~BfmeAptScreenQuitMenu()
 			TheGameLogic->setGamePaused( false, m_field25C, true );
 
 		if( TheMouse )
-			TheMouse->bfmeCommit();
+			((Gen_005A4470 *)TheMouse)->bfmeCommit();
 
 		if( TheShell && !m_field258 )
 			TheShell->hide( false );

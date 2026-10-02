@@ -189,12 +189,16 @@ public:
 	virtual void bfmeSlot1083Z_17(void);
 };
 
-extern BfmeZ1083 *g_bfmeZ1083;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
+// GameClient/Input/Mouse.cpp).  BfmeZ1083 above is this TU's view of the
+// pointee's layout, so the calls cast and the global links under its real name.
+class Mouse;
+extern Mouse *TheMouse;
 
 void bfmeGo1083B(void)
 {
 	if (g_bfmeD1083 && g_bfmeD1083->bfmeSlot1083D_114() && !bfmeB1083()->bfmeChk1083())
-		g_bfmeZ1083->bfmeSlot1083Z_17();
+		((BfmeZ1083 *)TheMouse)->bfmeSlot1083Z_17();
 	else
-		g_bfmeZ1083->bfmeSlot1083Z_17();
+		((BfmeZ1083 *)TheMouse)->bfmeSlot1083Z_17();
 }
