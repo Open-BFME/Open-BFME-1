@@ -73,6 +73,7 @@ class LargeGroupBonusUpdate : public UpdateModule,
 {
 public:
     LargeGroupBonusUpdate(Thing *, const ModuleData *);
+    ~LargeGroupBonusUpdate();
 
 private:
     unsigned int m_frame;

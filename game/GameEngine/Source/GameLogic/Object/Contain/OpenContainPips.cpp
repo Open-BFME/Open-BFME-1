@@ -58,15 +58,24 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing;
+static __forceinline Bool bfmeOpenContainPipsIsKindOf(const Thing *thing, KindOfType kind);
+
 class Thing
 {
 public:
 	virtual ~Thing();
-	Bool isKindOf(KindOfType kind) const { return m_template->isKindOf(kind); }
+
+	friend Bool bfmeOpenContainPipsIsKindOf(const Thing *thing, KindOfType kind);
 
 private:
 	OVERRIDE<ThingTemplate> m_template;
 };
+
+static __forceinline Bool bfmeOpenContainPipsIsKindOf(const Thing *thing, KindOfType kind)
+{
+	return thing->m_template->isKindOf(kind);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
@@ -135,7 +144,7 @@ Bool OpenContain::getContainerPipsToShow(Int &numTotal, Int &numFull, Int &numIn
 		for (_STL::list<Object *>::const_iterator it = m_containList.begin();
 			it != m_containList.end(); ++it)
 		{
-			if ((*it)->isKindOf(KINDOF_INFANTRY))
+			if (bfmeOpenContainPipsIsKindOf(*it, KINDOF_INFANTRY))
 				++numInfantry;
 		}
 		return true;

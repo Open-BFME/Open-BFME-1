@@ -79,18 +79,7 @@ struct BfmeThingEFE
 	unsigned char m_pad[0xc];
 	int m_baseCount;
 	BfmeVec *m_vec;
-	int bfmeClampIndex(int count);
 };
-
-int BfmeThingEFE::bfmeClampIndex(int count)
-{
-	int diff = count - m_baseCount;
-	if (diff <= 0)
-		return 0;
-	if (diff >= m_vec->size())
-		return m_vec->size() - 1;
-	return diff;
-}
 
 // The chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ at
 // 0x00087A80 (through ILT 0x000022BB).  Declaration only, no layout: the node

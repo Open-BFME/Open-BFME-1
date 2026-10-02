@@ -240,47 +240,7 @@ void GameLogic::clearGameData( Bool showScoreScreen )
 	
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Prepare for a new game */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/System/GameLogic_prepareNewGame_Thunk.cpp
-// ?prepareNewGame@GameLogic@@QAEXHW4GameDifficulty@@H@Z present-unmatched
-void GameLogic::prepareNewGame( Int gameMode, GameDifficulty diff, Int rankPoints )
-{
-	//Added By Sadullah Nader
-	//Fix for loading game scene
-
-	//Kris: Commented this out, but leaving it around incase it bites us later. I cleaned up the 
-	//      nomenclature. Look for setLoadingMap() and setLoadingSave()
-	//setGameLoading(TRUE);
-
-	TheScriptEngine->setGlobalDifficulty(diff);
-
-	if(!m_background)
-	{
-		m_background = TheWindowManager->winCreateLayout("Menus/BlankWindow.wnd");
-		DEBUG_ASSERTCRASH(m_background,("We Couldn't Load Menus/BlankWindow.wnd"));
-		m_background->hide(FALSE);
-		m_background->bringForward();
-	}
-	m_background->getFirstWindow()->winClearStatus(WIN_STATUS_IMAGE);
-	TheGameLogic->setGameMode( gameMode );
-	if (!TheGlobalData->m_pendingFile.isEmpty())
-	{
-		TheWritableGlobalData->m_mapName = TheGlobalData->m_pendingFile;
-		TheWritableGlobalData->m_pendingFile.clear();
-	}
-
-	m_rankPointsToAddAtGameStart = rankPoints;
-	DEBUG_LOG(("GameLogic::prepareNewGame() - m_rankPointsToAddAtGameStart = %d\n", m_rankPointsToAddAtGameStart));
-
-	// If we're about to start a game, hide the shell.
-	if(!TheGameLogic->isInShellGame())
-		TheShell->hideShell();
-
-	m_startNewGame = FALSE;
-
-}  // end prepareNewGame
+// GameLogic::prepareNewGame is defined in GameLogic_prepareNewGame_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** This message handles dispatches object command messages to the
