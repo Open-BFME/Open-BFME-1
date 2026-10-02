@@ -23,10 +23,8 @@
 class Parameter
 {
 public:
-	int getInt() const { return m_integer; }
-	const AsciiString &getString() const { return m_string; }
-
-private:
+	// Retail inlines these reads. Accessing the existing fields directly
+	// avoids emitting getter COMDATs for this partial Parameter layout.
 	char m_unknown[8];
 	int m_integer;
 	float m_real;
@@ -71,30 +69,30 @@ protected:
 
 void ScriptEngine::addCounter(ScriptAction *action)
 {
-	int value = action->getParameter(0)->getInt();
-	bfmeCounter(action->getParameter(1)->getString())->m_value += value;
+	int value = action->getParameter(0)->m_integer;
+	bfmeCounter(action->getParameter(1)->m_string)->m_value += value;
 }
 
 void ScriptEngine::subCounter(ScriptAction *action)
 {
-	int value = action->getParameter(0)->getInt();
-	bfmeCounter(action->getParameter(1)->getString())->m_value -= value;
+	int value = action->getParameter(0)->m_integer;
+	bfmeCounter(action->getParameter(1)->m_string)->m_value -= value;
 }
 
 void ScriptEngine::setFlag(ScriptAction *action, bool copyFromFlag)
 {
 	ScriptAction *sourceAction = action;
-	bool *flag = bfmeFlagForWrite(sourceAction->getParameter(0)->getString());
+	bool *flag = bfmeFlagForWrite(sourceAction->getParameter(0)->m_string);
 	bool value = false;
 	if (copyFromFlag)
 	{
-		bool *source = bfmeFlagForRead(sourceAction->getParameter(1)->getString());
+		bool *source = bfmeFlagForRead(sourceAction->getParameter(1)->m_string);
 		if (source)
 			value = *source;
 	}
 	else
 	{
-		value = sourceAction->getParameter(1)->getInt() != 0;
+		value = sourceAction->getParameter(1)->m_integer != 0;
 	}
 	*flag = value;
 }
