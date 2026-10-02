@@ -2,7 +2,6 @@
 // STLport 4.5.3 numeric-input helpers from src/num_get.cpp.
 
 #include <algorithm>
-#include <locale>
 
 _STLP_BEGIN_NAMESPACE
 
