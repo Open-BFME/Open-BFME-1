@@ -5,7 +5,7 @@
 // De-lifted from the __emit dump. The call chain is the already-matched
 // W3DRadarResetLock/bfmeUnlock1179 scoped-lock pair (BfmeConv1696.cpp),
 // GenAlpha::h00024D2A (GenAlpha_h00024D2A.cpp), the geometry manager's two
-// HashTableClass tables, TheBfmeReleaseOwner's real W3DBufferManager
+// HashTableClass tables, TheW3DBufferManager's real W3DBufferManager
 // teardown, and two BFME-only shadow vertex/index buffer pools absent from
 // the Zero Hour source, which only frees D3D resources and the geometry
 // manager.
@@ -47,7 +47,7 @@ public:
 	~W3DBufferManager();
 };
 
-extern W3DBufferManager *TheBfmeReleaseOwner;	// 0x01306DE8
+extern W3DBufferManager *TheW3DBufferManager;	// 0x01306DE8
 
 struct BfmeShadowPoolFM
 {
@@ -110,8 +110,8 @@ W3DVolumetricShadowManager::~W3DVolumetricShadowManager()
 	}
 	m_W3DShadowGeometryManager = 0;
 
-	delete TheBfmeReleaseOwner;
-	TheBfmeReleaseOwner = 0;
+	delete TheW3DBufferManager;
+	TheW3DBufferManager = 0;
 
 	g_bfmeShadowPoolA.count = 0;
 	if (g_bfmeShadowPoolA.ptr)

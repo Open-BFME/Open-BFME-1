@@ -63,7 +63,7 @@ struct W3DBufferManager::W3DIndexBufferSlot
 	int unused[7];
 };
 
-extern W3DBufferManager *TheBfmeReleaseOwner;
+extern W3DBufferManager *TheW3DBufferManager;
 
 class Rva007B12F0Base
 {
@@ -124,9 +124,9 @@ W3DVolumetricShadow::~W3DVolumetricShadow(void)
 			if (m_shadowVolume[i * 160 + j])
 				delete m_shadowVolume[i * 160 + j];
 			if (m_shadowVolumeVB[i * 160 + j])
-				TheBfmeReleaseOwner->releaseSlot(m_shadowVolumeVB[i * 160 + j]);
+				TheW3DBufferManager->releaseSlot(m_shadowVolumeVB[i * 160 + j]);
 			if (m_shadowVolumeIB[i * 160 + j])
-				TheBfmeReleaseOwner->releaseSlot(m_shadowVolumeIB[i * 160 + j]);
+				TheW3DBufferManager->releaseSlot(m_shadowVolumeIB[i * 160 + j]);
 		}
 	}
 

@@ -5,7 +5,8 @@
 // Named by the already-matched S3 triple at 0x007B7680, whose REL32 lands
 // on ILT 0x00024D2A and follows to this body. Scoped W3D radar lock, two
 // COM Release()s on the globals at 0x01306F20 / 0x01306F1C, then
-// Rva007ADB80Owner::releaseReferences on 0x01306DE8 and a thiscall back
+// Rva007ADB80Owner::releaseReferences on 0x01306DE8, retail's
+// W3DBufferManager singleton, and a thiscall back
 // through ILT 0x0003139A.
 
 typedef unsigned long ULONG;
@@ -26,6 +27,8 @@ struct BfmeComUnknown
 	virtual ULONG __stdcall AddRef() = 0;
 	virtual ULONG __stdcall Release() = 0;
 };
+
+class W3DBufferManager;
 
 class Rva007ADB80Owner
 {
@@ -57,7 +60,7 @@ public:
 
 extern BfmeComUnknown *TheBfmeComA;			// 0x01306F20
 extern BfmeComUnknown *TheBfmeComB;			// 0x01306F1C
-extern Rva007ADB80Owner *TheBfmeReleaseOwner;	// 0x01306DE8
+extern W3DBufferManager *TheW3DBufferManager;	// 0x01306DE8
 
 // ?h00024D2A@GenAlpha@@QAEXXZ
 void GenAlpha::h00024D2A()
@@ -67,7 +70,7 @@ void GenAlpha::h00024D2A()
 		TheBfmeComA->Release();
 	if (TheBfmeComB)
 		TheBfmeComB->Release();
-	Rva007ADB80Owner *owner = TheBfmeReleaseOwner;
+	Rva007ADB80Owner *owner = (Rva007ADB80Owner *)TheW3DBufferManager;
 	TheBfmeComA = 0;
 	TheBfmeComB = 0;
 	if (owner)

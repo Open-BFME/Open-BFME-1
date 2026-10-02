@@ -81,7 +81,7 @@ public:
 
 extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
 extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
-extern W3DBufferManager *TheBfmeReleaseOwner; // 0x01306DE8
+extern W3DBufferManager *TheW3DBufferManager; // 0x01306DE8
 extern unsigned BfmeShadowIndexCount; // 0x012BBEC4
 extern unsigned BfmeShadowVertexCount; // 0x012BBEC0
 
@@ -109,9 +109,9 @@ Bool W3DShadowHelperManager::ReAcquireResources(void)
 			return FALSE;
 	}
 
-	if (TheBfmeReleaseOwner)
+	if (TheW3DBufferManager)
 	{
-		if (!TheBfmeReleaseOwner->ReAcquireResources())
+		if (!TheW3DBufferManager->ReAcquireResources())
 			return FALSE;
 	}
 
