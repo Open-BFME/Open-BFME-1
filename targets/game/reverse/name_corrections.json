@@ -14548,5 +14548,15 @@
   "after_sha256": "70f23ddc2cf5c584150a600729ff5c958741ea97ff6c0a8448b110382bcf6f9b",
   "evidence": "targets/game/reverse/identity_evidence/diemodule-slot0-container-ondie.md",
   "reason": "Registered constructor die-interface slot and real deleting-destructor call chain independently refute the destructor identity; no class-specific lexical witness proves a full callback method name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGo933D",
+  "new_name": "Rva0024CEE0",
+  "before_sha256": "ff99a2c47dfc7e04f0f19ee9fdb582c14d547fbec221880d2569d8bdf8d6b7a1",
+  "after_sha256": "93861e6f28dc3bcee6dc167db2668e057917b8cc372a096dd3b18d1ff9cfd338",
+  "evidence": "targets/game/reverse/identity_evidence/diemodule-slot0-container-ondie.md",
+  "reason": "bfmeGo933D is an opaque generator-style emission label, not an established lexical method name. Registered constructors and primary literal getter prove the owner HordeTransportContain; the strict lexical rule requires the method to retain its address until a class-specific witness exists. Ledger correction hashes are the exact old/new CSV row text, as required by ledger_symbol_regressions."
  }
 ]

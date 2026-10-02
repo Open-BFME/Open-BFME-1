@@ -96,6 +96,9 @@ public:
 	void bfmeCall933D();
 };
 
+// RVA 0x0024CEE0: HordeTransportContain introduces this die-slot callback.
+// The ledger names HordeTransportContain::Rva0024CEE0; this opaque emission
+// view is retained through object-symbol. See diemodule-slot0-container-ondie.md.
 class BfmeThing933D
 {
 public:

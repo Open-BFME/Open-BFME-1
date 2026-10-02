@@ -151,3 +151,31 @@ Retain the historical naked byte emission unmodified via explicit
 not a second retail identity and this claims no conversion progress.
 name_corrections.json records the exact before/after source snapshots for
 the intentional descriptive-to-address correction.
+
+## HordeTransportContain introduces the small shared callback at 0024CEE0
+
+Registered factory 00115F30 calls ILT 0001FE7E at 00115F6E to constructor
+0024B6F0. The constructor calls TransportContain through ILT 000023A1 at
+0024B6FF, installs primary VA 010B0688 at 0024B704, and die table
+VA 010B03E8 at +0x28 at 0024B726. Primary slot 2 is ILT 0003C18C ->
+getter 0024B780, returning literal VA 01090A4C `HordeTransportContain`.
+The die slot is ILT 00021D91 -> 0024CEE0. Its whole-image stub-VA search
+has exactly two references, one in this table and one at VA 010B0004.
+
+The latter belongs to HordeSiegeEngineContain: registered constructor
+0024A560 calls HordeTransportContain through ILT 0001FE7E at 0024A58A
+and installs its die table at +0x28 at 0024A5B3. The base TransportContain
+uses OpenContain's distinct body 00222640. Thus HordeTransportContain is
+the introducing owner and HordeSiegeEngineContain inherits it.
+
+Retail 0024CEE0 reads module data at die-0x24, tests a byte at data+0x152,
+subtracts 0x28 to recover the complete object before calling ILT 0000A862
+-> 0024C530, and returns with RET 4 at 0024CEF5, followed by INT3 at
+0024CEF8. The extent is exactly 24 bytes; it is a void callback with one
+unused stack argument, consistent with the one-method die interface.
+No class-specific lexical witness for the method name is asserted. Use
+`?Rva0024CEE0@HordeTransportContain@@UAEXPBVDamageInfo@@@Z`, retaining
+the proven class and the method's address. The existing clean C++ in
+BfmeConv933.cpp already byte-matches. Keep its opaque emission through
+`object-symbol=?bfmeGo933D@BfmeThing933D@@QAEXPAX@Z`; this is an identity
+harvest with no new field names, helper names, pins or conversion claims.
