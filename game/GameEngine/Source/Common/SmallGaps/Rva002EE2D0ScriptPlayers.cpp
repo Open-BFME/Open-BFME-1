@@ -1,17 +1,25 @@
-// ?scriptPlayers002EE2D0Call11@@YGXH@Z
-class ScriptEngine { public: int resolvePlayerMask(int param, int flag); };
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+
+class ScriptEngine;
 extern ScriptEngine* TheScriptEngine;
-struct Rva002EE330Player { char m_pad[0x298]; void onScript002EE2D0(int a, int b); };
-struct Rva002EE330PlayerList { Rva002EE330Player* nextFromMask(unsigned short* mask); };
-// ThePlayerList (retail 0x012ED748) is PlayerList*; keep the local view, cast at the use.
-class PlayerList;
-extern PlayerList* ThePlayerList;
+// ILT 0x0004B290 routes to the matched selector resolver at 0x0034CB60.
+class BfmeScriptEngine_getPlayerMaskFromAsciiString
+{
+public:
+	unsigned short getPlayerMaskFromAsciiString(const AsciiString& name, bool* found);
+};
+
+// ?scriptPlayers002EE2D0Call11@@YGXH@Z
 void __stdcall scriptPlayers002EE2D0Call11(int param)
 {
-	param = TheScriptEngine->resolvePlayerMask(param, 0);
-	while ((unsigned short)param) {
-		Rva002EE330Player* player = ((Rva002EE330PlayerList*)ThePlayerList)->nextFromMask((unsigned short*)&param);
+	unsigned short mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString*)TheScriptEngine)->getPlayerMaskFromAsciiString(*(const AsciiString*)param, 0);
+	while (mask) {
+		Player* player = ThePlayerList->getEachPlayerFromMask(mask);
 		if (player)
-			player->onScript002EE2D0(1, 1);
+			player->setUnitsShouldHunt(true, CMD_FROM_SCRIPT);
 	}
 }
