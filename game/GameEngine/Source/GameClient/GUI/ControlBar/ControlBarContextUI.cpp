@@ -498,7 +498,18 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern GameText *TheGameText;
+
+// Retail global 0x012F147C is TheGameText, declared elsewhere with its
+// canonical pointee type so the linked name is
+// ?TheGameText@@3PAVGameTextInterface@@A; the TU-local GameText view above is
+// reached through this cast helper.
+class GameTextInterface;
+extern GameTextInterface *TheGameText;
+
+static inline GameText *localGameText( void )
+{
+	return (GameText *)TheGameText;
+}
 
 void GadgetStaticTextSetText( GameWindow *window, UnicodeString text );
 void GadgetProgressBarSetProgress( GameWindow *window, Int percent );
@@ -688,9 +699,9 @@ void ControlBar::updateOCLTimerTextDisplay( UnsignedInt totalSeconds, Real perce
 	Int minutes = totalSeconds / 60;
 	Int seconds = totalSeconds - (minutes * 60);
 	if( seconds < 10 )
-		text.format( TheGameText->fetch( "CONTROLBAR:OCLTimerDescWithPadding" ), minutes, seconds );
+		text.format( localGameText()->fetch( "CONTROLBAR:OCLTimerDescWithPadding" ), minutes, seconds );
 	else
-		text.format( TheGameText->fetch( "CONTROLBAR:OCLTimerDesc" ), minutes, seconds );
+		text.format( localGameText()->fetch( "CONTROLBAR:OCLTimerDesc" ), minutes, seconds );
 
 	GadgetStaticTextSetText( descWindow, text );
 	GadgetProgressBarSetProgress( barWindow, (Int)(percent * 100) );
@@ -880,7 +891,7 @@ void ControlBar::updateConstructionTextDisplay( Object *obj )
 	GameWindow *descWindow = TheWindowManager->winGetWindowFromId( 0, (NameKeyType)descID );
 
 	// format the message
-	text.format( TheGameText->fetch( "CONTROLBAR:UnderConstructionDesc" ),
+	text.format( localGameText()->fetch( "CONTROLBAR:UnderConstructionDesc" ),
 							 obj->getConstructionPercent() );
 	GadgetStaticTextSetText( descWindow, text );
 
