@@ -91,6 +91,29 @@ template class _STL::vector<Gen000DD310Entry>;
 		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->handle();            \
 	}
 
+// The callee at 0x0089CC10 is retail's `int get() const` member of
+// Rva0089CC10Object (matched in Rva0089CC10ConditionalOffset.cpp), so it is
+// spelled by that class and member name instead of the address-derived pair.
+// Its result is discarded here because the jmp hands the return to the callee;
+// the nine bytes are the same either way.
+#define BFME_OFFSET_TAIL_CALLEE_GET( ADDR )                               \
+	class Rva##ADDR##Object                                               \
+	{                                                                     \
+	public:                                                               \
+		int get() const;                                                  \
+	};
+
+#define BFME_OFFSET_TAIL_THUNK_GET( NAME, CALLEE, OFFSET )                 \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		void invoke();                                                    \
+	};                                                                    \
+	void NAME::invoke()                                                   \
+	{                                                                     \
+		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->get();               \
+	}
+
 // One stack word is inherited by the tail target at 0x00593A30 (ret 4).
 #define BFME_OFFSET_TAIL_THUNK_ARG1( NAME, CALLEE, OFFSET )               \
 	class NAME                                                            \
@@ -207,7 +230,7 @@ BFME_OFFSET_TAIL_CALLEE( 00887C90 )
 BFME_OFFSET_TAIL_CALLEE( 008881D0 )
 BFME_OFFSET_TAIL_CALLEE( 00888530 )
 BFME_OFFSET_TAIL_CALLEE( 0089C880 )
-BFME_OFFSET_TAIL_CALLEE( 0089CC10 )
+BFME_OFFSET_TAIL_CALLEE_GET( 0089CC10 )
 BFME_OFFSET_TAIL_CALLEE( 0089CC30 )
 BFME_OFFSET_TAIL_CALLEE( 008BDE20 )
 BFME_OFFSET_TAIL_CALLEE( 008FC5B0 )
@@ -381,23 +404,23 @@ BFME_OFFSET_TAIL_THUNK( Rva00762EC0, Gen00887940, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva00851330, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva00851340, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A380, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0089A3C0, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva0089A3C0, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A3D0, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A600, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0089A640, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva0089A640, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A650, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A7A0, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0089A7E0, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva0089A7E0, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A7F0, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A940, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0089A980, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva0089A980, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089A990, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089AAE0, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0089AB20, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva0089AB20, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0089AB30, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva008AC6B0, Gen008BDE20, 36 )
 BFME_OFFSET_TAIL_THUNK( Rva008CBD10, Gen0089C880, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva008CBD50, Gen0089CC10, 8 )
+BFME_OFFSET_TAIL_THUNK_GET( Rva008CBD50, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva008CBD60, Gen0089CC30, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0090C610, Gen00920BC0, 28 )
 BFME_OFFSET_TAIL_THUNK( Rva00943970, Gen009435A0, 4 )

@@ -1,15 +1,18 @@
 // cl: /O2 /Ob0
 
-class Gen0089CC10
+// Retail body at 0x0089CC10; declared in
+// Rva0089CC10ConditionalOffset.cpp, spelled here by its defining name so the
+// call resolves to ?get@Rva0089CC10Object@@QBEHXZ.
+class Rva0089CC10Object
 {
 public:
-	int handle();
+	int get() const;
 };
 
 class Rva00899D70
 {
 	char m_lead[8];
-	Gen0089CC10 m_inner;
+	Rva0089CC10Object m_inner;
 
 public:
 	int next();
@@ -17,5 +20,5 @@ public:
 
 int Rva00899D70::next()
 {
-	return m_inner.handle() + 1;
+	return m_inner.get() + 1;
 }

@@ -1,9 +1,19 @@
 // Open-BFME5 conversions.
 
+// Retail body at 0x0089CC10; declared in
+// Rva0089CC10ConditionalOffset.cpp, spelled here by its defining name so the
+// call resolves to ?get@Rva0089CC10Object@@QBEHXZ.  BfmeS1238 is reached
+// through a pointer, so the length call reads the same receiver through the
+// defining class.
+class Rva0089CC10Object
+{
+public:
+	int get() const;
+};
+
 class BfmeS1238
 {
 public:
-	int bfmeLen1238();
 	BfmeS1238 *bfmeAt1238B(int i);
 };
 
@@ -71,7 +81,7 @@ int BfmeN1238::bfmeSize1237() const
 
 	n = 1;
 	if (s)
-		n = s->bfmeLen1238() + 1;
+		n = ( (Rva0089CC10Object *)s )->get() + 1;
 
 	flags = that->m_bfme04;
 	if ((flags & 0x3f) == 0x0d)
@@ -114,7 +124,7 @@ BfmeS1238 *BfmeN1238::bfmeAt1238(int i)
 
 	n = 1;
 	if (s)
-		n = s->bfmeLen1238() + 1;
+		n = ( (Rva0089CC10Object *)s )->get() + 1;
 
 	if (i > 0 && i < n)
 		return s->bfmeAt1238B(i - 1);

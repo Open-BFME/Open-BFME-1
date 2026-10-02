@@ -70,10 +70,13 @@ void __stdcall bfmeGo1035C(BfmeX1035 *p, int b)
 	t.bfmeUse1035(p, b);
 }
 
-class BfmeSubE1035
+// Retail body at 0x0089CC10; declared in
+// Rva0089CC10ConditionalOffset.cpp, spelled here by its defining name so the
+// call resolves to ?get@Rva0089CC10Object@@QBEHXZ.
+class Rva0089CC10Object
 {
 public:
-	int bfmeSize1035(void);
+	int get(void) const;
 };
 
 class BfmeE1035
@@ -82,7 +85,7 @@ public:
 	int bfmeGo1035E(void);
 
 	char m_bfmePad[8];
-	BfmeSubE1035 m_bfmeSub;
+	Rva0089CC10Object m_bfmeSub;
 	char m_bfmePad2[0x13];
 	int m_bfme1c;
 	int m_bfme20;
@@ -92,7 +95,7 @@ public:
 
 int BfmeE1035::bfmeGo1035E(void)
 {
-	int n = m_bfmeSub.bfmeSize1035() + (m_bfme1c & 0xff);
+	int n = m_bfmeSub.get() + (m_bfme1c & 0xff);
 
 	if (m_bfme20 != 0)
 		n += m_bfme28;

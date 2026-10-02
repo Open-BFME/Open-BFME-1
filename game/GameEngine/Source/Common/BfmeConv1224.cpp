@@ -2,10 +2,13 @@
 
 class BfmeE1224;
 
-class BfmeSub1224
+// Retail body at 0x0089CC10; declared in
+// Rva0089CC10ConditionalOffset.cpp, spelled here by its defining name so the
+// call resolves to ?get@Rva0089CC10Object@@QBEHXZ.
+class Rva0089CC10Object
 {
 public:
-	int bfmeLen1224();
+	int get() const;
 	int m_bfme00;
 };
 
@@ -15,7 +18,7 @@ public:
 	BfmeE1224 *bfmeAt1224(int i);
 	BfmeE1224 *bfmeSub1224(int i);
 	char m_bfmePad00[8];
-	BfmeSub1224 m_bfme08;
+	Rva0089CC10Object m_bfme08;
 	char m_bfmePad0c[0x1c - 0x0c];
 	int m_bfme1c;
 	BfmeE1224 *m_bfme20;
@@ -34,7 +37,7 @@ BfmeE1224 *BfmeA1224::bfmeAt1224(int i)
 		return m_bfme28;
 	if (i == 2)
 		return m_bfme2c;
-	n = m_bfme08.bfmeLen1224() + (m_bfme1c & 0xff) + 3;
+	n = m_bfme08.get() + (m_bfme1c & 0xff) + 3;
 	if (i >= 3 && i < n)
 		return bfmeSub1224(i - 3);
 	return 0;
