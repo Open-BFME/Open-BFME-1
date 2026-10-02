@@ -8,8 +8,9 @@
 typedef float Real;
 typedef unsigned char Bool;
 
-extern "C" __declspec(dllimport) double __cdecl bfmeMathVE(double value);
-extern "C" __declspec(dllimport) double __cdecl BfmeFloorER(double value);
+// Retail IAT: MSVCR71.dll!ceil at VA 0x01359394, floor at 0x013593B8.
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
+extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
 __forceinline long Rva0071A150FloatToLong(Real value)
 {
@@ -24,12 +25,12 @@ __forceinline long Rva0071A150FloatToLong(Real value)
 
 __forceinline Real Rva0071A150Ceil(Real value)
 {
-	return (Real)bfmeMathVE((double)value);
+	return (Real)ceil((double)value);
 }
 
 __forceinline Real Rva0071A150Floor(Real value)
 {
-	return (Real)BfmeFloorER((double)value);
+	return (Real)floor((double)value);
 }
 
 void *__cdecl operator new[](unsigned int size);
