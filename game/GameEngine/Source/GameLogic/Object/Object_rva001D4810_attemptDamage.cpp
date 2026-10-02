@@ -44,8 +44,8 @@ class allocator
 {
 };
 
-template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+template <class Destination, class Value>
+void __cdecl _Construct(Destination *destination, const Value &value);
 
 template <class Type, class Allocator = allocator<Type> >
 class vector
@@ -68,7 +68,7 @@ __forceinline void vector<Type, Allocator>::appendAtEnd(
 {
 	if (_M_finish != _M_end_of_storage)
 	{
-		BfmeElementConstruct(_M_finish, value);
+		_Construct(_M_finish, value);
 		++_M_finish;
 	}
 	else

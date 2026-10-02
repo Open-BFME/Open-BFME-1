@@ -68,11 +68,15 @@ public:
 	allocator_type get_allocator(void) const { return allocator_type(); }
 
 private:
-	void _M_range_initialize(const CharT *f, const CharT *l, const forward_iterator_tag &);
+	// Retail's callee at 0x004FA6F0 is the char* member-template instance.
+	template <class InputIterator>
+	void _M_range_initialize(InputIterator f, InputIterator l,
+		const forward_iterator_tag &);
 
 	void _M_range_initialize(const CharT *f, const CharT *l)
 	{
-		_M_range_initialize(f, l, random_access_iterator_tag());
+		// Keep the source pointers mutable to select that existing instance.
+		_M_range_initialize((CharT *)f, (CharT *)l, random_access_iterator_tag());
 	}
 };
 
