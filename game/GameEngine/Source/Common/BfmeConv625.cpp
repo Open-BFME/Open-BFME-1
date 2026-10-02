@@ -1,4 +1,5 @@
-extern "C" unsigned char bfmeVftCNDa[];
+extern "C" unsigned char __identifier("??_7DamageInfo@@6B@")[];
+#define bfmeVftCNDa __identifier("??_7DamageInfo@@6B@")
 extern "C" unsigned char bfmeVftCNDb[];
 
 struct BfmeBaseCND
