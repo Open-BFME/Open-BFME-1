@@ -8,13 +8,13 @@ struct Coord3D
 class AudioEventRTS
 {
 public:
-	bool bfmeEnabledXY();
+	bool isPositionalAudio() const;
 	void resolveOwnerPosition(Coord3D *out, bool *valid);
 };
 
 Coord3D * __stdcall bfmeGetPosXY(Coord3D *out, AudioEventRTS *ev, bool *valid)
 {
-	if (!ev->bfmeEnabledXY())
+	if (!ev->isPositionalAudio())
 	{
 		*valid = false;
 
