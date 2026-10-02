@@ -1,10 +1,7 @@
 // Open-BFME5 conversions.
+// cl: /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
-class BfmeObjVOJ
-{
-public:
-	void bfmeSetUntilVOJ(int type, unsigned until);
-};
+#include "../../../../inputs/reference/shims/bfmeobject/GameLogic/Object.h"
 
 class BfmeMgrVOJ
 {
@@ -35,7 +32,7 @@ public:
 	virtual void bfmeSlot23VOJ();
 	virtual void bfmeSlot24VOJ();
 	virtual void bfmeSlot25VOJ();
-	virtual BfmeObjVOJ *bfmeFindVOJ(void *id);
+	virtual Object *bfmeFindVOJ(void *id);
 };
 
 // Retail's global at 0x012F076C is the ScriptEngine singleton; this TU's
@@ -48,8 +45,8 @@ static inline BfmeMgrVOJ *localMgrVOJ() { return (BfmeMgrVOJ *)TheScriptEngine; 
 
 void __stdcall bfmeSetVOJ(void *id, char flag)
 {
-	BfmeObjVOJ *o = localMgrVOJ()->bfmeFindVOJ(id);
+	Object *o = localMgrVOJ()->bfmeFindVOJ(id);
 
 	if (o != 0)
-		o->bfmeSetUntilVOJ(3, flag != 0 ? 0x3fffffff : 0);
+		o->setDisabledUntil((DisabledType)3, flag != 0 ? 0x3fffffff : 0);
 }

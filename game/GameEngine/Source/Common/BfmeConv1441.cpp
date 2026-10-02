@@ -6,7 +6,7 @@ struct BfmeItVMU
 	int m;
 };
 
-BfmeItVMU bfmeImplVMU(BfmeItVMU a, BfmeItVMU b, char c, char *p);
+char **bfmeRFindChV31(char **out, char *last, char *first, char ch);
 BfmeItVMU bfmeFwdVMU(BfmeItVMU a, BfmeItVMU b, char c);
 
 BfmeItVMU bfmeFwdVMU(BfmeItVMU a, BfmeItVMU b, char c)
@@ -32,7 +32,7 @@ BfmeItVMU bfmeFwdVMU(BfmeItVMU a, BfmeItVMU b, char c)
 		mov dword ptr [ecx], edx
 		mov eax, dword ptr [ebp+8]
 		push eax
-		call bfmeImplVMU
+		call bfmeRFindChV31
 		add esp, 0x14
 		mov eax, dword ptr [ebp+8]
 	}

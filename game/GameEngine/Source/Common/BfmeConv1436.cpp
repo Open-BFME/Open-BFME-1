@@ -16,11 +16,19 @@ struct BfmePad44VMO
 	char n[2];
 };
 
+struct Rva008312E0Tag;
+
+class Rva008312E0String
+{
+public:
+	Rva008312E0String &bfmeReplaceAliasedRange(char *first, char *last,
+		char *sourceFirst, char *sourceLast, const Rva008312E0Tag &tag);
+};
+
 class BfmeStrVMO
 {
 public:
 	void bfmeFwdVMO(int a, int b, int c, int d);
-	void bfmeImplVMO(int a, int b, int c, int d);
 };
 
 void BfmeStrVMO::bfmeFwdVMO(int a, int b, int c, int d)
@@ -44,6 +52,6 @@ void BfmeStrVMO::bfmeFwdVMO(int a, int b, int c, int d)
 		mov edx, dword ptr a
 		push edx
 		mov ecx, this
-		call bfmeImplVMO
+		call Rva008312E0String::bfmeReplaceAliasedRange
 	}
 }
