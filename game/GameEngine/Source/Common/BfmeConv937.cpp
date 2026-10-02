@@ -30,7 +30,10 @@ void BfmeThing937B::bfmeGo937B()
 	m_bfmeSub->bfmeCall937B(r);
 }
 
-void __stdcall bfmeThrow937C(unsigned int code);
+// comutil.h declares `void __stdcall _com_issue_error(HRESULT)`; the sweep
+// comutil.h shim does not, so the declaration is repeated here under its exact
+// defining spelling (?_com_issue_error@@YGXJ@Z).
+extern void __stdcall _com_issue_error(long);
 
 class BfmeThing937C
 {
@@ -42,7 +45,7 @@ public:
 void *BfmeThing937C::bfmeGo937C()
 {
 	if (m_bfmeP == 0)
-		bfmeThrow937C(0x80004003);
+		_com_issue_error((long)0x80004003);
 	return m_bfmeP;
 }
 

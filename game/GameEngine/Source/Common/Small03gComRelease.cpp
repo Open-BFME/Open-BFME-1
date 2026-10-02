@@ -8,10 +8,12 @@
 // push 0x80004003 / call / mov eax,[esi] / test eax,eax / je +0xC /
 // mov [esi],0 / mov ecx,[eax] / push eax / call [ecx+8] / mov eax,esi /
 // pop esi / ret 4` form; the early-return spelling merges the null tails and
-// drifts. The callee declaration matches the proven BfmeConv793.cpp
-// `bfmeFailDXE` spelling (void __stdcall at the 0x00AFD540 pin).
+// drifts. The callee is the real comutil.h declaration
+// `void __stdcall _com_issue_error(HRESULT)` at the 0x00AFD540 pin; the sweep
+// comutil.h shim does not declare it, so it is repeated here under its exact
+// defining spelling (?_com_issue_error@@YGXJ@Z).
 // IDENTITY IS NOT RECOVERED: the owner keeps its address token.
-void __stdcall bfmeFailDXE(int code);
+extern void __stdcall _com_issue_error(long);
 
 class Rva00958A80Box
 {
@@ -24,7 +26,7 @@ void *Rva00958A80Box::release(void *arg)
 {
 	void *heldArg = arg;
 	if (heldArg != 0)
-		bfmeFailDXE((int)0x80004003);
+		_com_issue_error((long)0x80004003);
 	void *held = m_ptr;
 	if (held != 0)
 	{

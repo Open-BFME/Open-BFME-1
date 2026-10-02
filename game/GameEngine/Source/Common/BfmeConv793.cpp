@@ -57,13 +57,16 @@ bool BfmeThingDXD::bfmeGoDXD()
 
 extern "C" __declspec(dllimport) HRESULT __stdcall VariantClear(VARIANT *what);
 extern VARIANT g_bfmeArgDXE;
-void __stdcall bfmeFailDXE(int code);
+// comutil.h declares `void __stdcall _com_issue_error(HRESULT)`; the sweep
+// comutil.h shim does not, so the declaration is repeated here under its exact
+// defining spelling (?_com_issue_error@@YGXJ@Z).
+extern void __stdcall _com_issue_error(long);
 
 void bfmeGoDXE()
 {
 	int r = VariantClear(&g_bfmeArgDXE);
 	if (r < 0)
-		bfmeFailDXE(r);
+		_com_issue_error((long)r);
 }
 
 extern "C" __declspec(dllimport) DWORD WINAPI GetFileType(HANDLE a);

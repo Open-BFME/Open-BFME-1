@@ -19,7 +19,10 @@ public:
 	long bfmeInvokeESQ(BfmeBstrESQ text);
 };
 
-void __stdcall bfmeThrowESQ(long hr);
+// comutil.h declares `void __stdcall _com_issue_error(HRESULT)`; the sweep
+// comutil.h shim does not, so the declaration is repeated here under its exact
+// defining spelling (?_com_issue_error@@YGXJ@Z).
+extern void __stdcall _com_issue_error(long);
 
 struct BfmePtrESQ
 {
@@ -28,7 +31,7 @@ struct BfmePtrESQ
 	BfmeTargetESQ *operator->() const
 	{
 		if (m_bfmePtrESQ == 0)
-			bfmeThrowESQ(0x80004003);
+			_com_issue_error(0x80004003);
 
 		return m_bfmePtrESQ;
 	}
