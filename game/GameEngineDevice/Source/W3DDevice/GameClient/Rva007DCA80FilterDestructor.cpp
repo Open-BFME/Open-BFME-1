@@ -1,16 +1,12 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 //
 // Retail 0x007DC9A0: destructor for the filter object constructed at
 // 0x007DCA80.  A vector of 12-byte POD values precedes two ref holders.
 
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
-
-class Rva007D6AB0SubPtr
-{
-public:
-	void release();
-};
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texture.h"
 
 class Rva007DC9A0RefHolder
 {
@@ -18,11 +14,11 @@ public:
 	~Rva007DC9A0RefHolder()
 	{
 		if (m_ptr)
-			m_ptr->release();
+			m_ptr->Release_Ref();
 	}
 
 private:
-	Rva007D6AB0SubPtr *m_ptr;
+	TextureBaseClass *m_ptr;
 };
 
 struct Rva007DC9A0Pod12

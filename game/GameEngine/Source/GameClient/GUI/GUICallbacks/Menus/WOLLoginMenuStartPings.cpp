@@ -14,6 +14,8 @@ class StringBase
     friend class AsciiString;
 
 private:
+    void releaseBuffer();
+
     StringBase() : m_data(0) {}
     StringBase(const T *text);
     StringBase(const StringBase<T> &other);
@@ -43,8 +45,6 @@ public:
         return data ? data->m_text : "";
     }
 
-private:
-    void releaseBuffer();
 };
 
 class GameSpyConfigInterface

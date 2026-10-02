@@ -34,7 +34,7 @@ enum LocomotorSetType
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 Real GetGameLogicRandomValueReal(Real lo, Real hi, char *file, int line);
-Real bfmeCosVNB(Real value);
+Real Cos(Real value);
 Real bfmeSinVNB(Real value);
 
 class Object;
@@ -313,7 +313,7 @@ void SlavedUpdate::moveToNewRepairSpot()
             0x2b9);
 
         m_guardPointOffset.set(master->getPosition());
-        m_guardPointOffset.x += data->m_repairRange * bfmeCosVNB(randomDirection);
+        m_guardPointOffset.x += data->m_repairRange * Cos(randomDirection);
         m_guardPointOffset.y += data->m_repairRange * bfmeSinVNB(randomDirection);
         m_guardPointOffset.z = TheTerrainLogic->getGroundHeight(
             m_guardPointOffset.x, m_guardPointOffset.y, 0);
