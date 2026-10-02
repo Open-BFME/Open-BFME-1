@@ -2200,169 +2200,17 @@ Bool NetPacket::isRoomForFrameResendRequestMessage(NetCommandRef *msg) {
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectScreenOffCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDisconnectScreenOffCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForDisconnectScreenOffMessage(msg)) {
-		NetDisconnectScreenOffCommandMsg *cmdMsg = (NetDisconnectScreenOffCommandMsg *)(msg->getCommand());
+// addDisconnectScreenOffCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the execution frame into the packet.
-		if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-			m_packet[m_packetLen] = 'F';
-			++m_packetLen;
-			UnsignedInt newframe = cmdMsg->getExecutionFrame();
-			memcpy(m_packet+m_packetLen, &newframe, sizeof(UnsignedInt));
-			m_packetLen += sizeof(UnsignedInt);
-
-			m_lastFrame = newframe;
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		UnsignedInt newFrame = cmdMsg->getNewFrame();
-		memcpy(m_packet + m_packetLen, &newFrame, sizeof(newFrame));
-		m_packetLen += sizeof(newFrame);
-
-		DEBUG_LOG(("NetPacket::addDisconnectScreenOff - added disconnect screen off command from player %d for frame %d, command id = %d\n", m_lastPlayerID, newFrame, m_lastCommandID));
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 // isRoomForDisconnectScreenOffMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDisconnectFrameCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForDisconnectFrameMessage(msg)) {
-		NetDisconnectFrameCommandMsg *cmdMsg = (NetDisconnectFrameCommandMsg *)(msg->getCommand());
+// addDisconnectFrameCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the execution frame into the packet.
-		if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-			m_packet[m_packetLen] = 'F';
-			++m_packetLen;
-			UnsignedInt newframe = cmdMsg->getExecutionFrame();
-			memcpy(m_packet+m_packetLen, &newframe, sizeof(UnsignedInt));
-			m_packetLen += sizeof(UnsignedInt);
-
-			m_lastFrame = newframe;
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		UnsignedInt disconnectFrame = cmdMsg->getDisconnectFrame();
-		memcpy(m_packet + m_packetLen, &disconnectFrame, sizeof(disconnectFrame));
-		m_packetLen += sizeof(disconnectFrame);
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		DEBUG_LOG(("NetPacket::addDisconnectFrame - added disconnect frame command from player %d for frame %d, command id = %d\n", m_lastPlayerID, disconnectFrame, m_lastCommandID));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 // isRoomForDisconnectFrameMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
@@ -2587,184 +2435,17 @@ Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addFileProgressCommand.cpp
 // ?addFileProgressCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addFileProgressCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForFileProgressMessage(msg)) {
-		NetFileProgressCommandMsg *cmdMsg = (NetFileProgressCommandMsg *)(msg->getCommand());
+// addFileProgressCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		UnsignedShort fileID = cmdMsg->getFileID();
-		memcpy(m_packet + m_packetLen, &fileID, sizeof(fileID));
-		m_packetLen += sizeof(fileID);
-
-		Int progress = cmdMsg->getProgress();
-		memcpy(m_packet + m_packetLen, &progress, sizeof(progress));
-		m_packetLen += sizeof(progress);
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 // isRoomForFileProgressMessage is defined in NetPacket_isRoomForDisconnectFamily.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addWrapperCommand.cpp
 // ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addWrapperCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForWrapperMessage(msg)) {
-		NetWrapperCommandMsg *cmdMsg = (NetWrapperCommandMsg *)(msg->getCommand());
+// addWrapperCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet + m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary put the player ID into the packet.
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		// wrapped command ID
-		UnsignedShort wrappedCommandID = cmdMsg->getWrappedCommandID();
-		memcpy(m_packet + m_packetLen, &wrappedCommandID, sizeof(wrappedCommandID));
-		m_packetLen += sizeof(wrappedCommandID);
-
-		// chunk number
-//		m_packet[m_packetLen] = cmdMsg->getChunkNumber();
-//		++m_packetLen;
-		UnsignedInt chunkNumber = cmdMsg->getChunkNumber();
-		memcpy(m_packet + m_packetLen, &chunkNumber, sizeof(chunkNumber));
-		m_packetLen += sizeof(chunkNumber);
-
-		// number of chunks
-//		m_packet[m_packetLen] = cmdMsg->getNumChunks();
-//		++m_packetLen;
-		UnsignedInt numChunks = cmdMsg->getNumChunks();
-		memcpy(m_packet + m_packetLen, &numChunks, sizeof(numChunks));
-		m_packetLen += sizeof(numChunks);
-
-		// total length of data for all chunks
-		UnsignedInt totalDataLength = cmdMsg->getTotalDataLength();
-		memcpy(m_packet + m_packetLen, &totalDataLength, sizeof(totalDataLength));
-		m_packetLen += sizeof(totalDataLength);
-
-		// data length for this chunk
-		UnsignedInt dataLength = cmdMsg->getDataLength();
-		memcpy(m_packet + m_packetLen, &dataLength, sizeof(dataLength));
-		m_packetLen += sizeof(dataLength);
-
-		// the offset into the data of this chunk
-		UnsignedInt dataOffset = cmdMsg->getDataOffset();
-		memcpy(m_packet + m_packetLen, &dataOffset, sizeof(dataOffset));
-		m_packetLen += sizeof(dataOffset);
-
-		// the data for this chunk
-		UnsignedByte *data = cmdMsg->getData();
-		memcpy(m_packet + m_packetLen, data, dataLength);
-		m_packetLen += dataLength;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 Bool NetPacket::isRoomForWrapperMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -2805,69 +2486,9 @@ Bool NetPacket::isRoomForWrapperMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addTimeOutGameStartMessage(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForLoadCompleteMessage(msg)) {
-		NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+// addTimeOutGameStartMessage is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-//		DEBUG_LOG(("Added keep alive command to packet.\n"));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room in the packet for this command.
@@ -2902,69 +2523,9 @@ Bool NetPacket::isRoomForTimeOutGameStartMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addLoadCompleteMessage(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForLoadCompleteMessage(msg)) {
-		NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+// addLoadCompleteMessage is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-//		DEBUG_LOG(("Added keep alive command to packet.\n"));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room in the packet for this command.
@@ -3000,60 +2561,9 @@ Bool NetPacket::isRoomForLoadCompleteMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addProgressMessage(NetCommandRef *msg) {
-	if (isRoomForProgressMessage(msg)) {
-		NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(msg->getCommand());
+// addProgressMessage is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-		}
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		m_packet[m_packetLen] = cmdMsg->getPercentage();
-		++m_packetLen;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-//		DEBUG_LOG(("Added keep alive command to packet.\n"));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room in the packet for this command.
@@ -3087,85 +2597,9 @@ Bool NetPacket::isRoomForProgressMessage(NetCommandRef *msg) {
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectVoteCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDisconnectVoteCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
+// addDisconnectVoteCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-//	DEBUG_LOG(("NetPacket::addDisconnectVoteCommand - entering...\n"));
-	//  need type, player id, relay, command id, slot number
-	if (isRoomForDisconnectVoteMessage(msg)) {
-		NetDisconnectVoteCommandMsg *cmdMsg = (NetDisconnectVoteCommandMsg *)(msg->getCommand());
-//		DEBUG_LOG(("NetPacket::addDisconnectVoteCommand - adding run ahead command\n"));
-
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-//		DEBUG_LOG(("relay = %d, ", m_lastRelay));
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-//		DEBUG_LOG(("player = %d", m_lastPlayerID));
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-//		DEBUG_LOG(("command id = %d\n", m_lastCommandID));
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-		UnsignedByte slot = cmdMsg->getSlot();
-		memcpy(m_packet + m_packetLen, &slot, sizeof(slot));
-		m_packetLen += sizeof(slot);
-
-		UnsignedInt voteFrame = cmdMsg->getVoteFrame();
-		memcpy(m_packet + m_packetLen, &voteFrame, sizeof(voteFrame));
-		m_packetLen += sizeof(voteFrame);
-
-//		DEBUG_LOG(("NetPacket::addDisconnectVoteCommand - added disconnect vote command, player id %d command id %d, voted slot %d\n", m_lastPlayerID, m_lastCommandID, slot));
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room for this player disconnect command in this packet.
@@ -3593,85 +3027,9 @@ Bool NetPacket::isRoomForPacketRouterQueryMessage(NetCommandRef *msg) {
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDisconnectPlayerCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
+// addDisconnectPlayerCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-//	DEBUG_LOG(("NetPacket::addDisconnectPlayerCommand - entering...\n"));
-	//  need type, player id, relay, command id, slot number
-	if (isRoomForDisconnectPlayerMessage(msg)) {
-		NetDisconnectPlayerCommandMsg *cmdMsg = (NetDisconnectPlayerCommandMsg *)(msg->getCommand());
-//		DEBUG_LOG(("NetPacket::addDisconnectPlayerCommand - adding run ahead command\n"));
-
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-//		DEBUG_LOG(("relay = %d, ", m_lastRelay));
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-//		DEBUG_LOG(("player = %d", m_lastPlayerID));
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-//		DEBUG_LOG(("command id = %d\n", m_lastCommandID));
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-		UnsignedByte slot = cmdMsg->getDisconnectSlot();
-		memcpy(m_packet + m_packetLen, &slot, sizeof(slot));
-		m_packetLen += sizeof(slot);
-
-		UnsignedInt disconnectFrame = cmdMsg->getDisconnectFrame();
-		memcpy(m_packet + m_packetLen, &disconnectFrame, sizeof(disconnectFrame));
-		m_packetLen += sizeof(disconnectFrame);
-
-//		DEBUG_LOG(("NetPacket::addDisconnectPlayerCommand - added disconnect player command, player id %d command id %d, disconnecting slot %d\n", m_lastPlayerID, m_lastCommandID, slot));
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room for this player disconnect command in this packet.
@@ -3711,57 +3069,9 @@ Bool NetPacket::isRoomForDisconnectPlayerMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDisconnectKeepAliveCommand(NetCommandRef *msg) {
-	if (isRoomForDisconnectKeepAliveMessage(msg)) {
-		NetDisconnectKeepAliveCommandMsg *cmdMsg = (NetDisconnectKeepAliveCommandMsg *)(msg->getCommand());
+// addDisconnectKeepAliveCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-		}
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-//		DEBUG_LOG(("Added keep alive command to packet.\n"));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room in the packet for this command.
@@ -3793,57 +3103,9 @@ Bool NetPacket::isRoomForDisconnectKeepAliveMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addKeepAliveCommand(NetCommandRef *msg) {
-	if (isRoomForKeepAliveMessage(msg)) {
-		NetKeepAliveCommandMsg *cmdMsg = (NetKeepAliveCommandMsg *)(msg->getCommand());
+// addKeepAliveCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-		}
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-//		DEBUG_LOG(("Added keep alive command to packet.\n"));
-
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room in the packet for this command.
@@ -4003,88 +3265,9 @@ Bool NetPacket::isRoomForRunAheadMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDestroyPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addDestroyPlayerCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForDestroyPlayerMessage(msg)) {
-		NetDestroyPlayerCommandMsg *cmdMsg = (NetDestroyPlayerCommandMsg *)(msg->getCommand());
+// addDestroyPlayerCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary, put the execution frame into the packet.
-		if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-			m_packet[m_packetLen] = 'F';
-			++m_packetLen;
-			UnsignedInt newframe = cmdMsg->getExecutionFrame();
-			memcpy(m_packet+m_packetLen, &newframe, sizeof(UnsignedInt));
-			m_packetLen += sizeof(UnsignedInt);
-
-			m_lastFrame = newframe;
-		}
-
-//		DEBUG_LOG(("relay = %d, ", m_lastRelay));
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-//		DEBUG_LOG(("player = %d", m_lastPlayerID));
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-//		DEBUG_LOG(("command id = %d\n", m_lastCommandID));
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-		UnsignedInt newVal = cmdMsg->getPlayerIndex();
-		memcpy(m_packet + m_packetLen, &newVal, sizeof(UnsignedInt));
-		m_packetLen += sizeof(UnsignedInt);
-
-		//DEBUG_LOG(("NetPacket - added CRC:0x%8.8X info command, frame %d, player id %d command id %d\n", newCRC, m_lastFrame, m_lastPlayerID, m_lastCommandID));
-
-		++m_numCommands;
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is room for this DestroyPlayer command in this packet.
@@ -4240,88 +3423,9 @@ Bool NetPacket::isRoomForRunAheadMetricsMessage(NetCommandRef *msg) {
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addPlayerLeaveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::addPlayerLeaveCommand(NetCommandRef *msg) {
-	Bool needNewCommandID = FALSE;
-	if (isRoomForPlayerLeaveMessage(msg)) {
-		NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(msg->getCommand());
-//		DEBUG_LOG(("NetPacket::addPlayerLeaveCommand - adding player leave command for player %d\n", cmdMsg->getLeavingPlayerID()));
+// addPlayerLeaveCommand is owned by NetPacket_addCommandFamily.cpp.
+// The matched addCommand dispatcher names its retail BFME body.
 
-		// If necessary, put the NetCommandType into the packet.
-		if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-			m_packet[m_packetLen] = 'T';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getNetCommandType();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastCommandType = cmdMsg->getNetCommandType();
-		}
-
-		// If necessary, put the relay into the packet.
-		if (m_lastRelay != msg->getRelay()) {
-			m_packet[m_packetLen] = 'R';
-			++m_packetLen;
-			UnsignedByte newRelay = msg->getRelay();
-			memcpy(m_packet+m_packetLen, &newRelay, sizeof(UnsignedByte));
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastRelay = newRelay;
-		}
-
-		// If necessary, put the execution frame into the packet.
-		if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-			m_packet[m_packetLen] = 'F';
-			++m_packetLen;
-			UnsignedInt newframe = cmdMsg->getExecutionFrame();
-			memcpy(m_packet+m_packetLen, &newframe, sizeof(UnsignedInt));
-			m_packetLen += sizeof(UnsignedInt);
-
-			m_lastFrame = newframe;
-		}
-
-//		DEBUG_LOG(("relay = %d, ", m_lastRelay));
-
-		if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-			m_packet[m_packetLen] = 'P';
-			++m_packetLen;
-			m_packet[m_packetLen] = cmdMsg->getPlayerID();
-			m_packetLen += sizeof(UnsignedByte);
-
-			m_lastPlayerID = cmdMsg->getPlayerID();
-			needNewCommandID = TRUE;
-		}
-
-//		DEBUG_LOG(("player = %d", m_lastPlayerID));
-
-		// If necessary, specify the command ID of this command.
-		if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-			m_packet[m_packetLen] = 'C';
-			++m_packetLen;
-			UnsignedShort newID = cmdMsg->getID();
-			memcpy(m_packet + m_packetLen, &newID, sizeof(UnsignedShort));
-			m_packetLen += sizeof(UnsignedShort);
-		}
-		m_lastCommandID = cmdMsg->getID();
-
-//		DEBUG_LOG(("command id = %d\n", m_lastCommandID));
-
-		m_packet[m_packetLen] = 'D';
-		++m_packetLen;
-		UnsignedByte leavingPlayerID = cmdMsg->getLeavingPlayerID();
-		memcpy(m_packet + m_packetLen, &leavingPlayerID, sizeof(UnsignedByte));
-		m_packetLen += sizeof(UnsignedByte);
-
-		if (m_lastCommand != NULL) {
-			m_lastCommand->deleteInstance();
-			m_lastCommand = NULL;
-		}
-		m_lastCommand = NEW_NETCOMMANDREF(msg->getCommand());
-		m_lastCommand->setRelay(msg->getRelay());
-
-		++m_numCommands;
-		return TRUE;
-	}
-	return FALSE;
-}
 
 /**
  * Returns true if there is enough room in the packet to fit this message.
