@@ -2,7 +2,7 @@
 // Open-BFME7: ParseAudioEventBlock (retail 0x003B7780 204 B; a gap claimed
 // through its own exception text).  With no INI or instance it throws
 // INIException(3 "ParseAudioEventBlock::Invalid data passed in."); otherwise
-// a 16-byte record of the Rva003B7740 class (Rva003B7740ReleaseDtor.cpp: a
+// a 16-byte record of the Rva003B7740 class (defined below: a
 // vtable a pad the ref-counted holder and a flag byte all zeroed by the
 // inline constructor) is filled through INI::initFromINI with the table at
 // VA 0x010ECDC8 and handed to the instance's add routine (0x00415DD4 thunk)
