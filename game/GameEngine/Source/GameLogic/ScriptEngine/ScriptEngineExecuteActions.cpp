@@ -7,10 +7,6 @@
 class Parameter
 {
 public:
-	int getInt() const { return m_integer; }
-	float getReal() const { return m_real; }
-	const AsciiString &getString() const { return m_string; }
-private:
 	char m_unknown[8];
 	int m_integer;
 	float m_real;
@@ -97,8 +93,8 @@ void ScriptEngine::executeActions(ScriptAction *head)
 	for (action = head; action; action = action->getNext()) {
 		switch (action->getActionType()) {
 		case 2: {
-			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
-			if (counter) { counter->value = action->getParameter(1)->getInt(); counter->milliseconds = false; }
+			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
+			if (counter) { counter->value = action->getParameter(1)->m_integer; counter->milliseconds = false; }
 			break;
 		}
 		case 15: addCounter(action); break;
@@ -109,8 +105,8 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 9: disableScript(action); break;
 		case 10: Rva00343780(action); break;
 		case 20: {
-			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
-			float value = (float)bfmeMathVE((double)(action->getParameter(1)->getReal() * g_bfmeK1266C));
+			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
+			float value = (float)bfmeMathVE((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
 			counter->value = fast_float2long_round(value);
 			counter->milliseconds = true; counter->countdown = true;
 			break;
@@ -125,8 +121,8 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 133: setPriorityKind(action); break;
 		case 134: setPriorityDefault(action); break;
 		case 154: {
-			ScriptCounter *counter = bfmeCounter(action->getParameter(1)->getString());
-			float value = (float)bfmeMathVE((double)(action->getParameter(0)->getReal() * g_bfmeK1266C));
+			ScriptCounter *counter = bfmeCounter(action->getParameter(1)->m_string);
+			float value = (float)bfmeMathVE((double)(action->getParameter(0)->m_real * g_bfmeK1266C));
 			counter->value += fast_float2long_round(value);
 			break;
 		}
@@ -135,18 +131,18 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 375: setFlag(action, true); break;
 		case 155: adjustTimer(action, true, false); break;
 		case 415: {
-			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
+			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 			if (counter) {
-				float value = (float)bfmeMathVE((double)(action->getParameter(1)->getReal() * g_bfmeK1266C));
+				float value = (float)bfmeMathVE((double)(action->getParameter(1)->m_real * g_bfmeK1266C));
 				counter->value = fast_float2long_round(value); counter->milliseconds = true;
 			}
 			break;
 		}
 		case 507: {
-			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->getString());
+			ScriptCounter *counter = bfmeCounter(action->getParameter(0)->m_string);
 			if (counter) {
-				int low = action->getParameter(1)->getInt();
-				int high = action->getParameter(2)->getInt();
+				int low = action->getParameter(1)->m_integer;
+				int high = action->getParameter(2)->m_integer;
 				counter->value = GetGameClientRandomValue(low, high, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp", 1831);
 				counter->milliseconds = false;
 			}
