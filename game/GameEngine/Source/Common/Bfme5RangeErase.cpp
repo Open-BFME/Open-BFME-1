@@ -14,6 +14,8 @@
 
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
 
+extern void j_000205a9(void);
+
 class BfmeRangeValue
 {
 public:
@@ -38,7 +40,13 @@ inline void bfmeEraseNode(BfmeRangeNode *node)
 	previous->m_bfmeNext = next;
 	next->m_bfmePrev = previous;
 
-	node->m_bfmeValue.~BfmeRangeValue();
+	typedef void (BfmeRangeValue::*BfmeRangeValueDestroyCall)(void);
+	union
+	{
+		void (*function)(void);
+		BfmeRangeValueDestroyCall method;
+	} destroy = { j_000205a9 };
+	(node->m_bfmeValue.*destroy.method)();
 
 	bfmeDeallocate(node, sizeof(BfmeRangeNode));
 }

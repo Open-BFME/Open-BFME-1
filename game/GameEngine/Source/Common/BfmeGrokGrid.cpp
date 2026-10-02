@@ -1,10 +1,11 @@
 // cl: /O2
 
+extern void j_00023b14(void);
+
 class BfmeGridWM
 {
 public:
 	void walk();
-	void cell(int x, int y);
 
 private:
 	int m_pad0;
@@ -17,5 +18,13 @@ void BfmeGridWM::walk()
 {
 	for (int x = 0; x < m_w - 1; ++x)
 		for (int y = 0; y < m_h - 1; ++y)
-			cell(x, y);
+		{
+			typedef void (BfmeGridWM::*BfmeGridWMCellCall)(int, int);
+			union
+			{
+				void (*function)(void);
+				BfmeGridWMCellCall method;
+			} cell = { j_00023b14 };
+			(this->*cell.method)(x, y);
+		}
 }

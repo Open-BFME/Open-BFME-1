@@ -10,13 +10,13 @@ struct BfmeNode21B2C0
 };
 
 void __cdecl bfmeDeallocate(void *p, unsigned int n);
+extern void j_0003dee7(void);
 
 class BfmeRvaA760Object;
 
 class Rva0024A760
 {
 public:
-	void finish(BfmeRvaA760Object *obj);
 	void bfmeRemove(BfmeRvaA760Object *obj);
 
 private:
@@ -45,5 +45,11 @@ void Rva0024A760::bfmeRemove(BfmeRvaA760Object *obj)
 			n = n->next;
 		} while (n != head);
 	}
-	finish(obj);
+	typedef void (Rva0024A760::*Rva0024A760FinishCall)(BfmeRvaA760Object *);
+	union
+	{
+		void (*function)(void);
+		Rva0024A760FinishCall method;
+	} finish = { j_0003dee7 };
+	(this->*finish.method)(obj);
 }
