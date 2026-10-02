@@ -202,12 +202,20 @@ class Placement:
             self.slots[name].add(slot)
         self.outside = collections.defaultdict(set)  # external name -> retail addresses its references reach
         wanted = {s["name"] for _, symbols in self.objs.values() for s in symbols.values()
-                  if s["storage"] == EXTERNAL and s["section"] == 0 and s["name"] not in self.defined}
+                  if s["storage"] == EXTERNAL}
         self.ledger_rows = collections.defaultdict(list)
         with (ROOT / "targets/game/reverse/functions.csv").open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 if row["name"] in wanted and (row.get("target_rva") or "").startswith("0x"):
-                    self.anchors[row["name"]].add(int(row["target_rva"], 16))
+                    if row["name"] in self.defined:
+                        # A header-emitted COMDAT can have a native owner in
+                        # another TU. Its matched name proves the body address,
+                        # including when both it and its ILT entry are E9 jumps.
+                        if row.get("status") != "matched" or "gen-alias" in (row.get("notes") or ""):
+                            continue
+                        self.anchor_ext[row["name"]].add(int(row["target_rva"], 16))
+                    else:
+                        self.anchors[row["name"]].add(int(row["target_rva"], 16))
                     self.ledger_rows[row["name"]].append(row)
 
     def read(self, rva, size):
@@ -273,7 +281,7 @@ class Placement:
                 else:
                     key = None
                 if key is not None:
-                    address = self.through_stub(key, address)
+                    address = self.through_stub(key, address, target, offset)
                 elif target["name"].startswith("__imp_"):
                     bare = target["name"][len("__imp_"):]
                     # the C name first: __imp__exit is exit's slot, not _exit's
@@ -290,15 +298,27 @@ class Placement:
                 if self.place(key, address - offset, evidence):
                     queue.append(key)
 
-    def through_stub(self, key, address):
-        """Retail was linked incrementally: a call or a function pointer may
-        name an ILT jump stub (`jmp body`) rather than the body. Follow it when
-        the target is code that does not itself start with a jmp."""
+    def through_stub(self, key, address, target=None, offset=0):
+        """Follow an ILT entry, without mistaking a real jump body for it.
+
+        A jump-bodied target needs an independent, unique named ledger anchor;
+        identical E9 opcodes alone cannot distinguish its body from an ILT.
+        """
         section = self.objs[key[0]][0][key[1] - 1]
         head = self.read(address, 5)
-        starts_jmp = bool(section["body"]) and section["body"][0] == 0xE9
-        if section["name"].startswith(".text") and head and head[0] == 0xE9 and not starts_jmp:
-            return (address + 5 + struct.unpack_from("<i", head, 1)[0]) & 0xFFFFFFFF
+        starts_jmp = bool(section["body"]) and 0 <= offset < len(section["body"]) and section["body"][offset] == 0xE9
+        if section["name"].startswith(".text") and head and head[0] == 0xE9:
+            destination = (address + 5 + struct.unpack_from("<i", head, 1)[0]) & 0xFFFFFFFF
+            if not starts_jmp:
+                return destination
+            if target is not None:
+                known = set(self.anchor_obj[key[0]].get(target["name"], set()))
+                if target["storage"] == EXTERNAL:
+                    known |= self.anchor_ext.get(target["name"], set())
+                if len(known) == 1 and address not in known and destination in known:
+                    # The anchor names the target symbol entry, not its section
+                    # base; run() subtracts the symbol's offset when placing it.
+                    return destination
         return address
 
     @staticmethod
