@@ -29,6 +29,8 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+#include "../../../../Libraries/Source/WWVegas/WWMath/region.h"
+
 #define NULL 0
 #define TRUE true
 #define FALSE false
@@ -37,34 +39,6 @@ struct ICoord2D
 {
 	Int x;
 	Int y;
-};
-
-struct IRegion2D
-{
-	ICoord2D lo;
-	ICoord2D hi;
-
-	Int height() const { return hi.y - lo.y; }
-	Int width() const { return hi.x - lo.x; }
-};
-
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
-
-struct Region2D
-{
-	Coord2D lo;
-	Coord2D hi;
-};
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
 };
 
 class Vector3
@@ -180,30 +154,30 @@ Int W3DView::iterateDrawablesInRegion(IRegion2D *screenRegion,
 	Bool inside = FALSE;
 	Int count = 0;
 	register Drawable *draw;
-	Vector3 screen, world;
-	Coord3D pos;
-	Region2D normalizedRegion;
+	Vector3 screen, world, pos;
+	Real normalizedRegion[4];
 
 	Bool regionIsPoint = FALSE;
 
 	if (screenRegion)
 	{
-		if (screenRegion->height() == 0 && screenRegion->width() == 0)
+		if (screenRegion->y_max - screenRegion->y_min == 0 &&
+			screenRegion->x_max - screenRegion->x_min == 0)
 		{
 			regionIsPoint = TRUE;
 		}
 
-		normalizedRegion.lo.x = ((Real)(screenRegion->lo.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
-		normalizedRegion.lo.y = -(((Real)(screenRegion->hi.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
-		normalizedRegion.hi.x = ((Real)(screenRegion->hi.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
-		normalizedRegion.hi.y = -(((Real)(screenRegion->lo.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
+		normalizedRegion[0] = ((Real)(screenRegion->x_min - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
+		normalizedRegion[1] = -(((Real)(screenRegion->y_max - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
+		normalizedRegion[2] = ((Real)(screenRegion->x_max - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
+		normalizedRegion[3] = -(((Real)(screenRegion->y_min - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
 	}
 
 	Drawable *onlyDrawableToTest = NULL;
 	if (regionIsPoint)
 	{
 		PickType pickType = (PickType)(Rva00459060(TheInGameUI->isInForceAttackMode()) | 0x100);
-		onlyDrawableToTest = view->pickDrawable(&screenRegion->lo, TRUE, pickType);
+		onlyDrawableToTest = view->pickDrawable((ICoord2D *)&screenRegion->x_min, TRUE, pickType);
 		if (onlyDrawableToTest == NULL)
 		{
 			return 0;
@@ -228,16 +202,16 @@ Int W3DView::iterateDrawablesInRegion(IRegion2D *screenRegion,
 			}
 			else
 			{
-				pos = *draw->getPosition();
-				world.X = pos.x;
-				world.Y = pos.y;
-				world.Z = pos.z;
+				pos = *(Vector3 *)draw->getPosition();
+				world.X = pos.X;
+				world.Y = pos.Y;
+				world.Z = pos.Z;
 
 				if (view->m_3DCamera->Project(screen, world) == CameraClass::INSIDE_FRUSTUM &&
-					screen.X >= normalizedRegion.lo.x &&
-					screen.X <= normalizedRegion.hi.x &&
-					screen.Y >= normalizedRegion.lo.y &&
-					screen.Y <= normalizedRegion.hi.y)
+					screen.X >= normalizedRegion[0] &&
+					screen.X <= normalizedRegion[2] &&
+					screen.Y >= normalizedRegion[1] &&
+					screen.Y <= normalizedRegion[3])
 				{
 					inside = TRUE;
 				}
