@@ -17,7 +17,6 @@ public:
 
 class GameSpyConfigInterface;
 extern GameSpyConfigInterface *TheGameSpyConfig;
-#define g_obj12F70E4 ((BfmeThresholdSource *)TheGameSpyConfig)
 
 class BfmeAptScreenPickByThreshold
 {
@@ -34,11 +33,11 @@ private:
 // ?pick@BfmeAptScreenPickByThreshold@@QAEPAXH@Z
 void *BfmeAptScreenPickByThreshold::pick( int value )
 {
-	if( !g_obj12F70E4 )
+	if( !TheGameSpyConfig )
 		return 0;
-	if( value < g_obj12F70E4->getLow() )
+	if( value < ((BfmeThresholdSource *)TheGameSpyConfig)->getLow() )
 		return m_low;
-	if( value < g_obj12F70E4->getHigh() )
+	if( value < ((BfmeThresholdSource *)TheGameSpyConfig)->getHigh() )
 		return m_mid;
 	return m_high;
 }

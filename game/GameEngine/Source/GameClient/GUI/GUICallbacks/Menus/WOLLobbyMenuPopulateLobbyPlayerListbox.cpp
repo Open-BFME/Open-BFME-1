@@ -406,7 +406,7 @@ void PopulateLobbyPlayerListbox(void)
 		for (it = players->begin(); it != players->end(); ++it)
 		{
 			PlayerInfo info = it->second;
-			if (info.m_flags & PEER_FLAG_OP || reinterpret_cast<GameSpyConfigInterface *>(TheGameSpyConfig)->isPlayerVIP(info.m_profileID))
+			if (info.m_flags & PEER_FLAG_OP || TheGameSpyConfig->isPlayerVIP(info.m_profileID))
 			{
 				Int index = insertPlayerInListbox(info, info.isIgnored() ? GameSpyColor[GSCOLOR_PLAYER_IGNORED] : GameSpyColor[GSCOLOR_PLAYER_OWNER]);
 				// The helper and retail lookup both use the +4 display/base-name string.
@@ -420,7 +420,7 @@ void PopulateLobbyPlayerListbox(void)
 		{
 			PlayerInfo info = it->second;
 			bIt = buddies->find(info.m_profileID);
-			if (!(info.m_flags & PEER_FLAG_OP || reinterpret_cast<GameSpyConfigInterface *>(TheGameSpyConfig)->isPlayerVIP(info.m_profileID)) && bIt != buddies->end())
+			if (!(info.m_flags & PEER_FLAG_OP || TheGameSpyConfig->isPlayerVIP(info.m_profileID)) && bIt != buddies->end())
 			{
 				Int index = insertPlayerInListbox(info, info.isIgnored() ? GameSpyColor[GSCOLOR_PLAYER_IGNORED] : GameSpyColor[GSCOLOR_PLAYER_BUDDY]);
 				selIt = selectedNames.find(info.m_baseName);
@@ -433,7 +433,7 @@ void PopulateLobbyPlayerListbox(void)
 		{
 			PlayerInfo info = it->second;
 			bIt = buddies->find(info.m_profileID);
-			if (!(info.m_flags & PEER_FLAG_OP || reinterpret_cast<GameSpyConfigInterface *>(TheGameSpyConfig)->isPlayerVIP(info.m_profileID)) && bIt == buddies->end())
+			if (!(info.m_flags & PEER_FLAG_OP || TheGameSpyConfig->isPlayerVIP(info.m_profileID)) && bIt == buddies->end())
 			{
 				Int index = insertPlayerInListbox(info, info.isIgnored() ? GameSpyColor[GSCOLOR_PLAYER_IGNORED] : GameSpyColor[GSCOLOR_PLAYER_NORMAL]);
 				selIt = selectedNames.find(info.m_baseName);
