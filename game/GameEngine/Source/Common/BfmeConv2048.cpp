@@ -1,6 +1,9 @@
-class BfmeVecFN
+// The host key vector retail passes by pointer to
+// ?rva007F76F0@Rva00802240Host@@QAEHPAURva007F76F0Vector@@PBD@Z (defined in
+// game/GameEngine/Source/GameNetwork/Rva007F76F0FeslKeyIndex.cpp). Only the
+// address is used here, so the local payload width is irrelevant to the call.
+struct Rva007F76F0Vector
 {
-public:
 	unsigned char m_bfmeHeadFN[4];
 };
 
@@ -14,13 +17,16 @@ public:
 	unsigned char m_bfmeHeadFN[8];
 };
 
-class BfmeOwnerFN
+// The host half is Rva00802240Host: the retail body at 0x007F76F0 is its
+// member lookup, and this file's host prefix reaches the key vector at the
+// same offset the matched host layout uses.
+class Rva00802240Host
 {
 public:
-	int bfmeFindFN(BfmeVecFN *v, const char *name);
+	int rva007F76F0(Rva007F76F0Vector *v, const char *name);
 
 	unsigned char m_bfmeHeadFN[0x2a8];
-	BfmeVecFN m_bfmeVecFN;
+	Rva007F76F0Vector m_bfmeVecFN;
 };
 
 class BfmeHostFN
@@ -29,7 +35,7 @@ public:
 	int bfmeAddFN(const char *name, const char *text);
 
 	void *m_bfmeVfFN;
-	BfmeOwnerFN *m_bfmeOwnerFN;
+	Rva00802240Host *m_bfmeOwnerFN;
 	unsigned char m_bfmeGapFN[8];
 	Rva00800290Buffer *m_bfmeBufsFN;
 	int m_bfmeCountFN;
@@ -37,7 +43,7 @@ public:
 
 int BfmeHostFN::bfmeAddFN(const char *name, const char *text)
 {
-	int idx = m_bfmeOwnerFN->bfmeFindFN(&m_bfmeOwnerFN->m_bfmeVecFN, name);
+	int idx = m_bfmeOwnerFN->rva007F76F0(&m_bfmeOwnerFN->m_bfmeVecFN, name);
 
 	if (idx == -1)
 		return -106;
