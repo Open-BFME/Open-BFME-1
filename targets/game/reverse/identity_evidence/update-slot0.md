@@ -288,3 +288,29 @@ its opaque name and typed ABI are retained without inventing a method name.
 No new pin is required. Preserve the prior field-view spellings and receiver
 arithmetic; only the update owner, virtual status, return type, and first
 callee's existing ledger spelling change.
+
+## SiegeDockingBehavior::update (00207260, 41 bytes)
+
+Registered literal `SiegeDockingBehavior` at `00C90CA4`, registration
+`0012C77A`, and instance factory `00114E00` establish the owner. The factory
+call at `00114E3B` uses ILT `00004D36` -> constructor `002062C0`; its final
++0x10 vptr store at `0020631E` installs VA `010A6280`.
+The only absolute pointer to slot-zero ILT `00043E5A` -> body `00207260`
+is at table RVA `00CA6280`. Slot one is common `0004985F` -> `0011A130`,
+establishing the same directly labeled and WB-aligned update family.
+
+Retail tests a byte at update receiver+20, calls a primary-receiver helper
+with ECX adjusted by -10, sets the byte on the first path, and returns 5 on
+both paths. RETs occur at `0020727C` and final `00207288`; INT3 starts at
+`00207289`, proving 41 bytes with no stack arguments. The return is
+`UPDATE_SLEEP(5)` under the public virtual non-const UpdateSleepTime update
+interface, not a guessed integer callback.
+
+The two existing matched callees are `SiegeDockingBehavior::initializeBones00206CB0`
+(ILT `0000F966` -> `00206CB0`, 657 bytes) and
+`BfmeHostERP::bfmeSweepERP` (ILT `0001011D` -> `00206460`, 220 bytes).
+Both retain their current void-thiscall, no-stack-argument declarations.
+Use these ledger spellings instead of the old bfmeOneCFD/bfmeTwoCFD pin
+aliases; the second helper's historical method identity is still unclaimed.
+No new pins or field names are needed. Replace only the old update row and
+remove its now-orphaned Common TU after exact verification.
