@@ -236,7 +236,6 @@ void piSetAutoMatchStatus(PEER peer, int status);
 void piSendStateChanged(PEER peer);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
-void bfmePiDisconnectCleanupFromEsi(void);
 void msleep(unsigned int milliseconds);
 /* Retail 0085F040 compares the second cdecl word with operation +0x0C.
    The same matched provider already serves the other blocking loops here. */
@@ -448,7 +447,7 @@ void peerShutdown(PEER peer)
 		else
 		{
 			connection->stayInTitleRoom = 0;
-			bfmePiDisconnectCleanupFromEsi();
+			piDisconnectCleanup(peer);
 			piThink(peer, -1);
 		}
 		connection->disconnectedCallback = callback;
@@ -707,7 +706,7 @@ void peerConnectA(PEER peer, const char *nick, int profileID,
 				connectCallback, param, opID))
 		{
 			success = 0;
-			bfmePiDisconnectCleanupFromEsi();
+			piDisconnectCleanup(peer);
 		}
 	}
 
@@ -740,7 +739,7 @@ void peerDisconnect(PEER peer)
 	else
 	{
 		connection->stayInTitleRoom = 0;
-		bfmePiDisconnectCleanupFromEsi();
+		piDisconnectCleanup(peer);
 		piThink(peer, -1);
 	}
 
@@ -777,7 +776,7 @@ void peerConnectLoginA(PEER peer, int namespaceID, const char *email,
 				connectCallback, param, opID))
 		{
 			success = 0;
-			bfmePiDisconnectCleanupFromEsi();
+			piDisconnectCleanup(peer);
 		}
 	}
 
