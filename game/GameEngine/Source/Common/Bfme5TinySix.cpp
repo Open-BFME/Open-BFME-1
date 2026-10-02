@@ -44,12 +44,16 @@ unsigned char Gen_001DD250::bfmeDiffers(int value) const
 	return value != m_bfmeValue;
 }
 
-extern float g_bfmeScaleBK;					// retail 0x01075C70
+// Retail reads the multiplier from ONE .rdata address, 0x01075C70, which holds
+// cd cc cc 3d == 0.1f.  Spelling it as the pooled compiler literal
+// (__real@3dcccccd) keeps the x87 shape and gives the object a defined symbol;
+// the sibling game/GameEngine/Source/GameLogic/Pathfinder/PathfindLayerAllocateCells.cpp
+// matches the same address the same way (there: PATHFIND_CELL_SIZE_F/100).
 
 // ?bfmeScaled@@YGMMMMM@Z
 float __stdcall bfmeScaled(float first, float second, float third, float fourth)
 {
-	return (fourth - second) * g_bfmeScaleBK;
+	return (fourth - second) * (10.0f / 100);
 }
 
 class BfmeClockBK

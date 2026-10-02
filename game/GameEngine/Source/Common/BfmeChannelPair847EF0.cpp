@@ -12,8 +12,14 @@ struct BfmeChannels847EF0
 	unsigned char m_four;
 };
 
-struct BfmeTable847EF0;
-extern const BfmeTable847EF0 *const bfmeTable847EF0;
+// Retail's table pointer cell is the .rdata address 0x0112FADC (RVA
+// 0x00D2FADC), which symbols.csv pins as the STLport 4.5.3
+// moneypunct<char> vtable ??_7?$moneypunct@D$00@_STL@@6B@; retail reuses that
+// block as the channel table.  Spelled the way the sibling
+// BfmeChannelPair8480.cpp spells its own three, so the reference resolves to
+// the vtable the STLport TUs define.
+extern "C" const void *const __identifier("??_7?$moneypunct@D$00@_STL@@6B@")[];
+#define bfmeTable847EF0 __identifier("??_7?$moneypunct@D$00@_STL@@6B@")
 
 class BfmeChannelPair847EF0
 {
