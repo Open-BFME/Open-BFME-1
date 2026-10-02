@@ -35,18 +35,20 @@ public:
 };
 
 class Pathfinder;
-class BfmeE1081;
+class Object;
+
+enum ObjectID
+{
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
+};
 
 class Pathfinder
 {
 public:
 	bool bfmeStepD4F90(void *state, PathfindCell *cell);
-};
-
-class BfmeD1081
-{
-public:
-	char bfmeDo1081(BfmeE1081 *a, char *b, char *c, int d);
+	bool slowDoesPathExist(Object *object, const Coord3D *from,
+		const Coord3D *to, ObjectID ignoreObject);
 };
 
 class TerrainLogic
@@ -71,7 +73,7 @@ class Object
 {
 public:
 	char m_pad00[0x38];
-	char m_position;
+	Coord3D m_position;
 };
 
 class Rva003EE9F0
@@ -127,9 +129,8 @@ check_type:
 	position.z = TheTerrainLogic->getLayerHeight(position.x, position.y,
 		(PathfindLayerEnum)layer, 0, true);
 
-	if (((BfmeD1081 *)m_pathfinder)->bfmeDo1081(
-		(BfmeE1081 *)m_object, &m_object->m_position,
-		(char *)&position, 0))
+	if (m_pathfinder->slowDoesPathExist(
+		m_object, &m_object->m_position, &position, INVALID_ID))
 	{
 		m_found = 1;
 		return true;
