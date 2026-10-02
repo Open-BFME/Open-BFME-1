@@ -2,26 +2,15 @@
 // cl: /DNDEBUG /MD /O2
 // Byte-exact C++ reconstruction of the tokeniser at retail RVA 0x009D1C50.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 extern "C" __declspec(dllimport) int __cdecl isspace(int c);
 
-class BfmeLayoutVHH;
-
-class AsciiString
-{
-friend class BfmeLayoutVHH;
-
-private:
-	void releaseBuffer();
-};
+class Gen009D1C50;
 
 class BfmeLayoutVHH
 {
-public:
-	void releaseBuffer()
-	{
-		m_string.releaseBuffer();
-	}
-	void bfmeCatVHH(const char *s, int n);
+friend class Gen009D1C50;
 
 private:
 	AsciiString m_string;
@@ -41,7 +30,7 @@ private:
 
 char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 {
-	out->releaseBuffer();
+	out->m_string.clear();
 	while (m_pos < m_end)
 	{
 		if (isspace(static_cast<signed char>(m_buf[m_pos])) == 0)
@@ -56,7 +45,7 @@ char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 	do
 	{
 		char ch = m_buf[m_pos];
-		out->bfmeCatVHH(&ch, 1);
+		static_cast<StringBase<char> &>(out->m_string).concat(&ch, 1);
 		++m_pos;
 		if (m_pos >= m_end)
 			break;

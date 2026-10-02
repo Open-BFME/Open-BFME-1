@@ -5,53 +5,25 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-//
-// The format call used to be spelled through a TU-local stand-in pair
-// (StringBaseNarrowAH/AsciiStringAH), which named retail's callee
-// ?format@StringBaseNarrowAH@@QAAXVAsciiStringAH@@ZZ -- a name retail has no
-// body for.  AsciiString::format (0x00888FF0, matched in
-// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
-// one, so it comes from ascii_string.h and is named through the real class.
-
-class StringBaseNarrowAH
-{
-protected:
-	StringBaseNarrowAH(void)
-	{
-		m_bfmeNarrowAH = 0;
-	}
-
-	StringBaseNarrowAH(const char *text);
-
-	StringBaseNarrowAH(const StringBaseNarrowAH &other);
-
-	~StringBaseNarrowAH(void);
-
-	char *m_bfmeNarrowAH;
-};
-
-class AsciiStringAH : public StringBaseNarrowAH
+// Keep the return type that identifies this body, but use the real BFME string
+// implementation so construction and destruction reference StringBase<char>.
+class AsciiStringAH : public AsciiString
 {
 public:
-	AsciiStringAH(void)
+	AsciiStringAH(void) : AsciiString()
 	{
 	}
 
-	AsciiStringAH(const char *text) : StringBaseNarrowAH(text)
+	AsciiStringAH(const char *text) : AsciiString(text)
 	{
 	}
 
-	AsciiStringAH(const AsciiStringAH &other) : StringBaseNarrowAH(other)
+	AsciiStringAH(const AsciiStringAH &other) : AsciiString(other)
 	{
 	}
 
 	~AsciiStringAH(void)
 	{
-	}
-
-	const char *bfmeTextAH(void) const
-	{
-		return (m_bfmeNarrowAH != 0) ? m_bfmeNarrowAH + 8 : "";
 	}
 };
 
