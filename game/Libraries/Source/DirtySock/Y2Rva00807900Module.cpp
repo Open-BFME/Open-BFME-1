@@ -40,7 +40,7 @@ int  Rva007FE780Printf( const char *format, ... );          // 0x007FE780
 int  Rva00808220( Rva00807BA0Ping *ping, unsigned int address,
 		const char *text, int length, int id );             // 0x00808220
 void Rva007FD3F0SocketClose( void *socket );                // 0x007FD3F0
-void Rva007F0030Free( void *block );                        // 0x007F0030
+void bfmeGo1019C( int block );                               // 0x007F0030
 void Rva007FEAA0ListReset( void *list );                    // 0x007FEAA0
 void *Rva007FD2D0SocketOpen( int family, int type, int protocol ); // 0x007FD2D0
 int   Rva007FD510Bind( void *socket, const void *addr, int addrLen ); // 0x007FD510
@@ -229,11 +229,11 @@ void Rva00808140( Rva00808140Ref *ref )
 		{
 			node = ref->m_list;
 			ref->m_list = node->m_next;
-			Rva007F0030Free( node );
+			bfmeGo1019C( (int)node );
 		}
 
 		Rva007FEAA0ListReset( ref->m_sub0C );
-		Rva007F0030Free( ref );
+		bfmeGo1019C( (int)ref );
 	}
 }
 
@@ -817,7 +817,7 @@ int Rva00808660( Rva00807BA0Ping *ping, void *data, int *dataLen,
 			}
 
 			ping->m_list = entry->m_next;
-			Rva007F0030Free( entry );
+			bfmeGo1019C( (int)entry );
 			ping->m_credits = ping->m_credits + 1;
 			Rva007FECB0Unlock( ping->m_lock0C );
 		}

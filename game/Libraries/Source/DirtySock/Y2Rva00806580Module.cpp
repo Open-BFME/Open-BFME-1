@@ -12,7 +12,7 @@
 void Rva0080B070Destroy( void *object );
 
 // 0x007F0030, the one-argument release the rest of this directory uses.
-void Rva007F0030Free( void *block );
+void bfmeGo1019C( int block );
 
 // An import thunk the ledger already names; the C spelling is what this call
 // site needs.
@@ -596,12 +596,12 @@ void Rva00806580( Rva00806580Record *record )
 	Rva0081BDE4();
 
 	if( record->m_field7C != 0 )
-		Rva007F0030Free( record->m_field7C );
+		bfmeGo1019C( (int)record->m_field7C );
 
 	if( record->m_outBuffer != 0 )
-		Rva007F0030Free( record->m_outBuffer );
+		bfmeGo1019C( (int)record->m_outBuffer );
 
-	Rva007F0030Free( record );
+	bfmeGo1019C( (int)record );
 }
 
 // 0x008068B0 and 0x00806A10 ARE BYTE-IDENTICAL apart from the displacements of
@@ -623,7 +623,7 @@ int Rva008068B0( Rva00806580Record *record )
 
 	if( record->m_outBuffer != 0 )
 	{
-		Rva007F0030Free( record->m_outBuffer );
+		bfmeGo1019C( (int)record->m_outBuffer );
 		record->m_outBuffer = 0;
 	}
 
@@ -641,7 +641,7 @@ int Rva00806A10( Rva00806580Record *record )
 
 	if( record->m_outBuffer != 0 )
 	{
-		Rva007F0030Free( record->m_outBuffer );
+		bfmeGo1019C( (int)record->m_outBuffer );
 		record->m_outBuffer = 0;
 	}
 
@@ -805,7 +805,7 @@ int Rva00806910( Rva00806580Record *record, unsigned int addr,
 
 	if( record->m_field7C != 0 )
 	{
-		Rva007F0030Free( record->m_field7C );
+		bfmeGo1019C( (int)record->m_field7C );
 		record->m_field7C = 0;
 	}
 
@@ -861,7 +861,7 @@ int Rva00806710( Rva00806580Record *record, const char *name, unsigned int addr,
 
 	if( record->m_field7C != 0 )
 	{
-		Rva007F0030Free( record->m_field7C );
+		bfmeGo1019C( (int)record->m_field7C );
 		record->m_field7C = 0;
 	}
 
@@ -945,7 +945,7 @@ int Rva00807820( Rva00806580Record *record, unsigned int *outA,
 		if( dest != 0 )
 			memcpy( dest, (char *)record->m_field7C + 0x0C, destSize );
 
-		Rva007F0030Free( record->m_field7C );
+		bfmeGo1019C( (int)record->m_field7C );
 		record->m_field7C = 0;
 	}
 
@@ -1137,7 +1137,7 @@ int Rva00807520( Rva00806580Record *record, int length, int limit )
 			return 0;
 
 		memcpy( grown, record->m_outBuffer, record->m_outUsed );
-		Rva007F0030Free( record->m_outBuffer );
+		bfmeGo1019C( (int)record->m_outBuffer );
 		record->m_outBuffer = grown;
 		record->m_outSize = record->m_outUsed + length + limit;
 	}
@@ -1171,7 +1171,7 @@ void Rva00806B10( Rva00806580Record *record )
 	if( record->m_field5C == 3 && record->m_field00 == 0 )
 	{
 		if( record->m_field7C != 0 )
-			Rva007F0030Free( record->m_field7C );
+			bfmeGo1019C( (int)record->m_field7C );
 
 		record->m_field74 = 0xC;
 		record->m_field78 = 0xC;
@@ -1211,7 +1211,7 @@ void Rva00806B10( Rva00806580Record *record )
 		record->m_outSent = 0;
 
 		if( record->m_field7C != 0 )
-			Rva007F0030Free( record->m_field7C );
+			bfmeGo1019C( (int)record->m_field7C );
 
 		record->m_field74 = 0xC;
 		record->m_field78 = 0xC;
@@ -1274,7 +1274,7 @@ void Rva00806B10( Rva00806580Record *record )
 		record->m_outSent = 0;
 
 		if( record->m_field7C != 0 )
-			Rva007F0030Free( record->m_field7C );
+			bfmeGo1019C( (int)record->m_field7C );
 
 		record->m_field74 = 0xC;
 		record->m_field78 = 0xC;
@@ -1316,7 +1316,7 @@ void Rva00806B10( Rva00806580Record *record )
 
 		if( record->m_outSent == record->m_outUsed )
 		{
-			Rva007F0030Free( record->m_outBuffer );
+			bfmeGo1019C( (int)record->m_outBuffer );
 			record->m_outBuffer = 0;
 		}
 	}
@@ -1370,7 +1370,7 @@ void Rva00806B10( Rva00806580Record *record )
 					&& record->m_outBuffer != 0
 					&& record->m_outSent == record->m_outUsed )
 			{
-				Rva007F0030Free( record->m_outBuffer );
+				bfmeGo1019C( (int)record->m_outBuffer );
 				record->m_outBuffer = 0;
 			}
 		}
@@ -1416,7 +1416,7 @@ void Rva00806B10( Rva00806580Record *record )
 					&& record->m_outBuffer != 0
 					&& record->m_outSent == record->m_outUsed )
 			{
-				Rva007F0030Free( record->m_outBuffer );
+				bfmeGo1019C( (int)record->m_outBuffer );
 				record->m_outBuffer = 0;
 			}
 		}
