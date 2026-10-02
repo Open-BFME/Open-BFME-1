@@ -2,7 +2,7 @@
 // parseMod, retail 0x000624F0, 478 bytes.
 // Identity: the retail CommandLineParam table entry { "-mod" (0x01075204),
 // ILT 0x00040070 -> 0x000624F0 } and the Zero Hour twin in CommandLine.cpp.
-// BFME adds the byte_134CB4C store (the search-order Bool documented in
+// BFME adds the g_rva00061DE0 store (the search-order Bool documented in
 // FileSystem_openFile.cpp, whose writer list names 0x00062512) and calls the
 // non-virtual FileSystem::doesFileExist through TheFileSystem (0x0134CB48).
 // GlobalData+0xDC0/+0xDC4 are m_modDir/m_modBIG as in ParseCommandLine.cpp.
@@ -37,11 +37,11 @@ public:
 
 extern FileSystem *TheFileSystem;
 
-extern bool byte_134CB4C;
+extern char g_rva00061DE0[];
 
 Int parseMod(char *args[], Int num)
 {
-	byte_134CB4C = true;
+	g_rva00061DE0[0] = 1;
 	if (TheWritableGlobalData && num > 1)
 	{
 		AsciiString modPath = args[1];

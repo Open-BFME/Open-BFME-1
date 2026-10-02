@@ -33,7 +33,7 @@
 //                 calling TheArchiveFileSystem vtable slot 9 -- a directory out
 //                 of global data, applied only when non-empty.
 //
-//   byte_134CB4C  A Bool, and NOT a suppressor: it selects the search ORDER.
+//   g_rva00061DE0  A Bool, and NOT a suppressor: it selects the search ORDER.
 //                 When it is false the archive block below runs BEFORE the local
 //                 one; when it is true the archive block runs AFTER instead. It
 //                 has three writers outside this function (0x00061BE2 and
@@ -126,7 +126,7 @@ extern ArchiveFileSystem *TheArchiveFileSystem;
 extern LocalFileSystem *TheLocalFileSystem;
 extern char byte_134CA48[];
 extern char byte_134CB50[];
-extern bool byte_134CB4C;
+extern char g_rva00061DE0[];
 
 class FileSystem
 {
@@ -151,7 +151,7 @@ File *FileSystem::openFile( const char *filename, int access )
 		file = TheLocalFileSystem->openFile( modPath.str(), access );
 	}
 
-	if( !byte_134CB4C && file == NULL && TheArchiveFileSystem )
+	if( !g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 			file = TheArchiveFileSystem->openFile( languagePath, access );
@@ -167,7 +167,7 @@ File *FileSystem::openFile( const char *filename, int access )
 			file = TheLocalFileSystem->openFile( filename, access );
 	}
 
-	if( byte_134CB4C && file == NULL && TheArchiveFileSystem )
+	if( g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 		{
@@ -202,7 +202,7 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 		file = TheLocalFileSystem->openFile( modPath.str(), access, offset, size );
 	}
 
-	if( !byte_134CB4C && file == NULL && TheArchiveFileSystem )
+	if( !g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 			file = TheArchiveFileSystem->openFile( languagePath, access, offset, size );
@@ -220,7 +220,7 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 
 	// Note the test order: the wide form checks TheArchiveFileSystem before
 	// file == NULL, where the narrow one above does it the other way round.
-	if( byte_134CB4C && TheArchiveFileSystem && file == NULL )
+	if( g_rva00061DE0[0] && TheArchiveFileSystem && file == NULL )
 	{
 		if( !(access & 8) )
 		{
