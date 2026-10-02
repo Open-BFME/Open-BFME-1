@@ -145,18 +145,8 @@ void UnicodeString::releaseBuffer()
 	}
 }
 
-// -----------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
-// ??0UnicodeString@@QAE@PBG@Z present-unmatched
-UnicodeString::UnicodeString(const WideChar* s) : m_data(0)
-{
-	int len = wcslen(s);
-	if (len)
-	{
-		ensureUniqueBufferOfSize(len + 1, false, s, NULL);
-	}
-	validate();
-}
+// The exported wchar-pointer constructor delegates to the wide StringBase
+// constructor; its matched inline definition lives in WWLib/unicode_string.cpp.
 
 // -----------------------------------------------------
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/string_base.cpp

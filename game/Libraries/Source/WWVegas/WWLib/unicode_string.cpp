@@ -15,7 +15,7 @@ UnicodeString::UnicodeString(wchar_t c)
     ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(c);
 }
 
-UnicodeString::UnicodeString(const wchar_t *str)
+inline UnicodeString::UnicodeString(const wchar_t *str)
 {
     ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(str);
 }
