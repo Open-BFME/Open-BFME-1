@@ -3,10 +3,25 @@
 // removed record node routes through 0x00354A60 to the Script destructor at
 // 0x00352C20 (vtable 0x010E858C).  The concrete list-node class is not known.
 
+// Retail call +0x43 routes through ILT 0x00028EC0 to the existing
+// Rva00354A60::invoke provider (add ecx,4; tail jump). Call +0x54 routes
+// through ILT 0x0003E85B to Rva00359530StringRecordTable::release, which
+// receives the table in ECX and one integer stack argument (ret 4).
+class Rva00354A60
+{
+public:
+	void invoke();
+};
+
+class Rva00359530StringRecordTable
+{
+public:
+	void release(int index);
+};
+
 class Rva0035B3D0RecordNode
 {
 public:
-	void bfmeDestroy354A60();
 	Rva0035B3D0RecordNode *m_next;
 };
 
@@ -19,8 +34,6 @@ struct Rva0035B3D0Record
 class Rva0035B3D0TableView
 {
 public:
-	void bfmeRelease359530(int index);
-
 	char m_unused[0x0C];
 	Rva0035B3D0Record *m_records;
 };
@@ -82,9 +95,9 @@ void BfmeThingFFF::bfmeStepFFF(BfmeSubFFF *list, void *entryPointer)
 	Rva0035B3D0Record *record = &records->m_records[index];
 	Rva0035B3D0RecordNode *node = record->m_head;
 	record->m_head = node->m_next;
-	node->bfmeDestroy354A60();
+	((Rva00354A60 *)node)->invoke();
 	delete node;
-	records->bfmeRelease359530(index);
+	((Rva00359530StringRecordTable *)records)->release(index);
 
 	delete entry;
 }
