@@ -139,7 +139,8 @@ __declspec(noinline) void Rva001A4630TerrainRecordQuery::queryPointImplAt001A463
 					delta.set(record.m_position.x, record.m_position.y,
 						record.m_position.z);
 					delta.sub(position);
-					if (radius * radius > delta.lengthSqr())
+					if (radius * radius >
+						delta.x * delta.x + delta.y * delta.y + delta.z * delta.z)
 					{
 						Rva001A31D0Candidate *best =
 							reinterpret_cast<Rva001A31D0Candidate *>(result);

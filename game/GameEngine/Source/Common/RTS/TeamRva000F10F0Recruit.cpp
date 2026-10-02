@@ -170,18 +170,19 @@ public:
 	Bool Rva000F10F0(Object **recruit, float *distanceSquared,
 		Object *candidate, ThingTemplate *desired, Coord3D *teamHome);
 
-	Player *getControllingPlayer() const
-	{
-		if (m_prototype == 0)
-			return 0;
-		return m_prototype->m_owningPlayer;
-	}
 };
+
+static __forceinline Player *recruitmentTeamOwner(const Team *team)
+{
+	if (team->m_prototype == 0)
+		return 0;
+	return team->m_prototype->m_owningPlayer;
+}
 
 Bool Team::Rva000F10F0(Object **recruit, float *distanceSquared,
 	Object *candidate, ThingTemplate *desired, Coord3D *teamHome)
 {
-	Player *myPlayer = getControllingPlayer();
+	Player *myPlayer = recruitmentTeamOwner(this);
 
 	if (!candidate->getTemplate()->isEquivalentTo(desired))
 	{
@@ -238,7 +239,7 @@ Bool Team::Rva000F10F0(Object **recruit, float *distanceSquared,
 // the Object forward link at+88 is witnessed as m_next.
 Bool Team::Rva000F12B0(const ThingTemplate *desired, int minimum)
 {
-	Player *myPlayer = getControllingPlayer();
+	Player *myPlayer = recruitmentTeamOwner(this);
 	int count = 0;
 	for (Object *candidate = TheBfmeGameLogic->getFirstObject();
 		candidate != 0; candidate = candidate->m_next)

@@ -50,7 +50,7 @@ bool BaseHeightMapFloorElement::init006F8A60()
  }
  AsciiString &name=*(AsciiString *)((char *)this+0x88);
  filename=name;
- filename.concat(suffix);
+ static_cast<StringBase<char> &>(filename).concat(suffix.str(), suffix.getLength());
  if (!bfmeGo1025F((BfmeR1025 *)&filename)) filename=name;
  RenderObjClass *obj=Create_Render_Obj(filename.str());
  if (obj) {
