@@ -17,6 +17,9 @@
 // is the allocation you get when the pointer is a return value that has to
 // survive the call. Same thirty bytes either way, different order.
 
+// 0x0130BCA0: the classic-locale impl pointer, defined as void *g_bfmeObjWE.
+extern void *g_bfmeObjWE;
+
 namespace _STL
 {
 
@@ -27,8 +30,6 @@ public:
 	virtual void _bfme_incr(void) = 0;			// vtable slot 1
 
 };
-
-extern _Locale_impl *_Bfme_classic_locale;		// 0x0130BCA0 (pinned)
 
 class locale
 {
@@ -49,7 +50,7 @@ static _Locale_impl *_bfme_acquire(_Locale_impl *impl)
 locale::locale(void)
 {
 	_M_impl = 0;
-	_M_impl = _bfme_acquire(_Bfme_classic_locale);
+	_M_impl = _bfme_acquire((_Locale_impl *)g_bfmeObjWE);
 }
 
 }
