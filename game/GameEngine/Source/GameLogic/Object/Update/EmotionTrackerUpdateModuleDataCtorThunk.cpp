@@ -21,7 +21,7 @@ private:
 // The linked build has ONE KINDOFMASK_NONE, defined by Common/System/KindOf.cpp;
 // this is its canonical spelling (?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B). The
 // TU-local KindOfMask above stays as this file's view of the same 24 bytes.
-template<int N> class BitFlags { public: unsigned int m_bits[(N + 31) / 32]; };
+template<int N> class BitFlags;
 extern const BitFlags<192> KINDOFMASK_NONE;
 static inline const KindOfMask *kindOfMaskNoneView() { return (const KindOfMask *)&KINDOFMASK_NONE; }
 
