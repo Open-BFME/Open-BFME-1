@@ -5,7 +5,6 @@
 
 extern "C" __declspec(dllimport) int __cdecl _vsnprintf(char *, unsigned int,
 	const char *, va_list);
-extern const char g_bfmeByteFormat[];
 
 struct BfmeByteValue
 {
@@ -75,7 +74,7 @@ Gen009D9360 *Gen009D9360::bfmeEmit(const BfmeByteValue *value)
 {
 	if (!m_pending)
 		bfmeAppend(reinterpret_cast<BfmeAppendStream *>(this), 0);
-	bfmeAppend(reinterpret_cast<BfmeAppendStream *>(this), g_bfmeByteFormat,
+	bfmeAppend(reinterpret_cast<BfmeAppendStream *>(this), "version: %i\n",
 			static_cast<unsigned int>(value->value));
 	m_pending = false;
 	return this;
