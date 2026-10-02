@@ -15,6 +15,9 @@
    fresh zeroing: retail's `ret` at 0x0085812E is that path.  */
 
 typedef void *PEER;
+typedef struct qr2_implementation *qr2_t;
+
+void qr2_shutdown(qr2_t qrec);
 
 typedef enum
 {
@@ -36,6 +39,8 @@ typedef struct piConnection
 {
 	unsigned char pad0[0x18d4];
 	PEERAutoMatchStatus autoMatchStatus;		/* +0x18D4 */
+	unsigned char pad18d8[0x1ef4 - 0x18d8];
+	qr2_t autoMatchReporting;
 } piConnection;
 
 PEERBool peerIsAutoMatching(PEER peer)
@@ -46,4 +51,15 @@ PEERBool peerIsAutoMatching(PEER peer)
 		return PEERFalse;
 
 	return (PEERBool)(connection->autoMatchStatus != PEERComplete);
+}
+
+void piStopAutoMatchReporting(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if(connection->autoMatchReporting)
+	{
+		qr2_shutdown(connection->autoMatchReporting);
+		connection->autoMatchReporting = 0;
+	}
 }

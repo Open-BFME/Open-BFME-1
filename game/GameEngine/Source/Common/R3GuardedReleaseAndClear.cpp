@@ -1,4 +1,4 @@
-// Seven "release the pointer I own, then forget it" bodies:
+// Six "release the pointer I own, then forget it" bodies:
 //
 //     mov  <base>            ; ecx for a member, [esp+4] for a free function
 //     mov  eax,[base+OFF]
@@ -15,7 +15,7 @@
 //      `mov esi,[esp+8]` (one push deep) is a pointer PARAMETER of a free
 //      __cdecl function.  Counting the push against the offset the load reads
 //      is the whole argument; the callee is never consulted.
-//   2. WHICH FIELD.  0x18, 0, 0xC0, 0, 0x1798, 0xAF0, 0x1EF4.
+//   2. WHICH FIELD.  0x18, 0, 0xC0, 0, 0x1798, 0xAF0.
 //   3. WHAT FREES IT.  Four different callees; `push`/`call`/`add esp,4` makes
 //      every one of them __cdecl with a single pointer argument.
 //
@@ -23,7 +23,7 @@
 // branch either lands on the store or past it, and that is not cosmetic --
 // `if (p) { free(p); p = 0; }` and `if (p) free(p); p = 0;` are different
 // source and give different displacements.  Rva0058C470 and Rva0085EFA0 clear
-// the field unconditionally; the other five clear it only inside the guard.
+// the field unconditionally; the other four clear it only inside the guard.
 //
 // CALLEE IDENTITY.  Two of the four callees are already named in the ledger and
 // are spelled as themselves: 0x00881EB0 is `operator delete` (reached by
@@ -139,20 +139,5 @@ extern "C" void piStopReporting( Rva00866770Owner *owner )
 	{
 		qr2_shutdown( owner->m_AF0 );
 		owner->m_AF0 = 0;
-	}
-}
-
-class Rva008667F0Owner
-{
-public:
-	char m_lead[0x1EF4];
-	void *m_1EF4;
-};
-void Rva008667F0( Rva008667F0Owner *owner )
-{
-	if ( owner->m_1EF4 )
-	{
-		qr2_shutdown( owner->m_1EF4 );
-		owner->m_1EF4 = 0;
 	}
 }
