@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class WindModuleInfo
 {
 public:
+    WindModuleInfo();
     virtual ~WindModuleInfo();
 private:
     unsigned char m_data[0x44];

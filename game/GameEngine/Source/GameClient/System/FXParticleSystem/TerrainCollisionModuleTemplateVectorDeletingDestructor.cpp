@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class TerrainCollisionModuleTemplate
 {
 public:
+    TerrainCollisionModuleTemplate();
     virtual ~TerrainCollisionModuleTemplate();
 
 private:

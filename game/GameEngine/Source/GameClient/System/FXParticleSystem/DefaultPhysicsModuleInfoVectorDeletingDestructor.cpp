@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class DefaultPhysicsModuleInfo
 {
 public:
+    DefaultPhysicsModuleInfo();
     virtual ~DefaultPhysicsModuleInfo();
 
 private:

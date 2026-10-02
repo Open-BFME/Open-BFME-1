@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class RenderObjectDrawModuleTemplate
 {
 public:
+    RenderObjectDrawModuleTemplate();
     virtual ~RenderObjectDrawModuleTemplate();
 
 private:
