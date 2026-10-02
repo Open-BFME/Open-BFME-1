@@ -1,3 +1,7 @@
+// TooltipUpgrade::upgradeImplementation at retail 0x002D9510: slot 9 of the UpgradeMux table
+// 0x010CE1A0, reached only through ILT 0x0002DBF0. TooltipUpgrade's registered
+// constructor 0x002D93E0 stores that table. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 // Address-derived control-bar dirtying helper at 0x002D9510.
 // cl: /O2 /DNDEBUG /DWIN32 /MD
 
@@ -44,13 +48,13 @@ public:
 
 extern ControlBar *TheControlBar;
 
-class Rva002D9510Owner
+class TooltipUpgrade
 {
-public:
-	void applyAndDirty();
+protected:
+	virtual void upgradeImplementation();
 };
 
-void Rva002D9510Owner::applyAndDirty()
+void TooltipUpgrade::upgradeImplementation()
 {
 	Rva002D9510Target *target = (*reinterpret_cast<Rva002D9510Source **>(reinterpret_cast<char *>(this) - 8))->getTarget();
 	if (target) {
