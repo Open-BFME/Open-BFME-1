@@ -38,10 +38,12 @@ public:
 	virtual ~Vector3SolidCylinderRandomizer();
 };
 
-__declspec(noinline) Vector3SolidBoxRandomizer::~Vector3SolidBoxRandomizer() {}
-__declspec(noinline) Vector3SolidSphereRandomizer::~Vector3SolidSphereRandomizer() {}
-__declspec(noinline) Vector3HollowSphereRandomizer::~Vector3HollowSphereRandomizer() {}
-__declspec(noinline) Vector3SolidCylinderRandomizer::~Vector3SolidCylinderRandomizer() {}
+// Keep retail out-of-line calls while allowing the identical complete
+// destructor COMDATs emitted by v3_rnd.cpp to coexist.
+inline __declspec(noinline) Vector3SolidBoxRandomizer::~Vector3SolidBoxRandomizer() {}
+inline __declspec(noinline) Vector3SolidSphereRandomizer::~Vector3SolidSphereRandomizer() {}
+inline __declspec(noinline) Vector3HollowSphereRandomizer::~Vector3HollowSphereRandomizer() {}
+inline __declspec(noinline) Vector3SolidCylinderRandomizer::~Vector3SolidCylinderRandomizer() {}
 
 void forceVector3RandomizerDeletingDestructors()
 {
