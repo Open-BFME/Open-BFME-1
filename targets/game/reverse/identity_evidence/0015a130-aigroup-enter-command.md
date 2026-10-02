@@ -11,8 +11,8 @@ The body ends in `ret 8` at RVA 0x0015A16F and INT3 starts at 0x0015A172.
 In the retail GameLogic message dispatcher at RVA 0x00397540, call
 0x003975D0 uses ILT 0x0003B570 -> RVA 0x0014C630, the matched clean C++
 `AI::createGroup()` returning `AIGroup*`. Its result is copied into EBP at
-0x003975D9 and saved in the local at ESP+0x14 (after the intervening push)
-at 0x003975DE. The MSG_ENTER branch loads this same local into ESI at
+0x003975D9 and saved at [ESP+0x18] at 0x003975DE, after the intervening push.
+When the stack returns to its original depth, this is the local at ESP+0x14. The MSG_ENTER branch loads this same local into ESI at
 0x00398140. It passes that value in ECX at 0x00398158 to the call at
 0x0039815A, ILT 0x0000DD0A -> RVA 0x0015A130.
 
