@@ -2740,28 +2740,6 @@ Bool AIMoveAndTightenState::computePath()
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 
-StateReturnType AIMoveAwayFromRepulsorsState::onEnter()	  
-{
-	setAdjustsDestination(false);
-	Object *obj = getMachineOwner();
-	Object* enemy = TheAI->findClosestRepulsor(getMachineOwner(), obj->getVisionRange());
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-	if (!enemy || !ai) {
-		return STATE_FAILURE;
-	}
-	ai->chooseLocomotorSet(LOCOMOTORSET_PANIC);
-
-	if (obj)
-	{
-		obj->setModelConditionState(MODELCONDITION_PANICKING);
-	}
-	m_okToRepathTimes = 1;
-	m_checkForPath = true;
-	TheAI->pathfinder()->removeGoal(obj);
-	ai->requestSafePath(enemy->getID());
-	return AIInternalMoveToState::onEnter();
-}
-
 //----------------------------------------------------------------------------------------------------------
 // ?update@AIMoveAwayFromRepulsorsState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveAwayFromRepulsorsState::update()

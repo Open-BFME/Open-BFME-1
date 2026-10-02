@@ -10,10 +10,18 @@ struct BfmeB1112
 	char m_bfmePad[0x18];
 };
 
+template <int Bits>
+class BitFlags
+{
+public:
+	bool testSetAndClear(const BitFlags<Bits> &a,
+		const BitFlags<Bits> &b) const;
+};
+
 class BfmeSub1112
 {
 public:
-	char bfmeChk1112(BfmeA1112 *a, BfmeB1112 *b);
+	char m_bfmePad[0x18];
 };
 
 struct BfmeQ1112
@@ -37,7 +45,18 @@ struct BfmeSlot1112
 	char m_bfmePad[8];
 };
 
-BfmeNode1112 *__cdecl bfmeNext1112(BfmeNode1112 *p);
+namespace _STL
+{
+struct _Rb_tree_node_base;
+
+template <class Dummy>
+class _Rb_global
+{
+public:
+	static _Rb_tree_node_base *__cdecl _M_increment(
+		_Rb_tree_node_base *node);
+};
+}
 
 class BfmeV1112
 {
@@ -60,9 +79,11 @@ int BfmeV1112::bfmeGo1112A(BfmeA1112 a, BfmeB1112 b)
 		BfmeQ1112 *q = p->m_bfme10;
 		int w = p->m_bfme14;
 
-		if (q && q->m_bfmec8.bfmeChk1112(&a, &b))
+		if (q && ((const BitFlags<116> *)&q->m_bfmec8)->testSetAndClear(
+			(const BitFlags<116> &)a, (const BitFlags<116> &)b))
 			n += w;
-		p = bfmeNext1112(p);
+		p = (BfmeNode1112 *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)p);
 		h = m_bfme144;
 	}
 	return n;
@@ -82,9 +103,11 @@ int BfmeV1112::bfmeGo1112B(BfmeA1112 a, BfmeB1112 b)
 			BfmeQ1112 *q = p->m_bfme10;
 			int w = p->m_bfme14;
 
-			if (q && q->m_bfmec8.bfmeChk1112(&a, &b))
+			if (q && ((const BitFlags<116> *)&q->m_bfmec8)->testSetAndClear(
+				(const BitFlags<116> &)a, (const BitFlags<116> &)b))
 				n += w;
-			p = bfmeNext1112(p);
+			p = (BfmeNode1112 *)_STL::_Rb_global<bool>::_M_increment(
+				(_STL::_Rb_tree_node_base *)p);
 			h = s->m_bfmeHead;
 		}
 		s++;

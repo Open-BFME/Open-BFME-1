@@ -115,18 +115,10 @@ public:
 		return m_id;
 	}
 
-	void setModelConditionState(ModelConditionFlagType condition)
-	{
-		if (!m_modelConditionFlags.test(condition))
-		{
-			m_modelConditionFlags.set(condition);
-			notifyModelConditionChanged();
-		}
-	}
-
 	void notifyModelConditionChanged();
 
-private:
+	// The matched caller emits this inline operation directly so this TU does
+	// not provide another external Object::setModelConditionState definition.
 	unsigned char m_unreconstructed_000[0x74];
 	ObjectID m_id;
 	unsigned char m_unreconstructed_078[0xA0];
@@ -242,7 +234,13 @@ StateReturnType AIMoveAwayFromRepulsorsState::onEnter()
 
 	ai->chooseLocomotorSet(LOCOMOTORSET_PANIC);
 	if (object)
-		object->setModelConditionState(MODELCONDITION_PANICKING);
+	{
+		if (!object->m_modelConditionFlags.test(MODELCONDITION_PANICKING))
+		{
+			object->m_modelConditionFlags.set(MODELCONDITION_PANICKING);
+			object->notifyModelConditionChanged();
+		}
+	}
 
 	m_okToRepathTimes = 1;
 	m_checkForPath = true;
