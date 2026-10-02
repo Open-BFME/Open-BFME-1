@@ -60,3 +60,20 @@ it from ZH's signature once the converted body confirms the argument types.
 TileBuildInfo is nested in BuildAssistant, so the return type is
 `BuildAssistant::TileBuildInfo *`. The ZH copy in
 `game/GameEngine/Source/Common/System/BuildAssistant.cpp` is the natural home.
+
+## Independent re-derivation (sol/w4 e4845bc398)
+
+A separate session reached the same identity. Facts it adds:
+
+- Slot 14 is VA 0x01086110 and is the only absolute pointer to ILT VA
+  0x00415DD9. The destructor 0x000FDB40 reinstalls table 0x010860D8
+  (operand at 0x000FDB5F).
+- Extent: `ret 0x1C` at 0x000FC214, INT3 at 0x000FC217 (519 bytes). The
+  build-option mask 0x1F is pushed at 0x000FC18C.
+- At 0x000FC1E0 the positions pointer goes to VA 0x012ED844, at 0x000FC1E5
+  the used-tile count goes to VA 0x012ED840, and 0x000FC1EB returns that
+  static: TileBuildInfo `{tilesUsed, positions}`.
+- Proposed mangling:
+  `?buildTiledLocations@BuildAssistant@@UAEPAUTileBuildInfo@1@PBVThingTemplate@@MPBUCoord3D@@1MHPAVObject@@@Z`.
+  The 514-byte / 0.509 bank still misses the 519-byte extent (coordinate
+  lifetime and frame placement).
