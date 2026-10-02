@@ -21,7 +21,9 @@ class Object;
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
-class GameLogic
+class GameLogic;
+
+class SpawnClosestSlaveGameLogicView
 {
 public:
 	Object *findObjectByID(ObjectID id)
@@ -66,7 +68,7 @@ Object *SpawnBehavior::getClosestSlave(const Coord3D *pos)
 	for (_STL::list<ObjectID>::iterator it = m_spawnIDs.begin();
 		it != m_spawnIDs.end(); ++it)
 	{
-		Object *obj = TheGameLogic->findObjectByID(*it);
+		Object *obj = reinterpret_cast<SpawnClosestSlaveGameLogicView *>(TheGameLogic)->findObjectByID(*it);
 		if (obj)
 		{
 			Real dx = obj->m_position.x - pos->x;

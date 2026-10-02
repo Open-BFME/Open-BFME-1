@@ -19,7 +19,9 @@ class Object;
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
-class GameLogic
+class GameLogic;
+
+class WorkerAIOnDeleteGameLogicView
 {
 public:
 	Object *findObjectByID(ObjectID id)
@@ -149,7 +151,7 @@ void WorkerAIUpdate::onDelete(void)
 
 	for (i = 0; i < 3; ++i)
 	{
-		Object *goalObject = TheGameLogic->findObjectByID(m_task[i].m_targetObjectID);
+		Object *goalObject = reinterpret_cast<WorkerAIOnDeleteGameLogicView *>(TheGameLogic)->findObjectByID(m_task[i].m_targetObjectID);
 		if (goalObject != 0)
 			goalObject->clearActivelyBeingConstructed();
 	}

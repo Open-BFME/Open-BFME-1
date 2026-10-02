@@ -13,38 +13,17 @@ extern "C" __declspec(dllimport) LPVOID WINAPI MapViewOfFile(
 
 namespace _STL {
 
-streamoff _Filebuf_base::_M_seek(streamoff offset, ios_base::seekdir dir)
+static __forceinline streamoff bfmeMmapSeekFromStart(_Filebuf_base *filebuf, streamoff offset)
 {
-  streamoff result = -1;
-  int whence;
-
-  switch (dir) {
-  case ios_base::beg:
-    if (offset < 0)
-      return streamoff(-1);
-    whence = FILE_BEGIN;
-    break;
-  case ios_base::cur:
-    whence = FILE_CURRENT;
-    break;
-  case ios_base::end:
-    if (-offset > _M_file_size())
-      return streamoff(-1);
-    whence = FILE_END;
-    break;
-  default:
+  if (offset < 0)
     return streamoff(-1);
-  }
 
   LARGE_INTEGER li;
   li.QuadPart = offset;
-  li.LowPart = SetFilePointer(_M_file_id, li.LowPart, &li.HighPart, whence);
+  li.LowPart = SetFilePointer(*(HANDLE *)filebuf, li.LowPart, &li.HighPart, FILE_BEGIN);
   if (li.LowPart == (DWORD)-1 && GetLastError() != 0)
-    result = -1;
-  else
-    result = li.QuadPart;
-
-  return result;
+    return streamoff(-1);
+  return li.QuadPart;
 }
 
 void *_Filebuf_base::_M_mmap(streamoff offset, streamoff len)
@@ -56,7 +35,7 @@ void *_Filebuf_base::_M_mmap(streamoff offset, streamoff len)
                          (DWORD)((unsigned __int64)offset >> 32),
                          (DWORD)((unsigned __int64)offset & 0xffffffff),
                          (SIZE_T)len);
-    if (base == 0 || _M_seek(offset + len, ios_base::beg) < 0) {
+    if (base == 0 || bfmeMmapSeekFromStart(this, offset + len) < 0) {
       if (base)
         UnmapViewOfFile(base);
       if (_M_view_id)

@@ -31,7 +31,9 @@ typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;
 typedef _STL::set<UnsignedInt> BfmeIdSet;
 
-class GameLogic
+class GameLogic;
+
+class Rva0023C4D0GameLogicView
 {
 public:
 	__forceinline Object *findObjectByID( ObjectID id )
@@ -113,7 +115,7 @@ Bool HordeContainInterface::slot98( void )
 		if ( id == 0 )
 			continue;
 
-		Object *member = TheGameLogic->findObjectByID( id );
+		Object *member = reinterpret_cast<Rva0023C4D0GameLogicView *>( TheGameLogic )->findObjectByID( id );
 		if ( member != 0 )
 		{
 			anyResolved = true;

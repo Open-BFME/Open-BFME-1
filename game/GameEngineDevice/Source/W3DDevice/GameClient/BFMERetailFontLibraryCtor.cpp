@@ -21,7 +21,6 @@ class BFMERetailAsciiString
 {
 public:
 	BFMERetailAsciiString(const char *str);
-	~BFMERetailAsciiString(void) { releaseBuffer(); }
 	void set(const BFMERetailAsciiString &other);
 	void releaseBuffer();
 };
@@ -30,7 +29,7 @@ class UnicodeString : public BFMERetailAsciiString
 {
 public:
 	UnicodeString(const char *str) : BFMERetailAsciiString(str) {}
-	~UnicodeString(void) {}
+	~UnicodeString(void) { releaseBuffer(); }
 	void set(const UnicodeString &other);
 	UnicodeString &operator=(const UnicodeString &other)
 	{

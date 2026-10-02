@@ -23,7 +23,9 @@ class Object;
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
-class GameLogic
+class GameLogic;
+
+class SpawnCanAttackGameLogicView
 {
 public:
 	Object *findObjectByID(ObjectID id)
@@ -72,7 +74,7 @@ CanAttackResult SpawnBehavior::getCanAnySlavesAttackSpecificTarget(AbleToAttackT
 	Bool invalidShot = false;
 	for (_STL::list<ObjectID>::iterator it = m_spawnIDs.begin(); it != m_spawnIDs.end(); ++it)
 	{
-		Object *obj = TheGameLogic->findObjectByID(*it);
+		Object *obj = reinterpret_cast<SpawnCanAttackGameLogicView *>(TheGameLogic)->findObjectByID(*it);
 		if (obj)
 		{
 			CanAttackResult result = obj->getAbleToAttackSpecificObject(attackType, target, commandSource);
