@@ -15,19 +15,25 @@
 // used directly as this function`s, and the `jne` skips the fallback, so the
 // whole body is `result = f( K ); return result ? result : ADDRESS;`.
 //
-// WHAT THE BYTES CANNOT DECIDE.  THE FOUR RELOCATED BYTES OF THE FALLBACK
-// ADDRESS ARE NOT EVIDENCE.  What is evidence is that all eight carry the SAME
-// four bytes, so one extern object serves all eight and
-// verify_dir32_consistency holds.  Its type is left INCOMPLETE on purpose: only
-// its address is ever taken, and an incomplete type is the declaration that
-// asserts the least.  Nothing here says what the ordinal selects, and nothing
-// says the eight consecutive ordinals index anything contiguous.
+// WHAT THE BYTES CANNOT DECIDE.  The fallback address itself is one relocated
+// field, so its four bytes are not evidence -- but the ADDRESS is.  0x012F1318 is
+// the shared empty audio event that
+// game/GameEngine/Source/Common/Audio/BfmeTheEmptyAudioEventGlobal.cpp defines as
+// `AudioEventRTS BfmeTheEmptyAudioEvent` (matched row ?Rva00C6B4B0Init@@YAXXZ,
+// whose $E initializer builds it from the empty AsciiString and owner 0), and
+// what ThingTemplate::getSound hands back when a unit has no sound of its own.
+// What is also evidence is that all eight fallbacks carry the SAME four bytes, so
+// one extern object serves all eight and verify_dir32_consistency holds.  Its type
+// stays INCOMPLETE: only its address is ever taken here, and an incomplete type is
+// the declaration that asserts the least.  Nothing here says what the ordinal
+// selects, and nothing says the eight consecutive ordinals index anything
+// contiguous.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
-// pin is address-derived and additive.
+// IDENTITY IS NOT RECOVERED for anything but that global.  Every other name is
+// derived from an address; the callee pin is address-derived and additive.
 
-class Q1Fallback012F1318;
-extern Q1Fallback012F1318 g_q1Fallback012F1318;
+class AudioEventRTS;
+extern AudioEventRTS BfmeTheEmptyAudioEvent;
 
 void *__stdcall Q1Selector0000286A( int ordinal );
 
@@ -42,7 +48,7 @@ void Rva00417110()
 	void *NAME()                                                          \
 	{                                                                     \
 		void *selected = Q1Selector0000286A( ORDINAL );                       \
-		return selected ? selected : (void *)&g_q1Fallback012F1318;           \
+		return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;           \
 	}
 
 Q1_SELECT_OR_FALLBACK( Rva00417200, 0x5F )
@@ -64,7 +70,7 @@ void *__stdcall Rva00417260( int selector )
 		case 3: selected = Q1Selector0000286A( 0x5A ); break;
 		default: selected = Q1Selector0000286A( 0x57 ); break;
 	}
-	return selected ? selected : (void *)&g_q1Fallback012F1318;
+	return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;
 }
 
 void *__stdcall Rva004172A0( int selector )
@@ -77,5 +83,5 @@ void *__stdcall Rva004172A0( int selector )
 		case 3: selected = Q1Selector0000286A( 0x5E ); break;
 		default: selected = Q1Selector0000286A( 0x5B ); break;
 	}
-	return selected ? selected : (void *)&g_q1Fallback012F1318;
+	return selected ? selected : (void *)&BfmeTheEmptyAudioEvent;
 }
