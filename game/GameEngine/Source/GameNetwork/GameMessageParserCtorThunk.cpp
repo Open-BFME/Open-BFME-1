@@ -32,9 +32,10 @@ class GameMessageParser
 {
 public:
 	GameMessageParser(GameMessage *msg);
-	virtual ~GameMessageParser();
 
 protected:
+	virtual ~GameMessageParser();			///< ??1GameMessageParser@@MAE@XZ
+
 	void addArgType(int type, int count);		///< ILT 0x0000B569
 
 	void *m_first;								///< retail this+0x04
