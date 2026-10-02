@@ -65,11 +65,14 @@
 #undef ICoord2D
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
+namespace
 {
-	Int x, y;
-	ICoord2D() {}
-};
+	struct ICoord2D
+	{
+		Int x, y;
+		ICoord2D() {}
+	};
+}
 
 // DEFINES ////////////////////////////////////////////////////////////////////
 

@@ -159,25 +159,6 @@ void CompositeRenderObjClass::Restart(void)
 }
 
 /***********************************************************************************************
- * CompositeRenderObjClass::Get_Name -- returns the name of this render object                 *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   1/26/00    gth : Created.                                                                 *
- *=============================================================================================*/
-// ?CompositeRenderObjClass::Get_Name present-unmatched
-const char * CompositeRenderObjClass::Get_Name(void) const															
-{ 
-	return Name; 
-}
-
-
-/***********************************************************************************************
  * CompositeRenderObjClass::Set_Name -- sets the name of this render object                    *
  *                                                                                             *
  * INPUT:                                                                                      *

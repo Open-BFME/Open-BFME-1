@@ -383,7 +383,7 @@ void ShortestDistancePointToSegment2D( const Coord2D *a, const Coord2D *b, const
 		segment.x = pt->x - a->x;
 		segment.y = pt->y - a->y;
 		if (outDistance) {		
-			(*outDistance) = segment.length();
+			(*outDistance) = (Real)sqrt( segment.x * segment.x + segment.y * segment.y );
 		}
 
 		if (outPosition) {
@@ -403,7 +403,7 @@ void ShortestDistancePointToSegment2D( const Coord2D *a, const Coord2D *b, const
 
 	// General case
 	Real u = ((pt->x - a->x) * (b->x - a->x) + (pt->y - a->y) * (b->y - a->y)) /
-					 sqr(segAB.length());
+					 sqr((Real)sqrt( segAB.x * segAB.x + segAB.y * segAB.y ));
 
 	Coord2D intersectSegment;
 
@@ -416,7 +416,7 @@ void ShortestDistancePointToSegment2D( const Coord2D *a, const Coord2D *b, const
 	}
 
 	if (outDistance) {
-		(*outDistance) = intersectSegment.length();
+		(*outDistance) = (Real)sqrt( intersectSegment.x * intersectSegment.x + intersectSegment.y * intersectSegment.y );
 	}
 	
 	if (outU) {

@@ -19,14 +19,6 @@
 #include "vector3.h"
 
 
-// Inlined context from part_buf.cpp; emitted copy already has its own owner.
-inline int ParticleBufferClass::Is_Freeze_Random(void) const
-{
-	if (LineRenderer != NULL) {
-		return LineRenderer->Is_Freeze_Random();
-	}
-	return false;
-}
 // ParticleBufferClass::Render_Line, retail 0x0098AD00, 1763 bytes.
 // /EHsc is intentional: the default /EHsc- treats extern-C atexit as throwing
 // and adds EH states 0/2/4 around the local-static vector registrations. State
@@ -36,7 +28,7 @@ inline int ParticleBufferClass::Is_Freeze_Random(void) const
 void ParticleBufferClass::Render_Line(RenderInfoClass & rinfo)
 {
 
-	LineRenderer->Set_Freeze_Random(Is_Freeze_Random());
+	LineRenderer->Set_Freeze_Random(LineRenderer != NULL ? LineRenderer->Is_Freeze_Random() : false);
 
 	int pingpong = 0;
 	if (PingPongPosition) {
