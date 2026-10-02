@@ -1,9 +1,16 @@
 // Open-BFME5 conversions.
 
+// 0x0089C880 is matched in functions.csv as Gen0089C880::handle(); the only
+// declaration of that class lives in a TU, so it is redeclared here.
+class Gen0089C880
+{
+public:
+	void handle(void);
+};
+
 class BfmeSubVOQ
 {
 public:
-	void bfmeHandleVOQ();
 	char m_bfmePad00[0x18];
 };
 
@@ -44,7 +51,7 @@ public:
 
 void BfmeThingVOQ::bfmeResetVOQ()
 {
-	m_bfme08.bfmeHandleVOQ();
+	((Gen0089C880 *)&m_bfme08)->handle();
 	bfmeNotifyVOQ(0, 0);
 	m_bfme24 = 0;
 	if (m_bfme20 != 0)

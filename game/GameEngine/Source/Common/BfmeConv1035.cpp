@@ -16,10 +16,12 @@ void BfmeA1035::bfmeGo1035A(char f)
 		bfmeMore1035();
 }
 
-class BfmeSubB1035
+// 0x0089C880 is matched in functions.csv as Gen0089C880::handle(); the only
+// declaration of that class lives in a TU, so it is redeclared here.
+class Gen0089C880
 {
 public:
-	void bfmeClear1035(void);
+	void handle(void);
 };
 
 class BfmeRef1035
@@ -35,14 +37,14 @@ public:
 	void bfmeGo1035B(void);
 
 	char m_bfmePad[8];
-	BfmeSubB1035 m_bfmeSub;
+	Gen0089C880 m_bfmeSub;
 	char m_bfmePad2[0xc];
 	BfmeRef1035 *m_bfmeP;
 };
 
 void BfmeB1035::bfmeGo1035B(void)
 {
-	m_bfmeSub.bfmeClear1035();
+	m_bfmeSub.handle();
 
 	if (m_bfmeP != 0)
 		m_bfmeP->bfmeRelease1035();

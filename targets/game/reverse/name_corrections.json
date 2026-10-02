@@ -13268,5 +13268,15 @@
   "after_sha256": "978e995449d0bf8c8f4a302d9cb234569e799ab1bdc7a07258096251f5c42a8e",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Link census: the referenced address 0x0003B557 is the ILT thunk the ledger defines as j_0003b557 (functions.csv); the old spelling was a stand-in nothing defines, so the object could never link. Call-target spelling only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1035.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1035.cpp",
+  "old_name": "BfmeSubB1035",
+  "new_name": "Gen0089C880",
+  "before_sha256": "e64a6f837de3ee098da19ee971c131fd9e0d3db44b4058f39705fcaaf0cbd002",
+  "after_sha256": "52a24c9d3f1f74e3bfc0fe68a93730d101f4decd326c136f2533910da09ce480",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

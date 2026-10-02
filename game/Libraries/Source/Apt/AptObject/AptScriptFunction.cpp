@@ -7,10 +7,17 @@ public:
 	virtual void bfmeV1222B();
 };
 
+// 0x0089C880 is matched in functions.csv as Gen0089C880::handle(); the only
+// declaration of that class lives in a TU, so it is redeclared here.
+class Gen0089C880
+{
+public:
+	void handle(void);
+};
+
 class BfmeSub1222
 {
 public:
-	void bfmeClose1222();
 	int m_bfme00;
 };
 
@@ -36,5 +43,5 @@ void BfmeA1222::bfmeRelease1222()
 	m_bfme28 = 0;
 	m_bfme2c->bfmeV1222B();
 	m_bfme2c = 0;
-	m_bfme08.bfmeClose1222();
+	((Gen0089C880 *)&m_bfme08)->handle();
 }
