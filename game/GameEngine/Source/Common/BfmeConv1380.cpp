@@ -11,12 +11,25 @@ class BfmeMsgVIX
 {
 public:
 	void bfmeSetVIX(const char *k, void *v);
-	void bfmeSet2VIX(const char *k, void *a, void *b);
 	void bfmeSet4VIX(const char *k, void *v);
 	void rva007E8EF0(const char *k, void *v);
 	char m_bfmePad[0x1c];
 	int m_bfme1c;
 };
+
+typedef __int64 FeslInt64;
+
+// retail 0x007E8E90
+class Rva007E8810Message
+{
+public:
+	void addInt64(const char *key, FeslInt64 value);
+};
+
+// Retail hands addInt64 the "blobId" key as a single 64-bit value, while the
+// builders here receive that value split over two adjacent stack parameters
+// (the low half first). Reading the frame keeps the byte-identical pair of
+// pushes: nothing is shifted or combined at the call site.
 
 extern void *g_bfmeFVIX;
 extern void *g_bfmeGVIY;
@@ -80,7 +93,7 @@ void BfmeThingVIY::bfmeGoVIY(BfmeMsgVIX *m, void *a, void *b, void *c, void *d, 
 	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
 	m->bfmeSetVIX("TXN", g);
-	m->bfmeSet2VIX("blobId", a, b);
+	((Rva007E8810Message *)m)->addInt64("blobId", *reinterpret_cast<const FeslInt64 *>(&a));
 	bfmeSubVIY(m, c, d);
 	m->bfmeSetVIX("version", e);
 }
