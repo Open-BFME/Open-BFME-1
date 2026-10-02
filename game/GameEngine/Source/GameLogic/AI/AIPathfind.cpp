@@ -12149,79 +12149,10 @@ Bool Pathfinder::isViewBlockedByObstacle(const Object* obj, const Object* objOth
 
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Pathfinder_isAttackViewBlockedByObstacle_Thunk.cpp
-// ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@01@Z present-unmatched
-Bool Pathfinder::isAttackViewBlockedByObstacle(const Object* attacker, const Coord3D& attackerPos, const Object* victim, const Coord3D& victimPos)
-{
-	//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() - attackerPos is (%g,%g,%g) (%X,%X,%X)\n",
-	//	attackerPos.x, attackerPos.y, attackerPos.z,
-	//	AS_INT(attackerPos.x),AS_INT(attackerPos.y),AS_INT(attackerPos.z)));
-	//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() - victimPos is (%g,%g,%g) (%X,%X,%X)\n",
-	//	victimPos.x, victimPos.y, victimPos.z,
-	//	AS_INT(victimPos.x),AS_INT(victimPos.y),AS_INT(victimPos.z)));
-	// Global switch to turn this off in case it doesn't work.
-	if (!TheAI->getAiData()->m_attackUsesLineOfSight) 
-	{
-		//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() 1\n"));
-		return false;
-	}
-
-	// If the attacker doesn't need line of sight, isn't blocked.
-	if (!attacker->isKindOf(KINDOF_ATTACK_NEEDS_LINE_OF_SIGHT)) 
-	{
-		//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() 2\n"));
-		return false;
-	}
-
-// srj sez: this is a good start at taking terrain into account for attacks, but findAttackPath needs to be smartened also
-#define LOS_TERRAIN
-#ifdef LOS_TERRAIN
-	const Weapon* w = attacker->getCurrentWeapon();
-	if (attacker->isKindOf(KINDOF_IMMOBILE)) {
-		// Don't take terrain blockage into account, since we can't move around it. jba.
-		w = NULL;
-	}
-	if (w)
-	{
-		Bool viewBlocked;
-		if (victim)
-			viewBlocked = !w->isClearGoalFiringLineOfSightTerrain(attacker, attackerPos, victim);
-		else
-			viewBlocked = !w->isClearGoalFiringLineOfSightTerrain(attacker, attackerPos, victimPos);
-
-		if (viewBlocked)
-		{
-			//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() 3\n"));
-			return true;
-		}
-	}
-#endif
-
-	ViewAttackBlockedStruct info;
-	info.obj = attacker;
-	info.victim = victim;
-	PathfindLayerEnum layer = LAYER_GROUND;
-	if (victim) {
-		layer = victim->getLayer();
-	}
-	info.victimCell = getCell(layer, &victimPos);
-	
-	info.skipCount = 0;
-	if (attacker->getLayer() != LAYER_GROUND) 
-	{
-		info.skipCount = 3;	/// srj -- someone wanna tell me what this magic number means?
-												/// jba - Yes, it means that if someone is on a bridge, or rooftop, they can see 
-												///      3 pathfind cells out of whatever they are standing on.  
-												/// srj -- awesome! thank you very much :-)
-		if (layer==LAYER_GROUND) {
-			layer = attacker->getLayer();
-		}
-	}
-
-	Int ret = iterateCellsAlongLine(attackerPos, victimPos, layer, attackBlockedByObstacleCallback, &info);
-	//CRCDEBUG_LOG(("Pathfinder::isAttackViewBlockedByObstacle() 4\n"));
-	return ret != 0;
-}
+// The BFME obstacle-view test at RVA 003EA980 is verified in
+// ../Pathfinder/PathfinderIsAttackViewBlockedByObstacle.cpp. Its template
+// flag, bridge-layer and terrain-elevation checks are absent from the
+// Zero Hour body, which must not emit a competing definition.
 
 static void computeNormalRadialOffset(const Coord3D& from,	Coord3D& insert, const Coord3D& to, 
 																			Object *obj, Real radius)
