@@ -1,6 +1,8 @@
 // cl: /O2 /Ob0 /MD
 // Open-BFME5: STLport ios_base::iword, retail 0x0083F0C0, 117 bytes.
 
+#include <stdio.h>
+
 namespace _STL
 {
 
@@ -14,11 +16,9 @@ struct GrowPair
 template <class T>
 GrowPair<T> *grow_array(GrowPair<T> *, T *, unsigned int, unsigned int);
 
-typedef void (__cdecl *IosBaseErrorCall)(void *, void *);
-extern IosBaseErrorCall g_call;
-extern void *g_global;
-extern long g_0130BD24;
-extern void *g_0130BD28;
+// Separate four-byte fallback cells returned by the two retail wrappers.
+long g_0130BD24 = 0;
+void *g_0130BD28 = 0;
 
 class ios_base
 {
@@ -58,7 +58,7 @@ long &ios_base::iword(int index)
 
 	m_iostate |= 1;
 	if (m_iostate & m_exception_mask)
-		g_call((void *)"ios failure", (char *)g_global + 0x40);
+		fputs("ios failure", stderr);
 	return g_0130BD24;
 }
 
@@ -75,7 +75,7 @@ void *&ios_base::pword(int index)
 
 	m_iostate |= 1;
 	if (m_iostate & m_exception_mask)
-		g_call((void *)"ios failure", (char *)g_global + 0x40);
+		fputs("ios failure", stderr);
 	return g_0130BD28;
 }
 
