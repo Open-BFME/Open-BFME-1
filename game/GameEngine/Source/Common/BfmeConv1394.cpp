@@ -23,10 +23,18 @@ BfmeThingVJT *BfmeThingVJT::bfmeInitVJT(BfmeMsgVJT *m)
 	return this;
 }
 
+// Retail calls Gen_008D2C80::bfmePush (0x008D2C80) from the VJU sequence push;
+// bfmePushVJU was a stand-in spelling of that same body, so declare the
+// defining owner here and call it through the defining name.
+class Gen_008D2C80
+{
+public:
+	void bfmePush(void);
+};
+
 class BfmeStackVJU
 {
 public:
-	void bfmePushVJU();
 	void bfmeSetVJU(void *p);
 	void bfmePopVJU();
 };
@@ -46,7 +54,7 @@ void BfmeThingVJU::bfmeGoVJU(BfmeStackVJU *s, int v, void *p)
 {
 	if (p)
 	{
-		s->bfmePushVJU();
+		((Gen_008D2C80 *)s)->bfmePush();
 		s->bfmeSetVJU(p);
 	}
 	switch (m_bfme00)

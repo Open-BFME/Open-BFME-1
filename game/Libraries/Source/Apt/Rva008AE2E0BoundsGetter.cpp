@@ -32,10 +32,17 @@ struct BfmeNode008AE2E0
 	BfmeNode008AE2E0 *m_next;
 };
 
+// Retail calls Gen_008D2C80::bfmePush (0x008D2C80) on this stack; the mark
+// step was a stand-in spelling of that same body.
+class Gen_008D2C80
+{
+public:
+	void bfmePush(void);
+};
+
 class BfmeA1236
 {
 public:
-	void bfmeMark1236(void);
 	void bfmeSet1236(void *value);
 	void bfmePop1236(void);
 };
@@ -86,7 +93,7 @@ void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
 	for (BfmeNode008AE2E0 *node = m_node; node; node = node->m_next)
 		bfmeMul1208((BfmeM1208 *)&local, (BfmeM1208 *)&node->m_transform, (BfmeM1208 *)&local);
 
-	g_bfmeStack008AE2E0->bfmeMark1236();
+	((Gen_008D2C80 *)g_bfmeStack008AE2E0)->bfmePush();
 	g_bfmeStack008AE2E0->bfmeSet1236(&local);
 
 	unsigned *u = (unsigned *)bounds;

@@ -28,12 +28,19 @@ public:
 	void *m_bfme4c;
 };
 
+// Retail calls Gen_008D2C80::bfmePush (0x008D2C80) from this sequence; the
+// mark step was a stand-in spelling of that same body.
+class Gen_008D2C80
+{
+public:
+	void bfmePush(void);
+};
+
 class BfmeA1236
 {
 public:
 	void bfmeBegin1236();
 	void bfmePush1236(void *a);
-	void bfmeMark1236();
 	void bfmeSet1236(void *a);
 	void bfmePop1236();
 	void bfmeEnd1236();
@@ -43,7 +50,7 @@ void bfmeGo1236(BfmeA1236 *a, BfmeB1236 *b, void *c)
 {
 	a->bfmeBegin1236();
 	a->bfmePush1236(&b->m_bfme28);
-	a->bfmeMark1236();
+	((Gen_008D2C80 *)a)->bfmePush();
 	if ((b->m_bfme04 & 0x3f) == 0xf && !((unsigned char)(~(b->m_bfme04 >> 15)) & 1))
 		b->bfmeApply1236(b->m_bfme4c);
 	a->bfmeSet1236(&b->m_bfme10);

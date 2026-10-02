@@ -1,7 +1,14 @@
+// Retail calls Gen_008D2C80::bfmePush (0x008D2C80) here; bfmePushXS was a
+// stand-in spelling of that body, so declare the defining owner and use it.
+class Gen_008D2C80
+{
+public:
+	void bfmePush(void);
+};
+
 class BfmeThingXS
 {
 public:
-	void bfmePushXS();
 	void bfmeGoXS(void *flag);
 	void bfmeApplyXS(void *what, void *sub);
 	void bfmePopXS();
@@ -21,7 +28,7 @@ void BfmeOwnerXS::bfmeRunXS(BfmeThingXS *thing, void *what, void *flag)
 {
 	if (flag != 0)
 	{
-		thing->bfmePushXS();
+		((Gen_008D2C80 *)thing)->bfmePush();
 		thing->bfmeGoXS(flag);
 	}
 
