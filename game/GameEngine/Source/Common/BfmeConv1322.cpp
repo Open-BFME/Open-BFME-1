@@ -28,7 +28,10 @@ struct BfmeGuidTSA
 	char m_bfmeBytes[16];
 };
 
-extern BfmeGuidTSA g_bfmeIidTSA;
+// Retail 0x0113DF00: the uuid attribute on IFEBrowserEngine2 (see
+// DX8WebBrowserInitialize.cpp) makes the compiler reference this C-linkage
+// GUID constant by its __GUID_<uuid> spelling, so that is the name used here.
+extern "C" BfmeGuidTSA __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
 
 class BfmeThingTSA;
 
@@ -66,7 +69,8 @@ long BfmeThingTSA::bfmeGoOneTSA()
 {
 	long hr = m_bfmeVt->m_bfmeOneTSA(this);
 	if (hr < 0)
-		bfmeReportTSA(hr, this, &g_bfmeIidTSA);
+		bfmeReportTSA(hr, this,
+			&__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 	return hr;
 }
 
@@ -74,6 +78,7 @@ long BfmeThingTSA::bfmeGoTwoTSA()
 {
 	long hr = m_bfmeVt->m_bfmeTwoTSA(this);
 	if (hr < 0)
-		bfmeReportTSA(hr, this, &g_bfmeIidTSA);
+		bfmeReportTSA(hr, this,
+			&__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 	return hr;
 }

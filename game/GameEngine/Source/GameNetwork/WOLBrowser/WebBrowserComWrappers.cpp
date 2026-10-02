@@ -39,7 +39,10 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volati
 extern void __stdcall _com_issue_error(long error);
 extern void __stdcall _com_issue_errorex(long error, IUnknown *object,
 	const GUID &iid);
-extern GUID g_bfmeIidTSA;
+// Retail 0x0113DF00: the uuid attribute on IFEBrowserEngine2 (see
+// WebBrowserComCreateInstance.cpp) makes the compiler reference this C-linkage
+// GUID constant by its __GUID_<uuid> spelling, so that is the name used here.
+extern "C" const GUID __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
 
 // _bstr_t's Data_t: the BSTR, its reference count and its length.
 class BfmeThingVGP
@@ -110,7 +113,8 @@ public:
 		long result = vtable->slot24(this, firstValue, secondValue, hwnd,
 			x, y, w, h, options, gamedispatch);
 		if (result < 0)
-			_com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+			_com_issue_errorex(result, (IUnknown *)this,
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return result;
 	}
 
@@ -150,7 +154,8 @@ public:
 		void *value = data ? data->m_bfme00 : 0;
 		long result = vtable->slot28(this, value);
 		if (result < 0)
-			_com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+			_com_issue_errorex(result, (IUnknown *)this,
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return result;
 	}
 
@@ -162,7 +167,8 @@ public:
 		void *firstValue = firstData ? firstData->m_bfme00 : 0;
 		long result = vtable->slot2C(this, firstValue, secondValue);
 		if (result < 0)
-			_com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+			_com_issue_errorex(result, (IUnknown *)this,
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return result;
 	}
 
@@ -172,7 +178,8 @@ public:
 		void *text = data ? data->m_bfme00 : 0;
 		long result = vtable->slot44(this, text, value);
 		if (result < 0)
-			_com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+			_com_issue_errorex(result, (IUnknown *)this,
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return result;
 	}
 
@@ -212,7 +219,8 @@ public:
 		void *text = data ? data->m_bfme00 : 0;
 		long result = vtable->slot34(this, text, &value);
 		if (result < 0)
-			_com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+			_com_issue_errorex(result, (IUnknown *)this,
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return value;
 	}
 

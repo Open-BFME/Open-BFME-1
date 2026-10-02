@@ -25,12 +25,10 @@ struct IUnknown;
 extern void __stdcall _com_issue_errorex(long error, IUnknown *object,
 	const GUID &iid);
 
-struct BfmeGuidTSA
-{
-	char m_bfmeBytes[16];
-};
-
-extern BfmeGuidTSA g_bfmeIidTSA;
+// Retail 0x0113DF00: the uuid attribute on IFEBrowserEngine2 (see
+// DX8WebBrowserInitialize.cpp) makes the compiler reference this C-linkage
+// GUID constant by its __GUID_<uuid> spelling, so that is the name used here.
+extern "C" const GUID __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
 
 class Rva00958D30
 {
@@ -60,7 +58,7 @@ public:
 		long result = vtable->slot3c(this);
 		if (result < 0)
 			_com_issue_errorex(result, (IUnknown *)this,
-				reinterpret_cast<const GUID &>(g_bfmeIidTSA));
+				__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
 		return result;
 	}
 
