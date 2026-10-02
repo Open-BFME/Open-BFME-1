@@ -1,29 +1,5 @@
 // Open-BFME5 conversions.
 
-class BfmeSubTFA
-{
-public:
-	void bfmeSetTFA(int a);
-};
-
-class BfmeBaseTFA
-{
-public:
-	void bfmeInitTFA();
-};
-
-class BfmeThingTFA
-{
-public:
-	void bfmeGoTFA();
-};
-
-void BfmeThingTFA::bfmeGoTFA()
-{
-	((BfmeBaseTFA *)((char *)this - 0x10))->bfmeInitTFA();
-	(*(BfmeSubTFA **)((char *)this - 8))->bfmeSetTFA(3);
-}
-
 class BfmeThingTFB
 {
 public:
