@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class CylindricalEmissionVelocityInfo
 {
 public:
+    CylindricalEmissionVelocityInfo();
     virtual ~CylindricalEmissionVelocityInfo();
 
 private:

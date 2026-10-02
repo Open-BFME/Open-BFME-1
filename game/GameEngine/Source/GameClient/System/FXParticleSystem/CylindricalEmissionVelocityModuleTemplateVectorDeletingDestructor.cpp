@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class CylindricalEmissionVelocityModuleTemplate
 {
 public:
+    CylindricalEmissionVelocityModuleTemplate();
     virtual ~CylindricalEmissionVelocityModuleTemplate();
 
 private:

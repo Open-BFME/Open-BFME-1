@@ -21,10 +21,6 @@ private:
     unsigned char m_data[0x24];
 };
 
-DefaultModuleTemplate<3>::~DefaultModuleTemplate()
-{
-}
-
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x28-byte class.
 DefaultModuleTemplate<3> *MakeDefaultModuleTemplate02Array(int count)

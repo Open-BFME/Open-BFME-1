@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class OutwardEmissionVelocityModuleTemplate
 {
 public:
+    OutwardEmissionVelocityModuleTemplate();
     virtual ~OutwardEmissionVelocityModuleTemplate();
 
 private:

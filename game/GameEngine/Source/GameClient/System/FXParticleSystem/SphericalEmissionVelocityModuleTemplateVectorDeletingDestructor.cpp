@@ -10,6 +10,7 @@ namespace FXParticleSystem
 class SphericalEmissionVelocityModuleTemplate
 {
 public:
+    SphericalEmissionVelocityModuleTemplate();
     virtual ~SphericalEmissionVelocityModuleTemplate();
 
 private:

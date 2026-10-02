@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class HemisphericalEmissionVelocityModuleTemplate
 {
 public:
+    HemisphericalEmissionVelocityModuleTemplate();
     virtual ~HemisphericalEmissionVelocityModuleTemplate();
 
 private:

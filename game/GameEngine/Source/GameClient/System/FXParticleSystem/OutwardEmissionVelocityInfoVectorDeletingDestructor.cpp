@@ -8,6 +8,7 @@ namespace FXParticleSystem
 class OutwardEmissionVelocityInfo
 {
 public:
+    OutwardEmissionVelocityInfo();
     virtual ~OutwardEmissionVelocityInfo();
 
 private:
