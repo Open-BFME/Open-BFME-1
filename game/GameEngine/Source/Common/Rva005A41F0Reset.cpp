@@ -50,6 +50,13 @@ private:
 	int m_counter;
 };
 
+// 0x005A41F0 tail-calls the matched Keyboard event/status pass at 0x005A3EF0.
+class Rva005A3EF0Keyboard
+{
+public:
+	void processKeyEvents(void);
+};
+
 // ?reset@Rva005A41F0@@QAEXXZ
 void Rva005A41F0::reset(void)
 {
@@ -74,7 +81,7 @@ void Rva005A41F0::reset(void)
 
 	if (events.begin() != events.end())
 	{
-		publish();
+		((Rva005A3EF0Keyboard *)this)->processKeyEvents();
 		slot10();
 	}
 }

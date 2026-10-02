@@ -1,58 +1,16 @@
-// cl: /O2 /DNDEBUG /MD /EHsc
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 //
 // Retail 0x005293E0, 209 bytes.  This address-derived helper normalizes a
 // seven-character map key when the incoming name lacks the retail prefix and
 // tests the resulting key against the embedded STL tree.  The second
-// parameter is the BFME AsciiString value passed by value; it is represented
-// as its one-word string handle here so VC7.1 keeps the retail copy shape.
+// parameter is the BFME AsciiString value passed by value; its WWLib header
+// keeps the one-word handle and retail copy shape.
 
-extern const char Rva006A16B0Empty[];
+#include <set>
+#include "ascii_string.h"
 
-template <typename T> class StringBase
-{
-protected:
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	public:
-	bool startsWith(const char *text, int length) const;
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
-	}
-
-	int length() const
-	{
-		return m_data ? *(const unsigned short *)((const char *)m_data + 4) : 0;
-	}
-
-	protected:
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *data);
-	// Retail's AsciiString adds no members to StringBase<char>: a copy of one
-	// encodes the base copy ctor at 0x00887B60 directly, so the delegation has
-	// to be visible here.
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
-
-	void set(const char *text, int length);
-	void concat(const char *text, int length);
-
-};
-
-class Rva006AEE00Tree
-{
-public:
-	void *find(void *key);
-
-	void *m_root;
-};
+typedef _STL::set<AsciiString> Rva006AEE00Tree;
 
 class Gen005293E0Object
 {
@@ -73,11 +31,11 @@ bool bfmeGen005293E0(Gen005293E0Object *object, void *text)
 	StringBase<char> *textView = (StringBase<char> *)text;
 	if (!textView->startsWith("Faction", 7))
 	{
-		key.set("Faction", 7);
-		key.concat(textView->str(), textView->length());
+		((StringBase<char> *)&key)->set("Faction", 7);
+		((StringBase<char> *)&key)->concat(textView->str(), textView->getLength());
 	}
 
-	void *root = tree->m_root;
-	void *found = tree->find((void *)&key);
-	return found != root;
+	void *root = *(void **)tree;
+	Rva006AEE00Tree::iterator found = tree->find(key);
+	return *(void **)&found != root;
 }

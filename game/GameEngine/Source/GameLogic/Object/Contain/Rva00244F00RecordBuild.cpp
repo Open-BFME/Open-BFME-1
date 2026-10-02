@@ -49,15 +49,19 @@ struct Gen_t_0023db70_m4pod { Int a[ 1 ]; };
 bool operator==( const Gen_t_0023db70_m4pod &, const Gen_t_0023db70_m4pod & );
 bool operator<( const Gen_t_0023db70_m4pod &, const Gen_t_0023db70_m4pod & );
 
-// pinned targets/game/reverse/symbols.csv: ?bfmeFind975D@BfmeFind975D@@QAEPAXH@Z @ 0x00028560
-class BfmeFind975D
+class AsciiString;
+class ThingTemplate;
+
+// The matched one-argument factory lookup lives at 0x00137E80 and is reached
+// through the retail ILT at 0x00028560.
+class BfmeThingFactory
 {
 public:
-	void *bfmeFind975D( Int arg );
+	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 class ThingFactory;
 extern ThingFactory *TheThingFactory;
-static inline BfmeFind975D *localTheThingFactory() { return (BfmeFind975D *)TheThingFactory; }
+static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 
 struct Rva0024SourceHolder
 {
@@ -107,7 +111,7 @@ void Rva00244F00Owner::rva00244f00( Rva0024SourceHolder *src )
 		add( (BfmeRva44E60Input *)( *(char **)( src->m_begin + i * 4 ) + 4 ), 0, &node->b );
 
 		Int idx = (Int) * (char **)( src->m_begin + i * 4 );
-		node->a = (Int)localTheThingFactory()->bfmeFind975D( idx );
+		node->a = (Int)localTheThingFactory()->findTemplate( *(const AsciiString *)idx );
 
 		m_nodes.push_back( *(Gen_t_0023db70_m4pod *)&node );
 
