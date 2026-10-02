@@ -146,8 +146,9 @@ static const char * piStagingRoomHash(unsigned int publicIP, unsigned int privat
 {
 	unsigned int result;
 
-	publicIP = ntohl(publicIP);
-	privateIP = ntohl(privateIP);
+	// Retail imports only htonl from WSOCK32 (IAT 0x01359718); both perform the same swap.
+	publicIP = htonl(publicIP);
+	privateIP = htonl(privateIP);
 
 	result = (((privateIP >> 24) & 0xFF) | ((privateIP >> 8) & 0xFF00) | ((privateIP << 8) & 0xFF0000) | ((privateIP << 24) & 0xFF000000));
 	result ^= publicIP;
