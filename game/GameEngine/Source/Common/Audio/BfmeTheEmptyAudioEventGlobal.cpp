@@ -16,8 +16,6 @@ enum ObjectID
 	INVALID_ID = 0
 };
 
-extern AsciiString TheEmptyString;
-
 class AudioEventRTS
 {
 public:
@@ -25,4 +23,4 @@ public:
 	~AudioEventRTS();
 };
 
-AudioEventRTS BfmeTheEmptyAudioEvent(TheEmptyString, INVALID_ID);
+AudioEventRTS BfmeTheEmptyAudioEvent(AsciiString::TheEmptyString, INVALID_ID);
