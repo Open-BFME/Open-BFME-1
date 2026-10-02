@@ -85,13 +85,17 @@ public:
 
 extern ParticleSystemManager *TheParticleSystemManager;
 
-class BfmeGlobQE
+// retail's `W3DShadowManager *TheW3DShadowManager` global (0x01306EEC).  The
+// class is address-derived here; the global is the real game name, and retail
+// mangles the pointer type into the data symbol, so the class must be spelled
+// as retail spells it.
+class W3DShadowManager
 {
 public:
 	unsigned char ready;
 };
 
-extern BfmeGlobQE *g_bfmeGlobQE;
+extern W3DShadowManager *TheW3DShadowManager;
 
 class DX8MeshRendererClass
 {
@@ -154,7 +158,7 @@ void Rva006FEB10Scene::Customized_Render(RenderInfoClass &rinfo)
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ZWRITEENABLE, TRUE);
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 
-	g_bfmeGlobQE->ready = 1;
+	TheW3DShadowManager->ready = 1;
 	DoShadows(rinfo, true);
 	TheParticleSystemManager->queueParticleRender();
 	TheParticleSystemManager->doParticles(rinfo);

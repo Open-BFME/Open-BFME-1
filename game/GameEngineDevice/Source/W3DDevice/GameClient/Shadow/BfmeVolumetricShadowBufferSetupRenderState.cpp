@@ -57,8 +57,12 @@ extern Device *ScreenDevice;      // 0x1340534
 typedef long (__stdcall *SetRenderStateFn)(Device *, unsigned, unsigned);
 typedef long (__stdcall *SetShaderStageFn)(Device *, unsigned);
 
-struct TacticalViewLike { unsigned char pad[8]; unsigned mask; };
-extern TacticalViewLike *TheTacticalView;   // 0x1306EEC
+// Retail's shadow-manager global at 0x01306EEC is `W3DShadowManager
+// *TheW3DShadowManager`, the same name the W3D shadow TUs already use.  The
+// class here is a stand-in, and retail mangles `class`/`struct` into the data
+// symbol (PAV vs PAU), so it must be a class spelled as retail spells it.
+class W3DShadowManager { public: unsigned char pad[8]; unsigned mask; };
+extern W3DShadowManager *TheW3DShadowManager;   // 0x1306EEC
 
 class BfmeVolumetricShadowBufferLocks
 {
@@ -117,7 +121,7 @@ void BfmeVolumetricShadowBufferLocks::setupRenderState()
 	Device *dev = ScreenDevice;
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x34, 1);
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x38, 8);
-	unsigned mask2 = TheTacticalView->mask;
+	unsigned mask2 = TheW3DShadowManager->mask;
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x3a, 0xffffffff);
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x3b, ~mask2);
 	((SetShaderStageFn)dev->vt[0x170 / 4])(dev, 0);

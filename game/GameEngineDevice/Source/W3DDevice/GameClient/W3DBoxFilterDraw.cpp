@@ -4,8 +4,13 @@
 // clusters and only one of them re-checks the DX8 caps sign bit.
 // cl: /DNDEBUG /MD
 
-class TacticalViewLike { public: unsigned char pad[8]; unsigned field8; };
-extern TacticalViewLike *TheTacticalView; // 0x01306EEC
+// Retail's shadow-manager global at 0x01306EEC is `W3DShadowManager
+// *TheW3DShadowManager`, the same name the W3D shadow TUs already use.  The
+// class here is a stand-in (retail's own `View *TheTacticalView` is a
+// different global, at 0x012F1600), but retail mangles the pointer type into
+// the data symbol, so both spellings have to match retail's.
+class W3DShadowManager { public: unsigned char pad[8]; unsigned field8; };
+extern W3DShadowManager *TheW3DShadowManager; // 0x01306EEC
 
 class ShaderClass { public: unsigned bits; };
 extern ShaderClass TheScorchShader; // 0x012BAD70
@@ -43,7 +48,7 @@ extern bool TheBoxFilterUVEnabled; // 0x012D6DAD
 
 void Rva00711600FilterDraw(unsigned color, unsigned mask, bool useAltCluster, unsigned altMaskValue)
 {
-	if (!TheTacticalView)
+	if (!TheW3DShadowManager)
 		return;
 
 	BaseHeightMapScorchSetShader(TheScorchShader);
@@ -67,7 +72,7 @@ void Rva00711600FilterDraw(unsigned color, unsigned mask, bool useAltCluster, un
 		unsigned queryResult = 0x12345678;
 
 		if (useAltCluster) {
-			unsigned fieldMask = TheTacticalView->field8;
+			unsigned fieldMask = TheW3DShadowManager->field8;
 			DX8Wrapper::Set_DX8_Render_State(0x39, mask);
 			DX8Wrapper::Set_DX8_Render_State(0x3A, fieldMask);
 			DX8Wrapper::Set_DX8_Render_State(0x3B, fieldMask);
