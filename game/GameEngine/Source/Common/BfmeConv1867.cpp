@@ -1,4 +1,7 @@
-extern "C" void *bfmeVftYX[];
+// Retail vtable at 0x0113DEE4 is defined by ??_7BfmeThingTXA@@6B@; the extern
+// binds the exact mangled symbol so the reference links.
+extern "C" void *__identifier("??_7BfmeThingTXA@@6B@")[];
+#define bfmeVftYX __identifier("??_7BfmeThingTXA@@6B@")
 extern "C" void __stdcall bfmeFreeAYX(void *p);
 extern "C" void __stdcall bfmeFreeBYX(void *p);
 
