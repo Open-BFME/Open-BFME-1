@@ -183,7 +183,11 @@ public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
+// (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
+// Declare it under that exact spelling; the narrow forward-call view is cast in.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 class BfmeX1035
 {
@@ -235,7 +239,7 @@ void BfmeT1035::bfmeUse1035(BfmeX1035 *p, int b)
 	p->m_delta.y = delta.y;
 	p->m_delta.z = delta.z;
 
-	BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
+	BfmeWideResult iterator = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
 		(int)p, 0x40A00000 /* 5.0f */, 1,
 		(int)&Rva000C3DD0VptrZeroBlockObject(VptrZeroBlock24(144),
 			*(const VptrZeroBlock24 *)&KINDOFMASK_NONE), 0);

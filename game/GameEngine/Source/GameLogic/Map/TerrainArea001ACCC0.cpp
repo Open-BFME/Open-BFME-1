@@ -46,7 +46,11 @@ struct BfmeWideResult {
  }
 };
 class BfmeWideForwardC {public: BfmeWideResult bfmeForwardWideC(int,int,int,int,int);};
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
+// (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
+// Declare it under that exact spelling; the narrow forward-call view is cast in.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 struct BfmePointFC;
 class BfmeTaintManager {public: void bfmeApplyCircleWorld(const BfmePointFC*,float,int,bool);};
 extern BfmeTaintManager *TheTaintManager;
@@ -59,7 +63,7 @@ public:
 };
 void TerrainArea001ACCC0::clear(const void *position,int radius) {
  if(!position||!TheTaintManager||!ThePartitionManager||!TheGameLogic)return;
- BfmeWideResult iterator=ThePartitionManager->bfmeForwardWideC((int)position,radius,0,
+ BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)position,radius,0,
   (int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,151),KINDOFMASK_NONE),1);
  Object *object;
  while(iterator.next(object)) {
@@ -97,7 +101,7 @@ extern TerrainVisual001AC3D0 *TheTerrainVisual;
 void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
  if(!position||!TheTaintManager||!ThePartitionManager||!TheGameLogic)return;
  TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC*)position,*(float*)&radius,128,true);
- BfmeWideResult iterator=ThePartitionManager->bfmeForwardWideC((int)position,radius,0,
+ BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)position,radius,0,
   (int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,173),KINDOFMASK_NONE),1);
  Object *object;
  while(iterator.next(object)) TheGameLogic->destroyObject(object);

@@ -167,7 +167,11 @@ public:
 
 extern BfmeRvaBA90GlobalB *g_bfmeRvaBA90GlobalB;
 extern BfmeRvaBA90GlobalC *g_bfmeRvaBA90GlobalC;
-extern BfmeRvaBA90Manager *g_bfmeRvaBA90Manager;
+// Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
+// (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
+// Declare it under that exact spelling; the narrow notify view is cast in.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 class Rva0024BA90
 {
@@ -195,5 +199,5 @@ void Rva0024BA90::update(BfmeRvaBA90Member *member)
 	}
 	if (member->check(0x14))
 		member->set(0x14);
-	g_bfmeRvaBA90Manager->notify((char *)member + 0x6c);
+	((BfmeRvaBA90Manager *)ThePartitionManager)->notify((char *)member + 0x6c);
 }

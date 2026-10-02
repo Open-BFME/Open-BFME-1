@@ -26,7 +26,11 @@ public:
 	void bfmeDel1086(BfmeQ1086 *a);
 };
 
-extern BfmeA1086 *g_bfmeA1086;
+// Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
+// (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
+// Declare it under that exact spelling; the narrow call view is cast in.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 extern BfmeB1086 *g_bfmeB1086;
 extern BfmeC1086 *g_bfmeC1086;
 
@@ -50,7 +54,7 @@ void BfmeQ1086::bfmeGo1086A(void)
 	if (m_bfme3b0)
 		m_bfme3b0->bfmeClose1086();
 	if (m_bfme3b4)
-		g_bfmeA1086->bfmeDrop1086A(&m_bfme6c);
+		((BfmeA1086 *)ThePartitionManager)->bfmeDrop1086A(&m_bfme6c);
 	if (m_bfme3b8)
 		g_bfmeB1086->bfmeDrop1086B(&m_bfme70);
 	if (g_bfmeC1086)
