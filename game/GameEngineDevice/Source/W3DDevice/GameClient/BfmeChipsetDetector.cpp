@@ -5,14 +5,17 @@ typedef unsigned int Dword;
 typedef unsigned char Byte;
 
 extern void W3DRadarResetLock(void);
-extern void W3DRadarResetUnlock(void);
+extern char bfmeUnlock1179(void);
 
+namespace
+{
 class BfmeRadarResetGuard
 {
 public:
 	BfmeRadarResetGuard() { W3DRadarResetLock(); }
-	~BfmeRadarResetGuard() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetGuard() { bfmeUnlock1179(); }
 };
+}
 
 struct BfmeAdapterIdentifier
 {

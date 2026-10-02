@@ -13,13 +13,13 @@
 typedef int Int;
 
 void W3DRadarResetLock(void);					// retail 0x00903090
-void W3DRadarResetUnlock(void);					// retail 0x00905B10
+char bfmeUnlock1179(void);					// retail 0x00905B10
 
 class BfmeRadarResetLock
 {
 public:
 	BfmeRadarResetLock() { W3DRadarResetLock(); }
-	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetLock() { bfmeUnlock1179(); }
 };
 
 class IndexBufferRef

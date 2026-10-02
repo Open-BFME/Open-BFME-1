@@ -8,7 +8,7 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
@@ -46,7 +46,7 @@ class BfmeRadarResetLock
 {
 public:
 	BfmeRadarResetLock() { W3DRadarResetLock(); }
-	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetLock() { bfmeUnlock1179(); }
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
