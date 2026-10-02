@@ -1,9 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWMath
 // readable body of ??1BoneFXUpdate@@MAE@XZ: game/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp
 // ModuleFactory reaches this body through the named BoneFXUpdate constructor
 // ILT at 0x0000264E, whose jump target is the retail body at 0x00288C50.
 
 #include <vector>
+
+#include "coord3d.h"
 
 class Thing;
 class ModuleData;
@@ -53,25 +55,6 @@ private:
     int m_updateState;
 };
 
-class BFU_Coord3D
-{
-public:
-    BFU_Coord3D();
-    ~BFU_Coord3D();
-
-    void zero()
-    {
-        x = 0.0f;
-        y = 0.0f;
-        z = 0.0f;
-    }
-
-private:
-    float x;
-    float y;
-    float z;
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 class BoneFXUpdate : public UpdateModule
 {
@@ -87,9 +70,9 @@ private:
     int m_nextFXFrame[4][8];
     int m_nextOCLFrame[4][8];
     int m_nextParticleSystemFrame[4][8];
-    BFU_Coord3D m_FXBonePositions[4][8];
-    BFU_Coord3D m_OCLBonePositions[4][8];
-    BFU_Coord3D m_PSBonePositions[4][8];
+    Coord3D m_FXBonePositions[4][8];
+    Coord3D m_OCLBonePositions[4][8];
+    Coord3D m_PSBonePositions[4][8];
     int m_curBodyState;
     bool m_bonesResolved[4];
     bool m_active;
@@ -106,9 +89,15 @@ BoneFXUpdate::BoneFXUpdate(Thing *thing, const ModuleData *moduleData)
             m_nextFXFrame[i][j] = -1;
             m_nextOCLFrame[i][j] = -1;
             m_nextParticleSystemFrame[i][j] = -1;
-            m_FXBonePositions[i][j].zero();
-            m_OCLBonePositions[i][j].zero();
-            m_PSBonePositions[i][j].zero();
+            m_FXBonePositions[i][j].x = 0.0f;
+            m_FXBonePositions[i][j].y = 0.0f;
+            m_FXBonePositions[i][j].z = 0.0f;
+            m_OCLBonePositions[i][j].x = 0.0f;
+            m_OCLBonePositions[i][j].y = 0.0f;
+            m_OCLBonePositions[i][j].z = 0.0f;
+            m_PSBonePositions[i][j].x = 0.0f;
+            m_PSBonePositions[i][j].y = 0.0f;
+            m_PSBonePositions[i][j].z = 0.0f;
         }
         m_bonesResolved[i] = false;
     }
