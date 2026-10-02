@@ -230,50 +230,8 @@ void AudioEventRTS::generateFilename( void )
 // RVA 0x000B3B70. It regenerates a dirty filename before returning the copy.
 
 //-------------------------------------------------------------------------------------------------
-// ?generatePlayInfo@AudioEventRTS@@ present-unmatched
-void AudioEventRTS::generatePlayInfo( void )
-{
-	m_pitchShift = GameAudioRandomValueReal(m_eventInfo->m_pitchShiftMin, m_eventInfo->m_pitchShiftMax);
-	m_volumeShift = GameAudioRandomValueReal(1.0f + m_eventInfo->m_volumeShift, 1.0f);	// volume shifts are between 0 and 1
-	m_loopCount = m_eventInfo->m_loopCount;
-	
-	m_portionToPlayNext = PP_Attack;
-	Int attackSize = m_eventInfo->m_attackSounds.size();
-	if (attackSize > 0) {
-		m_attackName = generateFilenamePrefix(m_eventInfo->m_soundType, false);
-		// needs to be logic because it needs to be the same on all systems.
-		Int attackToPlay;
-		if (m_isLogicalAudio) {
-			attackToPlay = GameLogicRandomValue(0, attackSize - 1);
-		} else {
-			attackToPlay = GameAudioRandomValue(0, attackSize - 1);
-		}
-		
-		m_attackName.concat(m_eventInfo->m_attackSounds[attackToPlay]);
-		m_attackName.concat(generateFilenameExtension(m_eventInfo->m_soundType));
-		adjustForLocalization(m_attackName);
-	} else {
-		m_portionToPlayNext = PP_Sound;
-	}
-
-	Int decaySize = m_eventInfo->m_decaySounds.size();
-	if (decaySize > 0) {
-		m_decayName = generateFilenamePrefix(m_eventInfo->m_soundType, false);
-		// needs to be logic because it needs to be the same on all systems.
-		Int decayToPlay;
-		if (m_isLogicalAudio) {
-			decayToPlay = GameLogicRandomValue(0, decaySize - 1);
-		} else {
-			decayToPlay = GameAudioRandomValue(0, decaySize - 1);
-		}
-		
-		m_decayName.concat(m_eventInfo->m_decaySounds[decayToPlay]);
-		m_decayName.concat(generateFilenameExtension(m_eventInfo->m_soundType));
-		adjustForLocalization(m_decayName);
-	}
-
-	m_isLogicalAudio = FALSE;
-}
+// BFME generatePlayInfo is owned by AudioEventRTSWeightedChoice.cpp at
+// RVA 0x000B3C60. Its attack and decay sounds use retail weighted selection.
 
 //-------------------------------------------------------------------------------------------------
 // getPitchShift lives in AudioEventRTSGetPitchShiftThunk.cpp (retail 0x000B48D0).
