@@ -18,7 +18,8 @@ public:
 	BfmeK1101 *bfmeFind1101(int key);
 };
 
-extern BfmeJ1101 *g_bfmeJ1101;
+class CaveSystem;
+extern CaveSystem *TheCaveSystem;
 
 class Rva219E20LookupDispatch
 {
@@ -70,7 +71,7 @@ private:
 
 void Rva219E20LookupDispatch::dispatchAll(int argument)
 {
-	BfmeK1101 *record = g_bfmeJ1101->bfmeFind1101(lookupKey);
+	BfmeK1101 *record = ((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(lookupKey);
 	Rva219E20Node **list = &record->sentinel;
 	Rva219E20Node *node = (*list)->next;
 
