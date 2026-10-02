@@ -359,7 +359,7 @@ public:
 #include <stdlib.h>
 #include <string.h>
 template <>
-__declspec(noinline) int
+inline __declspec(noinline) int
 StringBase<char>::compareNoCase(const StringBase<char> &other) const {
   int n = other.m_data ? other.m_data->length : 0;
   const char *otherData = other.m_data ? other.m_data->data : "";

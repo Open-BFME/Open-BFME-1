@@ -1032,7 +1032,7 @@ struct Rva004FA800SideView {
 // The real 91-byte comparison remains visible for exception analysis.
 // Its independent emitted body exactly matches 00090570.
 template <>
-__declspec(noinline) int
+inline __declspec(noinline) int
 StringBase<char>::compareNoCase(const StringBase<char> &other) const {
   int theirLength = other.getLength();
   const char *theirData = other.str();
