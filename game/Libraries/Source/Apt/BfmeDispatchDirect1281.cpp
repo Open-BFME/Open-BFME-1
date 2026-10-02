@@ -118,13 +118,19 @@ public:
 	BfmeNodeInfo1281 *m_info50;
 };
 
-class BfmeR1227
+// BfmeOtherLP and BfmeThingLP are real classes (defined in
+// game/GameEngine/Source/Common/BfmeTwoHundredThirtyTwo.cpp); no header declares
+// them, so name the callee by its defining spelling with a declaration-only
+// slice: this body only calls bfmePushLP, never a layout.
+class BfmeOtherLP;
+
+class BfmeThingLP
 {
 public:
-	void bfmeAdd1227(void *payload, void *source, void *extra);
+	void bfmePushLP(void *what, BfmeOtherLP *other, int note);
 };
 
-class BfmeBroadcast1282 : public BfmeR1227
+class BfmeBroadcast1282
 {
 public:
 	void bfmeBroadcast1282(BfmeEntry1282 *entry, int mode);
@@ -252,7 +258,10 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 					for (int record = 0; record < descriptor->m_count34; ++record) {
 						BfmeRecord1281 *item = &descriptor->m_records38[record];
 						if ((item->m_mask & 0x10) != 0)
-							bfmeAdd1227(&item->m_payload, entry->m_source4c, g_bfmeExtra1282);
+							reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+								&item->m_payload,
+								reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+								reinterpret_cast<int>(g_bfmeExtra1282));
 					}
 					if ((entry->m_info50->m_flags18 & 0x10000) != 0) {
 						int *route = &g_bfmeRouteTable1282[0].m_index;
@@ -277,7 +286,10 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 				for (int record = 0; record < descriptor->m_count34; ++record) {
 					BfmeRecord1281 *item = &descriptor->m_records38[record];
 					if ((item->m_mask & 0x20) != 0)
-						bfmeAdd1227(&item->m_payload, entry->m_source4c, g_bfmeExtra1282);
+						reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+							&item->m_payload,
+							reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+							reinterpret_cast<int>(g_bfmeExtra1282));
 				}
 				if ((entry->m_info50->m_flags18 & 0x8000) != 0) {
 					int *route = &g_bfmeRouteTable1282[0].m_index;
@@ -304,7 +316,10 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 				for (int record = 0; record < descriptor->m_count34; ++record) {
 					BfmeRecord1281 *item = &descriptor->m_records38[record];
 					if ((item->m_mask & 0x20) != 0)
-						bfmeAdd1227(&item->m_payload, entry->m_source4c, g_bfmeExtra1282);
+						reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+							&item->m_payload,
+							reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+							reinterpret_cast<int>(g_bfmeExtra1282));
 				}
 				if ((entry->m_info50->m_flags18 & 0x8000) != 0) {
 					int *route = &g_bfmeRouteTable1282[0].m_index;
@@ -331,7 +346,10 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 			for (int record = 0; record < descriptor->m_count34; ++record) {
 				BfmeRecord1281 *item = &descriptor->m_records38[record];
 				if ((item->m_mask & 2) != 0)
-					bfmeAdd1227(&item->m_payload, entry->m_source4c, g_bfmeExtra1282);
+					reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+						&item->m_payload,
+						reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+						reinterpret_cast<int>(g_bfmeExtra1282));
 			}
 			if ((entry->m_info50->m_flags18 & 0x4000) != 0) {
 				int *route = &g_bfmeRouteTable1282[0].m_index;

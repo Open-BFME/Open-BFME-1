@@ -39,10 +39,16 @@ struct Rva8BB1A0BoundsCheckThunk
 	bool contains(Rva8BB1A0BoundsSource *source, void *unused);
 };
 
-class BfmeR1227
+// BfmeOtherLP and BfmeThingLP are real classes (defined in
+// game/GameEngine/Source/Common/BfmeTwoHundredThirtyTwo.cpp); no header declares
+// them, so name the callee by its defining spelling with a declaration-only
+// slice: this body only calls bfmePushLP, never a layout.
+class BfmeOtherLP;
+
+class BfmeThingLP
 {
 public:
-	void bfmeAdd1227(void *payload, void *source, void *extra);
+	void bfmePushLP(void *what, BfmeOtherLP *other, int note);
 };
 
 struct BfmeRecord1281
@@ -85,7 +91,7 @@ extern AptValue *g_bfmeFallbackDB;
 extern unsigned char g_bfmeDispatchEnabled1281;
 extern void *g_bfmeExtra1282;
 
-class BfmeSlotDispatcher1281 : public BfmeR1227
+class BfmeSlotDispatcher1281
 {
 public:
 	void bfmePrepare1281(int group, int slot, unsigned int encoded);
@@ -199,8 +205,10 @@ void BfmeSlotDispatcher1281::bfmePrepare1281(int group, int slot, unsigned int e
 		for (int record = 0; record < descriptor->m_count34; ++record) {
 			if ((descriptor->m_records38[record].m_mask & 0xfe00) != 0 &&
 				group == ((entry->m_info50->m_descriptor0c->m_records38[record].m_mask >> 9) & 0x7f)) {
-				bfmeAdd1227(&descriptor->m_records38[record].m_payload,
-					entry->m_source4c, g_bfmeExtra1282);
+				reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+					&descriptor->m_records38[record].m_payload,
+					reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+					reinterpret_cast<int>(g_bfmeExtra1282));
 				return;
 			}
 		}

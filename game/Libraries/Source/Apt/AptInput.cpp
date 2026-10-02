@@ -95,10 +95,16 @@ struct BfmeRoute1285
 	int m_code;
 };
 
-class BfmeR1227
+// BfmeOtherLP and BfmeThingLP are real classes (defined in
+// game/GameEngine/Source/Common/BfmeTwoHundredThirtyTwo.cpp); no header declares
+// them, so name the callee by its defining spelling with a declaration-only
+// slice: the body only has to reach bfmePushLP, never a layout.
+class BfmeOtherLP;
+
+class BfmeThingLP
 {
 public:
-	void bfmeAdd1227(void *payload, void *source, void *extra);
+	void bfmePushLP(void *what, BfmeOtherLP *other, int note);
 };
 
 class BfmeRouteManager1285
@@ -108,7 +114,7 @@ public:
 	void bfmeSubmit1285(void *entry, BfmeNode1285 *node, int zero, int encoded);
 };
 
-class BfmeBroadcast1285 : public BfmeR1227
+class BfmeBroadcast1285
 {
 public:
 	void bfmeAdvance1285();
@@ -281,7 +287,10 @@ void BfmeBroadcast1285::bfmeAdvance1285()
 		for (int index = 0; index < descriptor->m_count34; ++index) {
 			BfmeRecord1285 *record = &descriptor->m_records38[index];
 			if ((record->m_mask & 2) != 0) {
-				bfmeAdd1227(&record->m_payload, entry->m_next4c, g_bfmeExtra1282);
+				reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+					&record->m_payload,
+					reinterpret_cast<BfmeOtherLP *>(entry->m_next4c),
+					reinterpret_cast<int>(g_bfmeExtra1282));
 			}
 		}
 
@@ -389,7 +398,7 @@ public:
 	void bfmeSubmit1282(void *entry, BfmeN1034 *node, int zero, int encoded);
 };
 
-class BfmeBroadcast1282 : public BfmeR1227
+class BfmeBroadcast1282
 {
 public:
 	void bfmeBroadcast1282(BfmeEntry1282 *entry, int mode);
@@ -402,7 +411,10 @@ void BfmeBroadcast1282::bfmeBroadcast1282(BfmeEntry1282 *entry, int mode)
 	for (int index = 0; index < descriptor->m_count34; ++index) {
 		BfmeRecord1282 *record = &descriptor->m_records38[index];
 		if ((record->m_mask & mode) != 0)
-			bfmeAdd1227(&record->m_payload, entry->m_source4c, g_bfmeExtra1282);
+			reinterpret_cast<BfmeThingLP *>(this)->bfmePushLP(
+				&record->m_payload,
+				reinterpret_cast<BfmeOtherLP *>(entry->m_source4c),
+				reinterpret_cast<int>(g_bfmeExtra1282));
 	}
 
 	int routeMask = 0;
