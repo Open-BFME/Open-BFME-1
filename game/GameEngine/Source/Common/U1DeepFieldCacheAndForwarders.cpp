@@ -70,7 +70,7 @@ public:
 class U1Sub
 {
 public:
-	void apply( U1CachedHolder *holder );
+	U1Sub &apply( U1CachedHolder *holder );
 };
 
 #define U1_CACHE_ROW( ROW, SUBOFF )                                           \
