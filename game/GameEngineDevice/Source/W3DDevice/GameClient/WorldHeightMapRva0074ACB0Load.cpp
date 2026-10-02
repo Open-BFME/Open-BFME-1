@@ -50,7 +50,11 @@ public:
 
 typedef Bool (*ChunkParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
 
-extern "C" int _bfmeVftVE[];
+// Retail vtable 0x0107C7D0: BfmeParserBindingBaseVE's vftable, i.e.
+// ??_7BfmeParserBindingBaseVE@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the stores below reference the defining name.
+extern "C" int __identifier("??_7BfmeParserBindingBaseVE@@6B@")[];
 extern int g_0109BFD4[];
 void j_0001579e();
 void j_0004a755();
@@ -65,7 +69,7 @@ public:
 	BfmeParserRegistrationVE(DataChunkInput *file, const AsciiString &label,
 		const AsciiString &parent)
 	{
-		m_vftable = _bfmeVftVE;
+		m_vftable = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
 		m_file = file;
 		m_parser = file->registerParser(label, parent,
 			(ChunkParserCallback)j_0001579e, this);
@@ -73,7 +77,7 @@ public:
 
 	~BfmeParserRegistrationVE()
 	{
-		m_vftable = _bfmeVftVE;
+		m_vftable = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
 		((BfmeSubVE *)m_file)->bfmeDropVE(m_parser);
 	}
 

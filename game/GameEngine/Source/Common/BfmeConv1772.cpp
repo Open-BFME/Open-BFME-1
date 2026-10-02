@@ -1,4 +1,8 @@
-extern "C" int _bfmeVftVE[];
+// Retail vtable 0x0107C7D0: BfmeParserBindingBaseVE's vftable, i.e.
+// ??_7BfmeParserBindingBaseVE@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
+extern "C" int __identifier("??_7BfmeParserBindingBaseVE@@6B@")[];
 
 class BfmeTargetCN
 {
@@ -20,7 +24,7 @@ public:
 	BfmeScopeCN(void *owner, BfmeTargetCN *target, void *value);
 	~BfmeScopeCN()
 	{
-		m_bfmeVfCN = _bfmeVftVE;
+		m_bfmeVfCN = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
 
 		m_bfmeInnerCN->bfmeCloseCN(m_bfmeArgCN);
 	}

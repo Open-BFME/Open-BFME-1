@@ -8,8 +8,11 @@ public:
 	int m_opaque;
 };
 
+// Retail vtable 0x0107C7D0: BfmeParserBindingBaseVE's vftable, i.e.
+// ??_7BfmeParserBindingBaseVE@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
 extern "C" Q1SharedTarget0107C7D0 __identifier("??_7BfmeParserBindingBaseVE@@6B@");
-#define g_q1Shared0107C7D0 __identifier("??_7BfmeParserBindingBaseVE@@6B@")
 
 class Q1Forwardee0000871A
 {
@@ -28,7 +31,7 @@ public:
 	};                                                                    \
 	void NAME::invoke()                                                   \
 	{                                                                     \
-		m_target = &g_q1Shared0107C7D0;                                       \
+		m_target = &__identifier("??_7BfmeParserBindingBaseVE@@6B@");               \
 		m_receiver->handle( m_value );                                    \
 	}
 

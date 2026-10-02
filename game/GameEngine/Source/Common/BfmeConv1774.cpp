@@ -1,4 +1,8 @@
-extern "C" int _bfmeVftVE[];
+// Retail vtable 0x0107C7D0: BfmeParserBindingBaseVE's vftable, i.e.
+// ??_7BfmeParserBindingBaseVE@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
+extern "C" int __identifier("??_7BfmeParserBindingBaseVE@@6B@")[];
 extern "C" int _bfmeVftXB[];
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -16,7 +20,7 @@ class BfmeBaseVE
 public:
 	~BfmeBaseVE()
 	{
-		m_bfmeVfVE = _bfmeVftVE;
+		m_bfmeVfVE = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
 
 		m_bfmeInnerVE->bfmeCloseCN(m_bfmeArgVE);
 	}
