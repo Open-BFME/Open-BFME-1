@@ -29,7 +29,7 @@ extern "C" __declspec(dllimport) int __stdcall GetVersionExA(
 	RvaOSVersionInfo821D0 *info);
 
 extern "C" RvaModuleHandle821D0 (__stdcall *g_rva0130E988LoadLibraryA)(
-	const char *name);
+	const char *name) = 0;
 
 extern void *rva00882140PatchAllModules(const char *dllName,
 	const char *functionName, void *replacement);
