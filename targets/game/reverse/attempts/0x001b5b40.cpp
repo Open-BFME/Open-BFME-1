@@ -1,5 +1,5 @@
 // ?d_001b5b40@@YAXXZ
-// partial score=0.99 date=2026-09-08
+// partial score=0.9861 date=2026-09-08
 // Retail RVA 0x001B5B40.
 
 typedef float Real;
