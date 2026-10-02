@@ -20,7 +20,10 @@ typedef bool Bool;
 typedef void *PEER;
 typedef void *qr2_buffer_t;
 
-void qr2_buffer_add( qr2_buffer_t buffer, const char *value );
+// retail's qr2 SDK defines the ANSI buffer adder under C linkage
+// (_qr2_buffer_addA, 0x00855360); qr2.h's own #define maps the generic
+// spelling onto the A/W pair.
+extern "C" void qr2_buffer_addA( qr2_buffer_t buffer, const char *value );
 
 // Only the hosting flag is reconstructed; everything above it is retail's
 // spacing, not a claim about what lives there.
@@ -54,7 +57,7 @@ static void QRTeamKeyCallback
 		t->stopHostingAlready(peer);
 
 	// we don't report teams, so this shouldn't get called
-	qr2_buffer_add(buffer, "");
+	qr2_buffer_addA(buffer, "");
 }
 
 // The callback is static and reaches retail only as a registered function
