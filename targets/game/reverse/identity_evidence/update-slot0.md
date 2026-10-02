@@ -105,7 +105,7 @@ no recovered identity and an integer return type. Replace it with
 `?update@DeletionUpdate@@UAE?AW4UpdateSleepTime@@XZ` in DeletionUpdate.cpp,
 using the real headers, and remove the old orphaned local-view implementation.
 
-## ProneUpdate::update (002A00F0, 27 bytes; rename deferred)
+## ProneUpdate::update (002A00F0, 27 bytes; initial deferral)
 
 The literal at `00C901B4` is `ProneUpdate`; registration `0012ECEF` selects
 instance factory `0011AD30`. Its call at `0011AD6B` uses constructor ILT
@@ -385,3 +385,25 @@ Correct the helper declarations and ledger access mangling, and update the
 start-helper declaration in the goProne caller. No shared header, helper body,
 field offset, or pin changes. Verify each helper independently at its original
 extent; the pair is one small set/clear-pattern declaration batch.
+
+## ProneUpdate update replacement after the helper repair
+
+With both protected effect-helper declarations corrected and independently
+verified, the earlier access blocker is resolved. The update replacement uses
+the surviving ProneUpdate.h and explicitly includes the existing game
+UpdateModule.h before it. No header is modified. This combination has update
+receiver +14 and m_proneFrames +24, while retail has receiver +10 and field +20.
+The receiver-relative field displacement is +10 in both layouts; the primary
+helper receiver requires an explicit four-byte correction in this TU.
+
+The ordinary ZH countdown body accesses the proven m_proneFrames field and
+calls the corrected protected stopProneEffects. The explicit receiver
+adjustment compiles to retail's add ecx,-10 rather than the mixed headers'
+uncorrected -14. Name_oracle and constructor store 0029FEB4 independently prove
+the retail field at complete-object +20. This is a scoped layout accommodation,
+not a claim that the cross-game headers describe the complete BFME class.
+
+Replace the earlier opaque row at its unchanged 27-byte extent with
+`?update@ProneUpdate@@UAE?AW4UpdateSleepTime@@XZ` and remove the now-orphaned
+BfmeConv496.cpp. This completes the historical evidence-only deferral, with
+no duplicate alias or new pin.
