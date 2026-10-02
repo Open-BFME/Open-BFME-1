@@ -68,7 +68,8 @@ Int parseMod(char *args[], Int num)
 
 		if (statBuf.st_mode & _S_IFDIR)
 		{
-			if (!modPath.endsWith("\\") && !modPath.endsWith("/"))
+			if (!modPath.StringBase<char>::endsWith("\\") &&
+				!modPath.StringBase<char>::endsWith("/"))
 				modPath.concat('\\');
 			TheWritableGlobalData->m_modDir = modPath;
 		}

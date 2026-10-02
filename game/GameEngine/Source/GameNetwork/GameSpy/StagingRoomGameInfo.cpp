@@ -651,7 +651,8 @@ AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket( void )
 
 			// check if he lasted
 			GameSlot *slot = getSlot(i);
-			if (!slot->disconnected())
+			if (!(slot->isHuman() && *reinterpret_cast<const Bool *>(
+				reinterpret_cast<const char *>(slot) + 0x40)))
 			{
 				if (slot->getTeamNumber() != lastTeamAtGameEnd || numTeamsAtGameEnd == 0)
 				{
@@ -692,7 +693,8 @@ AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket( void )
 			GameSpyGameSlot *slot = &(m_GameSpySlot[i]);
 			AsciiString playerName = (slot->isHuman())?slot->getLoginName():"AIPlayer";
 			Int gsPlayerID = slot->getProfileID();
-			Bool disconnected = slot->disconnected();
+			Bool disconnected = slot->isHuman() && *reinterpret_cast<const Bool *>(
+				reinterpret_cast<const char *>(slot) + 0x40);
 
 			AsciiString result = "loss";
 			if (disconnected)
@@ -747,7 +749,8 @@ AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket( void )
 
 			// check if he lasted
 			GameSlot *slot = getSlot(i);
-			if (!slot->disconnected())
+			if (!(slot->isHuman() && *reinterpret_cast<const Bool *>(
+				reinterpret_cast<const char *>(slot) + 0x40)))
 			{
 				if (slot->getTeamNumber() != lastTeamAtGameEnd || numTeamsAtGameEnd == 0)
 				{
@@ -788,7 +791,8 @@ AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket( void )
 			Int buildingsBuilt = keeper->getTotalBuildingsBuilt();
 			Int earnings = keeper->getTotalMoneyEarned();
 			Int techCaptured = keeper->getTotalTechBuildingsCaptured();
-			Bool disconnected = slot->disconnected();
+			Bool disconnected = slot->isHuman() && *reinterpret_cast<const Bool *>(
+				reinterpret_cast<const char *>(slot) + 0x40);
 
 			AsciiString playerStr;
 			playerStr.format(",player%d=%s,playerID%d=%d,locale%d=%d",

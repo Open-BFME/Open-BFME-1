@@ -73,13 +73,7 @@ typedef _STL::hash_map<Int, Object *, _STL::hash<Int>, _STL::equal_to<Int> > Obj
 class GameLogic
 {
 public:
-	__declspec(noinline) Object *findObjectByID(Int id)
-	{
-		if (id == 0) return 0;
-		ObjectPtrHash::iterator it = m_objHash.find(id);
-		if (it == m_objHash.end()) return 0;
-		return (*it).second;
-	}
+	__declspec(noinline) Object *findObjectByID(Int id);
 	UnsignedInt getFrame() { return m_frame; }
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_frame;

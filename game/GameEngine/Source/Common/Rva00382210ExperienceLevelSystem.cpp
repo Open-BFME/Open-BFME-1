@@ -118,6 +118,7 @@ class ExperienceLevel : public Overridable
 public:
 	ExperienceLevel(const ExperienceLevel &that);
 	virtual ~ExperienceLevel();
+	ExperienceLevel &operator=(const ExperienceLevel &that);
 
 private:
 	AsciiString m_name;
