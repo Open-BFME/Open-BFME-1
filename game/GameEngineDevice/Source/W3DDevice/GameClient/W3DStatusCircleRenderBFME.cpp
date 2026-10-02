@@ -118,10 +118,13 @@ public:
 };
 
 class GameLogic;
+class ScriptEngine;
 extern GameLogic *TheGameLogic;
 extern char *TheWritableGlobalData;
 extern char *TheGameEngine;
-extern char *TheScriptEngine;
+// Retail's singleton (0x012F076C), defined in ScriptEngine.cpp. Spelled with
+// the real pointee type so the mangled name matches the definition.
+extern ScriptEngine *TheScriptEngine;
 extern bool g_w3dStatusCircleNeedUpdate;
 extern float g_worldMatrix[16];
 extern unsigned char g_rva007A2330Flag;
@@ -274,13 +277,13 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 	Real &currentIntensity = *(Real *)((char *)this + 0xd4);
 	if (*(Int *)(TheGameEngine + 0x30) == 1) {
 		previousIntensity = currentIntensity;
-		fade = *(Int *)(TheScriptEngine + 0x170b4);
+		fade = *(Int *)((char *)TheScriptEngine + 0x170b4);
 		if (fade == 0) {
 			currentIntensity = 0.0f;
 			return;
 		}
-		currentIntensity = *(Real *)(TheScriptEngine + 0x170c4);
-		if (*(Bool *)(TheScriptEngine + 0x170b8))
+		currentIntensity = *(Real *)((char *)TheScriptEngine + 0x170c4);
+		if (*(Bool *)((char *)TheScriptEngine + 0x170b8))
 			previousIntensity = currentIntensity;
 	}
 	if (fade == 0)

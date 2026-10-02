@@ -20,7 +20,14 @@ public:
 	BfmeItemEUA *bfmeLookEUA(int *id);
 };
 
-extern BfmeGlobAEUA *g_bfmeAEUA;
+// 0x012F076C is retail's ScriptEngine singleton (defined once in
+// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU reaches only the one
+// method it calls through its own view, so the global keeps the canonical
+// spelling and the view is taken by casting; bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeGlobAEUA *theScriptEngineAEUA() { return (BfmeGlobAEUA *)TheScriptEngine; }
 
 // 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
 // defines `PlayerList *ThePlayerList`); only the address-derived lookup this TU spells
@@ -31,7 +38,7 @@ extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 void __stdcall bfmeGoEUAa(int id, void *ctx)
 {
-	id = g_bfmeAEUA->bfmeFirstEUA(id, 0);
+	id = theScriptEngineAEUA()->bfmeFirstEUA(id, 0);
 	while ((unsigned short)id)
 	{
 		BfmeItemEUA *it = ((BfmeGlobBEUA *)ThePlayerList)->bfmeLookEUA(&id);
@@ -42,7 +49,7 @@ void __stdcall bfmeGoEUAa(int id, void *ctx)
 
 void __stdcall bfmeGoEUAb(int id, void *ctx)
 {
-	id = g_bfmeAEUA->bfmeFirstEUA(id, 0);
+	id = theScriptEngineAEUA()->bfmeFirstEUA(id, 0);
 	while ((unsigned short)id)
 	{
 		BfmeItemEUA *it = ((BfmeGlobBEUA *)ThePlayerList)->bfmeLookEUA(&id);
@@ -53,7 +60,7 @@ void __stdcall bfmeGoEUAb(int id, void *ctx)
 
 void __stdcall bfmeGoEUAc(int id, void *ctx)
 {
-	id = g_bfmeAEUA->bfmeFirstEUA(id, 0);
+	id = theScriptEngineAEUA()->bfmeFirstEUA(id, 0);
 	while ((unsigned short)id)
 	{
 		BfmeItemEUA *it = ((BfmeGlobBEUA *)ThePlayerList)->bfmeLookEUA(&id);
@@ -64,7 +71,7 @@ void __stdcall bfmeGoEUAc(int id, void *ctx)
 
 void __stdcall bfmeGoEUAd(int id, void *ctx)
 {
-	id = g_bfmeAEUA->bfmeFirstEUA(id, 0);
+	id = theScriptEngineAEUA()->bfmeFirstEUA(id, 0);
 	while ((unsigned short)id)
 	{
 		BfmeItemEUA *it = ((BfmeGlobBEUA *)ThePlayerList)->bfmeLookEUA(&id);
@@ -75,7 +82,7 @@ void __stdcall bfmeGoEUAd(int id, void *ctx)
 
 void __stdcall bfmeGoEUAe(int id, void *ctx)
 {
-	id = g_bfmeAEUA->bfmeFirstEUA(id, 0);
+	id = theScriptEngineAEUA()->bfmeFirstEUA(id, 0);
 	while ((unsigned short)id)
 	{
 		BfmeItemEUA *it = ((BfmeGlobBEUA *)ThePlayerList)->bfmeLookEUA(&id);

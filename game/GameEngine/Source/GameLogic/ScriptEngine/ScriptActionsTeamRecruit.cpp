@@ -85,7 +85,17 @@ public:
 	int recruit(ObjectTypes *, Int, Team *);
 };
 
-extern BfmeScriptEngineVtbl_44_50 *TheScriptEngine;
+// 0x012F076C is retail's `ScriptEngine *TheScriptEngine`, defined once in
+// ScriptEngine.cpp. This TU reaches the two slots it needs through its own
+// vtable view, so the global keeps the canonical spelling and the view is
+// taken by casting; the emitted bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static __forceinline BfmeScriptEngineVtbl_44_50 *theScriptEngineVtbl()
+{
+	return (BfmeScriptEngineVtbl_44_50 *)TheScriptEngine;
+}
 extern BfmeThingFactory *TheThingFactory;
 // retail's TheAI singleton is an AI*; BfmeAI is the view this file reads it through
 class AI;
@@ -170,14 +180,14 @@ protected:
 void ScriptActions::doTeamRecruitUnits(const AsciiString &teamName,
 	Int count, const AsciiString &objectTypeName)
 {
-	Team *team = TheScriptEngine->getTeamNamed(teamName, true);
+	Team *team = theScriptEngineVtbl()->getTeamNamed(teamName, true);
 	if (!team) {
 		return;
 	}
 
 	const ThingTemplate *thingTemplate =
 		TheThingFactory->findTemplate(objectTypeName);
-	ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectTypeName);
+	ObjectTypes *objectTypes = theScriptEngineVtbl()->getObjectTypes(objectTypeName);
 	if (bfmeHasAnyObjects(team)) {
 		bfmeRecruitUnits(team, thingTemplate, objectTypes, count,
 			reinterpret_cast<BfmeAI *>(TheAI)->m_aiData->m_maxRecruitDistance);
@@ -192,17 +202,17 @@ void ScriptActions::doTeamRecruitUnitsFromTeam(const AsciiString &teamName,
 	Int count, const AsciiString &objectTypeName,
 	const AsciiString &sourceTeamName)
 {
-	Team *team = TheScriptEngine->getTeamNamed(teamName, true);
+	Team *team = theScriptEngineVtbl()->getTeamNamed(teamName, true);
 	if (!team) {
 		return;
 	}
 
-	Team *sourceTeam = TheScriptEngine->getTeamNamed(sourceTeamName, false);
+	Team *sourceTeam = theScriptEngineVtbl()->getTeamNamed(sourceTeamName, false);
 	if (!sourceTeam) {
 		return;
 	}
 
-	ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectTypeName);
+	ObjectTypes *objectTypes = theScriptEngineVtbl()->getObjectTypes(objectTypeName);
 	if (objectTypes) {
 		bfmeRecruitUnits(team, objectTypes, count, sourceTeam);
 	} else {

@@ -46,11 +46,18 @@ public:
 class PlayerList;
 
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
-extern BfmeP1096 *g_bfmeP1096;
+// 0x012F076C is retail's ScriptEngine singleton (defined once in
+// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU reaches only the one
+// method it calls through its own view, so the global keeps the canonical
+// spelling and the view is taken by casting; bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeP1096 *theScriptEngineP1096() { return (BfmeP1096 *)TheScriptEngine; }
 
 void __stdcall bfmeGo1096A(int a, char b)
 {
-	a = g_bfmeP1096->bfmeFirst1096(a, 0);
+	a = theScriptEngineP1096()->bfmeFirst1096(a, 0);
 	while ((short)a) {
 		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
@@ -61,7 +68,7 @@ void __stdcall bfmeGo1096A(int a, char b)
 
 void __stdcall bfmeGo1096B(int a, int b)
 {
-	a = g_bfmeP1096->bfmeFirst1096(a, 0);
+	a = theScriptEngineP1096()->bfmeFirst1096(a, 0);
 	while ((short)a) {
 		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
@@ -72,7 +79,7 @@ void __stdcall bfmeGo1096B(int a, int b)
 
 void __stdcall bfmeGo1096C(int a, int b)
 {
-	a = g_bfmeP1096->bfmeFirst1096(a, 0);
+	a = theScriptEngineP1096()->bfmeFirst1096(a, 0);
 	while ((short)a) {
 		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&a);
 
@@ -89,7 +96,7 @@ void __stdcall bfmeGo1096D(int a, int b, char c)
 
 	if (!s)
 		return;
-	b = g_bfmeP1096->bfmeFirst1096(a + 0x10, 0);
+	b = theScriptEngineP1096()->bfmeFirst1096(a + 0x10, 0);
 	while ((short)b) {
 		BfmeR1096 *r = ((BfmeD1096 *)ThePlayerList)->bfmeLook1096((short *)&b);
 

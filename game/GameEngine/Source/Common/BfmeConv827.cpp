@@ -48,13 +48,20 @@ public:
 	virtual void v25();
 	virtual void* vfn26(void *key);
 };
-extern BfmeMgrF07 *g_mgr12F076C;
+// 0x012F076C is retail's ScriptEngine singleton (defined once in
+// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU reaches only the slot it
+// calls through its own vtable view, so the global keeps the canonical
+// spelling and the view is taken by casting; bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeMgrF07 *mgr12F076C() { return (BfmeMgrF07 *)TheScriptEngine; }
 
 void __cdecl bfmeHelperB20(void *obj, void *param);
 
 void __stdcall bfmeLookupAndExecFBE(void *key, void *param)
 {
-	void *obj = g_mgr12F076C->vfn26(key);
+	void *obj = mgr12F076C()->vfn26(key);
 	if (obj) {
 		bfmeHelperB20(obj, param);
 	}
@@ -68,7 +75,7 @@ public:
 
 void __stdcall bfmeLookupAndSend3E0(void *key, void *param2)
 {
-	BfmeObjF3E *obj = (BfmeObjF3E*)g_mgr12F076C->vfn26(key);
+	BfmeObjF3E *obj = (BfmeObjF3E*)mgr12F076C()->vfn26(key);
 	if (obj) {
 		obj->sendCode(0x20, param2);
 	}
@@ -122,7 +129,7 @@ extern BfmeMgrF14 *g_mgr12F148C;
 
 void __stdcall bfmeLookupAndSend7B0(void *key)
 {
-	void *obj = g_mgr12F076C->vfn26(key);
+	void *obj = mgr12F076C()->vfn26(key);
 	if (obj) {
 		g_mgr12F148C->vfn38(obj);
 	}
@@ -130,7 +137,7 @@ void __stdcall bfmeLookupAndSend7B0(void *key)
 
 void __stdcall bfmeLookupAndSend7F0(void *key)
 {
-	void *obj = g_mgr12F076C->vfn26(key);
+	void *obj = mgr12F076C()->vfn26(key);
 	if (obj) {
 		g_mgr12F148C->vfn39(obj);
 	}

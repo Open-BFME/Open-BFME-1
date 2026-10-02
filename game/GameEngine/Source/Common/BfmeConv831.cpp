@@ -31,7 +31,14 @@ public:
 	virtual void* vfn26(void *key);
 	int findSomething(void *key, int zero);
 };
-extern BfmeMgrF07 *g_mgr12F076C;
+// 0x012F076C is retail's ScriptEngine singleton (defined once in
+// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU only needs its vtable
+// slice, so it reaches it by casting at each use; DIR32 relocations are
+// masked by the byte gate, so the emitted bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeMgrF07 *mgr12F076C() { return (BfmeMgrF07 *)TheScriptEngine; }
 
 class BfmeLinkedObj
 {
@@ -67,8 +74,8 @@ extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 void __stdcall bfmeLinkObjectsA70(void *k1, void *k2)
 {
-	int id2 = g_mgr12F076C->findSomething(k2, 0);
-	int id1 = g_mgr12F076C->findSomething(k1, 0);
+	int id2 = mgr12F076C()->findSomething(k2, 0);
+	int id1 = mgr12F076C()->findSomething(k1, 0);
 	BfmeLinkedObj *obj2 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
 	BfmeLinkedObj *obj1 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
 	if (obj2 && obj1) {
@@ -78,8 +85,8 @@ void __stdcall bfmeLinkObjectsA70(void *k1, void *k2)
 
 void __stdcall bfmeNotifyLinkedBE0(void *k1, void *p3, void *k2)
 {
-	int id2 = g_mgr12F076C->findSomething(k2, 0);
-	int id1 = g_mgr12F076C->findSomething(k1, 0);
+	int id2 = mgr12F076C()->findSomething(k2, 0);
+	int id1 = mgr12F076C()->findSomething(k1, 0);
 	BfmeLinkedObjBE *obj2 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
 	BfmeLinkedObjBE *obj1 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
 	if (obj2 && obj1) {
@@ -117,8 +124,8 @@ int __cdecl bfmeHelper760(void *obj, int zero);
 
 void __stdcall bfmeAttachSubAF0(void *k1, void *k2)
 {
-	BfmeObjVfnAF0 *obj1 = (BfmeObjVfnAF0*)g_mgr12F076C->vfn26(k1);
-	int id2 = g_mgr12F076C->findSomething(k2, 0);
+	BfmeObjVfnAF0 *obj1 = (BfmeObjVfnAF0*)mgr12F076C()->vfn26(k1);
+	int id2 = mgr12F076C()->findSomething(k2, 0);
 	BfmeObjAF0_2 *obj2 = (BfmeObjAF0_2*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
 	if (obj1 && obj2 && obj2->m_sub230) {
 		obj1->vfn20(obj2->m_sub230);

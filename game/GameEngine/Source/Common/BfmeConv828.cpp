@@ -46,7 +46,14 @@ public:
 	virtual void v25();
 	virtual void* vfn26(void *key);
 };
-extern BfmeMgrF07 *g_mgr12F076C;
+// 0x012F076C is retail's ScriptEngine singleton (defined once in
+// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU reaches only the slots it
+// calls through its own vtable view, so the global keeps the canonical
+// spelling and the view is taken by casting; bytes are unchanged.
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
+
+static inline BfmeMgrF07 *mgr12F076C() { return (BfmeMgrF07 *)TheScriptEngine; }
 
 struct BfmeThing152
 {
@@ -62,7 +69,7 @@ void BfmeThing152::resetAll()
 	((BfmeMgr089_152 *)TheGameLogic)->reset();
 	clear();
 	g_obj12F1024->m_flag1D = 1;
-	g_mgr12F076C->vfn13();
+	mgr12F076C()->vfn13();
 }
 
 struct BfmeCoord12
@@ -208,7 +215,7 @@ public:
 
 void __stdcall bfmeLookupAndActionE10(void *key, BfmeInfoE10 *info)
 {
-	BfmeObjE10 *obj = (BfmeObjE10*)g_mgr12F076C->vfn26(key);
+	BfmeObjE10 *obj = (BfmeObjE10*)mgr12F076C()->vfn26(key);
 	if (obj) {
 		if (info->m_count > 0) {
 			obj->actionA(0x17);
@@ -253,7 +260,7 @@ public:
 
 void __stdcall bfmeLookupAndRun9E0(void *key)
 {
-	BfmeObj9E0 *obj = (BfmeObj9E0*)g_mgr12F076C->vfn26(key);
+	BfmeObj9E0 *obj = (BfmeObj9E0*)mgr12F076C()->vfn26(key);
 	if (obj) {
 		BfmeSubVfn9E0 *sub = obj->findSub(0x2e);
 		if (sub) {

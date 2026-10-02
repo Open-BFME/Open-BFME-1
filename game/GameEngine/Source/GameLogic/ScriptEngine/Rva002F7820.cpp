@@ -228,7 +228,12 @@ static __forceinline BfmeGlobFEA *theGameLogicFEA()
 {
 	return (BfmeGlobFEA *)TheGameLogic;
 }
-extern BfmeScriptEngineVtbl_44 *TheScriptEngine;
+// Likewise 0x012F076C is EA's `ScriptEngine *TheScriptEngine` (defined once
+// in ScriptEngine.cpp); this TU's TU-local vtable views are reached by casting
+// at each use, so the emitted bytes are unchanged.
+class ScriptEngine;
+
+extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
 void ScriptActions::rva002F7820(Parameter *objectParameter,
