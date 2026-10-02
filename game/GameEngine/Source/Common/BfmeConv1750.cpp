@@ -1,4 +1,10 @@
-extern int g_s5Head0059FB50;
+// Retail VA 0x0110CBEC is Rva0059FB40TailDtor's own vftable: the derived
+// destructor at 0x0059FB40 is `mov dword ptr [ecx],0x0110CBEC ; jmp base`.
+// That table is a COMDAT emitted by VptrTailJumpDestructors.cpp, and C++ has no
+// expression for a vftable address, so it is spelled by its decorated symbol
+// with __identifier (the convention BfmeConv2067.cpp uses for the same table
+// family) rather than by a stand-in name.
+extern "C" int __identifier("??_7Rva0059FB40TailDtor@@6B@");
 
 class BfmeBaseBC
 {
@@ -25,7 +31,7 @@ public:
 
 BfmeOwnBC::BfmeOwnBC(void)
 {
-	m_bfmeVfBC = &g_s5Head0059FB50;
+	m_bfmeVfBC = &__identifier("??_7Rva0059FB40TailDtor@@6B@");
 	m_bfmeCBC = 0x1e;
 	m_bfmeBBC = 0;
 	m_bfmeEBC = 0;

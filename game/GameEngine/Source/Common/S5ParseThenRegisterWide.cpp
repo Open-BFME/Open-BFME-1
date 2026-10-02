@@ -60,7 +60,29 @@ S5_PARSE( 0059DE10, ,
 	m_00 = &g_s5Head0059DE10; m_10 = 0; m_14 = 30; m_04 = m_14; m_0C = 0; m_28 = 0; m_2C = -1; m_09 = 1; m_30 = 0;,
 	int m_10; int m_14; int m_18; int m_1C; int m_20; int m_24; int m_28; int m_2C; int m_30; )
 
+// Same family, but 0x0059FB50 stores Rva0059FB40TailDtor's own vftable
+// (retail VA 0x0110CBEC; the derived destructor at 0x0059FB40 re-seats [ecx] to
+// it).  That table is a COMDAT emitted by VptrTailJumpDestructors.cpp and C++
+// has no expression for a vftable address, so it is spelled by its decorated
+// symbol with __identifier, the convention BfmeConv2067.cpp uses for this
+// family, instead of by a stand-in name.
+#define S5_PARSE_VFT( NAME, BODY, FIELDS )                                       \
+	extern "C" int __identifier("??_7Rva0059FB40TailDtor@@6B@");               \
+	extern const FieldParse s5Table##NAME;                                     \
+	struct S5Built##NAME : public Rva00489210                                  \
+	{                                                                          \
+		FIELDS                                                                 \
+		S5Built##NAME() { BODY }                                               \
+	};                                                                         \
+	void s5parse##NAME( INI *ini, Gen_00489270 *sink )                         \
+	{                                                                          \
+		S5Built##NAME *t = new S5Built##NAME;                                  \
+		ini->initFromINI( t, &s5Table##NAME );                                 \
+		t->m_04 = t->m_14;                                                     \
+		sink->m( (int)t );                                                     \
+	}
+
 // 0x0059FB50 157 B, 0x28 bytes
-S5_PARSE( 0059FB50, ,
-	m_00 = &g_s5Head0059FB50; m_10 = 0; m_14 = 30; m_18 = 7; m_1C = 0; m_20 = 1.0f; m_24 = 0; m_04 = m_14;,
+S5_PARSE_VFT( 0059FB50,
+	m_00 = &__identifier("??_7Rva0059FB40TailDtor@@6B@"); m_10 = 0; m_14 = 30; m_18 = 7; m_1C = 0; m_20 = 1.0f; m_24 = 0; m_04 = m_14;,
 	int m_10; int m_14; int m_18; char m_1C; float m_20; char m_24; )
