@@ -6,7 +6,16 @@ struct BfmeIterator1285
 	void *m_extra;
 };
 
-extern BfmeIterator1285 g_emptyStringData;
+// The shared empty string block at 0x012D5298, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  Only its address is
+// compared against here.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class BfmeIteratorList1285
 {
@@ -32,7 +41,7 @@ BfmeIterator1285 *BfmeIteratorList1285::bfmeFirst1285()
 		for (; index < count; ++index, ++walk)
 		{
 			void *data = walk->m_data;
-			if (data != 0 && data != &g_emptyStringData)
+			if (data != 0 && data != (void *)&g_rva012D5298Empty)
 				return array + index;
 		}
 	}

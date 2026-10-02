@@ -28,7 +28,9 @@ public:
 	EAStringC(unsigned int nSize);
 };
 
-extern EAStringC::StringDataC g_emptyStringData;
+// The shared empty string block at 0x012D5298, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 EAStringC::EAStringC(unsigned int nSize)
 {
@@ -44,7 +46,7 @@ EAStringC::EAStringC(unsigned int nSize)
 	}
 	else
 	{
-		m_pData = &g_emptyStringData;
-		++g_emptyStringData.m_uRefCount;
+		m_pData = &g_rva012D5298Empty;
+		++g_rva012D5298Empty.m_uRefCount;
 	}
 }

@@ -5,15 +5,25 @@ struct Rva00891B80Block
 	unsigned short m_ref;
 };
 
-extern Rva00891B80Block g_default012D5298;
+// The shared empty string block at 0x012D5298 is defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp as
+// EAStringC::StringDataC g_rva012D5298Empty.  Only the refcount word at +0 is
+// touched here, so the TU keeps its own view of the block and casts at use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class Rva008B0120String
 {
 public:
 	Rva008B0120String()
 	{
-		m_block = &g_default012D5298;
-		++g_default012D5298.m_ref;
+		m_block = (Rva00891B80Block *)&g_rva012D5298Empty;
+		++((Rva00891B80Block *)&g_rva012D5298Empty)->m_ref;
 	}
 
 	~Rva008B0120String();

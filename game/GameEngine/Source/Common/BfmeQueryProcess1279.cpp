@@ -62,7 +62,16 @@ public:
 	void bfmeErase1279(BfmeKey1279 &key);
 };
 
-extern char g_bfmeSpecialKeyVtable1279;
+// The shared empty string block at 0x012D5298, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  Only its address is
+// compared against here.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 void BfmeWrapper1279::bfmeProcess1279(void *value)
 {
@@ -73,7 +82,7 @@ void BfmeWrapper1279::bfmeProcess1279(void *value)
 			if (provider) {
 				BfmeLookup1279 *lookup = provider->bfmeGetLookup1279();
 				BfmeKey1279 &key = node->m_key;
-				if (key.m_vtable != &g_bfmeSpecialKeyVtable1279 && lookup) {
+				if (key.m_vtable != (void *)&g_rva012D5298Empty && lookup) {
 					if (lookup->bfmeLookup1279(key) == node)
 						lookup->bfmeErase1279(key);
 				}

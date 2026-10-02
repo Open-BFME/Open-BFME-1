@@ -8,7 +8,17 @@ struct BfmeStringData3AF0
     char m_text[1];
 };
 
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+// The shared empty string block at 0x012D5298 is defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp as
+// EAStringC::StringDataC g_rva012D5298Empty.  Only its address is compared
+// against here.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class Rva00891B00String
 {
@@ -21,7 +31,7 @@ public:
 
 bool Rva00891B00String::isDefaultRva00891B00() const
 {
-    return m_data == &g_bfmeDefaultString1284;
+    return m_data == (BfmeStringData3AF0 *)&g_rva012D5298Empty;
 }
 
 char *Rva00891B00String::dataRva00891B10() const
