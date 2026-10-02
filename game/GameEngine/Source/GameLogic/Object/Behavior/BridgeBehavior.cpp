@@ -294,32 +294,6 @@ BridgeBehavior::~BridgeBehavior( void )
 }  // end ~BridgeBehavior
 
 // ------------------------------------------------------------------------------------------------
-/** Get bridge behavior interface */
-// ------------------------------------------------------------------------------------------------
-/*static */BridgeBehaviorInterface *BridgeBehavior::getBridgeBehaviorInterfaceFromObject( Object *obj )
-{
-	
-	// sanity
-	if( obj == NULL )
-		return NULL;
-
-	BehaviorModule **bmi;
-	BridgeBehaviorInterface *bbi = NULL;
-	for( bmi = obj->getBehaviorModules(); *bmi; ++bmi )
-	{
-
-		bbi = (*bmi)->getBridgeBehaviorInterface();
-		if( bbi )
-			return bbi;
-
-	}  // end for, bmi
-
-	// interface not found
-	return NULL;
-
-}  // end getBridgeBehaviorInterfaceFromObject
-
-// ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?onDelete@BridgeBehavior@@UAEXXZ present-unmatched
 void BridgeBehavior::onDelete( void )
