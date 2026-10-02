@@ -23,11 +23,11 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(
 extern int g_guardTargetTypeThrowInfo;
 extern const char Rva006A16B0Empty[];
 
-extern "C" __declspec(dllimport) void *__cdecl bfmeFopenVIF(
+extern "C" __declspec(dllimport) void *__cdecl fopen(
 	const char *name, const char *mode);
 extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(
 	const void *buffer, unsigned int size, unsigned int count, void *stream);
-extern "C" __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
+extern "C" __declspec(dllimport) void __cdecl fclose(void *stream);
 
 class BFMERetailAsciiString
 {
@@ -77,7 +77,7 @@ static __declspec(noinline) void extractAndSaveMap(AsciiString mapToSave, Xfer *
 {
 	UnsignedInt dataSize;
 
-	void *fp = bfmeFopenVIF(mapToSave.str(), "w+b");
+	void *fp = fopen(mapToSave.str(), "w+b");
 	if (fp == 0)
 	{
 		XferException error;
@@ -105,7 +105,7 @@ static __declspec(noinline) void extractAndSaveMap(AsciiString mapToSave, Xfer *
 		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
-	bfmeFreeUXB(fp);
+	fclose(fp);
 	xfer->endBlock();
 	::operator delete[](buffer);
 }
