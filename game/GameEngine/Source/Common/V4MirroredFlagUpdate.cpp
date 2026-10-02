@@ -152,8 +152,8 @@ public:
   (this->*route.member)(value, one);
  }
 };
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class Gen003BF540Owner
 {
@@ -201,19 +201,19 @@ void Rva003BF540::select( int id )
 // tail-dispatches the returned result.
 void Gen003BD7D0Node::enter()
 {
-	activate( (char *)g_bfmeGameCW + 0x168, 1, 3 );
+	activate( (char *)TheLivingWorldManager + 0x168, 1, 3 );
 	unsigned int index = 0;
 	if( m_items.size() > 0 )
 	{
 		do
 		{
 			Gen003A43C0Element *entry = m_items.m_begin[ index ];
-			reinterpret_cast<Gen003BD7D0Game *>( g_bfmeGameCW )->notify( entry->m_value, 1 );
+			reinterpret_cast<Gen003BD7D0Game *>( TheLivingWorldManager )->notify( entry->m_value, 1 );
 			++index;
 		}
 		while( index < m_items.size() );
 	}
-	Rva006122A0Item *result = reinterpret_cast<Rva006122A0Mgr *>( g_bfmeGameCW )->find(
+	Rva006122A0Item *result = reinterpret_cast<Rva006122A0Mgr *>( TheLivingWorldManager )->find(
 		*reinterpret_cast<const AsciiString *>( reinterpret_cast<char *>( this ) + 8 ) );
 	reinterpret_cast<Rva0060A900 *>(result)->run();
 }
@@ -224,14 +224,14 @@ void Gen003BD7D0Node::enter()
 // the global registration first, then notify it with flag zero for each item.
 void Gen003BD7D0Node::leave()
 {
-	activate( (char *)g_bfmeGameCW + 0x168, 0, 0 );
+	activate( (char *)TheLivingWorldManager + 0x168, 0, 0 );
 	unsigned int index = 0;
 	if( m_items.size() > 0 )
 	{
 		do
 		{
 			Gen003A43C0Element *entry = m_items.m_begin[ index ];
-			reinterpret_cast<Gen003BD7D0Game *>( g_bfmeGameCW )->notify( entry->m_value, 0 );
+			reinterpret_cast<Gen003BD7D0Game *>( TheLivingWorldManager )->notify( entry->m_value, 0 );
 			++index;
 		}
 		while( index < m_items.size() );

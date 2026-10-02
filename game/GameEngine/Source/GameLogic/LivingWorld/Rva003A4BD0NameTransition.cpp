@@ -1,11 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// Retail 0x003A4BD0/133: the receiver at ECX is passed unchanged to
-// Rva003A48B0Owner::applyByName through ILT 0x00032010 twice. The matched
-// MainMenuMediumScaleUpTransition::init and Rva003BEED0::finish callers
-// independently confirm this body, but no source-level method spelling is
-// known; the address stays in the method name. The old/new selectors choose
-// the three four-byte strings at g_bfmeGameCW+0x188..0x190 or the shared
-// empty-string object at 0x01336E50.
+// Retail 0x003A4BD0/133 applies the old and new selector strings through ILT 0x00032010.
+// Selectors read TheLivingWorldManager+0x188..0x190 or the shared empty-string object.
 #include "ascii_string.h"
 
 class BfmeGameCW
@@ -16,17 +11,10 @@ public:
     AsciiString m_string18C;
     AsciiString m_string190;
 };
-// 0x012F706C is EA's `TheLivingWorldManager` (build/report_0x012F1028.md,
-// section "0x012F706C -- TheLivingWorldManager": the literal pushed at the
-// GameEngine::init initSubsystem<LivingWorldManager> site, RVA 0x00079CAC,
-// the "LivingWorldManager" literal the class vtable's name() returns at
-// 0x01116C28, and EA's own assert text "TheLivingWorldManager==NULL").
-// Its definition moved to the class's own TU,
-// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp, which
-// owns the data row for that address; this file only reads it, through the pin
-// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A @ 0x012F706C that the other 23 referencing
-// TUs also use. Nothing here is respelled.
-extern BfmeGameCW *g_bfmeGameCW;
+// EA's singleton at 0x012F706C is defined in LivingWorldManager.cpp.
+// The BfmeGameCW view preserves the selector-string layout.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 extern AsciiString Rva01336E50EmptyString;
 
 class Rva003A48B0Owner
@@ -43,16 +31,16 @@ void Rva003A48B0Owner::rva003A4BD0(int state)
 {
     AsciiString *oldName;
     switch (m_state3C) {
-    case 0: oldName = &g_bfmeGameCW->m_string190; break;
-    case 1: oldName = &g_bfmeGameCW->m_string18C; break;
-    case 2: oldName = &g_bfmeGameCW->m_string188; break;
+    case 0: oldName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string190; break;
+    case 1: oldName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string18C; break;
+    case 2: oldName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string188; break;
     default: oldName = &Rva01336E50EmptyString; break;
     }
     AsciiString *newName;
     switch (state) {
-    case 0: newName = &g_bfmeGameCW->m_string190; break;
-    case 1: newName = &g_bfmeGameCW->m_string18C; break;
-    case 2: newName = &g_bfmeGameCW->m_string188; break;
+    case 0: newName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string190; break;
+    case 1: newName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string18C; break;
+    case 2: newName = &reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->m_string188; break;
     default: newName = &Rva01336E50EmptyString; break;
     }
     applyByName(oldName, 0, 0);

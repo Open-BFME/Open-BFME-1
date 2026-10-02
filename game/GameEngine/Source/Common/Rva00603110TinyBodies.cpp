@@ -182,7 +182,7 @@ unsigned int Rva0060C190Field::get() const
 }
 
 class AsciiString;
-class BfmeGameCW;
+class LivingWorldManager;
 
 struct Rva00612430Item
 {
@@ -196,12 +196,12 @@ public:
 	Rva00612430Item *find(const AsciiString &name);
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // ?Rva0060C1B0@@YGXPAXPBVAsciiString@@@Z
 void __stdcall Rva0060C1B0(void *out, const AsciiString *name)
 {
-	Rva00612430Item *item = reinterpret_cast<Rva00612430Owner *>(g_bfmeGameCW)->find(*name);
+	Rva00612430Item *item = reinterpret_cast<Rva00612430Owner *>(TheLivingWorldManager)->find(*name);
 	if (item != 0)
 		*(void **)out = item->m_value;
 }

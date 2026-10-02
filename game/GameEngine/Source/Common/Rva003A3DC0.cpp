@@ -1,10 +1,9 @@
 // Retail 0x003A3DC0, 48 bytes.
-// The body looks up a target through g_bfmeGameCW, then passes three member
-// addresses and a byte member to the target's existing retail thunk. The
+// The body looks up a target through TheLivingWorldManager and dispatches its retail thunk.
 // receiver name stays RVA-derived because no caller proves a semantic owner.
 
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class AsciiString;
 struct Rva006122A0Item;
@@ -38,7 +37,7 @@ public:
 
 void Rva003A3DC0Owner::rva003A3DC0(void *key)
 {
-	Rva006122A0Mgr *game = reinterpret_cast<Rva006122A0Mgr *>(g_bfmeGameCW);
+	Rva006122A0Mgr *game = reinterpret_cast<Rva006122A0Mgr *>(TheLivingWorldManager);
 	Rva003A3DC0Target *target = reinterpret_cast<Rva003A3DC0Target *>(
 		game->find(*reinterpret_cast<AsciiString *>(key)));
 
