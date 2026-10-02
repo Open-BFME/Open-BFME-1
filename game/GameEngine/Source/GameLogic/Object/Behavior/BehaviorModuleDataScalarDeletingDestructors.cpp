@@ -8,5 +8,4 @@
     ModuleName *Make##ModuleName() { return new ModuleName; } \
     void Delete##ModuleName(ModuleName *object) { delete object; }
 
-DECLARE_MODULE_DELETING_DESTRUCTOR(ClearanceTestingSlowDeathBehaviorModuleData)
 DECLARE_MODULE_DELETING_DESTRUCTOR(ShareExperienceBehaviorModuleData)

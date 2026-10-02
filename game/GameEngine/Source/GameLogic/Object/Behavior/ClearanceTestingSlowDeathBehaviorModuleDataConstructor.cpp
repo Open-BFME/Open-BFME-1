@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/Common/System
+// This constructor owns the exact 30-byte scalar-deleting wrapper at
+// 0x001F7390, whose ILT 0x000018CA call reaches the real complete destructor
+// at 0x001F73C0. Keep both lifetime providers explicit to avoid competing
+// implicit constructor/destructor bodies from separate forcing declarations.
 // Retail 001F72D0, 149 bytes. Matched factory 00117310 constructs this 0x220-byte type.
 // GeometryInfo's BFME extent is 0x5C: its constructors FFD10/100580 store through
 // +0x58, and this owner's first following field is +0x204 after member +0x1A8.
@@ -51,6 +55,9 @@ class ClearanceTestingSlowDeathBehaviorModuleData
 {
 public:
 	ClearanceTestingSlowDeathBehaviorModuleData();
+	// Defined at 0x001F73C0 in the matched destructor TU. An implicit
+	// definition here would compete with that independently verified body.
+	virtual ~ClearanceTestingSlowDeathBehaviorModuleData();
 
 private:
 	GeometryInfo m_geometry;
