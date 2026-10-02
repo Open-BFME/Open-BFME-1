@@ -47,7 +47,7 @@ a link with no /FORCE, /NODEFAULTLIB, against the retail import libraries
 non-import external, succeeds and imports only what retail imports, from the
 same DLL. Stubs never define an `__imp_` name or an import library's call
 stub, so an import can only be resolved by the real library. Receipt:
-build/import_binding/<stem>/receipt.json.
+build/import_binding/<build.py object stem>/receipt.json.
 """
 import argparse
 import collections
@@ -627,7 +627,7 @@ def rewrite(text, steps, keep_declarations=True, c_source=False):
 
 
 def work_dir(source):
-    return OUT / Path(source).stem
+    return OUT / build.obj_path(ROOT / source).stem
 
 
 def fresh_object(source):
@@ -887,7 +887,7 @@ def cmd_next(args):
         if not (kinds or facts["duplicate_thunks"]) or not kinds <= set(REPAIRABLE):
             continue
         source = sources.get(name)
-        if source is None or Path(source).stem in done or not editable(source):
+        if source is None or work_dir(source).name in done or not editable(source):
             continue
         print(source)
         for symbol, kind in sorted(facts["imports"].items()):
