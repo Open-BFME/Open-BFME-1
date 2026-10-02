@@ -3,9 +3,11 @@
 // the neighboring owner methods establish the original memorypool TU.
 // cl: /O2 /DNDEBUG /MD
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358D18Enter(void *lock);
-extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave(void *lock);
-extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *section);
+// Retail IAT slots 0x01358D18, 0x01358E74 and 0x01358D0C identify
+// KERNEL32 EnterCriticalSection, LeaveCriticalSection and DeleteCriticalSection.
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *lock);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *lock);
+extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection(void *section);
 extern "C" __declspec(dllimport) void *__stdcall GetProcessHeap(void);
 extern "C" __declspec(dllimport) void *__stdcall HeapAlloc(void *heap, unsigned long flags, unsigned long bytes);
 extern "C" __declspec(dllimport) int __stdcall HeapFree(
@@ -48,7 +50,9 @@ private:
 	void *m_previousOwner;
 	void *m_lock;
 };
-extern Rva008838F0Owner *g_01336CE0;
+// Retail constructor 0x00883340 reads then replaces this four-byte owner head.
+// It starts zero in the image's uninitialized data; teardown walks this head.
+Rva008838F0Owner *g_01336CE0;
 
 Rva008838F0Owner::Rva008838F0Owner(void *owner, void **table)
 {
@@ -70,7 +74,7 @@ int Rva008838F0Owner::lookup(unsigned int key, void **dest, unsigned int limit)
 	if (dest != 0 && limit != 0 && m_disabled == 0)
 	{
 		if (m_lock != 0)
-			Rva01358D18Enter(m_lock);
+			EnterCriticalSection(m_lock);
 
 		Rva008838F0Node **link = &m_buckets[key % 0x2b7b];
 		while (*link != 0 && (*link)->m_key != key)
@@ -87,7 +91,7 @@ int Rva008838F0Owner::lookup(unsigned int key, void **dest, unsigned int limit)
 		}
 
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return i;
 	}
 
@@ -100,7 +104,7 @@ bool Rva008838F0Owner::isValidBlock(int type, void *block)
 		return false;
 
 	if (m_lock != 0)
-		Rva01358D18Enter(m_lock);
+		EnterCriticalSection(m_lock);
 
 	Rva008838F0Node **link = &m_buckets[(unsigned int)block % 0x2b7b];
 	while (*link != 0 && (*link)->m_key != (unsigned int)block)
@@ -110,24 +114,24 @@ bool Rva008838F0Owner::isValidBlock(int type, void *block)
 	if (node == 0)
 	{
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return false;
 	}
 	if (node->m_freeCheckpoint >= 0)
 	{
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return false;
 	}
 	if (type >= 0 && node->m_type != (unsigned int)type)
 	{
 		if (m_lock != 0)
-			Rva01358E74Leave(m_lock);
+			LeaveCriticalSection(m_lock);
 		return false;
 	}
 
 	if (m_lock != 0)
-		Rva01358E74Leave(m_lock);
+		LeaveCriticalSection(m_lock);
 	return true;
 }
 
@@ -141,14 +145,14 @@ struct Rva00883220Node
 Rva008838F0Owner::~Rva008838F0Owner()
 {
 	if (m_lock != 0)
-		Rva01358D18Enter(m_lock);
+		EnterCriticalSection(m_lock);
 
 	m_disabled = 1;
 
 	if (m_lock != 0)
 	{
-		Rva01358E74Leave(m_lock);
-		Rva01358D0CReset(m_lock);
+		LeaveCriticalSection(m_lock);
+		DeleteCriticalSection(m_lock);
 		HeapFree(GetProcessHeap(), 0, m_lock);
 		m_lock = 0;
 	}
