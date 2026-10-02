@@ -559,17 +559,6 @@ void Rva00264860NoOp::invoke(void *, void *)
 {
 }
 
-class Rva00264870NoOp
-{
-public:
-	void invoke(void *);
-};
-
-// ?invoke@Rva00264870NoOp@@QAEXPAX@Z
-void Rva00264870NoOp::invoke(void *)
-{
-}
-
 class Rva002659F0Field
 {
 public:
