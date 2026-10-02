@@ -9,6 +9,12 @@
 
 class DataChunkInput;
 struct DataChunkInfo;
+extern void j_0002df65();
+
+struct Rva0019BE80TeamRecClearReceiver
+{
+	void clear();
+};
 
 class Dict
 {
@@ -30,7 +36,6 @@ public:
 class Rva0019BE80TeamRec
 {
 public:
-	void clear();
 	int append(const Dict *dict);
 
 private:
@@ -55,8 +60,17 @@ private:
 bool Rva0019BE80SidesList::loadTeams(DataChunkInput &file, DataChunkInfo *info)
 {
 	int count = file.readInt();
-	m_teamrec.clear();
-	m_skirmishTeamrec.clear();
+	typedef void (Rva0019BE80TeamRecClearReceiver::*Clear)();
+	union
+	{
+		void *asVoid;
+		Clear asMember;
+	} clearFunction;
+	clearFunction.asVoid = (void *)j_0002df65;
+	(reinterpret_cast<Rva0019BE80TeamRecClearReceiver *>(&m_teamrec)->*
+		clearFunction.asMember)();
+	(reinterpret_cast<Rva0019BE80TeamRecClearReceiver *>(&m_skirmishTeamrec)->*
+		clearFunction.asMember)();
 	if (count > 0)
 	{
 		for (int i = count; i > 0; --i)
