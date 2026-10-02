@@ -11,7 +11,16 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern void *g_bfmeArgDZF;
+// Retail's show-argument global at 0x012B7D80 is the AptPalantir window index,
+// `int g_aptPalantirWindow` (defined in GUI/GUICallbacks/Apt/AptPalantir.cpp).
+// The canonical int is cast to the callee's `void *a` at the use; the load is
+// `mov eax,[abs]` either way.
+extern int g_aptPalantirWindow;
+
+static __forceinline void *bfmeArgDZF()
+{
+	return (void *)g_aptPalantirWindow;
+}
 
 extern "C" unsigned char bfmeFmtStrDZF[];
 
@@ -24,27 +33,27 @@ void bfmeGoDZFa(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFa, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(bfmeArgDZF(), (const char *)bfmeMsgDZFa, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFb(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFb, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(bfmeArgDZF(), (const char *)bfmeMsgDZFb, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFc(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFc, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(bfmeArgDZF(), (const char *)bfmeMsgDZFc, 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGoDZFd(int a)
 {
 	char buf[16];
 	_snprintf(buf, 16, (const char *)bfmeFmtStrDZF, a);
-	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(g_bfmeArgDZF, (const char *)bfmeMsgDZFd, 1, buf, 0, 0, 0, 0);
+	((BfmeUiDZF *)g_rva012F19E8WindowManager)->bfmeShowDZF(bfmeArgDZF(), (const char *)bfmeMsgDZFd, 1, buf, 0, 0, 0, 0);
 }
 

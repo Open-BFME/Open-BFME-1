@@ -31,7 +31,15 @@ public:
 // reached by casting the canonical global.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeX1077 *g_bfmeX1077;
+// Retail's first-argument global at 0x012B7D80 is the AptPalantir window index,
+// `int g_aptPalantirWindow` (defined in GUI/GUICallbacks/Apt/AptPalantir.cpp).
+// The TU-local BfmeX1077 view is only a call-target type here, so the canonical
+// int is cast to it at the use; the load is `mov eax,[abs]` either way.
+extern int g_aptPalantirWindow;
+static inline BfmeX1077 *bfmeX1077()
+{
+	return (BfmeX1077 *)g_aptPalantirWindow;
+}
 extern char g_bfmeFmtD1077[];
 extern char g_bfmeFmtF1077[];
 extern char g_bfmeFmtL1077[];
@@ -53,7 +61,7 @@ void bfmeGo1077A(int a, float b, float c)
 	_snprintf(buf1, 0x10, g_bfmeFmtD1077, a);
 	_snprintf(buf2, 0x10, g_bfmeFmtF1077, b * p->m_bfme00);
 	_snprintf(buf3, 0x10, g_bfmeFmtF1077, c * p->m_bfme04);
-	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(g_bfmeX1077, g_bfmeFmtL1077, 3, buf1, buf2, buf3, 0, 0);
+	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeX1077(), g_bfmeFmtL1077, 3, buf1, buf2, buf3, 0, 0);
 }
 
 void bfmeGo1077B(int a, float b, float c)

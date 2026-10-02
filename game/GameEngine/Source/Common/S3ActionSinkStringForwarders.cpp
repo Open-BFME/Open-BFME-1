@@ -51,13 +51,22 @@ public:
 // object and casts at the use.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern void *TheGenActionContext;
+// Retail's action-context global at 0x012B7D80 is the AptPalantir window index,
+// `int g_aptPalantirWindow` (defined in
+// GUI/GUICallbacks/Apt/AptPalantir.cpp).  The canonical int is cast to the
+// sink's `void *ctx` at the use; the load is `mov eax,[abs]` either way.
+extern int g_aptPalantirWindow;
+
+static __forceinline void *genActionContext()
+{
+	return (void *)g_aptPalantirWindow;
+}
 
 #define S3_ACTION( NAME, TEXT )                                           \
 	void NAME( const GenString *value )                                   \
 	{                                                                     \
 		((GenActionSink *)g_rva012F19E8WindowManager)->add(                 \
-			TheGenActionContext, TEXT, 1,                              \
+			genActionContext(), TEXT, 1,                              \
 			value->str(), 0, 0, 0, 0 );                                   \
 	}
 

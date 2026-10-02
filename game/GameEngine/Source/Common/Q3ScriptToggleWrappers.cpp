@@ -50,7 +50,17 @@ struct Q3ScriptDispatcher
 // view below is what these bodies call through.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern Q3ScriptMovie *g_q3ScriptMovie;
+// Retail's dispatch-receiver global at 0x012B7D80 is the AptPalantir window
+// index, `int g_aptPalantirWindow` (defined in
+// GUI/GUICallbacks/Apt/AptPalantir.cpp).  The TU-local Q3ScriptMovie view is
+// only a dispatch-target type here, so the canonical int is cast to it at the
+// use; the load is `mov eax,[abs]` either way.
+extern int g_aptPalantirWindow;
+
+static inline Q3ScriptMovie *q3ScriptMovie()
+{
+	return (Q3ScriptMovie *)g_aptPalantirWindow;
+}
 
 static inline Q3ScriptDispatcher *q3Dispatcher()
 {
@@ -60,7 +70,7 @@ static inline Q3ScriptDispatcher *q3Dispatcher()
 #define BFME_SCRIPT_TOGGLE( NAME, ENTRY, WHEN_TRUE, WHEN_FALSE )              \
 	void NAME( bool on )                                                      \
 	{                                                                         \
-		q3Dispatcher()->invoke( g_q3ScriptMovie, ENTRY, 1,                     \
+		q3Dispatcher()->invoke( q3ScriptMovie(), ENTRY, 1,                     \
 			on ? WHEN_TRUE : WHEN_FALSE, 0, 0, 0, 0 );                        \
 	}
 

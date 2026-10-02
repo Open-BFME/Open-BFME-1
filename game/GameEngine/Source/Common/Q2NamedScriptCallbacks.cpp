@@ -46,7 +46,16 @@ public:
 // TU-local view below is what the callee at 0x004675F0 is called through.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;		///< retail 0x012F19E8
-extern void *g_Q2ScriptOwner;						///< retail 0x012B7D80
+// Retail's dispatch-owner global at 0x012B7D80 is the AptPalantir window index,
+// `int g_aptPalantirWindow` (defined in
+// GUI/GUICallbacks/Apt/AptPalantir.cpp).  The canonical int is cast to the
+// callee's `void *owner` at the use; the load is `mov eax,[abs]` either way.
+extern int g_aptPalantirWindow;					///< retail 0x012B7D80
+
+static __forceinline void *q2ScriptOwner()
+{
+	return (void *)g_aptPalantirWindow;
+}
 
 static __forceinline Gen004675F0 *q2ScriptTarget()
 {
@@ -56,7 +65,7 @@ static __forceinline Gen004675F0 *q2ScriptTarget()
 #define Q2_NAMED_SCRIPT_CALLBACK( NAME, CALLBACK, ARGUMENT )              \
 	void NAME()                                                           \
 	{                                                                     \
-		q2ScriptTarget()->invoke( g_Q2ScriptOwner, CALLBACK, 1, ARGUMENT, \
+		q2ScriptTarget()->invoke( q2ScriptOwner(), CALLBACK, 1, ARGUMENT, \
 								  0, 0, 0, 0 );                           \
 	}
 
