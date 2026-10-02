@@ -65,7 +65,7 @@ struct Q3SortCompare
 {
 	void *m_state;
 
-	__forceinline bool operator()(const Q3SortElem4 &left,
+	__forceinline bool compareForPartition(const Q3SortElem4 &left,
 		const Q3SortElem4 &right) const
 	{
 		if (left.m_base.startsWithUnderscore() && right.m_base.startsWithUnderscore())
@@ -79,11 +79,11 @@ Q3SortElem4 *Gen009CCC50(Q3SortElem4 *first, Q3SortElem4 *last,
 {
 	for (;;)
 	{
-		while (comp(*first, pivot))
+		while (comp.compareForPartition(*first, pivot))
 			++first;
 
 		--last;
-		while (comp(pivot, *last))
+		while (comp.compareForPartition(pivot, *last))
 			--last;
 
 		if (!(first < last))

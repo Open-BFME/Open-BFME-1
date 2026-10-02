@@ -3197,20 +3197,6 @@ void AIPlayer::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-TeamInQueue::~TeamInQueue()
-{
-	WorkOrder *order, *next;
-
-	for( order = m_workOrders; order; order = next )
-	{
-		next = order->m_next;
-		order->deleteInstance();
-	}
-	// If we have a team, activate it.  If it is empty, Team.cpp will remove empty active teams.
-	if (m_team) m_team->setActive();
-	m_workOrders = NULL;
-}
-
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?isAllBuilt@TeamInQueue@@QAE_NXZ present-unmatched

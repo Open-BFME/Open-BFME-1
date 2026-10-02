@@ -414,58 +414,6 @@ void AIGuardInnerState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AIGuardInnerState@@ present-unmatched
-StateReturnType AIGuardInnerState::onEnter( void )
-{
-	// See if we try to enter the target
-	if (getMachineOwner()->getTemplate()->isEnterGuard())
-	{
-		Object* nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID()) ;
-		if (nemesis == NULL) 
-		{
-			DEBUG_LOG(("Unexpected NULL nemesis in AIGuardInnerState.\n"));
-			return STATE_SUCCESS;
-		}
-		m_enterState = newInstance(AIEnterState)(getMachine());
-
-		m_enterState->getMachine()->setGoalObject(nemesis);
-
-		StateReturnType returnVal = m_enterState->onEnter();
-		if (returnVal == STATE_CONTINUE) {
-			return STATE_CONTINUE;
-		}
-	}
-	// Or try to destroy the target
-	else
-	{
-		Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-		Coord3D pos = targetToGuard ? *targetToGuard->getPosition() : *getGuardMachine()->getPositionToGuard();
-		Object* nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID()) ;
-		if (nemesis == NULL) 
-		{
-			DEBUG_LOG(("Unexpected NULL nemesis in AIGuardInnerState.\n"));
-			return STATE_SUCCESS;
-		}
-		m_exitConditions.m_center = pos;
-		m_exitConditions.m_radiusSqr = sqr(AIGuardMachine::getStdGuardRange(getMachineOwner()));
-		m_exitConditions.m_conditionsToConsider = (ExitConditions::ATTACK_ExitIfOutsideRadius | 
-																								ExitConditions::ATTACK_ExitIfNoUnitFound);
-
-		m_attackState = newInstance(AIAttackState)(getMachine(), false, true, false, &m_exitConditions);
-
-		m_attackState->getMachine()->setGoalObject(nemesis);
-
-		StateReturnType returnVal = m_attackState->onEnter();
-		if (returnVal == STATE_CONTINUE) {
-			return STATE_CONTINUE;
-		}
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
-
-//--------------------------------------------------------------------------------------
 // ?update@AIGuardInnerState@@UAE?AW4StateReturnType@@XZ
 // Body in AIGuardInnerStateUpdate.cpp (slot 6; BFME team guard, restart flag and rescans).
 
