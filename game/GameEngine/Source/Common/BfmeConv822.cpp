@@ -69,11 +69,15 @@ void BfmeThingF63::doDispatch2(BfmeArgF5F *a, void *b)
 	}
 }
 
-void __cdecl bfmeHelper990410(void *arg, double val);
+// 0x00990410 is the matched row `_lua_pushnumber` from the vendored Lua 4.0.1
+// (game/Libraries/Source/Lua/lapi.c) -- the C-linkage COFF spelling of
+// lua_pushnumber, as already spelled by the sibling lua_ externs.
+struct lua_State;
+extern "C" void lua_pushnumber(lua_State *L, double n);
 
 int __cdecl bfmeAction2A4(void *arg)
 {
-	bfmeHelper990410(arg, (double)bfmeMgrF5F()->m_frame3C);
+	lua_pushnumber(reinterpret_cast<lua_State *>(arg), (double)bfmeMgrF5F()->m_frame3C);
 	return 1;
 }
 
@@ -98,7 +102,7 @@ int __cdecl bfmeAction2B1(void *arg)
 	float val = bfmeConst1075350;
 	if (g_obj12F060C->m_sub78)
 		val = g_obj12F060C->m_sub78->f10;
-	bfmeHelper990410(arg, (double)val);
+	lua_pushnumber(reinterpret_cast<lua_State *>(arg), (double)val);
 	return 1;
 }
 
@@ -108,6 +112,6 @@ extern const char bfmeString10CF498[];
 int __cdecl bfmeAction2B7(void *arg)
 {
 	double val = bfmeRandom2B7(0, 1.0f, bfmeString10CF498, 0x973);
-	bfmeHelper990410(arg, val);
+	lua_pushnumber(reinterpret_cast<lua_State *>(arg), val);
 	return 1;
 }

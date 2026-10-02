@@ -10,7 +10,11 @@ struct BfmeTagVIF
 
 const char *__cdecl bfmeCheckStrVHR(BfmeLuaVHR *L, int n, unsigned *len);
 void __cdecl bfmePushNilVHR(BfmeLuaVHR *L);
-void __cdecl bfmePushNumVHR(BfmeLuaVHR *L, double v);
+// 0x00990410 is the matched row `_lua_pushnumber` from the vendored Lua 4.0.1
+// (game/Libraries/Source/Lua/lapi.c) -- the C-linkage COFF spelling of
+// lua_pushnumber, as already spelled by the sibling lua_ externs.
+struct lua_State;
+extern "C" void lua_pushnumber(lua_State *L, double n);
 void __cdecl bfmePushStrVHR(BfmeLuaVHR *L, const char *s);
 void __cdecl bfmePushUserVHR(BfmeLuaVHR *L, void *u, int tag);
 void *__cdecl bfmeToUserVIF(BfmeLuaVHR *L, int n);
@@ -30,6 +34,6 @@ int __cdecl bfmeOpenVIF(BfmeLuaVHR *L)
 	}
 	bfmePushNilVHR(L);
 	bfmePushStrVHR(L, "generic I/O error");
-	bfmePushNumVHR(L, -1.0);
+	lua_pushnumber(reinterpret_cast<lua_State *>(L), -1.0);
 	return 3;
 }
