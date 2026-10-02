@@ -131,6 +131,7 @@ class FoundationAIUpdate : public UpdateModule, public FoundationAIUpdateIface3
 {
 public:
 	FoundationAIUpdate(Thing *thing, const ModuleData *data);
+	virtual ~FoundationAIUpdate();
 
 private:
 	AudioEventRTS m_sound;

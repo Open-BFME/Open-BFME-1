@@ -48,20 +48,6 @@
 #endif
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp
-// ??0RadiusDecalTemplate@@ present-unmatched
-RadiusDecalTemplate::RadiusDecalTemplate() : 
-	m_shadowType(SHADOW_ALPHA_DECAL), 
-	m_minOpacity(1.0f),
-	m_maxOpacity(1.0f),
-	m_opacityThrobTime(LOGICFRAMES_PER_SECOND),
-	m_color(0),
-	m_onlyVisibleToOwningPlayer(true),
-	m_name(AsciiString::TheEmptyString)  // Added By Sadullah Nader for Init purposes
-{
-}
-
-// ------------------------------------------------------------------------------------------------
 // ?createRadiusDecal@RadiusDecalTemplate@@ present-unmatched
 void RadiusDecalTemplate::createRadiusDecal(const Coord3D& pos, Real radius, const Player* owningPlayer, RadiusDecal& result) const
 {

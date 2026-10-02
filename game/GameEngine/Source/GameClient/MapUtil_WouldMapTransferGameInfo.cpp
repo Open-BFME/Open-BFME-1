@@ -38,14 +38,7 @@ private:
 public:
 	Bool startsWithNoCase(const T *text, Int length) const;
 
-	Bool startsWithNoCase(const StringBase<T> &other) const
-	{
-		const Int length = other.m_data != 0 ? other.m_data->m_length : 0;
-		const T *text = other.m_data != 0
-			? &other.m_data->m_text[0]
-			: (const T *)Rva006A16B0Empty;
-		return startsWithNoCase(text, length);
-	}
+	Bool startsWithNoCase(const StringBase<T> &other) const;
 };
 
 class AsciiString : private StringBase<char>
@@ -57,8 +50,12 @@ public:
 
 	Bool startsWithNoCase(const AsciiString &other) const
 	{
-		return ((const StringBase<char> *)this)->startsWithNoCase(
-			*(const StringBase<char> *)&other);
+		const StringBase<char> &source = *(const StringBase<char> *)&other;
+		const Int length = source.m_data != 0 ? source.m_data->m_length : 0;
+		const char *text = source.m_data != 0
+			? &source.m_data->m_text[0]
+			: (const char *)Rva006A16B0Empty;
+		return ((const StringBase<char> *)this)->startsWithNoCase(text, length);
 	}
 };
 

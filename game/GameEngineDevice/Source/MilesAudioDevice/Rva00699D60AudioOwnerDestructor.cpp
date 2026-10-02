@@ -45,10 +45,10 @@ class Rva00691200Obj : public Rva00691200Pad, public Rva00691200RefBase
 {
 };
 
-class Rva00691200Holder
+class Rva00699D60HolderView
 {
 public:
-	~Rva00691200Holder()
+	~Rva00699D60HolderView()
 	{
 		Rva00691200Obj *object = m_pointer;
 		if (object)
@@ -98,7 +98,7 @@ public:
 private:
 	unsigned char m_head[0x04];
 	void *m_sample;
-	Rva00691200Holder m_child;
+	Rva00699D60HolderView m_child;
 	unsigned char m_padding0c[0x08];
 	unsigned char *m_array;
 	unsigned char m_padding18[0x04];
