@@ -24,15 +24,6 @@ struct Vector3
 class DefaultPhysicsModuleInfo
 {
 public:
-	DefaultPhysicsModuleInfo &operator=(const DefaultPhysicsModuleInfo &that)
-	{
-		m_vector = that.m_vector;
-		m_field3 = that.m_field3;
-		m_var1 = that.m_var1;
-		return *this;
-	}
-
-private:
 	void *m_vtable;
 	Vector3 m_vector;
 	int m_field3;
@@ -57,7 +48,9 @@ DefaultModuleTemplate<Category> &DefaultModuleTemplate<Category>::operator=(cons
 	const DefaultPhysicsModuleInfo *info = source
 		? (const DefaultPhysicsModuleInfo *)((const char *)source + 8)
 		: 0;
-	m_info = *info;
+	m_info.m_vector = info->m_vector;
+	m_info.m_field3 = info->m_field3;
+	m_info.m_var1 = info->m_var1;
 	return *this;
 }
 

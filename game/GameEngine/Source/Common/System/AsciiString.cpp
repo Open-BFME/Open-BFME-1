@@ -354,21 +354,6 @@ Bool AsciiString::startsWithNoCase(const char* p) const
 }
 
 // -----------------------------------------------------
-// ?endsWith@AsciiString@@ present-unmatched
-Bool AsciiString::endsWith(const char* p) const
-{
-	if (*p == 0)
-		return true;	// everything ends with the empty string
-
-	int lenThis = getLength();
-	int lenThat = strlen(p);
-	if (lenThis < lenThat)
-		return false;	// that must be smaller than this
-
-	return strncmp(peek() + lenThis - lenThat, p, lenThat) == 0;
-}
-
-// -----------------------------------------------------
 // ?endsWithNoCase@AsciiString@@ present-unmatched
 Bool AsciiString::endsWithNoCase(const char* p) const
 {
