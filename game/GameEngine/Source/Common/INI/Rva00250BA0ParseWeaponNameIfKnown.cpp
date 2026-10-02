@@ -4,21 +4,14 @@
 // the token copies straight into the argument slot; the store global at VA
 // 0x012EF738) and only when a template exists the raw token is written into
 // the string member at instance+8 through StringBase::set(text length) with
-// the inline strlen.  The by-value parameter is spelled as a thin derived
-// string class with an inline forwarding constructor: that is what puts the
-// saved-esp store before the argument-slot construction as retail has it.
+// the inline strlen. The callee uses the same AsciiString signature as the
+// matched WeaponStore definition.
 // Address-derived names.
 
 extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )
 
 #include "ascii_string.h"
-
-class Rva00250BA0Name : public AsciiString
-{
-public:
-	Rva00250BA0Name( const char *text ) : AsciiString( text ) {}
-};
 
 class RetailLayoutString
 {
@@ -32,7 +25,7 @@ class WeaponTemplate;
 class WeaponStore
 {
 public:
-	const WeaponTemplate *findWeaponTemplate( Rva00250BA0Name name ) const;
+	const WeaponTemplate *findWeaponTemplate( AsciiString name ) const;
 };
 
 extern WeaponStore *TheWeaponStore;
