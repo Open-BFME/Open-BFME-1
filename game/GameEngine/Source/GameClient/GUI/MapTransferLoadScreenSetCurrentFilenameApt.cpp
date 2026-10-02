@@ -11,7 +11,11 @@
 
 // The shared empty AsciiString sentinel (targets/game/reverse/symbols.csv
 // pins _g_bfmeEmptyAscii at retail 0x0107388B); a null StringBase reads it.
-extern "C" const char g_bfmeEmptyAscii[];
+// The one definition is C++-linkage in
+// game/GameEngine/Source/Common/System/Rva00C7388BEmptyAscii.cpp, so it spells
+// ?g_bfmeEmptyAscii@@3QBDB: declaring it extern "C" here would make this
+// object reference a second, undefined spelling of that one address.
+extern const char g_bfmeEmptyAscii[];
 
 template <typename T> struct StringInlineData
 {
