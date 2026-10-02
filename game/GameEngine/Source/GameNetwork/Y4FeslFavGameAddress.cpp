@@ -85,17 +85,19 @@ struct Rva007E9B70Obj
 	virtual unsigned int now();
 };
 
-Rva007EFFC0Allocator *Rva007EFFC0Get();
+// getter uses its ledger spelling bfmeGo929C; the local class describes
+// only the vftable shape this body needs, so cast the void * result.
+extern void *bfmeGo929C();
 Rva007EB810Diag *Rva007EB810Get();
 Rva007E9B70Obj *Rva007E9B70Get();
 
 void Rva00809500Sink::accept( Rva00809500Entry *entry )
 {
 	if( m_gdatBuffer != 0 )
-		Rva007EFFC0Get()->release( m_gdatBuffer, 0 );
+		((Rva007EFFC0Allocator *)bfmeGo929C())->release( m_gdatBuffer, 0 );
 
 	m_gdatBufferSize = entry->m_gdatBufferSize;
-	m_gdatBuffer = (char *)Rva007EFFC0Get()->allocate( m_gdatBufferSize, 0 );
+	m_gdatBuffer = (char *)((Rva007EFFC0Allocator *)bfmeGo929C())->allocate( m_gdatBufferSize, 0 );
 	if( m_gdatBuffer == 0 )
 	{
 		Rva007EB810Get()->fail(
