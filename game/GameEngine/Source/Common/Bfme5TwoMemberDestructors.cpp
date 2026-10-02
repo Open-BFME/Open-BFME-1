@@ -33,10 +33,13 @@ private:
 	int m_bfmeValue;
 };
 
-class Gen_001031B0
+// UserParser identity: matched registration vptrVA01086348 -> deleting
+// wrapper00103180 -> complete destructor001031B0. Retain the canonical
+// string-header provider so member teardown resolves to the retail body.
+class UserParser
 {
 public:
-	virtual ~Gen_001031B0(void);
+	virtual ~UserParser(void);
 
 private:
 	int m_bfmeFields[3];					// +0x04
@@ -55,8 +58,8 @@ private:
 	BfmeDtorMemberC m_bfmeSecond;				// +0x1B8
 };
 
-// ??1Gen_001031B0@@UAE@XZ
-Gen_001031B0::~Gen_001031B0(void)
+// ??1UserParser@@UAE@XZ
+UserParser::~UserParser(void)
 {
 }
 
