@@ -6,7 +6,10 @@
 // Gen_00411DD0::bfmeSet via ILT 0x00008337 and GameLogic::destroyObject via
 // ILT 0x0001D0DE. The rider loop calls Object vtable +0x28 (getDrawable, as in
 // GarrisonContain_onContaining.cpp) twice and passes true to bfmeSet. No caller
-// proves the owner or method name, so the owner keeps an address-derived name.
+// proved the name when this layout view was written. The registered constructor
+// census now proves OpenContain::onDie; see diemodule-slot0-container-ondie.md.
+// The address-qualified COFF label is retained as an explicit object-symbol
+// implementation view, not an additional retail identity.
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
