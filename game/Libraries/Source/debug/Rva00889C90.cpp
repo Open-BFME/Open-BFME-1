@@ -8,7 +8,7 @@ struct Element {
 	void* val8;
 };
 
-extern void* Rva0088EB90( void*, unsigned int );
+extern void* DebugReAllocMemory( void*, unsigned int );
 
 class Rva00889C90Class
 {
@@ -31,7 +31,7 @@ void Rva00889C90Class::d_00889c90( void* arg1, void* arg2 )
 		{
 			memmove( p, p + 1, (m_size - i - 1) * sizeof(m_data) );
 			m_data = m_data - 1;
-			m_data = (Element*)Rva0088EB90( m_data, m_size * sizeof(Element) );
+			m_data = (Element*)DebugReAllocMemory( m_data, m_size * sizeof(Element) );
 		}
 	}
 }

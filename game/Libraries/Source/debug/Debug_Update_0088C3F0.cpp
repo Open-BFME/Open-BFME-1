@@ -13,7 +13,7 @@ public:
     virtual int Read(char *, int)=0;
 };
 
-extern void *Rva0088EB90(void *, unsigned);
+extern void *DebugReAllocMemory(void *, unsigned);
 
 class Debug
 {
@@ -50,7 +50,7 @@ void Debug::Update(void)
         for (;;)
         {
             if (cur->inputAlloc-cur->inputUsed<64)
-                cur->input=(char *)Rva0088EB90(
+                cur->input=(char *)DebugReAllocMemory(
                     cur->input,(cur->inputAlloc+=64)+1);
             int numChars=cur->io->Read(cur->input+cur->inputUsed,
                                        cur->inputAlloc-cur->inputUsed);

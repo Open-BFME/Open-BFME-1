@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-extern void *Rva0088EB90(void *, unsigned);
+extern void *DebugReAllocMemory(void *, unsigned);
 
 class DebugIOInterface
 {
@@ -52,7 +52,7 @@ int Debug::GetInput(char *buf, int maxchar, bool *hasInput)
         for (;;)
         {
             if (cur->inputAlloc-cur->inputUsed<64)
-                cur->input=(char *)Rva0088EB90(
+                cur->input=(char *)DebugReAllocMemory(
                     cur->input,(cur->inputAlloc+=64)+1);
 
             int numChars=cur->io->Read(cur->input+cur->inputUsed,
