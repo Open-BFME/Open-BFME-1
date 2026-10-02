@@ -50,6 +50,7 @@ struct GeometryRecord
 	int m_second;
 	int m_third;
 	StringBase<char> m_name;
+	~GeometryRecord();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h

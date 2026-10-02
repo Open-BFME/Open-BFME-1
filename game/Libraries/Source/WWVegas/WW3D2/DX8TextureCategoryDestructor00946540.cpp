@@ -142,22 +142,6 @@ private:
 	void *render_task_head;
 };
 
-DX8TextureCategoryClass::DX8TextureCategoryClass(int pass_, TextureClass **texs, ShaderClass shd,
-	VertexMaterialClass *mat, DX8FVFCategoryContainer *container_)
-	: container(container_), shader(shd), material(mat), pass(pass_), render_task_head(0)
-{
-	for (int a = 0; a < 2; ++a)
-	{
-		if (texs[a] != 0)
-			texs[a]->Add_Ref();
-		if (textures[a].Referent != 0)
-			textures[a].Referent->Release_Ref();
-		textures[a].Referent = texs[a];
-	}
-	if (material)
-		material->Add_Ref();
-}
-
 DX8TextureCategoryClass::~DX8TextureCategoryClass()
 {
 	if (TheDX8MeshRenderer)

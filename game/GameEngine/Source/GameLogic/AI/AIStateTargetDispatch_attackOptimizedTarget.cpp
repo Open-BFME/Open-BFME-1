@@ -24,7 +24,6 @@ struct Coord2D
 {
 	float x;
 	float y;
-	__forceinline Coord2D(float xValue, float yValue) : x(xValue), y(yValue) {}
 	__forceinline friend float operator *(const Coord2D &left, const Coord2D &right)
 	{
 		return left.x * right.x + left.y * right.y;
@@ -149,7 +148,9 @@ void AIStateTargetDispatch::attackOptimizedTarget(Thing *target)
 	dir.y = selfDir->y;
 	dir.z = selfDir->z;
 	const Coord3D *targetDir = target->getUnitDirectionVector2D();
-	Coord2D targetDir2(targetDir->x, targetDir->y);
+	Coord2D targetDir2;
+	targetDir2.x = targetDir->x;
+	targetDir2.y = targetDir->y;
 	if (targetDir2 * *reinterpret_cast<const Coord2D *>(&dir) <= 0.0f)
 		return;
 	attackOrdinaryTarget(target);

@@ -415,37 +415,6 @@ void PropagandaTowerBehavior::effectLogic( Object *obj, Bool giving,
 }  // end effectLogic
 
 // ------------------------------------------------------------------------------------------------
-/** Remove all influence from objects we've given bonuses to */
-// ------------------------------------------------------------------------------------------------
-// ?removeAllInfluence@PropagandaTowerBehavior@@ present-unmatched
-void PropagandaTowerBehavior::removeAllInfluence( void )
-{
-	ObjectTracker *o;
-
-	// go through all objects we've given bonuses to and remove them
-	Object *obj;
-	for( o = m_insideList; o; o = o->next )
-	{
-		
-		obj = TheGameLogic->findObjectByID( o->objectID );
-		if( obj )
-			effectLogic( obj, FALSE, getPropagandaTowerBehaviorModuleData() );
-
-	}  // end for
-
-	// delete the list of objects under our influence
-	while( m_insideList )
-	{
-
-		o = m_insideList->next;
-		m_insideList->deleteInstance();
-		m_insideList = o;
-
-	}  // end while
-
-}  // end removeAllInfluence
-
-// ------------------------------------------------------------------------------------------------
 /** Do a scan */
 // ------------------------------------------------------------------------------------------------
 // ?doScan@PropagandaTowerBehavior@@ present-unmatched

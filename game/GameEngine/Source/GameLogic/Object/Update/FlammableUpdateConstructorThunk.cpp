@@ -62,6 +62,7 @@ class FlammableUpdate : public UpdateModule, public DamageModuleInterface
 {
 public:
     FlammableUpdate(Thing *, const ModuleData *);
+    virtual ~FlammableUpdate();
 
     // 0x00292FA0, 13 bytes: row-less unclaimed-boundary candidate. Tail-jmps
     // into the already-landed ?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ
