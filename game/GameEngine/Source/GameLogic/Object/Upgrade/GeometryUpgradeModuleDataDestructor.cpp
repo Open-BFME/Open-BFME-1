@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ lift of the ModuleData destructor.
 
-class GeometryUpgradeModuleDataMemberA
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~GeometryUpgradeModuleDataMemberA();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 
 private:
 	unsigned char m_data[0x68];
@@ -35,7 +35,7 @@ class __declspec(novtable) GeometryUpgradeModuleDataIntermediateBase
 	: public GeometryUpgradeModuleDataPrimaryBase
 {
 private:
-	GeometryUpgradeModuleDataMemberA m_base;
+	AttributeModifierAuraUpdateModuleDataMemberD m_base;
 };
 
 // Named factory 0x0011DFA0 passes ILT 0x0002A4C3 -> 0x002D5580.

@@ -38,10 +38,10 @@ struct Gen_p8pod { int a[2]; };
 
 // Member at 0x08 of the intermediate base, destroyed out-of-line at 0x00129C80.
 // Identity unknown.
-class CritterEmitterUpdateModuleDataInner
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~CritterEmitterUpdateModuleDataInner();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 
 private:
 	unsigned char m_unreconstructed_00[0x9c];			///< 0x08 out to 0xA4
@@ -75,7 +75,7 @@ public:
 	virtual ~CritterEmitterUpdateModuleDataBase() {}
 
 private:
-	CritterEmitterUpdateModuleDataInner m_unreconstructed_08;	///< retail this+0x008
+	AttributeModifierAuraUpdateModuleDataMemberD m_unreconstructed_08;	///< retail this+0x008
 };
 
 class __declspec(novtable) CritterEmitterUpdateModuleData : public CritterEmitterUpdateModuleDataBase

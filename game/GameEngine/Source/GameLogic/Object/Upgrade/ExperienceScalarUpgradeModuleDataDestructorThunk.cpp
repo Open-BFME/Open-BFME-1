@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: ExperienceScalarUpgradeModuleData dtor. SEH member@+0x8 pin 0x1B97D.
 
-class UnpauseSpecialPowerUpgradeModuleDataMember
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~UnpauseSpecialPowerUpgradeModuleDataMember();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 };
 
 class ExperienceScalarUpgradeModuleDataBase
@@ -20,7 +20,7 @@ class __declspec(novtable) ExperienceScalarUpgradeModuleData : public Experience
 public:
 	virtual ~ExperienceScalarUpgradeModuleData();
 private:
-	UnpauseSpecialPowerUpgradeModuleDataMember m_member;
+	AttributeModifierAuraUpdateModuleDataMemberD m_member;
 };
 
 // ??1ExperienceScalarUpgradeModuleData@@UAE@XZ

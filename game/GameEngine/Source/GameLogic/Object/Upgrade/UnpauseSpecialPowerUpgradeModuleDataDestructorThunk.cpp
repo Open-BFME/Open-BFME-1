@@ -4,10 +4,10 @@
 // runs the inlined base dtor (base vtable store) on the normal and unwind
 // paths. The derived class emits no vtable store of its own.
 
-class UnpauseSpecialPowerUpgradeModuleDataMember
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-    ~UnpauseSpecialPowerUpgradeModuleDataMember();
+    ~AttributeModifierAuraUpdateModuleDataMemberD();
 };
 
 class UnpauseSpecialPowerUpgradeModuleDataBase
@@ -25,7 +25,7 @@ public:
     virtual ~UnpauseSpecialPowerUpgradeModuleData();
 
 private:
-    UnpauseSpecialPowerUpgradeModuleDataMember m_08;
+    AttributeModifierAuraUpdateModuleDataMemberD m_08;
 };
 
 // ??1UnpauseSpecialPowerUpgradeModuleData@@UAE@XZ

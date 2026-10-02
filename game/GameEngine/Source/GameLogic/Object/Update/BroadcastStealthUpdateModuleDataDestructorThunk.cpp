@@ -9,10 +9,10 @@ private:
 	unsigned char m_pad[4];
 };
 
-class BroadcastStealthUpdateModuleDataMemberB
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	~BroadcastStealthUpdateModuleDataMemberB();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 private:
 	unsigned char m_pad[4];
 };
@@ -31,7 +31,7 @@ public:
 	virtual ~BroadcastStealthUpdateModuleData();
 private:
 	BroadcastStealthUpdateModuleDataMemberA m_a;
-	BroadcastStealthUpdateModuleDataMemberB m_b;
+	AttributeModifierAuraUpdateModuleDataMemberD m_b;
 };
 
 // ??1BroadcastStealthUpdateModuleData@@UAE@XZ

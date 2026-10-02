@@ -95,13 +95,23 @@ R4_VPTR_TAIL_ELEM( Gen000FF700, 0xC )
 R4_VPTR_TAIL_ELEM( Gen000FF7D0, 4 )
 R4_VPTR_TAIL_ELEM( Gen00887940, 4 )
 R4_VPTR_TAIL_ELEM( Gen000658A0, 4 )
-R4_VPTR_TAIL_ELEM( Gen00129C80, 4 )
+
+// Spelled with its defining name, not after its address: this destructor is the
+// matched body at 0x00129C80 (functions.csv), and retail's ILT slot for the
+// call at this+0x04 is 0x001B97D, which that matched row pins.
+// ??1AttributeModifierAuraUpdateModuleDataMemberD@@QAE@XZ
+struct AttributeModifierAuraUpdateModuleDataMemberD
+{
+	char m_body[ 4 ];
+	AttributeModifierAuraUpdateModuleDataMemberD();
+	~AttributeModifierAuraUpdateModuleDataMemberD();
+};
 
 R4_VPTR_TAIL_FLAT( Rva000FFCA0, 0x28, Gen000FF700, Gen000FF7D0 )
 R4_VPTR_TAIL_FLAT( Rva00126DD0, 4, Gen00887940, Gen00887940 )
 R4_VPTR_TAIL_FLAT_TIGHT( Rva001DC400, Gen00887940, Gen000658A0 )
 R4_VPTR_TAIL_FLAT( Rva0033B2A0, 8, Gen00887940, Gen00887940 )
 
-R4_VPTR_TAIL_NESTED( Rva0012B8E0, Gen00129C80, 0x64, Gen00887940 )
-R4_VPTR_TAIL_NESTED( Rva0012BA10, Gen00129C80, 0x64, Gen00887940 )
-R4_VPTR_TAIL_NESTED( Rva002D79B0, Gen00129C80, 0x6C, Gen00887940 )
+R4_VPTR_TAIL_NESTED( Rva0012B8E0, AttributeModifierAuraUpdateModuleDataMemberD, 0x64, Gen00887940 )
+R4_VPTR_TAIL_NESTED( Rva0012BA10, AttributeModifierAuraUpdateModuleDataMemberD, 0x64, Gen00887940 )
+R4_VPTR_TAIL_NESTED( Rva002D79B0, AttributeModifierAuraUpdateModuleDataMemberD, 0x6C, Gen00887940 )
