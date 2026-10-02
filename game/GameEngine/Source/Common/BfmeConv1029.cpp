@@ -84,7 +84,7 @@ void BfmeD1029::bfmeGo1029D(int i, char v)
 	m_bfmeBuf[i] = v;
 }
 
-void bfmeCopy1029(char *d, int n, char *s);
+void Rva007E8640Copy(char *dst, unsigned int dstSize, const char *src);
 
 class BfmeE1029
 {
@@ -98,6 +98,6 @@ public:
 
 void BfmeE1029::bfmeGo1029E(char *s, int n)
 {
-	bfmeCopy1029(m_bfmeBuf, 0x1c, s);
+	Rva007E8640Copy(m_bfmeBuf, 0x1c, s);
 	m_bfmeN = n;
 }
