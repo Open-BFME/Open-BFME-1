@@ -62,10 +62,10 @@ public:
 
 // The release body at 0x003CC890, reached through its incremental-link thunk.
 // Declared only: retail encodes a `call`, so it was not visible here.
-class Gen00036A9D
+class Rva003CC890
 {
 public:
-	void call();
+	void release();
 };
 
 class Rva003CBA90
@@ -127,7 +127,7 @@ void *Rva003CBA90::releaseSlots()
 
 void Rva003CBA90::repoint( void *owned, int extra )
 {
-	( (Gen00036A9D *)this )->call();
+	( (Rva003CC890 *)this )->release();
 
 	m_owned = owned;
 	m_extra = extra;
