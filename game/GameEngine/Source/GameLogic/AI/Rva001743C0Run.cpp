@@ -17,7 +17,7 @@ private:
 	_STL::bitset<320> m_bits;
 };
 
-class BfmeRes920D
+class Rva001CF980Result
 {
 public:
 	DECLARE_BFME_JL_SLOT(0) DECLARE_BFME_JL_SLOT(1) DECLARE_BFME_JL_SLOT(2) DECLARE_BFME_JL_SLOT(3) DECLARE_BFME_JL_SLOT(4) DECLARE_BFME_JL_SLOT(5) DECLARE_BFME_JL_SLOT(6) DECLARE_BFME_JL_SLOT(7) DECLARE_BFME_JL_SLOT(8) DECLARE_BFME_JL_SLOT(9)
@@ -35,17 +35,15 @@ public:
 
 #undef DECLARE_BFME_JL_SLOT
 
-class BfmeX920D
-{
-public:
-	BfmeRes920D *bfmeGet920D();
-};
+#define OBJECT_TU_MEMBERS Rva001CF980Result *queryAt001CF980();
+#include "../Object/Object.h"
+#undef OBJECT_TU_MEMBERS
 
 class BfmeOwnJL
 {
 public:
 	unsigned char m_bfmeHeadJL[0x10];
-	BfmeX920D *m_bfme10JL;
+	Object *m_bfme10JL;
 };
 
 class BfmeSelfJL
@@ -60,12 +58,12 @@ public:
 int BfmeSelfJL::bfmeRunJL()
 {
 	BfmeOwnJL *a = m_bfme1cJL;
-	BfmeX920D *sub = a->m_bfme10JL;
+	Object *sub = a->m_bfme10JL;
 
 	if (sub == 0)
 		return -2;
 
-	BfmeRes920D *target = sub->bfmeGet920D();
+	Rva001CF980Result *target = sub->queryAt001CF980();
 	if (target == 0)
 		return -2;
 

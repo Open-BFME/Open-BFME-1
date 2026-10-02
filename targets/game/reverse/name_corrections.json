@@ -13348,5 +13348,35 @@
   "after_sha256": "6f64a7b4303f332dde4d28ef9e4974be68aaaff148dbe01c76292d39be7e6830",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv920.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv920.cpp",
+  "old_name": "BfmeRes920D",
+  "new_name": "Rva001CF980Result",
+  "before_sha256": "65965d77a74e3f1116e7f12ca9ca35271fec7071faba9f2fb982410d4fcdc67a",
+  "after_sha256": "bb0539dfb7f31a7e6440013fe617e4c8b9698102727001afa9844823266a90a9",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Link census: the matched row ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ (functions.csv, 0x001CF980) spells its result type Rva001CF980Result, so the callers' return type must match to link; BfmeRes920D was a stand-in for the same opaque result. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva001743C0Run.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva001743C0Run.cpp",
+  "old_name": "BfmeRes920D",
+  "new_name": "Rva001CF980Result",
+  "before_sha256": "12ab61ac398940e69fbe4fc155c3e4cafbebcaba6bcb407bc9a786841140680a",
+  "after_sha256": "17efee08db5d3573c167766c43ca9b36b469483735666ecad46ad2299a0c3c53",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Link census: the matched row ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ (functions.csv, 0x001CF980) spells its result type Rva001CF980Result, so the callers' return type must match to link; BfmeRes920D was a stand-in for the same opaque result. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva0026FBE0StateSelection.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva0026FBE0StateSelection.cpp",
+  "old_name": "BfmeRes920D",
+  "new_name": "Rva001CF980Result",
+  "before_sha256": "502c359612f106d77c768a7fd15d74ef86f20b84ea16a7803568e2fd7d78c45e",
+  "after_sha256": "bd3a3cebf2768b5f7e6be2eb4411fb302d440e3268a03263af905f400d7d8dfb",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Link census: the matched row ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ (functions.csv, 0x001CF980) spells its result type Rva001CF980Result, so the callers' return type must match to link; BfmeRes920D was a stand-in for the same opaque result. Declaration-only, bytes unchanged."
  }
 ]

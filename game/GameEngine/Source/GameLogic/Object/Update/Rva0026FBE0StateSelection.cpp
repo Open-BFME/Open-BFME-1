@@ -1,12 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Opaque owner at 0x0026FBE0: map five selector values to state keys and
 // durations. Read the host anew between dispatches: callbacks can mutate it.
-class BfmeRes920D;
-class BfmeX920D
-{
-public:
-	BfmeRes920D *bfmeGet920D();
-};
+class Rva001CF980Result;
+#define OBJECT_TU_MEMBERS Rva001CF980Result *queryAt001CF980();
+#include "../Object.h"
+#undef OBJECT_TU_MEMBERS
 class Rva0016AD50
 {
 public:
@@ -23,7 +21,7 @@ class Rva0026FBE0Owner
 public:
 	void selectState(int selector, int argument);
 	char m_pad0[8];
-	BfmeX920D *m_08;
+	Object *m_08;
 	char m_pad30[0x30 - 0x08 - 4];
 	void *m_host;
 };
@@ -50,10 +48,10 @@ void Rva0026FBE0Owner::selectState(int selector, int argument)
 	int currentKey = slot ? *(int *)((char *)slot + 4) : 0xf423f;
 	if (currentKey == key)
 		return;
-	BfmeX920D *owner = m_08;
+	Object *owner = m_08;
 	if (!owner)
 		return;
-	BfmeRes920D *result = owner->bfmeGet920D();
+	Rva001CF980Result *result = owner->queryAt001CF980();
 	if (result)
 	{
 		void **vtable = *(void ***)result;

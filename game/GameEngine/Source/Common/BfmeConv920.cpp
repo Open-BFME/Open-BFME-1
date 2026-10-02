@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-class BfmeRes920D
+class Rva001CF980Result
 {
 public:
 	virtual void bfmeSlot920D00();
@@ -101,16 +101,14 @@ public:
 	virtual void bfmeVirt920D();
 };
 
-class BfmeX920D
-{
-public:
-	BfmeRes920D *bfmeGet920D();
-};
+#define OBJECT_TU_MEMBERS Rva001CF980Result *queryAt001CF980();
+#include "../GameLogic/Object/Object.h"
+#undef OBJECT_TU_MEMBERS
 
 struct BfmeSub920D
 {
 	char m_bfmePad[0x10];
-	BfmeX920D *m_bfmeX;
+	Object *m_bfmeX;
 };
 
 class BfmeThing920D
@@ -123,10 +121,10 @@ public:
 
 void BfmeThing920D::bfmeGo920D(void *a)
 {
-	BfmeX920D *x = m_bfmeSub->m_bfmeX;
+	Object *x = m_bfmeSub->m_bfmeX;
 	if (!x)
 		return;
-	BfmeRes920D *r = x->bfmeGet920D();
+	Rva001CF980Result *r = x->queryAt001CF980();
 	if (!r)
 		return;
 	r->bfmeVirt920D();
