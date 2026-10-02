@@ -577,19 +577,9 @@ void AudioEventRTS::setAudioPriority( AudioPriority newPriority )
 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Audio/AudioEventRTSGetVolumeThunk.cpp
-// ?getVolume@AudioEventRTS@@ present-unmatched
-Real AudioEventRTS::getVolume( void ) const
-{
-	if (m_volume == -1.0f) {
-		if (m_eventInfo) {
-			return m_eventInfo->m_volume;
-		}
-		return 0.5;
-	}
-	
-	return m_volume;
-}
+// BFME getVolume is owned by AudioEventRTSGetPitchShiftThunk.cpp at
+// RVA 0x000B4960. Its owner audibility checks and zero fallback differ from
+// the unverified ZH getter previously emitted here.
 
 //-------------------------------------------------------------------------------------------------
 void AudioEventRTS::setVolume( Real vol )
