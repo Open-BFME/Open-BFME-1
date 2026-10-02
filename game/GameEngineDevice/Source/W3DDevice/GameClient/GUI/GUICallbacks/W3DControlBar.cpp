@@ -65,38 +65,6 @@ void W3DCameoMovieDraw( GameWindow *window, WinInstanceData *instData )
 
 
 //-------------------------------------------------------------------------------------------------
-void W3DLeftHUDDraw( GameWindow *window, WinInstanceData *instData )
-{
-	// draw the default stuff
-//
-	Player *player = ThePlayerList->getLocalPlayer();
-	// draw video buffer
-	VideoBuffer *video = TheInGameUI->videoBuffer();
-	if ( video )
-	{
-		ICoord2D pos, size;
-		window->winGetScreenPosition( &pos.x, &pos.y );
-		window->winGetSize( &size.x, &size.y );
-
-		TheDisplay->drawVideoBuffer( video, pos.x, pos.y, pos.x + size.x, pos.y + size.y );
-	}
-	else if( TheRadar->isRadarForced() || ( TheRadar->isRadarHidden() == false && player->hasRadar() ) )
-	{
-		ICoord2D pos, size;
-		//W3DGameWinDefaultDraw( window, instData );
-		// window position and size on the display
-		window->winGetScreenPosition( &pos.x, &pos.y );
-		window->winGetSize( &size.x, &size.y );
-		//TheDisplay->drawOpenRect(pos.x, pos.y, size.x,size.y, 1,GameMakeColor(100,100,255,255));
-		// draw the radar on the screen now
-		TheRadar->draw( pos.x + 1, pos.y + 1, size.x - 2, size.y - 2 );
-
-	}  // end else if
-
-
-}  // end W3DLeftHUDDraw
-
-//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ?W3DRightHUDDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 // BFME's GameWindow carries a per-window draw-callback pointer and an
