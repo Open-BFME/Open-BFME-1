@@ -1,9 +1,5 @@
 // cl: /O2
 
-bool Rva00220230Value()
-{
-    return true;
-}
 
 class Rva00220340Owner
 {

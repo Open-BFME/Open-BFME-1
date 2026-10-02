@@ -196,11 +196,6 @@ void *Rva0021B850::get( void )
 }
 
 
-// ?Rva0021B870@@YA_NXZ
-bool __cdecl Rva0021B870( void )
-{
-	return false;
-}
 
 // ?Rva0021B890@@YA_NXZ
 bool __cdecl Rva0021B890( void )

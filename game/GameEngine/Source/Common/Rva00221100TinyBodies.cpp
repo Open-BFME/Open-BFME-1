@@ -81,17 +81,6 @@ int Rva00221AE0Dword::method() const
 	return m_value;
 }
 
-class Rva00226450Bool
-{
-public:
-	bool method() const;
-};
-
-// ?method@Rva00226450Bool@@QBE_NXZ
-bool Rva00226450Bool::method() const
-{
-	return false;
-}
 
 class Rva0022A060Opaque
 {
@@ -193,17 +182,6 @@ int Rva0022EE60Dword::method() const
 	return m_value;
 }
 
-class Rva0022EF40Opaque
-{
-public:
-	bool method() const;
-};
-
-// ?method@Rva0022EF40Opaque@@QBE_NXZ
-bool Rva0022EF40Opaque::method() const
-{
-	return false;
-}
 
 class Rva0022EF50Opaque
 {
