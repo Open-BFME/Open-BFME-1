@@ -75,7 +75,7 @@ extern void j_0002784a();
 class TerrainLogic
 {
 public:
-	int countTrees(PolygonTrigger *trigger)
+	int countTreesViaThunk(PolygonTrigger *trigger)
 	{
 		typedef int (TerrainLogic::*Function)(PolygonTrigger *);
 		union { void (*raw)(void); Function member; } fn;
@@ -119,7 +119,7 @@ Bool Rva003248E0Condition::evaluate(Condition *pCondition,
 		}
 	}
 
-	int count = TheTerrainLogic->countTrees(pTrig);
+	int count = TheTerrainLogic->countTreesViaThunk(pTrig);
 	Bool comparison = false;
 	switch (pComparisonParm->getInt()) {
 	case 0:
