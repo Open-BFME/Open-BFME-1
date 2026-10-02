@@ -78,7 +78,7 @@ public:
 	unsigned int m_flags;
 };
 
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell, const ICoord2D *cellPosition);
@@ -121,9 +121,9 @@ void PathfindCell::setTypeAsObstacle(Object *obstacle, Bool isFence,
 		m_packed = (m_packed & ~3u) | 4u;
 		if (m_info == 0)
 		{
-			if (g_bfmePathfindFreeList == 0)
+			if (g_rva012F1094 == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &cellPosition);
+			m_info = bfmeAcquirePathfindCellInfo(reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094), this, &cellPosition);
 		}
 		else
 			m_info->m_next = 0;

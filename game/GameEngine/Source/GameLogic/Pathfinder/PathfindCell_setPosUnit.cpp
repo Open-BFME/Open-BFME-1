@@ -30,7 +30,7 @@ public:
 	unsigned int m_posUnitID;
 };
 
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell,
@@ -70,9 +70,9 @@ void PathfindCell::setPosUnit(unsigned int positionUnitID, const ICoord2D &cellP
 	{
 		if (m_info == 0)
 		{
-			if (g_bfmePathfindFreeList == 0)
+			if (g_rva012F1094 == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &cellPosition);
+			m_info = bfmeAcquirePathfindCellInfo(reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094), this, &cellPosition);
 		}
 		if (m_info->m_goalUnitID != 0 && m_info->m_goalUnitID == m_info->m_posUnitID)
 			return;

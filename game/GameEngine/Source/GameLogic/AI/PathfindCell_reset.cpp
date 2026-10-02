@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-extern "C" unsigned char g_pathfindCellInfoPool[];
+extern void *g_rva012F1094;
 
 class PathfindCellInfo
 {
@@ -25,7 +25,7 @@ void PathfindCell::reset()
 {
 	PathfindCellInfo *cellInfoRecord = m_info;
 	if (cellInfoRecord != 0) {
-		cellInfoRecord->releaseToPool(g_pathfindCellInfoPool);
+		cellInfoRecord->releaseToPool(&g_rva012F1094);
 		m_info = 0;
 	}
 

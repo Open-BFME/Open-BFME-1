@@ -11,7 +11,7 @@ public:
  void *m_prevOpen; unsigned short m_totalCost,m_costSoFar;
  char pad14[16]; unsigned m_flags;
 };
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 // Retail global 0x012F1060 is a TU-local counter. Internal linkage permits
 // the same non-aliasing load/store schedule as retail.
 static unsigned g_rva012F1060;
@@ -84,8 +84,8 @@ int ExamineCellsStruct::cellCallback(PathfindCell *from,PathfindCell *to,int to_
   unsigned newCostSoFar=from->m_info->m_costSoFar+(((unsigned char)(to->m_packed>>24)&1)?2.5f:5.0f);
   if ((to->m_packed&7)==2) return 1;
   if (!to->m_info) {
-   if (!g_bfmePathfindFreeList) PathfindCellInfo::allocateCellInfos();
-   to->m_info=bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList,to,&newCellCoord);
+   if (!g_rva012F1094) PathfindCellInfo::allocateCellInfos();
+   to->m_info=bfmeAcquirePathfindCellInfo(reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094),to,&newCellCoord);
   } else to->m_info->m_prevOpen=0;
   to->m_info->m_flags &= ~1u;
   int costRemaining=thePathfinder->rva003db900(to,goalCell);

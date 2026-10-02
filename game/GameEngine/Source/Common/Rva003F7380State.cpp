@@ -1,6 +1,6 @@
 // Open-BFME5: clean C++ conversion of the state reset at 0x003F7380.
 
-extern int TheMixFileInfoPool;
+extern void *g_rva012F1094;
 
 class MixFileInfoBuffer
 {
@@ -56,7 +56,7 @@ void Rva003F7380State::finishReset()
 	if ((flags & 7) != 4 && (flags & 0x38) == 0 &&
 		(flags & 0x80000) == 0 && m_node != 0 &&
 		m_node->m_link == 0 && (m_node->m_nodeFlags & 0x18) == 0) {
-		reinterpret_cast<MixFileInfoBuffer *>(m_node)->releaseInto(&TheMixFileInfoPool);
+		reinterpret_cast<MixFileInfoBuffer *>(m_node)->releaseInto(&g_rva012F1094);
 		m_node = 0;
 	}
 }

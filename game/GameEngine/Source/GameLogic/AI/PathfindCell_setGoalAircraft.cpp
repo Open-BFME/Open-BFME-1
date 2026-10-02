@@ -31,7 +31,7 @@ public:
 	unsigned int m_goalAircraftID;
 };
 
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell,
@@ -64,9 +64,9 @@ void PathfindCell::setGoalAircraft(unsigned int goalAircraftID, const ICoord2D &
 	{
 		if (m_info == 0)
 		{
-			if (g_bfmePathfindFreeList == 0)
+			if (g_rva012F1094 == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &cellPosition);
+			m_info = bfmeAcquirePathfindCellInfo(reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094), this, &cellPosition);
 		}
 		m_info->m_goalAircraftID = goalAircraftID;
 		m_packed |= 0x80000u;

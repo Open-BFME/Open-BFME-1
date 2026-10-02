@@ -40,7 +40,7 @@ public:
 	unsigned int m_flags;
 };
 
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell,
@@ -190,9 +190,9 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &startCell,
 			newCellCoord.y = y;
 			if (currentCell->m_info == 0)
 			{
-				if (g_bfmePathfindFreeList == 0)
+				if (g_rva012F1094 == 0)
 					PathfindCellInfo::allocateCellInfos();
-				currentCell->m_info = bfmeAcquirePathfindCellInfo( &g_bfmePathfindFreeList, currentCell, &newCellCoord );
+				currentCell->m_info = bfmeAcquirePathfindCellInfo( reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094), currentCell, &newCellCoord );
 			}
 			else
 			{

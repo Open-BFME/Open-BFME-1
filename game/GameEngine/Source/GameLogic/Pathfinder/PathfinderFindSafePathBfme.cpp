@@ -52,7 +52,7 @@ struct PathfindCellInfo
 	unsigned char m_pad10[0x28 - 0x10];
 	PathfindCell *m_cell;
 };
-extern PathfindCellInfo *g_bfmePathfindFreeList;
+extern void *g_rva012F1094;
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos);
 
@@ -67,9 +67,9 @@ public:
 	{
 		if (m_info == 0)
 		{
-			if (g_bfmePathfindFreeList == 0)
+			if (g_rva012F1094 == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, pos);
+			m_info = bfmeAcquirePathfindCellInfo(reinterpret_cast<PathfindCellInfo **>(&g_rva012F1094), this, pos);
 		}
 		else
 		{

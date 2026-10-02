@@ -10,7 +10,7 @@ public:
 	void releaseInto( void *pool );
 };
 
-extern int TheMixFileInfoPool;				// 0x012F1094
+extern void *g_rva012F1094;				// 0x012F1094
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 class MixFileCreator
@@ -29,5 +29,5 @@ public:
 MixFileCreator::FileInfoStruct::~FileInfoStruct()
 {
 	if( m_buffer )
-		m_buffer->releaseInto( &TheMixFileInfoPool );
+		m_buffer->releaseInto( &g_rva012F1094 );
 }
