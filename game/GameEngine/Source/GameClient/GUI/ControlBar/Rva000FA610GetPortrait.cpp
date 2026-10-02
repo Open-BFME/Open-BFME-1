@@ -50,7 +50,7 @@ public:
 class ScienceStore
 {
 public:
-	ScienceType getScienceFromInternalName(const AsciiString &name);
+	ScienceType getScienceFromInternalName(const AsciiString &name) const;
 };
 
 // Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A: the
@@ -71,10 +71,12 @@ public:
 
 class ThingTemplate;
 
-class ThingFactory
+class ThingFactory;
+
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate(const AsciiString &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 class Rva00016FAE
@@ -112,10 +114,10 @@ public:
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
+static inline GameLogicPortraitShim *TheGameLogicView() { return (GameLogicPortraitShim *)TheGameLogic; }
 extern ScienceStore *TheScienceStore;
 extern ImageCollection *TheMappedImageCollection;
 extern ThingFactory *TheThingFactory;
-#define TheGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 
 class Rva000FA610
 {
@@ -176,7 +178,7 @@ const Image *Rva000FA610::getPortrait(Player *player)
 	if (m_flag)
 		return m_prefix.image;
 
-	if (TheGameLogic->isInMultiplayerOrSkirmishGame())
+	if (TheGameLogicView()->isInMultiplayerOrSkirmishGame())
 	{
 		static AsciiString gondor("GondorGandalf");
 		if (m_name.compare(gondor) == 0)
@@ -199,7 +201,7 @@ const Image *Rva000FA610::getPortrait(Player *player)
 		}
 	}
 
-	ThingTemplate *tmpl = TheThingFactory->findTemplate(m_name);
+	const ThingTemplate *tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(m_name);
 	if (tmpl != 0)
 	{
 		ThingTemplatePortraitShim *portrait = (ThingTemplatePortraitShim *)tmpl;
