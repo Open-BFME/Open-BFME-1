@@ -8,8 +8,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
+// Retail vtable 0x010EC768 is Rva003B7740's; it is defined by
+// Rva003B7740ReleaseDtor.cpp, so name the defining symbol directly.
 extern "C" int __identifier("??_7Rva003B7740@@6B@");
-#define R2Data010EC768 __identifier("??_7Rva003B7740@@6B@")
 
 struct P6Elem003B1A80
 {
@@ -21,7 +22,7 @@ struct P6Elem003B1A80
 	P6Elem003B1A80();
 	P6Elem003B1A80(const P6Elem003B1A80 &source)
 	{
-		m_at00 = &R2Data010EC768;
+		m_at00 = &__identifier("??_7Rva003B7740@@6B@");
 		m_at04 = source.m_at04;
 		m_at08 = source.m_at08;
 		if (m_at08 != 0)

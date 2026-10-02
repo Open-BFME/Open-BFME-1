@@ -4,7 +4,9 @@
 
 extern int R2Data010EC760;
 extern int R2Data010EC764;
-extern int R2Data010EC768;
+// Retail vtable 0x010EC768 belongs to Rva003B7740 and is defined by
+// Rva003B7740ReleaseDtor.cpp, so name the defining symbol.
+extern "C" int __identifier("??_7Rva003B7740@@6B@");
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long *addend);
 
@@ -50,7 +52,7 @@ void gen003A85C0( Elem16 * slot, const Elem16 * source )
 	if ( slot == 0 )
 		return;
 
-	slot->m_at00 = &R2Data010EC768;
+	slot->m_at00 = &__identifier("??_7Rva003B7740@@6B@");
 	slot->m_at04 = source->m_at04;
 	slot->m_at08 = source->m_at08;
 	if ( slot->m_at08 != 0 )

@@ -2,7 +2,9 @@
 // retained handle; keeping the increment after the pointer store reproduces
 // the retail constructor's null branch and instruction order.
 
-extern int R2Data010EC768;
+// Retail vtable 0x010EC768 belongs to Rva003B7740 and is defined by
+// Rva003B7740ReleaseDtor.cpp, so name the defining symbol.
+extern "C" int __identifier("??_7Rva003B7740@@6B@");
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long *addend);
 
@@ -19,7 +21,7 @@ public:
 
 Rva003A6FF0::Rva003A6FF0( const Rva003A6FF0 & source )
 {
-	m_at00 = &R2Data010EC768;
+	m_at00 = &__identifier("??_7Rva003B7740@@6B@");
 	m_at04 = source.m_at04;
 	m_at08 = source.m_at08;
 	if ( m_at08 != 0 )
