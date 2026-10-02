@@ -65,6 +65,7 @@ public:
 	void *bfmeGo1050C(int a, int b, int c, int d, int e);
 	void *bfmeGo1050D(int a, int b, int c, int d);
 	void bfmeGo009F26D0(int a, int b, int c, int d);
+	void *bfmeGo009F2680(int a, int b, int c);
 
 	char m_bfmePad[0xc];
 	BfmeP1050 *m_bfmeP;
@@ -100,6 +101,15 @@ void *BfmeC1050::bfmeGo1050D(int a, int b, int c, int d)
 void BfmeC1050::bfmeGo009F26D0(int a, int b, int c, int d)
 {
 	m_bfmeP->bfmeFwd1050(a, c, b, d, 0);
+}
+
+// retail 0x009F2680 (30 bytes), directly before 0x009F26A0 and unclaimed until
+// now: three stack args and ret 0xC, the same inner at +0xC and callee
+// 0x009F5C00 with zeros in the third and fifth slots; EAX is untouched after
+// the call.  16-aligned after int3 padding, int3 after the ret, no callers.
+void *BfmeC1050::bfmeGo009F2680(int a, int b, int c)
+{
+	return m_bfmeP->bfmeFwd1050(a, b, 0, c, 0);
 }
 
 extern "C" void *bfmeVft1050F[];
