@@ -1,16 +1,13 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 extern "C" unsigned strlen(const char *s);
 #pragma intrinsic(strlen)
 
-class BfmeStrVMZ
-{
-public:
-	void bfmeReleaseVMZ();
-	void bfmeSetVMZ(const char *s, int n);
-};
+class BfmeStrVMZ;
 
-extern char *(__cdecl *g_bfmeStrStrVMZ)(const char *a, const char *b);
+extern "C" __declspec(dllimport) char *__cdecl strstr(const char *a, const char *b);
 
 char bfmeGetParamVMZ(const char *hay, const char *key, BfmeStrVMZ *out)
 {
@@ -19,7 +16,7 @@ char bfmeGetParamVMZ(const char *hay, const char *key, BfmeStrVMZ *out)
 	if (key == 0 || *key == 0)
 		return 0;
 
-	const char *p = g_bfmeStrStrVMZ(hay, key);
+	const char *p = strstr(hay, key);
 
 	if (p == 0)
 		return 0;
@@ -37,9 +34,9 @@ char bfmeGetParamVMZ(const char *hay, const char *key, BfmeStrVMZ *out)
 		++e;
 	if (e == p)
 	{
-		out->bfmeReleaseVMZ();
+		((StringBase<char> *)out)->clear();
 		return 1;
 	}
-	out->bfmeSetVMZ(p, e - p);
+	((StringBase<char> *)out)->set(p, e - p);
 	return 1;
 }
