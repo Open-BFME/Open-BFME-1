@@ -30,7 +30,7 @@ private:
 	Header *m_bfmeHeader;
 
 public:
-	int compare(const StringBase<T> &other) const
+	int bfmeCompareS4(const StringBase<T> &other) const
 	{
 		const int length = other.m_bfmeHeader ? other.m_bfmeHeader->m_bfmeLength : 0;
 		const char *data = other.m_bfmeHeader ? (const char *)&other.m_bfmeHeader->m_bfmeData[0] : "";
@@ -69,10 +69,10 @@ struct S4Cmp002EB8E0
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem20 &left,
-		const S4SortElem20 &right) const
+	template <class Left, class Right>
+	__forceinline bool operator()(const Left &left, const Right &right) const
 	{
-		return left.m_bfmeName.compare(right.m_bfmeName) < 0;
+		return left.m_bfmeName.bfmeCompareS4(right.m_bfmeName) < 0;
 	}
 };
 

@@ -15,7 +15,6 @@ struct Coord3D
 	float x;
 	float y;
 	float z;
-	void set(float a, float b, float c) { x=a; y=b; z=c; }
 };
 
 struct Rva0087DC00Vec
@@ -48,7 +47,7 @@ public:
 
 class View;
 extern View *TheTacticalView;
-#define TheTacticalView ((Rva001C0010View *)TheTacticalView)
+static inline Rva001C0010View *TheTacticalViewView() { return (Rva001C0010View *)TheTacticalView; }
 
 class Rva00027BC9Object
 {
@@ -80,13 +79,15 @@ static __forceinline void geometryPosition001C0010(Rva0087DC00 *source, const Co
 	result.Y = transform[6]*vec.z + transform[5]*vec.y + transform[4]*vec.x + transform[7];
 	result.Z = transform[10]*vec.z + transform[9]*vec.y + transform[8]*vec.x + transform[11];
 
-	out->set(result.X, result.Y, result.Z);
+	out->x = result.X;
+	out->y = result.Y;
+	out->z = result.Z;
 
-	TheTacticalView->drawMarker001C0010Slot30( out, 3.0f, 0xff00ff77, 0 );
-	TheTacticalView->drawMarker001C0010Slot30( out, 6.0f, 0xff00ff77, 0 );
-	TheTacticalView->drawMarker001C0010Slot30( out, 9.0f, 0xff00ff77, 0 );
-	TheTacticalView->drawMarker001C0010Slot30( out, 12.0f, 0xff00ff77, 0 );
-	TheTacticalView->drawMarker001C0010Slot30( out, 15.0f, 0xff00ff77, 0 );
+	TheTacticalViewView()->drawMarker001C0010Slot30( out, 3.0f, 0xff00ff77, 0 );
+	TheTacticalViewView()->drawMarker001C0010Slot30( out, 6.0f, 0xff00ff77, 0 );
+	TheTacticalViewView()->drawMarker001C0010Slot30( out, 9.0f, 0xff00ff77, 0 );
+	TheTacticalViewView()->drawMarker001C0010Slot30( out, 12.0f, 0xff00ff77, 0 );
+	TheTacticalViewView()->drawMarker001C0010Slot30( out, 15.0f, 0xff00ff77, 0 );
 }
 
 void Rva00027BC9Object::getPosition(Coord3D *out)

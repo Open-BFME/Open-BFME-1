@@ -10,7 +10,7 @@ struct Coord3D
 {
 	float x, y, z;
 
-	float length(void) const
+	float bfmeLength(void) const
 	{
 		return (float)sqrt(x * x + y * y + z * z);
 	}
@@ -86,7 +86,7 @@ float Rva0069B040Owner::getAttenuation(AudioEventRTS *event)
 			maxD = info->m_maxDistance;
 		}
 
-		float dist = distance.length();
+		float dist = distance.bfmeLength();
 		if (dist >= maxD)
 			return 0.0f;
 		if (dist > minD && minD < maxD)

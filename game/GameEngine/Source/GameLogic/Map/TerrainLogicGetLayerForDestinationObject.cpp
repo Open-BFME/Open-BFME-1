@@ -15,7 +15,7 @@ enum PathfindLayerEnum
 struct Coord3D
 {
 	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
-	~Coord3D() {}
+	~Coord3D();
 
 	Real x;
 	Real y;

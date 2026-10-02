@@ -13,7 +13,7 @@ struct Coord2D
 	Real x;
 	Real y;
 
-	void normalize()
+	void bfmeNormalizePathVector()
 	{
 		Real length = (Real)sqrt(x * x + y * y);
 		if (length != 0.0f)
@@ -89,7 +89,7 @@ Real Path::bfmeComputeFlightDistToGoal(const Coord3D *currentPosition,
 		Coord2D pathVector;
 		pathVector.x = nextNode->m_position.x - curNode->m_position.x;
 		pathVector.y = nextNode->m_position.y - curNode->m_position.y;
-		pathVector.normalize();
+		pathVector.bfmeNormalizePathVector();
 
 		Real dotProduct = posToGoalVector.x * pathVector.x +
 			posToGoalVector.y * pathVector.y;

@@ -22,7 +22,6 @@ struct Coord2D
 	Real y;
 	Coord2D(void) {}
 	Coord2D(const Coord2D &that) : x(that.x), y(that.y) {}
-	~Coord2D(void) {}
 };
 
 class GameWindow
