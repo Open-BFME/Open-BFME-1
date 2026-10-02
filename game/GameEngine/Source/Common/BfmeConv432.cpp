@@ -1,4 +1,9 @@
-extern "C" unsigned char bfmeTextOneAZB[];
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+// The empty-string arguments retail pushes here are the two exported WWLib
+// statics: retail 0x00584DD0/0x00585530 push 0x01336E50 (AsciiString) and
+// 0x01336E54 (UnicodeString), i.e. the two `TheEmptyString` data objects.
+#include "unicode_string.h"
+
 extern "C" unsigned char bfmeTextTwoAZB[];
 
 void bfmeStopAZB(int what);
@@ -20,7 +25,7 @@ void BfmeThingAZB::bfmeGoAZB(void *what)
 	if (m_bfmeWhat != 0 && m_bfmeOn)
 	{
 		bfmeStopAZB(0);
-		bfmeSendAZB(0, bfmeTextOneAZB, bfmeTextTwoAZB);
+		bfmeSendAZB(0, (void *)&UnicodeString::TheEmptyString, bfmeTextTwoAZB);
 		m_bfmeWhat = 0;
 		m_bfmeReady = false;
 		m_bfmeOn = false;
@@ -34,7 +39,7 @@ void BfmeThingAZB::bfmeSetAZB(void *what)
 	{
 		m_bfmeOn = true;
 		bfmeStopAZB(0);
-		bfmeSendAZB(0, bfmeTextOneAZB, bfmeTextTwoAZB);
+		bfmeSendAZB(0, (void *)&UnicodeString::TheEmptyString, bfmeTextTwoAZB);
 		m_bfmeWhat = 0;
 		m_bfmeReady = false;
 		m_bfmeOn = false;

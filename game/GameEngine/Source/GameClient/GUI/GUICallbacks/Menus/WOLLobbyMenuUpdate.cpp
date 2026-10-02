@@ -77,7 +77,6 @@ enum {
 };
 enum { PEER_ADD, PEER_UPDATE, PEER_REMOVE, PEER_CLEAR };
 extern const AsciiString Rva01336E50EmptyAscii;
-extern const UnicodeString Rva01336E54EmptyUnicode;
 // String prefix, 0x330 extent and payload fields follow the independently
 // matched PeerResponse copy/assignment bodies and aligned retail accesses.
 class PeerResponse {
@@ -201,7 +200,7 @@ public:
   void setColor(int c) { color = c; }
   void setPlayerTemplate(int);
   UnicodeString getName() const;
-  void setState(SlotState, UnicodeString = Rva01336E54EmptyUnicode,
+  void setState(SlotState, UnicodeString = UnicodeString::TheEmptyString,
                 const GameSlotConnectInfo * = &GameSlotConnectInfo());
 };
 class GameSpyGameSlot : public GameSlot {
@@ -978,7 +977,7 @@ void WOLLobbyMenuInit(WindowLayout *layout, void *userData) {
   comboLobbyGroupRooms =
       TheWindowManager->winGetWindowFromId(parent, comboLobbyGroupRoomsID);
 
-  GadgetTextEntrySetText(textEntryChat, Rva01336E54EmptyUnicode);
+  GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
 
   populateGroupRoomListbox_004FA240(comboLobbyGroupRooms);
 
@@ -1052,7 +1051,7 @@ void playerTooltip(GameWindow *window, WinInstanceData *instData,
   GadgetListBoxGetEntryBasedOnXY(window, x, y, row, col);
 
   if (row == -1 || col == -1) {
-    TheMouse->setCursorTooltip(Rva01336E54EmptyUnicode);
+    TheMouse->setCursorTooltip(UnicodeString::TheEmptyString);
     return;
   }
 
@@ -1072,7 +1071,7 @@ void playerTooltip(GameWindow *window, WinInstanceData *instData,
       TheMouse->setCursorTooltip(
           TheGameText->fetch("TOOLTIP:LobbyOfficersClub"));
     } else {
-      TheMouse->setCursorTooltip(Rva01336E54EmptyUnicode);
+      TheMouse->setCursorTooltip(UnicodeString::TheEmptyString);
     }
     return;
   }
@@ -1087,7 +1086,7 @@ void playerTooltip(GameWindow *window, WinInstanceData *instData,
                     TheGameText->fetch(localeIdentifier).str(), playerWins,
                     playerLosses);
 
-  UnicodeString tooltip = Rva01336E54EmptyUnicode;
+  UnicodeString tooltip = UnicodeString::TheEmptyString;
   if (isLocalPlayer) {
     tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
   } else {
