@@ -519,14 +519,6 @@ void W3DShroud::fillBorderShroudData(W3DShroudLevel level, SurfaceClass* pDestSu
 	
 }
 
-/**Set the shroud color within the border area of the map*/
-// ?setBorderShroudLevel@W3DShroud@@ present-unmatched
-void W3DShroud::setBorderShroudLevel(W3DShroudLevel level)
-{
-	m_boderShroudLevel = level;
-	m_clearDstTexture = TRUE;
-}
-
 //-----------------------------------------------------------------------------
 ///@todo: remove this
 TextureClass *DummyTexture=NULL;

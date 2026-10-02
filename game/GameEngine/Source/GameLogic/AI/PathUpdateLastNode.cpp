@@ -34,9 +34,6 @@ extern TerrainLogic *TheTerrainLogic;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathNode
 {
-public:
-	void setNextOptimized(PathNode *node) { m_nextOptimized = node; }
-
 private:
 	PathNode *m_next;
 	PathNode *m_previous;
@@ -77,7 +74,7 @@ void Path::bfmeUpdateLastNode(const Coord3D *position)
 			while (node && node->m_nextOptimized != m_pathTail)
 				node = node->m_nextOptimized;
 			if (node && node->m_nextOptimized == m_pathTail)
-				node->setNextOptimized(m_pathTail);
+				node->m_nextOptimized = m_pathTail;
 		}
 	}
 }

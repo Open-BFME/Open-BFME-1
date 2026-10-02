@@ -11,9 +11,9 @@
 // cascade selecting a start-position table row, i.e. this counts something
 // about the currently-eligible players.
 //
-// Loops i=0..31 via the same inlined getNthPlayer(i) bounds check used by
-// the already-matched getPlayersMask.cpp (hence the redundant i<0 test that
-// a plain `i<32` for-loop alone would not produce). Per non-null player it
+// Loops i=0..31 with the same getNthPlayer bounds check used by the
+// already-matched getPlayersMask.cpp (hence the redundant i<0 test that a
+// plain `i<32` for-loop alone would not produce). Per non-null player it
 // calls three already-matched byte/bool getters -- Rva000C9D40::get() (an
 // indirect byte read through +4, already matched at 0x000C9D40),
 // Rva000C9D00::get() (a direct byte read at +0x680, already matched at
@@ -64,13 +64,6 @@ class PlayerList
 public:
 	int unidentified_000df510(bool includeFields);
 
-	Player *getNthPlayer(Int i)
-	{
-		if (i < 0 || i >= 32)
-			return 0;
-		return m_players[i];
-	}
-
 private:
 	unsigned char m_pad[0x10];
 	Int m_playerCount;
@@ -82,7 +75,7 @@ int PlayerList::unidentified_000df510(bool includeFields)
 	int total = 0;
 	for (Int i = 0; i < 32; ++i)
 	{
-		Player *player = getNthPlayer(i);
+		Player *player = i < 0 || i >= 32 ? 0 : m_players[i];
 		if (!player)
 			continue;
 		if (!(unsigned char)((Rva000C9D40 *)player)->get())

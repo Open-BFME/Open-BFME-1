@@ -81,10 +81,6 @@ void ModelConditionUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 // four bodies. Unblocking it is a header change.
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgradeConstructor.cpp
 // ??0ModelConditionUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-ModelConditionUpgrade::ModelConditionUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
-{
-}
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1ModelConditionUpgrade@@MAE@XZ present-unmatched

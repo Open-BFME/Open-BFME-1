@@ -27,6 +27,7 @@ class SpawnUnitBehaviorModuleData : public SpawnUnitBehaviorModuleDataBase
 {
 public:
 	SpawnUnitBehaviorModuleData();
+	~SpawnUnitBehaviorModuleData();
 
 private:
 	// Named factory 0x00125D70 passes callback ILT 0x0000A727 ->

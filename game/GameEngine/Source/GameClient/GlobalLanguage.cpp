@@ -184,16 +184,6 @@ void GlobalLanguage::init( void )
 void GlobalLanguage::reset( void ) {}
 
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GlobalLanguage_parseFontDesc.cpp
-// ?parseFontDesc@GlobalLanguage@@ present-unmatched
-void GlobalLanguage::parseFontDesc(INI *ini, void *instance, void *store, const void* userData)
-{
-	FontDesc *fontDesc = (FontDesc *)store;
-	fontDesc->name = ini->getNextQuotedAsciiString();
-	fontDesc->size = ini->scanInt(ini->getNextToken());
-	fontDesc->bold = ini->scanBool(ini->getNextToken());
-}
-
 // ?parseFontFileName@GlobalLanguage@@ present-unmatched
 void GlobalLanguage::parseFontFileName( INI *ini, void * instance, void *store, const void* userData )
 {
