@@ -12,7 +12,7 @@
 typedef unsigned char Bool;
 typedef float Real;
 
-struct Coord2D
+struct AIGroupOffset2D
 {
 	Real x;
 	Real y;
@@ -165,7 +165,7 @@ public:
 		return m_boundingCircleRadius;
 	}
 
-	void getFormationOffset(Coord2D *offset) const
+	void getFormationOffset(AIGroupOffset2D *offset) const
 	{
 		*offset = m_formationOffset;
 	}
@@ -180,7 +180,7 @@ private:
 	unsigned char m_unreconstructed_0c0[0x204 - 0xc0];
 	AIUpdateInterface *m_ai;
 	unsigned char m_unreconstructed_208[0x320 - 0x208];
-	Coord2D m_formationOffset;
+	AIGroupOffset2D m_formationOffset;
 };
 
 class AIGroup
@@ -203,7 +203,7 @@ void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const
 		return;
 	}
 
-	Coord2D groupOffset;
+	AIGroupOffset2D groupOffset;
 	const Coord3D *objectPosition = object->getPosition();
 	if (isFormation)
 	{
