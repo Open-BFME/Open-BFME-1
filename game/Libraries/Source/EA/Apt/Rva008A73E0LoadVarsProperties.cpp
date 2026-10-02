@@ -2,9 +2,10 @@
 // RVA 008A73E0 (1252 B incl. jump table): property lookup, vtable 0x01137270 slot 10
 // (the vtable 0x008CBB30 installs; +0x20 is the field that constructor zeroes).
 // The perfect-hash table at 0x012D5490 used by 0x008A44A0 proves the keys:
-// 1 load, 2 send, 4 getBytesTotal, 5 getBytesLoaded, 6 loaded, 7 toString,
-// 8 contentType (default "application/x-www-form-urlencoded"); id 3 has no
-// table entry. The member set is Flash LoadVars; class and method names stay
+// 1 load, 2 send, 3 sendAndLoad, 4 getBytesTotal, 5 getBytesLoaded, 6 loaded,
+// 7 toString, 8 contentType (default "application/x-www-form-urlencoded").
+// Entry 0x012D5510 is the final accepted hash index (16), not a separate table.
+// The member set is Flash LoadVars; class and method names stay
 // address-derived.
 struct Rva00899560Value;
 struct Rva00899560Pool {
