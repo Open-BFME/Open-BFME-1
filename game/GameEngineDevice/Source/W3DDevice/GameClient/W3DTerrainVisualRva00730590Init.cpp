@@ -257,6 +257,10 @@ BFME_SIZE_ASSERT(W3DSmudgeManager, 0x44);
 #undef BFME_OFFSET_ASSERT
 #undef BFME_SIZE_ASSERT
 
+// Retail 0x012F7014 is GameClient's TerrainVisual *TheTerrainVisual, defined
+// once in game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp.
+// TerrainVisualSettings is a TU-local vftable view of that same object.
+class TerrainVisual;
 class TerrainVisualSettings
 {
 public:
@@ -284,7 +288,11 @@ extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
 extern W3DShadowManager *TheW3DShadowManager;
 extern WaterRenderObjClass *TheWaterRenderObj;
 extern W3DSmudgeManager *TheSmudgeManager;
-extern TerrainVisualSettings *TheTerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+static __forceinline TerrainVisualSettings *theBfmeTerrainVisual(void)
+{
+	return (TerrainVisualSettings *)TheTerrainVisual;
+}
 extern GlobalData *TheWritableGlobalData;
 
 static __forceinline Rva00730590GlobalData *localWritableGlobalData()
@@ -349,19 +357,19 @@ void Rva00730590::init(void)
 			m_waterRenderObject->toggleCloudLayer(false);
 	}
 
-	TheTerrainVisual->setWaterGridHeightClamps(
+	theBfmeTerrainVisual()->setWaterGridHeightClamps(
 		0, localWritableGlobalData()->m_vertexWaterHeightClampLow,
 		localWritableGlobalData()->m_vertexWaterHeightClampHi);
-	TheTerrainVisual->setWaterTransform(
+	theBfmeTerrainVisual()->setWaterTransform(
 		0, localWritableGlobalData()->m_vertexWaterAngle,
 		localWritableGlobalData()->m_vertexWaterXPosition,
 		localWritableGlobalData()->m_vertexWaterYPosition,
 		localWritableGlobalData()->m_vertexWaterZPosition);
-	TheTerrainVisual->setWaterGridResolution(
+	theBfmeTerrainVisual()->setWaterGridResolution(
 		0, static_cast<float>(localWritableGlobalData()->m_vertexWaterXGridCells),
 		static_cast<float>(localWritableGlobalData()->m_vertexWaterYGridCells),
 		localWritableGlobalData()->m_vertexWaterGridSize);
-	TheTerrainVisual->setWaterAttenuationFactors(
+	theBfmeTerrainVisual()->setWaterAttenuationFactors(
 		0, localWritableGlobalData()->m_vertexWaterAttenuationA,
 		localWritableGlobalData()->m_vertexWaterAttenuationB,
 		localWritableGlobalData()->m_vertexWaterAttenuationC,

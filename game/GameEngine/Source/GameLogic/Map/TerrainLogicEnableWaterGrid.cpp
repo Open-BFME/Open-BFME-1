@@ -52,6 +52,10 @@ static __forceinline Rva001A8820GlobalData* localWritableGlobalData() {
     return (Rva001A8820GlobalData*)TheWritableGlobalData;
 }
 class WaterHandle;
+// Retail 0x012F7014 is GameClient's TerrainVisual *TheTerrainVisual, defined
+// once in game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp.
+// Rva001A8820TerrainVisual is a TU-local vftable view of that same object.
+class TerrainVisual;
 class Rva001A8820TerrainVisual {
 public:
     virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
@@ -65,7 +69,10 @@ public:
     virtual void slot3c();
     virtual void setWaterGridResolution(const WaterHandle*,float,float,float);
 };
-extern Rva001A8820TerrainVisual* TheTerrainVisual;
+extern TerrainVisual* TheTerrainVisual;
+static inline Rva001A8820TerrainVisual *theBfmeTerrainVisual(void) {
+    return (Rva001A8820TerrainVisual *)TheTerrainVisual;
+}
 void TerrainLogic::enableWaterGrid(bool enable) {
     // m_waterGridEnabled in the BFME layout.
     *(bool*)((char*)this + 0x44) = enable;
@@ -87,10 +94,10 @@ void TerrainLogic::enableWaterGrid(bool enable) {
             if(strippedMapNameOnly.compareNoCase(strippedCompareMapNameOnly.str()) == 0) { waterSettingIndex = i; break; }
         }
         if(waterSettingIndex == -1) return;
-        TheTerrainVisual->setWaterGridHeightClamps(0,localWritableGlobalData()->m_vertexWaterHeightClampLow[waterSettingIndex],localWritableGlobalData()->m_vertexWaterHeightClampHi[waterSettingIndex]);
-        TheTerrainVisual->setWaterTransform(0,localWritableGlobalData()->m_vertexWaterAngle[waterSettingIndex],localWritableGlobalData()->m_vertexWaterXPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterZPosition[waterSettingIndex]);
-        TheTerrainVisual->setWaterGridResolution(0,localWritableGlobalData()->m_vertexWaterXGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterGridSize[waterSettingIndex]);
-        TheTerrainVisual->setWaterAttenuationFactors(0,localWritableGlobalData()->m_vertexWaterAttenuationA[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationB[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationC[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationRange[waterSettingIndex]);
+        theBfmeTerrainVisual()->setWaterGridHeightClamps(0,localWritableGlobalData()->m_vertexWaterHeightClampLow[waterSettingIndex],localWritableGlobalData()->m_vertexWaterHeightClampHi[waterSettingIndex]);
+        theBfmeTerrainVisual()->setWaterTransform(0,localWritableGlobalData()->m_vertexWaterAngle[waterSettingIndex],localWritableGlobalData()->m_vertexWaterXPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYPosition[waterSettingIndex],localWritableGlobalData()->m_vertexWaterZPosition[waterSettingIndex]);
+        theBfmeTerrainVisual()->setWaterGridResolution(0,localWritableGlobalData()->m_vertexWaterXGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterYGridCells[waterSettingIndex],localWritableGlobalData()->m_vertexWaterGridSize[waterSettingIndex]);
+        theBfmeTerrainVisual()->setWaterAttenuationFactors(0,localWritableGlobalData()->m_vertexWaterAttenuationA[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationB[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationC[waterSettingIndex],localWritableGlobalData()->m_vertexWaterAttenuationRange[waterSettingIndex]);
     }
-    TheTerrainVisual->enableWaterGrid(enable);
+    theBfmeTerrainVisual()->enableWaterGrid(enable);
 }

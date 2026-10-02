@@ -69,7 +69,15 @@ class TerrainVisual001AE4D0 { public:
     virtual void slot84();
     virtual void slot88(unsigned int);
 };
-extern "C" TerrainVisual001AE4D0 *g_bfmeTerrainVisual;
+// Retail 0x012F7014 is GameClient's TerrainVisual *TheTerrainVisual, defined
+// once in game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp.
+// TerrainVisual001AE4D0 is a TU-local vftable view of that same object.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+static inline TerrainVisual001AE4D0 *theBfmeTerrainVisual(void)
+{
+    return (TerrainVisual001AE4D0 *)TheTerrainVisual;
+}
 struct Rva00367E30Logic { char prefix[0x3c]; unsigned int frame; };
 // Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
 // game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Rva00367E30Logic is a
@@ -94,7 +102,7 @@ void TerrainRecordRemoval001AE4D0::removeIntersecting(void *position,BfmeSubYR *
         if (record->field0c && collision->bfmeDoYR(position,shape,&geometry,record,0)) {
             unsigned int handle=record->field0c;
             record->reset();
-            g_bfmeTerrainVisual->slot88(handle);
+            theBfmeTerrainVisual()->slot88(handle);
             unsigned int frame=theBfmeGameLogic()->frame;
             frame18f0=frame;
             break;
