@@ -29,10 +29,10 @@ struct BfmeSubCCE
 	BfmeInnerCCE m_bfmeInner;
 };
 
-class BfmeOuterCCE
+class GenOwner
 {
 public:
-	bool bfmeAskCCE();
+	bool ready();
 };
 
 class BfmeThingCCE
@@ -45,7 +45,7 @@ public:
 
 int BfmeThingCCE::bfmeGoCCE()
 {
-	if (((BfmeOuterCCE *)((char *)this - 0x10))->bfmeAskCCE())
+	if (((GenOwner *)((char *)this - 0x10))->ready())
 		return m_bfmeSub->m_bfmeInner.bfmeRunCCE();
 	return 0;
 }

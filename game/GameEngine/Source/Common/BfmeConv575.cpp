@@ -29,10 +29,10 @@ struct BfmeSubCCD
 	BfmeInnerCCD m_bfmeInner;
 };
 
-class BfmeOuterCCD
+class GenOwner
 {
 public:
-	bool bfmeAskCCD();
+	bool ready();
 };
 
 class BfmeThingCCD
@@ -45,7 +45,7 @@ public:
 
 int BfmeThingCCD::bfmeGoCCD()
 {
-	if (((BfmeOuterCCD *)((char *)this - 0x10))->bfmeAskCCD())
+	if (((GenOwner *)((char *)this - 0x10))->ready())
 		return m_bfmeSub->m_bfmeInner.bfmeRunCCD();
 	return 0;
 }

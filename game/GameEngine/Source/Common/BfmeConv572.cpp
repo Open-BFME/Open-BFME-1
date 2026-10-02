@@ -1,3 +1,7 @@
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged(void);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 struct BfmeSubCCA
 {
 	void bfmeNotifyCCA();
@@ -25,6 +29,6 @@ void BfmeThingCCA::onExit(void *spare)
 	if (sub->m_bfmeFlags & 0x200000u)
 	{
 		sub->m_bfmeFlags &= ~0x200000u;
-		sub->bfmeNotifyCCA();
+		((Object *)sub)->notifyModelConditionChanged();
 	}
 }
