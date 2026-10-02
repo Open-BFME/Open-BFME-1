@@ -116,8 +116,8 @@ static inline Rva001077D0FrameSource *rva001077D0FrameSource( void )
 {
 	return (Rva001077D0FrameSource *)TheGameClient;
 }
-extern Rva001077D0TerrainLogic *g_rva001077D0TerrainLogic;
-extern float g_rva001077D0RefreshDelay;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 void Rva001077D0Radar::update()
 {
@@ -140,10 +140,11 @@ void Rva001077D0Radar::update()
 
 	if (terrainRefreshFrame != 0
 		&& (float)(g_rva001077D0GameLogic()->frame - terrainRefreshFrame)
-			> g_rva001077D0RefreshDelay)
+			> 15.0f) // Retail 0x010888F0: __real@41700000.
 	{
 		Rva001077D0RadarPrimary *primary =
 			(Rva001077D0RadarPrimary *)((char *)this - 4);
-		primary->refreshTerrain(g_rva001077D0TerrainLogic);
+		primary->refreshTerrain(
+			reinterpret_cast<Rva001077D0TerrainLogic *>(TheTerrainLogic));
 	}
 }
