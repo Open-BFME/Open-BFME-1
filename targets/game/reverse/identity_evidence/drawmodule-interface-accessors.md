@@ -195,3 +195,37 @@ The compiled W3DLightDrawDestructor object was also inspected directly: its
 the eight typed methods above, const first in each pair. Its six ledger rows
 remain byte-exact. Retiring the eight misanchors reduces the measured
 `one_identity.surplus` baseline from 2516 to 2508.
+
+
+## W3DLaserDraw: slots 44 and 45
+
+The same census resolves the laser-specific pair independently. Registry site
+`006C0112` names W3DLaserDraw, factory `006BF150`, constructor `00757E70`,
+size `0x5C`. The factory pushes `0x5C` at `006BF166` and calls ILT `0000E61A`
+at `006BF18B`, resolving to that constructor. Constructor instruction
+`00757EA5` installs base LaserDrawInterface table VA `011229A0` at +0x0C,
+`00757EAC` installs the derived primary VA `01122A00`, and `00757EB3`
+installs derived secondary VA `011229FC` at +0x0C. Its single secondary
+operation is the matched getLaserTemplateWidth described above.
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | Identity |
+|---|---|---|---|---|
+| 44 | `00D22AB0` | `0000F64B` | `00757BD0` | const getLaserDrawInterface |
+| 45 | `00D22AB4` | `0002C13D` | `00757BC0` | non-const getLaserDrawInterface |
+
+Whole-image bytewise dword scans find each stub VA exactly once, at its listed
+primary-table entry. Both 11-byte bodies are `85 C9 74 04 8D 41 0C C3 33 C0 C3`,
+with INT3 immediately after the final RET. Their null-preserving +0x0C
+adjustment agrees with the independently proven secondary interface.
+Zero Hour W3DLaserDraw.h:70 supplies DrawModule/LaserDrawInterface inheritance;
+lines 91-92 explicitly define both public virtual overloads returning this.
+The const overload occupies slot 44 under the same MSVC reverse-overload
+rule proven above. The exact pointer-returning manglings are
+`?getLaserDrawInterface@W3DLaserDraw@@UBEPBVLaserDrawInterface@@XZ` and
+`?getLaserDrawInterface@W3DLaserDraw@@UAEPAVLaserDrawInterface@@XZ`.
+
+Replace the two `?dup_00757bc0/00757bd0` aliases that falsely use the Rope
+getter's object symbol. The upstream Laser header emits each real body in
+W3DLaserDrawInterfaceAccessors.cpp; its wrappers are emission anchors only.
+The existing Rope TU remains needed by its other rows. This is an identity
+correction at unchanged extents, with no new pin or inferred member name.
