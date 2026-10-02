@@ -154,6 +154,11 @@ protected:
 	void *m_drawable;                                                  // +0x08
 };
 
+class ObjectDrawInterface;
+class DebrisDrawInterface;
+class RopeDrawInterface;
+class LaserDrawInterface;
+
 class DrawModule : public DrawableModule
 {
 protected:
@@ -192,14 +197,14 @@ public:
 		const Coord3D *oldPosition, Real oldAngle) = 0;                 // 35 -> purecall
 	virtual void reactToGeometryChange() = 0;                         // 36 -> purecall
 	virtual Bool isLaser() const;                                     // 37 -> 0x007500D0
-	virtual void *rva007500F0();                                      // 38 -> 0x007500F0
-	virtual void *getObjectDrawInterface();                           // 39 -> 0x007500E0
-	virtual void *rva00750110();                                      // 40 -> 0x00750110
-	virtual void *rva00750100();                                      // 41 -> 0x00750100
-	virtual void *rva00750130();                                      // 42 -> 0x00750130
-	virtual void *rva00750120();                                      // 43 -> 0x00750120
-	virtual void *rva00750150();                                      // 44 -> 0x00750150
-	virtual void *rva00750140();                                      // 45 -> 0x00750140
+	virtual ObjectDrawInterface *getObjectDrawInterface(); // slot 39 -> 0x007500E0
+	virtual const ObjectDrawInterface *getObjectDrawInterface() const; // slot 38 -> 0x007500F0
+	virtual DebrisDrawInterface *getDebrisDrawInterface(); // slot 41 -> 0x00750100
+	virtual const DebrisDrawInterface *getDebrisDrawInterface() const; // slot 40 -> 0x00750110
+	virtual RopeDrawInterface *getRopeDrawInterface(); // slot 43 -> 0x00750120
+	virtual const RopeDrawInterface *getRopeDrawInterface() const; // slot 42 -> 0x00750130
+	virtual LaserDrawInterface *getLaserDrawInterface(); // slot 45 -> 0x00750140
+	virtual const LaserDrawInterface *getLaserDrawInterface() const; // slot 44 -> 0x00750150
 	virtual void *rva00750160();                                      // 46 -> 0x00750160
 	virtual Real rva00750170() const;                                 // 47 -> 0x00750170
 	virtual void rva00750180(UnsignedInt);                            // 48 -> 0x00750180

@@ -30,14 +30,6 @@ public:
 	virtual void rva007500A0();
 	virtual Bool rva007500C0() const;
 	virtual Bool rva007500D0() const;
-	virtual void *rva007500F0();
-	virtual void *rva007500E0();
-	virtual void *rva00750110();
-	virtual void *rva00750100();
-	virtual void *rva00750120();
-	__declspec(noinline) void *rva00750130();
-	virtual void *rva00750150();
-	virtual void *rva00750140();
 	virtual void *rva00750160();
 	virtual void rva00750180(UnsignedInt);
 	virtual Bool rva007501A0() const;
@@ -131,55 +123,6 @@ Bool DrawModule::rva007500C0() const
 Bool DrawModule::rva007500D0() const
 {
 	return false;
-}
-
-// ?rva007500E0@DrawModule@@UAEPAXXZ
-void *DrawModule::rva007500E0()
-{
-	return 0;
-}
-
-// ?rva007500F0@DrawModule@@UAEPAXXZ
-void *DrawModule::rva007500F0()
-{
-	return 0;
-}
-
-// ?rva00750100@DrawModule@@UAEPAXXZ
-void *DrawModule::rva00750100()
-{
-	return 0;
-}
-
-// ?rva00750110@DrawModule@@UAEPAXXZ
-void *DrawModule::rva00750110()
-{
-	return 0;
-}
-
-// ?rva00750120@DrawModule@@UAEPAXXZ
-void *DrawModule::rva00750120()
-{
-	return 0;
-}
-
-// DrawModule vtable slot 42 names this body at retail 0x00750130.
-// ?rva00750130@DrawModule@@QAEPAXXZ
-void *DrawModule::rva00750130()
-{
-	return 0;
-}
-
-// ?rva00750140@DrawModule@@UAEPAXXZ
-void *DrawModule::rva00750140()
-{
-	return 0;
-}
-
-// ?rva00750150@DrawModule@@UAEPAXXZ
-void *DrawModule::rva00750150()
-{
-	return 0;
 }
 
 // ?rva00750160@DrawModule@@UAEPAXXZ

@@ -84,7 +84,7 @@ overloads to be emitted. The unrelated W3DRopeDraw source remains in use.
 For each module_registry row ending in Draw, disassemble the registered
 constructor, select its final primary-vptr store, read slots 38 through 45,
 and resolve each pointer through its E9 stub. This yields all 16 registered
-Draw owners (the rest of this note uses the Debris pair only):
+Draw owners. The census columns below show the Debris pair:
 
 | Registered owner | Primary table RVA | Store instruction RVA | Slot 40 body | Slot 41 body |
 |---|---|---|---|---|
@@ -104,3 +104,94 @@ Draw owners (the rest of this note uses the Debris pair only):
 | W3DTankDraw | `0xd25ab0` | `0x77f081` | `0x750110` | `0x750100` |
 | W3DTreeDraw | `0xd25be8` | `0x77f1d4` | `0x750110` | `0x750100` |
 | W3DTruckDraw | `0xd265b0` | `0x77fb51` | `0x750110` | `0x750100` |
+
+## DrawModule's inherited null getters
+
+The primary base table at VA `0x01121BA8` contains the default entries in all
+four interface pairs. RVA `0x00750230` seats that table and tail-jumps through
+ILT `0x0002B8C8` to the next base destructor at `0x00113E60`. Concrete draw
+module destruction has the same transition: the independently reconstructed
+W3DLightDraw destructor seats `0x01121BA8` at instruction RVA `0x007585E8`
+before destroying DrawableModule. Its partial declaration reproduces the full
+59-slot table. Zero Hour's `DrawModule : public DrawableModule` and empty inline
+DrawModule destructor supply the introducing-class witness. These shared
+bodies belong to DrawModule, not to any of the 16 registered concrete owners.
+
+The same `Common/DrawModule.h` declares the eight public virtual const/non-const
+getters below, returning typed null pointers. Its exact unmodified inline
+bodies are compiled in `DrawModuleInterfaceAccessors.cpp`; no layout fields
+are needed by a null getter. The table pairs use the same reversed overload
+ordering as the proven W3DDebrisDraw pair.
+
+| Slot | ILT RVA | Body RVA | Exact public virtual declaration |
+|---|---|---|---|
+| 38 | `0003B47B` | `007500F0` | `const ObjectDrawInterface* getObjectDrawInterface() const` |
+| 39 | `0001D8DB` | `007500E0` | `ObjectDrawInterface* getObjectDrawInterface()` |
+| 40 | `00040449` | `00750110` | `const DebrisDrawInterface* getDebrisDrawInterface() const` |
+| 41 | `00011C39` | `00750100` | `DebrisDrawInterface* getDebrisDrawInterface()` |
+| 42 | `00008819` | `00750130` | `const RopeDrawInterface* getRopeDrawInterface() const` |
+| 43 | `0003C6AA` | `00750120` | `RopeDrawInterface* getRopeDrawInterface()` |
+| 44 | `00031408` | `00750150` | `const LaserDrawInterface* getLaserDrawInterface() const` |
+| 45 | `00001951` | `00750140` | `LaserDrawInterface* getLaserDrawInterface()` |
+
+Each body is `33 C0 C3` (`xor eax,eax; ret`), followed by INT3 padding. No calls,
+stack arguments, or pointer adjustment occur. Every inherited table uses the
+same respective ILT entry; those repetitions are inheritance, not independent
+class-specific bodies.
+
+Further slot witnesses independently distinguish the interface pairs:
+
+- Object: the matched Zero Hour twin
+  `AnimatedParticleSysBoneClientUpdate::clientUpdate`, RVA `0x00603020` (61 B),
+  calls primary slot 39 and then `updateBonesForClientParticleSystems` on the
+  returned ObjectDrawInterface. The model secondary table VA `0x01123C68`
+  begins with the matched `clientOnly_getRenderObjInfo` (`0075C390`),
+  `clientOnly_getRenderObjBoundBox` (`0075C470`) and
+  `clientOnly_getRenderObjBoneTransform` (`00763520`), agreeing with the three
+  initial ObjectDrawInterface declarations in Zero Hour. This corroborates
+  the model-family override of slots 38/39.
+- Debris: the unique registered W3DDebrisDraw pair proven above.
+- Rope: registered constructor `0075A490` seats secondary VA `011234D4` at
+  +0x0C. That table's ILTs `00030BAC`, `00006B81`, `0004A525` reach matched
+  `initRopeParms` (`0075AC70`), `setRopeCurLen` (`00759EA0`) and `setRopeSpeed`
+  (`00759EB0`). Zero Hour `W3DRopeDraw.h:65-66` explicitly supplies both named
+  getters, and its primary slots 42/43 are the +0x0C conversion pair.
+- Laser: registered constructor `00757E70` seats secondary VA `011229FC` at
+  +0x0C. Its only entry, ILT `00012CE2`, reaches the matched const float getter
+  `getLaserTemplateWidth` (`00756E40`). Zero Hour `W3DLaserDraw.h:91-92`
+  supplies both interface-getter twins; its primary slots 44/45 return +0x0C.
+
+The eight previous `rva...@DrawModule` identities are replaced at unchanged
+three-byte extents. This corrects the old untyped pointer and non-const
+placeholders, including the nonvirtual claim at `00750130`. The partial
+W3DLightDraw destructor declaration is updated to the same typed overloads,
+with non-const declared first so MSVC emits const first. Unproven DrawModule
+slots outside this getter block remain opaque.
+
+### Retiring the old ICF misanchors
+
+Before this correction, each of the eight real getter names was also claimed
+at `0x006CF680`, size 3, source `W3DDefaultDraw.cpp`, with
+`icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ`. Those are erroneous aliases:
+retail did not fold identical COMDATs, and the DrawModule introducing table
+and independently registered derived tables route these methods to the eight
+distinct bodies listed above, never to `006CF680`. The zero-return bytes alone
+cannot identify a method. Delete and tombstone precisely those eight name/RVA
+pairs at `006CF680`, preserving all other claims there; no conclusion about
+that address's correct identity is needed for this narrowly scoped repair.
+The named methods survive at their proven retail addresses, so this is not a
+descriptive-to-opaque downgrade and requires no name_corrections exemption.
+
+An executable-section E9 scan finds exactly one ILT for each of these eight
+default bodies. A whole-image pointer scan finds 11 occurrences apiece for
+the Object pair and 17 apiece for the Debris/Rope/Laser pairs, all in the
+corresponding inherited table slots. In particular the base table's slot
+39 pointer lives at RVA `00D21C44`, and slots 38 through 45 occupy
+`00D21C40` through `00D21C5C`. The matched Object getter caller's indirect
+call is physically at `0060303A`, operand `[eax+0x9C]` (slot 39).
+
+The compiled W3DLightDrawDestructor object was also inspected directly: its
+`??_7DrawModule@@6B@` COFF relocations at offsets 38*4 through 45*4 name exactly
+the eight typed methods above, const first in each pair. Its six ledger rows
+remain byte-exact. Retiring the eight misanchors reduces the measured
+`one_identity.surplus` baseline from 2516 to 2508.
