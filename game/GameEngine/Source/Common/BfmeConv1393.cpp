@@ -1,7 +1,9 @@
 // Open-BFME5 conversions.
 
 void __cdecl W3DRadarResetLock();
-char __cdecl bfmeUnlockVJR();
+// Retail 0x00905B10: the ledger's defining name for this body
+// (?bfmeUnlock1179@@YADXZ, matched in BfmeConv1179.cpp).
+char __cdecl bfmeUnlock1179(void);
 
 class BfmeThingVJR
 {
@@ -108,7 +110,7 @@ int BfmeThingVJR::bfmeGoVJR(int force)
 	{
 		W3DRadarResetLock();
 		bfmeV164VJR(3);
-		bfmeUnlockVJR();
+		bfmeUnlock1179();
 	}
 	return 0;
 }

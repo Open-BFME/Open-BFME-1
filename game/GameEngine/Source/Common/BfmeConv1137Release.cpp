@@ -7,7 +7,10 @@
 // Called by the destructor thunk at 0x000491C5 -- see BfmeConv1137Term.cpp.
 
 void __cdecl W3DRadarResetLock();
-char __cdecl bfmeUnlockVJR();
+// Retail 0x00905B10: the ledger's defining name for this body
+// (?bfmeUnlock1179@@YADXZ, matched in BfmeConv1179.cpp). Spelled exactly
+// here so the reference resolves instead of an orphan stand-in.
+char __cdecl bfmeUnlock1179(void);
 
 class TextureBaseClass
 {
@@ -38,7 +41,7 @@ class W3DResourceResetGuard
 {
 public:
 	W3DResourceResetGuard() { W3DRadarResetLock(); }
-	~W3DResourceResetGuard() { bfmeUnlockVJR(); }
+	~W3DResourceResetGuard() { bfmeUnlock1179(); }
 };
 
 class BfmeA1137Release
