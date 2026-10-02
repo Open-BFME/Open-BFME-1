@@ -7,7 +7,8 @@ typedef unsigned long LCID;
 
 __declspec(dllimport) int __stdcall GetLocaleInfoA(
     LCID locale, unsigned long type, char *data, int count);
-__declspec(dllimport) int __stdcall lstrcmpiA(const char *left, const char *right);
+// Retail IAT VA 0x01358F78 imports KERNEL32!lstrcmpi (the ANSI entry).
+__declspec(dllimport) int __stdcall lstrcmpi(const char *left, const char *right);
 __declspec(dllimport) char *__cdecl strcpy(char *destination, const char *source);
 __declspec(dllimport) char *__cdecl strcat(char *destination, const char *source);
 __declspec(dllimport) char *__cdecl strncpy(char *destination, const char *source, unsigned int count);
@@ -71,7 +72,7 @@ static const char *__ConvertName(const char *lname, LOCALECONV *table, int table
     int high = tableSize - 1;
     while (low <= high) {
         i = (low + high) / 2;
-        if ((cmp = lstrcmpiA(lname, table[i].name)) == 0)
+        if ((cmp = lstrcmpi(lname, table[i].name)) == 0)
             return table[i].abbrev;
         else if (cmp < 0)
             high = i - 1;
@@ -198,9 +199,9 @@ static int __GetLCIDFromName(const char *lname, LCID *lcid, char *cp)
     }
 
     if (result == 0) {
-        if (lstrcmpiA(page, "ACP") == 0 || page[0] == 0)
+        if (lstrcmpi(page, "ACP") == 0 || page[0] == 0)
             my_ltoa(__intGetACP(*lcid), cp);
-        else if (lstrcmpiA(page, "OCP") == 0)
+        else if (lstrcmpi(page, "OCP") == 0)
             my_ltoa(__intGetOCP(*lcid), cp);
         else
             strncpy(cp, page, 5);

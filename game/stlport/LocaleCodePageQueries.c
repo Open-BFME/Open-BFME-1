@@ -16,7 +16,8 @@ __declspec(dllimport) char *__cdecl strcat(char *destination, const char *source
 __declspec(dllimport) unsigned int __cdecl strlen(const char *text);
 __declspec(dllimport) void *__cdecl memcpy(void *destination, const void *source,
     unsigned int count);
-__declspec(dllimport) int __stdcall lstrcmpiA(const char *left, const char *right);
+// Retail IAT VA 0x01358F78 imports KERNEL32!lstrcmpi (the ANSI entry).
+__declspec(dllimport) int __stdcall lstrcmpi(const char *left, const char *right);
 __declspec(dllimport) int __stdcall EnumSystemLocalesA(
     int (__stdcall *callback)(char *), unsigned long flags);
 int __stdcall EnumLocalesProcA(char *locale);
@@ -114,7 +115,7 @@ static const char *__ConvertName(const char *lname, LOCALECONV *table, int table
     while (low <= high)
     {
         i = (low + high) / 2;
-        if ((cmp = lstrcmpiA(lname, table[i].name)) == 0)
+        if ((cmp = lstrcmpi(lname, table[i].name)) == 0)
             return table[i].abbrev;
         else if (cmp < 0)
             high = i - 1;
