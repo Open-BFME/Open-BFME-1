@@ -48,7 +48,7 @@ public:
 	}
 
 	void translate(const AsciiString &other);
-	void trim() { ((StringBase<wchar_t> *)this)->trim(); }
+	void trim();
 	bool isEmpty() const
 	{
 		return m_data == 0 || *(const unsigned short *)((const char *)m_data + 4) == 0;
