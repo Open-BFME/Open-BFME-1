@@ -4,7 +4,7 @@
 
 class SpecialAbilityUpdate
 {
-protected:
+public:
 	virtual ~SpecialAbilityUpdate();
 };
 
