@@ -11,12 +11,6 @@
 #include "GameLogic/Module/TunnelContain.h"
 #include "GameLogic/Object.h"
 
-class BfmeThingPositionSetter
-{
-public:
-	void setPosition(const Coord3D *position);
-};
-
 class BfmeTerrainGroundHeight
 {
 public:
@@ -51,10 +45,10 @@ void TunnelContain::scatterToNearbyPosition(Object *obj)
 
 	AIUpdateInterface *ai = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(obj) + 0x204);
 	if (ai) {
-		reinterpret_cast<BfmeThingPositionSetter *>(obj)->setPosition(theContainer->getPosition());
+		reinterpret_cast<Thing *>(obj)->setPosition(theContainer->getPosition());
 		ai->ignoreObstacle(theContainer);
 		ai->aiMoveToPosition(&pos, CMD_FROM_AI);
 	} else {
-		reinterpret_cast<BfmeThingPositionSetter *>(obj)->setPosition(&pos);
+		reinterpret_cast<Thing *>(obj)->setPosition(&pos);
 	}
 }

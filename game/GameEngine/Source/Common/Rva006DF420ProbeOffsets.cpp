@@ -41,18 +41,10 @@ struct Coord3D
 	float z;
 };
 
-// The spelling the 0x0000A7DB pin already carries; identical layout to Coord3D.
-struct BfmeCoord6DF1F0
-{
-	float x;
-	float y;
-	float z;
-};
-
-class BfmePolygon6DF1F0
+class PolygonTrigger
 {
 public:
-	char bfmeContains6DF1F0(const BfmeCoord6DF1F0 &point) const;
+	bool bfmeContainsPointAt0018FA20(Coord3D &point) const;
 };
 
 enum CellShroudStatus
@@ -93,7 +85,7 @@ public:
 
 private:
 	char m_pad00[0x1c];
-	BfmePolygon6DF1F0 *m_polygon1c;
+	PolygonTrigger *m_polygon1c;
 	Coord3D m_center20;
 };
 
@@ -122,8 +114,7 @@ bool Rva006DF550::bfmeProbeOffsets(Coord3D *position, float step)
 				if (TheShroudManager->getShroudStatusForPlayer(playerIndex,
 						&candidate) == 2)
 					continue;
-				if (!m_polygon1c->bfmeContains6DF1F0(
-						*(const BfmeCoord6DF1F0 *)&candidate))
+				if (!m_polygon1c->bfmeContainsPointAt0018FA20(candidate))
 					continue;
 			}
 

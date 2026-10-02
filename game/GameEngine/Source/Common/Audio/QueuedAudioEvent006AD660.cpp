@@ -29,11 +29,13 @@ struct Rva006AACB0Element
 		: m_event(event), m_zero(0) { m_flag = 0; }
 };
 
+struct BfmeEntVSZ;
+void bfmeConstructVSZ(BfmeEntVSZ *destination, const BfmeEntVSZ *source);
+
 namespace _STL
 {
 struct __false_type {};
 template <class Type> class allocator {};
-template <class Type> void __cdecl BfmeElementConstruct(Type *, const Type &);
 
 template <class Type, class Allocator>
 class vector
@@ -42,7 +44,8 @@ public:
 	void push_back(const Type &value)
 	{
 		if (_M_finish != _M_end_of_storage) {
-			BfmeElementConstruct(_M_finish, value);
+			bfmeConstructVSZ((BfmeEntVSZ *)_M_finish,
+				(const BfmeEntVSZ *)&value);
 			++_M_finish;
 		} else {
 			__false_type tag; _M_insert_overflow(_M_finish, value, tag, 1, true);
