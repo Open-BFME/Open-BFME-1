@@ -219,7 +219,7 @@ extern TerrainLogic *TheTerrainLogic;                                     // 0x0
 extern Manager012EF4F0 *g_012EF4F0;                                       // 0x012EF4F0 TheBuffLogic
 extern GhostObjectManager *TheGhostObjectManager;                         // 0x012EF4FC
 extern GameLogic *TheGameLogic;                                           // 0x012F0898
-extern LargeGroupAudio *TheLargeGroupAudio;                               // 0x012F1044
+LargeGroupAudio *TheLargeGroupAudio = 0;                               // 0x012F1044
 
 // ?init@GameLogic@@UAEXXZ
 void GameLogic::init(void)

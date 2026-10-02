@@ -6,7 +6,7 @@
 // is drawn with LargeGroupAudioUpdate.cpp as its __FILE__.  The interface sits
 // at owner+0x10, so the module data and object are this-0x0C and this-0x08.
 // While enabled, the module re-registers its owner with the large-group audio
-// manager (g_bfmeJ1023) whenever the object's position, model condition flags,
+// manager (TheLargeGroupAudio) whenever the object's position, model condition flags,
 // the 12-byte block at Object+0x90 or its stealthed-and-undetected state
 // changed since the last pass, and remembers the new values.
 
@@ -85,9 +85,9 @@ public:
 	void run(Y1ForEachArg *arg);
 };
 
-class BfmeJ1023;
+class LargeGroupAudio;
 
-extern BfmeJ1023 *g_bfmeJ1023;
+extern LargeGroupAudio *TheLargeGroupAudio;
 
 class ModuleData
 {
@@ -180,7 +180,7 @@ UpdateSleepTime LargeGroupAudioUpdate::update()
 		|| block90.notEquals(&m_lastBlock90)
 		|| stealthed != m_lastStealthed)
 	{
-		((Rva003D0F60 *)g_bfmeJ1023)->run((Y1ForEachArg *)this);
+		((Rva003D0F60 *)TheLargeGroupAudio)->run((Y1ForEachArg *)this);
 		m_lastPosition = *position;
 		m_lastModelConditionFlags = flags;
 		m_lastBlock90 = block90;
