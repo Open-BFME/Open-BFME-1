@@ -2,12 +2,14 @@
 
 typedef void (__stdcall *BfmeStdcallIntSlot)(int);
 
-extern BfmeStdcallIntSlot Data00F58F30;
+// C linkage so the slot spells as retail's `_Rva01358F30`; the value is the
+// pointer the call reads, so only the symbol name changes.
+extern "C" BfmeStdcallIntSlot Rva01358F30;
 
 void rva0082BE10Shift(int n)
 {
   if (n <= 0x14)
-    Data00F58F30(1);
+    Rva01358F30(1);
   else
-    Data00F58F30(1 << (n - 0x14));
+    Rva01358F30(1 << (n - 0x14));
 }

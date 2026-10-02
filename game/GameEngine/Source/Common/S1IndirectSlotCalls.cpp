@@ -39,7 +39,9 @@ typedef void( __stdcall *BfmeStdcallFlagSlot )( bool );
 extern BfmeVoidSlot Data00F59214;
 extern BfmeVoidSlot Data00F595C4;
 extern BfmeIntSlot Data00F59544;
-extern BfmeStdcallFlagSlot Data00F58F30;
+// C linkage so the slot spells as retail's `_Rva01358F30`; the value is the
+// pointer the call reads, so only the symbol name changes.
+extern "C" BfmeStdcallFlagSlot Rva01358F30;
 
 extern const int Rdata00C766DC;
 extern const int Rdata00CE7524;
@@ -101,6 +103,6 @@ void Rva00133070()
 {
 	if ( Data00EEF1DC )
 	{
-		Data00F58F30( false );
+		Rva01358F30( false );
 	}
 }
