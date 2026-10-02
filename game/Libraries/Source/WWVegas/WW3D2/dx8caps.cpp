@@ -894,6 +894,8 @@ struct BFME_DX8Caps_DriverFields
 
 #undef DXLOG
 #define DXLOG(n) CapsWorkString.Format n; retail->capsLog += CapsWorkString;
+// Retail IAT VA0135933C names MSVCR71!_strcmpi. Use that exact import
+// spelling with its existing int __cdecl(const char *, const char *) ABI.
 void DX8Caps::Check_Driver_Version_Status()
 {
 	BFME_DX8Caps_DriverFields *retail = (BFME_DX8Caps_DriverFields *)this;
@@ -905,14 +907,14 @@ void DX8Caps::Check_Driver_Version_Status()
 		retail->driverVersionStatus=DRIVER_STATUS_BAD;
 		break;
 	case VENDOR_NVIDIA:
-		if (!stricmp(retail->driverDLL,"nv4.dll")) {
+		if (!_strcmpi(retail->driverDLL,"nv4.dll")) {
 			switch (retail->driverBuildVersion) {
 			case 327:	// 5.00.2165.327
 				retail->driverVersionStatus=DRIVER_STATUS_BAD;
 			}
 		}
 
-		if (!stricmp(retail->driverDLL,"nv4_disp.dll") || !stricmp(retail->driverDLL,"nvdd32.dll")) {
+		if (!_strcmpi(retail->driverDLL,"nv4_disp.dll") || !_strcmpi(retail->driverDLL,"nvdd32.dll")) {
 			switch (retail->driverBuildVersion) {
 			// 23.11 Is known to be very unstable
 			case 2311:
@@ -974,7 +976,7 @@ void DX8Caps::Check_Driver_Version_Status()
 			}
 		}
 		// Elsa OEM drivers?
-		if (!stricmp(retail->driverDLL,"egdad.dll")) {
+		if (!_strcmpi(retail->driverDLL,"egdad.dll")) {
 			// We know of version 5.9.0.312 (asked MShelling if he the drivers seem ok)
 			switch (retail->driverBuildVersion) {
 			default:
@@ -985,7 +987,7 @@ void DX8Caps::Check_Driver_Version_Status()
 		}
 
 		// Elsa GLoria
-		if (!stricmp(retail->driverDLL,"egliid.dll")) {
+		if (!_strcmpi(retail->driverDLL,"egliid.dll")) {
 			switch (retail->driverBuildVersion) {
 			default:
 				retail->driverVersionStatus=DRIVER_STATUS_UNKNOWN;
@@ -996,12 +998,12 @@ void DX8Caps::Check_Driver_Version_Status()
 		}
 
 		// ASUS OEM drivers?
-		if (!stricmp(retail->driverDLL,"v66_disp.dll")) {
+		if (!_strcmpi(retail->driverDLL,"v66_disp.dll")) {
 		// TOMSS1: 5.0.2195.379
 		}
 		break;
 	case VENDOR_ATI:
-		if (!stricmp(retail->driverDLL,"ati2dvag.dll")) {
+		if (!_strcmpi(retail->driverDLL,"ati2dvag.dll")) {
 			switch (retail->driverBuildVersion) {
 			case 3287:
 				retail->driverVersionStatus=DRIVER_STATUS_UNKNOWN;
@@ -1020,13 +1022,13 @@ void DX8Caps::Check_Driver_Version_Status()
 				break;
 			}
 		}
-		if (!stricmp(retail->driverDLL,"atid32ae.dll")) {
+		if (!_strcmpi(retail->driverDLL,"atid32ae.dll")) {
 			switch (retail->driverBuildVersion) {
 			case 1010:
 				retail->driverVersionStatus=DRIVER_STATUS_OK;
 			}
 		}
-		if (!stricmp(retail->driverDLL,"ati3drai.dll")) {
+		if (!_strcmpi(retail->driverDLL,"ati3drai.dll")) {
 			switch (retail->driverBuildVersion) {
 			case 1119:
 				retail->driverVersionStatus=DRIVER_STATUS_UNKNOWN;
@@ -1034,7 +1036,7 @@ void DX8Caps::Check_Driver_Version_Status()
 		}
 		break;
 	case VENDOR_POWERVR:
-		if (!stricmp(retail->driverDLL,"pmx2hal.dll")) {
+		if (!_strcmpi(retail->driverDLL,"pmx2hal.dll")) {
 			switch (retail->driverBuildVersion) {
 			case 3111:	// Michael Ruppert - TESTIBM104
 			default: retail->driverVersionStatus=DRIVER_STATUS_UNKNOWN;
