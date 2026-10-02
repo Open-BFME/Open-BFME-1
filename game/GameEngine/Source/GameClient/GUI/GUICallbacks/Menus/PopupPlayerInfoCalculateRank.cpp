@@ -14,6 +14,18 @@ struct BfmeNode1110
 	int m_value;
 };
 
+namespace _STL
+{
+struct _Rb_tree_node_base;
+
+template <class _Dummy>
+class _Rb_global
+{
+public:
+	static _Rb_tree_node_base *__cdecl _M_increment(_Rb_tree_node_base *node);
+};
+}
+
 class PSPlayerStats
 {
 public:
@@ -32,8 +44,6 @@ struct RankPoints
 
 extern RankPoints *TheRankPointValues;
 
-BfmeNode1110 *__cdecl bfmeNext1110( BfmeNode1110 *node );
-
 int CalculateRank( const PSPlayerStats &stats )
 {
 	if ( stats.id == 0 || !TheRankPointValues )
@@ -45,7 +55,8 @@ int CalculateRank( const PSPlayerStats &stats )
 	while ( node != header )
 	{
 		numGames += node->m_value;
-		node = bfmeNext1110( node );
+		node = (BfmeNode1110 *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)node);
 		header = stats.wins;
 	}
 	int rankPoints = (int)( (float)numGames * TheRankPointValues->m_winMultiplier );
@@ -56,7 +67,8 @@ int CalculateRank( const PSPlayerStats &stats )
 	while ( node != header )
 	{
 		numGames += node->m_value;
-		node = bfmeNext1110( node );
+		node = (BfmeNode1110 *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)node);
 		header = stats.losses;
 	}
 	rankPoints = (int)( (float)numGames * TheRankPointValues->m_lostMultiplier + (float)rankPoints );

@@ -718,7 +718,7 @@ Int GetFavoriteSide( const PSPlayerStats& stats )
 	return favorite;
 }
 
-Int CalculateRank( const PSPlayerStats& stats )
+static Int CalculateRankFromPopupPlayerInfo( const PSPlayerStats& stats )
 {
 	if(stats.id == 0 || !TheRankPointValues)	
 		return 0;
@@ -801,7 +801,7 @@ void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 	}
 	
 	Int currentRank = 0;
-	Int rankPoints = CalculateRank(stats);
+	Int rankPoints = CalculateRankFromPopupPlayerInfo(stats);
 	Int i = 0;
 	while( rankPoints >= TheRankPointValues->m_ranks[i + 1])
 		++i;
@@ -1135,7 +1135,7 @@ void HandlePersistentStorageResponses( void )
 						}
 						req.statsToPush.wins = wins;
 						req.statsToPush.losses = losses;
-						req.statsToPush.rankPoints = CalculateRank( resp.player );
+						req.statsToPush.rankPoints = CalculateRankFromPopupPlayerInfo( resp.player );
 
 						Int numGames = 0;
 						Int favorite = 0;
@@ -1190,7 +1190,7 @@ void HandlePersistentStorageResponses( void )
 							}
 							info->m_wins = wins;
 							info->m_losses = losses;
-							info->m_rankPoints = CalculateRank( resp.player );
+							info->m_rankPoints = CalculateRankFromPopupPlayerInfo( resp.player );
 							Int numGames = 0;
 							Int favorite = 0;
 							for(it = resp.player.games.begin(); it != resp.player.games.end(); ++it)

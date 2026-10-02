@@ -21,8 +21,12 @@ private:
 	StringBase(const T *text);
 	StringBase(const StringBase &text);
 	~StringBase() { releaseBuffer(); }
+
+public:
 	void concat(const T *text, int length);
 	void set(const StringBase &text);
+
+private:
 	void releaseBuffer();
 };
 
@@ -32,11 +36,6 @@ public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &text) : StringBase<char>(text) {}
 	~AsciiString() {}
-
-	void concat(const char *text, int length)
-	{
-		((StringBase<char> *)this)->concat(text, length);
-	}
 };
 
 class UnicodeString : private StringBase<unsigned short>
@@ -54,12 +53,6 @@ public:
 	}
 	~UnicodeString() {}
 
-	UnicodeString &operator=(const UnicodeString &text)
-	{
-		((StringBase<unsigned short> *)this)->set(
-			(const StringBase<unsigned short> &)text);
-		return *this;
-	}
 };
 
 typedef bool Bool;
@@ -91,7 +84,8 @@ Bool Rva00434A90::lookup(const char *label, UnicodeString *subtitle)
 {
 	AsciiString subtitleLabel("SUBTITLE:");
 	Bool exists;
-	subtitleLabel.concat(label, label ? (int)strlen(label) : 0);
-	*subtitle = TheGameText->fetch(subtitleLabel, &exists);
+	((StringBase<char> *)&subtitleLabel)->concat(label, label ? (int)strlen(label) : 0);
+	((StringBase<unsigned short> *)subtitle)->set(
+		(const StringBase<unsigned short> &)TheGameText->fetch(subtitleLabel, &exists));
 	return exists;
 }
