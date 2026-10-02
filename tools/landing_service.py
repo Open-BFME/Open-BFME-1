@@ -641,12 +641,12 @@ def main(argv=None):
     run.add_argument("--no-publish", action="store_true")
     run.add_argument("--window", action="store_true",
                      help="hold the cooperative publish window for the pass (header-wide units)")
-    drain = sub.add_parser("drain", help="land the queue under the window, now and every N minutes")
-    drain.add_argument("--interval", type=float, default=10, help="minutes between passes")
-    drain.add_argument("--once", action="store_true", help="one pass, then exit")
-    drain.add_argument("--max-batch", type=int, default=20)
-    drain.add_argument("--gate", default=DEFAULT_GATE)
-    drain.add_argument("--seed-cache", metavar="DIR",
+    drain_p = sub.add_parser("drain", help="land the queue under the window, now and every N minutes")
+    drain_p.add_argument("--interval", type=float, default=10, help="minutes between passes")
+    drain_p.add_argument("--once", action="store_true", help="one pass, then exit")
+    drain_p.add_argument("--max-batch", type=int, default=20)
+    drain_p.add_argument("--gate", default=DEFAULT_GATE)
+    drain_p.add_argument("--seed-cache", metavar="DIR",
                        help="a warm build/match to copy into the service worktree once")
     args = ap.parse_args(argv)
     service = Service(gate=getattr(args, "gate", DEFAULT_GATE))
