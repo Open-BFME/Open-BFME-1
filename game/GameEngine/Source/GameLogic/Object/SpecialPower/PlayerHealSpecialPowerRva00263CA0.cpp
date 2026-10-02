@@ -1,6 +1,6 @@
 
 
-// ?rva00263CA0@PlayerHealSpecialPower@@UAEXPAVObject@@I@Z
+// ?rva00263CA0@PlayerHealSpecialPower@@UAEXPAXI@Z
 // partial score=0.996 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // PlayerHealSpecialPower::rva00263CA0, retail RVA 0x00263CA0: slot 13 of the
@@ -9,7 +9,8 @@
 // calls slot 12, and PlayerHeal's slot 12 (0x00263B80) forwards the target's
 // +0x38 position here. The body treats its first argument as a location (OCL
 // dispatch point and heal-radius centre). The slot's name is unproven, so the
-// method keeps its address; the first parameter keeps the old view's type.
+// method keeps its address. Its first parameter is spelled as an untyped
+// location pointer; the casts below keep the callees' existing spellings.
 // Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md
 // stlport
 
@@ -239,7 +240,7 @@ public:
 	virtual void slot10() = 0;
 	virtual void slot11() = 0;
 	virtual void slot12() = 0;
-	virtual void rva00263CA0(Object *target, UnsignedInt commandOptions) = 0;
+	virtual void rva00263CA0(void *where, UnsignedInt commandOptions) = 0;
 	virtual void slot14() = 0;
 	virtual void slot15() = 0;
 	virtual void startPowerRecharge() = 0;
@@ -261,10 +262,10 @@ public:
 class PlayerHealSpecialPower : public SpecialPowerModule
 {
 public:
-	virtual void rva00263CA0(Object *target, UnsignedInt commandOptions);
+	virtual void rva00263CA0(void *where, UnsignedInt commandOptions);
 };
 
-void PlayerHealSpecialPower::rva00263CA0(Object *target,
+void PlayerHealSpecialPower::rva00263CA0(void *where,
 	UnsignedInt commandOptions)
 {
 	Object *owner = getObject();
@@ -276,17 +277,17 @@ void PlayerHealSpecialPower::rva00263CA0(Object *target,
 	if (owner->getControllingPlayer() == 0)
 		return;
 
-	((Rva00268CB0 *)this)->invoke(target);
+	((Rva00268CB0 *)this)->invoke((Object *)where);
 	startPowerRecharge();
 
 	Object *healOwner = getObject();
 	ObjectCreationList *dispatchList = getModuleData()->m_dispatchList;
 	if (dispatchList != 0)
-		dispatchList->dispatch(healOwner, target, 0, 0);
+		dispatchList->dispatch(healOwner, (const Object *)where, 0, 0);
 
 	BfmeWideResult iterator =
 		ThePartitionManager->bfmeForwardWideC(
-			(int)target,
+			(int)where,
 			*(Int *)&getModuleData()->m_healRadius, 0,
 			(int)Rva00263CA0RootFilter().link(), 1);
 
