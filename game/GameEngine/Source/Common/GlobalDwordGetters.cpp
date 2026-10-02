@@ -19,7 +19,15 @@
 // The bytes witness an address and a width; the type is spelled `int` because
 // four bytes moved with a plain load say nothing more.
 
-extern int g_Va012ACC30;
+// 0x012ACC30 is not a free global: retail defines it as the static member
+// Rva001A1A30::s_value (declared and defined in TinyGlobalStores.cpp), so the
+// reference is spelled with its defining name to link.
+class Rva001A1A30
+{
+public:
+	static int s_value;
+};
+
 extern int g_Va012BA938;
 extern int g_Va012D6DB0;
 extern int g_Va012D6DB4;
@@ -89,7 +97,7 @@ int Rva001A19D0Get( void )
 
 int Rva001A1A20Get( void )
 {
-	return g_Va012ACC30;
+	return Rva001A1A30::s_value;
 }
 
 int Rva001ADD20Get( void )

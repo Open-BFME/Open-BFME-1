@@ -23,7 +23,16 @@ extern BfmeHub982 *g_bfmeHub982;
 // stays as the TU-local view the call is made through.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern int g_Va012D7198;
+// retail 0x012D7198: the one global definition is the static member
+// `Rva00782E10::s_value`, whose address `Rva00782E10::store` writes
+// (game/GameEngine/Source/Common/TinyGlobalStores.cpp).  That file has no
+// header, so its class definition is repeated here verbatim.
+class Rva00782E10
+{
+public:
+	static void store( int value );
+	static int s_value;
+};
 extern Rva007845D0Transform g_Rva00F0692CTransform;
 void rva00785FD0Flush();
 int bfmeHelpWI(int);
@@ -33,8 +42,8 @@ void applyRoundedBounds00786060(const char *name, int first, BoundsSource0078606
  Rva00785FD0Item *item = source->item();
  if (!item) return;
  rva00785FD0Flush();
- int saved = g_Va012D7198;
- g_Va012D7198 = (int)&bfmeHelpWI;
+ int saved = Rva00782E10::s_value;
+ Rva00782E10::s_value = (int)&bfmeHelpWI;
  g_bfmeHub982->bfmeBegin982C();
  item->m_xform = g_Rva00F0692CTransform;
  Rva00784090Point minPt, extent;
@@ -44,7 +53,7 @@ void applyRoundedBounds00786060(const char *name, int first, BoundsSource0078606
  extent.x = (float)(int)(extent.x + 0.5f);
  extent.y = (float)(int)(extent.y + 0.5f);
  ((BfmeHostDO *)g_rva012F19E8WindowManager)->bfmeApplyDO(name, (int)&minPt, (int)&extent, first, fourth);
- g_Va012D7198 = saved;
+ Rva00782E10::s_value = saved;
  g_bfmeHub982->bfmeEnd982C();
 }
 

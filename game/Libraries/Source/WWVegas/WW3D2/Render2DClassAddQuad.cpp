@@ -34,7 +34,20 @@ struct BfmeRenderVertex
 typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
 
 extern "C" float g_BfmeRender2DZ;
-extern "C" BfmeColorConverter g_BfmeColorConverter;
+
+// retail 0x012D7198: the one definition of this storage is the static member
+// `Rva00782E10::s_value`, whose address `Rva00782E10::store` writes
+// (game/GameEngine/Source/Common/TinyGlobalStores.cpp).  That file has no
+// header, so its class definition is repeated here verbatim.  Retail keeps a
+// function pointer in the slot the setter writes as an int, so the call goes
+// through the memory at the member's address rather than through a register
+// copy of it.
+class Rva00782E10
+{
+public:
+	static void store( int value );
+	static int s_value;
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
@@ -90,10 +103,10 @@ void Render2DClass::Add_Quad(const RectClass &screen, const RectClass &uv,
 	vertices[0].v = vertices[2].v = uv.Top;
 	vertices[1].v = vertices[3].v = uv.Bottom;
 
-	vertices[0].color = g_BfmeColorConverter(color0);
-	vertices[1].color = g_BfmeColorConverter(color2);
-	vertices[2].color = g_BfmeColorConverter(color1);
-	vertices[3].color = g_BfmeColorConverter(color3);
+	vertices[0].color = (*(BfmeColorConverter *)&Rva00782E10::s_value)(color0);
+	vertices[1].color = (*(BfmeColorConverter *)&Rva00782E10::s_value)(color2);
+	vertices[2].color = (*(BfmeColorConverter *)&Rva00782E10::s_value)(color1);
+	vertices[3].color = (*(BfmeColorConverter *)&Rva00782E10::s_value)(color3);
 
 	indices[0] = baseVertexPair + 0x00010000;
 	indices[1] = baseVertexPair + 0x00020002;
