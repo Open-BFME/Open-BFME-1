@@ -58,11 +58,21 @@ public:
 private:
     PlayingAudio *m_ptr;
 };
+// Retail callers use ILT 0x0002669D -> 0x006A59F0, a thiscall with one
+// PlayingAudio pointer. The old member declaration had no linked provider.
+extern void j_0002669d();
+template <class Function>
+__forceinline Function rva006A59F0Thunk()
+{
+    union { void (*raw)(); Function member; } fn;
+    fn.raw = j_0002669d;
+    return fn.member;
+}
+
 class MilesAudioManager {
     char pad000[0x9d0];
     _STL::list<PlayingAudioRef> m_playingStreams;
 public:
-    void rva006A59F0(PlayingAudio *);
     void rva006A5F20();
 };
 void MilesAudioManager::rva006A5F20() {
@@ -72,7 +82,7 @@ void MilesAudioManager::rva006A5F20() {
         audio=*it;
         if(audio) {
             if(audio->getAudioEvent()->getEventInfo()->m_soundClass==1) {
-                rva006A59F0(audio);
+                (this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(audio);
                 it=m_playingStreams.erase(it);
             } else ++it;
         }

@@ -141,12 +141,22 @@ typedef _STL::list<AudioRequest *> AudioRequestList;
 typedef _STL::list<PlayingAudioRef> PlayingAudioList;
 typedef _STL::deque<PlayingAudioRef> PlayingAudioDeque;
 
+// Retail callers use ILT 0x0002669D -> 0x006A59F0, a thiscall with one
+// PlayingAudio pointer. The old member declaration had no linked provider.
+extern void j_0002669d();
+template <class Function>
+__forceinline Function rva006A59F0Thunk()
+{
+    union { void (*raw)(); Function member; } fn;
+    fn.raw = j_0002669d;
+    return fn.member;
+}
+
 class MilesAudioManager
 {
 public:
 	virtual bool rva006A8DC0(AudioHandle audioEvent);
 
-	void rva006A59F0(PlayingAudio *release);
 
 private:
 	char m_pad004[0x4c - 4];
@@ -204,7 +214,7 @@ bool MilesAudioManager::rva006A8DC0(AudioHandle audioEvent)
 
 		if (audio->m_audioEventRTS->getPlayingHandle() == audioEvent)
 		{
-			rva006A59F0(*it);
+			(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(*it);
 			m_playing3DSounds.erase(it);
 			killed = true;
 			break;
@@ -219,7 +229,7 @@ bool MilesAudioManager::rva006A8DC0(AudioHandle audioEvent)
 
 		if (audio->m_audioEventRTS->getPlayingHandle() == audioEvent)
 		{
-			rva006A59F0(*it);
+			(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(*it);
 			m_playingSounds.erase(it);
 			killed = true;
 			break;
@@ -234,7 +244,7 @@ bool MilesAudioManager::rva006A8DC0(AudioHandle audioEvent)
 
 		if (audio->m_audioEventRTS->getPlayingHandle() == audioEvent)
 		{
-			rva006A59F0(*it);
+			(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(*it);
 			m_playingStreams.erase(it);
 			killed = true;
 			break;
@@ -254,7 +264,7 @@ bool MilesAudioManager::rva006A8DC0(AudioHandle audioEvent)
 
 				if (audio->m_audioEventRTS->getPlayingHandle() == audioEvent)
 				{
-					rva006A59F0(*qit);
+					(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(*qit);
 					queue.erase(qit);
 					killed = true;
 					break;

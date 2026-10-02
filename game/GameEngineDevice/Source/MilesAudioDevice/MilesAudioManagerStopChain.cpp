@@ -418,6 +418,17 @@ public:
 };
 
 
+// Retail callers use ILT 0x0002669D -> 0x006A59F0, a thiscall with one
+// PlayingAudio pointer. The old member declaration had no linked provider.
+extern void j_0002669d();
+template <class Function>
+__forceinline Function rva006A59F0Thunk()
+{
+    union { void (*raw)(); Function member; } fn;
+    fn.raw = j_0002669d;
+    return fn.member;
+}
+
 class MilesAudioManager
 {
 public:
@@ -427,7 +438,7 @@ public:
 	void rva006AE250(PlayingAudioRef *playing);
 	void rva006AFD00(unsigned int handle);
 	bool rva006B2230(AudioEventRTS *event);
-	void rva006A59F0(PlayingAudio *playing);
+
 
 private:
 	// 0x006955C0 via ILT 0x00023F79: a new 0x18-byte request.
@@ -700,7 +711,7 @@ bool MilesAudioManager::rva006B2230(AudioEventRTS *event)
 				{
 					if (playing->m_audioEventRTS->hasMoreLoops())
 						rva006AE250(&playing);
-					rva006A59F0(playing);
+					(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(playing);
 					m_list9cc.erase(it);
 					return true;
 				}
@@ -717,7 +728,7 @@ bool MilesAudioManager::rva006B2230(AudioEventRTS *event)
 				{
 					if (playing->m_audioEventRTS->hasMoreLoops())
 						rva006AE250(&playing);
-					rva006A59F0(playing);
+					(this->*rva006A59F0Thunk<void (MilesAudioManager::*)(PlayingAudio *)>())(playing);
 					m_list9c8.erase(it);
 					return true;
 				}
