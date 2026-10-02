@@ -1,0 +1,24 @@
+// cl: /MD /D_STLP_USE_STATIC_LIB
+// stlport
+// Two distinct retail wrappers call the already matched STLport __copy
+// specialization at 0x00846E00. Their individual template identities are
+// unproved, so each name retains its own address. Native return-by-value
+// supplies the hidden result pointer and the empty iterator-tag temporary.
+// See targets/game/reverse/identity_evidence/0x00846e80-0x00846eb0.md.
+#include <string>
+#include <iterator>
+#include <algorithm>
+
+typedef _STL::back_insert_iterator<_STL::string> Rva00846E80Iterator;
+// Retail calls this body out of line; do not instantiate another provider.
+namespace _STL {
+template<> back_insert_iterator<string> __copy<const char *, back_insert_iterator<string>, int>(const char *, const char *, back_insert_iterator<string>, const random_access_iterator_tag &, int *);
+}
+Rva00846E80Iterator Rva00846E80(const char *first, const char *last, Rva00846E80Iterator output)
+{
+    return _STL::__copy(first, last, output, _STL::random_access_iterator_tag(), (int *)0);
+}
+Rva00846E80Iterator Rva00846EB0(const char *first, const char *last, Rva00846E80Iterator output)
+{
+    return _STL::copy(first, last, output);
+}
