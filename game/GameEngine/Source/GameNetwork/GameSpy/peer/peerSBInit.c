@@ -23,7 +23,7 @@ typedef struct PEERConnection
 
 typedef PEERConnection *PEER;
 
-extern int piSBQueryVersion;
+int piSBQueryVersion = 1;
 
 void piSBGamesListCallback(void);
 void piSBGamesEngineCallback(void);
