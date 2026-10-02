@@ -14778,5 +14778,35 @@
   "after_sha256": "4d6f8938d2ea415ff9ca6866ee09c87694561ac64bde8ae95d2e49f1038914b2",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
   "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradePostUpgradeCheck.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradePostUpgradeCheck.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4470",
+  "before_sha256": "7b72697ddfec30b9feba17003f1a5fc412517a203627f1ffc8de9e3d1b359614",
+  "after_sha256": "a3f7d5afc47aaf4767882854588715b63391bb0391ad47e93d19e31ddc742277",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "TU-local UpgradeMux view: slot 7 (BFME-only virtual, reached by vcall index so bytes are unchanged) was spelled with the unproven name upgradeRemovalImplementation. It now uses the address-keeping token of the class's slot-7 body, matching b0dffe2492."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeImplementation.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4770",
+  "before_sha256": "7348ef10f248ef5e6675692f94531e27392f79bcd384fe019886a22ebf280b23",
+  "after_sha256": "39112f3bd979abf4e691aacf4bc3cb749a1c4cf0d7a810fdaf241d3cb9afebe2",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "TU-local UpgradeMux view: slot 7 (BFME-only virtual, reached by vcall index so bytes are unchanged) was spelled with the unproven name upgradeRemovalImplementation. It now uses the address-keeping token of the class's slot-7 body, matching b0dffe2492."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeOnCapture.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/CostModifierUpgradeOnCapture.cpp",
+  "old_name": "upgradeRemovalImplementation",
+  "new_name": "rva002D4770",
+  "before_sha256": "8e5c8e81be64b2145a8cd856b8f656d810e984b4fb292d953b8a89310b08c9a4",
+  "after_sha256": "ba77689fabbde90baf029c283e0f4876c7d1893302798870b1392592c76a9094",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "TU-local UpgradeMux view: slot 7 (BFME-only virtual, reached by vcall index so bytes are unchanged) was spelled with the unproven name upgradeRemovalImplementation. It now uses the address-keeping token of the class's slot-7 body, matching b0dffe2492."
  }
 ]

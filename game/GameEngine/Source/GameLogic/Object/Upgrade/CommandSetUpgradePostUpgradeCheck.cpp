@@ -106,7 +106,7 @@ public:
 	virtual Bool isSubObjectsUpgrade() = 0;
 	virtual void forceRefreshUpgrade() = 0;
 	virtual void rva002D43A0PostUpgradeCheck() = 0;
-	virtual void upgradeRemovalImplementation() = 0;
+	virtual void rva002D4470() = 0;
 
 private:
 	Bool m_upgradeExecuted;
@@ -134,7 +134,7 @@ public:
 // ?rva002D43A0PostUpgradeCheck@CommandSetUpgrade@@UAEXXZ
 void CommandSetUpgrade::rva002D43A0PostUpgradeCheck()
 {
-	upgradeRemovalImplementation();
+	rva002D4470();
 
 	UpgradeMaskType mask(getObject()->getControllingPlayer()->getCompletedUpgradeMask());
 	mask.setObjectCompletedUpgrades(*getObject());
