@@ -139,10 +139,15 @@ public:
 	~Rva00026AB2MultiBase();
 };
 
-class Rva00026F35MultiBase
+// The base this family tail-jumps to at 0x00026F35 is released through the
+// AudioEventRTS destructor (that ILT jumps to the body at 0x000B31F0), so the
+// base carries the class's name.  The destructor is declared non-virtual
+// because the bytes give no vptr store for the base itself; the virtual
+// spelling is pinned at a different address.
+class AudioEventRTS
 {
 public:
-	~Rva00026F35MultiBase();
+	~AudioEventRTS();
 };
 
 class Rva00027D81MultiBase
@@ -239,7 +244,7 @@ Rva0008F840MultiTailDtor::~Rva0008F840MultiTailDtor()
 {
 }
 
-class Rva000B9AD0MultiTailDtor : public Rva00026F35MultiBase
+class Rva000B9AD0MultiTailDtor : public AudioEventRTS
 {
 public:
 	virtual ~Rva000B9AD0MultiTailDtor();

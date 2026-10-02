@@ -34,12 +34,20 @@ public:
 	virtual ~DozerPrimaryStateMachine();
 };
 
-class DozerAudioEventRTS
+// The 0x70-byte member released through the ILT at 0x00026F35 (which jumps to
+// the 162-byte AudioEventRTS destructor at 0x000B31F0) is a retail
+// AudioEventRTS, so the member carries that class's own name and the BFME
+// 0x70-byte footprint: vptr + 0x6C.  The destructor is declared
+// non-virtual because the call at +0xB3 is the SCALAR AudioEventRTS destructor
+// named by the ledger at 0x000B31F0, not the 77-byte virtual body at
+// 0x000CFA40; the vptr is spelled as a member to keep the size at 0x70.
+class AudioEventRTS
 {
 public:
-	virtual ~DozerAudioEventRTS();
+	~AudioEventRTS();
 
 private:
+	void *m_vptr;				// +0x00
 	unsigned char m_pad[0x6C];
 };
 
@@ -67,7 +75,7 @@ private:
 	DozerTaskInfo m_task[3];
 	DozerPrimaryStateMachine *m_dozerMachine;
 	unsigned int m_currentTask;
-	DozerAudioEventRTS m_buildingSound;
+	AudioEventRTS m_buildingSound;
 	unsigned int m_isRebuild;
 	DozerDockPointInfo m_dockPoint[3][3];
 	unsigned int m_buildSubTask;

@@ -3,10 +3,15 @@
 
 void __cdecl freeHordeContainOwnedBuffer(void *memory, unsigned int element_size);
 
-class HordeContainMember70
+// Both 0x70-byte members are released through the ILT at 0x00026F35, which
+// jumps to the AudioEventRTS destructor at 0x000B31F0, so both carry that
+// class's name and its BFME 0x70-byte footprint.  The destructor is declared
+// non-virtual because that call site is the SCALAR AudioEventRTS destructor
+// (the ledger's name for 0x000B31F0); the 77-byte virtual body is elsewhere.
+class AudioEventRTS
 {
 public:
-	~HordeContainMember70();
+	~AudioEventRTS();
 private:
 	unsigned char m_storage[0x70];
 };
@@ -63,8 +68,8 @@ class __declspec(novtable) HordeContainModuleData : public HordeContainModuleDat
 public:
 	virtual ~HordeContainModuleData();
 private:
-	HordeContainMember70 m_member34;
-	HordeContainMember70 m_membera4;
+	AudioEventRTS m_member34;
+	AudioEventRTS m_membera4;
 	HordeContainMember4A m_member114;
 	HordeContainMember4A m_member118;
 	HordeContainOwnedBuffer m_member11c;

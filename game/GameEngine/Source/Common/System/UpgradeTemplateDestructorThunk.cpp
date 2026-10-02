@@ -18,12 +18,20 @@ private:
     char *m_text;
 };
 
-class UpgradeAudioMember
+// Both 0x6C-padded members are released through the ILT at 0x00026F35, which
+// jumps to the AudioEventRTS destructor at 0x000B31F0, so both carry that
+// class's name and its BFME 0x70-byte footprint (vptr + 0x6C).  The destructor
+// is declared non-virtual because that call site is the SCALAR AudioEventRTS
+// destructor the ledger names at 0x000B31F0; the 77-byte virtual body at
+// 0x000CFA40 is a different address.  The vptr is spelled as a member so the
+// footprint stays 0x70.
+class AudioEventRTS
 {
 public:
-    virtual ~UpgradeAudioMember();
+    ~AudioEventRTS();
 
 private:
+    void *m_vptr;               // +0x00
     unsigned char m_data[0x6c];
 };
 
@@ -41,8 +49,8 @@ private:
     UpgradeStringMember m_member14;
     unsigned char m_pad18[0x0c];
     UpgradeStringMember m_member24;
-    UpgradeAudioMember m_researchSound;
-    UpgradeAudioMember m_unitSpecificSound;
+    AudioEventRTS m_researchSound;
+    AudioEventRTS m_unitSpecificSound;
     unsigned char m_pad108[8];
     UpgradeStringMember m_buttonImageName;
     unsigned char m_pad114[4];

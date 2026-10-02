@@ -50,14 +50,26 @@
 // need no destruction, and whether these destructors are virtual (they are
 // entered non-virtually here and nothing in the body distinguishes the two).
 
+// The subobject released at 0x00026F35 (the ILT to the AudioEventRTS
+// destructor body at 0x000B31F0) is a retail AudioEventRTS, so that one
+// member carries the class's own name.  The destructor is declared
+// non-virtual because this call site is the SCALAR spelling the ledger
+// resolves at 0x00026F35; the virtual spelling is pinned at a different
+// address and does not reproduce these bytes.  The other five addresses are
+// ICF folds and keep their address-derived names: no one recovered name can
+// be chosen for them.
+class AudioEventRTS
+{
+public:
+	~AudioEventRTS();
+};
+
 #define Q4_SUBOBJECT( ADDR )                                              \
 	class Mem##ADDR                                                       \
 	{                                                                     \
 	public:                                                               \
 		~Mem##ADDR();                                                     \
 	};
-
-Q4_SUBOBJECT( 000B31F0 )
 Q4_SUBOBJECT( 0027E4E0 )
 Q4_SUBOBJECT( 00887940 )
 Q4_SUBOBJECT( 00258730 )
@@ -77,7 +89,7 @@ Q4_SUBOBJECT( 00427390 )
 	{                                                                     \
 	}
 
-Q4_PAIR_DTOR( Rva00124510, Mem0027E4E0, Mem000B31F0, 0x90 )
+Q4_PAIR_DTOR( Rva00124510, Mem0027E4E0, AudioEventRTS, 0x90 )
 Q4_PAIR_DTOR( Rva00259320, Mem00258730, Mem00887940, 0x218 )
 Q4_PAIR_DTOR( Rva002642C0, Mem00258730, Mem000658A0, 0x210 )
 Q4_PAIR_DTOR( Rva0026B8E0, Mem00258730, Mem00887940, 0x210 )
