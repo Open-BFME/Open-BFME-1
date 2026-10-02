@@ -12,7 +12,7 @@ typedef unsigned int UnsignedInt;
 class INI
 {
 public:
-	const char *getNextToken( int flags );
+	const char *getNextToken( const char *seps = 0 );
 	const char *getNextTokenOrNull( const char *seps = 0 );
 	static UnsignedInt scanUnsignedInt( const char *token );
 };

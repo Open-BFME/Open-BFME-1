@@ -12,7 +12,7 @@ enum ScienceType
 class INI
 {
 public:
-	const char *getNextToken(int);
+	const char *getNextToken(const char *seps = 0);
 	static ScienceType scanScience(const char *);
 };
 

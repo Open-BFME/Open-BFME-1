@@ -6,7 +6,7 @@
 class INI
 {
 public:
-	const char *getNextToken( int );
+	const char *getNextToken( const char *seps = 0 );
 	const char *getNextTokenOrNull( const char * );
 };
 
