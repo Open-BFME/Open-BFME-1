@@ -46,7 +46,7 @@ class Drawable
 {
 public:
 	void replaceModelConditionState(const ModelConditionFlags &flags,
-		bool forceReplace, UnsignedInt value);
+		UnsignedInt forceReplace, UnsignedInt value);
 };
 
 class BfmeUpdVKP
