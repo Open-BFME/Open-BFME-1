@@ -1,9 +1,9 @@
 // cl: /EHsc
 
-class Q4Sub00C9CC70
+class Q3EhMember0089C900
 {
 public:
-	~Q4Sub00C9CC70();
+	~Q3EhMember0089C900();
 };
 
 class Q4Base00D35D68
@@ -28,7 +28,7 @@ public:
 	~Gen_uwm_00899380();
 
 	char m_gap0[8 - 4];
-	Q4Sub00C9CC70 m_sub;
+	Q3EhMember0089C900 m_sub;
 	char m_gap1[0x18 - 9];
 	int m_flag;
 };

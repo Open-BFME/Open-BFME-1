@@ -14,10 +14,10 @@
 // destructor inlined at +0x20, __forceinline middle destructor that calls
 // Q4Base00D35D68::notify. EH try-levels 0 then 2 then 1.
 
-class Q4Sub00C9CC70
+class Q3EhMember0089C900
 {
 public:
-	~Q4Sub00C9CC70();
+	~Q3EhMember0089C900();
 };
 
 class Q4Base00D35D68
@@ -64,7 +64,7 @@ public:
 
 private:
 	char m_gap0[8 - 4];
-	Q4Sub00C9CC70 m_sub;
+	Q3EhMember0089C900 m_sub;
 	char m_gap1[0x18 - 9];
 	int m_flag;
 	char m_gap2[0x20 - 0x1C];

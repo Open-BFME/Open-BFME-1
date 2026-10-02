@@ -4,10 +4,10 @@
 // then performs the common Q4 teardown through vtables 0x01136058 and
 // 0x01135D68.
 
-class Q4Sub00C9CC70
+class Q3EhMember0089C900
 {
 public:
-	~Q4Sub00C9CC70();
+	~Q3EhMember0089C900();
 };
 
 class Q4Base00D35D68
@@ -33,7 +33,7 @@ public:
 
 private:
 	char m_gap0[ 8 - 4 ];
-	Q4Sub00C9CC70 m_sub;
+	Q3EhMember0089C900 m_sub;
 	char m_gap1[ 0x18 - 9 ];
 	int m_flag;
 	char m_gap2[ 0x20 - 0x1C ];
