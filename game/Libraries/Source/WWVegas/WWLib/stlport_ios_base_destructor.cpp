@@ -5,7 +5,8 @@
 // preserves the real second nontrivial member lifetime in the flattened
 // reconstruction, so VC7.1 assigns the same EH cleanup state as retail.
 
-extern "C" __declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+// Retail IAT VA 0x013593D4 imports MSVCR71!free.
+extern "C" __declspec(dllimport) void __cdecl free(void *p);
 void __cdecl operator delete(void *p);
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -156,9 +157,9 @@ ios_base::~ios_base()
 		while (n);
 	}
 
-	bfmeFree1035(_M_callbacks);
-	bfmeFree1035(_M_iwords);
-	bfmeFree1035(_M_pwords);
+	free(_M_callbacks);
+	free(_M_iwords);
+	free(_M_pwords);
 
 	char *start = _M_cached_grouping._M_start;
 	unsigned int bytes = (unsigned int)(_M_cached_grouping._M_end_of_storage._M_data - start);
