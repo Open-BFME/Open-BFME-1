@@ -64,15 +64,22 @@ public:
 	void setGroup( AsciiString name, bool immediate );
 };
 
-// The shell singleton, spelled for the neighbouring body at 0x0057F100 the way
-// S3GuardedIndirectRelease.cpp names it.
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell); this is the TU's view of the pointee.
+class Shell
+{
+public:
+	unsigned char m_unmodelled[ 0x59 ];
+	unsigned char m_flag59;
+};
+
+// game/GameEngine/Source/Common/S3GuardedIndirectRelease.cpp owns the
+// giveBack body at 0x0057F100, so the call is made through that view, exactly
+// as Rva0051DD10StartBattleSchool.cpp does.
 class Rva0057F100
 {
 public:
 	void giveBack();
-
-	unsigned char m_unmodelled[ 0x59 ];
-	unsigned char m_flag59;
 };
 
 #define BFME_VSLOT( n ) virtual void _bfme_slot##n( void ) = 0
@@ -91,7 +98,7 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
-extern Rva0057F100 *g_obj12F4B58;
+extern Shell *TheShell;
 extern GameEngine *TheGameEngine;
 
 class BfmeAptScreenMainMenu
@@ -115,14 +122,14 @@ void BfmeAptScreenMainMenu::_bfme_credits( const char *name )
 
 	TheTransitionHandler->setGroup( AsciiString( "MainMenuToCreditsScreen" ), false );
 
-	if ( g_obj12F4B58 )
-		g_obj12F4B58->giveBack();
+	if ( TheShell )
+		( ( Rva0057F100 * )TheShell )->giveBack();
 
 	AudioEventRTS event( AsciiString( "Credits" ), 2 );
 	event.setIsLogicalAudio( true );
 	((Rva0051D690Audio *)TheAudio)->addAudioEvent( &event );
 
 	m_state264 = 4;
-	g_obj12F4B58->m_flag59 = 1;
+	TheShell->m_flag59 = 1;
 	TheGameEngine->setFramesPerSecondLimit( 100 );
 }

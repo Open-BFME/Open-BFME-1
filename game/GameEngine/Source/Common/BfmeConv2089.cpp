@@ -12,13 +12,21 @@ struct Rva00579160Manager
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell).
+class Shell
+{
+};
+
+// bfmeDoneXP is pinned under the Shell40D9 spelling (ILT 0x00002F1D), so the
+// call goes through that view; the cast is pointer-size neutral.
 class Shell40D9
 {
 public:
 	void bfmeDoneXP(BfmeHostXP *layout, int flag);
 };
 
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 
 class BfmeWinXP
 {
@@ -73,5 +81,5 @@ void BfmeHostXP::bfmeCloseAllXP(int unused)
 		m_bfme28XP = 0;
 	}
 
-	TheShell->bfmeDoneXP(this, 0);
+	((Shell40D9 *)TheShell)->bfmeDoneXP(this, 0);
 }

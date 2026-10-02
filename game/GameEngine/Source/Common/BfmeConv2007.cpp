@@ -6,7 +6,9 @@ struct BfmeObj947C
 	void *m_bfmeParamEAH;
 };
 
-class Shell40D9
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell); this is the TU's view of the pointee.
+class Shell
 {
 public:
 	unsigned char m_bfmeHeadEAH[0x50];
@@ -19,7 +21,7 @@ struct Rva00579160Manager
 };
 
 extern BfmeObj947C *g_bfme947ObjC;
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;

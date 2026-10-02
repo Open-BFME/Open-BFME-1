@@ -19,12 +19,21 @@ public:
 	bool isFinished(void);
 };
 
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell).
+class Shell
+{
+};
+
+// game/GameEngine/Source/Common/S3GuardedIndirectRelease.cpp owns the
+// giveBack body at 0x0057F100, so the call is made through that view, exactly
+// as Rva0051DD10StartBattleSchool.cpp does.
 class Rva0057F100
 {
 public:
 	void giveBack(void);
 };
-extern Rva0057F100 *g_obj12F4B58;
+extern Shell *TheShell;
 
 class WindowManager
 {
@@ -66,8 +75,8 @@ int rva0051E280PreParchmentMapFadeStartNew(int, bool start)
 	if (go)
 	{
 		((TransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("PreParchmentMapFade_StartNew"), 0);
-		if (g_obj12F4B58)
-			g_obj12F4B58->giveBack();
+		if (TheShell)
+			((Rva0057F100 *)TheShell)->giveBack();
 		g_theWindowManager->unidentified_0002e9a1(-1);
 	}
 	else if (((TransitionHandler *)TheTransitionHandler)->isFinished())

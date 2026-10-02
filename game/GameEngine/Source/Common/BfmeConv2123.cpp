@@ -48,17 +48,26 @@ public:
 
 extern MessageStream *TheMessageStream;
 
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell).
+class Shell
+{
+public:
+	unsigned char m_bfmeHeadAAV[0x50];
+	unsigned char m_bfme50AAV;
+};
+
+// bfmeShowAAV (ILT 0x00006AAA) and bfmeGoAAV (ILT 0x000428ED) are pinned
+// under the Shell40D9 spelling, so the calls go through that view; the casts
+// are pointer-size neutral.
 class Shell40D9
 {
 public:
 	void bfmeShowAAV();
 	void bfmeGoAAV(bool a);
-
-	unsigned char m_bfmeHeadAAV[0x50];
-	unsigned char m_bfme50AAV;
 };
 
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 
 extern unsigned char g_bfmeDirtyYH;
 extern int g_bfmeArgAAV;
@@ -94,8 +103,8 @@ void bfmeShutdownAAV(void)
 	}
 
 	TheShell->m_bfme50AAV = 1;
-	TheShell->bfmeShowAAV();
-	TheShell->bfmeGoAAV(true);
+	((Shell40D9 *)TheShell)->bfmeShowAAV();
+	((Shell40D9 *)TheShell)->bfmeGoAAV(true);
 
 	g_bfmeDoneAAV = 1;
 }

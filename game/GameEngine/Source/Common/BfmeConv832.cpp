@@ -104,18 +104,23 @@ int BfmeMsgHandler::checkMsg(int msg, void *p2, void *p3)
 	}
 }
 
-struct BfmeObj4B5
+// Retail global 0x012F4B58 is EA's shell singleton, defined under the
+// canonical spelling (Shell *TheShell); this TU keeps its own view of the
+// pointee but names the class and the global as retail does so the reference
+// resolves to that definition.
+class Shell
 {
+public:
 	unsigned char pad[0x59];
 	char m_flag59;
 };
-extern BfmeObj4B5 *g_obj12F4B58;
+extern Shell *TheShell;
 extern void *g_obj12F495C;
 
 void __stdcall bfmeCheckAndNotify940(void *param)
 {
-	if (g_obj12F4B58) {
-		g_obj12F4B58->m_flag59 = 1;
+	if (TheShell) {
+		TheShell->m_flag59 = 1;
 	}
 	if (g_obj12F495C) {
 		((BfmeMgr19E *)g_rva012F19E8WindowManager)->notify();

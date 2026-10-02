@@ -8,8 +8,12 @@ struct BfmeObj985
 	int m_bfmeMode;
 };
 
-struct BfmeAux985
+// Retail global 0x012F4B58 is EA's shell singleton, defined under the canonical
+// spelling (Shell *TheShell); this TU's view of the pointee keeps that class
+// name so the reference resolves to the definition.
+class Shell
 {
+public:
 	char m_bfmePad[0x50];
 	char m_bfmeFlag;
 };
@@ -21,7 +25,7 @@ public:
 };
 
 extern BfmeObj985 *g_bfmeObj985;
-extern BfmeAux985 *g_bfmeAux985;
+extern Shell *TheShell;
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
@@ -52,7 +56,7 @@ void BfmeA985::bfmeGo985A(int unused)
 
 	p->m_bfmeFlag = 1;
 	g_bfmeObj985->m_bfmeMode = 2;
-	g_bfmeAux985->m_bfmeFlag = 1;
+	TheShell->m_bfmeFlag = 1;
 	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }
 
@@ -67,7 +71,7 @@ void __stdcall bfmeGo985B(int unused)
 
 	p->m_bfmeFlag = 1;
 	g_bfmeObj985->m_bfmeMode = 0;
-	g_bfmeAux985->m_bfmeFlag = 1;
+	TheShell->m_bfmeFlag = 1;
 	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }
 

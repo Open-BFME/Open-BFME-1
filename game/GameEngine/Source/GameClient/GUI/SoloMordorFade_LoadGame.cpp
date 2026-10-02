@@ -53,12 +53,14 @@ public:
 };
 extern Display *TheDisplay;
 
+// Retail global 0x012F4B58 is EA's shell singleton, defined once under the
+// canonical spelling (Shell *TheShell).
 class Shell
 {
 public:
 	void hide(Bool hide);
 };
-extern Shell *g_obj12F4B58;
+extern Shell *TheShell;
 
 // Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
 // game_logic.cpp). This TU reads it through a local view type, so keep the
@@ -116,7 +118,7 @@ int soloMordorFadeLoadGame(int, bool)
 {
 	g_theWindowManager->unidentified_000144bb(-1);
 	TheDisplay->stopMovie();
-	g_obj12F4B58->hide(true);
+	TheShell->hide(true);
 	if (localTheGameLogic()->m_gameMode != 8)
 		localTheGameLogic()->clearGameData(false, false);
 	Glo012F7048->unidentified_00000010(true);
