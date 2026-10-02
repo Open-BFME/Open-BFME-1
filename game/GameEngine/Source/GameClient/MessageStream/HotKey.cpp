@@ -134,17 +134,6 @@ GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage 
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp
-// ??0HotKey@@ present-unmatched
-HotKey::HotKey()
-{
-	m_win = NULL;
-	//Added By Sadullah Nader
-	//Initializations missing and needed
-	m_key.clear();
-	//
-}
-
 // The exact retail constructor is emitted by HotKeyManagerCtorThunk.cpp.
 
 //-----------------------------------------------------------------------------

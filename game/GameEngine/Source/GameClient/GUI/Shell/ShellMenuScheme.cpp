@@ -97,16 +97,6 @@ ShellMenuSchemeLine::~ShellMenuSchemeLine( void )
 {
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/Shell/ShellMenuSchemeImageConstructor.cpp
-// ??0ShellMenuSchemeImage@@QAE@XZ present-unmatched
-ShellMenuSchemeImage::ShellMenuSchemeImage( void )
-{
-	m_name.clear();
-	m_position.x = m_position.y = 0;
-	m_size.x = m_size.x = 0;
-	m_image = NULL;
-}
-
 // ??1ShellMenuSchemeImage@@QAE@XZ present-unmatched
 ShellMenuSchemeImage::~ShellMenuSchemeImage( void )
 {

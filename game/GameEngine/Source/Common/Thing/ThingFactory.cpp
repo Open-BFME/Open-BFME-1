@@ -72,23 +72,6 @@ ThingFactory *TheThingFactory = NULL;  ///< Thing manager singleton declaration
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
-/** Free all data loaded into this template database */
-//-------------------------------------------------------------------------------------------------
-// ?freeDatabase@ThingFactory@@ present-unmatched
-void ThingFactory::freeDatabase( void )
-{
-	while (m_firstTemplate)
-	{
-		ThingTemplate* tmpl = m_firstTemplate;
-		m_firstTemplate = m_firstTemplate->friend_getNextTemplate();
-		tmpl->deleteInstance();
-	}
-
-	m_templateHashMap.clear();
-
-}  // end freeDatabase
-
-//-------------------------------------------------------------------------------------------------
 /** add the thing template passed in, into the databse */
 //-------------------------------------------------------------------------------------------------
 // ?addTemplate@ThingFactory@@ present-unmatched
