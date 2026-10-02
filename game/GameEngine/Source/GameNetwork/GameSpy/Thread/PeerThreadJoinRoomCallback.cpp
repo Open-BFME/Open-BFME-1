@@ -177,7 +177,7 @@ public:
 class PeerThreadClass
 {
 public:
-	void clearPlayerStats(RoomType roomType)
+	void clearStatsForJoinCallback(RoomType roomType)
 	{
 		switch (roomType)
 		{
@@ -238,7 +238,7 @@ void joinRoomCallback(PEER peer, PEERBool success, PEERJoinResult result,
 	{
 	case GroupRoom:
 		{
-			t->clearPlayerStats(GroupRoom);
+			t->clearStatsForJoinCallback(GroupRoom);
 			PeerResponse resp;
 			resp.peerResponseType = 7;
 			resp.joinGroupRoom.id = t->getLocalRoomID();
@@ -254,7 +254,7 @@ void joinRoomCallback(PEER peer, PEERBool success, PEERJoinResult result,
 		break;
 	case StagingRoom:
 		{
-			t->clearPlayerStats(StagingRoom);
+			t->clearStatsForJoinCallback(StagingRoom);
 			PeerResponse resp;
 			resp.peerResponseType = 9;
 			resp.joinStagingRoom.id = t->getLocalRoomID();

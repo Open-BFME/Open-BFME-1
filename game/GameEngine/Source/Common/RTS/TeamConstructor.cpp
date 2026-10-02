@@ -121,7 +121,7 @@ public:
 	}
 
 protected:
-	virtual ~Team() {}
+	virtual ~Team();
 
 private:
 	// The +0x1C member is the file-scope Rva000F4250Hash above: the same

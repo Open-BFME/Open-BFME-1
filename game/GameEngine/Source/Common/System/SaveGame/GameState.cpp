@@ -101,11 +101,7 @@ __declspec(noinline) SaveGameInfo::SaveGameInfo( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1SaveGameInfo@@QAE@XZ present-unmatched
-SaveGameInfo::~SaveGameInfo( void )
-{
 
-}  // end ~SaveGameInfo
 
 // ------------------------------------------------------------------------------------------------
 /** Is this date newer than the other one passed in? */

@@ -467,66 +467,6 @@ WindowMsgHandledType GadgetPushButtonInput( GameWindow *window,
 
 }  // end GadgetPushButtonInput
 
-// GadgetPushButtonSystem =====================================================
-/** Handle system messages for push button */
-//=============================================================================
-WindowMsgHandledType GadgetPushButtonSystem( GameWindow *window, UnsignedInt msg,
-														 WindowMsgData mData1, WindowMsgData mData2 )
-{
-	WinInstanceData *instData = window->winGetInstanceData();
-
-	switch( msg ) 
-	{
-		
-		// ------------------------------------------------------------------------
-		case GGM_SET_LABEL:
-		{
-			// set text into the win instance text data field
-			window->winSetText( *(UnicodeString*)mData1 );
-			break;
-		}
-
-		// ------------------------------------------------------------------------
-		case GWM_CREATE:
-			break;
-
-		// ------------------------------------------------------------------------
-		case GWM_DESTROY:
-		{
-			PushButtonData *pData = (PushButtonData *)window->winGetUserData();
-			if(pData)
-				delete pData;
-			window->winSetUserData(NULL);
-		}
-			break;
-
-		// ------------------------------------------------------------------------
-		case GWM_INPUT_FOCUS:
-
-			if( mData1 == FALSE )
-				BitClear( instData->m_state, WIN_STATE_HILITED );
-			else
-				BitSet( instData->m_state, WIN_STATE_HILITED );
-
-			TheWindowManager->winSendSystemMsg( instData->getOwner(), 
-																					GGM_FOCUS_CHANGE,
-																					(WindowMsgData)mData1, 
-																					window->winGetWindowId() );
-			if( mData1 == FALSE )
-				*(Bool*)mData2 = FALSE;
-			else
-				*(Bool*)mData2 = TRUE;
-			break;
-
-		default:
-			return MSG_IGNORED;
-
-	}  // end switch( msg )
-
-	return MSG_HANDLED;
-
-}  // end GadgetPushButtonSystem
-
 // ------------------------------------------------------------------------------------------------
 /** Set the visual status of a button to make it looked checked/unchecked ... DO NOT send
 	* any actual button selected messages, this is ONLY VISUAL */
