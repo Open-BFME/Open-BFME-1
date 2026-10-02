@@ -1,7 +1,9 @@
 // cl: /EHs-c-
-// Four 31-byte __thiscall const predicates over one packed dword at +4.  Retail
-// (the four differ only in the compared immediate, which runs 0x13, 0x0C, 0x0F
-// and 0x11):
+// Eight 31-byte __thiscall const predicates over one packed dword at +4.  Retail
+// (the eight differ only in the compared immediate, which runs 0x13, 0x0C, 0x0F,
+// 0x11, 0x0A, 0x10, 0x15 and 0x16; for 0x10 MSVC masks with `and cl,0x3F`
+// instead of `and ecx,0x3F`, the same as it does for the other power-of-two
+// type checks in ValuePredicates008C4940.cpp):
 //
 //     mov eax,[ecx+4]
 //     mov ecx,eax ; and ecx,0x3F ; cmp cl,<K> ; jne fail
@@ -26,7 +28,7 @@
 // So the source tests the NEGATION of a byte-typed flag, which is what an
 // inline "is not ..." accessor reads like at its call site.
 //
-// FOUR ROWS, FOUR CONSTANTS, ONE LAYOUT.  Nothing in these bytes distinguishes
+// EIGHT ROWS, EIGHT CONSTANTS, ONE LAYOUT.  Nothing in these bytes distinguishes
 // the class at 0x008A0F20 from the one at 0x008AD030; they are spelled as one
 // class here because the field offset, the mask and the tested bit are all the
 // same, not because anything proves it.
@@ -49,6 +51,10 @@ public:
 	Bool isKind0C(void) const;
 	Bool isKind0F(void) const;
 	Bool isKind11(void) const;
+	Bool isKind0A(void) const;
+	Bool isKind10(void) const;
+	Bool isKind15(void) const;
+	Bool isKind16(void) const;
 };
 
 #define RVA_KIND_PREDICATE( NAME, KIND )                                  \
@@ -62,3 +68,7 @@ RVA_KIND_PREDICATE( isKind13, 0x13 )
 RVA_KIND_PREDICATE( isKind0C, 0x0c )
 RVA_KIND_PREDICATE( isKind0F, 0x0f )
 RVA_KIND_PREDICATE( isKind11, 0x11 )
+RVA_KIND_PREDICATE( isKind0A, 0x0a )
+RVA_KIND_PREDICATE( isKind10, 0x10 )
+RVA_KIND_PREDICATE( isKind15, 0x15 )
+RVA_KIND_PREDICATE( isKind16, 0x16 )
