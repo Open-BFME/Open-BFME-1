@@ -36,8 +36,13 @@
 //
 // IDENTITY IS NOT RECOVERED.  Names are address-derived, including the .rdata
 // datum and the global pointer slot.
+//
+// 0x010E75C0 is retail's vftable of Rva0033C070TailDtor, whose destructor lives
+// in VptrTailJumpDestructors.cpp, so the datum is referenced by its defining
+// mangled name instead of a stand-in that nothing defines.
 
-extern const int Rdata00CE75C0;
+extern "C" const int __identifier("??_7Rva0033C070TailDtor@@6B@")[];
+#define g_bfmeVftRva0033C070TailDtor __identifier("??_7Rva0033C070TailDtor@@6B@")
 
 class Rva00339100
 {
@@ -50,7 +55,7 @@ public:
 
 Rva00339100::Rva00339100()
 {
-	m_target = &Rdata00CE75C0;
+	m_target = g_bfmeVftRva0033C070TailDtor;
 	m_a = 0;
 	m_b = false;
 }

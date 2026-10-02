@@ -4,7 +4,12 @@
 // subsystem; the callback's public owner/name is not recovered, so the
 // function deliberately keeps its retail RVA in its address-derived name.
 
-extern "C" unsigned char g_rva00339a80Vtable[];
+// 0x010E75C0 is retail's vftable of Rva0033C070TailDtor (defined in
+// VptrTailJumpDestructors.cpp), so the stand-in `g_rva00339a80Vtable` is
+// replaced by the defining mangled name rather than kept as an unresolvable
+// data reference.
+extern "C" unsigned char __identifier("??_7Rva0033C070TailDtor@@6B@")[];
+#define g_bfmeVftRva0033C070TailDtor __identifier("??_7Rva0033C070TailDtor@@6B@")
 
 class Rva00339A80ParticleNode;
 extern Rva00339A80ParticleNode *g_rva00339a80Node;
@@ -14,7 +19,7 @@ class Rva00339A80ParticleNode
 public:
 	Rva00339A80ParticleNode()
 	{
-		m_vtable = g_rva00339a80Vtable;
+		m_vtable = g_bfmeVftRva0033C070TailDtor;
 		m_value = 0;
 		m_flag = 0;
 	}
