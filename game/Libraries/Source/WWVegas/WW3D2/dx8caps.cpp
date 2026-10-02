@@ -799,48 +799,36 @@ void DX8Caps::Check_Render_To_Texture_Support(WW3DFormat display_format,const D3
 //! Check Depth Stencil Format Support
 /*! KJM
 */
-// ?Check_Depth_Stencil_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z present-unmatched
+struct Rva0091B750Fields
+{
+	char pad0[0x20b];
+	bool field20B[100];
+	char pad26F[0x2a0 - 0x26f];
+	IDirect3D8 *field2A0;
+};
+
+// Retail RVA0091B750: Compute_Caps calls this after the two texture checks.
+// Its 120-byte body is followed by an 8-byte jump table and 14 selectors.
 void DX8Caps::Check_Depth_Stencil_Support(WW3DFormat display_format, const D3DCAPS8& caps)
 {
-	if (display_format==WW3D_FORMAT_UNKNOWN) 
-	{
-		for (unsigned i=0;i<WW3D_ZFORMAT_COUNT;++i) 
-		{
-			SupportDepthStencilFormat[i]=false;
+	Rva0091B750Fields *retail = reinterpret_cast<Rva0091B750Fields *>(this);
+	if (display_format == WW3D_FORMAT_UNKNOWN) {
+		for (unsigned i = 0; i < 100; ++i) {
+			retail->field20B[i] = false;
 		}
 		return;
 	}
-
-	D3DFORMAT d3d_display_format=WW3DFormat_To_D3DFormat(display_format);
-	
-	for (unsigned i=0;i<WW3D_ZFORMAT_COUNT;++i) 
-	{
-		if (i==WW3D_ZFORMAT_UNKNOWN) 
-		{
-			SupportDepthStencilFormat[i]=false;
-		}
-		else 
-		{
-			WW3DZFormat format=(WW3DZFormat)i;
-			SupportDepthStencilFormat[i]=SUCCEEDED
-			(
-				Direct3D->CheckDeviceFormat
-				(
-					caps.AdapterOrdinal,
-					caps.DeviceType,
-					d3d_display_format,
-					D3DUSAGE_DEPTHSTENCIL,
-					D3DRTYPE_TEXTURE,
-					WW3DZFormat_To_D3DFormat(format)
-				)
-			);
-
-			if (SupportDepthStencilFormat[i]) 
-			{
-				StringClass name(0,true);
-				Get_WW3D_ZFormat_Name(format,name);
-				DXLOG(("Supports depth stencil format: %s\r\n",name));
-			}
+	for (unsigned i = 70; i < 81; ++i) {
+		D3DFORMAT format = (D3DFORMAT)i;
+		switch (format) {
+		case 70: case 71: case 73: case 75: case 77:
+		// The retail selector table includes 82/83 beyond the loop bound.
+		case 79: case 80: case 82: case 83:
+			retail->field20B[i] = SUCCEEDED(
+				retail->field2A0->CheckDeviceFormat(
+					caps.AdapterOrdinal, caps.DeviceType, (D3DFORMAT)display_format,
+					D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, format));
+			break;
 		}
 	}
 }
