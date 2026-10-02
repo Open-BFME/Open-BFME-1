@@ -54,6 +54,14 @@ public:
 
 class SpecialPowerTemplate;
 
+// SpecialPowerStore is a real class (the registration manifest declares it at
+// Common/System/game_engine_subsystems.h:91). Only the name is needed to declare
+// the global with the pointee type its own decorated name carries
+// (?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A), so forward-declare it
+// rather than redeclare it; the read below still goes through the modelling
+// class BfmeSpecialPowerStoreView by cast, which emits nothing.
+class SpecialPowerStore;
+
 // The global this TU reads is the game's TheScriptEngine, whose defining
 // decorated name carries the pointee type
 // (?TheScriptEngine@@3PAVScriptEngine@@A), so the pointee is declared under the
@@ -105,7 +113,7 @@ protected:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern void *TheSpecialPowerStore;
+extern SpecialPowerStore *TheSpecialPowerStore;
 extern void j_000033b4();
 extern void j_000241fe();
 
