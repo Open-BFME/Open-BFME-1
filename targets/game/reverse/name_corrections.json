@@ -14558,5 +14558,15 @@
   "after_sha256": "93861e6f28dc3bcee6dc167db2668e057917b8cc372a096dd3b18d1ff9cfd338",
   "evidence": "targets/game/reverse/identity_evidence/diemodule-slot0-container-ondie.md",
   "reason": "bfmeGo933D is an opaque generator-style emission label, not an established lexical method name. Registered constructors and primary literal getter prove the owner HordeTransportContain; the strict lexical rule requires the method to retain its address until a class-specific witness exists. Ledger correction hashes are the exact old/new CSV row text, as required by ledger_symbol_regressions."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva0042DEF0Noop.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/FXListStoreDefaultVirtuals.cpp",
+  "old_name": "b_0042def0",
+  "new_name": "rva0042DED0Emission",
+  "before_sha256": "fcdb1d800da2933c33359cf453511d76d10734e2f9e701ef40eb944cbd2e1065",
+  "after_sha256": "7aa31e8e104293c2de62a071f064a81a55064ed9a43e394b5c7ed0b05676d5ee",
+  "evidence": "targets/game/reverse/identity_evidence/subsystem-lifecycle-slots.md",
+  "reason": "False cross-body pairing: the removed address-named b_0042def0 is now the proven FXListStore::update at 0x0042DEF0, emitted from the upstream header. The checker pairs it with the new TU first emission anchor for init at 0x0042DED0; that anchor is not a retail identity or replacement method name."
  }
 ]

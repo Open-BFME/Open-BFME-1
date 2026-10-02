@@ -123,3 +123,55 @@ as distinct concrete classes. All listed tables carry slot 2 -> `009A1A50`.
 | TheActionManager | `0xc3ff0` | `0xc3ff8` | `0xc83b90` |
 | TheGameStateMap | `0x1129b0` | `0x1129bf` | `0xc89644` |
 | TheGameState | `0x1111c0` | `0x111207` | `0xc893e0` |
+
+## TerrainRoadCollection and FXListStore
+
+These two independently registered classes use the same proven subsystem
+slots 1/4/5. Their owner evidence, decoded from `GameEngine::init`, is:
+
+| Global literal | Constructor call RVA / ILT / body | Literal push RVA / literal VA | Global push RVA / storage VA | initSubsystem call RVA / ILT / body |
+|---|---|---|---|---|
+| TheTerrainRoads | `00079640 / 00045FF7 / 00601430` | `00079657 / 01076534` | `00079665 / 012F7008` | `0007966A / 000148B2 / 00073550` |
+| TheFXListStore | `00079923 / 00010208 / 0042E020` | `0007993A / 0107642C` | `00079948 / 012F144C` | `0007994D / 0001AC6C / 00073E50` |
+
+Zero Hour explicitly declares `TerrainRoadCollection *TheTerrainRoads`
+(`GameClient/TerrainRoads.h:231`) and `FXListStore *TheFXListStore`
+(`GameClient/FXList.h:222`). The corresponding typed global symbols in
+`dir32_addresses.csv` independently bind to VAs `012F7008` and `012F144C`.
+Thus no class is inferred merely by stripping a `The` prefix.
+
+TerrainRoadCollection's constructor stores VA `01114FD4` at instruction
+`00601440`; FXListStore's stores VA `010F35A4` at `0042E049`. Both tables
+retain the family slot-2 and slot-3 anchors. The lifecycle entries are:
+
+| Owner | Slot | Pointer RVA | ILT RVA | Body RVA | Method |
+|---|---|---|---|---|---|
+| TerrainRoadCollection | 1 | `00D14FD8` | `000117F7` | `00601460` | init |
+| TerrainRoadCollection | 4 | `00D14FE4` | `0002DC90` | `00601470` | reset |
+| TerrainRoadCollection | 5 | `00D14FE8` | `000416FA` | `00601480` | update |
+| FXListStore | 1 | `00CF35A8` | `00040D5E` | `0042DED0` | init |
+| FXListStore | 4 | `00CF35B4` | `00024BF9` | `0042DEE0` | reset |
+| FXListStore | 5 | `00CF35B8` | `00044DAF` | `0042DEF0` | update |
+
+Each body is a complete one-byte RET (`C3`) followed by INT3 padding, and each
+listed stub VA occurs exactly once as a little-endian dword in the whole
+image, at the listed pointer. Their individual registered tables fix the
+owners; no shared or inherited no-op is assigned to a concrete class.
+
+The full lexical/type twins are unmodified Zero Hour
+`GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h:198-209` and
+`GameClient/FXList.h:192-202`. Both classes publicly inherit SubsystemInterface
+and explicitly define public inline `void init() {}`, `void reset() {}`, and
+`void update() {}`. Although these declarations omit the repeated `virtual`
+keyword, overriding a virtual retains virtual dispatch. Therefore all six
+methods use `@@UAEXXZ` (public virtual void, non-const, no arguments), not
+`@@QAEXXZ`. The source TUs include the upstream headers and force those exact
+inline bodies to be emitted. All six existing address-placeholder rows retain
+their original one-byte extents.
+
+The name-regression checker falsely pairs removed address-named helper
+`b_0042def0` with the first emission anchor `rva0042DED0Emission` in the new
+FXListStore TU. They are different bodies: the old RVA `0042DEF0` becomes
+`FXListStore::update`, while that anchor emits init at `0042DED0`. The exact
+source-snapshot entry in name_corrections.json records this false pairing,
+not a descriptive-to-opaque rename of a retail method.
