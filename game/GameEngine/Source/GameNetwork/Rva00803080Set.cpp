@@ -1,11 +1,7 @@
 // cl: /O2 /Ob0
 
-// Retail global at 0x0112C6F4, recorded as ?g_bfmeVftUUA@@3PAPAXA: a stored
-// function pointer. `set` stores the global's own address into m_00, so the
-// extern binds that symbol and the store relocates with the data in a linked
-// build.
-extern "C" const void *bfmeVftUUA[];
-#pragma comment(linker, "/alternatename:_bfmeVftUUA=?g_bfmeVftUUA@@3PAPAXA")
+// Retail global at 0x0112C6F4, recorded as ?g_bfmeVftUUA@@3PAPAXA.
+extern void *g_bfmeVftUUA[];
 
 class Rva00803080
 {
@@ -22,7 +18,7 @@ public:
 Rva00803080 &Rva00803080::set(int a)
 {
 	m_04 = a;
-	m_00 = (void *)bfmeVftUUA;
+	m_00 = (void *)g_bfmeVftUUA;
 	m_08 = 0;
 	m_0C = 0;
 	m_10 = 0;
