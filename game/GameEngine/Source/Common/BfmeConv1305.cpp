@@ -33,11 +33,11 @@ struct BfmeCtxSZA
 	BfmeRecSZA *m_bfmeRec;
 };
 
-void bfmeSymbolSZA(unsigned a, char *buf, unsigned n);
+#include "../../../Libraries/Source/WWVegas/WWDebug/debug_stack.h"
 
 void bfmeGoSZA(BfmeStreamSZA *out, BfmeCtxSZA *ctx)
 {
 	char m_bfmeBuf[0x200];
-	bfmeSymbolSZA(ctx->m_bfmeRec->m_bfmeAddr, m_bfmeBuf, 0x200);
+	DebugStackwalk::Signature::GetSymbol(ctx->m_bfmeRec->m_bfmeAddr, m_bfmeBuf, 0x200);
 	out->bfmeAddSZA("Exception occured at\n")->bfmeAddSZA(m_bfmeBuf)->bfmeAddSZA(".");
 }

@@ -5,8 +5,17 @@ struct BfmeSentenceDataStruct
 {
 	void *surface;
 	int fields[8];
+};
 
-	BfmeSentenceDataStruct &operator=(const BfmeSentenceDataStruct &that);
+// The record take-over this body calls sits at retail 0x0093D9B0 and is
+// defined as BfmeThingFT::bfmeTakeFT
+// (game/GameEngine/Source/Common/BfmeOneHundredNinetyEight.cpp).  Both take
+// `this` plus one pointer and return `this`, so the call site is spelled
+// through the defined name rather than a local assignment operator.
+class BfmeThingFT
+{
+public:
+	BfmeThingFT &bfmeTakeFT(const BfmeThingFT *from);
 };
 
 class BfmeSentenceDataVector
@@ -46,6 +55,7 @@ bool BfmeSentenceDataVector::Add(const BfmeSentenceDataStruct &object)
 	const BfmeSentenceDataStruct *incoming = &object;
 	active_count = index + 1;
 	BfmeSentenceDataStruct *base = vector;
-	base[index] = *incoming;
+	reinterpret_cast<BfmeThingFT *>(base + index)->bfmeTakeFT(
+		reinterpret_cast<const BfmeThingFT *>(incoming));
 	return true;
 }

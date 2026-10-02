@@ -24,7 +24,18 @@ public:
 	int m_id;
 };
 
-void bfmeFreeSizedVF( void *block, unsigned int size );
+// The sized release this body calls is retail 0x007F0170, defined as the
+// class operator delete ? 3Gen007F0170@@SAXPAX@Z
+// (game/GameEngine/Source/Common/S3AllocatorOperatorNewDelete.cpp).  Retail
+// pushes the size as well, so the call goes through that definition with a
+// two-argument pointer type.
+class Gen007F0170
+{
+public:
+	static void operator delete(void *block);
+};
+
+typedef void (__cdecl *Gen007F0170SizedFree)(void *block, unsigned int size);
 
 class BfmeSubSKA
 {
@@ -56,7 +67,7 @@ char BfmeSubSKA::bfmeTestSKA( int id )
 				if ( elem->m_id == id )
 				{
 					reinterpret_cast< Gen_007e86c0 * >( elem )->m();
-					bfmeFreeSizedVF( elem, 0x38 );
+					((Gen007F0170SizedFree)&Gen007F0170::operator delete)( elem, 0x38 );
 					m_array[ i ] = 0;
 					return 1;
 				}
