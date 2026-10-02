@@ -7,8 +7,6 @@
 extern "C" __declspec( dllimport ) int __cdecl sprintf(
 	char *destination, const char *format, ... );
 
-extern char g_aptPalantirNumberFormat[];
-
 struct BfmeScoreScreenPlayerRow
 {
 	int color;
@@ -34,7 +32,7 @@ void BfmeAptScreenScoreScreen::_bfme_getPlayerColor(
 		*(unsigned short *)output = (unsigned short)'0';
 		if( !m_playerTable.empty() &&
 			(unsigned int)index < m_playerTable.size() )
-			sprintf( output, g_aptPalantirNumberFormat,
+			sprintf( output, "%d",
 				m_playerTable[ index ].color );
 	}
 }

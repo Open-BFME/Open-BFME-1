@@ -11,8 +11,6 @@
 extern "C" __declspec(dllimport) int __cdecl sprintf(
 	char *destination, const char *format, ...);
 
-extern char g_aptPalantirNumberFormat[];
-
 class BfmeAptScreenObjectives
 {
 public:
@@ -36,6 +34,6 @@ void BfmeAptScreenObjectives::bfmePlayerColor(
 	if (m_screenType == 1 &&
 		!m_players.empty() &&
 		(unsigned int)selector < m_players.size())
-		sprintf((char *)value, g_aptPalantirNumberFormat,
+		sprintf((char *)value, "%d",
 			m_players[(unsigned int)selector]);
 }

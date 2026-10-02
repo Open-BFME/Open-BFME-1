@@ -24,8 +24,6 @@ void j_0002d727(void);
 extern "C" __declspec( dllimport ) int __cdecl sscanf(
 	const char *source, const char *format, void *output );
 
-extern char g_aptPalantirNumberFormat[];
-
 class Gen_004b5a80
 {
 public:
@@ -86,7 +84,7 @@ void MpGameSetup::_bfme_onInitGadget(
 	}
 
 	unsigned int index;
-	if( sscanf( name, g_aptPalantirNumberFormat, &index ) != 1 || index > 8 )
+	if( sscanf( name, "%d", &index ) != 1 || index > 8 )
 		return;
 
 	const char *leaf = bfmePathLeafAfterMarker( name );
