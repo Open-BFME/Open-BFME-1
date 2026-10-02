@@ -29,7 +29,14 @@ public:
 	BfmeChainResult *bfmeFind(int key);				// ILT 0x0002F52C
 };
 
-extern BfmeChainOwner *TheBfmeChainOwner;				// 0x012F086C
+// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
+// (?TheCaveSystem@@3PAVCaveSystem@@A). The class itself is declared by
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
+// forward-declared here and this TU's own view of it, BfmeChainOwner, is
+// reached through a cast -- no second CaveSystem is declared in this TU.
+class CaveSystem;
+
+extern CaveSystem *TheCaveSystem;					// 0x012F086C
 
 class Gen_002197e0
 {
@@ -74,23 +81,23 @@ private:
 // ?bfmeLookup@Gen_002197e0@@QAEPAXXZ
 void *Gen_002197e0::bfmeLookup(void)
 {
-	return TheBfmeChainOwner->bfmeFind(m_bfme00BC)->bfmeGet_002197e0();
+	return ((BfmeChainOwner *)TheCaveSystem)->bfmeFind(m_bfme00BC)->bfmeGet_002197e0();
 }
 
 // ?bfmeLookup@Gen_00219890@@QAEPAXXZ
 void *Gen_00219890::bfmeLookup(void)
 {
-	return TheBfmeChainOwner->bfmeFind(m_bfme00BC)->bfmeGet_00219890();
+	return ((BfmeChainOwner *)TheCaveSystem)->bfmeFind(m_bfme00BC)->bfmeGet_00219890();
 }
 
 // ?bfmeLookup@Gen_002198b0@@QAEPAXXZ
 void *Gen_002198b0::bfmeLookup(void)
 {
-	return TheBfmeChainOwner->bfmeFind(m_bfme00BC)->bfmeGet_002198b0();
+	return ((BfmeChainOwner *)TheCaveSystem)->bfmeFind(m_bfme00BC)->bfmeGet_002198b0();
 }
 
 // ?bfmeLookup@Gen_002198d0@@QAEPAXXZ
 void *Gen_002198d0::bfmeLookup(void)
 {
-	return TheBfmeChainOwner->bfmeFind(m_bfme00BC)->bfmeGet_002198d0();
+	return ((BfmeChainOwner *)TheCaveSystem)->bfmeFind(m_bfme00BC)->bfmeGet_002198d0();
 }

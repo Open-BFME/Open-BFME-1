@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME6: 0x0021A080. DieMux on *(this-0x24)+8, skip if object status
-// bit 2, then find+unregisterCave through g_bfmeJ1101 and onTunnelDestroyed.
+// bit 2, then find+unregisterCave through TheCaveSystem and onTunnelDestroyed.
 
 class Object;
 class DamageInfo;
@@ -39,7 +39,11 @@ public:
 	BfmeK1101 *bfmeFind1101(int key);
 };
 
-extern BfmeJ1101 *g_bfmeJ1101;
+// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
+// (?TheCaveSystem@@3PAVCaveSystem@@A); ZH spells the same declaration
+// `extern CaveSystem *TheCaveSystem;` in GameLogic/CaveSystem.h. This TU's
+// own view of the class, BfmeJ1101, is reached through a cast.
+extern CaveSystem *TheCaveSystem;
 
 class Gen_0021A080
 {
@@ -61,7 +65,7 @@ void Gen_0021A080::bfmeOnDie(DamageInfo *info)
 	obj = *(Object **)((char *)this - 0x20);
 	if ((reinterpret_cast<const unsigned char *>(obj->m_status)[0] & 4) != 0)
 		return;
-	TunnelTracker *t = (TunnelTracker *)g_bfmeJ1101->bfmeFind1101(m_id);
-	((CaveSystem *)g_bfmeJ1101)->unregisterCave(m_id);
+	TunnelTracker *t = (TunnelTracker *)((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(m_id);
+	TheCaveSystem->unregisterCave(m_id);
 	t->onTunnelDestroyed(*(Object **)((char *)this - 0x20));
 }

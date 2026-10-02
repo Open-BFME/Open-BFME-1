@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME6: 0x00219C70. Guarded find through g_bfmeJ1101, two methods on the
+// Open-BFME6: 0x00219C70. Guarded find through TheCaveSystem, two methods on the
 // result, then a virtual at owner+0x1FC vtable+0x48 and Object::onRemovedFrom.
 
 class Object
@@ -23,7 +23,14 @@ public:
 	class BfmeK1101 *bfmeFind1101(int key);
 };
 
-extern BfmeJ1101 *g_bfmeJ1101;
+// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
+// (?TheCaveSystem@@3PAVCaveSystem@@A). CaveSystem is declared by
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
+// forward-declared here and this TU's own view of it, BfmeJ1101, is reached
+// through a cast rather than a second CaveSystem definition in this TU.
+class CaveSystem;
+
+extern CaveSystem *TheCaveSystem;
 
 class BfmeVirt48
 {
@@ -71,7 +78,7 @@ void Gen_00219C70::bfmeRemove(Object *obj, void *extra)
 {
 	if (obj == 0)
 		return;
-	TunnelTracker *k = (TunnelTracker *)g_bfmeJ1101->bfmeFind1101(m_key);
+	TunnelTracker *k = (TunnelTracker *)((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(m_key);
 	if (!k->isInContainer(obj))
 		return;
 	k->bfmeApply(obj, extra);

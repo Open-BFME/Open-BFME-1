@@ -118,7 +118,14 @@ public:
 	BfmeK1101 *bfmeFind1101(int key);
 };
 
-extern BfmeJ1101 *g_bfmeJ1101;
+// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
+// (?TheCaveSystem@@3PAVCaveSystem@@A). CaveSystem is declared by
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
+// forward-declared here and this TU's own view of it, BfmeJ1101, is reached
+// through a cast rather than a second CaveSystem definition in this TU.
+class CaveSystem;
+
+extern CaveSystem *TheCaveSystem;
 
 class CaveContain
 {
@@ -133,7 +140,7 @@ private:
 // ?changeTeamOnAllConnectedCaves@CaveContain@@QAEXPAVTeam@@_N@Z
 void CaveContain::changeTeamOnAllConnectedCaves(Team *newTeam, Bool setOriginalTeams)
 {
-	BfmeK1101 *myTracker = g_bfmeJ1101->bfmeFind1101(m_caveIndex);
+	BfmeK1101 *myTracker = ((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(m_caveIndex);
 	const _STL::list<ObjectID> *allCaves = myTracker->getContainerList();
 	for (_STL::list<ObjectID>::const_iterator iter = allCaves->begin(); iter != allCaves->end(); ++iter)
 	{

@@ -6,7 +6,14 @@ public:
 	char *bfmeFindTJA(int key);
 };
 
-extern BfmeMgrTJA *g_bfmeMgrTJA;
+// The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
+// (?TheCaveSystem@@3PAVCaveSystem@@A). CaveSystem is declared by
+// game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
+// forward-declared here and this TU's own view of it, BfmeMgrTJA, is reached
+// through a cast rather than a second CaveSystem definition in this TU.
+class CaveSystem;
+
+extern CaveSystem *TheCaveSystem;
 
 class BfmeThingTJA
 {
@@ -18,5 +25,5 @@ public:
 
 char *BfmeThingTJA::bfmeGoTJA()
 {
-	return g_bfmeMgrTJA->bfmeFindTJA(m_bfmeKey) + 8;
+	return ((BfmeMgrTJA *)TheCaveSystem)->bfmeFindTJA(m_bfmeKey) + 8;
 }
