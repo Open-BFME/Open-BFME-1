@@ -20,10 +20,6 @@ Coord2DBase &Coord2DBase::operator=(const Coord2DBase &that)
     return *this;
 }
 
-Coord2D::Coord2D()
-{
-}
-
 Coord2D::Coord2D(const Coord2D &that)
 {
     x = that.x;
@@ -52,10 +48,6 @@ Coord2D::Coord2D(int x, int y)
 {
     this->x = (float)x;
     this->y = (float)y;
-}
-
-Coord2D::~Coord2D()
-{
 }
 
 Coord2D &Coord2D::operator=(const Coord2D &that)
@@ -167,7 +159,7 @@ bool Coord2D::IsExactlyEqualTo(const Coord2D &that) const
     return x == that.x && y == that.y;
 }
 
-float Coord2D::length() const
+inline float Coord2D::length() const
 {
     return (float)sqrt(x * x + y * y);
 }
