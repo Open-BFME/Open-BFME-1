@@ -10,16 +10,16 @@
 // what keeps the zero in a callee-saved register across the copy and gets the
 // byte store duplicated into both paths.
 
-extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
-inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
+static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
 	if (first == last)
 		return destination;
 
 	int bytes = (const char *)last - (const char *)first;
 
-	return (int *)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (int *)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeVecJ
@@ -80,7 +80,7 @@ inline BfmeOwnedJ **bfmeCopyOwned(BfmeOwnedJ **destination, BfmeOwnedJ **first, 
 
 	int bytes = (char *)last - (char *)first;
 
-	return (BfmeOwnedJ **)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (BfmeOwnedJ **)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeVecK

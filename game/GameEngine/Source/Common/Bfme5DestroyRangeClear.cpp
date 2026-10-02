@@ -5,7 +5,7 @@
 // object a stack slot, writes its one byte there and pushes the whole word,
 // which is why the prologue reserves four bytes it otherwise never uses.
 
-extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
 class BfmeAllocL
 {
@@ -20,14 +20,14 @@ public:
 
 char __cdecl bfmeDestroyRange(int *first, int *last, BfmeAllocL allocator);	// retail thunk 0x0002376D -> 0x0042376D
 
-inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
+static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
 	if (first == last)
 		return destination;
 
 	int bytes = (const char *)last - (const char *)first;
 
-	return (int *)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (int *)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeVecL

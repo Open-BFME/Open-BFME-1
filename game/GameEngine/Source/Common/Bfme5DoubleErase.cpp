@@ -12,7 +12,7 @@
 // or through a pointer to the member -- MSVC sinks the first vector's store
 // past the load and the self-compare of the second.
 
-extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
 inline int *bfmeCopyInts(int *destination, const int *first, const int *last)
 {
@@ -37,7 +37,7 @@ inline void **bfmeCopySlots(void **destination, void **first, void **last)
 
 	int bytes = (char *)last - (char *)first;
 
-	return (void **)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (void **)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class BfmeIntVecG
