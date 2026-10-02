@@ -2,7 +2,7 @@
 
 extern void d_00904be0(void);
 extern void W3DRadarResetLock(void);
-extern void BFME_DX8_Thread_Assert(void);
+extern char __cdecl bfmeUnlock1179(void);
 
 typedef void *(__cdecl *Rva00904Be0)(int, int, int, int, int, int);
 
@@ -76,7 +76,7 @@ void Rva0090C2F0Inner::go(int arg1, int arg2, int arg3, int arg4, int arg5, int 
 
 	W3DRadarResetLock();
 	m_08 = ((Rva00904Be0)d_00904be0)(arg1, arg2, arg3, arg4, mode, flags);
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 	m_24 = arg1;
 	m_2C = arg1;
 	m_28 = arg2;

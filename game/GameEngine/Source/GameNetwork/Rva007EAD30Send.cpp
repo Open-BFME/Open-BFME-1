@@ -7,6 +7,40 @@ class Rva007EA380Owner;
 void __cdecl rva007EAD10BindCallback(Rva007EA320Owner *owner, void *first, void *second);
 void __cdecl rva007EADA0BindCallback(Rva007EA380Owner *owner, void *first, void *second);
 
+class BfmeThingUNB;
+class Rva007F9B80;
+class Rva00803080;
+
+class Rva007EAA70Owner
+{
+public:
+	void prepare();
+
+private:
+	char m_pad00[4];
+	void *m_04;
+	char m_pad08[0x260];
+	BfmeThingUNB *m_268;
+	Rva007F9B80 *m_26C;
+	char m_pad270[0x10];
+	void *m_280;
+};
+
+class Rva007EAB40Owner
+{
+public:
+	void prepare();
+
+private:
+	char m_pad00[4];
+	void *m_04;
+	char m_pad08[0x27C];
+	BfmeThingUNB *m_284;
+	Rva007F9B80 *m_288;
+	char m_pad28C[0x10];
+	void *m_29C;
+};
+
 class Rva007EADIface
 {
 public:
@@ -21,7 +55,6 @@ class Rva007EAD30Owner
 {
 public:
 	void send();
-	void prepare();
 
 private:
 	char m_pad00[0x0C];
@@ -38,7 +71,6 @@ class Rva007EADC0Owner
 {
 public:
 	void send();
-	void prepare();
 
 private:
 	char m_pad00[0x0C];
@@ -53,7 +85,7 @@ private:
 
 void Rva007EAD30Owner::send()
 {
-	prepare();
+	((Rva007EAA70Owner *)this)->prepare();
 	char *flag = &m_flag;
 	if (m_flag)
 	{
@@ -70,7 +102,7 @@ void Rva007EAD30Owner::send()
 
 void Rva007EADC0Owner::send()
 {
-	prepare();
+	((Rva007EAB40Owner *)this)->prepare();
 	char *flag = &m_flag;
 	if (m_flag)
 	{
