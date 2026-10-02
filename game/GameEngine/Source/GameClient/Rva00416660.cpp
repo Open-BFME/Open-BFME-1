@@ -6,7 +6,33 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "PreRTS.h"
 #include "GameClient/Drawable.h"
-#include "../Common/Rva00412140Ctor.cpp"
+class Rva00412140
+{
+	void *m_00;
+	int m_04;
+	int m_08;
+	int m_0C;
+	int m_10;
+	int m_14;
+	int m_18;
+	int m_1C;
+	int m_20;
+	int m_24;
+	int m_28;
+	int m_2C;
+	int m_30;
+	int m_34;
+	char m_38;
+	char m_39;
+	int m_3C;
+	int m_40;
+	int m_44;
+	int m_48;
+	int m_4C;
+
+public:
+	Rva00412140();
+};
 struct Rva00416660EnvelopeView { char head[0x38]; unsigned char mode; };
 struct Rva00416660Global { char head[0x2C]; RGBColor color; int first,second; char pad40[8]; float scale; char pad4C[0xA8-0x4C]; int mode; };
 class BfmeGlobCC0;

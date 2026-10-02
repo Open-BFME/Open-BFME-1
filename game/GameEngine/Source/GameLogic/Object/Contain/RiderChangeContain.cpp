@@ -219,29 +219,6 @@ void RiderChangeContain::createPayload()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContainUpdate.cpp
-// ?update@RiderChangeContain@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime RiderChangeContain::update()
-{
-	if( m_scuttledOnFrame != 0 )
-	{
-		//Bike in the process of getting scuttled.
-		const RiderChangeContainModuleData *data = getRiderChangeContainModuleData();
-		UnsignedInt now = TheGameLogic->getFrame();
-		if( m_scuttledOnFrame + data->m_scuttleFrames <= now )
-		{
-			//We have scuttled the bike (at least as far as tipping it over via scuttle animation. Now
-			//kill the bike in a way that will cause it to sink into the ground without any real destruction.
-			getObject()->kill( DAMAGE_UNRESISTABLE, DEATH_TOPPLED ); //Sneaky, eh? Toppled heheh.
-		}
-	}
-	// extend base class
-// ?update@TransportContain@@ present-unmatched
-	return TransportContain::update(); //extend
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
 // ?unreserveDoorForExit@RiderChangeContain@@UAEXW4ExitDoorType@@@Z present-unmatched
 void RiderChangeContain::unreserveDoorForExit( ExitDoorType exitDoor )
 {

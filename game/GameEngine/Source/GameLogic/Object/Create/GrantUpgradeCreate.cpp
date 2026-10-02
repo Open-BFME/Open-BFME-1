@@ -58,15 +58,6 @@ struct GrantUpgradeStatusBits12
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreateModuleDataCtor.cpp
-// ??0GrantUpgradeCreateModuleData@@QAE@XZ present-unmatched
-GrantUpgradeCreateModuleData::GrantUpgradeCreateModuleData()
-{
-	m_upgradeName = "";
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
 // ?buildFieldParse@GrantUpgradeCreateModuleData@@ present-unmatched
 void GrantUpgradeCreateModuleData::buildFieldParse(MultiIniFieldParse& p)
 {

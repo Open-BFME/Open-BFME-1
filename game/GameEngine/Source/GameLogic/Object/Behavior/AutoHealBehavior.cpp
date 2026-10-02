@@ -107,57 +107,6 @@ struct BfmeAutoHealDamageData
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorCtorThunk.cpp
-// ??0AutoHealBehavior@@ present-unmatched
-// I claimed here that AutoHealBehaviorCtorThunk.cpp does not hold this body, and
-// that was WRONG. Call sites settle it: several ?friend_newModuleInstance@
-// factories -- AutoHealBehavior's own, and SpyVisionUpdate's, EMPUpdate's and
-// FireOCLAfterWeaponCooldownUpdate's -- are matched rows that all CALL the stub
-// at 0x00048B9E to construct their object. Retail folded those constructors onto
-// one body, which is exactly what I argued it could not do.
-//
-// The row is restored and the cluster marker with it. A call site that names the
-// symbol beats any inference from stub topology: the unique-stub test says which
-// body a stub reaches, not whose the body is when it is shared.
-AutoHealBehavior::AutoHealBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
-{
-	const AutoHealBehaviorModuleData *d = getAutoHealBehaviorModuleData();
-
-	m_radiusParticleSystemID = INVALID_PARTICLE_SYSTEM_ID;
-	m_soonestHealFrame = 0;
-	m_stopped = false;
-	Object *obj = getObject();
-
-	{
-		if( d->m_radiusParticleSystemTmpl )
-		{
-			ParticleSystem *particleSystem;
-
-			particleSystem = TheParticleSystemManager->createParticleSystem( d->m_radiusParticleSystemTmpl );
-			if( particleSystem )
-			{
-				particleSystem->setPosition( obj->getPosition() );
-				m_radiusParticleSystemID = particleSystem->getSystemID();
-			}
-		}
-	}
-
-	if (d->m_initiallyActive)
-	{
-		giveSelfUpgrade();
-		// start these guys with random phasings so that we don't
-		// have all of 'em check on the same frame.
-		UnsignedInt delay = getAutoHealBehaviorModuleData()->m_healingDelay;
-		setWakeFrame(getObject(), UPDATE_SLEEP(GameLogicRandomValue(1, delay)));
-	}
-	else
-	{
-		setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // ??1AutoHealBehavior@@ present-unmatched
 AutoHealBehavior::~AutoHealBehavior( void )
 {
