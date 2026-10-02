@@ -15,7 +15,20 @@ struct Bfme5FreeTable
 };
 
 extern Bfme5FreeTable *g_bfme5FreeTable;
-extern unsigned short g_bfme5SharedEmpty;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU only bumps its leading unsigned short, so it views the block through
+// that member and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+static inline unsigned short *bfme5SharedEmptyRef()
+{
+	return (unsigned short *)&g_rva012D5298Empty;
+}
 
 class Bfme5AttachNodeA
 {
@@ -41,8 +54,8 @@ void Bfme5AttachNodeA::bfmeAttach(void)
 		if (--*h == 0)
 			g_bfme5FreeTable->m_bfmeF1(h);
 
-		m_bfmeStr.m_bfmeData = &g_bfme5SharedEmpty;
-		++g_bfme5SharedEmpty;
+		m_bfmeStr.m_bfmeData = bfme5SharedEmptyRef();
+		++*bfme5SharedEmptyRef();
 	}
 }
 
@@ -70,7 +83,7 @@ void Bfme5AttachNodeB::bfmeAttach(void)
 		if (--*h == 0)
 			g_bfme5FreeTable->m_bfmeF1(h);
 
-		m_bfmeStr.m_bfmeData = &g_bfme5SharedEmpty;
-		++g_bfme5SharedEmpty;
+		m_bfmeStr.m_bfmeData = bfme5SharedEmptyRef();
+		++*bfme5SharedEmptyRef();
 	}
 }

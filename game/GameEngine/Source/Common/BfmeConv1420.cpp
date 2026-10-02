@@ -19,7 +19,15 @@ struct BfmeHdrVLU
 	char m_bfme08[1];
 };
 
-extern BfmeHdrVLU g_bfmeEmptyVLU;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU keeps its own local view of the block and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class BfmeStrVLU
 {
@@ -43,8 +51,8 @@ BfmeStrVLU *BfmeStrVLU::bfmeInitVLU(int c, unsigned n)
 	}
 	else
 	{
-		m_bfme00 = &g_bfmeEmptyVLU;
-		++g_bfmeEmptyVLU.m_bfme00;
+		m_bfme00 = (BfmeHdrVLU *)&g_rva012D5298Empty;
+		++((BfmeHdrVLU *)&g_rva012D5298Empty)->m_bfme00;
 	}
 	return this;
 }

@@ -11,14 +11,22 @@ struct Rva008AF210StringPool
 	void *m_unused;
 	void (__cdecl *free)(void *);
 };
-extern Rva008AF210StringData g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU keeps its own local view of the block and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern Rva008AF210StringPool *g_bfmeStringPool1284;
 class Rva8CD130String
 {
 public:
-	Rva8CD130String() : m_data(&g_bfmeDefaultString1284)
+	Rva8CD130String() : m_data((Rva008AF210StringData *)&g_rva012D5298Empty)
 	{
-		++g_bfmeDefaultString1284.m_refCount;
+		++((Rva008AF210StringData *)&g_rva012D5298Empty)->m_refCount;
 	}
 	~Rva8CD130String()
 	{

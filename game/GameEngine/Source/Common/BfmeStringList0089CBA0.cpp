@@ -19,7 +19,15 @@ class BfmeString0089CBA0
 	BfmeStringData0089CBA0 *m_data;
 };
 
-extern "C" char g_bfmeEmptyString1285[];
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU only compares its address, through its own local view of the block.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 int bfmeCompareVSC(const char *left, const char *right);
 
 class BfmeStringList0089CBA0
@@ -37,7 +45,7 @@ BfmeStringEntry0089CBA0 *BfmeStringList0089CBA0::find(const BfmeString0089CBA0 &
 	{
 		BfmeStringEntry0089CBA0 *entry = m_array + i;
 		BfmeStringData0089CBA0 *data = entry->m_data;
-		if (data != 0 && data != reinterpret_cast<BfmeStringData0089CBA0 *>(g_bfmeEmptyString1285))
+		if (data != 0 && data != (BfmeStringData0089CBA0 *)&g_rva012D5298Empty)
 		{
 			BfmeStringData0089CBA0 *keyData = *reinterpret_cast<BfmeStringData0089CBA0 * const *>(&key);
 			if (data == keyData)

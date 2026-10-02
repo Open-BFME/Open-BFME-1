@@ -13,7 +13,15 @@ struct BfmeSlotC880
 	void *m_held;
 };
 
-extern void *g_emptyStringData;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU only compares its address, never a field.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class Gen0089C880
 {
@@ -60,7 +68,7 @@ void Gen0089C880::handle()
 		do
 		{
 			void *key = m_array[i].m_key;
-			if (key != 0 && key != &g_emptyStringData)
+			if (key != 0 && key != &g_rva012D5298Empty)
 			{
 				void *held = m_array[i].m_held;
 				if ((unsigned)held & 1)

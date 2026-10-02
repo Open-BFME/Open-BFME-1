@@ -16,7 +16,15 @@ struct BfmeHdrVKI
 typedef void *(__cdecl *BfmeAllocFnVKI)(unsigned n);
 
 extern BfmeAllocFnVKI *g_bfmeAllocVKI;
-extern BfmeHdrVKI g_bfmeEmptyVKI;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU keeps its own local view of the block and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class BfmeStrVKI
 {
@@ -30,8 +38,8 @@ void BfmeStrVKI::bfmeSetVKI(const char *s)
 {
 	if (*s == 0)
 	{
-		m_bfme00 = &g_bfmeEmptyVKI;
-		++g_bfmeEmptyVKI.m_bfme00;
+		m_bfme00 = (BfmeHdrVKI *)&g_rva012D5298Empty;
+		++((BfmeHdrVKI *)&g_rva012D5298Empty)->m_bfme00;
 		return;
 	}
 	int len = strlen(s);

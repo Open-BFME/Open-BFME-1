@@ -12,7 +12,15 @@ struct BfmeStringPoolVKI
 	void (__cdecl *free)(void *);
 };
 
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU keeps its own local view of the block and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern BfmeStringPoolVKI *g_bfmeStringPool1284;
 
 class BfmeStrEAW
@@ -20,9 +28,9 @@ class BfmeStrEAW
 public:
 	BfmeStrEAW()
 	{
-		g_bfmeDefaultString1284.m_refCount++;
+		((BfmeStringData3AF0 *)&g_rva012D5298Empty)->m_refCount++;
 
-		m_data = &g_bfmeDefaultString1284;
+		m_data = (BfmeStringData3AF0 *)&g_rva012D5298Empty;
 	}
 	~BfmeStrEAW()
 	{

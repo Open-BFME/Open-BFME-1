@@ -10,7 +10,15 @@ struct Rva00899770Block
 	char m_text[1];
 };
 
-extern Rva00899770Block g_default012D5298;
+// The shared empty EA string block at 0x012D5298 is defined once, as
+// EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
+// this TU keeps its own local view of the block and casts at each use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 struct Rva00899770Pool
 {
@@ -26,8 +34,8 @@ struct Rva00899770String
 
 	Rva00899770String()
 	{
-		m_block = &g_default012D5298;
-		++g_default012D5298.m_ref;
+		m_block = (Rva00899770Block *)&g_rva012D5298Empty;
+		++((Rva00899770Block *)&g_rva012D5298Empty)->m_ref;
 	}
 
 	~Rva00899770String()
