@@ -112,7 +112,8 @@ public:
 	Rva00595160 m_subobject;
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class Rva002EE330PlayerList
 {
@@ -202,8 +203,8 @@ void Object::rva001CE530()
 	TheRadar->removeObject(this);
 	TheAI->m_pathfinder->removeObjectFromPathfindMap(this);
 
-	if (Glo012F4B98 != 0)
-		Glo012F4B98->m_subobject.update((Rva00595160Argument *)this);
+	if (TheAptPalantir != 0)
+		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_subobject.update((Rva00595160Argument *)this);
 
 	((BfmeThingXV *)this)->bfmeStopXV();
 	((Gen001C8010 *)this)->setSold();

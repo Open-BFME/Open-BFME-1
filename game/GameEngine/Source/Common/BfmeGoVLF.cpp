@@ -13,16 +13,17 @@ public:
 	char m_flag;
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 // ?bfmeGoVLF@@YAXXZ
 void bfmeGoVLF()
 {
-	BfmeGoVLFCallback *slot = &Glo012F4B98->m_callback;
+	BfmeGoVLFCallback *slot = &reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_callback;
 	BfmeGoVLFCallback callback = *slot;
 	if( callback != 0 )
 	{
-		callback( Glo012F4B98->m_flag != 0 );
+		callback( reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_flag != 0 );
 		*slot = 0;
 	}
 }

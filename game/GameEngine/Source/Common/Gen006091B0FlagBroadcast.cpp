@@ -127,7 +127,8 @@ public:
 	void run();
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 #pragma comment(linker, "/alternatename:?run@Glo012F4B98Type@@QAEXXZ=?bfmeRun_00589680@@YAXXZ")
 
@@ -220,7 +221,7 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 		TheControlBar->slot14();
 	}
 
-	Glo012F4B98->run();
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->run();
 
 	TheGameLogic->m_field11D = m_bfmeFlag;
 

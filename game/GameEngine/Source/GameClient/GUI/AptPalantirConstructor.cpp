@@ -146,6 +146,8 @@ private:
 	Coord2D m_coords564[4];
 };
 
+AptPalantir *TheAptPalantir = 0;
+
 extern const char Rva006A16B0Empty[];
 
 static char *bfmeString( const AsciiString &value )
