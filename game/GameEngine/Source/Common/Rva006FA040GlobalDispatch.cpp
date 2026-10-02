@@ -20,20 +20,31 @@ public:
     virtual void invokeAlternate(int value) = 0;
 };
 
-extern Rva006FA040Target *g_Rva012F6464Target;
+// Retail's global at 0x012F64BC is TheParticleSystemManager, proven by the DIR32
+// of updateSubObjectsFromShroud and the initSubsystem<ParticleSystemManager>
+// registration site that pushes its address. Only the pointer's decorated name
+// matters here, so the class is forward declared by that defining name rather
+// than pulled in: the manifest stub in System/game_engine_subsystems.h derives
+// from SubsystemInterface and declares none of the slots these two bodies
+// dispatch through, so it cannot spell the calls. The vtable shape stays
+// described by Rva006FA040Target below, which is exactly the shape that was
+// already proven against retail's bytes (+0x2C and +0x30).
+class ParticleSystemManager;
+
+extern ParticleSystemManager *TheParticleSystemManager;
 
 void Rva006FA040Invoke(int value)
 {
-    if (g_Rva012F6464Target != 0)
+    if (TheParticleSystemManager != 0)
     {
-        g_Rva012F6464Target->invoke(value);
+        reinterpret_cast<Rva006FA040Target *>(TheParticleSystemManager)->invoke(value);
     }
 }
 
 void Rva006FA0A0Invoke(int value)
 {
-    if (g_Rva012F6464Target != 0)
+    if (TheParticleSystemManager != 0)
     {
-        g_Rva012F6464Target->invokeAlternate(value);
+        reinterpret_cast<Rva006FA040Target *>(TheParticleSystemManager)->invokeAlternate(value);
     }
 }
