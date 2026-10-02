@@ -470,43 +470,7 @@ void ResetBattleHonorInsertion(void)
 {
 	rowsToSkip = 0;
 }
-void InsertBattleHonor(GameWindow *list, const Image *image, Bool enabled, Int itemData, Int& row, Int& column, UnicodeString text = UnicodeString::TheEmptyString, Int extra = 0)
-{
-	Int width = MAX_BATTLE_HONOR_IMAGE_WIDTH * (TheDisplay->getWidth() / 800.0f);
-	Int height = MAX_BATTLE_HONOR_IMAGE_HEIGHT * (TheDisplay->getHeight() / 600.0f);
-
-	static Int enabledColor = 0xFFFFFFFF;
-	static Int disabledColor = GameMakeColor(80, 80, 80, 255);
-	Int color;
-	if (enabled)
-		color = enabledColor;
-	else
-		color = disabledColor;
-	
-	if (!enabled)
-		itemData |= BATTLE_HONOR_NOT_GAINED;
-
-	GadgetListBoxAddEntryImage(list, image, row, column, height, width, TRUE, color);
-	GadgetListBoxSetItemData(list, (void *)itemData, row, column );
-	GadgetListBoxSetItemData(list, (void *)extra, row - 1, column );
-
-	/*
-	** removing text, since every place that adds text has alternate displays of the same thing
-	if (!text.isEmpty())
-	{
-		GadgetListBoxAddEntryText(list, text, GameSpyColor[GSCOLOR_DEFAULT], row+1, column, TRUE );
-		GadgetListBoxSetItemData(list, (void *)itemData, row+1, column );
-		rowsToSkip++;
-	}
-	*/
-
-	if(++column >= GadgetListBoxGetNumColumns(list))
-	{
-		column = 0;
-		row = row + 1 + rowsToSkip;
-		rowsToSkip = max(rowsToSkip-1, 0);
-	}
-}
+void InsertBattleHonor(GameWindow *list, const Image *image, Bool enabled, Int itemData, Int& row, Int& column, UnicodeString text = UnicodeString::TheEmptyString, Int extra = 0);
 
 static void populateBattleHonors(const PSPlayerStats& stats, Int battleHonors, Int gamesInRow, Int lastGen, Int challenge, GameWindow *list)
 {

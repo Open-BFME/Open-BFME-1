@@ -1136,15 +1136,6 @@ void RTS3DScene::flushOccludedObjects(RenderInfoClass & rinfo)
 //=============================================================================
 /** Returns an iterator of the lights in the scene. */
 //=============================================================================
-// ?createLightsIterator@RTS3DScene@@QAEPAV?$RefMultiListIterator@VRenderObjClass@@@@XZ present-unmatched
-RefRenderObjListIterator * RTS3DScene::createLightsIterator(void)
-{
-	RefRenderObjListIterator * it = NEW RefRenderObjListIterator(&LightList);	// poolify
-	return it;
-}
-
-
-//=============================================================================
 // RTS3DScene::destroyLightsIterator
 //=============================================================================
 /** Destroys the iterator returned by createLightsIterator. */

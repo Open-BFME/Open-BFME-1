@@ -753,21 +753,7 @@ void MeshClass::Replace_VertexMaterial(VertexMaterialClass* vmat,VertexMaterialC
  * HISTORY:                                                                                    *
  *   4/2/2001   hy : Created.                                                                  *
  *=============================================================================================*/
-// ?MeshClass::Make_Unique present-unmatched
-void MeshClass::Make_Unique(bool force_meshmdl_clone)
-{
-	// Usually we will not clone the mesh model if it is already unique - force_meshmdl_clone will
-	// force it to be cloned in any case. This is used in some special situations, for example if we
-	// want to change this mesh and it may have already been rendered, we need to clone the mesh
-	// model regardless of whether there is another mesh using it.
-	if (Model->Num_Refs()==1 && !force_meshmdl_clone) return;
-
-	MeshModelClass *newmesh=NEW_REF(MeshModelClass,(*Model));
-	REF_PTR_SET(Model,newmesh);
-	REF_PTR_RELEASE(newmesh);
-}
-
-/*********************************************************************************************** 
+/***********************************************************************************************
  * MeshClass::Load -- creates a mesh out of a mesh chunk in a .w3d file                        * 
  *                                                                                             * 
  * INPUT:                                                                                      * 
@@ -1257,7 +1243,6 @@ int MeshClass::Get_Draw_Call_Count(void) const
 		return 0;
 	}
 }
-
 
 
 

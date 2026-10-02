@@ -101,6 +101,11 @@ __declspec(noinline) void bfmeConstructDeliverPayloadNuggetPayload(
 #include "GameLogic/Module/RadiusDecalUpdate.h"
 #include "GameLogic/Object.h"
 #include "GameLogic/ObjectCreationList.h"
+namespace _STL
+{
+	extern template _Vector_base<ObjectCreationNugget *, allocator<ObjectCreationNugget *> >::_Vector_base(
+		unsigned int, const allocator<ObjectCreationNugget *> &);
+}
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Weapon.h"

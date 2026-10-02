@@ -433,36 +433,6 @@ void GadgetComboBoxSetColors( GameWindow *comboBox,
 	}
 }  // end GadgetComboBoxSetColors
 
-// GadgetComboBoxSetIsEditable ================================================
-/** Sets up the Text Entry gadget as editable or not */
-//=============================================================================
-void GadgetComboBoxSetIsEditable(GameWindow *comboBox, Bool isEditable  )
-{
-	ComboBoxData *comboData = (ComboBoxData *)comboBox->winGetUserData();	
-	GameWindow *editBox = GadgetComboBoxGetEditBox(comboBox);
-	UnsignedInt status ;
-	if(!editBox)
-	 return;
-
-	comboData->isEditable = isEditable;
-	if (isEditable)
-	{
-		status = editBox->winGetStatus();
-		
-		BitClear(status, WIN_STATUS_NO_INPUT);
-//		BitClear(status, WIN_STATUS_NO_FOCUS);
-		editBox->winSetStatus(status);
-	}
-	else
-	{
-		status = editBox->winGetStatus();
-		
-		BitSet(status, WIN_STATUS_NO_INPUT);
-//		BitSet(status, WIN_STATUS_NO_FOCUS);
-		editBox->winSetStatus(status);
-	}
-}//void GadgetComboBoxSetIsEditable(GameWindow *comboBox, Int maxChars )
-
 // GadgetComboBoxSetIsAsciiOnly ==================================================
 /** Get the text the Combo Box */
 //=============================================================================
