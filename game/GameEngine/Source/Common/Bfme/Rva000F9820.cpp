@@ -1,6 +1,6 @@
 // Retail 0x000F9820 (143 bytes).
 // The address-derived owner uses the matched BfmeVecVLH accessor and the
-// pinned factory, lookup, and time-calculation callees.
+// matched BfmeThingFactory::findTemplate lookup.
 
 struct Rva000F9820Record
 {
@@ -30,14 +30,13 @@ public:
 	void *evaluate(void *argument);
 };
 
-class AsciiStringBN
-{
-};
+class AsciiString;
+class ThingTemplate;
 
-class BfmeOtherBN
+class BfmeThingFactory
 {
 public:
-	void *bfmeLookupBN(const AsciiStringBN &record);
+	const ThingTemplate *findTemplate(const AsciiString &record);
 };
 
 class BfmeUseB980
@@ -87,7 +86,7 @@ float Rva000F9820::getValue(int divisor, int *out)
 		}
 
 		key = (void *)value10;
-		product = (BfmeUseB980 *)((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(*reinterpret_cast<const AsciiStringBN *>(record));
+		product = (BfmeUseB980 *)((BfmeThingFactory *)TheThingFactory)->findTemplate(*reinterpret_cast<const AsciiString *>(record));
 		if (product)
 		{
 			value = (int)product->bfmeApply980B((int)key, record->value34);

@@ -34,10 +34,18 @@ public:
 
 #undef SKYBOX_SLOT
 
-class WaterSkyBoxSettingsOwner
+class WaterSkyBoxScaleOwner
 {
 public:
 	void setSkyBoxScale(const float *scale);
+
+	unsigned char m_beforeSkyBox[0x250];
+	SkyBoxRenderObject *m_skyBox;
+};
+
+class WaterSkyBoxSettingsOwner
+{
+public:
 	void setSkyBoxRotation007A15A0(const float *rotation);
 	void setSkyBoxTexture007A58C0(const AsciiString *texture);
 
@@ -45,8 +53,8 @@ public:
 	SkyBoxRenderObject *m_skyBox;
 };
 
-// Retail's global is a WaterRenderObjClass *; the sky box owner view used
-// below sits at the same offsets, so the owner spelling is cast on use.
+// Retail's global is a WaterRenderObjClass *. Both TU-local setter views below
+// use the same offsets; their distinct class names preserve each setter symbol.
 class WaterRenderObjClass;
 
 extern WaterRenderObjClass *TheWaterRenderObj;
@@ -62,7 +70,7 @@ void dup_007A5AB0()
 	}
 	{
 		float scale = 1.0f;
-		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+		reinterpret_cast<WaterSkyBoxScaleOwner *>(TheWaterRenderObj)
 			->setSkyBoxScale(&scale);
 	}
 	{
