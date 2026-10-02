@@ -6,6 +6,7 @@
 
 #include "PreRTS.h"
 #include "Common/RandomValue.h"
+#include "Common/TunnelTracker.h"
 #include "GameLogic/AIPathfind.h"
 #include "GameLogic/Module/AIUpdate.h"
 #include "GameLogic/Module/TunnelContain.h"
@@ -51,4 +52,29 @@ void TunnelContain::scatterToNearbyPosition(Object *obj)
 	} else {
 		reinterpret_cast<Thing *>(obj)->setPosition(&pos);
 	}
+}
+
+// Retail 0x0022F300. Use the real class declarations with BFME offsets.
+// See diemodule-slot0-container-ondie.md for identity and the +0x28 die base.
+static inline TunnelTracker *Rva0022F300Tracker(const Player *player)
+{
+    return *reinterpret_cast<TunnelTracker *const *>(reinterpret_cast<const char *>(player) + 0x22c);
+}
+void TunnelContain::onDie(const DamageInfo *damageInfo)
+{
+    // ZH puts module data/Object four bytes later; use its inline accessors
+    // through a local shifted view. No virtual calls use this shifted pointer.
+    TunnelContain *layout = reinterpret_cast<TunnelContain *>(reinterpret_cast<char *>(this) - 4);
+    if (!layout->getTunnelContainModuleData()->m_dieMuxData.isDieApplicable(layout->getObject(), damageInfo))
+        return;
+    if (!*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0xd5))
+        return;
+    Player *player = layout->getObject()->getControllingPlayer();
+    if (player == NULL)
+        return;
+    TunnelTracker *tracker = Rva0022F300Tracker(player);
+    if (tracker == NULL)
+        return;
+    tracker->onTunnelDestroyed(layout->getObject());
+    *reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0xd5) = FALSE;
 }
