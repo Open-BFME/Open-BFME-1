@@ -559,9 +559,18 @@ def _row_key(row):
 
 def _fetch_master(root=None):
     """origin/master's sha after a fetch, or None."""
-    if _git("fetch", "-q", "--no-tags", REMOTE, "master", cwd=root, timeout=300).returncode:
+    fetched = _git("fetch", "-q", "--no-tags", REMOTE, "master", cwd=root, timeout=300)
+    if fetched.returncode:
+        print(f"claims: git fetch {REMOTE} master failed (exit {fetched.returncode}): "
+              f"{fetched.stderr.strip() or '(no stderr)'}", file=sys.stderr)
         return None
-    return _git("rev-parse", "FETCH_HEAD", cwd=root).stdout.strip() or None
+    resolved = _git("rev-parse", "FETCH_HEAD", cwd=root)
+    if resolved.returncode or not resolved.stdout.strip():
+        print(f"claims: git rev-parse FETCH_HEAD failed (exit {resolved.returncode}"
+              f"{', empty stdout' if not resolved.stdout.strip() else ''}): "
+              f"{resolved.stderr.strip() or '(no stderr)'}", file=sys.stderr)
+        return None
+    return resolved.stdout.strip()
 
 
 def _rows_at(rev, root=None):

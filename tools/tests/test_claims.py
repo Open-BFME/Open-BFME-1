@@ -443,3 +443,58 @@ def test_a_trailer_naming_an_old_lease_does_not_release_a_fresh_claim(hosts):
     assert fresh.leases[0x300] != old.leases[0x300]
     assert claims.release_landed(sha)[0] == []
     assert claims.holds(0x300, fresh.tokens[0x300])
+
+
+@pytest.mark.parametrize("failure", [None, "fetch", "head", "head_error_with_output", "empty", "timeout"])
+def test_fetch_master_preserves_commands_and_reports_failed_step(
+        tmp_path, monkeypatch, capsys, failure):
+    # Exercise the real _fetch_master and _git with a mocked subprocess only:
+    # no fixture or production Git/network operation is launched.
+    import os
+
+    monkeypatch.setattr(claims, "REMOTE", "fixture-origin")
+    inherited_env = dict(os.environ)
+    calls = []
+
+    def run(command, **kwargs):
+        step = "fetch" if len(calls) == 0 else "head"
+        calls.append(command)
+        assert kwargs == {
+            "cwd": tmp_path, "capture_output": True, "text": True,
+            "input": None, "timeout": 300 if step == "fetch" else 60,
+            "env": dict(inherited_env, GIT_CEILING_DIRECTORIES=str(tmp_path.parent)),
+        }
+        if step == "fetch":
+            assert command == ["git", "fetch", "-q", "--no-tags", "fixture-origin", "master"]
+            if failure == "timeout":
+                raise subprocess.TimeoutExpired(command, 300)
+            if failure == "fetch":
+                return subprocess.CompletedProcess(command, 128, "", "fatal: fixture fetch failed\n")
+            return subprocess.CompletedProcess(command, 0, "", "")
+        assert command == ["git", "rev-parse", "FETCH_HEAD"]
+        if failure == "head":
+            return subprocess.CompletedProcess(command, 128, "", "fatal: fixture FETCH_HEAD failed\n")
+        if failure == "head_error_with_output":
+            return subprocess.CompletedProcess(command, 128, "abc123\n", "fatal: fixture FETCH_HEAD failed\n")
+        if failure == "empty":
+            return subprocess.CompletedProcess(command, 0, " \n", "")
+        return subprocess.CompletedProcess(command, 0, "abc123\n", "")
+
+    monkeypatch.setattr(claims.subprocess, "run", run)
+    result = claims._fetch_master(tmp_path)
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert len(calls) == (1 if failure in ("fetch", "timeout") else 2)
+    if failure is None:
+        assert result == "abc123"
+        assert captured.err == ""
+    else:
+        assert result is None
+        expected = {
+            "fetch": "claims: git fetch fixture-origin master failed (exit 128): fatal: fixture fetch failed\n",
+            "head": "claims: git rev-parse FETCH_HEAD failed (exit 128, empty stdout): fatal: fixture FETCH_HEAD failed\n",
+            "head_error_with_output": "claims: git rev-parse FETCH_HEAD failed (exit 128): fatal: fixture FETCH_HEAD failed\n",
+            "empty": "claims: git rev-parse FETCH_HEAD failed (exit 0, empty stdout): (no stderr)\n",
+            "timeout": "claims: git fetch fixture-origin master failed (exit 124): timed out after 300s\n",
+        }
+        assert captured.err == expected[failure]
