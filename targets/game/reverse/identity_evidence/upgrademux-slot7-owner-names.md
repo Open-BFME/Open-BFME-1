@@ -31,3 +31,12 @@ are empty overrides (`ret`).
 | RadarUpgrade | 0x002D7AA0 | 0x010CDA50 | 0x0003B200 | 0x002D7A50 | 8 | `?d_002d7a50@@YAXXZ` |
 | SubObjectsUpgrade | 0x002D83A0 | 0x010CDEB0 | 0x00047EBF | 0x002D8220 | 1 | `?Rva002D8220Noop@@YAXXZ` |
 | WeaponBonusUpgrade | 0x002DA320 | 0x010CE5B8 | 0x00011E73 | 0x002DA300 | 1 | `?empty@Rva002DA300Empty@@QAEXXZ` |
+
+## Non-trivial slot-7 bodies (second batch)
+
+| Owner (registry) | registered ctor | table | slot-7 ILT | body | size | ledger name before | what it undoes |
+|---|---|---|---|---|---|---|---|
+| ExperienceScalarUpgrade | 0x002D4FD0 | 0x010CC890 | 0x0000AC04 | 0x002D5120 | 26 | `?sub@Rva002D5120@@QAEXXZ` | subtracts the +0x70 scalar that slot 9 (0x002D5100) adds |
+| MaxHealthUpgrade | 0x002D63A0 | 0x010CD158 | 0x0000AD44 | 0x002D6510 | 46 | `?update@Rva002D6510@@QAEXXZ` | max-health change of slot 9 (0x002D64D0), reversed |
+| DynamicPortalBehaviour | 0x001F8B80 | 0x010A3868 | 0x00025A09 | 0x001F8DD0 | 62 | `?bfmeCloseZJ@BfmeOwnerZJ@@QAEXXZ` | slot 8 with false, then module teardown |
+| TooltipUpgrade | 0x002D93E0 | 0x010CE1A0 | 0x00036750 | 0x002D9570 | 69 | `?bfmeGoUYA@BfmeThingUYA@@QAEXXZ` | clears the two strings slot 9 (0x002D9510) applies, then slot 8 with false |

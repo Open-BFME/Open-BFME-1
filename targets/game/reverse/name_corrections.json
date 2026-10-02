@@ -14938,5 +14938,95 @@
   "after_sha256": "e93a342627321e8718e3ff7eb7790d4fe27cda705c56039e178f07b901f7477e",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "The old names were address-owner or shape placeholders for trivial bodies (empty ret, slot 8 with false: b_/method/empty/invokeZero*) with no owner. Each body is slot 7 of an UpgradeMux table that a registered constructor stores (ILT sole image ref), so the owner is now proven. Slot 7 is a BFME-only virtual with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>. Some pairings are the checker matching removed shape names to new address names across moved files."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1346.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/TooltipUpgradeRva002D9570.cpp",
+  "old_name": "bfmeGoUYA",
+  "new_name": "rva002D9570",
+  "before_sha256": "f982a5f2d97e35bf8c9f7c5be22eb0d4c8b665f092e97a58dd3376ed52167d21",
+  "after_sha256": "fbeb5046a41115ba95b48e47d0c38ac894c941714f2c1f07db13f696c7cddb77",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "bfmeGoUYA was a shape name on the address-derived class BfmeThingUYA. The body 0x002D9570 is slot 7 (ILT 0x00036750, sole image ref) of TooltipUpgrade's UpgradeMux table 0x010CE1A0 (registered ctor 0x002D93E0), so the owner is proven and the method is address-named. Hashes are this commit's rebased snapshots."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1346.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/TooltipUpgradeRva002D9570.cpp",
+  "old_name": "bfmeGoUYA",
+  "new_name": "rva002D9570",
+  "before_sha256": "9e0ffe235a9b55c05d32c74d911b7ba74b6eb49e42184c513f908bf775ec7ebf",
+  "after_sha256": "6ca7634180ac0f13f85984555438484577febf8a0d043d2cc6ba232ae29c9b9c",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1877.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/DynamicPortalBehaviourRva001F8DD0.cpp",
+  "old_name": "bfmeCloseZJ",
+  "new_name": "rva001F8DD0",
+  "before_sha256": "29cb131b040dcb43983bb4ecedb6bbc9fcf793e3524e755ac6c57dd0cf1e1465",
+  "after_sha256": "35e81fd1ac88bd31c677c3aefd233434ac1d3324ff3190a9ce1700e2d7a3fd54",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva002D5120Sub.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeRva002D5120.cpp",
+  "old_name": "sub",
+  "new_name": "rva002D5120",
+  "before_sha256": "112fe431472673425cfda9d3fe7f37b73d957d3c7670d4bbb846db3fe1ab2e4c",
+  "after_sha256": "fbebf0e0d94a66ee5cec9dd1e431436d2f09b162b486a8a8dffed8c903cb9333",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva002D6510VirtualValueUpdate.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeRva002D6510.cpp",
+  "old_name": "update",
+  "new_name": "rva002D6510",
+  "before_sha256": "a329d55bc41cdd555d65673a20fde84cbc795b5a5227a45c60c949db3953b48a",
+  "after_sha256": "9d781da86d815aaba20934b41b02d774904cf43ccc2c21124d875ec2808de887",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGoUYA",
+  "new_name": "rva002D9570",
+  "before_sha256": "91d7c6aa8de367be20b035c691eb3d86c89d89f4764e58746b83811c7436282d",
+  "after_sha256": "900e9ffebd320eaaaf858493779981edab9167af1cdda34cc1d146af7a77565f",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "sub",
+  "new_name": "rva002D5120",
+  "before_sha256": "94f7d74db088931f74e4db0dd2b3a75a14dd4ec6588e5265740bb54d1ea9a09f",
+  "after_sha256": "df813731b5550e55af3fe004920410c54d7fe1288228cc5f2ec509b13dd4ab47",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "update",
+  "new_name": "rva002D6510",
+  "before_sha256": "96c6ff3ff48640ed8a5dfcaf8410db797691919bbda29781198378979b18df31",
+  "after_sha256": "3347594cd7bd6dc2a09a08d9dcd64ffae385501db31de41e8e136238f17e238f",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeCloseZJ",
+  "new_name": "rva001F8DD0",
+  "before_sha256": "c6d191305e85e570ffbd5f2ee2c2a66f7b016cdee6f4bdf013dd4c5c964cb2cf",
+  "after_sha256": "e753e9df645a52f8b222480fb4f6204c5fbb52402a73ae78ea94159eee8d7676",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
+  "reason": "The old method names were placeholders describing a shape (sub, update, bfmeCloseZJ, bfmeGoUYA) on address-derived classes. Each body is slot 7 of an UpgradeMux table that the class's registered constructor stores (ILT sole image ref), so the owner is now proven, and it reverses that class's slot-9 upgradeImplementation. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address: <Owner>::rva<address>."
  }
 ]
