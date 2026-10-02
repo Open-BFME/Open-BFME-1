@@ -77,10 +77,12 @@ class GameTextInterface { public:
 };
 extern GameTextInterface *TheGameText;
 class Rva00548D30WindowGroup { public: void winEnable(bool); };
-class Rva00550500Target { public: void startPings(); };
-class WindowManager { public:
- void *_bfme_callAptFunction(unsigned int,const char*,int,const char*,const char*,const char*,const char*,const char*);
+class Rva00550500Target;
+namespace Rva00550500 { void startPings(); }
+class BfmeLevelAN { public:
+ char *bfmeBuildAN(unsigned int,int,int,int,int,int,int,int);
 };
+class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 struct LoginContext00551620 { char field000[0x250]; unsigned int field250; };
 class BfmeAptScreenOnlineLogin { public:
@@ -95,9 +97,9 @@ void BfmeAptScreenOnlineLogin::submitLogin00551620() {
  email.translate(bfmeGetTextAt74());
  login.translate(bfmeGetTextAt78());
  password.translate(bfmeGetTextAt7C());
- { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonDeleteNickname",0,0,0,0); }
- { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonLogin",0,0,0,0); }
- { unsigned int level=field34->field250; g_rva012F19E8WindowManager->_bfme_callAptFunction(level,"CallChild",1,"DisableButtonServiceTerms",0,0,0,0); }
+ { unsigned int level=field34->field250; ((BfmeLevelAN*)g_rva012F19E8WindowManager)->bfmeBuildAN(level,reinterpret_cast<int>("CallChild"),1,reinterpret_cast<int>("DisableButtonDeleteNickname"),0,0,0,0); }
+ { unsigned int level=field34->field250; ((BfmeLevelAN*)g_rva012F19E8WindowManager)->bfmeBuildAN(level,reinterpret_cast<int>("CallChild"),1,reinterpret_cast<int>("DisableButtonLogin"),0,0,0,0); }
+ { unsigned int level=field34->field250; ((BfmeLevelAN*)g_rva012F19E8WindowManager)->bfmeBuildAN(level,reinterpret_cast<int>("CallChild"),1,reinterpret_cast<int>("DisableButtonServiceTerms"),0,0,0,0); }
  if(!email.isEmpty() && !login.isEmpty() && !password.isEmpty()) {
   fieldA8=login;
   field98=timeGetTime();
@@ -116,7 +118,7 @@ void BfmeAptScreenOnlineLogin::submitLogin00551620() {
   TheGameSpyInfo->setLocalPassword(password);
   TheGameSpyBuddyMessageQueue->addRequest(req);
   ((Rva00548D30WindowGroup*)this)->winEnable(false);
-  ((Rva00550500Target*)this)->startPings();
+  ((void (__fastcall *)(Rva00550500Target *))&Rva00550500::startPings)((Rva00550500Target*)this);
  } else {
   if(email.isEmpty() && login.isEmpty() && password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
   else if(email.isEmpty() && login.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailNickname"));
