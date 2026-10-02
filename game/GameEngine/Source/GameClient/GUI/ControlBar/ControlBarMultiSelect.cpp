@@ -124,6 +124,8 @@ public:
 	void call(void);
 };
 
+extern void j_0003672d(void);
+
 
 // 0x004A4240 takes command, window, object, percent out-pointer and force flag
 // and returns one of eight availability values; reached through ILT 0x000414D4.
@@ -133,6 +135,8 @@ public:
 	Int call(const CommandButton *command, GameWindow *window, Object *object,
 		Real *percent, Bool forceDisabledEvaluation) const;
 };
+
+extern void j_000414d4(void);
 
 
 extern Real g_bfmeDefaultBU;					// 1.0f at 0x01075334
@@ -169,7 +173,10 @@ void ControlBar::updateContextMultiSelect(void)
 
 	if (m_currentSelectedDrawable != 0)
 	{
-		((BfmeRva004A5950ControlBarContextCommandView *)this)->call();
+		typedef void (BfmeRva004A5950ControlBarContextCommandView::*ContextFunction)(void);
+		union { void (*raw)(void); ContextFunction member; } contextCall;
+		contextCall.raw = j_0003672d;
+		(reinterpret_cast<BfmeRva004A5950ControlBarContextCommandView *>(this)->*contextCall.member)();
 		return;
 	}
 
@@ -208,8 +215,12 @@ void ControlBar::updateContextMultiSelect(void)
 				continue;
 
 			Real percent;
+			typedef Int (BfmeRva004A4240CommandAvailabilityView::*AvailabilityFunction)(
+				const CommandButton *, GameWindow *, Object *, Real *, Bool) const;
+			union { void (*raw)(void); AvailabilityFunction member; } availabilityCall;
+			availabilityCall.raw = j_000414d4;
 			Int availability =
-				((const BfmeRva004A4240CommandAvailabilityView *)this)->call(
+				(reinterpret_cast<const BfmeRva004A4240CommandAvailabilityView *>(this)->*availabilityCall.member)(
 					command, win, obj, &percent, false);
 
 			win->winClearStatus(0x00400000);
