@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// stlport
 // Three vector releases (the fourth, 0x000D7330, is AICommandParms's
 // destructor and lives in GameLogic/AI/AICommandParmsDtor.cpp).
 //
@@ -15,15 +17,11 @@
 // directly instead lets MSVC shrink-wrap the callee-saved push into the
 // guarded region, which costs two bytes and moves the load past the test.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+#include <stl/_alloc.h>
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+static inline void bfmeRelease(void *block, unsigned int bytes)
 {
-	if (bytes > 0x80)
-		bfmeFreeScalar(block);
-	else
-		bfmeDeallocate(block, bytes);
+	_STL::__node_alloc<true, 0>::deallocate(block, bytes);
 }
 
 struct BfmeElem_000CEDF0 { char m_bfmeBytes[0x60]; };

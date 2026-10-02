@@ -4,24 +4,12 @@
 // Each element owns two four-byte strings and releases them in reverse order.
 
 #include <vector>
-
-class BFMERetailAsciiString
-{
-private:
-	void releaseBuffer();
-	void *m_data;
-
-public:
-	~BFMERetailAsciiString()
-	{
-		releaseBuffer();
-	}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva00142250Nugget
 {
-	BFMERetailAsciiString first;
-	BFMERetailAsciiString second;
+	AsciiString first;
+	AsciiString second;
 	unsigned char m_padding[12];
 
 	~Rva00142250Nugget()

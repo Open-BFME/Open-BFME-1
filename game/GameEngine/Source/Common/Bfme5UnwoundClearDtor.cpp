@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GR- /EHsc- /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GR- /EHsc- /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // A destructor that deletes what its vector holds, empties it and then lets
 // the vector member go away.
 //
@@ -16,18 +17,13 @@
 #include "PreRTS.h"
 
 #include "subsystem_interface.h"
+#include <stl/_alloc.h>
 
 extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
-
-inline void bfmeRelease(void *block, unsigned int bytes)
+static inline void bfmeRelease(void *block, unsigned int bytes)
 {
-	if (bytes > 0x80)
-		bfmeFreeScalar(block);
-	else
-		bfmeDeallocate(block, bytes);
+	_STL::__node_alloc<true, 0>::deallocate(block, bytes);
 }
 
 class BfmeOwnedAA
