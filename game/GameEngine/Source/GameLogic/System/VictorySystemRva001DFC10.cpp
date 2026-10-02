@@ -63,7 +63,7 @@ public:
 
 extern GameLogic *TheGameLogic;	// 0x012F0898
 
-class BfmeCell
+class Gen_001B1240
 {
 public:
 	void bfmeAdd(Real amount, Int firstIndex, Int secondIndex);
@@ -104,7 +104,7 @@ public:
 private:
 	unsigned char m_unmodelled_00[0x24];
 	Int m_playerParameterIndex[16];
-	BfmeCell m_rootCell;
+	Gen_001B1240 m_rootCell;
 	FactionVictoryParametersVector m_factionVictoryParameters;
 	BfmeCellGrid *m_cellGrids[2];
 };

@@ -13408,5 +13408,15 @@
   "after_sha256": "bbc356b32f2b00379e2239d3e8f326816dff7587d18e51fc809203a6abd5d7ef",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/System/VictorySystemRva001DFC10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/System/VictorySystemRva001DFC10.cpp",
+  "old_name": "BfmeCell",
+  "new_name": "Gen_001B1240",
+  "before_sha256": "5614fac7da571fc8ddc6487ab2c2b3013a841e3b7e3b879efccb37b7351a41b9",
+  "after_sha256": "8c5a001bfa659af56d57e74ba44ee2013cd9b30f13f6255388bb43cad32c59e0",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "BfmeCell was a local stand-in with no ledger row; the matched bfmeAdd at 0x001B1240 that retail calls through the BfmeCell pin is owned by Gen_001B1240, so the stand-in takes that owner's name."
  }
 ]
