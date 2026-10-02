@@ -1,5 +1,5 @@
 // ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z
-// partial score=0.99 date=2026-09-11
+// partial score=0.8794 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // stlport
 // Readable reconstruction of ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z.
