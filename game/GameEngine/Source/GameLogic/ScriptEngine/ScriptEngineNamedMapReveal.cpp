@@ -106,12 +106,27 @@ struct NamedReveal
 	// Declared, so the whole element is one object to the unwinder: retail
 	// carries a single state across the three strings, not one apiece.
 	NamedReveal(void) {}
+	__declspec(noinline) ~NamedReveal();
 
 	AsciiString m_revealName;				// +0x00
 	AsciiString m_waypointName;				// +0x04
 	Real m_radiusToReveal;					// +0x08
 	AsciiString m_playerName;				// +0x0C
 };
+
+// A stack-only view whose inline member destruction preserves the retail
+// cleanup sequence in createNamedMapReveal; vector elements use NamedReveal's
+// separately owned destructor above.
+namespace {
+struct NamedRevealStackTemp
+{
+	NamedRevealStackTemp(void) {}
+	AsciiString m_revealName;
+	AsciiString m_waypointName;
+	Real m_radiusToReveal;
+	AsciiString m_playerName;
+};
+}
 
 typedef _STL::vector<NamedReveal> VecNamedReveal;
 typedef VecNamedReveal::iterator VecNamedRevealIt;
@@ -284,11 +299,11 @@ void ScriptEngine::createNamedMapReveal(const AsciiString& revealName, const Asc
 		}
 	}
 
-	NamedReveal reveal;
+	NamedRevealStackTemp reveal;
 	reveal.m_playerName = playerName;
 	reveal.m_radiusToReveal = radiusToReveal;
 	reveal.m_revealName = revealName;
 	reveal.m_waypointName = waypointName;
 
-	m_namedReveals.push_back(reveal);
+	m_namedReveals.push_back(*reinterpret_cast<const NamedReveal *>(&reveal));
 }

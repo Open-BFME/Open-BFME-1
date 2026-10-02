@@ -1473,38 +1473,6 @@ CanMakeType BuildAssistant::canMakeUnit( Object *builder, const ThingTemplate *w
 /** Some objects will be automatically removed when something is built on them so they
 	* aren't considered as obstacles when placing them */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/BuildAssistant_isRemovableForConstruction.cpp
-// ?isRemovableForConstruction@BuildAssistant@@ present-unmatched
-Bool BuildAssistant::isRemovableForConstruction( Object *obj )
-{
-
-	// sanity
-	if( obj == NULL )
-		return FALSE;
-
-	if (obj->isKindOf(KINDOF_INERT))
-	{
-		DEBUG_CRASH(("should not have gotten here."));
-		return FALSE;
-	}
-
-	// all shrubbery can be removed
-	if( obj->isKindOf( KINDOF_SHRUBBERY ) )
-		return TRUE;
-
-	// anything with a kindof marked as cleared by build can be removed
-	if( obj->isKindOf( KINDOF_CLEARED_BY_BUILD ) )
-		return TRUE;
-
-	// Rubble, scrap & dead units can be cleared.
-	if( obj->isEffectivelyDead( ) )
-		return TRUE;
-
-	// not removable
-	return FALSE;
-
-}  // end isRemovableForConstruction
-
 // ------------------------------------------------------------------------------------------------
 /** Given that we are about to build 'whatToBuild' remove all the objects that are in the
 	* 'footprint' of where the build will take place that can be auto-removed for construction */

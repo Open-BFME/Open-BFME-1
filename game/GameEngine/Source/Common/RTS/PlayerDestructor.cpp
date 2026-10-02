@@ -67,6 +67,7 @@ private:
     int *m_end;
 };
 
+namespace {
 class Gen_000D1730 : public BfmeBaseVUQ
 {
 public:
@@ -76,6 +77,7 @@ private:
     int m_field;
     BfmeVecMemberY m_vector;
 };
+}
 
 class Gen_uwm_0002cd7c
 {

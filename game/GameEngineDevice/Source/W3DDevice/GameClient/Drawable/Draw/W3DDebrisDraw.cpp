@@ -269,56 +269,6 @@ void W3DDebrisDraw::reactToTransformChange( const Matrix3D *oldMtx,
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doDrawModule@W3DDebrisDraw@@ present-unmatched
-void W3DDebrisDraw::doDrawModule(const Matrix3D* transformMtx)
-{
-	if (m_renderObject)
-	{
-
-		Matrix3D scaledTransform;
-		if (getDrawable()->getInstanceScale() != 1.0f)
-		{	//do custom scaling of the W3D model.
-			scaledTransform=*transformMtx;
-			scaledTransform.Scale(getDrawable()->getInstanceScale());
-			transformMtx = &scaledTransform;
-			m_renderObject->Set_ObjectScale(getDrawable()->getInstanceScale());
-		}
-		m_renderObject->Set_Transform(*transformMtx);
-
-		static const RenderObjClass::AnimMode TheAnimModes[STATECOUNT] = 
-		{
-			RenderObjClass::ANIM_MODE_ONCE,
-			RenderObjClass::ANIM_MODE_LOOP,
-			RenderObjClass::ANIM_MODE_ONCE
-		};
-		
-		Int oldState = m_state;
-		Object* obj = getDrawable()->getObject();
-		const Int MIN_FINAL_FRAMES = 3;
-		if (m_state != FINAL && obj != NULL && !obj->isAboveTerrain() && m_frames > MIN_FINAL_FRAMES)
-		{
-			m_state = FINAL;
-		}
-		else if (m_state < FINAL && (isAnimationComplete(m_renderObject)))
-		{
-			++m_state;
-		}
-		HAnimClass* hanim = m_anims[m_state];
-		if (hanim != NULL && (hanim != m_renderObject->Peek_Animation() || oldState != m_state))
-		{
-			RenderObjClass::AnimMode m = TheAnimModes[m_state];
-			if (m_state == FINAL)
-			{
-				FXList::doFXPos(m_fxFinal, getDrawable()->getPosition(), getDrawable()->getTransformMatrix(), 0, NULL, 0.0f);
-				if (m_finalStop)
-					m = RenderObjClass::ANIM_MODE_MANUAL;
-			}
-			m_renderObject->Set_Animation(hanim, 0, m);
-		}
-		++m_frames;
-	}
-}
-
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------

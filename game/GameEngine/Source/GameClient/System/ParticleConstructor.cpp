@@ -268,14 +268,9 @@ class AssetList
 {
 public:
 	AssetList() : m_treeLayoutPad(0), m_changed(true) {}
-	AssetList &operator <<(const AsciiString &name)
-	{
-		if (m_prototypes.insert(((FindPrototypeFn)bfmeGoEMEb)(name.str())).second)
-			m_changed = true;
-		return *this;
-	}
 
 private:
+	friend class Particle;
 	Rva001408C0Set m_prototypes;
 	unsigned int m_treeLayoutPad;
 	bool m_changed;
@@ -434,7 +429,8 @@ Particle::Particle(const BfmeParticleSystemHandle &system, const ParticleInfo *i
 			for (Int i = 4; i; --i)
 				name.removeLastChar();
 			AssetList assets;
-			assets << name;
+			if (assets.m_prototypes.insert(((FindPrototypeFn)bfmeGoEMEb)(name.str())).second)
+				assets.m_changed = true;
 			Rva009EBAC0((int)&assets);
 			m_renderObject = Create_Render_Obj(name.str());
 			m_74 = system->m_1c8->s18();

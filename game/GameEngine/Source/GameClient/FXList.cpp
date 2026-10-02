@@ -850,20 +850,6 @@ void FXList::clear()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListDoFXPosThunk.cpp
-// ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z present-unmatched
-void FXList::doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real primarySpeed, const Coord3D *secondary, const Real overrideRadius ) const
-{
-	if (ThePartitionManager->getShroudStatusForPlayer(ThePlayerList->getLocalPlayer()->getPlayerIndex(), primary) != CELLSHROUD_CLEAR)
-		return;
-
-	for (FXNuggetList::const_iterator it = m_nuggets.begin(); it != m_nuggets.end(); ++it)
-	{
-		(*it)->doFXPos(primary, primaryMtx, primarySpeed, secondary, overrideRadius);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?doFXObj@FXList@@IBEXPBVObject@@0@Z present-unmatched
 void FXList::doFXObj(const Object* primary, const Object* secondary) const
 {

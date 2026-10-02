@@ -104,16 +104,6 @@ ControlBarResizer::~ControlBarResizer( void )
 	m_resizerWindowsList.clear();
 }
 	
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarResizerInit.cpp
-// ?init@ControlBarResizer@@QAEXXZ present-unmatched
-void ControlBarResizer::init( void )
-{
-	INI ini;
-	// Read from INI all the ControlBarSchemes
-	ini.load( AsciiString( "Data\\INI\\ControlBarResizer.ini" ), INI_LOAD_OVERWRITE, NULL );
-
-}
-
 	
 // ?findResizerWindow@ControlBarResizer@@QAEPAVResizerWindow@@VAsciiString@@@Z present-unmatched
 ResizerWindow *ControlBarResizer::findResizerWindow( AsciiString name )
