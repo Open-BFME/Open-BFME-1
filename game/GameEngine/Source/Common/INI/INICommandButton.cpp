@@ -18,7 +18,7 @@
 class CommandButton
 {
 public:
-	static const FieldParse m_commandButtonFieldParseTable[];
+	static const FieldParse s_commandButtonFieldParseTable[];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
@@ -61,5 +61,5 @@ void INI::parseCommandButtonDefinition( INI* ini )
 		button = TheControlBar->newCommandButtonOverride( button );
 	}
 
-	ini->initFromINI( button, CommandButton::m_commandButtonFieldParseTable );
+	ini->initFromINI( button, CommandButton::s_commandButtonFieldParseTable );
 }
