@@ -19,7 +19,14 @@
 struct Rva00893410Block { unsigned short refs, length, capacity, flags; };
 struct Rva00893410Pool { void *unused; void (__cdecl *free)(void *); };
 extern Rva00893410Pool *g_bfmeStringPool1284;
-extern Rva00893410Block Rva012D5298Empty;
+// The shared empty EA string block at 0x012D5298 is one global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty (defined in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles the type
+// into a global's name, so the reference must carry that exact spelling; the
+// TU-local Rva00893410Block view is only reached through a cast.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+static __forceinline Rva00893410Block *localEmptyString1284() { return (Rva00893410Block *)&g_rva012D5298Empty; }
 class BfmeStrVKI {
 public:
     BfmeStrVKI(const char *p) { bfmeSetVKI(p); }
@@ -102,7 +109,7 @@ static __forceinline Rva008A9B00 *createValue() {
     if (value) {
         Rva01338478FreeHead = value->next;
         g_rva8CD130IdleHook->addOrClear(value);
-        if (value->block != &Rva012D5298Empty)
+        if (value->block != localEmptyString1284())
             ((BfmeStrVKK *)&value->block)->bfmeTruncVKK(0);
         return value;
     }

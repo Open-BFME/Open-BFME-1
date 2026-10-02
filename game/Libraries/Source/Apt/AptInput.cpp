@@ -129,7 +129,24 @@ private:
 	BfmeNode1285 *m_current126c;
 };
 
-extern BfmeStringData1285 g_bfmeEmptyString1285;
+// The shared empty EA string block at 0x012D5298 is a single global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  MSVC mangles a
+// global's type into its name, so the reference must carry that exact
+// spelling or the link fails.  EAStringC itself has no header here, so declare
+// only the nested class; every access goes through the TU-local view below.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+static __forceinline BfmeStringData1285 *localEmptyString1285()
+{
+	return (BfmeStringData1285 *)&g_rva012D5298Empty;
+}
+
 extern float g_bfmeDirectionWeight1285;
 extern float g_bfmeInvalidScore1285;
 // AptInput reaches the same singleton through two independently witnessed class slices.
@@ -185,7 +202,7 @@ static __declspec(noinline) bool bfmeParseSuffix1285(
 	BfmeString1285 *value, int *first, int *second)
 {
 	BfmeStringData1285 *data = value->m_data;
-	if (data == &g_bfmeEmptyString1285)
+	if (data == localEmptyString1285())
 		return false;
 
 	char *cursor = &data->m_text[data->m_length - 1];
@@ -327,7 +344,7 @@ void BfmeBroadcast1285::bfmeAdvance1285()
 		if (seen == m_count14)
 			break;
 		if (*slot != 0) {
-			if ((*slot)->m_name0c.m_data != &g_bfmeEmptyString1285 &&
+			if ((*slot)->m_name0c.m_data != localEmptyString1285() &&
 				bfmeParseSuffix1285(&(*slot)->m_name0c, &first, &second)) {
 				m_current126c = m_entries18[index];
 				m_current126c->bfmeAttachVirtual1285();

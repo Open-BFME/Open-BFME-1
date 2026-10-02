@@ -9,7 +9,14 @@ struct BfmeStringData3AF0
 	unsigned short m_bfmeRefAAA;
 };
 
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is one global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty (defined in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles the type
+// into a global's name, so the reference must carry that exact spelling; the
+// TU-local BfmeStringData3AF0 view is only reached through a cast.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+static __forceinline BfmeStringData3AF0 *localEmptyString1284() { return (BfmeStringData3AF0 *)&g_rva012D5298Empty; }
 
 class BfmeBaseAAA
 {
@@ -43,8 +50,8 @@ class BfmeStrAAA
 public:
 	BfmeStrAAA()
 	{
-		m_block = &g_bfmeDefaultString1284;
-		++g_bfmeDefaultString1284.m_bfmeRefAAA;
+		m_block = localEmptyString1284();
+		++localEmptyString1284()->m_bfmeRefAAA;
 	}
 
 	~BfmeStrAAA() { ((Rva00891B80 *)this)->release(); }

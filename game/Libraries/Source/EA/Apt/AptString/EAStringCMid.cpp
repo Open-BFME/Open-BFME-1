@@ -27,7 +27,6 @@ struct EAStringData
 	unsigned short m_hash;
 };
 
-extern EAStringData g_emptyStringData;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 template <typename T> class StringBase
@@ -62,13 +61,7 @@ template <typename T> class StringBase
 
 class EAStringC : private StringBase<char>
 {
-	typedef EAStringData StringDataC;
-
-	EAStringC() : StringBase<char>()
-	{
-		m_data = &g_emptyStringData;
-		++g_emptyStringData.m_refCount;
-	}
+	EAStringC();
 
 	EAStringC(const EAStringC &other) : StringBase<char>(other) {}
 
@@ -88,45 +81,63 @@ class EAStringC : private StringBase<char>
 		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
 
 public:
+	// The shared empty EA string block at 0x012D5298 is one global, EA's
+	// EAStringC::StringDataC g_rva012D5298Empty (defined in
+	// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles a
+	// global's type into its name, so the extern below must carry that exact
+	// spelling.  Only declared here: every use of the global in this TU goes
+	// through the local EAStringData view, which shares its layout.  The
+	// default constructor is defined after the extern, which is why it is not
+	// inline in the class body.
+	class StringDataC;
+
 	EAStringC Mid(int start) const;
 	EAStringC Mid(int start, int count) const;
 };
 
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+EAStringC::EAStringC() : StringBase<char>()
+{
+	m_data = (EAStringData *)&g_rva012D5298Empty;
+	++((EAStringData *)&g_rva012D5298Empty)->m_refCount;
+}
+
 void EAStringC::ChangeBuffer(unsigned int reserve, unsigned int offset,
 	unsigned int copy, CBPushZero pushZero, unsigned int internalSize)
 {
-	StringDataC *oldData = m_data;
+	EAStringData *oldData = m_data;
 	EAStringC *self = this;
 	if (oldData->m_refCount == 1 && reserve <= oldData->m_maxSize)
 	{
 		if (offset != 0)
-			memmove((char *)oldData + sizeof(StringDataC),
-				(char *)oldData + sizeof(StringDataC) + offset, copy);
+			memmove((char *)oldData + sizeof(EAStringData),
+				(char *)oldData + sizeof(EAStringData) + offset, copy);
 
 		self->m_data->m_size = (unsigned short)internalSize;
 		self->m_data->m_hash = 0;
 		if (pushZero != CB_NO_PUSH_ZERO)
-			((char *)self->m_data + sizeof(StringDataC))[internalSize] = 0;
+			((char *)self->m_data + sizeof(EAStringData))[internalSize] = 0;
 		return;
 	}
 
 	if (reserve != 0)
 	{
 		unsigned int allocationSize = (reserve + (reserve >> 3) + 0xc) & ~3;
-		self->m_data = (StringDataC *)g_bfmeAllocVKJ->allocate(allocationSize);
+		self->m_data = (EAStringData *)g_bfmeAllocVKJ->allocate(allocationSize);
 		self->m_data->m_refCount = 1;
 		self->m_data->m_maxSize = (unsigned short)(allocationSize - 9);
 		self->m_data->m_size = (unsigned short)internalSize;
 		self->m_data->m_hash = 0;
-		memcpy((char *)self->m_data + sizeof(StringDataC),
-			(char *)oldData + sizeof(StringDataC) + offset, copy);
+		memcpy((char *)self->m_data + sizeof(EAStringData),
+			(char *)oldData + sizeof(EAStringData) + offset, copy);
 		if (pushZero != CB_NO_PUSH_ZERO)
-			((char *)self->m_data + sizeof(StringDataC))[internalSize] = 0;
+			((char *)self->m_data + sizeof(EAStringData))[internalSize] = 0;
 	}
 	else
 	{
-		self->m_data = &g_emptyStringData;
-		++g_emptyStringData.m_refCount;
+		self->m_data = (EAStringData *)&g_rva012D5298Empty;
+		++((EAStringData *)&g_rva012D5298Empty)->m_refCount;
 	}
 
 	if (--oldData->m_refCount == 0)

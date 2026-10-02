@@ -7,7 +7,14 @@ struct Rva8CD130StringBlock
 	unsigned short m_refs;
 };
 
-extern Rva8CD130StringBlock g_bfmeDefaultString1284;
+// The shared empty EA string block at 0x012D5298 is one global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty (defined in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles the type
+// into a global's name, so the reference must carry that exact spelling; the
+// TU-local Rva8CD130StringBlock view is only reached through a cast.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+static __forceinline Rva8CD130StringBlock *localEmptyString1284() { return (Rva8CD130StringBlock *)&g_rva012D5298Empty; }
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 
 class Rva8CD130String
@@ -15,8 +22,8 @@ class Rva8CD130String
 public:
 	Rva8CD130String()
 	{
-		m_block = &g_bfmeDefaultString1284;
-		++g_bfmeDefaultString1284.m_refs;
+		m_block = localEmptyString1284();
+		++localEmptyString1284()->m_refs;
 	}
 	~Rva8CD130String()
 	{

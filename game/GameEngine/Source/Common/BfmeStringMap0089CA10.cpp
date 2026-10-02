@@ -2,7 +2,18 @@
 // Open-address string-map find at retail 0x0089CA10: hashes the key into a
 // bucket, then probes up to 8 slots forward and 8 backward inside the table.
 
-extern "C" char g_bfmeEmptyString1285[];
+// The shared empty EA string block at 0x012D5298 is one global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty (defined in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles the type
+// into a global's name, so the reference must carry that exact spelling; the
+// TU-local BfmeStringData0089CA10 view is only reached through a cast.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
 int __cdecl bfmeCompareVSC(const char *left, const char *right);
 
 struct BfmeStringData0089CA10
@@ -12,6 +23,11 @@ struct BfmeStringData0089CA10
 	unsigned short m_maxSize;
 	unsigned short m_hash;
 };
+
+static inline BfmeStringData0089CA10 *localEmptyString1285()
+{
+	return reinterpret_cast<BfmeStringData0089CA10 *>(&g_rva012D5298Empty);
+}
 
 struct BfmeStringKey0089CA10
 {
@@ -51,7 +67,7 @@ BfmeStringEntry0089CA10 *BfmeStringMap0089CA10::findInMap0089CA10(const BfmeStri
 	BfmeStringData0089CA10 *data = m_entries[bucket].m_data;
 	if (data == 0)
 		return 0;
-	if (data != reinterpret_cast<BfmeStringData0089CA10 *>(g_bfmeEmptyString1285)
+	if (data != localEmptyString1285()
 		&& matchEntry0089CA10(&m_entries[bucket], key))
 		return &m_entries[bucket];
 	int start = bucket - 8;
@@ -83,7 +99,7 @@ BfmeStringEntry0089CA10 *BfmeStringMap0089CA10::findInMap0089CA10(const BfmeStri
 		data = m_entries[cursor].m_data;
 		if (data == 0)
 			return 0;
-		if (data != reinterpret_cast<BfmeStringData0089CA10 *>(g_bfmeEmptyString1285)
+		if (data != localEmptyString1285()
 			&& matchEntry0089CA10(&m_entries[cursor], key))
 			return &m_entries[cursor];
 	}
@@ -96,7 +112,7 @@ BfmeStringEntry0089CA10 *BfmeStringMap0089CA10::findInMap0089CA10(const BfmeStri
 		--backward;
 		if (data == 0)
 			return 0;
-		if (data != reinterpret_cast<BfmeStringData0089CA10 *>(g_bfmeEmptyString1285)
+		if (data != localEmptyString1285()
 			&& matchEntry0089CA10(&m_entries[cursor], key))
 			return &m_entries[cursor];
 	}
