@@ -8,6 +8,11 @@ public:
 	virtual void AddRef();
 	virtual void Release();
 
+	// AptValue::toNumber @ 0x008983D0, matched in
+	// game/Libraries/Source/EA/Apt/AptValue_toNumber.cpp; declared here so the
+	// call mangles to the defining symbol instead of a stand-in.
+	float toNumber();
+
 	bool isUndefined() const
 	{
 		return (m_valueBits >> 15 & 1) == 0;
@@ -20,12 +25,6 @@ public:
 
 private:
 	unsigned int m_valueBits;
-};
-
-class BfmeE1239 : public AptValue
-{
-public:
-	float bfmeF1239();
 };
 
 class AptActionInterpreter
@@ -60,8 +59,8 @@ void AptActionInterpreter::_FunctionAptActionEquals(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 		float difference = topValue - underValue;
 
 		difference = (float)fabs(difference);
