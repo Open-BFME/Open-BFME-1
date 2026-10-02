@@ -123,7 +123,10 @@ void BfmeThingECHb::bfmeGoECHb()
 	m_bfmeP = 0;
 }
 
-class BfmeObjECI
+// Retail's LAN singleton (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp); only slot 46 is
+// read here.  Partial vtable view, no header covers it in this TU.
+class LANAPI
 {
 public:
 	virtual void bfmeW0();
@@ -175,11 +178,11 @@ public:
 	virtual bool bfmeAsk46ECI();
 };
 
-extern BfmeObjECI *g_bfmeObjECI;
+extern LANAPI *TheLAN;
 
 bool bfmeGoECI()
 {
-	BfmeObjECI *o = g_bfmeObjECI;
+	LANAPI *o = TheLAN;
 	if (!o)
 		return false;
 	return o->bfmeAsk46ECI();

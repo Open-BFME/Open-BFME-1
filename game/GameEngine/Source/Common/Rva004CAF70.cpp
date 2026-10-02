@@ -12,10 +12,16 @@ struct Rva004CAF70Obj
 	char m_flag;
 };
 
+// retail loads the LAN singleton (0x012F7730, defined as
+// `LANAPI *TheLAN` in game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp)
+// into ECX/EAX for the two slot-24 virtual calls below; only its address
+// is needed here.
+class LANAPI;
+
 extern char g_rva004CAF70_gate;
 extern Rva004CAF70Obj *g_rva004CAF70_obj;
 extern void *g_rva004CAF70_value;
-extern void *g_rva004CAF70_g;
+extern LANAPI *TheLAN;
 extern char g_rva004CAF70_a[];
 extern char g_rva004CAF70_b[];
 extern char g_rva004CAF70_c[];
@@ -44,7 +50,7 @@ void lanUpdateSlotList004CAF70(void)
 
 	__asm {
 		mov eax, dword ptr [g_rva004CAF70_value]
-		mov ecx, dword ptr [g_rva004CAF70_g]
+		mov ecx, dword ptr [TheLAN]
 		mov edx, dword ptr [ecx]
 		push offset g_rva004CAF70_f
 		push eax
@@ -56,7 +62,7 @@ void lanUpdateSlotList004CAF70(void)
 		call dword ptr [edx+0c0h]
 		push eax
 		call j_0001e4bb
-		mov ecx, dword ptr [g_rva004CAF70_g]
+		mov ecx, dword ptr [TheLAN]
 		mov eax, dword ptr [ecx]
 		add esp, 20h
 		push 0

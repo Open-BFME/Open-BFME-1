@@ -36,15 +36,20 @@ public:
 	char m_bfmePad[12];
 };
 
-struct BfmeG1078
+// Retail's LAN singleton (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp); only the three
+// fields below are cleared here.  Partial layout view, no header covers it in
+// this TU.
+class LANAPI
 {
+public:
 	char m_bfmePad[0x5c];
 	int m_bfme5c;
 	int m_bfme60;
 	int m_bfme64;
 };
 
-extern BfmeG1078 *g_bfmeG1078;
+extern LANAPI *TheLAN;
 
 class BfmeQ1078
 {
@@ -88,9 +93,9 @@ void BfmeQ1078::bfmeGo1078A(void)
 		bfmeR1078View()->bfmeRun1078(m_bfme250, g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
-	if (g_bfmeG1078) {
-		g_bfmeG1078->m_bfme64 = 0;
-		g_bfmeG1078->m_bfme5c = 0;
-		g_bfmeG1078->m_bfme60 = 0;
+	if (TheLAN) {
+		TheLAN->m_bfme64 = 0;
+		TheLAN->m_bfme5c = 0;
+		TheLAN->m_bfme60 = 0;
 	}
 }

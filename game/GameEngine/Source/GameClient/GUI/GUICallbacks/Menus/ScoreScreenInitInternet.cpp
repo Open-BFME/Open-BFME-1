@@ -64,9 +64,11 @@ public:
 	virtual int winSetFocus( GameWindow *window );
 };
 
-// BFME chat-holder struct: initLANMultiPlayer stores the same listbox pointer
-// into [global]+0x5c through this shape (ScoreScreenInitLAN.cpp).
-class ChatHolder
+// Retail's LAN singleton global (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp).  initInternet-
+// MultiPlayer stores the same listbox pointer into TheLAN+0x5c through this
+// shape (ScoreScreenInitLAN.cpp; matched ScoreScreenInit row `LAN=TheLAN+0x5c`).
+class LANAPI
 {
 public:
 	char pad[0x5c];
@@ -126,7 +128,7 @@ void grabMultiPlayerInfo( void );
 void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
 
 extern GameWindowManager *TheWindowManager;
-extern ChatHolder *s_chatHolder;
+extern LANAPI *TheLAN;
 extern GameSpyInfo *TheGameSpyInfo;
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 
@@ -159,8 +161,8 @@ void initInternetMultiPlayer( void )
 		buttonEmote->winHide( 1 );
 	if ( listboxChatWindowScoreScreen )
 		listboxChatWindowScoreScreen->winHide( 0 );
-	if ( s_chatHolder )
-		s_chatHolder->chat = listboxChatWindowScoreScreen;
+	if ( TheLAN )
+		TheLAN->chat = listboxChatWindowScoreScreen;
 	if ( chatBoxBorder )
 		chatBoxBorder->winHide( 0 );
 

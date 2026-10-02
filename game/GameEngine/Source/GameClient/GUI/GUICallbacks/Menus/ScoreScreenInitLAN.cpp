@@ -54,7 +54,12 @@ public:
 	virtual int winSetFocus( GameWindow *window );
 };
 
-class ChatHolder
+// Retail's LAN singleton global (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp).  This TU only
+// stores the chat listbox into TheLAN+0x5c, witnessed by the matched
+// ScoreScreenInit row (`LAN=TheLAN+0x5c`), so a partial layout view is
+// enough and no header covers the object here.
+class LANAPI
 {
 public:
 	char pad[0x5c];
@@ -65,7 +70,7 @@ void grabMultiPlayerInfo( void );
 void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
 
 extern GameWindowManager *TheWindowManager;
-extern ChatHolder *s_chatHolder;
+extern LANAPI *TheLAN;
 
 enum { SCORESCREEN_LAN = 2 };
 
@@ -94,8 +99,8 @@ void initLANMultiPlayer( void )
 		buttonContinue->winHide( 1 );
 	if ( listboxChatWindowScoreScreen )
 		listboxChatWindowScoreScreen->winHide( 0 );
-	if ( s_chatHolder )
-		s_chatHolder->chat = listboxChatWindowScoreScreen;
+	if ( TheLAN )
+		TheLAN->chat = listboxChatWindowScoreScreen;
 	if ( chatBoxBorder )
 		chatBoxBorder->winHide( 0 );
 	if ( buttonBuddies )

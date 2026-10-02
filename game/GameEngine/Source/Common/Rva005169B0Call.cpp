@@ -1,6 +1,9 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-class Gen00024B7C
+// Retail's LAN singleton (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp); only slot 18
+// is called here.  Partial vtable view, no header covers it in this TU.
+class LANAPI
 {
 public:
 	virtual void v00();
@@ -24,7 +27,7 @@ public:
 	virtual void v48();
 };
 
-extern Gen00024B7C *g_Va012F7730;
+extern LANAPI *TheLAN;
 
 class Rva005169B0
 {
@@ -37,9 +40,9 @@ public:
 
 void Rva005169B0::wrap(int, int)
 {
-	if (g_Va012F7730)
+	if (TheLAN)
 	{
 		m_val = 11;
-		g_Va012F7730->v48();
+		TheLAN->v48();
 	}
 }

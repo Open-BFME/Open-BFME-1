@@ -86,7 +86,10 @@ void BfmeB1023::bfmeGo1023B(int a)
 	bfmeApply1023(a);
 }
 
-class BfmeK1023
+// Retail's LAN singleton (0x012F7730, `LANAPI *TheLAN`, defined in
+// game/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp); only slot 49 is
+// read here.  Partial vtable view, no header covers it in this TU.
+class LANAPI
 {
 public:
 	virtual void bfmeVK01023();
@@ -140,7 +143,7 @@ public:
 	virtual void *bfmeName1023();
 };
 
-extern BfmeK1023 *g_bfmeK1023;
+extern LANAPI *TheLAN;
 extern void *g_bfmeA1023;
 extern char g_bfmeBuf1023[];
 void bfmeEmit1023(void *a, char *b, void *c, int d);
@@ -148,7 +151,7 @@ void bfmeEmit1023(void *a, char *b, void *c, int d);
 void bfmeGo1023F(void)
 {
 	if (g_bfmeA1023 != 0)
-		bfmeEmit1023(g_bfmeK1023->bfmeName1023(), g_bfmeBuf1023, g_bfmeA1023, 0);
+		bfmeEmit1023(TheLAN->bfmeName1023(), g_bfmeBuf1023, g_bfmeA1023, 0);
 }
 
 class BfmeH1023;
