@@ -2,20 +2,23 @@
 // Open-BFME5: DynamicShroudClearingRangeUpdateModuleData dtor.
 // Nested dual-BFMERetailAsciiString @+0x28.
 
-// Retail destroys this member with a direct call to
-// StringBase<char>::releaseBuffer (0x00887940) -- the member is a retail
-// AsciiString, not the WWLib Buffer whose own destructor is the 40-byte
-// body at 0x009E1E30, so name it the way the other lifted ModuleData
-// destructors already do.
+// The TU-local string view uses the canonical StringBase release method.
+#include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+namespace
+{
 class BFMERetailAsciiString
 {
 public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	__forceinline ~BFMERetailAsciiString()
+	{
+		reinterpret_cast<StringBase<char> *>(this)->clear();
+	}
 
 private:
-	void releaseBuffer();
 	unsigned char m_pad[4];
 };
+}
 
 class NestedBuffers
 {
