@@ -5353,22 +5353,9 @@ Bool Pathfinder::checkForMovement(const Object *obj, TCheckMovementInfo &info)
  * Adjusts a coordinate to the center of it's cell.
  */
 // Snaps the current position to it's grid location.
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfinderSnapPosition.cpp
-// ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z present-unmatched
-void Pathfinder::snapPosition(Object *object, Coord3D *position)
-{
-	Int iRadius;
-	Bool center;
-	getRadiusAndCenter(object, iRadius, center);
-	ICoord2D cell;
-	Coord3D adjustDest = *position;
-	if (!center) {
-		adjustDest.x += PATHFIND_CELL_SIZE_F/2;
-		adjustDest.y += PATHFIND_CELL_SIZE_F/2;
-	}
-	worldToCell( &adjustDest, &cell );
-	adjustCoordToCell(cell.x, cell.y,  center, *position, LAYER_GROUND);
-}
+// The BFME snapPosition body at RVA 003E6A30 is verified in
+// PathfinderSnapPosition.cpp. Retail queries the destination layer; the
+// Zero Hour body hardcoded ground and must not compete with that provider.
 
 /**
  * Adjusts a goal position to the center of it's cell.
