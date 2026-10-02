@@ -24,6 +24,9 @@ Every `__imp_` reference an object emits falls in one class:
   conflict     witnesses disagree. Refused
   invented     no import and no witness. Refused: nothing proves which slot
                it means, and aliasing it to a similar name is a guess
+  owned-iat    a source-defined import-address cell whose native name or DIR32
+               witness proves a retail IAT slot. Refused: the native import
+               library must provide the cell; STATIC cells need a DIR32 witness
 
 and a definition in one of our objects of a name that an import library also
 defines as the call stub of a retail import is a DUPLICATE THUNK: it links only
@@ -335,20 +338,61 @@ def coff_symbols(data):
     return out
 
 
+def external_symbols(records):
+    """(undefined, defined) external names; COMMON and ABS are definitions."""
+    undefined, defined = set(), set()
+    for _, name, section, storage, value in records:
+        if storage != EXTERNAL:
+            continue
+        if section == 0 and value == 0:
+            undefined.add(name)
+        elif section > 0 or section == -1 or (section == 0 and value > 0):
+            defined.add(name)
+    return undefined - defined, defined
+
+
 def object_facts(path):
     """(undefined __imp_ names, defined external names) of one object."""
     data = path.read_bytes()
     if data[:2] != b"\x4c\x01":
         return set(), set()
-    undefined, defined = set(), set()
-    for _, name, section, storage, _ in coff_symbols(data):
-        if storage != EXTERNAL:
+    undefined, defined = external_symbols(coff_symbols(data))
+    return {name for name in undefined if name.startswith("__imp_")}, defined
+
+
+def static_iat_symbols(path):
+    """Defined local __imp_ names, separate from the external-provider API."""
+    data = path.read_bytes()
+    if data[:2] != b"\x4c\x01":
+        return set()
+    return {name for _, name, section, storage, _ in coff_symbols(data)
+            if storage == STATIC and (section > 0 or section == -1) and name.startswith("__imp_")}
+
+
+def owned_iat_cells(defined, imports, found, sites, static_defined=()):
+    """Source-owned cells proven to denote retail IAT slots. Call only for a
+    known source object: import-library members legitimately define cells.
+    Pins and name tokens alone do not prove an owned global is an IAT cell.
+    Local STATIC cells require an object-local DIR32 witness: the recorded
+    global name table has no source provenance for local symbols."""
+    cells = {}
+    for symbol in sorted(defined | set(static_defined)):
+        if not symbol.startswith("__imp_"):
             continue
-        if section == 0 and name.startswith("__imp_"):
-            undefined.add(name)
-        elif section > 0:
-            defined.add(name)
-    return undefined, defined
+        slots = set(sites.get(symbol, ()))
+        if symbol in defined:
+            slots.update(rva for kind, rva in found.get(symbol, ()) if kind == "dir32")
+            if symbol in imports.imp:
+                slots.add(imports.by_import[imports.imp[symbol]])
+        slots.intersection_update(imports.slots)
+        if slots:
+            cells[symbol] = sorted(slots)
+    return cells
+
+
+def owned_iat_problem(symbol, slots):
+    return (f"{symbol}: source object defines a retail import-address cell "
+            f"({', '.join(map(hex, slots))}); it must remain undefined for the native import library")
 
 
 def read_rsp(path):
@@ -390,6 +434,7 @@ def measure(objects, imports, found):
     seen = collections.defaultdict(set)
     detail = {}
     by_object = rows_by_object()
+    source_objects = {path.resolve() for path in census_objects()}
     for path in objects:
         if not path.exists():
             continue
@@ -410,6 +455,16 @@ def measure(objects, imports, found):
             seen[verdict[0]].add(symbol)
             if verdict[0] != names[symbol][0]:
                 detail[symbol + " @ " + path.name] = list(verdict)
+        source_owned = path.resolve() in source_objects
+        static_defined = static_iat_symbols(path) if source_owned else set()
+        if source_owned and (static_defined or any(s.startswith("__imp_") for s in defined)):
+            if sites is None:
+                sites = site_witnesses(path, by_object.get(path.name, ()))
+            for symbol, slots in owned_iat_cells(defined, imports, found, sites, static_defined).items():
+                classes[symbol] = "owned-iat"
+                refs["owned-iat"] += 1
+                seen["owned-iat"].add(symbol)
+                detail[symbol + " @ " + path.name] = ["owned-iat", owned_iat_problem(symbol, slots), None]
         thunks = sorted(defined & imports.thunk.keys())
         for t in thunks:
             dup.append((path.name, t))
@@ -479,6 +534,8 @@ def plan(source, obj, imports, found):
     undefined, defined = object_facts(obj)
     sites = site_witnesses(obj, rows)
     steps, refused = [], []
+    refused.extend(owned_iat_problem(symbol, slots)
+                   for symbol, slots in owned_iat_cells(defined, imports, found, sites, static_iat_symbols(obj)).items())
     for symbol in sorted(undefined):
         kind, detail, slot = classify(symbol, imports, found, sites)
         if kind == "correct":
@@ -583,12 +640,14 @@ def fresh_object(source):
 
 def verify_object(source, obj, imports, found, steps):
     """[problem] for the rebuilt object: every import correct and witnessed
-    as its retail slot where a matched body reads it, no duplicate thunk, and
-    each owned name defined."""
+    as its retail slot where a matched body reads it, no source-owned IAT cell
+    or duplicate thunk, and each owned name defined."""
     problems = []
     rows = tu_rows(source)
     undefined, defined = object_facts(obj)
     sites = site_witnesses(obj, rows)
+    problems.extend(owned_iat_problem(symbol, slots)
+                    for symbol, slots in owned_iat_cells(defined, imports, found, sites, static_iat_symbols(obj)).items())
     for symbol in sorted(undefined):
         kind, detail, slot = classify(symbol, imports, found, sites)
         if kind != "correct":
@@ -624,9 +683,7 @@ def strict_link(obj, imports, work, label):
     order = {"wsock32.lib": 0}
     libs = sorted(libs, key=lambda p: order.get(p.name.lower(), 1))
     records = coff_symbols(obj.read_bytes())
-    defined = {name for _, name, section, storage, _ in records if storage == EXTERNAL and section > 0}
-    undefined = {name for _, name, section, storage, _ in records
-                 if storage == EXTERNAL and section == 0} - defined
+    undefined, _ = external_symbols(records)
     stubbed = {n for n in undefined if not n.startswith("__imp_") and n not in provided}
     work.mkdir(parents=True, exist_ok=True)
     stubs = link_census.stub_object(stubbed, work / f"{label}_stubs.obj")
