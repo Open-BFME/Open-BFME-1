@@ -125,14 +125,15 @@ public:
 	unsigned char test(void *first, void *second);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 
 unsigned char Rva002DCDA0::test(void *first, void *second)
 {
 	if (!Rva002DF120::test(first, second))
 		return 0;
 
-	Object *found = TheBfmeGameLogic->findObjectByID(
+	Object *found = TheGameLogic->findObjectByID(
 		((Rva002DCDA0ObjectId *)first)->m_id);
 	if (found == 0 || *(void **)((unsigned char *)found + 0x1fc) == 0)
 		return 1;

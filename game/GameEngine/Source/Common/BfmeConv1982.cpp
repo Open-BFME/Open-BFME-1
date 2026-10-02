@@ -241,7 +241,8 @@ public:
 };
 
 extern PartitionManager *ThePartitionManager;
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 
 void BfmeBaseETC::bfmeAETC(void *a, void *b, void *c)
 {
@@ -271,6 +272,6 @@ void BfmeBaseETC::bfmeAETC(void *a, void *b, void *c)
 		if ((them->getKindOfWord(1) & KINDOF_ALWAYS_SELECTABLE_MASK) != 0)
 			continue;
 
-		TheBfmeGameLogic->destroyObject(them);
+		TheGameLogic->destroyObject(them);
 	}
 }

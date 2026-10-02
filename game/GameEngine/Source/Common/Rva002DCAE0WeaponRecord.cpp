@@ -151,7 +151,8 @@ public:
     Object *findObjectByID(int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// Retail VA 0x012F0898 is the pointer defined in GameLogic.cpp.
+extern GameLogic *TheGameLogic;
 
 // Constructor 0x002DF2B0 builds the 0x58-byte base at offset zero. The
 // Rva002DCBA0 constructor then installs retail's 12-slot table at 0x010CECA4;
@@ -281,7 +282,7 @@ void Rva002DCBA0::rva002DCAE0Slot5(void *record, Thing *thing)
     Thing *thingForRecord;
     Object *found;
 
-    found = TheBfmeGameLogic->findObjectByID(
+    found = TheGameLogic->findObjectByID(
         *(int *)((unsigned char *)record + 8));
 
     if (found == 0)
