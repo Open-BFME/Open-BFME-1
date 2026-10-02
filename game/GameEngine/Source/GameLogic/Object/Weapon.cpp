@@ -3136,18 +3136,7 @@ void Weapon::getFiringLineOfSightOrigin(const Object* source, Coord3D& origin) c
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 /** Determine whether if source was at goalPos whether it would have clear line of sight. */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
-// ?isClearGoalFiringLineOfSightTerrain@Weapon@@ present-unmatched
-Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coord3D& goalPos, const Object* victim) const
-{
-	Coord3D origin=goalPos;
-	//CRCDEBUG_LOG(("Weapon::isClearGoalFiringLineOfSightTerrain(Object) for %s\n", DescribeObject(source).str()));
-	//DUMPCOORD3D(&origin);
-	getFiringLineOfSightOrigin(source, origin);
-	Coord3D victimPos;
-	victim->getGeometryInfo().getCenterPosition( *victim->getPosition(), victimPos );
-	return ThePartitionManager->isClearLineOfSightTerrain(NULL, origin, NULL, victimPos);
-}
+// Retail goal-object terrain LOS lives in Weapon_isClearGoalFiringLineOfSightTerrain_Object.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

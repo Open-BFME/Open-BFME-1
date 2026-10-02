@@ -38,11 +38,6 @@ public:
 		return &m_position;
 	}
 
-	const GeometryInfo &getGeometryInfo(void) const
-	{
-		return m_geometry;
-	}
-
 	unsigned char m_pad_000[4];
 	Overridable *m_template;
 	unsigned char m_pad_008[0x38 - 0x08];
@@ -97,7 +92,7 @@ bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object *source, const Coo
 	origin.x = goal->x;
 	origin.y = gy;
 	origin.z = goal->z;
-	origin.z += src->getGeometryInfo().getMaxHeightAbovePosition();
+	origin.z += src->m_geometry.getMaxHeightAbovePosition();
 	Coord3D victimPos;
 	victimPos = bfmeGetLOSVictimPos(src, victim, 0);
 	if (victim)
