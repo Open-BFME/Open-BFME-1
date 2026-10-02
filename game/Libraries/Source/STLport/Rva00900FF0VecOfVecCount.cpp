@@ -11,7 +11,8 @@
 #include <vector>
 #include <string>
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(void *dest, const void *src, unsigned int count);
+// Retail IAT VA 0x0135945C imports MSVCR71!memmove.
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *dest, const void *src, unsigned int count);
 
 namespace _STL {
 void *__cdecl vectorLargeAllocate(unsigned int);
@@ -43,7 +44,7 @@ __forceinline void Rva008FFB80Allocate(Rva008FFB80StringBase *self,unsigned int 
  }
 }
 inline char *Rva008FFB80Copy(const char *first,const char *last,char *dest) {
- return last==first?dest:(char*)BfmeMemMove(dest,first,last-first)+(last-first);
+ return last==first?dest:(char*)memmove(dest,first,last-first)+(last-first);
 }
 struct Gen_t_008ff3e0_p12cd: Rva008FFB80StringBase {
  __forceinline Gen_t_008ff3e0_p12cd(const _STL::string &source) {

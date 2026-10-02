@@ -4,7 +4,8 @@
 // register schedule in the growth path.
 // cl: /DNDEBUG /MD /EHsc
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
+// Retail IAT VA 0x0135945C imports MSVCR71!memmove.
+extern "C" __declspec(dllimport) void *__cdecl memmove(
 	void *dest, const void *src, unsigned int count);
 
 inline void *operator new(unsigned int, void *p) { return p; }
@@ -51,7 +52,7 @@ class char_traits
 public:
 	static T *move(T *dest, const T *src, unsigned int n)
 	{
-		return (T *)BfmeMemMove(dest, src, n * sizeof(T));
+		return (T *)memmove(dest, src, n * sizeof(T));
 	}
 
 	static void assign(T &c1, const T &c2) { c1 = c2; }
