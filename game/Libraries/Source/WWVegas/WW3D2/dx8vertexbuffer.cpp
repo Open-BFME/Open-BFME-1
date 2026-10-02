@@ -841,22 +841,8 @@ DynamicVBAccessClass::~DynamicVBAccessClass()
 
 // ----------------------------------------------------------------------------
 
-// ?_Deinit@DynamicVBAccessClass@@ present-unmatched
-void DynamicVBAccessClass::_Deinit()
-{
-	WWASSERT ((_DynamicDX8VertexBuffer == NULL) || (_DynamicDX8VertexBuffer->Num_Refs() == 1));
-	REF_PTR_RELEASE(_DynamicDX8VertexBuffer);
-	_DynamicDX8VertexBufferInUse=false;
-	_DynamicDX8VertexBufferSize=DEFAULT_VB_SIZE;
-	_DynamicDX8VertexBufferOffset=0;
-
-	WWASSERT ((_DynamicSortingVertexArray == NULL) || (_DynamicSortingVertexArray->Num_Refs() == 1));
-	REF_PTR_RELEASE(_DynamicSortingVertexArray);
-	WWASSERT(!_DynamicSortingVertexArrayInUse);
-	_DynamicSortingVertexArrayInUse=false;
-	_DynamicSortingVertexArraySize=0;
-	_DynamicSortingVertexArrayOffset=0;
-}
+// BFME _Deinit is defined in DynamicVBAccessClassDeinitBFME.cpp (RVA 0091DAA0).
+// Reset_Device calls that fifteen-slot implementation, not the ZH scalar body.
 
 // ?Allocate_DX8_Dynamic_Buffer@DynamicVBAccessClass@@ present-unmatched
 void DynamicVBAccessClass::Allocate_DX8_Dynamic_Buffer()
