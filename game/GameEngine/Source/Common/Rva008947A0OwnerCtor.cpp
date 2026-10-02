@@ -4,11 +4,13 @@
 // built through the EH vector constructor iterator.
 // Identity unrecovered; named from the address.
 
-class Rva008947A0Elem
+// The element destructor is retail's ??1BfmeElemBW@@QAE@XZ (0x004463AD), the
+// out-of-line copy BfmeElemDeleteBW.cpp defines; only the name differs.
+class BfmeElemBW
 {
 public:
-	Rva008947A0Elem(void);
-	~Rva008947A0Elem();
+	BfmeElemBW(void);
+	~BfmeElemBW();
 
 	int m_data;
 };
@@ -33,8 +35,8 @@ public:
 	Rva008947A0Head m_head;
 	int m_b;
 	int m_c;
-	Rva008947A0Elem *m_items;
-	Rva008947A0Elem m_array[2];
+	BfmeElemBW *m_items;
+	BfmeElemBW m_array[2];
 };
 
 Rva008947A0Owner::Rva008947A0Owner(void)

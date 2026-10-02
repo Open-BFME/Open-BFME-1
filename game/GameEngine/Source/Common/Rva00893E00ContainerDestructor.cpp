@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 
-struct Rva00893E00Element
+// The element destructor is retail's ??1BfmeElemBW@@QAE@XZ (0x004463AD), the
+// out-of-line copy BfmeElemDeleteBW.cpp defines; only the name differs.
+struct BfmeElemBW
 {
-    ~Rva00893E00Element(void);
+    ~BfmeElemBW(void);
 
 private:
     unsigned m_value;
@@ -18,8 +20,8 @@ public:
 private:
     unsigned m_pad0;
     unsigned m_pad4;
-    Rva00893E00Element *m_data;
-    Rva00893E00Element m_inline[2];
+    BfmeElemBW *m_data;
+    BfmeElemBW m_inline[2];
 };
 
 Gen_t_00894a10_p12cd::~Gen_t_00894a10_p12cd(void)
