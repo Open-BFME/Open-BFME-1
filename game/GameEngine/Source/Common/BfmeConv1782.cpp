@@ -5,7 +5,12 @@ struct Rva006C9270GlobalData1782
 	int m_yResolution;
 };
 
-extern Rva006C9270GlobalData1782 *TheWritableGlobalData;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  Rva006C9270GlobalData1782 above is
+// this TU's view of the pointee, so the canonical global is forward declared
+// and the cast at the use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 template <class T> class StringBase
 {
@@ -108,8 +113,9 @@ void ClientRoot4120::bfmeCloseHV(void)
 
 	OptionPreferences optionPreferences;
 	AsciiString value;
-	value.format("%d %d", TheWritableGlobalData->m_xResolution,
-		TheWritableGlobalData->m_yResolution);
+	value.format("%d %d",
+		((Rva006C9270GlobalData1782 *)TheWritableGlobalData)->m_xResolution,
+		((Rva006C9270GlobalData1782 *)TheWritableGlobalData)->m_yResolution);
 	optionPreferences[AsciiString("Resolution")] = value;
 	optionPreferences.write();
 }

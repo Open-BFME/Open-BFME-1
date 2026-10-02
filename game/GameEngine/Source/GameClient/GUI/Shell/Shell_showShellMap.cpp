@@ -38,7 +38,17 @@ public:
 	Bool m_shellMapOn;
 };
 
-extern BfmeGlobalData *TheWritableGlobalData;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  BfmeGlobalData above is this TU's
+// view of the pointee, so the canonical global is forward declared and the cast
+// at the use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+static inline BfmeGlobalData *localGlobalData()
+{
+	return (BfmeGlobalData *)TheWritableGlobalData;
+}
 
 class BfmeGameLogic
 {
@@ -154,13 +164,13 @@ private:
 
 Bool Shell::showShellMap(Bool useShellMap)
 {
-	m_shellMapRequested = useShellMap && !TheWritableGlobalData->m_shellMapOn;
+	m_shellMapRequested = useShellMap && !localGlobalData()->m_shellMapOn;
 
-	if (TheWritableGlobalData->m_initialFile.isNotEmpty() || TheGameLogic == 0)
+	if (localGlobalData()->m_initialFile.isNotEmpty() || TheGameLogic == 0)
 		return false;
 
 	m_clearBackground = false;
-	if (useShellMap && TheWritableGlobalData->m_shellMapOn)
+	if (useShellMap && localGlobalData()->m_shellMapOn)
 	{
 		TheDisplay->bfmeStopMovie();
 		((BfmeShellAudioRelease *)this)->releaseViaThunk();
@@ -171,7 +181,7 @@ Bool Shell::showShellMap(Bool useShellMap)
 		if (((BfmeGameLogic *)TheGameLogic)->m_gameMode != BFME_GAME_NONE)
 			TheMessageStream->appendMessage(BFME_MSG_CLEAR_GAME_DATA);
 
-		TheWritableGlobalData->m_pendingFile = TheWritableGlobalData->m_shellMapName;
+		localGlobalData()->m_pendingFile = localGlobalData()->m_shellMapName;
 		InitGameLogicRandom(0);
 		GameMessage *message = TheMessageStream->appendMessage(BFME_MSG_NEW_GAME);
 		message->appendIntegerArgument(BFME_GAME_SHELL);

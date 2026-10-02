@@ -102,7 +102,12 @@ public:
 
 extern Rva0051D690Shell *g_obj12F4B58;
 extern Rva0051D690Audio *TheAudioClientUpdate;
-extern Rva0051D690GlobalData *TheWritableGlobalData;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  Rva0051D690GlobalData above is this
+// TU's view of the pointee, so the canonical global is forward declared and the
+// cast at the use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 // Retail 0x012F3330 is EA's GameWindowTransitionsHandler *TheTransitionHandler.
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
@@ -129,7 +134,7 @@ void Rva0051D690::apply()
 
 void Rva0051D690Shell::restore()
 {
-	if (TheWritableGlobalData && !TheWritableGlobalData->m_noShellAudio)
+	if (TheWritableGlobalData && !((Rva0051D690GlobalData *)TheWritableGlobalData)->m_noShellAudio)
 	{
 		if (TheAudioClientUpdate && TheAudioClientUpdate->getMiscAudio() &&
 			!TheAudioClientUpdate->isCurrentlyPlaying(m_musicHandle))

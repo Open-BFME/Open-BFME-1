@@ -82,7 +82,12 @@ extern CreditsManager *TheCredits;
 extern Rva0051D690Shell *g_obj12F4B58;
 extern Rva0051D690Audio *TheAudioClientUpdate;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  Rva006C9270GlobalData above is this
+// TU's view of the pointee, so the canonical global is forward declared and the
+// cast at the use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 extern GameEngine *TheGameEngine;
 
 class BfmeAptScreenMainMenu
@@ -115,5 +120,6 @@ void BfmeAptScreenMainMenu::_bfme_creditsExit( const char *name )
 	m_state264 = 0;
 	m_name27C.~AsciiString();
 	g_obj12F4B58->m_flag59 = 0;
-	TheGameEngine->setFramesPerSecondLimit( TheWritableGlobalData->m_framesPerSecondLimit );
+	TheGameEngine->setFramesPerSecondLimit(
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_framesPerSecondLimit );
 }

@@ -16,13 +16,17 @@ class GameWindowTransitionsHandler { public: SLOT(0) SLOT(1) SLOT(2) SLOT(3) vir
 class Rva0048B0E0TransitionHandler {public: void update();};
 #undef SLOT
 struct Rva005A00B0Transition;
-struct Rva006C9270GlobalData;
 extern GameEngine *TheGameEngine;
 extern GameWindowManager *TheWindowManager;
 extern Display *TheDisplay;
 extern ImageCollection *TheMappedImageCollection;
 extern Rva005A00B0Transition *TheTransitionHandler;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  Rva0042EE70Flags below is this TU's
+// view of the pointee, so the canonical global is forward declared and the cast
+// at each use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 struct Rva0042EE70Flags {unsigned char pad000[0xbb4]; bool fieldbb4; unsigned char padbb5[3]; bool fieldbb8; unsigned char padbb9[0x206]; bool fielddbf;};
 int Rva0042EE70(int, bool start) {
  TheGameEngine->serviceWindowsOS();

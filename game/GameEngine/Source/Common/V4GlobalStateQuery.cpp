@@ -42,7 +42,8 @@ public:
 	int  m_at110;
 };
 
-// Same type as in V4MirroredFlagUpdate.cpp, which reads the byte at +0x8E.
+// TU-local VIEW of the canonical GlobalData (Common/GlobalData.cpp), kept only
+// for the offsets this row reads.
 class Glo012ED5C8Type
 {
 public:
@@ -55,8 +56,12 @@ public:
 // The canonical GameLogic global (0x012F0898), declared here with the
 // pointee type GameLogic so it links against GameLogic.cpp's definition.
 extern GameLogic *       TheGameLogic;
-// A second, unrelated global; untouched by this spelling.
-extern Glo012ED5C8Type *  Glo012ED5C8;
+// Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
+// defined once in Common/GlobalData.cpp.  Glo012ED5C8Type above is this TU's
+// view of the pointee, so the canonical global is forward declared and the cast
+// at the use is the whole translation.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva003BCC10
 {
@@ -73,5 +78,5 @@ int Rva003BCC10::current()
 	if( !((Rva00383860 *)TheGameLogic)->test() )
 		return ((Rva00383860 *)TheGameLogic)->m_at110;
 other:
-	return Glo012ED5C8->m_atEB0;
+	return ((Glo012ED5C8Type *)TheWritableGlobalData)->m_atEB0;
 }
