@@ -76,11 +76,15 @@ public:
 		set(text, wcslen(text));
 		return *this;
 	}
-	void concat(const WideChar *text) { StringBase<WideChar>::concat(text, wcslen(text)); }
 	void concat(const UnicodeString &other) { StringBase<WideChar>::concat(other.str(), other.getLength()); }
 
 	void __cdecl format(UnicodeString fmt, ...);		// 0x00889190
 };
+
+static __forceinline void lanDisplayConcat(UnicodeString *string, const WideChar *text)
+{
+	reinterpret_cast<StringBase<WideChar> *>(string)->concat(text, wcslen(text));
+}
 
 class GameWindow
 {
@@ -232,12 +236,12 @@ void LANDisplayGameList( GameWindow *gameListbox, LANGameInfo *gameList )
 			txtGName = L"";
 			if( gameList->isGameInProgress() )
 			{
-				txtGName.concat(L"[");
+				lanDisplayConcat(&txtGName, L"[");
 			}
 			txtGName.concat(gameList->getPlayerName(0));
 			if( gameList->isGameInProgress() )
 			{
-				txtGName.concat(L"]");
+				lanDisplayConcat(&txtGName, L"]");
 			}
 
 			UnicodeString txtPlayers;

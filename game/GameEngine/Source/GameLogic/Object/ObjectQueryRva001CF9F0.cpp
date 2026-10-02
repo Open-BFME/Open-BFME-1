@@ -181,7 +181,7 @@ class Object : public Thing
 {
 public:
 	Bool query(Object *viewer, Int mode);
-	Player *getControllingPlayer() const { Team *team = m_team; return team ? team->getControllingPlayer() : 0; }
+	Player *getControllingPlayer() const;
 	Bool testStatus(Int status) const;
 
 protected:
@@ -196,13 +196,19 @@ public:
 	Team *m_team;
 };
 
+static __forceinline Player *queryControllingPlayer(Object *object)
+{
+	Team *team = object->m_team;
+	return team ? team->getControllingPlayer() : 0;
+}
+
 // ?query@Object@@QAE_NPAV1@H@Z
 Bool Object::query(Object *viewer, Int mode)
 {
 	Player *viewerPlayer = (Player *)viewer;
 	if (mode == 1)
 	{
-		Player *controller = getControllingPlayer();
+		Player *controller = queryControllingPlayer(this);
 		if (controller != 0 && viewerPlayer->getRelationship(controller->getDefaultTeam()) == REL_ALLIES)
 			return false;
 	}
@@ -228,7 +234,7 @@ Bool Object::query(Object *viewer, Int mode)
 
 		if (mode != 1)
 			goto query_success;
-		Player *controller = getControllingPlayer();
+		Player *controller = queryControllingPlayer(this);
 		if (controller == 0)
 			return false;
 		if (viewerPlayer->getRelationship(controller->getDefaultTeam()) != REL_ENEMIES)
@@ -238,7 +244,7 @@ Bool Object::query(Object *viewer, Int mode)
 
 	if (mode == 1)
 	{
-		Player *controller = getControllingPlayer();
+		Player *controller = queryControllingPlayer(this);
 		if (controller == 0)
 			return false;
 		if (viewerPlayer->getRelationship(controller->getDefaultTeam()) != REL_ENEMIES)

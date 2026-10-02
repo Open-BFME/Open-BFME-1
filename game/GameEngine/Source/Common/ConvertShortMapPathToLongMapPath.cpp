@@ -69,12 +69,6 @@ public:
 		return 0;
 	}
 
-	bool nextToken(AsciiString *token, const char *delimiters)
-	{
-		return StringBase<char>::nextToken(
-			reinterpret_cast<StringBase<char> *>(token), delimiters);
-	}
-
 	bool endsWithNoCase(const char *text, int length) const
 	{
 		return StringBase<char>::endsWithNoCase(text, length);
@@ -113,6 +107,13 @@ public:
 	AsciiString &operator=(const char *text);
 };
 
+static __forceinline bool shortMapPathNextToken(
+	AsciiString *path, AsciiString *token, const char *delimiters)
+{
+	return reinterpret_cast<StringBase<char> *>(path)->nextToken(
+		reinterpret_cast<StringBase<char> *>(token), delimiters);
+}
+
 __declspec(noinline) static void ConvertShortMapPathToLongMapPath(AsciiString &mapName)
 {
 	AsciiString path = mapName;
@@ -122,7 +123,7 @@ __declspec(noinline) static void ConvertShortMapPathToLongMapPath(AsciiString &m
 	if (path.find('\\') == 0 && path.find('/') == 0)
 		return;
 
-	path.nextToken(&token, "\\/");
+	shortMapPathNextToken(&path, &token, "\\/");
 	for (;;)
 	{
 		if (token.endsWithNoCase(".map", 4))
@@ -131,7 +132,7 @@ __declspec(noinline) static void ConvertShortMapPathToLongMapPath(AsciiString &m
 			goto done;
 		actualpath.concat(token);
 		actualpath.concat('\\');
-		if (path.nextToken(&token, "\\/"))
+		if (shortMapPathNextToken(&path, &token, "\\/"))
 			continue;
 		goto done;
 	}
