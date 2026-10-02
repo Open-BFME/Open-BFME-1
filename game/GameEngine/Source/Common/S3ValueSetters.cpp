@@ -15,13 +15,17 @@
 typedef bool Bool;
 
 
-class Gen_000946D0Manager
+// The manager every notify-setter tail-jumps through is one global object at
+// 0x012ED604, spelled in the ledger as
+// ?g_rva000946b0@@3PAVRva000946B0G@@A; its member is the 0x0001A7DF ILT
+// (pinned as ?bar@Rva000946B0G@@QAEXPAX@Z).
+class Rva000946B0G
 {
 public:
-	void bfmeNotify(void *sender);				// ILT 0x0001A7DF
+	void bar(void *sender);					// ILT 0x0001A7DF
 };
 
-extern Gen_000946D0Manager *TheBfmeManager_000946D0;
+extern Rva000946B0G *g_rva000946b0;
 
 class Gen_000946D0
 {
@@ -33,14 +37,6 @@ private:
 	Bool m_bfmeValue;						// +0x8
 };
 
-class Gen_00094700Manager
-{
-public:
-	void bfmeNotify(void *sender);				// ILT 0x0001A7DF
-};
-
-extern Gen_00094700Manager *TheBfmeManager_00094700;
-
 class Gen_00094700
 {
 public:
@@ -50,14 +46,6 @@ private:
 	char m_bfmeHead[0x8];
 	int m_bfmeValue;						// +0x8
 };
-
-class Gen_00094730Manager
-{
-public:
-	void bfmeNotify(void *sender);				// ILT 0x0001A7DF
-};
-
-extern Gen_00094730Manager *TheBfmeManager_00094730;
 
 class Gen_00094730
 {
@@ -146,7 +134,7 @@ void Gen_000946D0::bfmeSet(Bool value)
 {
 	m_bfmeValue = value;
 
-	TheBfmeManager_000946D0->bfmeNotify(this);
+	g_rva000946b0->bar(this);
 }
 
 // ?bfmeSet@Gen_00094700@@QAEXH@Z
@@ -154,7 +142,7 @@ void Gen_00094700::bfmeSet(int value)
 {
 	m_bfmeValue = value;
 
-	TheBfmeManager_00094700->bfmeNotify(this);
+	g_rva000946b0->bar(this);
 }
 
 // ?bfmeSet@Gen_00094730@@QAEXH@Z
@@ -162,7 +150,7 @@ void Gen_00094730::bfmeSet(int value)
 {
 	m_bfmeValue = value;
 
-	TheBfmeManager_00094730->bfmeNotify(this);
+	g_rva000946b0->bar(this);
 }
 
 // ?bfmeSet@Gen_00411DD0@@QAEX_N@Z
