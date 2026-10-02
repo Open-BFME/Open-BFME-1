@@ -45,10 +45,7 @@ struct _Rb_global
 class BfmeChunkZO
 {
 public:
-	void bfmeOpenZO(char *name, unsigned short version)
-	{
-		((DataChunkOutput *)this)->openDataChunk(name, version);
-	}
+	void bfmeOpenZO(char *name, unsigned short version);
 	void bfmeWriteByteZO(char value)
 	{
 		((DataChunkOutput *)this)->writeByte(value);

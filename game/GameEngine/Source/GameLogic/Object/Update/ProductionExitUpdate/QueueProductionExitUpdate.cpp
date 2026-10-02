@@ -207,20 +207,6 @@ Bool QueueProductionExitUpdate::isFreeToExit() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?update@QueueProductionExitUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime QueueProductionExitUpdate::update()
-{
-	// This update needs to decide when we are again free to exit something
-	if (isFreeToExit())
-	{
-		m_currentDelay = 0;
-		return UPDATE_SLEEP_NONE;
-	}
-
-	m_currentDelay--;
-	return UPDATE_SLEEP_NONE;
-}
-
 //-------------------------------------------------------------------------------------------------
 // ?exitObjectByBudding@QueueProductionExitUpdate@@UAEXPAVObject@@0@Z present-unmatched
 void QueueProductionExitUpdate::exitObjectByBudding( Object *newObj, Object *budHost )

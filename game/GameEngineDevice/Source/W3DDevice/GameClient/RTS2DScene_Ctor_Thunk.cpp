@@ -204,6 +204,7 @@ class RTS2DScene : public SimpleSceneClass, public SubsystemInterface
 {
 public:
 	RTS2DScene();
+	virtual ~RTS2DScene();
 
 private:
 	RenderObjClass *m_status;

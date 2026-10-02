@@ -37,7 +37,10 @@ class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const AsciiString &other, int start, int len)
+	// Keep this slice construction inline without defining the real substring
+	// constructor a second time in this translation unit.
+	template <typename Source>
+	__forceinline AsciiString(const Source &other, int start, int len)
 		: StringBase<char>(other, start, len) {}
 	~AsciiString() {}
 
