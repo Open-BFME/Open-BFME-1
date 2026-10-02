@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-class BfmeMgrF1D
+class ThingTemplate;
+class AsciiString;
+
+class BfmeThingFactory
 {
 public:
-	void *registerObj(void *field);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
@@ -54,7 +57,7 @@ void *BfmeSub942D::bfmeCall942D(void *a)
 {
 	int index = (int)a;
 	if ((unsigned int)index < m_bfmeElements942D.size())
-		return ((BfmeMgrF1D *)TheThingFactory)->registerObj(
-			m_bfmeElements942D.begin() + index);
+		return (void *)((BfmeThingFactory *)TheThingFactory)->findTemplate(
+			*(const AsciiString *)(m_bfmeElements942D.begin() + index));
 	return 0;
 }
