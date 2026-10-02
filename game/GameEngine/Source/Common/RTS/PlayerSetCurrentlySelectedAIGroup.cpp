@@ -24,7 +24,11 @@ enum ObjectID
 typedef _STL::vector<ObjectID> VecObjectID;
 
 class AIGroup;
-extern int Gen01083E78;
+
+// Retail's Squad vftable at 0x01083E78 (dir32_addresses.csv).  A vftable is
+// emitted, never spellable from C++, so reference it by its exact decorated
+// name; &var keeps the immediate-address store the retail code performs.
+extern "C" char *__identifier("??_7Squad@@6B@");
 
 // This is the BFME shape at Player+0x67c: one vptr followed by the two
 // STLport vector triples.  The body identity is kept address-derived because
@@ -36,7 +40,7 @@ public:
 	// Keep the storage as scalar fields so MSVC emits the retail vptr literal
 	// and six zero stores instead of an EH-bearing virtual constructor path.
 	Gen_0018B850()
-		: m_vptr(&Gen01083E78), m_04(0), m_08(0), m_0C(0),
+		: m_vptr((int *)&__identifier("??_7Squad@@6B@")), m_04(0), m_08(0), m_0C(0),
 		  m_10(0), m_14(0), m_18(0)
 	{
 	}

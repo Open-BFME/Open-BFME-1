@@ -31,7 +31,9 @@
 // NOT DECIDED BY THE BYTES: whether 0x3F800000 is 1.0f or an integer, whether
 // a zeroed dword is an int or a pointer, and where each object really ends.
 
-extern int Gen01083E78;
+// 0x01083E78 is retail's Squad vftable, spelled by its exact decorated name:
+// a vftable is compiler-emitted, so C++ cannot spell it otherwise.
+extern "C" char *__identifier("??_7Squad@@6B@");
 extern int Gen01096964;
 extern int Gen010A31A0;
 extern int Gen010C74D4;
@@ -72,7 +74,7 @@ public:
 };
 Rva000D1930::Rva000D1930()
 {
-	m_vtable = &Gen01083E78;
+	m_vtable = (int *)&__identifier("??_7Squad@@6B@");
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
