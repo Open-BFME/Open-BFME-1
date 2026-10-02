@@ -84,26 +84,7 @@
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassDtor.cpp
 // (retail 0x0072F110)
 
-//=============================================================================
-// TerrainTracksRenderObjClass::TerrainTracksRenderObjClass
-//=============================================================================
-/** Constructor. Just nulls out some variables. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainTracksRenderObjClassCtor.cpp
-// ??0TerrainTracksRenderObjClass@@QAE@XZ present-unmatched
-TerrainTracksRenderObjClass::TerrainTracksRenderObjClass(void)
-{
-	m_stageZeroTexture=NULL;
-	m_lastAnchor=Vector3(0,1,2.25);
-	m_haveAnchor=false;
-	m_haveCap=true;
-	m_topIndex=0;
-	m_bottomIndex=0;
-	m_activeEdgeCount=0;
-	m_totalEdgesAdded=0;
-	m_bound=false;
-	m_ownerDrawable = NULL;
-}
+// Exact BFME constructor is provided by TerrainTracksRenderObjClassCtor.cpp.
 
 //=============================================================================
 // TerrainTracksRenderObjClass::Get_Obj_Space_Bounding_Sphere
@@ -499,62 +480,7 @@ void TerrainTracksRenderObjClassSystem::ReleaseResources(void)
 	// has no dx8 resources. jba.
 }
 
-//=============================================================================
-// TerrainTracksRenderObjClassSystem::init
-//=============================================================================
-/**  initialize the system, allocate all the render objects we will need */
-//=============================================================================
-// ?init@TerrainTracksRenderObjClassSystem@@QAEXPAVSceneClass@@@Z present-unmatched
-void TerrainTracksRenderObjClassSystem::init( SceneClass *TerrainTracksScene )
-{
-	const Int numModules=TheGlobalData->m_maxTerrainTracks;
-
-	Int i;
-	TerrainTracksRenderObjClass *mod;
-
-	m_TerrainTracksScene=TerrainTracksScene;
-
-	ReAcquireResources();
-	//go with a preset material for now.
-	m_vertexMaterialClass=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
-
-	//use a multi-texture shader: (text1*diffuse)*text2.
-	m_shaderClass = ShaderClass::_PresetAlphaShader;//_PresetATestSpriteShader;//_PresetOpaqueShader;
-
-	// we cannot initialize a system that is already initialized
-	if( m_freeModules || m_usedModules )
-	{
-
-		// system already online!
-		assert( 0 );
-		return;
-
-	}  // end if
-
-	// allocate our modules for this system
-	for( i = 0; i < numModules; i++ )
-	{
-
-		mod = NEW_REF( TerrainTracksRenderObjClass, () );
-
-		if( mod == NULL )
-		{
-
-			// unable to allocate modules needed
-			assert( 0 );
-			return;
-
-		}  // end if
-
-		mod->m_prevSystem = NULL;
-		mod->m_nextSystem = m_freeModules;
-		if( m_freeModules )
-			m_freeModules->m_prevSystem = mod;
-		m_freeModules = mod;
-
-	}  // end for i
-
-}  // end init
+// Exact system init is provided by TerrainTracksSystemInit.cpp.
 
 // Exact shutdown is provided by TerrainTracksRenderObjClassSystem.cpp.
 
