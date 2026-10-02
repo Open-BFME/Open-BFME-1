@@ -74,7 +74,7 @@ static HMODULE g_dbghelp;
 // local flag that is true if we're using an old dbghelp.dll version
 static bool g_oldDbghelp;
 
-static void InitDbghelp(void)
+void InitDbghelp(void)
 {
   // already called?
   if (g_dbghelp)
