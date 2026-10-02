@@ -111,20 +111,7 @@ WinInstanceData::~WinInstanceData( void )
 // WinInstanceData:setText ====================================================
 /** Set the text for this window instance data */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/WinInstanceDataDisplayStrings.cpp
-// ?setText@WinInstanceData@@QAEXVUnicodeString@@@Z present-unmatched
-void WinInstanceData::setText( UnicodeString text )
-{
-
-	// allocate a text instance if needed
-	if( m_text == NULL )
-		m_text = TheDisplayStringManager->newDisplayString();
-	DEBUG_ASSERTCRASH( m_text, ("no text") );
-
-	// set the text
-	m_text->setText( text );
-
-}  // end set text
+// Retail implementation: WinInstanceDataDisplayStrings.cpp.
 
 // WinInstanceData:setText ====================================================
 /** Set the text for this window instance data */
