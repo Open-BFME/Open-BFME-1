@@ -51,6 +51,17 @@ int g_013377E0 = 0;
 int g_013377E4 = 0;
 int g_013377EC = 0;
 
+// Retail 0x00891AA0 consumes only the first cdecl stack argument and forwards
+// it to the allocator table's second slot. The original name and formal
+// parameter count are unknown: no direct or absolute reference survives.
+// An unused second formal preserves the retail call/pop/ret instead of VC7.1's
+// one-argument tail jump. This is an ABI-compatible codegen view, not an
+// identification as a sized delete. See identity_evidence/0x00891aa0.md.
+void Rva00891AA0(void *storage, unsigned int)
+{
+    g_rva01337A30AllocPair->m_free(storage);
+}
+
 // Retail RVA 0x00892170, 34 bytes. EA file evidence places this body in Apt.cpp;
 // its original function name and the meanings of these globals are unproved.
 void Rva00892170Store(int first, int second)
