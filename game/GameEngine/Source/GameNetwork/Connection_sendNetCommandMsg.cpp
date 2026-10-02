@@ -22,7 +22,6 @@ class NetCommandList {
 public:
  virtual ~NetCommandList();
  NetCommandRef*addMessage(NetCommandMsg*);
- NetCommandRef*getFirstMessage(){return first;}
  NetCommandRef *first,*last,*inserted;
 };
 class NetPacket;
@@ -59,7 +58,7 @@ void Connection::sendNetCommandMsg(NetCommandMsg *msg,unsigned char relay){
    while(it!=packetList.end()){
     NetPacket *p=*it;
     NetCommandList *list=p->getCommandList();
-    NetCommandRef *ref1=list->getFirstMessage();
+    NetCommandRef *ref1=list->first;
     while(ref1){
      NetCommandRef *ref2=commands->addMessage(ref1->getCommand());
      ref2->setRelay(relay);
