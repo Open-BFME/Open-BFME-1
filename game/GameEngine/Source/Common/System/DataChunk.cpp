@@ -479,22 +479,13 @@ UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 // DataChunkInputCtorThunk.cpp, and DataChunkInput.cpp. Their retail-verified
 // BFME layouts supersede the reference definitions formerly emitted here.
 
-// register a user parsing function for a given DataChunk label
-// ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z present-unmatched
-void DataChunkInput::registerParser( const AsciiString& label, const AsciiString& parentLabel, 
-																		 DataChunkParserPtr parser, void *userData )
-{
-	UserParser *p = newInstance(UserParser);
+// Parser registration is supplied by DataChunkInput.cpp. Retail returns the
+// inserted UserParser and maintains both intrusive list links in its BFME node.
 
-	p->label.set( label );
-	p->parentLabel.set(parentLabel );
-	p->parser = parser;
-	p->userData = userData;
-
-	// prepend parser to parser list
-	p->next = m_parserList;
-	m_parserList = p;
-}
+// Keep the retail placement-delete body that the removed parser construction
+// previously emitted for exception cleanup.
+void (*bfme_user_parser_placement_delete)(void *, UserParser::UserParserMagicEnum) =
+	&UserParser::operator delete;
 
 // parse the chunk stream using registered parsers
 // it is assumed that the file position is at the start of a data chunk
