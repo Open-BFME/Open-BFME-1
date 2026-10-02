@@ -14,6 +14,8 @@
 // NameKeyType is an enum, not an integer typedef. nameToKey mangles its return
 // as ?AW4NameKeyType@@ and a typedef to unsigned int gives I instead, which
 // leaves the call unresolved with a zero displacement.
+
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0
@@ -47,12 +49,10 @@ public:
 
 	void clear(void)
 	{
-		releaseBuffer();
+		reinterpret_cast<StringBase<char> *>(this)->clear();
 	}
 
 private:
-	void releaseBuffer(void);
-
 	char *m_data;
 };
 

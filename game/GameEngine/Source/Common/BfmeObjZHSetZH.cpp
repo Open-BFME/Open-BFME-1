@@ -19,10 +19,10 @@ template <typename T> class StringBase
 {
 public:
 	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
 	void set(const StringBase &other);
 
 private:
+	StringBase(const StringBase &other);
 	void releaseBuffer();
 	friend struct BfmeElemCD;
 	friend class BfmeObjZH;

@@ -1,11 +1,13 @@
 // cl: /O2 /GR- /EHsc-
+// stlport
+
+#include <list>
 
 // Retail 0x006A0730 is an STLport unique insertion over a pointer-valued
 // element.  The generated hash_map<int, Gen_t[3]> claim is contradicted by
 // the eight-byte node allocation and by the key's null/offset-8 comparison.
 
-// Address-derived cdecl allocator pin; independently matched retail node pool.
-void *Rva0082E540NodeAllocate(unsigned int bytes);
+// Retail uses STLport's multithreaded node allocator for this eight-byte node.
 
 struct Rva006A0730Value
 {
@@ -88,7 +90,8 @@ Rva006A0730Result Rva006A0730Table::insert(Rva006A0730Value *const &value)
 	}
 
 	Rva006A0730Node *created =
-		(Rva006A0730Node *)Rva0082E540NodeAllocate(sizeof(Rva006A0730Node));
+		(Rva006A0730Node *)_STL::__node_alloc<true, 0>::allocate(
+			sizeof(Rva006A0730Node));
 	Rva006A0730Value **slot = &created->m_value;
 	created->m_next = 0;
 	if (slot)

@@ -6,7 +6,7 @@
 // Ghidras old 141-byte extent cuts into the first jump-table entry.
 // Spell out the original selector cases so MSVC regenerates both tables.
 
-extern "C" int __cdecl Rva009C4B70CpuFeatureProbe(void);
+extern int __cdecl Rva009C4B70CpuFeatureProbe(void);
 
 extern void __cdecl bfmeQueryCpuTierFlags(int *pTierA, int *pTierB,
 	int *pTierC)

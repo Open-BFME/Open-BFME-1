@@ -82,12 +82,31 @@ class LivingWorldRegion
 {
 };
 
+class Rva003C8340Item
+{
+public:
+	char m_pad00[0xa8];
+	unsigned char m_enabled;
+};
+
+class Rva003C8340
+{
+public:
+	void set(Rva003C8340Item *value);
+	void release(Rva003C8340Item *value, int mode);
+	void prepare(Rva003C8340Item *value);
+
+	char m_pad00[8];
+	Rva003C8340Item *m_current;
+	char m_pad0c[4];
+	unsigned char m_enabled;
+};
+
 class LivingWorldRegionManager
 {
 public:
 	void rva003C8B90();
 	LivingWorldRegion *rva003C8160(Coord3D *position);
-	void rva003C8340(LivingWorldRegion *region);
 
 private:
 	void *m_vtable;
@@ -116,6 +135,7 @@ void LivingWorldRegionManager::rva003C8B90()
 	{
 		Coord3D world;
 		g_bfmeStateDF->screenToTerrain(&screen, &world);
-		rva003C8340(rva003C8160(&world));
+		reinterpret_cast<Rva003C8340 *>(this)->set(
+			reinterpret_cast<Rva003C8340Item *>(rva003C8160(&world)));
 	}
 }

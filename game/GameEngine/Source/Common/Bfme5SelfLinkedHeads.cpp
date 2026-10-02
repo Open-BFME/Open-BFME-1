@@ -10,7 +10,8 @@
 // immediate byte, which is the three bytes separating the thirty-two byte
 // bodies from the thirty-five byte ones.
 
-void *bfmeNewAlloc(unsigned int bytes);				// retail 0x00881F30
+#include <new>
+
 void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
 
 struct BfmeSelfHead
@@ -70,7 +71,7 @@ Gen_0037E8F0::Gen_0037E8F0(void *owner)
 {
 	m_bfmeHead = 0;
 
-	BfmeSelfHead *head = (BfmeSelfHead *)bfmeNewAlloc(0xE0);
+	BfmeSelfHead *head = (BfmeSelfHead *)::operator new(0xE0);
 
 	head->m_bfmeNext = head;
 	head->m_bfmePrev = head;
@@ -96,7 +97,7 @@ Gen_004FD8A0::Gen_004FD8A0(void *owner)
 {
 	m_bfmeHead = 0;
 
-	BfmeSelfHead *head = (BfmeSelfHead *)bfmeNewAlloc(0x338);
+	BfmeSelfHead *head = (BfmeSelfHead *)::operator new(0x338);
 
 	head->m_bfmeNext = head;
 	head->m_bfmePrev = head;
