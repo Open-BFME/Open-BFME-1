@@ -1,12 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
-// Machine twin of ?upgradeImplementation@ModelConditionUpgrade@@MAEXXZ at
-// 0x002D6930 (ModelConditionUpgradeUpgradeImplementation.cpp): identical
-// shape and single callee (0x000095ed, clearAndSetModelConditionFlags), but
-// this owner's two BfmeC1166 flag fields sit in the OPPOSITE struct order
-// (set before clear) so the higher-offset field is checked first and each
-// call's argument roles are swapped relative to the landed twin. No named
-// caller, vtable slot or string anchor proves the owning class, so the
-// class keeps its address token.
+// ModelConditionUpgrade::upgradeImplementation at retail 0x002D6840, 180 bytes.
+// The constructor at 0x002D66D0 installs the vtable 0x010CD378, whose slot 9
+// reaches this body through ILT 0x0001131A. Slot 9 is the call
+// UpgradeMux::attemptUpgrade (0x002D9AD0) makes where Zero Hour's
+// giveSelfUpgrade calls upgradeImplementation. Slot 7 (0x002D6930) is the
+// mirror-image body that undoes this one. Evidence:
+// targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
 typedef unsigned int UnsignedInt;
 
@@ -40,13 +39,13 @@ struct Rva002D6840PairData
 	BfmeC1166 clear;
 };
 
-class Rva002D6840FlagPairUpgrade
+class ModelConditionUpgrade
 {
-public:
-	void applyFlagPair();
+protected:
+	virtual void upgradeImplementation();
 };
 
-void Rva002D6840FlagPairUpgrade::applyFlagPair()
+void ModelConditionUpgrade::upgradeImplementation()
 {
 	Rva002D6840PairData *data =
 		*(Rva002D6840PairData **)((char *)this - 0xc);
