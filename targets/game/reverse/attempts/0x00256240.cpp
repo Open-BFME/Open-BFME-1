@@ -1,5 +1,5 @@
 // ?onDie@UpgradeDie@@UAEXPBVDamageInfo@@@Z
-// partial score=0.95 date=2026-09-17
+// partial score=0.9505 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc
 
 class Thing;
