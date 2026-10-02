@@ -2,24 +2,9 @@
 // stlport
 // Open-BFME5: split-result-list destructor, retail 0x00240590.
 
-#define BFME_STLP_NODE_ALLOC 1
-#include "PreRTS.h"
 #include <algorithm>
-
-namespace _STL
-{
-	void vectorLargeDeallocate( void *memory );
-	void vectorSmallDeallocate( void *memory, unsigned int bytes );
-}
-
-class BfmeSplitResultListName
-{
-public:
-	~BfmeSplitResultListName();
-
-private:
-	void *m_data;
-};
+#include <memory>
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct BfmeSplitResultValue
 {
@@ -39,10 +24,7 @@ public:
 		if ( m_start )
 		{
 			unsigned int bytes = ( m_capacity - m_start ) * sizeof( BfmeSplitResultValue );
-			if ( bytes > 128 )
-				_STL::vectorLargeDeallocate( m_start );
-			else
-				_STL::vectorSmallDeallocate( m_start, bytes );
+			_STL::__node_alloc<true, 0>::deallocate( m_start, bytes );
 		}
 	}
 
@@ -59,7 +41,7 @@ public:
 	~BfmeHordeContainSplitResultList();
 
 private:
-	BfmeSplitResultListName m_name;
+	AsciiString m_name;
 	BfmeSplitResultVector m_values;
 };
 
