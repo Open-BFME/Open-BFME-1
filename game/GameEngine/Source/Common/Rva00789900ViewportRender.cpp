@@ -4,7 +4,11 @@
 #define _OPERATOR_NEW_DEFINED_
 #define Matrix4x4 Matrix4
 #include "WW3D2/camera.h"
+#include "WW3D2/w3derr.h"
+// The matched BFME scene renderer returns bool.
+#define WW3DErrorType bool
 #include "WW3D2/ww3d.h"
+#undef WW3DErrorType
 #include "GameEngine/Include/GameClient/Display.h"
 // Retail 0x00789BF0 / 492B: vtable 0x01126CCC slot 2 via ILT 0x00033CAD.
 // Owner established by the matched Rva00789900Init constructor; camera/scene
