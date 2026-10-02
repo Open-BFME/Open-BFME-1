@@ -27,7 +27,7 @@ public:
 class BehaviorModule
 {
 public:
-	virtual void behaviorModuleAnchor();
+	virtual ~BehaviorModule();
 protected:
 	unsigned int m_04;
 	Object *m_object;
