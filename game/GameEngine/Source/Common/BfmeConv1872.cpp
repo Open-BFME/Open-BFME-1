@@ -68,7 +68,7 @@ public:
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
 
-char bfmeCheckZE();
+bool bfmeIsSet();
 
 class BfmeOwnerZE
 {
@@ -85,7 +85,7 @@ void BfmeOwnerZE::bfmeCloseZE(void *unused)
 	if (m_bfmeWinZE == 0)
 		return;
 
-	if (m_bfmeFlagZE != 0 && ((BfmeManagerZE *)TheWindowManager)->bfmeBusyZE() == 0 && bfmeCheckZE() == 0)
+	if (m_bfmeFlagZE != 0 && ((BfmeManagerZE *)TheWindowManager)->bfmeBusyZE() == 0 && bfmeIsSet() == 0)
 		((BfmeManagerZE *)TheWindowManager)->bfmeHideZE(m_bfmeWinZE);
 
 	m_bfmeWinZE->bfmeDoneZE();
@@ -130,13 +130,25 @@ public:
 class BfmeObjZC
 {
 public:
-	GeometryInfo *bfmeGeomZC();
-	Coord3D *bfmePosZC();
-
 	unsigned char m_bfmeHeadZC[4];
 	Overridable *m_nextOverride;
 	unsigned char m_bfmeMidZC[0xf4];
 	BfmeSubZC *m_bfmeFCZC;
+};
+
+// Defining spellings for ILTs 0x000293E8 -> 0x00416AE0 and
+// 0x0003EE55 -> 0x0041D150. Keep the local layout view at the call sites.
+class BfmeThingJA
+{
+public:
+	int bfmeGoJA();
+};
+
+struct BfmeLinearCoord3D;
+class BFMERopeDrawableGetPositionShim
+{
+public:
+	const BfmeLinearCoord3D *getPositionLinear() const;
 };
 
 struct Rva003FD060TerrainLogic
@@ -152,7 +164,9 @@ struct Rva003FD060TerrainLogic
 
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern const float g_bfmeK1266B;
+// Retail's 4.0f at VA 0x01075340 is already supplied by this compiler COMDAT.
+// C linkage supplies the leading underscore of __real@40800000.
+extern "C" const float __identifier("_real@40800000");
 extern const float BfmeZeroRange;
 
 static __forceinline Overridable *bfmeFinalZC(Overridable *p)
@@ -184,7 +198,7 @@ float BfmeHostZC::bfmeHeightZC()
 	BfmeSubZC *s = o->m_bfmeFCZC;
 
 	if (s != 0 && (bfmeFinalZC(s->m_nextOverride)->m_bfmeC8ZC & 0x40) != 0)
-		return o->bfmeGeomZC()->getMaxHeightAbovePosition() * g_bfmeK1266B;
+		return ((GeometryInfo *)((BfmeThingJA *)o)->bfmeGoJA())->getMaxHeightAbovePosition() * __identifier("_real@40800000");
 
 	if ((ov1->m_bfme482ZC & 0x386) == 0)
 		return BfmeZeroRange;
@@ -192,12 +206,12 @@ float BfmeHostZC::bfmeHeightZC()
 	if (m_bfme2EZC == 0)
 		return BfmeZeroRange;
 
-	Coord3D *p = o->bfmePosZC();
+	const Coord3D *p = (const Coord3D *)((const BFMERopeDrawableGetPositionShim *)o)->getPositionLinear();
 	float coords[3];
 	coords[0] = p->x;
 	coords[1] = p->y;
 	coords[2] = p->z;
 	float d = coords[2] - ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeGroundZC(coords[0], coords[1], 0);
 
-	return (m_bfme08ZC->bfmeGeomZC()->getMaxHeightAbovePosition() + d) * 2.0f;
+	return (((GeometryInfo *)((BfmeThingJA *)m_bfme08ZC)->bfmeGoJA())->getMaxHeightAbovePosition() + d) * 2.0f;
 }
