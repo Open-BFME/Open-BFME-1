@@ -25,15 +25,3 @@ void bfmeGo918D(void)
 	*(char **)(g_bfme918D + d) = g_bfme918VftA;
 	((BfmeSub918P *)(g_bfme918D + 4))->bfmeDtor918P();
 }
-
-
-extern char g_bfme918G[];
-
-void bfmeGo918G(void)
-{
-	int d = *(int *)(*(char **)g_bfme918G + 4);
-	*(char **)(g_bfme918G + d) = g_bfme918VftA;
-	((BfmeSub918P *)(g_bfme918G + 4))->bfmeDtor918P();
-}
-
-

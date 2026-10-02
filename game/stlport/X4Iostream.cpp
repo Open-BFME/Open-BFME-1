@@ -72,6 +72,9 @@ using _STLP_VENDOR_CSTD::_streams;
 # pragma init_seg("STLPORT_NO_INIT")
 #endif
 
+// BFME narrow pairs: _$E1/_$E2 -> 0x00C6D8E0/0x00C70D50,
+// _$E4/_$E5 -> 0x00C6D900/0x00C70D70. Native helpers preserve
+// the retail ILT routes for the stream constructors and basic_ios destructor.
 _STLP_DECLSPEC istream cin(0);
 _STLP_DECLSPEC ostream cout(0);
 _STLP_DECLSPEC ostream cerr(0);
