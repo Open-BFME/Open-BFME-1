@@ -1,204 +1,177 @@
-// ?d_001f7b10@@YAXXZ
-// partial score=0.88 date=2026-08-31
-// cl: /O2 /Ob1 /G7
-
+// ?rva001F7B10@ClickReactionBehavior@@UAEXXZ
+// partial score=0.5156 date=2026-10-02
+// cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I.
+// stlport
 #include <algorithm>
-
-class RvaDrawable
-{
-public:
-	void setState( int state );
-};
-
-class RvaObject
-{
-	char m_pad_04[ 0x11C ];
-
-public:
-	unsigned int m_modelConditions;
-	unsigned char m_status_124;
-	char m_pad_125[ 0xDF ];
-	void *m_module_204;
-
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual void v6();
-	virtual void v7();
-	virtual void v8();
-	virtual void v9();
-	virtual RvaDrawable *getDrawable();
-
-	unsigned int *getStatusPtr();
-	void notifyModelConditionChanged();
-};
-
-class RvaObjectModuleBase
-{
-public:
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43();
-	virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
-	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51();
-	virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55();
-	virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
-	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63();
-	virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67();
-	virtual void v68(); virtual void v69(); virtual void v70(); virtual void v71();
-	virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75();
-	virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
-	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83();
-	virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87();
-	virtual void v88(); virtual void v89(); virtual void v90(); virtual void v91();
-	virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95();
-	virtual bool check();
-};
-
-class RvaModuleData
-{
-public:
-	virtual void moduleDataAnchor();
-	int m_tag;
-};
-
-class RvaClickReactionBehaviorModuleData : public RvaModuleData
-{
-public:
-	int m_clickTimer;
-	int m_reactionFrames[ 5 ];
-};
-
-class RvaUpdateModuleRoot
-{
-public:
-	virtual ~RvaUpdateModuleRoot();
-	virtual void updateModuleAnchor();
-
-public:
-	RvaClickReactionBehaviorModuleData *m_moduleData;
-	RvaObject *m_object;
-
-};
-
-class RvaUpdateModuleIface1
-{
-public:
-	virtual void updateModuleIface1();
-};
-
-class RvaUpdateModuleIface2
-{
-public:
-	virtual void updateModuleIface2();
-};
-
-class RvaUpdateModule : public RvaUpdateModuleRoot,
-	public RvaUpdateModuleIface1,
-	public RvaUpdateModuleIface2
-{
-protected:
-	int m_nextFrame;
-	int m_index;
-	int m_phase;
-	RvaObject *getObject() const { return m_object; }
-	RvaClickReactionBehaviorModuleData *getModuleData() const { return m_moduleData; }
-};
-
+#define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
+#include "game/GameEngine/Source/GameLogic/Object/object.h"
+class Rva001BEF20FieldAddress { public: char *get(); };
 class ClickReactionBehavior;
-
-class ClickReactionBehaviorIface
-{
-public:
-	virtual ~ClickReactionBehaviorIface();
-	virtual void v0();
-	virtual void onClick();
-	virtual void update();
-	int m_elapsed;
-	int m_reactionFrames;
+class Drawable {
+    friend class ClickReactionBehavior;
+    void applyPendingModelConditionFlags(bool);
 };
-
-class ClickReactionBehavior : public RvaUpdateModule,
-	public ClickReactionBehaviorIface
-{
+class Rva001F7B10AI {
 public:
-	virtual ~ClickReactionBehavior();
-	virtual void v0();
+    virtual void slot0();
+    virtual void slot1();
+    virtual void slot2();
+    virtual void slot3();
+    virtual void slot4();
+    virtual void slot5();
+    virtual void slot6();
+    virtual void slot7();
+    virtual void slot8();
+    virtual void slot9();
+    virtual void slot10();
+    virtual void slot11();
+    virtual void slot12();
+    virtual void slot13();
+    virtual void slot14();
+    virtual void slot15();
+    virtual void slot16();
+    virtual void slot17();
+    virtual void slot18();
+    virtual void slot19();
+    virtual void slot20();
+    virtual void slot21();
+    virtual void slot22();
+    virtual void slot23();
+    virtual void slot24();
+    virtual void slot25();
+    virtual void slot26();
+    virtual void slot27();
+    virtual void slot28();
+    virtual void slot29();
+    virtual void slot30();
+    virtual void slot31();
+    virtual void slot32();
+    virtual void slot33();
+    virtual void slot34();
+    virtual void slot35();
+    virtual void slot36();
+    virtual void slot37();
+    virtual void slot38();
+    virtual void slot39();
+    virtual void slot40();
+    virtual void slot41();
+    virtual void slot42();
+    virtual void slot43();
+    virtual void slot44();
+    virtual void slot45();
+    virtual void slot46();
+    virtual void slot47();
+    virtual void slot48();
+    virtual void slot49();
+    virtual void slot50();
+    virtual void slot51();
+    virtual void slot52();
+    virtual void slot53();
+    virtual void slot54();
+    virtual void slot55();
+    virtual void slot56();
+    virtual void slot57();
+    virtual void slot58();
+    virtual void slot59();
+    virtual void slot60();
+    virtual void slot61();
+    virtual void slot62();
+    virtual void slot63();
+    virtual void slot64();
+    virtual void slot65();
+    virtual void slot66();
+    virtual void slot67();
+    virtual void slot68();
+    virtual void slot69();
+    virtual void slot70();
+    virtual void slot71();
+    virtual void slot72();
+    virtual void slot73();
+    virtual void slot74();
+    virtual void slot75();
+    virtual void slot76();
+    virtual void slot77();
+    virtual void slot78();
+    virtual void slot79();
+    virtual void slot80();
+    virtual void slot81();
+    virtual void slot82();
+    virtual void slot83();
+    virtual void slot84();
+    virtual void slot85();
+    virtual void slot86();
+    virtual void slot87();
+    virtual void slot88();
+    virtual void slot89();
+    virtual void slot90();
+    virtual void slot91();
+    virtual void slot92();
+    virtual void slot93();
+    virtual void slot94();
+    virtual void slot95();
+    virtual bool query();
 };
-
-extern int GetGameLogicRandomValue( int min, int max, char *file, int line );
-
-__forceinline RvaDrawable *getDrawableForClickReaction( RvaObject *object )
+struct Rva001F7B10Data {
+    unsigned char m_unmodelled00[8];
+    int m_unmodelled08;
+    int m_unmodelled0C[5];
+};
+class Rva001F7B10Primary {
+public:
+    virtual void slot0() = 0;
+protected:
+    Rva001F7B10Data *m_moduleData;
+    Object *m_object;
+    unsigned char m_unmodelled0C[0x14];
+};
+class Rva001F7B10Interface {
+public:
+    virtual void slot0() = 0;
+    virtual void rva001F7B10() = 0;
+};
+class ClickReactionBehavior : public Rva001F7B10Primary, public Rva001F7B10Interface {
+public:
+    virtual void rva001F7B10();
+private:
+    int m_unmodelled24;
+    int m_unmodelled28;
+};
+extern int GetGameLogicRandomValue(int,int,char*,int);
+void ClickReactionBehavior::rva001F7B10()
 {
-	return object->getDrawable();
-}
-
-void ClickReactionBehaviorIface::onClick()
-{
-	RvaClickReactionBehaviorModuleData *data;
-	RvaObject *object = *(RvaObject **)((char *)this - 0x18);
-	if( object == 0 )
-		return;
-	data = *(RvaClickReactionBehaviorModuleData **)((char *)this - 0x1c);
-	RvaDrawable *drawable = getDrawableForClickReaction( object );
-	if( drawable == 0 )
-		return;
-	if( *object->getStatusPtr() & 0x100 )
-		return;
-	if( object->m_modelConditions & 0x01000000 )
-		return;
-	if( object->m_status_124 & 4 )
-		return;
-	RvaObjectModuleBase *module =
-		(RvaObjectModuleBase *)object->m_module_204;
-	if( module == 0 || !module->check() )
-		return;
-
-	int timer = data->m_clickTimer;
-	if( timer <= 0 )
-		return;
-	m_elapsed += timer;
-	int max_elapsed = timer * 5;
-	m_elapsed = std::min( m_elapsed, max_elapsed );
-	if( m_reactionFrames > 0 )
-		return;
-
-	int reaction = m_elapsed / timer;
-	if( reaction <= 3 )
-		reaction = GetGameLogicRandomValue( 1, 3,
-			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\ClickReactionBehavior.cpp",
-			0x74 );
-	if( reaction <= 0 )
-		return;
-
-	int index = reaction - 1;
-	unsigned int condition;
-	switch( index )
-	{
-	case 0: condition = 4; break;
-	case 1: condition = 8; break;
-	case 2: condition = 0x10; break;
-	case 3: condition = 0x20; break;
-	default: condition = 0x40; break;
-	}
-	if( ( object->m_modelConditions & condition ) == 0 )
-	{
-		object->m_modelConditions |= condition;
-		object->notifyModelConditionChanged();
-	}
-	drawable->setState( 0 );
-	if( index < 0 || index >= 5 )
-		return;
-	m_reactionFrames = data->m_reactionFrames[ index ];
+    Object *object = m_object;
+    Rva001F7B10Data *data = m_moduleData;
+    if (!object) return;
+    Drawable *drawable = object->getDrawable();
+    if (!drawable) return;
+    if (*(unsigned int *)((Rva001BEF20FieldAddress *)object)->get() & 0x100) return;
+    if (object->m_modelConditionFlags[4] & 0x01000000) return;
+    if (object->m_modelConditionFlags[5] & 4) return;
+    Rva001F7B10AI *ai = (Rva001F7B10AI *)object->m_ai;
+    if (!ai || !ai->query()) return;
+    int timer = data->m_unmodelled08;
+    if (timer <= 0) return;
+    m_unmodelled24 += timer;
+    int limit = timer*5;
+    m_unmodelled24 = _STL::min(m_unmodelled24,limit);
+    if (m_unmodelled28 > 0) return;
+    int reaction = m_unmodelled24/timer;
+    if (reaction <= 3) reaction=GetGameLogicRandomValue(1,3,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\ClickReactionBehavior.cpp",0x74);
+    if (reaction <= 0) return;
+    int index = reaction - 1;
+    unsigned int condition;
+    switch(index) {
+    case 0: condition=0x04000000; break;
+    case 1: condition=0x08000000; break;
+    case 2: condition=0x10000000; break;
+    case 3: condition=0x20000000; break;
+    case 4: condition=0x40000000; break;
+    default: condition=0x40000000; break;
+    }
+    if (!(object->m_modelConditionFlags[4]&condition)) {
+        object->m_modelConditionFlags[4] |= condition;
+        object->notifyModelConditionChanged();
+    }
+    drawable->applyPendingModelConditionFlags(false);
+    if (index >= 0 && index < 5) m_unmodelled28=data->m_unmodelled0C[index];
 }

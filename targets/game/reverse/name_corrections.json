@@ -14338,5 +14338,125 @@
   "old_name": "method",
   "new_name": "rva001F7CC0",
   "reason": "The old bank explicitly uses an opaque method placeholder and has the wrong zero-argument ABI. The proven owner gets an address-preserving method spelling with its witnessed Boolean argument."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "ClickReactionBehavior",
+  "new_name": "rva001F7B10",
+  "reason": "False pairing: the ClickReactionBehavior class is retained; the callback method is address-qualified because no lexical name is witnessed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "ClickReactionBehaviorIface",
+  "new_name": "Rva001F7B10Interface",
+  "reason": "The old interface name was an unwitnessed partial view. The native table proves +0x20 and slot1, not a lexical interface type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "RvaDrawable",
+  "new_name": "Rva001BEF20FieldAddress",
+  "reason": "False pairing of independent callees: Drawable::applyPendingModelConditionFlags replaces the fake setState shim; Rva001BEF20FieldAddress is the existing separate getter identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "RvaModuleData",
+  "new_name": "Rva001F7B10Data",
+  "reason": "Generic partial module-data header view gains address provenance; no lexical type was established."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "RvaObjectModuleBase",
+  "new_name": "Rva001F7B10AI",
+  "reason": "Old generic name incorrectly implies ObjectModule; canonical Object identifies +0x204 as AI interface, whose unknown slot ABI remains address-qualified."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "RvaUpdateModule",
+  "new_name": "Rva001F7B10Primary",
+  "reason": "Old synthetic hierarchy becomes an explicitly partial 32-byte primary-prefix view; no lexical type is asserted."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "RvaUpdateModuleIface2",
+  "new_name": "Rva001F7B10Interface",
+  "reason": "False hierarchy pairing: the new secondary view describes observed full+0x20 table, not the old generic prefix interface at +0x10."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "m_clickTimer",
+  "new_name": "m_unmodelled08",
+  "reason": "Data+8 integer access is proven; old timer label had no independent lexical witness."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "m_elapsed",
+  "new_name": "m_unmodelled24",
+  "reason": "Full+0x24 integer state is proven; the old elapsed label was a behavioral guess."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "m_reactionFrames",
+  "new_name": "m_unmodelled0C",
+  "reason": "Data+0xC five-word array is proven; the old frame label had no independent lexical witness."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "m_reactionFrames",
+  "new_name": "m_unmodelled28",
+  "reason": "Full+0x28 integer state is proven; the old frame label had no independent lexical witness."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f7b10.cpp",
+  "before_sha256": "150d6625cf7246c926618a7d00ff6ea4593a82d0e943278d6d7efe1e12eb8634",
+  "after_sha256": "ed90ee6d3e6abad2683b2b66b3390a3afdfd9e1ab6c94e3805aaf682bc36e28a",
+  "evidence": "targets/game/reverse/identity_evidence/001f7b10-corrected-bank.md",
+  "old_name": "v0",
+  "new_name": "rva001F7B10",
+  "reason": "The old v0 was an unnamed filler; the observed secondary slot1 is now represented by its exact address."
  }
 ]
