@@ -18,7 +18,7 @@ struct Rva0058D8E0Slot
 	char              m_pad04[ 0x14 ];
 };
 
-void __cdecl rva0058D8E0Select( int index );
+void __cdecl bfmeGoDZEb( int index );
 
 class Rva0058D8E0SlotLookup
 {
@@ -41,7 +41,7 @@ void Rva0058D8E0SlotLookup::selectMatchingSlot( Rva0058D8E0Target *target )
 			int key = target->m_key;
 			if( key == node->m_key )
 			{
-				rva0058D8E0Select( i );
+				bfmeGoDZEb( i );
 				return;
 			}
 		}

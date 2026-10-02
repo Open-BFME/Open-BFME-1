@@ -4,6 +4,16 @@
 
 class BfmeItemBF;
 
+class Object;
+
+// AIGroup::add is the matched body at 0x001526C0; the retail ILT at
+// 0x0002B7E2 routes to it. This TU only needs the call-side view.
+class AIGroup
+{
+public:
+	void add(Object *member);
+};
+
 class BfmeVisitorBF
 {
 public:
@@ -39,7 +49,8 @@ void Gen_0018BC70::bfmeVisitAll(BfmeVisitorBF *visitor)
 		BfmeItemBF **it = m_vector.m_start;
 		while (it != m_vector.m_finish)
 		{
-			visitor->bfmeVisit(*it);
+			reinterpret_cast<AIGroup *>(visitor)->add(
+				reinterpret_cast<Object *>(*it));
 			++it;
 		}
 	}
