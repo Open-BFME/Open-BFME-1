@@ -4,9 +4,9 @@
 // "wrap a C-string in a temporary AsciiString key, look up, release the key,
 // return the found payload or 0" shape, but this body:
 //   - the "this" for the lookup is a fixed global hashtable object at
-//     0x012F19A4 (already pinned as ?g_bfmeTwoSJA@@3PADA, a char*-typed
-//     placeholder from an earlier session), loaded as a plain address, not a
-//     pointer that needs a null check
+//     0x012F19A4 (defined by game/GameEngine/Source/Common/
+//     Rva00C6B390StaticInitializers.cpp as g_rva012F19A4), loaded as a plain
+//     address, not a pointer that needs a null check
 //   - the lookup calls the private hashtable _M_find implementation
 //     directly through its own ILT thunk (0x0002E5A5 -> retail 0x00460C00,
 //     already landed as the _M_find<AsciiString> instantiation for this same
@@ -23,13 +23,20 @@
 
 extern void j_0002e5a5(void);
 
-// address-derived stand-in for the hashtable instance living at 0x012F19A4
-class Rva00462C10Table
+// address-derived stand-in for the hashtable instance living at 0x012F19A4.
+// The global itself is defined once, by the TU that owns its dynamic
+// initializer: Rva00C6B390StaticInitializers.cpp declares
+// `Rva00C6B860Init g_rva012F19A4;` (retail 0x00C6B860, the $E stub for this
+// address).  Only the address is used here, so this TU repeats the type name to
+// spell that exact symbol -- same idiom as Gen_00C700A0Target in
+// S3SingletonForwarders.cpp.  It must be a `struct`, not a `class`: MSVC
+// decorates a class type `V...` and a struct type `U...`, and the defining
+// object spells ?g_rva012F19A4@@3URva00C6B860Init@@A.
+struct Rva00C6B860Init
 {
-public:
 	void *findRaw(const AsciiString &key)
 	{
-		typedef void *(Rva00462C10Table::*MemberThunk)(const AsciiString &);
+		typedef void *(Rva00C6B860Init::*MemberThunk)(const AsciiString &);
 		union {
 			void (*function)(void);
 			MemberThunk member;
@@ -39,7 +46,7 @@ public:
 	}
 };
 
-extern Rva00462C10Table g_bfmeTwoSJA_table;
+extern Rva00C6B860Init g_rva012F19A4;
 
 // ?Rva00462C10@@YAPAXPBD@Z -- address-derived TAG, identity unresolved
 void *Rva00462C10(const char *name)
@@ -47,7 +54,7 @@ void *Rva00462C10(const char *name)
 	void *node;
 	{
 		AsciiString key(name);
-		node = g_bfmeTwoSJA_table.findRaw(key);
+		node = g_rva012F19A4.findRaw(key);
 	}
 	return node ? reinterpret_cast<char *>(node) + 8 : 0;
 }
