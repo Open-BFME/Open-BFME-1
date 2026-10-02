@@ -23,6 +23,41 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def _has_external_search_root(output):
+    """Whether the reusable sidecar depends on a directory above this tree.
+
+    STLport's MSVC headers expand native includes to ``<../include/...>``. The
+    candidate made from ``/I.`` is a real search root, but it can change while
+    the census compiles other TUs. Keep the fresh preprocessor receipt for
+    these objects as a fallback if that inventory changes later in the run.
+    """
+    try:
+        meta = json.loads(build._deps_sidecar(output).read_text())
+        keys = meta.get("search_roots", [])
+    except (OSError, ValueError, TypeError):
+        return False
+    if not isinstance(keys, list):
+        return False
+    for key in keys:
+        if not isinstance(key, str):
+            continue
+        root = build._root_from_key(key)
+        if root is None:
+            return True
+        try:
+            root.resolve().relative_to(build.ROOT.resolve())
+        except (OSError, RuntimeError, ValueError):
+            return True
+    return False
+
+
+def _normal_cache_current(source, output):
+    try:
+        return build.compile_is_current(source, output)
+    except (OSError, ValueError, TypeError, subprocess.SubprocessError, SystemExit):
+        return False
+
+
 def signature(command, env):
     return {"command": command, "fingerprint": build._cmd_fingerprint(command, env),
             "implicit_flags": [env.get("CL", ""), env.get("_CL_", "")]}
@@ -156,8 +191,10 @@ class Receipts:
             return None  # A missing-header attempt may be retried by build.py.
 
     def after(self, source, output, command, env, before, compiler_output):
+        sidecar = build._deps_sidecar(output)
+        external_search = sidecar.exists() and _has_external_search_root(output)
         if before is None:
-            if build._deps_sidecar(output).exists():
+            if sidecar.exists() and not external_search and _normal_cache_current(source, output):
                 return  # No fresh proof captured; use the normal cache gate.
             raise SystemExit(f"census input proof unavailable: {source}")
         try:
@@ -178,7 +215,12 @@ class Receipts:
             # compile. Do not leave that receipt able to bless this object.
             build._deps_sidecar(output).unlink(missing_ok=True)
             raise SystemExit(f"census input proof failed: {source}: {error}") from error
-        if build._deps_sidecar(output).exists():
+        # A normal sidecar inventories directory names, including any
+        # higher-priority parent include roots. Preserve a fresh PP receipt for
+        # roots above the checkout because another parallel compile can change
+        # them after this callback, invalidating that inventory without changing
+        # the inputs this object actually used.
+        if sidecar.exists() and not external_search and _normal_cache_current(source, output):
             return  # Captured proof agreed; keep the normal cache semantics.
         self.entries[str(output.resolve())] = {"source": str(source.resolve()),
                                                "object": digest(output), "input": before,

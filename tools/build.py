@@ -884,6 +884,7 @@ def _include_search_roots(source, command, env):
     if env.get("CL") or env.get("_CL_"):
         return None  # These implicit compiler options may add include roots.
     roots = {source.parent}
+    compiler_roots = set()
     reported = {p for p in env.get("INCLUDE", "").split(";") if p}
     args = iter(command)
     for arg in args:
@@ -903,15 +904,18 @@ def _include_search_roots(source, command, env):
             resolved = host
         if resolved is None:
             return None
-        roots.add(Path(resolved))
+        resolved = Path(resolved)
+        roots.add(resolved)
+        compiler_roots.add(resolved)
     if source_needs_stlport(source):
         # STLport's native-header macros expand to <../include/HEADER>
         # (_STLP_NATIVE_INCLUDE_PATH in stl/_config.h) and
-        # _include_escapes_search_roots admits no ".." inside HEADER, so a root R
-        # adds exactly one searched directory: R/../include. Inventorying all of
-        # R's parent instead walked the directory holding the clone whenever R
-        # was the repo root (/I.), i.e. every sibling checkout and project.
-        roots.update(root.parent / "include" for root in tuple(roots))
+        # _include_escapes_search_roots admits no ".." inside HEADER, so each
+        # compiler include root R adds exactly one searched directory:
+        # R/../include. The source directory is searched implicitly only for
+        # quoted includes; it is not a compiler root for STLport's angle
+        # includes and must not grow a phantom sibling /include root here.
+        roots.update(root.parent / "include" for root in compiler_roots)
     # Expanded ../include roots can spell an existing Include directory with
     # different casing. WindowsPath cache keys fold case, but the inventory
     # serializes paths verbatim; use the actual spelling for both so a shared
@@ -921,15 +925,45 @@ def _include_search_roots(source, command, env):
 
 
 # /I. makes the checkout a search root. build/ and .git/ change on every
-# compile, verify and commit, so inventorying them made every /I. receipt stale
-# before pre-push reread it; no TU includes from them (_write_deps_sidecar
-# refuses one that does), so they are skipped.
+# compile, verify and commit, while session metadata directories may be
+# mounted after a compile. Inventorying those trees made /I. receipts stale;
+# no ordinary TU includes from them (_write_deps_sidecar refuses one that
+# does), so they are skipped.
 _UNWATCHED_ROOT_DIRS = ("build", ".git")
+
+# Session metadata may be mounted into a private worktree after an object was
+# compiled. They are not compiler inputs for an ordinary include operand, and
+# walking them as part of a source's explicit /I. root makes that receipt stale
+# as the agent session changes. `_include_escapes_search_roots` below refuses
+# reusable caching when an include explicitly names one of these directories.
+_UNWATCHED_ROOT_METADATA_DIRS = (".agents", ".codex", ".aws")
+_ALL_UNWATCHED_ROOT_DIRS = _UNWATCHED_ROOT_DIRS + _UNWATCHED_ROOT_METADATA_DIRS
+_UNWATCHED_GENERATED_DIRS = ("__pycache__",)
+
+
+def _is_unwatched_include_path(path):
+    try:
+        parts = Path(path).resolve().relative_to(ROOT.resolve()).parts
+    except (OSError, RuntimeError, ValueError):
+        return False
+    names = {part.lower() for part in parts}
+    return bool(parts and parts[0].lower() in _ALL_UNWATCHED_ROOT_DIRS
+                or names.intersection(_UNWATCHED_GENERATED_DIRS))
 
 
 def _directory_inventory(root):
     def fail(error):
         raise error
+
+    try:
+        relative = Path(root).resolve().relative_to(ROOT.resolve())
+    except (OSError, RuntimeError, ValueError):
+        relative = None
+    if relative is not None:
+        parts = [part.lower() for part in relative.parts]
+        if ((parts and parts[0] in _ALL_UNWATCHED_ROOT_DIRS)
+                or any(part in _UNWATCHED_GENERATED_DIRS for part in parts)):
+            return None  # An explicit root here needs a fresh input proof.
 
     directories = []
     top = Path(root).resolve() == ROOT.resolve()
@@ -944,7 +978,10 @@ def _directory_inventory(root):
             if any(os.path.islink(os.path.join(directory, name)) for name in subdirs):
                 return None  # os.walk would miss additions below a symlink.
             if top and Path(directory).resolve() == ROOT.resolve():
-                subdirs[:] = [name for name in subdirs if name not in _UNWATCHED_ROOT_DIRS]
+                unwatched = {name.lower() for name in _ALL_UNWATCHED_ROOT_DIRS}
+                subdirs[:] = [name for name in subdirs if name.lower() not in unwatched]
+            generated = {name.lower() for name in _UNWATCHED_GENERATED_DIRS}
+            subdirs[:] = [name for name in subdirs if name.lower() not in generated]
             subdirs.sort()
             # Accepted TUs cannot include .cpp, so sibling source additions do not affect them.
             directories.append((_root_key(Path(directory)), subdirs[:],
@@ -986,14 +1023,53 @@ def _root_key(root):
     try:
         return root.relative_to(ROOT).as_posix()
     except ValueError:
-        return str(root)
+        try:
+            return "@ROOT_PARENT@/" + root.relative_to(ROOT.parent).as_posix()
+        except ValueError:
+            return str(root)
+
+
+def _root_from_key(key):
+    """Resolve a sidecar search-root key in this checkout.
+
+    STLport's `<../include/...>` fallback can search one level above the
+    checkout when `/I.` is present. Store that root relative to ROOT's parent
+    so a warm sidecar remains meaningful in another worktree. Legacy absolute
+    roots are accepted only when they still lie under this checkout or its
+    parent; farther-away paths cannot safely be reused without the original
+    compiler command.
+    """
+    marker = "@ROOT_PARENT@"
+    if key == marker:
+        return ROOT.parent
+    if key.startswith(marker + "/"):
+        suffix = key[len(marker) + 1:]
+        if ".." in suffix.split("/") or "\\" in suffix:
+            return None
+        return ROOT.parent / Path(suffix)
+    path = Path(key)
+    if path.is_absolute():
+        try:
+            path.relative_to(ROOT)
+            return path
+        except ValueError:
+            try:
+                path.relative_to(ROOT.parent)
+                return path
+            except ValueError:
+                return None
+    if ".." in path.parts:
+        return None
+    return ROOT / path
 
 
 def _recorded_inventory(meta, inventory_cache=None):
     keys = meta.get("search_roots")
     if not isinstance(keys, list) or not keys or not all(cache_path_is_valid(key) for key in keys):
         return None
-    roots = [Path(key) if os.path.isabs(key) else ROOT / key for key in keys]
+    roots = [_root_from_key(key) for key in keys]
+    if any(root is None for root in roots):
+        return None
     return _inventory_for_roots(roots, inventory_cache)
 
 
@@ -1048,6 +1124,13 @@ def _include_escapes_search_roots(path, stlport, roots=None, anchored=None):
             if local is not None and local.is_file():
                 anchored.add(local)
                 continue
+        # These top-level trees are omitted from the /I. inventory. An
+        # explicit include beneath one cannot use that reusable cache; the
+        # census can still prove it with a fresh preprocessor receipt.
+        components = [component.lower() for component in include.split("/")]
+        if (components[0] in _ALL_UNWATCHED_ROOT_DIRS
+                or any(component in _UNWATCHED_GENERATED_DIRS for component in components)):
+            return True
         if ".." in include.split("/"):
             if roots is None:
                 return True
@@ -1182,9 +1265,8 @@ def _write_deps_sidecar(source, output, fingerprint, stdout_text, is_cl,
         if re.search(r"^\s*include\s", head, re.IGNORECASE | re.MULTILINE):
             problems.append("(.asm uses an include directive; deps unknown)")
     roots = _include_search_roots(source, command, env) if is_cl else []
-    if is_cl and any(path.resolve().is_relative_to((ROOT / name).resolve())
-                     for name in _UNWATCHED_ROOT_DIRS for path in dep_paths):
-        problems.append("(a header is included from build/ or .git/, which the inventory skips)")
+    if is_cl and any(_is_unwatched_include_path(path) for path in dep_paths):
+        problems.append("(a header is included from an unwatched checkout directory)")
     anchored = set()
     if is_cl and any(_include_escapes_search_roots(
             path, source_needs_stlport(source), roots, anchored) for path in [source, *dep_paths]):

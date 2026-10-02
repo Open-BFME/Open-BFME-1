@@ -144,6 +144,11 @@ def test_stlport_root_watches_its_native_include_not_its_whole_parent(tmp_path, 
                               "Note: including file: " + str(original), True,
                               command, env, build.search_inventory(source, command, env), [])
     assert build.compile_is_current(source, output)
+    metadata = json.loads(build._deps_sidecar(output).read_text())
+    assert "@ROOT_PARENT@/include" in metadata["search_roots"]
+    # The source directory is an implicit quoted-include root, not a compiler
+    # root for STLport's expanded angle include.
+    assert "include" not in metadata["search_roots"]
     # A sibling of the checkout is outside every searched directory.
     (root.parent / "sibling-checkout").mkdir()
     (root.parent / "sibling-checkout" / "algorithm").write_text("// unrelated\n")
