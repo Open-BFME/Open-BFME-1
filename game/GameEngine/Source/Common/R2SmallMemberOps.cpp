@@ -517,8 +517,10 @@ void Rva0045B5D0::run() { m_at28 = m_at48; m_at2C = m_at4C; }
 		*m_at08 = m_at04;                                                 \
 	}
 
-extern int R2Data010E75B0;
+// Retail vtable at 0x010E75B0 is LatchRestore<Player *>'s; __identifier is how
+// this tree spells a compiler-emitted vftable (cf. WeaponCopyConstructor.cpp).
+extern "C" int __identifier("??_7?$LatchRestore@PAVPlayer@@@@6B@");
 extern int R2Data010EE4EC;
 
-R2_PUBLISH_AND_FORWARD( Rva00337750, R2Data010E75B0 )
+R2_PUBLISH_AND_FORWARD( Rva00337750, __identifier("??_7?$LatchRestore@PAVPlayer@@@@6B@") )
 R2_PUBLISH_AND_FORWARD( Rva003D67C0, R2Data010EE4EC )
