@@ -40,16 +40,6 @@ bool IRegion2D::operator!=(const IRegion2D &that) const
     return !(*this == that);
 }
 
-IRegion2D &IRegion2D::operator=(const IRegion2D &that)
-{
-    struct IRegion2DBase {
-        int x_min, y_min, x_max, y_max;
-    };
-    IRegion2DBase *base = (IRegion2DBase *)this;
-    *base = *(IRegion2DBase *)&that;
-    return *this;
-}
-
 void IRegion2D::expandBy(const ICoord2D &point)
 {
     if (point.x < x_min) {
