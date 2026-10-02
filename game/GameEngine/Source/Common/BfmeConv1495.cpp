@@ -1,6 +1,6 @@
 // cl: /Od
 
-unsigned bfmeStrlenV51(char *s);
+int stringLength(const char *s);
 
 // Tag type of the retail callee at 0x008314E0, spelled as its defining name.
 struct BfmeRangeTag;
@@ -30,7 +30,7 @@ void __stdcall bfmeWrapInsertV51(char *pos, char *first, char *last)
 		mov dword ptr [ebp-0x94], ecx
 		mov eax, dword ptr [ebp+0x10]
 		push eax
-		call bfmeStrlenV51
+		call stringLength
 		add esp, 4
 		add eax, dword ptr [ebp+0x10]
 		mov dword ptr [ebp-0x90], eax

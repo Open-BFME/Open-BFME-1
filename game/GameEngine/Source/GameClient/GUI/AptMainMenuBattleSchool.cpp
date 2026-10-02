@@ -52,7 +52,7 @@ static inline Rva005A00B0AudioClient *localAudioClient()
 class GameWindowTransitionsHandler
 {
 public:
-	void setGroup( AsciiString name );
+	void reverse( AsciiString name );
 };
 
 extern GameWindowTransitionsHandler *TheTransitionHandler;
@@ -73,7 +73,7 @@ void AptMainMenu::BattleSchool( void *unused )
 
 	localAudioClient()->bfmeStopBQ( 8 );
 
-	TheTransitionHandler->setGroup( AsciiString( "MainMenuToBattleSchool" ) );
+	TheTransitionHandler->reverse( AsciiString( "MainMenuToBattleSchool" ) );
 
 	if( TheShell != 0 )
 		localShell()->restore();

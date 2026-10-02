@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // The reset role is proven by subsystem dispatch; original method spellings remain unresolved.
-class Rva0019BE80TeamRec
+class TeamsInfoRec
 {
 public:
     void clear();
@@ -18,8 +18,8 @@ public:
 private:
     void clearSideStorageAt0019B4C0();
     unsigned char m_prefix[0x630];
-    Rva0019BE80TeamRec m_teams;
-    Rva0019BE80TeamRec m_skirmishTeams;
+    TeamsInfoRec m_teams;
+    TeamsInfoRec m_skirmishTeams;
     char m_flag668;
 };
 

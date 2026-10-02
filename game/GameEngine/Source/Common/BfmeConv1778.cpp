@@ -18,11 +18,11 @@ public:
 	int m_playerIndex;
 };
 
-class BfmeItemDB
-{
-public:
-	Player *bfmeInfoDB(void);
-};
+class BfmeItemDB;
+
+#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 class BfmeValDB
 {
@@ -162,7 +162,8 @@ void InGameUI::addIdleWorker(BfmeItemDB *item)
 	if (bfmeRejectDB(item) != 0)
 		return;
 
-	BfmeNodeDB *head = m_idleWorkers[item->bfmeInfoDB()->m_playerIndex];
+	BfmeNodeDB *head = m_idleWorkers[
+		reinterpret_cast<Object *>(item)->getControllingPlayer()->m_playerIndex];
 	BfmeNodeDB *node = (BfmeNodeDB *)_STL::__new_alloc::allocate(0xc);
 
 	new (&node->m_bfmeValueDB) BfmeValDB(item);
