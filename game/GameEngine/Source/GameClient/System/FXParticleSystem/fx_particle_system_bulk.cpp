@@ -464,6 +464,12 @@ void xferInteger_44FD0(Xfer &xfer, int &value);
 void xferInteger_48851(Xfer &xfer, int &value);
 void parseFXList_851EE0(INI *ini, void *data, void *store, const void *userData);
 
+// The store global: ?TheFXListStore@@3PAVFXListStore@@A @ 0x012F144C, defined in
+// game/GameEngine/Source/GameClient/FXList.cpp. Forward declaration only; the
+// lookup itself goes through the pinned thunk declared further down.
+class FXListStore;
+extern FXListStore *TheFXListStore;
+
 namespace FXParticleSystem {
 
 void writeDrawTemplateBase(const void *self, File &file, const unsigned int *flags);
@@ -577,8 +583,6 @@ struct LifeEventInfoView {
     unsigned char padding[0x14];
     const FXList *cached;
 };
-
-extern "C" TerrainCollisionEventFXLookupShim *g_terrainCollisionEventFXListStore;
 
 class PointEmissionVolumeTemplateCopyCtorShim {
 public:
@@ -9849,7 +9853,10 @@ const FXList *LifeEventModuleInfo::getEventFX()
     LifeEventInfoView *view = (LifeEventInfoView *)this;
     if (!view->cached) {
         TerrainCollisionFXNameShim *name = (TerrainCollisionFXNameShim *)(base + 4);
-        view->cached = g_terrainCollisionEventFXListStore->lookup(
+        // The lookup body is the pinned thunk
+        // ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z
+        // (0x0001669E); only the store global itself carries the defining name.
+        view->cached = reinterpret_cast<TerrainCollisionEventFXLookupShim *>(TheFXListStore)->lookup(
             name->m_text ? name->m_text + 8 : DefaultModuleName<8>::VALUE);
     }
     return view->cached;
@@ -9863,7 +9870,7 @@ const FXList *TerrainCollisionModuleInfo::getEventFX()
     if (!view->cached) {
         TerrainCollisionFXNameShim *name = (TerrainCollisionFXNameShim *)(base + 4);
         _ReadWriteBarrier();
-        view->cached = g_terrainCollisionEventFXListStore->lookup(
+        view->cached = reinterpret_cast<TerrainCollisionEventFXLookupShim *>(TheFXListStore)->lookup(
             name->m_text ? name->m_text + 8 : DefaultModuleName<8>::VALUE);
     }
     return view->cached;

@@ -1,6 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 
 class FXList;
+
+// The store global: ?TheFXListStore@@3PAVFXListStore@@A @ 0x012F144C, defined in
+// game/GameEngine/Source/GameClient/FXList.cpp. Forward declaration only; the
+// lookup itself goes through the pinned thunk below.
+class FXListStore;
+extern FXListStore *TheFXListStore;
+
 extern "C" const void *bfmeVftCategoryModuleInfo8[];
 #pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
 
@@ -11,8 +18,6 @@ class TerrainCollisionEventFXLookupShim
 public:
 	const FXList *lookup( const char *name ) const;
 };
-
-extern "C" TerrainCollisionEventFXLookupShim *g_terrainCollisionEventFXListStore;
 
 template <int Category>
 struct DefaultModuleName
@@ -112,7 +117,11 @@ BaseY005E4C10::BaseY005E4C10( OwnerY005E4C10 *owner )
 	if ( !owner->m_cached )
 	{
 		const char *name = owner->m_name;
-		owner->m_cached = FXParticleSystem::g_terrainCollisionEventFXListStore->lookup(
+		// The lookup body is the pinned thunk ?lookup@TerrainCollisionEventFXLookupShim
+		// @FXParticleSystem@@QBEPBVFXList@@PBD@Z (0x0001669E); only the store global
+		// itself carries the defining name.
+		owner->m_cached =
+			reinterpret_cast<FXParticleSystem::TerrainCollisionEventFXLookupShim *>(TheFXListStore)->lookup(
 			name ? name + 8 : FXParticleSystem::DefaultModuleName<8>::VALUE );
 	}
 

@@ -42,7 +42,9 @@ public:
 	const FXList *findFXList( const char *name ) const;
 };
 
-extern "C" FXListStore *g_terrainCollisionEventFXListStore;
+// The store global itself: ?TheFXListStore@@3PAVFXListStore@@A @ 0x012F144C
+// (FXList.cpp defines it). Not in a namespace, so it is declared here.
+extern FXListStore *TheFXListStore;
 
 namespace FXParticleSystem
 {
@@ -153,7 +155,7 @@ Rva005FC920LifeEventModule::Rva005FC920LifeEventModule(
 	{
 		const char *text = sourceImage->m_eventName;
 		mutableSourceImage->m_cached =
-			g_terrainCollisionEventFXListStore->findFXList(
+			TheFXListStore->findFXList(
 				text ? text + 8 : Rva006A16B0Empty );
 	}
 	m_cached = sourceImage->m_cached;
