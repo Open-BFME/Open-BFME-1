@@ -64,7 +64,11 @@ public:
 	int m_c;
 };
 
-extern Gen006E1AC0 *Data00EF8048;
+// 0X012F8048 is retail's global dword (?g_get_00710fb0@@3HA, defined in
+// W3DDevice/GameClient/Gen_00710fb0_Global.cpp).  Retail reloads it through
+// eax each time, so this TU reads it as the pointer it holds.
+extern int g_get_00710fb0;
+#define Data00EF8048 (*reinterpret_cast<Gen006E1AC0 **>(&g_get_00710fb0))
 
 void Rva006E1AC0();
 void Rva006E1AC0()
