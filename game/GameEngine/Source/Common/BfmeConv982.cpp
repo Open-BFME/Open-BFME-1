@@ -80,7 +80,13 @@ public:
 // cast at the use.
 class ScriptEngine;
 extern ScriptEngine *TheScriptEngine;
-extern BfmeOut982 *g_bfmeOut982;
+// Retail spells the build-assistant singleton at 0x012ED83C TheBuildAssistant
+// (`extern BuildAssistant *TheBuildAssistant`, ZH Common/BuildAssistant.h); this
+// TU carries no header that declares it, so the type is forward-declared under
+// its defining name and the global keeps it. BfmeOut982 is the local view, cast
+// at the use, exactly as TheScriptEngine is above.
+class BuildAssistant;
+extern BuildAssistant *TheBuildAssistant;
 
 void __stdcall bfmeGo982B(int a)
 {
@@ -94,7 +100,7 @@ void __stdcall bfmeGo982B(int a)
 	if (!z)
 		return;
 
-	g_bfmeOut982->bfmeSend982B(z);
+	((BfmeOut982 *)TheBuildAssistant)->bfmeSend982B(z);
 }
 
 class BfmeT982
