@@ -1,3 +1,17 @@
+typedef bool Bool;
+
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+// The kind query this TU calls is Thing::isKindOf(KindOfType) const; the real
+// header declares the class, this TU only adds the member it calls.
+#define THING_TU_MEMBERS \
+	Bool isKindOf(KindOfType t) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class BfmeTargetZW
 {
 public:
@@ -42,8 +56,6 @@ public:
 class BfmeThingZW
 {
 public:
-	char bfmeHasZW(int what);
-
 	unsigned char m_bfmeHeadZW[0x1f0];
 	BfmeItemZW **m_bfmeListZW;
 };
@@ -71,7 +83,7 @@ void BfmeOwnerZW::bfmeApplyZW(BfmeThingZW *thing, void *b, void *c)
 	if (thing == 0)
 		return;
 
-	if (thing->bfmeHasZW(0x65) == 0)
+	if (((Thing *)thing)->isKindOf((KindOfType)0x65) == 0)
 		return;
 
 	for (BfmeItemZW **p = thing->m_bfmeListZW; *p != 0; p++)

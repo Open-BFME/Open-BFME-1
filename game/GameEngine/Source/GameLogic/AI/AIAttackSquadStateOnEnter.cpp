@@ -23,6 +23,18 @@ enum StateReturnType
 
 typedef unsigned char Bool;
 
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+// The kind query this TU calls is Thing::isKindOf(KindOfType) const; the real
+// header declares the class, this TU only adds the member it calls.
+#define THING_TU_MEMBERS \
+	bool isKindOf(KindOfType t) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 enum { INVALID_STATE_ID = 999999 };	// Zero Hour StateMachine.h
 enum { AI_IDLE = 0, AI_ATTACK_OBJECT = 10, AI_PICK_UP_CRATE = 39 };
 
@@ -226,11 +238,6 @@ class BfmeAIUpdateMethods
 public:
 	Object *checkForCrateToPickup();
 };
-class BfmeThingMethods
-{
-public:
-	bool isKindOf(int kind) const;
-};
 // ?update@AIAttackSquadState@@UAE?AW4StateReturnType@@XZ
 // Retail vtable 0x01097E30 slot 6 routes here. Keep the actual rva0016B010
 // helper in this TU: the compiler passes its Object* in EDI, not on the stack.
@@ -287,9 +294,9 @@ StateReturnType AIAttackSquadState::update()
 		return STATE_SUCCESS;
 
 	if (owner->testStatus(0x40) ||
-		((BfmeThingMethods *)goal)->isKindOf(0x36) ||
-		((BfmeThingMethods *)goal)->isKindOf(0x9a) ||
-		((BfmeThingMethods *)goal)->isKindOf(0x5d) ||
+		((Thing *)goal)->isKindOf((KindOfType)0x36) ||
+		((Thing *)goal)->isKindOf((KindOfType)0x9a) ||
+		((Thing *)goal)->isKindOf((KindOfType)0x5d) ||
 		goal->getControllingPlayer() != owner->getControllingPlayer())
 	{
 		if (!weapon->isWithinAttackRange(owner, goal, 0))

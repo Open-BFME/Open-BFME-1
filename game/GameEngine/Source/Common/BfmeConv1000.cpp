@@ -1,5 +1,19 @@
 // Open-BFME5 conversions.
 
+typedef bool Bool;
+
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+// The kind query this TU calls is Thing::isKindOf(KindOfType) const; the real
+// header declares the class, this TU only adds the member it calls.
+#define THING_TU_MEMBERS \
+	Bool isKindOf(KindOfType t) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class BfmeMgr1000
 {
 public:
@@ -108,7 +122,6 @@ char BfmeA1000::bfmeGo1000A(BfmeArg1000 *a)
 class BfmeThing1000
 {
 public:
-	char bfmeIs1000(int kind);
 };
 
 struct BfmeSlot1000
@@ -125,7 +138,7 @@ int bfmeGo1000B(BfmeThing1000 *t, BfmeSlot1000 *s)
 		if (cur) {
 			if (t == cur)
 				s->m_bfmeCur = 0;
-		} else if (t->bfmeIs1000(0x59)) {
+		} else if (((Thing *)t)->isKindOf((KindOfType)0x59)) {
 			s->m_bfmeFirst = t;
 			return 0;
 		}

@@ -1,7 +1,20 @@
+typedef bool Bool;
+
+enum KindOfType
+{
+	KINDOF_INVALID = 0
+};
+
+// The kind query this TU calls is Thing::isKindOf(KindOfType) const; the real
+// header declares the class, this TU only adds the member it calls.
+#define THING_TU_MEMBERS \
+	Bool isKindOf(KindOfType t) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 class BfmeThingERX
 {
 public:
-	char bfmeCheckERX(int what);
 };
 
 class BfmeBaseERX
@@ -86,7 +99,7 @@ bool BfmeHostERX::bfmeCanERX(BfmeThingERX *thing, int flag)
 {
 	if (thing != 0 &&
 		((BfmeBaseERX *)((char *)this - 0x20))->bfmeAllowERX(thing, flag) &&
-		!thing->bfmeCheckERX(0x1b))
+		!((Thing *)thing)->isKindOf((KindOfType)0x1b))
 	{
 		if ((char)flag != 0)
 		{

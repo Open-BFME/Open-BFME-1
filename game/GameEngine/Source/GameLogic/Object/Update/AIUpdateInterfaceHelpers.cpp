@@ -99,7 +99,7 @@ extern void j_00025d56();
 class Thing
 {
 public:
-	Bool bfmeIsKindOf( KindOfType type ) const;
+	Bool isKindOf( KindOfType type ) const;
 	Bool isSignificantlyAboveTerrain() const;
 };
 
@@ -375,7 +375,7 @@ void AIUpdateInterface::setGoalPositionClipped( const Coord3D *position, Command
 		{
 			Real fudge = TheWritableGlobalData->m_partitionCellSize * 0.5f;
 			Object *object = getObject();
-			if( object->bfmeIsKindOf( KINDOF_AIRCRAFT ) &&
+			if( object->isKindOf( KINDOF_AIRCRAFT ) &&
 				object->isSignificantlyAboveTerrain() && m_curLocomotor )
 			{
 				fudge = max( fudge, m_curLocomotor->getPreferredHeight() );
