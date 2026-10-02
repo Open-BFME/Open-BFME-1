@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "416a239895a688a4051f122bbbc9f404012a886bc947d917ee197d494f2700c0",
+  "symbol": "?lookup@Rva003D2B80Child@@QAEPAURva003D1380Elem@@URva003D2B80Coord@@@Z",
+  "score_kind": "measured",
+  "score": 0.2761,
+  "source": "// ?lookup@Rva003D2B80Child@@QAEPAURva003D1380Elem@@URva003D2B80Coord@@@Z\n// partial score=0.2761 date=2026-10-02\nstruct Rva003D1380Elem\n{\n\tunsigned char m_body[0x3c];\n};\n\nstruct Rva003D2B80Coord\n{\n\tfloat x;\n\tfloat y;\n Rva003D2B80Coord &operator-=(const Rva003D2B80Coord &c) { x-=c.x; y-=c.y; return *this; }\n};\n\ntemplate <typename T>\nstruct Rva003D2B80Entries\n{\n\tT *m_begin;\n\tT *m_end;\n\tT *m_capacity;\n\n\tT *begin() const { return m_begin; }\n\tint size() const { return (int)(m_end - m_begin); }\n};\n\nclass Rva003D2B80Source\n{\npublic:\n\tunsigned char m_pad00[0xc];\n\tvolatile float m_step;\n\t};\n\nclass Rva003D2B80Child\n{\npublic:\n\tfloat m_originX;\n\tfloat m_originY;\n\tRva003D2B80Entries<Rva003D1380Elem> m_entries;\n\tRva003D2B80Source *m_source;\n\tint m_count;\n\n\tRva003D1380Elem *lookup(Rva003D2B80Coord coord);\n};\n\nRva003D1380Elem *Rva003D2B80Child::lookup(Rva003D2B80Coord coord)\n{\n    coord -= *(const Rva003D2B80Coord *)&m_originX;\n    volatile float cs = m_source->m_step;\n    int col = (int)(coord.x / cs);\n    if (col >= 0 && col < m_count) {\n        int idx = (int)(coord.y / cs) * m_count + col;\n        if (idx >= 0 && (unsigned)idx < (unsigned)m_entries.size())\n            return m_entries.begin() + idx;\n    }\n    return 0;\n}\n"
+}

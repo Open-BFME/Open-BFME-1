@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1e63f4e690b0b3f9679c14e72b6bf3fa23c65f70fbd211816d0cd9a3e8b04b56",
+  "symbol": "?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z\n// partial score=0.9 date=2026-09-09\nstruct Rva003D1380Elem\n{\n\tunsigned char m_body[0x3c];\n};\n\nstruct Rva003D2B80Coord\n{\n\tfloat x;\n\tfloat y;\n};\n\ntemplate <typename T>\nstruct Rva003D2B80Entries\n{\n\tT *m_begin;\n\tT *m_end;\n\tT *m_capacity;\n\n\tT *begin() const { return m_begin; }\n\tint size() const { return (int)(m_end - m_begin); }\n};\n\nclass Rva003D2B80Source\n{\npublic:\n\tunsigned char m_pad00[0xc];\n\tvolatile float m_step;\n\t};\n\nclass Rva003D2B80Child\n{\npublic:\n\tfloat m_originX;\n\tfloat m_originY;\n\tRva003D2B80Entries<Rva003D1380Elem> m_entries;\n\tRva003D2B80Source *m_source;\n\tint m_count;\n\n\tRva003D1380Elem *lookup(Rva003D2B80Coord coord);\n};\n\nRva003D1380Elem *Rva003D2B80Child::lookup(Rva003D2B80Coord coord)\n{\n\tregister Rva003D2B80Child *self = this;\n\tfloat fx = coord.x;\n\tfx -= self->m_originX;\n\tfloat cs = self->m_source->m_step;\n\tfloat fy = coord.y;\n\tfy -= self->m_originY;\n\n\tint col = (int)(fx / cs);\n\n\tif (col < 0)\n\t\treturn 0;\n\n\tint w = self->m_count;\n\n\tif (col >= w)\n\t\treturn 0;\n\n\tint idx = (int)(fy / cs) * w + col;\n\n\tif (idx < 0)\n\t\treturn 0;\n\n\tif ((unsigned int)idx >= (unsigned int)self->m_entries.size())\n\t\treturn 0;\n\n\treturn self->m_entries.begin() + idx;\n}\n"
+}

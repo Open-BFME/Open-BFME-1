@@ -1,5 +1,5 @@
-// ?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z
-// partial score=0.9 date=2026-09-09
+// ?lookup@Rva003D2B80Child@@QAEPAURva003D1380Elem@@URva003D2B80Coord@@@Z
+// partial score=0.2761 date=2026-10-02
 struct Rva003D1380Elem
 {
 	unsigned char m_body[0x3c];
@@ -9,6 +9,7 @@ struct Rva003D2B80Coord
 {
 	float x;
 	float y;
+ Rva003D2B80Coord &operator-=(const Rva003D2B80Coord &c) { x-=c.x; y-=c.y; return *this; }
 };
 
 template <typename T>
@@ -43,30 +44,13 @@ public:
 
 Rva003D1380Elem *Rva003D2B80Child::lookup(Rva003D2B80Coord coord)
 {
-	register Rva003D2B80Child *self = this;
-	float fx = coord.x;
-	fx -= self->m_originX;
-	float cs = self->m_source->m_step;
-	float fy = coord.y;
-	fy -= self->m_originY;
-
-	int col = (int)(fx / cs);
-
-	if (col < 0)
-		return 0;
-
-	int w = self->m_count;
-
-	if (col >= w)
-		return 0;
-
-	int idx = (int)(fy / cs) * w + col;
-
-	if (idx < 0)
-		return 0;
-
-	if ((unsigned int)idx >= (unsigned int)self->m_entries.size())
-		return 0;
-
-	return self->m_entries.begin() + idx;
+    coord -= *(const Rva003D2B80Coord *)&m_originX;
+    volatile float cs = m_source->m_step;
+    int col = (int)(coord.x / cs);
+    if (col >= 0 && col < m_count) {
+        int idx = (int)(coord.y / cs) * m_count + col;
+        if (idx >= 0 && (unsigned)idx < (unsigned)m_entries.size())
+            return m_entries.begin() + idx;
+    }
+    return 0;
 }
