@@ -1,3 +1,6 @@
+// cl: /DNDEBUG /MD /Igame/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
+#include "../../Include/GameLogic/Module/UpdateModule.h"
 #include "../GameLogic/Object/object.h"
 
 struct Rva00367E30Logic
@@ -6,36 +9,36 @@ struct Rva00367E30Logic
 	int m_bfme3CXW;
 };
 
-// Retail 0x012F0898 is EA's game-logic singleton, whose one canonical
-// spelling is ?TheGameLogic@@3PAVGameLogic@@A.  Rva00367E30Logic above is this
-// TU's own view of that address, so the read below casts at the use.
+// Rva00367E30Logic exposes the frame read from the game-logic singleton.
 class GameLogic;
 
 extern GameLogic *TheGameLogic;
 
-class BfmeHostXW
+class ObjectHelper : public UpdateModule
 {
 public:
-	void bfmeSetXW(int when);
-	void bfmeApplyXW(Object *obj, int value);
-
-	unsigned char m_bfmeHeadXW[8];
-	Object *m_bfme08XW;
+	void sleepUntil(UnsignedInt when);
 };
 
-void BfmeHostXW::bfmeSetXW(int when)
+struct Rva00256CD0Helper
 {
-	Object *obj = m_bfme08XW;
+	unsigned char m_unmodelled[8];
+	Object *m_object;
+};
+
+void ObjectHelper::sleepUntil(UnsignedInt when)
+{
+	Object *obj = reinterpret_cast<Rva00256CD0Helper *>(this)->m_object;
 
 	if (reinterpret_cast<const unsigned char *>(obj->m_status)[0] & 1)
 		return;
 
-	int v;
+	UpdateSleepTime wakeDelay;
 
 	if (when != 0 && when != 0x3fffffff)
-		v = when - ((Rva00367E30Logic *)TheGameLogic)->m_bfme3CXW;
+		wakeDelay = UPDATE_SLEEP(when - ((Rva00367E30Logic *)TheGameLogic)->m_bfme3CXW);
 	else
-		v = 0x3fffffff;
+		wakeDelay = UPDATE_SLEEP_FOREVER;
 
-	bfmeApplyXW(obj, v);
+	setWakeFrame(obj, wakeDelay);
 }

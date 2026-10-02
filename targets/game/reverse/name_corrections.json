@@ -13308,5 +13308,25 @@
   "after_sha256": "99f146ca333e95c2cadcdf989f015b14a404db91695531d4c755cc06e1c5dd5c",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv2093.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv2093.cpp",
+  "old_name": "BfmeHostXW",
+  "new_name": "Rva00256CD0Helper",
+  "before_sha256": "9bdcfb4410e63fe06f5f7e87c132d6140cdf141c7781d89945155e3d582efc73",
+  "after_sha256": "10a725e0d7e8aae4f831b22bb95c99b2fe68f0488e8ab4d2ab1df8716471b210",
+  "evidence": "targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md",
+  "reason": "False pairing: the placeholder class BfmeHostXW became ObjectHelper (identity correction proved in targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md); Rva00256CD0Helper is a new address-derived layout view that reads the owning object at +8, not a rename of BfmeHostXW. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv2093.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv2093.cpp",
+  "old_name": "m_bfmeHeadXW",
+  "new_name": "m_unmodelled",
+  "before_sha256": "9bdcfb4410e63fe06f5f7e87c132d6140cdf141c7781d89945155e3d582efc73",
+  "after_sha256": "10a725e0d7e8aae4f831b22bb95c99b2fe68f0488e8ab4d2ab1df8716471b210",
+  "evidence": "targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md",
+  "reason": "False pairing: m_bfmeHeadXW was a placeholder for the helper's first eight bytes; the new layout view keeps them as m_unmodelled because nothing reads them. Identity correction proved in targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md. Bytes unchanged."
  }
 ]
