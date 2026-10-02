@@ -72,7 +72,7 @@ public:
  int m_rva240;
  GameWindow *m_rva244;
 };
-class Rva00508C80GameSpyInfo {
+class GameSpyInfo {
 public:
  virtual void slot00();
  virtual void slot01();
@@ -104,7 +104,7 @@ public:
  virtual void slot27();
  virtual int getLocalProfileID();
 };
-extern Rva00508C80GameSpyInfo *TheGameSpyInfo;
+extern GameSpyInfo *TheGameSpyInfo;
 extern int GameSpyColor[];
 static bool isPopulatingLadderBox = false;
 // Retail validity call: ECX is LadderInfo, no stack arguments, bool in AL.
