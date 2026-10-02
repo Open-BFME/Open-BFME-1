@@ -25,6 +25,13 @@
 #define PNG_INTERNAL
 #include "png.h"
 
+/* Retail resolved this file's zlib call to the copy inside d3dx9.lib, whose
+   stdcall entry is the archive symbol _d3dx_deflate@8 (functions.csv
+   0x00AAD683, inputs/vendor/d3dx9/d3dx9.lib).  zlib.h spells the same call
+   plain `deflate`, which /Gz decorates to __deflate@8 -- a name retail never
+   defines.  Declare the real entry point; same ABI, same compiled bytes. */
+extern int __stdcall d3dx_deflate(z_streamp strm, int flush);
+
 /* Writes all the PNG information.  This is the suggested way to use the
  * library.  If you have a new chunk to add, make a function to write it,
  * and put it in the correct location here.  If you want the chunk written
@@ -582,7 +589,7 @@ png_write_flush(png_structp png_ptr)
       int ret;
 
       /* compress the data */
-      ret = deflate(&png_ptr->zstream, Z_SYNC_FLUSH);
+      ret = d3dx_deflate(&png_ptr->zstream, Z_SYNC_FLUSH);
       wrote_IDAT = 0;
 
       /* check for compression errors */

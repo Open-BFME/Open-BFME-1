@@ -24,6 +24,13 @@
 #define PNG_INTERNAL
 #include "png.h"
 
+/* Retail resolved this file's zlib call to the copy inside d3dx9.lib, whose
+   stdcall entry is the archive symbol _d3dx_deflate@8 (functions.csv
+   0x00AAD683, inputs/vendor/d3dx9/d3dx9.lib).  zlib.h spells the same call
+   plain `deflate`, which /Gz decorates to __deflate@8 -- a name retail never
+   defines.  Declare the real entry point; same ABI, same compiled bytes. */
+extern int __stdcall d3dx_deflate(z_streamp strm, int flush);
+
 /* Place a 32-bit number into a buffer in PNG byte order.  We work
  * with unsigned numbers for convenience, although one supported
  * ancillary chunk uses signed (two's complement) numbers.
@@ -818,7 +825,7 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
    do
    {
       /* compress the data */
-      ret = deflate(&png_ptr->zstream, Z_NO_FLUSH);
+      ret = d3dx_deflate(&png_ptr->zstream, Z_NO_FLUSH);
       if (ret != Z_OK)
       {
          /* error */
@@ -870,7 +877,7 @@ png_write_zTXt(png_structp png_ptr, png_charp key, png_charp text,
    do
    {
       /* tell zlib we are finished */
-      ret = deflate(&png_ptr->zstream, Z_FINISH);
+      ret = d3dx_deflate(&png_ptr->zstream, Z_FINISH);
       if (ret != Z_OK && ret != Z_STREAM_END)
       {
          /* we got an error */
@@ -1222,7 +1229,7 @@ png_write_finish_row(png_structp png_ptr)
    do
    {
       /* tell the compressor we are done */
-      ret = deflate(&png_ptr->zstream, Z_FINISH);
+      ret = d3dx_deflate(&png_ptr->zstream, Z_FINISH);
       /* check for an error */
       if (ret != Z_OK && ret != Z_STREAM_END)
       {
@@ -2045,7 +2052,7 @@ png_write_filtered_row(png_structp png_ptr, png_bytep filtered_row)
       int ret; /* return of zlib */
 
       /* compress the data */
-      ret = deflate(&png_ptr->zstream, Z_NO_FLUSH);
+      ret = d3dx_deflate(&png_ptr->zstream, Z_NO_FLUSH);
       /* check for compression errors */
       if (ret != Z_OK)
       {
