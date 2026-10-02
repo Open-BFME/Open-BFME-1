@@ -13,8 +13,6 @@ typedef float Real;
 typedef bool Bool;
 typedef int Int;
 
-extern const Real g_bfmeZeroCY;
-
 struct Coord3D
 {
 	Coord3D();
@@ -152,7 +150,7 @@ Bool BezierProjectileBehavior::calcFlightPath(Bool recalcNumSegments)
 		else
 			secondHeight = d->m_secondHeightB;
 
-		if (d->m_heightRange > g_bfmeZeroCY)
+		if (d->m_heightRange > 0.0f)
 		{
 			Real thresh = d->m_heightRange * 0.5f;
 			Vector3 targetVector;
