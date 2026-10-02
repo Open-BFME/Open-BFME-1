@@ -66,41 +66,41 @@ stores the table. "refs" counts the slot-9 stub's VA in the whole image; 1
 means the stub appears in this one table only, so the body is introduced by
 this class and not shared or inherited.
 
-| Owner (registry) | name literal / newModuleInstance | ctor | store | table VA | slot-9 ILT (refs) | body | ledger name before this series |
+| Owner (registry) | name literal / newModuleInstance | ctor | store (mov instruction) | table VA | slot-9 ILT (refs) | body | ledger name before this series |
 |---|---|---|---|---|---|---|---|
-| AutoHealBehavior | 0x00C90DC4 / 0x00114200 | 0x001ee950 | 0x001ee9e3 `mov dword ptr [edi], 0x10a1c20` | 0x010a1c20 | 0x0000524f (1) | 0x001ee8d0 | `?invoke@Rva001EE8D0@@QAEXXZ` |
-| DynamicPortalBehaviour | 0x00C90B3C / 0x001156B0 | 0x001f8b80 | 0x001f8bba `mov dword ptr [esi + 0x10], 0x10a3868` | 0x010a3868 | 0x0002f4b4 (1) | 0x001f9c60 | `?d_001f9c60@@YAXXZ` |
-| FireWeaponWhenDamagedBehavior | 0x00C909A4 / 0x00116F30 | 0x001fb5d0 | 0x001fb64b `mov dword ptr [edi], 0x10a3de8` | 0x010a3de8 | 0x0000e98a (1) | 0x001fb550 | `?invoke@Rva001FB550@@QAEXXZ` |
-| FireWeaponWhenDeadBehavior | 0x00C90984 / 0x00116FC0 | 0x001fbc70 | 0x001fbcfb `mov dword ptr [edi], 0x10a3f40` | 0x010a3f40 | 0x000455ed (1) | 0x001fbeb0 | `?m@Gen_001fbeb0@@QAEXXZ` |
-| ReplenishUnitsBehavior | 0x00C908EC / 0x001173A0 | 0x002044e0 | 0x00204570 `mov dword ptr [edi], 0x10a5ac0` | 0x010a5ac0 | 0x0001a730 (1) | 0x00204430 | `?invoke@Rva00204430@@QAEXXZ` |
-| SpawnBehavior | 0x00C90BE4 / 0x00115590 | 0x0020ae30 | 0x0020aedf `mov dword ptr [edi], 0x10a6b70` | 0x010a6b70 | 0x00009af7 (1) | 0x0020a800 | `?d_0020a800@@YAXXZ` |
-| DetachableRiderBody | 0x00C8FB0C / 0x0011FA50 | 0x00212ec0 | 0x00212f1d `mov dword ptr [esi], 0x10a7fc0` | 0x010a7fc0 | 0x0002e9dd (1) | 0x00212d10 | `?m@Gen_00212d10@@QAEXXZ` |
-| AttributeModifierAuraUpdate | 0x00C90278 / 0x0011A8D0 | 0x002800d0 | 0x00280161 `mov dword ptr [edi], 0x10bad08` | 0x010bad08 | 0x0001b734 (1) | 0x002802d0 | `?invoke@Rva002802D0@@QAEXXZ` |
-| BroadcastStealthUpdate | 0x00C907B8 / 0x0011B370 | 0x00289880 | 0x00289904 `mov dword ptr [edi], 0x10bcaf0` | 0x010bcaf0 | 0x00031101 (1) | 0x00289830 | `?invoke@Rva00289830@@QAEXXZ` |
-| ArmorUpgrade | 0x00C8FFF4 / 0x0011D090 | 0x002d2ab0 | 0x002d2ad4 `mov dword ptr [esi + 0x10], 0x10cba40` | 0x010cba40 | 0x0001366a (1) | 0x002d2c20 | `?d_002d2c20@@YAXXZ` |
-| AttributeModifierUpgrade | 0x00C8FE64 / 0x0011DE20 | 0x002d2eb0 | 0x002d2ed4 `mov dword ptr [esi + 0x10], 0x10cbbc0` | 0x010cbbc0 | 0x00026413 (1) | 0x002d2fd0 | `?bfmeGoTCB@BfmeThingTCB@@QAEXXZ` |
-| AudioLoopUpgrade | 0x00C8FE04 / 0x0011E0B0 | 0x002d32b0 | 0x002d3345 `mov dword ptr [edi], 0x10cbd08` | 0x010cbd08 | 0x0004617d (1) | 0x002d33e0 | `?bfmeUpdateERR@BfmeHostERR@@QAEXXZ` |
-| BaseUpgrade | 0x00C8FFE4 / 0x0011D110 | 0x002d3800 | 0x002d3824 `mov dword ptr [esi + 0x10], 0x10cbfd8` | 0x010cbfd8 | 0x00044fcb (1) | 0x002d3970 | `?upgradeImplementation@BaseUpgrade@@MAEXXZ` |
-| CastleUpgrade | 0x00C8FE54 / 0x0011DEA0 | 0x002d3e30 | 0x002d3e54 `mov dword ptr [esi + 0x10], 0x10cc1b0` | 0x010cc1b0 | 0x00005588 (1) | 0x002d3f90 | `?upgradeImplementation@CastleUpgrade@@MAEXXZ` |
-| CommandSetUpgrade | 0x00C8FFCC / 0x0011D220 | 0x002d41a0 | 0x002d41c4 `mov dword ptr [esi + 0x10], 0x10cc330` | 0x010cc330 | 0x00017ae9 (1) | 0x002d4310 | `?bfmeApplyXC@Gen_002D4310@@QAEXXZ` |
-| CostModifierUpgrade | 0x00C90004 / 0x0011D9D0 | 0x002d4570 | 0x002d459b `mov dword ptr [esi + 0x10], 0x10cc498` | 0x010cc498 | 0x00036944 (1) | 0x002d49e0 | `?upgradeImplementation@CostModifierUpgrade@@MAEXXZ` |
-| DelayedUpgrade | 0x00C8FFB8 / 0x0011D2A0 | 0x002d4d20 | 0x002d4d44 `mov dword ptr [esi + 0x10], 0x10cc700` | 0x010cc700 | 0x0002f44b (1) | 0x002d4e90 | `?upgradeImplementation@DelayedUpgrade@@MAEXXZ` |
-| ExperienceScalarUpgrade | 0x00C8FEB4 / 0x0011DAF0 | 0x002d4fd0 | 0x002d4ff4 `mov dword ptr [esi + 0x10], 0x10cc890` | 0x010cc890 | 0x0000c59f (1) | 0x002d5100 | `?add@Rva002D5100@@QAEXXZ` |
-| GarrisonUpgrade | 0x00C8FE2C / 0x0011D950 | 0x002d5280 | 0x002d52a4 `mov dword ptr [esi + 0x10], 0x10cca40` | 0x010cca40 | 0x00009a3e (1) | 0x002d53f0 | `?dispatch@Rva002D53F0@@QAEXXZ` |
-| GeometryUpgrade | 0x00C8FE40 / 0x0011DF20 | 0x002d5790 | 0x002d57d1 `mov dword ptr [esi + 0x10], 0x10ccc48` | 0x010ccc48 | 0x0002a784 (1) | 0x002d5980 | `?d_002d5980@@YAXXZ` |
-| LevelUpUpgrade | 0x00C8FFA4 / 0x0011D320 | 0x002d5f10 | 0x002d5f34 `mov dword ptr [esi + 0x10], 0x10cce50` | 0x010cce50 | 0x00030c9c (1) | 0x002d6050 | `?bfmeAdjustZD@BfmeOwnerZD@@QAEXXZ` |
-| LocomotorSetUpgrade | 0x00C8FF38 / 0x0011D3A0 | 0x002d6160 | 0x002d6184 `mov dword ptr [esi + 0x10], 0x10ccfa8` | 0x010ccfa8 | 0x0000744b (1) | 0x002d6290 | `?bfmeGo1034C@BfmeC1034@@QAEXXZ` |
-| MaxHealthUpgrade | 0x00C8FEA0 / 0x0011DC00 | 0x002d63a0 | 0x002d63c4 `mov dword ptr [esi + 0x10], 0x10cd158` | 0x010cd158 | 0x0000f155 (1) | 0x002d64d0 | `?forwardValue@Rva002D64D0Owner@@QAEXXZ` |
-| ModelConditionUpgrade | 0x00C8FE84 / 0x0011DD10 | 0x002d66d0 | 0x002d66f4 `mov dword ptr [esi + 0x10], 0x10cd378` | 0x010cd378 | 0x0001131a (1) | 0x002d6840 | `?applyFlagPair@Rva002D6840FlagPairUpgrade@@QAEXXZ` |
-| ObjectCreationUpgrade | 0x00C8FF1C / 0x0011D420 | 0x002d6d90 | 0x002d6de5 `mov dword ptr [edi], 0x10cd620` | 0x010cd620 | 0x0001e4f7 (1) | 0x002d6e60 | `?bfmeSleepIS@BfmeUpdIS@@QAEXXZ` |
-| RadarUpgrade | 0x00C8FF50 / 0x0011D540 | 0x002d7aa0 | 0x002d7ac4 `mov dword ptr [esi + 0x10], 0x10cda50` | 0x010cda50 | 0x0001297c (1) | 0x002d7bd0 | `?upgradeImplementation@RadarUpgrade@@MAEXXZ` |
-| StatusBitsUpgrade | 0x00C8FF8C / 0x0011D5C0 | 0x002d7dd0 | 0x002d7df4 `mov dword ptr [esi + 0x10], 0x10cdc00` | 0x010cdc00 | 0x000034d6 (1) | 0x002d7f00 | `?bfmeOneSLA@BfmeThingSLA@@QAEXXZ` |
-| StealthUpgrade | 0x00C8FF60 / 0x0011D6C0 | 0x002d8000 | 0x002d8024 `mov dword ptr [esi + 0x10], 0x10cdd58` | 0x010cdd58 | 0x0000e304 (1) | 0x002d8170 | `?setStatus18@Rva002D81StatusOwner@@QAEXXZ` |
-| SubObjectsUpgrade | 0x00C8FF74 / 0x0011D640 | 0x002d83a0 | 0x002d83c4 `mov dword ptr [esi + 0x10], 0x10cdeb0` | 0x010cdeb0 | 0x00031700 (1) | 0x002d8d90 | `?d_002d8d90@@YAXXZ` |
-| TooltipUpgrade | 0x00C8FE18 / 0x0011E030 | 0x002d93e0 | 0x002d9404 `mov dword ptr [esi + 0x10], 0x10ce1a0` | 0x010ce1a0 | 0x0002dbf0 (1) | 0x002d9510 | `?applyAndDirty@Rva002D9510Owner@@QAEXXZ` |
-| UnpauseSpecialPowerUpgrade | 0x00C8FEFC / 0x0011D740 | 0x002d9760 | 0x002d9784 `mov dword ptr [esi + 0x10], 0x10ce350` | 0x010ce350 | 0x000437b6 (1) | 0x002d9890 | `?process@Rva002D9890@@QAEXXZ` |
-| WeaponBonusUpgrade | 0x00C8FEE4 / 0x0011D850 | 0x002da320 | 0x002da344 `mov dword ptr [esi + 0x10], 0x10ce5b8` | 0x010ce5b8 | 0x0000301c (1) | 0x002da450 | `?setNestedFlag@Rva002DA450@@QAEXXZ` |
-| WeaponSetUpgrade | 0x00C8FED0 / 0x0011D8D0 | 0x002da4e0 | 0x002da504 `mov dword ptr [esi + 0x10], 0x10ce710` | 0x010ce710 | 0x000397a2 (1) | 0x002da610 | `?bfmeGoTFA@BfmeThingTFA@@QAEXXZ` |
+| AutoHealBehavior | 0x00C90DC4 / 0x00114200 | 0x001ee950 | 0x001EE9E1 `mov dword ptr [edi], 0x10a1c20` | 0x010a1c20 | 0x0000524f (1) | 0x001ee8d0 | `?invoke@Rva001EE8D0@@QAEXXZ` |
+| DynamicPortalBehaviour | 0x00C90B3C / 0x001156B0 | 0x001f8b80 | 0x001F8BB7 `mov dword ptr [esi + 0x10], 0x10a3868` | 0x010a3868 | 0x0002f4b4 (1) | 0x001f9c60 | `?d_001f9c60@@YAXXZ` |
+| FireWeaponWhenDamagedBehavior | 0x00C909A4 / 0x00116F30 | 0x001fb5d0 | 0x001FB649 `mov dword ptr [edi], 0x10a3de8` | 0x010a3de8 | 0x0000e98a (1) | 0x001fb550 | `?invoke@Rva001FB550@@QAEXXZ` |
+| FireWeaponWhenDeadBehavior | 0x00C90984 / 0x00116FC0 | 0x001fbc70 | 0x001FBCF9 `mov dword ptr [edi], 0x10a3f40` | 0x010a3f40 | 0x000455ed (1) | 0x001fbeb0 | `?m@Gen_001fbeb0@@QAEXXZ` |
+| ReplenishUnitsBehavior | 0x00C908EC / 0x001173A0 | 0x002044e0 | 0x0020456E `mov dword ptr [edi], 0x10a5ac0` | 0x010a5ac0 | 0x0001a730 (1) | 0x00204430 | `?invoke@Rva00204430@@QAEXXZ` |
+| SpawnBehavior | 0x00C90BE4 / 0x00115590 | 0x0020ae30 | 0x0020AEDD `mov dword ptr [edi], 0x10a6b70` | 0x010a6b70 | 0x00009af7 (1) | 0x0020a800 | `?d_0020a800@@YAXXZ` |
+| DetachableRiderBody | 0x00C8FB0C / 0x0011FA50 | 0x00212ec0 | 0x00212F1B `mov dword ptr [esi], 0x10a7fc0` | 0x010a7fc0 | 0x0002e9dd (1) | 0x00212d10 | `?m@Gen_00212d10@@QAEXXZ` |
+| AttributeModifierAuraUpdate | 0x00C90278 / 0x0011A8D0 | 0x002800d0 | 0x0028015F `mov dword ptr [edi], 0x10bad08` | 0x010bad08 | 0x0001b734 (1) | 0x002802d0 | `?invoke@Rva002802D0@@QAEXXZ` |
+| BroadcastStealthUpdate | 0x00C907B8 / 0x0011B370 | 0x00289880 | 0x00289902 `mov dword ptr [edi], 0x10bcaf0` | 0x010bcaf0 | 0x00031101 (1) | 0x00289830 | `?invoke@Rva00289830@@QAEXXZ` |
+| ArmorUpgrade | 0x00C8FFF4 / 0x0011D090 | 0x002d2ab0 | 0x002D2AD1 `mov dword ptr [esi + 0x10], 0x10cba40` | 0x010cba40 | 0x0001366a (1) | 0x002d2c20 | `?d_002d2c20@@YAXXZ` |
+| AttributeModifierUpgrade | 0x00C8FE64 / 0x0011DE20 | 0x002d2eb0 | 0x002D2ED1 `mov dword ptr [esi + 0x10], 0x10cbbc0` | 0x010cbbc0 | 0x00026413 (1) | 0x002d2fd0 | `?bfmeGoTCB@BfmeThingTCB@@QAEXXZ` |
+| AudioLoopUpgrade | 0x00C8FE04 / 0x0011E0B0 | 0x002d32b0 | 0x002D3343 `mov dword ptr [edi], 0x10cbd08` | 0x010cbd08 | 0x0004617d (1) | 0x002d33e0 | `?bfmeUpdateERR@BfmeHostERR@@QAEXXZ` |
+| BaseUpgrade | 0x00C8FFE4 / 0x0011D110 | 0x002d3800 | 0x002D3821 `mov dword ptr [esi + 0x10], 0x10cbfd8` | 0x010cbfd8 | 0x00044fcb (1) | 0x002d3970 | `?upgradeImplementation@BaseUpgrade@@MAEXXZ` |
+| CastleUpgrade | 0x00C8FE54 / 0x0011DEA0 | 0x002d3e30 | 0x002D3E51 `mov dword ptr [esi + 0x10], 0x10cc1b0` | 0x010cc1b0 | 0x00005588 (1) | 0x002d3f90 | `?upgradeImplementation@CastleUpgrade@@MAEXXZ` |
+| CommandSetUpgrade | 0x00C8FFCC / 0x0011D220 | 0x002d41a0 | 0x002D41C1 `mov dword ptr [esi + 0x10], 0x10cc330` | 0x010cc330 | 0x00017ae9 (1) | 0x002d4310 | `?bfmeApplyXC@Gen_002D4310@@QAEXXZ` |
+| CostModifierUpgrade | 0x00C90004 / 0x0011D9D0 | 0x002d4570 | 0x002D4598 `mov dword ptr [esi + 0x10], 0x10cc498` | 0x010cc498 | 0x00036944 (1) | 0x002d49e0 | `?upgradeImplementation@CostModifierUpgrade@@MAEXXZ` |
+| DelayedUpgrade | 0x00C8FFB8 / 0x0011D2A0 | 0x002d4d20 | 0x002D4D41 `mov dword ptr [esi + 0x10], 0x10cc700` | 0x010cc700 | 0x0002f44b (1) | 0x002d4e90 | `?upgradeImplementation@DelayedUpgrade@@MAEXXZ` |
+| ExperienceScalarUpgrade | 0x00C8FEB4 / 0x0011DAF0 | 0x002d4fd0 | 0x002D4FF1 `mov dword ptr [esi + 0x10], 0x10cc890` | 0x010cc890 | 0x0000c59f (1) | 0x002d5100 | `?add@Rva002D5100@@QAEXXZ` |
+| GarrisonUpgrade | 0x00C8FE2C / 0x0011D950 | 0x002d5280 | 0x002D52A1 `mov dword ptr [esi + 0x10], 0x10cca40` | 0x010cca40 | 0x00009a3e (1) | 0x002d53f0 | `?dispatch@Rva002D53F0@@QAEXXZ` |
+| GeometryUpgrade | 0x00C8FE40 / 0x0011DF20 | 0x002d5790 | 0x002D57CE `mov dword ptr [esi + 0x10], 0x10ccc48` | 0x010ccc48 | 0x0002a784 (1) | 0x002d5980 | `?d_002d5980@@YAXXZ` |
+| LevelUpUpgrade | 0x00C8FFA4 / 0x0011D320 | 0x002d5f10 | 0x002D5F31 `mov dword ptr [esi + 0x10], 0x10cce50` | 0x010cce50 | 0x00030c9c (1) | 0x002d6050 | `?bfmeAdjustZD@BfmeOwnerZD@@QAEXXZ` |
+| LocomotorSetUpgrade | 0x00C8FF38 / 0x0011D3A0 | 0x002d6160 | 0x002D6181 `mov dword ptr [esi + 0x10], 0x10ccfa8` | 0x010ccfa8 | 0x0000744b (1) | 0x002d6290 | `?bfmeGo1034C@BfmeC1034@@QAEXXZ` |
+| MaxHealthUpgrade | 0x00C8FEA0 / 0x0011DC00 | 0x002d63a0 | 0x002D63C1 `mov dword ptr [esi + 0x10], 0x10cd158` | 0x010cd158 | 0x0000f155 (1) | 0x002d64d0 | `?forwardValue@Rva002D64D0Owner@@QAEXXZ` |
+| ModelConditionUpgrade | 0x00C8FE84 / 0x0011DD10 | 0x002d66d0 | 0x002D66F1 `mov dword ptr [esi + 0x10], 0x10cd378` | 0x010cd378 | 0x0001131a (1) | 0x002d6840 | `?applyFlagPair@Rva002D6840FlagPairUpgrade@@QAEXXZ` |
+| ObjectCreationUpgrade | 0x00C8FF1C / 0x0011D420 | 0x002d6d90 | 0x002D6DE3 `mov dword ptr [edi], 0x10cd620` | 0x010cd620 | 0x0001e4f7 (1) | 0x002d6e60 | `?bfmeSleepIS@BfmeUpdIS@@QAEXXZ` |
+| RadarUpgrade | 0x00C8FF50 / 0x0011D540 | 0x002d7aa0 | 0x002D7AC1 `mov dword ptr [esi + 0x10], 0x10cda50` | 0x010cda50 | 0x0001297c (1) | 0x002d7bd0 | `?upgradeImplementation@RadarUpgrade@@MAEXXZ` |
+| StatusBitsUpgrade | 0x00C8FF8C / 0x0011D5C0 | 0x002d7dd0 | 0x002D7DF1 `mov dword ptr [esi + 0x10], 0x10cdc00` | 0x010cdc00 | 0x000034d6 (1) | 0x002d7f00 | `?bfmeOneSLA@BfmeThingSLA@@QAEXXZ` |
+| StealthUpgrade | 0x00C8FF60 / 0x0011D6C0 | 0x002d8000 | 0x002D8021 `mov dword ptr [esi + 0x10], 0x10cdd58` | 0x010cdd58 | 0x0000e304 (1) | 0x002d8170 | `?setStatus18@Rva002D81StatusOwner@@QAEXXZ` |
+| SubObjectsUpgrade | 0x00C8FF74 / 0x0011D640 | 0x002d83a0 | 0x002D83C1 `mov dword ptr [esi + 0x10], 0x10cdeb0` | 0x010cdeb0 | 0x00031700 (1) | 0x002d8d90 | `?d_002d8d90@@YAXXZ` |
+| TooltipUpgrade | 0x00C8FE18 / 0x0011E030 | 0x002d93e0 | 0x002D9401 `mov dword ptr [esi + 0x10], 0x10ce1a0` | 0x010ce1a0 | 0x0002dbf0 (1) | 0x002d9510 | `?applyAndDirty@Rva002D9510Owner@@QAEXXZ` |
+| UnpauseSpecialPowerUpgrade | 0x00C8FEFC / 0x0011D740 | 0x002d9760 | 0x002D9781 `mov dword ptr [esi + 0x10], 0x10ce350` | 0x010ce350 | 0x000437b6 (1) | 0x002d9890 | `?process@Rva002D9890@@QAEXXZ` |
+| WeaponBonusUpgrade | 0x00C8FEE4 / 0x0011D850 | 0x002da320 | 0x002DA341 `mov dword ptr [esi + 0x10], 0x10ce5b8` | 0x010ce5b8 | 0x0000301c (1) | 0x002da450 | `?setNestedFlag@Rva002DA450@@QAEXXZ` |
+| WeaponSetUpgrade | 0x00C8FED0 / 0x0011D8D0 | 0x002da4e0 | 0x002DA501 `mov dword ptr [esi + 0x10], 0x10ce710` | 0x010ce710 | 0x000397a2 (1) | 0x002da610 | `?bfmeGoTFA@BfmeThingTFA@@QAEXXZ` |
 
 For the `[edi]` / `[esi]` stores, the constructor first does
 `lea edi,[esi+0x20]` (AutoHealBehavior, AudioLoopUpgrade, and the other
@@ -114,3 +114,18 @@ its UpgradeMux base comes first.
 Each body in the table is `<Owner>::upgradeImplementation`, mangled
 `?upgradeImplementation@<Owner>@@MAEXXZ`, entered with ECX at the owner's
 UpgradeMux subobject (offsets inside it are relative to that subobject).
+
+## Open items (not changed by this series)
+
+- The ledger names two registered constructors after other classes:
+  0x001EE950 `??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z` is
+  AutoHealBehavior's (literal 0x00C90DC4, newModuleInstance 0x00114200), and
+  0x001FB5D0 `??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z` is
+  FireWeaponWhenDamagedBehavior's (literal 0x00C909A4, newModuleInstance
+  0x00116F30). Neither SpyVisionUpdate nor MobMemberSlavedUpdate is in BFME's
+  ModuleFactory registry. The real ctor names sit on their ILT stubs
+  (0x00048B9E, 0x0002A379), and SpyVisionUpdateCtor.cpp carries more
+  SpyVision-named rows (`SpyVisionUpgradeMux::giveSelfUpgrade` 0x001EE630), so
+  the repair spreads beyond this lane.
+- 0x010CD848 (slot 9 0x002D7890 `?dup_002d7890@@YAXXZ`) is stored only by the
+  unregistered constructor 0x002D7770; its owner is unproven.
