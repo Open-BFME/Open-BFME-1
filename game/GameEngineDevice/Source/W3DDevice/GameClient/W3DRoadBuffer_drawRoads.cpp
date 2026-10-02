@@ -86,7 +86,11 @@ public:
 	RefCountedHandle getHandle() const;
 };
 
-extern TextureHandle g_bfmeTableDU[];
+// retail 0x012F9D28: the shader texture-handle table (BfmeHandleCX *[8]),
+// defined by Rva00C6C520StaticInit.cpp. Declared by its defining name; the
+// table's 4-byte slots are written through the TextureHandle view this TU uses.
+class BfmeHandleCX;
+extern BfmeHandleCX *g_bfmeTableDU;
 
 class W3DShaderManager
 {
@@ -101,7 +105,7 @@ public:
 	static int setShroudTex(int stage);
 	static int setShader(ShaderTypes shader, int pass);
 	static void resetShader(ShaderTypes shader);
-	static void setTexture(int stage, const TextureHandle &texture) { g_bfmeTableDU[stage] = texture; }
+	static void setTexture(int stage, const TextureHandle &texture) { ((TextureHandle *)&g_bfmeTableDU)[stage] = texture; }
 };
 
 extern int Rva00716970Lookup(int shader);	// passes for a shader type

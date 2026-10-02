@@ -17,7 +17,11 @@ class ShaderTextureHandle { public:
 extern ShaderVertexBufferRef *rva012F9D1C;
 extern unsigned rva012F9D20;
 extern ShaderComResourceRef *rva012F9D0C, *rva012F9D04, *rva012F9D08, *rva012F9D10;
-extern ShaderTextureHandle rva012F9D28[8];
+// 0x012F9D28 is the shader texture-handle table (BfmeHandleCX *[8]), defined by
+// Rva00C6C520StaticInit.cpp. Declared by its defining name; the table's 4-byte
+// slots are cleared through the ShaderTextureHandle view this TU models.
+class BfmeHandleCX;
+extern BfmeHandleCX *g_bfmeTableDU;
 class BfmeShaderShutdown { public: static void releaseDependentResources(); };
 void BfmeShaderShutdown::releaseDependentResources() {
  if(rva012F9D1C) { rva012F9D1C->Release_Ref(); rva012F9D1C=0; }
@@ -26,5 +30,5 @@ void BfmeShaderShutdown::releaseDependentResources() {
  if(rva012F9D04) { ((ReleaseResource)rva012F9D04->VTable[2])(rva012F9D04); rva012F9D04=0; }
  if(rva012F9D08) { ((ReleaseResource)rva012F9D08->VTable[2])(rva012F9D08); rva012F9D08=0; }
  if(rva012F9D10) { ((ReleaseResource)rva012F9D10->VTable[2])(rva012F9D10); rva012F9D10=0; }
- for(unsigned i=0;i<8;++i) rva012F9D28[i]=0;
+ for(unsigned i=0;i<8;++i) ((ShaderTextureHandle *)&g_bfmeTableDU)[i]=0;
 }

@@ -205,11 +205,16 @@ Bfme5PairArray::Bfme5PairArray(void)
 {
 }
 
-extern TextureClass *g_bfme5TextureSlots[];
+// retail 0x012F9D28: the shader texture-handle table (BfmeHandleCX *[8]),
+// defined by Rva00C6C520StaticInit.cpp. Declared by its defining name so the
+// object references the real symbol; the table's 4-byte slots are addressed
+// through the TextureClass view this TU actually uses.
+class BfmeHandleCX;
+extern BfmeHandleCX *g_bfmeTableDU;
 
 void __cdecl bfme5SetTextureSlot(int i, TextureClass **src)
 {
-	TextureClass **slot = &g_bfme5TextureSlots[i];
+	TextureClass **slot = &((TextureClass **)&g_bfmeTableDU)[i];
 	TextureClass *t = *src;
 
 	if (t)
