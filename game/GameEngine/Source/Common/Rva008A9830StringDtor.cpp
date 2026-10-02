@@ -1,12 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-struct Rva00891B80Pool
+struct BfmeStringPool3AF0
 {
-	void *m_unused;
-	void (__cdecl *free)(void *);
+	void *m_alloc;
+	void (__cdecl *m_free)(void *);
 };
 
-extern Rva00891B80Pool *g_pool01337A30;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct Rva00891B80Block
 {
@@ -20,7 +20,7 @@ public:
 	{
 		Rva00891B80Block *block = m_block;
 		if (--block->m_ref == 0)
-			g_pool01337A30->free(block);
+			g_rva01337A30AllocPair->m_free(block);
 	}
 
 private:

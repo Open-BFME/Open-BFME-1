@@ -1,12 +1,12 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-struct Rva00891B80Pool
+struct BfmeStringPool3AF0
 {
-	void *m_unused;
-	void (__cdecl *free)(void *);
+	void *m_alloc;
+	void (__cdecl *m_free)(void *);
 };
 
-extern Rva00891B80Pool *g_pool01337A30;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct Rva00891B80Block
 {
@@ -37,7 +37,7 @@ void Rva008AD2C0::assign(const Rva008AD2C0 &src)
 	++src.m_block->m_ref;
 	Rva00891B80Block *old = m_block;
 	if (--old->m_ref == 0)
-		g_pool01337A30->free(old);
+		g_rva01337A30AllocPair->m_free(old);
 	m_block = src.m_block;
 
 	m_f4 = src.m_f4;
