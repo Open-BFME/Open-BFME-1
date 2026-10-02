@@ -48,6 +48,7 @@
 // because the vector has to start at 8.
 #include <map>
 #include <vector>
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 struct U4MapKey
 {
@@ -56,8 +57,11 @@ struct U4MapKey
 	U4MapKey( const U4MapKey & );
 	~U4MapKey();
 	U4MapKey &operator=( const U4MapKey & );
-	int compare( const U4MapKey & ) const;
-	bool operator<( const U4MapKey &o ) const { return compare( o ) < 0; }
+	bool operator<( const U4MapKey &o ) const
+	{
+		return ((const StringBase<char> *)this)->compare(
+			*(const StringBase<char> *)&o) < 0;
+	}
 };
 
 struct U4MapVal
