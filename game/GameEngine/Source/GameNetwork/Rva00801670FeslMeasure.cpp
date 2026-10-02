@@ -13,8 +13,8 @@
 // The helper at 0x007F76D0 is already matched as the bfmeAt body.  Its body
 // reads the vector and index from [esp+4]/[esp+8] and returns with ret 8, but
 // every named demangler-family caller loads the host into ECX before those
-// pushes.  This neutral receiver view preserves that proven source ABI while
-// making no claim about an unrecovered public helper class name.
+// pushes. The member-pointer call view below preserves that ECX load while
+// referencing the existing stdcall definition.
 
 class Rva00800290Buffer
 {
@@ -43,10 +43,22 @@ public:
 class Rva00801670Host
 {
 public:
-	int *rva007F76D0( BfmeVecCZ *vector, int index );
-
 	unsigned char m_unreconstructed00[0x2A8];
 	BfmeVecCZ m_gameKeys;
+};
+
+int *__stdcall bfmeAt( BfmeVecCZ *vector, int index );
+
+class Gen_007fbe70
+{
+public:
+	char *bfmeText();
+};
+
+class Rva007FBEF0GameRecord
+{
+public:
+	bool Rva007FBE80( const char *key, char *dest, unsigned destSize );
 };
 
 typedef __int64 FeslInt64;
@@ -59,9 +71,6 @@ typedef __int64 FeslInt64;
 class Rva007FBC60Game
 {
 public:
-	char *rva007FBE70();
-	bool rva007FBE80( const char *key, char *dest, unsigned destSize );
-
 	int m_lid;
 	int m_gid;
 	void *m_msg;
@@ -104,7 +113,7 @@ void BfmeThingVHW::rva00801670( Rva007FBC60Game *rec )
 	m_bfme10.addString( rec->m_n );
 	m_bfme10.addString( rec->m_hn );
 	m_bfme10.addString( rec->m_v );
-	if( rec->rva007FBE70() )
+	if( reinterpret_cast<Gen_007fbe70 *>(rec)->bfmeText() )
 		m_bfme10.addPadded( 0x28 );
 	else
 		m_bfme10.addPadded( 0x10 );
@@ -114,9 +123,15 @@ void BfmeThingVHW::rva00801670( Rva007FBC60Game *rec )
 	m_bfme10.addPadded( count * 4 );
 	for( i = 0; i < count; i++ )
 	{
-		key = (char *)m_bfme04->rva007F76D0( vector, i );
+		union
+		{
+			int *(__stdcall *function)( BfmeVecCZ *, int );
+			int *(Rva00801670Host::*member)( BfmeVecCZ *, int );
+		} at;
+		at.function = bfmeAt;
+		key = (char *)(m_bfme04->*at.member)( vector, i );
 		slot[0] = 0;
-		if( rec->rva007FBE80( key, slot, 0x40 ) )
+		if( reinterpret_cast<Rva007FBEF0GameRecord *>(rec)->Rva007FBE80( key, slot, 0x40 ) )
 			m_bfme10.addString( slot );
 	}
 }

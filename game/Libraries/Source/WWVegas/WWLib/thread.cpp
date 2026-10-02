@@ -47,11 +47,7 @@ ThreadClass::ThreadClass(const char *thread_name, ExceptionHandlerType exception
 	ExceptionHandler = exception_handler;
 }
 
-// ??1ThreadClass@@ present-unmatched
-ThreadClass::~ThreadClass()
-{
-	Stop();
-}
+// ThreadClass's destructor is owned by ThreadClassLifecycle.cpp.
 
 // ?Internal_Thread_Function@ThreadClass@@ present-unmatched
 void __cdecl ThreadClass::Internal_Thread_Function(void* params)
@@ -96,18 +92,7 @@ void ThreadClass::Execute()
 	#endif
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/ThreadClassLifecycle.cpp
-// ?Set_Priority@ThreadClass@@ present-unmatched
-void ThreadClass::Set_Priority(int priority)
-{
-	#ifdef _UNIX
-		// assert(0);
-		return;
-	#else
-		thread_priority=priority;
-		if (handle) SetThreadPriority((HANDLE)handle,THREAD_PRIORITY_NORMAL+thread_priority);
-	#endif
-}
+// ThreadClass::Set_Priority is owned by ThreadClassLifecycle.cpp.
 
 void ThreadClass::Stop(unsigned ms)
 {
@@ -166,9 +151,4 @@ unsigned ThreadClass::_Get_Current_Thread_ID()
 	#endif
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/ThreadClassLifecycle.cpp
-// ?Is_Running@ThreadClass@@ present-unmatched
-bool ThreadClass::Is_Running()
-{
-	return !!handle;
-}
+// ThreadClass::Is_Running is owned by ThreadClassLifecycle.cpp.
