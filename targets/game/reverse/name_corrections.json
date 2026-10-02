@@ -13878,5 +13878,15 @@
   "after_sha256": "75eaf35792156f357abad6565e6d9cce6842613f7331cad9bb953b2725488d9b",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/XferGuardTargetTypes.cpp",
+  "new_path": "game/GameEngine/Source/Common/XferGuardTargetTypes.cpp",
+  "old_name": "bfmeXferGuardTargetType",
+  "new_name": "Rva0010C100",
+  "before_sha256": "0fe335ef21084a9b18fb86ca29ed87784290d17934ff4e01223570aa4728b215",
+  "after_sha256": "855aa53cfe858b365fa67535c571003c77ccaa40be9cc556dc94b6b7018971ae",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

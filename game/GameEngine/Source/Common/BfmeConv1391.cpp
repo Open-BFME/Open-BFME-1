@@ -8,10 +8,13 @@ public:
 	void m();
 };
 
-class BfmeMsgVJN
+// The "message" is built by the buffer constructor retail calls at 0x007E8850
+// (ledger: ??0BfmeC994@@QAE@PADH@Z), so this is that class, not a local type
+// with an extra init member.
+class BfmeC994
 {
 public:
-	void bfmeInitVJN(char *buf, int n);
+	BfmeC994(char *buf, int n);
 	char m_bfmePad[0x34];
 };
 
@@ -39,7 +42,7 @@ public:
 	virtual void bfmeA48VJN();
 	virtual void bfmeA4CVJN();
 	virtual void bfmeA50VJN();
-	virtual void bfmeA54VJN(class BfmeMsgVJN *m, int a, int b, int c, int d, int e);
+	virtual void bfmeA54VJN(class BfmeC994 *m, int a, int b, int c, int d, int e);
 };
 
 class BfmeBVJN
@@ -47,7 +50,7 @@ class BfmeBVJN
 public:
 	virtual void bfmeB00VJN();
 	virtual void bfmeB04VJN();
-	virtual void bfmeB08VJN(class BfmeMsgVJN *m, int z, void *o, int n);
+	virtual void bfmeB08VJN(class BfmeC994 *m, int z, void *o, int n);
 };
 
 class BfmeThingVJN
@@ -64,8 +67,7 @@ public:
 
 void BfmeThingVJN::bfmeGoVJN(int a, int b, int c, int d, int e)
 {
-	BfmeMsgVJN msg;
-	msg.bfmeInitVJN(m_bfmeBuf, 0x400);
+	BfmeC994 msg(m_bfmeBuf, 0x400);
 	m_bfme10->bfmeA54VJN(&msg, a, b, c, d, e);
 	m_bfme14->bfmeB08VJN(&msg, 0, this, m_bfme6dc);
 	((Gen_007e86c0 *)&msg)->m();

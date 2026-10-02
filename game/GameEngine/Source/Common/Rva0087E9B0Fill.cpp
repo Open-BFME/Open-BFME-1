@@ -1,11 +1,9 @@
 // cl: /O2 /Ob0 /G6
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-struct BfmeTailE9
-{
-	char *m_p;
-	void copyFrom(const BfmeTailE9 *src);
-};
-
+// 0x00887C90 is StringBase<char>::set (ledger:
+// ?set@?$StringBase@D@@QAEXABV1@@Z), so the element's 0x1C tail member is a
+// real string and the element copy goes through that body, not a local helper.
 struct BfmeCoordE9
 {
 	int m_x;
@@ -20,7 +18,7 @@ struct BfmeElemE9
 	int m_08;
 	int m_0C;
 	BfmeCoordE9 m_10;
-	BfmeTailE9 m_1C;
+	StringBase<char> m_1C;
 	char m_20;
 	char m_pad[3];
 };
@@ -34,7 +32,7 @@ void bfmeFillE9(BfmeElemE9 *first, BfmeElemE9 *last, const BfmeElemE9 *src)
 		first->m_08 = src->m_08;
 		first->m_0C = src->m_0C;
 		first->m_10 = src->m_10;
-		first->m_1C.copyFrom(&src->m_1C);
+		first->m_1C.set(src->m_1C);
 		first->m_20 = src->m_20;
 	}
 }
