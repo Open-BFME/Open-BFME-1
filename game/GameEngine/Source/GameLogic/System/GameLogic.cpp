@@ -7068,22 +7068,6 @@ UnsignedInt GameLogic::getCRC( Int mode, AsciiString deepCRCFileName )
 }
 
 // ------------------------------------------------------------------------------------------------
-/** A new GameLogic object has been constructed, therefore create
- * a corresponding drawable and bind them together. */
-// ------------------------------------------------------------------------------------------------
-// ?sendObjectCreated@GameLogic@@QAEXPAVObject@@@Z present-unmatched
-void GameLogic::sendObjectCreated( Object *obj )
-{
-	Drawable *draw = TheThingFactory->newDrawable(obj->getTemplate());
-
-/// @todo COLIN ... shouldn't we have a check here for existing drawable!!!!!
-
-	// bind drawable to object and object to drawable
-	bindObjectAndDrawable(obj, draw);
-
-}
-
-// ------------------------------------------------------------------------------------------------
 // ?bindObjectAndDrawable@GameLogic@@QAEXPAVObject@@PAVDrawable@@@Z present-unmatched
 void GameLogic::bindObjectAndDrawable(Object* obj, Drawable* draw)
 {

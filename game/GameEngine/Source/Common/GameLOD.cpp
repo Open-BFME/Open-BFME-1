@@ -390,21 +390,6 @@ void GameLODManager::refreshCustomStaticLODLevel(void)
 
 }
 
-/**Convert LOD name to an index*/
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameLODManagerGetStaticGameLODIndex.cpp
-// ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z present-unmatched
-Int GameLODManager::getStaticGameLODIndex(AsciiString name)
-{
-	for (Int i=0; i<STATIC_GAME_LOD_COUNT; ++i)
-	{
-		if (name.compareNoCase(StaticGameLODNames[i]) == 0)
-			return i;
-	}
-
-	DEBUG_CRASH(( "GameLODManager::getGameLODIndex - Invalid LOD name '%s'\n", name.str() ));
-	return STATIC_GAME_LOD_UNKNOWN;
-}
-
 /**Parse a description of all the LOD settings for a given detail level*/
 // ?parseStaticGameLODDefinition@INI@@SAXPAV1@@Z
 // The "StaticGameLOD" block. BFME's field set is not Zero Hour's, so this table

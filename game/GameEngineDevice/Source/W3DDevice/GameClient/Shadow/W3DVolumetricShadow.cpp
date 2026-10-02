@@ -1450,31 +1450,6 @@ void W3DVolumetricShadow::getRenderCost(RenderCost & rc) const
 #endif
 
 /************************************ New Buffered Rendering Code ************************/
-// ?RenderVolume@W3DVolumetricShadow@@IAEXHH@Z present-unmatched
-void W3DVolumetricShadow::RenderVolume(Int meshIndex, Int lightIndex)
-{
-	HLodClass *hlod=(HLodClass *)m_robj;
-	MeshClass *mesh=NULL;
-
-	Int meshRobjIndex=m_geometry->getMesh(meshIndex)->m_meshRobjIndex;
-
-	if (meshRobjIndex >= 0)
-		mesh = (MeshClass *)hlod->Peek_Lod_Model(0,meshRobjIndex);
-	else
-		mesh = (MeshClass *)m_robj;
-
-	if (mesh)
-	{
-#ifdef SV_DEBUG_BOUNDS
-			RenderMeshVolumeBounds(meshIndex,lightIndex, &mesh->Get_Transform());
-#endif
-			if (m_shadowVolume[0][ meshIndex ]->GetFlags() & SHADOW_DYNAMIC)
-				RenderDynamicMeshVolume(meshIndex,lightIndex,&mesh->Get_Transform());
-			else
-				RenderMeshVolume(meshIndex,lightIndex,&mesh->Get_Transform());
-	}
-}
-
 struct BfmeRenderDevice;
 typedef long (__stdcall *BfmeSetTransform)(BfmeRenderDevice *, unsigned, void *);
 typedef long (__stdcall *BfmeSetStreamSource)(BfmeRenderDevice *, unsigned, void *, unsigned, unsigned);
