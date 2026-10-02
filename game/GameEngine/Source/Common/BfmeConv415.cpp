@@ -96,7 +96,6 @@ public:
 	virtual void bfmeSpareARA92();
 	virtual void bfmeSpareARA93();
 	virtual void bfmeTailARA();
-	void bfmeStepARA();
 	void bfmeGoARA();
 	unsigned char m_bfmeHeadOne[0x6c - 4];
 	unsigned int m_bfmeOne;
@@ -105,11 +104,15 @@ public:
 	bool m_bfmeFlag;
 };
 
+void j_000312a0();
+
 void BfmeThingARA::bfmeGoARA()
 {
 	m_bfmeFlag = false;
 	m_bfmeTwo = 0x3f800000;
 	m_bfmeOne = 0x3f5f66f3;
-	bfmeStepARA();
+	// One-argument fastcall places this in ECX, like a no-argument thiscall.
+	typedef void (__fastcall *BfmeStepARA)(BfmeThingARA *);
+	reinterpret_cast<BfmeStepARA>(&j_000312a0)(this);
 	bfmeTailARA();
 }

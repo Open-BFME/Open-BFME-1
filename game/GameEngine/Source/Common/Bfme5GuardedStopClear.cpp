@@ -7,11 +7,11 @@ struct BfmeStopState
 class BfmeStopF
 {
 public:
-	void bfmeStop(void);
-
 	char m_bfmeFields[4];
 	BfmeStopState *m_bfmeState;
 };
+
+void j_00015e2e();
 
 class Gen_0028EFD0
 {
@@ -30,7 +30,9 @@ void Gen_0028EFD0::bfmeClear(void)
 
 	if (stopper != 0 && stopper->m_bfmeState->m_bfmeStatus != -1)
 	{
-		stopper->bfmeStop();
+		// One-argument fastcall places this in ECX, like a no-argument thiscall.
+		typedef void (__fastcall *BfmeStopCall)(BfmeStopF *);
+		reinterpret_cast<BfmeStopCall>(&j_00015e2e)(stopper);
 		m_bfmeStopper = 0;
 	}
 }

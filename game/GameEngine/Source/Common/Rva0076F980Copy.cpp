@@ -25,6 +25,15 @@ private:
 	int m_08;
 };
 
+void j_00007a63();
+
+// Keep the target's member-call ABI while referring to its recorded thunk name.
+union Rva0076F980MidAssign
+{
+	void (*function)(void);
+	Rva0076F980Mid &(Rva0076F980Mid::*member)(const Rva0076F980Mid &);
+};
+
 class Rva0076F980
 {
 	Rva0036CA00Str m_00;
@@ -38,7 +47,9 @@ public:
 Rva0076F980 &Rva0076F980::operator=(const Rva0076F980 &other)
 {
 	m_00 = other.m_00;
-	m_04 = other.m_04;
+	Rva0076F980MidAssign assign;
+	assign.function = &j_00007a63;
+	(m_04.*assign.member)(other.m_04);
 	m_10 = other.m_10;
 	return *this;
 }
