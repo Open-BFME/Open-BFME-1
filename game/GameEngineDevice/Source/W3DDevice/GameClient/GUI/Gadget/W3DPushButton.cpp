@@ -289,8 +289,8 @@ void W3DGadgetPushButtonDraw( GameWindow *window, WinInstanceData *instData )
 // W3DGadgetPushButtonImageDraw ===============================================
 /** Draw pushbutton with user supplied images */
 //=============================================================================
-void W3DGadgetPushButtonImageDraw( GameWindow *window, 
-																	 WinInstanceData *instData )
+static void drawPushButtonImageDispatchLocal( GameWindow *window,
+																				 WinInstanceData *instData )
 {
 	// if we return NULL then we'll call the one picture drawing code, if we return a value
 	// then we'll call the 3 picture drawing code

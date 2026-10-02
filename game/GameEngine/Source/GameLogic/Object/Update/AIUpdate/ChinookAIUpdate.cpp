@@ -1451,34 +1451,6 @@ void ChinookAIUpdate::loadPostProcess( void )
 
 
 
-//----------------------------------------------------------------------------------------
-/**
- * Enter idle state.
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/ChinookAIUpdatePrivateIdle.cpp
-// ?privateIdle@ChinookAIUpdate@@ present-unmatched
-void ChinookAIUpdate::privateIdle(CommandSourceType cmdSource)
-{
-
-  // Just an extra step, here, before extending idle to parent classes.
-  // Living in you own privateIdle-ho.
-  ContainModuleInterface* contain = getObject()->getContain();
-	if( contain != NULL )
-	{
-    Object *rider = (Object*)contain->friend_getRider();
-    if ( rider )
-    {
-			AIUpdateInterface *riderAI = rider->getAIUpdateInterface();
-			if( riderAI )
-				riderAI->aiIdle( cmdSource );
-		}
-  }
-
-  SupplyTruckAIUpdate::privateIdle( cmdSource );
-
-}
-
-
 //-------------------------------------------------------------------------------------------------
 /**
  * Attack given object

@@ -80,23 +80,26 @@ typedef char RadarUpdateModelConditionFlagsSizeCheck[
 class Object
 {
 public:
-	__forceinline void clearAndSetModelConditionState(ModelConditionFlagType clr,
-		ModelConditionFlagType set)
-	{
-		if (m_modelConditionFlags.test(clr) || !m_modelConditionFlags.test(set))
-		{
-			m_modelConditionFlags.reset(clr);
-			m_modelConditionFlags.set(set);
-			notifyModelConditionChanged();
-		}
-	}
-
 	void notifyModelConditionChanged();
 
-private:
 	unsigned char m_unreconstructed000[0x110];
 	ModelConditionFlags m_modelConditionFlags;
 };
+
+namespace
+{
+	__forceinline void radarClearAndSetModelConditionState(Object *object,
+		ModelConditionFlagType clr, ModelConditionFlagType set)
+	{
+		if (object->m_modelConditionFlags.test(clr)
+			|| !object->m_modelConditionFlags.test(set))
+		{
+			object->m_modelConditionFlags.reset(clr);
+			object->m_modelConditionFlags.set(set);
+			object->notifyModelConditionChanged();
+		}
+	}
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -142,7 +145,7 @@ UpdateSleepTime RadarUpdate::update()
 		m_extendDoneFrame = 0;
 
 		// remove the extending condition and set the extended condition
-		getObject()->clearAndSetModelConditionState(MODELCONDITION_RADAR_EXTENDING,
+		radarClearAndSetModelConditionState(getObject(), MODELCONDITION_RADAR_EXTENDING,
 			MODELCONDITION_RADAR_UPGRADED);
 	}
 

@@ -42,6 +42,7 @@ class UpgradeModuleModuleData : public ActiveBodyModuleData
 {
 public:
 	UpgradeModuleModuleData();
+	virtual ~UpgradeModuleModuleData();
 
 private:
 	RetailLayoutString m_layout;
