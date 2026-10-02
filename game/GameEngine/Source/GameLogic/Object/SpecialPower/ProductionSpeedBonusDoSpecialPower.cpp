@@ -11,24 +11,18 @@ typedef unsigned int UnsignedInt;
 
 #include "ascii_string.h"
 
-class Rva00010A23Target
+// ILT 0x00010A23 reaches setMaps at 0x000D9F50; its values are raw dwords.
+class BfmeThingEZC
 {
 public:
-	void rva00010a23( void *key, float value1, int value2 );
+	void setMaps( void *key, void *value1, void *value2 );
 };
 
 class Player;
 
-class Object
-{
-public:
-	Player *getControllingPlayer() const;
-
-	unsigned char m_pad00[ 0x38 ];
-	float m_position[ 3 ];
-	unsigned char m_pad44[ 0x160 ];
-	UnsignedInt m_disabledMask;
-};
+#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
+#include "../object.h"
+#undef OBJECT_TU_MEMBERS
 
 struct ProductionSpeedBonusModuleData
 {
@@ -55,28 +49,28 @@ public:
 		UnsignedInt commandOptions ) = 0;
 };
 
-extern const double g_bfmeSubB3;
-extern const double Rva002645D0NegativeOne;
-
 void ProductionSpeedBonus::doSpecialPower( UnsignedInt commandOptions )
 {
 	const char *self = reinterpret_cast<const char *>( this );
 	Object *object = *reinterpret_cast<Object *const *>( self - 8 );
 	ProductionSpeedBonusModuleData *data =
 		*reinterpret_cast<ProductionSpeedBonusModuleData *const *>( self - 12 );
-	Rva00010A23Target *player = reinterpret_cast<Rva00010A23Target *>(
+	BfmeThingEZC *player = reinterpret_cast<BfmeThingEZC *>(
 		object->getControllingPlayer() );
 
 	for( AsciiString *it = data->m_upgradeTypesBegin;
 		it != data->m_upgradeTypesEnd; ++it )
 	{
-		player->rva00010a23( it,
+		// Preserve the float argument's bits for the pointer-spelled map ABI.
+		// The double literals use retail's pooled constants at 0x0107C640/0x01095F18.
+		(player->*reinterpret_cast<void (BfmeThingEZC::*)(void *, float, int)>(
+			&BfmeThingEZC::setMaps))( it,
 			static_cast<float>(
-				( static_cast<double>( data->m_duration ) - g_bfmeSubB3 ) /
-				( static_cast<double>( data->m_duration ) * Rva002645D0NegativeOne ) ),
+				( static_cast<double>( data->m_duration ) - 1.0 ) /
+				( static_cast<double>( data->m_duration ) * -1.0 ) ),
 			data->m_bonusPercent );
 	}
 
 	if( object->m_disabledMask == 0 )
-		doSpecialPowerAtLocation( object->m_position, commandOptions );
+		doSpecialPowerAtLocation( object->m_cachedPos, commandOptions );
 }
