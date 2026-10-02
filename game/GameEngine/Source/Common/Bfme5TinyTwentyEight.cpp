@@ -147,8 +147,10 @@ public:
 	int m_bfmeBack;						// +0x1DC
 };
 
+// The table the detach at 0x00479A30 stores. Retail names it by its vftable
+// symbol, so spell that name exactly; the stand-in ?g_bfmeTableCV@@3PAHA
+// resolves to nothing.  retail 0x010F77AC
 extern "C" int __identifier("??_7GenBase00479230@@6B@")[];
-#define g_bfmeTableCV __identifier("??_7GenBase00479230@@6B@")					// retail 0x010F77AC
 
 class Gen_00479A30
 {
@@ -166,7 +168,7 @@ void Gen_00479A30::bfmeDetach(void)
 {
 	BfmeOwnerCV *owner = m_bfmeOwner;
 
-	m_bfmeTable = g_bfmeTableCV;
+	m_bfmeTable = __identifier("??_7GenBase00479230@@6B@");
 
 	if (owner)
 	{
