@@ -89,31 +89,6 @@ void BfmeThing940D::bfmeGo940D()
 	r->bfmeVirt940D(0);
 }
 
-// Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
-// game_logic.cpp). This TU calls through a local view type, so keep the view
-// and cast at the use; the global itself uses the canonical spelling.
-class BfmeGlob940E
-{
-public:
-	void bfmeCall940E(void *p);
-};
-
-class GameLogic;
-extern GameLogic *TheGameLogic;
-
-class BfmeThing940E
-{
-public:
-	int bfmeGo940E();
-};
-
-int BfmeThing940E::bfmeGo940E()
-{
-	void *p = *(void **)((char *)this - 8);
-	reinterpret_cast<BfmeGlob940E *>(TheGameLogic)->bfmeCall940E(p);
-	return 0x3fffffff;
-}
-
 struct BfmeA940G
 {
 	char m_bfmePad[8];

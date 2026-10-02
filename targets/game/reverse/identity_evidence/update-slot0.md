@@ -1,4 +1,4 @@
-# UpdateModuleInterface slot 0: constant-return overrides
+# UpdateModuleInterface slot 0: update overrides
 
 Image: `inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe`,
 SHA-256 `1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75`.
@@ -69,3 +69,38 @@ function; those rows identify no owner or method. Replace the generated rows
 and correct the two aliases to the independently proven class methods. Keep
 the old common constant source because other rows still use it. No member or
 field identities are inferred from the constant-return byte match.
+
+## DeletionUpdate::update (0028C740, 21 bytes)
+
+The registry names `DeletionUpdate` at literal RVA `00C90780`, registered at
+`0012DAC2`. Its instance factory `00117EF0` calls ILT `00016C52` -> constructor
+`0028C520`. At `0028C583` that constructor stores table VA `010BD5C8` at
+`[esi+0x10]`, replacing the base update table. Slot zero is ILT `0003466C` ->
+body `0028C740`, and slot one is the common `0004985F` disabled-mask accessor.
+The slot-zero stub VA occurs exactly once as an absolute pointer in the image,
+at table RVA `00CBD5C8`. This proves the concrete override owner.
+
+`GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeletionUpdate.h:80`
+explicitly declares the public non-const virtual `UpdateSleepTime update()`.
+The release twin in `Source/GameLogic/Object/Update/DeletionUpdate.cpp:104`
+calls `TheGameLogic->destroyObject(getObject())` and returns
+`UPDATE_SLEEP_FOREVER`. Retail does precisely that:
+
+```
+0028C740  mov eax,[ecx-8]
+0028C743  mov ecx,[012F0898]
+0028C749  push eax
+0028C74A  call 0041D0DE
+0028C74F  mov eax,3FFFFFFF
+0028C754  ret
+```
+
+Incoming ECX is the update subobject at complete-object +0x10, so ECX-8 is
+ObjectModule's object pointer at complete-object +8. ILT `0001D0DE` reaches
+the independently matched 190-byte `GameLogic::destroyObject(Object*)` body
+`0038B0C0`; its existing typed declaration and pin suffice. No pin is added.
+The RET ends the 21-byte body and INT3 follows. The old
+`BfmeThing940E::bfmeGo940E` opaque reconstruction has the same behavior but
+no recovered identity and an integer return type. Replace it with
+`?update@DeletionUpdate@@UAE?AW4UpdateSleepTime@@XZ` in DeletionUpdate.cpp,
+using the real headers, and remove the old orphaned local-view implementation.

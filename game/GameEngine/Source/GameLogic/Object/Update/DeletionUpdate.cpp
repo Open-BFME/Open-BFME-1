@@ -6,7 +6,7 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/Module/DeletionUpdate.h"
 
-// ?d_0028c6e0@@YAXXZ
+// ?setLifetimeRange@DeletionUpdate@@QAEXII@Z
 void DeletionUpdate::setLifetimeRange(UnsignedInt minFrames, UnsignedInt maxFrames)
 {
 	UnsignedInt delay = calcSleepDelay(minFrames, maxFrames);
@@ -22,4 +22,12 @@ UnsignedInt DeletionUpdate::calcSleepDelay(UnsignedInt minFrames, UnsignedInt ma
 		delay = 1;
 	m_dieFrame = TheGameLogic->getFrame() + delay;
 	return delay;
+}
+
+// Update interface slot 0, retail RVA 0x0028C740.
+// Identity: targets/game/reverse/identity_evidence/update-slot0.md.
+UpdateSleepTime DeletionUpdate::update()
+{
+	TheGameLogic->destroyObject(getObject());
+	return UPDATE_SLEEP_FOREVER;
 }
