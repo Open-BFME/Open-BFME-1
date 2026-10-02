@@ -3,11 +3,10 @@
 // Open-BFME5: STLport reallocating insert for a 12-byte vector element, retail
 // 0x00197EA0, 314 bytes. The body carried only a machine byte-dump row and no name.
 //
-// The element type is not recoverable from this body or its callees: both bulk
-// phases go to that TU's own copies of the 12-byte-element helpers (0x00192190
-// and 0x001921E0, through the ILTs at 0x000475FF and 0x0003D4C4), and the
-// ledger holds those only under synthetic Gen_p12pod spellings. So the element
-// is named for the address of the body it belongs to and modelled by width.
+// The element type is not recoverable from this body. Its copy helper at
+// 0x00192190 is the const ArmorTemplateSet specialization; its fill helper at
+// 0x001921E0 is the HorzLine specialization. Both operate on the same proven
+// 12-byte trivial element width, so this body keeps an address-derived view.
 //
 // Twelve bytes is what the bytes say: both size computations go through the
 // signed divide-by-twelve magic multiply and the new end-of-storage is a pair of
@@ -18,6 +17,9 @@ struct Rva00197EA0Element
 {
 	unsigned char m_data[12];
 };
+
+class ArmorTemplateSet;
+struct HorzLine;
 
 inline void *__cdecl operator new(unsigned int, void *where)
 {
@@ -49,19 +51,18 @@ struct __false_type
 {
 };
 
+template <class Input, class Output>
+Output __cdecl __uninitialized_copy(Input first, Input last, Output result,
+	const __false_type &tag);
+
+template <class Output, class Size, class Value>
+Output __cdecl __uninitialized_fill_n(Output result, Size count,
+	const Value &value, const __false_type &tag);
+
 template <class Type>
 class allocator
 {
 };
-
-// Both reach this TU's own copies of the shared 12-byte-element helpers through
-// their link thunks, at 0x00192190 and 0x001921E0.
-Rva00197EA0Element *__cdecl BfmeRva00197EA0Copy(
-	Rva00197EA0Element *first, Rva00197EA0Element *last, Rva00197EA0Element *result, const __false_type &);
-
-Rva00197EA0Element *__cdecl BfmeRva00197EA0FillN(
-	Rva00197EA0Element *result, unsigned int count,
-	const Rva00197EA0Element &value, const __false_type &);
 
 template <class Type, class Allocator>
 class vector
@@ -98,8 +99,10 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeRva00197EA0Copy(_M_start, position, newStart,
-		reinterpret_cast<const __false_type &>(atEnd));
+	Type *newFinish = reinterpret_cast<Type *>(__uninitialized_copy<const ArmorTemplateSet *, ArmorTemplateSet *>(
+		reinterpret_cast<const ArmorTemplateSet *>(_M_start),
+		reinterpret_cast<const ArmorTemplateSet *>(position),
+		reinterpret_cast<ArmorTemplateSet *>(newStart), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (fillLength == 1)
 	{
@@ -108,13 +111,16 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeRva00197EA0FillN(newFinish, fillLength, value,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = reinterpret_cast<Type *>(__uninitialized_fill_n<HorzLine *, unsigned int, HorzLine>(
+			reinterpret_cast<HorzLine *>(newFinish), fillLength,
+			reinterpret_cast<const HorzLine &>(value), reinterpret_cast<const __false_type &>(atEnd)));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeRva00197EA0Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = reinterpret_cast<Type *>(__uninitialized_copy<const ArmorTemplateSet *, ArmorTemplateSet *>(
+			reinterpret_cast<const ArmorTemplateSet *>(position),
+			reinterpret_cast<const ArmorTemplateSet *>(_M_finish),
+			reinterpret_cast<ArmorTemplateSet *>(newFinish), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (_M_start)
 	{

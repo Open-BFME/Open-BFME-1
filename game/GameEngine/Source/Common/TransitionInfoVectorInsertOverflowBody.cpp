@@ -28,6 +28,8 @@ public:
 	};
 };
 
+struct Coord3D;
+
 inline void *__cdecl operator new(unsigned int, void *where)
 {
 	return where;
@@ -63,16 +65,13 @@ class allocator
 {
 };
 
-// Both reach the shared 12-byte-element helpers through their link thunks;
-// naming them apart from the _STL spellings keeps those names on their real
-// bodies at 0x000A0AE0 and 0x000A0B30. The copy takes its input iterators const.
-State::TransitionInfo *__cdecl BfmeTransitionInfoUninitializedCopy(
-	const State::TransitionInfo *first, const State::TransitionInfo *last,
-	State::TransitionInfo *result, const __false_type &);
+template <class Input, class Output>
+Output __cdecl __uninitialized_copy(Input first, Input last, Output result,
+	const __false_type &tag);
 
-State::TransitionInfo *__cdecl BfmeTransitionInfoUninitializedFillN(
-	State::TransitionInfo *result, unsigned int count,
-	const State::TransitionInfo &value, const __false_type &);
+template <class Output, class Size, class Value>
+Output __cdecl __uninitialized_fill_n(Output result, Size count,
+	const Value &value, const __false_type &tag);
 
 template <class Type, class Allocator>
 class vector
@@ -109,8 +108,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeTransitionInfoUninitializedCopy(_M_start, position, newStart,
-		reinterpret_cast<const __false_type &>(atEnd));
+	Type *newFinish = reinterpret_cast<Type *>(__uninitialized_copy<const Coord3D *, Coord3D *>(
+		reinterpret_cast<const Coord3D *>(_M_start), reinterpret_cast<const Coord3D *>(position),
+		reinterpret_cast<Coord3D *>(newStart), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (fillLength == 1)
 	{
@@ -119,13 +119,14 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeTransitionInfoUninitializedFillN(newFinish, fillLength, value,
+		newFinish = __uninitialized_fill_n<Type *, unsigned int, Type>(newFinish, fillLength, value,
 			reinterpret_cast<const __false_type &>(atEnd));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeTransitionInfoUninitializedCopy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = reinterpret_cast<Type *>(__uninitialized_copy<const Coord3D *, Coord3D *>(
+			reinterpret_cast<const Coord3D *>(position), reinterpret_cast<const Coord3D *>(_M_finish),
+			reinterpret_cast<Coord3D *>(newFinish), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (_M_start)
 	{

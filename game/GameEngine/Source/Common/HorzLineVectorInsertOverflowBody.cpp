@@ -25,6 +25,8 @@ struct HorzLine
 	int m_xEnd;
 };
 
+struct Coord3D;
+
 inline void *__cdecl operator new(unsigned int, void *where)
 {
 	return where;
@@ -60,15 +62,13 @@ class allocator
 {
 };
 
-// Both reach retail's shared 12-byte-element helpers through their link thunks;
-// naming them apart from the _STL spellings keeps those names on their real
-// bodies at 0x00068C50 and 0x00068CA0.
-HorzLine *__cdecl BfmeHorzLineUninitializedCopy(
-	HorzLine *first, HorzLine *last, HorzLine *result, const __false_type &);
+template <class Input, class Output>
+Output __cdecl __uninitialized_copy(Input first, Input last, Output result,
+	const __false_type &tag);
 
-HorzLine *__cdecl BfmeHorzLineUninitializedFillN(
-	HorzLine *result, unsigned int count,
-	const HorzLine &value, const __false_type &);
+template <class Output, class Size, class Value>
+Output __cdecl __uninitialized_fill_n(Output result, Size count,
+	const Value &value, const __false_type &tag);
 
 template <class Type, class Allocator>
 class vector
@@ -105,8 +105,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeHorzLineUninitializedCopy(_M_start, position, newStart,
-		reinterpret_cast<const __false_type &>(atEnd));
+	Type *newFinish = reinterpret_cast<Type *>(__uninitialized_copy<Coord3D *, Coord3D *>(
+		reinterpret_cast<Coord3D *>(_M_start), reinterpret_cast<Coord3D *>(position),
+		reinterpret_cast<Coord3D *>(newStart), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (fillLength == 1)
 	{
@@ -115,13 +116,15 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeHorzLineUninitializedFillN(newFinish, fillLength, value,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = reinterpret_cast<Type *>(__uninitialized_fill_n<Coord3D *, unsigned int, Coord3D>(
+			reinterpret_cast<Coord3D *>(newFinish), fillLength,
+			reinterpret_cast<const Coord3D &>(value), reinterpret_cast<const __false_type &>(atEnd)));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeHorzLineUninitializedCopy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = reinterpret_cast<Type *>(__uninitialized_copy<Coord3D *, Coord3D *>(
+			reinterpret_cast<Coord3D *>(position), reinterpret_cast<Coord3D *>(_M_finish),
+			reinterpret_cast<Coord3D *>(newFinish), reinterpret_cast<const __false_type &>(atEnd)));
 
 	if (_M_start)
 	{

@@ -60,20 +60,18 @@ struct __false_type
 {
 };
 
+template <class Input, class Output>
+Output __cdecl __uninitialized_copy(Input first, Input last, Output result,
+	const __false_type &tag);
+
+template <class Output, class Size, class Value>
+Output __cdecl __uninitialized_fill_n(Output result, Size count,
+	const Value &value, const __false_type &tag);
+
 template <class Type>
 class allocator
 {
 };
-
-// Both reach the 12-byte-element helpers through their link thunks; naming them
-// apart from the _STL spellings keeps those names on their real bodies at
-// 0x0020E2C0 and 0x0020E310.
-W3DModelDraw::WeaponRecoilInfo *__cdecl BfmeWeaponRecoilInfoUninitializedCopy(
-	W3DModelDraw::WeaponRecoilInfo *first, W3DModelDraw::WeaponRecoilInfo *last, W3DModelDraw::WeaponRecoilInfo *result, const __false_type &);
-
-W3DModelDraw::WeaponRecoilInfo *__cdecl BfmeWeaponRecoilInfoUninitializedFillN(
-	W3DModelDraw::WeaponRecoilInfo *result, unsigned int count,
-	const W3DModelDraw::WeaponRecoilInfo &value, const __false_type &);
 
 template <class Type, class Allocator>
 class vector
@@ -110,8 +108,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeWeaponRecoilInfoUninitializedCopy(_M_start, position, newStart,
-		reinterpret_cast<const __false_type &>(atEnd));
+	Type *newFinish = __uninitialized_copy<W3DModelDraw::WeaponRecoilInfo *, W3DModelDraw::WeaponRecoilInfo *>(
+		_M_start, position, newStart, reinterpret_cast<const __false_type &>(atEnd));
 
 	if (fillLength == 1)
 	{
@@ -120,13 +118,13 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeWeaponRecoilInfoUninitializedFillN(newFinish, fillLength, value,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = __uninitialized_fill_n<W3DModelDraw::WeaponRecoilInfo *, unsigned int, W3DModelDraw::WeaponRecoilInfo>(
+			newFinish, fillLength, value, reinterpret_cast<const __false_type &>(atEnd));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeWeaponRecoilInfoUninitializedCopy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = __uninitialized_copy<W3DModelDraw::WeaponRecoilInfo *, W3DModelDraw::WeaponRecoilInfo *>(
+			position, _M_finish, newFinish, reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
 	{

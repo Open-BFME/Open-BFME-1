@@ -55,20 +55,18 @@ struct __false_type
 {
 };
 
+template <class Input, class Output>
+Output __cdecl __uninitialized_copy(Input first, Input last, Output result,
+	const __false_type &tag);
+
+template <class Output, class Size, class Value>
+Output __cdecl __uninitialized_fill_n(Output result, Size count,
+	const Value &value, const __false_type &tag);
+
 template <class Type>
 class allocator
 {
 };
-
-// Both reach the helpers the ledger already names for this element through
-// their link thunks; naming them apart from the _STL spellings keeps those
-// names on their real bodies at 0x0013DA80 and 0x0013DAD0.
-ArmorTemplateSet *__cdecl BfmeArmorTemplateSetUninitializedCopy(
-	ArmorTemplateSet *first, ArmorTemplateSet *last, ArmorTemplateSet *result, const __false_type &);
-
-ArmorTemplateSet *__cdecl BfmeArmorTemplateSetUninitializedFillN(
-	ArmorTemplateSet *result, unsigned int count,
-	const ArmorTemplateSet &value, const __false_type &);
 
 template <class Type, class Allocator>
 class vector
@@ -105,8 +103,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeArmorTemplateSetUninitializedCopy(_M_start, position, newStart,
-		reinterpret_cast<const __false_type &>(atEnd));
+	Type *newFinish = __uninitialized_copy<ArmorTemplateSet *, ArmorTemplateSet *>(
+		_M_start, position, newStart, reinterpret_cast<const __false_type &>(atEnd));
 
 	if (fillLength == 1)
 	{
@@ -115,13 +113,13 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeArmorTemplateSetUninitializedFillN(newFinish, fillLength, value,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = __uninitialized_fill_n<ArmorTemplateSet *, unsigned int, ArmorTemplateSet>(
+			newFinish, fillLength, value, reinterpret_cast<const __false_type &>(atEnd));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeArmorTemplateSetUninitializedCopy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
+		newFinish = __uninitialized_copy<ArmorTemplateSet *, ArmorTemplateSet *>(
+			position, _M_finish, newFinish, reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
 	{
