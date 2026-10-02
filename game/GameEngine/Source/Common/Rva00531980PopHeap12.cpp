@@ -8,12 +8,21 @@ struct S4SortElem12Pod
 	int m_c;
 };
 
-void bfmeAdjustHeap00531B20(S4SortElem12Pod *first, int hole, int len,
-	S4SortElem12Pod value, void *comp);
+// The matched adjust_heap at 0x005300E0 spells the same twelve-byte record S4SortElem12.
+struct S4SortElem12
+{
+	int m_a;
+	int m_b;
+	int m_c;
+};
+
+void bfmeAdjustHeap005300E0(S4SortElem12 *first, int hole, int len,
+	S4SortElem12 value, void *comp);
 
 void Rva00531980PopHeap(S4SortElem12Pod *first, S4SortElem12Pod *last,
 	S4SortElem12Pod *result, S4SortElem12Pod value, void *comp, int *)
 {
 	*result = *first;
-	bfmeAdjustHeap00531B20(first, 0, last - first, value, comp);
+	bfmeAdjustHeap005300E0(reinterpret_cast<S4SortElem12 *>(first), 0, last - first,
+		*reinterpret_cast<S4SortElem12 *>(&value), comp);
 }

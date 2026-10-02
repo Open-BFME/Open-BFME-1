@@ -1,30 +1,31 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: STLport __make_heap over a trivially-copyable twelve-byte
-// element, retail 0x00531B20, 148 bytes.  Same countdown as gen00531C50 but
-// the value is three dword copies instead of a string copy constructor.
+// STLport make_heap over the twelve-byte pointer-key-int record.
+// Retail calls the matched adjust_heap at 0x005300E0 through 0x0001D0B6.
 
-struct S4SortElem12Pod
+struct S4Named0052E880;
+
+struct S4SortElem12
 {
-	int m_bfmeA;
-	int m_bfmeB;
-	int m_bfmeC;
+	S4Named0052E880 *m_bfmeObj;
+	int m_bfmeKey;
+	int m_bfmeThird;
 };
 
-void bfmeAdjustHeap00531B20(S4SortElem12Pod *first, int holeIndex, int len,
-	S4SortElem12Pod value, void *comp);
+void bfmeAdjustHeap005300E0(S4SortElem12 *first, int holeIndex, int len,
+	S4SortElem12 value, void *comp);
 
 void gen00531B20(void *a, void *b, void *c, int, int)
 {
-	S4SortElem12Pod *first = (S4SortElem12Pod *)a;
-	S4SortElem12Pod *last = (S4SortElem12Pod *)b;
+	S4SortElem12 *first = (S4SortElem12 *)a;
+	S4SortElem12 *last = (S4SortElem12 *)b;
 	int len = last - first;
 	if (len < 2)
 		return;
 	int parent = (len - 2) / 2;
 	for (;;)
 	{
-		bfmeAdjustHeap00531B20(first, parent, len, *(first + parent), c);
+		bfmeAdjustHeap005300E0(first, parent, len, *(first + parent), c);
 		if (parent == 0)
 			return;
 		--parent;
