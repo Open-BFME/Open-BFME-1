@@ -197,7 +197,12 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 extern ControlBar *TheControlBar;
-extern BfmeThingFactory *TheThingFactory;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  The member call below goes through
+// the address-derived BfmeThingFactory view, reached by a cast.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 extern TerrainLogic *TheTerrainLogic;
 
@@ -319,7 +324,7 @@ void ScriptActions::doNamedUseCommandButtonOnNearestObjectType(
 	}
 	else
 	{
-		thingTemplate = TheThingFactory->findTemplate(objectTypeName);
+		thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(objectTypeName);
 	}
 
 	if (!thingTemplate)

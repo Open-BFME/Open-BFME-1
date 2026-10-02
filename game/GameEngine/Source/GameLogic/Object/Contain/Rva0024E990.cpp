@@ -53,7 +53,12 @@ static __forceinline Player *controllingPlayerOf(const Object *object)
 	return object->getControllingPlayer();
 }
 
-extern BfmeThingFactory *TheThingFactory;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  The member call below goes through
+// the address-derived BfmeThingFactory view, reached by a cast.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 #pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
 #pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
@@ -143,7 +148,7 @@ void Rva0024E990Owner::rva0024e990(Object *other)
 	const ThingTemplate *tmpl;
 	creatorPlayer = controllingPlayerOf(m_creatorObj);
 	otherPlayer = controllingPlayerOf(self);
-	tmpl = TheThingFactory->findTemplate(name);
+	tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(name);
 	if (creatorPlayer == otherPlayer)
 		goto release;
 	if (tmpl == 0)

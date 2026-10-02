@@ -73,7 +73,12 @@ static __forceinline Object *bfmeNewObject(BfmeThingFactory *factory,
 	return (factory->*function.member)(thingTemplate, team, status, unknown);
 }
 
-extern BfmeThingFactory *TheThingFactory;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  The member calls below go through the
+// address-derived BfmeThingFactory view, reached by a cast.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 struct GarrisonContainModuleData
 {
@@ -100,13 +105,13 @@ void GarrisonContain::onObjectCreated()
 		return;
 
 	const ThingTemplate *rosterTemplate =
-		TheThingFactory->findTemplate(moduleData->m_initialRosterTemplateName);
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(moduleData->m_initialRosterTemplateName);
 	Object *object = m_object;
 	for (int i = 0; i < count; ++i)
 	{
 		ObjectStatusMaskType status;
 		Team *team = object->getControllingPlayer()->m_defaultTeam;
-		Object *payload = bfmeNewObject(TheThingFactory, rosterTemplate,
+		Object *payload = bfmeNewObject((BfmeThingFactory *)TheThingFactory, rosterTemplate,
 			team, status, 0);
 		ContainModuleInterface *contain = object->m_contain;
 		if (contain && contain->isValidContainerFor(payload, true))

@@ -52,7 +52,12 @@ struct BfmeGameLogic
 	int frame;
 };
 
-extern BfmeOtherBN *g_bfmeOtherBN;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  This TU keeps the address-derived
+// BfmeOtherBN view for the member call and casts the singleton to it.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 class GameLogic;
 
 // retail 0x012F0898; the TU-local view above is BfmeGameLogic
@@ -82,7 +87,7 @@ float Rva000F9820::getValue(int divisor, int *out)
 		}
 
 		key = (void *)value10;
-		product = (BfmeUseB980 *)g_bfmeOtherBN->bfmeLookupBN(*reinterpret_cast<const AsciiStringBN *>(record));
+		product = (BfmeUseB980 *)((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(*reinterpret_cast<const AsciiStringBN *>(record));
 		if (product)
 		{
 			value = (int)product->bfmeApply980B((int)key, record->value34);

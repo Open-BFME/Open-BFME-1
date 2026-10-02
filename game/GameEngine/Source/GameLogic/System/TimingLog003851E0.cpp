@@ -93,7 +93,12 @@ private:
 
 class GlobalData;								///< retail pointee at 0x012ED5C8
 extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
-extern TimingLogThingFactory *TheThingFactory;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  The +8 first-template slot is read
+// through the address-derived TimingLogThingFactory view, reached by a cast.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 // Retail 0x012F1600 is the tactical-view singleton defined once in
 // GameClient/View.cpp; this TU only needs the lookAt vtable slot of it.
 class View;
@@ -132,7 +137,7 @@ void TimingLog003851E0::start()
 	rva00889690Set();
 	HideControlBar(true);
 
-	m_curThing = TheThingFactory->m_firstTemplate;
+	m_curThing = ((TimingLogThingFactory *)TheThingFactory)->m_firstTemplate;
 	m_startTiming = 1;
 	m_gotUnit = 0;
 

@@ -2,7 +2,7 @@
 // Open-BFME: address-derived HordeContain template selection helper, retail
 // 0x002369C0.  Retail chooses one integer from the list at +0x138, maps its
 // sixteen-byte slot at +0x12C to the module-data roster at +0x224, and asks
-// TheRegistry for the matching template name.
+// TheThingFactory (0x012EF1D8) for the matching template name.
 
 typedef bool Bool;
 typedef int Int;
@@ -19,7 +19,12 @@ public:
 	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
-extern BfmeThingFactory *Rva0020AA00TheRegistry;
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
+// from ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h).  The member call below goes through
+// the address-derived BfmeThingFactory view, reached by a cast.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 extern Int GetGameLogicRandomValue( Int low, Int high, char *file, Int line );
 
@@ -101,7 +106,7 @@ ThingTemplate *Rva002369C0HordeContain::rva002369C0()
 	{
 		BfmeHordeRosterEntry *entry = *cursor;
 		if (slot->m_key == entry->m_key)
-			return (ThingTemplate *)Rva0020AA00TheRegistry->findTemplate(entry->m_name);
+			return (ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(entry->m_name);
 	}
 
 	return 0;

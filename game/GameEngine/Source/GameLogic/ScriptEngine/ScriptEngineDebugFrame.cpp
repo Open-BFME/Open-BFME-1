@@ -84,9 +84,12 @@ extern GlobalData *TheWritableGlobalData;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern View *TheTacticalView;
 extern TerrainLogic *TheTerrainLogic;
-// 0x012EF1D8 has only address-derived pins so far (placeBuildAvailable casts
-// it to a thing factory); keep the untyped pin rather than invent a class.
-extern void *g_global12EF1D8;
+// 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name from
+// ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@, class declared in
+// common/System/game_engine_subsystems.h); only its address is forwarded here,
+// as the tenth argument of SetTheSidesList.
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 extern SidesList *TheSidesList;
 extern void *TheScriptDebugWindowDLL;
 extern GameClient *TheGameClient;
@@ -143,7 +146,7 @@ void _bfme_updateDebugWindowInputs(void)
 			0,
 			TheTacticalView,
 			TheTerrainLogic,
-			g_global12EF1D8,
+			TheThingFactory,
 			TheGameLogic);
 	}
 }
