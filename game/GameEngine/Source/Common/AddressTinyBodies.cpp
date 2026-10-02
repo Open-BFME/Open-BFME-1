@@ -131,28 +131,6 @@ int Rva0024FD40Body::body() const
 	return m_value;
 }
 
-class Rva002507A0Body
-{
-public:
-	void body(int value);
-};
-
-// ?body@Rva002507A0Body@@QAEXH@Z
-void Rva002507A0Body::body(int value)
-{
-}
-
-class Rva002507B0Body
-{
-public:
-	void body(int value);
-};
-
-// ?body@Rva002507B0Body@@QAEXH@Z
-void Rva002507B0Body::body(int value)
-{
-}
-
 class Rva00250AD0Body
 {
 public:
@@ -718,17 +696,6 @@ void Rva0042F280Noop()
 {
 }
 
-class Rva008F8E60SelfBody
-{
-public:
-	Rva008F8E60SelfBody *body();
-};
-
-// ?body@Rva008F8E60SelfBody@@QAEPAV1@XZ
-Rva008F8E60SelfBody *Rva008F8E60SelfBody::body()
-{
-	return this;
-}
 
 // ?Rva008FD4B0AlwaysTrue@@YAEXZ
 unsigned char Rva008FD4B0AlwaysTrue()
@@ -736,36 +703,7 @@ unsigned char Rva008FD4B0AlwaysTrue()
 	return 1;
 }
 
-class Rva008AB800OffsetGetter
-{
-	char m_pad[0x50];
-	int m_value;
-public:
-	int body() const;
-};
 
-// ?body@Rva008AB800OffsetGetter@@QBEHXZ
-int Rva008AB800OffsetGetter::body() const
-{
-	return m_value;
-}
-
-class Rva0083FE30VirtualForward
-{
-public:
-	virtual int slot0() = 0;
-	virtual int slot1() = 0;
-	virtual int slot2() = 0;
-	virtual int slot3() = 0;
-	virtual int slot4() = 0;
-	int body();
-};
-
-// ?body@Rva0083FE30VirtualForward@@QAEHXZ
-int Rva0083FE30VirtualForward::body()
-{
-	return slot4();
-}
 
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 
@@ -775,18 +713,6 @@ void *Rva008BD010Alloc(unsigned bytes)
 	return Rva008C5D70Alloc(bytes);
 }
 
-class Rva00891AB0IndirectWord
-{
-	char *m_value;
-public:
-	unsigned body() const;
-};
-
-// ?body@Rva00891AB0IndirectWord@@QBEIXZ
-unsigned Rva00891AB0IndirectWord::body() const
-{
-	return *reinterpret_cast<const unsigned short *>(m_value + 2);
-}
 
 // ?Rva0083FEB0WordLoad@@YAGPBG@Z
 unsigned short Rva0083FEB0WordLoad(const unsigned short *value)
@@ -794,27 +720,3 @@ unsigned short Rva0083FEB0WordLoad(const unsigned short *value)
 	return *value;
 }
 
-class Rva008BD000Value
-{
-	char m_pad[0x4c];
-	int m_value;
-public:
-	virtual void slot0() = 0;
-	virtual void slot1() = 0;
-	virtual void slot2() = 0;
-	void clear() { m_value = 0; }
-};
-
-class Rva008BD000Owner
-{
-	Rva008BD000Value *m_value;
-public:
-	void body();
-};
-
-// ?body@Rva008BD000Owner@@QAEXXZ
-void Rva008BD000Owner::body()
-{
-	m_value->clear();
-	m_value->slot2();
-}
