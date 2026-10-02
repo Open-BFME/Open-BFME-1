@@ -8,9 +8,11 @@ struct Gen_p8cd
 	int a[2];
 };
 
+struct Rva009F5970StateInit;
+
 struct T_009f4fb0
 {
-	void m();
+	void m(Rva009F5970StateInit *value);
 };
 
 struct T_009f59d0
