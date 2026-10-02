@@ -8,13 +8,18 @@ struct Rva008D2960Node {
 	virtual void shutdown();
 	int m_4; Rva008D2960Node* m_next;
 };
-extern Rva008D2960Node* Rva008D2960Head;
+// The chain head at 0x013387CC is the global this TU spells Rva008D2960Head;
+// Rva008D29A0Link.cpp defines it as ?g_rva008D29A0, a Rva008D29A0*. Only the
+// pointer value moves here, so the defining name is referenced by its own class
+// name (forward declared, never defined in this TU).
+class Rva008D29A0;
+extern Rva008D29A0* g_rva008D29A0;
 void shutdownChain2()
 {
-	while (Rva008D2960Head) {
-		Rva008D2960Node* next = Rva008D2960Head->m_next;
-		Rva008D2960Head->shutdown();
-		delete Rva008D2960Head;
-		Rva008D2960Head = next;
+	while (g_rva008D29A0) {
+		Rva008D2960Node* next = ((Rva008D2960Node*)g_rva008D29A0)->m_next;
+		((Rva008D2960Node*)g_rva008D29A0)->shutdown();
+		delete (Rva008D2960Node*)g_rva008D29A0;
+		g_rva008D29A0 = (Rva008D29A0*)next;
 	}
 }

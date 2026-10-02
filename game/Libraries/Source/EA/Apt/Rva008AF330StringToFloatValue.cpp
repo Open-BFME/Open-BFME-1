@@ -65,14 +65,19 @@ public:
     union { Rva008A4C00Value *m_next; float m_value; };
 };
 
-extern Rva008A4C00Value *Rva008AF330Head;
+// The free-list head at 0x013387CC is the global this TU spells
+// Rva008AF330Head; Rva008D29A0Link.cpp defines it as ?g_rva008D29A0, a
+// Rva008D29A0*. Only the pointer value moves here, so the defining name is
+// referenced by its own class name (forward declared, never defined here).
+class Rva008D29A0;
+extern Rva008D29A0 *g_rva008D29A0;
 extern int (__cdecl *Rva013378B8)(const char *, int);
 
 static __forceinline Rva008A4C00Value *makeValue(float value)
 {
-    Rva008A4C00Value *result = (Rva008A4C00Value *)Rva008AF330Head;
+    Rva008A4C00Value *result = (Rva008A4C00Value *)g_rva008D29A0;
     if (result) {
-        Rva008AF330Head = result->m_next;
+        g_rva008D29A0 = (Rva008D29A0 *)result->m_next;
         g_rva8CD130IdleHook->addPooled(result);
         result->m_value = value;
         return result;

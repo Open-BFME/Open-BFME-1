@@ -9,7 +9,12 @@ struct Rva00899560Pool {
   else { m_items[count]=node; count++; }
  }
 };
-extern Rva008D2950Node *Rva008D2950Head;
+// Retail's free-list head at 0x013387CC is the global this TU spells
+// Rva008D2950Head; Rva008D29A0Link.cpp defines it as ?g_rva008D29A0, a
+// Rva008D29A0*. Only the pointer value is used here, so the defining name is
+// referenced by its own class name (forward declared, never defined here).
+class Rva008D29A0;
+extern Rva008D29A0 *g_rva008D29A0;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 extern const char vtable01135D68[],vtable01136698[];
@@ -17,9 +22,9 @@ struct Float008B02A0 {
  void *m_vtable; unsigned m_flags;
  union { Float008B02A0 *m_next; float m_value; };
  static __forceinline Float008B02A0 *create(float value) {
-  Float008B02A0 *object=(Float008B02A0*)Rva008D2950Head;
+  Float008B02A0 *object=(Float008B02A0*)g_rva008D29A0;
   if(object) {
-   Rva008D2950Head=(Rva008D2950Node*)object->m_next;
+   g_rva008D29A0=(Rva008D29A0*)object->m_next;
    g_rva8CD130IdleHook->addPooled((Rva008D2950Node*)object);
    object->m_value=value;
    return object;
