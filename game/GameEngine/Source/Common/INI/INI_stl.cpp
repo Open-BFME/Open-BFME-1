@@ -1690,13 +1690,7 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ UnsignedInt INI::scanUnsignedInt(const char* token)
-{
-	UnsignedInt value;
-	if (sscanf( token, "%u", &value ) != 1)	// unsigned int is %u, not %d
-		throw INI_INVALID_DATA;
-	return value;
-}
+// Retail definition owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // Retail definition owned by ini_parsers.cpp.
