@@ -1,7 +1,8 @@
+void j_00040412();
+
 class BfmeSubBNC
 {
 public:
-	void bfmeDoBNC(void *one, void *two);
 };
 
 struct BfmeOwnerBNC
@@ -14,5 +15,9 @@ void bfmeGoBNC(BfmeOwnerBNC *owner, void *one, void *two)
 {
 	BfmeSubBNC *sub = owner->m_bfmeSub;
 	if (sub != 0)
-		sub->bfmeDoBNC(one, two);
+	{
+		typedef void (BfmeSubBNC::*Call)(void *, void *);
+		union { void (*address)(); Call member; } route = { j_00040412 };
+		(sub->*route.member)(one, two);
+	}
 }

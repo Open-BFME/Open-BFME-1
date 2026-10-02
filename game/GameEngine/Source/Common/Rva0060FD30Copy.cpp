@@ -1,10 +1,9 @@
 // cl: /O2 /Ob0
 
+void j_0000fa3d();
+
 class Rva0060FD30Base
 {
-public:
-	Rva0060FD30Base(const Rva0060FD30Base &other);
-
 private:
 	char m_pad[0x0C];
 };
@@ -18,7 +17,9 @@ public:
 };
 
 Rva0060FD30::Rva0060FD30(const Rva0060FD30 &other)
-	: Rva0060FD30Base(other)
-	, m_0C(other.m_0C)
 {
+	typedef void (Rva0060FD30Base::*CopyCall)(const Rva0060FD30Base &);
+	union { void (*address)(); CopyCall member; } copy = { j_0000fa3d };
+	(static_cast<Rva0060FD30Base *>(this)->*copy.member)(other);
+	m_0C = other.m_0C;
 }

@@ -1,3 +1,5 @@
+void j_00020b80();
+
 class BfmeInnerBNF
 {
 public:
@@ -16,7 +18,6 @@ public:
 class BfmeThingBNF
 {
 public:
-	void bfmeTailBNF();
 	void bfmeGoBNF();
 	unsigned char m_bfmeHead[0x10];
 	BfmeInnerBNF m_bfmeInner;
@@ -28,5 +29,7 @@ void BfmeThingBNF::bfmeGoBNF()
 {
 	if (m_bfmeFlag)
 		m_bfmeInner.bfmeStepBNF();
-	bfmeTailBNF();
+	typedef void (BfmeThingBNF::*Call)();
+	union { void (*address)(); Call member; } route = { j_00020b80 };
+	(this->*route.member)();
 }

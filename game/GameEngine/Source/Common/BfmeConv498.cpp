@@ -1,4 +1,4 @@
-void *bfmeMakeBNG(void *one, void *two);
+void j_00002b8f();
 
 class BfmeThingBNG
 {
@@ -10,5 +10,5 @@ public:
 
 void BfmeThingBNG::bfmeGoBNG(void *what)
 {
-	m_bfmeGot = bfmeMakeBNG(what, what);
+	m_bfmeGot = reinterpret_cast<void *(__cdecl *)(void *, void *)>(j_00002b8f)(what, what);
 }

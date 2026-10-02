@@ -1,4 +1,4 @@
-int __stdcall bfmeDoBNA(void *what);
+void j_000294e7();
 
 class BfmeThingBNA
 {
@@ -16,5 +16,5 @@ int BfmeThingBNA::bfmeGoBNA()
 		return -2;
 	void *what = m_bfmeWhat;
 	m_bfmeBusy = true;
-	return bfmeDoBNA(what);
+	return reinterpret_cast<int (__stdcall *)(void *)>(j_000294e7)(what);
 }
