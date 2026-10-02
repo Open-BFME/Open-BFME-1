@@ -6,8 +6,8 @@
 // -0x10), so those are read with raw pointer arithmetic rather than modelled
 // as real members. Callees are pinned/landed: BfmeBaseZJ::bfmeClearZJ,
 // BfmePathCL::bfmeDropOneCL, BfmeBBP::bfmeListBP, BfmeObjF9::setFlag
-// (landed, Rva0087F9C0Flag.cpp), addObjectToPathfindMap (landed,
-// BFMEPathfinderMapShim), and BfmeHostCL::bfmeResetCL (landed,
+// (landed, Rva0087F9C0Flag.cpp), Pathfinder::addObjectToPathfindMap (landed,
+// PathfindMapObjectWrappers.cpp), and BfmeHostCL::bfmeResetCL (landed,
 // BfmeConv1924.cpp).
 
 class BfmeHostCL;
@@ -35,7 +35,9 @@ extern AI *TheAI;
 
 class Object;
 
-class BFMEPathfinderMapShim
+// Declared here only to spell the callee under its real defining name;
+// the definition is landed in PathfindMapObjectWrappers.cpp.
+class Pathfinder
 {
 public:
 	void addObjectToPathfindMap(Object *object);
@@ -163,7 +165,7 @@ void Rva002D55F0Owner::bfmeTeardown002D55F0()
 	if (data != 0 && data->m_len != 0)
 		flags->setFlag(m_inlineName, 1);
 
-	((BFMEPathfinderMapShim *)TheAI->m_bfmePathCL)->addObjectToPathfindMap((Object *)host);
+	((Pathfinder *)TheAI->m_bfmePathCL)->addObjectToPathfindMap((Object *)host);
 	host->bfmeResetCL(0);
 	bfmeVfunc8(0);
 }

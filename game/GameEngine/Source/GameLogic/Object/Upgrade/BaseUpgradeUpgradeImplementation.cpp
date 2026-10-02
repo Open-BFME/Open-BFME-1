@@ -204,7 +204,9 @@ public:
 		const ObjectStatusMaskType &status, UnsignedInt unknown);
 };
 
-class BFMEPathfinderMapShim
+// Declared here only to spell the callee under its real defining name;
+// the definition is landed in PathfindMapObjectWrappers.cpp.
+class Pathfinder
 {
 public:
 	void addObjectToPathfindMap(Object *object);
@@ -216,7 +218,7 @@ private:
 	unsigned char m_pad[0x0c];
 
 public:
-	BFMEPathfinderMapShim *m_pathfinder;
+	Pathfinder *m_pathfinder;
 };
 
 extern ThingFactory *TheThingFactory;
