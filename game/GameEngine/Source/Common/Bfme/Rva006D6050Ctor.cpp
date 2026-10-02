@@ -2,21 +2,27 @@
 // Retail 0x006D6050 (91 bytes). Zeros dword 0 then 6-arg init. A trailing
 // member with a destructor forces the EH frame around the init call.
 
-class Rva006D6050Guard
+class TextureClass;
+
+class BfmeHandleCX
 {
 public:
-	~Rva006D6050Guard();
+	~BfmeHandleCX();
+
+private:
+	TextureClass *p;
 };
 
 class Rva006D6050
 {
 public:
 	Rva006D6050(int a, int b);
-	void init(int, int, int, int, int, int);
+	void init(unsigned int, unsigned int, unsigned int,
+		unsigned int, unsigned int, unsigned int);
 
 private:
 	int m_00;
-	Rva006D6050Guard m_guard;
+	BfmeHandleCX m_guard;
 };
 
 Rva006D6050::Rva006D6050(int a, int b)
