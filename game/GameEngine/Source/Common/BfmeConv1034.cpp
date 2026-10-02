@@ -106,10 +106,15 @@ void BfmeE1034::bfmeGo1034E(void)
 	m_bfmeRc = 0;
 }
 
+class AptValue
+{
+public:
+	int toInteger(void) const;
+};
+
 class BfmeN1034
 {
 public:
-	int bfmeVal1034(void);
 };
 
 class BfmeTab1034
@@ -132,7 +137,7 @@ int BfmeF1034::bfmeGo1034F(int k)
 	BfmeN1034 *n = m_bfmeTab->bfmeFind1034F(k);
 
 	if (n != 0)
-		return n->bfmeVal1034();
+		return ((AptValue *)n)->toInteger();
 
 	return -1;
 }

@@ -1,11 +1,16 @@
 // Open-BFME5 conversions.
 
+class AptValue
+{
+public:
+	int toInteger(void) const;
+};
+
 class BfmeE1231
 {
 public:
 	virtual void bfmeV1231A();
 	virtual void bfmeV1231B();
-	void *bfmeVal1231();
 	unsigned m_bfme04;
 };
 
@@ -38,7 +43,7 @@ void bfmeGo1231(BfmeA1231 *a, BfmeB1231 *b)
 	e1 = a->m_bfme08[a->m_bfme00 - 1];
 	e2 = a->m_bfme08[a->m_bfme00 - 2];
 	e3 = a->m_bfme08[a->m_bfme00 - 3];
-	v = e1->bfmeVal1231();
+	v = (void *)((AptValue *)e1)->toInteger();
 	a->bfmeEmit1231(b->m_bfme04, b->m_bfme08, e3, e2, v, 0);
 	for (i = 1; i <= 3; ++i) {
 		e = a->m_bfme08[a->m_bfme00 - i];

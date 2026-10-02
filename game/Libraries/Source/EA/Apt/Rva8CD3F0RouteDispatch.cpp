@@ -2,12 +2,17 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // readable Apt three-value route dispatch, retail 0x008CD3F0 (155 bytes).
 
+class AptValue
+{
+public:
+	int toInteger() const;
+};
+
 class Rva8CD3F0Value
 {
 public:
 	virtual void addRef();
 	virtual void release();
-	int toInteger() const;
 
 	unsigned m_flags;
 };
@@ -45,7 +50,7 @@ void rva8CD3F0RouteDispatch(Rva8CD3F0State *state, Rva8CD3F0Context *context)
 	Rva8CD3F0Value *candidate = owner->m_stack[count - 3];
 	Rva8CD3F0Value *resolved;
 	rva8CD3F0ResolveValue(context->m_first, context->m_second, candidate, &resolved);
-	int routeIndex = under->toInteger();
+	int routeIndex = ((AptValue *)under)->toInteger();
 	if (resolved != 0)
 	{
 		int keyIndex = g_rva8CD3F0RouteIndices[routeIndex];
