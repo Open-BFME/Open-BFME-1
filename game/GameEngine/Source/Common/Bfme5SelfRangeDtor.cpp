@@ -14,7 +14,8 @@
 void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
 
-extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
+	void *destination, const void *source, unsigned int bytes);
 
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
@@ -31,7 +32,7 @@ inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 
 	int bytes = (const char *)last - (const char *)first;
 
-	return (int *)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+	return (int *)((char *)BfmeMemMove(destination, first, bytes) + bytes);
 }
 
 class Gen_001DB2C0
