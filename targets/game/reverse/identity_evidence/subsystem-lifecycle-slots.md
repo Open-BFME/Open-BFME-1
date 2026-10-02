@@ -268,3 +268,34 @@ with no arguments; the full manglings are
 emit its inline bodies through qualified-call anchors. Remove only the
 three orphan placeholder TUs after replacing their rows. No header or pin
 changes are needed, and unchanged one-byte extents are verified separately.
+
+
+## GameStateMap lifecycle overrides
+
+GameEngine::init allocates `0x0C` bytes at `0007A2A5` and calls ILT `00035049`
+-> constructor `001129B0` at `0007A2BC`. Registration pushes literal VA
+`0107611C` (TheGameStateMap) at `0007A2D0` and typed global VA `012EF194`
+at `0007A2DE`, then calls ILT `0000A5A1` -> `000758A0` at `0007A2E3`.
+ZH's global declaration and GameEngine registration both name GameStateMap.
+The constructor calls SubsystemInterface at `001129B3`, stores primary VA
+`01089644` at `001129BF`, and seats a separate Snapshot table at +8.
+The primary subsystem methods below therefore receive the complete object;
+no secondary-interface adjustment is implied.
+
+| Slot | Pointer RVA | ILT RVA | Body RVA | Explicit ZH method |
+|---|---|---|---|---|
+| 1 | `00C89648` | `00033E0B` | `001129E0` | init |
+| 4 | `00C89654` | `00020919` | `001129F0` | reset |
+| 5 | `00C89658` | `00043B7B` | `00112A00` | update |
+
+Each stub VA has exactly one occurrence in a bytewise whole-image pointer
+scan, at its listed entry, and each body is one RET immediately followed by
+INT3. This concrete primary table shares the common subsystem slots and the
+lifecycle alignment independently established above. ZH Common/GameStateMap.h
+lines 54-56 explicitly supplies public virtual non-const void/no-argument
+empty init/reset/update twins. Full manglings are
+`?init@GameStateMap@@UAEXXZ`, `?reset@GameStateMap@@UAEXXZ`, and
+`?update@GameStateMap@@UAEXXZ`. Compile those unchanged header bodies via
+qualified-call emission anchors, replace the three address placeholders at
+unchanged one-byte extents, and remove only their two orphan TUs. Snapshot
+methods and shared headers are outside this correction and stay unchanged.
