@@ -114,22 +114,7 @@ void WOLStatusMenuInit( WindowLayout *layout, void *userData )
 	//WOL::raiseWOLMessageBox();
 } // WOLStatusMenuInit
 
-//-------------------------------------------------------------------------------------------------
-/** WOL Status Menu shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLStatusMenuShutdown( WindowLayout *layout, void *userData )
-{
 
-	// hide menu
-	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
-
-	// our shutdown is complete
-	TheShell->shutdownComplete( layout );
-
-	//progressLayout = NULL;
-
-	//WOL::raiseWOLMessageBox();
-}  // WOLStatusMenuShutdown
 
 
 //-------------------------------------------------------------------------------------------------

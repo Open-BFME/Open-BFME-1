@@ -113,7 +113,7 @@ public:
 	bool Load_W3D(ChunkLoadClass &cload);
 
 protected:
-	void Free(void)
+	void freeForLoad(void)
 	{
 		if (Model) {
 			Model->Release_Ref();
@@ -131,7 +131,7 @@ typedef char VerifyMeshClassSize[(sizeof(MeshClass) == 0x318) ? 1 : -1];
 // ?Load_W3D@MeshClass@@QAE_NAAVChunkLoadClass@@@Z
 bool MeshClass::Load_W3D(ChunkLoadClass &cload)
 {
-	Free();
+	freeForLoad();
 
 	Model = NEW_REF(MeshModelClass,());
 	if (Model == NULL) {
@@ -140,7 +140,7 @@ bool MeshClass::Load_W3D(ChunkLoadClass &cload)
 	}
 
 	if (!Model->Load_W3D(cload)) {
-		Free();
+		freeForLoad();
 		return false;
 	}
 
