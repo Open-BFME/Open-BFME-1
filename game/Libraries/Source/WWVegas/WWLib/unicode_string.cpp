@@ -25,10 +25,8 @@ UnicodeString::UnicodeString(const wchar_t *str, int len)
     ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(str, len);
 }
 
-UnicodeString::UnicodeString(const UnicodeString &that)
-{
-    ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(*(const StringBase<wchar_t> *)&that);
-}
+// The exported copy constructor is emitted inline by
+// GameEngine/Source/Common/System/UnicodeStringConstruct.cpp.
 
 UnicodeString::UnicodeString(const UnicodeString &that, int start, int len)
 {

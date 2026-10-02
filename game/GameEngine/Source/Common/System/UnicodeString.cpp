@@ -74,16 +74,9 @@ void UnicodeString::validate() const
 }
 #endif
 
-// -----------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
-// ??0UnicodeString@@ present-unmatched
-UnicodeString::UnicodeString(const UnicodeString& stringSrc) : m_data(stringSrc.m_data)
-{
-	ScopedCriticalSection scopedCriticalSection(TheUnicodeStringCriticalSection);
-	if (m_data)
-		++m_data->m_refCount;
-	validate();
-}
+// The retail copy constructor is emitted by System/UnicodeStringConstruct.cpp.
+// Its 19-byte exported body calls StringBase<unsigned short> copy directly;
+// the Zero Hour critical-section implementation is not a BFME definition.
 
 // -----------------------------------------------------
 // ?ensureUniqueBufferOfSize@UnicodeString@@ present-unmatched
@@ -154,7 +147,7 @@ void UnicodeString::releaseBuffer()
 
 // -----------------------------------------------------
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
-// ??0UnicodeString@@ present-unmatched
+// ??0UnicodeString@@QAE@PBG@Z present-unmatched
 UnicodeString::UnicodeString(const WideChar* s) : m_data(0)
 {
 	int len = wcslen(s);
