@@ -45,7 +45,10 @@ private:
 class HordeUpdateInterface
 {
 public:
-    virtual void slot();
+    virtual bool isInHorde() const = 0;
+    virtual bool hasFlag() const = 0;
+    virtual bool isTrueHordeMember() const = 0;
+    virtual bool isAllowedNationalism() const = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HordeUpdate.h
@@ -53,6 +56,10 @@ class HordeUpdate : public UpdateModule, public HordeUpdateInterface
 {
 public:
     HordeUpdate(Thing *, const ModuleData *);
+    virtual bool isInHorde() const;
+    virtual bool isTrueHordeMember() const;
+    virtual bool isAllowedNationalism() const;
+    virtual bool hasFlag() const;
 
 private:
     unsigned int m_lastHordeRefreshFrame;

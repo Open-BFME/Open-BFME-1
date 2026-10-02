@@ -52,7 +52,7 @@ private:
 class OneRingPenaltyUpdateIface
 {
 public:
-    virtual void slot();
+    virtual void slot() = 0;
 };
 
 class OneRingPenaltyUpdate : public UpdateModule, public OneRingPenaltyUpdateIface

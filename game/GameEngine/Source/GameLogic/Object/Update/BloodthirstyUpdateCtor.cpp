@@ -53,7 +53,7 @@ private:
 class BloodthirstyUpdateIface
 {
 public:
-    virtual void slot();
+    virtual void slot() = 0;
 };
 
 class BloodthirstyUpdate : public UpdateModule,

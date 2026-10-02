@@ -44,7 +44,7 @@ private:
 class StickyBombUpdateInterface
 {
 public:
-    virtual void slot();
+    virtual void slot() = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StickyBombUpdate.h

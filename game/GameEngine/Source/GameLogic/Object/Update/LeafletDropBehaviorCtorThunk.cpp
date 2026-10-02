@@ -55,7 +55,7 @@ private:
 class DieModuleInterface
 {
 public:
-    virtual void onDie(const DamageInfo *);
+    virtual void onDie(const DamageInfo *) = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/EMPUpdate.h
@@ -63,6 +63,7 @@ class LeafletDropBehavior : public UpdateModule, public DieModuleInterface
 {
 public:
     LeafletDropBehavior(Thing *, const ModuleData *);
+    virtual void onDie(const DamageInfo *);
 
 private:
     unsigned int m_startFrame;
