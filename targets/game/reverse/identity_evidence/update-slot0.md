@@ -216,3 +216,47 @@ and `_bfme_debugRecordCallsite(int)` at `008896A0`. These are already matched;
 no helper pin is added. Move only this method from BfmeConv1362.cpp into the
 owner's Behavior TU; other functions still need that Common file and its
 local diagnostic declarations.
+
+## ClickReactionBehavior::update (001F79F0, 96 bytes)
+
+Registered literal `ClickReactionBehavior` at `00C90CC0` and registration
+`0012C722` select instance factory `00114CF0`. Its call at `00114D2B` uses
+ILT `00025D01` -> constructor `001F7860`. The constructor replaces the base
+update table with VA `010A32F8` at +0x10 (store `001F78CA`), alongside its
+behavior table at +0x0C and additional subobject at +0x20.
+
+Update table slot zero is ILT `00005E66` -> body `001F79F0`. That stub VA
+occurs exactly once, at table RVA `00CA32F8`; slot one is the same common
+`0004985F` -> `0011A130` disabled-mask accessor. Thus the direct BFME label
+and both WorldBuilder alignments above apply without shifting either slot.
+The body belongs to this concrete override rather than an inherited method.
+
+There are no direct callees. Retail calls three existing virtual interfaces,
+reads two counters at receiver +14/+18, and returns 1 or 3fffffff. The final
+RET at `001F7A4F` ends the 96-byte body; INT3 starts at `001F7A50`. The first
+RET at `001F7A48` is an early exit. No stack arguments are consumed.
+The proven family signature is public virtual non-const
+`UpdateSleepTime update()`, `?update@ClickReactionBehavior@@UAE?AW4UpdateSleepTime@@XZ`.
+
+The replacement preserves the existing reconstruction and virtual-slot views,
+giving unproven view types address-kept names. Existing opaque field and slot
+spellings are retained; no identities for those slots or fields are claimed.
+Only this update and its local views leave BfmeTwoHundredTwentyEight.cpp;
+the unrelated matched add function remains in that Common source.
+
+### ClickReaction view-name correction records
+
+The removed `BfmeThingLJ` was an update-subobject layout view, not the actual
+owner: the registered constructor and unique table prove that owner is
+ClickReactionBehavior. The checker pairs that removed layout with the new
+`Rva001F79F0State` view instead of with the new class declaring the recovered
+method. The correction record disambiguates this pairing.
+
+The other three old `Bfme...LJ` types were local indirect-call views, containing
+unnamed spare virtual slots. Their only uses in this body are the object
+pointer at receiver-8, that object's +204 pointer, and the module subobject
+at receiver+10. No type identity was established for these invented spellings.
+The new address-kept Host/Maker/Sub views preserve exactly those same fields
+and virtual slots, without promoting the structural role to an EA identity.
+The snapshot-specific correction entries cover these view renames only;
+they do not exempt any future layout or identity change.

@@ -14488,5 +14488,45 @@
   "after_sha256": "fa989150c71ca662bd4e183840928cffe104dbba0265e43f4e7b703affba93b7",
   "evidence": "targets/game/reverse/identity_evidence/0x0077C000-vector.md",
   "reason": "False cross-file pairing: the removed naked C emission anchor is replaced by native vector<ModelConditionInfo>::_M_insert_overflow with its full template identity. The address-named clear adapter already existed in the destination before this change and is unrelated."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeTwoHundredTwentyEight.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorUpdate.cpp",
+  "old_name": "BfmeMakerLJ",
+  "new_name": "Rva001F79F0Maker",
+  "before_sha256": "2b058ed33b50c3e3d1aa0e3c483733d8e2118e557b3e62b472e2ae0c445cded9",
+  "after_sha256": "ebfbe82e92dcb07078044e4777b1acc138cb6f29e0167de67d232d42f200c5bb",
+  "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
+  "reason": "Snapshot-specific local-view correction: retail registered ctor and unique slot identify ClickReactionBehavior::update; preserve the old indirect ABI and fields as address-kept layout views rather than presenting generated Bfme names as EA identities. The owner/state pairing is disambiguated in the evidence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeTwoHundredTwentyEight.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorUpdate.cpp",
+  "old_name": "BfmeHostLJ",
+  "new_name": "Rva001F79F0Host",
+  "before_sha256": "2b058ed33b50c3e3d1aa0e3c483733d8e2118e557b3e62b472e2ae0c445cded9",
+  "after_sha256": "ebfbe82e92dcb07078044e4777b1acc138cb6f29e0167de67d232d42f200c5bb",
+  "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
+  "reason": "Snapshot-specific local-view correction: retail registered ctor and unique slot identify ClickReactionBehavior::update; preserve the old indirect ABI and fields as address-kept layout views rather than presenting generated Bfme names as EA identities. The owner/state pairing is disambiguated in the evidence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeTwoHundredTwentyEight.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorUpdate.cpp",
+  "old_name": "BfmeSubLJ",
+  "new_name": "Rva001F79F0Sub",
+  "before_sha256": "2b058ed33b50c3e3d1aa0e3c483733d8e2118e557b3e62b472e2ae0c445cded9",
+  "after_sha256": "ebfbe82e92dcb07078044e4777b1acc138cb6f29e0167de67d232d42f200c5bb",
+  "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
+  "reason": "Snapshot-specific local-view correction: retail registered ctor and unique slot identify ClickReactionBehavior::update; preserve the old indirect ABI and fields as address-kept layout views rather than presenting generated Bfme names as EA identities. The owner/state pairing is disambiguated in the evidence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeTwoHundredTwentyEight.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorUpdate.cpp",
+  "old_name": "BfmeThingLJ",
+  "new_name": "Rva001F79F0State",
+  "before_sha256": "2b058ed33b50c3e3d1aa0e3c483733d8e2118e557b3e62b472e2ae0c445cded9",
+  "after_sha256": "ebfbe82e92dcb07078044e4777b1acc138cb6f29e0167de67d232d42f200c5bb",
+  "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
+  "reason": "Snapshot-specific local-view correction: retail registered ctor and unique slot identify ClickReactionBehavior::update; preserve the old indirect ABI and fields as address-kept layout views rather than presenting generated Bfme names as EA identities. The owner/state pairing is disambiguated in the evidence."
  }
 ]
