@@ -456,12 +456,6 @@ SortingIndexBufferClass::SortingIndexBufferClass(unsigned short index_count_)
 
 // ----------------------------------------------------------------------------
 
-// ??1SortingIndexBufferClass@@UAE@XZ present-unmatched
-SortingIndexBufferClass::~SortingIndexBufferClass()
-{
-	delete[] index_buffer;
-}
-
 // ----------------------------------------------------------------------------
 //
 //

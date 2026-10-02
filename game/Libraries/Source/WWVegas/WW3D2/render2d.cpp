@@ -218,23 +218,6 @@ void Render2DClass::Enable_Texturing(bool b)
 
 // Retail Render2DClass::Set_Coordinate_Range is implemented in Render2DSetCoordinateRangeThunk.cpp.
 
-// ?Update_Bias@Render2DClass@@IAEXXZ present-unmatched
-void	  Render2DClass::Update_Bias( void )
-{
-
-	BiasedCoordinateOffset = CoordinateOffset;
-
-	if ( WW3D::Is_Screen_UV_Biased() ) {	// Global bais setting
-		Vector2 bais_add( -0.5f ,-0.5f );	// offset by -0.5,-0.5 in pixels
-
-		// Convert from pixels to (-1,1)-(1,-1) units
-		bais_add.X = bais_add.X / (Get_Screen_Resolution().Width() * 0.5f);
-		bais_add.Y = bais_add.Y / (Get_Screen_Resolution().Height() * -0.5f);
-
-		BiasedCoordinateOffset += bais_add;
-	}
-}
-
 #if 0
 // ?Convert_Vert@Render2DClass@@ present-unmatched
 Vector2 Render2DClass::Convert_Vert( const Vector2 & v ) 

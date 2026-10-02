@@ -278,6 +278,13 @@ struct Rva0094CCF0Value
 
 typedef _STL::pair<const unsigned int, Rva0094CCF0Value> Rva0094CCF0Pair;
 
+namespace _STL
+{
+template <>
+void _Construct(pair<const unsigned int, ::Rva0094CCF0Value> *destination,
+	const pair<const unsigned int, ::Rva0094CCF0Value> &source);
+}
+
 typedef _STL::_Rb_tree<unsigned int,
 	Rva0094CCF0Pair,
 	_STL::_Select1st<Rva0094CCF0Pair>,
