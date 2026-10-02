@@ -1,8 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // UpgradeMux slot 7 bodies that are trivial: slot 8 with false (the inverse
-// of attemptUpgrade's final setUpgradeExecuted(true)) or empty. Slot 7 is a
-// BFME-only virtual; its name is unproven, so each override keeps its address
-// on its proven owner. Owner, table and ILT stub for every body:
+// of attemptUpgrade's final setUpgradeExecuted(true)) or empty. Slot 7 is
+// EA's removeUpgrade (BFME2/RotWK WorldBuilder labels, matching slot); each override sits on its proven owner.
+// Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
+// Owner, table and ILT stub for every body:
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
 typedef bool Bool;
@@ -21,10 +22,10 @@ protected:
 class FireWeaponWhenDamagedBehavior : public UpgradeMux
 {
 protected:
-	virtual void rva001FB260();
+	virtual void removeUpgrade();
 };
 
-void FireWeaponWhenDamagedBehavior::rva001FB260()
+void FireWeaponWhenDamagedBehavior::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -33,10 +34,10 @@ void FireWeaponWhenDamagedBehavior::rva001FB260()
 class FireWeaponWhenDeadBehavior : public UpgradeMux
 {
 protected:
-	virtual void rva001FBB80();
+	virtual void removeUpgrade();
 };
 
-void FireWeaponWhenDeadBehavior::rva001FBB80()
+void FireWeaponWhenDeadBehavior::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -45,10 +46,10 @@ void FireWeaponWhenDeadBehavior::rva001FBB80()
 class ReplenishUnitsBehavior : public UpgradeMux
 {
 protected:
-	virtual void rva002043E0();
+	virtual void removeUpgrade();
 };
 
-void ReplenishUnitsBehavior::rva002043E0()
+void ReplenishUnitsBehavior::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -57,10 +58,10 @@ void ReplenishUnitsBehavior::rva002043E0()
 class SpawnBehavior : public UpgradeMux
 {
 protected:
-	virtual void rva0020A810();
+	virtual void removeUpgrade();
 };
 
-void SpawnBehavior::rva0020A810()
+void SpawnBehavior::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -69,10 +70,10 @@ void SpawnBehavior::rva0020A810()
 class DetachableRiderBody : public UpgradeMux
 {
 protected:
-	virtual void rva00212D20();
+	virtual void removeUpgrade();
 };
 
-void DetachableRiderBody::rva00212D20()
+void DetachableRiderBody::removeUpgrade()
 {
 }
 
@@ -80,10 +81,10 @@ void DetachableRiderBody::rva00212D20()
 class AttributeModifierAuraUpdate : public UpgradeMux
 {
 protected:
-	virtual void rva0027FFA0();
+	virtual void removeUpgrade();
 };
 
-void AttributeModifierAuraUpdate::rva0027FFA0()
+void AttributeModifierAuraUpdate::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -92,10 +93,10 @@ void AttributeModifierAuraUpdate::rva0027FFA0()
 class BroadcastStealthUpdate : public UpgradeMux
 {
 protected:
-	virtual void rva002899F0();
+	virtual void removeUpgrade();
 };
 
-void BroadcastStealthUpdate::rva002899F0()
+void BroadcastStealthUpdate::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -104,10 +105,10 @@ void BroadcastStealthUpdate::rva002899F0()
 class CastleUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002D3DD0();
+	virtual void removeUpgrade();
 };
 
-void CastleUpgrade::rva002D3DD0()
+void CastleUpgrade::removeUpgrade()
 {
 }
 
@@ -115,10 +116,10 @@ void CastleUpgrade::rva002D3DD0()
 class DelayedUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002D4CF0();
+	virtual void removeUpgrade();
 };
 
-void DelayedUpgrade::rva002D4CF0()
+void DelayedUpgrade::removeUpgrade()
 {
 }
 
@@ -126,10 +127,10 @@ void DelayedUpgrade::rva002D4CF0()
 class LevelUpUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002D5F70();
+	virtual void removeUpgrade();
 };
 
-void LevelUpUpgrade::rva002D5F70()
+void LevelUpUpgrade::removeUpgrade()
 {
 }
 
@@ -137,10 +138,10 @@ void LevelUpUpgrade::rva002D5F70()
 class RadarUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002D7A50();
+	virtual void removeUpgrade();
 };
 
-void RadarUpgrade::rva002D7A50()
+void RadarUpgrade::removeUpgrade()
 {
 	setUpgradeExecuted(false);
 }
@@ -149,10 +150,10 @@ void RadarUpgrade::rva002D7A50()
 class SubObjectsUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002D8220();
+	virtual void removeUpgrade();
 };
 
-void SubObjectsUpgrade::rva002D8220()
+void SubObjectsUpgrade::removeUpgrade()
 {
 }
 
@@ -160,9 +161,9 @@ void SubObjectsUpgrade::rva002D8220()
 class WeaponBonusUpgrade : public UpgradeMux
 {
 protected:
-	virtual void rva002DA300();
+	virtual void removeUpgrade();
 };
 
-void WeaponBonusUpgrade::rva002DA300()
+void WeaponBonusUpgrade::removeUpgrade()
 {
 }
