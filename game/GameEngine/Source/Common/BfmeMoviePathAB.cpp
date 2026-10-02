@@ -5,11 +5,18 @@
 // its string by value, so the stack slot it fills is the local destroyed at
 // the end.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+//
+// The format call used to be spelled through a TU-local stand-in
+// (StringBaseNarrowAB::format), which named retail's callee
+// ?format@StringBaseNarrowAB@@QAAXVAsciiStringAB@@ZZ -- a name retail has no
+// body for.  AsciiString::format (0x00888FF0, matched in
+// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
+// one, so it comes from ascii_string.h and is named through the real class.
+
 class StringBaseNarrowAB
 {
-public:
-	void __cdecl format(class AsciiStringAB text, ...);
-
 protected:
 	StringBaseNarrowAB(void)
 	{
@@ -62,5 +69,5 @@ public:
 void BfmeHookAB::bfmeMakeNameAB(AsciiStringAB &out)
 {
 	if (m_bfmeFuncAB != 0)
-		out.format(AsciiStringAB("Data/%s/Movies/"), m_bfmeFuncAB().bfmeTextAB());
+		((AsciiString &)out).format(AsciiString("Data/%s/Movies/"), m_bfmeFuncAB().bfmeTextAB());
 }
