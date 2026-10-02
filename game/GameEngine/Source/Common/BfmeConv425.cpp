@@ -10,7 +10,10 @@ struct BfmeTwoATC
 	bool m_bfmeFlag;
 };
 
-extern BfmeOneATC *g_bfmeOneATC;
+// Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
+// BfmeOneATC above is this TU's view of the pointee, so the member call casts.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeTwoATC *g_bfmeTwoATC;
 
 class BfmeThingATC
@@ -26,7 +29,7 @@ void BfmeThingATC::bfmeGoATC()
 	if (m_bfmeState == 2)
 	{
 		m_bfmeState = 0;
-		g_bfmeOneATC->bfmeStopATC(0);
+		((BfmeOneATC *)g_rva012F19E8WindowManager)->bfmeStopATC(0);
 		g_bfmeTwoATC->m_bfmeFlag = true;
 		return;
 	}
