@@ -4,15 +4,13 @@
 // 45 bytes. It releases the current key references, copies the three-dword
 // map storage, then retains every selected key in the copy.
 
+extern void j_000163ba();
+
 class LGA_MemberObj;
 
 void bfmeClearMembers(LGA_MemberObj *map);
 
-class Rva0039C830Mid
-{
-public:
-	Rva0039C830Mid &operator=(const Rva0039C830Mid &other);
-};
+class Rva0039C830Mid {};
 
 class LargeGroupAudioKeyMap
 {
@@ -29,7 +27,12 @@ LargeGroupAudioKeyMap &LargeGroupAudioKeyMap::operator=(
 	if (&other != this)
 	{
 		bfmeClearMembers((LGA_MemberObj *)this);
-		*(Rva0039C830Mid *)this = *(const Rva0039C830Mid *)&other;
+		typedef Rva0039C830Mid &(Rva0039C830Mid::*Assign)(
+			const Rva0039C830Mid &);
+		union { void (__cdecl *raw)(); Assign member; } call;
+		call.raw = j_000163ba;
+		(((Rva0039C830Mid *)this)->*call.member)(
+			*(const Rva0039C830Mid *)&other);
 		bfmeRetainMembers(this);
 	}
 
