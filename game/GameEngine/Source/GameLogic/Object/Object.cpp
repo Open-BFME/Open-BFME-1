@@ -6177,7 +6177,8 @@ public:
 #undef BFME_DEFECT_AUDIO_SLOT
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// TheAudio (GameAudio.h, retail 0x012ED668) is the canonical spelling the
+// linked build needs; Rva005A00B0AudioClient above is this TU's view of it.
 
 // The __fastcall pointer puts the event in EDX and on the stack. The retail slot receives the event from the stack.
 typedef UnsignedInt (__fastcall *Rva005A00B0AddAudioEventCall)(
@@ -6245,7 +6246,7 @@ void Object::defect(Team *newTeam, UnsignedInt detectionTime)
 	{
 		reinterpret_cast<Rva0004067ECall *>(drawable)->invoke(0);
 
-		Rva005A00B0MiscAudio *misc = TheAudioClientUpdate->getMiscAudio();
+		Rva005A00B0MiscAudio *misc = ((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio();
 		BfmeAudioEventRTS defectorTimerSound(misc->m_defectorTimerTickSound);
 		defectorTimerSound.setObjectID(self->m_id);
 		if (newTeam->getControllingPlayer())
@@ -6257,9 +6258,9 @@ void Object::defect(Team *newTeam, UnsignedInt detectionTime)
 
 		Rva005A00B0AudioClientVtable *audioVtable =
 			reinterpret_cast<Rva005A00B0AudioClientVtable *>(
-				*reinterpret_cast<void **>(TheAudioClientUpdate));
-		audioVtable->addAudioEvent(TheAudioClientUpdate, &defectorTimerSound,
-			&defectorTimerSound);
+				*reinterpret_cast<void **>((Rva005A00B0AudioClient *)TheAudio));
+		audioVtable->addAudioEvent((Rva005A00B0AudioClient *)TheAudio,
+			&defectorTimerSound, &defectorTimerSound);
 
 		_STL::list<Drawable *> drawables;
 		drawables.push_back(drawable);

@@ -84,8 +84,10 @@ public:
 	virtual void getInfoForAudioEvent( const AudioEventRTS *eventToFindAndFill ) const;	// +0xAC
 };
 
-struct Rva005A00B0AudioClient;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;	// TheAudio, 0x012ED668
+// The linked build has one mangled name for the global at 0x012ED668, so this
+// TU spells the singleton the canonical way and reads it as the AudioManager
+// view spelled just above.
+extern AudioManager *TheAudio;
 
 class INIParseDynamicAudioEventRTSShim
 {
@@ -123,12 +125,12 @@ void INIParseDynamicAudioEventRTSShim::parse( INI *ini, void * /*instance*/, voi
 	(*theSound)->m_event.setEventName(AsciiString(token));
 
 	if (*theSound)
-		((AudioManager *)TheAudioClientUpdate)->getInfoForAudioEvent(&(*theSound)->m_event);
+		TheAudio->getInfoForAudioEvent(&(*theSound)->m_event);
 
 	if (*theSound &&
 			!(*theSound)->m_event.getEventName().isEmpty() &&
 			isNamedOtherThanNoSound((*theSound)->m_event) &&
-			!((AudioManager *)TheAudioClientUpdate)->isValidAudioEvent(&(*theSound)->m_event))
+			!TheAudio->isValidAudioEvent(&(*theSound)->m_event))
 	{
 		throw INIException(3, "Invalid Sound '%s'", (*theSound)->m_event.getEventName().str());
 	}

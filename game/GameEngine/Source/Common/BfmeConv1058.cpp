@@ -31,7 +31,12 @@ public:
 	virtual void bfmeKill1058(int v);
 };
 
-extern BfmeB1058 *g_bfmeB1058;
+// Retail's 1058 conversion stub pointer is the same global as the audio
+// manager singleton (0x012ED668), so the linked build needs the one canonical
+// spelling here: `AudioManager *TheAudio`, defined in GameAudio.cpp.
+class AudioManager;
+extern AudioManager *TheAudio;
+
 extern char g_bfmeLit1058[];
 
 class BfmeA1058
@@ -56,7 +61,7 @@ void BfmeA1058::bfmeGo1058A(void)
 	int v = m_bfme10;
 
 	m_bfme0c = z;
-	g_bfmeB1058->bfmeKill1058(v);
+	((BfmeB1058 *)TheAudio)->bfmeKill1058(v);
 	m_bfme10 = 1;
 	m_bfme14 = z;
 	m_bfmeStr.bfmeSet1058(g_bfmeLit1058, 0);

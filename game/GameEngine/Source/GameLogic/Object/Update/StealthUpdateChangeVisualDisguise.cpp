@@ -270,7 +270,11 @@ public:
 	virtual void addAudioEvent(AudioEventRTS *event);
 };
 
-extern AudioClient *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp. AudioClient is
+// this TU's view of it.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class BFMERetailAsciiString : public AsciiString
 {
@@ -401,7 +405,7 @@ void StealthUpdate::changeVisualDisguise()
 			AudioEventRTS sound = *draw->getPerUnitSound(
 				BFMERetailAsciiString("DisguiseStarted"));
 			sound.setObjectID(self->getID());
-			TheAudioClientUpdate->addAudioEvent(&sound);
+			((AudioClient *)TheAudio)->addAudioEvent(&sound);
 		}
 
 		FXList *fx = data->m_disguiseFX;
@@ -450,7 +454,7 @@ void StealthUpdate::changeVisualDisguise()
 				sound = *draw->getPerUnitSound(eventName);
 			}
 			sound.setObjectID(self->getID());
-			TheAudioClientUpdate->addAudioEvent(&sound);
+			((AudioClient *)TheAudio)->addAudioEvent(&sound);
 		}
 		FXList *fx = data->m_disguiseRevealFX;
 		if (fx && !fx->isEmpty())

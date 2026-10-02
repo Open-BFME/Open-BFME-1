@@ -128,9 +128,18 @@ extern GameWindowManager *TheWindowManager;
 class WindowManager;
 extern WindowManager *g_theWindowManager;
 extern Display *TheDisplay;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp.
+// Rva005A00B0AudioClient is this TU's view of it.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern GlobalData *TheWritableGlobalData;
 extern void *g_Va012F4AE4;
+
+static inline Rva005A00B0AudioClient *theAudioClient()
+{
+	return (Rva005A00B0AudioClient *)TheAudio;
+}
 
 static inline const Rva006C9270GlobalData *aptGlobalData()
 {
@@ -177,7 +186,7 @@ void BfmeAptScreenOptions::_bfme_cancel( const char * )
 {
 	if( g_Va012F4AE4 != 0 )
 	{
-		TheAudioClientUpdate->stopAudioEvent( g_Va012F4AE4 );
+		theAudioClient()->stopAudioEvent( g_Va012F4AE4 );
 		g_Va012F4AE4 = 0;
 	}
 
@@ -250,23 +259,23 @@ void BfmeAptScreenOptions::_bfme_cancel( const char * )
 
 	{
 		int volume = (int)m_options.getMusicVolume();
-		TheAudioClientUpdate->setMusicVolume( volume * 0.01f );
+		theAudioClient()->setMusicVolume( volume * 0.01f );
 	}
 	{
 		int volume = (int)m_options.getSoundVolume();
-		TheAudioClientUpdate->setSoundVolume( volume * 0.01f );
+		theAudioClient()->setSoundVolume( volume * 0.01f );
 	}
 	{
 		int volume = (int)m_options.getSpeechVolume();
-		TheAudioClientUpdate->setSpeechVolume( volume * 0.01f );
+		theAudioClient()->setSpeechVolume( volume * 0.01f );
 	}
 	{
 		int volume = (int)m_options.getAmbientVolume();
-		TheAudioClientUpdate->setAmbientVolume( volume * 0.01f );
+		theAudioClient()->setAmbientVolume( volume * 0.01f );
 	}
 	{
 		int volume = (int)m_options.getMovieVolume();
-		TheAudioClientUpdate->setMovieVolume( volume * 0.01f );
+		theAudioClient()->setMovieVolume( volume * 0.01f );
 	}
 
 	if( g_quitMenuLayout != 0 )

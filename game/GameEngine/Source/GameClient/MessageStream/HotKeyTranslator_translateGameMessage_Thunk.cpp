@@ -223,7 +223,11 @@ struct Rva005A00B0AudioClient
     virtual void *getMiscAudio();
 #undef AUDIO_SLOT
 };
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp.
+// Rva005A00B0AudioClient is this TU's view of it.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class AudioEventRTS
 {
@@ -323,11 +327,11 @@ Bool BfmeTransitionMD::dispatch(AsciiString *key, Bool shiftOnly)
 playDisabledAudio:
     {
         AudioEventRTS sound(AsciiString("GUIClickDisabled"), 0);
-        if (TheAudioClientUpdate)
+        if (((Rva005A00B0AudioClient *)TheAudio))
         {
-            if (TheAudioClientUpdate->getMiscAudio())
-                TheAudioClientUpdate->addAudioEvent(
-                    (char *)TheAudioClientUpdate->getMiscAudio() + 0xd20);
+            if (((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio())
+                ((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(
+                    (char *)((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio() + 0xd20);
         }
     }
     return false;
@@ -347,11 +351,11 @@ sendWindowMessage:
         window->winGetWindowId());
     if (!handled && shift)
         playEnabledFeedback = false;
-    if (TheAudioClientUpdate)
+    if (((Rva005A00B0AudioClient *)TheAudio))
     {
-        if (TheAudioClientUpdate->getMiscAudio() && playEnabledFeedback)
-            TheAudioClientUpdate->addAudioEvent(
-                (char *)TheAudioClientUpdate->getMiscAudio() + 0xcb0);
+        if (((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio() && playEnabledFeedback)
+            ((Rva005A00B0AudioClient *)TheAudio)->addAudioEvent(
+                (char *)((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio() + 0xcb0);
     }
     return true;
 }

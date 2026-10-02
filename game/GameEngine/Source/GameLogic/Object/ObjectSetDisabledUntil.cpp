@@ -125,7 +125,16 @@ private:
 	Contain *m_contain;
 };
 
-extern AudioClient *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp. AudioClient is
+// this TU's view of it.
+class AudioManager;
+extern AudioManager *TheAudio;
+
+static inline AudioClient *theAudioClient()
+{
+	return (AudioClient *)TheAudio;
+}
 
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
@@ -147,9 +156,9 @@ void ObjectSetDisabledUntilShim::setDisabledUntil(DisabledType type, UnsignedInt
 	AudioEventRTS sound(TheEmptyString, 0);
 	if (disabledType == 5 && !((Thing *)self)->isKindOf((KindOfType)0x48))
 	{
-		sound = *(AudioEventRTS *)((char *)TheAudioClientUpdate->getMiscAudio() + 0x7E0);
+		sound = *(AudioEventRTS *)((char *)theAudioClient()->getMiscAudio() + 0x7E0);
 		sound.setPosition(self->getPosition());
-		TheAudioClientUpdate->addAudioEvent(&sound);
+		theAudioClient()->addAudioEvent(&sound);
 	}
 	else if (disabledType == 6 || disabledType == 2)
 	{
@@ -158,15 +167,15 @@ void ObjectSetDisabledUntilShim::setDisabledUntil(DisabledType type, UnsignedInt
 		{
 			if (((Thing *)self)->isKindOf((KindOfType)7))
 			{
-				sound = *(AudioEventRTS *)((char *)TheAudioClientUpdate->getMiscAudio() + 0x620);
+				sound = *(AudioEventRTS *)((char *)theAudioClient()->getMiscAudio() + 0x620);
 				sound.setPosition(self->getPosition());
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				theAudioClient()->addAudioEvent(&sound);
 			}
 			else if (((Thing *)self)->isKindOf((KindOfType)9))
 			{
-				sound = *(AudioEventRTS *)((char *)TheAudioClientUpdate->getMiscAudio() + 0x700);
+				sound = *(AudioEventRTS *)((char *)theAudioClient()->getMiscAudio() + 0x700);
 				sound.setPosition(self->getPosition());
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				theAudioClient()->addAudioEvent(&sound);
 			}
 		}
 	}

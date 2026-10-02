@@ -118,7 +118,11 @@ public:
 	virtual void slot6c( int a, int b, int c );
 };
 
-extern Rva0051D690Audio *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp.
+// Rva0051D690Audio is this TU's view of it.
+class AudioManager;
+extern AudioManager *TheAudio;
 
 class WindowManager
 {
@@ -283,6 +287,6 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 			g_theWindowManager->bfme_hideBackground( showBackground );
 
 		if( !g_obj12F4B58 || !g_obj12F4B58->check() )
-			TheAudioClientUpdate->slot6c( 2, 1, 0 );
+			((Rva0051D690Audio *)TheAudio)->slot6c( 2, 1, 0 );
 	}
 }

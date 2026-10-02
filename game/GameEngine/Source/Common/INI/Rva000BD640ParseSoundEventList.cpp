@@ -96,7 +96,16 @@ public:
 	virtual AudioEventInfoRef findSound( const AsciiString &name );
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// The linked build has one mangled name for the global at 0x012ED668: the
+// canonical `AudioManager *TheAudio`, defined in GameAudio.cpp. The local view
+// above is what this body calls through.
+class AudioManager;
+extern AudioManager *TheAudio;
+
+static inline Rva005A00B0AudioClient *theAudioClient()
+{
+	return (Rva005A00B0AudioClient *)TheAudio;
+}
 
 // 0x70-byte view: the thin extra ctor (ILT 0x0001EC13), copy ctor and destructor are all it needs.
 class AudioEventRTS
@@ -141,7 +150,7 @@ void INI::rva000BD640( INI *ini, void *, void *store, const void * )
 		}
 		else
 		{
-			info = TheAudioClientUpdate->findSound( AsciiString( token ) );
+			info = theAudioClient()->findSound( AsciiString( token ) );
 			if( info.m_ptr == 0 )
 				throw INIException( 3, "Invalid Sound '%s'", token );
 		}
