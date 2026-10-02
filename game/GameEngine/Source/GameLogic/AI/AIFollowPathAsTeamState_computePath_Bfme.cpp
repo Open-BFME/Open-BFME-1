@@ -80,15 +80,6 @@ protected:
 	Bool getAdjustsDestination() const;
 };
 
-Bool AIInternalMoveToState::computePath()
-{
-	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
-	ai->requestPath(&m_goalPosition, getAdjustsDestination());
-	m_waitingForPath = ai->m_waitingForPath;
-	ai->friend_startingMove();
-	return true;
-}
-
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a(void);

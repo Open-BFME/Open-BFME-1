@@ -10,4 +10,5 @@ struct ICoord2D
 	Int x, y;
 };
 
-template class _STL::vector<ICoord2D>;
+template _STL::vector<ICoord2D> &_STL::vector<ICoord2D>::operator=(
+	const _STL::vector<ICoord2D> &);

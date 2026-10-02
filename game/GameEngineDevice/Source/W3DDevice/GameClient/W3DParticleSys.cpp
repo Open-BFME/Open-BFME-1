@@ -97,16 +97,6 @@ W3DParticleSystemManager::~W3DParticleSystemManager()
 }
 
 /**
- * Hack because DoParticles is called from Flush(), which is called
- * multiple times per frame.  We only want to render once.
- * @todo Clean up the flag/Flush hack.
- */
-void W3DParticleSystemManager::queueParticleRender()
-{
-	m_readyToRender = true;
-}
-
-/**
  * Nasty hack to render particles last. Called directly by WW3D::Flush()
  */
 void DoParticles( RenderInfoClass &rinfo )
