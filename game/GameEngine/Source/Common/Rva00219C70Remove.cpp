@@ -23,6 +23,24 @@ public:
 	class BfmeK1101 *bfmeFind1101(int key);
 };
 
+extern void j_00037cd1();
+extern void j_0002f52c();
+
+typedef void (TunnelTracker::*TunnelApplyCall)(Object *, void *);
+typedef BfmeK1101 *(BfmeJ1101::*Find1101Call)(int);
+
+union TunnelApplyTarget
+{
+	void (*freeFunction)();
+	TunnelApplyCall memberFunction;
+};
+
+union Find1101Target
+{
+	void (*freeFunction)();
+	Find1101Call memberFunction;
+};
+
 // The DIR32 at 0x012F086C is retail's `CaveSystem *TheCaveSystem`
 // (?TheCaveSystem@@3PAVCaveSystem@@A). CaveSystem is declared by
 // game/GameEngine/Source/Common/System/game_engine_subsystems.h, so it is only
@@ -78,10 +96,13 @@ void Gen_00219C70::bfmeRemove(Object *obj, void *extra)
 {
 	if (obj == 0)
 		return;
-	TunnelTracker *k = (TunnelTracker *)((BfmeJ1101 *)TheCaveSystem)->bfmeFind1101(m_key);
+	Find1101Target findTarget = { &j_0002f52c };
+	TunnelTracker *k = (TunnelTracker *)(((BfmeJ1101 *)TheCaveSystem)->*
+		findTarget.memberFunction)(m_key);
 	if (!k->isInContainer(obj))
 		return;
-	k->bfmeApply(obj, extra);
+	TunnelApplyTarget applyTarget = { &j_00037cd1 };
+	(k->*applyTarget.memberFunction)(obj, extra);
 	BfmeVirt48 *v = (*(BfmePointed19C70 **)((char *)this - 0x18))->m_virt;
 	if (v != 0)
 		v->notify(obj);

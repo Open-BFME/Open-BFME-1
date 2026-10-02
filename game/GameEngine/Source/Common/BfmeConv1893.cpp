@@ -1,4 +1,8 @@
-extern const char g_bfmeEmptyAE[];
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+
+extern const char g_bfmeEmptyAscii[];
 
 struct BfmeStrAE
 {
@@ -34,17 +38,6 @@ public:
 	BfmeThingAE *m_bfmeThingAE;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-enum NameKeyType { };
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *text);
-};
-
-extern NameKeyGenerator *TheBfmeGenAE;
-
 class BfmeOwnerAE
 {
 public:
@@ -56,8 +49,8 @@ public:
 
 char BfmeOwnerAE::bfmeSetAE(BfmeStrAE *name, char on)
 {
-	const char *text = name->m_bfmeDataAE != 0 ? name->m_bfmeDataAE + 8 : g_bfmeEmptyAE;
-	int key = (int)TheBfmeGenAE->nameToKey(text);
+	const char *text = name->m_bfmeDataAE != 0 ? name->m_bfmeDataAE + 8 : g_bfmeEmptyAscii;
+	int key = (int)TheNameKeyGenerator->nameToKey(text);
 
 	for (BfmeEntryAE **p = m_bfmeListAE; *p != 0; p++)
 	{

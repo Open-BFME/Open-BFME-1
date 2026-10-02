@@ -10,12 +10,8 @@ struct Rva00364980HeapCompare
 	void *m_state;
 };
 
-void rva00366320InsertionSortCall( Rva00364980HeapElement *first,
-	Rva00364980HeapElement *last, Rva00364980HeapCompare compare );
-
-void rva00363B80UnguardedInsertionSortAuxCall(
-	Rva00364980HeapElement *first, Rva00364980HeapElement *last,
-	Rva00364980HeapElement *, Rva00364980HeapCompare compare );
+extern void j_0002aa4f();
+extern void j_00034bd5();
 
 void rva00366760FinalInsertionSort( Rva00364980HeapElement *first,
 	Rva00364980HeapElement *last, Rva00364980HeapCompare compare )
@@ -23,11 +19,18 @@ void rva00366760FinalInsertionSort( Rva00364980HeapElement *first,
 	if( last - first > 16 )
 	{
 		Rva00364980HeapElement *middle = first + 16;
-		rva00366320InsertionSortCall( first, middle, compare );
-		rva00363B80UnguardedInsertionSortAuxCall( middle, last, 0, compare );
+		reinterpret_cast<void (*)( Rva00364980HeapElement *,
+			Rva00364980HeapElement *, Rva00364980HeapCompare )>(
+				&j_0002aa4f)( first, middle, compare );
+		reinterpret_cast<void (*)( Rva00364980HeapElement *,
+			Rva00364980HeapElement *, Rva00364980HeapElement *,
+			Rva00364980HeapCompare )>( &j_00034bd5 )(
+				middle, last, 0, compare );
 	}
 	else
 	{
-		rva00366320InsertionSortCall( first, last, compare );
+		reinterpret_cast<void (*)( Rva00364980HeapElement *,
+			Rva00364980HeapElement *, Rva00364980HeapCompare )>(
+				&j_0002aa4f)( first, last, compare );
 	}
 }
