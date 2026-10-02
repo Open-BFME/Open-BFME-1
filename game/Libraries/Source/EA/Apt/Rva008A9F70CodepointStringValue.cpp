@@ -69,7 +69,10 @@ struct Rva008A9F70Registry {
         ++m_count;
     }
 };
-extern Rva008A9F70Registry *g_registry01337810;
+// Retail's global at 0x01337810 is defined in Apt.cpp under this name and
+// canonical pool type. Keep this TU's narrower registry view local.
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 // The Apt global node free list at 0x01338478, defined once by
 // game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This body keeps its own
 // view of a node (Rva008A9B00) and reaches the next link through it.
@@ -128,7 +131,7 @@ Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
     Rva008A9B00 *obj = rva01338478FreeHead();
     if (obj) {
         rva01338478FreeHead() = obj->m_next;
-        g_registry01337810->add(obj);
+        ((Rva008A9F70Registry *)g_rva01337810GcRoots)->add(obj);
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);
     } else {
