@@ -1,3 +1,6 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+#include "dx8wrapper.h"
+
 // Open-BFME5 conversions.
 
 // The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
@@ -40,7 +43,6 @@ public:
 };
 
 extern BfmeGameCW *g_bfmeGameCW;
-extern BfmeProbe976 *g_bfmeProbe976;
 
 // Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
 // only the global's spelling matters to the link, so the pointee keeps this
@@ -53,7 +55,7 @@ void bfmeGo976C(void)
 {
 	g_bfmeGameCW->bfmeTick976C();
 
-	BfmeProbe976 *p = g_bfmeProbe976;
+	BfmeProbe976 *p = reinterpret_cast<BfmeProbe976 *>(DX8Wrapper::_Get_D3D_Device8());
 
 	if (p && !p->m_bfmeTab->m_bfmeAsk(p))
 		((BfmeEndC976 *)TheParticleSystemManager)->bfmeEnd976C();

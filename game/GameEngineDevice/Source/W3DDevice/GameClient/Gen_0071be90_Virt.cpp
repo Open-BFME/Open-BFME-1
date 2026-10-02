@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc
+#include "dx8wrapper.h"
+
 
 // Retail 0x0071BE90. Sibling of 0x00716500: stdcall vtable slot 0x1AC.
 
@@ -15,12 +17,11 @@ struct Gen_0071be90_Obj
 	Gen_0071be90_Vtbl *vtbl;
 };
 
-Gen_0071be90_Obj *g_0071be90_obj;
 int g_0071be90_count;
 
 // ?run_0071be90@@YAXPAX@Z
 void run_0071be90(void *p)
 {
-	g_0071be90_obj->vtbl->call(g_0071be90_obj, p);
+	reinterpret_cast<Gen_0071be90_Obj *>(DX8Wrapper::_Get_D3D_Device8())->vtbl->call(reinterpret_cast<Gen_0071be90_Obj *>(DX8Wrapper::_Get_D3D_Device8()), p);
 	++g_0071be90_count;
 }

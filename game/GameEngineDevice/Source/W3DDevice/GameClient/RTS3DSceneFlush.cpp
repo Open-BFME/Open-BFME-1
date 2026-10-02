@@ -1,4 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+#include "dx8wrapper.h"
+#include "ww3d.h"
+
 // stlport
 // RVA 0x007158F0 +511, named RTS3DScene::Render callers and GeneralsMD
 // W3DScene.cpp Flush establish identity. BFME adds shader mesh dispatch,
@@ -19,15 +22,9 @@ struct Rva01340534DeviceVTable {
  void *slots[0x170/4];
  long (__stdcall *SetVertexShader)(IDirect3DDevice8*,unsigned long);
 };
-struct IDirect3DDevice8 { Rva01340534DeviceVTable *lpVtbl; };
-class DX8Wrapper {
- static IDirect3DDevice8 *D3DDevice;
-public:
- static bool Has_Stencil();
- static void Set_DX8_Render_State(unsigned long,unsigned);
- static void ClearVertexShader() { D3DDevice->lpVtbl->SetVertexShader(D3DDevice,0); }
-};
-class WW3D { public: static void Render_And_Clear_Static_Sort_Lists(RenderInfoClass&); };
+
+
+
 class SortingRendererClass { public: static void Flush(); };
 class Player { char pad00[0x24]; public: int m_playerIndex; };
 class PlayerList { char pad00[0xc]; public: Player *m_localPlayer; };
@@ -76,19 +73,19 @@ void RTS3DScene::Flush(RenderInfoClass &rinfo) {
   if(m_customPassMode==0 && m_extraPassPolyMode==0) DoShadows(rinfo,false);
  }
  if(DX8Wrapper::Has_Stencil()) {
-  DX8Wrapper::Set_DX8_Render_State(52,1);
-  DX8Wrapper::Set_DX8_Render_State(57,0);
-  DX8Wrapper::Set_DX8_Render_State(58,-1);
-  DX8Wrapper::Set_DX8_Render_State(59,-1);
-  DX8Wrapper::Set_DX8_Render_State(56,8);
-  DX8Wrapper::Set_DX8_Render_State(54,1);
-  DX8Wrapper::Set_DX8_Render_State(53,1);
-  DX8Wrapper::Set_DX8_Render_State(55,3);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(52,1);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(57,0);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(58,-1);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(59,-1);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(56,8);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(54,1);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(53,1);
+  (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(55,3);
  }
  DoTrees(rinfo);
- DX8Wrapper::Set_DX8_Render_State(52,0);
+ (*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(52,0);
  if(m_customPassMode==0 && m_extraPassPolyMode==0) DoShadows(rinfo,true);
- DX8Wrapper::ClearVertexShader();
+ (*reinterpret_cast<Rva01340534DeviceVTable **>(DX8Wrapper::_Get_D3D_Device8()))->SetVertexShader(DX8Wrapper::_Get_D3D_Device8(), 0);
  WW3D::Render_And_Clear_Static_Sort_Lists(rinfo);
  if(m_customPassMode==0) {
   bfmeDispatch_006CDF70(&rinfo,(void*)1);

@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc
+#include "dx8wrapper.h"
+
 
 typedef int Int;
 typedef unsigned long UnsignedLong;
@@ -55,7 +57,6 @@ public:
 		SurfaceResource *destination, const BfmeRect *destinationRect, Int mode);
 };
 
-extern BfmeD3DDevice *g_bfmeD3DDevice;
 extern unsigned g_bfmeD3DCallCount;
 
 class W3DRadarResetSurface
@@ -84,7 +85,7 @@ private:
 W3DRadarResetSurface getBackBufferSurface006e(Int index)
 {
 	SurfaceResource *surface = 0;
-	g_bfmeD3DDevice->getBackBuffer(0, index, 0, &surface);
+	reinterpret_cast<BfmeD3DDevice *>(DX8Wrapper::_Get_D3D_Device8())->getBackBuffer(0, index, 0, &surface);
 	++g_bfmeD3DCallCount;
 
 	if (surface)
@@ -101,7 +102,7 @@ W3DRadarResetSurface getBackBufferSurface006e(Int index)
 void copySurfaceRects006e(W3DRadarResetSurface source, const BfmeRect *sourceRect,
 	W3DRadarResetSurface destination, const BfmeRect *destinationRect, Int mode)
 {
-	g_bfmeD3DDevice->copySurfaceRects(
+	reinterpret_cast<BfmeD3DDevice *>(DX8Wrapper::_Get_D3D_Device8())->copySurfaceRects(
 		source.getSurface(), sourceRect, destination.getSurface(), destinationRect, mode);
 	++g_bfmeD3DCallCount;
 }

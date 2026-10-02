@@ -1,3 +1,6 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc
+#include "dx8wrapper.h"
+
 // Retail RVA 0x00716770, 399 bytes; shader dependent-resource creation.
 // Matched W3DShaderManager::init at 0x00718E90 calls this via ILT 0xCF8B
 // at 0x00718E9B; keep the method address-qualified pending its exact name.
@@ -5,7 +8,6 @@
 // resources cleared by verified releaseDependentResources at 0x00717C90.
 // DX8VertexBuffer constructor 0x0091F2F0 takes FVF 0x144, 200 vertices,
 // USAGE_DYNAMIC (1), and vertex_size 0; the retail allocation is 0x20 bytes.
-// cl: /DNDEBUG /MD /EHsc
 static inline int decrement(int *p) { return --*p; }
 class BfmeDX8VertexBuffer {
 public:
@@ -22,7 +24,7 @@ struct SurfaceDesc { unsigned format,type,usage,pool,multisample,quality,width,h
 struct Resource { void **vt; };
 extern BfmeDX8VertexBuffer *rva012F9D1C;
 extern unsigned rva012F9D20;
-extern Resource *rva012F9D04, *rva012F9D08, *rva012F9D0C, *rva012F9D10, *rva01340534;
+extern Resource *rva012F9D04, *rva012F9D08, *rva012F9D0C, *rva012F9D10;
 typedef long (__stdcall *GetTarget)(Resource*,unsigned,Resource**);
 typedef long (__stdcall *GetDesc)(Resource*,SurfaceDesc*);
 typedef long (__stdcall *CreateTexture)(Resource*,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,Resource**,void*);
@@ -36,14 +38,14 @@ void BfmeShaderShutdown::rva00716770() {
  rva012F9D1C=new BfmeDX8VertexBuffer(0x144,200,BfmeDX8VertexBuffer::USAGE_DYNAMIC,0);
  rva012F9D20=0;
  if(rva012F9D04 || rva012F9D08 || rva012F9D0C || rva012F9D10) return;
- ((GetTarget)rva01340534->vt[38])(rva01340534,0,&rva012F9D04);
+ ((GetTarget)reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8())->vt[38])(reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8()),0,&rva012F9D04);
  SurfaceDesc desc;
  ((GetDesc)rva012F9D04->vt[12])(rva012F9D04,&desc);
- if(((CreateTexture)rva01340534->vt[23])(rva01340534,desc.width,desc.height,1,1,desc.format,0,&rva012F9D08,0)!=0) {
+ if(((CreateTexture)reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8())->vt[23])(reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8()),desc.width,desc.height,1,1,desc.format,0,&rva012F9D08,0)!=0) {
   release(rva012F9D04); rva012F9D04=0; rva012F9D08=0;
  } else if(((GetLevel)rva012F9D08->vt[18])(rva012F9D08,0,&rva012F9D0C)!=0) {
   release(rva012F9D08); rva012F9D0C=0; rva012F9D08=0;
- } else if(((GetDepth)rva01340534->vt[40])(rva01340534,&rva012F9D10)!=0) {
+ } else if(((GetDepth)reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8())->vt[40])(reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8()),&rva012F9D10)!=0) {
   release(rva012F9D0C); release(rva012F9D08);
   rva012F9D10=0; rva012F9D0C=0; rva012F9D08=0;
  }

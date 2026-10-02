@@ -130,7 +130,6 @@ public:
 		unsigned fvf, unsigned pool, void **vertexBuffer, void *sharedHandle);
 };
 
-extern BfmeSnowDevice *g_bfmeDevice1340534;
 
 class BFMEWaterTrackTexture
 {
@@ -235,7 +234,7 @@ Bool W3DSnowManager::ReAcquireResources(void)
 	if (setting->m_usePointSprites != 0 &&
 		g_bfmeCaps1340578->m_supportPointSprites != 0)
 	{
-		BfmeSnowDevice *device = g_bfmeDevice1340534;
+		BfmeSnowDevice *device = reinterpret_cast<BfmeSnowDevice *>(DX8Wrapper::_Get_D3D_Device8());
 		if (layout->m_vertexBufferD3D == 0)
 		{
 			if (device->CreateVertexBuffer(

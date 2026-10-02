@@ -1,3 +1,6 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD
+#include "dx8wrapper.h"
+
 // Retail RVA 0x00716AD0, 913 bytes: shader viewport quad rendering.
 // The matched highlight postRender at 0x007D7040 calls this through ILT
 // 0x000196A0; its last argument supplies optional texture-coordinate dimensions.
@@ -6,20 +9,13 @@
 // AppendLock constructor/destructor at 0x0091DE90/0x0091DF50 are matched C++.
 // Separate dimension scalars are significant: a Coord2D local changes MSVC 7.1
 // stack allocation despite otherwise identical instructions. No forced padding.
-// cl: /DNDEBUG /MD
 struct Coord2D {float x,y;};
 struct Vec4Base {float x,y,z,w;};
 struct Vec4 : Vec4Base {Vec4(float a,float b,float c,float d){x=a;y=b;z=c;w=d;}};
 struct Vertex {Vec4Base pos;unsigned color;float u,v;};
 struct Resource {void **vt;};
-struct FVFInfo {unsigned fvf,vertexSize;};
-class VertexBufferClass {public:
- char pad[0x14]; FVFInfo *info;unsigned unknown;Resource *buffer;
- class AppendLockClass {VertexBufferClass *Buffer;void *Vertices;public:
- AppendLockClass(VertexBufferClass*,unsigned,unsigned,int);
- ~AppendLockClass();void *Get_Vertex_Array(){return Vertices;}
- };
-};
+
+
 extern VertexBufferClass *ShaderQuadBuffer;
 extern int ShaderQuadIndex;
 // TU-local view of the tactical view singleton; the real class is GameClient/View.h's
@@ -69,7 +65,6 @@ class Display {public:
 // width/height vtable slots, so it uses a TU-local view class named for the
 // real one and references the singleton under its canonical spelling.
 extern Display *TheDisplay;
-extern Resource *ShaderQuadDevice;
 typedef long(__stdcall *SetFVF)(Resource*,unsigned);
 typedef long(__stdcall *GetStream)(Resource*,unsigned,Resource**,unsigned*,unsigned*);
 typedef long(__stdcall *SetStream)(Resource*,unsigned,Resource*,unsigned,unsigned);
@@ -114,12 +109,12 @@ void ShaderViewportRva00716AD0(int color,bool useSize,const Coord2D *givenSize) 
   v[3].u=(float)x/displayWidth;
   v[3].v=(float)y/displayHeight;
  }
- Resource *dev=ShaderQuadDevice;
+ Resource *dev=reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8());
  ((SetFVF)dev->vt[89])(dev,0x144);
  Resource *old = 0;
  unsigned offset = 0, stride = 0;
  ((GetStream)dev->vt[101])(dev,0,&old,&offset,&stride);
- ((SetStream)dev->vt[100])(dev,0,ShaderQuadBuffer->buffer,0,ShaderQuadBuffer->info->vertexSize);
+ ((SetStream)dev->vt[100])(dev,0,reinterpret_cast<Resource *>(static_cast<DX8VertexBufferClass *>(ShaderQuadBuffer)->Get_DX8_Vertex_Buffer()),0,ShaderQuadBuffer->FVF_Info().Get_FVF_Size());
  ((DrawPrimitive)dev->vt[81])(dev,5,ShaderQuadIndex*4,2);
  ((SetStream)dev->vt[100])(dev,0,old,offset,stride);
  if (old) ((ReleaseResource)old->vt[2])(old);
@@ -155,11 +150,11 @@ v[3].color=0xffffffff;
 v[3].u=halfTexel;
   v[3].v=1+halfTexel;
  }
- Resource *dev=ShaderQuadDevice;
+ Resource *dev=reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8());
  Resource *old = 0;
  unsigned offset = 0, stride = 0;
  ((GetStream)dev->vt[101])(dev,0,&old,&offset,&stride);
- ((SetStream)dev->vt[100])(dev,0,ShaderQuadBuffer->buffer,0,ShaderQuadBuffer->info->vertexSize);
+ ((SetStream)dev->vt[100])(dev,0,reinterpret_cast<Resource *>(static_cast<DX8VertexBufferClass *>(ShaderQuadBuffer)->Get_DX8_Vertex_Buffer()),0,ShaderQuadBuffer->FVF_Info().Get_FVF_Size());
  ((DrawPrimitive)dev->vt[81])(dev,5,ShaderQuadIndex*4,2);
  ((SetStream)dev->vt[100])(dev,0,old,offset,stride);
  if(old)((ReleaseResource)old->vt[2])(old);

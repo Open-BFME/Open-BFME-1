@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+#include "dx8wrapper.h"
+
 // W3DShrubBuffer::allocateTreeBuffers, retail 0x0071C470: the twin of W3DTreeBuffer's at 0x00732B00
 // with USAGE_DEFAULT buffers, the Shrubs_darken/lighten shaders and the texture at +0x1E3914.
 
@@ -47,11 +49,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
-class TextureBaseClass
-{
-public:
-	IDirect3DBaseTexture8 *Peek_D3D_Base_Texture(void) const;
-};
+
 
 class Rva006D6050
 {
@@ -177,7 +175,6 @@ public:
 	virtual int __stdcall CreateVertexShader(const BfmeVertexElement *declaration, BfmeShaderResource **shader);
 };
 
-extern BfmeD3DDevice *g_BfmeD3DDevice;
 extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
@@ -283,7 +280,7 @@ void W3DShrubBuffer::allocateTreeBuffers(void)
 	};
 
 	if (!m_resource4) {
-		Int result = g_BfmeD3DDevice->CreateVertexShader(declaration, &m_resource4);
+		Int result = reinterpret_cast<BfmeD3DDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateVertexShader(declaration, &m_resource4);
 		if (result < zero)
 			return;
 	}

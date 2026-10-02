@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+#include "dx8wrapper.h"
+
 //
 // BFME's two-argument pixel-shader loader.  The retail body is the target of
 // the 0x0001FC99 ILT used by the flat-terrain shader initializers.  The small
@@ -54,7 +56,6 @@ extern FileSystem *TheFileSystem;
 // The BFME device stores the shader methods at the shifted table offsets
 // represented by the validated interface shim.  This global is the retail
 // [0x01340534] device pointer.
-extern IDirect3DDevice8 *g_retailShaderDevice;
 typedef HRESULT (__stdcall *BfmeCreatePixelShader)(IDirect3DDevice8 *, const DWORD *, DWORD *);
 
 // ?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z
@@ -89,7 +90,7 @@ HRESULT BfmeShaderLoader::LoadAndCreateD3DShader( const char *filename, DWORD *s
 		file->read( (void *)shaderData, fileSize );
 		file->close();
 
-			IDirect3DDevice8 *device = g_retailShaderDevice;
+			IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
 			HRESULT result = (*(BfmeCreatePixelShader **)device)[106]( device, shaderData, shader );
 		HeapFree( GetProcessHeap(), 0, (void *)shaderData );
 

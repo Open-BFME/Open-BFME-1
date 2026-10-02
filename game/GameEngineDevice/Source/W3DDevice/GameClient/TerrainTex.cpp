@@ -546,7 +546,6 @@ struct Rva006D4FF0Device
 };
 #undef ALPHA_DEVICE_SLOT
 
-extern Rva006D4FF0Device *Rva01340534Device;
 extern unsigned int Rva01340594DX8Calls;
 extern unsigned int Rva01340568StageChanges;
 
@@ -598,7 +597,6 @@ struct Rva006C9270Device
 		Rva006C9270Texture *texture);
 };
 
-extern Rva006C9270Device *Rva01340534DeviceB;
 extern Rva006C9270Texture *Rva0133F478Textures[];
 extern unsigned int Rva01340560TextureChanges;
 
@@ -607,7 +605,7 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 {
 	if (stage >= 8)
 	{
-		Rva01340534DeviceB->SetTexture(stage, texture);
+		reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture(stage, texture);
 		++Rva01340594DX8Calls;
 		return;
 	}
@@ -618,7 +616,7 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 	Rva0133F478Textures[stage] = texture;
 	if (texture)
 		texture->AddRef();
-	Rva01340534DeviceB->SetTexture(stage, texture);
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture(stage, texture);
 	++Rva01340594DX8Calls;
 	++Rva01340560TextureChanges;
 }
@@ -630,10 +628,10 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 {
 	Rva0090C610Invoke((void *)stage);
 	Rva006D4690Apply((void *)stage);
-	Rva01340534Device->SetTextureStageState(0, 1, 3);
+	reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(0, 1, 3);
 	++Rva01340594DX8Calls;
 	++Rva01340568StageChanges;
-	Rva01340534Device->SetTextureStageState(0, 2, 3);
+	reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(0, 2, 3);
 	++Rva01340594DX8Calls;
 	++Rva01340568StageChanges;
 

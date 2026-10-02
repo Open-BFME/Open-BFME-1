@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD
+#include "dx8wrapper.h"
+
 //
 // Retail RVA 0x007C19F0, 408 bytes: render-state setup that precedes the
 // matched drawAndRelease() at 0x007C1BF0 (same shadow-buffer-lock owner:
@@ -16,20 +18,7 @@ class IndexBufferClass;
 static inline int decrementRef(int *p) { return --*p; }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
-class VertexMaterialClass
-{
-public:
-	virtual void Delete_This();
-	int refs;
-	enum PresetType { PRELIT_DIFFUSE = 0 };
-	static VertexMaterialClass *Get_Preset(PresetType preset);
-	void ReleaseGlobalRef()
-	{
-		decrementRef(&refs);
-		if (refs == 0)
-			Delete_This();
-	}
-};
+
 
 extern VertexMaterialClass *ScreenMaterial;      // 0x1340EC4 -- shared model global
 extern unsigned TheBoxTextureDirtyMask;          // 0x133F49C -- shared model global
@@ -40,19 +29,11 @@ class ShaderClass;
 // (bits 0x00101823; Opaque's are 0x0011581B), as the draw path does.
 extern ShaderClass Rva012BBF14Shader;
 
-class DX8Wrapper
-{
-public:
-	static void Set_Shader(const ShaderClass &shader);
-	static void Set_Vertex_Buffer(const VertexBufferClass *vb, unsigned stream);
-	static void Set_Index_Buffer(const IndexBufferClass *ib, unsigned short index);
-	static void Apply_Render_State_Changes(void);
-};
+
 
 extern float g_worldMatrix[16];   // 0x134108C, one 4x4 identity matrix
 
 struct Device { void **vt; };
-extern Device *ScreenDevice;      // 0x1340534
 
 typedef long (__stdcall *SetRenderStateFn)(Device *, unsigned, unsigned);
 typedef long (__stdcall *SetShaderStageFn)(Device *, unsigned);
@@ -77,20 +58,19 @@ void BfmeVolumetricShadowBufferLocks::setupRenderState()
 {
 	VertexMaterialClass *vmat = VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
 	if (vmat)
-		++vmat->refs;
+		vmat->Add_Ref();
 
 	if (ScreenMaterial)
-		ScreenMaterial->ReleaseGlobalRef();
+		ScreenMaterial->Release_Ref();
 
 	unsigned dirty = TheBoxTextureDirtyMask | 0x4000;
 	ScreenMaterial = vmat;
 	TheBoxTextureDirtyMask = dirty;
 	if (vmat) {
-		if (--vmat->refs == 0)
-			vmat->Delete_This();
+		vmat->Release_Ref();
 	}
 
-	DX8Wrapper::Set_Shader(Rva012BBF14Shader);
+	(*static_cast<void (*)(const ShaderClass &)>(&DX8Wrapper::Set_Shader))(Rva012BBF14Shader);
 	DX8Wrapper::Set_Vertex_Buffer(m_vertexBuffer, 0);
 	DX8Wrapper::Set_Index_Buffer(m_indexBuffer, 0);
 
@@ -118,7 +98,7 @@ void BfmeVolumetricShadowBufferLocks::setupRenderState()
 
 	DX8Wrapper::Apply_Render_State_Changes();
 
-	Device *dev = ScreenDevice;
+	Device *dev = reinterpret_cast<Device *>(DX8Wrapper::_Get_D3D_Device8());
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x34, 1);
 	((SetRenderStateFn)dev->vt[0xE4 / 4])(dev, 0x38, 8);
 	unsigned mask2 = TheW3DShadowManager->mask;

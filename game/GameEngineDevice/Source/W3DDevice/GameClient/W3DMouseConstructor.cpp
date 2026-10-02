@@ -1,10 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc
+#include "dx8wrapper.h"
 
-class TextureClass
-{
-public:
-	void Release_Ref();
-};
+
+
 
 class D3DSurfaceInterface
 {
@@ -172,7 +170,6 @@ private:
 extern TextureClass *g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
-extern D3DDeviceInterface *g_w3dMouseD3DDevice;
 extern MouseThreadClass g_w3dMouseThread;
 extern unsigned char g_w3dMouseThreadRunLock;
 extern bool g_w3dMouseIsThread;
@@ -256,7 +253,7 @@ bool W3DMouse::releaseD3DCursorTextures(Mouse::MouseCursor cursor)
 
 W3DMouse::~W3DMouse()
 {
-	D3DDeviceInterface *device = g_w3dMouseD3DDevice;
+	D3DDeviceInterface *device = reinterpret_cast<D3DDeviceInterface *>(DX8Wrapper::_Get_D3D_Device8());
 	if (device)
 	{
 		device->m_vtable->ShowCursor(device, 0);

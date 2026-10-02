@@ -22,7 +22,6 @@ struct Rva006C9270Device
 	Rva00907B00DeviceVtable *m_vtable;
 };
 
-extern Rva006C9270Device *Rva01340534Device;
 extern unsigned int Rva01340594DX8Calls;
 
 extern VertexBufferClass *Rva01341120VertexBuffers[];
@@ -32,18 +31,18 @@ extern IndexBufferClass *Rva01341128IndexBuffer;
 void DX8Wrapper::Release_Device( void )
 {
 	void *zero = 0;
-	if( Rva01340534Device == (Rva006C9270Device *)zero )
+	if( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()) == (Rva006C9270Device *)zero )
 		return;
 
 	for( unsigned stage = 0; stage < 8; ++stage )
 	{
-		Rva01340534Device->m_vtable->m_setTexture( Rva01340534Device, stage, zero );
+		reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setTexture( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), stage, zero );
 		++Rva01340594DX8Calls;
 	}
 
-	Rva01340534Device->m_vtable->m_setStreamSource( Rva01340534Device, (unsigned)zero, zero, (unsigned)zero, (unsigned)zero );
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setStreamSource( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), (unsigned)zero, zero, (unsigned)zero, (unsigned)zero );
 	++Rva01340594DX8Calls;
-	Rva01340534Device->m_vtable->m_setIndices( Rva01340534Device, zero );
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setIndices( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), zero );
 	++Rva01340594DX8Calls;
 
 	for( unsigned stream = 0; stream < 8; stream += 4 )
@@ -66,6 +65,6 @@ void DX8Wrapper::Release_Device( void )
 	}
 
 	DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns();
-	Rva01340534Device->m_vtable->m_release( Rva01340534Device );
-	Rva01340534Device = (Rva006C9270Device *)zero;
+	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_release( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()) );
+	D3DDevice = (IDirect3DDevice8 *)zero;
 }

@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD
+#include "dx8wrapper.h"
+
 // Retail 0x007D88B0: ScreenMotionBlurFilter::postRender.  BFME's filter
 // wrapper forwards a fourth Coord2D* display-size argument; this concrete
 // declaration follows the proven BW/CrossFade postRender ABI.
@@ -47,7 +49,6 @@ struct BfmeDevice
 
 struct IDirect3DDevice8;
 
-#define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
 
 class BfmeTacticalView
 {
@@ -110,13 +111,7 @@ extern GameLogic *TheGameLogic;
 #define ZoomToValid (ScreenMotionBlurFilter::m_zoomToValid)
 #define ZoomToPosition ((void *)&ScreenMotionBlurFilter::m_zoomToPos)
 
-class DX8Wrapper
-{
-public:
-	static void Set_DX8_Render_State(unsigned long, unsigned int);
-	static void Apply_Render_State_Changes(void);
-	static IDirect3DDevice8 *D3DDevice;
-};
+
 
 void *__cdecl bfmeEndRenderToTexture(void);
 
@@ -155,7 +150,7 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	if (!set(mode))
 		return false;
 
-	BfmeDevice *pDev = BfmeDeviceGlobal;
+	BfmeDevice *pDev = reinterpret_cast<BfmeDevice *>(DX8Wrapper::_Get_D3D_Device8());
 	Bool continueEffect = true;
 	struct _TRANS_LIT_TEX_VERTEX
 	{
@@ -167,7 +162,7 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 
 	Int xpos, ypos, width, height;
 
-	BfmeDevice *textureDevice = BfmeDeviceGlobal;
+	BfmeDevice *textureDevice = reinterpret_cast<BfmeDevice *>(DX8Wrapper::_Get_D3D_Device8());
 	textureDevice->vt->SetTexture(textureDevice, 0, tex);
 	BfmeTacticalView *originView = theTacticalView();
 	originView->getOrigin(&xpos, &ypos);
@@ -199,13 +194,13 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	v[3].color = 0xffffffff;
 
 	if (m_additive) {
-		DX8Wrapper::Set_DX8_Render_State(0x13, 5);
-		DX8Wrapper::Set_DX8_Render_State(0x14, 2);
+		(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x13, 5);
+		(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x14, 2);
 	} else {
-		DX8Wrapper::Set_DX8_Render_State(0x13, 5);
-		DX8Wrapper::Set_DX8_Render_State(0x14, 6);
+		(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x13, 5);
+		(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x14, 6);
 	}
-	DX8Wrapper::Set_DX8_Render_State(0x1b, false);
+	(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x1b, false);
 	DX8Wrapper::Apply_Render_State_Changes();
 	pDev->vt->SetVertexShader(pDev, 0x144);
 
@@ -276,7 +271,7 @@ Bool ScreenMotionBlurFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	pDev->vt->SetTextureStageState(pDev, 0, 6, 2);
 	pDev->vt->SetTextureStageState(pDev, 0, 4, 2);
 	pDev->vt->DrawPrimitiveUP(pDev, 5, 2, v, sizeof(_TRANS_LIT_TEX_VERTEX));
-	DX8Wrapper::Set_DX8_Render_State(0x1b, true);
+	(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x1b, true);
 
 	DX8Wrapper::Apply_Render_State_Changes();
 	{

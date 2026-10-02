@@ -1,4 +1,6 @@
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+#include "dx8wrapper.h"
+
 //
 // BFME buffer-owner draw/release helper at 0x007C1BF0.  The owner name is
 // address-derived: retail exposes the two write-lock destructors and the
@@ -7,37 +9,13 @@
 typedef bool Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
-class VertexBufferLockClass
-{
-protected:
-	void *m_vertexBuffer;
-	void *m_vertices;
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
-class VertexBufferClass
-{
-public:
-	class WriteLockClass : public VertexBufferLockClass
-	{
-	public:
-		__declspec(noinline) ~WriteLockClass();
-	};
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
-class IndexBufferClass
-{
-public:
-	class WriteLockClass
-	{
-		void *m_indexBuffer;
-		unsigned short *m_indices;
 
-	public:
-		__declspec(noinline) ~WriteLockClass();
-	};
-};
 
 struct IDirect3DDevice9;
 typedef long (__stdcall *BfmeSetRenderState)(IDirect3DDevice9 *, unsigned, unsigned);
@@ -65,7 +43,6 @@ extern void d_009373a0();
 typedef void (__cdecl *BfmeRecordStatistics)(int, int,
 	const Debug_Statistics::ShaderClass &);
 
-extern IDirect3DDevice9 *TheD3DDevice;
 extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
 
 class BfmeVolumetricShadowBufferLocks
@@ -108,7 +85,7 @@ void BfmeVolumetricShadowBufferLocks::drawAndRelease(int frontFace)
 	reinterpret_cast<BfmeRecordStatistics>(&d_009373a0)(polygonCount * 2, vertexCount * 2,
 		reinterpret_cast<const Debug_Statistics::ShaderClass &>(Rva012BBF14Shader));
 
-	IDirect3DDevice9 *device = TheD3DDevice;
+	IDirect3DDevice9 *device = reinterpret_cast<IDirect3DDevice9 *>(DX8Wrapper::_Get_D3D_Device8());
 	if (!(TheW3DRadarFormatCaps->m_caps & 0x100)) {
 		if (!frontFace) {
 			(*(BfmeSetRenderState **)device)[57](device, 0x16, 2);

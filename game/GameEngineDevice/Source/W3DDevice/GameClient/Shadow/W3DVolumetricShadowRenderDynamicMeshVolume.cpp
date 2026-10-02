@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_VOLUMETRIC_DELETE_LAYOUT /Iinputs/reference/shims/volumetricshadow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_VOLUMETRIC_DELETE_LAYOUT /Iinputs/reference/shims/volumetricshadow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // Native BFME RenderDynamicMeshVolume, RVA 007BC270, 1269 bytes.
 // Ported from EA GPL-3.0-or-later GeneralsMD W3DVolumetricShadow.cpp.
 // Identity: matched RenderVolume (007BD9C0) dispatches here for dynamic volumes.
@@ -14,6 +14,7 @@
 #define Matrix4x4 Matrix4
 #include "matrix4.h"
 #include "shader.h"
+#include "dx8wrapper.h"
 #include <string.h>
 struct ShadowBuffer007BC270 {
  virtual void slot00();
@@ -137,7 +138,6 @@ struct ShadowDevice007BC270 {
  virtual void slot19c();
  virtual int __stdcall SetIndices(ShadowBuffer007BC270*);
 };
-extern ShadowDevice007BC270* device01340534;
 extern ShadowBuffer007BC270* shadowVertexBufferD3D;
 extern ShadowBuffer007BC270* shadowIndexBufferD3D;
 extern ShadowBuffer007BC270* lastActiveVertexBuffer;
@@ -145,7 +145,7 @@ extern int nShadowVertsInBuf,nShadowStartBatchVertex,nShadowIndicesInBuf,nShadow
 extern int SHADOW_VERTEX_SIZE,SHADOW_INDEX_SIZE;
 struct W3DShadowManager { char pad[8]; int m_stencilShadowMask; int getStencilShadowMask(){return m_stencilShadowMask;} };
 extern W3DShadowManager* TheW3DShadowManager;
-class DX8Wrapper { public: static bool _EnableTriangleDraw; };
+
 namespace Debug_Statistics { void Record_DX8_Polys_And_Vertices(int,int,const ShaderClass&); }
 class ShadowLog007BC270 {
 public:
@@ -230,7 +230,7 @@ void W3DVolumetricShadow::RenderDynamicMeshVolume(int meshIndex,int lightIndex,c
  int numVerts,numPolys,numIndex;
  Vector3* pvVertices;
  unsigned short* pvIndices;
- ShadowDevice007BC270* m_pDev=device01340534;
+ ShadowDevice007BC270* m_pDev=reinterpret_cast<ShadowDevice007BC270 *>(DX8Wrapper::_Get_D3D_Device8());
  if(!m_pDev) return;
  int playerColor=(bitsAt0034>>7)&7;
  if(playerColor) {
@@ -283,7 +283,7 @@ void W3DVolumetricShadow::RenderDynamicMeshVolume(int meshIndex,int lightIndex,c
   m_pDev->SetStreamSource(0,shadowVertexBufferD3D,0,sizeof(Vector3));
   lastActiveVertexBuffer=shadowVertexBufferD3D;
  }
- if(DX8Wrapper::_EnableTriangleDraw) {
+ if(DX8Wrapper::_Is_Triangle_Draw_Enabled()) {
   Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys,numVerts,ShaderClass::_PresetOpaqueShader);
   m_pDev->DrawIndexedPrimitive(4,nShadowStartBatchVertex,0,numVerts,nShadowStartBatchIndex,numPolys);
  }

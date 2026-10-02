@@ -1,4 +1,6 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+#include "dx8wrapper.h"
+
 
 typedef int Bool;
 
@@ -10,13 +12,7 @@ class FrustumClass
 {
 };
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
@@ -66,9 +62,7 @@ public:
 	W3DVolumetricShadow *m_bufferNext;
 };
 
-class IDirect3DDevice8
-{
-};
+
 
 typedef long (__stdcall *BfmeSetRenderState)(IDirect3DDevice8 *, unsigned, unsigned);
 
@@ -81,7 +75,6 @@ public:
 };
 
 extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
-extern IDirect3DDevice8 *TheD3DDevice;
 extern AABoxClass g_bfmeVisibleShadowBounds;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
@@ -167,7 +160,7 @@ void W3DVolumetricShadowManager::renderShadows(void)
 
 	if (TheW3DRadarFormatCaps->m_caps & 0x100)
 	{
-		IDirect3DDevice8 *device = TheD3DDevice;
+		IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
 		(*(BfmeSetRenderState **)device)[57](device, 0xB9, 0);
 	}
 }

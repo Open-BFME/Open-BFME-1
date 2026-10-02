@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD
+#include "dx8wrapper.h"
+
 // readable body of ?postRender@ScreenDefaultFilter@@: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 //
 // Retail 0x007D46D0: ScreenDefaultFilter::postRender.  BFME passes Coord2D by
@@ -23,7 +25,6 @@ struct BfmeDevice
 	BfmeDeviceVt *vt;
 };
 
-extern "C" BfmeDevice *g_bfmeO1145;
 
 void *__cdecl bfmeEndRenderToTexture(void);
 void __cdecl bfmeDrawFilterUV(int a, int b, Coord2D *uv);
@@ -48,7 +49,7 @@ bool ScreenDefaultFilter::postRender(int mode, Coord2D scroll, bool &extra)
 	if (!set(mode))
 		return false;
 
-	BfmeDevice *dev = g_bfmeO1145;
+	BfmeDevice *dev = reinterpret_cast<BfmeDevice *>(DX8Wrapper::_Get_D3D_Device8());
 	dev->vt->SetTexture(dev, 0, tex);
 
 	Coord2D uv;

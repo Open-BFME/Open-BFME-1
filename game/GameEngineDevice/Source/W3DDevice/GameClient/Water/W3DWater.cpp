@@ -714,7 +714,6 @@ public:
 		unsigned int, BfmeRetailIndexBuffer **, void *) = 0;
 };
 
-extern BfmeRetailDevice *g_retailWaterDevice;			///< retail [0x01340534]
 
 struct BfmeWaterIndexLayout
 {
@@ -738,7 +737,7 @@ HRESULT WaterRenderObjClass::generateIndexBuffer(Int sizeX, Int sizeY)
 	// Create index buffer
 	WORD *pIndices;
 
-	if ((hr = g_retailWaterDevice->CreateIndexBuffer((self->numIndices + 2) * sizeof(WORD),
+	if ((hr = reinterpret_cast<BfmeRetailDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateIndexBuffer((self->numIndices + 2) * sizeof(WORD),
 		8, 101, 1, &self->indexBufferD3D, 0)) < 0)
 		return hr;
 

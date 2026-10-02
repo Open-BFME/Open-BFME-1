@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /EHsc
+#include "dx8wrapper.h"
+
 // Retail 0x007DBA00: vtable0x01128C5C slot0; matched constructor Rva007DCA80.
 struct Surface;
 struct Texture;
@@ -14,7 +16,6 @@ struct DeviceVtable {
 struct Device {DeviceVtable *v;};
 struct Rect {long left,top,right,bottom;};
 extern "C" long __stdcall D3DXLoadSurfaceFromMemory(Surface*,const void*,const Rect*,const void*,unsigned,unsigned,const void*,const Rect*,unsigned,unsigned);
-extern Device *HighlightDevice;
 extern unsigned HighlightVertexSupport,HighlightPixelSupport;
 // Retail 0x012F9CE0. ScreenHilightFilter::init stores a sibling at 0x012F9CDC
 // under the same HighlightActive name.
@@ -26,7 +27,7 @@ class BfmeVertexShaderLoader {public: static long LoadAndCreateD3DShader(const c
 class BfmeShaderLoader {public: static long LoadAndCreateD3DShader(const char*,unsigned long*);};
 struct Cu {unsigned f[8];};
 
-class TextureClass{public:void Release_Ref();};
+
 class BFMEWaterTrackTexture{public:void Release_Ref();};
 class BFMEWaterTrackTextureHandle{public:TextureClass*m_texture;~BFMEWaterTrackTextureHandle(){if(m_texture)((BFMEWaterTrackTexture*)m_texture)->Release_Ref();}};
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char*,int,int);
@@ -48,12 +49,12 @@ int Rva007DCA80::init(){
  if(BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\hilightfilter.vso",&vertexShader)<0){shutdown();return 0;}
  if(BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\hilightfilter.pso",&pixelShader)<0){shutdown();return 0;}
  size=((Cu*)bfmeCurrentCU())->f[3];
- if(HighlightDevice->v->CreateTexture(HighlightDevice,size,size,1,1,21,0,&texture[0],0)<0){shutdown();return 0;}
+ if(reinterpret_cast<Device *>(DX8Wrapper::_Get_D3D_Device8())->v->CreateTexture(reinterpret_cast<Device *>(DX8Wrapper::_Get_D3D_Device8()),size,size,1,1,21,0,&texture[0],0)<0){shutdown();return 0;}
  if(texture[0]->v->GetSurfaceLevel(texture[0],0,&surface[0])!=0){
   if(texture[0])texture[0]->v->Release(texture[0]);
   texture[0]=0;surface[0]=0;
  }
- Device*dev=HighlightDevice;
+ Device*dev=reinterpret_cast<Device *>(DX8Wrapper::_Get_D3D_Device8());
  if(dev->v->CreateTexture(dev,size,size,1,1,21,0,&texture[1],0)<0){shutdown();return 0;}
  if(texture[1]->v->GetSurfaceLevel(texture[1],0,&surface[1])!=0){
   if(texture[1])texture[1]->v->Release(texture[1]);texture[1]=0;surface[1]=0;

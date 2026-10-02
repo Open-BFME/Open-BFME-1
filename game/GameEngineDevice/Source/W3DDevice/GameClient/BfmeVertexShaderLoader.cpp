@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+#include "dx8wrapper.h"
+
 //
 // BFME's two-argument vertex-shader loader.  The tree-buffer initializer calls
 // this helper for Trees.vso through the 0x000078CE ILT.  Its file-system and
@@ -52,7 +54,6 @@ public:
 extern FileSystem *TheFileSystem;
 
 // BFME's device table places the vertex creation entry at 0x16C.
-extern IDirect3DDevice8 *g_retailShaderDevice;
 typedef HRESULT (__stdcall *BfmeCreateVertexShader)(IDirect3DDevice8 *, const DWORD *, DWORD *);
 
 // ?LoadAndCreateD3DShader@BfmeVertexShaderLoader@@SAJPBDPAK@Z
@@ -87,7 +88,7 @@ HRESULT BfmeVertexShaderLoader::LoadAndCreateD3DShader( const char *filename, DW
 		file->read( (void *)shaderData, fileSize );
 		file->close();
 
-		IDirect3DDevice8 *device = g_retailShaderDevice;
+		IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
 		HRESULT result = (*(BfmeCreateVertexShader **)device)[91]( device, shaderData, shader );
 		HeapFree( GetProcessHeap(), 0, (void *)shaderData );
 

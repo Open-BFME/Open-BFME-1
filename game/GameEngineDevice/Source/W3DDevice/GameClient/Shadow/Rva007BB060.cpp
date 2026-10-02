@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+#include "dx8wrapper.h"
+
 // Retail RVA 0x007BB060, 929 bytes through ret at 0x007BB400 then int3.
 // This is not invalidateCachedLightPositions: no receiver is read. It draws
 // 256 test quads and passes the render target to 0x007B93E0, whose literal is
@@ -56,14 +58,13 @@ public:
 class View;
 extern View *TheTacticalView;
 static inline Rva007BB060View *theTacticalView() { return (Rva007BB060View *)TheTacticalView; }
-extern Rva007BB060Device *Rva01340534Device;
 extern VertexMaterialClass *Rva01340EC4Material;
 extern unsigned int Rva0133F49CChanged;
 extern bool Rva012D6DFCShaderDirty;
 // 0x012D6E08 is ShaderClass::_PresetOpaqueShader; shader.h declares the identity.
 extern unsigned int Rva01340EC0Shader;
 
-class DX8Wrapper { private: static void Apply_Render_State_Changes(); friend void Rva007BB060(); };
+
 void Rva007B93E0(Rva007BB060Surface *surface);
 
 struct Rva007BB060Position {
@@ -75,7 +76,7 @@ struct Rva007BB060Vertex { Rva007BB060Position position; unsigned int color; };
 
 void Rva007BB060()
 {
-    Rva007BB060Device *device = Rva01340534Device;
+    Rva007BB060Device *device = reinterpret_cast<Rva007BB060Device *>(DX8Wrapper::_Get_D3D_Device8());
     if (!device) return;
 
     int x, y;
@@ -124,7 +125,7 @@ void Rva007BB060()
     device->vtable->SetRenderState(device, 52, 0);
 
     Rva007BB060Surface *surface = 0;
-    Rva01340534Device->vtable->GetRenderTarget(Rva01340534Device, 0, &surface);
+    reinterpret_cast<Rva007BB060Device *>(DX8Wrapper::_Get_D3D_Device8())->vtable->GetRenderTarget(reinterpret_cast<Rva007BB060Device *>(DX8Wrapper::_Get_D3D_Device8()), 0, &surface);
     Rva007B93E0(surface);
     surface->vtable->Release(surface);
 }

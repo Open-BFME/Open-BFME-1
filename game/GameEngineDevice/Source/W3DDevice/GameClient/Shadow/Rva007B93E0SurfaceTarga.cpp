@@ -1,4 +1,6 @@
-// cl: /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+#include "dx8wrapper.h"
+
 #include <string.h>
 #include <new>
 #include "targa.h"
@@ -22,7 +24,6 @@ struct DeviceVtable007B93E0 {
  long (__stdcall *CreateOffscreenPlainSurface)(Device007B93E0*,unsigned,unsigned,unsigned,unsigned,Rva007BB060Surface**,void*);
 };
 struct Device007B93E0 { DeviceVtable007B93E0 *vtable; };
-extern Device007B93E0 *Rva01340534Device;
 class Rva009E0360 { public: void m009E0360(); };
 class BfmeAwakenLog
 {
@@ -90,7 +91,7 @@ void Rva007B93E0(Rva007BB060Surface *surface)
  Rva007BB060Surface *copy=0;
  SurfaceDesc007B93E0 desc;
  surface->vtable->GetDesc(surface,&desc);
- Device007B93E0 *device=Rva01340534Device;
+ Device007B93E0 *device=reinterpret_cast<Device007B93E0 *>(DX8Wrapper::_Get_D3D_Device8());
  device->vtable->CreateOffscreenPlainSurface(device,desc.Width,desc.Height,desc.Format,2,&copy,0);
  device->vtable->GetRenderTargetData(device,surface,copy);
  LockedRect007B93E0 locked;

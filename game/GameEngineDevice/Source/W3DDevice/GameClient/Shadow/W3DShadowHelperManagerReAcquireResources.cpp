@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /MD /EHsc
+#include "dx8wrapper.h"
+
 
 // W3DShadowHelperManager::ReAcquireResources, retail 0x007B9810.
 // The constructor at 0x007C10D0 zeros seven fields in the 0x1c-byte object
@@ -73,11 +75,7 @@ struct IDirect3DDevice8;
 struct IDirect3DIndexBuffer8;
 struct IDirect3DVertexBuffer8;
 
-class DX8Wrapper
-{
-public:
-	static IDirect3DDevice8 *D3DDevice;
-};
+
 
 extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
 extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
@@ -96,7 +94,7 @@ Bool W3DShadowHelperManager::ReAcquireResources(void)
 	BfmeRadarResetLock guard;
 	reinterpret_cast<GenAlpha *>(this)->h00024D2A();
 
-	BfmeD3DDevice *device = (BfmeD3DDevice *)DX8Wrapper::D3DDevice;
+	BfmeD3DDevice *device = (BfmeD3DDevice *)DX8Wrapper::_Get_D3D_Device8();
 	if (device->CreateIndexBuffer(BfmeShadowIndexCount + BfmeShadowIndexCount,
 		0x208, 101, 0,
 		(void **)&shadowIndexBufferD3D, 0) < 0)

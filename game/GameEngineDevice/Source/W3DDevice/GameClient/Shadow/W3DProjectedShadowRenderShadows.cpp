@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /MD /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+#include "dx8wrapper.h"
+
 // BFME W3DProjectedShadowManager::renderShadows, RVA 0x007B6D30.
 // Identity: ZH W3DProjectedShadow.cpp and the DoShadows retail caller.
 // Lists +4/+8/+C agree with the landed manager constructor/removeAllShadows.
@@ -267,7 +269,6 @@ extern DX8MeshRendererClass *TheDX8MeshRenderer;
 // The bounds call is reached through the TU-local dispatch view above.
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern void *device01340534;
 extern const FrustumClass *shadowCameraFrustum;
 static int drawStartX, drawStartY, drawEdgeX, drawEdgeY;
 static int nShadowDecalVertsInBuf,nShadowDecalIndicesInBuf;
@@ -290,7 +291,7 @@ int W3DProjectedShadowManager::renderShadows(RenderInfoClass &rinfo)
  static SphereClass sphere;
  int projectionCount=0;
  if (!m_shadowList && !m_decalList && !m_simpleDecalList && !m_1c) return projectionCount;
- if (!device01340534 || !TheTerrainRenderObject) return projectionCount;
+ if (!reinterpret_cast<void *>(DX8Wrapper::_Get_D3D_Device8()) || !TheTerrainRenderObject) return projectionCount;
  {
  Rect007B6D30 rect;
  reinterpret_cast<TerrainDispatch007B6D30 *>(TheTerrainRenderObject)->bounds238(&rect);

@@ -474,7 +474,6 @@ public:
 	virtual int __stdcall CreateVertexShader(const BfmeVertexElement *declaration, BfmeShaderResource **shader);
 };
 
-extern BfmeD3DDevice *g_BfmeD3DDevice;
 extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
@@ -1416,7 +1415,7 @@ void W3DTreeBuffer::allocateTreeBuffers(void)
 	};
 
 	if (!self->m_resource4) {
-		Int result = g_BfmeD3DDevice->CreateVertexShader(declaration, &self->m_resource4);
+		Int result = reinterpret_cast<BfmeD3DDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateVertexShader(declaration, &self->m_resource4);
 		if (result < zero)
 			return;
 	}
