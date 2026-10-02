@@ -4,20 +4,12 @@
 // 104 bytes.  Members are inline forwarding wrappers over the retail string,
 // the shape the landed constructor at 0x0014ADC0 uses.
 
-class AsciiStringVZ
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+class BfmeStrVZ : private AsciiString
 {
 public:
-	AsciiStringVZ(const AsciiStringVZ &other);
-	~AsciiStringVZ(void);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeStrVZ : private AsciiStringVZ
-{
-public:
-	BfmeStrVZ(const BfmeStrVZ &other) : AsciiStringVZ(other) {}
+	BfmeStrVZ(const BfmeStrVZ &other) : AsciiString((const AsciiString &)other) {}
 	~BfmeStrVZ(void) {}
 };
 
