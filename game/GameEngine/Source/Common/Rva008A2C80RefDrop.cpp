@@ -8,7 +8,7 @@
 class Rva00894D90Accessor
 {
 public:
-	static unsigned int decrement(int *p);
+	static unsigned int decrement(unsigned int *p);
 };
 
 void bfmeDropA(void *p);
@@ -34,7 +34,7 @@ Rva008A2C80::~Rva008A2C80()
 {
 	if (m_ptr)
 	{
-		if (Rva00894D90Accessor::decrement(m_ptr) == 0)
+		if (Rva00894D90Accessor::decrement((unsigned int *)m_ptr) == 0)
 			bfmeDropA(m_ptr);
 	}
 }

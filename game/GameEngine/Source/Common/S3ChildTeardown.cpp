@@ -14,7 +14,12 @@
 // operator delete(void *, size_t) form -- the size sixteen is sizeof of the
 // child, not a constant the body computes.
 
-int bfmeCheckA(void *p);					// retail 0x00894D90
+class Rva00894D90Accessor
+{
+public:
+	static unsigned int decrement(unsigned int *value);	// retail 0x00894D90
+};
+
 __declspec(noinline) void bfmeDropA(void *p);		// retail 0x00895320
 int bfmeCheckB(void *p);					// retail 0x00894DB0
 __declspec(noinline) void bfmeDropB(void *p);		// retail 0x008961C0
@@ -167,7 +172,7 @@ void Gen_00783A50::bfmeCleanup(void)
 {
 	if (m_bfmeItem)
 	{
-		if (bfmeCheckA(m_bfmeItem) == 0)
+		if (Rva00894D90Accessor::decrement((unsigned int *)m_bfmeItem) == 0)
 			bfmeDropA(m_bfmeItem);
 	}
 }

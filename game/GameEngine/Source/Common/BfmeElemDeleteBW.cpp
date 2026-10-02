@@ -4,7 +4,11 @@
 // The element destructor is inline, so the scalar branch expands it while the
 // array branch still needs the out-of-line copy for the iterator.
 
-int bfmeCheckBW(void *block);
+class Rva00894D90Accessor
+{
+public:
+	static unsigned int decrement(unsigned int *value);	// retail 0x00894D90
+};
 
 void bfmeFreeBW(void *block);
 
@@ -13,7 +17,8 @@ class BfmeElemBW
 public:
 	~BfmeElemBW(void)
 	{
-		if (m_bfmeBlockBW != 0 && bfmeCheckBW(m_bfmeBlockBW) == 0)
+		if (m_bfmeBlockBW != 0 &&
+			Rva00894D90Accessor::decrement((unsigned int *)m_bfmeBlockBW) == 0)
 			bfmeFreeBW(m_bfmeBlockBW);
 	}
 
