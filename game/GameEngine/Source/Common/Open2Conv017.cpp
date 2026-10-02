@@ -1,13 +1,5 @@
-// Two bodies from the 0x006xxxxx run.  Identity is not recovered.
-
-// ---------------------------------------------------------------------------
-// 0x006094E0 -- walk a count that is re-asked every turn, releasing each item.
-//
-// The count comes back from slot 0x6C and is called AGAIN at the bottom of
-// every iteration rather than being hoisted, so the loop condition really does
-// re-evaluate it.  The flag argument reaches the item inverted (`sete` on a
-// zero test), and the release is `dec [item+4] / jne`, a plain zero test
-// rather than the signed `<= 0` some other counters in this binary use.
+// Retail 0x006094E0 (94 bytes), reached through ILT 0x00030963.
+// Callers 0x00609DA0 and 0x003C7B60 establish the pinned member ABI.
 
 class Open26094E0Item
 {
@@ -117,7 +109,7 @@ public:
 	int m_refs;
 };
 
-class Open26094E0Owner
+class BfmeThingESM
 {
 public:
 	virtual void slot00();
@@ -152,15 +144,20 @@ public:
 	virtual Open26094E0Item *slot74( int index );
 };
 
-// @?Rva006094E0@@YGXPAVOpen26094E0Owner@@D@Z 0x006094E0
-void __stdcall Rva006094E0( Open26094E0Owner *owner, char flag )
+class BfmeHostESM
+{
+public:
+	void bfmeMarkESM( BfmeThingESM *owner, int flag );
+};
+
+void BfmeHostESM::bfmeMarkESM( BfmeThingESM *owner, int flag )
 {
 	for( int index = 0; index < owner->slot6C(); ++index )
 	{
 		Open26094E0Item *item = owner->slot74( index );
 		if( item != 0 )
 		{
-			item->slot190( flag == 0 );
+			item->slot190( (char)flag == 0 );
 			if( --item->m_refs == 0 )
 				item->slot00();
 		}
