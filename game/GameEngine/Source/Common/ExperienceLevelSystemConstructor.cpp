@@ -51,7 +51,7 @@ class ExperienceLevelSystem : public SubsystemInterface
 public:
 	ExperienceLevelSystem();
 	virtual ~ExperienceLevelSystem();
-	virtual void init() {}
+	virtual void init();
 	virtual void reset() {}
 	virtual void update() {}
 

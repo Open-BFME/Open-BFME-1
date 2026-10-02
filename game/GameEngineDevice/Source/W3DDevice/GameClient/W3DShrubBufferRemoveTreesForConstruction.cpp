@@ -56,6 +56,7 @@ struct GeometryRecord
 	int m_second;
 	int m_third;
 	StringBase<char> m_name;
+	~GeometryRecord();
 };
 
 class Snapshot

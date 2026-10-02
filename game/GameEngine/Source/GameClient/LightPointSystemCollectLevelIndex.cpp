@@ -28,24 +28,23 @@ template <> struct __type_traits<Gen_t_000bbe70_m4pod> : __type_traits_aux<1> {}
 class BfmeUniqueIntegerStoreC8C0
 {
 public:
-	__forceinline void add(int value)
-	{
-		Gen_t_000bbe70_m4pod *at = m_values.begin();
-		Gen_t_000bbe70_m4pod *end = m_values.end();
-		while (at != end)
-		{
-			if (at->a[0] == value)
-				return;
-			++at;
-		}
-		Gen_t_000bbe70_m4pod *item = (Gen_t_000bbe70_m4pod *)&value;
-		m_values.push_back(*item);
-	}
-
-private:
 	char m_bfmePrefix[8];
 	_STL::vector<Gen_t_000bbe70_m4pod> m_values;
 };
+
+static __forceinline void addLightPointLevelIndex(BfmeUniqueIntegerStoreC8C0 *store, int value)
+{
+	Gen_t_000bbe70_m4pod *at = store->m_values.begin();
+	Gen_t_000bbe70_m4pod *end = store->m_values.end();
+	while (at != end)
+	{
+		if (at->a[0] == value)
+			return;
+		++at;
+	}
+	Gen_t_000bbe70_m4pod *item = (Gen_t_000bbe70_m4pod *)&value;
+	store->m_values.push_back(*item);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -97,7 +96,7 @@ void LightPointSystem::rva0039CB60(BfmeUniqueIntegerStoreC8C0 *indices, const As
 		const LightPointLevel *level = (const LightPointLevel *)m_levels[i]->getFinalOverride();
 		if (level->m_name.compare(name) == 0)
 		{
-			indices->add(i);
+			addLightPointLevelIndex(indices, i);
 			return;
 		}
 	}

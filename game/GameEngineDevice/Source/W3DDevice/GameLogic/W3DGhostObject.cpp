@@ -1369,15 +1369,3 @@ void W3DGhostObjectManager::xfer( Xfer *xfer )
 	}  // end else, loading
 
 }  // end xfer
-
-// ------------------------------------------------------------------------------------------------
-/** Load post process */
-// ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@W3DGhostObjectManager@@MAEXXZ present-unmatched
-void W3DGhostObjectManager::loadPostProcess( void )
-{
-
-	// extend base class
-	GhostObjectManager::loadPostProcess();
-
-}  // end loadPostProcess
