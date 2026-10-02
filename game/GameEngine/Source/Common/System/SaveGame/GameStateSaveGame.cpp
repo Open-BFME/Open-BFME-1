@@ -260,11 +260,14 @@ public:
 	void bfmeClose();
 };
 
-class Rva009D8630BlockWriter
+// The save-side block writer's base constructor and virtual destructor are
+// matched under Gen_009D83D0 (0x009D8630 / 0x009D83D0), so the local view of
+// the 0x40-byte base spells the class that way.
+class Gen_009D83D0
 {
 public:
-	Rva009D8630BlockWriter();
-	virtual ~Rva009D8630BlockWriter();
+	Gen_009D83D0();
+	virtual ~Gen_009D83D0();
 
 private:
 	unsigned char body[0x3c];
@@ -337,7 +340,7 @@ SaveCode GameState::saveGame(AsciiString filename, UnicodeString desc,
 		return SC_ERROR;
 	}
 
-	Rva009D8630BlockWriter xferSave;
+	Gen_009D83D0 xferSave;
 	try
 	{
 		reinterpret_cast<Gen009D6300 *>(&xferSave)->bfmeTryActivate(
