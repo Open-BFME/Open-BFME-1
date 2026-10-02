@@ -309,17 +309,6 @@ unsigned int Rva001FABB0::get() const
 	return m_value;
 }
 
-class Rva001FB240
-{
-public:
-	void slot(unsigned int a, unsigned int b, unsigned int c);
-};
-
-// ?slot@Rva001FB240@@QAEXIII@Z
-void Rva001FB240::slot(unsigned int, unsigned int, unsigned int)
-{
-}
-
 class Rva001FB250
 {
 public:

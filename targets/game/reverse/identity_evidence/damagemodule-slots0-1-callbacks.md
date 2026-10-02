@@ -91,3 +91,33 @@ is made. Use the existing TransitionDamageFX.cpp TU, which includes that
 upstream header, and remove the two retired AddressTinyBodies.cpp definitions.
 The manglings are `?onDamage@TransitionDamageFX@@UAEXPAVDamageInfo@@@Z` and
 `?onHealing@TransitionDamageFX@@UAEXPAVDamageInfo@@@Z`.
+
+## FireWeaponWhenDamagedBehavior: slot 1
+
+Its registered instance factory 00116F30 calls ILT 0002A379 -> constructor
+001FB5D0. Unlike the simpler damage modules above, this class seats its
+DamageModuleInterface at **+0x28**: the constructor first writes abstract
+table VA 010A1BFC at 001FB63F, then final table VA 010A3DD4 at 001FB666.
+Its primary table is VA 010A3F04 (store 001FB652); primary slot 2 is ILT
+0004B4D9 -> 001FB1E0, returning literal VA 010909A4,
+`FireWeaponWhenDamagedBehavior`. The registered factory route and literal
+getter independently establish ownership.
+
+The damage table is three entries followed by zero:
+
+| Slot | ILT RVA | Body RVA | Method |
+|---|---|---|---|
+| 0 | 00008C8D | 001FB930 | matched onDamage |
+| 1 | 0001FB81 | 001FB230 | onHealing |
+| 2 | 0001FD11 | 001FB240 | onBodyDamageStateChange |
+
+The slot-1 stub VA appears exactly once in the complete mapped image, at
+VA 010A3DD8, and E9 resolves directly to 001FB230. Its entire body is
+`C2 04 00`, followed by INT3. GeneralsMD FireWeaponWhenDamagedBehavior.h:127
+explicitly defines public virtual non-const `void onHealing(DamageInfo*) {}`.
+Thus the same proven damage-interface order, matched slot-0 method, unique
+stub and class-specific ZH twin prove
+`?onHealing@FireWeaponWhenDamagedBehavior@@UAEXPAVDamageInfo@@@Z`.
+Retire the stdcall placeholder in Rva001FB230Ret4.cpp and add the method to
+the existing class view in FireWeaponWhenDamagedBehavior_onDamage.cpp.
+No field layout or existing method changes are needed.

@@ -75,6 +75,9 @@ class FireWeaponWhenDamagedBehavior
 {
 public:
 	virtual void onDamage(DamageInfo *damageInfo);
+	virtual void onHealing(DamageInfo *damageInfo);
+	virtual void onBodyDamageStateChange(const DamageInfo *damageInfo,
+		BodyDamageType oldState, BodyDamageType newState);
 
 	Weapon *m_reactionWeaponPristine;
 	Weapon *m_reactionWeaponDamaged;
@@ -148,4 +151,15 @@ void FireWeaponWhenDamagedBehavior::onDamage(DamageInfo *damageInfo)
 		if (m_reactionWeaponPristine && m_reactionWeaponPristine->getStatus() == READY_TO_FIRE)
 			m_reactionWeaponPristine->forceFireWeapon(obj, obj->getPosition());
 	}
+}
+
+// Empty callbacks in the registered DamageModuleInterface table.
+// See damagemodule-slots0-1-callbacks.md and damagemodule-slot2-bodydamagestatechange.md.
+void FireWeaponWhenDamagedBehavior::onHealing(DamageInfo *)
+{
+}
+
+void FireWeaponWhenDamagedBehavior::onBodyDamageStateChange(
+	const DamageInfo *, BodyDamageType, BodyDamageType)
+{
 }
