@@ -78,10 +78,10 @@ public:
 	Rva000A19E0StateBase(void *machine, AsciiString name);
 };
 
-class Rva0014F280StateBase : public State
+class AIInternalMoveToState : public State
 {
 public:
-	Rva0014F280StateBase(void *machine, AsciiString name);
+	AIInternalMoveToState(StateMachine *machine, AsciiString name);
 };
 
 // Both base calls above are declaration-only ABI views of the retail state
@@ -97,12 +97,12 @@ extern int g_AITNGuardPickUpCrateStateVTable;
 extern int g_AITNGuardAttackAggressorStateVTable;
 extern int g_Rva0109B558StateSecondaryVTable;
 
-class AITNGuardReturnState : public Rva0014F280StateBase
+class AITNGuardReturnState : public AIInternalMoveToState
 {
 public:
 	// Retail derived view: primary vptr at this+0, fields at this+0x50/0x54.
 	AITNGuardReturnState(void *machine)
-		: Rva0014F280StateBase(machine, AsciiString("AIEnterState"))
+		: AIInternalMoveToState((StateMachine *)machine, AsciiString("AIEnterState"))
 	{
 		m_field50 = 0;
 		m_vftable = &g_AITNGuardReturnStateVTable;
@@ -174,12 +174,12 @@ private:
 	volatile unsigned int m_field2c;
 };
 
-class AITNGuardPickUpCrateState : public Rva0014F280StateBase
+class AITNGuardPickUpCrateState : public AIInternalMoveToState
 {
 public:
 	// Retail derived view: primary vptr at this+0 and field at this+0x50.
 	AITNGuardPickUpCrateState(void *machine)
-		: Rva0014F280StateBase(machine, AsciiString("AIAttackPickUpCrateState"))
+		: AIInternalMoveToState((StateMachine *)machine, AsciiString("AIAttackPickUpCrateState"))
 	{
 		m_field50 = 0;
 		m_vftable = &g_AITNGuardPickUpCrateStateVTable;

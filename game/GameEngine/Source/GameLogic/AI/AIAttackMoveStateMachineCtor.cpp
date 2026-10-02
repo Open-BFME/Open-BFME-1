@@ -21,10 +21,10 @@ protected:
 		const StateConditionInfo *conditions );
 };
 
-class Rva0014F280StateBase
+class AIInternalMoveToState
 {
 public:
-	Rva0014F280StateBase( void *machine, AsciiString name );
+	AIInternalMoveToState( StateMachine *machine, AsciiString name );
 };
 
 class Rva000A19E0StateBase
@@ -47,7 +47,7 @@ private:
 
 extern int g_AIPickUpCrateStateVTable;
 
-class AIPickUpCrateState : public Rva0014F280StateBase
+class AIPickUpCrateState : public AIInternalMoveToState
 {
 public:
 	AIPickUpCrateState( void *machine );
@@ -59,7 +59,7 @@ private:
 };
 
 AIPickUpCrateState::AIPickUpCrateState( void *machine )
-	: Rva0014F280StateBase( machine, AsciiString( "AIAttackPickUpCrateState" ) )
+	: AIInternalMoveToState( (StateMachine *)machine, AsciiString( "AIAttackPickUpCrateState" ) )
 {
 	m_vftable = &g_AIPickUpCrateStateVTable;
 	m_delayCounter = 0;
