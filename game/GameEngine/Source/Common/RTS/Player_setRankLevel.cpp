@@ -72,7 +72,11 @@ public:
 extern RankInfoStore *TheRankInfoStore;
 extern ControlBar *TheControlBar;
 extern Eva *TheEva;
-extern BfmePlayerList *Rva002EE330ThePlayers;
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+// This TU's view of the object keeps its own spelling and is cast at each use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern "C" __declspec(dllimport) double floor(double value);
 
 __forceinline long fast_float2long_round(Real input)
@@ -167,7 +171,8 @@ Bool Player::setRankLevel(Int newLevel)
 
 	if (TheControlBar)
 	{
-		if (state->m_levelUp && this == Rva002EE330ThePlayers->m_localPlayer)
+		if (state->m_levelUp &&
+			this == ((BfmePlayerList *)ThePlayerList)->m_localPlayer)
 			TheEva->setShouldPlay(EVA_GENERAL_LEVEL_UP, 0);
 
 		TheControlBar->onPlayerRankChanged(this);

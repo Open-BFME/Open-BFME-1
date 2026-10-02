@@ -68,7 +68,11 @@ struct Rva002EE330PlayerList {
   char head[0xc];
   Rva002EE330Player *field0c;
 };
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+// The field view above is TU-local and cast at each use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 struct Rva002EEDA0ShroudManager;
 extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
 struct Coord3D;
@@ -481,7 +485,7 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
           if (!object->getControllingPlayer() || (object->field344 & 1))
             continue;
           if ((object->field90 & 0x8000) && !(object->field90 & 0x20000)) {
-            if (((Player *)Rva002EE330ThePlayers->field0c)
+            if (((Player *)((Rva002EE330PlayerList *)ThePlayerList)->field0c)
                     ->getRelationship(
                         object->getControllingPlayer()->field230) != 2)
               continue;

@@ -194,10 +194,11 @@ public:
 	Player *m_local;
 };
 
-// The ledger types the player-list global's pointee Rva002EE330PlayerList, so
-// the pointee keeps that spelling and inherits the methods under their names.
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+// This TU's view of the object keeps its own spelling and is cast at each use.
 class Rva002EE330PlayerList : public PlayerList {};
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
@@ -259,7 +260,8 @@ void BfmeAptScreenInGameChat::_bfme_send( const char *name )
 
 	if( !msg.isEmpty() )
 	{
-		const Player *localPlayer = Rva002EE330ThePlayers->m_local;
+		const Player *localPlayer =
+			((Rva002EE330PlayerList *)ThePlayerList)->m_local;
 		AsciiString playerName;
 		playerMask = 0;
 		UnicodeString chatText( L"Unknown" );
@@ -272,7 +274,8 @@ void BfmeAptScreenInGameChat::_bfme_send( const char *name )
 			playerName.set(
 				*(const AsciiString *)( (const char *)TheGameInfo->getSlot( i ) + 0x2c ) );
 
-			const Player *player = Rva002EE330ThePlayers->findPlayerWithNameKey(
+			const Player *player =
+				((Rva002EE330PlayerList *)ThePlayerList)->findPlayerWithNameKey(
 				TheNameKeyGenerator->nameToKey( playerName.str() ) );
 
 			if( player && localPlayer )

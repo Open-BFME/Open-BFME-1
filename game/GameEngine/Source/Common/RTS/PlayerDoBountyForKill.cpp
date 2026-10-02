@@ -143,7 +143,9 @@ extern const Real g_bfmeDirectionWeight1285;
 // type, cast at the use.
 class GameLogic;
 extern GameLogic *TheGameLogic;
-extern PlayerList *Rva002EE330ThePlayers;
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+extern PlayerList *ThePlayerList;
 extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
 
@@ -173,7 +175,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
-		const Int playerIndex = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
+		const Int playerIndex = ((Rva002EE330PlayerListThunk *)ThePlayerList)->unidentified_000389f6(false);
 		const Real factor = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerIndex);
 		bounty = (UnsignedInt)(bounty * factor);
 	}

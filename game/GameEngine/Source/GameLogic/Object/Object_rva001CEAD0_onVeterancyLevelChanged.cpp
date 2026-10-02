@@ -69,13 +69,17 @@ struct BfmeBody
 	virtual void onVeterancyLevelChanged(int oldLevel, int newLevel);
 };
 
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+// This TU's view of the object keeps its own spelling and is cast at each use.
 struct BfmePlayerList
 {
 	char pad[0xc];
 	Player *localPlayer;
 	Player *getLocalPlayer() { return localPlayer; }
 };
-extern BfmePlayerList *ThePlayerList;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 struct BfmeGameLogic
 {
@@ -255,7 +259,7 @@ void Rva001CEAD0Object::onVeterancyLevelChanged(int oldLevel, int newLevel)
 	Team *team = *(Team **)((char *)this + 0x23c);
 	Player *owner = team ? team->getControllingPlayer() : 0;
 	Bool hideAnimationForStealth = 0;
-	if (owner != ThePlayerList->getLocalPlayer() &&
+	if (owner != ((BfmePlayerList *)ThePlayerList)->getLocalPlayer() &&
 		(*(unsigned int *)((char *)this + 0x90) & 0x8000) &&
 		!(*(unsigned int *)((char *)this + 0x90) & 0x20000))
 		hideAnimationForStealth = 1;

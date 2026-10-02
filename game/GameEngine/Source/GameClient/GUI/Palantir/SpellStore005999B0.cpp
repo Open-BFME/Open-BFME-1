@@ -29,8 +29,12 @@ class Player { public:
  bool isScienceHidden(ScienceType) const;
  char pad[0x264]; int m_sciencePurchasePoints;
 };
+// Retail's global at 0x012ED748 is EA's PlayerList *ThePlayerList, defined in
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp; only that TU may define it.
+// This TU's view of the object keeps its own spelling and is cast at each use.
 struct Players005999B0 { char pad[12]; Player *player; };
-extern Players005999B0 *PlayerList005999B0;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 class ScienceStore { public: bool playerHasRootPrereqsForScience(const Player*,ScienceType) const; };
 extern ScienceStore *TheScienceStore;
 struct Rva0049B010String;
@@ -55,7 +59,7 @@ void Rva005999B0Screen::frameUpdate()
   ((GenActionSink*)g_theWindowManager)->add((void*)bfmeAptLevel00465CE0((BfmeH1065*)this),"SetLayout",1,mode==1?"_multiplayer":"_campaign",0,0,0,0);
   field25c=mode; return;
  }
- Player *player=PlayerList005999B0->player;
+ Player *player=((Players005999B0*)ThePlayerList)->player;
  bool selected=field2cc>=0;
  if(selected!=field2d0) {
   ((GenActionSink*)g_theWindowManager)->add((void*)bfmeAptLevel00465CE0((BfmeH1065*)this),"ShowSpellHelpText",1,selected?"_on":"_off",0,0,0,0);
