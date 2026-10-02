@@ -59,7 +59,14 @@ public:
 	virtual void bfmeHideZE(BfmeWinZE *win);
 };
 
-extern BfmeManagerZE *TheBfmeManagerZE;
+// The global read at 0x012F1B40 is EA's window-manager singleton, spelled in
+// exactly one name everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The class above
+// is this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 char bfmeCheckZE();
 
@@ -78,8 +85,8 @@ void BfmeOwnerZE::bfmeCloseZE(void *unused)
 	if (m_bfmeWinZE == 0)
 		return;
 
-	if (m_bfmeFlagZE != 0 && TheBfmeManagerZE->bfmeBusyZE() == 0 && bfmeCheckZE() == 0)
-		TheBfmeManagerZE->bfmeHideZE(m_bfmeWinZE);
+	if (m_bfmeFlagZE != 0 && ((BfmeManagerZE *)TheWindowManager)->bfmeBusyZE() == 0 && bfmeCheckZE() == 0)
+		((BfmeManagerZE *)TheWindowManager)->bfmeHideZE(m_bfmeWinZE);
 
 	m_bfmeWinZE->bfmeDoneZE();
 }

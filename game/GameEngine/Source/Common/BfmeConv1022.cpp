@@ -148,7 +148,14 @@ public:
 	virtual void bfmeQuery1022(int h, int k, int f, int *out);
 };
 
-extern BfmeN1022 *g_bfmeN1022;
+// The global read at 0x012F1B40 is EA's window-manager singleton, spelled in
+// exactly one name everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The class above
+// is this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class BfmeI1022
 {
@@ -165,7 +172,7 @@ void BfmeI1022::bfmeGo1022I(void)
 {
 	if (m_bfmeDone == 0) {
 		m_bfmeDone = 1;
-		g_bfmeN1022->bfmeReg1022(m_bfmeP);
+		((BfmeN1022 *)TheWindowManager)->bfmeReg1022(m_bfmeP);
 	}
 }
 
@@ -206,6 +213,6 @@ int bfmeGo1022L(int h)
 	if (h == 0)
 		return -1;
 
-	g_bfmeN1022->bfmeQuery1022(h, 0x402b, 0, &h);
+	((BfmeN1022 *)TheWindowManager)->bfmeQuery1022(h, 0x402b, 0, &h);
 	return h;
 }

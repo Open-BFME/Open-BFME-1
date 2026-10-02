@@ -114,7 +114,14 @@ public:
 	virtual int bfmeNow977C();
 };
 
-extern BfmeClock977 *g_bfmeClock977;
+// The global read at 0x012F1B40 is EA's window-manager singleton, spelled in
+// exactly one name everywhere in the link: `GameWindowManager *TheWindowManager'
+// (?TheWindowManager@@3PAVGameWindowManager@@A), defined in
+// game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp. The class above
+// is this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 char bfmeFallback977C();
 
@@ -132,7 +139,7 @@ public:
 char BfmeC977::bfmeGo977C()
 {
 	if (m_bfmeBuf[-1] != -1 && m_bfmeStamp != 0
-			&& m_bfmeStamp == g_bfmeClock977->bfmeNow977C())
+			&& m_bfmeStamp == ((BfmeClock977 *)TheWindowManager)->bfmeNow977C())
 		return 1;
 
 	return bfmeFallback977C();
