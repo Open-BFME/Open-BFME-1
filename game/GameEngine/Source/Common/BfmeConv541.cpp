@@ -26,10 +26,10 @@ struct BfmeSubBVF
 	BfmeInnerBVF m_bfmeInner;
 };
 
-class BfmeOuterBVF
+class GenOwner
 {
 public:
-	bool bfmeAskBVF();
+	bool ready();
 };
 
 class BfmeThingBVF
@@ -42,7 +42,7 @@ public:
 
 int BfmeThingBVF::bfmeGoBVF()
 {
-	if (((BfmeOuterBVF *)((char *)this - 0x10))->bfmeAskBVF())
+	if (((GenOwner *)((char *)this - 0x10))->ready())
 		return m_bfmeSub->m_bfmeInner.bfmeRunBVF();
 	return -1;
 }

@@ -27,10 +27,10 @@ struct BfmeSubBVG
 	BfmeInnerBVG m_bfmeInner;
 };
 
-class BfmeOuterBVG
+class GenOwner
 {
 public:
-	bool bfmeAskBVG();
+	bool ready();
 };
 
 class BfmeThingBVG
@@ -43,7 +43,7 @@ public:
 
 int BfmeThingBVG::bfmeGoBVG()
 {
-	if (((BfmeOuterBVG *)((char *)this - 0x10))->bfmeAskBVG())
+	if (((GenOwner *)((char *)this - 0x10))->ready())
 		return m_bfmeSub->m_bfmeInner.bfmeRunBVG();
 	return -1;
 }
