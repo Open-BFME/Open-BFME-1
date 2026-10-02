@@ -33,9 +33,20 @@ private:
 	StringBase( const T *text );
 	StringBase( const StringBase<T> &other );
 	~StringBase();
+	void releaseBuffer();
 
 	StringInlineData<T> *m_data;
 };
+
+// Retail exports both narrow destructors as jumps to releaseBuffer at
+// 0x00887940: StringBase<char> at 0x0005E490 and AsciiString at 0x0005EE90.
+// Keep the base forwarding body visible so the derived destructor emits that
+// direct target, as in the canonical WWLib/string_base.h.
+template <>
+inline StringBase<char>::~StringBase()
+{
+	releaseBuffer();
+}
 
 class AsciiString : private StringBase<char>
 {
