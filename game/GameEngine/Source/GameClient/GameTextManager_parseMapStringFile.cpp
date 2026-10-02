@@ -53,6 +53,21 @@ public:
 	virtual Int read( void *, Int );
 };
 
+static inline Bool readLine( char *buffer, Int max, File *file )
+{
+	Int ok = 0;
+	while( max && file->read( buffer, 1 ) == 1 )
+	{
+		ok = 1;
+		if( *buffer == '\n' )
+			break;
+		buffer++;
+		max--;
+	}
+	*buffer = 0;
+	return ok != 0;
+}
+
 class LanguageFilter
 {
 public:
@@ -82,21 +97,6 @@ protected:
 	void removeLeadingAndTrailing( Char *buffer );
 	void readToEndOfQuote( File *file, Char *in, Char *out, Char *wavefile, Int maxBufLen );
 	void translateCopy( WideChar *outbuf, Char *inbuf );
-
-	Bool readLine( char *buffer, Int max, File *file )
-	{
-		Int ok = 0;
-		while( max && file->read( buffer, 1 ) == 1 )
-		{
-			ok = 1;
-			if( *buffer == '\n' )
-				break;
-			buffer++;
-			max--;
-		}
-		*buffer = 0;
-		return ok != 0;
-	}
 
 	void *m_vptr;
 	Int m_textCount;

@@ -50,6 +50,9 @@ private:
 
 extern void j_0000c70c(void);
 
+class NetPacket;
+static __forceinline bool isRoomForAckMessage(NetPacket *packet, NetCommandRef *msg);
+
 class NetPacket
 {
 	class IsAckRepeatReceiver
@@ -65,7 +68,7 @@ class NetPacket
 	};
 
 protected:
-	bool isRoomForAckMessage(NetCommandRef *msg);
+	friend bool isRoomForAckMessage(NetPacket *packet, NetCommandRef *msg);
 	bool addAckCommand(NetCommandRef *msg, UnsignedShort commandID, UnsignedByte originalPlayerID, UnsignedInt playerID);
 
 	unsigned char m_pad000[0x04];
@@ -79,19 +82,18 @@ protected:
 	UnsignedByte m_lastCommandType;
 };
 
-// ?isRoomForAckMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-// The helper is retained only for the force-inline shape of the matched body;
-// retail has no separately owned call at this boundary.
-__forceinline bool NetPacket::isRoomForAckMessage(NetCommandRef *msg)
+// ?addAckCommand@NetPacket@@IAE_NPAVNetCommandRef@@GEI@Z uses this local
+// helper only for its force-inline shape; retail has no separate call here.
+static __forceinline bool isRoomForAckMessage(NetPacket *packet, NetCommandRef *msg)
 {
 	Int len = 0;
 	NetCommandMsg *cmdMsg = msg->getCommand();
-	if (m_lastCommandType != cmdMsg->getNetCommandType())
+	if (packet->m_lastCommandType != cmdMsg->getNetCommandType())
 	{
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID())
+	if (packet->m_lastPlayerID != cmdMsg->getPlayerID())
 	{
 		++len;
 		len += sizeof(UnsignedByte);
@@ -100,7 +102,7 @@ __forceinline bool NetPacket::isRoomForAckMessage(NetCommandRef *msg)
 	len += sizeof(UnsignedShort);
 	len += sizeof(UnsignedByte);
 	len += sizeof(UnsignedInt);
-	return (len + m_packetLen) <= MAX_PACKET_SIZE;
+	return (len + packet->m_packetLen) <= MAX_PACKET_SIZE;
 }
 
 // ?addAckCommand@NetPacket@@IAE_NPAVNetCommandRef@@GEI@Z
@@ -129,7 +131,7 @@ bool NetPacket::addAckCommand(NetCommandRef *msg, UnsignedShort commandID, Unsig
 		return TRUE;
 	}
 
-	if (isRoomForAckMessage(msg))
+	if (::isRoomForAckMessage(this, msg))
 	{
 		NetCommandMsg *cmdMsg = msg->getCommand();
 		if (m_lastCommandType != cmdMsg->getNetCommandType())
