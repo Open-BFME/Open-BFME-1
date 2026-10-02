@@ -54,6 +54,7 @@ import json
 import hashlib
 import functools
 import io
+import multiprocessing
 import pickle
 import os
 import re
@@ -1205,7 +1206,8 @@ def read_facts(objs, rows):
     workers = build._pool_size()
     if workers > 1:
         import concurrent.futures
-        with concurrent.futures.ProcessPoolExecutor(workers, initializer=_truth_init, initargs=(rows,)) as pool:
+        with concurrent.futures.ProcessPoolExecutor(workers, mp_context=multiprocessing.get_context("spawn"),
+                                                    initializer=_truth_init, initargs=(rows,)) as pool:
             return list(pool.map(object_facts, objs, chunksize=64))
     truth = RetailTruth(rows)
     return [object_facts(obj, truth) for obj in objs]

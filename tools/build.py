@@ -8,6 +8,7 @@ import csv
 import functools
 import hashlib
 import json
+import multiprocessing
 import os
 import re
 import shutil
@@ -2571,7 +2572,7 @@ def stale_sources(sources, source_outputs, workers=1):
     pairs = [(source, source_outputs[source]) for source in sources]
     if workers <= 1 or len(pairs) < 200:
         return _stale_chunk(pairs)
-    with concurrent.futures.ProcessPoolExecutor(workers) as pool:
+    with concurrent.futures.ProcessPoolExecutor(workers, mp_context=multiprocessing.get_context("spawn")) as pool:
         return [source for part in pool.map(_stale_chunk, [pairs[i::workers] for i in range(workers)])
                 for source in part]
 
