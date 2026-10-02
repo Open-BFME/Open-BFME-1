@@ -226,12 +226,8 @@ void AudioEventRTS::generateFilename( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Audio/AudioEventRTSGetFilenameThunk.cpp
-// ?getFilename@AudioEventRTS@@ present-unmatched
-AsciiString AudioEventRTS::getFilename( void )
-{
-	return m_filenameToLoad;
-}
+// BFME getFilename is owned by AudioEventRTSGetFilenameThunk.cpp at
+// RVA 0x000B3B70. It regenerates a dirty filename before returning the copy.
 
 //-------------------------------------------------------------------------------------------------
 // ?generatePlayInfo@AudioEventRTS@@ present-unmatched
