@@ -15,10 +15,14 @@ class BfmeItemHM : public BfmeObjAS
 {
 };
 
-class BfmeHolderHM
+class Object;
+
+// ILT 0x0000E570 reaches the existing matched StateMachine body 0x000A1490.
+// It reads the goal ID at +0x20 and returns GameLogic::findObjectByID's result.
+class StateMachine
 {
 public:
-	BfmeItemHM *bfmeGetHM();
+	Object *getGoalObject();
 };
 
 class BfmeInnerCPB
@@ -65,7 +69,7 @@ public:
 public:
 	unsigned char m_unobserved04[0x1c];
 	BfmeInnerCPB m_inner20;
-	BfmeHolderHM *m_holder30;
+	StateMachine *m_holder30;
 };
 
 struct Rva00242B90Member
@@ -140,7 +144,8 @@ void Rva00242B90This::rva00242B90(BfmeObjAS *param)
 					BfmeObjAS *parentOfParam = param->bfmeParentAS(0);
 					if (unit->testAt184())
 					{
-						BfmeItemHM *goal = unit->m_holder30->bfmeGetHM();
+						BfmeItemHM *goal = reinterpret_cast<BfmeItemHM *>(
+							unit->m_holder30->getGoalObject());
 						if (goal != 0)
 						{
 							if (param == static_cast<BfmeObjAS *>(goal))
