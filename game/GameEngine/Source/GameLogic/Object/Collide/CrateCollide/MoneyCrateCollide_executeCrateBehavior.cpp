@@ -28,8 +28,10 @@ public:
 	Int unidentified_000389f6(Bool includeFields);
 };
 
-class Rva002EE330PlayerList;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; Rva002EE330PlayerListThunk
+// above is this TU's read of its unidentified_000389f6 surface.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class Rva00083240Thunk
 {
@@ -210,7 +212,7 @@ Bool MoneyCrateCollide::executeCrateBehavior(Object *other)
 	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
 	{
 		const Int playerIndex = reinterpret_cast<Rva002EE330PlayerListThunk *>(
-			Rva002EE330ThePlayers)->unidentified_000389f6(false);
+			ThePlayerList)->unidentified_000389f6(false);
 		const float factor = reinterpret_cast<Rva00083240Thunk *>(
 			reinterpret_cast<char *>(TheWritableGlobalData) + 0xee0)->unidentified_00009e12(playerIndex);
 		money = static_cast<UnsignedInt>(money * factor);

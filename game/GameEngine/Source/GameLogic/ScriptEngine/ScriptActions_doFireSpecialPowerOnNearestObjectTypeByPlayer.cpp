@@ -143,7 +143,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 extern ThingFactory *TheThingFactory;
-extern PlayerList *ThePlayers;
+extern PlayerList *ThePlayerList;
 extern PartitionManager *ThePartitionManager;
 extern void j_000241fe(void);
 extern void j_0002ee60(void);
@@ -242,7 +242,7 @@ void ScriptActions::rva002F9A80(
 
 	while (playerMask)
 	{
-		Player *thePlayer = bfmeGetEachPlayer(ThePlayers, playerMask);
+		Player *thePlayer = bfmeGetEachPlayer(ThePlayerList, playerMask);
 		ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectType);
 		Object *object;
 		if (objectTypes)

@@ -156,8 +156,10 @@ public:
 // 0x012F0898 is retail's `GameLogic *TheGameLogic`; the view types below are
 // this TU's local reads of the same global, so cast at the use.
 extern GameLogic *TheGameLogic;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; Rva002EE330PlayerListThunk
+// above is this TU's read of its unidentified_000389f6 surface.
 class PlayerList;
-extern PlayerList *Rva002EE330ThePlayers;
+extern PlayerList *ThePlayerList;
 extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
 
@@ -177,7 +179,7 @@ void AutoDepositUpdate::awardInitialCaptureBonus(Player *player)
 	money = getAutoDepositUpdateModuleData()->m_initialCaptureBonus;
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
-		const Int playerIndex = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
+		const Int playerIndex = ((Rva002EE330PlayerListThunk *)ThePlayerList)->unidentified_000389f6(false);
 		const float factor = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerIndex);
 		money = (Int)(money * factor);
 	}

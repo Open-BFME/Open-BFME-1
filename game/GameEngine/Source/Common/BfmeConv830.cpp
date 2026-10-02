@@ -27,12 +27,18 @@ public:
 	void notify(void *param, int flag);
 };
 
+// Retail's global at 0x012ED748 is EA's `PlayerList *ThePlayerList`, defined
+// once in game/GameEngine/Source/Common/RTS/PlayerList.cpp. BfmeMgrD74 is this
+// TU's local view of the iterator surface, so cast at the use.
+class PlayerList;
+
 class BfmeMgrD74
 {
 public:
 	BfmeObjNotify3F0* getNext(short *pIter);
 };
-extern BfmeMgrD74 *g_mgr12ED748;
+extern PlayerList *ThePlayerList;
+static inline BfmeMgrD74 *localThePlayerList() { return (BfmeMgrD74 *)ThePlayerList; }
 
 class BfmeMgrF07
 {
@@ -97,7 +103,7 @@ void __stdcall bfmeIterateAndNotify3F0(void *key, void *param)
 	key = (void*)g_mgr12F076C->findSomething(key, 0);
 	if ((unsigned short)(int)key != 0) {
 		do {
-			BfmeObjNotify3F0 *obj = g_mgr12ED748->getNext((short*)&key);
+			BfmeObjNotify3F0 *obj = localThePlayerList()->getNext((short*)&key);
 			if (obj) {
 				obj->notify(param, 0);
 			}
@@ -110,7 +116,7 @@ void __stdcall bfmeIterateAndNotify510(void *key, void *param)
 	key = (void*)g_mgr12F076C->findSomething(key, 0);
 	if ((unsigned short)(int)key != 0) {
 		do {
-			BfmeObjNotify3F0 *obj = g_mgr12ED748->getNext((short*)&key);
+			BfmeObjNotify3F0 *obj = localThePlayerList()->getNext((short*)&key);
 			if (obj) {
 				obj->notify(param, 1);
 			}

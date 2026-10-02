@@ -125,11 +125,9 @@ public:
 	Player *findPlayerWithNameKey( NameKeyType key );
 };
 
-class Rva002EE330PlayerList : public PlayerList
-{
-};
-
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; the PlayerList view
+// above is this TU's read of its findPlayerWithNameKey surface.
+extern PlayerList *ThePlayerList;
 
 class Player
 {
@@ -173,7 +171,7 @@ int Rva00513740Owner::_bfme_getInternetPlayerStatus( const UnicodeString &name )
 	if( TheBfmeGameLogicView()->m_gameMode != 5 )
 		return 0;
 
-	if( Rva002EE330ThePlayers == 0 )
+	if( ThePlayerList == 0 )
 		return 0;
 
 	for( Int slotNum = 0; slotNum < 8; ++slotNum )
@@ -191,7 +189,7 @@ int Rva00513740Owner::_bfme_getInternetPlayerStatus( const UnicodeString &name )
 
 		AsciiString playerName(
 			*(const AsciiString *)( (const char *)slot + 0x2c ) );
-		Player *player = Rva002EE330ThePlayers->findPlayerWithNameKey(
+		Player *player = ThePlayerList->findPlayerWithNameKey(
 			NAMEKEY( playerName ) );
 		if( player == 0 )
 			return 0;

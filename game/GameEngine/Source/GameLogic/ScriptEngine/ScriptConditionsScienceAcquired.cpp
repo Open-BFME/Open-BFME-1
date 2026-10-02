@@ -45,7 +45,11 @@ class GameLogic;
 extern GameLogic *TheGameLogic;
 extern BfmeM1091 *g_bfmeM1091;
 extern BfmeC1091 *g_bfmeC1091;
-extern BfmeD1091 *g_bfmeD1091;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; BfmeD1091 is this
+// TU's view of the getEachPlayer surface, so cast at the use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+static inline BfmeD1091 *localThePlayerList() { return (BfmeD1091 *)ThePlayerList; }
 extern BfmeP1091 *g_bfmeP1091;
 
 class Parameter;
@@ -69,7 +73,7 @@ bool ScriptConditions::evaluateScienceAcquired(
 	scienceParm = reinterpret_cast<Parameter *>(
 		g_bfmeP1091->bfmeNext1091(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(scienceParm)) {
-		BfmeR1091 *r = g_bfmeD1091->bfmeLook1091(
+		BfmeR1091 *r = localThePlayerList()->bfmeLook1091(
 			reinterpret_cast<short *>(&scienceParm));
 
 		if (r && r->bfmeHas1091(e))
@@ -86,7 +90,7 @@ char __stdcall bfmeGo1091B(int a)
 		return 0;
 	a = g_bfmeP1091->bfmeNext1091(a);
 	while ((short)a) {
-		BfmeR1091 *r = g_bfmeD1091->bfmeLook1091((short *)&a);
+		BfmeR1091 *r = localThePlayerList()->bfmeLook1091((short *)&a);
 
 		if (r && r->bfmeChk1091())
 			return 0;
@@ -102,7 +106,7 @@ char __stdcall bfmeGo1091C(int a)
 		return 0;
 	a = g_bfmeP1091->bfmeNext1091(a);
 	while ((short)a) {
-		BfmeR1091 *r = g_bfmeD1091->bfmeLook1091((short *)&a);
+		BfmeR1091 *r = localThePlayerList()->bfmeLook1091((short *)&a);
 
 		if (r && r->bfmeTest1091(0))
 			return 0;

@@ -118,15 +118,15 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-struct Rva002EE330PlayerList;
-
 // Retail's singleton at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`;
 // this TU keeps its own BfmeThingFactory ABI view and casts at the use.
 class ThingFactory;
 
 extern ScriptEngine *TheScriptEngine;
 extern TeamFactory *TheTeamFactory;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; the PlayerList view
+// above is this TU's read of its getPlayerFromMask surface.
+extern PlayerList *ThePlayerList;
 extern ThingFactory *TheThingFactory;
 extern const Real g_bfmeK1253;
 
@@ -152,8 +152,7 @@ Bool ScriptConditions::evaluateHasCommandPointsToBuildTeam(Parameter *player,
 	if (mask == 0)
 		return false;
 
-	Player *thePlayer =
-		((PlayerList *)Rva002EE330ThePlayers)->getPlayerFromMask(mask);
+	Player *thePlayer = ThePlayerList->getPlayerFromMask(mask);
 	if (thePlayer == 0)
 		return false;
 

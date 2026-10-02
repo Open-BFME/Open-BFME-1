@@ -41,7 +41,10 @@ public:
 	Player *m_localPlayer;
 };
 
-extern PlayerListView *ThePlayerList;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; PlayerListView is this
+// TU's view of its +0x0C local-player slot, so cast at the use.
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class Rva002377A0GlobalDataView
 {
@@ -154,7 +157,7 @@ private:
 // their observed integer widths; their meanings are not asserted here.
 void Rva002377A0HordeContain::rva002377a0( void )
 {
-	Player *localPlayer = ThePlayerList->m_localPlayer;
+	Player *localPlayer = ((PlayerListView *)ThePlayerList)->m_localPlayer;
 	Bool forwardMembers = false;
 	Object *owner = *(Object **)((char *)this - 0xDC);
 
