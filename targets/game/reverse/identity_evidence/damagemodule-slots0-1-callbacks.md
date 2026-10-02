@@ -61,3 +61,33 @@ already elsewhere: RVAs 00891AB0, 008AB800, 008BD000 and 008F8E60 in
 AddressTinyBodiesD0083FDF0.cpp, and 0083FE30 (`basic_streambuf<wchar_t>::pubsync`)
 in stlport_wide_streambuf_xsgetn.cpp. No ledger claim or name at these five
 addresses changes.
+
+## TransitionDamageFX: the same two slots
+
+Registered factory 0011E880 (registration 0012FA95, literal VA 0108FCD8)
+calls ILT 0003F526 -> constructor 00252F50. Its last vtable stores are
+primary VA 010B265C, behavior VA 010B2598 at +0x0C, and damage VA 010B2588
+at +0x10. The earlier +0x10 store is the identical three-pure-virtual abstract
+table VA 010A1BFC used by BoneFXDamage. Primary slot 2 is ILT 00007725 ->
+00252FD0, a six-byte getter returning that `TransitionDamageFX` literal.
+Thus both the registered factory route and an independent primary-table
+getter prove this class owns the damage table.
+
+| Owner | Slot | Table-entry VA | ILT RVA | Body RVA | Bytes | Name |
+|---|---:|---|---|---|---|---|
+| TransitionDamageFX | 0 | 010B2588 | 0001F1CC | 00252FE0 | C2 04 00 | onDamage |
+| TransitionDamageFX | 1 | 010B258C | 0003A418 | 00252FF0 | C2 04 00 | onHealing |
+
+Slot 2 is ILT 00001ABE -> 002525E0, followed by zero at VA 010B2594.
+Each of the slot-0/1 ILT VAs occurs exactly once as a dword in the complete
+mapped retail image, at the listed entry. Both are E9 stubs directly to the
+listed three-byte `ret 4` body; INT3 starts immediately after each body.
+GeneralsMD `TransitionDamageFX.h:254-256` explicitly declares this class's
+empty public virtual `onDamage(DamageInfo*)` and `onHealing(DamageInfo*)`
+overrides immediately before its body-damage-state callback. These class-specific
+ZH twins, the same abstract interface table, and the proven BoneFXDamage slot
+mapping supply the exact method identities and ABI. No inherited-body claim
+is made. Use the existing TransitionDamageFX.cpp TU, which includes that
+upstream header, and remove the two retired AddressTinyBodies.cpp definitions.
+The manglings are `?onDamage@TransitionDamageFX@@UAEXPAVDamageInfo@@@Z` and
+`?onHealing@TransitionDamageFX@@UAEXPAVDamageInfo@@@Z`.

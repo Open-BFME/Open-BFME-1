@@ -299,28 +299,6 @@ int Rva00251AB0Body::body() const
 	return m_value;
 }
 
-class Rva00252FE0Body
-{
-public:
-	void body(int value);
-};
-
-// ?body@Rva00252FE0Body@@QAEXH@Z
-void Rva00252FE0Body::body(int value)
-{
-}
-
-class Rva00252FF0Body
-{
-public:
-	void body(int value);
-};
-
-// ?body@Rva00252FF0Body@@QAEXH@Z
-void Rva00252FF0Body::body(int value)
-{
-}
-
 class Rva00254640Body
 {
 public:
