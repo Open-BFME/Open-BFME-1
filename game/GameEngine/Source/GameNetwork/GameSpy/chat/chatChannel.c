@@ -107,6 +107,32 @@ void ciChannelEntering(CHAT chat, const char *channel)
 	ArrayAppend(connection->enteringChannelList, &chatChannel);
 }
 
+/* The entering-channel list is searched by comparator.  Retail reaches the
+   comparator through a 6-byte body at 0x008718B0 -- FF 25 3C 93 35 01, a jump
+   straight through IAT slot 0x0135933C, then ten int3 bytes padding to
+   0x008718C0 where the matched _ciIsEnteringChannel begins -- and both callers
+   push that body's address (ciChannelLeft and ciChannelEntered, 0x00C718B0).
+   import_binding.retail_slots() maps 0x0135933C to msvcr71.dll!_strcmpi, and
+   _ciIsEnteringChannel calls that same slot to compare a list entry's name
+   against the channel, so the comparator is the case-insensitive name compare.
+   Callers push the BODY's address, not the IAT slot, so the call sites cannot
+   be respelled to _strcmpi without breaking their already-matched bytes; the
+   body has to exist.  Written as an ordinary __cdecl forwarder, /O2 collapses
+   the whole body to the same jump through the import.
+
+   The name is the SDK's own, not a guess: nitrocaster/GameSpy
+   src/GameSpy/Chat/chatChannel.c spells the comparator
+   "int GS_STATIC_CALLBACK ciEnteringChannelComparator(const void *param1,
+   const void *param2)" returning strcasecmp(channel1->name,
+   channel2->name) -- name is the first ciChatChannel member, so offset 0, and
+   strcasecmp is the 2004 build's msvcr71.dll!_strcmpi.  Comparing the two
+   const void* as strings reads the same bytes without redeclaring the type. */
+
+int ciEnteringChannelComparator(const void *param1, const void *param2)
+{
+	return _strcmpi((const char *)param1, (const char *)param2);
+}
+
 void ciChannelLeft(CHAT chat, const char *channel)
 {
 	ciChatChannel chatChannel;
