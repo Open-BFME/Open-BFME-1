@@ -129,48 +129,104 @@ FireSpreadUpdate::~FireSpreadUpdate( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-UpdateSleepTime FireSpreadUpdate::update( void )
+// BFME evidence: targets/game/reverse/identity_evidence/FireSpreadUpdate_update_00292900.md
+// The ZH headers own the engine classes. Address-derived views describe only
+// BFME additions that those headers do not expose.
+class AI;
+extern AI *TheAI;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+
+struct Rva00292900AIData
 {
-	const FireSpreadUpdateModuleData* d = getFireSpreadUpdateModuleData();
-	Object* me = getObject();
+	char pad_00[0xb8];
+	bool slot_b8;
+};
 
-	if( !me->getStatusBits().test( OBJECT_STATUS_AFLAME ) )
-		return UPDATE_SLEEP_FOREVER;		// not on fire -- sleep forever
+struct Rva00292900AI
+{
+	char pad_00[0x14];
+	Rva00292900AIData *slot_14;
+	const Rva00292900AIData *data() const { return slot_14; }
+};
+
+// The filter is a BFME linked node, not the ZH array of filter pointers.
+// Its lifetime ends before the terrain fallback. Both table symbols already
+// exist in this TU through the native filter declarations.
+struct Rva00292900Filter
+{
+	const void *slot_00;
+	Rva00292900Filter *slot_04;
+
+	Rva00292900Filter() : slot_04(0)
 	{
-		ObjectCreationList::create( d->m_oclEmbers, getObject(), NULL );
+		slot_00 = __identifier("??_7PartitionFilterFlammable@@6B@");
+	}
+	~Rva00292900Filter()
+	{
+		slot_00 = __identifier("??_7PartitionFilter@@6B@");
+	}
+};
 
-		if( d->m_spreadTryRange != 0 )
+// Existing pinned four-argument wrappers at 0x009F26A0 and 0x001A62D0.
+// Their integer ABI slots carry position/filter pointers and radius bits.
+class BfmeC1050 { public: void *bfmeGo1050D(int, int, int, int); };
+class BfmeA1275 { public: int bfmeGo1275(int, int, int, int); };
+class Rva001AA5B0Receiver { public: Object *invoke(const Coord3D *); };
+
+// BFME createInternal returns void; the ZH header returns Object*. Bind its
+// existing ILT through the independently decoded single-inheritance thiscall
+// ABI without redeclaring ObjectCreationList or adding a second callee pin.
+void j_000160d1();
+class Rva001D6810Receiver {};
+static void rva001D6810Call(const ObjectCreationList *ocl,
+	const Object *a, const Object *b, unsigned n)
+{
+	typedef void (Rva001D6810Receiver::*Call)(const Object *, const Object *, unsigned);
+	union { void (*symbol)(); Call member; } call;
+	call.symbol = j_000160d1;
+	(((Rva001D6810Receiver *)ocl)->*call.member)(a, b, n);
+}
+
+UpdateSleepTime FireSpreadUpdate::update(void)
+{
+	Object *me = getObject();
+	const FireSpreadUpdateModuleData *d = getFireSpreadUpdateModuleData();
+	if ((*(const unsigned *)((const char *)me + 0x90) & 0x400) == 0)
+		return UPDATE_SLEEP_FOREVER;
+
+	if (d->m_oclEmbers)
+		rva001D6810Call(d->m_oclEmbers, me, 0, 0);
+
+	if (d->m_spreadTryRange != 0)
+	{
+		Object *objectToLight;
 		{
-			// This will spread fire explicitly
-			PartitionFilterFlammable fFilter;
-			PartitionFilter *filters[] = { &fFilter, NULL };
-
-//			SimpleObjectIterator *iter = NULL;
-//			iter = ThePartitionManager->iterateObjectsInRange(getObject(), 
-//																									d->m_spreadTryRange, 
-//																									FROM_CENTER_3D, 
-//																									filters, 
-//																									ITER_SORTED_NEAR_TO_FAR
-//																									);
-//			MemoryPoolObjectHolder hold(iter);
-//			Object *objectToLight = iter->first();
-//
-// srj sez: the above code is stupid and slow. since we only want the closest object,
-// just ask for that; the above has to find ALL objects in range, but we ignore all 
-// but the first (closest).
-//
-			Object* objectToLight = ThePartitionManager->getClosestObject(getObject(), d->m_spreadTryRange, FROM_CENTER_3D, filters);
-			if( objectToLight )
-			{
-				static NameKeyType key_FlammableUpdate = NAMEKEY("FlammableUpdate");
-				FlammableUpdate* fu = (FlammableUpdate*)objectToLight->findUpdateModule(key_FlammableUpdate);
-				if( fu )
-					fu->tryToIgnite();
-			}
+			Rva00292900Filter filter;
+			objectToLight = (Object *)((BfmeC1050 *)ThePartitionManager)->bfmeGo1050D(
+				(int)((char *)getObject() + 0x38), *(const int *)&d->m_spreadTryRange,
+				2, (int)&filter);
 		}
 
-		return UPDATE_SLEEP(calcNextSpreadDelay());
+		// objectToLight is zero on this arm and supplies the final false argument.
+		if (!objectToLight && ((Rva00292900AI *)TheAI)->data()->slot_b8)
+		{
+			const Coord3D *point = (const Coord3D *)((BfmeA1275 *)TheTerrainLogic)->bfmeGo1275(
+				(int)((char *)me + 0x38), *(const int *)&d->m_spreadTryRange,
+				1, (int)objectToLight);
+			if (point)
+				objectToLight = ((Rva001AA5B0Receiver *)TheTerrainLogic)->invoke(point);
+		}
+
+		if (objectToLight)
+		{
+			static NameKeyType key_FlammableUpdate = NAMEKEY("FlammableUpdate");
+			FlammableUpdate *fu = (FlammableUpdate *)objectToLight->findUpdateModule(key_FlammableUpdate);
+			if (fu)
+				fu->tryToIgnite();
+		}
 	}
+	return UPDATE_SLEEP(calcNextSpreadDelay());
 }
 
 //-------------------------------------------------------------------------------------------------
