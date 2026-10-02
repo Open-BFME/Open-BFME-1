@@ -1,3 +1,13 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#define HEAP_ZERO_MEMORY 8
+extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
+extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
+extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
+#include "dx8wrapper.h"
+
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: a W3D shader state block at 0x006D4FF0 (237 B; one stack
 // argument callee-cleaned).  After two calls that take the argument (the
@@ -85,32 +95,28 @@ struct Rva006D4FF0Device
 	virtual long __stdcall SetTextureStageState( unsigned int stage, unsigned int state, unsigned int value );
 };
 
-extern Rva006D4FF0Device *Rva01340534Device;
-extern unsigned int Rva01340594DX8Calls;
-extern unsigned int Rva01340568StageChanges;
-
-class DX8Wrapper
+// Canonical protected storage is shared with the header's device-state code.
+struct Rva006D4FF0DX8Access : DX8Wrapper
 {
-public:
-	static void Set_DX8_Texture_Stage_State_Body( unsigned int stage, unsigned long state, unsigned int value );
-	static void Set_DX8_Render_State( unsigned long state, unsigned int value );
+ static void RecordStageChange() { ++texture_stage_state_changes; }
 };
 
 void __stdcall Rva0090C610Invoke( void *argument );
-void __cdecl Rva006D4690Apply( void *argument );
+// ILT 0x00038389 reaches the verified cdecl filter helper at RVA 0x006D4690.
+void __cdecl setTerrainTextureFilters( unsigned int stage );
 
 static __forceinline void Rva006D4FF0DeviceStageState( unsigned int stage, unsigned int state, unsigned int value )
 {
-	Rva01340534Device->SetTextureStageState( stage, state, value );
-	Rva01340594DX8Calls++;
-	Rva01340568StageChanges++;
+	reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState( stage, state, value );
+	number_of_DX8_calls++;
+	Rva006D4FF0DX8Access::RecordStageChange();
 }
 
 // ?Rva006D4FF0ApplyShaderStates@@YGXPAX@Z
 void __stdcall Rva006D4FF0ApplyShaderStates( void *argument )
 {
 	Rva0090C610Invoke( argument );
-	Rva006D4690Apply( argument );
+	setTerrainTextureFilters( reinterpret_cast<unsigned int>(argument) );
 	DX8Wrapper::Set_DX8_Texture_Stage_State_Body( 0, 0x18, 0 );
 	Rva006D4FF0DeviceStageState( 0, 1, 3 );
 	Rva006D4FF0DeviceStageState( 0, 2, 3 );
