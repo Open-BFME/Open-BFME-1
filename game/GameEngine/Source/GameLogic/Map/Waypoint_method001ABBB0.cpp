@@ -30,7 +30,7 @@ class BitFlags
 class Thing
 {
 public:
-	Bool isAnyKindOf(const BitFlags<69> &) const;
+	Bool isAnyKindOf(const BitFlags<116> &) const;
 };
 
 enum Relationship
@@ -81,12 +81,12 @@ private:
 
 Bool Waypoint::method001ABBB0(Object *obj)
 {
-	if (m_hasInclude && !obj->isAnyKindOf(*(const BitFlags<69> *)m_includeMask))
+	if (m_hasInclude && !obj->isAnyKindOf(*(const BitFlags<116> *)m_includeMask))
 		return false;
 
 	if (m_hasExclude)
 	{
-		if (obj->isAnyKindOf(*(const BitFlags<69> *)m_excludeMask))
+		if (obj->isAnyKindOf(*(const BitFlags<116> *)m_excludeMask))
 			return false;
 
 		if (*(unsigned int *)m_excludeMask & 0x00000200)

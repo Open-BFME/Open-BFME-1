@@ -10,13 +10,13 @@ class BitFlags
 class Thing
 {
 public:
-	bool isAnyKindOf(const BitFlags<69> &) const;
+	bool isAnyKindOf(const BitFlags<116> &) const;
 };
 
 class Rva001DCD30
 {
 	char m_lead[8];
-	BitFlags<69> m_kindOf;
+	BitFlags<116> m_kindOf;
 
 public:
 	int isNotAnyKindOf(const Thing &mask) const;

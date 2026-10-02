@@ -67,11 +67,14 @@ public:
 	unsigned int m_kindBits;
 };
 
+template <int N>
+class BitFlags;
+
 class Thing
 {
 public:
 	bool isKindOf(KindOfType t) const;
-	bool isAnyKindOf(const KindOfMask &mask) const;
+	bool isAnyKindOf(const BitFlags<116> &mask) const;
 
 	int m_vptr;
 	ThingTemplate *m_template;
@@ -281,7 +284,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		KindOfMask *mask88 = (KindOfMask *)((char *)m_curWeaponTemplateSet + 0x88 + kindOff);
 		if (bfmeAnySix(mask88->bits))
 		{
-			if (victim->isAnyKindOf(*mask88))
+			if (victim->isAnyKindOf(*(const BitFlags<116> *)mask88))
 			{
 				damage = 100000.0f;
 				attackRange = 100000.0f;
@@ -296,7 +299,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		}
 
 		KindOfMask *mask28 = (KindOfMask *)((char *)m_curWeaponTemplateSet + 0x28 + kindOff);
-		if (bfmeAnySix(mask28->bits) && victim->isAnyKindOf(*mask28))
+		if (bfmeAnySix(mask28->bits) && victim->isAnyKindOf(*(const BitFlags<116> *)mask28))
 		{
 			damage = 1.0e10f;
 			attackRange = 1.0e10f;

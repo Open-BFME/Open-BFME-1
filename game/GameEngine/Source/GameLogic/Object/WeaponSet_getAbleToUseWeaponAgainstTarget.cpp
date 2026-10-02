@@ -71,11 +71,14 @@ enum KindOfType
 	KINDOF_NONE = 0
 };
 
+template <int N>
+class BitFlags;
+
 class Thing
 {
 public:
 	bool isKindOf(KindOfType t) const;
-	bool isAnyKindOf(const KindOfMask &mask) const;
+	bool isAnyKindOf(const BitFlags<116> &mask) const;
 
 	int m_vptr;
 	ThingTemplate *m_template;
@@ -363,7 +366,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 		if (weapon && weapon->bfmeCanAffect(source, victim))
 		{
 			const KindOfMask &mask = m_curWeaponTemplateSet->m_kindOf88[i];
-			if (!mask.any() || victim->isAnyKindOf(mask))
+			if (!mask.any() || victim->isAnyKindOf(*(const BitFlags<116> *)&mask))
 				return okResult;
 		}
 	}

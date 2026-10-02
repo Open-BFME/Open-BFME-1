@@ -35,10 +35,13 @@ public:
 	WeaponSlotType m_slot;
 };
 
+template <int N>
+class BitFlags;
+
 class Thing
 {
 public:
-	bool isAnyKindOf(const KindOfMask &) const;
+	bool isAnyKindOf(const BitFlags<116> &) const;
 	bool isAboveTerrainOrWater() const;
 };
 
@@ -209,7 +212,7 @@ UpdateSleepTime DemoTrapUpdate::update()
 	Object *other;
 	while (iterator.next(other))
 	{
-		if (other->isAnyKindOf(data->m_ignoreKindOf))
+		if (other->isAnyKindOf(*(const BitFlags<116> *)&data->m_ignoreKindOf))
 			continue;
 		if (other->isEffectivelyDead())
 			continue;
