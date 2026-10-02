@@ -608,17 +608,8 @@ AsciiString AudioEventRTS::generateFilenamePrefix( AudioType audioTypeToPlay, Bo
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?generateFilenameExtension@AudioEventRTS@@ present-unmatched
-AsciiString AudioEventRTS::generateFilenameExtension( AudioType audioTypeToPlay )
-{
-	AsciiString retStr = AsciiString::TheEmptyString;
-	if (audioTypeToPlay != AT_Music) {
-		retStr = ".";
-		retStr.concat(TheAudio->getAudioSettings()->m_soundsExtension);
-	}
-
-	return retStr;
-}
+// BFME generateFilenameExtension is owned by
+// AudioEventRTSGenerateFilenameExtension.cpp at RVA 0x000B3630.
 
 //-------------------------------------------------------------------------------------------------
 // ?adjustForLocalization@AudioEventRTS@@ present-unmatched
