@@ -6,13 +6,12 @@
 
 #include "PreRTS.h"
 #include "Common/STLTypedefs.h"
+#include "Common/AsciiString.h"
 
 struct Rva0049B060Item
 {
 	int m_value;
 };
-
-extern Rva0049B060Item g_rva0049B060Fallback;
 
 class Rva0049B060Owner
 {
@@ -34,5 +33,5 @@ const Rva0049B060Item &Rva0049B060Owner::Rva0049B060()
 			return m_items.back();
 		return m_items[ m_index ];
 	}
-	return g_rva0049B060Fallback;
+	return *reinterpret_cast<const Rva0049B060Item *>( &AsciiString::TheEmptyString );
 }
