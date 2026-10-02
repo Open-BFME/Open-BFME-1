@@ -13278,5 +13278,15 @@
   "after_sha256": "52a24c9d3f1f74e3bfc0fe68a93730d101f4decd326c136f2533910da09ce480",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Q1FrameCheckedWrappers.cpp",
+  "new_path": "game/GameEngine/Source/Common/Q1FrameCheckedWrappers.cpp",
+  "old_name": "Q1Wrapped007FEA00",
+  "new_name": "Rva007FEA00",
+  "before_sha256": "cc61c24c2e7d9c33a878488b46d5fe0bc3e8acb8286593d13213707705085c77",
+  "after_sha256": "cedb7454bb53fcd6b6689bdbafa1871d28defd890ec3a11ced91761b93fb0030",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

@@ -29,13 +29,18 @@
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address; both pins
 // are address-derived and additive.
 
-void Q1Wrapped007FEA00( void );
+// The inner call at RVA 0x007FEA00 is retail's tick forwarder, DEFINED as C in
+// Y4DirtySockSocket.c and recorded there as `_Rva007FEA00`. `extern "C"`
+// gives exactly that decorated symbol from C++; a C++-mangled
+// `Q1Wrapped007FEA00` is a different name nothing defines. Its unsigned int
+// result is dropped here, which is what these seven wrappers already do.
+extern "C" unsigned int Rva007FEA00( void );
 
 #define Q1_FRAME_CHECKED_WRAPPER( NAME )                                  \
 	void NAME( void );                                                    \
 	void NAME( void )                                                     \
 	{                                                                     \
-		Q1Wrapped007FEA00();                                                  \
+		Rva007FEA00();                                                    \
 	}
 
 Q1_FRAME_CHECKED_WRAPPER( Rva007F8B40 )

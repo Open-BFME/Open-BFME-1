@@ -71,7 +71,8 @@ extern "C" unsigned int strlen( const char *text );
 // The empty string this module hands back for a block with no payload.
 extern char g_Rva0130ACE0Empty[];
 extern char g_0130ACF8[];
-unsigned int Rva007FEA00Tick( void );                       // 0x007FEA00
+// 0x007FEA00 is retail's tick forwarder; it is declared with its defining
+// (C) spelling further down with the rest of the socket prototypes.
 
 // The tick this module first ran at, filled in once and never again.
 extern unsigned int g_Rva0130ACDCEpoch;
@@ -764,7 +765,7 @@ Rva00806580Record *Rva008064A0( void )
 		return 0;
 
 	if( g_Rva0130ACDCEpoch == 0 )
-		g_Rva0130ACDCEpoch = Rva007FEA00Tick();
+		g_Rva0130ACDCEpoch = Rva007FEA00();
 
 	record = (Rva00806580Record *)Rva007F0000Alloc( 0x2F0 );
 	if( record != 0 )
@@ -1233,7 +1234,7 @@ void Rva00806B10( Rva00806580Record *record )
 
 	if( record->m_field5C == 2 )
 	{
-		if( Rva007FEA00Tick() > (unsigned int)record->m_field60 )
+		if( Rva007FEA00() > (unsigned int)record->m_field60 )
 		{
 			if( record->m_field00 != 0 )
 				Rva0080B070Destroy( record->m_field00 );
@@ -1249,7 +1250,7 @@ void Rva00806B10( Rva00806580Record *record )
 					Rva007FFA60Swap16( record->m_port ) ) < 0 )
 				return;
 
-			record->m_field60 = Rva007FEA00Tick() + 0x7530;
+			record->m_field60 = Rva007FEA00() + 0x7530;
 			Rva0080DFC0( &record->m_fieldE4, 0 );
 		}
 
