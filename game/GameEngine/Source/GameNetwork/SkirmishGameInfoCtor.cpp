@@ -46,13 +46,13 @@ private:
 	virtual void crc(void *);
 	virtual void xfer(void *);
 	virtual void loadPostProcess();
-	GameSlot m_slots[8];
+	GameSlot m_skirmishSlot[8];
 };
 
 // ??0SkirmishGameInfo@@QAE@XZ
 SkirmishGameInfo::SkirmishGameInfo()
 {
 	for (int i = 0; i < 8; ++i)
-		setSlotPointer(i, &m_slots[i]);
+		setSlotPointer(i, &m_skirmishSlot[i]);
 }
 

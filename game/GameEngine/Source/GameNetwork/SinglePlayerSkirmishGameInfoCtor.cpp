@@ -43,7 +43,7 @@ private:
 	virtual void crc(void *);
 	virtual void xfer(void *);
 	virtual void loadPostProcess();
-	GameSlot m_skirmishSlot[8];
+	GameSlot m_skirmishSlot[8];	// twin layout of SkirmishGameInfo; member name unproven
 };
 
 // ??0SinglePlayerSkirmishGameInfo@@QAE@XZ
