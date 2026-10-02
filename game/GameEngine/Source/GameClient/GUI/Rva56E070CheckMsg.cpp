@@ -1,10 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
 
+class Rva0056AB50Owner
+{
+public:
+	void *getSelectedItemData();
+};
+
 class BfmeThingME
 {
 public:
 	void bfmeGoME(int value);
-	int bfmeTestME();
 	void apply();
 };
 
@@ -65,7 +70,7 @@ int Rva56E070StateOwner::checkMsg(int msg, void *control, void *data)
 	case 0x4015:
 		if (control == m_arg264 || control == m_arg268)
 		{
-			if (bfmeTestME())
+			if (((Rva0056AB50Owner *)this)->getSelectedItemData())
 			{
 				if (m_mode270 == 3)
 					bfmeGoME(0);
