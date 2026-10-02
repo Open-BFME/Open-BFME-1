@@ -48,8 +48,8 @@ typedef BitFlags<192> UpgradeMaskType;
 class UpgradeMuxData
 {
 public:
-	void getUpgradeActivationMasks(UpgradeMaskType &activation,
-		UpgradeMaskType &conflicting) const;
+	void getUpgradeActivationMasks(BitFlags<128> &activation,
+		BitFlags<128> &conflicting) const;
 };
 
 class SpawnBehaviorModuleData
@@ -169,7 +169,9 @@ UpdateSleepTime SpawnBehavior::update()
 	UpgradeMaskType activation;
 	UpgradeMaskType conflicting;
 	SpawnBehaviorModuleData *md = m_module;
-	md->m_upgradeMuxData.getUpgradeActivationMasks(activation, conflicting);
+	md->m_upgradeMuxData.getUpgradeActivationMasks(
+		reinterpret_cast<BitFlags<128> &>(activation),
+		reinterpret_cast<BitFlags<128> &>(conflicting));
 	if (activation.any())
 	{
 		SpawnBehaviorFourthBase *gate =

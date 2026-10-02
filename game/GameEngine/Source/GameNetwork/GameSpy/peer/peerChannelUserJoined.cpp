@@ -93,10 +93,12 @@ typedef struct piPlayer
 } piPlayer;
 
 
+struct BfmeThingDBE;
+int bfmeGoDBE(BfmeThingDBE *);
+
 extern "C" {
 int piRoomToType(PEER, const char *, int *);
 piPlayer *piPlayerJoinedRoom(PEER, const char *, int, int);
-int chatGetBasicUserInfoNoWaitA(void *, const char *, const char **, const char **);
 int piDemangleUser(const char *, unsigned int *, int *);
 void piSetPlayerIPAndProfileID(PEER, const char *, unsigned int, int);
 void piKeyCacheRefreshPlayer(PEER, int, const char *);
@@ -117,7 +119,7 @@ extern "C" void piChannelUserJoinedA(void *chat, const char *channel,
   const char *user;
   unsigned int IP;
   int profileID;
-  if (chatGetBasicUserInfoNoWaitA(connection->chat, nick, &user, 0)
+  if (reinterpret_cast<int (__cdecl *)(void *, const char *, const char **, const char **)>(bfmeGoDBE)(connection->chat, nick, &user, 0)
       && piDemangleUser(user, &IP, &profileID))
    piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
  }
