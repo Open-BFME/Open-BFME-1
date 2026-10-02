@@ -1,9 +1,15 @@
 extern "C" unsigned char bfmeVftCUEa[];
 extern "C" unsigned char bfmeVftCUEb[];
 
-struct BfmeBaseCUE
+// The tail call at this+4 is the 0x00013994 ILT thunk into the matched
+// ?unlink@GenNode_006fa270@@QAEXXZ (see
+// game/GameEngine/Source/Common/Gen_006fa270.cpp), so the node is
+// re-declared here by its defining name with the member function
+// declared but not defined: this TU emits no second copy of that
+// COMDAT.
+struct GenNode_006fa270
 {
-	void bfmeDtorCUE();
+	void unlink();
 };
 
 struct BfmeSecondCUE
@@ -14,7 +20,7 @@ struct BfmeSecondCUE
 struct BfmeThingCUE
 {
 	void *m_bfmeVftB;
-	BfmeBaseCUE m_bfmeBase;
+	GenNode_006fa270 m_bfmeBase;
 	unsigned char m_bfmeGap[0xc];
 	BfmeSecondCUE m_bfmeSecond;
 };
@@ -24,5 +30,5 @@ void __fastcall bfmeGoCUE(BfmeThingCUE *p)
 	BfmeSecondCUE *s = p ? &p->m_bfmeSecond : 0;
 	s->m_bfmeVft = bfmeVftCUEa;
 	p->m_bfmeVftB = bfmeVftCUEb;
-	p->m_bfmeBase.bfmeDtorCUE();
+	p->m_bfmeBase.unlink();
 }
