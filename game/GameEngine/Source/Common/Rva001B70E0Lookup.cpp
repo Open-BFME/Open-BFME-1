@@ -49,14 +49,21 @@ public:
 	BfmeNodeERA *m_bfmeEndERA;
 };
 
+// 0x012EF504 is retail's TheLocomotorStore (dir32 record
+// ?TheLocomotorStore@@3PAVLocomotorStore@@A); the real class and global are
+// declared by GameLogic/Locomotor.h, which this TU does not include, so the
+// global is named by forward declaration here and the layout view below stays
+// TU-local.
+class LocomotorStore;
+
+extern LocomotorStore *TheLocomotorStore;
+
 class BfmeOwnerERA
 {
 public:
 	unsigned char m_bfmeHeadERA[8];
 	BfmeMapERA m_bfmeMapERA;
 };
-
-extern BfmeOwnerERA *g_bfmeOwnerERA;
 
 void * __stdcall Rva001B70E0Lookup(BfmeStrERA *name)
 {
@@ -71,7 +78,7 @@ void * __stdcall Rva001B70E0Lookup(BfmeStrERA *name)
 		return 0;
 	}
 
-	BfmeMapERA *map = &g_bfmeOwnerERA->m_bfmeMapERA;
+	BfmeMapERA *map = &reinterpret_cast<BfmeOwnerERA *>(TheLocomotorStore)->m_bfmeMapERA;
 	BfmeNodeERA *node;
 	map->bfmeFindERA(&node, &key);
 

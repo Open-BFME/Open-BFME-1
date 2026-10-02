@@ -54,7 +54,13 @@ class Rva001B70E0LocomotorStore
 public:
     const LocomotorTemplate *lookup(const AsciiString &name);
 };
-extern Rva001B70E0LocomotorStore *TheRva001B70E0LocomotorStore;
+// 0x012EF504 is retail's TheLocomotorStore; the class and the global are
+// declared by GameLogic/Locomotor.h, which this TU does not include (and whose
+// LocomotorStore carries no `lookup` member, so the layout view above has to
+// stay TU-local). Only the global is respelled here; the call keeps going
+// through the view.
+class LocomotorStore;
+extern LocomotorStore *TheLocomotorStore;
 class BfmeSinkANB;
 class BfmeThingANB
 {
@@ -76,7 +82,7 @@ void BfmeThingANB::bfmeFinishANB(BfmeSinkANB *sink, void *what)
         throw INIException(3, "Attempted to specify a locomotor for object %s without an AIUpdate\tblock.", thing->m_name.str());
     LocomotorSetType set = (LocomotorSetType)INI::scanIndexList(m_condition.str(),
         TheLocomotorSetNames);
-    const LocomotorTemplate *locomotor = TheRva001B70E0LocomotorStore->lookup(m_locomotor);
+    const LocomotorTemplate *locomotor = reinterpret_cast<Rva001B70E0LocomotorStore *>(TheLocomotorStore)->lookup(m_locomotor);
     if (!data->m_locomotorTemplates[set].empty() && ini->m_loadType != 2 && ini->m_loadType != 4)
         throw INIException(3, "re-specifying a LocomotorSet\tis no longer allowed");
     thing->bfmeResetANB(set, locomotor);
