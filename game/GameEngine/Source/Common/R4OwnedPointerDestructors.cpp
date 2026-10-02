@@ -30,8 +30,10 @@
 //
 // The 0x00172430 base destructor is identified independently as
 // AIInternalMoveToState by its matched body, constructor, and the named state
-// destructors that route through this shared cleanup.  The other base remains
-// address-derived because no equivalent identity evidence exists for it.
+// destructors that route through this shared cleanup.  The 0x000A1B30 base is
+// named Rva000A1B30Holder: that is the DEFINING name at that address (its
+// matched body lives in GameClient/GUI/Rva000A1B30VectorHolderDestructor.cpp),
+// so it is spelled here rather than a local stand-in that could never link.
 //
 // WHAT THE BYTES CANNOT DECIDE.  The type of the owned object beyond "it has a
 // virtual destructor in slot 0", and whether the padding between the vptr and
@@ -39,8 +41,28 @@
 
 struct GenOwned { virtual ~GenOwned(); };
 
-struct Gen000A1B30 { virtual ~Gen000A1B30(); };
+// The base destructor at 0x000A1B30 is owned by
+// GameClient/GUI/Rva000A1B30VectorHolderDestructor.cpp as
+// ??1Rva000A1B30Holder@@QAE@XZ, so this TU declares it by that name -- and
+// without `virtual`, because a virtual base destructor would mangle UAE.
+struct Rva000A1B30Holder { ~Rva000A1B30Holder(); };
 struct AIInternalMoveToState { virtual ~AIInternalMoveToState(); };
+
+// That base must still occupy four bytes at offset 0 (retail tail-calls it
+// with ecx = this, i.e. it is the PRIMARY base), and the defining name cannot
+// provide them: a non-virtual destructor contributes no vptr, so the derived
+// classes slid past it and every member offset moved.  This stand-in reserves
+// the vptr width -- and inlines into each derived destructor -- so the tail
+// call itself carries the real, defining name.  Same shape as
+// OwnedPtrBase000A1B30 in Q4OwnedPtrDtors.cpp, for this very destructor.
+class __declspec( novtable ) R4Base000A1B30
+{
+public:
+	virtual ~R4Base000A1B30()
+	{
+		reinterpret_cast<Rva000A1B30Holder *>( this )->Rva000A1B30Holder::~Rva000A1B30Holder();
+	}
+};
 
 #define R4_OWNED_PTR_MEMBERS( NAME, BASE, PAD )                               \
 	struct NAME : public BASE                                                 \
@@ -71,12 +93,12 @@ struct AIInternalMoveToState { virtual ~AIInternalMoveToState(); };
 		m_owned = 0;                                                          \
 	}
 
-R4_OWNED_PTR_DTOR_GUARDED( Rva00173F30, Gen000A1B30, 0x20 )
+R4_OWNED_PTR_DTOR_GUARDED( Rva00173F30, R4Base000A1B30, 0x20 )
 R4_OWNED_PTR_DTOR_GUARDED( Rva001780A0, AIInternalMoveToState, 0x4C )
 R4_OWNED_PTR_DTOR_GUARDED( Rva00179550, AIInternalMoveToState, 0x5C )
 
 // Rva00183C10 now lives with its constructor and full 18-slot class in
 // GameLogic/AI/Rva00183AF0StateCtor.cpp.
 R4_OWNED_PTR_DTOR_PLAIN( Rva00183DC0, AIInternalMoveToState, 0x68 )
-R4_OWNED_PTR_DTOR_PLAIN( Rva002B85C0, Gen000A1B30, 0x24 )
-R4_OWNED_PTR_DTOR_PLAIN( Rva002BF7D0, Gen000A1B30, 0x28 )
+R4_OWNED_PTR_DTOR_PLAIN( Rva002B85C0, R4Base000A1B30, 0x24 )
+R4_OWNED_PTR_DTOR_PLAIN( Rva002BF7D0, R4Base000A1B30, 0x28 )
