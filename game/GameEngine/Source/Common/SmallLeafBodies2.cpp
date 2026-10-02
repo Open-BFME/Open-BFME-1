@@ -137,7 +137,7 @@ extern unsigned char g_Va01336E7C;
 extern unsigned char g_Va0133F428;
 extern unsigned char g_Va0133F42B;
 extern unsigned char g_Va0133F42C;
-extern unsigned char g_Va0133F42F;
+extern unsigned char g_006fc8d0;
 extern unsigned char g_Va0133F451;
 
 unsigned char Rva0051A6C0GetFlag( void )
@@ -172,7 +172,7 @@ unsigned char Rva006E7010GetFlag( void )
 
 unsigned char Rva0078ABA0GetFlag( void )
 {
-	return g_Va0133F42F;
+	return g_006fc8d0;
 }
 
 unsigned char Rva0078AE10GetFlag( void )

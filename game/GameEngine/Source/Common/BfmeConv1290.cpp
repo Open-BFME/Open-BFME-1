@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeFlagSGA;
+extern unsigned char g_006fc8d0;
 
 void bfmeEndSGA(void);
 
@@ -14,10 +14,10 @@ public:
 
 void BfmeThingSGA::bfmeGoSGA()
 {
-	char saved = g_bfmeFlagSGA;
-	g_bfmeFlagSGA = 0;
+	char saved = g_006fc8d0;
+	g_006fc8d0 = 0;
 	bfmeOneSGA();
 	bfmeTwoSGA();
 	bfmeEndSGA();
-	g_bfmeFlagSGA = saved;
+	g_006fc8d0 = (unsigned char)saved;
 }
