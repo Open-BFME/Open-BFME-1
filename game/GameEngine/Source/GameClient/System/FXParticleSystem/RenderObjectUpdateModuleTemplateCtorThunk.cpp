@@ -52,6 +52,7 @@ class RenderObjectUpdateModuleTemplate : public CategoryModuleTemplate<1>,
 {
 public:
     RenderObjectUpdateModuleTemplate();
+    virtual ~RenderObjectUpdateModuleTemplate();
 };
 
 // ??0RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAE@XZ

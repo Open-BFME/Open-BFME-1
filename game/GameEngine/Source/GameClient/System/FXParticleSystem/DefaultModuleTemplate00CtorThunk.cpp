@@ -42,6 +42,7 @@ class DefaultModuleTemplate : public CategoryModuleTemplate<Category>, public De
 {
 public:
 	DefaultModuleTemplate();
+	virtual ~DefaultModuleTemplate();
 };
 
 template <int Category>

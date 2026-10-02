@@ -55,6 +55,7 @@ class LightningEmissionModuleTemplate : public CategoryModuleTemplate<5>,
 {
 public:
     LightningEmissionModuleTemplate();
+    virtual ~LightningEmissionModuleTemplate();
 };
 
 // ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@XZ

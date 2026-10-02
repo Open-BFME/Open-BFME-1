@@ -55,6 +55,7 @@ class StreakDrawModuleTemplate : public CategoryModuleTemplate<6>,
 {
 public:
     StreakDrawModuleTemplate();
+    virtual ~StreakDrawModuleTemplate();
 };
 
 // ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@XZ
