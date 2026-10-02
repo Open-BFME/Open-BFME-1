@@ -111,3 +111,43 @@ That label describes the existing implementation view, not a second retail
 identity. Its one-pointer thiscall ABI is identical; virtual/public naming
 comes from the independent interface and lexical twin above. No speculative
 field names, new header declarations, source bytes or callee pins are added.
+
+## Correct the related false HordeGarrisonContain destructor at 00249820
+
+The same die-table census exposes an existing incorrect destructor claim.
+Registered factory 001160C0 calls ILT 00037FAB at 001160FE -> constructor
+00248F90. That constructor calls GarrisonContain through ILT 0001934E at
+00248FB9, then writes primary table VA 010AFDC0 at 00248FC9 and die table
+VA 010AFB20 at +0x28 at 00248FEB. Primary slot 2 is ILT 00009CA5 ->
+getter 00249070, returning literal VA 01090A30 `HordeGarrisonContain`.
+The die table's only slot is ILT 000097B9 -> 00249820.
+
+A complete image search finds this ILT VA exactly twice: die tables
+VA 010AFB20 (HordeGarrisonContain) and VA 010AB120 (ContestableContain).
+Contestable's constructor 0021BEE0 calls HordeGarrisonContain through
+ILT 00037FAB at 0021BF0A, then installs VA 010AB120 at +0x28 at
+0021BF33. GarrisonContain, the introducing owner's base, has the distinct
+OpenContain callback 00222640. Thus HordeGarrisonContain introduces this
+body and Contestable inherits it. SlaughterHorde's override is distinct.
+
+The 409-byte body accepts a die-interface receiver (it subtracts 0x28 before
+its first call), handles contained objects, and ends with RET 4 at 002499B6,
+followed immediately by INT3 at 002499B9. It is not the complete destructor.
+The independently decoded scalar-deleting destructor at 00249110 calls
+ILT 00038622 at 00249113. Its actual chain is:
+`00038622 -> 0021A2B0 -> 00037A24 -> 0021D9C0`.
+The final body is already matched as GarrisonContain's complete destructor.
+It never reaches 00249820. Correct the misleading row/pin comments that
+previously claimed that connection; preserve the existing callable pin.
+
+The interface establishes the one-pointer, void-returning callback ABI, but
+there is no class-specific Zero Hour twin or WorldBuilder lexical label for
+HordeGarrisonContain in this proof. Under the team's stricter lexical rule,
+use the proven owner plus address-preserving method name:
+`?Rva00249820@HordeGarrisonContain@@UAEXPBVDamageInfo@@@Z`.
+This corrects the false destructor without inventing a full method name.
+Retain the historical naked byte emission unmodified via explicit
+`object-symbol=??1HordeGarrisonContain@@UAE@XZ`; the old COFF label is
+not a second retail identity and this claims no conversion progress.
+name_corrections.json records the exact before/after source snapshots for
+the intentional descriptive-to-address correction.

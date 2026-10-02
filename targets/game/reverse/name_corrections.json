@@ -14538,5 +14538,15 @@
   "after_sha256": "d238d8babf8bbc5732a9cec0f908268bad5a6ab9b26444bbfd5d61bb68360083",
   "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
   "reason": "The old actionB declaration is only a pin alias through ILT 000122AB to body 001C9AC0. The replacement uses that body's existing matched address-derived Gen001C9AC0::handle(int) declaration, preserving its ABI without treating the local BfmeObjE10 spelling as a historical class identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeGarrisonContainDestructorThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeGarrisonContainDestructorThunk.cpp",
+  "old_name": "HordeGarrisonContain::~HordeGarrisonContain",
+  "new_name": "HordeGarrisonContain::Rva00249820",
+  "before_sha256": "18e9ed4f6e7323976cdffad0a855ccf6bfef71d7da9012ba4a79d7335f2fb296",
+  "after_sha256": "70f23ddc2cf5c584150a600729ff5c958741ea97ff6c0a8448b110382bcf6f9b",
+  "evidence": "targets/game/reverse/identity_evidence/diemodule-slot0-container-ondie.md",
+  "reason": "Registered constructor die-interface slot and real deleting-destructor call chain independently refute the destructor identity; no class-specific lexical witness proves a full callback method name."
  }
 ]

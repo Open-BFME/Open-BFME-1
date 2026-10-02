@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Historical byte lift. RVA 0x00249820 is a die-interface callback, NOT a
+// destructor. The registered constructor census proves HordeGarrisonContain
+// introduces it. See diemodule-slot0-container-ondie.md. The ledger uses
+// HordeGarrisonContain::Rva00249820 and retains this old emission label via
+// object-symbol metadata only; no new reconstruction is claimed.
 
 class __declspec(novtable) HordeGarrisonContain
 {
