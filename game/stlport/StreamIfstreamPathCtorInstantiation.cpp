@@ -11,6 +11,10 @@
 // this ctor's body, not by basic_iostream's (which the fstream twin calls).
 #include <fstream>
 
+template <>
+_STL::locale _STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::pubimbue(
+	const _STL::locale &);
+
 template class _STL::basic_ifstream<wchar_t, _STL::char_traits<wchar_t> >;
 
 template _STL::basic_ifstream<wchar_t, _STL::char_traits<wchar_t> >::basic_ifstream(

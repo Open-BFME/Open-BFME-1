@@ -124,7 +124,8 @@ void Rva001A4DD0GridCount::visit(const Coord3D *position, Real radius,
 					Coord3D delta;
 					delta.set(record->position.x, record->position.y, record->position.z);
 					delta.sub(position);
-					if (radius * radius > delta.lengthSqr())
+					if (radius * radius >
+						(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z))
 					{
 						ICoord3D point;
 						point.x = (int)record->position.x;
