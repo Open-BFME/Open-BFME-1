@@ -508,6 +508,14 @@ class Refused(Exception):
     """Fail closed: the TU is not repaired, and why."""
 
 
+def canonical_source(source):
+    """Use the compiler's source identity for rows, evidence and receipts."""
+    try:
+        return build.resolved(ROOT / source.replace("\\", "/")).relative_to(ROOT).as_posix()
+    except ValueError:
+        raise Refused(f"{source}: source path is outside this checkout") from None
+
+
 def identifier(symbol):
     """(C/C++ identifier, 'C' or 'C++') a function symbol (no __imp_) spells.
     Only plain global functions: a scoped C++ name or a fastcall one is refused."""
@@ -773,7 +781,7 @@ def record_name_correction(source, d):
 
 
 def cmd_apply(args):
-    source = args.source.replace("\\", "/")
+    source = canonical_source(args.source)
     imports, found = load_context()
     work = work_dir(source)
     work.mkdir(parents=True, exist_ok=True)
@@ -843,7 +851,7 @@ def cmd_apply(args):
 
 
 def cmd_check(args):
-    source = args.source.replace("\\", "/")
+    source = canonical_source(args.source)
     imports, found = load_context()
     work = work_dir(source)
     steps = json.loads((work / "plan.json").read_text(encoding="utf-8")) if (work / "plan.json").exists() else []
@@ -917,7 +925,11 @@ def main(argv=None):
         p.add_argument("--model", default=os.environ.get("BFME_MODEL", ""))
         p.set_defaults(func=func)
     args = parser.parse_args(argv)
-    return args.func(args)
+    try:
+        return args.func(args)
+    except Refused as why:
+        print(f"import_binding: REFUSED: {why}")
+        return 1
 
 
 if __name__ == "__main__":
