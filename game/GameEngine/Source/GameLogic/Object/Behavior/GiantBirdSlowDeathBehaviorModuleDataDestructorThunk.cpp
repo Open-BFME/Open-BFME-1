@@ -14,19 +14,22 @@ private:
 	unsigned char m_pad[4];
 };
 
-class GiantBirdSlowDeathBehaviorModuleDataBase
+class SlowDeathBehaviorModuleData
 {
 public:
-	virtual ~GiantBirdSlowDeathBehaviorModuleDataBase();
+	virtual ~SlowDeathBehaviorModuleData();
 private:
-	unsigned char m_pad[0x1b0];
+	unsigned char m_pad[0x1a4];
 };
 
-class __declspec(novtable) GiantBirdSlowDeathBehaviorModuleData : public GiantBirdSlowDeathBehaviorModuleDataBase
+class __declspec(novtable) GiantBirdSlowDeathBehaviorModuleData : public SlowDeathBehaviorModuleData
 {
 public:
 	virtual ~GiantBirdSlowDeathBehaviorModuleData();
 private:
+	unsigned int m_field1A8;
+	unsigned int m_field1AC;
+	unsigned int m_field1B0;
 	AudioEventRTS m_member;
 };
 
