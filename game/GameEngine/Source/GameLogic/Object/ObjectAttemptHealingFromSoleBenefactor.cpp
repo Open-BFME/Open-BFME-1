@@ -150,7 +150,7 @@ public:
 		}
 	}
 	// Same body as the out-of-line Object::attemptHealing at 0x001C3080, inlined here in retail.
-	__forceinline void attemptHealing(Real amount, const Object *source)
+	__forceinline void attemptHealingInline(Real amount, const Object *source)
 	{
 		BodyModuleInterface *body = m_body;
 		if (body)
@@ -198,7 +198,7 @@ Bool Object::attemptHealingFromSoleBenefactor(Real amount, const Object *source,
 			m_soleHealingBenefactorExpirationFrame = now + duration;
 		}
 
-		attemptHealing(amount, source);
+		attemptHealingInline(amount, source);
 
 		if (getTemplate()->m_bfme4CA)
 		{

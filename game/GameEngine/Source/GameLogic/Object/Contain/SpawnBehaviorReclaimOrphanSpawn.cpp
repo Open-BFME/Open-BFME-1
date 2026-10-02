@@ -143,14 +143,6 @@ public:
 class OrphanData
 {
 public:
-	OrphanData()
-	{
-		m_matchTemplate = 0;
-		m_source = 0;
-		m_closest = 0;
-		m_closestDistSq = BIG_DISTANCE;
-	}
-
 	const ThingTemplate *m_matchTemplate;
 	Object *m_source;
 	Object *m_closest;
@@ -162,7 +154,7 @@ Object *Rva0020B860SpawnBehavior::reclaimOrphanSpawn()
 {
 	Player *player = getObject()->getControllingPlayer();
 	const Rva0020B860SpawnBehaviorModuleData *md = getSpawnBehaviorModuleData();
-	OrphanData orphanData;
+	OrphanData orphanData = { 0, 0, 0, BIG_DISTANCE };
 	AsciiString prevName("");
 	for (AsciiString *tempName = md->m_spawnTemplateNameData.begin();
 		tempName != md->m_spawnTemplateNameData.end(); ++tempName)

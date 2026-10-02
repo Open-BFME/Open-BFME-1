@@ -229,7 +229,7 @@ void W3DGadgetProgressBarImageDrawA( GameWindow *window, WinInstanceData *instDa
 
 }
 
-void W3DGadgetProgressBarImageDraw( GameWindow *window, WinInstanceData *instData )
+void W3DGadgetProgressBarImageDrawLocalCopy( GameWindow *window, WinInstanceData *instData )
 {
 	ICoord2D origin, size, start, end;
 	const Image *backLeft, *backRight, *backCenter, 
