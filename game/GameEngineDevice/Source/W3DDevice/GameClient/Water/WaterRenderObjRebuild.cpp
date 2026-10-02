@@ -37,7 +37,7 @@ struct BFMEWaterPolygonTriggerTableView
 	BFMEWaterPolygonTriggerView *m_head;
 };
 
-extern "C" BFMEWaterPolygonTriggerTableView *g_bfmePolygonTriggerTable;
+extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 
 class WaterRenderObjClass
 {
@@ -53,7 +53,7 @@ private:
 
 void WaterRenderObjClass::rebuildPolygonList007A50A0(int)
 {
-	BFMEWaterPolygonTriggerView *trigger = g_bfmePolygonTriggerTable->m_head;
+	BFMEWaterPolygonTriggerView *trigger = ((BFMEWaterPolygonTriggerTableView*)g_rva0018EC80)->m_head;
 	updateMapOverrides();
 
 	for ( ; trigger; trigger = trigger->getNext() )

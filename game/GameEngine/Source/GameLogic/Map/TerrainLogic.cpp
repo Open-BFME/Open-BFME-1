@@ -2148,7 +2148,7 @@ public:
 	virtual Bool getWaterGridHeight(Real x, Real y, Real *height) = 0;
 };
 
-extern "C" BFMETerrainWaterPolygonTableView *g_bfmePolygonTriggerTable;
+extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 extern "C" BFMETerrainWaterVisualView *g_bfmeTerrainVisual;
 extern "C" WaterHandle g_bfmeGridWaterHandle;
 
@@ -2166,7 +2166,7 @@ const WaterHandle* TerrainLogic::getWaterHandle( Real x, Real y )
 	location.y = (Int)y;
 	location.z = 0;
 
-	for (BFMETerrainWaterPolygonView *trigger = g_bfmePolygonTriggerTable->m_head;
+	for (BFMETerrainWaterPolygonView *trigger = ((BFMETerrainWaterPolygonTableView*)g_rva0018EC80)->m_head;
 		trigger; trigger = trigger->getNext()) {
 		if (trigger->isWaterArea() && trigger->pointInTrigger(location) &&
 			trigger->getPoint(0)->z >= waterZ) {

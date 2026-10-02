@@ -239,7 +239,7 @@ public:
 
 extern Waypoint *g_waypointListHead;
 
-extern "C" BfmePolygonTriggerTable *g_bfmePolygonTriggerTable;
+extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 extern "C" WaterHandle g_bfmeGridWaterHandle;
 
 // getWaypointByName compares the by-value AsciiString argument against the
@@ -428,7 +428,7 @@ const WaterHandle *TerrainLogic::getWaterHandleByName(AsciiString name)
 	if (name.compare("Water Grid") == 0)
 		return &g_bfmeGridWaterHandle;
 
-	PolygonTrigger *trig = g_bfmePolygonTriggerTable->m_head;
+	PolygonTrigger *trig = ((BfmePolygonTriggerTable*)g_rva0018EC80)->m_head;
 	while (trig)
 	{
 		if (compareTriggerName(trig->getTriggerName(), name) == 0 && trig->isWaterArea())

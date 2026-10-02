@@ -353,14 +353,14 @@ struct BfmeHoldFAE
 	BfmeItemFAE *m_bfmeP;
 };
 
-extern BfmeHoldFAE *g_bfmeAFAE;
+extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 extern int g_bfmeBFAE;
 extern int g_bfmeCFAE;
 
 void bfmeGoFAE()
 {
-	BfmeItemFAE *p = g_bfmeAFAE->m_bfmeP;
-	g_bfmeAFAE->m_bfmeP = 0;
+	BfmeItemFAE *p = ((BfmeHoldFAE*)g_rva0018EC80)->m_bfmeP;
+	((BfmeHoldFAE*)g_rva0018EC80)->m_bfmeP = 0;
 	g_bfmeBFAE = 1;
 	if (p)
 		p->bfmeDelFAE(1);

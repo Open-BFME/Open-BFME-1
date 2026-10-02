@@ -44,12 +44,12 @@ public:
 	BfmeEntryCN *m_bfmeHead;				// +0x00
 };
 
-extern BfmeTableCN *g_bfmeTableCN;				// retail 0x012ACB50
+extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 
 // ?bfmeLookup@@YAPAVBfmeEntryCN@@PAX@Z
 BfmeEntryCN * __cdecl bfmeLookup(void *key)
 {
-	BfmeEntryCN *entry = g_bfmeTableCN->m_bfmeHead;
+	BfmeEntryCN *entry = ((BfmeTableCN*)g_rva0018EC80)->m_bfmeHead;
 
 	while (entry)
 	{
