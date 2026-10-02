@@ -103,10 +103,12 @@ public:
 	virtual BfmeRva489E0AI *getAI(BfmeRva489E0Object *object) = 0;
 };
 
-class BfmeRva489E0Base
+class Object;
+
+class GarrisonContain
 {
 public:
-	void notify(BfmeRva489E0Object *object, int value);
+	virtual void onContaining(Object *object, bool selected);
 };
 
 class BfmeRva489E0State
@@ -131,7 +133,8 @@ void Rva002489E0::admit(BfmeRva489E0Object *object)
 	if (ai->admissionComplete() == true)
 		return;
 	ai->act(object);
-	((BfmeRva489E0Base *)((char *)this + 0x20))->notify(object, 0);
+	((GarrisonContain *)((char *)this + 0x20))->GarrisonContain::onContaining(
+		(Object *)object, false);
 	primary->post();
 	if (ai->admissionComplete())
 		((BfmeRva489E0State *)TheControlBar)->m_flag = 1;

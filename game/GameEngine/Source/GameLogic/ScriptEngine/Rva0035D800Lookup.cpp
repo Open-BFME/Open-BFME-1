@@ -14,13 +14,12 @@ struct Rva0035D800Node
 	int m_extra;
 };
 
-class Rva0035D800Table
+class AsciiString;
+
+class Rva0035D2B0StringRecordTable
 {
 public:
-	int lookup(int key);
-
-private:
-	unsigned char m_pad[0xC];
+	int addNode(AsciiString *name);
 };
 
 class Rva0035D800Elem
@@ -35,14 +34,14 @@ public:
 
 private:
 	unsigned char m_pad[0x2C];
-	Rva0035D800Table m_table;
+	unsigned char m_table[0xC];
 	Rva0035D800Elem *m_elems;
 };
 
 // @?makeNode@Rva0035D800@@QAEPAURva0035D800Node@@H@Z 0x0035D800
 Rva0035D800Node *Rva0035D800::makeNode(int key)
 {
-	int index = m_table.lookup(key);
+	int index = ((Rva0035D2B0StringRecordTable *)&m_table)->addNode((AsciiString *)key);
 	if (index != -1)
 	{
 		Rva0035D800Node *node = new Rva0035D800Node;
