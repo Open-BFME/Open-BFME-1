@@ -125,12 +125,6 @@ static inline const BfmeSwitchDR *livingWorldCampaignManagerSwitchView()
 	return (const BfmeSwitchDR *)TheLivingWorldCampaignManager;
 }
 
-class BfmeThingNA
-{
-public:
-	void bfmeOneNA();
-};
-
 class Snapshot
 {
 public:
@@ -222,5 +216,5 @@ LivingWorldSound::LivingWorldSound( const LivingWorldSound &that ) :
 	m_isPlaying = that.m_isPlaying;
 	m_hasPlayed = that.m_hasPlayed;
 	if ( (unsigned int)that.m_playState >= 5 && m_sound.m_sound != 0 )
-		reinterpret_cast<BfmeThingNA *>( this )->bfmeOneNA();
+		Rva0061C060();
 }
