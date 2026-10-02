@@ -1,7 +1,8 @@
 // cl: /GX-
-// Rva00801FB0Elem ctor: vtable, V2ZeroInt +8/+C, twin Rva00800630Owner at
+// Rva00801FB0Elem ctor: vtable, V2ZeroInt +8/+C, twin Gen_00800340 members at
 // +0x10/+0x1C, body zeros, m_4C=-1. Stride 0x80 from Rva00802A10::allocate.
-// Pin: ??0Rva00800630Owner@@QAE@XZ -> 0x00800340 (this-zero3).
+// Pin: ?m@Gen_00800340@@QAEPAXXZ -> 0x00800340 (this-zero3), defined in
+// game/gen_small/fun_005.cpp; declared here without a body.
 
 struct V2ZeroInt
 {
@@ -9,10 +10,10 @@ struct V2ZeroInt
 	int m_value;
 };
 
-class Rva00800630Owner
+class Gen_00800340
 {
 public:
-	Rva00800630Owner();
+	void *m();
 
 	void *m_block;
 	int m_field4;
@@ -28,8 +29,8 @@ public:
 	int m_04;
 	V2ZeroInt m_08;
 	V2ZeroInt m_0C;
-	Rva00800630Owner m_10;
-	Rva00800630Owner m_1C;
+	Gen_00800340 m_10;
+	Gen_00800340 m_1C;
 	int m_28;
 	int m_2C;
 	int m_30;
@@ -58,6 +59,11 @@ public:
 
 Rva00801FB0Elem::Rva00801FB0Elem()
 {
+	// Retail constructs the twin +0x10/+0x1C members through the member
+	// function that is defined at 0x00800340; call it under its real name so
+	// the two emitted calls resolve.
+	m_10.m();
+	m_1C.m();
 	m_3C = 0;
 	m_40 = 0;
 	m_04 = 0;

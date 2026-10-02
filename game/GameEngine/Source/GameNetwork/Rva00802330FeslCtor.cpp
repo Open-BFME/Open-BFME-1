@@ -7,10 +7,10 @@ struct V2ZeroInt
 	int m_value;
 };
 
-class Rva00800630Owner
+class Gen_00800340
 {
 public:
-	Rva00800630Owner();
+	void *m();
 
 	void *m_block;
 	int m_field4;
@@ -26,13 +26,16 @@ public:
 	int m_field4;
 	V2ZeroInt m_field8;
 	char m_pad00C[0x0C];
-	Rva00800630Owner m_owner;
+	Gen_00800340 m_owner;
 	int m_field24;
 	int m_field28;
 };
 
 Rva00802380Owner::Rva00802380Owner()
 {
+	// Retail constructs the +0x18 member through the member function defined
+	// at 0x00800340; call it under its real name so the call resolves.
+	m_owner.m();
 	m_field4 = 0;
 	m_field24 = 0;
 	m_field28 = 0;
