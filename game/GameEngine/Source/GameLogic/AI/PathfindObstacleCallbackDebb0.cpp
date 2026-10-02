@@ -69,12 +69,12 @@ public:
 	unsigned int m_packed;			// +0x0c
 };
 
-// The guarded bitfield getter already matched at 0x003D4C50; retail calls it
-// with the cell in ecx.
+// The guarded bitfield getter at 0x003D4C50 returns one masked bit in eax.
+// The callback tests its low byte, as retail does.
 class Rva003D4C50
 {
 public:
-	Bool get( void );
+	Int get( void );
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
@@ -184,7 +184,7 @@ Int ObstacleCellStruct::cellCallback( PathfindCell *previousCell, PathfindCell *
 	if (currentCell->isObstaclePresent( bfme5WalkFirstValue( (Bfme5WalkOwner *)obj ) ))
 		return 0;
 
-	if (((Rva003D4C50 *)currentCell)->get())
+	if ((unsigned char)((Rva003D4C50 *)currentCell)->get())
 		return 0;
 
 	if (m_cell != 0)
