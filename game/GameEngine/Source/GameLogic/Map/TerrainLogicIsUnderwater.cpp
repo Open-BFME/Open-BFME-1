@@ -5,7 +5,7 @@ typedef bool Bool;
 typedef float Real;
 
 struct Coord3D;
-struct WaterHandle {};
+class WaterHandle {};
 
 class TerrainVisualDispatch
 {
@@ -55,13 +55,17 @@ static inline TerrainVisualDispatch *bfmeTerrainVisual()
 	return reinterpret_cast<TerrainVisualDispatch *>(TheTerrainVisual);
 }
 
-extern "C" WaterHandle g_bfmeGridWaterHandle;
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
+// Retail names the grid-water singleton `TerrainLogic::m_gridWaterHandle`
+// (?m_gridWaterHandle@TerrainLogic@@1VWaterHandle@@A, dir32 0x012EF4D4); the
+// extern "C" alias spelled nothing the retail image has.
 class TerrainLogic
 {
 public:
 	virtual Bool isUnderwater(Real x, Real y, Real *waterZ, Real *terrainZ);
+
+protected:
+	static WaterHandle m_gridWaterHandle;
 };
 
 Bool TerrainLogic::isUnderwater(Real x, Real y, Real *waterZ, Real *terrainZ)
@@ -73,7 +77,7 @@ Bool TerrainLogic::isUnderwater(Real x, Real y, Real *waterZ, Real *terrainZ)
 	}
 
 	Real waterHeight = 0.0f;
-	if (water == &g_bfmeGridWaterHandle) {
+	if (water == &TerrainLogic::m_gridWaterHandle) {
 		bfmeTerrainVisual()->getWaterGridHeight(x, y, &waterHeight);
 	} else {
 		waterHeight = self->getWaterHeight(water);

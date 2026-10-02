@@ -76,7 +76,17 @@ public:
 	virtual Bool isBuddy(Int profileID) = 0;
 };
 
-extern BfmeGameSpyInfoView *TheGameSpyInfo;
+// The singleton is defined elsewhere as `GameSpyInfo *TheGameSpyInfo`
+// (?TheGameSpyInfo@@3PAVGameSpyInfo@@A, dir32 0x012F7194); this TU only needs
+// the view slots, so it references the defining spelling and casts at the use.
+class GameSpyInfo;
+extern GameSpyInfo *TheGameSpyInfo;
+
+static inline BfmeGameSpyInfoView *bfmeGameSpyInfoView()
+{
+	return reinterpret_cast<BfmeGameSpyInfoView *>(TheGameSpyInfo);
+}
+
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 
 class GameSpyInfo
@@ -92,7 +102,7 @@ void GameSpyInfo::removeBuddy(Int profileID)
 	if (profileID <= 0)
 		return;
 
-	Bool isBuddy = TheGameSpyInfo->isBuddy(profileID);
+	Bool isBuddy = bfmeGameSpyInfoView()->isBuddy(profileID);
 	if (isBuddy)
 	{
 		request.arg.profile.id = profileID;
@@ -104,10 +114,10 @@ void GameSpyInfo::removeBuddy(Int profileID)
 		request.arg.profile.id = profileID;
 		request.buddyRequestType = BuddyRequest::BUDDYREQUEST_DENYADD;
 		TheGameSpyBuddyMessageQueue->addRequest(request);
-		BuddyInfoMap *requests = TheGameSpyInfo->getBuddyRequestMap();
+		BuddyInfoMap *requests = bfmeGameSpyInfoView()->getBuddyRequestMap();
 		requests->erase(profileID);
 	}
 
-	BuddyInfoMap *buddies = isBuddy ? TheGameSpyInfo->getBuddyMap() : TheGameSpyInfo->getBuddyRequestMap();
+	BuddyInfoMap *buddies = isBuddy ? bfmeGameSpyInfoView()->getBuddyMap() : bfmeGameSpyInfoView()->getBuddyRequestMap();
 	buddies->erase(profileID);
 }

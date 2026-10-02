@@ -12,11 +12,14 @@ public:
 	void bfmeRemoveCA(const char *name);
 };
 
-// Retail spells the singleton `BfmeGameCW *g_bfmeGameCW`
-// (?g_bfmeGameCW@@3PAVBfmeGameCW@@A); bfmeRemoveCA is matched on BfmeHostCA
-// (0x00616320), so only the pointer's spelling changes here.
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// The singleton at 0x012F706C is DEFINED as
+// `LivingWorldManager *TheLivingWorldManager` (?TheLivingWorldManager@@3PAV
+// LivingWorldManager@@A, targets/game/reverse/data_rows.csv); nothing defines
+// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A, so only a reference to the defining
+// spelling links. bfmeRemoveCA is matched on BfmeHostCA (0x00616320), so the
+// pointer is cast at the use.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // Defined in BfmeNamedCtorBG.cpp (its own row keeps this file's row from
 // counting as an orphan-inducing duplicate class); undefined here so the
@@ -50,5 +53,5 @@ __declspec(noinline) AsciiString BfmeNamedBG::bfmeGetKeyBG() const
 
 BfmeNamedBG::~BfmeNamedBG()
 {
-	((BfmeHostCA *)g_bfmeGameCW)->bfmeRemoveCA(bfmeGetKeyBG().str());
+	((BfmeHostCA *)TheLivingWorldManager)->bfmeRemoveCA(bfmeGetKeyBG().str());
 }
