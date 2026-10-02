@@ -28,16 +28,16 @@
 //
 // WHAT THE BYTES DO NOT DECIDE.  Nothing about the pointed-at types: `char *`
 // with literal -8/+8 is used because any 8-byte element type with `p - 1` and
-// `p + 1` encodes the same.  Nothing says the global is a plain function
-// pointer rather than an import thunk slot; the address is 0x01337830 and its
-// four bytes come from retail.  26 of the 34 bytes are concrete -- everything
-// outside the REL32 and that one absolute operand.
+// `p + 1` encodes the same.  The owner spells the cell TheBfmeFree with a
+// different local ABI; this call retains the two-pointer shape seen in retail.
+// 26 of the 34 bytes are concrete -- everything outside the REL32 and that one
+// absolute operand.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
 typedef void ( __cdecl *Q2PairDispatchFn )( char *first, char *second );
 
-extern Q2PairDispatchFn g_Q2PairDispatch;			///< retail 0x01337830
+extern void ( __cdecl *TheBfmeFree )( void *value, unsigned int bytes );
 
 class BfmeItemDX;
 
@@ -48,7 +48,7 @@ void bfmeRemove( BfmeItemDX *block );
 	void NAME( char *a, char *b )                                         \
 	{                                                                     \
 		bfmeRemove( (BfmeItemDX *)a );                                    \
-		g_Q2PairDispatch( a - 8, b + 8 );                                 \
+		( ( Q2PairDispatchFn ) TheBfmeFree )( a - 8, b + 8 );              \
 	}
 
 Q2_INDIRECT_PAIR_DISPATCH( Rva008B2B10 )

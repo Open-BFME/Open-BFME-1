@@ -52,7 +52,7 @@ public:
     Rva008A9B00 *m_next;
 };
 struct Rva008C3B60Node;
-extern Rva008C3B60Node *Rva008C3B60Head;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 struct Rva00899560Pool {
     int m_capacity, m_count;
     void **m_items;
@@ -101,9 +101,9 @@ void Rva008AD530StringBinding::resolve(Rva8CD130Value *scope)
     }
     Rva8CD130Value *value = (Rva8CD130Value *)Rva008AE770TheStack.createString(scope, 0, &key, 1, 1, 0);
     if (value->undefined()) {
-        Rva008A9B00 *node = (Rva008A9B00 *)Rva008C3B60Head;
+        Rva008A9B00 *node = (Rva008A9B00 *)g_rva01338478NodeHead;
         if (node) {
-            Rva008C3B60Head = (Rva008C3B60Node *)node->m_next;
+            g_rva01338478NodeHead = (Rva008C3B60Node *)node->m_next;
             g_rva8CD130IdleHook->add(node);
             if (node->m_string.m_data != &g_bfmeDefaultString1284)
                 ((BfmeStrVKK *)&node->m_string)->bfmeTruncVKK(0);
