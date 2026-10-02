@@ -17,7 +17,7 @@ extern Rva008CF3C0Pool *g_pool01337A30;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 extern char *(__cdecl *g_rva01337860Empty)(void);
 extern char *(__cdecl *g_rva0133785CDuplicate)(const char *);
-extern void (__cdecl *g_rva0133782CFree)(void *);
+extern void (__cdecl *g_bfmeFreeDWF)(void *);
 
 class BfmeStrVKK
 {
@@ -135,5 +135,5 @@ void Rva008CF3C0State::parseAndAppend(void *owner, void *scope,
 			append(owner, scope, &name, node, 1, 1, 0);
 		}
 	}
-	g_rva0133782CFree(buffer);
+	g_bfmeFreeDWF(buffer);
 }
