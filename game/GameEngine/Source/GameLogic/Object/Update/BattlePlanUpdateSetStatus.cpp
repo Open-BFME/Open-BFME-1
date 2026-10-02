@@ -111,7 +111,7 @@ class AudioEventRTS
     AsciiString name;
     char pad18[0x58];
     void setObjectID(unsigned id);
-    void setPlayingHandle(unsigned id)
+    void battlePlanSetPlayingHandle(unsigned id)
     {
         typedef void (AudioEventRTS::*Fn)(unsigned);
         union {
@@ -121,7 +121,7 @@ class AudioEventRTS
         c.raw = j_00040a52;
         (this->*c.member)(id);
     }
-    unsigned getPlayingHandle()
+    unsigned battlePlanGetPlayingHandle()
     {
         return handle;
     }
@@ -129,7 +129,7 @@ class AudioEventRTS
     {
         return name;
     }
-    void setPosition(const Coord3D *p)
+    void battlePlanSetPosition(const Coord3D *p)
     {
         typedef void (AudioEventRTS::*Fn)(const Coord3D *);
         union {
@@ -295,7 +295,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             clearCondition(obj, 29);
             break;
         }
-        TheAudio->removeAudioEvent(unpack[m_currentPlan].getPlayingHandle());
+        TheAudio->removeAudioEvent(unpack[m_currentPlan].battlePlanGetPlayingHandle());
         break;
     case ACTIVE:
         switch (m_currentPlan)
@@ -310,7 +310,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             clearCondition(obj, 32);
             break;
         }
-        TheAudio->removeAudioEvent(idle[m_currentPlan].getPlayingHandle());
+        TheAudio->removeAudioEvent(idle[m_currentPlan].battlePlanGetPlayingHandle());
         break;
     case PACKING:
         switch (m_currentPlan)
@@ -325,7 +325,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             clearCondition(obj, 30);
             break;
         }
-        TheAudio->removeAudioEvent(pack[m_currentPlan].getPlayingHandle());
+        TheAudio->removeAudioEvent(pack[m_currentPlan].battlePlanGetPlayingHandle());
         break;
     }
     unsigned now = ((RvaBattlePlanLogicView *)TheGameLogic)->frame;
@@ -371,14 +371,14 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             if (unpack[m_currentPlan].getEventName().isNotEmpty())
             {
                 unpack[m_currentPlan].setObjectID(obj->getID());
-                unpack[m_currentPlan].setPlayingHandle(
+                unpack[m_currentPlan].battlePlanSetPlayingHandle(
                     TheAudio->addAudioEvent(&unpack[m_currentPlan]));
             }
         }
         {
             if (announcement[m_currentPlan].getEventName().isEmpty() == false)
             {
-                announcement[m_currentPlan].setPosition(obj->getPosition());
+                announcement[m_currentPlan].battlePlanSetPosition(obj->getPosition());
                 TheAudio->addAudioEvent(&announcement[m_currentPlan]);
             }
         }
@@ -401,7 +401,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             if (idle[m_currentPlan].getEventName().isNotEmpty())
             {
                 idle[m_currentPlan].setObjectID(obj->getID());
-                idle[m_currentPlan].setPlayingHandle(TheAudio->addAudioEvent(&idle[m_currentPlan]));
+                idle[m_currentPlan].battlePlanSetPlayingHandle(TheAudio->addAudioEvent(&idle[m_currentPlan]));
             }
         }
         break;
@@ -430,7 +430,7 @@ void BattlePlanUpdate::setStatus(TransitionStatus newStatus)
             if (pack[m_currentPlan].getEventName().isNotEmpty())
             {
                 pack[m_currentPlan].setObjectID(obj->getID());
-                pack[m_currentPlan].setPlayingHandle(TheAudio->addAudioEvent(&pack[m_currentPlan]));
+                pack[m_currentPlan].battlePlanSetPlayingHandle(TheAudio->addAudioEvent(&pack[m_currentPlan]));
             }
         }
         break;

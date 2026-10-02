@@ -46,6 +46,9 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 #include <string>
 #include <time.h>
 
+extern "C" __declspec(dllimport) wchar_t *__cdecl wcsncpy(
+	wchar_t *destination, const wchar_t *source, unsigned int count);
+
 typedef int GPProfile;
 struct BuddyRequest
 {
@@ -304,7 +307,8 @@ class Rva004ED400WindowManager
 	virtual void slotB8() = 0;
 	virtual void winSetLoneWindow(GameWindow *) = 0;
 };
-extern Rva004ED400WindowManager *TheWindowManager;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 class Rva004ED400Display
 {
   public:
@@ -388,7 +392,6 @@ UnicodeString GadgetTextEntryGetText(GameWindow *);
 void GadgetTextEntrySetText(GameWindow *, UnicodeString);
 void setUnignoreText(WindowLayout *, AsciiString, int);
 void insertChat(BuddyMessage);
-extern const UnicodeString Rva01336E54EmptyUnicode;
 WindowMsgHandledType BuddyControlSystem(GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2)
 {
 	if (!TheGameSpyInfo || !buddyControls.isInit)
@@ -415,11 +418,11 @@ WindowMsgHandledType BuddyControlSystem(GameWindow *window, UnsignedInt msg, Win
 
 			GadgetListBoxSetSelected(control, rc->pos);
 			if (itemType == ITEM_BUDDY)
-				rcLayout = TheWindowManager->winCreateLayout(AsciiString("Menus/RCBuddiesMenu.wnd"));
+				rcLayout = ((Rva004ED400WindowManager *)TheWindowManager)->winCreateLayout(AsciiString("Menus/RCBuddiesMenu.wnd"));
 			else if (itemType == ITEM_REQUEST)
-				rcLayout = TheWindowManager->winCreateLayout(AsciiString("Menus/RCBuddyRequestMenu.wnd"));
+				rcLayout = ((Rva004ED400WindowManager *)TheWindowManager)->winCreateLayout(AsciiString("Menus/RCBuddyRequestMenu.wnd"));
 			else
-				rcLayout = TheWindowManager->winCreateLayout(AsciiString("Menus/RCNonBuddiesMenu.wnd"));
+				rcLayout = ((Rva004ED400WindowManager *)TheWindowManager)->winCreateLayout(AsciiString("Menus/RCNonBuddiesMenu.wnd"));
 			rcMenu = ((Rva004ED400LayoutView *)rcLayout)->getFirstWindow();
 			((Rva004ED400LayoutView *)rcMenu->winGetLayout())->runInit();
 			rcMenu->winBringToTop();
@@ -441,7 +444,7 @@ WindowMsgHandledType BuddyControlSystem(GameWindow *window, UnsignedInt msg, Win
 			rcData->m_itemType = itemType;
 			setUnignoreText(rcLayout, rcData->m_nick, rcData->m_id);
 			rcMenu->winSetUserData((void *)rcData);
-			TheWindowManager->winSetLoneWindow(rcMenu);
+			((Rva004ED400WindowManager *)TheWindowManager)->winSetLoneWindow(rcMenu);
 		}
 		else
 			return MSG_IGNORED;
@@ -483,7 +486,7 @@ WindowMsgHandledType BuddyControlSystem(GameWindow *window, UnsignedInt msg, Win
 
 			UnicodeString txtInput;
 			txtInput = GadgetTextEntryGetText(buddyControls.textEntryEdit);
-			GadgetTextEntrySetText(buddyControls.textEntryEdit, Rva01336E54EmptyUnicode);
+			GadgetTextEntrySetText(buddyControls.textEntryEdit, UnicodeString::TheEmptyString);
 			((StringBase<unsigned short> *)&txtInput)->trim();
 			if (!txtInput.isEmpty())
 			{

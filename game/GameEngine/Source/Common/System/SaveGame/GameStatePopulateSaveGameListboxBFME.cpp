@@ -28,13 +28,17 @@ template <typename T> class StringBase
 
 protected:
 	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
 	BfmeStringData<T> *m_data;
+	~StringBase() { releaseBuffer(); }
 
 private:
+	StringBase(const StringBase<T> &other);
 	StringBase(const T *text);
+
+public:
 	void set(const StringBase<T> &other);
+
+private:
 	void releaseBuffer();
 };
 
