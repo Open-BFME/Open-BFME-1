@@ -1681,32 +1681,6 @@ void Condition::setConditionType(enum ConditionType type)
 	}
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ConditionDuplicateThunk.cpp
-// ?duplicate@Condition@@QBEPAV1@XZ present-unmatched
-// DECLINED under the anti-lift rule. The donor is a 5-byte ILT whose whole
-// content is a cast-and-call into an unnamed shim, and its jump lands at
-// 0x00357d30 -- still an unconverted dump (game/gen_asm/d_003492a0.asm). This
-// body is the only readable statement of what the function does.
-Condition *Condition::duplicate(void) const 
-{
-	Condition *pNew = newInstance(Condition)(m_conditionType);	
-	Int i;
-	for (i=0; i<m_numParms && i<pNew->m_numParms; i++) {
-		*pNew->m_parms[i] = *m_parms[i];
-	}
-	Condition *pLink = m_nextAndCondition;
-	Condition *pCur = pNew;
-	while (pLink) {
-		pCur->m_nextAndCondition = newInstance(Condition)(pLink->getConditionType());
-		pCur = pCur->m_nextAndCondition;
-		for (i=0; i<pLink->m_numParms; i++) {
-			*pCur->m_parms[i] = *pLink->m_parms[i];
-		}
-		pLink = pLink->m_nextAndCondition;
-	}
-	return pNew;
-}
-
 // ?duplicateAndQualify@Condition@@QBEPAV1@ABVAsciiString@@00@Z present-unmatched
 Condition *Condition::duplicateAndQualify(const AsciiString& qualifier, 
 			const AsciiString& playerTemplateName, const AsciiString& newPlayerName) const 

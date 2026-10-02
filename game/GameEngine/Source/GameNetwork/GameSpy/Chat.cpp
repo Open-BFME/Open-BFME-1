@@ -298,31 +298,6 @@ void GameSpyInfo::addChat( PlayerInfo p, UnicodeString msg, Bool isPublic, Bool 
 	}
 }
 
-// ?addText@GameSpyInfo@@ present-unmatched
-Int GameSpyInfo::addText( UnicodeString message, Color c, GameWindow *win )
-{
-	if (TheGameSpyGame && TheGameSpyGame->isInGame() && TheGameSpyGame->isGameInProgress())
-	{
-		static AudioEventRTS messageFromChatSound("GUIMessageReceived");
-		TheAudio->addAudioEvent(&messageFromChatSound);
-
-		TheInGameUI->message(message);
-	}
-
-	if (!win)
-	{
-		// try to pick up a registered text window
-		if (m_textWindows.empty())
-			return -1;
-
-		win = *(m_textWindows.begin());
-	}
-	Int index = GadgetListBoxAddEntryText(win, message, c, -1, -1);
-	GadgetListBoxSetItemData(win, (void *)-1, index);
-
-	return index;
-}
-
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/PeerDefsRegisterTextWindow.cpp
 // ?registerTextWindow@GameSpyInfo@@ present-unmatched
 void GameSpyInfo::registerTextWindow( GameWindow *win )

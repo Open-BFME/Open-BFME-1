@@ -608,21 +608,6 @@ Mouse::Mouse( void )
 
 }  // end Mouse
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1Mouse@@ present-unmatched
-Mouse::~Mouse( void )
-{
-	if(m_tooltipDisplayString)
-		TheDisplayStringManager->freeDisplayString(m_tooltipDisplayString);
-	m_tooltipDisplayString = NULL;
-
-	if( m_cursorTextDisplayString )
-		TheDisplayStringManager->freeDisplayString( m_cursorTextDisplayString );
-	m_cursorTextDisplayString = NULL;
-
-}  // end ~Mouse
-
 /**Had to move this out of main init() because I need this data to properly initialize
 the Win32 version of the mouse (by preloading resources before D3D device is created).*/
 // ?parseIni@Mouse@@ present-unmatched

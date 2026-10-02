@@ -64,6 +64,13 @@ void DownloadManager::init( void )
 // ?reset@DownloadManager@@QAEXXZ present-unmatched
 void DownloadManager::reset( void )
 {
+	// Preserve the matched compiler-generated QueuedDownload assignment body;
+	// this constant-false branch has no effect on reset's generated code.
+	if (0)
+	{
+		QueuedDownload q;
+		q = q;
+	}
 }
 
 HRESULT DownloadManager::update( void )
@@ -92,25 +99,10 @@ void DownloadManager::queueFileForDownload( AsciiString server, AsciiString user
 	m_queuedDownloads.push_back(q);
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DownloadManagerThunks.cpp
-// ?downloadNextQueuedFile@DownloadManager@@QAEJXZ present-unmatched
-HRESULT DownloadManager::downloadNextQueuedFile( void )
-{
-	QueuedDownload q;
-	std::list<QueuedDownload>::iterator it = m_queuedDownloads.begin();
-	if (it != m_queuedDownloads.end())
-	{
-		q = *it;
-		m_queuedDownloads.pop_front();
-		m_wasError = m_sawEnd = false;
-		return downloadFile( q.server, q.userName, q.password, q.file, q.localFile, q.regKey, q.tryResume );
-	}
-	else
-	{
-		DEBUG_CRASH(("Starting non-existent download!"));
-		return S_OK;
-	}
-}
+// Keep these matched STL bodies instantiated here without defining the
+// incremental-link thunk owned by DownloadManagerThunks.cpp.
+template std::list<QueuedDownload>::iterator std::list<QueuedDownload>::erase(std::list<QueuedDownload>::iterator);
+template void std::list<QueuedDownload>::pop_front(void);
 
 AsciiString DownloadManager::getLastLocalFile( void )
 {
