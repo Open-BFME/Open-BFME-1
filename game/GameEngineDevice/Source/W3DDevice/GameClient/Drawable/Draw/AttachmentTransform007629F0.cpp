@@ -49,10 +49,12 @@ struct ObjectFields007629F0 {
     float buildRate() { return reinterpret_cast<BfmeHostYA *>(this)->bfmeGetYA(); }
     const GeometryInfo &geometry() const { return *reinterpret_cast<const GeometryInfo *>((const char *)this + 0xAC); }
 };
-struct Engine007629F0 { char unknown00[0x30]; int mode30; int unknown34; float value38; };
+// The 0x012ED524 global is EA's `GameEngine *TheGameEngine`; only this TU's
+// view of the pointee is declared here.
+class GameEngine { public: char unknown00[0x30]; int mode30; int unknown34; float value38; };
 class GameClient;
 extern GameClient *TheGameClient;
-extern Engine007629F0 *EngineGlobal007629F0;
+extern GameEngine *TheGameEngine;
 extern int AttachmentFailures007629F0;
 void stepAngleToward(float *, float);
 struct State007629F0 { char unknown00[0x38]; unsigned flags38; };
@@ -124,9 +126,9 @@ void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
     if (m_curState && (m_curState->flags38 & 8)) {
         ObjectFields007629F0 *object = drawable08->m_object;
         if (object) {
-            if (EngineGlobal007629F0->mode30 == 1) value20C = object->value220;
+            if (TheGameEngine->mode30 == 1) value20C = object->value220;
             if (value20C >= 0.0f) {
-                float pct = object->buildRate() * EngineGlobal007629F0->value38 + value20C;
+                float pct = object->buildRate() * TheGameEngine->value38 + value20C;
                 float height = object->geometry().getMaxHeightAbovePosition();
                 mtx.Translate_Z(height * pct * 0.01f - height);
             }

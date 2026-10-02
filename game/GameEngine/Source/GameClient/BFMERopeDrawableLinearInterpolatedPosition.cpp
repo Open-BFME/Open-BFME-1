@@ -12,13 +12,16 @@ struct BfmeLinearCoord3D
 	float z;
 };
 
-struct BfmeLinearGameEngine
+// The 0x012ED524 global is EA's `GameEngine *TheGameEngine`; only this TU's
+// view of the pointee is declared here.
+class GameEngine
 {
+public:
 	unsigned char m_unknown[0x38];
 	float m_interpolationFactor;
 };
 
-extern BfmeLinearGameEngine *TheGameEngine;
+extern GameEngine *TheGameEngine;
 
 class BFMERopeDrawableGetPositionShim
 {

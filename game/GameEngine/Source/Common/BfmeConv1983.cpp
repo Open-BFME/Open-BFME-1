@@ -41,14 +41,16 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;
 
-class BfmeEngineETE
+// The 0x012ED524 global is EA's `GameEngine *TheGameEngine`, defined once in
+// the engine; only this TU's view of the pointee is declared here.
+class GameEngine
 {
 public:
 	unsigned char m_bfmeHeadETE[0x38];
 	float m_bfme38ETE;
 };
 
-extern BfmeEngineETE *g_bfmeEngineETE;
+extern GameEngine *TheGameEngine;
 
 // 0x008D8480 is Matrix3D::Lerp (matrix3d.cpp, matched); BfmeMatETE is this
 // TU's 48-byte view of a Matrix3D, kept so the accessor's mangled name (its
@@ -83,7 +85,7 @@ BfmeMatETE *BfmeHostETE::bfmeGetETE()
 	if (m_bfme1fcETE != ((BfmeClientETE *)TheGameClient)->bfmeSlot26ETE())
 	{
 		Matrix3D::Lerp(*reinterpret_cast<const Matrix3D *>(&m_bfme168ETE),
-			*reinterpret_cast<const Matrix3D *>(&m_bfme198ETE), g_bfmeEngineETE->m_bfme38ETE,
+			*reinterpret_cast<const Matrix3D *>(&m_bfme198ETE), TheGameEngine->m_bfme38ETE,
 			*reinterpret_cast<Matrix3D *>(&m_bfme1c8ETE));
 
 		m_bfme1fcETE = ((BfmeClientETE *)TheGameClient)->bfmeSlot26ETE();
