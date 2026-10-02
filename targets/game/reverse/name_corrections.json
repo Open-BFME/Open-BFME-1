@@ -14278,5 +14278,25 @@
   "after_sha256": "7cc939a418c968c21d064d64ddf52512cbf555bb8117982cc06be73a4d50bdc2",
   "evidence": "targets/game/reverse/identity_evidence/rva007897d0.md",
   "reason": "Reuse the existing address-derived constructor owner, independently established by shared vtable 01126CCC and its scalar-deleting route. Both names retain an address; no descriptive EA identity is removed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005e2c70.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva005E2C70Destructor.cpp",
+  "old_name": "BfmeStringBaseVUQ",
+  "new_name": "Rva005E2C70StringView",
+  "before_sha256": "de2f270930ad44650228da0383fd6e718d801cf28266071400109816b9ba2d6e",
+  "after_sha256": "d07fdb1ce816eb094753e71a306104f92a2588bc7622cf610f7e2715b9e8c73c",
+  "evidence": "targets/game/reverse/identity_evidence/rva005e2c70.md",
+  "reason": "Bank-only descriptive helper has no witnessed EA identity; retail EH proves the cleanup offsets but not its original type, so retain the body address in this ABI view name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005e2c70.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva005E2C70Destructor.cpp",
+  "old_name": "NAME",
+  "new_name": "Rva005DDD60",
+  "before_sha256": "de2f270930ad44650228da0383fd6e718d801cf28266071400109816b9ba2d6e",
+  "after_sha256": "d07fdb1ce816eb094753e71a306104f92a2588bc7622cf610f7e2715b9e8c73c",
+  "evidence": "targets/game/reverse/identity_evidence/rva005e2c70.md",
+  "reason": "False pairing: NAME is the removed bank macro parameter, not a class identity. Rva005DDD60 is the existing matched cleanup destructor called by retail state 0."
  }
 ]
