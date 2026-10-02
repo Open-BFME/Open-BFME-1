@@ -10,12 +10,20 @@ public:
 	virtual void slot0c();
 	virtual void slot10();
 	virtual void slot14();
-	char bfmeChk1083();
 	char m_pad18[ 0x19C ];
 	int m_frameCounter;
 };
 
-extern BfmeB1083 *g_bfmeSwitchDR;
+// The shell singleton is defined at 0x012F4B58 as Shell *TheShell.
+class Shell;
+extern Shell *TheShell;
+
+// ILT 0x00022C96 reaches the matched pause accessor at 0x00383480.
+class BfmeGameLogicPause
+{
+public:
+	bool isGamePaused();
+};
 // The living-world singleton at 0x012F706C is EA's
 // `LivingWorldManager *TheLivingWorldManager` (data_rows.csv row
 // ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined once in
@@ -51,7 +59,9 @@ public:
 	unsigned char m_flag08;
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// The client living-world singleton at 0x012F7048 is defined in LivingWorld.cpp.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern void setFPMode();
 extern void j_000322e5();
 extern void j_000309ea();
@@ -103,10 +113,10 @@ void Rva003C2530Owner::update()
 	} callbackCall;
 	if( m_enabled )
 	{
-		if( g_bfmeSwitchDR != 0 )
-			g_bfmeSwitchDR->slot14();
+		if( TheShell != 0 )
+			((BfmeB1083 *)TheShell)->slot14();
 
-		if( ((BfmeB1083 *)TheGameLogic)->bfmeChk1083() )
+		if( ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused() )
 			return;
 
 		ownerCall.plain = j_000322e5;
@@ -152,9 +162,9 @@ void Rva003C2530Owner::prepare()
 		GameArgumentCall member;
 	} gameArgumentCall;
 
-	if (g_bfmeStateDF->slot50())
+	if (((Gen_00609320 *)g_rva012F7048LivingWorld)->slot50())
 	{
-		g_bfmeStateDF->slot58();
+		((Gen_00609320 *)g_rva012F7048LivingWorld)->slot58();
 
 		void *value = *(void **)((char *)m_callback + 8);
 		if (value != 0)
@@ -164,9 +174,9 @@ void Rva003C2530Owner::prepare()
 		}
 	}
 
-	if (g_bfmeStateDF->slot54())
+	if (((Gen_00609320 *)g_rva012F7048LivingWorld)->slot54())
 	{
-		g_bfmeStateDF->slot5C();
+		((Gen_00609320 *)g_rva012F7048LivingWorld)->slot5C();
 		gameCall.plain = j_00016dec;
 		(livingWorld012F706C()->*gameCall.member)();
 	}
@@ -175,7 +185,7 @@ void Rva003C2530Owner::prepare()
 	{
 		mov al, byte ptr [esi + 2Dh]
 		test al, al
-		mov ecx, dword ptr [g_bfmeStateDF]
+		mov ecx, dword ptr [g_rva012F7048LivingWorld]
 		je not_ready
 		mov dl, byte ptr [ecx + 8]
 		test dl, dl
