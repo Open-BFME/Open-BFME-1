@@ -1,4 +1,8 @@
 // ?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ
+// partial score=0.6273 date=2026-10-02
+extern "C" void _WriteBarrier();
+#pragma intrinsic(_WriteBarrier)
+// ?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ
 // partial score=0.82 date=2026-09-02
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the length-prefixed skip helper at retail RVA 0x009D8C30.
@@ -47,16 +51,11 @@ void Gen009D8C30::bfmeSkipPrefixed()
 
 	if (length == 0)
 		return;
-	switch (length)
-	{
-	case 0xff:
-		{
-			int count = 4;
-			m_stream->skip(count, 1);
-			return;
-		}
-	default:
-		m_stream->skip(static_cast<int>(length), 1);
-		return;
-	}
+    if (length == 0xff) {
+        int count = 4;
+        _WriteBarrier();
+        m_stream->skip(count, 1);
+        return;
+    }
+    m_stream->skip(static_cast<int>(length), 1);
 }
