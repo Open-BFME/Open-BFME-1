@@ -264,19 +264,3 @@ Real SimpleObjectIterator::sortFarToNear(Clump *a, Clump *b)
 	return b->m_numeric - a->m_numeric;
 }
 
-//-----------------------------------------------------------------------------
-// ?sortCheapToExpensive@SimpleObjectIterator@@CAMPAVClump@1@0@Z present-unmatched
-Real SimpleObjectIterator::sortCheapToExpensive(Clump *a, Clump *b)
-{
-	return a->m_obj->getTemplate()->friend_getBuildCost() -
-				 b->m_obj->getTemplate()->friend_getBuildCost();
-}
-
-//-----------------------------------------------------------------------------
-// ?sortExpensiveToCheap@SimpleObjectIterator@@CAMPAVClump@1@0@Z present-unmatched
-Real SimpleObjectIterator::sortExpensiveToCheap(Clump *a, Clump *b)
-{
-	return b->m_obj->getTemplate()->friend_getBuildCost() -
-				 a->m_obj->getTemplate()->friend_getBuildCost();
-}
-

@@ -20,7 +20,7 @@ public:
 	void concat(const char *text, int length);
 	Header *m_data;
 
-	private:
+	protected:
 	void releaseBuffer();
 };
 
