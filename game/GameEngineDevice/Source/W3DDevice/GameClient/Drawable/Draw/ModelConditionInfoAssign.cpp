@@ -76,6 +76,22 @@ public:
 	Rva0013B8F0TargetView *m_target;
 };
 
+// The observed 20-byte record's destructor is retail body 0x0013B8F0, defined
+// in game/GameEngine/Source/Common/BfmeConv1637.cpp as BfmeOwnVUG. The record
+// has no destructor of its own: every STLport destroy helper on this element
+// enters BfmeOwnVUG's, so the element carries no dtor declaration and _Destroy
+// is specialized below the way the sibling vector unit does.
+class BfmeOwnVUG
+{
+public:
+	int m_word00;
+	int m_word04;
+	int m_word08;
+	AsciiString m_string0C;
+	Rva0013B8F0ReferenceView m_reference10;
+	~BfmeOwnVUG();
+};
+
 struct Rva0013B8F0Element
 {
 	int m_word00;
@@ -83,8 +99,16 @@ struct Rva0013B8F0Element
 	int m_word08;
 	AsciiString m_string0C;
 	Rva0013B8F0ReferenceView m_reference10;
-	~Rva0013B8F0Element();
 };
+
+namespace _STL
+{
+template <>
+__forceinline void _Destroy(Rva0013B8F0Element *element)
+{
+	((BfmeOwnVUG *)element)->~BfmeOwnVUG();
+}
+}
 
 struct Rva00772870Turret
 {
