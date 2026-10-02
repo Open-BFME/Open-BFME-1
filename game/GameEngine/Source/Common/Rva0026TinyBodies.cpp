@@ -232,18 +232,6 @@ unsigned int Rva0027FB30::getDword(void) const
 	return m_value;
 }
 
-class Rva0027FFB0
-{
-public:
-	unsigned char getByte(void) const;
-};
-
-// ?getByte@Rva0027FFB0@@QBEEXZ
-unsigned char Rva0027FFB0::getByte(void) const
-{
-	return 0;
-}
-
 class Rva0027FFD0
 {
 public:

@@ -20,12 +20,6 @@ public:
 	unsigned int get() const;
 };
 
-class Rva001FBEC0False
-{
-public:
-	bool get() const;
-};
-
 class Rva001FC3B0Float
 {
 private:
@@ -222,12 +216,6 @@ unsigned int Rva001FB540Dword::get() const
 unsigned int Rva001FBC60Dword::get() const
 {
 	return m_value;
-}
-
-// ?get@Rva001FBEC0False@@QBE_NXZ
-bool Rva001FBEC0False::get() const
-{
-	return false;
 }
 
 // ?get@Rva001FC3B0Float@@QBEMXZ

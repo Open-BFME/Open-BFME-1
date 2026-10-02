@@ -194,18 +194,6 @@ unsigned int Rva001ECEE0DwordField::get(void) const
 	return m_value;
 }
 
-class Rva001EE800False
-{
-public:
-	bool value(void) const;
-};
-
-// ?value@Rva001EE800False@@QBE_NXZ
-bool Rva001EE800False::value(void) const
-{
-	return false;
-}
-
 class Rva001EE8C0DwordField
 {
 public:

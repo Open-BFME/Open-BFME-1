@@ -309,14 +309,3 @@ unsigned int Rva001FABB0::get() const
 	return m_value;
 }
 
-class Rva001FB250
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva001FB250@@QBE_NXZ
-bool Rva001FB250::value() const
-{
-	return false;
-}

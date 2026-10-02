@@ -1,30 +1,6 @@
 // cl: /O2 /DNDEBUG /MD /EHs-c-
 // Address-derived leaf recoveries from carved retail boundaries.
 
-class Rva002D7E30
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002D7E30@@QBE_NXZ
-bool Rva002D7E30::value() const
-{
-	return false;
-}
-
-class Rva002D8060
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002D8060@@QBE_NXZ
-bool Rva002D8060::value() const
-{
-	return false;
-}
-
 class Rva002D8270
 {
 public:
@@ -72,18 +48,6 @@ unsigned int Rva002D8390::value() const
 	return m_value;
 }
 
-class Rva002D9440
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002D9440@@QBE_NXZ
-bool Rva002D9440::value() const
-{
-	return false;
-}
-
 class Rva002D9720
 {
 public:
@@ -98,18 +62,6 @@ private:
 unsigned int Rva002D9720::value() const
 {
 	return m_value;
-}
-
-class Rva002D97C0
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002D97C0@@QBE_NXZ
-bool Rva002D97C0::value() const
-{
-	return false;
 }
 
 class Rva002D9AA0
@@ -137,30 +89,6 @@ private:
 unsigned int Rva002D9B60::value() const
 {
 	return m_value;
-}
-
-class Rva002DA380
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002DA380@@QBE_NXZ
-bool Rva002DA380::value() const
-{
-	return false;
-}
-
-class Rva002DA540
-{
-public:
-	bool value() const;
-};
-
-// ?value@Rva002DA540@@QBE_NXZ
-bool Rva002DA540::value() const
-{
-	return false;
 }
 
 class Rva002DA6A0

@@ -1,15 +1,3 @@
-class Rva002043D0
-{
-public:
-	bool invoke() const;
-};
-
-// ?invoke@Rva002043D0@@QBE_NXZ
-bool Rva002043D0::invoke() const
-{
-	return false;
-}
-
 class Rva00205030
 {
 	unsigned int m_head;
@@ -128,18 +116,6 @@ void Rva0020B0D0::invoke( unsigned int first, unsigned int second, unsigned int 
 {
 }
 
-class Rva0020B0E0
-{
-public:
-	bool invoke() const;
-};
-
-// ?invoke@Rva0020B0E0@@QBE_NXZ
-bool Rva0020B0E0::invoke() const
-{
-	return false;
-}
-
 class Rva0020CC60
 {
 	unsigned int m_head;
@@ -224,18 +200,6 @@ public:
 unsigned int Rva00212940::get() const
 {
 	return m_value;
-}
-
-class Rva00212D90
-{
-public:
-	bool invoke() const;
-};
-
-// ?invoke@Rva00212D90@@QBE_NXZ
-bool Rva00212D90::invoke() const
-{
-	return false;
 }
 
 class Rva00212E40

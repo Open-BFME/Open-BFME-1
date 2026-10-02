@@ -211,12 +211,6 @@ unsigned int Rva002897F0::word(void) const
 	return m_word;
 }
 
-// ?Rva00289A00False@@YA_NXZ
-bool Rva00289A00False(void)
-{
-	return false;
-}
-
 class Rva0028A2C0
 {
 public:
