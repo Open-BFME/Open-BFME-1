@@ -40,7 +40,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-unsigned int Rva00892370Get();
+int Rva00892370Get();
 AptValue *Rva008A4EA0MakeFloat(float);
 extern const float BfmeZeroRange;
 extern "C" double fmod(double, double);

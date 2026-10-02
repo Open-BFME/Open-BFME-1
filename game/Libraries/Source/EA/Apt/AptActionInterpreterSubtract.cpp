@@ -42,7 +42,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-unsigned int Rva00892370Get();
+int Rva00892370Get();
 void __cdecl d_008a4cd0(void);
 
 // ?_FunctionRva008C6EE0@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z

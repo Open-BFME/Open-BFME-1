@@ -51,7 +51,7 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 extern const float BfmeZeroRange;
-unsigned int Rva00892370Get();
+int Rva00892370Get();
 void __cdecl d_008996b0(void);
 
 // ?_FunctionRva008C73B0@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
