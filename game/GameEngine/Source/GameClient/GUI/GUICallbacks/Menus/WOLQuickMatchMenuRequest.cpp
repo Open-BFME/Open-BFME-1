@@ -305,12 +305,17 @@ public:
   AsciiString side;
   char remainder[0x124 - 12];
 };
-class Rva000E1410Store {
-public:
+// Retail's quick-match build reads this singleton as `PlayerTemplateStore *`,
+// so the global is declared with the defining spelling (forward declaration
+// only: the class body lives in Common/PlayerTemplate.h, which this TU does not
+// pull in because it supplies its own AsciiString/UnicodeString). Rva000E1410Store
+// stays the local layout view the byte-verified reads below go through.
+class PlayerTemplateStore;
+extern PlayerTemplateStore *ThePlayerTemplateStore;
+struct Rva000E1410Store {
   char prefix[8];
   Rva000E1410PlayerTemplate *begin, *end, *capacity;
 };
-extern Rva000E1410Store *ThePlayerTemplateStore;
 extern void j_00037bd2();
 typedef const Rva000E1410PlayerTemplate *(Rva000E1410Store::*TemplateMethod)(int) const;
 __forceinline TemplateMethod templateMethod() {
@@ -426,11 +431,12 @@ void BfmeAptScreenQuickMatchMenu::rva00509B30Request(GameWindow *) {
     }
     if (cit != ladderInfo->validFactions.end()) {
       int numPlayerTemplates =
-          ThePlayerTemplateStore->end - ThePlayerTemplateStore->begin;
+          ((Rva000E1410Store *)ThePlayerTemplateStore)->end -
+              ((Rva000E1410Store *)ThePlayerTemplateStore)->begin;
       AsciiString sideStr = *cit;
       for (int c = 0; c < numPlayerTemplates; ++c) {
         const Rva000E1410PlayerTemplate *fac =
-            (ThePlayerTemplateStore->*templateMethod())(c);
+            ((Rva000E1410Store *)ThePlayerTemplateStore->*templateMethod())(c);
         if (fac && fac->side.compare(sideStr) == 0) {
           req.QM.side = c;
           break;
