@@ -1,13 +1,14 @@
 // cl: /O2 /Ob0
 
-class Rva00465C50
+class WindowManager
 {
 public:
-	bool set(unsigned i);
+	bool showAptWindow(int index);
 };
 
-bool Rva00465C50::set(unsigned i)
+bool WindowManager::showAptWindow(int index)
 {
+	unsigned i = (unsigned)index;
 	if (i >= 12)
 		return false;
 	unsigned char *s = (unsigned char *)this + 0xA8 + i * 20;
