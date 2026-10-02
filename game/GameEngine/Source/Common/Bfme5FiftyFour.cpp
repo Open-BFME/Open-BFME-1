@@ -23,7 +23,7 @@ inline BfmeLinksDX *bfmeLinksDX(BfmeItemDX *item)
 	return (BfmeLinksDX *)item - 1;
 }
 
-extern BfmeItemDX *g_bfmeHeadDX;				// retail 0x013379A0
+BfmeItemDX *g_bfmeHeadDX = 0;				// retail 0x013379A0
 
 // ?bfmePush@@YAXPAVBfmeItemDX@@@Z
 void __cdecl bfmePush(BfmeItemDX *item)
