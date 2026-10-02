@@ -38,8 +38,9 @@ extern TeamFactory *TheTeamFactory;
 
 extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
-extern void __declspec(noreturn) __stdcall _CxxThrowException(
-	void *object, void *throwInfo);
+// Retail 0x009F6D00 is the MSVCR71 _CxxThrowException import thunk.
+extern "C" void __stdcall _CxxThrowException(
+	void *object, _ThrowInfo *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
 
 class Xfer
@@ -128,7 +129,8 @@ void Rva00219960::xfer(Xfer *xfer)
 			{
 				XferException error;
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+				_CxxThrowException(&error, (_ThrowInfo *)&g_guardTargetTypeThrowInfo);
+				__assume(0);
 			}
 		}
 		else
