@@ -49,11 +49,18 @@ public:
 #undef BFME_SLOT
 };
 
-class BfmeRva49250AI
+// Retail ILTs 0x00012E3B and 0x00008337 reach these existing matched
+// address-derived views at 0x00410BA0 and 0x00411DD0.
+class Gen_00410BA0
 {
 public:
-	char kind(void);
-	void run(int value);
+	int bfmeBusy(void) const;
+};
+
+class Gen_00411DD0
+{
+public:
+	void bfmeSet(bool value);
 };
 
 class BfmeRva49250Object
@@ -71,10 +78,12 @@ public:
 	BfmeRva49250Contain *m_contain;
 };
 
-class BfmeRva49250Control
+// ILT 0x0003F0FD reaches the matched pointer-taking body at 0x00248AA0.
+class BfmeArgCQE;
+class BfmeThingCQE
 {
 public:
-	void fallback(BfmeRva49250Object *object);
+	void bfmeGoCQE(BfmeArgCQE *object);
 };
 
 class Rva002491F0
@@ -127,15 +136,17 @@ void BfmeRva49250Base::bfmeApplyObject(BfmeRva49250Object *object, void *)
 		}
 		if ((object->m_status94 & 0x20) != 0)
 		{
-			((BfmeRva49250Control *)((char *)this - 0x20))->fallback(object);
+			((BfmeThingCQE *)((char *)this - 0x20))->bfmeGoCQE(
+				(BfmeArgCQE *)object);
 		}
 		else
 		{
 			((Rva002491F0 *)((char *)this - 0x20))->apply(
 				(BfmeRva491F0Object *)object);
 			BfmeRva49250AI *ai = object->getAI();
-			if (ai != 0 && ai->kind() == 1)
-				ai->run(0);
+			// Retail consumes AL; the matched provider returns only 0 or 1.
+			if (ai != 0 && (char)((Gen_00410BA0 *)ai)->bfmeBusy() == 1)
+				((Gen_00411DD0 *)ai)->bfmeSet(false);
 		}
 
 	done:

@@ -31,7 +31,8 @@ public:
 	void processNestedRiders(void);
 };
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };
+// UpdateModule.h defines UPDATE_SLEEP_NONE as one frame.
+enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
 
 class TransportContain
 {

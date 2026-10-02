@@ -14108,5 +14108,15 @@
   "after_sha256": "3d0372a5527ba18692064cc1a5262711baf76a36ae5920870a6c8c1d0ecaf636",
   "evidence": "targets/game/reverse/identity_evidence/000b5450-Rva000B5450Thing-constructor.md",
   "reason": "The matched caller constructs this object with new and allocation EH cleanup. Retail calls the matched AudioEventInfo base constructor, installs the existing derived vftable and returns this with ret 4. The old ordinary-member identity cannot satisfy that constructor contract; the address-derived constructor spelling is already pinned in symbols.csv."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00249250HordeGarrisonHook.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00249250HordeGarrisonHook.cpp",
+  "old_name": "BfmeRva49250AI",
+  "new_name": "Gen_00410BA0",
+  "before_sha256": "56a15d95bf6692206bbfd354c3d392587a1a348a301af62ce33808e7d6f01ac4",
+  "after_sha256": "ab2380611c207ddaa34a141f2ef93d4d96ae2519665894d68dd247f3215bdc8b",
+  "evidence": "targets/game/reverse/identity_evidence/0x00249250-callee-declarations.md",
+  "reason": "The old AI forward view remains; replace unavailable method declarations with existing matched address-derived provider declarations. Exact retail ILT routes and callee bodies establish the correspondence, not a new class identity."
  }
 ]
