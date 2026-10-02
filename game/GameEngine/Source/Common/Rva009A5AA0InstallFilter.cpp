@@ -18,7 +18,9 @@ extern const unsigned int *g_rva01356A98;
 extern const void *g_rva01356A88;
 extern int g_rva01356940[64];
 extern unsigned short *Rva009C0D10Src;			// retail 0x01356A7C
-extern int *g_rva01356A9C;
+// VA 0x01356A9C is a zero-filled 4-byte pointer: this retail body stores
+// int-table addresses, and RVA 0x009C2170 loads it for indexed dword reads.
+int *g_rva01356A9C = 0;
 
 extern unsigned short g_rva012D7C58[128];
 extern unsigned short g_rva012D7D58[128];
