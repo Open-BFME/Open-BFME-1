@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "73f51a3cbccb98043da4024a4c3cb1bca37c2ae0e91481590e5179b62f84292d",
+  "symbol": "?Rva008B9080@@YAPAVAptValue@@PAURva008B9080Owner@@@Z",
+  "score_kind": "measured",
+  "score": 0.3645,
+  "source": "// ?Rva008B9080@@YAPAVAptValue@@PAURva008B9080Owner@@@Z\n// partial score=0.3645 date=2026-10-02\n// cl: /DNDEBUG /MD /O2\nextern \"C\" void *__cdecl memmove(void *, const void *, unsigned int);\nclass AptValue;\nextern AptValue *g_bfmeFallbackDB;\nstruct Rva008B9080Owner\n{\n    unsigned int m_unmodelled00;\n    unsigned int m_bits04;\n    unsigned char m_unmodelled08[0x18];\n    unsigned int *m_slots20;\n    unsigned int m_unmodelled24;\n    int m_count28;\n    bool isArray() const {\n        unsigned int bits = m_bits04;\n        unsigned int type = bits & 0x3f;\n        return type == 0x16 &&\n            !((unsigned char)~(bits >> 15) & 1);\n    }\n};\nAptValue *__cdecl Rva008B9080(Rva008B9080Owner *owner)\n{\n    AptValue *fallback = g_bfmeFallbackDB;\n    if (!owner->isArray()) return fallback;\n    if (owner->m_count28 <= 0) return fallback;\n    AptValue *result = (AptValue *)(owner->m_slots20[0] & ~1u);\n    if (!result) result = fallback;\n    int count = --owner->m_count28;\n    if (count) memmove(owner->m_slots20,owner->m_slots20+1,count*4);\n    owner->m_slots20[owner->m_count28]=0;\n    return result;\n}\n"
+}
