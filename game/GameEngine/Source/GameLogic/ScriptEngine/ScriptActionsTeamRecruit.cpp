@@ -20,6 +20,7 @@ typedef float Real;
 class Team;
 class ObjectTypes;
 class ThingTemplate;
+class ThingFactory;
 
 // Named for the two slots it reaches: getTeamNamed at +0x44 and getObjectTypes
 // at +0x50.
@@ -96,7 +97,7 @@ static __forceinline BfmeScriptEngineVtbl_44_50 *theScriptEngineVtbl()
 {
 	return (BfmeScriptEngineVtbl_44_50 *)TheScriptEngine;
 }
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 // retail's TheAI singleton is an AI*; BfmeAI is the view this file reads it through
 class AI;
 extern AI *TheAI;
@@ -186,7 +187,7 @@ void ScriptActions::doTeamRecruitUnits(const AsciiString &teamName,
 	}
 
 	const ThingTemplate *thingTemplate =
-		TheThingFactory->findTemplate(objectTypeName);
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(objectTypeName);
 	ObjectTypes *objectTypes = theScriptEngineVtbl()->getObjectTypes(objectTypeName);
 	if (bfmeHasAnyObjects(team)) {
 		bfmeRecruitUnits(team, thingTemplate, objectTypes, count,

@@ -14,11 +14,13 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
 #include "PreRTS.h"
-#include "Common/KindOf.h"
+#include "Common/BitFlags.h"
 
 class Object;
 class Rva002622D0Subject;
 typedef BitFlags<192> Rva002622D0KindOfMask;
+extern "C" const BitFlags<192>
+	__identifier("?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B");
 
 __declspec(noinline) void *__cdecl bfmeNodeAllocateAt00061CE0(
 	unsigned int bytes)
@@ -167,7 +169,8 @@ Bool Rva002622D0Owner::collectAt002622D0(Rva002622D0Entries *out)
 					Rva002622D0KindOfMask(
 						Rva002622D0KindOfMask::kInit, 114),
 					*reinterpret_cast<const Rva002622D0KindOfMask *>(
-						&KINDOFMASK_NONE))));
+						&__identifier(
+							"?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B")))));
 
 	Object *other;
 	while (iterator.next(other))

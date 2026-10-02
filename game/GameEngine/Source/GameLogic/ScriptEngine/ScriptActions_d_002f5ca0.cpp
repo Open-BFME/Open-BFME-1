@@ -14,6 +14,7 @@ typedef bool Bool;
 class Team;
 class ObjectTypes;
 class ThingTemplate;
+class ThingFactory;
 
 // BFME inserts its team lookup at slot 17 and its object-type-list lookup at
 // slot 20.  The reference ScriptEngine header confirms the latter takes the
@@ -71,7 +72,7 @@ static inline BfmeScriptEngineVtbl_44_50 *bfmeViewScriptEngine()
 	return (BfmeScriptEngineVtbl_44_50 *)TheScriptEngine;
 }
 
-extern BfmeThingFactory *TheThingFactory;
+extern ThingFactory *TheThingFactory;
 extern void j_000043f9();
 
 static __forceinline void bfmeApplyTeamObjectAction(Team *team,
@@ -99,7 +100,7 @@ void __stdcall d_002f5ca0(const AsciiString &teamName,
 		return;
 
 	const ThingTemplate *thingTemplate =
-		TheThingFactory->findTemplate(objectTypeName);
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(objectTypeName);
 	ObjectTypes *objectTypes = bfmeViewScriptEngine()->getObjectTypes(objectTypeName);
 	bfmeApplyTeamObjectAction(team, thingTemplate, objectTypes, count,
 		otherTeam);

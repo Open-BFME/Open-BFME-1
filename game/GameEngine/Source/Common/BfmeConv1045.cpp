@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern "C" void *bfmeVft1045A[];
+extern "C" void *__identifier("??_7Rva00800920Owner@@6BRva00800920Primary@@@")[];
 // retail 0x0112C304: the Rva00800920Sec secondary vftable of Rva00800920Owner.
 extern "C" void *__identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@")[];
 
@@ -34,7 +34,7 @@ void BfmeB1045::bfmeGo1045B(void)
 {
 	int z = 0;
 
-	m_bfmeVfptr = bfmeVft1045A;
+	m_bfmeVfptr = __identifier("??_7Rva00800920Owner@@6BRva00800920Primary@@@");
 	m_bfmeVfptr2 = __identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@");
 	m_bfme08 = z;
 	m_bfme0c = z;
