@@ -29,7 +29,16 @@ public:
 // The tail accesses the sorting pointer at VA 013467DC and word capacity
 // at VA 013467E0. All five storage extents are initially zero in retail.
 BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[15] = {};
-extern unsigned int BfmeDynamicFVFTable[];
+// Retail .rdata VA 0113BD28: RVA 0091DACB reads one dword per
+// iteration of the fifteen-slot loop below. Preserve external const linkage.
+extern const unsigned int BfmeDynamicFVFTable[15] = {
+	0x002, 0x012, 0x112, 0x212, 0x152, 0x252, 0x142, 0x242,
+	0x102, 0x202,
+	// D3DFVF_* values: inputs/reference/shims/d3d8_shim_validated.h:63-85.
+	// XYZ + normal + diffuse, four texture coordinates; coordinates 1-3 have size 3.
+	0x052 | 0x400 | (1u << 18) | (1u << 20) | (1u << 22),
+	0xB0312, 0x052, 0x344, 0x444
+};
 extern bool BfmeDynamicDX8VertexBufferInUse[];
 unsigned short BfmeDynamicDX8VertexBufferSize[15] = {};
 extern unsigned short BfmeDynamicDX8VertexBufferOffset[];

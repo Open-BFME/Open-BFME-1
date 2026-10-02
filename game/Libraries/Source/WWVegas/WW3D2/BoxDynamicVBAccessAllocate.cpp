@@ -59,7 +59,7 @@ extern bool BfmeDynamicDX8VertexBufferInUse[];
 extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
 extern unsigned short BfmeDynamicDX8VertexBufferSize[];
 extern BfmeDX8VertexBuffer *BfmeDynamicDX8VertexBuffer[];
-extern unsigned BfmeDynamicFVFTable[21];
+extern const unsigned BfmeDynamicFVFTable[];
 extern unsigned char *BfmeCurrentCaps;
 
 class BoxDynamicVBAccessClass
