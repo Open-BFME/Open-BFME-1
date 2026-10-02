@@ -14718,5 +14718,65 @@
   "after_sha256": "14bc5718d75f2e5e1d4bc194d2822b7397d029dbc3562f6cf33d37b3a87acea8",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
   "reason": "UpgradeMux slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) with no Zero Hour twin, no EA WorldBuilder label and no in-exe name table; upgradeRemovalImplementation was a guess. The owner stays proven by the registered constructor's table store; the method keeps its address. The TU-local UpgradeMux view names slot 7 after the same token so the override keeps its this-adjustment."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1294.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/StatusBitsUpgradeUpgradeImplementation.cpp",
+  "old_name": "bfmeTwoSLA",
+  "new_name": "rva002D7F40",
+  "before_sha256": "b3d9157ba58cddc38c4d83df1fbd6dd4924c657069cf6293c7aeaf0da36a9d93",
+  "after_sha256": "00c1dc583392eea02965db2db0d0b00bc7ec3f0b22082b3e7d8b282f2d6e9971",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva002D9910ProcessElements.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeUpgradeImplementation.cpp",
+  "old_name": "process",
+  "new_name": "rva002D9910",
+  "before_sha256": "c96e30a82acf69d7dafc2ca93f6045f891d6f78ce60781c38ba4ba7e2bcdeb6b",
+  "after_sha256": "ab753485bcee05517847dbf264347b30fcb5d3d8cfcb568e3ff7f01cbd682b7d",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D81StatusOwner.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/StealthUpgradeUpgradeImplementation.cpp",
+  "old_name": "clearStatus18",
+  "new_name": "rva002D81B0",
+  "before_sha256": "6de7396ab714ee2475d0c9cf8c95ef4de174ff752f47a899e52d1b94230e444a",
+  "after_sha256": "8fcd898aebedbf18189c31499b020e2ccbc78abc0ead590cd8e40f42813eebfd",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "clearStatus18",
+  "new_name": "rva002D81B0",
+  "before_sha256": "269af06eb37ac8fc52421bb1361f72c34d15944a718f1e55ea2eedb5454689d1",
+  "after_sha256": "61d5b0e3a1263ebff6f7dc1754b5573a89600e6675fd537a751f19c9481d0ea2",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeTwoSLA",
+  "new_name": "rva002D7F40",
+  "before_sha256": "5739325c017f885c13a359e632f842207f9a398709ade0f58c09794643dd50c0",
+  "after_sha256": "1e0b2d9a83889eb3668b5d86187a1249d63199f562bd9b39bc0564405608812f",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "process",
+  "new_name": "rva002D9910",
+  "before_sha256": "dc67a9207143d1089556ae6b4027f37ea73407f2941c5e320a9b77f9c5531599",
+  "after_sha256": "4d6f8938d2ea415ff9ca6866ee09c87694561ac64bde8ae95d2e49f1038914b2",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "The old method name was an address-owner placeholder describing the body (status set/clear, element walk). The body is UpgradeMux slot 7 of a table that the class's registered constructor stores, so the owner is now proven. Slot 7 is a BFME-only virtual with no Zero Hour twin, EA label or name table, so the method takes the address-keeping name <Owner>::rva<address>."
  }
 ]
