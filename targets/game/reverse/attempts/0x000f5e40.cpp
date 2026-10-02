@@ -1,5 +1,5 @@
 // ?d_000f5e40@@YAXXZ
-// partial score=0.96 date=2026-09-28
+// partial score=0.2119 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Retail 0x000F5E40, 1293 bytes, ret 0xC.
