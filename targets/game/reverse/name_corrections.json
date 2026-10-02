@@ -12909,7 +12909,7 @@
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  },
-{
+ {
   "old_path": "targets/game/reverse/attempts/0x00880af0.cpp",
   "new_path": "targets/game/reverse/attempts/0x00880af0.cpp",
   "old_name": "BfmeBoxF0",
@@ -12918,8 +12918,8 @@
   "after_sha256": "b110243b3e1dac171a209c2f16679c983e32588715a33ca7d2580480ad3019e1",
   "evidence": "targets/game/reverse/identity_evidence/00880af0-banked-identity.md",
   "reason": "The historical bank inferred a native owner from overlap arithmetic and a neighbouring point-test layout without an independent class-name witness. The exact bank now uses an address-bound borrowed float view; original owner, declared types and lifetime remain unproved. Published point-test source is untouched."
-},
-{
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x00880af0.cpp",
   "new_path": "targets/game/reverse/attempts/0x00880af0.cpp",
   "old_name": "intersects",
@@ -12928,8 +12928,8 @@
   "after_sha256": "b110243b3e1dac171a209c2f16679c983e32588715a33ca7d2580480ad3019e1",
   "evidence": "targets/game/reverse/identity_evidence/00880af0-banked-identity.md",
   "reason": "Four native x87 predicate comparisons and the unnamed dump caller prove physical access and AL result transport, not the private method spelling intersects. The exact bank retains RVA 00880AF0 without claiming a different native identity."
-},
-{
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "new_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "old_name": "BfmeStringPool3AF0",
@@ -12938,8 +12938,8 @@
   "after_sha256": "c2a6559bef45e48ee70a08e24dfcc2e72e20d3bbdf186002449c3dea69f54348",
   "evidence": "targets/game/reverse/identity_evidence/0089ecd0-banked-identity.md",
   "reason": "False layout carrier pairing: BfmeStringPool3AF0 and its extern pointer remain declared in the after snapshot. The parser omits its function-pointer fields and mistakes the old measured one-word pool fragment for the new receiver view; no pool rename occurred."
-},
-{
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "new_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "old_name": "EAStringC",
@@ -12948,8 +12948,8 @@
   "after_sha256": "c2a6559bef45e48ee70a08e24dfcc2e72e20d3bbdf186002449c3dea69f54348",
   "evidence": "targets/game/reverse/identity_evidence/0089ecd0-banked-identity.md",
   "reason": "The Apt/EAString.cpp file and existing EAString-family pins remain useful leads but do not independently witness this nonmatching bank's native owner declaration. The exact bank uses an RVA-qualified borrowed state view and does not rename published EAString siblings."
-},
-{
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "new_path": "targets/game/reverse/attempts/0x0089ecd0.cpp",
   "old_name": "appendFormat0089ECD0",
@@ -12958,7 +12958,7 @@
   "after_sha256": "c2a6559bef45e48ee70a08e24dfcc2e72e20d3bbdf186002449c3dea69f54348",
   "evidence": "targets/game/reverse/identity_evidence/0089ecd0-banked-identity.md",
   "reason": "Retail proves stack variadic transport, a formatting import and concrete state accesses, but no independent witness of the inherited private method spelling was found. The exact bank retains the body address and makes no competing semantic identity claim."
-},
+ },
  {
   "old_path": "game/GameEngine/Source/Common/BfmeConv1476.cpp",
   "new_path": "game/GameEngine/Source/Common/BfmeConv1476.cpp",
@@ -13258,5 +13258,15 @@
   "after_sha256": "2357aed9b1be22e8a5cf3f3d0c32db7cd7d1ed885a06064da9619cf739862233",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1470.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1470.cpp",
+  "old_name": "bfmePredV30",
+  "new_name": "j_0003b557",
+  "before_sha256": "db624266f00ac16594617d1caedc7d88cb9ac543722448d37a4df32b56ae40bb",
+  "after_sha256": "978e995449d0bf8c8f4a302d9cb234569e799ab1bdc7a07258096251f5c42a8e",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Link census: the referenced address 0x0003B557 is the ILT thunk the ledger defines as j_0003b557 (functions.csv); the old spelling was a stand-in nothing defines, so the object could never link. Call-target spelling only, bytes unchanged."
  }
 ]

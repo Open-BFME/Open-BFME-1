@@ -1,6 +1,6 @@
 // cl: /Od
 
-int bfmePredV30(int a, int b, char ch);
+void j_0003b557();
 
 char *bfmeFindIfV30(char *first, char *last, int a, int b)
 {
@@ -31,7 +31,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push eax
 		mov ecx, dword ptr [ebp+0x10]
 		push ecx
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -57,7 +57,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push edx
 		mov eax, dword ptr [ebp+0x10]
 		push eax
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -83,7 +83,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push ecx
 		mov edx, dword ptr [ebp+0x10]
 		push edx
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -109,7 +109,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push eax
 		mov ecx, dword ptr [ebp+0x10]
 		push ecx
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -148,7 +148,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push eax
 		mov ecx, dword ptr [ebp+0x10]
 		push ecx
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -175,7 +175,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push edx
 		mov eax, dword ptr [ebp+0x10]
 		push eax
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
@@ -202,7 +202,7 @@ char *bfmeFindIfV30(char *first, char *last, int a, int b)
 		push ecx
 		mov edx, dword ptr [ebp+0x10]
 		push edx
-		call bfmePredV30
+		call j_0003b557
 		add esp, 0x0C
 		sub eax, dword ptr [ebp+0x14]
 		neg eax
