@@ -61,10 +61,10 @@ public:
 typedef _STL::hash_map<int, Rva006A5080PlayingAudio *> Rva006A5080PlayingMap;
 typedef _STL::list<int> Rva006A5080PendingHandles;
 
-class Rva006ABFD0File
+class Rva00691080
 {
 public:
-	void release();
+	void go();
 };
 
 class Rva00691180
@@ -130,7 +130,7 @@ void Rva006A5080Owner::releaseSlot(Rva006A5080Slot *slot)
 		::operator delete[](slot->freeEvent);
 		slot->freeEvent = 0;
 	}
-	((Rva006ABFD0File *)&slot->file)->release();
+	((Rva00691080 *)&slot->file)->go();
 	slot->clear2C = 0;
 	slot->clear28 = 0;
 	slot->clear30 = 0;
