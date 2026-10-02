@@ -70,10 +70,14 @@ public:
 
 	virtual void Set_Animation( HAnimClass *motion, float frame, int mode );
 
-	void Release( void );
 	void Set_Hierarchy_Valid( bool onoff ) const { IsTreeValid = onoff; }
 
 protected:
+	// retail spells this `?Release@Animatable3DObjClass@@IAEXXZ`: non-virtual but
+	// protected, the access Animatable3DObjClass_Release_Thunk.cpp declares it
+	// with. Public here would mangle QAEXXZ and never link.
+	void Release( void );
+
 	char m_head[0xf4];				// vtable pointer is +0x00; RenderObjClass's fields follow
 
 	mutable bool IsTreeValid;		// +0xf8
