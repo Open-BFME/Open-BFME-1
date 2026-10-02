@@ -282,12 +282,7 @@ void SceneClass::Load(ChunkLoadClass & cload)
  *   3/24/98    GTH : Created.                                                                 *
  *   9/10/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ??0SimpleSceneClass@@QAE@XZ present-unmatched
-SimpleSceneClass::SimpleSceneClass(void) :
-   Visibility_Checked(false)
-{
-
-}
+// Retail SimpleSceneClass constructor (0x00944940) is implemented in SimpleSceneClass_ctor.cpp.
 
 /***********************************************************************************************
  * SimpleSceneClass::~SimpleSceneClass -- destructor                                           *
@@ -301,11 +296,7 @@ SimpleSceneClass::SimpleSceneClass(void) :
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ??1SimpleSceneClass@@UAE@XZ present-unmatched
-SimpleSceneClass::~SimpleSceneClass(void)
-{
-	Remove_All_Render_Objects();
-}
+// Retail SimpleSceneClass destructor (0x00943E70) is implemented in SimpleSceneClass_dtor.cpp.
 
 // Retail SimpleSceneClass::Remove_All_Render_Objects (0x00943890) is implemented in SimpleSceneClass_Remove_All_Render_Objects.cpp.
 
