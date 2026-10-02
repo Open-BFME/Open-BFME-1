@@ -33,6 +33,8 @@ public:
     Rva0029A7D0Conditions m_conditions;
 };
 
+enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };
+
 class Overridable
 {
 public:
@@ -41,8 +43,8 @@ public:
 
 class UpdateModule
 {
-public:
-    void setWakeFrame(Object *, unsigned int);
+protected:
+    void setWakeFrame(Object *, UpdateSleepTime);
 };
 
 class PhysicsBehavior : public UpdateModule
@@ -88,5 +90,5 @@ void PhysicsBehavior::rva0029A7D0()
     *(bool *)(self + 0x5c) = true;
     char *data = *(char **)(self + 4);
     *(unsigned int *)(self + 0x58) = *(unsigned int *)(data + 0x20);
-    setWakeFrame((Object *)object, 1);
+    setWakeFrame((Object *)object, (UpdateSleepTime)1);
 }
