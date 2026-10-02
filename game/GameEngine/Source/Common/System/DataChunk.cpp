@@ -779,30 +779,7 @@ Byte DataChunkInput::readByte(void)
 	return b; 
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputReadArrayOfBytes.cpp
-// ?readArrayOfBytes@DataChunkInput@@QAEXPADH@Z present-unmatched
-void DataChunkInput::readArrayOfBytes(char *ptr, Int len) 
-{ 
-	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
-	m_file->read( ptr, len ); 
-	decrementDataLeft( len );
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInput_readNameKey_Thunk.cpp
-// ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ present-unmatched
-NameKeyType DataChunkInput::readNameKey(void)
-{
-		Int keyAndType = readInt();
-#if (defined(_DEBUG) || defined(_INTERNAL))
-		Dict::DataType t = (Dict::DataType)(keyAndType & 0xff);
-		DEBUG_ASSERTCRASH(t==Dict::DICT_ASCIISTRING,("Invalid key data."));
-#endif
-		keyAndType >>= 8;
-
-		AsciiString kname = m_contents.getName(keyAndType);
-		NameKeyType k = TheNameKeyGenerator->nameToKey(kname);
-		return k;
-}
+// readArrayOfBytes and readNameKey use the verified providers in DataChunkInput.cpp.
 
 // Full584B at0x001039C0 includes561B code plus3 alignment and5 DWORD
 // switch targets at0x00103BF4 through0x00103C08 exclusive; CC follows.
@@ -852,26 +829,7 @@ Dict DataChunkInput::readDict()
 	return d;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputReadAsciiString.cpp
-// ?readAsciiString@DataChunkInput@@QAE?AVAsciiString@@XZ present-unmatched
-AsciiString DataChunkInput::readAsciiString(void) 
-{ 
-	UnsignedShort len;	
-	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(UnsignedShort), ("Read past end of chunk."));
-	m_file->read( &len, sizeof(UnsignedShort) );
-	decrementDataLeft( sizeof(UnsignedShort) );
-	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
-	AsciiString theString;
-	if (len>0) {
-		char *str = theString.getBufferForRead(len);
-		m_file->read( str, len );
-		decrementDataLeft( len );
-		// add null delimiter to string.  Note that getBufferForRead allocates space for terminating null.
-		str[len] = '\000';
-	}
-
-	return theString; 
-}
+// readAsciiString uses the verified BFME provider in DataChunkInput.cpp.
 
 UnicodeString DataChunkInput::readUnicodeString(void) 
 { 
