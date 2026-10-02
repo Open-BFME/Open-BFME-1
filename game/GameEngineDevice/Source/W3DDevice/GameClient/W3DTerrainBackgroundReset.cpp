@@ -1,4 +1,7 @@
-extern "C" void Gen00881EF0( void *memory );
+// Retail's global operator delete[] (matched in
+// game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp at 0x00881EF0); m_C0 is the
+// FlatHeightMap tile array this class owns.
+void operator delete[](void *memory);
 
 class W3DTerrainBackground
 {
@@ -25,7 +28,7 @@ void W3DTerrainBackground::reset( void )
 
 	if ( m_C0 )
 	{
-		Gen00881EF0( m_C0 );
+		::operator delete[]( m_C0 );
 		m_C0 = 0;
 	}
 }

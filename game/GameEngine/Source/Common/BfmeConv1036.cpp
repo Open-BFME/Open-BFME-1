@@ -22,7 +22,10 @@ BfmeA1036 *BfmeA1036::bfmeGo1036A(void *h)
 	return this;
 }
 
-void bfmeRelease1036(void *p);
+// Retail 0x00804330 is ProtoMangle's own destroy routine (matched in
+// game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp); the call site is
+// spelled as its definition spells it so the object links.
+extern "C" void ProtoMangleDestroy(void *ref);
 
 class BfmeE1036
 {
@@ -42,7 +45,7 @@ void BfmeE1036::bfmeGo1036E(void)
 	int z = 0;
 
 	if (m_bfmeP != 0) {
-		bfmeRelease1036(m_bfmeP);
+		ProtoMangleDestroy(m_bfmeP);
 		m_bfmeP = (void *)z;
 	}
 
