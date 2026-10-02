@@ -22,7 +22,11 @@ struct Rva008C3B60Node
 	void insertRva008A9AB0(void);
 };
 
-extern Rva008C3B60Node *Rva008C3B60Head;
+// The cell at 0x01338478 is defined once, by its canonical spelling, in
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This TU's view of
+// Rva008C3B60Node is local, but MSVC mangles only the pointee class name, so
+// the spelling below is the same symbol retail's references bind to.
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 
 struct BfmeStringPool3AF0
 {
@@ -35,8 +39,8 @@ extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 void Rva008C3B60Node::insertRva008A9AB0(void)
 {
-	m_next = Rva008C3B60Head;
-	Rva008C3B60Head = this;
+	m_next = g_rva01338478NodeHead;
+	g_rva01338478NodeHead = this;
 
 	if (m_8.cmp(0x21))
 	{

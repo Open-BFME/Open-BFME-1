@@ -8,13 +8,17 @@ struct Rva008C3B60Node {
 	virtual void shutdown();
 	int m_4; int m_8; Rva008C3B60Node* m_next;
 };
-extern Rva008C3B60Node* Rva008C3B60Head;
+// The cell at 0x01338478 is defined once, by its canonical spelling, in
+// game/GameEngine/Source/Common/Data/Rva01338478.cpp.  This TU's view of
+// Rva008C3B60Node is local, but MSVC mangles only the pointee class name, so
+// the spelling below is the same symbol retail's references bind to.
+extern Rva008C3B60Node* g_rva01338478NodeHead;
 void shutdownChain()
 {
-	while (Rva008C3B60Head) {
-		Rva008C3B60Node* next = Rva008C3B60Head->m_next;
-		Rva008C3B60Head->shutdown();
-		delete Rva008C3B60Head;
-		Rva008C3B60Head = next;
+	while (g_rva01338478NodeHead) {
+		Rva008C3B60Node* next = g_rva01338478NodeHead->m_next;
+		g_rva01338478NodeHead->shutdown();
+		delete g_rva01338478NodeHead;
+		g_rva01338478NodeHead = next;
 	}
 }
