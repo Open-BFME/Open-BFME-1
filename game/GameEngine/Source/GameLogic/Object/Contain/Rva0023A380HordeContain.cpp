@@ -6,7 +6,7 @@
 // this-0xAC and member-index tree at this+0x30 match the already-landed
 // Rva0023A270HordeContain body. Each visited Object's +0x200 field is an
 // address-derived interface whose vtable slot 0x48 returns an id; that id is
-// resolved through TheBfmeGameLogic's object hash. The exact identity of the
+// resolved through TheGameLogic's object hash. The exact identity of the
 // interface and the +0x214/+0x74 chase on the resolved Object are unproven.
 //
 // At the first slot-0x48 call, an explicit typed vtable view emits the retail
@@ -47,7 +47,7 @@ typedef _STL::list<Object *> BfmeMemberList;
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
-// Retail 0x012F0898 TheBfmeGameLogic. Only the bucket vector's placement
+// Retail 0x012F0898 TheGameLogic. Only the bucket vector's placement
 // matters (this+0xB4/+0xB8), as in GameLogicFindObjectByID.cpp.
 class GameLogic
 {
@@ -65,7 +65,7 @@ public:
 	char m_head[0xb0];
 	BfmeObjectPtrHash m_objectHash;
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeMemberIndexNode
 {
@@ -121,7 +121,7 @@ UnsignedInt Rva0023A380HordeContain::rva0023a380(UnsignedInt targetId)
 		if (candidate == 0)
 			continue;
 
-		Object *found = TheBfmeGameLogic->findObjectByID(candidate);
+		Object *found = TheGameLogic->findObjectByID(candidate);
 		if (found != 0)
 		{
 			void *field214 = *(void **)((char *)found + 0x214);
@@ -138,12 +138,12 @@ UnsignedInt Rva0023A380HordeContain::rva0023a380(UnsignedInt targetId)
 	while (entry != m_memberIndex)
 	{
 		UnsignedInt key = entry->m_key;
-		Object *obj2 = TheBfmeGameLogic->findObjectByID(key);
+		Object *obj2 = TheGameLogic->findObjectByID(key);
 		Rva0023A380BodyShim *iface2 = *(Rva0023A380BodyShim **)((char *)obj2 + 0x200);
 		if (iface2 != 0)
 		{
 			UnsignedInt candidate2 = iface2->slot48();
-			Object *obj3 = TheBfmeGameLogic->findObjectByID(candidate2);
+			Object *obj3 = TheGameLogic->findObjectByID(candidate2);
 			if (obj3 != 0)
 			{
 				void *field214b = *(void **)((char *)obj3 + 0x214);

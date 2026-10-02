@@ -94,7 +94,7 @@ public:
 
 extern Bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
 
@@ -167,10 +167,10 @@ Bool AIAttackMeleeSquishState::computePath()
 	if (!ai->m_path && !ai->m_waitingForPath)
 		forceRepath = true;
 
-	if (!forceRepath && TheBfmeGameLogic->m_frame - m_field50 < 5)
+	if (!forceRepath && TheGameLogic->m_frame - m_field50 < 5)
 		return true;
 
-	m_field50 = TheBfmeGameLogic->m_frame;
+	m_field50 = TheGameLogic->m_frame;
 	if (m_machine->getGoalObject())
 	{
 		Object *source = m_machine->m_owner;

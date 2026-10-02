@@ -66,7 +66,7 @@ public:
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_frame;
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct Rva00266B50ListNode
 {
@@ -244,7 +244,7 @@ void Rva00266EB0SiegeDeployBase::transition(Int state)
 	case 4:
 		setModelCondition(object, 93);
 		object->setDisabledUntil((DisabledType)8,
-			TheBfmeGameLogic->m_frame + m_moduleData->m_1d4);
+			TheGameLogic->m_frame + m_moduleData->m_1d4);
 		return;
 	case 3:
 	{

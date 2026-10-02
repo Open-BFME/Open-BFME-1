@@ -19,7 +19,7 @@ enum DamageType { DAMAGE8=8 }; enum DeathType { DEATH0=0 };
 #define OBJECT_TU_MEMBERS Module* findModule(NameKeyType) const; void clearStatus(ObjectStatusTypes); void bfmeApplySpecialModelCondition(int,const void*,int); void kill(DamageType,DeathType);
 #include "../object.h"
 class GameLogic { public: Object* findObjectByID(int); char pad00[0x3c]; unsigned at3c; };
-extern GameLogic* TheBfmeGameLogic;
+extern GameLogic* TheGameLogic;
 class AudioDispatch00299250 { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c(); virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c(); virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c(); virtual void s40(); virtual void add(AudioEventRTS*); };
 // Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
 // Common/Audio/GameAudio.cpp. AudioDispatch00299250 above is this TU's vslot view of
@@ -35,7 +35,7 @@ static inline AudioDispatch00299250 *localTheAudio()
 struct Config00299250 { char pad00[0x20]; AudioEventInfoRef at20; };
 class StealthCleanup00299250 { public: void apply(); char pad00[4]; Config00299250* at04; Object* at08; char pad0c[0x18]; int at24; int at28; int at2c; unsigned at30; };
 void StealthCleanup00299250::apply() {
- unsigned frame=TheBfmeGameLogic->at3c;
+ unsigned frame=TheGameLogic->at3c;
  Config00299250* config=at04;
  at30=frame;
  Object* object=at08;
@@ -52,7 +52,7 @@ void StealthCleanup00299250::apply() {
    localTheAudio()->add(&audio);
   }
  }
- Object* previous=TheBfmeGameLogic->findObjectByID(at24);
+ Object* previous=TheGameLogic->findObjectByID(at24);
  if(previous) { previous->kill(DAMAGE8,DEATH0); at24=0; }
 }
 

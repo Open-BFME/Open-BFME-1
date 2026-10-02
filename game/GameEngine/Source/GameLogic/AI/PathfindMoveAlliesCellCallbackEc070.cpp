@@ -75,7 +75,7 @@ public:
 	Object *findObjectByID( ObjectID id );
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class MADStruct
 {
@@ -99,7 +99,7 @@ Int MADStruct::cellCallback( PathfindCell *previousCell, PathfindCell *currentCe
 			register Object *obj = m_obj;
 			if (objectID != obj->m_id && objectID != m_ignoreID)
 			{
-				Object *other = TheBfmeGameLogic->findObjectByID( objectID );
+				Object *other = TheGameLogic->findObjectByID( objectID );
 				if (other != 0 && obj->getRelationship( other ) == ALLIES)
 				{
 					if (((BFMEActionObject *)other)->testStatus( 0x25 ))

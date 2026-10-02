@@ -315,7 +315,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern GameEngine *TheGameEngine;
 class GameClient;
 extern GameClient *TheGameClient;
@@ -438,7 +438,7 @@ public:
 
 void Drawable::updateDrawable(void)
 {
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
+	UnsignedInt now = TheGameLogic->m_frame;
 	Object *obj = m_object;
 
 	if (TheGameEngine->m_bfme30 == 1 && m_bfme3B3)

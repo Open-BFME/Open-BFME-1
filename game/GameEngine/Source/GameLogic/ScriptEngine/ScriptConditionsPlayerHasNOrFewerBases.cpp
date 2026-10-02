@@ -123,7 +123,7 @@ public:
 // so the extern carries the canonical type and the view is cast at the use.
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
@@ -140,7 +140,7 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 	else
 		baseCheckFrame = (int)g_010E1F40;
 
-	if (TheBfmeGameLogic->m_frame < (UnsignedInt)baseCheckFrame)
+	if (TheGameLogic->m_frame < (UnsignedInt)baseCheckFrame)
 		return false;
 
 	PlayerMaskType mask = TheScriptEngine->unidentified_0034DB40(playerParm);

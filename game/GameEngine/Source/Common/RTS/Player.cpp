@@ -149,7 +149,7 @@ public:
 	Bool isInMultiplayerOrSkirmishGame();
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 template <typename T>
 class StringBase
@@ -5477,7 +5477,7 @@ void Rva000D9D30Player::method( void )
 	if (self->m_defaultTeam != NULL && self->m_playerTemplate != NULL)
 	{
 		BfmePlayerAsciiString startingObjectName;
-		if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
+		if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x114);
 		else
 			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x110);
@@ -5534,8 +5534,8 @@ void Rva000D9D30Player::method( void )
 		 (((BfmePlayerGameInfo *)TheGameInfo)->isSkirmish() ||
 		  ((BfmePlayerGameInfo *)TheGameInfo)->isMultiplayer() ||
 		  ((BfmePlayerGameInfo *)TheGameInfo)->isSandBox())) ||
-		(TheBfmeGameLogic != NULL &&
-		 ((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame()))
+		(TheGameLogic != NULL &&
+		 ((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame()))
 	{
 		union
 		{

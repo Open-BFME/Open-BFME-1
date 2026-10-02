@@ -67,7 +67,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Object
 {
@@ -116,5 +116,5 @@ void Object::onContainedBy(Object *containedBy)
 	}
 
 	m_containedBy = containedBy;
-	m_containedByFrame = TheBfmeGameLogic->m_frame;
+	m_containedByFrame = TheGameLogic->m_frame;
 }

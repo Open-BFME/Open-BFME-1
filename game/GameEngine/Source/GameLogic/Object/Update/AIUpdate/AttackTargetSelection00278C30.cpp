@@ -20,7 +20,7 @@ class Thing { public: bool isKindOf(KindOfType) const; };
 class Overridable { public: const Overridable *getFinalOverride() const { if(at<Overridable*>((void*)this,4)) return at<Overridable*>((void*)this,4)->getFinalOverride(); return this; } };
 inline const Overridable *finalTemplate(Object *o) { const Overridable *p=at<Overridable*>(o,4); if(!p) return 0; return p->getFinalOverride(); }
 class GameLogic { public: Object *findObjectByID(int); };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class BFMEWeaponSetFlags {};
 class BFMEWeaponSetOwner { public: const BFMEWeaponSetFlags &getWeaponSetFlags() const; };
 class BfmeSubEQT;
@@ -106,7 +106,7 @@ static Object *selectAttackTarget00278C30(Object *target,Object *owner,bool *fla
  if (!(at<unsigned char>(owner,0x94)&0x20)) {
   Object *parent=at<Object*>(target,0x214);
   if (!parent || !((Thing*)parent)->isKindOf((KindOfType)108)) {
-   parent=TheBfmeGameLogic->findObjectByID(at<int>(target,0x78));
+   parent=TheGameLogic->findObjectByID(at<int>(target,0x78));
    if(parent && ((Thing*)parent)->isKindOf((KindOfType)108)) target=parent;
   } else target=parent;
  } else if(at<unsigned>((void*)finalTemplate(target),0xd4)&0x1000) {

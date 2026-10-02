@@ -35,7 +35,7 @@ private:
 	ObjectPtrHash m_objectMap;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 typedef int Int;
 
@@ -112,25 +112,25 @@ Int Rva0036ff70Module::query(Rva0036ff70Callback callback, void *context)
 	ObjectID *it;
 	for (it = m_range0Begin; it != m_range0End; ++it)
 	{
-		Object *value = TheBfmeGameLogic->findObjectByID(*it);
+		Object *value = TheGameLogic->findObjectByID(*it);
 		if (value != 0 && !callback(value, context))
 			return 0;
 	}
 	for (it = m_range1Begin; it != m_range1End; ++it)
 	{
-		Object *value = TheBfmeGameLogic->findObjectByID(*it);
+		Object *value = TheGameLogic->findObjectByID(*it);
 		if (value != 0 && !callback(value, context))
 			return 0;
 	}
 	for (it = m_range3Begin; it != m_range3End; ++it)
 	{
-		Object *value = TheBfmeGameLogic->findObjectByID(*it);
+		Object *value = TheGameLogic->findObjectByID(*it);
 		if (value != 0 && !callback(value, context))
 			return 0;
 	}
 	for (it = m_range2Begin; it != m_range2End; ++it)
 	{
-		Object *value = TheBfmeGameLogic->findObjectByID(*it);
+		Object *value = TheGameLogic->findObjectByID(*it);
 		if (value != 0 && !callback(value, context))
 			return 0;
 	}

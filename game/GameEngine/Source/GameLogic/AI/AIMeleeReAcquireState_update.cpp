@@ -323,7 +323,6 @@ public:
 		Int distanceCalculation, PartitionFilter *filters);
 };
 
-extern GameLogic *TheBfmeGameLogic;
 extern AI *TheAI;
 extern PartitionManager *ThePartitionManager;
 
@@ -342,7 +341,7 @@ private:
 
 StateReturnType AIMeleeReAcquireState::update()
 {
-	const UnsignedInt frame = TheBfmeGameLogic->m_frame;
+	const UnsignedInt frame = TheGameLogic->m_frame;
 	if (frame - m_nextAcquireFrame < 1)
 		return STATE_FAILURE;
 
@@ -364,7 +363,7 @@ StateReturnType AIMeleeReAcquireState::update()
 	{
 		m_machine->setGoalObject(goal);
 		owner->m_ai->friend_setGoalObject(goal);
-		m_nextAcquireFrame = TheBfmeGameLogic->m_frame;
+		m_nextAcquireFrame = TheGameLogic->m_frame;
 		return STATE_SUCCESS;
 	}
 
@@ -388,6 +387,6 @@ StateReturnType AIMeleeReAcquireState::update()
 	}
 	m_machine->setGoalObject(found);
 	owner->m_ai->friend_setGoalObject(found);
-	m_nextAcquireFrame = TheBfmeGameLogic->m_frame;
+	m_nextAcquireFrame = TheGameLogic->m_frame;
 	return STATE_SUCCESS;
 }

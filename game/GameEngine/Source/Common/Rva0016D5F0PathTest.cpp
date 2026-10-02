@@ -59,7 +59,7 @@ class CRCParameterCheck
 {
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a(void);
@@ -110,7 +110,7 @@ Bool Rva0016D5F0PathTest::run(Object *target)
 	position.y = targetObject->m_position.y;
 	position.z = targetObject->m_position.z;
 
-	if (TheBfmeGameLogic->m_desyncLogFrameCount > 0 && TheCRCParameterCheck != 0)
+	if (TheGameLogic->m_desyncLogFrameCount > 0 && TheCRCParameterCheck != 0)
 	{
 		((BfmeCritterDesyncLog)j_0003a17a)(
 			TheCRCParameterCheck,

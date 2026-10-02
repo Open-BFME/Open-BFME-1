@@ -44,7 +44,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Team
 {
@@ -266,7 +266,7 @@ StateReturnType AIGuardInnerState::onEnter()
 			FindObjectByIDCall asMember;
 		} findObjectCast;
 		findObjectCast.asVoid = (void *)j_0001f253;
-		Object *targetObject = (TheBfmeGameLogic->*findObjectCast.asMember)(
+		Object *targetObject = (TheGameLogic->*findObjectCast.asMember)(
 			machine->m_targetToGuard);
 		union
 		{
@@ -299,7 +299,7 @@ StateReturnType AIGuardInnerState::onEnter()
 	}
 
 	register Rva0015C570GuardMachine *machine = (Rva0015C570GuardMachine *)state->m_machine;
-	Object *nemesisObject = findBfmeObject(TheBfmeGameLogic,
+	Object *nemesisObject = findBfmeObject(TheGameLogic,
 		machine->m_nemesisToAttack);
 	if (!nemesisObject)
 		return STATE_SUCCESS;
@@ -342,7 +342,7 @@ StateReturnType AIGuardInnerState::onEnter()
 			getMachine(), false, true, false,
 			&m_exitConditions);
 	m_attackState->m_machine->setGoalObject(nemesisObject);
-	m_frameAt48 = TheBfmeGameLogic->m_frame + 0xf;
+	m_frameAt48 = TheGameLogic->m_frame + 0xf;
 	StateReturnType result = m_attackState->onEnter();
 	return result == STATE_CONTINUE ? STATE_CONTINUE : STATE_SUCCESS;
 }

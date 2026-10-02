@@ -132,7 +132,7 @@ public:
 };
 
 extern AI *TheAI;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern void j_0000e570();
 extern void j_00027bc9();
 extern void j_00032b46();
@@ -171,7 +171,7 @@ bool Rva00173620State::computePath()
 	}
 
 	m_checkForPath = 1;
-	m_okToRepathTimes = TheBfmeGameLogic->m_frame + 0x32;
+	m_okToRepathTimes = TheGameLogic->m_frame + 0x32;
 	AIUpdateInterface *ai = owner->m_ai;
 	if (!ai)
 		return true;

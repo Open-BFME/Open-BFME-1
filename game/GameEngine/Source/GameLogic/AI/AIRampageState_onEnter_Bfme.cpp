@@ -61,7 +61,7 @@ private:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Pathfinder
 {
@@ -201,7 +201,7 @@ StateReturnType AIRampageState::onEnter()
 	aiUpdate->m_flag334 = true;
 	aiUpdate->m_flag333 = true;
 	owner->clearCondition(8);
-	TheBfmeGameLogic->deselectObject(owner, 0xffff, true);
+	TheGameLogic->deselectObject(owner, 0xffff, true);
 
 	{
 		BitFlags<86> status;
@@ -215,7 +215,7 @@ StateReturnType AIRampageState::onEnter()
 	}
 
 	int durationOrNextFrame = bfmeRampageDuration(aiUpdate);
-	m_field28 = TheBfmeGameLogic->getFrame() + durationOrNextFrame;
+	m_field28 = TheGameLogic->getFrame() + durationOrNextFrame;
 
 	UnsignedInt period = aiUpdate->m_moduleData->m_field48;
 	if (period == 0)
@@ -224,7 +224,7 @@ StateReturnType AIRampageState::onEnter()
 		return STATE_CONTINUE;
 	}
 
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	_ReadWriteBarrier();
 	if (durationOrNextFrame)
 		durationOrNextFrame = logic->getFrame() + period;

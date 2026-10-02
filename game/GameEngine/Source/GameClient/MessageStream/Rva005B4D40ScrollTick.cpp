@@ -77,7 +77,7 @@ public:
 };
 
 extern Glo012F1028Type *Glo012F1028;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Gen_00609320 *g_bfmeStateDF;
 extern InGameUI *TheInGameUI;
 extern Display *TheDisplay;
@@ -114,7 +114,7 @@ void Calls004329D0::rva005B4D40()
 {
 	if (!Glo012F1028 || !Glo012F1028->m_at2C)
 		return;
-	if (((BfmeGameLogicPause *)TheBfmeGameLogic)->isGamePaused())
+	if (((BfmeGameLogicPause *)TheGameLogic)->isGamePaused())
 		return;
 	Glo012F1028->m_at1C = false;
 

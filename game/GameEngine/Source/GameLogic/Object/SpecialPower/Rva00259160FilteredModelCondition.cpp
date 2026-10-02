@@ -15,7 +15,7 @@ class GameLogic {
 public:
     Object *getFirstObject();
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class Rva2225E0Filter {
 public:
     bool accepts(Object *object, Player *player);
@@ -36,7 +36,7 @@ public:
 void Rva00259160Owner::applyToFilteredObjects()
 {
     Object *targetObject = target;
-    Object *object = TheBfmeGameLogic->getFirstObject();
+    Object *object = TheGameLogic->getFirstObject();
     while (object != 0) {
         Rva00259160Context *currentContext = context;
         if (currentContext->filter.accepts(object, targetObject->getControllingPlayer()))

@@ -75,7 +75,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class CastleBehavior
 {
@@ -89,7 +89,7 @@ private:
 
 Bool CastleBehavior::isPendingObjectUnavailable() const
 {
-	Object *object = TheBfmeGameLogic->findObjectByID(m_pendingObjectID);
+	Object *object = TheGameLogic->findObjectByID(m_pendingObjectID);
 	if (object)
 	{
 		if (!(object->destroyedFlags() & 1))

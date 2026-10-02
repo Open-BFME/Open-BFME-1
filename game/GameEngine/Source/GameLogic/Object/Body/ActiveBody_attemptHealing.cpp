@@ -26,7 +26,7 @@ class Object { public:
  HealingTemplate0020FBC0 *getTemplate() const { HealingTemplate0020FBC0 *t=tmpl; if(!t)return 0; if(t->next)t=(HealingTemplate0020FBC0*)t->next->getFinalOverride();return t; }
 };
 class GameLogic { public: char pad[0x3c]; unsigned frame; Object *findObjectByID(int); };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class FXList { public: static void doFXObj(const FXList*,const Object*,const Object*); };
 struct HealingData0020FBC0 { char pad[0x48]; const FXList *fx; };
 struct HealingArmor001B0200 { float adjust(void*,Object*,int); };
@@ -50,7 +50,7 @@ void ActiveBody::attemptHealing(DamageInfo *info) {
   int oldState=m_curDamageState;
   internalChangeHealth(amount,info);
   info->actual=amount;info->clipped=m_prevHealth-m_currentHealth;
-  m_lastHealingTimestamp=TheBfmeGameLogic->frame;
+  m_lastHealingTimestamp=TheGameLogic->frame;
   if(m_currentHealth>m_prevHealth) {
    for(HealingBehavior0020FBC0 **m=obj->m_behaviors;*m;++m) {
     HealingDamageFacet0020FBC0 *d=(*m)->facet.getDamage();
@@ -64,7 +64,7 @@ void ActiveBody::attemptHealing(DamageInfo *info) {
     HealingDamageFacet0020FBC0 *d=(*m)->facet.getDamage();
     if(d) d->onState(info,oldState,m_curDamageState);
    }
-   if(fieldBC) { Object *linked=TheBfmeGameLogic->findObjectByID(fieldBC);if(linked) { HealingBodyFacet0020FBC0 *b=linked->body; if(b) b->state(m_curDamageState); } }
+   if(fieldBC) { Object *linked=TheGameLogic->findObjectByID(fieldBC);if(linked) { HealingBodyFacet0020FBC0 *b=linked->body; if(b) b->state(m_curDamageState); } }
   }
  }
  primary->fx(info);

@@ -94,7 +94,7 @@ private:
 	unsigned char m_active;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Rva002BD630TeamFactory *TheBfmeTeamFactory;
 
 Int Rva002BD630State::run()
@@ -109,7 +109,7 @@ Int Rva002BD630State::run()
 		return -1;
 
 	Rva002BD630Machine *machine = m_machine;
-	Rva002BD630Object *object = (Rva002BD630Object *)TheBfmeGameLogic->findObjectByID(machine->m_teamID);
+	Rva002BD630Object *object = (Rva002BD630Object *)TheGameLogic->findObjectByID(machine->m_teamID);
 	Team *teamResult = (Team *)TheBfmeTeamFactory->find(machine->m_otherID);
 	if (object)
 	{

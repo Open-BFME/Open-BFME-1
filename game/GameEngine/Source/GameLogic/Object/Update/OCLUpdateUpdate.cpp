@@ -37,7 +37,7 @@ public:
 	UnsignedInt getFrame() const { return m_frame; }
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern char g_bfmeFmt1051B[];
 int GetGameLogicRandomValue(int, int, char *, int);
 
@@ -114,7 +114,7 @@ __forceinline void OCLUpdate::setNextCreationFrame(char *file)
 	UnsignedInt delay = GetGameLogicRandomValue(getOCLUpdateModuleData()->m_minDelay,
 		getOCLUpdateModuleData()->m_maxDelay,
 		file, 0x6a);
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	UnsignedInt frame = logic->m_frame;
 	m_timerStartedFrame = frame;
 	m_nextCreationFrame = frame + delay;
@@ -126,7 +126,7 @@ __forceinline void OCLUpdate::setNextCreationFrameOrdered(char *file)
 	UnsignedInt delay = GetGameLogicRandomValue(getOCLUpdateModuleData()->m_minDelay,
 		getOCLUpdateModuleData()->m_maxDelay,
 		file, 0x6a);
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	UnsignedInt frame = logic->m_frame;
 	*(volatile UnsignedInt *)((char *)this + 0x14) = frame;
 	*(volatile UnsignedInt *)((char *)this + 0x10) = frame + delay;
@@ -146,7 +146,7 @@ __forceinline Object *OCLUpdate::getObject()
 
 __forceinline unsigned char OCLUpdate::shouldCreate()
 {
-	return TheBfmeGameLogic->getFrame() >= m_nextCreationFrame;
+	return TheGameLogic->getFrame() >= m_nextCreationFrame;
 }
 
 UpdateSleepTime OCLUpdate::update()

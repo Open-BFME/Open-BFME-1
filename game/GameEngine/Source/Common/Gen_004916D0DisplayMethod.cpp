@@ -131,7 +131,7 @@ private:
 extern ImageCollection *TheMappedImageCollection;
 extern Display *TheDisplay;
 extern AudioManager *TheAudio;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
 
 // ?rva004916D0@Gen_00491580@@UAEXH@Z
@@ -153,7 +153,7 @@ void Gen_00491580::rva004916D0(int unused)
 			2, 0, 0, 0x3f800000, 0x3f800000);
 	}
 
-	TheBfmeGameLogic->m_flag = 1;
+	TheGameLogic->m_flag = 1;
 
 	if (m_first.isNotEmpty())
 	{

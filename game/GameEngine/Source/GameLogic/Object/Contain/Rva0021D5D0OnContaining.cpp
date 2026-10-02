@@ -55,7 +55,7 @@ public:
 	unsigned char m_beforeFrame[0x3c];
 	unsigned int m_frame;
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // This receiver is ContestableContain's secondary interface at primary+0x20.
 // The ctor at 0x0021BEE0 installs its 0x010AB140 vtable here; slot 17
@@ -114,5 +114,5 @@ void Rva0021D5D0Secondary::onContaining(Object *object, Bool selected)
 	}
 
 	((Rva0021D5D0WakeAccess *)primary())->wake(host);
-	setNextFrame(TheBfmeGameLogic->m_frame);
+	setNextFrame(TheGameLogic->m_frame);
 }

@@ -5,7 +5,7 @@
 // status bit on its pending object and on every object in m_ownedObjectsC4,
 // then tells the ScriptEngine.  Same class slice as the landed
 // CastleBehaviorRva00370340.cpp (m_objectID +0xA0, owned-object vector
-// +0xC4/+0xC8, TheBfmeGameLogic's hash_map at +0xB0).  Callers 0x00372BD0,
+// +0xC4/+0xC8, TheGameLogic's hash_map at +0xB0).  Callers 0x00372BD0,
 // 0x00376C70 and 0x00377550 reach it through ILT 0x00026094.
 //
 // GameLogic::findObjectByID is the header inline (body = landed
@@ -78,7 +78,7 @@ public:
 	CastleObjectMap m_objects;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class ScriptEngine
 {
@@ -104,7 +104,7 @@ private:
 
 void CastleBehavior::rva00371ee0(ObjectStatusTypes status, Bool set)
 {
-	Object *pending = TheBfmeGameLogic->findObjectByID(m_objectID);
+	Object *pending = TheGameLogic->findObjectByID(m_objectID);
 	if (pending) {
 		if (set)
 			pending->setStatusBit(status, true);
@@ -113,7 +113,7 @@ void CastleBehavior::rva00371ee0(ObjectStatusTypes status, Bool set)
 	}
 
 	for (unsigned int i = 0; i < m_ownedObjectsC4.size(); ++i) {
-		Object *object = TheBfmeGameLogic->findObjectByID(m_ownedObjectsC4[i]);
+		Object *object = TheGameLogic->findObjectByID(m_ownedObjectsC4[i]);
 		if (object != 0) {
 			if (set) {
 				ObjectStatusMaskType mask;

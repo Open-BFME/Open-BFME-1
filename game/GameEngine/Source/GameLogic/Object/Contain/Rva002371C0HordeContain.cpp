@@ -56,7 +56,7 @@ public:
 	BfmeObjectPtrHash m_objectHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 template <int N> class Rva002371C0MemberViewSlots : public Rva002371C0MemberViewSlots<N - 1>
 {
@@ -123,7 +123,7 @@ void Rva002371C0HordeContain::rva002371c0()
 		UnsignedInt key = entry->m_key;
 		if (key != 0)
 		{
-			Object *object = TheBfmeGameLogic->findObjectByID(key);
+			Object *object = TheGameLogic->findObjectByID(key);
 			if (object != 0)
 				TheAI->pathfinder->updatePos(object,
 					(const Coord3D *)((const char *)object + 0x38));

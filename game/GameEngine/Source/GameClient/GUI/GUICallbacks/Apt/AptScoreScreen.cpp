@@ -102,7 +102,7 @@ public:
 };
 
 extern RecorderClass *TheRecorder;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class AudioManager;
 
 extern AudioManager *TheAudio;
@@ -121,20 +121,20 @@ Bool _bfme_showScoreScreen(void)
 	{
 		type = 4;
 	}
-	else if (TheBfmeGameLogic->m_bfmeMode == 5)
+	else if (TheGameLogic->m_bfmeMode == 5)
 	{
 		type = 3;
 	}
-	else if (TheBfmeGameLogic->m_bfmeMode == 1)
+	else if (TheGameLogic->m_bfmeMode == 1)
 	{
 		type = 2;
 	}
-	else if (TheBfmeGameLogic->m_bfmeMode == 2)
+	else if (TheGameLogic->m_bfmeMode == 2)
 	{
 		type = 1;
 	}
-	else if (!TheBfmeGameLogic->isInSinglePlayerGame() &&
-		TheBfmeGameLogic->m_bfmeMode != 6)
+	else if (!TheGameLogic->isInSinglePlayerGame() &&
+		TheGameLogic->m_bfmeMode != 6)
 	{
 		return false;
 	}

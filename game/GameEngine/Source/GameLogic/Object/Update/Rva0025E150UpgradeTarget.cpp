@@ -178,7 +178,7 @@ public:
 	Object *findObjectByID(int);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // The +20 member is an embedded BFME interface.  Slot zero receives
 // (data+1D8, selected candidate, 0, 0, 0); its semantic owner is not asserted.
@@ -269,7 +269,7 @@ void Rva0025E150Owner::callAt0025E150()
 				ObjectID producerID = candidate->m_producerID;
 				if (producerID == 0)
 					goto dispatch_original;
-				Object *producer = TheBfmeGameLogic->findObjectByID(producerID);
+				Object *producer = TheGameLogic->findObjectByID(producerID);
 				if (producer == 0)
 					goto dispatch_original;
 				if (reinterpret_cast<Thing *>(producer)->isKindOf(

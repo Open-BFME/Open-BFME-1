@@ -197,7 +197,7 @@ public:
     unsigned nextObjectID;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 void GameLogic::setDefaults(bool loadingSaveGame)
 {
@@ -227,7 +227,7 @@ void GameLogic::setDefaults(bool loadingSaveGame)
 
 void GameLogic::friend_awakenUpdateModule(Object *obj, UpdateModule *u, unsigned when)
 {
-    unsigned now = TheBfmeGameLogic->frame;
+    unsigned now = TheGameLogic->frame;
     if (u == current)
         return;
     if (when == u->friend_getNextCallFrame())

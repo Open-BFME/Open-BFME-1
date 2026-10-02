@@ -52,7 +52,7 @@ public:
 	CastleObjectMap m_objects;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class CastleBehavior
 {
@@ -79,8 +79,8 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 		ObjectID id = *it;
 		if (id != 0) {
 			CastleObjectMap::iterator objectIt =
-				TheBfmeGameLogic->m_objects.find(id);
-			if (objectIt != TheBfmeGameLogic->m_objects.end()) {
+				TheGameLogic->m_objects.find(id);
+			if (objectIt != TheGameLogic->m_objects.end()) {
 				Object *object = (*objectIt).second;
 				if (object != 0) {
 					ThingTemplate *objectTemplate = object->m_template;
@@ -99,8 +99,8 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 		ObjectID id = m_ownedObjectsC4[i];
 		if (id != 0) {
 			CastleObjectMap::iterator objectIt =
-				TheBfmeGameLogic->m_objects.find(id);
-			if (objectIt != TheBfmeGameLogic->m_objects.end()) {
+				TheGameLogic->m_objects.find(id);
+			if (objectIt != TheGameLogic->m_objects.end()) {
 				Object *object = (*objectIt).second;
 				if (object != 0) {
 					ThingTemplate *objectTemplate = object->m_template;
@@ -119,8 +119,8 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 		ObjectID id = m_ownedObjectsD0[i];
 		if (id != 0) {
 			CastleObjectMap::iterator objectIt =
-				TheBfmeGameLogic->m_objects.find(id);
-			if (objectIt != TheBfmeGameLogic->m_objects.end()) {
+				TheGameLogic->m_objects.find(id);
+			if (objectIt != TheGameLogic->m_objects.end()) {
 				Object *object = (*objectIt).second;
 				if (object != 0) {
 					ThingTemplate *objectTemplate = object->m_template;
@@ -138,8 +138,8 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 	ObjectID id = m_objectID;
 	if (id != 0) {
 		CastleObjectMap::iterator objectIt =
-			TheBfmeGameLogic->m_objects.find(id);
-		if (objectIt != TheBfmeGameLogic->m_objects.end()) {
+			TheGameLogic->m_objects.find(id);
+		if (objectIt != TheGameLogic->m_objects.end()) {
 			Object *object = (*objectIt).second;
 			if (object != 0) {
 				ThingTemplate *objectTemplate = object->m_template;
@@ -157,8 +157,8 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 		ObjectID id = m_ownedObjectsB8[i];
 		if (id != 0) {
 			CastleObjectMap::iterator objectIt =
-				TheBfmeGameLogic->m_objects.find(id);
-			if (objectIt != TheBfmeGameLogic->m_objects.end()) {
+				TheGameLogic->m_objects.find(id);
+			if (objectIt != TheGameLogic->m_objects.end()) {
 				Object *object = (*objectIt).second;
 				if (object != 0) {
 					ThingTemplate *objectTemplate = object->m_template;

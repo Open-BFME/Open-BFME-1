@@ -67,7 +67,7 @@ public:
     }
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 template<int N>
 class AIUpdateVirtualSlots : public AIUpdateVirtualSlots<N - 1>
@@ -191,7 +191,7 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(void *, const char *, ...);
 
 StateReturnType AIGuardRetaliateReturnState::onEnter()
 {
-    UnsignedInt now = TheBfmeGameLogic->getFrame();
+    UnsignedInt now = TheGameLogic->getFrame();
 #line 248 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGuardRetaliate.cpp"
     m_nextReturnScanTime = now + GetGameLogicRandomValue(0, TheAI->getAiData()->m_guardEnemyReturnScanRate, __FILE__, __LINE__);
 #line 249 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGuardRetaliate.cpp"

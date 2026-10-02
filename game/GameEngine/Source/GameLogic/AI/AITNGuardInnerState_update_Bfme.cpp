@@ -31,7 +31,7 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class AIData
 {
@@ -179,7 +179,7 @@ public:
 
 StateReturnType AITNGuardInnerState::update()
 {
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	_ReadWriteBarrier();
 	AITNGuardMachine *guardMachine = m_machine;
 	Object *nemesis = logic->findObjectByID(guardMachine->m_nemesisID);
@@ -198,7 +198,7 @@ StateReturnType AITNGuardInnerState::update()
 			getGuardMachine()->setNemesisID(teamVictim->getID());
 			_ReadWriteBarrier();
 			register AIData *data = TheAI->getAiData();
-			m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheBfmeGameLogic->getFrame();
+			m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheGameLogic->getFrame();
 			return STATE_CONTINUE;
 		}
 		if (tunnels)
@@ -209,7 +209,7 @@ StateReturnType AITNGuardInnerState::update()
 				getGuardMachine()->setNemesisID(nemesis->getID());
 				_ReadWriteBarrier();
 				register AIData *data = TheAI->getAiData();
-				m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheBfmeGameLogic->getFrame();
+				m_attackGiveUpFrame = data->m_guardChaseUnitFrames + TheGameLogic->getFrame();
 				return STATE_CONTINUE;
 			}
 		}

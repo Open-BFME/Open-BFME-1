@@ -62,7 +62,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Real normalizeAngle(Real angle);
 
 class DamageInfo
@@ -106,7 +106,7 @@ Bool DieMuxData::isDieApplicable(
 	if (!(m_minKillerAngle < m_maxKillerAngle))
 		return true;
 
-	Object *killer = TheBfmeGameLogic->findObjectByID(damageInfo->m_sourceID);
+	Object *killer = TheGameLogic->findObjectByID(damageInfo->m_sourceID);
 	if (killer == 0)
 		return false;
 

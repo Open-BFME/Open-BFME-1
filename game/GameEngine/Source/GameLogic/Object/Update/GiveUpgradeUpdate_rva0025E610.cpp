@@ -93,7 +93,7 @@ public:
 	BfmeNodeND *bfmeFindND(const UnsignedInt *mask);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // Existing typed pin: this ILT/body is shared by the neighboring charge
 // application and carries the live receiver in ECX with no stack arguments.
@@ -194,7 +194,7 @@ void Rva0025E610Owner::runAt0025E610()
 	reinterpret_cast<Rva0025EF90Owner *>(this)->callAt002A9850();
 
 	Object *object = m_object;
-	Object *target = TheBfmeGameLogic->findObjectByID(m_objectID);
+	Object *target = TheGameLogic->findObjectByID(m_objectID);
 	if (target == 0 || (target->m_privateStatus & 1) != 0 ||
 		!reinterpret_cast<SpecialAbilityUpdate *>(this)->checkTarget(target))
 		goto failure;
@@ -229,7 +229,7 @@ void Rva0025E610Owner::runAt0025E610()
 			drawable->colorFlash(&white, 4, 4, 15);
 	}
 
-	TheBfmeGameLogic->deselectObject(object, 0xffff, true);
+	TheGameLogic->deselectObject(object, 0xffff, true);
 	reinterpret_cast<Rva0025E0B0Module *>(this)->update(object);
 	return;
 

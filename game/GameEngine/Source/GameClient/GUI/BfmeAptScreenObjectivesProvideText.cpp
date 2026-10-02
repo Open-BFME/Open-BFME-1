@@ -65,7 +65,7 @@ public:
 	Int m_gameMode;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct Rva00026AB2Vec12
 {
@@ -119,7 +119,7 @@ void BfmeAptScreenObjectives::bfmeProvideObjectiveText(
 
 	AsciiString text;
 
-	if (TheBfmeGameLogic->m_gameMode == 7)
+	if (TheGameLogic->m_gameMode == 7)
 	{
 		if ((unsigned)index >= TheWritableGlobalData->m_vec1208.size())
 			return;

@@ -20,7 +20,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeFormattedText225960
 {
@@ -75,7 +75,7 @@ void Rva00225960Owner::rva00225960()
 
 	for (_STL::list<ObjectID>::iterator it = m_pendingList.begin();
 		it != m_pendingList.end(); ++it) {
-		Object *object = TheBfmeGameLogic->findObjectByID(*it);
+		Object *object = TheGameLogic->findObjectByID(*it);
 		if (!object) {
 			BfmeFormattedText225960 buf;
 			bfmeFormatText(&buf, 5, 0);

@@ -171,7 +171,7 @@ class GameLogic
 public:
 	Object *findObjectByID(int id);
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 float GetGameLogicRandomValueReal(float lo, float hi, char *file, int line);
 
@@ -272,7 +272,7 @@ void ObjectAttemptDamageHook::apply(DamageInfo *damageInfo)
 				if (m_ai && m_ai->getAIStateType() == AI_STATE_00001CDE30_2D)
 				{
 					int sourceID = m_body->getLastDamageInfo() ? m_body->getLastDamageInfo()->m_sourceID008 : 0;
-					Object *source = TheBfmeGameLogic->findObjectByID(sourceID);
+					Object *source = TheGameLogic->findObjectByID(sourceID);
 					if (source && (m_privateStatus & 1) == 0)
 						((ObjectAttemptDamageHook *)source)->touch001C9490(this, true);
 					kill(DAMAGE_00001CDE30_8, DEATH_00001CDE30_0);

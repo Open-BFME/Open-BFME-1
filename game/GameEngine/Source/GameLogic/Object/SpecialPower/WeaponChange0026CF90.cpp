@@ -44,7 +44,7 @@ struct Data0026CF90 {
     AsciiString field21C,field220;
 };
 class GameLogic { public: char pad00[0x3c]; unsigned field3C; };
-extern GameLogic* TheBfmeGameLogic;
+extern GameLogic* TheGameLogic;
 struct WeaponChange0026CF90Interface {
     void basePower(unsigned n) { reinterpret_cast<Rva00265A00ScavengerDispatch*>(this)->forward(n); }
     void execute(unsigned);
@@ -81,12 +81,12 @@ void WeaponChange0026CF90Interface::execute(unsigned options) {
         if(enabled) {
             if(stringNotEmpty(data->field21C) && data->field214)
                 object->modifier(data->field21C,data->field214);
-            object->disable(4,TheBfmeGameLogic->field3C+data->field214);
+            object->disable(4,TheGameLogic->field3C+data->field214);
             object->notify(0x128,data->field214);
         } else {
             if(stringNotEmpty(data->field220) && data->field218)
                 object->modifier(data->field220,data->field218);
-            object->disable(4,TheBfmeGameLogic->field3C+data->field218);
+            object->disable(4,TheGameLogic->field3C+data->field218);
         }
     }
     basePower(options);

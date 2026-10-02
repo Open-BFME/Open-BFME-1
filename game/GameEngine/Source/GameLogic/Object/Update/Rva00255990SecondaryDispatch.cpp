@@ -36,7 +36,7 @@ public:
 	bool bfmeAskAMB( void *object, BfmeKeyAMB *key );
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00255990Owner
 {
@@ -52,7 +52,7 @@ void Rva00255990Owner::run( void *argument )
 		Player *player = object->getControllingPlayer();
 		if( player != 0 && ((PlayerShim *)player)->unidentified_00012eea() )
 		{
-			TheBfmeGameLogic->destroyObject( object );
+			TheGameLogic->destroyObject( object );
 			return;
 		}
 	}

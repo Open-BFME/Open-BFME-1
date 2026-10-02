@@ -81,7 +81,7 @@ public:
 	unsigned char m_pad00[0x3c];
 	unsigned int m_frame;
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class MoodState0027ACF0 { public: void *vptr; int m_ID; int getID() const { return m_ID; } };
 class MoodMachine0027ACF0 { public: char pad[0x1c]; MoodState0027ACF0 *m_currentState; int getStateID() const { return m_currentState ? m_currentState->getID() : 0xf423f; } };
@@ -242,7 +242,7 @@ bool AIUpdateInterface::rva0027ACF0MoodTargetCheck()
 	if (finalTemplate->m_kindof & 4)
 		return false;
 
-	if (TheBfmeGameLogic->m_frame % 10 != object->m_id % 10)
+	if (TheGameLogic->m_frame % 10 != object->m_id % 10)
 		return false;
 
 	int stateID = m_stateMachine->getStateID();

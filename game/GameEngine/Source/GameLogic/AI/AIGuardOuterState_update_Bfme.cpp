@@ -45,7 +45,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Team
 {
@@ -108,7 +108,7 @@ class AIGuardMachine
 public:
 	Object *findTargetToGuardByID()
 	{
-		return TheBfmeGameLogic->findObjectByID(m_targetToGuard);
+		return TheGameLogic->findObjectByID(m_targetToGuard);
 	}
 	Bool lookForInnerTarget();
 
@@ -221,7 +221,7 @@ StateReturnType AIGuardOuterState::update()
 		{
 			volatile AI *ai = TheAI;
 			m_exitConditions.m_attackGiveUpFrame = ai->m_aiData->m_guardChaseUnitFrames +
-				TheBfmeGameLogic->m_frame;
+				TheGameLogic->m_frame;
 		}
 		return result;
 	}

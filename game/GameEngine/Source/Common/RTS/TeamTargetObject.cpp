@@ -71,7 +71,7 @@ public:
 	Object *findObjectByID(int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;				// retail [0x012F0898]
+extern GameLogic *TheGameLogic;				// retail [0x012F0898]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
@@ -101,7 +101,7 @@ Object *Team::getTeamTargetObject()
 	if (m_commonAttackTarget == 0)
 		return 0;
 
-	Object *target = TheBfmeGameLogic->findObjectByID(m_commonAttackTarget);
+	Object *target = TheGameLogic->findObjectByID(m_commonAttackTarget);
 	if (target)
 	{
 		Player *viewer = getControllingPlayer();

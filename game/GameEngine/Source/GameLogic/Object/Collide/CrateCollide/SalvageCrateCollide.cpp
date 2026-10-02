@@ -65,7 +65,7 @@ class GameLogic;
 class PlayerList;
 
 extern char g_bfmeFileAO[];
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;		// retail [0x012ED748]
 extern void j_0002dcfe();
 extern void j_000389f6();
@@ -120,7 +120,7 @@ void SalvageCrateCollide::doMoney(Object *other)
 		money = md->minimumMoney;
 
 	if (money > 0) {
-		if (reinterpret_cast<GameLogicPortraitShim *>(TheBfmeGameLogic)->
+		if (reinterpret_cast<GameLogicPortraitShim *>(TheGameLogic)->
 			isInMultiplayerOrSkirmishGame()) {
 			Int playerIndex = bfmeCurrentPlayerIndex(ThePlayerList);
 			Real factor = reinterpret_cast<Gen_00083240 *>(

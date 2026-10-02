@@ -21,13 +21,13 @@ struct BfmeGameLogicFrameSlice
 };
 
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 UnsignedInt Player::getOrStartSpecialPowerReadyFrame(const SpecialPowerTemplate *temp)
 {
 	BfmePlayerReadyTimerFields *self = (BfmePlayerReadyTimerFields *)this;
 	UnsignedInt lookupID = temp->getID();
-	UnsignedInt now = ((BfmeGameLogicFrameSlice *)TheBfmeGameLogic)->m_bfmeFrame;
+	UnsignedInt now = ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeFrame;
 
 	SpecialPowerReadyTimerType *timer;
 	std::list<SpecialPowerReadyTimerType>::iterator it;

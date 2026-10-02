@@ -216,7 +216,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva0026C430Owner
 {
@@ -252,7 +252,7 @@ void Rva0026C430Owner::apply(Object *object)
 		ai->aiIdle(CMD_FROM_AI);
 	}
 
-	m_lastFrame = TheBfmeGameLogic->m_frame;
+	m_lastFrame = TheGameLogic->m_frame;
 	object->setStatusBit(15, true);
 	object->setStatusBit(16, true);
 

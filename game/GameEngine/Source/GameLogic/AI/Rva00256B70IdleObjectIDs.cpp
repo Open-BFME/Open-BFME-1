@@ -8,7 +8,7 @@
 // The body drains an STLport list<ObjectID> at this+0x24.  Retail's 12-byte
 // list-node erase and the preceding sentinel-count loop identify the list
 // element width.  A live ID is looked up through the named GameLogic hash-map
-// layout at TheBfmeGameLogic+0xB0; a found Object receives the named
+// layout at TheGameLogic+0xB0; a found Object receives the named
 // AICommandInterface::aiIdle(CMD_FROM_AI) call through Object+0x204 and the
 // embedded command interface at +0x20.  A missing map value is removed from
 // the ID list.  These are layout/ABI claims, not an invented owner semantic.
@@ -67,7 +67,7 @@ private:
 	ObjectPtrHashRva00256B70 m_objHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00256B70Owner
 {
@@ -84,7 +84,7 @@ void Rva00256B70Owner::clearObjectIDs()
 	while (m_objectIDs.size() > 0)
 	{
 		ObjectID id = m_objectIDs.front();
-		ObjectRva00256B70 *object = TheBfmeGameLogic->findObjectByID(id);
+		ObjectRva00256B70 *object = TheGameLogic->findObjectByID(id);
 		if (object == 0)
 		{
 			m_objectIDs.remove(id);

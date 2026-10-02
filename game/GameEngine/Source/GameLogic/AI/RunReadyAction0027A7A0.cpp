@@ -56,7 +56,7 @@ class GameLogic { public:
  Object *findObjectByID(int id) { if(id==0) return 0; ObjectHash::iterator it=objects.find(id); if(it==objects.end()) return 0; return (*it).second; }
  char pad[0xb0]; ObjectHash objects;
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 class Waypoint;
 class TerrainLogic { public:
 virtual void unused0();
@@ -380,17 +380,17 @@ void BfmeObjectAI::bfmeRunReadyAction()
   ObjectIDs first,second,third;
   relation->collect(&first,&second,&third);
   for(ObjectIDs::iterator it=second.begin();it!=second.end();++it) {
-   Object *other=TheBfmeGameLogic->findObjectByID(*it);
+   Object *other=TheGameLogic->findObjectByID(*it);
    if(other) { other->kill((DamageType)8,(DeathType)0); markKilled(other); }
   }
   bool moved=false;
   if(third.size()<first.size()) { ((RetailObjectIDs&)third).swap((RetailObjectIDs&)first); moved=true; }
   for(ObjectIDs::iterator it=first.begin();it!=first.end();++it) {
-   Object *other=TheBfmeGameLogic->findObjectByID(*it);
+   Object *other=TheGameLogic->findObjectByID(*it);
    if(other) { other->kill((DamageType)8,(DeathType)0); markKilled(other); }
   }
   for(ObjectIDs::iterator it=third.begin();it!=third.end();++it) {
-   Object *other=TheBfmeGameLogic->findObjectByID(*it);
+   Object *other=TheGameLogic->findObjectByID(*it);
    if(other) { BfmeObjectAI *ai=other->aiAt204; if(ai) ai->clearPath(); }
   }
   if(moved) {

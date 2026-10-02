@@ -100,7 +100,7 @@ private:
 	ObjectPtrHash m_objHash;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeK1101
 {
@@ -136,7 +136,7 @@ void CaveContain::changeTeamOnAllConnectedCaves(Team *newTeam, Bool setOriginalT
 	const _STL::list<int> *allCaves = myTracker->getContainerList();
 	for (_STL::list<int>::const_iterator iter = allCaves->begin(); iter != allCaves->end(); ++iter)
 	{
-		Object *currentCave = TheBfmeGameLogic->findObjectByID(*iter);
+		Object *currentCave = TheGameLogic->findObjectByID(*iter);
 		if (currentCave)
 		{
 			CaveInterface *caveModule = 0;

@@ -18,7 +18,7 @@ class GameLogic { public:
  __declspec(noinline) Object* findObjectByID(int id) { if(!id) return 0; ObjectPtrHash::iterator it=m_objHash.find(id); if(it==m_objHash.end()) return 0; return (*it).second; }
  char pad00[0x3c]; unsigned frame; char pad40[0x70]; ObjectPtrHash m_objHash;
 };
-extern GameLogic* TheBfmeGameLogic;
+extern GameLogic* TheGameLogic;
 class Team; class Waypoint; class PolygonTrigger; class CommandButton; class Path;
 enum AICommandType { AICMD_MOVE_TO_POSITION = 0x00 };
 struct DamageInfo { char m_bfme_body[0x5C]; };
@@ -147,8 +147,8 @@ inline float lerp00299400(float a,float b,float t) { return a+(b-a)*t; }
 void OneRingTrajectory00299400::update() {
  Config00299400* config=at04;
  Object* owner=at08;
- Object* target=TheBfmeGameLogic->findObjectByID(at24);
- unsigned frame=TheBfmeGameLogic->frame;
+ Object* target=TheGameLogic->findObjectByID(at24);
+ unsigned frame=TheGameLogic->frame;
  unsigned start=config->at0c+at28;
  unsigned end=start+config->at10;
  if(frame>=end) {

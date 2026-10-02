@@ -152,7 +152,7 @@ public:
 };
 
 class GameLogic { public: Object *getFirstObject(); };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Team
 {
@@ -241,7 +241,7 @@ Bool Team::Rva000F12B0(const ThingTemplate *desired, int minimum)
 {
 	Player *myPlayer = recruitmentTeamOwner(this);
 	int count = 0;
-	for (Object *candidate = TheBfmeGameLogic->getFirstObject();
+	for (Object *candidate = TheGameLogic->getFirstObject();
 		candidate != 0; candidate = candidate->m_next)
 	{
 		if (!candidate->getTemplate()->isEquivalentTo(desired))

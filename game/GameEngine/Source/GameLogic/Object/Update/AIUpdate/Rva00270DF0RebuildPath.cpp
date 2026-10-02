@@ -358,7 +358,7 @@ protected:
 extern TerrainLogic *TheTerrainLogic;
 extern AI *TheAI;
 extern GlobalData *TheWritableGlobalData;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // ?rebuildPathFromStatePoints@Rva00270DF0AIUpdate@@IAEXXZ
 void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
@@ -395,7 +395,7 @@ void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 		locomotor = locomotor->m_nextOverride->friend_getFinalOverride();
 	m_path->bfmeOptimizeDir(object, &direction, locomotor->m_legalSurfaces, false);
 
-	m_pathTimestamp = TheBfmeGameLogic->m_frame;
+	m_pathTimestamp = TheGameLogic->m_frame;
 	slot117();
 	m_blockedFrames = 0;
 	m_isBlockedAndStuck = false;

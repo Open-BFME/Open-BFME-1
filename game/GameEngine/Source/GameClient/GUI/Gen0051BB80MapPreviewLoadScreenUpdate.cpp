@@ -176,8 +176,8 @@ void Gen_0051BB80::update(int percent)
 		}
 		else if (percent <= 100)
 		{
-			extern GameLogic *TheBfmeGameLogic;
-			TheBfmeGameLogic->processProgress(m_gameInfo->getLocalSlotNum(), percent);
+			extern GameLogic *TheGameLogic;
+			TheGameLogic->processProgress(m_gameInfo->getLocalSlotNum(), percent);
 		}
 	}
 

@@ -27,7 +27,7 @@ public:
 	void invoke(void);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Glo012F1028Sub
 {
@@ -85,7 +85,7 @@ void Glo012F1024Type::setCampaign(AsciiString *key)
 		sub->refresh003CAD90();
 	}
 
-	TheBfmeGameLogic->invoke();
+	TheGameLogic->invoke();
 
 	if (TheWritableGlobalData->m_flag8E
 		|| (TheWritableGlobalData->m_at94.m_data != 0 && TheWritableGlobalData->m_at94.m_data[2] != 0))

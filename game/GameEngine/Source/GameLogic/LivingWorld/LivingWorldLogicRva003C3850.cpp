@@ -314,7 +314,7 @@ extern void j_000012e4();
 class AudioManager;
 extern AudioManager *TheAudio;
 extern InGameUI *TheInGameUI;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Keyboard *TheKeyboard;
 extern GlobalData *TheWritableGlobalData;
 extern CampaignManager *TheLivingWorldLogic;
@@ -364,7 +364,7 @@ bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
 		AsciiString text;
 		((BfmeHostESA *)owner)->bfmeGetESA((BfmeStrESA *)&text, &range);
 
-		((Rva003855C0 *)TheBfmeGameLogic)->reset();
+		((Rva003855C0 *)TheGameLogic)->reset();
 
 		if (text.hasText())
 		{
@@ -374,7 +374,7 @@ bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
 				ApplyCQ member;
 			} apply;
 			apply.raw = ::j_0001d8c7;
-			(TheBfmeGameLogic->*apply.member)(text, &range);
+			(TheGameLogic->*apply.member)(text, &range);
 		}
 
 		union

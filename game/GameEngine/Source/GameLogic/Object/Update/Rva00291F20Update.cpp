@@ -202,7 +202,7 @@ public:
 	unsigned int m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00291F20ModuleData
 {
@@ -382,7 +382,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if (obj->m_flags344 & 1)
 		return 0x3fffffff;
 
-	bool ready = m_frame14 <= TheBfmeGameLogic->m_frame && (obj->m_status & 0x400) == 0;
+	bool ready = m_frame14 <= TheGameLogic->m_frame && (obj->m_status & 0x400) == 0;
 	if (m_flag1d)
 		ready = true;
 
@@ -399,7 +399,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 			if (hook != 0)
 				hook->v127(0);
 			m_frame14 = 0x3fffffff;
-			m_frame18 = TheBfmeGameLogic->m_frame + md->m_delay10;
+			m_frame18 = TheGameLogic->m_frame + md->m_delay10;
 			m_flag1c = false;
 			m_flag1e = false;
 			if (md->m_fx2c != 0)
@@ -410,7 +410,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if (m_flag1c)
 		return 1;
 
-	if (m_frame18 >= TheBfmeGameLogic->m_frame && !m_flag1f)
+	if (m_frame18 >= TheGameLogic->m_frame && !m_flag1f)
 		return 1;
 
 	bool ok = false;
@@ -445,7 +445,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if ((obj->m_shroudRange & 0x8000) == 0 && !obj->testStatus(0xa))
 	{
 		((BfmeItemRY *)obj)->bfmeDoRY((void *)0x11a, (void *)md->m_delay20);
-		obj->setDisabledUntil((DisabledType)4, TheBfmeGameLogic->m_frame + md->m_delay20);
+		obj->setDisabledUntil((DisabledType)4, TheGameLogic->m_frame + md->m_delay20);
 		if (md->m_fx24 != 0)
 			bfmeLinkRelation(md->m_fx24, obj, 0);
 	}
@@ -456,7 +456,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if (hook2 != 0)
 		hook2->v127(8);
 	m_flag1c = true;
-	m_frame14 = TheBfmeGameLogic->m_frame + md->m_delay0c;
+	m_frame14 = TheGameLogic->m_frame + md->m_delay0c;
 	if (md->m_fx28 != 0)
 		bfmeLinkRelation(md->m_fx28, obj, 0);
 

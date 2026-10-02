@@ -152,7 +152,7 @@ public:
 
 extern Bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
@@ -302,10 +302,10 @@ Bool AIAttackPursueTargetState::computePath()
 	if (!ai->m_path && !ai->m_waitingForPath)
 		forceRepath = true;
 
-	if (!forceRepath && TheBfmeGameLogic->m_frame - m_approachTimestamp < 5)
+	if (!forceRepath && TheGameLogic->m_frame - m_approachTimestamp < 5)
 		return true;
 
-	m_approachTimestamp = TheBfmeGameLogic->m_frame;
+	m_approachTimestamp = TheGameLogic->m_frame;
 	if (m_machine->getGoalObject())
 	{
 		Object *source = m_machine->m_owner;

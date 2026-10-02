@@ -138,7 +138,7 @@ class GameLogic { public:
     char pad00[0x3c]; int field3C;
     Object* findObjectByID(int);
 };
-extern GameLogic* TheBfmeGameLogic;
+extern GameLogic* TheGameLogic;
 class WeaponFireSpecialAbilityUpdate { public:
     virtual void triggerAbilityEffect();
     Data0026DA00* field04; Target0026DA00* field08;
@@ -152,7 +152,7 @@ void WeaponFireSpecialAbilityUpdate::triggerAbilityEffect() {
     Data0026DA00* data=field04;
     Target0026DA00* object=field08;
     object->field1EC->cool(true);
-    Target0026DA00* target=(Target0026DA00*)TheBfmeGameLogic->findObjectByID(fieldAC);
+    Target0026DA00* target=(Target0026DA00*)TheGameLogic->findObjectByID(fieldAC);
     int id=target ? target->getID() : 0;
     if(target) {
         Template0026DA00* t=target->field04;
@@ -180,7 +180,7 @@ void WeaponFireSpecialAbilityUpdate::triggerAbilityEffect() {
                 if(object->field1EC) object->field1EC->fired(fieldE8,0,pos,1);
             }
         }
-        object->deadline(TheBfmeGameLogic->field3C+field04->field260);
+        object->deadline(TheGameLogic->field3C+field04->field260);
     }
     finish();
     Power0026DA00* p=power();

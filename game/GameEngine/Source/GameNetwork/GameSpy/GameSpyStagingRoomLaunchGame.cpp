@@ -185,7 +185,7 @@ extern NetworkInterface *TheNetwork;
 void createTheNetwork();
 
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // BFME's two-Bool clearGameData, through the pinned retail ILT spelling.
 class BfmeGameLogicPause
@@ -341,7 +341,7 @@ void GameSpyStagingRoom::launchGame()
 
 	TheNetwork->parseUserList(this);
 
-	((BfmeGameLogicPause *)TheBfmeGameLogic)->clearGameData(false, false);
+	((BfmeGameLogicPause *)TheGameLogic)->clearGameData(false, false);
 
 	Bool filesOk = DoAnyMapTransfers(this);
 

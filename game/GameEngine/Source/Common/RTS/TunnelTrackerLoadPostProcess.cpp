@@ -38,7 +38,7 @@ class BfmeX1011 : public BfmeObjectView
 {
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeX1027
 {
@@ -114,7 +114,7 @@ void TunnelTracker::loadPostProcess()
 
 	for (it = m_xferContainList.begin(); it != m_xferContainList.end(); ++it)
 	{
-		object = reinterpret_cast<BfmeX1011 *>(TheBfmeGameLogic->findObjectByID(*it));
+		object = reinterpret_cast<BfmeX1011 *>(TheGameLogic->findObjectByID(*it));
 		if (object == 0)
 		{
 			XferException error;

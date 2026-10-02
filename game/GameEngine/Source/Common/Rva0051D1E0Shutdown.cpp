@@ -167,7 +167,7 @@ extern Display *TheDisplay;
 // keeps going through the local VideoPlayer model.
 class VideoPlayerInterface;
 extern VideoPlayerInterface *TheVideoPlayer;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Gen_00609320 *g_bfmeStateDF;
 extern MessageStream *TheMessageStream;
 
@@ -181,7 +181,7 @@ int Rva0051D1E0Shutdown(Bool mode, void *unused, Bool enabled)
         TheShell->hide(true);
         TheDisplay->m_displayFlag = true;
         reinterpret_cast<VideoPlayer *>(TheVideoPlayer)->slot17();
-        TheBfmeGameLogic->bfmeFallback961(0, 0);
+        TheGameLogic->bfmeFallback961(0, 0);
         g_bfmeStateDF->slot04(result);
         GameMessage *message = TheMessageStream->appendMessage(0x1f);
         if (message != 0)

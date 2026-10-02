@@ -105,7 +105,7 @@ public:
 class AudioManager;
 extern AudioManager *TheAudio;
 static inline ClientSubsystem *localAudio() { return (ClientSubsystem *)TheAudio; }
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Display *TheDisplay;
 
 class Gen_00491880 : public Rva00490470
@@ -134,7 +134,7 @@ Gen_00491880::~Gen_00491880(void)
 		localAudio()->slot4C(m_bfmeLimit);
 		m_bfmeLimit = 1;
 	}
-	TheBfmeGameLogic->m_bfmeResetFlag = 0;
+	TheGameLogic->m_bfmeResetFlag = 0;
 	TheDisplay->slotEC();
 	TheDisplay->bfmeStopMovie();
 }

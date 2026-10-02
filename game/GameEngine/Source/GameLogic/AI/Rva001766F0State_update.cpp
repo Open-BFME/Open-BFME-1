@@ -174,7 +174,7 @@ public:
 	Object *findObjectByID(Int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine : public BFMEVirtualSlots<14>
@@ -227,7 +227,7 @@ StateReturnType Rva001766F0State::update()
 	StateMachine *machine = m_machine;
 	Object *source = machine->m_owner;
 	AIUpdateInterface *ai = source->m_ai;
-	Object *victim = TheBfmeGameLogic->findObjectByID(m_victimID);
+	Object *victim = TheGameLogic->findObjectByID(m_victimID);
 	Object *previous = victim;
 	if (!victim)
 	{

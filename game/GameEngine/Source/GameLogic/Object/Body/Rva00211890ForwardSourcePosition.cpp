@@ -66,7 +66,7 @@ class GameLogic
 public:
     Object *findObjectByID(int id);
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva00211890Owner
 {
@@ -87,7 +87,7 @@ void Rva00211890Owner::forwardSourcePosition(
     float amount, Rva00211890DamageInfo *damage)
 {
     Rva00211890ObjectView *source = reinterpret_cast<Rva00211890ObjectView *>(
-        TheBfmeGameLogic->findObjectByID(damage->m_sourceID));
+        TheGameLogic->findObjectByID(damage->m_sourceID));
     if (source != 0)
     {
         Rva00211890Coord point;

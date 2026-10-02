@@ -53,7 +53,7 @@ extern GlobalData *TheWritableGlobalData;
 
 class GameLogic;
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // game/GameEngine/Source/Common/U4Sink0060D3B0_push.cpp owns the body at
 // 0x00396B00 this reaches through ILT 0x0001C46D.
@@ -124,12 +124,12 @@ private:
 // @?startGameMode7@Rva0051DA30Host@@QAEXH@Z 0x0051DA30
 void Rva0051DA30Host::startGameMode7(Int)
 {
-	((U4Sink0060D3B0 *)TheBfmeGameLogic)->push(false, false);
+	((U4Sink0060D3B0 *)TheGameLogic)->push(false, false);
 
 	if (TheWritableGlobalData->m_field1200.isNotEmpty())
 	{
 		TheWritableGlobalData->m_pendingFile = TheWritableGlobalData->m_field1200;
-		((Rva00386090 *)TheBfmeGameLogic)->set(
+		((Rva00386090 *)TheGameLogic)->set(
 			(Rva0036CA00Str *)&TheWritableGlobalData->m_field1204);
 
 		GameMessage *message = TheMessageStream->appendMessage(BFME_MSG_NEW_GAME);

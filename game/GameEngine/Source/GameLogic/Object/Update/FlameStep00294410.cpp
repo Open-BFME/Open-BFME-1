@@ -18,7 +18,7 @@ class Module;
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 class GameLogic { public: void deselectObject(Object*,unsigned short,bool); char pad00[0x3c]; unsigned frame; };
-extern GameLogic* TheBfmeGameLogic;
+extern GameLogic* TheGameLogic;
 
 enum CommandSourceType { COMMAND1=1 };
 class AICommandInterface { public: void aiMoveToPosition(const Coord3D*,CommandSourceType); };
@@ -234,7 +234,7 @@ public: int update();
  char pad00[0x14]; unsigned at14,at18,at1c,at20; int at24; char pad28[8]; bool at30; char pad31[3]; unsigned at34; int at38; bool at3c;
 };
 int FlameStep00294410::update() {
- unsigned now=TheBfmeGameLogic->frame;
+ unsigned now=TheGameLogic->frame;
  Config00294410* data=config();
  Object* obj=object();
  if(at34>0) {
@@ -267,7 +267,7 @@ int FlameStep00294410::update() {
       }
       ((AICommandInterface*)((char*)ai+0x20))->aiMoveToPosition(&best,COMMAND1);
       at30=true;
-      TheBfmeGameLogic->deselectObject(obj,0xffff,true);
+      TheGameLogic->deselectObject(obj,0xffff,true);
       obj->setStatusBit(3,true); obj->setStatusBit(5,true);
       if(enraged) { ((Rva002918E0Object*)enraged)->set(1); return 1; }
      } else if(enraged) ((BfmeMarksYE*)enraged)->bfmeSetYE(1,0);
@@ -277,7 +277,7 @@ int FlameStep00294410::update() {
   return 1;
  }
  if(obj->m_ai && !obj->m_ai->bfmeBlocksFormationRefresh() && g_terrain00294410->water(obj->m_cachedPos.x,obj->m_cachedPos.y,0,0)) {
-  unsigned end=TheBfmeGameLogic->frame+15;
+  unsigned end=TheGameLogic->frame+15;
   at18=minimum00294410(at18,end);
   at30=false;
  }

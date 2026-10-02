@@ -94,7 +94,7 @@ public:
 	UnsignedInt m_frame;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class AIData
 {
@@ -157,7 +157,7 @@ StateReturnType AIGuardRetaliateReturnState::update()
 	BodyModuleInterface *bmi = obj ? obj->getBodyModule() : 0;
 	if (obj && bmi)
 	{
-		Object *target = TheBfmeGameLogic->findObjectByID(bmi->getClearableLastAttacker());
+		Object *target = TheGameLogic->findObjectByID(bmi->getClearableLastAttacker());
 		if (target && !target->isEffectivelyDead() &&
 			obj->getRelationship(target) == ENEMIES &&
 			obj->isAbleToAttack())
@@ -177,7 +177,7 @@ StateReturnType AIGuardRetaliateReturnState::update()
 		}
 	}
 
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
+	UnsignedInt now = TheGameLogic->m_frame;
 	if (now >= m_nextReturnScanTime)
 	{
 		m_nextReturnScanTime = now + TheAI->getAiData()->m_guardEnemyReturnScanRate;

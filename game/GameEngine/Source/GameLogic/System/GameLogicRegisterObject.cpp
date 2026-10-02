@@ -157,14 +157,14 @@ public:
 
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 void GameLogic::registerObject(Object *obj)
 {
     ((BfmeLinkXN *)obj)->bfmeInsertXN((BfmeLinkXN **)&objList, (BfmeLinkXN **)&objTail);
     if (obj)
         lookup[obj->getID()] = obj;
-    unsigned now = TheBfmeGameLogic->getFrame();
+    unsigned now = TheGameLogic->getFrame();
     if (now == 0)
         now = 1;
 

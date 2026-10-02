@@ -26,7 +26,7 @@ class Object { public:
 struct Rva001BE220Receiver { void dispatch(int,unsigned int); };
 struct BFMEReportDamageSource { void report(Object*,int); };
 class GameLogic { public: char pad[0x3c]; unsigned int frame; Object *findObjectByID(int); };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 struct Rva002134E0Data { char pad[0x70]; int field70; unsigned int field74; char pad78[4]; UpgradeTemplate *field7c; };
 #define V(N) virtual void slot##N()
 // Both classes seen from their +0x10 BodyModuleInterface subobject.
@@ -53,13 +53,13 @@ void FreeLifeBody::internalChangeHealth(float amount,DamageInfo *info) {
    bool objectHas=obj->hasUpgrade(md->field7c);
    if(!has && !objectHas) goto fallback;
   }
-  if(fieldD8 && !((float)TheBfmeGameLogic->frame-(float)fieldDC > (float)fieldE0)) goto fallback;
+  if(fieldD8 && !((float)TheGameLogic->frame-(float)fieldDC > (float)fieldE0)) goto fallback;
   fieldD8=true;
-  fieldDC=TheBfmeGameLogic->frame;
+  fieldDC=TheGameLogic->frame;
   if(md->field70 != -1) ((Rva001BE220Receiver*)obj)->dispatch(md->field70,md->field74);
   restore(fieldD4*100.0f,false);
   if(info) {
-   Object *source=TheBfmeGameLogic->findObjectByID(info->source);
+   Object *source=TheGameLogic->findObjectByID(info->source);
    if(source) ((BFMEReportDamageSource*)source)->report(obj,3);
   }
   return;

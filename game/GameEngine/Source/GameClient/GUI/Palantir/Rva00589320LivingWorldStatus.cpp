@@ -51,7 +51,7 @@ extern Glo012F1028Type *Glo012F1028;
 class LivingWorldCampaignManager;
 
 extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
 
 int Rva00589320(void)
@@ -63,7 +63,7 @@ int Rva00589320(void)
 		return flag + flag + 2;
 	}
 
-	GameLogic *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheGameLogic;
 	if (!logic)
 		return 1;
 

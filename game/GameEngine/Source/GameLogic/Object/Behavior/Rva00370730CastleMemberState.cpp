@@ -98,7 +98,7 @@ struct Rva00370730ModuleData
 class PlayerList;
 
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern Eva *TheEva;
 extern Radar *TheRadar;
@@ -122,7 +122,7 @@ void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
 			if( localPlayer ==
 				(*(Object * volatile *)( self - 0x08 ))->getControllingPlayer() )
 			{
-				Object *pendingObject = TheBfmeGameLogic->findObjectByID(
+				Object *pendingObject = TheGameLogic->findObjectByID(
 					*(Int *)( self + 0x08 ) );
 				if( pendingObject != 0 )
 				{

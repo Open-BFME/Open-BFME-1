@@ -223,7 +223,7 @@ public:
 	BfmeRvaA760ProbeInterface m_unitScoreFilter;			// +0x121C
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ScoreKeeper.h
@@ -266,7 +266,7 @@ private:
 // ?addObjectBuilt@ScoreKeeper@@QAEXPAVObject@@H@Z
 void ScoreKeeper::addObjectBuilt(Object *o, Int amount)
 {
-	if (TheBfmeGameLogic->isScoringEnabled() == false)
+	if (TheGameLogic->isScoringEnabled() == false)
 		return;
 
 	if (o->getStatusBits() & 0x800)
@@ -302,7 +302,7 @@ void ScoreKeeper::addObjectBuilt(Object *o, Int amount)
 // ?removeObjectBuilt@ScoreKeeper@@QAEXPBVObject@@@Z
 void ScoreKeeper::removeObjectBuilt(const Object *o)
 {
-	if (TheBfmeGameLogic->isScoringEnabled() == false)
+	if (TheGameLogic->isScoringEnabled() == false)
 		return;
 
 	if (o->getStatusBits() & 0x800)
@@ -338,7 +338,7 @@ void ScoreKeeper::addObjectDestroyed(const Object *o)
 {
 	ScoreKeeper *keeper = this;
 	const Object *object = o;
-	if (TheBfmeGameLogic->isScoringEnabled() == false)
+	if (TheGameLogic->isScoringEnabled() == false)
 		return;
 
 	if (object->getStatusBits() & 0x800)
@@ -390,7 +390,7 @@ void ScoreKeeper::addObjectDestroyedCount(const ThingTemplate *tmpl, const Playe
 // The row keeps its Zero Hour name; the offsets it reaches are the LOST ones.
 void ScoreKeeper::addObjectBuilt(Object *o)
 {
-	if (TheBfmeGameLogic->isScoringEnabled() == false)
+	if (TheGameLogic->isScoringEnabled() == false)
 		return;
 
 	if (o->getStatusBits() & 0x800)

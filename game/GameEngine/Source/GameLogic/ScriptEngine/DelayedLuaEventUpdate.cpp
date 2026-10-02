@@ -105,7 +105,7 @@ public:
 	void destroyObject(Object *object);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class DelayedLuaEventList
 {
@@ -178,6 +178,6 @@ UpdateSleepTime DelayedLuaEventUpdate::update()
 	}
 
 	Object *destroyedObject = *(Object **)((char *)this - 8);
-	TheBfmeGameLogic->destroyObject(destroyedObject);
+	TheGameLogic->destroyObject(destroyedObject);
 	return UPDATE_SLEEP_NONE;
 }

@@ -159,7 +159,7 @@ private:
 	_STL::vector<UpdateModulePtr> m_normalUpdates;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 void GameLogic::loadPostProcess()
 {
@@ -180,7 +180,7 @@ void GameLogic::loadPostProcess()
 	}
 	m_normalUpdates.clear();
 
-	UnsignedInt now = TheBfmeGameLogic->getFrame();
+	UnsignedInt now = TheGameLogic->getFrame();
 	if (now == 0)
 		now = 1;
 

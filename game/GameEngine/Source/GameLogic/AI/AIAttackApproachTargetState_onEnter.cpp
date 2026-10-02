@@ -283,7 +283,7 @@ public:
 
 extern Bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
@@ -473,7 +473,7 @@ StateReturnType AIAttackApproachTargetState::onEnter()
 			!ai->isQuickPathAvailable(victim->getPosition()))
 		{
 			wait75 = true;
-			wait6c = TheBfmeGameLogic->m_frame + 10;
+			wait6c = TheGameLogic->m_frame + 10;
 			return STATE_CONTINUE;
 		}
 	}
@@ -492,7 +492,7 @@ StateReturnType AIAttackApproachTargetState::onEnter()
 	if (((BfmeSub1CC_EC3 *)ai->getCurLocomotor())->effectiveMaxSpeed(source) < 0.1f || !mobile)
 	{
 		wait75 = true;
-		wait6c = TheBfmeGameLogic->m_frame + 10;
+		wait6c = TheGameLogic->m_frame + 10;
 		return STATE_CONTINUE;
 	}
 

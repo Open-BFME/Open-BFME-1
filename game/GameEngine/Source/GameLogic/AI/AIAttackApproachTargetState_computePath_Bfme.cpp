@@ -157,7 +157,7 @@ public:
 
 extern Bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
@@ -317,10 +317,10 @@ Bool AIAttackApproachTargetState::computePath()
 		forceRepath = true;
 
 	// force minimum time between recomputation
-	if (!forceRepath && TheBfmeGameLogic->m_frame - m_approachTimestamp < 5)
+	if (!forceRepath && TheGameLogic->m_frame - m_approachTimestamp < 5)
 		return true;
 
-	m_approachTimestamp = TheBfmeGameLogic->m_frame;
+	m_approachTimestamp = TheGameLogic->m_frame;
 
 	// if we have a goal object, move to it, otherwise move to goal position
 	if (getMachineGoalObject())
@@ -387,7 +387,7 @@ Bool AIAttackApproachTargetState::computePath()
 			if (!CALL_THISCALL(Rva0016EE00, this, j_0001041a)(&pos, attacker))
 			{
 				m_byte75 = true;
-				m_dword6c = TheBfmeGameLogic->m_frame + 50;
+				m_dword6c = TheGameLogic->m_frame + 50;
 				return true;
 			}
 

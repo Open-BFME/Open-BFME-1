@@ -33,7 +33,7 @@ public:
 	Object *findObjectByID(Int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Team
 {
@@ -242,7 +242,7 @@ StateReturnType GiantBirdGuardInnerState::onEnter()
 			FindObjectByIDCall asMember;
 		} findObjectCast;
 		findObjectCast.asVoid = (void *)j_0001f253;
-		Object *target = (TheBfmeGameLogic->*findObjectCast.asMember)(
+		Object *target = (TheGameLogic->*findObjectCast.asMember)(
 			machine->m_targetToGuard);
 		union
 		{
@@ -275,7 +275,7 @@ StateReturnType GiantBirdGuardInnerState::onEnter()
 	}
 
 	register GiantBirdGuardMachine *machine = (GiantBirdGuardMachine *)state->m_machine;
-	register Object *nemesis = findBfmeObject(TheBfmeGameLogic,
+	register Object *nemesis = findBfmeObject(TheGameLogic,
 		machine->m_nemesisToAttack);
 	if (!nemesis)
 		return STATE_SUCCESS;

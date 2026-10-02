@@ -179,7 +179,7 @@ public:
 	int m_gameMode;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Glo012F1028Type
 {
@@ -327,7 +327,7 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 
 		g_rva012F19E8WindowManager->bfme_showBackground( 2 );
 
-		GameLogic *gameLogic = TheBfmeGameLogic;
+		GameLogic *gameLogic = TheGameLogic;
 		if( gameLogic && ( gameLogic->m_gameMode == 1 ||
 			gameLogic->m_gameMode == 5 ) )
 		{
@@ -340,9 +340,9 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 
 void BfmeAptScreenQuitMenu::_bfme_onInitialized( const char * )
 {
-	if( TheBfmeGameLogic &&
-		( TheBfmeGameLogic->m_gameMode == 1 ||
-		  TheBfmeGameLogic->m_gameMode == 5 ) )
+	if( TheGameLogic &&
+		( TheGameLogic->m_gameMode == 1 ||
+		  TheGameLogic->m_gameMode == 5 ) )
 		goto disableRestart;
 
 	if( !TheRecorder || TheRecorder->getMode() != RECORDERMODETYPE_PLAYBACK )

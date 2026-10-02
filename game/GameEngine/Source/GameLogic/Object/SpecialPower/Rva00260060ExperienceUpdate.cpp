@@ -91,7 +91,7 @@ public:
     Object *findObjectByID(int);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // This is the canonical Overridable base: getNextOverride() is the inline
 // const +4 load.  The retail target at ILT 0x22bb is an out-of-line call, so it
@@ -158,7 +158,7 @@ public:
 
 void Rva00260060Owner::update(Object *object)
 {
-    Object *producer = TheBfmeGameLogic->findObjectByID(object->m_producerID);
+    Object *producer = TheGameLogic->findObjectByID(object->m_producerID);
     if (producer != 0) {
         ThingTemplate *thingTemplate = producer->getTemplate();
         if (thingTemplate != 0) {

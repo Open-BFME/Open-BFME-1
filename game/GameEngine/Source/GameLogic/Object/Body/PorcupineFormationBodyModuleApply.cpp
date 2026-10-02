@@ -95,7 +95,7 @@ public:
 	void apply(DamageInfo *damageInfo);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern WeaponStore *TheWeaponStore;
 
 // ?apply@PorcupineDamageHelper@@QAEXPAVDamageInfo@@@Z
@@ -107,7 +107,7 @@ void PorcupineDamageHelper::apply(DamageInfo *damageInfo)
 		if (data != 0) {
 			WeaponTemplate *weapon = data->m_weapon;
 			if (weapon != 0) {
-				Object *target = TheBfmeGameLogic->findObjectByID(
+				Object *target = TheGameLogic->findObjectByID(
 					damageInfo->m_sourceID);
 				if (target != 0 && (target->m_status & 1) == 0 &&
 					!target->isKindOf(KINDOF_PORCUPINE_DAMAGE_EXCLUDED) &&

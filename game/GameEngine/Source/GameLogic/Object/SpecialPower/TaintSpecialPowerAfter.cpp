@@ -132,7 +132,7 @@ class GameLogic
 public:
 	void destroyObject(Object *object);
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmePointFC;
 
@@ -225,7 +225,7 @@ void TaintSpecialPower::after(const Coord3D *loc)
 			continue;
 		matches.insert(*(Rva0025BD30Key *)&candidate);
 		((TerrainArea001ACCC0 *)TheTerrainLogic)->clearOne001AC3D0(candidate->getPosition(), *(Int *)&radius);
-		TheBfmeGameLogic->destroyObject(candidate);
+		TheGameLogic->destroyObject(candidate);
 	}
 
 	iterator = ThePartitionManager->bfmeForwardWideC((Int)loc, radius * 4.0f, 0,

@@ -72,7 +72,7 @@ inline Object *GameLogic::findObjectByID(ObjectID id)
 	return (*it).second;
 }
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeScriptEngineSlashName
 {
@@ -149,7 +149,7 @@ Object *ScriptEngine::getUnitNamedByValue(AsciiString name)
 		ScriptReferenceKey key(canonical, name);
 		ScriptReferenceMap::iterator found = m_unitReferences.find(key);
 		if (found != m_unitReferences.end())
-			return TheBfmeGameLogic->findObjectByID(found->second);
+			return TheGameLogic->findObjectByID(found->second);
 	}
 	NamedObjectEntry *it = m_namedObjectsBegin;
 	NamedObjectEntry *end = m_namedObjectsEnd;

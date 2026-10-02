@@ -33,7 +33,7 @@ class GameLogic
 public:
 	Object *findObjectByID(int id);		// pinned retail 0x0001F253
 };
-extern GameLogic *TheBfmeGameLogic;	// VA 0x012F0898
+extern GameLogic *TheGameLogic;	// VA 0x012F0898
 
 class BfmeActiveBodySub10 {
 public:
@@ -138,7 +138,7 @@ void ActiveBody::internalChangeHealth(Real delta, DamageInfo *info)
  }
  us->setEffectivelyDead(m_currentHealth<=0.0f);
  if(m_linkedObjectId) {
-  Object *other = TheBfmeGameLogic->findObjectByID(m_linkedObjectId);
+  Object *other = TheGameLogic->findObjectByID(m_linkedObjectId);
   if(other) {
    BodyModuleInterface *body = *(BodyModuleInterface**)((char*)other+0x200);
    if(body) {

@@ -686,7 +686,7 @@ struct BfmeGuardReturnStateView
 	UnsignedInt m_nextReturnScanTime;
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern Int GetGameLogicRandomValue(Int minimum, Int maximum, char *file, Int line);
 extern Real g_bfmeK1266C;
 extern bool Glo012F0239;
@@ -702,7 +702,7 @@ extern void j_0003a17a();
 StateReturnType AIGuardReturnState::onEnter( void )
 {
 	BfmeGuardReturnStateView *self = (BfmeGuardReturnStateView *)this;
-	UnsignedInt now = TheBfmeGameLogic->getFrame();
+	UnsignedInt now = TheGameLogic->getFrame();
 	self->m_nextReturnScanTime = now + GetGameLogicRandomValue(
 		0, ((BfmeGuardAI *)TheAI)->getAiData()->m_guardEnemyReturnScanRate,
 		(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGuard.cpp",

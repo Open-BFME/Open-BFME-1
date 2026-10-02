@@ -164,7 +164,7 @@ extern Display *TheDisplay;
 // above is this TU's view of the same pointer's vtable.
 class AudioManager;
 extern AudioManager *TheAudio;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
 extern FontLibrary *TheFontLibrary;
 extern GameTextInterface *TheGameText;
@@ -191,7 +191,7 @@ void Gen_00491880::rva00491A40(int unused)
 		}
 	}
 
-	TheBfmeGameLogic->m_byte74 = 1;
+	TheGameLogic->m_byte74 = 1;
 	TheDisplay->rva002ED2E0(0.46826171875f, 0.8756510615f, 0.53076171875f, 0.958984375f);
 
 	AsciiString smallRing("SmallRing");

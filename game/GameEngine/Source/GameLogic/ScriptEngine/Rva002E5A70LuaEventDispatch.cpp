@@ -37,7 +37,7 @@ public:
     Object *findObjectByID(int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class Rva002E5A70Call
 {
@@ -116,7 +116,7 @@ void Rva002E5A70Call::dispatch(void *recordData, Object *object,
         case 3:
         {
             int objectID = *(int *)(argument + 16);
-            Object *resolved = TheBfmeGameLogic->findObjectByID(objectID);
+            Object *resolved = TheGameLogic->findObjectByID(objectID);
             ((Rva002E42C0Owner *)this)->rva002E42C0(
                 *(lua_State **)((char *)this + 8),
                 (const Rva002E32A0IdOwner *)resolved);

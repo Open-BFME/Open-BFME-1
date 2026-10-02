@@ -30,7 +30,7 @@ public:
 	int rva0002615c(Xfer *xfer);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern void j_0002615c();
 
 class LivingWorldRegion
@@ -275,7 +275,7 @@ void Rva003C48E0::rva003C48E0()
 	typedef int (GameLogic::*LogicFunction)( Xfer * );
 	union { void (*raw)(void); LogicFunction member; } logicFunction;
 	logicFunction.raw = j_0002615c;
-	(TheBfmeGameLogic->*logicFunction.member)( &xfer );
+	(TheGameLogic->*logicFunction.member)( &xfer );
 	g_bfmeGameCW->transfer( &xfer );
 
 	if( version >= 3 )
@@ -319,7 +319,7 @@ unsigned fade0060F010( float, Bool )
 		? Glo012F1028->m_regionManager->rva003C8A50( regionName ) : 0;
 	void *region = lookup;
 
-	((BfmeHost961 *)TheBfmeGameLogic)->bfmeFallback961( 0, 0 );
+	((BfmeHost961 *)TheGameLogic)->bfmeFallback961( 0, 0 );
 
 	if( region != 0 )
 	{

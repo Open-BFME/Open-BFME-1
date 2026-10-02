@@ -217,7 +217,7 @@ class GameLogic
 public:
 	Object *findObjectByID(ObjectID);
 };
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class FXList
 {
@@ -317,7 +317,7 @@ void DominateEnemySpecialPower::actionAt0025AEE0()
 		UnsignedInt status = other->m_status;
 		if ((status & 0x0cu) != 0)
 			continue;
-		Object *producer = TheBfmeGameLogic->findObjectByID(other->m_producerID);
+		Object *producer = TheGameLogic->findObjectByID(other->m_producerID);
 		if (producer != 0 && reinterpret_cast<Thing *>(producer)->isKindOf(
 				static_cast<KindOfType>(0x6c)))
 			continue;

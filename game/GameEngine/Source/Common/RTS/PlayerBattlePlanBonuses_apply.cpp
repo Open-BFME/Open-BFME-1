@@ -106,7 +106,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 // ?localApplyBattlePlanBonusesToObject@@YAHPAVObject@@PAX@Z
 static int localApplyBattlePlanBonusesToObject(Object *obj, void *userData)
@@ -122,7 +122,7 @@ static int localApplyBattlePlanBonusesToObject(Object *obj, void *userData)
 
 	Bool isProjectile = (thing->m_kindOf & 0x02000000) != 0;
 	if (isProjectile)
-		objectToValidate = TheBfmeGameLogic->findObjectByID(
+		objectToValidate = TheGameLogic->findObjectByID(
 			*(ObjectID *)((unsigned char *)obj + 0x78));
 
 	if (objectToValidate)

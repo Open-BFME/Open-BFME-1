@@ -15,7 +15,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BfmeFormattedText225960
 {
@@ -70,7 +70,7 @@ void ContainListRestore0022BFF0::restore()
 
 	for (_STL::list<ObjectID>::iterator it = m_atFC.begin();
 		it != m_atFC.end(); ++it) {
-		Object *object = TheBfmeGameLogic->findObjectByID(*it);
+		Object *object = TheGameLogic->findObjectByID(*it);
 		if (!object) {
 			BfmeFormattedText225960 buf;
 			bfmeFormatText(&buf, 5, 0);

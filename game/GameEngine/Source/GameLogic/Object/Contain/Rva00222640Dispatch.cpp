@@ -49,7 +49,7 @@ public:
 };
 
 extern const float BfmeZeroRange;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct Rva00222640ModuleData
 {
@@ -142,7 +142,7 @@ void Rva00222640Owner::dispatch(const DamageInfo *damageInfo)
 		{
 			if (rider->getDrawable() != 0)
 				rider->getDrawable()->bfmeSet(true);
-			TheBfmeGameLogic->destroyObject(rider);
+			TheGameLogic->destroyObject(rider);
 		}
 	}
 }
