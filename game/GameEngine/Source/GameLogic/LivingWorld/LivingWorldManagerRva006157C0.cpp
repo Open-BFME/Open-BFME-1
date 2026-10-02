@@ -9,8 +9,8 @@
 // AsciiString key at +4 and a mapped object pointer at +8.  The iterator's
 // retail increment passes the +4 key to the AsciiString bucket helper at
 // 0x00611CA0; this distinguishes the key from an integer despite the otherwise
-// compatible node layout.  The mapped object's public type and method spelling
-// are not recovered, so both remain address-derived.
+// compatible node layout.  The mapped object is a BfmeThingNA and retail's call
+// is its bfmeResetStateNA, the identity already matched at 0x0061C1D0.
 //
 // Evidence checkpoint: t=8min model=gpt-5.6-sol-ultra
 // campaign=luna36h-20260907 lane=expand08.
@@ -22,13 +22,17 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-class Rva0061C1D0Object
+// The mapped object's retail body at 0x0061C1D0 is the ledger's
+// ?bfmeResetStateNA@BfmeThingNA@@QAEXXZ (BfmeThingNAStateUpdates.cpp), the
+// spelling the sibling LivingWorldManager TUs use; the address-derived local
+// spelling referenced a symbol nothing defines.
+class BfmeThingNA
 {
 public:
-	void rva0061c1d0();
+	void bfmeResetStateNA();
 };
 
-typedef _STL::hash_map<AsciiString, Rva0061C1D0Object *,
+typedef _STL::hash_map<AsciiString, BfmeThingNA *,
 	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > Rva006157C0Map;
 
 class BfmeLivingWorldManager
@@ -46,6 +50,6 @@ void BfmeLivingWorldManager::rva006157c0()
 	for (Rva006157C0Map::iterator it = m_objects.begin();
 		it != m_objects.end(); ++it)
 	{
-		it->second->rva0061c1d0();
+		it->second->bfmeResetStateNA();
 	}
 }

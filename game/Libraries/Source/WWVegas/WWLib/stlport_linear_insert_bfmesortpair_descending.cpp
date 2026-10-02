@@ -22,6 +22,19 @@ struct BfmeSortCompareDescending
 	}
 };
 
+void __cdecl bfmeLinearInsertFloatDescending(BfmeSortPair *last,
+	BfmeSortPair pending);
+
+// Retail's unguarded arm at 0x009F38FC pushes four words - the comparator byte,
+// val.m_key, val.m_value and last - and cleans sixteen with `add esp, 0x10`,
+// i.e. the three-argument __cdecl entry point.  The ledger's defining spelling
+// at 0x009F2E30 takes only (last, pending) and reads the same eight bytes from
+// [esp+4]..[esp+11]; the extra comparator word sits above them and is ignored.
+// Spell the call through the wider entry point of that very symbol so the
+// object references a name something defines.
+typedef void (__cdecl *BfmeUnguardedLinearInsert)(BfmeSortPair *last,
+	BfmeSortPair val, BfmeSortCompareDescending comp);
+
 namespace _STL
 {
 
@@ -40,9 +53,6 @@ __forceinline BidirectionalIter __copy_backward(RandomAccessIter first,
 }
 
 template <class RandomAccessIter, class Tp, class Compare>
-void __unguarded_linear_insert(RandomAccessIter last, Tp val, Compare comp);
-
-template <class RandomAccessIter, class Tp, class Compare>
 void __linear_insert(RandomAccessIter first, RandomAccessIter last, Tp val,
 	Compare comp)
 {
@@ -54,7 +64,8 @@ void __linear_insert(RandomAccessIter first, RandomAccessIter last, Tp val,
 	}
 	else
 	{
-		__unguarded_linear_insert(last, val, comp);
+		((BfmeUnguardedLinearInsert)(void *)bfmeLinearInsertFloatDescending)(
+			last, val, comp);
 	}
 }
 

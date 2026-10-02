@@ -53,7 +53,13 @@ struct BfmeInsertCompareB
 	bool operator()(void *pending, void *element);
 };
 
-void bfmeLinearInsert_00452910(int *last, int pending,
+// The unguarded body at retail 0x00452910 is the ledger's
+// ?bfmeLinearInsert_00452910@@YAXPAPAXPAXUBfmeInsertCompareB@@@Z
+// (game/GameEngine/Source/Common/S3InsertAndDescribe.cpp), whose pointer
+// parameters are void** / void*, while retail's call site here pushes the
+// Q3SortElem4 payload itself.  Spell the reference exactly as the defining
+// object exports it and convert the two arguments at the call.
+void bfmeLinearInsert_00452910(void **last, void *pending,
 	BfmeInsertCompareB compare);
 
 __forceinline int *bfmeCopyBackward(int *first, int *last, int *result)
@@ -74,7 +80,7 @@ __forceinline void bfmeLinearInsertAO(int *first, int *last,
 	}
 	else
 	{
-		bfmeLinearInsert_00452910(last, value,
+		bfmeLinearInsert_00452910((void **)last, (void *)(long)value,
 			*(BfmeInsertCompareB *)&comp);
 	}
 }
