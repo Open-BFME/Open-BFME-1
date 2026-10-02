@@ -1,3 +1,17 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
+// stlport
+
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/NameKeyGenerator.h"
+
+class Module;
+#define OBJECT_TU_MEMBERS \
+	friend char __stdcall bfmeCheckERL(void *handle); \
+protected: \
+	Module *findModule(NameKeyType key) const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class BfmeThingERL;
 
 class BfmeGlobalERL
@@ -52,20 +66,6 @@ public:
 
 class BfmeModERL;
 
-class BfmeThingERL
-{
-public:
-	BfmeModERL *bfmeFindERL(int key);
-};
-
-class BfmeKeyGenERL
-{
-public:
-	int bfmeNameToKeyERL(const char *name);
-};
-
-extern BfmeKeyGenERL *g_bfmeKeyGenERL;
-
 char __stdcall bfmeCheckERL(void *handle)
 {
 	BfmeThingERL *thing =
@@ -75,9 +75,10 @@ char __stdcall bfmeCheckERL(void *handle)
 		return 0;
 
 	static int s_bfmeKeyERL =
-		g_bfmeKeyGenERL->bfmeNameToKeyERL("GateOpenAndCloseBehavior");
+		TheNameKeyGenerator->nameToKey("GateOpenAndCloseBehavior");
 
-	BfmeModERL *mod = thing->bfmeFindERL(s_bfmeKeyERL);
+	BfmeModERL *mod = (BfmeModERL *)((const Object *)thing)->findModule(
+		(NameKeyType)s_bfmeKeyERL);
 
 	if (mod == 0)
 		return 0;

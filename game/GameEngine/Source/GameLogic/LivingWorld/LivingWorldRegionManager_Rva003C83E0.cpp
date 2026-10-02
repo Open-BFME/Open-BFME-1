@@ -28,9 +28,13 @@ static __forceinline Rva003C83E0Campaign *glo012F1028()
 {
     return (Rva003C83E0Campaign *)TheLivingWorldLogic;
 }
-extern Rva003C83E0State *g_bfmeStateDF;
-extern Rva003C83E0Gate *g_bfmeGameCW;
-extern Rva003C83E0ResetSink *Glo012F4B98;
+// Existing singleton definitions at 0x012F7048, 0x012F706C and 0x012F4B98.
+class Rva006092D0State;
+class LivingWorldManager;
+class Rva002EECE0;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+extern LivingWorldManager *TheLivingWorldManager;
+extern Rva002EECE0 *g_rva002eece0;
 
 extern void j_00048c4d();
 extern void j_0000ea7f();
@@ -79,12 +83,12 @@ static __forceinline void callResetSink(Rva003C83E0ResetSink *sink)
 
 void LivingWorldRegionManager::rva003C83E0(int force)
 {
-    if (callFlag(g_bfmeStateDF, j_00048c4d)
+    if (callFlag((Rva003C83E0State *)g_rva012F7048LivingWorld, j_00048c4d)
         || callFlag(glo012F1028(), j_0000ea7f))
         return;
 
     Rva003C83E0Pair pair = glo012F1028()->m_pair;
-    if (callFlag(g_bfmeGameCW, j_000485d1)
+    if (callFlag((Rva003C83E0Gate *)TheLivingWorldManager, j_000485d1)
         && callFlag(glo012F1028(), j_00025a77))
     {
         if (!glo012F1028()->m_at1C)
@@ -99,7 +103,7 @@ void LivingWorldRegionManager::rva003C83E0(int force)
 
     if (m_current != 0)
     {
-        callResetSink(Glo012F4B98);
+        callResetSink((Rva003C83E0ResetSink *)g_rva002eece0);
         m_current = 0;
         m_count = 0;
     }
