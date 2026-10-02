@@ -1,4 +1,5 @@
-void bfmeFreeBOG(void *what);
+extern "C" void __cdecl __identifier("?j_000126fc@@YAXXZ")();
+typedef void (__cdecl *BfmeFreeBOGThunk)(void *what);
 
 class BfmeThingBOG
 {
@@ -14,7 +15,7 @@ void BfmeThingBOG::bfmeGoBOG()
 {
 	if (!m_bfmeDone)
 	{
-		bfmeFreeBOG(m_bfmeWhat);
+		((BfmeFreeBOGThunk)&__identifier("?j_000126fc@@YAXXZ"))(m_bfmeWhat);
 		m_bfmeDone = true;
 	}
 }

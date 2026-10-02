@@ -1,9 +1,12 @@
 // cl: /O2 /Ob0
 
+class Rva007B12F0Base;
+extern "C" void __cdecl __identifier("?j_0000af38@@YAXXZ")();
+typedef void (__fastcall *Rva007B12F0InitializeThunk)(Rva007B12F0Base *self);
+
 class Rva007B12F0Base
 {
 public:
-	void initialize();
 	virtual void handle();
 
 private:
@@ -24,7 +27,8 @@ public:
 
 void Rva007B1350::initialize()
 {
-	m_base.initialize();
+	((Rva007B12F0InitializeThunk)&__identifier(
+		"?j_0000af38@@YAXXZ"))(&m_base);
 	m_58 = 0;
 	m_5C = 0;
 	m_60 = 20.0f;

@@ -1,6 +1,7 @@
 // cl: /O2
 
-void bfmeHelpVML(int *p, int a, int b, int c);
+extern "C" void __cdecl __identifier("?j_0001d30e@@YAXXZ")();
+typedef void (__cdecl *BfmeHelpVMLThunk)(int *p, int a, int b, int c);
 
 class BfmeFwdVML
 {
@@ -12,5 +13,6 @@ public:
 
 void BfmeFwdVML::grokFwd(int a)
 {
-	bfmeHelpVML(&a, m_bfme00, m_bfme04, a);
+	((BfmeHelpVMLThunk)&__identifier("?j_0001d30e@@YAXXZ"))(
+		&a, m_bfme00, m_bfme04, a);
 }

@@ -4,7 +4,8 @@ struct BfmePairBOC
 	void *m_bfmeTwo;
 };
 
-void __stdcall bfmeTailBOC(int flag);
+extern "C" void __cdecl __identifier("?j_00020509@@YAXXZ")();
+typedef void (__stdcall *BfmeTailBOCThunk)(int flag);
 
 class BfmeThingBOC
 {
@@ -19,5 +20,5 @@ void BfmeThingBOC::bfmeGoBOC(BfmePairBOC *pair)
 {
 	m_bfmeA = pair->m_bfmeOne;
 	m_bfmeB = pair->m_bfmeTwo;
-	bfmeTailBOC(1);
+	((BfmeTailBOCThunk)&__identifier("?j_00020509@@YAXXZ"))(1);
 }
