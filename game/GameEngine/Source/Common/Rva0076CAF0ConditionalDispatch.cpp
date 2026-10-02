@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-extern int g_Va012F8064;
+extern unsigned int g_rva0075b2e0_value;
 
 class Rva0076CAF0ConditionalDispatch
 {
@@ -16,7 +16,7 @@ private:
 // ?dispatchIfStale@Rva0076CAF0ConditionalDispatch@@QAEXXZ
 void Rva0076CAF0ConditionalDispatch::dispatchIfStale(void)
 {
-	if (g_Va012F8064 != stamp) {
+	if (g_rva0075b2e0_value != (unsigned int)stamp) {
 		target();
 	}
 }

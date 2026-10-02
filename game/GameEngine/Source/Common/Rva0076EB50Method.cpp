@@ -41,7 +41,7 @@ public:
 	int stamp;
 };
 
-extern int g_Va012F8064;
+extern unsigned int g_rva0075b2e0_value;
 
 class Rva0076EB50
 {
@@ -59,8 +59,8 @@ BFMERetailAsciiString Rva0076EB50::method(int i)
 	Rva0076CAF0ConditionalDispatch *owner =
 		(Rva0076CAF0ConditionalDispatch *)((char *)this - 0xc);
 
-	int currentStamp = owner->stamp;
-	if (g_Va012F8064 != currentStamp)
+	unsigned int currentStamp = owner->stamp;
+	if (g_rva0075b2e0_value != currentStamp)
 		owner->target();
 
 	if (i < 0)

@@ -257,7 +257,7 @@ class View;
 class GameLODManager;
 extern View* TheTacticalView;
 extern GameLODManager* TheGameLODManager;
-extern int g_Va012F8064;
+extern unsigned int g_rva0075b2e0_value;
 float minf(float,float);
 float maxf(float,float);
 class Rva0076C080;
@@ -356,7 +356,7 @@ void Rva0076C080::advanceAnimation()
         }
         return;
     }
-    U32 now=g_Va012F8064;
+    U32 now=g_rva0075b2e0_value;
     U32 elapsed=now-u9c;
     u9c=now;
     if (b1fc) {

@@ -8,8 +8,8 @@ class Animation0076EBE0 { public:
  virtual int frames(); virtual void slot14(); virtual float duration();
 };
 struct Track0076EBE0 { Animation0076EBE0* anim; float frame; float at08; float blend; int mode; int at14; bool at18,at19; };
-extern int g_Va012F8064;
-class Rva0076CAF0ConditionalDispatch { public: void target(); char pad00[0x9c]; int stamp; void synchronize() { if(g_Va012F8064!=stamp) target(); } };
+extern unsigned int g_rva0075b2e0_value;
+class Rva0076CAF0ConditionalDispatch { public: void target(); char pad00[0x9c]; int stamp; void synchronize() { if(g_rva0075b2e0_value!=(unsigned int)stamp) target(); } };
 
 extern const char* AnimModeNames012BB5BC[];
 class AnimationInfo0076EBE0 { public:

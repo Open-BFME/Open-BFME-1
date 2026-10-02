@@ -43,7 +43,7 @@ void bfmeLinkRelation(void*,Object*,int);
 class Rva0075BA30Owner { friend class Select0076B800; float getCurrentAnimFraction() const; };
 class Rva00766A70W3DScriptedModelDraw { friend class Select0076B800; void apply(void*,int,int,int,int); };
 class Cleanup0076B550 { public: void stopParticles(bool); };
-extern int g_Va012F8064;
+extern unsigned int g_rva0075b2e0_value;
 struct Drawable0076B800 { char pad00[0xfc]; Object* m_object; char pad100[0x10]; unsigned char b110; };
 class Select0076B800 { public:
  char pad00[8]; Drawable0076B800* p08; Secondary0076B800 secondary;
@@ -58,7 +58,7 @@ bool Select0076B800::select(State0076B800* state,bool force,int flags) {
   if(m_curState && m_curState->b6c) { if(force) m_curState=state; else return false; }
   else { if(force) secondary.refresh(); else return false; }
  }
- unsigned int now=g_Va012F8064;
+ unsigned int now=g_rva0075b2e0_value;
  if(now>u9c) b1fc=false;
  u9c=now;
  if(!(p08->b110&8)) b2c=true;
