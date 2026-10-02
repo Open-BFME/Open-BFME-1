@@ -15,9 +15,17 @@
 // the build checks that every reference to a given symbol resolves to one
 // address, so a global shared by two bodies is checked to be one global.
 //
-// IDENTITY IS NOT RECOVERED, for the globals any more than for the functions.
-// The bytes witness an address and a width; the type is spelled `int` because
-// four bytes moved with a plain load say nothing more.
+// IDENTITY IS NOT RECOVERED, for the globals any more than for the functions --
+// except where a global's defining spelling is already proven elsewhere.  0x012F4C64
+// is the slot LookAtTranslator's constructor publishes itself into
+// (game/GameEngine/Source/GameClient/MessageStream/LookAtTranslator_ctor.cpp), and
+// that ctor is matched at retail, so the global is `TheLookAtTranslator` and is
+// spelled as the reference header GameClient/LookAtXlat.h spells it.  Only the
+// forward declaration is repeated here: this TU has no include path, and the
+// pointed-to class is never dereferenced, so no layout is needed or claimed.
+
+class LookAtTranslator;
+extern LookAtTranslator *TheLookAtTranslator;
 
 // 0x012ACC30 is not a free global: retail defines it as the static member
 // Rva001A1A30::s_value (declared and defined in TinyGlobalStores.cpp), so the
@@ -53,7 +61,7 @@ extern int g_Va012F4B40;
 extern int g_Va012F4B44;
 extern int g_Va012F4B54;
 extern int g_Va012F4C38;
-extern int g_Va012F4C64;
+
 extern int g_Va012F9CF4;
 extern int g_Va012F9D08;
 extern int g_Va01304B5C;
@@ -137,7 +145,7 @@ int Rva0043A5F0Get( void )
 
 int Rva0046ECB0Get( void )
 {
-	return g_Va012F4C64;
+	return reinterpret_cast<int>(TheLookAtTranslator);
 }
 
 int Rva0049CA60Get( void )
