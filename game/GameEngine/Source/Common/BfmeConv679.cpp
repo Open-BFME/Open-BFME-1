@@ -1,3 +1,9 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/gamewindow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#include "PreRTS.h"
+#include "GameClient/GameWindow.h"
+
 struct BfmeSubDEC
 {
 	unsigned char m_bfmeHead[0x134];
@@ -6,13 +12,12 @@ struct BfmeSubDEC
 
 class BfmeThingDEC
 {
-public:
-	BfmeSubDEC *bfmeFindDEC();
 };
 
 unsigned int bfmeGoDEC(BfmeThingDEC *a)
 {
-	BfmeSubDEC *s = a->bfmeFindDEC();
+	GameWindow *child = reinterpret_cast<GameWindow *>(a)->winGetChild();
+	BfmeSubDEC *s = reinterpret_cast<BfmeSubDEC *>(child);
 	if (s != 0)
 		return s->m_bfmeColor;
 	return 0x00FFFFFF;

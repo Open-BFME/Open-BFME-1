@@ -3,10 +3,15 @@
 // game_engine_subsystems.h.
 class ThingFactory;
 
-// TU-local view of the same object, kept for the member call shape.
-struct Rva0020AA00Registry
+class AsciiString;
+class ThingTemplate;
+
+// TU-local BFME factory view; its matched lookup body is in
+// ThingFactoryFindTemplate.cpp.
+class BfmeThingFactory
 {
-	void *bfmeLookupZF(void *key);
+	public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // Canonical global at 0x012EF1D8 (?TheThingFactory@@3PAVThingFactory@@A),
@@ -30,5 +35,7 @@ void *BfmeHostZF::bfmeFindZF()
 {
 	BfmeOwnerZF *o = *(BfmeOwnerZF **)((char *)this - 0xe0);
 
-	return ((Rva0020AA00Registry *)TheThingFactory)->bfmeLookupZF(&o->m_bfme248ZF);
+	return const_cast<ThingTemplate *>(
+		reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(
+			*reinterpret_cast<const AsciiString *>(&o->m_bfme248ZF)));
 }
