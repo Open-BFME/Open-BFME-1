@@ -1,22 +1,23 @@
 // stlport
 // Open-BFME5 conversions.
 
+#include <map>
+
 // GameLogic::findObjectByID(ObjectID) is the retail lookup these callers reach;
 // GameLogicObjectLookup.h carries the declaration and its proof. Only the
 // declaration is used: the body stays in GameLogicFindObjectByID.cpp.
 #include "Thing/GameLogicObjectLookup.h"
 
-class BfmeK1113
-{
-public:
-	char bfmeChk1113(int a);
-};
+class UpgradeTemplate;
+#define OBJECT_TU_MEMBERS bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 struct BfmeL1113
 {
 	BfmeL1113 *m_bfme00;
 	char m_bfmePad[4];
-	BfmeK1113 *m_bfme08;
+	Object *m_bfme08;
 };
 
 struct BfmeNode1113
@@ -31,8 +32,6 @@ struct BfmeNode1113
 // in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; Thing/GameLogicObjectLookup.h
 // above already declares the real GameLogic view this TU calls through.
 extern GameLogic *TheGameLogic;
-
-BfmeNode1113 *__cdecl bfmeNext1113(BfmeNode1113 *p);
 
 class BfmeW1113
 {
@@ -50,7 +49,7 @@ char BfmeW1113::bfmeGo1113A(int a)
 	BfmeNode1113 *p;
 
 	while (q != h1) {
-		if (q->m_bfme08->bfmeChk1113(a))
+		if (q->m_bfme08->affectedByUpgrade(reinterpret_cast<const UpgradeTemplate *>(a)))
 			return 1;
 		q = q->m_bfme00;
 		h1 = *(BfmeL1113 **)((char *)this - 0xac);
@@ -58,12 +57,12 @@ char BfmeW1113::bfmeGo1113A(int a)
 	h = m_bfme30;
 	p = h->m_bfme08;
 	while (p != h) {
-		BfmeK1113 *k = reinterpret_cast<BfmeK1113 *>(
-			TheGameLogic->findObjectByID(p->m_bfme10));
+		Object *k = TheGameLogic->findObjectByID(p->m_bfme10);
 
-		if (k->bfmeChk1113(a))
+		if (k->affectedByUpgrade(reinterpret_cast<const UpgradeTemplate *>(a)))
 			return 1;
-		p = bfmeNext1113(p);
+		p = reinterpret_cast<BfmeNode1113 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = m_bfme30;
 	}
 	return 0;

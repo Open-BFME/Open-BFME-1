@@ -6,7 +6,7 @@
    callback directly if it has not already been told, send the QUIT and close
    the socket if the connection is still up, then free the channels, the
    callbacks and the socket, free the handle itself through the imported free,
-   and tail into the library's own cleanup.
+   and tail into WSACleanup through the SocketShutDown thunk.
 
    The callback is called here rather than queued, with an empty reason -- the
    queue is about to be freed. The connection is the CHAT handle itself, with
@@ -40,11 +40,11 @@ extern __declspec(dllimport) void __cdecl free(void *block);
 
 void ciFilterCleanup(CHAT chat);
 void ciSocketSend(void *chatSocket, const char *buffer);
-void ciSocketFlush(void *chatSocket);
+void ciSocketThink(void *chatSocket);
 void ciSocketDisconnect(void *chatSocket);
 void ciCleanupChannels(CHAT chat);
 void ciCleanupCallbacks(CHAT chat);
-void ciCleanup(void);
+int __stdcall WSACleanup(void);
 
 void chatDisconnect(CHAT chat)
 {
@@ -58,7 +58,7 @@ void chatDisconnect(CHAT chat)
 	if(connection->connected)
 	{
 		ciSocketSend(&connection->chatSocket, "QUIT :Later!");
-		ciSocketFlush(&connection->chatSocket);
+		ciSocketThink(&connection->chatSocket);
 	}
 
 	ciCleanupChannels(chat);
@@ -67,5 +67,5 @@ void chatDisconnect(CHAT chat)
 
 	free(chat);
 
-	ciCleanup();
+	WSACleanup();
 }

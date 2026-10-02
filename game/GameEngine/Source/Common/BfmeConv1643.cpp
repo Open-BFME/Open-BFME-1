@@ -1,23 +1,19 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class BfmeStrNVUL
 {
 public:
-	~BfmeStrNVUL() { bfmeClearNVUL(); }
+	~BfmeStrNVUL() { reinterpret_cast<StringBase<char> *>(this)->clear(); }
 	char *m_bfme00;
-
-private:
-	void bfmeClearNVUL();
 };
 
 class BfmeStrWVUL
 {
 public:
-	~BfmeStrWVUL() { bfmeClearWVUL(); }
+	~BfmeStrWVUL() { reinterpret_cast<StringBase<unsigned short> *>(this)->clear(); }
 	unsigned short *m_bfme00;
-
-private:
-	void bfmeClearWVUL();
 };
 
 class BfmeOwnVUL
