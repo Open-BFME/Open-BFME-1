@@ -416,13 +416,7 @@ void (*bfme_force_dict_accessors_anchor)(const Dict &, Int) = &bfme_force_dict_a
 // DataChunkTableOfContents
 //----------------------------------------------------------------------
 
-DataChunkTableOfContents::DataChunkTableOfContents( void ) : 
-m_list(NULL), 
-m_nextID(1), 
-m_listLength(0),
-m_headerOpened(false)
-{
-}
+// Table construction uses the retail inline provider in DataChunkOutput.cpp.
 
 // ??1DataChunkTableOfContents@@QAE@XZ present-unmatched
 DataChunkTableOfContents::~DataChunkTableOfContents()
@@ -603,19 +597,7 @@ DataChunkVersionType DataChunkInput::getChunkVersion( void )
 	return m_chunkStack->version;
 }		
 
-// return size of data stored in this chunk
-UnsignedInt DataChunkInput::getChunkDataSize( void )
-{
-	if (m_chunkStack == NULL)
-	{
-		// TODO: Throw exception
-		DEBUG_CRASH(("Bad."));
-		return NULL;
-	}
-
-	return m_chunkStack->dataSize;
-}
-
+// getChunkDataSize uses the retail inline provider in DataChunkInput.cpp.
 
 // return size of data left to read in this chunk
 UnsignedInt DataChunkInput::getChunkDataSizeLeft( void )
@@ -645,7 +627,7 @@ Bool DataChunkInput::atEndOfChunk( void )
 // update data left in chunk(s)
 // since data read from a chunk is also read from all parent chunks,
 // traverse the chunk stack and decrement the data left for each
-void DataChunkInput::decrementDataLeft( Int size )
+inline void DataChunkInput::decrementDataLeft( Int size )
 {
 	InputChunk *c;
 
