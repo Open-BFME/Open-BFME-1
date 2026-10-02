@@ -1,5 +1,5 @@
 // ?d_001eba30@@YAXXZ
-// partial score=0.93 date=2026-09-26
+// partial score=0.8551 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: WeaponSet::setWeaponLock, retail 0x001EBA30, 214 bytes.
 //
