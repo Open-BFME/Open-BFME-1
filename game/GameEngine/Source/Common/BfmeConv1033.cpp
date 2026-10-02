@@ -22,11 +22,18 @@ void BfmeB1033::bfmeGo1033B(int unused)
 extern "C" void *bfmeVft1033D[];
 extern "C" __declspec(dllimport) void __stdcall CloseHandle(int h);
 
+// 0x007F0300 is the shared 7-byte store-imm teardown step (ledger:
+// ?m@Gen_007f0300@@QAEXXZ); it is called on this at the end of the body.
+class Gen_007f0300
+{
+public:
+	void m();
+};
+
 class BfmeD1033
 {
 public:
 	void bfmeGo1033D(void);
-	void bfmeBaseDtor1033(void);
 
 	void *m_bfmeVfptr;
 	int m_bfmeH;
@@ -39,7 +46,7 @@ void BfmeD1033::bfmeGo1033D(void)
 	if (m_bfmeH != 0)
 		CloseHandle(m_bfmeH);
 
-	bfmeBaseDtor1033();
+	reinterpret_cast<Gen_007f0300 *>(this)->m();
 }
 
 class BfmeF1033;
