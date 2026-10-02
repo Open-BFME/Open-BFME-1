@@ -407,3 +407,22 @@ Replace the earlier opaque row at its unchanged 27-byte extent with
 `?update@ProneUpdate@@UAE?AW4UpdateSleepTime@@XZ` and remove the now-orphaned
 BfmeConv496.cpp. This completes the historical evidence-only deferral, with
 no duplicate alias or new pin.
+
+## DelayedWeaponSetUpgradeUpdate update (0028C260)
+
+Registry literal `DelayedWeaponSetUpgradeUpdate` at `00C90794`, registration
+`0012DA6A`, factory `00117DC0`, and its call `00117DFB` through `0003006C`
+identify constructor `0028C2D0`. Its final store at `0028C316` installs table
+VA `010BD468` at complete-object +10. Slot zero is the sole absolute pointer
+to ILT `00006F0A` -> `0028C260`; slot one is the established common
+`0004985F` -> `0011A130`. Thus the labeled/aligned update-family prefix
+proves `DelayedWeaponSetUpgradeUpdate::update`, public virtual non-const,
+returning the four-byte UpdateSleepTime enum with no arguments.
+
+The full body is `mov eax,1; ret`, six bytes, with RET at `0028C265` followed
+by INT3. It accesses no receiver fields and has no callees; use the existing
+UpdateModule.h enum and UPDATE_SLEEP_NONE. The former anonymous row was only
+an alias to CommandLine.cpp's unrelated parseNoLogOrCrash constant body.
+Replace that row with a dedicated owner TU; retain CommandLine.cpp for its
+actual command-line functions. No field, callee name, or inherited identity
+is inferred from the constant value. No shared header or pin changes.
