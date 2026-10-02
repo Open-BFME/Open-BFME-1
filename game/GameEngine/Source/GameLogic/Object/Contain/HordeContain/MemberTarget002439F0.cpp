@@ -8,9 +8,8 @@
 #include <list>
 #include "../../../command_source_type.h"
 extern void j_00006dcf(); extern void j_0000e4a8();
+extern void j_0000faa6(); extern void j_00043ced();
 class Member002439F0;
-class BfmeSrcBT {public: float bfmeCalcBT(void *);};
-class BfmeObjAS {public: BfmeObjAS *bfmeParentAS(int);};
 class Object;
 class AIUpdateInterface {public: Object *getCurrentVictim() const;};
 class BFMEActionObject {public: bool testStatus(int) const;};
@@ -127,7 +126,10 @@ class Commands002439F0 { public: void idle(CommandSourceType source) {((AIComman
 class Member002439F0 {public:
  char pad000[0x74]; int field074; int field078; char pad07C[0x94-0x7c]; unsigned field094;
  char pad098[0x204-0x98]; AI002439F0 *field204; char pad208[12]; Member002439F0 *field214;
- Member002439F0 *parent(bool b) {return (Member002439F0 *)((BfmeObjAS *)this)->bfmeParentAS(b);}
+ Member002439F0 *parent(bool b) {
+  union {void (*p)(); Member002439F0 *(Member002439F0::*m)(int);} c;
+  c.p=j_0000faa6; return (this->*c.m)(b);
+ }
  bool status(int i) const {return ((const BFMEActionObject *)this)->testStatus(i);}
  void action(bool b) {union {void (*p)();void (Member002439F0::*m)(bool);} c;c.p=j_0000e4a8;(this->*c.m)(b);}
 };
@@ -220,7 +222,9 @@ class MemberTarget002439F0 {public:
 };
 bool MemberTarget002439F0::check(Member002439F0 *arg) {
  if (!arg) return false;
- bool close=((BfmeSrcBT *)arg)->bfmeCalcBT(*(Member002439F0 **)((char *)this-0xdc))<10000.0f;
+ union {void (*p)(); float (Member002439F0::*m)(void *);} calc;
+ calc.p=j_00043ced;
+ bool close=(arg->*calc.m)(*(Member002439F0 **)((char *)this-0xdc))<10000.0f;
  int id=arg->field074;
  Member002439F0 *parent=arg->parent(false);
  if(parent) id=parent->field074;
