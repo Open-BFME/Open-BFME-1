@@ -53,3 +53,8 @@ class Rva005E2C70StringView : public BfmeBaseVUQ
 class Rva005DDD60 : public V3NodeHead, public V3Vt1110830, public V3Vt107375C { public: int m_v; };
 class Rva005E2C70 : public Rva005DDD60, public Rva005E2C70StringView {};
 void useRva005E2C70() { Rva005E2C70 t; }
+
+// RVA 0x005E2D20 has its own retail EH handler and deleting wrapper.
+// Evidence: targets/game/reverse/identity_evidence/rva005e2d20.md
+class Rva005E2D20 : public Rva005DDD60, public Rva005E2C70StringView {};
+void useRva005E2D20() { Rva005E2D20 t; }
