@@ -13,7 +13,7 @@
 
 #pragma intrinsic(memset)
 extern "C" void* __cdecl memset(void *, int, unsigned int);
-extern "C" void* __cdecl bfme_debugAllocInnerAllocate_82AD80(unsigned int);
+void* __cdecl operator new(unsigned int);
 
 struct __alloc_header {
   unsigned int __magic: 16;
@@ -31,7 +31,7 @@ bfme_DebugAllocAllocate_82B700(unsigned int __n)
 {
   unsigned int __real_n = __n + 24;
   __alloc_header *__result =
-      (__alloc_header *)bfme_debugAllocInnerAllocate_82AD80(__real_n);
+      (__alloc_header *)::operator new(__real_n);
   memset((char *)__result, __shred_byte, __real_n);
   __result->__magic = __magic;
   __result->__type_size = 1;

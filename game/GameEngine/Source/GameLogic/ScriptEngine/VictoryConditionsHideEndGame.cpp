@@ -4,14 +4,19 @@
 typedef int Int;
 typedef bool Bool;
 
-class WindowManager
-{
-public:
-	void unidentified_00015235(Int a, const char *eventName, Int argCount,
-		const void *p1, const void *p2, const void *p3, const void *p4, const void *p5);
-};
+class WindowManager;
 
 extern WindowManager *g_theWindowManager;
+
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8);
+
+	char m_bfmePadAN[0x1c4];
+	char m_bfmeBuiltAN;
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
@@ -70,7 +75,8 @@ void VictoryConditions::hideEndGame(void)
 	if (!g_theWindowManager || !m_endGameShowing)
 		return;
 
-	g_theWindowManager->unidentified_00015235(0xb, "HideEndGame", 0, 0, 0, 0, 0, 0);
+	reinterpret_cast<BfmeLevelAN *>(g_theWindowManager)->bfmeBuildAN(
+		0xb, (int)"HideEndGame", 0, 0, 0, 0, 0, 0);
 	m_endGameShowing = false;
 	TheDisplay->setUnidentified13c(true);
 

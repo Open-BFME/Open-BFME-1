@@ -50,7 +50,7 @@ public:
 	typedef allocator<CharT> allocator_type;
 	typedef unsigned size_type;
 
-	__forceinline basic_string(const CharT *first, const CharT *last)
+	__forceinline basic_string(CharT *first, CharT *last)
 		: _String_base<CharT, Alloc>(allocator_type())
 	{
 		_M_range_initialize(first, last);
@@ -66,11 +66,13 @@ public:
 
 private:
 	__forceinline void _M_throw_out_of_range(void) const {}
-	void _M_range_initialize(const CharT *first, const CharT *last,
+	template <class InputIterator>
+	void _M_range_initialize(InputIterator first, InputIterator last,
 		const forward_iterator_tag &tag);
 
-	__forceinline void _M_range_initialize(const CharT *first,
-		const CharT *last)
+	template <class InputIterator>
+	__forceinline void _M_range_initialize(InputIterator first,
+		InputIterator last)
 	{
 		_M_range_initialize(first, last, random_access_iterator_tag());
 	}

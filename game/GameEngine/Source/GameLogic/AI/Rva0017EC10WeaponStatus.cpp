@@ -27,6 +27,7 @@ class Object
 {
 public:
 	Weapon *getCurrentWeapon( WeaponSlotType *slot );
+	void setStatusBit( int bit, bool set );
 
 	char m_objectFields[ 0x38 ];
 	Coord3D m_position;
@@ -41,8 +42,6 @@ public:
 
 class BfmeObj1004
 {
-public:
-	void bfmeSetA1004( int status, int value );
 };
 
 extern void j_00023e0c();
@@ -89,6 +88,6 @@ void Rva0017EC10State::process( Object *object )
 	else if (status == WEAPON_STATUS_ZERO)
 	{
 		m_weaponActive = true;
-		reinterpret_cast<BfmeObj1004 *>(object)->bfmeSetA1004( 0xD, 1 );
+		object->setStatusBit( 0xD, true );
 	}
 }
