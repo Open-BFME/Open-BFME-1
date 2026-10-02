@@ -23,6 +23,11 @@ typedef std::vector<const LocomotorTemplate *> LocomotorTemplateVector;
 typedef std::map<LocomotorSetType, LocomotorTemplateVector,
 	std::less<LocomotorSetType> > LocomotorTemplateMap;
 
+// This constructor has a ledger-owned thunk; leave only a reference here.
+extern template _STL::_Vector_base<const LocomotorTemplate *,
+	_STL::allocator<const LocomotorTemplate *> >::_Vector_base(
+		size_t, const _STL::allocator<const LocomotorTemplate *> &);
+
 // ??A?$map@W4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAEAAV?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@1@ABW4LocomotorSetType@@@Z
 template LocomotorTemplateVector &LocomotorTemplateMap::operator[](
 	const LocomotorSetType &key);

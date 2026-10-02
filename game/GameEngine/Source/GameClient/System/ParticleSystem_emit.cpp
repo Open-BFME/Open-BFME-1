@@ -130,7 +130,7 @@ void ParticleSystem::emit(const Coord3D *pos, int priority, bool isIdentity, con
                     Particle *p = createParticle(info, priority, false);
                     if (p) {
                         BfmeParticleSystemHandle sys = TheParticleSystemManager->createParticleSystem(tmp, true);
-                        sys->setControlParticle(p);
+                        *(Particle **)((char *)sys.operator->() + 0x1a0) = p;
                         p->controlParticleSystem(sys);
                     }
                 }
