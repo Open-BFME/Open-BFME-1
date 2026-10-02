@@ -42,3 +42,32 @@ without changing its extent; remove its obsolete class/body from
 Rva001FAdjacentTinyBodies.cpp. Use the already-defined types and class view
 in FireWeaponWhenDamagedBehavior_onDamage.cpp, adding only the two witnessed
 virtual declarations and empty bodies. Verify its existing onDamage too.
+
+## OpenContain: introducing owner and misplaced claim correction
+
+The complete sixteen-constructor table/chain census in
+`damagemodule-slots0-1-callbacks.md` proves that OpenContain introduces the
+shared damage callbacks. Its own registered constructor 002277A0 installs
+abstract damage table VA 010A1BFC at +0x2C, then concrete VA 010AC004. Its
+primary slot-2 literal getter independently names OpenContain. Slot 2 of its
+damage table is ILT 0001AA5A -> **00219450**; twelve containing-family tables
+reuse that same stub in slot 2. All twelve uses are accounted for by the
+registered constructor census, and the introducing owner is OpenContain,
+not one of its subclasses.
+
+GeneralsMD OpenContain.h:127-129 explicitly defines this empty public virtual
+non-const method with const DamageInfo* and two BodyDamageType arguments.
+The retail bytes are C2 0C 00, immediately followed by INT3, for an exact
+three-byte body and twelve-byte argument cleanup. Its full decorated name is
+`?onBodyDamageStateChange@OpenContain@@UAEXPBVDamageInfo@@W4BodyDamageType@@1@Z`.
+
+The existing same-name row at **006CF660** is wrong: its only justification
+is `icf-owner=?Scale@RenderObjClass@@UAEXMMM@Z`. Retail has no identical-COMDAT
+folding, and the actual OpenContain table points to the separate body 00219450,
+not the ILT 0003AB25 -> 006CF660. The common `ret 12` byte shape never proved
+that misplaced identity. Retire only OpenContain's 006CF660 row with a tombstone;
+this correction makes no new assertion about the other old names on 006CF660.
+Then replace the opaque 00219450 ret12 row with the witnessed method and
+same three-byte extent. The existing OpenContain.cpp source remains unchanged.
+This preserves the real method spelling while correcting its retail address;
+no descriptive-to-opaque rename is involved.

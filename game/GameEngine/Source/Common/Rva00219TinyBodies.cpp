@@ -48,26 +48,6 @@ bool Rva00219410False()
 	return false;
 }
 
-class Rva00219440Owner
-{
-public:
-	void ret4(int);
-};
-
-void Rva00219440Owner::ret4(int)
-{
-}
-
-class Rva00219450Owner
-{
-public:
-	void ret12(int, int, int);
-};
-
-void Rva00219450Owner::ret12(int, int, int)
-{
-}
-
 int Rva00219470Zero()
 {
 	return 0;
