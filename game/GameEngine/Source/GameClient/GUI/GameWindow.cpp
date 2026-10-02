@@ -1867,28 +1867,9 @@ Int GameWindow::winSetEnabledColor( Int index, Color color )
 
 }  // end winSetEnabledColor
 
-// GameWindow::winSetEnabledBorderColor =======================================
-/** set border color for state at this index */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowBorderColorSetters.cpp
-// ?winSetEnabledBorderColor@GameWindow@@QAEHHH@Z present-unmatched
-Int GameWindow::winSetEnabledBorderColor( Int index, Color color )
-{
+// BFME winSetEnabledBorderColor is provided by GameWindowBorderColorSetters.cpp.
+// The Zero Hour layout here uses the wrong draw-data displacement.
 
-	// sanity
-	if( index < 0 || index >= MAX_DRAW_DATA )
-	{
-
-		DEBUG_LOG(( "set enabled border color, index out of range '%d'\n", index ));
-		assert( 0 );
-		return WIN_ERR_INVALID_PARAMETER;
-
-	}  // end if
-
-	m_instData.m_enabledDrawData[ index ].borderColor = color;
-	return WIN_ERR_OK;
-
-}  // end winSetEnabledBorderColor
 
 // GameWindow::winSetDisabledImage ============================================
 /** Set an disabled image into the draw data for the disabled state */
@@ -1936,28 +1917,9 @@ Int GameWindow::winSetDisabledColor( Int index, Color color )
 
 }  // end winSetDisabledColor
 
-// GameWindow::winSetDisabledBorderColor ======================================
-/** set border color for state at this index */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowBorderColorSetters.cpp
-// ?winSetDisabledBorderColor@GameWindow@@QAEHHH@Z present-unmatched
-Int GameWindow::winSetDisabledBorderColor( Int index, Color color )
-{
+// BFME winSetDisabledBorderColor is provided by GameWindowBorderColorSetters.cpp.
+// The Zero Hour layout here uses the wrong draw-data displacement.
 
-	// sanity
-	if( index < 0 || index >= MAX_DRAW_DATA )
-	{
-
-		DEBUG_LOG(( "set disabled border color, index out of range '%d'\n", index ));
-		assert( 0 );
-		return WIN_ERR_INVALID_PARAMETER;
-
-	}  // end if
-
-	m_instData.m_disabledDrawData[ index ].borderColor = color;
-	return WIN_ERR_OK;
-
-}  // end winSetDisabledBorderColor
 
 // GameWindow::winSetHiliteImage ==============================================
 /** Set an hilite image into the draw data for the hilite state */
@@ -2005,28 +1967,9 @@ Int GameWindow::winSetHiliteColor( Int index, Color color )
 
 }  // end winSetHiliteColor
 
-// GameWindow::winSetHiliteBorderColor ========================================
-/** set border color for state at this index */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowBorderColorSetters.cpp
-// ?winSetHiliteBorderColor@GameWindow@@QAEHHH@Z present-unmatched
-Int GameWindow::winSetHiliteBorderColor( Int index, Color color )
-{
+// BFME winSetHiliteBorderColor is provided by GameWindowBorderColorSetters.cpp.
+// The Zero Hour layout here uses the wrong draw-data displacement.
 
-	// sanity
-	if( index < 0 || index >= MAX_DRAW_DATA )
-	{
-
-		DEBUG_LOG(( "set hilite border color, index out of range '%d'\n", index ));
-		assert( 0 );
-		return WIN_ERR_INVALID_PARAMETER;
-
-	}  // end if
-
-	m_instData.m_hiliteDrawData[ index ].borderColor = color;
-	return WIN_ERR_OK;
-
-}  // end winSetHiliteBorderColor
 
 // GameWindow::winGetInputFunc ================================================
 //=============================================================================
