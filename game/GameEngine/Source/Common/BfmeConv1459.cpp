@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-char *bfmeFindVMQ(const char *a, const char *b);
+char *Rva007EBCA0(const char *record, const char *tag);
 int bfmeApplyVMQ(char *p, int n);
 
 class BfmeThingVMQ
@@ -14,7 +14,7 @@ public:
 bool BfmeThingVMQ::bfmeGoVMQ(const char *name, char flag)
 {
 	int n1 = (flag != 0);
-	char *p = bfmeFindVMQ(m_bfme10, name);
+	char *p = Rva007EBCA0(m_bfme10, name);
 	int n2;
 
 	if (p == 0)

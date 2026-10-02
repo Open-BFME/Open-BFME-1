@@ -32,7 +32,7 @@ BfmeStrUPA *BfmeThingUPA::bfmeGoUPA(BfmeStrUPA *out)
 // it.  g_bfmeEmptyUPA is a different datum and keeps its own name.
 extern const char g_Rva0107301CEmptyString[];
 
-void *bfmeFindUPB(void *table, void *a);
+char *Rva007EBCA0(const char *record, const char *tag);
 void bfmeFormatUPB(void *r, char *out, void *c, const char *fmt);
 
 class BfmeThingUPB
@@ -45,7 +45,7 @@ public:
 
 char BfmeThingUPB::bfmeGoUPB(void *a, char *out, void *c)
 {
-	void *r = bfmeFindUPB(m_bfmeTable, a);
+	char *r = Rva007EBCA0((const char *)m_bfmeTable, (const char *)a);
 	if (!r) {
 		*out = 0;
 		return 0;

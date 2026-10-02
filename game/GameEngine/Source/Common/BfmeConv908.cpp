@@ -87,7 +87,7 @@ char BfmeThingRE::bfmeGoRE(BfmeOtherRE *o)
 	return 1;
 }
 
-void *bfmeOneRF(void *t, void *a);
+char *Rva007EBCA0(const char *record, const char *tag);
 void *bfmeTwoRF(void *r, void *b);
 
 class BfmeThingRF
@@ -100,7 +100,7 @@ public:
 
 void *BfmeThingRF::bfmeGoRF(void *a, void *b)
 {
-	void *r = bfmeOneRF(m_bfmeT, a);
+	char *r = Rva007EBCA0((const char *)m_bfmeT, (const char *)a);
 	if (!r)
 		return b;
 	return bfmeTwoRF(r, b);
