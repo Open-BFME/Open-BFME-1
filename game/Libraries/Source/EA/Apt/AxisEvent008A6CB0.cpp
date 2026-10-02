@@ -98,7 +98,10 @@ class Rva8D0D80String;
 class Rva8D0D80Value;
 class Rva8D0D80Table { public: void add(Rva8D0D80String *, Rva8D0D80Value *); };
 extern unsigned Rva008A5250LastKey;
-extern char *Rva008A5380Holder;
+// retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
+// incomplete here because only raw fields at +0x127c.. are read.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern char key0133853C[];
 Rva00899F00Base *axisEvent008A6CB0() {
     unsigned event = 0x1f7;
@@ -114,14 +117,14 @@ Rva00899F00Base *axisEvent008A6CB0() {
     table->add((Rva8D0D80String *)key0133853C, integer);
     BfmeStrVKI key("fXAxisValue");
     if (event == 0x1f5) {
-        Rva8D0D80Value *x = (Rva8D0D80Value *)makeFloat(*(float *)(Rva008A5380Holder + 0x127c));
-        Rva8D0D80Value *y = (Rva8D0D80Value *)makeFloat(*(float *)(Rva008A5380Holder + 0x1280));
+        Rva8D0D80Value *x = (Rva8D0D80Value *)makeFloat(*(float *)((char *)g_bfmeHolderBU + 0x127c));
+        Rva8D0D80Value *y = (Rva8D0D80Value *)makeFloat(*(float *)((char *)g_bfmeHolderBU + 0x1280));
         table->add((Rva8D0D80String *)&key, x);
         key = "fYAxisValue";
         table->add((Rva8D0D80String *)&key, y);
     } else if (event == 0x1f6) {
-        Rva8D0D80Value *x = (Rva8D0D80Value *)makeFloat(*(float *)(Rva008A5380Holder + 0x128c));
-        Rva8D0D80Value *y = (Rva8D0D80Value *)makeFloat(*(float *)(Rva008A5380Holder + 0x1290));
+        Rva8D0D80Value *x = (Rva8D0D80Value *)makeFloat(*(float *)((char *)g_bfmeHolderBU + 0x128c));
+        Rva8D0D80Value *y = (Rva8D0D80Value *)makeFloat(*(float *)((char *)g_bfmeHolderBU + 0x1290));
         key = "fXAxisValue";
         table->add((Rva8D0D80String *)&key, x);
         key = "fYAxisValue";

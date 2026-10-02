@@ -3,14 +3,15 @@
 // two-part tests -- each of which keeps its branches because the condition has
 // two halves.
 
-class BfmeHolderBU
+// Layout stand-in for the retail singleton at 0x013377D8; the defining
+// spelling is BfmePicker1284.cpp's BfmePickWorld1284 (struct -> ?PAU).
+struct BfmePickWorld1284
 {
-public:
 	char m_bfmeHead[0x126C];				// +0x0000
 	int m_bfmeField;					// +0x126C
 };
 
-extern BfmeHolderBU *g_bfmeHolderBU;				// retail 0x013377D8
+extern BfmePickWorld1284 *g_bfmeHolderBU;			// retail 0x013377D8
 
 // ?bfmeIsSet@@YAHXZ
 int __cdecl bfmeIsSet(void)

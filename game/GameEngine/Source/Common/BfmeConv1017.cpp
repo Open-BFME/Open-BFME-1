@@ -10,16 +10,20 @@ public:
 extern char g_bfme1017G;
 extern int g_bfme1017H;
 extern int g_bfme1017I;
-extern BfmeJ1017 *g_bfmeJ1017;
+
+// retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
+// incomplete here because this TU only needs the two calls below.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 void bfmeGo1017X(int a, int b)
 {
-	if (g_bfme1017G != 0 && g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeJ1017 != 0)
-		g_bfmeJ1017->bfmeSendX1017(a, b);
+	if (g_bfme1017G != 0 && g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeHolderBU != 0)
+		((BfmeJ1017 *)g_bfmeHolderBU)->bfmeSendX1017(a, b);
 }
 
 void bfmeGo1017Y(int a, int b, int c)
 {
-	if (g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeJ1017 != 0)
-		g_bfmeJ1017->bfmeSendY1017(a, b, c);
+	if (g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeHolderBU != 0)
+		((BfmeJ1017 *)g_bfmeHolderBU)->bfmeSendY1017(a, b, c);
 }

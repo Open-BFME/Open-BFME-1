@@ -53,18 +53,20 @@ int BfmeThing929D::bfmeGo929D(int i)
 	return ((BfmeNext929D *)((char *)this + 8))->bfmeNext929D(i - 1);
 }
 
-struct BfmeGlob929E
+// Layout stand-in for the retail singleton at 0x013377D8; the defining
+// spelling is BfmePicker1284.cpp's BfmePickWorld1284 (struct -> ?PAU).
+struct BfmePickWorld1284
 {
 	char m_bfmePad[0x126c];
 	void *m_bfmeP;
 };
 
-extern BfmeGlob929E *g_bfme929Glob;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 void bfmeCall929E(void *p, void **out);
 
 void bfmeGo929E(void *a)
 {
-	void *p = g_bfme929Glob->m_bfmeP;
+	void *p = g_bfmeHolderBU->m_bfmeP;
 	if (p)
 		bfmeCall929E(p, &a);
 }

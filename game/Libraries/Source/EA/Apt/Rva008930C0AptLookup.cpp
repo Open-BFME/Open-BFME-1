@@ -63,13 +63,15 @@ BfmeNestedBE *BfmeQuery1279::bfmeInsert1279(int value, BfmeNestedBE *node)
 	return node;
 }
 
-struct Rva008930C0Holder
+// Layout stand-in for the retail singleton at 0x013377D8; the defining
+// spelling is BfmePicker1284.cpp's BfmePickWorld1284 (struct -> ?PAU).
+struct BfmePickWorld1284
 {
 	char m_prefix[0x122c];
 	BfmeQuery1279 *m_query;
 };
 
-extern Rva008930C0Holder *g_bfmeHolderBU;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 BfmeNestedBE *Rva008930C0AptLookup(int value)
 {

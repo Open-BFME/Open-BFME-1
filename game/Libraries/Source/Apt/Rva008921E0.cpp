@@ -9,13 +9,16 @@
 class Rva008B38F0Global;
 extern Rva008B38F0Global *g_01337820;
 extern int g_bfme1017I;
-extern char *Rva008A5380Holder;
+// retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
+// incomplete here because only the pointer value is used.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 void __cdecl Rva008921E0(Rva008B38F0Global *value)
 {
     if (value) g_01337820 = value;
 }
 void __cdecl Rva008921F0()
 {
-    if (!g_bfme1017I && Rva008A5380Holder)
-        *(unsigned int *)(Rva008A5380Holder + 0x1238) = 0;
+    if (!g_bfme1017I && g_bfmeHolderBU)
+        *(unsigned int *)(reinterpret_cast<char *>(g_bfmeHolderBU) + 0x1238) = 0;
 }

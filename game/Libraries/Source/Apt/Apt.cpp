@@ -90,18 +90,20 @@ struct Rva00892A00Nested
     void *m_second;
 };
 
-struct Rva00892A00Holder
+// Layout stand-in for the retail singleton at 0x013377D8; the defining
+// spelling is BfmePicker1284.cpp's BfmePickWorld1284 (struct -> ?PAU).
+struct BfmePickWorld1284
 {
     char m_prefix[0x122c];
     Rva00892A00Root *m_root;
 };
 
-extern Rva00892A00Holder *g_bfmeHolderBU;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 // ?query@Rva00892A00@@YAXPAPAX0@Z
 void __cdecl Rva00892A00Query(void **firstResult, void **secondResult)
 {
-      Rva00892A00Holder *holder = g_bfmeHolderBU;
+      BfmePickWorld1284 *holder = g_bfmeHolderBU;
       if (!holder)
           return;
 

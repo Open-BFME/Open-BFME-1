@@ -45,7 +45,10 @@ public:
 	void bfmeGo1046D(void);
 };
 
-extern char *Rva008A5380Holder;
+// retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
+// incomplete here because only the physical field at +0x12a4 is read.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 class Rva008A1460Owner
 {
@@ -85,7 +88,7 @@ void Rva008A1460Owner::cleanup(void)
 
 	bucketOffset = 0;
 	counts[1] = 0;
-	for (; counts[1] < reinterpret_cast<int *>(Rva008A5380Holder)[0x12a4 / 4];
+	for (; counts[1] < reinterpret_cast<int *>(g_bfmeHolderBU)[0x12a4 / 4];
 		++counts[1], bucketOffset += 0x20)
 	{
 		if (reinterpret_cast<Rva008A1460Bucket *>(

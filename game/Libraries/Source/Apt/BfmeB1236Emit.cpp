@@ -142,7 +142,10 @@ public:
 	void bfmeAddLI(BfmeItemLI *item, const BfmeDataLI *data);
 };
 
-extern char *Rva008A5380Holder;
+// retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
+// incomplete here because only the pointer value is cast and passed on.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 class Gen_008D2B50 { public: void bfmePush(void); };
 class Gen_008D2B80 { public: void bfmePop(void); };
@@ -329,7 +332,7 @@ void BfmeB1236::bfmeEmit1236(void *a, int unused, void *c)
 	{
 		BfmeQ1206 data;
 		((BfmeA1206 *)a)->bfmeGet1206(&data);
-		((BfmeThingLI *)Rva008A5380Holder)->bfmeAddLI((BfmeItemLI *)this, (const BfmeDataLI *)&data);
+		((BfmeThingLI *)(void *)g_bfmeHolderBU)->bfmeAddLI((BfmeItemLI *)this, (const BfmeDataLI *)&data);
 		m_bfme50->m_bfme20.bfmeAdd1038((int)a, (int)c);
 		return;
 	}
