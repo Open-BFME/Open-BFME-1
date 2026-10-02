@@ -51,7 +51,7 @@ void Rva006D2130Elem::rva0072EAA0()
 	}
 }
 
-extern bool g_aiTargetDispatchSuppressed;
+bool g_aiTargetDispatchSuppressed = false;
 
 class Rva006D2130
 {
