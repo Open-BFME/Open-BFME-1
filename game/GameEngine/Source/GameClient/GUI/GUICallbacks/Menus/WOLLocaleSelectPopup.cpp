@@ -183,21 +183,6 @@ void WOLLocaleSelectInit( WindowLayout *layout, void *userData )
 } // WOLLocaleSelectInit
 
 //-------------------------------------------------------------------------------------------------
-/** WOL Status Menu shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLLocaleSelectShutdown( WindowLayout *layout, void *userData )
-{
-
-	// hide menu
-	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
-
-	// our shutdown is complete
-	TheShell->shutdownComplete( layout );
-
-}  // WOLLocaleSelectShutdown
-
-
-//-------------------------------------------------------------------------------------------------
 /** WOL Status Menu update method */
 //-------------------------------------------------------------------------------------------------
 void WOLLocaleSelectUpdate( WindowLayout * layout, void *userData)
