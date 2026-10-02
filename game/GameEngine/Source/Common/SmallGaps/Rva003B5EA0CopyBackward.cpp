@@ -13,7 +13,7 @@ public:
 	void set(const UnicodeString &);
 };
 
-extern "C" void j_00007a63();
+void j_00007a63();
 
 class Rva003B5EA0Handle
 {

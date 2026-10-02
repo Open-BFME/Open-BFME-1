@@ -91,10 +91,20 @@ public:
 class BfmeArg1000
 {
 public:
-	char bfmeHas1000(int v);
-
 	char m_bfmePad[0x1fc];
 	BfmeMgr1000 *m_bfmeMgr;
+};
+
+class Object;
+
+class BFMEObjectStealthQuery
+{
+public:
+	bool isStealthedAndUndetected(const Object *viewer) const;
+
+private:
+	unsigned char m_pad[0x90];
+	unsigned int m_status;
 };
 
 class BfmeA1000
@@ -108,7 +118,8 @@ public:
 
 char BfmeA1000::bfmeGo1000A(BfmeArg1000 *a)
 {
-	if (a->bfmeHas1000(m_bfmeVal))
+	if (((BFMEObjectStealthQuery *)a)->isStealthedAndUndetected(
+		reinterpret_cast<const Object *>(m_bfmeVal)))
 		return 1;
 
 	BfmeMgr1000 *m = a->m_bfmeMgr;
