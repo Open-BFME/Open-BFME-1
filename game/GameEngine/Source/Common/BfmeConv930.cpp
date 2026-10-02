@@ -48,11 +48,19 @@ public:
 	virtual void bfmeVirt930C(void *a, int f);
 };
 
-extern BfmeGlob930C *g_bfme930Glob;
+// The global this TU reads is the same storage the setter at Rva 0x009A58C0
+// writes and the allocator reads; its one defining name is the tiny store's
+// member, redeclared here exactly as TinyGlobalStores.cpp defines it.
+class Rva009A58C0
+{
+public:
+	static void store( int value );
+	static int s_value;
+};
 
 void bfmeGo930C(void *a)
 {
-	BfmeGlob930C *g = g_bfme930Glob;
+	BfmeGlob930C *g = (BfmeGlob930C *)Rva009A58C0::s_value;
 	if (g) {
 		g->bfmeVirt930C(a, 0);
 		return;
