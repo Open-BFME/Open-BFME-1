@@ -8,10 +8,8 @@ typedef unsigned char Byte;
 typedef void (__cdecl *Scale1D)( const Byte *, int, unsigned int, unsigned int,
 	Byte *, int, unsigned int, unsigned int );
 
-extern void __cdecl Rva009A9980( const Byte *, int, unsigned int, unsigned int,
-	Byte *, int, unsigned int, unsigned int );
-extern void __cdecl Rva009A9A20( const Byte *, int, unsigned int, unsigned int,
-	Byte *, int, unsigned int, unsigned int );
+extern void __cdecl d_009a9980();
+extern void __cdecl d_009a9a20();
 extern void __cdecl bfmeCopyColAA90( Byte *, int, int, int,
 	Byte *, int, int, int );
 
@@ -36,13 +34,13 @@ void Rva009A9AD0Scale2D(
 	unsigned int bands;
 	unsigned int destBandHeight;
 	unsigned int sourceBandHeight;
-	Scale1D scaleVertical = Rva009A9980;
-	Scale1D scaleHorizontal = Rva009A9980;
+	Scale1D scaleVertical = (Scale1D)d_009a9980;
+	Scale1D scaleHorizontal = (Scale1D)d_009a9980;
 	Scale1D scaleTwoToOne = (Scale1D)bfmeCopyColAA90;
 	if( hscale == 2 && hratio == 1 )
 		scaleHorizontal = scaleTwoToOne;
 	if( vscale == 2 && vratio == 1 )
-		scaleVertical = interlaced ? scaleTwoToOne : Rva009A9A20;
+		scaleVertical = interlaced ? scaleTwoToOne : (Scale1D)d_009a9a20;
 
 	if( sourceHeight == destHeight )
 	{
