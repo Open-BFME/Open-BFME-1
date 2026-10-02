@@ -71,6 +71,7 @@ class ParticleSystemTemplate : public ParticleSystemInfo
 {
 public:
 	ParticleSystemTemplate(const AsciiString &name);
+	virtual ~ParticleSystemTemplate();
 
 private:
 	AsciiString m_name;

@@ -15,6 +15,8 @@ template <class Type> class BfmeIntAllocator : public std::allocator<Type>
 class ProductionPrerequisite
 {
 public:
+	~ProductionPrerequisite();
+
 	struct PrereqUnitRec
 	{
 		unsigned int m_data[3];

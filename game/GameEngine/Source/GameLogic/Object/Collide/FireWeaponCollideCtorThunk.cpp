@@ -117,6 +117,7 @@ class FireWeaponCollide : public CollideModule
 {
 public:
 	FireWeaponCollide(Thing *, const ModuleData *);
+	virtual ~FireWeaponCollide();
 
 private:
 	const FireWeaponCollideModuleData *getFireWeaponCollideModuleData() const

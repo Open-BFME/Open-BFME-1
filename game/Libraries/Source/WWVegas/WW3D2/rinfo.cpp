@@ -51,25 +51,6 @@
 ** RenderInfoClass Implementation
 **
 ***********************************************************************************************/
-// ??0RenderInfoClass@@QAE@AAVCameraClass@@@Z present-unmatched
-RenderInfoClass::RenderInfoClass(CameraClass & cam) :
-	Camera(cam), 
-	fog_start(0.0f),
-	fog_end(0.0f),
-	fog_scale(0.0f),
-	light_environment(0),
-	AdditionalMaterialPassCount(0),
-	RejectedMaterialPasses(0),
-	OverrideFlagLevel(0),
-	Texture_Projector(NULL),
-	alphaOverride(1.0f),
-	materialPassAlphaOverride(1.0f),
-	materialPassEmissiveOverride(1.0f)
-{ 
-	// Need to have one entry in the override flags stack, initialize it to default values.
-	OverrideFlag[OverrideFlagLevel]=RINFO_OVERRIDE_DEFAULT;
-}
-
 // ??1RenderInfoClass@@QAE@XZ present-unmatched
 RenderInfoClass::~RenderInfoClass(void)
 {
@@ -155,4 +136,3 @@ SpecialRenderInfoClass::SpecialRenderInfoClass(CameraClass & cam,int render_type
 SpecialRenderInfoClass::~SpecialRenderInfoClass(void)
 {
 }
-
