@@ -14598,5 +14598,65 @@
   "old_name": "evacuateTeam",
   "new_name": "j_0004494a",
   "reason": "False pairing between removed bank Team::evacuateTeam declaration and unrelated pre-existing declaration in destination Player.cpp. New body still calls team->evacuateTeam() using the native Team header; no method rename occurs."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeUpgradeImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeRva002D2D20.cpp",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D2D20",
+  "before_sha256": "9807a8bd1c4eab986d5b36548aa6528593baf4d9a02efc50ed4666fc807db517",
+  "after_sha256": "a08c9bb7f1878fbc8d7a17acb10163bbf7835c696faa0fa1f4d8338169f3f9b6",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgradeUpgradeImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgradeRva002D6930.cpp",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D6930",
+  "before_sha256": "d34b64fc26a97d854f59ec6de7b02d398f1a82753a0c482c3b76fc7fda620c42",
+  "after_sha256": "2a0cd264095a5b71e0b68c973d6d60065b6bc817b76ac58d3ffc1f0c69ecb4ab",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeRva002D71D0.cpp",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D71D0",
+  "before_sha256": "cc986c08749e72af869c7df0bc8f13d008e5226288280e386660b0d555185668",
+  "after_sha256": "16260fc97c0c372dd828b8248cd695caa66d9287f13360ced89641eea0bce92c",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D2D20",
+  "before_sha256": "047a6ba00c5ab0a375fda6adec26a8685b1426f2bdc7a3c40dba40d540b8c5db",
+  "after_sha256": "1a605e1fac1d15b5285728ace9f1c8ea9937bc413da063632f50cf152fd2b0ae",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D6930",
+  "before_sha256": "d5dbf08d584627c6c7ddaabb61d8f073f7e04c19c3a24e3afc1bf37f9708bd4a",
+  "after_sha256": "afe0f8cc9add2117b990f6c4fd6b7a465b42e07b81238d3a0edd748826f77746",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "upgradeImplementation",
+  "new_name": "rva002D71D0",
+  "before_sha256": "ecfda230908a6f059fe2fb5f713cc6c36231bb68521b4aa394d0bd5de9a9cd8e",
+  "after_sha256": "83cea2fa1935563a3015f739e81099f4e342ea85556c8182cdd60389fdf99c73",
+  "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md",
+  "reason": "UpgradeMux::attemptUpgrade (0x002D9AD0) inlines Zero Hour's giveSelfUpgrade and calls upgradeImplementation through slot 9, not slot 7; slot 7 is a BFME-only virtual (_purecall in UpgradeModule's table 0x010A36E0) whose body undoes the class's slot-9 body. The owner class stays proven by its registered constructor; the slot-7 method name is unproven, so it keeps the address."
  }
 ]
