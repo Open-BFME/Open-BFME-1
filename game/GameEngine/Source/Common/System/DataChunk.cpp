@@ -363,79 +363,9 @@ void FileInputStream::rewind()
 // be written, including a table of m_contents.
 //----------------------------------------------------------------------
 
-#define TEMP_FILENAME		"_tmpChunk.dat"
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutput.cpp
-// ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z present-unmatched
-DataChunkOutput::DataChunkOutput( OutputStream *pOut ) :  
-m_pOut(pOut)
-{
-	AsciiString tmpFileName = TheGlobalData->getPath_UserData();
-	tmpFileName.concat(TEMP_FILENAME);
-	m_tmp_file = ::fopen( tmpFileName.str(), "wb" );	
-	// Added Sadullah Nader
-	// Initializations missing and needed
-	m_chunkStack = NULL;
-	
-	// End Add
-}
-
-// ??1DataChunkOutput@@QAE@XZ present-unmatched
-DataChunkOutput::~DataChunkOutput()
-{
-	// store the table of m_contents
-	m_contents.write(*m_pOut);
-
-	// Rewind the temp m_tmp_file
-	::fclose(m_tmp_file);
-
-	AsciiString tmpFileName = TheGlobalData->getPath_UserData();
-	tmpFileName.concat(TEMP_FILENAME);
-
- 	m_tmp_file = ::fopen( tmpFileName.str(), "rb" );	
-	::fseek(m_tmp_file, 0, SEEK_SET);
-
-	// append the temp m_tmp_file m_contents
-	char buffer[256];
-	int len = 256;
-	while( len == 256 )
-	{
-		// copy data from the temp m_tmp_file to the output m_tmp_file
-		len = ::fread( buffer, 1, 256, m_tmp_file );
-		m_pOut->write( buffer, len );
-	}
-
-	::fclose(m_tmp_file);
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutputOpenDataChunkBody.cpp
-// ?openDataChunk@DataChunkOutput@@QAEXPADG@Z present-unmatched
-void DataChunkOutput::openDataChunk( char *name, DataChunkVersionType ver )
-{
-	// allocate (or get existing) ID from the table of m_contents
-	UnsignedInt id = m_contents.allocateID( AsciiString(name) );
-
-	// allocate a new chunk and place it on top of the chunk stack
-	OutputChunk *c = newInstance(OutputChunk);
-	c->next = m_chunkStack;
-	m_chunkStack = c;
-	m_chunkStack->id = id;
-
-	// store the chunk ID
-	::fwrite( (const char *)&id, sizeof(UnsignedInt), 1, m_tmp_file );
-
-	// store the chunk version number
-	::fwrite( (const char *)&ver, sizeof(DataChunkVersionType), 1, m_tmp_file );
-
-	// remember this m_tmp_file position so we can write the real data size later
-	c->filepos = ::ftell(m_tmp_file);
-#ifdef VERBOSE
-	DEBUG_LOG(("Writing chunk %s at %d (%x)\n", name, ::ftell(m_tmp_file), ::ftell(m_tmp_file)));
-#endif
-	// store a placeholder for the data size
-	Int dummy = 0xffff;
-	::fwrite( (const char *)&dummy, sizeof(Int), 1, m_tmp_file  );
-}
+// DataChunkOutput's constructor, destructor and openDataChunk are supplied by
+// DataChunkOutput.cpp and DataChunkOutputDestructor.cpp. Those native bodies
+// preserve the retail temporary-file protocol and BFME object layout.
 
 // ?closeDataChunk@DataChunkOutput@@QAEXXZ
 // Body in DataChunk_closeDataChunk.asm (exact 118B retail).
@@ -460,23 +390,7 @@ void DataChunkOutput::writeArrayOfBytes(char *ptr, Int len)
 	::fwrite( (const char *)ptr, 1, len , m_tmp_file ); 
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutput_writeAsciiString.cpp
-// ?writeAsciiString@DataChunkOutput@@QAEXABVAsciiString@@@Z present-unmatched
-void DataChunkOutput::writeAsciiString( const AsciiString& theString ) 
-{ 
-	UnsignedShort len = theString.getLength();
-	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
-	::fwrite( theString.str(), len , 1, m_tmp_file ); 
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutputWriteUnicodeString.cpp
-// ?writeUnicodeString@DataChunkOutput@@QAEXVUnicodeString@@@Z present-unmatched
-void DataChunkOutput::writeUnicodeString( UnicodeString theString ) 
-{ 
-	UnsignedShort len = theString.getLength();
-	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
-	::fwrite( theString.str(), len*sizeof(WideChar) , 1, m_tmp_file ); 
-}
+// String serialization uses the verified providers in DataChunkOutput.cpp.
 
 // ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z
 // Body in DataChunk_writeNameKey.asm (exact 134B retail @ 0x00104300).
