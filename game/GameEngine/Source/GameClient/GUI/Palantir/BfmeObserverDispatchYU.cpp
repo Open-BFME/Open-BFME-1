@@ -26,9 +26,12 @@ public:
 	void bfmeUseYU(int mode, void *entry);
 };
 
+// The global at 0x012F33F8 is the ControlBar singleton; only the accessor
+// spellings the method pins carry are needed here, so it stays incomplete.
+class ControlBar;
 class GameLogic;
 extern GameLogic *TheGameLogic;				// retail 0x012F0898
-extern BfmeRegistryYU *g_bfmeRegistryYU;			// retail 0x012F33F8
+extern ControlBar *TheControlBar;			// retail 0x012F33F8
 
 // ?bfmeApplyYU@@YGXH@Z
 void __stdcall bfmeApplyYU(int unused)
@@ -48,8 +51,8 @@ void __stdcall bfmeApplyYU(int unused)
 		name = &s_bfmeOtherYU;
 	}
 
-	void *entry = g_bfmeRegistryYU->bfmeFindYU(*name);
+	void *entry = reinterpret_cast<BfmeRegistryYU *>(TheControlBar)->bfmeFindYU(*name);
 
 	if (entry != 0)
-		g_bfmeRegistryYU->bfmeUseYU(0, entry);
+		reinterpret_cast<BfmeRegistryYU *>(TheControlBar)->bfmeUseYU(0, entry);
 }
