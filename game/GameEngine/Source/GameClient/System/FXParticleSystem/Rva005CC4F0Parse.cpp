@@ -37,9 +37,6 @@ typedef ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME,
 	LifeEventModule, LifeEventModuleTemplate,
 	ParticleLifeEventModule, ParticleLifeEventModuleTemplate> LifeEventTag;
 
-// Retail 0x012F6508, the category-8 factory chain head.
-extern ConcreteModuleClass<LifeEventTag> *lifeEventRegistryHead;
-
 }
 
 class INI
@@ -84,6 +81,12 @@ public:
 
 #define _STLP_USE_STATIC_LIB
 #include <vector>
+#include "fx_particle_system_category.h"
+
+namespace FXParticleSystem
+{
+extern template class CategoryModuleClass<8>;
+}
 
 struct Gen_t_005c8690_m4pod
 {
@@ -112,7 +115,7 @@ void Rva005CC4F0Parse::parse(INI *ini, void *data, void *, const void *)
 	const char *token = ini->getNextToken(0);
 	AsciiString name(token);
 	Rva005CC4F0Factory *factory =
-		reinterpret_cast<Rva005CC4F0Factory *>(FXParticleSystem::lifeEventRegistryHead);
+		(Rva005CC4F0Factory *)FXParticleSystem::CategoryModuleClass<8>::getFirst();
 
 	for (;;)
 	{
