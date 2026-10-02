@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // A base constructed out of line, this class's vptr, then a layout string set
 // from an empty literal, then two fields.
@@ -10,18 +10,23 @@
 //
 // Two unwind states count the two destructible things standing when the call
 // that can throw is made: the base and the member.
-// The owner destructor passes the same +0x254 word directly to releaseBuffer;
-// both retail string aliases resolve through that one witnessed body.
+// The owner destructor passes the same +0x254 word directly to releaseBuffer.
+// StringBase::clear's inline body preserves that call and names the canonical
+// private releaseBuffer symbol.
+#include "ascii_string.h"
+
 class RetailLayoutString
 {
 public:
 	RetailLayoutString() : m_data(0) {}
-	~RetailLayoutString() { releaseBuffer(); }
+	~RetailLayoutString()
+	{
+		reinterpret_cast<StringBase<char> *>(this)->clear();
+	}
 
 	void set(const char *text, int length);
 
 private:
-	void releaseBuffer();
 	void *m_data;
 };
 

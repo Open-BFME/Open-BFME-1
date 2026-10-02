@@ -90,12 +90,29 @@ struct Rva000F9FF0Block14
 struct Rva000FB210Element
 {
 public:
-	// Retail 0x000FA4A0: the same record skeleton as the proven 0x000FA1B0
-	// constructor (six words at +0x14, +0x2C, -1 at +0x30, +0x34, +0x38, +0x3C,
-	// -1 at +0x40, subobject constructor at +0x44), taking the call site's two
-	// arguments and reading the first one at +0x20/+0x3BC/+0x47A.
-	Rva000FB210Element(const ThingTemplate *param1, Rva000D9680Player *param2);
 	Rva000FB210Element(const Rva000FB210Element &other);
+
+	AsciiString m_name;
+	int m_f04;
+	int m_f08;
+	int m_f0c;
+	int m_f10;
+	Rva000F9FF0Block14 m_block14;
+	int m_f2c;
+	int m_f30;
+	int m_f34;
+	unsigned char m_f38;
+	int m_f3c;
+	int m_f40;
+	Gen_000F9C60 m_audioEvent;
+};
+
+// 0x000FA4A0 is defined as Rva000FA610's source constructor.  Keep the
+// FB210Element vector specialization below, while using the defining class
+// name for this same 96-byte temporary layout and constructor call.
+struct Rva000FA610
+{
+	Rva000FA610(const unsigned char *source, int unused);
 
 	AsciiString m_name;
 	int m_f04;
@@ -149,14 +166,15 @@ struct Rva000FB3F0
 
 void Rva000FB3F0::rva000FB3F0(const ThingTemplate *param1, Rva000D9680Player *param2)
 {
-	Rva000FB210Element temp(param1, param2);
+	Rva000FA610 temp(reinterpret_cast<const unsigned char *>(param1), (int)param2);
+	Rva000FB210Element &element = *(Rva000FB210Element *)&temp;
 
-	temp.m_f0c = const_cast<Rva0013FC80ThingTemplateView *>(
+	element.m_f0c = const_cast<Rva0013FC80ThingTemplateView *>(
 		reinterpret_cast<const Rva0013FC80ThingTemplateView *>(param1))->rva0013FC80GetModuleValue();
 
 	// Keep the vector as the native STLport object.  The reference alias makes
 	// MSVC rebase esi to this+4 before its capacity test; native push_back then
 	// emits the retail start/finish order and the 96-byte store.
 	std::vector<Rva000FB210Element> &vec = m_vec;
-	vec.push_back(temp);
+	vec.push_back(element);
 }

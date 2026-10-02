@@ -13,8 +13,13 @@ enum Relationship
 #define OBJECT_TU_MEMBERS Relationship getRelationship(const Object *) const;
 
 #include "../GameLogic/Object/object.h"
+#include "../GameLogic/command_source_type.h"
 
-char bfmeShroudedVNI(void *ctx);
+bool __cdecl isObjectShroudedForAction(const Object *source, const Object *target,
+	CommandSourceType commandSource);
+// Retail's static helper uses EDI/ESI for the two object arguments and one
+// stack argument for command source.  This view preserves that call shape.
+typedef bool (__cdecl *BfmeShroudedCall)(void *ctx);
 
 class BfmeObjVNI
 {
@@ -30,7 +35,8 @@ public:
 
 char __stdcall bfmeCanSeeVNI(BfmeObjVNI *a, BfmeObjVNI *b, void *ctx)
 {
-	if (a != 0 && b != 0 && (b->m_bfme344 & 1) == 0 && bfmeShroudedVNI(ctx) == 0
+	if (a != 0 && b != 0 && (b->m_bfme344 & 1) == 0 &&
+		reinterpret_cast<BfmeShroudedCall>(&isObjectShroudedForAction)(ctx) == 0
 		&& reinterpret_cast<Object *>(a)->getRelationship(reinterpret_cast<const Object *>(b)) == 0 && (b->m_bfme90 & 0x40) == 0)
 	{
 		unsigned char v = b->m_bfme1a4;

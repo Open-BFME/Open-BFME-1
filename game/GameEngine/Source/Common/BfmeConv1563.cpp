@@ -1,25 +1,24 @@
 // Open-BFME5 conversions.
 
+class PartitionCell;
+class PartitionManager
+{
+public:
+	void getCellRange(PartitionCell **first, PartitionCell **last, int x1, int x2, int y);
+};
+
 // The per-cell touch target at 0x008FC3B0 is owned by the ShroudManager pimpl
 // element class (see game/GameEngine/Source/Common/RTS/
 // ShroudManagerImpl008FBA40.cpp, ledger row 0x008FC3B0).  No header declares
 // it, so this TU forward-declares it and the call below passes the same
-// objects the retail body does; the VRB stand-ins above keep their own
-// identities (bfmeCellRangeVRB at 0x008F7D10 is a different body).
+// objects the retail body does.  The range request uses the proven
+// PartitionManager::getCellRange name at 0x008F7D10.
 class ShroudManagerImpl008FBA40;
 
 class ShroudManagerImpl008FBA40Element
 {
 public:
 	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager, int index);
-};
-
-class BfmeCellVRB;
-
-class BfmePartVRB
-{
-public:
-	void bfmeCellRangeVRB(BfmeCellVRB **first, BfmeCellVRB **last, int x, int y, int radius);
 };
 
 class BfmeCellVRB
@@ -32,7 +31,7 @@ class BfmeShroudVRB
 {
 public:
 	char bfmeUpdateVRB(int x, int y, int radius);
-	BfmePartVRB *m_bfme00;
+	PartitionManager *m_bfme00;
 	int m_bfme04;
 };
 
@@ -43,7 +42,7 @@ char BfmeShroudVRB::bfmeUpdateVRB(int x, int y, int radius)
 	unsigned int mask;
 	int index;
 
-	m_bfme00->bfmeCellRangeVRB((BfmeCellVRB **)&first, &last, x, y, radius);
+	m_bfme00->getCellRange((PartitionCell **)&first, (PartitionCell **)&last, x, y, radius);
 
 	mask = m_bfme04;
 	index = 0;

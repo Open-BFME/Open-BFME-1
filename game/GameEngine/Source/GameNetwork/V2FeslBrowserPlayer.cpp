@@ -8,11 +8,17 @@
 // pointers (the base constructor stores BfmeThingRF::bfmeGoRF results), not
 // integers; keeping them opaque also describes the BfmeThingAEA key ABI.
 
+// Retail defines this body as W3DVideoBuffer::valid.  The qualified call
+// keeps the direct call instruction while emitting that defining symbol.
+class W3DVideoBuffer
+{
+public:
+	virtual bool valid(void);
+};
+
 class Rva007E8810Message
 {
 public:
-	bool hasError();
-
 	char m_head[0x28];
 	void *m_transaction;
 };
@@ -105,7 +111,7 @@ void Rva007F7980Browser::onPlayer(Rva007E8810Message *message)
 	void *gid = player.m_gid;
 	void *pid = player.m_pid;
 
-	if (message->hasError())
+	if (reinterpret_cast<W3DVideoBuffer *>(message)->W3DVideoBuffer::valid())
 		return;
 
 	BfmeThingAEA *entry = findByLid(lid);
