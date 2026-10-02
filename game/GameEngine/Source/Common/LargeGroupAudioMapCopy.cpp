@@ -41,18 +41,7 @@ class SoundKeyPair
 {
 public:
 	SoundKeyPair(LargeGroupAudioMap *owner);
-
-	~SoundKeyPair()
-	{
-		typedef void (SoundKeyPair::*Destroy)();
-		union
-		{
-			void (*raw)(void);
-			Destroy member;
-		} target;
-		target.raw = j_0000d0b7;
-		(this->*target.member)();
-	}
+	~SoundKeyPair();
 
 private:
 	unsigned char m_data[0x3c];

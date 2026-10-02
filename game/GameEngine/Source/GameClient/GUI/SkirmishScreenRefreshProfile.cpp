@@ -49,7 +49,7 @@ private:
 	Header *m_data;
 
 	public:
-	__forceinline int compareNoCase( const StringBase<T> &other ) const throw()
+	__forceinline int bfmeCompareNoCase( const StringBase<T> &other ) const throw()
 	{
 		const int otherLength = other.m_data ? other.m_data->length : 0;
 		const T *otherText = other.m_data ? other.m_data->text : (const T *)g_bfmeEmptyUnicode;
@@ -166,7 +166,7 @@ void BfmeAptScreenSkirmish::_bfme_refreshProfile()
 		GadgetComboBoxAddEntry(
 			m_profileCombo, profile, -1 );
 
-		if( ( (const StringBase<unsigned short> *)&profile )->compareNoCase(
+		if( ( (const StringBase<unsigned short> *)&profile )->bfmeCompareNoCase(
 			*(const StringBase<unsigned short> *)&m_preferences.getUserName() ) == 0 )
 			GadgetComboBoxSetSelectedPos( m_profileCombo, index, false );
 
