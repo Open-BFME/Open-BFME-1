@@ -4,7 +4,7 @@ Retail facts were read from the BFME1 retail-1.03-unpacked lotrbfme.exe
 with pefile/Capstone (image base 0x00400000).
 
 Matched HordeContain constructor RVA 0x0023EAF0 installs secondary vtable
-VA 0x010AED58 at receiver +0xE4 (instruction VA 0x0063EB75).
+VA 0x010AED58 at receiver +0xE4 (instruction VA 0x0063EB71).
 Matched HorseHordeContain constructor RVA 0x0024D220 installs its analogous
 table VA 0x010B07E0 at the same subobject position.
 Their slot 7, at 0x010AED74 and 0x010B07FC respectively, stores ILT
