@@ -192,7 +192,7 @@ class BfmeZeroRangeType;
 extern PlayerList *ThePlayerList;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern ScriptEngine *TheScriptEngine;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 extern const Real BfmeZeroRange;
 
 extern void j_00015460(void);

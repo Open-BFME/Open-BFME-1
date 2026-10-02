@@ -65,7 +65,7 @@ struct Rva0087E650Bounds
 	Real m_maxZ;
 };
 
-extern const Real g_bfmeK1257;	// 0.5f at retail 0x0107533C
+extern const Real g_rva0107533C;	// 0.5f at retail 0x0107533C
 
 class Snapshot
 {
@@ -155,9 +155,9 @@ void GeometryInfo::calcBoundingStuff()
 	Rva0087E650Bounds bounds;
 	rva0087E650(&bounds);
 	m_boundsCenter18.zero();
-	m_boundsCenter18.x = (bounds.m_maxX + bounds.m_minX) * g_bfmeK1257;
-	m_boundsCenter18.y = (bounds.m_maxY + bounds.m_minY) * g_bfmeK1257;
-	m_boundsCenter18.z = (bounds.m_maxZ + bounds.m_minZ) * g_bfmeK1257;
+	m_boundsCenter18.x = (bounds.m_maxX + bounds.m_minX) * g_rva0107533C;
+	m_boundsCenter18.y = (bounds.m_maxY + bounds.m_minY) * g_rva0107533C;
+	m_boundsCenter18.z = (bounds.m_maxZ + bounds.m_minZ) * g_rva0107533C;
 	m_extent24 = bfmeMax(bounds.m_maxX, -bounds.m_minX);
 	m_extent28 = bfmeMax(bounds.m_maxY, -bounds.m_maxY);
 }

@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
 extern const float g_bfmeK1269A;
-extern const float g_bfmeK1269B;
+extern const float g_rva0107533C;
 
 struct BfmeVec1269
 {
@@ -43,9 +43,9 @@ void BfmeA1269::bfmeGet1269(BfmeVec1269 *out, int a, int b, int c, int d)
 
 	bfmeFill1269(&t, a, b, c, d);
 	volatile float *bfmeBase = &((BfmeG1269 *)TheWritableGlobalData)->m_bfmeab4;
-	t.m_bfme00 = (*bfmeBase + g_bfmeK1269A) * g_bfmeK1269B * t.m_bfme00;
-	t.m_bfme04 = (*bfmeBase + g_bfmeK1269A) * g_bfmeK1269B * t.m_bfme04;
-	t.m_bfme08 = (*bfmeBase + g_bfmeK1269A) * g_bfmeK1269B * t.m_bfme08;
+	t.m_bfme00 = (*bfmeBase + g_bfmeK1269A) * g_rva0107533C * t.m_bfme00;
+	t.m_bfme04 = (*bfmeBase + g_bfmeK1269A) * g_rva0107533C * t.m_bfme04;
+	t.m_bfme08 = (*bfmeBase + g_bfmeK1269A) * g_rva0107533C * t.m_bfme08;
 	out->m_bfme00 = t.m_bfme00;
 	out->m_bfme04 = t.m_bfme04;
 	out->m_bfme08 = t.m_bfme08;

@@ -83,7 +83,7 @@ struct Rva00367E30Logic
 
 extern const Real g_bfmeUint32Scale;
 extern const Real g_bfmeDefaultBU;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
@@ -202,7 +202,7 @@ UpdateSleepTime ObjectDefectionHelper::update()
 	{
 		bool lastPhase = (((int)m_defectionDetectionFlashPhase) & 1) != 0;
 		UnsignedInt timeLeft = m_defectionDetectionEnd - now;
-		m_defectionDetectionFlashPhase += g_bfmeK1253 *
+		m_defectionDetectionFlashPhase += g_rva0107533C *
 			(g_bfmeDefaultBU - (Real)timeLeft * Rva0107C6EC);
 		bool thisPhase = (((int)m_defectionDetectionFlashPhase) & 1) != 0;
 

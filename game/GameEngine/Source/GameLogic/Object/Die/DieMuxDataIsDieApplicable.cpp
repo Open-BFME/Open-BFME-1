@@ -9,7 +9,7 @@ extern "C" double __cdecl fabs(double value);
 #pragma intrinsic(atan2, fabs)
 
 extern const Real BfmeZeroRange;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 struct Coord3D
 {
@@ -113,7 +113,7 @@ Bool DieMuxData::isDieApplicable(
 	Coord3D killerDirection = obj->getPlanarDirectionTo(killer);
 	const Real killerAngle = normalizeAngle(
 		obj->getOrientation() - (Real)atan2(killerDirection.y, killerDirection.x));
-	const Real midpoint = (m_maxKillerAngle + m_minKillerAngle) * g_bfmeK1253;
+	const Real midpoint = (m_maxKillerAngle + m_minKillerAngle) * g_rva0107533C;
 	const Real halfRange = m_maxKillerAngle - midpoint;
 	const Real relativeAngle = normalizeAngle(killerAngle - midpoint);
 	if ((Real)fabs(relativeAngle) > halfRange)

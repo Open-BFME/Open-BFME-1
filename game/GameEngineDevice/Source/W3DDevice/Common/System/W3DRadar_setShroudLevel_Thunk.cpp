@@ -100,7 +100,7 @@ public:
 
 extern float g_bfmeUint32Scale;
 extern float g_bfmeDefaultBU;
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 
 struct Rva006C23B0WorldPoint
 {
@@ -158,7 +158,7 @@ void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 		unsigned north = ((BfmeThingGN *)((char *)this + 0x1494))->bfmeAskGN();
 		float northFactor = (float)north;
 		float correction = northFactor *
-			((g_bfmeDefaultBU - yRatio) * g_bfmeK1253);
+			((g_bfmeDefaultBU - yRatio) * g_rva0107533C);
 		radarMinY = (int)(radarMinY + correction);
 		radarMaxY = (int)(radarMaxY + correction);
 	}
@@ -169,7 +169,7 @@ void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 		unsigned east = ((BfmeThingEF *)((char *)this + 0x1494))->bfmeAskEF();
 		float eastFactor = (float)east;
 		float correction = eastFactor *
-			((g_bfmeDefaultBU - xRatio) * g_bfmeK1253);
+			((g_bfmeDefaultBU - xRatio) * g_rva0107533C);
 		radarMinX = (int)(radarMinX + correction);
 		radarMaxX = (int)(radarMaxX + correction);
 	}

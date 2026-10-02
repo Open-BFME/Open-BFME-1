@@ -141,7 +141,7 @@ private:
 	Player *m_player;
 };
 
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 
 extern AI *TheAI;
 class ThingFactory;
@@ -202,7 +202,7 @@ Bool AIPlayer::isPossibleToBuildTeam(TeamPrototype *proto,
 				thingCost = 0;
 			cost = (Int)(cost + thingCost *
 				((float)(unitInfo->maxUnits + unitInfo->minUnits()) *
-					g_bfmeK1253));
+					g_rva0107533C));
 		}
 		++i;
 		++unitInfo;

@@ -6,7 +6,7 @@
 typedef float Real;
 
 extern const Real g_bfmeK1239;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 struct Rva005C36C0Vec3
 {
@@ -53,7 +53,7 @@ Rva005C36C0Vec3 Rva005C36C0Owner::rva005C36C0(void *first, void *second)
 {
 	if (m_receiver != 0)
 		return m_receiver->rva005FAE40(m_value180,
-			(*(volatile Real *)&( (BfmeG1269 *)TheWritableGlobalData )->m_valueAB4 + g_bfmeK1239) * g_bfmeK1253,
+			(*(volatile Real *)&( (BfmeG1269 *)TheWritableGlobalData )->m_valueAB4 + g_bfmeK1239) * g_rva0107533C,
 			first, second);
 
 	return Rva005C36C0Vec3(0, 0, 0);

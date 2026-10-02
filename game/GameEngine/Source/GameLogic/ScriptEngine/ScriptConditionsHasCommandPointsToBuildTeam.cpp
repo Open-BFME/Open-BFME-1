@@ -128,7 +128,7 @@ extern TeamFactory *TheTeamFactory;
 // above is this TU's read of its getPlayerFromMask surface.
 extern PlayerList *ThePlayerList;
 extern ThingFactory *TheThingFactory;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 class ScriptConditions
 {
@@ -167,7 +167,7 @@ Bool ScriptConditions::evaluateHasCommandPointsToBuildTeam(Parameter *player,
 		{
 			Int total = prototype->m_members[i].m_minUnits +
 				prototype->m_members[i].m_maxUnits;
-			Int average = (Int)((Real)total * g_bfmeK1253);
+			Int average = (Int)((Real)total * g_rva0107533C);
 			required += tmpl->getCommandPoints() * average;
 		}
 	}

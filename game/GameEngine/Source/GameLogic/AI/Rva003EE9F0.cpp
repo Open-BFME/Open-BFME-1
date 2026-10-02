@@ -66,7 +66,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 extern const float g_bfmeDirectionWeight1285;
 
 class Object
@@ -122,8 +122,8 @@ check_type:
 		return false;
 
 	Coord3D position;
-	position.x = ((float)cellX + g_bfmeK1253) * g_bfmeDirectionWeight1285;
-	position.y = ((float)cellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+	position.x = ((float)cellX + g_rva0107533C) * g_bfmeDirectionWeight1285;
+	position.y = ((float)cellY + g_rva0107533C) * g_bfmeDirectionWeight1285;
 	unsigned int layerWord = toCell->m_word;
 	int layer = (layerWord >> 6) & 0x3f;
 	position.z = TheTerrainLogic->getLayerHeight(position.x, position.y,

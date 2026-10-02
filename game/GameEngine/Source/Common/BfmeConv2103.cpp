@@ -16,7 +16,7 @@ StreamWriter *formatReal(StreamWriter *w, double v);
 StreamWriter *bfmeFormatIntYS(StreamWriter *w, int v);
 
 extern float g_bfmeScaleB3;
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 
 StreamWriter *bfmeWriteYR(StreamWriter *w, Vector3 *v)
 {
@@ -41,16 +41,16 @@ StreamWriter *bfmeWriteYS(StreamWriter *w, Vector3 *v)
 {
 	w->append("R:");
 
-	StreamWriter *wr = bfmeFormatIntYS(w, (int)(*(volatile float *)&v->X * g_bfmeScaleB3 + g_bfmeK1253));
+	StreamWriter *wr = bfmeFormatIntYS(w, (int)(*(volatile float *)&v->X * g_bfmeScaleB3 + g_rva0107533C));
 
 	wr->separate(0x20);
 	w->append("G:");
 
-	StreamWriter *wg = bfmeFormatIntYS(w, (int)(*(volatile float *)&v->Y * g_bfmeScaleB3 + g_bfmeK1253));
+	StreamWriter *wg = bfmeFormatIntYS(w, (int)(*(volatile float *)&v->Y * g_bfmeScaleB3 + g_rva0107533C));
 
 	wg->separate(0x20);
 	w->append("B:");
-	bfmeFormatIntYS(w, (int)(*(volatile float *)&v->Z * g_bfmeScaleB3 + g_bfmeK1253));
+	bfmeFormatIntYS(w, (int)(*(volatile float *)&v->Z * g_bfmeScaleB3 + g_rva0107533C));
 
 	return w;
 }

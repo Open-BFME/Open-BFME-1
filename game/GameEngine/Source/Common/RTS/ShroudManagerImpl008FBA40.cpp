@@ -25,7 +25,7 @@ enum ObjectShroudStatus
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 

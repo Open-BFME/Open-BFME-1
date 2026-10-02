@@ -105,7 +105,7 @@ private:
 
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 extern const Real g_bfmeDirectionWeight1285;
 
 Int Pathfinder::iterateCellsAlongLine(const ICoord2D &startCell,
@@ -163,9 +163,9 @@ Int Pathfinder::iterateCellsAlongLine(const ICoord2D &startCell,
 		if (cellLayer < 0x11 || cellLayer > 0x40)
 		{
 			PathfindLayerEnum hitLayer = (PathfindLayerEnum)currentCell->getLayer();
-			Real wx = ((Real)x + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+			Real wx = ((Real)x + g_rva0107533C) * g_bfmeDirectionWeight1285;
 			resultInfo->x = wx;
-			Real wy = ((Real)y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+			Real wy = ((Real)y + g_rva0107533C) * g_bfmeDirectionWeight1285;
 			resultInfo->y = wy;
 			resultInfo->z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightABE( wx, wy, hitLayer, 0, true );
 			return 1;

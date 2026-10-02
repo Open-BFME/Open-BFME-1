@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern const float g_bfmeK1260;
+extern const float g_rva0107533C;
 
 class BfmeV1260
 {
@@ -40,5 +40,5 @@ void BfmeA1260::bfmeSet1260(float a, float b)
 {
 	if (*m_bfme150)
 		(*m_bfme150)->bfmeApply1260(a, b);
-	m_bfmeac = (a + b) * g_bfmeK1260;
+	m_bfmeac = (a + b) * g_rva0107533C;
 }

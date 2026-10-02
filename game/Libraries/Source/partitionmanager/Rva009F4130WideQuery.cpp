@@ -2,7 +2,7 @@
 // The caller supplies a result, four-way node storage, bounds, and an optional distance path.
 // The owner name remains opaque because no independent vtable or named caller proves it.
 
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 
 struct Rva009F4130Point
 {
@@ -44,8 +44,8 @@ struct Rva009F4130Range
 	float m_y1;
     void center(Rva009F4130Point *out) const
     {
-        out->x = (m_x0 + m_x1) * g_bfmeK1253;
-        out->y = (m_y0 + m_y1) * g_bfmeK1253;
+        out->x = (m_x0 + m_x1) * g_rva0107533C;
+        out->y = (m_y0 + m_y1) * g_rva0107533C;
     }
 };
 

@@ -10,7 +10,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 extern Real g_bfmeDefaultBU;
 extern Real g_bfmeScaleB3;
 
@@ -168,24 +168,24 @@ Bool Rva007D3580::postRender(FilterModes mode, Coord2D &scrollDelta,
 	width = theTacticalView()->getWidth();
 	height = theTacticalView()->getHeight();
 
-	v[0].p = D3DXVECTOR4(xpos + width - g_bfmeK1253,
-		ypos + height - g_bfmeK1253, 0.0f, 1.0f);
+	v[0].p = D3DXVECTOR4(xpos + width - g_rva0107533C,
+		ypos + height - g_rva0107533C, 0.0f, 1.0f);
 	v[0].u = (g_bfmeDefaultBU / displaySize->x) *
 		(Real)(xpos + width);
 	v[0].v = (g_bfmeDefaultBU / displaySize->y) *
 		(Real)(ypos + height);
-	v[1].p = D3DXVECTOR4(xpos + width - g_bfmeK1253,
-		ypos - g_bfmeK1253, 0.0f, 1.0f);
+	v[1].p = D3DXVECTOR4(xpos + width - g_rva0107533C,
+		ypos - g_rva0107533C, 0.0f, 1.0f);
 	v[1].u = (g_bfmeDefaultBU / displaySize->x) *
 		(Real)(xpos + width);
 	v[1].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
-	v[2].p = D3DXVECTOR4(xpos - g_bfmeK1253,
-		ypos + height - g_bfmeK1253, 0.0f, 1.0f);
+	v[2].p = D3DXVECTOR4(xpos - g_rva0107533C,
+		ypos + height - g_rva0107533C, 0.0f, 1.0f);
 	v[2].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
 	v[2].v = (g_bfmeDefaultBU / displaySize->y) *
 		(Real)(ypos + height);
-	v[3].p = D3DXVECTOR4(xpos - g_bfmeK1253,
-		ypos - g_bfmeK1253, 0.0f, 1.0f);
+	v[3].p = D3DXVECTOR4(xpos - g_rva0107533C,
+		ypos - g_rva0107533C, 0.0f, 1.0f);
 	v[3].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
 	v[3].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
 	unsigned int currentFade =

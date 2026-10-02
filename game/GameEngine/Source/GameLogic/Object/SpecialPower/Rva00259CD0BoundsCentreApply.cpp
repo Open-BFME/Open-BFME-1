@@ -24,7 +24,7 @@ struct BfmeModeAZC
 };
 
 extern BfmeModeAZC *g_bfmeModeAZC;
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 class BfmeThingCOF
 {
@@ -109,8 +109,8 @@ void Rva00259CD0Dispatch::apply(Coord3D_259CD0 *subject)
 		Region3D_259CD0 extent;
 		((TerrainLogic_259CD0 *)TheTerrainLogic)->getExtentIncludingBorder(&extent);
 		Coord3D_259CD0 point;
-		point.x = (extent.lo.x + extent.hi.x) * g_bfmeK1253;
-		point.y = (extent.lo.y + extent.hi.y) * g_bfmeK1253;
+		point.x = (extent.lo.x + extent.hi.x) * g_rva0107533C;
+		point.y = (extent.lo.y + extent.hi.y) * g_rva0107533C;
 		point.z = subject->z;
 		BfmeThingCOF *containedBy = object->containedBy;
 		if (containedBy != 0 && !containedBy->bfmeAskCOF())

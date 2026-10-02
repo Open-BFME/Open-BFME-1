@@ -5,7 +5,7 @@
 // cell position. The cell walker at 0x003DE480 calls this body through ILT
 // 0x0001EAD3.
 
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 extern const float g_bfmeDirectionWeight1285;
 
 struct Rva003FD060TerrainLogic
@@ -75,11 +75,11 @@ int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentC
 	{
 		int currentCellLayer = currentCell->getLayer();
 
-		float terrainX = ((float)currentCellX + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float terrainX = ((float)currentCellX + g_rva0107533C) * g_bfmeDirectionWeight1285;
 
 		m_lastClearCellX = terrainX;
 
-		float terrainY = ((float)currentCellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float terrainY = ((float)currentCellY + g_rva0107533C) * g_bfmeDirectionWeight1285;
 
 		m_lastClearCellY = terrainY;
 		m_lastClearCellHeight = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightABE(terrainX, terrainY, currentCellLayer, 0, 1);

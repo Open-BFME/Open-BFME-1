@@ -27,7 +27,7 @@ typedef int Int;
 typedef float Real;
 
 extern "C" __declspec(dllimport) double floor(double value);
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 
 class GameFont
 {
@@ -95,7 +95,7 @@ private:
 GameFont *FontLibraryBFMERetail::rva00476C50(AsciiString *name, Real size,
 		unsigned char style, Int weight)
 {
-	size = (Real)floor((Real)weight * size + g_bfmeK1253)
+	size = (Real)floor((Real)weight * size + g_rva0107533C)
 		/ (Real)weight;
 	AsciiString fontName(*name);
 

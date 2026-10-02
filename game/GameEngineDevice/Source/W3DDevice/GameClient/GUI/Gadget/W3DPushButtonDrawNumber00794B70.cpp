@@ -113,7 +113,7 @@ struct PushButtonData
 	DisplayString *displayString;
 };
 
-extern const Real g_bfmeK1253;
+extern const Real g_rva0107533C;
 extern void getButtonTextColors( GameWindow *window, WinInstanceData *instData,
 	Color *textColor, Color *dropColor );
 
@@ -148,7 +148,7 @@ void DrawNumber00794B70( GameWindow *window,
 
 		text->getSize( &width, &height );
 
-		register Int textX = size.x * g_bfmeK1253 - width * g_bfmeK1253 + origin.x;
+		register Int textX = size.x * g_rva0107533C - width * g_rva0107533C + origin.x;
 		register Int textY = origin.y + size.y - height;
 		text->setTextColor( textColor, dropColor );
 		text->draw( textX, textY, 1, 1 );

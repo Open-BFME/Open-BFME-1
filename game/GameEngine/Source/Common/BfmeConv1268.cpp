@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern const float g_bfmeK1268;
+extern const float g_rva0107533C;
 
 struct BfmeVec1268
 {
@@ -39,7 +39,7 @@ public:
 
 void BfmeA1268::bfmeCell1268(unsigned int i, BfmeVec1268 *out)
 {
-	out->m_bfme00 = (float)(i % m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_bfmeK1268;
-	out->m_bfme04 = (float)(i / m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_bfmeK1268;
-	out->m_bfme08 = ((BfmeR1268 *)TheTerrainLogic)->bfmeHeight1268(out->m_bfme00, out->m_bfme04, 0) + g_bfmeK1268;
+	out->m_bfme00 = (float)(i % m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_rva0107533C;
+	out->m_bfme04 = (float)(i / m_bfme00) * *(volatile float *)&m_bfme0c + *(volatile float *)&m_bfme0c * g_rva0107533C;
+	out->m_bfme08 = ((BfmeR1268 *)TheTerrainLogic)->bfmeHeight1268(out->m_bfme00, out->m_bfme04, 0) + g_rva0107533C;
 }
