@@ -80,7 +80,11 @@ void BfmeThing928C::bfmeGo928C(BfmeArg928C *a)
 	s->bfmeTail928C(p);
 }
 
-void bfmeCall928D(void *p);
+class Rva00894D80Accessor
+{
+public:
+	static unsigned int increment(unsigned int *value);
+};
 
 class BfmeThing928D
 {
@@ -94,7 +98,7 @@ BfmeThing928D *BfmeThing928D::bfmeGo928D(void **src)
 	void *p = *src;
 	m_bfmeP = p;
 	if (p)
-		bfmeCall928D(p);
+		Rva00894D80Accessor::increment((unsigned int *)p);
 	return this;
 }
 
