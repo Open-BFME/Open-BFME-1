@@ -25,7 +25,8 @@ public:
     virtual unsigned getFrame();
 };
 
-extern Rva006C1280Client *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 
 struct Rva006C1280Event
 {
@@ -60,7 +61,7 @@ void Rva006C1280::method(int x, int y, int w, int h, int i, int unused)
 {
     Rva006C1280Event *event = &events[i];
     int type = event->type;
-    unsigned frame = TheGameClient->getFrame();
+    unsigned frame = reinterpret_cast<Rva006C1280Client *>(TheGameClient)->getFrame();
     int size = (int)((1.0f - (float)(frame - event->frame) / 45.0f) *
         (w * (2.0f / 3.0f)));
     if (size < 16)
