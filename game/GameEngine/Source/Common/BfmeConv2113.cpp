@@ -27,10 +27,11 @@ public:
 // the "LivingWorldLogic" literal the class vtable's name() returns at
 // 0x010EDC08). Its definition moved to the class's own TU,
 // game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp, which
-// owns the data row for that address; this file only reads it, through the
-// pin ?Glo012F1028@@3PAVGlo012F1028Type@@A @ 0x012F1028 that the other 34
-// referencing TUs also use. Nothing here is respelled.
-extern Glo012F1028Type *Glo012F1028;
+// owns the data row for that address; this file only reads it.
+// Glo012F1028Type above is this TU's own view of that address, so both reads
+// cast at the use.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeRewindZU
 {
@@ -55,11 +56,11 @@ void BfmeRewindZU::bfmeRewindZU(void)
 	if (index > limit)
 	{
 		m_bfmeIndexZU = limit;
-		Glo012F1028->m_bfmeSub->bfmeNotify();
+		((Glo012F1028Type *)TheLivingWorldLogic)->m_bfmeSub->bfmeNotify();
 	}
 	else
 	{
 		m_bfmeItemsZU[index].bfmeEnter();
-		Glo012F1028->m_bfmeSub->bfmeNotify();
+		((Glo012F1028Type *)TheLivingWorldLogic)->m_bfmeSub->bfmeNotify();
 	}
 }

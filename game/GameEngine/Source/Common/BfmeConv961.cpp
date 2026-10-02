@@ -19,7 +19,11 @@ struct BfmeFlag961
 	char m_bfmeFlag;
 };
 
-extern BfmeResetA961 *g_bfmeResetA961;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// BfmeResetA961 above is this TU's own view of that address, so the call casts.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern BfmeGate961 *g_bfmeGate961;
 extern BfmeFlag961 *g_bfmeFlag961;
 
@@ -32,7 +36,7 @@ public:
 
 void BfmeHost961::bfmeGo961()
 {
-	g_bfmeResetA961->bfmeReset961();
+	((BfmeResetA961 *)TheLivingWorldLogic)->bfmeReset961();
 
 	if (g_bfmeGate961->bfmeCheck961() && !g_bfmeFlag961->m_bfmeFlag) {
 		g_bfmeGate961->bfmeFinish961();

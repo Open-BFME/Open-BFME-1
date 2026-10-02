@@ -26,9 +26,15 @@ public:
 	int getBountyBonusPercent();
 };
 
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// CampaignObject above is this TU's own view of that address, so the read
+// casts at the use.
+class LivingWorldLogic;
+
 extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
-extern CampaignObject *TheLivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 inline long bfmeRoundFloat(float value)
 {
@@ -54,7 +60,7 @@ int Rva000C97C0Player::adjustBountyForLivingWorld(int bounty)
 {
 	if (TheGameLogic->isLivingWorld() && this == ThePlayerList->getLocalPlayer())
 	{
-		float factor = TheLivingWorldLogic->getBountyBonusPercent() * 0.01f + 1.0f;
+		float factor = ((CampaignObject *)TheLivingWorldLogic)->getBountyBonusPercent() * 0.01f + 1.0f;
 		return bfmeRoundFloat(static_cast<float>(ceil(static_cast<double>(bounty * factor))));
 	}
 

@@ -18,8 +18,10 @@ public:
 
 extern BfmeGameCW *g_bfmeGameCW;
 
-class CampaignManager;
-extern CampaignManager *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeOneAQA
 {

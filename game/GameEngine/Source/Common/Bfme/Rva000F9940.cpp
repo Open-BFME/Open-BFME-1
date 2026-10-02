@@ -45,7 +45,12 @@ private:
 	BfmeRecordVector m_records;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// Glo012F1028Type above is this TU's own view of that address, so the two
+// reads cast at the use.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeVecVLH
 {
@@ -60,10 +65,10 @@ private:
 // ?rva000F9940@BfmeVecVLH@@QAEXXZ
 void BfmeVecVLH::rva000F9940()
 {
-	Glo012F1028->rva003C3AC0();
+	((Glo012F1028Type *)TheLivingWorldLogic)->rva003C3AC0();
 
 	for (unsigned int index = 0; index < m_records.size(); ++index)
 	{
-		Glo012F1028->rva003C3B50(&m_records[index]);
+		((Glo012F1028Type *)TheLivingWorldLogic)->rva003C3B50(&m_records[index]);
 	}
 }

@@ -15,16 +15,22 @@ public:
 	unsigned char m_flag2C;
 };
 
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// CampaignObject above is this TU's own view of that address, so the reads cast.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 // ?Rva00588E00Value@@YAMXZ
 float Rva00588E00Value()
 {
 	if (TheLivingWorldLogic)
 	{
-		if (TheLivingWorldLogic->m_flag2C)
+		CampaignObject *campaign = (CampaignObject *)TheLivingWorldLogic;
+
+		if (campaign->m_flag2C)
 		{
-			return TheLivingWorldLogic->getBountyBonusPercent() * g_01076C24 + g_bfmeDefaultBU;
+			return campaign->getBountyBonusPercent() * g_01076C24 + g_bfmeDefaultBU;
 		}
 	}
 	return g_bfmeDefaultBU;

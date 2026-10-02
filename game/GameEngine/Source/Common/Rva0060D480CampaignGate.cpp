@@ -18,8 +18,10 @@ public:
 
 extern Glo012F7048CampaignGateMode *Glo012F7048;
 
-class CampaignManager;
-extern CampaignManager *TheBfmeLivingWorldCampaignState;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeCampaignManagerFlag78Slice
 {
@@ -42,7 +44,7 @@ Bool Rva0060D480CampaignGate::isOpen( void ) const
 {
 	if ( Glo012F7048->m_mode == 1
 		&& !m_blocked
-		&& !((BfmeCampaignManagerFlag78Slice *)TheBfmeLivingWorldCampaignState)->m_flag78 )
+		&& !((BfmeCampaignManagerFlag78Slice *)TheLivingWorldLogic)->m_flag78 )
 		return true;
 	return false;
 }

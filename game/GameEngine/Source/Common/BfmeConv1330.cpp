@@ -51,7 +51,11 @@ public:
 	BfmeSubUDD *m_bfmeSub;
 };
 
-extern BfmeMgrUDD *g_bfmeMgrUDD;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// BfmeMgrUDD above is this TU's own view of that address, so the read casts.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern char g_bfmeDefaultUDD[];
 
 class BfmeThingUDD
@@ -65,7 +69,7 @@ public:
 void *BfmeThingUDD::bfmeGoUDD()
 {
 	int k = m_bfmeKey;
-	BfmeSubUDD *s = g_bfmeMgrUDD->m_bfmeSub;
+	BfmeSubUDD *s = ((BfmeMgrUDD *)TheLivingWorldLogic)->m_bfmeSub;
 	if (s)
 		return s->bfmeFindUDD(k);
 	return g_bfmeDefaultUDD;
