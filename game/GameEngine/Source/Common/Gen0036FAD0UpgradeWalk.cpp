@@ -14,12 +14,15 @@ class UpgradeTemplate
 {
 };
 
+class ProjectileUpdateInterface;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	bool hasUpgrade(const UpgradeTemplate *upgrade) const;
 	bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
+	ProjectileUpdateInterface *getProjectileUpdateInterface() const;
 };
 
 typedef void (Object::*MarkUpgradeCompletedCall)(const UpgradeTemplate *);
@@ -34,8 +37,6 @@ public:
 	virtual void unused4();
 	virtual void unused5();
 	virtual Object *getObject();
-
-	BfmeY982 *bfmeConv982B();
 };
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
@@ -74,7 +75,7 @@ void __stdcall gen0036FAD0UpgradeWalk(Gen0036FAD0Range *range,
 						markUpgradeCompleted.asVoid = (void *)j_00007086;
 						(object->*markUpgradeCompleted.asMember)(upgrade);
 						BfmeY982 *completion =
-							((BfmeY982 *)object)->bfmeConv982B();
+							(BfmeY982 *)object->getProjectileUpdateInterface();
 						if (completion != 0 && completion->isComplete()) {
 							Object *next = completion->getObject();
 							if (next != 0 && !next->hasUpgrade(upgrade) &&
