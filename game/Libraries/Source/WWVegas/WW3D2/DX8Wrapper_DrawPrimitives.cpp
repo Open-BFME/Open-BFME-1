@@ -317,7 +317,7 @@ public:
 	static bool Is_Snapshot_Activated() { return SnapshotActivated; }
 };
 
-extern unsigned char g_Va0133F42C;
+extern unsigned char g_00710e30;
 extern float g_bfmeScaleBK;
 extern unsigned number_of_DX8_calls;
 
@@ -620,7 +620,7 @@ void DX8Wrapper::Draw(
 	// When this material filter is enabled, skip a missing material or one
 	// whose three emissive components are all below the global threshold.
 	// Preserve the short-circuit comparisons, including their NaN behavior.
-	if (g_Va0133F42C) {
+	if (g_00710e30) {
 		VertexMaterialClass *material = render_state.material;
 		if (!material) return;
 		Vector3 emissive;
