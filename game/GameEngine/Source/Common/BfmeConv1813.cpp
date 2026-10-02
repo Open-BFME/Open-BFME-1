@@ -1,4 +1,6 @@
-extern float g_bfmeDefaultBU;
+// Shared float at retail VA 0x01075334 (RVA 0x00C75334): 00 00 80 3F.
+// Keep the existing caller symbol; no original EA name is proven.
+float g_bfmeDefaultBU = 1.0f;
 extern const float BfmeZeroRange;
 
 class BfmeThingBU
