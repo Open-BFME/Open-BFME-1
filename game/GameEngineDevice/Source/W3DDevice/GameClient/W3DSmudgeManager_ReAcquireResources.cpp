@@ -63,7 +63,8 @@ public:
 		USAGE_DEFAULT = 0
 	};
 
-	DX8IndexBufferClass(unsigned short index_count, UsageType usage = USAGE_DEFAULT);
+	// retail calls the unsigned-count ctor at 0x0091D0A0
+	DX8IndexBufferClass(unsigned index_count, UsageType usage = USAGE_DEFAULT);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Smudge.h
@@ -116,7 +117,7 @@ void W3DSmudgeManager::ReAcquireResources(void)
 	m_backBufferWidth = (int)surface_desc.Width;
 	m_backBufferHeight = (int)surface_desc.Height;
 
-	m_indexBuffer = new DX8IndexBufferClass((unsigned short)(SMUDGE_DRAW_SIZE * 4 * 3));
+	m_indexBuffer = new DX8IndexBufferClass((unsigned)(SMUDGE_DRAW_SIZE * 4 * 3));
 
 	{
 		IndexBufferClass::WriteLockClass lockIdxBuffer((IndexBufferClass *)m_indexBuffer);

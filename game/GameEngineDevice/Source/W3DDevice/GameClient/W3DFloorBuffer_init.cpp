@@ -22,7 +22,8 @@ class DX8IndexBufferClass
 public:
 	 enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
 
-	DX8IndexBufferClass(unsigned short count, UsageType usage);
+	// retail calls the unsigned-count ctor at 0x0091D0A0
+	DX8IndexBufferClass(unsigned count, UsageType usage);
 
 private:
 	char m_body[0x18];

@@ -2,6 +2,11 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// retail calls the unsigned-count DX8IndexBufferClass ctor at 0x0091D0A0
+// (??0DX8IndexBufferClass@@QAE@IW4UsageType@0@@Z) from here, not the
+// unsigned short overload.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../WW3D2/dx8indexbuffer.h"
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)

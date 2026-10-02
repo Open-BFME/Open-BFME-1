@@ -2,6 +2,11 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// retail allocates index buffers through the unsigned-count ctor at 0x0091D0A0
+// (??0DX8IndexBufferClass@@QAE@IW4UsageType@0@@Z), so take BFME's dx8indexbuffer.h
+// ahead of the pristine copy W3DBufferManager.h would otherwise pull in.
+#define BFME_DYNAMIC_IB_UINT_CTOR_ABI
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h"
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -287,17 +292,6 @@ private:
 	unsigned char m_storage[0x20];
 };
 
-class BfmeDX8IndexBuffer
-{
-public:
-	enum UsageType { USAGE_DEFAULT = 0 };
-
-	BfmeDX8IndexBuffer(unsigned count, UsageType usage);
-
-private:
-	unsigned char m_storage[0x18];
-};
-
 struct BFMEReAcquireBufferManagerView
 {
 	unsigned char m_beforeVertexBuffers[0x9000];
@@ -332,8 +326,8 @@ Bool W3DBufferManager::ReAcquireResources(void)
 	while (ib)
 	{
 		ib->m_DX8IndexBuffer = (DX8IndexBufferClass *)
-			::new BfmeDX8IndexBuffer(
-				(unsigned)ib->m_size, BfmeDX8IndexBuffer::USAGE_DEFAULT);
+			::new DX8IndexBufferClass(
+				(unsigned)ib->m_size, DX8IndexBufferClass::USAGE_DEFAULT);
 		if (!ib->m_DX8IndexBuffer)
 			return FALSE;
 		ib = ib->m_nextIB;
@@ -563,7 +557,7 @@ W3DBufferManager::W3DIndexBufferSlot * W3DBufferManager::allocateSlotStorage(Int
 
 		Int ibSize=__max(DEFAULT_INDEX_BUFFER_SIZE,size);
 
-		pIB->m_DX8IndexBuffer=NEW_REF(DX8IndexBufferClass,(ibSize,DX8IndexBufferClass::USAGE_DEFAULT));
+		pIB->m_DX8IndexBuffer=NEW_REF(DX8IndexBufferClass,((unsigned)ibSize,DX8IndexBufferClass::USAGE_DEFAULT));
 		pIB->m_startFreeIndex=size;
 		pIB->m_size=ibSize;
 		ibSlot=&m_W3DIndexBufferEmptySlots[m_numEmptyIndexSlotsAllocated];
