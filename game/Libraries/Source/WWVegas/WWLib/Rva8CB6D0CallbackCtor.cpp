@@ -1,12 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Same family as game/GameEngine/Source/Common/Rva008B2EF0Constructors.cpp: a
-// __thiscall constructor whose first act is Rva899F00Base(id, kind) at 0x00899F00.
+// __thiscall constructor whose first act is the Rva00899F00Base ctor at 0x00899F00.
 //
 // The base call here can be followed by a THROWING operation
 // (retail carries a full SEH frame, scope table @ 0x0105A0? [DIR32, resolved by the
 // patcher] and an explicit try-state store of 0 right before the risky call), so the
-// generated code must protect the just-completed Rva899F00Base subobject: if the
+// generated code must protect the just-completed Rva00899F00Base subobject: if the
 // call throws, its destructor must still run. That only happens automatically when
 // the compiler sees code in the constructor BODY (not the init list) that can throw
 // while a base subobject is already alive.
@@ -15,7 +15,7 @@
 //
 //   [SEH prologue, scope table, push regs]
 //   push 8 ; mov esi,ecx ; push 0x2A ; mov [esp+0x10],esi
-//   call 0x00899F00                   ; Rva899F00Base(0x2A, 8)
+//   call 0x00899F00                   ; Rva00899F00Base(0x2A, 8)
 //   mov edi,[esp+0x1C]                ; edi = ctor's own stack parameter (a pointer)
 //   mov dword ptr [esi],0x01137180    ; derived vtable (this class overrides ~dtor)
 //   mov eax,[edi] ; mov ecx,edi ; mov [esp+0x14],0 (EH try-state -> 0)
@@ -36,15 +36,15 @@
 
 struct _EXCEPTION_POINTERS;
 
-// Unknown identity; named for its address.  ctor(id, kind) at 0x00899F00,
+// Unknown identity; named for its address.  Rva00899F00Base ctor at 0x00899F00,
 // subobject size 0x20 (vptr + 0x1C).  Local ABI-slice replica, same as the
 // ThreadClass sibling -- ODR is not violated across translation units for an
 // address-derived placeholder that no header ever declares.
-class Rva899F00Base
+class Rva00899F00Base
 {
 public:
-	Rva899F00Base(const char *id, int kind);
-	virtual ~Rva899F00Base();
+	Rva00899F00Base(unsigned int argument0, int argument1);
+	virtual ~Rva00899F00Base();
 
 private:
 	char	_bfme_base_slice[0x1c];
@@ -58,9 +58,9 @@ public:
 	virtual void Rva8CB6D0Invoke();
 };
 
-// Unknown identity; named for its address.  Derived from Rva899F00Base with
+// Unknown identity; named for its address.  Derived from Rva00899F00Base with
 // id=0x2A, kind=8, and one extra pointer field at this+0x20.
-class Rva8CB6D0Derived : public Rva899F00Base
+class Rva8CB6D0Derived : public Rva00899F00Base
 {
 public:
 	Rva8CB6D0Derived(Rva8CB6D0Callback *callback);
@@ -70,7 +70,7 @@ private:
 };
 
 Rva8CB6D0Derived::Rva8CB6D0Derived(Rva8CB6D0Callback *callback) :
-	Rva899F00Base(reinterpret_cast<const char *>(0x2a), 8)
+	Rva00899F00Base(0x2a, 8)
 {
 	callback->Rva8CB6D0Invoke();
 	_callback = callback;

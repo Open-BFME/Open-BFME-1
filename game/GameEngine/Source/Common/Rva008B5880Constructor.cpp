@@ -24,13 +24,13 @@ struct Rva008B5880Arg
 	Rva008B5880Mid *m_50;
 };
 
-class Rva899F00Base
+class Rva00899F00Base
 {
 public:
-	Rva899F00Base(const char *id, int kind);
+	Rva00899F00Base(unsigned int argument0, int argument1);
 };
 
-class Rva008B5880 : public Rva899F00Base
+class Rva008B5880 : public Rva00899F00Base
 {
 public:
 	Rva008B5880(Rva008B5880Arg *arg);
@@ -43,7 +43,7 @@ public:
 };
 
 Rva008B5880::Rva008B5880(Rva008B5880Arg *arg) :
-	Rva899F00Base(reinterpret_cast<const char *>(0x15), 8)
+	Rva00899F00Base(0x15, 8)
 {
 	Rva008B5880Arg *p = arg;
 	m_24 = reinterpret_cast<void *>(0);

@@ -25,17 +25,17 @@ private:
 	int m_f1C;
 };
 
-class Rva899F00Base
+class Rva00899F00Base
 {
 public:
-	Rva899F00Base(const char *id, int kind);
-	~Rva899F00Base();
+	Rva00899F00Base(unsigned int argument0, int argument1);
+	~Rva00899F00Base();
 
 private:
 	char m_pad[0x20];
 };
 
-class Rva008B0170 : public Rva899F00Base
+class Rva008B0170 : public Rva00899F00Base
 {
 public:
 	Rva008B0170(const Rva008AD2C0 &src);
@@ -45,7 +45,7 @@ private:
 };
 
 Rva008B0170::Rva008B0170(const Rva008AD2C0 &src) :
-	Rva899F00Base(reinterpret_cast<const char *>(0x24), 8),
+	Rva00899F00Base(0x24, 8),
 	m_str(src)
 {
 	*reinterpret_cast<void **>(this) = bfmeVft008B0170;

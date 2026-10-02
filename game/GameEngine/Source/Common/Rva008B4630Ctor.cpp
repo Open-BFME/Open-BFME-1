@@ -3,11 +3,11 @@
 extern "C" const void *bfmeVftRva008B46D0HeaderedDeleting[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva008B46D0HeaderedDeleting=??_7Rva008B46D0HeaderedDeleting@@6B@")
 
-class Rva899F00Base
+class Rva00899F00Base
 {
 public:
-	Rva899F00Base(const char *id, int kind);
-	virtual ~Rva899F00Base();
+	Rva00899F00Base(unsigned int argument0, int argument1);
+	virtual ~Rva00899F00Base();
 
 private:
 	char m_base[0x1c];
@@ -21,7 +21,7 @@ public:
 	unsigned int m_flags;
 };
 
-class Rva008B4630 : public Rva899F00Base
+class Rva008B4630 : public Rva00899F00Base
 {
 public:
 	Rva008B4630(Rva008B4630Callback *callback);
@@ -31,7 +31,7 @@ private:
 };
 
 Rva008B4630::Rva008B4630(Rva008B4630Callback *callback) :
-	Rva899F00Base(reinterpret_cast<const char *>(0x1a), 8)
+	Rva00899F00Base(0x1a, 8)
 {
 	*reinterpret_cast<void **>(this) = (void *)bfmeVftRva008B46D0HeaderedDeleting;
 
