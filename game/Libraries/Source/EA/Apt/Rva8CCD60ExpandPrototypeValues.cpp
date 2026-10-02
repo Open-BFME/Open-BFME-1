@@ -12,7 +12,8 @@ struct Rva8CCD60StringBlock
 	char m_text[1];
 };
 
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct BfmeIterator1285;
 
@@ -154,7 +155,8 @@ void Rva8CCD60State::expandPrototypeValues(void *first, void *second)
 				Rva8CCD60StringBlock *oldString = created->m_string;
 				--oldString->m_refs;
 				if (oldString->m_refs == 0)
-					Rva01337A30ReleaseTable[1](oldString);
+					reinterpret_cast<void (__cdecl **)(void *)>(
+						g_rva01337A30AllocPair)[1](oldString);
 				created->m_string = iterator->m_name;
 				pushValue(created);
 			}
