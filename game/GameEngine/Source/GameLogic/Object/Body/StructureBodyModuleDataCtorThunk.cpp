@@ -65,6 +65,10 @@ class StructureBodyModuleData : public ActiveBodyModuleData
 public:
 	StructureBodyModuleData();
 
+	// Retail wrapper 0x129460 calls complete-destructor ILT 0xA781,
+	// reaching the out-of-line tail jump at 0x129490.
+	virtual ~StructureBodyModuleData();
+
 private:
 	const FXList *m_fxList;
 };
