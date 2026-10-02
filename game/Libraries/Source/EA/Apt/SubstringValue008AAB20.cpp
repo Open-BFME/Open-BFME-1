@@ -61,7 +61,10 @@ struct Rva008AAB20Registry {
 };
 extern Rva008AAB20Registry *g_registry01337810;
 extern Rva008A9B00 *g_free01338478;
-extern Rva008A9B00 *g_fallback013379BC;
+// 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
+// Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
+// so the reinterpret_cast below compiles to the same mov.
+extern AptValue *g_bfmeFallbackDB;
 
 __forceinline Rva008A9B00 *acquire008AAB20() {
     Rva008A9B00 *result;
@@ -83,7 +86,7 @@ Rva008A9B00 *substringValue008AAB20(Rva8CD130Value *value, int count) {
     Rva8CD130String text;
     int start = -1;
     int length = 9999999;
-    if (!count) return g_fallback013379BC;
+    if (!count) return (Rva008A9B00 *)g_bfmeFallbackDB;
     if (count >= 1) start = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1]->toInteger();
     if (count >= 2) length = g_bfmeArr1233[Rva008AE770TheStack.field00 - 2]->toInteger();
     value->getName(&text);

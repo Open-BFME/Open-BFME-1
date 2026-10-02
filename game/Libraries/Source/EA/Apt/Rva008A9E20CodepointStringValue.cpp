@@ -65,7 +65,10 @@ struct Rva008A9E20Registry {
 };
 extern Rva008A9E20Registry *g_registry01337810;
 extern Rva008A9B00 *g_free01338478;
-extern Rva008A9B00 *g_fallback013379BC;
+// 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
+// Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
+// so the reinterpret_cast below compiles to the same mov.
+extern AptValue *g_bfmeFallbackDB;
 
 Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
     int index = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
@@ -74,10 +77,10 @@ Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
     if (type != 1) source = value->m_indirect;
     const BfmeUtf8Cursor0089F810 *cursor = (const BfmeUtf8Cursor0089F810 *)&source->m_string;
     if (index < 0) {
-        return g_fallback013379BC;
+        return (Rva008A9B00 *)g_bfmeFallbackDB;
     } else {
     const unsigned char *p = cursor->after(index);
-    if (!p) return g_fallback013379BC;
+    if (!p) return (Rva008A9B00 *)g_bfmeFallbackDB;
     {
     EAStringC result;
     result.rva0089FDA0((const char *)p, 1);

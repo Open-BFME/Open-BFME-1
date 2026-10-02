@@ -48,7 +48,8 @@ extern Rva008AED50Holder *g_bfmeHolderBU;    // retail 0x013377D8
 extern AptValue **g_bfmeArgBase;              // retail 0x01338750
 struct Rva008AE770Stack { int m_count; };     // retail 0x01338748
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeFallbackDB;                 // retail 0x013379BC
+// retail 0x013379BC: defined as AptValue* in Bfme5AppendFallback8CAFF0.cpp.
+extern AptValue *g_bfmeFallbackDB;
 
 void *Rva008AED50Ctor(Rva008AED50Obj *obj, int argc)
 {

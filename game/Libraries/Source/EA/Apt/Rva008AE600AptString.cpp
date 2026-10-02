@@ -79,7 +79,11 @@ extern Rva8CD130Value **g_bfmeArr1233;
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva00896AF0Tracker *g_bfmeTracker4310;
-extern Rva8CD130Value *g_bfmeFallbackDB;
+// 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
+// Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
+// so the reinterpret_cast below compiles to the same mov.
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 extern void bfmeResetEVF(void *context, BfmeStrVKI *text);
 
 Rva8CD130Value *rva008AE600(void *context)
@@ -113,5 +117,5 @@ Rva8CD130Value *rva008AE600(void *context)
 	}
 
 cleanup:
-	return g_bfmeFallbackDB;
+	return (Rva8CD130Value *)g_bfmeFallbackDB;
 }

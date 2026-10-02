@@ -4,7 +4,11 @@
 // cl: /O2 /DNDEBUG /MD
 
 extern "C" int __cdecl atoi(const char *text);
-extern void *g_bfmeFallbackDB;
+// 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
+// Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
+// so the reinterpret_cast below compiles to the same mov.
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 class BfmeE1242;
 

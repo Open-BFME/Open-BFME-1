@@ -27,7 +27,10 @@ extern Value008B09A0 **g_bfmeArr1233;
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern void *g_bfmeFallbackDB;
+// 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
+// Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load.
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 void *aptApplyRecord008B09A0(Owner008B09A0 *self, int argc) {
  if(argc<=3) {
   Value008B09A0 *v=g_bfmeArr1233[Rva008AE770TheStack.m_count-1];
