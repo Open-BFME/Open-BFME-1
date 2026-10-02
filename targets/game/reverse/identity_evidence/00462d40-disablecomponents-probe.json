@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "rva": "0x00462D40",
+  "symbol": "?Rva00462D40@@YAXPAX@Z",
+  "source_archive": "targets/game/reverse/attempt_history/0x00462d40/c3d388b6ffa0a7e9ba3c94d3142bd91b0b6e63ea8b5ee9e7bf04f6e27ebc3ff5.json",
+  "source_sha256": "c3d388b6ffa0a7e9ba3c94d3142bd91b0b6e63ea8b5ee9e7bf04f6e27ebc3ff5",
+  "baseline": "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe",
+  "measurement": "tools/finish_measure.py measure(0x00462d40, source)",
+  "result": {
+    "compiles": true,
+    "ours": 126,
+    "retail": 126,
+    "diffs": 2,
+    "first": 74,
+    "quality": 0.9841,
+    "symbol": "?Rva00462D40@@YAXPAX@Z"
+  },
+  "probe": {
+    "relocations": 7,
+    "normalized_shape": 1.0,
+    "difference": "LEA ECX/PUSH ECX versus retail LEA EAX/PUSH EAX at offsets0x49/0x4D"
+  },
+  "binding_status": "normalizer/table/begin unresolved; relocation slots masked",
+  "preferred_bank": "unchanged due to name-regression refusal"
+}

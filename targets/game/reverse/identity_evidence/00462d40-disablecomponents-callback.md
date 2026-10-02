@@ -67,8 +67,14 @@ The name-regression guard rejects replacing the old bank: it pairs the old
 GameWindowManager declaration with the new Rva0045F0A0 functor declaration,
 even after the experiment adopts the canonical GameWindowManager header.
 No exemption or guard change was made. The old tracked bank is preserved;
-the 126-byte experiment is not banked or promoted. This session records a
-blocked verdict rather than a partial with an uncommitted body.
+the protected preferred bank is not replaced or promoted. Reviewer-requested
+follow-up archives the complete experiment in tracked attempt_history at
+`0x00462d40/c3d388b6ffa0a7e9ba3c94d3142bd91b0b6e63ea8b5ee9e7bf04f6e27ebc3ff5.json`.
+Its source SHA256 equals its filename. Fresh finish_measure reports
+ours=126, retail=126, diffs=2, first=74, quality=0.9841. Companion
+`00462d40-disablecomponents-probe.json` records the measurement and source
+hash. The blocked outcome retains the guard refusal; a future worker can
+recover the source from this alternative without changing the preferred bank.
 
 The masked probe does not verify new normalizer, begin or data bindings.
 The old g_bfmeTwoSJA pin at VA 0x00EF19A4 is not the native VA 0x012F19A4;
