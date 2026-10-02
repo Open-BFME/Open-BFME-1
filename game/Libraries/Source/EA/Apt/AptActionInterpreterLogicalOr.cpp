@@ -2,19 +2,20 @@
 // Open-BFME7: near-twin of Rva008C72D0LessThanZero.cpp's _FunctionRva008C72D0
 // (0x008C72D0, 221 B) and AptActionInterpreterLessThan.cpp. Same shape (SWF
 // version 7 undefined-operand fast path reading g_bfmeFallbackDB, then both
-// operands converted through bfmeF1239, then a boolean packed through
+// operands converted through AptValue::toNumber, then a boolean packed through
 // d_008996b0, then the same pop-two-refs/push-result stack tail), but this
 // sibling opcode is an is-either-nonzero test (topValue != 0 || underValue
 // != 0) rather than the 0x008C72D0 twin's is-both-nonzero test.
 //
 // IDENTITY: address-derived. Real opcode name not recovered; the callee set
-// (Rva00892370Get x1, bfmeF1239 x2, d_008996b0 x1) matches both twins.
+// (Rva00892370Get x1, AptValue::toNumber x2, d_008996b0 x1) matches both twins.
 
 class AptValue
 {
 public:
 	virtual void AddRef();
 	virtual void Release();
+	float toNumber();
 
 	bool isUndefined() const
 	{
@@ -28,12 +29,6 @@ public:
 
 private:
 	unsigned int m_valueBits;
-};
-
-class BfmeE1239 : public AptValue
-{
-public:
-	float bfmeF1239();
 };
 
 class AptActionInterpreter
@@ -69,8 +64,8 @@ void AptActionInterpreter::_FunctionRva008C73B0(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 		int flag;
 
 		if (topValue != BfmeZeroRange || underValue != BfmeZeroRange)
