@@ -108,11 +108,7 @@ void StatusBitsUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 // The same eight-byte shift accounts for MaxHealthUpgrade, StatusBitsUpgrade,
 // ModelConditionUpgrade and ActiveShroudUpgrade, so it is the class and not the
 // four bodies. Unblocking it is a header change.
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Upgrade/StatusBitsUpgradeConstructor.cpp
-// ??0StatusBitsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-StatusBitsUpgrade::StatusBitsUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
-{
-}
+// Constructor is implemented in StatusBitsUpgradeConstructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

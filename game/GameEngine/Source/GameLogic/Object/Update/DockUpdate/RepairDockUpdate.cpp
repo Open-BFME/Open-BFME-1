@@ -89,77 +89,7 @@ RepairDockUpdate::~RepairDockUpdate( void )
 
 }  // end ~RepairDockUpdate
 
-// ------------------------------------------------------------------------------------------------
-/** Do the action while docked
-	* Return TRUE to continue the docking process
-	* Return FALSE to complete the dockin process */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RepairDockUpdate_action_Thunk.cpp
-// ?action@RepairDockUpdate@@UAE_NPAVObject@@0@Z present-unmatched
-Bool RepairDockUpdate::action( Object *docker, Object *drone )
-{
-
-	// sanity
-	if( docker == NULL )
-		return FALSE;
-
-	// get our module data
-	const RepairDockUpdateModuleData *modData = getRepairDockUpdateModuleData();
-
-	// get the body module for the docker
-	BodyModuleInterface *body = docker->getBodyModule();
-
-	//
-	// no matter if the object is damaged just a little bit, or on the brink of death, we will
-	// heal the object over a fixed amount of *TIME* that is specified in the INI file.  Whenever
-	// we get a new docker, given its current health we figure out how much health we will add
-	// to this docked object each frame so that it is fully healed after the correct amount
-	// of time has passed
-	//
-	if( m_lastRepair == 0 )
-	{
-
-		// save ID of this docker as the last docker
-		m_lastRepair = docker->getID();
-
-		//
-		// figure out how much health we need to add each frame to this object so that it's
-		// fully healed at the right time
-		//
-		m_healthToAddPerFrame = (body->getMaxHealth() - body->getHealth()) / modData->m_framesForFullHeal;
-
-	}  // end if
-
-	// if we're at max health we're done
-	if( body->getHealth() >= body->getMaxHealth() )
-	{
-
-		// repair is complete, clear our last docker
-		m_lastRepair = INVALID_ID;
-
-		// returning false will complete the docking process
-		return FALSE;
-
-	}  // end if
-
-	// give us some health buddy
-	DamageInfo healingInfo;
-	healingInfo.in.m_amount = m_healthToAddPerFrame;
-	healingInfo.in.m_sourceID = getObject()->getID();
-	healingInfo.in.m_damageType = DAMAGE_HEALING;
-	healingInfo.in.m_deathType = DEATH_NONE;
-	body->attemptHealing( &healingInfo );
-	if( drone )
-	{
-		body = drone->getBodyModule();
-		healingInfo.in.m_amount = body->getMaxHealth();
-		body->attemptHealing( &healingInfo );
-	}
-	
-	// stay docked
-	return TRUE;
-
-}  // end action
+// action is implemented in RepairDockUpdateAction.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

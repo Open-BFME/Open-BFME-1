@@ -66,7 +66,7 @@ public:
 	virtual Rva005379E0Inner *slotC4();
 };
 
-GameSpyInfo *TheGameSpyInfo;
+extern GameSpyInfo *TheGameSpyInfo;
 
 unsigned char rva005379E0()
 {
