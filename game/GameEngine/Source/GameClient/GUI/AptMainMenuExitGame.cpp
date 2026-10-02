@@ -70,7 +70,12 @@ class AudioManager;
 extern AudioManager *TheAudio;
 extern Shell *TheShell;
 extern GameEngine *TheGameEngine;
-extern const char *TheShellHookNames[];
+// The one definition of the table in the tree is Scripts.cpp's
+// `char *TheShellHookNames[]`, so the reference must carry that element type
+// (char *[] mangles to ?TheShellHookNames@@3PAPADA@A, const char *[] to
+// ...PAPBDA@A).  AsciiString(const char *) still binds each element, so the
+// compiled bytes are unchanged.
+extern char *TheShellHookNames[];
 
 // inputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include/GameClient/ShellHooks.h
 enum { SHELL_SCRIPT_HOOK_MAIN_MENU_EXIT_SELECTED = 15 };
