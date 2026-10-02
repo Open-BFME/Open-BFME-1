@@ -3,10 +3,10 @@
 extern "C" void *memcpy(void *destination, const void *source, unsigned int count);
 extern "C" void *memset(void *destination, int value, unsigned int count);
 
-__declspec(dllimport) void *__stdcall CreateThread(
+extern "C" __declspec(dllimport) void *__stdcall CreateThread(
 	void *security, unsigned int stackSize, void *start,
 	void *parameter, unsigned int flags, unsigned int *identifier);
-__declspec(dllimport) int __stdcall CloseHandle(void *handle);
+extern "C" __declspec(dllimport) int __stdcall CloseHandle(void *handle);
 
 // C++ linkage, matching retail: ?Rva007F0000Alloc@@YAPAXH@Z
 void *Rva007F0000Alloc(int size);
