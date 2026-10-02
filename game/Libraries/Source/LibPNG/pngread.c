@@ -27,6 +27,14 @@
 #define PNG_INTERNAL
 #include "png.h"
 
+/* Retail's libpng is linked against the zlib copy vendored inside
+   d3dx9.lib, which renames its inflate to _d3dx_inflate (functions.csv
+   0x00AAEA1A).  The pristine libpng/zlib headers spell it _inflate, which
+   nothing in the link defines, so call the vendored entry point directly.
+   The identifier is spelled without the leading underscore: MSVC prepends
+   its own to a C symbol, giving the vendored `_d3dx_inflate@8`. */
+extern int ZEXPORT d3dx_inflate OF((z_streamp strm, int flush));
+
 /* Create a PNG structure for reading, and allocate any memory needed. */
 png_structp
 png_create_read_struct(png_const_charp user_png_ver, png_voidp error_ptr,
@@ -457,7 +465,7 @@ png_read_row(png_structp png_ptr, png_bytep row, png_bytep dsp_row)
             (png_size_t)png_ptr->zstream.avail_in);
          png_ptr->idat_size -= png_ptr->zstream.avail_in;
       }
-      ret = inflate(&png_ptr->zstream, Z_PARTIAL_FLUSH);
+      ret = d3dx_inflate(&png_ptr->zstream, Z_PARTIAL_FLUSH);
       if (ret == Z_STREAM_END)
       {
          if (png_ptr->zstream.avail_out || png_ptr->zstream.avail_in ||
