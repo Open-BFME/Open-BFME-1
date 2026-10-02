@@ -1,8 +1,10 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /DNDEBUG /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // Releases one indexed 16-byte node, repairs its two reciprocal short links,
 // and moves the retired index onto the owner's free-list head.
 
+#include "PreRTS.h"
+#include "Common/Dict.h"
 #include <map>
 
 // Reuse the verified 0x00196D30 tree-erase instantiation. Its payload's
@@ -22,15 +24,6 @@ typedef _STL::_Rb_tree<int, BfmeIndexedTreePair,
 template<> void BfmeIndexedTree::erase(BfmeIndexedTree::iterator);
 typedef char CheckIndexedTreeSize[(sizeof(BfmeIndexedTree) == 12) ? 1 : -1];
 
-class BfmeMapObjectExtra
-{
-public:
-	void bfmeReset(void);
-
-private:
-	int m_state;
-};
-
 struct BfmeIndexedNodeFM
 {
 	short m_previous;
@@ -38,7 +31,7 @@ struct BfmeIndexedNodeFM
 	short m_chainNext;
 	short m_chainPrevious;
 	_STL::_Rb_tree_node<BfmeIndexedTreePair> *m_entry;
-	BfmeMapObjectExtra m_extra;
+	Dict m_extra;
 };
 
 class BfmeIndexedNodesFM
@@ -62,7 +55,7 @@ void BfmeIndexedNodesFM::bfmeRelease(int index)
 	bfmePrepareRelease(index);
 
 	BfmeIndexedNodeFM *node = &m_nodes[index];
-	node->m_extra.bfmeReset();
+	node->m_extra.clear();
 	m_nodes[node->m_previous].m_next = node->m_next;
 	m_nodes[node->m_next].m_previous = node->m_previous;
 	short oldFreeHead = m_freeHead;
@@ -86,7 +79,7 @@ void BfmeIndexedNodesFM::clearChainedNodesAt00197860()
 		{
 			bfmePrepareRelease(index);
 			BfmeIndexedNodeFM *node = &m_nodes[index];
-			node->m_extra.bfmeReset();
+			node->m_extra.clear();
 			m_nodes[node->m_previous].m_next = node->m_next;
 			m_nodes[node->m_next].m_previous = node->m_previous;
 			short oldFreeHead = m_freeHead;
