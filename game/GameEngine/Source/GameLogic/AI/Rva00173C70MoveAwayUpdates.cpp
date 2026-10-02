@@ -148,20 +148,3 @@ StateReturnType Rva00173E50State::update()
 	}
 	return AIInternalMoveToState::update();
 }
-
-StateReturnType Rva00173990State::onEnter()
-{
-	if (g_012F0239 && g_012ED4FC)
-		((Rva00173C70CritterDesyncLog)j_0003a17a)(g_012ED4FC,
-			"CritterDesync: setAdjustDestination(TRUE) 6");
-
-	Rva00173C70StateMachine *machine = m_machine;
-	m_adjustDestinations = 1;
-	Rva00173C70Object *obj = machine->m_owner;
-	Rva00173C70Path *path = obj->getAI()->m_path;
-	if (path == 0)
-		return STATE_FAILURE;
-
-	m_goalPosition = path->m_lastNode->m_position;
-	return AIInternalMoveToState::onEnter();
-}

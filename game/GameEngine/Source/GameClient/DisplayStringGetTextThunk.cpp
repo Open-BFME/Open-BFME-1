@@ -46,7 +46,7 @@ private:
 };
 
 // ?getText@DisplayString@@UAE?AVUnicodeString@@XZ
-UnicodeString DisplayString::getText()
+inline UnicodeString DisplayString::getText()
 {
 	return m_text;
 }
