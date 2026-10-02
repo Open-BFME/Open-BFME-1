@@ -53,35 +53,67 @@ struct Gen8ByteElement
 
 typedef bool ( *Gen8ByteElementLess )( const Gen8ByteElement &, const Gen8ByteElement & );
 
+struct AsciiString;
+struct StringInfo;
+
+struct StringLookUp
+{
+	AsciiString *label;
+	StringInfo *info;
+};
+
+struct StringLookUpCompare00437D80
+{
+	void *m_state;
+};
+
+struct S4SortElem8
+{
+	int m_00;
+	int m_04;
+};
+
+struct S4Cmp00575AA0
+{
+	void *m_state;
+};
+
+namespace _STL
+{
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
+		Distance len, Tp value, Compare comp);
+}
+
 void GenAdjust00260D80( Gen8ByteElement *first, int holeIndex, int len,
-						Gen8ByteElement value, Gen8ByteElementLess comp );
-void GenAdjust004379B0( Gen8ByteElement *first, int holeIndex, int len,
-						Gen8ByteElement value, Gen8ByteElementLess comp );
-void GenAdjust005757E0( Gen8ByteElement *first, int holeIndex, int len,
 						Gen8ByteElement value, Gen8ByteElementLess comp );
 
 // The third parameter is declared and never used -- that is what the bytes say.
-#define BFME_HEAP_POP_4( NAME, ADJUST )                                   \
+#define BFME_HEAP_POP_4( NAME, VALUE_TYPE, COMP_TYPE, ADJUST )             \
 	void NAME( Gen8ByteElement *first, Gen8ByteElement *last,             \
 			   Gen8ByteElement *, Gen8ByteElementLess comp )              \
 	{                                                                     \
 		Gen8ByteElement value = *( last - 1 );                            \
 		*( last - 1 ) = *first;                                           \
-		ADJUST( first, 0, ( last - 1 ) - first, value, comp );            \
+		ADJUST( reinterpret_cast<VALUE_TYPE *>( first ), 0,               \
+			( last - 1 ) - first, *reinterpret_cast<VALUE_TYPE *>( &value ), \
+			*reinterpret_cast<COMP_TYPE *>( &comp ) );                      \
 	}
 
-#define BFME_HEAP_POP_3( NAME, ADJUST )                                   \
+#define BFME_HEAP_POP_3( NAME, VALUE_TYPE, COMP_TYPE, ADJUST )             \
 	void NAME( Gen8ByteElement *first, Gen8ByteElement *last,             \
 			   Gen8ByteElementLess comp )                                 \
 	{                                                                     \
 		Gen8ByteElement value = *( last - 1 );                            \
 		*( last - 1 ) = *first;                                           \
-		ADJUST( first, 0, ( last - 1 ) - first, value, comp );            \
+		ADJUST( reinterpret_cast<VALUE_TYPE *>( first ), 0,               \
+			( last - 1 ) - first, *reinterpret_cast<VALUE_TYPE *>( &value ), \
+			*reinterpret_cast<COMP_TYPE *>( &comp ) );                      \
 	}
 
-BFME_HEAP_POP_4( Rva00261210, GenAdjust00260D80 )
-BFME_HEAP_POP_3( Rva00261390, GenAdjust00260D80 )
-BFME_HEAP_POP_4( Rva00437E00, GenAdjust004379B0 )
-BFME_HEAP_POP_3( Rva00437F10, GenAdjust004379B0 )
-BFME_HEAP_POP_4( Rva00575B20, GenAdjust005757E0 )
-BFME_HEAP_POP_3( Rva00577090, GenAdjust005757E0 )
+BFME_HEAP_POP_4( Rva00261210, Gen8ByteElement, Gen8ByteElementLess, GenAdjust00260D80 )
+BFME_HEAP_POP_3( Rva00261390, Gen8ByteElement, Gen8ByteElementLess, GenAdjust00260D80 )
+BFME_HEAP_POP_4( Rva00437E00, StringLookUp, StringLookUpCompare00437D80, _STL::__adjust_heap )
+BFME_HEAP_POP_3( Rva00437F10, StringLookUp, StringLookUpCompare00437D80, _STL::__adjust_heap )
+BFME_HEAP_POP_4( Rva00575B20, S4SortElem8, S4Cmp00575AA0, _STL::__adjust_heap )
+BFME_HEAP_POP_3( Rva00577090, S4SortElem8, S4Cmp00575AA0, _STL::__adjust_heap )

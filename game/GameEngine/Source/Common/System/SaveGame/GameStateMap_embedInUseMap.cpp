@@ -29,13 +29,13 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
 
-extern "C" __declspec(dllimport) void *__cdecl bfmeFopenVIF(
+extern __declspec(dllimport) void *__cdecl bfmeFopenVIF(
 	const char *name, const char *mode);
 extern "C" __declspec(dllimport) int __cdecl fseek(void *stream, Int offset, int origin);
 extern "C" __declspec(dllimport) Int __cdecl ftell(void *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(
 	void *buffer, unsigned int size, unsigned int count, void *stream);
-extern "C" __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
+extern __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
 
 extern const char Rva006A16B0Empty[];
 
