@@ -8,10 +8,15 @@ public:
 	virtual void release(int n);
 };
 
-class T_007ea120
+class Rva007EA0A0Owner
 {
 public:
 	void notify(void *arg);
+};
+
+class T_007ea120
+{
+public:
 	void m();
 
 private:
@@ -59,7 +64,7 @@ private:
 void T_007ea120::m()
 {
 	int err = -205;
-	notify(&err);
+	reinterpret_cast<Rva007EA0A0Owner *>(this)->notify(&err);
 
 	if (m_2A4)
 		m_2A4->release(1);

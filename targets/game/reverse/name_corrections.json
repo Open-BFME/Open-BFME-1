@@ -13328,5 +13328,15 @@
   "after_sha256": "10a725e0d7e8aae4f831b22bb95c99b2fe68f0488e8ab4d2ab1df8716471b210",
   "evidence": "targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md",
   "reason": "False pairing: m_bfmeHeadXW was a placeholder for the helper's first eight bytes; the new layout view keeps them as m_unmodelled because nothing reads them. Identity correction proved in targets/game/reverse/identity_evidence/00256cd0-objecthelper-sleepuntil.md. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/Rva007EA120Teardown.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva007EA120Teardown.cpp",
+  "old_name": "T_007ea120",
+  "new_name": "Rva007EA0A0Owner",
+  "before_sha256": "a1cf246eeab97ac82f6773742dbb5af5a5648e6d5ff1cb3c47f93a04fcb25d22",
+  "after_sha256": "d1d619fb10394f6f8c1fa3f45f06a768784612d980390ab61c7e62902325f56a",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "False pairing: T_007ea120 stays in the file; Rva007EA0A0Owner is a new declaration of the matched ledger owner of 0x007EA0A0 (functions.csv), whose notify the teardown now calls. Bytes unchanged."
  }
 ]
