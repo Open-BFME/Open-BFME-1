@@ -63,7 +63,12 @@ struct BfmeGlobFGA
 	virtual char bfmeAsk60FGA();
 };
 
-extern BfmeGlobFGA *g_bfmeObjFGA;
+// Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  This TU only needs the
+// slot-60 call through it, so the forward declaration plus a cast to the
+// local view type is all that is required.
+class Display;
+extern Display *TheDisplay;
 
 struct BfmeThingFGA
 {
@@ -74,7 +79,7 @@ struct BfmeThingFGA
 
 int BfmeThingFGA::bfmeGoFGA()
 {
-	if (m_bfmeFlag && g_bfmeObjFGA->bfmeAsk60FGA())
+	if (m_bfmeFlag && ((BfmeGlobFGA *)TheDisplay)->bfmeAsk60FGA())
 		return 1;
 	return 0;
 }

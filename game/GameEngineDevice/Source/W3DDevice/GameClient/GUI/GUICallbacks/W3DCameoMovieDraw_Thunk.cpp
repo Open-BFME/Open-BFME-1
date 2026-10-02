@@ -185,7 +185,11 @@ public:
 };
 
 extern MovieSourceShim *TheMovieSourceShim;				///< retail [0x012F148C]
-extern DisplayShim *TheDisplayShim;						///< retail [0x012F1270]
+// Retail's global at 0x012F1270 is `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  This TU keeps its own
+// TU-local view of the pointee and casts at the use.
+class Display;
+extern Display *TheDisplay;								///< retail [0x012F1270]
 
 // ?W3DCameoMovieDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void W3DCameoMovieDraw(GameWindow *window, WinInstanceData *instData)
@@ -198,7 +202,7 @@ void W3DCameoMovieDraw(GameWindow *window, WinInstanceData *instData)
 	window->winGetScreenPosition(&origin.x, &origin.y);
 	window->winGetSize(&size.x, &size.y);
 
-	TheDisplayShim->drawImage(image,
+	((DisplayShim *)TheDisplay)->drawImage(image,
 		(Real)origin.x, (Real)origin.y,
 		(Real)(origin.x + size.x), (Real)(origin.y + size.y), -1);
 }

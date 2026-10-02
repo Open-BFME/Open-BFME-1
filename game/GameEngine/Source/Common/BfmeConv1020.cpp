@@ -65,7 +65,11 @@ public:
 	virtual void bfmeClear1020();
 };
 
-extern BfmeA1020 *g_bfmeA1020;
+// Retail's global at 0x012F1270 is `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  This TU keeps its own
+// TU-local view of the pointee and casts at the uses.
+class Display;
+extern Display *TheDisplay;
 
 class BfmeG1020
 {
@@ -78,7 +82,7 @@ public:
 
 void BfmeG1020::bfmeGo1020G(void)
 {
-	g_bfmeA1020->bfmeClear1020();
+	((BfmeA1020 *)TheDisplay)->bfmeClear1020();
 	m_bfmeVal = 0;
 }
 
@@ -95,7 +99,7 @@ public:
 
 void BfmeH1020::bfmeGo1020H(void)
 {
-	g_bfmeA1020->bfmeClear1020();
+	((BfmeA1020 *)TheDisplay)->bfmeClear1020();
 
 	int z = 0;
 

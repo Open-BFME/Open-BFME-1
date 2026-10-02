@@ -36,7 +36,11 @@ public:
 	void showShell(bool);
 };
 
-extern BfmeStrVM0 *TheDisplay;
+// Retail's global at 0x012F1270 is `Display *TheDisplay`, defined once in
+// game/GameEngine/Source/GameClient/Display.cpp.  This TU keeps its own
+// TU-local view of the pointee and casts at the use.
+class Display;
+extern Display *TheDisplay;
 // Retail's global at 0x012ED668 is `AudioManager *TheAudio`, defined once in
 // Common/Audio/GameAudio.cpp. Only the name has to be canonical for the link;
 // this TU keeps its own TU-local view of the pointee and casts at the use.
@@ -62,7 +66,7 @@ public:
 Gen_0051b720::~Gen_0051b720()
 {
 	*(unsigned *)this = (unsigned)g_01105FCC;
-	TheDisplay->bfmeFlagVM0(0);
+	((BfmeStrVM0 *)TheDisplay)->bfmeFlagVM0(0);
 	((Rva0051D690Audio *)TheAudio)->slot6c(2, 1, 0);
 	TheShell->showShell(true);
 }
