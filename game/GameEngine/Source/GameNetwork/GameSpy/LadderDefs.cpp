@@ -378,42 +378,6 @@ LadderList::~LadderList()
 	}
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/LadderList_findLadder_Thunk.cpp
-// ?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z present-unmatched
-const LadderInfo* LadderList::findLadder( const AsciiString& addr, UnsignedShort port )
-{
-	LadderInfoList::const_iterator cit;
-
-	for (cit = m_specialLadders.begin(); cit != m_specialLadders.end(); ++cit)
-	{
-		const LadderInfo *li = *cit;
-		if (li->address == addr && li->port == port)
-		{
-			return li;
-		}
-	}
-
-	for (cit = m_standardLadders.begin(); cit != m_standardLadders.end(); ++cit)
-	{
-		const LadderInfo *li = *cit;
-		if (li->address == addr && li->port == port)
-		{
-			return li;
-		}
-	}
-
-	for (cit = m_localLadders.begin(); cit != m_localLadders.end(); ++cit)
-	{
-		const LadderInfo *li = *cit;
-		if (li->address == addr && li->port == port)
-		{
-			return li;
-		}
-	}
-
-	return NULL;
-}
-
 const LadderInfo* LadderList::findLadderByIndex( Int index )
 {
 	if (index == 0)

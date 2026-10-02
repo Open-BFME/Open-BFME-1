@@ -47,7 +47,7 @@ public:
 		return ((const StringBase<char> *)this)->endsWith(text, length);
 	}
 
-	bool endsWith(const char *text) const
+	bool endsWithViaStringBase(const char *text) const
 	{
 		return ((const StringBase<char> *)this)->endsWith(text);
 	}
@@ -191,7 +191,7 @@ selected_slot:
 
 
 	if (!directory.endsWith("\\", 1) &&
-		!directory.endsWith("/"))
+		!directory.endsWithViaStringBase("/"))
 		directory.concat("\\");
 
 	m_aptWindows[index].set(index,
