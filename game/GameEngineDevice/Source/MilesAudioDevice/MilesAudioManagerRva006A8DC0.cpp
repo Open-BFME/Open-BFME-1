@@ -15,6 +15,8 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
+	long volatile *value);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 
@@ -40,6 +42,8 @@ class RefCountedPlayingAudio
 public:
 	virtual ~RefCountedPlayingAudio();
 
+	void Add_Ref(void) { InterlockedIncrement(&m_refCount); }
+
 	void Release_Ref(void)
 	{
 		if (InterlockedDecrement(&m_refCount) <= 0)
@@ -64,6 +68,22 @@ public:
 	{
 		if (m_ptr)
 			m_ptr->Release_Ref();
+	}
+
+	// The deque copy bodies at retail 0x0069F1C0/0x0069CC60 retain the
+	// incoming reference before releasing the old one (with self-assign guard).
+	// Keep this shared element contract consistent with the verified erase TU.
+	PlayingAudioRef &operator=(const PlayingAudioRef &other)
+	{
+		if (this != &other)
+		{
+			if (other.m_ptr)
+				other.m_ptr->Add_Ref();
+			if (m_ptr)
+				m_ptr->Release_Ref();
+			m_ptr = other.m_ptr;
+		}
+		return *this;
 	}
 
 	operator PlayingAudio *(void) const { return m_ptr; }
