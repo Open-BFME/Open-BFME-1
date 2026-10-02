@@ -3,7 +3,15 @@
 struct RefBlock008B09A0 { unsigned short refs; };
 struct Pool008B09A0 { void *unused; void (__cdecl *free)(void *); };
 extern Pool008B09A0 *g_pool01337A30;
-extern RefBlock008B09A0 g_default012D5298;
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its own
+// RefBlock008B09A0 view of it and casts at the use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 class Rva008AD2C0 {
 public:
  Rva008AD2C0(const Rva008AD2C0 &);
@@ -48,7 +56,7 @@ void *aptApplyRecord008B09A0(Owner008B09A0 *self, int argc) {
     s->m_f68->assign(v->m_f20);
    }
    s->m_f68->m_f10=flags;
-   if(v->m_f20.m_block!=&g_default012D5298) {
+   if(v->m_f20.m_block!=(RefBlock008B09A0 *)&g_rva012D5298Empty) {
     Rva008AD2C0 *d=s->m_f68;
     ++v->m_f20.m_block->refs;
     RefBlock008B09A0 *old=d->m_block;

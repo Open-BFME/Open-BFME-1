@@ -17,8 +17,19 @@ struct Rva008AE600StringPool
 	void (__cdecl *free)(void *);
 };
 
-extern Rva008AE600StringData g_bfmeDefaultString1284;
 extern Rva008AE600StringPool *g_bfmeStringPool1284;
+
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its own
+// view of the block above and casts to it at the use, so the emitted reference
+// is that one symbol.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class BfmeStrVKI;
 
@@ -27,8 +38,9 @@ class Rva8CD130String
 public:
 	Rva8CD130String()
 	{
-		++g_bfmeDefaultString1284.m_refCount;
-		m_data = &g_bfmeDefaultString1284;
+		Rva008AE600StringData *block = (Rva008AE600StringData *)&g_rva012D5298Empty;
+		++block->m_refCount;
+		m_data = block;
 	}
 
 	Rva8CD130String(const Rva8CD130String &other)

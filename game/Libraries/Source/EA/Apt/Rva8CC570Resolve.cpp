@@ -11,7 +11,15 @@ struct Rva8CC570StringBlock
 	unsigned short m_length;
 };
 
-extern Rva8CC570StringBlock g_bfmeDefaultString1284;
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its own
+// Rva8CC570StringBlock view of it and casts at the use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 
 class Rva8CC570String
@@ -19,8 +27,9 @@ class Rva8CC570String
 public:
 	Rva8CC570String()
 	{
-		m_block = &g_bfmeDefaultString1284;
-		++g_bfmeDefaultString1284.m_refs;
+		Rva8CC570StringBlock *block = (Rva8CC570StringBlock *)&g_rva012D5298Empty;
+		m_block = block;
+		++block->m_refs;
 	}
 	~Rva8CC570String()
 	{

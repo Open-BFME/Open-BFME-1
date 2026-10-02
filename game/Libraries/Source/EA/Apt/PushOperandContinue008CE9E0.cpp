@@ -1,7 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
 // Address-derived Apt aligned string operand push followed by 0x008CDE50.
 struct BfmeHdrVKI { unsigned short m_bfme00; };
-extern BfmeHdrVKI g_bfmeDefaultString1284;
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its own
+// BfmeHdrVKI view of it and casts at the use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 class BfmeStrVKI {
 public:
@@ -44,7 +52,7 @@ void pushOperandContinue008CE9E0(Rva8CEE00State *state,Rva8CEE00Cursor *cursor) 
  if(value) {
   Rva008C3B60Head=value->m_next;
   g_rva8CD130IdleHook->add(value);
-  if(value->m_name.m_bfme00!=&g_bfmeDefaultString1284)
+  if(value->m_name.m_bfme00!=(BfmeHdrVKI *)&g_rva012D5298Empty)
    ((BfmeStrVKK *)&value->m_name)->bfmeTruncVKK(0);
  } else value=new Rva008A9B00;
  value->m_name=BfmeStrVKI(*operand);

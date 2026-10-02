@@ -70,12 +70,14 @@ class EAStringC
 	EAStringC &rva0089F530(const char *pStrText);
 };
 
-extern EAStringC::StringDataC g_emptyStringData;
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 __forceinline EAStringC::EAStringC()
 {
-	++g_emptyStringData.m_uRefCount;
-	m_pData = &g_emptyStringData;
+	++g_rva012D5298Empty.m_uRefCount;
+	m_pData = &g_rva012D5298Empty;
 }
 
 typedef char EAStringC_StringDataC_size_must_be_8[

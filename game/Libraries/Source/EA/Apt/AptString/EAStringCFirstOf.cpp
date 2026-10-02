@@ -20,11 +20,14 @@ struct BfmeAllocVKJ
 
 extern BfmeAllocVKJ *g_bfmeAllocVKJ;
 
-extern EAStringData g_emptyStringData;
-
 class EAStringC
 {
 public:
+	// 0x012D5298: the shared empty EA string block, defined once in
+	// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its
+	// own EAStringData view of it and casts at the use.
+	class StringDataC;
+
 	EAStringC();
 	EAStringC( const EAStringC &other ) : m_pData( other.m_pData )
 	{
@@ -58,8 +61,10 @@ private:
 	}
 };
 
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
 EAStringC::EAStringC()
-	: m_pData( &g_emptyStringData )
+	: m_pData( (EAStringData *)&g_rva012D5298Empty )
 {
 	++m_pData->m_refCount;
 }

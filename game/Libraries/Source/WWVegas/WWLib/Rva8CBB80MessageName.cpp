@@ -22,8 +22,22 @@ struct Rva8CBB80StringPool
 	void (__cdecl *free)(void *);
 };
 
-extern Rva8CBB80StringData g_bfmeDefaultString1284;
 extern Rva8CBB80StringPool *g_bfmeStringPool1284;
+
+class EAStringC
+{
+public:
+	// 0x012D5298: the shared empty EA string block, defined once in
+	// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its
+	// own Rva8CBB80StringData view of it and casts at the use.
+	class StringDataC;
+
+	EAStringC &Assign(const EAStringC &other);
+
+	Rva8CBB80StringData *m_data;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class Rva8CBB80FieldString
 {
@@ -36,8 +50,9 @@ class Rva8CD130String
 public:
 	Rva8CD130String()
 	{
-		++g_bfmeDefaultString1284.m_refCount;
-		m_data = &g_bfmeDefaultString1284;
+		Rva8CBB80StringData *block = (Rva8CBB80StringData *)&g_rva012D5298Empty;
+		++block->m_refCount;
+		m_data = block;
 	}
 	~Rva8CD130String()
 	{
@@ -54,14 +69,6 @@ class Rva8CD130Value
 {
 public:
 	void getName(Rva8CD130String *name);
-};
-
-class EAStringC
-{
-public:
-	EAStringC &Assign(const EAStringC &other);
-
-	Rva8CBB80StringData *m_data;
 };
 
 class Rva899F00Base

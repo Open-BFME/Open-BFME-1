@@ -34,7 +34,15 @@ private:
 	AptValue *m_indirect;
 };
 
-extern const BfmeStringData3AF0 g_bfmeDefaultString1284;
+// 0x012D5298: the shared empty EA string block, defined once in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  This TU keeps its own
+// BfmeStringData3AF0 view of it and casts at the use.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern AptValue *g_bfmeFallbackDB;
 extern "C" long __cdecl strtol(const char *, char **, int);
 extern "C" double __cdecl Rva008921B0Atof(const char *);
@@ -51,7 +59,7 @@ bool AptValue::rva00898480Check()
 			if ((m_flags & 0x3f) != 1)
 				value = m_indirect;
 			BfmeStringData3AF0 *const &string = value->m_string;
-			return (string != const_cast<BfmeStringData3AF0 *>(&g_bfmeDefaultString1284)) ? 1 : 0;
+			return (string != const_cast<BfmeStringData3AF0 *>((const BfmeStringData3AF0 *)&g_rva012D5298Empty)) ? 1 : 0;
 		}
 		{
 			AptValue *value = this;
