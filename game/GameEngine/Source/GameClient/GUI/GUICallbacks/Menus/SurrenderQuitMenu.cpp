@@ -20,6 +20,11 @@ public:
 class WindowManager
 {
 public:
+	// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+	// `WindowManager *g_rva012F19E8WindowManager` in
+	// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp; this class is
+	// only this TU's view of the pointee, so the linked name is the canonical
+	// one and the header is not included here.
 	void hideQuitMenu();
 };
 
@@ -76,11 +81,10 @@ public:
 
 extern void *g_obj12F4B40;
 extern Shell *TheShell;
-extern WindowManager *Rva00579160TheManager;
+extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 extern VictoryConditionsInterface *TheVictoryConditions;
 extern MessageStream *TheMessageStream;
 extern InGameUI *TheInGameUI;
-#define g_theWindowManager Rva00579160TheManager
 
 // ?surrenderQuitMenu@@YAXXZ
 void surrenderQuitMenu()
@@ -91,7 +95,7 @@ void surrenderQuitMenu()
 		menu->m_hidden = true;
 		static_cast<QuitMenu *>(g_obj12F4B40)->m_field25C = 0;
 		TheShell->m_isShellActive = true;
-		g_theWindowManager->hideQuitMenu();
+		g_rva012F19E8WindowManager->hideQuitMenu();
 	}
 
 	if (TheVictoryConditions->isLocalAlliedVictory())

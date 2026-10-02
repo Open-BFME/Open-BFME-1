@@ -32,6 +32,15 @@ public:
 	void bfmeRefreshYH(int mode);
 };
 
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// bfmeRefreshYH() through it, so the pointee stays the local BfmeOtherYH view
+// and the access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
+
 // Canonical identity of the retail global at 0x012ED5C8, defined once by
 // game/GameEngine/Source/Common/GlobalData.cpp as
 // ?TheWritableGlobalData@@3PAVGlobalData@@A.  The member address keeps the local
@@ -39,7 +48,6 @@ public:
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;		// retail 0x012ED5C8
 extern BfmeThingYH *g_bfmeThingYH;				// retail 0x012F4B58
-extern BfmeOtherYH *g_bfmeOtherYH;				// retail 0x012F19E8
 extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D
 
 // ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z
@@ -53,6 +61,6 @@ void __cdecl bfmeCommitYH(AsciiStringYH label)
 
 	g_bfmeThingYH->bfmeNotifyYH();
 
-	if (g_bfmeOtherYH != 0)
-		g_bfmeOtherYH->bfmeRefreshYH(0);
+	if (g_rva012F19E8WindowManager != 0)
+		((BfmeOtherYH *)g_rva012F19E8WindowManager)->bfmeRefreshYH(0);
 }

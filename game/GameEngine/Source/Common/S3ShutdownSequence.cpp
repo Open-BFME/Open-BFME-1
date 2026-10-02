@@ -43,7 +43,14 @@ public:
 extern void *TheBfmeHeldResource;					// 0x012F4974
 extern BfmeReleaseSink *TheBfmeReleaseSink;				// 0x012F12CC
 extern int TheBfmeHeldHandle;						// 0x012B7430
-extern Glo00EF19E8 *TheBfmeHandleOwner;					// 0x012F19E8
+// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
+// `WindowManager *g_rva012F19E8WindowManager` in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
+// the handle release through it, so the pointee stays the local Glo00EF19E8
+// view and the access is cast at the use.
+class WindowManager;
+
+extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeDeletable *TheBfmeCampaignManager;				// 0x012F49D0
 
 // ?Gen_00510b50@@YAXXZ
@@ -58,7 +65,7 @@ void Gen_00510b50(void)
 
 	if (TheBfmeHeldHandle != -1)
 	{
-		TheBfmeHandleOwner->h0046B2B0(TheBfmeHeldHandle);
+		((Glo00EF19E8 *)g_rva012F19E8WindowManager)->h0046B2B0(TheBfmeHeldHandle);
 
 		TheBfmeHeldHandle = -1;
 	}
