@@ -53,7 +53,7 @@ public:
 	virtual ~ExperienceLevelSystem();
 	virtual void init();
 	virtual void reset() {}
-	virtual void update() {}
+	virtual void update();
 
 private:
 	ExperienceLevelMap m_levelMap;

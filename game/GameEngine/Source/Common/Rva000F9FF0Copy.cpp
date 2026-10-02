@@ -10,38 +10,19 @@
 // carried into this class.
 
 #include "ascii_string.h"
+#include "unicode_string.h"
 
-class UnicodeStringWK
+class BfmeWideWK : private UnicodeString
 {
 public:
-	UnicodeStringWK(const UnicodeStringWK &other);
-	~UnicodeStringWK(void);
-
-private:
-	unsigned short *m_bfmeData;
-};
-
-class AsciiStringWK
-{
-public:
-	AsciiStringWK(const AsciiStringWK &other);
-	~AsciiStringWK(void);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeWideWK : private UnicodeStringWK
-{
-public:
-	BfmeWideWK(const UnicodeStringWK &other) : UnicodeStringWK(other) {}
+	BfmeWideWK(const UnicodeString &other) : UnicodeString(other) {}
 	~BfmeWideWK(void) {}
 };
 
-class BfmeStrWK : private AsciiStringWK
+class BfmeStrWK : private AsciiString
 {
 public:
-	BfmeStrWK(const AsciiStringWK &other) : AsciiStringWK(other) {}
+	BfmeStrWK(const AsciiString &other) : AsciiString(other) {}
 	~BfmeStrWK(void) {}
 };
 

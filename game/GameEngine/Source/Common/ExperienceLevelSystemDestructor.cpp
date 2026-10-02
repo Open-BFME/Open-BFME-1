@@ -65,7 +65,7 @@ public:
 	void cleanup();
 	virtual void init();
 	virtual void reset() {}
-	virtual void update() {}
+	virtual void update();
 
 private:
 	ExperienceMap m_levelMap;
