@@ -3,15 +3,9 @@
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// Open-BFME5: MetaMapRec dtor. dual CountUpBuffer @+0x1c/+0x20.
+// Open-BFME5: MetaMapRec dtor. dual UnicodeString members @+0x1c/+0x20.
 
-class CountUpBuffer
-{
-public:
-	~CountUpBuffer();
-private:
-	unsigned char m_pad[4];
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMapRec
@@ -20,8 +14,8 @@ public:
 	~MetaMapRec();
 private:
 	unsigned char m_gap[0x1c];
-	CountUpBuffer m_description;
-	CountUpBuffer m_displayName;
+	UnicodeString m_description;
+	UnicodeString m_displayName;
 };
 
 // ??1MetaMapRec@@QAE@XZ

@@ -1,25 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
 
-typedef int NameKeyType;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class StaticNameKey
-{
-public:
-	NameKeyType key() const;
-	operator NameKeyType() const { return key(); }
-
-private:
-	mutable NameKeyType m_key;
-	const char *m_name;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
-class Dict
-{
-public:
-	int getInt(NameKeyType key, bool *exists) const;
-};
+#include "Common/Dict.h"
 
 extern const StaticNameKey TheKey_playerColor;
 extern const StaticNameKey TheKey_playerNightColor;
