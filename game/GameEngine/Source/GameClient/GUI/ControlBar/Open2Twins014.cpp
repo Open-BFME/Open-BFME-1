@@ -20,7 +20,12 @@ public:
 	bool isInMultiplayerOrSkirmishGame();
 };
 
-class Open2Images143730
+// Retail's singleton at 0x012F6924 is ?TheMappedImageCollection@@3PAVImageCollection@@A
+// (defined in game/GameEngine/Source/GameClient/System/Image.cpp); the dir32 this
+// body loads is that address, so the pointee must be spelled ImageCollection for
+// the extern to resolve. No game header declares ImageCollection, so this TU
+// declares the one member it calls.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
@@ -41,7 +46,7 @@ public:
 // Open2Logic143730 is this TU's view of that pointee.
 class GameLogic;
 extern GameLogic *TheGameLogic;
-extern Open2Images143730 *TheOpen2Images143730;
+extern ImageCollection *TheMappedImageCollection;	///< retail 0x012F6924
 
 // The relevant BFME template flags are in the word at +0x128.  Bit 17
 // distinguishes the alternate GondorGandalf form at this call site.
@@ -63,7 +68,7 @@ const Image * __cdecl Open2SelectPortrait143730(
 		{
 			static const Image *portraitOverride = 0;
 			if (portraitOverride == 0)
-				portraitOverride = TheOpen2Images143730->findImageByName(
+				portraitOverride = TheMappedImageCollection->findImageByName(
 					AsciiString("HPGandalfGrey"));
 			if (portraitOverride != 0)
 				return portraitOverride;

@@ -29,7 +29,11 @@ public:
 	RecorderModeType getMode();
 };
 
-class MappedImageCollectionPortraitShim
+// Retail's singleton at 0x012F6924 is ?TheMappedImageCollection@@3PAVImageCollection@@A
+// (defined in game/GameEngine/Source/GameClient/System/Image.cpp), so the pointee
+// must be spelled ImageCollection for this extern to resolve to it. No game header
+// declares ImageCollection, so this TU declares the one member it calls.
+class ImageCollection
 {
 public:
 	const Image *findImageByName(const AsciiString &name);
@@ -50,7 +54,7 @@ class GameLogic;
 // 0x012F0898 is retail's `GameLogic *TheGameLogic`; GameLogicPortraitShim is
 // this TU's local view of the same global, so cast at the use.
 extern GameLogic *TheGameLogic;
-extern MappedImageCollectionPortraitShim *TheMappedImageCollection;
+extern ImageCollection *TheMappedImageCollection;	///< retail 0x012F6924
 // Retail loads 0x012ED62C for the playback checks, not TheGameLogic (0x012F0898).
 // GameEngine::init names 0x012ED62C TheRecorder; this method's `this` is GameLogic
 // and only the nested getMode/+0x2AC reads go through the recorder singleton.
