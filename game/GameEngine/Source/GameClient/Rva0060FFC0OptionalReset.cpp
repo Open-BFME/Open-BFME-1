@@ -4,6 +4,8 @@ class Glo012F706CType
 {
 };
 
+class LivingWorldManager;
+
 class Rva0060FFC0Record
 {
 public:
@@ -19,7 +21,7 @@ class Rva0060FFC0ActionTarget
 {
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern LivingWorldManager *TheLivingWorldManager;
 extern void j_0004446d();
 extern void j_0000f0fb();
 extern void j_0001fd16();
@@ -65,16 +67,16 @@ void Rva0060FFC0Optional::reset()
 	Rva0060FFC0Record *record;
 
 	lookup.plain = j_0004446d;
-	record = (g_bfmeGameCW->*lookup.member)( &m_field04 );
+	record = (reinterpret_cast<Glo012F706CType *>(TheLivingWorldManager)->*lookup.member)( &m_field04 );
 	if( record != 0 )
 		m_field14 = record->m_value;
-	record = (g_bfmeGameCW->*lookup.member)( &m_field08 );
+	record = (reinterpret_cast<Glo012F706CType *>(TheLivingWorldManager)->*lookup.member)( &m_field08 );
 	if( record != 0 )
 		m_field18 = record->m_value;
-	record = (g_bfmeGameCW->*lookup.member)( &m_field0c );
+	record = (reinterpret_cast<Glo012F706CType *>(TheLivingWorldManager)->*lookup.member)( &m_field0c );
 	if( record != 0 )
 		m_field1c = record->m_value;
-	record = (g_bfmeGameCW->*lookup.member)( &m_field10 );
+	record = (reinterpret_cast<Glo012F706CType *>(TheLivingWorldManager)->*lookup.member)( &m_field10 );
 	if( record != 0 )
 		m_field20 = record->m_value;
 

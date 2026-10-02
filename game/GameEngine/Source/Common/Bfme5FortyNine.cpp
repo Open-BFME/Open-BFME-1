@@ -23,13 +23,14 @@ public:
 // view above supplies the members this TU reads.
 class GlobalData;
 
-extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;	// defined at retail 0x012F1024
 extern GlobalData *TheWritableGlobalData;			// retail 0x012ED5C8
 
 // ?bfmeLimit@@YAHXZ
 int __cdecl bfmeLimit(void)
 {
-	BfmeSwitchDR *state = g_bfmeSwitchDR;
+	BfmeSwitchDR *state = reinterpret_cast<BfmeSwitchDR *>(TheLivingWorldCampaignManager);
 
 	int high = state != 0 ? state->m_bfmeUseHigh : 0;
 
