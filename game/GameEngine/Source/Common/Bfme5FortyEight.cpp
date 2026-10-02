@@ -84,13 +84,19 @@ public:
 // view above supplies the members this TU reads.
 class GlobalData;
 
-extern BfmeSwitchDR *g_bfmeSwitchDR;				// retail 0x012F1024
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so the reference here carries that canonical
+// type (class, not struct) and the local view above is cast in at the one use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;	// retail 0x012F1024
 extern GlobalData *TheWritableGlobalData;			// retail 0x012ED5C8
 
 // ?bfmeOffset@@YIHH@Z
 int __fastcall bfmeOffset(int base)
 {
-	if (g_bfmeSwitchDR->m_bfmeUseHigh)
+	if (((BfmeSwitchDR *)TheLivingWorldCampaignManager)->m_bfmeUseHigh)
 		return reinterpret_cast<BfmeBaseDR *>(TheWritableGlobalData)->m_bfmeHigh + base;
 
 	return reinterpret_cast<BfmeBaseDR *>(TheWritableGlobalData)->m_bfmeLow + base;

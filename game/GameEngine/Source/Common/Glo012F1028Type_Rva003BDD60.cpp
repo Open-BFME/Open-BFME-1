@@ -56,7 +56,13 @@ private:
 	Rva003BDD60Sub *m_bfmeSub;
 };
 
-extern Glo012F1024Type *TheLivingWorldCampaignManager;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at its uses.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 // Canonical identity of the retail global at 0x012ED5C8, defined once by
 // game/GameEngine/Source/Common/GlobalData.cpp as
@@ -72,7 +78,7 @@ int Glo012F1028Type::rva003BDD60(void)
 	Rva003BDD60Sub *child = m_bfmeSub;
 	if (child != 0)
 	{
-		Glo012F1024Type *state = TheLivingWorldCampaignManager;
+		Glo012F1024Type *state = (Glo012F1024Type *)TheLivingWorldCampaignManager;
 		int flag = state != 0 ? state->m_bfmeUseHigh : 0;
 		int limit;
 		int offset;

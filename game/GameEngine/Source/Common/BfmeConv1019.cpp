@@ -94,7 +94,13 @@ public:
 	virtual void bfmeTick1019();
 };
 
-extern BfmeT1019 *g_bfmeT1019;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at the one use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 void bfmeFirst1019(void);
 
 // Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
@@ -111,6 +117,6 @@ static inline BfmeU1019 *bfmeViewU1019(void)
 void bfmeGo1019F(void)
 {
 	bfmeFirst1019();
-	g_bfmeT1019->m_bfmeFlag = 1;
+	((BfmeT1019 *)TheLivingWorldCampaignManager)->m_bfmeFlag = 1;
 	bfmeViewU1019()->bfmeTick1019();
 }

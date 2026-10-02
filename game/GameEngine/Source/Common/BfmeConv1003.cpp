@@ -6,7 +6,13 @@ public:
 	void bfmeStop1003();
 };
 
-extern BfmeStop1003 *g_bfmeStop1003;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp; this reference carries that canonical type
+// (class, not struct) and the local view above is cast in at the one use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class BfmeB1003
 {
@@ -22,7 +28,7 @@ public:
 void BfmeB1003::bfmeGo1003B(char a, char b)
 {
 	if (m_bfmeOn) {
-		g_bfmeStop1003->bfmeStop1003();
+		((BfmeStop1003 *)TheLivingWorldCampaignManager)->bfmeStop1003();
 		bfmeClear1003();
 	}
 

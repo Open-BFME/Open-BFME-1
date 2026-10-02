@@ -36,8 +36,8 @@ public:
 	void step();
 };
 
-// The global at 0x012F1024 is the same one V4CampaignLabelSelect.cpp reads a
-// flag out of, so it carries ONE type here and there rather than two.
+// The global at 0x012F1024 carries its one canonical spelling, so the reference
+// below spells it that way rather than under a TU-local name.
 class Glo012F1024Type
 {
 public:
@@ -51,8 +51,14 @@ public:
 // own view of that address, so the tail-called member below casts at the use.
 class GameLogic;
 
-extern GameLogic *      TheGameLogic;
-extern Glo012F1024Type *  Glo012F1024;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at the use.
+class LivingWorldCampaignManager;
+
+extern GameLogic *            TheGameLogic;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class Rva003BCA30
 {
@@ -75,7 +81,7 @@ public:
 };
 void Rva003BEED0::run()
 {
-	Glo012F1024->step();
+	((Glo012F1024Type *)TheLivingWorldCampaignManager)->step();
 	finish();
 }
 

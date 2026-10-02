@@ -26,7 +26,13 @@ public:
 	void step();
 };
 
-extern Glo012F1024Type *TheLivingWorldCampaignManager;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at the one use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class Gen003BFB20Owner
 {
@@ -63,7 +69,7 @@ void Rva003BFB20::run( int unused )
 	m_at80 = ok;
 	if( ok )
 	{
-		TheLivingWorldCampaignManager->step();
+		((Glo012F1024Type *)TheLivingWorldCampaignManager)->step();
 		finish();
 	}
 	m_at28->m_at10 = true;

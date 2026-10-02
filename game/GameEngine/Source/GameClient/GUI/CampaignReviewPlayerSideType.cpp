@@ -14,7 +14,13 @@ struct PlayerSideFlag
 	unsigned char m_isEvil;
 };
 
-extern PlayerSideFlag *g_campaignReviewPlayer;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at the uses.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 // CampaignReview.apt, object 0x258 bytes.
 class BfmeAptScreenCampaignReview
@@ -30,7 +36,8 @@ void BfmeAptScreenCampaignReview::_bfme_playerSideType(
 	if( setting )
 		return;
 
-	if( g_campaignReviewPlayer && g_campaignReviewPlayer->m_isEvil )
+	if( TheLivingWorldCampaignManager &&
+		((PlayerSideFlag *)TheLivingWorldCampaignManager)->m_isEvil )
 		strcpy( (char *)value, "evil" );
 	else
 		strcpy( (char *)value, "good" );

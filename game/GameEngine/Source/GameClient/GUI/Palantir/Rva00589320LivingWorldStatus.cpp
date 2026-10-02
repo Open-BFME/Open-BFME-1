@@ -44,7 +44,13 @@ public:
 class PlayerList;
 
 extern Glo012F1028Type *Glo012F1028;
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+// Retail's global at 0x012F1024 is EA's LivingWorldCampaignManager singleton,
+// defined once in GameEngine/Source/GameLogic/LivingWorld/
+// LivingWorldCampaignManager.cpp, so this reference carries that canonical type
+// (class, not struct); the local view above is cast in at the one use.
+class LivingWorldCampaignManager;
+
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 extern GameLogic *TheBfmeGameLogic;
 extern PlayerList *ThePlayerList;
 
@@ -53,7 +59,7 @@ int Rva00589320(void)
 	Glo012F1028Type *campaign = Glo012F1028;
 	if (campaign && campaign->m_campaignLoaded && campaign->m_campaignActive)
 	{
-		int flag = TheLivingWorldCampaignManager->m_campaignFlag != 0;
+		int flag = ((BfmeLivingWorldCampaignManager *)TheLivingWorldCampaignManager)->m_campaignFlag != 0;
 		return flag + flag + 2;
 	}
 
