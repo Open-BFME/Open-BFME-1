@@ -314,3 +314,47 @@ Use these ledger spellings instead of the old bfmeOneCFD/bfmeTwoCFD pin
 aliases; the second helper's historical method identity is still unclaimed.
 No new pins or field names are needed. Replace only the old update row and
 remove its now-orphaned Common TU after exact verification.
+
+## WeaponModeSpecialPowerUpdate::update (002B2DE0, 97 bytes)
+
+Registered literal `WeaponModeSpecialPowerUpdate` at `00C90424`, registration
+`0012E76E`, and factory `00119670` identify the owner. The factory's call at
+`001196AB` uses ILT `00001C53` -> constructor `002B2BD0`; final store
+`002B2C1C` puts table VA `010C540C` at +0x10. The only absolute pointer to
+slot-zero ILT `00015EB0` -> `002B2DE0` is at table RVA `00CC540C`. Slot one
+is common `0004985F` -> `0011A130`, independently anchoring this body to the
+labeled/aligned update family, not merely to its earlier source filename.
+
+The body loops over 29 mask bits, calls existing object-side helpers, invokes
+an additional secondary interface slot, and returns 3fffffff. Its final RET
+at `002B2E40` and INT3 at `002B2E41` establish the 97-byte extent. Incoming
+ECX is complete-object +10; there are no stack arguments. Replace the
+address-kept owner and enum with public virtual non-const
+`?update@WeaponModeSpecialPowerUpdate@@UAE?AW4UpdateSleepTime@@XZ`.
+The unrelated secondary-interface view at receiver+14 remains address-kept;
+its slot spelling is not promoted to a recovered identity.
+
+Direct callee routes were independently decoded:
+
+- `00007513` -> `001C9B80` takes one four-byte integer argument (ret 4),
+  forwards it to interface slot +158 and to WeaponSet::releaseWeaponLock
+  through `0001192D` at Object+264; it never dereferences that argument.
+  Retain the pre-existing `BfmeItem1005::bfmeDoD1005(int)` pin/declaration.
+  The other matched reconstruction's synthetic void-pointer prototype is
+  not used as a reason to cast the caller's literal 2 to a pointer.
+- `000122AB` -> `001C9AC0` is matched `Gen001C9AC0::handle(int)`; use its
+  existing address-derived name in place of actionB's alias.
+- `0001EF9C` -> `001C1E30` is matched
+  `BfmeOwnerXI::bfmeSendXI(BfmeMsgXI*)`; retain its opaque message-view ABI
+  instead of the old void-pointer alias.
+
+No new pin, field identity, or callee historical method name is asserted.
+Only this verified update moves to the owner's TU; the old one-body TU is
+removed after verification.
+
+The snapshot-specific BfmeObjE10 -> Gen001C9AC0 correction records an alias
+replacement, not a loss of an EA class identity. The old actionB symbol is
+pinned only to ILT `000122AB`; independently resolving that E9 reaches the
+existing matched `Gen001C9AC0::handle(int)` row at `001C9AC0`. Both use a
+nonvirtual thiscall with one integer argument. The updated caller uses that
+same existing body directly; neither spelling proves a historical class name.

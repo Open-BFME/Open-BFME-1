@@ -14528,5 +14528,15 @@
   "after_sha256": "ebfbe82e92dcb07078044e4777b1acc138cb6f29e0167de67d232d42f200c5bb",
   "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
   "reason": "Snapshot-specific local-view correction: retail registered ctor and unique slot identify ClickReactionBehavior::update; preserve the old indirect ABI and fields as address-kept layout views rather than presenting generated Bfme names as EA identities. The owner/state pairing is disambiguated in the evidence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/WeaponModeSpecialPowerUpdateUpdateRva002B2DE0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/WeaponModeSpecialPowerUpdateUpdate.cpp",
+  "old_name": "BfmeObjE10",
+  "new_name": "Gen001C9AC0",
+  "before_sha256": "6eba8a9f9948bf51abc59da68078d007be1cbfa0d86dbb347f161030c8b71a1f",
+  "after_sha256": "d238d8babf8bbc5732a9cec0f908268bad5a6ab9b26444bbfd5d61bb68360083",
+  "evidence": "targets/game/reverse/identity_evidence/update-slot0.md",
+  "reason": "The old actionB declaration is only a pin alias through ILT 000122AB to body 001C9AC0. The replacement uses that body's existing matched address-derived Gen001C9AC0::handle(int) declaration, preserving its ABI without treating the local BfmeObjE10 spelling as a historical class identity."
  }
 ]

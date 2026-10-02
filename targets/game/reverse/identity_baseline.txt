@@ -34,7 +34,7 @@
 multi_name.family = 0
 multi_name.different = 0
 size_outlier.indicted = 1
-ctor_vtable.contradicted = 21
+ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
 one_identity.surplus = 2516
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
