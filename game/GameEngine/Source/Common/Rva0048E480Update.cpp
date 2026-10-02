@@ -81,7 +81,12 @@ struct RegionBox
 };
 
 extern GameClient *TheGameClient;
-extern MouseState *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse (defined once in
+// GameEngine/Source/GameClient/Input/Mouse.cpp), so the extern must be spelled
+// Mouse * to mangle to ?TheMouse@@3PAVMouse@@A.  The local MouseState above is
+// only the offset view read here, so the casts stay at the uses.
+class Mouse;
+extern Mouse *TheMouse;
 // Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
 // the TU keeps its own offset view and casts at each use.
 class GameLogic;
@@ -119,8 +124,8 @@ void Rva0048E480::update()
 		return;
 	}
 
-	int mx = TheMouse->x;
-	int my = TheMouse->y;
+	int mx = reinterpret_cast<MouseState *>(TheMouse)->x;
+	int my = reinterpret_cast<MouseState *>(TheMouse)->y;
 	RegionBox *box = m_box;
 	if (mx > box->x0 && mx < box->x1 && my > box->y0 && my < box->y1
 		&& frame > m_stamp)

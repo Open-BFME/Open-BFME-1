@@ -33,11 +33,17 @@ public:
 	void bfmeSetDYF(bool on);
 };
 
-extern BfmeGlobDYF *g_bfmeObjDYF;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse (defined once in
+// GameEngine/Source/GameClient/Input/Mouse.cpp), so the extern must be spelled
+// Mouse * to mangle to ?TheMouse@@3PAVMouse@@A.  The local BfmeGlobDYF above is
+// only the member view called here, so the cast stays at the call site.
+class Mouse;
+
+extern Mouse *TheMouse;
 
 void bfmeGoDYF(const char *s)
 {
-	g_bfmeObjDYF->bfmeSetDYF(_strcmpi(s, (const char *)bfmeStrDYF) == 0);
+	((BfmeGlobDYF *)TheMouse)->bfmeSetDYF(_strcmpi(s, (const char *)bfmeStrDYF) == 0);
 }
 
 extern "C" __declspec(dllimport) int __cdecl sscanf(const char *s, const char *fmt, void *out);

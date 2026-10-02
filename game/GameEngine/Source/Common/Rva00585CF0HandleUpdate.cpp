@@ -158,7 +158,12 @@ struct Rva005A63D0Mouse {
 	virtual void bfmeSlot13AAX();
 	virtual void bfmeSetCursorAAX(int kind);
 };
-extern Rva005A63D0Mouse *TheMouse;
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse (defined once in
+// GameEngine/Source/GameClient/Input/Mouse.cpp), so the extern must be spelled
+// Mouse * to mangle to ?TheMouse@@3PAVMouse@@A.  The local view above is only
+// the slots called here, so the casts stay at the call sites.
+class Mouse;
+extern Mouse *TheMouse;
 
 // Retail 0x00585D60: handle callback; events 2/3 update +38 and event 5
 // requests the final transition. Cache the range end as retail does.
@@ -176,7 +181,7 @@ void BfmeHostYF::rva00585D60(BfmeHandleYF h)
 		}
 	}
 	if (o->m_field38) {
-		TheMouse->bfmeSetCursorAAX(5);
+		((Rva005A63D0Mouse *)TheMouse)->bfmeSetCursorAAX(5);
 		Glo012F1028->m_field28->set(o->m_field14);
 		((Rva003C6200Owner*)Glo012F1028->m_field28)->update((Rva003C6200Item*)o->m_field14, false);
 	}
@@ -189,7 +194,7 @@ void BfmeHostYF::rva00585D60(BfmeHandleYF h)
 	if (activate) {
 		Glo012F1028->rva003C4740();
 		g_bfmeGameCW->rva0060D4C0(0);
-		TheMouse->bfmeSetCursorAAX(1);
+		((Rva005A63D0Mouse *)TheMouse)->bfmeSetCursorAAX(1);
 		((Rva003BCA20*)Glo012F1028)->go();
 	}
 }

@@ -111,7 +111,13 @@ public:
 	int m_bfmeValue;					// +0x4DA8
 };
 
-extern BfmeStateDS *g_bfmeStateDS;				// retail 0x012F4C5C
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse (defined once in
+// GameEngine/Source/GameClient/Input/Mouse.cpp), so the extern must be spelled
+// Mouse * to mangle to ?TheMouse@@3PAVMouse@@A.  The local BfmeStateDS above is
+// only the offset view read here, so the cast stays at the use.
+class Mouse;
+
+extern Mouse *TheMouse;				// retail 0x012F4C5C
 
 class Gen_005B4260
 {
@@ -132,7 +138,7 @@ void Gen_005B4260::bfmeAddMask(int mask)
 	int flags = m_bfmeFlags;
 
 	if (flags == 0)
-		m_bfmeBase = g_bfmeStateDS->m_bfmeValue;
+		m_bfmeBase = reinterpret_cast<BfmeStateDS *>(TheMouse)->m_bfmeValue;
 
 	m_bfmeDirty = true;
 

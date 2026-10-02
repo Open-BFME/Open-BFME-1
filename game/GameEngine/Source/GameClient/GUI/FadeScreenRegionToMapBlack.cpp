@@ -87,7 +87,14 @@ public:
 	virtual void slot34();
 	virtual void setCursor(Int cursor);
 };
-extern BfmeZ1100 *TheMouse;
+
+// Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse (defined once in
+// GameEngine/Source/GameClient/Input/Mouse.cpp), so the extern must be spelled
+// Mouse * to mangle to ?TheMouse@@3PAVMouse@@A.  The local BfmeZ1100 above is
+// only the view of the non-virtual bfmeEnd1100 called below, so the cast stays
+// at that call site (setCursor/setCursorTooltip are virtual on Mouse).
+class Mouse;
+extern Mouse *TheMouse;
 
 class Mouse
 {
@@ -128,9 +135,9 @@ unsigned fade005651F0(float, Bool firstCall)
 	else if (((TransitionHandler *)TheTransitionHandler)->isFinished())
 	{
 		result = 3;
-		((Mouse *)TheMouse)->setCursor(1);
-		TheMouse->bfmeEnd1100(1);
-		((Mouse *)TheMouse)->setCursorTooltip(
+		TheMouse->setCursor(1);
+		((BfmeZ1100 *)TheMouse)->bfmeEnd1100(1);
+		TheMouse->setCursorTooltip(
 			UnicodeString::TheEmptyString, -1, 0, 1.0f);
 		Glo012F7048->setMode(1, false);
 	}
