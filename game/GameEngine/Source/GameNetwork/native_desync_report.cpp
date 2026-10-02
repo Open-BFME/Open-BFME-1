@@ -108,7 +108,13 @@ public:
     virtual void slot12();
     virtual void message(UnicodeString text, ...);
 };
-extern DesyncInGameUI *TheInGameUI;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; DesyncInGameUI above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 struct DesyncSystemTime
 {
@@ -165,7 +171,7 @@ void BFMEDesyncCheck::writeReportIfMismatched()
         m_crcBeforeClientUpdate != crc)
     {
         if (TheInGameUI)
-            TheInGameUI->message(L"GameLogic changed outside of GameLogic::update()!");
+            ((DesyncInGameUI *)TheInGameUI)->message(L"GameLogic changed outside of GameLogic::update()!");
         AsciiString filename;
         AsciiString report;
         IPEnumeration enumeration;

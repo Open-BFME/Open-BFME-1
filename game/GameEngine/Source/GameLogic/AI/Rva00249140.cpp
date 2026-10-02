@@ -145,7 +145,14 @@ public:
 };
 
 extern BfmeRva9140GlobalB *g_bfmeRva9140GlobalB;
-extern BfmeRva9140GlobalC *g_bfmeRva9140GlobalC;
+
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeRva9140GlobalC above stays as this TU's local view of the
+// pointee, so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;
 
 class Rva00249140
 {
@@ -167,7 +174,7 @@ void Rva00249140::update(BfmeRva9140Member *member)
 			BfmeRva9140GlobalBResult *value =
 				g_bfmeRva9140GlobalB->fetch(0x3ec);
 			value->consume(member->m_index);
-			g_bfmeRva9140GlobalC->notify(ai);
+			((BfmeRva9140GlobalC *)TheInGameUI)->notify(ai);
 		}
 		member->setMode(3, 1);
 	}

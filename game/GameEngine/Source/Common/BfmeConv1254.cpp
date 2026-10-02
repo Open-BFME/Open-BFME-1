@@ -107,7 +107,13 @@ public:
 	virtual void bfmeMark1254(int a, BfmeVec1254 *b, unsigned int c);
 };
 
-extern BfmeR1254 *g_bfme1254;
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; BfmeR1254 above stays as this TU's local view of the pointee,
+// so the use casts.
+class InGameUI;
+
+extern InGameUI *TheInGameUI;		// retail 0x012F148C
 extern const float g_bfmeK1254;
 
 class BfmeQ1254
@@ -159,5 +165,5 @@ void BfmeA1254::bfmeDraw1254(BfmeS1254 *a, int b)
 	v.m_bfme04 = q->m_bfme04;
 	v.m_bfme08 = *(volatile float *)&q->m_bfme08 + g_bfmeK1254;
 	c = ((BfmeQ1254 *)((Object *)a)->getControllingPlayer())->m_bfme1c4 | 0xe6000000;
-	g_bfme1254->bfmeMark1254(b, &v, c);
+	((BfmeR1254 *)TheInGameUI)->bfmeMark1254(b, &v, c);
 }
