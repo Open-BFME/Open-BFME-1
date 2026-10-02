@@ -95,7 +95,9 @@ class AsciiString : public StringBase<char>
 
 extern const AsciiString Rva01336E50EmptyString;
 extern float g_Va0112E8B0;
-extern float g_bfmeElapsedScale;	// 0x0111BB98, milliseconds per logic frame
+// Retail VA 0x0111BB98: bytes 55 55 05 42. The fcomp dword in
+// RVA 0x006ABDA0 + 0xF9 proves this four-byte delay threshold.
+float g_bfmeElapsedScale = 33.333332061767578125f;
 
 // Refcounted base the event carries at +0x70 (Rva0069B4B0HandleAssignPtr.cpp).
 class RefCountedEvent0070
