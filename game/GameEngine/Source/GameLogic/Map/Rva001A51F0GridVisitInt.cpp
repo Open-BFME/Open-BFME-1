@@ -166,9 +166,11 @@ void Rva001A51F0GridVisitInt::visit(const Coord3D *position, Real radius,
 			checkDistance:
 				{
 					Coord3D delta;
-					delta.set(record->position.x, record->position.y, record->position.z);
+					delta.x = record->position.x;
+					delta.y = record->position.y;
+					delta.z = record->position.z;
 					delta.sub(position);
-					if (radius * radius > delta.lengthSqr())
+					if (radius * radius > delta.x * delta.x + delta.y * delta.y + delta.z * delta.z)
 					{
 						TerrainVisualP48Scan *visual = (TerrainVisualP48Scan *)TheTerrainVisual;
 						visual->notify(key, *payload);
