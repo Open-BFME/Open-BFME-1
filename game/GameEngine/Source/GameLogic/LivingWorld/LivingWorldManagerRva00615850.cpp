@@ -52,10 +52,22 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 
-class Rva0061C1D0Object
+// The map's mapped type stays address-derived here so the hash_map
+// instantiations keep the mangled names the sibling bodies at 0x006157C0,
+// 0x006159C0 and 0x00615C20 already pin.  Retail's call at ILT 0x0001447F goes
+// to body 0x0061BBB0, which is BfmeThingKB::bfmeGoKB, defined once in
+// game/GameEngine/Source/Common/BfmeTwoHundredNineteen.cpp -- the same
+// established spelling the matched 0x006156A0 body uses (see
+// BfmeHostAAYStep5.cpp), so the call is spelled that way and the receiver is
+// cast at the use.
+class BfmeThingKB
 {
 public:
-	void rva0061bbb0();
+	void bfmeGoKB();
+};
+
+class Rva0061C1D0Object
+{
 };
 
 typedef _STL::hash_map<AsciiString, Rva0061C1D0Object *,
@@ -79,6 +91,6 @@ void BfmeLivingWorldManager::rva00615850()
 	for (Rva00615850Map::iterator it = m_objects.begin();
 		it != m_objects.end(); ++it)
 	{
-		it->second->rva0061bbb0();
+		((BfmeThingKB *)it->second)->bfmeGoKB();
 	}
 }

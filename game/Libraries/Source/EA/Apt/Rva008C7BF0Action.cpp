@@ -42,7 +42,11 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-unsigned int Rva00892370Get();
+
+// Retail's 0x00892370 body is the global dword getter defined once in
+// game/GameEngine/Source/Common/GlobalDwordGetters.cpp as
+// ?Rva00892370Get@@YAHXZ, so the reference has to carry its `int` return.
+int Rva00892370Get();
 
 void AptActionInterpreter::_FunctionRva008C7BF0(
 	AptActionInterpreter *interpreter, LocalContextT *)

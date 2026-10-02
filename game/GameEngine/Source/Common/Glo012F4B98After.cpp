@@ -2,7 +2,6 @@
 // Glo012F4B98Type::after, retail RVA 0x0058EFF0, 129 bytes.
 
 void __cdecl operator delete(void *block) throw();
-extern "C" void __cdecl cleanup(void *block);
 
 class Glo012F4B98Type
 {
@@ -45,13 +44,20 @@ void Glo012F4B98Type::after()
 		operator delete(optional);
 	*(void * volatile *)&m_optional = 0;
 
-	__asm {
-		mov ecx, dword ptr [esi+484h]
-		push ecx
-		call cleanup
-		mov dword ptr [esi+484h], ebx
-		add esp, 4
+	// Retail at +0x57 is `mov ecx,[esi+484h] / push ecx / call ??3@YAXPAX@Z /
+	// mov [esi+484h],ebx / add esp,4`: a second unguarded deallocation whose
+	// pointer is loaded into ECX (not EAX, unlike the guarded one above), whose
+	// nulling store lands after the call and before the `add esp,4`.  Reading
+	// and clearing the slot through a `void * volatile *` is what keeps that
+	// load in ECX and the cleanup below the store; a plain `m_second = 0` puts
+	// the `add esp,4` first.  The callee is retail's own operator delete,
+	// declared at the top of this file.
+	{
+		void * volatile *slot = &m_second;
+		operator delete(*slot);
+		*slot = 0;
 	}
+
 	m_head0 = 0;
 	m_head1 = 0;
 	m_optionalMarker = 0;

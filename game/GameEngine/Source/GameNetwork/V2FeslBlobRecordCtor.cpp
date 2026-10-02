@@ -5,15 +5,19 @@
 // this 0x228-byte record.  Names below remain address-derived where the retail
 // image supplies layout but not C++ type information.
 
-class Rva007FF700FeslString
+// The two members at +0x30 and +0x3C are twelve bytes apart and the retail
+// body calls 0x007FF700 on each of them before writing anything else.  That
+// body is the calendar-date default constructor defined in
+// game/GameEngine/Source/GameNetwork/Y4DirtySockDate.cpp as
+// ??0Rva007FF700Date@@QAE@XZ, three ints wide, so the reference has to carry
+// that type's name (only the name is shared: this TU never reads the fields).
+struct Rva007FF700Date
 {
-public:
-	Rva007FF700FeslString();
+	int m_month;
+	int m_day;
+	int m_year;
 
-private:
-	unsigned int m_kind;
-	void *m_text;
-	unsigned int m_capacity;
+	Rva007FF700Date();
 };
 
 class Rva007F0CB0BlobRecord
@@ -34,8 +38,8 @@ private:
 	volatile int m_024;
 	volatile int m_028;
 	volatile int m_02C;
-	Rva007FF700FeslString m_030;
-	Rva007FF700FeslString m_03C;
+	Rva007FF700Date m_030;
+	Rva007FF700Date m_03C;
 	volatile unsigned char m_048;
 	char m_pad049[ 0x1F ];
 	volatile unsigned char m_068;
