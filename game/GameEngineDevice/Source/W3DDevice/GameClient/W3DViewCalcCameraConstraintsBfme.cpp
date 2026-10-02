@@ -103,7 +103,7 @@ void W3DView::calcCameraConstraints()
 		center.y -= bottom.y;
 		center.z = BfmeZeroRange;
 
-		Real offset = center.length();
+		Real offset = (float)sqrt(center.x * center.x + center.y * center.y + center.z * center.z);
 		if (_isnan(offset))
 			offset = BfmeZeroRange;
 		if (offset > mapRegion.hi.x * 0.25f)
