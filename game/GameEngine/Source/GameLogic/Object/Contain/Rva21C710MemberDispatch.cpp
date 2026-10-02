@@ -18,12 +18,27 @@ public:
 	void prepare(Rva21C710Object *object);
 };
 
+class Object;
+class BfmeRva49250Object;
+
+// Retail ILT 0x0002CE44 reaches the matched member dispatcher at 0x00227B60.
+class Rva00227B60ContainDispatch
+{
+public:
+	void dispatch(Object *object, bool flag);
+};
+
+// Retail ILT 0x00012E0E reaches the matched nonmember body at 0x00249250.
+class BfmeRva49250Base
+{
+public:
+	void bfmeApplyObject(BfmeRva49250Object *object, void *action);
+};
+
 class Rva21C710MemberDispatch
 {
 public:
 	void dispatch(Rva21C710Object *object, void *action);
-	void dispatchNew(Rva21C710Object *object, void *action);
-	void dispatchMember(Rva21C710Object *object, void *action);
 
 private:
 	char gap[0x99C];
@@ -40,11 +55,12 @@ void Rva21C710MemberDispatch::dispatch(Rva21C710Object *object, void *action)
 
 	while (node != end) {
 		if (node->object == object) {
-			dispatchMember(object, 0);
+			((Rva00227B60ContainDispatch *)this)->dispatch((Object *)object, false);
 			return;
 		}
 		node = node->next;
 	}
 
-	dispatchNew(object, action);
+	((BfmeRva49250Base *)this)->bfmeApplyObject(
+		(BfmeRva49250Object *)object, action);
 }
