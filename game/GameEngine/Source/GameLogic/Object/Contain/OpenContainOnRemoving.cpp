@@ -52,7 +52,7 @@ public:
  BitFlags(BogusInitType tag,int a,int b,int c,int d,int e);
  unsigned int m_words[(NUMBITS+31)/32];
 };
-class Rva00367E30Sink { public: void apply(int*,int); };
+class AsciiString;
 class Object
 {
 public:
@@ -70,7 +70,11 @@ public:
 
 	ObjectID getID() const { return m_id; }
  void clearModelConditionFlags(const BitFlags<304>&);
- void applyBonus(int *bonus) { ((Rva00367E30Sink*)this)->apply(bonus,-1); }
+ // Retail call 0x227F8C uses ILT 0x37A56 -> 0x1C1DA0: the existing
+ // bool-returning modifier method (thiscall, string reference, int, ret 8).
+ // This caller discards AL and passes the same entry address and duration -1.
+ Bool applyAttributeModifier(const AsciiString &name, Int duration);
+ void applyBonus(int *bonus) { applyAttributeModifier(*(const AsciiString *)bonus,-1); }
 
 private:
 	unsigned char m_unmodelled[0x74 - 4];
