@@ -59,8 +59,10 @@ class Object
 {
 public:
 	Weapon *getCurrentWeapon( WeaponSlotType *slot );
-	Bool setWeaponLock( Int slot, Int lockType );
+	void setWeaponLock( Int slot, Int lockType );
 };
+
+typedef Bool (Object::*BfmeSetWeaponLockResult)( Int, Int );
 
 class AIGroup
 {
@@ -83,7 +85,8 @@ Bool AIGroup::setWeaponLockForGroup( Int weaponSlot, Int lockType )
 		if ( object )
 		{
 			Weapon *weapon = object->getCurrentWeapon( (WeaponSlotType *)0 );
-			if ( object->setWeaponLock( weaponSlot, lockType ) )
+			if ( (object->*reinterpret_cast<BfmeSetWeaponLockResult>(
+				&Object::setWeaponLock))( weaponSlot, lockType ) )
 				any = true;
 
 			if ( weapon && weapon->m_template->m_bfmeFlag532 )
