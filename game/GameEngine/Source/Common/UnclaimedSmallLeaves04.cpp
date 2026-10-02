@@ -792,3 +792,107 @@ char *Rva009F2FD0::adjusted() const
 }
 
 #pragma pack( pop )
+
+// Seven more of the same evidence class, spelled by hand.
+#pragma pack( push, 1 )
+
+// 0x00891AD0 (6 bytes): bumps the word count at +0 of the block at +0.
+class Rva00891AD0
+{
+public:
+	void addRef();
+
+	unsigned short *m_refs;
+};
+
+void Rva00891AD0::addRef()
+{
+	++*m_refs;
+}
+
+// 0x0089C7A0 (7 bytes): word at +6 of the block at +0.
+class Rva0089C7A0
+{
+public:
+	short get() const;
+
+	struct Block { char m_lead[ 6 ]; short m_6; } *m_block;
+};
+
+short Rva0089C7A0::get() const
+{
+	return m_block->m_6;
+}
+
+// 0x008D5E50 (5 bytes): increments the word at +0x60.
+class Rva008D5E50
+{
+public:
+	void increment();
+
+	char m_lead[ 0x60 ];
+	short m_60;
+};
+
+void Rva008D5E50::increment()
+{
+	++m_60;
+}
+
+// 0x00921280 (5 bytes): returns true and pops one dword.
+class Rva00921280
+{
+public:
+	bool value( int ) const;
+};
+
+bool Rva00921280::value( int ) const
+{
+	return true;
+}
+
+// 0x009245F0 (7 bytes): dword at +0xC of the object at +0x60.
+class Rva009245F0
+{
+public:
+	int get() const;
+
+	char m_lead[ 0x60 ];
+	struct Inner { char m_lead[ 0xC ]; int m_c; } *m_inner;
+};
+
+int Rva009245F0::get() const
+{
+	return m_inner->m_c;
+}
+
+// 0x00945B00 (6 bytes): dword at +0x28 of the object at +0.
+class Rva00945B00
+{
+public:
+	int get() const;
+
+	struct Inner { char m_lead[ 0x28 ]; int m_28; } *m_inner;
+};
+
+int Rva00945B00::get() const
+{
+	return m_inner->m_28;
+}
+
+// 0x00AFE6D0 (4 bytes): decrements the dword at +0x14.
+class Rva00AFE6D0
+{
+public:
+	void decrement();
+
+	char m_lead[ 0x14 ];
+	int m_14;
+};
+
+void Rva00AFE6D0::decrement()
+{
+	--m_14;
+}
+
+#pragma pack( pop )
