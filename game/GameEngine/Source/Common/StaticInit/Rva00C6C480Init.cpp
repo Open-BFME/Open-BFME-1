@@ -12,7 +12,7 @@ class CriticalSectionClass
 {
 public:
     CriticalSectionClass();
-    ~CriticalSectionClass() {}
+    ~CriticalSectionClass();
     void *m_handle;
     unsigned m_locked;
 };

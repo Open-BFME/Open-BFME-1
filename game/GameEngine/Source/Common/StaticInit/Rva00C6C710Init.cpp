@@ -11,7 +11,7 @@ class Rva007DB820
 {
 public:
     Rva007DB820();
-    ~Rva007DB820() {}
+    ~Rva007DB820();
     unsigned char m_storage[0x54];
 };
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
