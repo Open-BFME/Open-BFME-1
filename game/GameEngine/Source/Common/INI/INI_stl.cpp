@@ -168,7 +168,6 @@ static const BlockParse theTypeTable[] =
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// ?isValidINIFilename@INI@@ present-unmatched
 Bool INI::isValidINIFilename( const char *filename )
 {
 	if( filename == NULL )
@@ -683,21 +682,8 @@ void INI::parseBitInInt32( INI *ini, void *instance, void *store, const void* us
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-/*static*/ Bool INI::scanBool(const char* token)
-{
-	// translate string yes/no into TRUE/FALSE
-	if( stricmp( token, "yes" ) == 0 )
-		return TRUE;
-	else if( stricmp( token, "no" ) == 0 )
-		return FALSE;
-	else
-	{
-		DEBUG_CRASH(("invalid boolean token %s -- expected Yes or No\n",token));
-		throw INI_INVALID_DATA;
-		return false;	// keep compiler happy
-	}
+// Retail definition owned by ini_parsers.cpp.
 
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an *ASCII* string from buffer and assign at location 'store' */
@@ -1719,13 +1705,8 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ Real INI::scanReal(const char* token)
-{
-	Real value;
-	if (sscanf( token, "%f", &value ) != 1)
-		throw INI_INVALID_DATA;
-	return value;
-}
+// Retail definition owned by ini_parsers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ Real INI::scanPercentToReal(const char* token)
@@ -2080,7 +2061,6 @@ Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, cha
 //-------------------------------------------------------------------------------------------------
 // parse the line and return whether the given line is a Block declaration of the form
 // [whitespace] end [EOL]
-// ?isEndOfBlock@INI@@ present-unmatched
 Bool INI::isEndOfBlock( char *bufferToCheck )
 {
 	Bool retVal = true;
