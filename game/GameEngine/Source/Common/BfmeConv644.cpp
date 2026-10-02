@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#include "PreRTS.h"
+#include "Common/StateMachine.h"
+
 class BfmeOutCTA
 {
 public:
@@ -16,7 +21,6 @@ public:
 	virtual void bfmeSpareCTA_12();
 	virtual void bfmeSpareCTA_13();
 	virtual void bfmeWriteVCTA(void *what);
-	void bfmeWriteNCTA(void *what);
 };
 
 class ObjectIsMobileBody;
@@ -44,7 +48,8 @@ void BfmeThingCTA::bfmeGoCTA(void *one, void *two)
 	if (m_bfmeSub->isMobile())
 	{
 		m_bfmeOut->bfmeBeginCTA();
-		m_bfmeOut->bfmeWriteNCTA(one);
+		// ILT 0x0000314D resolves to StateMachine::setGoalPosition at 0x000A0880.
+		reinterpret_cast<StateMachine *>(m_bfmeOut)->setGoalPosition(static_cast<const Coord3D *>(one));
 		m_bfmeVal = two;
 		m_bfmeOut->bfmeSendCTA(0x2f);
 	}

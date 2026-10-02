@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#include "PreRTS.h"
+#include "GameLogic/AIStateMachine.h"
+
 class BfmeOutCSH
 {
 public:
@@ -16,7 +21,6 @@ public:
 	virtual void bfmeSpareCSH_12();
 	virtual void bfmeSpareCSH_13();
 	virtual void bfmeSpareCSH_14();
-	void bfmeWriteNCSH(void *what);
 };
 
 class ObjectIsMobileBody
@@ -43,7 +47,8 @@ void BfmeThingCSH::bfmeGoCSH(void *one, void *two)
 	{
 		m_bfmeOut->bfmeBeginCSH();
 		m_bfmeVal = two;
-		m_bfmeOut->bfmeWriteNCSH(one);
+		// ILT 0x00036192 resolves to AIStateMachine::setGoalWaypoint at 0x0016AEB0.
+		reinterpret_cast<AIStateMachine *>(m_bfmeOut)->setGoalWaypoint(static_cast<const Waypoint *>(one));
 		m_bfmeOut->bfmeSendCSH(0x13);
 	}
 }
