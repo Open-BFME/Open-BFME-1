@@ -14,6 +14,7 @@
 // derived from the bank; no semantic identity is claimed here.
 
 #include "ascii_string.h"
+#include <new>
 #include <vector>
 
 class ThingTemplate;
@@ -110,6 +111,24 @@ public:
 	int m_f40;
 	Gen_000F9C60 m_audioEvent;
 };
+
+// The record's copy construction is retail body 0x000F9FF0, whose defining
+// name is Rva000F9FF0's copy constructor.  Spell the copy through that class so
+// the emitted reference is the resolved one; the 96-byte layout is unchanged.
+class Rva000F9FF0
+{
+public:
+	Rva000F9FF0(const Rva000F9FF0 &other);
+};
+
+namespace _STL
+{
+template<>
+inline void _Construct(Rva000FB210Element *p, const Rva000FB210Element &value)
+{
+	new (p) Rva000F9FF0(*(const Rva000F9FF0 *)&value);
+}
+}
 
 // Retail 0x0013FC80 scans the behaviour module vector at +0x294 and returns an
 // int; the matched Player walk has established no semantic name for it, so the
