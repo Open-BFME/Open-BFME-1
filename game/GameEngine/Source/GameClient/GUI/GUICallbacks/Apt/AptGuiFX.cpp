@@ -60,7 +60,10 @@ public:
 		int p7, int p8);
 };
 
-class FontLibraryBFMERetail
+// Retail global 0x012F1B38 is defined as `FontLibrary *TheFontLibrary`
+// (?TheFontLibrary@@3PAVFontLibrary@@A); this TU's view of the pointee needs
+// the class spelled FontLibrary (a class, not a struct) for that mangling.
+class FontLibrary
 {
 public:
 	GameFont *getFont(AsciiString *face, float size, unsigned char style);
@@ -74,7 +77,7 @@ extern "C" __declspec(dllimport) int __cdecl _snprintf(
 extern Rva00510DC0DisplayView *Rva00510DC0Display;
 extern DisplayStringManager *TheDisplayStringManager;
 extern WindowManager *g_theWindowManager;
-extern FontLibraryBFMERetail *Rva00510DC0FontLibraryGlobal;
+extern FontLibrary *TheFontLibrary;
 extern int Rva00510DC0DisplayWidth;
 extern int Rva00510DC0DisplayHeight;
 extern int g_bfmeVal995B;
@@ -92,7 +95,7 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	float minScale = (dimensions[0] < dimensions[1]) ? dimensions[0] : dimensions[1];
 	float scaledSize = size * minScale;
 	_ReadWriteBarrier();
-	GameFont *font = Rva00510DC0FontLibraryGlobal->getFont(
+	GameFont *font = TheFontLibrary->getFont(
 		face, scaledSize, style);
 	if (font == 0)
 		return;

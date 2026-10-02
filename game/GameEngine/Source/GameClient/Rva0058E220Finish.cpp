@@ -29,10 +29,15 @@ static inline Rva00579160Manager *Rva00579160TheManager()
 }
 
 class GameFont;
-struct FontLibraryBFMERetail {
+// Retail global 0x012F1B38: the defining declaration is `FontLibrary *TheFontLibrary`,
+// so the class name must spell `FontLibrary` (class, not struct) for the mangling
+// to be ?TheFontLibrary@@3PAVFontLibrary@@A.  No header in game/ declares
+// FontLibrary; this TU only needs the member call below.
+class FontLibrary {
+public:
     GameFont *getFont(AsciiString *name, float size, unsigned char bold);
 };
-extern FontLibraryBFMERetail *TheFontLibrary;
+extern FontLibrary *TheFontLibrary;
 
 struct Rva00588FA0Widget {
     virtual void slot00(); virtual void slot04(); virtual void slot08();

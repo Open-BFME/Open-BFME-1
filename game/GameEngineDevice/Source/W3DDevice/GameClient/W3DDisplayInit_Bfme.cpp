@@ -85,10 +85,7 @@ class Rva006E6C10 {
     char data[0x30];
 public: Rva006E6C10(); void apply(); void setAndNotify(int);
 };
-extern void *Rva012F1B38;
-
 #define TheGlobalLanguageData Rva012F1484
-#define TheFontLibrary Rva012F1B38
 #define m_3DInterfaceScene Rva012F8060
 #define m_2DScene Rva012F805C
 #define m_3DScene Rva012F8058
@@ -115,6 +112,10 @@ class Rva006FC970 { char bytes[0x2868]; public: Rva006FC970(); };
 extern Rva009EB960 *Rva0134FAA0;
 class Rva00711050 { public: void store(Open2Counted *, int); };
 class FontLibrary { public: GameFont *getFont(AsciiString *, float, bool); };
+// Retail global 0x012F1B38 is defined as `FontLibrary *TheFontLibrary`
+// (?TheFontLibrary@@3PAVFontLibrary@@A); spelling it that way replaces the old
+// void* stand-in and its #define alias.
+extern FontLibrary *TheFontLibrary;
 bool Rva00938620(AsciiString, AsciiString);
 void Rva009EBC00(int);
 void Rva008FD330(bool);
