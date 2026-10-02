@@ -15,7 +15,12 @@ struct BfmeHolderRE
 	BfmeMakerRE *m_bfmeMaker;
 };
 
-BfmeMakerRE *bfmeMakeRE();
+// 0x007F4D50 is the matched Bfme5 factory (ledger:
+// ?bfme5MakeObj18@@YAPAUBfme5Obj18@@XZ in Bfme5FactoryStubs.cpp), so the
+// maker this holder wants is spelled with that factory's own name and view.
+struct Bfme5Obj18;
+
+Bfme5Obj18 * __cdecl bfme5MakeObj18();
 void Rva007E8640Copy(char *destination, unsigned int capacity, const char *source);
 
 class BfmeThingRE
@@ -32,7 +37,7 @@ void BfmeThingRE::bfmeRunRE()
 {
 	BfmeHolderRE *holder = m_bfmeHolder;
 	if (holder->m_bfmeMaker == 0)
-		holder->m_bfmeMaker = bfmeMakeRE();
+		holder->m_bfmeMaker = (BfmeMakerRE *)bfme5MakeObj18();
 	m_bfmeHolder->m_bfmeMaker->bfmeDoRE();
 }
 
