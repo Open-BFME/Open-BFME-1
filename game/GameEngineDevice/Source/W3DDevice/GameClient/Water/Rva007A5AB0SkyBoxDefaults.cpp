@@ -45,25 +45,34 @@ public:
 	SkyBoxRenderObject *m_skyBox;
 };
 
-extern WaterSkyBoxSettingsOwner *TheWaterRenderObj;
+// Retail's global is a WaterRenderObjClass *; the sky box owner view used
+// below sits at the same offsets, so the owner spelling is cast on use.
+class WaterRenderObjClass;
+
+extern WaterRenderObjClass *TheWaterRenderObj;
 
 // Each local sits in its own block: VC7.1 then lets scale and rotation share
 // one frame slot, which is the 0x14-byte frame retail allocates.
 void dup_007A5AB0()
 {
-	if (TheWaterRenderObj->m_skyBox != 0) {
-		TheWaterRenderObj->m_skyBox->setPosition(Vector3(0.0f, 0.0f, 0.0f));
+	if (reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->m_skyBox != 0) {
+		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->m_skyBox->setPosition(Vector3(0.0f, 0.0f, 0.0f));
 	}
 	{
 		float scale = 1.0f;
-		TheWaterRenderObj->setSkyBoxScale(&scale);
+		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->setSkyBoxScale(&scale);
 	}
 	{
 		float rotation = 0.0f;
-		TheWaterRenderObj->setSkyBoxRotation007A15A0(&rotation);
+		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->setSkyBoxRotation007A15A0(&rotation);
 	}
 	{
 		AsciiString texture("DefaultSky");
-		TheWaterRenderObj->setSkyBoxTexture007A58C0(&texture);
+		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->setSkyBoxTexture007A58C0(&texture);
 	}
 }

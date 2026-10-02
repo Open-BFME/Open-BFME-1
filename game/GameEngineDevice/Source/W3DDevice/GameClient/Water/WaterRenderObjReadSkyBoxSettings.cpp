@@ -142,7 +142,10 @@ public:
 	AsciiString m_skyBoxTextureNames[5];
 };
 
-extern WaterSkyBoxSettingsOwner *TheWaterRenderObj;
+// Retail's global is a WaterRenderObjClass *: the sky box setters reached
+// below live at the same offsets in either spelling, so the owner view is
+// cast on use rather than merged into WaterRenderObjClass.
+extern WaterRenderObjClass *TheWaterRenderObj;
 
 void WaterSkyBoxSettingsOwner::setSkyBoxTexture007A58C0(
 	const AsciiString *texture)
@@ -189,13 +192,17 @@ bool parseSkyBoxSettings007A5BA0(DataChunkInput &file, DataChunkInfo *, void *)
 	float rotation = file.readReal();
 	AsciiString texture = file.readAsciiString();
 
-	if (TheWaterRenderObj->m_skyBox != 0) {
-		TheWaterRenderObj->setSkyBoxPosition(position.X, position.Y, position.Z);
+	if (reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)->m_skyBox != 0) {
+		reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+			->setSkyBoxPosition(position.X, position.Y, position.Z);
 	}
 
-	TheWaterRenderObj->setSkyBoxScale(&scale);
-	TheWaterRenderObj->setSkyBoxRotation007A15A0(&rotation);
-	TheWaterRenderObj->setSkyBoxTexture007A58C0(&texture);
+	reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+		->setSkyBoxScale(&scale);
+	reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+		->setSkyBoxRotation007A15A0(&rotation);
+	reinterpret_cast<WaterSkyBoxSettingsOwner *>(TheWaterRenderObj)
+		->setSkyBoxTexture007A58C0(&texture);
 	return true;
 }
 

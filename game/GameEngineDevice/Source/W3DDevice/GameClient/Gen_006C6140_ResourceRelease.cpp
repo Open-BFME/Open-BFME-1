@@ -8,12 +8,12 @@ extern void j_0000a2c2(void);
 extern void j_00018403(void);
 extern void j_0004a07f(void);
 
-class Gen006C6140Water
+class WaterRenderObjClass
 {
 public:
 	void ReleaseResources(void)
 	{
-		typedef void (Gen006C6140Water::*MemberThunk)(void);
+		typedef void (WaterRenderObjClass::*MemberThunk)(void);
 		union {
 			void (*function)(void);
 			MemberThunk member;
@@ -53,7 +53,7 @@ public:
 	}
 };
 
-extern Gen006C6140Water *TheWaterRenderObj;
+extern WaterRenderObjClass *TheWaterRenderObj;
 
 class Gen006C6140Owner
 {
