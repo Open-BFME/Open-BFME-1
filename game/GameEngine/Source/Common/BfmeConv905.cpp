@@ -216,7 +216,10 @@ public:
 	void bfmeTwoNF(void *a, int f);
 };
 
-extern BfmeGlobNF *g_bfmeGlobNF;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  BfmeGlobNF
+// above is this TU's view of the piece it needs.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeThingNF
 {
@@ -231,6 +234,6 @@ void BfmeThingNF::bfmeGoNF(void *a)
 	BfmeSubNF *s = m_bfmeSub;
 	if (s) {
 		s->bfmeOneNF(a);
-		g_bfmeGlobNF->bfmeTwoNF(a, 2);
+		reinterpret_cast<BfmeGlobNF *>(TheGameLogic)->bfmeTwoNF(a, 2);
 	}
 }

@@ -11,12 +11,9 @@ struct BfmeX987
 	int m_bfmeId;
 };
 
-// Holder for the GameLogic singleton's dir32 spelling in this TU.
-class BfmeLook987
-{
-};
-
-extern BfmeLook987 *g_bfmeLook987;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  GameLogic
+// comes from the GameLogicObjectLookup.h view included above.
+extern GameLogic *TheGameLogic;
 
 class BfmeA987
 {
@@ -34,7 +31,7 @@ void BfmeA987::bfmeGo987A()
 	bfmeBase987();
 
 	BfmeX987 *x = reinterpret_cast<BfmeX987 *>(
-		reinterpret_cast<GameLogic *>(g_bfmeLook987)->findObjectByID(m_bfmeId));
+		TheGameLogic->findObjectByID(m_bfmeId));
 
 	if (x) {
 		m_bfmeId = x->m_bfmeId;
@@ -49,7 +46,7 @@ void BfmeA987::bfmeGo987B()
 	bfmeBase987();
 
 	BfmeX987 *x = reinterpret_cast<BfmeX987 *>(
-		reinterpret_cast<GameLogic *>(g_bfmeLook987)->findObjectByID(m_bfmeId));
+		TheGameLogic->findObjectByID(m_bfmeId));
 
 	if (x) {
 		m_bfmeId = x->m_bfmeId;
@@ -77,7 +74,7 @@ public:
 void BfmeC987::bfmeGo987C()
 {
 	BfmeDrop987 *x = reinterpret_cast<BfmeDrop987 *>(
-		reinterpret_cast<GameLogic *>(g_bfmeLook987)->findObjectByID(m_bfmeId));
+		TheGameLogic->findObjectByID(m_bfmeId));
 
 	if (x) {
 		x->bfmeClear987(8, 0);
@@ -97,7 +94,7 @@ public:
 void BfmeD987::bfmeGo987D(int unused)
 {
 	BfmeDrop987 *x = reinterpret_cast<BfmeDrop987 *>(
-		reinterpret_cast<GameLogic *>(g_bfmeLook987)->findObjectByID(m_bfmeId));
+		TheGameLogic->findObjectByID(m_bfmeId));
 
 	if (x) {
 		x->bfmeClear987(8, 0);

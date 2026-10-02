@@ -28,8 +28,9 @@ public:
 	BfmeAiDataGS *m_bfmeDataGS;
 };
 
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 
@@ -105,7 +106,7 @@ BfmeStateGS::BfmeStateGS(BfmeArgGS *a)
 	m_bfme44GS = 10.0f;
 	m_bfme14GS = 2;
 	m_bfme18GS = 2;
-	m_bfme28GS = reinterpret_cast<Rva00367E30Logic *>(TheBfmeGameLogic)->m_bfmeFrameGS;
+	m_bfme28GS = reinterpret_cast<Rva00367E30Logic *>(TheGameLogic)->m_bfmeFrameGS;
 	a->m_bfmeFlagGS = 0;
 	m_bfme48GS = 0;
 	m_bfme4cGS = 0;

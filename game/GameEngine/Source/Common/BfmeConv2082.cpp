@@ -160,7 +160,9 @@ struct Rva00367E30Logic
 	int m_bfmeFrameXZ;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeHostXZ
 {
@@ -217,7 +219,7 @@ int BfmeHostXZ::bfmeStartXZ(void *a, int d)
 		if (d < 0)
 			w = -1;
 		else
-			w = TheBfmeGameLogic->m_bfmeFrameXZ + d;
+			w = ((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameXZ + d;
 
 		m_bfmeWhenXZ = w;
 		return 0;

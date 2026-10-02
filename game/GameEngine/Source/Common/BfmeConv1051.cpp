@@ -49,7 +49,10 @@ struct BfmeS1051
 	int m_bfme3c;
 };
 
-extern BfmeS1051 *g_bfmeS1051;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  BfmeS1051
+// above is this TU's view of the layout it reads.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern char g_bfmeFmt1051B[];
 int bfmeCount1051(int a, int b, char *f, int n);
 
@@ -69,7 +72,7 @@ void BfmeB1051::bfmeGo1051B(void)
 {
 	BfmeC1051 *c = m_bfmeC;
 	int n = bfmeCount1051(c->m_bfme0c, c->m_bfme10, g_bfmeFmt1051B, 0x6a);
-	int base = g_bfmeS1051->m_bfme3c;
+	int base = reinterpret_cast<BfmeS1051 *>(TheGameLogic)->m_bfme3c;
 
 	m_bfme24 = base;
 	m_bfme20 = base + n;

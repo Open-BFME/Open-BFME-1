@@ -113,9 +113,10 @@ public:
 	void set(Rva0036CA00Str *, Rva0036CA00Str *, Rva0036CA00Str *);
 };
 
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  The
+// Rva00386090/F0 views below are this TU's local layout guesses.
 class GameLogic;
-extern GameLogic *TheBfmeGameLogic;
-#define g_012F0898 reinterpret_cast<Rva00386090 *>(TheBfmeGameLogic)
+extern GameLogic *TheGameLogic;
 
 class LivingWorldLogic
 {
@@ -153,11 +154,11 @@ void LivingWorldLogic::rva003C3760()
 	_STL::fill(reinterpret_cast<Rva003C3760State *>(m_missionObjectiveStates.begin()),
 		reinterpret_cast<Rva003C3760State *>(m_missionObjectiveStates.end()), resetState);
 
-	if (g_012F0898)
+	if (TheGameLogic)
 	{
-		g_012F0898->set(
+		reinterpret_cast<Rva00386090 *>(TheGameLogic)->set(
 			(Rva0036CA00Str *)((Rva00618E60FieldAddress *)region)->get());
-		((Rva003860F0 *)g_012F0898)->set(
+		reinterpret_cast<Rva003860F0 *>(TheGameLogic)->set(
 			(Rva0036CA00Str *)((Rva00618E70FieldAddress *)region)->get(),
 			(Rva0036CA00Str *)((Rva00618E80FieldAddress *)region)->get(),
 			(Rva0036CA00Str *)((Rva00618E90FieldAddress *)region)->get());

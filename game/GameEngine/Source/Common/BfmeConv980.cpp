@@ -144,17 +144,14 @@ struct BfmeArgC980
 	int m_bfmeKey;
 };
 
-// Holder for the GameLogic singleton's dir32 spelling in this TU.
-class BfmeLookC980
-{
-};
-
-extern BfmeLookC980 *g_bfmeLookC980;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  GameLogic
+// comes from the GameLogicObjectLookup.h view included above.
+extern GameLogic *TheGameLogic;
 
 void __stdcall bfmeGo980C(BfmeArgC980 *a, int b)
 {
 	BfmeXC980 *x = reinterpret_cast<BfmeXC980 *>(
-		reinterpret_cast<GameLogic *>(g_bfmeLookC980)->findObjectByID(a->m_bfmeKey));
+		TheGameLogic->findObjectByID(a->m_bfmeKey));
 
 	if (!x)
 		return;

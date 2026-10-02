@@ -89,10 +89,6 @@ public:
 	Object *getFirstObject();
 };
 
-class GameLogic40D9
-{
-};
-
 class Object
 {
 public:
@@ -141,7 +137,9 @@ extern TerrainLogic *TheTerrainLogic;
 extern Radar *TheRadar;
 extern PartitionManager *ThePartitionManager;
 extern PartitionManager *TheShroudManager;
-extern GameLogic40D9 *TheGameLogic40D9;
+// Retail's GameLogic singleton; only GameLogic.cpp defines it.  The local
+// GameLogic above is this TU's view of it.
+extern GameLogic *TheGameLogic;
 extern View *TheTacticalView;
 
 void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
@@ -180,7 +178,7 @@ void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
 	shroudCall.generic = &Gen_008f7390::m;
 	(TheShroudManager->*shroudCall.typed)(&region, 0.0f);
 
-	Object *object = reinterpret_cast<GameLogic *>(TheGameLogic40D9)->getFirstObject();
+	Object *object = TheGameLogic->getFirstObject();
 	while (object != 0)
 	{
 		object->friend_notifyOfNewMapBoundary();
