@@ -14158,5 +14158,15 @@
   "after_sha256": "1b0e4bb8d4866230ac00d9d6d9991f0ada41b3adaac71da7ec9117a98d013817",
   "evidence": "targets/game/reverse/identity_evidence/peer-connect-callback-provider-bindings.md",
   "reason": "External callback binding correction only: retail DIR32 address identifies the existing matched C provider; no implementation or ledger identity is renamed. Full typed declaration preserves its cdecl ABI. Aggregate two-commit outgoing-range snapshot includes the preceding operation-callback binding repair."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DQuadrupedDrawModuleDataFactory.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DQuadrupedDrawModuleDataFactory.cpp",
+  "old_name": "W3DQuadrupedDrawFieldParse",
+  "new_name": "j_0001e2a9",
+  "before_sha256": "323b2e5c00df551f318dc4d140d1bf1e7af43e5869603a46f15731db514e1617",
+  "after_sha256": "2cfe93cf5ee0a5041d73bf2418562b5ec49e9886b1e7d0bfd88b01b8022670e3",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

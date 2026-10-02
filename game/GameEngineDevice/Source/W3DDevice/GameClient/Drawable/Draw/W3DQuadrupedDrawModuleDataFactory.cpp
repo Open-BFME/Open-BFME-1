@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl W3DQuadrupedDrawFieldParse(MultiIniFieldParse &parse);
+// The pushed immediate is 0x0041E2A9 = the five-byte ILT thunk at 0x0001E2A9,
+// which the ledger defines as ?j_0001e2a9@@YAXXZ and which chains to the
+// W3DQuadrupedDraw field-parse builder (0x00759700).  Naming the real method
+// would link straight to the builder and change the bytes, so the thunk is
+// referenced and the cast keeps the proc type initFromINIMultiProc declares for
+// its second argument.
+void __cdecl j_0001e2a9(void);
+typedef void (__cdecl *FieldParseProc)(MultiIniFieldParse &);
 
 class W3DQuadrupedDraw
 {
@@ -43,6 +50,6 @@ ModuleData *W3DQuadrupedDraw::friend_newModuleData(INI *ini)
 {
 	W3DQuadrupedDrawModuleData *data = new W3DQuadrupedDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DQuadrupedDrawFieldParse);
+		ini->initFromINIMultiProc(data, (FieldParseProc)&j_0001e2a9);
 	return (ModuleData *)data;
 }
