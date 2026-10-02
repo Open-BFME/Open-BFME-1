@@ -4,14 +4,23 @@
 
 class Xfer;
 
-// Existing pinned helper identity is address-derived; its implementation is
-// the LivingWorldSound stop-current-sound path at 0x0061BB50.
-class BfmeThingNA
+extern void j_00002c2a(void);
+extern void j_0003afe4(void);
+
+class LivingWorldSoundThunkCall
 {
-public:
-	void bfmeTwoNA();
-	void bfmeOneNA();
 };
+
+template <class Function>
+__forceinline Function livingWorldSoundThunk(void (*raw)())
+{
+	union { void (*raw)(); Function member; } fn;
+	fn.raw = raw;
+	return fn.member;
+}
+
+#define LIVING_WORLD_SOUND_THUNK_CALL(object, Function, raw) \
+	(reinterpret_cast<LivingWorldSoundThunkCall *>(object)->*livingWorldSoundThunk<Function>(raw))
 
 class Rva00087750Counted;
 
@@ -75,7 +84,8 @@ LivingWorldSound &LivingWorldSound::operator=( const LivingWorldSound &that )
 {
 	if ( this != &that )
 	{
-		reinterpret_cast<BfmeThingNA *>( this )->bfmeTwoNA();
+		typedef void (LivingWorldSoundThunkCall::*BfmeTwoNA)(void);
+		LIVING_WORLD_SOUND_THUNK_CALL(this, BfmeTwoNA, j_0003afe4)();
 
 		m_name = that.m_name;
 
@@ -91,7 +101,10 @@ LivingWorldSound &LivingWorldSound::operator=( const LivingWorldSound &that )
 		m_hasPlayed = that.m_hasPlayed;
 
 		if ( static_cast<unsigned int>( that.m_playState ) >= 5 && m_sound.m_ptr != 0 )
-			reinterpret_cast<BfmeThingNA *>( this )->bfmeOneNA();
+		{
+			typedef void (LivingWorldSoundThunkCall::*BfmeOneNA)(void);
+			LIVING_WORLD_SOUND_THUNK_CALL(this, BfmeOneNA, j_00002c2a)();
+		}
 	}
 
 	return *this;
