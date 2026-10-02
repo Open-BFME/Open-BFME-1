@@ -135,16 +135,9 @@ static BodyDamageType calcDamageState(Real health, Real maxHealth)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/ActiveBodyModuleDataCtorThunk.cpp
-// ??0ActiveBodyModuleData@@ present-unmatched
-ActiveBodyModuleData::ActiveBodyModuleData()
-{
-	m_maxHealth = 0;
-	m_initialHealth = 0;
-	m_subdualDamageCap = 0;
-	m_subdualDamageHealRate = 0;
-	m_subdualDamageHealAmount = 0;
-}
+// The BFME constructor and deleting destructor are owned by
+// ActiveBodyModuleDataCtor.cpp.  The ZH constructor here also emitted its
+// implicit 11-byte destructor, which is not BFME's 162-byte destructor.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
