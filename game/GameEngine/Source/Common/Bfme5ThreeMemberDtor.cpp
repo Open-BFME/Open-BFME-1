@@ -1,3 +1,4 @@
+// stlport
 // A three-member destructor.
 //
 // The body is one statement -- clear the first list -- and everything after it
@@ -6,51 +7,16 @@
 //
 // The state word counts the members: three while the body runs, then two, one
 // and zero as each is destroyed, and those later stores are byte-wide because
-// only the low byte changes. Two of the three members are the same type, which
-// is why the first and last destructor calls share a target.
+// only the low byte changes. The first and last cleanup calls share a target;
+// the middle call uses another retail instance of the list-base destructor.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+#include <list>
 
-struct BfmeNodeE
+// The three cleanup calls use the existing retail list-base destructor.
+namespace _STL
 {
-	BfmeNodeE *m_bfmeNext;					// +0x00
-	BfmeNodeE *m_bfmePrev;					// +0x04
-	void *m_bfmeValue;					// +0x08
-};
-
-class BfmeListE
-{
-public:
-	~BfmeListE(void);					// retail 0x00013449
-
-	void bfmeClear(void)
-	{
-		BfmeNodeE *node = m_bfmeNode->m_bfmeNext;
-
-		while (node != m_bfmeNode)
-		{
-			BfmeNodeE *current = node;
-
-			node = node->m_bfmeNext;
-
-			bfmeDeallocate(current, sizeof(BfmeNodeE));
-		}
-
-		m_bfmeNode->m_bfmeNext = m_bfmeNode;
-		m_bfmeNode->m_bfmePrev = m_bfmeNode;
-	}
-
-	BfmeNodeE *m_bfmeNode;					// +0x00
-};
-
-class BfmeThingE
-{
-public:
-	~BfmeThingE(void);					// retail 0x0000E68D
-
-private:
-	int m_bfmeField;
-};
+	template <> _List_base<int, allocator<int> >::~_List_base();
+}
 
 class BfmeBaseE
 {
@@ -64,13 +30,13 @@ public:
 	virtual ~Gen_000F8A40(void);
 
 private:
-	BfmeListE m_bfmeFirst;					// +0x04
-	BfmeThingE m_bfmeSecond;				// +0x08
-	BfmeListE m_bfmeThird;					// +0x0C
+	_STL::list<int> m_bfmeFirst;				// +0x04
+	_STL::list<int> m_bfmeSecond;				// +0x08
+	_STL::list<int> m_bfmeThird;				// +0x0C
 };
 
 // ??1Gen_000F8A40@@UAE@XZ
 Gen_000F8A40::~Gen_000F8A40(void)
 {
-	m_bfmeFirst.bfmeClear();
+	m_bfmeFirst.clear();
 }
