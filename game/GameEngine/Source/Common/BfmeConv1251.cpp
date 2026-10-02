@@ -1,9 +1,11 @@
 // Open-BFME5 conversions.
 
-class BfmeSub1251
+// jabba util.cpp container, defined out of line at 0x008002C0
+// (game/GameEngine/Source/GameNetwork/Y2FeslBufferAndChain.cpp).
+class Rva00800290Buffer
 {
 public:
-	void bfmeSet1251(void *a);
+	void append(const char *a);
 	int m_bfme00;
 };
 
@@ -47,9 +49,9 @@ public:
 	void *m_bfme1c;
 	BfmeSub2_1251 m_bfme20;
 	char m_bfmePad24[4];
-	BfmeSub1251 m_bfme28;
+	Rva00800290Buffer m_bfme28;
 	char m_bfmePad2c[4];
-	BfmeSub1251 m_bfme30;
+	Rva00800290Buffer m_bfme30;
 };
 
 void BfmeA1251::bfmeInit1251(BfmeB1251 *b, BfmeS1251 *a)
@@ -58,8 +60,8 @@ void BfmeA1251::bfmeInit1251(BfmeB1251 *b, BfmeS1251 *a)
 	m_bfme08 = b->m_bfme00;
 	m_bfme18 = b->m_bfme08;
 	m_bfme1c = b->m_bfme0c;
-	m_bfme28.bfmeSet1251(&b->m_bfme14);
-	m_bfme30.bfmeSet1251(&b->m_bfmeb4);
+	m_bfme28.append((const char *)&b->m_bfme14);
+	m_bfme30.append((const char *)&b->m_bfmeb4);
 	m_bfme20.bfmeUse1251(m_bfme04->m_bfme2bc);
 	m_bfme0c = 1;
 }

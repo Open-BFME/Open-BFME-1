@@ -55,10 +55,12 @@ char BfmeThingVFC::bfmeGoVFC(BfmeChunkVFC *c)
 
 extern char g_bfmeEmptyVFD[];
 
-class BfmeBufVFD
+// jabba util.cpp container, defined out of line at 0x008002C0
+// (game/GameEngine/Source/GameNetwork/Y2FeslBufferAndChain.cpp).
+class Rva00800290Buffer
 {
 public:
-	void bfmeAppendVFD(const char *s);
+	void append(const char *s);
 	char m_bfmePad[8];
 };
 
@@ -71,7 +73,7 @@ struct BfmeThingVFD
 	char m_bfme14;
 	char m_bfmePad2[3];
 	int m_bfme18;
-	BfmeBufVFD m_bfmeBuf;
+	Rva00800290Buffer m_bfmeBuf;
 	int m_bfme24;
 	int m_bfme28;
 	char m_bfmePad3[0x40];
@@ -85,7 +87,7 @@ void __stdcall bfmeGoVFD(BfmeThingVFD *p)
 	p->m_bfme10 = 0;
 	p->m_bfme14 = 0;
 	p->m_bfme18 = 0;
-	p->m_bfmeBuf.bfmeAppendVFD(g_bfmeEmptyVFD);
+	p->m_bfmeBuf.append(g_bfmeEmptyVFD);
 	p->m_bfme24 = 0;
 	p->m_bfme28 = 0;
 	p->m_bfme6c = 0;

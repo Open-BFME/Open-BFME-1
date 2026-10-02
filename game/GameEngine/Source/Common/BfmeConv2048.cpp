@@ -4,10 +4,12 @@ public:
 	unsigned char m_bfmeHeadFN[4];
 };
 
-class BfmeBufFN
+// jabba util.cpp container, defined out of line at 0x008002C0
+// (game/GameEngine/Source/GameNetwork/Y2FeslBufferAndChain.cpp).
+class Rva00800290Buffer
 {
 public:
-	void bfmeAppendFN(const char *s);
+	void append(const char *s);
 
 	unsigned char m_bfmeHeadFN[8];
 };
@@ -29,7 +31,7 @@ public:
 	void *m_bfmeVfFN;
 	BfmeOwnerFN *m_bfmeOwnerFN;
 	unsigned char m_bfmeGapFN[8];
-	BfmeBufFN *m_bfmeBufsFN;
+	Rva00800290Buffer *m_bfmeBufsFN;
 	int m_bfmeCountFN;
 };
 
@@ -40,9 +42,9 @@ int BfmeHostFN::bfmeAddFN(const char *name, const char *text)
 	if (idx == -1)
 		return -106;
 
-	BfmeBufFN *b = idx >= m_bfmeCountFN ? 0 : &m_bfmeBufsFN[idx];
+	Rva00800290Buffer *b = idx >= m_bfmeCountFN ? 0 : &m_bfmeBufsFN[idx];
 
-	b->bfmeAppendFN(text);
+	b->append(text);
 
 	return 0;
 }
