@@ -6,14 +6,24 @@
 // 0x00284C80.  The adjacent table fields and the matched BannerCarrier
 // module-data methods independently establish the owner.
 
+class INI;
+void parseBannerCarrierExpLevelDraw(INI *ini, void *instance, void *store,
+	const void *userData);
+
 template <typename T> class StringBase
 {
 protected:
 	StringBase() : m_data( 0 ) {}
+
+private:
 	StringBase( const T *text );
+	friend class AsciiString;
+	friend void parseBannerCarrierExpLevelDraw(INI *ini, void *instance,
+		void *store, const void *userData);
+
+protected:
 	StringBase( const StringBase<T> &other );
 	~StringBase();
-
 	void *m_data;
 };
 
@@ -48,7 +58,7 @@ private:
 class Rva002E7E00Owner
 {
 public:
-	void parse( AsciiString text );
+	void parse( StringBase<char> text );
 
 private:
 	unsigned char m_fields[ 0x28 ];
@@ -102,7 +112,10 @@ void parseBannerCarrierExpLevelDraw( INI *ini, void *instance, void *store,
 	if ( token == 0 || strcmp( token, "ModelState" ) != 0 )
 		throw INIException( 3, "'ModelState' expected" );
 
-	entry->m_modelState.parse(
+	typedef void (Rva002E7E00Owner::*ParseAsciiString)(AsciiString);
+	ParseAsciiString parseAsAsciiString = reinterpret_cast<ParseAsciiString>(
+		&Rva002E7E00Owner::parse);
+	(entry->m_modelState.*parseAsAsciiString)(
 		AsciiString( ini->getNextToken( ini->getSepsQuote() ) ) );
 
 	( (ExpLevelDrawVector *)store )->push_back( slot );
