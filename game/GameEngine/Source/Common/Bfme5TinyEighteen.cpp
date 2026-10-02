@@ -9,8 +9,6 @@ int __cdecl bfmeTestBit(unsigned int *bits, int index)
 	return (*bits & (1 << (index & 31))) != 0;
 }
 
-extern float g_bfmeDefaultCJ;					// retail 0x01075334
-
 class Gen_000C7DE0
 {
 public:
@@ -28,7 +26,7 @@ float Gen_000C7DE0::bfmeRatio(void) const
 	int count = m_bfmeCount;
 
 	if (count == 0)
-		return g_bfmeDefaultCJ;
+		return 1.0f;
 
 	return (float)m_bfmeValue / count;
 }

@@ -5,6 +5,7 @@
 typedef float Real;
 
 struct lua_State;
+class LuaScriptEngine;
 
 extern "C" void lua_pushnumber(lua_State *state, double value);
 extern "C" void lua_pushnil(lua_State *state);
@@ -36,11 +37,11 @@ struct LuaDrawableState
 	LuaDrawableLink *m_drawable;
 };
 
-extern LuaDrawableState *g_obj12F060C;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 int CurDrawableGetCurrentTargetHeight(lua_State *state)
 {
-	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	LuaDrawableLink *drawable = ((LuaDrawableState *)TheLuaScriptEngine)->m_drawable;
 	if (drawable != 0) {
 		LuaTargetOwner *owner = drawable->m_owner;
 		if (owner != 0) {

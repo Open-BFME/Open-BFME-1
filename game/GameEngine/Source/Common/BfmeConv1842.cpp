@@ -25,7 +25,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 typedef void (*ObjectIterateFunc)(Object *, void *);
 
@@ -58,5 +58,5 @@ Object *BfmeOwnerXF::bfmeFindXF()
 			m_bfmeTagXF = slot.m_bfmeHaveXF->m_bfmeTagXF;
 	}
 
-	return TheBfmeGameLogic->findObjectByID(m_bfmeTagXF);
+	return TheGameLogic->findObjectByID(m_bfmeTagXF);
 }
