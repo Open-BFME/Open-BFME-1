@@ -53,7 +53,12 @@ class GhostObjectManager : public Snapshot {};
 class VictorySystem : public SubsystemInterface, public Snapshot {};
 class BfmeTaintManager : public SubsystemInterface, public Snapshot {};
 class WeatherSystem : public SubsystemInterface, public Snapshot {};
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic (defined in
+// GameLogic/LivingWorld/LivingWorldLogic.cpp). The CampaignObject view above
+// inherits Snapshot at +0x08, so the cast reproduces retail's null-checked
+// base adjustment.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern AudioManager *TheAudio;
 extern GameState *TheGameState;
 extern CampaignManager *TheCampaignManager;
@@ -80,7 +85,7 @@ extern BfmeTaintManager *TheTaintManager;
 extern WeatherSystem *TheWeatherSystem;
 void GameState::init()
 {
-    addSnapshotBlock("CHUNK_LivingWorldLogic", TheLivingWorldLogic, SNAPSHOT_SAVELOAD);
+    addSnapshotBlock("CHUNK_LivingWorldLogic", (CampaignObject *)TheLivingWorldLogic, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_Audio", TheAudio, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_GameState", TheGameState, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_Campaign", TheCampaignManager, SNAPSHOT_SAVELOAD);

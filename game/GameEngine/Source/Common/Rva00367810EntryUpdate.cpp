@@ -91,8 +91,10 @@ public:
 	void notify( const AsciiString &message );
 };
 
-class CampaignManager;
-extern CampaignManager *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic;
+// Rva00367810Campaign is this TU's view of the object.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 static inline Rva00367810Campaign *Rva00367810TheCampaignView() { return (Rva00367810Campaign *)TheLivingWorldLogic; }
 extern const char Rva006A16B0Empty[];
 

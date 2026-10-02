@@ -133,7 +133,10 @@ public:
 	bool m_flag2d;
 };
 
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic; the
+// CampaignObject view above keeps the layout this TU reads.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 typedef _STL::_Rb_tree<
 	Gen_t_00234730_m4pod,
@@ -204,7 +207,7 @@ void AptPalantirStore::rva00591b60()
 	if ( !m_flag04 )
 		return;
 
-	CampaignObject *campaign = TheLivingWorldLogic;
+	CampaignObject *campaign = (CampaignObject *)TheLivingWorldLogic;
 	if ( campaign == 0 || !campaign->m_flag2c || !campaign->m_flag2d )
 	{
 		clear();

@@ -90,17 +90,19 @@ private:
 };
 
 class BfmeLivingWorldManagerIcons;
-class CampaignManager;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic;
+// Rva012F1028Owner is this TU's view of the object.
+class LivingWorldLogic;
 class GlobalData;
 extern int g_012B7638;
 extern BfmeLivingWorldManagerIcons *TheLivingWorldManager;
-extern CampaignManager *TheLivingWorldLogic;
+static inline Rva012F706COwner *RVA012F706CView() { return (Rva012F706COwner *)TheLivingWorldManager; }
+extern LivingWorldLogic *TheLivingWorldLogic;
+static inline Rva012F1028Owner *RVA012F1028View() { return (Rva012F1028Owner *)TheLivingWorldLogic; }
 extern GlobalData *TheWritableGlobalData;
+static inline Rva012ED5C8Owner *RVA012ED5C8View() { return (Rva012ED5C8Owner *)TheWritableGlobalData; }
 
 #define RVA012B7638 g_012B7638
-#define RVA012F706C ((Rva012F706COwner *)TheLivingWorldManager)
-#define RVA012F1028 ((Rva012F1028Owner *)TheLivingWorldLogic)
-#define RVA012ED5C8 ((Rva012ED5C8Owner *)TheWritableGlobalData)
 
 // ?rva0051F1C0Campaign@BfmeAptScreenMainMenu@@QAEXPBD_N@Z
 void BfmeAptScreenMainMenu::rva0051F1C0Campaign( const char *campaign, bool evil )
@@ -123,19 +125,19 @@ void BfmeAptScreenMainMenu::rva0051F1C0Campaign( const char *campaign, bool evil
 			Call member;
 		} route;
 		route.plain = j_00040840;
-		(RVA012F706C->*route.member)( evil );
+		(RVA012F706CView()->*route.member)( evil );
 	}
 
 	if( (unsigned)campaign != (unsigned)zero )
 	{
 		int value = RVA012B7638;
-		RVA012F1028->m_value90 = value;
+		RVA012F1028View()->m_value90 = value;
 	}
 
 	postTimedOp( LoadGameFadeSlot( (void *)j_00049454 ),
 		&fadeQueueKey );
 
-	if( RVA012ED5C8->m_flag2a == (unsigned char)zero )
+	if( RVA012ED5C8View()->m_flag2a == (unsigned char)zero )
 		postTimedOp( LoadGameFadeSlot( (void *)j_0003922a ),
 			&fadeQueueKey );
 
@@ -150,6 +152,6 @@ void BfmeAptScreenMainMenu::rva0051F1C0Campaign( const char *campaign, bool evil
 }
 
 #undef RVA012B7638
-#undef RVA012F706C
-#undef RVA012F1028
-#undef RVA012ED5C8
+#undef RVA012F706CView()
+#undef RVA012F1028View()
+#undef RVA012ED5C8View()

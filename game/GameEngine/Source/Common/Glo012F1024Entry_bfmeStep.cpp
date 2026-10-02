@@ -286,7 +286,11 @@ public:
 	void m(int value);
 };
 
-extern Gen_003bcb40 *g_Gen003bcb40;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic (defined in
+// GameLogic/LivingWorld/LivingWorldLogic.cpp); the Gen_* views below keep the
+// methods this TU calls, so every use casts.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class Rva0060D5E0
 {
@@ -329,7 +333,6 @@ public:
 
 extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
 
-extern Gen_003C02B0 *Glo012F1028Remove;				// 0x012F1028
 
 // ?j_0003152a@Glo012F1024Item@@QAEXXZ
 void Glo012F1024Item::j_0003152a(void)
@@ -353,7 +356,7 @@ void Glo012F1024Item::j_0003152a(void)
 void Glo012F1024Item::j_00008053(void)
 {
 	for (unsigned int index = 0; index < m_bfmeItems.bfmeSize(); ++index)
-		Glo012F1028Remove->bfmeRemove((int)(m_bfmeItems.m_bfmeBegin + index));
+		((Gen_003C02B0 *)TheLivingWorldLogic)->bfmeRemove((int)(m_bfmeItems.m_bfmeBegin + index));
 }
 
 // ?j_00040c32@Glo012F1024Item@@QAEXXZ
@@ -409,7 +412,7 @@ void Glo012F1024Item::j_00019eca(void)
 		User *user = g_bfmeGlobal_012f1024->getUser(m_bfmeNames.bfmeBegin() + index);
 		if (user != 0)
 		{
-			g_Gen003bcb40->m(user->GetName());
+			((Gen_003bcb40 *)TheLivingWorldLogic)->m(user->GetName());
 			user->bfmeEnter();
 		}
 	}

@@ -278,12 +278,15 @@ GameWindow *MessageBoxOk(UnicodeString title, UnicodeString body,
 	void (*callback)(void));
 
 extern FileSystem *TheFileSystem;
-extern CampaignManager *TheBfmeLivingWorldCampaignState;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic (defined in
+// GameLogic/LivingWorld/LivingWorldLogic.cpp); CurrentMapCallTarget is this
+// TU's view of it.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern Watchdog *Watchdog0040F780;
 extern GameTextInterface *TheGameText;
 extern InGameUI *TheInGameUI;
 extern char g_rva00061150;
-#define TheCampaignManager TheBfmeLivingWorldCampaignState
 #define TheWatchdog Watchdog0040F780
 #define TheInGameUIAscii (reinterpret_cast<InGameUIAscii *>(TheInGameUI))
 #define TheWriterFlag (*reinterpret_cast<Bool *>(&g_rva00061150))
@@ -356,7 +359,7 @@ SaveCode GameState::saveGame(AsciiString filename, UnicodeString desc,
 			CurrentMapCall asMember;
 		} currentMapCast;
 		currentMapCast.asFunction = j_0000d5d0;
-		(reinterpret_cast<CurrentMapCallTarget *>(TheCampaignManager)->*
+		(reinterpret_cast<CurrentMapCallTarget *>(TheLivingWorldLogic)->*
 			currentMapCast.asMember)(&gameInfo.pristineMapName);
 	}
 	else

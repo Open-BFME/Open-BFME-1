@@ -87,7 +87,11 @@ extern GameLogic *TheGameLogic;
 // TheLivingWorldLogic (tag after TheLivingWorldCampaignManager at 0x012F1024).
 // TheCampaignManager is the GameClient global at 0x012F4CB0. Type stays
 // CampaignManager* so the four objective-query callees keep their pins.
-extern CampaignManager *TheLivingWorldLogic;		///< retail 0x012F1028
+// The global itself is EA's LivingWorldLogic *TheLivingWorldLogic (retail
+// 0x012F1028, defined in GameLogic/LivingWorld/LivingWorldLogic.cpp);
+// CampaignManager is this TU's view, so every use casts.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;		///< retail 0x012F1028
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScoreKeeper.h
 class ScoreKeeper
@@ -128,7 +132,7 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 {
 	Int completed = 0;
 	Int total = 0;
-	CampaignManager *mgr = TheLivingWorldLogic;
+	CampaignManager *mgr = (CampaignManager *)TheLivingWorldLogic;
 
 	if (mgr)
 	{
@@ -138,12 +142,12 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 		{
 			do
 			{
-				if (TheLivingWorldLogic->isMissionObjectiveEligible(i))
+				if (((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveEligible(i))
 				{
-					if (TheLivingWorldLogic->isMissionObjectiveIndexed(i))
+					if (((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveIndexed(i))
 					{
 						++total;
-						if (TheLivingWorldLogic->isMissionObjectiveComplete(i))
+						if (((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveComplete(i))
 							++completed;
 					}
 				}

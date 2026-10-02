@@ -1191,7 +1191,11 @@ class CampaignObject : public Rva003BEDD0
 {
 };
 
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic, defined
+// once in GameLogic/LivingWorld/LivingWorldLogic.cpp; the view above keeps the
+// existing Rva003BEDD0 method symbol.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 	: _bfme_AptGameWindow( context )
@@ -1256,7 +1260,8 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 		return;
 	}
 
-	int result = static_cast<Rva003BEDD0 *>( TheLivingWorldLogic )->classify();
+	int result = static_cast<Rva003BEDD0 *>(
+		(CampaignObject *)TheLivingWorldLogic )->classify();
 	if( result == 2 )
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
