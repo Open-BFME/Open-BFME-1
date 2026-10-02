@@ -29,7 +29,13 @@ class Rva008D2A80;
 extern Rva008D2A80 *g_rva008D2A80;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
-extern const char vtable01135D68[],vtable011360A8[];
+extern const char vtable01135D68[];
+// 0x011360A8 is Rva008995E0Value's vftable, emitted as a COMDAT by
+// Rva008995E0AptBoolValueCtor.cpp; the stand-in name declared here resolved
+// nothing.  __identifier spells the compiler-emitted symbol, and the array
+// type keeps the decay-to-pointer that retail's `mov dword ptr [eax], imm32`
+// needs (a plain int declaration would load the vftable's first slot instead).
+extern "C" const char __identifier("??_7Rva008995E0Value@@6B@")[];
 struct Boolean008A58C0 {
  void *m_vtable; unsigned m_flags;
  union { Boolean008A58C0 *m_next; bool m_value; };
@@ -48,7 +54,7 @@ struct Boolean008A58C0 {
    m_vtable=(void*)vtable01135D68;
    m_flags=(m_flags&0xf0008005)|0x40008005;
    g_rva8CD130IdleHook->addPooled((Rva008D2A30Node*)this);
-   m_vtable=(void*)vtable011360A8;
+   m_vtable=(void*)__identifier("??_7Rva008995E0Value@@6B@");
    m_value=value;
  }
 
