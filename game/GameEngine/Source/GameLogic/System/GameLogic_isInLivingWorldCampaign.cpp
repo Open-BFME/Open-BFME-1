@@ -28,7 +28,8 @@ public:
 };
 
 extern RecorderClass *TheRecorder;
-extern CampaignObject *TheLivingWorldLogic;
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -57,7 +58,7 @@ ByteBool GameLogic::_bfme_isInLivingWorldCampaign(void)
 			return 0;
 	}
 campaign:
-	CampaignObject *campaign = TheLivingWorldLogic;
+	CampaignObject *campaign = (CampaignObject *)TheLivingWorldLogic;
 	if (campaign && campaign->m_flag)
 		return 1;
 	return 0;

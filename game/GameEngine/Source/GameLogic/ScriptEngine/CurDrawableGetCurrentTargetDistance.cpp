@@ -55,11 +55,12 @@ struct LuaDrawableState
 	LuaDrawableLink *m_drawable;
 };
 
-extern LuaDrawableState *g_obj12F060C;
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 int CurDrawableGetCurrentTargetDistance(lua_State *state)
 {
-	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	LuaDrawableLink *drawable = reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable;
 	if (drawable != 0) {
 		LuaTargetOwner *owner = drawable->m_owner;
 		if (owner != 0) {

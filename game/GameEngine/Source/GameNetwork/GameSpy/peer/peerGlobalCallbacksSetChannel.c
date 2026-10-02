@@ -25,7 +25,7 @@ void piChannelMessageA(void);
 void piChannelKickedA(void);
 void piChannelUserJoinedA(void);
 void piChannelUserPartedA(void);
-void piChannelUserChangedNickA(void);
+void piUserChangedNickCallback(void);
 void piChannelTopicChangedA(void);
 void piChannelNewUserListA(void);
 void piBroadcastKeyChangedA(void);
@@ -40,7 +40,7 @@ void piSetChannelCallbacks(PEER peer, chatChannelCallbacks *channelCallbacks)
 	channelCallbacks->kicked = piChannelKickedA;
 	channelCallbacks->userJoined = piChannelUserJoinedA;
 	channelCallbacks->userParted = piChannelUserPartedA;
-	channelCallbacks->userChangedNick = piChannelUserChangedNickA;
+	channelCallbacks->userChangedNick = piUserChangedNickCallback;
 	channelCallbacks->topicChanged = piChannelTopicChangedA;
 	channelCallbacks->newUserList = piChannelNewUserListA;
 	channelCallbacks->broadcastKeyChanged = piBroadcastKeyChangedA;
