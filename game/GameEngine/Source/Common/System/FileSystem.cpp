@@ -282,7 +282,9 @@ Bool FileSystem::areMusicFilesOnCD()
 		}
 
 		cdRoot = cdi->getPath();
-		if (!cdRoot.endsWith("\\"))
+		// Call the inherited implementation directly so this TU does not emit
+		// another inline AsciiString::endsWith beside its dedicated BFME owner.
+		if (!static_cast<const StringBase<char>&>(cdRoot).endsWith("\\"))
 			cdRoot.concat("\\");
 		cdRoot.concat("genseczh.big");
 		DEBUG_LOG(("FileSystem::areMusicFilesOnCD() - checking for %s\n", cdRoot.str()));

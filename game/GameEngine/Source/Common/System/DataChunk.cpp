@@ -738,14 +738,6 @@ void DataChunkInput::clearChunkStack( void )
 	m_chunkStack = NULL;
 }
 
-// reset the stream to just-opened state - ready to parse the first chunk
-// ?reset@DataChunkInput@@QAEXXZ present-unmatched
-void DataChunkInput::reset( void )
-{
-	clearChunkStack();
-	m_file->absoluteSeek( m_fileposOfFirstChunk );
-}
-
 // Checks if the file has our initial tag word.
 // ?isValidFileType@DataChunkInput@@QAE_NXZ present-unmatched
 Bool DataChunkInput::isValidFileType(void)
