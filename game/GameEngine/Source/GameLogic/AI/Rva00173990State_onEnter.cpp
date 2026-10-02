@@ -62,7 +62,8 @@ public:
 };
 
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a(void);
 typedef void (__cdecl *Rva00173990CritterDesyncLog)(void *, const char *);
 
@@ -91,8 +92,8 @@ public:
 
 StateReturnType Rva00173990State::onEnter()
 {
-	if (Glo012F0239 && g_012ED4FC)
-		((Rva00173990CritterDesyncLog)j_0003a17a)(g_012ED4FC,
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((Rva00173990CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 			"CritterDesync: setAdjustDestination(TRUE) 6");
 
 	setAdjustsDestination(true);

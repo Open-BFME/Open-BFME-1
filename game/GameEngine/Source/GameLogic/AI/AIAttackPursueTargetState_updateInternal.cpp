@@ -186,15 +186,16 @@ public:
 };
 
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a();
 
 typedef void (__cdecl *BfmePursueCritterDesyncLog)(void *, const char *);
 
 static void bfmePursueLog(const char *message)
 {
-	if (Glo012F0239 && g_012ED4FC)
-		((BfmePursueCritterDesyncLog)j_0003a17a)(g_012ED4FC, message);
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((BfmePursueCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck, message);
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h

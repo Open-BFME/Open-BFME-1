@@ -76,7 +76,8 @@ protected:
 };
 
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a();
 extern void j_0000e570();
 
@@ -91,8 +92,8 @@ public:
 
 static void rva00174730_log(const char *message)
 {
-	if (Glo012F0239 && g_012ED4FC)
-		((Rva00174730CritterDesyncLog)j_0003a17a)(g_012ED4FC, message);
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((Rva00174730CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck, message);
 }
 
 StateReturnType Rva00174730State::update()

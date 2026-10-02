@@ -69,7 +69,8 @@ extern AI *TheAI;
 static inline Melee002705D0GlobalAI *aiView002705D0() { return (Melee002705D0GlobalAI *)TheAI; }
 extern Melee002705D0Terrain *g002705D0Va012EF4CC;
 extern bool Glo012F0239;
-extern void *g002705D0Va012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 
 class MeleeApproach002705D0 {
 public:
@@ -146,8 +147,8 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
         distance.x-=pos.x;
         distance.y-=pos.y;
         if (!(sqrt(distance.x*distance.x+distance.y*distance.y)<20.0f)) {
-            if (Glo012F0239 && g002705D0Va012ED4FC)
-            ((void (__cdecl *)(void *,const char *,...))j_0003a17a)(g002705D0Va012ED4FC,
+            if (Glo012F0239 && TheCRCParameterCheck)
+            ((void (__cdecl *)(void *,const char *,...))j_0003a17a)(TheCRCParameterCheck,
                 "CritterDesync: requestMeleeApproachPath1 -- m_requestedDestination changing from %g,%g,%g to %g,%g,%g",
                 m_requestedDestination.x,m_requestedDestination.y,m_requestedDestination.z,pos.x,pos.y,pos.z);
             m_requestedDestination=pos;

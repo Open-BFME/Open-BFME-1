@@ -71,7 +71,8 @@
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/Module/StealthUpdate.h"
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a(void);
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *);
 // AIFollowWaypointPathState::computeGoal, retail RVA 0x0017A600, 586 bytes.
@@ -146,16 +147,16 @@ void AIFollowWaypointPathState::computeGoal(Bool useGroupOffsets)
 	(reinterpret_cast<Follow17A600DistanceSlot *>(ai)->*distanceSetter)(calcExtraPathDistance());
 	if (*(const Int *)((const char *)m_currentWaypoint + 0x4c) > 0) {
 		// We are in the middle of a path, so don't set the final goal location yet.
-		if (Glo012F0239 && g_012ED4FC)
+		if (Glo012F0239 && TheCRCParameterCheck)
 		{
-			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 				"CritterDesync: setAdjustDestination(FALSE) 51");
 		}
 		setAdjustsDestination(false);
 	} else {
-		if (Glo012F0239 && g_012ED4FC)
+		if (Glo012F0239 && TheCRCParameterCheck)
 		{
-			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 				"CritterDesync: setAdjustDestination(TRUE) 52");
 		}
 		setAdjustsDestination(true);
@@ -193,9 +194,9 @@ void AIFollowWaypointPathState::computeGoal(Bool useGroupOffsets)
 
 
 	if (!extent.isInRegionNoZ(&m_goalPosition)) {
-		if (Glo012F0239 && g_012ED4FC)
+		if (Glo012F0239 && TheCRCParameterCheck)
 		{
-			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 				"CritterDesync: setAdjustDestination(FALSE) 53");
 		}
 		setAdjustsDestination(false); // moving off the map.

@@ -8253,7 +8253,8 @@ extern unsigned g012A6F38;
 // is TU-local, so the pointer is cast back at its single use.
 extern Rva0038DA10PlayerList* g012ED748;
 extern bool g012ED4E5,g012ED4E6;
-extern Rva00065A40* g012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern Rva000A2E60* g012ED63C;
 void setFPMode();
 class BfmeMade_009CB5F0;
@@ -8326,7 +8327,7 @@ void Rva0038DA10GameLogic::update(int phase) {
             if (!g012ED4E5 && !g012ED4E6) ((GameMessage*)m)->appendBooleanArgument(false);
             else rva0038B430(crc,player,frame,m,false,text);
         }
-        if (g012ED4FC) g012ED4FC->rva00065A40();
+        if (TheCRCParameterCheck) reinterpret_cast<Rva00065A40 *>(TheCRCParameterCheck)->rva00065A40();
     }
     if (g012ED63C && first) g012ED63C->rva000A2E60();
     if (first) {

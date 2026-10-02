@@ -163,7 +163,8 @@ extern Rva006174D0State *g_bfmeStateDF;
 extern Rva003BF540 *TheLivingWorldLogic;
 extern BfmeC977 *g_theWindowManager;
 extern Glo012F4B98Type *Glo012F4B98;
-extern void *TheCRCParameterCheck;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 
 // ?update@BfmeLivingWorldManager@@QAEXXZ
 void BfmeLivingWorldManager::update()

@@ -68,12 +68,14 @@ static UnsignedInt theGameAudioSeed[6] =
     0xf22d0e56L, 0x883126e9L, 0xc624dd2fL, 0x702c49cL, 0x9e353f7dL, 0x6fdf3b64L
 };
 
-// BFME keeps a trace of every logic-random draw when this is open; the ZH
-// tree has only the #ifdef'd DEBUG_LOG in its place.
+// BFME accumulates logic-random draws in CRCParameterCheck; the ZH tree
+// has only the #ifdef'd DEBUG_LOG in its place. The calls retain this TU's
+// existing FILE view of the logger argument.
 extern "C" __declspec(dllimport) char * __cdecl strrchr(const char *string, int c);
 // Statically linked here, not imported: retail reaches it with a direct call.
 extern "C" int __cdecl fprintf(FILE *stream, const char *format, ...);
-extern FILE *theLogicRandomLogFile;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 
 static UnsignedInt theGameLogicBaseSeed = 0;
 static UnsignedInt theGameLogicSeed[6] =
@@ -234,8 +236,8 @@ Int GetGameLogicRandomValue( int lo, int hi, char *file, int line )
 
 	//rval = temp + lo;
 
-	if (theLogicRandomLogFile)
-		fprintf(theLogicRandomLogFile, "logicrandom = %i (%s, %i)\n", rval, strrchr(file, '\\') + 1, line);
+	if (TheCRCParameterCheck)
+		fprintf(reinterpret_cast<FILE *>(TheCRCParameterCheck), "logicrandom = %i (%s, %i)\n", rval, strrchr(file, '\\') + 1, line);
 
 	return rval;
 }
@@ -299,8 +301,8 @@ Real GetGameLogicRandomValueReal( Real lo, Real hi, char *file, int line )
 
 	rval = ((Real)(randomValue(theGameLogicSeed)) * theMultFactor ) * delta + lo;
 
-	if (theLogicRandomLogFile)
-		fprintf(theLogicRandomLogFile, "logicrandom = %f (%s, %i)\n", rval, strrchr(file, '\\') + 1, line);
+	if (TheCRCParameterCheck)
+		fprintf(reinterpret_cast<FILE *>(TheCRCParameterCheck), "logicrandom = %f (%s, %i)\n", rval, strrchr(file, '\\') + 1, line);
 
 	return rval;
 }

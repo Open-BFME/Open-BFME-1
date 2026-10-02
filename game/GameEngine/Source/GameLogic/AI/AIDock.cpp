@@ -253,15 +253,16 @@ static AIUpdateInterface *bfmeRetailAIUpdate( const Object *obj )
 // passthrough branch is taken. The flag it finally writes is the
 // m_adjustDestinations byte, which retail keeps at state+0x4c.
 extern bool Glo012F0239;			///< 0x012F0239
-extern "C" void *bfmeRetailCritterDesyncSink;					///< 0x012ED4FC
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern "C" void bfmeRetailCritterDesyncLog( void *sink, const char *msg );
 
 static void bfmeRetailSetAdjustsDestinationFalse( State *state )
 {
 	if( Glo012F0239 )
 	{
-		if( bfmeRetailCritterDesyncSink )
-			bfmeRetailCritterDesyncLog( bfmeRetailCritterDesyncSink, "CritterDesync: setAdjustDestination(FALSE) 2" );
+		if( TheCRCParameterCheck )
+			bfmeRetailCritterDesyncLog( TheCRCParameterCheck, "CritterDesync: setAdjustDestination(FALSE) 2" );
 	}
 
 	*((char *)state + 0x4C) = 0;
@@ -983,8 +984,8 @@ StateReturnType AIDockMoveToExitState::onEnter( void )
 
 		if( Glo012F0239 )
 		{
-			if( bfmeRetailCritterDesyncSink )
-				bfmeRetailCritterDesyncLog( bfmeRetailCritterDesyncSink, "CritterDesync: setAdjustDestination(FALSE) 1" );
+			if( TheCRCParameterCheck )
+				bfmeRetailCritterDesyncLog( TheCRCParameterCheck, "CritterDesync: setAdjustDestination(FALSE) 1" );
 		}
 
 		*((char *)this + 0x4C) = 0;

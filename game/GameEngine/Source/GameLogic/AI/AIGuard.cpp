@@ -690,7 +690,8 @@ extern GameLogic *TheBfmeGameLogic;
 extern Int GetGameLogicRandomValue(Int minimum, Int maximum, char *file, Int line);
 extern Real g_bfmeK1266C;
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0000314d();
 extern void j_000065e1();
 extern void j_00017099();
@@ -773,10 +774,10 @@ doEnter:
 	setGoalPositionCast.asVoid = (void *)j_0000314d;
 	(self->m_machine->*setGoalPositionCast.asMember)(&goal);
 
-	if (Glo012F0239 && g_012ED4FC)
+	if (Glo012F0239 && TheCRCParameterCheck)
 	{
 		typedef void (__cdecl *CritterDesyncLog)(void *, const char *);
-		((CritterDesyncLog)j_0003a17a)(g_012ED4FC,
+		((CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 			"CritterDesync: setAdjustDestination(TRUE) 3");
 	}
 	self->m_adjustsDestination = true;

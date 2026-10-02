@@ -60,7 +60,8 @@ public:
 };
 
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a(void);
 typedef void (__cdecl *Rva00173C70CritterDesyncLog)(void *, const char *);
 
@@ -109,8 +110,8 @@ public:
 
 static void rva00173c70_log(const char *message)
 {
-	if (Glo012F0239 && g_012ED4FC)
-		((Rva00173C70CritterDesyncLog)j_0003a17a)(g_012ED4FC, message);
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((Rva00173C70CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck, message);
 }
 
 StateReturnType Rva00173C70State::update()

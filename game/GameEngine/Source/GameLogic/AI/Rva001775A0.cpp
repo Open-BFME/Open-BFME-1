@@ -102,7 +102,8 @@ public:
 };
 
 extern bool Glo012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a();
 typedef void (__cdecl *Rva001775A0CritterLog)(void *, const char *, ...);
 
@@ -155,8 +156,8 @@ StateReturnType Rva001775A0::method()
 		{
 			if (((BfmeF1024 *)machine)->bfmeGo1024F() == 0)
 			{
-				if (Glo012F0239 && g_012ED4FC)
-					((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
+				if (Glo012F0239 && TheCRCParameterCheck)
+					((Rva001775A0CritterLog)j_0003a17a)(TheCRCParameterCheck,
 						"CritterDesync: setAdjustDestination(FALSE) 33");
 
 				m_field4c = 0;
@@ -174,8 +175,8 @@ StateReturnType Rva001775A0::method()
 							m_field54 = goal->m_position;
 							owner->m_ai->destroyPath();
 
-							if (Glo012F0239 && g_012ED4FC)
-								((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
+							if (Glo012F0239 && TheCRCParameterCheck)
+								((Rva001775A0CritterLog)j_0003a17a)(TheCRCParameterCheck,
 									"CritterDesync: ComputePath22");
 
 							if (rvaSlot17())

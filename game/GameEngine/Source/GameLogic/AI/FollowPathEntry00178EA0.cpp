@@ -24,7 +24,8 @@ template<class T> struct PathVector00178EA0 {
     const T &operator[](unsigned i) const { return *(begin()+i); }
 };
 extern bool Glo012F0239;
-extern void *gFollowPathEntry00178EA0Logger;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a();
 extern void j_0000a9d4();
 extern void j_0000ebab();
@@ -104,8 +105,8 @@ int FollowPathEntry00178EA0::run() {
     ai->at194=0;
     if (at004==7) {
         ai->at328=true; ai->at326=false;
-        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
-            PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(FALSE) 39");
+        if(Glo012F0239 && TheCRCParameterCheck)
+            PATH_LOG(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(FALSE) 39");
         at04c=false; at054=true;
     }
     int result=hub();
@@ -118,12 +119,12 @@ int FollowPathEntry00178EA0::run() {
         const Coord3D *following=(ai->*pointRoute.fn)(at050+2);
         if(following) offset+=40.0f;
         ai->extra(offset);
-        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
-            PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(FALSE) 40");
+        if(Glo012F0239 && TheCRCParameterCheck)
+            PATH_LOG(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(FALSE) 40");
         at04c=false;
     } else {
-        if(Glo012F0239 && gFollowPathEntry00178EA0Logger)
-            PATH_LOG(gFollowPathEntry00178EA0Logger,"CritterDesync: setAdjustDestination(m_adjustFinal=%s) 41",at054?"TRUE":"FALSE");
+        if(Glo012F0239 && TheCRCParameterCheck)
+            PATH_LOG(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(m_adjustFinal=%s) 41",at054?"TRUE":"FALSE");
         at04c=at054;
         ai->extra(0.0f);
         if(obj->kind(25)) {

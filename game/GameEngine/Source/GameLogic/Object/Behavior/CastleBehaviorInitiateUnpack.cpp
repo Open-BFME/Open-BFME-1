@@ -148,7 +148,8 @@ private:
 };
 
 extern GameLogic *TheBfmeGameLogic;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_000084d6(void);
 extern void j_0002191d(void);
 extern void j_000022bb(void);
@@ -197,7 +198,7 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 
 	if (TheBfmeGameLogic->m_packUnpackGate > 0)
 	{
-		void *crcParameterCheck = g_012ED4FC;
+		void *crcParameterCheck = TheCRCParameterCheck;
 		if (!crcParameterCheck)
 			return;
 
@@ -225,7 +226,7 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 
 		const char *castleName = finalTemplate->m_name.str();
 
-		((DebugLogFunction)j_0003a17a)(g_012ED4FC,
+		((DebugLogFunction)j_0003a17a)(TheCRCParameterCheck,
 			"CAMP: Frame %d: Castle %s(%d) ::initiateUnpack() called by %s",
 			TheBfmeGameLogic->m_frame,
 			castleName, castleID, callerName);
