@@ -146,49 +146,7 @@ static void parseGameLogicRandomDelay( INI *ini, void *instance, GameLogicRandom
 	delay->setRange(min, max, GameLogicRandomVariable::DistributionType::UNIFORM);
 }
 
-//-------------------------------------------------------------------------------------------------
-/** In the form of:
-	* <BodyDamageState>FXList<index> = Bone:<BoneName> OnlyOnce:<Yes|No> <Min delay> <Max delay> FXList:<FXListName> */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseFXListThunk.cpp
-// ?parseFXList@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z present-unmatched
-void BoneFXUpdateModuleData::parseFXList( INI *ini, void *instance, 
-																								void *store, const void *userData )
-{
-	const char *token;
-	BoneFXListInfo *info = (BoneFXListInfo *)store;
-
-	// parse the location bone or location
-	parseFXLocInfo( ini, instance, &info->locInfo );
-
-	// make sure we have an "OnlyOnce:" token
-	token = ini->getNextToken( ini->getSepsColon() );
-	if (stricmp( token, "onlyonce" ) != 0)
-	{
-
-		// error
-		throw INI_INVALID_DATA;
-
-	} // end if
-
-	ini->parseBool( ini, instance, &info->onlyOnce, NULL);
-
-	parseGameLogicRandomDelay( ini, instance, &info->gameLogicDelay);
-
-	// make sure we have an "FXList:" token
-	token = ini->getNextToken( ini->getSepsColon() );
-	if( stricmp( token, "fxlist" ) != 0 )
-	{
-
-		// error
-		throw INI_INVALID_DATA;
-
-	}  // end if
-
-	// parse the fx list name
-	ini->parseFXList( ini, instance, &info->fx, NULL );
-
-}  // end parseFXList
+// BoneFXUpdateModuleData::parseFXList is defined by its matched owner TU.
 
 //-------------------------------------------------------------------------------------------------
 /** In the form of:

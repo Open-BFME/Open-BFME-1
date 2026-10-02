@@ -461,49 +461,7 @@ void SlowDeathBehavior::beginSlowDeath(const DamageInfo *damageInfo)
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType sdphase)
-{
-	const SlowDeathBehaviorModuleData* d = getSlowDeathBehaviorModuleData();
-	Int idx, listSize;
-
-	if (!d->m_maskOfLoadedEffects)
-		return;	//has no ocl, fx, or weapons.
-
-	listSize = d->m_fx[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const FXListVec& v = d->m_fx[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const FXList* fxl = v[idx];
-		FXList::doFXObj(fxl, getObject(), NULL);
-	}
-
-	listSize = d->m_ocls[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const OCLVec& v = d->m_ocls[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const ObjectCreationList* ocl = v[idx];
-		ObjectCreationList::create(ocl, getObject(), NULL);
-	}
-
-	listSize = d->m_weapons[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const WeaponTemplateVec& v = d->m_weapons[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const WeaponTemplate* wt = v[idx];
-		if (wt)
-		{
-			TheWeaponStore->createAndFireTempWeapon(wt, getObject(), getObject()->getPosition());
-		}
-	}
-}
+// SlowDeathBehavior::doPhaseStuff is defined by its matched owner TU.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

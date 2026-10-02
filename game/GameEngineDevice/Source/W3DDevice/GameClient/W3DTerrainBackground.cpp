@@ -656,23 +656,7 @@ m_texMultiplier(TEX1X)
 {
 }
 
-//=============================================================================
-// W3DTerrainBackground::freeTerrainBuffers
-//=============================================================================
-/** Frees the index and vertex buffers. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground_freeTerrainBuffers.cpp
-// ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ present-unmatched
-void W3DTerrainBackground::freeTerrainBuffers(void)
-{
-	REF_PTR_RELEASE(m_vertexTerrain);
-	REF_PTR_RELEASE(m_indexTerrain);
-	m_curNumTerrainVertices=0;
-	m_curNumTerrainIndices=0;
-	m_initialized = false;
-	REF_PTR_RELEASE(m_map);
-	REF_PTR_RELEASE(m_map);
-}
+// W3DTerrainBackground::freeTerrainBuffers is defined by its matched owner TU.
 
 //=============================================================================
 // W3DTerrainBackground::allocateTerrainBuffers

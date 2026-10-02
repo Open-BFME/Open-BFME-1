@@ -88,10 +88,25 @@ public:
 #include "GameLogic/Module/BridgeBehavior.h"
 #include "GameLogic/Module/BridgeTowerBehavior.h"
 #include "GameLogic/Module/CreateModule.h"
+#include "GameLogic/Module/AIUpdate.h"
+#include "GameLogic/Module/DozerAIUpdate.h"
 #include "GameLogic/Module/SupplyTruckAIUpdate.h"
 #include "GameLogic/Module/SupplyCenterDockUpdate.h"
 #include "GameLogic/Module/SupplyWarehouseDockUpdate.h"
+
+// WorkerAIUpdate's matched name-key body lives in its owner TU.  Keep the
+// shared module macro's other declarations while making this TU reference it.
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) \
+public: \
+	static Module* friend_newModuleInstance( Thing *thing, const ModuleData* moduleData ) { return newInstance( cls )( thing, moduleData ); } \
+	virtual NameKeyType getModuleNameKey() const; \
+protected: \
+	virtual void crc( Xfer *xfer ); \
+	virtual void xfer( Xfer *xfer ); \
+	virtual void loadPostProcess( void );
 #include "GameLogic/Module/WorkerAIUpdate.h"
+#undef MAKE_STANDARD_MODULE_MACRO
 #undef BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
 
 extern "C" void _WriteBarrier( void );
