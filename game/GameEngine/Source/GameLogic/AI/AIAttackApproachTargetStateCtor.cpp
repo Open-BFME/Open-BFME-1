@@ -23,6 +23,7 @@ class AIInternalMoveToState : public State
 {
 public:
 	AIInternalMoveToState( StateMachine *, AsciiString );
+	virtual ~AIInternalMoveToState();
 
 private:
 	UnsignedByte m_body[0x2c];

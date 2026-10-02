@@ -9,6 +9,7 @@
 // stdio_ostreambuf overrides.  The PE import table names the two slots this
 // body calls, 0x00F593C4 as fputc and 0x00F593A8 as fflush, both in MSVCR71.dll.
 
+#define _STLP_LINK_TIME_INSTANTIATION
 #include "stlport_prefix.h"
 #include <stdio_streambuf>
 

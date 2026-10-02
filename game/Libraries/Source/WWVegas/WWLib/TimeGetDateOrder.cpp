@@ -9,6 +9,7 @@
 // do_date_order inline as a plain `return no_order`, which is the three bytes
 // retail runs.
 
+#define _STLP_LINK_TIME_INSTANTIATION
 #include <locale>
 
 typedef _STL::istreambuf_iterator<char, _STL::char_traits<char> >
