@@ -12,8 +12,12 @@
 #include "camera.h"
 #include "aabox.h"
 #include <math.h>
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// The global at VA 0x012F706C is EA's `LivingWorldManager *TheLivingWorldManager`
+// (data_rows.csv row ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined
+// once in LivingWorldManager.cpp. This TU reads no member through it, only the
+// +0x0c configuration view, so the canonical spelling is enough.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 extern void j_000460a1();
 extern void j_00042843();
 struct Rva006FE730Config {
@@ -44,7 +48,7 @@ static __forceinline float recip006FE730(float x) { return 1.0f/x; }
 static __forceinline float mul006FE730(const float& a,const float& b) { return a*b; }
 void Rva006FE730CameraBounds::update() {
  box120=object84->Get_Bounding_Box();
- Rva006FE730Config* config=reinterpret_cast<Rva006FE730Config*>(reinterpret_cast<char*>(g_bfmeGameCW)+0xc);
+ Rva006FE730Config* config=reinterpret_cast<Rva006FE730Config*>(reinterpret_cast<char*>(TheLivingWorldManager)+0xc);
  box120.Extent.X=config->field0c;
  box120.Extent.Y=config->field10;
  box120.Center.X=config->field04;

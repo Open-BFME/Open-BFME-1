@@ -63,7 +63,18 @@ private:
 	std::vector<BfmeArmyIcon *> m_armyIcons;
 };
 
-extern BfmeLivingWorldManagerIcons *TheLivingWorldManager;		// 0x012F706C
+// The global at 0x012F706C is EA's `LivingWorldManager *TheLivingWorldManager`
+// (data_rows.csv row ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined
+// once in LivingWorldManager.cpp. This TU keeps its own view class, whose
+// findArmyIcon body is a matched retail function, and reaches it through a cast,
+// so only the global's spelling is shared.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;		// 0x012F706C
+
+static inline BfmeLivingWorldManagerIcons *livingWorldManager()
+{
+	return (BfmeLivingWorldManagerIcons *)TheLivingWorldManager;
+}
 
 // ?findArmyIcon@BfmeLivingWorldManagerIcons@@QAEPAVBfmeArmyIcon@@ABVAsciiString@@@Z
 BfmeArmyIcon *BfmeLivingWorldManagerIcons::findArmyIcon( const AsciiString &name )
@@ -83,7 +94,7 @@ void ParseArmyIconBlock( INI *ini )
 	if( !token )
 		return;
 
-	BfmeArmyIcon *icon = TheLivingWorldManager->findArmyIcon( AsciiString( token ) );
+	BfmeArmyIcon *icon = livingWorldManager()->findArmyIcon( AsciiString( token ) );
 
 	if( icon )
 		ini->initFromINI( icon, BfmeArmyIcon::m_fieldParseTable );

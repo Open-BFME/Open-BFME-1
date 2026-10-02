@@ -9,12 +9,17 @@
 #include "ww3d.h"
 // BFME has one more Clear argument than the shared ZH header.
 class DX8Wrapper { public: static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned); };
-class GlobalData; class GameLogic; class BfmeGameCW;
+class GlobalData; class GameLogic;
+// The global at 0x012F706C is EA's `LivingWorldManager *TheLivingWorldManager`
+// (data_rows.csv row ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined
+// once in LivingWorldManager.cpp; here it is only tested and passed on.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 extern GlobalData* TheWritableGlobalData;
 // The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
 // once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
 extern GameLogic* TheGameLogic;
-extern BfmeGameCW* g_bfmeGameCW;
+
 extern unsigned char g_006fc8d0;
 extern float g_Va012F8268[2],g_Va012F825C[2],g_Va012F8270,g_Va012F8264,g_Va012BAC4C,g_Va012F8274;
 extern void j_00022c96(); extern void j_0000aadd(); extern void j_00014380();
@@ -64,10 +69,10 @@ void Rva006FDE50SceneRender::render() {
   if(!paused(TheGameLogic)) fielde4+=fielde8;
   if(fielde4>g_Va012BAC4C && fielde8!=0.0f) {
    fielde4=g_Va012BAC4C; fielde8=0;
-   if(g_bfmeGameCW) disable(g_bfmeGameCW);
+   if(TheLivingWorldManager) disable(TheLivingWorldManager);
   }
   if(fielde4<g_Va012F8274 && fielde8!=0.0f) {
-   if(g_bfmeGameCW) enable(g_bfmeGameCW);
+   if(TheLivingWorldManager) enable(TheLivingWorldManager);
    fielde4=g_Va012F8274; fielde8=0;
   }
   if(object13c) {

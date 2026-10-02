@@ -16,7 +16,19 @@ public:
 };
 
 extern BfmeB1083 *g_bfmeSwitchDR;
-extern BfmeB1083 *g_bfmeGameCW;
+// The living-world singleton at 0x012F706C is EA's
+// `LivingWorldManager *TheLivingWorldManager` (data_rows.csv row
+// ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined once in
+// LivingWorldManager.cpp. This TU keeps its own BfmeB1083 view of the pointee,
+// whose slot14 and member-pointer contracts are proven here, and reaches it
+// through a cast; only the global's spelling is shared.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+
+static inline BfmeB1083 *livingWorld012F706C()
+{
+	return (BfmeB1083 *)TheLivingWorldManager;
+}
 // Retail's frame-counter owner is TheGameLogic at 0x012F0898 (declared as
 // GameLogic * in GameLogic.cpp); BfmeB1083 is this TU's view of that pointee.
 // The final slot14 dispatch below uses the distinct living-world singleton at
@@ -120,7 +132,7 @@ void Rva003C2530Owner::update()
 		( this->*ownerCall.member )();
 		ownerCall.plain = j_00048cb6;
 		( this->*ownerCall.member )();
-		g_bfmeGameCW->slot14();
+		livingWorld012F706C()->slot14();
 		--((BfmeB1083 *)TheGameLogic)->m_frameCounter;
 	}
 }
@@ -148,7 +160,7 @@ void Rva003C2530Owner::prepare()
 		if (value != 0)
 		{
 			gameArgumentCall.plain = j_000309ea;
-			(g_bfmeGameCW->*gameArgumentCall.member)(value);
+			(livingWorld012F706C()->*gameArgumentCall.member)(value);
 		}
 	}
 
@@ -156,7 +168,7 @@ void Rva003C2530Owner::prepare()
 	{
 		g_bfmeStateDF->slot5C();
 		gameCall.plain = j_00016dec;
-		(g_bfmeGameCW->*gameCall.member)();
+		(livingWorld012F706C()->*gameCall.member)();
 	}
 
 	__asm

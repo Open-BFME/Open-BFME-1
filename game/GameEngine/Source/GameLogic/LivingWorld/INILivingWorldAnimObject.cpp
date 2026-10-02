@@ -86,7 +86,18 @@ private:
 	std::vector<LivingWorldAnimObject *> m_animObjects;
 };
 
-extern BfmeLivingWorldManagerIcons *TheLivingWorldManager;		// 0x012F706C
+// The global at 0x012F706C is EA's `LivingWorldManager *TheLivingWorldManager`
+// (data_rows.csv row ?TheLivingWorldManager@@3PAVLivingWorldManager@@A), defined
+// once in LivingWorldManager.cpp. This TU keeps its own view class, whose
+// findAnimObject body is a matched retail function, and reaches it through a
+// cast, so only the global's spelling is shared.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;		// 0x012F706C
+
+static inline BfmeLivingWorldManagerIcons *livingWorldManager()
+{
+	return (BfmeLivingWorldManagerIcons *)TheLivingWorldManager;
+}
 
 LivingWorldAnimObject::LivingWorldAnimObject( const AsciiString &name ) :
 	m_hasAnim( false ),
@@ -127,7 +138,7 @@ void parseLivingWorldAnimObject( INI *ini )
 	if( !token )
 		return;
 
-	LivingWorldAnimObject *object = TheLivingWorldManager->findAnimObject( AsciiString( token ) );
+	LivingWorldAnimObject *object = livingWorldManager()->findAnimObject( AsciiString( token ) );
 
 	ini->initFromINI( object, LivingWorldAnimObject::m_fieldParseTable );
 }
