@@ -60,7 +60,7 @@ extern FileSystem *TheFileSystem;
 class Rva003BAD00Owner
 {
 public:
-	void notify0C(const AsciiString &key, int a, int b);	// ILT 0x0000B316
+	void notify0C(int key, int a, int b);
 };
 
 class BfmeItemVector
@@ -86,7 +86,7 @@ public:
 
 private:
 	void bfmeBegin(Glo012F1028Item *item);			// ILT 0x0003BF2F
-	void bfmeFinish(Glo012F1028Item *item, Int flag);	// ILT 0x00038910
+	void bfmeFinish(Glo012F1028Item *item, bool flag);
 
 	char m_bfmeHead[0x04];
 	Glo012F1028Holder *m_bfmeHolder;			// +0x04
@@ -96,12 +96,18 @@ __declspec(noinline) void Glo012F1028Sub::bfmeBegin(Glo012F1028Item *item)
 {
 	Rva003BAD00Owner *owner =
 		(Rva003BAD00Owner *)((char *)m_bfmeHolder + 0x40);
-	owner->notify0C(AsciiString("EnemyBordersEffect"),
-		(int)&item->m_bfmePayload, 0);
-	owner->notify0C(AsciiString("FriendlyBordersEffect"),
-		(int)&item->m_bfmePayload, 0);
-	owner->notify0C(AsciiString("HilightBordersEffect"),
-		(int)&item->m_bfmePayload, 0);
+	{
+		AsciiString key("EnemyBordersEffect");
+		owner->notify0C((int)&key, (int)&item->m_bfmePayload, 0);
+	}
+	{
+		AsciiString key("FriendlyBordersEffect");
+		owner->notify0C((int)&key, (int)&item->m_bfmePayload, 0);
+	}
+	{
+		AsciiString key("HilightBordersEffect");
+		owner->notify0C((int)&key, (int)&item->m_bfmePayload, 0);
+	}
 }
 
 // ?bfmeNotify@Glo012F1028Sub@@QAEXXZ

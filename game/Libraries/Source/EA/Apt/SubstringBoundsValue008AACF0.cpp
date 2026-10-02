@@ -27,14 +27,21 @@ public:
         m_data = source.m_data;
         return *this;
     }
-    // 0089FBC0: receiver is handle; hidden result + two signed indices;
-    // +29 initializes [entry+4], returns that address in EAX; +3D ret12.
-    Rva8CD130String substring0089FBC0(int start, int count);
     BfmeStringData3AF0 *m_data;
 };
 class Rva8CD130Value { public: void getName(Rva8CD130String *output); };
 class AptValue { public: int toInteger() const; };
-class EAStringC { public: int bfmeUtf8Length() const; };
+class EAStringC {
+public:
+    int bfmeUtf8Length() const;
+    EAStringC utf8Mid0089FBC0(int start, int count) const;
+    __forceinline ~EAStringC() {
+        BfmeStringData3AF0 *old = m_data;
+        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+    }
+private:
+    BfmeStringData3AF0 *m_data;
+};
 class BfmeStrVKK { public: void bfmeTruncVKK(unsigned n); };
 extern AptValue **g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
@@ -62,7 +69,8 @@ struct Rva00899560Pool {
     }
 };
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008A9B00 *g_free01338478;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 // 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
 // Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
 // so the reinterpret_cast below compiles to the same mov.
@@ -70,9 +78,9 @@ extern AptValue *g_bfmeFallbackDB;
 
 __forceinline Rva008A9B00 *acquire008AACF0() {
     Rva008A9B00 *result;
-    Rva008A9B00 *obj = g_free01338478;
+    Rva008A9B00 *obj = (Rva008A9B00 *)g_rva01338478NodeHead;
     if (obj) {
-        g_free01338478 = obj->m_next;
+        g_rva01338478NodeHead = (Rva008C3B60Node *)obj->m_next;
         g_rva01337810GcRoots->add(obj);
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);
@@ -97,6 +105,7 @@ Rva008A9B00 *substringBoundsValue008AACF0(Rva8CD130Value *value, int count) {
     if (start > length) { int swap = length; length = start; start = swap; }
     value->getName(&text);
     Rva008A9B00 *obj = acquire008AACF0();
-    obj->m_string = text.substring0089FBC0(start, length - start);
+    obj->m_string = reinterpret_cast<const Rva8CD130String &>(
+        ((const EAStringC *)&text)->utf8Mid0089FBC0(start, length - start));
     return obj;
 }
