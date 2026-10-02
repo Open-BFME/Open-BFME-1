@@ -13,8 +13,23 @@ class BfmeStrVKK
 public:
 	void bfmeTruncVKK(unsigned n);
 	BfmeStrVKK *bfmeReverseVKK();
-	void bfmeReserveVKK(unsigned a, int b, unsigned c, int d, unsigned e);
 	BfmeHdrVKK *m_bfme00;
+};
+
+// The reserve call retail makes here is EAStringC::ChangeBuffer at 0x0089E570
+// (matched in EAStringCMid.cpp); only the this-pointer matters to this TU.
+class EAStringC
+{
+	enum CBPushZero
+	{
+		CB_NO_PUSH_ZERO,
+		CB_PUSH_ZERO
+	};
+
+	void ChangeBuffer(unsigned int reserve, unsigned int offset,
+		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
+
+	friend class BfmeStrVKK;
 };
 
 void BfmeStrVKK::bfmeTruncVKK(unsigned n)
@@ -22,13 +37,15 @@ void BfmeStrVKK::bfmeTruncVKK(unsigned n)
 	unsigned len = m_bfme00->m_bfme02;
 	if (len > n)
 		len = n;
-	bfmeReserveVKK(n, 0, len, 1, len);
+	reinterpret_cast<EAStringC *>(this)->ChangeBuffer(n, 0, len,
+		EAStringC::CB_PUSH_ZERO, len);
 }
 
 BfmeStrVKK *BfmeStrVKK::bfmeReverseVKK()
 {
 	unsigned len = m_bfme00->m_bfme02;
-	bfmeReserveVKK(len, 0, len, 1, len);
+	reinterpret_cast<EAStringC *>(this)->ChangeBuffer(len, 0, len,
+		EAStringC::CB_PUSH_ZERO, len);
 	unsigned n = m_bfme00->m_bfme02;
 	if (n > 1)
 	{
