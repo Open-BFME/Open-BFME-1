@@ -9,7 +9,17 @@ struct Rva008A99D0Pool
 	void (__cdecl *free)(void *);
 };
 
-extern Rva008A99D0Pool *g_rva008A99D0Pool;
+// The pool pointer at VA 0x01337A30 has one canonical global; this TU keeps
+// its own view type of the {void *unused; void (*free)(void *);} table and
+// casts at each use.
+struct BfmeStringPool3AF0;
+
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+static __forceinline Rva008A99D0Pool *localPool()
+{
+	return (Rva008A99D0Pool *)g_rva01337A30AllocPair;
+}
 
 struct Rva008A99D0Block
 {
@@ -24,7 +34,7 @@ public:
 	{
 		Rva008A99D0Block *block = m_block;
 		if (--block->m_ref == 0)
-			g_rva008A99D0Pool->free(block);
+			localPool()->free(block);
 	}
 
 	Rva008A99D0Block *m_block;
@@ -48,6 +58,6 @@ void rva008A99D0FormattedString(Rva008A99D0Object *object,
 	++text.m_block->m_ref;
 	Rva008A99D0Block *old = object->m_text.m_block;
 	if (--old->m_ref == 0)
-		g_rva008A99D0Pool->free(old);
+		localPool()->free(old);
 	object->m_text.m_block = text.m_block;
 }

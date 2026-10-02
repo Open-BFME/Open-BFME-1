@@ -23,7 +23,11 @@ struct Rva00892ED0ReferenceCount
 	unsigned short m_count;
 };
 
-extern void ( __cdecl **Rva00892ED0ReleaseTable )( void * );
+// The pointer at VA 0x01337A30 has one canonical global; this TU views it as
+// the {void *unused; void (*free)(void *);} table and casts at the use.
+struct BfmeStringPool3AF0;
+
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva00892ED0Reference
 {
@@ -33,7 +37,7 @@ public:
 		Rva00892ED0ReferenceCount *reference = m_reference;
 		--reference->m_count;
 		if( reference->m_count == 0 )
-			Rva00892ED0ReleaseTable[ 1 ]( reference );
+			( ( void ( __cdecl ** ) ( void * ) ) g_rva01337A30AllocPair )[ 1 ]( reference );
 	}
 
 	Rva00892ED0ReferenceCount *m_reference;

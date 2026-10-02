@@ -59,7 +59,16 @@ struct BfmeAlloc1045
 	void (__cdecl *m_bfmeFree)(BfmeRc1045 *r);
 };
 
-extern BfmeAlloc1045 *g_bfmeAlloc1045;
+// The pointer at VA 0x01337A30 has one canonical global; this TU keeps its own
+// view type of the {void *unused; void (*free)(Rf *);} table and casts at the use.
+struct BfmeStringPool3AF0;
+
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+static __forceinline BfmeAlloc1045 *localPool()
+{
+	return (BfmeAlloc1045 *)g_rva01337A30AllocPair;
+}
 
 class BfmeG1045
 {
@@ -79,7 +88,7 @@ BfmeG1045 *BfmeG1045::bfmeGo1045G(BfmeG1045 *o)
 	r->m_bfmeCount--;
 
 	if (r->m_bfmeCount == 0)
-		g_bfmeAlloc1045->m_bfmeFree(r);
+		localPool()->m_bfmeFree(r);
 
 	m_bfmeRc = o->m_bfmeRc;
 	m_bfmeVal = o->m_bfmeVal;

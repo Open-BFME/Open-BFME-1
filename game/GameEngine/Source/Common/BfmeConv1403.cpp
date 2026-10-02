@@ -15,7 +15,16 @@ struct BfmeAllocVKJ
 	void (__cdecl *m_bfmeFree)(void *p);
 };
 
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+// The pointer at VA 0x01337A30 has one canonical global; this TU keeps its own
+// view type of the two-slot {alloc, free} table and casts at the use.
+struct BfmeStringPool3AF0;
+
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+static __forceinline BfmeAllocVKJ *localPool()
+{
+	return (BfmeAllocVKJ *)g_rva01337A30AllocPair;
+}
 
 class BfmeStrVKJ
 {
@@ -33,7 +42,7 @@ BfmeStrVKJ *BfmeStrVKJ::bfmeAssignVKJ(const BfmeStrVKJ &o)
 		++o.m_bfme00->m_bfme00;
 		BfmeHdrVKJ *h = m_bfme00;
 		if (--h->m_bfme00 == 0)
-			g_bfmeAllocVKJ->m_bfmeFree(h);
+			localPool()->m_bfmeFree(h);
 		m_bfme00 = o.m_bfme00;
 		return this;
 	}

@@ -12,7 +12,17 @@ struct BfmeStringPoolVKI
 	void (__cdecl *free)(void *);
 };
 
-extern BfmeStringPoolVKI *g_bfmeStringPool1284;
+// The pool pointer at VA 0x01337A30 has one canonical global; this TU keeps its
+// own view type of the {void *unused; void (*free)(void *);} table and casts at
+// the use.
+struct BfmeStringPool3AF0;
+
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+
+static __forceinline BfmeStringPoolVKI *localPool()
+{
+	return (BfmeStringPoolVKI *)g_rva01337A30AllocPair;
+}
 
 class BfmeStrVKI
 {
@@ -26,7 +36,7 @@ public:
 	{
 		BfmeHdrVKI *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			localPool()->free(data);
 	}
 
 	BfmeHdrVKI *m_data;
