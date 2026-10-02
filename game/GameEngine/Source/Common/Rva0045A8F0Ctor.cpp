@@ -1,21 +1,18 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 -Igame/GameEngine/Source/Common/System -Igame/Libraries/Source/WWVegas/WWLib -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 // Retail runs the 16-byte base constructor at 0x009A1A30 here (vptr
 // 0x01141640 plus a zeroed word at +4), not the 9-byte vptr-only body the
-// ledger carries as ??0Snapshot@@QAE@XZ. GenBase009A1A30 is the neutral,
-// address-derived spelling symbols.csv already pins at that body.
-class GenBase009A1A30
-{
-public:
-	GenBase009A1A30();
-	virtual void handle();
+// ledger carries as ??0Snapshot@@QAE@XZ. That 16-byte body IS
+// SubsystemInterface::SubsystemInterface (ledger row ??0SubsystemInterface@@QAE@XZ
+// @ 0x009A1A30, source game/GameEngine/Source/Common/System/SubsystemInterface.cpp),
+// so the base is declared by the real header rather than by a TU-local
+// address-derived stand-in: the call then mangles to the defining name.
+// The base subobject is still eight bytes here -- a vptr plus the four-byte
+// AsciiString m_name -- so the derived members keep their retail offsets.
+#include "Lib/BaseType.h"
+#include "subsystem_interface.h"
 
-private:
-	int m_04;
-};
-
-class Rva0045A8F0 : public GenBase009A1A30
+class Rva0045A8F0 : public SubsystemInterface
 {
 	int m_08;
 	int m_0C;

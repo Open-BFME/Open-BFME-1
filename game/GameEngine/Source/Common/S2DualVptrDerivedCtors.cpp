@@ -1,3 +1,4 @@
+// cl: -Igame/GameEngine/Source/Common/System -Igame/Libraries/Source/WWVegas/WWLib -Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Two __thiscall constructors of classes with TWO polymorphic bases, whose
 // whole body is the base constructor and the three vptr stores that follow it:
 //
@@ -22,13 +23,15 @@
 // what the two bases are called, nor whether the derived classes add virtuals
 // of their own -- only that each has its own vftable for each base.
 
-class GenBase009A1A30
-{
-public:
-	GenBase009A1A30();
-	virtual void keepFirst();
-	int m_pad;
-};
+// The called base constructor 0x009A1A30 is SubsystemInterface's constructor
+// (ledger row ??0SubsystemInterface@@QAE@XZ, source
+// game/GameEngine/Source/Common/System/SubsystemInterface.cpp), so the base is
+// declared by the real header instead of a TU-local address-derived stand-in.
+// Its subobject is still eight bytes -- vptr plus the four-byte AsciiString
+// m_name -- so the second base still lands at +8 and the three vptr stores
+// keep their retail offsets.
+#include "Lib/BaseType.h"
+#include "subsystem_interface.h"
 
 class GenBase01073744
 {
@@ -37,7 +40,7 @@ public:
 };
 
 #define BFME_DUAL_VPTR_CTOR( NAME )                                       \
-	class NAME : public GenBase009A1A30, public GenBase01073744           \
+	class NAME : public SubsystemInterface, public GenBase01073744        \
 	{                                                                     \
 	public:                                                               \
 		NAME();                                                           \
