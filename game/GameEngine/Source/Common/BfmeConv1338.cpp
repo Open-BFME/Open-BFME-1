@@ -30,7 +30,17 @@ void *BfmeThingUNA::bfmeDelUNA(unsigned char flags)
 extern void *g_bfmeVftUNB[];
 
 void *bfmeAllocUNB(unsigned n);
-void *bfmeMakeRecUNB(int n);
+
+// 0x008064A0 IS THE RECORD CREATE of the DirtySock record module
+// (game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp), which defines it
+// taking no argument; retail's caller here pushes 0x1000 and cleans it with the
+// `add esp, 4` at +0x24, so the argument is dead weight at the call site.  It is
+// declared here with its defining signature and called through a one-argument
+// view of its own type, which is what keeps the push and the `add esp, 4` in
+// retail's bytes while the call still names the real symbol.
+struct Rva00806580Record;
+Rva00806580Record *Rva008064A0(void);
+typedef Rva00806580Record *( *Rva008064A0WithArg )( int );
 
 class BfmeThingUNB
 {
@@ -47,7 +57,7 @@ BfmeThingUNB *bfmeNewUNB(void)
 	BfmeThingUNB *p = (BfmeThingUNB *)bfmeAllocUNB(0x14);
 	if (p) {
 		p->m_bfmeVft = g_bfmeVftUNB;
-		p->m_bfmeRec = bfmeMakeRecUNB(0x1000);
+		p->m_bfmeRec = ( ( Rva008064A0WithArg )Rva008064A0 )( 0x1000 );
 		p->m_bfme04 = 0;
 		p->m_bfme0c = 0;
 		p->m_bfme10 = 0;

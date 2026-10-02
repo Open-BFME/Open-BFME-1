@@ -1,7 +1,17 @@
 // Open-BFME5 conversions.
 
 extern "C" void *bfmeVft1053A[];
-void *bfmeAlloc1053(int n);
+
+// 0x008064A0 IS THE RECORD CREATE of the DirtySock record module
+// (game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp), which defines
+// it taking no argument; retail's caller at +0x03 pushes 0x1000 and cleans it
+// with the `add esp, 4` at +0x21, so the argument is dead weight at the call
+// site.  It is declared here with its defining signature and called through a
+// one-argument view of its own type, which is what keeps the push and the
+// `add esp, 4` in retail's bytes while the call still names the real symbol.
+struct Rva00806580Record;
+Rva00806580Record *Rva008064A0(void);
+typedef Rva00806580Record *( *Rva008064A0WithArg )( int );
 
 class BfmeA1053
 {
@@ -18,7 +28,7 @@ public:
 BfmeA1053 *BfmeA1053::bfmeGo1053A(void)
 {
 	m_bfmeVfptr = bfmeVft1053A;
-	m_bfmeBuf = bfmeAlloc1053(0x1000);
+	m_bfmeBuf = ( ( Rva008064A0WithArg )Rva008064A0 )( 0x1000 );
 
 	int z = 0;
 
