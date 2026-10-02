@@ -28,7 +28,11 @@ public:
 };
 
 extern "C" BfmeStateDF *g_bfmeStateDF;
-extern "C" char *g_bfmeStateDO;
+
+// 0x012F1028 is the one Glo012F1028 global.  It must not be extern "C": the
+// unmangled spelling could never link against the retail-defining name.
+class Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
 
 class LivingWorldEyeTower
 {
@@ -48,7 +52,8 @@ private:
 void LivingWorldEyeTower::processFrame()
 {
 	Gen0060CBB0Scratch scratch;
-	g_bfmeStateDF->buildFramePoint(g_bfmeStateDO + 0x20, &scratch);
+	char *stateDO = (char *)Glo012F1028;
+	g_bfmeStateDF->buildFramePoint(stateDO + 0x20, &scratch);
 
 	m_framePoint.first = m_targetPoint.first;
 	m_framePoint.second = m_targetPoint.second;

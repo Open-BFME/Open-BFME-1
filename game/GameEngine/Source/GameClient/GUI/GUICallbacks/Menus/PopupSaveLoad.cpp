@@ -199,18 +199,20 @@ public:
 	SaveCode loadGame( AvailableGameInfo gameInfo );
 };
 
-class BfmeStateDO
+// The 0x012F1028 global's class; its name is the retail-defining spelling
+// ?Glo012F1028@@3PAVGlo012F1028Type@@A.
+class Glo012F1028Type
 {
 public:
 	int m_bfmeHead[11];
 	bool m_bfmeFirst;
 	bool m_bfmeSecond;
 };
-extern BfmeStateDO *g_bfmeStateDO;
+extern Glo012F1028Type *Glo012F1028;
 
 __declspec(noinline) int __cdecl bfmeReady(int mode)
 {
-	if (g_bfmeStateDO->m_bfmeFirst && g_bfmeStateDO->m_bfmeSecond)
+	if (Glo012F1028->m_bfmeFirst && Glo012F1028->m_bfmeSecond)
 		return 1;
 	return mode != 1;
 }

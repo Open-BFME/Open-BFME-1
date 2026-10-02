@@ -608,7 +608,10 @@ extern Display* TheDisplay;
 // Rva004891C0 is this TU's view of the object, so every use casts.
 class GameWindowTransitionsHandler;
 extern GameWindowTransitionsHandler* TheTransitionHandler;
-extern Rva003968A0* g_va012F1028;
+// 0x012F1028 is the one Glo012F1028 global.  Rva003968A0 above is this TU's
+// view of that object (its test() is a pinned callee), so the use casts.
+class Glo012F1028Type;
+extern Glo012F1028Type* Glo012F1028;
 extern void* g_va012F71B4;
 extern void* g_va012F4988;
 void rva00511CC0(int);
@@ -1078,7 +1081,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   }
   break;
  case 0x90:
-  if(!g_va012F1028 || !g_va012F1028->test()) if(TheControlBar) TheControlBar->togglePurchaseScience();
+  if(!Glo012F1028 || !((Rva003968A0*)Glo012F1028)->test()) if(TheControlBar) TheControlBar->togglePurchaseScience();
   disp=DESTROY_MESSAGE; break;
  }
  return disp;

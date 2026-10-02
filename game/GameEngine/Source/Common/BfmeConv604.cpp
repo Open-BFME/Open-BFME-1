@@ -13,15 +13,20 @@ public:
 };
 
 extern BfmeOneCHF *bfmeTheOneCHF;
-extern BfmeTwoCHF *bfmeTheTwoCHF;
+
+// 0x012F1028 is the one Glo012F1028 global.  BfmeTwoCHF above is this TU's
+// view of that object (its member is the pinned bfmeTwoCHF callee), so the use
+// casts rather than declaring a second name for the address.
+class Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
 
 void bfmeGoCHF()
 {
-	BfmeTwoCHF *two = bfmeTheTwoCHF;
+	BfmeTwoCHF *two = (BfmeTwoCHF *)Glo012F1028;
 	if (two->m_bfmeFlag)
 	{
 		bfmeTheOneCHF->bfmeOneCHF();
 		two->bfmeTwoCHF();
-		bfmeTheTwoCHF->m_bfmeFlag = false;
+		((BfmeTwoCHF *)Glo012F1028)->m_bfmeFlag = false;
 	}
 }

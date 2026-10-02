@@ -21,7 +21,10 @@ public:
 	BfmeJ1052 *m_bfmeSub;
 };
 
-extern Glo012F1028Type * volatile Glo012F1028;
+// Non-volatile: MSVC mangles a cv-qualified pointer-to-class global with the
+// reference code (3RAV), so the volatile here would spell the wrong symbol for
+// the retail global at 0x012F1028.
+extern Glo012F1028Type *Glo012F1028;
 
 class Gen003BD7D0Node
 {
