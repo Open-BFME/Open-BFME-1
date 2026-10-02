@@ -49,9 +49,20 @@ class DelayedUpgrade : public UpgradeModule
 {
 public:
 	DelayedUpgrade( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	// Slot 4 of the UpgradeModuleInterface vtable this constructor stores at
+	// +0x10 (retail 0x010CC700); SubObjectsUpgrade's matching slot returns true.
+	virtual bool isSubObjectsUpgrade();
 };
 
 DelayedUpgrade::DelayedUpgrade( Thing *thing, const ModuleData *moduleData )
 	: UpgradeModule( thing, moduleData )
 {
+}
+
+// ?isSubObjectsUpgrade@DelayedUpgrade@@MAE_NXZ
+bool DelayedUpgrade::isSubObjectsUpgrade()
+{
+	return false;
 }
