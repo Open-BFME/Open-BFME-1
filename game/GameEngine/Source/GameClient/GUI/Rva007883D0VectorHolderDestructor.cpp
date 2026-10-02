@@ -1,15 +1,20 @@
 // cl: /DNDEBUG /MD /EHsc /O2
 
-extern int bfmeVtable007883D0[];
-void __cdecl bfmeFreeLarge007883D0(void *memory);
-void __cdecl bfmeFreeSmall007883D0(void *memory, unsigned int bytes);
+// Retail VA 0x01126A98: ScalarDeletingDestructors.cpp owns this table.
+extern "C" int __identifier("??_7Rva00782DA0Deleting@@6B@")[];
+void __cdecl operator delete(void *memory);
+
+// The private STLport pool entry at RVA 0x0082E5F0 is a static __cdecl
+// member. Refer to its exact symbol without redeclaring the allocator.
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(
+	void *memory, unsigned int bytes);
 
 class Rva007883D0Base
 {
 public:
 	~Rva007883D0Base()
 	{
-		m_table = bfmeVtable007883D0;
+		m_table = __identifier("??_7Rva00782DA0Deleting@@6B@");
 	}
 
 	void *m_table;
@@ -28,9 +33,9 @@ public:
 		if (m_begin != 0) {
 			unsigned int bytes = (unsigned int)(m_capacityEnd - m_begin) * sizeof(Element);
 			if (bytes > 0x80)
-				bfmeFreeLarge007883D0(m_begin);
+				::operator delete(m_begin);
 			else
-				bfmeFreeSmall007883D0(m_begin, bytes);
+				__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(m_begin, bytes);
 		}
 	}
 

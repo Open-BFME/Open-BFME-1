@@ -1,10 +1,13 @@
-extern "C" void *bfmeBaseVftIC[];
-extern "C" void *bfmePathVftIC[];
+// Retail VAs 0x010C7450 and 0x010C7E28, emitted by
+// GiantBirdAIUpdateDestructorThunk.cpp.
+extern "C" void *__identifier("??_7GiantBirdNestedBase@@6B@")[];
+extern "C" void *__identifier("??_7GiantBirdNested@@6B@")[];
 
-class BfmeSubIC
+// ILT 0x0002A1B2 routes to ParabolicEase::setEaseTimes at RVA 0x00094970.
+class ParabolicEase
 {
 public:
-	void bfmeStartIC(int a, int b, float c);
+	void setEaseTimes(float easeInTime, float easeOutTime, float duration);
 
 	unsigned char m_bfmeGapIC[8];
 };
@@ -14,8 +17,8 @@ class BfmeBaseIC
 public:
 	BfmeBaseIC()
 	{
-		m_bfmeVftIC = bfmeBaseVftIC;
-		m_bfmeSubIC.bfmeStartIC(0, 0, 1.0f);
+		m_bfmeVftIC = __identifier("??_7GiantBirdNestedBase@@6B@");
+		m_bfmeSubIC.setEaseTimes(0.0f, 0.0f, 1.0f);
 		m_bfme04IC = 0;
 		m_bfme08IC = 0;
 		m_bfme18IC = 0;
@@ -28,7 +31,7 @@ public:
 	volatile int m_bfme04IC;
 	volatile int m_bfme08IC;
 	int m_bfme0cIC;
-	BfmeSubIC m_bfmeSubIC;
+	ParabolicEase m_bfmeSubIC;
 	volatile int m_bfme18IC;
 	volatile int m_bfme1cIC;
 	volatile int m_bfme20IC;
@@ -62,7 +65,7 @@ public:
 
 BfmeThingIC::BfmeThingIC()
 {
-	*(void *volatile *)&m_bfmeVftIC = bfmePathVftIC;
+	*(void *volatile *)&m_bfmeVftIC = __identifier("??_7GiantBirdNested@@6B@");
 	*(volatile int *)&m_bfme2cIC = 0;
 	m_bfme30IC = 0;
 	m_bfme34IC = 0;
