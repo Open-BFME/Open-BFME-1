@@ -24,6 +24,7 @@ public:
     unsigned char isType(unsigned char t) const { unsigned f=flags; return (f & 0x3f)==t && !((unsigned char)(~(f>>15)) & 1); }
 };
 class BfmeN1242 { public: void bfmeReserve1242(int); };
+class AptValue;
 class Rva008B9C90HeaderedDeleting : public Rva00899F00Base {
 public:
     unsigned *m_elements;
@@ -37,7 +38,6 @@ public:
         bfmePush((BfmeItemDX *)p);
         return p;
     }
-    static void operator delete(void *, unsigned);
     __forceinline void put(int index, Value008B9CC0 *v) {
         Value008B9CC0 *old=(Value008B9CC0 *)(m_elements[index]&~1u);
         v->retain();
@@ -55,10 +55,9 @@ public:
         }
     }
 };
-extern Value008B9CC0 **g_bfmeArr1233;
+extern AptValue **g_bfmeArr1233;
 struct Rva008AE770Stack { int field00; };
 extern Rva008AE770Stack Rva008AE770TheStack;
-class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 void *aptArrayConcat(Value008B9CC0 *self,int count) {
     if (self->isType(0x16)) {
@@ -67,7 +66,8 @@ void *aptArrayConcat(Value008B9CC0 *self,int count) {
         for (int i=0;i<source->field28;++i)
             out->set(out->field28,(Value008B9CC0 *)(source->m_elements[i]&~1u));
         for (int j=0;j<count;++j) {
-            Value008B9CC0 *v=g_bfmeArr1233[Rva008AE770TheStack.field00-j-1];
+            Value008B9CC0 *v=reinterpret_cast<Value008B9CC0 *>(
+                g_bfmeArr1233[Rva008AE770TheStack.field00-j-1]);
             if (v->isType(0x16)) {
                 Rva008B9C90HeaderedDeleting *a=(Rva008B9C90HeaderedDeleting *)v;
                 for (int k=0;k<a->field28;++k)
