@@ -62,11 +62,7 @@ private:
 
 struct Gen_t_000ef440_k4
 {
-	int a[1];
-	Gen_t_000ef440_k4();
-	Gen_t_000ef440_k4(const Gen_t_000ef440_k4&);
-	~Gen_t_000ef440_k4();
-	Gen_t_000ef440_k4& operator=(const Gen_t_000ef440_k4&);
+	int value;
 };
 
 bool operator==(const Gen_t_000ef440_k4&, const Gen_t_000ef440_k4&);
@@ -75,7 +71,7 @@ bool operator<(const Gen_t_000ef440_k4&, const Gen_t_000ef440_k4&);
 class EmotionTrackerUpdateSecondaryBase
 {
 public:
-	virtual void slot();
+	virtual void slot() = 0;
 };
 
 class EmotionTrackerUpdate
