@@ -1,4 +1,6 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /Igame/Libraries/Source/WWVegas/WWLib
+
+#include "string_base.h"
 
 class Rva0036CA00Str
 {
@@ -23,8 +25,8 @@ public:
 
 void Rva004666C0::set(int a0, const Rva0036CA00Str &a1, const Rva0036CA00Str &a2, int a3)
 {
-	m_00 = a2;
-	m_04 = a1;
+	((StringBase<char> &)m_00).set((const StringBase<char> &)a2);
+	((StringBase<char> &)m_04).set((const StringBase<char> &)a1);
 	m_0C = a0;
 	if (m_flags & 2)
 		m_flags &= (unsigned char)~2;

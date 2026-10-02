@@ -1,4 +1,6 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /Igame/Libraries/Source/WWVegas/WWLib
+
+#include "string_base.h"
 
 class Rva0036CA00Str
 {
@@ -36,8 +38,8 @@ void Rva00458450::operator=(const Rva00458450 &other)
 	m_14 = other.m_14;
 	m_18 = other.m_18;
 	m_1C = other.m_1C;
-	m_00 = other.m_00;
-	m_04 = other.m_04;
+	((StringBase<char> &)m_00).set((const StringBase<char> &)other.m_00);
+	((StringBase<char> &)m_04).set((const StringBase<char> &)other.m_04);
 	m_24 = other.m_24;
 	m_20 = other.m_20;
 	m_28 = other.m_28;

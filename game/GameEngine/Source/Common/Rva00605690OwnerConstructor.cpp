@@ -8,9 +8,7 @@
 
 #include <string.h>
 
-#define private public
-#include "string_base.h"
-#undef private
+#include "ascii_string.h"
 
 // This address-derived wrapper has the same four-byte layout as StringBase<char>.
 class Rva00605690CharPart
@@ -18,13 +16,12 @@ class Rva00605690CharPart
 public:
 	__forceinline Rva00605690CharPart(
 		const Rva00605690CharPart &other )
+		: m_storage( *(const AsciiString *)&other )
 	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other );
 	}
 
 private:
-	char *m_storage;
+	AsciiString m_storage;
 };
 
 class Rva00605690Owner

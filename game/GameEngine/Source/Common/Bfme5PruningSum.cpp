@@ -10,7 +10,17 @@
 // is a float local initialised with an integer zero store and returned on the
 // stack.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+class Gen_00250F50;
+
+namespace _STL
+{
+	template <bool __threads, int __inst>
+	class __node_alloc
+	{
+		friend class ::Gen_00250F50;
+		static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+	};
+}
 
 struct BfmeSumNode
 {
@@ -72,7 +82,8 @@ float Gen_00250F50::bfmeSum(void)
 			previous->m_bfmeNext = next;
 			next->m_bfmePrev = previous;
 
-			bfmeDeallocate(node, sizeof(BfmeSumNode));
+			_STL::__node_alloc<true, 0>::_M_deallocate(
+				node, sizeof(BfmeSumNode));
 
 			node = next;
 		}
