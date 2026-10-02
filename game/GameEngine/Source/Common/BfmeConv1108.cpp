@@ -1,4 +1,7 @@
 // Open-BFME5 conversions.
+// stlport
+
+#include <map>
 
 class BfmeK1108
 {
@@ -19,8 +22,6 @@ struct BfmeNode1108
 	BfmeK1108 *m_bfme14;
 };
 
-BfmeNode1108 *__cdecl bfmeNext1108(BfmeNode1108 *p);
-
 class BfmeW1108
 {
 public:
@@ -38,7 +39,8 @@ void BfmeW1108::bfmeGo1108B(void)
 
 		if (q && q->bfmeSlot1108K_5())
 			p->m_bfme14->bfmeSlot1108K_4();
-		p = bfmeNext1108(p);
+		p = reinterpret_cast<BfmeNode1108 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = m_bfme00;
 	}
 }

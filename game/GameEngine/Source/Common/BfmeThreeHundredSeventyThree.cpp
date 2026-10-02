@@ -1,11 +1,13 @@
+// stlport
+
+#include <deque>
+
 struct BfmeNodeXC
 {
 	BfmeNodeXC *m_bfmeNext;
 	BfmeNodeXC *m_bfmePrev;
 	unsigned short m_bfmeKey;
 };
-
-void bfmeFreeSizedXC(void *what, unsigned int bytes);
 
 class BfmeListXC
 {
@@ -26,7 +28,7 @@ void BfmeListXC::bfmeEraseXC(unsigned short *key)
 			BfmeNodeXC *prev = at->m_bfmePrev;
 			prev->m_bfmeNext = next;
 			next->m_bfmePrev = prev;
-			bfmeFreeSizedXC(at, 0xc);
+			_STL::__node_alloc<true, 0>::deallocate(at, 0xc);
 		}
 		at = next;
 	}

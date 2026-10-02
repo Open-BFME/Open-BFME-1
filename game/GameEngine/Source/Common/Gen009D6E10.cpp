@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the peer attach/finalize helper at retail RVA 0x009D6E10.
 
+#include "System/xfer.h"
+#include "System/snapshot.h"
+
 class BfmePeer
 {
 public:
@@ -20,7 +23,6 @@ public:
 	virtual void bfmeAccept(void *value);
 	virtual void bfmeFinish();
 
-	void bfmeReset(BfmePeer *peer);
 	Gen009D6E10 *bfmeAttach(BfmePeer *peer);
 
 private:
@@ -33,7 +35,8 @@ Gen009D6E10 *Gen009D6E10::bfmeAttach(BfmePeer *peer)
 	if (m_enabled)
 		bfmeAccept(peer->bfmeValue());
 
-	bfmeReset(peer);
+	reinterpret_cast<Xfer *>(this)->Xfer::operator==(
+		*reinterpret_cast<Snapshot *>(peer));
 	if (m_enabled)
 		bfmeFinish();
 	return this;
