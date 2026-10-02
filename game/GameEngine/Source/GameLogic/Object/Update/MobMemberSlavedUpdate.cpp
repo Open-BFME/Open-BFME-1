@@ -126,13 +126,6 @@ void MobMemberSlavedUpdate::onEnslave( const Object *slaver )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onSlaverDie@MobMemberSlavedUpdate@@ present-unmatched
-void MobMemberSlavedUpdate::onSlaverDie( const DamageInfo *info )
-{
-	stopSlavedEffects();
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?onSlaverDamage@MobMemberSlavedUpdate@@ present-unmatched
 void MobMemberSlavedUpdate::onSlaverDamage( const DamageInfo *info )
 {

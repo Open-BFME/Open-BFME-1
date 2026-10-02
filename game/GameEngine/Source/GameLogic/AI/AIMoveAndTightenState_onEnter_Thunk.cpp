@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the retail AIMoveAndTightenState::onEnter body to C++.
+// Open-BFME5: retain the matched AIInternalMoveToState getter body.
 
 enum StateReturnType
 {
@@ -68,7 +68,7 @@ public:
 	virtual StateReturnType onEnter();
 
 	Object *getMachineOwner(void) const { return m_machine->m_owner; }
-	const Coord3D *getMachineGoalPosition(void) const { return &m_machine->m_goalPosition; }
+	const Coord3D *getMachineGoalPosition(void) const;
 
 	protected:
 	unsigned char m_unreconstructed_04[0x18];
@@ -90,34 +90,7 @@ private:
 	unsigned char m_checkForPath;
 };
 
-// These are the retail globals read by the debug guard and the pathfinder call.
-extern unsigned char g_012F0239;
-extern void *g_012ED4FC;
-extern AI *TheAI;
-
-// Existing incremental-link thunks.  Their generated declarations are no-arg
-// identities; the casts below supply the retail call signatures at each site.
-extern void j_0003a17a(void);
-
-typedef void (__cdecl *DebugLogFunction)(void *, const char *);
-
-// ?onEnter@AIMoveAndTightenState@@UAE?AW4StateReturnType@@XZ
-StateReturnType AIMoveAndTightenState::onEnter()
+const Coord3D *AIInternalMoveToState::getMachineGoalPosition(void) const
 {
-	if (g_012F0239 && g_012ED4FC)
-	{
-		((DebugLogFunction)j_0003a17a)(g_012ED4FC,
-			"CritterDesync: setAdjustDestination(FALSE) 7");
-	}
-
-	StateMachine *machine = m_machine;
-	m_adjustDestinations = 0;
-	Object *obj = machine->m_owner;
-	AIUpdateInterface *ai = obj->getAI();
-	m_okToRepathTimes = 1;
-	m_checkForPath = 1;
-	TheAI->pathfinder()->removeGoal(obj);
-	m_goalPosition = *getMachineGoalPosition();
-	ai->requestApproachPath(&m_goalPosition);
-	return AIInternalMoveToState::onEnter();
+	return &m_machine->m_goalPosition;
 }
