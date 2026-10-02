@@ -58,3 +58,23 @@ DelayedDeathBody.cpp and is left alone.
 
 Not claimed: member names inside the body (`fieldD4`.. and the slot 4/21
 virtuals stay shape names).
+
+## Independent re-derivation (sol/w5 aad9fc1d90)
+
+A separate session reached the same identity. Facts it adds:
+
+- The constructor 0x00213390 also stores primary table 0x010A8538 and
+  Snapshot+0x0C table 0x010A8470. The factory `friend_newModuleInstance`
+  (0x0011F940) allocates 0xF4 bytes and calls it.
+- ActiveBody's interface table 0x010A7718 has slot 31 = 0x0020E870 and
+  slot 33 = `ActiveBody::setMaxHealth` (0x00210690). The matched
+  `ActiveBody::attemptHealing` (0x0020FBC0) calls slot 32 as
+  `internalChangeHealth(float, DamageInfo*)`.
+- Interface fields +0xD4/+0xD8/+0xDC/+0xE0 are complete-object
+  +0xE4/+0xE8/+0xEC/+0xF0, which the constructor initializes.
+- Extent: `ret 8` at 0x0021361C and 0x00213635, INT3 at 0x00213638 (344 bytes).
+- The fall-through callee 0x002147E0 reads the float at ESP+4, then the
+  DamageInfo pointer's +8 field (VA 0x00614850), and forwards both arguments
+  to `ActiveBody::internalChangeHealth` through ILT 0x00035337 at VA
+  0x0061488E. Its exits are `ret 8` (0x00214921, 0x00214947, 0x00214967),
+  with INT3 at 0x0021496A (394 bytes).
