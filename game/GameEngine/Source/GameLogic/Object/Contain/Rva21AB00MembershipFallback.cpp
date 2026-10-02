@@ -38,11 +38,16 @@ public:
 	virtual int accepts(void *value) = 0;
 };
 
+class Gen_002227A0
+{
+public:
+	bool bfmeContains(void *value) const;
+};
+
 class BfmeThing913D
 {
 public:
 	bool acceptsWithFallback(void *value);
-	char bfmeAdd913D(void *value);
 
 private:
 	char gap[0x99C];
@@ -60,7 +65,7 @@ bool BfmeThing913D::acceptsWithFallback(void *value)
 		node = node->next;
 	}
 
-	if (bfmeAdd913D(value))
+	if (reinterpret_cast<const Gen_002227A0 *>(this)->bfmeContains(value))
 		return true;
 
 	Rva21AB00Owner *owner = (Rva21AB00Owner *)((char *)this - 0x20);

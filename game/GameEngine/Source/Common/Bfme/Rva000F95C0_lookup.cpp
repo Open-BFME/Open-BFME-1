@@ -9,14 +9,13 @@ struct Rva000F95C0Record
 	int m_key3c;
 };
 
-class AsciiStringBN
-{
-};
+class AsciiString;
+class ThingTemplate;
 
-class BfmeOtherBN
+class BfmeThingFactory
 {
 public:
-	void *bfmeLookupBN(const AsciiStringBN &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 class BfmeUseB980
@@ -26,7 +25,7 @@ public:
 };
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
-// Common/Thing/ThingFactory.cpp; this TU keeps its own BfmeOtherBN view of it.
+// Common/Thing/ThingFactory.cpp; use the matched findTemplate symbol here.
 class ThingFactory;
 
 extern ThingFactory *TheThingFactory;
@@ -52,9 +51,9 @@ void *Rva000F95C0::lookup(int key)
 		if (record->m_key3c == key)
 		{
 			int value = (int)m_value10;
-			BfmeUseB980 *use = static_cast<BfmeUseB980 *>(
-				((BfmeOtherBN *)TheThingFactory)->bfmeLookupBN(
-					*reinterpret_cast<const AsciiStringBN *>(record)));
+			BfmeUseB980 *use = (BfmeUseB980 *)
+				((BfmeThingFactory *)TheThingFactory)->findTemplate(
+					*reinterpret_cast<const AsciiString *>(record));
 			if (!use)
 				return 0;
 			return use->bfmeApply980B(value, record->m_value34);
