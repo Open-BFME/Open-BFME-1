@@ -40,6 +40,30 @@
 		}                                                                    \
 	}
 
+// The 0x00425060 element is the one walk whose callee is NOT a stand-in.
+// That body is already matched as `Rva00425060::invoke()` -- the nine-byte
+// `add ecx,16 / jmp` tail thunk MemberOffsetTailThunks.cpp defines and
+// functions.csv records at 0x00425060 -- so the call is made through that
+// member and the object references the real symbol instead of an undefined
+// `?handle@Gen00425060@@QAEXXZ`.  The walk keeps `Gen00425060` as its
+// parameter type because the 28-byte stride is what the bytes give and the
+// ledger already matches these three walks under that spelling; the cast
+// changes the callee symbol only, and emits no code.
+class Rva00425060
+{
+public:
+	void invoke();
+};
+
+#define BFME_INVOKING_MEMBER_WALK( NAME )                                    \
+	void NAME( Gen00425060 *first, Gen00425060 *last )                      \
+	{                                                                        \
+		for ( ; first != last; ++first )                                     \
+		{                                                                    \
+			( ( Rva00425060 * ) first )->invoke();                          \
+		}                                                                    \
+	}
+
 BFME_WALKED_ELEMENT( 000D1690, 96 )
 BFME_WALKED_ELEMENT( 000FD010, 36 )
 BFME_WALKED_ELEMENT( 0013B8E0, 20 )
@@ -83,9 +107,9 @@ BFME_MEMBER_WALK( rva003BAFD0MemberWalk, Gen003B9270 )
 BFME_MEMBER_WALK( rva003CFA60MemberWalk, Gen003CDE30 )
 BFME_MEMBER_WALK( rva003D00B0MemberWalk, Gen003CDE30 )
 BFME_MEMBER_WALK( rva003D12F0MemberWalk, Gen003CDE30 )
-BFME_MEMBER_WALK( rva004260D0MemberWalk, Gen00425060 )
-BFME_MEMBER_WALK( rva004261C0MemberWalk, Gen00425060 )
-BFME_MEMBER_WALK( rva004261F0MemberWalk, Gen00425060 )
+BFME_INVOKING_MEMBER_WALK( rva004260D0MemberWalk )
+BFME_INVOKING_MEMBER_WALK( rva004261C0MemberWalk )
+BFME_INVOKING_MEMBER_WALK( rva004261F0MemberWalk )
 BFME_MEMBER_WALK( rva0069CC30MemberWalk, Gen00695630 )
 BFME_MEMBER_WALK( rva0069EDA0MemberWalk, Gen00695630 )
 BFME_MEMBER_WALK( rva006A0F80MemberWalk, Gen00695630 )
