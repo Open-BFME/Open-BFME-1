@@ -46,7 +46,6 @@ class Rva007E8810Message
 public:
 	Rva007E8810Message();
 	~Rva007E8810Message();
-	int getError();
 	void setError(int code);
 
 	void *m_vtable;
@@ -62,6 +61,15 @@ public:
 	int m_28;
 	int m_2C;
 	char m_30;
+};
+
+// The error-code accessor at 0x007E88B0 is matched in the ledger as
+// Gen_007e88b0::m; it returns the int at this+0x24, i.e. m_24 above.  Call it
+// under that defining name so the reference links.
+class Gen_007e88b0
+{
+public:
+	int m();
 };
 
 struct Rva007FA170Slot
@@ -162,7 +170,7 @@ found:
 			Rva007F91D0(header, "<-B");
 			slot->m_08->m_20 = message.m_20;
 			slot->m_08->m_1C = message.m_1C;
-			slot->m_08->setError(message.getError());
+			slot->m_08->setError(((Gen_007e88b0 *)&message)->m());
 			unsigned length = header->m_textLength;
 			if (slot->m_08->m_14 < length)
 				slot->m_08->setError(-100);
