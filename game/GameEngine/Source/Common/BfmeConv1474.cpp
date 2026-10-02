@@ -8,7 +8,7 @@ public:
 	BfmeNodeVMU *m_bfme04;
 };
 
-extern void(__cdecl *g_bfmeFreeVMU)(void *p);
+extern void(__cdecl *g_bfmeFreeDWF)(void *p);
 
 class BfmeListVMU
 {
@@ -30,7 +30,7 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 		{
 			n = p->m_bfme04;
 			p->bfmeCleanupVMU();
-			g_bfmeFreeVMU(p);
+			g_bfmeFreeDWF(p);
 			m_bfme00 = n;
 		}
 		return;
@@ -47,6 +47,6 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 	{
 		q->m_bfme04 = n->m_bfme04;
 		n->bfmeCleanupVMU();
-		g_bfmeFreeVMU(n);
+		g_bfmeFreeDWF(n);
 	}
 }

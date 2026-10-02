@@ -3,7 +3,7 @@
 // BfmeThingUEW constructor at 0x008A2CF0; member types follow the retail unwind map.
 
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
-extern void (__cdecl *Rva008A30A0ReleasePtr)(void *block);
+extern void (__cdecl *g_bfmeFreeDWF)(void *block);
 
 extern "C" void *memset(void *destination, int value, unsigned int bytes);
 #pragma intrinsic(memset)
@@ -70,7 +70,7 @@ public:
 
 	void operator delete[](void *block)
 	{
-		Rva008A30A0ReleasePtr(block);
+		g_bfmeFreeDWF(block);
 	}
 
 private:

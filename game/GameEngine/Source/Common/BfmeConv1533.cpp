@@ -8,7 +8,7 @@ public:
 	BfmeNodeVOH *m_bfme04;
 };
 
-extern void(__cdecl *g_bfmeFreeVOH)(void *p);
+extern void(__cdecl *g_bfmeFreeDWF)(void *p);
 
 class BfmeListVOH
 {
@@ -28,7 +28,7 @@ void BfmeListVOH::bfmeClearVOH()
 			BfmeNodeVOH *nx = p->m_bfme04;
 
 			p->bfmeCleanupVOH();
-			g_bfmeFreeVOH(p);
+			g_bfmeFreeDWF(p);
 			m_bfme00 = nx;
 		}
 	}

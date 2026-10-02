@@ -7,7 +7,7 @@
 
 extern void (__cdecl *TheBfmeFree)(void *block, unsigned int bytes);
 
-extern void (__cdecl *Rva008A30A0ReleasePtr)(void *block);
+extern void (__cdecl *g_bfmeFreeDWF)(void *block);
 
 class Rva008A0DC0Entry;
 
@@ -69,7 +69,7 @@ public:
 
 	void operator delete[](void *block)
 	{
-		Rva008A30A0ReleasePtr(block);
+		g_bfmeFreeDWF(block);
 	}
 
 private:
@@ -128,8 +128,8 @@ Rva008A2CF0Owner::~Rva008A2CF0Owner()
 	delete[] vectors;
 
 	void *elements = m_value81c;
-	Rva008A30A0ReleasePtr(elements);
-	Rva008A30A0ReleasePtr(m_value00);
+	g_bfmeFreeDWF(elements);
+	g_bfmeFreeDWF(m_value00);
 
 	void *bytes = m_value0c;
 	unsigned int size = m_value12a0 * 4;

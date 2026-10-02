@@ -23,7 +23,7 @@ struct EAStringData;
 extern EAStringData g_emptyStringData;
 
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
-extern void (*Rva008A30A0ReleasePtr)(void *);
+extern void (*g_bfmeFreeDWF)(void *);
 
 class Q3EhMember0089C900
 {
@@ -81,7 +81,7 @@ Q3EhMember0089C900::~Q3EhMember0089C900()
 					}
 			}
 
-		Rva008A30A0ReleasePtr(self->m_elements);
+		g_bfmeFreeDWF(self->m_elements);
 		self->m_elements = 0;
 	}
 }

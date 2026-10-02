@@ -3,7 +3,7 @@
 
 // The retail call is through a global function-pointer slot at 0x0133782C.
 // The DIR32 operand is copied from retail by the reconstruction gate.
-extern void (*Rva008A30A0ReleasePtr)( void * );
+extern void (*g_bfmeFreeDWF)( void * );
 
 class Rva008A30A0Object
 {
@@ -16,6 +16,6 @@ public:
 
 void Rva008A30A0Object::clear()
 {
-	Rva008A30A0ReleasePtr( m_owned );
+	g_bfmeFreeDWF( m_owned );
 	m_owned = 0;
 }

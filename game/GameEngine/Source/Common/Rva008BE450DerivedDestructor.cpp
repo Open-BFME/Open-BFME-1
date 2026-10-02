@@ -19,7 +19,7 @@ extern BfmeStringPool1286 *g_bfmeStringPool1284;
 extern char g_bfmeDerived1286Vtable;
 extern char g_bfmeSpecialBlock1286;
 extern void (__cdecl *g_bfmeFreePair1286)(void *storage, int count);
-extern void (__cdecl *g_bfmeFreeSingle1286)(void *storage);
+extern void (__cdecl *g_bfmeFreeDWF)(void *storage);
 extern char g_bfmeBase1285Vtable;
 extern void (__cdecl *TheBfmeFree)(void *storage, unsigned int size);
 
@@ -116,10 +116,10 @@ Rva008BE450SizedDeleting::~Rva008BE450SizedDeleting()
 	}
 	if ((m_flags74 & 1) != 0) {
 		if (m_nested->m_owned34 != 0)
-			g_bfmeFreeSingle1286(m_nested->m_owned34);
+			g_bfmeFreeDWF(m_nested->m_owned34);
 		if (m_nested->m_owned38 != 0)
-			g_bfmeFreeSingle1286(m_nested->m_owned38);
+			g_bfmeFreeDWF(m_nested->m_owned38);
 		if (m_nested != 0)
-			g_bfmeFreeSingle1286(m_nested);
+			g_bfmeFreeDWF(m_nested);
 	}
 }
