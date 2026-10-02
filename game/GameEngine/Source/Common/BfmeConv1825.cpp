@@ -1,22 +1,28 @@
-class BfmePlayerVK;
+// stlport
+#include "Thing/GameLogicObjectLookup.h"
+#include "../GameLogic/command_source_type.h"
+
+struct Coord3D;
 
 struct BfmeSetVK
 {
 	unsigned char m_bfmeRawVK[4];
 };
 
-class BfmeListVK
+// Retail ILTs 0x00044A44 and 0x000339FB reach the matched command bodies
+// at 0x0025D170 and 0x0025D270 in the AICommandInterface command TUs.
+class AICommandInterface
 {
 public:
-	void bfmeAddPlayerVK(BfmePlayerVK *player, int flag);
-	void bfmeAddSetVK(BfmeSetVK *set, int flag);
+	void aiBfmeCommand63(Object *object, CommandSourceType commandSource);
+	void aiBfmeCommand40(const Coord3D *position, CommandSourceType commandSource);
 };
 
 class BfmeUnitVK
 {
 public:
 	unsigned char m_bfmeHeadVK[0x20];
-	BfmeListVK m_bfmeListVK;
+	AICommandInterface m_bfmeListVK;
 };
 
 class BfmeHolderVK
@@ -26,15 +32,7 @@ public:
 	BfmeUnitVK *m_bfmeUnitVK;
 };
 
-// TU-local view of the retail GameLogic; the global itself is the canonical
-// ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
-class GameLogic;
-
-struct Rva00367E30Logic
-{
-	BfmePlayerVK *bfmeFindVK(void *key);
-};
-
+// ILT 0x0001F253 reaches GameLogic::findObjectByID at 0x0009A510.
 extern GameLogic *TheGameLogic;
 
 class BfmeOwnerVK
@@ -57,10 +55,10 @@ void BfmeOwnerVK::bfmeApplyVK(void)
 		return;
 
 	BfmeSetVK *set = &m_bfmeSetVK;
-	BfmePlayerVK *player = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindVK(m_bfmeKeyVK);
+	Object *player = TheGameLogic->findObjectByID((int)m_bfmeKeyVK);
 
 	if (player != 0)
-		unit->m_bfmeListVK.bfmeAddPlayerVK(player, 2);
+		unit->m_bfmeListVK.aiBfmeCommand63(player, CMD_FROM_AI);
 	else if (set != 0)
-		unit->m_bfmeListVK.bfmeAddSetVK(set, 2);
+		unit->m_bfmeListVK.aiBfmeCommand40((const Coord3D *)set, CMD_FROM_AI);
 }

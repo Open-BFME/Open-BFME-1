@@ -22,7 +22,11 @@ struct BfmeIterator
 };
 
 
-extern char TheBfmeOwner_000CBB80[];
+// These iterator words are code addresses, not data owners. The ledger's
+// ILTs at RVAs 0x00022A70, 0x0002FEE6 and 0x00008224 jump to the next-link
+// getters at 0x000C8A30, 0x001604E0 and 0x001605D0 respectively. Keep the
+// thunk addresses: substituting the getter body would change the stored word.
+void j_00022a70();
 
 class Gen_000CBB80
 {
@@ -34,7 +38,7 @@ private:
 	void *m_bfmeNode;					// +0x274
 };
 
-extern char TheBfmeOwner_00161290[];
+void j_0002fee6();
 
 class Gen_00161290
 {
@@ -46,7 +50,7 @@ private:
 	void *m_bfmeNode;					// +0x4
 };
 
-extern char TheBfmeOwner_001612B0[];
+void j_00008224();
 
 class Gen_001612B0
 {
@@ -70,19 +74,19 @@ private:
 // ?bfmeMake@Gen_000CBB80@@QAE?AUBfmeIterator@@XZ
 BfmeIterator Gen_000CBB80::bfmeMake(void)
 {
-	return BfmeIterator(m_bfmeNode, TheBfmeOwner_000CBB80);
+	return BfmeIterator(m_bfmeNode, (void *)&j_00022a70);
 }
 
 // ?bfmeMake@Gen_00161290@@QAE?AUBfmeIterator@@XZ
 BfmeIterator Gen_00161290::bfmeMake(void)
 {
-	return BfmeIterator(m_bfmeNode, TheBfmeOwner_00161290);
+	return BfmeIterator(m_bfmeNode, (void *)&j_0002fee6);
 }
 
 // ?bfmeMake@Gen_001612B0@@QAE?AUBfmeIterator@@XZ
 BfmeIterator Gen_001612B0::bfmeMake(void)
 {
-	return BfmeIterator(m_bfmeNode, TheBfmeOwner_001612B0);
+	return BfmeIterator(m_bfmeNode, (void *)&j_00008224);
 }
 
 // ?bfmeMake@Gen_004C14F0@@QAE?AUBfmeIterator@@XZ
