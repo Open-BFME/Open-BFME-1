@@ -27,7 +27,10 @@ BfmeStrUPA *BfmeThingUPA::bfmeGoUPA(BfmeStrUPA *out)
 	return out;
 }
 
-extern char g_bfmeFmtUPB[];
+// The pinned empty-string literal (symbols.csv ?g_Rva0107301CEmptyString@@3QBDB,
+// RVA 0x00C7301C); the census alias ?g_bfmeFmtUPB@@3PADA was a placeholder for
+// it.  g_bfmeEmptyUPA is a different datum and keeps its own name.
+extern const char g_Rva0107301CEmptyString[];
 
 void *bfmeFindUPB(void *table, void *a);
 void bfmeFormatUPB(void *r, char *out, void *c, const char *fmt);
@@ -47,7 +50,7 @@ char BfmeThingUPB::bfmeGoUPB(void *a, char *out, void *c)
 		*out = 0;
 		return 0;
 	}
-	bfmeFormatUPB(r, out, c, g_bfmeFmtUPB);
+	bfmeFormatUPB(r, out, c, g_Rva0107301CEmptyString);
 	return 1;
 }
 

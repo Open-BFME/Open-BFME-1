@@ -1,5 +1,8 @@
-extern "C" unsigned char bfmeStrERA[];
+// bfmeVftERA is the class vftable; the second name is the pinned empty-string
+// literal (symbols.csv ?g_Rva0107301CEmptyString@@3QBDB, RVA 0x00C7301C), for
+// which the census alias _bfmeStrERA was a placeholder.
 extern "C" unsigned char bfmeVftERA[];
+extern const char g_Rva0107301CEmptyString[];
 
 class BfmeOtherERA
 {
@@ -19,7 +22,7 @@ struct BfmeThingERA
 BfmeThingERA *BfmeThingERA::bfmeCtorERA()
 {
 	m_bfmeVft = bfmeVftERA;
-	m_bfmeSub.bfmeStrERA((const char *)bfmeStrERA);
+	m_bfmeSub.bfmeStrERA(g_Rva0107301CEmptyString);
 	m_bfmeFlag = 0;
 	return this;
 }
@@ -51,7 +54,7 @@ BfmeOtherERA *BfmeThingERB::bfmeGoERB(BfmeOtherERA *other)
 	BfmeHeldERB *p = m_bfmeP;
 	if (!p)
 	{
-		other->bfmeStrERA((const char *)bfmeStrERA);
+		other->bfmeStrERA(g_Rva0107301CEmptyString);
 		return other;
 	}
 	m_bfmeSub.bfmeValERB(other, p->m_bfmeX);
