@@ -30,13 +30,19 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &other)
 	return *this;
 }
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the member isOpen() is pinned under the local
+// view's name, so the global carries its real type and the view is applied
+// at the call.
+class BfmeGameCW;
+
 class Glo012F706CType
 {
 public:
 	bool isOpen() const;
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Gen_00609320
 {
@@ -135,7 +141,8 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 {
 	run((Rva003BF010Arg *)owner);
 
-	if (owner == 0 || !g_bfmeGameCW->isOpen() || !allowed()
+	if (owner == 0
+		|| !reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->isOpen() || !allowed()
 		|| g_bfmeStateDF->bfmeDisabled() || anyReady() || TheControlBar == 0)
 		return;
 

@@ -15,8 +15,13 @@ struct Record003C3D90 {
 class Rva003C1A50 { public: void run(); };
 extern Rva003C1A50 *TheLivingWorldLogic;
 class Gen_003BEA30;
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the member registerItem is named under the
+// local view, so the global carries its real type and the view is applied at
+// the call.
+class BfmeGameCW;
 class BfmeSinkAM { public: void registerItem(int,Gen_003BEA30*,int); };
-extern BfmeSinkAM *g_bfmeSinkAM;
+extern BfmeGameCW *g_bfmeGameCW;
 class UnicodeString;
 class Rva003A5450 {
 public:
@@ -103,7 +108,7 @@ int Transfer003C3D90::load003C4160(Xfer *xfer) {
         *xfer==record->m_10;
         *xfer==record->m_14;
         m_38.push_back(record);
-        g_bfmeSinkAM->registerItem(record->m_08,(Gen_003BEA30*)record,1);
+        reinterpret_cast<BfmeSinkAM *>(g_bfmeGameCW)->registerItem(record->m_08,(Gen_003BEA30*)record,1);
     }
     vector003C3480(xfer,m_50);
     vector003C3480(xfer,m_5C);

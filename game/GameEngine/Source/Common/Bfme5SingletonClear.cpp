@@ -21,13 +21,19 @@ public:
 	int m_bfmeHandle;					// +0x08
 };
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the member bfmeRemove is pinned under the local
+// view's name, so the global carries its real type and the view is applied at
+// the call.
+class BfmeGameCW;
+
 class BfmeSingletonH
 {
 public:
 	void bfmeRemove(int handle);				// retail thunk 0x00010FFA -> 0x003C6D40
 };
 
-extern BfmeSingletonH *g_bfmeSingletonH;			// retail 0x012F706C
+extern BfmeGameCW *g_bfmeGameCW;				// retail 0x012F706C
 
 inline BfmeItemH **bfmeCopyItems(BfmeItemH **destination, BfmeItemH **first, BfmeItemH **last)
 {
@@ -82,8 +88,9 @@ void Gen_003C0DB0::bfmeClear(void)
 {
 	for (unsigned int index = 0; index < m_bfmeVector.bfmeSize(); ++index)
 	{
-		if (g_bfmeSingletonH)
-			g_bfmeSingletonH->bfmeRemove(m_bfmeVector.bfmeAt(index)->m_bfmeHandle);
+		if (g_bfmeGameCW)
+			reinterpret_cast<BfmeSingletonH *>(g_bfmeGameCW)->bfmeRemove(
+				m_bfmeVector.bfmeAt(index)->m_bfmeHandle);
 	}
 
 	m_bfmeVector.bfmeClear();

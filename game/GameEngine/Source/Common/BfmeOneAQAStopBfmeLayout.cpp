@@ -4,13 +4,19 @@
 
 void HideControlBar(int immediate);
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the member j_0001d6c4 is pinned under the local
+// view's name, so the global carries its real type and the view is applied at
+// the call.
+class BfmeGameCW;
+
 class BfmeSingletonH
 {
 public:
 	void j_0001d6c4();
 };
 
-extern BfmeSingletonH *g_bfmeSingletonH;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class CampaignManager;
 extern CampaignManager *TheLivingWorldLogic;
@@ -46,8 +52,8 @@ void BfmeOneAQA::bfmeStopAQA(void)
 	stop(0, 1);
 	HideControlBar(1);
 
-	if (g_bfmeSingletonH != 0)
-		g_bfmeSingletonH->j_0001d6c4();
+	if (g_bfmeGameCW != 0)
+		reinterpret_cast<BfmeSingletonH *>(g_bfmeGameCW)->j_0001d6c4();
 
 	BfmeStateDO *state = reinterpret_cast<BfmeStateDO *>(TheLivingWorldLogic);
 	if (state != 0)

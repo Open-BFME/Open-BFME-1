@@ -36,13 +36,19 @@ public:
 
 extern Glo012F4B98Type *Glo012F4B98;
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the member isOpen() is pinned under the local
+// view's name, so the global carries its real type and the view is applied
+// at the call.
+class BfmeGameCW;
+
 class Glo012F706CType
 {
 public:
 	bool isOpen() const;
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Rva003BF010Arg
 {
@@ -89,7 +95,7 @@ void Rva003BF540::run(Rva003BF010Arg *arg)
 		if (--m_at48 > 0)
 			return;
 	}
-	else if (g_bfmeGameCW->isOpen() && allowed())
+	else if (reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->isOpen() && allowed())
 	{
 		if (!arg)
 			return;

@@ -15,6 +15,12 @@ public:
 
 extern Glo012F7048Type *Glo012F7048;
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); isOpen/lookup are pinned under the local view's
+// name, so the global carries its real type and the view is applied at the
+// calls.
+class BfmeGameCW;
+
 class Glo012F706CType
 {
 public:
@@ -22,7 +28,7 @@ public:
 	Rva00615D50Object *lookup(const ICoord2D *position, int category);
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Gen003BD7D0Node
 {
@@ -50,7 +56,7 @@ public:
 
 void Rva003BF540::run()
 {
-	if( !g_bfmeGameCW->isOpen() )
+	if( !reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->isOpen() )
 		goto fail;
 	Glo012F7048Type *state = Glo012F7048;
 	if( state->m_at04 != 0 )
@@ -72,9 +78,10 @@ void Rva003BF540::run()
 	if( m_at1C )
 	{
 		const ICoord2D *key = &m_at20;
-		Rva00615D50Object *found = g_bfmeGameCW->lookup( key, 1 );
+		Rva00615D50Object *found =
+			reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->lookup( key, 1 );
 		if( !found )
-			found = g_bfmeGameCW->lookup( key, 0 );
+			found = reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->lookup( key, 0 );
 		Gen003BD7D0Node *owner = found ? find(found->id) : 0;
 		applyOwner(owner);
 		return;

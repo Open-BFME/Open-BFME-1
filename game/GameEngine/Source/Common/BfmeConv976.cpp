@@ -1,6 +1,10 @@
 // Open-BFME5 conversions.
 
-class BfmeTickC976
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv). This TU only reaches it through the vtable slot
+// bfmeTick976C, which is spelled by no COFF symbol here, so the class
+// carries the defining name directly.
+class BfmeGameCW
 {
 public:
 	virtual void bfmeV0976();
@@ -35,13 +39,13 @@ public:
 	virtual void bfmeEnd976C();
 };
 
-extern BfmeTickC976 *g_bfmeTickC976;
+extern BfmeGameCW *g_bfmeGameCW;
 extern BfmeProbe976 *g_bfmeProbe976;
 extern BfmeEndC976 *g_bfmeEndC976;
 
 void bfmeGo976C(void)
 {
-	g_bfmeTickC976->bfmeTick976C();
+	g_bfmeGameCW->bfmeTick976C();
 
 	BfmeProbe976 *p = g_bfmeProbe976;
 

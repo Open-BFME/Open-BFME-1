@@ -7,14 +7,17 @@
 
 extern const char g_bfmeEmptyAscii[];
 
-class Glo012F706CType
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv). This TU only reads the +0x288 flag, so the class
+// itself carries the defining name and no member is spelled here.
+class BfmeGameCW
 {
 public:
 	unsigned char m_unmodelled_000[0x288];
 	unsigned char m_flag;
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 #include "ascii_string.h"
 
@@ -75,12 +78,12 @@ void __cdecl bfmeNamedAudio0046F1A0(const char *text);
 
 class Gen00587600;
 extern Gen00587600 *TheGen00587600;
+static inline BfmeThingATB *TheThingATBView() { return (BfmeThingATB *)TheGen00587600; }
+static inline BfmeThingAZB *TheThingAZBView() { return (BfmeThingAZB *)TheGen00587600; }
 class BfmeLivingWorldCampaignManager;
 extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+static inline BfmeOneCHF *TheLivingWorldView() { return (BfmeOneCHF *)TheLivingWorldCampaignManager; }
 
-#define TheThingAZB ((BfmeThingAZB *)TheGen00587600)
-#define TheThingATB ((BfmeThingATB *)TheGen00587600)
-#define TheLivingWorld ((BfmeOneCHF *)TheLivingWorldCampaignManager)
 
 class Rva003C1A50Tick
 {
@@ -132,7 +135,7 @@ void Rva003C1A50Tick::tick()
 		if (left > 0)
 			return;
 		LivingWorldRegion *found = m_at28->rva003C8A50(m_at30);
-		TheThingAZB->bfmeSetAZB(found);
+		TheThingAZBView()->bfmeSetAZB(found);
 		bfmeNamedAudio0046F1A0(nameOf((void **)((Gen_003C63A0 *)m_at28)->bfmeField()));
 	}
 
@@ -149,10 +152,10 @@ void Rva003C1A50Tick::tick()
 
 	if (m_at80)
 	{
-		TheLivingWorld->bfmeOneCHF();
+		TheLivingWorldView()->bfmeOneCHF();
 		((BfmeB1003 *)this)->bfmeClear1003();
 	}
 
 	((BfmeB1003 *)this)->bfmeFinish1003();
-	TheThingATB->bfmeGoATB();
+	TheThingATBView()->bfmeGoATB();
 }

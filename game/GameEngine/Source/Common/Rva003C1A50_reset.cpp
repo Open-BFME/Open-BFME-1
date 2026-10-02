@@ -5,6 +5,12 @@
 // d_003b8450 reset path: clearOwned + clearTwoVec, settle +0x74/+0x80/+0x78/
 // +0xC8/+0xCC, singleton go, clearSingleton, set m_at2C, tail-reset UI.
 
+// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
+// (dir32_addresses.csv); only the members are pinned under the local view's
+// name, so the global carries its real type and the view is applied at the
+// calls.
+class BfmeGameCW;
+
 class Glo012F706CType
 {
 public:
@@ -12,7 +18,7 @@ public:
 	void resetUi();
 };
 
-extern Glo012F706CType *g_bfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
 
 class Rva003C1A50
 {
@@ -46,8 +52,8 @@ void Rva003C1A50::run()
 	m_at78 = false;
 	m_atC8 = true;
 	m_atCC = 0x78;
-	g_bfmeGameCW->go();
+	reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->go();
 	clearSingleton();
 	m_at2C = true;
-	g_bfmeGameCW->resetUi();
+	reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->resetUi();
 }
