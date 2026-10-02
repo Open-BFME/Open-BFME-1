@@ -31,14 +31,14 @@
 // global addresses, the two string addresses and the call displacement come
 // from the target.
 //
-// IDENTITY IS NOT RECOVERED for anything but the strings.  The function names
-// and the callee name are derived from addresses.
+// The wrapper names remain address-derived. The shared target is spelled with
+// its matched ledger name, BfmeLevelAN::bfmeBuildAN at 0x004675F0.
 
-class Gen004675F0
+class BfmeLevelAN
 {
 public:
-	void invoke( void *owner, const char *name, int flag, const char *value,
-				 void *a4, void *a5, void *a6, void *a7 );
+	char *bfmeBuildAN( unsigned int p1, int p2, int p3, int p4,
+		int p5, int p6, int p7, int p8 );
 };
 
 // retail 0x012F19E8: the one global definition is
@@ -57,16 +57,16 @@ static __forceinline void *q2ScriptOwner()
 	return (void *)g_aptPalantirWindow;
 }
 
-static __forceinline Gen004675F0 *q2ScriptTarget()
+static __forceinline BfmeLevelAN *q2ScriptTarget()
 {
-	return (Gen004675F0 *)g_rva012F19E8WindowManager;
+	return (BfmeLevelAN *)g_rva012F19E8WindowManager;
 }
 
 #define Q2_NAMED_SCRIPT_CALLBACK( NAME, CALLBACK, ARGUMENT )              \
 	void NAME()                                                           \
 	{                                                                     \
-		q2ScriptTarget()->invoke( q2ScriptOwner(), CALLBACK, 1, ARGUMENT, \
-								  0, 0, 0, 0 );                           \
+		q2ScriptTarget()->bfmeBuildAN( (unsigned int)q2ScriptOwner(), (int)CALLBACK, \
+									1, (int)ARGUMENT, 0, 0, 0, 0 );          \
 	}
 
 Q2_NAMED_SCRIPT_CALLBACK( Rva00564DE0, "SetSelectAllHeroesButtonState", "_up" )

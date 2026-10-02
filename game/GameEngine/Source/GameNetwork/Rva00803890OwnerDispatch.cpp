@@ -20,7 +20,8 @@ struct Rva00809500Entry
 	int m_0c;
 };
 
-// FESL message (ctor 0x007E8810, dtor 0x007E86C0, getInt 0x007E8900).
+// FESL message (ctor 0x007E8810, dtor 0x007E86C0); its shared field
+// accessor is BfmeThingRF::bfmeGoRF at 0x007E8900.
 class SnapshotDupReplica
 {
 public:
@@ -29,10 +30,9 @@ public:
 
 // The message constructor at 0x007E8810 is defined under the class name
 // Rva007E8810 (functions.csv row 5402, body in
-// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), while the destructor
-// and the other members of the same retail class are defined and pinned
-// under the Rva007E8810Message spelling.  Rva007E8810 therefore carries only
-// the constructor call the object file already emitted.
+// game/GameEngine/Source/Common/Rva007E8810Ctor.cpp), and the destructor is
+// pinned under Rva007E8810Message.  Rva007E8810 therefore carries only the
+// constructor call the object file already emitted.
 class Rva007E8810
 {
 public:
@@ -43,7 +43,6 @@ class Rva007E8810Message
 {
 public:
 	~Rva007E8810Message();
-	int getInt( const char *key, int defaultValue );
 
 	void *m_vtable;
 	int m_04;
@@ -58,6 +57,12 @@ public:
 	int m_28;
 	int m_2c;
 	char m_30;
+};
+
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF( void *key, void *defaultValue );
 };
 
 class BfmeSrc803A00;
@@ -175,7 +180,8 @@ int Rva00803890Owner::dispatch( Rva00809500Entry *entry )
 		}
 	}
 
-	if( message.getInt( "LID", 0 ) == -2 )
+	if( (int)(long)reinterpret_cast< BfmeThingRF * >( &message )->bfmeGoRF(
+		(void *)"LID", (void *)0 ) == -2 )
 	{
 		switch( message.m_code )
 		{

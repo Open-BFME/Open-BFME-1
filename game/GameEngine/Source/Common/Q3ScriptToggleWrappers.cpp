@@ -28,22 +28,19 @@
 // twice.  Because the pair repeats while the name does not, the two are
 // independent and neither is standing in for the other.
 //
-// IDENTITY IS NOT RECOVERED for the function names, the globals or the callee:
-// those are address-derived, and the callee pin is additive.  What the literals
-// DO say is that this is a UI-script dispatch layer -- the names read as
-// entry points and the pairs as movie-clip labels and flag strings -- but the
-// bytes do not name the class, so nothing here asserts one.
+// The wrapper names and globals remain address-derived. The shared target is
+// spelled with its matched ledger name, BfmeLevelAN::bfmeBuildAN, while the
+// literals identify these wrappers as a UI-script dispatch layer.
 //
 // WHAT THE BYTES CANNOT DECIDE.  The types of the eight arguments beyond their
 // width; the third argument is the constant 1 and the last four are 0 in every
 // one of the seven, so nothing distinguishes an int from a pointer there.
 
-struct Q3ScriptMovie;
-
-struct Q3ScriptDispatcher
+class BfmeLevelAN
 {
-	void invoke( Q3ScriptMovie *movie, const char *name, int argc,
-		const char *arg0, void *a1, void *a2, void *a3, void *a4 );
+	public:
+	char *bfmeBuildAN( unsigned int p1, int p2, int p3, int p4,
+		int p5, int p6, int p7, int p8 );
 };
 
 // Retail global 0x012F19E8, canonical name and pointee type; the TU-local
@@ -57,21 +54,21 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // use; the load is `mov eax,[abs]` either way.
 extern int g_aptPalantirWindow;
 
-static inline Q3ScriptMovie *q3ScriptMovie()
+static inline unsigned int q3ScriptMovie()
 {
-	return (Q3ScriptMovie *)g_aptPalantirWindow;
+	return (unsigned int)g_aptPalantirWindow;
 }
 
-static inline Q3ScriptDispatcher *q3Dispatcher()
+static inline BfmeLevelAN *q3Dispatcher()
 {
-	return (Q3ScriptDispatcher *)g_rva012F19E8WindowManager;
+	return (BfmeLevelAN *)g_rva012F19E8WindowManager;
 }
 
 #define BFME_SCRIPT_TOGGLE( NAME, ENTRY, WHEN_TRUE, WHEN_FALSE )              \
 	void NAME( bool on )                                                      \
 	{                                                                         \
-		q3Dispatcher()->invoke( q3ScriptMovie(), ENTRY, 1,                     \
-			on ? WHEN_TRUE : WHEN_FALSE, 0, 0, 0, 0 );                        \
+		q3Dispatcher()->bfmeBuildAN( q3ScriptMovie(), (int)ENTRY, 1,            \
+			(int)( on ? WHEN_TRUE : WHEN_FALSE ), 0, 0, 0, 0 );                  \
 	}
 
 BFME_SCRIPT_TOGGLE( Rva005642F0, "EnablePlayerMagicButton", "1", "0" )

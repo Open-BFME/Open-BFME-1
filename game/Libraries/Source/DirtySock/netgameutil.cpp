@@ -10,7 +10,7 @@ extern "C" {
 	void NetGameUtilControl(NetGameUtilRef *ref, int selector, int value);
 }
 
-int Rva007FE780Printf(const char *format, ...);
+extern "C" int Rva007FE780(const char *format, ...);
 
 struct NetGameUtilRef
 {
@@ -28,21 +28,21 @@ void NetGameUtilControl(NetGameUtilRef *ref, int selector, int value)
 	if (selector == 0x6D776964) {
 		if (value <= 0x200) {
 			ref->m_maxWidth = value + 14;
-			Rva007FE780Printf("NetGameUtilControl: setting 'mwid' to %d\n", ref->m_maxWidth);
+			Rva007FE780("NetGameUtilControl: setting 'mwid' to %d\n", ref->m_maxWidth);
 		} else {
-			Rva007FE780Printf("NetGameUtilControl: 'mwid' value of %d is too large\n", value);
+			Rva007FE780("NetGameUtilControl: 'mwid' value of %d is too large\n", value);
 		}
 	}
 	if (selector == 0x6D696E70) {
 		ref->m_maxInput = value;
-		Rva007FE780Printf("NetGameUtilControl: setting 'minp' to %d\n", ref->m_maxInput);
+		Rva007FE780("NetGameUtilControl: setting 'minp' to %d\n", ref->m_maxInput);
 	}
 	if (selector == 0x6D6F7574) {
 		ref->m_maxOutput = value;
-		Rva007FE780Printf("NetGameUtilControl: setting 'mout' to %d\n", ref->m_maxOutput);
+		Rva007FE780("NetGameUtilControl: setting 'mout' to %d\n", ref->m_maxOutput);
 	}
 	if (selector == 0x61647666) {
 		ref->m_advertiseFrequency = value;
-		Rva007FE780Printf("NetGameUtilControl: setting 'advf' to %d\n", ref->m_advertiseFrequency);
+		Rva007FE780("NetGameUtilControl: setting 'advf' to %d\n", ref->m_advertiseFrequency);
 	}
 }

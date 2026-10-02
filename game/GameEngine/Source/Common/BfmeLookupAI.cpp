@@ -9,12 +9,13 @@ struct StringHeader
 	char data[ 1 ];
 };
 
+class AsciiStringAI;
+
 template <typename T>
 class StringBase
 {
 public:
 	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase<T> &other );
 	~StringBase() { releaseBuffer(); }
 
 	void set( const StringBase<T> &other );
@@ -28,6 +29,8 @@ public:
 	StringHeader *m_data;
 
 private:
+	friend class AsciiStringAI;
+	StringBase( const StringBase<T> &other );
 	void releaseBuffer();
 };
 
