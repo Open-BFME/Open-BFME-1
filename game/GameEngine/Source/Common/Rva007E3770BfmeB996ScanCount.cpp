@@ -20,11 +20,18 @@ public:
 	virtual int available();
 };
 
+extern void j_00038163();
+
 class BfmeB996
 {
 public:
 	int Rva007E3770( int target, int *maximum );
-	char bfmeTry996( int first, int second, char *stop );
+	typedef char (BfmeB996::*BfmeTry996Fn)( int, int, char * );
+	union BfmeTry996Target
+	{
+		void (*asFunction)();
+		BfmeTry996Fn asMember;
+	};
 
 	bool bfmeIsMode6()
 	{
@@ -37,19 +44,6 @@ public:
 	{
 		if ( m_kind == 6 )
 			m_dev->set996( 0, 0 );
-	}
-
-	void bfmeAdvance996()
-	{
-		if ( m_kind == 6 ) {
-			int probe2;
-			unsigned int arg2;
-			char flag2 = 0;
-			if ( bfmeTry996( (int)&probe2, (int)&arg2, &flag2 ) && !flag2 ) {
-				m_dev->set996( -8, 1 );
-				m_dev->set996( arg2, 1 );
-			}
-		}
 	}
 
 private:
@@ -66,10 +60,12 @@ int BfmeB996::Rva007E3770( int target, int *maximum )
 		int first = 0;
 		unsigned int second = 0;
 		char stop = 0;
+		BfmeTry996Target try996;
+		try996.asFunction = j_00038163;
 		invokeForMode();
 
 		while ( bfmeIsMode6() ) {
-			if ( !bfmeTry996( (int)&first, (int)&second, &stop ) ) {
+			if ( !(this->*try996.asMember)( (int)&first, (int)&second, &stop ) ) {
 				if ( stop )
 					goto fail;
 				break;
@@ -86,7 +82,17 @@ int BfmeB996::Rva007E3770( int target, int *maximum )
 			}
 			if ( *maximum < second )
 				*maximum = second;
-			bfmeAdvance996();
+			if ( m_kind == 6 ) {
+				int probe2;
+				unsigned int arg2;
+				char flag2 = 0;
+				BfmeB996::BfmeTry996Target try996;
+				try996.asFunction = j_00038163;
+				if ( (this->*try996.asMember)( (int)&probe2, (int)&arg2, &flag2 ) && !flag2 ) {
+					m_dev->set996( -8, 1 );
+					m_dev->set996( arg2, 1 );
+				}
+			}
 		}
 		m_dev->set996( initial, 1 );
 		return count;

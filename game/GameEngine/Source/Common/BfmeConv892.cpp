@@ -1,8 +1,15 @@
 class BfmeSubFCB
 {
 public:
-	void bfmeCallFCB(void *a, int z);
+	typedef void (BfmeSubFCB::*BfmeCallFCBMember)(void *, int);
+	union BfmeCallFCBTarget
+	{
+		void (*asFunction)();
+		BfmeCallFCBMember asMember;
+	};
 };
+
+extern void j_00043135();
 
 class Player;
 
@@ -119,7 +126,9 @@ void BfmeThingFCB::bfmeGoFCB(void *a)
 	BfmeSubFCB *s = *(BfmeSubFCB **)((char *)this - 8);
 	if (s)
 	{
-		s->bfmeCallFCB(a, 0);
+		BfmeSubFCB::BfmeCallFCBTarget callFCB;
+		callFCB.asFunction = j_00043135;
+		(s->*callFCB.asMember)(a, 0);
 		((BfmeOwnFCB *)((char *)this - 0x10))->bfmeAfterFCB();
 	}
 }
@@ -134,12 +143,21 @@ struct BfmePairFCD
 class BfmeObjFCD
 {
 public:
-	char bfmeCallFCD(void *a, void *b);
+	typedef char (BfmeObjFCD::*BfmeCallFCDMember)(void *, void *);
+	union BfmeCallFCDTarget
+	{
+		void (*asFunction)();
+		BfmeCallFCDMember asMember;
+	};
 };
+
+extern void j_0003eebe();
 
 void bfmeGoFCD(BfmeObjFCD *o, BfmePairFCD *p)
 {
-	char r = (o->bfmeCallFCD(p->m_bfmeA, p->m_bfmeB) == 0);
+	BfmeObjFCD::BfmeCallFCDTarget callFCD;
+	callFCD.asFunction = j_0003eebe;
+	char r = ((o->*callFCD.asMember)(p->m_bfmeA, p->m_bfmeB) == 0);
 	p->m_bfmeFlag |= r;
 }
 
