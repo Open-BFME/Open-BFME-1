@@ -35,12 +35,17 @@ struct BfmeOwnerBR
 	BfmeTargetBR *m_bfmeTarget;
 };
 
-extern BfmeOwnerBR *g_bfmeOwnerBR;
+// Retail's singleton at 0x012F060C is EA's `LuaScriptEngine
+// *TheLuaScriptEngine` (defined by game/GameEngine/Source/Common/RTS/
+// Team_updateState.cpp:334, data_rows.csv row 36); the +0x78 chain read
+// below walks the same cell through this TU's address-derived view.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 char Rva002E3750SetModule(char hide, const char *text)
 {
-	if (g_bfmeOwnerBR->m_bfmeTarget != 0) {
-		BfmeOwnerAE *owner = g_bfmeOwnerBR->m_bfmeTarget->m_bfmeOwner;
+	if (((BfmeOwnerBR *)TheLuaScriptEngine)->m_bfmeTarget != 0) {
+		BfmeOwnerAE *owner = ((BfmeOwnerBR *)TheLuaScriptEngine)->m_bfmeTarget->m_bfmeOwner;
 		AsciiString name(text);
 		if (owner != 0)
 			return owner->bfmeSetAE((BfmeStrAE *)&name, hide == 0);
