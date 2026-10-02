@@ -45,6 +45,7 @@ public:
 };
 
 extern TeamFactory *TheTeamFactory;
+extern void j_000241fe();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -158,7 +159,10 @@ StateReturnType GiantBirdGuardInnerState::update( void )
 	}
 	else if (teamToGuard)
 	{
-		teamToGuard->getEstimateTeamPosition_000EDCD0( &m_exitConditions.m_center );
+		typedef Coord3D *(Team::*EstimateTeamPosition)(Coord3D *) const;
+		union { void *asVoid; EstimateTeamPosition asMember; } estimateCast;
+		estimateCast.asVoid = (void *)j_000241fe;
+		(teamToGuard->*estimateCast.asMember)( &m_exitConditions.m_center );
 	}
 
 	StateReturnType ret = m_attackState->update();

@@ -10,6 +10,7 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
 #include "ascii_string.h"
+extern void j_00026ab2();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
@@ -37,7 +38,6 @@ class BuffNuggetFXNuggetMember
 {
 public:
 	BuffNuggetFXNuggetMember();
-	~BuffNuggetFXNuggetMember();
 
 	void *m_start;
 	void *m_finish;
@@ -69,4 +69,8 @@ private:
 // ??1BuffNuggetFXNugget@@UAE@XZ
 BuffNuggetFXNugget::~BuffNuggetFXNugget()
 {
+	typedef void (BuffNuggetFXNuggetMember::*Destructor)();
+	union { void *asVoid; Destructor asMember; } destructorCast;
+	destructorCast.asVoid = (void *)j_00026ab2;
+	(m_member.*destructorCast.asMember)();
 }

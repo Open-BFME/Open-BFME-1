@@ -8,6 +8,7 @@ typedef int Int;
 typedef bool Bool;
 
 extern Int TheW3DFrameLengthInMsec;
+extern void j_00025f0e();
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 #define BfmeKTHE (57.295776f)
 
@@ -207,7 +208,10 @@ void W3DView::pitchCamera(Real finalPitch, Int milliseconds, Real easeIn, Real e
 	SetEase setEase = reinterpret_cast<SetEase>(&ParabolicEase::setEaseTimes);
 	(view->m_pcEase.*setEase)(easeIn, easeOut, (Real)duration);
 	if (duration == 1) {
-		((Gen0073C890Owner *)view)->updateOneFrame();
+		typedef void (Gen0073C890Owner::*UpdateOneFrame)();
+		union { void *asVoid; UpdateOneFrame asMember; } updateCast;
+		updateCast.asVoid = (void *)j_00025f0e;
+		((Gen0073C890Owner *)view->*updateCast.asMember)();
 	}
 }
 

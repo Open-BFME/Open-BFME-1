@@ -67,6 +67,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern void j_0000fbaa();
+extern void j_0002ead2();
 
 #pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 
@@ -116,7 +117,10 @@ UpdateSleepTime WallUpgradeUpdate::update()
 			goto unready;
 
 		Object *owner = *(Object **)(self - 8);
-		reinterpret_cast<BfmeOwnerBUD *>(owner)->bfmeTwoBUD();
+		typedef void (BfmeOwnerBUD::*TwoBUD)();
+		union { void *asVoid; TwoBUD asMember; } twoBudCast;
+		twoBudCast.asVoid = (void *)j_0002ead2;
+		(reinterpret_cast<BfmeOwnerBUD *>(owner)->*twoBudCast.asMember)();
 		owner->m_body->setDamageState(BODY_DAMAGE_PRISTINE);
 		if ((owner->m_conditionFlags & 0x20000000) != 0)
 		{

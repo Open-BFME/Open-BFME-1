@@ -5,6 +5,7 @@ extern "C" void *__cdecl memset(void *destination, int value, unsigned int bytes
 
 void bfmeBigFreePM(void *block);
 void bfmeSmallFreePM(void *block, unsigned int bytes);
+extern void j_0002ab35();
 
 struct DebugAllocHeader
 {
@@ -41,7 +42,8 @@ extern "C" void __cdecl bfme_DebugNodeAllocDeallocate_82EED0(
 	memset(block, 0xA3, bytes);
 	if (locals.realBytes > 0x80)
 	{
-		bfmeBigFreePM(locals.realBlock);
+		typedef void (__cdecl *BigFree)(void *);
+		reinterpret_cast<BigFree>(::j_0002ab35)(locals.realBlock);
 	}
 	else
 	{

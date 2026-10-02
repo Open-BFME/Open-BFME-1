@@ -2,6 +2,7 @@
 
 extern "C" int memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
+extern void j_00033640();
 
 template <class T>
 class StringBase
@@ -109,7 +110,10 @@ void __pop_heap<S4SortElem20 *, S4SortElem20, S4Cmp002EB8E0, int>(
     S4SortElem20 *source = first;
     result->m_bfmeName = source->m_bfmeName;
     result->m_bfmeFlag = source->m_bfmeFlag;
-    result->m_bfmeTail.set(source->m_bfmeTail);
+    typedef void (BfmeSortElem20Tail::*SetTail)(const BfmeSortElem20Tail &);
+    union { void *asVoid; SetTail asMember; } setTailCast;
+    setTailCast.asVoid = (void *)j_00033640;
+    (result->m_bfmeTail.*setTailCast.asMember)(source->m_bfmeTail);
     __adjust_heap(first, 0, (int)(((char *)last - (char *)first) / 20),
         value, comp);
 }

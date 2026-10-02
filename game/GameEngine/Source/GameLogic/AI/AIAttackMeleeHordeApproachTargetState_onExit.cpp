@@ -109,6 +109,7 @@ public:
 
 extern void j_0002181e();
 extern void j_00048ca7();
+extern void j_0003a1a7();
 
 #define BFME_ATTACK_MELEE_HORDE_APPROACH_DISTANCE_SQUARED (12.5f)
 
@@ -157,7 +158,12 @@ void AIAttackMeleeHordeApproachTargetState::onExit(StateExitType status)
 			Real dy = m_goalPosition.y - owner->m_position.y;
 			if (dx * dx + dy * dy <
 				BFME_ATTACK_MELEE_HORDE_APPROACH_DISTANCE_SQUARED)
-				owner->setPosition(&m_goalPosition);
+			{
+				typedef void (Object::*SetPosition)(const Coord3D *);
+				union { void *asVoid; SetPosition asMember; } setPositionCast;
+				setPositionCast.asVoid = (void *)j_0003a1a7;
+				(owner->*setPositionCast.asMember)(&m_goalPosition);
+			}
 		}
 	}
 }
