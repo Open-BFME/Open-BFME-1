@@ -64,16 +64,11 @@ class Object : public Thing { public:
     AIUpdateInterface *ai() const {return *(AIUpdateInterface **)((char *)this+0x204);}
     const BfmeGeometryInfo &geometry() const {return *(BfmeGeometryInfo *)((char *)this+0xAC);}
 };
-void j_00011252();
 class Pathfinder { public:
     void addObjectToPathfindMap(Object *);
     void updateGoal(Object *,const Coord3D *,PathfindLayerEnum,const char *,int);
     float getLayerHeight(PathfindLayerEnum,const Coord3D *,Coord3D *);
-    bool adjustToPossibleDestination(Object *object,const LocomotorSet &set,Coord3D *destination) {
-        union {void (*route)(); bool (Pathfinder::*method)(Object *,const LocomotorSet &,Coord3D *);} call;
-        call.route=j_00011252;
-        return (this->*call.method)(object,set,destination);
-    }
+    bool adjustToPossibleDestination(Object *,const LocomotorSet &,Coord3D *);
 };
 class TerrainLogic {public: PathfindLayerEnum getLayerForDestination(Object *,const Coord3D *);};
 class AI {public: char pad[0xC]; Pathfinder *m_pathfinder; Pathfinder *pathfinder() const {return m_pathfinder;}};

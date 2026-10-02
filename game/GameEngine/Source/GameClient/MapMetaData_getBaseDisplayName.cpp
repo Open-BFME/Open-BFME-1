@@ -16,6 +16,7 @@ template <typename T> class StringBase
 {
 	friend class AsciiString;
 	friend class UnicodeString;
+	friend class MapMetaData;
 
 private:
 	StringBase() : m_data(0) {}
@@ -46,11 +47,11 @@ class UnicodeString;
 
 class AsciiString : private StringBase<char>
 {
+friend class MapMetaData;
+
 public:
 	AsciiString() : StringBase<char>() {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const AsciiString &other, int start, int length)
-		: StringBase<char>(other, start, length) {}
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	~AsciiString() {}
 
@@ -144,10 +145,12 @@ UnicodeString MapMetaData::bfme_getBaseDisplayName()
 		const char *slash = m_fileName.reverseFind('\\');
 		if (slash)
 		{
-			AsciiString stringFileName(m_fileName, 0,
+			StringBase<char> stringFileName(
+				static_cast<const StringBase<char> &>(m_fileName), 0,
 				(int)(slash - m_fileName.str()) + 1);
 			stringFileName.concat("map.str", 7);
-			TheGameText->initMapStringFile(stringFileName);
+			TheGameText->initMapStringFile(
+				*reinterpret_cast<const AsciiString *>(&stringFileName));
 		}
 
 		AsciiString label;
@@ -205,10 +208,12 @@ UnicodeString MapMetaData::getDescription()
 		const char *slash = m_fileName.reverseFind('\\');
 		if (slash)
 		{
-			AsciiString stringFileName(m_fileName, 0,
+			StringBase<char> stringFileName(
+				static_cast<const StringBase<char> &>(m_fileName), 0,
 				(int)(slash - m_fileName.str()) + 1);
 			stringFileName.concat("map.str", 7);
-			TheGameText->initMapStringFile(stringFileName);
+			TheGameText->initMapStringFile(
+				*reinterpret_cast<const AsciiString *>(&stringFileName));
 		}
 
 		AsciiString label;
