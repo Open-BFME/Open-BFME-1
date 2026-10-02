@@ -5,10 +5,9 @@
 #include "Common/INI.h"
 #include <vector>
 
-inline Snapshot::~Snapshot()
-{
-}
-
+// The constructors, parser and army helpers are owned by
+// GameLogic/LivingWorld/INILivingWorldPlayerArmy.cpp. Keep only this TU's
+// campaign operation here so it does not emit alternate helper definitions.
 class LivingWorldPlayerArmy;
 
 class LivingWorldArmy
@@ -62,127 +61,6 @@ public:
 	AsciiString m_replenishArmyName;
 };
 
-class ThingTemplate
-{
-public:
-	Int getCommandPointCost() const { return m_commandPointCost; }
-
-private:
-	char m_unmodelled[ 0x4B4 ];
-	Int m_commandPointCost;
-};
-
-class ThingFactory
-{
-public:
-	ThingTemplate *findTemplate( const AsciiString &name );
-};
-
-// Retail defines the factory lookup as BfmeThingFactory::findTemplate
-// (0x00137E80); TheThingFactory keeps its EA-spelled global type here, so the
-// call goes through this TU-local ABI view of the defining class.
-class BfmeThingFactory
-{
-public:
-	const ThingTemplate *findTemplate( const AsciiString &name );
-};
-
-extern ThingFactory *TheThingFactory;
-
-void LivingWorldArmy::replenish( LivingWorldPlayerArmy *playerArmy )
-{
-	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
-		playerArmy->m_armies.push_back( m_armies[ i ] );
-}
-
-Int LivingWorldPlayerArmy::currentCommandPoints() const
-{
-	Int commandPoints = 0;
-	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
-	{
-		const LivingWorldArmy &army = m_armies[ i ];
-		const ThingTemplate *thingTemplate =
-			((BfmeThingFactory *)TheThingFactory)->findTemplate( army.getName() );
-		if( thingTemplate )
-			commandPoints += thingTemplate->getCommandPointCost() * army.getCount();
-	}
-
-	return commandPoints;
-}
-
-LivingWorldPlayerArmy::LivingWorldPlayerArmy() :
-	m_index( 0 ),
-	m_isActive( false ),
-	m_name( AsciiString::TheEmptyString ),
-	m_faction( AsciiString::TheEmptyString ),
-	m_icon( AsciiString::TheEmptyString ),
-	m_startingCommandPoints( 1 ),
-	m_unmodelled24( 0 ),
-	m_unmodelled28( 0 ),
-	m_unmodelled2C( 0 ),
-	m_survivalThreshold( 0 ),
-	m_unmodelled4C( false ),
-	m_minCommandPoints( 0 )
-{
-	m_armies.clear();
-	m_color = 0xFF000000;
-	m_nightColor = 0xFF000000;
-	m_unmodelled3C = 0;
-	m_unmodelled40 = 0;
-}
-
-LivingWorldPlayerArmy::LivingWorldPlayerArmy( const LivingWorldPlayerArmy &other ) :
-	m_index( other.m_index ),
-	m_isActive( other.m_isActive ),
-	m_name( other.m_name ),
-	m_faction( other.m_faction ),
-	m_icon( other.m_icon ),
-	m_color( other.m_color ),
-	m_nightColor( other.m_nightColor ),
-	m_startingCommandPoints( other.m_startingCommandPoints ),
-	m_unmodelled24( other.m_unmodelled24 ),
-	m_unmodelled28( other.m_unmodelled28 ),
-	m_unmodelled2C( other.m_unmodelled2C ),
-	m_armies( other.m_armies ),
-	m_unmodelled3C( other.m_unmodelled3C ),
-	m_unmodelled40( other.m_unmodelled40 ),
-	m_survivalThreshold( other.m_survivalThreshold ),
-	m_displayNameTag( other.m_displayNameTag ),
-	m_unmodelled4C( other.m_unmodelled4C ),
-	m_minCommandPoints( other.m_minCommandPoints ),
-	m_replenishArmyName( other.m_replenishArmyName )
-{
-}
-
-LivingWorldPlayerArmy::~LivingWorldPlayerArmy()
-{
-}
-
-void LivingWorldPlayerArmy::clearArmies()
-{
-	m_armies.clear();
-	m_isActive = false;
-}
-
-class BfmeLivingWorldPlayerArmyCollection
-{
-public:
-	void clearModeFourArmies();
-
-private:
-	char m_unmodelled[ 0x18 ];
-	std::vector<LivingWorldPlayerArmy> m_playerArmies;
-};
-
-void BfmeLivingWorldPlayerArmyCollection::clearModeFourArmies()
-{
-	for( UnsignedInt i = 0; i < m_playerArmies.size(); ++i )
-	{
-		if( m_playerArmies[ i ].m_startingCommandPoints == 4 )
-			m_playerArmies[ i ].clearArmies();
-	}
-}
-
 struct Rva00366890Element
 {
 	char m_body[ 0x58 ];
@@ -227,40 +105,6 @@ private:
 	std::vector<LivingWorldPlayerArmy> m_playerArmies;
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;	// 0x012F1024
-
-void BfmeLivingWorldCampaignManager::addPlayerArmy( LivingWorldPlayerArmy *army )
-{
-	m_playerArmies.push_back( *army );
-	m_playerArmies.back().m_index = m_playerArmies.size() - 1;
-}
-
-LivingWorldArmy *LivingWorldPlayerArmy::findArmy(const AsciiString &name, int *outIndex)
-{
-	for (unsigned i = 0; i < m_armies.size(); ++i)
-	{
-		AsciiString current = m_armies[i].getName();
-		if (current.compare(name) == 0)
-		{
-			if (outIndex)
-				*outIndex = (int)i;
-			return &m_armies[i];
-		}
-	}
-	return 0;
-}
-
-LivingWorldArmy *BfmeLivingWorldCampaignManager::findArmy( const AsciiString &name )
-{
-	for( UnsignedInt i = 0; i < m_playerArmies.size(); ++i )
-	{
-		if( m_playerArmies[ i ].getName().compare( name ) == 0 )
-			return reinterpret_cast<LivingWorldArmy *>( &m_playerArmies[ i ] );
-	}
-
-	return NULL;
-}
-
 void BfmeLivingWorldCampaignManager::rva003B4250(
 	const AsciiString &guard, const AsciiString &first, const AsciiString &second )
 {
@@ -283,14 +127,3 @@ void BfmeLivingWorldCampaignManager::rva003B4250(
 	}
 }
 
-void parseLivingWorldPlayerArmy( INI *ini )
-{
-	if( !TheLivingWorldCampaignManager )
-		return;
-
-	LivingWorldPlayerArmy army;
-
-	ini->initFromINI( &army, LivingWorldPlayerArmy::m_fieldParseTable );
-
-	TheLivingWorldCampaignManager->addPlayerArmy( &army );
-}
