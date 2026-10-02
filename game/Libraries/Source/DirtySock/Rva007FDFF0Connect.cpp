@@ -8,7 +8,8 @@ __declspec(dllimport) void *__stdcall CreateThread(
 	void *parameter, unsigned int flags, unsigned int *identifier);
 __declspec(dllimport) int __stdcall CloseHandle(void *handle);
 
-extern "C" void *Rva007F0000Alloc(int size);
+// C++ linkage, matching retail: ?Rva007F0000Alloc@@YAPAXH@Z
+void *Rva007F0000Alloc(int size);
 extern "C" void Rva007FE200(const int *value);
 extern "C" void Rva007FE210(void *object);
 extern "C" int Rva007FE250(void *request);

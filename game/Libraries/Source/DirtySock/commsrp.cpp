@@ -12,7 +12,6 @@ extern "C" {
 	struct CommSRPRef;
 	struct CommSRPRef *Rva00815300(int maxPacket, int recvCount,
 		int sendCount);
-	void *Rva007F0000Alloc(int size);
 	void Rva007FEA20(void *lock);
 	void Rva00815510(void *ref);
 	void Rva008154F0(void *ref, void *socket);
@@ -36,6 +35,9 @@ extern "C" {
 	void Rva007FD3F0(void *socket);
 	int Rva00815B50(unsigned int socket, int flags, void *ref);
 }
+
+// The allocator is retail C++, so it keeps C++ linkage: ?Rva007F0000Alloc@@YAPAXH@Z
+void *Rva007F0000Alloc(int size);
 
 extern void Rva00815780(void);
 extern void Rva00815890(void);
