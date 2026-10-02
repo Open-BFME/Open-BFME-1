@@ -83978,7 +83978,6 @@ name,address,notes
 ?handle@Gen002D9BD0@@QAEXPAVFlagPairTarget@@@Z,0x002D9BD0,address-derived callee of the 45-byte flag-pair-then-direct-call family; target read from the REL32 at its call sites
 ?handle@Gen002DB210@@QAEXXZ,0x002DB210,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen002DFCF0@@QAEXXZ,0x002DFCF0,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
-?handle@Gen002E0E30@@QAEXXZ,0x002E0E30,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen002E9E10@@QAEXXZ,0x002E9E10,address-derived callee of the per-element member walk family; target read from the REL32 at its call sites
 ?handle@Gen002EB190@@QAEXPAX0@Z,0x002EB190,address-derived callee of the 13-byte field-pair forwarder family; target read from the REL32 at its call sites
 ?handle@Gen003396B0@@QAEXXZ,0x003396B0,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site

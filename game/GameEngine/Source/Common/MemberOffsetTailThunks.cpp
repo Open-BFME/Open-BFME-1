@@ -167,7 +167,13 @@ BFME_OFFSET_TAIL_CALLEE( 00269C50 )
 BFME_OFFSET_TAIL_CALLEE( 00296F90 )
 BFME_OFFSET_TAIL_CALLEE( 002A4660 )
 BFME_OFFSET_TAIL_CALLEE( 002BA240 )
-BFME_OFFSET_TAIL_CALLEE( 002E0E30 )
+// Retail RVA 0x0026EDD0 forwards three arguments to the matched ret-12
+// dispatcher at 0x002E0E30. The original zero-argument view hid its ABI.
+class Rva002E0E30
+{
+public:
+    void rva002E0E30Handle(int key, void *object, void *arguments);
+};
 BFME_OFFSET_TAIL_CALLEE( 00352C20 )
 class Rva00361250Target;
 class Rva00361250Owner
@@ -300,7 +306,17 @@ BFME_OFFSET_TAIL_THUNK( Rva00252390, Gen00887940, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva002523B0, Gen00887940, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva00252A40, Gen000658A0, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva0026A190, Gen00269C50, -16 )
-BFME_OFFSET_TAIL_THUNK( Rva0026EDD0, Gen002E0E30, 516 )
+class Rva0026EDD0
+{
+public:
+    void invoke(int key, void *object, void *arguments);
+};
+
+void Rva0026EDD0::invoke(int key, void *object, void *arguments)
+{
+    ((Rva002E0E30 *)((char *)this + 516))->rva002E0E30Handle(
+        key, object, arguments);
+}
 BFME_OFFSET_TAIL_THUNK( Rva00272EC0, Gen000E5E70, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva00293260, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva00297120, Gen00296F90, -32 )
