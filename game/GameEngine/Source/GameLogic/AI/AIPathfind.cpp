@@ -5368,23 +5368,10 @@ Bool Pathfinder::checkForMovement(const Object *obj, TCheckMovementInfo &info)
  * Returns coordinates of goal.
  *
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIPathfindGoalPosition.cpp
-// ?goalPosition@Pathfinder@@QAE_NPAVObject@@PAUCoord3D@@@Z present-unmatched
-Bool Pathfinder::goalPosition(Object *obj, Coord3D *pos)
-{
-	Int iRadius;
-	Bool center;
-	AIUpdateInterface *ai = obj->getAIUpdateInterface();
-	if (!ai) return false; // only consider ai objects.
-	getRadiusAndCenter(obj, iRadius, center);
-	ICoord2D cell = *ai->getPathfindGoalCell();
-	pos->zero();
-	if (cell.x<0 || cell.y<0) return false;
-	adjustCoordToCell(cell.x, cell.y,  center, *pos, LAYER_GROUND);
-	return true;
-}
+// BFME goalPosition at RVA 003E6080 is verified in AIPathfindGoalPosition.cpp.
+// Retail reads the goal cell from Object offsets 0x9C/0xA0; the Zero Hour
+// AIUpdate-field implementation must not emit a competing definition.
 
- 
 // ?checkForAdjust@Pathfinder@@IAE_NPAVObject@@ABVLocomotorSet@@_NHHW4PathfindLayerEnum@@H2PAUCoord3D@@PBU5@@Z present-unmatched
 Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet& locomotorSet, Bool isHuman,
 																Int cellX, Int cellY, PathfindLayerEnum layer, 
