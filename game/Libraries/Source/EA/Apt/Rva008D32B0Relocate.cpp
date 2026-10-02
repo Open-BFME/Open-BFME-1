@@ -36,16 +36,18 @@ struct Rva008D32B0Pool {
         else { m_items[count] = p; count++; }
     }
 };
-extern Rva008D32B0Value *Rva013387D0Head;
+// Chain head at 0x013387D0; defined in game/GameEngine/Source/Common/Rva008D2A10Link.cpp
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 extern Rva008D32B0Pool *g_rva8CD130IdleHook;
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
 extern "C" const void *bfmeVftAptInteger[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
 __forceinline Rva008D32B0Value *rva008D32B0Integer(int value) {
-    Rva008D32B0Value *p = Rva013387D0Head;
+    Rva008D32B0Value *p = (Rva008D32B0Value *)g_rva008D2A10;
     if (p) {
-        Rva013387D0Head = p->m_next;
+        g_rva008D2A10 = (Rva008D2A10 *)p->m_next;
         g_rva8CD130IdleHook->add(p);
         p->m_value = value;
         return p;
