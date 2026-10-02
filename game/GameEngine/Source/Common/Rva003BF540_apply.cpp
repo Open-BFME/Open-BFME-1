@@ -5,13 +5,6 @@ class BfmeOwnCZ
 	public:
 	char m_pad00[ 0x1E ];
 	bool m_at1E;
-	__forceinline void bfmeSetCZ( int value )
-	{
-		typedef void (BfmeOwnCZ::*Call)( int );
-		union { void (*function)(); Call member; } route;
-		route.function = j_000048d1;
-		(this->*route.member)( value );
-	}
 };
 
 struct Rva003BF540Span
@@ -39,6 +32,11 @@ void Rva003BF540::apply( bool on )
 	for( unsigned int index = 0; index < m_items.size(); ++index )
 	{
 		if( m_items[ index ]->m_at1E )
-			m_items[ index ]->bfmeSetCZ( value );
+		{
+			typedef void (BfmeOwnCZ::*Call)( int );
+			union { void (*function)(); Call member; } route;
+			route.function = j_000048d1;
+			(m_items[ index ]->*route.member)( value );
+		}
 	}
 }

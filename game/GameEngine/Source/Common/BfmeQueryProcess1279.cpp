@@ -2,6 +2,10 @@
 //
 // Processing for the node returned by the BfmeQuery1279 forwarding path.
 
+// The lookup and erase bodies are currently owned by the MASM ledger names.
+extern void d_0089cef0();
+extern void d_0089cc80();
+
 class BfmeQuery1279
 {
 public:
@@ -43,10 +47,10 @@ public:
 	virtual BfmeLookup1279 *bfmeGetLookup1279() = 0;
 };
 
-class BfmeNode1279
+class BfmeObj4310
 {
 public:
-	void bfmeFinish1279();
+	void bfmeDrop();
 	void *m_vtable;
 	unsigned int m_flags;
 	int m_bfme08;
@@ -57,9 +61,6 @@ public:
 
 class BfmeLookup1279
 {
-public:
-	BfmeNode1279 *bfmeLookup1279(BfmeKey1279 &key);
-	void bfmeErase1279(BfmeKey1279 &key);
 };
 
 // The shared empty string block at 0x012D5298, defined once in
@@ -75,7 +76,7 @@ extern EAStringC::StringDataC g_rva012D5298Empty;
 
 void BfmeWrapper1279::bfmeProcess1279(void *value)
 {
-	BfmeNode1279 *node = (BfmeNode1279 *)value;
+	BfmeObj4310 *node = (BfmeObj4310 *)value;
 	if (node) {
 		if (!((unsigned char)(~(node->m_flags >> 15)) & 1)) {
 			BfmeProvider1279 *provider = node->m_provider;
@@ -83,11 +84,18 @@ void BfmeWrapper1279::bfmeProcess1279(void *value)
 				BfmeLookup1279 *lookup = provider->bfmeGetLookup1279();
 				BfmeKey1279 &key = node->m_key;
 				if (key.m_vtable != (void *)&g_rva012D5298Empty && lookup) {
-					if (lookup->bfmeLookup1279(key) == node)
-						lookup->bfmeErase1279(key);
+					typedef BfmeObj4310 *(BfmeLookup1279::*Find)(BfmeKey1279 &);
+					union { void (*function)(); Find member; } find;
+					find.function = d_0089cef0;
+					if ((lookup->*find.member)(key) == node) {
+						typedef void (BfmeLookup1279::*Erase)(BfmeKey1279 &);
+						union { void (*function)(); Erase member; } erase;
+						erase.function = d_0089cc80;
+						(lookup->*erase.member)(key);
+					}
 				}
 			}
-			node->bfmeFinish1279();
+			node->bfmeDrop();
 		}
 	}
 }
