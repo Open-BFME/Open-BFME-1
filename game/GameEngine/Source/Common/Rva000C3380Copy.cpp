@@ -1,11 +1,14 @@
 // cl: /O2 /Ob0
+// The three members at +0/+4/+8 are narrow strings: retail's body calls
+// StringBase<char>::set (0x00887C90, ?set@?$StringBase@D@@QAEXABV1@@Z) once per
+// member rather than any copy constructor, so the placeholder
+// Rva0036CA00Str (whose copy ctor nothing defined) is spelled as the real
+// StringBase<char>, viewed through a local POD because StringBase's default
+// constructor is private.
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class Rva0036CA00Str
+struct Rva0036CA00Str
 {
-public:
-	Rva0036CA00Str(const Rva0036CA00Str &other);
-
-private:
 	void *m_item;
 };
 
@@ -24,12 +27,12 @@ public:
 };
 
 Rva000C3380::Rva000C3380(const Rva000C3380 &other)
-	: m_00(other.m_00)
-	, m_04(other.m_04)
-	, m_08(other.m_08)
-	, m_0C(other.m_0C)
-	, m_10(other.m_10)
-	, m_14(other.m_14)
-	, m_18(other.m_18)
 {
+	((StringBase<char> *)&m_00)->set(*(const StringBase<char> *)&other.m_00);
+	((StringBase<char> *)&m_04)->set(*(const StringBase<char> *)&other.m_04);
+	((StringBase<char> *)&m_08)->set(*(const StringBase<char> *)&other.m_08);
+	m_0C = other.m_0C;
+	m_10 = other.m_10;
+	m_14 = other.m_14;
+	m_18 = other.m_18;
 }

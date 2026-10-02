@@ -10,11 +10,16 @@ class ControlBar;
 
 extern ControlBar *TheControlBar;
 
-class BfmeStrUYA
+// The record's +0x2D4/+0x2D8 members are narrow strings: retail's body calls
+// StringBase<char>::releaseBuffer (0x00887940) on each, which is what
+// StringBase<char>::clear() is, so the placeholder bfmeClearUYA is spelled as
+// the real StringBase<char>, viewed through a local POD because StringBase's
+// default constructor is private.
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+struct BfmeStrUYA
 {
-public:
-	void bfmeClearUYA();
-	char m_bfmePad[4];
+	void *m_bfmePad;
 };
 
 class BfmeRecUYA
@@ -62,8 +67,8 @@ void BfmeThingUYA::bfmeGoUYA()
 		return;
 	BfmeRecUYA *r = (*(BfmeOwnerUYA **)((char *)this - 8))->bfmeFindUYA();
 	if (r) {
-		r->m_bfmeA.bfmeClearUYA();
-		r->m_bfmeB.bfmeClearUYA();
+		((StringBase<char> *)&r->m_bfmeA)->clear();
+		((StringBase<char> *)&r->m_bfmeB)->clear();
 		((BfmeStateUYA *)TheControlBar)->m_bfmeDirty = 1;
 	}
 	bfmeFinishUYA(0);
