@@ -136,7 +136,7 @@ public:
 	void bfmeGo1024A( int image, int key );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // ILT to 0x00588E60, the draw callback that reads m_resourceImage at +0x1C.
 extern void j_000062b2();
@@ -194,7 +194,7 @@ Rva00592570ResourceImageSlot::Rva00592570ResourceImageSlot()
 	{
 		BFMERetailAsciiString key( "Resource_Icon" );
 		BFMERetailAsciiString image( "ResourceBar/ResourceIcon" );
-		( (BfmeA1024 *)g_theWindowManager )->bfmeGo1024A( (int)&image, (int)&key );
+		( (BfmeA1024 *)g_rva012F19E8WindowManager )->bfmeGo1024A( (int)&image, (int)&key );
 	}
 
 	{
@@ -205,28 +205,28 @@ Rva00592570ResourceImageSlot::Rva00592570ResourceImageSlot()
 		} callback;
 		callback.raw = j_000062b2;
 		BFMERetailAsciiString name( "RenderFactionIcon" );
-		g_theWindowManager->registerPalantirCallback( name,
+		g_rva012F19E8WindowManager->registerPalantirCallback( name,
 			PalantirCallbackHolder(
 				FunctorBindingSingle( callback.member, (FunctorTargetSingle *)this ) ) );
 	}
 
 	{
 		BFMERetailAsciiString name( "Palantir/ResourceBar/Resources/" );
-		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder( FunctorSlot( &m_resources ),
 				(Rva0058D120FunctorSlotWrapper *)0 ) );
 	}
 
 	{
 		BFMERetailAsciiString name( "Palantir/ResourceBar/ResourceMultiplier/" );
-		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder( FunctorSlot( &m_resourceMultiplier ),
 				(Rva0058D160FunctorSlotWrapper *)0 ) );
 	}
 
 	{
 		BFMERetailAsciiString name( "Palantir/ResourceBar/CommandPoints/" );
-		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
+		g_rva012F19E8WindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder( FunctorSlot( &m_commandPoints ),
 				(Rva0058D1A0FunctorSlotWrapper *)0 ) );
 	}

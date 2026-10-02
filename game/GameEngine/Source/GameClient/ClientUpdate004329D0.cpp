@@ -254,7 +254,8 @@ extern Gen_00409040Registry *g_012F10D0;
 extern Rva001A8820TerrainVisual *TheTerrainVisual;
 extern ParticleSystemManager *TheParticleSystemManager;
 extern Rva0048EC80Manager *Rva0048EC80TheManager;
-extern Gen000290D2 *R2Ptr012F19E8;
+class WindowManager;	///< retail pointee at 0x012F19E8 (defined in GUI/WindowManager.cpp)
+extern WindowManager *g_rva012F19E8WindowManager;
 extern InGameUI *TheInGameUI;
 extern HeaderTemplateManager *TheHeaderTemplateManager;
 extern Shell *TheShell;
@@ -386,7 +387,7 @@ void ClientUpdate004329D0::update() {
             TheShell=new Shell;
             if (TheShell) TheShell->v04();
             ((Dispatch004329D0 *)Control0040F780)->v14();
-            ((Dispatch004329D0 *)R2Ptr012F19E8)->v14();
+            ((Dispatch004329D0 *)g_rva012F19E8WindowManager)->v14();
             ((Dispatch004329D0 *)TheInGameUI)->v188();
             TheShell->push(AsciiString("MainMenu.apt"),false);
         }

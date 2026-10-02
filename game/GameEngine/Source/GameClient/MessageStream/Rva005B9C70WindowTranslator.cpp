@@ -57,8 +57,8 @@ class GlobalData { public: char pad[3000]; bool flagBB8; };
 extern GlobalData *TheGlobalData;
 struct Rva00465D50Point { int x,y; };
 class Rva00465D50Owner { public: void apply(Rva00465D50Point *); };
-class WindowManager;
-extern WindowManager *Rva00579160TheManager;
+class WindowManager;	///< retail pointee at 0x012F19E8 (defined in GUI/WindowManager.cpp)
+extern WindowManager *g_rva012F19E8WindowManager;
 class Rva005B9C70Owner {
     void *vtable; int phase;
 public: int translate(const GameMessage *msg);
@@ -77,7 +77,7 @@ int Rva005B9C70Owner::translate(const GameMessage *msg)
     } else {
         if (firstMessage != GWM_NONE) {
             ICoord2D pos = msg->getArgument(0)->pixel;
-            ((Rva00465D50Owner *)Rva00579160TheManager)->apply((Rva00465D50Point *)&pos);
+            ((Rva00465D50Owner *)g_rva012F19E8WindowManager)->apply((Rva00465D50Point *)&pos);
         }
         if (g_bfmeDoneSJA || bfmeIsSet()) return 0;
     }

@@ -75,7 +75,11 @@ struct S4Holder0046DBB0
 	void take0046DEF0( const AsciiString &s );
 };
 
-extern S4Holder0046DBB0 *g_s4Holder;
+// Retail's holder global at 0x012F19E8 is EA's WindowManager singleton (defined
+// in GameClient/GUI/WindowManager.cpp); the TU-local S4Holder0046DBB0 view above
+// is reached by casting the canonical global.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 struct S4Owner
 {
@@ -90,7 +94,7 @@ struct S4Owner
 	void s4drain00464D70( void );
 };
 
-#define S4_DRAIN( NAME, TAKE, VEC )                                            	void S4Owner::s4drain##NAME( void )                                        	{                                                                          		if ( !g_s4Holder )                                                     			return;                                                            		for ( _STL::vector< AsciiString >::iterator it = VEC.begin();          			it != VEC.end(); ++it )                                            			g_s4Holder->TAKE( *it );                                           		VEC.clear();                                                           	}
+#define S4_DRAIN( NAME, TAKE, VEC )                                            	void S4Owner::s4drain##NAME( void )                                        	{                                                                          		if ( !(S4Holder0046DBB0 *)g_rva012F19E8WindowManager )                                                     			return;                                                            		for ( _STL::vector< AsciiString >::iterator it = VEC.begin();          			it != VEC.end(); ++it )                                            			((S4Holder0046DBB0 *)g_rva012F19E8WindowManager)->TAKE( *it );                                           		VEC.clear();                                                           	}
 
 S4_DRAIN( 00464B60, take0046DBB0, m_vec0 )
 S4_DRAIN( 00464C10, take0046DD00, m_vec1 )

@@ -65,7 +65,7 @@ public:
 extern GameTextInterface *TheGameText;
 class AptTextListener;
 class WindowManager { public: void bfme_bindAptText(const AsciiString&,const UnicodeString&,AptTextListener*); };
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 extern bool Rva012BB864ScaleEnabled;
 extern float Rva012BB86CScaleX,Rva012BB870ScaleY;
 class Rva00788290Base { public: virtual ~Rva00788290Base() {} };
@@ -149,7 +149,7 @@ Rva00788290Allocation::Rva00788290Allocation(Rva00788290Object *source):
   int width,height;
   m_displayString->getSize(&width,&height);
   setSize00787710((float)width,(float)height);
- } else g_theWindowManager->bfme_bindAptText(m_name,translated,(AptTextListener*)this);
+ } else g_rva012F19E8WindowManager->bfme_bindAptText(m_name,translated,(AptTextListener*)this);
  source->m_value40=m_size00787710.a;
  source->m_value44=m_size00787710.b;
  source->m_value20=m_size00787710.a;

@@ -1,7 +1,7 @@
 // Twenty 35-byte __cdecl niladic statics, all byte-identical except for one
 // string-literal address:
 //
-//     mov eax,[TheWideCall] / mov ecx,[TheWideRunner]
+//     mov eax,[TheWideCall] / mov ecx,[g_rva012F19E8WindowManager]
 //     push 0 x6 / push offset "..." / push eax / call REL32 / ret
 //
 // WHAT THE BYTES SHOW.  Eight arguments go on the stack and NOTHING pops them
@@ -34,9 +34,13 @@ public:
 };
 
 extern WideCall *TheWideCall;
-extern WideRunner *TheWideRunner;
+// Retail's runner receiver global at 0x012F19E8 is EA's WindowManager singleton
+// (defined in GameClient/GUI/WindowManager.cpp); the TU-local WideRunner view
+// below is reached by casting the canonical global.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
-#define WIDE_RUN_NAMED( NAME, TEXT )                                      	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void go();                                                 	};                                                                    	void Rva##NAME::go()                                                  	{                                                                     		TheWideRunner->run( TheWideCall, TEXT, 0, 0, 0, 0, 0, 0 );         	}
+#define WIDE_RUN_NAMED( NAME, TEXT )                                      	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void go();                                                 	};                                                                    	void Rva##NAME::go()                                                  	{                                                                     		((WideRunner *)g_rva012F19E8WindowManager)->run( TheWideCall, TEXT, 0, 0, 0, 0, 0, 0 );         	}
 
 WIDE_RUN_NAMED( 00563DA0, "ShowCommandInterface" )
 WIDE_RUN_NAMED( 00563DD0, "HideCommandInterface" )

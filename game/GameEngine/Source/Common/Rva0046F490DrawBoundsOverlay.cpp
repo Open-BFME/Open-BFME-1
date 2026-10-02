@@ -35,7 +35,11 @@ struct Rva00579160Manager
 {
 	Rva0046CA40Result computeThreshold(void *obj);	// retail ILT 0x0002E249 -> 0x0046CA40
 };
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail's manager global at 0x012F19E8 is EA's WindowManager singleton (defined
+// in GameClient/GUI/WindowManager.cpp); the TU-local Rva00579160Manager view
+// above is reached by casting the canonical global.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // Retail 0x0046EC50 (ILT 0x00034338): thiscall, `ret 0x1c`, forwards its seven
 // arguments to Display slot 0xD0 between slots 0xB0 and 0xDC.
@@ -85,7 +89,7 @@ extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]
 
 void Rva0046F490DrawBoundsOverlay(const Coord2D *pos, const Coord2D *size, void *self)
 {
-	Rva0046CA40Result result = Rva00579160TheManager->computeThreshold(self);
+	Rva0046CA40Result result = ((Rva00579160Manager *)g_rva012F19E8WindowManager)->computeThreshold(self);
 	if (result.threshold >= 0.0f && result.threshold < 1.0f)
 	{
 		static const Image *overlay1 = TheMappedImageCollection->findImageByName(AsciiString("RadialClockOverlay1"));

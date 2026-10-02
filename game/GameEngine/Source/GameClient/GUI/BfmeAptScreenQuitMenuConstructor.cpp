@@ -69,7 +69,7 @@ public:
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 };
 
-extern WindowManager *g_theWindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class __multiple_inheritance FunctorTarget;
 typedef void (FunctorTarget::*FunctorMethod)( void );
@@ -154,8 +154,6 @@ public:
 	unsigned char *invokeAtLevel( int level, const char *name, int kind,
 		const char *value, int a, int b, int c, int d );
 };
-
-extern GenActionSink *TheGenActionSink;
 
 int bfmeAptLevel00465CE0( BfmeH1065 *self );
 
@@ -327,14 +325,14 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 				Rva0056A280FunctorHolder( binding ) );
 		}
 
-		g_theWindowManager->bfme_showBackground( 2 );
+		g_rva012F19E8WindowManager->bfme_showBackground( 2 );
 
 		GameLogic *gameLogic = TheBfmeGameLogic;
 		if( gameLogic && ( gameLogic->m_gameMode == 1 ||
 			gameLogic->m_gameMode == 5 ) )
 		{
 			AsciiString pause( "APT:Pause" );
-			g_theWindowManager->bfme_setAptText(
+			g_rva012F19E8WindowManager->bfme_setAptText(
 				pause, TheGameText->fetch( "GUI:Menu" ) );
 		}
 	}
@@ -353,7 +351,7 @@ void BfmeAptScreenQuitMenu::_bfme_onInitialized( const char * )
 			!Glo012F1028->m_campaignActive )
 			return;
 
-		TheGenActionSink->invokeAtLevel(
+		((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(
 			bfmeAptLevel00465CE0( (BfmeH1065 *)this ), "disableButton", 1, "Restart",
 			0, 0, 0, 0 );
 
@@ -365,17 +363,17 @@ void BfmeAptScreenQuitMenu::_bfme_onInitialized( const char * )
 	}
 
 	disableRestart:
-	TheGenActionSink->invokeAtLevel(
+	((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(
 		bfmeAptLevel00465CE0( (BfmeH1065 *)this ), "disableButton", 1, "Restart",
 		0, 0, 0, 0 );
 
 	goto disableSaveLoad;
 
 	disableSaveLoad:
-	TheGenActionSink->invokeAtLevel(
+	((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(
 		bfmeAptLevel00465CE0( (BfmeH1065 *)this ), "disableButton", 1, "Save",
 		0, 0, 0, 0 );
-	TheGenActionSink->invokeAtLevel(
+	((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(
 			bfmeAptLevel00465CE0( (BfmeH1065 *)this ), "disableButton", 1, "Load",
 			0, 0, 0, 0 );
 }
