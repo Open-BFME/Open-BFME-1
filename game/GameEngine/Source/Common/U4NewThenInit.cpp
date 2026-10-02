@@ -90,9 +90,11 @@ public:
 	char m_body[ 0x74 ];
 };
 
-// retail 0x012F706C: the map-info singleton, whose COFF name is
-// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv).  The only member this TU
-// needs is the EyeTower block parked at +0x28C.
+// retail 0x012F706C: the map-info singleton, which is EA's `LivingWorldManager
+// *TheLivingWorldManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp.  The
+// only member this TU needs is the EyeTower block parked at +0x28C, reached
+// through the local view BfmeGameCW.
 class BfmeGameCW
 {
 public:
@@ -100,12 +102,13 @@ public:
 	U4Thing0060CD80 *m_thing;
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 extern const FieldParse g_u4FieldParse0060CD80[];
 
 void parseEyeTower( INI *ini )
 {
 	U4Thing0060CD80 *thing = new U4Thing0060CD80;
 	ini->initFromINI( thing, g_u4FieldParse0060CD80 );
-	g_bfmeGameCW->m_thing = thing;
+	reinterpret_cast< BfmeGameCW * >( TheLivingWorldManager )->m_thing = thing;
 }

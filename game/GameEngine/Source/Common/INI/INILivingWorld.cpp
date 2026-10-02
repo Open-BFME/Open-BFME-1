@@ -30,14 +30,28 @@ struct RetailLivingWorldManager
 	LivingWorldMapInfo m_mapInfo;		// 0x0c
 };
 
-extern RetailLivingWorldManager *TheLivingWorldManager;
+// The global's identity IS named: GameEngine::init pushes the literal
+// "TheLivingWorldManager" (0x010762FC) immediately before pushing 0x012F706C,
+// and EA's own definition lives in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp as
+// `LivingWorldManager *TheLivingWorldManager`.  The class is not named -- the
+// subsystem is BFME-only, so Zero Hour cannot supply the type and no ledger row
+// carries it -- so this TU keeps its local view RetailLivingWorldManager and
+// casts the canonical global at the use.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+
+static inline RetailLivingWorldManager *retailLivingWorldManager( void )
+{
+	return reinterpret_cast< RetailLivingWorldManager * >( TheLivingWorldManager );
+}
 
 void parseLivingWorldMapInfo( INI *ini )
 {
 	if( TheLivingWorldManager )
 	{
-		ini->initFromINI( &TheLivingWorldManager->m_mapInfo,
+		ini->initFromINI( &retailLivingWorldManager()->m_mapInfo,
 											LivingWorldMapInfo::m_fieldParseTable );
-		TheLivingWorldManager->m_mapInfo.m_isLoaded = TRUE;
+		retailLivingWorldManager()->m_mapInfo.m_isLoaded = TRUE;
 	}
 }

@@ -7,9 +7,7 @@
 
 typedef bool Bool;
 
-// retail 0x012F706C: the singleton whose COFF name is
-// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv); only the byte at +0x288 is
-// read here.
+// This TU's local view of the pointee: only the byte at +0x288 is read.
 class BfmeGameCW
 {
 public:
@@ -17,7 +15,12 @@ public:
 	Bool m_flag;						// +0x288
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+// retail 0x012F706C: the global is EA's `LivingWorldManager
+// *TheLivingWorldManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp, so
+// that is the one spelling this TU links against.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class Glo012F7048Type
 {
@@ -27,5 +30,5 @@ public:
 
 Bool Glo012F7048Type::test(void)
 {
-	return g_bfmeGameCW->m_flag;
+	return reinterpret_cast< BfmeGameCW * >( TheLivingWorldManager )->m_flag;
 }

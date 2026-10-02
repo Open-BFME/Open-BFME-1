@@ -69,11 +69,12 @@ bool __stdcall u4Less00605320( const U4Item00605320 &a, const U4Item00605320 &b 
 	return a.m_f08 < b.m_f08;
 }
 
-// retail 0x012F706C: the singleton whose COFF name is
-// ?g_bfmeGameCW@@3PAVBfmeGameCW@@A (symbols.csv).  Nothing of its own layout
-// is read here.
-class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// retail 0x012F706C: the global is EA's `LivingWorldManager
+// *TheLivingWorldManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp.
+// Nothing of its own layout is read here, so only the pointee is reinterpreted.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // The guarded tail call lands on retail 0x006159C0, already matched as
 // ?rva006159c0@BfmeLivingWorldManager@@QAEXXZ, whose sole matched caller is
@@ -97,6 +98,6 @@ public:
 void U4Self006094C0::run( void )
 {
 	act( 0, 0 );
-	if ( g_bfmeGameCW != 0 )
-		reinterpret_cast< BfmeLivingWorldManager * >( g_bfmeGameCW )->rva006159c0();
+	if ( TheLivingWorldManager != 0 )
+		reinterpret_cast< BfmeLivingWorldManager * >( TheLivingWorldManager )->rva006159c0();
 }
