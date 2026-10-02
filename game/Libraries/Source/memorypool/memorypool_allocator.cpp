@@ -5,10 +5,13 @@
 unsigned char bfmeAllSame(
 	const unsigned int *data, unsigned int value, unsigned int bytes);
 extern void __cdecl memset32(void *ptr, int value, unsigned int bytesToFill);
-// Address-derived guard-word count global at 0x0130EA00.
-extern int Rva0130EA00GuardWords;
-extern unsigned int g_rva0130EA04;
-extern unsigned char g_rva0130E9F9;
+// Retail check (RVA 0x00882580, 174 bytes) reads these as two dwords
+// at VA 0x0130EA00/0x0130EA04 and one byte at VA 0x0130E9F9.
+// All three scalars are initially zero in retail .data; data_rows.csv
+// verifies their widths and initial bytes independently of the code match.
+int Rva0130EA00GuardWords = 0;
+unsigned int g_rva0130EA04 = 0;
+unsigned char g_rva0130E9F9 = 0;
 
 class Rva008838F0Owner
 {
