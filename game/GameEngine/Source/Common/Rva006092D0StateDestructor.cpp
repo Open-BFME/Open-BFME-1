@@ -56,7 +56,8 @@ public:
 	void rva00615850();
 };
 
-extern "C" BfmeLivingWorldManager *g_bfmeGameCW;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 class Gen_00609320
 {
@@ -160,8 +161,8 @@ extern "C" const void *bfmeVftRva006092D0State[];
 Rva006092D0State::~Rva006092D0State()
 {
 	*(unsigned int *)this = (unsigned int)bfmeVftRva006092D0State;
-	if (g_bfmeGameCW != 0)
-		g_bfmeGameCW->rva00615850();
+	if (TheLivingWorldManager != 0)
+		((BfmeLivingWorldManager *)TheLivingWorldManager)->rva00615850();
 	if (localAudio() != 0 && localAudio()->slot40() == 1)
 		localAudio()->slot3c(2);
 	g_bfmeStateDF = 0;
