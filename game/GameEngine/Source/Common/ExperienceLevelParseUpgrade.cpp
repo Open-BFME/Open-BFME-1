@@ -39,7 +39,7 @@ class UpgradeTemplate;
 class UpgradeCenter
 {
 public:
-	const UpgradeTemplate *j_0002f95a(const AsciiString &name) const;
+	const UpgradeTemplate *findUpgrade(const AsciiString &name) const;
 };
 
 extern UpgradeCenter *TheUpgradeCenter;
@@ -61,7 +61,7 @@ void parseExperienceLevelUpgrade(INI *ini, void *instance, void *store, const vo
 		const UpgradeTemplate *upgrade;
 		{
 			BFMERetailAsciiString name(token);
-			upgrade = TheUpgradeCenter->j_0002f95a(
+			upgrade = TheUpgradeCenter->findUpgrade(
 				*(const AsciiString *)&name);
 		}
 

@@ -6,9 +6,11 @@
 // pair (mapped body 8 bytes).  The key comparator reuses the
 // Rva0019BC70Key tag already pinned to retail 0x0000B050 by an existing
 // symbols.csv row, so no new pin is needed for the compare call.  The
-// _Construct callee is a fresh pin to the retail address below.
+// The retail _Construct thunk at 0x0000D085 routes to the already matched
+// 12-byte placement-copy helper at 0x0033BEC0.
 
 struct BfmeRbTreeInsertRva0033F780AnchorHelper;
+struct Rva0033BEC0;
 
 namespace _STL
 {
@@ -37,6 +39,10 @@ inline void *BfmeNodeAllocate(unsigned int bytes)
 
 template <class T1, class T2>
 void _Construct(T1 *p, const T2 &value);
+
+template <>
+void _Construct<Rva0033BEC0, Rva0033BEC0>(Rva0033BEC0 *p,
+	const Rva0033BEC0 &value);
 
 template <class T1, class T2>
 struct pair
@@ -125,7 +131,8 @@ private:
 	_Link_type _M_create_node(const Value &v)
 	{
 		_Link_type tmp = (_Link_type)BfmeNodeAllocate(sizeof(_Node));
-		_Construct(&tmp->_M_value_field, v);
+		_Construct((Rva0033BEC0 *)&tmp->_M_value_field,
+			*(const Rva0033BEC0 *)&v);
 		return tmp;
 	}
 

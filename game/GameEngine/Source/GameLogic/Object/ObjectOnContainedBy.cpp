@@ -43,6 +43,12 @@ public:
 	virtual ContainmentStatus getStatus(const Object *object) const;
 };
 
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class ThingTemplate
 {
 public:
@@ -89,7 +95,7 @@ void Object::onContainedBy(Object *containedBy)
 	ContainModuleInterface *contain;
 	ThingTemplate *thing = m_template;
 	if (thing && thing->m_nextOverride)
-		thing = thing->m_nextOverride->getFinalOverride();
+		thing = (ThingTemplate *)((const Overridable *)thing->m_nextOverride)->getFinalOverride();
 
 	if ((thing->m_kindOfAtCC & 0x00400000) != 0)
 	{

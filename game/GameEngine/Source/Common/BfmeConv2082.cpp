@@ -177,9 +177,38 @@ public:
 	int m_bfmeWhenXZ;
 };
 
+struct BfmeNodeABB
+{
+	unsigned char m_bfmeHeadABB[0x14];
+	void *m_bfme14ABB;
+};
+
+struct BfmeIterABB
+{
+	BfmeNodeABB *m_bfmeNodeABB;
+};
+
+class BfmeSubABB
+{
+public:
+	void bfmeRangeABB(BfmeIterABB *first, BfmeIterABB *last);
+
+	BfmeNodeABB *m_bfmeHeadABB;
+};
+
+class BfmeHostABB
+{
+public:
+	void *bfmeFrontABB(BfmeIterABB last);
+
+	unsigned char m_bfmeHeadHABB[4];
+	BfmeSubABB m_bfme04ABB;
+};
+
 int BfmeHostXZ::bfmeStartXZ(void *a, int d)
 {
-	BfmeThingXZ *t = bfmeAcquireXZ(a);
+	BfmeThingXZ *t = (BfmeThingXZ *)((BfmeHostABB *)this)->bfmeFrontABB(
+		*(BfmeIterABB *)&a);
 
 	if (m_bfmeSlotXZ)
 	{

@@ -140,6 +140,12 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 
+class BfmeThingJZ
+{
+public:
+	void bfmeGoJZ();
+};
+
 class BfmeHostBI
 {
 public:
@@ -162,7 +168,7 @@ void BfmeHostBI::bfmeSaveBI(BfmeAgentBI *ag)
 	ag->bfmeFillBI(&info);
 
 	if (ag->bfmeReadingBI() != 0)
-		bfmeResetBI();
+		((BfmeThingJZ *)this)->bfmeGoJZ();
 
 	((Rva005A00B0AudioClient *)TheAudio)->bfmeAudioBI(ag, &m_bfmeHandleBI);
 

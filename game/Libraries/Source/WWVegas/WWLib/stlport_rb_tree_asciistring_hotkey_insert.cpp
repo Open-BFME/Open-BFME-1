@@ -32,7 +32,7 @@ struct BfmeRbTreeInsertAnchorHelper;
 class AsciiString
 {
 public:
-	int bfmeCompare(const AsciiString &other) const;	// ILT 0x000220C5
+	int compare(const AsciiString &other) const;	// ILT 0x000220C5
 
 private:
 	char *m_bfmeData;
@@ -99,7 +99,7 @@ struct less<AsciiString>
 {
 	bool operator()(const AsciiString &a, const AsciiString &b) const
 	{
-		return a.bfmeCompare(b) < 0;
+		return a.compare(b) < 0;
 	}
 };
 
