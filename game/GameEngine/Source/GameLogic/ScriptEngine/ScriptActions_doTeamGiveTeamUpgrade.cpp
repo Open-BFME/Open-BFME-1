@@ -138,8 +138,13 @@ public:
 	Object *getFirstItemIn_TeamMemberList() const;
 };
 
+// The upgrade-lookup global is TheUpgradeCenter (dir32 0x012EF188); its
+// declared type is UpgradeCenter*, the type of the registration site in
+// GameEngine::init, so the extern must be spelled that way to link.
+class UpgradeCenter;
+
 extern ScriptEngine *TheScriptEngine;
-extern void *TheUpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
 extern void *TheSpecialPowerStore;
 
 extern void j_00044e18();

@@ -4,7 +4,11 @@ public:
 	void *bfmeMakeBMD(void *what);
 };
 
-extern BfmeSinkBMD *g_bfmeSinkBMD;
+// The sink global at dir32 0x012EF188 is TheUpgradeCenter, declared
+// UpgradeCenter* by the registration site in GameEngine::init.
+class UpgradeCenter;
+
+extern UpgradeCenter *TheUpgradeCenter;
 
 class BfmeThingBMD
 {
@@ -18,5 +22,6 @@ public:
 
 void BfmeThingBMD::bfmeGoBMD()
 {
-	m_bfmeGot = g_bfmeSinkBMD->bfmeMakeBMD((char *)m_bfmeWhat + 0x18);
+	m_bfmeGot = reinterpret_cast<BfmeSinkBMD *>(TheUpgradeCenter)
+		->bfmeMakeBMD((char *)m_bfmeWhat + 0x18);
 }

@@ -46,7 +46,12 @@ public:
 	BfmeNodeND *bfmeFindND(const UnsignedInt *mask);
 };
 
-extern BfmeThingND *TheUpgradeCenter;
+// The upgrade-lookup global is TheUpgradeCenter (dir32 0x012EF188), declared
+// UpgradeCenter* by the registration site in GameEngine::init; BfmeThingND is
+// the shape its lookup member needs, so the cast is compile-time only.
+class UpgradeCenter;
+
+extern UpgradeCenter *TheUpgradeCenter;
 
 class Rva003C1050
 {
@@ -66,7 +71,9 @@ void Rva003C1050::setMask(UpgradeMaskType mask)
 	{
 		if (working.checksum() <= 0)
 			break;
-		BfmeNodeND *upgrade = TheUpgradeCenter->bfmeFindND(working.m_bits);
+		BfmeNodeND *upgrade =
+			reinterpret_cast<BfmeThingND *>(TheUpgradeCenter)->bfmeFindND(
+				working.m_bits);
 		if (!upgrade)
 			break;
 		if (!upgrade->m_flag11c || upgrade->m_field4)
