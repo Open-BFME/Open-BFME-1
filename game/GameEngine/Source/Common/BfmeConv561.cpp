@@ -72,7 +72,10 @@ public:
 	BfmeSubBZF m_bfmeSub;
 };
 
-extern BfmeGlobalBZF *bfmeTheBZF;
+// Retail's loads at 0x00383950 are 0x012F1028: the global BfmeConv2113.cpp
+// defines; this TU keeps its own view type and casts at the use.
+class Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
 
 // The matched caller at 0x00383950 reaches this method through ILT 0x0000E458.
 // Retail 0x00366130 walks the sub-object's 0x58-byte Living World player-army
@@ -96,6 +99,6 @@ void BfmeSubBZF::bfmeOneBZF()
 void BfmeThingBZF::bfmeGoBZF()
 {
 	m_bfmeSub.bfmeOneBZF();
-	bfmeTheBZF->bfmeTwoBZF();
-	bfmeTheBZF->bfmeThreeBZF(0);
+	reinterpret_cast<BfmeGlobalBZF *>(Glo012F1028)->bfmeTwoBZF();
+	reinterpret_cast<BfmeGlobalBZF *>(Glo012F1028)->bfmeThreeBZF(0);
 }

@@ -17,13 +17,16 @@ public:
 	char bfmeTail922A();
 };
 
-extern BfmeTail922A *g_bfme922Tail;
+// Retail's load in bfmeGo922A is 0x012F1028: the global BfmeConv2113.cpp
+// defines; this TU keeps its own view type and casts at the use.
+class Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
 
 char bfmeGo922A(void)
 {
 	if (reinterpret_cast<BfmeState922A *>(TheGameLogic)->m_bfmeMode != 6)
 		return 0;
-	return g_bfme922Tail->bfmeTail922A();
+	return reinterpret_cast<BfmeTail922A *>(Glo012F1028)->bfmeTail922A();
 }
 
 class BfmeGlob922D
