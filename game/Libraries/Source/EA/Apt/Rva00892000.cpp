@@ -4,7 +4,8 @@
 // thiscall declaration used by matched BfmeConv1038.cpp. Callee 008BDBB0
 // independently ends RET8 and consumes both argument words.
 // Receiver reload after the calls and +0x122C adjustment are retail-proven.
-// Globals keep their existing recorded identities. No new pins.
+// Retail loads at +0x00 and +0x19 both read VA 0x013377D8, the
+// verified g_bfmeHolderBU pointer owned by BfmePicker1284.cpp.
 
 class BfmeThingHH
 {
@@ -18,18 +19,19 @@ public:
     void bfmeAdd1038(int a, int b);
 };
 
-extern char *Rva008A5380Holder;
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern char *g_bfmeArenaCursor;
 extern int g_bfmeB1038;
 void Rva00897110ArenaReadyThunk();
 
 void Rva00892000()
 {
-    if (Rva008A5380Holder == 0)
+    if (g_bfmeHolderBU == 0)
         return;
 
-    reinterpret_cast<BfmeThingHH *>(Rva008A5380Holder)->bfmeClearHH();
+    reinterpret_cast<BfmeThingHH *>(g_bfmeHolderBU)->bfmeClearHH();
     Rva00897110ArenaReadyThunk();
-    reinterpret_cast<BfmeSubF1038 *>(Rva008A5380Holder + 0x122C)->bfmeAdd1038(g_bfmeB1038, 0);
+    reinterpret_cast<BfmeSubF1038 *>(reinterpret_cast<char *>(g_bfmeHolderBU) + 0x122C)->bfmeAdd1038(g_bfmeB1038, 0);
     g_bfmeArenaCursor -= 0x60;
 }
