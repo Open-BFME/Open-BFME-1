@@ -523,20 +523,6 @@ DataChunkTableOfContents::~DataChunkTableOfContents()
 	}
 }
 
-// return mapping data
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContents_findMapping.cpp
-// ?findMapping@DataChunkTableOfContents@@AAEPAVMapping@@ABVAsciiString@@@Z present-unmatched
-Mapping *DataChunkTableOfContents::findMapping( const AsciiString& name )
-{
-	Mapping *m;
-
-	for( m=m_list; m; m=m->next )
-		if (name == m->name )
-			return m;
-
-	return NULL;
-}
-
 // convert name to integer identifier
 UnsignedInt DataChunkTableOfContents::getID( const AsciiString& name )		
 {
@@ -547,21 +533,6 @@ UnsignedInt DataChunkTableOfContents::getID( const AsciiString& name )
 
 	DEBUG_CRASH(("name not found in DataChunkTableOfContents::getName for name %s\n",name.str()));
 	return 0;
-}
-
-// convert integer identifier to name
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsGetName.cpp
-// ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z present-unmatched
-AsciiString DataChunkTableOfContents::getName( UnsignedInt id )	
-{
-	Mapping *m;
-
-	for( m=m_list; m; m=m->next )
-		if (m->id == id)
-			return m->name;
-
-	DEBUG_CRASH(("name not found in DataChunkTableOfContents::getName for id %d\n",id));
-	return AsciiString::TheEmptyString;
 }
 
 // create new ID for given name or return existing mapping
@@ -589,34 +560,10 @@ UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 	}
 }
 
-// output the table of m_contents to a binary m_tmp_file stream
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsWrite.cpp
-// ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z present-unmatched
-void DataChunkTableOfContents::write( OutputStream &s )
-{
-	Mapping *m;
-	unsigned char len;
-
-	Byte tag[4]={'C','k', 'M', 'p'};	// Chunky height map. jba.
-	s.write(tag,sizeof(tag));
-
-	// output number of elements in the table
-	s.write( (void *)&this->m_listLength, sizeof(Int) );
-
-	// output symbol table
-	for( m=this->m_list; m; m=m->next )
-	{
-		len = m->name.getLength();
-		s.write( (char *)&len, sizeof(unsigned char) );
-		s.write( (char *)m->name.str(),  len);
-		s.write( (char *)&m->id, sizeof(UnsignedInt) );
-	}
-}
-
-// DataChunkTableOfContents::read and DataChunkInput's constructor/destructor
-// are provided by DataChunkTableOfContents.cpp, DataChunkInputCtorThunk.cpp,
-// and DataChunkInput.cpp. Their retail-verified BFME layouts supersede the
-// reference definitions formerly emitted here.
+// DataChunkTableOfContents findMapping/getName/read/write and DataChunkInput's
+// constructor/destructor are provided by DataChunkTableOfContents.cpp,
+// DataChunkInputCtorThunk.cpp, and DataChunkInput.cpp. Their retail-verified
+// BFME layouts supersede the reference definitions formerly emitted here.
 
 // register a user parsing function for a given DataChunk label
 // ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z present-unmatched
