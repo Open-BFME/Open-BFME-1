@@ -11,7 +11,12 @@ class Rva008B2EA0Node { public: void append(void *); };
 Rva008B2EA0Node *rva008B2EA0Create();
 struct Rva008A9A70Str { void *block; };
 class Rva008A9A70 { public: void set(const Rva008A9A70Str &); };
-extern Rva008A9A70Str g_013385D8, g_01338678, g_01338524;
+// Retail setter RVA 008A9A70 loads one pointer from each source holder.
+// Initialization also reads/writes these cells as dwords at VA 013385D8,
+// 01338678 and 01338524; their initial retail .data bytes are all zero.
+Rva008A9A70Str g_013385D8 = { 0 };
+Rva008A9A70Str g_01338678 = { 0 };
+Rva008A9A70Str g_01338524 = { 0 };
 extern AptValue *g_bfmeFallbackDB;
 extern char g_012D5298;
 struct Rva008D5430String { unsigned short refs, len; int capacity; char text[1]; };
