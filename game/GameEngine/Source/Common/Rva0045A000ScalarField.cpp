@@ -49,7 +49,12 @@ extern GenKey GenKey0012A79E0;
 extern GenKey GenKey0012A79F0;
 extern GenKey GenKey0012A79F8;
 extern GenTable GenTable0012ED5E0;
-extern R3FieldGlobals *R3FieldGlobals0012ED5C8;
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. This TU reads one float out of it at +0xE68 through
+// its own TU-local view, so the canonical declaration plus a cast keeps the
+// single linked name without disturbing the layout this file models.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 extern float R3FieldZero01075350;
 extern float R3FieldSampleScale010F653C;
@@ -92,7 +97,7 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 	float setting = GenTable0012ED5E0.lookup(
 		GenKey0012A79E0.fetch( &found ) );
 	if( !found )
-		setting = R3FieldGlobals0012ED5C8->m_default;
+		setting = ((R3FieldGlobals *)TheWritableGlobalData)->m_default;
 	if( setting == R3FieldZero01075350 )
 		return;
 

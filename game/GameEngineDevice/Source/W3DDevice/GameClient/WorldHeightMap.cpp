@@ -907,6 +907,7 @@ struct LightingCoord00747FF0 { float x,y,z; };
 struct LightingValues00747FF0 { LightingRGB00747FF0 ambient,diffuse; LightingCoord00747FF0 lightPos; };
 // Field names at +0x218, +0x290 and +0x518 are witnessed by name_oracle.
 // Unnamed BFME extensions retain their offsets; this is a partial layout view.
+// Retail's writable-global pointer (0x012ED5C8), declared by the header above; uses cast to this view.
 struct LightingData00747FF0 {
  char pad0000[0x218]; int m_timeOfDay;
  char pad021C[0x74]; LightingValues00747FF0 m_terrainLighting[4][3];
@@ -914,7 +915,6 @@ struct LightingData00747FF0 {
  char pad06C8[0xD8]; LightingValues00747FF0 lighting07A0[4][3];
  char pad0950[0x46C]; bool field0DBC, field0DBD;
 };
-extern LightingData00747FF0 *LightingGlobals00747FF0;
 extern bool Flag0133F42F;
 extern LightingCoord00747FF0 Value012B4FC8,Value012B4FD8,Value012B4FE8;
 struct ShadowData00747FF0 { void *field00; unsigned int field04; };
@@ -929,100 +929,100 @@ private:
 };
 bool Rva0074A680ParserRegistration::ParseLightingDataChunk(DataChunkInput &file, DataChunkInfo *info)
 {
-		LightingGlobals00747FF0->m_timeOfDay = file.readInt();
+		((LightingData00747FF0 *)TheWritableGlobalData)->m_timeOfDay = file.readInt();
 		int i;
 		LightingValues00747FF0	initLightValues	= { { 0,0,0},{0,0,0},{0,0,-1.0f}};
 
 		// initialize the directions of the lights to not be totally invalid, in case old maps are read
 		for (i=0; i<4; i++) {
 			for (int j=0;j<3; j++) {
-				LightingGlobals00747FF0->m_terrainObjectsLighting[i][j]=initLightValues;
-				LightingGlobals00747FF0->m_terrainLighting[i][j]=initLightValues;
+				((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j]=initLightValues;
+				((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j]=initLightValues;
 			}
 		}
 
 		for (i=0; i<4; i++) {
-			LightingGlobals00747FF0->m_terrainLighting[i][0].ambient.red = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].ambient.green = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].ambient.blue = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].diffuse.red = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].diffuse.green = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].diffuse.blue = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].lightPos.x = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].lightPos.y = file.readReal();
-			LightingGlobals00747FF0->m_terrainLighting[i][0].lightPos.z = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].ambient.red = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].ambient.green = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].ambient.blue = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].diffuse.red = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].diffuse.green = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].diffuse.blue = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].lightPos.x = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].lightPos.y = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][0].lightPos.z = file.readReal();
 
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].ambient.red = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].ambient.green = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].ambient.blue = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].diffuse.red = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].diffuse.green = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].diffuse.blue = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].lightPos.x = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].lightPos.y = file.readReal();
-			LightingGlobals00747FF0->m_terrainObjectsLighting[i][0].lightPos.z = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].ambient.red = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].ambient.green = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].ambient.blue = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].diffuse.red = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].diffuse.green = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].diffuse.blue = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].lightPos.x = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].lightPos.y = file.readReal();
+			((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][0].lightPos.z = file.readReal();
 
 			if (info->version >= 2) {
 				for (int j=1; j<3; j++)	//added support for 2 extra object lights
 				{
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].ambient.red = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].ambient.green = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].ambient.blue = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].diffuse.red = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].diffuse.green = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].diffuse.blue = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].lightPos.x = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].lightPos.y = file.readReal();
-					LightingGlobals00747FF0->m_terrainObjectsLighting[i][j].lightPos.z = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].ambient.red = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].ambient.green = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].ambient.blue = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].diffuse.red = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].diffuse.green = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].diffuse.blue = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].lightPos.x = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].lightPos.y = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j].lightPos.z = file.readReal();
 				}
 			}
 			if (info->version >= 3) {
 				for (int j=1; j<3; j++)	//added support for 2 extra terrain lights
 				{
-					LightingGlobals00747FF0->m_terrainLighting[i][j].ambient.red = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].ambient.green = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].ambient.blue = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].diffuse.red = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].diffuse.green = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].diffuse.blue = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].lightPos.x = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].lightPos.y = file.readReal();
-					LightingGlobals00747FF0->m_terrainLighting[i][j].lightPos.z = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].ambient.red = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].ambient.green = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].ambient.blue = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].diffuse.red = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].diffuse.green = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].diffuse.blue = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].lightPos.x = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].lightPos.y = file.readReal();
+					((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainLighting[i][j].lightPos.z = file.readReal();
 				}
 			}
             if (info->version >= 4) {
                 for (int j=0; j<3; ++j) {
-                    LightingGlobals00747FF0->lighting07A0[i][j].ambient.red = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].ambient.green = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].ambient.blue = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].diffuse.red = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].diffuse.green = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].diffuse.blue = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].lightPos.x = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].lightPos.y = file.readReal();
-                    LightingGlobals00747FF0->lighting07A0[i][j].lightPos.z = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].ambient.red = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].ambient.green = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].ambient.blue = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].diffuse.red = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].diffuse.green = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].diffuse.blue = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].lightPos.x = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].lightPos.y = file.readReal();
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j].lightPos.z = file.readReal();
                 }
             } else {
                 for (int j=0; j<3; ++j)
-                    LightingGlobals00747FF0->lighting07A0[i][j] = LightingGlobals00747FF0->m_terrainObjectsLighting[i][j];
+                    ((LightingData00747FF0 *)TheWritableGlobalData)->lighting07A0[i][j] = ((LightingData00747FF0 *)TheWritableGlobalData)->m_terrainObjectsLighting[i][j];
             }
 
 		}
         if (info->version >= 5) {
-            LightingGlobals00747FF0->field0DBC = file.readReal() > 1.0f ? true : false;
-            Flag0133F42F = LightingGlobals00747FF0->field0DBC;
+            ((LightingData00747FF0 *)TheWritableGlobalData)->field0DBC = file.readReal() > 1.0f ? true : false;
+            Flag0133F42F = ((LightingData00747FF0 *)TheWritableGlobalData)->field0DBC;
         } else {
-            LightingGlobals00747FF0->field0DBC = false;
+            ((LightingData00747FF0 *)TheWritableGlobalData)->field0DBC = false;
             Flag0133F42F = false;
         }
         if (info->version >= 6) {
-            LightingGlobals00747FF0->field0DBD = file.readInt() != 0;
+            ((LightingData00747FF0 *)TheWritableGlobalData)->field0DBD = file.readInt() != 0;
             float x = file.readReal();
             float y = file.readReal();
             float z = file.readReal();
             Value012B4FC8.x = x; Value012B4FC8.y = y; Value012B4FC8.z = z;
         } else {
-            LightingGlobals00747FF0->field0DBD = false;
+            ((LightingData00747FF0 *)TheWritableGlobalData)->field0DBD = false;
         }
         if (info->version >= 7) {
             float x = file.readReal();

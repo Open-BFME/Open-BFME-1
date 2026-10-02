@@ -20,7 +20,12 @@ class DamageInfo { public:__forceinline DamageInfo(){} virtual void xfer();Damag
 struct CtorCapacity00211A50 { CtorCapacity00211A50():value(0){} void *value; };
 class CtorVector0020F660 { public:CtorVector0020F660():begin(0),end(0),capacity(){}~CtorVector0020F660();CtorVector0020F660& operator=(const CtorVector0020F660&);void *begin,*end;CtorCapacity00211A50 capacity; };
 struct ActiveData00211A50 { char prefix[8];float maxHealth,initialHealth,maxDamaged,maxReallyDamaged;char gap18[0x10];bool defaults;char gap29[0x27];CtorVector0020F660 vector; };
-struct GlobalData {char prefix[0x19c];float m_unitDamagedThresh,m_unitReallyDamagedThresh;};extern GlobalData *TheGlobalData;
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. The canonical spelling is what links; the local view
+// below is only how this TU reads the two damage thresholds at +0x19C, so it
+// is cast at use.
+class GlobalData;extern GlobalData *TheWritableGlobalData;
+struct ActiveBodyGlobalDataView {char prefix[0x19c];float m_unitDamagedThresh,m_unitReallyDamagedThresh;};
 template<int N> class BitFlags { public: BitFlags():bits(0){}unsigned bits; };
 class ArmorTemplate;class DamageFX;
 class Armor { public:Armor(const ArmorTemplate *t=0):m_template(t){} const ArmorTemplate *m_template; };
@@ -43,7 +48,7 @@ ActiveBody::ActiveBody(Thing *thing,const ModuleData *data):BodyModule(thing,dat
  float reciprocal=1.0f/m_maxHealth;
  field24=reciprocal*md->maxDamaged;field28=reciprocal*md->maxReallyDamaged;
  m_initialHealth=m_currentHealth=(md->initialHealth!=-1.0f ? md->initialHealth:md->maxHealth);
- if(md->defaults) {if(field24==0.0f)field24=TheGlobalData->m_unitDamagedThresh;if(field28==0.0f)field28=TheGlobalData->m_unitReallyDamagedThresh;}
+ if(md->defaults) {if(field24==0.0f)field24=((ActiveBodyGlobalDataView*)TheWritableGlobalData)->m_unitDamagedThresh;if(field28==0.0f)field28=((ActiveBodyGlobalDataView*)TheWritableGlobalData)->m_unitReallyDamagedThresh;}
  for(int i=0;i<4;++i) {fieldAC[i]=0.0f;fieldBC[i]=false;}
  const ArmorTemplateSet *set=m_object->getTemplate()->findArmorTemplateSet(m_curArmorSetFlags);
  if(set && set!=m_curArmorSet) {if(set->armor){m_curArmor=Armor(set->armor);}else{m_curArmor.m_template=0;}m_curDamageFX=set->fx;m_curArmorSet=set;}

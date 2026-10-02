@@ -57,13 +57,17 @@ public:
 	ObjectID m_factoryID;								///< this+0x08
 };
 
-struct GlobalData
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. The canonical spelling is what links; the local view
+// below is only how this TU reads m_debugAI at +0xA88, so it is cast at use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
+struct AISkirmishGlobalDataView
 {
 	char m_unmodelled000[0xa88];
 	Int m_debugAI;										///< this+0xA88
 };
-
-extern GlobalData *TheGlobalData;
 
 class ScriptEngine
 {
@@ -96,7 +100,7 @@ Bool AISkirmishPlayer::startTraining( WorkOrder *order, Bool busyOK, AsciiString
 		ProductionUpdateInterface *pu = factory->getProductionUpdateInterface();
 		if (pu && pu->queueCreateUnit( order->m_thing, bfmeFactoryArg, pu->requestUniqueUnitID(), -1, 0 )) {
 			order->m_factoryID = factory->getID(); 
-			if (TheGlobalData->m_debugAI) {
+			if (((AISkirmishGlobalDataView *)TheWritableGlobalData)->m_debugAI) {
 				AsciiString teamStr = "Queuing ";
 				// BFME's AsciiString methods are StringBase<char>'s; calling it directly
 				// (not through ascii_string.h's forwarding inline) keeps retail's registers.

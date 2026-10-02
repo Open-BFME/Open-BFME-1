@@ -8,11 +8,16 @@ class ShaderClass{unsigned x;};extern ShaderClass ScreenOpaqueShader;
 void BaseHeightMapScorchSetShader(const ShaderClass&);
 void BoxSetTexture(unsigned,TextureBaseClass*&);
 class DX8Wrapper{public:static void Apply_Render_State_Changes();static void Set_DX8_Render_State(unsigned long,unsigned);};
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp.  The canonical spelling is what links; the local view
+// below is only how this TU reads mode/highlight/apply82AA0, so it is cast at
+// use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 struct ZoomSettings{
  char pad0[0x218];int mode;char pad1[0xdbd-0x21c];bool highlight;
  void apply82AA0(int);
 };
-extern ZoomSettings *ZoomGlobalSettings;
 struct ZoomClient{char pad[0x3c];int frame;};
 // Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
 // GameLogic.cpp).  This TU reads it through its own ZoomClient view.
@@ -103,13 +108,13 @@ extern bool ZoomPulseDown;extern float ZoomFadeValue;
 enum FilterModes{FM_NULL_MODE};
 class ScreenZoomFilter{public:virtual int set(FilterModes);unsigned shader;TextureBaseClass *texture;int savedMode;};
 int ScreenZoomFilter::set(FilterModes mode){
- ZoomGlobalSettings->highlight=false;
+ ((ZoomSettings *)TheWritableGlobalData)->highlight=false;
  bool changed=false;
  if(ZoomLastFrame!=localTheGameLogic()->frame){changed=true;ZoomLastFrame=localTheGameLogic()->frame;}
  if(ZoomPulse&&changed){
   if(ZoomFadeDirection<0&&!ZoomPulseDown){
    ZoomPulseDown=true;ZoomPulse=30;
-   ZoomGlobalSettings->apply82AA0(savedMode);
+   ((ZoomSettings *)TheWritableGlobalData)->apply82AA0(savedMode);
    ZoomTerrain->apply(savedMode);
   }
   if(ZoomPulseDown){
@@ -117,7 +122,7 @@ int ScreenZoomFilter::set(FilterModes mode){
    if(ZoomPulse<1){ZoomPulseDown=false;ZoomPulse=0;zoomTacticalView()->setMode(0);zoomTacticalView()->setFilter(0);}
   }else{
    ZoomPulse+=3;
-   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=ZoomGlobalSettings->mode;ZoomGlobalSettings->apply82AA0(4);ZoomTerrain->apply(4);}
+   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=((ZoomSettings *)TheWritableGlobalData)->mode;((ZoomSettings *)TheWritableGlobalData)->apply82AA0(4);ZoomTerrain->apply(4);}
   }
  }
  if(mode>FM_NULL_MODE){

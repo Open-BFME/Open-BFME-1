@@ -221,8 +221,12 @@ bool bfmeGoEMEa(void*);
 void Rva009EBC00(int);
 void Rva009EBBE0(int);
 void setFPMode();
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp.  The canonical spelling is what links; the local view
+// below is only how this TU reads field1278 at +0x1278, so it is cast at use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 struct Settings0040F780 {char bytes00[0x1278];bool field1278;};
-extern Settings0040F780 *SettingsGlobal0040F780;
 class Mouse {public: void _bfme_setEngineVisibility(bool);};
 extern Mouse *Mouse0040F780;
 class BfmeObjDC {public:void bfmeGoDC();};
@@ -414,7 +418,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
  Interval0040F780=(1.0/30.0)/(double)Counter0040F780*1000.0;
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(true,0,false);
  bool active=bfmeGoEMEa(0);
- if(!SettingsGlobal0040F780->field1278 && active) Rva009EBC00(0);
+ if(!((Settings0040F780 *)TheWritableGlobalData)->field1278 && active) Rva009EBC00(0);
  void *thread=GetCurrentThread();
  if(!SetThreadPriority(thread,2)) priorityFailure0040F780();
  if(TheAudio) ((Audio0040F780 *)TheAudio)->suspend();
@@ -456,7 +460,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
  }
  if(TheAudio) ((Audio0040F780 *)TheAudio)->resume();
  if(!SetThreadPriority(thread,0)) priorityFailure0040F780();
- if(!SettingsGlobal0040F780->field1278 && active) Rva009EBBE0(0);
+ if(!((Settings0040F780 *)TheWritableGlobalData)->field1278 && active) Rva009EBBE0(0);
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(false,0,false);
  if(flags&0x100000) {Transitions0040E3B0->reset(); Mouse0040F780->_bfme_setEngineVisibility(true);}
  Control0040F780->update();

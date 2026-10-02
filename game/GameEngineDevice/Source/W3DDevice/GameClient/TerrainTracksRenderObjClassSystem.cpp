@@ -26,16 +26,21 @@
 typedef int Int;
 typedef bool Bool;
 
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. The canonical spelling is what links; the local view
+// below is only how this TU reads the three track limits at +0x1F4..+0x1FC,
+// so it is cast at use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+struct TerrainTracksLimitsView
 {
 	char pad[0x1f4];
 	Int m_maxTankTrackEdges;
 	Int m_maxTankTrackOpaqueEdges;
 	Int m_maxTankTrackFadeDelay;
 };
-
-extern GlobalData *TheGlobalData;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
@@ -113,9 +118,9 @@ TerrainTracksRenderObjClassSystem::TerrainTracksRenderObjClassSystem()
 	m_vertexMaterialClass = 0;
 	m_vertexBuffer = 0;
 
-	m_maxTankTrackEdges = TheGlobalData->m_maxTankTrackEdges;
-	m_maxTankTrackOpaqueEdges = TheGlobalData->m_maxTankTrackOpaqueEdges;
-	m_maxTankTrackFadeDelay = TheGlobalData->m_maxTankTrackFadeDelay;
+	m_maxTankTrackEdges = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackEdges;
+	m_maxTankTrackOpaqueEdges = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackOpaqueEdges;
+	m_maxTankTrackFadeDelay = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackFadeDelay;
 }
 
 // ?setDetail@TerrainTracksRenderObjClassSystem@@QAEXXZ
@@ -134,9 +139,9 @@ void TerrainTracksRenderObjClassSystem::setDetail()
 		*(RefCountClass * volatile *)&m_vertexBuffer = 0;
 	}
 
-	m_maxTankTrackEdges = TheGlobalData->m_maxTankTrackEdges;
-	m_maxTankTrackOpaqueEdges = TheGlobalData->m_maxTankTrackOpaqueEdges;
-	m_maxTankTrackFadeDelay = TheGlobalData->m_maxTankTrackFadeDelay;
+	m_maxTankTrackEdges = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackEdges;
+	m_maxTankTrackOpaqueEdges = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackOpaqueEdges;
+	m_maxTankTrackFadeDelay = ((TerrainTracksLimitsView *)TheWritableGlobalData)->m_maxTankTrackFadeDelay;
 
 	ReAcquireResources();
 }

@@ -102,12 +102,17 @@ struct BfmeArgVGJ
 	const char *m_bfme04;
 };
 
-extern BfmeThingVGJ *g_bfmeObjVGJ;
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. This TU reads one embedded string out of it through
+// its own TU-local view, so the canonical declaration plus a cast keeps the
+// single linked name.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 int __cdecl bfmeGoVGJ(BfmeArgVGJ *a)
 {
 	const char *s = a->m_bfme04;
-	BfmeLayoutVGD *p = &g_bfmeObjVGJ->m_bfmeStr;
+	BfmeLayoutVGD *p = &((BfmeThingVGJ *)TheWritableGlobalData)->m_bfmeStr;
 	p->bfmeSetVGD(s, s ? strlen(s) : 0);
 	return 2;
 }

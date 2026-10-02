@@ -5,14 +5,19 @@
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
+// Retail's writable-global pointer (0x012ED5C8), defined once in
+// Common/GlobalData.cpp. The canonical spelling is what links; the local view
+// below is only how this TU reads m_maxTerrainTracks at +0x1F0, so it is cast
+// at use.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-struct GlobalData
+struct TerrainTracksGlobalDataView
 {
 	char m_pad[0x1F0];
 	Int m_maxTerrainTracks;
 };
-
-extern GlobalData *TheGlobalData;
 
 class RefCountedResource
 {
@@ -103,7 +108,7 @@ private:
 void TerrainTracksRenderObjClassSystem::ReAcquireResources(void)
 {
 	Int i;
-	const Int numModules = TheGlobalData->m_maxTerrainTracks;
+	const Int numModules = ((TerrainTracksGlobalDataView *)TheWritableGlobalData)->m_maxTerrainTracks;
 
 	if (m_indexBuffer != 0)
 	{
