@@ -48,10 +48,11 @@ public:
 
 void _bfme_debugRecordCallsite(Int kind);
 
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail constructor loads VA 0x01336E5C; the shared provider owns this pointer cell.
+// See targets/game/reverse/identity_evidence/rva00f36e5c-pointer-provider.md.
+extern void *g_Rva00F36E5C;
 
-#define TheDebugManager ((DebugManager *)TheBfmeAwakenDebug)
+#define TheDebugManager (static_cast<DebugManager *>(g_Rva00F36E5C))
 #define CELL_GRID_ALLOCATION_FAILURE "Could not create Cell Grid for VictorySystem!"
 
 #define REPORT_CRASH(reason) do { \
