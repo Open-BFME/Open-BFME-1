@@ -34,10 +34,10 @@ public:
 	};
 };
 
-class Rva0025EB40State
+class SpecialAbilityUpdate
 {
 public:
-	void prepare();
+	void startPreparation();
 };
 
 class Rva0025EB40ModelConditionUpdate
@@ -52,7 +52,7 @@ private:
 
 void Rva0025EB40ModelConditionUpdate::update()
 {
-	( (Rva0025EB40State *)this )->prepare();
+	( (SpecialAbilityUpdate *)this )->startPreparation();
 
 	Object *object = m_object;
 	if( ( object->m_conditionFlagByte & 0x10 ) == 0 )

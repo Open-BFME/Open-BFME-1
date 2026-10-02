@@ -19,7 +19,17 @@
 
 namespace _STL
 {
-void __cdecl nodeDeallocate(void *block, unsigned int bytes);
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+class _Rb_tree;
+
+template <bool threads, int instance>
+class __node_alloc
+{
+	template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+	friend class _Rb_tree;
+
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
 
 struct _Rb_tree_node_base
 {
@@ -69,7 +79,7 @@ void _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_erase(_Rb_tree_node<Va
 	{
 		_M_erase((_Rb_tree_node<Value> *)node->_M_right);
 		_Rb_tree_node_base *left = node->_M_left;
-		nodeDeallocate(node, sizeof(_Rb_tree_node<Value>));
+		__node_alloc<true, 0>::_M_deallocate(node, sizeof(_Rb_tree_node<Value>));
 		node = (_Rb_tree_node<Value> *)left;
 	}
 }

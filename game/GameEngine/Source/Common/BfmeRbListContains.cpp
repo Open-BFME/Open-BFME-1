@@ -9,7 +9,17 @@ struct BfmeNode1108
 	int m_value;
 };
 
-BfmeNode1108 *__cdecl bfmeNext1108(BfmeNode1108 *node);
+namespace _STL
+{
+struct _Rb_tree_node_base;
+
+template <class _Dummy>
+class _Rb_global
+{
+public:
+	static _Rb_tree_node_base *__cdecl _M_increment(_Rb_tree_node_base *node);
+};
+}
 
 class BfmeW1108
 {
@@ -31,7 +41,8 @@ bool BfmeW1108::bfmeGo1108A(int value)
 	{
 		if (node->m_value == value)
 			break;
-		node = bfmeNext1108(node);
+		node = (BfmeNode1108 *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)node);
 	}
 
 	return node != m_head;

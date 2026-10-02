@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-extern void __cdecl Rva0088EAD0( void* );
+extern void __cdecl DebugFreeMemory( void* );
 
 class Rva00889DD0Node
 {
@@ -32,7 +32,7 @@ void Rva00889DD0Class::d_00889dd0( int val )
 		{
 			Rva00889DD0Node* toDelete = *ptr;
 			*ptr = toDelete->next;
-			Rva0088EAD0( toDelete );
+			DebugFreeMemory( toDelete );
 			return;
 		}
 	}
