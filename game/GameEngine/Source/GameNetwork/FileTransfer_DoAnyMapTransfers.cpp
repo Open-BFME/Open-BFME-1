@@ -69,7 +69,7 @@ AsciiString GetSoloINIFromMap(AsciiString path);
 AsciiString GetAssetUsageFromMap(AsciiString path);
 AsciiString GetReadmeFromMap(AsciiString path);
 
-extern "C" bool doFileTransfer(AsciiString filename, int mask);
+bool doFileTransfer(AsciiString filename, int mask);
 
 bool DoAnyMapTransfers(GameInfo *game)
 {

@@ -25,7 +25,7 @@ typedef bool Bool;
 typedef void *PEER;
 typedef void *qr2_buffer_t;
 
-void qr2_buffer_add(qr2_buffer_t buffer, const char *value) throw();
+extern "C" void qr2_buffer_addA(qr2_buffer_t buffer, const char *value) throw();
 extern "C" void qr2_buffer_add_int(qr2_buffer_t buffer, int value) throw();
 
 // The retail callback's logging macros retain this value object even in the
@@ -136,7 +136,7 @@ static void QRPlayerKeyCallback
 	if (!t->isHosting())
 		t->stopHostingAlready(peer);
 
-#define ADD(x) { qr2_buffer_add(buffer, x); val = x; }
+#define ADD(x) { qr2_buffer_addA(buffer, x); val = x; }
 #define ADDINT(x) { qr2_buffer_add_int(buffer, x); val.format(BFME_NUMBER_FORMAT, x); }
 	AsciiString val = "";
 
@@ -161,7 +161,7 @@ static void QRPlayerKeyCallback
 		ADDINT(t->getRva00642AB0(index));
 		break;
 	default:
-		qr2_buffer_add(buffer, BFME_EMPTY_STRING);
+		qr2_buffer_addA(buffer, BFME_EMPTY_STRING);
 		val.set(BFME_EMPTY_STRING, 0);
 		break;
 	}
