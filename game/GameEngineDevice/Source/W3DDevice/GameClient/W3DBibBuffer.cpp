@@ -240,37 +240,6 @@ W3DBibBuffer::~W3DBibBuffer(void)
 }
 
 //=============================================================================
-// W3DBibBuffer::W3DBibBuffer
-//=============================================================================
-/** Constructor. Sets m_initialized to true if it finds the w3d models it needs
-for the bibs. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer_ctor_Thunk.cpp
-// ??0W3DBibBuffer@@QAE@XZ present-unmatched
-W3DBibBuffer::W3DBibBuffer(void)
-{
-	m_initialized = false;
-	m_vertexBib = NULL;
-	m_indexBib = NULL;
-	m_bibTexture = NULL;
-	m_curNumBibVertices=0;
-	m_curNumBibIndices=0;
-	clearAllBibs();
-	m_indexBibSize = INITIAL_BIB_INDEX;
-	m_vertexBibSize = INITIAL_BIB_VERTEX;
-	allocateBibBuffers();
-
-	m_bibTexture = NEW_REF(TextureClass, ("TBBib.tga"));
-	m_highlightBibTexture = NEW_REF(TextureClass, ("TBRedBib.tga"));
-	m_bibTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-	m_bibTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-	m_highlightBibTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-	m_highlightBibTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-	m_initialized = true;
-}
-
-
-//=============================================================================
 // W3DBibBuffer::freeBibBuffers
 //=============================================================================
 /** Frees the index and vertex buffers. */
