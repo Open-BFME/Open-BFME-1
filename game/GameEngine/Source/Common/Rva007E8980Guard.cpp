@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0
 
-int bfmeCallCIB(void *a, void *b, void *c, void *d);
+int Rva007EC5C0(char *record, int size, const char *name, int value);
 
 class Rva007E8980
 {
@@ -17,7 +17,7 @@ private:
 
 void Rva007E8980::go(int x, unsigned char f)
 {
-	int r = bfmeCallCIB((void *)m_10, (void *)m_14, (void *)x, (void *)(f != 0));
+	int r = Rva007EC5C0((char *)m_10, m_14, (const char *)x, (int)(f != 0));
 	if (r < 0)
 		m_24 = -100;
 }
