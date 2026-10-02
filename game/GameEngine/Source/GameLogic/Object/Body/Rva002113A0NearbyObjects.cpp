@@ -130,7 +130,11 @@ public:
  virtual void slot24(); virtual void slot28(); virtual void slot2C();
  virtual void slot30(const Coord3D *,Real,Int,Int);
 };
-extern Rva002113A0Terrain *TheTerrainLogic;
+// The retail global at 0x012EF4CC is EA's `TerrainLogic *TheTerrainLogic`,
+// defined once in GameLogic/Map/TerrainLogic.cpp. The TU-local view type above
+// is kept for the member call and the canonical global is cast at the use.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern Rva002113A0View *TheTacticalView;
 class Rva002113A0Owner {
 public:
@@ -149,7 +153,7 @@ void Rva002113A0Owner::rva002113a0()
   position.x=object->m_position.x;
   position.y=object->m_position.y;
   position.z=object->m_position.z;
-  position.z=TheTerrainLogic->slot18(position.x,position.y,0);
+  position.z=((Rva002113A0Terrain *)TheTerrainLogic)->slot18(position.x,position.y,0);
   TheTacticalView->slot30(&position,data->m_range,0xFFFF8000,0);
  }
  Rva0025ED50WideResult iterator=ThePartitionManager->iterate(

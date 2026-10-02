@@ -159,9 +159,11 @@ public:
 	Rva00172600Pathfinder *m_pathfinder;
 };
 
-struct Rva003FD060TerrainLogic
-{
-};
+// The retail global at 0x012EF4CC is EA's `TerrainLogic *TheTerrainLogic`,
+// defined once in GameLogic/Map/TerrainLogic.cpp. The call below goes through
+// the address-derived Rva00172600Calls route, so no local view of the pointee
+// is needed here.
+class TerrainLogic;
 
 class Rva00172600StateWithComputePath
  	: public Rva00172600VirtualSlots<17>
@@ -190,7 +192,7 @@ public:
 };
 
 extern AI *TheAI;
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 class AudioManager;
 extern AudioManager *TheAudio;
 extern unsigned char g_012F0239;
