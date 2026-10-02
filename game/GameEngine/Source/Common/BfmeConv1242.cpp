@@ -15,15 +15,24 @@ public:
 	int m_bfme28;
 };
 
-extern BfmeE1242 **g_bfmeArr1242;
-// 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
-struct Rva008AE770Stack { int m_count; };
+// Rva00C6DCC0StaticInit.cpp owns the 88-byte stack at VA 0x01338748;
+// the argument array at VA 0x01338750 is its member at +8.
+struct Rva008AE770Stack {
+	int m_count;
+	char m_pad04[4];
+	BfmeE1242 **m_08;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 
-extern "C" void bfmeMove1242(void *d, const void *s, unsigned int n);
-extern "C" void *bfmeMake1242(int n);
+// Retail's memmove import thunk, with its ledger spelling.
+void ji_009f6ec6();
+class AptInteger
+{
+public:
+	static AptInteger *Create(int n);
+};
 
 void *bfmeInsert1242(BfmeN1242 *a, int k)
 {
@@ -34,11 +43,12 @@ void *bfmeInsert1242(BfmeN1242 *a, int k)
 	if ((a->m_bfme04 & 0x3f) == 0x16 && !((unsigned char)(~(a->m_bfme04 >> 15)) & 1)) {
 		a->bfmeReserve1242(a->m_bfme28 + k);
 		if (k) {
-			bfmeMove1242(a->m_bfme20 + k, a->m_bfme20, a->m_bfme28 * 4);
+			((void *(__cdecl *)(void *, const void *, unsigned int))ji_009f6ec6)(
+				a->m_bfme20 + k, a->m_bfme20, a->m_bfme28 * 4);
 			a->m_bfme28 += k;
 			for (i = 0; i < k; ++i) {
 				a->m_bfme20[i] = 0;
-				e = g_bfmeArr1242[Rva008AE770TheStack.m_count - i - 1];
+				e = Rva008AE770TheStack.m_08[Rva008AE770TheStack.m_count - i - 1];
 				if (i >= 0) {
 					a->bfmeReserve1242(i + 1);
 					a->bfmePut1242(i, e);
@@ -49,7 +59,7 @@ void *bfmeInsert1242(BfmeN1242 *a, int k)
 				}
 			}
 		}
-		return bfmeMake1242(a->m_bfme28);
+		return AptInteger::Create(a->m_bfme28);
 	}
 	return g_bfmeFallbackDB;
 }
