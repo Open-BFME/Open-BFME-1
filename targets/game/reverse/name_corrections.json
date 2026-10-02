@@ -15188,5 +15188,15 @@
   "after_sha256": "10bbcf4f7ebcb73ce6a6c51a5c25cb07051e6924cd8191079047cba90e86845b",
   "evidence": "targets/game/reverse/identity_evidence/pathfind-zone-block-provider-binding.md",
   "reason": "Caller declarations bind independently proven existing ctor/dtor addresses; PathfindZoneBlock remains a typedef; no provider identity changes."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva0040AD80ReferenceState.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva0040AD80ReferenceState.cpp",
+  "old_name": "ReferenceStateTree",
+  "new_name": "Rva00C6B3D0Init",
+  "before_sha256": "72ef4b684b50423e51445cbb5b355f7f23a4d7265b19f9c70c443fc80e19885f",
+  "after_sha256": "e746370d6020682fcaed57c691d813de2bc5ed72c7e06eaaacd92babe8d2a649",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

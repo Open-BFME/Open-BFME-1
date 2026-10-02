@@ -43,10 +43,13 @@ template <class T> struct equal_to {
 typedef _STL::hash_map<AsciiString, WindowRecord, rts::hash<AsciiString>,
     rts::equal_to<AsciiString> > WindowTable;
 
-class Gen_00C700A0Target;
-extern Gen_00C700A0Target TheBfmeObject_00C700A0;
+// 0x012F19A4 holds the table instance; retail's dynamic initializer
+// (retail 0x00C6B860) constructs it, so the one definition of the storage is
+// the init struct in game/GameEngine/Source/Common/Rva00C6B390StaticInitializers.cpp.
+struct Rva00C6B860Init;
+extern Rva00C6B860Init g_rva012F19A4;
 
-WindowTable *const g_windowTable = (WindowTable *)&TheBfmeObject_00C700A0;
+WindowTable *const g_windowTable = (WindowTable *)&g_rva012F19A4;
 
 void bfmeFinish991() {
     WindowTable *table = g_windowTable;
