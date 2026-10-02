@@ -1,5 +1,5 @@
 // ?checkFootprint003DFF70@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_NPAH@Z
-// partial score=0.2340686274509804 date=2026-09-28
+// partial score=0.4233 date=2026-10-02
 // cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing
 //
 // Retail 0x003DFF70 (816 bytes through ret 0x1c): a BFME variant of the Zero
@@ -324,10 +324,7 @@ Bool Pathfinder::checkFootprint003DFF70(const Object *obj, Int cellX, Int cellY,
 				continue;
 			if (unit->m_containedBy == obj)
 				continue;
-			if (obj->getRelationship(unit) == ALLIES)
-				*cost += 3;
-			else
-				(*cost)++;
+			*cost += obj->getRelationship(unit) == ALLIES ? 3 : 1;
 		}
 	}
 	return true;
