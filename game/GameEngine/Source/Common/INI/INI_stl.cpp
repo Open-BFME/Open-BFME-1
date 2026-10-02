@@ -1712,57 +1712,11 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ Int INI::scanIndexList(const char* token, ConstCharPtrArray nameList)
-{
-	if( nameList == NULL || nameList[ 0 ] == NULL )
-	{
+// Retail definition owned by ini_parsers.cpp.
 
-		DEBUG_ASSERTCRASH( 0, ("INTERNAL ERROR! scanIndexList, invalid name list\n") );
-		throw INI_INVALID_NAME_LIST;
-
-	}
-
-	// search for matching name
-	Int count = 0;
-	for(ConstCharPtrArray name = nameList; *name; name++, count++ )
-	{
-		if( stricmp( *name, token ) == 0 )
-		{
-			return count;
-		}
-	}
-
-	DEBUG_CRASH(("token %s is not a valid member of the index list\n",token));
-	throw INI_INVALID_DATA;
-	return 0;	// never executed, but keeps compiler happy
-
-}
 //-------------------------------------------------------------------------------------------------
-/*static*/ Int INI::scanLookupList(const char* token, ConstLookupListRecArray lookupList)
-{
-	if( lookupList == NULL || lookupList[ 0 ].name == NULL )
-	{
-		DEBUG_ASSERTCRASH( 0, ("INTERNAL ERROR! scanLookupList, invalid name list\n") );
-		throw INI_INVALID_NAME_LIST;
-	}
+// Retail definition owned by ini_parsers.cpp.
 
-	// search for matching name
-	Bool found = false;
-	for( const LookupListRec* lookup = &lookupList[0]; lookup->name; lookup++ )
-	{
-		if( stricmp( lookup->name, token ) == 0 )
-		{
-			return lookup->value;
-			found = true;
-			break;
-		}
-	}
-
-	DEBUG_CRASH(("token %s is not a valid member of the lookup list\n",token));
-	throw INI_INVALID_DATA;
-	return 0;	// never executed, but keeps compiler happy
-
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
