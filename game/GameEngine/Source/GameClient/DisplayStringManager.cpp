@@ -21,3 +21,10 @@ DisplayStringManager::DisplayStringManager( void )
 	m_currentCheckpoint = NULL;
 
 }  // end DisplayStringManager
+
+// Retail 0x00410290 re-seats the same vtable as the constructor and
+// tail-calls SubsystemInterface::~SubsystemInterface at 0x009A1A40.
+// The matched W3DDisplayStringManager destructor reaches it via ILT 0x000472E9.
+DisplayStringManager::~DisplayStringManager( void )
+{
+}
