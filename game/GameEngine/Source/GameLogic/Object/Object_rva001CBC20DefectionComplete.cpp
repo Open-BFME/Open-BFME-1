@@ -171,6 +171,7 @@ public:
 	Module *findModule(NameKeyType key) const;
 	void setStatus(const ObjectStatusMaskType &status, Bool set = true);
 	void bfmeAbortActiveSpecialAbilities() const;
+	void bfmeRefreshCompletedUpgrades(); // retail ILT 0x0001B9A5
 
 	Module *getContain() const { return (Module *)m_contain; }
 	void *getAI() const { return m_ai; }
@@ -183,12 +184,6 @@ protected:
 	void *m_contain;
 	void *m_bfme_gap_200;
 	void *m_ai;
-};
-
-class Rva0038AD90Object
-{
-public:
-	void bfmeRefreshCompletedUpgrades(); // retail ILT 0x0001B9A5
 };
 
 // ?rva001CBC20@Rva001CBC20Object@@QAEXXZ
@@ -231,5 +226,5 @@ void Rva001CBC20Object::rva001CBC20()
 
 	ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 81);
 	setStatus(status, true);
-	((Rva0038AD90Object *)this)->bfmeRefreshCompletedUpgrades();
+	bfmeRefreshCompletedUpgrades();
 }
