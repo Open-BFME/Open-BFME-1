@@ -1,10 +1,9 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class BfmeSubA
 {
-public:
-	BfmeSubA(const BfmeSubA &other);
-
 private:
 	void *m_item;
 };
@@ -20,7 +19,7 @@ public:
 };
 
 Rva003AD070::Rva003AD070(const Rva003AD070 &other)
-	: m_04(other.m_04)
-	, m_08(other.m_08)
 {
+	((StringBase<char> *)&m_04)->set(*(const StringBase<char> *)&other.m_04);
+	m_08 = other.m_08;
 }

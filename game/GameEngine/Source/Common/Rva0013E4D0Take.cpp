@@ -1,10 +1,10 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class Rva0036CA00Str
 {
 public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-
 	struct Data
 	{
 		short a;
@@ -28,7 +28,7 @@ bool Rva0013E4D0::take(Rva0036CA00Str &dest)
 {
 	if (m_1C.m_item && m_1C.m_item->first)
 	{
-		dest = m_1C;
+		((StringBase<char> *)&dest)->set(*(const StringBase<char> *)&m_1C);
 		return true;
 	}
 	return false;
