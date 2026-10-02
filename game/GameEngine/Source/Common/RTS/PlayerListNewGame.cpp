@@ -14,7 +14,10 @@ enum PlayerType { PLAYER_HUMAN = 0 };
 class StaticNameKey { public: NameKeyType key() const; };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern StaticNameKey TheKey_playerName, TheKey_multiplayerIsLocal,
+// Retail's defining decoration for 0x012A7918 is
+// ?TheKey_playerName@@3VStaticNameKey@@B: const, so the object lives in .bss.
+extern const StaticNameKey TheKey_playerName;
+extern StaticNameKey TheKey_multiplayerIsLocal,
     TheKey_playerIsHuman, TheKey_playerEnemies, TheKey_playerAllies;
 
 class Dict

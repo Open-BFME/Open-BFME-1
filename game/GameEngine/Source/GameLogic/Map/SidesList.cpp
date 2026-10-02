@@ -636,7 +636,8 @@ struct Rva001A0390Template { char rva00[0x10c]; AsciiString rva10C; };
 struct Rva000E0F30 { Rva001A0390Template* rva000E0F30(NameKeyType key) { union { void (*entry)(); Rva001A0390Template* (Rva000E0F30::*method)(NameKeyType); } fn; fn.entry=&j_0002cd8b; return (this->*fn.method)(key); } };
 extern Rva001A0390GameInfo* g012F708C;
 extern Rva000E0F30* g012ED750;
-extern StaticNameKey g012A7918,g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
+// 0x012A7918 is TheKey_playerName, already declared const by Common/WellKnownKeys.h.
+extern StaticNameKey g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
 extern StaticNameKey g012A75B8,g012A75C0,g012A75C8;
 
 void j_00032ec5(); void j_000238ad();
@@ -671,7 +672,7 @@ void SidesList::prepareForMP_or_Skirmish() {
     temp.rva630.rva0019DA80(self->rva630);
     for(int i=0;i<self->rva28;) {
         Dict* side=&self->rva2C[i].dict04();
-        AsciiString name=side->getAsciiString(g012A7918);
+        AsciiString name=side->getAsciiString(TheKey_playerName);
         if(((const StringBase<char>*)&name)->isEmpty()) goto keepSide;
         if(((const StringBase<char>*)&name)->compare("PlyrCivilian")==0) goto keepSide;
         if(((const StringBase<char>*)&name)->compare("PlyrCreeps")==0) goto keepSide;
@@ -703,7 +704,7 @@ void SidesList::prepareForMP_or_Skirmish() {
         }
     }
     Dict dict;
-    dict.setAsciiString(g012A7918,AsciiString("SkirmishHuman"));
+    dict.setAsciiString(TheKey_playerName,AsciiString("SkirmishHuman"));
     dict.setBool(g012A7920,true);
     dict.setUnicodeString(g012A7930,UnicodeString::TheEmptyString);
     dict.setAsciiString(g012A7938,AsciiString("FactionCivilian"));

@@ -60,10 +60,13 @@ public:
 	}
 };
 
-class GenKey
+// 0x012A7918 is retail's ?TheKey_playerName@@3VStaticNameKey@@B: the const
+// StaticNameKey global, so its value is read through the const accessor
+// ?key@StaticNameKey@@QBEHXZ (pinned at the retail ILT 0x00009304).
+class StaticNameKey
 {
 public:
-	int fetch(void);
+	int key(void) const;
 };
 
 class BfmeStringPresenceDict
@@ -75,7 +78,7 @@ public:
 	BfmeStringPresenceValue getAsciiString(int key, bool *exists) const;
 };
 
-extern GenKey GenKey0012A7918;
+extern const StaticNameKey TheKey_playerName;
 
 class SidesInfo
 {
@@ -101,7 +104,7 @@ SidesInfo *SidesList::findSideInfo(AsciiString name, int *index)
 {
 	for (int i = 0; i < m_numSides; ++i)
 	{
-		if (m_sides[i].m_dict.getAsciiString(GenKey0012A7918.fetch(), 0) == name)
+		if (m_sides[i].m_dict.getAsciiString(TheKey_playerName.key(), 0) == name)
 		{
 			if (index)
 				*index = i;
