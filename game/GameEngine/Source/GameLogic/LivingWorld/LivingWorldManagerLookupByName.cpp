@@ -56,7 +56,8 @@ private:
 	BfmeLivingWorldNameMap m_nameMap;
 };
 
-extern "C" BfmeLivingWorldManager *g_bfmeGameCW;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // ?rva006128f0@BfmeLivingWorldManager@@QAEPAXABVAsciiString@@@Z
 void *BfmeLivingWorldManager::rva006128f0(const AsciiString &name)
@@ -69,7 +70,8 @@ void *BfmeLivingWorldManager::rva006128f0(const AsciiString &name)
 	}
 	else
 	{
-		BfmeLivingWorldNameMap *table = &g_bfmeGameCW->m_nameMap;
+		BfmeLivingWorldNameMap *table =
+			&((BfmeLivingWorldManager *)TheLivingWorldManager)->m_nameMap;
 		BfmeLivingWorldNameMap::iterator found = table->find(key);
 		if (found == table->end())
 			return 0;

@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-extern "C" char* (__cdecl *BfmeItoaImport)( int, char*, int );
+extern "C" __declspec(dllimport) char *__cdecl _ultoa(unsigned long value, char *out, int base);
 
 class Rva00889880Class
 {
@@ -30,7 +30,7 @@ Rva00889880Class* Rva00889880Class::d_00889880( int val )
 	if ( val )
 	{
 		char buf[12];
-		print( "0x" )->print( BfmeItoaImport( val, buf, 16 ) );
+		print( "0x" )->print( _ultoa( val, buf, 16 ) );
 	}
 	else
 	{
