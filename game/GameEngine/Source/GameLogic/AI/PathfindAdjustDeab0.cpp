@@ -31,7 +31,7 @@ class Weapon
 {
 public:
 	Bool isGoalPosWithinAttackRange( const Object *object, const Coord3D *goalPosition,
-		const Object *victim, const Coord3D *victimPosition, Int flags ) const;
+		const Object *victim, const Coord3D *victimPosition, float extra ) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -77,7 +77,7 @@ Bool Rva003DEAB0Struct::checkCell( Int cellX, Int cellY )
 			return false;
 	}
 
-	if( !m_weapon->isGoalPosWithinAttackRange( m_target, &m_candidatePosition, m_victim, &m_victim->m_pos, 0 ) )
+	if( !m_weapon->isGoalPosWithinAttackRange( m_target, &m_candidatePosition, m_victim, &m_victim->m_pos, 0.0f ) )
 		return false;
 
 	if( !m_pathfinder->checkDestination( m_target, cellX, cellY, (PathfindLayerEnum)m_layer, m_radius, m_centerInCell ) )

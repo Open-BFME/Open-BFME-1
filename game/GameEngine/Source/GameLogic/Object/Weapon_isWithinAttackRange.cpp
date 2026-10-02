@@ -5,7 +5,7 @@
 // (AIAttackAimAtTargetState::onEnter, AIAttackApproachTargetState::updateInternal,
 // AIAttackSquadState::chooseVictim / onEnter) set ecx to the weapon and push
 // (source, victim-or-pos, extra) -- ZH's two-argument form plus a trailing int
-// that is forwarded into isGoalPosWithinAttackRange. The bodies themselves never
+// whose bits are forwarded as a float into isGoalPosWithinAttackRange. The bodies never
 // touch ecx, so the inner thiscall reuses the incoming this pointer; that is
 // why retail parks the extra argument in esi rather than ecx.
 
@@ -30,7 +30,7 @@ class Weapon
 {
 public:
 	bool isGoalPosWithinAttackRange(const Object *source, const Coord3D *goalPos,
-		const Object *target, const Coord3D *targetPos, int extra) const;
+		const Object *target, const Coord3D *targetPos, float extra) const;
 
 	bool isWithinAttackRange(const Object *source, const Coord3D *pos, int extra) const;
 	bool isWithinAttackRange(const Object *source, const Object *target, int extra) const;
@@ -39,13 +39,13 @@ public:
 bool Weapon::isWithinAttackRange(const Object *source, const Coord3D *pos, int extra) const
 {
 	if (source && pos)
-		return isGoalPosWithinAttackRange(source, &source->m_position, 0, pos, extra);
+		return isGoalPosWithinAttackRange(source, &source->m_position, 0, pos, *reinterpret_cast<const float *>(&extra));
 	return false;
 }
 
 bool Weapon::isWithinAttackRange(const Object *source, const Object *target, int extra) const
 {
 	if (source && target)
-		return isGoalPosWithinAttackRange(source, &source->m_position, target, &target->m_position, extra);
+		return isGoalPosWithinAttackRange(source, &source->m_position, target, &target->m_position, *reinterpret_cast<const float *>(&extra));
 	return false;
 }
