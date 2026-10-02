@@ -355,7 +355,7 @@ private:
 	void *m_source;
 
 public:
-	BfmeWideResult bfmeForwardWideC(Int a, Real b, Int c, Int d, Int e);
+	BfmeWideResult bfmeForwardWideC(Int a, Int b, Int c, Int d, Int e);
 };
 
 extern PartitionManager *ThePartitionManager;
@@ -384,7 +384,7 @@ Bool AerialPathfinder::rva00148C70SeparationPush(Object *obj,
 	const BfmeWideResult &found =
 		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
 			(Int)pos,
-			radius,
+			*(Int *)&radius,
 			FROM_BOUNDINGSPHERE_3D,
 			PartitionFilterWouldCollide(*pos, &obj->getGeometryInfo(),
 				obj->getOrientation(), true),

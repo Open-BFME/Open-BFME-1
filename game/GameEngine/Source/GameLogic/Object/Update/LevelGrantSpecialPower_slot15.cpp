@@ -133,13 +133,13 @@ struct Rva00260180IterData
 	Int references;
 };
 
-struct Rva00260180OwningIterator
+struct BfmeWideResult
 {
 	Rva00260180IterData *value;
 
-	Rva00260180OwningIterator();
-	Rva00260180OwningIterator(const Rva00260180OwningIterator &);
-	~Rva00260180OwningIterator()
+	BfmeWideResult();
+	BfmeWideResult(const BfmeWideResult &);
+	~BfmeWideResult()
 	{
 		if (--value->references == 0)
 			delete value;
@@ -154,14 +154,13 @@ struct Rva00260180OwningIterator
 	}
 };
 
-class PartitionManager
+class BfmeWideForwardC
 {
 public:
-	Rva00260180OwningIterator iterateAt00260180(
-		const Coord3D *, Real, IterOrderType, PartitionFilter *, Bool);
+	BfmeWideResult bfmeForwardWideC(Int, Int, Int, Int, Int);
 };
 
-extern PartitionManager *ThePartitionManager;
+extern BfmeWideForwardC *ThePartitionManager;
 
 class Object
 {
@@ -204,10 +203,10 @@ void LevelGrantSpecialPower::actionAt00260180()
 
 	if (data->m_useKindOf)
 	{
-		Rva00260180OwningIterator iterator =
-			ThePartitionManager->iterateAt00260180(
-				&m_queryPosition, data->m_radius, ITER_FASTEST,
-				Rva00260180SelfFilter(object)
+		BfmeWideResult iterator =
+			ThePartitionManager->bfmeForwardWideC(
+				(Int)&m_queryPosition, *(Int *)&data->m_radius, ITER_FASTEST,
+				(Int)(Rva00260180SelfFilter(object)
 					.link(&PartitionFilterRelationship(object, 4, false))
 					->link(&Rva0025ED50RootFilter())
 					->link(&Rva0025ED50ObjectFilter(object))
@@ -219,8 +218,8 @@ void LevelGrantSpecialPower::actionAt00260180()
 						Rva00260180ObjectStatusMask(
 							Rva00260180ObjectStatusMask::kInit,
 							Rva00260180RejectedStatusBit),
-						Rva00260180ObjectStatusMask())),
-				true);
+						Rva00260180ObjectStatusMask()))),
+				1);
 
 		Object *other;
 		while (iterator.next(other))
@@ -231,10 +230,10 @@ void LevelGrantSpecialPower::actionAt00260180()
 	}
 	else
 	{
-		Rva00260180OwningIterator iterator =
-			ThePartitionManager->iterateAt00260180(
-				&m_queryPosition, data->m_radius, ITER_FASTEST,
-				Rva00260180SelfFilter(object)
+		BfmeWideResult iterator =
+			ThePartitionManager->bfmeForwardWideC(
+				(Int)&m_queryPosition, *(Int *)&data->m_radius, ITER_FASTEST,
+				(Int)(Rva00260180SelfFilter(object)
 					.link(&PartitionFilterRelationship(object, 4, false))
 					->link(&Rva0025ED50RootFilter())
 					->link(&Rva0025ED50ObjectFilter(object))
@@ -245,8 +244,8 @@ void LevelGrantSpecialPower::actionAt00260180()
 						Rva00260180ObjectStatusMask(
 							Rva00260180ObjectStatusMask::kInit,
 							Rva00260180RejectedStatusBit),
-						Rva00260180ObjectStatusMask())),
-				true);
+						Rva00260180ObjectStatusMask()))),
+				1);
 
 		Object *other;
 		while (iterator.next(other))

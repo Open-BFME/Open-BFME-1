@@ -105,7 +105,7 @@ struct BfmeWideResult
 class BfmeWideForwardC
 {
   public:
-    BfmeWideResult bfmeForwardWideC(int, float, int, int, int);
+    BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 extern BfmeWideForwardC *ThePartitionManager;
 class GameLogic
@@ -153,7 +153,8 @@ void DrawableTiming0041E9E0::update()
             f1.link(&f2);
             float radius = *(float *)((char *)t + 0x400);
             BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
-                (int)((BFMERopeDrawable *)this)->getPosition(), radius, 1, (int)&f1, 0);
+                (int)((BFMERopeDrawable *)this)->getPosition(),
+                *(int *)&radius, 1, (int)&f1, 0);
             Object *obj;
             while ((obj = iterator.next()) != 0)
             {
