@@ -194,10 +194,16 @@ T1_FORWARDING_CTOR( 005E78A0, 00600BE0 )
 
 // ------------------------------------------ two bases, the second's own vptr
 
-class T1A1_005DD290
+// The 0x005DD290 base constructor, spelled as its matched defining name
+// (targets/game/reverse/functions.csv: ??0BfmeHolderCU@@QAE@PAPAVBfmeListCU@@PAX@Z,
+// 109 bytes, vtable 0x00D1126C).  Declaration only: retail's `call` proves it is
+// defined in another translation unit.
+class BfmeListCU;
+
+class BfmeHolderCU
 {
 public:
-	T1A1_005DD290( void *a, void *b );
+	BfmeHolderCU( BfmeListCU **list, void *b );
 	virtual void s0();
 	int m_pad[ 4 ];
 };
@@ -206,13 +212,13 @@ public:
 	class T1A2_##VT { public: virtual void s0(); };
 
 #define T1_FORWARDING_CTOR_2( ROW, VT )                                       \
-	class T1Derived_##ROW : public T1A1_005DD290, public T1A2_##VT            \
+	class T1Derived_##ROW : public BfmeHolderCU, public T1A2_##VT              \
 	{                                                                         \
 	public:                                                                   \
 		T1Derived_##ROW( void *a, void *b );                                  \
 	};                                                                        \
 	T1Derived_##ROW::T1Derived_##ROW( void *a, void *b )                      \
-		: T1A1_005DD290( a, b )                                               \
+		: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )            \
 	{                                                                         \
 	}
 

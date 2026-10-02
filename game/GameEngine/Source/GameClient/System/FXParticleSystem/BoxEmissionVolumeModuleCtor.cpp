@@ -3,10 +3,16 @@
 // Constructor-only slices preserve the retail multiple-inheritance layout
 // without exposing it through the shared particle-system header.
 
-class T1A1_005DD290
+// The 0x005DD290 base constructor, spelled as its matched defining name
+// (targets/game/reverse/functions.csv: ??0BfmeHolderCU@@QAE@PAPAVBfmeListCU@@PAX@Z,
+// 109 bytes, vtable 0x00D1126C).  Declaration only: retail's `call` proves it is
+// defined in another translation unit.
+class BfmeListCU;
+
+class BfmeHolderCU
 {
 public:
-	T1A1_005DD290( void *system, void *module_template );
+	BfmeHolderCU( BfmeListCU **list, void *module_template );
 	virtual void unusedVirtual();
 
 private:
@@ -37,13 +43,14 @@ public:
 
 template <int Category>
 class DefaultParticleModule
-	: public T1A1_005DD290,
+	: public BfmeHolderCU,
 	  public ParticleModuleCategorySlice,
 	  public ParticleModuleSnapshotSlice
 {
 public:
 	DefaultParticleModule( void *system, void *module_template )
-		: T1A1_005DD290( system, module_template )
+		: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( system ),
+			module_template )
 	{
 	}
 };

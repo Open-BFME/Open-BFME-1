@@ -61,14 +61,17 @@
 // is derived from an address -- the row's own for a derived class, the stored
 // vftable's for a secondary base.
 
-// The first base, spelled exactly as T1BaseForwardingCtors.cpp spells it so
-// that the call resolves through the constructor pin already in
-// targets/game/reverse/symbols.csv.  Declaration only: retail's `call` proves it is defined
-// in another translation unit.
-class T1A1_005DD290
+// The first base, spelled as its matched defining name (targets/game/reverse/
+// functions.csv: ??0BfmeHolderCU@@QAE@PAPAVBfmeListCU@@PAX@Z at 0x005DD290,
+// 109 bytes, vtable 0x00D1126C) so the call resolves against the matched
+// constructor rather than an address-derived placeholder.  Declaration only:
+// retail's `call` proves it is defined in another translation unit.
+class BfmeListCU;
+
+class BfmeHolderCU
 {
 public:
-	T1A1_005DD290( void *a, void *b );
+	BfmeHolderCU( BfmeListCU **list, void *b );
 	virtual void s0();
 	int m_pad[ 4 ];
 };
@@ -91,40 +94,40 @@ public:
 // three vptrs: first base at 0, bare vptr bases at 0x14 and 0x18
 #define T4_FORWARDING_CTOR_3( ROW, VT1, VT2 )                                 \
 	class T4Derived_##ROW                                                     \
-		: public T1A1_005DD290, public T4A2_##VT1, public T4A2_##VT2          \
+		: public BfmeHolderCU, public T4A2_##VT1, public T4A2_##VT2            \
 	{                                                                         \
 	public:                                                                   \
 		T4Derived_##ROW( void *a, void *b );                                  \
 	};                                                                        \
 	T4Derived_##ROW::T4Derived_##ROW( void *a, void *b )                      \
-		: T1A1_005DD290( a, b )                                               \
+		: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )            \
 	{                                                                         \
 	}
 
 // two vptrs: first base at 0, one bare vptr base at 0x14
 #define T4_FORWARDING_CTOR_2( ROW, VT1 )                                      \
 	class T4Derived_##ROW                                                     \
-		: public T1A1_005DD290, public T4A2_##VT1                             \
+		: public BfmeHolderCU, public T4A2_##VT1                               \
 	{                                                                         \
 	public:                                                                   \
 		T4Derived_##ROW( void *a, void *b );                                  \
 	};                                                                        \
 	T4Derived_##ROW::T4Derived_##ROW( void *a, void *b )                      \
-		: T1A1_005DD290( a, b )                                               \
+		: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )            \
 	{                                                                         \
 	}
 
 // three vptrs plus the flag base at 0x1C
 #define T4_FORWARDING_CTOR_3F( ROW, VT1, VT2 )                                \
 	class T4Derived_##ROW                                                     \
-		: public T1A1_005DD290, public T4A2_##VT1, public T4A2_##VT2,         \
+		: public BfmeHolderCU, public T4A2_##VT1, public T4A2_##VT2,           \
 		  public T4A4_Flags2                                                  \
 	{                                                                         \
 	public:                                                                   \
 		T4Derived_##ROW( void *a, void *b );                                  \
 	};                                                                        \
 	T4Derived_##ROW::T4Derived_##ROW( void *a, void *b )                      \
-		: T1A1_005DD290( a, b )                                               \
+		: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )            \
 	{                                                                         \
 	}
 

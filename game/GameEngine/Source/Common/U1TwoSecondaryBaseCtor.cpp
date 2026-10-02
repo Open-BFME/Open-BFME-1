@@ -28,18 +28,24 @@
 // bytes wide.  The first base runs 0x14 wide: a vptr plus four dwords.
 //
 // The base constructor at 0x005DD290 is the same one three rows of
-// T1BaseForwardingCtors.cpp call, which is why it is spelled with that file's
-// two-argument signature; it is unclaimed, so it enters here as a declaration
-// pinned by address.
+// T1BaseForwardingCtors.cpp call; it is matched as BfmeHolderCU's constructor,
+// so it is spelled with that defining name and signature here.  Declaration
+// only: retail's `call` proves it is defined in another translation unit.
 //
 // IDENTITY IS NOT RECOVERED.  The five vftable dwords are DIR32 operands
 // copied from retail; they prove only that no two of the slots hold the same
 // class.  Every name here is derived from an address.
 
-class U1First_005E3300
+// The first base, spelled as its matched defining name (targets/game/reverse/
+// functions.csv: ??0BfmeHolderCU@@QAE@PAPAVBfmeListCU@@PAX@Z at 0x005DD290,
+// 109 bytes, vtable 0x00D1126C).  Declaration only: retail's `call` proves it is
+// defined in another translation unit.
+class BfmeListCU;
+
+class BfmeHolderCU
 {
 public:
-	U1First_005E3300( void *a, void *b );
+	BfmeHolderCU( BfmeListCU **list, void *b );
 	virtual void s0();
 	int m_pad[ 4 ];
 };
@@ -57,13 +63,13 @@ public:
 };
 
 class U1Ctor_005E3300
-	: public U1First_005E3300, public U1Second_005E3300, public U1Third_005E3300
+	: public BfmeHolderCU, public U1Second_005E3300, public U1Third_005E3300
 {
 public:
 	U1Ctor_005E3300( void *a, void *b );
 };
 
 U1Ctor_005E3300::U1Ctor_005E3300( void *a, void *b )
-	: U1First_005E3300( a, b )
+	: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )
 {
 }
