@@ -11820,22 +11820,8 @@ void Pathfinder::prependCells( Path *path, const Coord3D *fromPos,
 
 }			 
 
-// ?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z present-unmatched
-void Pathfinder::setDebugPath(Path *newDebugpath) 
-{
-	if (TheGlobalData->m_debugAI)
-	{
-		// copy the path for debugging
-		if (debugPath)
-			debugPath->deleteInstance();
-
-		debugPath = newInstance(Path);
-					
-		for( PathNode *copyNode = newDebugpath->getFirstNode(); copyNode; copyNode = copyNode->getNextOptimized() )
-			debugPath->appendNode( copyNode->getPosition(), copyNode->getLayer() );
-	}
-
-}
+// Retail setDebugPath is provided by PathfinderSetDebugPath.cpp (0x003D9880).
+// The BFME body calls GameInfo before testing the debug flag and uses plain new.
 
 /**
  * Given two world-space points, call callback for each cell.
