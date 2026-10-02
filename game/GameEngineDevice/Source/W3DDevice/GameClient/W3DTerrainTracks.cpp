@@ -461,27 +461,7 @@ void TerrainTracksRenderObjClassSystem::releaseTrack( TerrainTracksRenderObjClas
 	m_TerrainTracksScene->Remove_Render_Object(mod);
 }
 
-//=============================================================================
-// TerrainTracksRenderObjClassSystem::TerrainTracksRenderObjClassSystem
-//=============================================================================
-/** Constructor. Just nulls out some variables. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainTracksRenderObjClassSystemCtor.cpp
-// ??0TerrainTracksRenderObjClassSystem@@QAE@XZ present-unmatched
-TerrainTracksRenderObjClassSystem::TerrainTracksRenderObjClassSystem()
-{
-	m_usedModules = NULL;
-	m_freeModules = NULL;
-	m_TerrainTracksScene = NULL;
-	m_edgesToFlush = 0;
-	m_indexBuffer = NULL;
-	m_vertexMaterialClass = NULL;
-	m_vertexBuffer = NULL;
-
-	m_maxTankTrackEdges=TheGlobalData->m_maxTankTrackEdges;
-	m_maxTankTrackOpaqueEdges=TheGlobalData->m_maxTankTrackOpaqueEdges;
-	m_maxTankTrackFadeDelay=TheGlobalData->m_maxTankTrackFadeDelay;
-}
+// Exact constructor is provided by TerrainTracksRenderObjClassSystem.cpp.
 
 //=============================================================================
 // TerrainTracksRenderObjClassSystem::~TerrainTracksRenderObjClassSystem
@@ -576,91 +556,12 @@ void TerrainTracksRenderObjClassSystem::init( SceneClass *TerrainTracksScene )
 
 }  // end init
 
-//=============================================================================
-// TerrainTracksRenderObjClassSystem::shutdown
-//=============================================================================
-/** Shutdown and free all memory for this system */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks_shutdown.cpp
-// ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ present-unmatched
-void TerrainTracksRenderObjClassSystem::shutdown( void )
-{
-	TerrainTracksRenderObjClass *nextMod,*mod;
-
-	//release unbound tracks that may still be fading out
-	mod=m_usedModules;
-
-	while(mod)
-	{
-		nextMod=mod->m_nextSystem;
-
-		if (!mod->m_bound)
-			releaseTrack(mod);
-
-		mod = nextMod;
-	}  // end while
-
-
-	// free all attached things and used modules
-	assert( m_usedModules == NULL );
-
-	// free all module storage
-	while( m_freeModules )
-	{
-
-		nextMod = m_freeModules->m_nextSystem;
-		REF_PTR_RELEASE (m_freeModules);
-		m_freeModules = nextMod;
-
-	}  // end while
-
-	REF_PTR_RELEASE(m_indexBuffer);
-	REF_PTR_RELEASE(m_vertexMaterialClass);
-	REF_PTR_RELEASE(m_vertexBuffer);
-
-}  // end shutdown
+// Exact shutdown is provided by TerrainTracksRenderObjClassSystem.cpp.
 
 // Exact BFME update and Reset bodies are provided by TerrainTracksSystemUpdate.cpp.
 // The flush body is provided by TerrainTracksSystemFlush.cpp.
 
-/**Clear the treads from each track laying object without freeing the objects.
-Mostly used when user changed LOD level*/
-// ?clearTracks@TerrainTracksRenderObjClassSystem@@IAEXXZ present-unmatched
-void TerrainTracksRenderObjClassSystem::clearTracks(void)
-{
-	TerrainTracksRenderObjClass *mod=m_usedModules;
-
-	while(mod)
-	{
-		mod->m_haveAnchor=false;
-		mod->m_haveCap=true;
-		mod->m_topIndex=0;
-		mod->m_bottomIndex=0;
-		mod->m_activeEdgeCount=0;
-		mod->m_totalEdgesAdded=0;
-
-		mod = mod->m_nextSystem;
-	}  // end while
-
-	m_edgesToFlush=0;
-}
-
-/**Adjust various paremeters which affect the cost of rendering tracks on the map.
-Parameters are passed via GlobalData*/
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainTracksRenderObjClassSystemSetDetail.cpp
-// ?setDetail@TerrainTracksRenderObjClassSystem@@QAEXXZ present-unmatched
-void TerrainTracksRenderObjClassSystem::setDetail(void)
-{
-	//Remove all existing track segments from screen.
-	clearTracks();
-	ReleaseResources();
-
-	m_maxTankTrackEdges=TheGlobalData->m_maxTankTrackEdges;
-	m_maxTankTrackOpaqueEdges=TheGlobalData->m_maxTankTrackOpaqueEdges;
-	m_maxTankTrackFadeDelay=TheGlobalData->m_maxTankTrackFadeDelay;
-
-	//We changed the maximum number of visible edges so re-allocate our resources to match.
-	ReAcquireResources();
-};
+// Exact clearTracks is provided by TerrainTracksRenderObjClassSystemClearTracks.cpp.
+// Exact setDetail is provided by TerrainTracksRenderObjClassSystem.cpp.
 
 TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem=NULL;	///< singleton for track drawing system.
