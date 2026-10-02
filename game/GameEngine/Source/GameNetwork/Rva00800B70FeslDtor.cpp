@@ -5,7 +5,8 @@
 // (ghidra/gen_asm size 84 truncates the epilogue).
 
 extern "C" void *bfmeVft1045A[];
-extern "C" void *bfmeVft1045B[];
+// retail 0x0112C304: the Rva00800920Sec secondary vftable of Rva00800920Owner.
+extern "C" void *__identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@")[];
 
 // 0x007E86C0 is the shared FESL base cleanup (ledger:
 // ?m@Gen_007e86c0@@QAEXXZ); it is this body's per-slot teardown step.
@@ -42,7 +43,7 @@ void *Rva00800B70Owner::bfmeGo( unsigned char flags )
 	int z = 0;
 
 	m_bfmeVfptr = bfmeVft1045A;
-	m_bfmeVfptr2 = bfmeVft1045B;
+	m_bfmeVfptr2 = __identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@");
 	m_bfme08 = z;
 	m_bfme0c = z;
 	m_bfme10 = z;
