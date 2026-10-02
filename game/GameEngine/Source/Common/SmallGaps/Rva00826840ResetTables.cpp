@@ -5,7 +5,6 @@
 struct Rva00826740Big { int m_v[0x89]; };
 struct Rva00826740Small { int m_v[0x20]; };
 #define Rva00826740BigInit (*(const Rva00826740Big *)LZHLDecoderStat::symbolTable0)
-#define Rva00826740SmallInit (*(const Rva00826740Small *)LZHLDecoderStat::groupTable0)
 // Volatile reset slots and destination pointer preserve retail reset/copy order.
 struct Rva00826840Owner {
 	int m_0;
@@ -23,6 +22,6 @@ void Rva00826840Owner::resetTables()
 	m_90 = 0;
 	m_4 = 0;
 	memcpy(m_big, &Rva00826740BigInit, sizeof(Rva00826740Big));
-	memcpy(&m_small, &Rva00826740SmallInit, sizeof(Rva00826740Small));
+	memcpy(&m_small, &LZHLDecoderStat::groupTable0, sizeof(Rva00826740Small));
 	memset(m_zeroed, 0, sizeof(Rva00826740Big));
 }
