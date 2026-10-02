@@ -157,15 +157,12 @@ struct BfmeArg913E
 	void *m_bfmeKey;
 };
 
-class BfmeGlob913E
-{
-};
-
-extern BfmeGlob913E *g_bfme913Glob;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+extern GameLogic *TheGameLogic;
 
 void __stdcall bfmeGo913E(BfmeArg913E *a, void *b)
 {
-	BfmeObj913E *o = (BfmeObj913E *)((GameLogic *)g_bfme913Glob)->findObjectByID((int)(size_t)a->m_bfmeKey);
+	BfmeObj913E *o = (BfmeObj913E *)TheGameLogic->findObjectByID((int)(size_t)a->m_bfmeKey);
 	if (o) {
 		BfmeSub913E *s = o->m_bfmeSub;
 		if (s)

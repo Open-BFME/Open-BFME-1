@@ -12,12 +12,15 @@ public:
 	Bool m_canBuildUnits;
 };
 
-struct GameLogic
+// TU-local view of the frame counter at +0x3C of the GameLogic singleton.
+struct GameLogicFrameView
 {
 	char m_beforeFrame[0x3c];
 	int m_frame;
 };
 
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
 extern GameLogic *TheGameLogic;
 
 extern "C" const void *bfmeVftAISkirmishPlayer[];
@@ -66,6 +69,6 @@ AISkirmishPlayer::AISkirmishPlayer(Player *player) :
 	m_currentEnemy(0)
 {
 	*(UnsignedInt *)this = (UnsignedInt)bfmeVftAISkirmishPlayer;
-	m_skillsetSelector = TheGameLogic->m_frame;
+	m_skillsetSelector = ((GameLogicFrameView *)TheGameLogic)->m_frame;
 	player->m_canBuildUnits = 1;
 }

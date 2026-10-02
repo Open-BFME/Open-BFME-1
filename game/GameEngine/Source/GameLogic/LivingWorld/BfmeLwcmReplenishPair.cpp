@@ -24,7 +24,14 @@ public:
 	BfmeResFGE *bfmeFindFGE(void *key);			// ILT 0x0004AD0E
 };
 
-extern BfmeGlobFGE *g_bfmeGameLogic1294;			// 0x012F0898
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static __forceinline BfmeGlobFGE *bfmeGlobFGEView(void)
+{
+	return (BfmeGlobFGE *)TheGameLogic;
+}
 
 class BfmeLivingWorldCampaignManager
 {
@@ -38,9 +45,9 @@ void BfmeLivingWorldCampaignManager::bfmeReplenishPair(
 	void *keyA, void *keyB, void *nameRef, unsigned char useNamed)
 {
 	LivingWorldArmy *left =
-		(LivingWorldArmy *)g_bfmeGameLogic1294->bfmeFindFGE(keyA);
+		(LivingWorldArmy *)bfmeGlobFGEView()->bfmeFindFGE(keyA);
 	LivingWorldPlayerArmy *right =
-		(LivingWorldPlayerArmy *)g_bfmeGameLogic1294->bfmeFindFGE(keyB);
+		(LivingWorldPlayerArmy *)bfmeGlobFGEView()->bfmeFindFGE(keyB);
 	if (!left || !right)
 		return;
 	if (!useNamed)

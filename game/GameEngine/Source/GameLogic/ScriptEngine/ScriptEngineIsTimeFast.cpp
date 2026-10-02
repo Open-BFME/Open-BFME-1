@@ -7,6 +7,7 @@ public:
 	bool isTimeFast(void);
 };
 
+// TU-local view of the GameLogic singleton's pause query used here.
 class BfmeGameLogicPause
 {
 public:
@@ -27,14 +28,21 @@ extern "C" __declspec(dllimport) FarProc __stdcall GetProcAddress(
 
 extern void *TheScriptDebugWindowDLL;
 extern bool g_012F0768;
-extern BfmeGameLogicPause *TheGameLogic;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
 #define AppIsFast g_012F0768
 #define TheGlobalData ((const GlobalData *)TheWritableGlobalData)
 
+static __forceinline BfmeGameLogicPause *bfmePauseView(void)
+{
+	return (BfmeGameLogicPause *)TheGameLogic;
+}
+
 bool ScriptEngine::isTimeFast(void)
 {
-	if (!TheGameLogic->isGamePaused() && TheGlobalData->m_tivoFastMode)
+	if (!bfmePauseView()->isGamePaused() && TheGlobalData->m_tivoFastMode)
 		return true;
 
 	void *module = TheScriptDebugWindowDLL;

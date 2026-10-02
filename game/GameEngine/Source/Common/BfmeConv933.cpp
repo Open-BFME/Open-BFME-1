@@ -60,13 +60,16 @@ void BfmeThing933B::bfmeGo933B()
 	b->m_bfmeTail.bfmeTail933B();
 }
 
+// TU-local view of the GameLogic singleton's dword at +0x3C.
 struct BfmeGlob933C
 {
 	char m_bfmePad[0x3c];
 	unsigned int m_bfmeVal;
 };
 
-extern BfmeGlob933C *g_bfme933GlobC;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeThing933C
 {
@@ -78,7 +81,7 @@ public:
 
 int BfmeThing933C::bfmeGo933C()
 {
-	return g_bfme933GlobC->m_bfmeVal < m_bfmeLimit;
+	return ((BfmeGlob933C *)TheGameLogic)->m_bfmeVal < m_bfmeLimit;
 }
 
 struct BfmeA933D

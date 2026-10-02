@@ -1,13 +1,21 @@
 // Open-BFME5: recovered BFME AI reset helper.
 class Object;
 
+// TU-local view of the GameLogic singleton's ID lookup used here.
 class GameLogicFrameSlice
 {
 public:
 	Object *bfmeFind(int id);
 };
 
-extern GameLogicFrameSlice *TheGameLogic;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+static __forceinline GameLogicFrameSlice *bfmeFrameSliceView(void)
+{
+	return (GameLogicFrameSlice *)TheGameLogic;
+}
 
 class BfmeResettable
 {
@@ -73,7 +81,7 @@ private:
 int Gen_00287670::bfmeUpdate(void)
 {
 	if (m_bfmeObjectID != 0) {
-		Object *object = TheGameLogic->bfmeFind(m_bfmeObjectID);
+		Object *object = bfmeFrameSliceView()->bfmeFind(m_bfmeObjectID);
 		if (object != 0) {
 			if (!(object->m_privateStatus & 1) &&
 				(object->m_bfmeConditionB & 1))

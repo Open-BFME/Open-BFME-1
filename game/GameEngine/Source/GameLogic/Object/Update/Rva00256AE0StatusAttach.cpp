@@ -53,12 +53,8 @@ public:
 	int m_bfme74ESN;
 };
 
-// Holder for the GameLogic singleton's dir32 spelling in this TU.
-class BfmeLogicESN
-{
-};
-
-extern BfmeLogicESN *g_bfmeLogicESN;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+extern GameLogic *TheGameLogic;
 
 namespace Rva00256AE0 {
 class BfmeHostESN
@@ -80,7 +76,7 @@ void BfmeHostESN::bfmeStepESN(BfmeThingESN *thing)
 	if (id != 0)
 	{
 		BfmeObjESN *obj = reinterpret_cast<BfmeObjESN *>(
-			reinterpret_cast<GameLogic *>(g_bfmeLogicESN)->findObjectByID(id));
+			TheGameLogic->findObjectByID(id));
 
 		if (obj == 0)
 			m_bfme20ESN = 0;

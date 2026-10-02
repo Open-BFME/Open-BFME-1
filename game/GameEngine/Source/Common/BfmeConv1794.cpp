@@ -58,12 +58,15 @@ public:
 	BfmeSlotHF *m_bfmeSlotHF;
 };
 
+// TU-local view of the GameLogic singleton's lookup used here.
 struct Rva00367E30Logic
 {
 	BfmeValueHF *bfmeLookupHF(void *key, int flag);
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeOwnerHF
 {
@@ -86,7 +89,8 @@ void BfmeOwnerHF::bfmeApplyHF(BfmeActorHF *actor, int spare)
 			BfmeSlotHF *slot = unit->m_bfmeSlotHF;
 
 			if (slot)
-				slot->m_bfmeListHF.bfmeAddHF(TheBfmeGameLogic->bfmeLookupHF(actor->m_bfmeKeyHF, 0));
+				slot->m_bfmeListHF.bfmeAddHF(
+					((Rva00367E30Logic *)TheGameLogic)->bfmeLookupHF(actor->m_bfmeKeyHF, 0));
 		}
 	}
 }

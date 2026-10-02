@@ -32,7 +32,15 @@ struct BfmeSumOwner
 	int m_bfmeOffset;					// +0x14
 };
 
-extern BfmeSumClock *TheBfmeSumClock;
+// Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+// TU-local view of the singleton's clock dword at +0x3C.
+static __forceinline BfmeSumClock *bfmeSumClockHF(void)
+{
+	return (BfmeSumClock *)TheGameLogic;
+}
 
 class Gen_00250F50
 {
@@ -49,7 +57,7 @@ private:
 // ?bfmeSum@Gen_00250F50@@QAEMXZ
 float Gen_00250F50::bfmeSum(void)
 {
-	int threshold = TheBfmeSumClock->m_bfmeTime - m_bfmeOwner->m_bfmeOffset;
+	int threshold = bfmeSumClockHF()->m_bfmeTime - m_bfmeOwner->m_bfmeOffset;
 
 	BfmeSumNode *node = m_bfmeList->m_bfmeNext;
 	float total = 0.0f;
