@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
-float bfmeCosVNB(float a);
-float bfmeSinVNB(float a);
+float Cos(float a);
+float Sin(float a);
 
 struct BfmeVecVNB
 {
@@ -28,8 +28,8 @@ void BfmeXformVNB::bfmeApplyVNB(BfmeVecVNB *out, float angle)
 		return;
 	}
 
-	float c = bfmeCosVNB(angle);
-	float s = bfmeSinVNB(angle);
+	float c = Cos(angle);
+	float s = Sin(angle);
 
 	out->m_bfme00 += c * m_bfme10 - s * m_bfme14;
 	out->m_bfme04 += s * m_bfme10 + c * m_bfme14;

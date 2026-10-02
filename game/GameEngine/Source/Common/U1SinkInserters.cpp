@@ -1,3 +1,5 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /D_STLP_LINK_TIME_INSTANTIATION
+// stlport
 // Four free functions, 23 to 52 bytes, that append one string to a sink and
 // hand the sink back.  Retail, the simplest of them (0x005C6350):
 //
@@ -60,11 +62,9 @@
 // IDENTITY IS NOT RECOVERED.  The sink type, the member and the two boxes are
 // named nowhere; every name here comes from a row or callee address.
 
-class U1Sink
-{
-public:
-	void add( const char *text );
-};
+#include <ostream>
+
+class U1Sink;
 
 class U1Box
 {
@@ -74,15 +74,16 @@ public:
 
 U1Sink *u1Insert_005C6350( U1Sink *sink, const U1Box *box )
 {
-	sink->add( box->m_value );
+	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(sink)
+		->_M_put_nowiden( box->m_value );
 	return sink;
 }
 
-void u1Emit_005C7A10( U1Sink *sink, const char *text );
-
 U1Sink *u1Insert_005C7A10( U1Sink *sink, const U1Box *box )
 {
-	u1Emit_005C7A10( sink, box->m_value );
+	_STL::_M_put_num<char, _STL::char_traits<char>, unsigned long>(
+		*reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(sink),
+		reinterpret_cast<unsigned long>(box->m_value) );
 	return sink;
 }
 
@@ -102,12 +103,14 @@ public:
 U1Sink *u1Insert_005C6630( U1Sink *sink, const U1NamedBox *box )
 {
 	const U1Named *named = box->m_named;
-	sink->add( named ? named->m_name : "" );
+	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(sink)
+		->_M_put_nowiden( named ? named->m_name : "" );
 	return sink;
 }
 
 U1Sink *u1Insert_005C6680( U1Sink *sink, bool flag )
 {
-	sink->add( flag ? "Yes" : "No" );
+	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(sink)
+		->_M_put_nowiden( flag ? "Yes" : "No" );
 	return sink;
 }
