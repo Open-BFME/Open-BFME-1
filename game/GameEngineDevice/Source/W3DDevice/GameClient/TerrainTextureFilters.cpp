@@ -1,3 +1,13 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#define HEAP_ZERO_MEMORY 8
+extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
+extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
+extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
+#include "dx8wrapper.h"
+
 // ?setTerrainTextureFilters@@YAXI@Z
 // Per-stage terrain min/mag/mip filter selection from the anisotropic filter
 // caps and GlobalData's bilinear/trilinear terrain flags; +0x47 stays unwitnessed.
@@ -76,9 +86,11 @@ struct Rva006D4FF0Device
 	virtual long __stdcall SetTextureStageState( unsigned int stage, unsigned int state, unsigned int value );
 };
 
-extern Rva006D4FF0Device *Rva01340534Device;
-extern unsigned int Rva01340594DX8Calls;
-extern unsigned int Rva01340568StageChanges;
+// Canonical storage is shared with the verified DX8Wrapper device-state bodies.
+struct Rva006D4690DX8Access : DX8Wrapper
+{
+ static void RecordStageChange() { ++texture_stage_state_changes; }
+};
 
 struct Rva006C9270GlobalData
 {
@@ -93,22 +105,22 @@ class GlobalData;
 // Retail [0x012ED5C8] is EA's writable GlobalData (Common/GlobalData.cpp); this
 // file views the same object through Rva006C9270GlobalData.
 extern GlobalData *TheWritableGlobalData;
-extern unsigned char *BfmeCurrentCaps;
+
 
 #define SET_TERRAIN_TEXTURE_FILTER_STATE(stage_, state_, value_) \
 	do { \
-		Rva01340534Device->SetTextureStageState( (stage_), (state_), (value_) ); \
-		Rva01340594DX8Calls++; \
-		Rva01340568StageChanges++; \
+		reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState( (stage_), (state_), (value_) ); \
+		number_of_DX8_calls++; \
+		Rva006D4690DX8Access::RecordStageChange(); \
 	} while( 0 )
 
 // ?setTerrainTextureFilters@@YAXI@Z
 void __cdecl setTerrainTextureFilters( unsigned stage )
 {
 	unsigned char filter_mode = ((Rva006C9270GlobalData *)TheWritableGlobalData)->m_unknown47;
-	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x400) == 0 )
+	if( (reinterpret_cast<const unsigned int *>( DX8Wrapper::Get_Current_Caps() )[ 0x12 ] & 0x400) == 0 )
 		filter_mode = 0;
-	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x04000000) == 0 )
+	if( (reinterpret_cast<const unsigned int *>( DX8Wrapper::Get_Current_Caps() )[ 0x12 ] & 0x04000000) == 0 )
 		filter_mode = 0;
 
 	if( filter_mode )
