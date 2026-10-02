@@ -128,17 +128,23 @@ public:
 	void hideShell( bool immediate );
 };
 
+// The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
+// game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
+// referenced here; InGameUISpellStoreView above stays as this TU's local view of
+// the pointee, so the use casts.
+class InGameUI;
+
 extern const void *BfmeAptScreenSpellStoreVftable[];
 extern const void *BfmeAptScreenSpellStoreSecondaryVftable[];
 extern WindowManager *g_rva012F19E8WindowManager;
-extern InGameUISpellStoreView *TheInGameUI;
+extern InGameUI *TheInGameUI;
 extern Shell *TheShell;
 extern void *g_obj12F4C38;
 
 BfmeAptScreenSpellStore::~BfmeAptScreenSpellStore()
 {
 	int zero = 0;
-	InGameUISpellStoreView *ui = TheInGameUI;
+	InGameUISpellStoreView *ui = (InGameUISpellStoreView *)TheInGameUI;
 
 	if( ui )
 		ui->slot84( zero );

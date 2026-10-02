@@ -10,7 +10,7 @@ struct Gen_00442460 { BfmeEntryWU bfmeEntryWU() const; };
 struct Gen_0043FC50 { BfmeEntryWR bfmeEntryWR() const; };
 struct Gen_0043FD60 { BfmeEntryWS bfmeEntryWS() const; };
 struct Gen_0043FE70 { BfmeEntryWT bfmeEntryWT() const; };
-struct InGameUI;
+class InGameUI;
 extern InGameUI *TheInGameUI;
 
 struct Rva00579160Manager {
