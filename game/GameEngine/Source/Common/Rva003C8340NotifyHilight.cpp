@@ -17,9 +17,10 @@ public:
 class Rva003BAD00Owner
 {
 public:
-	void notify0C(const AsciiString &key, int payload, int mode);
-	void notify04(const AsciiString &key, int mode);
-	void notify08(const AsciiString &key, int mode);
+	// V4LookupThenVirtualNotify.cpp declares the key address as a 32-bit int.
+	void notify0C(int key, int payload, int mode);
+	void notify04(int key, int mode);
+	void notify08(int key, int mode);
 };
 
 class Rva003C8340
@@ -39,14 +40,14 @@ void Rva003C8340::notifyHilight(Rva003C8340Item *item, Bool enabled)
 		(Rva003BAD00Owner *)((char *)m_owner + 0x40);
 	if (enabled)
 	{
-		owner->notify0C(AsciiString("HilightBordersEffect"),
+		owner->notify0C((int)&static_cast<const AsciiString &>(AsciiString("HilightBordersEffect")),
 			(int)&item->m_payload, 1);
-		owner->notify04(AsciiString("HilightBordersEffect"), 0);
+		owner->notify04((int)&static_cast<const AsciiString &>(AsciiString("HilightBordersEffect")), 0);
 	}
 	else
 	{
-		owner->notify0C(AsciiString("HilightBordersEffect"),
+		owner->notify0C((int)&static_cast<const AsciiString &>(AsciiString("HilightBordersEffect")),
 			(int)&item->m_payload, 0);
-		owner->notify08(AsciiString("HilightBordersEffect"), 1);
+		owner->notify08((int)&static_cast<const AsciiString &>(AsciiString("HilightBordersEffect")), 1);
 	}
 }

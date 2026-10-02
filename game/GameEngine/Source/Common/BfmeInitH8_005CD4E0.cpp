@@ -1,10 +1,10 @@
-// cl: /DNDEBUG /MD /O2 /Ob2
+// cl: /DNDEBUG /MD /O2 /Ob2 /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // Isolated 1054 category-table fragments already named by BfmeConv1054.cpp.
 // 0x005CD4E0 is the last quartet of bfmeTailA1054Impl (make 8 + ILT 0x0003C9CF).
 // 0x005CEF60 is H4+H5 then the cdecl A tail. 0x005D10E0 is key1+key2 then
 // the cdecl B tail. 0x005CD990 is H7+H8 with no tail.
 
-int bfmeMake1054( int n );
+#include "../GameClient/System/FXParticleSystem/fx_particle_system.h"
 extern void j_000410dd();
 extern void j_00008b39();
 extern void j_00041c09();
@@ -24,7 +24,7 @@ struct BfmeA1054H8
 void __cdecl bfmeInitH8_005CD4E0( BfmeA1054H8 *p )
 {
 	int z = 0;
-	p->m_h8 = bfmeMake1054( 8 );
+	p->m_h8 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)8 );
 	p->m_fn8 = j_0003c9cf;
 	p->m_88 = z;
 	p->m_8c = z;
@@ -72,22 +72,22 @@ struct BfmeB1054
 	int m_5c;
 };
 
-void bfmeTailA1054Cdecl( BfmeA1054 *p );
-void bfmeTailB1054Cdecl( BfmeB1054 *p );
+void bfmeTailA1054Impl( BfmeA1054 *p );
+void bfmeTailB1054Impl( BfmeB1054 *p );
 
 // H4+H5 then the cdecl A tail -- the back half of bfmeTailB1054Impl.
 void __cdecl bfmeInitH45_005CEF60( BfmeB1054 *p )
 {
 	int z = 0;
-	p->m_h4 = bfmeMake1054( 4 );
+	p->m_h4 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)4 );
 	p->m_fn4 = j_000410dd;
 	p->m_48 = z;
 	p->m_4c = z;
-	p->m_h5 = bfmeMake1054( 5 );
+	p->m_h5 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)5 );
 	p->m_fn5 = j_00008b39;
 	p->m_58 = z;
 	p->m_5c = z;
-	bfmeTailA1054Cdecl( reinterpret_cast<BfmeA1054 *>( p ) );
+	bfmeTailA1054Impl( reinterpret_cast<BfmeA1054 *>( p ) );
 }
 
 struct BfmeCategoryHead1054
@@ -110,15 +110,15 @@ struct BfmeCategoryHead1054
 void __cdecl bfmeInitKey12_005D10E0( BfmeCategoryHead1054 *p )
 {
 	int z = 0;
-	p->m_key1 = bfmeMake1054( 1 );
+	p->m_key1 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)1 );
 	p->m_callback1 = j_000391a8;
 	p->m_zero18 = z;
 	p->m_zero1c = z;
-	p->m_key2 = bfmeMake1054( 2 );
+	p->m_key2 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)2 );
 	p->m_callback2 = j_00011897;
 	p->m_zero28 = z;
 	p->m_zero2c = z;
-	bfmeTailB1054Cdecl( reinterpret_cast<BfmeB1054 *>( p ) );
+	bfmeTailB1054Impl( reinterpret_cast<BfmeB1054 *>( p ) );
 }
 
 // H7+H8 with no tail -- the last two quartets of bfmeTailA1054Impl.
@@ -127,11 +127,11 @@ void __cdecl bfmeInitKey12_005D10E0( BfmeCategoryHead1054 *p )
 void __cdecl bfmeInitH78_005CD990( BfmeA1054 *p )
 {
 	int z = 0;
-	p->m_h7 = bfmeMake1054( 7 );
+	p->m_h7 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)7 );
 	p->m_fn7 = j_00041c09;
 	p->m_78 = z;
 	p->m_7c = z;
-	int h8 = bfmeMake1054( 8 );
+	int h8 = (int)FXParticleSystem::GetKey( (FXParticleSystem::ModuleCategory)8 );
 	p->m_88 = z;
 	p->m_8c = z;
 	p->m_h8 = h8;

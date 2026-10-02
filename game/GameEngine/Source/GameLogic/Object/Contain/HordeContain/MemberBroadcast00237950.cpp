@@ -18,8 +18,10 @@ class Rva004141C0 {public: void broadcast();};
 #pragma comment(linker, "/alternatename:?broadcast@Rva004141C0@@QAEXXZ=?d_000376cd@@YAXXZ")
 struct PlayerList00237950 {char at000[12]; Player *m_local;};
 struct GlobalData00237950 {char at000[0xa76]; bool atA76;};
-extern PlayerList00237950 *g00237950Va012ED748;
-extern GlobalData00237950 *g00237950Va012ED5C8;
+class PlayerList;
+class GlobalData;
+extern PlayerList *ThePlayerList;
+extern GlobalData *TheWritableGlobalData;
 struct IndexNode00237950 {unsigned color; IndexNode00237950 *parent,*left,*right; unsigned key;};
 namespace _STL {struct _Rb_tree_node_base; template<class T> struct _Rb_global {static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base*);};}
 typedef _STL::hash_map<unsigned,Object*,_STL::hash<unsigned>,_STL::equal_to<unsigned> > Hash00237950;
@@ -31,20 +33,21 @@ struct GameLogic00237950 {
   return (*it).second;
  }
 };
-extern GameLogic00237950 *g00237950Va012F0898;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class MemberBroadcast00237950 {
 public:
  char at000[0x30]; IndexNode00237950 *at030;
  void run();
 };
 void MemberBroadcast00237950::run() {
- Player *localPlayer=g00237950Va012ED748->m_local;
+ Player *localPlayer=((PlayerList00237950*)ThePlayerList)->m_local;
  bool forwardMembers=false;
  Object *owner=*(Object**)((char*)this-0xdc);
  if(owner) {
   if(owner->getControllingPlayer()==localPlayer) {
    Drawable *drawable=owner->getDrawable();
-   if(g00237950Va012ED5C8->atA76) {
+   if(((GlobalData00237950*)TheWritableGlobalData)->atA76) {
     if(drawable) ((Rva004141C0*)drawable)->broadcast();
    } else forwardMembers=true;
   }
@@ -63,7 +66,7 @@ void MemberBroadcast00237950::run() {
  while(entry!=at030) {
   unsigned key=entry->key;
   if(key) {
-   Object *member=g00237950Va012F0898->find(key);
+   Object *member=((GameLogic00237950*)TheGameLogic)->find(key);
    if(member) {
     Drawable *drawable=member->getDrawable();
     if(drawable && forwardMembers) ((Rva004141C0*)drawable)->broadcast();
