@@ -61,7 +61,27 @@ extern GenKey GenKey0012A79C0;
 extern GenKey GenKey0012A79C8;
 extern GenKey GenKey0012A79D0;
 extern GenKey GenKey0012A79D8;
-extern GenTable GenTable0012ED5E0;
+// 0x012ED5E0 is retail's MapObject::TheWorldDict, the global Dict object this
+// lookup is a receiver for -- see the same declaration in
+// game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp
+// and its definition `Dict MapObject::TheWorldDict;` in
+// game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp.  No
+// game/**/*.h declares MapObject or Dict (only a bare `class Dict;` forward
+// declaration in GameLogic/TerrainLogic.h), so the spelling is declared here to
+// emit retail's `?TheWorldDict@MapObject@@2VDict@@A`.  The table receiver is
+// read through the local GenTable view so the call keeps its retail ABI.
+class Dict;
+class MapObject
+{
+public:
+	static Dict TheWorldDict;
+};
+
+static inline GenTable *localWorldDict( void )
+{
+	return reinterpret_cast<GenTable *>( &MapObject::TheWorldDict );
+}
+
 // 0x012ED5C8 is retail's TheWritableGlobalData, defined in
 // game/GameEngine/Source/Common/GlobalData.cpp as ?TheWritableGlobalData@@3PAVGlobalData@@A.
 // The bytes show this one is dereferenced first, so it is a global POINTER.  The fallback
@@ -90,7 +110,7 @@ public:
 	void Rva006DF290::NAME()                                              \
 	{                                                                     \
 		bool found;                                                       \
-		FIELD = GenTable0012ED5E0.lookup( KEY.fetch( &found ) );          \
+		FIELD = localWorldDict()->lookup( KEY.fetch( &found ) );             \
 		if( !found )                                                      \
 			FIELD = localTheWritableGlobalData()->FB;                      \
 	}
