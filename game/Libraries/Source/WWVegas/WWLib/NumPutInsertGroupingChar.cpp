@@ -1,8 +1,7 @@
 // cl: /O2 /EHsc /MD
 // STLport 4.5.3 __insert_grouping(char*,...) at retail 0x00845A00 (155B).
 
-extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
-#define memmove (*bfme_memmove_ptr)
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *, const void *, unsigned int);
 
 namespace _STL
 {

@@ -26,10 +26,8 @@
 
 typedef unsigned int size_t_;
 
-// Retail reaches memmove through the import slot (`ff 15`); the pin
-// `_bfme_memmove_ptr` is already in targets/game/reverse/symbols.csv at that slot.
-extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
-#define memmove (*bfme_memmove_ptr)
+// Retail reaches memmove through its import slot.
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *, const void *, unsigned int);
 
 namespace _STL
 {

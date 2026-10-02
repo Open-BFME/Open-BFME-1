@@ -13,8 +13,7 @@
 // memmove of a length that is always zero, the same shape the vector resizes
 // carry.
 
-extern "C" void *(__cdecl *bfme_memmove_ptr)( void *, const void *, unsigned int );
-#define memmove (*bfme_memmove_ptr)
+extern "C" __declspec(dllimport) void *__cdecl memmove( void *, const void *, unsigned int );
 
 class BfmeSiegeDockEntry
 {

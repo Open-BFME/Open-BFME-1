@@ -5,8 +5,7 @@
 
 extern void *DebugReAllocMemory(void *, unsigned);
 
-extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned);
-#define memmove (*bfme_memmove_ptr)
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *, const void *, unsigned);
 
 struct Rva00889BF0Entry
 {
