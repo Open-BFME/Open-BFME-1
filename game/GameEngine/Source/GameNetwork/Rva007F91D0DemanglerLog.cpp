@@ -28,9 +28,9 @@ void __cdecl Rva007F91D0(Rva00800E50Header *header, const char *direction)
 	if (flags & 0x80000000)
 	{
 		if (flags & 0x40000000)
-			((Rva007EB810Diag *)Rva007EB810Get())->log(0, "req");
+			((Rva007EB810Diag *)Rva007EB810Get())->log(0, "req ");
 		else
-			((Rva007EB810Diag *)Rva007EB810Get())->log(0, "res");
+			((Rva007EB810Diag *)Rva007EB810Get())->log(0, "res ");
 	}
 
 	int type = header->m_type;
