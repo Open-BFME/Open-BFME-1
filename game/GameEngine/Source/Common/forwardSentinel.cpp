@@ -30,6 +30,7 @@ class Rva007EA0A0Owner
 {
 public:
 	void notify(void *arg);
+	void forwardSentinel();
 
 private:
 	char m_pad[0x250];
@@ -43,14 +44,8 @@ private:
 	Rva007EA0A0Nested *m_288;
 };
 
-void forwardSentinel()
+void Rva007EA0A0Owner::forwardSentinel()
 {
 	int value = -204;
-	union CallRoute
-	{
-		void (Rva007EA0A0Owner::*member)(void *);
-		void (__stdcall *helper)(int *);
-	};
-	CallRoute route = { &Rva007EA0A0Owner::notify };
-	route.helper(&value);
+	notify(&value);
 }

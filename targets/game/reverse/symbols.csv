@@ -84632,7 +84632,6 @@ name,address,notes
 ?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?helper002BD940@Rva002C12E0Owner@@QAEXXZ,0x002BD940,address-derived GiantBird locomotor-update callee; thiscall no stack args (plain ret) reading this+8; body target of ILT 0x00002EDC
-?helper@@YGXPAH@Z,0x007EA0A0,address-derived stdcall helper recovered from 0x007EA300
 ?helper@BfmeBaseHelper060600@@QAEXHPAX@Z,0x0075BBA0,adjusted-this base helper call target from 0x00760600 (currently gen-dump ?d_0075bba0@@YAXXZ)
 ?helper@BfmeFixup2580@@QAEXPAXPAVBfmeFixupChunk2580@@0@Z,0x008A2130,pin
 ?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
