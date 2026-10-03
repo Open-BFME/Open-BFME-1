@@ -9573,11 +9573,13 @@ Object *InGameUI::findIdleWorker( Object *obj)
 		return NULL;
 	
 	Int index = obj->getControllingPlayer()->getPlayerIndex();	
-	if(m_idleWorkers[index].empty())
+	// Retail and removeIdleWorker place this list array at receiver+0x131C.
+	ObjectList *idleWorkers = (ObjectList *)((char *)this + 0x131c);
+	if(idleWorkers[index].empty())
 		return NULL;
 
-	ObjectListIt it = m_idleWorkers[index].begin();
-	while(it != m_idleWorkers[index].end())
+	ObjectListIt it = idleWorkers[index].begin();
+	while(it != idleWorkers[index].end())
 	{
 		Object *itObj = *it;
 		if(itObj == obj)
