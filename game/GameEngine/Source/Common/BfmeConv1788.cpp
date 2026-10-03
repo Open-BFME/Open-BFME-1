@@ -1,16 +1,16 @@
 class BfmeThingXK;
 
-class BfmeInnerXK
+class Overridable
 {
 public:
-	BfmeThingXK *bfmeResolveXK(void);
+	const Overridable *getFinalOverride(void) const;
 };
 
 class BfmeThingXK
 {
 public:
 	int m_bfmeSpareXK;
-	BfmeInnerXK *m_bfmeInnerXK;
+	Overridable *m_bfmeInnerXK;
 	unsigned char m_bfmeGapXK[0x484];
 	unsigned char m_bfmeAllowedXK;
 };
@@ -134,7 +134,10 @@ bool __stdcall bfmeAllowXK(BfmeActorXK *actor, BfmeHolderXK *holder, int spare)
 		BfmeThingXK *thing = holder->m_bfmeThingXK;
 
 		if (thing && thing->m_bfmeInnerXK)
-			thing = thing->m_bfmeInnerXK->bfmeResolveXK();
+		{
+			const Overridable *resolved = thing->m_bfmeInnerXK->getFinalOverride();
+			thing = reinterpret_cast<BfmeThingXK *>(const_cast<Overridable *>(resolved));
+		}
 
 		if (thing->m_bfmeAllowedXK)
 		{
