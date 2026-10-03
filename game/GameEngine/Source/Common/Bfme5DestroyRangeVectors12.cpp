@@ -6,15 +6,29 @@
 // pair, and it costs the extra callee-saved register the four-byte version
 // does not need.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+// The two allocators are retail's operator delete (0x00881EB0, mem_ops.cpp) and
+// _STL::__node_alloc<true,0>::_M_deallocate (0x0082E5F0,
+// node_alloc_M_deallocateThunk.cpp); they are named as they are defined, as in
+// Bfme5DestroyRangeVectors.cpp.
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
+inline void bfmeRelease(void *block, unsigned int bytes);
+
+namespace _STL
+{
+template <bool __threads, int __inst> class __node_alloc;
+template <> class __node_alloc<true, 0>
+{
+	friend void ::bfmeRelease(void *block, unsigned int bytes);
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+};
+}
 
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
-		bfmeFreeScalar(block);
+		::operator delete(block);
 	else
-		bfmeDeallocate(block, bytes);
+		_STL::__node_alloc<true, 0>::_M_deallocate(block, bytes);
 }
 
 struct BfmeElem12 { int m_bfmeWords[3]; };
