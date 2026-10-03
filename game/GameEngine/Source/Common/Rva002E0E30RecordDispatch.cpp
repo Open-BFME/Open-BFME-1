@@ -33,9 +33,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class Rva002E0E30Owner
-{
-};
+class LuaScriptEngine;
 
 extern void j_000122a6(void);
 
@@ -46,7 +44,7 @@ public:
         void *argument3);
 };
 
-static __forceinline void callRva002E5A70(Rva002E0E30Owner *owner,
+static __forceinline void callRva002E5A70(LuaScriptEngine *owner,
     void *recordData, Object *object, void *argument2, void *argument3)
 {
     typedef void (Rva002E5A70Call::*Function)(void *, Object *, void *, void *);
@@ -60,7 +58,7 @@ static __forceinline void callRva002E5A70(Rva002E0E30Owner *owner,
         object, argument2, argument3);
 }
 
-extern "C" Rva002E0E30Owner *g_bfmeOwnerBR;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 struct Rva002E0E30Record
 {
@@ -102,7 +100,7 @@ void Rva002E0E30::rva002E0E30Handle(int key, void *argument2,
                     Object *resolved = (*object).second;
                     if (resolved != 0)
                     {
-                        callRva002E5A70(g_bfmeOwnerBR,
+                        callRva002E5A70(TheLuaScriptEngine,
                             record->m_recordData, resolved, argument2,
                             argument3);
                     }
