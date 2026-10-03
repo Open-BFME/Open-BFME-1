@@ -464,13 +464,13 @@ class Gen_009EBB40Target
 public:
 	int bfmeForward(void);		// retail 0x009EE620
 };
-extern Gen_009EBB40Target *TheBfmeTarget_009EBB40;			// 0x134faac
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;				// 0x134faac
 class Gen_009EBB60Target
 {
 public:
 	int bfmeForward(void);		// retail 0x009EDE40
 };
-extern Gen_009EBB60Target *TheBfmeTarget_009EBB60;			// 0x134faac
 
 // ?bfmeForward@Gen_001BF950@@QAEHPAX0@Z
 int Gen_001BF950::bfmeForward(void *a0, void *a1)
@@ -683,16 +683,16 @@ void Gen_0094BFB0::bfmeForward(void)
 // ?bfmeForward_009EBB40@@YAHXZ
 int bfmeForward_009EBB40(void)
 {
-	if (TheBfmeTarget_009EBB40)
-		return TheBfmeTarget_009EBB40->bfmeForward();
+	if (g_theAssetRegistry)
+		return ((Gen_009EBB40Target *)g_theAssetRegistry)->bfmeForward();
 
 	return 100;
 }
 // ?bfmeForward_009EBB60@@YAHXZ
 int bfmeForward_009EBB60(void)
 {
-	if (TheBfmeTarget_009EBB60)
-		return TheBfmeTarget_009EBB60->bfmeForward();
+	if (g_theAssetRegistry)
+		return ((Gen_009EBB60Target *)g_theAssetRegistry)->bfmeForward();
 
 	return 100;
 }

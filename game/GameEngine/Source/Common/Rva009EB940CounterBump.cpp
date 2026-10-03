@@ -16,13 +16,14 @@ public:
 	int m_value;
 };
 
-extern "C" Rva009EB940Counter *g_bfmeCounterBZ;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 
 void Rva009EB940Receiver::bump()
 {
-	if (g_bfmeCounterBZ)
+	if (g_theAssetRegistry)
 	{
-		int *counter = &g_bfmeCounterBZ->m_value;
+		int *counter = &((Rva009EB940Counter *)g_theAssetRegistry)->m_value;
 		++*counter;
 		m_value = *counter;
 	}

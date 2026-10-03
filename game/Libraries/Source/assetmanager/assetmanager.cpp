@@ -60,7 +60,10 @@ private:
 	const char *m_data;
 };
 
-extern AssetRegistry *g_theAssetRegistry;
+// Retail VA 0x0134FAAC is a zero-filled four-byte pointer. The matched
+// Add_Prototype wrapper (RVA 0x009EBA40) and symbols.csv pin use this name
+// and type; the guarded load at RVA 0x009EB940 also reads a DWORD.
+AssetRegistry *g_theAssetRegistry = 0;
 
 AssetReference Rva009EBEC0( const AssetName &name )
 {

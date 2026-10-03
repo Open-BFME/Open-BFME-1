@@ -122,7 +122,8 @@ public:
 	char bfmeSay1025(char *t);
 };
 
-extern BfmeP1025 *g_bfmeP1025;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 extern char g_bfmeLit1025[];
 
 struct BfmeR1025
@@ -132,7 +133,7 @@ struct BfmeR1025
 
 char bfmeGo1025F(BfmeR1025 *p)
 {
-	if (g_bfmeP1025 != 0) {
+	if (g_theAssetRegistry != 0) {
 		char *t;
 
 		if (p->m_bfmeName != 0)
@@ -140,7 +141,7 @@ char bfmeGo1025F(BfmeR1025 *p)
 		else
 			t = g_bfmeLit1025;
 
-		return g_bfmeP1025->bfmeSay1025(t);
+		return ((BfmeP1025 *)g_theAssetRegistry)->bfmeSay1025(t);
 	}
 
 	return 0;

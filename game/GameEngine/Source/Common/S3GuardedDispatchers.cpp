@@ -172,7 +172,8 @@ public:
 	void bfmeInvoke(void *first, void *second);
 };
 
-extern Gen_009EBA60Target *TheBfmeTarget_009EBA60;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 
 void bfmeDispatch_009EBA60(void *first, void *second);
 
@@ -208,8 +209,8 @@ void bfmeDispatch_006CDF70(void *first, void *second)
 // ?bfmeDispatch_009EBA60@@YAXPAX0@Z
 void bfmeDispatch_009EBA60(void *first, void *second)
 {
-	if (TheBfmeTarget_009EBA60)
-		TheBfmeTarget_009EBA60->bfmeInvoke(first, second);
+	if (g_theAssetRegistry)
+		((Gen_009EBA60Target *)g_theAssetRegistry)->bfmeInvoke(first, second);
 }
 
 // ?bfmeDispatch_0064C6A0@@YAXPAX00PAVGen_0064C6A0Target@@@Z

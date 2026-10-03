@@ -129,7 +129,8 @@ public:
 	void bfmeReg1024(BfmeE1024 *p);
 };
 
-extern BfmeP1024 *g_bfmeP1024;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 
 class BfmeE1024
 {
@@ -145,10 +146,10 @@ void BfmeE1024::bfmeGo1024E(void)
 	if ((m_bfmeFlags & 0xff0000) == 0x70000)
 		return;
 
-	if (g_bfmeP1024 == 0)
+	if (g_theAssetRegistry == 0)
 		return;
 
-	g_bfmeP1024->bfmeReg1024(this);
+	((BfmeP1024 *)g_theAssetRegistry)->bfmeReg1024(this);
 }
 
 struct BfmeRec1024

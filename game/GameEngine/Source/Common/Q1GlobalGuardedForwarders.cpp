@@ -27,8 +27,8 @@
 // bytes say nothing about whether they are virtual, or in what order they are
 // declared.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
-// pins are address-derived and additive.
+// The local receiver and callee identities remain address-derived. The shared
+// global keeps its existing AssetRegistry declaration from matched callers.
 
 class Q1Receiver0134FAAC
 {
@@ -47,7 +47,8 @@ public:
 	void m009EC960( void *value );
 };
 
-extern Q1Receiver0134FAAC *g_q1Receiver0134FAAC;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 
 class Q1Receiver012F4820
 {
@@ -67,26 +68,26 @@ extern Q1Receiver012F4820 *g_q1Receiver012F4820;
 		}                                                                 \
 	}
 
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBA80, g_q1Receiver0134FAAC, m009F19E0 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAA0, g_q1Receiver0134FAAC, m009F1A60 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAC0, g_q1Receiver0134FAAC, m009F0BD0 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAE0, g_q1Receiver0134FAAC, m009F0CC0 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB00, g_q1Receiver0134FAAC, m009F0E50 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB20, g_q1Receiver0134FAAC, m009F0D40 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBC0, g_q1Receiver0134FAAC, m009EEEC0 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBE0, g_q1Receiver0134FAAC, m009EC970 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC00, g_q1Receiver0134FAAC, m009EC9A0 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC50, g_q1Receiver0134FAAC, m009ECA30 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBA80, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F19E0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAA0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F1A60 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAC0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0BD0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAE0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0CC0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB00, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0E50 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB20, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0D40 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBC0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EEEC0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBE0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EC970 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC00, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EC9A0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC50, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009ECA30 )
 
 void Rva009EBC40()
 {
-	if (g_q1Receiver0134FAAC)
-		g_q1Receiver0134FAAC->m009F1AE0();
+	if (g_theAssetRegistry)
+		((Q1Receiver0134FAAC *)g_theAssetRegistry)->m009F1AE0();
 }
 
 void Rva009EBBA0( void *value )
 {
-	if (value && g_q1Receiver0134FAAC)
-		g_q1Receiver0134FAAC->m009EC960(value);
+	if (value && g_theAssetRegistry)
+		((Q1Receiver0134FAAC *)g_theAssetRegistry)->m009EC960(value);
 }
 Q1_GLOBAL_GUARDED_FORWARD( Rva005091B0, g_q1Receiver012F4820, m0003CAD3 )

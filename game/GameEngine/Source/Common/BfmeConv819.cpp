@@ -51,11 +51,12 @@ public:
 	void *bfmeGetEME(void *a);
 };
 
-extern BfmeObjEME *g_bfmeObjEME;
+class AssetRegistry;
+extern AssetRegistry *g_theAssetRegistry;
 
 bool bfmeGoEMEa(void *a)
 {
-	BfmeObjEME *o = g_bfmeObjEME;
+	BfmeObjEME *o = (BfmeObjEME *)g_theAssetRegistry;
 	if (!o)
 		return false;
 	return o->bfmeAskEME(a);
@@ -63,7 +64,7 @@ bool bfmeGoEMEa(void *a)
 
 void *bfmeGoEMEb(void *a)
 {
-	BfmeObjEME *o = g_bfmeObjEME;
+	BfmeObjEME *o = (BfmeObjEME *)g_theAssetRegistry;
 	if (!o)
 		return 0;
 	return o->bfmeGetEME(a);
