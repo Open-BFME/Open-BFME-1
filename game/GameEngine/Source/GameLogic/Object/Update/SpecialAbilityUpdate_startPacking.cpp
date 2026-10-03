@@ -132,3 +132,18 @@ void SpecialAbilityUpdate::startPacking(bool success) {
   else pickAndPlayUnitVoiceResponse(&objects,(GameMessage::Type)2014,0);
  }
 }
+
+// Retail 0026D3D0 is a complete 13-byte wrapper, entered by table
+// 010B8D18 slot 19 via ILT 00031B4C. Its incoming stack word is ignored.
+// This unsigned word is an ABI view, not a claim about the source argument.
+// See identity_evidence/0026d3d0-complete-wrapper.md.
+class Rva0026D3D0
+{
+public:
+ virtual void method(unsigned int);
+};
+
+void Rva0026D3D0::method(unsigned int)
+{
+ reinterpret_cast<SpecialAbilityUpdate *>(this)->startPacking(true);
+}
