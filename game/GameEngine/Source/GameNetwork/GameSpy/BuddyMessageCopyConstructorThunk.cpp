@@ -8,35 +8,15 @@
 // for the narrow strings, StringBase<G> for the wide one), matching the two
 // distinct call targets in the retail thunk.
 
-#include "string_base.h"
+#include "ascii_string.h"
+#include "unicode_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+// Retail copies the wide member through the canonical StringBase helper.
+inline UnicodeString::UnicodeString(const UnicodeString &source)
 {
-public:
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-	}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString(const UnicodeString &that)
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that);
-	}
-	~UnicodeString();
-
-private:
-	unsigned short *m_text;
-};
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&source);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class BuddyMessage
