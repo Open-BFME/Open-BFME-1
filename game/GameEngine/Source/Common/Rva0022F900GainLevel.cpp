@@ -40,8 +40,14 @@ class Gen_0022F900
 {
 public:
 	void bfmeGain(Object *obj, void *extra);
-	void bfmeAfter(Object *obj, void *extra);
 };
+
+// The second half of the retail body calls through ILT 0x00047EE7, the
+// 5-byte thunk in front of the body at 0x0023F1A0.  That thunk symbol is the
+// only name defined at the call target, so reference it here; the
+// member-pointer view types the call thiscall (ecx = this, obj and extra
+// pushed, popped by the callee) without defining another Gen_0022F900.
+extern "C" void __identifier("?j_00047ee7@@YAXXZ")();
 
 // ?bfmeGain@Gen_0022F900@@QAEXPAVObject@@PAX@Z
 void Gen_0022F900::bfmeGain(Object *obj, void *extra)
@@ -49,5 +55,10 @@ void Gen_0022F900::bfmeGain(Object *obj, void *extra)
 	if (obj->getDrawable() != 0)
 		((BfmeA1057 *)obj->getDrawable())->bfmeGo1057A(0x19);
 	TheExperienceLevelSystem->gainLevel(obj, true);
-	bfmeAfter(obj, extra);
+	union {
+		void (*thunk)();
+		void (Gen_0022F900::*method)(Object *, void *);
+	} after;
+	after.thunk = &__identifier("?j_00047ee7@@YAXXZ");
+	(this->*after.method)(obj, extra);
 }

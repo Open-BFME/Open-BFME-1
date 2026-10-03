@@ -10,11 +10,16 @@
 // vector operations.  Eva's 0x004269E0 insertion path reaches this helper via
 // ILT 0x0000163B.
 
+// The twelve-byte tail is assigned through ILT 0x000083E1, the 5-byte thunk in
+// front of the 28-byte body at 0x00424AC0.  That thunk symbol is the only name
+// defined at the call target, so this TU references it directly; the
+// member-pointer view in EvaMessageWalkInfo::operator= types the call as the
+// thiscall retail used (ecx = destination tail, source pushed, popped by the
+// callee) without defining EvaMessageTail's assignment.
+extern "C" void __identifier("?j_000083e1@@YAXXZ")();
+
 class EvaMessageTail
 {
-public:
-	EvaMessageTail &operator=( const EvaMessageTail & );
-
 private:
 	char m_raw[ 12 ];
 };
@@ -33,7 +38,12 @@ struct EvaMessageWalkInfo
 		m_field4 = that.m_field4;
 		m_field8 = that.m_field8;
 		m_fieldC = that.m_fieldC;
-		m_tail = that.m_tail;
+		union {
+			void (*thunk)();
+			void (EvaMessageTail::*assign)(const EvaMessageTail &);
+		} tail;
+		tail.thunk = &__identifier("?j_000083e1@@YAXXZ");
+		(&m_tail->*tail.assign)(that.m_tail);
 		return *this;
 	}
 };
