@@ -11,7 +11,12 @@
 
 #include <memory>
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+// TU-local on purpose: this is a helper invented to spell the deallocate
+// dispatch, not a retail body, and several sibling TUs declare their own
+// helper under the same name with different bodies. Giving it external
+// linkage emits a COMDAT copy that collides with theirs at link; `static`
+// keeps it inside this object.
+static void bfmeRelease(void *block, unsigned int bytes)
 {
 	// STLport's inline dispatch calls the matched operator delete (0x00881EB0)
 	// or __node_alloc<true, 0>::_M_deallocate (0x0082E5F0).
