@@ -48,10 +48,26 @@ private:
 };
 
 // Member at 0xB4, destroyed out-of-line at 0x001FA220. Identity unknown.
-class CritterEmitterUpdateModuleDataUnknownB4
+//
+// Retail's cleanup call reaches the 0x00038055 ILT thunk, whose one identity
+// is ?j_00038055@@YAXXZ (game/gen_small/thunks_026.cpp), so the destructor is
+// spelled here as an inline body calling that defining name.  MSVC 7.1 always
+// emits an inline destructor out of line as well as inlining it at the call,
+// and symbols.csv still carries the caller-side over-claim
+// ??1CritterEmitterUpdateModuleDataUnknownB4@@QAE@XZ at 0x00038055; a COMDAT
+// copy under that spelling is charged as a definition that is not retail's
+// body, so this TU-local class carries its own offset name (as the 0x08 member
+// above already does) instead.
+extern void j_00038055();
+typedef void (__fastcall *B4DestroyThunk)( void * );
+
+class CritterEmitterUpdateModuleDataMemberB4
 {
 public:
-	~CritterEmitterUpdateModuleDataUnknownB4();
+	__forceinline ~CritterEmitterUpdateModuleDataMemberB4()
+	{
+		((B4DestroyThunk)j_00038055)( this );
+	}
 
 private:
 	unsigned char m_unreconstructed_00[12];
@@ -86,7 +102,7 @@ public:
 private:
 	AsciiString m_unreconstructed_a4;					///< retail this+0x0A4
 	_STL::vector<Gen_p8pod> m_vector;					///< retail this+0x0A8
-	CritterEmitterUpdateModuleDataUnknownB4 m_unreconstructed_b4;	///< retail this+0x0B4
+	CritterEmitterUpdateModuleDataMemberB4 m_unreconstructed_b4;	///< retail this+0x0B4
 	AsciiString m_unreconstructed_c0;					///< retail this+0x0C0
 };
 

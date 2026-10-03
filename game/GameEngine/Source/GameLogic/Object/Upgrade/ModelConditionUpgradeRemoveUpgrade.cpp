@@ -29,10 +29,15 @@ public:
 class Object
 {
 public:
-	void clearAndSetModelConditionFlags(
-		const BfmeC1166 &clear,
-		const BfmeC1166 &set);
 };
+
+// Retail's Object::clearAndSetModelConditionFlags reaches the 0x000095ED ILT
+// thunk, which the ledger owns as ?j_000095ed@@YAXXZ
+// (game/gen_small/thunks_004.cpp). Call it by its defining name instead of
+// through an undefined member.
+extern void j_000095ed();
+typedef void (Object::*ClearAndSetModelConditionFlagsCall)(
+	const BfmeC1166 &, const BfmeC1166 & );
 
 struct BfmeModelConditionUpgradeDataAAN
 {
@@ -53,11 +58,12 @@ void ModelConditionUpgrade::removeUpgrade()
 		*(BfmeModelConditionUpgradeDataAAN **)((char *)this - 0xc);
 	Object *object = *(Object **)((char *)this - 8);
 
+	union { void (*raw)(); ClearAndSetModelConditionFlagsCall member; } call;
+	call.raw = j_000095ed;
+
 	if (data->set.any())
-		object->clearAndSetModelConditionFlags(
-			BfmeC1166(), data->set);
+		(object->*call.member)( BfmeC1166(), data->set );
 
 	if (data->clear.any())
-		object->clearAndSetModelConditionFlags(
-			data->clear, BfmeC1166());
+		(object->*call.member)( data->clear, BfmeC1166() );
 }
