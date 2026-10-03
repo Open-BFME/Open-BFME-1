@@ -77,6 +77,31 @@ static Int scanUnsignedInt( const char *source, UnsignedInt& val )
 	return ret;
 }  // end scanUnsignedInt
 
+// Retail destroys this temporary by calling StringBase<char>::releaseBuffer (0x00887940)
+// directly instead of the AsciiString dtor stub, so the temporary is TU-local storage
+// whose dtor calls the retail release body.
+struct Rva00485EE0Release
+{
+	typedef void (StringBase<char>::*type)();
+	friend type stealRelease( Rva00485EE0Release );
+};
+template <typename Tag, typename Tag::type Member>
+struct Rva00485EE0Access
+{
+	friend typename Tag::type stealRelease( Tag ) { return Member; }
+};
+template struct Rva00485EE0Access<Rva00485EE0Release, &StringBase<char>::releaseBuffer>;
+
+class Rva00485EE0Name
+{
+public:
+	Rva00485EE0Name( const char *text ) { ((AsciiString *)m_storage)->AsciiString::AsciiString( text ); }
+	~Rva00485EE0Name() { ( ((StringBase<char> *)m_storage)->*stealRelease( Rva00485EE0Release() ) )(); }
+	const AsciiString &get() const { return *(const AsciiString *)m_storage; }
+private:
+	char m_storage[sizeof(AsciiString)];
+};
+
 Bool parseDrawData( char *token, WinInstanceData *instData,
 													 char *buffer, void *data )
 {
@@ -157,7 +182,7 @@ Bool parseDrawData( char *token, WinInstanceData *instData,
 	
 		c = strtok( NULL, seps );  // value
 		if( strcmp( c, "NoImage" ) )
-			drawData->image = TheMappedImageCollection->findImageByName( AsciiString( c ) );
+			{ Rva00485EE0Name name( c ); drawData->image = TheMappedImageCollection->findImageByName( name.get() ); }
 		else
 			drawData->image = NULL;
 		// COLOR: R G B A
