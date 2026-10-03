@@ -1815,3 +1815,11 @@ The complete caller passes strict byte/callee/DIR32 verification with no new
 pins, and the canonical Object header preserves the exact result. Check actual
 callee side effects before concluding that equivalent branch graphs prove an
 unreachable compiler-layout decision. Evidence: `identity_evidence/003dc810-clear-cell.md`.
+
+The same visibility principle fixes the 398-byte parser wrapper at 0x00190F10.
+Its bank had 17 differences because the node+0x32 flag store preceded append
+argument setup. Exposing the real non-inlined 85-byte
+`Gen_0018F210::bfmeAppendVector3` (which copies but does not retain the local
+point pointer) restores all retail bytes. Exposing the node constructor alone
+does nothing. The wrapper and visible helper both pass strict call/data checks;
+see `identity_evidence/00190f10-native-append.md`.
