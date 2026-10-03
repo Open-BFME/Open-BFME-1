@@ -1150,23 +1150,8 @@ PathfindCell::~PathfindCell( void )
 /**
  * Reset the cell to default values
  */
-// ?reset@PathfindCell@@QAEXXZ present-unmatched
-void PathfindCell::reset( ) 
-{ 
-	m_type = PathfindCell::CELL_CLEAR; 
-	m_flags = PathfindCell::NO_UNITS;
-	m_zone = 0;
-	m_aircraftGoal = false;
-	m_pinched = false;
-	if (m_info) {
-		m_info->m_obstacleID = INVALID_ID;
-		PathfindCellInfo::releaseACellInfo(m_info);
-		m_info = NULL;
-	}
-	m_connectsToLayer = LAYER_INVALID;
-	m_layer = LAYER_GROUND;
-	
-}
+// Retail reset is provided by PathfindCell_reset.cpp (0x003F6EC0).
+// BFME releases through its free-list head and resets the 16-byte cell layout.
 
 /**
  * Reset the pathfinding values in the cell.
