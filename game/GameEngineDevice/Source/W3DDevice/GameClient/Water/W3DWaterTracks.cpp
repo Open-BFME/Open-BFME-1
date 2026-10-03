@@ -279,18 +279,7 @@ __declspec(noinline) WaterTracksObj::~WaterTracksObj(void)
 	freeWaterTracksResources();
 }
 
-//=============================================================================
-// WaterTracksObj::WaterTracksObj
-//=============================================================================
-/** Constructor. Just nulls out some variables. */
-//=============================================================================
-// ??0WaterTracksObj@@QAE@XZ present-unmatched
-WaterTracksObj::WaterTracksObj(void)
-{
-	m_stageZeroTexture=NULL;
-	m_bound=false;
-	m_initTimeOffset=0;
-}
+// Exact BFME WaterTracksObj constructor is provided by WaterTracksObjConstructor.cpp.
 
 //=============================================================================
 // WaterTracksObj::Get_Obj_Space_Bounding_Sphere
