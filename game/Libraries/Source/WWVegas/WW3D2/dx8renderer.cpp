@@ -528,32 +528,6 @@ DX8TextureCategoryClass* DX8FVFCategoryContainer::Find_Matching_Texture_Category
 	return NULL;
 }
 
-// ?Find_Matching_Texture_Category@DX8FVFCategoryContainer@@ present-unmatched
-DX8TextureCategoryClass* DX8FVFCategoryContainer::Find_Matching_Texture_Category(
-		VertexMaterialClass* vmat,
-		unsigned pass,		
-		DX8TextureCategoryClass* ref_category)
-{
-	// Find texture category which matches ref_category's properties but has 'vmat' on given pass
-	DX8TextureCategoryClass* dest_tex_category=NULL;
-	TextureCategoryListIterator dest_it(&texture_category_list[pass]);
-	while (!dest_it.Is_Done()) {
-		if (Equal_Material(dest_it.Peek_Obj()->Peek_Material(),vmat)) {
-			// Compare all stage's textures
-			dest_tex_category=dest_it.Peek_Obj();
-			bool all_textures_same = true;
-			for (unsigned int s = 0; s < MeshMatDescClass::MAX_TEX_STAGES; s++)
-				all_textures_same = all_textures_same && (dest_tex_category->Peek_Texture(s) == ref_category->Peek_Texture(s));			
-			if (all_textures_same &&				
-				dest_tex_category->Get_Shader()==ref_category->Get_Shader()) {
-				return dest_tex_category;
-			}
-		}
-		dest_it.Next();
-	}
-	return NULL;
-}
-
 // ?Change_Polygon_Renderer_Texture@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@PAVTextureClass@@1II@Z present-unmatched
 void DX8FVFCategoryContainer::Change_Polygon_Renderer_Texture(
 	DX8PolygonRendererList& polygon_renderer_list,
