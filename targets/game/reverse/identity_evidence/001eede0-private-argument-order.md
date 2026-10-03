@@ -21,3 +21,24 @@ Both add_match transactions passed. The final TU passed all three rows (1216/223
 The subsequent commit hook rejected two pre-existing `/alternatename` directives in unrelated files after `origin/master` advanced: `Rva003C8340.cpp` and `Rva00803080Set.cpp`. The hook reports that these aliases no longer exist upstream and their local aliases lack a judgeable pin. No AutoHeal instruction or relocation check failed. No hook was bypassed and no baseline was enlarged.
 
 The uncommitted source/ledger/helper-signature changes were restored. The complete strictly verified source is now the improved update bank, with the original callback/predicate retained in production. The converted verdicts were retracted through re_log. After launcher synchronization removes the unrelated aliases, reapply the helper signature correction (same 223-byte range and address-qualified identity), then replace the update scaffold; rerun strict verification and the normal commit hook.
+
+## Reapplication after the external guard fixes (2026-10-03)
+
+Upstream commits `f3ef066627` and `c86648d2ae` removed the two unrelated
+aliases above. The unchanged best bank (SHA-256
+`dc384036102963e6f57418b57e4bb9d93b8c2eed63e24dfcde893b5c72920b95`)
+was promoted through the two normal `add_match.py` transactions. The predicate
+keeps its address-qualified identity and exact 223-byte range; its old source
+signature is tombstoned. The 1216-byte generated update row is replaced by the
+real AutoHealBehavior method. The existing 66-byte callback is unchanged.
+
+Fresh strict verification passes all three functions, their call bindings,
+and 14 DIR32 references, without new pins or shared-header changes. Ghidra
+12.1.2 through pyghidra-mcp independently shows LEA EAX,[ESP+0x64], MOV EBX,ESI,
+and CALL 0x005EE670 at VA 0x005EF195. Direct reads at VA 0x005EF29F,
+0x005EE74E, and 0x005EEDC1 each return `C3 CC CC`, confirming each final RET
+and following padding. These corroborate the existing private-ABI proof;
+decompiler-created names are not identity evidence.
+
+The complete preferred bank is now live source rather than a second competing
+implementation. Its archived history and the original evidence remain intact.
