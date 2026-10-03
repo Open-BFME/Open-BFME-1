@@ -117,35 +117,7 @@ Vector3 LightPosWorld[ MAX_SHADOW_LIGHTS ] =
 	Vector3( 94.0161f, 50.499f, 200.0f)
 };
 
-//DECLARE_PERF_TIMER(shadowsRender)
-void DoShadows(RenderInfoClass & rinfo, Bool stencilPass)
-{
-	//USE_PERF_TIMER(shadowsRender)
-	shadowCameraFrustum=&rinfo.Camera.Get_Frustum();
-	Int projectionCount=0;
-
-	//Projected shadows render first because they may fill the stencil buffer
-	//which will be used by the shadow volumes
-	if (stencilPass == FALSE  && TheW3DProjectedShadowManager)
-	{
-			if (TheW3DShadowManager->isShadowScene())
-				projectionCount=TheW3DProjectedShadowManager->renderShadows(rinfo);
-	}
-
-	if (stencilPass == TRUE && TheW3DVolumetricShadowManager)
-	{
-
-//		TheW3DShadowManager->loadTerrainShadows();
-
-			//This function gets called many times by the W3D renderer
-			//so we use this flag to make sure shadows rendered only once per frame.
-			if (TheW3DShadowManager->isShadowScene())
-				TheW3DVolumetricShadowManager->renderShadows(projectionCount);
-	}
-	if (TheW3DShadowManager && stencilPass)	//reset so no more shadow processing this frame.
-		TheW3DShadowManager->queueShadows(FALSE);
-
-}
+// DoShadows (retail 0x007B73D0) is defined by Shadow/DoShadowsThunk.cpp, its ledger owner.
 	
 struct BfmeTerrainLightPosition
 {

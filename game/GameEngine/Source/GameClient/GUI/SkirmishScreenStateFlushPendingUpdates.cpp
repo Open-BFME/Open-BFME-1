@@ -1,5 +1,10 @@
 // cl: /EHs-c-
 
+// Retail reaches these two refreshes through ILT thunks 0x00013025 and
+// 0x000176B6, defined by the ledger as j_00013025 / j_000176b6.
+extern void j_00013025(void);
+extern void j_000176b6(void);
+
 class SkirmishScreenOwner
 {
 public:
@@ -71,7 +76,13 @@ bool SkirmishScreenState::flushPendingUpdates(void)
 	if (m_flag15)
 	{
 		m_flag15 = false;
-		bfmeFlush15();
+		union
+		{
+			void (*raw)(void);
+			void (SkirmishScreenState::*member)(void);
+		} flush15;
+		flush15.raw = j_00013025;
+		(this->*flush15.member)();
 		changed = true;
 	}
 	if (m_flag10)
@@ -83,7 +94,13 @@ bool SkirmishScreenState::flushPendingUpdates(void)
 	if (m_flag12)
 	{
 		m_flag12 = false;
-		bfmeFlush12();
+		union
+		{
+			void (*raw)(void);
+			void (SkirmishScreenState::*member)(void);
+		} flush12;
+		flush12.raw = j_000176b6;
+		(this->*flush12.member)();
 		changed = true;
 	}
 	if (m_flag13)

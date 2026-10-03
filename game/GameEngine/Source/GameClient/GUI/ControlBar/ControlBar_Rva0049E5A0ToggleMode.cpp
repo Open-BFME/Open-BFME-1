@@ -58,7 +58,10 @@ public:
 
 extern MessageStream *TheMessageStream;
 extern InGameUI *TheInGameUI;
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail 0x012F7048 is defined as ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A
+// (GameClient/LivingWorld.cpp); keep the local Gen_00609320 view and cast at the read.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern GlobalData *TheWritableGlobalData;
 
 class ControlBar
@@ -84,7 +87,7 @@ Int ControlBar::Rva0049E5A0()
 		m_mode = 1;
 		break;
 	case 1:
-		if (g_bfmeStateDF != 0 && g_bfmeStateDF->m_modeFlag != 0)
+		if (g_rva012F7048LivingWorld != 0 && ((Gen_00609320 *)g_rva012F7048LivingWorld)->m_modeFlag != 0)
 			m_mode = 0;
 		else
 			m_mode = TheWritableGlobalData->m_modeFlag ? 2 : 0;

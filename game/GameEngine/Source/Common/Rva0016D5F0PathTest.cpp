@@ -62,6 +62,7 @@ class CRCParameterCheck
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
+extern void j_00006eec(void);
 extern void j_0003a17a(void);
 extern void j_000296b8(void);
 
@@ -102,7 +103,14 @@ Bool Rva0016D5F0PathTest::run(Object *target)
 		return false;
 
 	BfmeCheckerNW *checker = targetObject->m_checker;
-	if (checker != 0 && checker->bfmeBusyNW())
+	typedef char (BfmeCheckerNW::*BusyNW)();
+	union
+	{
+		void (*raw)(void);
+		BusyNW member;
+	} busy;
+	busy.raw = j_00006eec;
+	if (checker != 0 && (checker->*busy.member)())
 		return false;
 
 	Coord3D position;
