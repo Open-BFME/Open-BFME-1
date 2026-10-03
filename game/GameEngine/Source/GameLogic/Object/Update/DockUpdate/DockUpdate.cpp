@@ -583,78 +583,8 @@ void DockUpdate::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@DockUpdate@@MAEXPAVXfer@@@Z present-unmatched
-void DockUpdate::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// call base class
-	UpdateModule::xfer( xfer );
-
-	// enter position
-	xfer->xferCoord3D( &m_enterPosition );
-
-	// dock position
-	xfer->xferCoord3D( &m_dockPosition );
-
-	// exit position
-	xfer->xferCoord3D( &m_exitPosition );
-
-	// # approach positions
-	xfer->xferInt( &m_numberApproachPositions );
-
-	// positions loaded
-	xfer->xferBool( &m_positionsLoaded );
-
-	// approach positions
-	Int vectorSize = m_approachPositions.size();
-	xfer->xferInt( &vectorSize );
-	m_approachPositions.resize(vectorSize);
-	for( Int vectorIndex = 0; vectorIndex < vectorSize; ++vectorIndex )
-	{
-		// Okay, this is cool.  On save, the size and a bunch of coords will be written.
-		// on load, vectorSize will be at 0 from the .size, but will then get set
-		// by the xfer, and properly control the number of Coords.
-		xfer->xferCoord3D( &m_approachPositions[vectorIndex] );
-	}
-
-	// approach position owners
-	vectorSize = m_approachPositionOwners.size();
-	xfer->xferInt( &vectorSize );
-	m_approachPositionOwners.resize(vectorSize);
-	for( vectorIndex = 0; vectorIndex < vectorSize; ++vectorIndex )
-	{
-		xfer->xferObjectID( &m_approachPositionOwners[vectorIndex] );
-	}
-
-	// approach positions reached
-	vectorSize = m_approachPositionReached.size();
-	xfer->xferInt( &vectorSize );
-	m_approachPositionReached.resize(vectorSize);
-	for( vectorIndex = 0; vectorIndex < vectorSize; ++vectorIndex )
-	{
-		// Vector of Bool gets packed as bitfield internally
-		Bool unpack = m_approachPositionReached[vectorIndex];
-		xfer->xferBool( &unpack );
-	}
-
-	// active docker
-	xfer->xferObjectID( &m_activeDocker );
-
-	// docker inside
-	xfer->xferBool( &m_dockerInside );
-
-	// docker crippled
-	xfer->xferBool( &m_dockCrippled );
-
-	// dock open
-	xfer->xferBool( &m_dockOpen );
-
-}  // end xfer
+// DockUpdate::xfer is defined by retail 0x002CD700 in DockUpdateXferBfme.cpp (matched);
+// the ZH-derived body that stood here was an unledgered second strong definition.
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
