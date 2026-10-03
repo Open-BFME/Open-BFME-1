@@ -82,12 +82,11 @@ class GameLogicPortraitShim
 {
 };
 
-class PlayerList;
-
-class Rva002EE330PlayerListThunk
+// Retail ILT 0x389F6 reaches PlayerList::unidentified_000df510 at 0xDF510.
+class PlayerList
 {
 public:
-	Int unidentified_000389f6(Bool includeFields);
+	Int unidentified_000df510(Bool includeFields);
 };
 
 // Retail ILT 0x9E12 reaches the existing const float accessor at 0x83240.
@@ -102,6 +101,10 @@ class Rva000C97C0PlayerThunk
 public:
 	Int unidentified_00024938(Int bounty);
 };
+
+// Binding only: retail ILT 0x24938 reaches the existing 0xC97C0 body.
+// Both declarations use int __thiscall(int); keep the opaque caller name.
+#pragma comment(linker, "/alternatename:?unidentified_00024938@Rva000C97C0PlayerThunk@@QAEHH@Z=?adjustBountyForLivingWorld@Rva000C97C0Player@@QAEHH@Z")
 
 class InGameUI
 {
@@ -176,7 +179,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
-		const Int playerIndex = ((Rva002EE330PlayerListThunk *)ThePlayerList)->unidentified_000389f6(false);
+		const Int playerIndex = ThePlayerList->unidentified_000df510(false);
 		const Real factor = ((Gen_00083240 *)((char *)TheWritableGlobalData + 0xee0))->bfmeGet0(playerIndex);
 		bounty = (UnsignedInt)(bounty * factor);
 	}
