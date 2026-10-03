@@ -31,13 +31,8 @@
 // THE TWO ROWS CHAIN.  0x005CE550 calls 0x005CD820 and 0x005CD820 calls
 // 0x005CBEE0, so each row's tail member is the next row's class.  0x005CD820
 // is defined here and therefore marked __declspec(noinline): retail's `call`
-// proves it stayed out of line.  0x005CBEE0 is NOT converted -- it is the same
-// 94-byte body except that it computes the right-hand subobject address with
-// `lea eax,[ebx+8] / push eax` instead of `add ebx,8 / push ebx`.  That is the
-// same unexplained register choice U1CloneAssignOperators.cpp records at
-// 0x005CB1D0, and none of the spellings tried here (member through an empty
-// intermediate class, a bound reference local, an explicit `operator=` call, a
-// pointer argument) reproduces it.  It is declared only, and pinned.
+// proves it stayed out of line.  0x005CBEE0 is defined in
+// fx_particle_system_tail_assignment.cpp, in the FXParticleSystem namespace.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
@@ -48,11 +43,14 @@ public:
 	virtual Y3Clonable *clone();
 };
 
+namespace FXParticleSystem
+{
 class Y3AssignTail_005CBEE0
 {
 public:
 	Y3AssignTail_005CBEE0 &operator=( const Y3AssignTail_005CBEE0 &rhs );
 };
+}
 
 #define Y3_CLONE_ASSIGN_PAIR( ROW, TAIL, DECORATION )                         \
 	class Y3Assign_##ROW                                                      \
@@ -78,5 +76,5 @@ public:
 		return *this;                                                         \
 	}
 
-Y3_CLONE_ASSIGN_PAIR( 005CD820, Y3AssignTail_005CBEE0, __declspec(noinline) )
+Y3_CLONE_ASSIGN_PAIR( 005CD820, FXParticleSystem::Y3AssignTail_005CBEE0, __declspec(noinline) )
 Y3_CLONE_ASSIGN_PAIR( 005CE550, Y3Assign_005CD820, )
