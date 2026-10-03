@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl EmotionTrackerUpdateFieldParse(MultiIniFieldParse &parse);
+void j_00017fd5();
 
 class EmotionTrackerUpdate
 {
@@ -43,6 +43,15 @@ ModuleData *EmotionTrackerUpdate::friend_newModuleData(INI *ini)
 {
 	EmotionTrackerUpdateModuleData *data = new EmotionTrackerUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &EmotionTrackerUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00017fd5));
 	return (ModuleData *)data;
 }
+
+// Retail's factory at EmotionTrackerUpdate pushes 0x00417FD5 here (see
+// ?friend_newModuleData@EmotionTrackerUpdate@@SAPAVModuleData@@PAVINI@@@Z), and the only
+// symbol the build defines at that address is the five-byte ILT thunk
+// ?j_00017fd5@@YAXXZ (game/gen_small/gthunks_026.cpp), a `jmp` to 0x00290E30, the
+// module-data class's static field-parse builder.  The old
+// `extern "C" EmotionTrackerUpdateFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.

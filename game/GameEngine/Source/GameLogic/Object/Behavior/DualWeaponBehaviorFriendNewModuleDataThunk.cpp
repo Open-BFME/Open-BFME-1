@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DualWeaponBehaviorFieldParse(MultiIniFieldParse &parse);
+void j_00025b4e();
 
 class DualWeaponBehavior
 {
@@ -43,6 +43,15 @@ ModuleData *DualWeaponBehavior::friend_newModuleData(INI *ini)
 {
 	DualWeaponBehaviorModuleData *data = new DualWeaponBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DualWeaponBehaviorFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00025b4e));
 	return (ModuleData *)data;
 }
+
+// Retail's factory at DualWeaponBehavior pushes 0x00425B4E here (see
+// ?friend_newModuleData@DualWeaponBehavior@@SAPAVModuleData@@PAVINI@@@Z), and the only
+// symbol the build defines at that address is the five-byte ILT thunk
+// ?j_00025b4e@@YAXXZ (game/gen_small/gthunks_041.cpp), a `jmp` to 0x001F7E40, the
+// module-data class's static field-parse builder.  The old
+// `extern "C" DualWeaponBehaviorFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.

@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DelayedLuaEventUpdateFieldParse(MultiIniFieldParse &parse);
+void j_0001b199();
 
 class DelayedLuaEventUpdate
 {
@@ -43,6 +43,15 @@ ModuleData *DelayedLuaEventUpdate::friend_newModuleData(INI *ini)
 {
 	DelayedLuaEventUpdateModuleData *data = new DelayedLuaEventUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DelayedLuaEventUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0001b199));
 	return (ModuleData *)data;
 }
+
+// Retail's factory at DelayedLuaEventUpdate pushes 0x0041B199 here (see
+// ?friend_newModuleData@DelayedLuaEventUpdate@@SAPAVModuleData@@PAVINI@@@Z), and the only
+// symbol the build defines at that address is the five-byte ILT thunk
+// ?j_0001b199@@YAXXZ (game/gen_small/gthunks_029.cpp), a `jmp` to 0x0028BC00, the
+// module-data class's static field-parse builder.  The old
+// `extern "C" DelayedLuaEventUpdateFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.

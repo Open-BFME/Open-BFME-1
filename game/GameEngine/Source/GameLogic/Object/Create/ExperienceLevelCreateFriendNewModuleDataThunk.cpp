@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ExperienceLevelCreateFieldParse(MultiIniFieldParse &parse);
+void j_00013719();
 
 class ExperienceLevelCreate
 {
@@ -43,6 +43,15 @@ ModuleData *ExperienceLevelCreate::friend_newModuleData(INI *ini)
 {
 	ExperienceLevelCreateModuleData *data = new ExperienceLevelCreateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ExperienceLevelCreateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00013719));
 	return (ModuleData *)data;
 }
+
+// Retail's factory at ExperienceLevelCreate pushes 0x00413719 here (see
+// ?friend_newModuleData@ExperienceLevelCreate@@SAPAVModuleData@@PAVINI@@@Z), and the only
+// symbol the build defines at that address is the five-byte ILT thunk
+// ?j_00013719@@YAXXZ (game/gen_small/gthunks_020.cpp), a `jmp` to 0x0024F6D0, the
+// module-data class's static field-parse builder.  The old
+// `extern "C" ExperienceLevelCreateFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.

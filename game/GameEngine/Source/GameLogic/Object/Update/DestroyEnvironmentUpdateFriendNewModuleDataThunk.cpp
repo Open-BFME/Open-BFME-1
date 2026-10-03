@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DestroyEnvironmentUpdateFieldParse(MultiIniFieldParse &parse);
+void j_00014b87();
 
 class DestroyEnvironmentUpdate
 {
@@ -43,6 +43,15 @@ ModuleData *DestroyEnvironmentUpdate::friend_newModuleData(INI *ini)
 {
 	DestroyEnvironmentUpdateModuleData *data = new DestroyEnvironmentUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DestroyEnvironmentUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00014b87));
 	return (ModuleData *)data;
 }
+
+// Retail's factory at DestroyEnvironmentUpdate pushes 0x00414B87 here (see
+// ?friend_newModuleData@DestroyEnvironmentUpdate@@SAPAVModuleData@@PAVINI@@@Z), and the only
+// symbol the build defines at that address is the five-byte ILT thunk
+// ?j_00014b87@@YAXXZ (game/gen_small/gthunks_022.cpp), a `jmp` to 0x0028CD50, the
+// module-data class's static field-parse builder.  The old
+// `extern "C" DestroyEnvironmentUpdateFieldParse` was invented in this TU and nothing
+// defines it; the thunk is retail's real spelling of this operand.
