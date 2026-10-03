@@ -101,8 +101,10 @@ vtables). If it does, this Ghidra version agrees with the one the project was
 built against; if it does not, treat every other export as suspect before using
 it.
 
-**Against the ledger.** A `matched` row is a byte-verified fact, so the fraction
-Ghidra reproduces is a real score. Measured 2026-08-04 with 12.1.2:
+**Against the historical ledger.** These measurements compare Ghidra's
+inventory with the ledger, not with independently proven body boundaries.
+A `matched` row can reproduce a prefix while claiming the wrong extent.
+Measured 2026-08-04 with 12.1.2:
 
 | Row kind | rows | rva is a Ghidra function start | size exact |
 |---|---|---|---|
@@ -110,11 +112,14 @@ Ghidra reproduces is a real score. Measured 2026-08-04 with 12.1.2:
 | `gen_small` | 76,884 | 32.9% | 100% of those |
 | `masm_dumps` | 179 | 91.1% | **81.0%** of those |
 
-Read it as: where Ghidra has a boundary it is nearly always right, so
-`harvest.py` taking its sizes is safe, and the third of real-source rows it
-misses are simply absent rather than wrong. The `masm_dumps` row is the outlier
-and it is not a Ghidra defect — 19% of dump rows disagree with it because dumps
-byte-verify at any length.
+These percentages measure agreement, not boundary correctness. Taking the
+inventory's address-set count as a contiguous size is unsafe: internal gaps
+can make it omit a final instruction or epilogue. The ledger can contain the
+same short count, and an emitted-byte dump can reproduce that prefix exactly.
+Follow the retail control-flow checks under **Sizes** above before claiming
+an extent; neither ledger agreement nor a dump's byte match replaces them.
+See `targets/game/reverse/identity_evidence/20261003-range-count-audit.md`
+for five independently confirmed examples.
 
 ## Without the inventory
 
