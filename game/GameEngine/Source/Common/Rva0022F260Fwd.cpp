@@ -9,8 +9,18 @@
 
 struct BfmeList2F260
 {
-	void bfmeG(int a, int b);
+	char m_pad[1];
 };
+
+// Retail's call enters the 5-byte ILT at 0x0002818C
+// (game/gen_small/thunks_019.cpp, ?j_0002818c@@YAXXZ), which tail-jumps to
+// 0x000688A5. That ILT is the only definition of the address, so call it under
+// its defined name with the callee's thiscall shape. VC7.1 reserves
+// __thiscall in a free-function-pointer typedef, so use the established
+// pointer-to-member cast idiom.
+extern void j_0002818c();
+struct BfmeList2F260CallView { void call(int a, int b); };
+typedef void (BfmeList2F260CallView::*BfmeList2F260Call)(int a, int b);
 
 class Player
 {
@@ -38,5 +48,7 @@ void Gen_0022F260::bfmeForward(int a, int b)
 	Object *obj = *(Object **)((char *)self - 0x18);
 	Player *player = obj->getControllingPlayer();
 	BfmeList2F260 *list = player->m_list;
-	list->bfmeG(a, b);
+	union { void (*asFunction)(); BfmeList2F260Call asMember; } gCast;
+	gCast.asFunction = j_0002818c;
+	(reinterpret_cast<BfmeList2F260CallView *>(list)->*gCast.asMember)(a, b);
 }
