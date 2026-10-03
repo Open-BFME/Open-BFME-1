@@ -114,6 +114,14 @@ class AudioEventRTS
 {
 public:
 	AsciiString generateFilenamePrefix(AudioType audioTypeToPlay, Bool localized);
+
+protected:
+	void adjustForLocalization(AsciiString &strToAdjust);
+
+public:
+	void *m_vftable;
+	int m_filenameToLoad;
+	AudioEventInfo *m_eventInfo;
 };
 
 __forceinline AudioType retainAudioType(AudioType type)
@@ -121,19 +129,8 @@ __forceinline AudioType retainAudioType(AudioType type)
 	return type;
 }
 
-class Rva000B3730AudioEventRTS
-{
-protected:
-	void adjustForLocalization(AsciiString &strToAdjust);
-
-	public:
-	void *m_vftable;
-	int m_filenameToLoad;
-	AudioEventInfo *m_eventInfo;
-};
-
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
-void Rva000B3730AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
+void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 {
 	const char *path = strToAdjust.str();
 	if (TheFileSystem->doesFileExist(path))

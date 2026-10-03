@@ -593,27 +593,8 @@ const Coord3D *AudioEventRTS::getCurrentPosition( void )
 // AudioEventRTSGenerateFilenameExtension.cpp at RVA 0x000B3630.
 
 //-------------------------------------------------------------------------------------------------
-// ?adjustForLocalization@AudioEventRTS@@ present-unmatched
-void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
-{
-	const char *str = strToAdjust.reverseFind('\\');
-	if (!str) {
-		return;
-	}
-
-	// try the localized version first so that we're guarenteed to get it
-	// even if the generic data directory holds a version of the file
-	AsciiString localizedFilePath = generateFilenamePrefix(m_eventInfo->m_soundType, TRUE);
-	AsciiString filename = str;
-	localizedFilePath.concat(filename);
-
-	if (TheFileSystem->doesFileExist(localizedFilePath.str())) {
-		strToAdjust = localizedFilePath;
-	}
-	// else there was no localized version, so leave the path we received unchanged
-
-	return;
-}
+// BFME adjustForLocalization is owned by AudioEventRTSAdjustForLocalization.cpp
+// at RVA 0x000B3730. Retail keeps an existing path before trying localization.
 
 //-------------------------------------------------------------------------------------------------
 // BFME getPlayerIndex is owned by AudioEventRTSGetPlayerIndexThunk.cpp at
