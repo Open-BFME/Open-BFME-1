@@ -654,7 +654,7 @@ void BfmeAptScreenDisconnectScreen::_bfme_onQuit( const char * )
 	m_isQuitting = true;
 
 	UnicodeString message = TheNetwork->getPlayerName( TheNetwork->getLocalPlayerID() );
-	message.concat( L" has left the game", wcslen( L" has left the game" ) );
+	message.concat( L" has left the game.", wcslen( L" has left the game." ) );
 	((DisconnectMenu *)this)->sendChat( message );
 
 	for( int slot = 0; slot < 8; ++slot )
