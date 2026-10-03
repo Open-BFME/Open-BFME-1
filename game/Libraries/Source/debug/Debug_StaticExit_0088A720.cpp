@@ -15,8 +15,8 @@ struct BfmeThingQO
     void bfmeFlushQO(int);
 };
 
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Canonical pointer cell at retail VA 0x01336E5C.
+extern void *g_Rva00F36E5C;
 
 struct BfmeCsDWA;
 extern BfmeCsDWA g_bfmeCsDWC;
@@ -73,7 +73,7 @@ class Debug
     static void StaticExit(void);
 };
 
-#define Instance (*(Debug *)TheBfmeAwakenDebug)
+#define Instance (*(Debug *)g_Rva00F36E5C)
 
 // ?StaticExit@Debug@@CAXXZ
 void Debug::StaticExit(void)

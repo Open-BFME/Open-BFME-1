@@ -59,8 +59,8 @@ public:
 	virtual void slot00();
 };
 
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Canonical pointer cell at retail VA 0x01336E5C.
+extern void *g_Rva00F36E5C;
 
 class Debug
 {
@@ -95,7 +95,7 @@ private:
 	static void PostStaticInit(void);
 };
 
-#define Instance (*(Debug **)&TheBfmeAwakenDebug)
+#define Instance (*(Debug **)&g_Rva00F36E5C)
 
 // ?PostStaticInit@Debug@@CAXXZ
 void Debug::PostStaticInit(void)
