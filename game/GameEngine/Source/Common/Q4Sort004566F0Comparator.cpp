@@ -9,7 +9,7 @@ __declspec(nothrow) int StringBase<unsigned short>::compareNoCase(
 
 inline UnicodeString::~UnicodeString()
 {
-    ((StringBase<wchar_t> *)this)->releaseBuffer();
+    ((StringBase<unsigned short> *)this)->releaseBuffer();
 }
 
 class MapMetaData
