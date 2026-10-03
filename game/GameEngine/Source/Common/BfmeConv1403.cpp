@@ -30,8 +30,22 @@ class BfmeStrVKJ
 {
 public:
 	BfmeStrVKJ *bfmeAssignVKJ(const BfmeStrVKJ &o);
-	void bfmeReserveVKJ(unsigned a, int b, unsigned c, int d, unsigned e);
 	BfmeHdrVKJ *m_bfme00;
+};
+
+// The reserve call is EAStringC::ChangeBuffer at retail 0x0089E570.
+class EAStringC
+{
+	enum CBPushZero
+	{
+		CB_NO_PUSH_ZERO,
+		CB_PUSH_ZERO
+	};
+
+	void ChangeBuffer(unsigned int reserve, unsigned int offset,
+		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
+
+	friend class BfmeStrVKJ;
 };
 
 BfmeStrVKJ *BfmeStrVKJ::bfmeAssignVKJ(const BfmeStrVKJ &o)
@@ -50,7 +64,8 @@ BfmeStrVKJ *BfmeStrVKJ::bfmeAssignVKJ(const BfmeStrVKJ &o)
 	if (olen != 0)
 	{
 		unsigned total = olen + len;
-		bfmeReserveVKJ(total, 0, len, 0, total);
+		reinterpret_cast<EAStringC *>(this)->ChangeBuffer(
+			total, 0, len, EAStringC::CB_NO_PUSH_ZERO, total);
 		memcpy((char *)m_bfme00 + len + 8, (char *)o.m_bfme00 + 8, olen + 1);
 	}
 	return this;
