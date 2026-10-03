@@ -69,8 +69,8 @@
 static Bool checkingForPatchBeforeGameSpy = FALSE;
 Int checksLeftBeforeOnline = 0;
 Int timeThroughOnline = 0; // used to avoid having old callbacks cause problems
-static Bool mustDownloadPatch = FALSE;
-static Bool cantConnectBeforeOnline = FALSE;
+Bool mustDownloadPatch = FALSE;
+Bool cantConnectBeforeOnline = FALSE;
 static std::list<QueuedDownload> queuedDownloads;
 
 char *MOTDBuffer = NULL;
