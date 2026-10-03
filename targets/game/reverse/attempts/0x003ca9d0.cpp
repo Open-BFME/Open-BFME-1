@@ -1,5 +1,5 @@
 // ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z
-// partial score=0.955 date=2026-09-20
+// partial score=0.9614 date=2026-10-03
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // PROGRESS 2026-09-20 (opus): 657B/396-diff -> 673B(size-exact)/30-diff.
@@ -150,6 +150,53 @@ public:
 	Obf003C87A0( int *a, int *b );
 	unsigned int m_bits[ 8 ];
 };
+
+struct BigObfSelectorRecord
+{
+	unsigned int m_key[ 5 ];
+	unsigned int m_seed[ 5 ];
+};
+
+// The constructors use the same two-bit selector helpers already recovered in
+// Q3SelectorRecordReaders.cpp and R3SelectorRecordReadersEbp.cpp.  VC7.1 has
+// no intrinsic for rdtsc, and neither esp nor ebp can be read as a C++ value,
+// so these one-instruction selectors are the only non-C++ part of the bodies.
+// The xor chain is ordinary C++; its final two inputs are intentionally the
+// pre-existing object words, as the retail anti-tamper code reads them before
+// writing them.
+
+#define BFME_OBF_RECORD( ADDR )                                           \
+	extern BigObfSelectorRecord g_ObfRecord##ADDR;
+
+#define BFME_OBF_CTOR_BODY( ADDR, RECORD, SELECTOR, C1, C2, C3 )          \
+	__declspec(noinline) Obf##ADDR::Obf##ADDR( int *a, int *b )                                \
+	{                                                                     \
+		unsigned int selector = 0;                                         \
+		SELECTOR                                                           \
+		unsigned int index = selector & 3;                                 \
+		unsigned int key = RECORD.m_key[ index ];                          \
+		m_bits[ 0 ] = RECORD.m_seed[ index ];                              \
+		m_bits[ 1 ] = C1;                                                  \
+		m_bits[ 2 ] = C2;                                                  \
+		m_bits[ 3 ] = C3;                                                  \
+		m_bits[ 4 ] = *a;                                                  \
+		m_bits[ 5 ] = *b;                                                  \
+		m_bits[ 1 ] ^= key * key;                                          \
+		m_bits[ 2 ] ^= m_bits[ 1 ] * key;                                 \
+		m_bits[ 3 ] ^= m_bits[ 2 ] * key;                                 \
+		m_bits[ 4 ] ^= m_bits[ 3 ] * key;                                 \
+		m_bits[ 5 ] ^= m_bits[ 4 ] * key;                                 \
+		m_bits[ 6 ] ^= m_bits[ 5 ] * key;                                 \
+		m_bits[ 7 ] ^= m_bits[ 6 ] * key;                                 \
+	}
+
+#define BFME_OBF_SELECT_STACK __asm { mov selector, esp }
+#define BFME_OBF_SELECT_FRAME __asm { mov selector, ebp }
+#define BFME_OBF_SELECT_TIMESTAMP __asm { rdtsc } __asm { mov selector, eax }
+
+
+BFME_OBF_RECORD( 012B488C )
+BFME_OBF_CTOR_BODY( 003C87A0, g_ObfRecord012B488C, BFME_OBF_SELECT_STACK, 0x140C4A01, 0x140C4A05, 0x54A008CD )
 
 int __cdecl Gen003C78B0( int a, int b );
 
