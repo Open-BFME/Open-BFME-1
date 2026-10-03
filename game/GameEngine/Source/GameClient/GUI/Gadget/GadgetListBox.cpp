@@ -168,7 +168,7 @@ void Rva004B8230UpdateColumnWidths(GameWindow *listbox)
 // DEFINES ////////////////////////////////////////////////////////////////////
 // Sets up the user's OS set doubleclick time so if they don't like it... they can
 // change it in their OS.
-static UnsignedInt doubleClickTime = GetDoubleClickTime();
+UnsignedInt doubleClickTime = GetDoubleClickTime();
 
 // PRIVATE TYPES //////////////////////////////////////////////////////////////
 typedef struct _AddMessageStruct

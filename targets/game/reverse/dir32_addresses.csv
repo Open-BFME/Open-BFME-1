@@ -6827,7 +6827,7 @@ name,va
 ?Rva00DEFBE0ThreadProc@@YAXPAX@Z,0x00DEFBE0
 ?Rva00ED6848IdentityMatrix@@3VMatrix3D@@A,0x012D6848
 ?Rva00EF1000Global@@3URva00EF1000Storage@@A,0x012F1000
-?Rva00EF3640DoubleClickTime@@3IA,0x012F3640
+?doubleClickTime@@3IA,0x012F3640
 ?Rva00EF3884BriefingList@@3V?$list@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@A,0x012F3884
 ?Rva00F071D4Target986B@@3PADA,0x013071D4
 ?Rva00F4FAACRegistry@@3PAVRva009EEC60Registry@@A,0x0134FAAC

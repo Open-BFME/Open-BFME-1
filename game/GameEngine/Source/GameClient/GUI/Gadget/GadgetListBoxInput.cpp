@@ -53,6 +53,10 @@ inline AsciiString::~AsciiString()
     ((StringBase<char> *)this)->releaseBuffer();
 }
 
+// This TU-only 5 B COMDAT tail-forwards to StringBase<WideChar>::releaseBuffer.
+// It has no code/data incoming relocations, only a .debug$F SECREL reference;
+// retail dead-stripped this wrapper. RVA008881D0 is the 134 B wide body instead.
+// ?releaseBuffer@UnicodeString@@IAEXXZ absent-from-retail
 inline void UnicodeString::releaseBuffer()
 {
     ((StringBase<WideChar> *)this)->releaseBuffer();
@@ -86,7 +90,7 @@ struct Rva004B8940List
     short displayPos;
     int m_at48;
 };
-extern unsigned int Rva00EF3640DoubleClickTime;
+extern unsigned int doubleClickTime;
 void adjustDisplay(GameWindow *, int, bool);
 void adjustDisplay(GameWindow *, bool);
 
@@ -821,7 +825,7 @@ WindowMsgHandledType GadgetListBoxInput(GameWindow *window, UnsignedInt msg, Win
                 relativeX -= list->columnWidth[column];
             }
         }
-        if (list->doubleClickTime + Rva00EF3640DoubleClickTime > timeGetTime() &&
+        if (list->doubleClickTime + doubleClickTime > timeGetTime() &&
             (i == oldPos || (oldPos == -1 && (i >= 0 && i < list->endPos))))
         {
             int temp;
