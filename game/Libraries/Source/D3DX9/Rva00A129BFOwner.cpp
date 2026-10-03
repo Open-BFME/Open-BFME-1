@@ -7,6 +7,7 @@
 class Rva00A129BFOwner
 {
 public:
+    unsigned long __stdcall rva00A12A4A();
     unsigned long __stdcall rva00A12A6B();
     unsigned long __stdcall rva00A12A78();
     unsigned long __stdcall rva00A12D75();
@@ -49,4 +50,15 @@ unsigned long __stdcall Rva00A129BFOwner::rva00A12D9C()
 {
     return *reinterpret_cast<const unsigned long *>(
         reinterpret_cast<const char *>(this) + 0x2bc);
+}
+
+// Slot 1 increments receiver dword +4 and returns the updated value.
+// Only the readback is volatile, preserving retail INC [this+4] followed
+// by a separate load. This does not assert an original volatile member type.
+unsigned long __stdcall Rva00A129BFOwner::rva00A12A4A()
+{
+    unsigned long *value = reinterpret_cast<unsigned long *>(
+        reinterpret_cast<char *>(this) + 4);
+    ++*value;
+    return *static_cast<volatile unsigned long *>(value);
 }
