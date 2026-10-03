@@ -153,7 +153,7 @@ void __cdecl iniParseVictorySystemDefinition(INI *ini)
 		const char *text = name.str();
 		BFMEIndexBufferDebugStream *stream =
 			g_rva00889690->Get_Stream(0, 0);
-		stream->Put_String(Debug::Format("TheVictorySystem has not been initialized!.", text));
+		stream->Put_String(Debug::Format("TheVictorySystem has not been initialized!.\n", text));
 		stream->Finish(1);
 	}
 	else
