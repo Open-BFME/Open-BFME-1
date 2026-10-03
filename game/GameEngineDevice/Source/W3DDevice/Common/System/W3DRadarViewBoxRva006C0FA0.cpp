@@ -145,7 +145,7 @@ public:
 	void copy(const Rva00592E10Pair *source);
 };
 
-class Glo012F4B98Type;
+class AptPalantir;
 
 class Rva006C0FA0W3DRadar
 {
@@ -173,7 +173,8 @@ public:
 };
 
 extern View *TheTacticalView;
-extern Glo012F4B98Type *Glo012F4B98;
+// The existing singleton owner defines this 4-byte pointer at VA 0x012F4B98.
+extern AptPalantir *TheAptPalantir;
 
 void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, Int unused)
 {
@@ -213,6 +214,6 @@ void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, 
 	box[2] = start;
 	box[3] = end;
 
-	if (Glo012F4B98)
-		((Rva00592E10Owner *)Glo012F4B98)->copy((const Rva00592E10Pair *)box);
+	if (TheAptPalantir)
+		((Rva00592E10Owner *)TheAptPalantir)->copy((const Rva00592E10Pair *)box);
 }
