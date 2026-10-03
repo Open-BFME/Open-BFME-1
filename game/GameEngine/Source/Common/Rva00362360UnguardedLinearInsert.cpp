@@ -22,6 +22,10 @@ public:
 	void copyFrom( const LivingWorldArmy &other );
 };
 
+// Retail calls copyFrom through the five-byte ILT thunk 0x000470F0.
+extern void j_000470f0();
+typedef void ( LivingWorldArmy::*CopyFromThunk )( const LivingWorldArmy &other );
+
 class BfmeOwnVUM
 {
 public:
@@ -63,13 +67,14 @@ struct Rva00364980HeapCompare
 void rva00362360UnguardedLinearInsert( Rva00364980HeapElement *last,
 	Rva00364980HeapElement value, Rva00364980HeapCompare compare )
 {
+	union { void ( *fn )(); CopyFromThunk call; } copyFrom = { j_000470f0 };
 	Rva00364980HeapElement *next = last;
 	--next;
 	while( compare( value, *next ) )
 	{
-		((LivingWorldArmy *)last)->copyFrom( *(const LivingWorldArmy *)next );
+		( ((LivingWorldArmy *)last)->*copyFrom.call )( *(const LivingWorldArmy *)next );
 		last = next;
 		--next;
 	}
-	((LivingWorldArmy *)last)->copyFrom( *(const LivingWorldArmy *)&value );
+	( ((LivingWorldArmy *)last)->*copyFrom.call )( *(const LivingWorldArmy *)&value );
 }
