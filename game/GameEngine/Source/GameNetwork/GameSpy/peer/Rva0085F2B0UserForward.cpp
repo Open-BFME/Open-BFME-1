@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-// RVA0085F2B0: INT3 boundary, 55-byte cdecl body through RET at+0x36.
+// piConnectFillInUserCallbackA (retail 0085F2B0; DIR32 symbol _piConnectFillInUserCallbackA
+// at VA 00C5F2B0, passed by the connect path to chatConnect*A): INT3 boundary, 55-byte cdecl body through RET at+0x36.
 // Four incoming stack slots; first ignored, second stored at context+0x54,
 // third is the piMangleUser output buffer, fourth points to the context.
 // Lookup00860700 independently reads connection+0x8b0; a nonzero result
@@ -14,7 +15,7 @@ struct Rva0085F2B0Context {
     unsigned gap58;
     int field5C;
 };
-void rva0085F2B0(const void *, unsigned value, char *buffer, Rva0085F2B0Context **slot)
+extern "C" void piConnectFillInUserCallbackA(const void *, unsigned value, char *buffer, Rva0085F2B0Context **slot)
 {
     Rva0085F2B0Context *context=*slot;
     context->field54=value;
