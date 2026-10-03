@@ -1,3 +1,6 @@
+// stlport
+#include <stl/_alloc.h>
+
 class BfmeThingCFB
 {
 public:
@@ -8,8 +11,7 @@ public:
 	char *m_bfmeEnd;
 };
 
-void bfmeFreeBigCFB(char *ptr);
-void bfmeFreeSmallCFB(char *ptr, unsigned int size);
+void __cdecl operator delete(void *ptr);
 
 void BfmeThingCFB::bfmeGoCFB()
 {
@@ -18,8 +20,8 @@ void BfmeThingCFB::bfmeGoCFB()
 	if (ptr != 0)
 	{
 		if (size > 0x80)
-			bfmeFreeBigCFB(ptr);
+			::operator delete(ptr);
 		else
-			bfmeFreeSmallCFB(ptr, size);
+			_STL::__node_alloc<true, 0>::deallocate(ptr, size);
 	}
 }

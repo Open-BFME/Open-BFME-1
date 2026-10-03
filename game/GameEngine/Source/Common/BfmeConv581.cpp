@@ -1,3 +1,6 @@
+// stlport
+#include <stl/_alloc.h>
+
 class BfmeThingCFA
 {
 public:
@@ -8,8 +11,7 @@ public:
 	char *m_bfmeEnd;
 };
 
-void bfmeFreeBigCFA(char *ptr);
-void bfmeFreeSmallCFA(char *ptr, unsigned int size);
+void __cdecl operator delete(void *ptr);
 
 void BfmeThingCFA::bfmeGoCFA()
 {
@@ -18,8 +20,8 @@ void BfmeThingCFA::bfmeGoCFA()
 	if (ptr != 0)
 	{
 		if (size > 0x80)
-			bfmeFreeBigCFA(ptr);
+			::operator delete(ptr);
 		else
-			bfmeFreeSmallCFA(ptr, size);
+			_STL::__node_alloc<true, 0>::deallocate(ptr, size);
 	}
 }

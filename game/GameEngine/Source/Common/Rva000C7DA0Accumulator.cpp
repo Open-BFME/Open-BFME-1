@@ -1,9 +1,11 @@
 // Open-BFME: clean C++ lift of the accumulator body at 0x000C7DA0.
 
+class Drawable;
+int __stdcall bfmeGetXR(Drawable *d);
+
 class Rva000C7DA0
 {
 public:
-	int adjust(int value);                         // retail 0x000C7D10
 	void add(int value);
 
 private:
@@ -13,13 +15,12 @@ private:
 
 void Rva000C7DA0::add(int value)
 {
-	m_total += adjust(value);
+	m_total += bfmeGetXR((Drawable *)value);
 }
 
 class Rva000C7DC0
 {
 public:
-	int adjust(int value);                         // retail 0x000C7D10
 	void subtract(int value);
 
 private:
@@ -29,5 +30,5 @@ private:
 
 void Rva000C7DC0::subtract(int value)
 {
-	m_total -= adjust(value);
+	m_total -= bfmeGetXR((Drawable *)value);
 }
