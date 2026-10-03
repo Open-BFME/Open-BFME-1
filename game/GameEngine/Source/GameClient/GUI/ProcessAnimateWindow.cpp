@@ -512,22 +512,7 @@ ProcessAnimateWindowSlideFromTop::ProcessAnimateWindowSlideFromTop( void )
 // ??1ProcessAnimateWindowSlideFromTop@@UAE@XZ present-unmatched
 ProcessAnimateWindowSlideFromTop::~ProcessAnimateWindowSlideFromTop( void ) { }
 
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAEXPAVAnimateWindow@@I@Z present-unmatched
-void ProcessAnimateWindowSlideFromTop::initReverseAnimateWindow( AnimateWindow *animWin, UnsignedInt maxDelay )
-{
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	if(animWin->getDelay() > 0)
-		animWin->setStartTime(timeGetTime() + (maxDelay - animWin->getDelay()));
-	Coord2D vel = animWin->getVel();
-	vel.x *= -1;
-	vel.y *= -1;
-	animWin->setVel( vel );	
-
-}
+// Retail Top reverse initializer: ProcessAnimateWindowInitReverse.cpp.
 
 // Retail forward initializer: ProcessAnimateWindowInitAnimate.cpp.
 
