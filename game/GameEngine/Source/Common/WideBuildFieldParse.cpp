@@ -23,20 +23,20 @@
 //     static void X::buildFieldParse( MultiIniFieldParse &p )
 //     { Base::buildFieldParse( p ); p.add( theFieldParseTable, 0 ); }
 //
-// The receiver stays spelled WideMulti because every member body here is
-// matched under a name carrying it
-// (?buildFieldParse@Rva00115A80@@SAXAAVWideMulti@@@Z and 75 siblings);
-// respelling the parameter type would rename the enclosing bodies and unmatch
-// all 76 rows. The appender they call is retail's MultiIniFieldParse::add at
-// 0x00850920, so the call goes through the defining class.
+// The receiver stays spelled WideMulti because every address-derived body here
+// is matched under a name carrying it (?buildFieldParse@Rva00115A80@@SAXAAVWideMulti@@@Z
+// and its siblings); respelling the parameter type would rename and unmatch them.
+// The appender they call is retail's MultiIniFieldParse::add at 0x00850920, so
+// the call goes through the defining class. The identified RousingSpeech
+// builder takes MultiIniFieldParse directly.
 //
 // THE VARYING AXIS IS THE FIRST REL32 -- the base class's buildFieldParse.
 // Seventy-six members over seventeen distinct base callees.  The table address
 // also varies, but it is a DIR32 site: it is read from retail, not asserted.
 //
-// IDENTITY IS NOT RECOVERED.  Every name here is derived from an address, and
-// the table contents are not modelled at all -- each table is an undefined
-// extern whose only role is to make the compiler emit `push offset`.
+// Apart from the RousingSpeech builder, every name here is derived from an
+// address, and the table contents are not modelled at all -- each table is an
+// undefined extern whose only role is to make the compiler emit `push offset`.
 
 class WideFieldParse
 {
@@ -131,7 +131,20 @@ WIDE_FIELD_PARSE( 002639A0, 0002AF8B )
 WIDE_FIELD_PARSE( 002643F0, 0002AF8B )
 WIDE_FIELD_PARSE( 00264420, 0002AF8B )
 WIDE_FIELD_PARSE( 002647C0, 0002AF8B )
-WIDE_FIELD_PARSE( 00264AC0, 0000629E )
+extern const WideFieldParse WideTbl00264AC0[];
+class RousingSpeechUpdateModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The RousingSpeechUpdate factory passes this module-data builder.
+// Retail ILT 0x0002009A reaches this 30-byte body at RVA 0x00264AC0.
+void RousingSpeechUpdateModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0000629E::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl00264AC0), 0);
+}
 WIDE_FIELD_PARSE( 00265880, 0002AF8B )
 WIDE_FIELD_PARSE( 00265AF0, 00005B46 )
 WIDE_FIELD_PARSE( 00266210, 00005B46 )

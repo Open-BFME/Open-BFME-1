@@ -7,6 +7,7 @@ class INI;
 class Thing;
 class Module;
 class ModuleData;
+class MultiIniFieldParse;
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
@@ -15,13 +16,12 @@ class RousingSpeechUpdateModuleData
 {
 public:
 	RousingSpeechUpdateModuleData();
+	static void buildFieldParse(MultiIniFieldParse &parse);
 	virtual ~RousingSpeechUpdateModuleData();
 
 private:
 	unsigned char m_pad[0x280];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -33,8 +33,6 @@ public:
 	void initFromINIMultiProc(void *what,
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
-
-extern "C" void __cdecl RousingSpeechUpdateFieldParse(MultiIniFieldParse &parse);
 
 class RousingSpeechUpdate
 {
@@ -52,7 +50,7 @@ ModuleData *RousingSpeechUpdate::friend_newModuleData(INI *ini)
 {
 	RousingSpeechUpdateModuleData *data = new RousingSpeechUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RousingSpeechUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &RousingSpeechUpdateModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
 
