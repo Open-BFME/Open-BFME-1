@@ -25,7 +25,8 @@ struct BfmeFormattedText225960
 
 extern "C" BfmeFormattedText225960 *__cdecl bfmeFormatText(
 	BfmeFormattedText225960 *result, int tag, const char *format, ...);
-extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
+// Retail 0x9F6D00 jumps through the MSVCR71 _CxxThrowException IAT entry.
+extern "C" void __stdcall _CxxThrowException(void *object, _ThrowInfo *throwInfo);
 extern "C" char g_rva005c5100ThrowInfo;
 
 class Rva00225960Owner
@@ -65,7 +66,8 @@ void ContainListRestore0024A900::restore()
 	if (!m_atEC.empty()) {
 		BfmeFormattedText225960 buf;
 		bfmeFormatText(&buf, 5, 0);
-		_CxxThrowException(&buf, &g_rva005c5100ThrowInfo);
+		_CxxThrowException(&buf, (_ThrowInfo *)&g_rva005c5100ThrowInfo);
+		__assume(0);
 	}
 
 	for (_STL::list<ObjectID>::iterator it = m_at104.begin();
@@ -74,7 +76,8 @@ void ContainListRestore0024A900::restore()
 		if (!object) {
 			BfmeFormattedText225960 buf;
 			bfmeFormatText(&buf, 5, 0);
-			_CxxThrowException(&buf, &g_rva005c5100ThrowInfo);
+			_CxxThrowException(&buf, (_ThrowInfo *)&g_rva005c5100ThrowInfo);
+			__assume(0);
 		}
 
 		m_atEC.push_back(object);
