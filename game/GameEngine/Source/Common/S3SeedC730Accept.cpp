@@ -89,8 +89,6 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
-class Gen_0016B250;
-
 class Gen_0016C730
 {
 private:
@@ -107,11 +105,12 @@ private:
 	char m_item68;
 };
 
-class Gen_0016B250
+// Retail ILT 0x00002379 reaches the matched one-pointer thiscall body at 0x0016B140.
+class FlagPairTarget;
+class Gen0016B140
 {
-private:
-	friend class Gen_0016C730;
-	void bfmeAccept(BfmeSeedTarget *target);
+public:
+	void handle(FlagPairTarget *target);
 };
 
 void Gen_0016C730::bfmeAccept(BfmeSeedTarget *target)
@@ -120,7 +119,7 @@ void Gen_0016C730::bfmeAccept(BfmeSeedTarget *target)
 	pair.first = 1;
 	pair.second = 1;
 	target->bfmeSeed(&pair);
-	((Gen_0016B250 *)this)->bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	if (target->bfmeSkip())
 		return;
