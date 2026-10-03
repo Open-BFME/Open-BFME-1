@@ -36,7 +36,8 @@ struct BfmeAwakenDebugEqualityVtable
 	void *m_slots64[2];
 	BfmeAwakenLog *(__fastcall *slot6C)(BfmeAwakenDebug *debug, int first, int second);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail VA 0x01336E5C is the existing address-derived singleton cell.
+extern void *g_Rva00F36E5C;
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int kind);
 
@@ -65,18 +66,18 @@ struct Rva0061C410Sound
 	do { \
 		if (_bfme_debugReportingEnabled()) { \
 			_bfme_debugRecordCallsite(1); \
-			TheBfmeAwakenDebug->slot60(); \
-			TheBfmeAwakenDebug->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60(); \
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
 		} \
 	} while (0)
 #define REPORT_SOUND_EQUALITY(MESSAGE) \
 	do { \
 		if (_bfme_debugReportingEnabled()) { \
 			_bfme_debugRecordCallsite(1); \
-			BfmeAwakenDebug *debug = TheBfmeAwakenDebug; \
+			BfmeAwakenDebug *debug = reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C); \
 			BfmeAwakenDebugEqualityVtable *table = *(BfmeAwakenDebugEqualityVtable **)debug; \
 			table->slot60(debug, table); \
-			TheBfmeAwakenDebug->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
 		} \
 	} while (0)
 

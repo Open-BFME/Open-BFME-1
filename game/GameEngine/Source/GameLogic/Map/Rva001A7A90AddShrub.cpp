@@ -171,7 +171,8 @@ public:
 	virtual BfmeAwakenLog *v6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail VA 0x01336E5C is the existing address-derived singleton cell.
+extern void *g_Rva00F36E5C;
 
 // Typed view of the debug manager's table for the slot +0x60 call: the
 // second register parameter carries the table so it stays in EDX, as retail
@@ -211,10 +212,10 @@ void __stdcall Rva001A7A90AddShrub(const ThingTemplate *tmpl, const Coord3D *pos
 
 	_bfme_debugRecordCallsite(1);
 	{
-		void *const *table = *(void *const *const *)TheBfmeAwakenDebug;
-		((BfmeAwakenDebugSlot60)table[0x60 / 4])(TheBfmeAwakenDebug, table);
+		void *const *table = *(void *const *const *)reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C);
+		((BfmeAwakenDebugSlot60)table[0x60 / 4])(reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C), table);
 	}
-	TheBfmeAwakenDebug->v6c(0, 0)->v38("Shrub ")->v38(tmpl->getString20())
+	reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v6c(0, 0)->v38("Shrub ")->v38(tmpl->getString20())
 		->v38(" requires a W3DTreeDrawModule.\n")->v4c(2);
 	_WriteBarrier();
 }
