@@ -225,42 +225,9 @@ void FileSystem::getFileListInDirectory(const AsciiString& directory, const Asci
 }
 
 //============================================================================
-// FileSystem::getFileInfo
-//============================================================================
-// ?getFileInfo@FileSystem@@ present-unmatched
-Bool FileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileInfo) const
-{
-	USE_PERF_TIMER(FileSystem)
-	if (fileInfo == NULL) {
-		return FALSE;
-	}
-	memset(fileInfo, 0, sizeof(fileInfo));
-	
-	if (TheLocalFileSystem->getFileInfo(filename, fileInfo)) {
-		return TRUE;
-	}
-
-	if (TheArchiveFileSystem->getFileInfo(filename, fileInfo)) {
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-//============================================================================
-// FileSystem::createDirectory
-//============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/FileSystem_createDirectory.cpp
-// ?createDirectory@FileSystem@@ present-unmatched
-Bool FileSystem::createDirectory(AsciiString directory) 
-{
-	USE_PERF_TIMER(FileSystem)
-	if (TheLocalFileSystem != NULL) {
-		return TheLocalFileSystem->createDirectory(directory);
-	}
-	return FALSE;
-}
-
+// getFileInfo and createDirectory use the retail providers in
+// FileSystem_getFileInfo.cpp and FileSystem_createDirectory.cpp. The former
+// preserves BFME's prefixed/original local/archive lookup sequence.
 //============================================================================
 // FileSystem::areMusicFilesOnCD
 //============================================================================
@@ -299,30 +266,8 @@ Bool FileSystem::areMusicFilesOnCD()
 	return FALSE;
 }
 //============================================================================
-// FileSystem::loadMusicFilesFromCD
-//============================================================================
-// ?loadMusicFilesFromCD@FileSystem@@ present-unmatched
-void FileSystem::loadMusicFilesFromCD()
-{
-	if (!TheCDManager) {
-		return;
-	}
-
-	AsciiString cdRoot;
-	Int dc = TheCDManager->driveCount();
-	for (Int i = 0; i < dc; ++i) {
-		CDDriveInterface *cdi = TheCDManager->getDrive(i);
-		if (!cdi) {
-			continue;
-		}
-
-		cdRoot = cdi->getPath();
-		if (TheArchiveFileSystem->loadBigFilesFromDirectory(cdRoot, MUSIC_BIG)) {
-			break;
-		}
-	}
-}
-
+// loadMusicFilesFromCD uses the retail drive traversal in
+// FileSystem_loadMusicFilesFromCD.cpp.
 //============================================================================
 // FileSystem::unloadMusicFilesFromCD
 //============================================================================
