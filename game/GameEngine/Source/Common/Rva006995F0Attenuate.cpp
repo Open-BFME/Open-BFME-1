@@ -4,7 +4,9 @@
 extern "C" double sqrt(double);
 #pragma intrinsic(sqrt)
 
-void __stdcall refreshPair(int a, int b);
+// ILT 0x19E6B routes to retail 0x00699180 (defined as j_00019e6b); callers keep ECX across the call.
+extern void j_00019e6b();
+typedef void (__stdcall *RefreshPairFn)(int a, int b);
 
 struct Rva006995F0Range
 {
@@ -59,5 +61,5 @@ void Rva006995F0Owner::attenuate(Rva006995F0Range *range, Rva006995F0Vec3 *pos)
 	}
 
 	for (int i = 0; i < 6; ++i)
-		refreshPair(i, 1);
+		((RefreshPairFn)j_00019e6b)(i, 1);
 }

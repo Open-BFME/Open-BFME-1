@@ -1,7 +1,9 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Dual clamp floats + int params; flag +0xc4; stdcall 6x2 refresh.
 
-void __stdcall refreshPair(int a, int b);
+// ILT 0x19E6B routes to retail 0x00699180 (defined as j_00019e6b); callers keep ECX across the call.
+extern void j_00019e6b();
+typedef void (__stdcall *RefreshPairFn)(int a, int b);
 
 class Rva006998C0Owner
 {
@@ -50,6 +52,6 @@ void Rva006998C0Owner::setParams(float a, float b, int c, int d, int e)
 	for (int i = 0; i < 6; ++i)
 	{
 		for (int j = 0; j < 2; ++j)
-			refreshPair(i, j);
+			((RefreshPairFn)j_00019e6b)(i, j);
 	}
 }

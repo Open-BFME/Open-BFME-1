@@ -1,7 +1,9 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Clamp float into [0,1], store at +0x98, refresh 6x2 pairs via stdcall helper.
 
-void __stdcall refreshPair(int a, int b);
+// ILT 0x19E6B routes to retail 0x00699180 (defined as j_00019e6b); callers keep ECX across the call.
+extern void j_00019e6b();
+typedef void (__stdcall *RefreshPairFn)(int a, int b);
 
 class Rva00699850Owner
 {
@@ -26,6 +28,6 @@ void Rva00699850Owner::setVolume(float volume)
 	for (int i = 0; i < 6; ++i)
 	{
 		for (int j = 0; j < 2; ++j)
-			refreshPair(i, j);
+			((RefreshPairFn)j_00019e6b)(i, j);
 	}
 }
