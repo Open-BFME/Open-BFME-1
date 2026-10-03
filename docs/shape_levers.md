@@ -1866,3 +1866,13 @@ Correcting the helper's third argument to its witnessed signed integer alone
 did not fix the scheduling; neither did helper visibility. The final source
 needs no barrier or volatile access. Existing call/data bindings pass strict
 verification; see `identity_evidence/008b6f90-typed-array-store.md`.
+
+## Native override handling can need visible lookup too
+
+At00372E40, native OVERRIDE<ThingTemplate> plus the authentic visible
+GameLogic::findObjectByID eliminates a14-byte ESI/EDI mirror in a280-byte
+callback. Either visibility alone or native Object/direct-call declarations
+alone keeps all14; removing lookup visibility from the native override form
+restores them. The opaque callback and the same TU's82-byte lookup and26-byte
+const override resolver all pass strict checks. See
+`identity_evidence/00372e40-native-override.md` for caller ABI and extent proof.
