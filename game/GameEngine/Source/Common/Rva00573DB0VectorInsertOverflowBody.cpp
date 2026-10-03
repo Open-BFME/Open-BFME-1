@@ -24,6 +24,9 @@ inline void *__cdecl operator new(unsigned int, void *where)
 	return where;
 }
 
+void __cdecl j_00032fbf();
+void __cdecl j_0002932f();
+
 namespace _STL
 {
 // The node allocator's pool entry points are private STLport members
@@ -56,10 +59,10 @@ class allocator
 
 // Both reach this TU's own copies of the shared 12-byte-element helpers through
 // their link thunks, at 0x00570880 and 0x005708D0.
-Rva00573DB0Element *__cdecl BfmeRva00573DB0Copy(
-	Rva00573DB0Element *first, Rva00573DB0Element *last, Rva00573DB0Element *result, const __false_type &);
-
-Rva00573DB0Element *__cdecl BfmeRva00573DB0FillN(
+typedef Rva00573DB0Element *(__cdecl *Rva00573DB0CopyFunction)(
+	Rva00573DB0Element *first, Rva00573DB0Element *last,
+	Rva00573DB0Element *result, const __false_type &);
+typedef Rva00573DB0Element *(__cdecl *Rva00573DB0FillNFunction)(
 	Rva00573DB0Element *result, unsigned int count,
 	const Rva00573DB0Element &value, const __false_type &);
 
@@ -98,7 +101,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		newStart = 0;
 	}
 
-	Type *newFinish = BfmeRva00573DB0Copy(_M_start, position, newStart,
+	Type *newFinish = reinterpret_cast<Rva00573DB0CopyFunction>(j_00032fbf)(
+		_M_start, position, newStart,
 		reinterpret_cast<const __false_type &>(atEnd));
 
 	if (fillLength == 1)
@@ -108,12 +112,14 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 	else
 	{
-		newFinish = BfmeRva00573DB0FillN(newFinish, fillLength, value,
+		newFinish = reinterpret_cast<Rva00573DB0FillNFunction>(j_0002932f)(
+			newFinish, fillLength, value,
 			reinterpret_cast<const __false_type &>(atEnd));
 	}
 
 	if (!atEnd)
-		newFinish = BfmeRva00573DB0Copy(position, _M_finish, newFinish,
+		newFinish = reinterpret_cast<Rva00573DB0CopyFunction>(j_00032fbf)(
+			position, _M_finish, newFinish,
 			reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
