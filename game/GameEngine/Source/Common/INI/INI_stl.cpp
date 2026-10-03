@@ -960,52 +960,7 @@ void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const vo
 	* and store in "RGBAColorInt" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseRGBAColorInt@INI@@ present-unmatched
-void INI::parseRGBAColorInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char* names[4] = { "R", "G", "B", "A" };
-	Int colors[4];
-	for( Int i = 0; i < 4; i++ )
-	{
-		const char* token = ini->getNextTokenOrNull(ini->getSepsColon());
-		if (token == NULL)
-		{
-			if (i < 3)
-			{
-				throw INI_INVALID_DATA;
-			}
-			else
-			{
-				// it's ok for A to be omitted.
-				colors[i] = 255;
-			}
-		}
-		else
-		{
-			// if present, the token must match.
-			if (stricmp(token, names[i]) != 0)
-			{
-				throw INI_INVALID_DATA;				
-			}
-			colors[i] = scanInt(ini->getNextToken(ini->getSepsColon()));
-		}
-		if( colors[ i ] < 0 )
-			throw INI_INVALID_DATA;
-		if( colors[ i ] > 255 )
-			throw INI_INVALID_DATA;
-	}
-
-	//
-	// assign the color components to the "RGBColorInt" pointer at 'store', keep
-	// the numbers as between 0 and 255
-	//
-	RGBAColorInt *theColor = (RGBAColorInt *)store;
-	theColor->red		= colors[ 0 ];
-	theColor->green = colors[ 1 ];
-	theColor->blue	= colors[ 2 ];
-	theColor->alpha = colors[ 3 ];
-
-}  // end parseRGBAColorInt
+// The retail definition is owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a color in the form of
