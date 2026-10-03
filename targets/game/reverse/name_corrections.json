@@ -15558,5 +15558,45 @@
   "after_sha256": "80614c97db46d31017d1d734a18124c101485be3f693b0df9c2e562533e70970",
   "evidence": "targets/game/reverse/identity_evidence/008a7270-native-allocation.md",
   "reason": "False source-move pairing of removed bank object placeholder with existing canonical allocation policy. Independent 899FC0 construction versus 897670 sized deallocation proves different roles; old BfmeA1029 source remains unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "old_name": "BfmeSub937B",
+  "new_name": "Rva0090C2F0Inner",
+  "before_sha256": "04abd257991e87f7e774dafc5c03cba89c73c4d2938743c787c867d208c0244c",
+  "after_sha256": "c9be96514e393a074ba8a3d02edfc6042be2646c42e80f9012137344e8d1eec2",
+  "evidence": "targets/game/reverse/identity_evidence/0090d280-bank-declarations.md",
+  "reason": "Replace stale bank class declaration with the existing independently decoded 0090CD00 provider."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "old_name": "bfmeCall937B",
+  "new_name": "rva0090CD00LoadFromMemory",
+  "before_sha256": "04abd257991e87f7e774dafc5c03cba89c73c4d2938743c787c867d208c0244c",
+  "after_sha256": "c9be96514e393a074ba8a3d02edfc6042be2646c42e80f9012137344e8d1eec2",
+  "evidence": "targets/game/reverse/identity_evidence/0090d280-bank-declarations.md",
+  "reason": "Retail direct call0090D2A7 targets current address-qualified 0090CD00 provider; use its const-char ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "old_name": "SurfaceClass",
+  "new_name": "Rva008FC660",
+  "before_sha256": "04abd257991e87f7e774dafc5c03cba89c73c4d2938743c787c867d208c0244c",
+  "after_sha256": "c9be96514e393a074ba8a3d02edfc6042be2646c42e80f9012137344e8d1eec2",
+  "evidence": "targets/game/reverse/identity_evidence/0090d280-bank-declarations.md",
+  "reason": "Repair duplicate class declaration; canonical SurfaceClass remains included. The scratch Lock ABI view is explicitly unpinned and no new identity is claimed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0090d280.cpp",
+  "old_name": "W3DRadarResetSurface",
+  "new_name": "Rva0090D280Surface",
+  "before_sha256": "04abd257991e87f7e774dafc5c03cba89c73c4d2938743c787c867d208c0244c",
+  "after_sha256": "c9be96514e393a074ba8a3d02edfc6042be2646c42e80f9012137344e8d1eec2",
+  "evidence": "targets/game/reverse/identity_evidence/0090d280-bank-declarations.md",
+  "reason": "False temporary-to-adapter pairing: W3DRadarResetSurface destructor view is retained; native BfmeThingDC constructor is now called by an opaque local adapter."
  }
 ]

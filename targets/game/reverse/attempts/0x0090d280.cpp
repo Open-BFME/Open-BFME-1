@@ -1,7 +1,7 @@
 // ?method@Rva0090D280@@QAEXXZ
-// partial score=0.906 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// Opaque identity: vtable VA 0x0113A674; ret at RVA 0x0090D7AA; switch tables end at 0x0090D7F0.
+// partial score=0.8628 date=2026-10-03
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// Opaque identity: table VA 0x0113A668 slot 3 at VA 0x0113A674; ret at RVA 0x0090D7AA; switch tables end at 0x0090D7F0.
 class BFMEDebugStream008FC660
 {
 public:
@@ -29,7 +29,8 @@ public:
 	virtual BFMEDebugStream008FC660 *Get_Stream(void *owner, void *context);
 };
 
-extern BFMEDebugClass008FC660 *g_BFMEIndexBufferDebug;
+extern void *g_Rva00F36E5C;
+#define g_BFMEIndexBufferDebug reinterpret_cast<BFMEDebugClass008FC660 *>(g_Rva00F36E5C)
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline void BFME_Surface_ErrorCode008FC660(unsigned result)
@@ -49,18 +50,26 @@ static __forceinline void BFME_Surface_ErrorCode008FC660(unsigned result)
 #include <string.h>
 void RGB_To_HSV(Vector3 &, const Vector3 &);
 void HSV_To_RGB(Vector3 &, const Vector3 &);
-class SurfaceResource {
+struct BfmeItemDC {
 public:
  virtual void s0(); virtual unsigned __stdcall AddRef(); virtual unsigned __stdcall Release();
 };
-class W3DRadarResetSurface {
-public:
- W3DRadarResetSurface(SurfaceResource *);
- ~W3DRadarResetSurface();
- SurfaceResource *p;
+class BfmeThingDC {
+public: BfmeThingDC(BfmeItemDC *); BfmeItemDC *p;
 };
-// The real header lacks the BFME-only overload. Opaque ABI pending independent pin.
-class SurfaceClass { public: void *method(int *, bool); };
+class W3DRadarResetSurface {
+public: ~W3DRadarResetSurface();
+};
+struct Rva0090D280Surface : BfmeThingDC {
+ Rva0090D280Surface(BfmeItemDC *p) : BfmeThingDC(p) {}
+ ~Rva0090D280Surface() {
+  reinterpret_cast<W3DRadarResetSurface *>(this)->~W3DRadarResetSurface();
+ }
+};
+// SurfaceClass::Lock(int*,bool) is proven at 008FC660, but the canonical
+// header lacks that BFME overload. This scratch ABI view is UNPINNED;
+// repair its native declaration before any production promotion.
+class Rva008FC660 { public: void *method(int *, bool); };
 class Rva0090D280Resource {
 public:
  virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c();
@@ -68,50 +77,37 @@ public:
  virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c();
  virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c();
  virtual void s40(); virtual void s44();
- virtual unsigned __stdcall get(unsigned,SurfaceResource **);
+ virtual unsigned __stdcall get(unsigned,BfmeItemDC **);
 };
-class BfmeSub937B { public: void bfmeCall937B(void *); char f00[8]; Rva0090D280Resource *f08; };
-extern unsigned short g_Rva0090D280Palette[16];
+class Rva0090C2F0Inner { public: void rva0090CD00LoadFromMemory(const char *); char f00[8]; Rva0090D280Resource *f08; };
+extern unsigned short g_Rva00D3A54C[16];
 class Rva0090D280 {
 public:
- virtual void *slot00();
- char f04[0x10]; BfmeSub937B *f14; char f18[0x24]; char *f3c; unsigned f40;
+ virtual const char *slot00();
+ char f04[0x10]; Rva0090C2F0Inner *f14; char f18[0x24]; char *f3c; unsigned f40;
  void method();
 };
 void Rva0090D280::method()
 {
- f14->bfmeCall937B(slot00());
+ f14->rva0090CD00LoadFromMemory(slot00());
  if (!f14->f08) return;
- SurfaceResource *resource=0;
+ BfmeItemDC *resource=0;
  BFME_Surface_ErrorCode008FC660(f14->f08->get(0,&resource));
- W3DRadarResetSurface surface(resource);
+ Rva0090D280Surface surface(resource);
  if (resource) resource->Release();
  int pitch;
- void *pixels=((SurfaceClass *)&surface)->method(&pitch,false);
- Vector3 color;
+ void *pixels=((Rva008FC660 *)&surface)->method(&pitch,false);
  SurfaceClass::SurfaceDescription desc;
  ((SurfaceClass *)&surface)->Get_Description(desc);
  float blue=(f40&255)*(1.0f/255.0f);
  float green=((f40>>8)&255)*(1.0f/255.0f);
- color.Set((float)((f40>>16)&255)*(1.0f/255.0f),green,blue);
- bool palette;
+ Vector3 color((float)((f40>>16)&255)*(1.0f/255.0f),green,blue);
+ bool palette=f3c[3]=='D'||f3c[3]=='d';
  int entries[16];
  Vector3 shift;
- if(f3c[3]!='D'&&f3c[3]!='d') {palette=false; RGB_To_HSV(shift,color);}
- else {
-  palette=true;
-  int *out=entries;
-  for(unsigned short *p=g_Rva0090D280Palette;(int)p<(int)(g_Rva0090D280Palette+16);++p,++out) {
-   float scale=*p;
-   int r=(int)(color.X*scale),g=(int)(green*scale),b=(int)(blue*scale);
-   switch((int)desc.Format) {
-    case 21:case 22:*out=((((r|0xffffff00)<<8)|g)<<8)|b;break;
-    case 26:*out=(((r&~15)<<4|g)&~15)|((b|0xf0000)>>4);break;
-    case 25:*out=((((r&~7)<<5|g)&~7)<<2)|((b|0x40000)>>3);break;
-    case 23:*out=((((r&~7)<<5|g)&~3)<<3)|(b>>3);break;
-   }
-  }
- }
+ if(palette) goto fillPalette;
+ RGB_To_HSV(shift,color);
+convertPixels:
  switch((int)desc.Format) {
  case 21:case 22:
   if(palette) { unsigned *out=(unsigned *)pixels;
@@ -168,5 +164,24 @@ void Rva0090D280::method()
   }
   break;
  }
+ goto done;
+fillPalette:
+ {
+  int *out=entries;
+  for(unsigned short *p=g_Rva00D3A54C;(int)p<(int)(g_Rva00D3A54C+16);++p,++out) {
+   float scale=*p;
+   int r=(int)(color.X*scale),g=(int)(green*scale),b=(int)(blue*scale);
+   switch((int)desc.Format) {
+    case 21:case 22:r|=0xffffff00; r<<=8; r|=g; r<<=8; break;
+    case 26:r&=~15; r<<=4; r|=g; r&=~15; b|=0xf0000; b>>=4; break;
+    case 25:r&=~7; r<<=5; r|=g; r&=~7; r<<=2; b|=0x40000; b>>=3; break;
+    case 23:r&=~7; r<<=5; r|=g; r&=~3; r<<=3; b>>=3; break;
+    default:continue;
+   }
+   *out=r|b;
+  }
+ }
+ goto convertPixels;
+done:
  ((SurfaceClass *)&surface)->Unlock();
 }
