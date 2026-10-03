@@ -1,5 +1,5 @@
 // ?aptHelper008AE3A0@@YAPAVAptValue@@PAXHH@Z
-// partial score=0.931 date=2026-09-28
+// partial score=0.9819 date=2026-10-03
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 class AptValue
@@ -80,7 +80,7 @@ AptValue *aptHelper008AE3A0(void *entry, int count, int flag)
 	if ((last->m_flags.m_value & 0x3F) == 1 ||
 		(last->m_flags.m_value & 0x3F) == 0x2A)
 	{
-		if (last->m_flags.m_bit15 != 0)
+		if (((~((last->m_flags.m_value) >> 7) & 0x100)) == 0)
 		{
 			BfmeEntry008AE3A0 *lookupArg = last;
 			if ((last->m_flags.m_value & 0x3F) != 1)
