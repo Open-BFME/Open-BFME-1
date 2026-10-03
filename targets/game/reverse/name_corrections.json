@@ -15708,5 +15708,15 @@
   "after_sha256": "57b30b6af32977d87543d836eb0fdf4861ecbc69d1ad7066149adbb755f63ea0",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShaderLoader.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShaderLoader.cpp",
+  "old_name": "FileInfo",
+  "new_name": "Rva00718A10Dispatch",
+  "before_sha256": "c879a9dfcd1b9437f992d95637ce952292ff4c3ed23e33e67f5022ee7c0bf785",
+  "after_sha256": "87cd96a0a70b24ce983e743a52a4a5219590e913a920f20a2616c19329f70ea8",
+  "evidence": "targets/game/reverse/identity_evidence/00718a10-complete-string-operands.md",
+  "reason": "False pairing: FileInfo remains named in the included canonical FileSystem.h with its unchanged four Int fields and remains used by getFileInfo. Rva00718A10Dispatch is an unrelated no-data virtual-call view for the independently different BFME File slot ABI; no FileInfo identity changed."
  }
 ]

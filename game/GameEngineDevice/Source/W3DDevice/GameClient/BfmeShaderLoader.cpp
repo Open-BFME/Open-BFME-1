@@ -1,11 +1,11 @@
-// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+// cl: /Iinputs/reference/shims/zhcanonascii /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims /Iinputs/reference/shims/sweep
+// stlport
 #include "dx8wrapper.h"
 
 //
 // BFME's two-argument pixel-shader loader.  The retail body is the target of
-// the 0x0001FC99 ILT used by the flat-terrain shader initializers.  The small
-// local declarations keep the BFME file-system and D3D vtable shapes visible
-// without pulling the five-argument Zero Hour declaration into this TU.
+// the 0x0001FC99 ILT used by the flat-terrain shader initializers.  The file-system types come from their existing headers. The BFME-specific
+// D3D loader retains its two-argument declaration and shifted device slot.
 #include "string_base.h"
 #include "d3d8_shim_validated.h"
 
@@ -25,30 +25,17 @@ extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *)
 
 #include "ascii_string.h"
 
-struct FileInfo
-{
-	Int sizeHigh;
-	Int sizeLow;
-	Int timestampHigh;
-	Int timestampLow;
-};
+#include "Common/file.h"
+#include "Common/FileSystem.h"
 
-class File
+// Address-scoped dispatch view: retail File's slots differ from Zero Hour's.
+// Only +0x08 (close) and +0x0C (read) are used at this call site.
+struct Rva00718A10Dispatch
 {
-public:
-	enum { READ = 0x01, BINARY = 0x40 };
-
-	virtual ~File();
-	virtual Bool open( const char *filename, Int access );
-	virtual void close( void );
-	virtual Int read( void *buffer, Int bytes );
-};
-
-class FileSystem
-{
-public:
-	File *openFile( const char *filename, Int access );
-	Bool getFileInfo( const AsciiString &filename, FileInfo *fileInfo ) const;
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual Int slot0C(void *, Int);
 };
 
 extern FileSystem *TheFileSystem;
@@ -83,12 +70,13 @@ HRESULT BfmeShaderLoader::LoadAndCreateD3DShader( const char *filename, DWORD *s
 		const DWORD *shaderData = (const DWORD *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, fileSize );
 		if ( shaderData == NULL )
 		{
-			OutputDebugString( "Failed to allocate memory to load shader\n" );
+			OutputDebugString( "Failed to allocate memory to load shader\n " );
 			return (HRESULT)0x80004005L;
 		}
 
-		file->read( (void *)shaderData, fileSize );
-		file->close();
+		// BFME File slots are read +0x0C and close +0x08; Zero Hour adds a slot.
+		((Rva00718A10Dispatch *)file)->slot0C((void *)shaderData, fileSize);
+		((Rva00718A10Dispatch *)file)->slot08();
 
 			IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
 			HRESULT result = (*(BfmeCreatePixelShader **)device)[106]( device, shaderData, shader );
@@ -96,7 +84,7 @@ HRESULT BfmeShaderLoader::LoadAndCreateD3DShader( const char *filename, DWORD *s
 
 		if ( result < 0 )
 		{
-			OutputDebugString( "Failed to create shader\n" );
+			OutputDebugString( "Failed to create shader\n " );
 			return (HRESULT)0x80004005L;
 		}
 	}
