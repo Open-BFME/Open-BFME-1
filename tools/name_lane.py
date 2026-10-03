@@ -113,7 +113,8 @@ def vendor(model):
 
 
 def git(*args, check=True):
-    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=check).stdout
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True,
+                          text=True, encoding="utf-8", errors="replace", check=check).stdout
 
 
 def read(rel):
