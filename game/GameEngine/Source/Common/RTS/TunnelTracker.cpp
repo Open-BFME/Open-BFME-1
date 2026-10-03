@@ -294,54 +294,6 @@ void TunnelTracker::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@TunnelTracker@@ present-unmatched
-void TunnelTracker::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// tunnel object id list
-	xfer->xferSTLObjectIDList( &m_tunnelIDs );
-
-	// contain list count
-	xfer->xferInt( &m_containListSize );
-
-	// contain list data
-	ObjectID objectID;
-	if( xfer->getXferMode() == XFER_SAVE )
-	{
-		ContainedItemsList::const_iterator it;
-
-		for( it = m_containList.begin(); it != m_containList.end(); ++it )
-		{
-
-			objectID = (*it)->getID();
-			xfer->xferObjectID( &objectID );
-
-		}  // end for, it
-
-	}  // end if, save
-	else
-	{
-
-		for( UnsignedShort i = 0; i < m_containListSize; ++i )
-		{
-
-			xfer->xferObjectID( &objectID );
-			m_xferContainList.push_back( objectID );
-
-		}  // end for, i
-
-	}  // end else, load
-
-	// tunnel count
-	xfer->xferUnsignedInt( &m_tunnelCount );
-
-}  // end xfer
-
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
