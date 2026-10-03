@@ -233,6 +233,10 @@ private:
 	int m_field25C;
 };
 
+// Retail callback is ILT VA00410B86 (E9 -> RVA005691A0).
+// Keep its address identity; the callback ABI is not invoked here.
+void j_00010b86();
+
 union QuitMenuMethodBits
 {
 	FunctorMethod m_method;
@@ -315,7 +319,7 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 		}
 
 		{
-			methodBits.m_words[ 0 ] = 0x00410B86;
+			methodBits.m_words[ 0 ] = reinterpret_cast<unsigned int>( &j_00010b86 );
 			methodBits.m_words[ 1 ] = 0;
 			callback = methodBits.m_method;
 			FunctorBinding binding( callback, (FunctorTarget *)this );

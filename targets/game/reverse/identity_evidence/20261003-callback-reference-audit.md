@@ -46,3 +46,9 @@ j_ILT symbols. Independent retail E9 decoding gives these VA->RVA routes:
 representation remains unchanged; these declarations only name the stored
 addresses. Strict before/after checks pass755B and8 strings; checked DIR32
 references increase from11 to17. No semantic callback identity is inferred.
+
+### QuitMenu callback reduction, session2
+
+`??0BfmeAptScreenQuitMenu@@QAE@PAX@Z`, RVA0056A2F0,1024B, stores callback VA00410B86 at instruction56A5DB. The existing `?j_00010b86@@YAXXZ` row is a five-byte ILT; baseline and Ghidra both read `e9 15 86 55 00`, reaching RVA005691A0. Replacing the literal with the address of that existing symbol preserves the eight-byte member-pointer union representation and asserts no callback signature or semantic name.
+
+The constructor's RET4 at56A6ED ends at56A6F0 padding, also independently checked in Ghidra. Strict before/after verification passes both this constructor and the unchanged280B onInitialized sibling:17 strings; DIR32 references increase26→27. The legacy local string declarations are a separate header-adoption concern; the current adoption checker reports no eligible automatic swap for this source. No new pin, extent, identity or coverage claim is introduced.
