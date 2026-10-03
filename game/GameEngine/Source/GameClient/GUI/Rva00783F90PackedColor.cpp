@@ -1,6 +1,6 @@
 // Store the three low color channels as normalized floating-point values.
 // The address-derived name retains the unproven calling owner.
-extern float g_0107C64C;
+extern const float g_0107C64C;
 extern float Rva00783F90Red;
 extern float Rva00783F90Green;
 extern float Rva00783F90Blue;
@@ -14,3 +14,7 @@ void Rva00783F90StorePackedColor(unsigned int color)
     unsigned int blue = color & 255;
     Rva00783F90Blue = (float)blue * g_0107C64C;
 }
+
+// Retail .rdata at VA 0x0107C64C: 81 80 80 3b (float 1/255).
+// The original symbol name is unproven; retain the address-derived spelling.
+const float g_0107C64C = 0.0039215688593685626983642578125f;
