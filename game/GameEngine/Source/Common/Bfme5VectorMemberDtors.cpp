@@ -68,13 +68,11 @@ public:
 typedef bool Bool;
 #include "System/subsystem_interface.h"
 
-class BfmeBaseQ
-{
-public:
-	virtual ~BfmeBaseQ(void) {}
-};
+// Retail cleanup C1AEA8 calls Snapshot::~Snapshot through ILT 00001C80.
+// FuncInfo E0B28C proves this is the secondary base of parent 00378650.
+#include "System/snapshot.h"
 
-class Gen_00378650 : public SubsystemInterface, public BfmeBaseQ
+class Gen_00378650 : public SubsystemInterface, public Snapshot
 {
 public:
 	virtual ~Gen_00378650(void);
