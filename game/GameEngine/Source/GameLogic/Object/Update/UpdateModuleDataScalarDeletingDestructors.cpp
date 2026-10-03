@@ -9,8 +9,6 @@
     void Delete##ModuleName(ModuleName *object) { delete object; }
 
 DECLARE_MODULE_DELETING_DESTRUCTOR(RousingSpeechUpdateModuleData)
-DECLARE_MODULE_DELETING_DESTRUCTOR(AttributeModifierAuraUpdateModuleData)
 DECLARE_MODULE_DELETING_DESTRUCTOR(BroadcastStealthUpdateModuleData)
-DECLARE_MODULE_DELETING_DESTRUCTOR(CivilianSpawnUpdateModuleData)
 DECLARE_MODULE_DELETING_DESTRUCTOR(DynamicShroudClearingRangeUpdateModuleData)
 DECLARE_MODULE_DELETING_DESTRUCTOR(PartTheHeavensUpdateModuleData)
