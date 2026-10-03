@@ -29,6 +29,13 @@ public:
 
 extern void j_000328da();
 
+// Retail calls the retained logic member through its ILT thunk at 0x0003A279
+// (the ledger's ?j_0003a279@@YAXXZ); the body behind that thunk is the matched
+// 0x00383930 `BfmeGlobFEA::bfmeCallFEA`. Naming the thunk keeps the physical
+// route retail took rather than relying on a resolver pin for a name that also
+// owns a separate definition elsewhere.
+extern void j_0003a279();
+
 class Gen_003702A0
 {
 public:
@@ -51,7 +58,15 @@ void Gen_003702A0::bfmeDispatch(void *argument)
 	BfmeGlobFEA *global = (BfmeGlobFEA *)*(GameLogic *volatile *)&TheGameLogic;
 	void *found = ((GameLogic *)global)->findObjectByID((ObjectID)field94);
 	if (found)
-		global->bfmeCallFEA(found, (int)argument);
+	{
+		union CallRoute
+		{
+			void (*raw)();
+			void (BfmeGlobFEA::*member)(void *, int);
+		} route;
+		route.raw = j_0003a279;
+		(global->*route.member)(found, (int)argument);
+	}
 
 	Gen00370200Thunk *helper =
 		(Gen00370200Thunk *)((unsigned char *)this - 0x0c);

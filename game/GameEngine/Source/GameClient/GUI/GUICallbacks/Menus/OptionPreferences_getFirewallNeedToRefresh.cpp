@@ -18,6 +18,11 @@
 // /EHs-c- because the build default only clears the /EHc half, and the two
 // locals' destructors would otherwise pull in an SEH prologue retail lacks.
 
+// The map lookup is reached through retail's ILT thunk at 0x0000AEAC (the
+// ledger's ?j_0000aeac@@YAXXZ, the STLport hashtable find body), so the call
+// goes to that thunk rather than to a TU-local member.
+extern void j_0000aeac();
+
 #include "ascii_string.h"
 
 struct PreferenceNode
@@ -29,7 +34,6 @@ struct PreferenceNode
 class PreferenceMap
 {
 public:
-	PreferenceNode *find(const AsciiString &) const;
 	PreferenceNode *end(void) const { return m_end; }
 
 private:
@@ -53,7 +57,15 @@ bool OptionPreferences::getFirewallNeedToRefresh(void)
 	PreferenceNode *it;
 	{
 		AsciiString key("FirewallNeedToRefresh");
-		it = m_prefs.find(key);
+		// A member-pointer route keeps the thiscall receiver in ECX and the
+		// string reference on the stack, as retail's call does.
+		union FindRoute
+		{
+			void (*raw)();
+			PreferenceNode *(PreferenceMap::*member)(const AsciiString &) const;
+		} route;
+		route.raw = j_0000aeac;
+		it = ( ( &m_prefs )->*route.member )( key );
 	}
 
 	if (it == m_prefs.end())

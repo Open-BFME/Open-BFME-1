@@ -9,6 +9,15 @@
 // in the separately matched destructor TU, so this local view models only the
 // construction ABI.
 
+// The +0x2C upgrade subobject's constructor is reached through retail's ILT
+// thunk at 0x0000F0A6 (the ledger's ?j_0000f0a6@@YAXXZ, the shared upgrade
+// module-data handle constructor), so the constructor here is inline and
+// forwards to that thunk. The local view class carries a name of its own:
+// `UpgradeModuleDataSub` is pinned to 0x0000F0A6, and an in-class body under
+// that name would claim the address retail's `?j_` thunk already holds. The
+// upgrade-family TUs keep their own view of the same 0x68-byte subobject.
+extern void j_0000f0a6();
+
 class BroadcastStealthMask
 {
 public:
@@ -37,10 +46,10 @@ private:
 	unsigned int m_value;
 };
 
-class UpgradeModuleDataSub
+class BroadcastStealthUpgradeSub
 {
 public:
-	UpgradeModuleDataSub();
+	BroadcastStealthUpgradeSub() { ((void (__fastcall *)(BroadcastStealthUpgradeSub *))j_0000f0a6)(this); }
 
 private:
 	unsigned char m_unmodelled[ 0x68 ];
@@ -67,7 +76,7 @@ private:
 	float m_broadcastRadius;              // +0x20
 	unsigned int m_unmodelled_24;
 	BroadcastStealthPolicy m_policy;      // +0x28
-	UpgradeModuleDataSub m_upgradeData;   // +0x2C
+	BroadcastStealthUpgradeSub m_upgradeData;   // +0x2C
 };
 
 // ??0BroadcastStealthUpdateModuleData@@QAE@XZ

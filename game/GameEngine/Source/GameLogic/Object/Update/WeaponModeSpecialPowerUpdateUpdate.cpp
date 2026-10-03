@@ -8,10 +8,26 @@
 // WeaponModeSpecialPowerUpdate secondary update receiver at +0x10.
 // Identity and retained integer-argument callee ABI: identity_evidence/update-slot0.md.
 
+// The retained callee is reached through retail's ILT thunk at 0x00007513
+// (the ledger's ?j_00007513@@YAXXZ, the STLport hashtable erase body), so the
+// call goes to that thunk rather than to an invented member name.
+extern void j_00007513();
+
 class BfmeItem1005
 {
 public:
-	void bfmeDoD1005(int value);
+	// The retained callee is reached through retail's ILT thunk at 0x00007513
+	// (the ledger's ?j_00007513@@YAXXZ, the STLport hashtable erase body), so
+	// the call goes to that thunk rather than to an invented member name. A
+	// member pointer keeps the thiscall register and stack argument.
+	union Route { void (*raw)(); void (BfmeItem1005::*member)(int); };
+
+	static void bfmeDoD1005(BfmeItem1005 *self, int value)
+	{
+		Route route;
+		route.raw = j_00007513;
+		(self->*route.member)(value);
+	}
 };
 
 class BfmeMsgXI;
@@ -61,7 +77,7 @@ UpdateSleepTime WeaponModeSpecialPowerUpdate::update()
 {
 	BfmeItem1005 *object = *(BfmeItem1005 **)((char *)this - 8);
 
-	object->bfmeDoD1005(2);
+	BfmeItem1005::bfmeDoD1005(object, 2);
 	for (int i = 0; i < 0x1d; ++i)
 	{
 		if ((*(Rva002B2DE0ModuleData **)((char *)this - 0xc))->m_flags & (1u << (i & 0x1f)))
