@@ -14,10 +14,6 @@ typedef unsigned short PlayerMaskType;
 class Parameter
 {
 public:
-	const AsciiString &getString(void) const { return m_string; }
-	Int getInt(void) const { return m_int; }
-
-private:
 	unsigned char m_beforeInt[8];
 	Int m_int;
 	float m_real;
@@ -75,22 +71,22 @@ Bool Rva00324210PlayerCondition::evaluate(Parameter *playerParm,
 	PlayerMaskType mask =
 		((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
 		->getPlayerMaskFromAsciiString(
-		playerParm->getString(), 0);
+		playerParm->m_string, 0);
 	Player *player = bfmeGetPlayerFromMask(ThePlayerList, mask);
 	if (player) {
 		return false;
 	}
 
-	Int comparison = comparisonParm->getInt();
+	Int comparison = comparisonParm->m_int;
 	Int current = *reinterpret_cast<volatile Int *>(0x258);
 	Bool result;
 	switch (comparison) {
-	case 0: result = current < valueParm->getInt(); break;
-	case 1: result = current <= valueParm->getInt(); break;
-	case 2: result = current == valueParm->getInt(); break;
-	case 3: result = current >= valueParm->getInt(); break;
-	case 4: result = current > valueParm->getInt(); break;
-	case 5: result = current != valueParm->getInt(); break;
+	case 0: result = current < valueParm->m_int; break;
+	case 1: result = current <= valueParm->m_int; break;
+	case 2: result = current == valueParm->m_int; break;
+	case 3: result = current >= valueParm->m_int; break;
+	case 4: result = current > valueParm->m_int; break;
+	case 5: result = current != valueParm->m_int; break;
 	default: result = false; break;
 	}
 	if (result) {
