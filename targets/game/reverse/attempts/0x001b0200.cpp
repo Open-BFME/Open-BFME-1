@@ -1,116 +1,150 @@
-// ?Gen001B0200ArmorMultiplier@@YGMPBXPAVObject@@PBM@Z
-// partial score=0.1 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc
+// ?adjust@HealingArmor001B0200@@QAEMPAXPAVObject@@H@Z
+// partial score=0.9914 date=2026-10-03
+// ActiveBody::attemptHealing secondary BodyModuleInterface view (+0x10).
+// Identity: existing DAMAGE_HEALING dispatch and ActiveBody interface slot 1;
+// native BFME offsets/callback sequence independently read at RVA0020FBC0.
+// The primary subobject is this-16, not a pointer loaded from that address.
+// Slot80 receives DamageInfo* here; the older Bool declaration in sibling
+// views is not evidence for this call (retail pushes the full info pointer).
+// Callee001B0200 consumes a damage-input record, Object*, and unused stack slot;
+// both exits ret12 with ST0 holding adjusted float. Healing returns input+18.
+// The linked-body local preserves the retail virtual-call receiver lifetime.
+// cl: /DNDEBUG /MD /EHsc /FAsc /Fabuild/ActiveBody_adjust_eval_order.cod
+class DamageInfo { public: char prefix[0x10]; int damageType; char gap14[0x3c]; float actual,clipped; };
+class Object; class FXList;
+enum KindOfType { KINDOF_HEALING_149=149,KINDOF_HEALING_22=22,KINDOF_HEALING_24=24,KINDOF_HEALING_7=7 };
+class Thing { public: bool isKindOf(KindOfType) const; };
+class Overridable { public: void *vtable; Overridable *next; const Overridable *getFinalOverride() const; };
+struct HealingTemplate0020FBC0 : Overridable { char pad[0x4ca-8]; bool field4CA; };
+struct HealingDamageFacet0020FBC0 { virtual void unused(); virtual void onHealing(DamageInfo*); virtual void onState(DamageInfo*,int,int); };
+struct HealingBehaviorFacet0020FBC0 { virtual void slot0();virtual void slot1();virtual void slot2();virtual void slot3();virtual HealingDamageFacet0020FBC0 *getDamage(); };
+struct HealingBehavior0020FBC0 { char prefix[12]; HealingBehaviorFacet0020FBC0 facet; };
+#define V(N) virtual void slot##N()
+struct HealingBodyFacet0020FBC0 {
+ V(00);V(01);V(02);V(03);V(04);V(05);V(06);V(07);V(08);V(09);V(10);V(11);V(12);V(13);V(14);V(15);V(16);V(17);V(18);V(19);V(20);V(21);V(22);V(23);V(24);V(25);V(26);V(27);V(28);V(29);V(30);V(31);V(32);V(33);V(34);V(35);V(36);V(37);V(38); virtual void state(int);
+};
+class Object { public:
+ bool getAttributeModifierBonus(int, float *) const;
+ void *vtable; HealingTemplate0020FBC0 *tmpl; char gap8[0x90-8]; unsigned int m_status; char gap94[0x1f0-0x94]; HealingBehavior0020FBC0 **m_behaviors; char gap1f4[12]; HealingBodyFacet0020FBC0 *body; char gap204[0x344-0x204]; unsigned int m_privateStatus;
+ HealingTemplate0020FBC0 *getTemplate() const { HealingTemplate0020FBC0 *t=tmpl; if(!t)return 0; if(t->next)t=(HealingTemplate0020FBC0*)t->next->getFinalOverride();return t; }
+};
+class GameLogic { public: char pad[0x3c]; unsigned frame; Object *findObjectByID(int); };
+extern GameLogic *TheGameLogic;
+class FXList { public: static void doFXObj(const FXList*,const Object*,const Object*); };
+struct HealingData0020FBC0 { char pad[0x48]; const FXList *fx; };
+struct HealingArmor001B0200 { const float *m_kindMultipliers; char m_pad04[0x08]; float adjust(void*,Object*,int); };
+struct HealingPrimary0020FBC0 { V(00);V(01);V(02);V(03);V(04);V(05);V(06);V(07);V(08);V(09);V(10);V(11);V(12);V(13); virtual void validate(); virtual void fx(DamageInfo*); };
+class ActiveBody { public:
+ virtual void attemptDamage(DamageInfo*); virtual void attemptHealing(DamageInfo*);
+ V(02);V(03);V(04);V(05);V(06);V(07);V(08);V(09);V(10);V(11);V(12);V(13);V(14);V(15);V(16);V(17);V(18);V(19);V(20);V(21);V(22);V(23);V(24);V(25);V(26);V(27);V(28);V(29);V(30);V(31); virtual void internalChangeHealth(float,DamageInfo*);
+ char pad04[4]; float m_currentHealth,m_prevHealth;char pad10[0x10];int m_curDamageState;char pad24[0x6c];unsigned m_lastHealingTimestamp;char pad94[0x28];int fieldBC;char padC0[8];HealingArmor001B0200 armor;
+ Object *getObject() const { return *(Object**)((char*)this-8); }
+};
+void ActiveBody::attemptHealing(DamageInfo *info) {
+ HealingPrimary0020FBC0 *primary=(HealingPrimary0020FBC0*)((char*)this-16);
+ primary->validate();
+ if(!info)return;
+ if(info->damageType!=7) { attemptDamage(info);return; }
+ Object *obj=getObject();
+ if(!obj->getTemplate()->field4CA && !((Thing*)obj)->isKindOf(KINDOF_HEALING_149) && !((Thing*)obj)->isKindOf(KINDOF_HEALING_22) && !((Thing*)obj)->isKindOf(KINDOF_HEALING_24) && (obj->m_privateStatus&1)) return;
+ info->actual=0.0f;info->clipped=0.0f;
+ float amount=armor.adjust((char*)info+4,getObject(),0);
+ if(amount>0.0f) {
+  int oldState=m_curDamageState;
+  internalChangeHealth(amount,info);
+  info->actual=amount;info->clipped=m_prevHealth-m_currentHealth;
+  m_lastHealingTimestamp=TheGameLogic->frame;
+  if(m_currentHealth>m_prevHealth) {
+   for(HealingBehavior0020FBC0 **m=obj->m_behaviors;*m;++m) {
+    HealingDamageFacet0020FBC0 *d=(*m)->facet.getDamage();
+    if(d) d->onHealing(info);
+   }
+   HealingData0020FBC0 *md=*(HealingData0020FBC0**)((char*)this-12);
+   if(!((Thing*)obj)->isKindOf(KINDOF_HEALING_7) && md && md->fx && !(obj->m_status&0x40)) FXList::doFXObj(md->fx,obj,0);
+  }
+  if(m_curDamageState!=oldState) {
+   for(HealingBehavior0020FBC0 **m=obj->m_behaviors;*m;++m) {
+    HealingDamageFacet0020FBC0 *d=(*m)->facet.getDamage();
+    if(d) d->onState(info,oldState,m_curDamageState);
+   }
+   if(fieldBC) { Object *linked=TheGameLogic->findObjectByID(fieldBC);if(linked) { HealingBodyFacet0020FBC0 *b=linked->body; if(b) b->state(m_curDamageState); } }
+  }
+ }
+ primary->fx(info);
+}
 
-// Retail RVA 0x001B0200 (232 bytes). Served from Code/gen_asm/d_001aba80.asm.
-// No named caller identity beyond the three ILT-thunk call sites already
-// resolved in the lane brief (three callers, all still-dump thunks
-// themselves). Fast path: when the first argument's +0xc type field is 7,
-// the function returns that argument's +0x18 float unchanged. Otherwise it
-// walks a small override chain off the second argument's (an Object*) +4
-// field (falling back to the +4 pointer itself when its own +4 sub-field is
-// null) through the pinned getFinalOverride/findArmorTemplateSet pair to
-// find an ArmorTemplateSet, multiplies its +4->+0x5c float (or 1.0f when no
-// set was found) by a per-kind float pulled from the caller's own array
-// argument, then folds in Object::getAttributeModifierBonus(1, ...) capped
-// against GlobalData::AttributeModifierArmorMaxBonus and finished against
-// g_bfmeDefaultBU. The exact FPU compare/select shape at the tail
-// (FCOMP/FNSTSW/JP choosing between the live bonus and the GlobalData cap)
-// is reconstructed from the raw bytes and not independently confirmed.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
-
-class Overridable
+template <unsigned int N>
+class BitFlags
 {
 public:
-	const Overridable *getFinalOverride() const;
+    BitFlags() {}
+    BitFlags(const BitFlags<N> &);
+private:
+    unsigned int m_bits;
+};
+typedef BitFlags<8> ArmorSetFlags;
+
+class ThingTemplateView : public Overridable
+{
+public:
+    const void *findArmorTemplateSet(const ArmorSetFlags &) const;
 };
 
-class ArmorTemplateSet;
-
-class ThingTemplateArmor : public Overridable
+class BodyModuleFlagsSource001B0200
 {
 public:
-	const ArmorTemplateSet *findArmorTemplateSet(const void *flags) const;
-};
-
-class Object
-{
-public:
-	Bool getAttributeModifierBonus(Int which, Real *out) const;
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+    virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+    virtual void slot30(); virtual void slot34();
+    virtual ArmorSetFlags getCurrentArmorSetFlags() const;
 };
 
 struct Rva006C9270GlobalData
 {
-	unsigned char m_bfmeHeadRW[0xbac];
-	float m_attributeModifierArmorMaxBonus;
+    char m_bfmeHeadRW[0x0bac];
+    float m_attributeModifierArmorMaxBonus;
 };
-
 extern Rva006C9270GlobalData *TheWritableGlobalData;
 extern float g_bfmeDefaultBU;
 
-// Virtual accessor on the object at Object+0x200 (a body-module style
-// interface) that fills an ArmorSetFlags (a 4-byte BitFlags<ARMORSET_COUNT>)
-// through a hidden-return pointer and hands the same address back in EAX.
-class BodyModuleFlagsSource
+float HealingArmor001B0200::adjust(void *damageInfo, Object *object, int)
 {
-public:
-	virtual void slot00(); virtual void slot04(); virtual void slot08();
-	virtual void slot0C(); virtual void slot10(); virtual void slot14();
-	virtual void slot18(); virtual void slot1C(); virtual void slot20();
-	virtual void slot24(); virtual void slot28(); virtual void slot2C();
-	virtual void slot30(); virtual void slot34();
-	virtual unsigned int *getCurrentArmorSetFlags(unsigned int *out) const;
-};
+    int kind = *(int *)((char *)damageInfo + 0x0c);
+    struct LocalSlots { float amount; float multiplier; HealingArmor001B0200 * volatile receiver; };
+    LocalSlots slots;
+    float amount = *(float *)((char *)damageInfo + 0x18);
+    slots.receiver = this;
+    slots.amount = amount;
+    if (kind == 7)
+        return slots.amount;
 
-// ?bfmeArmorMultiplier@Gen_001B0200@@YGMPBXPAVObject@@PBM@Z
-Real __stdcall Gen001B0200ArmorMultiplier(const void *param1, Object *object, const float *kindMultipliers)
-{
-	const unsigned char *p1 = (const unsigned char *)param1;
-	int kind = *(const int *)(p1 + 0xc);
-	float raw = *(const float *)(p1 + 0x18);
+    Object *currentObject = object;
+    BodyModuleFlagsSource001B0200 *bodyModule =
+        *(BodyModuleFlagsSource001B0200 **)((char *)currentObject + 0x200);
+    slots.multiplier = 1.0f;
+    const ThingTemplateView *thingTemplate =
+        (const ThingTemplateView *)currentObject->getTemplate();
+    const void *armorSet = thingTemplate->findArmorTemplateSet(
+        bodyModule->getCurrentArmorSetFlags());
+    if (armorSet != 0)
+        slots.multiplier = *(float *)(*(char **)((char *)armorSet + 4) + 0x5c);
 
-	if (kind == 7)
-		return raw;
-
-	const unsigned char *obj = (const unsigned char *)object;
-	void *a = *(void **)(obj + 4);
-	const ThingTemplateArmor *tmpl = 0;
-
-	if (a)
-	{
-		void *b = *(void **)((unsigned char *)a + 4);
-		if (b)
-			tmpl = (const ThingTemplateArmor *)((const Overridable *)b)->getFinalOverride();
-		else
-			tmpl = (const ThingTemplateArmor *)a;
-	}
-
-	BodyModuleFlagsSource *flagsSource = *(BodyModuleFlagsSource **)(obj + 0x200);
-	unsigned int flags = 0;
-	flagsSource->getCurrentArmorSetFlags(&flags);
-
-	const ArmorTemplateSet *set = tmpl->findArmorTemplateSet(&flags);
-
-	Real multiplier = 1.0f;
-	if (set)
-		multiplier = *(const Real *)((const unsigned char *)(*(const void **)((const unsigned char *)set + 4)) + 0x5c);
-
-	if (kind == 8)
-		return multiplier * kindMultipliers[0];
-
-	if (kind == 0)
-		return multiplier * kindMultipliers[0];
-
-	multiplier *= kindMultipliers[kind];
-
-	Real bonus = 0.0f;
-	object->getAttributeModifierBonus(1, &bonus);
-
-	Real cap = TheWritableGlobalData->m_attributeModifierArmorMaxBonus;
-	Real chosen = (bonus < cap || bonus > cap || bonus == cap) ? bonus : cap;
-
-	return (g_bfmeDefaultBU - chosen) * multiplier;
+    slots.multiplier *= slots.amount;
+    if (kind != 8)
+    {
+        int multiplierKind = *(volatile int *)((char *)damageInfo + 0x0c);
+        slots.multiplier *= slots.receiver->m_kindMultipliers[multiplierKind];
+        if (kind != 0)
+        {
+            float bonus = 0.0f;
+            currentObject->getAttributeModifierBonus(1, &bonus);
+            const float *selected = &TheWritableGlobalData->m_attributeModifierArmorMaxBonus;
+            if (bonus < *selected)
+                selected = &bonus;
+            return (g_bfmeDefaultBU - *selected) * slots.multiplier;
+        }
+    }
+    return slots.multiplier;
 }
