@@ -71,6 +71,14 @@ public:
 	UnsignedInt m_frame;					// +0x3C
 };
 
+// Retail ILT 0x0002A62B targets the sole opaque member at 0x003BDF70.
+// Its ECX receiver and int/no-stack-arguments ABI are independently verified.
+class Rva003BDF70Owner
+{
+public:
+	Int combinedSpanCount(void);
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/CampaignManager.h
 class CampaignManager
 {
@@ -88,7 +96,7 @@ extern GameLogic *TheGameLogic;
 // countMissionObjectives loads 0x012F1028. GameEngine::init names that slot
 // TheLivingWorldLogic (tag after TheLivingWorldCampaignManager at 0x012F1024).
 // TheCampaignManager is the GameClient global at 0x012F4CB0. Type stays
-// CampaignManager* so the four objective-query callees keep their pins.
+// CampaignManager* so the three remaining objective-query callees keep their pins.
 // The global itself is EA's LivingWorldLogic *TheLivingWorldLogic (retail
 // 0x012F1028, defined in GameLogic/LivingWorld/LivingWorldLogic.cpp);
 // CampaignManager is this TU's view, so every use casts.
@@ -138,9 +146,7 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 
 	if (mgr)
 	{
-		typedef Int (CampaignManager::*ObjectiveCount)(void);
-		union { void (*fn)(); ObjectiveCount call; } count = { j_0002a62b };
-		Int n = (mgr->*count.call)();
+		Int n = reinterpret_cast<Rva003BDF70Owner *>(mgr)->combinedSpanCount();
 		Int i = 0;
 		if (n > 0)
 		{

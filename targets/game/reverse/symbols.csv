@@ -83278,7 +83278,6 @@ name,address,notes
 ?getMessageColor@InGameUI@@QAEH_N@Z,0x00015622,ShowDiplomacy retail call at 0x004C4048 through ILT
 ?getMinimumAttackRange@WeaponTemplate@@QBEMXZ,0x0001D7F5,ILT 0x0001D7F5 -> 0x001E15D0 matched getMinimumAttackRange; BezierProjectile fire-at
 ?getMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z,0x005BC110,thunk 0x0000770c target from CampaignManager::setCampaignAndMission (0x005BC9A0); Campaign::getMission(AsciiString), still a dump
-?getMissionObjectiveCount@CampaignManager@@QAEHXZ,0x0002A62B,ILT to 0x003BDF70 for ScoreKeeper::countMissionObjectives
 ?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ,0x00043EEB
 ?getMode@Rva0046F3D0ModeSource@@QAEHXZ,0x0046F280,pin
 ?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
