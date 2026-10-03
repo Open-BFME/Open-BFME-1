@@ -1,8 +1,17 @@
+// Both retail bodies call the five-byte ILT thunk at 0x000013ED, whose
+// address-derived identity is ?j_000013ed@@YAXXZ (functions.csv row
+// ?j_000013ed@@YAXXZ, defined by game/gen_small/gthunks_000.cpp).  Calling it
+// through its own symbol -- the idiom Rva006B9320RequestDispatch.cpp uses --
+// is what lets this object link; the call shape stays thiscall so the bytes
+// are unchanged.
+
 class BfmeSubDSI
 {
-public:
-	void bfmeCallDSI(void **what);
 };
+
+typedef void (BfmeSubDSI::*BfmeCallDSI_t)(void **);
+
+extern void j_000013ed();
 
 class BfmeThingDSI
 {
@@ -15,7 +24,9 @@ public:
 void BfmeThingDSI::bfmeGoDSI(void *what)
 {
 	*(void *volatile *)&what = what;
-	m_bfmeSub.bfmeCallDSI(&what);
+	union { void (__cdecl *raw)(); BfmeCallDSI_t member; } call;
+	call.raw = j_000013ed;
+	(m_bfmeSub.*call.member)(&what);
 }
 
 class BfmeThingDSJ
@@ -29,5 +40,7 @@ public:
 void BfmeThingDSJ::bfmeGoDSJ(void *what)
 {
 	*(void *volatile *)&what = what;
-	m_bfmeSub.bfmeCallDSI(&what);
+	union { void (__cdecl *raw)(); BfmeCallDSI_t member; } call;
+	call.raw = j_000013ed;
+	(m_bfmeSub.*call.member)(&what);
 }

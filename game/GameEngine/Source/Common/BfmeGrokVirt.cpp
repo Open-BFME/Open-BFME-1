@@ -15,11 +15,19 @@ struct BfmeObjWJ
 	virtual void v10(void *);
 };
 
-void __stdcall bfmePrepWJ(BfmeObjWJ *p);
+// The retail call at 0x002AB0B0 targets the five-byte ILT thunk at 0x000044C1,
+// whose address-derived identity is ?j_000044c1@@YAXXZ (functions.csv,
+// game/gen_small/thunks_001.cpp).  Naming it as itself is what lets this
+// object link; the stdcall shape and the pushed argument are unchanged.
+extern void j_000044c1();
+
+typedef void (__stdcall *BfmePrepWJ_t)(BfmeObjWJ *);
 
 void __stdcall bfmeVirtWJ(BfmeObjWJ *p)
 {
-	bfmePrepWJ(p);
+	union { void (__cdecl *raw)(); BfmePrepWJ_t prep; } call;
+	call.raw = j_000044c1;
+	call.prep(p);
 	if (!p->v4())
 	{
 		unsigned char n[2];
