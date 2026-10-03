@@ -266,75 +266,7 @@ NetPacketList NetPacket::ConstructBigCommandPacketList(NetCommandRef *ref) {
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_GetBufferSizeNeededForCommand.cpp
-// ?GetBufferSizeNeededForCommand@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetBufferSizeNeededForCommand(NetCommandMsg *msg) {
-	// This is where the fun begins...
-
-	if (msg == NULL) {
-		return TRUE; // There was nothing to add, so it was successful.
-	}
-
-	switch(msg->getNetCommandType())
-	{
-		case NETCOMMANDTYPE_GAMECOMMAND:
-			return GetGameCommandSize(msg);
-		case NETCOMMANDTYPE_ACKSTAGE1:
-		case NETCOMMANDTYPE_ACKSTAGE2:
-		case NETCOMMANDTYPE_ACKBOTH:
-			return GetAckCommandSize(msg);
-		case NETCOMMANDTYPE_FRAMEINFO:
-			return GetFrameCommandSize(msg);
-		case NETCOMMANDTYPE_PLAYERLEAVE:
-			return GetPlayerLeaveCommandSize(msg);
-		case NETCOMMANDTYPE_RUNAHEADMETRICS:
-			return GetRunAheadMetricsCommandSize(msg);
-		case NETCOMMANDTYPE_RUNAHEAD:
-			return GetRunAheadCommandSize(msg);
-		case NETCOMMANDTYPE_DESTROYPLAYER:
-			return GetDestroyPlayerCommandSize(msg);
-		case NETCOMMANDTYPE_KEEPALIVE:
-			return GetKeepAliveCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTKEEPALIVE:
-			return GetDisconnectKeepAliveCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTPLAYER:
-			return GetDisconnectPlayerCommandSize(msg);
-		case NETCOMMANDTYPE_PACKETROUTERQUERY:
-			return GetPacketRouterQueryCommandSize(msg);
-		case NETCOMMANDTYPE_PACKETROUTERACK:
-			return GetPacketRouterAckCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTCHAT:
-			return GetDisconnectChatCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTVOTE:
-			return GetDisconnectVoteCommandSize(msg);
-		case NETCOMMANDTYPE_CHAT:
-			return GetChatCommandSize(msg);
-		case NETCOMMANDTYPE_PROGRESS:
-			return GetProgressMessageSize(msg);
-		case NETCOMMANDTYPE_LOADCOMPLETE:
-			return GetLoadCompleteMessageSize(msg);
-		case NETCOMMANDTYPE_TIMEOUTSTART:
-			return GetTimeOutGameStartMessageSize(msg);
-		case NETCOMMANDTYPE_WRAPPER:
-			return GetWrapperCommandSize(msg);
-		case NETCOMMANDTYPE_FILE:
-			return GetFileCommandSize(msg);
-		case NETCOMMANDTYPE_FILEANNOUNCE:
-			return GetFileAnnounceCommandSize(msg);
-		case NETCOMMANDTYPE_FILEPROGRESS:
-			return GetFileProgressCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTFRAME:
-			return GetDisconnectFrameCommandSize(msg);
-		case NETCOMMANDTYPE_DISCONNECTSCREENOFF:
-			return GetDisconnectScreenOffCommandSize(msg);
-		case NETCOMMANDTYPE_FRAMERESENDREQUEST:
-			return GetFrameResendRequestCommandSize(msg);
-		default:
-			DEBUG_CRASH(("Unknown NETCOMMANDTYPE %d", msg->getNetCommandType()));
-			break;
-	}
-
-	return 0;
-}
+// GetBufferSizeNeededForCommand is defined in NetPacket_GetBufferSizeNeededForCommand.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_GetBufferSizeNeededForCommand.cpp
 // ?GetGameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
