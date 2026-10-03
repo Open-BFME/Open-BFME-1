@@ -10,10 +10,10 @@ unsigned int Rva008A0510::value() const { return field50; }
 
 // Existing address witnesses identify these two mutable callback slots.
 // Allocator takes one size; deallocator takes a pointer and a size.
-extern void *(__cdecl *Rva01337828Allocate)(unsigned int);
-extern void (__cdecl *g_Va01337830)(void *, unsigned int);
-void *rva008A0520(unsigned int bytes) { return Rva01337828Allocate(bytes); }
-void rva008A0530(void *memory, unsigned int bytes) { g_Va01337830(memory, bytes); }
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
+extern void (__cdecl *TheBfmeFree)(void *, unsigned int);
+void *rva008A0520(unsigned int bytes) { return Rva008C5D70Alloc(bytes); }
+void rva008A0530(void *memory, unsigned int bytes) { TheBfmeFree(memory, bytes); }
 
 struct Rva008A0540 { char pad00[0x30]; unsigned int field30; unsigned int value() const; };
 unsigned int Rva008A0540::value() const { return field30; }
