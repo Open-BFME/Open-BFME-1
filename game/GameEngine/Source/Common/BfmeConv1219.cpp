@@ -20,7 +20,6 @@ public:
 class BfmeG1219
 {
 public:
-	void bfmeStep1219C();
 	int m_bfme00;
 	int m_bfme04;
 };
@@ -28,6 +27,7 @@ public:
 struct Rva00899560Pool;
 
 extern Rva00899560Pool *g_rva01337810GcRoots;
+extern void d_008a30c0();
 
 void bfmeGo1219(BfmeA1219 *a, const unsigned char **b)
 {
@@ -45,5 +45,8 @@ void bfmeGo1219(BfmeA1219 *a, const unsigned char **b)
 		*b += *(const int *)p;
 	g = (BfmeG1219 *)g_rva01337810GcRoots;
 	if (g->m_bfme04 && a->m_bfme00 == 0)
-		g->bfmeStep1219C();
+	{
+		typedef void (__fastcall *Call)(BfmeG1219 *);
+		(reinterpret_cast<Call>(d_008a30c0))(g);
+	}
 }
