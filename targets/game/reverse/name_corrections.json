@@ -15168,5 +15168,15 @@
   "after_sha256": "b1a1a834ed2d33999bcb5bd5bff5ba78b78186b2874426d596a2651a571388ae",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_xfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_xfer.cpp",
+  "old_name": "BfmeParticleSystemXferHandle",
+  "new_name": "Rva0010C3E0",
+  "before_sha256": "2581b2ee2c11e0506106386737ed9930967a8a93e71751b74e7eae1ad082853a",
+  "after_sha256": "e42848f478a24e8ac49a925fd1e1d2d29187c4604c476442a2f95fd6a2816cbc",
+  "evidence": "targets/game/reverse/identity_evidence/0021daa0-slot90-callee.md",
+  "reason": "Caller-only descriptive helper declaration duplicates the independently decoded ILT/body route already owned by Rva0010C3E0; reuse the existing cdecl two-pointer provider without asserting a second identity."
  }
 ]

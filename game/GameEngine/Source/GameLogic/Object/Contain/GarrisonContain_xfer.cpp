@@ -146,7 +146,9 @@ protected:
 
 class MidVirtualSlot90Receiver;
 void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
-extern void BfmeParticleSystemXferHandle(Xfer &target, void *item);
+// Retail 0x21DBAF -> ILT 0x08CA1 -> the existing 25-byte 0x10C3E0 body.
+// It takes two stack pointers under cdecl; the caller cleans eight bytes.
+void Rva0010C3E0(MidVirtualSlot90Receiver *receiver, void *context);
 void GarrisonContain::xfer(Xfer *xfer)
 {
 	BfmeGarrisonXferTarget *target =
@@ -189,7 +191,7 @@ void GarrisonContain::xfer(Xfer *xfer)
 		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].targetID);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].placeFrame);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].lastEffectFrame);
-		BfmeParticleSystemXferHandle(*xfer, &self->m_garrisonPointData[i].effect);
+		Rva0010C3E0((MidVirtualSlot90Receiver *)xfer, &self->m_garrisonPointData[i].effect);
 	}
 
 	target->xferInt(&self->m_garrisonPointsInUse);
