@@ -1,3 +1,7 @@
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
+
 // Open-BFME5 conversions: bodies whose callees are already named.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
@@ -51,16 +55,6 @@ void Bfme5TextureHolderB::bfmeDropTexture(void)
 		bfme5ReleaseTexture(&m_bfmeTexture);
 }
 
-namespace _STL {
-
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int n);
-};
-
-}
-
 struct Bfme5IntNode
 {
 	Bfme5IntNode *m_bfmeNext;
@@ -69,7 +63,7 @@ struct Bfme5IntNode
 
 Bfme5IntNode * __stdcall bfme5MakeIntNode(const int *v)
 {
-	Bfme5IntNode *n = (Bfme5IntNode *)_STL::__new_alloc::allocate(8);
+	Bfme5IntNode *n = (Bfme5IntNode *)_STL::__node_alloc<true, 0>::allocate(8);
 	int *p = &n->m_bfmeValue;
 
 	n->m_bfmeNext = 0;
@@ -166,7 +160,7 @@ public:
 void Bfme5LinkPusher::bfmePushBack(void *x)
 {
 	Bfme5Link *pos = m_bfmeList->m_bfmeNode;
-	Bfme5Link *n = (Bfme5Link *)_STL::__new_alloc::allocate(0x0c);
+	Bfme5Link *n = (Bfme5Link *)_STL::__node_alloc<true, 0>::allocate(0x0c);
 	void **p = &n->m_bfmeValue;
 
 	if (p)
@@ -227,8 +221,6 @@ void __cdecl bfme5SetTextureSlot(int i, TextureClass **src)
 
 	*slot = *src;
 }
-
-void __cdecl operator delete(void *p);
 
 extern void *g_bfme5DetachVtable;
 
