@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1df56d60a2bd9ab184171176e80104d2da9e84558855d1c5bd37fe7e6264b637",
+  "symbol": "?lookup@Rva003D2B80Child@@QAEPAURva003D1380Elem@@URva003D2B80Coord@@@Z",
+  "score_kind": "measured",
+  "score": 0.0,
+  "source": "// ?lookup@Rva003D2B80Child@@QAEPAURva003D1380Elem@@URva003D2B80Coord@@@Z\n// partial score=0.0 date=2026-10-03\n\nstruct Rva003D2B80Step { float v; };\n__forceinline int Rva003D2B80Cell(float v, const Rva003D2B80Step &d) { return (int)(v / d.v); }\n\nstruct Rva003D1380Elem\n{\n\tunsigned char m_body[0x3c];\n};\n\nstruct Rva003D2B80Coord\n{\n\tfloat x;\n\tfloat y;\n};\n\nstruct Rva003D2B80Source\n{\n\tunsigned char m_pad00[0xc];\n\tRva003D2B80Step m_step_s;\n};\n\nclass Rva003D2B80Child\n{\npublic:\n\tfloat m_originX;\n\tfloat m_originY;\n\tRva003D1380Elem *m_begin;\n\tRva003D1380Elem *m_end;\n\tRva003D1380Elem *m_capacity;\n\tRva003D2B80Source *m_source;\n\tint m_count;\n\n\tRva003D1380Elem *lookup(Rva003D2B80Coord coord);\n};\n\nRva003D1380Elem *Rva003D2B80Child::lookup(Rva003D2B80Coord coord)\n{\n\tcoord.x -= m_originX;\n\tcoord.y -= m_originY;\n\tRva003D2B80Step st = m_source->m_step_s;\n\tRva003D2B80Step *pst = &st;\n\tint col = Rva003D2B80Cell(coord.x, *pst);\n\tif (col >= 0 && col < m_count)\n\t{\n\t\tint idx = Rva003D2B80Cell(coord.y, *pst) * m_count + col;\n\t\tif (idx >= 0 && (unsigned)idx < (unsigned)(m_end - m_begin))\n\t\t\treturn m_begin + idx;\n\t}\n\treturn 0;\n}\n"
+}
