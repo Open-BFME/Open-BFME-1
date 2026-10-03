@@ -18,6 +18,7 @@ class AptValue
 public:
 	virtual void AddRef();
 	virtual void Release();
+	float toNumber();
 
 	bool isUndefined() const
 	{
@@ -31,12 +32,6 @@ public:
 
 private:
 	unsigned int m_valueBits;
-};
-
-class BfmeE1239 : public AptValue
-{
-public:
-	float bfmeF1239();
 };
 
 class AptActionInterpreter
@@ -72,8 +67,8 @@ void AptActionInterpreter::_FunctionRva008C72D0(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 		int flag;
 
 		if (topValue != BfmeZeroRange && underValue != BfmeZeroRange)

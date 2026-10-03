@@ -1,16 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 //
 // Retail 0x007DB700: destructor for the filter object constructed at
 // 0x007DB820.  Two ref holders precede two vectors of 12-byte POD values.
 
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h supplies array placement new
+#include <texture.h>
 #include <vector>
-
-class Rva007D6AB0SubPtr
-{
-public:
-	void release();
-};
 
 class Rva007DB700RefHolder
 {
@@ -18,11 +15,11 @@ public:
 	~Rva007DB700RefHolder()
 	{
 		if (m_ptr)
-			m_ptr->release();
+			m_ptr->Release_Ref();
 	}
 
 private:
-	Rva007D6AB0SubPtr *m_ptr;
+	TextureBaseClass *m_ptr;
 };
 
 struct Rva007DB700Pod12
