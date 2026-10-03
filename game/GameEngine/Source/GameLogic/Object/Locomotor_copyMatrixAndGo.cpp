@@ -3,6 +3,19 @@
 // Retail 0x001B9C50: copy twelve dwords from arg+8 into this+0x64 then two
 // follow-up calls.
 
+// The ILT at 0x00024EA6 (the call this body makes first) is a thunk to
+// 0x001B5860, which the ledger owns as Locomotor::getMaxTurnRate
+// (game/GameEngine/Source/GameLogic/Object/LocomotorGetMaxTurnRateObject.cpp,
+// 133 B, matched): that TU's header comment names 0x001B9C50 -- this body --
+// as the rotate-toward caller that hands it its Object pointer.
+#include "object.h"
+
+class Locomotor
+{
+public:
+	float getMaxTurnRate(Object *object) const;
+};
+
 struct Mat12
 {
 	char m_pad[8];
@@ -23,7 +36,6 @@ struct Mat12
 class BfmeSub1CC_EC3
 {
 public:
-	float prep(Mat12 *m);
 	void finish(Mat12 *m, int a, int t, int b);
 	void copyMatrixAndGo(Mat12 *m, int a, int b);
 
@@ -57,6 +69,6 @@ void BfmeSub1CC_EC3::copyMatrixAndGo(Mat12 *m, int a, int b)
 	m_88 = m->m_2C;
 	m_8C = m->m_30;
 	m_90 = m->m_34;
-	float t = prep(m);
+	float t = ((Locomotor *)this)->getMaxTurnRate((Object *)m);
 	finish(m, a, *(int *)&t, b);
 }
