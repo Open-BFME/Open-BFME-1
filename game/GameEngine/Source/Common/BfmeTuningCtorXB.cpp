@@ -1,24 +1,24 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: the tuning-record constructor at retail 0x00762100, 89 bytes.
 // A string, a kind word and a run of float defaults; -1.0f and 1.0f each
 // repeat, so MSVC holds them in registers as retail does.
 
-class AsciiStringXB
+#include "ascii_string.h"
+
+class AsciiStringXB;
+
+class BfmeStrXB
 {
 public:
-	AsciiStringXB(const AsciiStringXB &other);
-	~AsciiStringXB(void);
+	BfmeStrXB(const AsciiStringXB &other)
+		: m_bfmeString(reinterpret_cast<const AsciiString &>(other))
+	{
+	}
+	~BfmeStrXB(void) {}
 
 private:
-	char *m_bfmeData;
-};
-
-class BfmeStrXB : private AsciiStringXB
-{
-public:
-	BfmeStrXB(const AsciiStringXB &other) : AsciiStringXB(other) {}
-	~BfmeStrXB(void) {}
+	AsciiString m_bfmeString;
 };
 
 // The two zeroed words stay ahead of the kind word instead of sinking, so they
