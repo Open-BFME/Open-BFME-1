@@ -2672,19 +2672,7 @@ void Weapon::fireProjectileDetonationWeapon(const Object *source, const Coord3D*
 //-------------------------------------------------------------------------------------------------
 //Currently, this function was added to allow a script to force fire a weapon,
 //and immediately gain control of the weapon that was fired to give it special orders...
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon_privateFireWeaponWrappers.cpp
-// ?forceFireWeapon@Weapon@@QAEPAVObject@@PBV2@PBUCoord3D@@@Z present-unmatched
-Object* Weapon::forceFireWeapon( const Object *source, const Coord3D *pos)
-{
-	//CRCDEBUG_LOG(("Weapon::forceFireWeapon() for %s\n", DescribeObject(source).str()));
-	//Force the ammo to load instantly.
-	//loadAmmoNow( source );
-	//Fire the weapon at the position. Internally, it'll store the weapon projectile ID if so created.
-	ObjectID projectileID = INVALID_ID;
-	const Bool ignoreRange = true;
-	privateFireWeapon(source, NULL, pos, false, ignoreRange, NULL, &projectileID, TRUE );
-	return TheGameLogic->findObjectByID( projectileID );
-}
+// Retail nine-argument force-fire wrapper lives in Weapon_privateFireWeaponWrappers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME's getStatus is a CACHED query, not a recomputation. A helper works the
