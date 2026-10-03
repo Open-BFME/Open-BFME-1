@@ -1,5 +1,5 @@
 // ?attach@BufferedStreamStarter006B7E70@@QAEXPAUStreamSlot006B7E70@@PAVFileRef006B7E70@@H@Z
-// partial score=0.7467 date=2026-09-28
+// partial score=0.8092 date=2026-10-03
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x006B7E70 (748 bytes; ret 8 at +0x2E9): choose a free 0x40-byte
 // stream slot, attach its counted event and file, fill a sample buffer and
@@ -109,8 +109,10 @@ void BufferedStreamStarter006B7E70::attach(StreamSlot006B7E70 *slot,FileRef006B7
 		slot->m_rva006B5900Field28=zero;
 		return;
 	}
-	slot->m_rva006B5900Field2c=(unsigned int)file->ptr->info.data-slot->m_rva006B5900Field1c.ptr->m_rva006B5900Word2c;
-	slot->m_rva006B5900Field28=file->ptr->info.size+slot->m_rva006B5900Field2c;
+	if (slot->m_rva006B5900Field1c.ptr) {
+		slot->m_rva006B5900Field2c=(unsigned int)file->ptr->info.data-slot->m_rva006B5900Field1c.ptr->m_rva006B5900Word2c;
+		slot->m_rva006B5900Field28=file->ptr->info.size+slot->m_rva006B5900Field2c;
+	}
 	if(*(SampleFile006B7E70 * volatile *)&file->ptr==(SampleFile006B7E70 *)zero) {
 		typedef void (BufferedStreamStarter006B7E70::*Fn)(const void *);
 		(this->*member006B7E70<Fn>(j_00021ff3))(&Rva01336E50EmptyString);
