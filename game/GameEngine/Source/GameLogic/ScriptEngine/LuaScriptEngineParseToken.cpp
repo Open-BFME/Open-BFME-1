@@ -28,8 +28,6 @@ public:
 	BfmeLexEAN(char *text, char *buffer, Int limit);
 	~BfmeLexEAN();
 
-	char *getTailEAN(void);
-
 	char *m_bfmePosEAN;
 	char *m_bfmeLineEAN;
 	char *m_bfmeSourceEAN;
@@ -49,11 +47,30 @@ class __declspec(novtable) LuaScriptEngine
 public:
 	void rva002EC770ParseToken(BfmeLexEAN *parser);
 	void rva002EC770ParseTokenEvents(BfmeLexEAN *parser);
-	void rva002EC770ParseTokenEventList(BfmeLexEAN *parser);
 
 private:
 	char m_pad00B4[0xB4];
 	unsigned char m_keepOpen;
+};
+
+// getTailEAN (ILT 0x000262BA) and the EventList handler (ILT 0x0003ED33) are
+// reached through their five-byte thunks, called as thiscall members.
+extern void j_000262ba(void);
+extern void j_0003ed33(void);
+
+typedef char *(BfmeLexEAN::*BfmeGetTailThunk)(void);
+typedef void (LuaScriptEngine::*LuaEventListThunk)(BfmeLexEAN *parser);
+
+union BfmeGetTailCast
+{
+	void (*raw)(void);
+	BfmeGetTailThunk member;
+};
+
+union LuaEventListCast
+{
+	void (*raw)(void);
+	LuaEventListThunk member;
 };
 
 #pragma comment(linker, "/alternatename:?finish@XmlNameSlotList@@QAEHXZ=?j_00049ae4@@YAXXZ")
@@ -61,7 +78,9 @@ private:
 // ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
 void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 {
-	char *tail = parser->getTailEAN();
+	BfmeGetTailCast tailCall;
+	tailCall.raw = &::j_000262ba;
+	char *tail = (parser->*tailCall.member)();
 	int cmp = strcmp(tail, "SageLuaScriptSection");
 	if (cmp != 0)
 		return;
@@ -72,7 +91,7 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 		if (--status != 0)
 			return;
 
-		const char *tag = parser->getTailEAN();
+		const char *tag = (parser->*tailCall.member)();
 		int cmpEvents = strcmp(tag, "Events");
 		if (cmpEvents == 0)
 		{
@@ -83,7 +102,9 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 			int cmpEventList = strcmp(tag, "EventList");
 			if (cmpEventList != 0)
 				return;
-			rva002EC770ParseTokenEventList(parser);
+			LuaEventListCast eventList;
+			eventList.raw = &::j_0003ed33;
+			(this->*eventList.member)(parser);
 		}
 		status = ((XmlNameSlotList *)parser)->finish();
 	}
