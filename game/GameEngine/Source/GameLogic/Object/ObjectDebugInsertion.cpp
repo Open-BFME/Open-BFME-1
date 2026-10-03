@@ -7,8 +7,6 @@
 
 class Object;
 
-extern const char Rva006A16B0Empty[];
-
 #include "ascii_string.h"
 
 AsciiString DescribeObject(const Object *object);

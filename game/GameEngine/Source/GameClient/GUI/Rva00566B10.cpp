@@ -1,8 +1,6 @@
 // The Skirmish options constructor registers this body for the four faction
 // tooltip selectors at 0x0110A2E4, 0x0110A2B8, 0x0110A288, and 0x0110A258.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> struct StringInlineData
@@ -50,7 +48,7 @@ public:
 	}
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 	int length() const
 	{

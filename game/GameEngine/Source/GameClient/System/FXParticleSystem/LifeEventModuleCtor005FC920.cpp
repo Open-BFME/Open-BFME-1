@@ -24,8 +24,6 @@ private:
 
 class FXList;
 
-extern const char Rva006A16B0Empty[];
-
 extern "C" const void *bfmeVftCategoryModuleInfo8[];
 #pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
 
@@ -156,7 +154,7 @@ Rva005FC920LifeEventModule::Rva005FC920LifeEventModule(
 		const char *text = sourceImage->m_eventName;
 		mutableSourceImage->m_cached =
 			TheFXListStore->findFXList(
-				text ? text + 8 : Rva006A16B0Empty );
+				text ? text + 8 : "" );
 	}
 	m_cached = sourceImage->m_cached;
 

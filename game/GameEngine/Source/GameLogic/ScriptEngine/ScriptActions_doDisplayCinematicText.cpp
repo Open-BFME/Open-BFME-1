@@ -28,8 +28,6 @@ public:
 	~UnicodeString();
 };
 
-extern const char Rva006A16B0Empty[];
-
 class AsciiString : private StringBase<char>
 {
 public:
@@ -55,7 +53,7 @@ public:
 	const char *str() const
 	{
 		return m_data ? (const char *)m_data + 8 :
-			Rva006A16B0Empty;
+			"";
 	}
 };
 

@@ -148,12 +148,10 @@ private:
 
 AptPalantir *TheAptPalantir = 0;
 
-extern const char Rva006A16B0Empty[];
-
 static char *bfmeString( const AsciiString &value )
 {
 	char *data = *(char **)&value;
-	return data ? data + 8 : (char *)Rva006A16B0Empty;
+	return data ? data + 8 : (char *)"";
 }
 
 AptPalantir::AptPalantir()

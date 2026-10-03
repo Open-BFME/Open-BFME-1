@@ -199,7 +199,6 @@ extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern Real g_01098AD4;
 extern Real g_01083B6C;
-extern const char Rva006A16B0Empty[];
 
 extern void j_000022bb(void);
 extern void j_0000979b(void);
@@ -287,7 +286,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 					->*finalOverrideCast.asMember)();
 		}
 		const char *objectName = templateForLog->m_name ?
-            (const char *)templateForLog->m_name + 8 : Rva006A16B0Empty;
+            (const char *)templateForLog->m_name + 8 : "";
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: AIInternalMoveToState::onEnter() entered. Object %s(%d) m_goalPosition=%g,%g,%g", objectName, objectId,
 			m_goalPosition.x, m_goalPosition.y, m_goalPosition.z);

@@ -38,7 +38,6 @@ typedef bool Bool;
 
 // Retail's empty-string sentinel: `mov ebx, 0x107388b` at +0xb4 is a DIR32
 // relocation to ?Rva006A16B0Empty@@3PADA (targets/game/reverse/symbols.csv, 0x0107388B).
-extern char Rva006A16B0Empty[];
 
 // Retail inlines the whole of AsciiString::str() here -- +0xa8..+0xb9 is
 // `mov ebx,[ebx+0x74]; test ebx,ebx; je; add ebx,8; jmp; mov ebx,0x107388b`.
@@ -49,7 +48,7 @@ extern char Rva006A16B0Empty[];
 static const char *inlineStr(const AsciiString &s)
 {
 	const char *text = *reinterpret_cast<const char *const *>(&s);
-	return text ? text + 8 : Rva006A16B0Empty;
+	return text ? text + 8 : "";
 }
 
 struct Coord3D
