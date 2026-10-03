@@ -115,20 +115,24 @@ struct BfmeLookupObject008ACCF0;
 extern void d_008accf0(void);
 extern void d_008a18c0(void);
 
-extern Rva8CD130Value **g_bfmeArr1233;
-struct Rva008AE770Stack { int m_count; };
+struct Rva008AE770Stack
+{
+	int m_count;
+	int m_rva0133874C;
+	Rva8CD130Value** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 int rva008AE490(void *context, int value)
 {
-	Rva8CD130Value *top = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
-	Rva8CD130Value *third = g_bfmeArr1233[Rva008AE770TheStack.m_count - 3];
+	Rva8CD130Value *top = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.m_count - 1];
+	Rva8CD130Value *third = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.m_count - 3];
 	Rva8CD130Value *fourth;
-	Rva8CD130Value *second = g_bfmeArr1233[Rva008AE770TheStack.m_count - 2];
+	Rva8CD130Value *second = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.m_count - 2];
 	if (value >= 4)
-		fourth = g_bfmeArr1233[Rva008AE770TheStack.m_count - 4];
+		fourth = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.m_count - 4];
 	else
 		fourth = 0;
 	Rva8CD130String name;

@@ -72,12 +72,16 @@ public:
 
 };
 
-extern AptValue **g_bfmeArr1233;
 // Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
 // as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
 // mangles a global's class type 3V for `class` but 3U for `struct`; only the leading
 // int (the stack depth) is read here, so the rest of the layout stays out of this TU.
-struct Rva008AE770Stack { int count; };
+struct Rva008AE770Stack
+{
+	int count;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern struct Rva008AE770Stack Rva008AE770TheStack;
 extern void *g_Rva01337A28Index;
 class BfmeS1238;
@@ -210,12 +214,12 @@ AptValue *rva00899800(void *, int argc)
 	if (argc != 2)
 		return (AptValue *)Rva00899800Boolean::createFalse();
 
-	AptValue *top = g_bfmeArr1233[Rva008AE770TheStack.count - 1];
+	AptValue *top = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.count - 1];
 	if (!(top->m_flags & 0x8000) || !top->isString())
 		return (AptValue *)Rva00899800Boolean::createFalse();
 
 	Rva0089C860State *table = (Rva0089C860State *)g_Rva01337A28Index;
-	AptValue *under = g_bfmeArr1233[Rva008AE770TheStack.count - 2];
+	AptValue *under = Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.count - 2];
 	if (table == 0)
 	{
 		g_Rva01337A28Index = new Rva0089C860State(8);

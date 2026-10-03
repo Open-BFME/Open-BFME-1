@@ -45,8 +45,12 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 extern BfmeAlloc1233 *g_bfmeAlloc1233;
-extern BfmeE1233 **g_bfmeArr1233;
-struct Rva008AE770Stack { int field00; };
+struct Rva008AE770Stack
+{
+	int field00;
+	int m_rva0133874C;
+	BfmeE1233** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 // 0x013379BC is the fallback value database pointer, defined as AptValue *
 // by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
@@ -62,7 +66,9 @@ void *bfmeVisit1233(BfmeN1233 *a, int n)
 	BfmeBuf1233 *buf;
 
 	if ((a->m_bfme04 & 0x3f) == 0x16 && !((unsigned char)(~(a->m_bfme04 >> 15)) & 1) && n > 0) {
-		e = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
+		Rva008AE770Stack& stk = Rva008AE770TheStack;
+		BfmeE1233** args = stk.m_rva01338750;
+		e = args[stk.field00 - 1];
 		e->bfmeName1233(&g_bfmeStr1233);
 		bfmeReport1233(a->m_bfme20, a->m_bfme28, 4, bfmeHandler1233);
 		buf = g_bfmeStr1233.m_bfme00;

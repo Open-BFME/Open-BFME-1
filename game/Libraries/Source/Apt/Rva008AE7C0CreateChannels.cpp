@@ -43,19 +43,23 @@ struct Node008AE7C0 {
  int m_f18,m_f1C,m_f20; float m_f24; int m_f28,m_f2C,m_f30;
  char *m_f34,*m_f38; int m_f3C;
 };
-extern AptValue **g_bfmeArr1233;
-struct Rva008AE770Stack { int field00; };
+struct Rva008AE770Stack
+{
+	int field00;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 AptValue *aptCreateChannels008AE7C0(Owner008AE7C0 *self,int argc) {
  if(argc!=6) return g_bfmeFallbackDB;
- Rva8CD130Value *v=(Rva8CD130Value*)g_bfmeArr1233[Rva008AE770TheStack.field00-1];
- AptValue *v2=g_bfmeArr1233[Rva008AE770TheStack.field00-2];
- AptValue *v3=g_bfmeArr1233[Rva008AE770TheStack.field00-3];
- AptValue *v4=g_bfmeArr1233[Rva008AE770TheStack.field00-4];
- AptValue *v5=g_bfmeArr1233[Rva008AE770TheStack.field00-5];
- AptValue *v6=g_bfmeArr1233[Rva008AE770TheStack.field00-6];
+ Rva8CD130Value *v=(Rva8CD130Value*)Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-1];
+ AptValue *v2=Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-2];
+ AptValue *v3=Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-3];
+ AptValue *v4=Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-4];
+ AptValue *v5=Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-5];
+ AptValue *v6=Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-6];
  int key=v2->toInteger();
  float x=v3->toNumber(); float y=v4->toNumber();
  float width=v5->toNumber(); float height=v6->toNumber();
