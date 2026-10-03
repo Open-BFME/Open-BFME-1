@@ -81,7 +81,7 @@ HRESULT BfmeVertexShaderLoader::LoadAndCreateD3DShader( const char *filename, DW
 		const DWORD *shaderData = (const DWORD *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, fileSize );
 		if ( shaderData == NULL )
 		{
-			OutputDebugString( "Failed to allocate memory to load shader\n" );
+			OutputDebugString( "Failed to allocate memory to load shader\n " );
 			return (HRESULT)0x80004005L;
 		}
 
@@ -94,7 +94,7 @@ HRESULT BfmeVertexShaderLoader::LoadAndCreateD3DShader( const char *filename, DW
 
 		if ( result < 0 )
 		{
-			OutputDebugString( "Failed to create shader\n" );
+			OutputDebugString( "Failed to create shader\n " );
 			return (HRESULT)0x80004005L;
 		}
 	}
