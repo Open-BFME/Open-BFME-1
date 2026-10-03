@@ -1694,7 +1694,7 @@ Condition *Condition::duplicateAndQualify(const AsciiString& qualifier,
 	Condition *pLink = m_nextAndCondition;
 	Condition *pCur = pNew;
 	while (pLink) {
-		pCur->m_nextAndCondition = newInstance(Condition)(pLink->getConditionType());
+		pCur->m_nextAndCondition = newInstance(Condition)(pLink->m_conditionType);
 		pCur = pCur->m_nextAndCondition;
 		for (i=0; i<pLink->m_numParms; i++) {
 			*pCur->m_parms[i] = *pLink->m_parms[i];
@@ -1843,7 +1843,7 @@ Bool Condition::ParseConditionDataChunk(DataChunkInput &file, DataChunkInfo *inf
 		}
 	}
 	// heal old files.
-	switch (pCondition->getConditionType()) 
+	switch (pCondition->m_conditionType)
 	{
 		case SKIRMISH_SPECIAL_POWER_READY:
 			if (pCondition->m_numParms == 1)

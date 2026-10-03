@@ -40,19 +40,21 @@ public:
 	Int m_playerParameterIndex[(0xec - 0x24) / 4];
 	FactionVictoryParametersVector m_parameters;
 
-	FactionVictoryParameters *bfmeParametersForPlayer( Int playerIndex )
-	{
-		UnsignedInt parameterIndex =
-			(UnsignedInt)m_playerParameterIndex[playerIndex] & 0x7fffffff;
-		if( parameterIndex < m_parameters.size() )
-		{
-			return &m_parameters[parameterIndex];
-		}
-		return 0;
-	}
 };
 
 extern VictorySystem *TheVictorySystem;
+
+static FactionVictoryParameters *bfmeParametersForPlayerLocal(
+	VictorySystem *system, Int playerIndex)
+{
+	UnsignedInt parameterIndex =
+		(UnsignedInt)system->m_playerParameterIndex[playerIndex] & 0x7fffffff;
+	if( parameterIndex < system->m_parameters.size() )
+	{
+		return &system->m_parameters[parameterIndex];
+	}
+	return 0;
+}
 
 class BfmeCell
 {
@@ -74,7 +76,7 @@ Int BfmeCell::bfmeEvaluate( bool useCellRatio )
 		for( UnsignedInt playerIndex = 0; playerIndex < 16; ++playerIndex )
 		{
 			FactionVictoryParameters *parameters =
-				TheVictorySystem->bfmeParametersForPlayer( playerIndex );
+				bfmeParametersForPlayerLocal( TheVictorySystem, playerIndex );
 			if( m_first[playerIndex] * parameters->m_enemyKillScaleFactor -
 				m_second[playerIndex] * parameters->m_allyDeathScaleFactor >
 				parameters->m_victoryThreshold *
@@ -89,7 +91,7 @@ Int BfmeCell::bfmeEvaluate( bool useCellRatio )
 		for( UnsignedInt playerIndex = 0; playerIndex < 16; ++playerIndex )
 		{
 			FactionVictoryParameters *parameters =
-				TheVictorySystem->bfmeParametersForPlayer( playerIndex );
+				bfmeParametersForPlayerLocal( TheVictorySystem, playerIndex );
 			if( m_first[playerIndex] * parameters->m_enemyKillScaleFactor -
 				m_second[playerIndex] * parameters->m_allyDeathScaleFactor >
 				parameters->m_victoryThreshold )

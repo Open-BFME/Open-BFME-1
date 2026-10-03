@@ -1667,24 +1667,6 @@ void INI::parseVeterancyLevelFlags(INI* ini, void* /*instance*/, void* store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp
-// ?parseSoundsList@INI@@ present-unmatched
-void INI::parseSoundsList( INI* ini, void *instance, void *store, const void* /*userData*/ )
-{
-	std::vector<AsciiString> *vec = (std::vector<AsciiString>*) store;
-	vec->clear();
-
-	const char* SEPS = " \t,=";
-	const char *c = ini->getNextTokenOrNull(SEPS);
-	while ( c )
-	{
-		vec->push_back( c );
-		c = ini->getNextTokenOrNull(SEPS);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDamageTypeFlags@INI@@ present-unmatched
 void INI::parseDamageTypeFlags(INI* ini, void* /*instance*/, void* store, const void* /*userData*/)

@@ -148,49 +148,35 @@ static void parseGameLogicRandomDelay( INI *ini, void *instance, GameLogicRandom
 
 // BoneFXUpdateModuleData::parseFXList is defined by its matched owner TU.
 
-//-------------------------------------------------------------------------------------------------
-/** In the form of:
-	* <BodyDamageState>OCL<index> = Bone:<BoneName> OnlyOnce:<Yes|No> <Min delay> <Max delay> OCL:<OCLName> */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseObjectCreationListThunk.cpp
-// ?parseObjectCreationList@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z present-unmatched
-void BoneFXUpdateModuleData::parseObjectCreationList( INI *ini, void *instance, 
-																														void *store, const void *userData )
+// Keep the non-owner callback body TU-local; the thunk owns the exported name.
+static void parseObjectCreationListLocal(INI *ini, void *instance,
+	void *store, const void *userData)
 {
 	const char *token;
 	BoneOCLInfo *info = (BoneOCLInfo *)store;
 
-	// parse the location bone or location
-	parseFXLocInfo( ini, instance, &info->locInfo );
+	parseFXLocInfo(ini, instance, &info->locInfo);
 
-	// make sure we have an "OnlyOnce:" token
-	token = ini->getNextToken( ini->getSepsColon() );
-	if (stricmp( token, "onlyonce" ) != 0)
+	token = ini->getNextToken(ini->getSepsColon());
+	if (stricmp(token, "onlyonce") != 0)
 	{
-
-		// error
 		throw INI_INVALID_DATA;
+	}
 
-	} // end if
-
-	ini->parseBool( ini, instance, &info->onlyOnce, NULL );
-
+	ini->parseBool(ini, instance, &info->onlyOnce, NULL);
 	parseGameLogicRandomDelay(ini, instance, &info->gameLogicDelay);
 
-	// make sure we have an "OCL:" token
-	token = ini->getNextToken( ini->getSepsColon() );
-	if( stricmp( token, "ocl" ) != 0 )
+	token = ini->getNextToken(ini->getSepsColon());
+	if (stricmp(token, "ocl") != 0)
 	{
-
-		// error
 		throw INI_INVALID_DATA;
+	}
 
-	}  // end if
+	ini->parseObjectCreationList(ini, instance, &info->ocl, NULL);
+}
 
-	// parse the ocl name
-	ini->parseObjectCreationList( ini, instance, &info->ocl, NULL );
-
-}  // end parseObjectCreationList
+static void (*volatile s_keepParseObjectCreationListLocal)(
+	INI *, void *, void *, const void *) = &parseObjectCreationListLocal;
 
 //-------------------------------------------------------------------------------------------------
 /** In the form of:
