@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME7: MatBufferClass::~MatBufferClass at 0x0092A220 (131 B):
 // release every VertexMaterialClass element (inline Release_Ref: --NumRefs,
 // Delete_This through vtable slot 0, then null the slot), then the inlined
@@ -19,12 +19,9 @@ public:
 
 extern void __cdecl operator delete[](void *) throw();
 
-class RefCountClass
-{
-public:
-	virtual ~RefCountClass() {}
-	int NumRefs;
-};
+// Canonical RefCountClass: a local redeclaration emits a truncated one-slot
+// vftable under the same COMDAT name as retail's two-slot table.
+#include "refcount.h"
 
 template <class T>
 class ShareBufferClass : public RefCountClass

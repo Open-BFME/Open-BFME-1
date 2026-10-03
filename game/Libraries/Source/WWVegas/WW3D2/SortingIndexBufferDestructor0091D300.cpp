@@ -13,12 +13,9 @@ static int _IndexBufferCount;
 static int _IndexBufferTotalIndices;
 static int _IndexBufferTotalSize;
 
-class RefCountClass
-{
-public:
-	virtual ~RefCountClass() {}
-	int NumRefs;
-};
+// Canonical RefCountClass: a local redeclaration emits a truncated one-slot
+// vftable under the same COMDAT name as retail's two-slot table.
+#include "refcount.h"
 
 class IndexBufferClass : public RefCountClass
 {
