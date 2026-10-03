@@ -1,7 +1,6 @@
 // cl: /O2 /Ob0
 
-class AsciiString;
-extern AsciiString TheEmptyString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva000E0AD0
 {
@@ -15,6 +14,6 @@ public:
 void *Rva000E0AD0::get(int index)
 {
 	if (index < 0 || index >= 10)
-		return (void *)&TheEmptyString;
+		return (void *)&AsciiString::TheEmptyString;
 	return &m_slots[index];
 }
