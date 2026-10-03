@@ -1,7 +1,14 @@
 // cl: /Od
 
-void *bfmeAllocQL(int n, void *p);
+// Both callees are five-byte ILT thunks (0x00030940 and 0x0001F4FB), so the
+// only names defined at the addresses the retail calls encode are the ?j_
+// thunk symbols.  A cdecl no-argument C++ global decorates to exactly that
+// name, and the asm below calls it under it.
+extern void j_00030940();
+extern void j_0001f4fb();
 
+// The vector is BfmeVecV34; its overflow handler is declared for its signature
+// only, the asm below reaches it through the 0x0001F4FB ILT thunk.
 class BfmeVecV34
 {
 public:
@@ -31,7 +38,7 @@ void __stdcall bfmePushV34(int *val)
 		mov edx, dword ptr [ebp-0x0C]
 		push edx
 		push 4
-		call bfmeAllocQL
+		call j_00030940
 		add esp, 8
 		mov dword ptr [ebp-8], eax
 		cmp dword ptr [ebp-8], 0
@@ -65,7 +72,7 @@ void __stdcall bfmePushV34(int *val)
 		mov edx, dword ptr [ecx+4]
 		push edx
 		mov ecx, dword ptr [ebp-0x48]
-		call BfmeVecV34::bfmeOverflowV34
+		call j_0001f4fb
 	done:
 	}
 }

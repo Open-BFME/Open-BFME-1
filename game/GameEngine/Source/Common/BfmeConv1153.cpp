@@ -1,8 +1,15 @@
 // cl: /Od
 // Open-BFME5 conversions.
 
-extern "C" void __cdecl bfmeCopy1153(char *d0, char *d1, const char *s0, const char *s1);
-extern "C" unsigned int __cdecl bfmeLen1153(const char *s);
+// Both callees are five-byte ILT thunks (0x00005934 and 0x00006B9A), so the
+// only names defined at the addresses the retail calls encode are the ?j_
+// thunk symbols.  Reference those names and type the calls through views of
+// their cdecl signatures.
+extern "C" void __identifier("?j_00005934@@YAXXZ")();
+extern "C" void __identifier("?j_00006b9a@@YAXXZ")();
+
+typedef void (__cdecl *BfmeCopy1153Thunk)(char *, char *, const char *, const char *);
+typedef unsigned int (__cdecl *BfmeLen1153Thunk)(const char *);
 
 // retail callee at 0x006434C0, reached through the ILT thunk at 0x000132CD;
 // declaration only, the body is game/gen_small/fun_004.cpp
@@ -30,5 +37,7 @@ void BfmeS1153::bfmeReplace1153(unsigned int pos, unsigned int n, const char *s)
 
 	n5 = (unsigned int)(m_bfme04 - m_bfme00) - pos;
 	n1 = (n5 < n) ? &n5 : &n;
-	bfmeCopy1153(m_bfme00 + pos, m_bfme00 + pos + *n1, s, s + bfmeLen1153(s));
+	((BfmeCopy1153Thunk)__identifier("?j_00005934@@YAXXZ"))(
+		m_bfme00 + pos, m_bfme00 + pos + *n1, s,
+		s + ((BfmeLen1153Thunk)__identifier("?j_00006b9a@@YAXXZ"))(s));
 }

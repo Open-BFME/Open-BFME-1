@@ -21,7 +21,11 @@ public:
 	class StringDataC;
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
-extern BfmeStringPoolVKI *g_bfmeStringPool1284;
+// The Apt operator-new/delete pair cell at 0x01337A30 is defined once, as
+// ?g_rva01337A30AllocPair, in game/Libraries/Source/Apt/Apt.cpp; this TU
+// declares that spelling and casts at each use to its own pool view.
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class BfmeStrEAW
 {
@@ -37,7 +41,7 @@ public:
 		BfmeStringData3AF0 *data = m_data;
 
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			((BfmeStringPoolVKI *)g_rva01337A30AllocPair)->free(data);
 	}
 	const char *strEAW() const
 	{

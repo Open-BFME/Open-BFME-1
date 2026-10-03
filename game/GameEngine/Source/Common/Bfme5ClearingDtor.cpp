@@ -10,14 +10,27 @@
 // The unwind frame is there for the two bases, which is why the state word
 // starts at one rather than zero.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
-
 struct BfmeClearNodeB
 {
 	BfmeClearNodeB *m_bfmeNext;				// +0x00
 	BfmeClearNodeB *m_bfmePrev;				// +0x04
 	void *m_bfmeValue;					// +0x08
 };
+
+class BfmeClearListB;
+
+// The list nodes come from the STLport node pool: 0x0082E5F0 is the private
+// static _STL::__node_alloc<true, 0>::_M_deallocate, so the list reaches it
+// under that real name instead of an invented free function.
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::BfmeClearListB;
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
+};
+}
 
 class BfmeClearListB
 {
@@ -32,7 +45,7 @@ public:
 
 			node = node->m_bfmeNext;
 
-			bfmeDeallocate(current, sizeof(BfmeClearNodeB));
+			_STL::__node_alloc<true, 0>::_M_deallocate(current, sizeof(BfmeClearNodeB));
 		}
 
 		m_bfmeNode->m_bfmeNext = m_bfmeNode;

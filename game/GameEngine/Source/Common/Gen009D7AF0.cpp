@@ -1,6 +1,15 @@
 // cl: /DNDEBUG /MD /O2 /D_STLP_USE_STATIC_LIB
 // stlport
 
+// The insert's resize callee at 0x009D78B0 is the STLport C-string hashtable
+// resize specialization; that mangled name is what the ledger holds for the
+// address, so reference it exactly and call it through a member-pointer view
+// (it is a __thiscall member, so `this` has to travel in ecx).
+extern "C" void __identifier("?resize@?$hashtable@URva009D78B0Value@@PBDURva009D78B0Hash@@URva009D78B0ExtractKey@@U?$equal_to@PBD@_STL@@V?$allocator@URva009D78B0Value@@@5@@_STL@@QAEXI@Z")();
+
+// retail 0x009D73D0; no name pinned at that address reproduces it yet, see the
+// ledger row tg_009d73d0 (its object symbol is pinned only at 0x000013C5,
+// 0x007850E0 and 0x000267F6).
 void __cdecl gen009D73D0(void *dest, void *src);
 
 #include <memory>
@@ -62,7 +71,14 @@ class BfmeHashTable
 public:
 	__forceinline BfmeHashPair &_M_insert(const BfmeHashPair &value)
 	{
-		static_cast<Owner *>(this)->bfmeResize(m_count + 1);
+		union ResizeView
+		{
+			void (*cdeclView)(unsigned int);
+			void (BfmeHashTable::*thiscallView)(unsigned int);
+		} resize;
+
+		resize.cdeclView = (void (*)(unsigned int))__identifier("?resize@?$hashtable@URva009D78B0Value@@PBDURva009D78B0Hash@@URva009D78B0ExtractKey@@U?$equal_to@PBD@_STL@@V?$allocator@URva009D78B0Value@@@5@@_STL@@QAEXI@Z");
+		(static_cast<Owner *>(this)->*resize.thiscallView)(m_count + 1);
 		unsigned int bucket = Hash()(value.key) % m_buckets.size();
 		BfmeHashNode *head = static_cast<BfmeHashNode *>(m_buckets[bucket]);
 		// Retail 009D7B3D calls pool helper 0082E540 with a 12-byte node.
