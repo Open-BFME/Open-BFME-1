@@ -1574,13 +1574,7 @@ void INI::parseVelocityReal( INI *ini, void * /*instance*/, void *store, const v
 //-------------------------------------------------------------------------------------------------
 // parse acceleration in (dist/sec^2) and convert to (dist/frame^2)
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseAccelerationReal@INI@@ present-unmatched
-void INI::parseAccelerationReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	Real val = scanReal(token);
-	*(Real *)store = ConvertAccelerationInSecsToFrames(val);
-}
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
