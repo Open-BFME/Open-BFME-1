@@ -11,7 +11,7 @@
 // node_alloc_M_deallocateThunk.cpp); they are named as they are defined, as in
 // Bfme5DestroyRangeVectors.cpp.
 void __cdecl operator delete(void *block);			// retail 0x00881EB0
-inline void bfmeRelease(void *block, unsigned int bytes);
+static inline void bfmeRelease(void *block, unsigned int bytes);
 
 namespace _STL
 {
@@ -23,7 +23,7 @@ template <> class __node_alloc<true, 0>
 };
 }
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+static inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
 		::operator delete(block);

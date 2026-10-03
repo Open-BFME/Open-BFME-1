@@ -11,11 +11,24 @@
 // or vtable install proves the owner class or method name, so both stay
 // address-derived.
 
-class Rva007E8810Message
+// LINK: retail calls the error predicate (0x007E88A0) and getter (0x007E88B0)
+// by their ledger names, ?valid@W3DVideoBuffer@@UAE_NXZ and
+// ?m@Gen_007e88b0@@QAEHXZ; no object defines hasError/getError.  Local views
+// with a cast at each use, as Rva007F6260GameBrowserConnect.cpp does.
+class W3DVideoBuffer
 {
 public:
-	bool hasError( void );
-	int getError( void );
+	virtual bool valid();
+};
+
+class Gen_007e88b0
+{
+public:
+	int m();
+};
+
+class Rva007E8810Message
+{
 };
 
 class Rva007F5120Queue
@@ -75,9 +88,9 @@ void Rva007F5840Owner::handleQueueReply( Rva007E8810Message *msg, BfmeOwnerYA *r
 	Rva007F5120Queue q( msg );
 	int error = 0;
 
-	if( msg->hasError() )
+	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
 	{
-		error = msg->getError();
+		error = ((Gen_007e88b0 *)msg)->m();
 		if( error == 0x71756575 )
 		{
 			error = 0;

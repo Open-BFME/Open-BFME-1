@@ -30,6 +30,7 @@ class Gen_000F9C60
 {
 public:
 	Gen_000F9C60(const Gen_000F9C60 &other);
+	~Gen_000F9C60();	// retail 0x000CFA40, pinned; declaration only
 
 	int m_bfmeA;
 	int m_bfmeB;

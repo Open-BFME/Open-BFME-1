@@ -17,12 +17,20 @@ class DisplayStringManager;
 // VA.  The declaration below is the established local view -- see
 // game/GameEngine/Source/Common/BfmeOwnerDtorBU.cpp -- and stays
 // declaration-only: this TU never defines the body.
-class BFMEPlayerTemplateAsciiString
+template <class T>
+class StringBase
 {
 public:
-	~BFMEPlayerTemplateAsciiString();
+	~StringBase() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
 
 	void *m_bfmeDataEAZ;
+};
+
+class BFMEPlayerTemplateAsciiString : private StringBase<char>
+{
 };
 
 class Rva0048EC80Manager
