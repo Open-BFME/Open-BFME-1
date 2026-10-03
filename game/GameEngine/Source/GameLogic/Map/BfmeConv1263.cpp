@@ -28,7 +28,11 @@ class TerrainLogic;
 
 extern TerrainLogic *TheTerrainLogic;
 
-extern "C" void bfmeAssert1263(void);
+// Retail 0x00032231 is the ILT thunk that lands on the assert body at
+// 0x0018F400.  The only definition of that entry point in the image is the
+// gen-small thunk j_00032231 (game/gen_small/thunks_023.cpp), so reference it
+// instead of the pin-only _bfmeAssert1263 spelling nothing defines.
+extern void j_00032231();
 
 class BfmeA1263
 {
@@ -48,7 +52,7 @@ void BfmeA1263::bfmeGet1263(BfmeVec1263 *out)
 	if (!out)
 		return;
 	if (m_bfme30)
-		bfmeAssert1263();
+		j_00032231();
 	out->m_bfme00 = (m_bfme1c + m_bfme24) * g_rva0107533C;
 	out->m_bfme04 = (m_bfme20 + m_bfme28) * g_rva0107533C;
 	if (TheTerrainLogic)
