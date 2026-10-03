@@ -33,3 +33,13 @@ the session audit and fix each body through normal claims and gates.
 The historical agreement paragraph in the inventory README called taking
 these sizes safe, contradicting its own explicit warning. Correct that
 interpretation while preserving the historical measurement table.
+
+## Retirement follow-up
+
+All five incomplete source/claim pairs were withdrawn independently:
+258D70 in3886fee624;289E50 in0f9fd1012d;379440 in96a6763d46;
+265ED0 in13619ad0dd;2AB0F0 inf2b95fd660. Normal caller-impact gates
+passed for every withdrawal. Complete native recovery remains open, and
+none is counted as a conversion. The full RET4 at379580 and RET20 at266160
+also contradict the inherited no-argument ordinary-destructor signatures;
+no replacement semantic name was invented.
