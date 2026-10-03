@@ -18,16 +18,21 @@ struct IRegion2D
 // BFME links both allocations through its array allocator; without the
 // declaration MSVC 7.1 folds these array expressions onto scalar new.
 void *operator new[](unsigned int size);
+void operator delete[](void *block);
 
-class PathfindZoneBlock
+// Retail allocation passes ILT 0x0004A4E4 -> 0x00402930 and
+// ILT 0x00040138 -> 0x004029F0, the existing Rva004029F0 providers.
+class Rva004029F0
 {
 public:
-	PathfindZoneBlock();
-	~PathfindZoneBlock();
+	Rva004029F0();
+	~Rva004029F0();
 
 private:
 	char m_retailLayout[0x228];
 };
+
+typedef Rva004029F0 PathfindZoneBlock;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager

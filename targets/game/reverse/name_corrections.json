@@ -15178,5 +15178,15 @@
   "after_sha256": "e42848f478a24e8ac49a925fd1e1d2d29187c4604c476442a2f95fd6a2816cbc",
   "evidence": "targets/game/reverse/identity_evidence/0021daa0-slot90-callee.md",
   "reason": "Caller-only descriptive helper declaration duplicates the independently decoded ILT/body route already owned by Rva0010C3E0; reuse the existing cdecl two-pointer provider without asserting a second identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp",
+  "old_name": "PathfindZoneBlock",
+  "new_name": "Rva004029F0",
+  "before_sha256": "6a0786f4e688309cca9d3a4816e65f251bbf3e76d355b942238a53b863958273",
+  "after_sha256": "10bbcf4f7ebcb73ce6a6c51a5c25cb07051e6924cd8191079047cba90e86845b",
+  "evidence": "targets/game/reverse/identity_evidence/pathfind-zone-block-provider-binding.md",
+  "reason": "Caller declarations bind independently proven existing ctor/dtor addresses; PathfindZoneBlock remains a typedef; no provider identity changes."
  }
 ]
