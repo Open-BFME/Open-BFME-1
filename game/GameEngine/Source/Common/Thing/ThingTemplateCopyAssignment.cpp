@@ -42,7 +42,7 @@ class BfmeThingBVA
 public:
 	void bfmeStepBVA(BfmeThingBVA *other);
 
-	BfmeThingBVA *bfmeGoBVA(BfmeThingBVA *other)
+	BfmeThingBVA *bfmeGoBVA_CopyHelper(BfmeThingBVA *other)
 	{
 		if (this != other)
 		{
@@ -327,7 +327,7 @@ ThingTemplate &ThingTemplate::operator=(const ThingTemplate &other)
 
 	for (int i = 0; i < 2; ++i)
 	{
-		m_bfmeBVA[i].bfmeGoBVA(
+		m_bfmeBVA[i].bfmeGoBVA_CopyHelper(
 			const_cast<BfmeThingBVA *>(&other.m_bfmeBVA[i]));
 	}
 
