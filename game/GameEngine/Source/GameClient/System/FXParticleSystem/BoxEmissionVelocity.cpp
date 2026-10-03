@@ -7,7 +7,7 @@
 #include <math.h>
 
 extern const float g_rva01075350;
-extern const float Rva00C75334One;
+extern float g_bfmeDefaultBU;
 
 struct Rva005F86C0Coord3DBase {
     float x;
@@ -30,7 +30,7 @@ public:
     __forceinline void normalize() {
         float len = length();
         if (len != g_rva01075350) {
-            float inverse_length = Rva00C75334One / len;
+            float inverse_length = g_bfmeDefaultBU / len;
             x *= inverse_length;
             y *= inverse_length;
             z *= inverse_length;

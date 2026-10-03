@@ -20,9 +20,9 @@
 typedef bool Bool;
 typedef int Int;
 
-class Glo012F1028Type;
+class LivingWorldLogic;
 
-extern Glo012F1028Type *Glo012F1028;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CampaignManager.h
 class CampaignManager
@@ -79,9 +79,9 @@ void BfmeAptScreenObjectives::bfmeProvideObjectiveStatus(
 	if (objective < 0)
 		return;
 
-	output[0] = ((CampaignManager *)Glo012F1028)->isMissionObjectiveComplete(objective)
+	output[0] = ((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveComplete(objective)
 		? '1' : '0';
-	output[1] = ((CampaignManager *)Glo012F1028)->isMissionObjectiveIndexed(objective)
+	output[1] = ((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveIndexed(objective)
 		? '1' : '0';
 	output[2] = 0;
 }
