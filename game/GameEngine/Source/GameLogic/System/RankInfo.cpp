@@ -268,7 +268,12 @@ void RankInfoStore::friend_parseRankDefinition( INI* ini )
 		static const FieldParse myFieldParse[] =
 		{
 			{ "RankName", INI::parseAndTranslateLabel, NULL, offsetof( RankInfo, m_rankName ) },
-			{ "SkillPointsNeeded", INI::parseInt, NULL, offsetof( RankInfo, m_skillPointsNeeded ) },
+			{ "SkillPointsNeededDefault", INI::parseInt, NULL, offsetof( RankInfo, m_skillPointsNeeded ) },
+			{ "SkillPointsNeededCampaign", INI::parseInt, NULL, offsetof( RankInfo, m_bfme_14 ) },
+			{ "SkillPointsNeededGondor", INI::parseInt, NULL, offsetof( RankInfo, m_bfme_18 ) },
+			{ "SkillPointsNeededRohan", INI::parseInt, NULL, offsetof( RankInfo, m_bfme_1c ) },
+			{ "SkillPointsNeededMordor", INI::parseInt, NULL, offsetof( RankInfo, m_bfme_20 ) },
+			{ "SkillPointsNeededIsengard", INI::parseInt, NULL, offsetof( RankInfo, m_bfme_24 ) },
 			{ "SciencesGranted", INI::parseScienceVector, NULL, offsetof( RankInfo, m_sciencesGranted ) },
 			{ "SciencePurchasePointsGranted", INI::parseUnsignedInt, NULL, offsetof( RankInfo, m_sciencePurchasePointsGranted ) },
 			{ 0, 0, 0, 0 }
