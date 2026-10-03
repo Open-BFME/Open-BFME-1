@@ -4,7 +4,7 @@ class MouseThreadClass
 public:
     unsigned char m_storage[0x54];
 };
-extern MouseThreadClass g_rva012F9808Object;
+MouseThreadClass g_rva012F9808Object;
 extern void j_0003cdd0();
 void bfmeForward_00C709C0();
 struct Rva00C6C4F0Caller

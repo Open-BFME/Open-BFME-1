@@ -463,7 +463,8 @@ public:
 	void bfmeForward(void);					// retail 0x0003AC01
 };
 
-extern Gen_00C709C0Target TheBfmeObject_00C709C0;		// 0x12f9808
+class MouseThreadClass;
+extern MouseThreadClass g_rva012F9808Object;		// 0x12f9808
 class Gen_00C70AB0Target
 {
 public:
@@ -1182,7 +1183,7 @@ void bfmeForward_00C709B0(void)
 // ?bfmeForward_00C709C0@@YAXXZ
 void bfmeForward_00C709C0(void)
 {
-	TheBfmeObject_00C709C0.bfmeForward();
+	reinterpret_cast<Gen_00C709C0Target &>(g_rva012F9808Object).bfmeForward();
 }
 // ?bfmeForward_00C70AB0@@YAXXZ
 void bfmeForward_00C70AB0(void)

@@ -99,7 +99,7 @@ public:
 	bool Is_Running();
 	void Execute();
 	virtual void Thread_Function();
-	// Retail g_w3dMouseThread is 0x012F9808 and m_handle is at 0x012F9858.
+	// Retail g_rva012F9808Object is 0x012F9808 and m_handle is at 0x012F9858.
 	// The virtual pointer occupies the first four bytes, so the opaque body
 	// between it and m_handle is 0x4C bytes, not 0x50.
 	unsigned char m_unmodelled[0x4C];
@@ -170,7 +170,7 @@ private:
 extern TextureClass *g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
-extern MouseThreadClass g_w3dMouseThread;
+extern MouseThreadClass g_rva012F9808Object;
 extern unsigned char g_w3dMouseThreadRunLock;
 extern bool g_w3dMouseIsThread;
 // Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
@@ -263,9 +263,9 @@ W3DMouse::~W3DMouse()
 	freeD3DAssets();
 	freeW3DAssets();
 
-	delete g_w3dMouseThread.m_handle;
-	g_w3dMouseThread.m_handle = 0;
-	g_w3dMouseThread.Stop();
+	delete g_rva012F9808Object.m_handle;
+	g_rva012F9808Object.m_handle = 0;
+	g_rva012F9808Object.Stop();
 }
 
 void MouseThreadClass::Thread_Function()
@@ -292,10 +292,10 @@ void W3DMouse::setRedrawMode(Mouse::RedrawMode mode)
 	switch (mode)
 	{
 	case Mouse::RM_WINDOWS:
-		if (g_w3dMouseThread.Is_Running())
+		if (g_rva012F9808Object.Is_Running())
 		{
-			reinterpret_cast<MouseThreadGuardOwner *>(&g_w3dMouseThread.m_handle)->prepareStop();
-			g_w3dMouseThread.Stop();
+			reinterpret_cast<MouseThreadGuardOwner *>(&g_rva012F9808Object.m_handle)->prepareStop();
+			g_rva012F9808Object.Stop();
 		}
 		freeD3DAssets();
 		freeW3DAssets();
@@ -305,10 +305,10 @@ void W3DMouse::setRedrawMode(Mouse::RedrawMode mode)
 		goto resetFrames;
 
 	case Mouse::RM_W3D:
-		if (g_w3dMouseThread.Is_Running())
+		if (g_rva012F9808Object.Is_Running())
 		{
-			reinterpret_cast<MouseThreadGuardOwner *>(&g_w3dMouseThread.m_handle)->prepareStop();
-			g_w3dMouseThread.Stop();
+			reinterpret_cast<MouseThreadGuardOwner *>(&g_rva012F9808Object.m_handle)->prepareStop();
+			g_rva012F9808Object.Stop();
 		}
 		freeD3DAssets();
 		for (int cursor = 0; cursor < 50; ++cursor)
@@ -319,10 +319,10 @@ void W3DMouse::setRedrawMode(Mouse::RedrawMode mode)
 		goto restoreCursor;
 
 	case Mouse::RM_POLYGON:
-		if (g_w3dMouseThread.Is_Running())
+		if (g_rva012F9808Object.Is_Running())
 		{
-			reinterpret_cast<MouseThreadGuardOwner *>(&g_w3dMouseThread.m_handle)->prepareStop();
-			g_w3dMouseThread.Stop();
+			reinterpret_cast<MouseThreadGuardOwner *>(&g_rva012F9808Object.m_handle)->prepareStop();
+			g_rva012F9808Object.Stop();
 		}
 		freeD3DAssets();
 		freeW3DAssets();
@@ -337,11 +337,11 @@ void W3DMouse::setRedrawMode(Mouse::RedrawMode mode)
 		freeW3DAssets();
 		for (int cursor = 0; cursor < 50; ++cursor)
 			g_w3dMouseCursorImages[cursor] = 0;
-		if (!g_w3dMouseThread.Is_Running())
+		if (!g_rva012F9808Object.Is_Running())
 		{
 			MouseThreadRunGuard *guard = new MouseThreadRunGuard(&g_w3dMouseThreadRunLock, -1);
-			reinterpret_cast<MouseThreadGuardOwner *>(&g_w3dMouseThread.m_handle)->assign(guard);
-			g_w3dMouseThread.Execute();
+			reinterpret_cast<MouseThreadGuardOwner *>(&g_rva012F9808Object.m_handle)->assign(guard);
+			g_rva012F9808Object.Execute();
 		}
 		break;
 
