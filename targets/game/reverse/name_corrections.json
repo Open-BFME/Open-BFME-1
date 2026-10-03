@@ -18138,5 +18138,75 @@
   "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
   "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
   "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "AptMovieHost",
+  "new_name": "Rva0053FC00Host",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "GameSpyInfo",
+  "new_name": "Rva0053FC00GameSpySlots",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "m_host",
+  "new_name": "m_034",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "m_joinEnabled",
+  "new_name": "m_1d4",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "m_listbox",
+  "new_name": "m_18c",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "m_movie",
+  "new_name": "m_250",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053fc00.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyStagingRoomRefresh.cpp",
+  "old_name": "m_setup",
+  "new_name": "m_040",
+  "before_sha256": "4296e9955ce6aac56018718b50e3fc6a5ae3d8e2d7ee8900cd2b3029addc4436",
+  "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
+  "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
+  "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
  }
 ]
