@@ -69,7 +69,6 @@ RenderObjClass * Null3DObjClass::Clone(void) const
 	return NEW_REF( Null3DObjClass, (*this)); 
 }
 
-// ?Null3DObjClass::Render present-unmatched
 void Null3DObjClass::Render(RenderInfoClass & rinfo)
 { 
 }
