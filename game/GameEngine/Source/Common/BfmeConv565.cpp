@@ -18,10 +18,24 @@ struct BfmeSubCAE
 	BfmeInnerCAE m_bfmeInner;
 };
 
-class BfmeOuterCAE
+// Retail routes this predicate through the already matched five-byte ILT
+// ?j_0004425b@@YAXXZ (0x0004425B -> FUN_00615080), but the call itself still
+// sets ECX to (this - 0x10), so use the established pointer-to-member cast
+// idiom: the relocation names the verified ILT while the call keeps the
+// retail thiscall shape.
+void j_0004425b();
+
+struct BfmeAskCAEThunk
 {
-public:
-	bool bfmeAskCAE();
+	bool Call();
+};
+
+typedef bool (BfmeAskCAEThunk::*BfmeAskCAE)(void);
+
+union BfmeAskCAECast
+{
+	void (*asFunction)();
+	BfmeAskCAE asMember;
 };
 
 class BfmeThingCAE
@@ -34,7 +48,10 @@ public:
 
 int BfmeThingCAE::bfmeGoCAE()
 {
-	if (((BfmeOuterCAE *)((char *)this - 0x10))->bfmeAskCAE())
+	BfmeAskCAECast fnCast;
+	fnCast.asFunction = j_0004425b;
+
+	if ((reinterpret_cast<BfmeAskCAEThunk *>((char *)this - 0x10)->*fnCast.asMember)())
 		return m_bfmeSub->m_bfmeInner.bfmeRunCAE();
 	return 3;
 }

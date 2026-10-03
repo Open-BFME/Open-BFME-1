@@ -12,11 +12,15 @@ public:
 	BfmeStateVT *m_bfmeStateVT;
 };
 
+// Retail routes this call through the five-byte incremental-link thunk at
+// 0x000030B2, whose ledger name is ?j_000030b2@@YAXXZ
+// (game/gen_small/thunks_001.cpp, target FUN_00608a50).
+void j_000030b2(void);
+
 class BfmeOwnerVT
 {
 public:
 	int bfmeTouchVT(void);
-	void bfmeNotifyVT(void);
 
 	unsigned char m_bfmeHeadVT[0x2c];
 	unsigned char m_bfmeMaskVT;
@@ -32,7 +36,7 @@ int BfmeOwnerVT::bfmeTouchVT(void)
 		m_bfmeDirtyVT = 1;
 
 	if (m_bfmeMaskVT & 1)
-		bfmeNotifyVT();
+		j_000030b2();
 
 	return 1;
 }
