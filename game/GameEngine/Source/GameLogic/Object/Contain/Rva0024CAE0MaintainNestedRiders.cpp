@@ -1,10 +1,12 @@
 // ?maintainNestedRiders@Rva0024CAE0Owner@@QAEXXZ
 // Retail RVA 0x0024CAE0, reached as the first containment-maintenance call
 // from HordeTransportContain::update.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 
+#define __PLACEMENT_VEC_NEW_INLINE  // GameMemory.h provides array placement new.
 #include <list>
+#include "GameLogic/Damage.h"
 
 class BfmeXCQE;
 
@@ -23,17 +25,14 @@ public:
 	void bfmeSet(bool value);
 };
 
-class BfmeDrop987
-{
-public:
-	void bfmeClear987(int state, int value);
-};
-
 class Rva0024CAE0Contain;
 
 class Object
 {
 public:
+	// Retail 0x24CBE0 calls ILT 0x14506 -> Object::kill at 0x1C30F0.
+	void kill(DamageType damageType, DeathType deathType);
+
 #define RVASLOT(n) virtual void slot##n();
 	RVASLOT(0) RVASLOT(1) RVASLOT(2) RVASLOT(3) RVASLOT(4) RVASLOT(5)
 	RVASLOT(6) RVASLOT(7) RVASLOT(8) RVASLOT(9)
@@ -151,7 +150,7 @@ void Rva0024CAE0Owner::maintainNestedRiders(void)
 			{
 				result->removeNested(object);
 				m_notifier.notifyRemoved(object, 0);
-				((BfmeDrop987 *)object)->bfmeClear987(8, 0);
+				object->kill((DamageType)8, (DeathType)0);
 				if (state != 0)
 					((Gen_00411DD0 *)state)->bfmeSet(true);
 			}
