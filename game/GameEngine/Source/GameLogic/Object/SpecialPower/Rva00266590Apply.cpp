@@ -47,8 +47,13 @@ public:
 	virtual void slot35(void *);
 };
 
-// Retail callee at 0x00033B77; this address is pinned as the owner's
-// private bfmeAccept(BfmeSeedTarget *) helper.
+// Retail thunk 0x00033B77 calls Gen_0026A980::bfmeSeed at 0x0026A980.
+class Gen_0026A980
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+};
+
 class Gen_0025A590
 {
 public:
@@ -67,9 +72,6 @@ public:
 	int m_field64;
 	char m_pad68[0x70 - 0x68];
 	int m_field70;
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);
 };
 
 // Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp);
@@ -80,7 +82,7 @@ void Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 // ?apply@Gen_0025A590@@QAEXPAVBfmeSeedTarget@@@Z
 void Gen_0025A590::apply(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	reinterpret_cast<Gen_0026A980 *>(this)->bfmeSeed(target);
 	if (target->slot04())
 		return;
 
