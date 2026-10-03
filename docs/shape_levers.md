@@ -1695,3 +1695,16 @@ itself independently emitted the exact 82 bytes with no relocations. The shared
 Object header preserved the match. Earlier coordinate-order and pointer-alias
 trials could not change this allocation. See
 `identity_evidence/003e3650-visible-lookup.md`.
+
+## Adopt native math before preserving an old store-order workaround
+
+DozerAIUpdate's build/repair position helper at `0x002B6C40` emitted 445 bytes
+with eighteen differences using a hand-written Vector3. The native Vector3
+header fixes five; restoring `maxRadius` before `sourceToPathToDest` in the
+options assignments fixes the remaining thirteen. The earlier reversed order
+had helped the hand-written vector but is wrong with the native math context.
+Shared Object and GeometryInfo headers preserve the exact result. Retail's
+incoming ECX, forwarding call and RET12 also refute the old static declaration;
+the recovery retains the method name with the correct member ABI and removes
+the caller's obsolete alternate-name directive. See
+`identity_evidence/002b6c40-dozer-member-and-native-vector.md`.

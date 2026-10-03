@@ -83,7 +83,6 @@ public:
 		Coord3D &positionOut);
 };
 
-#pragma comment(linker, "/alternatename:?findGoodBuildOrRepairPosition@Rva002B8890DozerAIUpdate@@QAE_NPBVObject@@0AAUCoord3D@@@Z=?findGoodBuildOrRepairPosition@DozerAIUpdate@@SA_NPBVObject@@0AAUCoord3D@@@Z")
 
 // ?findGoodBuildOrRepairPositionAndTarget@DozerAIUpdate@@SAPAVObject@@PAV2@0AAUCoord3D@@@Z
 Object *Rva002B8890DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget(
