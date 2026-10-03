@@ -101,19 +101,7 @@ const char* WeaponSetFlags::s_bitNameList[] =
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ?clear@WeaponTemplateSet@@QAEXXZ present-unmatched
-void WeaponTemplateSet::clear()
-{
-	m_isReloadTimeShared = false;
-	m_isWeaponLockSharedAcrossSets = FALSE;
-	m_types.clear();
-	for (int i = 0; i < WEAPONSLOT_COUNT; ++i) 
-	{
-		m_template[i] = NULL;
-		m_autoChooseMask[i] = 0xffffffff;					// by default, allow autochoosing from any CommandSource
-		CLEAR_KINDOFMASK(m_preferredAgainst[i]);	// by default, weapon isn't preferred against anything in particular
-	}
-}
+// Retail four-slot, two-mask clear lives in WeaponTemplateSet_clear.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?hasAnyWeapons@WeaponTemplateSet@@QBE_NXZ present-unmatched
