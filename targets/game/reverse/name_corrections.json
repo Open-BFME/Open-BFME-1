@@ -15798,5 +15798,15 @@
   "after_sha256": "cfa71df89c7babdba41cd4ea0d527f11e3e7af685a69db22c133a398aa46f6d2",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00662b00.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/native_connection_timing.cpp",
+  "old_name": "m_head",
+  "new_name": "m_unknown00",
+  "before_sha256": "f699d07111bf1ba0c52bdd2a2f51a05baa99418d43161a5dc9e18da7ca415837",
+  "after_sha256": "d50d3042a25395fa4d756a5808b53682591b85e42861bfb4c9fac908a6dabac5",
+  "evidence": "targets/game/reverse/re_attempts.log",
+  "reason": "The bank's m_head for the 4 bytes before the connection array was an unproven guess; name_oracle --class ConnectionManager --offset 0 reports the offset unwitnessed in BFME and ZH. The landed TU keeps its existing address-derived placeholder m_unknown00. Declaration spelling only, bytes unchanged."
  }
 ]
