@@ -26,6 +26,10 @@
 #include "codex.h"
 #include "refcodex.h"
 
+// The retail allocator slots are MSVCR71 malloc/free, not GIMEX exports.
+extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int size);
+extern "C" __declspec(dllimport) void __cdecl free(void *memory);
+
 // Retail's TU-local big-endian writer. The real REF_encode call sites below
 // let MSVC select its private EAX/ECX/EDX register convention.
 namespace Rva0081F3D0 {
@@ -88,10 +92,10 @@ static int refcompress(unsigned char *from, int len, unsigned char *dest, int ma
     if ((unsigned int)maxback > (unsigned int)131071)
         maxback = 131071;
 
-	hashtbl = (int *) galloc(65536L*sizeof(int));
+	hashtbl = (int *) malloc(65536L*sizeof(int));
 	if (!hashtbl)
         return(0);
-	link = (int *) galloc(131072L*sizeof(int));
+	link = (int *) malloc(131072L*sizeof(int));
 	if (!link)
         return(0);
 
@@ -238,8 +242,8 @@ static int refcompress(unsigned char *from, int len, unsigned char *dest, int ma
         to += run;
     }
 
-	gfree(link);
-	gfree(hashtbl);
+	free(link);
+	free(hashtbl);
     return(to-dest);
 }
 
