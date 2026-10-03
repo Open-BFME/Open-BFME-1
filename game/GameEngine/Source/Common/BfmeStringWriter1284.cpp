@@ -9,9 +9,11 @@ struct BfmeStringData1284
 extern "C" char *__cdecl strcpy(char *destination, const char *source);
 #pragma intrinsic(strcpy)
 
-struct BfmeStringPool1284
+// The Apt allocation table at 0x01337A30 is a POINTER to a {allocate, free}
+// pair, not the pair itself; only the free slot (+4) is ever called here.
+struct BfmeStringPool3AF0
 {
-	void *m_unused;
+	void *(__cdecl *allocate)(unsigned int bytes);
 	void (__cdecl *free)(void *storage);
 };
 
@@ -24,7 +26,7 @@ public:
 	class StringDataC;
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
-extern BfmeStringPool1284 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class BfmeString1284
 {
@@ -39,7 +41,7 @@ public:
 	{
 		BfmeStringData1284 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	BfmeStringData1284 *m_data;
@@ -48,6 +50,12 @@ public:
 class BfmeStringWriter1284
 {
 public:
+	// LINK: the call target 0x008B8E70 is owned by the gen-asm dump as the
+	// zero-argument `?d_008b8e70@@YAXXZ`, but the caller pushes two stack
+	// words, so no spelling of a __cdecl reference to that name can both
+	// resolve and keep the 139 bytes (a varargs `(...)` declaration mangles
+	// the same but changes the call's stack setup -- measured byte mismatch).
+	// Needs a ledger repoint of 0x008B8E70 to a two-argument __cdecl name.
 	void bfmeBuildString1284(BfmeString1284 *result, int value);
 	void bfmeWriteString1284(char *destination, int value);
 };
