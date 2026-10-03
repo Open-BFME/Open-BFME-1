@@ -27,7 +27,11 @@ class TC_Iface6 { public: virtual ~TC_Iface6(); };
 class TC_Iface7 { public: virtual ~TC_Iface7(); };
 class TC_Iface8 { public: virtual ~TC_Iface8(); };
 
-class TC_Base : public TC_GrandBase,
+// Retail's TunnelContain base is OpenContain: its constructor ILT 0x00036E49
+// forwards to ??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z (0x002277A0) and
+// the base destructor slots hold ??1OpenContain@@UAE@XZ (0x002262E0), so the
+// base carries the real name and only its layout is this TU's own view.
+class OpenContain : public TC_GrandBase,
                 public TC_Iface1,
                 public TC_Iface2,
                 public TC_Iface3,
@@ -38,15 +42,15 @@ class TC_Base : public TC_GrandBase,
                 public TC_Iface8
 {
 public:
-    TC_Base(Thing *, const ModuleData *);
-    virtual ~TC_Base();
+    OpenContain(Thing *, const ModuleData *);
+    virtual ~OpenContain();
 
 private:
     unsigned char m_pad[0x9C];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TunnelContain.h
-class TunnelContain : public TC_Base
+class TunnelContain : public OpenContain
 {
 public:
     TunnelContain(Thing *, const ModuleData *);
@@ -58,6 +62,6 @@ private:
 
 // ??0TunnelContain@@QAE@PAVThing@@PBVModuleData@@@Z
 TunnelContain::TunnelContain(Thing *t, const ModuleData *m)
-    : TC_Base(t, m), m_d4(true), m_d5(false)
+    : OpenContain(t, m), m_d4(true), m_d5(false)
 {
 }
