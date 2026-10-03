@@ -8,7 +8,9 @@ __declspec(dllimport) int __stdcall IsWindowUnicode(void*);
 __declspec(dllimport) long __stdcall DefWindowProcW(void*,unsigned,int,int);
 __declspec(dllimport) long __stdcall DefWindowProcA(void*,unsigned,int,int);
 }
-class Rva0048CE70 { public: unsigned short decode(unsigned,unsigned); };
+class Rva0048CE70 {};
+union Rva0048CE70Packed { unsigned int whole; char bytes[4]; };
+unsigned short __stdcall decodeRva0048CE70(volatile Rva0048CE70Packed packed, unsigned int codePage);
 class Rva0048CFA0 { public: void getResultsString(); };
 class GameWindow;
 class GameWindowManager { public:
@@ -95,7 +97,9 @@ bool IMEManager::serviceIMEMessage(void* window,unsigned message,int wParam,int 
 {
  switch(message) {
  case 0x286: {
-  unsigned short ch=((Rva0048CE70*)this)->decode(wParam,0);
+  typedef unsigned short (Rva0048CE70::*Decode)(unsigned,unsigned);
+  union { unsigned short (__stdcall *fn)(volatile Rva0048CE70Packed,unsigned); Decode call; } decode={decodeRva0048CE70};
+  unsigned short ch=(((Rva0048CE70*)this)->*decode.call)(wParam,0);
   if(m_window && (ch>32 || ch==13)) {
    TheWindowManager->winSendInputMsg(m_window,25,wParam&0xffff,lParam);
    m_result=0; return true;
