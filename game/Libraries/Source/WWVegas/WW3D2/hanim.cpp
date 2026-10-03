@@ -39,6 +39,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
+// Use the native lock-bearing pool declaration, as in HAnimComboDataObjectPool.cpp.
+#include "wwstring.h"
+#define MUTEX_H
+#include "../../../../../inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h"
 #include "hanim.h"
 #include "assetmgr.h"
 #include "htree.h"
