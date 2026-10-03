@@ -24,7 +24,9 @@ private:
 	Coord3D m_cachedPos;
 };
 
-#define BFME_ZERO_RANGE (*(const Real *)0x01075350)
+// Shared readonly zero at retail VA 0x01075350; data_rows.csv proves its float type.
+extern const Real g_rva01075350;
+#define BFME_ZERO_RANGE (g_rva01075350)
 #define BFME_DEFAULT_BU (1.0f)
 #define BFME_MINUS_ONE (-1.0)
 #define BFME_ONE (1.0)
@@ -43,7 +45,7 @@ Real Thing::bfmeRelativeAngleTo(const Coord3D *point) const
 	delta.x *= scale;
 	delta.y *= scale;
 	const Coord3D *direction = getUnitDirectionVector2D();
-	Real cosine = delta.x * direction->x + delta.y * direction->y;
+	Real cosine = *(const volatile Real *)&delta.x * direction->x + delta.y * direction->y;
 	if (cosine < BFME_MINUS_ONE)
 		cosine = -1.0f;
 	else if (cosine > BFME_ONE)
