@@ -1,17 +1,11 @@
 // Open-BFME5 conversions.
 
-class BfmeColorVJZ
-{
-public:
-	void bfmeCopyVJZ(const BfmeColorVJZ &o);
-	void bfmeClearVJZ();
-	void *m_bfme00;
-};
+#include "../../../../inputs/reference/shims/stringinline/StringInline.h"
 
 struct BfmeSrcVJZ
 {
 	char m_bfmePad[0x10];
-	BfmeColorVJZ m_bfme10;
+	AsciiString m_bfme10;
 };
 
 struct BfmeYVJZ
@@ -22,9 +16,7 @@ struct BfmeYVJZ
 
 char __stdcall bfmeGoVJZ(BfmeSrcVJZ *a, BfmeYVJZ *b)
 {
-	BfmeColorVJZ tmp;
-	tmp.bfmeCopyVJZ(a->m_bfme10);
+	AsciiString tmp(a->m_bfme10);
 	char r = (b->m_bfme08 <= 0);
-	tmp.bfmeClearVJZ();
 	return r;
 }
