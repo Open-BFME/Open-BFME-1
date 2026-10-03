@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c25d6c5caa1576c4e8290b9d53a0c10ec9d8f52b1790235513173fcd117b0d93",
+  "symbol": "?bfmeReg1033@@YAXP6AXXZ0@Z",
+  "score_kind": "measured",
+  "score": 0.8627,
+  "source": "// ?bfmeReg1033@@YAXP6AXXZ0@Z\n// partial score=0.8627 date=2026-10-03\n// cl: /DNDEBUG /MD /EHsc\nextern int g_012F3930;\nextern int g_012F3934;\n\nvoid bfmeReg1033(void (*a)(void), void (*b)(void))\n{\n\t__asm\n\t{\n\t\tmov eax, fs:[0]\n\t\tpush -1\n\t\tpush 01029600h\n\t\tpush eax\n\t}\n\tint zero = 0;\n\t__asm\n\t{\n\t\tmov fs:[0], esp\n\t}\n\tg_012F3930 = zero;\n\tg_012F3934 = zero;\n\t__asm\n\t{\n\t\tcall dword ptr [esp + 10h]\n\t\tmov ecx, [esp]\n\t\tmov fs:[0], ecx\n\t\tadd esp, 0Ch\n\t}\n}\n"
+}
