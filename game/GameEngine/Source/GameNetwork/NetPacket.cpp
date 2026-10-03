@@ -2585,25 +2585,7 @@ Bool NetPacket::isRoomForAckMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
-// ?isAckRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
-Bool NetPacket::isAckRepeat(NetCommandRef *msg) {
-	if (m_lastCommand == NULL) {
-		return FALSE;
-	}
-	if (m_lastCommand->getCommand()->getNetCommandType() != msg->getCommand()->getNetCommandType()) {
-		return FALSE;
-	}
-	if (msg->getCommand()->getNetCommandType() == NETCOMMANDTYPE_ACKBOTH) {
-		return isAckBothRepeat(msg);
-	}
-	if (msg->getCommand()->getNetCommandType() == NETCOMMANDTYPE_ACKSTAGE1) {
-		return isAckStage1Repeat(msg);
-	}
-	if (msg->getCommand()->getNetCommandType() == NETCOMMANDTYPE_ACKSTAGE2) {
-		return isAckStage2Repeat(msg);
-	}
-	return FALSE;
-}
+// isAckRepeat is defined in NetPacket_isAckRepeat.cpp.
 
 // BFME's ACK messages carry the acking player's ID at +0x20, a field the
 // reference class does not have, and every repeat test compares it.
