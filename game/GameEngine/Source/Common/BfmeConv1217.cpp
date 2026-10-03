@@ -21,10 +21,11 @@ public:
 class BfmeG1217
 {
 public:
-	void bfmeStep1217C();
 	int m_bfme00;
 	int m_bfme04;
 };
+
+extern void d_008a30c0(void);
 
 struct Rva00899560Pool;
 
@@ -46,6 +47,6 @@ void bfmeGo1217(BfmeA1217 *a, const unsigned char **b)
 	if (n == 1) {
 		g = (BfmeG1217 *)g_rva01337810GcRoots;
 		if (g->m_bfme04)
-			g->bfmeStep1217C();
+			((void (__fastcall *)(BfmeG1217 *))d_008a30c0)(g);
 	}
 }

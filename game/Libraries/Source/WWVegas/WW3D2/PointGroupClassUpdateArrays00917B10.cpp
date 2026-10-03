@@ -15,6 +15,8 @@
 #include "vector3.h"
 #include "vector4.h"
 
+extern void d_009148c0(void);
+
 class Rva00914860Sizer
 {
 public:
@@ -28,8 +30,6 @@ public:
 		unsigned char *point_orientation, unsigned char *point_frame,
 		int active_points, int total_points, int *vnum, int unknown);
 
-	void rva009148C0(Vector3 *point_loc, float *point_size, unsigned char *point_orientation,
-		int active_points);
 	void rva00916CD0(unsigned char *point_frame, int active_points, int unknown);
 	void rva00912880(Vector4 *point_diffuse, int active_points);
 
@@ -42,7 +42,10 @@ void PointGroupClass::rva00917B10(Vector3 *point_loc, Vector4 *point_diffuse, fl
 	int active_points, int total_points, int *vnum, int unknown)
 {
 	((Rva00914860Sizer *)this)->updatePoolSizes(active_points, total_points, vnum);
-	rva009148C0(point_loc, point_size, point_orientation, active_points);
+	typedef void (__fastcall *Rva009148C0Call)(PointGroupClass *, unsigned char *, Vector3 *,
+		float *, unsigned char *, int);
+	((Rva009148C0Call)d_009148c0)(this, point_orientation, point_loc, point_size,
+		point_orientation, active_points);
 	rva00916CD0(point_frame, active_points, unknown);
 	rva00912880(point_diffuse, active_points);
 }
