@@ -17298,5 +17298,35 @@
   "after_sha256": "0df115428a0c7858cc2dabfa27d215bc45177eaafcaa38176e5262440750e5f3",
   "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
   "reason": "The old bank invented build/dispatch names and its owner/argument interpretation was subsequently retracted. Matched caller ownership and independently decoded helper reference ABI establish the actual worker but no full semantic method names; address-preserving rva00694130/rva00693B90 are the honest identities."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeOrderDescribeZR.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva00675A80.cpp",
+  "old_name": "AsciiStringZR",
+  "new_name": "Rva00675A80",
+  "before_sha256": "aeb836378807c2ca56be1311a18b7b6989ecb5fae46de76fe58f2c33e11f78c9",
+  "after_sha256": "3127cb07bf493d4c9d33f7feefba78ac45898c8c17fbdda087f2f8f5f2a05182",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-rva675a80-string-result.md",
+  "reason": "False layout pairing: the synthetic AsciiStringZR alias is replaced by canonical AsciiString from its header, independently proved by retail constructor/format/copy/release calls. Rva00675A80 is the opaque parent owner, not a renamed string type."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeOrderDescribeZR.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva00675A80.cpp",
+  "old_name": "BfmeOrderZR",
+  "new_name": "Rva00675A80",
+  "before_sha256": "aeb836378807c2ca56be1311a18b7b6989ecb5fae46de76fe58f2c33e11f78c9",
+  "after_sha256": "3127cb07bf493d4c9d33f7feefba78ac45898c8c17fbdda087f2f8f5f2a05182",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-rva675a80-string-result.md",
+  "reason": "BfmeOrderZR is a legacy synthetic owner with no original full-name witness. The physical vtable owner and canonical base/string callees are independently established, while Rva00675A80 preserves the real parent address without asserting an invented class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeOrderZR",
+  "new_name": "Rva00675A80",
+  "before_sha256": "804058ed5610d4897d6b19974568e3fce77cd70e3ec331fee2359340e25facec",
+  "after_sha256": "8e62063d0937c2ed1daed2a144444290ff6eb2d4a64df18e3e19c19c8cd6c0fe",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-rva675a80-string-result.md",
+  "reason": "BfmeOrderZR is a legacy synthetic owner with no original full-name witness. The physical vtable owner and canonical base/string callees are independently established, while Rva00675A80 preserves the real parent address without asserting an invented class identity."
  }
 ]
