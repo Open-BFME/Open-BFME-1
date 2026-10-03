@@ -31,8 +31,11 @@ class Rva0006AB10Curve
 
 extern void j_0003a562();
 
-// Null-terminated padding-name list (HOLD, EXTRAPOLATE, CYCLE, ...).
-extern const char *g_012A718C[];
+// Null-terminated padding names used by INI::parseIndexList.
+const char *g_012A718C[] =
+{
+	"HOLD", "EXTRAPOLATE", "CYCLE", "CYCLE_OFFSET", "MIRROR", 0
+};
 
 class Rva0006AB90FunctionCurve
 {
