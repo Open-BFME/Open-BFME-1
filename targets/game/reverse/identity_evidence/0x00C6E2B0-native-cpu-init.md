@@ -1,0 +1,9 @@
+# CPU detection native CRT initializer
+
+Retail RVA0x00C6E2B0 is an independent10-byte initializer: mov ecx,VA0x0134EDF4 then direct tail jmp RVA0x009DFF40, followed by six INT3 bytes. CRT pointer slotVA0x012A5E1C holdsVA0x0106E2B0. No36-byte extent spanning the next initializer is claimed. Boundary inventory reports unmapped-gap rather than an invented Ghidra function; actual CRT pointer, terminal jump and following padding establish the boundary.
+
+Canonical cpudetect.cpp1139-1165 defines the real CPUDetectInitClass static object _CPU_Detect_Init. The class has no data members or virtual methods; its constructor calls the proven CPU feature, memory, OS, speed and logging routines. Its retail120-byte body atRVA0x009DFF40 ends with RET at+119 then INT3 at+120, takes no stack arguments, and reads/writes no object members. It returns the incoming ECX in EAX. The object's identity is real dummy storage, not an invented four-byte field. The nominal empty-class size/alignment are1/1; the retail address being4-aligned proves no four-byte data extent. No static-data row or data-byte gain is claimed. Its address is in the virtual zero-filled tail of .data (raw offsetA9DF4 exceeds raw size49000); a naive raw-file reader would return unrelated bytes and is not initial-value evidence.
+
+Actual native COFF _$E10 is10 bytes, with DIR32 relocation __CPU_Detect_Init and REL32 relocation ??0CPUDetectInitClass@@QAE@XZ. The opaque ledger identity Rva00C6E2B0Init identifies the address; object-symbol=_$E10 binds it to the genuine compiler initializer. Source and global are unchanged; no manual initialization or constructor prototype is added.
+
+Independent reviewer body15 checked the CRT pointer, initializer boundary, ctor boundary/ABI, lack of object member effects, and dummy-storage limitation. Full source-scoped matching must verify all existing cpudetect bodies and their references before local commit.
