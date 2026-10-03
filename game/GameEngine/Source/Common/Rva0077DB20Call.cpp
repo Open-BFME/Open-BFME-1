@@ -1,8 +1,8 @@
 // cl: /O2 /Ob0
 
-void rva0077d6b0();
+void j_00046cae();
 
 void __stdcall rva0077db20(int, int, int)
 {
-	rva0077d6b0();
+	j_00046cae();
 }
