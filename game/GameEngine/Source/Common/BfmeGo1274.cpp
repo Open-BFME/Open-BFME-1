@@ -14,17 +14,13 @@ public:
 	unsigned int m_bfme00[10];
 };
 
-class BfmeC1166
-{
-public:
-	unsigned int m_bfme00[10];
-};
+template <int N> class BitFlags;
 
 class Object
 {
 public:
-	void clearAndSetModelConditionFlags(const BfmeC1166 &clear,
-		const BfmeC1166 &set);
+	void clearAndSetModelConditionFlags(const BitFlags<320> &clear,
+		const BitFlags<320> &set);
 };
 
 class Gen_002A6DE0
@@ -46,6 +42,6 @@ void Gen_002A6DE0::bfmeGo1274(void)
 		0, 0x5f, 0x5d, 0x28, 0x6f, 0x5e, 0x7c, 0x60, 0x61, 0x62);
 	unsigned int setStorage[10] = {};
 	object->clearAndSetModelConditionFlags(
-		reinterpret_cast<const BfmeC1166 &>(*clear),
-		reinterpret_cast<const BfmeC1166 &>(setStorage));
+		reinterpret_cast<const BitFlags<320> &>(*clear),
+		reinterpret_cast<const BitFlags<320> &>(setStorage));
 }
