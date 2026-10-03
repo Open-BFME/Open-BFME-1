@@ -18,8 +18,6 @@ class UnicodeString : private StringBase<unsigned short>
 {
 };
 
-extern const char Rva006A16B0Empty[];
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
@@ -28,7 +26,7 @@ public:
 	~AsciiString() {}
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
+		return m_data ? (const char *)m_data + 8 : "";
 	}
 };
 

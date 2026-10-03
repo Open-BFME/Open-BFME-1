@@ -13,8 +13,6 @@ enum NameKeyType
 	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T> struct StringInlineData
 {
     int m_refCount;
@@ -45,7 +43,7 @@ public:
 	void format(AsciiString format, ...);
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 };
 

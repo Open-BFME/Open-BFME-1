@@ -33,12 +33,11 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 // Retail inlines AsciiString::str() and isEmpty() here; ascii_string.h
 // forwards both to out-of-line StringBase<char> bodies. Read the Header
 // pointer at +0 (ref count +0, length +4, text +8) in line, as retail does.
-extern char Rva006A16B0Empty[];
 
 static inline const char *inlineStr(const AsciiString &s)
 {
 	const char *text = *reinterpret_cast<const char *const *>(&s);
-	return text ? text + 8 : Rva006A16B0Empty;
+	return text ? text + 8 : "";
 }
 
 static inline Bool inlineIsEmpty(const AsciiString &s)

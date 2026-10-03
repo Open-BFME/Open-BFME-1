@@ -6,7 +6,6 @@ struct Rva006A16B0StringData { int m_refs; unsigned short m_length; unsigned sho
 struct Rva006A16B0String { Rva006A16B0StringData* m_data; };
 struct Rva006A16B0Entry { const char* m_name; int m_value; };
 extern Rva006A16B0Entry g_rva0111BAC8[0x1a];
-extern char Rva006A16B0Empty[];
 static inline int Rva006A16B0Compare(const Rva006A16B0String* s, const char* name)
 {
 	int nameLen = name ? strlen(name) : 0;
@@ -14,7 +13,7 @@ static inline int Rva006A16B0Compare(const Rva006A16B0String* s, const char* nam
 	int len = data ? data->m_length : 0;
 	const char* chars = data->m_chars;
 	if (!data)
-		chars = Rva006A16B0Empty;
+		chars = "";
 	int r = _memicmp(chars, name, len < nameLen ? len : nameLen);
 	if (r != 0)
 		return r;
