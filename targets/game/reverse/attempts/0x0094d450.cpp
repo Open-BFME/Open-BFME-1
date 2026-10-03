@@ -1,31 +1,17 @@
 // ?bfmeRefreshEY@BfmeHostEY@@QAEXXZ
-// partial score=0.94 date=2026-09-28
-// ?bfmeRefreshEY@BfmeHostEY@@QAEXXZ
-// Retail 0x0094D450, 1111 bytes: rebuilds the host's texture atlas.  Sorts
-// the textures of the +0x08 map<RefCountPtr<TextureClass>, rect> by area into
-// a local multimap, packs them in descending area on a 32-pixel row-skyline
-// (rows[64], doubling the atlas until size*64 exceeds the +0x00 limit), writes
-// each rect back through map::operator[] (0x0094D370), creates the atlas via
-// the +0x18 handle, blits every texture with D3DXLoadSurfaceFromSurface and
-// filters the mip chain.  Owner/role proven by the matched bfmeLookupEY caller.
-// The STL classes are a view in namespace _STL (as Rva0019A1D0TreeCtor.cpp)
-// so the retail direct calls to __new_alloc::allocate, _Rb_global and the
-// out-of-line ~_Rb_tree survive; the real STLport either imports them (DLL)
-// or inlines them (static lib).
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.3033 date=2026-10-03
+// Retail RVA0094D450 owns1111B, including its reachable trailing release block.
+// Native STLport/texture declarations preserve the corrected owner layout.
+// Sibling0094D8D0 proves an iterator at+14, between the12B map and+18 holder.
+// See identity_evidence/0094d450-atlas-iterator-layout.md.
+// Still1116B/764 differing bytes; no strict conversion or new callee binding.
+// stlport
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep /Iinputs/toolchains/dx81/include /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <map>
 
-class TextureClass
-{
-public:
-	void Add_Ref()
-	{
-		++m_numRefs;
-	}
-	void Release_Ref();
-
-	void *m_vftable;
-	unsigned short m_numRefs;
-};
+#include "texture.h"
 
 template <class T>
 class RefCountPtr
@@ -75,155 +61,6 @@ static __forceinline int textureHeight(TexturePtr &texture)
 	return ((BfmeThingGN *)&texture)->bfmeAskGN();
 }
 
-namespace _STL
-{
-
-template <class T> class allocator {};
-template <class T> struct less {};
-template <class P> struct _Select1st {};
-template <class T> struct _Nonconst_traits {};
-
-template <class T1, class T2>
-struct pair
-{
-	pair(const T1 &a, const T2 &b) : first(a), second(b) {}
-	template <class U1, class U2>
-	pair(const pair<U1, U2> &p) : first(p.first), second(p.second) {}
-
-	T1 first;
-	T2 second;
-};
-
-struct _Rb_tree_node_base
-{
-	char _M_color;
-	_Rb_tree_node_base *_M_parent;
-	_Rb_tree_node_base *_M_left;
-	_Rb_tree_node_base *_M_right;
-};
-
-template <class V>
-struct _Rb_tree_node : public _Rb_tree_node_base
-{
-	V _M_value_field;
-};
-
-template <class Dummy>
-struct _Rb_global
-{
-	static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *x);
-	static _Rb_tree_node_base *_M_decrement(_Rb_tree_node_base *x);
-};
-
-template <class V, class Traits>
-struct _Rb_tree_iterator
-{
-	typedef V value_type;
-
-	_Rb_tree_iterator(_Rb_tree_node_base *x) : _M_node(x) {}
-	V &operator*() const { return ((_Rb_tree_node<V> *)_M_node)->_M_value_field; }
-	V *operator->() const { return &((_Rb_tree_node<V> *)_M_node)->_M_value_field; }
-	_Rb_tree_iterator &operator++() { _M_node = _Rb_global<bool>::_M_increment(_M_node); return *this; }
-	_Rb_tree_iterator &operator--() { _M_node = _Rb_global<bool>::_M_decrement(_M_node); return *this; }
-	bool operator!=(const _Rb_tree_iterator &x) const { return _M_node != x._M_node; }
-
-	_Rb_tree_node_base *_M_node;
-};
-
-template <class It>
-struct reverse_iterator
-{
-	reverse_iterator(const It &x) : current(x) {}
-	typename It::value_type &operator*() const { It tmp = current; return *--tmp; }
-	typename It::value_type *operator->() const { return &(operator*()); }
-	reverse_iterator &operator++() { --current; return *this; }
-	bool operator!=(const reverse_iterator &x) const { return current != x.current; }
-
-	It current;
-};
-
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int n);
-};
-
-template <class K, class V, class KoV, class Cmp, class A>
-class _Rb_tree
-{
-public:
-	typedef _Rb_tree_iterator<V, _Nonconst_traits<V> > iterator;
-
-	_Rb_tree()
-	{
-		_M_header = 0;
-		_M_header = (_Rb_tree_node_base *)__new_alloc::allocate(sizeof(_Rb_tree_node<V>));
-		_M_node_count = 0;
-		_M_header->_M_color = 0;
-		_M_header->_M_parent = 0;
-		_M_header->_M_left = _M_header;
-		_M_header->_M_right = _M_header;
-	}
-	~_Rb_tree();
-
-	iterator begin() { return _M_header->_M_left; }
-	iterator end() { return _M_header; }
-
-	iterator insert_equal(const V &v)
-	{
-		_Rb_tree_node_base *y = _M_header;
-		_Rb_tree_node_base *x = _M_header->_M_parent;
-		while (x != 0)
-		{
-			y = x;
-			x = v.first < ((_Rb_tree_node<V> *)x)->_M_value_field.first ? x->_M_left : x->_M_right;
-		}
-		return _M_insert(x, y, v, 0);
-	}
-
-private:
-	iterator _M_insert(_Rb_tree_node_base *x, _Rb_tree_node_base *y, const V &v,
-		_Rb_tree_node_base *w);
-
-public:
-	_Rb_tree_node_base *_M_header;
-	unsigned int _M_node_count;
-	Cmp _M_key_compare;
-};
-
-template <class K, class T, class Cmp = less<K>, class A = allocator<pair<const K, T> > >
-class multimap
-{
-public:
-	typedef pair<const K, T> value_type;
-	typedef _Rb_tree<K, value_type, _Select1st<value_type>, Cmp, allocator<value_type> > _Rep_type;
-	typedef typename _Rep_type::iterator iterator;
-	typedef reverse_iterator<iterator> reverse_iterator;
-
-	iterator insert(const value_type &v) { return _M_t.insert_equal(v); }
-	reverse_iterator rbegin() { return reverse_iterator(_M_t.end()); }
-	reverse_iterator rend() { return reverse_iterator(_M_t.begin()); }
-
-	_Rep_type _M_t;
-};
-
-template <class K, class T, class Cmp = less<K>, class A = allocator<pair<const K, T> > >
-class map
-{
-public:
-	typedef pair<const K, T> value_type;
-	typedef _Rb_tree<K, value_type, _Select1st<value_type>, Cmp, allocator<value_type> > _Rep_type;
-	typedef typename _Rep_type::iterator iterator;
-
-	iterator begin() { return _M_t.begin(); }
-	iterator end() { return _M_t.end(); }
-	T &operator[](const K &k);
-
-	_Rep_type _M_t;
-};
-
-}
-
 // The per-texture atlas rectangle (operator[] at 0x0094D370).
 struct Rva0094D370Value
 {
@@ -245,6 +82,16 @@ struct Rva0094CA90Value
 
 typedef _STL::multimap<unsigned int, Rva0094CA90Value> Rva0094CA90Map;
 
+typedef _STL::pair<const unsigned int, Rva0094CA90Value> Rva0094D450SortedPair;
+typedef _STL::_Rb_tree<unsigned int, Rva0094D450SortedPair,
+ _STL::_Select1st<Rva0094D450SortedPair>, _STL::less<unsigned int>,
+ _STL::allocator<Rva0094D450SortedPair> > Rva0094D450SortedTree;
+namespace _STL {
+template<> Rva0094D450SortedTree::iterator Rva0094D450SortedTree::_M_insert(
+ _Rb_tree_node_base *, _Rb_tree_node_base *, const Rva0094D450SortedPair &, _Rb_tree_node_base *);
+template<> Rva0094D450SortedTree::~_Rb_tree();
+template<> Rva0094D370Value &Rva0094D370Map::operator[](const TexturePtr &);
+}
 class BfmeHandleCX;
 
 class BfmePairDW : public _STL::pair<int, TexturePtr>
@@ -274,14 +121,6 @@ public:
 };
 
 #pragma comment(linker, "/alternatename:?fill@Rva008FC830Surface@@QAEXI@Z=?d_008fc830@@YAXXZ")
-
-struct IDirect3DBaseTexture8;
-
-class TextureBaseClass
-{
-public:
-	IDirect3DBaseTexture8 *Peek_D3D_Base_Texture() const;
-};
 
 class BfmeThing930A
 {
@@ -324,7 +163,8 @@ public:
 
 	unsigned int m_maxSize;			// +0x00
 	unsigned int m_format;			// +0x04
-	Rva0094D370Map m_rects;			// +0x08
+	Rva0094D370Map m_rects;
+ Rva0094D370Map::iterator m_rva0094D450_14;			// +0x08
 	Rva0094D450Texture *m_texture;		// +0x18
 	bool m_dirty;				// +0x1C
 	unsigned char m_fill;			// +0x1D
