@@ -53,7 +53,7 @@ private:
 
 extern AptPalantir *TheAptPalantir;
 extern Radar *TheRadar;
-extern int g_aptPalantirRadarLeft;
+int g_aptPalantirRadarLeft = 0;
 
 // ?aptPalantirRenderRadar@@YAXPBUPalantirPoint@@0@Z
 void __cdecl aptPalantirRenderRadar( const PalantirPoint *from, const PalantirPoint *to )
