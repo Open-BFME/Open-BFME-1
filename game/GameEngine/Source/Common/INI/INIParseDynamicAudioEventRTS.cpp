@@ -46,6 +46,7 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS( const AsciiString &eventName, ObjectID ownerID );
+	~AudioEventRTS();	// retail 0x000B31F0 (ILT 0x00026F35); body lives in AudioEventRTSCopyAndLifetime.cpp
 	void setEventName( AsciiString name );
 	const AsciiString &getEventName() const { return m_eventName; }
 
