@@ -5,9 +5,6 @@
 class Parameter
 {
 public:
-	int getInt() const { return m_integer; }
-	const AsciiString &getString() const { return m_string; }
-private:
 	char m_unknown[8];
 	int m_integer;
 	float m_real;
@@ -50,16 +47,16 @@ protected:
 bool ScriptConditions::evaluateCounterCompareRva00325BC0(Condition *condition)
 {
 	int left = 0;
-	ScriptCounter *counter = TheScriptEngine->getCounter(condition->getParameter(0)->getString());
+	ScriptCounter *counter = TheScriptEngine->getCounter(condition->getParameter(0)->m_string);
 	if (counter)
 		left = counter->m_value;
 
 	int right = 0;
-	counter = TheScriptEngine->getCounter(condition->getParameter(2)->getString());
+	counter = TheScriptEngine->getCounter(condition->getParameter(2)->m_string);
 	if (counter)
 		right = counter->m_value;
 
-	switch (condition->getParameter(1)->getInt()) {
+	switch (condition->getParameter(1)->m_integer) {
 	case 0: return left < right;
 	case 1: return left <= right;
 	case 2: return left == right;
