@@ -15908,5 +15908,25 @@
   "after_sha256": "82e3b9c6ebc223a7df405f2c7983b47bb99c7da56886bad45f05f6d83a27e22f",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/GiveUpgradeUpdateFactories.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/GiveUpgradeUpdateFactories.cpp",
+  "old_name": "GiveUpgradeUpdateFieldParse",
+  "new_name": "j_00010cee",
+  "before_sha256": "86c16194fc8c922793fc79b4912eef947b1768959adbd1529141d386be7a9786",
+  "after_sha256": "668a4968d68493abff90c82d9ebeb8106fd519fc26a70a68eea94dd807465095",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/LevelGrantSpecialPowerFactories.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/LevelGrantSpecialPowerFactories.cpp",
+  "old_name": "LevelGrantSpecialPowerFieldParse",
+  "new_name": "j_0004128b",
+  "before_sha256": "6e48384083f546746f1e706937b1e2c31b435e53da692900acff8554b662d4f1",
+  "after_sha256": "76d93b849119c775943a80977b0b1d03187c363cfedf2b893b376c2421ff5896",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

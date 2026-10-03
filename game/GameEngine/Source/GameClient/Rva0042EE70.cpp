@@ -15,12 +15,16 @@ class ImageCollection {public: const Image *findImageByName(const AsciiString &)
 class GameWindowTransitionsHandler { public: SLOT(0) SLOT(1) SLOT(2) SLOT(3) virtual void reset(); void reverse(AsciiString); void setGroup(AsciiString,bool); };
 class Rva0048B0E0TransitionHandler {public: void update();};
 #undef SLOT
-struct Rva005A00B0Transition;
 extern GameEngine *TheGameEngine;
 extern GameWindowManager *TheWindowManager;
 extern Display *TheDisplay;
 extern ImageCollection *TheMappedImageCollection;
-extern Rva005A00B0Transition *TheTransitionHandler;
+// Retail's singleton at 0x012F3330 is defined once, as
+// `GameWindowTransitionsHandler *TheTransitionHandler`, by
+// game/GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp:66, so this
+// TU must spell the global with that class name; the second view of the same
+// pointer (Rva0048B0E0TransitionHandler) is cast at each use.
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 // Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
 // defined once in Common/GlobalData.cpp.  Rva0042EE70Flags below is this TU's
 // view of the pointee, so the canonical global is forward declared and the cast

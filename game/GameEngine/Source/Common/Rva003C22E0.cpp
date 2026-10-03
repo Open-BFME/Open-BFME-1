@@ -19,7 +19,12 @@ public:
 	int rva003c22e0_at04() const { return m_at04; }
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// Existing singleton definition at 0x012F7048, defined once in
+// game/GameEngine/Source/GameClient/LivingWorld.cpp (matched data row
+// ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A).  Gen_00609320 is this
+// TU's local view of that cell, so the reference casts at the use.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern void j_00009831();
 
 class Rva003C2280Item
@@ -60,7 +65,7 @@ void Rva003C2530Owner::rva003c22e0()
 	_STL::vector<Rva003C2280Item *> selected;
 
 	decrementCall.plain = j_00009831;
-	if ( g_bfmeStateDF->rva003c22e0_at04() == 1 && *( unsigned char * )( ( char * )TheLivingWorldManager + 0x288 ) == 0 )
+	if ( ( (Gen_00609320 *)g_rva012F7048LivingWorld )->rva003c22e0_at04() == 1 && *( unsigned char * )( ( char * )TheLivingWorldManager + 0x288 ) == 0 )
 	{
 		if (m_byte78)
 			return;

@@ -6,7 +6,11 @@
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count );
-extern const char Rva006A16B0Empty[];
+// Retail VA 0x0107388B is the single NUL byte used by null-AsciiString
+// fallbacks; it is defined once by
+// game/GameEngine/Source/Common/System/Rva00C7388BEmptyAscii.cpp, so this TU
+// must spell the reference exactly as that definition does.
+extern const char g_bfmeEmptyAscii[1];
 extern "C" void *__cdecl memset( void *destination, int value,
 	unsigned int size );
 
@@ -27,10 +31,10 @@ public:
 	{
 		const int length = that.m_data ? that.m_data->m_length : 0;
 		const char *data = that.m_data ? that.m_data->m_text
-			: Rva006A16B0Empty;
+			: g_bfmeEmptyAscii;
 		const int thisLength = m_data ? m_data->m_length : 0;
 		const char *thisData = m_data ? m_data->m_text
-			: Rva006A16B0Empty;
+			: g_bfmeEmptyAscii;
 		int difference = _memicmp( thisData, data,
 			thisLength < length ? thisLength : length );
 		if (difference != 0)

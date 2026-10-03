@@ -34,7 +34,16 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl LevelGrantSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The pushed immediate is 0x0044128B = the five-byte ILT thunk at 0x0004128B,
+// which the ledger defines as ?j_0004128b@@YAXXZ and which chains to the
+// LevelGrantSpecialPower field-parse builder ?buildFieldParse@Rva0025FCF0@@
+// (matched body 0x0065FCF0 in
+// game/GameEngine/Source/Common/WideBuildFieldParse.cpp).  Naming the real
+// method would link straight to the builder and change the bytes, so the thunk
+// is referenced and the cast keeps the proc type initFromINIMultiProc declares
+// for its second argument.
+void __cdecl j_0004128b(void);
+typedef void (__cdecl *FieldParseProc)(MultiIniFieldParse &);
 
 class LevelGrantSpecialPower
 {
@@ -52,7 +61,7 @@ ModuleData *LevelGrantSpecialPower::friend_newModuleData(INI *ini)
 {
 	LevelGrantSpecialPowerModuleData *data = new LevelGrantSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &LevelGrantSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (FieldParseProc)&j_0004128b);
 	return (ModuleData *)data;
 }
 
