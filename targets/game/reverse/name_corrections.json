@@ -17938,5 +17938,25 @@
   "after_sha256": "7f22e05da2e9fd5f4b927c76b4192adb825f8bb2465ef042b8cb1ffed4b44d61",
   "evidence": "targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md",
   "reason": "Historical bank is archived unchanged. Matched caller proves Pathfinder owner and ABI but not the synthetic helper spelling; the separately decoded duplicate layer body retains its own RVA rather than borrowing the getCell identity at 003FBAB0. Only the generated production row is replaced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002c4fd0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva002C4FD0.cpp",
+  "old_name": "BfmeHostESE",
+  "new_name": "Rva002C4FD0",
+  "before_sha256": "a3faadeebe31b80c520d8d48fbff2f4a73547d1c02cb5d693c7721c329f8a9d0",
+  "after_sha256": "ab8a48a885ab6c1040b95f693445207d35483686cfe530a61ec4b1894c0ad5f6",
+  "evidence": "targets/game/reverse/identity_evidence/002c4fd0-inline-setters.md",
+  "reason": "Historical bank archived unchanged. Matched callers have only a synthetic owner name; preserve the RVA in production. Only a generated production row is replaced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002c4fd0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/Rva002C4FD0.cpp",
+  "old_name": "m_bytes",
+  "new_name": "m_unmodelled04",
+  "before_sha256": "a3faadeebe31b80c520d8d48fbff2f4a73547d1c02cb5d693c7721c329f8a9d0",
+  "after_sha256": "ab8a48a885ab6c1040b95f693445207d35483686cfe530a61ec4b1894c0ad5f6",
+  "evidence": "targets/game/reverse/identity_evidence/002c4fd0-inline-setters.md",
+  "reason": "Comparison paired the removed invented vector-element arrays with the new opaque GeometryInfo storage. The latter represents the independently proven 92-byte BFME copy-constructed object; legacy geometry.h only covers the smaller ZH layout. Original bank remains archived; this is not a semantic field rename."
  }
 ]

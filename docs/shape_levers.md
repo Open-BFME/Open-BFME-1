@@ -1834,3 +1834,13 @@ dead radius output for the fld/fistp temporary and hoisted loop bound. Both
 caller and helper passed strict byte and reference checks. Visibility alone
 was insufficient while the array still constrained storage. See
 `targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md`.
+
+## Paired inline setters and scratch-register rotation
+
+RVA 002C4FD0's 378-byte bank had fourteen register bytes differing from the
+second object-ID store onward. Routing the two stores through ordinary inline
+setters fixes the scratch-register rotation through the geometry copies and
+final movement call. The exact result survives canonical Object, Snapshot,
+coordinate and command-source declarations. A coordinate-copy spelling alone
+does not fix it. See `identity_evidence/002c4fd0-inline-setters.md` for the
+strict call and layout audit; the setters add no runtime operation.
