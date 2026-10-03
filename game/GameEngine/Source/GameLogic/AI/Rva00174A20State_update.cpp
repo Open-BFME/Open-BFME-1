@@ -62,10 +62,10 @@ public:
 	}
 };
 
-class BfmeTeam
+class Team
 {
 public:
-	Player *bfmeGetControllingPlayer() const;
+	Player *getControllingPlayer() const;
 };
 
 // The AI's stop helper carries no recovered name of its own, so it is reached
@@ -126,7 +126,7 @@ public:
 	UnsignedByte m_unreconstructed_11c[0x204 - 0x11c];
 	AIUpdateInterface *m_ai;                           // retail Object+0x204
 	UnsignedByte m_unreconstructed_208[0x23c - 0x208];
-	BfmeTeam *m_team;                                  // retail Object+0x23C
+	Team *m_team;                                      // retail Object+0x23C
 };
 
 enum { BFME_MODEL_CONDITION_NOTIFIED = 1 };
@@ -256,8 +256,8 @@ StateReturnType Rva00174A20State::update()
 			{
 				AudioEventRTS sound(*event);
 				sound.setObjectID(source->getID());
-				if (source->m_team && source->m_team->bfmeGetControllingPlayer())
-					sound.setPlayerIndex(source->m_team->bfmeGetControllingPlayer()->getPlayerIndex());
+				if (source->m_team && source->m_team->getControllingPlayer())
+					sound.setPlayerIndex(source->m_team->getControllingPlayer()->getPlayerIndex());
 				TheAudio->addAudioEvent(&sound);
 			}
 		}
