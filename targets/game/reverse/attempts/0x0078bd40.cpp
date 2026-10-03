@@ -1,5 +1,5 @@
 // ?Flush@Rva00785FD0Renderer@@QAEXXZ
-// partial score=0.2 date=2026-09-23
+// partial score=0.2824 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Igame /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug
 // stlport
 
@@ -12,7 +12,8 @@ class ShaderClassAccess : public ShaderClass
 {
 public:
 	ShaderClassAccess(unsigned value) : ShaderClass(value) {}
-	unsigned &Bits(void) { return ShaderBits; }
+	void OrBits(unsigned value) { ShaderBits |= value; }
+	void AndBits(unsigned value) { ShaderBits &= value; }
 };
 
 class BfmeHandleCX
@@ -68,19 +69,23 @@ void Rva00785FD0Renderer::Flush(void)
 	if (m_vertexCount > 0)
 	{
 		int triangleCount = m_vertexCount / 3;
-		unsigned short offset = (unsigned short)m_vertexOffset;
-		bfmeGo930G((void *)offset, triangleCount);
+		unsigned short *offsetAddress = (unsigned short *)&m_vertexOffset;
+		bfmeGo930G((void *)(unsigned long)*offsetAddress, triangleCount);
 		m_vertexOffset += m_vertexCount;
 		m_vertexCount = 0;
 	}
 
 	if (m_modeChanged)
 	{
-		unsigned shaderBits = m_mode == 2 ? 0x0101837 : 0x01098B7;
+		unsigned shaderBits = (unsigned)(m_mode != 2) - 1;
+		shaderBits &= 0xFFFF7F80;
+		shaderBits += 0x001084B7;
+		shaderBits &= 0xFFFFF8FF;
+		shaderBits |= 0x1800;
 		ShaderClassAccess shader(shaderBits);
 		if (m_texture)
-			shader.Bits() |= 0x10000;
-		shader.Bits() &= 0xFFE3FFFF;
+			shader.OrBits(0x10000);
+		shader.AndBits(0xFFE3FFFF);
 
 		if (DX8Wrapper::Has_Stencil())
 		{
@@ -110,22 +115,19 @@ void Rva00785FD0Renderer::Flush(void)
 		}
 		else
 		{
-			float worldZ = Rva00785FD0Half;
 			if (m_mode == 2)
 			{
-				shader.Bits() |= 0x0F;
-				worldZ = Rva00785FD0ModeTwoValue;
+				shader.OrBits(0x0F);
 			}
 			else if (m_mode == 1)
 			{
-				shader.Bits() &= 0xFFFFFFF3;
-				shader.Bits() |= 3;
+				shader.AndBits(0xFFFFFFF3);
+				shader.OrBits(3);
 			}
-			m_world[2][3] = worldZ;
+			m_world[2][3] = m_mode == 2 ? Rva00785FD0ModeTwoValue : Rva00785FD0Half;
 		}
 
-		Rva00785FD0State.world = m_world.Transpose();
-		Rva00785FD0DirtyMask = (Rva00785FD0DirtyMask & 0xFFFBFFFF) | 1;
+		DX8Wrapper::Set_Transform(D3DTS_WORLD, m_world);
 		BaseHeightMapScorchSetShader(shader);
 		m_modeChanged = 0;
 	}
