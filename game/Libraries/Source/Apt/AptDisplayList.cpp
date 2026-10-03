@@ -18,7 +18,16 @@ public:
 		return block;
 	}
 
-	void operator delete(void *block);
+	// No class operator delete.  BfmeNestedBE's constructor is out-of-line and
+	// may throw, so every `new BfmeNestedBE(...)` site grows an 11-byte SEH
+	// cleanup funclet (mov eax,[ebp-0x10]; push eax; call <free>; pop ecx; ret).
+	// A whole-image scan of retail finds 1126 funclets of exactly that shape and
+	// every one of them calls 0x00881EB0, which the ledger holds as the single
+	// matched global operator delete ??3@YAXPAX@Z
+	// (game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp).  No funclet of that shape
+	// calls any class-specific delete anywhere in the image, so retail's
+	// BfmeNestedBE has none and the cleanup must reach the global one.  Declaring
+	// one here only made this TU reference an undefined ??3BfmeNestedBE@@SAXPAX@Z.
 
 	unsigned int m_flags;
 	int m_bfme08;

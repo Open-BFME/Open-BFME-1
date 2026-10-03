@@ -40,7 +40,10 @@ public:
 	float m_bfmeValue;					// +0x18
 };
 
-extern float g_bfmeOffsetDF;					// retail 0x01098AD4
+// retail 0x01098AD4 is MSVC's own literal pool entry __real@40200000: the
+// image holds 0x40200000 (2.5f) there and the only recorded spelling of that
+// address is the compiler literal, so the constant is spelled as the literal
+// (game/GameEngine/Source/Common/BfmeConv2032.cpp already does this).
 extern const float g_rva01075350;					// retail 0x01075350
 
 class Gen_001E1950
@@ -56,7 +59,7 @@ private:
 // ?bfmeValue@Gen_001E1950@@QBEMXZ
 float Gen_001E1950::bfmeValue(void) const
 {
-	float value = m_bfmeThing->m_bfmeValue - g_bfmeOffsetDF;
+	float value = m_bfmeThing->m_bfmeValue - 2.5f;
 
 	if (value < g_rva01075350)
 		value = g_rva01075350;
@@ -119,7 +122,19 @@ public:
 	bool m_bfmeBusy;					// +0x08
 };
 
-extern BfmeStateDF *g_bfmeStateDF;				// retail 0x012F7048
+// Retail global at 0x012F7048 is Rva006092D0State *, defined once in
+// game/GameEngine/Source/GameClient/LivingWorld.cpp as
+// ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A.  This TU only reads the
+// +0x08 busy flag, so it keeps its local BfmeStateDF view and reaches the
+// canonical spelling through a forward declaration, exactly as
+// game/GameEngine/Source/Common/BfmeConv1734.cpp does.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;		// retail 0x012F7048
+
+static inline BfmeStateDF *localGlo012F7048(void)
+{
+	return reinterpret_cast<BfmeStateDF *>(g_rva012F7048LivingWorld);
+}
 
 class Gen_005896B0
 {
@@ -134,7 +149,7 @@ private:
 // ?bfmeReady@Gen_005896B0@@QBEHXZ
 int Gen_005896B0::bfmeReady(void) const
 {
-	if (!g_bfmeStateDF->m_bfmeBusy && m_bfmeArmed)
+	if (!localGlo012F7048()->m_bfmeBusy && m_bfmeArmed)
 		return 1;
 
 	return 0;

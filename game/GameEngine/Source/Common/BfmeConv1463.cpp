@@ -4,12 +4,21 @@ class BfmeStrV23
 {
 public:
 	BfmeStrV23 *bfmeInsertV23(unsigned pos, BfmeStrV23 *s);
-	void bfmeLenErrV23();
-	void bfmeImplV23(char *a, char *b, char *c, char *d);
 
 	char *b;
 	char *e;
 };
+
+// Retail's length-error call at 0x00830FC8 targets the 5-byte ILT thunk at
+// 0x00042DC0, whose ledger row is ?j_00042dc0@@YAXXZ (game/gen_small/
+// thunks_032.cpp), not a BfmeStrV23 member.  The receiver still goes into ecx
+// because the thunk's target body is the thiscall length-error raise.
+extern void j_00042dc0();
+
+// Retail's range-insert call at 0x00830FA8 targets 0x008300B0, defined in
+// game/GameEngine/Source/Common/BfmeConv1493.cpp as
+// ?bfmeInsertRangeV50@@YGXPAD000@Z -- a free __stdcall function, not a member.
+extern void __stdcall bfmeInsertRangeV50(char *pos, char *first, char *last, char *tag);
 
 // The range-check helper retail reaches through the 0x000132CD thunk, whose
 // body is the one-byte function at 0x006434C0; that body is the
@@ -45,7 +54,7 @@ BfmeStrV23 *BfmeStrV23::bfmeInsertV23(unsigned pos, BfmeStrV23 *s)
 		cmp edx, ecx
 		jbe skip_len
 		mov ecx, this
-		call bfmeLenErrV23
+		call j_00042dc0
 	skip_len:
 		mov edx, this
 		mov eax, dword ptr [edx]
@@ -68,7 +77,7 @@ BfmeStrV23 *BfmeStrV23::bfmeInsertV23(unsigned pos, BfmeStrV23 *s)
 		add eax, dword ptr pos
 		push eax
 		mov ecx, this
-		call bfmeImplV23
+		call bfmeInsertRangeV50
 		mov eax, this
 	}
 }

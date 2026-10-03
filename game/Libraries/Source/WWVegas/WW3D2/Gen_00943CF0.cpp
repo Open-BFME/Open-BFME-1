@@ -16,7 +16,6 @@ class Gen_00943CF0
 	void second(void *value, void *secondOutput, void *firstOutput,
 		void *list);
 	void unlink(void *value);
-	void link(void *value, int address, int secondOutput, int firstOutput);
 
 public:
 	void process(Gen_00943CF0_Node **list);
@@ -55,5 +54,9 @@ void Gen_00943CF0::update(void *value)
 			return;
 		unlink(saved);
 	}
-	link(saved, (int)value, secondOutput, firstOutput);
+	// Retail's tail call at 0x0094353A targets 0x009433A0, the body the ledger
+	// owns as ?second@Gen_00943CF0@@AAEXPAX000@Z (Gen_00943CF0_Second.cpp).
+	// There is no separate retail `link` body; the source's former name was
+	// address-less and resolved nowhere.
+	second(saved, value, (void *)secondOutput, (void *)firstOutput);
 }
