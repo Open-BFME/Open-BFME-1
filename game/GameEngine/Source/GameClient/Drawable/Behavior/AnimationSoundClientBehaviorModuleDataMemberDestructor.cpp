@@ -61,14 +61,19 @@ public:
 	Rva00605E60TreeHeader *m_bfmeHeader;				// +0x00
 };
 
+struct Rva00605820Node;
+class Rva00605820Tree
+{
+public:
+	void eraseSubtree(Rva00605820Node *node);
+};
+
 class AnimationSoundClientBehaviorModuleDataMember
 {
 public:
 	~AnimationSoundClientBehaviorModuleDataMember();
 
 private:
-	void bfmeErase(void *root);				// ILT 0x000082D3
-
 	Rva00605180HeaderHandle m_bfmeHandle;				// +0x00
 	Int m_bfmeCount;					// +0x04
 };
@@ -78,7 +83,9 @@ AnimationSoundClientBehaviorModuleDataMember::~AnimationSoundClientBehaviorModul
 {
 	if (m_bfmeCount)
 	{
-		bfmeErase(m_bfmeHandle.m_bfmeHeader->m_parent);
+		reinterpret_cast<Rva00605820Tree *>(this)->eraseSubtree(
+			reinterpret_cast<Rva00605820Node *>(
+				m_bfmeHandle.m_bfmeHeader->m_parent));
 
 		m_bfmeHandle.m_bfmeHeader->m_left = m_bfmeHandle.m_bfmeHeader;
 		m_bfmeHandle.m_bfmeHeader->m_parent = 0;
