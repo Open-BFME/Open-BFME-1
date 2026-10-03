@@ -89,20 +89,27 @@ public:
 	Int bfmeAbove(const Real *samples, Int index) const;
 };
 
+struct FactionVictoryParameters;
+
 class VictorySystem
 {
 public:
-	Gen_001de260 *bfmeParametersForPlayer(Int playerIndex);
+	FactionVictoryParameters *bfmeParametersForPlayer(Int playerIndex);
 };
 
 extern VictorySystem *TheVictorySystem;
+
+class Gen_001B1240
+{
+public:
+	void bfmeAdd(Real amount, Int firstIndex, Int secondIndex);
+};
 
 class BfmeCell
 {
 public:
 	BfmeCell();
 	~BfmeCell();
-	void bfmeAdd(Real amount, Int firstIndex, Int secondIndex);
 
 	void clear()
 	{
@@ -235,7 +242,7 @@ void BfmeCellGrid::bfmeApplyAtObject(const Object *object,
 		index += (Int)((position->x - m_offset) / m_cellSize);
 
 		if ((UnsignedInt)index < m_cellCount && index != 0x7fffffff)
-			m_cells[index].bfmeAdd(amount, firstIndex, secondIndex);
+			((Gen_001B1240 *)&m_cells[index])->bfmeAdd(amount, firstIndex, secondIndex);
 	}
 }
 
@@ -251,7 +258,7 @@ Int BfmeCellGrid::bfmeEvaluateCells() const
 			{
 				if ((m_cells[cellIndex].m_firstMask & (1 << playerIndex)) != 0)
 				{
-					Gen_001de260 *parameters =
+					Gen_001de260 *parameters = (Gen_001de260 *)
 						TheVictorySystem->bfmeParametersForPlayer((Int)playerIndex);
 					if (parameters != 0 &&
 						static_cast<unsigned char>(parameters->bfmeAbove(
