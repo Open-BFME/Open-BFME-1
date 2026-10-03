@@ -7,9 +7,9 @@ public:
 	virtual ~SlaughterHordeContainBase();
 };
 
-__declspec(noinline) SlaughterHordeContainBase::~SlaughterHordeContainBase() {}
-
 void Force_SlaughterHordeContainBase_Deleting_Destructor(SlaughterHordeContainBase *contain)
 {
-	delete contain;
+	// Emit the deleting wrapper while referring to the complete destructor's
+	// owning TU, without supplying a second complete-destructor definition.
+	SlaughterHordeContainBase value;
 }

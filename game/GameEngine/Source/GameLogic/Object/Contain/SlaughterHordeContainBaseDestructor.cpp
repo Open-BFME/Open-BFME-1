@@ -2,18 +2,10 @@
 //
 // retail 0x0024E8E0, size 141, dump d_0024e310.asm.
 //
-// Fuzzy twin: GarrisonContain::~GarrisonContain (0x0021D9C0, r0.925,
-// GarrisonContainDestructor.cpp) -- SAME nine-polymorphic-subobject vtable
-// install shape (offsets 0, 0xc, 0x10, 0x20, 0x24, 0x28, 0x2c, 0x30, 0x34,
-// matching the twin's OpenContain layout exactly), but the callee set
-// differs: this destructor releases a BFMERetailAsciiString at this+0x9c0
-// and then calls a base destructor still pinned only as a placeholder
-// (??1Gen_dtor_0021e310@@UAE@XZ, 0x00037A24) whose REAL address does not
-// match the already-landed ??1OpenContain@@UAE@XZ (0x002262E0). So the
-// nine-vtable base hierarchy here is shape-identical to but NOT the same
-// class as the twin's OpenContain -- copied under fresh names and pinned to
-// the address this body's callee list actually proves (0x00037A24), leaving
-// the real OpenContain pin untouched.
+// The base-destructor ILT 0x00037A24 routes to the matched GarrisonContain
+// destructor at 0x0021D9C0 (GarrisonContainDestructor.cpp). Its nine inherited
+// vfptrs occupy 0, 0xc, 0x10, 0x20, 0x24, 0x28, 0x2c, 0x30 and 0x34.
+// The narrow string at this+0x9c0 releases through StringBase<char>.
 //
 // installs vtable(s): 0x010B11C0 (SlaughterHordeContain primary), 0x010B10F8,
 // 0x010B10E8, 0x010B0F40, 0x010B0F20, 0x010B0F1C, 0x010B0F0C, 0x010B0ED0,
@@ -24,6 +16,8 @@
 // class's larger destructor); ?getModuleNameKey@SlaughterHordeContain@@
 // 0x0024E850 (ModuleNameKeys_04.cpp) confirms the class name from the
 // vtable-carrying-function evidence (tools/vtable_lookup.py).
+
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva0024E8E0PrimaryBase
 {
@@ -50,9 +44,9 @@ private:
 	unsigned char m_pad[12];
 };
 
-// Shape-identical to GarrisonContainDestructor.cpp's OpenContain, but a
-// DIFFERENT compiled instance (see header comment) -- fresh names, own pin.
-class __declspec(novtable) Rva0024E8E0OpenContainLike
+// GarrisonContainDestructor.cpp establishes the full 0x99c-byte base extent;
+// only its nine vfptrs need explicit layout in this derived destructor.
+class __declspec(novtable) GarrisonContain
 	: public Rva0024E8E0PrimaryBase,
 	  public Rva0024E8E0SecondaryBase<1>,
 	  public Rva0024E8E0WideSecondaryBase,
@@ -64,42 +58,21 @@ class __declspec(novtable) Rva0024E8E0OpenContainLike
 	  public Rva0024E8E0SecondaryBase<7>
 {
 public:
-	virtual ~Rva0024E8E0OpenContainLike();		// ??1Rva0024E8E0OpenContainLike@@UAE@XZ, pinned 0x00037A24
+	virtual ~GarrisonContain();		// ILT 0x00037A24 -> 0x0021D9C0
 
 private:
-	unsigned char m_pad[0x3c4];
-};
-
-template <typename T>
-class StringBase
-{
-public:
-	~StringBase()
-	{
-		releaseBuffer();
-	}
-
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	~BFMERetailAsciiString() {}
+	unsigned char m_pad[0x99c - 0x38];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlaughterHordeContain.h
-class SlaughterHordeContainBase : public Rva0024E8E0OpenContainLike
+class SlaughterHordeContainBase : public GarrisonContain
 {
 public:
 	virtual ~SlaughterHordeContainBase();
 
 private:
-	unsigned char m_unreconstructed[0x9c0 - sizeof(Rva0024E8E0OpenContainLike)];
-	BFMERetailAsciiString m_name;			// this+0x9c0
+	unsigned char m_unreconstructed[0x9c0 - sizeof(GarrisonContain)];
+	AsciiString m_name;			// this+0x9c0
 };
 
 // ?d_0024e8e0@@YAXXZ -- address-derived; real name/signature not recovered.
