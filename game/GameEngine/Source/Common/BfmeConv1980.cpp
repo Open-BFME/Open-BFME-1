@@ -1,4 +1,6 @@
-extern char g_bfmeEmptyETA[];
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+extern const char g_bfmeEmptyAscii[];
 
 class BfmeUniETA;
 
@@ -7,24 +9,6 @@ struct BfmeStrDataETA
 	int m_bfmeRefETA;
 	int m_bfmeLenETA;
 	char m_bfmeTextETA[1];
-};
-
-class BfmeStrETA
-{
-public:
-	BfmeStrETA(const BfmeUniETA &other);
-
-	~BfmeStrETA() { releaseBuffer(); }
-
-	const char *bfmeTextETA() const
-	{
-		return m_bfmeDataETA ? m_bfmeDataETA->m_bfmeTextETA : g_bfmeEmptyETA;
-	}
-
-	BfmeStrDataETA *m_bfmeDataETA;
-
-private:
-	void releaseBuffer();
 };
 
 class BfmeInfoETA
@@ -57,7 +41,9 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 
 void *bfmeLookupETA(const BfmeUniETA &name)
 {
-	BfmeStrETA text(name);
+	AsciiString text(reinterpret_cast<const UnicodeString &>(name));
+	const BfmeStrDataETA *data = *reinterpret_cast<BfmeStrDataETA *const *>(&text);
 
-	return reinterpret_cast<BfmeInfoETA *>(TheGameSpyInfo)->bfmeSlot19ETA(text.bfmeTextETA());
+	return reinterpret_cast<BfmeInfoETA *>(TheGameSpyInfo)->bfmeSlot19ETA(
+		data ? data->m_bfmeTextETA : g_bfmeEmptyAscii);
 }
