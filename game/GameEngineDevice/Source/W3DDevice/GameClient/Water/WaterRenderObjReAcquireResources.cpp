@@ -287,7 +287,8 @@ void WaterRenderObjClass::ReAcquireResources(void)
 			mul r1, t1, t2 ; mul\n\
 			add r0.rgb, r0, t3\n\
 			+mul r0.a, r0, t3\n\
-			add r0.rgb, r0, r1\n";
+			add r0.rgb, r0, r1\n\
+			+mul r0.a, r0, c1\n";
 		hr = D3DXAssembleShader(shader, strlen(shader), 0, 0, 0, &compiledShader, 0);
 		if (hr == 0)
 		{
