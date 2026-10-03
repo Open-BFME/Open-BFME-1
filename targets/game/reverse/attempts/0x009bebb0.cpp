@@ -1,8 +1,15 @@
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
-// partial score=0.905 date=2026-09-24
+// partial score=0.9054 date=2026-10-03
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
 // cl: /O2
 //
+// Bank-only: the inherited long SIMD assembly islands have not been justified
+// as a compiler blocker or replaced with native intrinsics; do not promote this
+// as a clean-C++ conversion. Session4 independently confirms the complete RET
+// at RVA009BFA38. First variance-operand volatile reads improve354 to352 differing
+// bytes at the same3721B. Qualifying2/4/8 operands instead gives3751B/3321dif.
+// A six-instruction q-squared island replaced with native SSE2 intrinsics compiles
+// at3721B/1666dif; compiler support exists, but mixed native/asm scheduling differs.
 // Open-BFME5: VP6 postprocessor band deblock -- horizontal pass (loop 1)
 // then vertical pass (loop 2) over one 8-pixel-wide fragment column strip.
 // Retail 0x009BEBB0, 3721 bytes. Hand-vectorized SSE2/MMX kernel; each pass
@@ -360,8 +367,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				pop eax
 			}
 
-			CTX->m_fragmentVariances[frag] += out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
-			CTX->m_fragmentVariances[qIndex] += out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
+			CTX->m_fragmentVariances[frag] += *(volatile unsigned short *)&out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+			CTX->m_fragmentVariances[qIndex] += *(volatile unsigned short *)&out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
 		}
 		else
 		{
@@ -824,8 +831,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		pop eax
 				}
 
-				CTX->m_fragmentVariances[qIndex] += out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
-				CTX->m_fragmentVariances[qIndex + 1] += out[6] + out[7] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
+				CTX->m_fragmentVariances[qIndex] += *(volatile unsigned short *)&out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+				CTX->m_fragmentVariances[qIndex + 1] += *(volatile unsigned short *)&out[6] + out[7] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
 			}
 
 			++qIndex;
