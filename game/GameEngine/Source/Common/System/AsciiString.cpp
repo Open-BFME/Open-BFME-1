@@ -276,15 +276,8 @@ void AsciiString::removeLastChar()
 }
 
 // -----------------------------------------------------
-void AsciiString::format(AsciiString format, ...)
-{
-	validate();
-	va_list args;
-  va_start(args, format);
-	format_va(format, args);
-  va_end(args);
-	validate();
-}
+// The exported by-value formatter is defined in WWLib/AsciiStringNative.cpp.
+// The Zero Hour format_va/cleanup path is not its BFME implementation.
 
 // -----------------------------------------------------
 void AsciiString::format(const char* format, ...)
