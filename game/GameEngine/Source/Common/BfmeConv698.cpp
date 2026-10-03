@@ -39,11 +39,13 @@ struct BfmeSubDHA
 	BfmeInnerDHA m_bfmeInner;
 };
 
-class BfmeOuterDHA
-{
-public:
-	bool bfmeAskDHA();
-};
+// Retail 0x00215180 calls the ILT thunk at 0x0004425B, defined as
+// ?j_0004425b@@YAXXZ (game/gen_small/thunks_032.cpp). The question is asked
+// one-argument fastcall so the receiver lands in ECX, exactly as the
+// no-argument thiscall did; the answer comes back in AL.
+extern void __cdecl j_0004425b();
+
+typedef bool (__fastcall *BfmeAskDHA)(void *);
 
 class BfmeThingDHA
 {
@@ -55,7 +57,7 @@ public:
 
 int BfmeThingDHA::bfmeGoDHA()
 {
-	if (((BfmeOuterDHA *)((char *)this - 0x10))->bfmeAskDHA())
+	if (reinterpret_cast<BfmeAskDHA>(&j_0004425b)((char *)this - 0x10))
 		return m_bfmeSub->m_bfmeInner.bfmeRunDHA();
 	return 0;
 }

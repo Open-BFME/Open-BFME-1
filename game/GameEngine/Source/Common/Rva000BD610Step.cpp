@@ -1,8 +1,11 @@
 // Address-derived name: real identity not recovered.
-// Callee at retail 0x0001E6A5 is the matched thunk j_0001e6a5 (thunks_014.cpp);
-// pinned here under this file's own extern name since that call needs real
-// arguments the thunk's own void() declaration does not carry.
-void * __cdecl Rva0001E6A5Helper(void *first, void *second, void *third, char *status, int flag);
+// Callee at retail 0x0001E6A5 is the matched thunk j_0001e6a5, defined as
+// ?j_0001e6a5@@YAXXZ in game/gen_small/thunks_014.cpp. It is cdecl void() and
+// takes no arguments, so the five arguments retail pushes are carried by a
+// local call type rather than by its declaration.
+extern void j_0001e6a5();
+
+typedef void *(__cdecl *Rva0001E6A5Helper)(void *first, void *second, void *third, char *status, int flag);
 
 class Rva000BD610Owner
 {
@@ -20,5 +23,5 @@ void Rva000BD610Owner::step(void)
 	void *third = m_src;
 	void *cur = m_cur;
 	char status;
-	m_cur = Rva0001E6A5Helper(cur, cur, third, &status, flag);
+	m_cur = reinterpret_cast<Rva0001E6A5Helper>(&j_0001e6a5)(cur, cur, third, &status, flag);
 }
