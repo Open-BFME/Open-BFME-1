@@ -1,17 +1,10 @@
 // ??0PathfindZoneManager@@QAE@XZ
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 // Byte-exact reconstruction of the BFME PathfindZoneManager constructor.
 
 typedef unsigned short zoneStorageType;
-
-namespace _STL
-{
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int size);
-};
-}
 
 struct BfmeZonePointerMatrix
 {
@@ -33,7 +26,7 @@ public:
 	Rva00405E70Tree()
 	{
 		m_header = 0;
-		m_header = (BfmeTreeNode *)_STL::__new_alloc::allocate(0x34);
+		m_header = (BfmeTreeNode *)_STL::__node_alloc<true, 0>::allocate(0x34);
 		m_nodeCount = 0;
 		m_header->color = 0;
 		m_header->parent = 0;
@@ -68,8 +61,6 @@ private:
 };
 
 #pragma comment(linker, "/alternatename:??1Rva00406510Vector@@QAE@XZ=?j_0003b04d@@YAXXZ")
-
-void *operator new[](unsigned int size);
 
 class PathfindZoneManager
 {
