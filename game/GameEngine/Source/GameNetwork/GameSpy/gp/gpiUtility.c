@@ -362,6 +362,11 @@ gpiValueForKeyAlloc(
 	return value;
 }
 
+// Retail's one select helper at 0x00854530 is defined in the ledger as ghiSocketSelect
+// (ghttp/ghttpCommon.c); GSISocketSelect is only its later upstream name, so
+// the call uses the pinned definition.
+int ghiSocketSelect(SOCKET theSocket, int* theReadFlag, int* theWriteFlag, int* theExceptFlag);
+
 GPResult
 gpiCheckSocketConnect(
   GPConnection * connection,
@@ -376,7 +381,7 @@ gpiCheckSocketConnect(
 
 	// Check if the connect is completed.
 	/////////////////////////////////////
-	aReturnCode = GSISocketSelect(sock, NULL, &aWriteFlag, &aExceptFlag);
+	aReturnCode = ghiSocketSelect(sock, NULL, &aWriteFlag, &aExceptFlag);
 	if (aReturnCode == SOCKET_ERROR)
 	{
 		gpiDebug(connection, "Error connecting\n");
