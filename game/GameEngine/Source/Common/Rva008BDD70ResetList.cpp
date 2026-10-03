@@ -8,8 +8,19 @@
 // bfmeReset1046 names this address and the matched callers
 // BfmeD1046::bfmeGo1046D and bfmeGo1046E call it with a zero argument.
 
-struct BfmeStringData3AF0;
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+// The lookup, erase and idle-hook bodies retain their MASM ledger identities.
+// BfmeQueryProcess1279 and BfmeConv1217 use these same typed call views.
+extern void d_0089cc80();
+extern void d_0089cef0();
+extern void d_008a30c0();
 
 struct BfmeKey1279
 {
@@ -18,14 +29,10 @@ struct BfmeKey1279
 
 class BfmeLookup1279
 {
-public:
-	void bfmeErase1279(BfmeKey1279 &key);
 };
 
 class BfmeTab1024
 {
-public:
-	int bfmeFind1024(int key);
 };
 
 class BfmeObj4310
@@ -38,12 +45,6 @@ class Rva008C3F10Value
 {
 public:
 	void cleanup(char mode);
-};
-
-class BfmeG1211
-{
-public:
-	void bfmeStep1211C(void);
 };
 
 // Local view of the pool global's layout at 0x01337810; the canonical
@@ -125,10 +126,18 @@ void BfmeD1046::bfmeReset1046(int n)
 			if (entry->m_owner != 0)
 			{
 				BfmeTab1024 *tab = entry->m_owner->table();
-				if (entry->m_name.m_data != &g_bfmeDefaultString1284 && tab != 0)
+				if (entry->m_name.m_data != &g_rva012D5298Empty && tab != 0)
 				{
-					if ((Rva008BDD70Entry *)tab->bfmeFind1024((int)&entry->m_name) == entry)
-						((BfmeLookup1279 *)tab)->bfmeErase1279(entry->m_name);
+					typedef int (BfmeTab1024::*Find)(int);
+					union { void (*function)(); Find member; } find;
+					find.function = d_0089cef0;
+					if ((Rva008BDD70Entry *)(tab->*find.member)((int)&entry->m_name) == entry)
+					{
+						typedef void (BfmeLookup1279::*Erase)(BfmeKey1279 &);
+						union { void (*function)(); Erase member; } erase;
+						erase.function = d_0089cc80;
+						(((BfmeLookup1279 *)tab)->*erase.member)(entry->m_name);
+					}
 				}
 			}
 			((BfmeObj4310 *)entry)->bfmeDrop();
@@ -139,7 +148,7 @@ void BfmeD1046::bfmeReset1046(int n)
 			((Rva008C3F10Value *)entry)->cleanup(1);
 		}
 		if (((Rva008BDD70IdleHookView *)g_rva01337810GcRoots)->m_at04 != 0 && Rva008AE770TheStack.m_at00 == 0)
-			((BfmeG1211 *)g_rva01337810GcRoots)->bfmeStep1211C();
+			((void (__fastcall *)(Rva00899560Pool *))d_008a30c0)(g_rva01337810GcRoots);
 		entry = next;
 	}
 }
