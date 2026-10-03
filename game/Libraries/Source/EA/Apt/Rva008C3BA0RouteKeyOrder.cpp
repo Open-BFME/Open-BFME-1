@@ -11,20 +11,22 @@ public:
 };
 
 extern EAStringC::StringDataC g_rva012D5298Empty;
-extern "C" Rva008C3BA0StringBlock *g_bfmeRouteKeys1282[];
+extern "C" void *bfmeObjDAE[0xb2];
 extern "C" int __cdecl _strcmpi(const char *left, const char *right);
 
 bool aptRouteKeysSorted008C3BA0()
 {
+    Rva008C3BA0StringBlock **routeKeys =
+        reinterpret_cast<Rva008C3BA0StringBlock **>(bfmeObjDAE);
     for (int index = 0; index < 0xb2; ++index)
     {
-        Rva008C3BA0StringBlock *current = g_bfmeRouteKeys1282[index];
+        Rva008C3BA0StringBlock *current = routeKeys[index];
         if (current == (Rva008C3BA0StringBlock *)&g_rva012D5298Empty)
             return false;
         int nextIndex = index + 1;
         if (nextIndex < 0xb2)
         {
-            Rva008C3BA0StringBlock *next = g_bfmeRouteKeys1282[nextIndex];
+            Rva008C3BA0StringBlock *next = routeKeys[nextIndex];
             if (current == next)
                 return false;
             if (_strcmpi((const char *)current + 8, (const char *)next + 8) >= 0)
