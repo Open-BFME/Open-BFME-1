@@ -1,3 +1,9 @@
+#define OBJECT_TU_MEMBERS \
+	void *unidentified_001BFE20() const; \
+	bool isLocallyControlled() const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class ClientRoot4120
 {
 public:
@@ -11,14 +17,14 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;
 
-class GlobalData
-{
-public:
-	unsigned char m_bfmePad[0xa75];
-	unsigned char m_bfmeEnabled;
-};
-
+class GlobalData;
 extern GlobalData *TheWritableGlobalData;
+
+// ILT 0x0002CA61 reaches this dump at 0x001CABE0: ECX is the only
+// argument, and EAX holds the result. A one-argument fastcall has that ABI.
+extern void d_001cabe0();
+// ILT 0x0004067E reaches the one-stack-word thiscall body at 0x0041A2E0.
+extern void d_0041a2e0();
 
 class BfmeX1004
 {
@@ -83,21 +89,8 @@ class BfmePreBXF;
 class BfmeHold1004
 {
 public:
-	BfmeX1004 *bfmeFind1004();
 	unsigned char m_bfmePad[0x1fc];
 	BfmePreBXF *m_bfmePre;
-};
-
-class BfmeTargetJB
-{
-public:
-	bool bfmeTailJB();
-};
-
-class BfmeSubBIC
-{
-public:
-	int bfmeAskBIC();
 };
 
 class BfmePreBXF
@@ -151,7 +144,6 @@ class BfmeThingBXF
 {
 public:
 	void bfmeOnceBXF();
-	void bfmeThenBXF(int value);
 	void bfmeGoBXF();
 	unsigned char m_bfmeHead[0xfc];
 	BfmeHold1004 *m_bfmeHold;
@@ -174,17 +166,17 @@ void BfmeThingBXF::bfmeOnceBXF()
 	if (pre)
 		pre->bfmeNotify();
 
-	if (!TheWritableGlobalData->m_bfmeEnabled)
+	if (!((const unsigned char *)TheWritableGlobalData)[0xa75])
 		return;
 
-	BfmeX1004 *x = hold->bfmeFind1004();
+	BfmeX1004 *x = (BfmeX1004 *)((Object *)hold)->unidentified_001BFE20();
 	if (x)
 		return x->bfmeTail1004();
 
-	if (!((BfmeTargetJB *)hold)->bfmeTailJB())
+	if (!((Object *)hold)->isLocallyControlled())
 		return;
 
-	int value = ((BfmeSubBIC *)hold)->bfmeAskBIC();
+	int value = ((int (__fastcall *)(BfmeHold1004 *))d_001cabe0)(hold);
 
 	BfmeModuleBXF *module = m_bfmeModules[0];
 	if (module)
@@ -198,5 +190,12 @@ void BfmeThingBXF::bfmeGoBXF()
 		m_bfmeFlag = true;
 		bfmeOnceBXF();
 	}
-	bfmeThenBXF(0);
+	// VC7.1 folds this member-pointer view to the retail direct call while
+	// keeping the dump's defining symbol and the caller's thiscall ABI.
+	union {
+		void (*function)();
+		void (BfmeThingBXF::*method)(int);
+	} call;
+	call.function = &d_0041a2e0;
+	(this->*call.method)(0);
 }
