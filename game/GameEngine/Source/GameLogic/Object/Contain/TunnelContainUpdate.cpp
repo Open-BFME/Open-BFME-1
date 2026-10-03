@@ -56,6 +56,26 @@ public:
 	virtual UnsignedInt getLastDamageTimestamp() const = 0;
 };
 
+#include <hash_map>
+
+// Retail's GameLogic::findObjectByID is the out-of-line hash lookup at
+// 0x0009A510 (hash_map at this+0xB0, buckets at +0xB4); the ZH header's inline m_objVector body is
+// not retail's, and the sweep GameLogic.h only declares it. Its body stays
+// visible here (as in ObjectEnterUncontrollableCowerState.cpp) so MSVC knows the
+// out-of-line call writes no memory and keeps TheGameLogic in a register.
+typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > Rva0022F570ObjectHash;
+
+inline Object *GameLogic::findObjectByID( ObjectID id )
+{
+	if( id == INVALID_ID )
+		return NULL;
+	Rva0022F570ObjectHash &hash = *(Rva0022F570ObjectHash *)((char *)this + 0xB0);
+	Rva0022F570ObjectHash::iterator it = hash.find( id );
+	if( it == hash.end() )
+		return NULL;
+	return (*it).second;
+}
+
 enum { BFME_LOGICFRAMES_PER_SECOND = 5 };
 
 class Rva0022F570TunnelContain : public OpenContain

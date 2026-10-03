@@ -614,3 +614,11 @@ void AudioEventRTS::setPlayerIndex( Int playerNdx )
 {
 	m_playerIndex = playerNdx;
 }
+
+// The ledger rows this TU owns for vector<Object *> size/begin/operator[] were
+// emitted through the ZH GameLogic.h inline findObjectByID body (m_objVector).
+// The sweep GameLogic.h now declares that lookup out of line, as retail has it,
+// so request the same member bodies directly.
+template Object *&_STL::vector<Object *, _STL::allocator<Object *> >::operator[](size_t);
+template Object **_STL::vector<Object *, _STL::allocator<Object *> >::begin();
+template size_t _STL::vector<Object *, _STL::allocator<Object *> >::size() const;
