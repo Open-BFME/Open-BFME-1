@@ -1,5 +1,19 @@
 // Open-BFME5 conversions.
 
+#include "../GameLogic/command_source_type.h"
+
+struct Coord3D;
+
+// ILT 0x0002D6F5 reaches the protected virtual at 0x00278280.
+// The caller uses a qualified call to that implementation.
+class AIUpdateInterface
+{
+	friend class BfmeB975;
+
+protected:
+	virtual void privateMoveToPosition(const Coord3D *position, CommandSourceType commandSource);
+};
+
 struct BfmeObj975A
 {
 	char m_bfmePad[0x344];
@@ -78,7 +92,6 @@ class BfmeB975
 {
 public:
 	void bfmeGo975B(int a, int b);
-	void bfmeSend975B(int a, int b);
 
 	char m_bfmePad[8];
 	BfmeHold975B *m_bfmeHold;
@@ -89,13 +102,24 @@ void BfmeB975::bfmeGo975B(int a, int b)
 	BfmeMgr975B *m = m_bfmeHold->m_bfmeMgr;
 
 	if (m && m->bfmeReady975B())
-		bfmeSend975B(a, b);
+		reinterpret_cast<AIUpdateInterface *>(this)->AIUpdateInterface::privateMoveToPosition(
+			reinterpret_cast<const Coord3D *>(a), static_cast<CommandSourceType>(b));
 }
 
-class BfmeFind975D
+class AsciiString;
+
+class ThingTemplate
 {
 public:
-	void *bfmeFind975D(int a);
+	bool isEquivalentTo(const ThingTemplate *other) const;
+};
+
+// ILTs 0x00028560 and 0x0003E80B reach these matched definitions at
+// 0x00137E80 and 0x0013FE10 respectively.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
@@ -108,15 +132,15 @@ class BfmeD975
 {
 public:
 	char bfmeGo975D(int a);
-	char bfmeUse975D(void *p);
 };
 
 char BfmeD975::bfmeGo975D(int a)
 {
-	void *p = ((BfmeFind975D *)TheThingFactory)->bfmeFind975D(a);
+	const ThingTemplate *p = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(
+		*reinterpret_cast<const AsciiString *>(a));
 
 	if (p)
-		return bfmeUse975D(p);
+		return reinterpret_cast<const ThingTemplate *>(this)->isEquivalentTo(p);
 
 	return 0;
 }
