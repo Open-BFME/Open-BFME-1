@@ -1,4 +1,5 @@
 // cl: /O2
+// stlport
 
 // STLport sort driver over 12-byte records, retail 0x002E1F10, 90 bytes.
 // Same shape as Q3IntrosortFamilies.cpp's 74-byte drivers, but the element
@@ -15,9 +16,16 @@ struct S4Cmp002E1690
 	bool operator()(S4SortElem12, S4SortElem12) const;
 };
 
-void Gen002E1B60(S4SortElem12 *first, S4SortElem12 *last, S4SortElem12 *,
-	int depth, S4Cmp002E1690 comp);
-void Gen002E1690(S4SortElem12 *first, S4SortElem12 *last, S4Cmp002E1690 comp);
+namespace _STL
+{
+	template <class RandomAccessIter, class Compare>
+	void __final_insertion_sort(RandomAccessIter first, RandomAccessIter last,
+		Compare comp);
+
+	template <class RandomAccessIter, class Value, class Size, class Compare>
+	void __introsort_loop(RandomAccessIter first, RandomAccessIter last,
+		Value *, Size depth, Compare comp);
+}
 
 void Rva002E1F10(S4SortElem12 *first, S4SortElem12 *last, S4Cmp002E1690 comp)
 {
@@ -27,7 +35,8 @@ void Rva002E1F10(S4SortElem12 *first, S4SortElem12 *last, S4Cmp002E1690 comp)
 		int k;
 		for (k = 0; n != 1; n >>= 1)
 			++k;
-		Gen002E1B60(first, last, (S4SortElem12 *)0, k * 2, comp);
-		Gen002E1690(first, last, comp);
+		_STL::__introsort_loop<S4SortElem12 *, S4SortElem12, int,
+			S4Cmp002E1690>(first, last, (S4SortElem12 *)0, k * 2, comp);
+		_STL::__final_insertion_sort(first, last, comp);
 	}
 }
