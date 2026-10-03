@@ -4,7 +4,6 @@ class AsciiString;
 AsciiString GetBaseFileFromFile(AsciiString fname);
 
 extern "C" void *memcpy(void *destination, const void *source, unsigned int count);
-extern const char Rva006A16B0Empty[];
 
 template <typename T>
 class StringBase
@@ -43,7 +42,7 @@ public:
 	~AsciiString() {}
 	const char *str() const
 	{
-		return m_data ? &m_data->data[0] : Rva006A16B0Empty;
+		return m_data ? &m_data->data[0] : "";
 	}
 	const char *reverseFind(char match) const
 	{
@@ -91,7 +90,7 @@ AsciiString GetExtensionFromFile(AsciiString fname)
 	}
 	else
 	{
-		start = Rva006A16B0Empty;
+		start = "";
 		len = 0;
 	}
 

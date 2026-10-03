@@ -164,9 +164,7 @@ public:
 
 extern ArchiveFileSystem *TheArchiveFileSystem;
 
-extern const char Rva006A16B0Empty[];
-
-#define BFME_DRIVE_PATH_EMPTY (Rva006A16B0Empty)
+#define BFME_DRIVE_PATH_EMPTY ("")
 #define BFME_FILE_SYSTEM_STATE ((void *)TheFileSystem)
 #define BFME_MUSIC_BIG ("Music.big")
 

@@ -44,8 +44,6 @@ struct XferVersion
 	UnsignedByte m_pad[ 2 ];
 };
 
-extern const char Rva006A16B0Empty[];
-
 class RetailLayoutString
 {
 public:
@@ -63,7 +61,7 @@ public:
 
 	const char *str( void ) const
 	{
-		return m_text ? (const char *)m_text + 8 : Rva006A16B0Empty;
+		return m_text ? (const char *)m_text + 8 : "";
 	}
 
 	void set( const char *text, Int length )

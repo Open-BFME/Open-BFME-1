@@ -6,8 +6,6 @@
 class AsciiString;
 AsciiString GetFileFromPath(AsciiString path);
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -51,7 +49,7 @@ AsciiString GetFileFromPath(AsciiString path)
 	}
 	else
 	{
-		start = Rva006A16B0Empty;
+		start = "";
 		len = 0;
 	}
 
