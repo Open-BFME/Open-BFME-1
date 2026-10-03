@@ -1771,3 +1771,26 @@ new pin or shared-header edit is needed. The canonical UnicodeString copy
 constructor uses the established explicit qualified StringBase construction
 spelling; placement-new transposes the EH saved-ESP store and ECX setup.
 See `identity_evidence/00514da0-friend-selection.md`.
+
+## An intrusive unlink can need a value copy of its header
+
+At `0x00897360`, the outer loop keeps its successor in ESI across a virtual
+cleanup call. Retail also copies that successor to EDX for the inline unlink.
+Separate pointer locals and an inline remove helper let VC7.1 coalesce the
+second value away, leaving the body two bytes short. Copy the actual two-field
+header by value, then use its previous/next members in the unlink. This gave
+all 257 bytes without volatile accesses or assembly. The strict call, literal
+and DIR32 checks passed; see `identity_evidence/00897360-link-copy.md` under
+`targets/game/reverse/`.
+
+## A manual override walk can hide a two-byte register residue
+
+The 97-byte `0x00618980` bank used a volatile receiver, a dead volatile home,
+manual override resolution and an integer-shaped callee declaration. Merely
+correcting the callee to pointer-plus-three-floats kept its two register bytes.
+Using the native `OVERRIDE<T>` member and ordinary float fields, as witnessed
+by the matched neighboring `Rva00618A90Update.cpp`, removed both differences.
+The final body needs no volatile access, barrier or bit-pattern argument
+facade. Preserve the opaque entry name: matching the neighboring layout is
+not proof of a semantic owner name. Both direct callees and all 97 bytes
+verified; see `targets/game/reverse/identity_evidence/00618980-native-override.md`.
