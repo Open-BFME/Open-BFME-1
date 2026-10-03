@@ -396,7 +396,9 @@ void GameLODManager::refreshCustomStaticLODLevel(void)
 // carries the offsets retail's own table at 0x01076760 holds rather than
 // offsetof against a reconstructed struct: the element is 0x30 bytes (the parse
 // function indexes it as index*0x30) but not every member type past the offset
-// is pinned yet. m_staticGameLODInfo sits at offset 0 of GameLODManager --
+// is pinned yet. The shared tail and priority-name bindings are independently
+// verified in identity_evidence/20261003-gamelod-table-windows.md.
+// m_staticGameLODInfo sits at offset 0 of GameLODManager --
 // retail computes the element address as TheGameLODManager + index*0x30 with
 // nothing added.
 static const FieldParse TheBFMEStaticGameLODFieldParseTable[] =
@@ -418,8 +420,17 @@ static const FieldParse TheBFMEStaticGameLODFieldParseTable[] =
 	{ "TextureReductionFactor",		INI::parseInt,			NULL,	0x1c },
 	{ "UseHighQualityVideo",		INI::parseBool,			NULL,	0x23 },
 	{ "AnimationDetail",			INI::parseStaticGameLODLevel,	NULL,	0x24 },
-	{ "MinParticlePriority",		INI::parseIndexList,	NULL,	0x28 },
-	{ "MinParticleSkipPriority",	INI::parseIndexList,	NULL,	0x2c },
+	{ "MinParticlePriority",		INI::parseIndexList,	ParticlePriorityNames,	0x28 },
+	{ "MinParticleSkipPriority",	INI::parseIndexList,	ParticlePriorityNames,	0x2c },
+	// Retail has no terminator between the static, dynamic and audio windows.
+	// INI's lookup scans until a null key; preserve the shared tail it can read.
+	{ "MinimumFPS",             INI::parseInt,  NULL, 0x00 },
+	{ "ParticleSkipMask",       INI::parseInt,  NULL, 0x04 },
+	{ "DebrisSkipMask",         INI::parseInt,  NULL, 0x08 },
+	{ "SlowDeathScale",         INI::parseReal, NULL, 0x0c },
+	{ "MaximumAmbientStreams",  INI::parseInt,  NULL, 0x00 },
+	{ "AllowDolby",             INI::parseBool, NULL, 0x04 },
+	{ "AllowReverb",            INI::parseBool, NULL, 0x05 },
 	{ 0, 0, 0, 0 }
 };
 
@@ -678,14 +689,8 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 // GameLODManager with a 16-byte stride: retail computes the element address as
 // (index + 0x12) << 4 added to TheGameLODManager, which is index*16 + 0x120.
 // Offsets in the table are the ones retail's own table at 0x01076890 carries.
-static const FieldParse TheBFMEDynamicGameLODFieldParseTable[] =
-{
-	{ "MinimumFPS",			INI::parseInt,	NULL,	0x00 },
-	{ "ParticleSkipMask",	INI::parseInt,	NULL,	0x04 },
-	{ "DebrisSkipMask",		INI::parseInt,	NULL,	0x08 },
-	{ "SlowDeathScale",		INI::parseReal,	NULL,	0x0c },
-	{ 0, 0, 0, 0 }
-};
+static const FieldParse *const TheBFMEDynamicGameLODFieldParseTable =
+	TheBFMEStaticGameLODFieldParseTable + 19;
 
 void INI::parseDynamicGameLODDefinition( INI* ini )
 {
@@ -832,13 +837,8 @@ Bool GameLODManager::didMemPass( void )
 //
 // Unlike the static and dynamic variants, an unknown level name is fatal here
 // rather than silently ignored.
-static const FieldParse TheBFMEAudioLODFieldParseTable[] =
-{
-	{ "MaximumAmbientStreams",	INI::parseInt,	NULL,	0x00 },
-	{ "AllowDolby",				INI::parseBool,	NULL,	0x04 },
-	{ "AllowReverb",			INI::parseBool,	NULL,	0x05 },
-	{ 0, 0, 0, 0 }
-};
+static const FieldParse *const TheBFMEAudioLODFieldParseTable =
+	TheBFMEStaticGameLODFieldParseTable + 23;
 
 /*static*/ void INI::parseAudioLODDefinition( INI* ini )
 {
