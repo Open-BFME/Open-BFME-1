@@ -269,62 +269,7 @@ NetPacketList NetPacket::ConstructBigCommandPacketList(NetCommandRef *ref) {
 // GetBufferSizeNeededForCommand is defined in NetPacket_GetBufferSizeNeededForCommand.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_GetBufferSizeNeededForCommand.cpp
-// ?GetGameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
-UnsignedInt NetPacket::GetGameCommandSize(NetCommandMsg *msg) {
-	NetGameCommandMsg *cmdMsg = (NetGameCommandMsg *)msg;
-
-	UnsignedShort msglen = 0;
-	msglen += sizeof(UnsignedInt) + sizeof(UnsignedByte); // frame number
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // player ID
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // relay
-	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte); // command type
-	msglen += sizeof(UnsignedShort) + sizeof(UnsignedByte); // command ID
-	msglen += sizeof(UnsignedByte); // the 'D' for the data section.
-
-	GameMessage *gmsg = cmdMsg->constructGameMessage();
-	GameMessageParser *parser = newInstance(GameMessageParser)(gmsg);
-
-	msglen += sizeof(GameMessage::Type);
-	msglen += sizeof(UnsignedByte);
-//	Int numTypes = parser->getNumTypes();
-	GameMessageParserArgumentType *arg = parser->getFirstArgumentType();
-	while (arg != NULL) {
-		msglen += 2 * sizeof(UnsignedByte); // for the type and number of args of that type declaration.
-		GameMessageArgumentDataType type = arg->getType();
-		if (type == ARGUMENTDATATYPE_INTEGER) {
-			msglen += arg->getArgCount() * sizeof(Int);
-		} else if (type == ARGUMENTDATATYPE_REAL) {
-			msglen += arg->getArgCount() * sizeof(Real);
-		} else if (type == ARGUMENTDATATYPE_BOOLEAN) {
-			msglen += arg->getArgCount() * sizeof(Bool);
-		} else if (type == ARGUMENTDATATYPE_OBJECTID) {
-			msglen += arg->getArgCount() * sizeof(ObjectID);
-		} else if (type == ARGUMENTDATATYPE_DRAWABLEID) {
-			msglen += arg->getArgCount() * sizeof(DrawableID);
-		} else if (type == ARGUMENTDATATYPE_TEAMID) {
-			msglen += arg->getArgCount() * sizeof(UnsignedInt);
-		} else if (type == ARGUMENTDATATYPE_LOCATION) {
-			msglen += arg->getArgCount() * sizeof(Coord3D);
-		} else if (type == ARGUMENTDATATYPE_PIXEL) {
-			msglen += arg->getArgCount() * sizeof(ICoord2D);
-		} else if (type == ARGUMENTDATATYPE_PIXELREGION) {
-			msglen += arg->getArgCount() * sizeof(IRegion2D);
-		} else if (type == ARGUMENTDATATYPE_TIMESTAMP) {
-			msglen += arg->getArgCount() * sizeof(UnsignedInt);
-		} else if (type == ARGUMENTDATATYPE_WIDECHAR) {
-			msglen += arg->getArgCount() * sizeof(WideChar);
-		}
-		arg = arg->getNext();
-	}
-
-	parser->deleteInstance();
-	parser = NULL;
-
-	gmsg->deleteInstance();
-	gmsg = NULL;
-
-	return msglen;
-}
+// GetGameCommandSize is defined in NetPacket_GetBufferSizeNeededForCommand.cpp.
 
 // ?GetAckCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetAckCommandSize(NetCommandMsg *msg) {
