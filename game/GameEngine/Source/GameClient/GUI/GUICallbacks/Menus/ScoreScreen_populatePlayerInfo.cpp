@@ -14,6 +14,8 @@
 #include "Lib/BaseType.h"
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
+struct FieldParse;
+#include "Common/GameLOD.h"
 #define PSRequest Rva004E5DF0ReferencePSRequest
 #define PSResponse Rva004E5DF0ReferencePSResponse
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
@@ -212,7 +214,6 @@ public:
     GameSpyMiscPreferences(); virtual ~GameSpyMiscPreferences();
     void setCachedStats(AsciiString);
 };
-class OptionPreferences {public: Int getIdealStaticGameDetail();};
 
 extern GameWindow* Rva012F415C;
 extern Bool Rva012F4180;
@@ -222,7 +223,6 @@ extern GameInfo* TheGameInfo;
 extern GameSpyStagingRoom* TheGameSpyGame;
 extern GameLogic* TheGameLogic;
 extern PlayerTemplateStore* ThePlayerTemplateStore;
-extern OptionPreferences* Rva012ED5AC;
 void GadgetStaticTextSetText(GameWindow*,UnicodeString);
 void updateChallengeMedals(Int&);
 static void updateMPBattleHonors(Int&,PSPlayerStats&);
@@ -1119,7 +1119,7 @@ void populatePlayerInfo( Player *player, Int pos)
 					statsView.surrenders[ptIdx] += TheGameInfo->haveWeSurrendered()  || !localVictoryConditions()->getEndFrame();
 
 					AsciiString systemSpec;
-					systemSpec.format("LOD%d", Rva012ED5AC->getIdealStaticGameDetail());
+					systemSpec.format("LOD%d", TheGameLODManager->findStaticLODLevel());
 					const char *spec = systemSpec.str();
                     const char *endSpec = spec + strlen(spec);
                     statsView.systemSpec.assign(spec, endSpec);

@@ -1,0 +1,9 @@
+# 0007E0F0: GameLODManager::findStaticLODLevel
+
+The EA Zero Hour twin is `Common/GameLOD.cpp:445`, `GameLODManager::findStaticLODLevel`: cached ideal-detail guard, seven-pointer hardware probe, descending presets with .94 CPU/RAM thresholds, then IdealStaticGameLOD/StaticGameLOD preference writes. BFME adds resolution persistence, FixedStaticGameLOD, and Windows-2000 downgrade. This proves the method; an OptionPreferences getter cannot explain the receiver fields through +171C or construction of a distinct OptionPreferences local.
+
+The complete raw retail decode is 948 bytes, ending RET at RVA0007E4A3; the old 942-byte lift ends inside the common epilogue. No separate function exists in the final six bytes. The ILT0002DE02 reaches this body. Before this change, the matched ScoreScreen_populatePlayerInfo.cpp caller used the old wrong OptionPreferences alias, so it was NOT independent named-caller evidence; the EA twin is the naming evidence. The caller now includes canonical GameLOD.h and uses TheGameLODManager->findStaticLODLevel; its full7040B body and all109 DIR32 references still verify.
+
+Native GameLODManager, UserPreferences/PreferenceMap and AsciiString/StringBase headers are included. Address-qualified views express BFME-only offsets without replacing canonical types. Native preference map is map<AsciiString,AsciiString>, not the prior bank's fake MapMetaData value. Its existing ILT3E6DA contract takes one const-key reference, returns a four-byte string lvalue and pops four bytes. Hardware probe routes1391C->718DA0->41E7A->717880 and accepts seven nullable output pointers; its return is unused.
+
+The source uses no new callee pins. Strict build verification passes the full948B parent, five literals, two float constants and five DIR32 references. The complete7040B caller passes separately (21 literals,21 empty strings,two float constants,109 DIR32 references). No pin or shared header was changed. The parent is not the stale942B extent.
