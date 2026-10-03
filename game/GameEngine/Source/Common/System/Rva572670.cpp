@@ -24,11 +24,33 @@ public:
 	int m_d;
 };
 
-void rva571c40(Rva572670Record *first, int zero, int count, Rva572670Record value, int extra);
+struct BfmeScoreObject;
+class Player;
+struct BfmeScoreEntry
+{
+	BfmeScoreObject *m_object;
+	Player *m_player;
+	int m_secondary;
+	int m_primary;
+};
+struct BfmeScoreEntryLess
+{
+	bool operator()(const BfmeScoreEntry *left,
+		const BfmeScoreEntry *right) const;
+};
+
+namespace _STL
+{
+	template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+	void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
+		Distance len, Tp value, Compare comp);
+}
 
 void rva572670(Rva572670Record *first, Rva572670Record *last, Rva572670Record *result,
 	Rva572670Record value, int extra)
 {
 	*result = *first;
-	rva571c40(first, 0, last - first, value, extra);
+	_STL::__adjust_heap<BfmeScoreEntry *, int, BfmeScoreEntry,
+		BfmeScoreEntryLess>((BfmeScoreEntry *)first, 0, (int)(last - first),
+			*(BfmeScoreEntry *)&value, *(BfmeScoreEntryLess *)&extra);
 }

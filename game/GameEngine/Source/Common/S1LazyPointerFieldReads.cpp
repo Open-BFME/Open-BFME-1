@@ -31,7 +31,8 @@ public:
 	int m_field;
 };
 
-Gen00001B18 *Make00001B18();
+class ParticleSystemZA;
+ParticleSystemZA *bfmeNullSystemZA();
 
 #define BFME_LAZY_FIELD_READ( NAME )                                      \
 	class NAME                                                            \
@@ -46,7 +47,7 @@ Gen00001B18 *Make00001B18();
 		Gen00001B18 *target = m_target;                                   \
 		if ( !target )                                                    \
 		{                                                                 \
-			target = Make00001B18();                                      \
+			target = (Gen00001B18 *)bfmeNullSystemZA();                    \
 		}                                                                 \
 		return target->m_field;                                           \
 	}
@@ -72,7 +73,7 @@ Gen00001B18 *Rva0020E1F0::get()
 	Gen00001B18 *target = m_target;
 	if ( !target )
 	{
-		return Make00001B18();
+		return (Gen00001B18 *)bfmeNullSystemZA();
 	}
 	return target;
 }
