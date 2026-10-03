@@ -1,5 +1,5 @@
 // ?bfmeRunEQT@BfmeObjEQT@@QAEDPAX@Z
-// partial score=0.4811 date=2026-09-27
+// partial score=0.5758 date=2026-10-03
 struct Coord3D
 {
 	float x;
@@ -154,7 +154,7 @@ char BfmeObjEQT::bfmeRunEQT(void *arg)
 		if (nextOverride != 0)
 			ownerTemplate = (Overridable *)nextOverride->getFinalOverride();
 	}
-	if (*(const signed char *)((const unsigned char *)ownerTemplate + 0xC8) < 0)
+	if ((*(const unsigned char *)((const unsigned char *)ownerTemplate + 0xC8) & 0x80) != 0)
 		goto skipGeometryHeight;
 	origin.z += ((GeometryInfo *)((unsigned char *)owner + 0xAC))->getMaxHeightAbovePosition();
 	victimPos.z += ((GeometryInfo *)((unsigned char *)object + 0xAC))->getMaxHeightAbovePosition();
@@ -167,7 +167,7 @@ skipGeometryHeight:
 	AI *ai = TheAI;
 	Pathfinder *pathfinder = ai != 0 ? *(Pathfinder **)((unsigned char *)ai + 0x0C) : 0;
 	if (pathfinder != 0 &&
-		pathfinder->isAttackViewBlockedByObstacle((const Object *)owner, (const Object *)object))
+		pathfinder->isAttackViewBlockedByObstacle((const Object *)m_bfmeOwnerEQT, (const Object *)object))
 		return 0;
 
 	return 1;
