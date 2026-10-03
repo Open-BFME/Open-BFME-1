@@ -12,7 +12,8 @@ void lua_settop(lua_State *state, int index);
 void lua_error(lua_State *state, const char *message);
 }
 
-extern void bfmeLogMsg574(const char *message);
+// Retail's 0x3EBAD logger thunk is defined under its address-derived ILT name.
+extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 
 extern "C" int luaB_print(lua_State *state)
 {
@@ -30,10 +31,10 @@ extern "C" int luaB_print(lua_State *state)
         if (text == 0)
             lua_error(state, "`tostring' must return a string to `print'");
         if (index > 1)
-            bfmeLogMsg574("\t");
-        bfmeLogMsg574(text);
+            __identifier("?j_0003ebad@@YAXXZ")( "\t" );
+        __identifier("?j_0003ebad@@YAXXZ")( text );
         lua_settop(state, -2);
     }
-    bfmeLogMsg574("\n");
+    __identifier("?j_0003ebad@@YAXXZ")( "\n" );
     return 0;
 }

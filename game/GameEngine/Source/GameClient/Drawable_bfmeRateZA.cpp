@@ -4,6 +4,15 @@ struct BfmeReqZA
 	int m_bfme0CZA;
 };
 
+// The locomotor ILT resolves to this already-matched chain walker.
+class Overridable
+{
+public:
+	void *m_vtable;
+	Overridable *m_nextOverride;
+	const Overridable *getFinalOverride() const;
+};
+
 // Retail mangles KindOfType unsigned (W4KindOfType); VC7.1 picks the signed
 // underlying type only when an enumerator is negative.
 enum KindOfType
@@ -19,8 +28,6 @@ enum KindOfType
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
-
 	unsigned char m_bfmeHeadZA[4];
 	LocomotorOverridable *m_bfme04ZA;
 	unsigned char m_bfmeMidZA[0xc4];
@@ -47,7 +54,9 @@ static __forceinline LocomotorOverridable *bfmeFinalZA(LocomotorOverridable *p)
 	if (p->m_bfme04ZA == 0)
 		return p;
 
-	return p->m_bfme04ZA->friend_getFinalOverride();
+	const Overridable *finalOverride =
+		((const Overridable *)p->m_bfme04ZA)->getFinalOverride();
+	return (LocomotorOverridable *)finalOverride;
 }
 
 class Drawable

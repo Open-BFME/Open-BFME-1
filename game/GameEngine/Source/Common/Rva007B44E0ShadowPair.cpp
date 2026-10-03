@@ -13,8 +13,6 @@ extern "C" void *__identifier("??_7Rva007B0400Owner@@6B@")[];
 class BfmeB1050
 {
 public:
-	void bfmeBase1050(void);
-
 	void *m_bfmeVfptr;
 	char m_bfmePad[0x54];
 	int m_bfme58;
@@ -22,6 +20,16 @@ public:
 	float m_bfme60;
 	char m_bfme64;
 	char m_bfmeTail[0x0C];
+};
+
+// The 0xAF38 initializer thunk has only its address-derived ledger name. Use a
+// single-inheritance member-call view so the call keeps its receiver in ECX.
+extern "C" void __identifier("?j_0000af38@@YAXXZ")();
+typedef void (BfmeB1050::*Rva0000AF38Call)();
+union Rva0000AF38CallAddress
+{
+	void *raw;
+	Rva0000AF38Call member;
 };
 
 class BfmeB1050ReleaseInterface
@@ -54,7 +62,9 @@ Bool BfmeB1159::initialize(void)
 	if (resource != 0)
 	{
 		BfmeB1050 *initialized = resource;
-		initialized->bfmeBase1050();
+		Rva0000AF38CallAddress initialize;
+		initialize.raw = (void *)&__identifier("?j_0000af38@@YAXXZ");
+		(initialized->*initialize.member)();
 		initialized->m_bfme58 = 0;
 		initialized->m_bfme5c = 0;
 		initialized->m_bfme60 = 20.0f;
@@ -76,7 +86,9 @@ Bool BfmeB1159::initialize(void)
 	if (resource != 0)
 	{
 		BfmeB1050 *initialized = resource;
-		initialized->bfmeBase1050();
+		Rva0000AF38CallAddress initialize;
+		initialize.raw = (void *)&__identifier("?j_0000af38@@YAXXZ");
+		(initialized->*initialize.member)();
 		initialized->m_bfme58 = 0;
 		initialized->m_bfme5c = 0;
 		initialized->m_bfme60 = 20.0f;

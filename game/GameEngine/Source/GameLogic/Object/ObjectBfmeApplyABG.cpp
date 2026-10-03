@@ -60,15 +60,11 @@ public:
 
 extern ControlBar *TheControlBar;
 
-class BfmeObjectDoCommandButton
+class Object
 {
 public:
 	void doCommandButton(const CommandButton *button, Int source, Int extra);
-};
 
-class Object : public BfmeObjectDoCommandButton
-{
-public:
 	void *m_vtable;
 	Overridable *m_template;
 	unsigned char m_unmodelled_008[0x328 - 0x08];
@@ -127,7 +123,7 @@ void BfmeK1094::bfmeApplyABG(void *a, void *b)
 				}
 				else
 				{
-					((BfmeObjectDoCommandButton *)this)->doCommandButton(button, source, 0);
+					((Object *)this)->doCommandButton(button, source, 0);
 					return;
 				}
 			}

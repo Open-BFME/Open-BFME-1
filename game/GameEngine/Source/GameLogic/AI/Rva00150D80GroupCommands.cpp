@@ -13,7 +13,17 @@
 class BfmeItemRY
 {
 public:
-    void bfmeDoRY(void *, void *);
+};
+
+// The opaque ILT is the only ledger definition at 0x0002852E. Call its exact
+// symbol through a thiscall view so ECX and the two stack arguments retain the
+// member-call ABI without inventing a named callee.
+extern "C" void __identifier("?j_0002852e@@YAXXZ")();
+typedef void (BfmeItemRY::*Rva0002852ECall)(void *, void *);
+union Rva0002852ECallAddress
+{
+    void *raw;
+    Rva0002852ECall member;
 };
 
 struct GroupNode150D80
@@ -42,20 +52,40 @@ void Rva00150D80Group::dispatch(void *, int message, void *source)
         switch (message)
         {
         case 0x437:
-            object->bfmeDoRY((void *)0x6b, source);
+        {
+            Rva0002852ECallAddress call;
+            call.raw = (void *)&__identifier("?j_0002852e@@YAXXZ");
+            (object->*call.member)((void *)0x6b, source);
             break;
+        }
         case 0x44b:
-            object->bfmeDoRY((void *)0xae, source);
+        {
+            Rva0002852ECallAddress call;
+            call.raw = (void *)&__identifier("?j_0002852e@@YAXXZ");
+            (object->*call.member)((void *)0xae, source);
             break;
+        }
         case 0x44c:
-            object->bfmeDoRY((void *)0xaf, source);
+        {
+            Rva0002852ECallAddress call;
+            call.raw = (void *)&__identifier("?j_0002852e@@YAXXZ");
+            (object->*call.member)((void *)0xaf, source);
             break;
+        }
         case 0x44d:
-            object->bfmeDoRY((void *)0xb0, source);
+        {
+            Rva0002852ECallAddress call;
+            call.raw = (void *)&__identifier("?j_0002852e@@YAXXZ");
+            (object->*call.member)((void *)0xb0, source);
             break;
+        }
         case 0x44e:
-            object->bfmeDoRY((void *)0xb1, source);
+        {
+            Rva0002852ECallAddress call;
+            call.raw = (void *)&__identifier("?j_0002852e@@YAXXZ");
+            (object->*call.member)((void *)0xb1, source);
             break;
+        }
         }
     }
 }

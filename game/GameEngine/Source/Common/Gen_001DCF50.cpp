@@ -95,7 +95,6 @@ public:
 };
 
 #define OBJECT_TU_MEMBERS \
-	bool bfmeCheckC80F0(); \
 	bool isNonFactionStructure() const;
 #include "../GameLogic/Object/object.h"
 
@@ -110,6 +109,17 @@ class BFMEActionManager
 {
 public:
 	bool canEnterObject(const Object *obj, const Object *objectToEnter, CommandSourceType commandSource, CanEnterType mode, bool *out);
+};
+
+// The ledger defines this ILT only under its address-derived thunk name. Keep
+// the original thiscall ABI while referring to that exact linker symbol.
+extern "C" void __identifier("?j_0004039a@@YAXXZ")();
+class Rva0004039ACallReceiver {};
+typedef bool (Rva0004039ACallReceiver::*Rva0004039ACall)();
+union Rva0004039ACallAddress
+{
+	void *raw;
+	Rva0004039ACall member;
 };
 
 // Retail: 0x012ED700 is EA's ActionManager *TheActionManager (see
@@ -142,7 +152,9 @@ private:
 unsigned char Gen_001DCF50::canEnter(Object *target)
 {
 	Object *obj = target;
-	if (obj->bfmeCheckC80F0())
+	Rva0004039ACallAddress check;
+	check.raw = (void *)&__identifier("?j_0004039a@@YAXXZ");
+	if ((reinterpret_cast<Rva0004039ACallReceiver *>(obj)->*check.member)())
 	{
 		if (obj->isNonFactionStructure())
 		{
