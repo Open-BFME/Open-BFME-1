@@ -3,8 +3,10 @@
 extern "C" double __cdecl sin(double a);
 
 extern const float g_rva01075350;
-extern const float g_bfmeK1267A;
-extern const float g_bfmeK1267B;
+// Both K constants load the one shared readonly float at retail 0x0107533C
+// (00 00 00 3F, 0.5f), defined once by
+// game/Libraries/Source/EA/Apt/aptMathRound.cpp as g_rva0107533C.
+extern const float g_rva0107533C;
 
 struct BfmeVec1267
 {
@@ -54,7 +56,11 @@ BfmeVec1267 *BfmeA1267::bfmeGet1267()
 	r->m_bfme04 = m_bfme28.m_bfme04;
 	r->m_bfme08 = m_bfme28.m_bfme08;
 
-	s = (float)sin((float)bfmeG1267()->m_bfme3c * m_bfme40) * *(volatile float *)&m_bfme3c * g_bfmeK1267A + g_bfmeK1267B;
+	// Split in two statements: retail emits FMUL [0x0107533C] then FADD
+	// [0x0107533C]. With both operands spelled as one global in a single
+	// expression, MSVC 7.1 reassociates and emits the FADD first.
+	s = (float)sin((float)bfmeG1267()->m_bfme3c * m_bfme40) * *(volatile float *)&m_bfme3c * g_rva0107533C;
+	s = s + g_rva0107533C;
 	r->m_bfme00 = r->m_bfme00 * s;
 	m_bfme44.m_bfme04 = m_bfme44.m_bfme04 * s;
 	m_bfme44.m_bfme08 = m_bfme44.m_bfme08 * s;

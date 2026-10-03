@@ -1,12 +1,17 @@
-extern "C" unsigned char bfmeVftTL[];
+// retail 0x0112FBDC is STLport's stdio_streambuf_base vtable, emitted as a
+// COMDAT by game/stlport/StdioIstreambufDestructor.cpp (namespace _SgI).
+extern "C" const char __identifier("??_7stdio_streambuf_base@_SgI@@6B@")[];
 extern "C" unsigned char bfmeVftBasicStreambufChar[];
 #pragma comment(linker, "/alternatename:_bfmeVftBasicStreambufChar=??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@")
 
-class BfmeLocaleShim
-{
-public:
-	static void bfmeLocaleCtor(void);
-};
+// retail 0x00832120 is _STL::locale::locale(), matched in
+// game/Libraries/Source/WWVegas/WWLib/stlport_locale_default_ctor.cpp. That
+// ctor is __thiscall: it takes its construction address in ecx and has no
+// other argument. The inline asm below already loads this+0x4C into ecx, and a
+// __cdecl call sequence never touches ecx, so declaring the real mangled name
+// cdecl enters the ctor with exactly the ecx retail passes and emits no second
+// LEA (a placement new would add one, plus the SEH frame it needs).
+extern "C" void __identifier("??0locale@_STL@@QAE@XZ")(void);
 
 struct BfmeListNodeTL
 {
@@ -31,7 +36,7 @@ public:
 	void * volatile m_bfmeBaseFlag;
 	BfmeListTL m_bfmeList0;
 	BfmeListTL m_bfmeList1;
-	unsigned char m_bfmeLocale[4];
+	unsigned char m_bfmeLocale[4];			// +0x4C
 	volatile unsigned int m_bfmeZero;
 	void *m_bfmeWhat;
 };
@@ -48,7 +53,7 @@ __declspec(noinline) BfmeThingTL *BfmeThingTL::bfmeBaseTL(void *what, int flag)
 	void *resolvedBaseFlag = baseFlag != 0 ? baseFlag : &m_bfmeList1.m_head;
 	__asm { lea ecx, [esi+0x4c] }
 	m_bfmeBaseFlag = resolvedBaseFlag;
-	BfmeLocaleShim::bfmeLocaleCtor();
+	__identifier("??0locale@_STL@@QAE@XZ")();
 	BfmeListNodeTL *baseWhatNode =
 		(m_bfmeZero = 0, m_bfmeZero = 0,
 		 static_cast<BfmeListNodeTL *>(m_bfmeBaseWhat));
@@ -73,6 +78,6 @@ BfmeThingTL *BfmeThingTL::bfmeInitTL(void *what)
 {
 	bfmeBaseTL(what, 0);
 	m_bfmeWhat = what;
-	m_bfmeVft = bfmeVftTL;
+	m_bfmeVft = (void *)__identifier("??_7stdio_streambuf_base@_SgI@@6B@");
 	return this;
 }
