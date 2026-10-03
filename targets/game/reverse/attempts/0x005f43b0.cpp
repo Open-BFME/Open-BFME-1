@@ -1,5 +1,5 @@
 // ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
-// partial score=0.9811 date=2026-09-28
+// partial score=0.9869 date=2026-10-03
 // ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
 // partial score=0.981 date=2026-09-28 (42 nonreloc diffs by probe; along = end[-1]-positions[0])
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System /Iinputs/reference/shims/sweep
@@ -11,9 +11,8 @@
 #include "game_client_random_variable.h"
 
 // Candidate symbol: ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
-// Not landed: 2220-byte compiled body; 50 masked differing bytes; shape 0.967.
-// Residue: x87 memory-operand order in both cross products and the first
-// offset term (+0x2A0..+0x31F, +0x3C3..+0x3DA). No inline assembly.
+// Restored stronger history candidate: chained X offset sum matches retail.
+// Remaining residue: four x87 cross-product operand orders. No inline assembly.
 // Intended home: game/GameEngine/Source/GameClient/System/FXParticleSystem/.
 // Retail 005F43B0: LightningDrawModule primary vtable 01112FD0 slot +10,
 // installed by the verified ctor 005F4E90. The method spelling is unproven.
@@ -156,7 +155,10 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
                         float a=field1c.getValue();
                         float b=field28.getValue();
                         float c=field34.getValue();
-                        offset[k].X = a*field8c8.X+b*field8d4.X+c*field8bc.X;
+                        float sumX = b*field8d4.X;
+                        sumX = sumX + c*field8bc.X;
+                        sumX = sumX + a*field8c8.X;
+                        offset[k].X = sumX;
                         offset[k].Y = a*field8c8.Y+b*field8d4.Y+c*field8bc.Y;
                         offset[k].Z = a*field8c8.Z+b*field8d4.Z+c*field8bc.Z;
                         Vector3::Add(positions[k],offset[k],&out[k]);
