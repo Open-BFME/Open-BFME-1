@@ -15,7 +15,9 @@
 // and the stride (0x24 vs the twin's 0x74) follow directly from sizeof
 // BfmeThingFT.
 
-#include <new.h>
+// Standard <new> declares array placement new/delete; legacy new.h only
+// supplies scalar placement overloads under MSVC extensions.
+#include <new>
 
 extern void *__cdecl operator new[](size_t size);
 extern void __cdecl operator delete[](void *p);
@@ -67,19 +69,6 @@ protected:
 	bool VectorClassPad[2];
 };
 
-VectorClassBfmeThingFT::VectorClassBfmeThingFT(int size, BfmeThingFT const *array) :
-	Vector(0), VectorMax(size), IsValid(true), IsAllocated(false)
-{
-	if (size) {
-		if (array) {
-			Vector = new ((void *)array) BfmeThingFT[size];
-		} else {
-			Vector = new BfmeThingFT[size];
-			IsAllocated = true;
-		}
-	}
-}
-
 // ?Resize@VectorClassBfmeThingFT@@UAE_NHPBVBfmeThingFT@@@Z
 bool VectorClassBfmeThingFT::Resize(int newsize, BfmeThingFT const *array)
 {
@@ -119,12 +108,4 @@ bool VectorClassBfmeThingFT::Resize(int newsize, BfmeThingFT const *array)
 		Clear();
 	}
 	return (true);
-}
-
-// Force emission of the Resize instantiation even though nothing else in
-// this isolated TU calls it.
-void rva0093e1f0ForceEmit()
-{
-	VectorClassBfmeThingFT v;
-	v.Resize(1);
 }

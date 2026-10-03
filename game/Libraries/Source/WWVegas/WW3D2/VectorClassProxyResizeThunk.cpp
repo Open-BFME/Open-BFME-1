@@ -28,7 +28,9 @@
 // IsValid/IsAllocated at this+0x0C/0x0D -- the standard VectorClass layout
 // from WWLib's vector.h, unchanged here.
 
-#include <new.h>
+// Standard <new> declares array placement new/delete; legacy new.h only
+// supplies scalar placement overloads under MSVC extensions.
+#include <new>
 
 // Declaring operator new[]/delete[] in this TU is required: MSVC 7.1 folds
 // `new T[n]` / `delete[]` for a T that only ever needs scalar `operator new`
