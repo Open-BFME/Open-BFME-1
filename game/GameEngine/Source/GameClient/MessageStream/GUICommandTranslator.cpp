@@ -144,6 +144,24 @@ public:
 #undef BFME_MESSAGE_SLOT
 };
 
+// Retail's three ObjectID appends call the GameMessage::appendObjectIDArgument ILT
+// at 0x0002BCEC (-> body 0x0008ABB0), which no ledger row defines under the
+// ObjectID-typed name; reach it the way retail does, through the ILT.
+extern void j_0002bcec();
+
+class GameMessageObjectIDIlt
+{
+public:
+	void append(ObjectID id);
+};
+
+static void appendObjectIDArgumentViaILT(GameMessage *msg, ObjectID id)
+{
+	typedef void (GameMessageObjectIDIlt::*AppendCall)(ObjectID);
+	union { void (*fn)(); AppendCall call; } append = { j_0002bcec };
+	(reinterpret_cast<GameMessageObjectIDIlt *>(msg)->*append.call)(id);
+}
+
 static CommandStatus doFireWeaponCommand(const CommandButton *command, const ICoord2D *mouse)
 {
 	if (command == NULL || mouse == NULL)
@@ -168,7 +186,7 @@ static CommandStatus doFireWeaponCommand(const CommandButton *command, const ICo
 		msg->appendIntegerArgument(fireCommand->getMaxShotsToFire());
 		Object *target = validUnderCursor(mouse, command, PICK_TYPE_SELECTABLE);
 		ObjectID targetID = target ? target->getID() : INVALID_ID;
-		msg->appendObjectIDArgument(targetID);
+		appendObjectIDArgumentViaILT(msg, targetID);
 	} else if (options & 7) {
 		PickType pickType = PICK_TYPE_SELECTABLE;
 		if (options & 0x10)
@@ -180,7 +198,7 @@ static CommandStatus doFireWeaponCommand(const CommandButton *command, const ICo
 		if (target) {
 			GameMessage *msg = reinterpret_cast<FireWeaponMessageStreamShim *>(TheMessageStream)->appendMessage((GameMessage::Type)0x40E);
 			msg->appendIntegerArgument(fireCommand->getWeaponSlot());
-			msg->appendObjectIDArgument(target->getID());
+			appendObjectIDArgumentViaILT(msg, target->getID());
 			msg->appendIntegerArgument(fireCommand->getMaxShotsToFire());
 		}
 	} else {
