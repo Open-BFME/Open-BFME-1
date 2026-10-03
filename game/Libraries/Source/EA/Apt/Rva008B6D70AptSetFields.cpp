@@ -14,7 +14,8 @@ struct Rva008B6D70Obj {
 	void* m_context;
 	void refresh(void* rect, void* extra, void* context);
 };
-AptValue* __cdecl Rva008B6D70MakeValue(int value);
+// Each retail tail calls the existing cdecl integer factory at RVA 0x008A11E0.
+class AptInteger { public: static AptInteger *Create(int value); };
 
 AptValue* aptSetField008B6D70(Rva008B6D70Obj* self, int argc)
 {
@@ -22,7 +23,7 @@ AptValue* aptSetField008B6D70(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x30) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
 
 // ?aptSetField008B6E50@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z
@@ -32,7 +33,7 @@ AptValue* aptSetField008B6E50(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x28) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
 
 // ?aptSetField008B6EA0@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z
@@ -42,7 +43,7 @@ AptValue* aptSetField008B6EA0(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x3C) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
 
 // ?aptSetField008B6EF0@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z
@@ -52,7 +53,7 @@ AptValue* aptSetField008B6EF0(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x24) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
 
 // ?aptSetField008B6F40@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z
@@ -62,7 +63,7 @@ AptValue* aptSetField008B6F40(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x34) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
 
 // ?aptSetField008B7260@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z
@@ -72,5 +73,5 @@ AptValue* aptSetField008B7260(Rva008B6D70Obj* self, int argc)
 		return g_bfmeFallbackDB;
 	*(int*)((char*)self + 0x38) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refresh(self->m_rect, self->m_extra, self->m_context);
-	return Rva008B6D70MakeValue(0);
+	return reinterpret_cast<AptValue *>(AptInteger::Create(0));
 }
