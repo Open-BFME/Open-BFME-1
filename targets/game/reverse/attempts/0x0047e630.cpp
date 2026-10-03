@@ -1,5 +1,5 @@
 // ?winProcessMouseEvent@GameWindowManager@@UAE?AW4WinInputReturnCode@@W4GameWindowMessage@@PAUICoord2D@@PAX@Z
-// partial score=0.9904 date=2026-09-28
+// partial score=0.9943 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // GameWindowManager::winProcessMouseEvent, retail 0x0047E630, 1569 bytes
@@ -363,8 +363,8 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent(GameWindowMessage msg
 						if (newRegion.lo.y < 0)
 							newRegion.lo.y = 0;
 
-						newRegion.hi.x = newRegion.lo.x + grabSize.x;
-						newRegion.hi.y = newRegion.lo.y + grabSize.y;
+						*(volatile int *)&newRegion.hi.x = newRegion.lo.x + grabSize.x;
+						*(volatile int *)&newRegion.hi.y = newRegion.lo.y + grabSize.y;
 
 						if (newRegion.hi.x > (Int)TheDisplay->getWidth())
 							newRegion.hi.x = (Int)TheDisplay->getWidth();
