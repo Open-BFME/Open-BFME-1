@@ -18,8 +18,8 @@ bool _bfme_debugReportingEnabled( void )
 	return g_rva00889690->m_reportingEnabled;
 }
 
-// ?d_00889690@@YAXXZ @ 0x00889690
-void d_00889690( void )
+// Keep this unclaimed helper TU-local to avoid colliding with the generated symbol.
+static void markReportingSomething( void )
 {
 	g_rva00889690->m_reportingSomething = true;
 }

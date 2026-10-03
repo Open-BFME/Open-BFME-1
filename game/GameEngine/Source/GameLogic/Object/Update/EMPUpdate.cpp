@@ -341,7 +341,8 @@ void EMPUpdate::doDisableAttack( void )
 
 							sys->attachToObject(curVictim);
 							sys->setPosition( &offs );
-							sys->setSystemLifetime(MAX(0, data->m_disabledDuration - 30));
+							// Keep the inline ParticleSys.h store here; its standalone TU owns the external symbol.
+							*(UnsignedInt *)((char *)sys + 0x1A0) = MAX(0, data->m_disabledDuration - 30);
 							sys->setInitialDelay(GameLogicRandomValue(1,100));
 						}
 					}
