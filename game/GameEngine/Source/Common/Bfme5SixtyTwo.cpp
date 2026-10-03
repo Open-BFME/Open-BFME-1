@@ -1,7 +1,7 @@
 // Four more: a masked table read, two three-dimensional distances, and a
 // float range comparison.
 
-extern int g_bfmeTableEJ[];					// retail 0x012AA068
+extern const char *g_bfmeRva012AA068[];					// retail 0x012AA068
 
 class Gen_000D3690
 {
@@ -16,7 +16,7 @@ private:
 int Gen_000D3690::bfmeLookup(unsigned int index) const
 {
 	if (m_bfmeWords[index >> 5] & (1 << (index & 31)))
-		return g_bfmeTableEJ[index];
+		return (int)g_bfmeRva012AA068[index];
 
 	return 0;
 }

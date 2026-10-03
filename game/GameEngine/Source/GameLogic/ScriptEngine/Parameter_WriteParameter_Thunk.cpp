@@ -24,7 +24,7 @@ extern "C" unsigned int __cdecl strlen(const char *);
 enum { COORD3D = 0x10, KIND_OF_PARAM = 0x1B };
 
 // 181 named bits; only the bound is proven, the contents are not read here.
-extern const char *TheKindOfBitNames[0xB5];				///< retail [0x012AA068]
+extern const char *g_bfmeRva012AA068[0xB5];				///< retail [0x012AA068]
 
 class KindOfMaskType
 {
@@ -33,9 +33,9 @@ public:
 	{
 		// the bound comes from the array's own size, so it is unsigned and the
 		// comparison is `jae` rather than `jge` -- a literal 0xB5 would be signed
-		if (bit < 0 || bit >= sizeof(TheKindOfBitNames)/sizeof(TheKindOfBitNames[0]))
+		if (bit < 0 || bit >= sizeof(g_bfmeRva012AA068)/sizeof(g_bfmeRva012AA068[0]))
 			return 0;
-		return TheKindOfBitNames[bit];
+		return g_bfmeRva012AA068[bit];
 	}
 };
 
