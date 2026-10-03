@@ -101,9 +101,9 @@ public:
  *  0x00796480+0x1f8 loads them the same way. An earlier note stated the
  *  opposite assignment; the disassembly above is the correct one. That
  *  convention only reproduces beside in-TU callers, which is why the two draw
- *  callbacks below restate Gadget/W3DRadioButton.cpp's definitions; they stay
- *  unclaimed near misses on their gen_asm rows (0x00796480, 0x00796710), the
- *  same arrangement W3DPushButton and W3DStaticText already use. */
+ *  callbacks below restate Gadget/W3DRadioButton.cpp's definitions. The color
+ *  callback at 0x00796480 is now verified; the image callback at 0x00796710
+ *  remains the pre-existing unclaimed companion. */
 //=============================================================================
 static void drawRadioButtonText( GameWindow *window, WinInstanceData *instData )
 {
@@ -164,6 +164,22 @@ static void drawRadioButtonText( GameWindow *window, WinInstanceData *instData )
 // W3DGadgetRadioButtonDraw ===================================================
 /** Draw colored check box using standard graphics */
 //=============================================================================
+// Keep the canonical coordinate layout, with a local construction boundary.
+// An empty default constructor preserves retail SIB and stack allocation.
+// Evidence: targets/game/reverse/identity_evidence/00796480-radio-draw.md.
+template <class Coord>
+struct DefaultConstructed00796480 : Coord
+{
+	DefaultConstructed00796480() {}
+};
+// Reuse WinInstanceData's m_text layout and the BFME virtual-slot view above.
+struct Rva00796480InstanceData : WinInstanceData
+{
+	Int getTextLength()
+	{
+		return m_text ? ((BFMEDisplayString *)m_text)->getTextLength() : 0;
+	}
+};
 void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 {
 	Int checkOffsetFromLeft;
@@ -171,7 +187,10 @@ void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 				backBorder,
 				boxColor,
 				boxBorder;
-	ICoord2D origin, size, start, end;
+	DefaultConstructed00796480<ICoord2D> origin, size, start, end;
+	// Only the inline color getters use this view: BFME's three draw arrays
+	// start four bytes later than the Zero Hour header used by this TU.
+	GameWindow *colorWindow = (GameWindow *)((char *)window + 4);
 
 	// get window position and size
 	window->winGetScreenPosition( &origin.x, &origin.y );
@@ -188,19 +207,19 @@ void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 	{
 
 		// disabled background
-		backColor			= GadgetRadioGetDisabledColor( window );
-		backBorder		= GadgetRadioGetDisabledBorderColor( window );
+		backColor			= GadgetRadioGetDisabledColor( colorWindow );
+		backBorder		= GadgetRadioGetDisabledBorderColor( colorWindow );
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
 		{
-				boxColor		= GadgetRadioGetDisabledCheckedBoxColor( window );
-				boxBorder		= GadgetRadioGetDisabledCheckedBoxBorderColor( window );
+				boxColor		= GadgetRadioGetDisabledCheckedBoxColor( colorWindow );
+				boxBorder		= GadgetRadioGetDisabledCheckedBoxBorderColor( colorWindow );
 		}
 		else
 		{
-				boxColor		= GadgetRadioGetDisabledUncheckedBoxColor( window );
-				boxBorder		= GadgetRadioGetDisabledUncheckedBoxBorderColor( window );
+				boxColor		= GadgetRadioGetDisabledUncheckedBoxColor( colorWindow );
+				boxBorder		= GadgetRadioGetDisabledUncheckedBoxBorderColor( colorWindow );
 		}
 
 	}  // end if
@@ -208,19 +227,19 @@ void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 	{
 
 		// hilited background 
-		backColor			= GadgetRadioGetHiliteColor( window );
-		backBorder		= GadgetRadioGetHiliteBorderColor( window );
+		backColor			= GadgetRadioGetHiliteColor( colorWindow );
+		backBorder		= GadgetRadioGetHiliteBorderColor( colorWindow );
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
 		{
-			boxColor		= GadgetRadioGetHiliteCheckedBoxColor( window );
-			boxBorder		= GadgetRadioGetHiliteCheckedBoxBorderColor( window );
+			boxColor		= GadgetRadioGetHiliteCheckedBoxColor( colorWindow );
+			boxBorder		= GadgetRadioGetHiliteCheckedBoxBorderColor( colorWindow );
 		}
 		else
 		{
-			boxColor		= GadgetRadioGetHiliteUncheckedBoxColor( window );
-			boxBorder		= GadgetRadioGetHiliteUncheckedBoxBorderColor( window );
+			boxColor		= GadgetRadioGetHiliteUncheckedBoxColor( colorWindow );
+			boxBorder		= GadgetRadioGetHiliteUncheckedBoxBorderColor( colorWindow );
 		}
 
 	}  // end else if
@@ -228,19 +247,19 @@ void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 	{
 
 		// enabled background 
-		backColor			= GadgetRadioGetEnabledColor( window );
-		backBorder		= GadgetRadioGetEnabledBorderColor( window );
+		backColor			= GadgetRadioGetEnabledColor( colorWindow );
+		backBorder		= GadgetRadioGetEnabledBorderColor( colorWindow );
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
 		{
-			boxColor		= GadgetRadioGetEnabledCheckedBoxColor( window );
-			boxBorder		= GadgetRadioGetEnabledCheckedBoxBorderColor( window );
+			boxColor		= GadgetRadioGetEnabledCheckedBoxColor( colorWindow );
+			boxBorder		= GadgetRadioGetEnabledCheckedBoxBorderColor( colorWindow );
 		}
 		else
 		{
-			boxColor		= GadgetRadioGetEnabledUncheckedBoxColor( window );
-			boxBorder		= GadgetRadioGetEnabledUncheckedBoxBorderColor( window );
+			boxColor		= GadgetRadioGetEnabledUncheckedBoxColor( colorWindow );
+			boxBorder		= GadgetRadioGetEnabledUncheckedBoxBorderColor( colorWindow );
 		}
 
 	}  // end else
@@ -295,7 +314,7 @@ void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 	TheWindowManager->winFillRect( boxColor, WIN_DRAW_LINE_WIDTH, 
 																 start.x, start.y, end.x, end.y );
 	// draw the button text
-	if( instData->getTextLength() )
+	if( ((Rva00796480InstanceData *)instData)->getTextLength() )
 		drawRadioButtonText( window, instData );
 
 	

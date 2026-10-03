@@ -1747,3 +1747,15 @@ signed key comparisons. Use an address-qualified comparator when the generic
 map pin names a different retail copy; prove the native accessor ABI before
 adding its binding. Local key scopes and scheduling flags had not helped.
 See `identity_evidence/002435f0-native-map.md` for the boundary and binding proof.
+
+### Empty coordinate construction changes SIB and stack allocation
+
+The seven-byte residue in the 519-byte radio-button draw at `00796480`
+vanishes when its two-integer local coordinate type has an empty default
+constructor. A copy constructor is unnecessary. Operand rewrites, native text
+helper substitution and thousands of older local/register variants did not
+help. A TU-local class derived from canonical `ICoord2D` preserves its layout
+and avoids a shared-header edit; this is a reconstruction choice, not evidence
+of an EA constructor identity. The same TU's BFME text-length slot must remain
+an inline member accessor: a free accessor drops a two-byte register move.
+See `identity_evidence/00796480-radio-draw.md`.
