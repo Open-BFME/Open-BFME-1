@@ -10,63 +10,53 @@
 typedef int Int;
 typedef bool Bool;
 
-// This is the BFME StringBase layout used by the already matched WWLib bodies.
-// Keeping the wrapper local makes the copy and release lifetimes explicit while
-// leaving the shared StringBase implementation and headers untouched.
-class BFMERetailAsciiString;
+// BFME's AsciiString supplies the real StringBase ownership and copy lifetime.
+// This view keeps only the raw fields used by the matched cursor loader local.
+#include "ascii_string.h"
 
-template <typename T>
-class StringBase
+struct Win32MouseStringBuffer
 {
-	friend class BFMERetailAsciiString;
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &source);
-	void releaseBuffer();
-	Header *m_data;
-
-public:
-	bool endsWithNoCase(const T *text, Int length) const;
-	void removeLastChar();
+	int ref_count;
+	unsigned short length;
+	unsigned short capacity;
+	char data[1];
 };
 
-class BFMERetailAsciiString : private StringBase<char>
+struct Win32MouseStringLayout
+{
+	Win32MouseStringBuffer *m_data;
+};
+
+class Win32MouseAsciiStringView : private AsciiString
 {
 public:
-	BFMERetailAsciiString() : StringBase<char>() {}
-	BFMERetailAsciiString(const BFMERetailAsciiString &source)
-		: StringBase<char>(source)
+	Win32MouseAsciiStringView() : AsciiString() {}
+	Win32MouseAsciiStringView(const Win32MouseAsciiStringView &source)
+		: AsciiString((const AsciiString &)source)
 	{
 	}
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	~Win32MouseAsciiStringView() {}
 
 	Bool isEmpty() const
 	{
-		return m_data == 0 || m_data->length == 0;
+		const Win32MouseStringLayout *layout = (const Win32MouseStringLayout *)this;
+		return layout->m_data == 0 || layout->m_data->length == 0;
 	}
 
 	const char *str() const
 	{
-		return m_data ? &m_data->data[0] : "";
+		const Win32MouseStringLayout *layout = (const Win32MouseStringLayout *)this;
+		return layout->m_data ? &layout->m_data->data[0] : "";
 	}
 
 	Bool endsWithNoCase(const char *text, Int length) const
 	{
-		return StringBase<char>::endsWithNoCase(text, length);
+		return ((const StringBase<char> &)(const AsciiString &)*this).endsWithNoCase(text, length);
 	}
 
 	void removeLastChar()
 	{
-		StringBase<char>::removeLastChar();
+		((StringBase<char> &)(AsciiString &)*this).removeLastChar();
 	}
 };
 
@@ -86,14 +76,14 @@ struct ICoord2D
 // this body; the intervening fields are retained to make those offsets real.
 struct CursorInfo
 {
-	BFMERetailAsciiString cursorName;
-	BFMERetailAsciiString cursorText;
+	Win32MouseAsciiStringView cursorName;
+	Win32MouseAsciiStringView cursorText;
 	RGBAColorInt cursorTextColor;
 	RGBAColorInt cursorTextDropColor;
-	BFMERetailAsciiString textureName;
-	BFMERetailAsciiString imageName;
-	BFMERetailAsciiString W3DModelName;
-	BFMERetailAsciiString W3DAnimName;
+	Win32MouseAsciiStringView textureName;
+	Win32MouseAsciiStringView imageName;
+	Win32MouseAsciiStringView W3DModelName;
+	Win32MouseAsciiStringView W3DAnimName;
 	float W3DScale;
 	Bool loop;
 	ICoord2D hotSpotPosition;
@@ -125,7 +115,7 @@ public:
 	virtual void slot07() = 0;
 	virtual void slot08() = 0;
 	virtual void slot09() = 0;
-	BFMERetailAsciiString m_name;
+	Win32MouseAsciiStringView m_name;
 	CursorInfo m_cursorInfo[NUM_MOUSE_CURSORS];
 };
 
@@ -149,7 +139,7 @@ void Win32Mouse::initCursorResources(void)
 			{
 				char resourcePath[256];
 				const char *extension = "ani";
-				BFMERetailAsciiString textureName(m_cursorInfo[cursor].textureName);
+				Win32MouseAsciiStringView textureName(m_cursorInfo[cursor].textureName);
 
 				if (textureName.endsWithNoCase(".cur", 4))
 				{
