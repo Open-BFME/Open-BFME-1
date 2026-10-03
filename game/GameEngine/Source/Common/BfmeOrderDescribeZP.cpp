@@ -5,36 +5,30 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-// Preserve the ledger's return-type spelling while the real AsciiString
-// supplies the StringBase<char> copy and release calls.
-class AsciiStringZP
-{
-public:
-	AsciiString m_bfmeNarrowZP;
-};
-
-// ILT 0x0002D204 reaches the matched NetCommandMsg description at
-// 0x006747C0. The qualified call below invokes that base implementation.
+// Retail ILT 0x0002D204 reaches the independently matched 298-byte
+// NetCommandMsg::getContentsAsAsciiString at 0x006747C0. The Zero Hour
+// header supplies an empty inline body instead, so this TU needs BFME's
+// declaration-only call view; no storage or vtable is emitted for it.
 class NetCommandMsg
 {
 public:
-	virtual AsciiString getContentsAsAsciiString();
+    virtual AsciiString getContentsAsAsciiString();
 };
 
 class BfmeOrderZP
 {
 public:
-	AsciiStringZP bfmeDescribeZP(void);
+	AsciiString bfmeDescribeZP(void);
 
 	char m_bfmePadZP[0x1c];
 	int m_bfmeLeavePlayerZP;
 };
 
-AsciiStringZP BfmeOrderZP::bfmeDescribeZP(void)
+AsciiString BfmeOrderZP::bfmeDescribeZP(void)
 {
-	AsciiStringZP text;
+	AsciiString text;
 
-	text.m_bfmeNarrowZP.format(AsciiString("%s, leavePlayer=%d"),
+	text.format(AsciiString("%s, leavePlayer=%d"),
 			((NetCommandMsg *)this)->NetCommandMsg::getContentsAsAsciiString().str(), m_bfmeLeavePlayerZP);
 
 	return text;
