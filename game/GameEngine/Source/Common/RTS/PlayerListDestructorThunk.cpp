@@ -17,7 +17,9 @@ private:
 class Snapshot
 {
 public:
-	~Snapshot() {}
+	// Retail export ??1Snapshot@@UAE@XZ (0x0005C520) is virtual.
+	// The 0x00BFA528 unwind action reaches it through ILT 0x00001C80.
+	virtual ~Snapshot() {}
 	virtual void crc() = 0;
 	virtual void xfer() = 0;
 	virtual void loadPostProcess() = 0;
