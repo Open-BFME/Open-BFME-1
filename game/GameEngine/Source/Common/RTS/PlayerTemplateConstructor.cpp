@@ -20,20 +20,16 @@
 extern "C" __declspec(dllimport) __declspec(nothrow) long __stdcall
 	InterlockedIncrement(long volatile *addend);
 
-class UnicodeString
-{
-public:
-	UnicodeString() : m_text(0) {}
-	UnicodeString(const UnicodeString &source)
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&source);
-	}
-	~UnicodeString();
+#include "unicode_string.h"
 
-private:
-	unsigned short *m_text;
-};
+// Keep the constructor definitions visible to this TU, as the matched body
+// requires, while using UnicodeString's canonical declaration and storage.
+inline UnicodeString::UnicodeString() : m_text(0) {}
+inline UnicodeString::UnicodeString(const UnicodeString &source)
+{
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&source);
+}
 
 typedef int NameKeyType;
 
