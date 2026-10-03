@@ -21,8 +21,13 @@ class BfmeStrVMW
 {
 public:
 	void bfmeFwdVMW(BfmeObjVMW *p);
-	void bfmeImplVMW(int a, int b, char *q);
 };
+
+// Retail 0x00831740 calls through the incremental-link thunk at 0x00021A58
+// (E9 -> 0x000A5780). Its only definition in this link is the address-named
+// ?j_00021a58@@YAXXZ in game/gen_small/thunks_015.cpp, so the asm block names
+// that; the caller's thiscall shape is unchanged and the bytes do not move.
+void j_00021a58();
 
 void BfmeStrVMW::bfmeFwdVMW(BfmeObjVMW *p)
 {
@@ -46,6 +51,6 @@ void BfmeStrVMW::bfmeFwdVMW(BfmeObjVMW *p)
 		mov ecx, dword ptr [ebp-0x6C]
 		push ecx
 		mov ecx, this
-		call bfmeImplVMW
+		call j_00021a58
 	}
 }
