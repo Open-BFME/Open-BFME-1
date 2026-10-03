@@ -22,12 +22,19 @@
 // Rva000A1B30VectorHolderDestructor.cpp's Rva000A1B30Base. No entry-time
 // store happens for this family member (retail has none), only this single
 // tail store, so this is modelled without real C++ polymorphism.
-extern int bfmeVtable0012BDD0[];
+//
+// 0x01073744 is the vftable retail stores here (retail 0x0012BDD0 +0x58:
+// `mov dword ptr [edi], 0x1073744`), and it is the one the BfmeBaseVUQ family
+// shares -- symbols.csv/dir32_addresses.csv give `??_7BfmeBaseVUQ@@6B@,
+// 0x01073744`, and Rva006BCE40Destructor.cpp emits it as a COMDAT from its
+// TU-local BfmeBaseVUQ. Reference the defining mangled name rather than a
+// local placeholder.
+extern "C" int __identifier("??_7BfmeBaseVUQ@@6B@")[];
 
 class ModuleDataBase0012BDD0
 {
 public:
-	~ModuleDataBase0012BDD0() { m_table = bfmeVtable0012BDD0; }
+	~ModuleDataBase0012BDD0() { m_table = __identifier("??_7BfmeBaseVUQ@@6B@"); }
 	void *m_table;
 	unsigned int m_baseField;
 };
