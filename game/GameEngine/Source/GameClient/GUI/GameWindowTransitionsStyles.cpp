@@ -1021,10 +1021,11 @@ void MainMenuMediumScaleUpTransition::update( Int frame )
 
 void MainMenuMediumScaleUpTransition::reverse( void )
 {
-	m_isFinished = FALSE;
-	m_isForward = FALSE;
-	m_win->winHide(TRUE);
-	m_growWin->winHide(TRUE);
+	BfmeMediumScaleUpTransitionFields *self = (BfmeMediumScaleUpTransitionFields *)this;
+	self->m_isFinished = FALSE;
+	self->m_isForward = FALSE;
+	self->m_win->winHide(TRUE);
+	self->m_growWin->winHide(TRUE);
 
 }
 
@@ -1931,7 +1932,8 @@ void TextOnFrameTransition::init( GameWindow *win )
 	else
 	{
 		m_isForward = FALSE;
-		update(TEXTONFRAMETRANSITION_START);
+		// Retail passes the configured start frame from receiver+0x10.
+		update(m_startFrame);
 		m_isFinished = FALSE;
 		m_isForward = TRUE;
 	}
