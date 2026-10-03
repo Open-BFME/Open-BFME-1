@@ -1,8 +1,9 @@
+void j_0001f181();
+
 class BfmeOwnAH
 {
 public:
 	int bfmeHandleAH(void *unused, int code, unsigned char kind, int flags);
-	void bfmeNotifyAH(void);
 
 	unsigned char m_bfmeHeadAH[0x8c];
 	int m_bfmeStateAH;
@@ -29,7 +30,7 @@ int BfmeOwnAH::bfmeHandleAH(void *unused, int code, unsigned char kind, int flag
 		int state = m_bfmeStateAH;
 
 		if (state == 0 || state == 1)
-			bfmeNotifyAH();
+			j_0001f181();
 	}
 
 	return 1;

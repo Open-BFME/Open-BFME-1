@@ -6,10 +6,11 @@ struct BfmeVec4CMB
 	void *m_bfmeD;
 };
 
+void j_00032231();
+
 class BfmeThingCMB
 {
 public:
-	void bfmeUpdateCMB();
 	void bfmeGoCMB(BfmeVec4CMB *out);
 	unsigned char m_bfmeHead[0x1c];
 	BfmeVec4CMB m_bfmeCache;
@@ -22,7 +23,7 @@ void BfmeThingCMB::bfmeGoCMB(BfmeVec4CMB *out)
 	if (out != 0)
 	{
 		if (m_bfmeFlag)
-			bfmeUpdateCMB();
+			j_00032231();
 		*out = m_bfmeCache;
 	}
 }

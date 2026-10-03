@@ -1,3 +1,14 @@
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// stlport
+
+// The call at +0x0024 goes through the ILT entry at 0x00032DEE, which is
+// Object::setStatusBit( Int, Bool )'s thunk; the body it reaches is matched at
+// 0x000D3EB0.  Retail pushes the Bool and the bit index and leaves `this` in
+// ecx, which is what a thiscall to the real member spells, so the call uses
+// the real name.  Only the bitset type is needed; the header is included for
+// its declaration rather than redeclared.
+#include "../GameLogic/Object/ObjectStatusBits.h"
+
 class BfmeThingCNE
 {
 public:
@@ -30,8 +41,6 @@ public:
 	void *m_bfmeCur;
 };
 
-void __stdcall bfmeLogCNE(int code, int level);
-
 void BfmeThingCNE::bfmeGoCNE(void *what)
 {
 	if (what == 0)
@@ -40,6 +49,6 @@ void BfmeThingCNE::bfmeGoCNE(void *what)
 		return;
 	if (what == m_bfmeCur)
 		return;
-	bfmeLogCNE(0x3d, 1);
+	((Object *)this)->setStatusBit(0x3d, true);
 	bfmeRunCNE(what);
 }
