@@ -6,17 +6,18 @@ extern unsigned char bfmeAsyncDNSLookupInProgress;
 extern unsigned char bfmeCantConnectBeforeOnline;
 extern unsigned char bfmeHttpOk;
 
-extern int bfmeAsyncGethostbyname(char *name);
+extern int asyncGethostbyname(char *name);
 extern void bfmeReallyStartPatchCheck();
 // Defined by the matched retail body at 0x0062EA60 (Rva0062EA60StartOnline.cpp).
 extern void Rva0062EA60StartOnline();
-extern void bfmeGhttpThink();
+// Retail tail JMP at RVA00630488 reaches the C export at RVA0087AC30.
+extern "C" void ghttpThink(void);
 
 void HTTPThinkWrapper()
 {
 	if (bfmeAsyncDNSLookupInProgress)
 	{
-		int dnsLookupStatus = bfmeAsyncGethostbyname("servserv.generals.ea.com");
+		int dnsLookupStatus = asyncGethostbyname("servserv.generals.ea.com");
 		switch (dnsLookupStatus)
 		{
 		case 1:
@@ -30,5 +31,5 @@ void HTTPThinkWrapper()
 	}
 
 	if (bfmeHttpOk)
-		bfmeGhttpThink();
+		ghttpThink();
 }
