@@ -15128,5 +15128,25 @@
   "after_sha256": "4fdf84d2886383c6cb7094cd0e06d07aa379bef318d2ed9fcb8db36ce9bf9cfd",
   "evidence": "targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md",
   "reason": "doAction was a shape name on the address-derived BfmeThing2C0. The body is slot 7 (ILT 0x00037F01, sole image ref) of LocomotorSetUpgrade's UpgradeMux table 0x010CCFA8 (registered ctor 0x002D6160), so the owner is now proven. Slot 7 is BFME-only with no ZH twin, EA label or name table, so the method keeps its address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseUpdateModuleDataDeletingDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseUpdateModuleDataCtorThunk.cpp",
+  "old_name": "RubbleRiseElement",
+  "new_name": "Rva00127AC0Element",
+  "before_sha256": "2b2668e2f93eb1a231caa1655e79fd995bbf0ab262773c295771c8cc1f2c36d7",
+  "after_sha256": "d84262e88e047f2945ebdfaea0205191695a5335fbd0268f9a49e220eaf4bd22",
+  "evidence": "targets/game/reverse/identity_evidence/rubblerise-wrapper-rehome-false-pair.txt",
+  "reason": "False source-rehome pairing: destination type predates this repair and is unchanged; RubbleRiseElement remains declared and used in the unchanged retained complete-destructor TU. Only the scalar-wrapper ledger row moves."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseUpdateModuleDataDeletingDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseUpdateModuleDataCtorThunk.cpp",
+  "old_name": "RubbleRiseElement",
+  "new_name": "Rva002551A0DieMuxData",
+  "before_sha256": "2b2668e2f93eb1a231caa1655e79fd995bbf0ab262773c295771c8cc1f2c36d7",
+  "after_sha256": "d84262e88e047f2945ebdfaea0205191695a5335fbd0268f9a49e220eaf4bd22",
+  "evidence": "targets/game/reverse/identity_evidence/rubblerise-wrapper-rehome-false-pair.txt",
+  "reason": "False source-rehome pairing: destination type predates this repair and is unchanged; RubbleRiseElement remains declared and used in the unchanged retained complete-destructor TU. Only the scalar-wrapper ledger row moves."
  }
 ]

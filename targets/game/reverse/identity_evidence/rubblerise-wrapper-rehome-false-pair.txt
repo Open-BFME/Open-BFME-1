@@ -1,0 +1,27 @@
+RubbleRise scalar-wrapper rehome: false declaration pairing
+
+Before commit: 7c9291f8c862bef73114cd73ed8e340b32e525a1
+
+The only moved ledger row is scalar wrapper RVA 0x00128BA0, 30 bytes.
+No type is renamed. The destination constructor TU is byte-for-byte identical
+to its before-commit version. It already declares Rva00127AC0Element and
+Rva002551A0DieMuxData; both names and all layout declarations are preserved.
+
+The retired wrapper TU duplicates a complete destructor under an ordinary
+class declaration. The retained RubbleRiseUpdateModuleDataDestructorThunk.cpp
+uses novtable and owns the independently matched complete destructor at
+0x00128BD0 (103 bytes) plus its 22-byte funclet at 0x00C01D18. That retained
+file is also byte-for-byte unchanged, and still declares and uses
+RubbleRiseElement for both four-element arrays. Thus RubbleRiseElement has
+not been replaced by either address-derived type reported by the checker.
+
+Independent retail evidence: vtable VA 0x0108EAF8 slot zero contains VA
+0x00436BE7, an ILT jump to wrapper RVA 0x00128BA0. At 0x00128BA3 the wrapper
+calls ILT 0x0002815A, which jumps to complete destructor 0x00128BD0. The
+wrapper tests deletion bit 1 and returns with ret 4. Sequential build.sh
+verification passes all four retained rows across the two TUs, including
+the exception funclet and six DIR32 references.
+
+The exact-hash correction entries close only the checker's source-rehome
+false pairing. They do not assert that either address-derived type is the
+identity of RubbleRiseElement or change any provider identity.
