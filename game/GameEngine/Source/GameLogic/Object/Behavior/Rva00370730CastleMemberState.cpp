@@ -1,26 +1,18 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/radar /Iinputs/reference/shims/gameclientxfer /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/Radar.h"
+#include "Common/NameKeyGenerator.h"
+#include "GameLogic/GameLogic.h"
 
 typedef int Int;
 typedef bool Bool;
-
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
 
 enum EvaMessage
 {
 	EVA_INVALID = -1,
 	EVA_VALUE_7 = 7
-};
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
 };
 
 class Player;
@@ -42,31 +34,10 @@ public:
 	Module *findModule( NameKeyType key ) const;
 };
 
-class GameLogic
-{
-public:
-	Object *findObjectByID( Int id );
-};
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
-
 class Eva
 {
 public:
 	Bool setShouldPlay( EvaMessage message, const Coord3D *position );
-};
-
-// Retail 0x00108520 is the bounded radar-event helper called through ILT
-// 0x0001b6d0.  Its first explicit argument is the event type and its second
-// is the position; the body proves the event bound and the Coord3D use.
-class Radar
-{
-public:
-	Bool rva00108520( Int eventType, Coord3D *position );
 };
 
 typedef Int (__cdecl *Rva0036ff70Callback)( void *, void * );
@@ -103,9 +74,10 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 extern Eva *TheEva;
 extern Radar *TheRadar;
 
-// Retail callback36CFD0 returns a full EAX integer and accepts two cdecl
-// arguments (object and context); the query tests EAX, not AL.
-extern "C" Int __cdecl bfmeRva0036CFD0Callback(void *, void *);
+// The callback at 0x0036CFD0 is defined by BfmeConv1939.cpp. It returns
+// a full EAX integer and ignores the query interface's context argument.
+class BfmeThingDJ;
+Int __cdecl bfmeCheckDJ(BfmeThingDJ *thing);
 
 // ?run@Rva00370730CastleMemberInterface@@QAEXHHH@Z
 void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
@@ -133,7 +105,7 @@ void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
 					if( module != 0 )
 					{
 						Rva0036ff70Callback callback =
-							bfmeRva0036CFD0Callback;
+							reinterpret_cast<Rva0036ff70Callback>(bfmeCheckDJ);
 						if( ( (Rva0036ff70Module *)module )->query(
 							callback, 0 ) == 1 )
 						{
@@ -144,7 +116,7 @@ void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
 								register Coord3D *radarPosition =
 									(Coord3D *)( (unsigned char *)*(Object **)
 										( self - 0x08 ) + 0x38 );
-								(*(Radar * volatile *)&TheRadar)->rva00108520( 10,
+								(*(Radar * volatile *)&TheRadar)->tryEvent( RADAR_EVENT_FAKE,
 									radarPosition );
 							}
 						}
