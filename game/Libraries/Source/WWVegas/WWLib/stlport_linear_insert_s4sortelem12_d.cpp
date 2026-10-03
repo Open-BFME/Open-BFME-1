@@ -18,6 +18,15 @@ struct S4Cmp00531FA0
 {
 	void *m_bfmeState;
 
+	// Defined by the introsort and partial-sort TUs (retail's out-of-line
+	// comparator); this TU compares through S4ForwardLess so it emits no
+	// differing thin copy of it.
+	bool operator()(const S4SortElem12 &left,
+		const S4SortElem12 &right) const;
+};
+
+struct S4ForwardLess
+{
 	bool operator()(const S4SortElem12 &left,
 		const S4SortElem12 &right) const
 	{
@@ -43,7 +52,8 @@ template <class RandomAccessIter, class Tp, class Compare>
 void __linear_insert(RandomAccessIter first,
 	RandomAccessIter last, Tp val, Compare comp)
 {
-	if (comp(val, *first))
+	S4ForwardLess less;
+	if (less(val, *first))
 	{
 		random_access_iterator_tag tag;
 		BfmeCopyBackward0052D370(first, last, last + 1, tag, (int *)0);

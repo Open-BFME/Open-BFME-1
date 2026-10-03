@@ -65,6 +65,14 @@ struct S4Cmp00531FA0
 {
 	void *m_bfmeState;
 
+	// Defined by the other S4Cmp00531FA0 TUs (the call-out comparator); this TU
+	// compares through S4InlineLess so it emits no differing copy of it.
+	bool operator()(const S4SortElem12 &left,
+		const S4SortElem12 &right) const;
+};
+
+struct S4InlineLess
+{
 	bool operator()(const S4SortElem12 &left,
 		const S4SortElem12 &right) const
 	{
@@ -105,12 +113,13 @@ RandomAccessIter __unguarded_partition(RandomAccessIter first,
 	RandomAccessIter last, Tp pivot, Compare comp)
 {
 	const S4SortElem12 *pivotAddress = &pivot;
+	S4InlineLess less;
 	while (true)
 	{
-		while (comp(*first, *pivotAddress))
+		while (less(*first, *pivotAddress))
 			++first;
 		--last;
-		while (comp(*pivotAddress, *last))
+		while (less(*pivotAddress, *last))
 			--last;
 		if (first < last)
 		{
