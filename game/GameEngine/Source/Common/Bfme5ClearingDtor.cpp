@@ -51,11 +51,18 @@ public:
 	char m_bfmePad[0x1C];					// +0x08
 };
 
+// The retail unwind action proves this base destructor at 0x003828E0.
+// Keep the inherited local view name qualified by its actual body address.
+namespace Rva003828E0
+{
 class BfmeDBaseB
 {
 public:
 	virtual ~BfmeDBaseB(void) {}
 };
+
+}
+using Rva003828E0::BfmeDBaseB;
 
 class Gen_0042B9F0 : public BfmeDBaseA, public BfmeDBaseB
 {
