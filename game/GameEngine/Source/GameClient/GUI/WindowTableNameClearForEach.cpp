@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Retail 0x00462540 is the STLport for_each instantiation over the window
@@ -28,9 +28,13 @@
 //
 // NameClearFunctor00462540 also appears in AptScreenClose.cpp (the matched
 // 0x004629A0 caller), where operator() spells the same test with `==` over the
-// WWLib ascii_string.h shim.  Only the explicit compare() here inlines the
-// memcmp this retail body shows, and the two shims model AsciiString
-// differently, so the two definitions are intentionally not text-identical.
+// WWLib ascii_string.h header. The explicit compare() here inlines the
+// memcmp this retail body shows. Both now use the canonical string header;
+// its inline destruction also emits the native functor destructor at
+// 0x0045E6C0 as a direct releaseBuffer tail jump. Retail parent 0x00462540
+// inlines releaseBuffer on normal return; its EH state 0 (guarded result
+// at 0x00C24978) and state 1 (by-value input at 0x00C24970) reach the
+// functor destructor through ILT 0x00040264.
 // Nothing links the COMDAT except the explicit instantiation below; if a
 // future change makes that false, the two bodies must be reconciled.
 
@@ -38,7 +42,7 @@
 #include <algorithm>
 #include <hash_map>
 
-#include "Common/AsciiString.h"
+#include "ascii_string.h"
 
 struct WindowRecord
 {
