@@ -57,6 +57,7 @@ extern void W3DRadarResetLock(void);
 // Use its existing matched provider (BfmeConv1179.cpp); callers ignore the byte.
 extern char bfmeUnlock1179(void);
 extern void rva008fd2a0(void);
+extern void bfmeGo936C(void);
 
 // BFME's retail DX8 error path writes through the game debug stream rather
 // than calling the later Zero Hour Log_DX8_ErrorCode helper.  Keep the ABI
@@ -548,13 +549,14 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 
 	WWDEBUG_SAY(("Vertex buffer creation failed, trying to release assets...\n"));
 
-	// Vertex buffer creation failed, so try releasing least used textures and flushing the mesh cache.
+	// Vertex buffer creation failed, so release unused resources before retrying.
 
 	// Free all textures that haven't been used in the last 5 seconds
 	rva008fd2a0();
 
-	// Invalidate the mesh cache
-	WW3D::_Invalidate_Mesh_Cache();
+	// Retail call RVA0091E14C targets the existing 18-byte provider at
+	// RVA009056B0: device slot +0x14 followed by the DX8 call counter.
+	bfmeGo936C();
 
 	// Try again...
 	ret=reinterpret_cast<BFMEVertexBufferDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateVertexBuffer(
