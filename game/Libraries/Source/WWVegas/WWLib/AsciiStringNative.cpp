@@ -25,7 +25,7 @@ void bfme_force_ascii_string_assign_emission(AsciiString &dst, const AsciiString
 
 AsciiString::AsciiString(char c) : StringBase<char>(c) {}
 
-AsciiString::AsciiString(const AsciiString &that, int start, int len) : StringBase<char>(that, start, len) {}
+inline AsciiString::AsciiString(const AsciiString &that, int start, int len) : StringBase<char>(that, start, len) {}
 
 inline AsciiString::AsciiString(const char *str, int len) : StringBase<char>(str, len) {}
 
