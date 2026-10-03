@@ -193,6 +193,19 @@ Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
 	return false;
 }
 
+// Retail calls the validMovement body (0x003ED070) through the ILT at
+// 0x0002F798 (?j_0002f798@@YAXXZ); the call names that thunk.
+extern void j_0002f798();
+typedef Bool (BfmeAttackQuery::*ValidMovementCall)(Int, Int, zoneStorageType,
+	const void *);
+static __forceinline Bool callValidMovement(BfmeAttackQuery *query, Int layer,
+	Int fromZone, zoneStorageType toZone, const void *extra)
+{
+	union { void (*asFunction)(); ValidMovementCall asMember; } fnCast;
+	fnCast.asFunction = j_0002f798;
+	return (query->*fnCast.asMember)(layer, fromZone, toZone, extra);
+}
+
 Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int offsetX,
 	Int offsetY, Int movementLayer, Int pathLayer, Int fromZone,
 	BfmeCellResult *result,
@@ -208,7 +221,7 @@ Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int offsetX,
 		Int effectiveZone = m_zoneManager.getEffectiveZone(
 			*profile, (zoneStorageType)result->m_candidateZone);
 		if (fromZone == effectiveZone ||
-			validMovement(movementLayer, fromZone, effectiveZone, extra))
+			callValidMovement(this, movementLayer, fromZone, effectiveZone, extra))
 			return true;
 	}
 	return false;
