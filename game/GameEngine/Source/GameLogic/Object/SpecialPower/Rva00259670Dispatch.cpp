@@ -14,14 +14,10 @@ class Rva0025D7E0Context;
 
 class Rva0025D7E0FreezingRainDispatch
 {
-public:
-	void apply( Rva0025D7E0Subject *subject, Rva0025D7E0Context *context );
 };
 
 class Rva00259670Primary
 {
-public:
-	void finish( Rva0025D7E0Subject *subject );
 };
 
 class Rva00259160Owner
@@ -36,6 +32,9 @@ public:
 	void run( Rva0025D7E0Subject *subject, Rva0025D7E0Context *context );
 };
 
+extern void j_000170da();
+extern void j_00041a4c();
+
 void Rva00259670Dispatch::run(
 	Rva0025D7E0Subject *subject, Rva0025D7E0Context *context )
 {
@@ -44,8 +43,15 @@ void Rva00259670Dispatch::run(
 		return;
 	if ( subject == 0 )
 		return;
-	apply( subject, context );
+	typedef void (Rva0025D7E0FreezingRainDispatch::*ApplyCall)(
+		Rva0025D7E0Subject *, Rva0025D7E0Context *);
+	union { void (*raw)(); ApplyCall member; } apply;
+	apply.raw = j_000170da;
+	(this->*apply.member)(subject, context);
 	Rva00259670Primary *primary = (Rva00259670Primary *)( (char *)this - 0x10 );
-	primary->finish( subject );
+	typedef void (Rva00259670Primary::*FinishCall)(Rva0025D7E0Subject *);
+	union { void (*raw)(); FinishCall member; } finish;
+	finish.raw = j_00041a4c;
+	(primary->*finish.member)(subject);
 	((Rva00259160Owner *)primary)->applyToFilteredObjects();
 }
