@@ -6,7 +6,9 @@ public:
 	unsigned char handle(int a);
 };
 
-extern Gen00024B7C *g_Va012F7730;
+class LANAPI;
+extern LANAPI *TheLAN;
+extern void j_00024b7c();
 
 class Rva005169E0
 {
@@ -16,7 +18,12 @@ public:
 
 unsigned char Rva005169E0::wrap(int a)
 {
-	if (g_Va012F7730)
-		return g_Va012F7730->handle(a);
+	if (TheLAN)
+	{
+		typedef unsigned char (Gen00024B7C::*HandleCall)(int);
+		union { void (*function)(); HandleCall member; } handleCall;
+		handleCall.function = j_00024b7c;
+		return (reinterpret_cast<Gen00024B7C *>(TheLAN)->*handleCall.member)(a);
+	}
 	return 0;
 }
