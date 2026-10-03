@@ -1,3 +1,17 @@
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+#include "Common/PlayerList.h"
+#include "Common/Player.h"
+#include "GameClient/ControlBar.h"
+
+// ILT 0x0004B290 routes to the matched resolver at 0x0034CB60.
+// Its player-mask result and PlayerList input are both 16-bit.
+class BfmeScriptEngine_getPlayerMaskFromAsciiString
+{
+public:
+	unsigned short getPlayerMaskFromAsciiString(const AsciiString &name, bool *found);
+};
 
 class BfmeMgrF07
 {
@@ -29,7 +43,6 @@ public:
 	virtual void v24();
 	virtual void v25();
 	virtual void* vfn26(void *key);
-	int findSomething(void *key, int zero);
 };
 // 0x012F076C is retail's ScriptEngine singleton (defined once in
 // GameLogic/ScriptEngine/ScriptEngine.cpp). This TU only needs its vtable
@@ -46,38 +59,20 @@ public:
 	void link(BfmeLinkedObj *other, int zero);
 };
 
-class BfmeLinkedObjBE
-{
-public:
-	void notifyOther(BfmeLinkedObjBE *other, void *p3);
-};
-
 struct BfmeObjAF0_2
 {
 	unsigned char pad[0x230];
 	void *m_sub230;
 };
 
-class BfmeMgrD74_Linked
-{
-public:
-	BfmeLinkedObj* findObj(int id);
-	BfmeLinkedObjBE* findObjBE(int id);
-	BfmeObjAF0_2* findObjAF(int id);
-};
-// 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
-// defines `PlayerList *ThePlayerList`); only the address-derived lookups this TU
-// spells are still unnamed, so the global keeps its real spelling and the reads are cast.
-class PlayerList;
-
-extern PlayerList *ThePlayerList;	// retail [0x012ED748]
-
 void __stdcall bfmeLinkObjectsA70(void *k1, void *k2)
 {
-	int id2 = mgr12F076C()->findSomething(k2, 0);
-	int id1 = mgr12F076C()->findSomething(k1, 0);
-	BfmeLinkedObj *obj2 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
-	BfmeLinkedObj *obj1 = ((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
+	unsigned short id2 = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->
+		getPlayerMaskFromAsciiString(*(const AsciiString *)k2, 0);
+	unsigned short id1 = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->
+		getPlayerMaskFromAsciiString(*(const AsciiString *)k1, 0);
+	BfmeLinkedObj *obj2 = (BfmeLinkedObj *)ThePlayerList->getPlayerFromMask(id2);
+	BfmeLinkedObj *obj1 = (BfmeLinkedObj *)ThePlayerList->getPlayerFromMask(id1);
 	if (obj2 && obj1) {
 		obj2->link(obj1, 0);
 	}
@@ -85,12 +80,14 @@ void __stdcall bfmeLinkObjectsA70(void *k1, void *k2)
 
 void __stdcall bfmeNotifyLinkedBE0(void *k1, void *p3, void *k2)
 {
-	int id2 = mgr12F076C()->findSomething(k2, 0);
-	int id1 = mgr12F076C()->findSomething(k1, 0);
-	BfmeLinkedObjBE *obj2 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
-	BfmeLinkedObjBE *obj1 = (BfmeLinkedObjBE*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id1);
+	unsigned short id2 = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->
+		getPlayerMaskFromAsciiString(*(const AsciiString *)k2, 0);
+	unsigned short id1 = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->
+		getPlayerMaskFromAsciiString(*(const AsciiString *)k1, 0);
+	Player *obj2 = ThePlayerList->getPlayerFromMask(id2);
+	Player *obj1 = ThePlayerList->getPlayerFromMask(id1);
 	if (obj2 && obj1) {
-		obj1->notifyOther(obj2, p3);
+		obj1->setPlayerRelationship(obj2, (Relationship)(int)p3);
 	}
 }
 
@@ -125,8 +122,9 @@ int __cdecl bfmeHelper760(void *obj, int zero);
 void __stdcall bfmeAttachSubAF0(void *k1, void *k2)
 {
 	BfmeObjVfnAF0 *obj1 = (BfmeObjVfnAF0*)mgr12F076C()->vfn26(k1);
-	int id2 = mgr12F076C()->findSomething(k2, 0);
-	BfmeObjAF0_2 *obj2 = (BfmeObjAF0_2*)((BfmeMgrD74_Linked *)ThePlayerList)->findObj(id2);
+	unsigned short id2 = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->
+		getPlayerMaskFromAsciiString(*(const AsciiString *)k2, 0);
+	BfmeObjAF0_2 *obj2 = (BfmeObjAF0_2*)ThePlayerList->getPlayerFromMask(id2);
 	if (obj1 && obj2 && obj2->m_sub230) {
 		obj1->vfn20(obj2->m_sub230);
 		bfmeHelper760(obj1, 0);
@@ -207,16 +205,11 @@ public:
 	int m_field144;
 };
 
-class BfmeMgr33F
-{
-public:
-	BfmeObj720* findObj(void *key);
-};
-extern BfmeMgr33F *g_mgr12F33F8;
-
 void __stdcall bfmeCalculateAndStore720(void *key, int val)
 {
-	BfmeObj720 *obj = g_mgr12F33F8->findObj(key);
+	// ILT 0x0003B59D routes to ControlBar::findCommandButton at 0x004A0310.
+	BfmeObj720 *obj = (BfmeObj720 *)TheControlBar->findCommandButton(
+		*(const AsciiString *)key);
 	if (obj) {
 		int v = (val * 30) / 10;
 		if (v % 2 == 1) {
