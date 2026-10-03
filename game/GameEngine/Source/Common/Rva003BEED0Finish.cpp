@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Address-derived niladic member at retail 0x003BEC30 (167 bytes), carved
 // boundary (targets/game/reverse/carved.csv line "0x003BEC30,167,rel32-call/jmp;ghidra-start").
@@ -19,7 +19,8 @@
 // (target 0x003A4BD0, ECX=element) consumes it.  The name string is retail's
 // by-value return temporary, not a named local: retail arms its EH state
 // (mov [esp+0x20],0) only after the copy call returns, and releases it through
-// the existing ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ body at 0x00887940.
+// the existing StringBase<char>::releaseBuffer body at 0x00887940, which the
+// inline ~StringBase in string_base.h calls.
 
 // The global at retail 0x012F0898 is EA's `GameLogic *TheGameLogic`; it is
 // declared with its real type so the linked build has one symbol, while
@@ -35,18 +36,18 @@ extern void j_00044391(void);
 extern void j_0002437a(void);
 extern void j_000394e6(void);
 
-class BFMERetailAsciiString
+#include "ascii_string.h"
+
+// The copy copyName() hands back is an AsciiString: retail releases it through
+// 0x00887940, the body StringBase<char>::releaseBuffer reaches from the inline
+// ~StringBase (string_base.h). This view is deliberately NOT spelled
+// BFMERetailAsciiString: that destructor is the ledger's and belongs to
+// game/GameEngine/Source/Common/CarvedBFMERetailAsciiStringDestructor.cpp
+// (row ??1BFMERetailAsciiString@@QAE@XZ, 0x0000D828, which derives it from
+// AsciiString too), and a second inline definition here collided with it
+// (LNK4006).
+class Rva003BEC30AsciiStringView : public AsciiString
 {
-public:
-	~BFMERetailAsciiString()
-	{
-		releaseBuffer();
-	}
-
-	char *m_data;
-
-private:
-	void releaseBuffer();
 };
 
 struct Rva003BEC30Entry
@@ -57,16 +58,16 @@ struct Rva003BEC30Entry
 
 struct Rva003BEC30NameView
 {
-	BFMERetailAsciiString copyName(void);
+	Rva003BEC30AsciiStringView copyName(void);
 };
-typedef BFMERetailAsciiString (Rva003BEC30NameView::*Rva003BEC30Name)(void);
+typedef Rva003BEC30AsciiStringView (Rva003BEC30NameView::*Rva003BEC30Name)(void);
 
 struct Rva003BEC30LogicView
 {
-	int invoke(const BFMERetailAsciiString &name);
+	int invoke(const Rva003BEC30AsciiStringView &name);
 };
 typedef int (Rva003BEC30LogicView::*Rva003BEC30Invoke)(
-	const BFMERetailAsciiString &name);
+	const Rva003BEC30AsciiStringView &name);
 
 struct Rva003BEC30TierView
 {
