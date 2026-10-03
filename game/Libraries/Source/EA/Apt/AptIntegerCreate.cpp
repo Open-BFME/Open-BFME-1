@@ -43,7 +43,9 @@ struct Rva00899560Pool
 // 0x013387D4 head.
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// Retail RVA 0x008A11EE and 0x008A124E load VA 0x01337810,
+// the verified canonical GC-root pointer owned by Apt.cpp.
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
 extern "C" const void *bfmeVftAptInteger[];
@@ -76,7 +78,7 @@ AptInteger *AptInteger::Create(int value)
 	if (object != 0)
 	{
 		g_rva008D2A10 = (Rva008D2A10 *)object->m_next;
-		g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+		g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 		object->m_value = value;
 		return object;
 	}
@@ -87,7 +89,7 @@ AptInteger *AptInteger::Create(int value)
 	{
 		*(void **)object = (void *)bfmeVftAptValue;
 		object->m_flags = (object->m_flags & 0xf0008007) | 0x40008007;
-		g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+		g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 		*(void **)object = (void *)bfmeVftAptInteger;
 		object->m_value = value;
 		return object;
