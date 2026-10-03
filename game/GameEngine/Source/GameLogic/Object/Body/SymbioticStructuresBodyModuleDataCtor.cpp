@@ -42,6 +42,7 @@ class SymbioticStructuresBodyModuleData : public ActiveBodyModuleData
 {
 public:
 	SymbioticStructuresBodyModuleData();
+	virtual ~SymbioticStructuresBodyModuleData();
 
 private:
 	RetailLayoutString m_layout;
