@@ -34,7 +34,6 @@ extern "C" __declspec(dllimport) FARPROC __stdcall GetProcAddress(
 	HMODULE module, const char *procName);
 
 // The shared empty string retail substitutes for a null buffer.
-extern const char Rva006A16B0Empty[];
 
 template <class T> class StringBase
 {
@@ -120,7 +119,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 
 	Int getLength() const

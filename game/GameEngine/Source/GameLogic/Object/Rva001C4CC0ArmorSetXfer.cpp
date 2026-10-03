@@ -84,7 +84,6 @@ extern "C" Rva001C4CC0FormattedText *__cdecl bfmeFormatText(
 	Rva001C4CC0FormattedText *, int, const char *, ...);
 extern int __cdecl bfmeLookupA(void *name);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-extern char Rva006A16B0Empty[];
 extern int g_guardTargetTypeThrowInfo;
 
 #pragma comment(linker, "/alternatename:?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z=?j_00042ac3@@YAXXZ")
@@ -151,7 +150,7 @@ void Rva001C4CC0::xfer(Rva001C4CC0XferView *xfer)
 			if (data != 0)
 				lookupName = reinterpret_cast<unsigned char *>(data) + 8;
 			else
-				lookupName = Rva006A16B0Empty;
+				lookupName = "";
 			int flag = bfmeLookupA(lookupName);
 			if (flag < 0)
 			{

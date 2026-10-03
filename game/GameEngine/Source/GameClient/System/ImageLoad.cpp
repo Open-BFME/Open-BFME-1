@@ -19,14 +19,12 @@ static char *bfmeStringData(const AsciiString &value)
     return *(char **)&value;
 }
 
-extern const char Rva006A16B0Empty[];
-
 static char *bfmeString(const AsciiString &value)
 {
     char *data = bfmeStringData(value);
     if (data)
         return data + 8;
-    return (char *)Rva006A16B0Empty;
+    return (char *)"";
 }
 
 static __forceinline Bool bfmeIsEmpty(const AsciiString &value)

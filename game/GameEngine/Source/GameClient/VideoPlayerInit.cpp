@@ -59,8 +59,6 @@ enum INILoadType
 	INI_LOAD_INVALID = 0,
 	INI_LOAD_OVERWRITE = 1
 };
-
-extern const char Rva006A16B0Empty[]; // retail 0x0107388B
 extern Video *g_bfmeVideoTableBegin; // retail 0x0130B19C
 extern Video *g_bfmeVideoTableEnd;   // retail 0x0130B1A0
 
@@ -170,7 +168,7 @@ void VideoPlayer::init(void)
 						(const BfmeStringObject *)&video->m_internalName;
 					int length = name->m_data ? name->m_data->m_length : 0;
 					const char *text = name->m_data
-						? name->m_data->m_text : Rva006A16B0Empty;
+						? name->m_data->m_text : "";
 					path.concat(text, length);
 					path.concat(".ini", 4);
 

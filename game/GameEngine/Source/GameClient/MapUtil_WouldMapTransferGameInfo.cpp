@@ -13,8 +13,6 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -54,7 +52,7 @@ public:
 		const Int length = source.m_data != 0 ? source.m_data->m_length : 0;
 		const char *text = source.m_data != 0
 			? &source.m_data->m_text[0]
-			: (const char *)Rva006A16B0Empty;
+			: (const char *)"";
 		return ((const StringBase<char> *)this)->startsWithNoCase(text, length);
 	}
 };

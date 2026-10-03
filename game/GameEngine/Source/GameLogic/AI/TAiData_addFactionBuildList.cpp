@@ -5,8 +5,6 @@
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
 
-extern const char Rva006A16B0Empty[];
-
 struct BfmeAsciiStringData
 {
 	int m_refCount;
@@ -21,9 +19,9 @@ public:
 	int compare(const BfmeRetailAsciiString &other) const
 	{
 		int rightLength = other.m_data ? other.m_data->m_length : 0;
-		const char *right = other.m_data ? other.m_data->m_text : Rva006A16B0Empty;
+		const char *right = other.m_data ? other.m_data->m_text : "";
 		int leftLength = m_data ? m_data->m_length : 0;
-		const char *left = m_data ? m_data->m_text : Rva006A16B0Empty;
+		const char *left = m_data ? m_data->m_text : "";
 		int length = leftLength < rightLength ? leftLength : rightLength;
 		int result = memcmp(left, right, length);
 		if (result != 0)

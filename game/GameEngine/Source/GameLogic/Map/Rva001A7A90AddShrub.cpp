@@ -91,8 +91,6 @@ struct Rva001A7A90StringData
 	char m_text[1];
 };
 
-extern char Rva006A16B0Empty[];
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
@@ -101,7 +99,7 @@ public:
 
 	const char *getString20() const
 	{
-		return m_string20 ? m_string20->m_text : Rva006A16B0Empty;
+		return m_string20 ? m_string20->m_text : "";
 	}
 
 	unsigned char m_pad00[0x20];
