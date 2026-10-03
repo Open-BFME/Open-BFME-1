@@ -8,6 +8,7 @@
 #include <list>
 #include "coord.h"
 extern void j_00034a54();
+extern void j_0001f91f();
 extern int GetGameLogicRandomValue(int,int,char *,int);
 extern float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char *,int);
 enum UpdateSleepTime {UPDATE_SLEEP_NONE=1};
@@ -17,7 +18,7 @@ class UpdateModule {
 protected: void setWakeFrame(Object *,UpdateSleepTime);
  friend class Update00244680;
 };
-class BfmeSubDSU {public: void **bfmeTwoDSU(void **what);};
+class BfmeSubDSU {public: void **bfmeTwoDSU(void **what) {union {void (*p)();void **(BfmeSubDSU::*m)(void **);} c;c.p=j_0001f91f;return (this->*c.m)(what);}};
 struct Packet00244680 {int words[10];};
 class Member00244680 {public: char pad000[0x38]; Coord3D position; char pad044[0x74-0x44]; int field074;};
 struct TreeNode00244680 {int color;TreeNode00244680 *parent,*left,*right;};

@@ -25,12 +25,18 @@ struct FormationSlot
 	UnsignedByte m_padTail[0x1c - 0x11];
 };
 
-// still a dump: 0x0001F91F -> pinned ?bfmeTwoDSU@BfmeSubDSU@@QAEPAPAXPAPAX@Z
+// ILT 0x0001F91F is the thiscall map subscript at 0x226FA0; called through the ILT thunk
 extern void j_0001f91f();
 class BfmeSubDSU
 {
 public:
-	void **bfmeTwoDSU(void **key);
+	void **bfmeTwoDSU(void **key)
+	{
+		typedef void **(BfmeSubDSU::*Sub)(void **);
+		union { void (*raw)(); Sub member; } f;
+		f.raw = j_0001f91f;
+		return (this->*f.member)(key);
+	}
 	int &lookup(const unsigned &key)
 	{
 		typedef int &(BfmeSubDSU::*Fn)(const unsigned &);
