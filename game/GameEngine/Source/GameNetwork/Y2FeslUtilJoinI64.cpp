@@ -15,7 +15,7 @@ struct Rva007EB810Diag
 };
 
 extern Rva007EB810Diag *Rva007EB810Get();
-extern char g_bfmeMsgUVB[];
+extern const char g_rva0111C2A0[];
 extern char g_bfmeFileUVB[];
 
 void Rva00800040JoinI64( const __int64 *parts, unsigned count, char *dest, unsigned destSize, char sep )
@@ -44,7 +44,7 @@ void Rva00800040JoinI64( const __int64 *parts, unsigned count, char *dest, unsig
 		len = (unsigned)strlen( buf );
 		if( used + len + 1 >= destSize )
 		{
-			Rva007EB810Get()->fail( g_bfmeMsgUVB, g_bfmeFileUVB, 0x48 );
+			Rva007EB810Get()->fail( g_rva0111C2A0, g_bfmeFileUVB, 0x48 );
 			return;
 		}
 		if( i > 0 )

@@ -20,7 +20,9 @@ void BfmeThingUVA::bfmeGoUVA(const char *a, const char *b, const char *c)
 }
 
 extern char g_bfmeFileUVB[];
-extern char g_bfmeMsgUVB[];
+// Retail .rdata at VA 0x0111C2A0: "false" including its NUL (6 bytes).
+// The diagnostic callers pass its address; no EA symbol name is proven.
+extern const char g_rva0111C2A0[] = "false";
 
 struct Rva007EB810Diag
 {
@@ -54,6 +56,6 @@ int bfmeGoUVB(BfmeRecUVB *r, char *out)
 		bfmeCopyUVB(out + 1, 0x13, r->m_bfmeText);
 		return 1;
 	}
-	Rva007EB810Get()->fail(g_bfmeMsgUVB, g_bfmeFileUVB, 0x2e);
+	Rva007EB810Get()->fail(g_rva0111C2A0, g_bfmeFileUVB, 0x2e);
 	return 0;
 }
