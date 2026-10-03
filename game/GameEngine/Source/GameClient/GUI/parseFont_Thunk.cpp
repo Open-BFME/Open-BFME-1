@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME: readable reconstruction of the retail window-definition FONT
 // callback.  The callback is registered by gameWindowFieldList in the
 // reference GameWindowManagerScript.cpp and uses the BFME font-library ABI.
@@ -14,15 +14,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) int __cdecl sscanf(const char *, const char *, ...);
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *, const char *);
 
-#include "string_base.h"
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() { releaseBuffer(); }
-	operator AsciiString *(void) { return this; }
-};
+#include "ascii_string.h"
 
 class GameFont;
 
@@ -79,7 +71,10 @@ Bool __cdecl parseFont(char *, WinInstanceData *instanceData, char *buffer, void
 	if (TheFontLibrary)
 	{
 		GameFont *resolvedFont;
-		resolvedFont = TheFontLibrary->getFont(AsciiString(fontName), pointSize, boldFlag);
+		{
+			AsciiString name(fontName);
+			resolvedFont = TheFontLibrary->getFont(&name, pointSize, boldFlag);
+		}
 		if (resolvedFont)
 			instanceData->m_font = resolvedFont;
 	}
