@@ -15,7 +15,7 @@
 extern float GetGameClientRandomValueReal( float low, float high,
 	char *file, int line );
 extern const float g_rva01075350;
-extern const float Rva00C75334One;
+extern float g_bfmeDefaultBU;
 
 struct Coord3D
 {
@@ -48,7 +48,7 @@ extern "C" Coord3D *Rva005FAD00FillUnitVector( Coord3D *out )
 		components.y * components.y + components.z * components.z );
 	if ( length != g_rva01075350 )
 	{
-		float inverseLength = Rva00C75334One / length;
+		float inverseLength = g_bfmeDefaultBU / length;
 		components.x *= inverseLength;
 		components.y *= inverseLength;
 		components.z *= inverseLength;

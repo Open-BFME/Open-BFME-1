@@ -5,7 +5,7 @@
 // stopped short of its return tail).  It clears the caller's vector and, when
 // the flag at +0x10 is set, appends every item of the holder's vector at
 // (+4)->+0x30 whose byte at +0xA8 is set and which the object behind
-// Glo012F1028 accepts (Rva003BF540::act, ILT 0x0004AC0F); true when anything
+// TheLivingWorldLogic accepts (Rva003BF540::act, ILT 0x0004AC0F); true when anything
 // was collected.  Its only caller is itself unnamed, so the names keep the
 // address.  Indexing items[i] afresh for each use is what gives retail's
 // register copy of the element before the call.
