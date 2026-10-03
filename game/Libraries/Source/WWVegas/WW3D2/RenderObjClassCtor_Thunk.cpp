@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5: RenderObjClass's default constructor, lifted out of the byte dump
 // into real C++.
 //
@@ -86,15 +86,11 @@ public:
 	Vector3 Extent;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
-class RefCountClass
-{
-public:
-	RefCountClass(void) : NumRefs(1) {}
-	virtual void Delete_This(void);
-
-	int NumRefs;
-};
+// Retail's RefCountClass vtable at VA 0x011135AC has two slots:
+// Delete_This (ILT 0x00405D5D) and the deleting destructor (ILT 0x0041C4A4).
+// Use the canonical class: omitting its protected virtual destructor emits
+// a one-slot COMDAT under the same name as the complete retail table.
+#include "refcount.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
