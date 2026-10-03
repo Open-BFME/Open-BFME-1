@@ -90297,3 +90297,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??3@YAXPAX0@Z,0x000607F0,Scalar placement delete;native deque648920 EH state1 actionC4212B calls via ILT2AAA9;identity_evidence/000607f0-peer-deque-placement-delete.md
 ??1Rva00461A00Mapped@@QAE@XZ,0x0045F190,retail parent461A00 EH state0 via ILT2C124; independent matched caller4628E0 at462909 reaches map461A00 and proves mapped counted pointer with count+4 deleting slot0; native destructor26B exact without relocations
 ??1Rva0046C2A0Mapped@@QAE@XZ,0x00468320,retail parent46D280 EH state0 via ILT2F19E; independently matched caller46DBC0 call46DBF3 proves mapped counted pointer+0 and argument+4; native26B destructor exact without relocations
+??1Rva0058C2B0RefPtr@@QAE@XZ,0x00107550,retail parent58C2B0 stores and increments returned counted pointer; EH state0 cleanupC37334 reaches destructor via ILT18336; native26B destructor independently byte-exact without relocations

@@ -105,7 +105,8 @@ private:
 
 // The returned smart pointer: one pointer, so MSVC passes a hidden return
 // pointer in the first stack slot.  The user-declared destructor is what makes
-// VC7.1 register the state-0 unwind action above; it tail-calls release().
+// VC7.1 register the state-0 unwind action above. Its visible release() body
+// now emits the complete 26-byte retail destructor without another wrapper.
 // m_value is the shared reference count at [object+4] (the matched
 // Rva0058BF70Owner constructor stores 0 there and the release body at
 // 0x00107550 decrements it and calls vtable slot 0 with 1 at zero).
@@ -113,7 +114,14 @@ class Rva0058C2B0RefPtr
 {
 public:
 	Rva0058C2B0RefPtr(Rva0058BF70Base *p) { m_ptr = p; if (p) ++p->m_value; }
-	void release();
+	void release()
+	{
+		// Complete retail 0x00107550, independently reached by the
+		// owning-result action 0x00C37334 through ILT 0x00018336.
+		Rva0058BF70Base *p = m_ptr;
+		if (p && (p->m_value = p->m_value - 1) <= 0)
+			delete p;
+	}
 	~Rva0058C2B0RefPtr() { release(); }
 private:
 	Rva0058BF70Base *m_ptr;
