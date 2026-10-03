@@ -31,7 +31,7 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern const char Rva006A16B0Empty[];
+extern const char g_bfmeEmptyAscii[1];
 
 class AttributeModifierDefinition
 {
@@ -174,7 +174,7 @@ void Rva00239AF0::rva00239AF0(const AsciiString &name,
 	if (nameData != 0)
 		nameData += 8;
 	else
-		nameData = Rva006A16B0Empty;
+		nameData = g_bfmeEmptyAscii;
 
 	UnsignedInt key = TheNameKeyGenerator->nameToKey(nameData);
 	Int definitionIndex = TheAttributeModifierDefinitionStore->indexOf(key);

@@ -53,7 +53,8 @@ public:
 	Bool m_fieldA76;
 };
 
-extern Rva002377A0GlobalDataView *TheWritableGlobalData;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva004141A0GuardedVCall
 {
@@ -166,7 +167,7 @@ void Rva002377A0HordeContain::rva002377a0( void )
 		if ( owner->getControllingPlayer() == localPlayer )
 		{
 			Rva002377A0DrawableView *drawable = owner->getDrawable();
-			if ( TheWritableGlobalData->m_fieldA76 )
+			if ( ((Rva002377A0GlobalDataView *)TheWritableGlobalData)->m_fieldA76 )
 			{
 				if ( drawable != 0 )
 				{
