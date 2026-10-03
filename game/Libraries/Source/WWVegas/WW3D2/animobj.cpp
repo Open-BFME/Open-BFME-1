@@ -1015,34 +1015,7 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
  * HISTORY:                                                                                    *
  *   10/26/99    BMG : Created.                                                                 *
  *=============================================================================================*/
-// ?Animatable3DObjClass::Single_Anim_Progress present-unmatched
-void Animatable3DObjClass::Single_Anim_Progress (void)
-{
-	//
-	//	Update the current frame (only works in "SINGLE_ANIM" mode!)
-	//
-	if (CurMotionMode == SINGLE_ANIM) {
-		
-		// 
-		// Update the frame number and sync time
-		//
-		float oldprev = ModeAnim.PrevFrame;
-		ModeAnim.PrevFrame		= ModeAnim.Frame;
-		ModeAnim.Frame				= Compute_Current_Frame(&ModeAnim.animDirection);
-		ModeAnim.LastSyncTime	= WW3D::Get_Sync_Time();
-	
-		if (ModeAnim.Frame == ModeAnim.PrevFrame) {
-			// This function was somehow called twice per frame.
-			// Since ModeAnim.Frame hasn't changed, reset the ModeAnim.PrevFrame.
-			// If you don't do this sounds won't be triggered properly because Frame and PrevFrame will be the same.
-			ModeAnim.PrevFrame = oldprev;
-		}
-		//
-		// Force the heirarchy to be recalculated
-		//
-		Set_Hierarchy_Valid (false);
-	}
-}
+// Exact BFME frame progression: Animatable3DObjClass_Single_Anim_Progress.cpp.
 
 
 /***********************************************************************************************
