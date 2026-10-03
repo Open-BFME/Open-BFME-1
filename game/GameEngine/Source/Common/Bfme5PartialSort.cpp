@@ -18,10 +18,7 @@ public:
 		int count = length < otherLength ? length : otherLength;
 		int order = _memicmp(data, otherData, count);
 
-		if (order != 0)
-			return order;
-
-		return length - otherLength;
+		return order != 0 ? order : length - otherLength;
 	}
 
 private:
