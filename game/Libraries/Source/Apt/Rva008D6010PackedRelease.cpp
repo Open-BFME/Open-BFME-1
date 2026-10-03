@@ -22,7 +22,8 @@ public:
 	unsigned int m_kind;
 };
 
-extern Rva008D6010Value *g_bfmeFallbackDB;
+class AptValue;
+extern AptValue *g_bfmeFallbackDB;
 
 class Rva008D6010Node
 {
@@ -58,7 +59,7 @@ void Rva008D6010Node::bfmeDrop()
 {
 	unsigned int count = m_count;
 	Rva008D6010Value *value = (Rva008D6010Value *)(m_valueBits & ~1u);
-	if ( value != 0 && value != g_bfmeFallbackDB && count == 2 )
+	if ( value != 0 && value != reinterpret_cast<Rva008D6010Value *>(g_bfmeFallbackDB) && count == 2 )
 	{
 		unsigned int kind = value->m_kind;
 		if ( (kind & 0x3f) == 0x1c &&
