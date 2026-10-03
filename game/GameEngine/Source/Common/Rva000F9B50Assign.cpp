@@ -2,14 +2,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class Rva0036CA00Str
-{
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-
-private:
-	void *m_item;
-};
+typedef StringBase<char> Rva0036CA00Str;
 
 typedef StringBase<unsigned short> Rva00630D00UStr;
 
@@ -51,7 +44,7 @@ public:
 
 Rva000F9B50 &Rva000F9B50::operator=(const Rva000F9B50 &other)
 {
-	m_00 = other.m_00;
+	m_00.set(other.m_00);
 	m_04 = other.m_04;
 	m_08 = other.m_08;
 	m_0C = other.m_0C;
@@ -69,6 +62,6 @@ Rva000F9B50 &Rva000F9B50::operator=(const Rva000F9B50 &other)
 	m_50 = other.m_50;
 	m_54 = other.m_54;
 	m_58.set(other.m_58);
-	m_5C = other.m_5C;
+	m_5C.set(other.m_5C);
 	return *this;
 }
