@@ -951,27 +951,7 @@ void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const vo
 	* and store in "RGBColor" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseRGBColor@INI@@ present-unmatched
-void INI::parseRGBColor( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char* names[3] = { "R", "G", "B" };
-	Int colors[3];
-	for( Int i = 0; i < 3; i++ )
-	{
-		colors[i] = scanInt(ini->getNextSubToken(names[i]));
-		if( colors[ i ] < 0 )
-			throw INI_INVALID_DATA;
-		if( colors[ i ] > 255 )
-			throw INI_INVALID_DATA;
-	}
-
-	// assign the color components to the "RGBColor" pointer at 'store'
-	RGBColor *theColor = (RGBColor *)store;
-	theColor->red		= (Real)colors[ 0 ] / 255.0f;
-	theColor->green = (Real)colors[ 1 ] / 255.0f;
-	theColor->blue	= (Real)colors[ 2 ] / 255.0f;
-
-}
+// The retail definition is owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a color in the form of
