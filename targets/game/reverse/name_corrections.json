@@ -15808,5 +15808,65 @@
   "after_sha256": "d50d3042a25395fa4d756a5808b53682591b85e42861bfb4c9fac908a6dabac5",
   "evidence": "targets/game/reverse/re_attempts.log",
   "reason": "The bank's m_head for the 4 bytes before the connection array was an unproven guess; name_oracle --class ConnectionManager --offset 0 reports the offset unwitnessed in BFME and ZH. The landed TU keeps its existing address-derived placeholder m_unknown00. Declaration spelling only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorFriendNewModuleDataThunk.cpp",
+  "old_name": "UpgradeSoundSelectorClientBehaviorFieldParse",
+  "new_name": "j_000151a9",
+  "before_sha256": "2d84c5cb02f046e6b4dd7b529fad12906caa59a2f079e9f5d21ad3604563b05b",
+  "after_sha256": "58f8299167788f7f3e9105afb9345547f65c120a308bc8f4504a33ffd9254209",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerFriendNewModuleDataThunk.cpp",
+  "old_name": "CloudBreakSpecialPowerFieldParse",
+  "new_name": "j_0003ec8e",
+  "before_sha256": "7c46bfc0ba3000e7e21d1d4f21eb721281ceb02f4cda6689d1c529b845394694",
+  "after_sha256": "eb063ffad0a7caa57f3069e39b1e69d7981e399bf2447bcfa9e311c1f3379680",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerFriendNewModuleDataThunk.cpp",
+  "old_name": "DominateEnemySpecialPowerFieldParse",
+  "new_name": "j_00013c23",
+  "before_sha256": "f0307a813766854f8bf03df8acff90f85415a0127c22f43a55863e14906128d8",
+  "after_sha256": "8b6cf32abf4390e02563932f61911163a6ab18f94d19525dddb3a4ac9c577eb5",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/ScavengerSpecialPowerFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/ScavengerSpecialPowerFriendNewModuleDataThunk.cpp",
+  "old_name": "ScavengerSpecialPowerFieldParse",
+  "new_name": "j_0000f9e3",
+  "before_sha256": "49ef5801471f732c0c85a9cd8941fe19f8660472738f31f7fa8ca96c92668fc1",
+  "after_sha256": "45a681d00b3234a57c33f8dc26634274f7c5a2a689c951397b82bd244f0c2b6f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/TransportAIUpdateFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/TransportAIUpdateFriendNewModuleDataThunk.cpp",
+  "old_name": "TransportAIUpdateFieldParse",
+  "new_name": "j_0003572e",
+  "before_sha256": "4fee1f41d583b90c0ccb5e197206f9e48b4712c326a347c4b51580cc5449888a",
+  "after_sha256": "929186fb58d19c0224d713f49301d5f966b5760b054816c9b81c74b2131a4ec0",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/BloodthirstyUpdateFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/BloodthirstyUpdateFriendNewModuleDataThunk.cpp",
+  "old_name": "BloodthirstyUpdateFieldParse",
+  "new_name": "j_0002c822",
+  "before_sha256": "29e0652f427c2c31808871f1cb43447eaf03e3dedf27a23bfab31fc39d825d85",
+  "after_sha256": "c6a17b48d0c704a6e96f1d30ff54f32c81bd7353b6954806af1b5c1fcae38b21",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

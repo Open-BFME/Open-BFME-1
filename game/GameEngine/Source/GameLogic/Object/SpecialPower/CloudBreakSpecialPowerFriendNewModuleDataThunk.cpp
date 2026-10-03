@@ -39,7 +39,17 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl CloudBreakSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail's factory does not push the field-parse builder itself: at +0x51 it
+// pushes VA 0x0043EC8E, which is the 5-byte ILT thunk RVA 0x0003EC8E
+// (e9 4d a3 21 00 -> RVA 0x00258FE0, the 30-byte builder
+// ?buildFieldParse@Rva00258FE0@@SAXAAVWideMulti@@@Z in
+// Common/WideBuildFieldParse.cpp, which chains the base builder at the thunk
+// RVA 0x0002AF8B then registers its own .rdata table).  The thunk is the address
+// retail pushes, so the reference spells the thunk the ledger owns there; the real
+// EA identity of the builder it reaches is
+// ?buildFieldParse@CloudBreakSpecialPowerModuleData@@SAXAAVMultiIniFieldParse@@@Z,
+// still address-derived in the ledger.
+void __cdecl j_0003ec8e();
 
 class CloudBreakSpecialPower
 {
@@ -52,6 +62,7 @@ ModuleData *CloudBreakSpecialPower::friend_newModuleData(INI *ini)
 {
 	CloudBreakSpecialPowerModuleData *data = new CloudBreakSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &CloudBreakSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>( &j_0003ec8e ));
 	return (ModuleData *)data;
 }

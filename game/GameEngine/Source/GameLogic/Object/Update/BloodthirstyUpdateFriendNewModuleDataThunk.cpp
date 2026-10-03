@@ -39,7 +39,16 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl BloodthirstyUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail's factory does not push the field-parse builder itself: at +0x51 it
+// pushes VA 0x0042C822, which is the 5-byte ILT thunk RVA 0x0002C822
+// (e9 39 a7 25 00 -> RVA 0x00286F60, the 17-byte table-register forwarder
+// ?Rva00286F60@@YAXPAVGen00850920@@@Z in Common/MidTableRegisterForwarders.cpp,
+// which registers the .rdata table 0x010BC738).  The thunk is the address retail
+// pushes, so the reference spells the thunk the ledger owns there; the real EA
+// identity of the builder it reaches is
+// ?buildFieldParse@BloodthirstyUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,
+// still address-derived in the ledger.
+void __cdecl j_0002c822();
 
 class BloodthirstyUpdate
 {
@@ -52,6 +61,7 @@ ModuleData *BloodthirstyUpdate::friend_newModuleData(INI *ini)
 {
 	BloodthirstyUpdateModuleData *data = new BloodthirstyUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &BloodthirstyUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>( &j_0002c822 ));
 	return (ModuleData *)data;
 }

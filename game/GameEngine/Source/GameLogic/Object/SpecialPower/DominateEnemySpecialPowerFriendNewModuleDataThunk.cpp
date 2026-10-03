@@ -39,7 +39,17 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DominateEnemySpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail's factory does not push the field-parse builder itself: at +0x51 it
+// pushes VA 0x00413C23, which is the 5-byte ILT thunk RVA 0x00013C23
+// (e9 98 70 24 00 -> RVA 0x0025ACC0, the 30-byte builder
+// ?buildFieldParse@Rva0025ACC0@@SAXAAVWideMulti@@@Z in
+// Common/WideBuildFieldParse.cpp, which chains the base builder at the thunk
+// RVA 0x0000629E then registers its own .rdata table).  The thunk is the address
+// retail pushes, so the reference spells the thunk the ledger owns there; the real
+// EA identity of the builder it reaches is
+// ?buildFieldParse@DominateEnemySpecialPowerModuleData@@SAXAAVMultiIniFieldParse@@@Z,
+// still address-derived in the ledger.
+void __cdecl j_00013c23();
 
 class DominateEnemySpecialPower
 {
@@ -52,6 +62,7 @@ ModuleData *DominateEnemySpecialPower::friend_newModuleData(INI *ini)
 {
 	DominateEnemySpecialPowerModuleData *data = new DominateEnemySpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DominateEnemySpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>( &j_00013c23 ));
 	return (ModuleData *)data;
 }
