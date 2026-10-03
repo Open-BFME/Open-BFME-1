@@ -15938,5 +15938,15 @@
   "after_sha256": "a897ab481de1d5413c5e2f301f24e6b64e0633c111443132b72a392abf5643e1",
   "evidence": "docs/naming_evidence.md",
   "reason": "Gen_007e9b70::m is a generator-minted Gen* gen-shim placeholder (docs/naming_evidence.md: generator-minted names are anonymous by design, not identities) for retail's six-byte getter `mov eax,0x0130A580; ret`; five matched callers already spell it as the address-derived free function Rva007E9B70Get, now defined once in Rva007E9B70Get.cpp."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00351040ScriptAssetList.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00351040ScriptAssetList.cpp",
+  "old_name": "bfmeTwoGH",
+  "new_name": "j_00017a12",
+  "before_sha256": "2c2e7c3d963d3f14ab6db5474f1097e8bb4b1645c54e706e4802771990e7c268",
+  "after_sha256": "df4cd0477e2d3eae23a9a2841efbc2b78e146189352311a5755fdb57d23252ae",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

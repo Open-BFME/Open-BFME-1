@@ -29,13 +29,11 @@ public:
 	Rva00351040Action *m_next;
 };
 
-class BfmeResGH
-{
-public:
-	void bfmeTwoGH(void *assets, void *context);
-};
+// Retail's 0x00144DC0 two-argument walker has no owned body yet; call sites
+// reach it through the ILT thunk at 0x00017A12 (game/gen_small/thunks_011.cpp).
+extern void j_00017a12();
 
-class ThingTemplate : public BfmeResGH
+class ThingTemplate
 {
 };
 
@@ -134,7 +132,13 @@ private:
 static void collectAsset(const ThingTemplate *thing, void *assets, void *context)
 {
 	if (thing != 0)
-		const_cast<ThingTemplate *>(thing)->bfmeTwoGH(assets, context);
+	{
+		// The thunk's own prototype is void(void); the thiscall ABI is spelled
+		// here so the emitted call is the retail two-push indirect thiscall.
+		union { void (*entry)(); void (ThingTemplate::*member)(void *, void *); } walk;
+		walk.entry = j_00017a12;
+		(const_cast<ThingTemplate *>(thing)->*walk.member)(assets, context);
+	}
 }
 
 void Rva00351040Script::collectAssets(void *assets, void *context)

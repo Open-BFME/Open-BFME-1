@@ -52,11 +52,22 @@ struct ScriptCounter
 	int m_value;
 };
 
-class ScriptEngine
+// Retail's counter lookup body at 0x00344B20 is
+// ?findFlag@Open2Lookup344B20@@QAEPA_NVAsciiString@@@Z (Open2Twins015.cpp); the
+// caller reaches it through the ILT thunk at 0x000142B3, which is the defined
+// name here. Same proven ABI -- thiscall, by-value name, returns the node's
+// 8-byte ScriptCounter storage -- so cast the returned pointer's view.
+extern void j_000142b3();
+
+class BfmeGetCounterCall
 {
 public:
 	ScriptCounter *getCounter(AsciiString name);
 };
+
+typedef ScriptCounter *(BfmeGetCounterCall::*GetCounterFunction)(AsciiString);
+
+class ScriptEngine;
 
 extern ScriptEngine *TheScriptEngine;
 
@@ -73,8 +84,10 @@ bool ScriptConditions::evaluateCounterSeconds(Condition *pCondition)
 	Condition *cond = pCondition;
 	int count = 0;
 
-	ScriptCounter *counter =
-		TheScriptEngine->getCounter(cond->getParameter(0)->m_string);
+	union { void (*raw)(void); GetCounterFunction member; } getCounter;
+	getCounter.raw = j_000142b3;
+	ScriptCounter *counter = (reinterpret_cast<BfmeGetCounterCall *>(TheScriptEngine)
+		->*getCounter.member)(cond->getParameter(0)->m_string);
 	if (counter)
 		count = counter->m_value;
 

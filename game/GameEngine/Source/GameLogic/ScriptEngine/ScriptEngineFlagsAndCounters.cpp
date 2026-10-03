@@ -56,12 +56,25 @@ struct ScriptCounter
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
+// Retail's read-only flag lookup body at 0x00344E10 is
+// ?findFlag@BFMEScriptEngineFlagLookup@@QAEPA_NVAsciiString@@@Z
+// (ScriptEngineClearFlag.cpp); setFlag reaches it through the ILT thunk at
+// 0x0004278F, which is the defined name here.
+extern void j_0004278f();
+
+class BFMEScriptEngineFlagLookup
+{
+public:
+	bool *findFlag(AsciiString name);
+};
+
+typedef bool *(BFMEScriptEngineFlagLookup::*FindFlagFunction)(AsciiString);
+
 class ScriptEngine
 {
 protected:
 	ScriptCounter *bfmeCounter(AsciiString name);
 	bool *bfmeFlagForWrite(AsciiString name);
-	bool *bfmeFlagForRead(AsciiString name);
 	void addCounter(ScriptAction *action);
 	void subCounter(ScriptAction *action);
 	void setFlag(ScriptAction *action, bool copyFromFlag);
@@ -86,7 +99,11 @@ void ScriptEngine::setFlag(ScriptAction *action, bool copyFromFlag)
 	bool value = false;
 	if (copyFromFlag)
 	{
-		bool *source = bfmeFlagForRead(sourceAction->getParameter(1)->m_string);
+		union { void (*raw)(void); FindFlagFunction member; } findFlag;
+		findFlag.raw = j_0004278f;
+		bool *source =
+			(reinterpret_cast<BFMEScriptEngineFlagLookup *>(this)->*findFlag.member)(
+				sourceAction->getParameter(1)->m_string);
 		if (source)
 			value = *source;
 	}
