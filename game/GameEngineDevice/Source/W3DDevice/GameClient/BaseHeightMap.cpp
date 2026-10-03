@@ -2407,21 +2407,7 @@ Bool BaseHeightMapRenderObjClass::updateTreePosition(DrawableID id, Coord3D loca
 	return false;
 };
 
-//=============================================================================
-// BaseHeightMapRenderObjClass::addProp
-//=============================================================================
-/** Adds a prop to the prop buffer.*/
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAddProp.cpp
-// ?addProp@BaseHeightMapRenderObjClass@@QAEXHUCoord3D@@MMABVAsciiString@@@Z present-unmatched
-void BaseHeightMapRenderObjClass::addProp(Int id, Coord3D location, Real angle, Real scale, 
-																					const AsciiString &modelName)
-{
-	if (m_propBuffer) {
-		m_propBuffer->addProp(id, location, angle, scale, modelName);
-	}
-};
-
+// Exact BFME addProp forwarding body is provided by BaseHeightMapAddProp.cpp.
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::removeProp
