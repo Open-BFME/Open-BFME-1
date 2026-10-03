@@ -33,7 +33,7 @@ extern unsigned char g_aptPalantirInitialized;
 extern unsigned char g_aptPalantirJewelBrightened;
 extern int g_aptPalantirWindow;
 extern char g_aptPalantirJewelName[];
-extern char g_aptPalantirBrightJewel[];
+extern const char g_rva01080FC0[2];
 extern char g_aptPalantirNormalJewel[];
 
 // ?aptPalantirOnInitialized@@YAXXZ
@@ -48,7 +48,7 @@ void aptPalantirOnInitialized()
 	switch( TheAptPalantir->m_jewelMode )
 	{
 		case 1:
-			jewel = g_aptPalantirBrightJewel;
+			jewel = g_rva01080FC0;
 			break;
 		default:
 			jewel = g_aptPalantirNormalJewel;

@@ -8,7 +8,7 @@ struct BfmeP1060
 
 extern BfmeP1060 *g_bfmeP1060;
 extern char g_bfmeLitA1060[];
-extern char g_bfmeLitB1060[];
+extern const char g_rva01080FC0[2];
 extern char g_bfmeLitC1060[];
 
 class BfmeX1060;
@@ -43,7 +43,7 @@ public:
 void bfmeGo1060B(void)
 {
 	int v = g_bfmeP1060->m_bfme54;
-	char *s = --v ? g_bfmeLitA1060 : g_bfmeLitB1060;
+	char *s = --v ? g_bfmeLitA1060 : const_cast<char *>(g_rva01080FC0);
 
 	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)g_aptPalantirWindow,
 		(int)g_bfmeLitC1060, 1, (int)s, 0, 0, 0, 0);

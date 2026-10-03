@@ -58,7 +58,7 @@ public:
 #pragma comment(linker, "/alternatename:?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z=?j_0002c7cd@@YAXXZ")
 #pragma comment(linker, "/alternatename:?write@UserPreferences@@UAE_NXZ=?j_00030495@@YAXXZ")
 
-extern char g_bfmeJpegSingleMessage;
+extern const char g_rva01080FC0[2];
 extern char g_bfmeJpegExtendedMessage;
 
 class BfmeAptScreenOnlineShell
@@ -108,7 +108,7 @@ void BfmeAptScreenOnlineShell::_bfme_onlineAdvMode(
 		{
 			const char *source = preferences.getBool(
 				AsciiString( "InAdvMode" ), false )
-				? &g_bfmeJpegSingleMessage : &g_bfmeJpegExtendedMessage;
+				? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
 			char *destination = output;
 			char copied;
 			do

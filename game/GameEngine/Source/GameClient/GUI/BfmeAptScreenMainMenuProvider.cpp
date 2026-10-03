@@ -16,7 +16,7 @@ public:
 };
 
 extern GameState *TheGameState;
-extern char g_bfmeJpegSingleMessage;
+extern const char g_rva01080FC0[2];
 extern char g_bfmeJpegExtendedMessage;
 
 class BfmeAptScreenMainMenu
@@ -62,7 +62,7 @@ void BfmeAptScreenMainMenu::bfmeProvide(
 		{
 			const char *source = TheGameState->doesSaveGameExist(
 				AsciiString( "00000000.sav" ) )
-				? &g_bfmeJpegSingleMessage : &g_bfmeJpegExtendedMessage;
+				? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
 			char *destination = output;
 			char value;
 			do
@@ -77,7 +77,7 @@ void BfmeAptScreenMainMenu::bfmeProvide(
 		if( !setting )
 		{
 			const char *source = m_25D
-				? &g_bfmeJpegExtendedMessage : &g_bfmeJpegSingleMessage;
+				? &g_bfmeJpegExtendedMessage : g_rva01080FC0;
 			char *destination = output;
 			char value;
 			do

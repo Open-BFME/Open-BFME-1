@@ -7,7 +7,7 @@
 #include "Common/QuickmatchPreferences.h"
 #include "Common/QuotedPrintable.h"
 
-extern char g_bfmeJpegSingleMessage;
+extern const char g_rva01080FC0[2];
 extern char g_bfmeJpegExtendedMessage;
 
 class BfmeAsciiStringLengthSetter
@@ -20,7 +20,7 @@ public:
 
 void QuickMatchPreferences::setMapSelected(const AsciiString& mapName, Bool selected)
 {
-	const char *value = selected ? &g_bfmeJpegSingleMessage : &g_bfmeJpegExtendedMessage;
+	const char *value = selected ? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
 	BfmeAsciiStringLengthSetter *preference;
 	(preference = reinterpret_cast<BfmeAsciiStringLengthSetter *>( &(*this)[AsciiStringToQuotedPrintable(mapName)] ),
 		preference->set(value, value ? strlen(value) : 0));
