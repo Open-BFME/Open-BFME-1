@@ -20,8 +20,6 @@ enum { MAX_SLOTS = 8, PLAYERTEMPLATE_OBSERVER = -2 };
 #define FALSE false
 
 #include <set>
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> struct BfmeStartStringData
@@ -66,7 +64,7 @@ public:
 	const char *str(void) const
 	{
 		void *data = *(void *const *)this;
-		return data ? (const char *)data + 8 : Rva006A16B0Empty;
+		return data ? (const char *)data + 8 : "";
 	}
 	Int getLength(void) const
 	{
@@ -309,7 +307,7 @@ static __forceinline const char *BfmeStartAsciiString(
 	const AsciiString &string)
 {
 	void *data = *(void *const *)&string;
-	return data ? (const char *)data + 8 : Rva006A16B0Empty;
+	return data ? (const char *)data + 8 : "";
 }
 
 static __forceinline const unsigned short *BfmeStartUnicodeString(

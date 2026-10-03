@@ -464,7 +464,6 @@ struct BfmeTargetMapMetaData
 };
 
 extern const unsigned short BFMEEmptyUnicodeString;
-extern const char Rva006A16B0Empty[];
 
 static __forceinline const unsigned short *BfmeTargetUnicodeString(
 	const UnicodeString &string)
@@ -478,7 +477,7 @@ static __forceinline const char *BfmeTargetAsciiString(
 	const AsciiString &string)
 {
 	void *data = *(void *const *)&string;
-	return data ? (const char *)data + 8 : Rva006A16B0Empty;
+	return data ? (const char *)data + 8 : "";
 }
 
 // The generic GameInfo path uses the same BFME virtual slots as LANGameInfo,

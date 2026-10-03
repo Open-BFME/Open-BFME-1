@@ -20,7 +20,6 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-extern const char Rva006A16B0Empty[];
 
 class AsciiString : private StringBase<char>
 {
@@ -32,7 +31,7 @@ public:
 	void format( AsciiString format, ... );
 	const char *str( void ) const
 	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
+		return m_data ? (const char *)m_data + 8 : "";
 	}
 };
 

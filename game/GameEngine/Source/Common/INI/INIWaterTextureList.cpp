@@ -21,8 +21,6 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 
 typedef int Int;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -64,7 +62,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)((const char *)m_data + 8) : Rva006A16B0Empty;
+		return m_data ? (const char *)((const char *)m_data + 8) : "";
 	}
 };
 

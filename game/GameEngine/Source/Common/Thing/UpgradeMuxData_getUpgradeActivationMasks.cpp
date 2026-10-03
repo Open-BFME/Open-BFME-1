@@ -36,8 +36,6 @@ class AsciiString : public StringBase<char>
 {
 };
 
-extern char Rva006A16B0Empty[];
-
 class BFMERetailAsciiString : public StringBase<char>
 {
 public:
@@ -52,7 +50,7 @@ public:
 	const char *str() const
 	{
 		const char *data = *reinterpret_cast<const char *const *>(this);
-		return data ? data + 8 : Rva006A16B0Empty;
+		return data ? data + 8 : "";
 	}
 
 private:

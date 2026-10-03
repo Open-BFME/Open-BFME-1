@@ -340,12 +340,10 @@ void ladderSelectedCallback(void)
 	GameSpyCloseOverlay( GSOVERLAY_LADDERSELECT );
 }
 
-extern const char Rva006A16B0Empty[];
-
 static __forceinline const char *bfmePasswordString(const AsciiString &value)
 {
 	const char *data = *(const char **)&value;
-	return data ? data + 8 : Rva006A16B0Empty;
+	return data ? data + 8 : "";
 }
 
 extern const char g_bfmeEmptyAscii[];
