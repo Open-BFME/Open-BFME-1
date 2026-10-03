@@ -1,5 +1,5 @@
-// ?d_008d0f10@@YAXXZ
-// partial score=0.92 date=2026-09-28
+// ?rva008D0F10InvokeNamedMember@@YAXPAVRva008AE770Stack@@PAURva008D0F10Context@@@Z
+// partial score=0.5231 date=2026-10-03
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008D0F10, opaque Apt action body shared by the 1212A/1214A/1216A entry
 // points. It pops a member name, an object and an argument count, resolves the
@@ -140,9 +140,9 @@ void rva008D0F10InvokeNamedMember(Rva008AE770Stack *state, Rva008D0F10Context *c
             reinterpret_cast<BfmeStrVKI *>(&name), 1, 1, 0));
     if (result == 0 || result->undefined()) {
         if (bfmeCompareVSC(name.text(), "apply") == 0 || bfmeCompareVSC(name.text(), "call") == 0) {
-            result = object;
             if ((countValue->type() == 7 && !countValue->undefined()) ||
                 (countValue->type() == 6 && !countValue->undefined())) {
+                result = object;
                 if (count > 0) {
                     Rva8CD130Value *thisValue = state->m_entries[state->m_count - 1];
                     if (thisValue != 0 && !thisValue->undefined()) object = thisValue;
@@ -153,6 +153,7 @@ void rva008D0F10InvokeNamedMember(Rva008AE770Stack *state, Rva008D0F10Context *c
                     object = g_bfmeFallbackDB;
                 }
             } else {
+                result = object;
                 object = countValue;
                 count = state->m_entries[state->m_count - 1]->toInteger();
                 if (count > 1) {
