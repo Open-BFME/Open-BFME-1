@@ -6,8 +6,6 @@
 typedef bool Bool;
 typedef int Int;
 
-extern char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -39,7 +37,7 @@ public:
 
     const char *str() const
     {
-        return m_data != 0 ? m_data->m_text : Rva006A16B0Empty;
+        return m_data != 0 ? m_data->m_text : "";
     }
 };
 

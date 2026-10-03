@@ -31,7 +31,6 @@ private:
 extern "C" BfmeWeaponFormattedText *__cdecl bfmeFormatText(
 	BfmeWeaponFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-extern char Rva006A16B0Empty[];
 extern int g_guardTargetTypeThrowInfo;
 
 class BfmeWeaponSetXferView
@@ -152,7 +151,7 @@ void BfmeWeaponSetFlags::xfer(BfmeWeaponSetXferView *xfer)
 			if (data != 0)
 				lookupName = reinterpret_cast<unsigned char *>(data) + 8;
 			else
-				lookupName = Rva006A16B0Empty;
+				lookupName = "";
 			int flag = bfmeLookupB(lookupName);
 			if (flag < 0)
 			{

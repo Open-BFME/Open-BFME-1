@@ -8,8 +8,6 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
-extern const char Rva006A16B0Empty[];
-
 #include "ascii_string.h"
 
 struct Rva001408C0Target;

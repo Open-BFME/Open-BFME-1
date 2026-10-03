@@ -214,7 +214,6 @@ public:
 // Retail spells the singleton at 0x012F076C TheScriptEngine (declared above);
 // BfmeP1087 is this TU's view of the reviewed player-mask thunk, so it is cast
 // at the use instead of being a second name for the global.
-extern char Rva006A16B0Empty[];
 
 // The per-player light-point reader is only known as the thunk at 0x00047D34,
 // so it is called through the thunk's address rather than by name.
@@ -369,7 +368,7 @@ Bool ScriptConditions::evaluatePlayerHasNumberObjectsWithModelCondition(
 	int count = 0;
 	{
 		char *stringData = *(char **)((char *)modelConditionParm + 0x10);
-		char *name = stringData ? stringData + 8 : Rva006A16B0Empty;
+		char *name = stringData ? stringData + 8 : "";
 		int modelCondition = bfmeLookup_001c62b0((void *)name);
 		while (mask)
 		{

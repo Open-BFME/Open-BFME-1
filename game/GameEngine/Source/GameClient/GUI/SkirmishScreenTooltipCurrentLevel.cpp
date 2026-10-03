@@ -2,8 +2,6 @@
 // Retail 0x0057A200.  The constructor at 0x0057DA50 registers this callback
 // as Skirmish/tooltipPlayerLevelIcon.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> struct StringInlineData
@@ -40,7 +38,7 @@ public:
 	AsciiString &operator=( const char *text );
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 };
 
