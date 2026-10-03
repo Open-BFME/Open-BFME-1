@@ -2,12 +2,6 @@
 
 extern "C" long __ftol2(double v);
 
-void __cdecl bfmeGoVGM(float x, float y, int *ox, int *oy, int w, int h)
-{
-	*ox = (int)((x + 1.0f) * w * 0.5f);
-	*oy = (int)((1.0f - y) * h * 0.5f);
-}
-
 class Rva00894D90Accessor
 {
 public:

@@ -90,8 +90,9 @@ void W3DLogicalScreenToPixelScreen( Real logX, Real logY,
 																		Int *screenX, Int *screenY,
 																		Int screenWidth, Int screenHeight )
 {
-	*screenX = REAL_TO_INT((screenWidth  * (logX + 1.0f)) / 2.0f);
-	*screenY = REAL_TO_INT((screenHeight * (-logY + 1.0f)) / 2.0f);
+	// retail 0x006BEE90 truncates with a plain (Int) cast, not REAL_TO_INT
+	*screenX = (Int)((logX + 1.0f) * screenWidth * 0.5f);
+	*screenY = (Int)((1.0f - logY) * screenHeight * 0.5f);
 
 }  // end W3DLogicalScreenToPixelScreen
 
