@@ -12,7 +12,11 @@ typedef unsigned int UnsignedInt;
 #include <bitset>
 
 // The retail call is Thing::isAnyKindOf through ILT 0x0004250A; the BFME mask
-// is six dwords, wider than the reference-ZH KindOfMaskType.
+// is six dwords, wider than the reference-ZH KindOfMaskType. The matched
+// body at 0x00132AE0 is spelled with the BitFlags<116> view class
+// (game/GameEngine/Source/Common/Thing/Thing.cpp), which is what this
+// declaration must mangle to; only the reference changes, not the six-dword
+// mask that is built below.
 struct KindOfMask
 {
 	enum BogusInitType
@@ -31,10 +35,13 @@ struct KindOfMask
 
 typedef KindOfMask KindOfMaskType;
 
+template <int N>
+class BitFlags;
+
 class Thing
 {
 public:
-	bool isAnyKindOf(const KindOfMaskType &mask) const;
+	bool isAnyKindOf(const BitFlags<116> &mask) const;
 };
 
 class GameLogic;
@@ -65,6 +72,6 @@ void Drawable::setIndicatorColor(UnsignedInt color)
 	m_indicatorColor = color;
 	Thing *object = getObject();
 	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheGameLogic)->m_unreconstructed_114
-		|| (object && object->isAnyKindOf(KindOfMaskType(KindOfMaskType::kInit, 119, 179)));
+		|| (object && object->isAnyKindOf(*(const BitFlags<116> *)&(KindOfMaskType &)(KindOfMaskType(KindOfMaskType::kInit, 119, 179))));
 	bfmeSetIndicatorOn(indicatorOn);
 }
