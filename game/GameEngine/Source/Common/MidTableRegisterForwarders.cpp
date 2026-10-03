@@ -43,7 +43,12 @@ BFME_TABLE_REGISTER( Rva00124590, g_table_00124590 )
 BFME_TABLE_REGISTER( Rva001FABE0, g_table_001FABE0 )
 BFME_TABLE_REGISTER( Rva002029D0, g_table_002029D0 )
 BFME_TABLE_REGISTER( Rva00205F80, g_table_00205F80 )
-BFME_TABLE_REGISTER( Rva0020D260, g_table_0020D260 )
+extern int g_table_0020D260;
+
+extern "C" void __cdecl SpawnUnitBehaviorFieldParse( MultiIniFieldParse &parse )
+{
+	parse.add( reinterpret_cast<const FieldParse *>( &g_table_0020D260 ), 0 );
+}
 BFME_TABLE_REGISTER( Rva00211A30, g_table_00211A30 )
 extern int g_table_00217AB0;
 
