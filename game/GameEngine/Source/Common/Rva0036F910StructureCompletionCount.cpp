@@ -1,9 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/bfmeobject /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include "GameLogic/Object.h"
 
 typedef int ObjectID;
 
@@ -14,8 +15,12 @@ public:
 	virtual void unused1();
 	virtual void unused2();
 	virtual bool isComplete();
-	BfmeY982 *bfmeConv982B();
 };
+
+// Both complete 157-byte retail callers pass the hash payload unchanged in ECX
+// through ILT 0x0000DE9F to Object::getProjectileUpdateInterface at 0x001BF630.
+// Its 45-byte body reads Object+0x1f0 and returns the interface unchanged in EAX.
+// Keep the existing slot-0x0c return view; this binding does not recover its name.
 
 typedef _STL::hash_map<ObjectID, BfmeY982 *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > Rva0036F910ObjectMap;
 
@@ -68,7 +73,7 @@ int Rva0036F910Owner::countCompleteStructures()
 				BfmeY982 *object = (*it).second;
 				if (object != 0)
 				{
-					BfmeY982 *completion = object->bfmeConv982B();
+					BfmeY982 *completion = (BfmeY982 *)((const Object *)object)->getProjectileUpdateInterface();
 					if (completion != 0 && completion->isComplete())
 						++count;
 				}
@@ -95,7 +100,7 @@ int Rva0036F910Owner::countCompleteStructuresSecondary()
 				BfmeY982 *object = (*it).second;
 				if (object != 0)
 				{
-					BfmeY982 *completion = object->bfmeConv982B();
+					BfmeY982 *completion = (BfmeY982 *)((const Object *)object)->getProjectileUpdateInterface();
 					if (completion != 0 && completion->isComplete())
 						++count;
 				}
