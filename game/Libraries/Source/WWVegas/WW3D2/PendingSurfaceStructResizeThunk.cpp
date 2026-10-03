@@ -58,7 +58,7 @@ protected:
 };
 
 // ?W3DRadarResetSurface::operator= present-unmatched
-W3DRadarResetSurface &W3DRadarResetSurface::operator=(const W3DRadarResetSurface &that)
+inline W3DRadarResetSurface &W3DRadarResetSurface::operator=(const W3DRadarResetSurface &that)
 {
 	if (that.m_surface)
 		that.m_surface->addRef();
