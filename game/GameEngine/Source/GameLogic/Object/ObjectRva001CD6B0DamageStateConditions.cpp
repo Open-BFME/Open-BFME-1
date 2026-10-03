@@ -62,8 +62,6 @@ public:
 class GameLogic
 {
 public:
-	Bool isLoadingMap() const { return m_loadingMap; }
-
 	char m_pad000[0x69];
 	Bool m_loadingMap;								// +0x069
 };
@@ -109,7 +107,7 @@ void Object::rva001CD6B0(BodyDamageType newState, Int variant)
 		clearAndSetModelConditionFlags((const PinnedModelConditionFlags &)(ModelConditionFlags(ModelConditionFlags::kInit, 3, 4, 5)), (const PinnedModelConditionFlags &)(newDamage));
 	}
 
-	if (!TheGameLogic->isLoadingMap() && m_drawable)
+	if (!TheGameLogic->m_loadingMap && m_drawable)
 	{
 		union
 		{
