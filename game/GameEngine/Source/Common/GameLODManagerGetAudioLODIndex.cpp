@@ -101,7 +101,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail VA 0x01336E5C is the existing address-derived singleton cell.
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern bool _bfme_debugReportingEnabled(void);
 
@@ -122,8 +123,8 @@ Int GameLODManager::getAudioLODIndex(const AsciiString &name)
 	if (_bfme_debugReportingEnabled())
 	{
 		_bfme_debugRecordCallsite(1);
-		TheBfmeAwakenDebug->slot60();
-		BfmeAwakenLog *report = TheBfmeAwakenDebug->slot6C(0, 0);
+		reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60();
+		BfmeAwakenLog *report = reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot6C(0, 0);
 		report = report->slot38(
 			"GameLODManager::getAudioLODIndex - Invalid LOD name '");
 		const char *text = name.m_data ? name.m_data->text : "";

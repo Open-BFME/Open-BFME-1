@@ -52,7 +52,8 @@ public:
 	virtual BfmeAwakenLog *v6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail VA 0x01336E5C is the existing address-derived singleton cell.
+extern void *g_Rva00F36E5C;
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
 extern "C" __declspec(dllimport) void __stdcall AIL_mem_free_lock(void *ptr);
@@ -84,8 +85,8 @@ BfmeRecordBQ::~BfmeRecordBQ()
 		if (_bfme_debugReportingEnabled())
 		{
 			_bfme_debugRecordCallsite(1);
-			TheBfmeAwakenDebug->v60();
-			TheBfmeAwakenDebug->v6c(0, 0)
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v60();
+			reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->v6c(0, 0)
 				->v38("Attempting to close OpenAudioFile with an open count of ")
 				->v34(m_openCount)
 				->v38(". This will probably crash the game!")
