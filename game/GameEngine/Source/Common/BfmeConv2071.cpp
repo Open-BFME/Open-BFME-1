@@ -1,10 +1,19 @@
-extern int g_bfmeDivGT;
+// The divisor at 0x012BB1CC is the .bss int the only definition of this
+// address spells g_006fb9c0 (W3DDevice/GameClient/Gen_006fb9c0_Ftol.cpp, whose
+// setter at 0x006FB9C0 stores (int)float into it).  Both spellings share the
+// address in dir32_addresses.csv; only that one has a definition.
+extern int g_006fb9c0;
+
+// The sub-object start retail calls through the ILT thunk 0x0002A1B2, which
+// jumps to ParabolicEase::setEaseTimes (0x00094970, Common/
+// ParabolicEaseSetEaseTimesBFME.cpp).  The argument types are this TU's:
+// two ints and a float pushed raw, which is why the call goes through the
+// thunk's own address rather than that name.
+extern void j_0002a1b2();
 
 class BfmeSubGT
 {
 public:
-	void bfmeStartGT(int a, int b, float c);
-
 	unsigned char m_bfmeGapGT[8];
 };
 
@@ -39,7 +48,7 @@ void BfmeSetupGT::bfmeInitGT(int p1, int p2, int p3, int p4, int p5, int p6)
 	if (a < 1)
 		a = 0;
 
-	m_bfme1bcGT = a / g_bfmeDivGT;
+	m_bfme1bcGT = a / g_006fb9c0;
 
 	if (m_bfme1bcGT < 1)
 		m_bfme1bcGT = 0;
@@ -47,7 +56,7 @@ void BfmeSetupGT::bfmeInitGT(int p1, int p2, int p3, int p4, int p5, int p6)
 	if (p2 < 1)
 		p2 = 1;
 
-	m_bfme1acGT = p2 / g_bfmeDivGT;
+	m_bfme1acGT = p2 / g_006fb9c0;
 
 	if (m_bfme1acGT < 1)
 		m_bfme1acGT = 1;
@@ -58,7 +67,9 @@ void BfmeSetupGT::bfmeInitGT(int p1, int p2, int p3, int p4, int p5, int p6)
 	m_bfme1b4GT = m_bfme23c4GT;
 	m_bfme1b8GT = m_bfme23c4GT;
 
-	m_bfmeSubGT.bfmeStartGT(p4, p5, (float)p2);
+	union { void (*raw)(); void (BfmeSubGT::*member)(int, int, float); } start;
+	start.raw = ::j_0002a1b2;
+	(m_bfmeSubGT.*start.member)(p4, p5, (float)p2);
 
 	m_bfme1d8GT = p6;
 }

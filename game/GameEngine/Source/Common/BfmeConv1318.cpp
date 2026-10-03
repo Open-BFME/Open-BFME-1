@@ -1,5 +1,26 @@
 // Open-BFME5 conversions.
 
+// The release the sink teardown calls is the record teardown at 0x008068B0,
+// whose body is Libraries/Source/DirtySock/Y2Rva00806580Module.cpp.  Retail
+// passes the item pointer and ignores the returned count.
+struct Rva00806580Record;
+int Rva008068B0(Rva00806580Record *record);
+
+// The four-int box setter retail reaches through the ILT thunk 0x000297C6 is
+// Rva00494380::set (0x00494380), whose body is Common/Rva00494380Set.cpp; the
+// class is declared there exactly as here, with only the member left undefined.
+class Rva00494380
+{
+	char m_pad[0x0C];
+	int m_0C;
+	int m_10;
+	int m_14;
+	int m_18;
+
+public:
+	void set(int a, int b, int c, int d);
+};
+
 struct BfmeVecTMA
 {
 	float m_bfmeX;
@@ -68,8 +89,6 @@ public:
 	virtual void bfmeStopTMB() = 0;
 };
 
-void bfmeFreeTMB(void *p);
-
 class BfmeThingTMB
 {
 public:
@@ -89,7 +108,7 @@ void BfmeThingTMB::bfmeGoTMB()
 		m_bfmeFlag = 0;
 		m_bfmeSink->bfmeStopTMB();
 	}
-	bfmeFreeTMB(m_bfmeItem);
+	Rva008068B0(reinterpret_cast<Rva00806580Record *>(m_bfmeItem));
 }
 
 class BfmeBoxTMC
@@ -103,7 +122,6 @@ public:
 	virtual void bfmeV5TMC();
 	virtual void bfmeV6TMC();
 	virtual void bfmeApplyTMC();
-	void bfmeSetTMC(int a, int b, int c, int d);
 };
 
 class BfmeThingTMC
@@ -121,7 +139,7 @@ public:
 
 int BfmeThingTMC::bfmeGoTMC(int unused)
 {
-	m_bfmeBox.bfmeSetTMC(m_bfmeLeft, m_bfmeTop, m_bfmeRight, m_bfmeBottom);
+	reinterpret_cast<Rva00494380 *>(&m_bfmeBox)->set(m_bfmeLeft, m_bfmeTop, m_bfmeRight, m_bfmeBottom);
 	m_bfmeBox.bfmeApplyTMC();
 	return 1;
 }
@@ -136,6 +154,6 @@ public:
 
 void BfmeThingTMD::bfmeGoTMD(int x, int y, int w, int h)
 {
-	m_bfmeBox->bfmeSetTMC(x, y, x + w, y + h);
+	reinterpret_cast<Rva00494380 *>(m_bfmeBox)->set(x, y, x + w, y + h);
 	m_bfmeBox->bfmeApplyTMC();
 }

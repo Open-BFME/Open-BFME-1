@@ -3,8 +3,30 @@
 extern "C" void *memset(void *d, int c, unsigned n);
 #pragma intrinsic(memset)
 
-void bfmeBigFreeVLX(void *p);
-void bfmeSmallFreeVLX(void *p, unsigned n);
+// Retail's large-block release: the five-byte ILT thunk at 0x0002AB35.  It is
+// cdecl with the block pointer pushed, so the call goes through the thunk's own
+// address, which is where retail's own call lands; whatever the thunk jumps to
+// is retail's business, not this file's.
+extern void j_0002ab35();
+
+// The small-block release is STLport's own node-pool deallocator,
+// _STL::__node_alloc<true, 0>::_M_deallocate at 0x0082E5F0, whose body is
+// WWLib/node_alloc_M_deallocateThunk.cpp.  It is a private static member, so
+// this TU reaches it under its real name through a TU-local friend, the shape
+// WorldHeightMap_dtor.cpp uses for _M_allocate.
+
+void bfmeFreeVLX(void *p, unsigned int n);
+
+namespace _STL
+{
+template <bool __threads, int __inst> class __node_alloc;
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend void ::bfmeFreeVLX(void *, unsigned int);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
+};
+}
 
 struct BfmeHdrVLX
 {
@@ -32,7 +54,7 @@ void bfmeFreeVLX(void *p, unsigned n)
 	n1->m_bfmeTag = 0xdebd;
 	memset(p, 0xa3, n);
 	if (n3 > 0x80)
-		bfmeBigFreeVLX(n1);
+		reinterpret_cast<void (*)(void *)>(j_0002ab35)(n1);
 	else
-		bfmeSmallFreeVLX(n1, n3);
+		_STL::__node_alloc<true, 0>::_M_deallocate(n1, n3);
 }
