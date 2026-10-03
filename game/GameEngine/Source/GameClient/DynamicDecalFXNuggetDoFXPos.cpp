@@ -1,5 +1,5 @@
 // ?doFXPos@DynamicDecalFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // Retail RVA 00429080; complete 575-byte positional callback.
 // Native StringBase access inlines; math/color accessors stay out of line.
 // See identity_evidence/00429080-dynamic-decal.md for slot and ABI evidence.
@@ -9,6 +9,8 @@
 #include "matrix3d.h"
 #undef inline
 #include "ascii_string.h"
+#include "GameClient/Color.h"
+#include "GameClient/Shadow.h"
 
 void adjustVector(Coord3D *vec, const Matrix3D *mtx);
 
@@ -29,39 +31,28 @@ class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 extern const Real BfmeZeroRange;
 
-// BFME's dynamic decal path passes the extended ShadowTypeInfo used by the
-// renderer's BFME add-decal entry.  The standard ZH header only describes the
-// first 64 name bytes, so keep this ABI view local to the conversion TU.
-class Shadow
-{
+// BFME-only fields are deliberately separate from canonical Shadow.
+struct Rva00429080ShadowInfo {
+ char name[128]; int type; bool allowUpdates,allowWorldAlign; char pad[2];
+ float sizeX,sizeY,offsetX,offsetY,unused98,field9C; bool fieldA0;
+};
+extern void j_0000dc7e(); // Shadow::setOpacity at4597A0; RET4.
+extern void j_00005119(); // Shadow::rva00459960 at459960; RET32.
+class Rva00429080ShadowView {
 public:
-	struct ShadowTypeInfo
-	{
-		Char name[128];
-		Int type;
-		Bool allowUpdates;
-		Bool allowWorldAlign;
-		Char pad[2];
-		Real sizeX;
-		Real sizeY;
-		Real offsetX;
-		Real offsetY;
-		Real unused98;
-		Real field9C;
-		Bool fieldA0;
-	};
-
-	void rva00459960(Int, Int, Int, Int, Int, Int, Int, Int);
-	void setOpacity(Int value);
-
-	// The BFME decal object has a vtable/prefix before its position, unlike
-	// the small no-vptr view used by the setter-only thunks.
-	Char m_pad00[8];
-	Real m_x;
-	Real m_y;
-	Real m_z;
-	Char m_pad14[0x0c];
-	Real m_localAngle;
+ char field00[8]; Coord3D field08; char field14[12]; float field20;
+ __forceinline void setOpacity(int value) {
+  typedef void (Rva00429080ShadowView::*Call)(int);
+  typedef char WidthCheck[sizeof(Call)==sizeof(void(*)()) ? 1 : -1];
+  union { void (*entry)(); Call member; } call;
+  call.entry=j_0000dc7e; (this->*call.member)(value);
+ }
+ __forceinline void rva00459960(int a,int b,int c,int d,int e,int f,int g,int h) {
+  typedef void (Rva00429080ShadowView::*Call)(int,int,int,int,int,int,int,int);
+  typedef char WidthCheck[sizeof(Call)==sizeof(void(*)()) ? 1 : -1];
+  union { void (*entry)(); Call member; } call;
+  call.entry=j_00005119; (this->*call.member)(a,b,c,d,e,f,g,h);
+ }
 };
 
 class BfmeColourABK { public: void bfmeSetABK(int); };
@@ -73,7 +64,7 @@ public:
 	// entry: the manager's destructor and object-following overload.
 	virtual void managerSlot00(void);
 	virtual void managerSlot04(void);
-	virtual Shadow *addDecal(Shadow::ShadowTypeInfo *info);
+	virtual Shadow *addDecal(Rva00429080ShadowInfo *info);
 };
 
 class ProjectedShadowManager;
@@ -117,7 +108,7 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 		return;
 
 	Coord3D offset;
-	Shadow::ShadowTypeInfo decalInfo;
+	Rva00429080ShadowInfo decalInfo;
 	decalInfo.field9C = 20.0f;
 	decalInfo.fieldA0 = false;
 	strncpy(decalInfo.name,
@@ -149,17 +140,17 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	if (shadow)
 	{
 		if (primaryMtx && m_orientToObject)
-			shadow->m_localAngle = primaryMtx->Get_Z_Rotation();
+			((Rva00429080ShadowView *)shadow)->field20 = primaryMtx->Get_Z_Rotation();
 		else
-			shadow->m_localAngle = 0.0f;
+			((Rva00429080ShadowView *)shadow)->field20 = 0.0f;
 
 		((BfmeColourABK *)shadow)->bfmeSetABK(m_color.getAsInt());
 		*(Coord3D*)((char*)shadow+8) = position;
 
 		Int initialOpacity = (Int)(m_startingDelay > BfmeZeroRange
 			? BfmeZeroRange : (Real)m_opacityStart);
-		shadow->setOpacity(initialOpacity);
-		shadow->rva00459960(
+		((Rva00429080ShadowView *)shadow)->setOpacity(initialOpacity);
+		((Rva00429080ShadowView *)shadow)->rva00459960(
 			(Int)(m_startingDelay * BFME_FRAME_SCALE),
 			(Int)(m_lifetime * BFME_FRAME_SCALE),
 			m_opacityStart,

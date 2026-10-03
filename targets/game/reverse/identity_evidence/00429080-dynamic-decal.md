@@ -38,3 +38,24 @@ body, not the old bank's guessed setBounds spelling.
 Literal checks include the complete empty-string terminator atVA0107388B
 and frame multiplier bytes8FC2F53C atVA010F224C. The scoped add_match gate verified575/575 bytes, all calls, one float
 constant and seven DIR32 operands.
+
+## Review repair of f2f04fe5887
+
+The first landing redeclared Shadow/ShadowTypeInfo despite the covered
+GameClient/Shadow.h. The corrected source includes that canonical header
+and GameClient/Color.h. Rva00429080ShadowInfo is an independent BFME wire
+layout, and Rva00429080ShadowView addresses only position and angle fields;
+no same-named native declaration is replaced. The canonical Shadow pointer
+is retained as the addDecal return type.
+
+Calls preserve existing named ILTs j_0000dc7e and j_00005119, the exact
+entries used by retail at parent offsets1B7 and22D. Their E9 bodies resolve
+to Shadow::setOpacity4597A0 and Shadow::rva00459960 at459960 respectively.
+The first takes one int and ends RET4, the second eight ints and ends RET32;
+both require the unchanged receiver inECX. The TU-local member-pointer
+bridges explicitly check their single-inheritance member-pointer width
+against the function-pointer width before use. They emit direct calls with
+the same ECX and stack ABI; no new pins or native inline setter bodies.
+
+Scoped verification after canonical adoption:575/575 parent bytes, all
+call references, six floating constants and seven DIR32 operands pass.

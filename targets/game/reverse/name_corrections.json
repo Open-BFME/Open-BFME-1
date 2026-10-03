@@ -17788,5 +17788,25 @@
   "after_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
   "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
   "reason": "False declaration-position pairing: setColor now calls the existing matched BfmeColourABK::bfmeSetABK at459880; rva00459960 replaces setBounds at459960. Both independently typed targets and receiver/argument contracts remain preserved."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "Shadow",
+  "new_name": "Rva00429080ShadowInfo",
+  "before_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "after_sha256": "cc03d74e6925171ac677a95e5f5742ca0b6f78c5786b6d51b1bc6cc3e527bab6",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "Reviewer-required canonical adoption: native Shadow and nested ShadowTypeInfo now come from GameClient/Shadow.h, while the extra BFME descriptor bytes use a distinct address-qualified layout. Canonical Shadow return pointers remain."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "setOpacity",
+  "new_name": "j_00005119",
+  "before_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "after_sha256": "cc03d74e6925171ac677a95e5f5742ca0b6f78c5786b6d51b1bc6cc3e527bab6",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "False position pairing: setOpacity remains an inline local bridge via j_0000dc7e to4597A0. j_00005119 bridges the separate already matched Shadow::rva00459960 at459960. Both preserve the original retail ILTs and checked receiver/argument ABI."
  }
 ]
