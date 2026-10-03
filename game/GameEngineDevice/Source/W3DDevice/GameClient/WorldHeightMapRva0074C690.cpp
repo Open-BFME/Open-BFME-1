@@ -18,10 +18,6 @@ public:
 			++*(unsigned short *)((char *)m_texture + 4);
 	}
 
-	~BfmeHandleCX(void)
-	{
-	}
-
 	TextureBaseClass *m_texture;
 };
 

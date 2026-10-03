@@ -118,6 +118,13 @@ public:
 	unsigned short m_bfmeRefs;				// +0x04
 };
 
+// Retail's owning handle destructor (0x0005CC00) tail-calls TextureClass::Release_Ref.
+class TextureClass
+{
+public:
+	void Release_Ref(void);
+};
+
 class BfmeHandleCX
 {
 public:
@@ -139,7 +146,7 @@ public:
 	~BfmeHandleCX(void)
 	{
 		if (m_bfmeThing)
-			--m_bfmeThing->m_bfmeRefs;
+			((TextureClass *)m_bfmeThing)->Release_Ref();
 	}
 
 	BfmeThingCX *m_bfmeThing;				// +0x00
