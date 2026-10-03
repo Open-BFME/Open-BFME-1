@@ -44,3 +44,36 @@ namespace D3DXShader
     void CNodeToken::rva00A68884() {}
     void CNodeProgram::rva00A6891D() {}
 }
+
+// Further distinct cnode.obj slot2 leaves, each void thiscall/no arguments.
+namespace D3DXShader
+{
+    // Ctor A6891E installs VA0115160C; its slot2 selects 00A689DC.
+    class CNodeScope
+    {
+    public:
+        void rva00A689DC();
+    };
+    void CNodeScope::rva00A689DC() {}
+    // Ctor A689DD installs VA01151618; its slot2 selects 00A68AC4.
+    class CNodeDecl
+    {
+    public:
+        void rva00A68AC4();
+    };
+    void CNodeDecl::rva00A68AC4() {}
+    // Ctor A68AC5 installs VA01151624; its slot2 selects 00A68B59.
+    class CNodeUsage
+    {
+    public:
+        void rva00A68B59();
+    };
+    void CNodeUsage::rva00A68B59() {}
+    // Ctor A68B5D installs VA01151630; its slot2 selects 00A68BD1.
+    class CNodeArray
+    {
+    public:
+        void rva00A68BD1();
+    };
+    void CNodeArray::rva00A68BD1() {}
+}
