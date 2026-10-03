@@ -96,6 +96,7 @@ class PathfindLayer
 {
 public:
 	PathfindCell *rva003FBB20( Int cellX, Int cellY );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	unsigned char m_body[0x44];
@@ -124,6 +125,22 @@ class Pathfinder
 {
 public:
 	Int rva003E49F0( Object *obj, Coord3D *pos, void *cellIds );
+	Int rva003E4680( Object *obj, Coord3D *pos, void *cellIds );
+	PathfindCell *getCell003E4680( PathfindLayerEnum layer, Int cellX, Int cellY )
+	{
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+		{
+			if (layer > LAYER_GROUND && layer <= LAYER_LAST)
+			{
+				PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
+				if (cell)
+					return cell;
+			}
+			return &m_map[cellX][cellY];
+		}
+		return 0;
+	}
 	PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY );
 
 protected:
@@ -289,3 +306,96 @@ Int Pathfinder::rva003E49F0( Object *obj, Coord3D *pos, void *cellIds )
 	return numIds;
 }
 
+
+// Retail 003E4680: 693 bytes; native layer callee 003FBAB0 is distinct
+// from the 003FBB20 body used above. See 003e4680-radius-lifetime.md.
+
+Int Pathfinder::rva003E4680( Object *obj, Coord3D *pos, void *cellIds )
+{
+	Int radius;
+	Bool center;
+	getRadiusAndCenter(obj, radius, center);
+	Bool centered = center;
+	Int numCellsAbove = radius;
+	ICoord2D cell;
+	if (centered)
+	{
+		numCellsAbove = radius + 1;
+		cell.x = REAL_TO_INT_FLOOR(pos->x * 0.1f);
+		cell.y = REAL_TO_INT_FLOOR(pos->y * 0.1f);
+	}
+	else
+	{
+		cell.x = REAL_TO_INT_FLOOR(pos->x * 0.1f + 0.5f);
+		cell.y = REAL_TO_INT_FLOOR(pos->y * 0.1f + 0.5f);
+	}
+
+	Bool checkGround = false;
+	Bool checkLayer = false;
+	PathfindLayerEnum layer = (PathfindLayerEnum)obj->getLayer();
+	if (layer != LAYER_GROUND && layer < 16)
+	{
+		checkLayer = true;
+		if (TheTerrainLogic->queryObjectLayer(obj, layer))
+			checkGround = true;
+	}
+	else
+	{
+		checkGround = true;
+	}
+
+	ObjectID *ids = (ObjectID *)cellIds;
+	Int numIds = 0;
+	Int i, j;
+	for (i = cell.x - radius; i < cell.x + numCellsAbove; i++)
+	{
+		for (j = cell.y - radius; j < cell.y + numCellsAbove; j++)
+		{
+
+			if (checkLayer)
+			{
+				PathfindCell *layerCell = getCell003E4680(layer, i, j);
+				if (layerCell)
+				{
+					ObjectID id = layerCell->m_info ? layerCell->m_info->m_goalUnitID : 0;
+					if (id != INVALID_ID && id != obj->getID())
+					{
+						Int k;
+						for (k = 0; k < numIds; k++)
+							if (ids[k] == id)
+								break;
+						if (k == numIds)
+						{
+							ids[numIds++] = layerCell->getPosUnit();
+							if (numIds == 16)
+								return 16;
+						}
+					}
+				}
+			}
+
+			if (checkGround)
+			{
+				PathfindCell *groundCell = getCell003E4680(LAYER_GROUND, i, j);
+				if (groundCell)
+				{
+					ObjectID id = groundCell->m_info ? groundCell->m_info->m_goalUnitID : 0;
+					if (id != INVALID_ID && id != obj->getID())
+					{
+						Int k;
+						for (k = 0; k < numIds; k++)
+							if (ids[k] == id)
+								break;
+						if (k == numIds)
+						{
+							ids[numIds++] = id;
+							if (numIds == 16)
+								return 16;
+						}
+					}
+				}
+			}
+		}
+	}
+	return numIds;
+}

@@ -17968,5 +17968,15 @@
   "after_sha256": "95a096b928a284664567e24774e181fb25acc223b3672cbde0549ed423f49790",
   "evidence": "targets/game/reverse/identity_evidence/001c15f0-native-getters.md",
   "reason": "Historical bank is archived unchanged. Native owner and callees are proven but the synthetic bfmeTintCA spelling has no EA method-name witness. Only the generated production placeholder is replaced; keep an address-qualified method."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e4680.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderRva003E49F0.cpp",
+  "old_name": "getCell",
+  "new_name": "rva003FBB20",
+  "before_sha256": "f2f7773cc7b2c1742116da875e6f2d8199f73e068efa7fbd314ca9d2dd7c8c31",
+  "after_sha256": "71000723d31b907bf466af2be11dd47ccb9b4636d219ebc8ced3782dd961c625",
+  "evidence": "targets/game/reverse/identity_evidence/003e4680-radius-lifetime.md",
+  "reason": "Historical bank comparison pairs its getCell with the pre-existing sibling accessor. New 003E4680 still calls native getCell at 003FBAB0; existing 003E49F0 retains independently verified 003FBB20. No native name is removed or transferred between equal-byte bodies. Original bank archived unchanged."
  }
 ]
