@@ -1,4 +1,8 @@
-void *bfmeMakeASB(int one, int two);
+// 0x000283D5 is retail's 5-byte ILT thunk (?j_000283d5@@YAXXZ); the
+// __cdecl routine behind it is routed through the thunk's address.
+extern void j_000283d5();
+
+typedef void *(__cdecl *BfmeMakeASBCall)(int, int);
 
 class BfmeThingASB
 {
@@ -15,7 +19,7 @@ public:
 BfmeThingASB *BfmeThingASB::bfmeInitASB()
 {
 	m_bfmeZero = 0;
-	m_bfmeGot = bfmeMakeASB(0, 0);
+	m_bfmeGot = ((BfmeMakeASBCall)j_000283d5)(0, 0);
 	m_bfmeScale = 0x3f800000;
 	m_bfmeCount = 0;
 	m_bfmeFlag = false;

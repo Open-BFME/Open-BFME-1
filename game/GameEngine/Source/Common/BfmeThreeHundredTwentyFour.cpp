@@ -1,7 +1,17 @@
+// 0x000179BD is retail's 5-byte ILT thunk (?j_000179bd@@YAXXZ); the
+// __thiscall member behind it is routed through the thunk's address.
+extern void j_000179bd();
+
 class BfmeMemberRV
 {
 public:
-	bool bfmeAskRV();
+	bool askRV()
+	{
+		typedef bool (BfmeMemberRV::*Call)();
+		union { void *raw; Call method; } u;
+		u.raw = (void *)j_000179bd;
+		return (this->*u.method)();
+	}
 };
 
 struct BfmeWorldRV
@@ -27,7 +37,7 @@ BfmeMemberRV *BfmeThingRV::bfmePickRV()
 	BfmeMemberRV *mine = m_bfmeMine;
 	if (mine == 0)
 		return 0;
-	if (!mine->bfmeAskRV())
+	if (!mine->askRV())
 	{
 		BfmeWorldRV *world = (BfmeWorldRV *)TheControlBar;
 		if (world != 0)
