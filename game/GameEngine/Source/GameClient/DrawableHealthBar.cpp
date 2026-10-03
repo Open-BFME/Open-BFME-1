@@ -73,16 +73,16 @@ public:
 	virtual void slot24();
 	virtual Drawable *getDrawable() const;
 
-	Bool isKindOf(KindOfType kind) const
-	{
-		return ((const Thing *)this)->isKindOf(kind);
-	}
-
 	unsigned char m_pad04[0x1fc];
 	BfmeBody *m_body;
 	unsigned char m_pad204[0x10];
 	Object *m_containedBy;
 };
+
+static inline Bool objectIsKindOf(const Object *object, KindOfType kind)
+{
+	return ((const Thing *)object)->isKindOf(kind);
+}
 
 class InGameUI
 {
@@ -250,7 +250,7 @@ void Drawable::drawHealthBar()
 		if (object != 0)
 		{
 			Object *containedBy = object->m_containedBy;
-			if (containedBy != 0 && containedBy->isKindOf((KindOfType)0x6c))
+			if (containedBy != 0 && objectIsKindOf(containedBy, (KindOfType)0x6c))
 			{
 				Drawable *containedDrawable = containedBy->getDrawable();
 				if (containedDrawable != 0 && containedDrawable->m_selected)
@@ -271,32 +271,32 @@ void Drawable::drawHealthBar()
 	Object *object = m_object;
 	if (object == 0)
 		return;
-	if (!(object->isKindOf((KindOfType)0x59) ||
-		object->isKindOf((KindOfType)0x0b) ||
-		object->isKindOf((KindOfType)0x0a) ||
-		object->isKindOf((KindOfType)0x36) ||
-		object->isKindOf((KindOfType)0x07) ||
-		object->isKindOf((KindOfType)0xa8)))
+	if (!(objectIsKindOf(object, (KindOfType)0x59) ||
+		objectIsKindOf(object, (KindOfType)0x0b) ||
+		objectIsKindOf(object, (KindOfType)0x0a) ||
+		objectIsKindOf(object, (KindOfType)0x36) ||
+		objectIsKindOf(object, (KindOfType)0x07) ||
+		objectIsKindOf(object, (KindOfType)0xa8)))
 	{
 		global = (BfmeGlobalData *)TheWritableGlobalData;
 		if (!global->m_showObjectHealthSecondary)
 			return;
-		if (!object->isKindOf((KindOfType)8) &&
-			!object->isKindOf((KindOfType)9))
+		if (!objectIsKindOf(object, (KindOfType)8) &&
+			!objectIsKindOf(object, (KindOfType)9))
 			return;
 	}
 
-	if (object->isKindOf((KindOfType)0x95))
+	if (objectIsKindOf(object, (KindOfType)0x95))
 	{
 		Module *module = rva002B21E0FindWallUpgradeUpdate(object);
 		if (module != 0 && !module->m_interface.gate())
 			return;
 	}
-	if (object->isKindOf((KindOfType)0x3c) ||
-		object->isKindOf((KindOfType)0x35) ||
-		object->isKindOf((KindOfType)0x87) ||
-		object->isKindOf((KindOfType)0x67) ||
-		object->isKindOf((KindOfType)0x6c))
+	if (objectIsKindOf(object, (KindOfType)0x3c) ||
+		objectIsKindOf(object, (KindOfType)0x35) ||
+		objectIsKindOf(object, (KindOfType)0x87) ||
+		objectIsKindOf(object, (KindOfType)0x67) ||
+		objectIsKindOf(object, (KindOfType)0x6c))
 		return;
 
 	HealthBarRegionWords region;
