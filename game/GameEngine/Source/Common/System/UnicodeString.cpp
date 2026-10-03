@@ -199,18 +199,8 @@ WideChar* UnicodeString::getBufferForRead(Int len)
 }
 
 // -----------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
-// ?translate@UnicodeString@@ present-unmatched
-void UnicodeString::translate(const AsciiString& stringSrc)
-{
-	validate();
-	/// @todo srj put in a real translation here; this will only work for 7-bit ascii
-	clear();
-	Int len = stringSrc.getLength();
-	for (Int i = 0; i < len; i++)
-		concat((WideChar)stringSrc.getCharAt(i));
-	validate();
-}
+// The exported translation method is defined in WWLib/unicode_string.cpp.
+// BFME uses its by-value formatter rather than the Zero Hour character loop.
 
 // -----------------------------------------------------
 // ?concat@UnicodeString@@ present-unmatched
