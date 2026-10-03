@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: LevelGrantSpecialPower scalar deleting destructor.
-
 class SpecialAbilityUpdate
 {
 public:

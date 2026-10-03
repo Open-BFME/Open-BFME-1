@@ -5,7 +5,9 @@ class ios_base
 {
 protected:
 	ios_base();
-	virtual void handle();
+
+public:
+	virtual ~ios_base();
 
 private:
 	char m_pad[0x50];
