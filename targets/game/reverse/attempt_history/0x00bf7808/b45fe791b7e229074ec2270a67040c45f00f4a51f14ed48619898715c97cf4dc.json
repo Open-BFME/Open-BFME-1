@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b45fe791b7e229074ec2270a67040c45f00f4a51f14ed48619898715c97cf4dc",
+  "symbol": "?d_00bf7808@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.16,
+  "source": "// ?d_00bf7808@@YAXXZ\n// partial score=0.16 date=2026-10-02\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib\n// stlport\n\n#include \"PreRTS.h\"\n#include \"Common/IgnorePreferences.h\"\n\n// ?getIgnores@IgnorePreferences@@QAE?AV?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@XZ\nIgnorePrefMap IgnorePreferences::getIgnores(void)\n{\n\tIgnorePrefMap ignores;\n\n\tIgnorePreferences::iterator it;\n\tfor (it = begin(); it != end(); ++it)\n\t{\n\t\tAsciiString profileStr = it->first;\n\t\tAsciiString lastLoginStr = it->second;\n\t\tInt profileID = atoi(profileStr.str());\n\n\t\tignores[profileID] = lastLoginStr;\n\t}\n\n\treturn ignores;\n}\n"
+}
