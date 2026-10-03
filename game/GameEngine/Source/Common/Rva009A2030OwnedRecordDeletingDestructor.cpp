@@ -1,13 +1,5 @@
 // cl: /EHs-c-
 
-#include <vector>
-
-struct Rva009A2030Pair
-{
-	void *m_first;
-	void *m_second;
-};
-
 class Rva009A2030OwnedRecord
 {
 public:
@@ -16,7 +8,7 @@ public:
 
 private:
 	void releaseContents();
-	std::vector<Rva009A2030Pair> m_pairs;
+	void *m_pairs[3];
 };
 
 void __cdecl operator delete(void *);
