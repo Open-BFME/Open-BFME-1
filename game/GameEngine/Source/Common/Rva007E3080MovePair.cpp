@@ -9,12 +9,17 @@ public:
 	virtual int classify( int value, int width );
 };
 
+class BfmeB996Range
+{
+public:
+	char checkRange( int first, unsigned int *second, char *stop );
+};
+
 class BfmeB996
 {
 public:
 	char movePair( int *output, int *first, unsigned int *second,
 		unsigned int limit );
-	char bfmeTry996( int first, int second, char *stop );
 
 private:
 	char m_pad[ 4 ];
@@ -25,7 +30,8 @@ char BfmeB996::movePair( int *output, int *first,
 	unsigned int *second, unsigned int limit )
 {
 	char stop = 0;
-	if ( !bfmeTry996( (int)first, (int)second, &stop ) ||
+	if ( !reinterpret_cast<BfmeB996Range *>(this)->checkRange(
+			(int)first, second, &stop ) ||
 		stop || *second > limit ) {
 		return 0;
 	}

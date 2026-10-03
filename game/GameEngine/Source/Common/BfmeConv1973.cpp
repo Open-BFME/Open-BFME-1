@@ -68,14 +68,20 @@ class BfmeHostESK
 {
 public:
 	char bfmeAllowESK(BfmeMsgESK *msg, BfmeThingESK *thing);
-	char bfmeCheckESK(BfmeMsgESK *msg, BfmeThingESK *thing);
+};
+
+class Rva002DF120
+{
+public:
+	unsigned char test(void *first, void *second);
 };
 
 char BfmeHostESK::bfmeAllowESK(BfmeMsgESK *msg, BfmeThingESK *thing)
 {
 	BfmeObjESK *obj = (BfmeObjESK *)TheGameLogic->findObjectByID(msg->m_bfmeIdESK);
 
-	if (obj == 0 || thing == 0 || !bfmeCheckESK(msg, thing))
+	if (obj == 0 || thing == 0 ||
+		!reinterpret_cast<Rva002DF120 *>(this)->test(msg, thing))
 		return 0;
 
 	return (char)bfmeReadyESK(obj, thing);
