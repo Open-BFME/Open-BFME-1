@@ -22,21 +22,18 @@ struct BfmeOuterRZ
 	BfmeInnerRZ *m_bfmeInner;
 };
 
-// Retail's callee at 0x00029311 is the AIInternalMoveToState::onExit ILT,
-// defined as the cdecl no-arg body
-// game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExitShim.cpp.
-// Retail's call site pushes one argument and does no caller cleanup, which a
-// cdecl spelling cannot express, so the declared cdecl name is reinterpreted
-// through a union as a one-argument member-function view: MSVC folds the
-// constant member pointer back into the same direct rel32 call retail has.
-void Rva00029311AIInternalMoveToStateOnExitThunk(void);
-
-struct Rva00029311ThunkHolder
+// Retail's callee at 0x00029311 is the AIInternalMoveToState::onExit ILT
+// (game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExitShim.cpp);
+// the call site pushes one word and reaches it through ECX.
+enum StateExitType
 {
-	void step(void *what);
 };
 
-typedef void (Rva00029311ThunkHolder::*Rva00029311ThisCall)(void *what);
+class AIInternalMoveToState
+{
+public:
+	virtual void onExit(StateExitType);
+};
 
 class BfmeThingRZ
 {
@@ -48,14 +45,7 @@ public:
 
 void BfmeThingRZ::bfmeGoRZ(void *what)
 {
-	union Rva00029311Call
-	{
-		Rva00029311ThisCall member;
-		void (__cdecl *plain)(void);
-	};
-	Rva00029311Call call;
-	call.plain = &Rva00029311AIInternalMoveToStateOnExitThunk;
-	(((Rva00029311ThunkHolder *)this)->*call.member)(what);
+	((AIInternalMoveToState *)this)->AIInternalMoveToState::onExit((StateExitType)(int)what);
 	BfmeMidRZ *mid = m_bfmeOuter->m_bfmeInner->m_bfmeMid;
 	if (mid != 0)
 	{

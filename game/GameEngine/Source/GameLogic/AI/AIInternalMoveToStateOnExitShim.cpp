@@ -149,11 +149,13 @@ void AIInternalMoveToStateOnExitShim::onExit(StateExitType status)
 
 // Retail 0x00029311 is the AIInternalMoveToState::onExit ILT.
 // Its five-byte tail jump reaches the matched body at 0x00172D80.
-extern void rva00029311Target(void);
-
-#pragma comment(linker, "/alternatename:?rva00029311Target@@YAXXZ=?onExit@AIInternalMoveToStateOnExitShim@@QAEXW4StateExitType@@@Z")
-
-void Rva00029311AIInternalMoveToStateOnExitThunk(void)
+class AIInternalMoveToState
 {
-	rva00029311Target();
+public:
+	virtual void onExit(StateExitType);
+};
+
+void AIInternalMoveToState::onExit(StateExitType status)
+{
+	((AIInternalMoveToStateOnExitShim *)this)->onExit(status);
 }

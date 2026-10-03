@@ -165,19 +165,22 @@ public:
 };
 
 // Retail's call at 0x0017B28D reaches the ILT 0x00029311, the ledger's
-// ?Rva00029311AIInternalMoveToStateOnExitThunk@@YAXXZ
+// ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z
 // (AIInternalMoveToStateOnExitShim.cpp), through ECX with one stack word that
-// the thunk's tail jump consumes with `ret 4`.  The TU-local placeholder
-// bfmeBaseHH named a symbol nothing defines; drive the defined symbol through
-// a member-call view of it, which is the thiscall sequence retail emits.
-extern void __cdecl Rva00029311AIInternalMoveToStateOnExitThunk(void);
-typedef void (BfmeSelfHH::*BfmeBaseHHCall)(void *p);
+// the thunk's tail jump consumes with `ret 4`.
+enum StateExitType
+{
+};
+
+class AIInternalMoveToState
+{
+public:
+	virtual void onExit(StateExitType);
+};
 
 void BfmeSelfHH::bfmeResetHH(void *p)
 {
-	union { void *asVoid; BfmeBaseHHCall asMember; } baseCast;
-	baseCast.asVoid = (void *)Rva00029311AIInternalMoveToStateOnExitThunk;
-	(this->*baseCast.asMember)(p);
+	((AIInternalMoveToState *)this)->AIInternalMoveToState::onExit((StateExitType)(int)p);
 
 	BfmeCtrlHH *c = (BfmeCtrlHH *)m_bfmeOwnerHH->m_bfmeThingHH->m_ai;
 

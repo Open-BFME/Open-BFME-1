@@ -2003,35 +2003,9 @@ void AIInternalMoveToState::startMoveSound(void)
 
 }
 
-/**
- * We are leaving the moveTo state.
- */
-// ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z present-unmatched
-void AIInternalMoveToState::onExit( StateExitType status )
-{
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-
-	// stop ambient sound associated with movement
-	TheAudio->removeAudioEvent( m_ambientPlayingHandle );
-
- 	// If this onExit is the result of the state machine being deleted, then there is no AI.
-	// (This is why destructors should not do game logic)
-	if (ai) {
-		ai->friend_endingMove();
-		DEBUG_ASSERTLOG(obj->getTeam(), ("AIInternalMoveToState::onExit obj has NULL team.\n"));
-		if (obj->getTeam() && ai->isDoingGroundMovement() && ai->getCurLocomotor() && 
-								ai->getCurLocomotor()->isUltraAccurate()) {
-			Real dx = m_goalPosition.x-obj->getPosition()->x;
-			Real dy = m_goalPosition.y-obj->getPosition()->y;
-			if (dx*dx+dy*dy<PATHFIND_CELL_SIZE_F*PATHFIND_CELL_SIZE_F) 
-			{
-				// We are doing accurate ground movement, so make sure we end exactly at the goal.
-				ai->setFinalPosition(&m_goalPosition);
-			}
-		}
-	}
-}
+// ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z
+// Defined by the matched ILT at 0x00029311 in AIInternalMoveToStateOnExitShim.cpp.
+// Keep calls bound to that owner instead of a Zero Hour implementation.
 
 /**
  * Execute the moveTo behavior towards GoalPosition.
