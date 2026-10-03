@@ -150,7 +150,18 @@ BFME_TABLE_REGISTER( Rva002B1040, g_table_002B1040 )
 BFME_TABLE_REGISTER( Rva0036CDB0, g_table_0036CDB0 )
 BFME_TABLE_REGISTER( Rva006031F0, g_table_006031F0 )
 BFME_TABLE_REGISTER( Rva006039B0, g_table_006039B0 )
-BFME_TABLE_REGISTER( Rva00606870, g_table_00606870 )
+extern int g_table_00606870;
+
+class AnimationSoundClientBehaviorModuleData
+{
+public:
+	static void buildFieldParse( MultiIniFieldParse &parse );
+};
+
+void AnimationSoundClientBehaviorModuleData::buildFieldParse( MultiIniFieldParse &parse )
+{
+	parse.add( reinterpret_cast<const FieldParse *>( &g_table_00606870 ), 0 );
+}
 BFME_TABLE_REGISTER( Rva00609130, g_table_00609130 )
 BFME_TABLE_REGISTER( Rva007504A0, g_table_007504A0 )
 BFME_TABLE_REGISTER( Rva00758840, g_table_00758840 )

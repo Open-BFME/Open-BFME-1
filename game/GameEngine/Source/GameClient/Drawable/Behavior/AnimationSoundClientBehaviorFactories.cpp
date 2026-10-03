@@ -7,6 +7,7 @@ class Module;
 class Thing;
 class INI;
 class ModuleData;
+class MultiIniFieldParse;
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
@@ -16,12 +17,11 @@ class AnimationSoundClientBehaviorModuleData
 public:
 	AnimationSoundClientBehaviorModuleData();
 	virtual ~AnimationSoundClientBehaviorModuleData();
+	static void buildFieldParse(MultiIniFieldParse &parse);
 
 private:
 	unsigned char m_pad[0x14];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -33,8 +33,6 @@ public:
 	void initFromINIMultiProc(void *what,
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
-
-extern "C" void __cdecl AnimationSoundClientBehaviorFieldParse(MultiIniFieldParse &parse);
 
 class AnimationSoundClientBehavior
 {
@@ -52,7 +50,7 @@ ModuleData *AnimationSoundClientBehavior::friend_newModuleData(INI *ini)
 {
 	AnimationSoundClientBehaviorModuleData *data = new AnimationSoundClientBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AnimationSoundClientBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, &AnimationSoundClientBehaviorModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
 
