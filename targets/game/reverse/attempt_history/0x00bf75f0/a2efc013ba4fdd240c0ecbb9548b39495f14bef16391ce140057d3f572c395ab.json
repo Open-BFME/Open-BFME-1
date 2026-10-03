@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a2efc013ba4fdd240c0ecbb9548b39495f14bef16391ce140057d3f572c395ab",
+  "symbol": "?d_00bf75f0@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.0,
+  "source": "// ?d_00bf75f0@@YAXXZ\n// partial score=0.0 date=2026-10-02\n// cl: /DNDEBUG /MD /EHsc\n\nclass UserPreferencesMap\n{\npublic:\n\t~UserPreferencesMap();\n\nprivate:\n\tunsigned int m_tree[ 3 ];\n};\n\nclass UserPreferencesFilename\n{\npublic:\n\t~UserPreferencesFilename();\n\nprivate:\n\tvoid *m_data;\n};\n\nclass UserPreferencesBodyShim : public UserPreferencesMap\n{\npublic:\n\tvirtual ~UserPreferencesBodyShim();\n\nprivate:\n\tUserPreferencesFilename m_filename;\n};\n\nUserPreferencesBodyShim::~UserPreferencesBodyShim()\n{\n}\n"
+}
