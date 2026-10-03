@@ -5,13 +5,13 @@ public:
 	void *m_bfmePtr;
 };
 
-void bfmeDtorCBF(void *what);
-void bfmeFreeCBF(void *what);
+void __cdecl operator delete[](void *what);
+void __cdecl operator delete(void *what);
 
 void *BfmeThingCBF::bfmeGoCBF(unsigned int flags)
 {
-	bfmeDtorCBF(m_bfmePtr);
+	operator delete[](m_bfmePtr);
 	if (flags & 1)
-		bfmeFreeCBF(this);
+		operator delete(this);
 	return this;
 }
