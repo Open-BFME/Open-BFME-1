@@ -604,12 +604,7 @@ void INI::readLine( void )
 /** Parse an *ASCII* string from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseAsciiString@INI@@ present-unmatched
-void INI::parseAsciiString( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	AsciiString* asciiString = (AsciiString *)store;
-	*asciiString = ini->getNextAsciiString();
-}
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an *ASCII* string from buffer and assign at location 'store'. Has better support for quoted strings.
@@ -618,12 +613,7 @@ maintain existing code.
  */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseQuotedAsciiString@INI@@ present-unmatched
-void INI::parseQuotedAsciiString( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	AsciiString* asciiString = (AsciiString *)store;
-	*asciiString = ini->getNextQuotedAsciiString();
-}
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
