@@ -1,7 +1,7 @@
 typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
 
-extern int(__cdecl *g_bfmeNowVNH)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 void bfmeRefreshXE();
 
 class BfmeSpyXE
@@ -66,7 +66,7 @@ public:
 
 void BfmeOwnerXE::bfmePollXE(Bool force)
 {
-	int(__cdecl *nowFunction)() = g_bfmeNowVNH;
+	unsigned long (__stdcall *nowFunction)() = timeGetTime;
 
 	if (!force) {
 		if (m_bfmeTimeXE != 0) {

@@ -102,7 +102,7 @@ public:
 
 extern char g_bfmeJpegSingleMessage;
 extern char g_bfmeJpegExtendedMessage;
-extern int (__cdecl *g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 class WindowLayout;
 void ReleaseWindowLayout(WindowLayout *layout);
 
@@ -181,6 +181,6 @@ void BfmeOne924G::bfmeCall924G()
 	}
 
 	if (m_bfmeState924G != 0
-		&& (unsigned int)g_bfmeNowVNH() > m_bfmeTimestamp924G)
+		&& (unsigned int)timeGetTime() > m_bfmeTimestamp924G)
 		ReleaseWindowLayout(0);
 }

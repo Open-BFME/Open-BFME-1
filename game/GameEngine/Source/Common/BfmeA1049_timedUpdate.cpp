@@ -3,7 +3,8 @@
 typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
 
-extern int(__cdecl *g_bfmeNowVNH)();
+// Retail VA 0x01359544 is WINMM.dll!timeGetTime's import slot.
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 void bfmeFree1049(void *p);
 
 class BfmeA1049
@@ -21,7 +22,7 @@ public:
 
 void BfmeA1049::bfmeGo1049B(Bool force)
 {
-	int(__cdecl *nowFunction)() = g_bfmeNowVNH;
+	unsigned long (__stdcall *nowFunction)() = timeGetTime;
 
 	if (!force) {
 		if (m_bfmeTime != 0) {

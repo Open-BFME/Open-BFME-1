@@ -108,7 +108,7 @@ extern GameClient *TheGameClient;
 static inline ClientRoot4120 *theGameClientView() { return (ClientRoot4120 *)TheGameClient; }
 extern Mouse *TheMouse;
 extern StatsCollector *g_bfmeT1095;
-extern int (__cdecl *g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 void j_000174c7(void);
 
 static int g_bfmeV1095;
@@ -135,7 +135,7 @@ void LookAtTranslator::setScrolling(int type)
 	if (type != m_scrollType)
 	{
 		m_scrollType = type;
-		m_scrollResult = g_bfmeNowVNH();
+		m_scrollResult = timeGetTime();
 	}
 	if (g_bfmeT1095)
 		g_bfmeT1095->startScrollTime();

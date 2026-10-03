@@ -9,7 +9,7 @@ struct BfmeThingVNH
 };
 
 extern BfmeThingVNH *g_bfmeThingVNH;
-extern int(__cdecl *g_bfmeNowVNH)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
 void bfmeSetVNH(float secs)
 {
@@ -24,7 +24,7 @@ void bfmeSetVNH(float secs)
 		return;
 
 	BfmeThingVNH *p = g_bfmeThingVNH;
-	int now = g_bfmeNowVNH();
+	int now = timeGetTime();
 
 	p->m_bfme44 = now - (int)(secs * -1000.0f);
 }

@@ -6,7 +6,7 @@
 typedef int Int;
 typedef bool Bool;
 
-extern int(__cdecl *g_bfmeNowVNH)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 extern Int g_012F4B5C;
 
 class WindowLayout
@@ -109,7 +109,7 @@ private:
 void Shell::update()
 {
 	static Int updateState;
-	int(__cdecl *const nowFunction)() = g_bfmeNowVNH;
+	unsigned long (__stdcall *const nowFunction)() = timeGetTime;
 	Shell *self = this;
 
 	if (!(*(unsigned char *)&updateState & 1))

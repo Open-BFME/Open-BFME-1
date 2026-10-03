@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x007AAFA0: advance inactive-node time and move the active chain.
 
-extern unsigned int (__cdecl * volatile g_rva007AAFA0Clock)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 extern unsigned int g_rva007AAFA0Flags;
 extern unsigned int g_rva007AAFA0Time;
 
@@ -29,7 +29,7 @@ public:
 
 void Rva007AAFA0Owner::advanceAndMoveNodes()
 {
-	unsigned int (__cdecl *clock)() = g_rva007AAFA0Clock;
+	unsigned long (__stdcall *clock)() = timeGetTime;
 	unsigned int one = 1;
 	unsigned char flags = *(unsigned char *)&g_rva007AAFA0Flags;
 	if ( (flags & one) == 0 )

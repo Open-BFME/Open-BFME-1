@@ -63,7 +63,7 @@ extern int isThreadHosting;
 extern void j_000446ca(void);
 extern void bfmeRefreshXE(void);
 extern void PopulateLobbyPlayerListbox(void);
-extern "C" int (__cdecl *g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 typedef int (__cdecl *BfmeQr2StatusABI)(void);
 
@@ -115,10 +115,10 @@ Bool handleLobbySlashCommands(UnicodeString uText)
 	{
 		// Both arms capture the clock after the virtual query; this preserves
 		// retail scheduling while the player-list refresh stays unconditional.
-		int (__cdecl *nowFunction)(void);
+		unsigned long (__stdcall *nowFunction)(void);
 		if (TheGameSpyInfo->hasStagingRoomListChanged()
-			? (nowFunction = g_bfmeNowVNH, true)
-			: (nowFunction = g_bfmeNowVNH, false))
+			? (nowFunction = timeGetTime, true)
+			: (nowFunction = timeGetTime, false))
 		{
 			bfmeRefreshXE();
 			gameListRefreshTime = nowFunction();

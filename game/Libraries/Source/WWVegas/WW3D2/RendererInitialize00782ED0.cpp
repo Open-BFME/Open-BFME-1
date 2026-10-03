@@ -10,7 +10,7 @@ private:
 };
 class BfmeThingSGA { public: void bfmeOneSGA(); };
 class WW3D { public: static void Sync(unsigned int); };
-extern "C" __declspec(dllimport) unsigned int __stdcall bfmeTickDYA(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 void bfmeResetGlobals(void);
 extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 extern unsigned rva01346DD8, rva0130695C, rva01306958, rva0133F420, rva0133F424;
@@ -30,11 +30,11 @@ void BfmeThingSGA::bfmeOneSGA()
  WW3D::Sync(rva01306968);
  unsigned time = rva01306960;
  if (rva012BB85C) {
-  time += bfmeTickDYA() - rva01306964;
+  time += timeGetTime() - rva01306964;
   if (time - rva01306968 > 100) {
    time = rva01306968 + 100;
    rva01306960 = time;
-   rva01306964 = bfmeTickDYA();
+   rva01306964 = timeGetTime();
   }
  }
  WW3D::Sync(time);

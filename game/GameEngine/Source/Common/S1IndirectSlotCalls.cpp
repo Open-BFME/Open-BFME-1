@@ -11,7 +11,8 @@
 // THESE BYTES: a global function pointer produces the identical encoding, and
 // build.py fills the DIR32 from retail either way.  The slots are therefore
 // spelled as function-pointer globals named after their RVA, which claims no
-// import library, no module and no name.
+// import library, no module and no name, except for the independently identified
+// WINMM.dll!timeGetTime import at VA 0x01359544.
 //
 // WHAT THE BYTES DO DECIDE, per row:
 //
@@ -30,15 +31,15 @@
 //     one-byte global with `mov al,[..] / test al,al`, an int-width flag would
 //     have loaded a dword.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+// Function identities remain address-derived; the PE import table identifies
+// the timeGetTime slot independently of those bodies.
 
 typedef void ( *BfmeVoidSlot )();
-typedef int ( *BfmeIntSlot )();
 typedef void( __stdcall *BfmeStdcallFlagSlot )( bool );
 
 extern BfmeVoidSlot Data00F59214;
 extern BfmeVoidSlot Data00F595C4;
-extern BfmeIntSlot Data00F59544;
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 // C linkage so the slot spells as retail's `_Rva01358F30`; the value is the
 // pointer the call reads, so only the symbol name changes.
 extern "C" BfmeStdcallFlagSlot Rva01358F30;
@@ -93,7 +94,7 @@ public:
 
 void Rva006629A0::refresh()
 {
-	m_value = Data00F59544();
+	m_value = timeGetTime();
 }
 
 // Void: read a one-byte global and, only when it is set, forward one flag

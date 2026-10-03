@@ -7,7 +7,7 @@
 // - Owner: the step-A call goes through ILT 0x00014182, already pinned as
 //   BfmeAptScreenOnlineChat::Rva005337E0 (InitGadgets calls it with this).
 // - The refresh tail repeats BfmeA1049::bfmeGo1049B (0x00535150) with force
-//   set, sharing one g_bfmeNowVNH load: the +0x44 pointer and the +0x9C
+//   set, sharing one timeGetTime import load: the +0x44 pointer and the +0x9C
 //   timestamp are the same class.
 // - The per-player caller is 0x00536870 via ILT 0x0044A7E1.
 // The method name stays address-derived; the string model follows
@@ -146,7 +146,7 @@ public:
 #undef GAMESPY_SLOT
 
 extern GameSpyInfo *TheGameSpyInfo;
-extern int(__cdecl *g_bfmeNowVNH)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 void RefreshGameListBoxes();
 void bfmeFree1049(void *p);
 
@@ -193,7 +193,7 @@ bool BfmeAptScreenOnlineChat::Rva00536530HandleSlashCommands(UnicodeString uText
 	else if (token.compareNoCase(L"refresh") == 0)
 	{
 		bool refreshGames = TheGameSpyInfo->gamespySlot43();
-		int(__cdecl *nowFunction)() = g_bfmeNowVNH;
+		unsigned long (__stdcall *nowFunction)() = timeGetTime;
 		if (refreshGames)
 		{
 			RefreshGameListBoxes();

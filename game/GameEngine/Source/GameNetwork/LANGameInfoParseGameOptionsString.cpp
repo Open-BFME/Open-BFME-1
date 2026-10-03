@@ -225,7 +225,7 @@ extern Bool ParseAsciiStringToGameInfo(GameInfo *, AsciiString, Bool);
 extern Bool Rva0068EF70ParseBuffer(GameInfo *game, char *buffer, UnsignedInt length);
 extern void processInactiveLanMessages();
 extern void resetLanGameState();
-extern Int (*g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 // Restores. The by-value parameter and the named destination pointer are both
 // load-bearing; see the note at the top of the file.
@@ -287,7 +287,7 @@ Bool ParseGameOptionsString(LANGameInfo *game, AsciiString options,
             }
         }
 
-        UnsignedInt now = g_bfmeNowVNH();
+        UnsignedInt now = timeGetTime();
         for (i = 0; i < MAX_SLOTS; ++i)
         {
             LANGameSlot *slot = game->getLANSlot(i);

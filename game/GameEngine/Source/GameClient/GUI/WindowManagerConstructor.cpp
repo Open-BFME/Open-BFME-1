@@ -133,7 +133,7 @@ private:
 	unsigned int m_words[5];
 };
 
-extern "C" __declspec(dllimport) int __cdecl bfmeNowVNH() throw();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime() throw();
 
 class WindowManager;
 // The retail global at 0x012F19E8, named by its one linked-build definition
@@ -176,7 +176,7 @@ WindowManager::WindowManager()
 	, m_at19C(0)
 	, m_at1A0(0)
 {
-	m_at1A8 = bfmeNowVNH();
+	m_at1A8 = timeGetTime();
 
 	m_at1AC = 0;
 	m_at1AD = 0;

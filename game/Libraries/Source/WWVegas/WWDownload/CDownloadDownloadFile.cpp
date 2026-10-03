@@ -98,7 +98,10 @@ HRESULT CDownload::DownloadFile( LPCSTR server, LPCSTR username, LPCSTR password
 
 // ?PumpMessages@CDownload@@QAEJXZ present-unmatched
 
-extern unsigned int(__cdecl *g_bfmeNowVNH)();
+// Read the WINMM import slot as a pointer so VC7.1 preserves PumpMessages'
+// separate loads; a dllimport function declaration makes it cache the pointer.
+// C linkage adds the leading underscore to spell __imp__timeGetTime@0.
+extern "C" unsigned long (__stdcall *__identifier("_imp__timeGetTime@0"))();
 
 extern "C" __declspec(dllimport) long __stdcall MulDiv(long, long, long);
 extern "C" __declspec(dllimport) int __cdecl _strnicmp(
@@ -261,7 +264,7 @@ HRESULT CDownload::PumpMessages()
 		iResult = reinterpret_cast<Rva00884Ftp *>(m_Ftp)->GetNextFileBlock(m_LocalFile, &m_BytesRead);
 
 		if (m_TimeStarted == 0) {
-			m_TimeStarted = g_bfmeNowVNH();
+			m_TimeStarted = __identifier("_imp__timeGetTime@0")();
 		}
 
 		if (iResult == FTP_SUCCEEDED) {
@@ -275,7 +278,7 @@ HRESULT CDownload::PumpMessages()
 			}
 		}
 
-		timetaken = (g_bfmeNowVNH() - m_TimeStarted) / 1000;
+		timetaken = (__identifier("_imp__timeGetTime@0")() - m_TimeStarted) / 1000;
 
 		if ((m_BytesRead - m_StartPosition) > 0) {
 
