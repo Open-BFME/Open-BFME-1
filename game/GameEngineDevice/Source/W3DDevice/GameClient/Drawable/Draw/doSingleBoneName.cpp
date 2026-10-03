@@ -14,8 +14,6 @@
 typedef int Int;
 typedef bool Bool;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T>
 struct Rva0076D850StringData
 {
@@ -55,7 +53,7 @@ public:
 	}
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 	void toLower() { StringBase<char>::toLower(); }
 	void format(AsciiString format, ...);

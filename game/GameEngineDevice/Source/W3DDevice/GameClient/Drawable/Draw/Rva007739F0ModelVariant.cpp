@@ -9,8 +9,6 @@ void __cdecl operator delete(void *) throw();
 #include <set>
 #include <bitset>
 
-extern const char Rva006A16B0Empty[]; // retail 0x0107388B
-
 // TU-local wide model of BFME's reference-counted narrow string: the copy
 // constructor (0x00887B60), set (0x00887C90), concat (0x00887D60) and the
 // private releaseBuffer (0x00887940) stay out of line; the destructor, str()
@@ -53,7 +51,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 
 	void concat(char c) { StringBase<char>::concat(&c, 1); }

@@ -43,8 +43,6 @@ private:
 	Header *m_data;
 };
 
-extern const char Rva006A16B0Empty[];
-
 class AsciiString
 {
 public:
@@ -62,7 +60,7 @@ public:
 	{
 		if (m_data)
 			return reinterpret_cast<const char*>(m_data + 8);
-		return Rva006A16B0Empty;
+		return "";
 	}
 
 private:

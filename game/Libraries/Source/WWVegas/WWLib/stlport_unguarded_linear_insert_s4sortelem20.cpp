@@ -3,8 +3,6 @@
 extern "C" int memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 
-extern const char Rva006A16B0Empty[];
-
 template <class T>
 class StringBase
 {
@@ -29,9 +27,9 @@ public:
 	int compare(const StringBase<T> &other) const
 	{
 		const int length = other.m_bfmeHeader ? other.m_bfmeHeader->m_bfmeLength : 0;
-		const char *data = other.m_bfmeHeader ? (const char *)&other.m_bfmeHeader->m_bfmeData[0] : Rva006A16B0Empty;
+		const char *data = other.m_bfmeHeader ? (const char *)&other.m_bfmeHeader->m_bfmeData[0] : "";
 		const int myLength = m_bfmeHeader ? m_bfmeHeader->m_bfmeLength : 0;
-		const char *myData = m_bfmeHeader ? (const char *)&m_bfmeHeader->m_bfmeData[0] : Rva006A16B0Empty;
+		const char *myData = m_bfmeHeader ? (const char *)&m_bfmeHeader->m_bfmeData[0] : "";
 		int result = memcmp(myData, data, myLength < length ? myLength : length);
 		if (result == 0)
 			result = myLength - length;

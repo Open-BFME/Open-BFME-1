@@ -1173,7 +1173,6 @@ extern void Rva009EBAC0(int);
 class Rva009EB960;
 extern Rva009EB960 *Rva0134FAA0;
 static inline void *FirstUpdateSubsystemView() { return (void *)Rva0134FAA0; }
-extern const char Rva006A16B0Empty[];
 
 struct Rva001408C0Target;
 typedef Rva001408C0Target *Rva001408C0Key;
@@ -1231,7 +1230,7 @@ struct WaterTracksObjFlip007AC7E0
 static const char *bfmeSourceFilename(const AsciiString &fileName)
 {
 	const char *data = *(const char **)&fileName;
-	return data ? data + 8 : Rva006A16B0Empty;
+	return data ? data + 8 : "";
 }
 
 void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)

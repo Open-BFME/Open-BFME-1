@@ -43,8 +43,6 @@
 #include "Common/INIException.h"
 
 struct FieldParse;
-
-extern const char Rva006A16B0Empty[];
 extern const FieldParse g_010EBE44[];
 
 template <typename T>
@@ -81,7 +79,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)( (const char *)m_data + 8 ) : Rva006A16B0Empty;
+		return m_data ? (const char *)( (const char *)m_data + 8 ) : "";
 	}
 
 	void setInto( void *target ) const

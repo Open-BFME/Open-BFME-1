@@ -22,8 +22,6 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -56,7 +54,7 @@ public:
 	bool isEmpty( void ) const { return m_data == 0 || m_data->m_length == 0; }
 	const char *str( void ) const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 };
 
