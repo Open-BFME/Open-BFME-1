@@ -8,6 +8,10 @@
 #include "chunkio.h"
 #include "w3d_file.h"
 
+// Retail imports the unsuffixed lstrcpyn entry point.
+#undef lstrcpyn
+extern "C" __declspec(dllimport) char * __stdcall lstrcpyn(char *, const char *, int);
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_ldr.h
 class ParticleEmitterDefClass
 {
