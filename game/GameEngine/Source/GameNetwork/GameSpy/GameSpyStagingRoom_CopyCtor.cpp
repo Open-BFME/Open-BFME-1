@@ -143,7 +143,7 @@ private:
 
 // Force emission of the implicit copy constructor without heap-allocating
 // (placement new keeps this a pure construct, no operator new/delete needed).
-void *operator new( unsigned int, void *p ) { return p; }
+void *operator new( unsigned int, void *p );
 
 void bfme_forceGameSpyStagingRoomCopyCtor( void *dest, const GameSpyStagingRoom &src )
 {
