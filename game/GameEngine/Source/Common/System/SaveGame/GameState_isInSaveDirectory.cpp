@@ -1,7 +1,5 @@
 // Open-BFME5: GameState::isInSaveDirectory at retail RVA 0x0010F1E0.
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T> class StringBase
 {
     friend class AsciiString;
@@ -23,7 +21,7 @@ public:
     bool startsWithNoCase(const StringBase<T> &other) const
     {
         const int length = other.m_data ? other.m_data->length : 0;
-        const T *text = other.m_data ? &other.m_data->data[0] : (const T *)Rva006A16B0Empty;
+        const T *text = other.m_data ? &other.m_data->data[0] : (const T *)"";
         return startsWithNoCase(text, length);
     }
 };

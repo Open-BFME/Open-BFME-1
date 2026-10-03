@@ -37,8 +37,6 @@ extern "C" __declspec(dllimport) unsigned int __cdecl fread(
 	void *buffer, unsigned int size, unsigned int count, void *stream);
 extern __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
 
-extern const char Rva006A16B0Empty[];
-
 class BFMERetailAsciiString
 {
 public:

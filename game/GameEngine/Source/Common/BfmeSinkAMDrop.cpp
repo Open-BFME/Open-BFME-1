@@ -33,15 +33,13 @@ public:
 	}
 };
 
-extern const char Rva006A16B0Empty[];
-
 __forceinline const char *bfmeNameText(const BFMERetailAsciiString &name)
 {
 	const char *text = name.str();
 	if (text != 0)
 		text += 8;
 	else
-		text = Rva006A16B0Empty;
+		text = "";
 	return text;
 }
 

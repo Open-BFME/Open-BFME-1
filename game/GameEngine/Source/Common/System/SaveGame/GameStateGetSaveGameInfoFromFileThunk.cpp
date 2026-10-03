@@ -11,8 +11,6 @@
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T> struct BfmeStringData
 {
 	int m_refs;
@@ -50,7 +48,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 
 	int compareNoCase(const char *text) const;

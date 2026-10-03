@@ -21,7 +21,6 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
 extern int g_guardTargetTypeThrowInfo;
-extern const char Rva006A16B0Empty[];
 
 extern "C" __declspec(dllimport) void *__cdecl fopen(
 	const char *name, const char *mode);
