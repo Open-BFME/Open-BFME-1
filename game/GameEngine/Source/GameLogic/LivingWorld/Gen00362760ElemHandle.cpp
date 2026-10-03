@@ -18,6 +18,8 @@
 
 #include <exception>
 
+// This existing inline class also owns the exact 30-byte scalar deleting
+// wrapper at 0x0007B640 (vtable slot ILT 0x0003C5A6).
 class FunctorNotSet : public std::exception
 {
 public:
