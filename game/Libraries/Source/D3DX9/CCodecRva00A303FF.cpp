@@ -24,3 +24,19 @@ namespace D3DXTex
     {
     }
 }
+
+// Original ccodec.obj gives CCodecYUV slot3 a void thiscall/no-argument
+// signature. Retail ctor A3A643 stores VA0114A0F8 at A3A676 and its dtor
+// restores it at A3A732; that table's slot3 selects the one-byte RET A30A3E.
+namespace D3DXTex
+{
+    class CCodecYUV
+    {
+    public:
+        void rva00A30A3E();
+    };
+
+    void CCodecYUV::rva00A30A3E()
+    {
+    }
+}
