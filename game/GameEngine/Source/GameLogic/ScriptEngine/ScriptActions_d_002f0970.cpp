@@ -1,8 +1,14 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
 //
 // Convert of gen-dump ?d_002f0970@@YAXXZ at 0x002F0970 (87 bytes).
-// Two ScriptEngine vslot 26 lookups then Object::findSub(0x2E) at ILT
+// Two ScriptEngine vslot 26 lookups then
+// Object::findSpecialPowerModuleInterface(0x2E) at ILT
 // 0x0001B185; on success call vslot 1 then vslot 12(other, 2).
+
+#include "PreRTS.h"
+#include "GameLogic/Object.h"
+#include "Common/SpecialPowerType.h"
 
 class AsciiString;
 
@@ -26,8 +32,6 @@ public:
 
 class BfmeObj9E0
 {
-public:
-	BfmeSubVfn9E0 *findSub(int code);
 };
 
 class ScriptEngine
@@ -51,7 +55,9 @@ void __stdcall d_002f0970(const AsciiString &first, const AsciiString &second)
 	BfmeObj9E0 *b = TheScriptEngine->getUnitNamed(second);
 	if (a && b)
 	{
-		BfmeSubVfn9E0 *sub = a->findSub(0x2e);
+		BfmeSubVfn9E0 *sub = reinterpret_cast<BfmeSubVfn9E0 *>(
+		reinterpret_cast<Object *>(a)->findSpecialPowerModuleInterface(
+			(SpecialPowerType)0x2e));
 		if (sub && sub->test())
 			sub->apply(b, 2);
 	}
