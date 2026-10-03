@@ -1670,3 +1670,19 @@ destructor is also defined noinline and independently matches 39 bytes at
 `0x000A41C0`, preserving the parent unwind lifetime. Default-allocator,
 iterator-category-call and named-tag variants of the opaque bank retained the
 one-byte residue. See `identity_evidence/00844400-collate-native-transform.md`.
+
+## Reverse adapter parameters to recover vector-temporary construction order
+
+The W3DView ray-check body at `0x00744360` had twelve differing bytes: two
+`Vector3` call temporaries exchanged their source objects and stack homes.
+Named scalar constructors, whole-vector local copies, and a const-reference
+bound temporary did not match. A reconstruction-only inline adapter accepting
+`(end, start)` and forwarding to the real `LineSegClass::Set(start, end)` lets
+VC7.1 construct the start temporary first while preserving the actual callee's
+argument order. All 358 bytes then match, including with the existing Object,
+Vector3 and collision-test headers. Parse Vector3/CastResultStruct with normal
+inlining before disabling automatic inlining for the real Set and ray-test
+constructor calls. This adapter is a documented source-shaping choice, not an
+asserted EA helper name. Apply it only when the temporaries are independent
+and the retail copies establish the order. See
+`identity_evidence/00744360-vector-evaluation.md`.
