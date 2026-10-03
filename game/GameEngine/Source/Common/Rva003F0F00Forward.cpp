@@ -10,11 +10,13 @@ struct BfmeSrcEQC
 class Rva003F0EC0Owner
 {
 public:
-	int bfmeInnerEQC(bool a, unsigned int kind, void *b, const void *c,
-		const void *d, unsigned int e, bool f);
 	int bfmeFwdEQC(bool a, BfmeSrcEQC *src, void *b, const void *c,
 		const void *d, unsigned int e);
 };
+
+// Use the dump's emitted symbol with its observed member-call ABI. The extra
+// fastcall register slot repeats b, which is already in EDX at the call site.
+void d_003eeb90(void);
 
 class Rva003F0F00Owner
 {
@@ -27,6 +29,9 @@ int Rva003F0F00Owner::rva003F0F00(bool a, BfmeSrcEQC *src, void *b,
 	const void *c, const void *d, unsigned int e)
 {
 	unsigned int kind = src->m_bfmeKindEQC;
-	return reinterpret_cast<Rva003F0EC0Owner *>(this)->bfmeInnerEQC(
-		a, kind, b, c, d, e, true);
+	typedef int (__fastcall *DumpHelper)(Rva003F0EC0Owner *, void *, bool,
+		unsigned int, void *, const void *, const void *, unsigned int, bool);
+	return reinterpret_cast<DumpHelper>(&d_003eeb90)(
+		reinterpret_cast<Rva003F0EC0Owner *>(this), b, a, kind, b, c, d, e,
+		true);
 }
