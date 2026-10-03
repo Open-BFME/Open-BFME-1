@@ -35,11 +35,6 @@ public:
 class Rva0078CFB0SentenceHolder : public Rva0078CFB0SentenceHolderBase
 {
 public:
-	virtual void slot0();
-	virtual void slot1();
-	virtual void slot2();
-	virtual void slot3();
-	virtual void slot4();
 	virtual ~Rva0078CFB0SentenceHolder();
 
 private:
