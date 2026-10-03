@@ -4,8 +4,6 @@ class BfmeTarget952;
 
 class BfmeHolder952
 {
-public:
-	BfmeTarget952 *bfmeGoal952();
 };
 
 class BfmeTarget952
@@ -29,9 +27,14 @@ public:
 
 extern float g_bfmeLimit952;
 
+extern void j_0000e570();
+
+typedef BfmeTarget952 *(__fastcall *BfmeGoalThunk952)(BfmeHolder952 *);
+
 bool BfmeCheck952::bfmeNear952()
 {
-	BfmeTarget952 *t = m_bfmeHolder->bfmeGoal952();
+	BfmeTarget952 *t = reinterpret_cast<BfmeGoalThunk952>(
+		&j_0000e570)(m_bfmeHolder);
 	if (t) {
 		float dx = t->m_bfmeX - m_bfmeX;
 		float dy = t->m_bfmeY - m_bfmeY;

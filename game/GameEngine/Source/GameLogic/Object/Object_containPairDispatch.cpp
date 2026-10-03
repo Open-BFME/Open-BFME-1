@@ -123,19 +123,20 @@ struct BfmeBoxAFB
 {
 	void *first;
 	void *second;
-	void go(void *a, void *b);
 };
 
 class BfmeThingAFB
 {
 public:
 	void bfmeGoAFB();
-	BfmeBoxAFB *bfmeGetBoxAFB();
 
 private:
 	char m_pad[0x1FC];
 	Rva001D5DB0Inner *m_contain;
 };
+
+extern void j_000202ed();
+extern void j_00007a45();
 
 void BfmeThingAFB::bfmeGoAFB()
 {
@@ -150,10 +151,20 @@ void BfmeThingAFB::bfmeGoAFB()
 		}
 	}
 
-	BfmeBoxAFB *helper = bfmeGetBoxAFB();
+	union {
+		void (*raw)();
+		BfmeBoxAFB *(BfmeThingAFB::*method)();
+	} getBox;
+	getBox.raw = &j_000202ed;
+	BfmeBoxAFB *helper = (this->*getBox.method)();
 	if (helper)
 	{
 		BfmeBoxAFB *pair = reinterpret_cast<BfmeBoxAFB *>(reinterpret_cast<char *>(helper) + 0x20);
-		pair->go(pair->first, pair->second);
+		union {
+			void (*raw)();
+			void (BfmeBoxAFB::*method)(void *, void *);
+		} send;
+		send.raw = &j_00007a45;
+		(pair->*send.method)(pair->first, pair->second);
 	}
 }
