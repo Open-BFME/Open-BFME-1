@@ -10,8 +10,11 @@ function-ledger ownership was changed.
 
 ## Corrected cleanup alternative (2026-09-27)
 
-**The preferred bank still has incorrect empty deallocation stubs.** Resume
-from the [corrected immutable alternative](../attempt_history/0x008b0ee0/ba16d5160f1e1d9a2f18d7b7974bd92af3f1cc28f73ccc53570f71a0c444b64b.json)
+**Historical note:** the preferred bank at the time had incorrect empty
+deallocation stubs. Session4 (2026-10-03) supersedes it with the corrected
+cleanup model and an improved guard shape; see
+[the continuation evidence](008b0ee0-session4-guard-bank.md). The original
+[corrected immutable alternative](../attempt_history/0x008b0ee0/ba16d5160f1e1d9a2f18d7b7974bd92af3f1cc28f73ccc53570f71a0c444b64b.json)
 instead. Its identical score intentionally leaves the preferred pointer unchanged;
 this is an exception-cleanup correction, not a native-coverage claim.
 

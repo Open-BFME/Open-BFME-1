@@ -1,5 +1,5 @@
 // ?d_008b0ee0@@YAXXZ
-// partial score=0.28399888299357723 date=2026-09-27
+// partial score=0.3182 date=2026-10-03
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008B0EE0. Address-qualified property dispatch; retail extent includes two switch tables.
 struct Rva00899560Value;
@@ -31,7 +31,6 @@ struct Rva00899560Value {
             m_flags = flags & 0xBFFFFFFF;
     }
     static void *operator new(unsigned n) { return Rva008C5D70Alloc(n); }
-    static void operator delete(void *) {}
 };
 struct Rva008995E0Value : Rva00899560Value {
     union {
@@ -112,7 +111,7 @@ class Rva008B2EA0Node {
 class Rva008A9B00 {
   public:
     static void *operator new(unsigned n) { return Rva008C5D70Alloc(n); }
-    static void operator delete(void *) {}
+    static void operator delete(void *, unsigned);
     Rva008A9B00();
     void *m_vtable;
     unsigned m_flags;
@@ -203,10 +202,13 @@ struct Rva013377D8Owner {
 };
 extern Rva013377D8Owner *Rva013377D8;
 void *Rva00897640(unsigned);
-class BfmeA1029 {
+class Rva00897670HeaderedDelete {
+  public:
+    static void operator delete(void *, unsigned);
+};
+class BfmeA1029 : public Rva00897670HeaderedDelete {
   public:
     static void *operator new(unsigned n) { return Rva00897640(n); }
-    static void operator delete(void *) {}
     BfmeA1029 *bfmeGo1029A(int);
     __declspec(noinline) BfmeA1029(int callback);
     void bfmeBase1029(int, int);
@@ -273,13 +275,14 @@ extern char Rva00caed50[];
 Rva00899560Value *rva008B0EE0(Rva008B0EE0Owner *owner, const BfmeStrVKI &key) {
     unsigned flags = owner->flags;
     int kind = flags & 0x3f;
+    bool rva008B0EE0IsText = kind == 15 && !((unsigned char)(~(flags >> 15)) & 1);
     const R4Word *word;
     union {
         BfmeM1208 matrix;
         Rva8BB1A0Bounds bounds;
     } scratch;
     BfmeM1208 &m = scratch.matrix;
-    if (kind == 15 && !((unsigned char)(~(flags >> 15)) & 1) &&
+    if (rva008B0EE0IsText &&
         (word = Rva008ABF40((const char *)key.m_data + 8, key.m_data->m_length))) {
         Rva008B0EE0State *state = owner->field50;
         switch (word->value) {
