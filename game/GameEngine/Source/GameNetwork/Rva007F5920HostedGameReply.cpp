@@ -1,3 +1,4 @@
+class Rva007E88A0 { public: bool method(); };
 // cl: /O2 /GS /GX-
 // FESL game-browser hosted-game reply at 0x007F5920. The adjacent ticket
 // handler shares listener +0x1c, connection +0x24 and lobby +0x2d8.
@@ -12,7 +13,6 @@ extern Rva007EB810Diag *Rva007EB810Get();
 class Rva007E8810Message
 {
 public:
-    bool hasError();
     int getError();
 };
 class Rva007F5080Game
@@ -84,7 +84,7 @@ private:
 };
 void Rva007F5920Owner::handleHostedGameReply(Rva007E8810Message *msg)
 {
-    if (msg->hasError()) {
+    if (reinterpret_cast<Rva007E88A0 *>(msg)->method()) {
         int status = msg->getError();
         m_listener->v13(status);
         return;

@@ -6,22 +6,12 @@
 // connect flag at +0x34.  The exact original interface names are unavailable;
 // address- and state-derived names are used for those views.
 
-// LINK: retail calls the message's error predicate at 0x007E88A0 and its
-// error-code getter at 0x007E88B0 by their ledger names --
-// ?valid@W3DVideoBuffer@@UAE_NXZ (11 bytes, the row owned by
-// game/GameEngineDevice/Source/W3DDevice/GameClient/W3DVideoBuffer.cpp) and
-// ?m@Gen_007e88b0@@QAEHXZ (4 bytes, the gen-shim row owned by
-// game/gen_small/fun_005.cpp).  Neither `hasError` nor `getError` is defined by
-// any object, so this TU now declares the two owning classes as local views and
-// casts at each use, exactly as
-// game/GameEngine/Source/Common/SmallGaps/Rva007F5A70VideoBufferValue.cpp does
-// for the same pair.  `valid` is virtual (UAE) and `m` is not (QAE); both are
-// called non-virtually here, which is a direct call in either case, so the two
-// `call rel32` sites and their 0x007E88A0 / 0x007E88B0 targets are unchanged.
-class W3DVideoBuffer
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0
 {
 public:
-	virtual bool valid();
+	bool method();
 };
 
 class Gen_007e88b0
@@ -88,7 +78,7 @@ void Rva007F6260GameBrowser::handleConnectingProtocolReply(
 
 	// Qualified call: retail calls the body directly rather than through the
 	// vtable, so suppress virtual dispatch (as the VideoBufferValue TU does).
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		status = ((Gen_007e88b0 *)msg)->m();
 	}

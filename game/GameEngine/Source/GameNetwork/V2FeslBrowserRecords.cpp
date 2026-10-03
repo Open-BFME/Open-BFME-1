@@ -26,15 +26,12 @@
 // WHAT THE BYTES CANNOT DECIDE.  Nothing names the element types or the methods.
 // All names are address-derived.
 
-// 0x007E88A0 is DEFINED in the ledger as ?valid@W3DVideoBuffer@@UAE_NXZ, and
-// the matched ?videoBufferValue@Rva007F5A70Owner@@QAEHPAVW3DVideoBuffer@@@Z at
-// 0x007F5A80 calls it directly on a W3DVideoBuffer*, so the qualified
-// non-virtual call below is the spelling that mangles to the defining name.
-// No game/ header declares W3DVideoBuffer.
-class W3DVideoBuffer
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0
 {
 public:
-	virtual bool valid( void );                                       // 0x007E88A0
+	bool method();                                       // 0x007E88A0
 };
 
 class Rva007E8810Message
@@ -202,7 +199,7 @@ public:
 
 void Rva007F7980Browser::onRegion( Rva007E8810Message *msg )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 		return;
 	if( msg->m_txn != m_regionTxn )
 		return;
@@ -220,7 +217,7 @@ void Rva007F7980Browser::onRegion( Rva007E8810Message *msg )
 
 void Rva007F7980Browser::onLobby( Rva007E8810Message *msg )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 		return;
 	if( msg->m_txn != m_lobbyTxn )
 		return;

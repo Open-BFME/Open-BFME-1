@@ -1,3 +1,4 @@
+class Rva007E88A0 { public: bool method(); };
 // cl: /O2
 // 0x007FA3D0 is the next unclaimed FESL transactor operation after the
 // matched Rva007FA2C0 request/dispatch family.  Its complete body resets the
@@ -18,7 +19,6 @@ class Rva007E8AC0 { public: void run(); };
 class Rva007FA5E0Arg
 {
 public:
-	bool valid();
 
 	char m_pad00[0x20];
 	void *m_20;
@@ -102,7 +102,7 @@ void Rva007FA2C0::rva007FA3D0(Rva007FA5E0Arg *arg,
 	Rva007E8810Message *message, unsigned timeout)
 {
 	((Rva007E8AC0*)message)->run();
-	if (arg->valid())
+	if (reinterpret_cast<Rva007E88A0 *>(arg)->method())
 	{
 		message->setError(-103);
 		return;

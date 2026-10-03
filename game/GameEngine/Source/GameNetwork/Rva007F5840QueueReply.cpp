@@ -12,13 +12,12 @@
 // address-derived.
 
 // LINK: retail calls the error predicate (0x007E88A0) and getter (0x007E88B0)
-// by their ledger names, ?valid@W3DVideoBuffer@@UAE_NXZ and
 // ?m@Gen_007e88b0@@QAEHXZ; no object defines hasError/getError.  Local views
 // with a cast at each use, as Rva007F6260GameBrowserConnect.cpp does.
-class W3DVideoBuffer
+class Rva007E88A0
 {
 public:
-	virtual bool valid();
+	bool method();
 };
 
 class Gen_007e88b0
@@ -88,7 +87,7 @@ void Rva007F5840Owner::handleQueueReply( Rva007E8810Message *msg, BfmeOwnerYA *r
 	Rva007F5120Queue q( msg );
 	int error = 0;
 
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		error = ((Gen_007e88b0 *)msg)->m();
 		if( error == 0x71756575 )

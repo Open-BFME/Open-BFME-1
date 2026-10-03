@@ -13,13 +13,12 @@ public:
 	void *m_2C;
 };
 
-// 0x007E88A0 is W3DVideoBuffer::valid (m_texture != NULL, the word at +0x24).
-// The FESL arg valid() predicate is the linker's ICF fold of that exact body,
-// so the call has to carry the defining name to resolve.
-class W3DVideoBuffer
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0
 {
 public:
-	virtual bool valid();
+	bool method();
 };
 
 class Rva007FA5E0Id
@@ -62,7 +61,7 @@ private:
 
 int Rva007FA2C0::send(Rva007FA5E0Arg *arg)
 {
-	if (((W3DVideoBuffer *)arg)->W3DVideoBuffer::valid())
+	if (((Rva007E88A0 *)arg)->Rva007E88A0::method())
 		return -103;
 	void *want = arg->m_2C;
 	if (want != m_6A8->id())

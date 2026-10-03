@@ -86,10 +86,9 @@ extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 
 class Rva0063B080 { public: virtual void slot0(); };
 class Gen_007e86c0 { public: void m(); };
-// 0x007E88A0 is W3DVideoBuffer::valid (m_texture != NULL, the word at +0x24).
-// The FESL message error predicate is the linker's ICF fold of that exact
-// body, so the call has to carry the defining name to resolve.
-class W3DVideoBuffer { public: virtual bool valid(); };
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0 { public: bool method(); };
 class Gen_007e88b0 { public: int m(); };
 class BfmeC994
 {
@@ -97,7 +96,7 @@ class BfmeC994
 public:
     BfmeC994(char *,int);
     ~BfmeC994() { ((Gen_007e86c0*)this)->m(); }
-    bool hasError() { return ((W3DVideoBuffer*)this)->W3DVideoBuffer::valid(); }
+    bool hasError() { return ((Rva007E88A0*)this)->Rva007E88A0::method(); }
     int error() { return ((Gen_007e88b0*)this)->m(); }
 };
 // Retail constructs and destroys a 0x330-byte frame object through the ledger's

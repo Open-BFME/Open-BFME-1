@@ -14,13 +14,12 @@ class Rva007E8810Message
 {
 };
 
-// 0x007E88A0 is W3DVideoBuffer::valid (m_texture != NULL, the word at +0x24).
-// The FESL message error predicate is the linker's ICF fold of that exact
-// body, so the call has to carry the defining name to resolve.
-class W3DVideoBuffer
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0
 {
 public:
-	virtual bool valid();
+	bool method();
 };
 
 class Rva007F4130Endpoints
@@ -87,7 +86,7 @@ private:
 
 void Rva007F45E0Aries::rva007F4530(Rva007E8810Message *msg)
 {
-	if (((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid())
+	if (((Rva007E88A0 *)msg)->Rva007E88A0::method())
 		return;
 
 	Rva007F4130Endpoints endpoints(msg);

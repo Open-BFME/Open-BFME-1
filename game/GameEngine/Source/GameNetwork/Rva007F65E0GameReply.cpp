@@ -19,10 +19,10 @@
 
 typedef __int64 FeslInt64;
 
-class W3DVideoBuffer
+class Rva007E88A0
 {
 public:
-	virtual bool valid( void );
+	bool method();
 };
 
 // 0x007E88B0 is the getter the ledger defines as ?m@Gen_007e88b0@@QAEHXZ
@@ -125,7 +125,7 @@ void Rva007F65E0Owner::handleGameLobbyReply( Rva007E8810Message *msg, int flag )
 	bool done = false;
 	int gid = game.m_gid;
 	int lid = game.m_lid;
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 		m_listener->notify( lid, gid, ((Gen_007e88b0 *)msg)->m() );
 	if( Rva00802A90Owner *lobby = findGameLobby( lid ) )
 	{

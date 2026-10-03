@@ -12,13 +12,6 @@
 // bad owner type, so +0x24 really is an error code: a predicate, a getter and a
 // setter over one field.
 //
-// 0x007E88A0 is DEFINED in the ledger as ?valid@W3DVideoBuffer@@UAE_NXZ, and
-// the matched ?videoBufferValue@Rva007F5A70Owner@@QAEHPAVW3DVideoBuffer@@@Z at
-// 0x007F5A80 calls it DIRECTLY on a W3DVideoBuffer*, so the defining name is
-// what these call sites must spell: the qualified non-virtual call below
-// mangles to it and compiles to the same `call` the direct one does.  Only
-// 0x007E88B0/0x007E8900 keep the message accessor's own names.
-//
 // Every row here dispatches through the pointer at +0x1C of the browser object
 // into a vtable, so that pointer is a LISTENER and the slot INDEX is evidence
 // (0x0C, 0x10, 0x48, 0x4C -> slots 3, 4, 18, 19).  Nothing names the listener
@@ -28,19 +21,13 @@
 // The two count handlers end in `mov [esp+4],eax ; jmp [edx+slot]`, MSVC's tail
 // call for a void function whose last statement is a one-argument __thiscall
 // virtual call -- so the notification really is the last thing each does.
-//
-// WHAT THE BYTES CANNOT DECIDE.  Nothing names the browser, the listener, or
-// any method.  The key spellings "NUM-REGIONS" and "NUM-LOBBIES" are pushed
-// literals and are real; the C++ names are address-derived.
 
-// No game/ header declares W3DVideoBuffer, so it is spelled here the way the
-// matched 0x007F5A80 and W3DVideoBufferCtorBfme.cpp spell it: virtual member,
-// reached through a qualified call so the reference is the defining symbol
-// ?valid@W3DVideoBuffer@@UAE_NXZ and not an indirect vtable dispatch.
-class W3DVideoBuffer
+// Direct retail predicate at 0x007E88A0; receiver identity is opaque.
+// See identity_evidence/0x007e88a0-predicate-owner-correction.md.
+class Rva007E88A0
 {
 public:
-	virtual bool valid( void );                                       // 0x007E88A0
+	bool method();                                       // 0x007E88A0
 };
 
 class Rva007E8810Message
@@ -126,7 +113,7 @@ public:
 
 void Rva007F7980Browser::onRegionCount( Rva007E8810Message *msg )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		int status = msg->getError();
 		m_listener->onRegionCountDone( status );
@@ -146,7 +133,7 @@ void Rva007F7980Browser::onRegionCount( Rva007E8810Message *msg )
 
 void Rva007F7980Browser::onLobbyCount( Rva007E8810Message *msg )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		int status = msg->getError();
 		m_listener->onLobbyCountDone( status );
@@ -166,7 +153,7 @@ void Rva007F7980Browser::onLobbyCount( Rva007E8810Message *msg )
 
 void Rva007F5AC0( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		int status = msg->getError();
 		browser->m_listener->onSlot19( status );
@@ -179,7 +166,7 @@ void Rva007F5AC0( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 
 void Rva007F5B40( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 {
-	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
+	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
 		int status = msg->getError();
 		browser->m_listener->onSlot18( status );

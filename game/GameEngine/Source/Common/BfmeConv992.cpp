@@ -26,10 +26,10 @@ public:
 
 class BfmeAsk992;
 
-class W3DVideoBuffer
+class Rva007E88A0
 {
 public:
-	virtual bool valid(void);
+	bool method();
 };
 
 class Gen_007e88b0
@@ -49,7 +49,7 @@ public:
 
 void BfmeC992::bfmeGo992C(BfmeAsk992 *a)
 {
-	if (((W3DVideoBuffer *)a)->W3DVideoBuffer::valid()) {
+	if (((Rva007E88A0 *)a)->Rva007E88A0::method()) {
 		int v = ((Gen_007e88b0 *)a)->m();
 
 		m_bfmeSink->bfmeSend992C(v);
