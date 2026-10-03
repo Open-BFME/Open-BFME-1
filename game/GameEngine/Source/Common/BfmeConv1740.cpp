@@ -14,9 +14,16 @@ public:
 
 class GameLogic
 {
-public:
-	BfmeObjAN *bfmeFindAN(int id);
 };
+
+// The lookup callee is retail's ILT thunk at 0x0001F253, defined in the
+// ledger as ?j_0001f253@@YAXXZ (game/gen_small/thunks_014.cpp) and routed by
+// a matched caller to GameLogic::findObjectByID.  Reference that name through
+// the project-wide thunk convention and apply the callee's __thiscall
+// "BfmeObjAN *(int)" shape at the call.
+extern void j_0001f253();
+
+typedef BfmeObjAN *(GameLogic::*BfmeFindANCall)(int);
 
 class ClientRoot4120
 {
@@ -34,7 +41,15 @@ extern GameClient *TheGameClient;
 
 bool __cdecl bfmeCheckAN(void)
 {
-	BfmeObjAN *object = TheGameLogic->bfmeFindAN(((ClientRoot4120 *)TheGameClient)->m_bfmeIdAN);
+	union
+	{
+		void (*asThunk)(void);
+		BfmeFindANCall asFind;
+	} callee;
+
+	callee.asThunk = j_0001f253;
+
+	BfmeObjAN *object = (TheGameLogic->*callee.asFind)(((ClientRoot4120 *)TheGameClient)->m_bfmeIdAN);
 
 	if (object)
 		return object->m_bfmeStateAN->m_bfmeCountAN > 0;
