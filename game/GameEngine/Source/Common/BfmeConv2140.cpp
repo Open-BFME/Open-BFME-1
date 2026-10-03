@@ -23,7 +23,7 @@ class Gen008FF1B0
 public:
 	__forceinline Gen008FF1B0() { m_bfmeRefXW = 0; }
 	Gen008FF1B0(void *ref);
-	~Gen008FF1B0();
+	__declspec(noinline) ~Gen008FF1B0();
 
 	void *m_bfmeRefXW;
 };
@@ -34,4 +34,14 @@ Gen008FF1B0 bfmeMakeXW(const char *name)
 		return Gen008FF1B0();
 
 	return Gen008FF1B0(&(Rva009EBCE0AssetReference &)Rva009EBCE0_GetPrototype(name));
+}
+
+// The factory's FuncInfo state 0 destroys its completed return object through
+// 0x008FEB80.  This is the same address-named owner constructed at 0x008FF1B0,
+// not the NetCommandRef destructor formerly used as an unrelated byte alias.
+// See targets/game/reverse/identity_evidence/20261003-factory-result-cleanup.md.
+Gen008FF1B0::~Gen008FF1B0()
+{
+	if (m_bfmeRefXW != 0)
+		static_cast<TextureClass *>(m_bfmeRefXW)->Release_Ref();
 }
