@@ -1,5 +1,10 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#define OBJECT_TU_MEMBERS bool applyAttributeModifier(const AsciiString &name, int duration);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 struct BfmeOwner955
 {
 	char m_bfmePad[0x2bc];
@@ -145,11 +150,7 @@ void BfmeIter955::bfmeGoB955()
 		bfmeVB955(it, 0);
 }
 
-class BfmeSink955
-{
-public:
-	void bfmeAdd955(int *it, int a);
-};
+class BfmeSink955;
 
 class BfmeHost955
 {
@@ -169,5 +170,6 @@ void BfmeHost955::bfmeGoC955(BfmeSink955 *sink)
 		return;
 
 	for (int *it = o->m_bfmeBegin; it != o->m_bfmeEnd; ++it)
-		sink->bfmeAdd955(it, -1);
+		reinterpret_cast<Object *>(sink)->applyAttributeModifier(
+			*reinterpret_cast<const AsciiString *>(it), -1);
 }
