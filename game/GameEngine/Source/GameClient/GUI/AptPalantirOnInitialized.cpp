@@ -34,7 +34,7 @@ extern unsigned char g_aptPalantirJewelBrightened;
 extern int g_aptPalantirWindow;
 extern char g_aptPalantirJewelName[];
 extern const char g_rva01080FC0[2];
-extern char g_aptPalantirNormalJewel[];
+extern const char g_rva01081238[];
 
 // ?aptPalantirOnInitialized@@YAXXZ
 void aptPalantirOnInitialized()
@@ -51,7 +51,7 @@ void aptPalantirOnInitialized()
 			jewel = g_rva01080FC0;
 			break;
 		default:
-			jewel = g_aptPalantirNormalJewel;
+			jewel = g_rva01081238;
 			break;
 	}
 	g_rva012F19E8WindowManager->add( (void *)g_aptPalantirWindow,

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern const char g_rva01080FC0[2];
-extern char g_bfmeJpegExtendedMessage;
+extern const char g_rva01081238[];
 
 class WindowManager
 {
@@ -38,7 +38,7 @@ void WindowManager::bfme_hideBackground( bool hide )
 				if( hide )
 					message = g_rva01080FC0;
 				else
-					message = &g_bfmeJpegExtendedMessage;
+					message = g_rva01081238;
 				((BfmeLevelAN *)this)->bfmeBuildAN(
 					(unsigned int)m_bfmeBackgroundMovie,
 					(int)"HideInGameBackground", 1, (int)message, 0, 0, 0, 0);
@@ -52,7 +52,7 @@ void WindowManager::bfme_hideBackground( bool hide )
 				if( hide )
 					message = g_rva01080FC0;
 				else
-					message = &g_bfmeJpegExtendedMessage;
+					message = g_rva01081238;
 				((BfmeLevelAN *)this)->bfmeBuildAN(
 					(unsigned int)m_bfmeBackgroundMovie,
 					(int)"HideFrontEndBackground", 1, (int)message, 0, 0, 0, 0);
