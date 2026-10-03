@@ -1,28 +1,30 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: ProductionSpeedBonusModuleData dtor. SEH ProductionSpeedBonusModuleDataMember @+0x218 then base.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// Open-BFME5: ProductionSpeedBonusModuleData dtor. SEH vector<AsciiString>
+// @+0x218 then the common SpecialPower module-data base.
 
-class ProductionSpeedBonusModuleDataMember
+#include <vector>
+
+#include "ascii_string.h"
+
+extern template _STL::vector<AsciiString>::~vector();
+
+class SpecialPowerModuleData
 {
 public:
-	~ProductionSpeedBonusModuleDataMember();
+	virtual ~SpecialPowerModuleData();
 private:
-	unsigned char m_pad[4];
+	unsigned char m_pad[0x20c];
 };
 
-class ProductionSpeedBonusModuleDataBase
-{
-public:
-	virtual ~ProductionSpeedBonusModuleDataBase();
-private:
-	unsigned char m_pad[0x214];
-};
-
-class __declspec(novtable) ProductionSpeedBonusModuleData : public ProductionSpeedBonusModuleDataBase
+class __declspec(novtable) ProductionSpeedBonusModuleData : public SpecialPowerModuleData
 {
 public:
 	virtual ~ProductionSpeedBonusModuleData();
 private:
-	ProductionSpeedBonusModuleDataMember m_member;
+	unsigned int m_bonusPercent;
+	unsigned int m_duration;
+	_STL::vector<AsciiString> m_upgradeTypes;
 };
 
 // ??1ProductionSpeedBonusModuleData@@UAE@XZ
