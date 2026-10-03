@@ -477,7 +477,8 @@ public:
 	void bfmeForward(void);					// retail 0x0000F71D
 };
 
-extern Gen_00C70AD0Target TheBfmeObject_00C70AD0;		// 0x1306c6c
+class RvaSimpleDynVec;
+extern RvaSimpleDynVec g_rva01306C6CObject;		// 0x1306c6c
 class Gen_00C70B00Target
 {
 public:
@@ -1191,7 +1192,7 @@ void bfmeForward_00C70AB0(void)
 // ?bfmeForward_00C70AD0@@YAXXZ
 void bfmeForward_00C70AD0(void)
 {
-	TheBfmeObject_00C70AD0.bfmeForward();
+	reinterpret_cast<Gen_00C70AD0Target &>(g_rva01306C6CObject).bfmeForward();
 }
 // ?bfmeForward_00C70B00@@YAXXZ
 void bfmeForward_00C70B00(void)

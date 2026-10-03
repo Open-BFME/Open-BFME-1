@@ -56,7 +56,12 @@ public:
 	int m_active_count;
 };
 
-extern BFMEFontCharsList g_BFMEFontCharsList;
+class RvaSimpleDynVec;
+extern RvaSimpleDynVec g_rva01306C6CObject;
+inline BFMEFontCharsList &BFMEFontCharsListCell()
+{
+	return reinterpret_cast<BFMEFontCharsList &>(g_rva01306C6CObject);
+}
 
 // Source-authentic semantics from WW3DAssetManager::Get_FontChars, specialized
 // by BFME into this same-TU helper.  Its ledger name remains address-derived
@@ -64,19 +69,19 @@ extern BFMEFontCharsList g_BFMEFontCharsList;
 static __declspec(noinline) FontCharsClass *BFME_Get_Font_Chars(
 	const char *name, float point_size, bool is_bold, int extra_setting)
 {
-	for (int i = 0; i < g_BFMEFontCharsList.m_active_count; ++i)
+	for (int i = 0; i < BFMEFontCharsListCell().m_active_count; ++i)
 	{
-		if (g_BFMEFontCharsList[i]->Is_Font(name, point_size, is_bold, extra_setting))
+		if (BFMEFontCharsListCell()[i]->Is_Font(name, point_size, is_bold, extra_setting))
 		{
-			g_BFMEFontCharsList[i]->Add_Ref();
-			return g_BFMEFontCharsList[i];
+			BFMEFontCharsListCell()[i]->Add_Ref();
+			return BFMEFontCharsListCell()[i];
 		}
 	}
 
 	FontCharsClass *font = new FontCharsClass;
 	font->Initialize_GDI_Font(name, point_size, is_bold, extra_setting);
 	font->Add_Ref();
-	g_BFMEFontCharsList.Add(font);
+	BFMEFontCharsListCell().Add(font);
 	return font;
 }
 

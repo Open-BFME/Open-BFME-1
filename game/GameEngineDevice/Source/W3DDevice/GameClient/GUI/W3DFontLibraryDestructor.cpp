@@ -56,7 +56,12 @@ public:
 	}
 };
 
-extern BFMEFontCharsList g_BFMEFontCharsList;
+class RvaSimpleDynVec;
+extern RvaSimpleDynVec g_rva01306C6CObject;
+inline BFMEFontCharsList &BFMEFontCharsListCell()
+{
+	return reinterpret_cast<BFMEFontCharsList &>(g_rva01306C6CObject);
+}
 
 class GameFont;
 
@@ -71,12 +76,12 @@ protected:
 
 W3DFontLibrary::~W3DFontLibrary()
 {
-	for (int i = 0; i < g_BFMEFontCharsList.m_active_count; ++i)
+	for (int i = 0; i < BFMEFontCharsListCell().m_active_count; ++i)
 	{
-		FontCharsClass *font = g_BFMEFontCharsList[i];
+		FontCharsClass *font = BFMEFontCharsListCell()[i];
 		if (--font->m_ref_count == 0)
 			font->Release_Ref();
 	}
 
-	g_BFMEFontCharsList.Delete_All();
+	BFMEFontCharsListCell().Delete_All();
 }

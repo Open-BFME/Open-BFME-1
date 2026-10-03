@@ -7,7 +7,7 @@ public:
     int m_08;
     int m_0C;
 };
-extern RvaSimpleDynVec g_rva01306C6CObject;
+RvaSimpleDynVec g_rva01306C6CObject;
 extern void j_000463f3();
 void bfmeForward_00C70AD0();
 struct Rva00C6C5A0Caller
