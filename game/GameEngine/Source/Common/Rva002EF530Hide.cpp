@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-void HideControlBar(int immediate);
+void HideControlBar(bool immediate);
 
 void Rva002EF530()
 {

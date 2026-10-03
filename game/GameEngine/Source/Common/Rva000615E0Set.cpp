@@ -1,9 +1,9 @@
 // cl: /O2 /Ob0
 
-void rva0046ef50();
+void j_00018e8f();
 
 int rva000615e0()
 {
-	rva0046ef50();
+	j_00018e8f();
 	return 1;
 }

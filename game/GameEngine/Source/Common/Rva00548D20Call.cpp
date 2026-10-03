@@ -1,8 +1,8 @@
 // cl: /O2 /Ob0
 
-void rva0055bd40();
+void j_0001f181();
 
 void __stdcall rva00548d20(int)
 {
-	rva0055bd40();
+	j_0001f181();
 }
