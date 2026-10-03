@@ -2377,7 +2377,7 @@ void Debug::SetBuildInfo(const char *version,
 // Body in debug_debug_WriteBuildInfo.asm (exact 135B retail).
 
 // little helper to get app window
-static BOOL CALLBACK EnumThreadWndProc(HWND hwnd, LPARAM lParam)
+BOOL CALLBACK EnumThreadWndProc(HWND hwnd, LPARAM lParam)
 {
   *(HWND *)lParam=hwnd;
   return FALSE;
