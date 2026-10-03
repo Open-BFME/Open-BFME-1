@@ -1,9 +1,10 @@
 // ??0BfmeCheckMovementInfo@@QAE@PAVPathfinder@@PAVObject@@HHHHH@Z
-// partial score=0.4037 date=2026-10-01
-// Retain inherited field spellings for navigation; layout and accesses below
-// are established from retail offsets, not from those spellings.
-// Retail RVA 003E5640 /379. Corrected bank: template reads are not Player reads;
-// native 12-byte query copy is 48 -> 28; AI getter is null guarded.
+// partial score=0.4697 date=2026-10-03
+// Retail offsets establish the layout and member accesses below. Existing
+// member names keep the source readable.
+// Retail reads template fields at +0x444, +0x4CC, +0xC8, and +0xD4. It copies
+// the 12-byte zone record from +0x48 to +0x28 and checks the AI pointer before
+// reading its ignored-obstacle ID.
 // cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing
 class AIUpdateInterface { public: int getIgnoredObstacleID(); };
 #define OBJECT_TU_MEMBERS bool bfmeIsComputerControlled() const; const ThingTemplate *getTemplate() const;
@@ -26,7 +27,13 @@ public:
  unsigned char m_at4CC;
 };
 inline const ThingTemplate *Object::getTemplate() const {
- return m_template ? m_template->getFinalTemplate() : 0;
+ const ThingTemplate *result = m_template;
+ if (result == 0) {
+  result = 0;
+ } else if (result->m_nextOverride) {
+  result = (const ThingTemplate *)result->m_nextOverride->getFinalOverride();
+ }
+ return result;
 }
 class BfmeCheckMovementInfo;
 class Pathfinder {
@@ -74,7 +81,11 @@ BfmeCheckMovementInfo::BfmeCheckMovementInfo(
  m_zone.at08=index-1;
  m_zone.at04=(flag==0);
  m_allowPinched=(unsigned char)parameter7;
- m_coordinateZone=m_zone;
+ volatile Int *sourceZone=(volatile Int *)&m_zone;
+ Int *destinationZone=(Int *)&m_coordinateZone;
+ destinationZone[0]=sourceZone[0];
+ destinationZone[1]=sourceZone[1];
+ destinationZone[2]=sourceZone[2];
  m_coordinateSamePlayer=(unsigned char)parameter4;
  m_coordinatePlayerIndex=0;
  m_mode=13;
@@ -85,5 +96,5 @@ BfmeCheckMovementInfo::BfmeCheckMovementInfo(
  Object *current=m_object;
  if (current->getTemplate()->m_at0D4&0x1000) {
   m_radius=1;m_center=true;
- } else m_pathfinder->getRadiusAndCenter(current,m_radius,m_center);
+ } else pathfinder->getRadiusAndCenter(current,m_radius,m_center);
 }
