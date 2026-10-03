@@ -13,7 +13,7 @@ extern "C" __declspec(dllimport) void *__stdcall HeapAlloc(void *heap, unsigned 
 extern "C" __declspec(dllimport) int __stdcall HeapFree(
 	void *heap, unsigned long flags, void *block);
 extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(void *section);
-extern "C" unsigned char g_rva01336CE8[];
+extern "C" unsigned char g_rva01336CE8[4] = {0};
 
 class Rva008838F0Node
 {
