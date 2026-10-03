@@ -43,6 +43,12 @@ public:
 	virtual void updateValue(void *value);
 };
 
+class Rva001EF3D0Caller
+{
+public:
+	void invoke(FlagPairTarget *target);
+};
+
 class Gen_001F61B0
 {
 private:
@@ -69,7 +75,7 @@ void Gen002B2080::handle(FlagPairTarget *target)
 	flags.m_second = true;
 	target->applyFlags(flags);
 
-	bfmeAccept((BfmeSeedTarget *)target);
+	reinterpret_cast<Rva001EF3D0Caller *>(this)->invoke(target);
 	if (!target->slot10())
 	{
 		target->updateValue(&m_value14);

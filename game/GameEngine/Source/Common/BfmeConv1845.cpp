@@ -23,7 +23,7 @@ public:
 	virtual void bfmeV5XJ();
 	virtual void bfmeDoneXJ(void *a, BfmeSubXJ *sub);
 
-	void bfmeApplyXJ(void *a, BfmeThingXJ *b);
+	unsigned char bfmeApplyXJ(void *a, BfmeThingXJ *b);
 	void bfmeStepXJ(void *a, BfmeThingXJ *b);
 
 	unsigned char m_bfmeHeadXJ[0x58];

@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+#include "Common/Thing.h"
+
 class BfmeProbeXM;
 
 struct BfmeStateXM
@@ -14,8 +19,6 @@ struct BfmeStateXM
 class BfmeProbeXM
 {
 public:
-	bool bfmeTestXM(BfmeStateXM *state, void *tag);
-
 	unsigned char m_bfmeHeadXM[0x38];
 	float m_bfmeXXM;
 	float m_bfmeYXM;
@@ -23,7 +26,9 @@ public:
 
 int bfmeVisitXM(BfmeProbeXM *probe, BfmeStateXM *state)
 {
-	if (probe->bfmeTestXM(state, state->m_bfmeTagXM))
+	if (reinterpret_cast<Thing *>(probe)->isKindOfMulti(
+		*reinterpret_cast<const KindOfMaskType *>(state),
+		*reinterpret_cast<const KindOfMaskType *>(state->m_bfmeTagXM)))
 	{
 		float dx = probe->m_bfmeXXM - state->m_bfmeXXM;
 		float dy = probe->m_bfmeYXM - state->m_bfmeYXM;
