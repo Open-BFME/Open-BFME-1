@@ -1,8 +1,11 @@
 // cl: /O2 /Ob0
 
-struct BfmeC39F
+struct Coord3D;
+
+class BFMERopeDrawable
 {
-	int x, y, z;
+public:
+	const Coord3D *getPosition() const;
 };
 
 class BfmeHold9F
@@ -13,27 +16,39 @@ public:
 	int m_08;
 };
 
-class BfmePos9F
-{
-public:
-	const BfmeC39F *bfmePos9F();
-};
-
 class BfmeObj9F
 {
 public:
 	void bfmeGo9F(unsigned a0, unsigned char on);
-	void bfmeUse9F(const BfmeC39F *);
 	char m_00[4];
-	BfmePos9F *m_04;
+	BFMERopeDrawable *m_04;
+};
+
+// Retail 0x00409F40 reaches the two out-of-line bodies through the five-byte
+// ILT thunks at 0x0004B12D and 0x00046AFB; both tail-jump, so they keep the
+// this-call register and the pushed argument of the bodies they stand for.
+// 0x0004B12D is the recorded thunk body of
+// ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ; 0x00046AFB's only definition
+// is the void thunk ?j_00046afb@@YAXXZ, which drops the return value, so keep
+// the target's call shape while naming the recorded thunk.
+void j_00046afb();
+
+union BfmeObj9FUse
+{
+	void (*function)(void);
+	void (BfmeObj9F::*member)(const Coord3D *);
 };
 
 void BfmeObj9F::bfmeGo9F(unsigned a0, unsigned char on)
 {
 	int z = 0;
-	BfmePos9F *p = m_04;
-	if (p != (BfmePos9F *)z)
-		bfmeUse9F(p->bfmePos9F());
+	BFMERopeDrawable *p = m_04;
+	if (p != (BFMERopeDrawable *)z)
+	{
+		BfmeObj9FUse use;
+		use.function = &j_00046afb;
+		(this->*use.member)(p->getPosition());
+	}
 	if (on == (unsigned char)z)
 		return;
 	unsigned k = a0;
