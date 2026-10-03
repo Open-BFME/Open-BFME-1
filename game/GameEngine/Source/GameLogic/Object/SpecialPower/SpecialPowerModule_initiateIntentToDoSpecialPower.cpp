@@ -92,15 +92,6 @@ private:
 class FXList
 {
 public:
-	// BFME keeps an out-of-line copy at 0x00065DE0; here it is inlined.
-	static void doFXObj(const FXList *fx, const Object *primary, const Object *secondary)
-	{
-		if (fx)
-		{
-			if (!const_cast<FXList *>(fx)->bfmeIsBlocked())
-				fx->doFXObj(primary, secondary);
-		}
-	}
 	bool bfmeIsBlocked(void);
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
@@ -341,6 +332,10 @@ void SpecialPowerModule::initiateIntentToDoSpecialPower(const Object *targetObj,
 
 		Object *obj = getObject();
 		if (obj)
-			FXList::doFXObj(data->m_initiateFX, obj, targetObj);
+		{
+			FXList *fx = const_cast<FXList *>(data->m_initiateFX);
+			if (fx && !fx->bfmeIsBlocked())
+				fx->doFXObj(obj, targetObj);
+		}
 	}
 }

@@ -20,10 +20,6 @@ class FXList
 {
 public:
 	virtual ~FXList();
-	static void doFXObj(const FXList *fx, const Object *primary, const Object *secondary = NULL)
-	{
-		fx->doFXObj(primary, secondary);
-	}
 	Bool isEmpty() const;
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
@@ -151,7 +147,7 @@ void CrateCollide::onCollide(Object *other, const Coord3D *, const Coord3D *)
 			executeFX = modData->m_executeFX;
 			if (executeFX != NULL && executeFX->isEmpty() == FALSE)
 			{
-				FXList::doFXObj(executeFX, other);
+				executeFX->doFXObj(other, NULL);
 			}
 
 			m_everExecuted = TRUE;

@@ -36,9 +36,6 @@ class FXList {
 public:
     bool bfmeIsBlocked();
     void doFXObj(const Object *, const Object *) const;
-    static void doFXObj(const FXList *fx, const Object *obj, const Object *victim) {
-        if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked()) fx->doFXObj(obj, victim);
-    }
 };
 class ObjectCreationList {
 public:
@@ -122,7 +119,8 @@ void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType phase)
     if (listSize > 0) {
         idx = GetGameClientRandomValue(0, listSize - 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\SlowDeathBehavior.cpp", 535);
         const FXList *fx = d->fx[phase][idx];
-        FXList::doFXObj(fx, object, 0);
+        const Object *fxObject = object;
+        if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked()) fx->doFXObj(fxObject, 0);
     }
     listSize = d->ocls[phase].size();
     if (listSize > 0) {
