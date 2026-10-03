@@ -6,7 +6,7 @@
 // the head both appear twice -- because only the construction is guarded, and
 // that guard is the one the new expression itself emits.
 
-extern void * (*WideAllocPtr)(unsigned int bytes);
+extern void * (*Rva008C5D70Alloc)(unsigned int bytes);
 
 class BfmeRefBC
 {
@@ -19,7 +19,7 @@ class BfmeNodeBC
 public:
 	void *operator new(unsigned int bytes)
 	{
-		return WideAllocPtr(bytes);
+		return Rva008C5D70Alloc(bytes);
 	}
 
 	BfmeNodeBC(BfmeRefBC *value)

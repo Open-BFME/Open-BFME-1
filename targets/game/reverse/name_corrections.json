@@ -16318,5 +16318,55 @@
   "after_sha256": "5d1ce5f729a5c98daeb493b7d9543de39f8cb520cd4cd3b70ea1abd9c0ba4e94",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5AllocAndClear.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme5AllocAndClear.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "4736971c74c4fe9ed19d589a05ecd1fe66eada1b951cc2494442de73de611de7",
+  "after_sha256": "1efeff4654b4581ffd250f90ae5349ad781602c38897ce1da456dd5a911639be",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
+  "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5PushNode.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme5PushNode.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "b24ba3bd6361d1f77aa8ea70e0a6d34c7578c8ab10c27dc207471b4ea3025a5c",
+  "after_sha256": "d6eff51522fecc058f1147a49f46ca20a3fa416c8591d3c5b02a7943001ae033",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
+  "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5PushValue.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme5PushValue.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "31b403de3acd9e5124b79627280f10b0f7510fb4526d8a1f8400c782c2a02e3d",
+  "after_sha256": "88baf1380b5b5ec48c88523c1f999e61e83a76c0ac26910807606d7845e9ee74",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
+  "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/WideHeaderedAlloc.cpp",
+  "new_path": "game/GameEngine/Source/Common/WideHeaderedAlloc.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "5d6721a2879967adb7362f2d2a450dc893d528eac77a546882f5459b61fb5f75",
+  "after_sha256": "6cd73dda9773a1b3868025b8251aafb5138095a914ec9f0dae55f6fa3bec3c7b",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
+  "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/AptValue/Bfme5CountedBuffer.cpp",
+  "new_path": "game/Libraries/Source/Apt/AptValue/Bfme5CountedBuffer.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "abf0c3e0d307c4732705fc8bf866a43ea76b411bb953d1a90db31da119a57e4b",
+  "after_sha256": "d79e55c6eb098ff062ab194c2ba78bf60a59694c70535395249f017632be925b",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
+  "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
  }
 ]
