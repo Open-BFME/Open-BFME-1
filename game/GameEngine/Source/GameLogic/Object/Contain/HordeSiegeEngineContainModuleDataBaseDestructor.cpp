@@ -61,13 +61,18 @@ struct Gen_t_0022b000_p8cd
 
 #include "ascii_string.h"
 
-class HordeSiegeEngineContainModuleDataMemberA
+// The tail member's destructor is reached through ILT 0x0001A401, whose body is
+// retail 0x0039D550: ??1AttributeHandleStandIn@@QAE@XZ, matched and defined once
+// by game/GameEngine/Source/GameLogic/Object/Update/AttributeHandleStandInDestructor.cpp.
+// So the member carries that class's own spelling; only the declaration is
+// needed here because this TU never constructs one.
+class AttributeHandleStandIn
 {
 public:
-	~HordeSiegeEngineContainModuleDataMemberA();		// ILT 0x0001A401
+	~AttributeHandleStandIn();
 
 private:
-	char m_bfmePad[4];
+	unsigned int m_bfmeHandle;			// +0x00
 };
 
 class HordeContainModuleData
@@ -89,7 +94,7 @@ private:
 	AsciiString m_bfmeName;					// +0x170
 	_STL::_List_base<Gen_t_0022b000_p8cd> m_bfmeEntries;	// +0x174
 	char m_bfmePad178[0x20C - 0x178];
-	HordeSiegeEngineContainModuleDataMemberA m_bfmeTail;	// +0x20C
+	AttributeHandleStandIn m_bfmeTail;			// +0x20C
 };
 
 // ??1HordeSiegeEngineContainModuleDataBase@@UAE@XZ

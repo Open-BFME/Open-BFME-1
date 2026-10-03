@@ -68,6 +68,12 @@
 
 // ------------------------------------------------------------ zeroing ctor
 
+// Retail VA 0x0110FE78 is ParticleInfo's vftable, defined once by
+// game/GameEngine/Source/GameClient/System/ParticleInfoDeletingDestructor.cpp.
+// __identifier spells the defining symbol, so the store references the name
+// that exists instead of one invented for this TU's placeholder class.
+extern "C" int __identifier("??_7ParticleInfo@@6B@")[];
+
 class U1Triple
 {
 public:
@@ -108,11 +114,24 @@ U1ZeroBase::U1ZeroBase()
 	m_f = 0;
 }
 
-class U1Zero_005CEFC0 : public U1ZeroBase
+// __declspec(novtable): retail stamps VA 0x0110FE78 here, which is the
+// vftable of the class's real identity, ParticleInfo -- 0x0110FE78 slot 0
+// routes via ILT 0x004446F2 to retail 0x005CF020, the matched
+// ??_GParticleInfo@@UAEPAXI@Z (functions.csv:12299,
+// game/GameEngine/Source/GameClient/System/ParticleInfoDeletingDestructor.cpp).
+// This TU's class carries an address-derived name, so its compiler-generated
+// vftable could only ever be called ??_7U1Zero_005CEFC0@@6B@ and its slot 0 an
+// invented virtual nothing defines.  novtable drops that table, and with it the
+// invented slot; the store is then written by hand below against the name that
+// is really defined.  Keeping the class polymorphic is what preserves the
+// layout: the derived vptr stays at +0 and the non-polymorphic base at +4,
+// which is what every member offset in this file's byte-dump comment assumes
+// (dropping the virtuals instead would move the base to +0 and shift them all).
+class __declspec(novtable) U1Zero_005CEFC0 : public U1ZeroBase
 {
 public:
 	U1Zero_005CEFC0();
-	virtual void slot0();
+	virtual void slot0();				// unreferenced under novtable; kept for the +0 vptr
 
 	int m_g0;
 	int m_g1;
@@ -127,6 +146,10 @@ public:
 
 U1Zero_005CEFC0::U1Zero_005CEFC0()
 {
+	// novtable removed the vptr store; this writes it back at the only place it
+	// can go -- between the inlined non-polymorphic base and this class's own
+	// body -- which is where retail puts it.
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ParticleInfo@@6B@");
 	m_g0 = 0;
 	m_g1 = 0;
 	m_g2 = 0;
@@ -139,7 +162,13 @@ U1Zero_005CEFC0::U1Zero_005CEFC0()
 
 // ----------------------------------------------------------- flagging ctor
 
-bool u1Check_005C2CD0( void *p );
+// Retail 0x005C2CD0 is defined once by game/GameEngine/Source/Common/BfmeConv1414.cpp
+// as ?bfmeCheckVLL@@YA_NPAVBfmeOwnVLL@@@Z, so the predicate below is called
+// under that name; BfmeOwnVLL is forward-declared because this TU only passes
+// the pointer through.
+class BfmeOwnVLL;
+
+bool bfmeCheckVLL( BfmeOwnVLL *p );
 
 class U1Ctor_005C4690
 {
@@ -151,7 +180,7 @@ public:
 };
 
 U1Ctor_005C4690::U1Ctor_005C4690( void *p )
-	: m_pointer( p ), m_checked( u1Check_005C2CD0( p ) )
+	: m_pointer( p ), m_checked( bfmeCheckVLL( (BfmeOwnVLL *)p ) )
 {
 }
 

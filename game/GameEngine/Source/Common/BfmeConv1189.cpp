@@ -1,6 +1,10 @@
 // Open-BFME5 conversions.
 
-extern "C" char g_bfmeV1189[];
+// The vptr BfmeBase1189 stamps at +0 is retail VA 0x0111291C, the vftable of
+// Rva005E95C0 (targets/game/reverse/dir32_addresses.csv), defined once by
+// game/GameEngine/Source/Common/V3PolyCopyCtors.cpp. __identifier spells the
+// retail symbol exactly, so the store references the defining name.
+extern "C" int __identifier("??_7Rva005E95C0@@6B@")[];
 
 struct BfmeQuad1189
 {
@@ -20,7 +24,7 @@ struct BfmeQuad1189
 class BfmeBase1189
 {
 public:
-	BfmeBase1189(void) { m_bfme00 = g_bfmeV1189; }
+	BfmeBase1189(void) { m_bfme00 = (char *)__identifier("??_7Rva005E95C0@@6B@"); }
 	char *volatile m_bfme00;
 };
 

@@ -1,6 +1,10 @@
 // Open-BFME5 conversions.
 
-class BfmeLogVNC
+// Retail 0x007EB810 is defined once by
+// game/GameEngine/Source/Common/GlobalDwordGetters.cpp as
+// ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ, so the call below spells that
+// name; the local view of the returned object keeps this TU's own spelling.
+struct Rva007EB810Diag
 {
 public:
 	virtual void bfmeSlot0VNC();
@@ -9,7 +13,17 @@ public:
 	virtual void bfmeAssertVNC(const char *cond, const char *file, int line);
 };
 
-BfmeLogVNC *bfmeGetLogVNC();
+Rva007EB810Diag *Rva007EB810Get();
+
+// Retail 0x007E8900 is defined once by game/GameEngine/Source/Common/BfmeConv908.cpp
+// as ?bfmeGoRF@BfmeThingRF@@QAEPAXPAX0@Z. BfmeKeyVNC's own spelling belongs to
+// the matched row for bfmeFreeVNC, so the callee is reached through the real
+// declaring class and the object is cast at the use.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF(void *a, void *b);
+};
 
 class BfmeKeyVNC
 {
@@ -47,7 +61,7 @@ public:
 
 void BfmeMgrVNC::bfmeFreeVNC(BfmeKeyVNC *key)
 {
-	void *h = key->bfmeFindVNC("TID", 0);
+	void *h = ((BfmeThingRF *)key)->bfmeGoRF("TID", 0);
 	int n1;
 
 	for (n1 = 0; n1 < 8; ++n1)
@@ -65,7 +79,7 @@ void BfmeMgrVNC::bfmeFreeVNC(BfmeKeyVNC *key)
 				s->m_bfme20 = 0;
 				s->m_bfme08 = 0;
 				if (--m_bfme1f4 < 0)
-					bfmeGetLogVNC()->bfmeAssertVNC("mNumProbes >= 0", "\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserdemangler.cpp", 0x147);
+					Rva007EB810Get()->bfmeAssertVNC("mNumProbes >= 0", "\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserdemangler.cpp", 0x147);
 			}
 			break;
 		}
