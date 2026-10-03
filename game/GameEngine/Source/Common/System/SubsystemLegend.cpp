@@ -33,7 +33,7 @@
 // value happens to be the address of "STR". Reproduced as-is rather than guessed.
 static const LookupListRec TheSubsystemLegendLoaderNames[] =
 {
-	{ "INI", 0 },
+	{ "INI", (int)"STR" },
 	{ NULL,  0 }
 };
 
