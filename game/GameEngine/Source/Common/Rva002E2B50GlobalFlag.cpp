@@ -14,11 +14,13 @@ public:
 	Rva002E2B50Object *m_object;
 };
 
-extern Rva002E2B50Global *g_Rva002E2B50Global;
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 int Rva002E2B50Update(void)
 {
-	Rva002E2B50Object *object = g_Rva002E2B50Global->m_object;
+	Rva002E2B50Global *global = reinterpret_cast<Rva002E2B50Global *>(TheLuaScriptEngine);
+	Rva002E2B50Object *object = global->m_object;
 	if (object != 0)
 		object->m_flag = 1;
 	return false;
