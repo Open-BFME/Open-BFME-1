@@ -1,5 +1,6 @@
-void __cdecl bfmeStopAK(void *source, int handle, int flags);
-int __cdecl bfmeStartAK(void *source);
+class GameWindow;
+void __cdecl GadgetComboBoxSetSelectedPos(GameWindow *window, int position, bool selected);
+int __cdecl bfmeGo1022L(int window);
 
 class BfmeOwnAK
 {
@@ -19,7 +20,7 @@ void BfmeOwnAK::bfmeToggleAK(int code)
 		int handle = m_bfmeHandleAK;
 
 		if (handle != -1)
-			bfmeStopAK(m_bfmeSourceAK, handle, 0);
+			GadgetComboBoxSetSelectedPos((GameWindow *)m_bfmeSourceAK, handle, false);
 
 		return;
 	}
@@ -27,5 +28,5 @@ void BfmeOwnAK::bfmeToggleAK(int code)
 	void *source = m_bfmeSourceAK;
 
 	if (source)
-		m_bfmeHandleAK = bfmeStartAK(source);
+		m_bfmeHandleAK = bfmeGo1022L((int)source);
 }

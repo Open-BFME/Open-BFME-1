@@ -1,8 +1,38 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+#include "ascii_string.h"
+
+class BfmeOwnCX;
+
+struct Rva00356A60Record
+{
+	int m_previous;
+	int m_next;
+	AsciiString m_name;
+	unsigned char m_released;
+	unsigned char m_pad;
+	unsigned short m_references;
+	void *m_nodes;
+};
+
+class Rva00359530StringRecordTable
+{
+private:
+	friend class BfmeOwnCX;
+	int findNameIndex(AsciiString *name);
+
+	int *m_nameIndexesBegin;
+	int *m_nameIndexesEnd;
+	int *m_nameIndexesCapacity;
+	Rva00356A60Record *m_records;
+	int m_10;
+	int m_14;
+	int m_freeHead;
+	int m_activeTail;
+};
+
 class BfmeSubCX
 {
 public:
-	int bfmeCheckCX(void *key);
-
 	int m_bfmeDataCX;
 };
 
@@ -17,8 +47,6 @@ public:
 class BfmeVecCX
 {
 public:
-	int bfmeFindCX(void *key);
-
 	int *m_bfmeBeginCX;
 	int *m_bfmeEndCX;
 	unsigned char m_bfmePadCX[4];
@@ -38,13 +66,14 @@ int BfmeOwnCX::bfmeLookupCX(void *key)
 {
 	BfmeVecCX *vec = &m_bfmeVecCX;
 
-	int index = vec->bfmeFindCX(key);
+	int index = ((Rva00359530StringRecordTable *)vec)->findNameIndex((AsciiString *)key);
 
 	if ((unsigned int)index < (unsigned int)(vec->m_bfmeEndCX - vec->m_bfmeBeginCX))
 	{
 		int id = vec->m_bfmeBeginCX[index];
 
-		if (vec->m_bfmeEntriesCX[id].m_bfmeSubCX.bfmeCheckCX(key) == 0)
+		if (((StringBase<char> *)&vec->m_bfmeEntriesCX[id].m_bfmeSubCX)->compare(
+			*(const StringBase<char> *)key) == 0)
 			return id;
 	}
 
