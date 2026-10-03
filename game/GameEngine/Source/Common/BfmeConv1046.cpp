@@ -70,7 +70,7 @@ struct _SBQueryEngine;
 extern "C" void SBServerListDisconnect(_SBServerList *p);
 extern "C" void SBEngineHaltUpdates(_SBQueryEngine *p);
 
-void bfmeGo1046B(BfmeC1046 *p)
+extern "C" void piSBStopListingAutoMatches(BfmeC1046 *p)
 {
 	if (*(int *)((char *)p + 0xba0) == 0)
 		return;
