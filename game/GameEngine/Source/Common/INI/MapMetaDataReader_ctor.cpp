@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Clean C++ reconstruction of the BFME MapMetaDataReader default
-// constructor, retail 0x000C0EA0.
+// constructor (0x000C0EA0) and destructor (0x000C0B90).
+// Destructor identity and EH ownership: identity_evidence/000c0b90-map-reader.md.
 //
 // The class and its member order come from the upstream Zero Hour
 // definition of MapMetaDataReader in
@@ -19,9 +20,16 @@
 // inlined default ctor is what makes the two +0x20/+0x24 pointers plain stores
 // instead of out-of-line calls.
 
+#include "coord2d.h"
+// Retail list destructor decorates Coord3D as a struct (U), not a class (V).
+// Reuse its canonical layout and methods with that ABI class-key view.
+#define class struct
 #include "coord3d.h"
+#undef class
 #include "ascii_string.h"
 #include <list>
+// Retail outlines both list-base destructors through ILT344F0 -> 76B00.
+namespace _STL { template<> _List_base<Coord3D, allocator<Coord3D> >::~_List_base(); }
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -69,10 +77,15 @@ private:
 	char m_body[0x14];
 };
 
+// Keep the trailing eight-record lifetime together, as in MapMetaData_dtor.cpp.
+// This emits retail's LEA-before-size-push array destruction sequence.
+struct Rva000C0B90PlayerArray { PlayerPosition items[8]; };
+
 class MapMetaDataReader
 {
 public:
 	MapMetaDataReader();
+	~MapMetaDataReader();
 
 private:
 	Region3D m_extent;
@@ -89,7 +102,7 @@ private:
 	Coord3DPod m_initialCameraPosition;
 	Coord3DList m_supplyPositions;
 	Coord3DList m_techPositions;
-	PlayerPosition m_players[8];
+	Rva000C0B90PlayerArray m_players;
 };
 
 MapMetaDataReader::MapMetaDataReader()
@@ -139,3 +152,5 @@ MapMetaDataReader::MapMetaDataReader()
 	m_waypoints[7].y = 0.0f;
 	m_waypoints[7].z = 0.0f;
 }
+
+MapMetaDataReader::~MapMetaDataReader() {}

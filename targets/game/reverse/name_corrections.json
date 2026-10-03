@@ -16798,5 +16798,25 @@
   "after_sha256": "2bb76972cbb242f610a46fda457c577c32043a27e5e0230ceccbaaf02a557562",
   "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
   "reason": "The native allocator call reaches shared cell VA01337828, whose existing singleton matched owner is Rva008C5D70Alloc. Three identical BfmeNestedBE operator-new COMDAT copies must consistently use that owner spelling; no new storage, pins or semantic identity are introduced."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/INI/MapMetaDataReader_ctor.cpp",
+  "new_path": "game/GameEngine/Source/Common/INI/MapMetaDataReader_ctor.cpp",
+  "old_name": "PlayerPosition",
+  "new_name": "Rva000C0B90PlayerArray",
+  "before_sha256": "1329e78d5f4867e6e4767ef9093f04a24d6026d5c59e7c288c07c5adfb7cd67d",
+  "after_sha256": "35aab9313ab928471ad6f957a09387988ae43116a4665bf3be22f6e54cda133f",
+  "evidence": "targets/game/reverse/identity_evidence/000c0b90-map-reader.md",
+  "reason": "False positional pairing: existing PlayerPosition element identity remains; bank string becomes canonical AsciiString at20/24. New containing array lifetime atB0 is neither old type; proof records independently distinct member offsets and callbacks."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000c0b90.cpp",
+  "new_path": "game/GameEngine/Source/Common/INI/MapMetaDataReader_ctor.cpp",
+  "old_name": "BFMERetailAsciiString",
+  "new_name": "Rva000C0B90PlayerArray",
+  "before_sha256": "1ce904fd1e34e2bde07394857436575993c621aafff6e985d33953f620c6d34a",
+  "after_sha256": "35aab9313ab928471ad6f957a09387988ae43116a4665bf3be22f6e54cda133f",
+  "evidence": "targets/game/reverse/identity_evidence/000c0b90-map-reader.md",
+  "reason": "False positional pairing: existing PlayerPosition element identity remains; bank string becomes canonical AsciiString at20/24. New containing array lifetime atB0 is neither old type; proof records independently distinct member offsets and callbacks."
  }
 ]
