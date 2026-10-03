@@ -12,8 +12,17 @@ struct Q3SortCompare
 	void *state;
 };
 
-void b_00437e90();
-void b_00437c40();
+struct BfmePairCXD;
+struct GameTextStringLookUp;
+struct GameTextStringCompare
+{
+	void *state;
+};
+
+void __cdecl GameTextInsertionSort00437E90(
+	GameTextStringLookUp *first, GameTextStringLookUp *last,
+	GameTextStringCompare comp);
+void __cdecl bfmeGoCXD(BfmePairCXD *first, BfmePairCXD *last, void *extra);
 
 typedef void (__cdecl *SortPass)(Q3SortElem8 *, Q3SortElem8 *, Q3SortCompare);
 
@@ -21,11 +30,11 @@ void Gen00438270(Q3SortElem8 *first, Q3SortElem8 *last, Q3SortCompare comp)
 {
 	if (last - first > 16)
 	{
-		((SortPass)b_00437e90)(first, first + 16, comp);
-		((SortPass)b_00437c40)(first + 16, last, comp);
+		((SortPass)GameTextInsertionSort00437E90)(first, first + 16, comp);
+		((SortPass)bfmeGoCXD)(first + 16, last, comp);
 	}
 	else
 	{
-		((SortPass)b_00437e90)(first, last, comp);
+		((SortPass)GameTextInsertionSort00437E90)(first, last, comp);
 	}
 }
