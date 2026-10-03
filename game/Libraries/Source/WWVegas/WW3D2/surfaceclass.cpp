@@ -888,59 +888,6 @@ void SurfaceClass::Detach (void)
 
 
 /***********************************************************************************************
- * SurfaceClass::DrawPixel -- draws a pixel                                                    *
- *                                                                                             *
- *                                                                                             *
- *                                                                                             *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *=============================================================================================*/
-// ?DrawPixel@SurfaceClass@@ present-unmatched
-void SurfaceClass::DrawPixel(const unsigned int x,const unsigned int y, unsigned int color)
-{
-	SurfaceDescription sd;
-	Get_Description(sd);
-
-	unsigned int size=PixelSize(sd);
-
-	D3DLOCKED_RECT lock_rect;
-	::ZeroMemory(&lock_rect, sizeof(D3DLOCKED_RECT));
-	RECT rect;
-	::ZeroMemory(&rect, sizeof(RECT));
-
-	rect.bottom=y+1;
-	rect.top=y;
-	rect.left=x;
-	rect.right=x+1;
-
-	DX8_ErrorCode(D3DSurface->LockRect(&lock_rect,&rect,0));
-	unsigned char *cptr=(unsigned char*)lock_rect.pBits;
-	unsigned short *sptr=(unsigned short*)lock_rect.pBits;
-	unsigned int *lptr=(unsigned int*)lock_rect.pBits;
-
-	switch (size)
-	{
-	case 1:
-		*cptr=(unsigned char) (color & 0xFF);
-		break;
-	case 2:
-		*sptr=(unsigned short) (color & 0xFFFF);
-		break;
-	case 4:
-		*lptr=color;
-		break;
-	}
-
-	DX8_ErrorCode(D3DSurface->UnlockRect());
-}
-
-/***********************************************************************************************
  * SurfaceClass::DrawHLine -- draws a horizontal line                                          *
  *                                                                                             *
  *                                                                                             *
