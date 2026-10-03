@@ -2047,22 +2047,8 @@ void ZoneBlock::allocateZones(void)
 
 
 //------------------------  PathfindZoneManager  -------------------------------
-// ??0PathfindZoneManager@@QAE@XZ present-unmatched
-PathfindZoneManager::PathfindZoneManager() : m_maxZone(0), 
-m_nextFrameToCalculateZones(0), 
-m_groundCliffZones(NULL), 
-m_groundWaterZones(NULL), 
-m_groundRubbleZones(NULL), 
-m_terrainZones(NULL), 
-m_crusherZones(NULL), 
-m_hierarchicalZones(NULL), 
-m_blockOfZoneBlocks(NULL),
-m_zoneBlocks(NULL),
-m_zonesAllocated(0)
-{		
-	m_zoneBlockExtent.x = 0;
-	m_zoneBlockExtent.y = 0;
-}
+// Retail construction is provided by PathfindZoneManagerConstructor.cpp (0x004068C0).
+// BFME allocates four zone matrices and initializes the expanded state layout.
 
 // ??1PathfindZoneManager@@QAE@XZ present-unmatched
 PathfindZoneManager::~PathfindZoneManager()  
