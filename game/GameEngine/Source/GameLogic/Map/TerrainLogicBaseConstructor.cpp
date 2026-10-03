@@ -1,16 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 // Open-BFME5: TerrainLogicBase::TerrainLogicBase, retail 0x001ADB80.
 // The layout and member initialization are corroborated by TerrainLogic::reset
 // and the matched derived TerrainLogic constructor at 0x006BE070.
-
-namespace _STL
-{
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int bytes);
-};
-}
 
 class TerrainLogicBaseFirst
 {
@@ -60,7 +53,7 @@ public:
 	{
 		m_head = 0;
 		TerrainListNode *node =
-			(TerrainListNode *)_STL::__new_alloc::allocate(sizeof(TerrainListNode));
+			(TerrainListNode *)_STL::__node_alloc<true, 0>::allocate(sizeof(TerrainListNode));
 		node->m_next = node;
 		node->m_previous = node;
 		m_head = node;
@@ -86,7 +79,7 @@ public:
 	TerrainTree()
 	{
 		m_header = 0;
-		m_header = (TerrainTreeNode *)_STL::__new_alloc::allocate(sizeof(TerrainTreeNode));
+		m_header = (TerrainTreeNode *)_STL::__node_alloc<true, 0>::allocate(sizeof(TerrainTreeNode));
 		m_count = 0;
 		m_header->m_colour = 0;
 		m_header->m_parent = 0;
