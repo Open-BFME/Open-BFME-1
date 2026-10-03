@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Near-twin of Rva0059EE10AttackNuggetFactory.cpp (retail 0x0059EE10, 135B)
 // and sibling of Rva005A01F0AttackNuggetFactory.cpp (retail 0x005A01F0,
@@ -7,20 +7,14 @@
 // wider tail -- two words (m_10, m_14) plus two bytes (m_18, m_19) -- and
 // re-installs +0 with its own address before the post-parse m_04=m_14
 // resync. Class re-declared locally per file policy; identity of the
-// derived struct is not recovered.  The vtable-shaped global IS identified:
-// the `mov dword ptr [esi],<imm32>` at 0x0059D1F0+0x29 stores 0x0110C780,
-// which is Rva0059D1E0TailDtor's emitted vftable, so the reference is spelled
-// through that symbol's real definer below.  The field table is still owed as a
-// datum: the `push` at +0x62 is 0x0110C7C8 and no TU in game/ defines it (nor
-// its siblings 0x0110C730 for 0x0059C4C0 and 0x0110C76C for 0x0059CB30).
+// derived struct is not recovered.  The field table at 0x0110C7C8 is defined
+// below; its siblings 0x0110C730 (for 0x0059C4C0) and 0x0110C76C (for
+// 0x0059CB30) are still undefined.
 
-struct FieldParse;
+#include "Common/INI/INI.h"
 
-class INI
-{
-public:
-	void initFromINI(void *what, const FieldParse *table);
-};
+extern "C" void __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 
 struct Gen_00489270
 {
@@ -43,7 +37,13 @@ public:
 // array type keeps the decay-to-pointer the `mov dword ptr [esi],<imm32>` needs,
 // the convention AptBooleanCreate.cpp uses for the same reason.
 extern "C" const char __identifier("??_7Rva0059D1E0TailDtor@@6B@")[];
-extern const FieldParse s4TableRva0059D1F0;
+extern const FieldParse s4TableRva0059D1F0[] =
+{
+	{ "StartFrame", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x10 },
+	{ "EndFrame", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x14 },
+	{ "FadeInUnfrozenSounds", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x18 },
+	{ 0, 0, 0, 0 }
+};
 
 struct S4BuiltRva0059D1F0 : public Rva00489210
 {
@@ -65,7 +65,7 @@ void s4ParseFieldsRva0059D1F0(INI *ini, Gen_00489270 *sink)
 {
 	S4BuiltRva0059D1F0 *t = new S4BuiltRva0059D1F0;
 
-	ini->initFromINI(t, &s4TableRva0059D1F0);
+	ini->initFromINI(t, s4TableRva0059D1F0);
 	t->m_04 = t->m_14;
 
 	sink->m((int)t);
