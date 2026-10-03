@@ -1444,11 +1444,7 @@ void ScreenMotionBlurFilter::reset(void)
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 
-// ?shutdown@ScreenMotionBlurFilter@@UAEHXZ present-unmatched
-Int ScreenMotionBlurFilter::shutdown(void)
-{
-	return TRUE;
-}
+// ?shutdown@ScreenMotionBlurFilter@@UAEHXZ is owned by ScreenMotionBlurFilterShutdown.cpp.
 
 /*===========================================================================================*/
 /*=========      Shroud Shaders	=============================================================*/
