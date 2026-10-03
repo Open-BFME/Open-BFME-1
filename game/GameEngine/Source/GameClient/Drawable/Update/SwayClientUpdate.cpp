@@ -46,7 +46,7 @@
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/GameLogic.h"
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BfmeCalc919G
 {
@@ -105,7 +105,7 @@ SwayClientUpdate::~SwayClientUpdate( void )
 void SwayClientUpdate::updateSway()
 {
 	const BreezeInfo& info = TheScriptEngine->getBreezeInfo();
-	if (info.m_randomness == BfmeZeroRange)
+	if (info.m_randomness == g_rva01075350)
 	{
 		m_curValue = 0;
 	} 

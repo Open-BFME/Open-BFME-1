@@ -41,7 +41,7 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 #define LOGICSECONDS_PER_FRAME 0.2f
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Player
 {
@@ -275,7 +275,7 @@ void InGameUI::updateAndDrawWorldAnimations()
 				continue;
 			}
 
-			if( wad->m_zRisePerSecond != BfmeZeroRange )
+			if( wad->m_zRisePerSecond != g_rva01075350 )
 				wad->m_worldPos.z += (*(volatile Real *)&wad->m_zRisePerSecond) * LOGICSECONDS_PER_FRAME;
 		}
 

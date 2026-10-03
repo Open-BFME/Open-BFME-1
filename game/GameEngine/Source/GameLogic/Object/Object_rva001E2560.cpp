@@ -60,7 +60,7 @@ struct Coord3D
 	Real z;
 };
 
-extern const Real BfmeZeroRange;			///< retail 0x01075350, 0.0f
+extern const Real g_rva01075350;			///< retail 0x01075350, 0.0f
 
 class Object
 {
@@ -78,7 +78,7 @@ Coord3D Object::rva001E2560(const Coord3D *pos) const
 	Real dist = delta.length();
 	Real radius = m_float0BC;
 	if (dist <= radius)
-		delta.set(BfmeZeroRange, BfmeZeroRange, BfmeZeroRange);
+		delta.set(g_rva01075350, g_rva01075350, g_rva01075350);
 	else
 		delta.scale((dist - radius) / dist);
 	return delta;

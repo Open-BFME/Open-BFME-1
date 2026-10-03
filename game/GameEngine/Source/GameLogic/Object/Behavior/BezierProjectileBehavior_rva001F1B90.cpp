@@ -106,7 +106,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // Constructor1F1470 writes tableVA10A253C; slot2C routes30E72 to1F0480.
 // The complete846B callee consumes Object and position pointers and returns ret8.
@@ -171,7 +171,7 @@ void BezierProjectileBehavior::rva001F1B90(register Bool flag)
 	delta.y = m_path.begin()[pathCount - 1].y -
 		m_path.begin()[pathCount - 2].y;
 	Real lengthSquared = delta.x * delta.x + delta.y * delta.y;
-	if (lengthSquared != BfmeZeroRange)
+	if (lengthSquared != g_rva01075350)
 	{
 		Real inverseLength = WWMath::Inv_Sqrt(lengthSquared);
 		delta.x *= inverseLength;

@@ -132,7 +132,7 @@ extern GameClient *TheGameClient;
 #define TheGameClient ((Rva004435A0ClientRoot4120 *)TheGameClient)
 #define BfmeFloatingTextScale (0.03f)
 
-extern Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_bfmeUint32Scale;
 
 struct Rva004435A0Coord3D

@@ -5,7 +5,7 @@
 #include "vector3.h"
 
 extern const float g_01075954;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 #define g_bfmeDefaultEG (1.57079637f)
 #define g_010AEBB8 (10000.0f)
 
@@ -26,7 +26,7 @@ void bfmeFillBC(BfmeVecBC *out, int a, int b)
 	direction.Y = -(float)sin(second) * firstSine;
 	direction.Z = -(float)cos(first);
 	float lengthSquared = direction.Length2();
-	if (lengthSquared != BfmeZeroRange)
+	if (lengthSquared != g_rva01075350)
 	{
 		float inverseLength = WWMath::Inv_Sqrt(lengthSquared);
 		direction.X *= inverseLength;

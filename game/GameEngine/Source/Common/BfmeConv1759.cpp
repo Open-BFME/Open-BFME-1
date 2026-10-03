@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // Retail 0x01098AD4 is MSVC's own literal pool entry __real@40200000 (2.5f),
 // not a global (same verdict as linked BfmeConv2032.cpp / Bfme5ThirtySeven.cpp
@@ -45,10 +45,10 @@ char BfmeOwnBT::bfmeTestBT(BfmeSrcBT *source, void *value)
 {
 	float delta = m_bfmeDataBT->m_bfmeHeightBT - 2.5f;
 
-	if (delta < BfmeZeroRange)
+	if (delta < g_rva01075350)
 		return 0;
 
-	if (delta == BfmeZeroRange)
+	if (delta == g_rva01075350)
 		return 0;
 
 	if (source->bfmeCalcBT(value) < delta * delta)

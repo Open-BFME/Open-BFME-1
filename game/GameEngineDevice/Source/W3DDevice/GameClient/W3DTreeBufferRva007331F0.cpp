@@ -34,7 +34,7 @@ public:
 
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 struct Rva007331F0TypeData
 {
@@ -116,7 +116,7 @@ Bool Rva007331F0::method(void *key, const Coord3D *direction, Real height)
 
     const Rva007331F0TypeData *typeData = types[record->type].data;
     Real terrainHeight = *(Real *)((unsigned char *)TheTerrainLogic + 0x18f8);
-    if (terrainHeight > BfmeZeroRange)
+    if (terrainHeight > g_rva01075350)
         height = terrainHeight;
     else if (height < typeData->defaultHeight)
         height = typeData->defaultHeight;

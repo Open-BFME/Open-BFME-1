@@ -6,16 +6,16 @@
 // function keeps its address token.
 //
 // delta = *b - *a per component; dist = length(delta); when dist is not
-// exactly BfmeZeroRange (0x01075350, 0.0f) the delta is normalized by the
+// exactly g_rva01075350 (0x01075350, 0.0f) the delta is normalized by the
 // reciprocal distance (1.0f/dist, via the shared 1.0f global at 0x01075334).
-// The result (dx+dy)*BfmeZeroRange+dz reduces to dz numerically
-// (BfmeZeroRange == 0.0f) but IEEE fp rules keep the multiply live in
+// The result (dx+dy)*g_rva01075350+dz reduces to dz numerically
+// (g_rva01075350 == 0.0f) but IEEE fp rules keep the multiply live in
 // codegen. Naming the result in a local before returning it is what keeps
 // retail's shared branch tail and its fadd st(1)/fxch/fstp cleanup.
 
 #include <math.h>
 
-extern const float BfmeZeroRange;   // 0x01075350 == 0.0f
+extern const float g_rva01075350;   // 0x01075350 == 0.0f
 extern float g_bfmeDefaultBU;        // 0x01075334 == 1.0f
 
 struct Rva001B46B0Vec3
@@ -35,7 +35,7 @@ float Rva001B46B0(const Rva001B46B0Vec3 *a, const Rva001B46B0Vec3 *b)
 	delta.z -= a->z;
 
 	float dist = (float)sqrt(delta.z * delta.z + delta.y * delta.y + delta.x * delta.x);
-	if (dist != BfmeZeroRange)
+	if (dist != g_rva01075350)
 	{
 		dist = g_bfmeDefaultBU / dist;
 		delta.x *= dist;
@@ -43,6 +43,6 @@ float Rva001B46B0(const Rva001B46B0Vec3 *a, const Rva001B46B0Vec3 *b)
 		delta.z *= dist;
 	}
 
-	float result = (delta.x + delta.y) * BfmeZeroRange + delta.z;
+	float result = (delta.x + delta.y) * g_rva01075350 + delta.z;
 	return result;
 }

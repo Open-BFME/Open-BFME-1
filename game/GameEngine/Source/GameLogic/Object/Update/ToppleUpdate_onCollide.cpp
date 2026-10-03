@@ -14,7 +14,7 @@ typedef float Real;
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 struct Coord3D
 {
@@ -79,7 +79,7 @@ void ToppleUpdate::onCollide(Object *other, const Coord3D *, const Coord3D *)
 		toppleVector.z = 0.0f;
 
 		Real toppleSpeed = other->bfmeGetNonnegativePreferredLocomotorHeight();
-		if (toppleSpeed == BfmeZeroRange && other->m_containedBy != 0)
+		if (toppleSpeed == g_rva01075350 && other->m_containedBy != 0)
 			toppleSpeed = other->m_containedBy->bfmeGetNonnegativePreferredLocomotorHeight();
 
 		getObject()->topple(&toppleVector, toppleSpeed, 0);

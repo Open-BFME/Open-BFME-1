@@ -1,6 +1,6 @@
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Rva0036CD30Value
 {
@@ -20,7 +20,7 @@ public:
 
 Real Rva0036CD30Owner::value(void) const
 {
-	Real result = BfmeZeroRange;
+	Real result = g_rva01075350;
 	if( m_value04 )
 		result = m_value04->m_value38;
 	return result;

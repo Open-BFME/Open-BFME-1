@@ -8,7 +8,7 @@ extern "C" double __cdecl atan2(double y, double x);
 extern "C" double __cdecl fabs(double value);
 #pragma intrinsic(atan2, fabs)
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern const Real g_rva0107533C;
 
 struct Coord3D
@@ -99,7 +99,7 @@ Bool DieMuxData::isDieApplicable(
 	if (!obj->getStatusBits().testSetAndClear(m_requiredStatus, m_exemptStatus))
 		return false;
 
-	if (m_damageAmountRequired >= BfmeZeroRange &&
+	if (m_damageAmountRequired >= g_rva01075350 &&
 		damageInfo->m_damageAmount < m_damageAmountRequired)
 		return false;
 

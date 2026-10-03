@@ -5,7 +5,7 @@
 // body; the jump table after the final RET is compiler data, not code.
 
 extern unsigned int AptGetSwfVersion();
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct BfmeStringData3AF0
 {
@@ -74,14 +74,14 @@ bool AptValue::rva00898480Check()
 			if ((m_flags & 0x3f) != 1)
 				value = m_indirect;
 			BfmeStringData3AF0 *const &secondString = value->m_string;
-			return (Rva008921B0Atof(secondString->m_text) != BfmeZeroRange) ? 1 : 0;
+			return (Rva008921B0Atof(secondString->m_text) != g_rva01075350) ? 1 : 0;
 		}
 	case 5:
 		return m_boolean;
 	case 7:
 		return (m_integer != 0) ? 1 : 0;
 	case 6:
-		return (m_float != BfmeZeroRange) ? 1 : 0;
+		return (m_float != g_rva01075350) ? 1 : 0;
 	default:
 		return (this != g_bfmeFallbackDB) ? 1 : 0;
 	}

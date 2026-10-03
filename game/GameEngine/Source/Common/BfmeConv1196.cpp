@@ -38,7 +38,7 @@ class GlobalData;
 
 extern GlobalData *TheWritableGlobalData;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Object
 {
@@ -98,12 +98,12 @@ bool BfmeA1196::allow(Object *object)
 	const BfmeA1196FloatView *self = reinterpret_cast<const BfmeA1196FloatView *>(this);
 	const BfmeObject1196 *other = reinterpret_cast<const BfmeObject1196 *>(object);
 	float range = object->getShroudClearingRange();
-	if (range <= BfmeZeroRange || range == BfmeZeroRange)
+	if (range <= g_rva01075350 || range == g_rva01075350)
 		return !self->m_bfme18;
 
 	range += self->m_bfme14;
 	range += other->m_bfmebc;
-	BfmeDelta1196 delta = { other->m_bfme38, other->m_bfme3c, BfmeZeroRange };
+	BfmeDelta1196 delta = { other->m_bfme38, other->m_bfme3c, g_rva01075350 };
 	delta.x -= self->m_bfme08;
 	delta.y -= self->m_bfme0c;
 	float distanceSquared = delta.y * delta.y + delta.x * delta.x;

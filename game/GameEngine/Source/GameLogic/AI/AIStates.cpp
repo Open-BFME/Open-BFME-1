@@ -1652,7 +1652,7 @@ public:
 	void clearCurrentVictim(const Object *victim);
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern void j_0002be77();
 extern void j_0003a391();
 
@@ -1696,8 +1696,8 @@ void AIIdleState::doInitIdleState()
 	{
 		Coord3D goalPos = { obj->m_position.x, obj->m_position.y,
 			obj->m_position.z };
-		if (goalPos.x != BfmeZeroRange || goalPos.y != BfmeZeroRange ||
-			goalPos.z != BfmeZeroRange)
+		if (goalPos.x != g_rva01075350 || goalPos.y != g_rva01075350 ||
+			goalPos.z != g_rva01075350)
 		{
 			BfmeIdlePathfinder *pathfinder =
 				((BfmeIdleAI *)TheAI)->m_pathfinder;

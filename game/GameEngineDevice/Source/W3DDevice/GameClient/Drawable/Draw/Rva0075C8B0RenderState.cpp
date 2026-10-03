@@ -9,7 +9,7 @@
 
 typedef float Real;
 
-extern const Real BfmeZeroRange; // retail VA 0x01075350; existing canonical pin
+extern const Real g_rva01075350; // retail VA 0x01075350; existing canonical pin
 extern Real g_bfmeDefaultBU; // retail VA 0x01075334; existing canonical pin
 
 class __declspec(novtable) Rva0075C8B0RenderTarget
@@ -130,7 +130,7 @@ private:
 
 void Rva0075C8B0Owner::update(Rva0075C8B0RenderTarget *target, Real value)
 {
-	if (value <= BfmeZeroRange)
+	if (value <= g_rva01075350)
 	{
 		target->slot23(0.0f);
 		target->slot100(1);

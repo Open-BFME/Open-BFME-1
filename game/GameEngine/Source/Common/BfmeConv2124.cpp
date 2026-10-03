@@ -11,7 +11,7 @@ class GameWindowTransitionsHandler;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 extern const float g_bfmeDeltaAAW;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 class BfmeHostAAW
@@ -74,7 +74,7 @@ void BfmeHostAAW::bfmeUpdateAAW()
 
 			m_bfme144AAW = f;
 
-			if (f < BfmeZeroRange)
+			if (f < g_rva01075350)
 			{
 				m_bfme144AAW = 0;
 				bfmeExpireAAW();

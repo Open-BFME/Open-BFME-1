@@ -42,7 +42,7 @@ public:
 extern AptValue *g_bfmeFallbackDB;
 unsigned int AptGetSwfVersion();
 AptValue *Rva008A4EA0MakeFloat(float);
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern "C" double fmod(double, double);
 #pragma intrinsic(fmod)
 
@@ -62,7 +62,7 @@ void AptActionInterpreter::_FunctionRva008C8160(
 	else
 	{
         float topValue = top->toNumber();
-        if (topValue == BfmeZeroRange) result = g_bfmeFallbackDB;
+        if (topValue == g_rva01075350) result = g_bfmeFallbackDB;
         else {
             float underValue = under->toNumber();
             result = Rva008A4EA0MakeFloat((float)fmod(underValue, topValue));

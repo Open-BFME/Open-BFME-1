@@ -19,7 +19,7 @@
 
 #include <math.h>
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 struct Coord3DBase
@@ -68,7 +68,7 @@ static __forceinline float bfmeCoord3DLength(const Coord3D *v)
 static __forceinline void bfmeCoord3DNormalize(Coord3D *v)
 {
 	float len = bfmeCoord3DLength(v);
-	if (len != BfmeZeroRange)
+	if (len != g_rva01075350)
 	{
 		float scale = g_bfmeDefaultBU / len;
 		v->x *= scale;

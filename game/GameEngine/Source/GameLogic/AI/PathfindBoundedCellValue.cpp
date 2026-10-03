@@ -1,7 +1,7 @@
 // BFME Pathfinder-side bounded table accessor.  The table has 0x44-byte
 // records and stores the integer value returned as a float at +0x89c.
 
-extern const float BfmeZeroRange; // retail 0x01075350
+extern const float g_rva01075350; // retail 0x01075350
 
 class Gen_003D5BF0
 {
@@ -27,7 +27,7 @@ float Gen_003D5BF0::bfmeValue(int entryIndex) const
 	goto table;
 
 zero:
-	return BfmeZeroRange;
+	return g_rva01075350;
 
 table:
 	return (float)m_bfmeEntries[entryIndex].m_bfmeValue;

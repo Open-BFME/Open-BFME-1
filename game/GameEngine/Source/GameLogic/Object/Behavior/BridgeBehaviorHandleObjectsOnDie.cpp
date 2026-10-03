@@ -62,7 +62,7 @@ struct BfmeWideResult {
 class BfmeWideForwardA { public: BfmeWideResult bfmeForwardWideA(int,int,int,int); };
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 void j_000015e1();
 void j_0003a391();
 struct Rva001BEC20View { int call() const; };
@@ -94,7 +94,7 @@ void BridgeBehavior::handleObjectsOnBridgeOnDie() {
   Object *other;
   while((other=iter.next())!=0) {
    if(other->isKindOf(0x400000)||other->isKindOf(0x1000000)) continue;
-   if(other->getHeightAboveTerrain()>BfmeZeroRange) continue;
+   if(other->getHeightAboveTerrain()>g_rva01075350) continue;
    if(other->m_position.z<lowBridgeZ) continue;
    if(!((bool (__cdecl*)(const Coord3D*,const Coord3D*,int))j_000015e1)(&other->m_position,bridgePolygon,4)) continue;
    if(bridgeLayer!=getLayer(other)) continue;

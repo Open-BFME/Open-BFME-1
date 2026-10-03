@@ -420,7 +420,7 @@ extern AI *TheAI;
 extern GameLogic *TheGameLogic;
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern void j_0003a17a();
 extern "C" double sqrt(double);
 
@@ -551,7 +551,7 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 					obj->clearModelConditionState(MODELCONDITION_RAPPELLING);
 			}
 
-			if (curLoco != 0 && curLoco->query(obj) == (Real)BfmeZeroRange)
+			if (curLoco != 0 && curLoco->query(obj) == (Real)g_rva01075350)
 				obj->clearModelConditionState(MODELCONDITION_MOVING);
 			else
 				obj->setModelConditionState(MODELCONDITION_MOVING);

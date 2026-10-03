@@ -225,7 +225,7 @@ bool Rva00643B40False::get() const
 	return false;
 }
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva0073A6C0Thing
 {
@@ -239,7 +239,7 @@ public:
 // ?isAboveTerrainOrWater@Rva0073A6C0Thing@@QBE_NXZ
 bool Rva0073A6C0Thing::isAboveTerrainOrWater() const
 {
-	return getHeightAboveTerrainOrWater() > BfmeZeroRange;
+	return getHeightAboveTerrainOrWater() > g_rva01075350;
 }
 
 class Rva007460C0ByteField

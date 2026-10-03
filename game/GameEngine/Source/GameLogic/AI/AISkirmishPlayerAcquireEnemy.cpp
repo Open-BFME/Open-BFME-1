@@ -187,13 +187,13 @@ protected:
 	void acquireEnemy(void);
 };
 
-class BfmeZeroRangeType;
+class g_rva01075350Type;
 
 extern PlayerList *ThePlayerList;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern ScriptEngine *TheScriptEngine;
 extern const Real g_rva0107533C;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 extern void j_00015460(void);
 extern void j_00015438(void);
@@ -286,7 +286,7 @@ void AISkirmishPlayer::acquireEnemy(void)
 				if (bfmeIsSkirmishAIPlayer(somePlayer)
 					&& (bfmeGetCurrentEnemy(somePlayer) == m_player)) {
 					curDistSqr -= (25 * 25);
-					if (curDistSqr < BfmeZeroRange) curDistSqr = 0;
+					if (curDistSqr < g_rva01075350) curDistSqr = 0;
 				}
 			}
 

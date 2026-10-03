@@ -21,7 +21,7 @@ public:
 	Vector3 Get_Position() const;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
@@ -48,12 +48,12 @@ bool W3DVolumetricShadow::bfmeIntersectsVisibleBounds(const AABoxClass &box) con
 	if (pos.Z + m_extraExtrusionPadding < box.Center.Z)
 		return 0;
 
-	return ((m_lightOffsetX > BfmeZeroRange ? m_lightOffsetX : BfmeZeroRange) +
+	return ((m_lightOffsetX > g_rva01075350 ? m_lightOffsetX : g_rva01075350) +
 				m_robjExtent + pos.X > box.Center.X &&
 				pos.X - m_robjExtent +
-					(m_lightOffsetX < BfmeZeroRange ? m_lightOffsetX : BfmeZeroRange) < box.Center.X &&
-				(m_lightOffsetY > BfmeZeroRange ? m_lightOffsetY : BfmeZeroRange) +
+					(m_lightOffsetX < g_rva01075350 ? m_lightOffsetX : g_rva01075350) < box.Center.X &&
+				(m_lightOffsetY > g_rva01075350 ? m_lightOffsetY : g_rva01075350) +
 					m_robjExtent + pos.Y > box.Center.Y &&
 				pos.Y - m_robjExtent +
-					(m_lightOffsetY < BfmeZeroRange ? m_lightOffsetY : BfmeZeroRange) < box.Center.Y);
+					(m_lightOffsetY < g_rva01075350 ? m_lightOffsetY : g_rva01075350) < box.Center.Y);
 }

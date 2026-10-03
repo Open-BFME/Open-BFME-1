@@ -23,7 +23,7 @@ private:
 	RenderObjClass *m_worldRenderObject;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 Real BfmeLivingWorldManager::rva006fe600( Coord3D point )
 {
@@ -39,5 +39,5 @@ Real BfmeLivingWorldManager::rva006fe600( Coord3D point )
 			return ray.Result->ContactPoint.Z;
 	}
 
-	return BfmeZeroRange;
+	return g_rva01075350;
 }

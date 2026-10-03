@@ -2,7 +2,7 @@
 // Retail 0x0021F4E0. The callers prove a readiness predicate, but they do not
 // prove a semantic owner, so the class keeps the retail address in its name.
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva0021F4E0Range
 {
@@ -51,7 +51,7 @@ char Rva0021F4E0::ready(void *first, void *second)
 {
 	if (m_sub.test(first, second) == 0)
 		goto fail;
-	if (m_owner->m_range->range() <= BfmeZeroRange)
+	if (m_owner->m_range->range() <= g_rva01075350)
 		goto fail;
 	if (m_owner->m_range->mode() == 2 && m_owner->has(0x4e) == 0)
 		goto fail;

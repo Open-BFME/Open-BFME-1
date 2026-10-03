@@ -20,7 +20,7 @@ public:
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class DamageFX
 {
@@ -42,7 +42,7 @@ Bool DamageFX::doDamageFX(DamageType t, Real damageAmount, const Object *source,
 {
 	const FXList *fx = 0;
 
-	if (damageAmount != BfmeZeroRange)
+	if (damageAmount != g_rva01075350)
 	{
 		unsigned int offset = (unsigned int)t << 6;
 		const DFX *dfx = reinterpret_cast<const DFX *>(

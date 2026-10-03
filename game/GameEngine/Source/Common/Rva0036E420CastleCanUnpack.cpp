@@ -15,7 +15,7 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
 
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class GameLogic
 {
@@ -134,7 +134,7 @@ bool Rva0036E420Castle::canUnpack(bool checkTimer)
 		goto returnState;
 	if (!checkTimer)
 		goto returnState;
-	if (m_timer > BfmeZeroRange)
+	if (m_timer > g_rva01075350)
 		return false;
 returnState:
 	return stateReady;

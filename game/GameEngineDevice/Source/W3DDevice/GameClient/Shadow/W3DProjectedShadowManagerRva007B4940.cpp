@@ -7,7 +7,7 @@
 //
 // Takes two shadow-type records (their name is their first field, handed to
 // the manager's texture lookup 0x007AFD10), backfills any size equal to
-// BfmeZeroRange from the render object's box extent, acquires both textures,
+// g_rva01075350 from the render object's box extent, acquires both textures,
 // pops a pair object from the free list at +0x18 (reset by 0x007B02D0) or
 // allocates a fresh 0x68-byte one (ctor 0x007B3B80, initialize 0x007B44E0),
 // fills it, and links it into the list at +0x14 next to a pair that already
@@ -114,7 +114,7 @@ struct BFMEShadowTypeInfo
 	Real offsetY;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BfmeB1159
 {
@@ -190,18 +190,18 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 
 	if (robj)
 	{
-		if (lx == BfmeZeroRange || ly == BfmeZeroRange || rx == BfmeZeroRange || ry == BfmeZeroRange)
+		if (lx == g_rva01075350 || ly == g_rva01075350 || rx == g_rva01075350 || ry == g_rva01075350)
 		{
 			AABoxClass box;
 			robj->Get_Obj_Space_Bounding_Box(box);
 
-			if (lx == BfmeZeroRange)
+			if (lx == g_rva01075350)
 				lx = box.Extent.X + box.Extent.X;
-			if (ly == BfmeZeroRange)
+			if (ly == g_rva01075350)
 				ly = box.Extent.Y + box.Extent.Y;
-			if (rx == BfmeZeroRange)
+			if (rx == g_rva01075350)
 				rx = box.Extent.X + box.Extent.X;
-			if (ry == BfmeZeroRange)
+			if (ry == g_rva01075350)
 				ry = box.Extent.Y + box.Extent.Y;
 		}
 	}

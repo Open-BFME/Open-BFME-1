@@ -8,7 +8,7 @@
 extern "C" void __cdecl _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // The BFME RenderObjClass vtable has moved slots relative to the imported ZH
 // header.  This mirror names only the five slots witnessed by this body.
@@ -230,7 +230,7 @@ Bool Rva007129F0RTS3DScene::castRay(RayCollisionTestClass &raytest,
 		Real beta = sphere->Radius * sphere->Radius -
 			(Vector3::Dot_Product(sphereVector, sphereVector) -
 			 alpha * alpha);
-		if (beta < BfmeZeroRange)
+		if (beta < g_rva01075350)
 		{
 			Rva007129F0DrawableInfo *drawInfo =
 				(Rva007129F0DrawableInfo *)robj->Get_User_Data();
@@ -254,7 +254,7 @@ Bool Rva007129F0RTS3DScene::castRay(RayCollisionTestClass &raytest,
 				(Vector3::Dot_Product(recenteredSphereVector,
 					recenteredSphereVector) -
 				 recenteredAlpha * recenteredAlpha);
-			if (beta < BfmeZeroRange)
+			if (beta < g_rva01075350)
 				continue;
 		}
 

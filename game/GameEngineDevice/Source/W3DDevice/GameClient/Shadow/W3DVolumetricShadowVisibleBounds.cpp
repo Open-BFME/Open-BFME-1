@@ -21,7 +21,7 @@ public:
 	Vector3 Get_Position() const;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow

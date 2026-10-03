@@ -127,7 +127,7 @@ class Locomotor
 	unsigned m_flags;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_millisecondsToSeconds;
 
 extern Real Cos(Real radians);
@@ -138,7 +138,7 @@ extern Real Sin(Real radians);
 
 void Locomotor::maintainCurrentPositionWings(Object *object)
 {
-	if (!(object->getHeightAboveTerrain() > BfmeZeroRange))
+	if (!(object->getHeightAboveTerrain() > g_rva01075350))
 		return;
 
 	__asm { or dword ptr [esi+40h], 10h }
@@ -148,7 +148,7 @@ void Locomotor::maintainCurrentPositionWings(Object *object)
 		locoTemplate = (LocomotorTemplate *)locoTemplate->m_nextOverride->getFinalOverride();
 
 	Real turnRadius = locoTemplate->m_circlingRadius;
-	if (turnRadius == BfmeZeroRange)
+	if (turnRadius == g_rva01075350)
 		turnRadius = ((BfmeHostET *)this)->bfmeComputeET((BfmeThingET *)object, 0);
 
 	Real dx = m_maintainPos.x - object->m_x;
@@ -160,7 +160,7 @@ void Locomotor::maintainCurrentPositionWings(Object *object)
 		angle = (Real)atan2(dy, dx);
 
 	Real aim = g_rva001B59AnglePositive;
-	if (turnRadius < BfmeZeroRange)
+	if (turnRadius < g_rva01075350)
 	{
 		turnRadius = -turnRadius;
 		aim = g_rva001B59AngleNegative;

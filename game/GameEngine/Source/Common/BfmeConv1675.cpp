@@ -1,6 +1,6 @@
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern const Real BfmeSubdualCapERD;
 
 struct BfmeObjectERD;
@@ -20,7 +20,7 @@ public:
 
 void BfmeHelperERD::bfmeNotifyERD(Real amount)
 {
-	if (amount > BfmeZeroRange && amount <= BfmeSubdualCapERD)
+	if (amount > g_rva01075350 && amount <= BfmeSubdualCapERD)
 	{
 		bfmeApplyERD(m_bfmeObjectERD, amount);
 		m_bfmeLastERD = amount;

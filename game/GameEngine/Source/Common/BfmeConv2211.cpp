@@ -29,7 +29,7 @@ struct Rva003FD060TerrainLogic
 
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 extern const float g_0109B46C;
 
@@ -175,7 +175,7 @@ static float Rva007AE900Body(Rva007AE900Src *obj, const Coord3D007AE900 *groundP
 		}
 	}
 
-	float defaultResult = BfmeZeroRange;
+	float defaultResult = g_rva01075350;
 	outNormal->x = 0.0f;
 	outNormal->y = 0.0f;
 	outNormal->z = 1.0f;

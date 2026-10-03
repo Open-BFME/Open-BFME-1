@@ -2,7 +2,7 @@ extern "C" double sqrt(double x);
 
 #pragma intrinsic(sqrt)
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class BfmePosEJ
 {
@@ -38,7 +38,7 @@ float bfmeSignedEJ(const BfmePosEJ *p, BfmeObjEJ *o)
 
 	float d = (float)sqrt(s) - b->m_bfmeRadiusEJ;
 
-	if (d < BfmeZeroRange)
+	if (d < g_rva01075350)
 		return -(d * d);
 
 	return d * d;

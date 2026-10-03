@@ -5,13 +5,13 @@
 // two rise flags at +0x34 and +0x36 adds the owner's step at +0x44 to the
 // object's level at +0x28 and clamps it at the integer ceiling the owner
 // reaches through +0xc.  Either of the two fall flags at +0x35 and +0x37
-// subtracts the same step and clamps at BfmeZeroRange.  Reaching the ceiling
+// subtracts the same step and clamps at g_rva01075350.  Reaching the ceiling
 // without the +0x34 flag raises the +0x38 flag and clears all four.
 //
 // No caller, vtable slot or string names the owner or the method, so both keep
 // the retail address.  The field names are placeholders for the same reason.
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva0069ACE0Obj
 {
@@ -65,7 +65,7 @@ unsigned char Rva0069ACE0Owner::advance(Rva0069ACE0Obj **pp)
 
 		o->m_t = o->m_t - m_step;
 		Rva0069ACE0Obj *decayed = *pp;
-		if (decayed->m_t <= BfmeZeroRange)
+		if (decayed->m_t <= g_rva01075350)
 		{
 			decayed->m_t = 0.0f;
 			(*pp)->m_f35 = 0;

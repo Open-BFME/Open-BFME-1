@@ -176,7 +176,7 @@ extern AI *TheAI;
 extern GameLogic *TheGameLogic;
 extern bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(void *check, const char *format, ...);
 Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *victim);
 
@@ -275,7 +275,7 @@ StateReturnType AIAttackMeleeEngageState::updateInternal()
 		BfmeShapeE15 *victimShape = victim->m_e15.bfmeAtE15(0);
 		Real surfaceGap = sqrtf(distSqr) - (victimShape->m_08 + (sourceRadius + 10.0f));
 		Real gap = surfaceGap + victim->bfmeGetNonnegativePreferredLocomotorHeight();
-		if (gap < BfmeZeroRange)
+		if (gap < g_rva01075350)
 			gap = 0.0f;
 
 		Real maxSpeed = 999999.0f;

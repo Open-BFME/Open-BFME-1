@@ -5,7 +5,7 @@
 extern "C" double sqrt(double);
 #pragma intrinsic(sqrt)
 extern float g_bfmeDefaultBU;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 struct Rva00205A20Pos { float x,y,z; };
 struct Rva00205A20Thing { char pad[0x38]; Rva00205A20Pos pos; };
 struct Rva00205A20Info { char pad[8]; float range,scale; };
@@ -23,7 +23,7 @@ float Rva00205A20Owner::method(const Rva00205A20Pos *from, const Rva00205A20Thin
   delta.y -= from->y;
   delta.z -= from->z;
   float value = g_bfmeDefaultBU - (float)sqrt(delta.z*delta.z + delta.y*delta.y + delta.x*delta.x)/info->range;
-  if (!(value >= BfmeZeroRange)) return BfmeZeroRange;
+  if (!(value >= g_rva01075350)) return g_rva01075350;
   return value;
  }
  return g_bfmeDefaultBU;

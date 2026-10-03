@@ -369,7 +369,7 @@ LocomotorTemplate::~LocomotorTemplate()
 }
 
 //-------------------------------------------------------------------------------------------------
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 struct BfmeLocomotorTemplateView
 {
@@ -392,13 +392,13 @@ void LocomotorTemplate::validate()
 		reinterpret_cast<BfmeLocomotorTemplateView *>(this);
 	if (view->m_field2C == 0)
 		view->m_field2C = view->m_field28;
-	if (view->m_field48 < BfmeZeroRange)
+	if (view->m_field48 < g_rva01075350)
 		view->m_field48 = view->m_field44;
 	if (view->m_appearance == 3)
 	{
-		if (view->m_field24 <= BfmeZeroRange)
+		if (view->m_field24 <= g_rva01075350)
 			view->m_field24 = 0.01f;
-		if (view->m_field50 <= BfmeZeroRange)
+		if (view->m_field50 <= g_rva01075350)
 			view->m_field50 = 0.01f;
 	}
 }

@@ -4,7 +4,7 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 struct Coord3D
 {
@@ -113,7 +113,7 @@ Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *candidateVictim)
 	MeleeHordeVector2 victimFacingVector2D(
 		victimFacingDirection->x, victimFacingDirection->y);
 	if (!(victimFacingVector2D * *(const MeleeHordeVector2 *)&attackerToVictim
-		< BfmeZeroRange))
+		< g_rva01075350))
 	{
 		// The guarded getter reads Object+0x204, then AIUpdate+0x1CC; its
 		// recovered runtime accessor identity remains unknown.

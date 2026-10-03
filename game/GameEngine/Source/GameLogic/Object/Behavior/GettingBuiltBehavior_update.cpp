@@ -229,7 +229,7 @@ public:
 
 extern WeaponStore *TheWeaponStore;
 extern Real g_bfmeScaleBC;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_012ADC90;
 #define BfmeObjectCreationRange g_012ADC90
 
@@ -272,7 +272,7 @@ UpdateSleepTime GettingBuiltBehavior::update()
 	BodyModuleInterface *body;
 	if (!objectDead)
 	{
-		if (data->m_field20 >= BfmeZeroRange)
+		if (data->m_field20 >= g_rva01075350)
 		{
 			if (hasRecentSource && !m_field36)
 				goto cleanup;

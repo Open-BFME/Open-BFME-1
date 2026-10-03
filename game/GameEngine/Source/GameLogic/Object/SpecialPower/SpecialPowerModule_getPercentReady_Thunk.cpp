@@ -40,7 +40,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -96,7 +96,7 @@ private:
 float SpecialPowerModule::getPercentReady() const
 {
 	if (m_bfmeForcedZero)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	if (isReady())
 		return g_bfmeDefaultBU;
@@ -106,7 +106,7 @@ float SpecialPowerModule::getPercentReady() const
 
 	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
 	if (modData->m_specialPowerTemplate == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	unsigned int readyFrame = m_availableOnFrame;
 

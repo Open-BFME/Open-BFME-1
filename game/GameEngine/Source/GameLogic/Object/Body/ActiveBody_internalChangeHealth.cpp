@@ -15,7 +15,7 @@ typedef bool Bool;
 typedef int Int;
 class DamageInfo;
 
-#define BfmeZeroRange 0.0f
+#define g_rva01075350 0.0f
 #define g_bfmeMul1 (*(const float *)0x01083b6c)
 #define g_bfmeMul2 0.75f
 #define g_bfmeDefaultBU 1.0f
@@ -99,7 +99,7 @@ void ActiveBody::internalChangeHealth(Real delta, DamageInfo *info)
 	}
 	else
 	{
-		if (m_prevHealth == BfmeZeroRange)
+		if (m_prevHealth == g_rva01075350)
 		{
 			Real v = pad18();
 			v = v * g_bfmeMul1 * g_bfmeMul2 - g_bfmeDefaultBU;
@@ -108,7 +108,7 @@ void ActiveBody::internalChangeHealth(Real delta, DamageInfo *info)
 			m_unreconstructed_a4 = v;
 			m_unreconstructed_a8 = v;
 		}
-		else if (delta > BfmeZeroRange)
+		else if (delta > g_rva01075350)
 		{
 			Real reduce = delta * g_bfmeMul1 * g_bfmeMul2;
 

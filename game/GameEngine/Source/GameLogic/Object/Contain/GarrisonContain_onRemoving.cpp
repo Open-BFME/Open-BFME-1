@@ -288,7 +288,7 @@ public:
 	Int isReady();
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // ?onRemoving@GarrisonContain@@UAEXPAVObject@@@Z
 void GarrisonContain::onRemoving(Object *removedObject)
@@ -372,7 +372,7 @@ void GarrisonContain::onRemoving(Object *removedObject)
 		BfmeBodyModule *ownerBody = reinterpret_cast<BfmeObjectBodyLink *>(
 			reinterpret_cast<unsigned char *>(reinterpret_cast<BfmeGarrisonOwnerLink *>(
 			reinterpret_cast<unsigned char *>(this) - 0x18)->m_object))->m_body;
-		if (ownerBody->getHealth() <= BfmeZeroRange)
+		if (ownerBody->getHealth() <= g_rva01075350)
 			reinterpret_cast<GameLogic *>(TheBfmeGameLogicView())->destroyObject(removedObject);
 	}
 }

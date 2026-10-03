@@ -85,7 +85,7 @@ public:
 };
 
 extern ProjectedShadowManager *TheProjectedShadowManager;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class RadiusDecal
 {
@@ -136,10 +136,10 @@ void BfmeSubZF::bfmeGoZF(void *a, void *b, void *c, BfmeStateZF *state)
 	if (a == 0)
 		return;
 
-	if (self->m_minRadius == BfmeZeroRange)
+	if (self->m_minRadius == g_rva01075350)
 		return;
 
-	if (self->m_maxRadius == BfmeZeroRange)
+	if (self->m_maxRadius == g_rva01075350)
 		return;
 
 	RadiusDecal *result = reinterpret_cast<RadiusDecal *>(state);

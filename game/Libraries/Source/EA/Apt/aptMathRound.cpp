@@ -14,7 +14,7 @@ struct Rva008AE770Stack
 	AptValue** m_rva01338750;
 };
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float g_rva0107533C;
 AptValue* aptMathRound(void* self, int argc)
 {
@@ -22,7 +22,7 @@ AptValue* aptMathRound(void* self, int argc)
 		return g_bfmeFallbackDB;
 	AptValue** args = Rva008AE770TheStack.m_rva01338750;
 	float v = args[Rva008AE770TheStack.m_count - 1]->toNumber();
-	if (v > BfmeZeroRange) {
+	if (v > g_rva01075350) {
 		v += g_rva0107533C;
 		return (AptValue*)AptInteger::Create((int)v);
 	}

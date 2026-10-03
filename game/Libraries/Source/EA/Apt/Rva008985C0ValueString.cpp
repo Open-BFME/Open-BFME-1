@@ -22,7 +22,7 @@ struct BfmeStringPool3AF0
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern double g_bfmeSubB3;
 extern "C" BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
 
@@ -154,7 +154,7 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
     {
         union { unsigned bits; float number; } copy;
         copy.bits = static_cast<unsigned>(m_integer);
-        if (fmod(static_cast<double>(copy.number), g_bfmeSubB3) == BfmeZeroRange)
+        if (fmod(static_cast<double>(copy.number), g_bfmeSubB3) == g_rva01075350)
             sprintf(buffer, "%d",
                 static_cast<int>(m_float));
         else

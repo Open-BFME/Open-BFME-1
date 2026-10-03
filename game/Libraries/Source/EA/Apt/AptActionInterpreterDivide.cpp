@@ -5,7 +5,7 @@
 // reading g_bfmeFallbackDB, then both operands converted through AptValue::toNumber,
 // but this opcode computes underValue / topValue and boxes the float result
 // through the already-matched d_008a4cd0 (pinned _bfmeMakeF1239) rather than
-// d_008996b0's bool box; a division-by-zero (topValue == BfmeZeroRange)
+// d_008996b0's bool box; a division-by-zero (topValue == g_rva01075350)
 // falls back to the same g_bfmeFallbackDB sentinel reloaded fresh.
 //
 // IDENTITY: address-derived. Real opcode name not recovered (ActionScript
@@ -50,7 +50,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 unsigned int AptGetSwfVersion();
 void __cdecl d_008a4cd0(void);
 
@@ -72,7 +72,7 @@ void AptActionInterpreter::_FunctionRva008C7060(
 		float topValue = top->toNumber();
 		float underValue = under->toNumber();
 
-		if (topValue == BfmeZeroRange)
+		if (topValue == g_rva01075350)
 			result = g_bfmeFallbackDB;
 		else
 			result = ((AptValue *(__cdecl *)(float))d_008a4cd0)(underValue / topValue);

@@ -43,7 +43,7 @@ public:
 	virtual float bfmeGetZA(BfmeReqZA *r) = 0;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 static __forceinline LocomotorOverridable *bfmeFinalZA(LocomotorOverridable *p)
@@ -79,12 +79,12 @@ float Drawable::bfmeRateZA(BfmeReqZA *r)
 		&& !((const Thing *)this)->isKindOf((KindOfType)0x95)
 		&& k != 4
 		&& k != 5)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	if ((bfmeFinalZA(m_bfme04ZA)->m_bfmeD0ZA & 0x20000000) != 0)
 	{
 		if (k != 6)
-			return BfmeZeroRange;
+			return g_rva01075350;
 
 		return g_bfmeDefaultBU;
 	}
@@ -94,5 +94,5 @@ float Drawable::bfmeRateZA(BfmeReqZA *r)
 	if (s != 0)
 		return s->bfmeGetZA(r);
 
-	return BfmeZeroRange;
+	return g_rva01075350;
 }

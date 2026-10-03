@@ -70,7 +70,7 @@ static __forceinline Rva003FD060TerrainLogic *localTerrainLogic()
 }
 
 extern Real g_bfmeDefaultBU;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 static const Real DRAWABLE_OVERSCAN = 75.0f;
 static const Real MAP_Z_SAFE = 999999.0f;
@@ -166,7 +166,7 @@ void Rva0073B290View::getRegion(Region3D &region)
 				L.pt.y = dy / dzc * dz + camPos.Y;
 				Real py = L.pt.y;
 
-				if( L.bounds.lo.z < BfmeZeroRange )
+				if( L.bounds.lo.z < g_rva01075350 )
 				{
 					L.bounds.lo.x = L.bounds.hi.x = px;
 					L.bounds.lo.y = L.bounds.hi.y = py;

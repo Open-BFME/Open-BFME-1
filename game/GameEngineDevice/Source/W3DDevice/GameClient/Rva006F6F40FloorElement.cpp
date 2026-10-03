@@ -5,7 +5,7 @@
 
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 
 class BfmeCalc919G
@@ -48,11 +48,11 @@ bool Rva006F6F40FloorElement::update()
 
 	bool changed = false;
 	Real value;
-	if (m_step != BfmeZeroRange)
+	if (m_step != g_rva01075350)
 	{
 		value = m_value + m_step;
-		if (value < BfmeZeroRange)
-			value = BfmeZeroRange;
+		if (value < g_rva01075350)
+			value = g_rva01075350;
 		else if (value > g_bfmeDefaultBU)
 			value = g_bfmeDefaultBU;
 	}

@@ -13,7 +13,7 @@
 typedef int Int;
 typedef float Real;
 
-extern const Real BfmeZeroRange;		// retail 0x01075350
+extern const Real g_rva01075350;		// retail 0x01075350
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -62,8 +62,8 @@ void BfmeCell::rva001DE2A0(const Coord3D *position, Real cellSize,
 {
 	const Rva001DE2A0Parameters *p = (const Rva001DE2A0Parameters *)parameters;
 	Real value = m_first[index] * p->m_bfme0008 - m_second[index] * p->m_bfme0004;
-	if (!(value > BfmeZeroRange))
-		value = BfmeZeroRange;
+	if (!(value > g_rva01075350))
+		value = g_rva01075350;
 	if (!(value < p->m_bfme0010))
 		value = p->m_bfme0010;
 	Real ratio = value / p->m_bfme0010;

@@ -8,7 +8,7 @@
 #include "matrix3.h"
 #include "matrix3d.h"
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva0061E230Receiver
 {
@@ -57,7 +57,7 @@ void Rva0061E230Owner::Rva0061E230(void)
 		return;
 
 	float angle = m_angle88 + m_angle80;
-	if (angle < BfmeZeroRange)
+	if (angle < g_rva01075350)
 		angle += 6.2831854820251465f;
 	else if (angle > 6.2831854820251465f)
 		angle -= 6.2831854820251465f;

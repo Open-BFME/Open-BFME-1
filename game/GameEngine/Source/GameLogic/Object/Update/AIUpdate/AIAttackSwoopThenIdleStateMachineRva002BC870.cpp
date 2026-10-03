@@ -9,7 +9,7 @@ enum
 	INVALID_STATE_ID = 999999
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class State
 {
@@ -106,7 +106,7 @@ Bool AIAttackSwoopThenIdleStateMachine::rva002BC870() const
 				{
 					if (!target->flag6() && target->flag4())
 						return true;
-					if ((Real)target->m_value46C != BfmeZeroRange)
+					if ((Real)target->m_value46C != g_rva01075350)
 						return true;
 					return false;
 				}

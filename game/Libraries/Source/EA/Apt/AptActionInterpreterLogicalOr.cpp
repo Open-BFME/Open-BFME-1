@@ -45,7 +45,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 unsigned int AptGetSwfVersion();
 void __cdecl d_008996b0(void);
 
@@ -68,7 +68,7 @@ void AptActionInterpreter::_FunctionRva008C73B0(
 		float underValue = under->toNumber();
 		int flag;
 
-		if (topValue != BfmeZeroRange || underValue != BfmeZeroRange)
+		if (topValue != g_rva01075350 || underValue != g_rva01075350)
 			flag = 1;
 		else
 			flag = 0;

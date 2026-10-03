@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /GX /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // stlport
 // Data identity correction: retail +0xA3 reads DIR32 VA 0x01075350, the
-// readonly zero pinned as BfmeZeroRange; keep the relocation named.
+// readonly zero pinned as g_rva01075350; keep the relocation named.
 // Callee identity correction: retail 0x0003A1A7 is an ILT to matched
 // Thing::setPosition at 0x00132CE0 (272B, thiscall, one pointer argument, ret 4).
 // Keep this declaration on Thing so Object inherits the call as in the donor.
@@ -67,7 +67,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern const Real BfmeZeroRange; // VA 0x01075350, readonly zero used by retail.
+extern const Real g_rva01075350; // VA 0x01075350, readonly zero used by retail.
 
 class AICommandInterface
 {
@@ -223,7 +223,7 @@ void DefaultProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType
 		transform->Transform_Vector(*transform, loc, &loc);
 
 		loc.Z = TheTerrainLogic ? TheTerrainLogic->getLayerHeight(
-			loc.X, loc.Y, (PathfindLayerEnum)creationObject->getLayer(), 0, 1) : BfmeZeroRange;
+			loc.X, loc.Y, (PathfindLayerEnum)creationObject->getLayer(), 0, 1) : g_rva01075350;
 
 		createPoint.x = loc.X;
 		createPoint.y = loc.Y;

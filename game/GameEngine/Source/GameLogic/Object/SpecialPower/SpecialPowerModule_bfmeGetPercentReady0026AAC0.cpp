@@ -95,7 +95,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 class SpecialPowerModuleData
@@ -148,7 +148,7 @@ float SpecialPowerModule::bfmeGetPercentReady0026AAC0() const
 
 	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
 	if (modData->m_specialPowerTemplate == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	unsigned int readyFrame = m_availableOnFrame;
 

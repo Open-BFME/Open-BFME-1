@@ -260,7 +260,7 @@ extern TerrainLogic *TheTerrainLogic;
 extern PartitionManager *TheShroudManager;
 extern GameEngine *TheGameEngine;
 extern PlayerList *ThePlayerList;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BezierProjectileBehavior : public UpdateModule
 {
@@ -293,9 +293,9 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 	Real weaponSpeed;
 	Real minWeaponSpeed;
 	weaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
-		m_weapon->getWeaponSpeed() : BfmeZeroRange;
+		m_weapon->getWeaponSpeed() : g_rva01075350;
 	minWeaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
-		m_weapon->getMinWeaponSpeed() : BfmeZeroRange;
+		m_weapon->getMinWeaponSpeed() : g_rva01075350;
 	Coord3D framePad;
 
 	setWakeFrame(obj, (UpdateSleepTime)1);

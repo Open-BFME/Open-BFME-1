@@ -19,7 +19,7 @@
 class LightEnvironmentClass;
 class IndexBufferClass;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct MeshRuntimeData
 {
@@ -97,9 +97,9 @@ void MeshClass::Render_Material_Pass(MaterialPassClass *pass, IndexBufferClass *
 			it.Next();
 		}
 
-		if (oldOpacity >= BfmeZeroRange)
+		if (oldOpacity >= g_rva01075350)
 			pass->Peek_Material()->Set_Opacity(oldOpacity);
-		if (oldEmissive.X >= BfmeZeroRange)
+		if (oldEmissive.X >= g_rva01075350)
 			pass->Peek_Material()->Set_Emissive(oldEmissive);
 		pass->UnInstall_Materials();
 	} else {
@@ -129,9 +129,9 @@ void MeshClass::Render_Material_Pass(MaterialPassClass *pass, IndexBufferClass *
 			it.Next();
 		}
 
-		if (oldOpacity >= BfmeZeroRange)
+		if (oldOpacity >= g_rva01075350)
 			pass->Peek_Material()->Set_Opacity(oldOpacity);
-		if (oldEmissive.X >= BfmeZeroRange)
+		if (oldEmissive.X >= g_rva01075350)
 			pass->Peek_Material()->Set_Emissive(oldEmissive);
 		pass->UnInstall_Materials();
 	}

@@ -27,7 +27,7 @@ public:
 
 extern Display *TheDisplay;
 extern Real g_bfmeDefaultBU;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // The retail parse table at 0x00D0CBA0 names this transition's fields
 // StartFrame (+0x10), EndFrame (+0x14), and FadeColor (+0x30).  The vtable
@@ -87,11 +87,11 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	m_sizeY = sizeY;
 	if (!(scaled < 255.0f))
 		scaled = 255.0f;
-	else if (scaled > BfmeZeroRange)
+	else if (scaled > g_rva01075350)
 	{
 	}
 	else
-		scaled = BfmeZeroRange;
+		scaled = g_rva01075350;
 	unsigned char red = (unsigned char)scaled;
 
 	scaled = m_fadeGreen;
@@ -99,11 +99,11 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	m_red = red;
 	if (!(scaled < 255.0f))
 		scaled = 255.0f;
-	else if (scaled > BfmeZeroRange)
+	else if (scaled > g_rva01075350)
 	{
 	}
 	else
-		scaled = BfmeZeroRange;
+		scaled = g_rva01075350;
 	unsigned char green = (unsigned char)scaled;
 
 	scaled = m_fadeBlue;
@@ -111,10 +111,10 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	m_green = green;
 	if (!(scaled < 255.0f))
 		scaled = 255.0f;
-	else if (scaled > BfmeZeroRange)
+	else if (scaled > g_rva01075350)
 	{
 	}
 	else
-		scaled = BfmeZeroRange;
+		scaled = g_rva01075350;
 	m_blue = (unsigned char)scaled;
 }

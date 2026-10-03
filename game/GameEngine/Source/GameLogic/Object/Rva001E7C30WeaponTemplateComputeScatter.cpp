@@ -229,7 +229,7 @@ public:
 	Real m_infantryInaccuracyDist;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern const Real g_bfmeDefaultEG;
 extern char g_bfmeFmt1041[];
 extern TerrainLogic *TheTerrainLogic;
@@ -262,7 +262,7 @@ Coord3D WeaponTemplate::rva001e7c30(const Object *source,
 			templateValue = reinterpret_cast<const Rva001E7C30TemplateView *>(templateValue->m_nextOverride->getFinalOverride());
 		if ((templateValue->m_kind & 0x80) != 0)
 			position = *getAimPosition(&temporary, source, victim, 1);
-		if (m_infantryInaccuracyDist > BfmeZeroRange && victim->isKindOf(KINDOF_8))
+		if (m_infantryInaccuracyDist > g_rva01075350 && victim->isKindOf(KINDOF_8))
 			scatterRadius += m_infantryInaccuracyDist;
 		targetLayer = (PathfindLayerEnum)victim->getLayer();
 	}
@@ -278,7 +278,7 @@ Coord3D WeaponTemplate::rva001e7c30(const Object *source,
 		temporary.y = source->m_position.y - victim->m_position.y;
 		Real distanceSquared = temporary.y * temporary.y + temporary.x * temporary.x;
 		Real normalizedY = temporary.y;
-		if (distanceSquared != BfmeZeroRange)
+		if (distanceSquared != g_rva01075350)
 		{
 			Real inverseLength = WWMath::Inv_Sqrt(distanceSquared);
 			temporary.x *= inverseLength;

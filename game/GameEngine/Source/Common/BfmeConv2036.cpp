@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class BfmeKeyEM
 {
@@ -29,10 +29,10 @@ char BfmeHostEM::bfmeSmoothEM() const
 	BfmeKeyEM *p = m_bfmeBeginEM;
 	BfmeKeyEM *last = m_bfmeEndEM - 1;
 
-	if (first == 1 && p->m_bfmeBEM != BfmeZeroRange)
+	if (first == 1 && p->m_bfmeBEM != g_rva01075350)
 		return 0;
 
-	if (m_bfmeLastEM == 1 && last->m_bfmeCEM != BfmeZeroRange)
+	if (m_bfmeLastEM == 1 && last->m_bfmeCEM != g_rva01075350)
 		return 0;
 
 	if (p != last)
@@ -44,10 +44,10 @@ char BfmeHostEM::bfmeSmoothEM() const
 			if (p->m_bfmeAEM != q->m_bfmeAEM)
 				return 0;
 
-			if (p->m_bfmeCEM != BfmeZeroRange)
+			if (p->m_bfmeCEM != g_rva01075350)
 				return 0;
 
-			if (q->m_bfmeBEM != BfmeZeroRange)
+			if (q->m_bfmeBEM != g_rva01075350)
 				return 0;
 
 			++p;

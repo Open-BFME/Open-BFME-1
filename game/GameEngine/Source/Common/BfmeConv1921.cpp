@@ -78,7 +78,7 @@ public:
 
 extern float g_bfmeDefaultBU;
 extern float g_bfmeUint32Scale;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 bool BfmeSubBX::bfmeQueryBX(int *first, int *second)
 {
@@ -140,7 +140,7 @@ bool BfmeSubBX::bfmeQueryBX(int *first, int *second)
 				(g_bfmeDefaultBU > phase ? g_bfmeDefaultBU : phase);
 			value = *(float *)second - value;
 			*(float *)second = value;
-			if (*(float *)second <= BfmeZeroRange)
+			if (*(float *)second <= g_rva01075350)
 			{
 				*(int *)second = 0;
 				m_bfme24BX = 5;

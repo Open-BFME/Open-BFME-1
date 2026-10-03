@@ -819,7 +819,7 @@ Int W3DShadowGeometry::initFromMesh(RenderObjClass *robj)
 	return TRUE;
 }
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // The BFME mesh stores ref-counted vertex/index arrays in its model.  Keep
 // this view local: the Zero Hour mesh and shadow-geometry layouts differ.
@@ -901,7 +901,7 @@ Int W3DShadowGeometry::initFromMesh(RenderObjClass *robj, Int mesh_index,
 		for (Int k = j + 1; k < mesh->m_vertexCount; ++k)
 		{
 			Vector3 delta(*vertex - mesh->m_vertices[k]);
-			if (delta.Length2() == BfmeZeroRange)
+			if (delta.Length2() == g_rva01075350)
 			{
 				vertParent[k] = j;
 				--uniqueCount;

@@ -27,7 +27,7 @@ typedef unsigned char UnsignedByte;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Player;
 class Object;
@@ -305,7 +305,7 @@ void PlayerHealSpecialPower::rva00263CA0(void *where,
 			continue;
 		if (reinterpret_cast<const Thing *>(other)->isKindOf((KindOfType)7))
 		{
-			if (other->m_constructionPercent >= BfmeZeroRange)
+			if (other->m_constructionPercent >= g_rva01075350)
 			{
 				if (other->m_constructionPercent < 99.0f)
 					continue;
@@ -318,7 +318,7 @@ void PlayerHealSpecialPower::rva00263CA0(void *where,
 
 		Real amount = body->getMaxHealth() *
 			getModuleData()->m_healAmount;
-		if (!(amount > BfmeZeroRange))
+		if (!(amount > g_rva01075350))
 			continue;
 		other->attemptHealing(amount, 0);
 		if (getModuleData()->m_healFX != 0)

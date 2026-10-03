@@ -9,7 +9,7 @@ extern float ACos(float);  // Lib/trig.h, defined in Trig.cpp (retail 0x00873940
 
 // Retail's toAngle clamps the cosine against named globals rather than
 // literals: 0x01075350 (0.0f), 0x0109BF3C (-1.0f) and 0x01075334 (1.0f).
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float BfmeShadowScale;
 extern float g_bfmeDefaultBU;
 
@@ -237,14 +237,14 @@ Coord2D &Coord2D::Rotate(Coord2D &coord, float sine, float cosine)
 float Coord2D::toAngle() const
 {
     const float len = length();
-    if (len == BfmeZeroRange)
-        return BfmeZeroRange;
+    if (len == g_rva01075350)
+        return g_rva01075350;
 
     const float c = x / len;
     // bound it in case of numerical error
     const float bounded = c < BfmeShadowScale ? -1.0f : (c > g_bfmeDefaultBU ? 1.0f : c);
 
-    return y < BfmeZeroRange ? -ACos(bounded) : ACos(bounded);
+    return y < g_rva01075350 ? -ACos(bounded) : ACos(bounded);
 }
 
 Coord2D &Coord2D::Rotate(float angle)

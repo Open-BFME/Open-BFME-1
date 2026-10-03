@@ -6,7 +6,7 @@
 
 typedef int Int;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct Rva0006AB10CurvePoint
 {
@@ -54,7 +54,7 @@ void Rva0006AB90FunctionCurve::finish()
     {
         if (!m_haveInTangent)
             m_inTangent.value = m_haveOutTangent
-                ? m_outTangent.value : BfmeZeroRange;
+                ? m_outTangent.value : g_rva01075350;
     }
     else
     {

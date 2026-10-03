@@ -65,7 +65,7 @@ public:
 };
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class W3DPropDraw
 {
@@ -86,8 +86,8 @@ void W3DPropDraw::reactToTransformChange(
 	if (m_propAdded)
 		return;
 
-	if (draw->getPosition()->x == BfmeZeroRange
-		&& draw->getPosition()->y == BfmeZeroRange)
+	if (draw->getPosition()->x == g_rva01075350
+		&& draw->getPosition()->y == g_rva01075350)
 		return;
 
 	m_propAdded = true;

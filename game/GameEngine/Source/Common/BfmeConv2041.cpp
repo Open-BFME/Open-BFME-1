@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern volatile float g_rva001B59ScaleConstant;
 extern const float g_bfmeFallbackET;
 
@@ -53,14 +53,14 @@ float BfmeHostET::bfmeComputeET(BfmeThingET *t, float *out)
 	float v = bfmeMaxTurnET(t);
 	float x;
 
-	if (v > BfmeZeroRange)
+	if (v > g_rva01075350)
 		x = k / v;
 	else
 		x = g_bfmeFallbackET;
 
 	if (out != 0)
 	{
-		*out = k > BfmeZeroRange ? x / k : BfmeZeroRange;
+		*out = k > g_rva01075350 ? x / k : g_rva01075350;
 	}
 
 	return x;

@@ -52,7 +52,7 @@ struct Rva002EE330PlayerList
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
 extern const Real BfmeShadowScale;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern "C" const Real g_bfmeScaleBK;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
@@ -134,7 +134,7 @@ Real Rva001CA6C0::rva001CA6C0(UnsignedInt *lookingMask)
 		return BfmeShadowScale;
 
 	Object *obj = getObject();
-	if (obj->inlineShroudClearingRange() <= BfmeZeroRange)
+	if (obj->inlineShroudClearingRange() <= g_rva01075350)
 		return BfmeShadowScale;
 
 	if (obj->isKindOf(KINDOF_RVA001CA6C0_REVEALS_TO_ALL))
@@ -210,7 +210,7 @@ Real Rva001CA7D0::rva001CA7D0(Int mode, UnsignedInt *value, UnsignedInt *playerM
 	}
 
 	if ((m_status & 4) || (m_privateStatus & 1)
-		|| getObject()->getShroudClearingRange() <= BfmeZeroRange)
+		|| getObject()->getShroudClearingRange() <= g_rva01075350)
 	{
 		Real noRange = BfmeShadowScale;
 		*value = 0;

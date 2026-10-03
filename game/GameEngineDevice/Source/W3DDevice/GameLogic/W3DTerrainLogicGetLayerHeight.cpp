@@ -56,7 +56,7 @@ public:
 };
 
 extern AI *TheAI;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // BaseHeightMapRenderObjClass::getHeightMapHeight is the retail virtual at
 // +0x248.  This declaration is intentionally only a vtable slice; the TU
@@ -153,7 +153,7 @@ Real W3DTerrainLogic::getLayerHeight(Real x, Real y,
 		normal->z = 1.0f;
 	}
 	if (TheTerrainRenderObject == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	if (layer != LAYER_GROUND)
 	{

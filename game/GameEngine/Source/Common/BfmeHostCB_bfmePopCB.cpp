@@ -1,7 +1,7 @@
 // Retail RVA 0x003A4E30 is BfmeHostCB::bfmePopCB.  The named caller, the
 // element destructor, and the vector shift helper establish this owner and
 // the 20-byte element layout.
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern "C" const float _bfmeScaleCB;
 
 struct BfmeUniBufCB
@@ -123,7 +123,7 @@ char BfmeHostCB::bfmePopCB()
 		if (e.m_bfme0CCB.m_bfmeDataCB != 0 && e.m_bfme0CCB.m_bfmeDataCB->m_bfmeChCB != 0)
 			reinterpret_cast<Rva003A5450 *>(this)->setAscii(*reinterpret_cast<const AsciiString *>(&e.m_bfme0CCB));
 
-		if (e.m_bfme10CB != BfmeZeroRange)
+		if (e.m_bfme10CB != g_rva01075350)
 		{
 			BfmeScaleCB scale = { &_bfmeScaleCB };
 			m_bfme20CB = scale.multiply(e.m_bfme10CB);

@@ -167,7 +167,7 @@ extern TerrainLogic *TheTerrainLogic;
 // Retail's 4.0f at VA 0x01075340 is already supplied by this compiler COMDAT.
 // C linkage supplies the leading underscore of __real@40800000.
 extern "C" const float __identifier("_real@40800000");
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 static __forceinline Overridable *bfmeFinalZC(Overridable *p)
 {
@@ -201,10 +201,10 @@ float BfmeHostZC::bfmeHeightZC()
 		return ((GeometryInfo *)((BfmeThingJA *)o)->bfmeGoJA())->getMaxHeightAbovePosition() * __identifier("_real@40800000");
 
 	if ((ov1->m_bfme482ZC & 0x386) == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	if (m_bfme2EZC == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	const Coord3D *p = (const Coord3D *)((const BFMERopeDrawableGetPositionShim *)o)->getPositionLinear();
 	float coords[3];

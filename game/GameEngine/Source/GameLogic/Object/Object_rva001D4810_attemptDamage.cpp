@@ -4,7 +4,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct Rva001D28F0Element
 {
@@ -111,7 +111,7 @@ void Object::attemptDamage(Rva001D28F0Element *damageInfo)
 	damageInfo->m_delay = 1.0f;
 
 statusReady:
-	if (damageInfo->m_delay > BfmeZeroRange)
+	if (damageInfo->m_delay > g_rva01075350)
 	{
 		_STL::__false_type tag;
 		m_pendingDamage.appendAtEnd(*damageInfo, tag);

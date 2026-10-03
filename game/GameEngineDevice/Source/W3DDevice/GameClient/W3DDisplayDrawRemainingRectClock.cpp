@@ -48,7 +48,7 @@ public:
 		float height, float percent, UnsignedInt color);
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeScaleBC;
 extern const float g_rva0107533C;
 extern float g_bfmeDefaultBU;
@@ -72,8 +72,8 @@ inline long floatToLong(float value)
 void W3DDisplay::drawRemainingRectClock(float startX, float startY, float width,
 	float height, float percent, UnsignedInt color)
 {
-	if (percent < BfmeZeroRange)
-		percent = BfmeZeroRange;
+	if (percent < g_rva01075350)
+		percent = g_rva01075350;
 	else if (percent > g_bfmeScaleBC)
 		percent = g_bfmeScaleBC;
 
@@ -108,7 +108,7 @@ void W3DDisplay::drawRemainingRectClock(float startX, float startY, float width,
 		{
 			angle += angleStep;
 			BfmeVector2 next;
-			if (angle > BfmeZeroRange && angle < g_bfmeDisplayTwoPi)
+			if (angle > g_rva01075350 && angle < g_bfmeDisplayTwoPi)
 			{
 				next.X = -(halfWidth * (float)sin((double)angle));
 				next.Y = -(halfHeight * (float)cos((double)angle));

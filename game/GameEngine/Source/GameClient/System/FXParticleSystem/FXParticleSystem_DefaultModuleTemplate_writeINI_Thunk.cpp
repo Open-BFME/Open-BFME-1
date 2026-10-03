@@ -50,7 +50,7 @@ __forceinline void writeStreamText(File &file, const StreamText &text)
 	reinterpret_cast<FileWriteShim *>(&file)->write(text.m_start, (int)(text.m_finish - text.m_start));
 }
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class U1Pair { public: unsigned char padding[4]; float minimum; float maximum; };
 void b_005fff00();
@@ -74,19 +74,19 @@ void DefaultModuleTemplate<2>::writeINI(File &file, unsigned int flags) const
 	OutputStream stream(0x10);
 
 	U1Pair *sizeRate = (U1Pair *)((unsigned char *)this + 0x0c);
-	if (sizeRate->minimum != BfmeZeroRange || sizeRate->maximum != BfmeZeroRange)
+	if (sizeRate->minimum != g_rva01075350 || sizeRate->maximum != g_rva01075350)
 		u1Do_005C9030(&stream, (void *)flags, (void *)"SizeRate", sizeRate);
 	U1Pair *sizeRateDamping = (U1Pair *)((unsigned char *)this + 0x18);
-	if (sizeRateDamping->minimum != BfmeZeroRange || sizeRateDamping->maximum != BfmeZeroRange)
+	if (sizeRateDamping->minimum != g_rva01075350 || sizeRateDamping->maximum != g_rva01075350)
 		u1Do_005C9030(&stream, (void *)flags, (void *)"SizeRateDamping", sizeRateDamping);
 	U1Pair *angleZ = (U1Pair *)((unsigned char *)this + 0x24);
-	if (angleZ->minimum != BfmeZeroRange || angleZ->maximum != BfmeZeroRange)
+	if (angleZ->minimum != g_rva01075350 || angleZ->maximum != g_rva01075350)
 		u1Do_005C9030(&stream, (void *)flags, (void *)"AngleZ", angleZ);
 	U1Pair *angularRateZ = (U1Pair *)((unsigned char *)this + 0x30);
-	if (angularRateZ->minimum != BfmeZeroRange || angularRateZ->maximum != BfmeZeroRange)
+	if (angularRateZ->minimum != g_rva01075350 || angularRateZ->maximum != g_rva01075350)
 		u1Do_005C9030(&stream, (void *)flags, (void *)"AngularRateZ", angularRateZ);
 	U1Pair *angularDamping = (U1Pair *)((unsigned char *)this + 0x3c);
-	if (angularDamping->minimum != BfmeZeroRange || angularDamping->maximum != BfmeZeroRange)
+	if (angularDamping->minimum != g_rva01075350 || angularDamping->maximum != g_rva01075350)
 		u1Do_005C9030(&stream, (void *)flags, (void *)"AngularDamping", angularDamping);
 
 	unsigned int rotation = *(const unsigned int *)((const unsigned char *)this + 0x48);

@@ -11,7 +11,7 @@ extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(fabs)
 #pragma intrinsic(sqrt)
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -118,7 +118,7 @@ Real Object::bfmeSingleBoxBoundaryDistanceSquared2D(
 	if (projectedX < m_geometry.boxMajorRadius() &&
 		projectedY < m_geometry.boxMinorRadius())
 	{
-		return BfmeZeroRange;
+		return g_rva01075350;
 	}
 
 	Real distanceSquared;

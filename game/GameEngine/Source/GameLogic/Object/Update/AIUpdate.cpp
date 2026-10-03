@@ -85,7 +85,7 @@ extern void j_0003a17a( void );
 extern void j_00008a9e( void );
 extern void j_00049413( void );
 extern void j_000022bb( void );
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 
 typedef void (__cdecl *BFMEPathDebugLogFunction)( void *, const char *, ... );
@@ -2922,7 +2922,7 @@ Bool AIUpdateInterface::needToRotate(void)
 		return TRUE; // new path will probably require rotation.
 
 	BFMELocomotorOverride *curLocomotor = fields->m_curLocomotor;
-	if (curLocomotor && curLocomotor->getWanderWidthFactor()>BfmeZeroRange)
+	if (curLocomotor && curLocomotor->getWanderWidthFactor()>g_rva01075350)
 		return FALSE; // wanderers don't need to rotate.
 
 	Real deltaAngle = 0;
@@ -6295,7 +6295,7 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 	}
 
 	Real rangeToFindWithin = AI::getAdjustedVisionRangeForObject(obj, 3);
-	if (rangeToFindWithin <= BfmeZeroRange)
+	if (rangeToFindWithin <= g_rva01075350)
 		return NULL;
 	void *container = *reinterpret_cast<void **>(object + 0x214);
 	if (container != NULL)
@@ -6424,7 +6424,7 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 		return newVictim;
 
 	Real attackRange = *reinterpret_cast<Real *>(moduleData + 0x2C);
-	if (attackRange <= BfmeZeroRange)
+	if (attackRange <= g_rva01075350)
 		return NULL;
 	scratch.x = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x38)
 		- *reinterpret_cast<Real *>(object + 0x38);

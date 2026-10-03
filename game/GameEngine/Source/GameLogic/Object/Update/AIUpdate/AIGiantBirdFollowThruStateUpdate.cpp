@@ -156,7 +156,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 StateReturnType AIGiantBirdFollowThruState::update()
 {
@@ -192,7 +192,7 @@ StateReturnType AIGiantBirdFollowThruState::update()
 		goalRange * goalRange);
 	unsigned char pending = ai->m_pending46c;
 
-	if (pending == BfmeZeroRange && withinGoalRange == 0)
+	if (pending == g_rva01075350 && withinGoalRange == 0)
 		return STATE_CONTINUE;
 
 	((Thing *)object)->setPosition(&goal);

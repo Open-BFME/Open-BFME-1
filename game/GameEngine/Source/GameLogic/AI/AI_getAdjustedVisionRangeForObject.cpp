@@ -18,7 +18,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-extern const Real BfmeZeroRange;				// 0x01075350
+extern const Real g_rva01075350;				// 0x01075350
 
 class BfmeObjectAI;
 
@@ -190,7 +190,7 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
 	BfmeObjectAI *ai = object->m_bfmeAI;
 
 	if (!ai)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	range += object->m_bfmeVisionBonus;
 
@@ -206,7 +206,7 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
 		switch (kind)
 		{
 			case 0x100:
-				return BfmeZeroRange;
+				return g_rva01075350;
 
 			case 0x800:
 				return range

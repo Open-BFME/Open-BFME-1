@@ -21,7 +21,7 @@ typedef float Real;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Overridable
 {
@@ -92,7 +92,7 @@ Bool Object::rva001c7530()
 		return false;
 
 	Real factor = obj->getTemplate()->m_heightFactorAt0x3ec;
-	if (factor <= BfmeZeroRange)
+	if (factor <= g_rva01075350)
 		return true;
 
 	Real height = obj->bfmeGetNonnegativePreferredLocomotorHeight();

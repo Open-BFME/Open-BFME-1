@@ -19,7 +19,7 @@ public:
 	void Flush();
 };
 extern DX8MeshRendererClass *TheDX8MeshRenderer;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 // TU-local virtual views describe only the slots observed by this body.
 // They do not model the complete RenderObjClass hierarchy.
@@ -93,7 +93,7 @@ void RTS3DScene::rva00715530(RenderInfoClass &rinfo)
 				continue;
 
 			RenderObjClass *opacityView = robj;
-			if (opacityView->_bfme_ro_get_98() >= BfmeZeroRange)
+			if (opacityView->_bfme_ro_get_98() >= g_rva01075350)
 			{
 				rinfo.alphaOverride = opacityView->_bfme_ro_get_98();
 			}

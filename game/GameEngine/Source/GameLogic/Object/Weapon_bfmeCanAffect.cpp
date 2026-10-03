@@ -33,7 +33,7 @@ public:
 	Bool any(void *first, void *second);
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class PartitionFilter
 {
@@ -120,7 +120,7 @@ Bool Weapon::bfmeCanAffect(const Object *source, const Object *victim) const
 		&& m_template->m_bfme4f0 != 0)
 		return false;
 
-	if (static_cast<Real>(m_template->m_bfme530) != BfmeZeroRange)
+	if (static_cast<Real>(m_template->m_bfme530) != g_rva01075350)
 	{
 		if (victim->getLayer() >= 0x10)
 			return false;

@@ -68,7 +68,7 @@ private:
 extern GlobalData *TheWritableGlobalData;
 #define TheGlobalData TheWritableGlobalData
 extern TerrainLogic *TheTerrainLogic;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern "C" __declspec(dllimport) int __cdecl _isnan(double value);
 
 void W3DView::calcCameraConstraints()
@@ -101,13 +101,13 @@ void W3DView::calcCameraConstraints()
 		bottom.z = maxEdgeZ;
 		center.x -= bottom.x;
 		center.y -= bottom.y;
-		center.z = BfmeZeroRange;
+		center.z = g_rva01075350;
 
 		Real offset = (float)sqrt(center.x * center.x + center.y * center.y + center.z * center.z);
 		if (_isnan(offset))
-			offset = BfmeZeroRange;
+			offset = g_rva01075350;
 		if (offset > mapRegion.hi.x * 0.25f)
-			offset = BfmeZeroRange;
+			offset = g_rva01075350;
 
 		if (TheGlobalData->m_debugAI)
 			offset = -1000; // push out the constraints so we can look at staging areas.

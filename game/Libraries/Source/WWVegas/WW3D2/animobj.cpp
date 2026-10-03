@@ -71,14 +71,14 @@
 
 // BFME keeps these arithmetic constants in the image's shared data rather
 // than using immediate literals in Compute_Current_Frame.
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 extern const float BfmeShadowScale;
 extern float g_millisecondsToSeconds;
 
 static inline float Bfme_Frame_Zero(void)
 {
-	return BfmeZeroRange;
+	return g_rva01075350;
 }
 
 // BFME's animation constructor uses the same free hierarchy lookup as the
@@ -883,20 +883,20 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 						}
 						// If it is still too far out, reset
 						if ( frame >= ModeAnim.Motion->Get_Num_Frames() - 1 ) {
-							frame = BfmeZeroRange;
+							frame = g_rva01075350;
 						}
 						break;
 					case 6:	// once-backwards slot after BFME's inserted mode
-						if (frame < BfmeZeroRange) {
-							frame = BfmeZeroRange;
+						if (frame < g_rva01075350) {
+							frame = g_rva01075350;
 						}
 						break;
 					case 5:	// legacy loop-backwards slot after BFME's inserted mode
-						if ( frame < BfmeZeroRange ) {
+						if ( frame < g_rva01075350 ) {
 							frame += ModeAnim.Motion->Get_Num_Frames() - 1;
 						}
 						// If it is still too far out, reset
-						if ( frame < BfmeZeroRange ) {
+						if ( frame < g_rva01075350 ) {
 							frame = ModeAnim.Motion->Get_Num_Frames() - 1;
 						}
 						break;
@@ -914,18 +914,18 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 						}
 						else
 						{	//playing backwards, reverse direction
-							if (frame < BfmeZeroRange)
+							if (frame < g_rva01075350)
 							{	//step forwards in animation by excess time
 								frame = -frame;
 								// If it is still too far out, reset
 								if ( frame >= ModeAnim.Motion->Get_Num_Frames() - 1 )
-									frame = BfmeZeroRange;
+									frame = g_rva01075350;
 								direction = *(volatile const float *)&ModeAnim.animDirection * BfmeShadowScale;
 							}
 						}
 						break;
 					case ANIM_MODE_LOOP_BACKWARDS:
-						if (ModeAnim.animDirection > BfmeZeroRange)
+						if (ModeAnim.animDirection > g_rva01075350)
 						{
 							if (frame > ModeAnim.PrevFrame)
 								frame = ModeAnim.PrevFrame;

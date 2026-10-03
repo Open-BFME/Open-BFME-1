@@ -1,5 +1,5 @@
 extern float g_bfmeDefaultBU;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // Retail's global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once
 // in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  This TU keeps its
@@ -31,18 +31,18 @@ float Rva002A11F0ModeProgress::value(int *out) const
 	switch (m_2c)
 	{
 	case 0:
-		return BfmeZeroRange;
+		return g_rva01075350;
 	case 1:
 		return g_bfmeDefaultBU;
 	case 2:
-		return BfmeZeroRange;
+		return g_rva01075350;
 	case 3:
 		if (m_38 > 0)
 			return ((float)reinterpret_cast<GameLogicFrameView *>(TheGameLogic)->frame - m_34) / m_38;
-		return BfmeZeroRange;
+		return g_rva01075350;
 	case 4:
-		return BfmeZeroRange;
+		return g_rva01075350;
 	default:
-		return BfmeZeroRange;
+		return g_rva01075350;
 	}
 }

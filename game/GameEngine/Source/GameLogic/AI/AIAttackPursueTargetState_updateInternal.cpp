@@ -48,7 +48,7 @@ enum CrushSquishTestType
 
 const Real FAST_AS_POSSIBLE = 999999.0f;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Object;
 class Player;
@@ -290,7 +290,7 @@ StateReturnType AIAttackPursueTargetState::updateInternal()
 			}
 			ai->setDesiredSpeed(targetPreferredSpeed);
 			Locomotor *locomotor = ai->getCurLocomotor();
-			if (locomotor && locomotor->getPreferredHeight() == BfmeZeroRange)
+			if (locomotor && locomotor->getPreferredHeight() == g_rva01075350)
 				return STATE_SUCCESS;
 		}
 		else

@@ -3,7 +3,7 @@
 
 typedef float Real;
 
-extern const Real BfmeZeroRange = 0.0f;
+extern const Real g_rva01075350;
 
 struct Rva005BDBC0Point
 {
@@ -14,7 +14,7 @@ struct Rva005BDBC0Point
 
 int Rva005BDBC0IsZero2D(const Rva005BDBC0Point *point)
 {
-	if (point->x == BfmeZeroRange && point->y == BfmeZeroRange)
+	if (point->x == g_rva01075350 && point->y == g_rva01075350)
 		return 1;
 	return 0;
 }

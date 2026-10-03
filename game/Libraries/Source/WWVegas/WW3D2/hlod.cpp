@@ -157,7 +157,7 @@ extern template VectorClass<Rva0097ACA0TypeAccess::Node> &
 VectorClass<Rva0097ACA0TypeAccess::Node>::operator =(
 	const VectorClass<Rva0097ACA0TypeAccess::Node> &);
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 
@@ -3590,9 +3590,9 @@ void HLodClass::Update_Sub_Object_Transforms(void)
 		robj = AdditionalModels[model].Model;
 		int bone;
 		bone = AdditionalModels[model].BoneIndex;
-		if (offset.X != BfmeZeroRange ||
-				offset.Y != BfmeZeroRange ||
-				offset.Z != BfmeZeroRange) {
+		if (offset.X != g_rva01075350 ||
+				offset.Y != g_rva01075350 ||
+				offset.Z != g_rva01075350) {
 			Matrix3D transform = HTree->Get_Transform(bone);
 			transform[0][3] +=
 				(transform[0][2] * offset.Z + transform[0][1] * offset.Y) +

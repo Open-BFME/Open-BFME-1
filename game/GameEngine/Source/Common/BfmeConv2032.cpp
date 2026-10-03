@@ -3,7 +3,7 @@ extern "C" double sqrt(double x);
 #pragma intrinsic(sqrt)
 
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class BfmePosDF
 {
@@ -42,15 +42,15 @@ char BfmeHostDF::bfmeInReachDF(const BfmeThingDF *thing, const BfmePosDF *pos) c
 {
 	float reach = m_bfmeInfoDF->m_bfmeReachDF - 2.5f;
 
-	if (!(reach < BfmeZeroRange) && !(reach == BfmeZeroRange))
+	if (!(reach < g_rva01075350) && !(reach == g_rva01075350))
 	{
 		float dx = thing->m_bfmeXDF - pos->m_bfmeXDF;
 		float dy = thing->m_bfmeYDF - pos->m_bfmeYDF;
 		float d = (float)sqrt(dx * dx + dy * dy) - thing->m_bfmeSlopDF;
 		float n;
 
-		if (d < BfmeZeroRange)
-			n = BfmeZeroRange;
+		if (d < g_rva01075350)
+			n = g_rva01075350;
 		else
 			n = d * d;
 

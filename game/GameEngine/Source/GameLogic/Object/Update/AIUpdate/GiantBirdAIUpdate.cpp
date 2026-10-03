@@ -106,7 +106,7 @@ private:
 
 extern AI *TheAI;
 // Retail deliberately converts the byte at +0x46c to float before comparing.
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
@@ -187,7 +187,7 @@ StateReturnType GiantBirdNormalFlightState::update()
 	unsigned char withinGoalRange = (unsigned char)(dx * dx + dy * dy + dz * dz < height * height);
 	int pending = ai->m_pending46c;
 
-	if (pending != BfmeZeroRange || withinGoalRange)
+	if (pending != g_rva01075350 || withinGoalRange)
 	{
 		((Thing *)object)->setPosition( &goal );
 		return STATE_SUCCESS;

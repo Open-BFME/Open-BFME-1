@@ -58,7 +58,7 @@ extern "C" float fabs(float value);
 extern "C" float sqrt(float value);
 #pragma intrinsic(fabs, sqrt)
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float Rva0109BF40ZeroRange;
 
 class Thing
@@ -251,7 +251,7 @@ void Rva002DCBA0::rva002DC8B0Apply(Object *found, Thing *thing)
     damageInfo.m_unreconstructed44 = owner->m_value64;
     damageInfo.m_unreconstructed48 = owner->m_value6CBits;
 
-    if (owner->m_value68 > BfmeZeroRange)
+    if (owner->m_value68 > g_rva01075350)
     {
         damageInfo.m_distance24 =
             sqrt(delta.z * delta.z + delta.y * delta.y + delta.x * delta.x) /

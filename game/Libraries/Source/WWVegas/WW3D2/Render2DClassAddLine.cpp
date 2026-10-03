@@ -56,7 +56,7 @@ struct BfmeRenderVertex
 
 typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern "C" float g_BfmeRender2DZ;
 
 // retail 0x012D7198: the one definition of this storage is the static member
@@ -108,7 +108,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	BfmeUInt32 baseVertexPair;
 	BfmeUInt32 *indices;
 	BfmeRenderVertex *vertices;
-	if (*(volatile const float *)&BfmeZeroRange == len2)
+	if (*(volatile const float *)&g_rva01075350 == len2)
 		return;
 
 	float oolen = WWMath::Inv_Sqrt(len2);
@@ -155,7 +155,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	BfmeUInt32 baseVertexPair;
 	BfmeUInt32 *indices;
 	BfmeRenderVertex *vertices;
-	if (*(volatile const float *)&BfmeZeroRange == len2)
+	if (*(volatile const float *)&g_rva01075350 == len2)
 		return;
 
 	float oolen = WWMath::Inv_Sqrt(len2);

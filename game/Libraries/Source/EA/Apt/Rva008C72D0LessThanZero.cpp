@@ -6,7 +6,7 @@
 // pop-two-refs/push-result stack tail), but this sibling opcode's fast-path
 // fallback reads a different global (g_bfmeFallbackDB, not gpUndefinedValue)
 // and its "compare" is not `underValue < topValue`: both operands are
-// tested for exact equality against BfmeZeroRange (0.0f), consistent with
+// tested for exact equality against g_rva01075350 (0.0f), consistent with
 // the pinned name's "zero constant" origin -- an is-both-zero test rather
 // than a less-than.
 //
@@ -48,7 +48,7 @@ public:
 };
 
 extern AptValue *g_bfmeFallbackDB;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 unsigned int AptGetSwfVersion();
 void __cdecl d_008996b0(void);
 
@@ -71,7 +71,7 @@ void AptActionInterpreter::_FunctionRva008C72D0(
 		float underValue = under->toNumber();
 		int flag;
 
-		if (topValue != BfmeZeroRange && underValue != BfmeZeroRange)
+		if (topValue != g_rva01075350 && underValue != g_rva01075350)
 			flag = 1;
 		else
 			flag = 0;

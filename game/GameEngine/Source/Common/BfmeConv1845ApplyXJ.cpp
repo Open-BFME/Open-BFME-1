@@ -7,7 +7,7 @@
 // the offsets used below: damage type +0x10, death type +0x1c, and clipped
 // output +0x54 in a 0x5c-byte object.
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class DamageInfo
 {
@@ -96,5 +96,5 @@ unsigned char BfmeOwnerXJ::bfmeApplyXJ(void *a, BfmeThingXJ *thing)
 			thing->bfmeV13XJ(&damage);
 	}
 
-	return damage.actualDamageClipped() > BfmeZeroRange;
+	return damage.actualDamageClipped() > g_rva01075350;
 }

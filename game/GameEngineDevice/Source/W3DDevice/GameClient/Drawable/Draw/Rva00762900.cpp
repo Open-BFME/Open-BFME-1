@@ -27,7 +27,7 @@ public:
 	void method();
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float g_01076C24;
 extern const float g_bfmeScaleGI;
 
@@ -47,7 +47,7 @@ void Rva00762900::method()
 
 	char *entries = *(char **)(state + 0x2C);
 	float range = *(float *)(entries + index * 0x38 + 0x0C);
-	if (!(range > BfmeZeroRange))
+	if (!(range > g_rva01075350))
 		return;
 
 	char *owner = *(char **)(self + 0x08);
@@ -56,7 +56,7 @@ void Rva00762900::method()
 		return;
 
 	float height = object->bfmeGetNonnegativePreferredLocomotorHeight();
-	if (height == BfmeZeroRange)
+	if (height == g_rva01075350)
 	{
 		RvaC4390First *resolved = ((RvaC4390Second *)object)->resolve(0);
 		if (resolved != 0)

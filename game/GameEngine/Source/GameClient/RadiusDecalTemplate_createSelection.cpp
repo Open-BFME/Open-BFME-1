@@ -70,7 +70,7 @@ public:
 };
 
 extern ProjectedShadowManager *TheProjectedShadowManager;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class RadiusDecal
 {
@@ -119,10 +119,10 @@ void RadiusDecalTemplate::createRadiusDecal(
 	if (selectedUnits == 0)
 		return;
 
-	if (m_minRadius == BfmeZeroRange)
+	if (m_minRadius == g_rva01075350)
 		return;
 
-	if (m_maxRadius == BfmeZeroRange)
+	if (m_maxRadius == g_rva01075350)
 		return;
 
 	result.clear();

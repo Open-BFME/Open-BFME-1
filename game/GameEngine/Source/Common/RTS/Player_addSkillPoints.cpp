@@ -83,11 +83,11 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern RankInfoStore *TheRankInfoStore;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 #define TheBfmeGameLogic TheGameLogic
 #define TheRankInfoStore TheRankInfoStore
-#define BfmeZeroRange BfmeZeroRange
+#define g_rva01075350 g_rva01075350
 
 extern "C" __declspec(dllimport) double floor(double value);
 
@@ -130,7 +130,7 @@ Bool Player::addSkillPoints(Real delta, Bool fromScript)
 				adjustedDelta *= state->campaignMultipliers()->begin()[index];
 		}
 	}
-	if (adjustedDelta == BfmeZeroRange)
+	if (adjustedDelta == g_rva01075350)
 		return false;
 
 	Int levelCap = getRankLevelCap();
@@ -156,4 +156,4 @@ Bool Player::addSkillPoints(Real delta, Bool fromScript)
 
 #undef TheBfmeGameLogic
 #undef TheRankInfoStore
-#undef BfmeZeroRange
+#undef g_rva01075350

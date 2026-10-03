@@ -1,7 +1,7 @@
 // ?setPositiveValue@Rva00918DD0Owner@@QAEXM@Z
 // Opaque address-derived owner: field offsets and the constant relocation are
 // taken from the retail body; no semantic class identity is asserted here.
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 struct Rva00918DD0Owner {
 	char m_pad[0x10];
@@ -15,7 +15,7 @@ struct Rva00918DD0Owner {
 
 void Rva00918DD0Owner::setPositiveValue(float value)
 {
-	m_first = (value > BfmeZeroRange) ? value : BfmeZeroRange;
-	m_second = (value > BfmeZeroRange) ? value : BfmeZeroRange;
+	m_first = (value > g_rva01075350) ? value : g_rva01075350;
+	m_second = (value > g_rva01075350) ? value : g_rva01075350;
 	m_flags &= ~0x20000;
 }

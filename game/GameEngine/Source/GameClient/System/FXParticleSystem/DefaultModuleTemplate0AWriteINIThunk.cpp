@@ -87,7 +87,7 @@ __forceinline void writeStreamText(File &file, const StreamText &text)
 }
 StreamWriter *formatInteger(StreamWriter *stream, unsigned int value);
 StreamWriter *formatReal(StreamWriter *stream, double value);
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 namespace FXParticleSystem {
 void writeINI_part2(File *file, unsigned int *flags);
@@ -125,8 +125,8 @@ void DefaultModuleTemplate<0>::writeINI(File &file, unsigned int flags) const
 	OutputStream stream(0x10);
 	ColorKeyWriteView *key = (ColorKeyWriteView *)colorKeys_;
 	for (unsigned int keyIndex = 0; keyIndex < 8; ++keyIndex, ++key) {
-		if (key->red != BfmeZeroRange || key->green != BfmeZeroRange ||
-			key->blue != BfmeZeroRange || key->frame != 0) {
+		if (key->red != g_rva01075350 || key->green != g_rva01075350 ||
+			key->blue != g_rva01075350 || key->frame != 0) {
 			for (unsigned int indent = flags; indent > 0; --indent)
 				reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
 			reinterpret_cast<StreamWriter *>(&stream)->append("Color");
@@ -144,8 +144,8 @@ void DefaultModuleTemplate<0>::writeINI(File &file, unsigned int flags) const
 	}
 	RandomVariableWriteView *scale = (RandomVariableWriteView *)
 		((unsigned char *)this + 0x8c);
-	if (scale->getMinimumValue() != BfmeZeroRange ||
-		scale->getMaximumValue() != BfmeZeroRange) {
+	if (scale->getMinimumValue() != g_rva01075350 ||
+		scale->getMaximumValue() != g_rva01075350) {
 		for (unsigned int indent = flags; indent > 0; --indent)
 			reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
 		reinterpret_cast<StreamWriter *>(&stream)->append("ColorScale = ");

@@ -24,7 +24,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-#define BfmeZeroRange 0.0f
+#define g_rva01075350 0.0f
 
 class TeamFactory
 {
@@ -103,7 +103,7 @@ void AIGuardMachine::getGuardScanPos(Coord3D *scanPosition)
 		}
 	}
 
-	if (scanAnchor.x == BfmeZeroRange && scanAnchor.y == BfmeZeroRange)
+	if (scanAnchor.x == g_rva01075350 && scanAnchor.y == g_rva01075350)
 	{
 		Object *ownerPositionAddress = (Object *)((unsigned)m_owner + 0x38);
 		_ReadWriteBarrier();

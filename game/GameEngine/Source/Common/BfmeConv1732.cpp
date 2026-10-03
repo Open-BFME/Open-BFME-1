@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class BfmeRoomZE
 {
@@ -61,7 +61,7 @@ void BfmeOwnZE::bfmeTickZE(void *unused)
 	BfmeAZE *source = m_bfmeAZE;
 	BfmeBZE *target = m_bfmeBZE;
 
-	if (source && target && source->m_bfmeRangeZE != BfmeZeroRange
+	if (source && target && source->m_bfmeRangeZE != g_rva01075350
 		&& target->m_bfmeDZE && (target->m_bfmeDZE->m_bfmeFlagsZE & 1))
 		reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->bfmeSendZE(target,
 			source->m_bfmeRoomZE, source->m_bfmeRangeZE);

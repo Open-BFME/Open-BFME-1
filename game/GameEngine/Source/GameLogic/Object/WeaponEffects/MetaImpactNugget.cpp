@@ -50,7 +50,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 Real GetGameLogicRandomValueReal(Real lo, Real hi, char *file, Int line);
 
@@ -177,7 +177,7 @@ void MetaImpactNugget::execute(Weapon *weapon, Object *victim)
 
 	Real bonus;
 	victim->getAttributeModifierBonus(9, &bonus);
-	if (bonus > BfmeZeroRange)
+	if (bonus > g_rva01075350)
 	{
 		if (!(GetGameLogicRandomValueReal(0.0f, 0.999f, kMetaImpactFile, 344) > bonus))
 			return;

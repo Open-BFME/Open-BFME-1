@@ -51,7 +51,7 @@ enum { BFME_OBJECT_STATUS_UNTARGETABLE = 0x00040000 };
 enum { BFME_OBJECT_STATUS_BIT_PRE_FIRING = 0x0d };
 enum { BFME_OBJECT_STATUS_MASK_BIT = 28 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Object;
 class Player;
@@ -260,7 +260,7 @@ StateReturnType Rva001766F0State::update()
 		delta.y = goal->m_position.y;
 		delta.x -= source->m_position.x;
 		delta.y -= source->m_position.y;
-		if (delta.x * forwardVector.x + delta.y * forwardVector.y > BfmeZeroRange)
+		if (delta.x * forwardVector.x + delta.y * forwardVector.y > g_rva01075350)
 			goalIsAhead = true;
 	}
 

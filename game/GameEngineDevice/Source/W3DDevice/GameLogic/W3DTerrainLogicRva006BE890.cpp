@@ -35,7 +35,7 @@ public:
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 #define g_bfmeA1087 ((BfmeA1087 *)TheTerrainRenderObject)
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
 // Retail converts each floored Real with WWMath::Float_To_Long.  The
@@ -103,13 +103,13 @@ Bool W3DTerrainLogic::rva006BE890(const Coord2D *point) const
 	Real x = origin + point->x;
 	Real y = origin + point->y;
 
-	if (x < BfmeZeroRange)
+	if (x < g_rva01075350)
 		x = 0.0f;
 	else if (x > (Real)m_mapDX * 10.0f)
 		x = (Real)m_mapDX * 10.0f;
 
-	if (y < BfmeZeroRange)
-		y = BfmeZeroRange;
+	if (y < g_rva01075350)
+		y = g_rva01075350;
 	else if (y > (Real)m_mapDY * 10.0f)
 		y = (Real)m_mapDY * 10.0f;
 

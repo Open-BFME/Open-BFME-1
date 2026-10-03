@@ -15,7 +15,7 @@
 
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float g_bfmeDefaultBU;
 extern double Gen01085F58;
 
@@ -188,7 +188,7 @@ private:
 // ?rva001FAFE0@Rva001FAFE0Secondary@@UAEIXZ
 unsigned int Rva001FAFE0Secondary::rva001FAFE0()
 {
-	if (m_f20 > BfmeZeroRange)
+	if (m_f20 > g_rva01075350)
 	{
 		m_f20 -= g_bfmeDefaultBU;
 		if (m_f20 <= Gen01085F58)

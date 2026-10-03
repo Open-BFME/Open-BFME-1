@@ -18,7 +18,7 @@ struct Coord3D
 	Real z;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Matrix3D
 {

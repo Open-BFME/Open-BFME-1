@@ -221,7 +221,7 @@ extern CRCParameterCheck *TheCRCParameterCheck;
 
 #define CritterDesyncFlag Glo012F0239
 #define CritterDesyncSink TheCRCParameterCheck
-#define BfmeZeroRange 0.0f
+#define g_rva01075350 0.0f
 #define BfmeK1253 0.5f
 #define BfmeRandomFile ((char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp")
 #define BfmePanicMessage "CritterDesync: ComputePath40"
@@ -281,7 +281,7 @@ StateReturnType AIPanicState::update()
 				overrideCast.asVoid = (void *)j_000022bb;
 				locoTemplate = (locoTemplate->m_nextOverride->*overrideCast.asMember)();
 			}
-			if (locoTemplate->getWanderWidthFactor() > BfmeZeroRange)
+			if (locoTemplate->getWanderWidthFactor() > g_rva01075350)
 			{
 				int delta = REAL_TO_INT_FLOOR(
 					curLoco->getWanderWidthFactor() + BfmeK1253);

@@ -130,7 +130,7 @@ extern float g_worldMatrix[16];
 extern unsigned char g_rva007A2330Flag;
 extern float g_bfmeDefaultBU;
 extern const float g_bfmeScaleB3;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 void j_00008d5f();
 void j_0003d5a0();
@@ -306,7 +306,7 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 
 	Real intensity = currentIntensity;
 	Real frameFraction = *(Real *)(TheGameEngine + 0x38);
-	if (previousIntensity < BfmeZeroRange) {
+	if (previousIntensity < g_rva01075350) {
 		previousIntensity = intensity;
 	} else if (currentIntensity != previousIntensity) {
 		intensity = (g_bfmeDefaultBU - frameFraction) * previousIntensity +

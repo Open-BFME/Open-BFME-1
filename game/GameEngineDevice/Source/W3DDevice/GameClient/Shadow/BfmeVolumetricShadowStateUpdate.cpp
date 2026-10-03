@@ -233,7 +233,7 @@ public:
 extern Open27110B0Source *TheOpen27110B0Source;
 extern TerrainLogic *TheTerrainLogic;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern const Real BfmeShadowZLimit;
 extern const Real BfmeShadowScale;
 
@@ -274,7 +274,7 @@ void W3DVolumetricShadow::updateShadowState()
 	m_lightOffsetZ = *(volatile Real *)&m_lightOffsetZ - (Real)light->m_z;
 
 	Real lengthSquared = m_lightOffset.Length2();
-	if (lengthSquared != BfmeZeroRange)
+	if (lengthSquared != g_rva01075350)
 	{
 		Real inverseLength = WWMath::Inv_Sqrt(lengthSquared);
 		m_lightOffsetX *= inverseLength;
@@ -282,7 +282,7 @@ void W3DVolumetricShadow::updateShadowState()
 		m_lightOffsetZ *= inverseLength;
 	}
 
-	if (m_shadowLengthScale > BfmeZeroRange)
+	if (m_shadowLengthScale > g_rva01075350)
 	{
 		Real horizontalSquared = m_lightOffset.Length2D();
 		horizontalSquared *= m_shadowLengthScale;

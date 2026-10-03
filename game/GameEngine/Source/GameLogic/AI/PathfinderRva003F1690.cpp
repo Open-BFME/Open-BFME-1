@@ -115,7 +115,7 @@ typedef Bool (Pathfinder::*Rva0004A327Call)(
 // The zero range is a data reference; the height tolerance is the compiler
 // constant __real@42480000. Their semantic names are not established by this
 // candidate.
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 #define Rva003F1690HeightTolerance (50.0f)
 
 Bool Pathfinder::rva003f1690(
@@ -173,7 +173,7 @@ Bool Pathfinder::rva003f1690(
 		// Retail skips this height delta check when the first address-backed
 		// value is at least referenceHeight. Otherwise the absolute difference
 		// must be no greater than the height tolerance.
-		if (referenceHeight > BfmeZeroRange &&
+		if (referenceHeight > g_rva01075350 &&
 			(Real)fabs(candidate.z - referenceHeight) >
 			Rva003F1690HeightTolerance)
 			return false;

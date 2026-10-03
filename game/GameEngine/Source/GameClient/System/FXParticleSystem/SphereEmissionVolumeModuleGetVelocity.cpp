@@ -8,7 +8,7 @@
 
 #include <math.h>
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 struct Coord3DBase
@@ -44,7 +44,7 @@ public:
 	__forceinline void normalizeSphereEmissionVelocity()
 	{
 		float len = length();
-		if ( len != BfmeZeroRange )
+		if ( len != g_rva01075350 )
 		{
 			float inverse_length = g_bfmeDefaultBU / len;
 			x *= inverse_length;

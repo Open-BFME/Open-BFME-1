@@ -28,7 +28,7 @@ public:
 };
 
 extern BfmeMgrGK *g_bfmeMgrGK;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // The range test is not a recovered body: retail reaches it through the ILT
 // thunk at 0x000481FD, whose only definition in the tree is the
@@ -45,7 +45,7 @@ bool __stdcall bfmeTryGK(BfmeObjGK *obj, float range, BfmeVec3GK *out)
 		CheckThunk member;
 	} checkThunk;
 
-	if (range < BfmeZeroRange)
+	if (range < g_rva01075350)
 		return false;
 
 	obj->bfmeStartGK(1, 0xfa0, 1000.0f, 1000.0f, 0, 0);

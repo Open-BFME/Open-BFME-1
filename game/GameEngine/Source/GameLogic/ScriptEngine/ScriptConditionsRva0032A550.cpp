@@ -5,7 +5,7 @@
 // Identity: reached only from the matched condition dispatcher Rva0032D720::evaluate
 // through ILT j_00004066 with five Parameters. It builds an object-distance context
 // (center from ScriptEngine slot 26 resolveUnit, squared radius clamped to
-// BfmeZeroRange), lets Player::iterateObjects run the visitor at 0x0032A490 for each
+// g_rva01075350), lets Player::iterateObjects run the visitor at 0x0032A490 for each
 // player in the mask until the count passes the limit, then compares the count with
 // the comparison parameter. No Zero Hour name fits, so the name keeps the address token.
 
@@ -14,7 +14,7 @@ typedef float Real;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Object;
 
@@ -100,8 +100,8 @@ Bool ScriptConditions::rva0032A550(Parameter *pPlayerParm, Parameter *pCompariso
 	Rva00324540 context;
 
 	Real distance = pDistanceParm->m_real;
-	if (distance < BfmeZeroRange)
-		distance = BfmeZeroRange;
+	if (distance < g_rva01075350)
+		distance = g_rva01075350;
 	context.m_maxCount = limit;
 	context.m_radiusSquared = distance * distance;
 

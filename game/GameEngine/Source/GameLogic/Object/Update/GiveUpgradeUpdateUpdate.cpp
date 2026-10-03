@@ -112,7 +112,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-#define BfmeZeroRange 0.0f
+#define g_rva01075350 0.0f
 
 #pragma comment(linker, "/alternatename:?update@UpdateModuleInterface@@QAE?AW4UpdateSleepTime@@XZ=?j_00044b0c@@YAXXZ")
 #pragma comment(linker, "/alternatename:?advanceUpdate@SpecialAbilityUpdate@@QAEXXZ=?j_0003d0eb@@YAXXZ")
@@ -161,7 +161,7 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 		Object *objectForTimer = *reinterpret_cast<Object **>(rawThis - 8);
 		*reinterpret_cast<float *>(rawThis + 0xdc) -=
 			(*reinterpret_cast<GiveUpgradeUpdateModuleData **>(rawThis - 0xc))->m_fadeOutSpeed;
-		if (*reinterpret_cast<float *>(rawThis + 0xdc) < BfmeZeroRange)
+		if (*reinterpret_cast<float *>(rawThis + 0xdc) < g_rva01075350)
 		{
 			TheGameLogic->destroyObject(objectForTimer);
 			*reinterpret_cast<bool *>(rawThis + 0xd8) = false;

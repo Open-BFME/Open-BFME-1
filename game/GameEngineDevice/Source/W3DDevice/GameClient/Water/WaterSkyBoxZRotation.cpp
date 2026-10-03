@@ -65,7 +65,7 @@ private:
 	Matrix3D m_transform;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
@@ -80,7 +80,7 @@ private:
 
 float WaterRenderObjClass::bfmeSkyBoxZRotation0079F3E0(void) const
 {
-	float rotation = BfmeZeroRange;
+	float rotation = g_rva01075350;
 	if (m_skyBox != 0)
 	{
 		Matrix3D transform = m_skyBox->Get_Transform();

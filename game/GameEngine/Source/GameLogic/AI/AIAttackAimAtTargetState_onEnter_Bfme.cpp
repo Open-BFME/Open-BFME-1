@@ -275,7 +275,7 @@ public:
 extern AI *TheAI;
 // The shared zero constant at 0x01075350, read by name in
 // ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z and here.
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // The per-frame body behind the 8-byte index forwarders: 0x00039BD5 is a
 // five-byte `jmp 0x0017BA90`, and vtable slot 6 of AIAttackAimAtTargetState
@@ -321,7 +321,7 @@ StateReturnType AIAttackAimAtTargetState::onEnter()
 	Rva00170120Locomotor *curLoco = sourceAI->getCurLocomotor();
 	m_setLocomotor = false;
 	m_canTurnInPlace = curLoco ?
-		curLoco->check(reinterpret_cast<Rva00170120Object *>(source)) == BfmeZeroRange : false;
+		curLoco->check(reinterpret_cast<Rva00170120Object *>(source)) == g_rva01075350 : false;
 
 	TheAI->pathfinder()->updateGoal(source, source->getPosition(), source->getLayer(),
 		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x26c3);

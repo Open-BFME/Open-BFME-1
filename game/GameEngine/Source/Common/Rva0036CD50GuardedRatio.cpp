@@ -1,6 +1,6 @@
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Rva0036CD50Values
 {
@@ -26,7 +26,7 @@ Real Rva0036CD50Owner::ratio(void) const
 {
 	if( !m_guard )
 		return 1.0f - m_amount / m_values->m_divisor;
-	return BfmeZeroRange;
+	return g_rva01075350;
 }
 
 // @?ratio@Rva0036CD50Owner@@QBEMXZ 0x0036CD50

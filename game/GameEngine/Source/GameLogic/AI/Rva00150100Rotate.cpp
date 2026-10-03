@@ -6,7 +6,7 @@ extern "C" double sqrt(double);
 #pragma intrinsic(sqrt)
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 
 // Retail RVA 0x00150100. The matched waypoint caller reaches it through ILT
@@ -22,7 +22,7 @@ void Rva00150100Rotate(const Coord3D *pB, const Coord3D *pA, Coord2D *vec)
 	Real dy = scratch[4];
 	dy -= pB->y;
 	Real len = (Real)sqrt(dy * dy + dx * dx);
-	if (len != BfmeZeroRange)
+	if (len != g_rva01075350)
 	{
 		Real scale = g_bfmeDefaultBU / len;
 		dx *= scale;

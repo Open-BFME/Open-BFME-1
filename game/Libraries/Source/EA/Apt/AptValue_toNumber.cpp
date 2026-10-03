@@ -7,7 +7,7 @@
 // are not used as the source identity.
 
 extern "C" float Rva008921B0Atof(const char *text);
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 // The true/false value is retail's 1.0f literal at VA 0x01075334 (bytes
 // 00 00 80 3f, in a .rdata pool of float literals: 1.0f, 3.0f, 0.5f, 4.0f),
@@ -52,7 +52,7 @@ extern AptValue *g_bfmeFallbackDB;
 float AptValue::toNumber()
 {
 	if (isUndefined())
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	unsigned int type = m_valueBits & 0x3f;
 	switch (type)
@@ -67,7 +67,7 @@ float AptValue::toNumber()
 		}
 
 		case 5:
-			return m_boolean ? 1.0f : BfmeZeroRange;
+			return m_boolean ? 1.0f : g_rva01075350;
 
 		case 7:
 			return static_cast<float>(m_integer);
@@ -76,6 +76,6 @@ float AptValue::toNumber()
 			return m_float;
 
 		default:
-			return (this != g_bfmeFallbackDB) ? 1.0f : BfmeZeroRange;
+			return (this != g_bfmeFallbackDB) ? 1.0f : g_rva01075350;
 	}
 }

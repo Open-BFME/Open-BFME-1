@@ -6117,8 +6117,6 @@ name,va
 ?BfmeTheMapObjectListHolder@@3PAVBfmeMapObjectListHolder@@A,0x012ED5DC
 ?BfmeVfZQ@@3HA,0x0111DFB0
 ?BfmeXferDistributionTypeNames@@3PAPBDA,0x010890F0
-?BfmeZeroRange@@3MA,0x01075350
-?BfmeZeroRange@@3MB,0x01075350
 ?BitDepth@DX8Wrapper@@1HA,0x012D6DBC
 ?Borrow@?$Int@$0EA@@@2_NA,0x0134F998
 ?BuffNuggetFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2980

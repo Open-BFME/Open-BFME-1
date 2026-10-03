@@ -139,7 +139,7 @@ public:
 		UnsignedInt color) = 0;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern Real g_bfmeUint32Scale;
 extern const Real g_bfmeDirectionWeight1285;
 // Retail spells this global `GameLogic *TheGameLogic` (?TheGameLogic@@3PAVGameLogic@@A),
@@ -171,7 +171,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 	UnsignedInt bounty = victimBounty;
 	Real bountyPercent;
 	killerObject->getAttributeModifierBonus(0xf, &bountyPercent);
-	if (bountyPercent == BfmeZeroRange)
+	if (bountyPercent == g_rva01075350)
 		bountyPercent = m_cashBountyPercent;
 
 	Real roundedBounty = (Real)bfmeMathVE((double)((Real)bounty * bountyPercent));

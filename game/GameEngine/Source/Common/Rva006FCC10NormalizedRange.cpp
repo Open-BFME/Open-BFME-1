@@ -10,7 +10,7 @@
 // conversion of that scaled value.
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 #define Rva006FCC10Scale50 (50.0f)
@@ -35,7 +35,7 @@ private:
 int Rva006FCCC0Owner::rva006FCC10(float value, float lower, float upper, float *fraction)
 {
 	float range = upper - lower;
-	if (range > BfmeZeroRange)
+	if (range > g_rva01075350)
 	{
 		if (value < lower)
 			value = lower;
@@ -56,7 +56,7 @@ int Rva006FCCC0Owner::rva006FCC10(float value, float lower, float upper, float *
 
 float Rva006FCCC0Owner::rva006FCCC0(float x, float y, float unused)
 {
-	float zero = BfmeZeroRange;
+	float zero = g_rva01075350;
 	if (m_12c == zero || m_130 == zero)
 		return zero;
 

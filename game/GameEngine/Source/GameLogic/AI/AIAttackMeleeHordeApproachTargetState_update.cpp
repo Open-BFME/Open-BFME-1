@@ -176,7 +176,7 @@ public:
 	Bool m_isInitialApproach;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target);
 

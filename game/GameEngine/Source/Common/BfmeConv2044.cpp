@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 class BfmeHostEX
@@ -22,7 +22,7 @@ void BfmeHostEX::bfmeSetEX(float t)
 
 	if (m_bfmeFlagEX)
 	{
-		if (t <= BfmeZeroRange)
+		if (t <= g_rva01075350)
 			m_bfmeValEX = m_bfmeLoEX;
 		else if (t >= g_bfmeDefaultBU)
 			m_bfmeValEX = m_bfmeHiEX;

@@ -10,7 +10,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
@@ -140,7 +140,7 @@ public:
         Real distance = (Real)sqrt(dx * dx + dy * dy);
 
         distance -= m_boundingCircleRadius;
-        if (distance < BfmeZeroRange)
+        if (distance < g_rva01075350)
             distance = 0.0f;
         else
             distance *= distance;

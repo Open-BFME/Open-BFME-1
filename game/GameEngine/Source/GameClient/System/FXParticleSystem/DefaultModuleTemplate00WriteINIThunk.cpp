@@ -79,7 +79,7 @@ __forceinline void writeStreamText(File &file, const StreamText &text)
 }
 StreamWriter *formatInteger(StreamWriter *stream, unsigned int value);
 StreamWriter *formatReal(StreamWriter *stream, double value);
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 namespace FXParticleSystem {
 void writeDefaultAlphaHeader(const void *self, File *file, unsigned int *flags);
@@ -108,7 +108,7 @@ void DefaultModuleTemplate<1>::writeINI(File &file, unsigned int flags) const
 	OutputStream stream(0x10);
 	for (unsigned int keyIndex = 0; keyIndex < 8; ++keyIndex) {
 		const AlphaKeyWriteView &key = alphaKeys_[keyIndex];
-		if (key.minimum != BfmeZeroRange || key.maximum != BfmeZeroRange || key.frame != 0) {
+		if (key.minimum != g_rva01075350 || key.maximum != g_rva01075350 || key.frame != 0) {
 			for (unsigned int indent = flags; indent > 0; --indent)
 				reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
 			reinterpret_cast<StreamWriter *>(&stream)->append("Alpha");

@@ -1,4 +1,4 @@
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva00563E60
 {
@@ -26,9 +26,9 @@ private:
 
 void AptPalantir::setRankProgress( float value )
 {
-	unsigned char wasVisible = m_rankProgress >= BfmeZeroRange;
+	unsigned char wasVisible = m_rankProgress >= g_rva01075350;
 
-	if( value >= BfmeZeroRange )
+	if( value >= g_rva01075350 )
 	{
 		if( !wasVisible )
 			Rva00563E60::go();

@@ -31,7 +31,7 @@ enum StaticGameLODLevel
 };
 
 extern const char *StaticGameLODNames[];
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class INIException
 {
@@ -107,7 +107,7 @@ void INI::parseNonNegativeReal( INI *ini, void *, void *store, const void * )
 		throw INIException( 3, "Expected additional data after '%s'", seps );
 	Real value = INI::scanReal( token );
 	*(Real *)store = value;
-	if( value < BfmeZeroRange )
+	if( value < g_rva01075350 )
 		throw INIException( 3, "invalid Real value %1.7f -- expected >= 0", value );
 }
 
@@ -120,7 +120,7 @@ void INI::parseNonPositiveReal( INI *ini, void *, void *store, const void * )
 		throw INIException( 3, "Expected additional data after '%s'", seps );
 	Real value = INI::scanReal( token );
 	*(Real *)store = value;
-	if( value > BfmeZeroRange )
+	if( value > g_rva01075350 )
 		throw INIException( 3, "invalid Real value %1.7f -- expected <= 0", value );
 }
 

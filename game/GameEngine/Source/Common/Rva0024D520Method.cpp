@@ -20,7 +20,7 @@ struct Rva0024D520List
 	Rva0024D520Node *head;
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Rva0024D520Base
 {
@@ -94,7 +94,7 @@ bool Rva0024D520::method(float threshold)
 	{
 		object = (Object *)node->payload;
 
-		if (lastTurnRate == BfmeZeroRange &&
+		if (lastTurnRate == g_rva01075350 &&
 			((Rva001BE010 *)object)->get())
 		{
 			Object *argument = object;

@@ -13,7 +13,7 @@ typedef UnsignedInt ObjectID;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BodyModule
 {
@@ -83,7 +83,7 @@ void PassiveAreaEffectBehavior::rva00201fd0(Object *object)
 		return;
 
 	const PassiveAreaEffectBehaviorModuleData *data = m_moduleData;
-	if (!(data->m_healPercentPerSecond > BfmeZeroRange))
+	if (!(data->m_healPercentPerSecond > g_rva01075350))
 		return;
 
 	BodyModule *body = object->m_body;

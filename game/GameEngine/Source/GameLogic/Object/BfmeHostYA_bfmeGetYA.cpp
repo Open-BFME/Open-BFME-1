@@ -27,7 +27,7 @@ public:
 	Player *getControllingPlayer() const;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
 class BfmeHostYA
@@ -50,7 +50,7 @@ float BfmeHostYA::bfmeGetYA()
 		pl = team->getControllingPlayer();
 
 	if (pl == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	int buildTime;
 	if (m_bfme04YA == 0)

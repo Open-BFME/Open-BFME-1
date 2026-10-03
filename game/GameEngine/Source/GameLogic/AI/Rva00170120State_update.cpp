@@ -10,7 +10,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 extern void j_0000e570();
 extern void j_0002cc23();
 
@@ -66,7 +66,7 @@ StateReturnType Rva00170120State::update()
 	int check;
 	if (curLocomotor)
 	{
-		check = curLocomotor->check(owner) == BfmeZeroRange;
+		check = curLocomotor->check(owner) == g_rva01075350;
 	}
 	else
 		check = 0;

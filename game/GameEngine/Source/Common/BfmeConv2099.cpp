@@ -23,7 +23,7 @@ public:
 	BfmeSubYL *m_bfme204YL;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern volatile float g_rva001B59ScaleConstant;
 
 static __forceinline LocomotorOverridable *bfmeFinalYL(LocomotorOverridable *p)
@@ -49,12 +49,12 @@ public:
 float BfmeHostYL::bfmeRateYL(Object *obj)
 {
 	if (obj == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	BfmeSubYL *s = obj->m_bfme204YL;
 
 	if (s == 0)
-		return BfmeZeroRange;
+		return g_rva01075350;
 
 	float w = s->m_bfme1D4YL;
 

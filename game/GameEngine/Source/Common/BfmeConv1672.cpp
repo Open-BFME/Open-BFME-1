@@ -1,6 +1,6 @@
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BfmeRangeEQI
 {
@@ -24,7 +24,7 @@ Real BfmeRangeEQI::bfmeRatioEQI(void)
 {
 	if (bfmeReadyEQI())
 		return (Real)m_bfmeNumEQI / (Real)m_bfmeDenEQI;
-	return BfmeZeroRange;
+	return g_rva01075350;
 }
 
 class BfmeSpanEQJ
@@ -49,5 +49,5 @@ Real BfmeSpanEQJ::bfmeRatioEQJ(void)
 {
 	if (bfmeReadyEQJ())
 		return (Real)m_bfmeNumEQJ / (Real)m_bfmeDenEQJ;
-	return BfmeZeroRange;
+	return g_rva01075350;
 }

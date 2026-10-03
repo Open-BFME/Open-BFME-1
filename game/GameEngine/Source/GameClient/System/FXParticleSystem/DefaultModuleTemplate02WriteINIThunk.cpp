@@ -69,7 +69,7 @@ __forceinline void writeStreamText(File &file, const StreamText &text)
 	reinterpret_cast<FileWriteShim *>(&file)->write(text.m_start, (int)(text.m_finish - text.m_start));
 }
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 namespace FXParticleSystem {
 
@@ -102,18 +102,18 @@ void DefaultModuleTemplate<3>::writeINI(File &file, unsigned int flags) const
 	writeDefaultPhysicsHeader(this, &file, &flags);
 	OutputStream stream(0x10);
 
-	if (gravity_ != BfmeZeroRange)
+	if (gravity_ != g_rva01075350)
 		writePhysicsScalar((INI *)&stream, (void *)flags, "Gravity", &gravity_);
 
 	RandomVariableWriteView *damping =
 		(RandomVariableWriteView *)((unsigned char *)this + 0x1c);
-	if (damping->minimum != BfmeZeroRange || damping->maximum != BfmeZeroRange)
+	if (damping->minimum != g_rva01075350 || damping->maximum != g_rva01075350)
 		writePhysicsPair((void *)&stream, (void *)flags, "VelocityDamping",
 			damping);
 
 	float *drift = (float *)((unsigned char *)this + 0x0c);
-	if (drift[0] != BfmeZeroRange || drift[1] != BfmeZeroRange ||
-		drift[2] != BfmeZeroRange)
+	if (drift[0] != g_rva01075350 || drift[1] != g_rva01075350 ||
+		drift[2] != g_rva01075350)
 		writePhysicsVector((INI *)&stream, (void *)flags, "DriftVelocity",
 			drift);
 

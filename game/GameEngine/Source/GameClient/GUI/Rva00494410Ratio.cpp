@@ -4,7 +4,7 @@
 // loads 0.0f (bytes 00 00 00 00) from VA 0x01075350 on the fallback path.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva00494410MetricSource
 {
@@ -47,5 +47,5 @@ float Rva00494410RatioOwner::getRatio()
 		return (float)range / (float)m_source->getTotal();
 	}
 
-	return BfmeZeroRange;
+	return g_rva01075350;
 }

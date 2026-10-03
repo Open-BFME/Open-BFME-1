@@ -11837,7 +11837,6 @@ name,address,notes
 ?BfmeWeaponRecoilInfoUninitializedCopy@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU23@00ABU__false_type@1@@Z,0x00027525,Open-BFME5 ILT for _STL::__uninitialized_copy on W3DModelDraw WeaponRecoilInfo at 0x0020E2C0
 ?BfmeWeaponRecoilInfoUninitializedFillN@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU23@IABU23@ABU__false_type@1@@Z,0x00049459,Open-BFME5 ILT for _STL::__uninitialized_fill_n on W3DModelDraw WeaponRecoilInfo at 0x0020E310
 ?BfmeWeaponTemplateSetUninitializedCopy@_STL@@YAPAVWeaponTemplateSet@@PAV2@00ABU__false_type@1@@Z,0x0003D5C8,Open-BFME5 ILT for _STL::__uninitialized_copy on WeaponTemplateSet at 0x002E2FD0
-?BfmeZeroRange@@3MB,0x01075350,Open-BFME5 zero constant ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 loads from memory rather than materialising; address-derived name
 ?Bind@UDP@@QAEHIG@Z,0x00047FA0
 ?Blend_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,0x009546B0
 ?BoxSetTexture@@YAXIAAPAVTextureBaseClass@@@Z,0x00905AC0,TU-local texture binding ABI for BoxRenderObjClass::render_box

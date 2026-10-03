@@ -60,7 +60,7 @@ extern AI *TheAI;
 #define BFME_GAMELOGIC_LOOKUP_VISIBLE 1
 #include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
 extern GameLogic *TheGameLogic;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 struct ModuleData00241050 { unsigned char pad000[0x288]; Real at288; };
 struct Delay00241050 { Coord3D pos; UnsignedInt count; };
@@ -186,7 +186,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 						Coord3D toRider = *(const Coord3D *)rider->m_cachedPos;
 						toRider -= *(const Coord3D *)member->m_cachedPos;
 						side.normalize();
-						int offset = (toRider * side > BfmeZeroRange) ? -4 : 4;
+						int offset = (toRider * side > g_rva01075350) ? -4 : 4;
 						side *= (Real)offset;
 						pos.add(&side);
 					}
@@ -194,7 +194,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 			} else if (!m_map144.empty()) {
 				DelayMap00241050::iterator found = m_map144.find(member->getID());
 				if (found != m_map144.end()) {
-					if (target && data->at288 != BfmeZeroRange) {
+					if (target && data->at288 != g_rva01075350) {
 						Coord3D delta = *(const Coord3D *)member->m_cachedPos;
 						delta.sub((const Coord3D *)target->m_cachedPos);
 						Real len = delta.length();

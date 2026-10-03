@@ -42,7 +42,7 @@ public:
 
 extern SpecialPowerStore *TheSpecialPowerStore;
 extern ActionManager *TheActionManager;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class BfmeAIUpdateInterface
 {
@@ -96,7 +96,7 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 
 	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
 	{
-		Real distance = BfmeZeroRange;
+		Real distance = g_rva01075350;
 		Object *object = *i;
 		if (target)
 		{

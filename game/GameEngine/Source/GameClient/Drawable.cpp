@@ -1466,7 +1466,7 @@ static __forceinline Bool drawablePhysicsScriptFrozen(DrawablePhysicsScriptEngin
 // __fastcall spelling is used here because its first argument is likewise ECX.
 typedef Bool (__fastcall *DrawablePhysicsViewBoolCall)(void *);
 
-// The retail zero storage is the existing ?BfmeZeroRange@@3MB at VA
+// The retail zero storage is the existing ?g_rva01075350@@3MB at VA
 // 0x01075350, whose four bytes are 00 00 00 00 -- exactly 0.0f.  The literal
 // replaces the address view: an external variable spelling changes MSVC 7.1's
 // x87 grouping, and the constant pool read carries no COFF relocation either.

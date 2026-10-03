@@ -21,7 +21,7 @@ struct Coord3D
 	float z;
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 class Rva002BCB60Owner
 {
@@ -95,7 +95,7 @@ StateReturnType GiantBirdFollowPathState::update()
 	unsigned char withinGoalRange = (unsigned char)(dx * dx + dy * dy + dz * dz < goalRange * goalRange);
 	int pending = ai->m_pending46c;
 
-	if (pending != BfmeZeroRange || withinGoalRange)
+	if (pending != g_rva01075350 || withinGoalRange)
 	{
 		((Thing *)object)->setPosition(&goal);
 		if (!rva002BDBF0())

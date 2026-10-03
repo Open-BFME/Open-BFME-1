@@ -10,7 +10,7 @@
 // here. AudioEventRTS::m_eventInfo at +0x08 is proven by
 // game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp.
 
-#define BfmeZeroRange 0.0f
+#define g_rva01075350 0.0f
 
 enum AudioPriority { AP_RVA006AD590_PLACEHOLDER };
 
@@ -101,7 +101,7 @@ void Rva006AD590Owner::bfmeAdjustPriorityAndVolume(AudioEventRTS *event)
 		event->setAudioPriority((AudioPriority)slot->m_asInt);
 		Rva006AD590Info *info = event->m_eventInfo;
 		float priority = info->m_priority.m_asFloat;
-		if (priority > BfmeZeroRange)
+		if (priority > g_rva01075350)
 		{
 			float ratio = slot->m_asFloat / priority;
 			event->setVolume(ratio * info->m_defaultVolume);

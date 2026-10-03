@@ -183,7 +183,7 @@ struct BfmeGlobalData
 class GlobalData;						///< retail pointee at 0x012ED5C8
 extern GlobalData *TheWritableGlobalData;	///< retail [0x012ED5C8]
 extern InGameUI *TheInGameUI;
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class ModuleInterface
 {
@@ -303,14 +303,14 @@ void Drawable::drawHealthBar()
 	BfmeBody *body = object->m_body;
 	BfmeBodyVtable &maxVtable = **(BfmeBodyVtable **)body;
 	Real maxHealth = maxVtable.getMaxHealth(body);
-	if (maxHealth == BfmeZeroRange)
+	if (maxHealth == g_rva01075350)
 		return;
 
 	BfmeBodyVtable &bodyVtable = **(BfmeBodyVtable **)body;
 	region.first = 0;
 	region.second = 0;
 	Real health = bodyVtable.getHealth(body, &bodyVtable);
-	if (health == BfmeZeroRange)
+	if (health == g_rva01075350)
 		return;
 
 	int *regionPtr = &region.first;

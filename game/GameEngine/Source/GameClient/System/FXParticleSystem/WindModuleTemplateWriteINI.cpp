@@ -165,7 +165,7 @@ void u1Call_005C7110(void *stream, void *flags, void *name, void **value);
 void b_005ff160();
 void Rva005EE1D0Finish(File *file, unsigned int *indent);
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 
 namespace FXParticleSystem
 {
@@ -240,7 +240,7 @@ void DefaultModuleTemplate<7>::writeINI(File &file, unsigned int flags) const
 	if (m_windAngleChangeMax != 0.45f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
 			"WindAngleChangeMax", &m_windAngleChangeMax);
-	if (m_windMotionStartAngleMin != BfmeZeroRange)
+	if (m_windMotionStartAngleMin != g_rva01075350)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
 			"WindPingPongStartAngleMin", &m_windMotionStartAngleMin);
 	if (m_windMotionStartAngleMax != 0.7853982f)
@@ -252,10 +252,10 @@ void DefaultModuleTemplate<7>::writeINI(File &file, unsigned int flags) const
 	if (m_windMotionEndAngleMax != 6.2831855f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
 			"WindPingPongEndAngleMax", &m_windMotionEndAngleMax);
-	if (m_turbulenceAmplitude != BfmeZeroRange)
+	if (m_turbulenceAmplitude != g_rva01075350)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
 			"TurbulenceAmplitude", &m_turbulenceAmplitude);
-	if (m_turbulenceFrequency != BfmeZeroRange)
+	if (m_turbulenceFrequency != g_rva01075350)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
 			"TurbulenceFrequency", &m_turbulenceFrequency);
 

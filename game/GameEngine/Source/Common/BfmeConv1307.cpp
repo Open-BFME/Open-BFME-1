@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
 extern const float g_bfmeDefaultBU;
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern const float g_0112100C;
 #pragma comment(linker, "/alternatename:?g_0112100C@@3PB=__real@3727c5ac")
 #pragma comment(linker, "/alternatename:?g_0112100C@@3MB=__real@3727c5ac")
@@ -37,7 +37,6 @@ public:
 	void bfmeGoTBA();
 	void bfmeOneTBA();
 	void bfmeTwoTBA();
-	void bfmeThreeTBA();
 };
 
 void BfmeThingTBA::bfmeGoTBA()
@@ -131,74 +130,6 @@ void BfmeThingTBA::bfmeTwoTBA()
 	m_bfme10 = b;
 }
 
-void BfmeThingTBA::bfmeThreeTBA()
-{
-	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
-	const BfmeOverrideTBA *from;
-	const BfmeOverrideTBA *to;
-	BfmeOverrideTBA *d = (BfmeOverrideTBA *)bfmeWalkTBA(f);
-	float fraction;
-
-	if (d->m_bfmeFlag58 == 0 || m_bfme98 == 0)
-		return;
-
-	if (f == 0)
-	{
-		from = 0;
-		to = 0;
-	}
-	else
-	{
-		const BfmeOverrideTBA *next =
-			(const BfmeOverrideTBA *)f->m_nextOverride;
-		if (next != 0)
-		{
-			from = (const BfmeOverrideTBA *)next->getFinalOverride();
-			to = (const BfmeOverrideTBA *)next->getFinalOverride();
-		}
-		else
-		{
-			from = f;
-			to = f;
-		}
-	}
-	fraction = (float)(from->m_bfme5c - m_bfme4c) / (float)to->m_bfme5c;
-	if (fraction > g_bfmeDefaultBU)
-	{
-		bfmeTwoTBA();
-		return;
-	}
-
-	if (fraction > m_bfme54)
-	{
-		m_bfme98 = 3;
-		float blend = (fraction - m_bfme54) /
-			(g_bfmeDefaultBU - m_bfme54);
-		m_bfme38f = m_bfme5cf - (m_bfme5cf - m_bfme58f) * blend;
-		m_bfme10f = m_bfme64 - (m_bfme64 - m_bfme60) * blend;
-		return;
-	}
-
-	if (fraction > m_bfme50)
-	{
-		m_bfme98 = 2;
-		m_bfme38f = m_bfme5cf;
-		m_bfme10f = m_bfme64;
-		return;
-	}
-
-	if (fraction <= BfmeZeroRange)
-	{
-		bfmeTwoTBA();
-		return;
-	}
-
-	m_bfme98 = 1;
-	float blend = m_bfme50 > g_0112100C ?
-		fraction / m_bfme50 : g_bfmeDefaultBU;
-	m_bfme38f = m_bfme58f + (m_bfme5cf - m_bfme58f) * blend;
-	m_bfme10f = m_bfme60 + (m_bfme64 - m_bfme60) * blend;
-}
 
 class BfmeSinkTBB
 {

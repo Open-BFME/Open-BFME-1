@@ -65,7 +65,7 @@ public:
 };
 
 Bfme5WalkHit * __cdecl bfme5WalkFindHit(Bfme5WalkOwner *owner);
-extern const Real BfmeZeroRange;
+extern const Real g_rva01075350;
 
 class Object
 {
@@ -106,7 +106,7 @@ void Object::rva001c9380(Rva001C9380VictimArgument victim, Rva001C9380Argument a
 
 	m_experienceTracker->addExperiencePoints(
 		experienceGain, true, true, true, false);
-	if (experienceGain > BfmeZeroRange)
+	if (experienceGain > g_rva01075350)
 	{
 		m_feedbackFlags384 |= m_experienceTracker->m_state24;
 		Bfme5WalkHit *hit = bfme5WalkFindHit(

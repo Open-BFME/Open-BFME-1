@@ -51,7 +51,7 @@ public:
 	void destroyObject(Object *object);
 };
 
-extern const float BfmeZeroRange;
+extern const float g_rva01075350;
 extern GameLogic *TheGameLogic;
 
 struct Rva00222640ModuleData
@@ -130,7 +130,7 @@ void Rva00222640Owner::dispatch(const DamageInfo *damageInfo)
 
 	if (getModuleData()->m_flag152)
 	{
-		if (getModuleData()->m_damagePercent > BfmeZeroRange)
+		if (getModuleData()->m_damagePercent > g_rva01075350)
 			getContain()->slot77();
 		getModule()->slot24();
 		getContain()->slot37(false);
