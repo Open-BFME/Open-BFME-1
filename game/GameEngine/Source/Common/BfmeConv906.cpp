@@ -1,5 +1,14 @@
 // Open-BFME5 conversions.
 
+// Reference the ledger-owned ILT entries at the original call sites. These
+// five-byte jumps preserve ECX and the stack arguments; the member-pointer
+// views below keep each existing thiscall ABI without defining another body.
+void j_0000ddd7(); // W3DTreeBuffer::clearAllTrees, body 0x00732E70
+void j_00045d72(); // W3DShrubBuffer::clearAllTrees, body 0x0071C7E0
+void j_0002addd(); // W3DPropBuffer::updatePropPosition, body 0x007026E0
+void j_00025cca(); // AsciiString tree _M_find, body 0x005C7770
+void j_00021c1f(); // two-stack-argument thiscall body 0x006ADAE0
+
 class BfmeObjPA
 {
 public:
@@ -88,9 +97,6 @@ void BfmeThingPB::bfmeGoPB(int i)
 
 class BfmeSubPC
 {
-public:
-	void bfmeOnePC();
-	void bfmeTwoPC();
 };
 
 class BfmeThingPC
@@ -104,10 +110,12 @@ public:
 
 void BfmeThingPC::bfmeGoPC()
 {
+	union { void (*entry)(); void (BfmeSubPC::*member)(); }
+		one = { j_0000ddd7 }, two = { j_00045d72 };
 	if (m_bfmeA)
-		m_bfmeA->bfmeOnePC();
+		(m_bfmeA->*one.member)();
 	if (m_bfmeB)
-		m_bfmeB->bfmeTwoPC();
+		(m_bfmeB->*two.member)();
 }
 
 struct BfmeVecPD
@@ -119,8 +127,6 @@ struct BfmeVecPD
 
 class BfmeSubPD
 {
-public:
-	char bfmeTailPD(int a, BfmeVecPD *v, int e, int f);
 };
 
 class BfmeThingPD
@@ -133,16 +139,17 @@ public:
 
 char BfmeThingPD::bfmeGoPD(int a, BfmeVecPD v, int e, int f)
 {
+	union { void (*entry)(); char (BfmeSubPD::*member)(int, BfmeVecPD *, int, int); }
+		call = { j_0002addd };
 	BfmeSubPD *s = m_bfmeSub;
 	if (s)
-		return s->bfmeTailPD(a, &v, e, f);
+		return (s->*call.member)(a, &v, e, f);
 	return 0;
 }
 
 struct BfmeSubPE
 {
 	int *m_bfmeFirst;
-	int *bfmeFindPE(int k);
 };
 
 class BfmeThingPE
@@ -155,7 +162,9 @@ public:
 
 char *BfmeThingPE::bfmeGoPE(int k)
 {
-	int *r = m_bfmeSub.bfmeFindPE(k);
+	union { void (*entry)(); int *(BfmeSubPE::*member)(int); }
+		call = { j_00025cca };
+	int *r = (m_bfmeSub.*call.member)(k);
 	if (r == m_bfmeSub.m_bfmeFirst)
 		return 0;
 	return (char *)r + 0x14;
@@ -165,13 +174,14 @@ class BfmeThingPG
 {
 public:
 	void bfmeGoPG(int v, int i, void *c);
-	void bfmeSetPG(int i, void *c);
 	char m_bfmePad[0xac4];
 	int m_bfmeArr[1];
 };
 
 void BfmeThingPG::bfmeGoPG(int v, int i, void *c)
 {
-	bfmeSetPG(i, c);
+	union { void (*entry)(); void (BfmeThingPG::*member)(int, void *); }
+		call = { j_00021c1f };
+	(this->*call.member)(i, c);
 	m_bfmeArr[i] = v;
 }
