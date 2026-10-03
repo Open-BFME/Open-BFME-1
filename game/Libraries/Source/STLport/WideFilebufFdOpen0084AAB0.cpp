@@ -12,6 +12,10 @@
 // `lea ecx,[esi+0x54]` (one byte off), the wide open emits retail's
 // `lea ecx,[esi+0x24]` with zero non-reloc diffs over the 31 bytes.
 
+// This TU only supplies one member-function instantiation. Do not emit the
+// header's per-TU locale initializer here; its constructor and destructor are
+// not part of the retail object or this instantiation's matched body.
+#define __LOCALE_INITIALIZED
 #include <fstream>
 
 template _STL::basic_filebuf<unsigned short, _STL::char_traits<unsigned short> >::_Self *
