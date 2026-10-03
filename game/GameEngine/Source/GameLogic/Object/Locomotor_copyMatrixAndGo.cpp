@@ -36,7 +36,7 @@ struct Mat12
 class BfmeSub1CC_EC3
 {
 public:
-	void finish(Mat12 *m, int a, int t, int b);
+	// finish() is reached through the ILT thunk below, not declared here.
 	void copyMatrixAndGo(Mat12 *m, int a, int b);
 
 private:
@@ -55,6 +55,20 @@ private:
 	int m_90;
 };
 
+// The finish call goes through the five-byte ILT thunk at 0x00033861 (defined
+// as ?j_00033861@@YAXXZ in game/gen_small/thunks_024.cpp, target 0x001B8400),
+// pinned for ?finish@BfmeSub1CC_EC3@@. It is spelled through a thiscall member
+// pointer of the same shape.
+extern void j_00033861();
+
+typedef void (BfmeSub1CC_EC3::*BfmeFinishThunk)(Mat12 *m, int a, int t, int b);
+
+union BfmeFinishThunkCast
+{
+	void (__cdecl *freeFunction)(Mat12 *m, int a, int t, int b);
+	BfmeFinishThunk memberFunction;
+};
+
 void BfmeSub1CC_EC3::copyMatrixAndGo(Mat12 *m, int a, int b)
 {
 	m_64 = m->m_08;
@@ -70,5 +84,7 @@ void BfmeSub1CC_EC3::copyMatrixAndGo(Mat12 *m, int a, int b)
 	m_8C = m->m_30;
 	m_90 = m->m_34;
 	float t = ((Locomotor *)this)->getMaxTurnRate((Object *)m);
-	finish(m, a, *(int *)&t, b);
+	BfmeFinishThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(Mat12 *, int, int, int)>(&::j_00033861);
+	(this->*cast.memberFunction)(m, a, *(int *)&t, b);
 }
