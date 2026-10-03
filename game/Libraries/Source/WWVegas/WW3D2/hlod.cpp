@@ -3219,13 +3219,6 @@ void HLodClass::Set_LOD_Level(int lod)
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?HLodClass::Get_LOD_Level present-unmatched
-int HLodClass::Get_LOD_Level(void) const
-{
-	return CurLod;
-}
-
-
 /***********************************************************************************************
  * HLodClass::Get_LOD_Count -- returns the number of levels of detail                          *
  *                                                                                             *
@@ -3238,13 +3231,6 @@ int HLodClass::Get_LOD_Level(void) const
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?HLodClass::Get_LOD_Count present-unmatched
-int HLodClass::Get_LOD_Count(void) const
-{
-	return LodCount;
-}
-
-
 /***********************************************************************************************
  * HLodClass::Calculate_Cost_Value_Arrays -- computes the cost-value arrays                    *
  *                                                                                             *
