@@ -54,10 +54,13 @@ public:
 	Vector3 Corners[8];
 };
 
+class CameraClass;
+static const FrustumClass &ViewSpaceFrustumOf(const CameraClass *camera);
+
 class CameraClass
 {
 public:
-	const FrustumClass &Get_View_Space_Frustum(void) const;
+	friend const FrustumClass &ViewSpaceFrustumOf(const CameraClass *camera);
 
 protected:
 	void Update_Frustum(void) const;
@@ -66,11 +69,12 @@ protected:
 	FrustumClass ViewSpaceFrustum;
 };
 
-// ?Get_View_Space_Frustum@CameraClass@@QBEABVFrustumClass@@XZ absent-from-retail
-inline const FrustumClass &CameraClass::Get_View_Space_Frustum(void) const
+// TU-local stand-in for the reference header inline CameraClass::Get_View_Space_Frustum;
+// retail owns the standalone body (CameraClass_Get_View_Space_Frustum.cpp).
+static __forceinline const FrustumClass &ViewSpaceFrustumOf(const CameraClass *camera)
 {
-	Update_Frustum();
-	return ViewSpaceFrustum;
+	camera->Update_Frustum();
+	return camera->ViewSpaceFrustum;
 }
 
 class PlaneClass
@@ -118,7 +122,7 @@ class Rva00944430
 void Rva00944430::rva00944430(void **head, CameraClass *camera,
 	const float *padding)
 {
-	const Vector3 *corners = camera->Get_View_Space_Frustum().Corners;
+	const Vector3 *corners = ViewSpaceFrustumOf(camera).Corners;
 	Bounds00944430 box;
 	box.Init(corners[0]);
 	box.Add(corners[1]);
