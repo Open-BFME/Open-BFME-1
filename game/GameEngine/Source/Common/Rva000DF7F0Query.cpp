@@ -6,6 +6,10 @@ public:
 	bool active() const;
 };
 
+extern void j_000179bd();
+
+typedef bool (__fastcall *Rva000DF7F0ActiveCall)(const Rva000DF7F0Player *);
+
 class Rva000DF7F0
 {
 	char m_pad[0x0C];
@@ -17,5 +21,5 @@ public:
 
 int Rva000DF7F0::inactive() const
 {
-	return !m_player->active();
+	return !((Rva000DF7F0ActiveCall)j_000179bd)(m_player);
 }

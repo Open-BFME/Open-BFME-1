@@ -1,6 +1,8 @@
-void bfmeNextBCA(char *what);
+extern void j_00049413();
+
+typedef void (*BfmeConv437Call)(char *);
 
 void bfmeGoBCA(char *what)
 {
-	bfmeNextBCA(what + 0x38);
+	((BfmeConv437Call)j_00049413)(what + 0x38);
 }
