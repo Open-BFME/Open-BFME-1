@@ -1,9 +1,16 @@
 // ?doTeamGiveNearestTeamUpgrade@ScriptActions@@IAEXPAVParameter@@@Z
-// partial score=0.96 date=2026-09-19
+// partial score=0.9446 date=2026-10-03
+// ?doTeamGiveNearestTeamUpgrade@ScriptActions@@IAEXPAVParameter@@@Z
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 // TEAM_GIVE_NEAREST_TEAM_UPGRADE, retail RVA 0x002FE270.
 // The action resolves the source team, then gives its upgrade to the nearest
 // eligible member of another team owned by the source object's player.
+// 2026-09-23: ZH DLINK_ITERATOR shape (null-checking advance plus `if (!x)
+// continue;` at the top of both loop bodies) fixed the ESI/EDI rotation, the
+// swapped source/sourceObject homes and the size (632/632). Residue: the
+// sourcePosition copy is not interleaved with the team-list head load the way
+// retail schedules it; removing the equals() address escape reproduces the
+// retail order, so retail's escape is shaped differently.
 
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
@@ -347,7 +354,8 @@ public:
 
 	void advance()
 	{
-		m_current = (m_current->*m_getNext)();
+		if (m_current)
+			m_current = (m_current->*m_getNext)();
 	}
 
 	bool done() const { return m_current == 0; }
@@ -408,11 +416,10 @@ void ScriptActions::doTeamGiveNearestTeamUpgrade(Parameter *sourceTeam)
 		return;
 
 	Coord3D sourcePosition;
-	sourcePosition.z = ((BfmeObjectFields *)sourceObject)->m_position.z;
-	sourcePosition.y = ((BfmeObjectFields *)sourceObject)->m_position.y;
 	sourcePosition.x = ((BfmeObjectFields *)sourceObject)->m_position.x;
-	Object *bestTarget[1];
-	bestTarget[0] = 0;
+	sourcePosition.y = ((BfmeObjectFields *)sourceObject)->m_position.y;
+	sourcePosition.z = ((BfmeObjectFields *)sourceObject)->m_position.z;
+	Object *bestTarget = 0;
 	Real bestDistance;
 	BfmePlayerTeamNode *node =
 		((BfmePlayerTeamFields *)player)->m_playerTeams->m_next;
@@ -424,13 +431,17 @@ void ScriptActions::doTeamGiveNearestTeamUpgrade(Parameter *sourceTeam)
 		for (; !teams.done(); teams.advance())
 		{
 			Team *team = teams.current();
-			if (team != source && bfmeTeamCanReceiveUpgrade(team, upgrade))
+			if (!team)
+				continue;
+			if (source != team && bfmeTeamCanReceiveUpgrade(team, upgrade))
 			{
 				BfmeDlinkIterator<Object> members(team->m_head,
 					Object::dlink_next_TeamMemberList);
 				for (; !members.done(); members.advance())
 				{
 					Object *member = members.current();
+					if (!member)
+						continue;
 					if (!bfmeIsKindOf(member, 0x6c))
 						continue;
 
@@ -453,14 +464,14 @@ void ScriptActions::doTeamGiveNearestTeamUpgrade(Parameter *sourceTeam)
 					Object *target = bfmeInterfaceTarget(upgradeInterface);
 					if (!target)
 						continue;
-					if (!bestTarget[0])
+					if (!bestTarget)
 					{
-						bestTarget[0] = target;
+						bestTarget = target;
 						bestDistance = distanceValue;
 					}
 					else if (distanceValue < bestDistance)
 					{
-						bestTarget[0] = target;
+						bestTarget = target;
 						bestDistance = distanceValue;
 					}
 				}
@@ -469,7 +480,7 @@ void ScriptActions::doTeamGiveNearestTeamUpgrade(Parameter *sourceTeam)
 		node = node->m_next;
 	}
 
-	if (bestTarget[0])
-		bfmeDoSpecialPower(sourceObject, power, bestTarget[0],
+	if (bestTarget)
+		bfmeDoSpecialPower(sourceObject, power, bestTarget,
 			0x40000, false);
 }
