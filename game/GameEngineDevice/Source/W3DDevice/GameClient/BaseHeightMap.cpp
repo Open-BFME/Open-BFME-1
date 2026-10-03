@@ -469,58 +469,7 @@ void BaseHeightMapRenderObjClass::adjustTerrainLOD(Int adj)
 	}
 }
 
-//=============================================================================
-// BaseHeightMapRenderObjClass::ReleaseResources
-//=============================================================================
-/** Releases all w3d assets, to prepare for Reset device call. */
-//=============================================================================
-// ?ReleaseResources@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
-void BaseHeightMapRenderObjClass::ReleaseResources(void)
-{
-	if (m_treeBuffer) {
-		m_treeBuffer->freeTreeBuffers();
-	}
-	if (m_bibBuffer) {
-		m_bibBuffer->freeBibBuffers();
-	}
-	if (m_bridgeBuffer) {
-		m_bridgeBuffer->freeBridgeBuffers();
-	}
-
-	if( m_waypointBuffer )
-	{
-		m_waypointBuffer->freeWaypointBuffers();
-	}
-	// We need to save the map.
-	WorldHeightMap *pMap=NULL;
-	REF_PTR_SET(pMap, m_map);
-	freeMapResources();
-	m_map = pMap; // ref_ptr_set has already incremented the ref count.
-	if (TheWaterRenderObj)
-		TheWaterRenderObj->ReleaseResources();
-	if (TheTerrainTracksRenderObjClassSystem)
-		TheTerrainTracksRenderObjClassSystem->ReleaseResources();
-	if (TheW3DShadowManager)
-		TheW3DShadowManager->ReleaseResources();
-	if (m_shroud)
-	{	m_shroud->reset();
-		m_shroud->ReleaseResources();
-	}
-
-	if (TheSmudgeManager)
-		TheSmudgeManager->ReleaseResources();
-
-	if (TheSnowManager)
-		((W3DSnowManager *)TheSnowManager)->ReleaseResources();
-
-	//Release any resources that may be used by custom pixel/vertex shaders
-	W3DShaderManager::shutdown();
-#ifdef DO_ROADS
-	if (m_roadBuffer) {
-		m_roadBuffer->freeRoadBuffers();
-	}		  
-#endif
-}
+// Exact BFME ReleaseResources body is provided by BaseHeightMapReleaseResources_Bfme.cpp.
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::ReAcquireResources
