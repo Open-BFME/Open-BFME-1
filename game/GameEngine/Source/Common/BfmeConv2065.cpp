@@ -30,8 +30,21 @@ public:
 extern BfmeMgrGK *g_bfmeMgrGK;
 extern const float BfmeZeroRange;
 
+// The range test is not a recovered body: retail reaches it through the ILT
+// thunk at 0x000481FD, whose only definition in the tree is the
+// address-derived gen-thunk ?j_000481fd@@YAXXZ. Call it under that spelling,
+// keeping this TU's own view of the signature.
+extern void j_000481fd();
+
 bool __stdcall bfmeTryGK(BfmeObjGK *obj, float range, BfmeVec3GK *out)
 {
+	typedef char (BfmeMgrGK::*CheckThunk)(BfmeObjGK *, int, int);
+	union Check
+	{
+		void (*function)(void);
+		CheckThunk member;
+	} checkThunk;
+
 	if (range < BfmeZeroRange)
 		return false;
 
@@ -42,7 +55,8 @@ bool __stdcall bfmeTryGK(BfmeObjGK *obj, float range, BfmeVec3GK *out)
 
 	obj->m_bfmeRangeGK = range;
 
-	if (g_bfmeMgrGK->bfmeCheckGK(obj, 0, 0) == 0)
+	checkThunk.function = j_000481fd;
+	if ((g_bfmeMgrGK->*checkThunk.member)(obj, 0, 0) == 0)
 		return false;
 
 	*out = obj->m_bfmeResultGK;

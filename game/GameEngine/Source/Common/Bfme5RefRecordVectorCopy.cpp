@@ -1,5 +1,14 @@
 // Copies a vector of 16-byte records whose final pointer owns a 16-bit
 // reference count.
+//
+// Neither helper is a recovered body: retail reaches the allocator accessor
+// and the block allocator through the ILT thunks at 0x00046853 and
+// 0x00035B07, whose only definition in the tree is the address-derived
+// gen-thunk pair ?j_00046853@@YAXXZ / ?j_00035b07@@YAXXZ. Call them under
+// that spelling, keeping this TU's own view of the two signatures.
+
+extern void j_00035b07();
+extern void j_00046853();
 
 struct BfmeRefRecord
 {
@@ -21,8 +30,6 @@ class BfmeRefRecordVector
 {
 public:
 	BfmeRefRecordVector(const BfmeRefRecordVector &source);
-	BfmeRefRecordAllocator bfmeAllocator(void) const;
-	void bfmeAllocate(int count, const BfmeRefRecordAllocator &allocator);
 
 private:
 	BfmeRefRecord *m_begin;
@@ -33,7 +40,24 @@ private:
 BfmeRefRecordVector::BfmeRefRecordVector(
 	const BfmeRefRecordVector &source)
 {
-	bfmeAllocate((source.m_end - source.m_begin), source.bfmeAllocator());
+	typedef BfmeRefRecordAllocator (BfmeRefRecordVector::*AllocatorThunk)() const;
+	typedef void (BfmeRefRecordVector::*AllocateThunk)(int,
+		const BfmeRefRecordAllocator &);
+	union Allocator
+	{
+		void (*function)(void);
+		AllocatorThunk member;
+	} allocatorThunk;
+	union Allocate
+	{
+		void (*function)(void);
+		AllocateThunk member;
+	} allocateThunk;
+
+	allocatorThunk.function = j_00046853;
+	allocateThunk.function = j_00035b07;
+	(this->*allocateThunk.member)((source.m_end - source.m_begin),
+		(source.*allocatorThunk.member)());
 
 	BfmeRefRecord *sourceEnd = source.m_end;
 	BfmeRefRecord *input = source.m_begin;

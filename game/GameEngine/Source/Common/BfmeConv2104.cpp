@@ -87,11 +87,34 @@ public:
 	BfmeSubYX m_bfme340YX;
 };
 
+// Neither helper below is a recovered body. Retail reaches them through the
+// ILT thunks at 0x000338D4 and 0x000029D7, whose only definition in the tree
+// is the address-derived gen-thunk pair ?j_000338d4@@YAXXZ / ?j_000029d7@@YAXXZ.
+// Call them under that spelling, keeping this TU's own view of the signatures.
+extern void j_000338d4();
+extern void j_000029d7();
+
 void BfmeHostYX::bfmeApplyYX(BfmeThingYX *t, int mode)
 {
+	typedef bool (BFMEActionManager::*CheckThunk)(BfmeObjYX *, BfmeThingYX *,
+		int);
+	typedef int (BfmeThingYX::*IdThunk)();
+	union Check
+	{
+		void (*function)(void);
+		CheckThunk member;
+	} checkThunk;
+	union Id
+	{
+		void (*function)(void);
+		IdThunk member;
+	} idThunk;
+
 	BfmeObjYX *o = m_bfme08YX;
 
-	if (!((BFMEActionManager *)TheActionManager)->bfmeCheckYX(o, t, mode))
+	checkThunk.function = j_000338d4;
+	if (!(((BFMEActionManager *)TheActionManager)->*checkThunk.member)(o, t,
+		mode))
 		return;
 
 	if ((bfmeFinalYX(o->m_nextOverride)->m_bfmeC8YX & 0x8000) == 0)
@@ -99,7 +122,8 @@ void BfmeHostYX::bfmeApplyYX(BfmeThingYX *t, int mode)
 		if (!m_bfme340YX.bfmeTestYX(t))
 			return;
 
-		int id = t->bfmeGetIdYX();
+		idThunk.function = j_000029d7;
+		int id = (t->*idThunk.member)();
 
 		if (id != 0 && id != o->m_bfme74YX)
 			return;
