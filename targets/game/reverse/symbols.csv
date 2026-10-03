@@ -89970,3 +89970,4 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 ??_C@_05IPNNLDBD@CYCLE?$AA@,0x00C7593C,Retail curve padding-name table VA 0x012A718C slot +0x8; compiler string literal CYCLE equals retail at VA 0x0107593C
 ??_C@_0N@EPPOCNFI@CYCLE_OFFSET?$AA@,0x00C7592C,Retail curve padding-name table VA 0x012A718C slot +0xC; compiler string literal CYCLE_OFFSET equals retail at VA 0x0107592C
 ??_C@_06LPIEMBDF@MIRROR?$AA@,0x00C75924,Retail curve padding-name table VA 0x012A718C slot +0x10; compiler string literal MIRROR equals retail at VA 0x01075924
+?normAngle@@YAXAAM@Z,0x0073A900,"Existing TU-local STATIC COFF label in W3DViewRotateCameraOneFrameBfme.cpp; complete 134B body and eight float relocations identical to retail and canonical owner; compiler-private ECX reference ABI with EDX preserved; not an external cdecl provider; direct calls at 0x007439DC and sibling sites, no thunk"

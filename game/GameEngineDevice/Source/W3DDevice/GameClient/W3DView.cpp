@@ -275,7 +275,8 @@ __forceinline Real clampf(Real value, Real lo, Real hi)
 //-------------------------------------------------------------------------------------------------
 // Normalizes angle to +- PI.
 //-------------------------------------------------------------------------------------------------
-static void normAngle(Real &angle)
+// Retail uses ECX for this reference; expose that proven ABI as the single external provider.
+void __fastcall normAngle(Real &angle)
 {
 	if (angle < -10*PI) {
 		angle = 0;
