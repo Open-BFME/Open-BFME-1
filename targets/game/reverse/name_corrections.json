@@ -17508,5 +17508,15 @@
   "after_sha256": "85b80602511547622aa1bf4aa7d453a50a353a5e9a193109d6688bfbed83341e",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006eb000.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/Rva006EB000.cpp",
+  "old_name": "BfmeHostERB",
+  "new_name": "Rva006EB000",
+  "before_sha256": "306dfc6470e6308c66a37b27bcdfb4249427277b96fec582f2ba21b87ffbe540",
+  "after_sha256": "3f54a0f9d195c3e92e5c22a8245185ce72b785460875c483b84a18d693989bac",
+  "evidence": "targets/game/reverse/identity_evidence/006eb000-owning-texture-assignment.md",
+  "reason": "The old bank explicitly says identity unknown. BfmeHostERB is a generated placeholder with no owner-name witness; Rva006EB000 preserves the body address instead of promoting that bank-only spelling. Existing texture/mask member names remain at their original offsets."
  }
 ]

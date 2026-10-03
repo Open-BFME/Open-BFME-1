@@ -1708,3 +1708,16 @@ incoming ECX, forwarding call and RET12 also refute the old static declaration;
 the recovery retains the method name with the correct member ABI and removes
 the caller's obsolete alternate-name directive. See
 `identity_evidence/002b6c40-dozer-member-and-native-vector.md`.
+
+## Owning pointer assignment can fix adjacent pointer/mask stores
+
+At `0x006EB000` (54 bytes), writing the mask then the pointer produced the
+right EAX/ECX values but reversed the two stores. Writing the pointer first
+produced 52 bytes and reused EAX for the mask. An inlined assignment operator
+on the one-pointer owning texture handle, followed by the mask assignment,
+reproduces both registers and the pointer-before-mask store order. The operator
+adds the new low-word reference, releases the old texture, and reloads the
+borrowed handle after release. Use a real handle member and reference argument;
+no casts or scheduling intrinsics are needed. The native TextureBaseClass
+version uses the existing independently checked release call at `0x009EB7A0`.
+See `identity_evidence/006eb000-owning-texture-assignment.md`.
