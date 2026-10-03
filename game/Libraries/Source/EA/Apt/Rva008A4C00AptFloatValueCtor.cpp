@@ -2,14 +2,16 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: Apt script value constructor (101 B): the base constructor
 // (0x00899560, defined in-class so it inlines with a constant type) sets the
-// type bits and hands the value to the idle-hook pool, whose addPooled clears
+// type bits and hands the value to the GC-root pool, whose addPooled clears
 // the pooled bit when full; then the derived class stores its payload.
 struct Rva00899560Value;
 struct Rva00899560Pool {
 	int m_capacity; int m_count; Rva00899560Value** m_items;
 	void addPooled(Rva00899560Value* v);
 };
-extern Rva00899560Pool* g_rva8CD130IdleHook;
+// Retail RVA 0x008A4C1C reads VA 0x01337810, the verified pointer
+// owned by Apt.cpp; use its canonical symbol in this inlined constructor.
+extern Rva00899560Pool* g_rva01337810GcRoots;
 struct Rva00899560Value {
 	virtual ~Rva00899560Value();
 	unsigned int m_flags;
@@ -19,7 +21,7 @@ struct Rva00899560Value {
 		m_flags = flags;
 		if (type != 0x1c && type != 0xa) {
 			m_flags = flags | 0x40000000;
-			g_rva8CD130IdleHook->addPooled(this);
+			g_rva01337810GcRoots->addPooled(this);
 		} else {
 			m_flags = flags & 0xBFFFFFFF;
 		}
