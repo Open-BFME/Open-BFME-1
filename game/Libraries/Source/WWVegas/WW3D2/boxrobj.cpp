@@ -109,7 +109,8 @@
 #include "meshgeometry.h"
 
 extern void W3DRadarResetLock(void);
-extern void BFME_DX8_Thread_Assert(void);
+// Retail lock teardown tail-dispatches to RVA00905B10 and ignores AL.
+extern char bfmeUnlock1179(void);
 extern void _bfme_debugRecordCallsite(int kind);
 class BFMEIndexBufferDebugStream
 {
@@ -303,7 +304,7 @@ BoxDynamicVBAccessClass::WriteLockClass::~WriteLockClass()
 	case BUFFER_TYPE_DYNAMIC_SORTING:
 		break;
 	}
-	BFME_DX8_Thread_Assert();
+	bfmeUnlock1179();
 }
 
 void BoxSetTexture(unsigned stage,TextureBaseClass *& texture);
