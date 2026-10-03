@@ -101,7 +101,7 @@ public:
 // the extern carries the canonical type and the view is cast at each use.
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
-extern int OpenBFME5_netCRCInterval;
+extern int NET_CRC_INTERVAL;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
@@ -182,7 +182,7 @@ void RecorderClass::bfmeInit(void)
 	seedView->setOptimalExtrusionPadding(seed.real);
 
 	m_bfmeOriginalGameMode = -1;
-	m_bfmeNetworkCrcInterval = OpenBFME5_netCRCInterval;
+	m_bfmeNetworkCrcInterval = NET_CRC_INTERVAL;
 	m_bfmeNextFrame = 0;
 	m_bfmeDoingAnalysis = 0;
 	m_bfmeSeedOrDesync = -1;

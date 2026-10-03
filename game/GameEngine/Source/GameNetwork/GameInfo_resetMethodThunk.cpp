@@ -13,7 +13,7 @@ public:
 	virtual void reset();
 };
 
-extern int OpenBFME5_netCRCInterval;
+extern int NET_CRC_INTERVAL;
 
 class __declspec(novtable) GameInfo
 {
@@ -40,7 +40,7 @@ private:
 
 void GameInfo::reset()
 {
-	m_crcInterval = OpenBFME5_netCRCInterval;
+	m_crcInterval = NET_CRC_INTERVAL;
 	m_inGame = 0;
 	m_inProgress = 0;
 	m_gameID = 0;

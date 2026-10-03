@@ -328,7 +328,7 @@ extern Int g_value12A6F38;								///< retail [0x012A6F38]
 extern Int g_value12A6FA8;								///< retail [0x012A6FA8]
 extern Int g_value12A6FB0;								///< retail [0x012A6FB0]
 extern Int g_value12A6FB4;								///< retail [0x012A6FB4]
-extern Int g_value12A7040;								///< retail [0x012A7040]
+extern Int NET_CRC_INTERVAL;								///< retail [0x012A7040]
 
 // ?Rva00061260_parse@@YAHQAPADH@Z
 Int Rva00061260_parse(char *args[], int num)
@@ -362,7 +362,7 @@ Int Rva00061490_parse(char *args[], int num)
 	if (num > 1)
 	{
 		Int value = atoi(args[1]);
-		g_value12A7040 = value;
+		NET_CRC_INTERVAL = value;
 		TheCommandLineFlags |= 0x8000;
 		g_value12A6FB0 = value;
 	}

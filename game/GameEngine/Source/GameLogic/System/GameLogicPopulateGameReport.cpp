@@ -206,7 +206,7 @@ extern Bool g_verifyClientCRC;
 extern Bool g_deepCRC;
 extern Bool g_liteCRC;
 extern Bool g_binaryDeepCRC;
-extern Int g_netCRCInterval;
+extern Int NET_CRC_INTERVAL;
 extern Int g_debugCRCFromFrame;
 extern Int g_debugCRCUntilFrame;
 extern const char *g_crcLogFile;
@@ -359,7 +359,7 @@ void GameLogic::bfmePopulateGameReport( GameInfo *game, Int *localSlot )
 		self->m_commandLineArguments.concat( line.str(), line.getLength() );
 	}
 
-	line.format( (AsciiString)"\n    NetCRCInterval: %d\n", g_netCRCInterval );
+	line.format( (AsciiString)"\n    NetCRCInterval: %d\n", NET_CRC_INTERVAL );
 	self->m_commandLineArguments.concat( line.str(), line.getLength() );
 
 	self->m_gameReportTrailer.format( (AsciiString)"---------------------------------------------------------\n" );

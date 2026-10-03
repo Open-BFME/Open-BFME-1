@@ -76,7 +76,7 @@ extern NetworkInterface *TheNetwork;
 extern LANAPI *TheLAN;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern GameInfo *TheSkirmishGameInfo;
-extern int OpenBFME5_netCRCInterval;
+extern int NET_CRC_INTERVAL;
 AsciiString GameInfoToAsciiString(const GameInfo *, bool=true);
 
 class RecorderClass {
@@ -150,11 +150,11 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
         }
     } else {
         if (TheSkirmishGameInfo) {
-            TheSkirmishGameInfo->setCRCInterval(OpenBFME5_netCRCInterval);
+            TheSkirmishGameInfo->setCRCInterval(NET_CRC_INTERVAL);
             theSlotList=GameInfoToAsciiString(TheSkirmishGameInfo);
             localIndex=0;
         } else {
-            m_gameInfo.setCRCInterval(OpenBFME5_netCRCInterval);
+            m_gameInfo.setCRCInterval(NET_CRC_INTERVAL);
             theSlotList=GameInfoToAsciiString(&m_gameInfo);
         }
     }

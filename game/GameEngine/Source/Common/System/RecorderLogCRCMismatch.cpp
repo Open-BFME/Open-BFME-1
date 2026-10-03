@@ -14,7 +14,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-extern int OpenBFME5_netCRCInterval;
+extern int NET_CRC_INTERVAL;
 
 // BFME extends the recorder state after ReplayGameInfo with the CRC interval
 // and the frame at which the mismatch was observed.
@@ -35,7 +35,7 @@ void RecorderClass::logCRCMismatch(void)
 	if (!m_file)
 		return;
 
-	m_networkCRCInterval = OpenBFME5_netCRCInterval;
+	m_networkCRCInterval = NET_CRC_INTERVAL;
 	m_crcMismatchFrame = TheGameLogic->frame;
 	unsigned int fileSize = ftell(m_file);
 
