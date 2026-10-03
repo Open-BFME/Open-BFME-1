@@ -659,24 +659,7 @@ m_texMultiplier(TEX1X)
 // W3DTerrainBackground::freeTerrainBuffers is defined by its matched owner TU.
 
 //=============================================================================
-// W3DTerrainBackground::allocateTerrainBuffers
-//=============================================================================
-/** Allocates the index and vertex buffers. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundAllocateThunk.cpp
-// ?allocateTerrainBuffers@W3DTerrainBackground@@QAEXPAVWorldHeightMap@@HHH@Z present-unmatched
-void W3DTerrainBackground::allocateTerrainBuffers(WorldHeightMap *htMap, Int xOrigin, Int yOrigin, Int width)
-{
-	if (htMap==NULL) return;
-	freeTerrainBuffers(); // in case already allocated. jba [3/24/2003]
-	m_curNumTerrainVertices=0;
-	m_curNumTerrainIndices=0;
-	m_xOrigin = xOrigin;
-	m_yOrigin = yOrigin;
-	m_width = width;
-	m_initialized = true;
-	REF_PTR_SET(m_map, htMap);
-}
+// W3DTerrainBackground::allocateTerrainBuffers is defined by its matched owner TU.
 
 
 // Pin target for BFME's 183B CameraClass::Cull_Box at 0x9330C0 (not the 38B ICF twin).

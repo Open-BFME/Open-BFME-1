@@ -13,6 +13,15 @@
 #include <locale>
 #include <new>
 
+// The pointer formatter specialization is owned by NumPutPointerNarrow.cpp.
+namespace _STL
+{
+typedef ostreambuf_iterator<char, char_traits<char> > BfmeClassicNarrowOutput;
+template <>
+BfmeClassicNarrowOutput num_put<char, BfmeClassicNarrowOutput>::do_put(
+	BfmeClassicNarrowOutput, ios_base &, char, const void *) const;
+}
+
 namespace _STL
 {
 
