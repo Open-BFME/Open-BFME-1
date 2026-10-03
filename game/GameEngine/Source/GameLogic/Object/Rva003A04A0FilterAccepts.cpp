@@ -1,6 +1,4 @@
 // ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
-// partial score=1.0 date=2026-10-02
-// ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
 // Matched filtered-count caller 002225E0 proves this wrapper signature.
 // The push before getControllingPlayer belongs to the later three-argument call.
 // Evidence: identity_evidence/003a04a0-filter-player-abi.md

@@ -78325,7 +78325,6 @@ name,address,notes
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
 ?bfmeQuery932C@BfmeSub932C@@QAEEXZ,0x00048928,pin
-?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Gen01304B64@@QAEHXZ,0x0003B02A,ILT thunk to 0x00755A70
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAHPAE@Z,0x000461FF,byte-center alias of the bfmeQuery pinned at this same ILT; the center output is a byte here - an Int output changes the frame and breaks the match at 0x003E1F10

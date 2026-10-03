@@ -31,7 +31,8 @@ its const pointer-returning, zero-stack-argument ABI is retained explicitly.
 
 Strict byte and relocation verification passes without new pins. The obsolete
 `bfmeQuery@BfmeFilterObject` pin at 0x00020824 has no game-source users and is
-retained pending a separate cleanup; it described the disproved one-argument Boolean ABI.
+removed on reapplication after confirming no game-source or function-ledger users;
+it described the disproved one-argument Boolean ABI.
 
 ## Name-checker pairing
 
@@ -50,3 +51,19 @@ two unrelated pre-existing aliases (Rva003C8340.cpp and Rva00803080Set.cpp)
 that the current origin/master no longer carries. This session may not rebase
 or widen the body into unrelated repairs. The corrected source is banked at
 1.000; no production row or pin change from this attempt remains.
+
+
+## Reapplied after upstream guard corrections (2026-10-03)
+
+Upstream f3ef066627 and c86648d2ae removed the unrelated aliases that blocked
+the earlier commit. The unchanged exact bank was promoted with add_match,
+replacing only the 72-byte generated row. Strict byte/call verification passes
+all three relocations without new pins or shared-header edits. The obsolete
+BfmeFilterObject pin above is removed using the terminator-preserving ledger
+writer; the canonical Object getter pin and existing final-predicate pin remain.
+
+Fresh Ghidra MCP disassembly corroborates the carried stack argument at RVA
+0x003A04D1, the zero-argument Object getter call, and the three arguments consumed
+by the final predicate. The existing ABI-view names are unchanged. The earlier
+private bank remains available in archived history; its preferred copy is now
+verified production source.
