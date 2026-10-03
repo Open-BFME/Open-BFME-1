@@ -1686,3 +1686,12 @@ constructor calls. This adapter is a documented source-shaping choice, not an
 asserted EA helper name. Apply it only when the temporaries are independent
 and the retail copies establish the order. See
 `identity_evidence/00744360-vector-evaluation.md`.
+
+The same authentic lookup visibility also fixes a callee-saved register mirror:
+`Pathfinder::iterateCellsAlongLine` at `0x003E3650` kept eighteen EBX/EBP
+operand differences across its 538-byte coordinate walk. Enabling the existing
+`GameLogicObjectLookup.h` noinline definition removed all eighteen; the lookup
+itself independently emitted the exact 82 bytes with no relocations. The shared
+Object header preserved the match. Earlier coordinate-order and pointer-alias
+trials could not change this allocation. See
+`identity_evidence/003e3650-visible-lookup.md`.
