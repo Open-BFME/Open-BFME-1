@@ -15328,5 +15328,15 @@
   "after_sha256": "e35377c90ffa8766bf058f5221acb8a39dff1ef3085b93f4c193871f112172fe",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
- }
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00413a40.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp",
+  "old_name": "m_flagE9",
+  "new_name": "m_fieldE9",
+  "before_sha256": "eee84d478999a5e1d51ec09207b6e3eb9d5806f767e19a6bf4cfd5796fff3fc2",
+  "after_sha256": "17496f6c3517da07d3f88c3643c2de8172c5b768b9dc94079661083ea8a920b4",
+  "evidence": "targets/game/reverse/identity_evidence/00413a40-locomotor-field-e9.md",
+  "reason": "The banked draft called the byte m_flagE9. The byte test shows its boolean use, but no layout witness names its purpose. The landed source uses m_fieldE9 to keep the offset and leave the purpose open."
+}
 ]
