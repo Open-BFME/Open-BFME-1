@@ -49,6 +49,7 @@ def test_probe_output_becomes_a_measurement():
 
 @pytest.mark.parametrize("diagnostic", [
     "attempt.cpp(1) : error C2065: 'missing' : undeclared identifier",
+    "attempt.cpp(33) : error C2908: explicit specialization; 'StringBase<unsigned short>::str' has already been instantiated",
     "attempt.cpp(1) : fatal error C1083: Cannot open include file: 'missing.h': No such file or directory",
 ])
 def test_confirmed_source_error_measures_zero(tmp_path, monkeypatch, diagnostic):
@@ -69,6 +70,7 @@ def test_confirmed_source_error_measures_zero(tmp_path, monkeypatch, diagnostic)
     ("error C1999: unrecognized diagnostic", "compile failed: attempt.cpp", 1),
     ("error C2065: 'missing': undeclared identifier\nRuntime Error!\nMicrosoft Visual C++ Runtime Library\nruntime error R6002", "compile failed: attempt.cpp", 1),
     ("error C2065: 'missing': undeclared identifier", "compile failed: attempt.cpp\nwineserver: bind: Operation not permitted", 1),
+    ("error C2908: explicit specialization; 'StringBase<unsigned short>::str' has already been instantiated", "compile failed: attempt.cpp\nwineserver: bind: Operation not permitted", 1),
     (EXACT, "ModuleNotFoundError: No module named capstone", 1),
     ("result   NOT IN OBJECT\nwineserver: bind: Operation not permitted", "", 2),
     ("", "", 1),

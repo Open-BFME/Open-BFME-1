@@ -1,5 +1,5 @@
 // ?handleRequestJoinRva0068C400@LANAPI@@QAEXPAULANMessage@@PAUBfmeNetAddress@@@Z
-// partial score=0.514679 date=2026-09-27
+// partial score=0.5074 date=2026-10-03
 // ?handleRequestJoinRva0068C400@LANAPI@@QAEXPAULANMessage@@PAUBfmeNetAddress@@@Z
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Gap-seat reconstruction of LAN join-request handler RVA 0x0068C400.
@@ -25,12 +25,13 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
-#include "ascii_string.h"
-#include "unicode_string.h"
+#include "string_base.h"
 template<> inline StringBase<char>::~StringBase(){releaseBuffer();}
 template<> inline void StringBase<char>::clear(){releaseBuffer();}
 template<> inline const char *StringBase<char>::str()const{return m_data?m_data->data:"";}
 template<> inline const unsigned short *StringBase<unsigned short>::str()const{static const unsigned short empty=0;return m_data?m_data->data:&empty;}
+#include "ascii_string.h"
+#include "unicode_string.h"
 inline UnicodeString::UnicodeString():m_text(0){}
 inline UnicodeString::UnicodeString(const wchar_t*p){((StringBase<wchar_t>*)this)->StringBase<wchar_t>::StringBase(p);}
 inline UnicodeString::UnicodeString(const UnicodeString&o){((StringBase<wchar_t>*)this)->StringBase<wchar_t>::StringBase(*(const StringBase<wchar_t>*)&o);}
