@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "da0aec97efd7793162e02f9ea25960e1c4582769ba22c1b65d207fca479b017d",
+  "symbol": "?Rva00C6BC20Initialize@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.0,
+  "source": "// ?Rva00C6BC20Initialize@@YAXXZ\n// partial score=0.0 date=2026-10-02\n// cl: /O2 /MD /Igame/Libraries/Source/WWVegas/WWLib\n#include \"ascii_string.h\"\nextern \"C\" int __cdecl atexit(void (__cdecl *callback)());\nAsciiString g_aptLivingWorldCachedName(\"LivingWorldUI.apt\");\n"
+}
