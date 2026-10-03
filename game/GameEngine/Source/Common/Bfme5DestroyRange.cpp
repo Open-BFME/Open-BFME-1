@@ -1,5 +1,9 @@
 // Destroy the non-null elements in a half-open range and release their
 // storage.  The allocator object is passed by value by the retail caller.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+
+#include <vector>
 
 class BfmeAllocL
 {
@@ -16,14 +20,24 @@ public:
 	char m_bfmeTag;
 };
 
-class Gen_dtor_0048f590
+class BfmeObj927BEntry
 {
 public:
-	virtual ~Gen_dtor_0048f590(void);				// ILT 0x00036E9E
+	unsigned char m_bfmePad[4];
+	void *m_bfmeDisplayString;
 };
 
-void __cdecl bfmeFreeScalar(void *block);				// retail 0x00881EB0
-void j_00036e9e(void);
+class BfmeObj927B
+{
+public:
+	~BfmeObj927B();
+	void bfmeDtor927B();
+
+private:
+	_STL::vector<BfmeObj927BEntry *> m_bfmeEntries;
+};
+
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
 
 struct BfmeDtorThunk
 {
@@ -37,12 +51,12 @@ char __cdecl bfmeDestroyRange(int *first, int *last, BfmeAllocL allocator)
 {
 	while (first != last)
 	{
-		Gen_dtor_0048f590 *element = (Gen_dtor_0048f590 *)*first;
+		BfmeObj927B *element = (BfmeObj927B *)*first;
 
 		if (element)
 		{
-			element->Gen_dtor_0048f590::~Gen_dtor_0048f590();
-			bfmeFreeScalar(element);
+			element->BfmeObj927B::~BfmeObj927B();
+			operator delete(element);
 		}
 
 		++first;
