@@ -2,7 +2,14 @@
 // stlport
 // STLport 4.5.3 Win32 file-buffer implementation.
 
-#include <fstream>
+// Use the internal class header directly: the public <fstream> wrapper drags
+// in a TU-local `ios_base::Init __LocInit` static whose ctor/dtor are
+// __declspec(dllimport) (_Loc_init), so the object referenced
+// __imp_??0_Loc_init@ios_base@_STL@@QAE@XZ / __imp_??1_Loc_init..., which no
+// provider in this build defines and which retail does not import. Nothing in
+// this file needs the stream classes, only _Filebuf_base, exactly as in
+// game/Libraries/Source/STLport/Rva0084AD00Open.cpp.
+#include <stl/_fstream.h>
 #include <windows.h>
 
 #define _STLP_LF 10

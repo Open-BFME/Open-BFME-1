@@ -26,6 +26,16 @@
 #include "codex.h"
 #include "btreecodex.h"
 
+/* Retail does not import galloc/gfree: its calls read the IAT slots
+   0x0135944C and 0x013593D4, which targets/game/reverse/imports.csv records
+   as MSVCR71's `malloc` and `free`. Under those real names the same
+   call-through-pointer is emitted and the object links; under the galloc and
+   gfree spellings of gimex.h it referenced __imp__galloc/__imp__gfree, which
+   nothing resolves. Same convention as
+   game/Libraries/Source/Compression/LZHCompress/NoxCompress.cpp. */
+extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int);
+extern "C" __declspec(dllimport) void __cdecl free(void *);
+
 /****************************************************************/
 /*  Internal Functions                                          */
 /****************************************************************/
@@ -362,15 +372,15 @@ static void BTREE_treepack(struct BTreeEncodeContext *EC,
 	buf1size = EC->ulen*3/2+(int)BTREESLOPAGE;
 	buf2size = EC->ulen*3/2+(int)BTREESLOPAGE;
 
-	treebuf =	(unsigned char *) galloc(treebufsize);
+	treebuf =	(unsigned char *) malloc(treebufsize);
 	if (!treebuf)
         return; /* failure Insufficient memory for work buffer */
 
-	EC->buf1 =	(unsigned char *) galloc(buf1size);
+	EC->buf1 =	(unsigned char *) malloc(buf1size);
 	if (!EC->buf1)
         return; /* failure Insufficient memory for work buffer */
 
-	EC->buf2 =	(unsigned char *) galloc(buf2size);
+	EC->buf2 =	(unsigned char *) malloc(buf2size);
 	if (!EC->buf2)
         return; /* failure Insufficient memory for work buffer */
 
@@ -612,9 +622,9 @@ static void BTREE_treepack(struct BTreeEncodeContext *EC,
 
 	BTREE_writebits(EC,dest,0L,7);	/* flush bits */
 
-	gfree(EC->buf2);
-	gfree(EC->buf1);
-	gfree(treebuf);
+	free(EC->buf2);
+	free(EC->buf1);
+	free(treebuf);
 }
 
 static int BTREE_compressfile(struct BTreeEncodeContext *EC,
