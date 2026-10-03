@@ -59,3 +59,7 @@ Its final RET 4 is at +0x33; INT3 starts at +0x36. This independently supports
 the address-qualified `Render006F1AC0::setTexture006EB000` declaration, without
 asserting a new semantic identity. A body pin, rather than an ILT route alias,
 can resolve the caller's observed 0x00032F51 call.
+
+## Review correction
+
+The helper promotion in 5a4d32b098 was reverted after review 7171721b31: its actual caller context still fails five strict PI DIR32 checks. Both bodies remain banked; none of this document claims current production acceptance.
