@@ -17958,5 +17958,15 @@
   "after_sha256": "ab8a48a885ab6c1040b95f693445207d35483686cfe530a61ec4b1894c0ad5f6",
   "evidence": "targets/game/reverse/identity_evidence/002c4fd0-inline-setters.md",
   "reason": "Comparison paired the removed invented vector-element arrays with the new opaque GeometryInfo storage. The latter represents the independently proven 92-byte BFME copy-constructed object; legacy geometry.h only covers the smaller ZH layout. Original bank remains archived; this is not a semantic field rename."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001c15f0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp",
+  "old_name": "bfmeTintCA",
+  "new_name": "rva001C15F0",
+  "before_sha256": "aac84dd0ff5bf882f727366320242554fa228a83ca3ce8e328924b66b38665d1",
+  "after_sha256": "95a096b928a284664567e24774e181fb25acc223b3672cbde0549ed423f49790",
+  "evidence": "targets/game/reverse/identity_evidence/001c15f0-native-getters.md",
+  "reason": "Historical bank is archived unchanged. Native owner and callees are proven but the synthetic bfmeTintCA spelling has no EA method-name witness. Only the generated production placeholder is replaced; keep an address-qualified method."
  }
 ]

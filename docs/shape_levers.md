@@ -1844,3 +1844,14 @@ final movement call. The exact result survives canonical Object, Snapshot,
 coordinate and command-source declarations. A coordinate-copy spelling alone
 does not fix it. See `identity_evidence/002c4fd0-inline-setters.md` for the
 strict call and layout audit; the setters add no runtime operation.
+
+## Getter structure can fix receiver-before-push order
+
+The 132-byte Object body at 001C15F0 left ten differing bytes when its color
+selection tree was manually expanded. Feeding Drawable::setIndicatorColor
+from the authentic unsigned getter structure fixes both the night-color
+register and all three MOV ECX,EDI / PUSH EAX orderings. The signed public
+night getter grows this caller to152 bytes even with forceinline; an equivalent
+local unsigned helper retains the color bits without inventing a second public
+signature. Strict calls and global binding pass. See
+`targets/game/reverse/identity_evidence/001c15f0-native-getters.md`.
