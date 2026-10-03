@@ -1,5 +1,5 @@
 // ?d_00594ad0@@YAXXZ
-// partial score=0.4542 date=2026-10-03
+// partial score=0.5095 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Include /Igame/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #define private public
 #include "ascii_string.h"
@@ -37,12 +37,12 @@ private:
 	void *m_data;
 };
 
-class BfmeOtherDQC
+class BfmeOtherDQC : public AsciiString
 {
 public:
+	BfmeOtherDQC() : AsciiString() { }
 	void bfmeCallDQC(void *);
-private:
-	void *m_data;
+	~BfmeOtherDQC() { }
 };
 class BfmeSubDQC { public: char pad[0x84]; char tail[4]; };
 class BfmeThingDQC
