@@ -75,8 +75,8 @@ extern float g_milesVolume012BA13C;
 
 // The pushed float fallbacks: 0x0109F748 is __real@3f400000 (0.75) and
 // 0x010B933C is __real@3f0ccccd (0.55) per dir32_addresses.csv.
-extern const float g_real3f400000;
-extern const float g_real3f0ccccd;
+extern const float g_real3f400000 = 0.75f;
+extern const float g_real3f0ccccd = 0.55f;
 
 // One stack slot, cdecl, result unused at every site. 0x00047F3C thunks to the
 // 0x00699AF0 body, which walks two client slots per channel across three rows.
