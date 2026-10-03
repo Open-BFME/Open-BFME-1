@@ -80,27 +80,7 @@
  *=============================================================================================*/
 // Exact retail default constructor: HTreeClass.cpp.
 
-// ?HTreeClass::Init_Default present-unmatched
-void HTreeClass::Init_Default(void)
-{
-	Free ();
-
-	NumPivots = 1;
-	Pivot = MSGW3DNEWARRAY("HTreeClass::Pivot") PivotClass[NumPivots];
-
-	Pivot[0].Index = 0;
-	Pivot[0].Parent = NULL;
-	Pivot[0].BaseTransform.Make_Identity();
-	Pivot[0].Transform.Make_Identity();
-	Pivot[0].IsVisible = true;
-	strcpy(Pivot[0].Name,"RootTransform");
-	//::strcpy (Name, "Default");
-	Name[0] = 0;
-	return ;
-
-
-
-}
+// Exact retail Init_Default, including BFME PivotFade initialization: HTreeClassInitDefault.cpp.
 
 /*********************************************************************************************** 
  * HTreeClass::~HTreeClass -- destructor                                                       * 
