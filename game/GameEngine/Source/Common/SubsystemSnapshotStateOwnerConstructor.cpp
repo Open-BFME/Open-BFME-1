@@ -14,11 +14,17 @@ private:
 	void *m_name;
 };
 
+class Xfer;
 class Snapshot
 {
 public:
 	Snapshot() {}
 	virtual ~Snapshot() {}
+
+protected:
+	virtual void crc(Xfer *xfer) = 0;
+	virtual void xfer(Xfer *xfer) = 0;
+	virtual void loadPostProcess(void) = 0;
 };
 
 class Rva009F5970State
