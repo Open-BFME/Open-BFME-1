@@ -1,13 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc /O2
 
-extern int bfmeVtable007873C0[];
-void __cdecl bfmeFreeLarge007873C0(void *memory);
-void __cdecl bfmeFreeSmall007873C0(void *memory, unsigned int bytes);
+// Retail VA 0x01126A98: ScalarDeletingDestructors.cpp owns this table.
+extern "C" int __identifier("??_7Rva00782DA0Deleting@@6B@")[];
+void __cdecl operator delete(void *memory);
+
+// Refer to the private STLport pool entry without redeclaring the allocator.
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(
+	void *memory, unsigned int bytes);
 
 class Rva007873C0Base
 {
 public:
-	~Rva007873C0Base() { m_table = bfmeVtable007873C0; }
+	~Rva007873C0Base() { m_table = __identifier("??_7Rva00782DA0Deleting@@6B@"); }
 	void *m_table;
 };
 
@@ -22,9 +26,9 @@ public:
 		if (begin != 0) {
 			unsigned int bytes = (unsigned int)(m_capacityEnd - begin) * sizeof(Element);
 			if (bytes > 0x80)
-				bfmeFreeLarge007873C0(begin);
+				::operator delete(begin);
 			else
-				bfmeFreeSmall007873C0(begin, bytes);
+				__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(begin, bytes);
 		}
 	}
 
