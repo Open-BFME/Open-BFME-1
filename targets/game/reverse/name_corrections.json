@@ -18058,5 +18058,85 @@
   "after_sha256": "be41bf37ced9a199f29857b865f78a6c8018512f1adad7c6f081dc688f13bdc6",
   "evidence": "targets/game/reverse/identity_evidence/0089eb30-owning-return-bank.md",
   "reason": "False cross-owner pairing: m_uRefCount remains in the owning string/header view; m_unused is the unrelated callback table word from the existing matched EAStringCReserveCtor.cpp. The bank changes return lifetime/context, not this field identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeApply1250",
+  "new_name": "Rva008038F0Dispatch",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeFrame1250",
+  "new_name": "Rva008038F0Envelope",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeGuard1250",
+  "new_name": "Rva007E86B0Base",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeGuard1250",
+  "new_name": "Rva008038F0Tail",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeParam1250",
+  "new_name": "Rva008038F0Prefix",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeSink1250",
+  "new_name": "Rva008038F0Holder",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "BfmeThing1250",
+  "new_name": "Rva008038F0Sender",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008038f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008038F0Sender.cpp",
+  "old_name": "m_apply",
+  "new_name": "m_field04",
+  "before_sha256": "897ce59b3397674870caa0e3f2f48f597cac62c97dfb8b8a779c98d6b554f8aa",
+  "after_sha256": "f0687ba317c843bae66deb34fe4f18ac6cfcf9a4182cc2f255af9cd4d921a736",
+  "evidence": "targets/game/reverse/identity_evidence/008038f0-native-envelope.md",
+  "reason": "Unpinned experimental bank tag; raw constructor/destructor and secondary receiver layout replace the manual guard model with native lifetime views. Preserve existing neutral sender and base lifetime bindings; assert no original EA type or slot name."
  }
 ]
