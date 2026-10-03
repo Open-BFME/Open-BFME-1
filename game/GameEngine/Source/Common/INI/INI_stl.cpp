@@ -602,17 +602,7 @@ void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/,
 	* be in the form of a string "Yes" or "No" (case is ignored) */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseBitInInt32@INI@@ present-unmatched
-void INI::parseBitInInt32( INI *ini, void *instance, void *store, const void* userData )
-{
-	UnsignedInt* s = (UnsignedInt*)store;
-	UnsignedInt mask = (UnsignedInt)userData;
-
-	if (INI::scanBool(ini->getNextToken()))
-		*s |= mask;
-	else
-		*s &= ~mask;
-}
+// The retail definition is owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
