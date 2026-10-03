@@ -1877,3 +1877,4 @@ restores them. The opaque callback and the same TU's82-byte lookup and26-byte
 const override resolver all pass strict checks. See
 `identity_evidence/00372e40-native-override.md` for caller ABI and extent proof.
 identity_evidence/00256240-upgrade-die.md for the slot and field evidence.
+unreachable compiler-layout decision. Evidence: `identity_evidence/003dc810-clear-cell.md`.
