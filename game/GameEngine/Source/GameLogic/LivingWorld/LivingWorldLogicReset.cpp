@@ -13,12 +13,10 @@ extern "C" __declspec(dllimport) void * __cdecl memmove(
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" void _ReadWriteBarrier(void);
 
-class Rva003C1A50
-{
-public:
-	void clearOwned();
-	void clearTwoVec();
-};
+// Retail calls ILT 0x214E0 -> 0x3C0EF0 and 0x1B333 -> 0x3C0F70.
+// These existing thiscall providers both receive the unchanged owner pointer.
+class Gen_003C0EF0 { public: void bfmeClear(); };
+class Gen_003C0F70 { public: void bfmeClear(); };
 
 class BFMERetailAsciiString
 {
@@ -97,8 +95,8 @@ private:
 // ?reset@LivingWorldLogic@@QAEXXZ
 void LivingWorldLogic::reset()
 {
-	((Rva003C1A50 *)this)->clearOwned();
-	((Rva003C1A50 *)this)->clearTwoVec();
+	((Gen_003C0EF0 *)this)->bfmeClear();
+	((Gen_003C0F70 *)this)->bfmeClear();
 
 	m_at18 = 0;
 	m_at2C = 0;
