@@ -20,15 +20,15 @@ private:
 	char m_unmodelled[ 0x58 ];
 };
 
-extern BfmeAptScreenMapTransfer *TheBfmeAptScreenMapTransfer;
+BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 
 // ?_bfme_showMapTransferLoadScreen@@YA_NPAX@Z
 bool _bfme_showMapTransferLoadScreen( void *context )
 {
-	if( !TheBfmeAptScreenMapTransfer )
+	if( !g_rva012F496CBfmeAptScreenMapTransfer )
 	{
 		ReleaseWindowLayout( 0 );
-		TheBfmeAptScreenMapTransfer = new BfmeAptScreenMapTransfer( context );
+		g_rva012F496CBfmeAptScreenMapTransfer = new BfmeAptScreenMapTransfer( context );
 		return true;
 	}
 	return false;

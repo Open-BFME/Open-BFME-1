@@ -47,7 +47,8 @@ extern int g_Va012D7198;
 extern int g_Va012ED614;
 extern int g_Va012EF4D0;
 extern int g_Va012F4964;
-extern int g_Va012F496C;
+class BfmeAptScreenMapTransfer;
+extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 extern int g_Va012F4988;
 extern int g_Va012F4998;
 extern int g_Va012F49B0;
@@ -218,7 +219,7 @@ int Rva00623790Get( void )
 
 int Rva0066CE50Get( void )
 {
-	return g_Va012F496C;
+	return reinterpret_cast<int>( g_rva012F496CBfmeAptScreenMapTransfer );
 }
 
 int Rva006C07C0Get( void )

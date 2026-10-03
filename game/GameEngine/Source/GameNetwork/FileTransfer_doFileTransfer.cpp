@@ -111,7 +111,7 @@ public:
 extern NetworkInterface *TheNetwork;
 extern GameInfo *TheGameInfo;
 extern GameTextInterface *TheGameText;
-extern BfmeAptScreenMapTransfer *TheBfmeAptScreenMapTransfer;
+extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(UnsignedInt milliseconds);
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime();
@@ -119,7 +119,7 @@ extern "C" void *memset(void *destination, int value, unsigned int count);
 
 bool doFileTransfer(AsciiString filename, int mask)
 {
-	BfmeAptScreenMapTransfer *screen = TheBfmeAptScreenMapTransfer;
+	BfmeAptScreenMapTransfer *screen = g_rva012F496CBfmeAptScreenMapTransfer;
 	bool fileTransferDone = false;
 	int fileTransferPercent = 0;
 

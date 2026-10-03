@@ -208,7 +208,7 @@ private:
 
 extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
-extern BfmeAptScreenMapTransfer *TheBfmeAptScreenMapTransfer;
+extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 extern const unsigned short BFMEEmptyString[];
 extern "C" void *bfmeVftRva0050FD90[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva0050FD90=??_7Rva0050FD90@@6B@")
@@ -217,10 +217,10 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 {
 	*(void **)this = bfmeVftRva0050FD90;
 	m_game = (GameInfo *)context;
-	if( TheBfmeAptScreenMapTransfer )
+	if( g_rva012F496CBfmeAptScreenMapTransfer )
 		return;
 
-	TheBfmeAptScreenMapTransfer = this;
+	g_rva012F496CBfmeAptScreenMapTransfer = this;
 	g_rva012F19E8WindowManager->unidentified_00015235(
 		0x0B, "FileTransferPopUpOpen", 0, 0, 0, 0, 0, 0 );
 

@@ -20,7 +20,9 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern int g_glob12F496C;
+class BfmeAptScreenMapTransfer;
+
+extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 
 class Gen_dtor_004654c0
 {
@@ -38,5 +40,5 @@ public:
 Rva0050FD90::~Rva0050FD90()
 {
 	((GenActionSink *)g_rva012F19E8WindowManager)->add((void *)0xb, "FileTransferPopUpClose", 0, 0, 0, 0, 0, 0);
-	g_glob12F496C = 0;
+	g_rva012F496CBfmeAptScreenMapTransfer = 0;
 }

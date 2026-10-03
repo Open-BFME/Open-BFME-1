@@ -13,21 +13,21 @@
 // clears the store as well as the call, which is what puts the assignment
 // inside the guard; MSVC then folds `delete`'s own null test into that guard.
 
-class Gen012F496C
+class BfmeAptScreenMapTransfer
 {
 public:
-	virtual ~Gen012F496C();
+	virtual ~BfmeAptScreenMapTransfer();
 };
 
-extern Gen012F496C *TheGen012F496C;
+extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 
 // @?Rva0050FE20@@YAXXZ 0x0050FE20
 void Rva0050FE20( void )
 {
-	if( TheGen012F496C )
+	if( g_rva012F496CBfmeAptScreenMapTransfer )
 	{
-		delete TheGen012F496C;
-		TheGen012F496C = 0;
+		delete g_rva012F496CBfmeAptScreenMapTransfer;
+		g_rva012F496CBfmeAptScreenMapTransfer = 0;
 	}
 }
 
