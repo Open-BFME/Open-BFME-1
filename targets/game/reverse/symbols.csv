@@ -13207,6 +13207,7 @@ name,address,notes
 ?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x012ED600,BFME global name-key generator pointer
 ?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheNetwork@@3PAXA,0x012F7714,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00383690 calls; autopin
+?TheNullChr@?1??str@?$StringBase@D@@QBEPBDXZ@4DB,0x0107388B,function-local static of StringBase<char>::str() (retail RVA 0x00C7388B); the 63-byte rts::hash<AsciiString> body at 0x000B8600 loads this address when m_data is null
 ?TheOCLSpecialPowerPool@?1??getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFCE4,pool-glue cascade static (back-solved)
 ?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x00EEF70C,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
