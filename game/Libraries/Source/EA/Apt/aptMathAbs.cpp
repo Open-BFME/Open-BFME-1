@@ -14,11 +14,13 @@ struct Rva008AE770Stack
 
 extern Rva008AE770Stack Rva008AE770TheStack;
 AptValue* __cdecl Rva008A4EA0MakeFloat(float value);
-AptValue* __cdecl Rva008B6D70MakeValue(int value);
+// Retail call at RVA 0x008A4F87 reaches the existing factory at
+// 0x008A11E0 with one integer and caller cleanup; its result is a pointer.
+class AptInteger { public: static AptInteger *Create(int value); };
 AptValue* aptMathAbs(void* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
 	int v = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
-	return Rva008B6D70MakeValue(abs(v));
+	return reinterpret_cast<AptValue *>(AptInteger::Create(abs(v)));
 }
