@@ -109,6 +109,15 @@ jobs:
             targets/game/reverse/link_census_history.csv
             targets/game/reverse/link_status.csv
             targets/game/reverse/link_queue.csv
+      # The per-file index link_check.py needs (134 MB, never tracked). A separate
+      # artifact, so link-census keeps its flat layout for the publish job.
+      - name: Upload the census index
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-census-index
+          if-no-files-found: warn
+          retention-days: 7
+          path: build/link_census/link_index.pkl
 
   # The only job that can write. It commits the census's three files on the
   # commit the census measured and rebases that one commit onto master, exactly
