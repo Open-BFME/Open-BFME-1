@@ -7,7 +7,6 @@
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *,
 	const void *, unsigned int);
-extern const char Rva006A16B0Empty[];
 
 template <class T>
 class StringBase
@@ -17,9 +16,9 @@ public:
 	__forceinline int compareNoCaseForVOUOrdering(const StringBase<T> &other) const
 	{
 		int otherLength = other.m_data ? other.m_data->m_length : 0;
-		const T *otherData = other.m_data ? other.m_data->m_data : (const T *)Rva006A16B0Empty;
+		const T *otherData = other.m_data ? other.m_data->m_data : (const T *)"";
 		int thisLength = m_data ? m_data->m_length : 0;
-		const T *thisData = m_data ? m_data->m_data : (const T *)Rva006A16B0Empty;
+		const T *thisData = m_data ? m_data->m_data : (const T *)"";
 		int count = thisLength < otherLength ? thisLength : otherLength;
 		int result = _memicmp(thisData, otherData, count);
 		if (result != 0)

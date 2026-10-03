@@ -11,8 +11,6 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 
 typedef bool Bool;
 
-extern char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -85,14 +83,14 @@ char Rva007E3930StringState::_bfme_initialize_007E35E0(
 
 	if (valueA == 1)
 	{
-		if (!TheFileSystem->doesFileExist(m_data ? (const char *)m_data + 8 : Rva006A16B0Empty))
+		if (!TheFileSystem->doesFileExist(m_data ? (const char *)m_data + 8 : ""))
 		{
 			m_mode = 5;
 		}
 		else
 		{
 			m_value4 = (int)TheFileSystem->openFile(
-				m_data ? (const char *)m_data + 8 : Rva006A16B0Empty, 0x141);
+				m_data ? (const char *)m_data + 8 : "", 0x141);
 			m_valueC = ((File *)m_value4)->size();
 			m_mode = 6;
 			if (m_valueC >= 8)
@@ -120,7 +118,7 @@ char Rva007E3930StringState::_bfme_initialize_007E35E0(
 	else if (valueA == 2)
 	{
 		m_value4 = (int)TheFileSystem->openFile(
-			m_data ? (const char *)m_data + 8 : Rva006A16B0Empty, 0x5A);
+			m_data ? (const char *)m_data + 8 : "", 0x5A);
 		m_mode = 3;
 		if (m_value4 != 0)
 		{

@@ -6,8 +6,6 @@ class AsciiString;
 
 #include "string_base.h"
 
-extern const char Rva006A16B0Empty[];
-
 class AsciiString : private StringBase<char>
 {
 public:
@@ -18,7 +16,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : Rva006A16B0Empty;
+		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : "";
 	}
 };
 

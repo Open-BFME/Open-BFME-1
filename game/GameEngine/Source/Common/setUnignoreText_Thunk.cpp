@@ -9,8 +9,6 @@
 
 #include "string_base.h"
 
-extern const char Rva006A16B0Empty[];
-
 class BfmeStringLiteralBase
 {
     friend class AsciiString;

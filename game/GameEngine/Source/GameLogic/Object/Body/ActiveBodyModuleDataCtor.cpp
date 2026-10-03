@@ -55,8 +55,6 @@ private:
 class GlobalData;
 class FXList;
 
-extern const char Rva006A16B0Empty[];
-
 // The retail string: m_data points at a block whose length word sits at +4 and
 // whose characters start at +8; a null m_data reads as the empty literal.
 class BFMERetailAsciiString
@@ -76,7 +74,7 @@ public:
 	// for this class is the one used here.
 	void releaseBuffer(void);
 
-	const char *str(void) const { return m_data ? m_data + 8 : Rva006A16B0Empty; }
+	const char *str(void) const { return m_data ? m_data + 8 : ""; }
 
 	bool isNotEmpty(void) const
 	{

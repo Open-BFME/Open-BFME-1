@@ -9,8 +9,6 @@
 typedef int Int;
 typedef bool Bool;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T>
 class StringBase
 {
@@ -39,7 +37,7 @@ public:
 
     __forceinline const T *reverseFind(T c) const
     {
-        const T *start = m_data ? &m_data->data[0] : (const T *)Rva006A16B0Empty;
+        const T *start = m_data ? &m_data->data[0] : (const T *)"";
         const T *p = start + (m_data ? m_data->length : 0);
         while (p != start)
         {
