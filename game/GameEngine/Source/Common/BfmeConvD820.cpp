@@ -15,10 +15,26 @@ public:
 	void *m_bfmeMod;
 };
 
+class BfmeHelpD820;
+class BfmeTailD820;
+
+// The two callees of the tail body are reached through the retail five-byte
+// incremental-link thunks at 0x00002B49 and 0x00044B0C, so the only names
+// defined at those addresses are the ?j_ thunk symbols (game/gen_small/
+// thunks_000.cpp and thunks_033.cpp).  Reference those names.  Both callees are
+// thiscall: `this` in ECX and the arguments stacked.  VC7.1 reserves __thiscall
+// in a free-function-pointer typedef, so route each address through a member
+// pointer (the technique Rva003855F0Transition.cpp uses): the object holds the
+// pointer and the call still carries the direct ILT relocation the plain ?j_
+// name gives.
+extern "C" void __cdecl __identifier("?j_00002b49@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00044b0c@@YAXXZ")();
+
+// BfmeHelpD820 is reached only as the ECX `this` of the 0x00002B49 thunk. It
+// must be a complete type for the member-pointer route below, so it stays the
+// empty view the file has always used.
 class BfmeHelpD820
 {
-public:
-	void bfmeGoD820(Object *parent, const Coord3D *pos, int extra);
 };
 
 class GameLogic
@@ -40,7 +56,6 @@ class BfmeTailD820
 {
 public:
 	void bfmeTickD820(void);
-	void bfmeTailD820(void);
 
 	char m_bfmePad00[0x20];
 	int m_bfmeMode;
@@ -66,8 +81,12 @@ void BfmeTailD820::bfmeTickD820(void)
 			pos.y = found->m_bfmePos.y;
 			pos.z = found->m_bfmePos.z;
 			BfmeHelpD820 *help = *(BfmeHelpD820 **)((char *)mod + 0x1cc);
-			help->bfmeGoD820(parent, &pos, 0);
+			union { void (*raw)(); void (BfmeHelpD820::*member)(Object *, const Coord3D *, int); } go;
+			go.raw = __identifier("?j_00002b49@@YAXXZ");
+			(help->*go.member)(parent, &pos, 0);
 		}
 	}
-	bfmeTailD820();
+	union { void (*raw)(); void (BfmeTailD820::*member)(void); } tail;
+	tail.raw = __identifier("?j_00044b0c@@YAXXZ");
+	(this->*tail.member)();
 }

@@ -68,12 +68,25 @@ public:
 	virtual int bfmeContainCountERE(int includeAll);
 };
 
+class BfmeObjectERE;
+
+// Both predicates the filter calls are reached through the retail five-byte
+// incremental-link thunks at 0x0004039A and 0x0003BD3B, so the only names
+// defined at those addresses are the ?j_ thunk symbols (game/gen_small/
+// thunks_030.cpp and thunks_028.cpp).  Reference those names; each call is
+// typed through a __fastcall view of the thunk's thiscall shape, so the this
+// pointer rides in ECX and no argument is stacked, exactly as retail does.
+// The declarations stay __cdecl and undecorated: naming the symbol through
+// __identifier and casting through the typedef keeps the reference the plain
+// ?j_ name link.exe resolves.
+extern "C" char __cdecl __identifier("?j_0004039a@@YAXXZ")();
+extern "C" char __cdecl __identifier("?j_0003bd3b@@YAXXZ")();
+
+typedef char (__fastcall *BfmeIsPredicateERE)(BfmeObjectERE *);
+
 class BfmeObjectERE
 {
 public:
-	char bfmeIsStructureERE(void);
-	char bfmeIsNonFactionERE(void);
-
 	unsigned char m_bfmeHeadERE[0x1fc];
 	BfmeContainERE *m_bfmeContainERE;
 };
@@ -90,9 +103,10 @@ public:
 
 char BfmeFilterERE::bfmeAllowERE(BfmeObjectERE *other)
 {
-	if (other->bfmeIsStructureERE())
+	if (((BfmeIsPredicateERE)__identifier("?j_0004039a@@YAXXZ"))(other))
 	{
-		if (other->bfmeIsNonFactionERE() && !m_bfmeAllowInsignificantERE)
+		if (((BfmeIsPredicateERE)__identifier("?j_0003bd3b@@YAXXZ"))(other)
+			&& !m_bfmeAllowInsignificantERE)
 		{
 			BfmeContainERE *contain = other->m_bfmeContainERE;
 			if (contain != 0)
