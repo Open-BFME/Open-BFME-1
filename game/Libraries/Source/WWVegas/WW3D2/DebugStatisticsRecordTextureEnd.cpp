@@ -197,3 +197,14 @@ void Record_Texture_End()
 		textureStatisticsString += "\n";
 	}
 }
+
+// The producer above independently binds these globals to the retail homes.
+// ZH statistics.cpp supplies the scalar/reference getter ABI; entry names
+// retain their addresses. See identity_evidence/00937170-statistics-getters.md.
+int Rva00937170() { return lastFrameTextureCount; }
+int Rva00937180() { return lastFrameTextureChangeCount; }
+int Rva00937190() { return lastFrameLightmapTextureMemory; }
+int Rva009371A0() { return lastFrameLightmapTextureCount; }
+int Rva009371B0() { return lastFrameProceduralTextureMemory; }
+int Rva009371C0() { return lastFrameProceduralTextureCount; }
+const StringClass &Rva009371D0() { return textureStatisticsString; }
