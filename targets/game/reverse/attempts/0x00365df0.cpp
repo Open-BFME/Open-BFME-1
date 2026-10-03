@@ -1,5 +1,5 @@
-// ?d_00365df0@@YAXXZ
-// partial score=0.83 date=2026-09-28
+// ?rva00365df0@BfmeLivingWorldPlayerArmyCollection@@SIXPAV1@PAXPAVObject@@@Z
+// partial score=0.9056 date=2026-10-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00365DF0 (498 B).  The owning class is not named by the retail
 // symbols; this TU keeps the proven Living World layouts and uses an
@@ -240,8 +240,8 @@ public:
 	_STL::vector<ScienceType> m_sciencesHidden;
 	Int m_rankLevel;
 	Real m_field25C;
-	Real m_field260;
-	Int m_field264;
+	volatile Real m_field260;
+	volatile Int m_field264;
 	char m_unmodelled268[ 0x41C ];
 	Rva000F99C0Owner m_field684;
 };
@@ -279,7 +279,8 @@ void __fastcall BfmeLivingWorldPlayerArmyCollection::rva00365df0(
 	Rva00365DF0Record record;
 	for( Object *object = firstObject; object != 0; object = object->m_next )
 	{
-		if( object->getControllingPlayer() != player )
+		if (object == 0) continue;
+		if( player != object->getControllingPlayer() )
 			continue;
 		if( !reinterpret_cast<Thing *>( object )->isKindOf( RVA00365DF0_KIND_127 ) )
 			continue;
@@ -297,11 +298,11 @@ void __fastcall BfmeLivingWorldPlayerArmyCollection::rva00365df0(
 			continue;
 
 		object->fill( &record );
+		++record.m_field3C;
+		record.m_field34 = 1;
 		BfmeLivingWorldPlayerArmyCollection::ArmySlot *begin = self->m_playerArmies.begin();
 		Gen00365520 *army = reinterpret_cast<Gen00365520 *>(
 			reinterpret_cast<char *>( begin ) + index * 0x58 );
-		++record.m_field3C;
-		record.m_field34 = 1;
 		army->bfmeAppend( &record );
 		record.reset();
 	}
