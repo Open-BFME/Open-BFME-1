@@ -743,29 +743,7 @@ void CancelPatchCheckCallbackAndReopenDropdown( void )
 	CancelPatchCheckCallback();
 }
 
-void CancelPatchCheckCallback( void )
-{
-	s_asyncDNSLookupInProgress = FALSE;
-	HandleCanceledDownload(FALSE); // don't dropdown
-	checkingForPatchBeforeGameSpy = FALSE;
-	checksLeftBeforeOnline = 0;
-	if (onlineCancelWindow)
-	{
-		TheWindowManager->winDestroy(onlineCancelWindow);
-		onlineCancelWindow = NULL;
-	}
-	queuedDownloads.clear();
-	if (MOTDBuffer)
-	{
-		delete[] MOTDBuffer;
-		MOTDBuffer = NULL;
-	}
-	if (configBuffer)
-	{
-		delete[] configBuffer;
-		configBuffer = NULL;
-	}
-}
+// CancelPatchCheckCallback is supplied by CancelPatchCheckCallback_BFME.cpp.
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
