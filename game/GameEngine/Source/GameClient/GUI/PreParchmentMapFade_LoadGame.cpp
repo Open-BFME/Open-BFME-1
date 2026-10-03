@@ -38,7 +38,12 @@ class WindowManager
 public:
 	void unidentified_0002e9a1(int a);
 };
-extern WindowManager *g_theWindowManager;
+// Retail's 0x012F19E8 load (8b0d e8192f01) is the WindowManager singleton whose
+// one definition is WindowManager.cpp:17, recorded in data_rows.csv as
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A. The old g_theWindowManager
+// spelling was a guess and is refuted by that row's evidence: EA's real
+// TheWindowManager is 0x012F1B40 (a GameWindowManager), a different global.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 // ?parchmentMapFadeLoadGame@@YAHH_N@Z
 int parchmentMapFadeLoadGame(int, bool start)
@@ -50,8 +55,8 @@ int parchmentMapFadeLoadGame(int, bool start)
 		TheTransitionHandler->setGroup(AsciiString("PreParchmentMapFade_LoadGame"), 0);
 		if (TheShell)
 			((Rva0057F100 *)TheShell)->giveBack();
-		if (g_theWindowManager)
-			g_theWindowManager->unidentified_0002e9a1(-1);
+		if (g_rva012F19E8WindowManager)
+			g_rva012F19E8WindowManager->unidentified_0002e9a1(-1);
 	}
 	else if (TheTransitionHandler->isFinished())
 		result = 3;

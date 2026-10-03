@@ -39,7 +39,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl W3DStreakDrawFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the incremental-link thunk at 0x0001DAB6, not a body: that
+// thunk forwards to the 17-byte field-parse builder at 0x0077D4F0 (matched row
+// ?Rva0077D4F0@@YAXPAVGen00850920@@@Z in MidTableRegisterForwarders.cpp), so
+// the linked name of the value this factory hands initFromINIMultiProc is the
+// address-identified thunk ?j_0001dab6@@YAXXZ (matched row in
+// game/gen_small/gthunks_032.cpp). No retail body carries a free-function
+// W3DStreakDrawFieldParse, so nothing may be declared under that name here.
+extern void j_0001dab6();
 
 class W3DStreakDraw
 {
@@ -52,6 +59,7 @@ ModuleData *W3DStreakDraw::friend_newModuleData(INI *ini)
 {
 	W3DStreakDrawModuleData *data = new W3DStreakDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DStreakDrawFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0001dab6));
 	return (ModuleData *)data;
 }

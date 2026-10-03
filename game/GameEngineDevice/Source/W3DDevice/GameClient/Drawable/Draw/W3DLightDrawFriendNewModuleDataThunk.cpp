@@ -39,7 +39,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl W3DLightDrawFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the incremental-link thunk at 0x0003B5D9, not a body: that
+// thunk forwards to the 17-byte field-parse builder at 0x00758840 (matched row
+// ?Rva00758840@@YAXPAVGen00850920@@@Z in MidTableRegisterForwarders.cpp), so
+// the linked name of the value this factory hands initFromINIMultiProc is the
+// address-identified thunk ?j_0003b5d9@@YAXXZ (matched row in
+// game/gen_small/gthunks_066.cpp). No retail body carries a free-function
+// W3DLightDrawFieldParse, so nothing may be declared under that name here.
+extern void j_0003b5d9();
 
 class W3DLightDraw
 {
@@ -52,6 +59,7 @@ ModuleData *W3DLightDraw::friend_newModuleData(INI *ini)
 {
 	W3DLightDrawModuleData *data = new W3DLightDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DLightDrawFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0003b5d9));
 	return (ModuleData *)data;
 }

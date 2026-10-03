@@ -39,7 +39,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ReflectDamageFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the incremental-link thunk at 0x0000A00B, not a body: that
+// thunk forwards to the 17-byte field-parse builder at 0x00251670 (matched row
+// ?Rva00251670@@YAXPAVGen00850920@@@Z in MidTableRegisterForwarders.cpp), so
+// the linked name of the value this factory hands initFromINIMultiProc is the
+// address-identified thunk ?j_0000a00b@@YAXXZ (matched row in
+// game/gen_small/gthunks_010.cpp). No retail body carries a free-function
+// ReflectDamageFieldParse, so nothing may be declared under that name here.
+extern void j_0000a00b();
 
 class ReflectDamage
 {
@@ -52,6 +59,7 @@ ModuleData *ReflectDamage::friend_newModuleData(INI *ini)
 {
 	ReflectDamageModuleData *data = new ReflectDamageModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ReflectDamageFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0000a00b));
 	return (ModuleData *)data;
 }

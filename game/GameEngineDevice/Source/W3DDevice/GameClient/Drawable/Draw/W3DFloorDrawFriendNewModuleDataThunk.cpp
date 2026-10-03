@@ -39,7 +39,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl W3DFloorDrawFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the incremental-link thunk at 0x00014BAA, not a body: that
+// thunk forwards to the 30-byte static field-parse builder at 0x00751690
+// (matched row ?buildFieldParse@Rva00751690@@SAXAAVWideMulti@@@Z), so the
+// linked name of the value this factory hands initFromINIMultiProc is the
+// address-identified thunk ?j_00014baa@@YAXXZ (matched row in
+// game/gen_small/gthunks_022.cpp). No retail body carries a free-function
+// W3DFloorDrawFieldParse, so nothing may be declared under that name here.
+extern void j_00014baa();
 
 class W3DFloorDraw
 {
@@ -52,6 +59,7 @@ ModuleData *W3DFloorDraw::friend_newModuleData(INI *ini)
 {
 	W3DFloorDrawModuleData *data = new W3DFloorDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DFloorDrawFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00014baa));
 	return (ModuleData *)data;
 }
