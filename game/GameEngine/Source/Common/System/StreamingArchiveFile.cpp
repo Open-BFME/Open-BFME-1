@@ -129,15 +129,7 @@ public:
 // StreamingArchiveFile::StreamingArchiveFile
 //=================================================================
 
-StreamingArchiveFile::StreamingArchiveFile()
-: m_file(NULL), 
-	m_startingPos(0), 
-	m_size(0), 
-	m_curPos(0)
-{
-
-}
-
+// The BFME-layout constructor is defined in Common/System/File.cpp.
 
 //----------------------------------------------------------------------------
 //         Public Functions                                                
