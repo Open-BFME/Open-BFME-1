@@ -8,18 +8,37 @@
 // The element is four bytes wide, which the shift pair around the size names,
 // and each arm of the size test carries its own epilogue.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
+inline void bfmeRelease(void *block, unsigned int bytes);
+
+class Rva000BB5D0Ref;
+class ThingRefB;
+
+namespace _STL
+{
+template <bool __threads, int __inst> class __node_alloc;
+template <> class __node_alloc<true, 0>
+{
+	friend void ::bfmeRelease(void *block, unsigned int bytes);
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+
+struct __false_type;
+// Retail ILTs 0x000247E9 and 0x000096FB route to these ledger-owned bodies
+// at 0x000BB5D0 and 0x0069F100 respectively.
+void __cdecl __destroy_aux(Rva000BB5D0Ref *first, Rva000BB5D0Ref *last,
+	const __false_type &tag);
+void __cdecl __destroy_aux(ThingRefB *first, ThingRefB *last,
+	const __false_type &tag);
+}
 
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
-		bfmeFreeScalar(block);
+		::operator delete(block);
 	else
-		bfmeDeallocate(block, bytes);
+		_STL::__node_alloc<true, 0>::_M_deallocate(block, bytes);
 }
-
-void __cdecl bfmeDestroyRange(int *first, int *last, char *tag);	// retail 0x000247E9
 
 class Gen_000BCBC0
 {
@@ -37,15 +56,15 @@ void Gen_000BCBC0::bfmeDestroy(void)
 {
 	char tag;
 
-	bfmeDestroyRange(m_bfmeStart, m_bfmeFinish, &tag);
+	_STL::__destroy_aux(reinterpret_cast<Rva000BB5D0Ref *>(m_bfmeStart),
+		reinterpret_cast<Rva000BB5D0Ref *>(m_bfmeFinish),
+		*reinterpret_cast<const _STL::__false_type *>(&tag));
 
 	int *start = m_bfmeStart;
 
 	if (start)
 		bfmeRelease(start, sizeof(int) * (m_bfmeEnd - start));
 }
-
-void __cdecl bfmeDestroyRange2(int *first, int *last, char *tag);	// retail 0x000096FB
 
 class Gen_006A76E0
 {
@@ -63,7 +82,9 @@ void Gen_006A76E0::bfmeDestroy(void)
 {
 	char tag;
 
-	bfmeDestroyRange2(m_bfmeStart, m_bfmeFinish, &tag);
+	_STL::__destroy_aux(reinterpret_cast<ThingRefB *>(m_bfmeStart),
+		reinterpret_cast<ThingRefB *>(m_bfmeFinish),
+		*reinterpret_cast<const _STL::__false_type *>(&tag));
 
 	int *start = m_bfmeStart;
 
