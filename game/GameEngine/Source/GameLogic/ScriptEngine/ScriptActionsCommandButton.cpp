@@ -42,29 +42,14 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
 // Slot 27 takes the unit name by value through this wrapper, where slot 26
 // takes it by reference.
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h

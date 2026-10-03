@@ -10,29 +10,13 @@
 typedef bool Bool;
 typedef int Int;
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
 // ScriptEngine passes AsciiString by value through its retail vtable.  This
 // wrapper preserves the in-place copy construction used by the BFME ABI.
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 struct Coord3D

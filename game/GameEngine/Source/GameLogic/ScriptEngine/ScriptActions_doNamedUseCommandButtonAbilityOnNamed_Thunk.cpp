@@ -13,28 +13,13 @@ class CommandButton;
 class CommandSet;
 class Team;
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
 // Slot 27 takes the target through BFME's one-word by-value string view.
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 class ScriptEngine

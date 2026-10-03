@@ -15,27 +15,11 @@ class Player;
 // The BFME ScriptEngine takes this one-word string view by value.  Keeping
 // the forwarding copy constructor and declared-only destructor visible gives
 // MSVC 7.1 the retail EH saved-esp/string-copy shape at the call site.
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 struct Coord3D
