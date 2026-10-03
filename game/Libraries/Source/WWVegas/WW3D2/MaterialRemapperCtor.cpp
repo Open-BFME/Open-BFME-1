@@ -5,6 +5,8 @@
 // constructor's independent MSVC 7.1 layout and EH shape.
 
 void *__cdecl operator new[](unsigned int n);
+// Retail construction failure releases TextureRemaps through array delete.
+void __cdecl operator delete[](void *) throw();
 
 class VertexMaterialClass;
 
