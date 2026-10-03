@@ -1,19 +1,21 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /game/Libraries/Source/WWVegas/WWLib
-// readable body of ?loadUserMaps@MapCache@@AAE_NXZ: game/GameEngine/Source/GameClient/MapUtil.cpp
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
+// cl: /DNDEBUG /MD /EHsc
+// ILT RVA 0x00028FF1 routes directly to MapCache::loadUserMaps at 0x004577C0.
+// The implementation lives in MapCacheLoadUserMaps.cpp; this keeps the
+// incremental-link entry distinct from the full method's identity.
+class MapCacheLoadUserMapsThunk;
 class MapCache
 {
+    friend class MapCacheLoadUserMapsThunk;
     bool loadUserMaps();
 };
 
-class MapCacheLoadUserMapsShim
+class MapCacheLoadUserMapsThunk
 {
 public:
-    bool load();
+    bool loadUserMaps();
 };
 
-bool MapCache::loadUserMaps()
+bool MapCacheLoadUserMapsThunk::loadUserMaps()
 {
-    return ((MapCacheLoadUserMapsShim *)this)->load();
+    return ((MapCache *)this)->loadUserMaps();
 }

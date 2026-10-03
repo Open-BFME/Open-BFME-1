@@ -529,125 +529,16 @@ void MapCache::loadStandardMaps(void)
 #endif
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/MapCacheLoadUserMapsThunk.cpp
-// ?loadUserMaps@MapCache@@AAE_NXZ present-unmatched
-Bool MapCache::loadUserMaps()
-{
-	// Read in map list from disk
-	AsciiString mapDir;
-	if (TheGlobalData->m_buildMapCache)
-	{
-		mapDir = getMapDir();
-	}
-	else
-	{
-		mapDir = getUserMapDir();
+// MapCache::loadUserMaps is implemented in MapCacheLoadUserMaps.cpp.
 
-		INI ini;
-		AsciiString fname;
-		fname.format("%s\\%s", mapDir.str(), m_mapCacheName);
-		File *fp = TheFileSystem->openFile(fname.str(), File::READ);
-		if (fp)
-		{
-			fp->close();
-			ini.load( fname, INI_LOAD_OVERWRITE, NULL );
-		}
-
-	}
-
-	// mark all as unseen
-	m_seen.clear();
-	MapCache::iterator it = begin();
-	while (it != end())
-	{
-		m_seen[it->first] = FALSE;
-		++it;
-	}
-
-	FilenameList filenameList;
-	FilenameListIter iter;
-	AsciiString toplevelPattern;
-	toplevelPattern.format("%s\\", mapDir.str());
-	Bool parsedAMap = FALSE;
-	AsciiString filenamepattern;
-	filenamepattern.format("*.%s", getMapExtension().str());
-
-	TheFileSystem->getFileListInDirectory(toplevelPattern, filenamepattern, filenameList, TRUE);
-
-	iter = filenameList.begin();
-
-	while (iter != filenameList.end()) {
-		FileInfo fileInfo;
-		AsciiString tempfilename;
-		tempfilename = (*iter);
-		tempfilename.toLower();
-
-		const char *s = tempfilename.reverseFind('\\');
-		if (!s)
-		{
-			DEBUG_CRASH(("Couldn't find \\ in map name!"));
-		}
-		else
-		{
-			AsciiString endingStr;
-			AsciiString fname = s+1;
-			for (Int i=0; i<strlen(mapExtension); ++i)
-				fname.removeLastChar();
-
-			endingStr.format("%s\\%s%s", fname.str(), fname.str(), mapExtension);
-
-			Bool skipMap = FALSE;
-			if (TheGlobalData->m_buildMapCache)
-			{
-				std::set<AsciiString>::const_iterator sit = m_allowedMaps.find(fname);
-				if (m_allowedMaps.size() != 0 && sit == m_allowedMaps.end())
-				{
-					//DEBUG_LOG(("Skipping map: '%s'\n", fname.str()));
-					skipMap = TRUE;
-				}
-				else
-				{
-					//DEBUG_LOG(("Parsing map: '%s'\n", fname.str()));
-				}
-			}
-
-			if (!skipMap)
-			{
-				if (!tempfilename.endsWithNoCase(endingStr.str()))
-				{
-					DEBUG_CRASH(("Found map '%s' in wrong spot (%s)", fname.str(), tempfilename.str()));
-				}
-				else
-				{
-					if (TheFileSystem->getFileInfo(tempfilename, &fileInfo)) {
-						char funk[_MAX_PATH];
-						strcpy(funk, tempfilename.str());
-						char *filenameptr = funk;
-						char *tempchar = funk;
-						while (*tempchar != 0) {
-							if ((*tempchar == '\\') || (*tempchar == '/')) {
-								filenameptr = tempchar+1;
-							}
-							++tempchar;
-						}
-
-						m_seen[tempfilename] = TRUE;
-						parsedAMap |= addMap(mapDir, *iter, &fileInfo, TheGlobalData->m_buildMapCache);
-					} else {
-						DEBUG_CRASH(("Could not get file info for map %s", (*iter).str()));
-					}
-				}
-			}
-		}
-		iter++;
-	}
-
-	// clean out unseen maps
-	if (clearUnseenMaps(mapDir))
-		return TRUE;
-
-	return parsedAMap;
-}
+// Keep the existing byte-verified helper emitted by this TU after moving the
+// recovered loadUserMaps method to its focused source file.
+typedef std::_Rb_tree<AsciiString, std::pair<const AsciiString, Bool>,
+    std::_Select1st<std::pair<const AsciiString, Bool> >,
+    std::less<AsciiString>, std::allocator<std::pair<const AsciiString, Bool> > >
+    MapCacheSeenTree;
+template MapCacheSeenTree::iterator MapCacheSeenTree::insert_unique(
+    MapCacheSeenTree::iterator, const MapCacheSeenTree::value_type &);
 
 //Bool MapCache::addMap( AsciiString dirName, AsciiString fname, WinTimeStamp timestamp, UnsignedInt filesize, Bool isOfficial )
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/MapCacheAddMapThunk.cpp

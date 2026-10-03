@@ -85388,7 +85388,6 @@ name,address,notes
 ?load@INI@@QAEXVBFMERetailAsciiString@@00HH@Z,0x00853B30,retail five-argument INI entry point called by the FX particle-system loader
 ?load@INI@@QAE_NVBFMERetailAsciiString@@00HH@Z,0x00853B30,retail FX particle-system caller and exact five-argument body return shape prove this bool entry point
 ?load@MapCacheLoadStandardMapsShim@@QAEXXZ,0x004507A0,MapCache loadStandardMaps incremental-link thunk target through a TU-local forwarding shim
-?load@MapCacheLoadUserMapsShim@@QAE_NXZ,0x004577C0,MapCache loadUserMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@UserPreferences@@UAE_NVAsciiString@@@Z,0x00014308,QuickMatchPreferences retail constructor call ILT reaches UserPreferences::load at 0x000A9230
 ?loadAmmoNow@BfmeWeapon@@QAEXPBVObject@@@Z,0x0000FED4,ILT to Weapon::loadAmmoNow body 0x001E9D60; WeaponSet::updateWeaponSet
 ?loadAmmoNow@Weapon@@QAEXPBVObject@@@Z,0x0000FED4,Open-BFME5 ILT thunk fronting body 0x001E9D60 (pushes 1 to reloadWithBonus)
