@@ -13,6 +13,7 @@ typedef bool Bool;
 // BFME's AsciiString supplies the real StringBase ownership and copy lifetime.
 // This view keeps only the raw fields used by the matched cursor loader local.
 #include "ascii_string.h"
+#include <windows.h>
 
 struct Win32MouseStringBuffer
 {
@@ -125,9 +126,9 @@ public:
 	virtual void initCursorResources(void);
 };
 
-extern "C" void *g_cursorResources[][8];
+HCURSOR cursorResources[Mouse::NUM_MOUSE_CURSORS][8] = { 0 };
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer, const char *format, ...);
-extern "C" __declspec(dllimport) void *__stdcall LoadCursorFromFileA(const char *path);
+extern "C" __declspec(dllimport) HCURSOR __stdcall LoadCursorFromFileA(const char *path);
 
 void Win32Mouse::initCursorResources(void)
 {
@@ -135,7 +136,7 @@ void Win32Mouse::initCursorResources(void)
 	{
 		for (Int direction = 0; direction < m_cursorInfo[cursor].numDirections; ++direction)
 		{
-			if (!g_cursorResources[cursor][direction] && !m_cursorInfo[cursor].textureName.isEmpty())
+			if (!cursorResources[cursor][direction] && !m_cursorInfo[cursor].textureName.isEmpty())
 			{
 				char resourcePath[256];
 				const char *extension = "ani";
@@ -155,7 +156,7 @@ void Win32Mouse::initCursorResources(void)
 				else
 					sprintf(resourcePath, "data\\cursors\\%s.%s", textureName.str(), extension);
 
-				g_cursorResources[cursor][direction] = LoadCursorFromFileA(resourcePath);
+				cursorResources[cursor][direction] = LoadCursorFromFileA(resourcePath);
 			}
 		}
 	}

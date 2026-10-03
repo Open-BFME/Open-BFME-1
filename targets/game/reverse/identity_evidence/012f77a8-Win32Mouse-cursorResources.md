@@ -1,0 +1,11 @@
+# Win32Mouse cursorResources
+
+The owner is `game/GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse_initCursorResources.cpp`. EA declares the object with external C++ linkage as `HCURSOR cursorResources[Mouse::NUM_MOUSE_CURSORS][MAX_2D_CURSOR_DIRECTIONS]` at `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse.cpp:47`. The reference `GameEngine/Include/GameClient/Mouse.h:94` defines the direction count as 8. This evidence supports the original EA name rather than either local C alias.
+
+Retail `Win32Mouse::setCursor` at RVA 0x006BC190 loads a handle from VA 0x012F77A8 using `(m_directionFrame + cursor * 8) * 4` at VA 0x00ABC1BD and 0x00ABC1C0. Retail `Win32Mouse::initCursorResources` at RVA 0x006BC360 begins its table walk at VA 0x012F77C8 (cursor 1), advances by 0x20 at VA 0x00ABC4A0, and compares against the exclusive end VA 0x012F7DE8 at VA 0x00ABC4A6. The range therefore has 50 cursor rows, 8 directions per row, and 4-byte HCURSOR elements, totaling 1600 bytes.
+
+The constructor at RVA 0x006BC010 independently clears exactly 0x190 dwords beginning at VA 0x012F77A8 (the count at VA 0x00ABC042, the destination at VA 0x00ABC047, and `rep stosd` at VA 0x00ABC04C). Its current local spelling is `g_bfmeSITable`; this is another declaration of the same retail object and provides no second definition.
+
+The entire range [0x012F77A8, 0x012F7DE8) is zero in retail's virtual `.data` tail. Streaming checks of `dir32_addresses.csv`, `symbols.csv`, `exports.csv`, and `data_rows.csv` find no named start strictly inside it. At the base, `dir32_addresses.csv` records `_g_bfmeSITable` and `_g_cursorResources`. The former has one declaring game file, and the latter has two. EA's proven spelling takes precedence over these aliases.
+
+Refutation would be a retail table stride or loop endpoint inconsistent with these dimensions, a constructor clear inconsistent with this extent, a nonzero initial byte, another named datum beginning inside the range, or EA reference evidence that this table has a different name or linkage. The raw disassembly, memory measurement, alias counts, and ledger scan are in `build/rlink/run-1791050832/retail-probe.txt`.

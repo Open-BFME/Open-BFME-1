@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include <windows.h>
+
 class Mouse
 {
 public:
@@ -11,8 +13,7 @@ public:
 	virtual void setCursor(MouseCursor cursor);
 };
 
-extern "C" __declspec(dllimport) void *__stdcall SetCursor(void *cursor);
-extern "C" void *g_cursorResources[];
+extern HCURSOR cursorResources[][8];
 
 class Win32Mouse
 {
@@ -37,7 +38,7 @@ void Win32Mouse::setCursor(Mouse::MouseCursor cursor)
 		return;
 
 	if (cursor != Mouse::NONE && isCursorVisible())
-		SetCursor(g_cursorResources[m_directionFrame + cursor * 8]);
+		SetCursor(reinterpret_cast<HCURSOR *>(cursorResources)[m_directionFrame + cursor * 8]);
 	else
 		SetCursor(0);
 
