@@ -5,7 +5,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include <new>
-#include <bitset>
 
 #define OBJECT_TU_MEMBERS bool getAttributeModifierBonus(int, float *) const;
 #include "game/GameEngine/Source/GameLogic/Object/object.h"

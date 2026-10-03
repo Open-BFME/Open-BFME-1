@@ -9,9 +9,19 @@ public:
 class BfmeThingXS
 {
 public:
-	void bfmeGoXS(void *flag);
 	void bfmeApplyXS(void *what, void *sub);
-	void bfmePopXS();
+};
+
+class BfmeThingDXH
+{
+public:
+	void bfmeGoDXH(void *a);
+};
+
+class BfmeA1210
+{
+public:
+	void bfmePop1210();
 };
 
 class BfmeOwnerXS
@@ -29,7 +39,7 @@ void BfmeOwnerXS::bfmeRunXS(BfmeThingXS *thing, void *what, void *flag)
 	if (flag != 0)
 	{
 		((Gen_008D2C80 *)thing)->bfmePush();
-		thing->bfmeGoXS(flag);
+		((BfmeThingDXH *)thing)->bfmeGoDXH(flag);
 	}
 
 	switch (m_bfmeModeXS)
@@ -43,5 +53,5 @@ void BfmeOwnerXS::bfmeRunXS(BfmeThingXS *thing, void *what, void *flag)
 	}
 
 	if (flag != 0)
-		thing->bfmePopXS();
+		((BfmeA1210 *)thing)->bfmePop1210();
 }

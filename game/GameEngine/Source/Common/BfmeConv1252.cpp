@@ -1,4 +1,7 @@
 // Open-BFME5 conversions.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
+
+#include "../../../Libraries/Source/WWVegas/WWMath/colmath.h"
 
 struct BfmeVec1252
 {
@@ -16,16 +19,20 @@ public:
 	int m_bfme0c;
 };
 
-extern "C" void bfmeGet1252(void *a, void *b, BfmeVec1252 *t);
-extern "C" int bfmeCheck1252(void *a, BfmeVec1252 *t);
+void get_far_extent(const Vector3 &normal, const Vector3 &extent,
+	Vector3 *posfarpt);
 
 int bfmeTest1252(void *a, BfmeV1252 *b)
 {
 	BfmeVec1252 t;
 
-	bfmeGet1252(a, &b->m_bfme0c, &t);
+	get_far_extent(*reinterpret_cast<const Vector3 *>(a),
+		*reinterpret_cast<const Vector3 *>(&b->m_bfme0c),
+		reinterpret_cast<Vector3 *>(&t));
 	t.m_bfme00 = b->m_bfme00 - t.m_bfme00;
 	t.m_bfme04 = b->m_bfme04 - t.m_bfme04;
 	t.m_bfme08 = b->m_bfme08 - t.m_bfme08;
-	return bfmeCheck1252(a, &t) == 1;
+	return CollisionMath::Overlap_Test(
+		*reinterpret_cast<const PlaneClass *>(a),
+		*reinterpret_cast<const Vector3 *>(&t)) == 1;
 }
