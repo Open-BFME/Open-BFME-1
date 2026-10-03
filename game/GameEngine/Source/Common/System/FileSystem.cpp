@@ -182,25 +182,7 @@ void		FileSystem::reset( void )
 // FileSystem::open
 //============================================================================
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/FileSystem_openFile.cpp
-// ?openFile@FileSystem@@ present-unmatched
-File*		FileSystem::openFile( const Char *filename, Int access ) 
-{
-	USE_PERF_TIMER(FileSystem)
-	File *file = NULL;
-
-	if ( TheLocalFileSystem != NULL )
-	{
-		file = TheLocalFileSystem->openFile( filename, access );
-	}
-
-	if ( (TheArchiveFileSystem != NULL) && (file == NULL) )
-	{
-		file = TheArchiveFileSystem->openFile( filename );
-	}
-
-	return file;
-}
+// FileSystem::openFile: retail body (0x009C8860) lives in FileSystem_openFile.cpp
 
 //============================================================================
 // FileSystem::doesFileExist — matched body in FileSystem_doesFileExist.cpp
