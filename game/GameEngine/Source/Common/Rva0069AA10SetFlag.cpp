@@ -1,7 +1,7 @@
 // ?bfmeShowLK@@YGXPAVBfmeHolderLK@@@Z (identity unknown)
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-extern "C" __declspec(dllimport) void __stdcall bfmeApiLK(void *handle, int flag);
+extern "C" __declspec(dllimport) void __stdcall AIL_pause_stream(void *handle, int flag);
 
 class BfmeThingLK
 {
@@ -30,5 +30,5 @@ void __stdcall bfmeShowLK(BfmeHolderLK *holder)
 	else
 		flag = 0;
 
-	bfmeApiLK(thing->m_bfmeHandleLK, (unsigned char)flag);
+	AIL_pause_stream(thing->m_bfmeHandleLK, (unsigned char)flag);
 }
