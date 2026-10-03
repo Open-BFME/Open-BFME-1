@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 class Rva002DF120
 {
@@ -80,6 +80,33 @@ public:
 #undef RVA002DCDA0_SLOT
 };
 
+// Retail reaches both accessors through their incremental-link thunks:
+// 0x0000D3B9 (-> ?j_0000d3b9@@YAXXZ, game/gen_small/thunks_005.cpp) and
+// 0x00031A7F (-> ?j_00031a7f@@YAXXZ, game/gen_small/thunks_023.cpp).  A pin
+// alone cannot bind a name no object defines, so the calls are spelled through
+// the thunks themselves: the raw cdecl address is reinterpreted as a thiscall
+// member pointer, which leaves `this` in ecx and emits the identical direct
+// call to the same retail address.  Same idiom as
+// game/GameEngine/Source/GameLogic/AI/Rva0017DA80.cpp; it needs one inliner,
+// hence /Ob1 above (/Ob0 emits a real call to the template).
+extern void j_0000d3b9(void);
+extern void j_00031a7f(void);
+
+class Rva002DCDA0ThunkReceiver
+{
+};
+
+template <class Function>
+__forceinline Function rva002dcda0Thunk(void (*raw)())
+{
+	union { void (*raw)(); Function member; } fn;
+	fn.raw = raw;
+	return fn.member;
+}
+
+#define RVA002DCDA0_THUNK_CALL(object, Function, raw) \
+	(reinterpret_cast<Rva002DCDA0ThunkReceiver *>(object)->*rva002dcda0Thunk<Function>(raw))
+
 class BfmeHolderMD
 {
 public:
@@ -138,8 +165,9 @@ unsigned char Rva002DCDA0::test(void *first, void *second)
 	if (found == 0 || *(void **)((unsigned char *)found + 0x1fc) == 0)
 		return 1;
 
+	typedef BfmeX1004 *(Rva002DCDA0ThunkReceiver::*Find1004)(void);
 	BfmeX1004 *controller =
-		((BfmeHold1004 *)found)->bfmeFind1004();
+		RVA002DCDA0_THUNK_CALL(found, Find1004, j_0000d3b9)();
 	if (controller == 0)
 		return 1;
 	if (((BfmeThingAIA *)found)->bfmeAskAIA(0x6d))
@@ -148,8 +176,9 @@ unsigned char Rva002DCDA0::test(void *first, void *second)
 		controller = controller->slot62(0xa3);
 	if (controller == 0)
 		return 1;
-	if (((BfmeHolderMD *)controller)->bfmeFindMD(0) == 0)
+	typedef BfmeItemMD *(Rva002DCDA0ThunkReceiver::*FindMD)(int);
+	if (RVA002DCDA0_THUNK_CALL(controller, FindMD, j_00031a7f)(0) == 0)
 		return 1;
-	return ((Weapon *)((BfmeHolderMD *)controller)->bfmeFindMD(0))
+	return ((Weapon *)RVA002DCDA0_THUNK_CALL(controller, FindMD, j_00031a7f)(0))
 		->bfmeCanAffect((Object *)found, (Object *)second);
 }
