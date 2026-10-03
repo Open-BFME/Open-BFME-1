@@ -36,6 +36,37 @@ extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
+// Retail calls both members through their ILT thunks (RVA 0x0001D1C9 and
+// RVA 0x00029CBC), the bodies behind them are not recovered yet. Naming the
+// thunks keeps both references resolvable at link time and reproduces retail's
+// call rel32 encoding.
+extern void j_0001d1c9();
+extern void j_00029cbc();
+
+static __forceinline bool bfmeIsLivingWorld(GameLogic *logic)
+{
+	union
+	{
+		void (*raw)();
+		bool (GameLogic::*member)();
+	} call;
+
+	call.raw = j_0001d1c9;
+	return (logic->*call.member)();
+}
+
+static __forceinline int bfmeGetBountyBonusPercent(CampaignObject *campaign)
+{
+	union
+	{
+		void (*raw)();
+		int (CampaignObject::*member)();
+	} call;
+
+	call.raw = j_00029cbc;
+	return (campaign->*call.member)();
+}
+
 inline long bfmeRoundFloat(float value)
 {
 	long result;
@@ -58,9 +89,9 @@ public:
 
 int Rva000C97C0Player::adjustBountyForLivingWorld(int bounty)
 {
-	if (TheGameLogic->isLivingWorld() && this == ThePlayerList->getLocalPlayer())
+	if (bfmeIsLivingWorld(TheGameLogic) && this == ThePlayerList->getLocalPlayer())
 	{
-		float factor = ((CampaignObject *)TheLivingWorldLogic)->getBountyBonusPercent() * 0.01f + 1.0f;
+		float factor = bfmeGetBountyBonusPercent((CampaignObject *)TheLivingWorldLogic) * 0.01f + 1.0f;
 		return bfmeRoundFloat(static_cast<float>(ceil(static_cast<double>(bounty * factor))));
 	}
 
