@@ -59,8 +59,13 @@ struct Rva0046C2A0Mapped
 	}
 	~Rva0046C2A0Mapped()
 	{
-		if (m_counted && --m_counted->m_references <= 0)
-			m_counted->release(1);
+		// Retail 0x00468320: parent 0x0046D280's state-0 cleanup
+		// destroys this temporary through ILT 0x0002F19E. Matched
+		// caller 0x0046DBC0 separately witnesses the counted pointer
+		// at +0 and the unowned argument at +4 of the mapped value.
+		Rva0046C2A0Counted *current = m_counted;
+		if (current && (current->m_references = current->m_references - 1) <= 0)
+			current->release(1);
 	}
 
 	Rva0046C2A0Counted *m_counted;
