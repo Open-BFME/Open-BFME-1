@@ -1,5 +1,5 @@
 // ?bfmeClipSegment6DF730@BfmePolygon6DF1F0@@QBEDPBUBfmeCoord6DF1F0@@0PAU2@H@Z
-// partial score=0.966 date=2026-09-28
+// partial score=0.8139 date=2026-10-03
 // cl: /O2 /G6 /DNDEBUG /MD /EHsc- /Igame/Libraries/Source/WWVegas/WWMath
 #include "coord3d.h"
 #include <math.h>
@@ -15,6 +15,17 @@ struct BfmeCoord6DF1F0 { float x, y, z; };
 struct ClipPoint0018FBF0 { int x, y, z; };
 struct ClipPair0018FBF0 { float x, y; };
 extern bool IntersectLine2D(const Coord2D *, const Coord2D *, const Coord2D *, const Coord2D *, Coord2D *);
+// Authentic visible helper from coord3d.cpp; independently probes 79/79
+// at RVA 0x000FB930. Visibility improves the caller to 949/951 bytes,
+// 173 raw differences; the remaining x87/local-lifetime mismatch is unlanded.
+__declspec(noinline) void Coord3D::normalize()
+{
+    float len = (float)sqrt(x*x + y*y + z*z);
+    if (len != 0.0f) {
+        float scale = 1.0f / len;
+        x *= scale; y *= scale; z *= scale;
+    }
+}
 class BfmePolygon6DF1F0 {
     char m_unmodelled00[0x10];
     ClipPoint0018FBF0 *m_points;
