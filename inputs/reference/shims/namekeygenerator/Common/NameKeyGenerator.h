@@ -90,10 +90,6 @@ public:
 
 	enum BucketMagicEnum { Bucket_GLUE_NOT_IMPLEMENTED = 0 };
 
-	inline void *operator new(size_t s, BucketMagicEnum e)
-	{
-		return ::operator new(s);
-	}
 	inline void operator delete(void *p, BucketMagicEnum e)
 	{
 		::operator delete(p);
@@ -106,6 +102,12 @@ public:
 	NameKeyType		m_key;
 	AsciiString		m_nameString;
 };
+
+// Retail's allocation sites call ::operator new (0x00881F30) directly; the
+// out-of-line Bucket placement wrapper (??2Bucket, 0x009A5970, bfmeAllocBlock) is
+// owned by BucketPlacementNew.cpp, so this site-local overload has internal linkage
+// and never emits a competing ??2Bucket COMDAT.
+static inline void *operator new(size_t s, Bucket::BucketMagicEnum) { return ::operator new(s); }
 
 inline Bucket::Bucket() : m_nextInSocket(NULL), m_key(NAMEKEY_INVALID) { }
 inline Bucket::~Bucket() { }
