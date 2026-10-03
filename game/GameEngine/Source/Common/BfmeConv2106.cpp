@@ -10,7 +10,15 @@ public:
 	BfmeOverride1137 *m_bfme04ZB;
 };
 
-extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+class WeatherSetting;
+
+template <class T> class OVERRIDE
+{
+public:
+	T *ptr;
+};
+
+extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 
 class SubsystemInterface
 {
@@ -42,7 +50,7 @@ BfmeHostZB::~BfmeHostZB()
 
 	m_bfme08ZB = 0;
 
-	BfmeOverride1137 *g = g_bfmeGlo012F15F8;
+	BfmeOverride1137 *g = (BfmeOverride1137 *)TheWeatherSetting.ptr;
 
 	if (g != 0)
 	{
@@ -55,7 +63,7 @@ BfmeHostZB::~BfmeHostZB()
 			if (ov != 0)
 				ov->bfmeDeleteZB(1);
 
-			g_bfmeGlo012F15F8 = 0;
+			TheWeatherSetting.ptr = 0;
 		}
 	}
 }
