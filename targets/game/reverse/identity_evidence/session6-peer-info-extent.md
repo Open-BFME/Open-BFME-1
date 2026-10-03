@@ -1,0 +1,5 @@
+# Complete the Peer player-info entry epilogue
+
+Retail body RVA 0x00858E60 starts with SUB ESP,8 and has conditional exits joining the common epilogue at RVA 0x00858F76. The old 283-byte claim stops after the first byte of ADD ESP,8 at RVA 0x00858F7A. Its remaining two operand bytes and RET at RVA 0x00858F7D complete 286 bytes. INT3 padding occupies 0x00858F7E..0x00858F7F before the next prologue at 0x00858F80. Local PE/Capstone decoding and Ghidra read_memory at VA 0x00C58F60 independently agree on this tail. The expanded span intersects only its own ledger row. Existing clean C++ peerGetPlayerInfoA retains the blocking-loop and shutdown paths and its native emission matches this full span. Source, inherited identity and pins are unchanged; this is an extent repair only.
+
+Rule: AGENTS.md requires matched rows backed by real source and byte verification; docs/matching.md requires the exact decorated-symbol check. Severity WRONG: the old claim omits executable bytes. This evidence corrects the extent only; it does not newly validate inherited semantic names.
