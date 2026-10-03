@@ -17578,5 +17578,25 @@
   "after_sha256": "16f8a20621af0930c7440ce2e86732f76661fb4670ff60be62207d4e52b4b06c",
   "evidence": "targets/game/reverse/identity_evidence/00532280-selection-visibility.md",
   "reason": "Bank-only unbound Gather declaration replaced by an explicit receiver ABI view of the existing verified 00531DE0 helper. Retail ignores incoming ECX and pops two arguments; the canonical ledger helper identity is retained. No recovered Gather class identity or second body is asserted."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001b4a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Rva001B4A50.cpp",
+  "old_name": "BfmeXformXC",
+  "new_name": "Rva001B4A50",
+  "before_sha256": "7288a9143ed07b0968c226cf76924fae74cc5d7ab5f47366940d8d2b5c98a506",
+  "after_sha256": "cab722fd4af8f57fca9e2ff4a8574df35cb6df3a8c32211eb922f4b101902316",
+  "evidence": "targets/game/reverse/identity_evidence/001b4a50-native-cross-product.md",
+  "reason": "Historical bank comparison: the partial source is archived byte-for-byte as 001b4a50-original-bank.cpp.txt, while the completed production body replaces only the generated address placeholder. The bank has no authoritative identity witness; retain an address-qualified owner instead of promoting its synthetic name. No established production identity is renamed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001b4a50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Rva001B4A50.cpp",
+  "old_name": "pad",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "7288a9143ed07b0968c226cf76924fae74cc5d7ab5f47366940d8d2b5c98a506",
+  "after_sha256": "cab722fd4af8f57fca9e2ff4a8574df35cb6df3a8c32211eb922f4b101902316",
+  "evidence": "targets/game/reverse/identity_evidence/001b4a50-native-cross-product.md",
+  "reason": "Historical bank comparison: the partial source is archived byte-for-byte as 001b4a50-original-bank.cpp.txt, while the completed production body replaces only the generated address placeholder. The bank has no authoritative identity witness; retain an address-qualified owner instead of promoting its synthetic name. No established production identity is renamed."
  }
 ]
