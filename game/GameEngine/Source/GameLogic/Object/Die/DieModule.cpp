@@ -75,28 +75,20 @@ const FieldParse* DieMuxData::getFieldParse()
   return dataFieldParse;
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?isDieApplicable@DieMuxData@@ present-unmatched
-Bool DieMuxData::isDieApplicable(const Object* obj, const DamageInfo *damageInfo) const
+// 0x001FB090 and 0x00255120: two unreferenced retail copies of the same
+// one-bit flag test, (flags & (1 << (n - 1))) != 0.  Both are reached only
+// through ILT jumps (0x000372BD, 0x0001E37B) that nothing calls; the Zero Hour
+// helpers getDeathTypeFlag/getVeterancyLevelFlag have these bytes but retail
+// shows no caller that would say which name belongs to which address.
+// IDENTITY IS NOT RECOVERED.  Names are derived from the addresses.
+bool __cdecl rva001FB090BitFlag( unsigned int flags, int n )
 {
-	// wrong death type? punt
-	if (!getDeathTypeFlag(m_deathTypes, damageInfo->in.m_deathType))
-		return false;
+	return ( flags & ( 1 << ( n - 1 ) ) ) != 0;
+}
 
-	// wrong vet level? punt
-	if (!getVeterancyLevelFlag(m_veterancyLevels, obj->getVeterancyLevel()))
-		return false;
-
-	// all 'exempt' bits must be clear for us to run.
-	if( m_exemptStatus.any() && obj->getStatusBits().testForAny( m_exemptStatus ) )
-		return false;
-
-	// all 'required' bits must be set for us to run.
-	// But only if we have a required status to check
-	if( m_requiredStatus.any()  &&  !obj->getStatusBits().testForAll( m_requiredStatus ) )
-		return false;
-
-	return true;
+bool __cdecl rva00255120BitFlag( unsigned int flags, int n )
+{
+	return ( flags & ( 1 << ( n - 1 ) ) ) != 0;
 }
 
 // ------------------------------------------------------------------------------------------------
