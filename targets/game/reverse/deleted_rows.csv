@@ -33883,3 +33883,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?j_0017a5f7@@YAXXZ,0x0017A5F7,Interior terminal jump of a complete 12-byte state exit wrapper; no independent entry. Recovered parent at 0x0017A5F0; see identity_evidence/0017a5f0-0017f110-state-exit.md.
 ?j_0017f117@@YAXXZ,0x0017F117,Interior terminal jump of a complete 12-byte state exit wrapper; no independent entry. Recovered parent at 0x0017F110; see identity_evidence/0017a5f0-0017f110-state-exit.md.
 ?j_0026d3d8@@YAXXZ,0x0026D3D8,Interior final E9 of complete 13B wrapper at0026D3D0; table10B8D18 slot19 and ILT31B4C enter the prefix; see identity_evidence/0026d3d0-complete-wrapper.md.
+?logicMessageDispatcher@GameLogic@@,0x00397540,Truncated 11543B naked lift cuts FS restore and omits executable epilogue through RET8 at 0039A25F; 11554B executable stream plus separately owned switch data requires native recovery. See identity_evidence/session8-dispatcher-truncated-dump.md.
