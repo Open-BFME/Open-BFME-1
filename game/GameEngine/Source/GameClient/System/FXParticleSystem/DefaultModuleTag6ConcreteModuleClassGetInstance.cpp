@@ -11,6 +11,12 @@
 // Retail also publishes the object as the current instance of its category
 // (the store lands between the source loads and the member stores).
 
+#include "fx_particle_system_category.h"
+
+// VA 0x012F6500 is owned by fx_particle_system_category_accessors.cpp.
+extern template FXParticleSystem::CategoryModuleClass<6> *
+    FXParticleSystem::CategoryModuleClass<6>::s_firstList;
+
 namespace FXParticleSystem
 {
 
@@ -29,7 +35,6 @@ typedef DefaultModuleTag<6> DefaultModuleTag6Tag;
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **defaultModuleTag6SourceAt4;
 extern void **defaultModuleTag6SourceAt8;
-extern ConcreteModuleClass<DefaultModuleTag6Tag> *defaultModuleTag6RegistryHead;
 extern ConcreteModuleClass<DefaultModuleTag6Tag> *defaultModuleTag6CurrentInstance;
 extern void *defaultModuleTag6Vtable[];
 
@@ -44,8 +49,8 @@ public:
 		defaultModuleTag6CurrentInstance = this;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = defaultModuleTag6RegistryHead;
-		defaultModuleTag6RegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<6>::s_firstList);
+		CategoryModuleClass<6>::s_firstList = reinterpret_cast<CategoryModuleClass<6> *>(this);
 		m_table = defaultModuleTag6Vtable;
 	}
 

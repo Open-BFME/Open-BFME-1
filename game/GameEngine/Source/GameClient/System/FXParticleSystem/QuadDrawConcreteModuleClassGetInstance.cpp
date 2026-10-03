@@ -9,6 +9,12 @@
 // fx_particle_system_bulk.cpp; this inline semantic view is needed only so
 // MSVC7.1 materializes their body inside the guarded function-local static.
 
+#include "fx_particle_system_category.h"
+
+// VA 0x012F6500 is owned by fx_particle_system_category_accessors.cpp.
+extern template FXParticleSystem::CategoryModuleClass<6> *
+    FXParticleSystem::CategoryModuleClass<6>::s_firstList;
+
 namespace FXParticleSystem
 {
 
@@ -41,7 +47,6 @@ typedef ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME,
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **quadDrawSourceAt4;
 extern void **quadDrawSourceAt8;
-extern ConcreteModuleClass<QuadDrawTag> *quadDrawRegistryHead;
 extern void *quadDrawVtable[];
 
 template <>
@@ -54,8 +59,8 @@ public:
 		void *sourceAt4 = *quadDrawSourceAt4;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = quadDrawRegistryHead;
-		quadDrawRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<6>::s_firstList);
+		CategoryModuleClass<6>::s_firstList = reinterpret_cast<CategoryModuleClass<6> *>(this);
 		m_table = quadDrawVtable;
 	}
 

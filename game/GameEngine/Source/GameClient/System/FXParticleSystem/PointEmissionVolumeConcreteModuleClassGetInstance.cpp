@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64FC.
+extern template FXParticleSystem::CategoryModuleClass<5> *
+	FXParticleSystem::CategoryModuleClass<5>::s_firstList;
+
 // The public FX particle header intentionally keeps ConcreteModuleClass
 // specializations empty: fx_particle_system.cpp builds a second FXPS_V mode
 // with a virtual view.  This TU owns the actual PointEmissionVolume singleton ABI only.
@@ -29,7 +35,6 @@ typedef PointEmissionVolumeModuleTag PointEmissionVolumeTag;
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **pointEmissionVolumeSourceAt4;
 extern void **pointEmissionVolumeSourceAt8;
-extern ConcreteModuleClass<PointEmissionVolumeTag> *pointEmissionVolumeRegistryHead;
 extern ConcreteModuleClass<PointEmissionVolumeTag> *pointEmissionVolumeCurrentInstance;
 extern void *pointEmissionVolumeVtable[];
 
@@ -44,8 +49,8 @@ public:
 		pointEmissionVolumeCurrentInstance = this;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = pointEmissionVolumeRegistryHead;
-		pointEmissionVolumeRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<5>::s_firstList);
+		CategoryModuleClass<5>::s_firstList = reinterpret_cast<CategoryModuleClass<5> *>(this);
 		m_table = pointEmissionVolumeVtable;
 	}
 

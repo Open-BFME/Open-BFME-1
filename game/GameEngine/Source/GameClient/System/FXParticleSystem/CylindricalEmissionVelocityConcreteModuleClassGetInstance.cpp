@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64F8.
+extern template FXParticleSystem::CategoryModuleClass<4> *
+	FXParticleSystem::CategoryModuleClass<4>::s_firstList;
+
 // The public FX particle header intentionally keeps ConcreteModuleClass
 // specializations empty: fx_particle_system.cpp builds a second FXPS_V mode
 // with a virtual view.  This TU owns the actual CylindricalEmissionVelocity
@@ -45,8 +51,6 @@ typedef ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY,
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **cylindricalEmissionVelocitySourceAt4;
 extern void **cylindricalEmissionVelocitySourceAt8;
-extern ConcreteModuleClass<CylindricalEmissionVelocityTag> *
-	cylindricalEmissionVelocityRegistryHead;
 extern void *cylindricalEmissionVelocityVtable[];
 
 template <>
@@ -59,8 +63,8 @@ public:
 		void *sourceAt4 = *cylindricalEmissionVelocitySourceAt4;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = cylindricalEmissionVelocityRegistryHead;
-		cylindricalEmissionVelocityRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<4>::s_firstList);
+		CategoryModuleClass<4>::s_firstList = reinterpret_cast<CategoryModuleClass<4> *>(this);
 		m_table = cylindricalEmissionVelocityVtable;
 	}
 

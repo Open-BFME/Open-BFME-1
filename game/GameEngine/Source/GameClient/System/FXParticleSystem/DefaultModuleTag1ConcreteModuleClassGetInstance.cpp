@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64EC.
+extern template FXParticleSystem::CategoryModuleClass<1> *
+	FXParticleSystem::CategoryModuleClass<1>::s_firstList;
+
 // The public FX particle header intentionally keeps ConcreteModuleClass
 // specializations empty: fx_particle_system.cpp builds a second FXPS_V mode
 // with a virtual view.  This TU owns the actual DefaultModuleTag1 singleton ABI only.
@@ -29,7 +35,6 @@ typedef DefaultModuleTag<1> DefaultModuleTag1Tag;
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **defaultModuleTag1SourceAt4;
 extern void **defaultModuleTag1SourceAt8;
-extern ConcreteModuleClass<DefaultModuleTag1Tag> *defaultModuleTag1RegistryHead;
 extern ConcreteModuleClass<DefaultModuleTag1Tag> *defaultModuleTag1CurrentInstance;
 extern void *defaultModuleTag1Vtable[];
 
@@ -44,8 +49,8 @@ public:
 		defaultModuleTag1CurrentInstance = this;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = defaultModuleTag1RegistryHead;
-		defaultModuleTag1RegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<1>::s_firstList);
+		CategoryModuleClass<1>::s_firstList = reinterpret_cast<CategoryModuleClass<1> *>(this);
 		m_table = defaultModuleTag1Vtable;
 	}
 

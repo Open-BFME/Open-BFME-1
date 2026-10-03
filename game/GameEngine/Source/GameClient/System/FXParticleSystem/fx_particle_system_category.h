@@ -2,6 +2,9 @@
 
 namespace FXParticleSystem {
 
+template <class Tag>
+class ConcreteModuleClass;
+
 template <int Category>
 class CategoryModuleClass;
 
@@ -21,6 +24,9 @@ protected:
 
 template <int Category>
 class CategoryModuleClass : public CategoryModuleClassBase<Category> {
+    // Concrete module constructors register their ABI views in this list.
+    template <class Tag> friend class ConcreteModuleClass;
+
 public:
     const char *getKey() const { return m_key; }
     const char *getName() const { return m_name; }

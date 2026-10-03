@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64FC.
+extern template FXParticleSystem::CategoryModuleClass<5> *
+	FXParticleSystem::CategoryModuleClass<5>::s_firstList;
+
 // The public FX particle header intentionally keeps ConcreteModuleClass
 // specializations empty: fx_particle_system.cpp builds a second FXPS_V mode
 // with a virtual view.  This TU owns the actual LineEmissionVolume singleton
@@ -44,8 +50,6 @@ typedef ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY,
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **lineEmissionVolumeSourceAt4;
 extern void **lineEmissionVolumeSourceAt8;
-extern ConcreteModuleClass<LineEmissionVolumeTag> *
-	lineEmissionVolumeRegistryHead;
 extern void *lineEmissionVolumeVtable[];
 
 template <>
@@ -58,8 +62,8 @@ public:
 		void *sourceAt4 = *lineEmissionVolumeSourceAt4;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = lineEmissionVolumeRegistryHead;
-		lineEmissionVolumeRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<5>::s_firstList);
+		CategoryModuleClass<5>::s_firstList = reinterpret_cast<CategoryModuleClass<5> *>(this);
 		m_table = lineEmissionVolumeVtable;
 	}
 

@@ -1,8 +1,29 @@
 // cl: /EHsc /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?freeZones@ZoneBlock@@IAEXXZ: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 #include "fx_particle_system.h"
+#include "fx_particle_system_category.h"
 #include <memory.h>
 #include <memory>
+
+// The category accessor TU owns these nine four-byte registry heads.
+extern template FXParticleSystem::CategoryModuleClass<0> *
+    FXParticleSystem::CategoryModuleClass<0>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<1> *
+    FXParticleSystem::CategoryModuleClass<1>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<2> *
+    FXParticleSystem::CategoryModuleClass<2>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<3> *
+    FXParticleSystem::CategoryModuleClass<3>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<4> *
+    FXParticleSystem::CategoryModuleClass<4>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<5> *
+    FXParticleSystem::CategoryModuleClass<5>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<6> *
+    FXParticleSystem::CategoryModuleClass<6>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<7> *
+    FXParticleSystem::CategoryModuleClass<7>::s_firstList;
+extern template FXParticleSystem::CategoryModuleClass<8> *
+    FXParticleSystem::CategoryModuleClass<8>::s_firstList;
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
@@ -1759,22 +1780,11 @@ extern const char g_01110880[];
 extern const char g_0111088C[];
 extern const char g_01110874[];
 extern ConcreteModuleClass<DefaultModuleTag<0> > *defaultModuleTag0CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<0> > *defaultModuleTag0RegistryHead;
 extern ConcreteModuleClass<DefaultModuleTag<1> > *defaultModuleTag1CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<1> > *defaultModuleTag1RegistryHead;
 extern ConcreteModuleClass<DefaultModuleTag<2> > *defaultModuleTag2CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<2> > *defaultModuleTag2RegistryHead; // the same object; the sibling singleton TUs name it renderObjectUpdateRegistryHead
 extern ConcreteModuleClass<DefaultModuleTag<3> > *defaultModuleTag3CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<3> > *defaultModuleTag3RegistryHead;
 extern ConcreteModuleClass<DefaultModuleTag<6> > *defaultModuleTag6CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<6> > *defaultModuleTag6RegistryHead; // the same object; the sibling singleton TUs name it butterflyDrawRegistryHead, lightningDrawRegistryHead, quadDrawRegistryHead, renderObjectDrawRegistryHead, streakDrawRegistryHead
 extern ConcreteModuleClass<DefaultModuleTag<7> > *defaultModuleTag7CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<7> > *defaultModuleTag7RegistryHead;
-extern ConcreteModuleClass<OrthoEmissionVelocityModuleTag> *orthoEmissionVelocityRegistryHead; // the same object; the sibling singleton TUs name it cylindricalEmissionVelocityRegistryHead, hemisphericalEmissionVelocityRegistryHead, outwardEmissionVelocityRegistryHead, sphericalEmissionVelocityRegistryHead
-extern ConcreteModuleClass<PointEmissionVolumeModuleTag> *pointEmissionVolumeRegistryHead; // the same object; the sibling singleton TUs name it boxEmissionVolumeRegistryHead, cylinderEmissionVolumeRegistryHead, lightningEmissionRegistryHead, lineEmissionVolumeRegistryHead, sphereEmissionVolumeRegistryHead
-extern ConcreteModuleClass<ModuleTag<7, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME,
-    LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule,
-    ParticleLifeEventModuleTemplate> > *lifeEventRegistryHead; // the same object; the sibling singleton TUs name it terrainCollisionRegistryHead
 extern ConcreteModuleClass<OrthoEmissionVelocityModuleTag> *orthoEmissionVelocityCurrentInstance;
 extern ConcreteModuleClass<PointEmissionVolumeModuleTag> *pointEmissionVolumeCurrentInstance;
 extern void **defaultModuleTag0SourceAt8;
@@ -1864,8 +1874,8 @@ ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass()
     self[0] = ( void *)&CATEGORY_MODULE_CLASS_0_VTABLE;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag0RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag0RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<0>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<0>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag0Vtable;
 }
 
@@ -1895,8 +1905,8 @@ ConcreteModuleClass<DefaultModuleTag<1> >::ConcreteModuleClass()
     self[0] = ( void *)g_01110838;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag1RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag1RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<1>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<1>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag1Vtable;
 }
 
@@ -1927,8 +1937,8 @@ ConcreteModuleClass<DefaultModuleTag<2> >::ConcreteModuleClass()
     self[0] = ( void *)g_0111085C;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag2RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag2RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<2>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<2>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag2Vtable;
 }
 
@@ -1959,8 +1969,8 @@ ConcreteModuleClass<DefaultModuleTag<3> >::ConcreteModuleClass()
     self[0] = ( void *)g_01110850;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag3RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag3RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<3>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<3>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag3Vtable;
 }
 
@@ -1991,8 +2001,8 @@ ConcreteModuleClass<DefaultModuleTag<6> >::ConcreteModuleClass()
     self[0] = ( void *)g_01110820;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag6Vtable;
 }
 
@@ -2023,8 +2033,8 @@ ConcreteModuleClass<DefaultModuleTag<7> >::ConcreteModuleClass()
     self[0] = ( void *)g_01110868;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag7RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag7RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<7>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<7>::s_firstList) = this;
     self[0] = ( void *)defaultModuleTag7Vtable;
 }
 
@@ -2054,8 +2064,8 @@ ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UP
     slots[0] = ( void *)g_0111085C;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&defaultModuleTag2RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag2RegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<2>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<2>::s_firstList) = this;
     slots[0] = ( void *)renderObjectUpdateVtable;
 }
 
@@ -2099,8 +2109,8 @@ ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLIN
     slots[0] = ( void *)g_01110880;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList) = this;
     slots[0] = ( void *)cylindricalEmissionVelocityVtable;
 }
 
@@ -2145,8 +2155,8 @@ ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEM
     slots[0] = ( void *)g_01110880;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList) = this;
     slots[0] = ( void *)hemisphericalEmissionVelocityVtable;
 }
 
@@ -2191,8 +2201,8 @@ ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_E
     slots[0] = ( void *)g_01110880;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList) = this;
     slots[0] = ( void *)outwardEmissionVelocityVtable;
 }
 
@@ -2237,8 +2247,8 @@ ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERIC
     slots[0] = ( void *)g_01110880;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList) = this;
     slots[0] = ( void *)sphericalEmissionVelocityVtable;
 }
 
@@ -2283,8 +2293,8 @@ ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VO
     slots[0] = ( void *)g_0111088C;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     slots[0] = ( void *)boxEmissionVolumeVtable;
 }
 
@@ -2342,8 +2352,8 @@ ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_E
     self[0] = ( void *)g_0111088C;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     self[0] = ( void *)cylinderEmissionVolumeVtable;
 }
 
@@ -2403,8 +2413,8 @@ ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSI
     slots[0] = ( void *)g_0111088C;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     slots[0] = ( void *)lightningEmissionVtable;
 }
 
@@ -2447,8 +2457,8 @@ ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_
     slots[0] = ( void *)g_0111088C;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     slots[0] = ( void *)lineEmissionVolumeVtable;
 }
 
@@ -2509,8 +2519,8 @@ ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISS
     self[0] = ( void *)g_0111088C;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     self[0] = ( void *)sphereEmissionVolumeVtable;
 }
 
@@ -2566,8 +2576,8 @@ ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODUL
     slots[0] = ( void *)g_01110820;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     slots[0] = ( void *)butterflyDrawVtable;
 }
 
@@ -2611,8 +2621,8 @@ ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODUL
     self[0] = ( void *)g_01110820;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     self[0] = ( void *)lightningDrawVtable;
 }
 
@@ -2656,8 +2666,8 @@ ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, Qu
     slots[0] = ( void *)g_01110820;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     slots[0] = ( void *)quadDrawVtable;
 }
 
@@ -2702,8 +2712,8 @@ ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW
     self[0] = ( void *)g_01110820;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     self[0] = ( void *)renderObjectDrawVtable;
 }
 
@@ -2748,8 +2758,8 @@ ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME
     slots[0] = ( void *)g_01110820;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead);
-    *reinterpret_cast<void **>(&defaultModuleTag6RegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_firstList) = this;
     slots[0] = ( void *)streakDrawVtable;
 }
 
@@ -2794,8 +2804,8 @@ ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, 
     slots[0] = ( void *)g_01110874;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&lifeEventRegistryHead);
-    *reinterpret_cast<void **>(&lifeEventRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<8>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<8>::s_firstList) = this;
     slots[0] = ( void *)lifeEventVtable;
 }
 
@@ -2838,8 +2848,8 @@ ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION
     slots[0] = ( void *)g_01110874;
     slots[1] = (void *)second;
     slots[2] = (void *)first;
-    slots[3] = *reinterpret_cast<void **>(&lifeEventRegistryHead);
-    *reinterpret_cast<void **>(&lifeEventRegistryHead) = this;
+    slots[3] = *reinterpret_cast<void **>(&CategoryModuleClass<8>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<8>::s_firstList) = this;
     slots[0] = ( void *)terrainCollisionVtable;
 }
 
@@ -2883,8 +2893,8 @@ ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::ConcreteModuleClass()
     self[0] = ( void *)g_01110880;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityRegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_firstList) = this;
     self[0] = ( void *)orthoEmissionVelocityVtable;
 }
 
@@ -2930,8 +2940,8 @@ ConcreteModuleClass<PointEmissionVolumeModuleTag>::ConcreteModuleClass()
     self[0] = ( void *)g_0111088C;
     self[1] = (void *)second;
     self[2] = (void *)first;
-    self[3] = *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead);
-    *reinterpret_cast<void **>(&pointEmissionVolumeRegistryHead) = this;
+    self[3] = *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList);
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_firstList) = this;
     self[0] = ( void *)pointEmissionVolumeVtable;
 }
 

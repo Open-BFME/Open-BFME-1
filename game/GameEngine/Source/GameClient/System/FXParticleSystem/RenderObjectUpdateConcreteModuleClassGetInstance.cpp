@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64F0.
+extern template FXParticleSystem::CategoryModuleClass<2> *
+	FXParticleSystem::CategoryModuleClass<2>::s_firstList;
+
 // The public FX particle header keeps ConcreteModuleClass specializations
 // empty because fx_particle_system.cpp also builds an FXPS_V virtual view.
 // This TU owns the named RenderObjectUpdate singleton ABI only.  The module
@@ -40,8 +46,6 @@ typedef ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY,
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **renderObjectUpdateSourceAt4;
 extern void **renderObjectUpdateSourceAt8;
-extern ConcreteModuleClass<RenderObjectUpdateTag> *
-	renderObjectUpdateRegistryHead;
 extern void *renderObjectUpdateVtable[];
 
 template <>
@@ -54,8 +58,8 @@ public:
 		void *sourceAt4 = *renderObjectUpdateSourceAt4;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = renderObjectUpdateRegistryHead;
-		renderObjectUpdateRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<2>::s_firstList);
+		CategoryModuleClass<2>::s_firstList = reinterpret_cast<CategoryModuleClass<2> *>(this);
 		m_table = renderObjectUpdateVtable;
 	}
 

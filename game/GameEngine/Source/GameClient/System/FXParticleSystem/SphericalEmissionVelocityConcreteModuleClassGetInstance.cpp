@@ -1,5 +1,11 @@
 // cl: /EHs-c-
 
+#include "fx_particle_system_category.h"
+
+// The category accessor TU already owns the four-byte head at 0x012F64F8.
+extern template FXParticleSystem::CategoryModuleClass<4> *
+	FXParticleSystem::CategoryModuleClass<4>::s_firstList;
+
 // The public FX particle header intentionally keeps ConcreteModuleClass
 // specializations empty: fx_particle_system.cpp builds a second FXPS_V mode
 // with a virtual view.  This TU owns the actual SphericalEmissionVelocity
@@ -44,8 +50,6 @@ typedef ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY,
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **sphericalEmissionVelocitySourceAt4;
 extern void **sphericalEmissionVelocitySourceAt8;
-extern ConcreteModuleClass<SphericalEmissionVelocityTag> *
-	sphericalEmissionVelocityRegistryHead;
 extern void *sphericalEmissionVelocityVtable[];
 
 template <>
@@ -58,8 +62,8 @@ public:
 		void *sourceAt4 = *sphericalEmissionVelocitySourceAt4;
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
-		m_next = sphericalEmissionVelocityRegistryHead;
-		sphericalEmissionVelocityRegistryHead = this;
+		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<4>::s_firstList);
+		CategoryModuleClass<4>::s_firstList = reinterpret_cast<CategoryModuleClass<4> *>(this);
 		m_table = sphericalEmissionVelocityVtable;
 	}
 
