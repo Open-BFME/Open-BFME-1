@@ -1,5 +1,5 @@
 // ?checkQueuedTeams@AIPlayer@@MAEXXZ
-// partial score=0.997 date=2026-09-17
+// partial score=0.9986 date=2026-10-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/objectdlink
 
 // BFME's AIPlayer::checkQueuedTeams, retail RVA 0x00161E20 (697 bytes).
@@ -481,14 +481,10 @@ void AIPlayer::checkQueuedTeams()
 				{
                                         BFMERetailUnicodeString outName;
                                         TeamPrototype *prototype = team->m_team->getPrototype();
-        BFMERetailAsciiString *condition = &prototype->m_productionCondition;
-        BFMERetailAsciiString *teamName = prototype
-                ? &prototype->m_name
-                : (BFMERetailAsciiString *)0x01336e50;
-        Script *script = TheScriptEngine->findScriptByName(
-                teamName,
-                condition,
-                &outName);
+        TeamPrototype *conditionPrototype = prototype;
+        if (!prototype) prototype = (TeamPrototype *)0x01336e50;
+        else prototype = (TeamPrototype *)((char *)prototype + 0x10);
+        Script *script = TheScriptEngine->findScriptByName((BFMERetailAsciiString *)prototype, &conditionPrototype->m_productionCondition, &outName);
 				if (script)
 					TheScriptEngine->friend_executeAction(
 						&outName, script->getAction(), team->m_team);
