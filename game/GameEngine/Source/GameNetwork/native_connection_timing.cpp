@@ -541,6 +541,15 @@ private:
 	unsigned int m_disconnectFrame;
 };
 
+class NetDisconnectScreenOffCommandMsg : public NetCommandMsg
+{
+public:
+	NetDisconnectScreenOffCommandMsg();
+	void setNewFrame(unsigned int frame);
+private:
+	unsigned int m_newFrame;
+};
+
 class NetProgressCommandMsg : public NetCommandMsg
 {
 public:
@@ -810,6 +819,8 @@ public:
 	void init();
 protected:
 	// Protected there, so IAE.
+	friend class BFMEConnectionManager;
+	void turnOffScreen(int slot);
 	void processDisconnectFrame(NetCommandMsg *msg, ConnectionManager *conMgr);
 	void processDisconnectPlayer(NetCommandMsg *msg, ConnectionManager *conMgr);
 };
@@ -3957,154 +3968,26 @@ void BFMEConnectionManager::sendDisconnectFrameCommand()
 // DisconnectManager::turnOffScreen, which is the same pairing
 // processDisconnectScreenOff has on the receiving side. Named from the type its message carries, which is
 // evidence rather than inference now that the enum at 0x00683020 is recovered.
-__declspec(naked) void BFMEConnectionManager::sendDisconnectScreenOffCommand(int slot)
+void BFMEConnectionManager::sendDisconnectScreenOffCommand(int slot)
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 1044086h
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		push ecx
-		push ebx
-		push esi
-		mov esi, ecx
-		mov eax, dword ptr [esi+12028h]
-		mov ecx, dword ptr [esi+120E0h]
-		push edi
-		push eax
-		__emit 0E8h
-		__emit 043h
-		__emit 010h
-		__emit 09Eh
-		__emit 0FFh   // call 0x44AD0
-		push 20h
-		__emit 0E8h
-		__emit 09Ch
-		__emit 0E4h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		add esp, 4h
-		mov dword ptr [esp+0Ch], eax
-		xor ebx, ebx
-		cmp eax, ebx
-		mov dword ptr [esp+18h], ebx
-		je L00_663AB0
-		mov ecx, eax
-		__emit 0E8h
-		__emit 024h
-		__emit 0BEh
-		__emit 09Ah
-		__emit 0FFh   // call 0xF8D0
-		mov edi, eax
-		jmp L01_663AB2
-L00_663AB0:
-		xor edi, edi
-L01_663AB2:
-		mov eax, dword ptr [esi+12028h]
-		mov dword ptr [edi+0Ch], eax
-		mov eax, dword ptr [esp+20h]
-		push eax
-		mov ecx, edi
-		mov dword ptr [esp+1Ch], 0FFFFFFFFh
-		__emit 0E8h
-		__emit 036h
-		__emit 05Ah
-		__emit 09Ch
-		__emit 0FFh   // call 0x29505
-		mov eax, dword ptr [edi+14h]
-		push eax
-		__emit 0E8h
-		__emit 09Ah
-		__emit 020h
-		__emit 09Bh
-		__emit 0FFh   // call 0x15B72
-		add esp, 4h
-		test al, al
-		je L02_663AE8
-		__emit 0E8h
-		__emit 074h
-		__emit 0CAh
-		__emit 09Ch
-		__emit 0FFh   // call 0x30558
-		mov word ptr [edi+10h], ax
-L02_663AE8:
-		mov ecx, dword ptr [esi+12028h]
-		xor edx, edx
-		mov dl, 1h
-		shl dl, cl
-		mov ecx, esi
-		not dl
-		push edx
-		push edi
-		__emit 0E8h
-		__emit 0D8h
-		__emit 0D6h
-		__emit 09Dh
-		__emit 0FFh   // call 0x411D7
-		cmp dword ptr [esi+120E0h], ebx
-		je L03_663B5D
-		push 14h
-		__emit 0E8h
-		__emit 022h
-		__emit 0E4h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		add esp, 4h
-		mov dword ptr [esp+20h], eax
-		cmp eax, ebx
-		mov dword ptr [esp+18h], 1h
-		je L04_663B2B
-		push edi
-		mov ecx, eax
-		__emit 0E8h
-		__emit 0BDh
-		__emit 03Eh
-		__emit 09Ah
-		__emit 0FFh   // call 0x79E6
-		mov ebx, eax
-L04_663B2B:
-		mov ecx, dword ptr [esi+12028h]
-		mov al, 1h
-		shl al, cl
-		push esi
-		push ebx
-		mov dword ptr [esp+20h], 0FFFFFFFFh
-		mov byte ptr [ebx+0Ch], al
-		mov ecx, dword ptr [esi+120E0h]
-		__emit 0E8h
-		__emit 023h
-		__emit 04Eh
-		__emit 09Ch
-		__emit 0FFh   // call 0x28970
-		mov ecx, ebx
-		__emit 0E8h
-		__emit 00Ch
-		__emit 04Eh
-		__emit 09Dh
-		__emit 0FFh   // call 0x38960
-		push ebx
-		__emit 0E8h
-		__emit 056h
-		__emit 0E3h
-		__emit 021h
-		__emit 000h   // call 0x881EB0
-		add esp, 4h
-L03_663B5D:
-		mov ecx, edi
-		__emit 0E8h
-		__emit 040h
-		__emit 0C5h
-		__emit 09Bh
-		__emit 0FFh   // call 0x200A4
-		mov ecx, dword ptr [esp+10h]
-		pop edi
-		pop esi
-		pop ebx
-		mov dword ptr fs:[0h], ecx
-		add esp, 10h
-		ret 4h
+	int me = m_localSlot;
+	m_disconnectManager->turnOffScreen(me);
+	NetDisconnectScreenOffCommandMsg *msg = new NetDisconnectScreenOffCommandMsg;
+	msg->setPlayerID(m_localSlot);
+	msg->setNewFrame(slot);
+	if (DoesCommandRequireACommandID(msg->getNetCommandType()))
+		msg->setID(GenerateNextCommandID());
+	reinterpret_cast<ConnectionManager *>(this)->sendLocalCommandDirect(msg,
+		(unsigned char)~(unsigned char)(1 << m_localSlot));
+	if (m_disconnectManager)
+	{
+		NetCommandRef *ref = new NetCommandRef(msg);
+		ref->setRelay((unsigned char)(1 << m_localSlot));
+		m_disconnectManager->processDisconnectCommand(ref,
+			reinterpret_cast<ConnectionManager *>(this));
+		delete ref;
 	}
+	msg->detach();
 }
 
 // Requests agreement on the local player's departure and flushes the request immediately.
