@@ -13,28 +13,12 @@
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
 // Slot 17 takes the team name by value through this wrapper in all four bodies.
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h

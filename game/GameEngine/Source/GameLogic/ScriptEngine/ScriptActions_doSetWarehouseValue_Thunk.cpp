@@ -5,25 +5,10 @@ typedef int Int;
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-
-private:
-	char *m_text;
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyWarehouseDockUpdate.h

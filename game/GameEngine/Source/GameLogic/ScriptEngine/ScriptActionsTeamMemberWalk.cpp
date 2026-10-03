@@ -17,27 +17,11 @@ typedef bool Bool;
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))

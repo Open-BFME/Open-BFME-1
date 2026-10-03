@@ -18,26 +18,11 @@ class ScriptEngine;
 
 // Retail passes the BFME one-word string through an out-of-line copy
 // constructor when the ScriptEngine vcall takes it by value.
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 // The BFME string data header is eight bytes; its text starts at data+8.
