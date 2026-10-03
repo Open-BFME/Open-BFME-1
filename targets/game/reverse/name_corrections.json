@@ -16888,5 +16888,35 @@
   "after_sha256": "4da00ad3e9075113c381ab58758940d8619e7052d812a7a2ea4295cafbd28848",
   "evidence": "targets/game/reverse/identity_evidence/002f9ff0-nearest-enemy-command.md",
   "reason": "The retained bank guessed the exact method spelling from script action semantics. The template proves action behavior but no original C++ method spelling; use an honest address-derived owner for this body, without introducing a member declaration into a shared ScriptActions header."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Audio/AudioEventRTSDestructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/Gen000F9C60Destructor.cpp",
+  "old_name": "AudioEventRTS",
+  "new_name": "Gen_000F9C60",
+  "before_sha256": "24599be48e2535012c955fec0e4fb8a0299281bd93031ddd536865d381bc9f5e",
+  "after_sha256": "b358cf84533a8816d2929f62d2a5e0beff6198e249173e2459cf9ecbc5d4af76",
+  "evidence": "targets/game/reverse/identity_evidence/000cfa40-gen000f9c60-destructor.md",
+  "reason": "Native copied and zeroed integer at +0 and UnicodeString14/AsciiString18 prove this 28-byte record has the existing opaque Gen_000F9C60 identity; actual AudioEventRTS is separately the 0x70-byte virtual object with 162-byte destructor."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Audio/AudioEventRTSDestructorILT.cpp",
+  "new_path": "game/GameEngine/Source/Common/Audio/AudioEventRTSDestructorILT.cpp",
+  "old_name": "AudioEventRTS",
+  "new_name": "Gen_000F9C60",
+  "before_sha256": "114e7a006adf7d83168652930f309410c3abcc8dc1df936d887a210cb0e23943",
+  "after_sha256": "76124f8c0cac464ffe73a6d8980fc1d387f3515aae123da5e0e8274d51cc04df",
+  "evidence": "targets/game/reverse/identity_evidence/000cfa40-gen000f9c60-destructor.md",
+  "reason": "Native copied and zeroed integer at +0 and UnicodeString14/AsciiString18 prove this 28-byte record has the existing opaque Gen_000F9C60 identity; actual AudioEventRTS is separately the 0x70-byte virtual object with 162-byte destructor."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "AudioEventRTS",
+  "new_name": "Gen_000F9C60",
+  "before_sha256": "945a9dc55de26b9f97cc84a256396432e33d87c97591549c0cbe9a66e1352422",
+  "after_sha256": "e7d42da1c634da786122578dbc7237f85aac28f2a6e60a59069dc776c741c468",
+  "evidence": "targets/game/reverse/identity_evidence/000cfa40-gen000f9c60-destructor.md",
+  "reason": "Native copied and zeroed integer at +0 and UnicodeString14/AsciiString18 prove this 28-byte record has the existing opaque Gen_000F9C60 identity; actual AudioEventRTS is separately the 0x70-byte virtual object with 162-byte destructor."
  }
 ]
