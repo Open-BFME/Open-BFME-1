@@ -30,10 +30,7 @@ public:
 	unsigned int m_kindof[1];
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

@@ -17525,7 +17525,7 @@
   "old_name": "ScriptEngine",
   "new_name": "Rva00303910ScriptEngineView",
   "before_sha256": "5779b17251b27f381101f261990059dd1c0f5d36762bbbda0905e6b9eb82ceb7",
-  "after_sha256": "54f0d22790aa4d0e222b5ef95ad895e9be0b08e58823f3462efe7490a67936d1",
+  "after_sha256": "49876e30f959d3cf01dc1732a983dbd4d80761aaa9cebb052e5b8a673bed398b",
   "evidence": "targets/game/reverse/identity_evidence/00303910-team-repair-action.md",
   "reason": "The canonical ScriptEngine global remains typed as ScriptEngine*. The bank reduced class asserted an unwitnessed slot44 overload; the new address-qualified view describes only the independently witnessed BFME ABI."
  },
@@ -17535,7 +17535,7 @@
   "old_name": "doTeamRepairNearest",
   "new_name": "rva00303910",
   "before_sha256": "5779b17251b27f381101f261990059dd1c0f5d36762bbbda0905e6b9eb82ceb7",
-  "after_sha256": "54f0d22790aa4d0e222b5ef95ad895e9be0b08e58823f3462efe7490a67936d1",
+  "after_sha256": "49876e30f959d3cf01dc1732a983dbd4d80761aaa9cebb052e5b8a673bed398b",
   "evidence": "targets/game/reverse/identity_evidence/00303910-team-repair-action.md",
   "reason": "Retail dispatch assigns TEAM_REPAIR_NEREST/action479 to neighboring00303670 with a team/radius signature. This body is action480 with two string references; the alleged named caller is a naked dump. Keep the proven ScriptActions owner and the body address."
  },
@@ -17545,7 +17545,7 @@
   "old_name": "getHealth",
   "new_name": "rva00303910Slot14",
   "before_sha256": "5779b17251b27f381101f261990059dd1c0f5d36762bbbda0905e6b9eb82ceb7",
-  "after_sha256": "54f0d22790aa4d0e222b5ef95ad895e9be0b08e58823f3462efe7490a67936d1",
+  "after_sha256": "49876e30f959d3cf01dc1732a983dbd4d80761aaa9cebb052e5b8a673bed398b",
   "evidence": "targets/game/reverse/identity_evidence/00303910-team-repair-action.md",
   "reason": "ActiveBody secondary vtable slot4 reaches the raw getter0020E140, whereas the called slot5 reaches0020E150 dividing current by maximum health. The bank getHealth label names the wrong slot; the opaque slot spelling avoids guessing the ratio getter name."
  },
@@ -17555,7 +17555,7 @@
   "old_name": "getTeamNamed",
   "new_name": "rva00303910Slot44",
   "before_sha256": "5779b17251b27f381101f261990059dd1c0f5d36762bbbda0905e6b9eb82ceb7",
-  "after_sha256": "54f0d22790aa4d0e222b5ef95ad895e9be0b08e58823f3462efe7490a67936d1",
+  "after_sha256": "49876e30f959d3cf01dc1732a983dbd4d80761aaa9cebb052e5b8a673bed398b",
   "evidence": "targets/game/reverse/identity_evidence/00303910-team-repair-action.md",
   "reason": "The Zero Hour declaration takes one const-reference string and does not prove the bank overload name. Retail witnesses only slot44 taking a by-value string and bool; preserve that ABI with an address-qualified slot."
  }
