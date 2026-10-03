@@ -1,10 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
 // ?Rva009AABB0CodecDispatch@@YAXPAURva009AABB0Context@@@Z
 // Open-BFME5: codec dispatch argument marshaler at retail 0x009AABB0.
+//
+// The body is one call into the 610-byte body at 0x009B4390, which the ledger
+// owns as ?d_009b4390@@YAXXZ (game/gen_asm/d_009a4740.asm) and which the
+// sibling marshaler 0x009AAC80 already reaches under that name
+// (game/GameEngine/Source/Common/Rva009AAC80CodecGrid.cpp).  Retail passes the
+// printf format string at 0x011426A0 as the third argument; nothing defines that
+// VA as a datum, and retail's own text at it is the literal below, so the call
+// takes the same literal its sibling passes.
 
-extern unsigned char g_rva011426A0[];
+void __cdecl d_009b4390(void);
 
-void __cdecl Rva009B4390CodecCall(
+typedef void (__cdecl *Rva009B4390CodecMarshal)(
 	void *, int, void *, int, int, int, int, int,
 	int, int, int, int, int, int, int);
 
@@ -18,7 +26,7 @@ struct Rva009AABB0Context
 	unsigned char m_at19C;
 	unsigned char m_pad19D[0x1A0 - 0x19D];
 	int m_at1A0;
-	unsigned char m_at1A4[0x1AC - 0x1A4];
+	unsigned char m_pad1A4[0x1AC - 0x1A4];
 	unsigned char m_at1AC;
 	unsigned char m_pad1AD[0x1B8 - 0x1AD];
 	int m_at1B8;
@@ -40,10 +48,10 @@ struct Rva009AABB0Context
 
 void Rva009AABB0CodecDispatch(Rva009AABB0Context *self)
 {
-	Rva009B4390CodecCall(
+	((Rva009B4390CodecMarshal)d_009b4390)(
 		self,
 		((self->m_at1B8 + 1) * 3) << 4,
-		g_rva011426A0,
+		"F:%d G:%d Q:%d S:%d B: %d W:%d H:%d V:%d Decode:%8d, Blit:%8d, PP:%8d, P:%d",
 		self->m_at1AC,
 		self->m_at698,
 		*self->m_at13C,
