@@ -594,9 +594,44 @@ void LANAPI::OnPlayerList( LANPlayer *playerList )
 	}
 }
 
+// Retail LANAPI table111AF50 slot28 enters matched OnPlayerList689A40.
+class Rva00689B70CallbackView
+{
+public:
+    virtual void slot00(void) = 0;
+    virtual void slot01(void) = 0;
+    virtual void slot02(void) = 0;
+    virtual void slot03(void) = 0;
+    virtual void slot04(void) = 0;
+    virtual void slot05(void) = 0;
+    virtual void slot06(void) = 0;
+    virtual void slot07(void) = 0;
+    virtual void slot08(void) = 0;
+    virtual void slot09(void) = 0;
+    virtual void slot10(void) = 0;
+    virtual void slot11(void) = 0;
+    virtual void slot12(void) = 0;
+    virtual void slot13(void) = 0;
+    virtual void slot14(void) = 0;
+    virtual void slot15(void) = 0;
+    virtual void slot16(void) = 0;
+    virtual void slot17(void) = 0;
+    virtual void slot18(void) = 0;
+    virtual void slot19(void) = 0;
+    virtual void slot20(void) = 0;
+    virtual void slot21(void) = 0;
+    virtual void slot22(void) = 0;
+    virtual void slot23(void) = 0;
+    virtual void slot24(void) = 0;
+    virtual void slot25(void) = 0;
+    virtual void slot26(void) = 0;
+    virtual void slot27(void) = 0;
+    virtual void OnPlayerList(LANPlayer *playerList) = 0;
+};
+
 void LANAPI::OnNameChange( UnsignedInt IP, UnicodeString newName )
 {
-	OnPlayerList(m_lobbyPlayers);
+    ((Rva00689B70CallbackView *)this)->OnPlayerList(m_lobbyPlayers);
 }
 
 void LANAPI::OnInActive(UnsignedInt IP) {
