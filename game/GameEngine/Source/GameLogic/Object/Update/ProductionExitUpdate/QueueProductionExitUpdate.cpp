@@ -247,34 +247,7 @@ void QueueProductionExitUpdate::exitObjectByBudding( Object *newObj, Object *bud
 
 
 
-// ?getNaturalRallyPoint@QueueProductionExitUpdate@@UBE_NAAUCoord3D@@_N@Z present-unmatched
-Bool QueueProductionExitUpdate::getNaturalRallyPoint( Coord3D& rallyPoint, Bool offset )  const
-{
-	const QueueProductionExitUpdateModuleData *data = getQueueProductionExitUpdateModuleData();
-	Vector3 p;
-
-	//
-	// get the natural rally point from the INI definition, this coord is in model space relative
-	// to the model (0,0,0)
-	//
-	p.X = data->m_naturalRallyPoint.x;
-	p.Y = data->m_naturalRallyPoint.y;
-	p.Z = data->m_naturalRallyPoint.z;
-
-	if ( offset )
-	{
-		Vector3 offset = p;
-		offset.Normalize();
-		offset *= (2*PATHFIND_CELL_SIZE_F);
-		p+=offset;
-	}
-
-	// transform the point into world space
-	const Matrix3D *transform = getObject()->getTransformMatrix();
-	transform->Transform_Vector( *transform, p, &p );
-	rallyPoint.x = p.X; rallyPoint.y = p.Y; rallyPoint.z = p.Z;
-	return TRUE;
-}
+// The retail-proven definition is in QueueProductionExitUpdateGetNaturalRallyPoint.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

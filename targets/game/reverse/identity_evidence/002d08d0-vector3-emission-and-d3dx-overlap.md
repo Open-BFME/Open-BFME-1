@@ -1,0 +1,13 @@
+# QueueProductionExitUpdate emission and Vector3/D3DX identities
+
+The unmatched donor getNaturalRallyPoint definition is removed in favour of the existing matched canonical definition at RVA 0x002D08D0/342 bytes. Native entry uses the ExitInterface adjusted receiver and two stack arguments; RET 8 at 0x002D0A23 ends the body before INT3 at 0x002D0A26. Its identity and source remain unchanged.
+
+The existing canonical QueueProductionExitUpdateGetNaturalRallyPoint.cpp emits both genuine Vector3 operators without source changes: ??XVector3@@QAEAAV0@M@Z at 0x002205E0 and ??YVector3@@QAEAAV0@ABV0@@Z at 0x002CFD00. Each complete 33-byte body matches retail and has zero relocations. Removing the donor callback eliminates its incidental copies, so only their ledger emission source is rehomed. Canonical source SHA256: d36277b2f57ba320714dd0bd49dc88f1732d0ba47ed211dad721385892e51042.
+
+The surplus dup_a05039 and dup_a04ff7 rows falsely attribute identical byte shapes to Vector3. The native D3DX region 0x009F9B82..0x00AD5401 contains one copy of each shape, at 0x00A05039 and 0x00A04FF7. Pristine inputs/vendor/d3dx9/d3dx9.lib SHA256 9496d4ce606998c2ad7588f2db9aada3c59786515244482230fde0cd6099ed56 is the Summer 2003 release documented by PROVENANCE.txt. All external zero-relocation 33-byte archive instances of the X shape (8 instances) carry only ??XD3DXVECTOR3@@QAEAAU0@M@Z; all Y instances (11) carry only ??YD3DXVECTOR3@@QAEAAU0@ABU0@@Z. The symbol-class and native-window count agreement establish the D3DX identities, rather than byte similarity alone.
+
+Independent COFF inspection selected obj\i386\crendertoenvmap.obj section 47 for X and obj\i386\anim.obj section 42 for Y; both symbols start at offset zero, external storage class 2, type 32, with no relocations. Existing surviving ledger members remain unchanged. No claim is made about which identical archive instance supplied the linker copy.
+
+Retail has no identical COMDAT folding. The two overlapping surplus aliases are retired with durable deleted_rows.csv tombstones; the real vendored D3DX identities, archive, extents and provenance are preserved. This repair creates no reconstructed C++ coverage. Independent review: sol1843-review_bodies, gpt-6.1-sol; immutable review packet SHA256 a2bfeb09b06db040ebf7dac1767705184f678873a57d79774b903d7ee511ea5b. Fresh byte gates are required for the retained donor rows, canonical bodies and vendor survivors.
+
+The corrected immutable review packet supersedes packet 5f9c39808ab791abc734a4c6e26e37744a60ff6cb663b2be83f44c406652b378, whose Y member label used a suffix match instead of the exact basename. Only that packet metadata label was mistaken; full COFF section proof identifies anim.obj.
