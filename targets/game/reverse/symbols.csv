@@ -90289,3 +90289,4 @@ __CT??_R0H@84,0x00E4549C,int catchable type in CTA 0xE454B8: attrs/pmd/size from
 __CTA1H,0x00E454B8,int catchable type array of retail ThrowInfo 0xE454C0
 __TI1H,0x00E454C0,int ThrowInfo: pushed before _CxxThrowException in retail (retail 0x850949 and 18 more sites)
 ??_R0?AVtype_info@@@8,0x00EDBD90,type_info RTTI type descriptor: .?AVtype_info@@ at VA 0x012DBD90 holds type_info vftable VA 0x01145868
+_Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; retail guard ctor15D1D0 writes body VA0055C280 into12EF260; first stackarg and AL/plainRET independently decoded; evidence0015d1d0-native-guard-machine.md
