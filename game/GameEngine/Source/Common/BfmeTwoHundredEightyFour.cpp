@@ -3,13 +3,14 @@
 // only content. What was kept of it is never read again. Built without
 // optimisation; the callee is pinned by address.
 
-void *bfmeAllocQA(int kind, unsigned int bytes);
+void j_00030940(void);
+typedef void *(__cdecl *Rva00030940Call)(int kind, unsigned int bytes);
 
 void bfmeMakeQA(unsigned int bytes, const char *from)
 {
 	void *out;
 
-	char *got = (char *)bfmeAllocQA(1, bytes);
+	char *got = (char *)((Rva00030940Call)j_00030940)(1, bytes);
 
 	if (got != 0)
 	{

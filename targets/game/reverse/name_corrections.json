@@ -15268,5 +15268,15 @@
   "after_sha256": "31e6a02935499e1199498de4e7ffda039af80661f4e0cf371a011c1abd918a58",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3WalkBackForwarders.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3WalkBackForwarders.cpp",
+  "old_name": "bfmeForward",
+  "new_name": "j_0002644f",
+  "before_sha256": "1a50c7b811a172899a249c7b5a9e6e3d79e89acca387d0c2ae4131567593d008",
+  "after_sha256": "1317d68149e0305df6de25a133d0cd418269c56614458305b10d38bb88447aba",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

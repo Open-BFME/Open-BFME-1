@@ -11,9 +11,10 @@
 
 class Gen_0002644FTarget
 {
-public:
-	void bfmeForward(void);					// ILT 0x0002644F
 };
+
+void j_0002644f();							// ILT 0x0002644F
+typedef void (__fastcall *Gen0002644FTargetHandle)(Gen_0002644FTarget *);
 
 
 struct Gen_0020A9A0Holder
@@ -93,7 +94,7 @@ void Gen_0020A9A0::bfmeForward(void)
 {
 	Gen_0020A9A0Holder *holder = *(Gen_0020A9A0Holder **)((char *)this - 0x28);
 
-	holder->m_bfmeSub.bfmeForward();
+	((Gen0002644FTargetHandle)j_0002644f)(&holder->m_bfmeSub);
 }
 
 // ?bfmeForward@Gen_00212E50@@QAEXXZ
@@ -101,7 +102,7 @@ void Gen_00212E50::bfmeForward(void)
 {
 	Gen_00212E50Holder *holder = *(Gen_00212E50Holder **)((char *)this - 0xDC);
 
-	holder->m_bfmeSub.bfmeForward();
+	((Gen0002644FTargetHandle)j_0002644f)(&holder->m_bfmeSub);
 }
 
 // ?bfmeForward@Gen_0027FFE0@@QAEXXZ
@@ -109,7 +110,7 @@ void Gen_0027FFE0::bfmeForward(void)
 {
 	Gen_0027FFE0Holder *holder = *(Gen_0027FFE0Holder **)((char *)this - 0x1C);
 
-	holder->m_bfmeSub.bfmeForward();
+	((Gen0002644FTargetHandle)j_0002644f)(&holder->m_bfmeSub);
 }
 
 // ?bfmeForward@Gen_00289AA0@@QAEXXZ
@@ -117,7 +118,7 @@ void Gen_00289AA0::bfmeForward(void)
 {
 	Gen_00289AA0Holder *holder = *(Gen_00289AA0Holder **)((char *)this - 0x1C);
 
-	holder->m_bfmeSub.bfmeForward();
+	((Gen0002644FTargetHandle)j_0002644f)(&holder->m_bfmeSub);
 }
 
 // ?bfmeForward@Gen_002D6D00@@QAEXXZ
@@ -125,5 +126,5 @@ void Gen_002D6D00::bfmeForward(void)
 {
 	Gen_002D6D00Holder *holder = *(Gen_002D6D00Holder **)((char *)this + 0xC);
 
-	holder->m_bfmeSub.bfmeForward();
+	((Gen0002644FTargetHandle)j_0002644f)(&holder->m_bfmeSub);
 }

@@ -25,11 +25,10 @@ public:
 	virtual void shutdown();
 };
 
+void j_00009eda();
+
 class Gen_uwm_00009eda
 {
-public:
-	~Gen_uwm_00009eda();
-
 private:
 	char m_pad[8];
 	Rva0060A240Shutdown *m_shutdown;
@@ -56,7 +55,15 @@ void Rva0060A240Element::update()
 		Rva0060A240Shutdown *shutdown = owned->m_shutdown;
 		if (shutdown != 0)
 			shutdown->shutdown();
-		delete m_owned;
+		// The element destructor is reached through its ILT; a fastcall
+		// pointer keeps this in ECX with no stack arguments, then the
+		// scalar delete's free is spelled explicitly.
+		Gen_uwm_00009eda *freed = m_owned;
+		if (freed != 0)
+		{
+			((void (__fastcall *)(Gen_uwm_00009eda *))j_00009eda)(freed);
+			::operator delete(freed);
+		}
 		m_owned = 0;
 	}
 }

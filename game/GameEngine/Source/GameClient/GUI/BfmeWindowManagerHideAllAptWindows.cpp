@@ -9,10 +9,17 @@ struct BfmeWindowManagerAptSlot
 	char m_pad11[3];
 };
 
+void j_0003f3e1();
+
+struct BfmeW1183CallView
+{
+	void hide(unsigned int index);
+};
+typedef void (BfmeW1183CallView::*BfmeHideCall)(unsigned int);
+
 class BfmeW1183
 {
 public:
-	void bfmeHide1183(unsigned int index);
 	virtual void slot0() = 0;
 	virtual void slot1() = 0;
 	virtual void slot2() = 0;
@@ -36,7 +43,12 @@ void BfmeW1183::hideAllAptWindows()
 	{
 		if (m_aptWindows[index].m_flags & 2)
 		{
-			bfmeHide1183(index);
+			// The hide helper is reached through its ILT; a member pointer
+			// retains ECX and the stack argument while keeping the direct
+			// ILT relocation.
+			union { void (*asFunction)(void); BfmeHideCall asMember; } hideCast;
+			hideCast.asFunction = j_0003f3e1;
+			(reinterpret_cast<BfmeW1183CallView *>(this)->*hideCast.asMember)(index);
 			m_aptWindows[index].m_flags |= 1;
 		}
 	}
