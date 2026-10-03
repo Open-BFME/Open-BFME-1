@@ -1,12 +1,27 @@
 // ?Rva008B4DA0@Rva01136AB8Owner@@QAEPAXPAXPBUBfmeCandidateDX@@@Z
+// partial score=1.0 date=2026-10-03
+// BANK ONLY: BfmeCandidateSingleton0 is the retained bank-only construction-view name.
+// Its out-of-line operator new and ctor remain UNBOUND. Retail calls the existing
+// Rva00897640 and BfmeA1029::bfmeGo1029A at897640/899FC0; do not add duplicate pins.
+// Cleanup already inherits the existing Rva00897670HeaderedDelete identity.
+// ?Rva008B4DA0@Rva01136AB8Owner@@QAEPAXPAXPBUBfmeCandidateDX@@@Z
 // partial score=0.82 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x008B4DA0: vtable 0x01136AB8 slot 0; looks a string handle up among four
 // globals and lazily builds one cached object per match. Identity unrecovered.
 
+// The four callback identities are already independently matched.
+class AptValue; class Rva00899F00Base;
+struct Rva008B4370Owner; struct Rva008B4420Owner; struct Owner008B4700; struct Owner008B4480;
+AptValue *aptSetPackedChannels008B4370(Rva008B4370Owner *,int);
+AptValue *aptPackedChannels008B4420(Rva008B4420Owner *,int);
+Rva00899F00Base *aptGetChannels008B4700(Owner008B4700 *,int);
+AptValue *aptApplyChannels008B4480(Owner008B4480 *,int);
+
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
-void Gen00897300(void *block);
-int __cdecl bfmeCompareVSC(const char *a, const char *b);
+class BfmeItemDX;
+void bfmePush(BfmeItemDX *block);
+extern "C" int __cdecl _strcmpi(const char *a,const char *b);
 extern "C" void *bfmeVft1029A[];
 
 // upstream layout: Code/GameEngine/Source/Common/BfmeConv1029.cpp
@@ -60,24 +75,26 @@ static void bfmeSetRegisteredFlag(BfmeS1082 *obj)
 }
 
 // Same payload, or equal text.
-inline bool bfmeSameCandidate(const BfmeCandidateDataDX *x, const BfmeCandidateDataDX *y)
+__forceinline bool bfmeSameCandidate(const BfmeCandidateDataDX *x, const BfmeCandidateDataDX *y)
 {
-	return x == y || bfmeCompareVSC(x->m_name, y->m_name) == 0;
+	int result = x == y ? 0 : _strcmpi(x->m_name, y->m_name);
+ return !result;
 }
 
 // One class for all four matches: MSVC inlines new and ctor for the first two and calls
 // the out-of-line copies (0x00897640, 0x00899FC0) for the rest; unwind uses 0x00897670.
-class BfmeCandidateSingleton0 : public BfmeA1029
+class Rva00897670HeaderedDelete { public: static void operator delete(void *,unsigned); };
+class BfmeCandidateSingleton0 : public BfmeA1029, public Rva00897670HeaderedDelete
 {
 public:
 	static void *operator new(unsigned int n)
 	{
 		char *raw = (char *)Rva008C5D70Alloc(n + 8);
 		char *block = raw + 8;
-		Gen00897300(block);
+		bfmePush((BfmeItemDX *)block);
 		return block;
 	}
-	static void operator delete(void *block, unsigned int n);
+
 
 	BfmeCandidateSingleton0(int value)
 	{
@@ -100,7 +117,7 @@ void *Rva01136AB8Owner::Rva008B4DA0(void *unused, const BfmeCandidateDX *desc)
 	{
 		if (g_bfmeS1082_4 == 0)
 		{
-			g_bfmeS1082_4 = (BfmeS1082 *)new BfmeCandidateSingleton0(0xcb4370);
+			g_bfmeS1082_4 = (BfmeS1082 *)new BfmeCandidateSingleton0((int)&aptSetPackedChannels008B4370);
 			bfmeSetRegisteredFlag(g_bfmeS1082_4);
 			g_bfmeS1082_4->bfmeSlot1082S_0();
 		}
@@ -110,7 +127,7 @@ void *Rva01136AB8Owner::Rva008B4DA0(void *unused, const BfmeCandidateDX *desc)
 	{
 		if (g_bfmeS1082_5 == 0)
 		{
-			g_bfmeS1082_5 = (BfmeS1082 *)new BfmeCandidateSingleton0(0xcb4420);
+			g_bfmeS1082_5 = (BfmeS1082 *)new BfmeCandidateSingleton0((int)&aptPackedChannels008B4420);
 			bfmeSetRegisteredFlag(g_bfmeS1082_5);
 			g_bfmeS1082_5->bfmeSlot1082S_0();
 		}
@@ -120,7 +137,7 @@ void *Rva01136AB8Owner::Rva008B4DA0(void *unused, const BfmeCandidateDX *desc)
 	{
 		if (g_bfmeS1082_6 == 0)
 		{
-			g_bfmeS1082_6 = (BfmeS1082 *)new BfmeCandidateSingleton0(0xcb4700);
+			g_bfmeS1082_6 = (BfmeS1082 *)new BfmeCandidateSingleton0((int)&aptGetChannels008B4700);
 			bfmeSetRegisteredFlag(g_bfmeS1082_6);
 			g_bfmeS1082_6->bfmeSlot1082S_0();
 		}
@@ -130,7 +147,7 @@ void *Rva01136AB8Owner::Rva008B4DA0(void *unused, const BfmeCandidateDX *desc)
 	{
 		if (g_bfmeS1082_7 == 0)
 		{
-			g_bfmeS1082_7 = (BfmeS1082 *)new BfmeCandidateSingleton0(0xcb4480);
+			g_bfmeS1082_7 = (BfmeS1082 *)new BfmeCandidateSingleton0((int)&aptApplyChannels008B4480);
 			bfmeSetRegisteredFlag(g_bfmeS1082_7);
 			g_bfmeS1082_7->bfmeSlot1082S_0();
 		}
