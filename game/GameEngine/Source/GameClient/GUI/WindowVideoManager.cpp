@@ -1,51 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x00498240.  BFME's WindowVideo init takes four stack arguments.
 
-template <typename Type>
-class StringBase
-{
-public:
-	struct Header
-	{
-		int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		Type m_data[ 1 ];
-	};
-
-	void set( const StringBase<Type> &other );
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString &operator=( const AsciiString &other )
-	{
-		StringBase<char>::set( *(const StringBase<char> *)&other );
-		return *this;
-	}
-
-	~AsciiString()
-	{
-		releaseBuffer();
-	}
-
-private:
-	void releaseBuffer();
-};
-
-class GameWindowInstanceData
-{
-public:
-	void setVideoBuffer();
-};
-
-class GameWindow
-{
-public:
-	GameWindowInstanceData *winGetInstanceData( int bufferHandle );
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../game_window.h"
 
 class VideoBuffer
 {
@@ -96,5 +53,5 @@ void WindowVideo::init( GameWindow *win, AsciiString movieName,
 	m_videoBuffer = videoBuffer;
 	m_state = 3;
 	if ( m_win )
-		m_win->winGetInstanceData( videoBuffer->useBuffer() )->setVideoBuffer();
+		m_win->winGetInstanceData()->setVideoBuffer( (VideoBuffer *)videoBuffer->useBuffer() );
 }

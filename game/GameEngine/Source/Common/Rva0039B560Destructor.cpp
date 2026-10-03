@@ -4,11 +4,12 @@
 // first base SubsystemInterface (real class, dtor pinned at 0x009A1A40),
 // second base BfmeBaseVUQ (the shared folded trivial base, 0x01073744).
 // Members destruct in reverse declared order: a 5-element/8-byte-stride
-// array at +0x28 via the eh-vector-destructor-iterator helper (element dtor
-// pinned to the retail thunk address 0x00048D42), a BFMERetailAsciiString at
-// +0x1C, then a pinned "still a dump" member at +0x18
-// (AttributeModifierAuraUpdateModuleDataMemberC, already pinned at
-// 0x0001A401), before the two base subobjects unwind.
+// array at +0x28 via the eh-vector-destructor-iterator helper (ThingRef dtor
+// through ILT 0x00048D42 -> 0x0039B060), an AsciiString at +0x1C, then an
+// AttributeHandleStandIn at +0x18 (ILT 0x0001A401 -> 0x0039D550), before
+// the two base subobjects unwind.
+
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeBaseVUQ
 {
@@ -25,40 +26,19 @@ private:
 	unsigned int m_name;
 };
 
-template <typename T>
-class StringBase
+class AttributeHandleStandIn
 {
 public:
-	~StringBase()
-	{
-		releaseBuffer();
-	}
-
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	~BFMERetailAsciiString() { }
-};
-
-class AttributeModifierAuraUpdateModuleDataMemberC
-{
-public:
-	~AttributeModifierAuraUpdateModuleDataMemberC();            ///< pinned 0x0001A401
+	~AttributeHandleStandIn();                                 ///< ILT 0x0001A401
 
 private:
 	unsigned int m_body;
 };
 
-class Rva0039B560Element
+class ThingRef
 {
 public:
-	~Rva0039B560Element();                                      ///< pinned to retail thunk 0x00048D42
+	~ThingRef();                                               ///< ILT 0x00048D42
 
 private:
 	unsigned int m_words[2];
@@ -71,10 +51,10 @@ public:
 
 private:
 	unsigned char m_pad0C[0x18 - 0xC];                          ///< +0x0C, untouched by this body
-	AttributeModifierAuraUpdateModuleDataMemberC m_memberC;     ///< +0x18
-	BFMERetailAsciiString m_str;                                ///< +0x1C
+	AttributeHandleStandIn m_memberC;                          ///< +0x18
+	AsciiString m_str;                                         ///< +0x1C
 	unsigned char m_pad20[0x28 - 0x20];                         ///< +0x20, untouched by this body
-	Rva0039B560Element m_array[5];                              ///< +0x28
+	ThingRef m_array[5];                                       ///< +0x28, eight-byte stride
 };
 
 // @??1Rva0039B560@@UAE@XZ 0x0039B560
