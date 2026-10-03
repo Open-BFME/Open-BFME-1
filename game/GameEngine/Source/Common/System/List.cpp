@@ -50,6 +50,12 @@
 
 #include "list.h"
 
+// Preserve the byte-matched nested inline boundary without another external firstNode copy.
+static inline LListNode *firstListNode(LListNode &head)
+{
+	return head.next();
+}
+
 // 'assignment within condition expression'.
 #pragma warning(disable : 4706)
 
@@ -208,7 +214,7 @@ void LList::clear( void )
 {
 	LListNode *node;
 
-	while ( (node = firstNode()) != NULL )
+	while ( (node = firstListNode(m_head)) != NULL )
 	{
 		node->remove();
 		node->destroy();
@@ -224,7 +230,7 @@ Int LList::nodeCount( void )
 	LListNode* node;
 	Int	count = 0;
 
-	node = firstNode();
+	node = firstListNode(m_head);
 
 	while(node)
 	{
@@ -243,7 +249,7 @@ LListNode*	LList::getNode( Int index )
 {
 	LListNode* node;
 
-	node = firstNode();
+	node = firstListNode(m_head);
 
 	while( node && index >= 0 )
 	{
@@ -295,7 +301,7 @@ LListNode* LList::findItem( void *item )
 {
 	LListNode* node;
 
-	node = firstNode();
+	node = firstListNode(m_head);
 
 	while( node )
 	{
