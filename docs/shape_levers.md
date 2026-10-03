@@ -1855,3 +1855,14 @@ night getter grows this caller to152 bytes even with forceinline; an equivalent
 local unsigned helper retains the color bits without inventing a second public
 signature. Strict calls and global binding pass. See
 `targets/game/reverse/identity_evidence/001c15f0-native-getters.md`.
+
+## Store through the typed member before passing its array
+
+RVA008B6F90's 73-byte bank stored through a separate `int *` in the first
+call argument, `refresh(&(*field = value), ...)`, and emitted the store
+before retail's context load. An integer array member and a separate
+`self->m_rect[0] = value;` followed by the call reproduce all73 bytes.
+Correcting the helper's third argument to its witnessed signed integer alone
+did not fix the scheduling; neither did helper visibility. The final source
+needs no barrier or volatile access. Existing call/data bindings pass strict
+verification; see `identity_evidence/008b6f90-typed-array-store.md`.
