@@ -17918,5 +17918,25 @@
   "after_sha256": "715da0b9b95a39c3d349a1ce86aa5b311d8ed4d54338600b8878889f00f17034",
   "evidence": "targets/game/reverse/identity_evidence/003dc810-clear-cell.md",
   "reason": "The bank side-table view assigns the position-unit ID to +0x18, but the existing native getPosUnit at 003D4BF0 reads +0x20. Preserve the witnessed +0x18 access in an address-qualified partial view without claiming the unproven PathfindCellInfo layout or getter identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e49f0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderRva003E49F0.cpp",
+  "old_name": "bfmeCheckAttackViewHelper",
+  "new_name": "rva003E49F0",
+  "before_sha256": "5dcdb2db23df5a8fd8acc9da29a9653b42dbeefef812970de2a9194b5887a6c7",
+  "after_sha256": "7f22e05da2e9fd5f4b927c76b4192adb825f8bb2465ef042b8cb1ffed4b44d61",
+  "evidence": "targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md",
+  "reason": "Historical bank is archived unchanged. Matched caller proves Pathfinder owner and ABI but not the synthetic helper spelling; the separately decoded duplicate layer body retains its own RVA rather than borrowing the getCell identity at 003FBAB0. Only the generated production row is replaced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e49f0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderRva003E49F0.cpp",
+  "old_name": "getCell",
+  "new_name": "rva003FBB20",
+  "before_sha256": "5dcdb2db23df5a8fd8acc9da29a9653b42dbeefef812970de2a9194b5887a6c7",
+  "after_sha256": "7f22e05da2e9fd5f4b927c76b4192adb825f8bb2465ef042b8cb1ffed4b44d61",
+  "evidence": "targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md",
+  "reason": "Historical bank is archived unchanged. Matched caller proves Pathfinder owner and ABI but not the synthetic helper spelling; the separately decoded duplicate layer body retains its own RVA rather than borrowing the getCell identity at 003FBAB0. Only the generated production row is replaced."
  }
 ]

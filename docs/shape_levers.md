@@ -1823,3 +1823,14 @@ argument setup. Exposing the real non-inlined 85-byte
 point pointer) restores all retail bytes. Exposing the node constructor alone
 does nothing. The wrapper and visible helper both pass strict call/data checks;
 see `identity_evidence/00190f10-native-append.md`.
+
+## Radius output lifetime in a cell-border scan
+
+At RVA 003E49F0, the 753-byte bank retained 25 stack displacement differences
+with a two-integer radius array. Exposing the authentic 297-byte
+Pathfinder::getRadiusAndCenter reduced that to 23; replacing the artificial
+array with a scalar made the caller exact. The compiler could then reuse the
+dead radius output for the fld/fistp temporary and hoisted loop bound. Both
+caller and helper passed strict byte and reference checks. Visibility alone
+was insufficient while the array still constrained storage. See
+`targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md`.
