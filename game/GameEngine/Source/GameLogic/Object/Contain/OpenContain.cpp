@@ -706,23 +706,6 @@ void OpenContain::onContaining( Object *rider, Bool wasSelected )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onRemoving@OpenContain@@ present-unmatched
-void OpenContain::onRemoving( Object *rider) 
-{
-	// Play audio
-	AudioEventRTS exitSound = *getObject()->getTemplate()->getSoundExit();
-	exitSound.setObjectID(getObject()->getID());
-	TheAudio->addAudioEvent(&exitSound);
-
-	if (rider) {
-		// This is a misnomer, but it makes it clearer for the user.
-		AudioEventRTS fallingSound = *rider->getTemplate()->getSoundFalling();
-		fallingSound.setObjectID(rider->getID());
-		TheAudio->addAudioEvent(&fallingSound);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?getContainedItemsMass@OpenContain@@ present-unmatched
 Real OpenContain::getContainedItemsMass() const
 {
