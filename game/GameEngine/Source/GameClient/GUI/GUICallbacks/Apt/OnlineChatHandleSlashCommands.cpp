@@ -145,7 +145,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 void RefreshGameListBoxes();
 void bfmeFree1049(void *p);
@@ -180,19 +181,19 @@ bool BfmeAptScreenOnlineChat::Rva00536530HandleSlashCommands(UnicodeString uText
 	{
 		AsciiString name;
 		UnicodeString message;
-		const AsciiString *nick = TheGameSpyInfo->gamespySlot19(TheGameSpyInfo->gamespySlot26().str());
+		const AsciiString *nick = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->gamespySlot19(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->gamespySlot26().str());
 		if (nick)
 			name = *nick;
 		else
-			name = TheGameSpyInfo->gamespySlot26();
+			name = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->gamespySlot26();
 		message.translate(name);
 		message += UnicodeString(uText.str() + 3);
-		TheGameSpyInfo->sendChat(message, false, m_window40);
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->sendChat(message, false, m_window40);
 		return true;
 	}
 	else if (token.compareNoCase(L"refresh") == 0)
 	{
-		bool refreshGames = TheGameSpyInfo->gamespySlot43();
+		bool refreshGames = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->gamespySlot43();
 		unsigned long (__stdcall *nowFunction)() = timeGetTime;
 		if (refreshGames)
 		{

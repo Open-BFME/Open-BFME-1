@@ -129,7 +129,8 @@ void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
 
 extern GameWindowManager *TheWindowManager;
 extern LANAPI *TheLAN;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 
 enum { GP_ONLINE = 1 };

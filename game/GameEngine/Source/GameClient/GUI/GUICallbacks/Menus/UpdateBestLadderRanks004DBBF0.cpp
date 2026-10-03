@@ -96,7 +96,8 @@ public:
 	virtual AsciiString getLocalBaseName( void );  // +0x88
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // 0x012F76F0 (TheGameSpyPSMessageQueue); +0x10 is addRequest. The retail
 // header names this type GameSpyPSMessageQueueInterface; no game header
@@ -139,8 +140,8 @@ void UpdateBestLadderRanks004DBBF0( PSPlayerStats *stats )
 	PSRequest req;
 	PSPlayerStats newStats;
 	req.requestType = 11;
-	req.email = TheGameSpyInfo->getLocalEmail().str();
-	req.nick = TheGameSpyInfo->getLocalBaseName().str();
+	req.email = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalEmail().str();
+	req.nick = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName().str();
 	req.password = "";
 	newStats.best1v1LadderRank = best1v1;
 	newStats.id = stats->id;

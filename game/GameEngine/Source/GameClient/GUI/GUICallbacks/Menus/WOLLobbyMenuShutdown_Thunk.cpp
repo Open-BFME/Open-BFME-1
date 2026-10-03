@@ -106,7 +106,8 @@ public:
 	void reverse(AsciiString groupName);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern Shell *TheShell;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
@@ -162,7 +163,7 @@ void WOLLobbyMenuShutdown(WindowLayout *layout, void *userData)
 
 	ReleaseWindowInfo();
 
-	TheGameSpyInfo->unregisterTextWindow(g_WOLLobbyListboxChat);
+	reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->unregisterTextWindow(g_WOLLobbyListboxChat);
 
 	PeerRequest req;
 	// BFME inserts one request kind before STOPGAMELIST; retail stores 8 here.

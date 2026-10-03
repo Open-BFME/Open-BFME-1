@@ -64,7 +64,8 @@ public:
 	virtual void bfmeFree1025(int h);
 };
 
-extern BfmeB1025 *g_bfmeB1025;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeA1025
 {
@@ -77,8 +78,8 @@ public:
 
 void BfmeA1025::bfmeGo1025A(void)
 {
-	if (g_bfmeB1025 != 0 && m_bfmeH != 0) {
-		g_bfmeB1025->bfmeFree1025(m_bfmeH);
+	if (TheGameSpyInfo != 0 && m_bfmeH != 0) {
+		reinterpret_cast<BfmeB1025 *>(TheGameSpyInfo)->bfmeFree1025(m_bfmeH);
 		m_bfmeH = 0;
 	}
 }

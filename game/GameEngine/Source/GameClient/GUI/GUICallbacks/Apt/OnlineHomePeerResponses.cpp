@@ -143,7 +143,8 @@ virtual void slot164();
 virtual void slot168();
  virtual int getMaxMessagesPerUpdate();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 class GameSpyPeerMessageQueueInterface {public:
 virtual void slot00();
 virtual void slot04();
@@ -185,7 +186,7 @@ void BfmeAptScreenOnlineHome::updatePeerResponses00547160() {
  if(TheGameSpyPeerMessageQueue) {
   HandleBuddyResponses();
   HandlePersistentStorageResponses();
-  int allowedMessages=TheGameSpyInfo->getMaxMessagesPerUpdate();
+  int allowedMessages=reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getMaxMessagesPerUpdate();
   bool sawImportantMessage=false;
   PeerResponse resp;
   while(allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse(resp)) {
@@ -200,7 +201,7 @@ void BfmeAptScreenOnlineHome::updatePeerResponses00547160() {
     room.m_numPlaying=resp.fieldF4[4];
     room.m_numWaiting=resp.fieldF4[1];
     room.m_field1c=resp.fieldF4[5];
-    TheGameSpyInfo->addGroupRoom(room);
+    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addGroupRoom(room);
    } break;
    case 21: {
     AsciiString games;

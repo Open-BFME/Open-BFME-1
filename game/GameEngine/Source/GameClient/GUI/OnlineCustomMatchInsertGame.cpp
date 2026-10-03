@@ -149,7 +149,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GlobalData
 {
@@ -205,7 +206,7 @@ int BfmeAptScreenOnlineCustomMatch::insertGame( GameSpyStagingRoom *game )
 crc_ok:
 
 	UnicodeString gameName = game->getGameName();
-	if( TheGameSpyInfo->getDisallowAsianText() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getDisallowAsianText() )
 	{
 		const unsigned short *buff = gameName.str();
 		int length = gameName.getLength();
@@ -215,7 +216,7 @@ crc_ok:
 				return -1;
 		}
 	}
-	else if( TheGameSpyInfo->getDisallowNonAsianText() )
+	else if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getDisallowNonAsianText() )
 	{
 		const unsigned short *buff = gameName.str();
 		int length = gameName.getLength();

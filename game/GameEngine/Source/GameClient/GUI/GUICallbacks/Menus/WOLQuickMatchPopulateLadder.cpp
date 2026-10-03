@@ -104,7 +104,8 @@ public:
  virtual void slot27();
  virtual int getLocalProfileID();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern int GameSpyColor[];
 static bool isPopulatingLadderBox = false;
 // Retail validity call: ECX is LadderInfo, no stack arguments, bool in AL.
@@ -133,7 +134,7 @@ void BfmeQuickMatchLadderPanel::populateLadderList()
 	isPopulatingLadderBox = true;
 
 	QuickMatchPreferences pref;
-	Int localProfile = TheGameSpyInfo->getLocalProfileID();
+	Int localProfile = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID();
 
 	Color specialColor = GameSpyColor[GSCOLOR_MAP_SELECTED];
 	Color normalColor = GameSpyColor[GSCOLOR_MAP_UNSELECTED];
@@ -224,7 +225,7 @@ bool Rva0062A7D0Owner::method()
 		goto failed;
 
 	{
-		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID());
 		int totalWins = 0;
 		for (Rva0062A7D0Wins::const_iterator it = stats.wins.begin(); it != stats.wins.end(); ++it)
 			totalWins += it->second;

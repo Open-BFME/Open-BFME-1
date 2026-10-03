@@ -148,7 +148,8 @@ public:
 void SendStatsToOtherPlayers( const GameInfo *game );
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyStagingRoom *TheGameSpyGame;
 
 // The BfmeAptScreenSecondary subobject at +0x3C of the screen.
@@ -169,7 +170,7 @@ void Rva0053DA20Screen::bfmeStartPressed( Bool everyoneReady, void * )
 {
 	m_field14C = 13;
 
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 
 	if( everyoneReady )
 	{

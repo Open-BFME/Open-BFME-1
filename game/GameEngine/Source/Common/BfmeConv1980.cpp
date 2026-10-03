@@ -52,11 +52,12 @@ public:
 	virtual void *bfmeSlot19ETA(const char *text);
 };
 
-extern BfmeInfoETA *g_bfmeInfoETA;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 void *bfmeLookupETA(const BfmeUniETA &name)
 {
 	BfmeStrETA text(name);
 
-	return g_bfmeInfoETA->bfmeSlot19ETA(text.bfmeTextETA());
+	return reinterpret_cast<BfmeInfoETA *>(TheGameSpyInfo)->bfmeSlot19ETA(text.bfmeTextETA());
 }

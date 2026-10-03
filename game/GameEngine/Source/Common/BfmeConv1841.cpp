@@ -53,7 +53,8 @@ public:
 	virtual Bool bfmeAllowedXE();
 };
 
-extern BfmeSpyXE *TheBfmeSpyXE;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeOwnerXE
 {
@@ -76,7 +77,7 @@ void BfmeOwnerXE::bfmePollXE(Bool force)
 		}
 	}
 
-	if (TheBfmeSpyXE->bfmeAllowedXE()) {
+	if (reinterpret_cast<BfmeSpyXE *>(TheGameSpyInfo)->bfmeAllowedXE()) {
 		bfmeRefreshXE();
 		m_bfmeTimeXE = nowFunction();
 	}

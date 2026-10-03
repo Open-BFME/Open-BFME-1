@@ -112,7 +112,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class StlStr
 {
@@ -166,7 +167,7 @@ bool Rva0053D7D0OnlineCustomMatch::applySlotStartPos(
 {
 	if( !TheGameSpyInfo )
 		return false;
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if( !room )
 		return false;
 
@@ -174,7 +175,7 @@ bool Rva0053D7D0OnlineCustomMatch::applySlotStartPos(
 	if( room->amIHost() )
 	{
 		room->resetAccepted();
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 	}
 	else
 	{

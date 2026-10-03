@@ -66,11 +66,12 @@ public:
 	virtual Rva005379E0Inner *slotC4();
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 unsigned char rva005379E0()
 {
-	GameSpyInfo *g = TheGameSpyInfo;
+	GameSpyInfo *g = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo);
 	if (!g)
 		return 0;
 	Rva005379E0Inner *p = g->slotC4();

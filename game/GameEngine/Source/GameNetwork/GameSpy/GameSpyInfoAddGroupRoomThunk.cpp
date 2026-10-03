@@ -72,7 +72,8 @@ public:
     char pad24[0x68-0x24];
     Bool m_gotGroupRoomList;
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 // Unused virtual slots are intentionally unnamed; their signatures are not claims.
 class GameSpyConfigInterface {
 public:
@@ -134,7 +135,7 @@ void GameSpyInfo::addGroupRoom( GameSpyGroupRoom room )
 			// didn't get all names.  fix up
 			Int nameIndex = 0;
 			Int timesThrough = 1; // start with USA Lobby 1
-			for (iter = TheGameSpyInfo->getGroupRoomList()->begin(); iter != TheGameSpyInfo->getGroupRoomList()->end(); ++iter)
+			for (iter = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getGroupRoomList()->begin(); iter != reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getGroupRoomList()->end(); ++iter)
 			{
 				GameSpyGroupRoom room = iter->second;
 				if (room.m_groupID != TheGameSpyConfig->getQMChannel())

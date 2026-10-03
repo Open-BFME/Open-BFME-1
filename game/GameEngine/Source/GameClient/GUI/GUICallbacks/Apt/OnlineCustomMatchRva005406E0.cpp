@@ -73,7 +73,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameWindowManager
 {
@@ -164,7 +165,7 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 	if( !field194 ) return false;
 	if( !field198 ) return false;
 					if( TheGameSpyInfo )
-						TheGameSpyInfo->leaveStagingRoom();
+						reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->leaveStagingRoom();
 
 					((BfmeE976 *)( (char *)this + 0x40 ))->bfmeGo976E();
 					((Gen0000C955 *)this)->handle( false );
@@ -172,17 +173,17 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 					field1B0 = ((Rva0001D606ImageCollection *)TheMappedImageCollection)->findImageByName( AsciiString( "AptLock" ) );
 					field1B4 = 0;
 
-					if( TheGameSpyInfo->getCurrentGroupRoom() )
+					if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentGroupRoom() )
 					{
-						TheGameSpyInfo->joinGroupRoom( TheGameSpyInfo->getCurrentGroupRoom() );
+						reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->joinGroupRoom( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentGroupRoom() );
 						field1B8 = 0;
 					}
 					else
 					{
-						TheGameSpyInfo->joinBestGroupRoom(true);
+						reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->joinBestGroupRoom(true);
 					}
 
-					TheGameSpyInfo->clearStagingRoomList();
+					reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->clearStagingRoomList();
 
 					PeerRequest req;
 					req.peerRequestType = 7;

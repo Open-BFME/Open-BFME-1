@@ -99,7 +99,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern class BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 
 class BfmeAptScreenOnlineCustomMatch
@@ -145,7 +146,7 @@ void BfmeAptScreenOnlineCustomMatch::_bfme_onInitGadget(
 		GadgetListBoxReset( window );
 		m_chat = window;
 		GadgetListBoxReset( window );
-		TheGameSpyInfo->registerTextWindow( m_chat );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->registerTextWindow( m_chat );
 		bfmeGoENK( (BfmeObjENK *)m_chat, 1 );
 		BfmeGadgetListBoxSetAudioFeedback( m_chat, true );
 		return;

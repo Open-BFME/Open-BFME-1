@@ -56,7 +56,8 @@ public:
 	virtual Bool sendChat(UnicodeString message, Bool action, GameWindow *window) = 0;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern int GameSpyColor[];
 extern GameWindow *listboxLobbyPlayers;
 extern int isThreadHosting;
@@ -101,13 +102,13 @@ Bool handleLobbySlashCommands(UnicodeString uText)
 		UnicodeString s;
 			s.format(UnicodeString(L"Hosting qr2:%d thread:%d"),
 			((BfmeQr2StatusABI)j_000446ca)(), isThreadHosting);
-		TheGameSpyInfo->addText(s, GameSpyColor[0], 0);
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addText(s, GameSpyColor[0], 0);
 		return true;
 	}
 	else if (((const StringBase<char> *)&token)->compare("me") == 0 &&
 		bfmeUnicodeLength(uText) > 4)
 	{
-		TheGameSpyInfo->sendChat(UnicodeString(bfmeUnicodeStr(uText) + 4),
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->sendChat(UnicodeString(bfmeUnicodeStr(uText) + 4),
 			true, listboxLobbyPlayers);
 		return true;
 	}
@@ -116,7 +117,7 @@ Bool handleLobbySlashCommands(UnicodeString uText)
 		// Both arms capture the clock after the virtual query; this preserves
 		// retail scheduling while the player-list refresh stays unconditional.
 		unsigned long (__stdcall *nowFunction)(void);
-		if (TheGameSpyInfo->hasStagingRoomListChanged()
+		if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->hasStagingRoomListChanged()
 			? (nowFunction = timeGetTime, true)
 			: (nowFunction = timeGetTime, false))
 		{

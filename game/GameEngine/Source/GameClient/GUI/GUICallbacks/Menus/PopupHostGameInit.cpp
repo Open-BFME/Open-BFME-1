@@ -113,7 +113,8 @@ class GameSpyInfo { public:
  virtual void slot25();
  virtual AsciiString getLocalName();
 };
-extern GameSpyInfo* TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 class CustomMatchPreferences {
 public: CustomMatchPreferences(); virtual ~CustomMatchPreferences(); bool allowsObservers();
 private: char storage[16];
@@ -149,7 +150,7 @@ void PopupHostGameInit( WindowLayout *layout, void *userData )
 	textEntryGameNameID = TheNameKeyGenerator->nameToKey(AsciiString("PopupHostGame.wnd:TextEntryGameName").str());
 	textEntryGameName = TheWindowManager->winGetWindowFromId(parentPopup, textEntryGameNameID);
 	UnicodeString name;
-	name.translate(TheGameSpyInfo->getLocalName());
+	name.translate(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName());
 	GadgetTextEntrySetText(textEntryGameName, name);
 
 	textEntryGameDescriptionID = TheNameKeyGenerator->nameToKey(AsciiString("PopupHostGame.wnd:TextEntryGameDescription").str());

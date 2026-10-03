@@ -127,7 +127,8 @@ private:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern UnicodeString g_unicode12F498C;
 
 // Layout witnessed by BfmeAptScreenInGameChatConstructor.cpp at 0x005160E0.
@@ -182,7 +183,7 @@ void BfmeAptScreenInGameChat::_bfme_initGadgets( const char *name, void *userDat
 		GadgetListBoxSetListLength( window, 1000 );
 		GadgetListBoxAddMultiSelect( window );
 		if ( TheGameSpyInfo )
-			TheGameSpyInfo->slot57( window );
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot57( window );
 		m_chatBox = window;
 	}
 	else if ( strcmp( name, "AddFriendEntry" ) == 0 )

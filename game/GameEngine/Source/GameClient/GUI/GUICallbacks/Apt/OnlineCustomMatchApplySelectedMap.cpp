@@ -87,7 +87,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern MapCache *TheMapCache;
 
@@ -119,6 +120,6 @@ bool BfmeAptScreenOnlineCustomMatch::applySelectedMap( const AsciiString &mapNam
 	TheGameSpyGame->adjustSlotsForMap();
 	TheGameSpyGame->resetAccepted();
 	TheGameSpyGame->resetStartSpots();
-	TheGameSpyInfo->setGameOptions();
+	reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 	return true;
 }

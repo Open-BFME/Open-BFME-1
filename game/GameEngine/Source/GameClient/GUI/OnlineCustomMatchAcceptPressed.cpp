@@ -169,7 +169,8 @@ public:
 };
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // The BfmeAptScreenSecondary subobject at +0x3C of the screen.
 class Rva0053DBE0Screen
@@ -188,15 +189,15 @@ void Rva0053DBE0Screen::bfmeAcceptPressed( Bool accepted )
 	if( !accepted )
 		return;
 
-	GameSlot *localSlot = TheGameSpyInfo->getCurrentStagingRoom()->getSlot(
-		TheGameSpyInfo->getCurrentStagingRoom()->getLocalSlotNum() );
+	GameSlot *localSlot = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom()->getSlot(
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom()->getLocalSlotNum() );
 	if( localSlot )
 		localSlot->setAccept();
 
 	if( !TheGameSpyPeerMessageQueue )
 		return;
 
-	if( TheGameSpyInfo->amIHost() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->amIHost() )
 	{
 		PeerRequest req;
 		req.peerRequestType = 14;
@@ -207,7 +208,7 @@ void Rva0053DBE0Screen::bfmeAcceptPressed( Bool accepted )
 	}
 	else if( TheGameSpyInfo )
 	{
-		UnicodeString hostName = TheGameSpyInfo->getCurrentStagingRoom()->getSlot( 0 )->getName();
+		UnicodeString hostName = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom()->getSlot( 0 )->getName();
 		AsciiString asciiName;
 		asciiName.translate( hostName );
 		PeerRequest req;

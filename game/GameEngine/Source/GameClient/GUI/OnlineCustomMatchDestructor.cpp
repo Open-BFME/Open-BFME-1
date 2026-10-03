@@ -67,7 +67,8 @@ public:
 	virtual void s08();
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern class BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 
 class BfmeAptScreenOnlineCustomMatch : public BfmeAptGameWindow, public BfmeAptScreenSecondary
@@ -90,7 +91,7 @@ BfmeAptScreenOnlineCustomMatch::~BfmeAptScreenOnlineCustomMatch()
 		m_prefs.setInt( AsciiString( "PrimarySort" ), m_primarySort );
 		m_prefs.setInt( AsciiString( "SecondarySort" ), m_secondarySort );
 		m_prefs.write();
-		GameSpyInfo *info = TheGameSpyInfo;
+		GameSpyInfo *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo);
 		TheBfmeOnlineCustomMatch = 0;
 		if( info )
 			info->s08();

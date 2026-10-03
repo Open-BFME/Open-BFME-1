@@ -116,7 +116,8 @@ public:
 	virtual void removeFromSavedIgnoreListE7B(int id);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // Read a player name from the entry, resolve its PlayerInfo record, and issue
 // a buddy request unless it names the local profile (slots 28 and 71). The
@@ -136,8 +137,8 @@ void __stdcall bfmeSelectByNameEBA(int entryHandle)
 		{
 			int id = rec->m_bfmeIdEBA;
 
-			if (id != TheGameSpyInfo->getLocalProfileIDEBA())
-				TheGameSpyInfo->requestBuddyAddEBA(id);
+			if (id != reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileIDEBA())
+				reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->requestBuddyAddEBA(id);
 		}
 	}
 }
@@ -155,7 +156,7 @@ void __stdcall bfmeSelectByNameE5B(int entryHandle)
 		BfmeRecEBA *rec = bfmeLookupEBA(&text);
 
 		if (rec != 0)
-			TheGameSpyInfo->removeBuddyE5B(rec->m_bfmeIdEBA);
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->removeBuddyE5B(rec->m_bfmeIdEBA);
 	}
 }
 
@@ -173,6 +174,6 @@ void __stdcall bfmeRemoveSavedIgnoreFromEntryE7B(GameWindow *entry)
 		BfmeRecEBA *rec = bfmeLookupEBA(&text);
 
 		if (rec != 0)
-			TheGameSpyInfo->removeFromSavedIgnoreListE7B(rec->m_bfmeIdEBA);
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->removeFromSavedIgnoreListE7B(rec->m_bfmeIdEBA);
 	}
 }

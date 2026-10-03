@@ -65,7 +65,8 @@ public:
 	virtual bool hasStagingRoomListChanged(void);
 };
 
-static GameSpyInfoInterfaceStub *TheGameSpyInfo = 0;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 static unsigned long gameListRefreshTime = 0;
 static const unsigned long gameListRefreshInterval = 10000;
@@ -82,7 +83,7 @@ static void refreshGameList( bool forceRefresh )
 
 	if (forceRefresh || ((gameListRefreshTime == 0) || ((gameListRefreshTime + refreshInterval) <= timeGetTime())))
 	{
-		if (TheGameSpyInfo->hasStagingRoomListChanged())
+		if (reinterpret_cast<GameSpyInfoInterfaceStub *>(TheGameSpyInfo)->hasStagingRoomListChanged())
 		{
 			RefreshGameListBoxes();
 			gameListRefreshTime = timeGetTime();

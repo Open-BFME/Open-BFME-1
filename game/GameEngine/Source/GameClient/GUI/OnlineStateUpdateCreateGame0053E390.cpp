@@ -209,7 +209,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameSpyConfigInterface
 {
@@ -300,14 +301,14 @@ void OnlineStateUpdate00544E40::createGame0053E390()
 	req.exeCRC = Rva0009B4B0( TheWritableGlobalData->m_exeCRC, TheWritableGlobalData->m_exeCRC );
 	req.iniCRC = TheWritableGlobalData->m_iniCRC;
 	req.gameVersion = TheWritableGlobalData->m_versionBD4;
-	req.internalIP = TheGameSpyInfo->getInternalIP();
+	req.internalIP = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getInternalIP();
 	req.restrictGameList = TheGameSpyConfig->restrictGamesToLobby();
 
 	req.ladderIP = "localhost";
 	req.ladPort = 0;
 	TheGameSpyGame->setLadderIP( req.ladderIP.c_str() );
 	TheGameSpyGame->setLadderPort( req.ladPort );
-	req.hostPingStr = TheGameSpyInfo->getPingString().str();
+	req.hostPingStr = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getPingString().str();
 
 	req.numPlayers = 2;
 	if( TheMapCache )

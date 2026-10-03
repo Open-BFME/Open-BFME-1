@@ -72,7 +72,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class CustomMatchPreferences
 {
@@ -114,7 +115,7 @@ void BfmeAptScreenOnlineCustomMatch::applyPreferredGameNamePassword( bool fromPr
 	if( fromPrefs )
 	{
 		nameText.translate( m_prefs.getAsciiString(
-			AsciiString( "PreferedGameName" ), TheGameSpyInfo->getLocalName() ) );
+			AsciiString( "PreferedGameName" ), reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName() ) );
 		passwordText.translate( m_prefs.getAsciiString(
 			AsciiString( "PreferedGamePassword" ), AsciiString::TheEmptyString ) );
 	}

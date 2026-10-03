@@ -60,7 +60,8 @@ public:
 	virtual void s07();
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern class BfmeAptScreenOnlineChat *TheBfmeOnlineChat;
 
 class BfmeAptScreenOnlineChat : public BfmeAptGameWindow
@@ -87,6 +88,6 @@ BfmeAptScreenOnlineChat::~BfmeAptScreenOnlineChat()
 		}
 		TheBfmeOnlineChat = 0;
 		if( TheGameSpyInfo )
-			TheGameSpyInfo->s07();
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->s07();
 	}
 }

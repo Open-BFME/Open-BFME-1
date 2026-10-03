@@ -69,7 +69,8 @@ public:
 	virtual unsigned char getChatGateRva00637210() const;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
@@ -212,7 +213,7 @@ int BfmeAptScreenOnlineShell::handleLogoffKey( int msgType, int code, int flags 
 		{
 			if( flags & 0xc )
 			{
-				if( TheGameSpyInfo && TheGameSpyInfo->getChatGateRva00637210() )
+				if( TheGameSpyInfo && reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getChatGateRva00637210() )
 				{
 					if( flags & 1 )
 					{

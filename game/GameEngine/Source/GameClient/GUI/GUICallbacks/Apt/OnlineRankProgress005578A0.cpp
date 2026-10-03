@@ -17,7 +17,8 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->re
 class GameTextInterface;
 class GameSpyInfo;
 extern GameTextInterface *TheGameText;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 // The rank thresholds are the first member of the shared rank-point table,
 // retail 0x012F401C (TheRankPointValues).
 struct RankPoints

@@ -747,7 +747,8 @@ class Rva012F7194Slots { public:
  virtual void slot18()=0;
  virtual const AsciiString* Rva00650F06(const char*)=0;
 };
-extern Rva012F7194Slots* Rva012F7194;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 void PeerThreadClass::Thread_Function()
 {
@@ -1285,7 +1286,7 @@ void PeerThreadClass::Thread_Function()
 				{
 					if (incomingRequest.nick.length() > 0)
 					{
-						const AsciiString* p=Rva012F7194->Rva00650F06(incomingRequest.nick.c_str());
+						const AsciiString* p=reinterpret_cast<Rva012F7194Slots *>(TheGameSpyInfo)->Rva00650F06(incomingRequest.nick.c_str());
                         if(p) peerUTMPlayer(peer,p->str(),incomingRequest.id.c_str(),incomingRequest.options.c_str(),PEERFalse);
                         else peerUTMPlayer(peer,incomingRequest.nick.c_str(),incomingRequest.id.c_str(),incomingRequest.options.c_str(),PEERFalse);
 					}

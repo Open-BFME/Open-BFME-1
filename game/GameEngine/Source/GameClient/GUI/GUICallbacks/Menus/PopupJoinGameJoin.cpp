@@ -176,7 +176,8 @@ public:
 
 inline GameSpyInfo *gameSpyReceiver(GameSpyInfo *p) { return p; }
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameSpyPeerMessageQueueInterface
 {
@@ -207,8 +208,8 @@ void SetLobbyAttemptHostJoin( bool );
 // ?joinGame@@YAXVAsciiString@@@Z
 void joinGame( AsciiString password )
 {
-	GameSpyStagingRoom *ourRoom = TheGameSpyInfo->findStagingRoomByID(
-        gameSpyReceiver(TheGameSpyInfo)->getCurrentStagingRoomID());
+	GameSpyStagingRoom *ourRoom = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->findStagingRoomByID(
+        gameSpyReceiver(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo))->getCurrentStagingRoomID());
 	if ( !ourRoom )
 	{
 		GameSpyCloseOverlay( GSOVERLAY_GAMEPASSWORD );

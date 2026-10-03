@@ -33,7 +33,8 @@ struct Response00544E40 {
  ~Response00544E40() { invoke0_00544E40<void>(this,j_00044733); }
 };
 class GameSpyInfo; class GameSpyStagingRoom; class GameSpyPeerMessageQueueInterface; class GameTextInterface; class NAT; class WindowManager;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameTextInterface *TheGameText;

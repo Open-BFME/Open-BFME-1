@@ -114,7 +114,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class StlStr
 {
@@ -171,7 +172,7 @@ bool BfmeAptScreenOnlineCustomMatch::applySlotPlayerTemplate( GameSlot *slot, in
 {
 	if( !TheGameSpyInfo )
 		return false;
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if( !room )
 		return false;
 
@@ -181,10 +182,10 @@ bool BfmeAptScreenOnlineCustomMatch::applySlotPlayerTemplate( GameSlot *slot, in
 		slot->m_startPos = -1;
 
 	room->resetAccepted();
-	if( TheGameSpyInfo->amIHost() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->amIHost() )
 	{
 		room->resetAccepted();
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 		m_flag14 = 1;
 	}
 	else

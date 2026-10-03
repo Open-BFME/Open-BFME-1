@@ -27,9 +27,10 @@ public:
 	virtual void slot50(int);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 void rva0052CE60(int a)
 {
-	TheGameSpyInfo->slot50(a);
+	reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot50(a);
 }

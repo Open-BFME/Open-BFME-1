@@ -169,7 +169,8 @@ public:
     virtual void slot64();
     virtual AsciiString getLocalName();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameTextInterface
 {
@@ -225,14 +226,14 @@ void AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip(AsciiString name)
 	UnicodeString uName;
 	uName.translate(name);
 
-	PlayerInfoMap::iterator pmIt = TheGameSpyInfo->getPlayerInfoMap()->find(name);
-	if (pmIt == TheGameSpyInfo->getPlayerInfoMap()->end())
+	PlayerInfoMap::iterator pmIt = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getPlayerInfoMap()->find(name);
+	if (pmIt == reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getPlayerInfoMap()->end())
 	{
 		TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
 		return;
 	}
 
-	Rva005307B0PlayerRecord *info = TheGameSpyInfo->slot4C(name.str());
+	Rva005307B0PlayerRecord *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot4C(name.str());
 	if (info)
 	{
 		Int profileID = info->m_profileID;
@@ -247,7 +248,7 @@ void AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip(AsciiString name)
 			return;
 		}
 
-		AsciiString localName = TheGameSpyInfo->getLocalName();
+		AsciiString localName = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName();
 		Bool isLocalPlayer = (((StringBase<char> &)name).compare(localName) == 0);
 
 		AsciiString localeIdentifier;
@@ -335,7 +336,7 @@ void AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip(AsciiString name)
 		UnicodeString tooltip = UnicodeString::TheEmptyString;
 		if (isLocalPlayer)
 			tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
-		else if (TheGameSpyInfo->getBuddyMap()->find(profileID) != TheGameSpyInfo->getBuddyMap()->end())
+		else if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap()->find(profileID) != reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap()->end())
 			tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
 		else if (profileID)
 			tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());

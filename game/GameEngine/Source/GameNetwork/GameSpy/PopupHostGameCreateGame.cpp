@@ -224,7 +224,8 @@ public:
 };
 #undef GSI_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameSpyPeerMessageQueueInterface
 {
@@ -300,7 +301,7 @@ extern GameWindow *textEntryGamePassword;
 // ?createGame@@YAXXZ
 void createGame( void )
 {
-	TheGameSpyInfo->setCurrentGroupRoom( 0 );
+	reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setCurrentGroupRoom( 0 );
 	PeerRequest req;
 	UnicodeString gameName = GadgetTextEntryGetText( textEntryGameName );
 	req.peerRequestType = 9;
@@ -332,7 +333,7 @@ void createGame( void )
 		(int)TheWritableGlobalData->m_exeCRC );
 	req.iniCRC = TheWritableGlobalData->m_iniCRC;
 	req.gameVersion = TheWritableGlobalData->m_extraCRC;
-	req.internalIP = TheGameSpyInfo->getInternalIP();
+	req.internalIP = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getInternalIP();
 	req.restrictGameList = (unsigned char)TheGameSpyConfig->restrictGamesToLobby();
 
 	int ladderSelectPos = -1;
@@ -356,7 +357,7 @@ void createGame( void )
 	TheGameSpyGame->setLadderIP( req.ladderIP.c_str() );
 	TheGameSpyGame->setLadderPort( req.ladPort );
 
-	AsciiString &ping = TheGameSpyInfo->getPingString();
+	AsciiString &ping = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getPingString();
 	const char *pingStr = ping.str();
 	req.hostPingStr.assign( pingStr, pingStr + strlen( pingStr ) );
 

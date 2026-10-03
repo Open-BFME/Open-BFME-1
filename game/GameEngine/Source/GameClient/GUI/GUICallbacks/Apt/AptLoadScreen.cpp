@@ -169,7 +169,8 @@ class BfmeH1065;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern GameWindowManager *TheWindowManager;
 extern GameTextInterface *TheGameText;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern Rva00579160Current *Rva00579160TheCurrent;
 

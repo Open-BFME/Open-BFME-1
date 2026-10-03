@@ -62,7 +62,8 @@ public:
     virtual void slot8C();
     virtual PSPlayerStats getCachedLocalPlayerStats();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 // Retail's per-rank APT label tables for the player-level tooltip, indexed by
 // rank 0..9.  Neither address is recorded in dir32_addresses.csv, so they keep
 // address-derived names; the pointer-to-const-char shape is what the body reads.
@@ -100,7 +101,7 @@ class Mouse { public: void setCursorTooltip(UnicodeString,int,const RGBColor*,fl
 extern Mouse *TheMouse;
 class BfmeAptScreenOnlineHome { public: void tooltipPlayerLevelIcon(void*); };
 void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
-    PSPlayerStats stats = TheGameSpyInfo->getCachedLocalPlayerStats();
+    PSPlayerStats stats = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCachedLocalPlayerStats();
     int side = *(int*)(stats.bytes + 0x178);
     if(side < 0 || side >= 4) side = 1;
     int points = bfmeRankPointsFromStats((Gen_uw_00025c1b*)&stats,side);

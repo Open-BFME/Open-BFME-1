@@ -181,7 +181,8 @@ public:
 	virtual AsciiString getLocalBaseName(void);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // Retail AudioEventRTS is 0x70 bytes; the constructor and destructor are the
 // ledger's out-of-line bodies at 0x000B2CC0 (ILT 0x00025306) and 0x000B31F0
@@ -257,14 +258,14 @@ void RequestBuddyAdd(Int profileID, AsciiString nick)
 	}
 
 	// save message for future incarnations of the buddy window
-	BuddyMessageList *messages = TheGameSpyInfo->getBuddyMessages();
+	BuddyMessageList *messages = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMessages();
 	BuddyMessage message;
 	message.m_timestamp = time(0);
 	message.m_senderID = 0;
 	// ZH `m_senderNick = "";` -- retail calls the two-argument setter set("", 0).
 	((StringBase<char> *)&message.m_senderNick)->set("", 0);
-	message.m_recipientID = TheGameSpyInfo->getLocalProfileID();
-	message.m_recipientNick = TheGameSpyInfo->getLocalBaseName();
+	message.m_recipientID = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID();
+	message.m_recipientNick = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName();
 	message.m_message.format(TheGameText->fetch("Buddy:InviteSentToPlayer"), nick.str());
 
 	// insert status into box

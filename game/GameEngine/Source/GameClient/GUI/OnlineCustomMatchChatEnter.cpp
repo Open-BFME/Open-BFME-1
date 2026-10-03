@@ -81,7 +81,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineCustomMatch
 {
@@ -107,6 +108,6 @@ void BfmeAptScreenOnlineCustomMatch::chatEnter( const char *name )
 	if( !text.isEmpty() )
 	{
 		if( !handleSlashCommands( text ) )
-			TheGameSpyInfo->sendChat( text, false, 0 );
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->sendChat( text, false, 0 );
 	}
 }

@@ -90,7 +90,8 @@ public:
 	virtual BfmeL1079 * bfmeSlot1079_49(void);
 };
 
-extern BfmeP1079 *g_bfmeP1079;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeH1079
 {
@@ -111,9 +112,9 @@ void BfmeH1079::bfmeGo1079A(void)
 	int i;
 	char v;
 
-	if (!g_bfmeP1079)
+	if (!TheGameSpyInfo)
 		return;
-	l = g_bfmeP1079->bfmeSlot1079_49();
+	l = reinterpret_cast<BfmeP1079 *>(TheGameSpyInfo)->bfmeSlot1079_49();
 	if (!l)
 		return;
 	n = 0;

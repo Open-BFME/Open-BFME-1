@@ -104,7 +104,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern int GameSpyColor[];
 extern int isThreadHosting;
 
@@ -127,12 +128,12 @@ bool Rva004F1FF0HandleSlashCommands( UnicodeString uText )
 	{
 		UnicodeString s;
 		s.format( UnicodeString( L"Hosting qr2:%d thread:%d" ), 0, isThreadHosting );
-		TheGameSpyInfo->addText( s, GameSpyColor[ GSCOLOR_DEFAULT ], 0 );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addText( s, GameSpyColor[ GSCOLOR_DEFAULT ], 0 );
 		return true;
 	}
 	else if( token.compare( "me" ) == 0 && uText.getLength() > 4 )
 	{
-		TheGameSpyInfo->sendChat( UnicodeString( uText.str() + 4 ), true, 0 );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->sendChat( UnicodeString( uText.str() + 4 ), true, 0 );
 		return true;
 	}
 

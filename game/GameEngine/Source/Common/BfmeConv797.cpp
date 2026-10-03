@@ -49,7 +49,8 @@ public:
 	virtual bool bfmeAskDZD();
 };
 
-extern BfmeUiDZD *g_bfmeUiDZD;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 struct BfmeThingDZD
 {
@@ -61,7 +62,7 @@ struct BfmeThingDZD
 
 void BfmeThingDZD::bfmeGoDZD(void *unused)
 {
-	if (g_bfmeUiDZD->bfmeAskDZD())
+	if (reinterpret_cast<BfmeUiDZD *>(TheGameSpyInfo)->bfmeAskDZD())
 	{
 		bfmeDoDZD();
 		m_bfmeT = timeGetTime();

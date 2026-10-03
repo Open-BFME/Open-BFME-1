@@ -265,7 +265,8 @@ public:
 };
 
 class GameSpyInfo;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyConfigInterface *TheGameSpyConfig;
 extern GameWindowManager *TheWindowManager;
 extern Color GameSpyColor[];

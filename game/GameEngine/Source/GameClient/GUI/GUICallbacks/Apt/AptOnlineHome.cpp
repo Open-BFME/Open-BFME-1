@@ -105,7 +105,8 @@ public:
 #undef SLOT
 };
 class WindowManager {public: void bfme_setAptText(const AsciiString&,const UnicodeString&);};
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern int g_bfmePeerReqE4, g_bfmePeerReqE8;
@@ -153,8 +154,8 @@ void BfmeAptScreenOnlineHome::rva00547730() {
  if(TheGameSpyInfo) {
   field34->call();
   UnicodeString text;
-  AsciiString name=TheGameSpyInfo->getLocalName();
-  PSPlayerStats stats=TheGameSpyInfo->rva90();
+  AsciiString name=reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName();
+  PSPlayerStats stats=reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->rva90();
   int rank1=g_bfmePeerReqE4,rank2=g_bfmePeerReqE8;
   UnicodeString rankText1=bfmeOnlineHomeRankText(rank1);
   UnicodeString rankText2=bfmeOnlineHomeRankText(rank2);

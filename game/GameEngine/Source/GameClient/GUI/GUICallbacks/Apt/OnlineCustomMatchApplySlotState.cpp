@@ -123,7 +123,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class StlStr
 {
@@ -177,7 +178,7 @@ bool Rva0053D3D0BfmeAptScreenOnlineCustomMatch::applySlotState(
 {
 	if( !TheGameSpyInfo )
 		return false;
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if( !room )
 		return false;
 
@@ -199,7 +200,7 @@ bool Rva0053D3D0BfmeAptScreenOnlineCustomMatch::applySlotState(
 		slot->setState( (SlotState)state, UnicodeString::TheEmptyString,
 			&connectInfo );
 		room->resetAccepted();
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 		return true;
 	}
 
@@ -212,7 +213,7 @@ bool Rva0053D3D0BfmeAptScreenOnlineCustomMatch::applySlotState(
 		bool isAI = slot->isAI();
 		if( wasAI ^ isAI )
 			room->resetAccepted();
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 		return true;
 	}
 	return false;

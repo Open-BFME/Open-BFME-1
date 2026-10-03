@@ -106,14 +106,15 @@ public:
 	virtual void setCachedLocalPlayerStats(PSPlayerStats stats);
 };
 
-extern Rva0055CD80GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 
 void _bfme_cacheLocalPlayerStatsWithLocale()
 {
 	if (TheGameSpyInfo)
 	{
-		Int localID = TheGameSpyInfo->getLocalProfileID();
+		Int localID = reinterpret_cast<Rva0055CD80GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID();
 		if (localID)
 		{
 			PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(localID);
@@ -122,12 +123,12 @@ void _bfme_cacheLocalPlayerStatsWithLocale()
 				return;
 			stats.locale = mPref.getLocale();
 			TheGameSpyPSMessageQueue->trackPlayerStats(stats);
-			PSPlayerStats refreshed = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+			PSPlayerStats refreshed = TheGameSpyPSMessageQueue->findPlayerStatsByID(reinterpret_cast<Rva0055CD80GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID());
 			if (refreshed.id)
 			{
 				mPref.setCachedStats(GameSpyPSMessageQueueInterface::formatPlayerKVPairs(refreshed).c_str());
 				mPref.write();
-				TheGameSpyInfo->setCachedLocalPlayerStats(refreshed);
+				reinterpret_cast<Rva0055CD80GameSpyInfo *>(TheGameSpyInfo)->setCachedLocalPlayerStats(refreshed);
 			}
 		}
 	}

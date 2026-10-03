@@ -126,7 +126,8 @@ public:
 	virtual IgnoreList returnIgnoreList(void);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameWindow *listboxIgnore;
 
 inline Color GameMakeColor(UnsignedByte red, UnsignedByte green, UnsignedByte blue, UnsignedByte alpha)
@@ -142,7 +143,7 @@ void GadgetListBoxSetItemData(GameWindow *listbox, void *data, Int row, Int colu
 void refreshIgnoreList( void )
 {
 	SavedIgnoreMap tempMap;
-	tempMap = TheGameSpyInfo->returnSavedIgnoreList();
+	tempMap = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->returnSavedIgnoreList();
 	SavedIgnoreMap::iterator it = tempMap.begin();
 	GadgetListBoxReset(listboxIgnore);
 	while(it != tempMap.end())
@@ -154,7 +155,7 @@ void refreshIgnoreList( void )
 		++it;
 	}
 	IgnoreList tempList;
-	tempList = TheGameSpyInfo->returnIgnoreList();
+	tempList = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->returnIgnoreList();
 	IgnoreList::iterator iListIt = tempList.begin();
 	while( iListIt != tempList.end())
 	{

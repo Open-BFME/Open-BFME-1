@@ -109,7 +109,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class StlStr
 {
@@ -161,17 +162,17 @@ bool BfmeAptScreenOnlineCustomMatch::applySlotTeam( GameSlot *slot, int team )
 {
 	if( !TheGameSpyInfo )
 		return false;
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if( !room )
 		return false;
 
 	int teamNumber = team;
 	slot->m_teamNumber = teamNumber;
 	room->resetAccepted();
-	if( TheGameSpyInfo->amIHost() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->amIHost() )
 	{
 		room->resetAccepted();
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 	}
 	else
 	{

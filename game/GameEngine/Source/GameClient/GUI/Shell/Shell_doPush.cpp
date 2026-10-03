@@ -71,7 +71,8 @@ public:
 
 class GameSpyInfo;
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameWindowManager *TheWindowManager;
 extern IMEManagerInterface *TheIMEManager;
 

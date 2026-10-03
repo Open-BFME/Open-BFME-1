@@ -21,7 +21,8 @@ public:
 };
 
 extern BfmeImeManager *TheBfmeImeManager;
-extern void *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 void GameSpyCloseAllOverlays();
 
 class WindowLayout

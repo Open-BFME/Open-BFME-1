@@ -149,7 +149,8 @@ public:
 
 extern Mouse *TheMouse;
 extern GameTextInterface *TheGameText;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 Int GadgetListBoxGetEntryBasedOnXY( GameWindow *window, Int x, Int y, Int &row, Int &column );
 void *GadgetListBoxGetItemData( GameWindow *window, Int row, Int column );
@@ -180,7 +181,7 @@ void customMatchGameListTooltip( GameWindow *window, WinInstanceData *, Unsigned
 			return;
 		}
 
-		StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
+		StagingRoomMap *rooms = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getStagingRoomList();
 		Int gameID = (Int)GadgetListBoxGetItemData( window, row, 0 );
 		StagingRoomMapIterator it = rooms->find( gameID );
 		StagingRoomMapNode *header = rooms->header;
@@ -202,7 +203,7 @@ void customMatchGameListTooltip( GameWindow *window, WinInstanceData *, Unsigned
 
 			AsciiString player;
 			player.translate( slot->getName() );
-			PlayerInfo *info = TheGameSpyInfo->findPlayerName( player.str() );
+			PlayerInfo *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->findPlayerName( player.str() );
 			if ( info )
 			{
 				UnicodeString rating;

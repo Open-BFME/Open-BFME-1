@@ -33,7 +33,8 @@ public:
 	bool m_hidden;
 };
 
-extern void *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 void GameSpyCloseAllOverlays();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h

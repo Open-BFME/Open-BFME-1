@@ -76,11 +76,11 @@ public:
 	virtual Bool isBuddy(Int profileID) = 0;
 };
 
-// The singleton is defined elsewhere as `GameSpyInfo *TheGameSpyInfo`
-// (?TheGameSpyInfo@@3PAVGameSpyInfo@@A, dir32 0x012F7194); this TU only needs
-// the view slots, so it references the defining spelling and casts at the use.
+// PeerDefs.cpp defines GameSpyInfoInterface *TheGameSpyInfo (VA 0x012F7194).
+// Keep that spelling and cast to this TU's view for its BFME slots.
 class GameSpyInfo;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 static inline BfmeGameSpyInfoView *bfmeGameSpyInfoView()
 {

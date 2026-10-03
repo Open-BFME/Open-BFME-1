@@ -172,7 +172,8 @@ class GameSpyInfo { public:
  virtual void slot100();
  virtual const AsciiString &getMOTD();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameWindow *rva0050BA40_listboxInfo;
 extern int rva0050BA40_lastNumPlayersOnline;
 extern Color GameSpyColor[];
@@ -210,7 +211,7 @@ void updateNumPlayersOnline(void)
 		GadgetListBoxReset(rva0050BA40_listboxInfo);
 		AsciiString aLine;
 		UnicodeString line;
-		AsciiString aMotd = TheGameSpyInfo->getMOTD();
+		AsciiString aMotd = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getMOTD();
 		UnicodeString headingStr;
 		//Kris: Patch 1.01 - November 12, 2003
 		//Removed number of players from string, and removed the argument. The number is incorrect anyways...

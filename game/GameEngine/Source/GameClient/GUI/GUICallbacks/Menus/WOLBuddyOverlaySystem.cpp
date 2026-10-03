@@ -211,7 +211,8 @@ public:
 	virtual BuddyInfoMap *getBuddyRequestMap(void) = 0;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyRCMenuData
@@ -281,7 +282,7 @@ WindowMsgHandledType WOLBuddyOverlaySystem(GameWindow *window, UnsignedInt msg,
 			Bool isBuddy = false, isRequest = false;
 			GPProfile profileID = (GPProfile)GadgetListBoxGetItemData(control, rc->pos);
 			UnicodeString nick = GadgetListBoxGetText(control, rc->pos);
-			BuddyInfoMap *buddies = TheGameSpyInfo->getBuddyMap();
+			BuddyInfoMap *buddies = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap();
 			BuddyInfoMap::iterator bIt;
 			bIt = buddies->find(profileID);
 			if (bIt != buddies->end())
@@ -290,7 +291,7 @@ WindowMsgHandledType WOLBuddyOverlaySystem(GameWindow *window, UnsignedInt msg,
 			}
 			else
 			{
-				buddies = TheGameSpyInfo->getBuddyRequestMap();
+				buddies = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
 				bIt = buddies->find(profileID);
 				if (bIt != buddies->end())
 				{

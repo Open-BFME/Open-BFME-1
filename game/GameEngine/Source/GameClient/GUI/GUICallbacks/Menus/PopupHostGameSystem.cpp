@@ -144,7 +144,8 @@ public:
 };
 #undef GSI_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 void createGame( void );
 void PopulateCustomLadderComboBox( void );
@@ -246,7 +247,7 @@ WindowMsgHandledType PopupHostGameSystem( GameWindow *window, unsigned int msg, 
 				name.trim();
 				if ( name.getLength() <= 0 )
 				{
-					name.translate( TheGameSpyInfo->getLocalName() );
+					name.translate( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName() );
 					GadgetTextEntrySetText( textEntryGameName, name );
 				}
 				createGame();

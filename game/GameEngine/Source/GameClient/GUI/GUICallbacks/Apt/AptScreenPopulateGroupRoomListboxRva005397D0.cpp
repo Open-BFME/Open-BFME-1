@@ -100,7 +100,8 @@ int GadgetComboBoxAddEntry( GameWindow *win, UnicodeString text, int color );
 void GadgetComboBoxSetItemData( GameWindow *win, int index, void *data );
 void GadgetComboBoxSetSelectedPos( GameWindow *win, int index, bool dummy );
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyConfigInterface *TheGameSpyConfig;
 extern int GameSpyColor[];
 
@@ -124,13 +125,13 @@ void Rva005397D0AptScreen::rva005397D0PopulateGroupRoomListbox()
 	int indexToSelect = -1;
 	GroupRoomMap::iterator iter;
 
-	for( iter = TheGameSpyInfo->getGroupRoomList()->begin();
-		iter != TheGameSpyInfo->getGroupRoomList()->end(); ++iter )
+	for( iter = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getGroupRoomList()->begin();
+		iter != reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getGroupRoomList()->end(); ++iter )
 	{
 		AsciiUnicodePair room = iter->second;
 		if( room.m_a != TheGameSpyConfig->getQMChannel() && room.m_f == 1 )
 		{
-			if( room.m_a == TheGameSpyInfo->getCurrentGroupRoom() )
+			if( room.m_a == reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentGroupRoom() )
 			{
 				int selected = GadgetComboBoxAddEntry(
 					lb, room.m_unicode, GameSpyColor[ 1 ] );

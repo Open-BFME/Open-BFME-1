@@ -162,7 +162,8 @@ class GameSpyInfo {
     virtual void removeFromIgnoreList(AsciiString);
     virtual bool isIgnored(AsciiString);
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 class GameSpyBuddyMessageQueueInterface {
   public:
     virtual void slot0();
@@ -307,11 +308,11 @@ WindowMsgHandledType WOLBuddyOverlayRCMenuSystem(GameWindow *window, UnsignedInt
                 req.arg.profile.id = profileID;
                 TheGameSpyBuddyMessageQueue->addRequest(req);
 
-                BuddyInfoMap *m = TheGameSpyInfo->getBuddyRequestMap();
+                BuddyInfoMap *m = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
                 m->erase(profileID);
                 // if the profile ID is not from a buddy and we're okaying his request, then
                 // request to add him to our list automatically CLH 2-18-03
-                if (!TheGameSpyInfo->isBuddy(profileID)) {
+                if (!reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->isBuddy(profileID)) {
                     RequestBuddyAdd(profileID, nick);
                 }
                 updateBuddyInfo();
@@ -333,27 +334,27 @@ WindowMsgHandledType WOLBuddyOverlayRCMenuSystem(GameWindow *window, UnsignedInt
                 req.buddyRequestType = BuddyRequest::BUDDYREQUEST_DENYADD;
                 req.arg.profile.id = profileID;
                 TheGameSpyBuddyMessageQueue->addRequest(req);
-                BuddyInfoMap *m = TheGameSpyInfo->getBuddyRequestMap();
+                BuddyInfoMap *m = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
                 m->erase(profileID);
             }
             BuddyInfoMap *buddies =
-                (isBuddy) ? TheGameSpyInfo->getBuddyMap() : TheGameSpyInfo->getBuddyRequestMap();
+                (isBuddy) ? reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap() : reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
             buddies->erase(profileID);
             updateBuddyInfo();
             PopulateLobbyPlayerListbox();
         } else if (controlID == buttonPlayID) {
         } else if (controlID == buttonIgnoreID) {
             if (isGameSpyUser) {
-                if (TheGameSpyInfo->isSavedIgnored(profileID)) {
-                    TheGameSpyInfo->removeFromSavedIgnoreList(profileID);
+                if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->isSavedIgnored(profileID)) {
+                    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->removeFromSavedIgnoreList(profileID);
                 } else {
-                    TheGameSpyInfo->addToSavedIgnoreList(profileID, nick);
+                    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addToSavedIgnoreList(profileID, nick);
                 }
             } else {
-                if (TheGameSpyInfo->isIgnored(nick)) {
-                    TheGameSpyInfo->removeFromIgnoreList(nick);
+                if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->isIgnored(nick)) {
+                    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->removeFromIgnoreList(nick);
                 } else {
-                    TheGameSpyInfo->addToIgnoreList(nick);
+                    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addToIgnoreList(nick);
                 }
             }
             updateBuddyInfo();

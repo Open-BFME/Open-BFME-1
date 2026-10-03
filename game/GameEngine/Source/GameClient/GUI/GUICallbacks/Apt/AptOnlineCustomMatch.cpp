@@ -35,7 +35,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeCustomMatchMember40
 {
@@ -70,10 +71,10 @@ void BfmeAptScreenOnlineCustomMatch::leaveStagingRoom( int unused )
 	clearLocalStagingState();
 	if( TheGameSpyInfo )
 	{
-		GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+		GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 		if( room )
 			room->reset();
-		TheGameSpyInfo->leaveStagingRoom();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->leaveStagingRoom();
 	}
 	m_setup.notifyLeave();
 	m_state = 0;

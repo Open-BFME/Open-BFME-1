@@ -398,7 +398,8 @@ public:
 };
 
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BuddyMessage
 {
@@ -439,9 +440,9 @@ void dup_004EE1C0( const WideChar *text, std::vector<Int> *selected )
 
 	BuddyMessage message;
 	message.m_timestamp = 0;
-	message.m_recipientID = TheGameSpyInfo->getLocalProfileID();
-	message.m_recipientNick.set( TheGameSpyInfo->getLocalBaseName() );
-	message.m_senderNick.set( TheGameSpyInfo->getLocalBaseName() );
+	message.m_recipientID = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID();
+	message.m_recipientNick.set( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName() );
+	message.m_senderNick.set( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName() );
 	message.m_message.set( request.arg.message.text,
 		wcslen( request.arg.message.text ) );
 

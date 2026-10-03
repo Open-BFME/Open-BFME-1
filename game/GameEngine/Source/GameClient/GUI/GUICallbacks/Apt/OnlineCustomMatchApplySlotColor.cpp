@@ -110,7 +110,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class StlStr
 {
@@ -163,7 +164,7 @@ bool BfmeAptScreenOnlineCustomMatch::applySlotColor( GameSlot *slot, int color )
 {
 	if( !TheGameSpyInfo )
 		return false;
-	GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if( !room )
 		return false;
 
@@ -171,13 +172,13 @@ bool BfmeAptScreenOnlineCustomMatch::applySlotColor( GameSlot *slot, int color )
 	GameSlot *theSlot = slot;
 	theSlot->m_color = colorSel;
 
-	if( TheGameSpyInfo->amIHost() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->amIHost() )
 	{
-		TheGameSpyInfo->setGameOptions();
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->setGameOptions();
 	}
 	else
 	{
-		if( !theSlot->isPlayer( TheGameSpyInfo->getLocalName() ) )
+		if( !theSlot->isPlayer( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName() ) )
 			return false;
 
 		AsciiString options;

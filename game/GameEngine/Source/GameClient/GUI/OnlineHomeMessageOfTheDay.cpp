@@ -99,7 +99,8 @@ virtual void slot0FC();
 virtual void slot100();
 virtual const AsciiString &getMOTD();
 };
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 class GameWindow;
 extern int GameSpyColor[];
 void GadgetListBoxReset(GameWindow*);
@@ -123,7 +124,7 @@ void BfmeAptScreenOnlineHome::bfmeRefreshMessageOfTheDay() {
   GadgetListBoxReset(m_messageOfTheDay);
   AsciiString aLine;
   UnicodeString line;
-  AsciiString aMotd = TheGameSpyInfo->getMOTD();
+  AsciiString aMotd = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getMOTD();
   while(aMotd.nextToken(&aLine,"\n")) {
    if(aLine.getCharAt(aLine.getLength()-1)=='\r') aLine.removeLastChar();
    aLine.trim();

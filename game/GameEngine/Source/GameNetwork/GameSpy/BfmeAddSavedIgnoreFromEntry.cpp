@@ -149,7 +149,8 @@ public:
 	virtual void bfmeSlot74E6B(int id);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameSpyConfigInterface
 {
@@ -182,12 +183,12 @@ void __stdcall bfmeAddSavedIgnoreFromEntryE6B(GameWindow *entry)
 			(const BfmeUniETA &)text);
 
 		if (player != 0 && player->m_bfmeProfileIDE6B !=
-			TheGameSpyInfo->getLocalProfileID() &&
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID() &&
 			(player->m_bfmeFlagsE6B & 0x20) == 0 &&
 			(TheGameSpyConfig == 0 ||
 			 !TheGameSpyConfig->rejectPlayer(player->m_bfmeProfileIDE6B)))
 		{
-			TheGameSpyInfo->addToSavedIgnoreList(
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->addToSavedIgnoreList(
 				player->m_bfmeProfileIDE6B, player->m_bfmeNameE6B);
 		}
 	}

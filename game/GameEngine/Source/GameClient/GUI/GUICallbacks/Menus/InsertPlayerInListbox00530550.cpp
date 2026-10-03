@@ -196,7 +196,8 @@ public:
 	PerGeneralMap losses;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern ImageCollection *TheMappedImageCollection;
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
@@ -229,7 +230,7 @@ Int insertPlayerInListbox(GameWindow *listbox, const PlayerInfo &info, Int color
 {
 	const Rva00530550PlayerInfoLayout &player =
 		*reinterpret_cast<const Rva00530550PlayerInfoLayout *>(&info);
-	Bool isPreorder = TheGameSpyInfo->didPlayerPreorder(player.m_profileID);
+	Bool isPreorder = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->didPlayerPreorder(player.m_profileID);
 	const Image *preorderImg;
 	{
 		BFMERetailAsciiString imageName("Aptfellowship_clup");

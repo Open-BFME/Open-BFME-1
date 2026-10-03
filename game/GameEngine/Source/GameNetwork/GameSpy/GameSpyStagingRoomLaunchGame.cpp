@@ -146,7 +146,8 @@ public:
 	virtual Bool didPlayerPreorder(Int profileID);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class Transport;
 
@@ -323,7 +324,7 @@ void GameSpyStagingRoom::launchGame()
 		GameSlot *slot = getSlot(i);
 		if (slot->isHuman())
 		{
-			if (TheGameSpyInfo->didPlayerPreorder(slot->getProfileID()))
+			if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->didPlayerPreorder(slot->getProfileID()))
 				markPlayerAsPreorder(i);
 		}
 	}

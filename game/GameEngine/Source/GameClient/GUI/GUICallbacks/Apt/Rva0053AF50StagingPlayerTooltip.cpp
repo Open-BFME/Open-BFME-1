@@ -215,7 +215,8 @@ int bfmeRankPointsFromStats(Gen_uw_00025c1b *stats, int side);
 bool Rva004D8F50(int state);
 UnicodeString formatLadderRankText(int rank);
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 class BfmeQueueEUG;
 extern BfmeQueueEUG *g_bfmeQueueEUG;
@@ -229,7 +230,7 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 {
 	if (!TheGameSpyInfo)
 		return;
-	GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *game = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 	if (!game)
 		return;
 	if (!slot->rva004FA1A0Self())
@@ -243,7 +244,7 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	UnicodeString uName = slot->getName();
 	AsciiString aName;
 	aName.translate(uName);
-	Rva0053AF50PlayerInfo *player = TheGameSpyInfo->findPlayerInfo(aName.str());
+	Rva0053AF50PlayerInfo *player = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->findPlayerInfo(aName.str());
 	if (player)
 	{
 	Int profileID = player->m_profileID;
@@ -324,8 +325,8 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	UnicodeString tooltip = UnicodeString::TheEmptyString;
 	if (isLocalPlayer)
 		tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
-	else if (TheGameSpyInfo->getBuddyMap()->find(profileID) !=
-		TheGameSpyInfo->getBuddyMap()->end())
+	else if (reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap()->find(profileID) !=
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap()->end())
 		tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
 	else if (profileID)
 		tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());

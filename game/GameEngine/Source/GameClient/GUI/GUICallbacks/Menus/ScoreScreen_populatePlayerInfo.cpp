@@ -505,7 +505,8 @@ static inline VictoryConditions *localVictoryConditions()
 	return (VictoryConditions *)TheVictoryConditions;
 }
 extern NetworkInterface* TheNetwork;
-extern Rva004E5DF0GameSpyInfo* TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameResultsInterface* TheGameResultsQueue;
 extern Display* TheDisplay;
 struct Rva004E5DF0Stats
@@ -826,7 +827,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	if ( Rva012F4134 == SCORESCREEN_INTERNET )
 	{
 
-		Int localID = TheGameSpyInfo->getLocalProfileID();
+		Int localID = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID();
 		if (localID)
 		{
 			Int localSlotNum = TheGameSpyGame->getLocalSlotNum();
@@ -985,8 +986,8 @@ void populatePlayerInfo( Player *player, Int pos)
 
 							PSRequest req;
 							req.requestType = PSRequest::PSREQUEST_UPDATEPLAYERSTATS;
-							req.email = TheGameSpyInfo->getLocalEmail().str();
-							req.nick = TheGameSpyInfo->getLocalBaseName().str();
+							req.email = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalEmail().str();
+							req.nick = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName().str();
 							req.password = "";
 							req.player = stats;
 							req.addDesync = TheGameLogic->sawCRCMismatch();
@@ -1128,9 +1129,9 @@ void populatePlayerInfo( Player *player, Int pos)
 
 					PSRequest req;
 					req.requestType = PSRequest::PSREQUEST_UPDATEPLAYERSTATS;
-					req.email = TheGameSpyInfo->getLocalEmail().str();
-					req.nick = TheGameSpyInfo->getLocalBaseName().str();
-					req.password = TheGameSpyInfo->getLocalPassword().str();
+					req.email = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalEmail().str();
+					req.nick = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName().str();
+					req.password = reinterpret_cast<Rva004E5DF0GameSpyInfo *>(TheGameSpyInfo)->getLocalPassword().str();
 					req.player = stats;
 					req.addDesync = TheGameLogic->sawCRCMismatch();
  					req.addDiscon = gameEndedInDisconnect;

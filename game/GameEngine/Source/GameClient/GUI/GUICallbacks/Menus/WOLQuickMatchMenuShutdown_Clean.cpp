@@ -67,7 +67,8 @@ struct QuickMatchScreen
 	GameWindow *m_textWindow;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameEngine *TheGameEngine;
 extern QuickMatchScreen *TheQuickMatchScreen;
 extern GameWindow * volatile parentWOLQuickMatch;
@@ -90,7 +91,7 @@ typedef void (__fastcall *ImmediateShutdownFunction)(WindowLayout *);
 void WindowLayout::WOLQuickMatchMenuShutdown(void *userData)
 {
 	GameWindow *textWindow = TheQuickMatchScreen->m_textWindow;
-	TheGameSpyInfo->unregisterTextWindow(textWindow);
+	reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->unregisterTextWindow(textWindow);
 
 	if (!TheGameEngine->getQuitting())
 		((QuickMatchSaveFunction)j_00031e0d)(TheQuickMatchScreen);

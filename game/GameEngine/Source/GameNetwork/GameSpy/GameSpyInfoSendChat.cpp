@@ -95,7 +95,8 @@ virtual void slot60() = 0;
 virtual void slot61() = 0;
 virtual bool sendChat(UnicodeString message, bool isAction, GameWindow* playerListbox);
 };
-extern GameSpyInfo* TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 // Retail 0x00626230: ZH Chat.cpp sendChat with BFME player lookup and without duplicate suppression.
 bool GameSpyInfo::sendChat(UnicodeString message, bool isAction, GameWindow* playerListbox) {
  getCurrentGroupRoom();
@@ -122,14 +123,14 @@ bool GameSpyInfo::sendChat(UnicodeString message, bool isAction, GameWindow* pla
    AsciiString names = AsciiString::TheEmptyString;
    AsciiString tmp = AsciiString::TheEmptyString;
    AsciiString aStr;
-   AsciiString* player = TheGameSpyInfo->slot004c(TheGameSpyInfo->getLocalName().str());
+   AsciiString* player = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot004c(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName().str());
    if (player) names.format("%s", player->str());
-   else names.format("%s", TheGameSpyInfo->getLocalName().str());
+   else names.format("%s", reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName().str());
    for (int i=0;i<maxSel;++i) {
     if (selections[i] != -1) {
      aStr.translate(GadgetListBoxGetText(playerListbox,selections[i],GadgetListBoxGetNumColumns(playerListbox)-1));
-     if (aStr.compareNoCase(TheGameSpyInfo->getLocalName())) {
-      AsciiString* other = TheGameSpyInfo->slot004c(aStr.str());
+     if (aStr.compareNoCase(reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalName())) {
+      AsciiString* other = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot004c(aStr.str());
       if (other) tmp.format(",%s",other->str());
       else tmp.format(",%s",aStr.str());
       names.concat(tmp);

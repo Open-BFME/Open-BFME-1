@@ -58,7 +58,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineCustomMatch
 {
@@ -70,7 +71,7 @@ void BfmeAptScreenOnlineCustomMatch::getHostPlayerName( UnicodeString &dest )
 {
 	if( TheGameSpyInfo )
 	{
-		GameSpyStagingRoom *room = TheGameSpyInfo->getCurrentStagingRoom();
+		GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
 		if( room )
 			dest = room->getSlot( 0 )->getName();
 	}

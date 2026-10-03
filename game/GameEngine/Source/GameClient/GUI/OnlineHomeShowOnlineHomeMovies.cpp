@@ -63,7 +63,8 @@ public:
 	virtual PSPlayerStats getCachedLocalPlayerStats( void );
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineHome
 {
@@ -83,7 +84,7 @@ void BfmeAptScreenOnlineHome::showOnlineHomeMovies(
 		return;
 
 	char buffer[ 16 ];
-	GameSpyInfo *info = TheGameSpyInfo;
+	GameSpyInfo *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo);
 	PSPlayerStats stats = info->getCachedLocalPlayerStats();
 	int side = stats.m_lastSide;
 	switch( side )

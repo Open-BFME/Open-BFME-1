@@ -151,7 +151,8 @@ public:
 	virtual Bool didPlayerPreorder(Int profileID) const;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern ImageCollection *TheMappedImageCollection;
 extern GameWindow *listboxLobbyPlayers;
 
@@ -184,7 +185,7 @@ static Int insertPlayerInListbox(const PlayerInfo &info, Int color)
 
 	Int currentRank = player.m_rankPoints;
 	Int currentSide = player.m_side;
-	Bool isPreorder = TheGameSpyInfo->didPlayerPreorder(player.m_profileID);
+	Bool isPreorder = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->didPlayerPreorder(player.m_profileID);
 
 	const Image *preorderImg;
 	{

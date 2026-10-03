@@ -204,7 +204,8 @@ extern MappedImageCollection *TheMappedImageCollection;
 extern MapCache *TheMapCache;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern NAT *TheNAT;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 
@@ -328,7 +329,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 			room->slot00( 1 );
 			TheNAT = 0;
 		}
-		if( GameSpyInfo *info = TheGameSpyInfo )
+		if( GameSpyInfo *info = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo) )
 			info->slotB0();
 	}
 }

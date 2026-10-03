@@ -105,7 +105,8 @@ public:
 	virtual AsciiString getLocalBaseName(void);
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 // Retail reads +0x00, +0x20 and +0x28 of this table (ZH's GSCOLOR_DEFAULT and
 // GSCOLOR_PLAYER_BUDDY sit at 0 and 8; ZH's GSCOLOR_PLAYER_SELF is 9, so BFME
@@ -128,13 +129,13 @@ void insertChat( BuddyMessage msg )
 {
 	if (buddyControls.listboxChat)
 	{
-		BuddyInfoMap *m = TheGameSpyInfo->getBuddyMap();
-		Bool localSender = (msg.m_senderID == TheGameSpyInfo->getLocalProfileID());
+		BuddyInfoMap *m = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap();
+		Bool localSender = (msg.m_senderID == reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalProfileID());
 		UnicodeString s;
 		UnicodeString timeStr;
 		if (localSender)
 		{
-			s.format(L"[%hs -> %hs] %s", TheGameSpyInfo->getLocalBaseName().str(), msg.m_recipientNick.str(), msg.m_message.str());
+			s.format(L"[%hs -> %hs] %s", reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getLocalBaseName().str(), msg.m_recipientNick.str(), msg.m_message.str());
 			Int index = GadgetListBoxAddEntryText( buddyControls.listboxChat, s, GameSpyColor[10], -1, -1 );
 			GadgetListBoxAddEntryText( buddyControls.listboxChat, timeStr, GameSpyColor[10], index, 1);
 		}

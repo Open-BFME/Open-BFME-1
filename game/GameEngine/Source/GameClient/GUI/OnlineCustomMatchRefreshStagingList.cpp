@@ -28,7 +28,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineCustomMatch
 {
@@ -52,7 +53,7 @@ void BfmeAptScreenOnlineCustomMatch::refreshStagingRoomList( bool force )
 				return;
 		}
 	}
-	if( TheGameSpyInfo->hasStagingRoomListChanged() )
+	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->hasStagingRoomListChanged() )
 	{
 		applyStagingRoomRefresh();
 		m_lastRefresh = timeGetTime();

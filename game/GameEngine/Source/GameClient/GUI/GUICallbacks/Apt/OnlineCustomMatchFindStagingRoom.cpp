@@ -44,7 +44,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeAptScreenOnlineCustomMatch
 {
@@ -58,7 +59,7 @@ private:
 
 GameSpyStagingRoom *BfmeAptScreenOnlineCustomMatch::findSelectedStagingRoom()
 {
-	StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
+	StagingRoomMap *rooms = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getStagingRoomList();
 	if( !rooms )
 		return 0;
 	StagingRoomMapIterator it = rooms->find( m_selectedID );

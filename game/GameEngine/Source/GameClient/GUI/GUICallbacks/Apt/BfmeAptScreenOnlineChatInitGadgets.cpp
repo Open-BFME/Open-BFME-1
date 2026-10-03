@@ -135,7 +135,8 @@ class BfmeAptScreenOnlineChat;
 
 extern BfmeAptScreenOnlineChat *TheBfmeOnlineChat;
 extern GameWindowManager *TheWindowManager;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern void *g_obj12F49F4;
 
 // Layout witnessed by OnlineChatListButtons.cpp, which writes the same list
@@ -179,7 +180,7 @@ void BfmeAptScreenOnlineChat::_bfme_initGadgets( const char *name, void *userDat
 	{
 		GadgetListBoxSetListLength( window, 1000 );
 		GadgetListBoxAddMultiSelect( window );
-		TheGameSpyInfo->slot57( window );
+		reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot57( window );
 		m_chat = window;
 	}
 	else if ( strcmp( name, "OnlineChat::ChatEntry" ) == 0 )
@@ -195,14 +196,14 @@ void BfmeAptScreenOnlineChat::_bfme_initGadgets( const char *name, void *userDat
 	else if ( strcmp( name, "OnlineChat::ChatLobbies" ) == 0 )
 	{
 		m_chatLobbies = window;
-		if ( TheGameSpyInfo->slot13() )
+		if ( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot13() )
 		{
-			TheGameSpyInfo->slot06( TheGameSpyInfo->slot13() );
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot06( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot13() );
 			g_obj12F49F4 = 0;
 		}
 		else
 		{
-			TheGameSpyInfo->slot09( 2 );
+			reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->slot09( 2 );
 		}
 		rva0052E990();
 	}
