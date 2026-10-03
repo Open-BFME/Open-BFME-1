@@ -1,24 +1,19 @@
-// Open-BFME5 conversions.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-class BfmeStrAVOW
-{
-public:
-	void bfmeSetAVOW(const BfmeStrAVOW &o);
-	char *m_bfme00;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include <vector>
 
-class BfmeStrBVOW
+namespace _STL
 {
-public:
-	void bfmeSetBVOW(const BfmeStrBVOW &o);
-	char *m_bfme00;
-};
+template <> vector<AsciiString> &vector<AsciiString>::operator=(
+	const vector<AsciiString> &);
+}
 
 struct BfmeElemVOW
 {
-	BfmeStrAVOW m_bfme00;
-	BfmeStrBVOW m_bfme04;
-	char m_bfmePad08[8];
+	StringBase<char> m_bfme00;
+	_STL::vector<AsciiString> m_bfme04;
 };
 
 BfmeElemVOW *bfmeCopyBackVOW(const BfmeElemVOW *first, const BfmeElemVOW *last, BfmeElemVOW *dest)
@@ -33,8 +28,8 @@ BfmeElemVOW *bfmeCopyBackVOW(const BfmeElemVOW *first, const BfmeElemVOW *last, 
 		{
 			--last;
 			--dest;
-			dest->m_bfme00.bfmeSetAVOW(last->m_bfme00);
-			dest->m_bfme04.bfmeSetBVOW(last->m_bfme04);
+			dest->m_bfme00.set(last->m_bfme00);
+			dest->m_bfme04 = last->m_bfme04;
 		} while (--i);
 	}
 	return dest;
