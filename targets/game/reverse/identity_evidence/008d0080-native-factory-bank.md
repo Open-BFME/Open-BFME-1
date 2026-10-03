@@ -21,8 +21,8 @@ all17 retail/native predecessor states agree. States3/9/15 select the
 three shard actions C5A546/C5A5A0/C5A5F3. Ghidra/raw bytes establish
 15B through each RET, respectively sizes16/40/32 with saved EBP+0C/+08/+08
 and calls891A80/8C47A0/8A3160. They are still blocked on the parent.
-The state map supplies13 allocation cleanups and two scoped string
-lifetimes, including the two distinct XML new expressions and the
+The state map supplies15 allocation-cleanup states for13 allocation
+shapes, plus two scoped string lifetimes, including the two distinct XML new expressions and the
 by-value Error-string constructor. No standalone fake cleanup is used.
 
 A first complete draft compiles2540B/2056 positional byte differences.
