@@ -173,7 +173,8 @@ public:
 
 class Rva009EB960;
 extern Rva009EB960 *Rva0134FAA0;
-extern char g_012D6DE0;
+struct _RTL_CRITICAL_SECTION;
+extern _RTL_CRITICAL_SECTION g_bfmeRva012D6DE0CriticalSection;
 extern Gen_00C71060Target TheBfmeObject_00C71060;
 
 void BfmeSub911E::bfmePrep911E()
@@ -182,7 +183,7 @@ void BfmeSub911E::bfmePrep911E()
 	{
 		if (Rva0134FAA0)
 		{
-			Rva00886F60Class guard(reinterpret_cast<BfmeLockTEA *>(&g_012D6DE0));
+			Rva00886F60Class guard(reinterpret_cast<BfmeLockTEA *>(&g_bfmeRva012D6DE0CriticalSection));
 			std::vector<Gen_t_0090ef40_m4pod> &updates = *reinterpret_cast<std::vector<Gen_t_0090ef40_m4pod> *>(&TheBfmeObject_00C71060);
 			updates.push_back(*reinterpret_cast<Gen_t_0090ef40_m4pod *>(&m_rva00000008));
 		}
