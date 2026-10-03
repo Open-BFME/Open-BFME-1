@@ -45,7 +45,7 @@ public:
 class Rva009A45A0CollisionData
 {
 public:
-	void destroyDirect();
+	~Rva009A45A0CollisionData();
 };
 
 void __cdecl operator delete(void *block);
@@ -95,6 +95,9 @@ void Rva009A36F0Owner::apply(Rva009A36F0Param *param)
 	}
 
 	unlinkChain(thing);
-	((Rva009A45A0CollisionData *)thing)->destroyDirect();
+	// The qualified destructor call (p->T::~T(), not p->~T()) is what keeps the
+// call direct: the unqualified spelling makes MSVC 7.1 route through the
+// scalar-deleting destructor ??_GT@@QAEPAXI@Z, which retail does not call here.
+	((Rva009A45A0CollisionData *)thing)->Rva009A45A0CollisionData::~Rva009A45A0CollisionData();
 	operator delete(thing);
 }
