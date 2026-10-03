@@ -1,3 +1,4 @@
+// cl: /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // Five 46-byte bodies with one shape: build a two-byte flag pair on the stack
 // with both bytes set, hand its address to slot 10 of the argument's vtable,
 // and then pass the argument itself to a member of the sub-object at +0x1C.
@@ -11,8 +12,10 @@
 // set from the same value rather than from two literals. The lea rather than a
 // load at +0x1C says that second object is embedded, not pointed to.
 //
-// Each of the five reaches a different member for the second call; all are
-// known by address alone and are pinned here.
+// Each second call reaches the corresponding FXParticleSystem module's
+// DoXfer through its ILT entry. Qualify the call to preserve direct dispatch.
+
+#include "../GameClient/System/FXParticleSystem/fx_particle_system.h"
 
 struct BfmeFlagPair
 {
@@ -36,12 +39,6 @@ public:
 	virtual void bfmeApply(BfmeFlagPair *flags) = 0;		// +0x28
 };
 
-class Gen_005ee5a0Sub
-{
-public:
-	void bfmeNotify(BfmeFlagTarget *target);			// ILT 0x0002EE88
-};
-
 class Gen_005ee5a0
 {
 public:
@@ -49,13 +46,7 @@ public:
 
 private:
 	char m_bfmeHead[0x1C];
-	Gen_005ee5a0Sub m_bfmeSub;						// +0x1C
-};
-
-class Gen_005ef8b0Sub
-{
-public:
-	void bfmeNotify(BfmeFlagTarget *target);			// ILT 0x00049D64
+	FXParticleSystem::DefaultAlphaModuleInfo m_bfmeSub;	// +0x1C
 };
 
 class Gen_005ef8b0
@@ -65,13 +56,7 @@ public:
 
 private:
 	char m_bfmeHead[0x1C];
-	Gen_005ef8b0Sub m_bfmeSub;						// +0x1C
-};
-
-class Gen_005fe880Sub
-{
-public:
-	void bfmeNotify(BfmeFlagTarget *target);			// ILT 0x0000B235
+	FXParticleSystem::DefaultColorModuleInfo m_bfmeSub;	// +0x1C
 };
 
 class Gen_005fe880
@@ -81,13 +66,7 @@ public:
 
 private:
 	char m_bfmeHead[0x1C];
-	Gen_005fe880Sub m_bfmeSub;						// +0x1C
-};
-
-class Gen_005ff8d0Sub
-{
-public:
-	void bfmeNotify(BfmeFlagTarget *target);			// ILT 0x0001F087
+	FXParticleSystem::WindModuleInfo m_bfmeSub;			// +0x1C
 };
 
 class Gen_005ff8d0
@@ -97,13 +76,7 @@ public:
 
 private:
 	char m_bfmeHead[0x1C];
-	Gen_005ff8d0Sub m_bfmeSub;						// +0x1C
-};
-
-class Gen_00600710Sub
-{
-public:
-	void bfmeNotify(BfmeFlagTarget *target);			// ILT 0x00018926
+	FXParticleSystem::DefaultUpdateModuleInfo m_bfmeSub;	// +0x1C
 };
 
 class Gen_00600710
@@ -113,7 +86,7 @@ public:
 
 private:
 	char m_bfmeHead[0x1C];
-	Gen_00600710Sub m_bfmeSub;						// +0x1C
+	FXParticleSystem::RenderObjectUpdateModuleInfo m_bfmeSub;	// +0x1C
 };
 
 // ?bfmeRefresh@Gen_005ee5a0@@QAEXPAVBfmeFlagTarget@@@Z
@@ -126,7 +99,8 @@ void Gen_005ee5a0::bfmeRefresh(BfmeFlagTarget *target)
 
 	target->bfmeApply(&flags);
 
-	m_bfmeSub.bfmeNotify(target);
+	m_bfmeSub.FXParticleSystem::DefaultAlphaModuleInfo::DoXfer(
+		*reinterpret_cast<Xfer *>(target));
 }
 
 // ?bfmeRefresh@Gen_005ef8b0@@QAEXPAVBfmeFlagTarget@@@Z
@@ -139,7 +113,8 @@ void Gen_005ef8b0::bfmeRefresh(BfmeFlagTarget *target)
 
 	target->bfmeApply(&flags);
 
-	m_bfmeSub.bfmeNotify(target);
+	m_bfmeSub.FXParticleSystem::DefaultColorModuleInfo::DoXfer(
+		*reinterpret_cast<Xfer *>(target));
 }
 
 // ?bfmeRefresh@Gen_005fe880@@QAEXPAVBfmeFlagTarget@@@Z
@@ -152,7 +127,8 @@ void Gen_005fe880::bfmeRefresh(BfmeFlagTarget *target)
 
 	target->bfmeApply(&flags);
 
-	m_bfmeSub.bfmeNotify(target);
+	m_bfmeSub.FXParticleSystem::WindModuleInfo::DoXfer(
+		*reinterpret_cast<Xfer *>(target));
 }
 
 // ?bfmeRefresh@Gen_005ff8d0@@QAEXPAVBfmeFlagTarget@@@Z
@@ -165,7 +141,8 @@ void Gen_005ff8d0::bfmeRefresh(BfmeFlagTarget *target)
 
 	target->bfmeApply(&flags);
 
-	m_bfmeSub.bfmeNotify(target);
+	m_bfmeSub.FXParticleSystem::DefaultUpdateModuleInfo::DoXfer(
+		*reinterpret_cast<Xfer *>(target));
 }
 
 // ?bfmeRefresh@Gen_00600710@@QAEXPAVBfmeFlagTarget@@@Z
@@ -178,5 +155,6 @@ void Gen_00600710::bfmeRefresh(BfmeFlagTarget *target)
 
 	target->bfmeApply(&flags);
 
-	m_bfmeSub.bfmeNotify(target);
+	m_bfmeSub.FXParticleSystem::RenderObjectUpdateModuleInfo::DoXfer(
+		*reinterpret_cast<Xfer *>(target));
 }
