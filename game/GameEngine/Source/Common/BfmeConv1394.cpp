@@ -1,9 +1,12 @@
 // Open-BFME5 conversions.
 
-class BfmeMsgVJT
+class BfmeMsgVJT;
+
+// Retail 0x007E8A80 is defined by BfmeThingUPB in BfmeConv1339.cpp.
+class BfmeThingUPB
 {
 public:
-	char bfmeGetStrVJT(const char *k, char *b, int n);
+	char bfmeGoUPB(void *a, char *out, void *c);
 };
 
 class BfmeThingVJT
@@ -18,8 +21,8 @@ public:
 BfmeThingVJT *BfmeThingVJT::bfmeInitVJT(BfmeMsgVJT *m)
 {
 	m_bfme00 = m;
-	m->bfmeGetStrVJT("startDate", m_bfmeStart, 0x20);
-	m_bfme00->bfmeGetStrVJT("endDate", m_bfmeEnd, 0x20);
+	((BfmeThingUPB *)m)->bfmeGoUPB((void *)"startDate", m_bfmeStart, (void *)0x20);
+	((BfmeThingUPB *)m_bfme00)->bfmeGoUPB((void *)"endDate", m_bfmeEnd, (void *)0x20);
 	return this;
 }
 
@@ -32,11 +35,18 @@ public:
 	void bfmePush(void);
 };
 
-class BfmeStackVJU
+class BfmeStackVJU;
+
+// Retail 0x008D2E00 and 0x008D2CC0 use these defining owners.
+struct BfmeThingDXH
+{
+	void bfmeGoDXH(void *a);
+};
+
+class BfmeA1210
 {
 public:
-	void bfmeSetVJU(void *p);
-	void bfmePopVJU();
+	void bfmePop1210();
 };
 
 __declspec(dllimport) void __cdecl bfmeCallVJU(void *a, int b);
@@ -55,7 +65,7 @@ void BfmeThingVJU::bfmeGoVJU(BfmeStackVJU *s, int v, void *p)
 	if (p)
 	{
 		((Gen_008D2C80 *)s)->bfmePush();
-		s->bfmeSetVJU(p);
+		((BfmeThingDXH *)s)->bfmeGoDXH(p);
 	}
 	switch (m_bfme00)
 	{
@@ -64,5 +74,5 @@ void BfmeThingVJU::bfmeGoVJU(BfmeStackVJU *s, int v, void *p)
 		break;
 	}
 	if (p)
-		s->bfmePopVJU();
+		((BfmeA1210 *)s)->bfmePop1210();
 }
