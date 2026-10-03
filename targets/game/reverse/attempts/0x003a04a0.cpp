@@ -1,61 +1,50 @@
 // ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
-// partial score=0.97 date=2026-09-10
-// cl: /O2 /EHs-c-
-// Open-BFME: Rva2225E0Filter::accepts at retail 0x003A04A0.
-// The filtered-count callers and the existing ILT pin establish this private
-// predicate's Object/Player ABI; the source is kept in a dedicated TU so the
-// small override walk retains its retail frame.
-
-typedef bool Bool;
-
-class Player;
-
-class BfmeOverridable
-{
-public:
-	BfmeOverridable *friend_getFinalOverride(void);
-
-	char m_bfmeHead[0x04];
-	BfmeOverridable *m_bfmeNextOverride;
-};
-
-class BfmeFilterObject
-{
-public:
-	Bool bfmeQuery(Player *player);
-
-	char m_bfmeHead[0x04];
-	BfmeOverridable *m_bfmeOverride;
-};
-
-class Object : public BfmeFilterObject
-{
-};
-
-class Rva2225E0Filter
-{
-public:
-	Bool accepts(Object *object, Player *player);
-
-private:
-	Bool bfmeTest(BfmeOverridable *override, Bool queried);
-};
-
+// partial score=1.0 date=2026-10-02
 // ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
-Bool Rva2225E0Filter::accepts(Object *object, Player *player)
+// Matched filtered-count caller 002225E0 proves this wrapper signature.
+// The push before getControllingPlayer belongs to the later three-argument call.
+// Evidence: identity_evidence/003a04a0-filter-player-abi.md
+// cl: /O2 /EHs-c- /Igame/GameEngine/Source
+class Player;
+#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
+#include "GameLogic/Object/object.h"
+
+// Preserve the bank's established ABI-view names. The existing ILT reaches
+// the matched Overridable::getFinalOverride at RVA 00087A80; the next-override
+// link is at +4, as in the upstream Overridable declaration.
+extern void j_000022bb();
+struct BfmeOverridable
 {
-	if (!object)
-		return false;
+    unsigned char m_bfmeHead[4];
+    BfmeOverridable *m_bfmeNextOverride;
+    const void *resolve() const
+    {
+        typedef const void *(BfmeOverridable::*Method)() const;
+        union { void (*raw)(); Method method; } call = { j_000022bb };
+        return (this->*call.method)();
+    }
+};
+class Rva0039F0A0
+{
+public:
+    bool accepts(const void *thing, Player *player, Player *observer);
+};
+struct Rva2225E0Filter
+{
+    bool accepts(Object *object, Player *player);
+};
 
-	BfmeOverridable *override = object->m_bfmeOverride;
-	BfmeOverridable *walked;
-
-	if (override == 0)
-		walked = 0;
-	else if (override->m_bfmeNextOverride)
-		walked = override->m_bfmeNextOverride->friend_getFinalOverride();
-	else
-		walked = override;
-
-	return bfmeTest(walked, object->bfmeQuery(player));
+bool Rva2225E0Filter::accepts(Object *object, Player *player)
+{
+    if (!object)
+        return false;
+    const BfmeOverridable *overrides = (const BfmeOverridable *)object->m_template;
+    const void *walked;
+    if (!overrides)
+        walked = 0;
+    else if (overrides->m_bfmeNextOverride)
+        walked = overrides->m_bfmeNextOverride->resolve();
+    else
+        walked = overrides;
+    return ((Rva0039F0A0 *)this)->accepts(walked, object->getControllingPlayer(), player);
 }

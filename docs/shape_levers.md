@@ -1641,3 +1641,20 @@ remaining scheduling bytes and matches all 609 bytes. Both real functions
 verify together with canonical UnicodeString/StringBase headers. A declaration
 alone does not supply the same compiler context; do not substitute a synthetic
 helper. Evidence: `targets/game/reverse/identity_evidence/005151f0-ingame-chat-add-friend.md`.
+
+## A push before a call can belong to the following call (2026-10-03)
+
+At 0x003A04A0 the 72-byte bank missed only four call-setup bytes after many
+scheduling trials. It assigned a pushed Player argument to a fictitious
+Boolean query, then gave the final predicate two arguments. Retail actually
+calls zero-argument `Object::getControllingPlayer()` and leaves the preceding
+push on the stack for the final three-argument predicate. The incorrect calls
+happened to consume the correct *combined* stack space. Correcting both ABIs
+matches all 72 bytes with the canonical Object header and existing callee pins.
+Check each callee's cleanup and return type independently, even when the
+wrapper's size and stack balance look exact. Evidence:
+`targets/game/reverse/identity_evidence/003a04a0-filter-player-abi.md`.
+
+The 0x003A04A0 correction is banked at 1.000 after strict verification; its
+production promotion awaits resolution of unrelated alias-guard failures in
+the session worktree. No new production row or pin change was committed.
