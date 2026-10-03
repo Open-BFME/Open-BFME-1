@@ -158,7 +158,8 @@ class SpecialAbilityUpdateModuleData {public:
  char pad1dc[0x6a]; unsigned char m_alwaysValidateSpecialObjects;char pad247[3];unsigned char field24a;char field24b;unsigned char field24c;
 };
 struct BfmeThingFEC {int bfmeGoFEC();char pad000[4];SpecialAbilityUpdateModuleData* data;char pad008[0x24];int field02c;char pad030[0xac];unsigned char active;};
-inline int BfmeThingFEC::bfmeGoFEC(){if(!active){if(!data->m_alwaysValidateSpecialObjects){if(field02c==0)return 0x3fffffff;}}return 1;}
+// BfmeConv894.cpp owns the byte-verified bfmeGoFEC definition.
+static __forceinline int bfmeGoFECInline(BfmeThingFEC* self){if(!self->active){if(!self->data->m_alwaysValidateSpecialObjects){if(self->field02c==0)return 0x3fffffff;}}return 1;}
 struct BfmeA999 {char bfmeGo999A();};
 #include "Rva002A59F0BfmeReady.cpp"
 class BfmeThing5F30 {public:unsigned char bfmeReady5F30()const;};
@@ -201,9 +202,9 @@ int SpecialAbilityUpdateUpdateInterface002AA9D0::update(){
  SpecialAbilityUpdate* base=(SpecialAbilityUpdate*)((char*)this-0x10);
  const SpecialAbilityUpdateModuleData* d=getData();
  base->validateSpecialObjects();
- if(getObject()->flags344&1){base->onExit(true,true);return ((BfmeThingFEC*)base)->bfmeGoFEC();}
+ if(getObject()->flags344&1){base->onExit(true,true);return bfmeGoFECInline((BfmeThingFEC*)base);}
  if(field02c && field02c<TheGameLogic->frame)base->slot40();
- if(!active)return ((BfmeThingFEC*)base)->bfmeGoFEC();
+ if(!active)return bfmeGoFECInline((BfmeThingFEC*)base);
  AI002AA9D0* ai=getObject()->ai;
  if(!ai){base->onExit(false,true);return ((BfmeThingFEC*)base)->bfmeGoFEC();}
  if(targetID){Object* target=TheGameLogic->findObjectByID(targetID);if(target)targetPos=target->position;}
