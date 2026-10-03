@@ -13,7 +13,24 @@ struct BfmeRecordRange6BE90
 class BfmeRecordHook6BE90
 {
 public:
-	void bfmeSelect6BE90(BfmeRecord6BE90 *record, int activate, int reserved);
+	// bfmeSelect6BE90() is reached through the ILT thunk below, not declared here.
+};
+
+// The selection call goes through the five-byte ILT thunk at 0x000418E9, defined
+// as ?j_000418e9@@YAXXZ in game/gen_small/thunks_031.cpp (target FUN_00b6b800)
+// and pinned for this adjusted-this record hook. The thunk declares no arguments
+// of its own: it jumps with the thiscall `this` in ECX and the caller's arguments
+// already in place, so the call is spelled through a thiscall member pointer of
+// the same shape.
+extern void j_000418e9();
+
+typedef void (BfmeRecordHook6BE90::*bfmeSelect6BE90Thunk)(
+	BfmeRecord6BE90 *record, int activate, int reserved);
+
+union BfmeSelect6BE90ThunkCast
+{
+	void (__cdecl *freeFunction)(BfmeRecord6BE90 *record, int activate, int reserved);
+	bfmeSelect6BE90Thunk memberFunction;
 };
 
 class Rva0076BE90Cursor
@@ -42,7 +59,10 @@ void Rva0076BE90Cursor::advanceRecord()
 				m_active = true;
 				BfmeRecordHook6BE90 *hook = reinterpret_cast<BfmeRecordHook6BE90 *>(
 					reinterpret_cast<char *>(this) - 12);
-				hook->bfmeSelect6BE90(record, 1, 0);
+				BfmeSelect6BE90ThunkCast cast;
+				cast.freeFunction = reinterpret_cast<void (__cdecl *)(BfmeRecord6BE90 *, int, int)>(
+					&::j_000418e9);
+				(hook->*cast.memberFunction)(record, 1, 0);
 			}
 			return;
 		}

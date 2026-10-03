@@ -3,9 +3,24 @@ class BfmeNodeNY;
 class BfmeTableNY
 {
 public:
-	void bfmeFindNY(BfmeNodeNY **found, void **key);
+	// bfmeFindNY() is reached through the ILT thunk below, not declared here.
 
 	BfmeNodeNY *m_bfmeEndNY;
+};
+
+// The table lookup goes through the five-byte ILT thunk at 0x00016C70, defined
+// as ?j_00016c70@@YAXXZ in game/gen_small/thunks_010.cpp (target FUN_004eef40)
+// and pinned for ?bfmeFindNY@BfmeTableNY@@. The thunk declares no argument of
+// its own: it jumps with the thiscall `this` in ECX, so the call is spelled
+// through a thiscall member pointer of the same shape.
+extern void j_00016c70();
+
+typedef void (BfmeTableNY::*bfmeFindNYThunk)(BfmeNodeNY **found, void **key);
+
+union BfmeFindNYThunkCast
+{
+	void (__cdecl *freeFunction)(BfmeNodeNY **found, void **key);
+	bfmeFindNYThunk memberFunction;
 };
 
 class BfmeItemNY
@@ -35,7 +50,9 @@ char BfmeOwnerNY::bfmeCheckNY(void *item)
 
 	BfmeNodeNY *found;
 
-	m_bfmeTableNY.bfmeFindNY(&found, &item);
+	BfmeFindNYThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(BfmeNodeNY **, void **)>(&::j_00016c70);
+	(m_bfmeTableNY.*cast.memberFunction)(&found, &item);
 
 	return found != m_bfmeTableNY.m_bfmeEndNY;
 }

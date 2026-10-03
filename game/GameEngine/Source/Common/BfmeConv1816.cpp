@@ -19,7 +19,22 @@ public:
 	virtual float bfmeComputeVM(void);
 
 	void bfmeClampVM(BfmeItemVM *item);
-	void bfmeNotifyVM(BfmeItemVM *item);
+	// bfmeNotifyVM() is reached through the ILT thunk below, not declared here.
+};
+
+// The notify call goes through the five-byte ILT thunk at 0x0003B372, defined
+// as ?j_0003b372@@YAXXZ in game/gen_small/thunks_028.cpp (target FUN_00611d40)
+// and pinned for ?bfmeNotifyVM@BfmeOwnerVM@@. The thunk declares no argument of
+// its own: it jumps with the thiscall `this` in ECX, so the call is spelled
+// through a thiscall member pointer of the same shape.
+extern void j_0003b372();
+
+typedef void (BfmeOwnerVM::*bfmeNotifyVMThunk)(BfmeItemVM *item);
+
+union BfmeNotifyVMThunkCast
+{
+	void (__cdecl *freeFunction)(BfmeItemVM *item);
+	bfmeNotifyVMThunk memberFunction;
 };
 
 void BfmeOwnerVM::bfmeClampVM(BfmeItemVM *item)
@@ -33,5 +48,7 @@ void BfmeOwnerVM::bfmeClampVM(BfmeItemVM *item)
 		item->m_bfmeValueVM = chosen;
 	}
 
-	bfmeNotifyVM(item);
+	BfmeNotifyVMThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(BfmeItemVM *)>(&::j_0003b372);
+	(this->*cast.memberFunction)(item);
 }
