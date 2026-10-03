@@ -9,7 +9,12 @@ public:
 	void m();
 };
 
-extern T_007ea120 *g_Va0130A588;
+// Named by retail's hubsingle.cpp assertion; defined in createServiceHubImpl.cpp.
+class ServiceHubImpl
+{
+public:
+	static ServiceHubImpl *gInstance;
+};
 extern unsigned char g_Va0130A58D;
 extern unsigned char g_Va0130A58C;
 
@@ -18,14 +23,14 @@ void Rva007F0060();
 
 void Rva007EB270Shutdown()
 {
-	T_007ea120 *p = g_Va0130A588;
+	T_007ea120 *p = reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance);
 	if (p)
 	{
 		p->m();
-		p = g_Va0130A588;
+		p = reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance);
 		if (p)
 			p->release(1);
-		g_Va0130A588 = 0;
+		ServiceHubImpl::gInstance = 0;
 	}
 	if (g_Va0130A58D)
 		Rva007EB830Release();

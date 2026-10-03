@@ -69,7 +69,13 @@ extern int g_Va012F9CF4;
 extern int g_Va012F9D08;
 extern int g_Va01304B5C;
 extern int g_Va01304B60;
-extern int g_Va0130A588;
+// Retail's hubsingle.cpp assertion names this cell; createServiceHubImpl.cpp
+// owns its definition. Only the static pointer declaration is needed here.
+class ServiceHubImpl
+{
+public:
+	static ServiceHubImpl *gInstance;
+};
 extern int g_Va0130A5A0;
 extern int g_Va0130B198;
 extern int g_Va01336E80;
@@ -267,7 +273,7 @@ int Rva007C5560Get( void )
 
 int Rva007EB260Get( void )
 {
-	return g_Va0130A588;
+	return reinterpret_cast<int>(ServiceHubImpl::gInstance);
 }
 
 struct Rva007EB810Diag;

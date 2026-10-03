@@ -11,14 +11,15 @@ public:
 	void m(void);
 };
 
-struct Rva0130A588State
+// Named by retail's hubsingle.cpp assertion; defined in createServiceHubImpl.cpp.
+class ServiceHubImpl
 {
-	T_007ea120 *m_obj;
-	char m_flagC;
-	char m_flagD;
+public:
+	static ServiceHubImpl *gInstance;
 };
 
-extern Rva0130A588State g_Va0130A588;
+extern unsigned char g_Va0130A58C;
+extern unsigned char g_Va0130A58D;
 
 extern void Rva007EB830Release(void);
 extern void Rva007F0060(void);
@@ -31,18 +32,18 @@ public:
 
 Rva007EB2C0Object::~Rva007EB2C0Object()
 {
-	if (g_Va0130A588.m_obj)
+	if (ServiceHubImpl::gInstance)
 	{
-		g_Va0130A588.m_obj->m();
-		if (g_Va0130A588.m_obj)
-			g_Va0130A588.m_obj->vslot0(1);
-		g_Va0130A588.m_obj = 0;
+		reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance)->m();
+		if (ServiceHubImpl::gInstance)
+			reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance)->vslot0(1);
+		ServiceHubImpl::gInstance = 0;
 	}
 	_ReadWriteBarrier();
 
-	if (g_Va0130A588.m_flagD)
+	if (g_Va0130A58D)
 		Rva007EB830Release();
 
-	if (g_Va0130A588.m_flagC)
+	if (g_Va0130A58C)
 		Rva007F0060();
 }

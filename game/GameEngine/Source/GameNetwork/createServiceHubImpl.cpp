@@ -15,6 +15,7 @@ class ServiceHubImpl
 {
 public:
 	ServiceHubImpl(void *a, void *b, void *c, void *d, void *e, void *f) throw();
+	static ServiceHubImpl *gInstance;
 
 	char m_pad[0x2B0];
 };
@@ -29,7 +30,10 @@ void Rva007F0120(void *a, void *b);
 Rva007EB810Diag *Rva007EB810Get();
 void Rva007EBAA0(void);
 
-extern ServiceHubImpl *g_Va0130A588;
+// Retail's assertion at VA 0x01129CB8 names ServiceHubImpl::gInstance.
+// The factory stores its constructor result in the four-byte pointer cell at
+// VA 0x0130A588; retail .data initializes that cell to 00 00 00 00.
+ServiceHubImpl *ServiceHubImpl::gInstance = 0;
 extern unsigned char g_Va0130A58C;
 extern unsigned char g_Va0130A58D;
 
@@ -46,7 +50,7 @@ ServiceHubImpl *createServiceHubImpl(void *a, void *b, void *c, void *d, void *e
 		Rva007EBAA0();
 		g_Va0130A58D = 1;
 	}
-	if (g_Va0130A588)
+	if (ServiceHubImpl::gInstance)
 		Rva007EB810Get()->fail(
 			"!ServiceHubImpl::gInstance",
 			"\\views\\feslbuild_main\\jabba\\fesl\\source\\hubsingle.cpp",
@@ -54,10 +58,10 @@ ServiceHubImpl *createServiceHubImpl(void *a, void *b, void *c, void *d, void *e
 	void *raw = Gen007F0130(0x2B0);
 	if (raw)
 	{
-		g_Va0130A588 = new (raw) ServiceHubImpl(a, b, c, d, e, f);
-		return g_Va0130A588;
+		ServiceHubImpl::gInstance = new (raw) ServiceHubImpl(a, b, c, d, e, f);
+		return ServiceHubImpl::gInstance;
 	}
-	g_Va0130A588 = 0;
+	ServiceHubImpl::gInstance = 0;
 }
 
 ServiceHubImpl *Rva007EB170(void *a, void *b, void *c, void *d, void *e, void *f)

@@ -15,7 +15,12 @@ public:
 	void *destroy(unsigned int flags);
 };
 
-extern T_007ea120 *g_Va0130A588;
+// Named by retail's hubsingle.cpp assertion; defined in createServiceHubImpl.cpp.
+class ServiceHubImpl
+{
+public:
+	static ServiceHubImpl *gInstance;
+};
 extern unsigned char g_Va0130A58D;
 extern unsigned char g_Va0130A58C;
 extern int vftable_01129CB4;
@@ -27,14 +32,14 @@ void __cdecl operator delete(void *block);
 void *Rva007EB310Owner::destroy(unsigned int flags)
 {
 	*(int *)this = (int)&vftable_01129CB4;
-	T_007ea120 *p = g_Va0130A588;
+	T_007ea120 *p = reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance);
 	if (p)
 	{
 		p->m();
-		p = g_Va0130A588;
+		p = reinterpret_cast<T_007ea120 *>(ServiceHubImpl::gInstance);
 		if (p)
 			p->release(1);
-		g_Va0130A588 = 0;
+		ServiceHubImpl::gInstance = 0;
 	}
 	if (g_Va0130A58D)
 		Rva007EB830Release();
