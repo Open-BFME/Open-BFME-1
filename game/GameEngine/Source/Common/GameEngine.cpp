@@ -727,43 +727,7 @@ DECLARE_PERF_TIMER(GameEngine_update)
  * @todo Allow the client to run as fast as possible, but limit the execution
  * of TheNetwork and TheGameLogic to a fixed framerate.
  */
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameEngineUpdate.cpp
-// ?update@GameEngine@@UAEXXZ present-unmatched
-void GameEngine::update( void )
-{ 
-	USE_PERF_TIMER(GameEngine_update)
-	{
-
-		{
-			
-			// VERIFY CRC needs to be in this code block.  Please to not pull TheGameLogic->update() inside this block.
-			VERIFY_CRC
-
-			TheRadar->UPDATE();
-
-			/// @todo Move audio init, update, etc, into GameClient update
-			
-			TheAudio->UPDATE();
-			TheGameClient->UPDATE();
-			TheMessageStream->propagateMessages();
-
-			if (TheNetwork != NULL)
-			{
-				TheNetwork->UPDATE();
-			}
-			 
-			TheCDManager->UPDATE();
-		}
-
-
-		if ((TheNetwork == NULL && !TheGameLogic->isGamePaused()) || (TheNetwork && TheNetwork->isFrameDataReady()))
-		{
-			TheGameLogic->UPDATE();
-		}
-
-	}	// end perfGather
-
-}
+// Retail update is defined in GameEngineUpdate.cpp.
 
 // Horrible reference, but we really, really need to know if we are windowed.
 extern bool DX8Wrapper_IsWindowed;
