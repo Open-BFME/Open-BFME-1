@@ -10,13 +10,15 @@ typedef int Color;
 
 class Image;
 
-// BFME ICoord2D has a user-declared empty constructor (retail ??0ICoord2D@@QAE@XZ).
+// Local ICoord2D view of the two-int retail coordinate pair.
+namespace {
 struct ICoord2D
 {
 	Int x;
 	Int y;
 	ICoord2D() {}
 };
+}
 
 struct IRegion2D
 {

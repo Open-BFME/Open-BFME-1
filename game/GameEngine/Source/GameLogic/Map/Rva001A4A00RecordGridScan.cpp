@@ -109,8 +109,9 @@ void Rva001A4A00RecordGridScan::scan(const Coord3D *pos, Real radius, BfmeHostEZ
 					if (filter == 2 && !record->m_flag2d) goto nextRecord;
 				checkRecord:
 					Coord3D delta;
-					delta.set(record->m_bfmePosEZ.x,
-						record->m_bfmePosEZ.y, record->m_bfmePosEZ.z);
+					delta.x = record->m_bfmePosEZ.x;
+					delta.y = record->m_bfmePosEZ.y;
+					delta.z = record->m_bfmePosEZ.z;
 					delta.sub(pos);
 					if (radius*radius >
 						delta.x*delta.x + delta.y*delta.y + delta.z*delta.z)

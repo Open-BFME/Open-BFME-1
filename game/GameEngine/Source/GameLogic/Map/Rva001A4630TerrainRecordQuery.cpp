@@ -136,8 +136,9 @@ __declspec(noinline) void Rva001A4630TerrainRecordQuery::queryPointImplAt001A463
 
 			candidate_record:
 				Coord3D delta;
-					delta.set(record.m_position.x, record.m_position.y,
-						record.m_position.z);
+					delta.x = record.m_position.x;
+					delta.y = record.m_position.y;
+					delta.z = record.m_position.z;
 					delta.sub(position);
 					if (radius * radius >
 						delta.x * delta.x + delta.y * delta.y + delta.z * delta.z)
