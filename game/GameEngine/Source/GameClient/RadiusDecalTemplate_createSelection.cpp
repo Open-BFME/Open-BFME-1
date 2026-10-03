@@ -1,35 +1,18 @@
 // Open-BFME5: RadiusDecalTemplate::createRadiusDecal selection overload.
 // ?createRadiusDecal@RadiusDecalTemplate@@QAEXMMMIHAAVRadiusDecal@@M@Z
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /O2
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /O2 /Igame/Libraries/Source/WWVegas/WWLib
 
 #include <string.h>
 
 extern const char g_bfmeEmptyAscii[];
 
-class AsciiString
+#include "ascii_string.h"
+
+// This caller inlines the witnessed null/length test.
+template <> inline bool StringBase<char>::isEmpty() const
 {
-private:
-	struct Header
-	{
-		int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		char m_data[1];
-	};
-
-	Header *m_data;
-
-public:
-	bool isEmpty(void) const
-	{
-		return m_data == 0 || m_data->m_length == 0;
-	}
-
-	const char *str(void) const
-	{
-		return m_data ? m_data->m_data : g_bfmeEmptyAscii;
-	}
-};
+	return !m_data || m_data->length == 0;
+}
 
 class Gen00458270
 {
