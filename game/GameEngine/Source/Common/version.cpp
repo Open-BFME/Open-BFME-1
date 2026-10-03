@@ -54,22 +54,6 @@ inline Version::Version()
 #endif
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/VersionSetVersion.cpp
-// ?setVersion@Version@@ present-unmatched
-void Version::setVersion(Int major, Int minor, Int buildNum,
-												 Int localBuildNum, AsciiString user, AsciiString location,
-												 AsciiString buildTime, AsciiString buildDate)
-{
-	m_major = major;
-	m_minor = minor;
-	m_buildNum = buildNum;
-	m_localBuildNum = localBuildNum;
-	m_buildUser = user;
-	m_buildLocation = location;
-	m_buildTime = buildTime;
-	m_buildDate = buildDate;
-}
-
 UnsignedInt Version::getVersionNumber( void )
 {
 	return m_major << 16 | m_minor;
