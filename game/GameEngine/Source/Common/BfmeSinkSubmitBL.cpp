@@ -4,6 +4,14 @@
 // senders prove the name, count, and four BfmeBlobBL arguments. The body copies
 // the four blocks into the sink record, then submits a by-value name and count.
 
+// AsciiStringBL is the narrow string retail passed by value at 0x0044A240.
+// It derives from the real AsciiString, whose inline copy constructor and
+// destructor forward to StringBase<char>'s out-of-line bodies at 0x00887B60
+// and 0x00887940. A private declared-only narrow-string base left the object
+// referencing two names nothing defines.
+
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 struct Rva004488B0Block
 {
 	void *first;
@@ -11,19 +19,10 @@ struct Rva004488B0Block
 	void *third;
 };
 
-class StringBaseNarrowBL
-{
-protected:
-	StringBaseNarrowBL(const StringBaseNarrowBL &other);
-	~StringBaseNarrowBL(void);
-
-	char *m_bfmeNarrowBL;
-};
-
-class AsciiStringBL : public StringBaseNarrowBL
+class AsciiStringBL : public AsciiString
 {
 public:
-	AsciiStringBL(const AsciiStringBL &other) : StringBaseNarrowBL(other)
+	AsciiStringBL(const AsciiStringBL &other) : AsciiString(other)
 	{
 	}
 

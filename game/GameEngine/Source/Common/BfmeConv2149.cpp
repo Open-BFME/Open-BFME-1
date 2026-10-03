@@ -1,8 +1,18 @@
-class BfmeQueueXO
+// Retail's two calls out of this body reach the p20-deque producer at
+// 0x008FBCB0 and the queue send at 0x008FA070; both bodies are in the ledger,
+// so the call sites carry their DEFINING names. A private stand-in queue class
+// left the object referencing two names nothing defines.
+class Rva008FBCB0P20Queue
 {
 public:
-	void bfmeAppendXO(int a, int b, int c, int d);
-	void bfmeSendXO(int a, int b, int c, int d, int e, int f);
+	void append(int a, int b, int c, int d);
+};
+
+// The 0x008FA070 body is BfmeOwnerXO's: six arguments, the first two pointers.
+class BfmeOwnerXO
+{
+public:
+	void bfmeSendXO(void *a1, void *a2, int a3, int a4, void *a5, unsigned int a6);
 };
 
 class BfmeHostXO
@@ -10,7 +20,7 @@ class BfmeHostXO
 public:
 	void bfmeFlushXO();
 
-	BfmeQueueXO *m_bfme00XO;
+	Rva008FBCB0P20Queue *m_bfme00XO;
 	unsigned char m_bfmeHeadXO[0xb4 - 4];
 	int m_bfmeB4XO;
 	int m_bfmeB8XO;
@@ -25,7 +35,7 @@ void BfmeHostXO::bfmeFlushXO()
 {
 	if (m_bfmeBCXO >= 0)
 	{
-		m_bfme00XO->bfmeAppendXO(m_bfmeB4XO, m_bfmeB8XO, m_bfmeBCXO, m_bfmeC0XO);
+		m_bfme00XO->append(m_bfmeB4XO, m_bfmeB8XO, m_bfmeBCXO, m_bfmeC0XO);
 
 		m_bfmeBCXO = -1;
 	}
@@ -44,7 +54,9 @@ void BfmeHostXO::bfmeFlushXO()
 		if (b <= 0)
 			continue;
 
-		m_bfme00XO->bfmeSendXO(m_bfmeB4XO, m_bfmeB8XO, a, i, -(int)b, m_bfmeCXO[i]);
+		// Both calls land on the same receiver at +0x00.
+		BfmeOwnerXO *owner = reinterpret_cast<BfmeOwnerXO *>(m_bfme00XO);
+		owner->bfmeSendXO((void *)m_bfmeB4XO, (void *)m_bfmeB8XO, a, i, (void *)-(int)b, m_bfmeCXO[i]);
 
 		m_bfmeAXO[i] = -1;
 	}
