@@ -8,8 +8,8 @@ struct Rva00533760Elem
 	unsigned char m_bytes[12];
 };
 
-void Gen00533760Intro(void *, ...);
-void Gen00533760Final(void *, ...);
+void j_00038d8e(void);
+void j_00031598(void);
 
 void Rva00533760(Rva00533760Elem *first, Rva00533760Elem *last)
 {
@@ -26,8 +26,10 @@ void Rva00533760(Rva00533760Elem *first, Rva00533760Elem *last)
 			}
 			while (n != 1);
 		}
-		Gen00533760Intro(first, last, 0, lg + lg,
+		reinterpret_cast<void (__cdecl *)(void *, void *, int, int, void *)>(
+			j_00038d8e)(first, last, 0, lg + lg,
 			*(Rva00533760Elem * volatile *)&first);
-		Gen00533760Final(first, last, *(Rva00533760Elem * volatile *)&first);
+		reinterpret_cast<void (__cdecl *)(void *, void *, void *)>(
+			j_00031598)(first, last, *(Rva00533760Elem * volatile *)&first);
 	}
 }
