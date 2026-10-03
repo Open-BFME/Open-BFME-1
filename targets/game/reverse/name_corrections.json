@@ -17748,5 +17748,45 @@
   "after_sha256": "903a0fac437ff6fa67553164b089ea28e3ebe5f3fa9d1024a28a4b21021abd31",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00429080.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "ProjectedShadowManager",
+  "new_name": "Rva00429080ShadowManagerView",
+  "before_sha256": "485361ba6fc7d4e75a01ad051df1813b224f4b65777ec36132230699a84288ef",
+  "after_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "Canonical global pointer and owner are preserved; only the independently witnessed BFME slot08 call uses an address-qualified ABI view."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00429080.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "TerrainLogic",
+  "new_name": "Rva00429080TerrainView",
+  "before_sha256": "485361ba6fc7d4e75a01ad051df1813b224f4b65777ec36132230699a84288ef",
+  "after_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "Canonical global pointer and owner are preserved; BFME slot18 call uses an address-qualified ABI view instead of redeclaring a covered class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00429080.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "setBounds",
+  "new_name": "rva00459960",
+  "before_sha256": "485361ba6fc7d4e75a01ad051df1813b224f4b65777ec36132230699a84288ef",
+  "after_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "Old bank guessed a geometry name; the already matched Shadow::rva00459960 body updates frame and opacity fields. Preserve its actual ledger spelling."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00429080.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDoFXPos.cpp",
+  "old_name": "setColor",
+  "new_name": "rva00459960",
+  "before_sha256": "485361ba6fc7d4e75a01ad051df1813b224f4b65777ec36132230699a84288ef",
+  "after_sha256": "876de0c79b069790e87985224bfd67d3e0e8c82dd484e2e91b32b0910532ad91",
+  "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
+  "reason": "False declaration-position pairing: setColor now calls the existing matched BfmeColourABK::bfmeSetABK at459880; rva00459960 replaces setBounds at459960. Both independently typed targets and receiver/argument contracts remain preserved."
  }
 ]
