@@ -1,14 +1,26 @@
-extern "C" void *bfmeVftEAZ[];
+// Retail installs 0x010FA338 here, the vtable the ledger records as
+// ??_7WinInstanceData@@6B@ and which WinInstanceData.cpp defines (its
+// constructor at 0x00499B40 is the only other installer). The local name has
+// to be that one, not a private placeholder.
+extern "C" const char __identifier("??_7WinInstanceData@@6B@")[];
 
 // Retail's global at 0x012F12CC is EA's DisplayStringManager; defined once in
 // GameClient/DisplayStringManager.cpp.  The local view below only exists to spell
 // the slots this TU calls, so every use casts.
 class DisplayStringManager;
 
-class BfmeStrEAZ
+// The four small members the destructor tears down are each one releaseBuffer
+// string body.  Retail's call at 0x00887940 lands on
+// ??1BFMEPlayerTemplateAsciiString@@QAE@XZ (game/Libraries/Source/string/
+// StringBase.cpp, a C++ alias of ?releaseBuffer@?$StringBase@D@@AAEXXZ), which
+// is the only string-destructor definition among the three bodies folded at that
+// VA.  The declaration below is the established local view -- see
+// game/GameEngine/Source/Common/BfmeOwnerDtorBU.cpp -- and stays
+// declaration-only: this TU never defines the body.
+class BFMEPlayerTemplateAsciiString
 {
 public:
-	~BfmeStrEAZ();
+	~BFMEPlayerTemplateAsciiString();
 
 	void *m_bfmeDataEAZ;
 };
@@ -38,10 +50,10 @@ public:
 
 	void *volatile m_bfmeVftEAZ;
 	unsigned char m_bfmeHeadEAZ[0x184];
-	BfmeStrEAZ m_bfmeS0EAZ;
-	BfmeStrEAZ m_bfmeS1EAZ;
-	BfmeStrEAZ m_bfmeS2EAZ;
-	BfmeStrEAZ m_bfmeS3EAZ;
+	BFMEPlayerTemplateAsciiString m_bfmeS0EAZ;
+	BFMEPlayerTemplateAsciiString m_bfmeS1EAZ;
+	BFMEPlayerTemplateAsciiString m_bfmeS2EAZ;
+	BFMEPlayerTemplateAsciiString m_bfmeS3EAZ;
 	int m_bfmePadEAZ;
 	void *m_bfmeAEAZ;
 	void *m_bfmeBEAZ;
@@ -50,7 +62,7 @@ public:
 
 BfmeHostEAZ::~BfmeHostEAZ()
 {
-	m_bfmeVftEAZ = bfmeVftEAZ;
+	m_bfmeVftEAZ = (void *)__identifier("??_7WinInstanceData@@6B@");
 
 	void *a = *(void *volatile *)&m_bfmeAEAZ;
 

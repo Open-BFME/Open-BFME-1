@@ -1,14 +1,23 @@
 // cl: /Od
 
-class BfmeStrV38
+// The fill-or-insert helper at 0x00830030 is matched and owned by
+// ?bfmeAssignV14@BfmeStrV14@@QAEPAV1@PAD0ID@Z in BfmeConv1453.cpp, so the
+// receiver type has to carry that class name, not a private stand-in.
+class BfmeStrV14
 {
 public:
-	void bfmeLenErrV38();
-	BfmeStrV38 *bfmeFillInsV38(char *a, char *b, unsigned n, char ch);
+	BfmeStrV14 *bfmeAssignV14(char *a, char *b, unsigned n, char ch);
 
 	char *b;
 	char *e;
 };
+
+// Retail reaches the length-error helper through the five-byte ILT thunk at
+// 0x00042DC0, which the ledger owns as ?j_00042dc0@@YAXXZ
+// (game/gen_small/thunks_032.cpp).  Several ?bfmeLenErrVxx pins name that same
+// folded thunk; the definition is the only spelling that resolves, so the call
+// has to name it.
+extern void j_00042dc0();
 
 // The range-check helper retail reaches through the 0x000132CD thunk, whose
 // body is the one-byte function at 0x006434C0; that body is the
@@ -66,7 +75,7 @@ void __stdcall bfmeInsertChV38(int pos, int n, unsigned count, char ch)
 		jb do_ins
 	len_err:
 		mov ecx, dword ptr [ebp-0x18]
-		call BfmeStrV38::bfmeLenErrV38
+		call j_00042dc0
 	do_ins:
 		mov ecx, dword ptr [ebp-0x18]
 		mov edx, dword ptr [ecx]
@@ -86,6 +95,6 @@ void __stdcall bfmeInsertChV38(int pos, int n, unsigned count, char ch)
 		add edx, dword ptr [ebp+8]
 		push edx
 		mov ecx, dword ptr [ebp-0x18]
-		call BfmeStrV38::bfmeFillInsV38
+		call BfmeStrV14::bfmeAssignV14
 	}
 }

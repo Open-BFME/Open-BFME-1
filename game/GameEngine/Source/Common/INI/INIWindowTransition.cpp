@@ -22,6 +22,23 @@ public:
 	TransitionGroup *getNewGroup( AsciiString name );
 };
 
+// Retail calls the handler's getNewGroup through the five-byte ILT thunk at
+// 0x000480C7, which the ledger owns as ?j_000480c7@@YAXXZ
+// (game/gen_small/thunks_034.cpp: `void j_000480c7() { b_0048b550(); }`, a
+// tail jmp to ?getNewGroup@BFMETransitionHandler@@QAEPAVBFMETransitionGroup@@VBFMETransitionAsciiString@@@Z).
+// That thunk is the only definition at the call target's address, so the
+// reference has to carry its name.
+//
+// __thiscall is not available in this compilation, so the thunk is
+// reinterpreted as a member-function pointer through the same union pun the
+// Miles TUs use (SampleStarter006B4090.cpp) and BfmeConv1850.cpp; MSVC folds
+// it back into a direct thiscall, which is retail's "receiver in ECX, name on
+// the stack" shape.
+extern void j_000480c7();
+
+template <class M> inline M bfmeMemberOf(void (*fn)()) { union { void (*f)(); M m; } u; u.f = fn; return u.m; }
+typedef TransitionGroup *(GameWindowTransitionsHandler::*GetNewGroup)(AsciiString name);
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TransitionGroup
 {
@@ -38,7 +55,7 @@ void INI::parseWindowTransitions( INI* ini )
 
 	if( TheTransitionHandler )
 	{
-		TransitionGroup *group = TheTransitionHandler->getNewGroup( name );
+		TransitionGroup *group = (TheTransitionHandler->*bfmeMemberOf<GetNewGroup>(j_000480c7))( name );
 		ini->initFromINI( group, TransitionGroup::m_transitionGroupFieldParseTable );
 	}
 }
