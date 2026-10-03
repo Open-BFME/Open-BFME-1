@@ -15338,7 +15338,7 @@
   "after_sha256": "17496f6c3517da07d3f88c3643c2de8172c5b768b9dc94079661083ea8a920b4",
   "evidence": "targets/game/reverse/identity_evidence/00413a40-locomotor-field-e9.md",
   "reason": "The banked draft called the byte m_flagE9. The byte test shows its boolean use, but no layout witness names its purpose. The landed source uses m_fieldE9 to keep the offset and leave the purpose open."
-},
+ },
  {
   "old_path": "game/GameEngine/Source/GameLogic/Map/BfmeConv622.cpp",
   "new_path": "game/GameEngine/Source/GameLogic/Map/BfmeConv622.cpp",
