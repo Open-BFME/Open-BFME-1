@@ -6,12 +6,20 @@
 // name, so this lands under an address-derived name per the exact-match rule.
 
 void j_0004adb3();
+extern void j_0002f7fc();
 
 class MemberUnknown006E85D0
 {
-public:
-	void bfmeCall2(void);
 };
+
+template <class R>
+__forceinline R call0(void (*p)(), void *self)
+{
+	typedef R (MemberUnknown006E85D0::*F)();
+	union { void (*p)(); F f; } u;
+	u.p = p;
+	return (((MemberUnknown006E85D0 *)self)->*u.f)();
+}
 
 class Chain006E85D0
 {
@@ -26,5 +34,5 @@ private:
 void Chain006E85D0::forwardThenTransition(void)
 {
 	j_0004adb3();
-	m_transition.bfmeCall2();
+	call0<void>(j_0002f7fc, &m_transition);
 }

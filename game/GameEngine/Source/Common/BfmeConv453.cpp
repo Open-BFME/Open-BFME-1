@@ -1,8 +1,17 @@
 class BfmeSubBFD
 {
-public:
-	bool bfmeAskBFD();
 };
+
+extern void j_00048928();
+
+template <class R>
+__forceinline R call0(void (*p)(), void *self)
+{
+	typedef R (BfmeSubBFD::*F)();
+	union { void (*p)(); F f; } u;
+	u.p = p;
+	return (((BfmeSubBFD *)self)->*u.f)();
+}
 
 class BfmeThingBFD
 {
@@ -16,6 +25,6 @@ int BfmeThingBFD::bfmeGoBFD()
 {
 	BfmeSubBFD *sub = m_bfmeSub;
 	if (sub != 0)
-		return sub->bfmeAskBFD();
+		return call0<bool>(j_00048928, sub);
 	return 0;
 }
