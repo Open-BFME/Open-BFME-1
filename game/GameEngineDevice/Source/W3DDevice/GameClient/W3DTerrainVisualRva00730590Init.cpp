@@ -287,7 +287,9 @@ extern HeightMapRenderObjClass *TheTerrainRenderObject;
 extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
 extern W3DShadowManager *TheW3DShadowManager;
 extern WaterRenderObjClass *TheWaterRenderObj;
-extern W3DSmudgeManager *TheSmudgeManager;
+// Native singleton uses the base interface; retail stores the derived object
+// without adjustment at RVA 0x00730716 (VA 0x012F9D88).
+extern SmudgeManager *TheSmudgeManager;
 extern TerrainVisual *TheTerrainVisual;
 static __forceinline TerrainVisualSettings *theBfmeTerrainVisual(void)
 {
