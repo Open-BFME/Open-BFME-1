@@ -19,10 +19,24 @@ struct BfmeResEZC
 	Real m_bfmeF;
 };
 
+// The map lookup goes through the five-byte ILT thunk at 0x00037D6C, defined
+// as ?j_00037d6c@@YAXXZ in game/gen_small/thunks_026.cpp (target 0x004D7180).
+// The thunk declares no arguments of its own: it jumps with the thiscall `this`
+// in ECX and the caller's argument already in place, leaving the record pointer
+// in EAX, so the call is spelled through a thiscall member pointer of the same
+// shape.
+extern void j_00037d6c();
+
 class BfmeSubEZC
 {
-public:
-	BfmeResEZC *bfmeFindEZC(void *a);
+};
+
+typedef BfmeResEZC *(BfmeSubEZC::*bfmeFindEZCThunk)(void *a);
+
+union BfmeFindEZCThunkCast
+{
+	void (__cdecl *freeFunction)(void *a);
+	bfmeFindEZCThunk memberFunction;
 };
 
 class Player
@@ -37,8 +51,11 @@ private:
 
 Real Player::getProductionTimeChangePercent(const AsciiString &buildTemplateName) const
 {
-	BfmeResEZC *productionTimeChange = m_productionTimeChanges.bfmeFindEZC(
-		(void *)&buildTemplateName);
+	BfmeFindEZCThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(void *)>(
+		&::j_00037d6c);
+	BfmeResEZC *productionTimeChange = (m_productionTimeChanges.*
+		cast.memberFunction)((void *)&buildTemplateName);
 	if (productionTimeChange)
 		return productionTimeChange->m_bfmeF;
 	return g_rva01075350;
