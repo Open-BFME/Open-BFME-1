@@ -98,6 +98,15 @@ public:
 };
 extern TerrainLogic *TheTerrainLogic;
 
+// Retail calls the out-of-line AABoxClass(Vector3 *, int) at 0x007A0DF0 (owned by
+// AABoxClassPointsConstructor.cpp); reach it by its pinned name so this TU does not
+// emit a second copy from aabox.h.
+extern "C" void __identifier("??0AABoxClass@@QAE@PAVVector3@@H@Z")( void );
+struct AABoxPointsBuilder
+{
+	void construct(Vector3 *points, int num);
+};
+
 // Pin target for BFME's 183B CameraClass::Cull_Box at 0x9330C0 (see W3DTerrainBackground.cpp).
 struct BFMECameraCullBox
 {
@@ -268,7 +277,10 @@ Int WaterTracksObj::render(DX8VertexBufferClass	*vertexBuffer, Int batchStart, R
 	points[1].Set(tailRight.X, tailRight.Y, waterHeight+1.5f);
 	points[2].Set(waveFrontOrigin.X, waveFrontOrigin.Y, waterHeight+1.5f);
 	points[3].Set(frontRight.X, frontRight.Y, waterHeight+1.5f);
-	AABoxClass box(points, 4);
+	AABoxClass box;
+	typedef void (AABoxPointsBuilder::*BuildBox)(Vector3 *, int);
+	union { void (*fn)(); BuildBox call; } build = { __identifier("??0AABoxClass@@QAE@PAVVector3@@H@Z") };
+	(((AABoxPointsBuilder *)&box)->*build.call)(points, 4);
 	if (((const BFMECameraCullBox *)&rinfo.Camera)->Cull_Box(box))
 		return batchStart;
 
