@@ -14,12 +14,6 @@
 // Retail IAT VA 0x0135945C imports MSVCR71!memmove.
 extern "C" __declspec(dllimport) void *__cdecl memmove(void *dest, const void *src, unsigned int count);
 
-namespace _STL {
-void *__cdecl vectorLargeAllocate(unsigned int);
-void *__cdecl vectorSmallAllocate(unsigned int);
-void __cdecl vectorLargeDeallocate(void *);
-}
-
 struct Rva008FFB80StringBase
 {
 	char *m_start;
@@ -29,7 +23,7 @@ struct Rva008FFB80StringBase
  __forceinline ~Rva008FFB80StringBase() {
   unsigned int bytes=m_endOfStorage-m_start;
   if(m_start) {
-   if(bytes>128) _STL::vectorLargeDeallocate(m_start);
+   if(bytes>128) ::operator delete(m_start);
    else _STL::allocator<char>().deallocate(m_start,bytes);
   }
  }
@@ -37,9 +31,7 @@ struct Rva008FFB80StringBase
 
 __forceinline void Rva008FFB80Allocate(Rva008FFB80StringBase *self,unsigned int capacity) {
  if(capacity <= ((unsigned int)-1 / sizeof(char) - 1) + 1 && capacity > 0) {
-  char *buffer;
-  if(capacity > 128) buffer=(char*)_STL::vectorLargeAllocate(capacity);
-  else buffer=(char*)_STL::vectorSmallAllocate(capacity);
+  char *buffer=(char*)_STL::_Node_alloc::allocate(capacity);
   self->m_start=buffer; self->m_finish=buffer; self->m_endOfStorage=buffer+capacity;
  }
 }
