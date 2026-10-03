@@ -1,9 +1,8 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ze
 
 struct lua_State;
-struct Rva00990030Range;
 
-unsigned Rva00990030Lookup(Rva00990030Range *, int);
+unsigned Rva00990030Lookup(lua_State *, int);
 extern "C" const char *lua_tostring(lua_State *, int);
 
 struct BfmeListAllocator
@@ -129,7 +128,7 @@ struct BfmeCallJ3D
 // HordeBroadcastEventToMembers.
 int HordeBroadcastEventToMembers(lua_State *state)
 {
-	unsigned objectID = Rva00990030Lookup(reinterpret_cast<Rva00990030Range *>(state), 1);
+	unsigned objectID = Rva00990030Lookup(state, 1);
 	if (objectID == 0)
 		return 0;
 

@@ -7,10 +7,9 @@ extern "C" int lua_gettop(lua_State *state);
 extern "C" int lua_type(lua_State *state, int index);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 
-struct Rva00990030Range;
 struct Rva00990210Range;
 
-unsigned Rva00990030Lookup(Rva00990030Range *range, int index);
+unsigned Rva00990030Lookup(lua_State *range, int index);
 unsigned Rva00990210Lookup(Rva00990210Range *range, int index);
 
 #include "ascii_string.h"
@@ -54,7 +53,7 @@ int ObjectHideSubObject(lua_State *state)
 	unsigned objectID;
 	Object *object;
 	if (lua_gettop(state) != 3
-		|| ((objectID = Rva00990030Lookup((Rva00990030Range *)state, 1)) == 0
+		|| ((objectID = Rva00990030Lookup(state, 1)) == 0
 			&& lua_type(state, 1) != 1)
 		|| (object = TheGameLogic->findObjectByID((int)objectID)) == 0)
 		return 0;

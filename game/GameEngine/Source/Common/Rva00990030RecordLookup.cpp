@@ -14,22 +14,22 @@ struct Rva00990030Record
 	unsigned m_C;
 };
 
-struct Rva00990030Range
+struct lua_State
 {
-	Rva00990030Record *m_begin;
+	Rva00990030Record *top;
 	unsigned char m_pad10[0x10 - 4];
-	Rva00990030Record *m_end;
+	Rva00990030Record *base;
 };
 
-unsigned Rva00990030Lookup(Rva00990030Range *range, int index)
+unsigned Rva00990030Lookup(lua_State *range, int index)
 {
 	Rva00990030Record *record;
 	if (index >= 0) {
-		record = range->m_end + index - 1;
-		if (record >= range->m_begin)
+		record = range->base + index - 1;
+		if (record >= range->top)
 			return 0;
 	} else {
-		record = range->m_begin + index;
+		record = range->top + index;
 	}
 	if (!record || record->m_type != 4)
 		return 0;

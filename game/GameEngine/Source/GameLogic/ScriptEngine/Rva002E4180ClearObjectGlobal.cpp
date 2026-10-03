@@ -55,8 +55,7 @@ struct Rva002E32A0IdOwner
 };
 
 Rva002E32A0AsciiString Rva002E32A0ObjectIdAsStr(const Rva002E32A0IdOwner *p);
-struct Rva00990030Range;
-unsigned int Rva00990030Lookup(Rva00990030Range *range, int index) throw();
+unsigned int Rva00990030Lookup(lua_State *range, int index) throw();
 
 class Object;
 
@@ -85,7 +84,7 @@ void Rva0012F060COwner::rva002E4180(Object *object)
 	lua_getglobal((lua_State *)m_L, textPtr);
 
     if (lua_type((lua_State *)m_L, 1) == 1 ||
-        verify != (int)Rva00990030Lookup((Rva00990030Range *)m_L, 1))
+        verify != (int)Rva00990030Lookup((lua_State *)m_L, 1))
     {
         lua_settop((lua_State *)m_L, -2);
         return;

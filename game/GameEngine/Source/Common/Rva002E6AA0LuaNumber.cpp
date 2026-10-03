@@ -5,28 +5,7 @@ extern "C" int lua_gettop(lua_State *state);
 extern "C" int lua_type(lua_State *state, int index);
 extern "C" double lua_tonumber(lua_State *state, int index);
 
-struct Rva00990030Value
-{
-	unsigned char m_padC[0xC];
-	unsigned m_value;
-};
-
-struct Rva00990030Record
-{
-	unsigned m_type;
-	unsigned m_4;
-	Rva00990030Value *m_value;
-	unsigned m_C;
-};
-
-struct Rva00990030Range
-{
-	Rva00990030Record *m_begin;
-	unsigned char m_pad10[0x10 - 4];
-	Rva00990030Record *m_end;
-};
-
-unsigned Rva00990030Lookup(Rva00990030Range *range, int index);
+unsigned Rva00990030Lookup(lua_State *range, int index);
 
 class Object
 {
@@ -50,7 +29,7 @@ int bfmeHelper6AA0(lua_State *state)
 	if (lua_gettop(state) < 2)
 		return 0;
 
-	unsigned value = Rva00990030Lookup((Rva00990030Range *)state, 1);
+	unsigned value = Rva00990030Lookup(state, 1);
 	if (!value)
 	{
 		if (lua_type(state, 1) != 1)
