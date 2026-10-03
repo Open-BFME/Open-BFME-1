@@ -290,15 +290,8 @@ void UnicodeString::removeLastChar()
 }
 
 // -----------------------------------------------------
-void UnicodeString::format(UnicodeString format, ...)
-{
-	validate();
-	va_list args;
-  va_start(args, format);
-	format_va(format, args);
-  va_end(args);
-	validate();
-}
+// The exported by-value formatter is defined in WWLib/unicode_string.cpp.
+// The Zero Hour format_va/cleanup path is not its BFME implementation.
 
 // -----------------------------------------------------
 void UnicodeString::format(const WideChar* format, ...)
