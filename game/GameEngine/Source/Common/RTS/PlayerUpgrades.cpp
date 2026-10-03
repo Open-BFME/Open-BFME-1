@@ -54,7 +54,7 @@ private:
 class Upgrade
 {
 public:
-	static void *operator new( unsigned int size );
+	// Retail addUpgrade calls global operator new at 0x00881F30.
 	Upgrade( const UpgradeTemplate *upgradeTemplate );
 	void friend_setPrev( Upgrade *upgrade ) { m_prev = upgrade; }
 	void friend_setNext( Upgrade *upgrade ) { m_next = upgrade; }
