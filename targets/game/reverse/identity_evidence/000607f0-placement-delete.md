@@ -31,3 +31,22 @@ were restored. No commit was bypassed or rewritten. The ledger still points
 to its prior generated bodies. The exact verified proposal is saved locally
 as build/b1/placement-delete-verified.patch; rerun its normal gates before
 landing it in a later session. Both607F0 and C1A13B claims were released.
+
+## Session 3 independent confirmation and gate disposition
+
+PeerRequest deque growth648810 pushes handlerC42102; FuncInfoE31BC0
+state1 -> 0 selects C420EB. Its two native predecessor states agree, and
+$L722 passes pointers from EBP-1A4/EBP-1A8 to the same standard placement
+delete through ILT2AAA9, then pops8 and returns at C42101. Native
+parseConditionState77D150 -> C5075D -> E3FE64 state2 -> 1 likewise selects
+C50746/$L6579, with all three predecessors agreeing and RETC5075C.
+These are independent construction-lifetime witnesses for the canonical
+operator and exact23-byte actions, not merely identical empty bodies.
+
+The operator, LivingWorld action and PeerRequest action passed strict scoped
+verification again. The normal hook selected122 affected callers and waited
+for the host-wide build lock. At the per-body budget, only this worker's
+waiting build1163335 was terminated; the hook failed normally and the
+three uncommitted ledger changes were restored. No commit was created or
+bypassed. The proposal is build/b1/placement3-verified.patch for a future
+normal gate. C50746 remains a prepared native action awaiting this binding.
