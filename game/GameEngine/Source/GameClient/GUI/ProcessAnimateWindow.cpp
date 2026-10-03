@@ -338,22 +338,7 @@ ProcessAnimateWindowSlideFromLeft::ProcessAnimateWindowSlideFromLeft( void )
 // ??1ProcessAnimateWindowSlideFromLeft@@UAE@XZ present-unmatched
 ProcessAnimateWindowSlideFromLeft::~ProcessAnimateWindowSlideFromLeft( void ) { }
 
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z present-unmatched
-void ProcessAnimateWindowSlideFromLeft::initReverseAnimateWindow( AnimateWindow *animWin, UnsignedInt maxDelay )
-{
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	if(animWin->getDelay() > 0)
-		animWin->setStartTime(timeGetTime() + (maxDelay - animWin->getDelay()));
-	Coord2D vel = animWin->getVel();
-	vel.x *= -1;
-	vel.y *= -1;
-	animWin->setVel( vel );	
-
-}
+// Retail Left reverse initializer: ProcessAnimateWindowInitReverse.cpp.
 
 // Retail body matched via MASM: game/masm_dumps/initAnimateWindow_ProcessAnimateWindowSlideFromLeft_495B90.asm
 // (true body 0x495B90 via SlideFromLeft vtbl slot1; C++ blocked by Display getWidth slot + setAnimData shape)
