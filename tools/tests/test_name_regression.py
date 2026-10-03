@@ -839,6 +839,28 @@ def test_asm_emit_directive_is_a_directive_not_a_name():
     assert N.tokens('_emit 08Dh') == ['_emit', '08Dh']
 
 
+@pytest.mark.parametrize('number', ['0x004063BB', '0XABCD', '42', '077'])
+@pytest.mark.parametrize('suffix', ['', 'u', 'U', 'l', 'L', 'ul', 'UL',
+                                    'lu', 'LU', 'll', 'LL', 'ull', 'ULL',
+                                    'llu', 'LLU'])
+def test_integer_suffix_is_part_of_literal(number, suffix):
+    literal = number + suffix
+    assert N.tokens('use(' + literal + ');') == ['use', '(', literal, ')', ';']
+
+
+def test_unsigned_callback_address_to_relocatable_symbol_is_not_a_rename():
+    before = 'registerModule(reinterpret_cast<CreateFn>(0x004063BBu));'
+    after = 'registerModule(reinterpret_cast<CreateFn>(j_000063BB));'
+    assert N.regressions(before, after) == []
+
+
+@pytest.mark.parametrize('name', ['u', 'U', 'l', 'L', 'ul', 'ULL'])
+def test_integer_suffix_spelling_as_real_identifier_still_has_protection(name):
+    assert (name, 'j_000063BB') in N.regressions(
+        f'registerModule({name});', 'registerModule(j_000063BB);')
+    assert N.tokens(f'42 + {name}') == ['42', '+', name]
+
+
 def test_asm_emit_exemption_does_not_exempt_the_names_around_it():
     before = '__declspec(naked) void calculateScore() { __asm { _emit 0C3h } }\n'
     after = '__declspec(naked) void Rva00123456() { __asm { _emit 0C3h } }\n'

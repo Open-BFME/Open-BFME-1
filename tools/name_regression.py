@@ -33,7 +33,12 @@ SOURCE = ('.cpp', '.cc', '.cxx', '.c', '.h', '.hh', '.hpp', '.hxx')
 # renamed. `0E9h` is a MASM literal, not C++, so the trailing `h` is part of
 # the literal too: without that alternative the tokenizer split it into an
 # identifier and reported it against a member the same way.
-TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+|\d+[0-9A-Fa-f]*[hH]|\d+|[^\s]', re.S)
+# Integer suffixes belong to the literal, not to an author-chosen name.
+# In particular, replacing a callback address such as 0x004063BBu with a
+# relocatable j_XXXXXXXX reference must not report a rename of identifier u.
+# Keep standalone identifiers (including u and L) subject to the usual rule.
+INTEGER_SUFFIX = r'(?:[uU](?:ll|LL|[lL])?|(?:ll|LL|[lL])[uU]?)?'
+TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+' + INTEGER_SUFFIX + r'|\d+[0-9A-Fa-f]*[hH]|\d+' + INTEGER_SUFFIX + r'|[^\s]', re.S)
 IDENT = re.compile(r'^[A-Za-z_]\w*$')
 OPAQUE = re.compile(
     r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN)_[0-9a-f]{8}|'
