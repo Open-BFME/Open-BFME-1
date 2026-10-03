@@ -12,7 +12,7 @@ class Display { public:
 };
 extern Display* TheDisplay;
 // Retail VA 010F7540 contains float 0.75 (0000403f); distinct constant pool.
-#define ElvenTextScale010F7540 (*(const float*)0x010F7540)
+static const float ElvenTextScale010F7540[] = { 0.75f };
 class GameFont;
 class FontLibrary { public: GameFont* getFont(AsciiString*,float,unsigned char); };
 extern FontLibrary* TheFontLibrary;
@@ -46,7 +46,7 @@ class ElvenTextAssets00471900 { public:
 // directly from the Anim2D constructor, establishing the pointer element type.
 void ElvenTextAssets00471900::initialize() {
  float scale=float(TheDisplay->getWidth())/800.0f;
- scale *= ElvenTextScale010F7540;
+ scale *= ElvenTextScale010F7540[0];
  if(scale!=field38) { field04=0; field38=scale; }
  if(!field04) field04=TheFontLibrary->getFont(&field3c,float(field48)*scale,0);
  if(!field34) {
