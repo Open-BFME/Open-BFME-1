@@ -90294,3 +90294,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ?line@Rva006C4A50Display@@QAEXMMMMMH@Z,0x00479E00,Typed call view from exact parent006C4A50; full callee RET and argument words independently checked; evidence=identity_evidence/006c4a50-radar-draw.md
 ?renderObjectList@Rva006C4A50Owner@@QAEXPAXPAVW3DRadarResetTexture@@H@Z,0x006C43F0,Typed call view from exact parent006C4A50; full callee RET and argument words independently checked; evidence=identity_evidence/006c4a50-radar-draw.md
 ?drawEvents@Rva006C4A50Owner@@QAEXHHHHH@Z,0x006C3170,Typed call view from exact parent006C4A50; full callee RET and argument words independently checked; evidence=identity_evidence/006c4a50-radar-draw.md
+??3@YAXPAX0@Z,0x000607F0,Scalar placement delete;native deque648920 EH state1 actionC4212B calls via ILT2AAA9;identity_evidence/000607f0-peer-deque-placement-delete.md
