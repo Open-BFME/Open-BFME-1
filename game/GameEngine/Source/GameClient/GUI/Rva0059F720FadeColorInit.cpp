@@ -27,7 +27,6 @@ public:
 
 extern Display *TheDisplay;
 extern Real g_bfmeDefaultBU;
-extern Real g_bfmeScaleB3;
 extern const Real BfmeZeroRange;
 
 // The retail parse table at 0x00D0CBA0 names this transition's fields
@@ -84,10 +83,10 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	Int sizeY = TheDisplay->getHeight();
 
 	Real scaled = m_fadeRed;
-	scaled *= g_bfmeScaleB3;
+	scaled *= 255.0f;
 	m_sizeY = sizeY;
-	if (!(scaled < g_bfmeScaleB3))
-		scaled = g_bfmeScaleB3;
+	if (!(scaled < 255.0f))
+		scaled = 255.0f;
 	else if (scaled > BfmeZeroRange)
 	{
 	}
@@ -96,10 +95,10 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	unsigned char red = (unsigned char)scaled;
 
 	scaled = m_fadeGreen;
-	scaled *= g_bfmeScaleB3;
+	scaled *= 255.0f;
 	m_red = red;
-	if (!(scaled < g_bfmeScaleB3))
-		scaled = g_bfmeScaleB3;
+	if (!(scaled < 255.0f))
+		scaled = 255.0f;
 	else if (scaled > BfmeZeroRange)
 	{
 	}
@@ -108,10 +107,10 @@ void Rva0059F720FadeColor::init(GameWindow *)
 	unsigned char green = (unsigned char)scaled;
 
 	scaled = m_fadeBlue;
-	scaled *= g_bfmeScaleB3;
+	scaled *= 255.0f;
 	m_green = green;
-	if (!(scaled < g_bfmeScaleB3))
-		scaled = g_bfmeScaleB3;
+	if (!(scaled < 255.0f))
+		scaled = 255.0f;
 	else if (scaled > BfmeZeroRange)
 	{
 	}
