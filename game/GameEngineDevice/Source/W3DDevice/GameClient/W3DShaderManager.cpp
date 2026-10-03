@@ -2332,112 +2332,334 @@ Int TerrainShaderPixelShader::init( void )
 	return FALSE;
 }
 
-// ?set@TerrainShaderPixelShader@@EAEHH@Z present-unmatched
+// Shared with FlatTerrainShader2Stage below; moved here for both callers.
+struct Rva007DCF00Matrix;
+class Rva007DCF00TextureMatrix {
+public:
+    void build(Rva007DCF00Matrix *, Rva007DCF00Matrix *, bool);
+};
+
+// 0x007E2180: TerrainShaderPixelShader::set, ZH twin and table 0x01128D00.
+// Slot 2 loads terrain.pso / terrainnoise.pso / terrainnoise2.pso into +8/+C/+10.
+// BFME device ABI uses D3D9 slots; keep this view local to this recovered body.
+class Rva007E2180InlineString
+{
+	TCHAR *m_Buffer;
+
+public:
+	__forceinline Rva007E2180InlineString(int initial_len, bool hint_temporary)
+		: m_Buffer(StringClass::m_EmptyString)
+	{
+		((StringClass *)this)->Get_String(initial_len, hint_temporary);
+		TCHAR null_char = g_bfmeCh1035;
+		TCHAR *buffer = m_Buffer;
+		*buffer = null_char;
+	}
+
+	~Rva007E2180InlineString()
+	{
+		((StringClass *)this)->Free_String();
+	}
+};
+
+class Rva007E2180OrderedString
+{
+	TCHAR *m_Buffer;
+
+public:
+	__forceinline Rva007E2180OrderedString(int initial_len, bool hint_temporary)
+		: m_Buffer(StringClass::m_EmptyString)
+	{
+		((StringClass *)this)->Get_String(initial_len, hint_temporary);
+		TCHAR *buffer = *(TCHAR *volatile *)&m_Buffer;
+		TCHAR null_char = *(volatile TCHAR *)&g_bfmeCh1035;
+		*buffer = null_char;
+	}
+
+	~Rva007E2180OrderedString()
+	{
+		((StringClass *)this)->Free_String();
+	}
+};
+
+#define RVA007E2180_SET_TSS(stage_, state_, value_)                                                 \
+	if ((unsigned)(stage_) >= MAX_TEXTURE_STAGES) {                                          \
+		IDirect3DDevice8 *tss_raw_ = DX8Wrapper::_Get_D3D_Device8();                         \
+		(*(BFMESetTSSFn **)tss_raw_)[BFME_SET_TSS_SLOT](tss_raw_,                            \
+			(stage_), (state_), (value_));                                                   \
+		number_of_DX8_calls++;                                                               \
+	} else if (DX8Wrapper::TextureStageStates[stage_][state_] != (unsigned)(value_)) {       \
+		if (WW3D::Is_Snapshot_Activated()) {                                                 \
+			Rva007E2180InlineString value_name(0, true);                                               \
+			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(*(StringClass *)&value_name, \
+				(D3DTEXTURESTAGESTATETYPE)(state_), (value_));                               \
+			SNAPSHOT_SAY(("DX8 - SetTextureStageState(stage: %d, state: %s, value: %s)\n", \
+				(stage_), DX8Wrapper::Get_DX8_Texture_Stage_State_Name(                    \
+					(D3DTEXTURESTAGESTATETYPE)(state_)), value_name));                         \
+		}                                                                                    \
+		DX8Wrapper::TextureStageStates[stage_][state_] = (value_);                           \
+		IDirect3DDevice8 *tss_device_ = DX8Wrapper::_Get_D3D_Device8();                      \
+		(*(BFMESetTSSFn **)tss_device_)[BFME_SET_TSS_SLOT](tss_device_,                      \
+			(stage_), (state_), (value_));                                                   \
+		number_of_DX8_calls++;                                                               \
+		DX8Wrapper::texture_stage_state_changes++;                                           \
+	}
+
+#define RVA007E2180_SET_TSS_ORDERED(stage_, state_, value_)                                                 \
+	if ((unsigned)(stage_) >= MAX_TEXTURE_STAGES) {                                          \
+		IDirect3DDevice8 *tss_raw_ = DX8Wrapper::_Get_D3D_Device8();                         \
+		(*(BFMESetTSSFn **)tss_raw_)[BFME_SET_TSS_SLOT](tss_raw_,                            \
+			(stage_), (state_), (value_));                                                   \
+		number_of_DX8_calls++;                                                               \
+	} else if (DX8Wrapper::TextureStageStates[stage_][state_] != (unsigned)(value_)) {       \
+		if (WW3D::Is_Snapshot_Activated()) {                                                 \
+			Rva007E2180OrderedString value_name(0, true);                                               \
+			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(*(StringClass *)&value_name, \
+				(D3DTEXTURESTAGESTATETYPE)(state_), (value_));                               \
+			SNAPSHOT_SAY(("DX8 - SetTextureStageState(stage: %d, state: %s, value: %s)\n", \
+				(stage_), DX8Wrapper::Get_DX8_Texture_Stage_State_Name(                    \
+					(D3DTEXTURESTAGESTATETYPE)(state_)), value_name));                         \
+		}                                                                                    \
+		DX8Wrapper::TextureStageStates[stage_][state_] = (value_);                           \
+		IDirect3DDevice8 *tss_device_ = DX8Wrapper::_Get_D3D_Device8();                      \
+		(*(BFMESetTSSFn **)tss_device_)[BFME_SET_TSS_SLOT](tss_device_,                      \
+			(stage_), (state_), (value_));                                                   \
+		number_of_DX8_calls++;                                                               \
+		DX8Wrapper::texture_stage_state_changes++;                                           \
+	}
+
+struct Rva007E2180Device {
+virtual void __stdcall unused0() = 0;
+virtual void __stdcall unused1() = 0;
+virtual void __stdcall unused2() = 0;
+virtual void __stdcall unused3() = 0;
+virtual void __stdcall unused4() = 0;
+virtual void __stdcall unused5() = 0;
+virtual void __stdcall unused6() = 0;
+virtual void __stdcall unused7() = 0;
+virtual void __stdcall unused8() = 0;
+virtual void __stdcall unused9() = 0;
+virtual void __stdcall unused10() = 0;
+virtual void __stdcall unused11() = 0;
+virtual void __stdcall unused12() = 0;
+virtual void __stdcall unused13() = 0;
+virtual void __stdcall unused14() = 0;
+virtual void __stdcall unused15() = 0;
+virtual void __stdcall unused16() = 0;
+virtual void __stdcall unused17() = 0;
+virtual void __stdcall unused18() = 0;
+virtual void __stdcall unused19() = 0;
+virtual void __stdcall unused20() = 0;
+virtual void __stdcall unused21() = 0;
+virtual void __stdcall unused22() = 0;
+virtual void __stdcall unused23() = 0;
+virtual void __stdcall unused24() = 0;
+virtual void __stdcall unused25() = 0;
+virtual void __stdcall unused26() = 0;
+virtual void __stdcall unused27() = 0;
+virtual void __stdcall unused28() = 0;
+virtual void __stdcall unused29() = 0;
+virtual void __stdcall unused30() = 0;
+virtual void __stdcall unused31() = 0;
+virtual void __stdcall unused32() = 0;
+virtual void __stdcall unused33() = 0;
+virtual void __stdcall unused34() = 0;
+virtual void __stdcall unused35() = 0;
+virtual void __stdcall unused36() = 0;
+virtual void __stdcall unused37() = 0;
+virtual void __stdcall unused38() = 0;
+virtual void __stdcall unused39() = 0;
+virtual void __stdcall unused40() = 0;
+virtual void __stdcall unused41() = 0;
+virtual void __stdcall unused42() = 0;
+virtual void __stdcall unused43() = 0;
+virtual HRESULT __stdcall SetTransform(DWORD, const void *) = 0;
+virtual HRESULT __stdcall GetTransform(DWORD, void *) = 0;
+virtual void __stdcall unused46() = 0;
+virtual void __stdcall unused47() = 0;
+virtual void __stdcall unused48() = 0;
+virtual void __stdcall unused49() = 0;
+virtual void __stdcall unused50() = 0;
+virtual void __stdcall unused51() = 0;
+virtual void __stdcall unused52() = 0;
+virtual void __stdcall unused53() = 0;
+virtual void __stdcall unused54() = 0;
+virtual void __stdcall unused55() = 0;
+virtual void __stdcall unused56() = 0;
+virtual void __stdcall unused57() = 0;
+virtual void __stdcall unused58() = 0;
+virtual void __stdcall unused59() = 0;
+virtual void __stdcall unused60() = 0;
+virtual void __stdcall unused61() = 0;
+virtual void __stdcall unused62() = 0;
+virtual void __stdcall unused63() = 0;
+virtual void __stdcall unused64() = 0;
+virtual HRESULT __stdcall SetTexture(DWORD, IDirect3DBaseTexture8 *) = 0;
+virtual void __stdcall unused66() = 0;
+virtual void __stdcall unused67() = 0;
+virtual void __stdcall unused68() = 0;
+virtual void __stdcall unused69() = 0;
+virtual void __stdcall unused70() = 0;
+virtual void __stdcall unused71() = 0;
+virtual void __stdcall unused72() = 0;
+virtual void __stdcall unused73() = 0;
+virtual void __stdcall unused74() = 0;
+virtual void __stdcall unused75() = 0;
+virtual void __stdcall unused76() = 0;
+virtual void __stdcall unused77() = 0;
+virtual void __stdcall unused78() = 0;
+virtual void __stdcall unused79() = 0;
+virtual void __stdcall unused80() = 0;
+virtual void __stdcall unused81() = 0;
+virtual void __stdcall unused82() = 0;
+virtual void __stdcall unused83() = 0;
+virtual void __stdcall unused84() = 0;
+virtual void __stdcall unused85() = 0;
+virtual void __stdcall unused86() = 0;
+virtual void __stdcall unused87() = 0;
+virtual void __stdcall unused88() = 0;
+virtual void __stdcall unused89() = 0;
+virtual void __stdcall unused90() = 0;
+virtual void __stdcall unused91() = 0;
+virtual void __stdcall unused92() = 0;
+virtual void __stdcall unused93() = 0;
+virtual void __stdcall unused94() = 0;
+virtual void __stdcall unused95() = 0;
+virtual void __stdcall unused96() = 0;
+virtual void __stdcall unused97() = 0;
+virtual void __stdcall unused98() = 0;
+virtual void __stdcall unused99() = 0;
+virtual void __stdcall unused100() = 0;
+virtual void __stdcall unused101() = 0;
+virtual void __stdcall unused102() = 0;
+virtual void __stdcall unused103() = 0;
+virtual void __stdcall unused104() = 0;
+virtual void __stdcall unused105() = 0;
+virtual void __stdcall unused106() = 0;
+virtual HRESULT __stdcall SetPixelShader(DWORD) = 0;
+virtual void __stdcall unused108() = 0;
+virtual HRESULT __stdcall SetPixelShaderConstant(DWORD, const void *, DWORD) = 0;
+};
+// Local helpers spell the independently decoded BFME device ABI.
+__forceinline void rva007E2180GetTransform(DWORD state, Matrix4x4 &matrix) {
+    IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
+    ((Rva007E2180Device *)device)->GetTransform(state, &matrix);
+    number_of_DX8_calls++;
+}
+__forceinline void rva007E2180SetTransform(DWORD state, const Matrix4x4 &matrix) {
+    DX8Wrapper::matrix_changes++;
+    IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
+    ((Rva007E2180Device *)device)->SetTransform(state, &matrix);
+    number_of_DX8_calls++;
+}
+__forceinline void rva007E2180SetConstant(int reg, const void *data, int count) {
+    int size = count * sizeof(Vector4);
+    if (memcmp(data, &DX8Wrapper::Pixel_Shader_Constants[reg], size) == 0) return;
+    memcpy(&DX8Wrapper::Pixel_Shader_Constants[reg], data, size);
+    IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
+    ((Rva007E2180Device *)device)->SetPixelShaderConstant(reg, data, count);
+    number_of_DX8_calls++;
+}
+#define RVA007E2180_BIND_TEXTURE(stage, index) ((Rva007E2180Device *)DX8Wrapper::_Get_D3D_Device8())->SetTexture(stage, ((TextureBaseClass &)bfmeGet(index)).Peek_D3D_Base_Texture())
 Int TerrainShaderPixelShader::set(Int pass)
-{	
+{
 	//force WW3D2 system to set it's states so it won't later overwrite our custom settings.
 	DX8Wrapper::Apply_Render_State_Changes();
 
 	//setup base pass
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(0, W3DShaderManager::getShaderTexture(0)->Peek_D3D_Texture());
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(1, W3DShaderManager::getShaderTexture(1)->Peek_D3D_Texture());
+	RVA007E2180_BIND_TEXTURE(0, 0);
+	RVA007E2180_BIND_TEXTURE(1, 1);
 
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
+	BFME_SET_SAMP(0, BFME_SAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+	BFME_SET_SAMP(0, BFME_SAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+	BFME_SET_SAMP(1, BFME_SAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+	BFME_SET_SAMP(1, BFME_SAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
 	//tell pixel shader which UV set to use for each stage
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_TEXCOORDINDEX, 0 );
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_TEXCOORDINDEX, 1 );
+	RVA007E2180_SET_TSS( 0, D3DTSS_TEXCOORDINDEX, 0 );
+	RVA007E2180_SET_TSS( 1, D3DTSS_TEXCOORDINDEX, 1 );
 
-	if (TheGlobalData && TheGlobalData->m_bilinearTerrainTex || TheGlobalData->m_trilinearTerrainTex) {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-	} else {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MINFILTER, D3DTEXF_POINT);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MINFILTER, D3DTEXF_POINT);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MAGFILTER, D3DTEXF_POINT);
-	}
-	if (TheGlobalData && TheGlobalData->m_trilinearTerrainTex) {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MIPFILTER, D3DTEXF_LINEAR);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MIPFILTER, D3DTEXF_LINEAR);
-	} else {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0, D3DTSS_MIPFILTER, D3DTEXF_POINT);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MIPFILTER, D3DTEXF_LINEAR);
-	}
+	setTerrainTextureFilters(0);
+	setTerrainTextureFilters(1);
 
 	if (W3DShaderManager::getCurrentShader() >= W3DShaderManager::ST_TERRAIN_BASE_NOISE1)
-	{	
+	{
 		Matrix4x4 curView;
-		DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW, curView);
+		rva007E2180GetTransform(D3DTS_VIEW, curView);
 
 		D3DXMATRIX inv;
 		float det;
 		D3DXMatrixInverse(&inv, &det, (D3DXMATRIX*)&curView);
 
-		DX8Wrapper::Set_DX8_Texture_Stage_State(2,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+		RVA007E2180_SET_TSS(2,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
 		// Two output coordinates are used.
-		DX8Wrapper::Set_DX8_Texture_Stage_State(2,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);	
+		RVA007E2180_SET_TSS(2,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 
-		DX8Wrapper::Set_DX8_Texture_Stage_State(2,  D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(2,  D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-		
+		BFME_SET_SAMP(2, BFME_SAMP_ADDRESSU, D3DTADDRESS_WRAP);
+		BFME_SET_SAMP(2, BFME_SAMP_ADDRESSV, D3DTADDRESS_WRAP);
+
 		if (W3DShaderManager::getCurrentShader() == W3DShaderManager::ST_TERRAIN_BASE_NOISE12)
 		{	//full shader
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3,  D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3,  D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-			DX8Wrapper::_Get_D3D_Device8()->SetTexture(2, W3DShaderManager::getShaderTexture(2)->Peek_D3D_Texture());
-			DX8Wrapper::_Get_D3D_Device8()->SetTexture(3, W3DShaderManager::getShaderTexture(3)->Peek_D3D_Texture());
-			DX8Wrapper::_Get_D3D_Device8()->SetPixelShader(m_dwBaseNoise2PixelShader);
+			BFME_SET_SAMP(3, BFME_SAMP_ADDRESSU, D3DTADDRESS_WRAP);
+			BFME_SET_SAMP(3, BFME_SAMP_ADDRESSV, D3DTADDRESS_WRAP);
+			RVA007E2180_BIND_TEXTURE(2, 2);
+			RVA007E2180_BIND_TEXTURE(3, 3);
+			((Rva007E2180Device *)DX8Wrapper::_Get_D3D_Device8())->SetPixelShader(m_dwBaseNoise2PixelShader);
+            float value = 0.0f;
+            if (TheWritableGlobalData) value = *(float *)((char *)TheWritableGlobalData + 0x48);
+            Vector4 constant(value, value, value, value);
+            rva007E2180SetConstant(0, &constant, 1);
 
-			DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+			BFME_SET_SAMP(2, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+			BFME_SET_SAMP(2, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
 
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3, D3DTSS_MINFILTER, D3DTEXF_POINT);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+			BFME_SET_SAMP(3, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+			BFME_SET_SAMP(3, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 			terrainShader2Stage.updateNoise1(((D3DXMATRIX*)&curView),&inv);	//update curView with texture matrix
-			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE2, curView);
+			rva007E2180SetTransform(D3DTS_TEXTURE2, curView);
 
-			terrainShader2Stage.updateNoise2(((D3DXMATRIX*)&curView),&inv);	//update curView with texture matrix
-			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE3, curView);
+			((Rva007DCF00TextureMatrix *)&terrainShader2Stage)->build(
+                (Rva007DCF00Matrix *)&curView, (Rva007DCF00Matrix *)&inv, true);	//update curView with texture matrix
+			rva007E2180SetTransform(D3DTS_TEXTURE3, curView);
 
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+			RVA007E2180_SET_TSS_ORDERED(3,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
 			// Two output coordinates are used.
-			DX8Wrapper::Set_DX8_Texture_Stage_State(3,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);	
+			RVA007E2180_SET_TSS(3,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 		}
 		else
 		{	//single noise texture shader
-			DX8Wrapper::_Get_D3D_Device8()->SetPixelShader(m_dwBaseNoise1PixelShader);
+			((Rva007E2180Device *)DX8Wrapper::_Get_D3D_Device8())->SetPixelShader(m_dwBaseNoise1PixelShader);
 
 			if (W3DShaderManager::getCurrentShader() == W3DShaderManager::ST_TERRAIN_BASE_NOISE1)
 			{	//cloud map
-				DX8Wrapper::_Get_D3D_Device8()->SetTexture(2, W3DShaderManager::getShaderTexture(2)->Peek_D3D_Texture());
+				RVA007E2180_BIND_TEXTURE(2, 2);
 				terrainShader2Stage.updateNoise1(((D3DXMATRIX*)&curView),&inv);	//update curView with texture matrix
-				DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-				DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+				BFME_SET_SAMP(2, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+				BFME_SET_SAMP(2, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
 			}
 			else
 			{	//light map
-				DX8Wrapper::_Get_D3D_Device8()->SetTexture(2, W3DShaderManager::getShaderTexture(3)->Peek_D3D_Texture());
-				terrainShader2Stage.updateNoise2(((D3DXMATRIX*)&curView),&inv);	//update curView with texture matrix
-				DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MINFILTER, D3DTEXF_POINT);
-				DX8Wrapper::Set_DX8_Texture_Stage_State(2, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+				RVA007E2180_BIND_TEXTURE(2, 3);
+				((Rva007DCF00TextureMatrix *)&terrainShader2Stage)->build(
+                (Rva007DCF00Matrix *)&curView, (Rva007DCF00Matrix *)&inv, true);	//update curView with texture matrix
+				BFME_SET_SAMP(2, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+				BFME_SET_SAMP(2, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
 			}
-			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE2, curView);
+			rva007E2180SetTransform(D3DTS_TEXTURE2, curView);
 		}
 	}
 	else
 	{	//just base texturing
-		DX8Wrapper::_Get_D3D_Device8()->SetPixelShader(m_dwBasePixelShader);
+		((Rva007E2180Device *)DX8Wrapper::_Get_D3D_Device8())->SetPixelShader(m_dwBasePixelShader);
 	}
 
 	return TRUE;
 }
+
+#undef RVA007E2180_BIND_TEXTURE
+#undef RVA007E2180_SET_TSS
+#undef RVA007E2180_SET_TSS_ORDERED
 
 void TerrainShaderPixelShader::reset(void)
 {
@@ -3725,11 +3947,6 @@ void FlatTerrainShader2Stage::reset(void)
 // The second matrix helper is already owned by TerrainTextureMatrix.cpp.
 // Retail calls ILT 0x000051FF -> 0x007DCF00; reuse that established name and
 // its thiscall(matrix* destination, matrix* inverse, bool) / ret 12 ABI.
-struct Rva007DCF00Matrix;
-class Rva007DCF00TextureMatrix {
-public:
-    void build(Rva007DCF00Matrix *, Rva007DCF00Matrix *, bool);
-};
 namespace {
 struct FlatTerrainDeviceRva01340534 {
 	virtual void slot0() = 0;
