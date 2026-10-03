@@ -56,6 +56,31 @@ public:
 // Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
 extern GameLogic *TheGameLogic;
 
+// The two callees this body reaches are not members of the modelling classes
+// above; retail's own code at those addresses is defined under other names, so
+// the calls below have to carry those names for the link to resolve.
+//
+// ILT 0x0000A3B2 reaches 0x001BF4D0 (callees.py: 0xa3b2 -> 0x1bf4d0), whose
+// matched owner is game/GameEngine/Source/Common/S3GuardedDelegates2.cpp as
+// ?bfmeForward@Gen_001BF4D0@@QAEXPAX@Z. Declared, not defined, here: the call
+// is still a plain ECX-this member call with the object on the stack.
+class Gen_001BF4D0
+{
+public:
+	void bfmeForward(void *a);
+};
+
+// ILT 0x0003DE5B reaches 0x002569F0 (callees.py: 0x3de5b -> 0x2569f0), whose
+// matched owner is game/GameEngine/Source/GameLogic/Object/Update/
+// Gen002569F0SetStatus.cpp as ?apply@Gen002569F0@@QAEXPAVGen_001BF4F0@@@Z.
+class Gen_001BF4F0;
+
+class Gen002569F0
+{
+public:
+	void apply(Gen_001BF4F0 *obj);
+};
+
 namespace Rva00256AE0 {
 class BfmeHostESN
 {
@@ -81,14 +106,15 @@ void BfmeHostESN::bfmeStepESN(BfmeThingESN *thing)
 		if (obj == 0)
 			m_bfme20ESN = 0;
 		else
-			bfmeAttachESN(obj);
+			reinterpret_cast<Gen002569F0 *>(this)->apply(
+				reinterpret_cast<Gen_001BF4F0 *>(obj));
 	}
 
 	if (thing != 0)
 	{
 		m_bfme20ESN = thing->m_bfme74ESN;
 
-		thing->bfmeForward(m_bfme08ESN);
+		reinterpret_cast<Gen_001BF4D0 *>(thing)->bfmeForward(m_bfme08ESN);
 
 		m_bfme08ESN->setStatus(
 			ObjectStatusMaskType(ObjectStatusMaskType::kInit, 29), true);
