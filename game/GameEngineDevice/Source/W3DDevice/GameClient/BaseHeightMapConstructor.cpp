@@ -22,7 +22,7 @@ class RenderObjClass : public RenderObjBaseA, public RenderObjBaseB {
 public: RenderObjClass(); virtual ~RenderObjClass(); char bytes0C[0xBC];
 };
 class DX8_CleanupHook { public: virtual void ReleaseResources()=0; virtual void ReAcquireResources()=0; };
-class Snapshot { public: ~Snapshot(); virtual void crc(void*)=0; virtual void xfer(void*)=0; virtual void loadPostProcess()=0; };
+class Snapshot { public: virtual ~Snapshot(); virtual void crc(void*)=0; virtual void xfer(void*)=0; virtual void loadPostProcess()=0; };
 class TextureBaseClass { public: void Release_Ref(); };
 class TextureRef006CFAE0 {
 public:

@@ -52,11 +52,12 @@ class Snapshot
 {
 public:
 	Snapshot() { }
-	~Snapshot() { }
+	virtual ~Snapshot() { }
 
 protected:
-	virtual void crc(Xfer *xfer) = 0;
-	virtual void xfer(Xfer *xfer) = 0;
+public:
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
 	virtual void loadPostProcess() = 0;
 };
 

@@ -3,10 +3,15 @@
 // ??0W3DOverlordTankDrawModuleData@@QAE@XZ, and this body stores vtable
 // 0x010CBED8, which the matched destructor at 0x002D36B0 also installs.
 
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 class ThingRef

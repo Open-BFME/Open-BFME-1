@@ -24,13 +24,15 @@ private:
 	void *m_name;
 };
 
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
-	virtual void crc() {}
-	virtual void xfer() {}
-	virtual void loadPostProcess() {}
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 template <typename T> class StringBase

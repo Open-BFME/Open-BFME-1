@@ -31,10 +31,15 @@ private:
 	RefCountedThing *m_ptr;
 };
 
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 class UpgradeModuleDataSub

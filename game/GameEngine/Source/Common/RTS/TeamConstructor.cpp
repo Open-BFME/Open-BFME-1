@@ -43,10 +43,15 @@ template<> inline void StringBase<char>::concat(const StringBase<char> &other)
 // (??1Snapshot@@UAE@XZ at 0x0005C520), so Team's primary base is Snapshot and
 // its destructor is virtual.  The base constructor is the implicit one, so the
 // only code it contributes is the vptr store MSVC folds into the one at +0x00.
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot();
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 class Xfer;

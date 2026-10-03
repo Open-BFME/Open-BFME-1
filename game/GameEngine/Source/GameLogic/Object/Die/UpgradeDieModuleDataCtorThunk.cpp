@@ -10,10 +10,15 @@
 // 0x000071E4. This class then overwrites the vptr with its own and zeroes 0x34.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 
 private:
 	unsigned char m_data[4];

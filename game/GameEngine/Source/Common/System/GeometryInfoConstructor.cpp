@@ -49,9 +49,9 @@ class Snapshot
 {
 public:
 	virtual ~Snapshot();
-	virtual void LoadPostProcess();
-	virtual const char *GetSnapshotName();
-	virtual void DoXfer(Xfer &xfer);
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 extern const Real g_rva0107533C;

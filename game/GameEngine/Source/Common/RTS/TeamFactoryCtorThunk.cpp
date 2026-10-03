@@ -63,6 +63,8 @@ private:
 // as retail's bytes show -- only the resulting vptr store reaches the
 // target function.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Xfer;
+
 class Snapshot
 {
 public:
@@ -72,9 +74,9 @@ public:
 	// only ~SubsystemInterface, so Snapshot's destructor is folded away too.
 	virtual ~Snapshot() {}
 
-	virtual void crc(void);
-	virtual void xfer(void);
-	virtual void loadPostProcess(void);
+	virtual void crc(Xfer *) = 0;
+	virtual void xfer(Xfer *) = 0;
+	virtual void loadPostProcess() = 0;
 };
 
 // The map's value is anonymous in retail; the ledger already carries its
