@@ -41,7 +41,7 @@ public:
 	int m_bfmeY;
 };
 
-extern int g_bfmeLiveGU;
+extern int g_rva012F1098;
 
 class Gen_003D4B00
 {
@@ -76,5 +76,5 @@ void Gen_003D4B00::bfmeInit(int owner, const BfmePairGU *p)
 	m_bfmeI = 0;
 	m_bfmeJ = 0;
 	m_bfmeBits = m_bfmeBits & 0xFFFFFFE0;
-	++g_bfmeLiveGU;
+	++g_rva012F1098;
 }

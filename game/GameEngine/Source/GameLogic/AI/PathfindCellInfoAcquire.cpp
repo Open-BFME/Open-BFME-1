@@ -33,7 +33,7 @@ public:
 // Retail RVA 0x003F6B2A/0x003F6B40 load/store this four-byte free-list head.
 // VA 0x012F1094 is zero-filled; BFME's intrusive pool has no proven EA name.
 void *g_rva012F1094 = 0;
-extern int g_bfmePathfindInfoIssued;             // retail 0x012F1098
+int g_rva012F1098 = 0;                          // retail 0x012F1098
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell, const ICoord2D *cellPosition)
@@ -59,7 +59,7 @@ PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	cellInfoRecord->m_posUnitID = 0;
 	cellInfoRecord->m_goalAircraftID = 0;
 	cellInfoRecord->m_flags &= 0xffffffe0;
-	++g_bfmePathfindInfoIssued;
+	++g_rva012F1098;
 	return cellInfoRecord;
 }
 

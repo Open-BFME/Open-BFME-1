@@ -53,7 +53,7 @@ private:
 	MixFileInfoBuffer **m_bfmePrevNext;			// +0x30
 };
 
-extern int TheBfmeMixFileInfoCount;				// 0x012F1098
+extern int g_rva012F1098;				// 0x012F1098
 
 // ?releaseInto@MixFileInfoBuffer@@QAEXPAX@Z
 void MixFileInfoBuffer::releaseInto(void *head)
@@ -62,5 +62,5 @@ void MixFileInfoBuffer::releaseInto(void *head)
 
 	bfmeLinkInto((MixFileInfoBuffer **)head);
 
-	--TheBfmeMixFileInfoCount;
+	--g_rva012F1098;
 }

@@ -52,7 +52,7 @@ struct PathfindCellInfo
 };
 
 extern void *g_rva012F1094;
-extern int g_bfmePathfindInfoIssued;
+extern int g_rva012F1098;
 
 // Retail 0x003D7DB0 (PathfindCellInfoAcquire.cpp), visible so the caller knows it does not retain the position.
 inline __declspec(noinline) PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
@@ -79,7 +79,7 @@ inline __declspec(noinline) PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInf
 	cellInfoRecord->m_posUnitID = 0;
 	cellInfoRecord->m_goalAircraftID = 0;
 	cellInfoRecord->m_flags &= 0xffffffe0;
-	++g_bfmePathfindInfoIssued;
+	++g_rva012F1098;
 	return cellInfoRecord;
 }
 
