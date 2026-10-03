@@ -17,4 +17,5 @@ struct Open2Elem7716A0
 	~Open2Elem7716A0();
 };
 
-template class _STL::vector<Open2Elem7716A0>;
+template _STL::vector<Open2Elem7716A0>::vector(
+	const _STL::vector<Open2Elem7716A0> &);
