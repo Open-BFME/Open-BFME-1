@@ -57,18 +57,18 @@ void Gen_00732AB0::bfmeStampRows(unsigned char value)
 	m_bfmeDirty = 1;
 }
 
-extern int g_bfmeSeedJC;
+extern int g_rva012D4CB8;
 extern int g_bfmeCarryJC;
 
 int bfmeRandom(int range)
 {
-	int seed = g_bfmeSeedJC;
+	int seed = g_rva012D4CB8;
 	int carry = g_bfmeCarryJC;
 
 	int mix = seed * 0x3E322 + carry * 0x8149A;
 	int next = mix % 0xF408B;
 
 	g_bfmeCarryJC = seed;
-	g_bfmeSeedJC = next;
+	g_rva012D4CB8 = next;
 	return next % range;
 }

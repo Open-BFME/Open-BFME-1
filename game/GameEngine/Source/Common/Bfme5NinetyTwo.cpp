@@ -21,19 +21,19 @@ bool bfmePointDiffers(const BfmeVec2JE *a, const BfmeVec2JE *b)
 	return same == 0;
 }
 
-extern int g_bfmeSeedJC;
+extern int g_rva012D4CB8;
 extern int g_bfmeCarryJC;
 
 int bfmeRandomPositive(int range)
 {
-	int seed = g_bfmeSeedJC;
+	int seed = g_rva012D4CB8;
 	int carry = g_bfmeCarryJC;
 
 	int mix = seed * 0x3E322 + carry * 0x8149A;
 	int next = mix % 0xF408B;
 
 	g_bfmeCarryJC = seed;
-	g_bfmeSeedJC = next;
+	g_rva012D4CB8 = next;
 
 	int value = next % range;
 	if (value < 0)
