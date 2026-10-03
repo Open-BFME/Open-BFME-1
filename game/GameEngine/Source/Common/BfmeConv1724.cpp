@@ -1,15 +1,27 @@
-class BfmeArgLA
+// The call at 0x0004461B is the 5-byte ILT thunk that jumps to the body at
+// 0x004AD4C0, which the ledger owns as
+// ?drawForeground@ControlBarScheme@@QAEXUCoord2D@@UICoord2D@@@Z (game/
+// GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme_drawBackground.cpp).
+// Both arguments are 8-byte by-value structures on the stack and the callee
+// cleans them, which is the call shape retail encodes here, so this TU names
+// the two structures the way that definition names them.
+struct Coord2D
 {
-public:
-	BfmeArgLA(const BfmeArgLA &other) throw()
+	Coord2D(const Coord2D &other) throw()
 	{
-		m_bfmeALA = other.m_bfmeALA;
-		m_bfmeBLA = other.m_bfmeBLA;
+		x = other.x;
+		y = other.y;
 	}
-	~BfmeArgLA() throw() {}
+	~Coord2D() throw() {}
 
-	int m_bfmeALA;
-	int m_bfmeBLA;
+	float x;
+	float y;
+};
+
+struct ICoord2D
+{
+	int x;
+	int y;
 };
 
 struct BfmePairLA
@@ -18,10 +30,10 @@ struct BfmePairLA
 	void *m_bfmeLastLA;
 };
 
-class BfmeTgtLA
+class ControlBarScheme
 {
 public:
-	void bfmeRunLA(BfmeArgLA arg, void *first, void *last);
+	void drawForeground(Coord2D multi, ICoord2D offset);
 };
 
 class BfmeOwnLA
@@ -29,12 +41,19 @@ class BfmeOwnLA
 public:
 	void bfmeFwdLA(BfmePairLA pair);
 
-	BfmeTgtLA *m_bfmeTgtLA;
-	BfmeArgLA m_bfmeArgLA;
+	ControlBarScheme *m_bfmeTgtLA;
+	Coord2D m_bfmeMultiLA;
 };
 
 void BfmeOwnLA::bfmeFwdLA(BfmePairLA pair)
 {
 	if (m_bfmeTgtLA)
-		m_bfmeTgtLA->bfmeRunLA(m_bfmeArgLA, pair.m_bfmeFirstLA, pair.m_bfmeLastLA);
+	{
+		ICoord2D offset;
+		// The assignment order is load-bearing: it is what puts the pair's
+		// last word in the first register retail loads before the two pushes.
+		offset.y = (int)pair.m_bfmeLastLA;
+		offset.x = (int)pair.m_bfmeFirstLA;
+		m_bfmeTgtLA->drawForeground(m_bfmeMultiLA, offset);
+	}
 }

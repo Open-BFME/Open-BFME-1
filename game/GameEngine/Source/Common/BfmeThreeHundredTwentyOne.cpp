@@ -1,12 +1,24 @@
-struct BfmeInnerRQ
+// The call at 0x0000A5DD is the 5-byte ILT thunk that jumps to the body at
+// 0x00154330, which the ledger owns as
+// ?aiExit@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z (game/
+// GameEngine/Source/GameLogic/AI/AICommandInterfaceObjectCommands.cpp). Every
+// retail caller reaches it as Object+0x204 (the AIUpdateInterface) +0x20, so
+// this TU takes the same view of the block at +0x20; the two stack arguments
+// are the pointer and the command source the retail call site pushes.
+#include "../GameLogic/command_source_type.h"
+
+class Object;
+
+class AICommandInterface
 {
-	void bfmeSetRQ(int one, int two);
+public:
+	void aiExit(Object *objectToExit, CommandSourceType cmdSource);
 };
 
 struct BfmeSubRQ
 {
 	unsigned char m_bfmeHead[0x20];
-	BfmeInnerRQ m_bfmeInner;
+	AICommandInterface m_bfmeInner;
 };
 
 struct BfmeNodeRQ
@@ -63,5 +75,5 @@ void __stdcall bfmeResetRQ(void *key)
 	BfmeSubRQ *sub = node->m_bfmeSub;
 	if (sub == 0)
 		return;
-	sub->m_bfmeInner.bfmeSetRQ(0, 1);
+	sub->m_bfmeInner.aiExit((Object *)0, (CommandSourceType)1);
 }

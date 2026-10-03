@@ -1,13 +1,18 @@
-class BfmeFoundRP
+enum AttitudeType {};
+
+// Retail's call at 0x00030553 is AIUpdateInterface::setAttitude, reached
+// through the 5-byte ILT thunk (body 0x0027DEF0); the body is the one
+// AIGroup::setAttitude calls on each member AI, read from Object+0x204.
+class AIUpdateInterface
 {
 public:
-	void bfmeTellRP(void *what);
+	void setAttitude(AttitudeType tude);
 };
 
 struct BfmeNodeRP
 {
 	unsigned char m_bfmeHead[0x204];
-	BfmeFoundRP *m_bfmeSub;
+	AIUpdateInterface *m_bfmeSub;
 };
 
 class BfmeLookRP
@@ -55,8 +60,8 @@ void __stdcall bfmeSendRP(void *key, void *what)
 	BfmeNodeRP *node = localLookRP()->bfmeFindRP(key);
 	if (node == 0)
 		return;
-	BfmeFoundRP *sub = node->m_bfmeSub;
+	AIUpdateInterface *sub = node->m_bfmeSub;
 	if (sub == 0)
 		return;
-	sub->bfmeTellRP(what);
+	sub->setAttitude((AttitudeType)(int)what);
 }
