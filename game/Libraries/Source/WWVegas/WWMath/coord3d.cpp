@@ -398,13 +398,6 @@ Coord3D &Coord3D::SetZAxis()
     return *this;
 }
 
-void Coord3D::add(const Coord3DBase *that)
-{
-    x += that->x;
-    y += that->y;
-    z += that->z;
-}
-
 void Coord3D::set(float x, float y, float z)
 {
     this->x = x;
