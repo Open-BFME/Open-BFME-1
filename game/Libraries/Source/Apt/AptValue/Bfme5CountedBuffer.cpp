@@ -1,7 +1,7 @@
 // A constructor that remembers how many elements it was asked for, starts
 // empty and takes a block of that many words.
 
-extern void * (*WideAllocPtr)(unsigned int bytes);
+extern void * (*Rva008C5D70Alloc)(unsigned int bytes);
 
 class Gen_008A3070
 {
@@ -21,5 +21,5 @@ Gen_008A3070::Gen_008A3070(int count)
 
 	m_bfmeUsed = 0;
 
-	m_bfmeBlock = WideAllocPtr(count * 4);
+	m_bfmeBlock = Rva008C5D70Alloc(count * 4);
 }

@@ -1,14 +1,14 @@
 // The same push at the head of a list, with a plain value in the node instead
 // of a counted reference.
 
-extern void * (*WideAllocPtr)(unsigned int bytes);
+extern void * (*Rva008C5D70Alloc)(unsigned int bytes);
 
 class BfmeNodeBD
 {
 public:
 	void *operator new(unsigned int bytes)
 	{
-		return WideAllocPtr(bytes);
+		return Rva008C5D70Alloc(bytes);
 	}
 
 	BfmeNodeBD(int value)
