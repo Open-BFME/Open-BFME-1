@@ -1,8 +1,20 @@
-class BfmeRefCHA
+typedef bool Bool;
+
+class BFMENetworkLock;
+
+class BFMEAutoLockRef
 {
 public:
-	void bfmeDtorCHA();
+	BFMEAutoLockRef(BFMENetworkLock *lock, unsigned int timeout);
+	__declspec(noinline) ~BFMEAutoLockRef();
+	Bool failed() const { return m_failed; }
+
+private:
+	BFMENetworkLock *m_lock;
+	Bool m_failed;
 };
+
+class BfmeRefCHA;
 
 class BfmeThingCHA
 {
@@ -11,7 +23,7 @@ public:
 	BfmeRefCHA *m_bfmeRef;
 };
 
-void bfmeFreeCHA(void *what);
+void __cdecl operator delete(void *what);
 
 void BfmeThingCHA::bfmeGoCHA(BfmeRefCHA *what)
 {
@@ -20,8 +32,8 @@ void BfmeThingCHA::bfmeGoCHA(BfmeRefCHA *what)
 	{
 		if (cur != 0)
 		{
-			cur->bfmeDtorCHA();
-			bfmeFreeCHA(cur);
+			reinterpret_cast<BFMEAutoLockRef *>(cur)->~BFMEAutoLockRef();
+			::operator delete(cur);
 		}
 		m_bfmeRef = what;
 	}
