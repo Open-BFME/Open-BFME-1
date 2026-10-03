@@ -19,20 +19,12 @@ struct Coord3D
 	Coord3D() {}
 	Coord3D(const Coord3D &o) : x(o.x), y(o.y), z(o.z) {}
 };
+// Plain two-float holder: retail's Coord2D::length/normalize are owned by
+// WWMath/coord2d.cpp, so this TU spells the reciprocal-length math out inline
+// instead of declaring a second Coord2D that emits those symbols.
 struct Coord2D
 {
 	Real x, y;
-	Real length() const { return (Real)sqrt(x * x + y * y); }
-	void normalize()
-	{
-		Real len = length();
-		if (len != 0.0f)
-		{
-			Real inv = 1.0f / len;
-			x *= inv;
-			y *= inv;
-		}
-	}
 };
 
 class Object
@@ -66,7 +58,14 @@ static void rva003d60e0RadialOffset(const Coord3D &from, Coord3D &insert, const 
 		normal.x = -dy;
 		normal.y = dx;
 	}
-	normal.normalize();
+	// Coord2D::normalize's body, spelled out (see the struct comment).
+	Real normalLen = (Real)sqrt(normal.x * normal.x + normal.y * normal.y);
+	if (normalLen != 0.0f)
+	{
+		Real inv = 1.0f / normalLen;
+		normal.x *= inv;
+		normal.y *= inv;
+	}
 	insert = *obj->getPosition();
 	insert.x += normal.x * radius;
 	insert.y += normal.y * radius;

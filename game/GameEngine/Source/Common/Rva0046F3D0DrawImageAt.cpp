@@ -95,6 +95,13 @@ inline void drawImage(Display *display, const Image *image, Real x0,
 // No named caller or owning identity survived (blocked twice: this body
 // and its still-unclaimed sibling 0x0046F490), so every name here is
 // address-derived.
+
+// Retail calls the image lookup through the five-byte ILT thunk at 0x00008FEE
+// (?j_00008fee@@YAXXZ, game/gen_small/thunks_003.cpp, tail-jumping to the
+// still-dumped body at 0x0046C7D0); the member below stays declaration-only
+// and supplies the call's type.
+void j_00008fee();
+
 struct Rva00579160Manager
 {
 	void *bfmeLookup46C7D0(Int key);
@@ -108,7 +115,12 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 // The direct (non-thunked) callee at 0x0046F280: still a dump, 257 bytes,
 // no trustworthy owner. Retail calls it thiscall with no explicit stack
-// args and uses the eax result as drawImageCore's mode operand.
+// args and uses the eax result as drawImageCore's mode operand. The call
+// target is the body itself, so the body's own ledger spelling is what
+// links: ?d_0046f280@@YAXXZ (game/gen_asm/d_0046b490.asm). getMode() below
+// is declaration-only and supplies the call's type.
+void d_0046f280();
+
 class Rva0046F3D0ModeSource
 {
 public:
@@ -118,11 +130,22 @@ public:
 void Rva0046F3D0DrawImageAt(const Coord2D *pos, const Coord2D *size,
 	Int imageKey, Rva0046F3D0ModeSource *modeSource)
 {
-	const Image *image = (const Image *)((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeLookup46C7D0(imageKey);
+	const Image *image;
+	{
+		Rva00579160Manager *manager = (Rva00579160Manager *)g_rva012F19E8WindowManager;
+		union { void (*raw)(); void *(Rva00579160Manager::*m)(Int); } call;
+		call.raw = j_00008fee;
+		image = (const Image *)((manager->*call.m)(imageKey));
+	}
 	if (!image)
 		return;
 
-	Int mode = modeSource->getMode();
+	Int mode;
+	{
+		union { void (*raw)(); Int (Rva0046F3D0ModeSource::*m)(void); } call;
+		call.raw = d_0046f280;
+		mode = (modeSource->*call.m)();
+	}
 
 	drawImage(TheDisplay, image, pos->x, pos->y,
 		pos->x + size->x, pos->y + size->y, -1, mode);

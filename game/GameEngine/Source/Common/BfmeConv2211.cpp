@@ -2,11 +2,18 @@
 
 struct Coord3D007AE900 { float x, y, z; };
 
+// Retail calls the 0x001BEC20 body through the five-byte ILT thunk at
+// 0x0003A391 (?j_0003a391@@YAXXZ, game/gen_small/thunks_027.cpp). Referencing
+// the thunk's own symbol is what links: the member below keeps the body's
+// meaning (it is read as a namespace id and compared against 1) but is only a
+// type for the call, never a defined function.
 class BfmeHolderNS
 {
 public:
 	int bfmeQueryNS(void);
 };
+
+void j_0003a391();
 
 struct Rva003FD060TerrainLogic
 {
@@ -23,8 +30,18 @@ struct Rva003FD060TerrainLogic
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 extern const float BfmeZeroRange;
+
 extern const float g_0109B46C;
 
+// BLOCKED (needs a datum).  The bias retail adds here is not a game global:
+// its float literal lives in the MSVC constant pool at VA 0x0109B46C, which
+// targets/game/reverse/dir32_addresses.csv:14774 records as __real@3fc00000,
+// i.e. the 1.5f literal.  Nothing in the ledger defines that VA, so the
+// reference can only be removed by a datum landing there.  Spelling it as a
+// literal instead (1.5f, or a file-scope const) changes codegen: MSVC 7.1
+// folds `h += 1.5f` into an integer `add ecx, 0x3fc00000` and drops the
+// `fadd dword ptr` retail emits.  Keep the extern spelling; the bytes are
+// already correct.
 #define G_BFME_007AE900_BIAS g_0109B46C
 
 // Slot cap only: this reaches the retail vtable slot 0x158 (index 86) that
@@ -137,7 +154,12 @@ static float Rva007AE900Body(Rva007AE900Src *obj, const Coord3D007AE900 *groundP
 			BfmeHolderNS *holder = *(BfmeHolderNS **)((char *)field + 0xfc);
 			if (holder)
 			{
-				int ns = holder->bfmeQueryNS();
+				int ns;
+				{
+					union { void (*raw)(); int (BfmeHolderNS::*m)(void); } call;
+					call.raw = j_0003a391;
+					ns = (holder->*call.m)();
+				}
 				if (ns != 1)
 				{
 					if (TheTerrainLogic)

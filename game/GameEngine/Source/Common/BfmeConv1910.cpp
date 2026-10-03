@@ -137,7 +137,26 @@ struct Rva005A00B0AudioClient
 class AudioManager;
 extern AudioManager *TheAudio;
 
-extern "C" void __cdecl bfmeXferBE(BfmeAgentBE *ag, void *dst);
+// Retail reaches both of this host's helpers through five-byte ILT thunks, not
+// through the helper bodies themselves: the call at 0x0036BCB6/0x0036BCDC/
+// 0x0036BCEE targets 0x0000C9B4 (?j_0000c9b4@@YAXXZ,
+// game/gen_small/thunks_005.cpp, tail-jumping to the __cdecl forwarder at
+// 0x0010C3C0) and the call at 0x0036BCE7 targets 0x000160B3
+// (?j_000160b3@@YAXXZ, game/gen_small/thunks_010.cpp, tail-jumping to
+// 0x001EF3D0). Referencing the thunks' own symbols is what links; the
+// member declarations below keep the recovered meaning and stay declared-only
+// so no undefined helper body is emitted.
+void j_0000c9b4();
+void j_000160b3();
+
+typedef void (__cdecl *Rva0000C9B4XferCall)(BfmeAgentBE *, void *);
+
+// TU-local: the spelling of retail's transfer helper only exists to shape the
+// call, so it must not emit a symbol of its own.
+static __forceinline void bfmeXferBE(BfmeAgentBE *ag, void *dst)
+{
+	((Rva0000C9B4XferCall)(void *)j_0000c9b4)(ag, dst);
+}
 
 class BfmeHostBE
 {
@@ -167,7 +186,11 @@ void BfmeHostBE::bfmeSaveBE(BfmeAgentBE *ag)
 	ag->bfmeWordBE(m_bfmeSlotCBE);
 	bfmeXferBE(ag, m_bfmeSlotBBE);
 
-	bfmeStepBE(ag);
+	{
+		union { void (*raw)(); void (BfmeHostBE::*m)(BfmeAgentBE *); } step;
+		step.raw = j_000160b3;
+		(this->*step.m)(ag);
+	}
 
 	bfmeXferBE(ag, m_bfmeSlotBBE);
 	ag->bfmeWordBE(m_bfmeSlotCBE);
