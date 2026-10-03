@@ -5,7 +5,7 @@
 #include "unicode_string.h"
 #include "string_base.h"
 
-UnicodeString::UnicodeString()
+inline UnicodeString::UnicodeString()
 {
     m_text = 0;
 }
