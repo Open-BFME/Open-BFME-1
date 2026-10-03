@@ -1,45 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME: BFME ABI reconstruction of ActionManager::canTransferSuppliesAt.
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+// Open-BFME: native C4E80 offsets retained; canonical Object callees.
+#include "Common/ActionManager.h"
+#include "Common/NameKeyGenerator.h"
+#include "GameLogic/Object.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-// NameKeyType is an enum upstream, not a typedef for int: the enum is part of
-// the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
-// ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
-// body at 0x0008FFC0.  Same underlying type, same code.
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
-
-#define NULL 0
-#define FALSE false
-#define TRUE true
-
-enum Relationship
-{
-	ENEMIES = 0
-};
-
-enum ObjectShroudStatus
-{
-	OBJECTSHROUD_SHROUDED = 4
-};
-
-class Module;
 class SupplyTruckAIInterface;
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
-
-extern NameKeyGenerator *TheNameKeyGenerator;
 
 class BFMEAIUpdateInterface
 {
@@ -150,7 +116,7 @@ class SupplyCenterDockUpdate
 {
 };
 
-class Player
+class Rva000C4E80PlayerView
 {
 public:
 	Int getPlayerType() const
@@ -164,55 +130,13 @@ public:
 	}
 };
 
-class Object
+class BFMEActionObject { public: Bool testStatus(Int status) const; };
+class Rva000C4E80ObjectView
 {
 public:
-	Bool isEffectivelyDead() const
-	{
-		return (*(const unsigned char *)((const char *)this + 0x344) & 1) != 0;
-	}
-
-	Bool testStatus(Int status) const;
-	Module *findModule(Int key) const;
-	Relationship getRelationship(const Object *that) const;
-	Player *getControllingPlayer() const;
-	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
-	UnsignedInt getStatusWord() const
-	{
-		return m_status[0];
-	}
-
-	BFMEAIUpdateInterface *getAI() const
-	{
-		return *(BFMEAIUpdateInterface * const *)((const char *)this + 0x204);
-	}
-
-private:
-	char m_beforeStatus[0x90];
-	UnsignedInt m_status[2];
-	char m_beforeAI[0x204 - 0x98];
-	BFMEAIUpdateInterface *m_ai;
-};
-
-class BfmeObjectCall
-{
-public:
-	Player *getControllingPlayer() const;
-};
-
-class BfmeObjectShroudCall
-{
-public:
-	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
-};
-
-#pragma comment(linker, "/alternatename:?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getShroudedStatus@BfmeObjectShroudCall@@QBE?AW4ObjectShroudStatus@@H@Z=?j_0002b81e@@YAXXZ")
-
-class ActionManager
-{
-public:
-	Bool canTransferSuppliesAt(const Object *, const Object *);
+ Bool isEffectivelyDead() const { return (*(const unsigned char *)((const char *)this + 0x344) & 1) != 0; }
+ UnsignedInt getStatusWord() const { return *(const UnsignedInt *)((const char *)this + 0x90); }
+ BFMEAIUpdateInterface *getAI() const { return *(BFMEAIUpdateInterface *const *)((const char *)this + 0x204); }
 };
 
 // ?canTransferSuppliesAt@ActionManager@@QAE_NPBVObject@@0@Z
@@ -222,17 +146,17 @@ Bool ActionManager::canTransferSuppliesAt(const Object *obj,
 	if (obj == NULL || transferDest == NULL)
 		return FALSE;
 
-	if (transferDest->isEffectivelyDead())
+	if (reinterpret_cast<const Rva000C4E80ObjectView *>(transferDest)->isEffectivelyDead())
 		return FALSE;
 
-	if ((obj->getStatusWord() & 4) != 0 ||
+	if ((reinterpret_cast<const Rva000C4E80ObjectView *>(obj)->getStatusWord() & 4) != 0 ||
 		(*(const UnsignedInt *)((const char *)transferDest + 0x90) & 4) != 0)
 		return FALSE;
 
-	if (transferDest->testStatus(0x13))
+	if (reinterpret_cast<const BFMEActionObject *>(transferDest)->testStatus(0x13))
 		return FALSE;
 
-	const BFMEAIUpdateInterface *ai = obj->getAI();
+	const BFMEAIUpdateInterface *ai = reinterpret_cast<const Rva000C4E80ObjectView *>(obj)->getAI();
 	if (ai == NULL)
 		return FALSE;
 
@@ -244,7 +168,7 @@ Bool ActionManager::canTransferSuppliesAt(const Object *obj,
 	static const NameKeyType key_warehouseUpdate =
 		TheNameKeyGenerator->nameToKey("SupplyWarehouseDockUpdate");
 	SupplyWarehouseDockUpdate *warehouseModule =
-		(SupplyWarehouseDockUpdate *)transferDest->findModule(key_warehouseUpdate);
+		(SupplyWarehouseDockUpdate *)transferDest->findUpdateModule(key_warehouseUpdate);
 	if (warehouseModule != NULL)
 	{
 		if (warehouseModule->getBoxesStored() == 0 ||
@@ -255,12 +179,12 @@ Bool ActionManager::canTransferSuppliesAt(const Object *obj,
 	static const NameKeyType key_centerUpdate =
 		TheNameKeyGenerator->nameToKey("SupplyCenterDockUpdate");
 	SupplyCenterDockUpdate *centerModule =
-		(SupplyCenterDockUpdate *)transferDest->findModule(key_centerUpdate);
+		(SupplyCenterDockUpdate *)transferDest->findUpdateModule(key_centerUpdate);
 	if (centerModule != NULL)
 	{
 		if (supplyTruck->getNumberBoxes() == 0 ||
-			reinterpret_cast<const BfmeObjectCall *>(transferDest)->getControllingPlayer() !=
-			reinterpret_cast<const BfmeObjectCall *>(obj)->getControllingPlayer())
+			transferDest->getControllingPlayer() !=
+			obj->getControllingPlayer())
 			return FALSE;
 	}
 
@@ -271,11 +195,11 @@ Bool ActionManager::canTransferSuppliesAt(const Object *obj,
 		return FALSE;
 
 	Player *objPlayer =
-		reinterpret_cast<const BfmeObjectCall *>(obj)->getControllingPlayer();
+		obj->getControllingPlayer();
 	if (objPlayer != NULL)
 	{
-		if (objPlayer->getPlayerType() == 0 &&
-			reinterpret_cast<const BfmeObjectShroudCall *>(transferDest)->getShroudedStatus(objPlayer->getPlayerIndex()) ==
+		if (reinterpret_cast<const Rva000C4E80PlayerView *>(objPlayer)->getPlayerType() == 0 &&
+			transferDest->getShroudedStatus(reinterpret_cast<const Rva000C4E80PlayerView *>(objPlayer)->getPlayerIndex()) ==
 			OBJECTSHROUD_SHROUDED)
 			return FALSE;
 	}

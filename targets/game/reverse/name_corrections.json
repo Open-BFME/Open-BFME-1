@@ -10837,7 +10837,7 @@
     "before_sha256": "f7e5d09f1cbf930ac788454f477de0f8a34230a240809a07b39ad4de302464bb",
     "after_sha256": "d2b55bf8e53365558121bbc7b5b9e7ba359746f86886b4d7d44fffbbd6e4b1ec",
     "evidence": "targets/game/reverse/identity_evidence/00905140-gen-handle.md",
-    "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank\u2019s RefCountPtr<TextureClass> return."
+    "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank’s RefCountPtr<TextureClass> return."
   },
   {
     "old_path": "targets/game/reverse/attempts/0x00410f90.cpp",
@@ -17148,5 +17148,15 @@
     "after_sha256": "f28db96537d1fef27dc9865e3b7426fb6106482aa6501ada72871a6f8188c52e",
     "evidence": "targets/game/reverse/identity_evidence/0x007e88a0-predicate-owner-correction.md",
     "reason": "Supported actual wrong-callee-owner correction only: native007E88A0/11 loads receiver+24, thiscall/noargs Bool RET. Genuine BFME W3DVideoBuffer vtable0112165C slot18 instead routesILT1C0EE->00739F80/32. This caller actualnative directly calls007E88A0; replacing its false W3DVideoBuffer::valid callee view with honest Rva007E88A0::method preserves caller identity/ABI/extent. No semantic receiver inference or new coverage. Bind this exact current before/after source pair; original older correction hashes do not cover it."
+  },
+  {
+    "old_path": "game/GameEngine/Source/Common/RTS/ActionManager_canTransferSuppliesAt_Thunk.cpp",
+    "new_path": "game/GameEngine/Source/Common/RTS/ActionManager_canTransferSuppliesAt_Thunk.cpp",
+    "old_name": "Player",
+    "new_name": "Rva000C4E80PlayerView",
+    "before_sha256": "632cde475001e901c94c3e95628c6034ccfcdcad8ceede5676fdcd864ab83fc9",
+    "after_sha256": "b878e3fed43cbdd40ddd27773c86fffc0a01febc7d2c13a033b940a89d9ee10a",
+    "evidence": "targets/game/reverse/identity_evidence/000c4e80-canonical-object-and-player-view.md",
+    "reason": "False correspondence: the partial duplicate Player declaration is removed; canonical Object still returns genuine Player*. The new address-qualified view only preserves independently native-proven word reads at +24/+2C and asserts no Player identity replacement."
   }
 ]
