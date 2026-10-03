@@ -1,4 +1,12 @@
 // Open-BFME5 conversions.
+// stlport
+
+#include "Thing/GameLogicObjectLookup.h"
+
+class Player;
+#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 struct BfmeStateA979
 {
@@ -6,10 +14,10 @@ struct BfmeStateA979
 	int m_bfmeMode;
 };
 
-class BfmeActA979
+class WindowManager
 {
 public:
-	void bfmeDo979A(int a);
+	void bfme_showBackground(int kind);
 };
 
 class Shell
@@ -28,9 +36,7 @@ extern GameLogic *TheGameLogic;
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
-// the call through it, so the pointee stays the local BfmeActA979 view and the
-// access is cast at the use.
-class WindowManager;
+// the background-kind call at ILT 0x00009494, defined by AptScreenFactories.cpp.
 extern WindowManager *g_rva012F19E8WindowManager;
 
 extern Shell *TheShell;
@@ -41,28 +47,20 @@ char bfmeGo979A(void)
 			|| !TheShell->showShellMap(true))
 		return 1;
 
-	((BfmeActA979 *)g_rva012F19E8WindowManager)->bfmeDo979A(1);
+	g_rva012F19E8WindowManager->bfme_showBackground(1);
 	return 0;
 }
 
-class BfmeKey979;
-
-class BfmeSink979
+class TunnelTracker
 {
 public:
-	void bfmeSend979B(BfmeKey979 *k);
+	void onTunnelCreated(const Object *object);
 };
 
 struct BfmeX979
 {
 	char m_bfmePad[0x22c];
-	BfmeSink979 *m_bfmeSink;
-};
-
-class BfmeKey979
-{
-public:
-	BfmeX979 *bfmeGet979B();
+	TunnelTracker *m_bfmeSink;
 };
 
 class BfmeB979
@@ -84,30 +82,20 @@ void BfmeB979::bfmeGo979B()
 	if (!bfmeReady979B())
 		return;
 
-	BfmeKey979 *k = *(BfmeKey979 **)((char *)this - 0x2c);
+	Object *k = *(Object **)((char *)this - 0x2c);
 	m_bfmeFlagA = 0;
 
-	BfmeX979 *x = k->bfmeGet979B();
+	BfmeX979 *x = (BfmeX979 *)k->getControllingPlayer();
 	if (!x)
 		return;
 
-	BfmeSink979 *s = x->m_bfmeSink;
+	TunnelTracker *s = x->m_bfmeSink;
 	if (!s)
 		return;
 
-	s->bfmeSend979B(*(BfmeKey979 **)((char *)this - 0x2c));
+	s->onTunnelCreated(*(Object **)((char *)this - 0x2c));
 	m_bfmeFlagB = 1;
 }
-
-class BfmeThing979;
-
-class BfmeLook979
-{
-public:
-	void *bfmeFind979C(BfmeThing979 *t);
-};
-
-
 
 class BfmeC979
 {
@@ -117,16 +105,16 @@ public:
 	char m_bfmePad[0x338];
 	char m_bfmeFlag;
 	char m_bfmePad2[0xb];
-	BfmeThing979 *m_bfmeA;
-	BfmeThing979 *m_bfmeB;
-	BfmeThing979 *m_bfmeC;
+	ObjectID m_bfmeA;
+	ObjectID m_bfmeB;
+	ObjectID m_bfmeC;
 };
 
 void BfmeC979::bfmeGo979C()
 {
-	BfmeLook979 *g = (BfmeLook979 *)TheGameLogic;
+	GameLogic *g = TheGameLogic;
 
-	if (!g->bfmeFind979C(m_bfmeA) && !g->bfmeFind979C(m_bfmeB)
-			&& !g->bfmeFind979C(m_bfmeC))
+	if (!g->findObjectByID(m_bfmeA) && !g->findObjectByID(m_bfmeB)
+			&& !g->findObjectByID(m_bfmeC))
 		m_bfmeFlag = 0;
 }
