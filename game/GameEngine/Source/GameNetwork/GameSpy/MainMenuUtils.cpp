@@ -889,37 +889,7 @@ int asyncGethostbyname(char * szName)
 // time out) but at least we'll live.
 Bool isHttpOk = TRUE;
 
-void HTTPThinkWrapper( void )
-{
-	if (s_asyncDNSLookupInProgress)
-	{
-		Int ret = asyncGethostbyname("servserv.generals.ea.com");
-		switch(ret)
-		{
-		case LOOKUP_FAILED:
-			cantConnectBeforeOnline = TRUE;
-			startOnline();
-			break;
-		case LOOKUP_SUCCEEDED:
-			reallyStartPatchCheck();
-			break;
-		}
-	}
-
-	if (isHttpOk)
-	{
-		try
-		{
-			ghttpThink();
-		}
-		catch (...)
-		{
-			isHttpOk = FALSE; // we can't abort the login, since we might be done with the
-												// required checks and are fetching extras.  If it is a required
-												// check, we'll time out normally.
-		}
-	}
-}
+// HTTPThinkWrapper is supplied by the retail-matched HTTPThinkWrapperBFME.cpp.
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
