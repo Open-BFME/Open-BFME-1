@@ -14,7 +14,7 @@ class GenString
 extern void CreateButtonFlash(const GenString *value);
 extern void ShowButtonFlash(const GenString *value);
 
-extern int g_buttonFlashNumber;
+int g_Va012F3638;
 
 class Gen_ctor_004b02a0Base
 {
@@ -42,7 +42,7 @@ Gen_ctor_004b02a0::Gen_ctor_004b02a0()
 {
 	m_field0C = 0;
 	m_field10 = 0;
-	int flashNumber = g_buttonFlashNumber++;
+	int flashNumber = g_Va012F3638++;
 	m_flashName.format(AsciiString("Flash%d"), flashNumber);
 	CreateButtonFlash((const GenString *)&m_flashName);
 	ShowButtonFlash((const GenString *)&m_flashName);
