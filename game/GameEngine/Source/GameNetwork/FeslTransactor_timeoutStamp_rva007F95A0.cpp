@@ -13,17 +13,7 @@ public:
 	virtual int v2();
 };
 
-// Retail 0x007E9B70 is a six-byte singleton getter: `mov eax,0x0130A580; ret`.
-// It never reads `this`, so its only definition is the gen-shim skeleton
-// Gen_007e9b70::m (game/gen_small/fun_005.cpp:129-130), and callers must reach it
-// through that __thiscall spelling to link.  The earlier stand-in
-// ?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ was declared here and defined nowhere.
-// Retail's `push esi; mov esi,ecx; call 0x7E9B70` leaves this in ecx already, so
-// spelling the call as a member of `this` emits no receiver load and is
-// byte-exact; the cast is sound only because the body ignores its receiver, and
-// m() returns the singleton address that the next vcall consumes.
-// `unsigned` (not `int`) is required: the return type is part of the mangling.
-struct Gen_007e9b70 { unsigned m(); };
+Rva007E9B70Obj *Rva007E9B70Get();
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -46,7 +36,7 @@ private:
 
 void Rva007FA2C0::rva007F95A0(Rva007FA170Slot *slot, unsigned timeout)
 {
-	unsigned now = (unsigned)((Rva007E9B70Obj*)(unsigned)((Gen_007e9b70*)this)->m())->v2();
+	unsigned now = (unsigned)Rva007E9B70Get()->v2();
 	unsigned delay = timeout;
 	Rva007FA170Slot *target = slot;
 	_ReadWriteBarrier();

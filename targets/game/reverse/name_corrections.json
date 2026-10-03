@@ -15928,5 +15928,15 @@
   "after_sha256": "76d93b849119c775943a80977b0b1d03187c363cfedf2b893b376c2421ff5896",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "m",
+  "new_name": "Rva007E9B70Get",
+  "before_sha256": "396db1711886b35d917b67a49d1ecd6cc8887815cd65f101288c5cbf1197a449",
+  "after_sha256": "a897ab481de1d5413c5e2f301f24e6b64e0633c111443132b72a392abf5643e1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Gen_007e9b70::m is a generator-minted Gen* gen-shim placeholder (docs/naming_evidence.md: generator-minted names are anonymous by design, not identities) for retail's six-byte getter `mov eax,0x0130A580; ret`; five matched callers already spell it as the address-derived free function Rva007E9B70Get, now defined once in Rva007E9B70Get.cpp."
  }
 ]

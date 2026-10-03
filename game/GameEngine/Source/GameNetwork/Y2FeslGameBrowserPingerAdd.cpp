@@ -20,7 +20,7 @@ struct Rva007E9B70Obj
 	virtual unsigned now();
 };
 
-struct Gen_007e9b70 { unsigned m(); };
+Rva007E9B70Obj *Rva007E9B70Get();
 
 struct BfmeRecUVB
 {
@@ -96,11 +96,9 @@ void BfmeSink1028::bfmeSend1028( int a, int *b, int *c )
 		id = Rva008085A0( m_08, addr, (const char *)payload, 8 );
 		if( id >= 0 )
 		{
-			// The 0x007E9B70 getter ignores ECX; keep the already-computed slot
-			// offset there so the member spelling emits retail's direct call.
 			unsigned slotOffset = (unsigned)m_10 << 4;
 			((Rva00803080Request *)((char *)m_0C + slotOffset))->m_00 = id;
-			m_0C[m_10].m_04 = (int)((Rva007E9B70Obj *)((Gen_007e9b70 *)slotOffset)->m())->now();
+			m_0C[m_10].m_04 = (int)Rva007E9B70Get()->now();
 			m_0C[m_10].m_0C = *pc;
 			m_0C[m_10].m_08 = *pb;
 			( (BfmeSvcVMO *)this )->bfmeSetVMO( m_10 + 1 );
