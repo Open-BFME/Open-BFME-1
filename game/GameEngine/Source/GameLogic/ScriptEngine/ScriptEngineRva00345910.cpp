@@ -36,7 +36,7 @@ struct ScriptCounter
 class Rva000F72D0FrameCachedValue
 {
 public:
-	float valueThunk(float range);
+	float value(float range);
 };
 
 struct BfmeThingFBA
@@ -96,7 +96,7 @@ void ScriptEngine::Rva00345910(ScriptAction *action, Bool flag)
 	{
 		Rva000F72D0FrameCachedValue *cached = TheScriptEngine->unidentified44(action->getParameter(1)->m_string, false);
 		if (cached)
-			result = cached->valueThunk(paramValue);
+			result = cached->value(paramValue);
 	}
 	else
 	{
