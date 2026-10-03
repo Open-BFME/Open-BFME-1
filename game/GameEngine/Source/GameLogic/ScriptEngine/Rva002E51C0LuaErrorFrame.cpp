@@ -25,7 +25,9 @@ extern "C" int lua_getinfo(lua_State *state, const char *options,
 	lua_Debug *activation);
 extern "C" __declspec(dllimport) int __cdecl sprintf(
 	char *buffer, const char *format, ...);
-extern void __cdecl bfmeLogMsg574(const char *message);
+// Retail 0x0003EBAD game-logger ILT is only defined under its address-derived name
+// (game/gen_small/thunks_030.cpp); luaB_debug.cpp spells it the same way.
+extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 
 // ?Rva002E51C0LuaErrorFrame@@YAXPAUlua_State@@PAUlua_Debug@@@Z
 void __cdecl Rva002E51C0LuaErrorFrame(lua_State *state, lua_Debug *activation)
@@ -64,18 +66,18 @@ void __cdecl Rva002E51C0LuaErrorFrame(lua_State *state, lua_Debug *activation)
 	}
 	}
 
-	bfmeLogMsg574(buffer);
+	__identifier("?j_0003ebad@@YAXXZ")(buffer);
 	if (activation->currentline > 0)
 	{
 		sprintf(buffer, " at line %d",
 			activation->currentline);
-		bfmeLogMsg574(buffer);
+		__identifier("?j_0003ebad@@YAXXZ")(buffer);
 	}
 	if (activation->source)
 	{
 		sprintf(buffer, " [%.70s]",
 			activation->short_src);
-		bfmeLogMsg574(buffer);
+		__identifier("?j_0003ebad@@YAXXZ")(buffer);
 	}
-	bfmeLogMsg574("\n");
+	__identifier("?j_0003ebad@@YAXXZ")("\n");
 }
