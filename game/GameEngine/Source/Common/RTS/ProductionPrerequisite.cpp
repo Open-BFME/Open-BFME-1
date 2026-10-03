@@ -81,13 +81,6 @@ static __forceinline void appendWideText(UnicodeString &destination, const wchar
 // The exact retail constructor is emitted by ProductionPrerequisiteCtorThunk.cpp.
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ProductionPrerequisiteDestructorThunk.cpp
-// ??1ProductionPrerequisite@@QAE@XZ present-unmatched
-ProductionPrerequisite::~ProductionPrerequisite()
-{
-}
-
-//-----------------------------------------------------------------------------
 void ProductionPrerequisite::init()
 {
 	m_prereqUnits.clear();
