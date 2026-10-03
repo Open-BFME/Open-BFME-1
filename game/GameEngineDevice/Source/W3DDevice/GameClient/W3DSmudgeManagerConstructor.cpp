@@ -10,6 +10,11 @@ private:
 	char m_pad[0x20];
 };
 
+// Native W3DSmudge.cpp owns this base-interface singleton. Retail terrain init
+// stores the constructed W3DSmudgeManager at VA 0x012F9D88 (RVA 0x00730716);
+// resource callers dispatch through its base slots +0x0C and +0x10.
+SmudgeManager *TheSmudgeManager = 0;
+
 class W3DSmudgeManager : public SmudgeManager
 {
 	void *m_smudgeGroup;
