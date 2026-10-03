@@ -7,8 +7,10 @@ the tail of the Zero Hour PolygonTrigger::ParsePolygonTriggersDataChunk twin;
 that does not establish the BFME derived parser method name.
 
 The complete body ends with RET 8 at 0x0019109B and INT3 at 0x0019109E:
-398 bytes. Ghidra initially reported 395 bytes; read_memory and retail PE bytes
-include the three-byte return. Do not truncate the body to that initial extent.
+398 bytes. Ghidra reports a body_size of 395, which is not sufficient evidence
+for the contiguous extent. read_memory and retail PE bytes establish the return
+and padding addresses above; no claim is made that Ghidra omitted the return.
+Use the independently verified contiguous 398-byte range.
 
 At wrapper 0x00190F32 two arguments are pushed, ECX is retained as the receiver,
 and CALL 0x00013B10 reaches 0x00190700. AL is tested immediately afterward.

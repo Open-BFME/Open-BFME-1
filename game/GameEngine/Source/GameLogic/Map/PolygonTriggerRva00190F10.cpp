@@ -101,7 +101,7 @@ private:
 	int m_capacity;
 	char m_gap[0x14];
 	bool m_valuesDirty;
-	char m_pad31;		// +0x00
+	char m_pad31;		// +0x31
 	bool m_bfmeA;				// +0x32
 };
 
