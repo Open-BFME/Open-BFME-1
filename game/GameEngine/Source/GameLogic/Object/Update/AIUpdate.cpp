@@ -2759,46 +2759,9 @@ The way to have a higher priority is:
 3. If exactly tied (usually beacause both units got unfortunately snapped to the same location), ObjectID is used
 to break the tie. 
 */
-// ?hasHigherPathPriority@AIUpdateInterface@@ present-unmatched
-Bool AIUpdateInterface::hasHigherPathPriority(AIUpdateInterface *otherAI) const
-{
-	Object *other = otherAI->getObject();
-
-	// Dozers have highest priority.
-	if (getObject()->isKindOf(KINDOF_DOZER) && !other->isKindOf(KINDOF_DOZER)) {
-		return TRUE;
-	}
-	if (!getObject()->isKindOf(KINDOF_DOZER) && other->isKindOf(KINDOF_DOZER)) {
-		return FALSE;
-	}
-
-	// Vehicles always have higher priority than infantry.
-	if (getObject()->isKindOf(KINDOF_VEHICLE) && other->isKindOf(KINDOF_INFANTRY)) {
-		return TRUE;
-	}
-	if (getObject()->isKindOf(KINDOF_INFANTRY) && other->isKindOf(KINDOF_VEHICLE)) {
-		return FALSE;
-	}
-
-	// The paths aren't of the same group, so see which unit is in front.
-	Coord3D ourDir = *getObject()->getUnitDirectionVector2D();
-	Coord3D otherDir = *other->getUnitDirectionVector2D();
-	if (ourDir.x*otherDir.x + ourDir.y*otherDir.y <= 0) {
-		return getObject()->getID() < other->getID();
-	}
-	Coord2D	combinedDir; 
-	combinedDir.x = ourDir.x + otherDir.x;
-	combinedDir.y = ourDir.y + otherDir.y;
-	Coord2D vectorToOther;
-	vectorToOther.x = other->getPosition()->x - getObject()->getPosition()->x;
-	vectorToOther.y = other->getPosition()->y - getObject()->getPosition()->y;
-	// Dot product is our directions projected onto each other.
-	Real dotProduct = combinedDir.x*vectorToOther.x	+ combinedDir.y*vectorToOther.y;
-	if (dotProduct>0) return FALSE;  // other is ahead of us along our directional vector.
-	if (dotProduct<0) return TRUE; // We are ahead of other.
-	// Exactly equal.  Use object id's to break the tie.  
-	return getObject()->getID() < other->getID();
-}
+// ?hasHigherPathPriority@AIUpdateInterface@@QBE_NPAV1@@Z
+// Defined by the matched body in AIUpdatePathPriority.cpp (retail 0x00274410).
+// Keep calls bound to that owner instead of a Zero Hour implementation.
 
 //-------------------------------------------------------------------------------------------------
 /* Returns max speed we can have and not run into unit that is blocking us.
@@ -5933,6 +5896,7 @@ const Coord3D *AIUpdateInterface::getCurrentVictimPos( void ) const
 /**
  * Set the behavior modifier for this agent
  */
+// ?setAttitude@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::setAttitude( AttitudeType tude )
 {
 	m_attitude = tude;
@@ -5941,6 +5905,7 @@ void AIUpdateInterface::setAttitude( AttitudeType tude )
 /**
  * Get the current behavior modifier state	
  */
+// ?getAttitude@AIUpdateInterface@@ present-unmatched
 AttitudeType AIUpdateInterface::getAttitude( void ) const
 {
 	return m_attitude;
@@ -5966,12 +5931,14 @@ void AIUpdateInterface::ignoreObstacle( const Object *obj )
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?ignoreObstacleID@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::ignoreObstacleID( ObjectID id )
 {
 	m_ignoreObstacleID = id;
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?getIgnoredObstacleID@AIUpdateInterface@@ present-unmatched
 ObjectID AIUpdateInterface::getIgnoredObstacleID( void ) const
 { 
 	return m_ignoreObstacleID; 
@@ -6000,6 +5967,7 @@ Object* AIUpdateInterface::getEnterTarget()
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?setLastCommandSource@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::setLastCommandSource( CommandSourceType source )
 {
 	m_lastCommandSource = source; 
