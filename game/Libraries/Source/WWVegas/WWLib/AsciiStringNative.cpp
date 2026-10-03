@@ -27,7 +27,7 @@ AsciiString::AsciiString(char c) : StringBase<char>(c) {}
 
 AsciiString::AsciiString(const AsciiString &that, int start, int len) : StringBase<char>(that, start, len) {}
 
-AsciiString::AsciiString(const char *str, int len) : StringBase<char>(str, len) {}
+inline AsciiString::AsciiString(const char *str, int len) : StringBase<char>(str, len) {}
 
 // ??1AsciiString (0x0005EE90) is the implicit destructor; the unwind actions
 // of the by-value operators below emit its COMDAT.
