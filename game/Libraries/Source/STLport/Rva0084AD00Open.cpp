@@ -25,7 +25,10 @@
 // past it); `char`/`unsigned short` are layout views here, since the body
 // only calls the non-template _M_open and the `process` tail.
 
-#include <fstream>
+// Use the internal class header directly: the public wrapper adds a TU-local
+// _Loc_init static even though these matched methods only need the stream
+// declarations.  Its ctor/dtor have no linked provider in this build.
+#include <stl/_fstream.h>
 
 struct Rva0084AD00 : _STL::basic_ofstream<char, _STL::char_traits<char> >
 {
