@@ -1,25 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: StringInfo dtor. AsciiString @+0 then UnicodeString @+4.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
+#include "ascii_string.h"
 
-private:
-	unsigned char m_pad[4];
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();
-
-private:
-	unsigned char m_pad[4];
-};
+#include "unicode_string.h"
 
 class StringInfo
 {
