@@ -45,10 +45,10 @@ public:
 	void notifyModelConditionChanged();
 };
 
+extern void j_00015d02();
 class Pathfinder
 {
 public:
-	void removeGoal(Object *object);
 	void updateGoal(Object *object, const Coord3D *position,
 		PathfindLayerEnum layer, const char *file, Int line);
 };
@@ -92,7 +92,10 @@ void AIGiantBirdAttackState::onExit(StateExitType status)
 	if (weapon != 0)
 		weapon->reloadAmmo((const Object *)object);
 
-	TheAI->pathfinder()->removeGoal((Object *)object);
+	// Retail calls the incremental-link thunk 0x00015D02 (-> 0x003E3D20).
+	typedef void (Pathfinder::*RemoveGoalFn)(Object *);
+	union { void (*fn)(); RemoveGoalFn call; } removeGoal = { j_00015d02 };
+	(TheAI->pathfinder()->*removeGoal.call)((Object *)object);
 #line 1080 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\GiantBirdAIUpdate.cpp"
 	TheAI->pathfinder()->updateGoal((Object *)object,
 		(const Coord3D *)(object + 0x38), LAYER_GROUND, __FILE__, __LINE__);

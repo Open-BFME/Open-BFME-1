@@ -140,10 +140,10 @@ protected:
 	Bool m_adjustDestinations;
 };
 
+extern void j_00015d02();
 class Pathfinder
 {
 public:
-	void removeGoal(Object *object);
 };
 
 class AI
@@ -193,7 +193,10 @@ StateReturnType Rva00173B90State::onEnter()
 		owner->setModelConditionState(12);
 	m_okToRepathTimes = 1;
 	m_checkForPath = true;
-	TheAI->pathfinder()->removeGoal(owner);
+	// Retail calls the incremental-link thunk 0x00015D02 (-> 0x003E3D20).
+	typedef void (Pathfinder::*RemoveGoalFn)(Object *);
+	union { void (*fn)(); RemoveGoalFn call; } removeGoal = { j_00015d02 };
+	(TheAI->pathfinder()->*removeGoal.call)(owner);
 	ai->requestSafePath(enemy->getID());
 	return AIInternalMoveToState::onEnter();
 }
