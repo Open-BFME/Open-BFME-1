@@ -41,10 +41,24 @@ public:
 	char m_bfmeFlagGG;
 };
 
-class BfmePrimaryGG
+class Object;
+enum UpdateSleepTime;
+
+// The call at the tail of this body is retail's ILT thunk 0x000157DA, whose
+// target is UpdateModule::setWakeFrame(Object *, UpdateSleepTime) at
+// 0x002B2040 (game/GameEngine/Source/GameLogic/Object/Update/UpdateModule.cpp);
+// symbols.csv pins that real name at the thunk address, so spelling the real
+// protected member keeps the call displacement and lets the body resolve at
+// link. The definition lives in
+// game/GameEngine/Include/GameLogic/Module/UpdateModule.h, which this TU does
+// not include (its prefix view keeps retail's offsets local to this file), so
+// the declaration below carries the same signature and access.
+class UpdateModule
 {
-public:
-	void bfmeApplyGG(void *target, int limit);
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);
+
+	friend class BfmeSecondGG;
 };
 
 class BfmeSecondGG
@@ -69,5 +83,5 @@ void BfmeSecondGG::bfmeGoGG(int unused)
 		m_bfmeValueGG = 1;
 	}
 
-	((BfmePrimaryGG *)(base - 0x28))->bfmeApplyGG(*(void **)(base - 0x20), 0x3fffffff);
+	((UpdateModule *)(base - 0x28))->setWakeFrame(*(Object **)(base - 0x20), (UpdateSleepTime)0x3fffffff);
 }
