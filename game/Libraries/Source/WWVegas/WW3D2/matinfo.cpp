@@ -88,16 +88,9 @@ int MaterialInfoClass::Add_Texture(TextureClass * tex)
 	return index;
 }
 
-// ?Get_Texture_Index@MaterialInfoClass@@QAEHPBD@Z present-unmatched
-int MaterialInfoClass::Get_Texture_Index(const char * name)
-{
-	for (int i=0; i<Textures.Count(); i++) {
-		if (stricmp(name,Textures[i]->Get_Texture_Name()) == 0) {
-			return i;
-		}
-	}
-	return -1;
-}
+// Retail Get_Texture_Index is the verified 96-byte provider in
+// MaterialInfoGetTextureIndex.cpp (RVA00930680). BFME searches owning texture
+// handles and destroys the temporary StringClass returned by each name lookup.
 
 // ?Get_Texture@MaterialInfoClass@@QAEPAVTextureClass@@H@Z present-unmatched
 TextureClass * MaterialInfoClass::Get_Texture(int index)
