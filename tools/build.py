@@ -411,13 +411,14 @@ def _object_layout(path_str, mtime_ns, size):
                 "raw_pointer": u32(data, offset + 20),
                 "reloc_count": u16(data, offset + 32),
                 "reloc_pointer": u32(data, offset + 24),
+                "characteristics": u32(data, offset + 36),
             }
         )
 
     return data, sections, read_object_symbols(data)
 
 
-def read_object_symbol_bytes(path, symbol_name, expected_size=None):
+def read_object_symbol_bytes(path, symbol_name, expected_size=None, *, require_code=False):
     stat = path.stat()
     data, sections, symbols = _object_layout(str(path), stat.st_mtime_ns, stat.st_size)
     resolved_name = symbol_name
@@ -452,6 +453,11 @@ def read_object_symbol_bytes(path, symbol_name, expected_size=None):
         # before its real definition; keep scanning for the defined one
         if symbol["name"] == resolved_name and symbol["section"] > 0:
             section = sections[symbol["section"] - 1]
+            if require_code and not section["characteristics"] & 0x20:  # IMAGE_SCN_CNT_CODE
+                raise ValueError(
+                    f"function claim {symbol_name} resolves to non-code COFF section "
+                    f"{section['name']} in {path.name}; data relocations cannot prove "
+                    "executable bytes")
             value = symbol["value"]
             start = section["raw_pointer"] + value
             end = section["raw_pointer"] + section["raw_size"]
@@ -2269,7 +2275,11 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
     if is_funclet_row(row, object_symbol):
         compiled, relocs, note = read_funclet(row, object_symbol, output, target)
     else:
-        compiled, relocs = read_object_symbol_bytes(output, object_symbol, target_size)
+        # DIR32 rebasing can make a pointer table equal arbitrary instructions.
+        # Require code before relocation resolution; data/string readers keep
+        # using the same extractor without this function-only restriction.
+        compiled, relocs = read_object_symbol_bytes(
+            output, object_symbol, target_size, require_code=True)
     verify_guarded_dir32_imports(row, target, compiled, relocs)
 
     # A lib member is pre-link code: every relocation site still holds an addend

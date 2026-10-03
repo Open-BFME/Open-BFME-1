@@ -64,7 +64,7 @@ def write_object(path):
     symbol_at = reloc_at + len(relocs) * 10
     header = struct.pack("<HHIIIHH", 0x014C, 1, 0, symbol_at, len(symbols), 0, 0)
     section = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, len(BODY), raw_at,
-                          reloc_at, 0, len(relocs), 0, 0)
+                          reloc_at, 0, len(relocs), 0, 0x60000020)
     path.write_bytes(header + section + BODY + b"".join(relocs)
                      + b"".join(symbols) + bytes(strings))
     return path

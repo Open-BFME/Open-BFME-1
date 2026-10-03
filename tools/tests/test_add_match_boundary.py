@@ -148,8 +148,9 @@ def test_object_symbol_alias_checks_the_body_selected_by_the_row(monkeypatch):
     alias["target_size"] = str(len(body))
     monkeypatch.setattr(build, "read_target_bytes", lambda _rva, _size: body)
 
-    def read_selected(_path, symbol, _expected_size=None):
+    def read_selected(_path, symbol, _expected_size=None, *, require_code=False):
         assert symbol == "_actual"
+        assert require_code
         return body, []
 
     monkeypatch.setattr(build, "read_object_symbol_bytes", read_selected)

@@ -54,7 +54,7 @@ def _compile(monkeypatch, symbol, actual_name, *, actual_dll="MSVCR71.dll",
     monkeypatch.setattr(build, "read_target_bytes",
                         lambda _rva, _size: target)
     monkeypatch.setattr(build, "read_object_symbol_bytes",
-                        lambda *_args: (compiled, [(reloc_offset, DIR32, symbol)]))
+                        lambda *_args, **_kwargs: (compiled, [(reloc_offset, DIR32, symbol)]))
     monkeypatch.setattr(build, "import_guard_image", lambda: image)
     return build.compile_function(_row(symbol), {}, Path("test.obj"))
 
@@ -104,7 +104,7 @@ def test_a_guarded_reference_to_a_non_import_body_is_rejected(monkeypatch):
     monkeypatch.setattr(build, "read_target_bytes",
                         lambda _rva, _size: target)
     monkeypatch.setattr(build, "read_object_symbol_bytes",
-                        lambda *_args: (compiled, [(2, DIR32, "__imp__itoa")]))
+                        lambda *_args, **_kwargs: (compiled, [(2, DIR32, "__imp__itoa")]))
     monkeypatch.setattr(build, "import_guard_image", lambda: image)
 
     with pytest.raises(SystemExit, match="not an import-table slot"):
@@ -118,7 +118,7 @@ def test_a_guarded_relocation_after_this_comdat_body_is_ignored(monkeypatch):
     monkeypatch.setattr(build, "read_target_bytes",
                         lambda _rva, _size: body)
     monkeypatch.setattr(build, "read_object_symbol_bytes",
-                        lambda *_args: (body, [(TARGET_SIZE, DIR32, "__imp__itoa")]))
+                        lambda *_args, **_kwargs: (body, [(TARGET_SIZE, DIR32, "__imp__itoa")]))
     monkeypatch.setattr(
         build, "import_guard_image",
         lambda: pytest.fail("a later-function relocation must not parse imports"),
