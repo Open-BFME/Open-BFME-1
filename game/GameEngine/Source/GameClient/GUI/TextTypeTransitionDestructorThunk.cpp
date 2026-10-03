@@ -1,16 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??1TextTypeTransition@@UAE@XZ: game/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 // Open-BFME5: TextTypeTransition destructor lifted to clean C++.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();
-
-private:
-	unsigned char m_pad[4];
-};
+#include "unicode_string.h"
 
 class DisplayString;
 
