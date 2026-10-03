@@ -407,68 +407,6 @@ void BaseHeightMapRenderObjClass::setTextureLOD(Int lod)
 		m_map->setTextureLOD(lod);
 }
 
-//=============================================================================
-// BaseHeightMapRenderObjClass::adjustTerrainLOD
-//=============================================================================
-/** Adjust the terrain Level Of Detail.  If adj > 0 , increases LOD 1 step, if 
-adj < 0 decreases it one step, if adj==0, then just sets up for the current LOD */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAdjustTerrainLOD.cpp
-// ?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z present-unmatched
-void BaseHeightMapRenderObjClass::adjustTerrainLOD(Int adj) 
-{
-	if (adj>0 && TheGlobalData->m_terrainLOD<TERRAIN_LOD_MAX) TheWritableGlobalData->m_terrainLOD=(TerrainLOD)(TheGlobalData->m_terrainLOD+1);
-	if (adj<0 && TheGlobalData->m_terrainLOD>TERRAIN_LOD_MIN) TheWritableGlobalData->m_terrainLOD=(TerrainLOD)(TheGlobalData->m_terrainLOD-1);
-
-	if (TheGlobalData->m_terrainLOD ==TERRAIN_LOD_AUTOMATIC) {
-		TheWritableGlobalData->m_terrainLOD=TERRAIN_LOD_MAX;
-	}
-
-	if (m_map==NULL) return;
-	if (m_shroud)
-		m_shroud->reset();	//need reset here since initHeightData will load new shroud.
-
-	BaseHeightMapRenderObjClass *newROBJ = NULL;
-	if (TheGlobalData->m_terrainLOD==7) {
-		newROBJ = TheHeightMap;
-		if (newROBJ==NULL) {
-			newROBJ = NEW_REF( HeightMapRenderObjClass, () );
-		}
-	}	else {
-		newROBJ = TheFlatHeightMap;
-		if (newROBJ==NULL) {
-			newROBJ = NEW_REF( FlatHeightMapRenderObjClass, () );
-		}
-	}
-	if (TheGlobalData->m_terrainLOD == 5)
-		newROBJ = NULL;
-	RTS3DScene *pMyScene = (RTS3DScene *)Scene;
-	if (pMyScene) {
-		pMyScene->Remove_Render_Object(this);
-		pMyScene->Unregister(this, SceneClass::ON_FRAME_UPDATE);
-		// add our terrain render object to the scene
-		if (newROBJ) {
-			pMyScene->Add_Render_Object( newROBJ );
-			pMyScene->Register(newROBJ,SceneClass::ON_FRAME_UPDATE);
-		}
-	}
-
-	if (newROBJ) {
-		// apply the heightmap to the terrain render object
-		newROBJ->initHeightData( m_map->getDrawWidth(), 
-																					 m_map->getDrawHeight(),
-																					 m_map,
-																					 NULL);
-		TheTerrainRenderObject = newROBJ;
-		newROBJ->staticLightingChanged();
-		newROBJ->m_roadBuffer->loadRoads();
-	}
-	if (TheTacticalView) {
-		TheTacticalView->setAngle(TheTacticalView->getAngle() + 1);
-		TheTacticalView->setAngle(TheTacticalView->getAngle() - 1);
-	}
-}
-
 // Exact BFME ReleaseResources body is provided by BaseHeightMapReleaseResources_Bfme.cpp.
 
 // Exact BFME ReAcquireResources body is provided by BaseHeightMapReAcquireResources_Bfme.cpp.
