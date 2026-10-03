@@ -85,6 +85,8 @@ protected:
     bool evaluateNamedReachedWaypointsEnd(class Parameter *,class Parameter *);
     // 0032B520: ScriptConditions_evaluateTeamReachedWaypointsEnd.cpp
     bool evaluateTeamReachedWaypointsEnd(class Parameter *,class Parameter *);
+    // 0032B730: ScriptConditionsEvaluateNamedSelected.cpp
+    bool evaluateNamedSelected(class Condition *,class Parameter *);
     // 0032B840: ScriptConditionsNamedEnteredArea.cpp
     bool evaluateNamedEnteredArea(class Parameter *,class Parameter *);
     // 00324DE0: ScriptConditionsTriggerAreas.cpp
@@ -341,8 +343,6 @@ extern void j_00012855(void);
 extern void j_0001ca0d(void);
 // ILT 00005ACE -> body 0032CFC0; existing game/gen_small/thunks_002.cpp.
 extern void j_00005ace(void);
-// ILT 0003E73E -> body 0032B730; existing game/gen_asm/d_0032b730.asm.
-extern void d_0032b730(void);
 // ILT 00006852 -> body 003287E0; existing game/gen_asm/d_00322a60.asm.
 extern void d_003287e0(void);
 // ILT 00042C49 -> body 00328A80; existing game/gen_asm/d_00322a60.asm.
@@ -506,10 +506,7 @@ private:
 
     __forceinline bool rva0032B730(Condition* a0, Parameter* a1)
     {
-        typedef bool (Rva0032D720::*Function)(Condition*, Parameter*);
-        union { void (*raw)(void); Function member; } fn;
-        fn.raw = d_0032b730;
-        return (this->*fn.member)(a0, a1);
+        return evaluateNamedSelected(a0, a1);
     }
 
 

@@ -1791,54 +1791,6 @@ Bool ScriptConditions::evaluateTeamReachedWaypointsEnd(Parameter *pTeamParm, Par
 }
 
 //-------------------------------------------------------------------------------------------------
-/** evaluateNamedSelected */
-//-------------------------------------------------------------------------------------------------
-// ?evaluateNamedSelected@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@@Z present-unmatched
-Bool ScriptConditions::evaluateNamedSelected(Condition *pCondition, Parameter *pUnitParm)
-{
-	if (TheGameEngine->isMultiplayerSession()) 
-	{
-		return false;
-	}
-
-
-	Bool anyChanges = false;
-	if (pCondition->getCustomData() == 0) anyChanges = true;
-
-
-	if (TheInGameUI->getFrameSelectionChanged() != pCondition->getCustomFrame()) {
-		anyChanges = true; // Selection changed since we cached the value.  jba.
-	}
-	if (!anyChanges) {
-		if (pCondition->getCustomData()==-1) return false;
-		if (pCondition->getCustomData()==1) return true;
-	}
-
-	Bool isSelected = false;
-	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
-
-	// loop through all the selected drawables
-	Drawable *draw;
-	for( DrawableListCIt it = selected->begin(); it != selected->end(); ++it )
-	{
-		draw = *it;
-
-		if (draw->getObject()->getName() == (pUnitParm->getString())) { 
-			isSelected = true;
-			break;
-		}
-
-	}
-
-	pCondition->setCustomData(-1); // false.
-	if (isSelected) {
-		pCondition->setCustomData(1); // true.
-	}
-	pCondition->setCustomFrame(TheInGameUI->getFrameSelectionChanged());
-	return isSelected;
-}
-
-//-------------------------------------------------------------------------------------------------
 /** evaluateVideoHasCompleted */
 //-------------------------------------------------------------------------------------------------
 // ?evaluateVideoHasCompleted@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
