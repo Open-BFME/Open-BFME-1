@@ -26,7 +26,16 @@ struct BfmeDevice
 };
 
 
-void *__cdecl bfmeEndRenderToTexture(void);
+// Retail reaches W3DShaderManager::endRenderToTexture (0x00717420) through
+// the ILT at 0x0003FAC6 (?j_0003fac6@@YAXXZ); the call names that thunk.
+extern void j_0003fac6();
+static __forceinline void *callEndRenderToTexture()
+{
+	typedef void *(__cdecl *Call)();
+	union { void (*asFunction)(); Call asCall; } fnCast;
+	fnCast.asFunction = j_0003fac6;
+	return fnCast.asCall();
+}
 void __cdecl bfmeDrawFilterUV(int a, int b, Coord2D *uv);
 
 class ScreenDefaultFilter
@@ -43,7 +52,7 @@ public:
 
 bool ScreenDefaultFilter::postRender(int mode, Coord2D scroll, bool &extra)
 {
-	void *tex = bfmeEndRenderToTexture();
+	void *tex = callEndRenderToTexture();
 	if (!tex)
 		return false;
 	if (!set(mode))

@@ -108,7 +108,16 @@ public:
 	static Real m_curFadeValue;
 };
 
-void *__cdecl bfmeEndRenderToTexture(void);
+// Retail reaches W3DShaderManager::endRenderToTexture (0x00717420) through
+// the ILT at 0x0003FAC6 (?j_0003fac6@@YAXXZ); the call names that thunk.
+extern void j_0003fac6();
+static __forceinline void *callEndRenderToTexture()
+{
+	typedef void *(__cdecl *Call)();
+	union { void (*asFunction)(); Call asCall; } fnCast;
+	fnCast.asFunction = j_0003fac6;
+	return fnCast.asCall();
+}
 
 class W3DShaderManager
 {
@@ -141,7 +150,7 @@ Bool ScreenCrossFadeFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	{
 		BfmeSkipRender = false;
 		doExtraRender = true;
-		tex = (IDirect3DTexture8 *)bfmeEndRenderToTexture();
+		tex = (IDirect3DTexture8 *)callEndRenderToTexture();
 		return true;
 	}
 

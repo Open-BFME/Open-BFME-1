@@ -84,7 +84,16 @@ class View;
 extern View *TheTacticalView;
 static inline BfmeTacticalView *bfmeTacticalView() { return (BfmeTacticalView *)TheTacticalView; }
 
-void *__cdecl bfmeEndRenderToTexture(void);
+// Retail reaches W3DShaderManager::endRenderToTexture (0x00717420) through
+// the ILT at 0x0003FAC6 (?j_0003fac6@@YAXXZ); the call names that thunk.
+extern void j_0003fac6();
+static __forceinline void *callEndRenderToTexture()
+{
+	typedef void *(__cdecl *Call)();
+	union { void (*asFunction)(); Call asCall; } fnCast;
+	fnCast.asFunction = j_0003fac6;
+	return fnCast.asCall();
+}
 
 class ScreenBWFilter
 {
@@ -101,7 +110,7 @@ public:
 Bool ScreenBWFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 	Bool &doExtraRender, Coord2D *displaySize)
 {
-	void *tex = bfmeEndRenderToTexture();
+	void *tex = callEndRenderToTexture();
 	if (!tex)
 		return false;
 	if (!set(mode))
