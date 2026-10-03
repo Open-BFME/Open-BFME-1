@@ -35,7 +35,7 @@ public:
         const char *password, unsigned char returnEncryptedInfo,
         const char *encryptedInfo);
 };
-extern const char *g_Rva0130A50CTxn;
+const char *g_Rva0130A50CTxn;
 
 void Rva007E9310AccountWriter::write(Rva007E8810Message *message,
     const char *name, const char *password, unsigned char returnEncryptedInfo,
