@@ -410,13 +410,6 @@ Coord3D &Coord3D::SetZAxis()
     return *this;
 }
 
-void Coord3D::zero()
-{
-    ((unsigned int *)this)[0] = 0;
-    ((unsigned int *)this)[1] = 0;
-    ((unsigned int *)this)[2] = 0;
-}
-
 void Coord3D::add(const Coord3DBase *that)
 {
     x += that->x;
