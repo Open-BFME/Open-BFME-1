@@ -544,46 +544,7 @@ void ProcessAnimateWindowSlideFromTop::initReverseAnimateWindow( AnimateWindow *
 
 }
 
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAEXPAVAnimateWindow@@@Z present-unmatched
-void ProcessAnimateWindowSlideFromTop::initAnimateWindow( AnimateWindow *animWin )
-{
-	ICoord2D restPos = {0,0};
-	ICoord2D startPos = {0,0};
-	ICoord2D curPos = {0,0};
-	ICoord2D endPos = {0,0};
-	Coord2D	vel = {0.0f,0.0f};
-	
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	
-	// it's set that the window is passed in as it's current position being it's rest position
-	// so save off the rest position
-	GameWindow *win = animWin->getGameWindow();
-	if(!win)
-	{
-		DEBUG_ASSERTCRASH( win, ("animWin contains a NULL Pointer for it's GameWindow... Whatup wit dat?"));
-		return;
-	}
-	win->winGetPosition(&restPos.x, &restPos.y);
-	endPos.x = restPos.x;
-	endPos.y = restPos.y;
-
-	//set the initial positions for the window. In this case, off the Top of the screen
-	Int travelDistance = TheDisplay->getWidth();// / 4 * 3;
-	startPos.x = curPos.x = restPos.x ;
-	startPos.y = curPos.y = restPos.y - travelDistance;
-
-	//set the window's position to the new start positions.
-	win->winSetPosition(startPos.x, startPos.y);
-
-	//Now initialize the velocities
-	vel = m_maxVel;
-
-	animWin->setAnimData(startPos, endPos, curPos, restPos, vel, timeGetTime() + animWin->getDelay(), 0);
-}
+// Retail forward initializer: ProcessAnimateWindowInitAnimate.cpp.
 
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromTop::updateAnimateWindow( AnimateWindow *animWin )
