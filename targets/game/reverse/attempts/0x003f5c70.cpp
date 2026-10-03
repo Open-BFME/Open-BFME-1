@@ -1,56 +1,64 @@
-// ?rva003f5c70@Pathfinder@@QAEEPAVObject@@PAXPAUCoord3D@@@Z
-// partial score=0.95 date=2026-09-26
-// cl: /O2 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
+// ?rva003f5c70@Pathfinder@@QAE_NPAVObject@@PAXPAUCoord3D@@@Z
+// partial score=1.0 date=2026-10-03
+// cl: /DWIN32 /D_WINDOWS /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/GameLogic/Object /Igame/Libraries/Source/WWVegas/WWMath
+// BANK ONLY: 003F5C70, 335 bytes exact modulo 12 relocation slots.
+// Native coord.h POD and Object header plus visible native radius helper fix
+// the historical EBX/EBP swap. No production or strict link claim is made.
+// Remaining ABI debt: 003E6200 currently has an Int final parameter; retail
+// supplies getLayerHeight's float directly, requiring independent callee audit.
+// 003F55E0 is currently named as a free stdcall helper. Retail explicitly sets
+// ECX to this at 003F5D52 before calling it; changing to that free declaration
+// removes two bytes and fails. Do not add aliases to hide either mismatch.
+// Actual RET12 is at 003F5DBC, followed by INT3 at 003F5DBF.
+// This is the opaque three-argument method, not the old four-argument guess.
 
 typedef int Int;
-typedef unsigned char Bool;
+typedef bool Bool;
 typedef float Real;
+typedef unsigned int ObjectID;
 
-struct Coord3D
-{
-	Real x, y, z;
-	void set(const Coord3D *a) { x = a->x; y = a->y; z = a->z; }
-};
+const ObjectID INVALID_ID = 0;
 
-struct ICoord2D
-{
-	Int x, y;
-};
+extern "C" __declspec(dllimport) double __cdecl floor(double);
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "coord.h"
+#define BFME_HAVE_COORD3D
 
+
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+
+extern const Real g_pathfindCellSize;
+extern const Real g_pathfindDoubleCellSize;
+extern const float g_rva01075350;
+extern const Real g_pathfindCellCenterBias;
+
+// Template view read by getRadiusAndCenter (PathfindGetRadiusAndCenterE30.cpp).
 class BfmeOverridable
 {
 public:
-	__declspec(noinline) BfmeOverridable *friend_getFinalOverride();
-	BfmeOverridable *getFinalOverride()
+	BfmeOverridable *friend_getFinalOverride( void );
+
+	BfmeOverridable *getFinalOverride( void )
 	{
-		return m_override ? m_override->friend_getFinalOverride() : this;
+		if (m_override == 0) return this;
+		return m_override->friend_getFinalOverride();
 	}
 
 	Int m_unknown00;
 	BfmeOverridable *m_override;
-	char m_pad08[0xc8 - 8];
+	unsigned char m_pad08[0xc8 - 0x08];
 	Int m_flagsC8;
+	unsigned char m_padCC[0xd4 - 0xcc];
+	Int m_flagsD4;
+	unsigned char m_padD8[0x408 - 0xd8];
+	Real m_level;
 };
 
-class Object
-{
-public:
-	BfmeOverridable *getTemplate()
-	{
-		BfmeOverridable *result = m_template;
-		if (result && result->m_override)
-			result = result->getFinalOverride();
-		return result;
-	}
 
-	Int m_unknown00;
-	BfmeOverridable *m_template;
-};
+#define BFME_HAVE_OBJECTID
+#define OBJECT_TU_MEMBERS ObjectID getID() const { return m_id; } Int getLayer() const;
+#include "object.h"
 
 class TerrainLogic
 {
@@ -113,7 +121,7 @@ protected:
 Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 {
 	Object *object = obj;
-	BfmeOverridable *objectTemplate = object->m_template;
+	BfmeOverridable *objectTemplate = (BfmeOverridable *)object->m_template;
 	if (objectTemplate && objectTemplate->m_override)
 		objectTemplate = objectTemplate->getFinalOverride();
 	if (objectTemplate->m_flagsC8 & 0x02000000)
@@ -154,10 +162,41 @@ Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 	return false;
 }
 
-#pragma comment(linker, "/alternatename:?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z=?j_000461ff@@YAXXZ")
-#pragma comment(linker, "/alternatename:?worldToCell@Pathfinder@@QAE_NPBVCoord3D@@PAUICoord2D@@@Z=?j_000171e8@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBVCoord3D@@@Z=?j_0001c675@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Rva003E6200Info@@QAE@PAVPathfinder@@PAVObject@@PAXPBVCoord3D@@M@Z=?j_0003592c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?call@Rva003F55E0@@QAE_NPBUICoord2D@@HPAU2@PAX@Z=?j_00034e0a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?adjustCoordToCell@Pathfinder@@IAEXHH_NAAVCoord3D@@W4PathfindLayerEnum@@@Z=?j_000411d2@@YAXXZ")
+__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+{
+	Real diameter;
+	Int maxRadius = 2;
+	BfmeOverridable *t1 = ((BfmeOverridable *)object->m_template);
+	if ((t1 == 0 ? t1 : t1->getFinalOverride())->m_flagsC8 & 0x400) {
+		maxRadius = 4;
+	} else {
+		BfmeOverridable *t2 = ((BfmeOverridable *)object->m_template);
+		if ((t2 == 0 ? t2 : t2->getFinalOverride())->m_flagsD4 & 0x1000) {
+			maxRadius = 4;
+		}
+	}
+
+	diameter = (*(const Real *)&object->m_geometryInfo[4]) * 2.0f;
+	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
+		diameter = 20.0f;
+	}
+
+	if ((((BfmeOverridable *)object->m_template) == 0 ? ((BfmeOverridable *)object->m_template) :
+		((BfmeOverridable *)object->m_template)->getFinalOverride())->m_level > g_rva01075350) {
+		diameter = (((BfmeOverridable *)object->m_template) == 0 ? ((BfmeOverridable *)object->m_template) :
+		((BfmeOverridable *)object->m_template)->getFinalOverride())->m_level;
+	}
+
+	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
+	centerInCell = false;
+	if (radius == 0) radius++;
+	if (radius & 1) {
+		centerInCell = true;
+	}
+	radius /= 2;
+	if (radius > maxRadius) {
+		radius = maxRadius;
+		centerInCell = true;
+	}
+}
+
