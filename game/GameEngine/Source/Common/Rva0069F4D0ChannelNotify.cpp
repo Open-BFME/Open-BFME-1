@@ -7,6 +7,14 @@ public:
 	void notify(void *arg, int which);
 };
 
+void j_0003f5f8();
+
+union Rva0069F4D0BlockNotify
+{
+	void (*function)(void);
+	void (Rva0069F4D0Block::*member)(void *, int);
+};
+
 class Rva0069F4D0Owner
 {
 public:
@@ -18,7 +26,11 @@ void Rva0069F4D0Owner::notify(void *arg, int index)
 	void *held = arg;
 	int idx = index;
 	Rva0069F4D0Owner *self = this;
-	((Rva0069F4D0Block *)((char *)self + 0xB8 + idx * 0x1C4))->notify(held, idx);
+	Rva0069F4D0BlockNotify notify;
+	notify.function = &j_0003f5f8;
+	Rva0069F4D0Block *block =
+		(Rva0069F4D0Block *)((char *)self + 0xB8 + idx * 0x1C4);
+	(block->*notify.member)(held, idx);
 	if (idx == 2)
 	{
 		int i = 0;
@@ -27,7 +39,7 @@ void Rva0069F4D0Owner::notify(void *arg, int index)
 		while (i < 3)
 		{
 			if (i != 2)
-				((Rva0069F4D0Block *)block)->notify(held, 2);
+				(((Rva0069F4D0Block *)block)->*notify.member)(held, 2);
 			++i;
 			block += 0x1C4;
 		}
