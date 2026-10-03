@@ -6,7 +6,13 @@
 #include <stdarg.h>
 
 extern "C" __declspec(dllimport) int __cdecl _vsnprintf(char *buffer, unsigned int size, const char *format, va_list args);
-extern "C" __declspec(dllimport) int __cdecl vswprintf(unsigned short *buffer, unsigned int size, const unsigned short *format, va_list args);
+// Retail imports the wide formatter by its C++ mangled name
+// ?vswprintf@@YAHPAGIPBGPAD@Z (IAT 0x01359228, targets/game/reverse/imports.csv),
+// so the declaration carries C++ linkage and that signature (wchar_t is
+// unsigned short without /Zc:wchar_t, and mangles as PAG / PBG exactly as the
+// import table spells it). Declaring it extern "C" names `__imp__vswprintf`,
+// an import slot retail's table does not have.
+__declspec(dllimport) int __cdecl vswprintf(unsigned short *buffer, unsigned int size, const unsigned short *format, va_list args);
 
 static int Rva00887040Narrow(char *buffer, unsigned int size, const char *format, va_list args)
 {
