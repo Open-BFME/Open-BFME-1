@@ -16,7 +16,8 @@ public:
     virtual void slot08(const Rva003C8300Pair *pair, Coord3D *out);
 };
 
-extern "C" Rva003C8300State *g_bfmeStateDF;
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class LivingWorldRegionManager
 {
@@ -41,6 +42,7 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8300(
     const Rva003C8300Pair *pair)
 {
     Coord3D position;
-    g_bfmeStateDF->slot08(pair, &position);
+    reinterpret_cast<Rva003C8300State *>(
+        g_rva012F7048LivingWorld)->slot08(pair, &position);
     return callRegionLookup(this, &position);
 }

@@ -12,16 +12,15 @@ extern "C" __declspec(dllimport) BOOL __stdcall EnumThreadWindows(
 	LPARAM context);
 extern "C" __declspec(dllimport) BOOL __stdcall ShowWindow(HWND window, int command);
 
-// The callback body at 0x00548D90 is already pinned by its generated-body
-// identity. Give that body its real callback type only at this use site.
-extern void b_00548d90(void);
+// The callback at 0x00548D90 is pinned as bfmeEnumThreadWndProc.
+extern BOOL __stdcall bfmeEnumThreadWndProc(HWND window, LPARAM context);
 
 void bfmeMinimizeCurrentThreadWindow(void)
 {
 	HWND window = 0;
 	EnumThreadWindows(
 		GetCurrentThreadId(),
-		reinterpret_cast<BOOL (__stdcall *)(HWND, LPARAM)>(&b_00548d90),
+		&bfmeEnumThreadWndProc,
 		reinterpret_cast<LPARAM>(&window));
 
 	if (window != 0) {
