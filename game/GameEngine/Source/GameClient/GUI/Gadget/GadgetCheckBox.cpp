@@ -367,6 +367,13 @@ WindowMsgHandledType GadgetCheckBoxSystem( GameWindow *window, UnsignedInt msg,
 
 }  // end GadgetCheckBoxSystem
 
+// Retail inlines ~UnicodeString: the by-value temporary is released by a direct
+// call to StringBase<G>::releaseBuffer (0x008881D0), not the 5-byte stub body.
+inline UnicodeString::~UnicodeString()
+{
+	((StringBase<WideChar> *)this)->releaseBuffer();
+}
+
 // GadgetCheckBoxSetText ======================================================
 /** Set the text for the control */
 //=============================================================================
