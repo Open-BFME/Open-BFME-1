@@ -141,25 +141,7 @@ ImageCollection *TheMappedImageCollection = NULL;  ///< mapped images
 // PUBLIC FUNCTIONS////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI/ImageCtorThunk.cpp
-// ??0Image@@QAE@XZ present-unmatched
-Image::Image( void )
-{
-
-	m_name.clear();
-	m_filename.clear();
-	m_textureSize.x = 0;
-	m_textureSize.y = 0;
-	m_UVCoords.lo.x = 0.0f;
-	m_UVCoords.lo.y = 0.0f;
-	m_UVCoords.hi.x = 1.0f;
-	m_UVCoords.hi.y = 1.0f;
-	m_imageSize.x = 0;
-	m_imageSize.y = 0;
-	m_rawTextureData = NULL;
-	m_status = IMAGE_STATUS_NONE;
-
-}  // end Image
+// Image::Image( void ) is defined once, in ImageCtorThunk.cpp (retail 0x005D2260).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
