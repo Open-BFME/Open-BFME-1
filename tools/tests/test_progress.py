@@ -301,6 +301,31 @@ def test_zero_hour_reference_source_is_not_authored():
     print("PASS Zero Hour reference source lands in the vendored lane")
 
 
+def test_nbench_wrappers_and_helpers_are_vendored():
+    """The official Benchmark path contains BYTEmark, not authored game code.
+
+    Wrapping its C source in C++ or adapting a library helper does not change
+    that provenance. Dumps and generated aliases keep their earlier priority.
+    """
+    root = "game/Libraries/Source/Benchmark/"
+    for name in ("nbench1.cpp", "nbench1.c", "emfloat.cpp", "AllocateMemory.cpp",
+                 "BitfieldRun.cpp", "sysspecFile.cpp", "d_00879390.cpp"):
+        assert progress.source_lane(root + name, "", False) == "vendored"
+    assert progress.source_lane(root + "nbench1.cpp", "", True) == "dump"
+    assert progress.source_lane(root + "nbench1.cpp", "gen-alias;", False) == "generated"
+    assert progress.source_lane("game/Libraries/Source/BenchmarkExtra/x.cpp",
+                                "", False) == "authored"
+
+    matched = {}
+    matched.update(row("nbench", 0x1000, 10, root + "nbench1.cpp"))
+    matched.update(row("game", 0x1010, 10, "game/GameEngine/Source/Common/x.cpp"))
+    notes = {key: "" for key in matched}
+    split = progress.source_split(matched, notes, 0x1000, 100)
+    assert split["authored"] == 10 and split["vendored"] == 10, split
+    assert progress.rebuildable(split) == 20, split
+    assert progress.coverage(matched, 0x1000, 100)["exact"] == 20
+
+
 def test_gamespy_sdk_c_is_vendored_but_the_cpp_beside_it_is_not():
     """GameSpy's SDK is the one vendored tree that shares a directory with the
     game's own code, so the lane split has to key on extension there.
@@ -432,6 +457,7 @@ def main():
     test_details_are_opt_in()
     test_source_lanes_partition_claims_and_exclude_dumps()
     test_zero_hour_reference_source_is_not_authored()
+    test_nbench_wrappers_and_helpers_are_vendored()
     test_gamespy_sdk_c_is_vendored_but_the_cpp_beside_it_is_not()
     test_dump_pass_moved_zero_recovered_bytes()
     test_readme_headline_is_a_recovered_figure()

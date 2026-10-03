@@ -56,6 +56,9 @@ LIB_SUFFIXES = {".lib"}
 # lane instead of inflating the reverse-engineered figure. EA-authored
 # libraries (EAC, DirtySock, debug) are the game and stay out of this list.
 VENDORED_ROOTS = (
+    # BYTEmark/nbench 2.2.3, including the C++ wrappers and locally adapted
+    # library helpers. Provenance: inputs/vendor/nbench/PROVENANCE.md.
+    "game/Libraries/Source/Benchmark/",
     "game/Libraries/Source/Compression/LZHCompress/",
     "game/Libraries/Source/Compression/ZLib/",
     "game/Libraries/Source/JPEG/",
