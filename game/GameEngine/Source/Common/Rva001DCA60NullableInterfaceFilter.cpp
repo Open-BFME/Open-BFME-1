@@ -32,8 +32,11 @@ public:
 class BfmeHold1004
 {
 public:
-	BfmeX1004 *bfmeFind1004( void );
+	BfmeX1004 *bfmeFind1004( void ); // retail ILT 0x0000D3B9; called via j_0000d3b9 below
 };
+
+extern void j_0000d3b9();
+typedef BfmeX1004 *(BfmeHold1004::*BfmeHold1004FindCall)( void );
 
 class Rva001DCA60NullableInterfaceFilter
 {
@@ -48,7 +51,9 @@ private:
 
 bool Rva001DCA60NullableInterfaceFilter::accepts( BfmeHold1004 *object )
 {
-	BfmeX1004 *interfaceObject = object->bfmeFind1004();
+	union { void (*raw)(); BfmeHold1004FindCall member; } call;
+	call.raw = j_0000d3b9;
+	BfmeX1004 *interfaceObject = (object->*call.member)();
 	if( interfaceObject != 0 )
 	{
 		if( interfaceObject->predicate( m_expected ) > 0 )

@@ -2,9 +2,12 @@
 
 struct BfmeElem340
 {
-	unsigned char bfmePred(void);
+	unsigned char bfmePred(void); // retail ILT 0x0003C5B0; called via j_0003c5b0 below
 	char m_bfmeBytes[0xEC];
 };
+
+extern void j_0003c5b0();
+typedef unsigned char (BfmeElem340::*BfmeElem340PredCall)(void);
 
 class Gen_0013E340
 {
@@ -26,7 +29,9 @@ unsigned char Gen_0013E340::bfmeAny(void)
 
 	do
 	{
-		if (cursor->bfmePred())
+		union { void (*raw)(); BfmeElem340PredCall member; } call;
+		call.raw = j_0003c5b0;
+		if ((cursor->*call.member)())
 			return 1;
 
 		++cursor;

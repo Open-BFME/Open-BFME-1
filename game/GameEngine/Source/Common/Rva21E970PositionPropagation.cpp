@@ -10,8 +10,11 @@ struct Coord3D
 class Object
 {
 public:
-	void setPosition(const Coord3D *position);
+	void setPosition(const Coord3D *position); // retail ILT 0x0003A1A7; called via j_0003a1a7 below
 };
+
+extern void j_0003a1a7();
+typedef void (Object::*Rva21E970SetPositionCall)(const Coord3D *);
 
 struct Rva21E970Data
 {
@@ -47,7 +50,9 @@ void Rva21E970PositionPropagation::propagate(void)
 	Rva21E970Node *node = m_objects->next;
 
 	while (node != m_objects) {
-		node->object->setPosition((const Coord3D *)((const char *)m_anchor + 0x38));
+		union { void (*raw)(); Rva21E970SetPositionCall member; } call;
+		call.raw = j_0003a1a7;
+		(node->object->*call.member)((const Coord3D *)((const char *)m_anchor + 0x38));
 		node = node->next;
 	}
 }
