@@ -1,0 +1,9 @@
+# Retire the truncated GameLogic startNewGame dump
+
+The ledger claims 7640 bytes at RVA 00394260 under ?startNewGame@GameLogic@@QAEX_N@Z, with object-symbol _bfme_GameLogic_startNewGame_394260. Its source is a __declspec(naked) function containing exactly 7640 literal __emit bytes, equal to the retail prefix. The ledger incorrectly calls this a C++ thunk conversion from MASM.
+
+The old span ends at 00396038, immediately after ADD ESP,34Ch at 00396032..00396037. Retail executes RET 4 at 00396038..0039603A, followed by INT3 from 0039603B. This proves a complete 7643-byte executable body. All 2114 instructions decode exactly from the entry; every direct branch stays inside this body, with no indirect jumps or embedded switch tables. The reached epilogue restores saved registers and FS before the stack adjustment. Local PE/Capstone and Ghidra read_memory at VA 00796020 independently agree on the complete tail.
+
+Rule: AGENTS.md requires real source and byte verification for matched progress and states that a naked/__emit lift is not a conversion. The missing return also independently contradicts a complete matched body. Severity WRONG: retire the incomplete claim and orphaned dump with a deletion tombstone. No new body or identity is added. The existing present-unmatched startNewGame implementation in GameLogic.cpp remains for future full native recovery.
+
+Validation: the ordinary pre-removal scoped gate reproduces the old prefix, demonstrating the historical boundary gap. A game-tree search finds the dump object symbol only in its own definition. Normal commit checks verify the retirement and remaining ledger. No pins or baselines change. Modern progress accounting already excludes this dump from authored C++; this removes false ASM coverage rather than adding native coverage.
