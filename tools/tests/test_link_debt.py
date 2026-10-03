@@ -96,6 +96,42 @@ def test_masks_and_comments_are_not_addresses():
     assert L.literals("if (x & 0x80000000) {}  // *(int *)0x012ED5C8\n") == []
 
 
+@pytest.mark.parametrize("suffix", ["", "u", "U", "l", "L", "ul", "UL", "lu", "LU", "ll", "LL", "ull", "ULL", "llu", "LLU"])
+@pytest.mark.parametrize("cast", ["(int *)", "(const void * volatile)", "(void (*)(void))",
+                                  "reinterpret_cast<void *>", "reinterpret_cast<void (*)()>"])
+def test_pointer_casts_include_integer_suffixes(cast, suffix):
+    source = f"return {cast}(0x0043C9CF{suffix});"
+    assert len(L.literals(source)) == 1
+
+
+@pytest.mark.parametrize("cast", ["(void (*)(void))", "reinterpret_cast<void (*)()>"])
+def test_new_callback_literal_fails(repo, cast):
+    put(repo, "game/A.cpp", NAMED)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", f"return {cast}(0x0043C9CFu);")
+    assert L.staged() == 1
+
+
+def test_suffix_and_cast_changes_preserve_existing_address_debt(repo):
+    put(repo, "game/A.cpp", "return (void (*)(void))0x0043C9CFu;")
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", "return reinterpret_cast<void (*)()>(0x0043c9cfUL);")
+    assert L.staged() == 0
+    put(repo, "game/A.cpp", "return reinterpret_cast<void (*)()>(0x0043c9d0UL);")
+    assert L.staged() == 1
+
+
+def test_extended_casts_do_not_capture_plain_constants_or_documentation():
+    assert L.literals('''
+        unsigned color = 0x00B4B0A5u;
+        return 0x0043C9CF;
+        (unsigned)0x0043C9CFu;
+        /* (void (*)(void))0x0043C9CFu */
+        "reinterpret_cast<void (*)()>(0x0043C9CFu)";
+        // (void *)0x0043C9CFu
+    ''') == []
+
+
 def test_addresses_catch_every_form_of_an_image_address():
     text = """
     *(unsigned *)this = 0x0113C340;          // vftable stored as an integer
