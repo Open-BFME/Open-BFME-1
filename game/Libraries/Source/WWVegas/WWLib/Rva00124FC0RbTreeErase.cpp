@@ -1,11 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 
+class Rva00124FC0RbTree;
+
 namespace _STL
 {
 	template <bool threads, int inst>
 	class __node_alloc
 	{
-	public:
+		friend class ::Rva00124FC0RbTree;
 		static void _M_deallocate(void *address, unsigned size);
 	};
 }
@@ -30,7 +32,7 @@ void Rva00124FC0RbTree::erase(Rva00124FC0RbTreeNode *node)
 	{
 		erase(node->m_right);
 		Rva00124FC0RbTreeNode *left = node->m_left;
-		_STL::__node_alloc<false, 0>::_M_deallocate(node, sizeof(Rva00124FC0RbTreeNode));
+		_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(Rva00124FC0RbTreeNode));
 		node = left;
 	}
 }
