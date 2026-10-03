@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // TransitionDamageFXModuleData's destructor, lifted from its MASM dump to C++.
 //
@@ -19,13 +19,26 @@
 //
 // The three 0x1C-byte arrays have three different element destructors, so they
 // are three different types despite the shared stride; the two 0x0C-byte arrays
-// share one, so they are the same type. None of those destructors is claimed,
-// and they are only ever pushed as an address the comparison masks, so the
-// element classes stay anonymous here. The 0x1034 member's destructor is called
+// share one, so they are the same type. SlotA now uses independently proved
+// native AsciiString destruction at element+8. The other array callbacks
+// retain their previous declarations pending separate ownership repairs.
+// The 0x1034 member's destructor is called
 // rather than pushed, and its body is already named in the ledger, so it is
 // spelled under that name below.
 
-class TransitionDamageFXSlotA { public: ~TransitionDamageFXSlotA(); private: unsigned char m_unreconstructed_00[0x1c]; };
+// C0E9A8 owns the48-element array at0C. Its callback ILT1074E ->252370
+// releases the canonical AsciiString at element+8. Other callback owners
+// remain distinct (252390 and2523B0); no identical-body identity merging.
+#include "ascii_string.h"
+class TransitionDamageFXSlotA
+{
+public:
+    ~TransitionDamageFXSlotA() {}
+private:
+    unsigned char m_unreconstructed_00[8];
+    AsciiString m_unreconstructed_08;
+    unsigned char m_unreconstructed_0c[0x10];
+};
 class TransitionDamageFXSlotB { public: ~TransitionDamageFXSlotB(); private: unsigned char m_unreconstructed_00[0x1c]; };
 class TransitionDamageFXSlotC { public: ~TransitionDamageFXSlotC(); private: unsigned char m_unreconstructed_00[0x1c]; };
 class TransitionDamageFXSlotD { public: ~TransitionDamageFXSlotD(); private: unsigned char m_unreconstructed_00[0x0c]; };
