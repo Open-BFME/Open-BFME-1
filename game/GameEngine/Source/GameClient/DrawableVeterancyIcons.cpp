@@ -125,14 +125,19 @@ class Drawable
 {
 public:
 	void rva00420360( Bool evil, Int level );
-	// 0x0041FCE0, reached through ILT 0x000239ED: thiscall, one Coord3D&
-	// out argument, ret 4. drawIconUI (0x00420860) makes the same call.
-	void rva0041FCE0( Coord3D &position );
 
 private:
 	// defined in DrawableInitStaticImages.cpp
 	static const Image *s_veterancyImage[ 4 ];
 };
+
+typedef void (Drawable::*Rva0041FCE0Call)( Coord3D & );
+union Rva0041FCE0CallValue
+{
+	void (*freeFunction)();
+	Rva0041FCE0Call memberFunction;
+};
+extern void j_000239ed();
 
 void Drawable::rva00420360( Bool evil, Int level )
 {
@@ -150,7 +155,8 @@ void Drawable::rva00420360( Bool evil, Int level )
 	Real gapX = scaleX * 2.0f;
 
 	Coord3D pos;
-	rva0041FCE0( pos );
+	Rva0041FCE0CallValue healthPosition = { j_000239ed };
+	(this->*healthPosition.memberFunction)( pos );
 	ICoord2D screen;
 	if ( TheTacticalView->worldToScreenTriReturn( &pos, &screen ) != 0 )
 		return;

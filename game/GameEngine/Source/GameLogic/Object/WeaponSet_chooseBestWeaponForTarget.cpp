@@ -133,11 +133,17 @@ public:
 	WeaponStatus getStatus() const;
 	bool isWithinTargetPitch(const Object *source, const Object *victim) const;
 	bool bfmeCanAffect(const Object *source, const Object *victim) const;
-	float bfmeEstimate(const Object *source, const Object *victim) const;
 
 	int m_vptr;
 	WeaponTemplate *m_template;
 };
+typedef float (Weapon::*WeaponEstimateCall)(const Object *, const Object *) const;
+union WeaponEstimateCallValue
+{
+	void (*freeFunction)();
+	WeaponEstimateCall memberFunction;
+};
+extern void j_0001538e();
 
 class WeaponTemplateSet
 {
@@ -284,7 +290,8 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		else
 			damage = 0.0f;
 
-		float attackRange = weapon->bfmeEstimate(obj, victim);
+		WeaponEstimateCallValue estimateCall = { j_0001538e };
+		float attackRange = (weapon->*estimateCall.memberFunction)(obj, victim);
 		float minRange = reinterpret_cast<const Gen_001E1950 *>(weapon)->bfmeValue();
 
 		bool weaponIsReady = (status == READY_TO_FIRE || status == (WeaponStatus)4);
