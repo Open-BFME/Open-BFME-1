@@ -471,69 +471,7 @@ void BaseHeightMapRenderObjClass::adjustTerrainLOD(Int adj)
 
 // Exact BFME ReleaseResources body is provided by BaseHeightMapReleaseResources_Bfme.cpp.
 
-//=============================================================================
-// BaseHeightMapRenderObjClass::ReAcquireResources
-//=============================================================================
-/** Reallocates all W3D assets after a reset.. */
-//=============================================================================
-// ?ReAcquireResources@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
-void BaseHeightMapRenderObjClass::ReAcquireResources(void)
-{
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00718E90_W3DShaderManager_Init.cpp
-// ?init@W3DShaderManager@@ present-unmatched
-	W3DShaderManager::init();	//reaquire resources which may be needed by custom shaders
-
-	if (TheWaterRenderObj)
-		TheWaterRenderObj->ReAcquireResources();
-
-	if (TheTerrainTracksRenderObjClassSystem)
-		TheTerrainTracksRenderObjClassSystem->ReAcquireResources();
-
-	if (TheW3DShadowManager)
-		TheW3DShadowManager->ReAcquireResources();
-	if (m_shroud)
-		m_shroud->ReAcquireResources();
-
-	if (m_map)
-	{
-		this->initHeightData(m_x,m_y,m_map, NULL);
-		// Tell lights to update next time through.
-		m_needFullUpdate = true;
-	}
-
-	if (m_treeBuffer) {
-		m_treeBuffer->allocateTreeBuffers();
-	}
-	if (m_bibBuffer) {
-		m_bibBuffer->allocateBibBuffers();
-	}
-	if (m_bridgeBuffer) {
-		m_bridgeBuffer->allocateBridgeBuffers();
-	}
-
-	if (TheSmudgeManager)
-		TheSmudgeManager->ReAcquireResources();
-
-	if (TheSnowManager)
-		((W3DSnowManager *)TheSnowManager)->ReAcquireResources();
-
-	//Waypoint buffers are done dynamically. One line, one node (just rendered multiple times accessing other data).
-	//Internally creates it if needed.
-
-#ifdef DO_ROADS
-	if (m_roadBuffer) {
-		m_roadBuffer->allocateRoadBuffers();
-		m_roadBuffer->loadRoads();
-	}
-#endif
-
-	if (TheTacticalView)
-	{	TheTacticalView->forceRedraw();	//force map to update itself for the current camera position.
-		//for some reason we need to do it twice otherwise we sometimes end up with a black map until
-		//the player moves.
-		TheTacticalView->forceRedraw();
-	}
-}
+// Exact BFME ReAcquireResources body is provided by BaseHeightMapReAcquireResources_Bfme.cpp.
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::doTheLight
