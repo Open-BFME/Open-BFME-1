@@ -15,25 +15,21 @@
 // the reset is a tail call. Five of the six keep the target at +0x40 and one at
 // +0x2C, which is the only difference between them.
 
-// Retail calls 0x0002A88D, an ILT thunk, so the call is spelled through
-// j_0002a88d with the member-pointer union.
-extern void j_0002a88d();
+class Object;
 
-class BfmeStopOther
+// Retail tail-call ILT 0x0002A88D -> Team::setTeamTargetObject at 0x000EC900.
+// The existing provider proves ECX this and one const Object* argument (RET4).
+class Team
 {
 public:
-	__forceinline void bfmeResetViaIlt(void *value)		// retail ILT 0x0002A88D
-	{
-		union { void (*fn)(); void (BfmeStopOther::*call)(void *); } route = { j_0002a88d };
-		(this->*route.call)(value);
-	}
+	void setTeamTargetObject(const Object *target);
 };
 
 class BfmeStopHost
 {
 public:
 	char m_bfmePad[0x23C];					// +0x00
-	BfmeStopOther *m_bfmeOther;				// +0x23C
+	Team *m_bfmeOther;				// +0x23C
 };
 
 class BfmeStopOwner
@@ -139,7 +135,7 @@ void Gen_0015BA80::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }
 
 // ?bfmeStop@Gen_0015BD10@@QAEXPAX@Z
@@ -155,7 +151,7 @@ void Gen_0015BD10::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }
 
 // ?bfmeStop@Gen_0015E9E0@@QAEXPAX@Z
@@ -171,7 +167,7 @@ void Gen_0015E9E0::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }
 
 // ?bfmeStop@Gen_00189D60@@QAEXPAX@Z
@@ -187,7 +183,7 @@ void Gen_00189D60::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }
 
 // ?bfmeStop@Gen_002BBE30@@QAEXPAX@Z
@@ -203,7 +199,7 @@ void Gen_002BBE30::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }
 
 // ?bfmeStop@Gen_002BC0B0@@QAEXPAX@Z
@@ -219,5 +215,5 @@ void Gen_002BC0B0::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeResetViaIlt(0);
+		host->m_bfmeOther->setTeamTargetObject(0);
 }

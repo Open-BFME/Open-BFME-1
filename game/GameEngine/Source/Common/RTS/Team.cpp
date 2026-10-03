@@ -2145,23 +2145,6 @@ Relationship Team::getRelationship(const Team *that) const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/Team_setTeamTargetObject.cpp
-// ?setTeamTargetObject@Team@@QAEXPBVObject@@@Z present-unmatched
-void Team::setTeamTargetObject(const Object *target)
-{
-	if (target==NULL) {
-		m_commonAttackTarget = INVALID_ID;
-		return;
-	}
-	// Only ai players do common attack.
-	if (getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER) {
-		if (getControllingPlayer()->getPlayerDifficulty() == DIFFICULTY_EASY) {
-			return; // we don't do this for easy.  jba.
-		}
-		m_commonAttackTarget = target->getID();
-	}
-}
-
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/Team_getTeamTargetObject.cpp
 // ?getTeamTargetObject@Team@@QAEPAVObject@@XZ present-unmatched
