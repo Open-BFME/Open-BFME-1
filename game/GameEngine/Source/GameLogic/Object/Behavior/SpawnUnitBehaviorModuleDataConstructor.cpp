@@ -8,7 +8,12 @@
 // releases the strings at+8/+C. Scalar offsets retain opaque names.
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-extern const char g_Rva0107301CEmptyString[];
+// The empty literal both StringBase::set calls push is retail's compiler
+// literal ??_C@_00CNPNBAHC@?$AA placed at 0x0107301C (targets/game/reverse/
+// linking_worklist.csv, kind code-literal). Spelled as a literal rather than
+// as the address-scoped pin ?g_Rva0107301CEmptyString@@3QBDB, which nothing
+// defines; MSVC folds the copy this TU emits with every other TU's, and the
+// relocated bytes are unchanged (build.sh reports 2 empty-string refs verified).
 
 // +0x00 is the vtable this constructor installs and +0x04 is never written;
 // the base is one word past it, so the derived record starts at +0x08. The
@@ -49,8 +54,8 @@ SpawnUnitBehaviorModuleData::SpawnUnitBehaviorModuleData()
 	// own set overloads and so hides the two-argument base one. The qualified
 	// call is what retail encodes -- both call sites at +0x40 and +0x4D are
 	// rel32s to 0x00887D20, ?set@?$StringBase@D@@QAEXPBDH@Z.
-	m_unitName.StringBase<char>::set(g_Rva0107301CEmptyString, 0);
-	m_unitCommand.StringBase<char>::set(g_Rva0107301CEmptyString, 0);
+	m_unitName.StringBase<char>::set("", 0);
+	m_unitCommand.StringBase<char>::set("", 0);
 	m_bfme14 = 0;
 	m_bfme18 = 0;
 	m_bfme10 = 0;

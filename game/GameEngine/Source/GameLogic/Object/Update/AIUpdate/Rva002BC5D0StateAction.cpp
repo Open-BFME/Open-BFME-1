@@ -19,6 +19,15 @@ public:
 	void finish(void *argument);
 };
 
+// Both call targets are 5-byte ILT thunks owned by game/gen_small (rows
+// ?j_0003f42c@@YAXXZ at 0x0003F42C and ?j_00035a1c@@YAXXZ at 0x00035A1C in
+// targets/game/reverse/functions.csv); the address-scoped helper pins
+// ?finish@Rva002BC470StateAction_2BC5D0@@QAEXPAX@Z and
+// ?setGoalObject@StateMachine_2BC5D0@@QAEXPBX@Z name the same thunks but
+// nothing defines them, so call through the thunks' own names.
+extern void j_0003f42c();
+extern void j_00035a1c();
+
 class StateMachine_2BC5D0
 {
 public:
@@ -59,13 +68,33 @@ private:
 	Int m_actionStarted;
 };
 
+typedef void (Rva002BC470StateAction_2BC5D0::*FinishCall)(void *);
+
+union FinishPointer
+{
+	void (*entry)();
+	FinishCall member;
+};
+
+typedef void (StateMachine_2BC5D0::*GoalCall)(const void *);
+
+union GoalPointer
+{
+	void (*entry)();
+	GoalCall member;
+};
+
 void Rva002BC5D0StateAction::run(void *first, void *second, unsigned char third)
 {
 	if (first && m_object->isMobile())
 	{
-		((Rva002BC470StateAction_2BC5D0 *)this)->finish(second);
+		FinishPointer finishCall;
+		finishCall.entry = j_0003f42c;
+		(((Rva002BC470StateAction_2BC5D0 *)this)->*finishCall.member)(second);
 		((Rva002BC5D0Sink *)m_sink)->beginAction();
-		((StateMachine_2BC5D0 *)m_sink)->setGoalObject(first);
+		GoalPointer goalCall;
+		goalCall.entry = j_00035a1c;
+		(((StateMachine_2BC5D0 *)m_sink)->*goalCall.member)(first);
 		if (third)
 			((Rva002BC5D0Sink *)m_sink)->signalAction(0x3f3);
 		else
