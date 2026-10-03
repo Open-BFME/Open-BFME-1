@@ -67,13 +67,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 static Bool checkingForPatchBeforeGameSpy = FALSE;
-static Int checksLeftBeforeOnline = 0;
-static Int timeThroughOnline = 0; // used to avoid having old callbacks cause problems
+Int checksLeftBeforeOnline = 0;
+Int timeThroughOnline = 0; // used to avoid having old callbacks cause problems
 static Bool mustDownloadPatch = FALSE;
 static Bool cantConnectBeforeOnline = FALSE;
 static std::list<QueuedDownload> queuedDownloads;
 
-static char *MOTDBuffer = NULL;
+char *MOTDBuffer = NULL;
 static char *configBuffer = NULL;
 GameWindow *onlineCancelWindow = NULL;
 
