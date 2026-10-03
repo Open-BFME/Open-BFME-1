@@ -75,11 +75,13 @@ public:
 class CampaignManager
 {
 public:
-	Int getMissionObjectiveCount(void);
 	unsigned char isMissionObjectiveEligible(Int index);
 	unsigned char isMissionObjectiveIndexed(Int index);
 	unsigned char isMissionObjectiveComplete(Int index);
 };
+
+// Retail calls getMissionObjectiveCount through ILT 0x0002A62B.
+extern void j_0002a62b();
 
 extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;
@@ -136,7 +138,9 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 
 	if (mgr)
 	{
-		Int n = mgr->getMissionObjectiveCount();
+		typedef Int (CampaignManager::*ObjectiveCount)(void);
+		union { void (*fn)(); ObjectiveCount call; } count = { j_0002a62b };
+		Int n = (mgr->*count.call)();
 		Int i = 0;
 		if (n > 0)
 		{
