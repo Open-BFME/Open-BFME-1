@@ -4264,6 +4264,17 @@ Bool GameTextManager::getStringCount( const char *filename, Int& textCount )
 	return TRUE;
 }
 
+// BFME's File vtable places close at +0x08 and read at +0x0C.  The shared header models a later
+// layout, so keep the retail slot correction local to this translation unit.
+class BFMEGameTextFileReadLayout
+{
+public:
+	virtual void slot0( void ) = 0;
+	virtual void slot1( void ) = 0;
+	virtual void close( void ) = 0;
+	virtual Int read( void *buffer, Int bytes ) = 0;
+};
+
 //============================================================================
 // GameTextManager::getCSFInfo 
 //============================================================================
@@ -4277,7 +4288,7 @@ Bool GameTextManager::getCSFInfo ( const Char *filename )
 
 	if ( file != NULL )
 	{
-		if ( file->read( &header, sizeof ( header )) == sizeof ( header ) )
+		if ( ((BFMEGameTextFileReadLayout *)file)->read( &header, sizeof ( header )) == sizeof ( header ) )
 		{
 			if ( header.id == CSF_ID )
 			{
@@ -4296,7 +4307,7 @@ Bool GameTextManager::getCSFInfo ( const Char *filename )
 			}
 		}
 
-		file->close();
+		((BFMEGameTextFileReadLayout *)file)->close();
 		file = NULL;
 	}
 
@@ -4773,17 +4784,6 @@ AsciiStringVec& GameTextManager::getStringsWithLabelPrefix(AsciiString label)
 //============================================================================
 // GameTextManager::readLine
 //============================================================================
-
-// BFME's File vtable places read at +0x0C.  The shared header models a later
-// layout, so keep the retail slot correction local to this translation unit.
-class BFMEGameTextFileReadLayout
-{
-public:
-	virtual void slot0( void ) = 0;
-	virtual void slot1( void ) = 0;
-	virtual void slot2( void ) = 0;
-	virtual Int read( void *buffer, Int bytes ) = 0;
-};
 
 Bool	GameTextManager::readLine( char *buffer, Int max, File *file )
 {
