@@ -17,10 +17,10 @@ private:
 
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
 
-// This is the already-pinned retail table installed by the neighboring
-// BTB/TD constructor family.  Keeping it as data avoids emitting a synthetic
-// vtable while retaining the exact DIR32 relocation in the copy constructor.
-extern "C" unsigned char bfmeVftBTB[];
+// DynamicAudioEventRTS's retail vftable is compiler-emitted by
+// INIParseDynamicAudioEventRTS.cpp.  Reference its real decorated symbol so
+// this copy constructor keeps the same DIR32 relocation without a local alias.
+extern "C" int __identifier("??_7DynamicAudioEventRTS@@6B@");
 
 struct Rva003CC780OwnedAudio
 {
@@ -28,7 +28,7 @@ struct Rva003CC780OwnedAudio
 	AudioEventRTS m_audio;
 
 	Rva003CC780OwnedAudio(const Rva003CC780OwnedAudio &other)
-		: m_vft(bfmeVftBTB), m_audio(other.m_audio)
+		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@")), m_audio(other.m_audio)
 	{
 	}
 };
