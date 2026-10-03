@@ -4,9 +4,6 @@
 
 class Rva0036CA00Str
 {
-public:
-	Rva0036CA00Str(const Rva0036CA00Str &other);
-
 private:
 	void *m_item;
 };
@@ -33,8 +30,8 @@ public:
 };
 
 Rva00630D00::Rva00630D00(const Rva00630D00 &other)
-	: m_00(other.m_00)
 {
+	((StringBase<char> *)&m_00)->set(*(const StringBase<char> *)&other.m_00);
 	((StringBase<unsigned short> *)&m_04)->set(
 		*(const StringBase<unsigned short> *)&other.m_04);
 	m_08 = other.m_08;

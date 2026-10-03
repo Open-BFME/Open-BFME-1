@@ -1,10 +1,9 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class BfmeSubA
 {
-public:
-	BfmeSubA(const BfmeSubA &other);
-
 private:
 	void *m_item;
 };
@@ -26,14 +25,14 @@ public:
 };
 
 Rva0075E420::Rva0075E420(const Rva0075E420 &other)
-	: m_00(other.m_00)
-	, m_04(other.m_04)
-	, m_08(other.m_08)
-	, m_0c(other.m_0c)
-	, m_10(other.m_10)
-	, m_14(other.m_14)
-	, m_18(other.m_18)
-	, m_1c(other.m_1c)
-	, m_20(other.m_20)
 {
+	((StringBase<char> *)&m_00)->set(*(const StringBase<char> *)&other.m_00);
+	m_04 = other.m_04;
+	m_08 = other.m_08;
+	m_0c = other.m_0c;
+	m_10 = other.m_10;
+	m_14 = other.m_14;
+	m_18 = other.m_18;
+	m_1c = other.m_1c;
+	m_20 = other.m_20;
 }
