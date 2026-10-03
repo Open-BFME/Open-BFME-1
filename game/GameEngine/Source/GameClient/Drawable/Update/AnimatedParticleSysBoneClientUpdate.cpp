@@ -44,6 +44,17 @@ public:
 	void **getDrawModules();
 };
 
+// Retail calls the ILT thunk at 0x00021472, owned by game/gen_small/thunks_015.cpp
+// as ?j_00021472@@YAXXZ.  It is reached through a member-function pointer so the
+// call keeps its thiscall shape; getDrawModules is never referenced by name.
+extern "C" void __cdecl __identifier("?j_00021472@@YAXXZ")();
+typedef void **(Drawable::*DrawableGetDrawModulesThunk)();
+union DrawableGetDrawModulesThunkRef
+{
+	void *m_thunk;
+	DrawableGetDrawModulesThunk m_call;
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Module/AnimatedParticleSysBoneClientUpdate.h
 class AnimatedParticleSysBoneClientUpdate
 {
@@ -61,9 +72,11 @@ void AnimatedParticleSysBoneClientUpdate::clientUpdate()
 {
 	++m_life;
 	Drawable *draw = m_drawable;
+	DrawableGetDrawModulesThunkRef thunk;
+	thunk.m_thunk = (void *)&__identifier("?j_00021472@@YAXXZ");
 	if (draw)
 	{
-		for (DrawModule **dm = (DrawModule **)draw->getDrawModules(); *dm; ++dm)
+		for (DrawModule **dm = (DrawModule **)(draw->*thunk.m_call)(); *dm; ++dm)
 		{
 			ObjectDrawInterface *di = (*dm)->getObjectDrawInterface();
 			if (di)

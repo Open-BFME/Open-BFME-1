@@ -23,6 +23,17 @@ public:
 	int m_bfmeWakeDataIS;
 };
 
+// Retail calls the ILT thunk at 0x000157DA, owned by game/gen_small/thunks_009.cpp
+// as ?j_000157da@@YAXXZ.  It is reached through a member-function pointer so the
+// call keeps its thiscall shape; bfmeSetWakeIS is never referenced by name.
+extern "C" void __cdecl __identifier("?j_000157da@@YAXXZ")();
+typedef void (BfmeWakeIS::*BfmeSetWakeISThunk)(void *obj, int sleep);
+union BfmeSetWakeISThunkRef
+{
+	void *m_thunk;
+	BfmeSetWakeISThunk m_call;
+};
+
 class BfmeDataIS
 {
 public:
@@ -51,5 +62,7 @@ void ObjectCreationUpgrade::upgradeImplementation()
 
 	m_bfmeFrameIS = ((RvaBfmeConv1721GameLogic *)TheGameLogic)->m_bfmeFrameIS - (int)(m_bfmeDataIS->m_bfmeDelayIS * -5.0f);
 	m_bfmeDoneIS = 1;
-	m_bfmeWakeIS.bfmeSetWakeIS(m_bfmeObjIS, 1);
+	BfmeSetWakeISThunkRef thunk;
+	thunk.m_thunk = (void *)&__identifier("?j_000157da@@YAXXZ");
+	(m_bfmeWakeIS.*thunk.m_call)(m_bfmeObjIS, 1);
 }
