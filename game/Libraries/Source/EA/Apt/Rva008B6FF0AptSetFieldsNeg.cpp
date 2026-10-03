@@ -5,8 +5,12 @@
 // block first and the context negated.
 class AptValue { public: int toInteger(); };
 extern AptValue* g_bfmeFallbackDB;
-extern AptValue** g_bfmeArr1233;
-struct Rva008AE770Stack { int m_count; };
+struct Rva008AE770Stack
+{
+	int m_count;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 struct Rva008B6D70Obj {
 	char m_pad0[0x20];
@@ -21,7 +25,8 @@ AptValue* aptSetFieldNeg008B6FF0(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x50) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x50) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -31,7 +36,8 @@ AptValue* aptSetFieldNeg008B70D0(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x48) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x48) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -41,7 +47,8 @@ AptValue* aptSetFieldNeg008B7120(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x5C) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x5C) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -51,7 +58,8 @@ AptValue* aptSetFieldNeg008B7170(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x44) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x44) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -61,7 +69,8 @@ AptValue* aptSetFieldNeg008B71C0(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x54) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x54) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
@@ -71,7 +80,8 @@ AptValue* aptSetFieldNeg008B7210(Rva008B6D70Obj* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	*(int*)((char*)self + 0x40) = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toInteger();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	*(int*)((char*)self + 0x40) = args[Rva008AE770TheStack.m_count - 1]->toInteger();
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }

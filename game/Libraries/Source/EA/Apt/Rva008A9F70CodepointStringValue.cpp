@@ -46,8 +46,12 @@ public:
     unsigned char m_unknown0C[0x14];
     AptValue *m_indirect;
 };
-extern AptValue **g_bfmeArr1233;
-struct Rva008AE770Stack { int field00; };
+struct Rva008AE770Stack
+{
+	int field00;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern void *(__cdecl *WideAllocPtr)(unsigned int);
 class Rva008A9B00 {
@@ -87,7 +91,9 @@ static __forceinline Rva008A9B00 *&rva01338478FreeHead() {
 extern AptValue *g_bfmeFallbackDB;
 
 Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
-    int index = g_bfmeArr1233[Rva008AE770TheStack.field00 - 1]->toInteger();
+    Rva008AE770Stack& stk = Rva008AE770TheStack;
+    AptValue** args = stk.m_rva01338750;
+    int index = args[stk.field00 - 1]->toInteger();
     unsigned int type = value->m_flags & 0x3f;
     AptValue *source = value;
     if (type != 1) source = value->m_indirect;

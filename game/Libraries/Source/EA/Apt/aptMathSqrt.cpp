@@ -6,10 +6,11 @@
 #pragma intrinsic(atan, log, sqrt, tan, abs)
 class AptValue { public: float toNumber(); int toInteger(); };
 extern AptValue* g_bfmeFallbackDB;
-extern AptValue** g_bfmeArr1233;
 struct Rva008AE770Stack
 {
 	int m_count;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
@@ -19,6 +20,7 @@ AptValue* aptMathSqrt(void* self, int argc)
 {
 	if (argc < 1)
 		return g_bfmeFallbackDB;
-	float v = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	float v = args[Rva008AE770TheStack.m_count - 1]->toNumber();
 	return Rva008A4EA0MakeFloat((float)sqrt(v));
 }

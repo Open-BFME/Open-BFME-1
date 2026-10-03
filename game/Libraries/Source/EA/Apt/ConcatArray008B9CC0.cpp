@@ -55,8 +55,12 @@ public:
         }
     }
 };
-extern AptValue **g_bfmeArr1233;
-struct Rva008AE770Stack { int field00; };
+struct Rva008AE770Stack
+{
+	int field00;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 void *aptArrayConcat(Value008B9CC0 *self,int count) {
@@ -67,7 +71,7 @@ void *aptArrayConcat(Value008B9CC0 *self,int count) {
             out->set(out->field28,(Value008B9CC0 *)(source->m_elements[i]&~1u));
         for (int j=0;j<count;++j) {
             Value008B9CC0 *v=reinterpret_cast<Value008B9CC0 *>(
-                g_bfmeArr1233[Rva008AE770TheStack.field00-j-1]);
+                Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-j-1]);
             if (v->isType(0x16)) {
                 Rva008B9C90HeaderedDeleting *a=(Rva008B9C90HeaderedDeleting *)v;
                 for (int k=0;k<a->field28;++k)

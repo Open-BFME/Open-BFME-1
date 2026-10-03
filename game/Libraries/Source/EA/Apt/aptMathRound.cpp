@@ -7,8 +7,12 @@ class AptValue { public: float toNumber(); };
 // translation units do.
 class AptInteger { public: static AptInteger* Create(int value); };
 extern AptValue* g_bfmeFallbackDB;
-extern AptValue** g_bfmeArr1233;
-struct Rva008AE770Stack { int m_count; };
+struct Rva008AE770Stack
+{
+	int m_count;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern const float BfmeZeroRange;
 extern const float g_rva0107533C;
@@ -16,7 +20,8 @@ AptValue* aptMathRound(void* self, int argc)
 {
 	if (argc <= 0)
 		return g_bfmeFallbackDB;
-	float v = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
+	AptValue** args = Rva008AE770TheStack.m_rva01338750;
+	float v = args[Rva008AE770TheStack.m_count - 1]->toNumber();
 	if (v > BfmeZeroRange) {
 		v += g_rva0107533C;
 		return (AptValue*)AptInteger::Create((int)v);

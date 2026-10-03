@@ -9,8 +9,12 @@ class Rva008A4BD0 { public: unsigned char has(int value); };
 class BfmePtrTable64_008A4B20 { public: void add(BfmeRef008A4B20* value); };
 struct Rva008A5380Value { int m_0; int m_flags; };
 extern AptValue* g_bfmeFallbackDB;
-extern AptValue** g_bfmeArr1233;
-struct Rva008AE770Stack { int field00; };
+struct Rva008AE770Stack
+{
+	int field00;
+	int m_rva0133874C;
+	AptValue** m_rva01338750;
+};
 extern Rva008AE770Stack Rva008AE770TheStack;
 struct BfmePickWorld1284;
 extern BfmePickWorld1284* g_bfmeHolderBU;
@@ -20,7 +24,9 @@ AptValue* aptRegisterFlagged008A5380(void* self, int argc)
 	if (argc != 1)
 		goto done;
 	{
-		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
+		Rva008AE770Stack& stk = Rva008AE770TheStack;
+		AptValue** args = stk.m_rva01338750;
+		Rva008A5380Value* v = (Rva008A5380Value*)args[stk.field00 - 1];
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;
@@ -38,7 +44,9 @@ AptValue* aptRegisterFlagged008A5440(void* self, int argc)
 	if (argc != 1)
 		goto done;
 	{
-		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[Rva008AE770TheStack.field00 - 1];
+		Rva008AE770Stack& stk = Rva008AE770TheStack;
+		AptValue** args = stk.m_rva01338750;
+		Rva008A5380Value* v = (Rva008A5380Value*)args[stk.field00 - 1];
 		int flags = v->m_flags;
 		if (!(flags & 0x8000))
 			goto done;
