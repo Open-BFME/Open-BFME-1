@@ -1,8 +1,10 @@
 // Retail 0x00220820 forwards the second argument's dword at +4 to the first.
-class BfmeItem1005
+class BfmeItem1005;
+
+class BfmeThing916D
 {
 public:
-	void bfmeDoD1005(int value);
+	void bfmeGo916D(void *value);
 };
 
 struct Rva00220820Pair
@@ -13,5 +15,5 @@ struct Rva00220820Pair
 
 void __cdecl rva00220820Forward(BfmeItem1005 *receiver, const Rva00220820Pair *value)
 {
-	receiver->bfmeDoD1005(value->second);
+	((BfmeThing916D *)receiver)->bfmeGo916D((void *)value->second);
 }
