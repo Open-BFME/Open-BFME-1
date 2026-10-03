@@ -117,8 +117,9 @@ struct Rva0046AF20Mapped
 	}
 	~Rva0046AF20Mapped()
 	{
-		if (m_counted && --m_counted->m_references <= 0)
-			m_counted->release(1);
+		Rva0046C2A0Counted *current = m_counted;
+		if (current && (current->m_references = current->m_references - 1) <= 0)
+			current->release(1);
 	}
 
 	Rva0046C2A0Counted *m_counted;
