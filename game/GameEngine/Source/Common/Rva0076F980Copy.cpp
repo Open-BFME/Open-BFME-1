@@ -5,14 +5,7 @@
 // vector<AsciiString>::operator= at 0x000DE2C0.  This is therefore an
 // assignment operator, not a copy constructor.
 
-class Rva0036CA00Str
-{
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-
-private:
-	void *m_item;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class Rva0076F980Mid
 {
@@ -36,7 +29,7 @@ union Rva0076F980MidAssign
 
 class Rva0076F980
 {
-	Rva0036CA00Str m_00;
+	StringBase<char> m_00;
 	Rva0076F980Mid m_04;
 	int m_10;
 
@@ -46,7 +39,7 @@ public:
 
 Rva0076F980 &Rva0076F980::operator=(const Rva0076F980 &other)
 {
-	m_00 = other.m_00;
+	m_00.set(other.m_00);
 	Rva0076F980MidAssign assign;
 	assign.function = &j_00007a63;
 	(m_04.*assign.member)(other.m_04);

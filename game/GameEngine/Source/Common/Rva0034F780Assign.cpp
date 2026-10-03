@@ -1,13 +1,6 @@
 // cl: /O2 /Ob0
 
-class Rva0036CA00Str
-{
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-
-private:
-	void *m_item;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class Rva0076F980Mid
 {
@@ -32,7 +25,7 @@ union Rva0076F980MidAssign
 class Rva0034F780
 {
 	virtual void handle();
-	Rva0036CA00Str m_04;
+	StringBase<char> m_04;
 	Rva0076F980Mid m_08;
 
 public:
@@ -41,7 +34,7 @@ public:
 
 Rva0034F780 &Rva0034F780::operator=(const Rva0034F780 &other)
 {
-	m_04 = other.m_04;
+	m_04.set(other.m_04);
 	Rva0076F980MidAssign assign;
 	assign.function = &j_00007a63;
 	(m_08.*assign.member)(other.m_08);
