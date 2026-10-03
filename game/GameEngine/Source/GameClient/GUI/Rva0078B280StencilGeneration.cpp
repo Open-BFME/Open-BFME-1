@@ -6,6 +6,7 @@
 class DX8Wrapper
 {
 public:
+	static bool Has_Stencil(void);
 	// Retail 0x00904250: BFME's seven-argument Clear (see WW3D2/DX8Wrapper_Clear.cpp).
 	static void Clear(bool clear_color, bool clear_z, bool clear_stencil,
 		const Vector3 &color, float dest_alpha, float z, unsigned int stencil);
@@ -15,7 +16,6 @@ class Rva0078B280Renderer
 {
 public:
 	void bfmeAdvanceStencil(void);
-	bool bfmeHasStencil(void);
 
 	char m_pad00[0xc];
 	int m_stencilGeneration;
@@ -24,7 +24,7 @@ public:
 // @?bfmeAdvanceStencil@Rva0078B280Renderer@@QAEXXZ 0x0078B280
 void Rva0078B280Renderer::bfmeAdvanceStencil(void)
 {
-	if (bfmeHasStencil()) {
+	if (DX8Wrapper::Has_Stencil()) {
 		++m_stencilGeneration;
 		if (m_stencilGeneration > 255)
 			m_stencilGeneration = 1;

@@ -13,13 +13,6 @@ extern "C" unsigned int __cdecl strlen( const char *s );
 
 #include "ascii_string.h"
 
-class RetailLayoutString
-{
-public:
-	void set( const char *s, int n );
-	void set( const char *s ) { set( s, s ? (int)strlen( s ) : 0 ); }
-};
-
 class WeaponTemplate;
 
 class WeaponStore
@@ -39,7 +32,7 @@ public:
 struct Rva00250BA0Owner
 {
 	char m_unreconstructed[ 8 ];
-	RetailLayoutString m_weaponName;
+	StringBase<char> m_weaponName;
 };
 
 class Rva00250BA0
@@ -54,7 +47,7 @@ void Rva00250BA0::parseWeaponNameIfKnown( INI *ini, void *instance, void *, cons
 	const char *token = ini->getNextToken();
 	if( TheWeaponStore->findWeaponTemplate( token ) )
 	{
-		RetailLayoutString *name = &((Rva00250BA0Owner *)instance)->m_weaponName;
+		StringBase<char> *name = &((Rva00250BA0Owner *)instance)->m_weaponName;
 		int len = token ? (int)strlen( token ) : 0;
 		name->set( token, len );
 	}
