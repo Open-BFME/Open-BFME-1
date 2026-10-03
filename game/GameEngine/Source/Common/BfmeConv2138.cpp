@@ -23,7 +23,12 @@ class Gen00971E40
 public:
 	__forceinline Gen00971E40() { m_bfmeRefXU = 0; }
 	Gen00971E40(void *ref);
-	~Gen00971E40();
+	// Retail971CC0: returned-handle action C5F2B0 releases this pointer.
+	~Gen00971E40()
+	{
+		if (m_bfmeRefXU)
+			((TextureClass *)m_bfmeRefXU)->Release_Ref();
+	}
 
 	void *m_bfmeRefXU;
 };
