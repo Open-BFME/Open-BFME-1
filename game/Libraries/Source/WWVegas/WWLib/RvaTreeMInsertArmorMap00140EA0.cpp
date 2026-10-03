@@ -11,6 +11,7 @@
 // _STL::less<int>.
 
 struct BfmeRbTreeInsertArmorAnchorHelper;
+template <int Bits> class BitFlags;
 
 namespace _STL
 {
@@ -163,7 +164,9 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_insert(
 	_Link_type z;
 
 	if (y == this->_M_header._M_data
-		|| (w == 0 && (x != 0 || _M_key_compare(KeyOfValue()(v), _S_key(y)))))
+		|| (w == 0 && (x != 0 || _M_key_compare(
+			reinterpret_cast<const BitFlags<11> &>(KeyOfValue()(v)),
+			reinterpret_cast<const BitFlags<11> &>(_S_key(y))))))
 	{
 		z = _M_create_node(v);
 		y->_M_left = z;
@@ -213,13 +216,22 @@ struct Rva001363B0Value
 	int m_body;
 };
 
-// fresh out-of-line comparator: the retail body calls
-// ??RMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@QBE_NABV?$BitFlags@$0L@@@0@Z
-// at rva 0x0000A9A2; this tag names our own instantiation so it can be
-// pinned to that address additively.
-struct Rva00140EA0Compare
+class ArmorTemplateSet;
+
+template <class Set, class Flags>
+class SparseMatchFinder
 {
-	bool operator()(const int &a, const int &b) const;
+public:
+	struct MapHelper
+	{
+		bool operator()(const Flags &a, const Flags &b) const;
+	};
+};
+
+// The integer key stores the one-word armor flags passed to retail's
+// MapHelper comparator through the thunk at 0x0000A9A2.
+struct Rva00140EA0Compare : SparseMatchFinder<ArmorTemplateSet, BitFlags<11> >::MapHelper
+{
 };
 
 typedef _STL::pair<const int, Rva001363B0Value> Rva00140EA0Pair;
