@@ -6,6 +6,8 @@
 // directly reproduces all56B without register barriers or padding.
 // Node next is at+0. The helper receives the address of the predecessor
 // link plus the chosen/fallback pointer; semantic owner remains unknown.
+extern void j_0000cec8();
+
 struct BfmeNodeZN
 {
 	BfmeNodeZN *m_bfmeNextZN;
@@ -26,5 +28,8 @@ void Rva0035E710Owner::bfmeUnlinkZN(void *a, BfmeNodeZN **link, BfmeNodeZN *targ
         link = &(*link)->m_bfmeNextZN;
     }
 
-	bfmeDoZN(a, link, chosen != 0 ? chosen : fallback);
+	// Retail calls helper 0x0035E5A0 through its ILT thunk 0x0000CEC8.
+	typedef void (Rva0035E710Owner::*DoZN)(void *, BfmeNodeZN **, void *);
+	union { void (*fn)(); DoZN call; } doZN = { j_0000cec8 };
+	(this->*doZN.call)(a, link, chosen != 0 ? chosen : fallback);
 }

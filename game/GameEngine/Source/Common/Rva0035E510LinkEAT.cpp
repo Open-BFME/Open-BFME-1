@@ -20,6 +20,8 @@ private:
 	int m_head1;
 };
 
+extern void j_0000cec8();
+
 struct BfmeNodeZN
 {
 	BfmeNodeZN *m_bfmeNextZN;
@@ -82,7 +84,10 @@ void BfmeNodeEAT::bfmeLinkEAT(BfmeNodeEAT *node, int *a, int *b)
 		links.push_back(link);
 	Rva0035E710Owner *owner = reinterpret_cast<Rva0035E710Owner *>(this);
 	while (!links.empty()) {
-		owner->bfmeDoZN(node, links.back(), b);
+		// Retail calls helper 0x0035E5A0 through its ILT thunk 0x0000CEC8.
+		typedef void (Rva0035E710Owner::*DoZN)(void *, BfmeNodeZN **, void *);
+		union { void (*fn)(); DoZN call; } doZN = { j_0000cec8 };
+		(owner->*doZN.call)(node, links.back(), b);
 		links.pop_back();
 	}
 }
