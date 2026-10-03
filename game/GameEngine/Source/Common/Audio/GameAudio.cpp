@@ -447,20 +447,8 @@ void AudioManager::update()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getInfoForAudioEvent@AudioManager@@ present-unmatched
-void AudioManager::getInfoForAudioEvent( const AudioEventRTS *eventToFindAndFill ) const
-{
-	if (!eventToFindAndFill) {
-		return;
-	}
-
-	if (eventToFindAndFill->getAudioEventInfo()) {
-		// already done
-		return;
-	}
-
-	eventToFindAndFill->setAudioEventInfo(findAudioEventInfo(eventToFindAndFill->getEventName()));
-}
+// BFME getInfoForAudioEvent is owned by AudioManagerGetInfoForAudioEvent.cpp
+// at RVA 0x00699FD0. Retail locks the manager and binds a counted info reference.
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WWAudio/AudioManagerAddAudioEventThunk.cpp
