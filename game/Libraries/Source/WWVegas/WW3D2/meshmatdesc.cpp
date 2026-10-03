@@ -220,35 +220,8 @@ void UVBufferClass::Update_CRC(void)
 // ?NullShader@MeshMatDescClass@@2VShaderClass@@A present-unmatched
 ShaderClass MeshMatDescClass::NullShader(0);	// Used to mark no shader data
 
-// ??0MeshMatDescClass@@ present-unmatched
-MeshMatDescClass::MeshMatDescClass(void) :
-	PassCount(1),
-	VertexCount(0),
-	PolyCount(0)
-{
-	for (int array=0;array < MAX_COLOR_ARRAYS; array++) {
-		ColorArray[array] = NULL;
-	}
-
-	for (int uvarray=0;uvarray<MAX_UV_ARRAYS;uvarray++) {
-		UV[uvarray] = NULL;
-	}
-
-	for (int pass=0; pass < MAX_PASSES; pass++) {
-		for (int stage=0; stage < MAX_TEX_STAGES; stage++) {
-			UVSource[pass][stage] = -1;
-			Texture[pass][stage] = NULL;
-			TextureArray[pass][stage] = NULL;
-		}
-		DCGSource[pass] = VertexMaterialClass::MATERIAL;
-		DIGSource[pass] = VertexMaterialClass::MATERIAL;
-
-		Shader[pass] = 0; //ShaderClass::_PresetOpaqueSolidShader;
-		Material[pass] = NULL;
-		ShaderArray[pass] = NULL;
-		MaterialArray[pass] = NULL;
-	}
-}
+// ??0MeshMatDescClass@@QAE@XZ
+// byte-exact owning texture-grid default constructor: MeshMatDescClass_ctor_Thunk.cpp
 
 // ??0MeshMatDescClass@@QAE@ABV0@@Z
 // byte-exact owning texture-grid copy constructor: MeshMatDescClassCopyCtor.cpp
