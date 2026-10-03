@@ -82,6 +82,10 @@
  *   WW3DAssetManager::Get_Streaming_Texture -- Gets a streaming texture.                      *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+// Retail inlines the BFME FastCriticalSectionClass spin-call lock (wwstring.h),
+// not the reference mutex.h class whose inline-asm constructor materializes a sentry.
+#include "../WWLib/wwstring.h"
+#include "../WWLib/mutex.h"
 #include "assetmgr.h"
 #include <assert.h>
 
