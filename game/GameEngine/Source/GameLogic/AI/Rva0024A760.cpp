@@ -41,11 +41,17 @@ public:
 	void fill(int *value);
 };
 
+// Retail ILT 0x0003DEE7 reaches Rva223440PointerList::remove with this object as receiver.
+class Rva223440PointerList
+{
+public:
+	void remove(void *value);
+};
+
 class Rva0024A760
 {
 public:
 	void update(BfmeRvaA760Object *object);
-	void finish(BfmeRvaA760Object *object);
 
 	char m_head[4];
 	BfmeRvaA760Probe *m_probe;
@@ -84,5 +90,5 @@ void Rva0024A760::update(BfmeRvaA760Object *object)
 		member->m_flags &= 0xffffffbf;
 		member->notify();
 	}
-	finish(member);
+	reinterpret_cast<Rva223440PointerList *>(this)->remove(member);
 }
