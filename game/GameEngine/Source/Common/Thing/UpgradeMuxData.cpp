@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@: game/GameEngine/Source/Common/Thing/Module.cpp
 // readable body of ?performUpgradeFX@UpgradeMuxData@@: game/GameEngine/Source/Common/Thing/Module.cpp
 
@@ -13,32 +13,13 @@ public:
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+#include "ascii_string.h"
+
+// Retail inlines the null/length test here, but calls StringBase<char>::isNone.
+template <> inline bool StringBase<char>::isEmpty() const
 {
-public:
-	bool isEmpty() const
-	{
-		return !m_data || m_data->length == 0;
-	}
-
-	bool isNone() const;
-
-	const char *str() const
-	{
-		return m_data ? m_data->text : "";
-	}
-
-private:
-	struct Data
-	{
-		int references;
-		unsigned short length;
-		unsigned short reserved;
-		char text[1];
-	};
-	Data *m_data;
-};
+	return !m_data || m_data->length == 0;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
