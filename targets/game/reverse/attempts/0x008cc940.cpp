@@ -1,5 +1,5 @@
 // ?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z
-// partial score=0.3097 date=2026-09-28
+// partial score=0.3544 date=2026-10-03
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Boundary: RVA 008CC940, 917 bytes, final ret 18h at +392.
 // Analyst source: docs/analysis/0x008cf740.md; 00893380 independently calls
@@ -182,6 +182,7 @@ extern NotifyString g_Va013378C4Notify;
 Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	BfmeStrVKI *name, int one, int another, int zero)
 {
+	{
 	struct LookupState008CC940 { BfmeStrVKI key; unsigned char prepared; __forceinline ~LookupState008CC940() {} } state;
 	BfmeStrVKI &key=state.key;
 	register Rva008AE770Stack *owner = this;
@@ -232,7 +233,7 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	if (state.prepared == 1 && candidate != 0)
 	{
 		value = ((BfmeNode1220 *)candidate)->bfmeTest1220(&key, unused);
-		if (value != 0) return (Rva00899770 *)value;
+		if (value != 0) goto rva008CC940ReturnValue;
 	}
 
 	Rva00899770 *found = 0;
@@ -248,7 +249,7 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	if (candidate != 0 && !((unsigned char)~(candidate->m_flags >> 15) & 1))
 	{
 		value = candidate->slot10(candidate, &key);
-		if (value != 0) return (Rva00899770 *)value;
+		if (value != 0) goto rva008CC940ReturnValue;
 		found = ((BfmeNode1220 *)candidate)->bfmeTest1220(&key, unused);
 		if (found != 0)
 			return found;
@@ -270,4 +271,7 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 		found = (Rva00899770 *)g_bfmeFallbackDB;
 	}
 	return found;
+	}
+rva008CC940ReturnValue:
+	return (Rva00899770 *)value;
 }
