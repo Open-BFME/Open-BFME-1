@@ -26,11 +26,12 @@ public:
   return it->second;
  }
 };
-extern ObjectRegistry0036F1B0 *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 void SetMemberPayload0036F1B0(_STL::vector<int> *ids,int payload) {
  static NameKeyType key=TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
  for(_STL::vector<int>::iterator it=ids->begin();it!=ids->end();++it) {
-  Object *object=TheBfmeGameLogic->lookup(*it);
+  Object *object=((ObjectRegistry0036F1B0*)TheGameLogic)->lookup(*it);
   if(object) {
    Module *module=object->findModule(key);
    if(module) *(int*)((char*)module+0x14)=payload;
