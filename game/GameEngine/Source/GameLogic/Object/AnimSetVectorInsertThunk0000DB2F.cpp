@@ -25,14 +25,6 @@ struct __false_type
 {
 };
 
-class GenericObjectCreationNuggetAnimSetInsertOverflowShim
-{
-public:
-	void insert_overflow(GenericObjectCreationNugget::AnimSet *,
-		const GenericObjectCreationNugget::AnimSet &, const __false_type &,
-		unsigned int, bool);
-};
-
 template <class T>
 class allocator
 {
@@ -41,12 +33,15 @@ class allocator
 template <class T, class Allocator>
 class vector
 {
+protected:
+	void _M_insert_overflow(T *position, const T &value,
+		const __false_type &tag, unsigned int fillLength, bool atEnd);
+
 public:
 	void d_0000db2f(T *position, const T &value, const __false_type &tag,
 		unsigned int fillLength, bool atEnd)
 	{
-		((GenericObjectCreationNuggetAnimSetInsertOverflowShim *)this)->insert_overflow(
-			position, value, tag, fillLength, atEnd);
+		this->_M_insert_overflow(position, value, tag, fillLength, atEnd);
 	}
 };
 
