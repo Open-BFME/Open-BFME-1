@@ -105,9 +105,9 @@ class Debug
     bool finishAssert0088B530(int mode);
 };
 Debug &operator<<(Debug &, const DebugStackwalk::Signature &);
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
-#define TheDebug ((Debug *)TheBfmeAwakenDebug)
+// Retail RVA 0x0088B69C reads the canonical pointer cell at VA 0x01336E5C.
+extern void *g_Rva00F36E5C;
+#define TheDebug ((Debug *)g_Rva00F36E5C)
 struct BfmeCsDWA;
 extern BfmeCsDWA g_bfmeCsDWC;
 extern bool g_01336E79;
