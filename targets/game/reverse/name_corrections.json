@@ -16509,16 +16509,16 @@
   "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
   "reason": "Original Object caller at VA005D0CBC..005D0CCE passes the drawable receiver as argument two and its final template as argument three. The parser sends argument two to00416FA0 and argument three to00087BD0; the old bank wrongly named argument two ThingTemplate. This correction preserves an address-qualified receiver pending independent canonical provider repair."
  },
-{
- "old_path": "targets/game/reverse/functions.csv",
- "new_path": "targets/game/reverse/functions.csv",
- "old_name": "INIException",
- "new_name": "Rva00139FF0",
- "before_sha256": "31fffe5b5e89c7f1d44c0c739319f5b0df4e9a62078a586ab81e4a54966fe78f",
- "after_sha256": "07d6fca8008da85250e05f67a8ce72e877ea83705f5f4014dd040f79a14f8f0b",
- "evidence": "targets/game/reverse/identity_evidence/00061bd0-iniexception-dtor-copyctor.md",
- "reason": "Retail's INIException ThrowInfo names 0x00061BD0 as its destructor; 0x00139FF0 is a null-checked operator delete[] release referenced only by ILT 0x0001A5DC, so the INIException claim on it is refuted and it keeps an address-derived identity."
-},
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "INIException",
+  "new_name": "Rva00139FF0",
+  "before_sha256": "31fffe5b5e89c7f1d44c0c739319f5b0df4e9a62078a586ab81e4a54966fe78f",
+  "after_sha256": "07d6fca8008da85250e05f67a8ce72e877ea83705f5f4014dd040f79a14f8f0b",
+  "evidence": "targets/game/reverse/identity_evidence/00061bd0-iniexception-dtor-copyctor.md",
+  "reason": "Retail's INIException ThrowInfo names 0x00061BD0 as its destructor; 0x00139FF0 is a null-checked operator delete[] release referenced only by ILT 0x0001A5DC, so the INIException claim on it is refuted and it keeps an address-derived identity."
+ },
  {
   "old_path": "game/GameEngine/Source/Common/System/BuildAssistant.cpp",
   "new_path": "game/GameEngine/Source/Common/System/BuildAssistant.cpp",
@@ -16738,5 +16738,15 @@
   "after_sha256": "ea4f19d724c01b8be335d8846df34fb44b6d4c9156e2f275140d0e862e3d8e7e",
   "evidence": "targets/game/reverse/identity_evidence/renderobj-vtable-slot-addresses.md",
   "reason": "Retail's RenderObjClass vtable (0x0113BD88) reaches _bfme_ro_get_98 at a different address; this address is referenced by no vtable and only by its own unreferenced ILT stub, so the RenderObjClass claim on it is refuted and it keeps an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0023c5e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva0023C5E0.cpp",
+  "old_name": "MemberSelection0023C5E0",
+  "new_name": "Rva0023C5E0",
+  "before_sha256": "8ab2ac0e88067286674e1e438553b09cae6e2a8c861bc22acce29c87a659b569",
+  "after_sha256": "0f1a896d62215b963a002104c06c8bf434756d9ef98ecf62202295778af33aad",
+  "evidence": "targets/game/reverse/identity_evidence/0023c5e0-opaque-owner.md",
+  "reason": "The bank-only owner describes inferred selection behavior but has no class-name witness. Retail debug strings prove a HordeContain source file, not the member identity. Keep a fully opaque address owner and method instead of promoting the bank convenience name."
  }
 ]
