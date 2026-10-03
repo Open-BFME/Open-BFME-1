@@ -22,3 +22,22 @@ those owners or function entries. This reconstruction uses a separate fully
 address-qualified storage view and method names for the two dword-family
 bodies. It claims no new semantic owner/method spelling, boolean return,
 callee pin, or remaining native method.
+
+## Remaining masks, independently checked in session 4
+
+The same original object gives four more distinct code COMDATs. Their full
+89-byte enclosing sequence was re-read from the archive and found exactly
+once in retail .text; Ghidra read_memory at VA 00E08036 agrees byte for byte.
+
+| Section | Original method (same uint-indexed owner) | RVA | Mask | Final RET |
+| --- | --- | --- | ---: | --- |
+| 378 | BHasPerFaceAttributeId | 00A08057 | 4 | 00A08060 |
+| 380 | BHasPerFaceAttributeIndex | 00A08061 | 8 | 00A0806A |
+| 382 | BHasAttributeTable | 00A0806B | 16 | 00A08074 |
+| 384 | BSharedVB | 00A08075 | 32 | 00A0807E |
+
+Each original symbol ends `@?$GXTri3Mesh@I$0A@$0?0@@ABEIXZ`; each section
+is ten code bytes without relocations. These independently establish unsigned
+int return, const-thiscall/no stack arguments and the separate entry/return
+boundaries. The reconstruction retains address-qualified methods and the
+existing measured storage view. Only ledgered methods are promoted.
