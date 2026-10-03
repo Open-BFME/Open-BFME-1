@@ -19,7 +19,7 @@ void BfmeThingUVA::bfmeGoUVA(const char *a, const char *b, const char *c)
 	bfmeCopyUVA(m_bfmeBuf + 0x142, 0x41, c ? c : g_bfmeEmptyUVA);
 }
 
-extern char g_bfmeFileUVB[];
+extern const char g_bfmeFileUVB[];
 // Retail .rdata at VA 0x0111C2A0: "false" including its NUL (6 bytes).
 // The diagnostic callers pass its address; no EA symbol name is proven.
 extern const char g_rva0111C2A0[] = "false";

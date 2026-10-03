@@ -6,7 +6,7 @@
 #include <string.h>
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-extern const void *g_011207C0[];
+extern const void *const g_011207C0[];
 
 class Rva006092D0State
 {

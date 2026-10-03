@@ -24,7 +24,7 @@
 
 extern void j_00048b67();
 extern void j_00011356();
-extern const void *g_011207C0[];
+extern const void *const g_011207C0[];
 
 class Rva006FD550RefCounted
 {

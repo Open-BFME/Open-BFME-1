@@ -81756,7 +81756,7 @@ name,address,notes
 ?g_bfmeFallbackET@@3MB,0x00C9CECC,pin fallback ratio for BfmeConv2041
 ?g_bfmeFileAO@@3PADA,0x00CAA908,pin
 ?g_bfmeFileUUA@@3PADA,0x00D2C6A8,pin
-?g_bfmeFileUVB@@3PADA,0x00D2C24C,pin
+?g_bfmeFileUVB@@3QBDB,0x00D2C24C,pin
 ?g_bfmeFilterLimit@@3PAHA,0x01356A7C,codec int-limit table pointer read by retail at 0x009AF530+2 and by matched edge filters
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
