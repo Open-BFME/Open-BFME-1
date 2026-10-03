@@ -1,23 +1,19 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 class BfmeStrNVSR
 {
 public:
-	~BfmeStrNVSR() { bfmeReleaseNVSR(); }
+	~BfmeStrNVSR() { ((StringBase<char> *)this)->clear(); }
 	char *m_bfme00;
-
-private:
-	void bfmeReleaseNVSR();
 };
 
 class BfmeStrWVSR
 {
 public:
-	~BfmeStrWVSR() { bfmeReleaseWVSR(); }
+	~BfmeStrWVSR() { ((StringBase<unsigned short> *)this)->clear(); }
 	unsigned short *m_bfme00;
-
-private:
-	void bfmeReleaseWVSR();
 };
 
 class BfmeHolderVSR
