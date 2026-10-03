@@ -2262,18 +2262,6 @@ m_nextAction(NULL)
 {
 }
 
-// ??0ScriptAction@@ present-unmatched
-ScriptAction::ScriptAction(enum ScriptActionType type):
-m_actionType(type),
-m_numParms(0)
-{
-	Int i;
-	for (i=0; i<MAX_PARMS; i++) {
-		m_parms[i] = NULL;
-	}
-	setActionType(type);
-}
-
 // ?setActionType@ScriptAction@@QAEXW4ScriptActionType@1@@Z present-unmatched
 void ScriptAction::setActionType(enum ScriptActionType type)
 {

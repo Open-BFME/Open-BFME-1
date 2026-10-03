@@ -59,7 +59,7 @@ private:
 	Int m_bfmeActionTail;
 };
 
-ScriptAction::ScriptAction(ScriptActionType type) :
+inline ScriptAction::ScriptAction(ScriptActionType type) :
 	m_numParms(0),
 	m_nextAction(0),
 	m_hasWarnings(false),
