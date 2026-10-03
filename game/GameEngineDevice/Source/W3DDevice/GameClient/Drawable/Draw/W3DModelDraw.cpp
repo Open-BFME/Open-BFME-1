@@ -1416,12 +1416,21 @@ static void parseParticleSysBone(INI* ini, void *instance, void * store, const v
 //-------------------------------------------------------------------------------------------------
 static void parseRealRange( INI *ini, void *instance, void *store, const void* /*userData*/ )
 {
+	// BFME table 0x011240F0 binds AnimationSpeedFactorRange to this callback.
+	// Its floats are at +0x1C/+0x20, unlike the reference owner layout.
+	struct Rva0075B800RangeView
+	{
+		char m_rva0075B800Prefix[0x1c];
+		Real m_animMinSpeedFactor;
+		Real m_animMaxSpeedFactor;
+	};
 	ModelConditionInfo *self = (ModelConditionInfo *)instance;
+	Rva0075B800RangeView *range = (Rva0075B800RangeView *)self;
 
 	const char *token = ini->getNextToken();
-	self->m_animMinSpeedFactor = ini->scanReal( token );
+	range->m_animMinSpeedFactor = ini->scanReal( token );
 	token = ini->getNextToken();
-	self->m_animMaxSpeedFactor = ini->scanReal( token );
+	range->m_animMaxSpeedFactor = ini->scanReal( token );
 }
 
 //-------------------------------------------------------------------------------------------------
