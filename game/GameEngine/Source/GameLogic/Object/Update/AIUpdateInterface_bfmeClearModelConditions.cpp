@@ -28,9 +28,15 @@ typedef BfmeC1166 ModelConditionFlags;
 class Object
 {
 public:
-	void clearAndSetModelConditionFlags(const ModelConditionFlags &clr,
-		const ModelConditionFlags &set);
 };
+
+// Retail's Object::clearAndSetModelConditionFlags reaches the 0x000095ED ILT
+// thunk, which the ledger owns as ?j_000095ed@@YAXXZ
+// (game/gen_small/thunks_004.cpp). Call it by its defining name instead of
+// through an undefined member.
+extern void j_000095ed();
+typedef void (Object::*ClearAndSetModelConditionFlagsCall)(
+	const ModelConditionFlags &, const ModelConditionFlags & );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
@@ -53,5 +59,7 @@ void AIUpdateInterface::bfmeClearModelConditions()
 		0,
 		0x3C, 0x7D, 0x7E, 0x81, 0x82, 0x7F, 0x80, 0x93);
 	ModelConditionFlags set;
-	obj->clearAndSetModelConditionFlags(*clr, set);
+	union { void (*raw)(); ClearAndSetModelConditionFlagsCall member; } call;
+	call.raw = j_000095ed;
+	(obj->*call.member)(*clr, set);
 }
