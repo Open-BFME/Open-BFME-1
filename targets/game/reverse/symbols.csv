@@ -90291,3 +90291,4 @@ __TI1H,0x00E454C0,int ThrowInfo: pushed before _CxxThrowException in retail (ret
 ??_R0?AVtype_info@@@8,0x00EDBD90,type_info RTTI type descriptor: .?AVtype_info@@ at VA 0x012DBD90 holds type_info vftable VA 0x01145868
 _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; retail guard ctor15D1D0 writes body VA0055C280 into12EF260; first stackarg and AL/plainRET independently decoded; evidence0015d1d0-native-guard-machine.md
 ??1?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@QAE@XZ,0x00692000,native five-byte destructor body verified in RvaHashIndexAsciiString.cpp; parent693880 string-scalar pair lifetime via state0 actionC47150 and ILT46D9E proves binding; releaseBuffer tail
+??1?$pair@$$CBVAsciiString@@W4Rva006A7AD0Mapped@@@_STL@@QAE@XZ,0x0069DEC0,native five-byte destructor body verified in RvaHashIndexAsciiString.cpp; parent6AC440 string-scalar pair lifetime via state0 actionC48210 and ILT36291 proves binding; releaseBuffer tail
