@@ -35,3 +35,12 @@ Gen00972540 bfmeMakeXV(const char *name)
 
 	return Gen00972540(&(Rva009EBCE0AssetReference &)Rva009EBCE0_GetPrototype(name));
 }
+
+// Factory972590 constructs this hidden result via matched ctor972540.
+// FuncInfo E4E818 state0/C5F3D0 calls destructor9723A0; the separate
+// lookup temporary in state1 goes through ILT27C41 to5C640.
+Gen00972540::~Gen00972540()
+{
+	if (m_bfmeRefXV)
+		((TextureClass *)m_bfmeRefXV)->Release_Ref();
+}
