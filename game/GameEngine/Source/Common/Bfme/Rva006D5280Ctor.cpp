@@ -8,10 +8,18 @@ class Rva006D5280TextureBase
 public:
 	Rva006D5280TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
 	virtual ~Rva006D5280TextureBase();
-	void Release_Ref(void);
 
 	unsigned m_refBits;
 	char m_body[0x34];
+};
+
+// Retail releases through 0x009EB7A0, which TextureBaseReleaseRefThunk.cpp
+// owns as TextureBaseClass::Release_Ref; the ref-counted object is only ever
+// seen here through that leaf.
+class TextureBaseClass
+{
+public:
+	void Release_Ref(void);
 };
 
 // Shared base body, now matched as Rva006D51B0Ctor.cpp's
@@ -41,7 +49,7 @@ public:
 			m_ptr->Release_Ref();
 	}
 
-	Rva006D5280TextureBase *m_ptr;
+	TextureBaseClass *m_ptr;
 };
 
 class Rva006D5280
@@ -61,7 +69,7 @@ Rva006D5280::Rva006D5280(unsigned a, unsigned b, unsigned c)
 		++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(texture) + 4);
 		if (m_texture.m_ptr)
 			m_texture.m_ptr->Release_Ref();
-		m_texture.m_ptr = texture;
+		m_texture.m_ptr = reinterpret_cast<TextureBaseClass *>(texture);
 		texture->m_refBits |= 0x01000000;
 	}
 }
