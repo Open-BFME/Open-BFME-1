@@ -18,7 +18,11 @@ Rva008A9A70Str g_013385D8 = { 0 };
 Rva008A9A70Str g_01338678 = { 0 };
 Rva008A9A70Str g_01338524 = { 0 };
 extern AptValue *g_bfmeFallbackDB;
-extern char g_012D5298;
+class EAStringC {
+public:
+ class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
 struct Rva008D5430String { unsigned short refs, len; int capacity; char text[1]; };
 class Rva008D5430 {
 public:
@@ -47,7 +51,7 @@ AptValue *Rva008D5430::method(void *arg, Rva008D5430String **key) {
  }
  case 3: if (f30 & 0x10000) { bool b=false; if(f30 & 1) b=true; return (AptValue*)AptBoolean::Create(b); } return g_bfmeFallbackDB;
  case 5: if(f28 != -1) return (AptValue*)AptInteger::Create(f28 & 0xffffff); return g_bfmeFallbackDB;
- case 6: if(f20 != (Rva008D5430String*)&g_012D5298) { Rva008B2EA0Node *r=rva008B2EA0Create(); r->append(f20->text); return (AptValue*)r; } return g_bfmeFallbackDB;
+ case 6: if(f20 != (Rva008D5430String*)&g_rva012D5298Empty) { Rva008B2EA0Node *r=rva008B2EA0Create(); r->append(f20->text); return (AptValue*)r; } return g_bfmeFallbackDB;
  case 7: if(f34 == -1) return g_bfmeFallbackDB; else return (AptValue*)AptInteger::Create(f34);
  case 8: if(f30 & 0x100000) { bool b=false; if(f30 & 0x10) b=true; return (AptValue*)AptBoolean::Create(b); } return g_bfmeFallbackDB;
  case 10: if(f38 == -1) return g_bfmeFallbackDB; else return (AptValue*)AptInteger::Create(f38);
