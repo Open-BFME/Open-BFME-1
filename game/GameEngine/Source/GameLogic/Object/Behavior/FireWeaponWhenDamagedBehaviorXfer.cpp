@@ -75,10 +75,15 @@ private:
 	Weapon *m_continuousWeaponRubble;
 };
 
+extern void j_000044c1();
+
 // ?xfer@FireWeaponWhenDamagedBehavior@@MAEXPAVXfer@@@Z
 void FireWeaponWhenDamagedBehavior::xfer(Xfer *xfer)
 {
-	UpdateModule::xfer(xfer);
+	// retail calls UpdateModule::xfer through ILT 0x000044C1
+	union { void (*raw)(); void (UpdateModule::*method)(Xfer *); } base;
+	base.raw = j_000044c1;
+	(static_cast<UpdateModule *>(this)->*base.method)(xfer);
 	reinterpret_cast<Gen_002D9B90 *>(reinterpret_cast<char *>(this) + 0x20)->bfmeSeed(
 		reinterpret_cast<BfmeSeedTarget *>(xfer));
 	if (xfer->IsLightCRC())

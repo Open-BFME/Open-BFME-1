@@ -68,10 +68,15 @@ private:
 	Coord3D m_risePosition;
 };
 
+extern void j_000044c1();
+
 // ?xfer@RubbleRiseUpdate@@MAEXPAVXfer@@@Z
 void RubbleRiseUpdate::xfer(Xfer *xfer)
 {
-	UpdateModule::xfer(xfer);
+	// retail calls UpdateModule::xfer through ILT 0x000044C1
+	union { void (*raw)(); void (RubbleRiseUpdate::*method)(Xfer *); } base;
+	base.raw = j_000044c1;
+	(this->*base.method)(xfer);
 	if (xfer->skipsRubbleState())
 		return;
 
