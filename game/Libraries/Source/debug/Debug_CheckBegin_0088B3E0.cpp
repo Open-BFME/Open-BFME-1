@@ -75,10 +75,10 @@ public:
     Debug &CheckBegin(const char *, int, const char *);
 };
 
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Canonical four-byte pointer cell at retail VA 0x01336E5C.
+extern void *g_Rva00F36E5C;
 extern const char g_Rva0107301CEmptyString[];
-#define TheDebug ((Debug *)TheBfmeAwakenDebug)
+#define TheDebug ((Debug *)g_Rva00F36E5C)
 
 // ?CheckBegin@Debug@@QAEAAV1@PBDH0@Z
 Debug &Debug::CheckBegin(const char *file, int line, const char *expr)

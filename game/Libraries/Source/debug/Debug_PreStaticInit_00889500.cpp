@@ -9,8 +9,8 @@
 
 void *DebugAllocMemory(unsigned numBytes);
 
-class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Canonical four-byte pointer cell at retail VA 0x01336E5C.
+extern void *g_Rva00F36E5C;
 
 class Debug
 {
@@ -23,7 +23,7 @@ class Debug
 	static Debug *PreStaticInit();
 };
 
-#define TheDebugInstance (*(Debug **)&TheBfmeAwakenDebug)
+#define TheDebugInstance (*(Debug **)&g_Rva00F36E5C)
 
 Debug *Debug::PreStaticInit()
 {
