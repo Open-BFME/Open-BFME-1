@@ -13,7 +13,15 @@
 
 typedef bool Bool;
 
-void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int bytes);
+};
+}
+
 void *operator new(unsigned int bytes);				// retail 0x00881F30
 
 struct BfmeRingBlock
@@ -120,7 +128,7 @@ Gen_00586540::Gen_00586540(int first, int second)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeAllocNode(0x50);
+	m_bfmeBlock = (BfmeRingBlock *)_STL::__new_alloc::allocate(0x50);
 
 	m_bfmeCount = 0;
 
@@ -135,7 +143,7 @@ Gen_00587CD0::Gen_00587CD0(void)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeAllocNode(0x50);
+	m_bfmeBlock = (BfmeRingBlock *)_STL::__new_alloc::allocate(0x50);
 
 	m_bfmeCount = 0;
 
@@ -150,7 +158,7 @@ Gen_00605500::Gen_00605500(int first, int second)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeAllocNode(0x70);
+	m_bfmeBlock = (BfmeRingBlock *)_STL::__new_alloc::allocate(0x70);
 
 	m_bfmeCount = 0;
 
@@ -165,7 +173,7 @@ Gen_00605FF0::Gen_00605FF0(void)
 {
 	m_bfmeBlock = 0;
 
-	m_bfmeBlock = (BfmeRingBlock *)bfmeAllocNode(0x70);
+	m_bfmeBlock = (BfmeRingBlock *)_STL::__new_alloc::allocate(0x70);
 
 	m_bfmeCount = 0;
 
