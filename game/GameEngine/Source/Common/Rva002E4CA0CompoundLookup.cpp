@@ -4,8 +4,8 @@ typedef bool Bool;
 
 struct BfmeEntryBB
 {
-	int m_key;
-	unsigned char m_data[0x18];
+	int m_bfmeKey;
+	unsigned char m_bfmeBody[0x18];
 };
 
 struct BfmeEntryYB
@@ -14,9 +14,15 @@ struct BfmeEntryYB
 	unsigned char m_data[0x50];
 };
 
-struct BfmeCallJ3A1FC
+class BfmeTableBB
 {
-	BfmeEntryBB *invoke(int key) const;
+public:
+	BfmeEntryBB *bfmeFindBB(int key) const;
+
+private:
+	unsigned char m_bfmeHead[0xa4];
+	BfmeEntryBB *m_bfmeBegin;
+	BfmeEntryBB *m_bfmeEnd;
 };
 
 struct BfmeEntry8
@@ -77,5 +83,5 @@ values:
 		record = (volatile BfmeEntryYB *)((char *)record + 0x54);
 	}
 
-	return reinterpret_cast<const BfmeCallJ3A1FC *>(this)->invoke(key);
+	return reinterpret_cast<const BfmeTableBB *>(this)->bfmeFindBB(key);
 }

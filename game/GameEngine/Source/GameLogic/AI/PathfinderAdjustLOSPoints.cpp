@@ -25,12 +25,6 @@ enum PathfindLayerEnum
 	LAYER_GROUND = 1
 };
 
-class BfmeP1181
-{
-public:
-	void bfmeConv1181(void *point, BfmePair1181 *cell);
-};
-
 class Gen_003d6680
 {
 public:
@@ -43,9 +37,10 @@ struct Rva003D79C0Struct : Gen_003d6680
 	float x, y, z;
 };
 
-class Pathfinder : public BfmeP1181
+class Pathfinder
 {
 public:
+	bool worldToCell(const Coord3D *point, ICoord2D *cell);
 	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003D79C0Struct *resultInfo);
 	void bfmeAdjustLOSPoints(Coord3D *startPosition, Coord3D *endPosition);
@@ -59,8 +54,8 @@ void Pathfinder::bfmeAdjustLOSPoints(Coord3D *startPosition, Coord3D *endPositio
 
 	BfmePair1181 startCell;
 	BfmePair1181 endCell;
-	bfmeConv1181(startPosition, &startCell);
-	bfmeConv1181(endPosition, &endCell);
+	worldToCell(startPosition, (ICoord2D *)&startCell);
+	worldToCell(endPosition, (ICoord2D *)&endCell);
 
 	if (iterateCellsAlongLine(*(ICoord2D *)&startCell,
 		*(ICoord2D *)&endCell, LAYER_GROUND, &adjustmentResult))
