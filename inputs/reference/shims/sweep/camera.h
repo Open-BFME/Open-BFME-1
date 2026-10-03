@@ -401,11 +401,8 @@ CameraClass::Get_Frustum_Corners(void) const
  * HISTORY:                                                                                    *
  *   5/16/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-inline const FrustumClass & CameraClass::Get_View_Space_Frustum(void) const
-{
-	Update_Frustum();
-	return ViewSpaceFrustum;
-}
+// Out of line in retail (CameraClass_Get_View_Space_Frustum.cpp, 0x00942F20); the
+// reference header defines it inline, which made TUs emit a non-retail COMDAT copy.
 
 
 /***********************************************************************************************
