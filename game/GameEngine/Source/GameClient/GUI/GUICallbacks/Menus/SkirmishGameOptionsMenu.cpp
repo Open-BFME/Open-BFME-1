@@ -634,57 +634,7 @@ void MapSelectorTooltip(GameWindow *window,
 }
 
 
-void positionStartSpotControls( GameWindow *win, GameWindow *mapWindow, Coord3D *pos, MapMetaData *mmd, GameWindow *buttonMapStartPositions[])
-{
-	if(!win || !mmd || !mapWindow || !buttonMapStartPositions)
-		return;
-	DEBUG_ASSERTCRASH(win && mmd,("positionStartSpotControls:: we don't have a window to position or any mapmetadata"));
-	ICoord2D winMapSize, winMapPos, gadgetPos, gadgetSize;
-	mapWindow->winGetSize(&winMapSize.x, &winMapSize.y);
-	mapWindow->winGetScreenPosition(&winMapPos.x, &winMapPos.y);
-	win->winGetSize(&gadgetSize.x, &gadgetSize.y);
-	ICoord2D ul, lr;
-	findDrawPositions(0,0, winMapSize.x, winMapSize.y,mmd->m_extent, &ul, &lr);
-	Int smallWidth = lr.x - ul.x;
-	Int smallHeight= lr.y - ul.y;
-	
-	// When we actually draw the map, save off it's screen position and use that instead of the map window's position/size
-	Real position;
-	position = (pos->x - mmd->m_extent.lo.x) / (mmd->m_extent.hi.x - mmd->m_extent.lo.x);
-	gadgetPos.x = (position * smallWidth) - gadgetSize.x /2 + ul.x;// + winMapPos.x;
-
-	position = (pos->y - mmd->m_extent.lo.y) / (mmd->m_extent.hi.y - mmd->m_extent.lo.y);
-	gadgetPos.y = ((1- position) * smallHeight) - gadgetSize.y /2 + ul.y;// + winMapPos.y;
-	
-	
-
-	// loop through and make sure we're not on top of anyone else
-	for(Int i = 0; i < MAX_SLOTS; ++i)
-	{
-		if(buttonMapStartPositions[i] == win)
-			break;
-		ICoord2D tempPos;
-		buttonMapStartPositions[i]->winGetScreenPosition(&tempPos.x, &tempPos.y);
-		// we're inside the other gadget
-		if(gadgetPos.x > tempPos.x && gadgetPos.x < tempPos.x + gadgetSize.x
-				&& gadgetPos.y > tempPos.y && gadgetPos.y < tempPos.y + gadgetSize.y)
-		{
-			Int closerRight = tempPos.x + gadgetSize.x - gadgetPos.x;
-			Int closerBottom = tempPos.y + gadgetSize.y - gadgetPos.y;
-			// we're closer to the right then the bottom
-			if( closerRight < closerBottom)
-				gadgetPos.x = tempPos.x + gadgetSize.x + 1;
-			else if( closerBottom < closerRight)
-				gadgetPos.y = tempPos.y + gadgetSize.y + 1;
-			else
-			{
-				gadgetPos.x = tempPos.x + gadgetSize.x + 1;
-				gadgetPos.y = tempPos.y + gadgetSize.y + 1;
-			}
-		}
-	}
-	win->winSetPosition(gadgetPos.x,gadgetPos.y);
-}
+void positionStartSpotControls( GameWindow *win, GameWindow *mapWindow, Coord3D *pos, MapMetaData *mmd, GameWindow *buttonMapStartPositions[]);
 TechAndSupplyImages TheSupplyAndTechImageLocations;
 
 void positionAdditionalImages( MapMetaData *mmd, GameWindow *mapWindow, Bool force)
