@@ -1,0 +1,207 @@
+{
+  "status": "Blocked dependency evidence only. No production source, header, symbol pin, or ledger identity changed; no coverage or linked-byte claim.",
+  "date_utc": "2026-10-03T21:18:00Z",
+  "model": "gpt-6-astra",
+  "checkout": "d76d720e4e",
+  "bank": "targets/game/reverse/identity_evidence/constructor-0027f4b0-lifecycle-bank.json",
+  "bank_verification": "All ten embedded content SHA-256 values independently verified before restoring only to build/.",
+  "scratch_reproduction": {
+    "input": "build/sol_ai_canonical/loco_adoption_probe/LocomotorSetProvider.cpp",
+    "input_sha256": "32bfa2bebd8dfb1fb4d1d2a1966a63cd788e9db7362190538669b9d3f6b06aca",
+    "unchanged_result": "MSVC C2908 at the two explicit StringBase<char> destructor/str specializations: current canonical headers already instantiate these methods.",
+    "transform": "Decode UTF-8, normalize CRLF to LF, remove both lines beginning template <> inline; preserve every other line. Write build/loco_integration/LocomotorSetCurrentHeaders.cpp. This remains diagnostic scratch with an address-derived base and two legacy aliases, not promotable production source.",
+    "output_sha256": "cf3af98073e0388ce6fab578f6aecdea435ab514dd99aa11f42186b744afab3f",
+    "header_hashes": {
+      "game/Libraries/Source/WWVegas/WWLib/ascii_string.h": "3c3bf49bd66de89d1f6491fd34f7cd9b354e57ae22602b89eda4c1d731c0f1c4",
+      "game/Libraries/Source/WWVegas/WWLib/string_base.h": "5176177b03e69a157e7dd1c36cf81daa93335bda32021736ec69683348e69b79"
+    },
+    "verification": "tools/probe.py run for each listed symbol/RVA/size using real MSVC 7.1; independent COFF/PE masked-byte check reproduced all seven measurements.",
+    "measurements": [
+      {
+        "rva": "0x001B7450",
+        "size": 35,
+        "symbol": "??0LocomotorSet@@QAE@XZ",
+        "section_size": 35,
+        "relocations": 1,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x6"
+        ]
+      },
+      {
+        "rva": "0x001B7480",
+        "size": 1,
+        "symbol": "?LoadPostProcess@LocomotorSet@@UAEXXZ",
+        "section_size": 1,
+        "relocations": 0,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": []
+      },
+      {
+        "rva": "0x001B7490",
+        "size": 6,
+        "symbol": "?GetSnapshotName@LocomotorSet@@UAEPBDXZ",
+        "section_size": 6,
+        "relocations": 1,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x1"
+        ]
+      },
+      {
+        "rva": "0x001B98B0",
+        "size": 113,
+        "symbol": "?clear@LocomotorSet@@QAEXXZ",
+        "section_size": 113,
+        "relocations": 1,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x57"
+        ]
+      },
+      {
+        "rva": "0x001BA9E0",
+        "size": 147,
+        "symbol": "??1LocomotorSet@@UAE@XZ",
+        "section_size": 147,
+        "relocations": 11,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x3",
+          "0x9",
+          "0x11",
+          "0x1F",
+          "0x2C",
+          "0x39",
+          "0x46",
+          "0x6A",
+          "0x76",
+          "0x83",
+          "0x8B"
+        ]
+      },
+      {
+        "rva": "0x001BAAA0",
+        "size": 576,
+        "symbol": "?DoXfer@LocomotorSet@@UAEXAAVXfer@@@Z",
+        "section_size": 577,
+        "relocations": 20,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x3",
+          "0x9",
+          "0x11",
+          "0x8A",
+          "0xB7",
+          "0xDB",
+          "0xE3",
+          "0xED",
+          "0x13A",
+          "0x140",
+          "0x146",
+          "0x158",
+          "0x16C",
+          "0x18D",
+          "0x1C5",
+          "0x1D6",
+          "0x216",
+          "0x22A",
+          "0x232",
+          "0x23C"
+        ]
+      },
+      {
+        "rva": "0x001BBC10",
+        "size": 30,
+        "symbol": "??_GLocomotorSet@@UAEPAXI@Z",
+        "section_size": 30,
+        "relocations": 2,
+        "nonrelocation_differences": 0,
+        "relocation_offsets": [
+          "0x4",
+          "0x11"
+        ]
+      }
+    ],
+    "doxfer_extent": "Section has one trailing 0xCC at +576 also present in retail. Body remains 576 bytes; no boundary expansion requested."
+  },
+  "canonical_snapshot_probe": {
+    "header": "game/GameEngine/Source/Common/System/snapshot.h",
+    "header_sha256": "96299e295f364de1695ccb59693fbb47f2d975c534b04e8085c0d0715c1b891d",
+    "transform": "From the corrected scratch provider, replace the Rva01073744SnapshotBase class block with #include \"../../game/GameEngine/Source/Common/System/snapshot.h\" and derive LocomotorSet from Snapshot. Write build/loco_integration/LocomotorSetCurrentSnapshot.cpp.",
+    "source_sha256": "ff5b52af05168f5f76df64dda572fc2197074334b20088491fd422206856da5e",
+    "masked_destructor_result": "147 bytes / 11 relocs / zero non-relocation differences. This does NOT validate vtable targets.",
+    "emitted_locomotor_table": [
+      "??_ELocomotorSet@@UAEPAXI@Z",
+      "?GetSnapshotName@LocomotorSet@@UAEPBDXZ",
+      "?LoadPostProcess@LocomotorSet@@UAEXXZ",
+      "?DoXfer@LocomotorSet@@UAEXAAVXfer@@@Z"
+    ],
+    "retail_locomotor_table_order": [
+      "scalar deleting destructor 0x001BBC10",
+      "LoadPostProcess 0x001B7480",
+      "GetSnapshotName 0x001B7490",
+      "DoXfer 0x001BAAA0"
+    ],
+    "problem": "Current Snapshot header fixes GetSnapshotName before LoadPostProcess. Derived declarations cannot reorder inherited slots; LocomotorSet slots +4/+8 are wrong despite exact constructor/destructor instruction bytes.",
+    "emitted_snapshot_table": [
+      "??_ESnapshot@@UAEPAXI@Z",
+      "__purecall",
+      "__purecall",
+      "__purecall"
+    ],
+    "weak_externals": {
+      "??_ESnapshot@@UAEPAXI@Z": {
+        "default": "??_GSnapshot@@UAEPAXI@Z",
+        "search": 2
+      },
+      "??_ELocomotorSet@@UAEPAXI@Z": {
+        "default": "??_GLocomotorSet@@UAEPAXI@Z",
+        "search": 2
+      }
+    },
+    "scalar_delete_body_bytes": "f644240401568bf1c70600000000740956e80000000083c4048bc65ec20400",
+    "scalar_delete_body_size": 31,
+    "retail_snapshot_requirement": "Table slot zero at VA01073744 goes through ILT0003FA3A to 0005C550/83, a genuine vector deleting destructor (4-byte elements; Snapshot::~Snapshot callback through ILT00001C80). Current probe has no defined E body, only weak E -> G31. Remaining three retail slots are purecall.",
+    "alternative_bank_snapshot_probe": "Unmodified snapshot_e_dtor_export_probe/Snapshot.cpp still emits ??_ESnapshot@@UAEPAXI@Z exact 83 bytes / 5 relocations with real MSVC; this is an alternative diagnostic model, not an extra canonical class to land."
+  },
+  "ghidra_mcp": {
+    "version": "Ghidra 12.1.2, pyghidra-mcp 0.2.7 supervised stdio, private copy of analyzed project",
+    "successful_calls": [
+      "decompile 005B7450",
+      "decompile 005B98B0",
+      "decompile 005BA9E0",
+      "decompile 0045C550",
+      "disassemble 005B7490",
+      "read_bytes 0109DF3C/16",
+      "read_bytes 01073744/16"
+    ],
+    "retail_locomotor_vtable_hex": "3e334300dade4100e5014100a03d4000",
+    "retail_snapshot_vtable_hex": "3afa430000c5c80000c5c80000c5c800",
+    "finding": "LocomotorSet constructor writes through +0x20; destructor releases +0x1C then +0x18, deallocates vector, and installs canonical Snapshot vptr. Clear deletes through virtual slot zero."
+  },
+  "selection_caveat": {
+    "census_commit": "1677ebdc33",
+    "census_date": "2026-10-03 17:32",
+    "snapshot_native_selected_object": "game_^game^engine_^source_^game^client_^system_^f^x^particle^system_fx_particle_system.obj",
+    "old_bank_owner_map": "The bank cites TeamFactoryCtorThunk from an older census. This verified newer census selects fx_particle_system.cpp. The weak-root receipt belongs to the hosted runner and weak native proof is intentionally disabled locally. No current whole-tree selected-definition claim is made.",
+    "before_after_link_check": "Not run: Locomotor.cpp is held by another worker, and link_check can compile supplied sources even with --census-only. No production patch was made. A future integration must refresh all changed providers and callers together."
+  },
+  "ownership_at_check": [
+    {
+      "rva": "0x000B9D20",
+      "source": "game/GameEngine/Source/GameLogic/Object/Locomotor.cpp",
+      "owner": "Jonathan@steamdeck/326fcd46",
+      "expires_utc": "2026-10-03T21:54:13Z",
+      "meaning": "Matched source sibling; no edit/compile of the held production source performed."
+    },
+    {
+      "rva": "0xFFA868A0",
+      "family": "Snapshot vtable",
+      "owner": "TheThag@GreatFaram/9649b873",
+      "expires_utc": "2026-10-04T00:59:25Z",
+      "meaning": "Independent held prerequisite; no Snapshot provider/header/family rows edited."
+    }
+  ],
+  "next_required_change": "Finish the independently owned canonical Snapshot header/lifecycle provider selection with [E83, LoadPostProcess, GetSnapshotName, DoXfer] semantics; then revalidate availability of Locomotor.cpp and scoped canonical WWLib header route. Rehome all seven identities with supported tools, preserve all 37 Locomotor.cpp rows, refresh provider/caller link checks, and pay the full shrink-only header gate. A distinct Snapshot base-view vtable or new alias/pin cannot substitute for that prerequisite."
+}
