@@ -8,6 +8,10 @@ struct Coord3D
 	float z;
 };
 
+#define THING_TU_MEMBERS void setPosition(const Coord3D *position);
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
+
 struct HordeContainTransform
 {
 	unsigned char unused_00[0x0C];
@@ -35,11 +39,7 @@ struct HordeContainObject
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	void setPosition( const Coord3D *position );
-};
+class Object;
 
 class Rva00248F40HordeContain
 {
@@ -64,7 +64,7 @@ void Rva00248F40HordeContain::setExitPosition( Object *object )
 	Coord3D position;
 	HordeContainTransform transform( m_object->transform );
 	transform.getTranslation( &position );
-	object->setPosition( &position );
+	reinterpret_cast<Thing *>(object)->setPosition( &position );
 }
 
 void Rva0024B9B0HordeContain::setExitPosition( Object *object )
@@ -72,5 +72,5 @@ void Rva0024B9B0HordeContain::setExitPosition( Object *object )
 	Coord3D position;
 	HordeContainTransform transform( m_object->transform );
 	transform.getTranslation( &position );
-	object->setPosition( &position );
+	reinterpret_cast<Thing *>(object)->setPosition( &position );
 }

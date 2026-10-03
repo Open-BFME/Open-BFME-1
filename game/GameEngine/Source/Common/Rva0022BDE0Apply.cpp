@@ -10,11 +10,18 @@ public:
 	unsigned int m_flags;
 };
 
+// TransportContain::onRemoving is the ledger-owned body reached by the
+// retail ILT for this call (0x00041E34 -> 0x0022E340).
+class TransportContain
+{
+public:
+	virtual void onRemoving(Object *object);
+};
+
 class Rva0022BDE0Obj
 {
 public:
 	void apply(Object *obj);
-	void finish(Object *obj);
 };
 
 void Rva0022BDE0Obj::apply(Object *obj)
@@ -26,6 +33,6 @@ void Rva0022BDE0Obj::apply(Object *obj)
 			obj->m_flags &= ~0x40u;
 			obj->notifyModelConditionChanged();
 		}
-		finish(obj);
+		reinterpret_cast<TransportContain *>(this)->TransportContain::onRemoving(obj);
 	}
 }
