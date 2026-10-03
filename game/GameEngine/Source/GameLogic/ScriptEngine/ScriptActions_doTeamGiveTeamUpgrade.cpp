@@ -12,42 +12,14 @@ typedef unsigned int UnsignedInt;
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
-class BfmeStringLiteralBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringLiteralBase(const char *text);
-	~BfmeStringLiteralBase();
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
+	BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
 
-	BfmeAsciiStringArg(const char *text)
-	{
-		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
-	}
+	BfmeAsciiStringArg(const char *text) : AsciiString(text) {}
 
 	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h

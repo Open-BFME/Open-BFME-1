@@ -7,25 +7,11 @@
 #include "Common/GameCommon.h"
 #include "ObjectDlinkPmf.h"
 
-class BfmeStringArgBase
-{
-    friend class BfmeAsciiStringArg;
-private:
-    BfmeStringArgBase(const BfmeStringArgBase &);
-    ~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
+class BfmeAsciiStringArg : public AsciiString
 {
 public:
-    BfmeAsciiStringArg(const AsciiString &that)
-    {
-        ((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-            *(const BfmeStringArgBase *)&that);
-    }
+    BfmeAsciiStringArg(const AsciiString &that) : AsciiString(that) {}
     ~BfmeAsciiStringArg();
-private:
-    char *m_text;
 };
 
 class Team
