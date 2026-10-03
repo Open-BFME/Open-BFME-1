@@ -8,6 +8,8 @@ public:
 	void handle();
 };
 
+void j_0002644f();
+
 struct Rva002D34F0Holder
 {
 	char m_lead[0x14];
@@ -23,5 +25,6 @@ public:
 void Rva002D34F0::invoke()
 {
 	Rva002D34F0Holder *holder = *(Rva002D34F0Holder **)((char *)this - 0x1C);
-	holder->m_sub.handle();
+	typedef void (__fastcall *Gen0002644FHandle)(Gen0002644F *);
+	((Gen0002644FHandle)j_0002644f)(&holder->m_sub);
 }

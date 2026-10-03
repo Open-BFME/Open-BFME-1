@@ -6,6 +6,8 @@ public:
 	void bar(void *);
 };
 
+void j_00047f46();
+
 Rva007BAA90G *g_rva007baa90;
 
 class Rva007BAA90
@@ -16,5 +18,8 @@ public:
 
 void Rva007BAA90::run()
 {
-	g_rva007baa90->bar(this);
+	typedef void (Rva007BAA90G::*BarCall)(void *);
+	union { void *address; BarCall member; } call;
+	call.address = (void *)j_00047f46;
+	(g_rva007baa90->*call.member)(this);
 }

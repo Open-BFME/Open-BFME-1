@@ -1,8 +1,9 @@
 // cl: /O2 /Ob0
 
-void rva00782e80(int);
+void j_0002b823();
 
 void __stdcall rva0078adb0(int a)
 {
-	rva00782e80(a);
+	typedef void (__cdecl *Rva00782E80Call)(int);
+	((Rva00782E80Call)j_0002b823)(a);
 }
