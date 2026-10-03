@@ -33,16 +33,21 @@ class Rva0060FFC0Owner
 {
 public:
     void resetUiState(void);
-    void prepare(void);
 
 private:
     unsigned char m_prefix[0x28c];
     Rva0060FFC0Optional *m_optional;
 };
 
+// 0x00028F92 is an incremental-link thunk (row ?j_00028f92@@YAXXZ,
+// game/gen_small/thunks_019.cpp): a tail jump, so the prepare it enters still
+// reads this frame's `this` in ECX. The body behind it is unclaimed, so the
+// call names the thunk.
+extern void j_00028f92(void);
+
 void Rva0060FFC0Owner::resetUiState(void)
 {
-    prepare();
+    ((void (__fastcall *)(Rva0060FFC0Owner *))j_00028f92)(this);
 
     if (m_optional)
         m_optional->reset();

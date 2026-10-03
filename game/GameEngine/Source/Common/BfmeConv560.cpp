@@ -21,9 +21,12 @@ public:
 	virtual void bfmeStepCAA17();
 	virtual void bfmeStepCAA18();
 	virtual void bfmeStepCAA19();
-	void bfmeTailCAA();
 	void bfmeGoCAA();
 };
+
+// 0x000428AC is an incremental-link thunk (row ?j_000428ac@@YAXXZ,
+// game/gen_small/thunks_032.cpp): a tail jump that keeps this frame's `this`.
+extern void j_000428ac(void);
 
 void BfmeThingCAA::bfmeGoCAA()
 {
@@ -31,5 +34,5 @@ void BfmeThingCAA::bfmeGoCAA()
 	bfmeStepCAA17();
 	bfmeStepCAA18();
 	bfmeStepCAA19();
-	bfmeTailCAA();
+	((void (__fastcall *)(BfmeThingCAA *))j_000428ac)(this);
 }
