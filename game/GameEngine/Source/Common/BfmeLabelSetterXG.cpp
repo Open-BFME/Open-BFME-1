@@ -5,13 +5,26 @@
 // set and again for the trailing release -- and the store is skipped when the
 // target is absent.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+class BFMEPlayerTemplateAsciiString
+{
+public:
+	BFMEPlayerTemplateAsciiString(const char *text);
+	~BFMEPlayerTemplateAsciiString(void);
+
+private:
+	void *m_data;
+};
+
 class AsciiStringXG
 {
 public:
 	AsciiStringXG(const AsciiStringXG &other);
-	~AsciiStringXG(void);
-
-	void set(const AsciiStringXG &other);
+	__forceinline ~AsciiStringXG(void)
+	{
+		((BFMEPlayerTemplateAsciiString *)this)->~BFMEPlayerTemplateAsciiString();
+	}
 
 private:
 	char *m_bfmeData;
@@ -25,7 +38,7 @@ public:
 
 	void bfmeSetXG(const AsciiStringXG &other)
 	{
-		set(other);
+		((StringBase<char> *)this)->set(*(const StringBase<char> *)&other);
 	}
 };
 

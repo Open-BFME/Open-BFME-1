@@ -1,5 +1,7 @@
 // Open-BFME5 conversions.
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 inline void *operator new(unsigned int size, void *where)
 {
 	return where;
@@ -9,12 +11,23 @@ inline void operator delete(void *block, void *where)
 {
 }
 
+void __cdecl j_0001ab86(void);
+
 class BfmeStrVSY
 {
 public:
-	BfmeStrVSY(const BfmeStrVSY &other);
-	~BfmeStrVSY() { bfmeClearVSY(); }
-	void bfmeClearVSY();
+	__forceinline BfmeStrVSY(const BfmeStrVSY &other)
+	{
+		union CopyCall
+		{
+			void (__cdecl *freeCall)(void);
+			void (BfmeStrVSY::*memberCall)(const BfmeStrVSY &);
+		} copyCall;
+		copyCall.freeCall = &j_0001ab86;
+		(this->*copyCall.memberCall)(other);
+	}
+
+	~BfmeStrVSY() { ((StringBase<char> *)this)->clear(); }
 	char *m_bfme00;
 	int m_bfme04;
 };

@@ -13,12 +13,13 @@ public:
 	char m_bfmeFlagBZ;
 };
 
+void __cdecl j_0003fa30(void);
+void __cdecl j_00039257(void);
+
 class BfmeOwnBZ
 {
 public:
 	void bfmeRunBZ(void);
-	void bfmeInitBZ(void);
-	char bfmeStepBZ(void);
 
 	unsigned char m_bfmeHeadBZ[4];
 	BfmeCfgBZ *m_bfmeCfgBZ;
@@ -30,7 +31,7 @@ public:
 
 void BfmeOwnBZ::bfmeRunBZ(void)
 {
-	bfmeInitBZ();
+	((void (__cdecl *)(void))&j_0003fa30)();
 
 	BfmeCfgBZ *cfg = m_bfmeCfgBZ;
 
@@ -44,7 +45,13 @@ void BfmeOwnBZ::bfmeRunBZ(void)
 
 	while (index < cfg->m_bfmeCountBZ)
 	{
-		m_bfmeDoneBZ = bfmeStepBZ();
+		union StepCall
+		{
+			char (__cdecl *freeCall)(void);
+			char (BfmeOwnBZ::*memberCall)(void);
+		} stepCall;
+		stepCall.freeCall = (char (__cdecl *)(void))&j_00039257;
+		m_bfmeDoneBZ = (this->*stepCall.memberCall)();
 		++index;
 
 		if (m_bfmeDoneBZ)
