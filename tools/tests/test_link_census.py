@@ -636,3 +636,39 @@ def test_selected_legacy_data_over_the_verified_provider_blocks_its_callers(monk
     assert results["d1"] == "wrong"  # judge_selected: the kept definition is not the owner's
     results, _ = L.selection_verdicts(present, facts, L.ledger_owners([], data), {"d1": "glob.obj"})
     assert results["d1"] == "ok"
+
+
+def test_pin_at_an_ilt_stub_to_a_second_copy_is_a_retail_call_target():
+    # one instantiation, two retail bodies: 0x1000 (ledger) and 0x1100 (second copy,
+    # differing only in the rel32 of its call), reached through a packed ILT stub at 0x1200
+    first = b"\x55\x8b\xec\xe8\x10\x00\x00\x00\x5d\xc3\x90\x90"
+    second = b"\x55\x8b\xec\xe8\x77\x00\x00\x00\x5d\xc3\x90\x90"
+
+    def image(second_copy):
+        data = bytearray(0x220)
+        data[0x000:0x00C], data[0x100:0x10C] = first, second_copy
+        data[0x200:0x205] = jmp(0x1200, 0x1100)
+        data[0x205:0x20A] = jmp(0x1205, 0x1000)
+        data[0x20C:0x211] = b"\xe8" + struct.pack("<i", 0x1200 - 0x1211)  # the caller reaches the second copy
+        return data
+
+    def make(second_copy):
+        t = truth(image(second_copy), {"grow": {0x1000}, "caller": {0x120C}})
+        t.sizes = {"grow": {0x1000: len(first)}}
+        t.pin_copies = collections.defaultdict(set)
+        return t
+
+    t = make(second)
+    body = b"\xe8\0\0\0\0"
+    relocs = [(1, L.RetailTruth.REL32, referent("grow"))]
+    assert t.verdict(symbol("caller"), body, relocs, "x", 5) == "wrong"  # no pin accepted: ledger address only
+    assert t._second_copy("grow", 0x1200)
+    assert not t._second_copy("grow", 0x1205)  # a stub to the ledger body itself is no second copy
+    t.ledger["grow"].add(0x1100)
+    assert not t._second_copy("grow", 0x1200)  # the target is the name's own address
+    t.ledger["grow"].discard(0x1100)
+    t.pin_copies["grow"].add(0x1200)
+    assert t.addresses("grow", L.RetailTruth.REL32) == {0x1000, 0x1200}
+    assert t.addresses("grow", L.RetailTruth.DIR32) == {0x1000}  # a call route only
+    assert t.verdict(symbol("caller"), body, relocs, "y", 5) == "retail"
+    assert not make(second.replace(b"\x8b\xec", b"\x8b\xed"))._second_copy("grow", 0x1200)  # differs outside a call

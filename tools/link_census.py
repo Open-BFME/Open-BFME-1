@@ -708,8 +708,10 @@ class RetailTruth:
         pin_consistency.import_table.cache_clear()
         pin_consistency.gen_import_targets.cache_clear()
         routes = {}
-        pinned = pins(routes)
+        every = {}
+        pinned = pins(routes, every)
         self.ledger = collections.defaultdict(set)
+        self.sizes = collections.defaultdict(dict)
         names_at = collections.defaultdict(set)
         for row in rows:
             notes = row.get("notes") or ""
@@ -719,6 +721,8 @@ class RetailTruth:
             names = {row["name"]} if "gen-alias" in notes else {row["name"], build.ledger_object_symbol(row)}
             for name in names:  # a gen-alias twin's object symbol names its original, not the twin
                 self.ledger[_normal(name)].add(address)
+                if (row.get("target_size") or "").isdigit():
+                    self.sizes[_normal(name)][address] = int(row["target_size"])
             names_at[address].add(row["name"])
         for row in data_ledger():  # a data row is byte-verified at its address, like a function row
             self.ledger[_normal(row["name"])].add(data_rva(row))
@@ -736,6 +740,14 @@ class RetailTruth:
         with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):  # a data name: pin or dir32 entry, either may be right
                 self.pinned[_normal(row["name"])].add(int(row["va"], 16) - BASE)
+        self.pin_copies = collections.defaultdict(set)
+        for name, found in every.items():
+            key = _normal(name)
+            if key in self.sizes:
+                for address in found:
+                    for rva in self._rvas(address):
+                        if self._second_copy(key, rva):
+                            self.pin_copies[key].add(rva)
         self.slots = collections.defaultdict(set)
         for name, address in retail_import_slots():
             self.slots[name].add(address)
@@ -749,6 +761,8 @@ class RetailTruth:
         """Retail relocation targets, with proven import routes for REL32 only."""
         key = _normal(name)
         if key in self.ledger:
+            if kind == self.REL32 and getattr(self, "pin_copies", {}).get(key):
+                return self.ledger[key] | self.pin_copies[key]
             return self.ledger[key]
         if kind == self.REL32 and key in self.import_routes:
             return set(self.pinned.get(key, ())) | self.import_routes[key]
@@ -781,6 +795,31 @@ class RetailTruth:
             return None
         target = address + 5 + struct.unpack_from("<i", around, 6)[0]
         return target if text["rva"] <= target < text["rva"] + text["size"] else None
+
+    def _second_copy(self, key, pin):
+        """Is a symbols.csv pin at an ILT stub that routes a REL32 call to a
+        second retail copy of the ledger's body for this name?
+
+        Retail was linked without ICF, so one template instantiation can have
+        two retail bodies (0x757C70 and the EH-frame copy at 0x63700, reached
+        through ILT 0x3827B), and one name then has two call targets. The pin
+        counts only when it sits at a packed ILT stub, the stub's target is
+        not one of the name's own addresses, and the target's bytes equal a
+        ledger body of the name (that row's size) except in the rel32 field of
+        a call (E8) both bodies make at the same offset. The target may carry
+        another row's name (0x63700 is filed as a placeholder instantiation);
+        the byte skeleton, not that name, is the proof."""
+        target = self._stub(pin)
+        if target is None or pin in self.ledger[key] or target in self.ledger[key]:
+            return False
+        for home, size in self.sizes.get(key, {}).items():
+            first, second = self._read(home, size), self._read(target, size)
+            if first is None or second is None or size <= 5 or first == second:
+                continue
+            allowed = {at + k for at in range(size - 4) if first[at] == second[at] == 0xE8 for k in range(1, 5)}
+            if all(at in allowed for at in range(size) if first[at] != second[at]):
+                return True
+        return False
 
     def _lands(self, target, expected):
         if target in expected or self._stub(target) in expected:
@@ -1129,7 +1168,7 @@ def truth_fingerprint(truth):
         return None
     if not hasattr(truth, "_weak_fingerprint"):
         digest = hashlib.sha256(truth.image)
-        for name in ("ledger", "pinned", "slots", "import_routes", "shared", "sections"):
+        for name in ("ledger", "pinned", "slots", "import_routes", "shared", "sections", "pin_copies"):
             value = getattr(truth, name, {})
             digest.update(name.encode() + b"\0")
             _truth_fingerprint_update(digest, value)
