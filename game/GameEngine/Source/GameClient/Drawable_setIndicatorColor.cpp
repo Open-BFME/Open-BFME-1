@@ -58,7 +58,6 @@ class Drawable
 {
 public:
 	void setIndicatorColor(UnsignedInt color);
-	void bfmeSetIndicatorOn(bool flag);
 	Thing *getObject() const { return m_object; }
 
 	unsigned char m_unreconstructed_000[0xfc];
@@ -67,11 +66,25 @@ public:
 	UnsignedInt m_indicatorColor;
 };
 
+// bfmeSetIndicatorOn is reached through the five-byte ILT thunk 0x00018CF5
+// (?j_00018cf5@@YAXXZ); it jumps with the thiscall `this` in ECX.
+extern void j_00018cf5();
+
+typedef void (Drawable::*bfmeSetIndicatorOnThunk)(bool flag);
+
+union BfmeSetIndicatorOnThunkCast
+{
+	void (__cdecl *freeFunction)(bool flag);
+	bfmeSetIndicatorOnThunk memberFunction;
+};
+
 void Drawable::setIndicatorColor(UnsignedInt color)
 {
 	m_indicatorColor = color;
 	Thing *object = getObject();
 	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheGameLogic)->m_unreconstructed_114
 		|| (object && object->isAnyKindOf(*(const BitFlags<116> *)&(KindOfMaskType &)(KindOfMaskType(KindOfMaskType::kInit, 119, 179))));
-	bfmeSetIndicatorOn(indicatorOn);
+	BfmeSetIndicatorOnThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(bool)>(&::j_00018cf5);
+	(this->*cast.memberFunction)(indicatorOn);
 }
