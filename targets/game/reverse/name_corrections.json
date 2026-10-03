@@ -15738,5 +15738,15 @@
   "after_sha256": "e9366e347ede6114f5ab91f229e27f70834aa363f5e9a9887620dd423658fb8b",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "The local placeholder Gen003C0350Owner::probe and the matched LivingWorldRegionManager::rva003C8A50 are both pinned to ILT 0x0002BF0D, which reaches 0x003C8A50; the call now names the matched owner and its bytes are unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv511.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv511.cpp",
+  "old_name": "bfmeStepBQA",
+  "new_name": "j_0000f966",
+  "before_sha256": "50aaed89230b401a43d44223282e74aa26765ecd8fa2f3e4c73de1c2add4233f",
+  "after_sha256": "f1274f9951bc71fcf73bc559c716150dafd097b27e1c555465ffd3fd7df8fce3",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
