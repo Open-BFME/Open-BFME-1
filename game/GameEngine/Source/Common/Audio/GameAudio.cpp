@@ -541,17 +541,8 @@ AudioHandle AudioManager::addAudioEvent(const AudioEventRTS *eventToAdd)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isValidAudioEvent@AudioManager@@ present-unmatched
-Bool AudioManager::isValidAudioEvent(const AudioEventRTS *eventToCheck) const
-{
-	if (eventToCheck->getEventName().isEmpty()) {
-		return false;
-	}
-
-	getInfoForAudioEvent(eventToCheck);
-
-	return (eventToCheck->getAudioEventInfo() != NULL);
-}
+// BFME const-event isValidAudioEvent is owned by AudioManagerIsValidAudioEvent.cpp
+// at RVA 0x0069CFB0. Retail checks null and holds the manager mutex.
 
 //-------------------------------------------------------------------------------------------------
 // ?isValidAudioEvent@AudioManager@@ present-unmatched
