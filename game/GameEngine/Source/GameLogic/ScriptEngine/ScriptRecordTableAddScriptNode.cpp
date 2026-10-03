@@ -111,17 +111,28 @@ struct Rva0035D1E0Record
 	Rva0035D1E0ScriptNode *m_nodes;
 };
 
+// Retail reaches the table's two helpers through the ILT thunks
+// ?j_0004599e@@YAXXZ (findOrCreateIndex) and ?j_0003e85b@@YAXXZ (release),
+// the only symbols the ledger defines at those call targets; they are called
+// with ECX = table through thiscall member pointers of the same shape.
+extern void j_0004599e();
+extern void j_0003e85b();
+struct Rva0035D1E0HelperThunks
+{
+	int FindOrCreate(AsciiString *name);
+	void Release(int index);
+};
+typedef int (Rva0035D1E0HelperThunks::*Rva0035D1E0FindCall)(AsciiString *);
+typedef void (Rva0035D1E0HelperThunks::*Rva0035D1E0ReleaseCall)(int);
+
 // This address-derived table name is shared with the matched default-node
 // overload so the real 0x0004599E helper resolves through its existing pin.
 class Rva0035D2B0StringRecordTable
 {
 public:
 	int addNode(AsciiString *name, const Script *script);
-	void release(int index);
 
 private:
-	int findOrCreateIndex(AsciiString *name);
-
 	int *m_nameIndexesBegin;
 	int *m_nameIndexesEnd;
 	int *m_nameIndexesCapacity;
@@ -135,7 +146,9 @@ private:
 int Rva0035D2B0StringRecordTable::addNode(
 	AsciiString *name, const Script *script)
 {
-	int index = findOrCreateIndex(name);
+	union { void (*asFunction)(); Rva0035D1E0FindCall asMember; } findCast;
+	findCast.asFunction = j_0004599e;
+	int index = (reinterpret_cast<Rva0035D1E0HelperThunks *>(this)->*findCast.asMember)(name);
 	if (index != -1)
 	{
 		Rva0035D1E0Record *records = m_records;
@@ -149,7 +162,9 @@ int Rva0035D2B0StringRecordTable::addNode(
 		}
 		catch (...)
 		{
-			release(index);
+			union { void (*asFunction)(); Rva0035D1E0ReleaseCall asMember; } releaseCast;
+			releaseCast.asFunction = j_0003e85b;
+			(reinterpret_cast<Rva0035D1E0HelperThunks *>(this)->*releaseCast.asMember)(index);
 			throw;
 		}
 	}
