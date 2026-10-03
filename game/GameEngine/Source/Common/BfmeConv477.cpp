@@ -12,7 +12,17 @@ public:
 	BfmeSubBJF m_bfmeSub;
 };
 
+// The forward reaches the ILT thunk at 0x00006C58
+// (`?j_00006c58@@YAXXZ`, game/gen_small/thunks_002.cpp), so the callee is
+// named by the thunk holding the body at that address.
+
+extern void j_00006c58();
+
 void BfmeThingBJF::bfmeGoBJF(void *one, void *two)
 {
-	m_bfmeSub.bfmeDoBJF(one, two, 1);
+	typedef void (BfmeSubBJF::*Call)(void *, void *, int);
+	union { void (*raw)(); Call forward; } call;
+
+	call.raw = j_00006c58;
+	(m_bfmeSub.*call.forward)(one, two, 1);
 }
