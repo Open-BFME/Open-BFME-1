@@ -7,6 +7,8 @@
 // j_00041899 thunk reaches this body, but no named caller or owner/vtable is
 // present in the current retail evidence, so the C++ identity stays neutral.
 
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long timeout);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern void j_00034626();
@@ -33,16 +35,9 @@ private:
 	char m_owned;
 };
 
-class AsciiString
-{
-public:
-	void *m_data;
-	int bfmeCompare1294(const char *text) const;
-};
-
 struct Rva006B1E60Provider
 {
-	AsciiString m_name;
+	StringBase<char> m_name;
 	unsigned int m_id;
 	int m_valid;
 };
@@ -70,7 +65,7 @@ bool Rva006B1E60Owner::evaluate(bool requested)
 	bool request = requested;
 	if (selected != 0xffffffffu)
 	{
-		if (self->m_provider[selected].m_name.bfmeCompare1294(
+		if (self->m_provider[selected].m_name.compare(
 				"Creative Labs EAX 3 (TM)") == 0)
 		{
 			if (request)
@@ -94,7 +89,7 @@ bool Rva006B1E60Owner::evaluate(bool requested)
 	selected = self->m_selectedProvider;
 	if (selected != 0xffffffffu)
 	{
-		bool isEax = self->m_provider[selected].m_name.bfmeCompare1294(
+		bool isEax = self->m_provider[selected].m_name.compare(
 			"Creative Labs EAX 3 (TM)") == 0;
 		return request == isEax;
 	}
