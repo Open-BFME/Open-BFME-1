@@ -1526,51 +1526,6 @@ UnsignedInt ThingTemplate::getMaxSimultaneousOfType() const
 
 
 //-------------------------------------------------------------------------------------------------
-// ?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z present-unmatched
-Bool ThingTemplate::isEquivalentTo(const ThingTemplate* tt) const
-{
-	// sanity
-	if (!(this && tt)) 
-		return false;
-
-	// sanity
-	if (this == tt) 
-		return true;
-	
-	if (this->getFinalOverride() == tt->getFinalOverride()) 
-		return true;
-
-	// This reskinned from that?
-	if (this->m_reskinnedFrom == tt)
-		return true;
-
-	// That reskinned from this?
-	if (this == tt->m_reskinnedFrom)
-		return true;
-
-	// This reskinned from that reskinned from?
-	// Kris: added case (chassis 2 compared to chassis 3 -- NULL possible if not reskinned)
-	if( this->m_reskinnedFrom && this->m_reskinnedFrom == tt->m_reskinnedFrom )
-		return true;
-
-	// Is this thing a build variation of that thing or vice versa
-	Int i;
-
-	Int numVariations = m_buildVariations.size();
-	for (i = 0; i < numVariations; ++i) 
-		if (m_buildVariations[i].compareNoCase(tt->getName()) == 0)
-			return true;
-	
-	numVariations = tt->m_buildVariations.size();
-	for (i = 0; i < numVariations; ++i)
-		if (tt->m_buildVariations[i].compareNoCase(getName()) == 0)
-			return true;
-
-	// Guess we're not equivalent.
-	return false;
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?isBuildableItem@ThingTemplate@@QBE_NXZ present-unmatched
 Bool ThingTemplate::isBuildableItem(void) const
 {

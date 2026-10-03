@@ -98,12 +98,12 @@ public:
 	int bfmeGoUKD();
 };
 
-// The item's "availability" facet at the retail call site 0x0003E80B; still
-// an unmatched dump (pinned), called here only for its ABI.
-class BfmeCheckFH
+// The item's "availability" facet at the retail call site 0x0003E80B: the ILT
+// whose symbol is ThingTemplate::isEquivalentTo (0x0013FE10).
+class ThingTemplate
 {
 public:
-	char bfmeCheckFH( void *a );
+	bool isEquivalentTo( const ThingTemplate *tt ) const;
 };
 
 // ProductionUpdateInterface, extended two slots past Rva004BC8A0.cpp's copy:
@@ -214,7 +214,7 @@ void Rva004BCCE0( GameWindow *window )
 
 		if( purpose == 3 )
 		{
-			BfmeCheckFH *thing = (BfmeCheckFH *)command->getThingTemplate();
+			ThingTemplate *thing = command->getThingTemplate();
 
 			Rva0029BBC0 *item = pui->slot18();
 			while( item != 0 )
@@ -224,7 +224,7 @@ void Rva004BCCE0( GameWindow *window )
 					// Named local, not an inline argument: it shifts VC7.1's scratch
 					// register rotation so the get-next vtable load lands in EAX.
 					void *field8 = *(void **)( (char *)item + 8 );
-					if( thing->bfmeCheckFH( field8 ) )
+					if( thing->isEquivalentTo( (ThingTemplate *)field8 ) )
 					{
 						GadgetButtonDrawInverseClock( window, ( (BfmeThingUKD *)item )->bfmeGoUKD(), 0x80FFFFFF );
 						return;
