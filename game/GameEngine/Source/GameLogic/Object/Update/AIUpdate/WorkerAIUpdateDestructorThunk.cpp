@@ -107,11 +107,18 @@ private:
 class BfmeWorkerDockPoint
 {
 public:
-	~BfmeWorkerDockPoint();
+	__declspec(noinline) ~BfmeWorkerDockPoint();
 
 private:
 	unsigned char m_data[0x10];
 };
+
+// FuncInfo E03774 state 1 selects the real nine-element array cleanup at
+// C14058. Its callback FD6C -> 2C7A70 is one RET followed by INT3 padding.
+// Keep the existing local layout spelling; its ledger identity stays opaque.
+BfmeWorkerDockPoint::~BfmeWorkerDockPoint()
+{
+}
 
 class WorkerAIUpdate
 	: public Rva0001C774FlatBase,
