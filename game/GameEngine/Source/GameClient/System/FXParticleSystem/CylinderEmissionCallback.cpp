@@ -5,7 +5,7 @@
 // the semantic type of the copied third word are not established.
 extern "C" double __cdecl sqrt(double value);
 extern const float g_rva01075350;
-extern const float Rva00C75334One;
+extern float g_bfmeDefaultBU;
 
 namespace FXParticleSystem {
 
@@ -41,7 +41,7 @@ Rva005F93F0Coord3D Rva005F93F0CylinderCallbackView::Rva005F93F0CylinderCallback(
     float y = input->y;
     float length = (float)sqrt(y * y + x * x);
     if (length != g_rva01075350) {
-        float inverseLength = Rva00C75334One / length;
+        float inverseLength = g_bfmeDefaultBU / length;
         x = x * inverseLength;
         y = y * inverseLength;
     }
