@@ -31,8 +31,6 @@ class FXList;
 class FXListStore;
 extern FXListStore *TheFXListStore;
 
-extern const char Rva006A16B0Empty[];
-
 extern "C" const void *bfmeVftCategoryModuleInfo8[];
 #pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
 
@@ -167,7 +165,7 @@ TerrainCollisionModule::TerrainCollisionModule(
         // itself carries the defining name.
         mutableSourceImage->m_cached =
             reinterpret_cast<TerrainCollisionEventFXLookupShim *>(TheFXListStore)->lookup(
-            text ? text + 8 : Rva006A16B0Empty);
+            text ? text + 8 : "");
     }
     m_cached = sourceImage->m_cached;
 

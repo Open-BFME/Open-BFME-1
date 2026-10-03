@@ -20,8 +20,6 @@ typedef unsigned short WideChar;
 class GameWindow;
 class GameSlot;
 class Team;
-
-extern char Rva006A16B0Empty[];
 extern const char g_bfmeEmptyUnicode[];
 
 class UnicodeString;
@@ -112,7 +110,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? &m_data->data[ 0 ] : Rva006A16B0Empty;
+		return m_data ? &m_data->data[ 0 ] : "";
 	}
 };
 

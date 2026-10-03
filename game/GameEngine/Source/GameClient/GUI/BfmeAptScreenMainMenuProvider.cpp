@@ -5,8 +5,6 @@
 // provider fields at +0x25D and +0x27C.
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
-
-extern const char Rva006A16B0Empty[];
 #include "ascii_string.h"
 
 class GameState

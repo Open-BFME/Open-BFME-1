@@ -5,8 +5,6 @@
 
 typedef int Int;
 
-extern const char Rva006A16B0Empty[];
-
 #include "ascii_string.h"
 
 class INI

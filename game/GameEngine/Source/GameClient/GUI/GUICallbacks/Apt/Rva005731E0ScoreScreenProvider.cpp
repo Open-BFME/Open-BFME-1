@@ -14,8 +14,6 @@ struct StringHeader
 	char data[ 1 ];
 };
 
-extern char Rva006A16B0Empty[];
-
 // ?nullStringAI@@YAXXZ absent-from-retail
 void nullStringAI();
 
@@ -41,7 +39,7 @@ public:
 
 	const char *strAI() const
 	{
-		return rawDataAI() ? peekAI() : Rva006A16B0Empty;
+		return rawDataAI() ? peekAI() : "";
 	}
 
 	// Retail keeps an unwind state for the lookup result with no store, so a
