@@ -9,7 +9,7 @@ struct Rva00EF1000Storage
     void *word4;
     void *word8;
 };
-extern Rva00EF1000Storage Rva00EF1000Global;
+Rva00EF1000Storage Rva00EF1000Global;
 void bfmeForward_00C6FEF0();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
