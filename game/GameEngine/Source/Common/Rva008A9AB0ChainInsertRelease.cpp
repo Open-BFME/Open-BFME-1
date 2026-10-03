@@ -6,6 +6,12 @@ struct BfmeStringData3AF0
 	unsigned short m_refCount;
 };
 
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+
 struct Rva0089E1E0
 {
 	BfmeStringData3AF0 *m_inner;
@@ -34,8 +40,8 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern EAStringC::StringDataC g_rva012D5298Empty;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 void Rva008C3B60Node::insertRva008A9AB0(void)
 {
@@ -47,9 +53,9 @@ void Rva008C3B60Node::insertRva008A9AB0(void)
 		BfmeStringData3AF0 *data = m_8.m_inner;
 
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 
-		m_8.m_inner = &g_bfmeDefaultString1284;
-		++g_bfmeDefaultString1284.m_refCount;
+		m_8.m_inner = (BfmeStringData3AF0 *)&g_rva012D5298Empty;
+		++((BfmeStringData3AF0 *)&g_rva012D5298Empty)->m_refCount;
 	}
 }
