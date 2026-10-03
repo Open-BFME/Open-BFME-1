@@ -40,7 +40,7 @@ extern BfmeProcVB g_bfmeSlot00VB;
 extern BfmeProcVB g_bfmeSlot01VB;
 extern BfmeProcVB g_bfmeSlot02VB;
 extern BfmeProcVB g_bfmeSlot03VB;
-extern BfmeProcVB g_bfmeSlot04VB;
+BfmeProcVB g_bfmeSlot04VB;
 extern BfmeProcVB g_bfmeSlot05VB;
 extern BfmeProcVB g_bfmeSlot06VB;
 extern BfmeProcVB g_bfmeSlot07VB;

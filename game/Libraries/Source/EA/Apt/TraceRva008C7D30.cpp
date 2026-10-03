@@ -18,7 +18,7 @@ struct BfmeStringPool3AF0
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 extern BfmeStringData3AF0 *g_stringBlock01338724;
-extern "C" void (__cdecl *g_bfmeCallback1226)(const void *, const void *);
+extern void (__cdecl *g_bfmeSlot04VB)(void);
 
 class BfmeStrVKI
 {
@@ -164,7 +164,7 @@ converted:
     Rva8CD130String line("AptTrace: ");
     ((BfmeStrVKJ *)&line)->bfmeAssignVKJ(*(BfmeStrVKJ *)&text);
     line.rva0089EA60Append("\n");
-    ((void (__cdecl *)(const char *, ...))g_bfmeCallback1226)("%s", (char *)line.m_data + 8);
+    ((void (__cdecl *)(const char *, ...))g_bfmeSlot04VB)("%s", (char *)line.m_data + 8);
 
     Rva8CD130Value *old = state->m_values[state->m_count - 1];
     if (!old->maxRefCountHit())
