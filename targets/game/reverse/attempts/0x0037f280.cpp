@@ -1,10 +1,15 @@
 // ?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z
-// partial score=0.898 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc
+// partial score=0.9826 date=2026-10-03
+// ?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic/Object
 // stlport
-// BFME ExperienceLevelSystem::update, retail 0x0037F4C0.  The pending list at
-// +0x1C holds ObjectID, level-data pointer and effect flag records.  Phase 5
-// resolves each live object, applies the record, then clears the list.
+// Bank only: full459B through RET12 at0037F448; next INT3 at0037F44B.
+// Scope audit: both effect calls are guarded; explicit frame load and upgrade
+// local reduce47 differences to9, native Object getter reduces to8 (quality0.9826).
+// Native object.h/ascii_string.h adopted; getter is the ZH Object.h inline.
+// Remaining8 differences surround tracker string assignment and first store.
+// Inherited tracker/data labels, member-pointer union, and21 relocation bindings
+// remain unaudited for production. See identity_evidence/0037f280-effect-scope.md.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -16,14 +21,7 @@ typedef int Int;
 typedef unsigned int ObjectID;
 typedef unsigned int NameKeyType;
 
-class AsciiString
-{
-public:
-	void set( const AsciiString &that );
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class ExperienceLevelData;
 class ExperienceTracker;
@@ -106,20 +104,14 @@ public:
 	Int m_scalarIndex;
 };
 
-class Object
-{
-public:
-	Bool applyAttributeModifier( const AsciiString &name, Int duration );
-	void giveUpgrade( const UpgradeTemplate *upgrade );
-	Module *findModule( NameKeyType key );
-	void bfmeApplySpecialModelCondition( Int condition,
-		const void *animation, Int frames );
-
-	char m_pad000[ 0x210 ];
-	ExperienceTracker *m_experienceTracker;
-	char m_pad214[ 0x344 - 0x214 ];
-	unsigned char m_flags344;
-};
+#define OBJECT_TU_MEMBERS \
+ ExperienceTracker *getExperienceTracker() { return m_experienceTracker; } \
+ Bool applyAttributeModifier(const AsciiString &, Int); \
+ void giveUpgrade(const UpgradeTemplate *); \
+ Module *findModule(NameKeyType); \
+ void bfmeApplySpecialModelCondition(Int, const void *, Int);
+#include "object.h"
+#undef OBJECT_TU_MEMBERS
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;
@@ -191,25 +183,26 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 		index < static_cast<unsigned int>(
 			level->m_upgrades.size() ); ++index )
 	{
-		object->giveUpgrade( level->m_upgrades.begin()[ index ] );
+		const UpgradeTemplate *upgrade = level->m_upgrades.begin()[ index ];
+		object->giveUpgrade( upgrade );
 	}
 
-	if ( showEffect & ( TheBfmeGameLogic->m_frame >= 10 ) )
+	unsigned int frame = TheBfmeGameLogic->m_frame;
+	if (showEffect && frame >= 10)
 	{
 		ExperienceLevelEffectCallValue effectCall;
 		effectCall.freeFunction = j_00038843;
 		(reinterpret_cast<ExperienceLevelSystem *>( this )
 			->*effectCall.memberFunction)( level, object );
+		((BfmeItemRY *)object)->bfmeDoRY( (void *)0xc7, (void *)0xf );
 	}
 
-	((BfmeItemRY *)object)->bfmeDoRY( (void *)0xc7, (void *)0xf );
-
-	object->m_experienceTracker->m_name.set( level->m_name );
-	object->m_experienceTracker->m_experience = level->m_experienceAward;
-	object->m_experienceTracker->m_experienceAwardOwnGuysDie =
+	object->getExperienceTracker()->m_name.set( level->m_name );
+	object->getExperienceTracker()->m_experience = level->m_experienceAward;
+	object->getExperienceTracker()->m_experienceAwardOwnGuysDie =
 		level->m_experienceAwardOwnGuysDie;
-	++object->m_experienceTracker->m_scalarIndex;
-	object->m_experienceTracker->bfmeSetScalarIndex( level->m_rank );
+	++object->getExperienceTracker()->m_scalarIndex;
+	object->getExperienceTracker()->bfmeSetScalarIndex( level->m_rank );
 
 	unsigned int nonzero = 0;
 	for ( unsigned int index = 0; index < 10; ++index )
@@ -242,18 +235,4 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 
 	if ( level->m_emotionType != -1 )
 		object->bfmeApplySpecialModelCondition( level->m_emotionType, 0, trueValue );
-}
-
-void ExperienceLevelSystem::update()
-{
-	for ( _STL::list<PendingExperienceLevel>::iterator it = m_pending.begin();
-		it != m_pending.end(); ++it )
-	{
-		Object *object = TheBfmeGameLogic->findObjectByID( (*it).m_objectID );
-		if ( object && !(object->m_flags344 & 1) )
-			((Gen0002B7F6 *)this)->call(
-				(*it).m_level, object, (*it).m_showEffect );
-	}
-
-	m_pending.clear();
 }
