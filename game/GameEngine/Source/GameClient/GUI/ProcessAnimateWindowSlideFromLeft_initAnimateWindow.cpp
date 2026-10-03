@@ -70,6 +70,19 @@ public:
 		UnsignedInt endTime);
 };
 
+// Retail 0x0003D5B9 is the ILT thunk to AnimateWindow::setAnimData (0x0045CF50).
+extern void j_0003d5b9(void);
+
+typedef void (BFMEAnimateWindowLayout::*BFMESetAnimDataThunk)(
+	ICoord2D startPos, ICoord2D endPos, ICoord2D curPos,
+	ICoord2D restPos, BFMECoord2D vel, UnsignedInt startTime,
+	UnsignedInt endTime);
+union BFMESetAnimDataThunkPun
+{
+	void (*address)(void);
+	BFMESetAnimDataThunk method;
+};
+
 extern Display *TheDisplay;
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
@@ -111,6 +124,6 @@ void ProcessAnimateWindowSlideFromLeft::initAnimateWindow(AnimateWindow *animWin
 	vel.x = m_maxVel.x;
 	vel.y = m_maxVel.y;
 
-	((BFMEAnimateWindowLayout *)animWin)->setAnimData(startPos, endPos, curPos,
+	BFMESetAnimDataThunkPun thunk; thunk.address = j_0003d5b9; (((BFMEAnimateWindowLayout *)animWin)->*thunk.method)(startPos, endPos, curPos,
 		restPos, vel, bfme_timeGetTime() + animWin->getDelay(), 0);
 }
