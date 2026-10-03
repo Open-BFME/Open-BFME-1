@@ -26,64 +26,61 @@ public:
 	float &operator[](int index) { return (&X)[index]; }
 };
 
-class DX8Wrapper
+// TU-local: the DX8Wrapper::Clamp_Color symbol is owned by DX8WrapperClampColor.cpp
+static __forceinline void PackColorClamp(Vector4 &color)
 {
-public:
-	static __forceinline void Clamp_Color(Vector4 &color)
-	{
-		if (!CPUDetectClass::Has_CMOV_Instruction()) {
-			for (int i = 0; i < 4; ++i) {
-				color[i] = (color[i] <= 0.0f)
-					? 0.0f
-					: ((color[i] > 1.0f)
-						? 1.0f : color[i]);
-			}
-			return;
+	if (!CPUDetectClass::Has_CMOV_Instruction()) {
+		for (int i = 0; i < 4; ++i) {
+			color[i] = (color[i] <= 0.0f)
+				? 0.0f
+				: ((color[i] > 1.0f)
+					? 1.0f : color[i]);
 		}
-
-		__asm
-		{
-			mov esi,dword ptr color
-			mov edx,0x3f800000
-
-			mov edi,dword ptr[esi]
-			mov ebx,edi
-			sar edi,31
-			not edi
-			and edi,ebx
-			cmp edi,edx
-			cmovnb edi,edx
-			mov dword ptr[esi],edi
-
-			mov edi,dword ptr[esi+4]
-			mov ebx,edi
-			sar edi,31
-			not edi
-			and edi,ebx
-			cmp edi,edx
-			cmovnb edi,edx
-			mov dword ptr[esi+4],edi
-
-			mov edi,dword ptr[esi+8]
-			mov ebx,edi
-			sar edi,31
-			not edi
-			and edi,ebx
-			cmp edi,edx
-			cmovnb edi,edx
-			mov dword ptr[esi+8],edi
-
-			mov edi,dword ptr[esi+12]
-			mov ebx,edi
-			sar edi,31
-			not edi
-			and edi,ebx
-			cmp edi,edx
-			cmovnb edi,edx
-			mov dword ptr[esi+12],edi
-		}
+		return;
 	}
-};
+
+	__asm
+	{
+		mov esi,dword ptr color
+		mov edx,0x3f800000
+
+		mov edi,dword ptr[esi]
+		mov ebx,edi
+		sar edi,31
+		not edi
+		and edi,ebx
+		cmp edi,edx
+		cmovnb edi,edx
+		mov dword ptr[esi],edi
+
+		mov edi,dword ptr[esi+4]
+		mov ebx,edi
+		sar edi,31
+		not edi
+		and edi,ebx
+		cmp edi,edx
+		cmovnb edi,edx
+		mov dword ptr[esi+4],edi
+
+		mov edi,dword ptr[esi+8]
+		mov ebx,edi
+		sar edi,31
+		not edi
+		and edi,ebx
+		cmp edi,edx
+		cmovnb edi,edx
+		mov dword ptr[esi+8],edi
+
+		mov edi,dword ptr[esi+12]
+		mov ebx,edi
+		sar edi,31
+		not edi
+		and edi,ebx
+		cmp edi,edx
+		cmovnb edi,edx
+		mov dword ptr[esi+12],edi
+	}
+}
 
 static __forceinline unsigned int Rva0090F950ConvertColor(
 	const Vector3 &color, float alpha)
@@ -145,7 +142,7 @@ rva0090f950_fpu_restored:
 void Rva0090F950PackColor(unsigned int *out, const Vector4 *color)
 {
 	Vector4 clamped_color = *color;
-	DX8Wrapper::Clamp_Color(clamped_color);
+	PackColorClamp(clamped_color);
 	*out = Rva0090F950ConvertColor(
 		reinterpret_cast<const Vector3 &>(clamped_color), clamped_color[3]);
 }
