@@ -1794,3 +1794,10 @@ The final body needs no volatile access, barrier or bit-pattern argument
 facade. Preserve the opaque entry name: matching the neighboring layout is
 not proof of a semantic owner name. Both direct callees and all 97 bytes
 verified; see `targets/game/reverse/identity_evidence/00618980-native-override.md`.
+For UpgradeDie::onDie (0x00256240, 101 bytes), exposing the existing noinline
+GameLogicObjectLookup.h body fixes the five-byte producer-lookup schedule:
+retail loads the ID into ECX, saves EDI, pushes ECX, then loads TheGameLogic.
+A declaration-only call kept the ID in EAX and loaded the receiver early.
+The full native module headers and canonical object.h preserve the match;
+no artificial pure accessor or duplicate helper claim is needed. See
+identity_evidence/00256240-upgrade-die.md for the slot and field evidence.
