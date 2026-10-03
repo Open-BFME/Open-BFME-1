@@ -25,13 +25,16 @@ enum {
     W3D_CHUNK_AABTREE = 0x90
 };
 
+// Retail's read_vertex_influences is the 559-byte body at 0x00925380, carried by
+// the ledger row d_00925380; the call goes through that name.
+extern void d_00925380();
+
 class MeshGeometryClass {
 protected:
     bool read_vertices(ChunkLoadClass &cload, bool alternate_format);
     bool read_vertex_normals(ChunkLoadClass &cload, bool alternate_format);
     bool read_triangles(ChunkLoadClass &cload);
     bool read_user_text(ChunkLoadClass &cload);
-    bool read_vertex_influences(ChunkLoadClass &cload);
     bool read_vertex_shade_indices(ChunkLoadClass &cload);
     bool read_aabtree(ChunkLoadClass &cload);
     bool read_chunks(ChunkLoadClass &cload);
@@ -57,8 +60,10 @@ bool MeshGeometryClass::read_chunks(ChunkLoadClass &cload)
             case W3D_CHUNK_MESH_USER_TEXT:
                 error = read_user_text(cload);
                 break;
-            case W3D_CHUNK_VERTEX_INFLUENCES:
-                error = read_vertex_influences(cload);
+            case W3D_CHUNK_VERTEX_INFLUENCES: {
+                union { void (*fn)(); bool (MeshGeometryClass::*call)(ChunkLoadClass &); } route = { d_00925380 };
+                error = (this->*route.call)(cload);
+            }
                 break;
             case W3D_CHUNK_VERTEX_SHADE_INDICES:
                 error = read_vertex_shade_indices(cload);
