@@ -1,6 +1,10 @@
+// 0x00045EB7 is retail's 5-byte ILT thunk (?j_00045eb7@@YAXXZ); the callee's
+// own identity is not recovered, so the __thiscall is routed through the
+// thunk's address.
+extern void j_00045eb7();
+
 struct BfmeSlotBTE
 {
-	void **bfmeMakeBTE(void *what);
 	unsigned char m_bfmeHead[12];
 };
 
@@ -14,6 +18,8 @@ public:
 
 void BfmeThingBTE::bfmeGoBTE(int at, void *what, void *out)
 {
-	void **got = m_bfmeSlots[at].bfmeMakeBTE(what);
+	typedef void **(BfmeSlotBTE::*Make)(void *);
+	union { void (*address)(); Make member; } make = { j_00045eb7 };
+	void **got = (m_bfmeSlots[at].*make.member)(what);
 	*got = out;
 }

@@ -2,6 +2,11 @@
 // Retail 0x0024F730: forwards a time delta to a pinned thiscall callee.
 // Identity of the owner and its two pointer members is not recovered; the
 // pinned callee's class (BfmeSubKQ) is the only real name involved.
+// 0x0004A12E is retail's 5-byte ILT thunk (?j_0004a12e@@YAXXZ); the callee's
+// own identity is not recovered, so the __thiscall is routed through the
+// thunk's address (see BfmeConv751.cpp for the same convention).
+extern void j_0004a12e();
+
 class BfmeSubKQ
 {
 public:
@@ -46,5 +51,7 @@ void Rva0024F730Owner::apply(void)
 	Rva0024F730Inner *inner = state->m_inner;
 	int now = thing->m_time;
 	int start = inner->m_start;
-	reinterpret_cast<BfmeSubKQ *>(inner)->bfmeDoKQ(now - start, 0, 0);
+	typedef void (BfmeSubKQ::*Call)(int, int, int);
+	union { void (*address)(); Call member; } call = { j_0004a12e };
+	(reinterpret_cast<BfmeSubKQ *>(inner)->*call.member)(now - start, 0, 0);
 }
