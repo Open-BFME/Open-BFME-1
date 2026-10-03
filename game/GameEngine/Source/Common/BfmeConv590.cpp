@@ -44,10 +44,13 @@ struct BfmeSubCFC
 	BfmeInnerCFC m_bfmeInner;
 };
 
-class BfmeOuterCFC
+// The guard at this-0x10 is retail's GenOwner and the call is its matched
+// ?ready@GenOwner@@QAE_NXZ (game/GameEngine/Source/Common/Bfme/GenOwner_ready.cpp);
+// retail reaches it through the incremental-link thunk at 0x0004425B.
+class GenOwner
 {
 public:
-	bool bfmeAskCFC();
+	bool ready();
 };
 
 class BfmeThingCFC
@@ -60,7 +63,7 @@ public:
 
 int BfmeThingCFC::bfmeGoCFC()
 {
-	if (((BfmeOuterCFC *)((char *)this - 0x10))->bfmeAskCFC())
+	if (((GenOwner *)((char *)this - 0x10))->ready())
 		return m_bfmeSub->m_bfmeInner.bfmeRunCFC();
 	return 0;
 }

@@ -3,7 +3,7 @@
 // built without optimisation. Both callees are pinned by address; nothing here
 // names them.
 
-int bfmeMakeOX(void *one);
+int stringLength(const char *s);
 
 // The helper the worker below calls is retail's BfmeS1155::bfmeFind1155 (its
 // three arguments are pushed and its this comes from the caller's this).
@@ -23,5 +23,5 @@ void BfmeThingPD::bfmeGoPD(void *one, void *two)
 {
 	reinterpret_cast<BfmeS1155 *>(this)->bfmeFind1155(
 		reinterpret_cast<const char *>(one), reinterpret_cast<unsigned int>(two),
-		(unsigned int)bfmeMakeOX(one));
+		(unsigned int)stringLength(reinterpret_cast<const char *>(one)));
 }
