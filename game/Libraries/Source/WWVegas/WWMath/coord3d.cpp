@@ -310,11 +310,6 @@ float Coord3D::length() const
     return (float)sqrt(x * x + y * y + z * z);
 }
 
-float Coord3D::lengthSqr() const
-{
-    return z * z + y * y + x * x;
-}
-
 Coord3D &Coord3D::Negate()
 {
     x = -x;
