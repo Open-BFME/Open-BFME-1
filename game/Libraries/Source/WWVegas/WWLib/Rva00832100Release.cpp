@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD
 
+extern void *g_bfmeObjWE;
+extern int g_bfmeCountWE;
+
 namespace _STL
 {
 
@@ -11,15 +14,12 @@ public:
 	virtual void _bfme_decr(void) = 0;
 };
 
-extern _Locale_impl *_Bfme_classic_locale;
-extern int _Bfme_classic_locale_refs;
-
 void rva00832100Release(void)
 {
-	if (_Bfme_classic_locale_refs)
+	if (::g_bfmeCountWE)
 	{
-		_Bfme_classic_locale->_bfme_decr();
-		--_Bfme_classic_locale_refs;
+		static_cast<_Locale_impl *>(::g_bfmeObjWE)->_bfme_decr();
+		--::g_bfmeCountWE;
 	}
 }
 
