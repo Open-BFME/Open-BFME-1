@@ -19,7 +19,7 @@ class BFMERetailAsciiString
 public:
 	BFMERetailAsciiString(const char *text);
 	BFMERetailAsciiString(const BFMERetailAsciiString &other);
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	~BFMERetailAsciiString();
 
 	bool isNotEmpty() const
 	{
@@ -28,16 +28,15 @@ public:
 	}
 
 private:
-	void releaseBuffer();
 	void *m_data;
 };
 
 class BfmeAsciiStringArg
 {
 public:
-	BfmeAsciiStringArg(const BFMERetailAsciiString &that)
+	BfmeAsciiStringArg(const AsciiString &that)
 	{
-		((AsciiString *)this)->AsciiString::AsciiString(*(const AsciiString *)&that);
+		((AsciiString *)this)->AsciiString::AsciiString(that);
 	}
 	~BfmeAsciiStringArg();
 
@@ -157,7 +156,8 @@ void Gen_00491580::rva004916D0(int unused)
 
 	if (m_first.isNotEmpty())
 	{
-		BFMERetailAsciiString smallRing("SmallRing");
+		// The retail temporary calls StringBase<char>'s constructor and release.
+		AsciiString smallRing("SmallRing");
 		if (TheWritableGlobalData->m_flag == 0)
 		{
 			if (TheDisplay != 0)
