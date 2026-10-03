@@ -21,12 +21,14 @@ struct Rva21D510Node
 	Rva21D510Object *object;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
-class AICommandInterface
+void j_0000a5dd(void);
+
+class Rva21D510Exit
 {
 public:
-	void aiExit(Object *objectToExit, CommandSourceType commandSource);
+	void exit(Object *objectToExit, CommandSourceType commandSource);
 };
+typedef void (Rva21D510Exit::*Rva21D510ExitCall)(Object *, CommandSourceType);
 
 class Rva21D510OrderMembersIdle
 {
@@ -48,10 +50,15 @@ void Rva21D510OrderMembersIdle::orderAll(int commandSource)
 		node = node->next;
 
 		if (ai != 0) {
-			AICommandInterface *command =
-				(AICommandInterface *)((char *)ai + 0x20);
+			Rva21D510Exit *command = (Rva21D510Exit *)((char *)ai + 0x20);
+			union
+			{
+				void (*raw)(void);
+				Rva21D510ExitCall member;
+			} call;
+			call.raw = j_0000a5dd;
 			Object *owner = *(Object **)((char *)this - 0x18);
-			command->aiExit(owner, (CommandSourceType)commandSource);
+			(command->*call.member)(owner, (CommandSourceType)commandSource);
 		}
 	}
 }
