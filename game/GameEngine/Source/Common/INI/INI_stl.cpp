@@ -1018,46 +1018,21 @@ void INI::parseColorInt( INI* ini, void * /*instance*/, void *store, const void*
 	* FIELD_NAME = X:400 Y:-214.3 Z:8.6 */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseCoord3D@INI@@ present-unmatched
-void INI::parseCoord3D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	Coord3D *theCoord = (Coord3D *)store;
-
-	theCoord->x = scanReal(ini->getNextSubToken("X"));
-	theCoord->y = scanReal(ini->getNextSubToken("Y"));
-	theCoord->z = scanReal(ini->getNextSubToken("Z"));
-
-}  // end parseCoord3D
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a 2D coordinate of reals in the form of:
 	* FIELD_NAME = X:400 Y:-214.3 */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseCoord2D@INI@@ present-unmatched
-void INI::parseCoord2D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	Coord2D *theCoord = (Coord2D *)store;
-
-	theCoord->x = scanReal(ini->getNextSubToken("X"));
-	theCoord->y = scanReal(ini->getNextSubToken("Y"));
-
-}  // end parseCoord2D
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a 2D coordinate of Ints in the form of:
 	* FIELD_NAME = X:400 Y:-214 */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseICoord2D@INI@@ present-unmatched
-void INI::parseICoord2D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	ICoord2D *theCoord = (ICoord2D *)store;
-
-	theCoord->x = scanInt(ini->getNextSubToken("X"));
-	theCoord->y = scanInt(ini->getNextSubToken("Y"));
-
-}  // end parseICoord2D
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an audio event and assign to the 'AudioEventRTS*' at store */
