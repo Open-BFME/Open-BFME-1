@@ -76,11 +76,16 @@ public:
 	Object *findObjectByID(int objectID);
 };
 
+// Retail calls ILT 0x00037A56 here, so the call goes through j_00037a56.
+extern void j_00037a56();
+
 class Rva00367E30Sink
 {
 public:
-	void apply(int *data, int delta);
 };
+
+typedef void (Rva00367E30Sink::*Rva00367E30Apply)(int *, int);
+union Rva00367E30Route { void (*fn)(); Rva00367E30Apply call; };
 
 // math.h makes cosf an inline over the cos intrinsic; retail calls _cosf.
 namespace BfmeCrtA97
@@ -109,6 +114,7 @@ private:
 // ?handleMatch@BfmeBaseA97@@QAEXPAX0@Z
 void BfmeBaseA97::handleMatch(void *owner, void *direction)
 {
+	Rva00367E30Route route = { j_00037a56 };
 	BfmeDirectionA97 *sample = (BfmeDirectionA97 *)direction;
 	BfmeHandleA97 *handle = (BfmeHandleA97 *)owner;
 	BfmeFoundObjectA97 *object = (BfmeFoundObjectA97 *)
@@ -126,6 +132,6 @@ void BfmeBaseA97::handleMatch(void *owner, void *direction)
 		if (Vector3::Dot_Product(sourceVector, damageVector) < BfmeCrtA97::cosf(m_angle))
 			return;
 	}
-	((Rva00367E30Sink *)sample)->apply(
+	(((Rva00367E30Sink *)sample)->*route.call)(
 		(int *)((unsigned char *)this + 0x58), -1);
 }
