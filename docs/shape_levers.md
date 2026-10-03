@@ -1628,3 +1628,16 @@ calling map.clear(), matched the destructor exactly. The handwritten bank
 encoded the right instruction stream but hid the native type structure from
 the compiler. Check verified sibling declarations before exhausting more
 register-allocation spellings. See identity_evidence/001aba80-waypoint-native-destructor.md.
+
+## Compile the real vector-filling helper beside its caller (2026-10-03)
+
+`BfmeAptScreenInGameChat::OnBttnAddFriend` at 0x005151F0 stayed at
+613 bytes versus retail 609 through pointer-lifetime, accessor, barrier and
+flag variants. The cleanup reloaded `selected._M_start` instead of retaining
+EDI from the load after the selection call. Putting the already matched
+511-byte `rva00513BF0` definition before the callback in the same TU removes
+that reload. Removing the bank's `_ReadWriteBarrier` then fixes the six
+remaining scheduling bytes and matches all 609 bytes. Both real functions
+verify together with canonical UnicodeString/StringBase headers. A declaration
+alone does not supply the same compiler context; do not substitute a synthetic
+helper. Evidence: `targets/game/reverse/identity_evidence/005151f0-ingame-chat-add-friend.md`.
