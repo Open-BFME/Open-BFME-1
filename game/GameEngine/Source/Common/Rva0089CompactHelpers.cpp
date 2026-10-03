@@ -168,7 +168,8 @@ struct Rva0089DC40StringData
 {
     unsigned short m_refs;
 };
-extern Rva0089DC40StringData g_bfmeDefaultString1284;
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
 struct Rva0089DC40String
 {
     Rva0089DC40StringData *m_data;
@@ -176,8 +177,8 @@ struct Rva0089DC40String
 };
 Rva0089DC40String::Rva0089DC40String(int)
 {
-    m_data = &g_bfmeDefaultString1284;
-    ++g_bfmeDefaultString1284.m_refs;
+    m_data = reinterpret_cast<Rva0089DC40StringData *>(&g_rva012D5298Empty);
+    ++m_data->m_refs;
 }
 
 struct Rva00892850Handle
