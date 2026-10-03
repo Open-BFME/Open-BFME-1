@@ -2,9 +2,9 @@
 // body keeps the asynchronous DNS state machine, then tail-calls ghttpThink
 // when HTTP processing remains enabled.
 
-extern unsigned char bfmeAsyncDNSLookupInProgress;
-extern unsigned char bfmeCantConnectBeforeOnline;
-extern unsigned char bfmeHttpOk;
+extern bool s_asyncDNSLookupInProgress;
+extern bool cantConnectBeforeOnline;
+extern bool isHttpOk;
 
 extern int asyncGethostbyname(char *name);
 extern void bfmeReallyStartPatchCheck();
@@ -15,13 +15,13 @@ extern "C" void ghttpThink(void);
 
 void HTTPThinkWrapper()
 {
-	if (bfmeAsyncDNSLookupInProgress)
+	if (s_asyncDNSLookupInProgress)
 	{
 		int dnsLookupStatus = asyncGethostbyname("servserv.generals.ea.com");
 		switch (dnsLookupStatus)
 		{
 		case 1:
-			bfmeCantConnectBeforeOnline = 1;
+			cantConnectBeforeOnline = 1;
 			Rva0062EA60StartOnline();
 			break;
 		case 2:
@@ -30,6 +30,6 @@ void HTTPThinkWrapper()
 		}
 	}
 
-	if (bfmeHttpOk)
+	if (isHttpOk)
 		ghttpThink();
 }
