@@ -1857,13 +1857,7 @@ void Weapon::reloadAmmo(const Object *sourceObj)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getClipReloadTime@Weapon@@QBEHPBVObject@@@Z present-unmatched
-Int Weapon::getClipReloadTime(const Object *source) const
-{
-	WeaponBonus bonus;
-	computeBonus(source, 0, bonus);
-	return m_template->getClipReloadTime(bonus);
-}
+// Retail six-field bonus reload time lives in Weapon_getClipReloadTime.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // Retail contained-ammo-aware setClipPercentFull lives in Weapon_setClipPercentFull.cpp.

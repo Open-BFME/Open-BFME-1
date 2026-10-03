@@ -7,17 +7,6 @@ class Object;
 class WeaponBonus
 {
 public:
-	WeaponBonus()
-	{
-		m_fields[0] = 1.0f;
-		m_fields[1] = 1.0f;
-		m_fields[2] = 1.0f;
-		m_fields[3] = 1.0f;
-		m_fields[4] = 1.0f;
-		m_fields[5] = 1.0f;
-	}
-
-private:
 	float m_fields[6];
 };
 
@@ -43,6 +32,12 @@ private:
 int Weapon::getClipReloadTime(const Object *source) const
 {
 	WeaponBonus bonus;
+	bonus.m_fields[0] = 1.0f;
+	bonus.m_fields[1] = 1.0f;
+	bonus.m_fields[2] = 1.0f;
+	bonus.m_fields[3] = 1.0f;
+	bonus.m_fields[4] = 1.0f;
+	bonus.m_fields[5] = 1.0f;
 	computeBonus(source, 0, bonus);
 	return m_template->getClipReloadTime(bonus);
 }
