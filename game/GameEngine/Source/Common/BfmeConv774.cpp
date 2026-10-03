@@ -1,14 +1,16 @@
-class BfmeSubDSN
+class Object;
+
+class UpgradeMuxData
 {
 public:
-	void bfmeOneDSN(void *what);
-	void bfmeTwoDSN(void *what);
+	void performUpgradeFX(Object *what) const;
+	void muxDataProcessUpgradeRemoval(Object *what) const;
 };
 
 struct BfmeOwnerDSN
 {
 	unsigned char m_bfmeHead[0x5c];
-	BfmeSubDSN m_bfmeSub;
+	UpgradeMuxData m_bfmeSub;
 };
 
 struct BfmeThingDSN
@@ -21,12 +23,12 @@ void BfmeThingDSN::bfmeGoDSN()
 {
 	void *what = *(void **)((char *)this - 0xd8);
 	BfmeOwnerDSN *owner = *(BfmeOwnerDSN **)((char *)this - 0xdc);
-	owner->m_bfmeSub.bfmeOneDSN(what);
+	owner->m_bfmeSub.performUpgradeFX((Object *)what);
 }
 
 void BfmeThingDSN::bfmeGoDSO()
 {
 	void *what = *(void **)((char *)this - 0xd8);
 	BfmeOwnerDSN *owner = *(BfmeOwnerDSN **)((char *)this - 0xdc);
-	owner->m_bfmeSub.bfmeTwoDSN(what);
+	owner->m_bfmeSub.muxDataProcessUpgradeRemoval((Object *)what);
 }
