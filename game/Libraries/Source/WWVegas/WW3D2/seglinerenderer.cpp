@@ -128,27 +128,7 @@ SegLineRendererClass::SegLineRendererClass(void) :
 
 // The exact retail copy constructor is emitted by SegLineRendererClassCopyCtorThunk.cpp.
 
-// ?SegLineRendererClass::operator= present-unmatched
-SegLineRendererClass & SegLineRendererClass::operator = (const SegLineRendererClass & that)
-{
-	if (this != &that) {
-		REF_PTR_SET(Texture,that.Texture);
-		Shader = that.Shader;
-		Width = that.Width;
-		Color = that.Color;
-		Opacity = that.Opacity;
-		SubdivisionLevel = that.SubdivisionLevel;
-		NoiseAmplitude = that.NoiseAmplitude;
-		MergeAbortFactor = that.MergeAbortFactor;
-		TextureTileFactor = that.TextureTileFactor;
-		LastUsedSyncTime = that.LastUsedSyncTime;
-		CurrentUVOffset = that.CurrentUVOffset;
-		UVOffsetDeltaPerMS = that.UVOffsetDeltaPerMS;
-		Bits = that.Bits;
-		// Don't modify m_vertexBufferSize and m_vertexBuffer
-	}
-	return *this;
-}
+// SegLineRendererClass::operator= is emitted by SegLineRendererClassAssignThunk.cpp (retail 0x009600F0).
 
 SegLineRendererClass::~SegLineRendererClass(void)
 {
