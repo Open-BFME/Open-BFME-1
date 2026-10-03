@@ -15,8 +15,18 @@ public:
 
 class BfmeHolderNS
 {
+};
+
+class Gen_001BEC20
+{
 public:
-	int bfmeQueryNS();
+	int bfmeScale(void) const;
+
+private:
+	int m_bfmeHead[197];
+	int m_bfmeStored;
+	char m_bfmeGap[0x90];
+	unsigned char m_bfmeFixed;
 };
 
 struct Rva003FD060TerrainLogic
@@ -56,7 +66,8 @@ void BfmeAimAAE::bfmeFireAAE(Weapon *weapon, BfmeHolderNS *victim)
 {
 	Coord3D pos = weapon->bfmeGetLOSVictimPos(0, (const Object *)victim, 1);
 
-	pos.z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightAAE(pos.x, pos.y, victim->bfmeQueryNS(), 0, 1);
+	pos.z = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeHeightAAE(
+		pos.x, pos.y, ((const Gen_001BEC20 *)victim)->bfmeScale(), 0, 1);
 
 	bfmeAimAtAAE(weapon, &pos);
 }

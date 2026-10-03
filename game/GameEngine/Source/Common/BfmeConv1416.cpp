@@ -17,10 +17,13 @@ struct BfmeNodeVLQ
 	BfmeNodeVLQ *m_bfme0c;
 };
 
+// Retail's 0x0004B65F ILT routes to the private _STL::_Rb_tree::_M_erase
+// body at 0x0058CC20; call the ledger-owned thunk directly.
+extern void j_0004b65f(void);
+
 class BfmeListVLQ
 {
 public:
-	void bfmeEraseVLQ(int n);
 	BfmeNodeVLQ *volatile m_bfme00;
 	int m_bfme04;
 };
@@ -44,7 +47,13 @@ void BfmeOwnVLQ::bfmeResetVLQ()
 	BfmeListVLQ *l = &m_bfme4fc;
 	if (l->m_bfme04 != 0)
 	{
-		l->bfmeEraseVLQ(l->m_bfme00->m_bfme04);
+		union
+		{
+			void (*function)(void);
+			void (BfmeListVLQ::*method)(int);
+		} erase;
+		erase.function = j_0004b65f;
+		(l->*erase.method)(l->m_bfme00->m_bfme04);
 		BfmeNodeVLQ *n1 = l->m_bfme00;
 		n1->m_bfme08 = n1;
 		l->m_bfme00->m_bfme04 = 0;

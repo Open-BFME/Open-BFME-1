@@ -10,6 +10,18 @@ public:
 	void handle(FlagPairTarget *target);
 };
 
+class BfmeHostAT;
+class BfmeSeedTarget;
+
+class Gen_00257D10
+{
+	friend class BfmeHostAT;
+
+private:
+	void bfmeAccept(BfmeSeedTarget *target);
+	static void (Gen_00257D10::*const acceptReference)(BfmeSeedTarget *);
+};
+
 struct BfmeInfoAT
 {
 	unsigned char m_bfmeFlagAT;
@@ -61,8 +73,6 @@ class BfmeHostAT
 {
 public:
 	void bfmeSaveAT(BfmeAgentAT *ag);
-	
-	void bfmeEndAT(BfmeAgentAT *ag);
 
 	unsigned char m_bfmeHeadAT[0xec];
 	unsigned char m_bfmeSlotBAT[4];
@@ -86,5 +96,5 @@ void BfmeHostAT::bfmeSaveAT(BfmeAgentAT *ag)
 	ag->bfmeWriteAT(m_bfmeSlotBAT);
 
 	if (info.m_bfmeLevelAT >= 2)
-		bfmeEndAT(ag);
+		((Gen_00257D10 *)this)->bfmeAccept((BfmeSeedTarget *)ag);
 }

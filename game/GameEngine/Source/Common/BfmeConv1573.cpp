@@ -1,5 +1,11 @@
 // Open-BFME5 conversions.
 
+// stlport
+#include <string>
+
+extern template _STL::basic_string<char> &_STL::basic_string<char>::assign(
+	const char *, const char *);
+
 extern "C" unsigned int __cdecl strlen(const char *text);
 
 struct BfmeTimeVSE
@@ -17,12 +23,7 @@ struct BfmeTimeVSE
 extern "C" __declspec(dllimport) void __stdcall GetLocalTime(BfmeTimeVSE *now);
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *dest, const char *format, ...);
 
-class BfmeStrVSE
-{
-public:
-	BfmeStrVSE &bfmeAssignVSE(const char *first, const char *last);
-	char m_bfmePad00[0x1c];
-};
+typedef _STL::basic_string<char> BfmeStrVSE;
 
 class BfmeStampVSE
 {
@@ -39,5 +40,5 @@ void BfmeStampVSE::bfmeStampVSE()
 
 	GetLocalTime(&now);
 	sprintf(text, "%d/%d/%d", now.m_bfme02, now.m_bfme06, now.m_bfme00);
-	m_bfme14c.bfmeAssignVSE(text, text + strlen(text));
+	m_bfme14c.assign((const char *)text, (const char *)(text + strlen(text)));
 }

@@ -1,5 +1,8 @@
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+// cl: /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <hash_map>
+#include "Common/PlayerList.h"
 
 struct XferVersion
 {
@@ -43,24 +46,11 @@ public:
 	virtual void xferInt(int *);
 };
 
-class Player
+struct BfmePlayerBR
 {
-public:
 	unsigned char m_bfmeHeadBR[0x24];
 	int m_playerIndex;
 };
-
-struct Rva002EE330PlayerList
-{
-	Player *bfmeFindBR(int id);
-};
-
-// Retail's global at 0x012ED748 is PlayerList.cpp's `PlayerList *ThePlayerList`
-// (mangled ?ThePlayerList@@3PAVPlayerList@@A), so the reference carries the
-// real name; Rva002EE330PlayerList stays this TU's offset view of the pointee
-// and is reached by a no-op pointer cast.
-class PlayerList;
-extern PlayerList *ThePlayerList;
 
 class BfmeHostBR
 {
@@ -85,9 +75,9 @@ void BfmeHostBR::xfer(Xfer *x)
 	int id;
 
 	if (x->isSaving())
-		id = m_owner->m_playerIndex;
+		id = ((BfmePlayerBR *)m_owner)->m_playerIndex;
 
 	x->xferInt(&id);
 
-	m_owner = ((Rva002EE330PlayerList *)ThePlayerList)->bfmeFindBR(id);
+	m_owner = ThePlayerList->getNthPlayer(id);
 }
