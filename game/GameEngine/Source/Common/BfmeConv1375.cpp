@@ -1,16 +1,25 @@
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5 conversions.
+#include "winbase_shim.h"
+#include "rendobj.h"
+#include "seglinerenderer.h"
+
+// The assignment at 0x0095C860 is owned by TextureRefAssignOperators.cpp.
+class Rva0095C860
+{
+public:
+	Rva0095C860 &operator=(const Rva0095C860 &other);
+};
 
 class BfmeSubAVIK
 {
 public:
-	void bfmeAssignAVIK(const BfmeSubAVIK &o);
 	char m_bfmePad[0x50];
 };
 
 class BfmeSubBVIK
 {
 public:
-	void bfmeAssignBVIK(const BfmeSubBVIK &o);
 	char m_bfmePad[0x10];
 };
 
@@ -18,7 +27,6 @@ class BfmeThingVIK
 {
 public:
 	BfmeThingVIK &bfmeAssignVIK(const BfmeThingVIK &o);
-	void bfmeBaseVIK(const BfmeThingVIK &o);
 	char m_bfmePad[0xc8];
 	int m_bfmec8;
 	int m_bfmecc;
@@ -41,7 +49,7 @@ public:
 
 BfmeThingVIK &BfmeThingVIK::bfmeAssignVIK(const BfmeThingVIK &o)
 {
-	bfmeBaseVIK(o);
+	*(RenderObjClass *)this = *(const RenderObjClass *)&o;
 	if (this != &o)
 	{
 		m_bfmec8 = o.m_bfmec8;
@@ -55,8 +63,8 @@ BfmeThingVIK &BfmeThingVIK::bfmeAssignVIK(const BfmeThingVIK &o)
 		m_bfmef8 = o.m_bfmef8;
 		m_bfmefc = o.m_bfmefc;
 		m_bfme100 = o.m_bfme100;
-		m_bfme104.bfmeAssignAVIK(o.m_bfme104);
-		m_bfme154.bfmeAssignBVIK(o.m_bfme154);
+		*(SegLineRendererClass *)&m_bfme104 = *(const SegLineRendererClass *)&o.m_bfme104;
+		*(Rva0095C860 *)&m_bfme154 = *(const Rva0095C860 *)&o.m_bfme154;
 		m_bfmecc = o.m_bfmecc;
 	}
 	return *this;

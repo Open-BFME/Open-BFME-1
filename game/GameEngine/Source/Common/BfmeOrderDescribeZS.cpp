@@ -4,43 +4,26 @@
 // Sibling of 0x00675A80 with two string fields rather than one.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-//
-// The format call used to be spelled through a TU-local stand-in pair
-// (StringBaseNarrowZS/AsciiStringZS), which named retail's callee
-// ?format@StringBaseNarrowZS@@QAAXVAsciiStringZS@@ZZ -- a name retail has no
-// body for.  AsciiString::format (0x00888FF0, matched in
-// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
-// one, so it comes from ascii_string.h and is named through the real class.
-
-class StringBaseNarrowZS
+// ILT 0x0002D204 reaches the base description at 0x006747C0.
+class NetCommandMsg
 {
-protected:
-	StringBaseNarrowZS(void)
-	{
-		m_bfmeNarrowZS = 0;
-	}
-
-	StringBaseNarrowZS(const char *text);
-
-	StringBaseNarrowZS(const StringBaseNarrowZS &other);
-
-	~StringBaseNarrowZS(void);
-
-	char *m_bfmeNarrowZS;
+public:
+	virtual AsciiString getContentsAsAsciiString();
 };
 
-class AsciiStringZS : public StringBaseNarrowZS
+// Keep this row's return type while using the canonical string lifecycle.
+class AsciiStringZS
 {
 public:
 	AsciiStringZS(void)
 	{
 	}
 
-	AsciiStringZS(const char *text) : StringBaseNarrowZS(text)
+	AsciiStringZS(const char *text) : m_bfmeNarrowZS(text)
 	{
 	}
 
-	AsciiStringZS(const AsciiStringZS &other) : StringBaseNarrowZS(other)
+	AsciiStringZS(const AsciiStringZS &other) : m_bfmeNarrowZS(other.m_bfmeNarrowZS)
 	{
 	}
 
@@ -50,15 +33,16 @@ public:
 
 	const char *bfmeTextZS(void) const
 	{
-		return (m_bfmeNarrowZS != 0) ? m_bfmeNarrowZS + 8 : "";
+		return m_bfmeNarrowZS.str();
 	}
+
+private:
+	AsciiString m_bfmeNarrowZS;
 };
 
 class BfmeOrderZS
 {
 public:
-	AsciiStringZS bfmeNameZS(void);
-
 	AsciiStringZS bfmeDescribeZS(void);
 
 	char m_bfmePadZS[0x1c];
@@ -71,7 +55,8 @@ AsciiStringZS BfmeOrderZS::bfmeDescribeZS(void)
 	AsciiStringZS text;
 
 	((AsciiString &)text).format(AsciiString("%s, authToken=%s, authKey=%s"),
-			bfmeNameZS().bfmeTextZS(), m_bfmeAuthTokenZS.bfmeTextZS(),
+			((NetCommandMsg *)this)->NetCommandMsg::getContentsAsAsciiString().str(),
+			m_bfmeAuthTokenZS.bfmeTextZS(),
 			m_bfmeAuthKeyZS.bfmeTextZS());
 
 	return text;
