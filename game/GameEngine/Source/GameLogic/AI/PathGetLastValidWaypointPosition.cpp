@@ -10,7 +10,6 @@ static const WaypointID INVALID_WAYPOINT_ID = 0x7fffffff;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
-	Coord3D() {}
 	Coord3D(const Coord3D &other)
 	{
 		x = other.x;
@@ -119,11 +118,12 @@ Coord3D Path::bfmeGetLastValidWaypointPosition(void) const
 	}
 	else
 	{
-		Coord3D zero;
-		zero.x = 0.0f;
-		zero.y = 0.0f;
-		zero.z = 0.0f;
-		position = &zero;
+		Real zeroStorage[3];
+		Coord3D *zero = (Coord3D *)zeroStorage;
+		zero->x = 0.0f;
+		zero->y = 0.0f;
+		zero->z = 0.0f;
+		position = zero;
 	}
 
 	return *position;

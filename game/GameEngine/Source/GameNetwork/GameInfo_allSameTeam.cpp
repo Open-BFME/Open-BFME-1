@@ -17,7 +17,7 @@ enum SlotState
 class GameSlot
 {
 public:
-	bool isOccupied() const
+	__forceinline bool isOccupiedForSameTeamCheck() const
 	{
 		return m_state == SLOT_PLAYER || m_state == SLOT_EASY_AI ||
 			m_state == SLOT_MED_AI || m_state == SLOT_BRUTAL_AI;
@@ -79,7 +79,7 @@ Bool GameInfo::allPlayersSameTeam() const
 		for (int i = 0; i < 8; ++i)
 		{
 			GameSlot *slot = getSlot(i);
-			if (slot->isOccupied())
+			if (slot->isOccupiedForSameTeamCheck())
 			{
 				localTeam = slot->getTeamNumber();
 				break;
@@ -98,7 +98,7 @@ Bool GameInfo::allPlayersSameTeam() const
 			continue;
 
 		GameSlot *slot = getSlot(i);
-		if (slot->isOccupied())
+		if (slot->isOccupiedForSameTeamCheck())
 		{
 			int team = slot->getTeamNumber();
 			if (team < 0 || team != localTeam)

@@ -71,20 +71,17 @@ class BFMERetailAsciiString
 {
 public:
 	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
 private:
+	friend class ArgBox;
 	void releaseBuffer();
 	char *m_data;
 };
 
-// The one-word argument object: its only member is the string, so the Owner
-// constructor receives the object's address and its destructor is the string
-// destructor retail calls.
 class ArgBox
 {
 public:
 	ArgBox(const char *text) : m_s(text) {}
-	~ArgBox() {}
+	~ArgBox() { m_s.releaseBuffer(); }
 	BFMERetailAsciiString m_s;
 };
 

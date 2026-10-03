@@ -683,18 +683,8 @@ unsigned char Rva008FD4B0AlwaysTrue()
 
 
 
-extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
-
-// ?Rva008BD010Alloc@@YAPAXI@Z
-void *Rva008BD010Alloc(unsigned bytes)
-{
-	return Rva008C5D70Alloc(bytes);
-}
-
-
 // ?Rva0083FEB0WordLoad@@YAGPBG@Z
 unsigned short Rva0083FEB0WordLoad(const unsigned short *value)
 {
 	return *value;
 }
-

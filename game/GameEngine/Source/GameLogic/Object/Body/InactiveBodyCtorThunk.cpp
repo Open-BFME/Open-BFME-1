@@ -64,6 +64,7 @@ class InactiveBody : public InactiveBodyBase,
 	public InactiveBodyFields
 {
 public:
+	virtual ~InactiveBody();
 	InactiveBody(Thing *thing, const ModuleData *moduleData);
 
 protected:
