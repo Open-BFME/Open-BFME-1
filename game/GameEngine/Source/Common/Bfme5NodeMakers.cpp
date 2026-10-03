@@ -1,16 +1,8 @@
+// cl: /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
+
 // Open-BFME5 conversions: allocate-then-initialise bodies.
-
-void * __cdecl operator new(unsigned int n);
-
-namespace _STL {
-
-class __new_alloc
-{
-public:
-	static void *allocate(unsigned int n);
-};
-
-}
 
 extern void *g_bfme5RefVtable;
 
@@ -87,7 +79,7 @@ struct Bfme5RbNode
 
 Bfme5RbNode * __stdcall bfme5CloneRbNodeA(const Bfme5RbNode *src)
 {
-	Bfme5RbNode *n = (Bfme5RbNode *)_STL::__new_alloc::allocate(20);
+	Bfme5RbNode *n = (Bfme5RbNode *)_STL::__node_alloc<true, 0>::allocate(20);
 	int *p = &n->m_bfmeValue;
 
 	if (p)
@@ -101,7 +93,7 @@ Bfme5RbNode * __stdcall bfme5CloneRbNodeA(const Bfme5RbNode *src)
 
 Bfme5RbNode * __stdcall bfme5CloneRbNodeB(const Bfme5RbNode *src)
 {
-	Bfme5RbNode *n = (Bfme5RbNode *)_STL::__new_alloc::allocate(20);
+	Bfme5RbNode *n = (Bfme5RbNode *)_STL::__node_alloc<true, 0>::allocate(20);
 	int *p = &n->m_bfmeValue;
 
 	if (p)
