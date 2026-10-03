@@ -124,13 +124,23 @@ private: \
 public:
 
 //-------------------------------------------------------------------------------------------------
+// Retail doFXPos uses four arguments at slot+04.  The independently
+// matched SoundFXNugget4289B0 returns16 bytes; keep this ABI correction local.
+class Rva00427C30CallbackView
+{
+public:
+    virtual void slot0(void) = 0;
+    virtual void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx,
+        Real primarySpeed, const Coord3D *secondary) const = 0;
+};
+
 void FXNugget::doFXObj(const Object* primary, const Object* secondary) const
 {
 	const Coord3D* primaryPosition = primary ? primary->getPosition() : NULL;
 	const Matrix3D* primaryTransform = primary ? primary->getTransformMatrix() : NULL;
 	const Real speed = 0.0f;	// yes, that's right -- NOT the object's speed.
 	const Coord3D* secondaryPosition = secondary ? secondary->getPosition() : NULL;
-	doFXPos(primaryPosition, primaryTransform, speed, secondaryPosition);
+	((const Rva00427C30CallbackView *)this)->doFXPos(primaryPosition, primaryTransform, speed, secondaryPosition);
 }
 
 //-------------------------------------------------------------------------------------------------
