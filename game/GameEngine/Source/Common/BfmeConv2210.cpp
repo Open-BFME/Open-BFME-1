@@ -54,7 +54,7 @@
 //   - Deleting Opaque8's user dtor entirely (implicit trivial dtor).
 //   - Pulling Opaque8's first three (zero-valued) dwords OUT of the class
 //     entirely into three plain `unsigned int` members directly on the
-//     outer Rva0077CDE0 class, declared right after m_str9 and before the
+//     outer W3DScriptedModelDrawModuleData class, declared right after m_str9 and before the
 //     (now-smaller) m_opaque8 -- the extra store's position and presence
 //     were BYTE-IDENTICAL to the baseline in every one of the above
 //     variants, which rules out Opaque8's own shape/type-boundary as the
@@ -212,11 +212,11 @@ private:
 	unsigned int m_a[10];
 };
 
-class Rva0077CDE0 : public BfmeBase0077CDE0
+class W3DScriptedModelDrawModuleData : public BfmeBase0077CDE0
 {
 public:
-	Rva0077CDE0();
-	virtual ~Rva0077CDE0() {}
+	W3DScriptedModelDrawModuleData();
+	virtual ~W3DScriptedModelDrawModuleData() {}
 
 private:
 	unsigned int m_pad04;                                 ///< +0x04, never written by retail
@@ -267,8 +267,8 @@ private:
 	Rva00146BA0ArrayItem m_arr[2];                     ///< +0x134
 };
 
-// ??0Rva0077CDE0@@QAE@XZ
-Rva0077CDE0::Rva0077CDE0()
+// ??0W3DScriptedModelDrawModuleData@@QAE@XZ
+W3DScriptedModelDrawModuleData::W3DScriptedModelDrawModuleData()
 	: m_neg1(-1)
 	, m_i64(0)
 	, m_b68(0), m_b69(0), m_b6a(1), m_b6b(0)

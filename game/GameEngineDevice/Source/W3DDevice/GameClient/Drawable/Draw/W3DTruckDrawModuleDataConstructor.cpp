@@ -7,16 +7,16 @@ struct BfmeAsciiString0077F830
 	BfmeAsciiString0077F830() : m_data(0) {}
 };
 
-class W3DSupplyDrawModuleDataBase
+class W3DScriptedModelDrawModuleData
 {
 	char m_bfmeBase[0x158];
 
 public:
-	W3DSupplyDrawModuleDataBase();
-	virtual ~W3DSupplyDrawModuleDataBase();
+	W3DScriptedModelDrawModuleData();
+	virtual ~W3DScriptedModelDrawModuleData();
 };
 
-class W3DTruckDrawModuleData : public W3DSupplyDrawModuleDataBase
+class W3DTruckDrawModuleData : public W3DScriptedModelDrawModuleData
 {
 	BfmeAsciiString0077F830 m_dustEffectName;
 	BfmeAsciiString0077F830 m_dirtEffectName;
