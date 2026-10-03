@@ -17558,5 +17558,25 @@
   "after_sha256": "49876e30f959d3cf01dc1732a983dbd4d80761aaa9cebb052e5b8a673bed398b",
   "evidence": "targets/game/reverse/identity_evidence/00303910-team-repair-action.md",
   "reason": "The Zero Hour declaration takes one const-reference string and does not prove the bank overload name. Retail witnesses only slot44 taking a by-value string and bool; preserve that ABI with an address-qualified slot."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00532280.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva00532280Classify.cpp",
+  "old_name": "Gather00531DE0",
+  "new_name": "Rva00531DE0Receiver",
+  "before_sha256": "d7126bb4aedd1edc0368c8db688707394c84aeb4e51ba3ec2f436b5a6f5f8edd",
+  "after_sha256": "16f8a20621af0930c7440ce2e86732f76661fb4670ff60be62207d4e52b4b06c",
+  "evidence": "targets/game/reverse/identity_evidence/00532280-selection-visibility.md",
+  "reason": "Bank-only unbound Gather declaration replaced by an explicit receiver ABI view of the existing verified 00531DE0 helper. Retail ignores incoming ECX and pops two arguments; the canonical ledger helper identity is retained. No recovered Gather class identity or second body is asserted."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00532280.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva00532280Classify.cpp",
+  "old_name": "gather",
+  "new_name": "Rva00531DE0RefreshSelectedIndices",
+  "before_sha256": "d7126bb4aedd1edc0368c8db688707394c84aeb4e51ba3ec2f436b5a6f5f8edd",
+  "after_sha256": "16f8a20621af0930c7440ce2e86732f76661fb4670ff60be62207d4e52b4b06c",
+  "evidence": "targets/game/reverse/identity_evidence/00532280-selection-visibility.md",
+  "reason": "Bank-only unbound Gather declaration replaced by an explicit receiver ABI view of the existing verified 00531DE0 helper. Retail ignores incoming ECX and pops two arguments; the canonical ledger helper identity is retained. No recovered Gather class identity or second body is asserted."
  }
 ]

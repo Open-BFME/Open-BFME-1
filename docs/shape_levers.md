@@ -1721,3 +1721,17 @@ borrowed handle after release. Use a real handle member and reference argument;
 no casts or scheduling intrinsics are needed. The native TextureBaseClass
 version uses the existing independently checked release call at `0x009EB7A0`.
 See `identity_evidence/006eb000-owning-texture-assignment.md`.
+### Visible selection helper preserves an empty-vector reload
+
+The 460-byte callback at `0x00532280` kept five loop-entry differences:
+retail loads the vector begin into EBX and branches to its destructor reload,
+while the bank reused ECX and jumped past that reload. The genuine 171-byte
+selection helper at `0x00531DE0`, visible with `__declspec(noinline)`, makes
+both bodies exact. Preserve the caller's witnessed member-call ECX setup;
+the helper itself ignores incoming ECX and pops its two stack arguments.
+A free-function declaration or a member-pointer adapter did not recover the
+caller. The existing helper ledger identity is retained through object-symbol
+mapping and one independently verified emitter pin. Both bodies and all eight
+DIR32 references pass the strict gate. See
+`identity_evidence/00532280-selection-visibility.md`; no volatile or barrier
+is needed.
