@@ -15238,5 +15238,15 @@
   "after_sha256": "1d9d9915f0c2e5d5c885612849e0ddb7da360ccc5f319768bbdfa69e03330b75",
   "evidence": "targets/game/reverse/identity_evidence/parttheheavens-wrapper-rehome-false-pair.txt",
   "reason": "False source-rehome pairing: ModuleName is a deleted macro parameter; the unrelated Rva0006AA90Vector predates this repair in the unchanged destination TU. No type rename or identity equivalence."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00417710.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DrawableStartAmbientSound.cpp",
+  "old_name": "AudioEventInfoRef",
+  "new_name": "Rva00417710InfoRef",
+  "before_sha256": "e3795d639e8179641a8620a7883b23bdce2b73f99926f159d6a87776b3a4265e",
+  "after_sha256": "05fabf90e46ae32facf3d884cc4cbc6d72307f1d0ff7ab906f9cee630dceb35d",
+  "evidence": "targets/game/reverse/identity_evidence/00417710-ambient-result.md",
+  "reason": "The bank-only convenience type has no source-name witness: the Zero Hour twin uses raw AudioEventInfo pointers, while independently decoded BFME getter and cleanup prove only a one-word owning result. Keep an address-qualified layout view rather than promote the bank name to a recovered identity."
  }
 ]
