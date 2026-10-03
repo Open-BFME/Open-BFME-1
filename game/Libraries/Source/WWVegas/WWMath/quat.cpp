@@ -15,7 +15,7 @@
 
 #define SLERP_EPSILON		0.001
 
-extern bool Fast_Slerp_Use_Inline;
+bool Fast_Slerp_Use_Inline = false;
 extern void ji_009fcfc0();
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
