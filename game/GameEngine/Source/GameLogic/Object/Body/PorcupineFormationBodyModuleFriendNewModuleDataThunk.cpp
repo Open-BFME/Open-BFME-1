@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl PorcupineFormationBodyModuleFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x0044A061, not of the builder body it jumps to (0x00214140); the
+// ledger owns that five-byte thunk as ?j_0004a061@@YAXXZ.  The thunk carries no
+// signature of its own, so it is declared bare and cast to the EA Module.h
+// buildFieldParse contract at the use.
+extern void j_0004a061();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class PorcupineFormationBodyModule
 {
@@ -43,6 +50,6 @@ ModuleData *PorcupineFormationBodyModule::friend_newModuleData(INI *ini)
 {
 	PorcupineFormationBodyModuleModuleData *data = new PorcupineFormationBodyModuleModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &PorcupineFormationBodyModuleFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0004a061));
 	return (ModuleData *)data;
 }

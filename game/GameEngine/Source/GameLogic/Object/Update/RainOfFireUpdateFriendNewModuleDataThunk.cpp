@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl RainOfFireUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x0043F904, not of the builder body it jumps to (0x002A0900); the
+// ledger owns that five-byte thunk as ?j_0003f904@@YAXXZ.  The thunk carries no
+// signature of its own, so it is declared bare and cast to the EA Module.h
+// buildFieldParse contract at the use.
+extern void j_0003f904();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class RainOfFireUpdate
 {
@@ -43,6 +50,6 @@ ModuleData *RainOfFireUpdate::friend_newModuleData(INI *ini)
 {
 	RainOfFireUpdateModuleData *data = new RainOfFireUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RainOfFireUpdateFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0003f904));
 	return (ModuleData *)data;
 }

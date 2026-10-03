@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl OneRingPenaltyUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x0043777C, not of the builder body it jumps to (0x00298DF0); the
+// ledger owns that five-byte thunk as ?j_0003777c@@YAXXZ.  The thunk carries no
+// signature of its own, so it is declared bare and cast to the EA Module.h
+// buildFieldParse contract at the use.
+extern void j_0003777c();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class OneRingPenaltyUpdate
 {
@@ -43,6 +50,6 @@ ModuleData *OneRingPenaltyUpdate::friend_newModuleData(INI *ini)
 {
 	OneRingPenaltyUpdateModuleData *data = new OneRingPenaltyUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &OneRingPenaltyUpdateFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0003777c));
 	return (ModuleData *)data;
 }

@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl RespawnBodyFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x0044B650, not of the builder body it jumps to (0x00214620); the
+// ledger owns that five-byte thunk as ?j_0004b650@@YAXXZ.  The thunk carries no
+// signature of its own, so it is declared bare and cast to the EA Module.h
+// buildFieldParse contract at the use.
+extern void j_0004b650();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class RespawnBody
 {
@@ -43,6 +50,6 @@ ModuleData *RespawnBody::friend_newModuleData(INI *ini)
 {
 	RespawnBodyModuleData *data = new RespawnBodyModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RespawnBodyFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0004b650));
 	return (ModuleData *)data;
 }

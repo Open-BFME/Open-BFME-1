@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl RefundDieFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x0040F4BB, not of the builder body it jumps to (0x00523290); the
+// ledger owns that five-byte thunk as ?j_0000f4bb@@YAXXZ.  The thunk carries
+// no signature of its own, so it is declared bare and cast to the EA
+// Module.h buildFieldParse contract at the use.
+extern void j_0000f4bb();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class RefundDie
 {
@@ -43,6 +50,6 @@ ModuleData *RefundDie::friend_newModuleData(INI *ini)
 {
 	RefundDieModuleData *data = new RefundDieModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RefundDieFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0000f4bb));
 	return (ModuleData *)data;
 }

@@ -30,7 +30,14 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl PassiveAreaEffectBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail hands INI::initFromINIMultiProc the address of the incremental-link
+// thunk 0x00424D9D, not of the builder body it jumps to (0x00201FB0); the
+// ledger owns that five-byte thunk as ?j_00024d9d@@YAXXZ.  The thunk carries no
+// signature of its own, so it is declared bare and cast to the EA Module.h
+// buildFieldParse contract at the use.
+extern void j_00024d9d();
+
+typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
 class PassiveAreaEffectBehavior
 {
@@ -43,6 +50,6 @@ ModuleData *PassiveAreaEffectBehavior::friend_newModuleData(INI *ini)
 {
 	PassiveAreaEffectBehaviorModuleData *data = new PassiveAreaEffectBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &PassiveAreaEffectBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_00024d9d));
 	return (ModuleData *)data;
 }
