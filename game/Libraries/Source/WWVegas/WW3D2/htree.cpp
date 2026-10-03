@@ -123,77 +123,7 @@
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HTreeClass::Load_W3D present-unmatched
-int HTreeClass::Load_W3D(ChunkLoadClass & cload)
-{
-	Free();
-
-	/*
-	**	Read the first chunk, it should be the hierarchy header
-	*/
-	if (!cload.Open_Chunk()) return LOAD_ERROR;
-
-	if (cload.Cur_Chunk_ID() != W3D_CHUNK_HIERARCHY_HEADER) {
-		// ERROR: Expected Hierarchy Header
-		return LOAD_ERROR;
-	}
-	
-	W3dHierarchyStruct header;
-	if (cload.Read(&header,sizeof(W3dHierarchyStruct)) != sizeof(W3dHierarchyStruct)) {
-		return LOAD_ERROR;
-	}
-
-	cload.Close_Chunk();
-
-	/*
-	** Check the version, if < 3.0 add a root node for everything
-	** to attach to.  The load_pivots function will also have to be
-	** notified of this.
-	*/
-	bool pre30 = false;
-	if (header.Version < W3D_MAKE_VERSION(3,0)) {
-		header.NumPivots ++;
-		pre30 = true;
-	}
-	
-	/*
-	** Allocate the array of pivots
-	*/
-	memcpy(Name,header.Name,W3D_NAME_LEN);
-	NumPivots = header.NumPivots;
-	if (NumPivots > 0) {
-		Pivot = MSGW3DNEWARRAY("HTreeClass::Pivot") PivotClass[NumPivots];
-	}
-
-	/*
-	** Now, read in all of the other chunks for this hierarchy.
-	*/
-
-	while (cload.Open_Chunk()) {
-
-		switch (cload.Cur_Chunk_ID()) {
-
-			case W3D_CHUNK_PIVOTS:
-				if (!read_pivots(cload,pre30)) {
-					goto Error;
-				}			
-				break;
-
-			default:
-				// ERROR: expected W3D_CHUNK_PIVOTS!
-				break;
-		}
-		cload.Close_Chunk();
-	}
-
-	return OK;
-
-Error:
-
-	Free();
-	return LOAD_ERROR;
-}
-
+// Exact retail hierarchy loader with the BFME pivot ABI: HTreeClassLoadW3D.cpp.
 
 /*********************************************************************************************** 
  * HTreeClass::read_pivots -- reads the pivots out of a file                                   * 
