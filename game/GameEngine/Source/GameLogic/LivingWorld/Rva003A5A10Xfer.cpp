@@ -74,13 +74,6 @@ public:
 	int m_at10;
 };
 
-struct Rva003A5500Placement;
-inline void *operator new(unsigned int, Rva003A5500Placement *place)
-{
-	return place;
-}
-void operator delete(void *, Rva003A5500Placement *);
-
 namespace _STL
 {
 struct Rva003A5500Element
@@ -91,7 +84,7 @@ struct Rva003A5500Element
 template <>
 __forceinline void _Construct<Rva003A5500Element, Rva003A5500Element>(Rva003A5500Element *destination, const Rva003A5500Element &source)
 {
-	new ((Rva003A5500Placement *)destination) Open2Rec3A4420(
+	new ((void *)destination) Open2Rec3A4420(
 		reinterpret_cast<const Open2Rec3A4420 &>(source));
 }
 
