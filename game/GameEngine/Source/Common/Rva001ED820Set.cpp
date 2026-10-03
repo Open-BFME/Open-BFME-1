@@ -2,12 +2,10 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-typedef StringBase<char> RetailLayoutString;
-
 class Rva001ED820
 {
 	char m_lead[0x20];
-	RetailLayoutString m_layout;
+	StringBase<char> m_layout;
 
 public:
 	void run();
