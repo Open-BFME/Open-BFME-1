@@ -16,7 +16,8 @@ extern "C" int __cdecl ghttpGetA(const char *url, int blocking,
 extern "C" int __cdecl ghttpHeadA(const char *url, int blocking,
 	GHTTPCompletedCallback completed, void *param);
 // Retail calls the lower-level Gamespy implementation through ILT 0x0087AD40.
-extern "C" int __cdecl ghiSetProxy(const char *server);
+extern void j_0087ad40();
+typedef int (__cdecl *GhiSetProxyFn)(const char *server);
 
 enum GHTTPBool { GHTTPFalse, GHTTPTrue };
 enum GHTTPResult { GHTTPSuccess };
@@ -37,7 +38,7 @@ void bfmeReallyStartPatchCheck(void)
 
 	std::string proxy;
 	if (GetStringFromRegistry("", "Proxy", proxy)) {
-		if (!proxy.empty()) ghiSetProxy(proxy.c_str());
+		if (!proxy.empty()) reinterpret_cast<GhiSetProxyFn>(j_0087ad40)(proxy.c_str());
 	}
 
 	// These callback VAs are the direct operands in the retail call sites.
