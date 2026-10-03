@@ -1,3 +1,5 @@
+void j_0003672d();
+
 struct BfmeBlockZC
 {
 	int m_bfmeWords[20];
@@ -6,7 +8,6 @@ struct BfmeBlockZC
 class BfmeThingZC
 {
 public:
-	void bfmeTailZC();
 	void bfmeGoZC();
 	unsigned char m_bfmeHead[0x100];
 	BfmeBlockZC m_bfmeCur;
@@ -31,5 +32,9 @@ void BfmeThingZC::bfmeGoZC()
 			m_bfmeCur = m_bfmeA;
 		}
 	}
-	bfmeTailZC();
+	// Retail calls the five-byte ILT thunk at 0x0003672D, which tail-jumps to
+	// the real body; one-argument fastcall puts `this` in ECX like a no-argument
+	// thiscall, and the reference names the thunk that defines it.
+	typedef void (__fastcall *BfmeTailCall)(BfmeThingZC *);
+	reinterpret_cast<BfmeTailCall>(&j_0003672d)(this);
 }

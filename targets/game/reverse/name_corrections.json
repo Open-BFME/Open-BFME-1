@@ -15318,5 +15318,15 @@
   "after_sha256": "988c4d766d12501796ff329e1093d19ed16edb87003caa6b833315b0fd1eb9c2",
   "evidence": "targets/game/reverse/identity_evidence/003a04a0-filter-player-abi.md",
   "reason": "False type pairing: remove the fictitious BfmeFilterObject base and wrong Boolean query in favor of the canonical Object header and Player-returning zero-argument getter. Rva0039F0A0 is the separate existing final predicate view proved by matched BannerThingCounter, not a renamed Object base."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva00627A50Clear.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00627A50Clear.cpp",
+  "old_name": "b_00042a50",
+  "new_name": "j_00042a50",
+  "before_sha256": "1a193f65fdec1dae25fd33c226d2036d87f7a91e900f0fe10766929e3a93fcbf",
+  "after_sha256": "e35377c90ffa8766bf058f5221acb8a39dff1ef3085b93f4c193871f112172fe",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
