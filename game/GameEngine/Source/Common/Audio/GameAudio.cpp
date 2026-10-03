@@ -1012,25 +1012,8 @@ void AudioManager::refreshCachedVariables()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/AudioManager_getAudioLengthMS_Thunk.cpp
-// ?getAudioLengthMS@AudioManager@@ present-unmatched
-Real AudioManager::getAudioLengthMS( const AudioEventRTS *event )
-{
-	if (!event->getAudioEventInfo()) {
-		getInfoForAudioEvent(event);
-		if (!event->getAudioEventInfo()) {
-			return 0.0f;
-		}
-	}
-
-	AudioEventRTS tmpEvent = *event;
-
-	tmpEvent.generateFilename();
-	tmpEvent.generatePlayInfo();
-	return getFileLengthMS(tmpEvent.getAttackFilename()) + 
-				 getFileLengthMS(tmpEvent.getFilename()) + 
-				 getFileLengthMS(tmpEvent.getDecayFilename());
-}
+// BFME getAudioLengthMS is owned by AudioManager_getAudioLengthMS_Thunk.cpp
+// at RVA 0x0069FA00. Retail locks the manager and uses bfmeGenerateFilename.
 
 //-------------------------------------------------------------------------------------------------
 Bool AudioManager::isMusicAlreadyLoaded(void) const
