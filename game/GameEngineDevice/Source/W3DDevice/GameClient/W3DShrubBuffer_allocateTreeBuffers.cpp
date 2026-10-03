@@ -295,12 +295,12 @@ void W3DShrubBuffer::allocateTreeBuffers(void)
 			return;
 	}
 	{
-		Int result = BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\Shrubs_darken.vs", reinterpret_cast<unsigned long *>(&m_resource2));
+		Int result = BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\Shrubs_darken.vso", reinterpret_cast<unsigned long *>(&m_resource2));
 		if (result < zero)
 			return;
 	}
 	{
-		Int result = BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\Shrubs_lighten.vs", reinterpret_cast<unsigned long *>(&m_resource3));
+		Int result = BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\Shrubs_lighten.vso", reinterpret_cast<unsigned long *>(&m_resource3));
 		if (result < zero)
 			return;
 	}
