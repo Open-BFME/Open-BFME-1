@@ -14,7 +14,7 @@
 // numPlayers, PlayerInfo's destructor is compiler-generated, setPlayerTemplate
 // and setGameName are inline, a 1v1/2v2 value from response +0x194 goes to
 // slot +0x68/+0x6C, and the receiver's +0x56 flag replaces startGame.
-// The only caller (0x0055A240) is still a dump, so the receiver class keeps
+// The caller (0x0055A240) is reconstructed below; its owner is unproven, so the receiver class keeps
 // the address token; slot +0x68/+0x6C keep offset names.
 #define _STLP_NO_EXCEPTIONS 1
 #define __PLACEMENT_VEC_NEW_INLINE
@@ -646,16 +646,19 @@ enum QMStatus {
 // Retail 0x00559840 (1248 bytes). The quick-match "matched" handler of the
 // Apt quick-match screen: the QM_MATCHED block of the window-based
 // Rva00506720Layout::update above, reworked for BFME's Apt screen. The only
-// caller (0x0055A240, still a dump) passes its object in ECX and the peer
+// caller (0x0055A240, reconstructed below) passes its object in ECX and the peer
 // response on the stack. The receiver's class is not proven, so the class
 // keeps the address token; +0x78 is the quick-match mode it hands to
 // markGameAsQM and +0x56 the flag it raises once the game is set up.
 class Rva00559840QuickMatch {
 public:
   void handleMatched(PeerResponse &resp);
+  void rva0055A240();
 
 private:
-  char opaque00[0x56];
+  char opaque00[0x3c];
+  int rva3c;
+  char opaque40[0x16];
   bool rva56;
   char opaque57[0x21];
   int rva78;
@@ -738,4 +741,193 @@ void Rva00559840QuickMatch::handleMatched(PeerResponse &resp) {
 
   SendStatsToOtherPlayers(TheGameSpyGame);
   rva56 = true;
+}
+
+// Retail RVA 0055A240: complete quick-match dispatch including both
+// response loops. Uses the verified 559840/506720 donor contracts.
+// Boundary and callee evidence: identity_evidence/0055a240-quickmatch-dispatch.md.
+class __single_inheritance FunctorTargetSingle;
+typedef void (FunctorTargetSingle::*FunctorMethodSingle)(int);
+struct FunctorBindingSingle {
+  FunctorTargetSingle *m_target;
+  FunctorMethodSingle m_method;
+  FunctorBindingSingle(FunctorMethodSingle f, FunctorTargetSingle *p):m_target(p),m_method(f) {}
+};
+class Rva00559280FunctorSingleHolder {
+public:
+  Rva00559280FunctorSingleHolder(FunctorBindingSingle);
+  ~Rva00559280FunctorSingleHolder();
+  Rva00559280FunctorSingleHolder(const Rva00559280FunctorSingleHolder &);
+  void *ptr;
+};
+typedef char Rva0055A240MethodWidth[sizeof(FunctorMethodSingle) == 4 ? 1 : -1];
+typedef char Rva0055A240HolderWidth[sizeof(Rva00559280FunctorSingleHolder) == 4 ? 1 : -1];
+class BfmeTagZB;
+extern void bfmeSendZB(void *,void *,void *,BfmeTagZB);
+extern void j_00021328();
+class BfmeLevelAN {
+public:
+  char *bfmeBuildAN(unsigned,int,int,int,int,int,int,int);
+};
+extern BfmeLevelAN *g_rva012F19E8WindowManager;
+struct Rva0055A240Context {char opaque00[0x250]; unsigned rva250;};
+struct Rva0055A240Global {char opaque00[0x34]; Rva0055A240Context *rva34;};
+extern Rva0055A240Global *g_rva012F4ABC;
+void Rva00559840QuickMatch::rva0055A240() {
+  HandleBuddyResponses();
+  HandlePersistentStorageResponses();
+  if (TheGameSpyGame && TheGameSpyGame->isGameInProgress()) {
+    if (TheGameSpyInfo->isDisconnectedAfterGameStart(NULL)) return;
+    int allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+    bool sawImportantMessage = false;
+    PeerResponse resp;
+    while (allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse(resp)) {
+      switch (resp.peerResponseType) {
+      case PeerResponse::PEERRESPONSE_DISCONNECT: {
+        sawImportantMessage = true;
+        AsciiString disconMunkee;
+        disconMunkee.format("GUI:GSDisconReason%d", resp.discon.reason);
+        NameKeyType id=NAMEKEY("ScoreScreen.wnd:ListboxChatWindowScoreScreen");
+        GameWindow *window=TheWindowManager->winGetWindowFromId(NULL,id);
+        if (window) GadgetListBoxAddEntryText(window,TheGameText->fetch(disconMunkee),GameSpyColor[GSCOLOR_DEFAULT],-1);
+        TheGameSpyInfo->markAsDisconnectedAfterGameStart(resp.discon.reason);
+      }}
+    }
+    return;
+  }
+  if (TheNAT) {
+    NATStateType state=TheNAT->update();
+    if (state==NATSTATE_DONE) {TheGameSpyGame->launchGame(); return;}
+    else if (state==NATSTATE_FAILED) {
+      delete TheNAT;
+      TheNAT=NULL;
+      rva3c=3;
+      union {void (*raw)(); FunctorMethodSingle method;} callback;
+      callback.raw=j_00021328;
+      typedef void (__cdecl *Send)(void *,const UnicodeString &,const UnicodeString &,Rva00559280FunctorSingleHolder);
+      ((Send)bfmeSendZB)(0,TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:NATNegotiationFailed"),Rva00559280FunctorSingleHolder(FunctorBindingSingle(callback.method,(FunctorTargetSingle*)this)));
+      g_rva012F19E8WindowManager->bfmeBuildAN(g_rva012F4ABC->rva34->rva250,(int)"CallChild",1,(int)"CloseFoundAndReset",0,0,0,0);
+      return;
+    }
+  }
+    Int allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+    Bool sawImportantMessage = FALSE;
+    PeerResponse resp;
+    while (allowedMessages-- && !sawImportantMessage &&
+           TheGameSpyPeerMessageQueue->getResponse(resp)) {
+
+      switch (resp.peerResponseType) {
+      case PeerResponse::PEERRESPONSE_PLAYERUTM: {
+        AsciiString nick;
+        PlayerInfoMap::iterator found =
+            TheGameSpyInfo->getPlayerInfoMap()->find(resp.nick.c_str());
+        if (found != TheGameSpyInfo->getPlayerInfoMap()->end())
+          nick = found->second.baseName;
+        else
+          nick = resp.nick.c_str();
+        if (!_strcmpi(resp.command.c_str(), "STATS")) {
+          AsciiString data = resp.commandOptions.c_str();
+          AsciiString idStr;
+          data.nextToken(&idStr, " ");
+          Int id = atoi(idStr.str());
+
+          PSPlayerStats stats =
+              TheGameSpyPSMessageQueue->parsePlayerKVPairs(data.str());
+          PSPlayerStats oldStats =
+              TheGameSpyPSMessageQueue->findPlayerStatsByID(id);
+          stats.id = id;
+          if (stats.id && (oldStats.id == 0))
+            TheGameSpyPSMessageQueue->trackPlayerStats(stats);
+
+          for (Int i = 0; i < MAX_SLOTS; ++i) {
+            GameSpyGameSlot *slot = TheGameSpyGame->getGameSpySlot(i);
+            if (slot && slot->isHuman() &&
+                (((Rva00505D10StringOwner *)slot)
+                     ->value()
+                     .compareNoCase(nick) == 0)) {
+              slot->setProfileID(id);
+              break;
+            }
+          }
+        }
+        Int slotNum = TheGameSpyGame->getSlotNum(nick);
+        if ((slotNum >= 0) && (slotNum < MAX_SLOTS) &&
+            (!_strcmpi(resp.command.c_str(), "NAT"))) {
+
+          sawImportantMessage = TRUE;
+          if (TheNAT != NULL) {
+            TheNAT->processGlobalMessage(slotNum, resp.commandOptions.c_str());
+          }
+        }
+
+      } break;
+
+      case PeerResponse::PEERRESPONSE_DISCONNECT: {
+        sawImportantMessage = TRUE;
+        UnicodeString title, body;
+        AsciiString disconMunkee;
+        disconMunkee.format("GUI:GSDisconReason%d", resp.discon.reason);
+        title = TheGameText->fetch("GUI:GSErrorTitle");
+        body = TheGameText->fetch(disconMunkee);
+        GameSpyCloseAllOverlays();
+        GSMessageBoxOk(title, body);
+        TheGameSpyInfo->reset();
+        TheShell->pop();
+        TearDownGameSpy();
+      } break;
+
+      case PeerResponse::PEERRESPONSE_JOINGROUPROOM:
+
+        break;
+      case PeerResponse::PEERRESPONSE_PLAYERJOIN: {
+
+      } break;
+      case PeerResponse::PEERRESPONSE_PLAYERLEFT: {
+
+      } break;
+      case PeerResponse::PEERRESPONSE_MESSAGE: {
+
+      } break;
+
+      case PeerResponse::PEERRESPONSE_CREATESTAGINGROOM: {
+        if (resp.createStagingRoom.result == PEERJoinSuccess) {
+
+          UnicodeString str;
+          str.format(L"Created staging room");
+        } else {
+          UnicodeString s;
+          s.format(L"createStagingRoom result: %d",
+                   resp.createStagingRoom.result);
+        }
+      } break;
+      case PeerResponse::PEERRESPONSE_JOINSTAGINGROOM: {
+        if (resp.joinStagingRoom.ok == PEERTrue) {
+
+          UnicodeString s;
+          s.format(L"joinStagingRoom result: %d", resp.joinStagingRoom.ok);
+        } else {
+          UnicodeString s;
+          s.format(L"joinStagingRoom result: %d", resp.joinStagingRoom.ok);
+        }
+      } break;
+      case PeerResponse::PEERRESPONSE_STAGINGROOM: {
+        UnicodeString str;
+        str.format(L"Staging room list callback", resp.nick.c_str());
+      } break;
+
+      case PeerResponse::PEERRESPONSE_QUICKMATCHSTATUS: {
+        sawImportantMessage=TRUE;
+        switch(resp.qmStatus.status) {
+        case QM_WORKING: {UnicodeString s; s.format(TheGameText->fetch("QM:WORKING"),resp.qmStatus.poolSize);} break;
+        case QM_POOLSIZE: {UnicodeString s; s.format(TheGameText->fetch("QM:POOLSIZE"),resp.qmStatus.poolSize);} break;
+        case QM_MATCHED: {
+          unsigned level = g_rva012F4ABC->rva34->rva250;
+          BfmeLevelAN *manager = g_rva012F19E8WindowManager;
+          manager->bfmeBuildAN(level,(int)"CallChild",1,(int)"DoOpenFound",0,0,0,0);
+          handleMatched(resp);
+          } break;
+        }
+      } break;
+      }
+    }
 }
