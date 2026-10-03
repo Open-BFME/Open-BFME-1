@@ -3008,13 +3008,29 @@ Bool ScriptConditions::evaluatePlayerLostObjectType(Parameter *pPlayerParm, Para
 //-------------------------------------------------------------------------------------------------
 /** Evaluate a condition */
 //-------------------------------------------------------------------------------------------------
+// Scripts.h declares Condition::getConditionType as an inline accessor, so
+// calling it here emits this TU's own COMDAT copy of
+// ?getConditionType@Condition@@QAE?AW4ConditionType@1@XZ, which collides at link
+// with retail's only copy of that body (the 4-byte accessor at 0x002ED4B0, owned
+// by game/GameEngine/Source/GameLogic/ScriptEngine/Condition_getConditionType.cpp).
+// Retail calls the accessor from evaluateCondition, so the same body over the same
+// +0x04 member under a TU-local view name keeps the bytes and drops the colliding
+// symbol. The leading pad is the Condition vtable pointer: no virtual member is
+// declared here, so this view emits no vftable of its own.
+struct Rva002ED4B0ConditionType
+{
+	unsigned char m_vtablePad[4];
+	Condition::ConditionType m_conditionType;
+	Condition::ConditionType getConditionType(void) { return m_conditionType; }
+};
+
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/script_conditions.cpp
 // ?evaluateCondition@ScriptConditions@@UAE_NPAVCondition@@@Z present-unmatched
 Bool ScriptConditions::evaluateCondition( Condition *pCondition )
 {
-	switch (pCondition->getConditionType()) {
+	switch (((Rva002ED4B0ConditionType *)pCondition)->getConditionType()) {
 		default: 
-			DEBUG_CRASH(("Unknown ScriptCondition type %d", pCondition->getConditionType())); 
+			DEBUG_CRASH(("Unknown ScriptCondition type %d", ((Rva002ED4B0ConditionType *)pCondition)->getConditionType())); 
 			return false;
 		case Condition::PLAYER_ALL_DESTROYED: 
 			return evaluateAllDestroyed(pCondition->getParameter(0));

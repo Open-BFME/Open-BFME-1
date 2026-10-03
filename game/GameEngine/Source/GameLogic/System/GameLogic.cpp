@@ -393,6 +393,20 @@ extern void externalAddTree(Coord3D location, Real scale, Real angle, AsciiStrin
 
 
 
+// MultiplayerSettings.h declares MultiplayerColorDefinition::getNightColor as
+// an inline accessor, so calling it here emits this TU's own COMDAT copy of
+// ?getNightColor@MultiplayerColorDefinition@@QBEHXZ, which collides at link with
+// retail's only copy of that body (the 4-byte accessor at 0x0008DE80, owned by
+// game/GameEngine/Source/Common/MultiplayerColorDefinitionGetNightColor.cpp).
+// Retail calls the accessor from these two sites, so the same body under a
+// TU-local view name keeps the bytes and drops the colliding symbol.
+struct Rva008DE80ColorNight
+{
+	unsigned char m_beforeColorNight[0x20];
+	Color m_colorNight;
+	Color getNightColor(void) const { return m_colorNight; }
+};
+
 // I'm making this larger now that we know how big our maps are going to be. 
 enum { OBJ_HASH_SIZE	= 8192 };
 
@@ -4362,7 +4376,7 @@ void GameLogic::startNewGame( Bool loadingSaveGame )
 			*/
 
 			d.setInt(TheKey_playerColor, TheMultiplayerSettings->getColor(slot->getColor())->getColor());
-			d.setInt(TheKey_playerNightColor, TheMultiplayerSettings->getColor(slot->getColor())->getNightColor());
+			d.setInt(TheKey_playerNightColor, ((const Rva008DE80ColorNight *)TheMultiplayerSettings->getColor(slot->getColor()))->getNightColor());
 			d.setInt(TheKey_multiplayerStartIndex, slot->getStartPos());
 //			d.setBool(TheKey_multiplayerIsLocal, slot->isLocalPlayer());
 //			d.setBool(TheKey_multiplayerIsLocal, slot->getIP() == game->getLocalIP());
@@ -4425,7 +4439,7 @@ void GameLogic::startNewGame( Bool loadingSaveGame )
 		d.setAsciiString(TheKey_playerAllies, AsciiString::TheEmptyString);
 		d.setAsciiString(TheKey_playerEnemies, AsciiString::TheEmptyString);
 		d.setInt(TheKey_playerColor, TheMultiplayerSettings->getColor(0)->getColor());
-		d.setInt(TheKey_playerNightColor, TheMultiplayerSettings->getColor(0)->getNightColor());
+		d.setInt(TheKey_playerNightColor, ((const Rva008DE80ColorNight *)TheMultiplayerSettings->getColor(0))->getNightColor());
 		d.setInt(TheKey_multiplayerStartIndex, 0);
 		d.setBool(TheKey_multiplayerIsLocal, FALSE);
 

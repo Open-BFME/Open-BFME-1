@@ -66,6 +66,20 @@ struct Rva0019BE80TeamRec
 	int append(const Dict *d);
 };
 
+// MultiplayerSettings.h declares MultiplayerColorDefinition::getNightColor as
+// an inline accessor, so calling it here emits this TU's own COMDAT copy of
+// ?getNightColor@MultiplayerColorDefinition@@QBEHXZ, which collides at link with
+// retail's only copy of that body (the 4-byte accessor at 0x0008DE80, owned by
+// game/GameEngine/Source/Common/MultiplayerColorDefinitionGetNightColor.cpp).
+// Retail inlines the load here, so read m_colorNight at the same +0x20 through a
+// TU-local view: same bytes, no colliding symbol.
+struct Rva008DE80ColorNight
+{
+	unsigned char m_beforeColorNight[0x20];
+	Color m_colorNight;
+	Color getNightColor(void) const { return m_colorNight; }
+};
+
 
 
 void dup_003865b0( void )
@@ -87,7 +101,8 @@ void dup_003865b0( void )
 	d.setAsciiString(TheKey_playerAllies, AsciiString::TheEmptyString);
 	d.setAsciiString(TheKey_playerEnemies, AsciiString::TheEmptyString);
 	d.setInt(TheKey_playerColor, TheMultiplayerSettings->getColor(0)->getColor());
-	d.setInt(TheKey_playerNightColor, TheMultiplayerSettings->getColor(0)->getNightColor());
+	d.setInt(TheKey_playerNightColor,
+		((const Rva008DE80ColorNight *)TheMultiplayerSettings->getColor(0))->getNightColor());
 	d.setInt(TheKey_multiplayerStartIndex, 0);
 	d.setBool(TheKey_multiplayerIsLocal, FALSE);
 

@@ -88,6 +88,18 @@ template<class T> __forceinline T &at(void *p, unsigned n)
 	return *(T *)((char *)p + n);
 }
 
+// BaseType.h declares Coord3D::length inline, so naming it here makes this TU
+// emit its own COMDAT copy of ?length@Coord3D@@QBEMXZ, which collides at link
+// with retail's only copy of that body (game/Libraries/Source/WWVegas/WWMath/
+// coord3d.cpp, the ledger owner). The call is inlined at this site -- retail
+// computes the square root in place -- so the same arithmetic under a TU-local
+// name keeps the bytes and drops the colliding symbol.
+struct RvaCoord3DLength
+{
+	float x, y, z;
+	float length(void) const { return (float)sqrt(x * x + y * y + z * z); }
+};
+
 void BfmeOwnerXJ::bfmeDoneXJ(void *weapon, BfmeSubXJ *sub)
 {
 	float radius = m_bfmeValueXJ;
@@ -126,7 +138,7 @@ void BfmeOwnerXJ::bfmeDoneXJ(void *weapon, BfmeSubXJ *sub)
 				initial.set((const Coord3D *)center);
 				initial.sub(source->getPosition());
 				Vector3 direction(initial.x, initial.y, initial.z);
-				if (initial.length() == 0.0f)
+				if (((const RvaCoord3DLength *)&initial)->length() == 0.0f)
 					direction = Vector3(at<float>(source, 8), at<float>(source, 0x18), at<float>(source, 0x28));
 				Vector3 normalized(delta.x, delta.y, delta.z);
 				direction.Normalize();
