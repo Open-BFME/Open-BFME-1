@@ -282,6 +282,20 @@ private:
 	char m_retailData[ 0x3C ];
 };
 
+// UpgradeSoundSelectorClientBehavior's pool getter is retail 0x00121FA0: it binds the
+// pool name "UpgradeSoundSelectorClientBehavior" and is reached only through that
+// class's vtable (0x0108AD18) slot 4 via ILT 0x000473FC. The ledger used to claim it as
+// Upgrade's; this TU-scoped declaration carries just the pool glue and constructor.
+// identity_evidence/20261003-upgrade-pool-getter-identity.md
+class UpgradeSoundSelectorClientBehavior : public MemoryPoolObject
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( UpgradeSoundSelectorClientBehavior, "UpgradeSoundSelectorClientBehavior" )
+public:
+	UpgradeSoundSelectorClientBehavior( Thing *thing, const ModuleData *moduleData );
+private:
+	char m_retailData[ 0x10 ];
+};
+
 namespace ModulePoolGlueBulk
 {
 
@@ -396,6 +410,7 @@ EMIT_MODULE_POOL_GLUE( SpecialAbilityUpdate )
 // Only the pool-placement helper: the class is not a Module here, and its factory is
 // matched in WeaponModeSpecialPowerUpdateFriendNewModuleInstanceThunk.cpp.
 MemoryPoolObject *pool_emit_WeaponModeSpecialPowerUpdate( Thing *thing, const ModuleData *moduleData ) { return newInstance( WeaponModeSpecialPowerUpdate )( thing, moduleData ); }
+MemoryPoolObject *pool_emit_UpgradeSoundSelectorClientBehavior( Thing *thing, const ModuleData *moduleData ) { return newInstance( UpgradeSoundSelectorClientBehavior )( thing, moduleData ); }
 EMIT_MODULE_POOL_GLUE( AnimatedParticleSysBoneClientUpdate )
 EMIT_MODULE_POOL_GLUE( BeaconClientUpdate )
 
