@@ -17228,8 +17228,7 @@
   "after_sha256": "aa234aee31c04877f648adc417661e9efb05bdf41b70f14cc163475d4cfbcab3",
   "evidence": "targets/game/reverse/identity_evidence/00895a00-banked-handle-abi.md",
   "reason": "Replace the bank-only invented recipe label and false void-output lookup model with the independently proven hidden handle-return ABI; no witness names the method, so preserve its address."
- }
-,
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x005082d0.cpp",
   "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva005082D0.cpp",
@@ -17239,5 +17238,25 @@
   "after_sha256": "05b5d14ee676d1187d963d3b38819d00e839d583c1e8bc76644fbc1e1037ebdd",
   "evidence": "targets/game/reverse/identity_evidence/005082d0-method-name.md",
   "reason": "The previous name came from a Zero Hour static helper. BFME's matched callers prove the menu receiver and arguments, and the retail selector scan has no row for 0x005082D0. The evidence does not establish the BFME member spelling."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeFrameLabelAH.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00664680.cpp",
+  "old_name": "BfmeFrameAH",
+  "new_name": "Rva00664680",
+  "before_sha256": "9de4db9134f5359a8cdf6ea0d09b9255522df30fdbae93a44bb5fb68716f844f",
+  "after_sha256": "7b6b9db03e52c7c0361918184d0ae750d826aaa9f5bbb64b7140343bbe1959bb",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-rva664680-string-result.md",
+  "reason": "BfmeFrameAH is a legacy synthetic Bfme<Role><Suffix> owner with no named caller or symbol pin; independent retail format/copy/release calls refute the AH string alias but do not establish an owner name. Rva00664680 keeps the actual address while canonicalizing the proven AsciiString return type."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeFrameAH",
+  "new_name": "Rva00664680",
+  "before_sha256": "e480e576e2defc84f153fd2ae1cf3404214b4303763a60217117b6b6978cd87a",
+  "after_sha256": "129d21858379baeee36b714ce5d7d52549fb43367e99c881c587a6bd11d5b9ba",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-rva664680-string-result.md",
+  "reason": "BfmeFrameAH is a legacy synthetic Bfme<Role><Suffix> owner with no named caller or symbol pin; independent retail format/copy/release calls refute the AH string alias but do not establish an owner name. Rva00664680 keeps the actual address while canonicalizing the proven AsciiString return type."
  }
 ]
