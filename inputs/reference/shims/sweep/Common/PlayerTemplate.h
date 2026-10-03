@@ -76,6 +76,8 @@ class PlayerTemplate
 public:
 
 	PlayerTemplate();
+	// Retail copy body is out of line (PlayerTemplateCopyConstructor.cpp, 0xE2E50); declared so no TU emits an inline copy.
+	PlayerTemplate(const PlayerTemplate&);
 
 	inline void setNameKey(NameKeyType namekey) { m_nameKey = namekey; }
 
