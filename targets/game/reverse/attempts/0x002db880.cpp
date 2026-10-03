@@ -1,6 +1,9 @@
 // ?apply@BfmeOwnerXJApplyCall@@QAE_NPAXPAVBfmeThingXJ@@PAVDamageInfo@@@Z
-// partial score=0.9709 date=2026-09-28
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /MD /EHs-c- /Igame/GameEngine/Source/GameLogic/Object /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// partial score=0.9897 date=2026-10-03
+// Native read-only lookup visibility restores retail ratio/filter/multiplier homes.
+// Remaining: +0x202 MOV of receiver+0x74 and +0x205 FSTP are exchanged.
+// This bank is not a production identity or call-binding claim.
+// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /MD /EHs-c- /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 #include "Lib/BaseType.h"
 #include <list>
@@ -12,7 +15,8 @@
 class Player;
 #define OBJECT_TU_MEMBERS Player* getControllingPlayer() const; bool getAttributeModifierBonus(int,float*) const; bool getAttributeModifierMultiplier(int,float*) const;
 #include "object.h"
-class GameLogic { public: Object* findObjectByID(int); };
+#define BFME_GAMELOGIC_LOOKUP_VISIBLE
+#include "GameLogicObjectLookup.h"
 extern GameLogic* TheGameLogic;
 class BfmeThingXJ;
 class DamageInfo;
