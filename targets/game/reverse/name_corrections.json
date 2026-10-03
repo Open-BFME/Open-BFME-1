@@ -15788,5 +15788,15 @@
   "after_sha256": "49d97df74d5580a210b4e1baeb8c2703102d802356ca823cc58ce803d59d1a08",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/FadeAndDieOrnamentUpdateFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/FadeAndDieOrnamentUpdateFriendNewModuleDataThunk.cpp",
+  "old_name": "FadeAndDieOrnamentUpdateFieldParse",
+  "new_name": "j_000318bd",
+  "before_sha256": "7986db467035a34bb4740728352bfd9cb7d463d1af1541d69e3fceabf99ad7cc",
+  "after_sha256": "cfa71df89c7babdba41cd4ea0d527f11e3e7af685a69db22c133a398aa46f6d2",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
