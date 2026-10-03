@@ -17,15 +17,11 @@
 // the same in every member.  Each table therefore gets its own extern here, so
 // the gate's DIR32 consistency check sees one symbol per address.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+// CrateCollideModuleData is proven; the remaining names are address-derived.
 //
-// The appender these bodies call at 0x00850920 is
-// MultiIniFieldParse::add(const FieldParse*, unsigned), so the call goes
-// through the defining class, taken from the real Common/INI.h. The receiver
-// stays spelled Gen00850920 because every forwarder here is matched under a
-// name carrying it (?Rva00122E10@@YAXPAVGen00850920@@@Z and 101 siblings);
-// respelling the parameter type would rename the enclosing bodies and unmatch
-// all 102 rows.
+// The appender is MultiIniFieldParse::add, declared in Common/INI.h.
+// The 101 address-derived forwarders keep the receiver spelled Gen00850920,
+// because respelling it would rename and unmatch every one of them.
 
 #include "Common/INI.h"
 
@@ -49,7 +45,19 @@ BFME_TABLE_REGISTER( Rva002029D0, g_table_002029D0 )
 BFME_TABLE_REGISTER( Rva00205F80, g_table_00205F80 )
 BFME_TABLE_REGISTER( Rva0020D260, g_table_0020D260 )
 BFME_TABLE_REGISTER( Rva00211A30, g_table_00211A30 )
-BFME_TABLE_REGISTER( Rva00217AB0, g_table_00217AB0 )
+extern int g_table_00217AB0;
+
+class CrateCollideModuleData
+{
+public:
+	static void buildFieldParse( MultiIniFieldParse &parse );
+};
+
+void CrateCollideModuleData::buildFieldParse( MultiIniFieldParse &parse )
+{
+	parse.add( reinterpret_cast<const FieldParse *>( &g_table_00217AB0 ), 0 );
+}
+
 BFME_TABLE_REGISTER( Rva00250CA0, g_table_00250CA0 )
 BFME_TABLE_REGISTER( Rva0026A8F0, g_table_0026A8F0 )
 BFME_TABLE_REGISTER( Rva00270150, g_table_00270150 )
