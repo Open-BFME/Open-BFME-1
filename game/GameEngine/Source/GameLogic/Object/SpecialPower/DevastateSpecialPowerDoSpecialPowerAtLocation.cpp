@@ -35,6 +35,7 @@ typedef unsigned int UnsignedInt;
 class Coord3D;
 class Matrix3D;
 class BfmeX1035;
+class GlobalData;
 
 #define OBJECT_TU_MEMBERS \
 	class Player *getControllingPlayer() const;
@@ -178,7 +179,7 @@ static __forceinline Rva012EF4CCTerrain *localTerrainLogic()
 class GameLogic;
 extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
-extern char *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 #pragma comment(linker, "/alternatename:?bfmeGo1275@BfmeA1275@@QAEHHHHH@Z=?j_000226ab@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva001AE4A0@Rva012EF4CCTerrain@@QAEXPAVBfmeX1035@@H@Z=?j_0001acbc@@YAXXZ")
@@ -247,7 +248,7 @@ void DevastateSpecialPowerInterface::doSpecialPowerAtLocation(const Coord3D *tar
 			if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 			{
 				int playerCount = ThePlayerList->unidentified_000df510(false);
-				float factor = ((Gen_00083240 *)(TheWritableGlobalData + 0xee0))->bfmeGet0(playerCount);
+				float factor = ((Gen_00083240 *)((char *)TheWritableGlobalData + 0xee0))->bfmeGet0(playerCount);
 				reward *= factor;
 			}
 
