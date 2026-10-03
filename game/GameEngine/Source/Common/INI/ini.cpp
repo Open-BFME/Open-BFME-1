@@ -1219,11 +1219,16 @@ void INI::parseGameClientRandomVariable( INI* ini, void * /*instance*/, void *st
 }
 
 //-------------------------------------------------------------------------------------------------
+// Retail at the three duration parser operands loads binary32 0.005f.
+// Keep this local: the shared Zero Hour timing constants serve other callers.
+namespace Rva000B9C30Arithmetic {
+    inline Real ConvertDurationFromMsecsToFrames(Real value) { return value * 0.005f; }
+}
 // parse a duration in msec and convert to duration in frames
 void INI::parseDurationReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	Real val = scanReal(ini->getNextToken());
-	*(Real *)store = ConvertDurationFromMsecsToFrames(val);
+	*(Real *)store = Rva000B9C30Arithmetic::ConvertDurationFromMsecsToFrames(val);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1231,7 +1236,7 @@ void INI::parseDurationReal( INI *ini, void * /*instance*/, void *store, const v
 void INI::parseDurationUnsignedInt( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	UnsignedInt val = scanUnsignedInt(ini->getNextToken());
-	*(UnsignedInt *)store = (UnsignedInt)ceilf(ConvertDurationFromMsecsToFrames((Real)val));
+	*(UnsignedInt *)store = (UnsignedInt)ceilf(Rva000B9C30Arithmetic::ConvertDurationFromMsecsToFrames((Real)val));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -1239,7 +1244,7 @@ void INI::parseDurationUnsignedInt( INI *ini, void * /*instance*/, void *store, 
 void INI::parseDurationUnsignedShort( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	UnsignedInt val = scanUnsignedInt(ini->getNextToken());
-	*(UnsignedShort *)store = (UnsignedShort)ceilf(ConvertDurationFromMsecsToFrames((Real)val));
+	*(UnsignedShort *)store = (UnsignedShort)ceilf(Rva000B9C30Arithmetic::ConvertDurationFromMsecsToFrames((Real)val));
 }
 
 //-------------------------------------------------------------------------------------------------
