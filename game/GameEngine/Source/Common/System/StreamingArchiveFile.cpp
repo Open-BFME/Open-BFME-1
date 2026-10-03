@@ -190,38 +190,8 @@ Bool StreamingArchiveFile::open( File *file )
 //============================================================================
 // StreamingArchiveFile::openFromArchive
 //============================================================================
-// ?openFromArchive@StreamingArchiveFile@@ present-unmatched
-Bool StreamingArchiveFile::openFromArchive(File *archiveFile, const AsciiString& filename, Int offset, Int size) 
-{
-	//USE_PERF_TIMER(StreamingArchiveFile)
-	if (archiveFile == NULL) {
-		return FALSE;
-	}
-
-	if (File::open(filename.str(), File::READ | File::BINARY | File::STREAMING) == FALSE) {
-		return FALSE;
-	}
-
-	m_file = archiveFile;
-	m_startingPos = offset;
-	m_size = size;
-	m_curPos = 0;
-
-	if (m_file->seek(offset, File::START) != offset) {
-		return FALSE;
-	}
-	
-	if (m_file->seek(size) != m_startingPos + size) {
-		return FALSE;
-	}
-
-	// We know this will succeed.
-	m_file->seek(offset, File::START);
-
-	m_nameStr = filename;
-
-	return TRUE;
-}
+// Retail openFromArchive, including the compressed-archive marker check,
+// is defined in game/Libraries/Source/file/StreamingArchiveFile.cpp.
 
 //=================================================================
 // StreamingArchiveFile::close 	
