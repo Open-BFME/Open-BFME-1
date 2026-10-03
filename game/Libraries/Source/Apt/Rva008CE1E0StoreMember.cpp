@@ -60,7 +60,7 @@ class BfmeE1242;
 class BfmeN1242 { public: void rva008B8E10(int, BfmeE1242 *); };
 typedef void (Rva008CE1E0Value::*Rva008B8E10Store)(int, Rva008CE1E0Value *);
 typedef void (__cdecl *Rva008CE1E0Notify)(const char *, const char *);
-extern Rva008CE1E0Notify g_bfmeCompareEAW;
+extern Rva008CE1E0Notify g_rva01337864;
 
 void rva008CE1E0StoreMember(Rva008CE1E0State *state, Rva008CE1E0Context *context)
 {
@@ -85,7 +85,7 @@ void rva008CE1E0StoreMember(Rva008CE1E0State *state, Rva008CE1E0Context *context
         ((Rva8CD130Value *)value)->getName(&text);
         int keyKind = key->kind();
         if (keyKind != 1) key = key->m_value20;
-        g_bfmeCompareEAW((const char *)key->m_string08.m_data + 8,
+        g_rva01337864((const char *)key->m_string08.m_data + 8,
             (const char *)text.m_data + 8);
     }
     for (int index = 1; index <= 3; ++index) {

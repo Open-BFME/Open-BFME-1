@@ -48,7 +48,7 @@ extern BfmeProcVB g_bfmeSlot08VB;
 extern BfmeProcVB g_bfmeSlot09VB;
 extern BfmeProcVB g_bfmeSlot10VB;
 extern BfmeProcVB g_bfmeSlot11VB;
-extern BfmeProcVB g_bfmeSlot12VB;
+extern void (__cdecl *g_rva01337864)(const char *, const char *);
 extern BfmeProcVB g_bfmeSlot13VB;
 extern BfmeProcVB g_bfmeSlot14VB;
 extern BfmeProcVB g_bfmeSlot15VB;
@@ -84,7 +84,7 @@ void bfmeInstallHandlersVB(void)
 	g_bfmeSlot09VB = bfmeHandler09VB;
 	g_bfmeSlot10VB = bfmeHandler10VB;
 	g_bfmeSlot11VB = bfmeHandler11VB;
-	g_bfmeSlot12VB = bfmeHandler12VB;
+	g_rva01337864 = (void (__cdecl *)(const char *, const char *))bfmeHandler12VB;
 	g_bfmeSlot13VB = bfmeHandler13VB;
 	g_bfmeSlot14VB = bfmeHandler14VB;
 	g_bfmeSlot15VB = bfmeHandler15VB;

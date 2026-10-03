@@ -61,7 +61,9 @@ public:
 	void getName(Rva8CD130String *out);
 };
 
-extern void (__cdecl *g_bfmeCompareEAW)(const char *a, const char *b);
+// Native VA 0x01337864 is one zero-filled .data callback cell (the installer at
+// bfmeInstallHandlersVB stores slot 12 here); address-derived name, no EA name proven.
+void (__cdecl *g_rva01337864)(const char *a, const char *b) = 0;
 
 char __stdcall bfmeReportEAW(void *unused, BfmeStrEAW *other, BfmeHostEAW *host)
 {
@@ -69,7 +71,7 @@ char __stdcall bfmeReportEAW(void *unused, BfmeStrEAW *other, BfmeHostEAW *host)
 
 	((Rva8CD130Value *)host)->getName((Rva8CD130String *)&text);
 
-	g_bfmeCompareEAW(other->strEAW(), text.strEAW());
+	g_rva01337864(other->strEAW(), text.strEAW());
 
 	return 1;
 }
