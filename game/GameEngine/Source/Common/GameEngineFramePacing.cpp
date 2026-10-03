@@ -254,17 +254,7 @@ extern int BfmeSkippedClientFrames;
 #define SkippedClientFrames BfmeSkippedClientFrames
 extern int TimedOperationInputLocked;
 
-void GameEngine::_bfme_updateClientFrameRatio(void)
-{
-	float ratio = (float)m_clientFramePeriod / (float)m_clientFrameCounter;
-	m_clientFrameRatio = ratio;
-	if (ratio < 0.0f)
-		m_clientFrameRatio = 0.0f;
-	else if (ratio > 1.0f)
-		m_clientFrameRatio = 1.0f;
-	else
-		m_clientFrameRatio = ratio;
-}
+// The ratio helper is defined with its caller in GameEngineUpdate.cpp.
 
 bool GameEngine::_bfme_shouldSkipClientFrame(void)
 {
