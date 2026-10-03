@@ -1,23 +1,33 @@
 // cl: /Od /Gy
 // Open-BFME5 conversions.
 
+class BfmeVecV17
+{
+public:
+	void bfmeResizeV17(unsigned n, int v);
+};
+
+class BfmeStrVME
+{
+public:
+	void bfmeResizeVME(unsigned n, char c);
+};
+
 class BfmeThingSVA
 {
 public:
 	void bfmeOneSVA(int a);
 	void bfmeTwoSVA(int a);
-	void bfmeFwdOneSVA(int a, int b);
-	void bfmeFwdTwoSVA(int a, int b);
 };
 
 void BfmeThingSVA::bfmeOneSVA(int a)
 {
 	char m_bfmeScratch[0x24];
-	bfmeFwdOneSVA(a, 0);
+	((BfmeVecV17 *)this)->bfmeResizeV17(a, 0);
 }
 
 void BfmeThingSVA::bfmeTwoSVA(int a)
 {
 	char m_bfmeScratch[0x10];
-	bfmeFwdTwoSVA(a, 0);
+	((BfmeStrVME *)this)->bfmeResizeVME(a, 0);
 }

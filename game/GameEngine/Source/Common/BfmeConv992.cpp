@@ -24,11 +24,18 @@ public:
 	virtual void bfmeSend992C(int v);
 };
 
-class BfmeAsk992
+class BfmeAsk992;
+
+class W3DVideoBuffer
 {
 public:
-	char bfmeHas992C();
-	int bfmeGet992C();
+	virtual bool valid(void);
+};
+
+class Gen_007e88b0
+{
+public:
+	int m();
 };
 
 class BfmeC992
@@ -42,8 +49,8 @@ public:
 
 void BfmeC992::bfmeGo992C(BfmeAsk992 *a)
 {
-	if (a->bfmeHas992C()) {
-		int v = a->bfmeGet992C();
+	if (((W3DVideoBuffer *)a)->W3DVideoBuffer::valid()) {
+		int v = ((Gen_007e88b0 *)a)->m();
 
 		m_bfmeSink->bfmeSend992C(v);
 	} else {
