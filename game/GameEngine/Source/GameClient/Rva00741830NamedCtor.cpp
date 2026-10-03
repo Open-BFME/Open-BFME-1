@@ -58,12 +58,12 @@ public:
 	Rva00741830(
 		const AsciiString &name,
 		const Coord3D &pos,
-		unsigned a,
-		unsigned b,
-		unsigned c,
-		unsigned e,
-		unsigned f,
-		unsigned d);
+		float a,
+		float b,
+		float c,
+		float e,
+		float f,
+		float d);
 
 private:
 	unsigned m_zero;
@@ -81,22 +81,22 @@ private:
 Rva00741830::Rva00741830(
 	const AsciiString &name,
 	const Coord3D &pos,
-	unsigned a,
-	unsigned b,
-	unsigned c,
-	unsigned e,
-	unsigned f,
-	unsigned d)
+	float a,
+	float b,
+	float c,
+	float e,
+	float f,
+	float d)
 	: m_zero(0), m_name(name)
 {
 	m_pos.x = pos.x;
 	m_pos.y = pos.y;
 	m_pos.z = pos.z;
-	m_a = a;
-	m_b = b;
-	m_c = c;
-	m_d = d;
-	m_e = e;
-	m_f = f;
+	m_a = *(const unsigned *)&a;
+	m_b = *(const unsigned *)&b;
+	m_c = *(const unsigned *)&c;
+	m_d = *(const unsigned *)&d;
+	m_e = *(const unsigned *)&e;
+	m_f = *(const unsigned *)&f;
 	m_flag = 0;
 }
