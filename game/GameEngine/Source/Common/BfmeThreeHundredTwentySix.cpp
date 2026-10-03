@@ -5,7 +5,14 @@ struct BfmeLinkRX
 	unsigned short m_bfmeWhat;
 };
 
-void *bfmeAllocRX(unsigned int bytes);
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int bytes);
+};
+}
 
 class BfmeListRX
 {
@@ -17,7 +24,7 @@ public:
 void BfmeListRX::bfmePushRX(unsigned short *what)
 {
 	BfmeLinkRX *end = m_bfmeEnd;
-	BfmeLinkRX *link = (BfmeLinkRX *)bfmeAllocRX(0xc);
+	BfmeLinkRX *link = (BfmeLinkRX *)_STL::__new_alloc::allocate(0xc);
 	unsigned short *slot = &link->m_bfmeWhat;
 	if (slot != 0)
 		*slot = *what;
