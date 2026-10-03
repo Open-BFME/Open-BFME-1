@@ -15598,5 +15598,15 @@
   "after_sha256": "c9be96514e393a074ba8a3d02edfc6042be2646c42e80f9012137344e8d1eec2",
   "evidence": "targets/game/reverse/identity_evidence/0090d280-bank-declarations.md",
   "reason": "False temporary-to-adapter pairing: W3DRadarResetSurface destructor view is retained; native BfmeThingDC constructor is now called by an opaque local adapter."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva0032A490ObjectDistanceFilter.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva0032A490ObjectDistanceFilter.cpp",
+  "old_name": "bfmeTemplatePredicate",
+  "new_name": "j_00007df6",
+  "before_sha256": "ffe7573c4937645a066867bb6b4c5e0804c44f4e52dbfde8bad6b4ae149d4a0b",
+  "after_sha256": "91c74282490d8b322efc55080c4c2fc93fb806e545c543b8df4780972b7e8d2d",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

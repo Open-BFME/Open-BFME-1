@@ -18,9 +18,16 @@ public:
 
 class ThingTemplate : public Overridable
 {
-public:
-	bool bfmeTemplatePredicate() const;
 };
+
+// Retail 0x0032A490 reaches the final-template predicate through its ILT
+// 0x00007DF6, whose one definition in the tree is ?j_00007df6@@YAXXZ
+// (game/gen_small/thunks_003.cpp, matched, tail-jumping to the predicate at
+// 0x0032A220).  The body encodes a thiscall, so the callee is named through
+// the union member-pointer call the static-initializer stubs already use: the
+// thiscall form keeps ecx and passes no stack argument, which is exactly what
+// `mov ecx, finalTemplate; call 0x00007DF6` is.
+extern void __cdecl j_00007df6();
 
 struct Coord3D
 {
@@ -72,7 +79,10 @@ int rva0032a490(Object *object, Rva0032A490Context *context)
 		finalTemplate = (ThingTemplate *)nextOverride->getFinalOverride();
 	if (finalTemplate == 0)
 		goto failure;
-	if (!finalTemplate->bfmeTemplatePredicate())
+	typedef bool (ThingTemplate::*TemplatePredicate)(void);
+	union { bool (*function)(void); TemplatePredicate method; } predicate;
+	predicate.function = (bool (*)(void))j_00007df6;
+	if (!(finalTemplate->*predicate.method)())
 		goto failure;
 
 	Coord3D delta = object->m_position;

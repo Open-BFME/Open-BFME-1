@@ -66,9 +66,6 @@ public:
 	virtual void onEntry( BfmeEntryZI *entry, int flag );
 };
 
-extern int g_bfmeKeyAVHC;
-extern int g_bfmeKeyBVHC;
-
 struct Rva007EB810Diag
 {
 public:
@@ -93,9 +90,13 @@ public:
 void BfmeThingZI::rva007F7640( Rva007E8810Message *msg )
 {
 	Rva007F7640Locals locals( msg );
-	locals.m_results.m_resultA = msg->bfmeGoRF( &g_bfmeKeyAVHC, 0 );
+	// The two keys are not globals: retail pushes the ADDRESSES of two .rdata
+	// string literals, "QPOS" at 0x0112B580 and "QLEN" at 0x0112B578, the
+	// FESL field names this reply asks for. An address-taken literal is
+	// defined in this object, so neither name is an external symbol.
+	locals.m_results.m_resultA = msg->bfmeGoRF( (void *)"QPOS", 0 );
 	void *resultB;
-	resultB = msg->bfmeGoRF( &g_bfmeKeyBVHC, 0 );
+	resultB = msg->bfmeGoRF( (void *)"QLEN", 0 );
 	locals.m_results.m_resultBSpill = resultB;
 	BfmeEntryZI *entry = bfmeFindZI( locals.m_key.m_lid, locals.m_key.m_gid );
 
