@@ -77,3 +77,6 @@ void Rva0010D2F0Noop() {}
 void Rva00122D00Noop() {}
 void Rva00350B60Noop() {}
 void Rva00383FB0Noop() {}
+// Retail ILT 0x0001D593 -> 0x001E23B0; C3 followed by fifteen CC bytes.
+// No table reference or independently named caller establishes an owner.
+void Rva001E23B0Noop() {}
