@@ -292,6 +292,8 @@ class W3DStreakDraw : public DrawModule
 {
 public:
 	W3DStreakDraw( Thing *, const ModuleData * );
+	// Declared only: the destructor body is owned by W3DStreakDrawDestructor.cpp.
+	virtual ~W3DStreakDraw();
 	const W3DStreakDrawModuleData *getData( void ) const
 	{
 		return (const W3DStreakDrawModuleData *)m_moduleData;

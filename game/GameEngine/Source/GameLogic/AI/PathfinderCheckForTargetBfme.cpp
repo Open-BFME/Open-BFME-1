@@ -14,13 +14,11 @@ class Weapon
 {
 public:
 	Bool isGoalPosWithinAttackRange(const Object *, const Coord3D *,
-		const Object *, const Coord3D *, Int) const;
+		const Object *, const Coord3D *, float) const;
 };
 class Pathfinder
 {
 public:
-	UByte bfmeInnerE6E90(void *, void *, void *, void *, void *, void *,
-		void **, Int);
 protected:
 	void adjustCoordToCell(Int, Int, Int, Coord3D &, PathfindLayerEnum);
 	Bool checkForTarget(const Object *object, Int cellX, Int cellY, const Weapon *weapon,
@@ -29,6 +27,9 @@ protected:
 };
 
 extern void j_000411d2(void);
+// ILT 0x00049F3F (?j_00049f3f@@YAXXZ, jumps to the 8-argument query at
+// 0x007DF580); thiscall, so it is called through a member-pointer union.
+extern void j_00049f3f(void);
 
 class Luna39AdjustOwner
 {
@@ -36,6 +37,22 @@ class Luna39AdjustOwner
 
 typedef void (Luna39AdjustOwner::*Luna39AdjustCall)(Int, Int, Int,
 	Coord3D &, PathfindLayerEnum);
+
+typedef UByte (Luna39AdjustOwner::*Luna39InnerCall)(void *, void *, void *,
+	void *, void *, void *, void **, Int);
+
+static __forceinline UByte luna39Inner(Pathfinder *self, void *a, void *b,
+	void *c, void *d, void *e, void *f, void **g, Int h)
+{
+	union
+	{
+		void (*raw)(void);
+		Luna39InnerCall member;
+	} call;
+	call.raw = j_00049f3f;
+	return (reinterpret_cast<Luna39AdjustOwner *>(self)->*call.member)(
+		a, b, c, d, e, f, g, h);
+}
 
 static __forceinline void luna39Adjust(Pathfinder *self, Int cellX, Int cellY,
 	Int centerInCell, Coord3D &dest, PathfindLayerEnum layer)
@@ -56,7 +73,7 @@ Bool Pathfinder::checkForTarget(const Object *object, Int cellX, Int cellY,
 {
 	Coord3D adjustDest;
 	Int centerInCell = *(volatile const Int *)&centerFlag;
-	if (bfmeInnerE6E90((void *)object, (void *)cellX, (void *)cellY, (void *)1,
+	if (luna39Inner(this, (void *)object, (void *)cellX, (void *)cellY, (void *)1,
 					   (void *)radius, (void *)centerInCell,
 					   (void **)&centerFlag, 0))
 	{
@@ -66,7 +83,7 @@ Bool Pathfinder::checkForTarget(const Object *object, Int cellX, Int cellY,
 		{
 			luna39Adjust(this, cellX, cellY, centerInCell, adjustDest, LAYER_GROUND);
 			if (weapon->isGoalPosWithinAttackRange(object, &adjustDest, targetObject,
-									targetPosition, 0x41200000))
+									targetPosition, 10.0f))
 			{
 				*adjustedDestination = adjustDest;
 				return true;
