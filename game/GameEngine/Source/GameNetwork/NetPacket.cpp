@@ -3127,76 +3127,19 @@ void NetPacket::readGameMessageArgumentFromPacket(GameMessageArgumentDataType ty
  * Reads the data portion of the ack message at this position in the packet.
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_read.cpp
-// ?readAckBothMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
-NetCommandMsg * NetPacket::readAckBothMessage(UnsignedByte *data, Int &i) {
-	NetAckBothCommandMsg *msg = newInstance(NetAckBothCommandMsg);
-
-	//DEBUG_LOG(("NetPacket::readAckMessage, "));
-	UnsignedShort cmdID = 0;
-
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
-	//DEBUG_LOG(("commandID = %d, ", cmdID));
-
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
-	//DEBUG_LOG(("original player id = %d\n", origPlayerID));
-
-	return msg;
-}
+// readAckBothMessage is defined in NetPacket_read.cpp.
 
 /**
  * Reads the data portion of the ack message at this position in the packet.
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_read.cpp
-// ?readAckStage1Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
-NetCommandMsg * NetPacket::readAckStage1Message(UnsignedByte *data, Int &i) {
-	NetAckStage1CommandMsg *msg = newInstance(NetAckStage1CommandMsg);
-
-//	DEBUG_LOG(("NetPacket::readAckMessage, "));
-	UnsignedShort cmdID = 0;
-
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
-//	DEBUG_LOG(("commandID = %d, ", cmdID));
-
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
-//	DEBUG_LOG(("original player id = %d\n", origPlayerID));
-
-	return msg;
-}
+// readAckStage1Message is defined in NetPacket_read.cpp.
 
 /**
  * Reads the data portion of the ack message at this position in the packet.
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetPacket_read.cpp
-// ?readAckStage2Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
-NetCommandMsg * NetPacket::readAckStage2Message(UnsignedByte *data, Int &i) {
-	NetAckStage2CommandMsg *msg = newInstance(NetAckStage2CommandMsg);
-
-//	DEBUG_LOG(("NetPacket::readAckMessage, "));
-	UnsignedShort cmdID = 0;
-
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
-//	DEBUG_LOG(("commandID = %d, ", cmdID));
-
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
-//	DEBUG_LOG(("original player id = %d\n", origPlayerID));
-
-	return msg;
-}
+// readAckStage2Message is defined in NetPacket_read.cpp.
 
 /**
  * Reads the data portion of the frame message at this position in the packet.
