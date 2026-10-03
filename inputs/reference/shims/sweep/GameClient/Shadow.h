@@ -99,22 +99,7 @@ public:
 		void setAngle(Real angle);		///<adjust orientation around z-axis
 		void setPosition(Real x, Real y, Real z);
 
-		void setSize(Real sizeX, Real sizeY)
-		{
-			m_decalSizeX = sizeX; 
-			m_decalSizeY = sizeY; 
-			
-			if (sizeX == 0) 
-				m_oowDecalSizeX = 0;
-			else
-				m_oowDecalSizeX = 1.0f/sizeX ;
-
-			if (sizeY == 0) 
-				m_oowDecalSizeY = 0;
-			else
-				m_oowDecalSizeY = 1.0f/sizeY ;
-
-		};
+		void setSize(Real sizeX, Real sizeY); ///<out of line in retail (Shadow_setSize.cpp, 0x001E4250)
 
 		#if defined(_DEBUG) || defined(_INTERNAL)	
 		virtual void getRenderCost(RenderCost & rc) const = 0;
