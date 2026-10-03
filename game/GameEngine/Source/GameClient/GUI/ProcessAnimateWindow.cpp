@@ -1233,54 +1233,8 @@ ProcessAnimateWindowSlideFromRightFast::~ProcessAnimateWindowSlideFromRightFast(
 
 
 //-----------------------------------------------------------------------------
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAEXPAVAnimateWindow@@@Z present-unmatched
-void ProcessAnimateWindowSlideFromRightFast::initAnimateWindow( AnimateWindow *animWin )
-{
-	ICoord2D restPos = {0,0};
-	ICoord2D startPos = {0,0};
-	ICoord2D size = {0,0};
-	ICoord2D curPos = {0,0};
-	ICoord2D endPos = {0,0};
-	Coord2D	vel = {0.0f,0.0f};
-	
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	animWin->setFinished( FALSE );
+// Retail forward initializer: ProcessAnimateWindowInitAnimate.cpp.
 
-	// it's set that the window is passed in as it's current position being it's rest position
-	// so save off the rest position
-	GameWindow *win = animWin->getGameWindow();
-	if(!win)
-	{
-		DEBUG_ASSERTCRASH( win, ("animWin contains a NULL Pointer for it's GameWindow... Whatup wit dat?"));
-		return;
-	}
-	win->winGetPosition(&restPos.x, &restPos.y);
-	win->winGetSize(&size.x, &size.y);
-	endPos.x = restPos.x;
-	endPos.y = restPos.y;
-
-	//set the initial positions for the window. In this case, off the Right of the screen
-	Int travelDistance = TheDisplay->getWidth() - restPos.x + size.x ;// / 4 * 3;
-	startPos.x = curPos.x = restPos.x + travelDistance;
-	startPos.y = curPos.y = restPos.y;
-
-	//set the window's position to the new start positions.
-	win->winSetPosition(startPos.x, startPos.y);
-
-	//Now initialize the velocities
-	vel.x = m_maxVel.x;
-	vel.y = 0.0f;
-
-
-	animWin->setAnimData(startPos, endPos, curPos, restPos, vel, timeGetTime() + animWin->getDelay(), 0);
-}
-
-
-//-----------------------------------------------------------------------------
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow( AnimateWindow *animWin )
 {
