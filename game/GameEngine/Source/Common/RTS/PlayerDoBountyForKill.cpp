@@ -90,10 +90,11 @@ public:
 	Int unidentified_000389f6(Bool includeFields);
 };
 
-class Rva00083240Thunk
+// Retail ILT 0x9E12 reaches the existing const float accessor at 0x83240.
+class Gen_00083240
 {
 public:
-	Real unidentified_00009e12(Int index) const;
+	Real bfmeGet0(Int index) const;
 };
 
 class Rva000C97C0PlayerThunk
@@ -176,7 +177,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
 		const Int playerIndex = ((Rva002EE330PlayerListThunk *)ThePlayerList)->unidentified_000389f6(false);
-		const Real factor = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerIndex);
+		const Real factor = ((Gen_00083240 *)((char *)TheWritableGlobalData + 0xee0))->bfmeGet0(playerIndex);
 		bounty = (UnsignedInt)(bounty * factor);
 	}
 
