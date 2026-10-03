@@ -2768,13 +2768,6 @@ void W3DDisplay::setClipRegion( IRegion2D *region )
 /* we don't really need to override this call, since we will soon be called to
 	update every shroud cell explicitly...
 */
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayClearShroud.cpp
-// ?clearShroud@W3DDisplay@@UAEXXZ present-unmatched
-void W3DDisplay::clearShroud()
-{
-	// nothing
-}
-
 //=============================================================================
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetBorderShroudLevel.cpp
 // ?setBorderShroudLevel@W3DDisplay@@UAEXE@Z present-unmatched

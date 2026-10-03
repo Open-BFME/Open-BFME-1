@@ -176,7 +176,7 @@ MultiplayerColorDefinition * MultiplayerColorDefinition::operator =(const Multip
 	m_rgbValue = other.getRGBValue();
 	m_color = other.getColor();
 	m_rgbValueNight = other.getRGBNightValue();
-	m_colorNight = other.getNightColor();
+	m_colorNight = other.m_colorNight;
 
 	return this;
 }

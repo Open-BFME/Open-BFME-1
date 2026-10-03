@@ -415,12 +415,6 @@ void VertexMaterialClass::Set_Emissive(float r,float g,float b)
 }
 
 
-// ?Get_Shininess@VertexMaterialClass@@QBEMXZ present-unmatched
-float	VertexMaterialClass::Get_Shininess(void) const
-{
-	return Material->Power;
-}
-
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
 // ?Set_Shininess@VertexMaterialClass@@QAEXM@Z present-unmatched
 void	VertexMaterialClass::Set_Shininess(float shin)
