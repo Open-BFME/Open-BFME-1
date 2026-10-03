@@ -75,7 +75,7 @@ public:
 };
 
 extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
-extern AABoxClass g_bfmeVisibleShadowBounds;
+extern Vector3 ShadowCameraPosition;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadowManager
@@ -115,7 +115,7 @@ void W3DVolumetricShadowManager::renderShadows(void)
 					if (shadow->intersectsVisibleBounds(bbox))
 					{
 						shadow->updateShadowState();
-						if (shadow->bfmeIntersectsVisibleBounds(g_bfmeVisibleShadowBounds))
+						if (shadow->bfmeIntersectsVisibleBounds(*(const AABoxClass *)&ShadowCameraPosition))
 						{
 							shadow->m_bufferNext = bufferedShadow;
 							bufferedShadow = shadow;

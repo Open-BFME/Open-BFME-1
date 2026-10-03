@@ -64,7 +64,8 @@ public:
 };
 
 extern const FrustumClass *shadowCameraFrustum;
-extern Vector3 ShadowCameraPosition;
+// Generals ZH W3DVolumetricShadow/W3DShadow: Vector3 ShadowCameraPosition (12 B at retail 0x01306EF0, .bss).
+Vector3 ShadowCameraPosition;
 extern W3DShadowManager *TheW3DShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
