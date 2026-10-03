@@ -38,3 +38,11 @@ archived candidate again passes the strict1136B/16strings/40DIR32 gate. The
 name or pin is introduced. The40-reference source repair is now committed
 separately from that tool correction. The remaining VA00424AFA stub decodes
 E9 01 AB 69 00 -> RVA006BF600; its proper source declaration is separate work.
+
+OnlineQuickMatch session2 repair replaces all six raw values with the existing
+j_ILT symbols. Independent retail E9 decoding gives these VA->RVA routes:
+436C64->558450,411E14->559360,43730D->5592D0,423015->558440,
+42F5E0->558470,4178DC->558FB0. The preserved single-inheritance callback
+representation remains unchanged; these declarations only name the stored
+addresses. Strict before/after checks pass755B and8 strings; checked DIR32
+references increase from11 to17. No semantic callback identity is inferred.

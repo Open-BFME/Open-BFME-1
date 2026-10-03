@@ -6,6 +6,14 @@
 // the class.  The constructor loads the two custom-match images and registers
 // the seven OnlineQuickMatch callbacks only for the first instance.
 
+// Existing address-identified ILT entries, used only as stored callback bits.
+extern void j_00036c64();
+extern void j_00011e14();
+extern void j_0003730d();
+extern void j_00023015();
+extern void j_0002f5e0();
+extern void j_000178dc();
+
 class BFMERetailAsciiString
 {
 public:
@@ -243,7 +251,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x00436C64;
+			callback.raw = &j_00036c64;
 			BFMERetailAsciiString name( "AptOnline::OnlineQuickMatch::PlayGame" );
 			_bfme_showAptScreenOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
@@ -257,7 +265,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x00411E14;
+			callback.raw = &j_00011e14;
 			BFMERetailAsciiString name( "AptOnline::OnlineQuickMatch::Cancel" );
 			_bfme_showAptScreenOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
@@ -271,7 +279,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x0043730D;
+			callback.raw = &j_0003730d;
 			BFMERetailAsciiString name( "AptOnline::OnlineQuickMatch::WidenSearch" );
 			_bfme_showAptScreenOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
@@ -285,7 +293,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x00423015;
+			callback.raw = &j_00023015;
 			BFMERetailAsciiString name( "AptOnline::OnlineQuickMatch::StartSimple" );
 			_bfme_showAptScreenOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
@@ -299,7 +307,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x0042F5E0;
+			callback.raw = &j_0002f5e0;
 			BFMERetailAsciiString name( "AptOnline::OnlineQuickMatch::OnFoundMovieDone" );
 			_bfme_showAptScreenOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
@@ -313,7 +321,7 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 				void (*raw)( void );
 				FunctorMethodSingle member;
 			} callback;
-			callback.raw = (void (*)( void ))0x004178DC;
+			callback.raw = &j_000178dc;
 			BFMERetailAsciiString name( "AptOnlineQuickMatch::InitGadgets" );
 			_bfme_setAptScreenRefOnlineQuickMatch(
 				reinterpret_cast<const AsciiString &>( name ),
