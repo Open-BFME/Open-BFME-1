@@ -36,13 +36,6 @@ Coord3D::Coord3D(const Coord3DBase &that)
     z = that.z;
 }
 
-Coord3D::Coord3D(float x, float y, float z)
-{
-    this->x = x;
-    this->y = y;
-    this->z = z;
-}
-
 Coord3D::Coord3D(int x, int y, int z)
 {
     this->x = (float)x;
