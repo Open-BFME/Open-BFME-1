@@ -1,5 +1,8 @@
-// cl: /O2 /Ob2 /G6
+// cl: /O2 /Ob2 /G6 /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean C++ conversion of the geometry-record pointer update.
+
+#include "coord.h"
+#include "System/geometry.h"
 
 struct Rva0087F270Record
 {
@@ -15,7 +18,6 @@ class BfmeSubCNG
 {
 public:
 	void bfmeOneCNG(void *value);
-	void calcBoundingStuff();
 
 private:
 	unsigned char m_unused000[0x2c];
@@ -43,5 +45,6 @@ void BfmeSubCNG::bfmeOneCNG(void *value)
 		}
 	}
 
-	calcBoundingStuff();
+	GeometryInfo *geometry = reinterpret_cast<GeometryInfo *>(this);
+	geometry->setMajorRadius(geometry->getMajorRadius());
 }
