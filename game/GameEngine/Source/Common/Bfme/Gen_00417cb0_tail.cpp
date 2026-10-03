@@ -44,7 +44,6 @@ public:
 	void alt(void);						// retail 0x00411BE0
 
 private:
-	void bfmeEmit(void *value, void *param);		// ILT 0x0002CB79
 
 	unsigned char m_bfmeHeadA[0xFC];
 	BfmeTailHolder *m_bfmeHolder;				// +0x00FC
@@ -54,6 +53,8 @@ private:
 	unsigned char m_bfmeUnused_142;				// +0x0142
 	bool m_bfmeFlagC;					// +0x0143
 };
+
+extern void j_0002cb79();					// ILT 0x0002CB79 to body 0x00417710
 
 // ?tail@Gen_00417cb0@@QAEXPAX@Z
 void Gen_00417cb0::tail(void *param)
@@ -68,6 +69,8 @@ void Gen_00417cb0::tail(void *param)
 		if (holder)
 			value = holder->m_bfmeSource->bfmeCurrent();
 
-		bfmeEmit(value, param);
+		typedef void (Gen_00417cb0::*Emit)(void *, void *);
+		union { void (*fn)(); Emit call; } emit = { j_0002cb79 };
+		(this->*emit.call)(value, param);
 	}
 }

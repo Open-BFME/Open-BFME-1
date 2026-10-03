@@ -143,6 +143,8 @@ public:
 // These two retail callees are already identified in the BFME ledger.  The
 // setter reaches them through the same Drawable storage, so only their
 // established names are needed here; their bodies stay in their own TUs.
+extern void j_0002cb79();	// ILT 0x0002CB79 to body 0x00417710
+
 class Gen_00417cb0
 {
 public:
@@ -150,7 +152,6 @@ public:
 
 private:
 	friend class Drawable;
-	void bfmeEmit( void *value, void *param );
 };
 
 #define BFME_CAPTION_DISPLAY_SLOT(n) virtual void slot##n();
@@ -338,7 +339,9 @@ void Drawable::setCustomSoundAmbientInfo( DynamicAudioEventInfo **customAmbientI
 		void *value = 0;
 		if ( object )
 			value = object->m_drawInterface->getAmbientValue();
-		reinterpret_cast<Gen_00417cb0 *>( this )->bfmeEmit( value, 0 );
+		typedef void (Gen_00417cb0::*Emit)( void *, void * );
+		union { void (*fn)(); Emit call; } emit = { j_0002cb79 };
+		(reinterpret_cast<Gen_00417cb0 *>( this )->*emit.call)( value, 0 );
 	}
 }
 
