@@ -91,7 +91,10 @@ class Object : public Thing
 class GameLogic
 {
 public:
-	bool isLivingWorld();
+	// 0x00382B50 is the matched body; the pin this call site reads
+	// (0x0001D1C9) is its ILT thunk, so the reference must carry the
+	// defining member's name.
+	bool _bfme_isInLivingWorldCampaign();
 };
 
 extern GameLogic *TheGameLogic;
@@ -99,7 +102,9 @@ extern GameLogic *TheGameLogic;
 class BfmeThingEFE
 {
 public:
-	Real bfmeAt(int count);
+	// The definition is BfmeThingEFEAt.cpp's const member at 0x001B2500, so
+	// the reference must carry the const (QBEMH@Z) too.
+	Real bfmeAt(int count) const;
 
 private:
 	void *m_vtable;
@@ -155,7 +160,7 @@ void ExperienceTracker::bfmeResetScalarBaseCount()
 Real ExperienceTracker::bfmeScaleLivingWorldExperience(Real amount) const
 {
 	const unsigned char bfmeKindOfStructure = 0x80;
-	if (TheGameLogic->isLivingWorld())
+	if (TheGameLogic->_bfme_isInLivingWorldCampaign())
 	{
 		if (!(m_parent->getTemplate()->m_kindOfLowByte &
 			bfmeKindOfStructure))

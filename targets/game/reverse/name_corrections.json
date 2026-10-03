@@ -15388,5 +15388,15 @@
   "after_sha256": "313f725f58928788a57324d553b6ebe8924c17f9d8d930123b27de80fac8aa94",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/Rva0090C2F0InnerLoad.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/Rva0090C2F0InnerLoad.cpp",
+  "old_name": "go",
+  "new_name": "rva0090C2F0Go",
+  "before_sha256": "dbaaa5df8a0a32ecde850b586fdbe338eda03c9bf7565c723b39b422b80274ff",
+  "after_sha256": "a782393cca3b839b615d00efa5654b1c6c5b55f9648ae2e63e97557929f5a411",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

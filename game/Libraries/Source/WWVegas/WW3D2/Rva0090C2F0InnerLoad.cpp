@@ -188,6 +188,9 @@ class Rva0090C2F0Inner
 	int m_40;
 	int m_44;
 
+	friend void rva0090C2F0Go(Rva0090C2F0Inner *self, int arg1, int arg2, int arg3, int arg4, int arg5,
+		int arg6, int arg7);
+
 public:
 	void go(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 	bool rva0090CAD0();
@@ -195,16 +198,20 @@ public:
 };
 
 // The body of 0x0090C2F0, visible here so it inlines as it does in retail.
-inline void Rva0090C2F0Inner::go(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
+// It is a TU-local function, not the member of Rva0090C2F0Inner: that member
+// is defined out of line (and owned by the ledger) in Rva0090C2F0Go.cpp, and a
+// second definition of it here would collide at link (LNK2005).
+static __forceinline void rva0090C2F0Go(Rva0090C2F0Inner *self, int arg1, int arg2, int arg3,
+	int arg4, int arg5, int arg6, int arg7)
 {
-	if (m_08 != 0)
+	if (self->m_08 != 0)
 		return;
 
-	m_34 = arg4;
-	m_3C = arg3;
-	m_40 = arg5;
-	m_44 = arg6;
-	m_38 = arg7;
+	self->m_34 = arg4;
+	self->m_3C = arg3;
+	self->m_40 = arg5;
+	self->m_44 = arg6;
+	self->m_38 = arg7;
 
 	int mode;
 	switch (arg5) {
@@ -239,12 +246,12 @@ inline void Rva0090C2F0Inner::go(int arg1, int arg2, int arg3, int arg4, int arg
 	}
 
 	W3DRadarResetLock();
-	m_08 = (IDirect3DTexture9 *)Rva00904BE0CreateTexture(arg1, arg2, arg3, arg4, mode, flags);
+	self->m_08 = (IDirect3DTexture9 *)Rva00904BE0CreateTexture(arg1, arg2, arg3, arg4, mode, flags);
 	bfmeUnlock1179();
-	m_24 = arg1;
-	m_28 = arg2;
-	m_2C = arg1;
-	m_30 = arg2;
+	self->m_24 = arg1;
+	self->m_28 = arg2;
+	self->m_2C = arg1;
+	self->m_30 = arg2;
 }
 
 // ?rva0090CD00LoadFromMemory@Rva0090C2F0Inner@@QAEXPBD@Z
@@ -319,7 +326,7 @@ create:
 	}
 
 	W3DRadarResetLock();
-	go(1, 1, 0x15, 1, 1, 0, 0);
+	rva0090C2F0Go(this, 1, 1, 0x15, 1, 1, 0, 0);
 
 	if (m_08)
 	{

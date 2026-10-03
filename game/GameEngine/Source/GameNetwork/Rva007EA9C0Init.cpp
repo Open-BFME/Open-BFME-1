@@ -20,6 +20,14 @@ public:
 
 class Rva00803080;
 
+// 0x007F0130 is the class-scoped allocating operator retail calls with the
+// 0x6B8 byte size here; its defining name is the operator of this class.
+class Gen007F0130
+{
+public:
+	static void *operator new(unsigned int size);
+};
+
 // 0x007F9590 is a matched body under this class name; the object it is called
 // on is the Rva007F9B80 allocated just above.
 class Gen_007f9590
@@ -37,7 +45,10 @@ public:
 class BfmeThingDGG;
 
 BfmeThingUNB *bfmeNewUNB(void);
-void *Gen007F0130(unsigned int size);
+// 0x007F8FB0 is retail's free cdecl body (it never reads ECX, and the call
+// site reloads this+0x254 only after it), so it stays spelled as a free
+// function here; the gen-shim that defines that address as a member is the
+// side that is wrong.
 unsigned Rva007F8FB0(void);
 BfmeThingDGG *bfmeGoDGG(void *a);
 int Rva007EB380Startup(char *params);
@@ -69,7 +80,7 @@ void Rva007EA9C0Owner::init()
 		Rva007EB380Startup(0);
 	m_0C = bfmeGoDGG(this);
 	m_250 = bfmeNewUNB();
-	Rva007F9B80 *p = (Rva007F9B80 *)Gen007F0130(0x6B8);
+	Rva007F9B80 *p = (Rva007F9B80 *)Gen007F0130::operator new(0x6B8);
 	if (p)
 		p = new (p) Rva007F9B80(this);
 	else
