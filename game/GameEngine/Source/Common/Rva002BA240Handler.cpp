@@ -23,11 +23,22 @@
 
 typedef unsigned int UnsignedInt;
 
+class Player;
+enum ObjectStatusTypes;
+
+// The three Object callees are the matched bodies behind retail's ILTs
+// 0x00020824, 0x00031F7A and 0x00032DEE, respectively.
+#define OBJECT_TU_MEMBERS \
+	Player *getControllingPlayer() const; \
+	void clearStatus(ObjectStatusTypes status); \
+	void setStatusBit(int bit, bool set);
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+
 class Drawable
 {
 public:
 	void setSelectable(bool selectable);
-	void bfmeDelayA(int);
 	void bfmeDelayB(int);
 };
 
@@ -37,21 +48,12 @@ public:
 	bool bfmeAskAIA(int what);
 };
 
-class BfmeR1094;
-
-class BfmeK1094
+// ILT 0x0003F288 jumps to the matched 0x00410D30 member in BfmeConv962.cpp.
+class BfmeInit962
 {
 public:
-	BfmeR1094 *bfmeCur1094();
+	void bfmeInit962(int frames);
 };
-
-class Rva0025DF30Object
-{
-public:
-	void applyUpgrade(int upgrade);
-};
-
-void __stdcall bfmeLogCNE(int code, int level);
 
 class GameMessage
 {
@@ -206,16 +208,12 @@ void Gen002BA240::handle(UnsignedInt id)
 
 		if (!reinterpret_cast<BfmeThingAIA *>(who)->bfmeAskAIA(0x95))
 		{
-			typedef void (__stdcall *LogCNEFn)(int, int);
-			typedef void (Rva002BA240SourceObject::*LogCNEThisCall)(int, int);
-			union { LogCNEFn function; LogCNEThisCall member; } route;
-			route.function = bfmeLogCNE;
-			(who->*route.member)(3, 1);
+			reinterpret_cast<Object *>(who)->setStatusBit(3, true);
 
 			if (drawable)
 			{
 				drawable->setSelectable(false);
-				drawable->bfmeDelayA(0xa);
+				reinterpret_cast<BfmeInit962 *>(drawable)->bfmeInit962(0xa);
 			}
 
 			return;
@@ -223,8 +221,8 @@ void Gen002BA240::handle(UnsignedInt id)
 
 		if (drawable && who)
 		{
-			BfmeR1094 *localPlayer = reinterpret_cast<BfmeR1094 *>(((Rva002EE330PlayerList *)ThePlayerList)->m_localPlayer);
-			if (reinterpret_cast<BfmeK1094 *>(who)->bfmeCur1094() == localPlayer)
+			Player *localPlayer = ((Rva002EE330PlayerList *)ThePlayerList)->m_localPlayer;
+			if (reinterpret_cast<Object *>(who)->getControllingPlayer() == localPlayer)
 			{
 				GameMessage *message = TheMessageStream->appendMessage(0x3ec);
 				message->appendObjectIDArgument(m_object->m_id0x74);
@@ -240,7 +238,7 @@ void Gen002BA240::handle(UnsignedInt id)
 	if (reinterpret_cast<BfmeThingAIA *>(direct)->bfmeAskAIA(0x95))
 		return;
 
-	reinterpret_cast<Rva0025DF30Object *>(direct)->applyUpgrade(3);
+	reinterpret_cast<Object *>(direct)->clearStatus(static_cast<ObjectStatusTypes>(3));
 
 	Drawable *drawable = m_object->vslot0x28();
 
