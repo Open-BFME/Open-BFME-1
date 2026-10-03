@@ -1,5 +1,5 @@
 // ?rva00365df0@BfmeLivingWorldPlayerArmyCollection@@SIXPAV1@PAXPAVObject@@@Z
-// partial score=0.9056 date=2026-10-02
+// partial score=0.9478 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00365DF0 (498 B).  The owning class is not named by the retail
 // symbols; this TU keeps the proven Living World layouts and uses an
@@ -313,8 +313,9 @@ void __fastcall BfmeLivingWorldPlayerArmyCollection::rva00365df0(
 	RVA00365DF0_LIVING_WORLD_LOGIC->m_field74 = whole;
 	RVA00365DF0_LIVING_WORLD_LOGIC->m_fieldA0 = player->m_field264;
 	RVA00365DF0_LIVING_WORLD_LOGIC->m_fieldA4 = player->m_field260;
+	const _STL::vector<ScienceType> *scienceSource = &player->m_sciences;
 	reinterpret_cast<Rva003C2720Owner *>( RVA00365DF0_LIVING_WORLD_LOGIC )->copy(
-		&player->m_sciences );
+		scienceSource );
 	UpgradeMaskType mask = player->m_upgradesCompleted;
 	reinterpret_cast<Rva003C1050 *>( RVA00365DF0_LIVING_WORLD_LOGIC )->setMask( mask );
 }
