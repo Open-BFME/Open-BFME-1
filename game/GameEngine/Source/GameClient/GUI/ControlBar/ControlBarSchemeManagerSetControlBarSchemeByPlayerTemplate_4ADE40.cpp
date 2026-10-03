@@ -2,63 +2,13 @@
 // stlport
 // readable body of ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp
 
-#include <list>
-
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
-typedef float Real;
+#include "PreRTS.h"
+#include "Common/Player.h"
+#include "Common/PlayerTemplate.h"
+#include "GameClient/ControlBarScheme.h"
+#include "GameClient/Display.h"
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *left, const void *right, unsigned int count);
-
-class ControlBarSchemeAsciiString;
-
-template <typename T>
-class StringBase
-{
-public:
-	void concat(const T *text, int length);
-	void set(const T *text, int length);
-	int compare(const StringBase<T> &other) const;
-
-private:
-	friend class ControlBarSchemeAsciiString;
-	StringBase(const StringBase<T> &source);
-	StringBase(const T *text);
-	~StringBase();
-	void releaseBuffer();
-};
-
-class PlayerTemplate;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
-class Display
-{
-public:
-	virtual void _slot0(void) {}
-	virtual void _slot1(void) {}
-	virtual void _slot2(void) {}
-	virtual void _slot3(void) {}
-	virtual void _slot4(void) {}
-	virtual void _slot5(void) {}
-	virtual void _slot6(void) {}
-	virtual void _slot7(void) {}
-	virtual void _slot8(void) {}
-	virtual void _slot9(void) {}
-	virtual void _slot10(void) {}
-	virtual UnsignedInt getWidth(void);
-	virtual UnsignedInt getHeight(void);
-};
-
-extern Display *TheDisplay;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
 
 struct RealCoord2D
 {
@@ -66,21 +16,14 @@ struct RealCoord2D
 	Real y;
 };
 
-class ControlBarSchemeAsciiString
+// This local view keeps the byte-matched string operations while the adjacent
+// retail classes use the header's AsciiString spelling at their interface.
+class ControlBarSchemeAsciiString : public AsciiString
 {
 public:
-	ControlBarSchemeAsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	ControlBarSchemeAsciiString(const ControlBarSchemeAsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-	}
-	~ControlBarSchemeAsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
+	ControlBarSchemeAsciiString(const char *text) : AsciiString(text) {}
+	ControlBarSchemeAsciiString(const ControlBarSchemeAsciiString &that) : AsciiString(that) {}
+	~ControlBarSchemeAsciiString() {}
 
 	void concat(const char *text, int length)
 	{
@@ -92,7 +35,7 @@ public:
 	}
 	bool isEmpty(void) const
 	{
-		return m_text == 0 || *(const UnsignedShort *)(m_text + 4) == 0;
+		return AsciiString::isEmpty();
 	}
 	Int compare(const ControlBarSchemeAsciiString &other) const
 	{
@@ -100,11 +43,11 @@ public:
 	}
 	Int getLength(void) const
 	{
-		return m_text ? *(const UnsignedShort *)(m_text + 4) : 0;
+		return AsciiString::getLength();
 	}
 	const char *str(void) const
 	{
-		return m_text ? m_text + 8 : "";
+		return AsciiString::str();
 	}
 	Int compareNoCase(const ControlBarSchemeAsciiString &other) const
 	{
@@ -119,29 +62,14 @@ public:
 			return difference;
 		return thisLen - otherLen;
 	}
-
-private:
-	char *m_text;
 };
 
 typedef _STL::list<class ControlBarScheme *> ControlBarSchemeList;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
-class ControlBarScheme
-{
-public:
-	ControlBarSchemeAsciiString m_name;
-	ICoord2D m_ScreenCreationRes;
-	ControlBarSchemeAsciiString m_side;
-
-	void init(void);
-};
 
 class ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate
 {
 public:
 	void setControlBarSchemeByPlayerTemplate(const PlayerTemplate *pt, Bool useSmall);
-	ControlBarScheme *findControlBarScheme(ControlBarSchemeAsciiString name);
 
 private:
 	ControlBarScheme *m_currentScheme;
@@ -159,7 +87,7 @@ void ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate::setControlBarSc
 	if(useSmall)
 		side.concat("Small", 5);
 	ControlBarScheme *currentScheme = m_currentScheme;
-	if(currentScheme && (currentScheme->m_side.compare(side) == 0))
+	if(currentScheme && (((ControlBarSchemeAsciiString *)&currentScheme->m_side)->compare(side) == 0))
 	{
 		currentScheme->init();
 		return;
@@ -177,7 +105,7 @@ void ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate::setControlBarSc
 			++it;
 			continue;
 		}
-		if(CBScheme->m_side.compareNoCase(side) == 0)
+		if(((ControlBarSchemeAsciiString *)&CBScheme->m_side)->compareNoCase(side) == 0)
 		{
 			if(!tempScheme || tempScheme->m_ScreenCreationRes.x < CBScheme->m_ScreenCreationRes.x)
 				tempScheme = CBScheme;
@@ -193,7 +121,8 @@ void ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate::setControlBarSc
 	}
 	else
 	{
-		m_currentScheme = findControlBarScheme("Default");
+		m_currentScheme = ((ControlBarSchemeManager *)this)->findControlBarScheme(
+			AsciiString("Default"));
 	}
 	if(m_currentScheme)
 		m_currentScheme->init();
