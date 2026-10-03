@@ -25,6 +25,14 @@ public:
 	void closeDataChunk();
 };
 
+// Retail callers reach DataChunkOutput::openDataChunk through the 0x0003A256
+// incremental-link thunk, which the ledger names BfmeChunkZO::bfmeOpenZO.
+class BfmeChunkZO
+{
+public:
+	void bfmeOpenZO(char *name, unsigned short version);
+};
+
 class Rva00741830NamedCamera
 {
 public:
@@ -58,7 +66,7 @@ void Rva00747E80(DataChunkOutput *output, Rva00747E80Filter *filter)
 	if (TheTacticalView == 0)
 		return;
 
-	output->openDataChunk("NamedCameras", 2);
+	((BfmeChunkZO *)output)->bfmeOpenZO("NamedCameras", 2);
 
 	Int count = 0;
 	for (Rva00741830NamedCamera *camera = TheTacticalView->m_namedCameras;

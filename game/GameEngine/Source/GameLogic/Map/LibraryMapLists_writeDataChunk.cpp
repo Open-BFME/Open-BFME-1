@@ -12,6 +12,14 @@ public:
 	void writeAsciiString(const AsciiString &value);
 };
 
+// Retail callers reach DataChunkOutput::openDataChunk through the 0x0003A256
+// incremental-link thunk, which the ledger names BfmeChunkZO::bfmeOpenZO.
+class BfmeChunkZO
+{
+public:
+	void bfmeOpenZO(char *name, unsigned short version);
+};
+
 struct LibraryMaps
 {
 	char m_pad[0xc];
@@ -34,7 +42,7 @@ public:
 // ?writeDataChunk@LibraryMapLists@@QAEXAAVDataChunkOutput@@@Z
 void LibraryMapLists::writeDataChunk(DataChunkOutput &output)
 {
-	output.openDataChunk("LibraryMapLists", 1);
+	((BfmeChunkZO &)output).bfmeOpenZO("LibraryMapLists", 1);
 	int listCount = m_count;
 	int index = 0;
 	if (listCount > 0)
@@ -42,7 +50,7 @@ void LibraryMapLists::writeDataChunk(DataChunkOutput &output)
 		LibraryMaps *cursor = m_lists;
 		do
 		{
-			output.openDataChunk("LibraryMaps", 1);
+			((BfmeChunkZO &)output).bfmeOpenZO("LibraryMaps", 1);
 			LibraryMaps *list;
 			if (index < 0 || index >= m_count)
 				list = 0;

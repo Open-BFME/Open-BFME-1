@@ -16,6 +16,14 @@ public:
     void writeAsciiString(const AsciiString &value);
 };
 
+// Retail callers reach DataChunkOutput::openDataChunk through the 0x0003A256
+// incremental-link thunk, which the ledger names BfmeChunkZO::bfmeOpenZO.
+class BfmeChunkZO
+{
+public:
+	void bfmeOpenZO(char *name, unsigned short version);
+};
+
 class BaseHeightMapRenderObjClass
 {
 public:
@@ -34,7 +42,7 @@ private:
 
 void BaseHeightMapRenderObjClass::writeEnvironmentData(DataChunkOutput *output)
 {
-    output->openDataChunk("EnvironmentData", 3);
+    ((BfmeChunkZO *)output)->bfmeOpenZO("EnvironmentData", 3);
     output->writeReal(m_environmentFirst);
     output->writeReal(m_environmentSecond);
     output->writeByte(m_environmentFlag != 0);
