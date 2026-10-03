@@ -15218,5 +15218,25 @@
   "after_sha256": "6388854e2147c64a20c83b10a71d34d2014a6c6223a4ee795205372d900f682a",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/UpdateModuleDataScalarDeletingDestructors.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateFriendNewModuleDataThunk.cpp",
+  "old_name": "ModuleName",
+  "new_name": "Rva0006AA90Vector",
+  "before_sha256": "33df1627ca924a2442bceccc31262a5423e7520a5a45caef4036090719c44b59",
+  "after_sha256": "1d9d9915f0c2e5d5c885612849e0ddb7da360ccc5f319768bbdfa69e03330b75",
+  "evidence": "targets/game/reverse/identity_evidence/parttheheavens-wrapper-rehome-false-pair.txt",
+  "reason": "False source-rehome pairing: ModuleName is a deleted macro parameter; the unrelated Rva0006AA90Vector predates this repair in the unchanged destination TU. No type rename or identity equivalence."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/UpdateModuleDataScalarDeletingDestructors.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateFriendNewModuleDataThunk.cpp",
+  "old_name": "ModuleName",
+  "new_name": "Rva0006AA90Vector",
+  "before_sha256": "70695b49fd90585e5b382787f120cc3f3a65e1a52036682877b30dcab43a9324",
+  "after_sha256": "1d9d9915f0c2e5d5c885612849e0ddb7da360ccc5f319768bbdfa69e03330b75",
+  "evidence": "targets/game/reverse/identity_evidence/parttheheavens-wrapper-rehome-false-pair.txt",
+  "reason": "False source-rehome pairing: ModuleName is a deleted macro parameter; the unrelated Rva0006AA90Vector predates this repair in the unchanged destination TU. No type rename or identity equivalence."
  }
 ]

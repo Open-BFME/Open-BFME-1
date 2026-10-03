@@ -1,0 +1,29 @@
+PartTheHeavens wrapper rehome: false macro-parameter pairing
+
+Before commit: 76d9f00d882a638304cd82cab40eab7b920b59b5
+
+The deleted source defines DECLARE_MODULE_DELETING_DESTRUCTOR(ModuleName).
+ModuleName is its macro parameter, not a descriptive retail type. Its sole
+remaining invocation declares PartTheHeavensUpdateModuleData, whose exact
+30-byte wrapper row is rehomed to the existing constructor/factory TU.
+
+The destination TU is byte-for-byte unchanged. Rva0006AA90Vector already
+exists there and remains unchanged, as do all layout declarations and bodies.
+The checker pairs the deleted macro parameter with this unrelated vector.
+No type or symbol was renamed, and this entry asserts no type equivalence.
+
+Retail constructor RVA299E10 writes vtable VA010C08A8 at RVA299E32.
+Slot zero contains VA004208F6, an ILT jump to wrapper RVA299F20. The wrapper
+calls ILT2FA36 at299F23, reaching complete destructor299F50, then tests
+deletion bit1 and calls operator delete881EB0 as needed, returning ret4.
+The normal scoped gate passes all5 rows +3DIR32: constructor217B,
+factory110B, wrapper30B, EH cleanup11B and complete destructor220B.
+The cleanup is byte-verified despite its preexisting stale object-label pin.
+
+The correction covers only the exact source hashes and false name pair;
+there is no baseline relaxation or provider identity change.
+
+The pair-wide comparison starts at 57e9ce063de946152b7162b2e08094d7db3fe0ca
+whose same macro also has BroadcastStealth and DynamicShroud invocations.
+The second exact-before-hash entry covers this cumulative comparison only;
+the destination is unchanged in both comparisons.
