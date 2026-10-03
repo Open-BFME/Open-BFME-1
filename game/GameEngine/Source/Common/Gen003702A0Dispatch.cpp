@@ -13,6 +13,8 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
+extern GameLogic *TheGameLogic;
+
 class BfmeGlobFEA
 {
 public:
@@ -44,8 +46,9 @@ public:
 void Gen_003702A0::bfmeDispatch(void *argument)
 {
 	unsigned int field94 = *(unsigned int *)((unsigned char *)this + 0x94);
-	*(void **)((unsigned char *)this + 0xf8) = argument;
-	BfmeGlobFEA *global = *(BfmeGlobFEA **)0x012f0898;
+	// Preserve retail's receiver store before loading the shared logic pointer.
+	*(void *volatile *)((unsigned char *)this + 0xf8) = argument;
+	BfmeGlobFEA *global = (BfmeGlobFEA *)*(GameLogic *volatile *)&TheGameLogic;
 	void *found = ((GameLogic *)global)->findObjectByID((ObjectID)field94);
 	if (found)
 		global->bfmeCallFEA(found, (int)argument);
