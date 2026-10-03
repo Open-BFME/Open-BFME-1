@@ -88,9 +88,9 @@ private:
 	GiantBirdNested m_nested;
 };
 
-GiantBirdMemberA::~GiantBirdMemberA()
-{
-}
+// ??1GiantBirdMemberA@@QAE@XZ (retail 0x0027AF40) is owned by
+// game/GameEngine/Source/Common/GiantBirdMemberADestructor.cpp; this TU only
+// calls it from GiantBirdAIUpdate's destructor, so it stays declared, undefined.
 
 GiantBirdAIUpdate::~GiantBirdAIUpdate()
 {
