@@ -15258,5 +15258,15 @@
   "after_sha256": "0bb6b59e0c82b54f8c690150455d4295de79dc121a66881d6004f4b154b31396",
   "evidence": "targets/game/reverse/identity_evidence/005778e0-edx-binding.md",
   "reason": "The bank casts the global at VA012F1028 to CampaignManager. The authoritative data row and GameEngine init/name vtable identify its pointee as LivingWorldLogic. Preserve that real global declaration and use an address-qualified partial layout for its +28 region-manager member; do not propagate the wrong CampaignManager identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Object_setSingleModelCondition.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Object_setSingleModelCondition.cpp",
+  "old_name": "unidentified_0002181E",
+  "new_name": "rva001CD540",
+  "before_sha256": "15a20aad6542097d690b3b7ea20ebbc1acd37880aa5e0070fc734dd4e88cc9a7",
+  "after_sha256": "31e6a02935499e1199498de4e7ffda039af80661f4e0cf371a011c1abd918a58",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

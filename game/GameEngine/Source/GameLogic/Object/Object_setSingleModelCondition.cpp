@@ -13,14 +13,14 @@
 // to a callee through twelve bytes of stack would overrun.
 //
 // So the 304-bit family is not what is wrong here; this typedef was, and it is
-// renamed to say only what is measured. What the ninety-six bits actually are
-// is still open: the two BitFlags widths in the ledger that round to three
-// dwords are $0ED@ at 67 bits and $0FG@ at 86, and deciding between them needs
-// the callee, which is the unidentified body behind ILT 0x0002181E. The row
-// name ?setSingleModelCondition@Object@@QAEXH@Z is left alone for the same
-// reason -- it is now known to be suspect, but nothing here supplies a better
-// one, and the typedef rename is mangling-neutral because a typedef name never
-// reaches the decoration.
+// renamed to say only what is measured. The callee behind ILT 0x0002181E is
+// now identified: it is Object::rva001CD540 at 0x001CD540, whose three
+// outgoing Object::setStatus calls take the 86-bit mask family ($0FG@) and a
+// Bool, so the local flag set is 86 bits and the second argument is a bool.
+// That is still three dwords, so this body reserves exactly 0x0C as before. The
+// row name ?setSingleModelCondition@Object@@QAEXH@Z is left alone for the same
+// reason -- nothing here supplies a better one, and the width is
+// mangling-neutral because a typedef name never reaches the decoration.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -43,18 +43,18 @@ public:
 	UnsignedInt m_bits[(NUMBITS + 31) / 32];
 };
 
-typedef BitFlags<96> Flags96;   // NOT ModelConditionFlags: those are 304 bits
+typedef BitFlags<86> ObjectStatusMaskType;   // NOT ModelConditionFlags: those are 304 bits
 
 class Object
 {
 public:
-	void unidentified_0002181E(const Flags96 &flags, Int arg);
+	void rva001CD540(const ObjectStatusMaskType &flags, bool arg);
 	void setSingleModelCondition(Int bit);
 };
 
 void Object::setSingleModelCondition(Int bit)
 {
-	Flags96 flags;
+	ObjectStatusMaskType flags;
 	flags.set(bit);
-	unidentified_0002181E(flags, 0);
+	rva001CD540(flags, false);
 }

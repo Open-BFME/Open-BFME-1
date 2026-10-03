@@ -1,7 +1,18 @@
-class BfmeInnerAKD
+// The 0x20-byte object this site calls into is an AICommandInterface: retail's
+// call at 0x0012F0F4 goes through the ILT thunk at 0x00014FDD to
+// AICommandInterface::aiGuardObject (AICMD 0x1F) at 0x00154670.
+class Object;
+enum GuardMode {};
+#include "../GameLogic/command_source_type.h"
+class AICommandInterface
 {
 public:
-	void bfmeJoinAKD(void *who, int one, int two);
+	void aiGuardObject(Object *objToGuard, GuardMode guardMode, CommandSourceType commandSource);
+};
+
+struct BfmeInnerAKD
+{
+	unsigned char m_bfmePad[0x20];
 };
 
 struct BfmeSubAKD
@@ -63,5 +74,6 @@ void __stdcall bfmeGoAKD(void *one, void *two)
 	BfmeNodeAKD *first = bfmeScriptEngine()->bfmeFindAKD(two);
 	BfmeNodeAKD *second = bfmeScriptEngine()->bfmeFindAKD(one);
 	if (second != 0 && second->m_bfmeSub != 0 && first != 0)
-		second->m_bfmeSub->m_bfmeInner.bfmeJoinAKD(first, 0, 1);
+		((AICommandInterface *)&second->m_bfmeSub->m_bfmeInner)->
+			aiGuardObject((Object *)first, (GuardMode)0, (CommandSourceType)1);
 }

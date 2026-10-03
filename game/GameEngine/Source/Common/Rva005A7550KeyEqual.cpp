@@ -2,14 +2,16 @@
 // BfmeKeyOD ordering routine: neither operand may sort before the other.
 // No named caller establishes the original function spelling, so the name
 // retains the retail address.
+// bfmeLessOD is retail's own ordering body at 0x005A74A0 (BfmeTwoHundredFortyFour.cpp);
+// this site reaches it through the ILT thunk at 0x00014196.
 struct BfmeKeyOD;
-extern char bfmeTestQP(void *left, void *right);
+extern unsigned char bfmeLessOD(const BfmeKeyOD *left, const BfmeKeyOD *right);
 
 bool Rva005A7550KeyEqual(const BfmeKeyOD *left, const BfmeKeyOD *right)
 {
     int different;
-    if (bfmeTestQP((void *)left, (void *)right) ||
-        bfmeTestQP((void *)right, (void *)left))
+    if (bfmeLessOD(left, right) ||
+        bfmeLessOD(right, left))
         different = 1;
     else
         different = 0;

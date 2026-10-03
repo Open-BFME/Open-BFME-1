@@ -1,7 +1,15 @@
-class BfmeSubEVM
+// The view at BfmeObjEVM+0x1C is an AICommandInterface: retail's call reaches
+// AICommandInterface::aiIdle (0x000D87E0) through the ILT thunk at 0x00024D70.
+#include "../GameLogic/command_source_type.h"
+class AICommandInterface
 {
 public:
-	void bfmeApplyEVM(int mode);
+	void aiIdle(CommandSourceType commandSource);
+};
+
+struct BfmeSubEVM
+{
+	unsigned char m_bfmePadEVM[1];
 };
 
 class BfmeObjEVM
@@ -128,7 +136,7 @@ char __stdcall bfmeTryEVM(BfmeArgEVM *arg, int unused)
 
 	if (obj->bfmeCheckBEVM())
 	{
-		obj->m_bfmeSubEVM.bfmeApplyEVM(2);
+		((AICommandInterface *)&obj->m_bfmeSubEVM)->aiIdle((CommandSourceType)2);
 		return 1;
 	}
 
