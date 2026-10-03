@@ -6,6 +6,14 @@
 
 void __cdecl operator delete(void *p);
 
+// Retail calls these ILTs, whose ledger definitions retain their thunk names.
+// Each target takes only this in ECX, also the one-argument fastcall ABI.
+extern void j_0004278a(); // -> 0x0037DCA0, list clear
+extern void j_00036e9e(); // -> 0x0048F3E0, BfmeObj927B destructor
+extern void j_0003418f(); // -> 0x0053ADC0, virtual-base destructor
+extern void j_0002987a(); // -> 0x005C7180, virtual-base destructor
+extern void j_000414bb(); // -> 0x00538210, basic_ios<char> destructor
+
 // The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
 // defined once in DisplayStringManager.cpp.  This TU keeps its own view of
 // the vtable and casts at the use.
@@ -36,7 +44,6 @@ static inline Rva0048EC80Manager *theDisplayStringManagerView()
 class BfmeSub927A
 {
 public:
-	void bfmeClear927A();
 	void *m_bfmeP;
 };
 
@@ -51,7 +58,7 @@ public:
 void BfmeThing927A::bfmeGo927A()
 {
 	BfmeSub927A *s = &m_bfmeSub;
-	s->bfmeClear927A();
+	reinterpret_cast<void (__fastcall *)(BfmeSub927A *)>(j_0004278a)(s);
 	void *p = s->m_bfmeP;
 	if (p)
 		operator delete(p);
@@ -68,7 +75,6 @@ class BfmeObj927B
 {
 public:
 	~BfmeObj927B();
-	void bfmeDtor927B();
 
 private:
 	_STL::vector<BfmeObj927BEntry *> m_bfmeEntries;
@@ -97,30 +103,23 @@ BfmeObj927B::~BfmeObj927B()
 void __stdcall bfmeGo927B(BfmeObj927B *p)
 {
 	if (p) {
-		p->bfmeDtor927B();
+		reinterpret_cast<void (__fastcall *)(BfmeObj927B *)>(j_00036e9e)(p);
 		operator delete(p);
 	}
 }
-
-class BfmeSub918P
-{
-public:
-	void bfmeDtor918P();
-};
 
 class BfmeThing927C
 {
 public:
 	void *bfmeGo927C(unsigned int flags);
-	void bfmeOne927C();
 };
 
 void *BfmeThing927C::bfmeGo927C(unsigned int flags)
 {
 	char *base = (char *)this - 0x74;
 	BfmeThing927C *self = (BfmeThing927C *)(base + 0x74);
-	self->bfmeOne927C();
-	((BfmeSub918P *)self)->bfmeDtor918P();
+	reinterpret_cast<void (__fastcall *)(BfmeThing927C *)>(j_0003418f)(self);
+	reinterpret_cast<void (__fastcall *)(BfmeThing927C *)>(j_000414bb)(self);
 	if (flags & 1)
 		operator delete(base);
 	return base;
@@ -130,15 +129,14 @@ class BfmeThing927D
 {
 public:
 	void *bfmeGo927D(unsigned int flags);
-	void bfmeOne927D();
 };
 
 void *BfmeThing927D::bfmeGo927D(unsigned int flags)
 {
 	char *base = (char *)this - 0x70;
 	BfmeThing927D *self = (BfmeThing927D *)(base + 0x70);
-	self->bfmeOne927D();
-	((BfmeSub918P *)self)->bfmeDtor918P();
+	reinterpret_cast<void (__fastcall *)(BfmeThing927D *)>(j_0002987a)(self);
+	reinterpret_cast<void (__fastcall *)(BfmeThing927D *)>(j_000414bb)(self);
 	if (flags & 1)
 		operator delete(base);
 	return base;
