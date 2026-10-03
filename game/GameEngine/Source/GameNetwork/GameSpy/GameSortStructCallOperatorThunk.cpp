@@ -1,5 +1,7 @@
 class GameSpyStagingRoom;
 
+void d_0053edd0();
+
 class GameSortStructCallOperatorShim
 {
 public:
@@ -14,5 +16,10 @@ public:
 
 bool GameSortStruct::operator()( GameSpyStagingRoom *left, GameSpyStagingRoom *right ) const
 {
-	return ((GameSortStructCallOperatorShim *)this)->compare( left, right );
+	union {
+		void (*asFunction)(void);
+		bool (GameSortStructCallOperatorShim::*asMember)(GameSpyStagingRoom *, GameSpyStagingRoom *);
+	} target;
+	target.asFunction = d_0053edd0;
+	return (((GameSortStructCallOperatorShim *)this)->*target.asMember)(left, right);
 }

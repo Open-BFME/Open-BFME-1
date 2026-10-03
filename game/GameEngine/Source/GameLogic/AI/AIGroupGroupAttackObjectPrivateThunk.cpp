@@ -7,6 +7,8 @@ class AIGroup
     void groupAttackObjectPrivate(bool, Object *, int, CommandSourceType);
 };
 
+void d_00155da0();
+
 class AIGroupGroupAttackObjectPrivateShim
 {
 public:
@@ -15,5 +17,11 @@ public:
 
 void AIGroup::groupAttackObjectPrivate(bool forced, Object *target, int maxShots, CommandSourceType source)
 {
-    ((AIGroupGroupAttackObjectPrivateShim *)this)->attack(forced, target, maxShots, source);
+    union {
+        void (*asFunction)(void);
+        void (AIGroupGroupAttackObjectPrivateShim::*asMember)(bool, Object *, int, CommandSourceType);
+    } targetCall;
+    targetCall.asFunction = d_00155da0;
+    (((AIGroupGroupAttackObjectPrivateShim *)this)->*targetCall.asMember)(
+        forced, target, maxShots, source);
 }

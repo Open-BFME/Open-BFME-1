@@ -2,6 +2,8 @@
 
 class W3DShadowTexture;
 
+void d_007afd10();
+
 class BFMEShadowManagerLayout
 {
 public:
@@ -16,5 +18,10 @@ public:
 
 W3DShadowTexture *BFMEShadowManagerLayout::getTexture(const char *name)
 {
-    return ((BFMEShadowManagerLayoutGetTextureShim *)this)->getTexture(name);
+    union {
+        void (*asFunction)(void);
+        W3DShadowTexture *(BFMEShadowManagerLayoutGetTextureShim::*asMember)(const char *);
+    } target;
+    target.asFunction = d_007afd10;
+    return (((BFMEShadowManagerLayoutGetTextureShim *)this)->*target.asMember)(name);
 }
