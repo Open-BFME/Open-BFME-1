@@ -195,10 +195,6 @@ public:
 
 	unsigned char m_pad04[0x18];
 	StateMachine *m_machine;
-	StateMachine *getMachine()
-	{
-		return m_machine;
-	}
 };
 
 class AIGuardInnerState : public State
@@ -339,7 +335,7 @@ StateReturnType AIGuardInnerState::onEnter()
 	m_attackState = new(
 		Rva002BD020AIAttackState::GLUE_NOT_IMPLEMENTED)
 		Rva002BD020AIAttackState(
-			getMachine(), false, true, false,
+			m_machine, false, true, false,
 			&m_exitConditions);
 	m_attackState->m_machine->setGoalObject(nemesisObject);
 	m_frameAt48 = TheGameLogic->m_frame + 0xf;
