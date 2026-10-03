@@ -56,11 +56,6 @@ public:
 		virtual ~facet();
 	};
 
-	~locale() __declspec(nothrow)
-	{
-		m_impl->release_reference();
-	}
-
 	_Locale_impl *m_impl;
 };
 
@@ -169,6 +164,7 @@ __declspec(nothrow) bool _STLP_CALL _M_read_float(
 	// locale temporary, even though narrow atom initialization needs no facet.
 	{
 		locale narrow_locale = stream.getloc();
+		narrow_locale.m_impl->release_reference();
 	}
 
 	const numpunct<CharT> &np =

@@ -19,12 +19,7 @@ struct Coord3D
     Real y;
     Real z;
 
-    void set(Real px, Real py, Real pz)
-    {
-        x = px;
-        y = py;
-        z = pz;
-    }
+    void set(Real px, Real py, Real pz);
 
     void normalize(void);
 };

@@ -21,6 +21,8 @@ typedef unsigned int UnsignedInt;
 // StringBase copy or cleanup is part of this body.
 #include "ascii_string.h"
 
+namespace
+{
 struct Coord3D
 {
 	Real x;
@@ -34,11 +36,12 @@ struct Coord3D
 		z -= other->z;
 	}
 
-	Real length(void) const
+	__forceinline Real length(void) const
 	{
 		return (Real)sqrt(x * x + y * y + z * z);
 	}
 };
+}
 
 // BFME uses STLport's bitset for its 192-bit KindOfMaskType.  The explicit
 // kInit constructor is the source-level form used by the retail action: the

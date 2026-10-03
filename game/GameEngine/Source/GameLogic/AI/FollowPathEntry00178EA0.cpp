@@ -12,10 +12,6 @@
 #include "coord3d.h"
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
-inline Coord3D &Coord3D::operator=(const Coord3D &c) {
-    struct Words { unsigned x,y,z; };
-    *(Words*)this=*(const Words*)&c; return *this;
-}
 template<class T> struct PathVector00178EA0 {
     T *start; T *finish;
     T *begin() { return start; }
@@ -99,7 +95,8 @@ int FollowPathEntry00178EA0::run() {
     at050=0;
     const Coord3D *pos=ai->point(at050);
     if (!pos) return -2;
-    at024=*pos;
+    struct Words { unsigned x,y,z; };
+    *(Words *)&at024 = *(const Words *)pos;
     const Coord3D *next=ai->point(1);
     at054=true;
     ai->at194=0;

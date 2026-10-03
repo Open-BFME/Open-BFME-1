@@ -61,7 +61,7 @@ bool Rva006F6F40FloorElement::update()
 		value = m_provider->m_step * m_provider->m_scale;
 		Matrix3D *source = (Matrix3D *)(long)
 			reinterpret_cast<BfmeCalc919G *>(m_provider)->bfmeCalc919G();
-		if (m_matrix != *source)
+		if (!(m_matrix == *source))
 		{
 			source = (Matrix3D *)(long)
 				reinterpret_cast<BfmeCalc919G *>(m_provider)->bfmeCalc919G();
