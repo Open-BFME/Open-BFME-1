@@ -3443,7 +3443,6 @@ name,address,notes
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x00007FF4,pinharvest x1 (thunk)
 ??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
 ??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x000261CA,ModuleFactory ILT thunk to 0x0020D580; the byte-verified retail caller encodes it
-??0Pinger@@QAE@XZ,0x00029C12,pinharvest x1 (thunk)
 ??0PivotClass@@QAE@ABU0@@Z,0x00972D70,derived from HTreeClass::Alter_Avatar_HTree
 ??0PlayerInfo@@QAE@ABV0@@Z,0x00028218,PlayerInfoMap subscript6359C0 actual call route; identity from matched GameSpyInfo updatePlayerInfo636C60 via ILT151E0 and matched PlayerInfo insert_unique634650; direct ctor copy ctor and lower_bound ABI verified
 ??0PlayerInfo@@QAE@XZ,0x0003F751,PlayerInfoMap subscript6359C0 actual call route; identity from matched GameSpyInfo updatePlayerInfo636C60 via ILT151E0 and matched PlayerInfo insert_unique634650; direct ctor copy ctor and lower_bound ABI verified

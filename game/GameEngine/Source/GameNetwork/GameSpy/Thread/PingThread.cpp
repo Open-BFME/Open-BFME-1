@@ -95,10 +95,9 @@ private:
 	PingThreadClass *m_workerThreads[NumWorkerThreads];
 };
 
-PingerInterface* PingerInterface::createNewPingerInterface( void )
-{
-	return NEW Pinger;
-}
+// The Pinger factory is retail RVA 0x00661490 (Q4NewNiladicFactories.cpp).
+// The former row at 0x0065C1F0 instead constructs BFMENetwork through ILT
+// 0x00029C12 -> 0x0065AC30 and must not call Pinger's larger constructor.
 
 PingerInterface *ThePinger;
 
@@ -119,15 +118,12 @@ private:
 
 //-------------------------------------------------------------------------
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/Pinger_ctor_Thunk.cpp
-// ??0Pinger@@ present-unmatched
-Pinger::Pinger() : m_requestCount(0), m_responseCount(0)
-{
-	for (Int i=0; i<NumWorkerThreads; ++i)
-	{
-		m_workerThreads[i] = NULL;
-	}
-}
+// Pinger::Pinger is provided by Pinger_ctor_Thunk.cpp (retail RVA 0x00660FD0).
+// The BFME constructor also initializes the worker mutex at +0xA8 and count
+// at +0xB0; the smaller Zero Hour constructor here was not retail's body.
+// Retain the four verified queue/deque constructor COMDATs this TU owns.
+template RequestQueue::queue();
+template ResponseQueue::queue();
 
 // ??1Pinger@@ present-unmatched
 Pinger::~Pinger()
