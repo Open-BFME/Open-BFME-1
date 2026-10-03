@@ -3820,7 +3820,6 @@ name,address,notes
 ??0SlowDeathBehaviorModuleData@@QAE@XZ,0x000186FB,pinharvest x1 (thunk)
 ??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
-??0Snapshot@@QAE@XZ,0x00044030,ILT thunk; real body 0x627200
 ??0SnapshotDupReplica@@QAE@XZ,0x007E86B0,"the 16-byte base ctor at 0x007E86B0 (vftable 0x01129358, zero at +4); functions.csv already records this spelling as that body's object symbol"
 ??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
 ??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
