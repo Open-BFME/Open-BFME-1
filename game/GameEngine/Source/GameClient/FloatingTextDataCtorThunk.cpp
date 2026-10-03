@@ -1,16 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: FloatingTextData constructor from InGameUI.cpp.
 
-class UnicodeString
-{
-public:
-	UnicodeString() : m_data(0) {}
-	~UnicodeString();
-	void clear();
+#include "unicode_string.h"
 
-private:
-	void *m_data;
-};
+// Retail inlines default construction before explicitly clearing the buffer.
+inline UnicodeString::UnicodeString() : m_text(0) {}
 
 class DisplayString;
 
@@ -60,6 +54,6 @@ FloatingTextData::FloatingTextData()
 	m_frameCount = 0;
 	m_frameTimeOut = 0;
 	m_pos3D.zero();
-	m_text.clear();
+	((StringBase<unsigned short> *)&m_text)->clear();
 	m_dString = TheDisplayStringManager->newDisplayString();
 }
