@@ -78,13 +78,7 @@
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HTreeClass::HTreeClass present-unmatched
-HTreeClass::HTreeClass(void) :
-	NumPivots(0),
-	Pivot(NULL),
-	ScaleFactor(1.0f)
-{
-}
+// Exact retail default constructor: HTreeClass.cpp.
 
 // ?HTreeClass::Init_Default present-unmatched
 void HTreeClass::Init_Default(void)
@@ -120,14 +114,7 @@ void HTreeClass::Init_Default(void)
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HTreeClass::~HTreeClass present-unmatched
-HTreeClass::~HTreeClass(void)
-{
-	Free();
-
-
-
-}
+// Exact retail destructor: HTreeClass.cpp.
 
 
 /***********************************************************************************************
