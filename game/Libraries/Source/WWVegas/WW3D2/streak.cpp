@@ -315,7 +315,10 @@ float StreakLineClass::Get_Opacity(void)
 // ?Get_Noise_Amplitude@StreakLineClass@@ present-unmatched
 float StreakLineClass::Get_Noise_Amplitude(void)
 {
-	return LineRenderer.Get_Noise_Amplitude();
+	// This TU sees ZH's SegLineRendererClass layout, where the inline accessor reads +0x20.
+	// Retail's class has the extra +0x1c member, so NoiseAmplitude is at +0x24; reading it
+	// here keeps a differing COMDAT copy of the accessor out of this object.
+	return *reinterpret_cast<const float *>(reinterpret_cast<const char *>(&LineRenderer) + 0x24);
 }
 
 // ?Get_Merge_Abort_Factor@StreakLineClass@@ present-unmatched
