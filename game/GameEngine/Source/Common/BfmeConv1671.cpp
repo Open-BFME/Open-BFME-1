@@ -1,5 +1,5 @@
 extern "C" __declspec(dllimport) int __cdecl bfmeCheckEQH(void *buffer, void *what, void **out);
-extern unsigned char g_bfmeBufferEQH[];
+extern "C" unsigned char g_bfmeBufferEQH[];
 
 struct BfmeSinkEQH
 {
