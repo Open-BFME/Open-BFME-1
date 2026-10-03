@@ -1,15 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 // W3DFloorBuffer constructor, retail 0x006F92D0: installs vtable 0x01120360, whose name getter
 // returns "W3DFloorBuffer"; the terrain stores the result at +0x30A4.
-
-namespace _STL
-{
-    class __new_alloc
-    {
-    public:
-        static void *allocate(unsigned bytes);
-    };
-}
 
 struct Rva006F92D0ListNode
 {
@@ -24,7 +17,7 @@ public:
     Rva006F92D0List() : m_head(0)
     {
         Rva006F92D0ListNode *node = static_cast<Rva006F92D0ListNode *>(
-            _STL::__new_alloc::allocate(12));
+            _STL::__node_alloc<true, 0>::allocate(12));
         node->m_next = node;
         node->m_prev = node;
         m_head = node;
