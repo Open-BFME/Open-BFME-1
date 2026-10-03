@@ -77,3 +77,36 @@ namespace D3DXShader
     };
     void CNodeArray::rva00A68BD1() {}
 }
+
+// Distinct cnode.obj slot2 leaves; original signatures are void thiscall().
+namespace D3DXShader
+{
+    // Constructor store A68BE2 installs VA0115163C; slot2 selects 00A68C74.
+    class CNodeType
+    {
+    public:
+        void rva00A68C74();
+    };
+    void CNodeType::rva00A68C74() {}
+    // Constructor store A68C86 installs VA01151648; slot2 selects 00A68DCC.
+    class CNodeFunction
+    {
+    public:
+        void rva00A68DCC();
+    };
+    void CNodeFunction::rva00A68DCC() {}
+    // Constructor store A68DDE installs VA01151654; slot2 selects 00A68F1B.
+    class CNodeVariable
+    {
+    public:
+        void rva00A68F1B();
+    };
+    void CNodeVariable::rva00A68F1B() {}
+    // Constructor store A68F2D installs VA01151660; slot2 selects 00A68FE1.
+    class CNodeStatement
+    {
+    public:
+        void rva00A68FE1();
+    };
+    void CNodeStatement::rva00A68FE1() {}
+}
