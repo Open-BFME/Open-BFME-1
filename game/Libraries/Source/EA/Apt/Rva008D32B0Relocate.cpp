@@ -14,12 +14,13 @@ public:
     ~BfmeStrVKI() { Rva008D32B0Block *old = m_00; if (--old->refs == 0) g_bfmeStringPool1284->free(old); }
     Rva008D32B0Block *m_00;
 };
-class Rva0089C860State {
+// Shared address-based sized-delete view, also used by matched 00899800.
+struct Gen_uws16_008976d0 { static void operator delete(void *, unsigned); };
+class Rva0089C860State : public Gen_uws16_008976d0 {
 public:
     Rva0089C860State(int n) { initialize(n); }
     Rva0089C860State *initialize(int n);
     static void *operator new(unsigned n) { return Rva008C5D70Alloc(n); }
-    static void operator delete(void *p, unsigned n) { TheBfmeFree(p, n); }
     int m_00, m_04, m_08, m_0c;
 };
 struct Rva008D32B0Value {
