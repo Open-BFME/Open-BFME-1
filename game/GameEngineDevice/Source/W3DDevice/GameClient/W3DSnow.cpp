@@ -47,8 +47,6 @@ struct POINTVERTEX
     Vector3 v;	//center of particle.
 };
 
-extern const char Rva006A16B0Empty[]; // retail 0x0107388B
-
 class BfmeOverridable
 {
 public:
@@ -70,7 +68,7 @@ public:
 	const char *snowTextureName(void) const
 	{
 		return m_snowTextureData ? m_snowTextureData + 8 :
-			Rva006A16B0Empty;
+			"";
 	}
 };
 

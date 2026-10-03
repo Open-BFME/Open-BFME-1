@@ -46,7 +46,6 @@ public:
 };
 
 extern OVERRIDE<WeatherSetting> TheWeatherSetting;
-extern const char Rva006A16B0Empty[];
 
 void j_00038c49(void);
 
@@ -120,7 +119,7 @@ void W3DSnowManager::updateIniSettings(void)
 		if (setting->m_snowTexture.m_data)
 			name = setting->m_snowTexture.m_data + 8;
 		else
-			name = Rva006A16B0Empty;
+			name = "";
 
 		TextureClass *texture = m_snowTexture;
 		const char *textureName = texture ? texture->Get_Texture_Name() : 0;
@@ -132,7 +131,7 @@ void W3DSnowManager::updateIniSettings(void)
 			if (replacementName)
 				replacementName += 8;
 			else
-				replacementName = Rva006A16B0Empty;
+				replacementName = "";
 
 			BFMEAssignSnowTexture(
 				m_snowTexture,

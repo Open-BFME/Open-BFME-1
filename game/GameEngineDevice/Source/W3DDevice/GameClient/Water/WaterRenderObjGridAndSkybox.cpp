@@ -127,8 +127,6 @@ public:
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	Char *name, Int mipCount, Int format);
 
-extern const char Rva006A16B0Empty[];
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
@@ -139,7 +137,7 @@ public:
 	{
 		if (m_data)
 			return m_data + 8;
-		return (Char *)Rva006A16B0Empty;
+		return (Char *)"";
 	}
 };
 
