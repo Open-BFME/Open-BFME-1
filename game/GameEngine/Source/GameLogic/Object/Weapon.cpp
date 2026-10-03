@@ -339,11 +339,7 @@ WeaponTemplate::WeaponTemplate() : m_nextTemplate(NULL)
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?reset@WeaponTemplate@@QAEXXZ present-unmatched
-void WeaponTemplate::reset( void )
-{
-	m_historicDamage.clear();
-}  // end reset
+// Retail reset behavior is provided by WeaponStore_reset.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ void WeaponTemplate::parseWeaponBonusSet( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
@@ -1642,38 +1638,10 @@ void WeaponStore::deleteAllDelayedDamage()
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?resetWeaponTemplates@WeaponStore@@IAEXXZ present-unmatched
-void WeaponStore::resetWeaponTemplates( void )
-{
-
-	for (Int i = 0; i < m_weaponTemplateVector.size(); i++)
-	{
-		WeaponTemplate* wt = m_weaponTemplateVector[i];
-		wt->reset();
-	}
-
-}
+// Retail reset behavior is provided by WeaponStore_reset.cpp.
 
 //-------------------------------------------------------------------------------------------------
-// ?reset@WeaponStore@@UAEXXZ is matched from WeaponStore_reset.cpp. This Zero Hour
-// copy stays: it emits the out-of-line isOverride and friend_clearNextTemplate rows.
-void WeaponStore::reset()
-{
-	// clean up any overriddes.
-	for (Int i = 0; i < m_weaponTemplateVector.size(); ++i)
-	{
-		WeaponTemplate *wt = m_weaponTemplateVector[i];
-		if (wt->isOverride()) 
-		{
-			WeaponTemplate *override = wt;
-			wt = wt->friend_clearNextTemplate();
-			override->deleteInstance();
-		}
-	}
-
-	deleteAllDelayedDamage();
-	resetWeaponTemplates();
-}
+// Retail reset behavior is provided by WeaponStore_reset.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?setDelayedDamage@WeaponStore@@IAEXPBVWeaponTemplate@@PBUCoord3D@@IW4ObjectID@@2ABVWeaponBonus@@@Z present-unmatched
