@@ -1,7 +1,8 @@
 # Vertex shader loader complete diagnostics
 
-The existing260-byte body at RVA007188B0 returns at007189B3 and is followed
-by INT3. Its absolute string operands at+168/+232 name VA01120CB8 and
+The existing260-byte body at RVA007188B0 returns at007189B3. The outlined catch-handler stub follows at007189B4
+through007189C4; INT3 starts007189C5. No padding is swallowed by the260B
+primary-body claim. Its absolute string operands at+168/+232 name VA01120CB8 and
 VA01120C98. Local retail bytes contain respectively
 `Failed to allocate memory to load shader\n \0` (43 bytes) and
 `Failed to create shader\n \0` (26 bytes). The old source ended each string
