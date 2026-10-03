@@ -5,6 +5,8 @@
 // rather than a function-local static: the two corner temporaries are built on
 // the stack right to left and passed by reference.
 
+#include "../../../Libraries/Source/WWVegas/WWMath/region.h"
+
 struct BfmePairYP
 {
 	BfmePairYP(float x, float y) : X(x), Y(y) {}
@@ -12,18 +14,6 @@ struct BfmePairYP
 	float X;						// +0x00
 	float Y;						// +0x04
 };
-
-class BfmeBoxYP
-{
-public:
-	BfmeBoxYP(const BfmePairYP &low, const BfmePairYP &high);
-
-	~BfmeBoxYP(void);
-
-private:
-	char m_bfmeRaw[0x10];
-};
-
 // ??__Eg_bfmeBoxYP@@YAXXZ
-BfmeBoxYP g_bfmeBoxYP(BfmePairYP(-3.402823466e+38F, -3.402823466e+38F),
-	BfmePairYP(3.402823466e+38F, 3.402823466e+38F));
+Region2D g_bfmeBoxYP((const Coord2D &)BfmePairYP(-3.402823466e+38F, -3.402823466e+38F),
+	(const Coord2D &)BfmePairYP(3.402823466e+38F, 3.402823466e+38F));
