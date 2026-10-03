@@ -8,11 +8,18 @@ struct __false_type
 {
 };
 
-class UnicodeStringInsertOverflowShim
+template <class Type>
+class allocator
 {
-public:
-	void insert_overflow( UnicodeString *position, const UnicodeString &value,
+};
+
+template <class Type, class Allocator>
+class vector
+{
+protected:
+	void _M_insert_overflow( Type *position, const Type &value,
 		const __false_type &tag, unsigned int count, bool unused );
+	friend class Rva00016A63UnicodeStringVectorInsertThunk;
 };
 
 class Rva00016A63UnicodeStringVectorInsertThunk
@@ -26,7 +33,7 @@ void Rva00016A63UnicodeStringVectorInsertThunk::forward(
 	UnicodeString *position, const UnicodeString &value,
 	const __false_type &tag, unsigned int count, bool unused )
 {
-	( ( UnicodeStringInsertOverflowShim * )this )->insert_overflow(
+	( ( vector<UnicodeString, allocator<UnicodeString> > * )this )->_M_insert_overflow(
 		position, value, tag, count, unused );
 }
 }

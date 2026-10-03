@@ -15,11 +15,16 @@ class allocator
 {
 };
 
-class BitVectorInsertAuxShim
+template <class Type, class Allocator>
+class vector;
+
+template <class Allocator>
+class vector<bool, Allocator>
 {
-public:
-	void insert_aux( _Bit_iter< _Bit_reference, _Bit_reference * > position,
+protected:
+	void _M_insert_aux( _Bit_iter< _Bit_reference, _Bit_reference * > position,
 		bool value );
+	friend class Rva0002CB5BBitVectorThunk;
 };
 
 class Rva0002CB5BBitVectorThunk
@@ -32,6 +37,6 @@ public:
 void Rva0002CB5BBitVectorThunk::forward(
 	_Bit_iter< _Bit_reference, _Bit_reference * > position, bool value )
 {
-	( ( BitVectorInsertAuxShim * )this )->insert_aux( position, value );
+	( ( vector<bool, allocator<bool> > * )this )->_M_insert_aux( position, value );
 }
 }

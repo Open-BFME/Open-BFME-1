@@ -3,9 +3,17 @@
 // resize body at 0x00453DF0.  This method keeps the proven resize ABI and
 // lets MSVC emit the direct tail jump for the thunk.
 
+struct ICoord2D;
+
 namespace _STL
 {
-class ICoord2DVectorResizeShim
+template <class Type>
+class allocator
+{
+};
+
+template <class Type, class Allocator>
+class vector
 {
 public:
 	void resize(unsigned int newSize);
@@ -20,5 +28,5 @@ public:
 
 void Rva0000366BICoord2DVectorResizeThunk::forward(unsigned int newSize)
 {
-	((_STL::ICoord2DVectorResizeShim *)this)->resize(newSize);
+	((_STL::vector<ICoord2D, _STL::allocator<ICoord2D> > *)this)->resize(newSize);
 }

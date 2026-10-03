@@ -16,10 +16,14 @@ class allocator
 {
 };
 
-class BitVectorFillInsertShim
+template <class Type, class Allocator>
+class vector;
+
+template <class Allocator>
+class vector<bool, Allocator>
 {
 public:
-	void fill_insert( _Bit_iter< _Bit_reference, _Bit_reference * > position,
+	void _M_fill_insert( _Bit_iter< _Bit_reference, _Bit_reference * > position,
 		unsigned int count, bool value );
 };
 
@@ -32,9 +36,9 @@ public:
 
 void Rva0000886EBitVectorFillInsertThunk::forward(
 	_Bit_iter< _Bit_reference, _Bit_reference * > position,
-		unsigned int count, bool value )
+	unsigned int count, bool value )
 {
-	( ( BitVectorFillInsertShim * )this )->fill_insert(
+	( ( vector<bool, allocator<bool> > * )this )->_M_fill_insert(
 		position, count, value );
 }
 }
