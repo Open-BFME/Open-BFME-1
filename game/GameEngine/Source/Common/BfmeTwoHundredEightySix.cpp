@@ -3,16 +3,17 @@
 // caller never sees, built without optimisation but with the sizing helper
 // spelled out in place. Both callees are pinned by address.
 
-void bfmeBigFreePZ(void *at);
+extern "C" void __identifier("?j_0002ab35@@YAXXZ")(void *at);
 
-void bfmeSmallFreePZ(void *at, unsigned int bytes);
+extern "C" void __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+	(void *at, unsigned int bytes);
 
 inline void bfmeFreeSizedPZ(void *at, unsigned int bytes)
 {
 	if (bytes > 0x80)
-		bfmeBigFreePZ(at);
+		__identifier("?j_0002ab35@@YAXXZ")(at);
 	else
-		bfmeSmallFreePZ(at, bytes);
+		__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(at, bytes);
 }
 
 class BfmeThingPZ
