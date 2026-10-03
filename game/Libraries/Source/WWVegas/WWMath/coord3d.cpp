@@ -424,13 +424,6 @@ void Coord3D::add(const Coord3DBase *that)
     z += that->z;
 }
 
-void Coord3D::scale(float scale)
-{
-    x *= scale;
-    y *= scale;
-    z *= scale;
-}
-
 void Coord3D::set(float x, float y, float z)
 {
     this->x = x;
