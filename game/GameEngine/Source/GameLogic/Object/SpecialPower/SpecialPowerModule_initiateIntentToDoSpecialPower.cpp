@@ -235,7 +235,8 @@ class Glo012F4B98Type
 public:
 	void show00592D60(AsciiString *movie, void (*callback)(bool));
 };
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class SpecialPowerModule : public ObjectModule
 {
@@ -325,7 +326,7 @@ void SpecialPowerModule::initiateIntentToDoSpecialPower(const Object *targetObj,
 		const SpecialPowerTemplate *tmpl = getSpecialPowerModuleData()->m_specialPowerTemplate;
 		AsciiString movie = tmpl->getPalantirMovie();
 		if (!movie.isEmpty())
-			Glo012F4B98->show00592D60(&movie, 0);
+			reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->show00592D60(&movie, 0);
 
 		if (commandOptions & 0x40000)	// BFME CommandOption name table: "---DO-NOT-USE---"
 			m_byte24 = true;

@@ -94,7 +94,8 @@ public:
 	void after();
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class Rva003C1A50
 {
@@ -150,6 +151,6 @@ void Rva003C1A50::start(unsigned char mordor)
 	}
 	m_at28->bfmeNotify();
 	refreshEntries003BEC30();
-	Glo012F4B98->after();
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->after();
 	--TheBfmeGameLogicView()->m_fp;
 }

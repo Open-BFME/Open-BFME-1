@@ -43,7 +43,8 @@ public:
 	BfmeSubBU m_bfmeSubBU;
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class BfmeHostBU
 {
@@ -81,8 +82,8 @@ void BfmeHostBU::bfmeDieBU()
 		TheRadar->bfmeRemoveBU(this);
 		TheAI->m_bfmePathBU->bfmeDropBU(this);
 
-		if (Glo012F4B98 != 0)
-			Glo012F4B98->m_bfmeSubBU.bfmeUnlinkBU(this);
+		if (TheAptPalantir != 0)
+			reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_bfmeSubBU.bfmeUnlinkBU(this);
 
 		bfmeCleanBU();
 		bfmeFinishBU();

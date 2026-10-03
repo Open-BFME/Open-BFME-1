@@ -162,7 +162,8 @@ static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logi
 extern Rva006174D0State *g_bfmeStateDF;
 extern Rva003BF540 *TheLivingWorldLogic;
 extern BfmeC977 *g_theWindowManager;
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
@@ -205,7 +206,7 @@ void BfmeLivingWorldManager::update()
 			TheMouse->_bfme_setEngineVisibility(true);
 	}
 
-	Glo012F4B98Type *global012F4B98 = Glo012F4B98;
+	Glo012F4B98Type *global012F4B98 = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir);
 	global012F4B98->slot14();
 	Rva00367E30Logic *logicExit = TheBfmeGameLogicView();
 	--logicExit->m_fp;

@@ -47,7 +47,8 @@ public:
 	virtual ~Glo012F368CType();				// slot 0
 };
 
-extern Glo012F4B98Type *Glo012F4B98;				// 0x012F4B98
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;				// 0x012F4B98
 extern Glo012F368CType *Glo012F368C;				// 0x012F368C
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
@@ -95,8 +96,8 @@ void ControlBar::deleteBuildTooltipLayout(void)
 	delete m_bfmeWindow;
 	m_bfmeWindow = 0;
 
-	if (Glo012F4B98)
-		Glo012F4B98->m_bfmeSub.release();
+	if (TheAptPalantir)
+		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_bfmeSub.release();
 
 	delete Glo012F368C;
 	Glo012F368C = 0;

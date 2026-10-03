@@ -324,7 +324,8 @@ class Glo012F4B98Type;
 extern BfmeTransitionMD *g_bfmeTransitionMD;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 extern void *g_obj12F4C38;
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 // No recovered source name exists for this retail selection cache.
 extern volatile Drawable *g_Rva012F340C;
 #define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)g_bfmeTransitionMD)
@@ -332,7 +333,7 @@ extern volatile Drawable *g_Rva012F340C;
 #define BFME_CONTEXT_IN_GAME_CHAT g_Rva005127A0InGameChat
 #define BFME_CONTEXT_OBJECT_12F4C38 g_obj12F4C38
 #define BFME_CONTEXT_GAME_LOGIC ((BfmeContextSwitchGameLogicView *)TheGameLogic)
-#define BFME_CONTEXT_GLO_12F4B98 ((Rva0058C040 *)Glo012F4B98)
+#define BFME_CONTEXT_GLO_12F4B98 ((Rva0058C040 *)TheAptPalantir)
 #define BFME_CONTEXT_SELECTION_CACHE g_Rva012F340C
 
 
@@ -2203,8 +2204,8 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 		commandSet = ((Rva004A0340 *)TheControlBar)->call( overrideRecord->field_002c );
 	if( !commandSet )
 	{
-		if( Glo012F4B98 )
-			((Rva0058C040 *)Glo012F4B98)->invoke();
+		if( TheAptPalantir )
+			((Rva0058C040 *)TheAptPalantir)->invoke();
 		return;
 	}
 	int i;
@@ -2323,7 +2324,7 @@ void ControlBar::populateCommand( Object *object, Bool refresh )
 			((Rva0049DF00 *)this)->call( exitInterface->getRallyPoint() );
 	}
 	((BfmeRva004A5950ControlBarContextCommandView *)this)->call();
-	((Rva005976B0 *)Glo012F4B98)->update( object );
+	((Rva005976B0 *)TheAptPalantir)->update( object );
 	if( field_02f0 )
 	{
 		if( !object->isLocallyControlled() && ThePlayerList->getLocalPlayer()->isPlayerActive() )

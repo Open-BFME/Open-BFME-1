@@ -24,7 +24,8 @@ public:
 	void report( void *value, const char *text );
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class Rva003C3AE0Owner
 {
@@ -71,7 +72,7 @@ void Rva003C3AE0Owner::dispatch( void *value )
 	record = (this->*create.memberFunction)( value );
 	if ( record != 0 )
 	{
-		Glo012F4B98->report( (void *)((char *)record + 0x0C), (const char *)bfmeHook1052 );
+		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->report( (void *)((char *)record + 0x0C), (const char *)bfmeHook1052 );
 		m_value = record->m_value;
 
 		typedef void (Rva003C3AE0Owner::*Finish)( Rva003C3AE0Record * );

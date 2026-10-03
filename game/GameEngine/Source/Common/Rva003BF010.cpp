@@ -34,7 +34,8 @@ public:
 	void show00592D60(AsciiString *name, void (__cdecl *callback)(bool));
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 // The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
 // (dir32_addresses.csv); only the member isOpen() is pinned under the local
@@ -111,7 +112,7 @@ void Rva003BF540::run(Rva003BF010Arg *arg)
 		{
 			AsciiString copy(arg->m_name);
 			if (!copy.isEmpty())
-				Glo012F4B98->show00592D60(&arg->m_name, 0);
+				reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->show00592D60(&arg->m_name, 0);
 			m_at4C = 1;
 		}
 		return;
@@ -119,7 +120,7 @@ void Rva003BF540::run(Rva003BF010Arg *arg)
 	else
 		goto zero_fields;
 
-	Glo012F4B98->notifyTarget();
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->notifyTarget();
 zero_fields:
 	m_atC4 = 0;
 	m_at48 = 0;

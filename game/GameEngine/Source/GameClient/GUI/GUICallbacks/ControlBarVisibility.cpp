@@ -205,7 +205,6 @@ public:
     virtual void reset();
 };
 class Glo012F4B98Type;
-extern Glo012F4B98Type *Glo012F4B98;
 extern void showReplayControls();
 // name_oracle witnesses ControlBar::m_UIDirty at +24.
 struct Rva004C0E10DirtyView { char opaque0[0x24]; bool m_UIDirty; };
@@ -220,8 +219,8 @@ void ShowControlBar(bool immediate)
         reinterpret_cast<Rva0049E5A0View *>(TheControlBar)->transition();
     switch (reinterpret_cast<Rva0049E5A0View *>(TheControlBar)->mode()) {
     case 1:
-        if (Glo012F4B98)
-            reinterpret_cast<AptPalantir *>(Glo012F4B98)->hide(false);
+        if (TheAptPalantir)
+            TheAptPalantir->hide(false);
         if (TheBannerUI)
             TheBannerUI->hide(false);
         break;

@@ -92,7 +92,8 @@ public:
 
 extern ControlBar *TheControlBar;
 extern Glo012F4B78Type *Glo012F4B78;
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 extern BannerUI *TheBannerUI;
 extern View *TheTacticalView;
 extern DisplayStringManager *TheDisplayStringManager;
@@ -232,7 +233,7 @@ void InGameUI::reset()
 
 	TheControlBar->reset();
 	Glo012F4B78->reset();
-	Glo012F4B98->reset();
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->reset();
 	TheBannerUI->reset();
 
 	setScrolling(false);

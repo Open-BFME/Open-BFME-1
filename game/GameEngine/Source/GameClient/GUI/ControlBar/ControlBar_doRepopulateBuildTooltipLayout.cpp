@@ -50,7 +50,8 @@ public:
 	Rva005929E0 m_bfmeSub;
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class ControlBar
 {
@@ -78,6 +79,6 @@ void ControlBar::doRepopulateBuildTooltipLayout()
 	window->collectText(name, cost, description, requirements);
 	m_layout->setVisible(false);
 
-	if (Glo012F4B98)
-		Glo012F4B98->m_bfmeSub.replace(name, cost, description, requirements);
+	if (TheAptPalantir)
+		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_bfmeSub.replace(name, cost, description, requirements);
 }

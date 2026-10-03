@@ -90,7 +90,8 @@ private:
 	Report *m_report;
 };
 
-extern Glo012F4B98Type * Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 #define BFME_GUARDED_LOOKUP_FLAG( NAME, FIELD )                           \
 	class NAME                                                            \
@@ -142,7 +143,7 @@ void Rva003BCA90::run()
 	int count = found->m_at80;
 	if( count <= 0 )
 		return;
-	Glo012F4B98->report( count, 7.0f );
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->report( count, 7.0f );
 }
 
 void Glo012F4B98Type::report( int count, float weight )

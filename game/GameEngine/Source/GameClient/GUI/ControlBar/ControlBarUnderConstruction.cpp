@@ -156,7 +156,8 @@ public:
 
 class Glo012F4B98Type;
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 // The object ControlBar keeps at +0x2f0, identified only by the body it runs.
 class Rva004B19E0
@@ -201,8 +202,8 @@ void ControlBar::populateUnderConstruction(Object *objectUnderConstruction)
 	// sanity
 	if (objectUnderConstruction == 0)
 	{
-		if (Glo012F4B98)
-			((Rva0058C040 *)Glo012F4B98)->invoke();
+		if (TheAptPalantir)
+			((Rva0058C040 *)TheAptPalantir)->invoke();
 		return;
 	}
 
@@ -269,8 +270,8 @@ void ControlBar::populateUnderConstruction(Object *objectUnderConstruction)
 	if (exit)
 		showRallyPoint(exit->getRallyPoint());
 
-	if (Glo012F4B98)
-		((Rva005976B0 *)Glo012F4B98)->update(objectUnderConstruction);
+	if (TheAptPalantir)
+		((Rva005976B0 *)TheAptPalantir)->update(objectUnderConstruction);
 
 	m_bfmeOverlaySink->apply(&windows);
 

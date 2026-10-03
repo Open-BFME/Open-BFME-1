@@ -23,11 +23,12 @@ private:
 	unsigned char m_unreconstructed[0x584 - 4];
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 // ?Rva006FC330@@YAXXZ -- address-derived TAG, identity unresolved
 void Rva006FC330(void)
 {
-	Glo012F4B98 = new Glo012F4B98Type;
-	Glo012F4B98->init();
+	TheAptPalantir = reinterpret_cast<AptPalantir *>(new Glo012F4B98Type);
+	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->init();
 }

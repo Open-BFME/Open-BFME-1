@@ -141,7 +141,8 @@ public:
 	Rva005929E0 m_sub;
 };
 
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 
 class GameWindowTransitionsHandler
 {
@@ -223,8 +224,8 @@ void ControlBar::reset(void)
 	if (m_buildToolTipLayout)
 		m_buildToolTipLayout->hide(TRUE);
 	m_showBuildToolTipLayout = zero;
-	if (Glo012F4B98 != (Glo012F4B98Type *)zero)
-		Glo012F4B98->m_sub.release();
+	if ((Glo012F4B98Type *)TheAptPalantir != (Glo012F4B98Type *)zero)
+		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_sub.release();
 	if (m_animateWindowManager)
 		m_animateWindowManager->reset();
 	if (m_animateWindowManagerForGenShortcuts)
