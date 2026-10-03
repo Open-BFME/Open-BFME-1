@@ -33888,3 +33888,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?validateCachedBones@ModelConditionInfo@@ABEXPAVRenderObjectClass@@@Z,0x00778590,Truncated 3983B naked lift; complete 3986B native recovery remains pending. See targets/game/reverse/identity_evidence/session9-cached-bones-truncated-dump.md.
 ?popSleepyUpdate@GameLogic@@AAEXXZ,0x0038C1E0,Truncated 2876B literal-byte lift; complete 2892B native recovery remains pending. See targets/game/reverse/identity_evidence/session9-38c1e0-truncated-dump.md.
 ?queueSupplyTruck@AIPlayer@@,0x00165D50,Truncated 2330B literal-byte lift; complete 2333B native recovery remains pending. See targets/game/reverse/identity_evidence/session9-supply-truck-truncated-dump.md.
+?update@LANAPI@@,0x006870F0,Truncated 2030B literal-byte lift; complete 2436B native recovery remains pending. See targets/game/reverse/identity_evidence/session9-lan-update-truncated-dump.md.
