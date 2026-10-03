@@ -12,7 +12,19 @@
 // eax rather than the other way round. And the end parameter is copied into a
 // local so it is the one loaded first.
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+struct BfmeRangeNode;
+inline void bfmeEraseNode(BfmeRangeNode *node);
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend void ::bfmeEraseNode(BfmeRangeNode *node);
+
+	static void __cdecl _M_deallocate(void *p, unsigned int bytes);
+};
+}
 
 extern void j_000205a9(void);
 
@@ -48,7 +60,7 @@ inline void bfmeEraseNode(BfmeRangeNode *node)
 	} destroy = { j_000205a9 };
 	(node->m_bfmeValue.*destroy.method)();
 
-	bfmeDeallocate(node, sizeof(BfmeRangeNode));
+	_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(BfmeRangeNode));
 }
 
 class BfmeRangeIterator

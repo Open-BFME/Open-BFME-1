@@ -1,4 +1,7 @@
 // Open-BFME5 conversions.
+// cl: /Iinputs/vendor/stlport
+
+#include <ios>
 
 class BfmeSubVLN
 {
@@ -13,7 +16,6 @@ public:
 class BfmeCtlVLN
 {
 public:
-	void bfmeNotifyVLN();
 	int m_bfme00;
 	int m_bfme04;
 	int m_bfme08;
@@ -48,12 +50,7 @@ BfmeOwnVLN *BfmeOwnVLN::bfmeApplyVLN()
 	if (s != 0 && s->bfmeStateVLN() == -1)
 	{
 		BfmeCtlVLN *b = bfmeBaseVLN(this);
-		int f = b->m_bfme08 | 1;
-		if (b->m_bfme58 == 0)
-			f |= 1;
-		b->m_bfme08 = f;
-		if ((b->m_bfme14 & f) != 0)
-			b->bfmeNotifyVLN();
+		((_STL::basic_ios<char, _STL::char_traits<char> > *)b)->setstate(1);
 	}
 	return this;
 }

@@ -1,7 +1,7 @@
-class Gen_0092D720
+class LightEnvironmentClass
 {
 public:
-	void bfmeAssign(const char *text);
+	LightEnvironmentClass &operator=(const LightEnvironmentClass &other);
 };
 
 class Gen_0092E440
@@ -12,7 +12,7 @@ public:
 private:
 	char m_bfmeHead[0xCC];					// +0x00
 	const void *m_ptr;					// +0xCC
-	Gen_0092D720 m_embedded;				// +0xD0
+	LightEnvironmentClass m_embedded;			// +0xD0
 };
 
 // ?bfmeSet@Gen_0092E440@@QAEXPBD@Z
@@ -26,7 +26,7 @@ void Gen_0092E440::bfmeSet(const char *text)
 			return;
 		}
 
-		m_embedded.bfmeAssign(text);
+		m_embedded = *(const LightEnvironmentClass *)text;
 		m_ptr = &m_embedded;
 		return;
 	}

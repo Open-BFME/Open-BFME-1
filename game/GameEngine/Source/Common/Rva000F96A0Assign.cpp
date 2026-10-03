@@ -10,9 +10,6 @@ private:
 
 class Rva0036CA00Str
 {
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-
 private:
 	void *m_item;
 };
@@ -40,6 +37,7 @@ Rva000F96A0 &Rva000F96A0::operator=(const Rva000F96A0 &other)
 	m_10 = other.m_10;
 	((StringBase<unsigned short> *)&m_14)->set(
 		*(const StringBase<unsigned short> *)&other.m_14);
-	m_18 = other.m_18;
+	((StringBase<char> *)&m_18)->set(
+		*(const StringBase<char> *)&other.m_18);
 	return *this;
 }
