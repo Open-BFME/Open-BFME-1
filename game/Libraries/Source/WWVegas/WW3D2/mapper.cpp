@@ -530,6 +530,12 @@ GridWSEnvMapperClass::GridWSEnvMapperClass(const INIClass &ini, const char *sect
 // Retail INI/copy constructors also emit this family's virtual destructors.
 // Their vtable slot 0 is RefCountClass::Delete_This; slot 1 is the deleting destructor.
 
+// ZH twin and retail VA0113E630 identify this six-argument constructor.
+GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(float fps, unsigned int gridwidth_log2, unsigned int last_frame, unsigned int offset, AxisType axis, unsigned int stage):
+	GridWSEnvMapperClass(fps, gridwidth_log2, last_frame, offset, axis, stage)
+{
+}
+
 // ??0GridWSClassicEnvironmentMapperClass@@QAE@ABVINIClass@@PBDI@Z
 GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(const INIClass &ini, const char *section, unsigned int stage):
 	GridWSEnvMapperClass(ini,section,stage)
