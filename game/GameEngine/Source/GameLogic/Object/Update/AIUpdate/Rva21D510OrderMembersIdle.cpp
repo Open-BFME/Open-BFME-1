@@ -1,3 +1,12 @@
+// Retail calls the ILT thunk at 0x0000A5DD, which gen_small/thunks_004.cpp owns
+// as ?j_0000a5dd@@YAXXZ and forwards to 0x00154330 -- the body
+// AICommandInterfaceObjectCommands.cpp matches as ?aiExit@AICommandInterface.
+// The caller therefore names the real method; the resolver keeps the thunk
+// address, which is the one retail's call encodes.
+#include "../../../command_source_type.h"
+
+class Object;
+
 class Rva21D510Object
 {
 public:
@@ -12,10 +21,11 @@ struct Rva21D510Node
 	Rva21D510Object *object;
 };
 
-class BfmeInnerRQ
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
+class AICommandInterface
 {
 public:
-	void bfmeSetRQ(int object, int commandSource);
+	void aiExit(Object *objectToExit, CommandSourceType commandSource);
 };
 
 class Rva21D510OrderMembersIdle
@@ -38,9 +48,10 @@ void Rva21D510OrderMembersIdle::orderAll(int commandSource)
 		node = node->next;
 
 		if (ai != 0) {
-			BfmeInnerRQ *command = (BfmeInnerRQ *)((char *)ai + 0x20);
-			Rva21D510Object *owner = *(Rva21D510Object **)((char *)this - 0x18);
-			command->bfmeSetRQ((int)owner, commandSource);
+			AICommandInterface *command =
+				(AICommandInterface *)((char *)ai + 0x20);
+			Object *owner = *(Object **)((char *)this - 0x18);
+			command->aiExit(owner, (CommandSourceType)commandSource);
 		}
 	}
 }
