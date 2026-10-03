@@ -23,6 +23,7 @@ public:
 
 private:
 	StringBase(const StringBase<Char> &src);
+	void releaseBuffer();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -37,7 +38,9 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
 	}
-	~AsciiString();
+	// Retail's ~AsciiString (0x0005EE90) is a bare jmp to releaseBuffer
+	// (0x00887940); scope exits call that body directly.
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 private:
 	void *m_data;
