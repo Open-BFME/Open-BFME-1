@@ -103,9 +103,6 @@ public:
 class Parameter
 {
 public:
-	Int getInt() const { return m_int; }
-	const AsciiString &getString() const { return m_string; }
-
 	unsigned char m_beforeInt[8];
 	Int m_int;
 	float m_real;
@@ -347,7 +344,7 @@ void ScriptActions::doCounterMathCounter(Parameter *counter,
 	ScriptCounter *destination;
 	int result;
 	const ScriptCounter *source;
-	destination = TheScriptEngine->bfmeCounter(counter->getString());
+	destination = TheScriptEngine->bfmeCounter(counter->m_string);
 	result = destination->m_value;
 	int value;
 	value = 0;
@@ -355,11 +352,11 @@ void ScriptActions::doCounterMathCounter(Parameter *counter,
 	union { void (*raw)(void); GetCounterFunction member; } getCounter;
 	getCounter.raw = j_000142b3;
 	source = (reinterpret_cast<BfmeGetCounterCall *>(TheScriptEngine)
-		->*getCounter.member)(otherCounter->getString());
+		->*getCounter.member)(otherCounter->m_string);
 	if (source)
 		value = source->m_value;
 
-	switch (operation->getInt())
+	switch (operation->m_int)
 	{
 	case 0:
 		result += value;
@@ -381,11 +378,11 @@ void ScriptActions::doCounterMathValue(Parameter *counter,
 	Parameter *operation, Parameter *value)
 {
 	ScriptCounter *destination = TheScriptEngine->bfmeCounter(
-		counter->getString());
+		counter->m_string);
 	int result = destination->m_value;
-	int operand = value->getInt();
+	int operand = value->m_int;
 
-	switch (operation->getInt())
+	switch (operation->m_int)
 	{
 	case 0:
 		result += operand;
