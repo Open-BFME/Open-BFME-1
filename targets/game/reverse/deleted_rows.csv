@@ -33969,3 +33969,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?j_0016ca0e@@YAXXZ,0x0016CA0E,Interior final E9 of complete19B state-table wrapper at0016CA00; table1097D40 slot5 and ILT D06C enter its prefix; evidence=identity_evidence/0016ca00-complete-state-wrapper.md.
 ?j_00516a36@@YAXXZ,0x00516A36,Interior E9 of complete11B fixed-member forwarding body beginning six bytes earlier; table and ILT target its prefix; evidence=identity_evidence/00516a30-0075bf20-complete-wrappers.md.
 ?j_0075bf26@@YAXXZ,0x0075BF26,Interior E9 of complete11B fixed-member forwarding body beginning six bytes earlier; table and ILT target its prefix; evidence=identity_evidence/00516a30-0075bf20-complete-wrappers.md.
+?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z,0x00167E80,Truncated 786B literal-byte lift; complete 805B native recovery remains pending. See targets/game/reverse/identity_evidence/session9-build-team-truncated-dump.md.
