@@ -8,12 +8,17 @@ public:
 	virtual void bfmeEventZS(void *owner, void *a, void *b, void *c);
 };
 
+class BfmeMsgHandler
+{
+public:
+	int defaultHandler(int msg, void *p2, void *p3);
+	int checkMsg(int msg, void *p2, void *p3);
+};
+
 class BfmeOwnerZS
 {
 public:
 	int bfmeNotifyZS(void *a, void *b, void *c);
-
-	void bfmeSelfZS(void *a, void *b, void *c);
 
 	unsigned char m_bfmeHeadZS[0x25c];
 	BfmeObsZS **m_bfmeBeginZS;
@@ -22,7 +27,7 @@ public:
 
 int BfmeOwnerZS::bfmeNotifyZS(void *a, void *b, void *c)
 {
-	bfmeSelfZS(a, b, c);
+	((BfmeMsgHandler *)this)->defaultHandler((int)a, b, c);
 
 	for (BfmeObsZS **p = m_bfmeBeginZS; p != m_bfmeEndZS; p++)
 		(*p)->bfmeEventZS(this, a, b, c);
