@@ -1,31 +1,21 @@
 // ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.887 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.5827 date=2026-10-03
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // BFME ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ at retail
 // RVA 0x00179B10 (1517 bytes).
 //
-// IDENTITY.  Slot 6 (update) of vtable 0x01099C08, which the matched
-// constructor 0x00183990 installs; slots 4 and 5 route to onEnter 0x00179740
-// and the landed onExit 0x00179A90.
-//
-// SHAPE.  Zero Hour's AIFollowPathState::update (AIStates.cpp) with BFME's
-// team attack-move machine at +0x60 (spelled as the matched
-// AIAttackFollowWaypointPathState_update_Bfme.cpp spells it), a final-facing
-// turn (+0x64/+0x68), a turn-in-place step before each waypoint (+0x5A/+0x5B)
-// and the BFME CritterDesync logging.
-//
-// STATUS (opus-5.5, 2026-09-28): probe 1515/1517 bytes, 655 differing, shape
-// 0.887; 415 of 547 instructions identical. Frame, team block, turn block,
-// retry/advance, tail and CRC logging line up. Left: the tooClose loop entry is
-// not threaded past the first tooClose test (retail: je exit; jmp body), which
-// also moves the !m_field5A update block from after the loop preheader into the
-// loop; dx is re-loaded instead of kept by fst; a few register swaps.
-// Tried: while (tooClose && pos) (worse), guarded do-while (worse),
-// function-scope tooClose (no change).
-// Landing needs one pin: ?Scale@Coord3D@@QAEAAU1@M@Z at ILT 0x0000E1C4
-// route=0x0014FFD0 (the matched row is the class-tag form).
+// BANK ONLY. Native STLport vector access improves the served 1515B/655dif
+// to 1520B/627dif against full1517B through RET17A0FC, quality0.5827.
+// Loop threading/cold update block placement and x87 dx retention remain wrong.
+// Guard, redundant pointer test, count accessor, direct/template sqr controls
+// did not improve the served bank; explicit labels worsened native vector.
+// Inherited semantic names, hand-written Object/State/AI views, dynamic slot
+// contracts and all56 relocation bindings remain unaudited for promotion.
+// Vtable layout alone does not establish the old asserted source identity.
 
 #include <math.h>
+#include <vector>
 
 typedef bool Bool;
 typedef float Real;
@@ -108,19 +98,15 @@ struct Rva0016FFD0Coord3D
 class Rva0016FFD0Path
 {
 public:
-	Rva0016FFD0Coord3D *getPoint(int index)
-	{
-		if (index >= 0)
-		{
-			if ((unsigned int)index < (unsigned int)(m_finish - m_start))
-				return &m_start[index];
-		}
-		return 0;
-	}
-
-	unsigned char m_pad00[0x44];
-	Rva0016FFD0Coord3D *m_start;
-	Rva0016FFD0Coord3D *m_finish;
+ Rva0016FFD0Coord3D *getPoint(int index) {
+  if (index >= 0) {
+   if ((unsigned)index < m_points.size())
+    return &m_points[index];
+  }
+  return 0;
+ }
+ unsigned char m_pad00[0x44];
+ std::vector<Rva0016FFD0Coord3D> m_points;
 };
 
 class AIUpdateInterface
