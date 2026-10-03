@@ -86874,9 +86874,6 @@ name,address,notes
 ?rva0061c1d0@Rva0061C1D0Object@@QAEXXZ,0x0061C1D0,LivingWorldManager +0x194 mapped-object method; direct 0x006157C0 call reaches body through ILT 0x0001EF42; address-derived type and method;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
 ?rva0061c2a0@Rva0061C1D0Object@@QAEXXZ,0x0061C2A0,LivingWorldManager +0x194 mapped-object method; direct 0x006159C0 call reaches body through ILT 0x0000EA6B; address-derived method on the mapped type shared with 0x006157C0 and 0x00615C20;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
 ?rva0061c3c0@Rva0061C1D0Object@@QAEXXZ,0x0061C3C0,LivingWorldManager +0x194 mapped-object method; direct 0x00615C20 call reaches body through ILT 0x0001B2AC; address-derived method on the same mapped type as 0x006157C0;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
-?rva00696370OpenFile@@YAXXZ,0x00A96370,AudioManagerInit 0x006B8220 AIL file-open callback
-?rva006963B0ForwardSlot5@@YAXXZ,0x00A963B0,AudioManagerInit 0x006B8220 AIL file-read callback
-?rva006963D0ForwardSlot3@@YAXXZ,0x00A963D0,AudioManagerInit 0x006B8220 AIL file-write callback
 ?rva006A1C60@Rva006B3F90Owner@@QAEXPAURva006B3F90Wrapper@@PAE@Z,0x000445D0,body 0x006A1C60 via ILT jmp; called from 0x006B1CE0+0x118 and 0x006B2FC0 with ecx=this and two pushed args (wrapper and Bool out); callee sub esp 0x1c/mov ebx ecx thiscall and every exit ret 8 with byte store through arg2; address-derived name
 ?rva006A20D0@MilesAudioManager@@QAE_NIPAX0@Z,0x00008549,body 0x006A20D0 via ILT jmp (ret 0xc thiscall bool in AL; reads this+0x9C8/0x9CC/0x9D0 playing lists); called from 0x006A2750+0x56 isCurrentlyPlaying with (handle 0 0) via ILT 0x00008549; method identity unproven so address-derived name
 ?rva006A56A0@Rva006A56A0@@QAEXHHH@Z,0x006A56A0,Retail call target at RVA 0x006A56A0 returns with ret 0x0C after three stack arguments. Caller 0x006A5870 sets ECX and pushes three stack arguments. EAX is unused.

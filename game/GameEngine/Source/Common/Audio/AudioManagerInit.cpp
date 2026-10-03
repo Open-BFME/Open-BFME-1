@@ -233,14 +233,18 @@ public:
 extern "C" __declspec(dllimport) void __stdcall AIL_set_file_callbacks(
 	void *open, void *close, void *read, void *write);
 
-// ?rva00696370OpenFile@@YGHPBDPAPAVFile@@@Z
-extern void __cdecl rva00696370OpenFile();
+// Retail callback bodies use stdcall: open ret 8 and read/seek ret 12.
+// Match their existing providers; no callback implementation is duplicated here.
+class File;
+struct Rva006963B0Receiver;
+struct Rva006963D0Receiver;
+extern int __stdcall rva00696370OpenFile(const char *path, File **out);
 // ?dup_006963a0@@YAXXZ
 extern void __cdecl dup_006963a0();
 // ?rva006963B0ForwardSlot5@@YGHPAURva006963B0Receiver@@HH@Z
-extern void __cdecl rva006963B0ForwardSlot5();
+extern int __stdcall rva006963B0ForwardSlot5(Rva006963B0Receiver *receiver, int first, int second);
 // ?rva006963D0ForwardSlot3@@YGHPAURva006963D0Receiver@@HH@Z
-extern void __cdecl rva006963D0ForwardSlot3();
+extern int __stdcall rva006963D0ForwardSlot3(Rva006963D0Receiver *receiver, int first, int second);
 
 void *operator new[](unsigned int);
 // Retail unwind state 2 releases the owner array through operator delete[].
