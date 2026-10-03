@@ -84,7 +84,7 @@ extern void __cdecl Rva009A9550(const void *, int, void *);
 extern void __cdecl Rva009A9660(unsigned char *, int, unsigned int);
 extern void __cdecl Rva009A9720(unsigned char *, int, unsigned int);
 extern void __cdecl Rva009A91D0(const void *, int, void *);
-extern void __cdecl Rva009A92D0(void);
+extern unsigned char *__cdecl Rva009A92D0(unsigned char *, int, unsigned int);
 extern void __cdecl Rva009A9370(void);
 struct Rva009B6BB0Context
 {
