@@ -1,5 +1,9 @@
-// ?move@Rva002BB170@@QAE_NPBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@@Z
-// partial score=0.98 date=2026-09-28
+// ?move@Rva002BB170@@QAE_NPBVThingTemplate@@PBVCoord3D@@MPAVPlayer@@@Z
+// partial score=0.3488 date=2026-10-02
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWMath
+// ?move@Rva002BB170@@QAE_NPBVThingTemplate@@PBVCoord3D@@MPAVPlayer@@@Z
+// Resumed bank: native Object/Coord3D; correct 1.5 scale; declared real filter slot.
+// Still unmatched: 1253/1261 bytes; 816 differing non-relocation bytes.
 // stlport
 #include <vector>
 #include <math.h>
@@ -9,8 +13,12 @@ typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-struct Coord3DBase { float x,y,z; };
-struct Coord3D : Coord3DBase { Coord3D &Sub(const Coord3DBase &); };
+#include "coord3d.h"
+inline Coord3D::Coord3D() {}
+inline Coord3D::Coord3D(const Coord3D &v) { x=v.x; y=v.y; z=v.z; }
+inline Coord3D::~Coord3D() {}
+inline Coord3D &Coord3D::operator=(const Coord3D &v) { x=v.x; y=v.y; z=v.z; return *this; }
+#define BFME_HAVE_COORD3D
 
 class Overridable
 {
@@ -63,35 +71,18 @@ private:
 	UnsignedInt m_kindof[5];
 };
 
-// Retail stores the template pointer at +0x04 and the status byte at +0x344.
-class Thing {public: bool isKindOf(KindOfType)const; void getUnitDirectionVector3D(Coord3D &)const;};
-class Object : public Thing
-{
-public:
-	const ThingTemplate *getTemplate() const
-	{
-		const ThingTemplate *tmpl = m_template;
-		if (tmpl != 0 && tmpl->m_nextOverride != 0)
-			tmpl = static_cast<const ThingTemplate *>(
-				tmpl->m_nextOverride->getFinalOverride());
-		return tmpl;
-	}
-
-	UnsignedInt getKindOfWord(Int word) const
-	{
-		return getTemplate()->getKindOfWord(word);
-	}
-
-	UnsignedInt getStatusBits() const
-	{
-		return *reinterpret_cast<const unsigned char *>(
-			reinterpret_cast<const char *>(this) + 0x344);
-	}
-
-private:
-	void *m_vptr;
-	const ThingTemplate *m_template;
-};
+#define THING_TU_MEMBERS \
+ bool isKindOf(KindOfType) const; \
+ void getUnitDirectionVector3D(Coord3D &) const; \
+ const ThingTemplate *getTemplate() const;
+#define OBJECT_TU_MEMBERS \
+ UnsignedInt getKindOfWord(Int word) const { return getTemplate()->getKindOfWord(word); }
+#include "GameLogic/Object/object.h"
+inline const ThingTemplate *Thing::getTemplate() const {
+ const ThingTemplate *tmpl=m_template;
+ if (tmpl && tmpl->m_nextOverride) tmpl=(const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+ return tmpl;
+}
 
 // Each result entry stores an object pointer and a distance as two dwords.
 struct SimpleObjectIteratorClump
@@ -133,6 +124,7 @@ public:
 	PartitionFilter() : m_base(0) { }
 	virtual ~PartitionFilter() { }
 	virtual Bool allow(Object *obj) = 0;
+ virtual Int getPlayerMask();
 
 private:
 	UnsignedInt m_base;
@@ -152,10 +144,7 @@ public:
 		m_desired = desired;
 	}
 
-	virtual Bool allow(Object *obj)
-	{
-		return false;
-	}
+	virtual Bool allow(Object *obj);
 
 	operator Int()
 	{
@@ -223,10 +212,10 @@ public: bool move(const ThingTemplate *,const Coord3D *,float,Player *);
 bool Rva002BB170::move(const ThingTemplate *what,const Coord3D *pos,float angle,Player *player) {
  Rva002BB170 *self=this;
  const BfmeGeometryInfo *shape=(const BfmeGeometryInfo *)((const char*)what+0x60);
- GeometryInfo gi(GEOMETRY_BOX,false,50.0f,shape->boxMajorRadius()*1.1f,shape->boxMinorRadius()*1.1f);
- float radius=gi.at010*1.1f;
+ GeometryInfo gi(GEOMETRY_BOX,false,50.0f,shape->boxMajorRadius()*1.5f,shape->boxMinorRadius()*1.5f);
+ float radius=gi.at010*1.5f;
  bool anyUnmovables=false;
- const BfmeWideResult &found=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)pos,gi.at014*1.1f,3,PartitionFilterWouldCollide(*pos,&gi,angle,true),0);
+ const BfmeWideResult &found=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)pos,gi.at014*1.5f,3,PartitionFilterWouldCollide(*pos,&gi,angle,true),0);
  while(true) {
   Object *them=found.next();
   if(!them)break;
