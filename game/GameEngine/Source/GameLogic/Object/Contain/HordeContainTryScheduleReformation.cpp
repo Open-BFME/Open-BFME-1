@@ -11,8 +11,6 @@ typedef unsigned int UnsignedInt;
 class BfmeHordeMember
 {
 public:
-	Bool bfmeBlocksFormationRefresh( void );
-
 	char m_head[ 0x31e ];
 	Bool m_refreshBlocked;
 };
@@ -20,14 +18,11 @@ public:
 class BfmeHordeOwnerInterface
 {
 public:
-	Bool bfmeBlocksFormationRefresh( void );
 };
 
 class BfmeHordeOwner
 {
 public:
-	UnsignedInt bfmeGetFormationRefreshValue( void );
-
 	char m_head[ 0x1f8 ];
 	BfmeHordeOwnerInterface *m_refreshInterface;
 	char m_gap0[ 0x204 - 0x1fc ];
@@ -66,7 +61,6 @@ class BfmeHordeContainOwner
 public:
 	void bfmeTryScheduleReformation( BfmeHordeMember *member,
 		BfmeHordeRefreshContext *context );
-	void bfmeRefreshFormation( void );
 
 	char m_head[ 8 ];
 	BfmeHordeOwner *m_owner;
@@ -78,9 +72,53 @@ public:
 	void rva0023fa50( void );
 };
 
+// The four callees this body reaches are all called in retail through the
+// five-byte ILT thunks at RVA 0x00044774, 0x00024357, 0x00023727 and
+// 0x0001798B, which the ledger owns as ?j_00044774@@YAXXZ,
+// ?j_00024357@@YAXXZ, ?j_00023727@@YAXXZ and ?j_0001798b@@YAXXZ (the
+// game/gen_small/thunks_*.cpp files).  The pins that gave the methods their
+// descriptive names sit on those same thunk addresses, so the calls are
+// respelled to the thunks themselves and dispatched through a member-pointer
+// union: the receiver still arrives in ecx and no argument moves, so every
+// call displacement stays where retail has it.
+extern void j_00044774();
+extern void j_00024357();
+extern void j_00023727();
+extern void j_0001798b();
+
+typedef Bool (BfmeHordeMember::*BlocksFormationRefreshCall)();
+typedef Bool (BfmeHordeOwnerInterface::*BlocksFormationRefreshCall2)();
+typedef UnsignedInt (BfmeHordeOwner::*GetFormationRefreshValueCall)();
+typedef void (BfmeHordeContainOwner::*RefreshFormationCall)();
+
 void BfmeHordeContainOwner::bfmeTryScheduleReformation(
 	BfmeHordeMember *member, BfmeHordeRefreshContext *context )
 {
+	union
+	{
+		void ( *raw )();
+		BlocksFormationRefreshCall member;
+	} memberBlocks;
+	union
+	{
+		void ( *raw )();
+		BlocksFormationRefreshCall2 member;
+	} interfaceBlocks;
+	union
+	{
+		void ( *raw )();
+		GetFormationRefreshValueCall member;
+	} refreshValue;
+	union
+	{
+		void ( *raw )();
+		RefreshFormationCall member;
+	} refreshFormation;
+	memberBlocks.raw = j_00044774;
+	interfaceBlocks.raw = j_00024357;
+	refreshValue.raw = j_00023727;
+	refreshFormation.raw = j_0001798b;
+
 	if ( m_refreshDelay != 0 )
 		--m_refreshDelay;
 
@@ -90,22 +128,22 @@ void BfmeHordeContainOwner::bfmeTryScheduleReformation(
 		return;
 	if ( m_pendingRefresh != 0 )
 		return;
-	if ( member->bfmeBlocksFormationRefresh() )
+	if ( ( member->*memberBlocks.member )() )
 		return;
 	if ( member->m_refreshBlocked )
 		return;
 	if ( m_owner->m_refreshInterface != 0
-		&& m_owner->m_refreshInterface->bfmeBlocksFormationRefresh() )
+		&& ( m_owner->m_refreshInterface->*interfaceBlocks.member )() )
 		return;
 
 	BfmeHordeGlobalData *globalData =
 		reinterpret_cast<BfmeHordeGlobalData *>(TheGameLogic);
 	BfmeHordeOwner *owner = m_owner;
 	UnsignedInt threshold = globalData->m_refreshThreshold;
-	UnsignedInt refreshValue = owner->bfmeGetFormationRefreshValue();
+	UnsignedInt value = ( owner->*refreshValue.member )();
 	threshold -= 20;
-	if ( refreshValue < threshold )
-		bfmeRefreshFormation();
+	if ( value < threshold )
+		( this->*refreshFormation.member )();
 }
 
 // Retail keeps the owner test after the ternary already proved it; the
