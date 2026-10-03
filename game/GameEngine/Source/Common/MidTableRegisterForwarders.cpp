@@ -17,10 +17,10 @@
 // the same in every member.  Each table therefore gets its own extern here, so
 // the gate's DIR32 consistency check sees one symbol per address.
 //
-// CrateCollideModuleData is proven; the remaining names are address-derived.
+// The module-data builders defined below by name are proven; the remaining names are address-derived.
 //
 // The appender is MultiIniFieldParse::add, declared in Common/INI.h.
-// The 101 address-derived forwarders keep the receiver spelled Gen00850920,
+// The remaining address-derived forwarders keep the receiver spelled Gen00850920,
 // because respelling it would rename and unmatch every one of them.
 
 #include "Common/INI.h"
@@ -105,7 +105,12 @@ BFME_TABLE_REGISTER( Rva00202F20, g_table_00202F20 )
 BFME_TABLE_REGISTER( Rva00203C00, g_table_00203C00 )
 BFME_TABLE_REGISTER( Rva00205040, g_table_00205040 )
 BFME_TABLE_REGISTER( Rva00205720, g_table_00205720 )
-BFME_TABLE_REGISTER( Rva002072E0, g_table_002072E0 )
+extern int g_table_002072E0;
+
+extern "C" void __cdecl SlaveWatcherBehaviorFieldParse( MultiIniFieldParse &parse )
+{
+	parse.add( reinterpret_cast<const FieldParse *>( &g_table_002072E0 ), 0 );
+}
 BFME_TABLE_REGISTER( Rva0020CDA0, g_table_0020CDA0 )
 BFME_TABLE_REGISTER( Rva0020D5A0, g_table_0020D5A0 )
 BFME_TABLE_REGISTER( Rva0020D960, g_table_0020D960 )
