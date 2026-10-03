@@ -22,8 +22,9 @@ public:
 
 Rva007EB810Diag *Rva007EB810Get(void);
 
-extern const char g_bfmeNameABD[];
-extern const char g_bfmeKindABD[];
+// registerService's two text arguments are retail .rdata literals, not
+// globals: the assert text at 0x0112BC58 and the naming.cpp source path at
+// 0x0112BC80.
 
 struct BfmeSlotABD
 {
@@ -63,7 +64,9 @@ int BfmeHostABD::bfmeAllocABD(const char *name, void *a, void *b, void *c)
 
 	selected:
 		if (idx == -1)
-			Rva007EB810Get()->registerService(g_bfmeNameABD, g_bfmeKindABD, 0x60);
+			Rva007EB810Get()->registerService(
+				"lookupIndex != NAMING_TOO_MANY_LOOKUPS",
+				"\\views\\feslbuild_main\\jabba\\fesl\\source\\naming.cpp", 0x60);
 
 		m_lookups[idx].m_bfme00ABD = b;
 		m_lookups[idx].m_bfme04ABD = c;
