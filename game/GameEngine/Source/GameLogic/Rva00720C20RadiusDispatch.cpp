@@ -53,7 +53,6 @@ struct Rva00720C20Record
 class Rva00720BB0Context
 {
 public:
-	void dispatchC20(int owner, void *request);
 	void scan(const Rva00720C20Coord3D &center, float radius, void *request);
 
 private:
@@ -62,6 +61,9 @@ private:
 	unsigned char m_pad15ec[0x1e1cc8 - 0x15ec];
 	int m_count;
 };
+
+extern "C" bool __fastcall Rva00720BB0LookupDispatch(
+	Rva00720BB0Context *self, void *, void *owner, void *request);
 
 void Rva00720BB0Context::scan(const Rva00720C20Coord3D &center,
 	float radius, void *request)
@@ -80,7 +82,16 @@ void Rva00720BB0Context::scan(const Rva00720C20Coord3D &center,
 				delta.set(position[-2], position[-1], position[0]);
 				delta.sub(&point);
 				if (delta.lengthSqr() < radius * radius)
-					dispatchC20(*(int *)((char *)position + 0x54), request);
+				{
+					// The matched callee uses ECX and two stack words; EDX is unused.
+					union
+					{
+						bool (Rva00720BB0Context::*member)(void *, void *);
+						bool (__fastcall *function)(Rva00720BB0Context *, void *, void *, void *);
+					} dispatchCall;
+					dispatchCall.function = Rva00720BB0LookupDispatch;
+					(this->*dispatchCall.member)((void *)*(int *)((char *)position + 0x54), request);
+				}
 			}
 			++index;
 			position = (float *)((char *)position + 0xa4);
