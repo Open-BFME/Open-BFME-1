@@ -93,7 +93,7 @@ class AsciiString : public StringBase<char>
 {
 };
 
-extern const AsciiString Rva01336E50EmptyString;
+extern AsciiString Rva01336E50EmptyString;
 // Retail VA 0x0112E8B0 is the IEEE binary32 +infinity bits 0x7F800000.
 // VC7.1 cannot spell this float with a literal. Its supported union-punning
 // behavior lets consumers load the float view of a statically initialized
