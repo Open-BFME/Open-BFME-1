@@ -11,10 +11,18 @@ public:
 
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
 
+// Each item is a DynamicAudioEventRTS; the TUs that define that class emit its vftable.
+extern "C" int __identifier("??_7DynamicAudioEventRTS@@6B@");
+
 struct Rva00606A80Item
 {
-	virtual void Slot();
+	void *m_vft;
 	AudioEventRTS m_audio;
+
+	Rva00606A80Item(const Rva00606A80Item &other)
+		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@")), m_audio(other.m_audio)
+	{
+	}
 };
 
 struct Rva00606A80Member
