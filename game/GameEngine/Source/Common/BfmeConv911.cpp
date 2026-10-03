@@ -1,4 +1,11 @@
+// cl: /DNDEBUG /MD /EHsc /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <stl/_config.h>
+#undef _STLP_DEFAULT_CONSTRUCTOR_BUG
+#include <vector>
+#include <windows.h>
 
 extern char g_bfme911Flag;
 extern int g_bfme911Val;
@@ -113,7 +120,79 @@ public:
 	virtual void bfmeSlot911F0();
 	virtual void bfmeDrop911E(int f);
 	void bfmePrep911E();
+	void *m_rva00000004;
+	void *m_rva00000008;
 };
+
+struct BfmeLockTEA
+{
+	char m_pad[0x18];
+	bool m_armed;
+};
+
+class Rva00886F60Class
+{
+public:
+	Rva00886F60Class(BfmeLockTEA *lock) : m_lock(lock)
+	{
+		if (lock && lock->m_armed)
+			EnterCriticalSection(reinterpret_cast<CRITICAL_SECTION *>(lock));
+	}
+	virtual ~Rva00886F60Class()
+	{
+		if (m_lock && m_lock->m_armed)
+			LeaveCriticalSection(reinterpret_cast<CRITICAL_SECTION *>(m_lock));
+	}
+
+private:
+	BfmeLockTEA *m_lock;
+};
+
+class Rva0090F050Resource
+{
+public:
+	virtual ~Rva0090F050Resource();
+	virtual void unusedVirtual();
+	virtual void __stdcall releaseResources();
+};
+
+struct Gen_t_0090ef40_m4pod
+{
+	int a[1];
+};
+namespace _STL
+{
+template <> struct __type_traits<Gen_t_0090ef40_m4pod> : __type_traits_aux<1> {};
+}
+
+class Gen_00C71060Target
+{
+public:
+	void bfmeForward(void);
+};
+
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+extern char g_012D6DE0;
+extern Gen_00C71060Target TheBfmeObject_00C71060;
+
+void BfmeSub911E::bfmePrep911E()
+{
+	if (m_rva00000008)
+	{
+		if (Rva0134FAA0)
+		{
+			Rva00886F60Class guard(reinterpret_cast<BfmeLockTEA *>(&g_012D6DE0));
+			std::vector<Gen_t_0090ef40_m4pod> &updates = *reinterpret_cast<std::vector<Gen_t_0090ef40_m4pod> *>(&TheBfmeObject_00C71060);
+			updates.push_back(*reinterpret_cast<Gen_t_0090ef40_m4pod *>(&m_rva00000008));
+		}
+		else
+		{
+			static_cast<Rva0090F050Resource *>(m_rva00000008)->releaseResources();
+		}
+		m_rva00000008 = 0;
+	}
+}
 
 class BfmeThing911E
 {
