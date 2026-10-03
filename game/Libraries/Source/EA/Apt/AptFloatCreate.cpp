@@ -48,7 +48,10 @@ extern Rva008D29A0 *g_rva008D29A0;
 // AptBooleanCreate uses this same canonical four-byte provider.
 extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-extern const char vtable01135D68[], vtable01136698[];
+// These vftables are emitted by Rva00899560AptValueCtor.cpp and
+// Rva008A4C00AptFloatValueCtor.cpp at VAs 0x01135D68 and 0x01136698.
+extern "C" const char __identifier("??_7Rva00899560Value@@6B@")[];
+extern "C" const char __identifier("??_7Rva008A4C00Value@@6B@")[];
 
 class AptValue
 {
@@ -83,10 +86,10 @@ AptValue * __cdecl Rva008A4EA0MakeFloat(float value)
 
 	if (object != 0)
 	{
-		*(void **)object = (void *)vtable01135D68;
+		*(void **)object = (void *)__identifier("??_7Rva00899560Value@@6B@");
 		object->m_flags = (object->m_flags & 0xf0008006) | 0x40008006;
 		g_rva01337810GcRoots->addPooled((Rva008D2950Node *)object);
-		*(void **)object = (void *)vtable01136698;
+		*(void **)object = (void *)__identifier("??_7Rva008A4C00Value@@6B@");
 		object->m_value = value;
 		return object;
 	}

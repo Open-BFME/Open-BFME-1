@@ -5,61 +5,25 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-//
-// The format call used to be spelled through a TU-local stand-in pair
-// (StringBaseNarrowZP/AsciiStringZP), which named retail's callee
-// ?format@StringBaseNarrowZP@@QAAXVAsciiStringZP@@ZZ -- a name retail has no
-// body for.  AsciiString::format (0x00888FF0, matched in
-// game/Libraries/Source/WWVegas/WWLib/AsciiStringNative.cpp) is the real
-// one, so it comes from ascii_string.h and is named through the real class.
-
-class StringBaseNarrowZP
-{
-protected:
-	StringBaseNarrowZP(void)
-	{
-		m_bfmeNarrowZP = 0;
-	}
-
-	StringBaseNarrowZP(const char *text);
-
-	StringBaseNarrowZP(const StringBaseNarrowZP &other);
-
-	~StringBaseNarrowZP(void);
-
-	char *m_bfmeNarrowZP;
-};
-
-class AsciiStringZP : public StringBaseNarrowZP
+// Preserve the ledger's return-type spelling while the real AsciiString
+// supplies the StringBase<char> copy and release calls.
+class AsciiStringZP
 {
 public:
-	AsciiStringZP(void)
-	{
-	}
+	AsciiString m_bfmeNarrowZP;
+};
 
-	AsciiStringZP(const char *text) : StringBaseNarrowZP(text)
-	{
-	}
-
-	AsciiStringZP(const AsciiStringZP &other) : StringBaseNarrowZP(other)
-	{
-	}
-
-	~AsciiStringZP(void)
-	{
-	}
-
-	const char *bfmeTextZP(void) const
-	{
-		return (m_bfmeNarrowZP != 0) ? m_bfmeNarrowZP + 8 : "";
-	}
+// ILT 0x0002D204 reaches the matched NetCommandMsg description at
+// 0x006747C0. The qualified call below invokes that base implementation.
+class NetCommandMsg
+{
+public:
+	virtual AsciiString getContentsAsAsciiString();
 };
 
 class BfmeOrderZP
 {
 public:
-	AsciiStringZP bfmeNameZP(void);
-
 	AsciiStringZP bfmeDescribeZP(void);
 
 	char m_bfmePadZP[0x1c];
@@ -70,8 +34,8 @@ AsciiStringZP BfmeOrderZP::bfmeDescribeZP(void)
 {
 	AsciiStringZP text;
 
-	((AsciiString &)text).format(AsciiString("%s, leavePlayer=%d"),
-			bfmeNameZP().bfmeTextZP(), m_bfmeLeavePlayerZP);
+	text.m_bfmeNarrowZP.format(AsciiString("%s, leavePlayer=%d"),
+			((NetCommandMsg *)this)->NetCommandMsg::getContentsAsAsciiString().str(), m_bfmeLeavePlayerZP);
 
 	return text;
 }
