@@ -85,7 +85,7 @@ void Image::parseImageCoords( INI* ini, void *instance, void *store, const void*
 	uvCoords.hi.y = (Real)bottom - 1.0f;
 	
 	// adjust the coords by texture size
-	const ICoord2D *textureSize = theImage->getTextureSize();
+	const ICoord2D *textureSize = &theImage->m_textureSize;
 	if( textureSize->x )
 	{
 		uvCoords.lo.x /= (Real)textureSize->x;

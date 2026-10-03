@@ -295,7 +295,7 @@ WindowMsgHandledType GadgetImageComboBoxSystem(GameWindow* window,unsigned msg,u
             ICoord2D size;
             const Image* image=*(const Image**)((char*)button+0x48);
             if(image) {
-                size=*image->getImageSize();
+                size=*(const ICoord2D*)((const char*)image+0x24);
                 float scale=(float)(int)mData2/size.y;
                 size.x=(int)(size.x*scale); size.y=(int)(size.y*scale);
             }
