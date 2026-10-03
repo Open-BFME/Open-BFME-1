@@ -584,28 +584,9 @@ const Coord3D *AudioEventRTS::getCurrentPosition( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?generateFilenamePrefix@AudioEventRTS@@ present-unmatched
-AsciiString AudioEventRTS::generateFilenamePrefix( AudioType audioTypeToPlay, Bool localized )
-{
-	AsciiString retStr;
-	retStr = TheAudio->getAudioSettings()->m_audioRoot;
-	retStr.concat("\\");
-	if (audioTypeToPlay == AT_Music) {
-		retStr.concat(TheAudio->getAudioSettings()->m_musicFolder);
-	} else if (audioTypeToPlay == AT_Streaming) {
-		retStr.concat(TheAudio->getAudioSettings()->m_streamingFolder);
-	} else {
-		retStr.concat(TheAudio->getAudioSettings()->m_soundsFolder);
-	}
-	retStr.concat("\\");
-
-	if (localized) {
-		retStr.concat(GetRegistryLanguage());
-		retStr.concat("\\");
-	}
-
-	return retStr;
-}
+// BFME generateFilenamePrefix is owned by
+// AudioEventRTSGenerateFilenamePrefix.cpp at RVA 0x000B33F0. It prepends
+// the localized language directory and handles BFME ambient-stream folders.
 
 //-------------------------------------------------------------------------------------------------
 // BFME generateFilenameExtension is owned by
