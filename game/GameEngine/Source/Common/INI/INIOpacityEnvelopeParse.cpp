@@ -5,6 +5,10 @@
 #include "PreRTS.h"
 #include "Common/INI.h"
 #include <math.h>
+// Retail FMUL operands reference VA01082C38 (binary32 0.005f).
+namespace Rva000B9EA0Arithmetic {
+    inline float ConvertDurationFromMsecsToFrames(float value) { return value * 0.005f; }
+}
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 class Rva000B9EA0Store
@@ -40,15 +44,15 @@ void Rva000B9EA0Parse::parse(INI *ini, void *instance, void *store, const void *
 		else if (strcmp(token, "SustainOpacity") == 0)
 			s->m_08 = INI::scanReal(ini->getNextToken());
 		else if (strcmp(token, "AttackTime") == 0)
-			s->m_14 = (int)ceil(ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_14 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "DecayTime") == 0)
-			s->m_18 = (int)ceil(ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_18 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "SustainTime") == 0)
-			s->m_1c = (int)ceil(ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_1c = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "ReleaseTime") == 0)
-			s->m_20 = (int)ceil(ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_20 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "InitialDelay") == 0)
-			s->m_10 = (int)ceil(ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_10 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "End") == 0)
 			break;
 	}
