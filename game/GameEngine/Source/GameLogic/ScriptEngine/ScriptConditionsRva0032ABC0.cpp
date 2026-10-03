@@ -217,8 +217,6 @@ class Parameter
 {
 public:
 	enum { LESS_THAN = 0, LESS_EQUAL, EQUAL, GREATER_EQUAL, GREATER, NOT_EQUAL };
-	Int getInt() const { return m_int; }
-	const AsciiString &getString() const { return m_string; }
 
 	unsigned char m_pad00[0x08];
 	Int m_int;
@@ -269,12 +267,12 @@ Bool ScriptConditions::rva0032ABC0(Condition *pCondition, Parameter *pPlayerParm
 	Parameter *pComparisonParm, Parameter *pCountParm, Parameter *pKindParm,
 	Parameter *pTriggerParm)
 {
-	AsciiString triggerName = pTriggerParm->getString();
-	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+	AsciiString triggerName = pTriggerParm->m_string;
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->m_string);
 	if (pTrig == 0)
 		return false;
 
-	Int kind = pKindParm->getInt();
+	Int kind = pKindParm->m_int;
 	UnsignedShort playerMask = TheScriptEngine->unidentified_0034DB40(pPlayerParm);
 	Int count = 0;
 	while (playerMask)
@@ -337,14 +335,14 @@ Bool ScriptConditions::rva0032ABC0(Condition *pCondition, Parameter *pPlayerParm
 	}
 
 	Bool comparison = false;
-	switch (pComparisonParm->getInt())
+	switch (pComparisonParm->m_int)
 	{
-		case Parameter::LESS_THAN:		comparison = (count < pCountParm->getInt()); break;
-		case Parameter::LESS_EQUAL:		comparison = (count <= pCountParm->getInt()); break;
-		case Parameter::EQUAL:			comparison = (count == pCountParm->getInt()); break;
-		case Parameter::GREATER_EQUAL:	comparison = (count >= pCountParm->getInt()); break;
-		case Parameter::GREATER:		comparison = (count > pCountParm->getInt()); break;
-		case Parameter::NOT_EQUAL:		comparison = (count != pCountParm->getInt()); break;
+		case Parameter::LESS_THAN:		comparison = (count < pCountParm->m_int); break;
+		case Parameter::LESS_EQUAL:		comparison = (count <= pCountParm->m_int); break;
+		case Parameter::EQUAL:			comparison = (count == pCountParm->m_int); break;
+		case Parameter::GREATER_EQUAL:	comparison = (count >= pCountParm->m_int); break;
+		case Parameter::GREATER:		comparison = (count > pCountParm->m_int); break;
+		case Parameter::NOT_EQUAL:		comparison = (count != pCountParm->m_int); break;
 	}
 	pCondition->setCustomData(TheScriptEngine->getFrameObjectCountChanged());
 	return comparison;
