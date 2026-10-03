@@ -21,11 +21,11 @@
  * byte.
  */
 
-extern "C" void *Rva007F0000( unsigned int size );
+extern void *Rva007F0000Alloc( int size );
 extern "C" void Rva007FD3F0( void *socket );
 extern "C" void Rva0080AD00( int a, int b, unsigned char *state );
 extern "C" void * __cdecl memset( void *dest, int c, unsigned int count );
-extern "C" void bfmeGo1019C( int value );
+extern void bfmeGo1019C( int value );
 extern "C" void __RTC_CheckEsp( void );
 
 struct Rva0080ADE0Object
@@ -75,7 +75,7 @@ extern "C" int __cdecl Rva0080ADE0( struct Rva0080ADE0Object *object, int releas
 	{
 		if ( object->m_backend == 0 )
 		{
-			object->m_backend = Rva007F0000( 0x88C0 );
+			object->m_backend = Rva007F0000Alloc( 0x88C0 );
 			if ( object->m_backend != 0 )
 			{
 				memset( object->m_backend, 0, 0x88C0 );
