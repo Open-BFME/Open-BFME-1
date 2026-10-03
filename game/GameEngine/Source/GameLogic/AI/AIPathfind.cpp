@@ -3398,35 +3398,8 @@ void PathfindLayer::allocateCellsForWallLayer(const IRegion2D *extent, ObjectID 
 /**
  * Checks to see if a broken bridge connects 2 zones.
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindLayerConnectsZones.cpp
-// ?connectsZones@PathfindLayer@@QAE_NPAVPathfindZoneManager@@ABVLocomotorSet@@HH@Z present-unmatched
-Bool PathfindLayer::connectsZones(PathfindZoneManager *zm, const LocomotorSet& locoSet,
-																	Int zone1, Int zone2)
-{
-	if (!m_destroyed) {
-		return false;
-	}
-	Bool found1 = false;
-	Bool found2 = false;
-	Int i, j;
-	for (i=0; i<m_width; i++) {
-		for (j=0; j<m_height; j++) {
-			PathfindCell *cell = &m_layerCells[i][j];
-			if (cell->getConnectLayer()==LAYER_GROUND) {
-					PathfindCell *groundCell = TheAI->pathfinder()->getCell(LAYER_GROUND, i+m_xOrigin, j+m_yOrigin);
-					DEBUG_ASSERTCRASH(groundCell, ("Should have cell."));
-					if (groundCell) {
-						zoneStorageType zone = zm->getEffectiveZone(locoSet.getValidSurfaces(),
-							true, groundCell->getZone());
-						zone = zm->getEffectiveTerrainZone(zone);
-						if (zone == zone1) found1 = true;
-						if (zone == zone2) found2 = true;
-					}
-			}
-		}
-	}
-	return found1 && found2;
-}
+// Retail connectsZones is provided by PathfindLayerConnectsZones.cpp (0x003FC5A0).
+// BFME uses 16-byte cells and accepts both ground and bridge connections.
 
 /**
  * Classifies the pathfind cells for the bridge layer.
