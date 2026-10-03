@@ -1735,3 +1735,15 @@ mapping and one independently verified emitter pin. Both bodies and all eight
 DIR32 references pass the strict gate. See
 `identity_evidence/00532280-selection-visibility.md`; no volatile or barrier
 is needed.
+
+### Native map visibility fixes key-address/store scheduling
+
+At `002435F0`, an external `lookup(const int&)` declaration left nine bytes
+wrong in a 737-byte caller: MSVC stored the first result before preparing the
+second key address. Native STLport `map<int,int>::operator[]` visibility
+produces the retail ordering with unchanged size and all 13 relocation slots.
+The genuine accessor at `00226FA0` independently matches 115 bytes and uses
+signed key comparisons. Use an address-qualified comparator when the generic
+map pin names a different retail copy; prove the native accessor ABI before
+adding its binding. Local key scopes and scheduling flags had not helped.
+See `identity_evidence/002435f0-native-map.md` for the boundary and binding proof.
