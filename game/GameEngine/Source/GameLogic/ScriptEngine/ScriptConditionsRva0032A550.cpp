@@ -42,9 +42,6 @@ int rva0032a490(Object *object, Rva0032A490Context *context);
 class Parameter
 {
 public:
-	Int getInt() const { return m_int; }
-	Real getReal() const { return m_real; }
-
 	unsigned char m_pad00[0x08];
 	Int m_int;
 	Real m_real;
@@ -99,10 +96,10 @@ Bool ScriptConditions::rva0032A550(Parameter *pPlayerParm, Parameter *pCompariso
 	Parameter *pCountParm, Parameter *pDistanceParm, Parameter *pUnitParm)
 {
 	UnsignedShort playerMask = TheScriptEngine->unidentified_0034DB40(pPlayerParm);
-	Int limit = pCountParm->getInt();
+	Int limit = pCountParm->m_int;
 	Rva00324540 context;
 
-	Real distance = pDistanceParm->getReal();
+	Real distance = pDistanceParm->m_real;
 	if (distance < BfmeZeroRange)
 		distance = BfmeZeroRange;
 	context.m_maxCount = limit;
@@ -131,7 +128,7 @@ Bool ScriptConditions::rva0032A550(Parameter *pPlayerParm, Parameter *pCompariso
 
 	Int count = context.m_count;
 	Bool result;
-	switch (pComparisonParm->getInt())
+	switch (pComparisonParm->m_int)
 	{
 	case 0: result = count < limit; break;
 	case 1: result = count <= limit; break;
