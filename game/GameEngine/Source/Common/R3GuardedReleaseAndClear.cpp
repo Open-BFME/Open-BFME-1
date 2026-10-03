@@ -28,24 +28,31 @@
 // CALLEE IDENTITY.  Two of the four callees are already named in the ledger and
 // are spelled as themselves: 0x00881EB0 is `operator delete` (reached by
 // writing `delete`), and _ArrayFree / _qr2_shutdown are extern "C" declarations
-// whose decorated names are the pins.  0x00881EF0 is spelled as an opaque
-// address-derived extern instead: the ledger calls it `operator delete[]`, but
-// MSVC 7.1 lowers `delete[]` on a destructor-less element type to `operator
-// delete`, so this file cannot reach that symbol through the language and will
-// not pretend the call site proves which of the two it is.  All the call site
-// proves is a __cdecl function of one pointer.
+// whose decorated names are the pins.  0x00881EF0 is retail's ARRAY form of the
+// delete operator, ?_V@YAXPAX@Z, and WWLib/mem_ops.cpp owns that body.  MSVC
+// 7.1 folds `delete []` onto the scalar ??3@YAXPAX@Z (the body at 0x00881EB0)
+// unless the array form is declared where it can see it, so it is declared
+// here and both sites that free a buffer at 0x00881EF0 now write `delete[]`,
+// the spelling every other matched TU with that callee uses.  All the call
+// site proves is a __cdecl function of one pointer.
 //
-// The indirect `call dword ptr [0x013593A0]` in Rva00382AA0 is a call through a
-// function-pointer variable at a fixed address.  That is a DIR32 site, so
-// build.py copies the four bytes from retail: they are NOT evidence, and this
-// file makes no claim about what the slot holds.
+// The indirect `call dword ptr [0x013593A0]` in Rva00382AA0 is MSVCR71's
+// `fclose`: 0x013593A0 is that import's IAT slot (targets/game/reverse/
+// imports.csv) and the callee pops its one pointer argument with `ret 4`.
+// Retail's original TU linked the DLL CRT, so _DLL is defined before the CRT
+// headers to reproduce the dllimport (IAT-indirect) call, as StringBase.cpp
+// does for the same reason.
 //
 // IDENTITY IS NOT RECOVERED: class names are the RVA of the body, the owning
 // field is named for its offset, and the leading filler is not a claim that
 // anything else lives there.
 
-extern void (__cdecl *Gen013593A0)( void * );
-extern "C" void Gen00881EF0( void * );
+#define _DLL
+#include <stdio.h>
+#include <new>
+
+void operator delete[]( void *block );
+
 extern "C" void ArrayFree( void * );
 extern "C" void qr2_shutdown( void * );
 
@@ -64,7 +71,7 @@ void Rva00382AA0::release()
 {
 	if ( m_18 )
 	{
-		Gen013593A0( m_18 );
+		fclose( (FILE *)m_18 );
 		m_18 = 0;
 	}
 }
@@ -93,7 +100,7 @@ void Rva00728A30::release()
 {
 	if ( m_C0 )
 	{
-		Gen00881EF0( m_C0 );
+		delete[] m_C0;
 		m_C0 = 0;
 	}
 }
@@ -109,7 +116,7 @@ void Rva007E2E20( Rva007E2E20Owner *owner )
 {
 	if ( owner->m_00 )
 	{
-		Gen00881EF0( owner->m_00 );
+		delete[] owner->m_00;
 		owner->m_00 = 0;
 	}
 }
