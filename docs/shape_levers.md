@@ -1759,3 +1759,15 @@ and avoids a shared-header edit; this is a reconstruction choice, not evidence
 of an EA constructor identity. The same TU's BFME text-length slot must remain
 an inline member accessor: a free accessor drops a two-byte register move.
 See `identity_evidence/00796480-radio-draw.md`.
+
+### Visible selection helper also preserves vector cleanup storage
+
+The 609-byte remove-friend callback at `00514DA0` had an extra four-byte
+vector-begin reload at cleanup. Its actual, independently exact 511-byte
+`00513BF0` helper, visible with noinline in the original helper TU, removes
+that reload. Removing the bank's barrier then restores the early pointer-load
+order. Both bodies pass the strict gate with canonical string headers; no
+new pin or shared-header edit is needed. The canonical UnicodeString copy
+constructor uses the established explicit qualified StringBase construction
+spelling; placement-new transposes the EH saved-ESP store and ECX setup.
+See `identity_evidence/00514da0-friend-selection.md`.

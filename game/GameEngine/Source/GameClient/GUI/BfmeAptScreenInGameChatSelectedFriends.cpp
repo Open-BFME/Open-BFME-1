@@ -90,6 +90,7 @@ class __multiple_inheritance BfmeAptScreenInGameChat
 {
 public:
 	void OnBttnAddFriend(const char *name);
+	void _bfme_onBttnRemoveFriend(const char *name);
 	Int rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter );
 	Int _bfme_getInternetPlayerStatus( const UnicodeString &name );
 	Int rva00512890( Int profileID, UnicodeString &result );
@@ -191,6 +192,7 @@ extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 // and 2E0B9 to the dialog body at 0x00522D20.
 extern void j_00040584();
 extern void j_00028e25();
+extern void j_0002b878();
 extern void j_0002e0b9();
 
 struct FunctorSlot
@@ -315,6 +317,46 @@ void BfmeAptScreenInGameChat::OnBttnAddFriend( const char *name )
 			Rva004C6370 ))j_0002e0b9 )(
 			2, title, message, Rva004C5C30(
 				FunctorSlot( j_00028e25 ),
+				FunctorSlot( j_00040584 ) ) );
+	}
+}
+
+// @?_bfme_onBttnRemoveFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x00514DA0
+void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
+{
+	(void)name;
+
+	if( g_Rva005127A0InGameChat == 0 )
+		return;
+
+	std::vector<Int> selected;
+	Int count = g_Rva005127A0InGameChat->rva00513BF0(
+		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
+	Int *ids = selected.begin();
+
+	if( count > 0 )
+	{
+		UnicodeString title = TheGameText->fetch( "APT:RemoveFirendTitle", 0 );
+		UnicodeString message;
+
+		if( count == 1 )
+		{
+			UnicodeString fmt =
+				TheGameText->fetch( "APT:RemovieFriendMessage", 0 );
+			Int id = ids[ 0 ];
+			UnicodeString buddy;
+			g_Rva005127A0InGameChat->rva00512890( id, buddy );
+			message.format( fmt, buddy.str() );
+		}
+		else
+		{
+			message = ( TheGameText->fetch( "APT:RemovieFriendMessageMulti", 0 ) );
+		}
+
+		( (void( __cdecl * )( int, const UnicodeString &, const UnicodeString &,
+			Rva004C6370 ))j_0002e0b9 )(
+			2, title, message, Rva004C5C30(
+				FunctorSlot( j_0002b878 ),
 				FunctorSlot( j_00040584 ) ) );
 	}
 }
