@@ -34,8 +34,6 @@ public:
 	void set(const StringBase<T> &other);
 };
 
-extern const char Rva006A16B0Empty[];
-
 class AsciiString : private StringBase<char>
 {
 public:
@@ -48,7 +46,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 };
 

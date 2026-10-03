@@ -63,8 +63,6 @@ static inline void Gen006D0280AssignTexture(
 	destination = texture.m_texture;
 }
 
-extern const char Rva006A16B0Empty[];
-
 class Gen006D0280Owner
 {
 public:
@@ -95,7 +93,7 @@ void Gen006D0280Owner::updateTexture(AsciiString textureName)
 		if (name->m_data)
 			text = name->m_data + 8;
 		else
-			text = Rva006A16B0Empty;
+			text = "";
 
 		Gen006D0280AssignTexture(
 			m_texture.m_texture,

@@ -10,7 +10,6 @@ typedef unsigned short WideChar;
 typedef unsigned int size_t;
 
 extern "C" size_t __cdecl strlen( const char *s );
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> class StringBase
@@ -57,7 +56,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 };
 

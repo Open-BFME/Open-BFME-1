@@ -17,8 +17,6 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
 	WideChar *, const WideChar *, unsigned int);
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> struct BfmeStringData
@@ -83,7 +81,7 @@ public:
 	const char *str(void) const
 	{
 		return m_data ? (const char *)m_data + 8
-			: Rva006A16B0Empty;
+			: "";
 	}
 
 	Int getLength(void) const

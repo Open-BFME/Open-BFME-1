@@ -28,7 +28,6 @@ extern "C" char * __cdecl ghttpGetHeaders(int request);
 typedef GHTTPBool (__cdecl *GHTTPCompletedCallback)(int, GHTTPResult, char *, __int64, void *);
 extern "C" int __cdecl ghttpGetA(const char *, int, GHTTPCompletedCallback, void *);
 GHTTPBool __cdecl configCallback(int request, GHTTPResult result, char *buffer, __int64 bufferLen, void *param);
-extern const char Rva006A16B0Empty[];
 struct Rva0062F130Header {
     int refs;
     unsigned short length, capacity;
@@ -38,7 +37,7 @@ static __forceinline int compareContentLength(const AsciiString &key)
 {
     Rva0062F130Header *keyData = *(Rva0062F130Header * const *)&key;
     int keyLen = keyData ? keyData->length : 0;
-    const char *keyText = keyData ? keyData->text : Rva006A16B0Empty;
+    const char *keyText = keyData ? keyData->text : "";
     int count = keyLen < 14 ? keyLen : 14;
     int comparison = memcmp(keyText, "Content-Length", count);
     if (comparison != 0)

@@ -75,8 +75,6 @@ class Rva0068D3E0Arr
 public:
 	Rva0068D3E0Slot *at(Int index);
 };
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 class StringBaseWideAP
@@ -221,7 +219,7 @@ inline const char *Rva00688CD0AsciiText(const AsciiString &text)
 {
 	const void *data = *(void *const *)&text;
 	return data != 0 ? (const char *)((const unsigned char *)data + 8)
-		: Rva006A16B0Empty;
+		: "";
 }
 
 void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
