@@ -3,10 +3,18 @@
 
 class BfmeFourSlotSource;
 
-class BfmeFourSlotEntry
+class Object;
+
+// BFME's matched Weapon overload at 0x001E8930 has a trailing int slot.
+class Weapon
 {
 public:
-	bool bfmeAccepts(BfmeFourSlotSource *source, int value, int mode);
+	bool isWithinAttackRange(const Object *source, const Object *target,
+		int extra) const;
+};
+
+class BfmeFourSlotEntry
+{
 };
 
 class BfmeFourSlotTable
@@ -52,7 +60,9 @@ bool BfmeFourSlotOwner::bfmeAnyAccepts(int value)
 		BfmeFourSlotEntry *entry = source->bfmeTable()->bfmeGet(index);
 		if (entry != 0 &&
 			(m_flags->m_enabled & (1 << index)) != 0 &&
-			entry->bfmeAccepts(m_source, value, 0))
+			reinterpret_cast<Weapon *>(entry)->isWithinAttackRange(
+				reinterpret_cast<const Object *>(m_source),
+				reinterpret_cast<const Object *>(value), 0))
 		{
 			return true;
 		}

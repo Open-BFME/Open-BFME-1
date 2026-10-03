@@ -44,6 +44,17 @@ public:
 	int m_bfmeIndexAH;
 };
 
+class BfmeABP;
+
+class BfmeHostBP
+{
+public:
+	void bfmeSweepBP();
+
+	unsigned char m_bfmeHeadBP[0xc];
+	BfmeABP *m_bfmeABP;
+};
+
 class BfmeOwnerAH
 {
 public:
@@ -73,7 +84,7 @@ void BfmeOwnerAH::bfmeClearAH()
 	while (node != 0);
 
 	if (m_bfmeFlagAH != 0)
-		bfmeFinishAH();
+		((BfmeHostBP *)this)->bfmeSweepBP();
 
 	BfmeNodeAH *p = m_bfmeListsAH[index];
 
