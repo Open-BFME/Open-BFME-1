@@ -9,7 +9,7 @@
 // and each arm of the size test carries its own epilogue.
 
 void __cdecl operator delete(void *block);			// retail 0x00881EB0
-inline void bfmeRelease(void *block, unsigned int bytes);
+static inline void bfmeRelease(void *block, unsigned int bytes);
 
 class Rva000BB5D0Ref;
 class ThingRefB;
@@ -32,7 +32,7 @@ void __cdecl __destroy_aux(ThingRefB *first, ThingRefB *last,
 	const __false_type &tag);
 }
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+static inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
 		::operator delete(block);

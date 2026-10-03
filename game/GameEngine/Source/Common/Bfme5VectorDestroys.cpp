@@ -14,7 +14,7 @@
 // pointer span and multiplied straight back: five for the thirty-two byte
 // elements, four for the sixteen byte ones.
 
-inline void bfmeRelease(void *block, unsigned int bytes);
+static inline void bfmeRelease(void *block, unsigned int bytes);
 
 namespace _STL
 {
@@ -27,7 +27,7 @@ class __node_alloc
 };
 }
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+static inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
 		::operator delete(block);
