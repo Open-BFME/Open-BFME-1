@@ -37,9 +37,9 @@ class GameWindow
 {
 public:
 	GameWindow();
-	virtual ~GameWindow();
 
 protected:
+	virtual ~GameWindow();
 	Gen0078D1C0 *m_embeddedPointer;
 	char m_unreconstructed[ 0x210 ];
 };
