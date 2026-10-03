@@ -1,6 +1,7 @@
 // Open-BFME5: clean C++ conversion of the four-entry CDC cache destructor.
+// cl: /O1
 
-extern void (__stdcall *g_destroy)(void *allocation);
+extern "C" __declspec(dllimport) int __stdcall DeleteDC(void *allocation);
 
 class CDCCache
 {
@@ -16,6 +17,6 @@ CDCCache::~CDCCache()
 	for (int index = 0; index < 4; ++index)
 	{
 		if (m_allocations[index] != 0)
-			g_destroy(m_allocations[index]);
+			DeleteDC(m_allocations[index]);
 	}
 }
