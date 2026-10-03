@@ -1,17 +1,8 @@
 // ?update@AutoHealBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.9951 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=1.0 date=2026-10-02
+// AutoHeal update and player scan; identity_evidence/001eede0-private-argument-order.md.
+// cl: /Igame/GameEngine/Source/GameLogic/Object /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// BANK 0x001EEDE0 AutoHealBehavior::update (1216 B): this is the WHOLE
-// AutoHealBehavior_playerScan.cpp TU with update appended (update must share the
-// TU with the static rva001EE670EligibleForAutoHeal to get its EAX/EBX private
-// convention).  checkForAutoHeal 0x001EED80 and the predicate 0x001EE670 still
-// probe EXACT under these declarations.  update: 1216/1216 bytes, 6 non-reloc
-// bytes differ at +0x3B0 (retail lea eax,[esp+0x64] then mov ebx,esi; ours the
-// reverse).  Landing prerequisites (probe masks relocations): pin
-// ?iterateObjectsInRange@PartitionManager@@QAE?AUBfmeWideResult@@PBUCoord3D@@MW4DistanceCalculationType@@PAVPartitionFilter@@W4IterOrderType@@@Z
-// at 0x009F2960 (ledger placeholder bfmeForwardWideC; ZH twin call evidence),
-// and confirm the filter vtable names against dir32_addresses.csv.
 // BFME's player-wide auto-heal scan uses a 24-byte kind-of mask and three
 // policy bytes at scan-data offsets 0x20..0x22, unlike the Zero Hour callback.
 // Keep the predicate in this translation unit: VC7.1 passes its scan data in
@@ -66,11 +57,6 @@ public:
 	UnsignedInt m_bits[6];
 };
 
-class Thing
-{
-public:
-	Bool isAnyKindOf(const BitFlags<69> &mask) const;
-};
 
 class AIUpdateInterface
 {
@@ -100,30 +86,20 @@ public:
 	virtual UnsignedInt getLastDamageTimestamp() const = 0;
 };
 
-class Object : public Thing
-{
-public:
-	Player *getControllingPlayer() const;
-	Bool isEffectivelyDead() const { return (reinterpret_cast<const unsigned char *>(&m_status)[0] & 1) != 0; }
-	Bool isOffMap() const { return (reinterpret_cast<const unsigned char *>(&m_status)[0] & 8) != 0; }
-	BodyModuleInterface *getBodyModule() const { return m_body; }
-	AIUpdateInterface *getAIUpdateInterface() const { return m_ai; }
-
-	Bool getAttributeModifierBonus(int kind, Real *out) const;
-	const Coord3D *getPosition() const { return &m_position; }
-	const GeometryInfo &getGeometryInfo() const { return m_geometryInfo; }
-
-private:
-	unsigned char m_pad000[0x38];
-	Coord3D m_position;
-	unsigned char m_pad044[0xac - 0x44];
-	GeometryInfo m_geometryInfo;
-	unsigned char m_padAC[0x200 - 0xac - sizeof(GeometryInfo)];
-	BodyModuleInterface *m_body;
-	AIUpdateInterface *m_ai;
-	unsigned char m_pad208[0x344 - 0x208];
-	UnsignedInt m_status;
-};
+#define BFME_HAVE_COORD3D
+#define THING_TU_MEMBERS Bool isAnyKindOf(const BitFlags<69> &mask) const;
+#define OBJECT_TU_MEMBERS \
+ Player *getControllingPlayer() const; \
+ Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; } \
+ Bool isOffMap() const { return (m_privateStatus & 8) != 0; } \
+ BodyModuleInterface *getBodyModule() const { return m_body; } \
+ AIUpdateInterface *getAIUpdateInterface() const { return m_ai; } \
+ Bool getAttributeModifierBonus(int kind, Real *out) const; \
+ const Coord3D *getPosition() const { return &m_cachedPos; } \
+ const GeometryInfo &getGeometryInfo() const { return *(const GeometryInfo *)m_geometryInfo; }
+#include "object.h"
+#undef OBJECT_TU_MEMBERS
+#undef THING_TU_MEMBERS
 
 class GameLogic
 {
@@ -182,9 +158,9 @@ struct AutoHealPlayerScanHelper
 	Bool m_skipSelfForHealing;
 };
 
-// ?rva001EE670EligibleForAutoHeal@@YA_NPBUAutoHealPlayerScanHelper@@PAVObject@@@Z
+// ?rva001EE670EligibleForAutoHeal@@YA_NPAVObject@@PBUAutoHealPlayerScanHelper@@@Z
 static Bool rva001EE670EligibleForAutoHeal(
-	const AutoHealPlayerScanHelper *helper, Object *testObj)
+	Object *testObj, const AutoHealPlayerScanHelper *helper)
 {
 	if (helper->m_skipSelfForHealing && testObj == helper->m_theHealer)
 		return false;
@@ -236,7 +212,7 @@ static Bool rva001EE670EligibleForAutoHeal(
 int checkForAutoHeal(Object *testObj, void *userData)
 {
 	AutoHealPlayerScanHelper *helper = (AutoHealPlayerScanHelper *)userData;
-	if (rva001EE670EligibleForAutoHeal(helper, testObj))
+	if (rva001EE670EligibleForAutoHeal(testObj, helper))
 		helper->m_objectList->push_back(testObj);
 	return 1;
 }
@@ -419,13 +395,12 @@ enum IterOrderType
 	ITER_FASTEST = 0
 };
 
-class PartitionManager
+class BfmeWideForwardC
 {
 public:
-	BfmeWideResult iterateObjectsInRange(const Coord3D *pos, Real maxDist,
-		DistanceCalculationType dc, PartitionFilter *filters, IterOrderType order);
+	BfmeWideResult bfmeForwardWideC(Int pos, Real maxDist, Int dc, Int filters, Int order);
 };
-extern PartitionManager *ThePartitionManager;
+extern BfmeWideForwardC *ThePartitionManager;
 
 enum UpdateSleepTime
 {
@@ -563,9 +538,9 @@ UpdateSleepTime AutoHealBehavior::update()
 	}
 	else
 	{
-		BfmeWideResult iter = ThePartitionManager->iterateObjectsInRange(
-			obj->getPosition(), (Real)d->m_radius, FROM_CENTER_2D,
-			PartitionFilterRelationship(obj, PartitionFilterRelationship::ALLOW_ALLIES).link(
+		BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC(
+			(Int)obj->getPosition(), (Real)d->m_radius, FROM_CENTER_2D,
+			(Int)PartitionFilterRelationship(obj, PartitionFilterRelationship::ALLOW_ALLIES).link(
 				Rva0025ED50RootFilter().link(&PartitionFilterSameMapStatus(obj))),
 			ITER_FASTEST);
 
@@ -587,7 +562,7 @@ UpdateSleepTime AutoHealBehavior::update()
 			helper.m_bfmeFlag20 = getAutoHealBehaviorModuleData()->m_bfmeFlag85;
 			helper.m_bfmeFlag21 = getAutoHealBehaviorModuleData()->m_bfmeFlag86;
 			helper.m_skipSelfForHealing = getAutoHealBehaviorModuleData()->m_bfmeFlagA0;
-			if (!rva001EE670EligibleForAutoHeal(&helper, obj))
+			if (!rva001EE670EligibleForAutoHeal(obj, &helper))
 				continue;
 
 			pulseHealObject(obj);
