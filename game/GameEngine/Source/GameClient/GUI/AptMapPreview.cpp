@@ -5,6 +5,19 @@
 
 #include "ascii_string.h"
 #include "basetype.h"
+// Retail comparison 0x0005FFA0 calls ILT 0x0000A8D5 -> 0x0005DC70,
+// a call-free length-bounded character loop. Specialize the canonical member
+// locally as non-throwing before UnicodeString's inline forwarding definition:
+// an unknown exception path would keep both conditional temporaries in EH.
+template <> int StringBase<unsigned short>::compare(
+    const StringBase<unsigned short> &) const throw();
+#include "unicode_string.h"
+// The real 0x0005EEA0 destructor forwards to releaseBuffer at 0x008881D0.
+// Preserve that visible forwarding body for the full-expression temporaries.
+inline UnicodeString::~UnicodeString()
+{
+    ((StringBase<unsigned short> *)this)->~StringBase();
+}
 
 extern "C" int strcmp(const char *left, const char *right);
 #pragma intrinsic(strcmp)
@@ -21,6 +34,7 @@ class MapMetaData
 public:
 	char m_unmodelled00[0x50];
 	AsciiString m_mapName;
+	UnicodeString getDescription();
 };
 void _bfme_closeAptScreen(const AsciiString &screenName);
 
@@ -38,6 +52,7 @@ public:
 	GameWindow *winGetChild( void );
 	GameWindow *winGetNext( void );
 	int winHide( Bool hide );
+	int winEnable(Bool enable);
 };
 
 void bfmeGoENK( BfmeObjENK *window, char enable );
@@ -258,3 +273,28 @@ void AptMapPreview::rva005216B0(MapMetaData *metadata)
 	bfmeSetMapPicture(metadata);
 }
 
+int GadgetListBoxGetNumEntries(GameWindow *window);
+UnicodeString GadgetListBoxGetText(GameWindow *window, int column, int row);
+void GadgetListBoxReset(GameWindow *window);
+int GadgetListBoxAddEntryText(GameWindow *window, UnicodeString text,
+	int color, int index, int flags, bool addColorToImage);
+
+// Caller rva005216B0 passes its unchanged AptMapPreview receiver. Keep the
+// method's address: the body witnesses behavior, not an original EA spelling.
+// Retail 0x00521000 ends in RET 4 at 0x0052110E before INT3 padding.
+void AptMapPreview::rva00521000(MapMetaData *metadata)
+{
+	if (!m_mapInfo)
+		return;
+
+	bool same = metadata && GadgetListBoxGetNumEntries(m_mapInfo) > 0 &&
+		metadata->getDescription().compare(GadgetListBoxGetText(m_mapInfo, 0, 0)) == 0;
+	if (!same) {
+		GadgetListBoxReset(m_mapInfo);
+		if (metadata) {
+			GadgetListBoxAddEntryText(m_mapInfo, metadata->getDescription(),
+				-1, -1, -1, true);
+			m_mapInfo->winEnable(true);
+		}
+	}
+}
