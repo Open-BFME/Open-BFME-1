@@ -16,6 +16,7 @@ struct StagingRoomMapNode
 
 struct StagingRoomMapIterator
 {
+	StagingRoomMapIterator() { }
 	StagingRoomMapIterator( const StagingRoomMapIterator &other );
 	StagingRoomMapNode *m_node;
 };
@@ -25,6 +26,25 @@ struct StagingRoomMap
 	StagingRoomMapNode *m_header;
 	StagingRoomMapIterator find( const int &key );
 };
+
+// RVA 0x0001990C is retail's five-byte ILT thunk into the map find (body
+// 0x008D7DE0); `?j_0001990c@@YAXXZ` is the only definition of that address in
+// the ledger. Naming the thunk keeps the reference resolvable at link time and
+// reproduces retail's call rel32. Same spelling as the linked sibling
+// game/GameEngine/Source/Common/RTS/PlayerAdjustLivingWorldBounty.cpp.
+extern void j_0001990c();
+
+static __forceinline void bfmeFind( StagingRoomMap *map, StagingRoomMapIterator *dest, const int &key )
+{
+	union
+	{
+		void (*raw)();
+		void (StagingRoomMap::*member)( StagingRoomMapIterator *, const int & );
+	} call;
+
+	call.raw = j_0001990c;
+	(map->*call.member)( dest, key );
+}
 
 #define GAMESPY_SLOT( n ) virtual void gamespySlot##n() = 0
 class GameSpyInfo
@@ -62,7 +82,8 @@ GameSpyStagingRoom *BfmeAptScreenOnlineCustomMatch::findSelectedStagingRoom()
 	StagingRoomMap *rooms = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getStagingRoomList();
 	if( !rooms )
 		return 0;
-	StagingRoomMapIterator it = rooms->find( m_selectedID );
+	StagingRoomMapIterator it;
+	bfmeFind( rooms, &it, m_selectedID );
 	if( it.m_node == rooms->m_header )
 		return 0;
 	return it.m_node->m_room;

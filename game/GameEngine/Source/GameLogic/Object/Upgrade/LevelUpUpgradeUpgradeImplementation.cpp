@@ -11,6 +11,24 @@ public:
 	int m_bfmeBaseZD;
 };
 
+// RVA 0x0004A12E is retail's five-byte ILT thunk into the body at 0x005B2A10
+// that this call reaches; `?j_0004a12e@@YAXXZ` is the only definition of that
+// address in the ledger. Naming the thunk keeps the reference resolvable at
+// link time and reproduces retail's call rel32.
+extern void j_0004a12e();
+
+static __forceinline void bfmeDoZD(BfmeCZD *c, int value, int flag, int spare)
+{
+	union
+	{
+		void (*raw)();
+		void (BfmeCZD::*member)(int, int, int);
+	} call;
+
+	call.raw = j_0004a12e;
+	(c->*call.member)(value, flag, spare);
+}
+
 class BfmeBZD
 {
 public:
@@ -43,5 +61,5 @@ void LevelUpUpgrade::upgradeImplementation()
 	const int &value = first < second ? first : second;
 
 	if (value >= 1)
-		c->bfmeDoZD(value, 1, 0);
+		bfmeDoZD(c, value, 1, 0);
 }

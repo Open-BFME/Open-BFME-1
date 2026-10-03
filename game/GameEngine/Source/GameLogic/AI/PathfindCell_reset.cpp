@@ -2,11 +2,29 @@
 
 extern void *g_rva012F1094;
 
+// Retail reaches PathfindCellInfo::releaseToPool through the five-byte ILT
+// thunk at RVA 0x000203D8 (`?j_000203d8@@YAXXZ`, body 0x007F6E10), which is the
+// only definition of that address in the ledger. Naming the thunk keeps the
+// reference resolvable at link time and reproduces retail's call rel32.
+extern void j_000203d8();
+
 class PathfindCellInfo
 {
 public:
 	void releaseToPool(void *pool);
 };
+
+static __forceinline void bfmeReleaseToPool(PathfindCellInfo *info, void *pool)
+{
+	union
+	{
+		void (*raw)();
+		void (PathfindCellInfo::*member)(void *);
+	} call;
+
+	call.raw = j_000203d8;
+	(info->*call.member)(pool);
+}
 
 class PathfindCell
 {
@@ -25,7 +43,7 @@ void PathfindCell::reset()
 {
 	PathfindCellInfo *cellInfoRecord = m_info;
 	if (cellInfoRecord != 0) {
-		cellInfoRecord->releaseToPool(&g_rva012F1094);
+		bfmeReleaseToPool(cellInfoRecord, &g_rva012F1094);
 		m_info = 0;
 	}
 

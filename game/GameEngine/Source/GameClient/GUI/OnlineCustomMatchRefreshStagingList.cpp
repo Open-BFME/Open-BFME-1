@@ -42,6 +42,24 @@ private:
 	unsigned long m_lastRefresh;
 };
 
+// RVA 0x00022999 is retail's five-byte ILT thunk into applyStagingRoomRefresh
+// (body 0x0093FC00); `?j_00022999@@YAXXZ` is the only definition of that
+// address in the ledger. Naming the thunk keeps the reference resolvable at
+// link time and reproduces retail's call rel32.
+extern void j_00022999();
+
+static __forceinline void bfmeApplyStagingRoomRefresh(BfmeAptScreenOnlineCustomMatch *screen)
+{
+	union
+	{
+		void (*raw)();
+		void (BfmeAptScreenOnlineCustomMatch::*member)();
+	} call;
+
+	call.raw = j_00022999;
+	(screen->*call.member)();
+}
+
 void BfmeAptScreenOnlineCustomMatch::refreshStagingRoomList( bool force )
 {
 	if( !force )
@@ -55,7 +73,7 @@ void BfmeAptScreenOnlineCustomMatch::refreshStagingRoomList( bool force )
 	}
 	if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->hasStagingRoomListChanged() )
 	{
-		applyStagingRoomRefresh();
+		bfmeApplyStagingRoomRefresh(this);
 		m_lastRefresh = timeGetTime();
 	}
 }
