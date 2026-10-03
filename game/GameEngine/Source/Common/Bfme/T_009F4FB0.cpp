@@ -14,16 +14,23 @@ struct BfmeNode912C
 	BfmeNode912C *m_next;
 };
 
-class Gen_dtor_009f2600
-{
-public:
-	void cleanup();
-};
+// The cleanup call at 0x009F4FB0+0x04 goes to 0x009F4ED0, which the ledger
+// defines as the gen-dump body ?d_009f4ed0@@YAXXZ in
+// game/gen_asm/d_009f2f00.asm.  It is a free body, not a member of the state
+// class, so it is called as one; `this` already sits in ecx and the call takes
+// no argument, exactly as the member call did.
+extern void d_009f4ed0();
 
-class BfmeThing912C
+// The loop call at 0x009F4FB0+0x73 goes to 0x009F4D80, which the ledger
+// defines as Gen009F5040::linkNode_009F4D80 in
+// game/Libraries/Source/partitionmanager/Gen009F5040Handle.cpp; the node
+// argument is spelled with that function's own node type.
+struct Gen009F5040Node;
+
+class Gen009F5040
 {
 public:
-	void bfmeDo912C(BfmeNode912C *node);
+	void linkNode_009F4D80(Gen009F5040Node *node);
 };
 
 extern float g_bfmeDefaultBU;
@@ -44,7 +51,7 @@ public:
 void T_009f4fb0::m(Rva009F5970StateInit *value)
 {
 	T_009f4fb0 *self = this;
-	((Gen_dtor_009f2600 *)self)->cleanup();
+	d_009f4ed0();
 
 	self->m_values = *value;
 
@@ -56,7 +63,8 @@ void T_009f4fb0::m(Rva009F5970StateInit *value)
 
 	BfmeNode912C *node = self->m_head;
 	while (node != 0) {
-		((BfmeThing912C *)self)->bfmeDo912C(node);
+		((Gen009F5040 *)self)->linkNode_009F4D80(
+			reinterpret_cast<Gen009F5040Node *>(node));
 		node = node->m_next;
 	}
 }
