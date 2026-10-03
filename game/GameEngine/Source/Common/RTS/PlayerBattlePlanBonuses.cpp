@@ -191,7 +191,8 @@ public:
 	virtual void removeIdleWorker(Object *object, Int playerIndex);
 };
 
-void localApplyBattlePlanBonusesToObject(Object *object, void *bonuses);
+// Retail 0x000D5A40 returns int in EAX; these callers ignore that result.
+int localApplyBattlePlanBonusesToObject(Object *object, void *bonuses);
 
 
 struct KindOfMaskType

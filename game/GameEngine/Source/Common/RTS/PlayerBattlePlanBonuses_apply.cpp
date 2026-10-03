@@ -109,7 +109,7 @@ public:
 extern GameLogic *TheGameLogic;
 
 // ?localApplyBattlePlanBonusesToObject@@YAHPAVObject@@PAX@Z
-static int localApplyBattlePlanBonusesToObject(Object *obj, void *userData)
+int localApplyBattlePlanBonusesToObject(Object *obj, void *userData)
 {
 	const BattlePlanBonuses *bonus = (const BattlePlanBonuses *)userData;
 	Object *objectToValidate = obj;
