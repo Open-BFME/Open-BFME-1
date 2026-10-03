@@ -501,24 +501,10 @@ void MaterialCollectorClass::Add_Vertex_Material(VertexMaterialClass * vmat)
 	LastMaterial = vmat;
 }
 
-// ?Get_Shader_Count@MaterialCollectorClass@@QAEHXZ present-unmatched
-int MaterialCollectorClass::Get_Shader_Count(void)
-{
-	return Shaders.Count();
-}
+// The verified retail count getters live in MaterialCollectorCounts.cpp:
+// RVA0092F500/+0x10, RVA0092F510/+0x28 and RVA0092F520/+0x40.
+// Keep those providers as the sole definitions.
 
-// ?Get_Vertex_Material_Count@MaterialCollectorClass@@QAEHXZ present-unmatched
-int MaterialCollectorClass::Get_Vertex_Material_Count(void)
-{
-	return VertexMaterials.Count();
-}
-
-// ?Get_Texture_Count@MaterialCollectorClass@@QAEHXZ present-unmatched
-int MaterialCollectorClass::Get_Texture_Count(void)
-{
-	return Textures.Count();
-}
-	
 ShaderClass MaterialCollectorClass::Peek_Shader(int i)
 {
 	return Shaders[i];
