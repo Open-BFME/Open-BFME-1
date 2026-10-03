@@ -37,10 +37,12 @@
  * Functions:                                                              * 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+// BFME dx8wrapper.h first: the Zero Hour dynamesh.h includes its own copy, which
+// defines Clamp_Color inline; retail has it out of line (0x0090F310).
+#include "dx8wrapper.h"
 #include "dynamesh.h"
 #include "dx8vertexbuffer.h"
 #include "dx8indexbuffer.h"
-#include "dx8wrapper.h"
 #include "sortingrenderer.h"
 #include "rinfo.h"
 #include "camera.h"

@@ -1085,65 +1085,8 @@ not_changed:
 	return col;
 }
 
-// ----------------------------------------------------------------------------
-//
-// Clamp color vertor to [0...1] range
-//
-// ----------------------------------------------------------------------------
-
-WWINLINE void DX8Wrapper::Clamp_Color(Vector4& color)
-{
-	if (!CPUDetectClass::Has_CMOV_Instruction()) {
-		for (int i=0;i<4;++i) {
-			float f=(color[i]<0.0f) ? 0.0f : color[i];
-			color[i]=(f>1.0f) ? 1.0f : f;
-		}
-		return;
-	}
-
-	__asm
-	{
-		mov	esi,dword ptr color
-
-		mov edx,0x3f800000
-
-		mov edi,dword ptr[esi]
-		mov ebx,edi
-		sar edi,31
-		not edi			// mask is now zero if negative value
-		and edi,ebx
-		cmp edi,edx		// if no less than 1.0 set to 1.0
-		cmovnb edi,edx
-		mov dword ptr[esi],edi
-
-		mov edi,dword ptr[esi+4]
-		mov ebx,edi
-		sar edi,31
-		not edi			// mask is now zero if negative value
-		and edi,ebx
-		cmp edi,edx		// if no less than 1.0 set to 1.0
-		cmovnb edi,edx
-		mov dword ptr[esi+4],edi
-
-		mov edi,dword ptr[esi+8]
-		mov ebx,edi
-		sar edi,31
-		not edi			// mask is now zero if negative value
-		and edi,ebx
-		cmp edi,edx		// if no less than 1.0 set to 1.0
-		cmovnb edi,edx
-		mov dword ptr[esi+8],edi
-
-		mov edi,dword ptr[esi+12]
-		mov ebx,edi
-		sar edi,31
-		not edi			// mask is now zero if negative value
-		and edi,ebx
-		cmp edi,edx		// if no less than 1.0 set to 1.0
-		cmovnb edi,edx
-		mov dword ptr[esi+12],edi
-	}
-}
+// Clamp_Color is out of line in retail (DX8WrapperClampColor.cpp, 0x0090F310);
+// declared above, so no TU emits an inline copy.
 
 // ----------------------------------------------------------------------------
 //
