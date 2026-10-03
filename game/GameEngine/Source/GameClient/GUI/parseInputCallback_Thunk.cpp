@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the parseInputCallback window-file parser to clean C++.
 //
 // The third argument is a line from a window file. Scan to the opening quote,
@@ -22,19 +22,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim);
 extern "C" unsigned int __cdecl strlen(const char *s);
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set(const char *s, Int len);					///< ILT thunk at 0x00887D20
-
-	const char *str(void) const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) : "";
-	}
-
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 enum NameKeyType { };
@@ -70,7 +58,7 @@ Bool parseInputCallback(char *token, WinInstanceData *instData, char *line, void
 	++p;
 
 	char *fieldText = strtok(p, "\"");
-	TheParsedCallbackName.set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
+	TheParsedCallbackName.StringBase<char>::set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
 	Int key = TheNameKeyGeneratorShim->nameToKey(TheParsedCallbackName.str());
 	TheParsedCallbackResult = TheWindowLookupShim->unidentified_00025CD4(key, 1);
