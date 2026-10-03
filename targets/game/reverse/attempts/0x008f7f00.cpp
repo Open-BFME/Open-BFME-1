@@ -1,5 +1,5 @@
 // ?doRectFill@PartitionData@@AAE_NMMMMM@Z
-// partial score=0.88 date=2026-09-24
+// partial score=0.894 date=2026-10-03
 // cl: /O2 /FAsc /Fabuild/doRectFill.cod
 
 typedef float Real;
@@ -84,7 +84,7 @@ bool PartitionData::doRectFill(Real centerX, Real centerY, Real halfsizeX,
 	Real tl_x = centerX - halfsizeX * c - halfsizeY * s;
 	Int nextCellStamp;
 	nextCellStamp = *(volatile Int *)0x0133F408;
-	Real tl_y = centerY + halfsizeY * c - halfsizeX * s;
+	centerY += halfsizeY * c - halfsizeX * s;
 	CellAndObjectIntersection *coi = m_coiArray;
 	++nextCellStamp;
 	*(volatile Int *)0x0133F408 = nextCellStamp;
@@ -94,7 +94,7 @@ bool PartitionData::doRectFill(Real centerX, Real centerY, Real halfsizeX,
 		do
 		{
 			Real x = tl_x;
-			Real y = tl_y;
+			Real y = centerY;
 			if (numStepsX > 0)
 			{
 				Int columns = numStepsX;
@@ -124,7 +124,7 @@ bool PartitionData::doRectFill(Real centerX, Real centerY, Real halfsizeX,
 			}
 			--rows;
 			tl_x += ydx;
-			tl_y += ydy;
+			centerY += ydy;
 		} while (rows != 0);
 	}
 	return true;
