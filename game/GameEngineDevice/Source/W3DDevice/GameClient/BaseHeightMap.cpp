@@ -1248,27 +1248,7 @@ RenderObjClass *	 BaseHeightMapRenderObjClass::Clone(void) const
 	return NULL;
 }
 
-//=============================================================================
-// BaseHeightMapRenderObjClass::loadRoadsAndBridges
-//=============================================================================
-/** Loads the roads from the map objects. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_loadRoadsAndBridges.cpp
-// ?loadRoadsAndBridges@BaseHeightMapRenderObjClass@@QAEXPAVW3DTerrainLogic@@_N@Z present-unmatched
-void BaseHeightMapRenderObjClass::loadRoadsAndBridges(W3DTerrainLogic *pTerrainLogic, Bool saveGame)
-{	
-	if (DX8Wrapper::_Get_D3D_Device8() && (DX8Wrapper::_Get_D3D_Device8()->TestCooperativeLevel()) != D3D_OK)
-		return;	//device not ready to render anything
-
-#ifdef DO_ROADS
-	if (m_roadBuffer) {
-		m_roadBuffer->loadRoads();
-	}
-#endif
-	if (m_bridgeBuffer) {
-		m_bridgeBuffer->loadBridges(pTerrainLogic, saveGame);
-	}
-}
+// Exact BFME loader is provided by BaseHeightMap_loadRoadsAndBridges.cpp.
 
 // ============================================================================
 // BaseHeightMapRenderObjClass::worldBuilderUpdateBridgeTowers
