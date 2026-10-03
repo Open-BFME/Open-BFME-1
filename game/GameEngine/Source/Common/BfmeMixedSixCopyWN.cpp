@@ -1,41 +1,24 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: the mixed six-member copy constructor at retail 0x004E9FD0,
 // 148 bytes: a word, three narrow strings, a word and two wide strings.
 
-class AsciiStringWN
+#include "ascii_string.h"
+#include "unicode_string.h"
+
+// The canonical header declares these forwarders out of line. Keep their
+// retail inline bodies visible here so calls go directly to StringBase at
+// 0x00888400 (copy) and 0x008881D0 (release), as they do for AsciiString.
+inline UnicodeString::UnicodeString(const UnicodeString &other)
 {
-public:
-	AsciiStringWN(const AsciiStringWN &other);
-	~AsciiStringWN(void);
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&other);
+}
 
-private:
-	char *m_bfmeData;
-};
-
-class UnicodeStringWN
+inline UnicodeString::~UnicodeString()
 {
-public:
-	UnicodeStringWN(const UnicodeStringWN &other);
-	~UnicodeStringWN(void);
-
-private:
-	unsigned short *m_bfmeData;
-};
-
-class BfmeStrWN : private AsciiStringWN
-{
-public:
-	BfmeStrWN(const AsciiStringWN &other) : AsciiStringWN(other) {}
-	~BfmeStrWN(void) {}
-};
-
-class BfmeWideWN : private UnicodeStringWN
-{
-public:
-	BfmeWideWN(const UnicodeStringWN &other) : UnicodeStringWN(other) {}
-	~BfmeWideWN(void) {}
-};
+	((StringBase<unsigned short> *)this)->releaseBuffer();
+}
 
 class Gen_004E9FD0
 {
@@ -43,12 +26,12 @@ public:
 	Gen_004E9FD0(const Gen_004E9FD0 &other);
 
 	int m_bfmeKind;						// +0x00
-	BfmeStrWN m_bfmeFirst;					// +0x04
-	BfmeStrWN m_bfmeSecond;					// +0x08
-	BfmeStrWN m_bfmeThird;					// +0x0C
+	AsciiString m_bfmeFirst;					// +0x04
+	AsciiString m_bfmeSecond;					// +0x08
+	AsciiString m_bfmeThird;					// +0x0C
 	int m_bfmeCount;					// +0x10
-	BfmeWideWN m_bfmeText;					// +0x14
-	BfmeWideWN m_bfmeHint;					// +0x18
+	UnicodeString m_bfmeText;					// +0x14
+	UnicodeString m_bfmeHint;					// +0x18
 };
 
 // ??0Gen_004E9FD0@@QAE@ABV0@@Z
