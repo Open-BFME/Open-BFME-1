@@ -2,7 +2,15 @@
 // virtual stop notification, a letterbox hide, a guarded singleton callback,
 // and a final virtual state notification.
 
-void HideControlBar(bool immediate);
+// Retail calls HideControlBar(bool) through the ILT thunk at 0x00002847.
+extern void j_00002847();
+typedef void (__cdecl *HideControlBarFn)(bool immediate);
+static __forceinline void HideControlBar(bool immediate)
+{
+	union { void (*raw)(); HideControlBarFn call; } hide;
+	hide.raw = j_00002847;
+	hide.call(immediate);
+}
 
 // Retail 0x012F706C is LivingWorldManager *TheLivingWorldManager.  The
 // shutdown call uses ILT 0x0001D6C4 to the matched body at 0x00617DB0.

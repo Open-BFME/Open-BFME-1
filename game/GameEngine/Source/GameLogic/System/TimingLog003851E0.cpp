@@ -107,7 +107,15 @@ static inline TimingView *timingView() { return (TimingView *)TheTacticalView; }
 
 void Rva009EBC00(int value);
 void rva00889690Set();
-void HideControlBar(bool immediate);
+// Retail calls HideControlBar(bool) through the ILT thunk at 0x00002847.
+extern void j_00002847();
+typedef void (__cdecl *HideControlBarFn)(bool immediate);
+static __forceinline void HideControlBar(bool immediate)
+{
+	union { void (*raw)(); HideControlBarFn call; } hide;
+	hide.raw = j_00002847;
+	hide.call(immediate);
+}
 
 extern "C"
 {
