@@ -16918,5 +16918,25 @@
   "after_sha256": "e7d42da1c634da786122578dbc7237f85aac28f2a6e60a59069dc776c741c468",
   "evidence": "targets/game/reverse/identity_evidence/000cfa40-gen000f9c60-destructor.md",
   "reason": "Native copied and zeroed integer at +0 and UnicodeString14/AsciiString18 prove this 28-byte record has the existing opaque Gen_000F9C60 identity; actual AudioEventRTS is separately the 0x70-byte virtual object with 162-byte destructor."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002c2a60.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate_rva002c2a60.cpp",
+  "old_name": "AIUpdateInterface",
+  "new_name": "Rva002BCE00Path",
+  "before_sha256": "bbfe0355ec2db7405c612934c8d12702863a4f6d3d6ae67d14bfef4a18a07f31",
+  "after_sha256": "cc316e614d65869b67b0e88295a648edb7b11a9554727c07a1c9330b645b002b",
+  "evidence": "targets/game/reverse/identity_evidence/002c2a60-bank-types.md",
+  "reason": "False token pairing: removed bank base-interface declaration is not renamed into a path. Native supplies the accumulated three-pointer vector address to the independently matched path-action ABI; existing Rva002BCE00Path is the canonical two-pointer path view."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002c2a60.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate_rva002c2a60.cpp",
+  "old_name": "RunTarget",
+  "new_name": "Rva002BCE00StateAction",
+  "before_sha256": "bbfe0355ec2db7405c612934c8d12702863a4f6d3d6ae67d14bfef4a18a07f31",
+  "after_sha256": "cc316e614d65869b67b0e88295a648edb7b11a9554727c07a1c9330b645b002b",
+  "evidence": "targets/game/reverse/identity_evidence/002c2a60-bank-types.md",
+  "reason": "RunTarget is the bank generic member-pointer receiver without an identity witness. Native direct call ILT0x2299E reaches independently matched Rva002BCE00StateAction::run at0x002BCE00 with ECX=this and four stack arguments; canonical matched receiver replaces the fabricated union-call contract."
  }
 ]
