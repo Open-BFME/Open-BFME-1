@@ -5,9 +5,10 @@
 
 typedef unsigned char Bool;
 
-class TextureClass;
-
-class BFMEWaterTrackTexture
+// The ref-count leaf the destructor calls is the shared TextureClass/TextureBaseClass
+// release body at 0x009EB7A0 (matched in WW3D2/TextureBaseReleaseRefThunk.cpp); the
+// handle's texture pointer is a plain TextureClass*, so spell the call with that class.
+class TextureClass
 {
 public:
 	void Release_Ref();
@@ -20,7 +21,7 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 	}
 };
 
@@ -33,7 +34,7 @@ static inline void BFMEAssignTerrainTrackTexture(
 	if (texture.m_texture)
 		++*(unsigned short *)((char *)texture.m_texture + 4);
 	if (destination)
-		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+		destination->Release_Ref();
 	destination = texture.m_texture;
 }
 
