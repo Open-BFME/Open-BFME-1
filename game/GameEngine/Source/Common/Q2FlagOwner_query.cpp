@@ -18,6 +18,8 @@
 typedef int Int;
 typedef bool Bool;
 
+extern void j_0000286a(void);
+
 class AudioEventRTS;
 class Q2FlagOwner;
 
@@ -39,5 +41,12 @@ public:
 // ?query@Q2FlagOwner@@QAE_NH@Z
 Bool Q2FlagOwner::query(Int index)
 {
-	return ((const ThingTemplate *)this)->bfmeLookupSound(index) != 0;
+	union LookupSoundPointer
+	{
+		void (*thunk)(void);
+		const AudioEventRTS *(ThingTemplate::*method)(Int) const;
+	};
+	LookupSoundPointer lookup;
+	lookup.thunk = j_0000286a;
+	return (((const ThingTemplate *)this)->*(lookup.method))(index) != 0;
 }

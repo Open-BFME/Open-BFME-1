@@ -13,10 +13,10 @@ class PlayerList;
 extern PlayerList *ThePlayerList;
 static inline BfmeGlobDSV *thePlayersView() { return (BfmeGlobDSV *)ThePlayerList; }
 
+extern void j_000313a9();
+
 class BfmeSubDSV
 {
-public:
-	void bfmeOneDSV();
 };
 
 struct BfmeThingDSV
@@ -28,6 +28,6 @@ struct BfmeThingDSV
 
 void BfmeThingDSV::bfmeGoDSV()
 {
-	m_bfmeSub->bfmeOneDSV();
+	((void (__fastcall *)(BfmeSubDSV *))j_000313a9)(m_bfmeSub);
 	thePlayersView()->bfmeRunDSV();
 }

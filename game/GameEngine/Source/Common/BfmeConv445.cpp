@@ -1,7 +1,7 @@
+extern void j_00034211();
+
 class BfmeSubBEB
 {
-public:
-	bool bfmeAskBEB();
 };
 
 class BfmeThingBEB
@@ -17,5 +17,5 @@ bool BfmeThingBEB::bfmeGoBEB()
 	BfmeSubBEB *sub = m_bfmeSub;
 	if (sub == 0)
 		return false;
-	return sub->bfmeAskBEB();
+	return ((bool (__fastcall *)(BfmeSubBEB *))j_00034211)(sub);
 }

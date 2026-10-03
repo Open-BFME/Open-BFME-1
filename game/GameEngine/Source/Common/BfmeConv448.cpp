@@ -21,10 +21,10 @@ public:
 	virtual void bfmeSendBEC(int what);
 };
 
+extern void j_0000f498(void);
+
 class BfmeSubBEC
 {
-public:
-	BfmeGotBEC *bfmeFindBEC();
 };
 
 class BfmeThingBEC
@@ -37,5 +37,5 @@ public:
 
 void BfmeThingBEC::bfmeGoBEC()
 {
-	m_bfmeSub->bfmeFindBEC()->bfmeSendBEC(1);
+	((BfmeGotBEC *(__fastcall *)(BfmeSubBEC *))j_0000f498)(m_bfmeSub)->bfmeSendBEC(1);
 }

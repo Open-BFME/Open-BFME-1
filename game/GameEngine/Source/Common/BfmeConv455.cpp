@@ -1,7 +1,8 @@
+extern void j_000286a0();
+
 class BfmeThingBFG
 {
 public:
-	void bfmeTailBFG();
 	void bfmeGoBFG();
 	unsigned char m_bfmeHead[0x18];
 	int m_bfmeWidth;
@@ -12,5 +13,5 @@ void BfmeThingBFG::bfmeGoBFG()
 {
 	m_bfmeWidth = 0x280;
 	m_bfmeHeight = 0x1e0;
-	bfmeTailBFG();
+	((void (__fastcall *)(BfmeThingBFG *))j_000286a0)(this);
 }

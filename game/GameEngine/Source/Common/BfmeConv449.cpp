@@ -1,3 +1,5 @@
+extern void j_00012c6f(void);
+
 class BfmeThingBED
 {
 public:
@@ -32,12 +34,11 @@ public:
 	virtual void bfmeSpareBEDS();
 	virtual void bfmeSpareBEDT();
 	virtual void bfmeSetBED(int what);
-	void bfmeTailBED();
 	void bfmeGoBED();
 };
 
 void BfmeThingBED::bfmeGoBED()
 {
 	bfmeSetBED(2);
-	bfmeTailBED();
+	((void (__fastcall *)(BfmeThingBED *))j_00012c6f)(this);
 }
