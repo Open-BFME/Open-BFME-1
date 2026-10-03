@@ -1658,3 +1658,15 @@ wrapper's size and stack balance look exact. Evidence:
 The 0x003A04A0 correction is banked at 1.000 after strict verification; its
 production promotion awaits resolution of unrelated alias-guard failures in
 the session worktree. No new production row or pin change was committed.
+## Empty iterator tags can need the real range helper visible
+
+`collate<char>::do_transform` at `0x00844400` (87 bytes) differed only in
+one empty-tag stack displacement: `[esp+0x20]` instead of retail's hidden
+result-pointer home at `[esp+0x18]`. Native STLport `<locale>` plus the real
+`basic_string<char>::_M_range_initialize<const char*>` definition, kept
+`__declspec(noinline)`, recovers all bytes. That helper independently matches
+97 bytes at `0x002D8760`; its existing ILT pin suffices. The native string-base
+destructor is also defined noinline and independently matches 39 bytes at
+`0x000A41C0`, preserving the parent unwind lifetime. Default-allocator,
+iterator-category-call and named-tag variants of the opaque bank retained the
+one-byte residue. See `identity_evidence/00844400-collate-native-transform.md`.
