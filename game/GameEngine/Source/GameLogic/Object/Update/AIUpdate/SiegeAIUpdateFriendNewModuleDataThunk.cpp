@@ -31,7 +31,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SiegeAIUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the address 0x0043D9FB (RVA 0x0003d9fb) as the field-parse
+// proc; that address is the 5-byte ILT thunk ?j_0003d9fb@@YAXXZ, which routes
+// to the matched forwarder at 0x002C5300. The proc is taken by address only, so
+// the thunk's no-argument cdecl declaration is the honest view; the
+// cast restores the MultiIniFieldParse ABI.
+void j_0003d9fb();
 
 class SiegeAIUpdate
 {
@@ -44,6 +49,7 @@ ModuleData *SiegeAIUpdate::friend_newModuleData(INI *ini)
 {
 	SiegeAIUpdateModuleData *data = new SiegeAIUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SiegeAIUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0003d9fb));
 	return (ModuleData *)data;
 }

@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl TooltipUpgradeFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the address 0x004297E9 (RVA 0x000297e9) as the field-parse
+// proc; that address is the 5-byte ILT thunk ?j_000297e9@@YAXXZ, which routes
+// to the matched forwarder at 0x002D93B0. The proc is taken by address only, so
+// the thunk's no-argument cdecl declaration is the honest view; the
+// cast restores the MultiIniFieldParse ABI.
+void j_000297e9();
 
 class TooltipUpgrade
 {
@@ -43,6 +48,7 @@ ModuleData *TooltipUpgrade::friend_newModuleData(INI *ini)
 {
 	TooltipUpgradeModuleData *data = new TooltipUpgradeModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &TooltipUpgradeFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_000297e9));
 	return (ModuleData *)data;
 }

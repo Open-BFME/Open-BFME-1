@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ShareExperienceBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the address 0x0043A657 (RVA 0x0003a657) as the field-parse
+// proc; that address is the 5-byte ILT thunk ?j_0003a657@@YAXXZ, which routes
+// to the matched forwarder at 0x00205720. The proc is taken by address only, so
+// the thunk's no-argument cdecl declaration is the honest view; the
+// cast restores the MultiIniFieldParse ABI.
+void j_0003a657();
 
 class ShareExperienceBehavior
 {
@@ -43,6 +48,7 @@ ModuleData *ShareExperienceBehavior::friend_newModuleData(INI *ini)
 {
 	ShareExperienceBehaviorModuleData *data = new ShareExperienceBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ShareExperienceBehaviorFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0003a657));
 	return (ModuleData *)data;
 }

@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SpecialEnemySenseUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the address 0x00434252 (RVA 0x00034252) as the field-parse
+// proc; that address is the 5-byte ILT thunk ?j_00034252@@YAXXZ, which routes
+// to the matched forwarder at 0x00123D70. The proc is taken by address only, so
+// the thunk's no-argument cdecl declaration is the honest view; the
+// cast restores the MultiIniFieldParse ABI.
+void j_00034252();
 
 class SpecialEnemySenseUpdate
 {
@@ -43,6 +48,7 @@ ModuleData *SpecialEnemySenseUpdate::friend_newModuleData(INI *ini)
 {
 	SpecialEnemySenseUpdateModuleData *data = new SpecialEnemySenseUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SpecialEnemySenseUpdateFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00034252));
 	return (ModuleData *)data;
 }

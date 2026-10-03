@@ -30,7 +30,12 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl RunOffMapBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the address 0x00412F80 (RVA 0x00012F80) as the field-parse
+// proc; that address is the 5-byte ILT thunk ?j_00012f80@@YAXXZ, which routes
+// to the matched forwarder ?Rva00205040@@YAXPAVGen00850920@@@Z at 0x00205040.
+// The proc is taken by address only, so the thunk's no-argument cdecl
+// declaration is the honest view; the cast restores the MultiIniFieldParse ABI.
+void j_00012f80();
 
 class RunOffMapBehavior
 {
@@ -43,6 +48,7 @@ ModuleData *RunOffMapBehavior::friend_newModuleData(INI *ini)
 {
 	RunOffMapBehaviorModuleData *data = new RunOffMapBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RunOffMapBehaviorFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00012f80));
 	return (ModuleData *)data;
 }
