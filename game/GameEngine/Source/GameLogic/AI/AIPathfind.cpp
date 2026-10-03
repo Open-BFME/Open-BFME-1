@@ -14932,16 +14932,8 @@ void Pathfinder::crc( Xfer *xfer )
 }  // end crc
 
 //-----------------------------------------------------------------------------
-// ?xfer@Pathfinder@@UAEXPAVXfer@@@Z present-unmatched
-void Pathfinder::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-}  // end xfer
+// Retail xfer is provided by PathfinderXferE38F0.cpp (0x003E38F0).
+// BFME transfers CRC state and snapshot fields, beyond the ZH version-only body.
 
 //-----------------------------------------------------------------------------
 // ?loadPostProcess@Pathfinder@@UAEXXZ present-unmatched
