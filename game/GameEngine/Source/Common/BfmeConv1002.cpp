@@ -18,7 +18,6 @@ class BfmeA1002
 {
 public:
 	void bfmeGo1002A(BfmeArg1002 *a);
-	BfmeX1002 *bfmeFind1002(BfmeArg1002 *a);
 
 	char m_bfmePad[0x1b4];
 	int m_bfmeA;
@@ -34,6 +33,20 @@ struct BfmeArg1002
 	int m_bfmeId;
 };
 
+// Retail's call at +0x35 of ?bfmeGo1002A@BfmeA1002@@QAEXPAUBfmeArg1002@@@Z
+// lands on the ILT thunk ?j_0003f5da@@YAXXZ (0x0003F5DA), whose matched
+// five-byte body lives in game/gen_small/thunks_030.cpp.  That decorated
+// symbol is what the call must relocate against, so the reference is spelled
+// with that name; VC7.1 reserves __thiscall in a free-function-pointer
+// typedef, so the pointer-to-member cast idiom (as
+// GameEngineDevice/Source/W3DDevice/GameClient/RTS3DScene_Render_Thunk.cpp
+// uses for the same ?j_0002d961@@YAXXZ ILT) keeps the proven shape: ECX holds
+// the receiver and the single argument stays on the stack for the callee to
+// pop.
+extern void j_0003f5da();
+struct BfmeFindThunk1002 { BfmeX1002 *Call(BfmeArg1002 *arg); };
+typedef BfmeX1002 *(BfmeFindThunk1002::*BfmeFindCall1002)(BfmeArg1002 *arg);
+
 void BfmeA1002::bfmeGo1002A(BfmeArg1002 *a)
 {
 	int id = a->m_bfmeId;
@@ -48,7 +61,9 @@ void BfmeA1002::bfmeGo1002A(BfmeArg1002 *a)
 
 	m_bfmeB = 0;
 
-	BfmeX1002 *x = bfmeFind1002(a);
+	union { void (*asFunction)(); BfmeFindCall1002 asMember; } fnCast;
+	fnCast.asFunction = j_0003f5da;
+	BfmeX1002 *x = (reinterpret_cast<BfmeFindThunk1002 *>(this)->*fnCast.asMember)(a);
 
 	if (x)
 		m_bfmeC = x->m_bfmeSub->m_bfmeVal;
@@ -81,8 +96,15 @@ class BfmeB1002
 {
 public:
 	char bfmeGo1002B(BfmeHold1002 *a, int b);
-	char bfmeSend1002(BfmeHold1002 *a, int b);
 };
+
+// The second retail call, at +0x35 of
+// ?bfmeGo1002B@BfmeB1002@@QAEDPAUBfmeHold1002@@H@Z, lands on the ILT thunk
+// ?j_0000583a@@YAXXZ (0x0000583A, game/gen_small/thunks_002.cpp): the
+// receiver in ECX and the two arguments on the stack, popped by the callee.
+extern void j_0000583a();
+struct BfmeSendThunk1002 { char Call(BfmeHold1002 *arg, int value); };
+typedef char (BfmeSendThunk1002::*BfmeSendCall1002)(BfmeHold1002 *arg, int value);
 
 char BfmeB1002::bfmeGo1002B(BfmeHold1002 *a, int b)
 {
@@ -95,5 +117,7 @@ char BfmeB1002::bfmeGo1002B(BfmeHold1002 *a, int b)
 	if (p->m_bfmeFlags & 0x1000)
 		return 0;
 
-	return bfmeSend1002(a, b);
+	union { void (*asFunction)(); BfmeSendCall1002 asMember; } fnCast;
+	fnCast.asFunction = j_0000583a;
+	return (reinterpret_cast<BfmeSendThunk1002 *>(this)->*fnCast.asMember)(a, b);
 }

@@ -14,10 +14,24 @@ struct BfmeIterABA
 class BfmeListABA
 {
 public:
-	void bfmeRangeABA(BfmeIterABA *first, BfmeIterABA *last);
-
 	BfmeNodeABA *m_bfmeHeadABA;
 };
+
+// The list-range helper this progress query reaches is an ILT thunk in retail:
+// the call at +0x19 of the 0x00224440 body lands on ?j_0001c017@@YAXXZ
+// (0x0001C017), whose matched five-byte body lives in
+// game/gen_small/thunks_013.cpp.  That decorated symbol is what the call must
+// relocate against; VC7.1 reserves __thiscall in a free-function-pointer
+// typedef, so the pointer-to-member cast idiom (as BfmeConv1002.cpp uses for
+// the same ?j_0003f5da ILT) keeps the proven shape: ECX holds the list and
+// the two arguments stay on the stack for the callee to pop.
+extern void j_0001c017();
+struct BfmeRangeThunkABA
+{
+	void Call(BfmeIterABA *first, BfmeIterABA *last);
+};
+typedef void (BfmeRangeThunkABA::*BfmeRangeCallABA)(
+	BfmeIterABA *first, BfmeIterABA *last);
 
 struct Rva00367E30Logic
 {
@@ -48,7 +62,9 @@ int BfmeHostABA::bfmeProgressABA(BfmeIterABA last)
 	BfmeListABA *l = (BfmeListABA *)((char *)this + 0xa8);
 	BfmeIterABA first;
 
-	l->bfmeRangeABA(&first, &last);
+	union { void (*asFunction)(); BfmeRangeCallABA asMember; } fnCast;
+	fnCast.asFunction = j_0001c017;
+	(reinterpret_cast<BfmeRangeThunkABA *>(l)->*fnCast.asMember)(&first, &last);
 
 	if (first.m_bfmeNodeABA == l->m_bfmeHeadABA)
 		return 100;

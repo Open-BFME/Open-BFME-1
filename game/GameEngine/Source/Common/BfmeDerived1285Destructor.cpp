@@ -44,11 +44,21 @@ private:
 	BfmeOwnedWrapper1285 *m_owned;
 };
 
+// The child teardown this base destructor reaches is an ILT thunk in retail:
+// the call at +0x6C of the 0x008BEDC0 body lands on ?j_0089cc70@@YAXXZ
+// (0x0089CC70), whose matched five-byte body lives in
+// game/gen_small/thunks_037.cpp.  That decorated symbol is what the call must
+// relocate against; VC7.1 reserves __thiscall in a free-function-pointer
+// typedef, so the pointer-to-member cast idiom (as BfmeConv1002.cpp uses for
+// the same ?j_0003f5da ILT) keeps the proven shape: ECX holds the child, the
+// dtor takes no stack argument and its callee pops none.
+extern void j_0089cc70();
+struct BfmeChildDtorThunk1285 { void Call(); };
+typedef void (BfmeChildDtorThunk1285::*BfmeChildDtorCall1285)();
+
 class BfmeChildB
 {
 public:
-	~BfmeChildB();
-
 	void operator delete(void *storage, unsigned int size)
 	{
 		TheBfmeFree(storage, size);
@@ -64,7 +74,15 @@ public:
 	~BfmeBase1285()
 	{
 		m_vtable = &g_bfmeBase1285Vtable;
-		delete m_child;
+
+		union { void (*asFunction)(); BfmeChildDtorCall1285 asMember; } fnCast;
+		BfmeChildB *child = m_child;
+		if (child)
+		{
+			fnCast.asFunction = j_0089cc70;
+			(reinterpret_cast<BfmeChildDtorThunk1285 *>(child)->*fnCast.asMember)();
+			TheBfmeFree(child, 0x10);
+		}
 	}
 
 private:
