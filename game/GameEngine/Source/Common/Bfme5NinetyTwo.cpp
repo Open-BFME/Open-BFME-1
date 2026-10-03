@@ -1,5 +1,4 @@
-// Four more: two comparisons answered the other way round, the generator again
-// with its answer folded positive, and a global list lookup.
+// Point comparison, positive random remainder, and indexed global-list lookup.
 
 class BfmeVec2JE
 {
@@ -55,28 +54,4 @@ BfmeRecJD * __stdcall bfmeSlotAt(int index)
 	if (index >= 0 && index < (int)(g_bfmeEndJD - g_bfmeBeginJD))
 		return g_bfmeBeginJD + index;
 	return 0;
-}
-
-extern "C" int memcmp(const void *left, const void *right, unsigned int count);
-#pragma intrinsic(memcmp)
-
-class BfmeStrIF
-{
-public:
-	const char *m_bfmeBegin;					// +0x00
-	const char *m_bfmeEnd;						// +0x04
-};
-
-__forceinline int bfmeSameText(const BfmeStrIF *a, const BfmeStrIF *b)
-{
-	int count = a->m_bfmeEnd - a->m_bfmeBegin;
-	if (count == b->m_bfmeEnd - b->m_bfmeBegin && memcmp(a->m_bfmeBegin, b->m_bfmeBegin, count) == 0)
-		return 1;
-	return 0;
-}
-
-bool bfmeTextDiffers(const BfmeStrIF *a, const BfmeStrIF *b)
-{
-	unsigned char same = (unsigned char)bfmeSameText(a, b);
-	return same == 0;
 }
