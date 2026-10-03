@@ -89,8 +89,17 @@ public:
 class Rva000D6CF0Field
 {
 public:
-	void Rva000D6CF0(BfmeSeedTarget *target);
 };
+
+// Retail reaches the 0x000D6CF0 body through ILT 0x0003573D.
+extern void j_0003573d();
+class Route0003573D {};
+static __forceinline void callRva000D6CF0(void *self, BfmeSeedTarget *target)
+{
+	typedef void (Route0003573D::*Fn)(BfmeSeedTarget *);
+	union { void (*fn)(); Fn call; } route = { j_0003573d };
+	(((Route0003573D *)self)->*route.call)(target);
+}
 
 class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
 void Rva0010C3C0(MidVirtualSlot90Receiver *target, void *value);
@@ -131,8 +140,8 @@ void Rva00286C40Self::Rva00286C40(BfmeSeedTarget *target)
 	target->takeAt78((char *)m_field40 + 8);
 	target->takeAt78((char *)m_field40 + 0xc);
 	target->takeAt6C((char *)m_field40 + 0x10);
-	((Rva000D6CF0Field *)((char *)m_field40 + 0x14))->Rva000D6CF0(target);
-	((Rva000D6CF0Field *)((char *)m_field40 + 0x2c))->Rva000D6CF0(target);
+	callRva000D6CF0((char *)m_field40 + 0x14, target);
+	callRva000D6CF0((char *)m_field40 + 0x2c, target);
 
 	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field744);
 

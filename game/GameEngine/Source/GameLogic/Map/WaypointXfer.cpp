@@ -80,10 +80,19 @@ class BfmeSeedTarget;
 class Rva000D6CF0Field
 {
 public:
-	void Rva000D6CF0(BfmeSeedTarget *target);
 
 	UnsignedInt m_values[6];
 };
+
+// Retail reaches the 0x000D6CF0 body through ILT 0x0003573D.
+extern void j_0003573d();
+class Route0003573D {};
+static __forceinline void callRva000D6CF0(void *self, BfmeSeedTarget *target)
+{
+	typedef void (Route0003573D::*Fn)(BfmeSeedTarget *);
+	union { void (*fn)(); Fn call; } route = { j_0003573d };
+	(((Route0003573D *)self)->*route.call)(target);
+}
 
 enum { INVALID_WAYPOINT_ID = 0x7fffffff };
 
@@ -204,8 +213,8 @@ void Waypoint::xfer(Xfer *xfer)
 	xfer->xferBool(&m_field84);
 	xfer->xferBool(&m_fielda0);
 	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_fielda8);
-	m_field6c.Rva000D6CF0((BfmeSeedTarget *)xfer);
-	m_field88.Rva000D6CF0((BfmeSeedTarget *)xfer);
+	callRva000D6CF0(&m_field6c, (BfmeSeedTarget *)xfer);
+	callRva000D6CF0(&m_field88, (BfmeSeedTarget *)xfer);
 	if (version.currentVersion >= 3)
 		xfer->xferUnsignedInt(&m_fieldac);
 }

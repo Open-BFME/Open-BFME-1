@@ -68,16 +68,25 @@ class BfmeSeedTarget;
 class Rva000D6CF0Field
 {
 public:
-	void Rva000D6CF0(BfmeSeedTarget *xfer);
 
 	UnsignedInt m_values[6];
 };
+
+// Retail reaches the 0x000D6CF0 body through ILT 0x0003573D.
+extern void j_0003573d();
+class Route0003573D {};
+static __forceinline void callRva000D6CF0(void *self, BfmeSeedTarget *target)
+{
+	typedef void (Route0003573D::*Fn)(BfmeSeedTarget *);
+	union { void (*fn)(); Fn call; } route = { j_0003573d };
+	(((Route0003573D *)self)->*route.call)(target);
+}
 
 // Preserve the established plain-block identity while binding its proven
 // retail serializer through the existing address-qualified ABI declaration.
 class BfmeAttributePlainBlock {
 public:
- void xfer(Xfer *value) { ((Rva000D6CF0Field *)this)->Rva000D6CF0((BfmeSeedTarget *)value); }
+ void xfer(Xfer *value) { callRva000D6CF0(this, (BfmeSeedTarget *)value); }
  UnsignedInt m_values[6];
 };
 
