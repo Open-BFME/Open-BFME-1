@@ -11,11 +11,17 @@
 
 #include "ascii_string.h"
 
+// The ILT thunk at 0x00014943 is the retail body at this call site
+// (targets/game/reverse/functions.csv ?j_00014943@@YAXXZ, 5 bytes, tail
+// jmp to 0x003636C0).  Retail calls it thiscall with ECX = this+0x170 and
+// the name in the hidden first stack slot, so the route is a member-pointer
+// union over the defined thunk symbol rather than a TU-local placeholder.
+extern void j_00014943();
 
-class BfmeSubDRE
+class Rva00367E30Sub
 {
 public:
-	void *bfmeOneDRE(void *what);
+	void *route(void *what);
 };
 
 struct Rva00367E30Logic
@@ -23,10 +29,17 @@ struct Rva00367E30Logic
 	AsciiString rva003870f0(const AsciiString &name);
 
 	unsigned char m_head[0x170];
-	BfmeSubDRE m_bfmeSub;
 };
 
 AsciiString Rva00367E30Logic::rva003870f0(const AsciiString &name)
 {
-	return *(const AsciiString *)m_bfmeSub.bfmeOneDRE((void *)&name);
+	union
+	{
+		void (*raw)();
+		void *(Rva00367E30Sub::*member)(void *);
+	} route;
+
+	route.raw = j_00014943;
+	return *(const AsciiString *)(
+		reinterpret_cast<Rva00367E30Sub *>((char *)this + 0x170)->*route.member)((void *)&name);
 }

@@ -16,12 +16,17 @@ public:
 
 extern GameEngine *TheGameEngine;
 
-extern "C" GameEngine *__cdecl bfmeMakeBZ(void);
+// The ILT thunk at 0x00040F3E is the retail body at this call site
+// (targets/game/reverse/functions.csv ?j_00040f3e@@YAXXZ, 5 bytes, tail jmp
+// to 0x0045D710).  Retail calls it cdecl with no arguments and takes the
+// engine pointer in EAX, so it is spelled as the defined thunk symbol.
+extern void j_00040f3e();
+
 extern "C" void __cdecl bfmeExitBZ(void);
 
 void __cdecl bfmeBootBZ(void *first, void *second)
 {
-	TheGameEngine = bfmeMakeBZ();
+	TheGameEngine = ((GameEngine *(__cdecl *)())j_00040f3e)();
 	TheGameEngine->bfmeInitBZ(first, second);
 	TheGameEngine->bfmeRunBZ();
 	bfmeExitBZ();
