@@ -150,3 +150,22 @@ namespace D3DXShader
     };
     void CNodeRegister::rva00A69498() {}
 }
+
+// Original cnodeasm.obj supplies the same void thiscall() slot2 ABI.
+namespace D3DXShader
+{
+    // Constructor store A6AD4A installs VA01151868; slot2 is 00A6ADB4.
+    class CNodeAsmInstruction
+    {
+    public:
+        void rva00A6ADB4();
+    };
+    void CNodeAsmInstruction::rva00A6ADB4() {}
+    // Constructor store A6ADD0 installs VA01151874; slot2 is 00A6AE2E.
+    class CNodeAsmRegister
+    {
+    public:
+        void rva00A6AE2E();
+    };
+    void CNodeAsmRegister::rva00A6AE2E() {}
+}
