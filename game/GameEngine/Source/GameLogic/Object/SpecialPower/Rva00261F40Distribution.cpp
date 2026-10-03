@@ -40,8 +40,9 @@ public:
     // unchanged receiver, context and subject arguments, vector result, RET 8.
     Rva00261F40Vector *selectAt00261E40(void *, Rva00261F40Subject *);
     void distribute(void *context, Rva00261F40Iterator *range);
-    void buildPairsAt00261CC0(Rva00261E40InputCollection *, Rva00261F40Subject *, Rva00261E40PairVector *);
 };
+extern void j_0002a036();
+typedef void (Rva00261F40Owner::*BuildPairs)(Rva00261E40InputCollection *, Rva00261F40Subject *, Rva00261E40PairVector *);
 void Rva00261F40Owner::distribute(void *context, Rva00261F40Iterator *range)
 {
     Rva00261F40Subject *subject;
@@ -58,7 +59,10 @@ Rva00261F40Vector *Rva00261F40Owner::selectAt00261E40(
     void *context, Rva00261F40Subject *subject)
 {
     Rva00261E40PairVector pairs;
-    buildPairsAt00261CC0(static_cast<Rva00261E40InputCollection *>(context), subject, &pairs);
+    // ILT 0x0002A036 reaches the retail builder body at 0x00261CC0 (defined as
+    // j_0002a036); it is a thiscall member that takes this in ECX.
+    union { void (*fn)(); BuildPairs call; } build = { j_0002a036 };
+    (this->*build.call)(static_cast<Rva00261E40InputCollection *>(context), subject, &pairs);
     Rva00261E40Pair *end = pairs.end();
     Rva00261E40Pair *begin = pairs.begin();
     for (int threshold=0; threshold<10; ++threshold) {
