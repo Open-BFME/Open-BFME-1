@@ -15,10 +15,18 @@
 // the reset is a tail call. Five of the six keep the target at +0x40 and one at
 // +0x2C, which is the only difference between them.
 
+// Retail calls 0x0002A88D, an ILT thunk, so the call is spelled through
+// j_0002a88d with the member-pointer union.
+extern void j_0002a88d();
+
 class BfmeStopOther
 {
 public:
-	void bfmeReset(void *value);				// retail 0x0002A88D
+	__forceinline void bfmeResetViaIlt(void *value)		// retail ILT 0x0002A88D
+	{
+		union { void (*fn)(); void (BfmeStopOther::*call)(void *); } route = { j_0002a88d };
+		(this->*route.call)(value);
+	}
 };
 
 class BfmeStopHost
@@ -131,7 +139,7 @@ void Gen_0015BA80::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
 
 // ?bfmeStop@Gen_0015BD10@@QAEXPAX@Z
@@ -147,7 +155,7 @@ void Gen_0015BD10::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
 
 // ?bfmeStop@Gen_0015E9E0@@QAEXPAX@Z
@@ -163,7 +171,7 @@ void Gen_0015E9E0::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
 
 // ?bfmeStop@Gen_00189D60@@QAEXPAX@Z
@@ -179,7 +187,7 @@ void Gen_00189D60::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
 
 // ?bfmeStop@Gen_002BBE30@@QAEXPAX@Z
@@ -195,7 +203,7 @@ void Gen_002BBE30::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
 
 // ?bfmeStop@Gen_002BC0B0@@QAEXPAX@Z
@@ -211,5 +219,5 @@ void Gen_002BC0B0::bfmeStop(void *value)
 	}
 
 	if (host->m_bfmeOther)
-		host->m_bfmeOther->bfmeReset(0);
+		host->m_bfmeOther->bfmeResetViaIlt(0);
 }
