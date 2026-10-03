@@ -907,77 +907,10 @@ void DynamicVBAccessClass::Allocate_Sorting_Dynamic_Buffer()
 }
 
 // ----------------------------------------------------------------------------
-static int dx8_lock;
-// ??0WriteLockClass@DynamicVBAccessClass@@QAE@PAV1@@Z present-unmatched
-DynamicVBAccessClass::WriteLockClass::WriteLockClass(DynamicVBAccessClass* dynamic_vb_access_)
-	:
-	DynamicVBAccess(dynamic_vb_access_)
-{
-	DX8_THREAD_ASSERT();
-	switch (DynamicVBAccess->Get_Type()) {
-	case BUFFER_TYPE_DYNAMIC_DX8:
-#ifdef VERTEX_BUFFER_LOG
-/*		{
-		WWASSERT(!dx8_lock);
-		dx8_lock++;
-		StringClass fvf_name;
-		DynamicVBAccess->VertexBuffer->FVF_Info().Get_FVF_Name(fvf_name);
-		WWDEBUG_SAY(("DynamicVertexBuffer->Lock(start_index: %d, index_range: %d, fvf_size: %d, fvf: %s)\n",
-			DynamicVBAccess->VertexBufferOffset,
-			DynamicVBAccess->Get_Vertex_Count(),
-			DynamicVBAccess->VertexBuffer->FVF_Info().Get_FVF_Size(),
-			fvf_name));
-		}
-*/
-#endif
-		WWASSERT(_DynamicDX8VertexBuffer);
-//		WWASSERT(!_DynamicDX8VertexBuffer->Engine_Refs());
-
-		DX8_Assert();
-		// Lock with discard contents if the buffer offset is zero
-		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(DynamicVBAccess->VertexBuffer)->Get_DX8_Vertex_Buffer()->Lock(
-			DynamicVBAccess->VertexBufferOffset*_DynamicDX8VertexBuffer->FVF_Info().Get_FVF_Size(),
-			DynamicVBAccess->Get_Vertex_Count()*DynamicVBAccess->VertexBuffer->FVF_Info().Get_FVF_Size(),
-			(unsigned char**)&Vertices,
-			D3DLOCK_NOSYSLOCK | (!DynamicVBAccess->VertexBufferOffset ? D3DLOCK_DISCARD : D3DLOCK_NOOVERWRITE)));
-		break;
-	case BUFFER_TYPE_DYNAMIC_SORTING:
-		Vertices=static_cast<SortingVertexBufferClass*>(DynamicVBAccess->VertexBuffer)->VertexBuffer;
-		Vertices+=DynamicVBAccess->VertexBufferOffset;
-//		vertices=_DynamicSortingVertexArray+_DynamicSortingVertexArrayOffset;
-		break;
-	default:
-		WWASSERT(0);
-		break;
-	}
-}
-
-// ----------------------------------------------------------------------------
-
-// ??1WriteLockClass@@ present-unmatched
-DynamicVBAccessClass::WriteLockClass::~WriteLockClass()
-{
-	DX8_THREAD_ASSERT();
-	switch (DynamicVBAccess->Get_Type()) {
-	case BUFFER_TYPE_DYNAMIC_DX8:
-#ifdef VERTEX_BUFFER_LOG
-/*		dx8_lock--;
-		WWASSERT(!dx8_lock);
-		WWDEBUG_SAY(("DynamicVertexBuffer->Unlock()\n"));
-*/
-#endif
-		DX8_Assert();
-		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(DynamicVBAccess->VertexBuffer)->Get_DX8_Vertex_Buffer()->Unlock());
-		break;
-	case BUFFER_TYPE_DYNAMIC_SORTING:
-		break;
-	default:
-		WWASSERT(0);
-		break;
-	}
-}
-
-// ----------------------------------------------------------------------------
+// BFME's dynamic write-lock bodies are the verified BoxDynamicVBAccessClass
+// providers in boxrobj.cpp: constructor RVA0091F160 (221 bytes) and destructor
+// RVA0091F240 (108 bytes). They use the retail buffer layout and debug stream.
+// The older DynamicVBAccessClass definitions used a different layout/error path.
 
 void DynamicVBAccessClass::_Reset(bool frame_changed)
 {
