@@ -130,23 +130,6 @@ void NetCommandList::init() {
 	reset();
 }
 
-/**
- * Reset the contents of this list.
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetCommandListOperations.cpp
-// ?reset@NetCommandList@@QAEXXZ present-unmatched
-void NetCommandList::reset() {
-	NetCommandRef *temp = m_first;
-	while (m_first != NULL) {
-		temp = m_first->getNext();
-		m_first->setNext(NULL);
-		m_first->setPrev(NULL);
-		m_first->deleteInstance();
-		m_first = temp;
-	}
-	m_last = NULL;
-	m_lastMessageInserted = NULL;
-}
 
 /**
  * Insert sorts msg.  Assumes that all the previous message inserts were done using this function.
