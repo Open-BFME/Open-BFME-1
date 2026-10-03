@@ -1,34 +1,23 @@
 class BFMENetworkQueueItem1
 {
 public:
+	BFMENetworkQueueItem1 &operator=(const BFMENetworkQueueItem1 &other);
 	void copyFromQueueNode(void *);
 };
 
 class BFMENetworkQueueItem
 {
 public:
+	BFMENetworkQueueItem &operator=(const BFMENetworkQueueItem &other);
 	void copyFromQueueNode(void *);
-};
-
-class BFMENetworkQueueItem1copyFromQueueNodeShim
-{
-public:
-	void copyFromQueueNode(void *node);
 };
 
 void BFMENetworkQueueItem1::copyFromQueueNode(void *node)
 {
-	((BFMENetworkQueueItem1copyFromQueueNodeShim *)this)->copyFromQueueNode(node);
+	*this = *static_cast<const BFMENetworkQueueItem1 *>(node);
 }
-
-class BFMENetworkQueueItemcopyFromQueueNodeShim
-{
-public:
-	void copyFromQueueNode(void *node);
-};
 
 void BFMENetworkQueueItem::copyFromQueueNode(void *node)
 {
-	((BFMENetworkQueueItemcopyFromQueueNodeShim *)this)->copyFromQueueNode(node);
+	*this = *static_cast<const BFMENetworkQueueItem *>(node);
 }
-
