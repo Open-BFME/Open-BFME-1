@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?doTeamDelete@ScriptActions@@IAEXABVAsciiString@@_N@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamKill@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamStopSequentialScript@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
@@ -45,6 +45,8 @@ struct Coord3D
 	Real z;
 };
 
+#include "string_base.h"
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
@@ -61,15 +63,15 @@ private:
 		unsigned short length;
 	};
 	Header *m_data;
-};
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
+public:
+	// StringBase<char> (string_base.h) befriends AsciiString, so the by-value copy
+	// is built here: retail's copy is StringBase<char>'s out-of-line 0x00887B60.
+	static void copyConstructArg(void *dst, const AsciiString &src)
+	{
+		((StringBase<char> *)dst)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&src);
+	}
 };
 
 // Slots 16 and 17 both take the name by value through this wrapper.
@@ -78,8 +80,7 @@ class BfmeAsciiStringArg
 public:
 	BfmeAsciiStringArg(const AsciiString &that)
 	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
+		AsciiString::copyConstructArg(this, that);
 	}
 	~BfmeAsciiStringArg();
 

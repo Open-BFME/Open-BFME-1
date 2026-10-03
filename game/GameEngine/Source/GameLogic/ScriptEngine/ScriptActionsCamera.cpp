@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?doModCameraFinalLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doModCameraLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
@@ -57,6 +57,8 @@ struct BfmeAsciiStringData
 	unsigned short m_unreconstructed_06;
 };
 
+#include "string_base.h"
+
 // One data pointer. Only the name compare reads through it; the other bodies
 // take it by reference and hand it straight on, which is why two of the four
 // files that held these bodies declared the pointer as a bare char *.
@@ -65,6 +67,14 @@ class AsciiString
 {
 public:
 	const BfmeAsciiStringData *m_data;
+
+	// StringBase<char> (string_base.h) befriends AsciiString, so the by-value copy
+	// is built here: retail's copy is StringBase<char>'s out-of-line 0x00887B60.
+	static void copyConstructArg(void *dst, const AsciiString &src)
+	{
+		((StringBase<char> *)dst)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&src);
+	}
 };
 
 // Waypoint::getName returns a retail AsciiString by value. Naming the returned
@@ -81,23 +91,13 @@ private:
 	const BfmeAsciiStringData *m_data;
 };
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
 // The by-value string temporary TerrainLogic slot 31 takes.
 class BfmeAsciiStringArg
 {
 public:
 	BfmeAsciiStringArg(const AsciiString &that)
 	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
+		AsciiString::copyConstructArg(this, that);
 	}
 	~BfmeAsciiStringArg();
 

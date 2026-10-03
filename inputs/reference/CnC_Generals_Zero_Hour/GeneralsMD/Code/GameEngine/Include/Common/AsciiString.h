@@ -343,6 +343,19 @@ public:
 
 	void debugIgnoreLeaks();
 
+#ifdef BFME_ASCIISTRING_STRINGBASE_COPY
+	// Open-BFME: StringBase<char> (WWLib/string_base.h, included first by the TU that
+	// defines the macro) befriends AsciiString and keeps its copy constructor private.
+	// Retail copies a by-value string argument through that out-of-line constructor
+	// (0x00887B60) rather than this header's inline addref; the TU's by-value argument
+	// view builds that copy through this member. Never defined globally.
+	static void copyConstructStringBaseArg(void *dst, const AsciiString &src)
+	{
+		((StringBase<char> *)dst)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&src);
+	}
+#endif
+
 };
 
 // -----------------------------------------------------
