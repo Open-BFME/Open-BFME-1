@@ -18,11 +18,17 @@ struct BfmeThingCPC
 	void *m_bfmeMid;
 };
 
-bool __stdcall bfmeAskCPC(BfmeThingCPC *thing);
+// Retail's call target is the ILT thunk at 0x00025EF5, owned by
+// game/gen_small/thunks_018.cpp as ?j_00025ef5@@YAXXZ.  It is declared here by
+// its decorated symbol and called through a __stdcall typedef, the convention
+// BfmeConv502.cpp uses, instead of under a TU-local name nothing defines.
+extern "C" void __cdecl __identifier("?j_00025ef5@@YAXXZ")();
+typedef bool (__stdcall *BfmeAskCPCThunk)(BfmeThingCPC *thing);
 
 bool __stdcall bfmeGoCPC(BfmeThingCPC *thing)
 {
-	if (bfmeAskCPC(thing) && thing->m_bfmeMid != 0 &&
+	if (((BfmeAskCPCThunk)&__identifier("?j_00025ef5@@YAXXZ"))(thing) &&
+		thing->m_bfmeMid != 0 &&
 		!((const Thing *)thing)->isKindOf((KindOfType)2))
 		return true;
 	return false;
