@@ -90267,3 +90267,4 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 __CT??_R0?AVINIException@@@8??0INIException@@QAE@ABV0@@Z8,0x00DDFC08,INIException catchable type: size 8 copy ctor ILT 0x448621 (retail ThrowInfo 0xDDFC30 chain)
 __CTA1?AVINIException@@,0x00DDFC28,INIException catchable type array {1, CT 0x011DFC08}: CTA of retail ThrowInfo 0xDDFC30
 ??_7type_info@@6B@,0x00D45868,type_info vftable: first dword of every retail RTTI type descriptor (e.g. INIException TD VA 0x012A6FD4 holds VA 0x01145868)
+??1Mid0112F304@@UAE@XZ,0x005BFA20,address-based native intermediate destructor ABI view; matched0084B410 state0 -> C55C00 -> ILT0002E40B ->005BFA20; native15B independently exact and DIR32 vfptr0112F304 agrees; no original class spelling asserted
