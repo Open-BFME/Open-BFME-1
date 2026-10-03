@@ -42,7 +42,7 @@ identities at this one body after adjudication.
 Origin/master still contains both rows and identical MetaEvent.cpp source.
 The bounded12-second pickaxe is not treated as introduction-date proof;
 both names survive in the August1 cohort. The fresh source audit passes
-3/3 branch-local function/reference comparisons. Normal null-relocation
+7/7 branch-local function/reference comparisons. Normal null-relocation
 verification belongs to the whole gate and needs readable objects for the
 whole ledger; do not shrink its53-row/19-body baseline using this sample.
 
