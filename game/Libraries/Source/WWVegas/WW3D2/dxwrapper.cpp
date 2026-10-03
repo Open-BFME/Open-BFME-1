@@ -2030,27 +2030,16 @@ void DX8Wrapper::End_Statistics()
 	last_frame_draw_calls=draw_calls;
 }
 
-// ?Get_Last_Frame_Matrix_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Matrix_Changes()			{ return last_frame_matrix_changes; }
-// ?Get_Last_Frame_Material_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Material_Changes()		{ return last_frame_material_changes; }
-// ?Get_Last_Frame_Vertex_Buffer_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Vertex_Buffer_Changes()	{ return last_frame_vertex_buffer_changes; }
-// ?Get_Last_Frame_Index_Buffer_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Index_Buffer_Changes()	{ return last_frame_index_buffer_changes; }
-// ?Get_Last_Frame_Light_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Light_Changes()			{ return last_frame_light_changes; }
-// ?Get_Last_Frame_Texture_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Texture_Changes()			{ return last_frame_texture_changes; }
-// ?Get_Last_Frame_Render_State_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Render_State_Changes()	{ return last_frame_render_state_changes; }
-// ?Get_Last_Frame_Texture_Stage_State_Changes@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Texture_Stage_State_Changes()	{ return last_frame_texture_stage_state_changes; }
-// ?Get_Last_Frame_DX8_Calls@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_DX8_Calls()					{ return last_frame_number_of_DX8_calls; }
-// ?Get_Last_Frame_Draw_Calls@DX8Wrapper@@ present-unmatched
 unsigned DX8Wrapper::Get_Last_Frame_Draw_Calls()				{ return last_frame_draw_calls; }
-// ?Get_FrameCount@DX8Wrapper@@ present-unmatched
 unsigned long DX8Wrapper::Get_FrameCount(void) {return FrameCount;}
 
 void DX8_Assert()
