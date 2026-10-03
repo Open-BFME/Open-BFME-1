@@ -4,6 +4,10 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
+// The retail vector destructor is owned by AsciiStringVectorDestructor.cpp.
+// Refer to that instantiation instead of emitting another copy here.
+extern template _STL::vector<AsciiString>::~vector();
+
 // Open-BFME7: the destructor at 0x00464E20 (140 B) of S4Owner (see
 // S4DrainStringVector.cpp for the four already-matched drain methods, called
 // here on `this` with no offset adjustment -- the same object).  The body
