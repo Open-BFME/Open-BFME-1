@@ -15,8 +15,6 @@ typedef unsigned short WideChar;
 
 extern "C" __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(
 	const WideChar *text);
-
-extern const char Rva006A16B0Empty[];
 extern const char g_Rva0107301CEmptyString[];
 
 class AsciiString
@@ -54,7 +52,7 @@ public:
 		int length = text.m_data
 			? *(const unsigned short *)(text.m_data + 4)
 			: 0;
-		const char *data = text.m_data ? text.m_data + 8 : Rva006A16B0Empty;
+		const char *data = text.m_data ? text.m_data + 8 : "";
 		((StringBase<char> *)this)->concat(data, length);
 	}
 
@@ -65,7 +63,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
+		return m_data ? m_data + 8 : "";
 	}
 
 	bool startsWith(const char *text) const

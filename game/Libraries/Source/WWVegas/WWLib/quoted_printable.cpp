@@ -28,8 +28,6 @@
 // Description: Quoted-printable encode/decode
 ////////////////////////////////////////////////////////////////////////////
 #include "prerts.h"
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 extern char g_012ED8D8[];
 extern char g_012EDDA8[];
@@ -50,7 +48,7 @@ public:
 	const char *str() const
 	{
 		return m_data ? (const char *)((const char *)m_data + 8)
-		              : Rva006A16B0Empty;
+		              : "";
 	}
 	const char *data() const { return (const char *)((const char *)m_data + 8); }
 	~AsciiString();

@@ -55,7 +55,6 @@ public:
 };
 
 extern void j_0002e7b7();
-extern const char Rva006A16B0Empty[];
 
 struct Rva00767B30OutCall
 {
@@ -96,7 +95,7 @@ int Rva00767B30::method(void *outParam)
             char *base2 = *(char **)(self - 8);
             local.set(*(AsciiString *)(base2 + 0xE0));
         }
-        text = (*(void **)&local) ? (const char *)(*(void **)&local) + 8 : Rva006A16B0Empty;
+        text = (*(void **)&local) ? (const char *)(*(void **)&local) + 8 : "";
 
         result = result->slot31(text, 0);
         if (result)

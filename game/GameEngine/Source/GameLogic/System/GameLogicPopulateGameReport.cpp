@@ -10,8 +10,6 @@ typedef bool Bool;
 typedef unsigned short WideChar;
 typedef unsigned char UnsignedByte;
 
-extern const char Rva006A16B0Empty[];
-
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -57,7 +55,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
+		return m_data ? (const char *)m_data + 8 : "";
 	}
 
 	Int getLength() const

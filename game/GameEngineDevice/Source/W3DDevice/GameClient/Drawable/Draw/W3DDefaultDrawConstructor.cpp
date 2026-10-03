@@ -41,8 +41,6 @@ struct BfmeStringData
 	char m_chars[1];
 };
 
-extern char Rva006A16B0Empty[];
-
 template <class Character>
 class BFMERetailStringBase
 {
@@ -50,7 +48,7 @@ public:
 	~BFMERetailStringBase() { releaseBuffer(); }
 
 	Bool isEmpty() const { Int empty = (m_data == 0 || m_data->m_length == 0); return (Bool)empty; }
-	const char *str() const { return m_data ? m_data->m_chars : Rva006A16B0Empty; }
+	const char *str() const { return m_data ? m_data->m_chars : ""; }
 
 private:
 	void releaseBuffer();

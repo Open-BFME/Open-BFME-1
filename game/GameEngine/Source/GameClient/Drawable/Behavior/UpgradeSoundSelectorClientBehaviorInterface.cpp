@@ -7,7 +7,6 @@
 typedef bool Bool;
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
-extern const char Rva006A16B0Empty[];
 
 #include <bitset>
 
@@ -90,7 +89,7 @@ public:
 	bool isNone() const;
 	const char *str() const
 	{
-		return m_data ? m_data->text : Rva006A16B0Empty;
+		return m_data ? m_data->text : "";
 	}
 
 	void set(const AsciiString &source);
