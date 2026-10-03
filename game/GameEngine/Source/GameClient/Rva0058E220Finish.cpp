@@ -29,11 +29,12 @@ static inline Rva00579160Manager *Rva00579160TheManager()
 }
 
 class GameFont;
+class FontLibrary;
 // Retail global 0x012F1B38: the defining declaration is `FontLibrary *TheFontLibrary`,
-// so the class name must spell `FontLibrary` (class, not struct) for the mangling
-// to be ?TheFontLibrary@@3PAVFontLibrary@@A.  No header in game/ declares
-// FontLibrary; this TU only needs the member call below.
-class FontLibrary {
+// so its declared pointee stays FontLibrary for the global symbol. The matched
+// method body is FontLibraryBFMERetail::getFont at 0x004772D0; this TU only
+// needs its call signature.
+class FontLibraryBFMERetail {
 public:
     GameFont *getFont(AsciiString *name, float size, unsigned char bold);
 };
@@ -52,7 +53,7 @@ static void Rva00588FA0(Rva00588FA0Widget *widget, BfmeEntryWU *entry)
 {
     const float *range = Rva00579160TheManager()->scale();
     float factor = range[0] < range[1] ? range[0] : range[1];
-    GameFont *font = TheFontLibrary->getFont(&entry->text,
+    GameFont *font = reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&entry->text,
         entry->size * factor, entry->bold);
     widget->setColor(entry->color, 0);
     widget->setFlag(1);

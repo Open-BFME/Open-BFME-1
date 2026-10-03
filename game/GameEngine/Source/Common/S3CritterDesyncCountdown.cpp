@@ -31,7 +31,8 @@
 bool Glo012F0239 = false;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern void Gen0003A17A( void *sink, const char *text );
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(
+	CRCParameterCheck *sink, const char *text, ... );
 
 #define S3_CRITTER( NAME, TEXT )                                          \
 	class NAME                                                            \
@@ -44,7 +45,7 @@ extern void Gen0003A17A( void *sink, const char *text );
 	bool NAME::step()                                                     \
 	{                                                                     \
 		if( Glo012F0239 && TheCRCParameterCheck )                                    \
-			Gen0003A17A( TheCRCParameterCheck, TEXT );                               \
+			bfmeRetailCritterDesyncLog( TheCRCParameterCheck, TEXT );                \
 		if( m_countdown > 0 )                                             \
 		{                                                                 \
 			--m_countdown;                                                \
@@ -93,7 +94,7 @@ public:
 bool Rva0016B2C0::step()
 {
 	if( Glo012F0239 && TheCRCParameterCheck )
-		Gen0003A17A( TheCRCParameterCheck, "CritterDesync: ComputePath3" );
+		bfmeRetailCritterDesyncLog( TheCRCParameterCheck, "CritterDesync: ComputePath3" );
 
 	Intermediate0016B2C0 *it = m_intermediate;
 	Object0016B2C0 *obj = it->m_object;
@@ -106,4 +107,3 @@ bool Rva0016B2C0::step()
 	}
 	return true;
 }
-
