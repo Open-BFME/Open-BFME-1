@@ -8,22 +8,22 @@ struct BfmeThingVNH
 	int m_bfme44;
 };
 
-extern BfmeThingVNH *g_bfmeThingVNH;
+extern void *g_rva012F49D0;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
 void bfmeSetVNH(float secs)
 {
-	if (g_bfmeThingVNH == 0)
+	if (g_rva012F49D0 == 0)
 		return;
 
-	int st = g_bfmeThingVNH->m_bfme34;
+	int st = static_cast<BfmeThingVNH *>(g_rva012F49D0)->m_bfme34;
 
 	if (st == 0)
 		return;
 	if (st == 3)
 		return;
 
-	BfmeThingVNH *p = g_bfmeThingVNH;
+	BfmeThingVNH *p = static_cast<BfmeThingVNH *>(g_rva012F49D0);
 	int now = timeGetTime();
 
 	p->m_bfme44 = now - (int)(secs * -1000.0f);

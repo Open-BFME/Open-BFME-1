@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: the destructor at 0x005225F0 (141 B) zeroes the singleton
-// g_bfmeThingCB (0x012F49D0, already named) then releases two ref-counted
+// g_rva012F49D0 (defined by Bfme5TinyEleven.cpp) then releases two ref-counted
 // pointers at +0x3C and +0x40 -- each a manual (non-atomic) refcount at the
 // pointee's +4 decremented, and the pointee's virtual deleting destructor
 // (vtable slot 0, push 1) called once the count reaches zero, the same shape
@@ -8,8 +8,7 @@
 // chaining to the already-landed base destructor Gen_dtor_004654c0
 // (0x00021FC1).
 
-class BfmeThingCB;
-extern BfmeThingCB *g_bfmeThingCB;				// retail 0x012F49D0
+extern void *g_rva012F49D0;					// retail 0x012F49D0
 
 class Rva005225F0RefCounted
 {
@@ -57,5 +56,5 @@ private:
 // ??1Rva005225F0@@UAE@XZ
 Rva005225F0::~Rva005225F0()
 {
-	g_bfmeThingCB = 0;
+	g_rva012F49D0 = 0;
 }

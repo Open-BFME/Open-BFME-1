@@ -24,13 +24,13 @@ public:
 	virtual ~BfmeDeletable();
 };
 
-extern BfmeDeletable *TheBfmeCampaignManager;				// 0x012F49D0
+extern void *g_rva012F49D0;					// 0x012F49D0
 extern BfmeDeletable *TheBfmeSecondManager;				// 0x012F6DA4
 
 // ?Gen_00510b20@@YAXXZ
 void Gen_00510b20(void)
 {
-	delete TheBfmeCampaignManager;
+	delete static_cast<BfmeDeletable *>(g_rva012F49D0);
 }
 
 // ?Gen_005f3140@@YAXXZ

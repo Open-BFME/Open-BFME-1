@@ -125,7 +125,7 @@ public:
 	unsigned char m_49;
 };
 
-extern BfmeThingCB *g_bfmeThingCB;					// retail 0x012F49D0
+extern void *g_rva012F49D0;					// retail 0x012F49D0
 
 static const unsigned short s_bfmeSpaceYX[2] = { L' ', 0 };
 
@@ -133,15 +133,15 @@ static const unsigned short s_bfmeSpaceYX[2] = { L' ', 0 };
 void Rva00522990ConfigureMessageBox(int newState, const UnicodeStringYX &titleText,
 	const UnicodeStringYX &bodyText, Rva522990RefPtr onOk, Rva522990RefPtr onCancel)
 {
-	if (g_bfmeThingCB == 0)
+	if (g_rva012F49D0 == 0)
 		return;
 
-	if (g_bfmeThingCB->m_38 != 4)
+	if (static_cast<BfmeThingCB *>(g_rva012F49D0)->m_38 != 4)
 		ReleaseWindowLayout(0);
 
-	g_bfmeThingCB->m_38 = newState;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->m_38 = newState;
 
-	Rva522990RefPtr *p3c = &g_bfmeThingCB->m_3c;
+	Rva522990RefPtr *p3c = &static_cast<BfmeThingCB *>(g_rva012F49D0)->m_3c;
 	if (p3c != &onOk)
 	{
 		if (onOk.m_ptr)
@@ -155,7 +155,7 @@ void Rva00522990ConfigureMessageBox(int newState, const UnicodeStringYX &titleTe
 		p3c->m_ptr = onOk.m_ptr;
 	}
 
-	Rva522990RefPtr *p40 = &g_bfmeThingCB->m_40;
+	Rva522990RefPtr *p40 = &static_cast<BfmeThingCB *>(g_rva012F49D0)->m_40;
 	if (p40 != &onCancel)
 	{
 		if (onCancel.m_ptr)
@@ -169,7 +169,7 @@ void Rva00522990ConfigureMessageBox(int newState, const UnicodeStringYX &titleTe
 		p40->m_ptr = onCancel.m_ptr;
 	}
 
-	g_bfmeThingCB->m_44 = -1;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->m_44 = -1;
 
 	if (titleText.isEmpty())
 	{
@@ -182,11 +182,11 @@ void Rva00522990ConfigureMessageBox(int newState, const UnicodeStringYX &titleTe
 
 	((BfmePalantirYX *)g_rva012F19E8WindowManager)->bfmeStoreYX(AsciiStringYX("APT:MessageBoxGenericText"), bodyText);
 
-	g_bfmeThingCB->m_34 = 2;
-	g_bfmeThingCB->m_49 = 0;
-	g_bfmeThingCB->m_48 = bodyText.getLength() > 0x100;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->m_34 = 2;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->m_49 = 0;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->m_48 = bodyText.getLength() > 0x100;
 
 	if (g_rva012F19E8WindowManager != 0 &&
 		((BfmePalantirYX *)g_rva012F19E8WindowManager)->m_pad[0x1ae] == 0)
-		((BfmeOne924G *)g_bfmeThingCB)->bfmeCall924G();
+		((BfmeOne924G *)g_rva012F49D0)->bfmeCall924G();
 }

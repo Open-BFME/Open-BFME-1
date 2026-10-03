@@ -51,7 +51,7 @@ extern int TheBfmeHeldHandle;						// 0x012B7430
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeDeletable *TheBfmeCampaignManager;				// 0x012F49D0
+extern void *g_rva012F49D0;					// 0x012F49D0
 
 // ?Gen_00510b50@@YAXXZ
 void Gen_00510b50(void)
@@ -70,5 +70,5 @@ void Gen_00510b50(void)
 		TheBfmeHeldHandle = -1;
 	}
 
-	delete TheBfmeCampaignManager;
+	delete static_cast<BfmeDeletable *>(g_rva012F49D0);
 }

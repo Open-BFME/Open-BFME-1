@@ -75,7 +75,7 @@ public:
 	unsigned char released;
 };
 
-extern BfmeThingCB *g_bfmeThingCB;
+extern void *g_rva012F49D0;
 
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
@@ -92,38 +92,38 @@ public:
 
 void ReleaseWindowLayoutShim::run(WindowLayout *layout)
 {
-	if (g_bfmeThingCB == 0)
+	if (g_rva012F49D0 == 0)
 	{
 		return;
 	}
 
-	if (g_bfmeThingCB->state == 4)
+	if (static_cast<BfmeThingCB *>(g_rva012F49D0)->state == 4)
 	{
 		return;
 	}
 
-	g_bfmeThingCB->state = 4;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->state = 4;
 
 	{
 		ReleaseWindowLayoutTempRef temp;
-		g_bfmeThingCB->current.assign(reinterpret_cast<const ReferencePointerAssignmentThunk *>(&temp));
+		static_cast<BfmeThingCB *>(g_rva012F49D0)->current.assign(reinterpret_cast<const ReferencePointerAssignmentThunk *>(&temp));
 	}
 
-	g_bfmeThingCB->index = -1;
+	static_cast<BfmeThingCB *>(g_rva012F49D0)->index = -1;
 
-	if (g_bfmeThingCB->mode != 0 && g_bfmeThingCB->mode != 3)
+	if (static_cast<BfmeThingCB *>(g_rva012F49D0)->mode != 0 && static_cast<BfmeThingCB *>(g_rva012F49D0)->mode != 3)
 	{
-		g_bfmeThingCB->mode = 3;
+		static_cast<BfmeThingCB *>(g_rva012F49D0)->mode = 3;
 	}
 
 	if (*reinterpret_cast<unsigned char *>(&layout) != 0)
 	{
-		g_bfmeThingCB->released = 1;
+		static_cast<BfmeThingCB *>(g_rva012F49D0)->released = 1;
 	}
 
 	if (g_rva012F19E8WindowManager != 0 && ((Rva00579160Manager *)g_rva012F19E8WindowManager)->flag == 0)
 	{
-		reinterpret_cast<BfmeOne924G *>(g_bfmeThingCB)->bfmeCall924G();
+		reinterpret_cast<BfmeOne924G *>(g_rva012F49D0)->bfmeCall924G();
 	}
 }
 

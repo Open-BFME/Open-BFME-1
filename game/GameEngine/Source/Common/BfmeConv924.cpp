@@ -131,13 +131,13 @@ public:
 	virtual void bfmeTail924G();
 };
 
-extern BfmeOne924G *g_bfme924OneG;
+extern void *g_rva012F49D0;
 extern BfmeTwo924G *g_bfme924TwoG;
 
 void bfmeGo924G(void)
 {
-	if (g_bfme924OneG)
-		g_bfme924OneG->bfmeCall924G();
+	if (g_rva012F49D0)
+		static_cast<BfmeOne924G *>(g_rva012F49D0)->bfmeCall924G();
 	if (g_bfme924TwoG)
 		g_bfme924TwoG->bfmeTail924G();
 }

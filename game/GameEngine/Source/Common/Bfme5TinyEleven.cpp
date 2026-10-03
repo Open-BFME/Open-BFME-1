@@ -43,12 +43,16 @@ public:
 	int m_bfmeField;					// +0x34
 };
 
-extern BfmeThingCB *g_bfmeThingCB;				// retail 0x012F49D0
+// Retail RVA 0x00522E89 stores this into the four-byte pointer at VA
+// 0x012F49D0; destructor RVA 0x00522613 clears it. The retail .data tail
+// supplies four loader-zero bytes. No containing object or EA global name
+// is proven; callers cast this one pointer to their existing local views.
+void *g_rva012F49D0 = 0;
 
 // ?bfmeIsSet@@YA_NXZ
 bool __cdecl bfmeIsSet(void)
 {
-	BfmeThingCB *thing = g_bfmeThingCB;
+	BfmeThingCB *thing = static_cast<BfmeThingCB *>(g_rva012F49D0);
 
 	if (!thing)
 		return 0;

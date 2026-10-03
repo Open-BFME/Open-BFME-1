@@ -52,7 +52,7 @@ extern int g_Va012F4988;
 extern int g_Va012F4998;
 extern int g_Va012F49B0;
 extern int g_Va012F49B4;
-extern int g_Va012F49D0;
+extern void *g_rva012F49D0;
 extern int g_Va012F49D4;
 extern int g_Va012F49E4;
 extern int g_Va012F49FC;
@@ -178,7 +178,7 @@ int Rva004F0750Get( void )
 
 int Rva00510B40Get( void )
 {
-	return g_Va012F49D0;
+	return reinterpret_cast<int>(g_rva012F49D0);
 }
 
 int Rva00558420Get( void )

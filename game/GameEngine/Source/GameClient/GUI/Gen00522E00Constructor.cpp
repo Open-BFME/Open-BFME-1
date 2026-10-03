@@ -98,7 +98,7 @@ public:
 	void *m_ptr;
 };
 
-extern Gen00522E00 *g_bfmeThingCB;			// retail 0x012F49D0
+extern void *g_rva012F49D0;					// retail 0x012F49D0
 
 class Gen00522E00 : public S4Owner
 {
@@ -127,9 +127,9 @@ Gen00522E00::Gen00522E00() : m_34(0), m_38(4)
 	m_44 = -1;
 	m_48 = false;
 	m_49 = false;
-	if( g_bfmeThingCB == 0 )
+	if( g_rva012F49D0 == 0 )
 	{
-		g_bfmeThingCB = this;
+		g_rva012F49D0 = this;
 
 		{
 			AsciiString name( "AptGuiFX::MessageBoxOk" );
