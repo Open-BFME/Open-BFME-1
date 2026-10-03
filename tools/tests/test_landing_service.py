@@ -264,6 +264,7 @@ def test_a_takeover_after_ref_advertisement_blocks_publication(claimed):
     (hooks / "pre-push").write_text(
         "#!/bin/sh\n" + f'git --git-dir="{origin.as_posix()}" update-ref refs/claims/0x00000100 {rival}\n',
         encoding="utf-8")
+    (hooks / "pre-push").chmod(0o755)  # Git ignores a non-executable hook on POSIX.
     git(service.repo, "config", "core.hooksPath", hooks.as_posix())
     result = service.run_once()
     assert result == {"landed": [], "rejected": [uid]}

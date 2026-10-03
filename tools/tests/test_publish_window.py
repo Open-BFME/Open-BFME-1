@@ -188,6 +188,7 @@ def test_a_narrow_scoped_record_never_skips_a_wider_gate(tmp_path):
     (repo / "game/b.h").write_text("old\n")
     _git(repo, "add", "--", ".githooks", "tools", "build.sh", "game", "targets")
     _git(repo, "update-index", "--chmod=+x", "build.sh")
+    (repo / "build.sh").chmod(0o755)  # Index mode does not change the worktree mode.
     _git(repo, "commit", "-q", "-m", "initial")
     older = _git(repo, "rev-parse", "HEAD")
     (repo / "game/b.h").write_text("bad b\n")
@@ -321,6 +322,7 @@ def test_an_ignored_included_input_that_changes_is_caught_by_the_next_push(tmp_p
     (repo / "game/a.cpp").write_text('#include "generated.h"\nint a;\n')
     _git(repo, "add", ".")
     _git(repo, "update-index", "--chmod=+x", "build.sh")
+    (repo / "build.sh").chmod(0o755)  # The hook executes this worktree file directly.
     _git(repo, "commit", "-q", "-m", "base")
     base = _git(repo, "rev-parse", "HEAD")
     (repo / "game/a.cpp").write_text('#include "generated.h"\nint a = 1;\n')
