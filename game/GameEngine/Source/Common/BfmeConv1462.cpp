@@ -1,13 +1,15 @@
 // cl: /Od
 
-int bfmeMakeOX(void *p);
+int stringLength(const char *s);
+void __stdcall bfmeInsertRangeV49(char *pos, char *first, char *last, char *tag);
+
+// The 0x00042DC0 ILT reaches the one-byte member at 0x000A34E0.
+struct Gen_000a34e0 { void m(); };
 
 class BfmeStrV22
 {
 public:
 	BfmeStrV22 *bfmeInsertV22(unsigned pos, char *s);
-	void bfmeLenErrV22();
-	void bfmeImplV22(char *a, char *b, char *c, char *d);
 
 	char *b;
 	char *e;
@@ -37,7 +39,7 @@ BfmeStrV22 *BfmeStrV22::bfmeInsertV22(unsigned pos, char *s)
 	skip_grow:
 		mov eax, dword ptr s
 		push eax
-		call bfmeMakeOX
+		call stringLength
 		add esp, 4
 		mov dword ptr [ebp-4], eax
 		mov ecx, this
@@ -49,7 +51,7 @@ BfmeStrV22 *BfmeStrV22::bfmeInsertV22(unsigned pos, char *s)
 		cmp eax, ecx
 		jbe skip_len
 		mov ecx, this
-		call bfmeLenErrV22
+		call Gen_000a34e0::m
 	skip_len:
 		mov edx, this
 		mov eax, dword ptr [edx]
@@ -67,7 +69,7 @@ BfmeStrV22 *BfmeStrV22::bfmeInsertV22(unsigned pos, char *s)
 		mov edx, dword ptr at
 		push edx
 		mov ecx, this
-		call bfmeImplV22
+		call bfmeInsertRangeV49
 		mov eax, this
 	}
 }
