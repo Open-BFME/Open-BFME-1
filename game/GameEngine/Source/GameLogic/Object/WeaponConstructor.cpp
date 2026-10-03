@@ -6,14 +6,7 @@ enum WeaponSlotType
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
-class WeaponTemplate
-{
-public:
-	float getMinTargetPitch() const { return *reinterpret_cast<const float *>(reinterpret_cast<const char *>(this) + 0x78); }
-	float getMaxTargetPitch() const { return *reinterpret_cast<const float *>(reinterpret_cast<const char *>(this) + 0x7c); }
-	int getShotsPerBarrel() const { return *reinterpret_cast<const int *>(reinterpret_cast<const char *>(this) + 0x4d0); }
-	unsigned int getSuspendFXDelay() const { return *reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(this) + 0x518); }
-};
+class WeaponTemplate;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -82,10 +75,10 @@ Weapon::Weapon(const WeaponTemplate *tmpl, WeaponSlotType wslot)
 	m_projectileStreamID = 0;
 	m_leechWeaponRangeActive = 0;
 	m_unknown54 = 0;
-	m_pitchLimited = tmpl->getMinTargetPitch() > -3.14159265f || tmpl->getMaxTargetPitch() < 3.14159265f;
+	m_pitchLimited = (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(tmpl) + 0x78)) > -3.14159265f || (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(tmpl) + 0x7c)) < 3.14159265f;
 	m_curBarrel = 0;
 	m_maxShotCount = 0x7fffffff;
-	m_numShotsForCurBarrel = tmpl->getShotsPerBarrel();
+	m_numShotsForCurBarrel = (*reinterpret_cast<const int *>(reinterpret_cast<const char *>(tmpl) + 0x4d0));
 	m_unknown2c = 0;
-	m_suspendFXFrame = TheGameLogic->getFrame() + tmpl->getSuspendFXDelay();
+	m_suspendFXFrame = TheGameLogic->getFrame() + (*reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(tmpl) + 0x518));
 }
