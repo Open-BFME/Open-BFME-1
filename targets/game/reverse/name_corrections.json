@@ -17908,5 +17908,15 @@
   "after_sha256": "4f7dbb7547b5bc4213f40c9f5ab7d9575989aa567a87145bbdccc6735ff190ba",
   "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
   "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003dc810.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderClearCellForDiameter.cpp",
+  "old_name": "PathfindCellInfo",
+  "new_name": "Rva003DC810CellInfo",
+  "before_sha256": "e233938e1dfb546d460f60c95cf1b89030d4a2da0c5972f6572dc4522bb5b344",
+  "after_sha256": "715da0b9b95a39c3d349a1ce86aa5b311d8ed4d54338600b8878889f00f17034",
+  "evidence": "targets/game/reverse/identity_evidence/003dc810-clear-cell.md",
+  "reason": "The bank side-table view assigns the position-unit ID to +0x18, but the existing native getPosUnit at 003D4BF0 reads +0x20. Preserve the witnessed +0x18 access in an address-qualified partial view without claiming the unproven PathfindCellInfo layout or getter identity."
  }
 ]

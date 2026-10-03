@@ -1801,3 +1801,17 @@ A declaration-only call kept the ID in EAX and loaded the receiver early.
 The full native module headers and canonical object.h preserve the match;
 no artificial pure accessor or duplicate helper claim is needed. See
 identity_evidence/00256240-upgrade-die.md for the slot and field evidence.
+
+
+## A visible lookup can change failure-block placement (2026-10-03)
+
+`Pathfinder::clearCellForDiameter` at 0x003DC810 compiled to 745 bytes against
+retail's 729; its bank's 0.96 score measured instruction shape, with 521 actual
+nonrelocation differences. Many equivalent control-flow graphs retained a
+failure block after the loop and widened four conditional branches. Including
+`GameLogicObjectLookup.h` with `BFME_GAMELOGIC_LOOKUP_VISIBLE` exposes the real
+non-inlined 82-byte lookup and places the failure block exactly as retail does.
+The complete caller passes strict byte/callee/DIR32 verification with no new
+pins, and the canonical Object header preserves the exact result. Check actual
+callee side effects before concluding that equivalent branch graphs prove an
+unreachable compiler-layout decision. Evidence: `identity_evidence/003dc810-clear-cell.md`.
