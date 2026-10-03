@@ -3090,6 +3090,30 @@ def verify_noop_patch(patches):
     print(f"No-op patch: OK {NOOP_EXE.relative_to(ROOT)}")
 
 
+def string_literal_bytes(symbol, section_bytes):
+    """MSVC's literal length includes its terminator, but excludes COFF padding.
+
+    A digit encodes lengths 1..10; A..P digits encode a hexadecimal length
+    terminated by @. The length is in bytes for both narrow and UTF-16 strings.
+    Preserve embedded/trailing NULs instead of rstrip-ing away evidence.
+    """
+    match = re.match(r"\?\?_C@_([01])([0-9]|[A-P]+@)", symbol)
+    if not match:
+        raise ValueError("unrecognized MSVC string-literal length")
+    width = 2 if match[1] == "1" else 1
+    encoded = match[2]
+    length = int(encoded) + 1 if encoded.isdigit() else 0
+    if not encoded.isdigit():
+        for digit in encoded[:-1]:
+            length = length * 16 + ord(digit) - ord("A")
+    if length < width or length % width or length > len(section_bytes):
+        raise ValueError("invalid or truncated MSVC string literal")
+    value = section_bytes[:length]
+    if value[-width:] != b"\0" * width:
+        raise ValueError("MSVC string literal has no complete terminator")
+    return value
+
+
 def verify_string_refs(rows):
     """Independently VERIFY (not mask) every DIR32 relocation that points at a string literal:
     read the address the compiled code references, and confirm the string AT that address in the
@@ -3118,6 +3142,7 @@ def verify_string_refs(rows):
             # genuine extraction/RVA failure is surfaced as a mismatch (fail loudly), not swallowed.
             try:
                 cs, _ = read_object_symbol_bytes(obj, sym)
+                cs = string_literal_bytes(sym, cs)
                 str_rva = struct.unpack_from("<I", target, offset)[0] - 0x400000
                 file_off = rva_to_file_offset(pe, str_rva)
             except (ValueError, struct.error) as exc:
@@ -3127,19 +3152,14 @@ def verify_string_refs(rows):
             # references symbol+addend (e.g. "DBGHELP.DLL"+4 == "ELP.DLL"), so the referenced
             # literal is content[addend:], and the binary holds it at str_rva == sym_rva+addend.
             addend = struct.unpack_from("<i", fn_bytes, offset)[0] if offset + 4 <= len(fn_bytes) else 0
-            content = cs.rstrip(b"\x00")
-            if 0 < addend <= len(content):
-                content = content[addend:]
-            if not content:
-                # empty string literal "": no content to match, but confirm the referenced location
-                # really is an empty string (a null byte) and not a stale/wrong pointer.
-                if exe[file_off] != 0:
-                    mismatches.append((row["name"], b'"" (empty)', exe[file_off : file_off + 4]))
-                else:
-                    empty_ok += 1
+            if not 0 <= addend < len(cs):
+                mismatches.append((row["name"], f"<invalid literal addend {addend}>".encode(), b""))
                 continue
+            content = cs[addend:]
             if exe[file_off : file_off + len(content)] != content:
                 mismatches.append((row["name"], content, exe[file_off : file_off + len(content)]))
+            elif not content.rstrip(b"\0"):
+                empty_ok += 1
             else:
                 checked += 1
     if mismatches:
