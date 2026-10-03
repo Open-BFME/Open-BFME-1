@@ -3,44 +3,17 @@
 // UnicodeString @+4 (no gap between them in this ctor's own evidence -- the
 // UnicodeString::set() call below runs with this==&m_name+4), then five
 // zero-initialised Int fields packed at +8..+0x18.
-#include "string_base.h"
+#include "ascii_string.h"
+#include "unicode_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+// The retail constructor inlines these canonical wide-string operations.
+inline UnicodeString::UnicodeString() : m_text(0) {}
+inline UnicodeString &UnicodeString::operator=(const UnicodeString &that)
 {
-public:
-	static const AsciiString TheEmptyString;
-	AsciiString() { m_data = 0; }
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-		return *this;
-	}
-private:
-	char *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	// Retail's storage is ?TheEmptyString@UnicodeString@@2V1@A (0x00F36E54),
-	// which is what Common/System/UnicodeString.cpp -- the only TU that
-	// defines the datum -- exports. The `const` is what decides the trailing
-	// access code: `static const UnicodeString` mangles ...@2V1@B and no
-	// object in the tree defines that, so only its address was ever taken.
-	static UnicodeString TheEmptyString;
-	UnicodeString() { m_data = 0; }
-	~UnicodeString();
-	UnicodeString &operator=(const UnicodeString &that)
-	{
-		((StringBase<unsigned short> *)this)->set(*(const StringBase<unsigned short> *)&that);
-		return *this;
-	}
-private:
-	unsigned short *m_data;
-};
+	((StringBase<unsigned short> *)this)->set(
+		*(const StringBase<unsigned short> *)&that);
+	return *this;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyGroupRoom
