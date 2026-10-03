@@ -1,5 +1,5 @@
-// ?d_008bc120@@YAXXZ
-// partial score=0.918 date=2026-09-27
+// ?bfmeMirror1281@BfmeSlotDispatcher1281@@QAEXHHI@Z
+// partial score=0.6636 date=2026-10-03
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // EA Apt integer factory.  Its callers are the named integer-producing Apt
 // handlers, and the body is the pooled Apt value constructor at 0x008A11E0.
@@ -25,7 +25,7 @@ struct Rva00899560Pool
 
 	__forceinline void addPooled(Rva008D2A30Node *node)
 	{
-		int &count = m_count;
+		int count = m_count;
 		if (count >= m_capacity)
 		{
 			node->m_flags &= 0xbfffffff;
@@ -33,14 +33,15 @@ struct Rva00899560Pool
 		else
 		{
 			m_items[count] = node;
-			count++;
+			m_count=count+1;
 		}
 	}
 };
 
 // Retail AptInteger::Create reads the adjacent pool head at 0x013387D0;
 // AptBoolean and the Rva008D2A30 chain use the distinct 0x013387D4 head.
-extern Rva008D2A30Node *Rva013387D0Head;
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 
@@ -60,9 +61,9 @@ struct Rva008A1110Value : Rva00899560Value {
 };
 class AptInteger {public:
  static __forceinline Rva008A1110Value *Create(int value) {
-  Rva008A1110Value *object=(Rva008A1110Value *)Rva013387D0Head;
+  Rva008A1110Value *object=(Rva008A1110Value *)g_rva008D2A10;
   if(object) {
-   Rva013387D0Head=(Rva008D2A30Node *)object->m_next;
+   g_rva008D2A10=(Rva008D2A10 *)object->m_next;
    g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
    object->m_value=value;
   } else object=new Rva008A1110Value(value);
@@ -80,7 +81,8 @@ class BfmeStrVKI {public:
  __forceinline ~BfmeStrVKI() {BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) g_bfmeStringPool1284->free(p);}
 };
 class Rva008A0F20Header {public: int isKind0F() const; void *vptr; unsigned flags;};
-void rva008AF650Implementation(int,int,int);
+class Rva008AF650Object; class AptValue;
+bool rva008AF650Implementation(Rva008AF650Object *,BfmeStrVKI *,AptValue *);
 class BfmeSlotDispatcher1281 {public:
  char field000[0x924]; int field924; Rva008A0F20Header *field928[64]; char fielda28[0x1268-0xa28]; Rva008A0F20Header *field1268;
  void bfmeMirror1281(int,int,unsigned);
@@ -105,7 +107,7 @@ void BfmeSlotDispatcher1281::bfmeMirror1281(int group,int slot,unsigned encoded)
        if(slot==4) amount=-amount;
        Rva008A1110Value *integer=AptInteger::Create(amount);
        BfmeStrVKI name("scroll");
-       rva008AF650Implementation((int)entry,(int)&name,(int)integer);
+       rva008AF650Implementation((Rva008AF650Object *)entry,&name,(AptValue *)integer);
       }
      } else bfmeApplySlot1281(entry,0x40000,(void *)encoded);
      break;
