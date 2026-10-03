@@ -473,53 +473,7 @@ void AIGuardOuterState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AIGuardOuterState@@ present-unmatched
-StateReturnType AIGuardOuterState::onEnter( void )
-{
-	if (getGuardMachine()->getGuardMode() == GUARDMODE_GUARD_WITHOUT_PURSUIT)
-	{
-		// "patrol" mode does not follow targets outside the guard area.
-		return STATE_SUCCESS;
-	}
-
-	Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-	Coord3D pos = targetToGuard ? *targetToGuard->getPosition() : *getGuardMachine()->getPositionToGuard();
-
-	Object* nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID()) ;
-	if (nemesis == NULL) 
-	{
-		DEBUG_LOG(("Unexpected NULL nemesis in AIGuardInnerState.\n"));
-		return STATE_SUCCESS;
-	}
-	Object *obj = getMachineOwner();
-
-	Real range = TheAI->getAdjustedVisionRangeForObject(obj, AI_VISIONFACTOR_OWNERTYPE | AI_VISIONFACTOR_MOOD);
-
-	const PolygonTrigger *area = getGuardMachine()->getAreaToGuard();
-	if (area) 
-	{
-		if (range < area->getRadius()) 
-			range = area->getRadius();
-		area->getCenterPoint(&pos);
-	}
-	m_exitConditions.m_center = pos;
-	m_exitConditions.m_radiusSqr = sqr(range);
-	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-	m_exitConditions.m_conditionsToConsider = (ExitConditions::ATTACK_ExitIfExpiredDuration | 
-																								ExitConditions::ATTACK_ExitIfOutsideRadius | 
-																								ExitConditions::ATTACK_ExitIfNoUnitFound);
-
-	m_attackState = newInstance(AIAttackState)(getMachine(), false, true, false, &m_exitConditions);
-	m_attackState->getMachine()->setGoalObject(nemesis);
-
-	StateReturnType returnVal = m_attackState->onEnter();
-	if (returnVal == STATE_CONTINUE) {
-		return STATE_CONTINUE;
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
+// AIGuardOuterState::onEnter is emitted by AIGuardOuterState_onEnter_Bfme.cpp (retail 0x0015C7A0).
 
 //--------------------------------------------------------------------------------------
 // ?update@AIGuardOuterState@@ present-unmatched
