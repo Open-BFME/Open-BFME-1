@@ -9,9 +9,21 @@ struct BfmeHeadXA
 class BfmeListXA
 {
 public:
-	void bfmeDropXA(void *what);
 	BfmeHeadXA *m_bfmeHead;
 	int m_bfmeCount;
+};
+
+// The drop goes through the five-byte ILT thunk at 0x0001FF82, defined as
+// ?j_0001ff82@@YAXXZ (game/gen_small/thunks_015.cpp); it is spelled through a
+// thiscall member pointer of the same shape.
+extern void j_0001ff82();
+
+typedef void (BfmeListXA::*bfmeDropXAThunk)(void *what);
+
+union BfmeDropXAThunkCast
+{
+	void (__cdecl *freeFunction)(void *what);
+	bfmeDropXAThunk memberFunction;
 };
 
 class BfmeThingXA
@@ -27,7 +39,9 @@ void BfmeThingXA::bfmeClearXA()
 	BfmeListXA *list = &m_bfmeList;
 	if (list->m_bfmeCount != 0)
 	{
-		list->bfmeDropXA(list->m_bfmeHead->m_bfmeOne);
+		BfmeDropXAThunkCast cast;
+		cast.freeFunction = reinterpret_cast<void (__cdecl *)(void *)>(&::j_0001ff82);
+		(list->*cast.memberFunction)(list->m_bfmeHead->m_bfmeOne);
 		list->m_bfmeHead->m_bfmeTwo = list->m_bfmeHead;
 		list->m_bfmeHead->m_bfmeOne = 0;
 		list->m_bfmeHead->m_bfmeThree = list->m_bfmeHead;

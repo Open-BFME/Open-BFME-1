@@ -12,8 +12,20 @@ struct BfmeModeAAB
 
 class BfmeSinkAAB
 {
-public:
-	void bfmeSendAAB(void *what, bool flag, int more);
+};
+
+// The send goes through the five-byte ILT thunk at 0x00044409, defined as
+// ?j_00044409@@YAXXZ (game/gen_small/thunks_032.cpp). The thunk declares no
+// arguments: it jumps with the thiscall `this` in ECX, so the call is spelled
+// through a thiscall member pointer of the same shape.
+extern void j_00044409();
+
+typedef void (BfmeSinkAAB::*bfmeSendAABThunk)(void *what, bool flag, int more);
+
+union BfmeSendAABThunkCast
+{
+	void (__cdecl *freeFunction)(void *what, bool flag, int more);
+	bfmeSendAABThunk memberFunction;
 };
 
 // Retail global at 0x012F19E8; the canonical mangled spelling is
@@ -45,5 +57,7 @@ void BfmeThingAAB::bfmeGoAAB(int at)
 	void *what = m_bfmeSlots[at].m_bfmeWhat;
 	if (what == 0)
 		return;
-	((BfmeSinkAAB *)TheControlBar)->bfmeSendAAB(what, ((BfmeModeAAB *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
+	BfmeSendAABThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(void *, bool, int)>(&::j_00044409);
+	(((BfmeSinkAAB *)TheControlBar)->*cast.memberFunction)(what, ((BfmeModeAAB *)g_rva012F19E8WindowManager)->m_bfmeMode != 2, 0);
 }

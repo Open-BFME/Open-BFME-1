@@ -49,6 +49,24 @@ public:
 	virtual void attemptDamage(DamageInfo *damageInfo);
 };
 
+// The base dispatch is retail's five-byte ILT thunk at 0x0003B372, defined as
+// ?j_0003b372@@YAXXZ (game/gen_small/thunks_028.cpp). It declares no
+// arguments: it jumps with the thiscall `this` in ECX, so the call is spelled
+// through a thiscall member pointer of the same shape.
+extern void j_0003b372();
+
+class BodyBaseCallee
+{
+};
+
+typedef void (BodyBaseCallee::*bodyAttemptDamageThunk)(DamageInfo *damageInfo);
+
+union BodyAttemptDamageThunkCast
+{
+	void (__cdecl *freeFunction)(DamageInfo *damageInfo);
+	bodyAttemptDamageThunk memberFunction;
+};
+
 class RespawnBody : public BehaviorModule,
 	public BehaviorModuleInterface,
 	public BodyModuleInterface
@@ -79,5 +97,8 @@ void FreeLifeBody::attemptDamage(DamageInfo *damageInfo)
 			return;
 	}
 
-	BodyModuleInterface::attemptDamage(damageInfo);
+	BodyAttemptDamageThunkCast cast;
+	cast.freeFunction = reinterpret_cast<void (__cdecl *)(DamageInfo *)>(&::j_0003b372);
+	// ECX already holds the interface subobject for this call.
+	(((BodyBaseCallee *)((char *)this + 0x10))->*cast.memberFunction)(damageInfo);
 }
