@@ -1,24 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean C++ reconstruction of map-cache validation.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-struct AsciiStringData
-{
-	unsigned short m_refCount;
-	unsigned short m_allocated;
-	unsigned short m_length;
-};
+#include "ascii_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+// Retail inlines the canonical string's null/length test in this caller.
+template <> inline bool StringBase<char>::isEmpty() const
 {
-public:
-	~AsciiString();
-	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
-	void toLower();
-private:
-	AsciiStringData *m_data;
-};
+	return !m_data || m_data->length == 0;
+}
 
 struct MapCacheNode
 {
