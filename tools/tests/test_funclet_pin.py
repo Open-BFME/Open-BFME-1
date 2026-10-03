@@ -71,7 +71,7 @@ def write_object(path, bodies, sites=None):
     symbol_at = reloc_at + len(relocs) * 10
     header = struct.pack("<HHIIIHH", 0x014C, 1, 0, symbol_at, len(symbols), 0, 0)
     section = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, len(blobs), raw_at,
-                          reloc_at, 0, len(relocs), 0, 0)
+                          reloc_at, 0, len(relocs), 0, 0x60301020)
     path.write_bytes(header + section + blobs + b"".join(relocs)
                      + b"".join(symbols) + bytes(strings))
     return path
@@ -103,7 +103,7 @@ def test_tail_jump_target_breaks_identical_funclet_prefix_tie(monkeypatch):
         "$L8408": [(7, build.REL32, "??1Straw@@UAE@XZ")],
     }
     monkeypatch.setattr(build, "read_object_symbol_bytes",
-                        lambda _path, label, _size: (target, relocs[label]))
+                        lambda _path, label, _size, **_kwargs: (target, relocs[label]))
     monkeypatch.setattr(build, "load_symbol_map", lambda: {
         "??1CacheStraw@@UAE@XZ": [destination],
         "??1Straw@@UAE@XZ": [0x009E1A90],
@@ -123,7 +123,7 @@ def test_tail_jump_tie_break_requires_unique_route(monkeypatch):
         ("$L9684", "??1Pipe@@UAE@XZ"),
     )}
     monkeypatch.setattr(build, "read_object_symbol_bytes",
-                        lambda _path, label, _size: (target, relocs[label]))
+                        lambda _path, label, _size, **_kwargs: (target, relocs[label]))
     monkeypatch.setattr(build, "load_symbol_map", lambda: {
         "??1BufferPipe@@UAE@XZ": [destination],
         "??1Pipe@@UAE@XZ": [destination],
@@ -254,8 +254,8 @@ def write_split_object(path, bodies):
     symbol_at = reloc_at + len(relocs) * 10
     header = struct.pack("<HHIIIHH", 0x014C, 2, 0, symbol_at, len(symbols), 0, 0)
     text = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, len(blobs), raw_at,
-                       reloc_at, 0, len(relocs), 0, 0)
-    handler = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                       reloc_at, 0, len(relocs), 0, 0x60301020)
+    handler = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, 0, 0, 0, 0, 0, 0, 0x60301020)
     path.write_bytes(header + text + handler + blobs + b"".join(relocs)
                      + b"".join(symbols) + bytes(strings))
     return path
@@ -293,3 +293,14 @@ def test_a_fully_relocated_body_is_not_a_candidate(tmp_path):
     assert patch["bytes"] == patch["target"], "the real funclet still compiles exact"
     assert "$L47543" in patch["note"], "the note names the body that actually holds it"
     assert "$L47547" not in patch["note"], "the all-masked table is not a candidate"
+
+
+def test_funclet_pin_in_noncode_section_is_refused(tmp_path):
+    obj = write_object(tmp_path / "data_pin.obj", {"$L12345": BIT0})
+    raw = bytearray(obj.read_bytes())
+    raw[20:28] = b".data\0\0\0"
+    struct.pack_into("<I", raw, 56, 0xC0300040)
+    obj.write_bytes(raw)
+    assert build.funclet_scan(obj, make_row("$L12345"), TARGET) == []
+    with pytest.raises(SystemExit, match="nothing in the parent's group"):
+        compile_row(obj, "$L12345")

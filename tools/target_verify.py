@@ -193,7 +193,7 @@ def _compile(target, source, profile_name, output):
 
 
 def _object_body(obj, symbol):
-    code, relocs = build.read_object_symbol_bytes(obj, symbol)
+    code, relocs = build.read_object_symbol_bytes(obj, symbol, require_code=True)
     data, sections, symbols = build._object_layout(str(obj), obj.stat().st_mtime_ns, obj.stat().st_size)
     defined = [entry for entry in symbols if entry["name"] == symbol and entry["section"] > 0]
     _require(len(defined) == 1, f"{symbol}: expected one defined object symbol")

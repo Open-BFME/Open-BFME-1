@@ -1796,7 +1796,7 @@ def funclet_scan(path, row, target):
         if symbol["section"] not in group or not re.fullmatch(r"\$L\d+", symbol["name"]):
             continue
         try:
-            body, relocs = read_object_symbol_bytes(path, symbol["name"], size)
+            body, relocs = read_object_symbol_bytes(path, symbol["name"], size, require_code=True)
         except ValueError:
             continue
         masked = {i for offset, _rtype, _sym in relocs if offset + 4 <= size
@@ -1853,7 +1853,7 @@ def funclet_tail_jump_candidates(path, row, target, labels):
     symbol_map = load_symbol_map()
     matches = []
     for label in labels:
-        _body, relocs = read_object_symbol_bytes(path, label, len(target))
+        _body, relocs = read_object_symbol_bytes(path, label, len(target), require_code=True)
         tail_symbols = [symbol for offset, rtype, symbol in relocs
                         if offset == len(target) - 4 and rtype == REL32]
         if len(tail_symbols) == 1 and destination in symbol_map.get(tail_symbols[0], ()):
@@ -1870,7 +1870,7 @@ def read_funclet(row, object_symbol, output, target):
     what it actually compiled. Nothing is ever picked from a field of two.
     """
     try:
-        compiled, relocs = read_object_symbol_bytes(output, object_symbol, len(target))
+        compiled, relocs = read_object_symbol_bytes(output, object_symbol, len(target), require_code=True)
     except ValueError as missing:
         compiled, relocs, gone = None, None, missing
     else:
@@ -1883,7 +1883,7 @@ def read_funclet(row, object_symbol, output, target):
     if len(hits) > 1:
         routed = funclet_tail_jump_candidates(output, row, target, hits)
         if len(routed) == 1:
-            compiled, relocs = read_object_symbol_bytes(output, routed[0], len(target))
+            compiled, relocs = read_object_symbol_bytes(output, routed[0], len(target), require_code=True)
             return compiled, relocs, (
                 f"{object_symbol} was renumbered; retail's tail jump target "
                 f"identifies {routed[0]} in the object built now")
@@ -1893,7 +1893,7 @@ def read_funclet(row, object_symbol, output, target):
             f"match it equally ({', '.join(hits)}). Byte evidence cannot tell them apart, "
             "so the gate will not pick one — the row needs a body it can name on its own"))
     if hits:
-        compiled, relocs = read_object_symbol_bytes(output, hits[0], len(target))
+        compiled, relocs = read_object_symbol_bytes(output, hits[0], len(target), require_code=True)
         return compiled, relocs, (
             f"{object_symbol} was renumbered by an edit to this TU; the body is {hits[0]} "
             "in the object built now (stale ledger pin, not a byte mismatch)")

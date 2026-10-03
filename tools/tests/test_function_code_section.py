@@ -58,3 +58,13 @@ def test_code_section_with_comdat_suffix_remains_eligible(tmp_path, monkeypatch)
     monkeypatch.setattr(build, "read_target_bytes", lambda *_: body)
     patch = build.compile_function(row(len(body)), {}, obj)
     assert build.verified_patch_eligible(patch, body)
+
+
+def test_target_function_extraction_rejects_noncode_sections(tmp_path):
+    import target_verify
+    body = bytes.fromhex("8b01c3")
+    obj = write_object(tmp_path / "data_body.obj", ".data", 0xC0300040, body)
+    with pytest.raises(ValueError, match="non-code COFF section"):
+        target_verify._object_body(obj, "_lookup")
+    obj = write_object(tmp_path / "code_body.obj", ".text$mn", 0x60301020, body)
+    assert target_verify._object_body(obj, "_lookup") == (body, [])
