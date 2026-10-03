@@ -53,8 +53,15 @@ class ExperienceTracker
 public:
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
+{
+public:
+	void setPosition( const Coord3D *position );
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
+class Object : public Thing
 {
 public:
 	Team *getTeam() const { return m_team; }
@@ -63,8 +70,6 @@ public:
 		return reinterpret_cast<const Coord3D *>(
 			reinterpret_cast<const unsigned char *>( this ) + 0x38 );
 	}
-	void setPosition( const Coord3D *position );
-
 	unsigned char m_unmodelled_00[0x74];
 	UnsignedInt m_id;
 	unsigned char m_unmodelled_78[0x210 - 0x78];
