@@ -1473,13 +1473,7 @@ void MultiIniFieldParse::add(const FieldParse* f, UnsignedInt e)
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?initFromINIMultiProc@INI@@ present-unmatched
-void INI::initFromINIMultiProc( void *what, BuildMultiIniFieldProc proc )
-{
-	MultiIniFieldParse p;
-	(*proc)(p);
-	initFromINIMulti(what, p);
-}
+// The retail definition is owned by ini_parsers.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?initFromINIMulti@INI@@ present-unmatched
