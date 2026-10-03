@@ -1,5 +1,5 @@
 // ??0OpenContainModuleData@@QAE@XZ
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: ??0OpenContainModuleData@@QAE@XZ, retail 0x00227200, 398 bytes.
 //
@@ -21,6 +21,8 @@
 //   - native STLport vector<AsciiString> at +0x158, explicit erase declaration;
 //   - m_sounds.clear() before the plain +0x164 = 100 store.
 //
+#define _STLP_NO_EXCEPTIONS 1
+#include <memory>
 #include "ascii_string.h"
 
 // The vptr-bearing base the body installs at +0x00.  Retail never touches
@@ -82,7 +84,9 @@ private:
 // both AudioEventRTS constructions.
 extern const AsciiString Rva01336E50EmptyString;
 
-void *bfmeAllocNode( unsigned int bytes ); // retail 0x0082E540
+// Retail calls 0x0082E540 for the fixed 0x24/0x3C nodes below. Its
+// freelist/lock/refill body is the pooled __node_alloc<true,0>::_M_allocate;
+// use the authentic public entry point, whose <=128 branch reaches it.
 
 // The first self-linked container, at +0x11C.  The body allocates exactly one
 // 0x24-byte node, points both of the node's links at the node itself, and the
@@ -103,7 +107,7 @@ public:
 	{
 		m_node = 0;
 		Rva00211CListNode *node = static_cast<Rva00211CListNode *>(
-			bfmeAllocNode( sizeof( Rva00211CListNode ) ) );
+			_STL::__node_alloc<true, 0>::allocate( sizeof( Rva00211CListNode ) ) );
 		node->m_next = node;
 		node->m_prev = node;
 		m_node = node;
@@ -136,7 +140,7 @@ public:
 	{
 		m_node = 0;
 		m_node = static_cast<Rva002120ListNode *>(
-			bfmeAllocNode( sizeof( Rva002120ListNode ) ) );
+			_STL::__node_alloc<true, 0>::allocate( sizeof( Rva002120ListNode ) ) );
 		m_word124 = 0;
 		m_node->m_zero0 = 0;
 		m_node->m_zero4 = 0;
@@ -149,8 +153,9 @@ private:
 	unsigned int m_word124;
 };
 
-#define _STLP_USE_NEWALLOC 1
-#define _STLP_NO_EXCEPTIONS 1
+// Retail constructor EH state 7 reaches vector<AsciiString> destructor
+// 0x000658A0 via ILT 0x00026AB2: <=128 bytes use pool deallocation and
+// larger allocations use scalar delete. Preserve the native allocator.
 #include <vector>
 #include <string.h>
 class Rva00212CThreePointer {
