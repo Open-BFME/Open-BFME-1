@@ -23,7 +23,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 
 NameKeyType NAMEKEY(const char *name);
 
-void bfmeLogMsg574(const char *message);
+extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 int bfmeNotify2_574(void *state, void *parameter);
 extern "C" int io_debug(lua_State *state);
 
@@ -113,7 +113,7 @@ int ObjectSpy(lua_State *state)
 	}
 
 debugMode:
-	bfmeLogMsg574(
+	__identifier("?j_0003ebad@@YAXXZ")(
 		"\nEntering LUA debug mode.  Type ? for help, 'cont' to exit debug mode\n");
 	bfmeNotify2_574(state, 0);
 	return 0;

@@ -228,7 +228,7 @@ SLOT(80) SLOT(84) SLOT(88) SLOT(8C) SLOT(90)
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern void *g_activeObj12F0610;
-extern void __cdecl bfmeLogMsg574(const char *message);
+extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 extern void __cdecl bfmeNotify1_574(void *state, void *activation);
 
 int __cdecl bfmeNotify2_574(void *state, void *parameter)
@@ -241,36 +241,36 @@ int __cdecl bfmeNotify2_574(void *state, void *parameter)
 		lua_getstack((lua_State *)state, 1, &activation);
 	}
 
-	bfmeLogMsg574("> ");
+	__identifier("?j_0003ebad@@YAXXZ")("> ");
 readCommand:
 	if (TheBfmeAwakenDebug->slot94(command, 250, &inputAvailable) > 0) {
 		if (strcmp(command, "cont") == 0) {
-			bfmeLogMsg574("cont - Exiting LUA debug mode.\n");
+			__identifier("?j_0003ebad@@YAXXZ")("cont - Exiting LUA debug mode.\n");
 			g_activeObj12F0610 = 0;
 			return 0;
 		}
 		if (strcmp(command, "step") == 0) {
-			bfmeLogMsg574("step\n");
+			__identifier("?j_0003ebad@@YAXXZ")("step\n");
 			g_activeObj12F0610 = state;
 			return 0;
 		}
 		if (strcmp(command, "where") == 0) {
 			bfmeNotify1_574(state, parameter);
-			bfmeLogMsg574("> ");
+			__identifier("?j_0003ebad@@YAXXZ")("> ");
 		} else if (strncmp(command, "?", 1) == 0) {
-			bfmeLogMsg574("cont - continue, step - single step script, where - describe current execution point.\n");
-			bfmeLogMsg574("Any other text is passed to the LUA interpreter.  Try print('something')\n");
-			bfmeLogMsg574("> ");
+			__identifier("?j_0003ebad@@YAXXZ")("cont - continue, step - single step script, where - describe current execution point.\n");
+			__identifier("?j_0003ebad@@YAXXZ")("Any other text is passed to the LUA interpreter.  Try print('something')\n");
+			__identifier("?j_0003ebad@@YAXXZ")("> ");
 		} else {
-			bfmeLogMsg574(command);
-			bfmeLogMsg574("\n");
+			__identifier("?j_0003ebad@@YAXXZ")(command);
+			__identifier("?j_0003ebad@@YAXXZ")("\n");
 			lua_dostring((lua_State *)state, command);
 			lua_settop((lua_State *)state, 0);
-			bfmeLogMsg574("> ");
+			__identifier("?j_0003ebad@@YAXXZ")("> ");
 		}
 	}
 	if (inputAvailable)
 		goto readCommand;
-	bfmeLogMsg574("No console input devices.  Exiting LUA debug mode.\n");
+	__identifier("?j_0003ebad@@YAXXZ")("No console input devices.  Exiting LUA debug mode.\n");
 	return 0;
 }

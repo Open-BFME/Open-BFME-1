@@ -1,7 +1,7 @@
 
 extern void *g_activeObj12F0610;
 extern const char bfmeString10CF748[];
-void __cdecl bfmeLogMsg574(const char *msg);
+extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 void __cdecl bfmeNotify1_574(void *obj, void *param);
 int __cdecl bfmeNotify2_574(void *obj, void *param);
 
@@ -9,7 +9,7 @@ void __cdecl bfmeHandleDeactivation574(void *obj, void *param)
 {
 	if (g_activeObj12F0610 == obj) {
 		g_activeObj12F0610 = 0;
-		bfmeLogMsg574(bfmeString10CF748);
+		__identifier("?j_0003ebad@@YAXXZ")(bfmeString10CF748);
 		bfmeNotify1_574(obj, param);
 		bfmeNotify2_574(obj, param);
 	}
