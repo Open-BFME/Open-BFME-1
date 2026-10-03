@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the draw-callback window-file parser to clean C++.
 
 typedef int Int;
@@ -7,19 +7,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *string, const char *separators);
 extern "C" unsigned int __cdecl strlen(const char *string);
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set(const char *string, Int length);
-
-	const char *str(void) const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) : "";
-	}
-
-	void *m_data;
-};
+#include "ascii_string.h"
 
 enum NameKeyType
 {
@@ -67,7 +55,7 @@ Bool parseDrawCallback(char *token, WinInstanceData *instData, char *buffer, voi
 	ptr++;
 	c = strtok(ptr, stringSeps);
 
-	theDrawString.set(c, c ? (Int)strlen(c) : 0);
+	theDrawString.StringBase<char>::set(c, c ? (Int)strlen(c) : 0);
 	NameKeyType key = TheNameKeyGenerator->nameToKey(theDrawString.str());
 	drawFunc = TheFunctionLexicon->gameWinDrawFunc(key);
 
