@@ -1,3 +1,6 @@
+// stlport
+#include "Thing/GameLogicObjectLookup.h"
+
 class BfmeResCRA;
 class BfmeSubCRA
 {
@@ -37,16 +40,7 @@ struct BfmeMidCRA
 	BfmeSubCRA *m_bfmeSub;
 };
 
-class BfmeTableCRA
-{
-public:
-	BfmeMidCRA *bfmeFindCRA(void *key);
-};
-
-// TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
-// only forward declared here, so the call casts through this view.
-class GameLogic;
-
+// Retail ILT 0x0001F253 reaches GameLogic::findObjectByID at 0x0009A510.
 extern GameLogic *TheGameLogic;
 
 struct BfmeThingCRA
@@ -59,8 +53,9 @@ BfmeResCRA *__stdcall bfmeGoCRA(BfmeThingCRA *thing)
 {
 	if (thing == 0)
 		return 0;
-	BfmeMidCRA *mid =
-		((BfmeTableCRA *)TheGameLogic)->bfmeFindCRA(thing->m_bfmeKey);
+	int id = (int)(size_t)thing->m_bfmeKey;
+
+	BfmeMidCRA *mid = (BfmeMidCRA *)TheGameLogic->findObjectByID(id);
 	if (mid == 0)
 		return 0;
 	BfmeSubCRA *sub = mid->m_bfmeSub;
