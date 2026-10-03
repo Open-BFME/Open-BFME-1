@@ -1,5 +1,5 @@
 // ?Rva00524B40Tooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z
-// partial score=0.96 date=2026-09-20
+// partial score=0.5316 date=2026-10-03
 // cl: /DNDEBUG /MD
 
 class GameWindow
@@ -88,10 +88,11 @@ cleanup:
 	if (setup->m_second && !setup->m_owner->contains(setup->m_second))
 		setup->m_second = 0;
 
+	setup = *(MpGameSetup **)0x012F49D4;
 	if (setup->m_first)
 	{
 		GameSlot *slot = setup->m_first->getSlot(playerIndex);
 		if (slot)
-			setup->m_owner->updateSlot(slot);
+			{ MpGameSetupOwner *owner = (*(MpGameSetup **)0x012F49D4)->m_owner; owner->updateSlot(slot); }
 	}
 }
