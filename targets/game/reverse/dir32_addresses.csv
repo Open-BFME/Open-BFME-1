@@ -99,7 +99,7 @@ name,va
 ?$S275@?1??getClassMemoryPool@StructureBody@@CAPAVMemoryPool@@XZ@4IA,0x012EF9B4
 ?$S279@?1??getClassMemoryPool@DefectorSpecialPower@@CAPAVMemoryPool@@XZ@4IA,0x012EFC78
 ?$S280@?1??getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ@4IA,0x012EFCE8
-?$S281@?1??getClassMemoryPool@SpecialAbility@@CAPAVMemoryPool@@XZ@4IA,0x012F0054
+?$S281@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F0054
 ?$S286@?1??getClassMemoryPool@AnimatedParticleSysBoneClientUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F701C
 ?$S288@?1??getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F7024
 ?$S29@?1??getClassMemoryPool@W3DLaserDraw@@CAPAVMemoryPool@@XZ@4IA,0x01304BB4
@@ -115,7 +115,7 @@ name,va
 ?$S51@?1??getClassMemoryPool@FireWeaponWhenDamagedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7C8
 ?$S52@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7D0
 ?$S7@?1??getClassMemoryPool@Upgrade@@CAPAVMemoryPool@@XZ@4IA,0x012EF1C0
-?$S95@?1??getClassMemoryPool@Weapon@@CAPAVMemoryPool@@XZ@4IA,0x012F0234
+?$S95@?1??getClassMemoryPool@WeaponModeSpecialPowerUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F0234
 ??0?$CEdgeInfo@G@@QAE@XZ,0x00E0936C
 ??0?$CEdgeInfo@I@@QAE@XZ,0x00E09346
 ??0?$MultiListClass@VDX8TextureCategoryClass@@@@QAE@XZ,0x00D44D00
@@ -7800,7 +7800,7 @@ name,va
 ?TheSnowManager@@3PAVSnowManager@@A,0x012F15F4
 ?TheSpawnBehaviorPool@?1??getClassMemoryPool@SpawnBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EF900
 ?TheSpawnPointProductionExitUpdatePool@?1??getClassMemoryPool@SpawnPointProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0504
-?TheSpecialAbilityPool@?1??getClassMemoryPool@SpecialAbility@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0050
+?TheSpecialAbilityUpdatePool@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0050
 ?TheSpecialPowerCompletionDiePool@?1??getClassMemoryPool@SpecialPowerCompletionDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFC34
 ?TheSpecialPowerCreatePool@?1??getClassMemoryPool@SpecialPowerCreate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFBA4
 ?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A,0x012ED80C
@@ -7920,7 +7920,7 @@ name,va
 ?TheWeaponBonusFieldNames@@3PAPBDA,0x012AD50C
 ?TheWeaponBonusNames@@3PAPBDA,0x012AD4B0
 ?TheWeaponBonusUpgradePool@?1??getClassMemoryPool@WeaponBonusUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F05E8
-?TheWeaponPool@?1??getClassMemoryPool@Weapon@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0230
+?TheWeaponModeSpecialPowerUpdatePool@?1??getClassMemoryPool@WeaponModeSpecialPowerUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0230
 ?TheWeaponSetUpgradePool@?1??getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F05F0
 ?TheWeaponSlotTypeNames@@3QBQBDB,0x012AD678
 ?TheWeaponStore@@3PAVBfmeWeaponStore@@A,0x012EF738

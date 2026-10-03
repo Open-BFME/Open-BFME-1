@@ -268,6 +268,20 @@ private:
 	char m_retailData[ 0xD8 ];
 };
 
+// WeaponModeSpecialPowerUpdate has no header in this tree. Retail's pool getter
+// at 0x002B2B30 binds the pool name "WeaponModeSpecialPowerUpdate" and is
+// reached only through that class's vtable slot 4 (0x010C54EC), so this
+// TU-scoped declaration carries just the pool glue and the constructor.
+// identity_evidence/20261003-pool-getter-identities.md
+class WeaponModeSpecialPowerUpdate : public MemoryPoolObject
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( WeaponModeSpecialPowerUpdate, "WeaponModeSpecialPowerUpdate" )
+public:
+	WeaponModeSpecialPowerUpdate( Thing *thing, const ModuleData *moduleData );
+private:
+	char m_retailData[ 0x3C ];
+};
+
 namespace ModulePoolGlueBulk
 {
 
@@ -378,7 +392,10 @@ EMIT_MODULE_POOL_GLUE( ImmortalBody )
 EMIT_MODULE_POOL_GLUE( StructureBody )
 EMIT_MODULE_POOL_GLUE( DefectorSpecialPower )
 EMIT_MODULE_POOL_GLUE( OCLSpecialPower )
-EMIT_MODULE_POOL_GLUE( SpecialAbility )
+EMIT_MODULE_POOL_GLUE( SpecialAbilityUpdate )
+// Only the pool-placement helper: the class is not a Module here, and its factory is
+// matched in WeaponModeSpecialPowerUpdateFriendNewModuleInstanceThunk.cpp.
+MemoryPoolObject *pool_emit_WeaponModeSpecialPowerUpdate( Thing *thing, const ModuleData *moduleData ) { return newInstance( WeaponModeSpecialPowerUpdate )( thing, moduleData ); }
 EMIT_MODULE_POOL_GLUE( AnimatedParticleSysBoneClientUpdate )
 EMIT_MODULE_POOL_GLUE( BeaconClientUpdate )
 
