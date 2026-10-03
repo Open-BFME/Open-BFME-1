@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail RVA 0x005584B0.
 
-extern "C" void j_0003b75a(int value, int *result);
-extern "C" int j_0003b971(int value, int argument);
+void j_0003b75a(void);
+void j_0003b971(void);
 
 class LadderInfo;
 class LadderList
@@ -24,6 +24,7 @@ public:
 void Rva005584B0Owner::dispatch(void)
 {
 	int result;
-	j_0003b75a(m_value, &result);
-	TheLadderList->findLadderByIndex(j_0003b971(m_value, result));
+	reinterpret_cast<void (__cdecl *)(int, int *)>(j_0003b75a)(m_value, &result);
+	TheLadderList->findLadderByIndex(
+		reinterpret_cast<int (__cdecl *)(int, int)>(j_0003b971)(m_value, result));
 }

@@ -1,5 +1,5 @@
-extern "C" unsigned char bfmeVftCUDa[];
-extern "C" unsigned char bfmeVftCUDb[];
+extern "C" unsigned char __identifier("??_7V3Vt0110F9AC@@6B@")[];
+extern "C" unsigned char __identifier("??_7BfmeHolderCU@@6B@")[];
 
 // The tail call at this+4 is the 0x00013994 ILT thunk into the matched
 // ?unlink@GenNode_006fa270@@QAEXXZ (see
@@ -28,7 +28,7 @@ struct BfmeThingCUD
 void __fastcall bfmeGoCUD(BfmeThingCUD *p)
 {
 	BfmeSecondCUD *s = p ? &p->m_bfmeSecond : 0;
-	s->m_bfmeVft = bfmeVftCUDa;
-	p->m_bfmeVftB = bfmeVftCUDb;
+	s->m_bfmeVft = __identifier("??_7V3Vt0110F9AC@@6B@");
+	p->m_bfmeVftB = __identifier("??_7BfmeHolderCU@@6B@");
 	p->m_bfmeBase.unlink();
 }
