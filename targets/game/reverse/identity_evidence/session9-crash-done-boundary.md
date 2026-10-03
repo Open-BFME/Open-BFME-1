@@ -1,0 +1,9 @@
+# Preserve the complete CrashDone code-and-table extent
+
+The old whole-ledger linear screen flagged the 1216-byte row at RVA0088BB60 because decoding its final bytes as instructions creates a bogus ENTER extending across the next entry at0088C020. This is not an executable boundary failure.
+
+Retail executes 1188 bytes through CALL [013592C4] at0088BFFE..0088C003. The PE import directory identifies that slot as MSVCR71.dll!_exit, a nonreturning termination call. The next28bytes,0088C004..0088C01F, form the seven-entry switch table reached at0088BD59. DEC EAX / CMP EAX,6 / JA default at0088BD4F/50/53 bounds the index. Its seven absolute targets are00C8BD60,00C8BD6C,00C8BD79,00C8BF31,00C8BD92,00C8BF31,00C8BDDF; all target decoded instruction starts inside the executable stream. No direct jump leaves that stream. The separate next body starts0088C020 with PUSH EBP; MOV EBP,ESP, agreeing with the already matched string-insertion row there.
+
+The existing1216-byte extent therefore includes the complete code and owned table, with no swallowed executable prefix of the next body. Ghidra read_memory VA00C8BFF0 agrees with local PE/Capstone on the final call, table and next entry. A fresh ordinary scoped build of ?CrashDone@Debug@@QAE_N_N@Z passes1/1; the emitter supplies literal bytes, so it reports zero symbolic reference checks. This validates the claimed bytes, not a native conversion or the inherited identity.
+
+Rule: docs/matching.md requires byte verification; AGENTS.md treats a naked/__emit body as a dump, not a conversion. The extent candidate is CLEARED. Preserve the source, row, identity and current dump classification. No detector or baseline is weakened. Native source recovery remains separate work. In particular, do not replace this span with a heuristic first-RET or first-padding bound.
