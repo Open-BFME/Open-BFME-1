@@ -1,7 +1,7 @@
 // cl: /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // FXParticleSystem::DefaultModuleName<N>::GetValue -- the module display names.
 // This is the name-side twin of DefaultModuleKey<N>::GetValue: a function-local
-// AsciiString starts as "Default", appends the category name once, and returns
+// AsciiString starts as "Default " (including the separator), appends the category name, and returns
 // its character data.
 #include "string_base.h"
 
@@ -33,7 +33,7 @@ private:
 template <int N>
 const char *DefaultModuleName<N>::GetValue()
 {
-    static AsciiString value("Default");
+    static AsciiString value("Default ");
     static bool once;
     if (!once) {
         value.concat(GetName((ModuleCategory)N));
