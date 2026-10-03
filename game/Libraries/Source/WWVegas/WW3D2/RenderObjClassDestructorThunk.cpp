@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 
 // Two bases and one refcounted member.
 //
@@ -12,31 +12,10 @@
 // the decrement is a plain dec rather than an interlocked one. There is no null
 // test before the virtual call because Delete_This is an ordinary virtual on a
 // pointer already known good, not a delete expression.
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
-class RefCountClass
-{
-public:
-	virtual void Delete_This(void);
-
-	void Release_Ref(void)
-	{
-		if (--m_numRefs == 0) {
-			Delete_This();
-		}
-	}
-
-	int m_numRefs;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/persist.h
-class PersistClass
-{
-public:
-	virtual ~PersistClass() {}
-
-private:
-	int m_04;
-};
+// The primary base is RefCountClass: retail's final vptr store is 0x011135AC.
+// Its second vtable slot routes to the deleting destructor at RVA 0x005F38E0.
+// See targets/game/reverse/identity_evidence/005f38e0-refcount-destructor.md.
+#include "refcount.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
@@ -49,7 +28,7 @@ private:
 	void *m_next;
 };
 
-class RenderObjClass : public PersistClass, public MultiListObjectClass
+class RenderObjClass : public RefCountClass, public MultiListObjectClass
 {
 public:
 	virtual ~RenderObjClass();
