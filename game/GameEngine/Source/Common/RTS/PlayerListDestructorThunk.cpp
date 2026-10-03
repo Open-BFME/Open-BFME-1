@@ -13,17 +13,8 @@ private:
 	void *m_name;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
-class Snapshot
-{
-public:
-	// Retail export ??1Snapshot@@UAE@XZ (0x0005C520) is virtual.
-	// The 0x00BFA528 unwind action reaches it through ILT 0x00001C80.
-	virtual ~Snapshot() {}
-	virtual void crc() = 0;
-	virtual void xfer() = 0;
-	virtual void loadPostProcess() = 0;
-};
+// BFME Snapshot: the PE-exported virtual destructor and its shared declaration.
+#include "../System/snapshot.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

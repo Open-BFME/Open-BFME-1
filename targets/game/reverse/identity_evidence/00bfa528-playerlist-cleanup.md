@@ -18,12 +18,15 @@ tail-jump boundary is taken from the actual retail bytes.
 The existing PlayerList destructor TU already emits the action, but its
 local Snapshot destructor declaration was nonvirtual and therefore named
 an unresolved, different callee. Making that declaration virtual follows
-the PE export; no new pin or header change is needed. The available
-Snapshot headers retain the nonvirtual Zero Hour contract, so they cannot
-express this BFME contract (see docs/header_adoption.md on unsettled
-Snapshot headers). The parent and deleting destructor remain byte-exact.
+the PE export; no new pin or header change is needed. The existing
+`game/GameEngine/Source/Common/System/snapshot.h` supplies the correct
+inline virtual destructor. The follow-up adopts that shared declaration
+instead of retaining the local Snapshot view. The earlier assertion that
+all available headers were nonvirtual was incorrect; only the headers
+checked under Include and the reference shims had that contract.
+The parent and deleting destructor remain byte-exact.
 
-After this declaration correction, the compiler unwind map selects $L390
+After this declaration correction, the compiler unwind map selects $L399
 for state 1 -> 0, and its 39-byte prefix exactly reproduces the action.
 The row keeps an opaque RVA identity, native C++ source, explicit parent
 and state-proven object label. Normal verification also resolves its
