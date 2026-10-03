@@ -15718,5 +15718,25 @@
   "after_sha256": "87cd96a0a70b24ce983e743a52a4a5219590e913a920f20a2616c19329f70ea8",
   "evidence": "targets/game/reverse/identity_evidence/00718a10-complete-string-operands.md",
   "reason": "False pairing: FileInfo remains named in the included canonical FileSystem.h with its unchanged four Int fields and remains used by getFileInfo. Rva00718A10Dispatch is an unrelated no-data virtual-call view for the independently different BFME File slot ABI; no FileInfo identity changed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/CampaignManagerIsMissionObjectiveComplete.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/CampaignManagerIsMissionObjectiveComplete.cpp",
+  "old_name": "probe",
+  "new_name": "rva003C8A50",
+  "before_sha256": "3109c322e9079d64a16c864c9b6d53753eb419556a939c11501f47cf9ab36858",
+  "after_sha256": "7dd8b0f9515e494ba6b84f078efda6371456ba921009835d375f72f4b17ecda6",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The local placeholder Gen003C0350Owner::probe and the matched LivingWorldRegionManager::rva003C8A50 are both pinned to ILT 0x0002BF0D, which reaches 0x003C8A50; the call now names the matched owner and its bytes are unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/CampaignManagerIsMissionObjectiveEligible.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/CampaignManagerIsMissionObjectiveEligible.cpp",
+  "old_name": "probe",
+  "new_name": "rva003C8A50",
+  "before_sha256": "42016a0e839de8b4dbcaf7bd11bae28908c49c4f7679f27c6b9f3b3695390d33",
+  "after_sha256": "e9366e347ede6114f5ab91f229e27f70834aa363f5e9a9887620dd423658fb8b",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The local placeholder Gen003C0350Owner::probe and the matched LivingWorldRegionManager::rva003C8A50 are both pinned to ILT 0x0002BF0D, which reaches 0x003C8A50; the call now names the matched owner and its bytes are unchanged."
  }
 ]

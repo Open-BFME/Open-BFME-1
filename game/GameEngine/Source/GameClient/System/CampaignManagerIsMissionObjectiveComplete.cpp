@@ -1,14 +1,19 @@
 // ?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's second mission-objective span stores completion bytes alongside the
 // objective records.  The ILT at 0x0000DFDA names this body.
+
+#include "ascii_string.h"
+
+class LivingWorldRegion;
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class Gen003C0350Owner
+class LivingWorldRegionManager
 {
 public:
-	void *probe(void *key);
+	LivingWorldRegion *rva003C8A50(const AsciiString &key);
 };
 
 struct CampaignObjectiveRecord
@@ -53,22 +58,22 @@ public:
 
 private:
 	char m_pad00[0x28];
-	Gen003C0350Owner *m_resolver;
+	LivingWorldRegionManager *m_resolver;
 	char m_pad2C[0x4];
-	char m_key;
-	char m_pad31[0x53];
+	AsciiString m_key;
+	char m_pad34[0x50];
 	CampaignObjectiveSpan m_objectives;
 };
 
 unsigned char CampaignManager::isMissionObjectiveComplete(int index)
 {
-	Gen003C0350Owner *resolver = m_resolver;
+	LivingWorldRegionManager *resolver = m_resolver;
 	if (resolver)
 	{
 		int idx = index;
 		if (idx >= 0)
 		{
-			if (resolver->probe(&m_key))
+			if (resolver->rva003C8A50(m_key))
 			{
 				int count = m_objectives.byteDistance();
 				count >>= 1;

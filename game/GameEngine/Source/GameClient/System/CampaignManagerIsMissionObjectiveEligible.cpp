@@ -1,14 +1,19 @@
 // ?isMissionObjectiveEligible@CampaignManager@@QAEEH@Z
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 //
 // The CampaignManager identity is established by the matched sibling
 // objective methods and ScoreKeeper's named caller.  This method uses the
 // same resolver/key layout, while its first objective span stores the
 // eligibility byte in each two-byte record.
 
-class Gen003C0350Owner
+#include "ascii_string.h"
+
+class LivingWorldRegion;
+
+class LivingWorldRegionManager
 {
 public:
-	void *probe(void *key);
+	LivingWorldRegion *rva003C8A50(const AsciiString &key);
 };
 
 struct CampaignObjectiveEligibleRecord
@@ -55,23 +60,23 @@ public:
 
 private:
 	char m_pad00[0x28];
-	Gen003C0350Owner *m_resolver;
+	LivingWorldRegionManager *m_resolver;
 	char m_pad2C[0x4];
-	char m_key;
-	char m_pad31[0x53];
+	AsciiString m_key;
+	char m_pad34[0x50];
 	CampaignObjectiveEligibleSpan m_objectives;
 };
 
 unsigned char CampaignManager::isMissionObjectiveEligible(int index)
 {
-	Gen003C0350Owner *resolver = m_resolver;
+	LivingWorldRegionManager *resolver = m_resolver;
 	if (resolver)
 	{
 		int idx = index;
 		if (idx >= 0)
 		{
 			CampaignObjectiveEligibleFound *found =
-				(CampaignObjectiveEligibleFound *)resolver->probe(&m_key);
+				(CampaignObjectiveEligibleFound *)resolver->rva003C8A50(m_key);
 			if (found)
 			{
 				unsigned int count = m_objectives.size();
