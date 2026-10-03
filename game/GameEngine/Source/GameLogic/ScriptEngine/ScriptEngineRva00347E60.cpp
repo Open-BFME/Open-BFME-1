@@ -1,5 +1,5 @@
 // ??0ScriptEngine@@QAE@XZ
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <vector>
@@ -15,15 +15,7 @@
 // Retail stores and the unwind map prove the array counts and offsets below.
 // Address-based member names retain fields that the evidence does not name.
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer;
 class Object;
