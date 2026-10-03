@@ -26,8 +26,6 @@ typedef unsigned int size_t;
 extern "C" size_t strlen(const char *);
 #pragma intrinsic(strlen)
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *, const void *, size_t);
-
-extern char Rva006A16B0Empty[];				// 0x0107388B
 extern const char g_bfmeEmptyUnicode[];		// 0x0107388C
 
 template <typename T> struct StringHeader
@@ -63,7 +61,7 @@ public:
 	AsciiString &operator=(const AsciiString &other) { set(other); return *this; }
 
 	Int getLength() const { return m_data ? m_data->m_length : 0; }
-	const char *str() const { return m_data ? m_data->m_text : Rva006A16B0Empty; }
+	const char *str() const { return m_data ? m_data->m_text : ""; }
 
 	void set(const AsciiString &other);
 	void set(const char *text, Int length);

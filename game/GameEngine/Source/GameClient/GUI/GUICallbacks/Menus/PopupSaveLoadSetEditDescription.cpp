@@ -7,8 +7,6 @@
 typedef int Int;
 typedef bool Bool;
 typedef unsigned short WideChar;
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 template <typename T> class StringBase
@@ -48,12 +46,12 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 
 	const char *reverseFind( char c ) const
 	{
-		const char *start = m_data ? m_data->m_text : Rva006A16B0Empty;
+		const char *start = m_data ? m_data->m_text : "";
 		const char *p = start + ( m_data ? m_data->m_length : 0 );
 		while ( p != start )
 		{

@@ -18,7 +18,6 @@ extern "C" unsigned int __cdecl strlen( const char *text );
 
 // The shared empty AsciiString payload, retail 0x0107388B
 // (?Rva006A16B0Empty@@3PADA / ?g_bfmeEmptyAscii@@3QBDB).
-extern const char Rva006A16B0Empty[];
 
 template <typename T> class StringBase
 {
@@ -75,13 +74,13 @@ public:
 	void concat( const AsciiString &other )
 	{
 		const Int length = other.m_data ? other.m_data->m_length : 0;
-		const char *text = other.m_data ? other.m_data->m_text : Rva006A16B0Empty;
+		const char *text = other.m_data ? other.m_data->m_text : "";
 		StringBase<char>::concat( text, length );
 	}
 
 	void translate( class UnicodeString const &src );
 
-	const char *str() const { return m_data ? m_data->m_text : Rva006A16B0Empty; }
+	const char *str() const { return m_data ? m_data->m_text : ""; }
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h

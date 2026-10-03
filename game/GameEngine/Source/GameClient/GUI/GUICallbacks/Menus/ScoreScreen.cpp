@@ -517,7 +517,6 @@ WindowMsgHandledType ScoreScreenInput( GameWindow *window, UnsignedInt msg,
 // the same members, access and 8-byte header. That header befriends AsciiString and
 // UnicodeString, which in this TU are the Zero Hour classes, so the retail-layout string views
 // below are befriended here instead.
-extern char Rva006A16B0Empty[];
 extern const char g_bfmeEmptyUnicode[];
 
 template <typename T> class StringBase
@@ -593,7 +592,7 @@ public:
 	using StringBase<char>::isEmpty;
 	const char *str( void ) const
 	{
-		return m_data ? m_data->data : Rva006A16B0Empty;
+		return m_data ? m_data->data : "";
 	}
 };
 

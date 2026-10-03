@@ -1300,8 +1300,6 @@ public:
 	virtual void slot008() = 0;
 	virtual void startGame( Int gameID ) = 0;
 };
-
-extern const char Rva006A16B0Empty[];
 extern const unsigned short BFMEEmptyUnicodeString;
 
 // BFME's StringBase payload starts eight bytes after m_data.  The vendored
@@ -1310,7 +1308,7 @@ extern const unsigned short BFMEEmptyUnicodeString;
 static __forceinline const char *BfmeStartAsciiString( const AsciiString &string )
 {
 	void *data = *(void *const *)&string;
-	return data ? (const char *)data + 8 : Rva006A16B0Empty;
+	return data ? (const char *)data + 8 : "";
 }
 
 static __forceinline const unsigned short *BfmeStartUnicodeString( const UnicodeString &string )
@@ -1330,7 +1328,7 @@ public:
 
 	__forceinline const char *str() const
 	{
-		return m_text ? m_text + 8 : Rva006A16B0Empty;
+		return m_text ? m_text + 8 : "";
 	}
 
 	private:

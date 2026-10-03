@@ -10,7 +10,6 @@ extern "C" __declspec(dllimport) int __cdecl atoi( const char * );
 
 // The shared empty AsciiString payload, retail 0x0107388B
 // (?Rva006A16B0Empty@@3PADA / ?g_bfmeEmptyAscii@@3QBDB).
-extern const char Rva006A16B0Empty[];
 
 template <typename T> struct StringInlineData
 {
@@ -41,7 +40,7 @@ public:
 	~AsciiString() {}
 	const char *str( void ) const
 	{
-		return m_data ? m_data->m_text : Rva006A16B0Empty;
+		return m_data ? m_data->m_text : "";
 	}
 	void format( AsciiString fmt, ... ) throw();
 };
@@ -55,7 +54,7 @@ struct PreferenceNode
 __forceinline const char *prefStr( PreferenceNode *node )
 {
 	StringInlineData<char> *data = node->m_data;
-	return data ? data->m_text : Rva006A16B0Empty;
+	return data ? data->m_text : "";
 }
 
 class PreferenceMap
