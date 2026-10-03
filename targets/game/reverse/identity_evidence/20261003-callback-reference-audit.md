@@ -30,3 +30,11 @@ These findings concern relocatable references, not new byte coverage. Future
 work must preserve exact named-reference verification and independently
 justify any additional callback/ILT anchor. Do not replace these addresses
 with plausible callback names merely from neighboring registration strings.
+
+Session 2: the tokenizer false positive is repaired in20c4dd27a1, with170
+name-regression tests including real u/L identifier protections. Restoring the
+archived candidate again passes the strict1136B/16strings/40DIR32 gate. The
+38 referenced j_ symbols retain their existing ILT identities; no new semantic
+name or pin is introduced. The40-reference source repair is now committed
+separately from that tool correction. The remaining VA00424AFA stub decodes
+E9 01 AB 69 00 -> RVA006BF600; its proper source declaration is separate work.
