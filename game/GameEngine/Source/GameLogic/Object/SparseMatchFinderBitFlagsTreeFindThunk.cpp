@@ -3,6 +3,7 @@ template <int Bits>
 class BitFlags
 {
 };
+class ArmorTemplateSet;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponTemplateSet
 {
@@ -21,6 +22,7 @@ public:
 
 namespace _STL
 {
+class ArmorTreeFindAccess;
 template <class First, class Second>
 struct pair
 {
@@ -41,20 +43,11 @@ class allocator
 template <class Key, class Value, class Select, class Less, class Alloc>
 class _Rb_tree
 {
+	friend class ArmorTreeFindAccess;
 	_Rb_tree_node<Value> *_M_find(Key const &) const;
+	template <class SearchKey>
+	_Rb_tree_node<Value> *_M_find(SearchKey const &) const;
 };
-
-class SparseBitFlagsTreeFindShim
-{
-public:
-	_Rb_tree_node<pair<const BitFlags<187>, const WeaponTemplateSet *> > *find(BitFlags<187> const &k) const;
-};
-
-template <class Key, class Value, class Select, class Less, class Alloc>
-_Rb_tree_node<Value> *_Rb_tree<Key, Value, Select, Less, Alloc>::_M_find(Key const &k) const
-{
-	return (_Rb_tree_node<Value> *)((SparseBitFlagsTreeFindShim const *)this)->find((BitFlags<187> const &)k);
-}
 }
 
 typedef BitFlags<187> WeaponFlags;
@@ -62,4 +55,28 @@ typedef SparseMatchFinder<WeaponTemplateSet, WeaponFlags> WeaponFinder;
 typedef WeaponFinder::MapHelper WeaponMapHelper;
 typedef _STL::pair<const WeaponFlags, const WeaponTemplateSet *> WeaponPair;
 typedef _STL::_Rb_tree<const WeaponFlags, WeaponPair, _STL::_Select1st<WeaponPair>, WeaponMapHelper, _STL::allocator<WeaponPair> > WeaponTree;
+typedef BitFlags<11> ArmorFlags;
+typedef _STL::pair<const ArmorFlags, const ArmorTemplateSet *> ArmorPair;
+typedef SparseMatchFinder<ArmorTemplateSet, ArmorFlags>::MapHelper ArmorMapHelper;
+typedef _STL::_Rb_tree<const ArmorFlags, ArmorPair, _STL::_Select1st<ArmorPair>, ArmorMapHelper, _STL::allocator<ArmorPair> > ArmorTree;
+
+namespace _STL
+{
+class ArmorTreeFindAccess
+{
+public:
+	static __forceinline _Rb_tree_node<::ArmorPair> *find(::ArmorTree const *tree, ::ArmorFlags const &key)
+	{
+		return tree->_M_find<::ArmorFlags>(key);
+	}
+};
+}
+
+template <class Key, class Value, class Select, class Less, class Alloc>
+_STL::_Rb_tree_node<Value> *_STL::_Rb_tree<Key, Value, Select, Less, Alloc>::_M_find(Key const &k) const
+{
+	return (_STL::_Rb_tree_node<Value> *)_STL::ArmorTreeFindAccess::find(
+		(ArmorTree const *)this, (ArmorFlags const &)k);
+}
+
 template _STL::_Rb_tree_node<WeaponPair> *WeaponTree::_M_find(WeaponFlags const &) const;
