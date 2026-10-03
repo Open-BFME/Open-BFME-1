@@ -1,68 +1,19 @@
 // ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.85 date=2026-09-27
-// (previous bank: 0.76, shape 0.965, 11 structural diffs)
+// partial score=0.9225 date=2026-10-03
+// ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ
 // cl: /DNDEBUG /MD /EHsc
-//
-// Retail AIHuntState::update at 0x0017E480 (800 bytes).  Identity: AIHuntState vtable
-// 0x01098330 slot 6, ILT thunk 0x00413CDC -> 0x0017E480; ctor 0x00171820 installs the
-// vtable.  tools/callees.py 0x0017E480 800: 14 direct targets, 0 unnamed.
-//
-// This bank probes at ours=798 retail=800, 404 differing non-relocation bytes,
-// shape 0.990 with only THREE structural differences left:
-//
-//   1. Callee-saved allocation.  Retail {edi=this, ebp=owner, ebx=info/bool,
-//      esi=the rotating call-result pointer} and pushes all four in the prologue.
-//      Ours allocates {esi=this, ebp=owner, ebx=info/bool, edi=the call-result
-//      pointer} and MSVC 7.1 SINKS the `push edi` to +0x10.  Everything else is a
-//      pure ESI/EDI mirror of retail, so this one swap is ~380 of the 404 bytes.
-//      Measured NOT reachable by: `register` on any of the 11 body locals
-//      (12 combinations), hoisting every declaration to the top of the body,
-//      huntGoal/teamVictim/victim/info/crate aliases, a `register AIHuntState
-//      *self = this` alias, a __forceinline helper for the goal-sync block,
-//      Int-vs-Bool scan/status flags, and tools/rotation_sweep.py (51 toggles,
-//      best -4 bytes).  Cross-checked against the two landed, byte-exact siblings
-//      ?update@AIAttackAreaState@@ (0x0017E900, this->ESI) and
-//      ?update@AIHarvestPrepareSiteState@@ (0x00160050, this->EDI): MSVC 7.1 hands
-//      the implicit `this` the LAST free callee-saved register, and retail here
-//      left EDI for it.  See build/HUNT_0x0017E480_NOTES.md.
-//   2. Retail materialises the goal-changed test at +0x28d/+0x290 as
-//      `cmp esi,ebx; setne al; test al,al; je` where we emit `cmp ebx,edi; je`.
-//      20 spellings tried (Bool/int/unsigned-char temp at top level and in an
-//      inner scope, !(a==b), swapped operands, (Bool)/bool casts, a __forceinline
-//      helper, an inline second getGoalObject(), a volatile qualifier, an &&
-//      chain, if (x == true)): MSVC 7.1 folds all of them.  5 bytes.
-//   3. Size: 798 vs 800.
-//
-// Everything else is decoded and reproduced, including three things the earlier
-// banks had wrong:
-//
-//   * The hunt goal and the team victim are SEPARATE variables that share one
-//     stack slot.  Retail zeroes [esp+0x10] at +0x1aa, before the
-//     attackCommonTarget branch, and re-reads the flag from
-//     owner->getTeam()->getPrototype() at +0x21b rather than caching it: caching
-//     it in a `Bool` local adds `mov byte ptr [esp+0x13],al` and a frame slot.
-//   * The goal-changed block TAIL-MERGES its setState(AI_ATTACK_OBJECT) with the
-//     idle branch's: one call at +0x2b7 reached by `jmp 0x2b7` from +0x2a8 and
-//     by fallthrough from +0x2b5.  The `goto scanned` spelling is what makes
-//     MSVC 7.1 emit the single call; the if/else-if spelling duplicates it.
-//     Retail therefore really does force ATTACK_OBJECT when the hunt goal
-//     CHANGED, and only tests isIdle/victim when it did not.
-//   * teamVictimPriority is stored to the `now` stack slot at +0x24f and compared
-//     against 0 at +0x268, so it is the if/else form, not the ternary the
-//     earlier bank used.
-//
-// Faithful but unproven ABI spellings (unchanged from the previous bank, no
-// better evidence exists in this body): StateMachine slot +0x20 setState,
-// +0x38 setGoalObject, +0x40 the lock byte; State slot +0x34 the idle predicate
-// (AIAttackAreaState's landed body proves +0x20/+0x38/+0x40 on the same class);
-// updateStateMachine at StateMachine +0x10; Object +0x04 template, +0x90 status,
-// +0x1fc contain module, +0x204 AI update, +0x23c team; AIUpdate +0x70
-// attack info and slot +0x130; TeamPrototype +0x1c2 attackCommonTarget; Player
-// +0x29d unitsShouldHunt.
-//
-// Retail AIHuntState::update at 0x0017E480 (800 bytes).  The BFME state
-// machine stores goal IDs at +0x20 and resolves them through the game-logic
-// singleton; this TU keeps that layout local to the body.
+// Retail 0x0017E480..0x0017E7A0, 800 bytes; unchanged bank ABI views.
+// 2026-10-03: 800 emitted bytes, 62 differing non-relocation bytes, all 28
+// relocation positions aligned; normalized instruction shape 0.997.
+// Two fixes over the former 798-byte bank: retain Bool changed for BOTH the
+// target update and attack-state decisions, and keep scan byte-sized.
+// That restores retail cmp/setne/test plus mov bl,1, reducing 404 differences
+// to 62. Remaining residue: ESI/EDI allocation and sunk push edi at +0x10.
+// Same failure after accessor, scope, declaration-order and helper variants.
+// ABI helper names/alternatename and local covered-type declarations below are
+// inherited draft scaffolding, not independently validated production bindings.
+// Promotion still needs canonical-header adoption and strict callee/slot proof.
+// Identity: ctor 0x00171820 installs 0x01098330; update slot6 routes via 0x13CDC.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -545,12 +496,12 @@ StateReturnType AIHuntState::update()
 		return STATE_CONTINUE;
 	}
 
-	register Int scan = 1;
+	Bool scan = true;
 	if (ai->isGiantBird())
 	{
 		BfmeCurrentState *current = m_huntMachine->m_currentState;
 		if (current != 0 && !current->slot34() && !bfmeIsIdle(m_huntMachine))
-			scan = 0;
+			scan = false;
 	}
 	m_nextEnemyScanTime = now + 15;
 	if (!scan)
@@ -597,18 +548,15 @@ StateReturnType AIHuntState::update()
 	}
 
 	Object *oldGoal = bfmeGetGoalObject(m_huntMachine);
-	if (oldGoal != victim)
+	Bool changed = victim != oldGoal;
+	if (changed)
 	{
 		m_huntMachine->setGoalObject(victim);
 		if (oldGoal == 0)
 			bfmePlayAttackVoice(ai, victim);
 	}
-	else if (!(bfmeIsIdle(m_huntMachine) && victim != 0))
-	{
-		goto scanned;
-	}
-
-	m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
+	if (changed || (bfmeIsIdle(m_huntMachine) && victim != 0))
+		m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
 scanned:
 
 	if (bfmeGetControllingPlayer(owner) != 0 &&
