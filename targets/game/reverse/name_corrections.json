@@ -15248,5 +15248,15 @@
   "after_sha256": "05fabf90e46ae32facf3d884cc4cbc6d72307f1d0ff7ab906f9cee630dceb35d",
   "evidence": "targets/game/reverse/identity_evidence/00417710-ambient-result.md",
   "reason": "The bank-only convenience type has no source-name witness: the Zero Hour twin uses raw AudioEventInfo pointers, while independently decoded BFME getter and cleanup prove only a one-word owning result. Keep an address-qualified layout view rather than promote the bank name to a recovered identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005778e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/ScoreScreenRva005778E0.cpp",
+  "old_name": "CampaignManager",
+  "new_name": "Rva005778E0CampaignView",
+  "before_sha256": "3319cb2051cf96f6ff12d92f9da7d909a99a4c7551294f79aea3adcdad299f85",
+  "after_sha256": "0bb6b59e0c82b54f8c690150455d4295de79dc121a66881d6004f4b154b31396",
+  "evidence": "targets/game/reverse/identity_evidence/005778e0-edx-binding.md",
+  "reason": "The bank casts the global at VA012F1028 to CampaignManager. The authoritative data row and GameEngine init/name vtable identify its pointee as LivingWorldLogic. Preserve that real global declaration and use an address-qualified partial layout for its +28 region-manager member; do not propagate the wrong CampaignManager identity."
  }
 ]
