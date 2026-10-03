@@ -113,7 +113,8 @@ public:
 	virtual void reacquire();
 };
 
-extern GlobalVirtualResource *TheSmudgeManager;
+class SmudgeManager;
+extern SmudgeManager *TheSmudgeManager;
 
 class TacticalView
 {
@@ -179,7 +180,7 @@ void BaseHeightMapRenderObjClass::ReAcquireResources(void)
 	if (m_bibBuffer != 0)
 		CALL_TARGET(j_000129ef, m_bibBuffer);
 	if (TheSmudgeManager != 0)
-		TheSmudgeManager->reacquire();
+		reinterpret_cast<GlobalVirtualResource *>(TheSmudgeManager)->reacquire();
 	if (TheSnow != 0)
 		CALL_TARGET(j_0000acd1, TheSnow);
 	if (m_bridgeBuffer != 0)

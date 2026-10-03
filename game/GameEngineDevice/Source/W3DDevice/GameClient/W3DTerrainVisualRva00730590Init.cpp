@@ -283,7 +283,8 @@ public:
 	virtual void setWaterGridResolution(void *water, float x, float y, float size);
 };
 
-extern HeightMapRenderObjClass *TheTerrainRenderObject;
+// Retail RVA 0x007305FE stores the primary base pointer without adjustment.
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
 extern W3DShadowManager *TheW3DShadowManager;
 extern WaterRenderObjClass *TheWaterRenderObj;
