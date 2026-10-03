@@ -42,6 +42,7 @@ def _stub_gate(monkeypatch, red=()):
     """Replace every check with a recorder; names in `red` fail like the real ones."""
     build, pin_consistency = _modules()
     null_reloc = importlib.import_module("null_reloc")
+    data_rows = importlib.import_module("data_rows")
     calls = []
 
     def check(name, result=None):
@@ -64,6 +65,7 @@ def _stub_gate(monkeypatch, red=()):
     monkeypatch.setattr(build, "verify_noop_patch", check("noop"))
     monkeypatch.setattr(pin_consistency, "verify", check("pins"))
     monkeypatch.setattr(null_reloc, "verify", check("null-relocs"))
+    monkeypatch.setattr(data_rows, "verify", check("data-rows"))
     return calls, build
 
 
@@ -79,7 +81,7 @@ def test_a_red_check_cannot_silence_the_checks_behind_it(monkeypatch, capsys):
     assert "pins" in calls, (
         "the pin guard did not run behind a red DIR32 — this is the defect that "
         "made a landed guard a no-op on master for two days")
-    for late in ("string-refs", "constant-refs", "source-claims", "noop"):
+    for late in ("string-refs", "constant-refs", "source-claims", "data-rows", "noop"):
         assert late in calls, f"{late} was skipped by an earlier failure"
 
     out = capsys.readouterr().out

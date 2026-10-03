@@ -3150,13 +3150,79 @@ def verify_string_refs(rows):
     print(f"String-ref verify: OK ({checked} literals + {empty_ok} empty-string refs verified, 0 unverified/skipped)")
 
 
+def local_float_refs(obj, body, relocs):
+    """Readonly TU-local x87 operands, with the exact bytes each load consumes.
+
+    A local array does not use __real@ and has no global DIR32 identity. Decode
+    the load width instead of comparing its packed section or assuming a float
+    is four bytes. Indexed loads and writable data are not constant windows.
+    """
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_32, CS_OP_MEM
+
+    stat = obj.stat()
+    data, sections, symbols = _object_layout(str(obj), stat.st_mtime_ns, stat.st_size)
+    local = {}
+    ambiguous = set()
+    for symbol in symbols:
+        if symbol["section"] <= 0 or symbol["storage"] != COFF_STORAGE_STATIC:
+            continue
+        name = symbol["name"]
+        if name in local:
+            ambiguous.add(name)
+        local[name] = symbol
+    # read_object_symbol_bytes exposes relocation names, not COFF indices.
+    # Repeated section symbols such as .rdata cannot be disambiguated here.
+    for name in ambiguous:
+        del local[name]
+    candidates = [(off, name, local[name]) for off, kind, name in relocs
+                  if kind == 6 and name in local and 0 <= off <= len(body) - 4]
+    if not candidates:
+        return
+    md = Cs(CS_ARCH_X86, CS_MODE_32)
+    md.detail = True
+    reads = {"fld", "fadd", "fsub", "fsubr", "fmul", "fdiv", "fdivr",
+             "fcom", "fcomp", "fild", "fiadd", "fisub", "fisubr",
+             "fimul", "fidiv", "fidivr", "ficom", "ficomp"}
+    windows = {}
+    for ins in md.disasm(body, 0):
+        if ins.mnemonic not in reads or ins.disp_size != 4:
+            continue
+        for operand in ins.operands:
+            if (operand.type == CS_OP_MEM and not operand.mem.base
+                    and not operand.mem.index and not operand.mem.segment):
+                windows[ins.address + ins.disp_offset] = operand.size
+    for off, name, symbol in candidates:
+        width = windows.get(off)
+        section = sections[symbol["section"] - 1]
+        flags = u32(data, 20 + (symbol["section"] - 1) * 40 + 36)
+        if not width or section["name"] != ".rdata" or flags & 0x80000000:
+            continue
+        start = symbol["value"] + struct.unpack_from("<i", body, off)[0]
+        if start < 0 or start + width > section["raw_size"]:
+            raise ValueError(f"{name}+addend: {width}-byte constant load exceeds its data section")
+        # A relocation inside the datum is an address initializer, not literal
+        # numeric bytes. data_check owns that separate proof.
+        if any(start < u32(data, section["reloc_pointer"] + n * 10) + 4
+               and u32(data, section["reloc_pointer"] + n * 10) < start + width
+               for n in range(section["reloc_count"])):
+            continue
+        raw = section["raw_pointer"] + start
+        value = data[raw:raw + width]
+        if len(value) != width:
+            raise ValueError(f"{name}+addend: truncated constant data")
+        yield off, name, value
+
+
 def verify_constant_refs(rows):
     """VERIFY every DIR32 relocation to a compiler float constant (__real@<hex>): the bytes retail
-    loads must be the value the source compiled. compile_function masks the address, so a wrong
+    loads must be the value the source compiled. Also check direct x87 reads of
+    readonly local numeric data, which have no external DIR32 identity.
+    compile_function masks the address, so a wrong
     literal -- Zero Hour's 30 logic frames where BFME runs 5, 99.9 where retail has 49.9 -- matched
     byte for byte until this read 41 of them back out of the image."""
     mismatches = []
     checked = 0
+    local_checked = 0
     for row in rows:
         obj = require_row_object(row)
         target_rva = int(row["target_rva"], 16)
@@ -3182,12 +3248,33 @@ def verify_constant_refs(rows):
                 checked += 1
             else:
                 mismatches.append((row["name"], sym, base, held))
+        try:
+            for offset, sym, value in local_float_refs(obj, fn_bytes, relocs):
+                if offset + 4 > target_size:
+                    continue
+                if target is None:
+                    target = read_target_bytes(target_rva, target_size)
+                # value already includes the COFF addend; compare the actual
+                # operand's window, not the beginning of its containing symbol.
+                address = struct.unpack_from("<I", target, offset)[0]
+                try:
+                    held = read_target_bytes(address - 0x400000, len(value))
+                except ValueError:
+                    held = b""
+                if held == value:
+                    local_checked += 1
+                else:
+                    mismatches.append((row["name"], sym, address, held))
+        except ValueError as exc:
+            print(f"Constant-ref verify: FAIL {row['name']}: {exc}")
+            raise SystemExit(1) from exc
     if mismatches:
         print(f"Constant-ref verify: FAIL {len(mismatches)} mismatch(es) (source constant != the value retail loads)")
         for name, sym, base, held in mismatches[:12]:
             print(f"    {name}: {sym}, but retail 0x{base:08X} holds {held.hex() or '<outside the image>'}")
         raise SystemExit(1)
-    print(f"Constant-ref verify: OK ({checked} float constants verified)")
+    print(f"Constant-ref verify: OK ({checked} float constants verified; "
+          f"{local_checked} local readonly loads verified)")
 
 
 def dir32_references(rows):
