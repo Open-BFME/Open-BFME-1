@@ -8,13 +8,12 @@
 // interior instruction (+0x247), not a function entry.  The constructor's
 // raw stores at that instruction establish the +0x170, +0x1A0, +0x1AC and
 // +0x1B0 tail; the destructor's unwind states and member calls establish the
-// earlier fields below.  The second base is the trivial BfmeBaseVUQ family:
-// the matched constructor installs secondary vtable 0x010EB560, this body
-// restores 0x01073744 at +0x08, and no EH action or call names a
-// BfmeBaseVUQ destructor.  This is the same proven inline/no-op base ABI
-// documented by Rva000E9A40Destructor.cpp, so the empty virtual declaration
-// below models retail behavior and is not a dummy callback/body.  The primary
-// SubsystemInterface destructor is the existing retail body at 0x009A1A40.
+// earlier fields below. The second base is Snapshot: the constructor installs
+// secondary vtable 0x010EB560 and this destructor restores 0x01073744 at +8.
+// Retail FuncInfo 0x00E0C438 state 1 points to cleanup 0x00C1BED8, whose
+// tail jump uses ILT 0x00001C80, the exported Snapshot::~Snapshot entry.
+// Use the canonical inline Snapshot definition for both local base views.
+// The primary SubsystemInterface destructor is the retail body at 0x009A1A40.
 // Parent verification: Snapshot::~Snapshot at 0x0005C520 is exactly the
 // 7-byte store of vtable 0x01073744 followed by ret. The empty C++ base
 // destructor emits this real vtable restoration implicitly. The same base
@@ -46,6 +45,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
+#include "../../Common/System/snapshot.h"
 
 // The +0x4C member is the concrete STLport list<int> whose out-of-line base
 // destructor is the retail 0x00387480 body.  Keep the vendor instantiation in
@@ -162,16 +162,13 @@ public:
 };
 
 
-class BfmeBaseVUQ
-{
-public:
-	virtual ~BfmeBaseVUQ(void) { }
-};
-
-class Gen_003643C0 : public BfmeBaseVUQ
+class Gen_003643C0 : public Snapshot
 {
 public:
 	virtual ~Gen_003643C0(void);
+	virtual const char *GetSnapshotName(void);
+	virtual void LoadPostProcess(void);
+	virtual void DoXfer(Xfer &xfer);
 
 private:
 	BfmeTailV m_string;                             // +0x04
@@ -462,7 +459,7 @@ private:
 	int *m_end;
 };
 
-class GameLogic : public SubsystemInterface, public BfmeBaseVUQ
+class GameLogic : public SubsystemInterface, public Snapshot
 {
 public:
 	virtual ~GameLogic(void);
