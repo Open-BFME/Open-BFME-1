@@ -63,8 +63,13 @@ struct Rva00461A00Mapped
 	}
 	~Rva00461A00Mapped()
 	{
-		if (m_counted && --m_counted->m_references <= 0)
-			m_counted->release(1);
+		// Retail 0x0045F190 (26 bytes), reached by parent 0x00461A00's
+		// state-0 cleanup at 0x00C24860 through ILT 0x0002C124.
+		// Matched caller 0x004628E0 independently uses this map's result
+		// as an owning pointer with count +4 and deleting vtable slot 0.
+		Rva0046C2A0Counted *current = m_counted;
+		if (current && (current->m_references = current->m_references - 1) <= 0)
+			current->release(1);
 	}
 
 	Rva0046C2A0Counted *m_counted;
