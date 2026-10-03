@@ -1,5 +1,5 @@
 // ?update@BezierProjectileBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.966 date=2026-09-28
+// partial score=0.9965 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // BezierProjectileBehavior::update, retail 0x001F0960, 1733 bytes.
@@ -424,10 +424,16 @@ UpdateSleepTime BezierProjectileBehavior::update()
 	}
 	else
 	{
-		const Coord3D *pos = obj->getPosition();
-		Coord3D next = *flightStep;
+		Coord3D pos;
+		pos.x = obj->getPosition()->x;
+		pos.y = obj->getPosition()->y;
+		pos.z = obj->getPosition()->z;
+		Coord3D next;
+		next.x = flightStep->x;
+		next.y = flightStep->y;
+		next.z = flightStep->z;
 		next.scale(2.0f);
-		next.sub(pos);
+		next.sub(&pos);
 		obj->setExtraPos(next);
 	}
 
@@ -436,7 +442,10 @@ UpdateSleepTime BezierProjectileBehavior::update()
 		Object *victim = TheGameLogic->findObjectByID(m_victimID);
 		if (victim)
 		{
-			Coord3D top = *victim->getPosition();
+			Coord3D top;
+			top.x = victim->getPosition()->x;
+			top.y = victim->getPosition()->y;
+			top.z = victim->getPosition()->z;
 			top.z += victim->m_geometryInfo.getMaxHeightAbovePosition() * 0.5f;
 			if (top.length() < victim->m_geometryInfo.m_boundingSphereRadius + m_flightPathSpeed)
 				slot0C(victim);
