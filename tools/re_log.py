@@ -553,6 +553,14 @@ def _record(argv):
         raise SystemExit(_record.__doc__)
     symbol, rva_text, size_text, status = argv[0], argv[1], argv[2], argv[3]
     evidence = " ".join(argv[4:])
+    # Readers split physical lines, then tabs. Refuse field separators before
+    # tagging, touching the run, or banking a candidate: even an otherwise
+    # valid verdict would hide evidence or invent another record when read.
+    for name, value in zip(("symbol", "rva", "size", "status", "evidence"),
+                           (symbol, rva_text, size_text, status, evidence)):
+        if any(char in value for char in "\t\n\r\v\f\x1c\x1d\x1e\x85\u2028\u2029"):
+            raise SystemExit(f"{name} contains a tab or line separator; "
+                             "record needs exactly one five-field line.")
     from fleet_run import run_tag
     import blockers
     # one vocabulary: blocker=x becomes blocker=<family>/x so pick_blocker.py

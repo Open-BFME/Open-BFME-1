@@ -59,6 +59,30 @@ SYM = "?Sym@@QAEXXZ"
 RVA = 0x00401000
 
 
+@pytest.mark.parametrize("separator", ["\t", "\n", "\r", "\v", "\f", "\x1c", "\x1d", "\x1e", "\x85", "\u2028", "\u2029"])
+@pytest.mark.parametrize("field", range(5))
+def test_record_refuses_field_separators_before_side_effects(log, monkeypatch, field, separator):
+    import fleet_run
+
+    def unexpected(*args):
+        pytest.fail("invalid framing must not touch the run or bank a candidate")
+
+    monkeypatch.setattr(fleet_run, "mark_touched", unexpected)
+    monkeypatch.setattr(re_log, "_bank", unexpected)
+    args = [SYM, "0x00401000", "16", "partial", "t=20min blocker=other/test"]
+    args[field] += separator + "extra"
+    refusal = record(*args, "--stash", "unused.cpp", "--score", "0.9")
+    assert refusal is not None and "tab or line separator" in refusal
+    assert log.read_bytes() == b""
+
+
+def test_record_preserves_unicode_and_literal_escape_text(log):
+    assert record(SYM, "0x00401000", "16", "blocked", r"t=1min dtor → caller; literal \n") is None
+    rows = log.read_text(encoding="utf-8").splitlines()
+    assert len(rows) == 1 and len(rows[0].split("\t")) == 5
+    assert r"dtor → caller; literal \n" in rows[0]
+
+
 def test_partial_after_dead_end_releases_the_candidate(log):
     """The whole point: a near miss recorded after a dead end un-retires it."""
     write_rows(log,
