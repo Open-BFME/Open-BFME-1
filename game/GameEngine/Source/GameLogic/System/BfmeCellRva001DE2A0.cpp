@@ -30,8 +30,12 @@ struct Rva006E6E50Triple
 	Real third;
 };
 
-void rva006E6E50(const Coord3D *position, Real size, Int frames,
-	Rva006E6E50Triple triple);
+// The retail call passes these arguments through the 5-byte ILT at 0x243AC.
+// Its linked spelling is the thunk's address-derived name; call through a
+// typed cast so the caller keeps the proven argument setup and call bytes.
+void j_000243ac(void);
+typedef void (__cdecl *Rva006E6E50Call)(const Coord3D *position, Real size,
+	Int frames, Rva006E6E50Triple triple);
 
 struct Rva001DE2A0Parameters
 {
@@ -68,8 +72,8 @@ void BfmeCell::rva001DE2A0(const Coord3D *position, Real cellSize,
 	triple.first = 1.0f;
 	triple.second = ratio;
 	triple.third = 1.0f;
-	rva006E6E50(position, cellSize, 6, triple);
+	((Rva006E6E50Call)j_000243ac)(position, cellSize, 6, triple);
 
 	triple.third = 0.0f;
-	rva006E6E50(position, cellSize - 20.0f, 6, triple);
+	((Rva006E6E50Call)j_000243ac)(position, cellSize - 20.0f, 6, triple);
 }
