@@ -8,6 +8,7 @@
 #include "chunkio.h"
 #include "w3d_file.h"
 #include "wwdebug.h"
+#include <string.h>
 
 #define DECL_DUMMY(n) virtual void Dummy##n(void);
 
@@ -53,6 +54,8 @@ protected:
 private:
 	char Pad[0x0c];
 	unsigned int Version;
+	char m_rva0098C9A0Prefix[0x1e0 - 0x14];
+	W3dEmitterExtraInfoStruct m_ExtraInfo;
 };
 #undef DECL_DUMMY
 
@@ -104,5 +107,15 @@ bool ParticleEmitterDefClass::Load_W3D(ChunkLoadClass &chunk_load)
 		chunk_load.Close_Chunk();
 	}
 
+	return ret_val;
+}
+
+// Slot 56 of retail vtable VA0113F908; full extent through RET4 at0098C9E0.
+bool ParticleEmitterDefClass::Read_Extra_Info(ChunkLoadClass &chunk_load)
+{
+	bool ret_val = false;
+	::memset(&m_ExtraInfo, 0, sizeof(m_ExtraInfo));
+	if (chunk_load.Read(&m_ExtraInfo, sizeof(m_ExtraInfo)) == sizeof(m_ExtraInfo))
+		ret_val = true;
 	return ret_val;
 }

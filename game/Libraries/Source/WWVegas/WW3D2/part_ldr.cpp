@@ -1139,23 +1139,8 @@ ParticleEmitterDefClass::Read_Blur_Time_Keyframes (ChunkLoadClass &chunk_load)
 //
 //	Read_Extra_Info
 //
-WW3DErrorType
-// ?ParticleEmitterDefClass::Read_Extra_Info present-unmatched
-ParticleEmitterDefClass::Read_Extra_Info (ChunkLoadClass &chunk_load)
-{
-	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_LOAD_FAILED;
-
-	// Read the chunk straight into our member structure
-	::memset (&m_ExtraInfo, 0, sizeof (m_ExtraInfo));
-	if (chunk_load.Read (&m_ExtraInfo, sizeof (m_ExtraInfo)) == sizeof (m_ExtraInfo)) {
-		// Success!
-		ret_val = WW3D_ERROR_OK;
-	}	
-
-	// Return the WW3DErrorType return code
-	return ret_val;
-}
+// BFME uses the complete bool-returning implementation in
+// ParticleEmitterDefClassLoadW3DBool.cpp (RVA0098C9A0, 67 bytes).
 
 //////////////////////////////////////////////////////////////////////////////////
 //
