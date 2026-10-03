@@ -17218,5 +17218,15 @@
   "after_sha256": "407a06475a3ceaaed6421afc639fb105f1f6d512170940d072366818888f65f1",
   "evidence": "targets/game/reverse/identity_evidence/0x00558be0-bank-type-pairings.md",
   "reason": "False cross-RVA bank delete/add alignment, not identifier rename. Deleted measured bank0x00558BE0.cpp belongs native00558BE0/341 now matched as existing address-owned ?dup_00558be0@@YAXXZ in OnlineQuickMatchInitGadget.cpp, native RET00558D34 followedINT3. Added measured bank0x002B26C0.cpp expressly owns distinct native002B26C0/756, still gen-dump in ledger and partialscore0.254, not an accepted conversion. No causal mapping exists between these four token pairs; neither bank rename nor semantic naming is approved. Bind only exact48e364.../407a064... snapshots."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00895a00.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00895a00.cpp",
+  "old_name": "bfmeBuildEVB",
+  "new_name": "rva00895A00",
+  "before_sha256": "9d8e2d61638e5cfe4e278030440178519eee4033959f9e9a3ed900cd4d9c5c52",
+  "after_sha256": "aa234aee31c04877f648adc417661e9efb05bdf41b70f14cc163475d4cfbcab3",
+  "evidence": "targets/game/reverse/identity_evidence/00895a00-banked-handle-abi.md",
+  "reason": "Replace the bank-only invented recipe label and false void-output lookup model with the independently proven hidden handle-return ABI; no witness names the method, so preserve its address."
  }
 ]

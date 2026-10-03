@@ -1,6 +1,6 @@
-// ?d_00895a00@@YAXXZ
-// partial score=0.72 date=2026-09-10
-// cl: /Oa
+// ?rva00895A00@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z
+// partial score=0.2044 date=2026-10-03
+// cl: /O2 /DNDEBUG /MD /EHsc
 
 struct BfmeHdrVKI
 {
@@ -39,11 +39,13 @@ public:
 
 class BfmeDropObjectA;
 
-struct BfmeResultEVB
+class RefHandle008958D0
 {
-	BfmeResultEVB();
-	BfmeResultEVB(const BfmeResultEVB &other);
-	~BfmeResultEVB();
+public:
+	RefHandle008958D0();
+ RefHandle008958D0(BfmeDropObjectA *p);
+	RefHandle008958D0(const RefHandle008958D0 &other);
+	~RefHandle008958D0();
 
 	BfmeDropObjectA *m_bfmeAEVB;
 };
@@ -64,6 +66,8 @@ class BfmeDropObjectA
 {
 public:
 	~BfmeDropObjectA();
+ void *operator new(unsigned int n) { return Rva008C5D70Alloc(n); }
+ BfmeDropObjectA(BfmeStrVKI *name) { m_refCount=0; m_string=reinterpret_cast<BfmeStringDataEVB *>(name->m_data); ++m_string->m_refCount; m_kind=1; m_argument=0; m_object=0; m_buffer=0; }
 
 	void operator delete(void *value, unsigned int bytes)
 	{
@@ -79,18 +83,18 @@ public:
 };
 
 
-__forceinline BfmeResultEVB::~BfmeResultEVB()
+__forceinline RefHandle008958D0::~RefHandle008958D0()
 {
-	if (m_bfmeAEVB != 0 && --m_bfmeAEVB->m_refCount == 0)
-		delete m_bfmeAEVB;
+	BfmeDropObjectA *p=m_bfmeAEVB;
+ if(p && --p->m_refCount == 0) delete p;
 }
 
-__forceinline BfmeResultEVB::BfmeResultEVB()
+__forceinline RefHandle008958D0::RefHandle008958D0()
 	: m_bfmeAEVB(0)
 {
 }
 
-__forceinline BfmeResultEVB::BfmeResultEVB(const BfmeResultEVB &other)
+__forceinline RefHandle008958D0::RefHandle008958D0(const RefHandle008958D0 &other)
 	: m_bfmeAEVB(other.m_bfmeAEVB)
 {
 	if (m_bfmeAEVB != 0)
@@ -106,104 +110,22 @@ struct BfmeDropNodeEVB
 class Rva00893030Manager
 {
 public:
-	void lookupEVB(void **result, BfmeStrVKI *name);
-	BfmeResultEVB bfmeBuildEVB(BfmeStrVKI *name);
+	RefHandle008958D0 find008958D0(BfmeStrVKI *name);
+	RefHandle008958D0 rva00895A00(BfmeStrVKI *name);
 
 	BfmeDropNodeEVB *m_head;
 };
 
-extern "C" int memcmp(const void *left, const void *right, unsigned int count);
 
-#pragma intrinsic(memcmp)
-
-__forceinline BfmeStringDataEVB **bfmeStringSlotEVB(void *object)
+inline RefHandle008958D0::RefHandle008958D0(BfmeDropObjectA *p) : m_bfmeAEVB(p) { if(p) ++p->m_refCount; }
+RefHandle008958D0 Rva00893030Manager::rva00895A00(BfmeStrVKI *name)
 {
-	return (BfmeStringDataEVB **)((char *)object + 4);
-}
-
-void Rva00893030Manager::lookupEVB(void **result, BfmeStrVKI *name)
-{
-	BfmeDropNodeEVB *node = m_head;
-	volatile int guard = 0;
-	void **output = result;
-	if (node != 0)
-	{
-		BfmeHdrVKI *key = name->m_data;
-		unsigned int length = key->m_length;
-		do
-		{
-			volatile BfmeDropObjectA *object = node->m_object;
-			BfmeStringDataEVB * volatile *slot =
-				(BfmeStringDataEVB * volatile *)((char *)object + 4);
-			BfmeStringDataEVB *candidate = *slot;
-			if (length == candidate->m_length)
-			{
-				if (key == reinterpret_cast<BfmeHdrVKI *>(candidate) ||
-						memcmp(key->m_data, candidate->m_data, length) == 0)
-				{
-					BfmeDropObjectA *object = node->m_object;
-					*output = object;
-					if (object != 0)
-					{
-						int *refCount = &object->m_refCount;
-						++*refCount;
-					}
-					return;
-				}
-			}
-			node = node->m_next;
-		}
-		while (node != 0);
-	}
-	*output = 0;
-}
-
-extern Rva00893030Manager *g_rva00893030Manager;
-
-BfmeResultEVB bfmeMakeEVB(const char *name)
-{
-	BfmeStrVKI value(name);
-
-	return g_rva00893030Manager->bfmeBuildEVB(&value);
-}
-
-BfmeResultEVB Rva00893030Manager::bfmeBuildEVB(BfmeStrVKI *name)
-{
-	BfmeResultEVB result;
-	BfmeDropObjectA *value;
-	lookupEVB((void **)&value, name);
-
-	if (value != 0)
-	{
-		result.m_bfmeAEVB = value;
-		return result;
-	}
-
-	value = static_cast<BfmeDropObjectA *>(Rva008C5D70Alloc(0x18));
-	if (value != 0)
-	{
-		value->m_refCount = 0;
-		value->m_string = reinterpret_cast<BfmeStringDataEVB *>(name->m_data);
-		++value->m_string->m_refCount;
-		value->m_kind = 1;
-		value->m_argument = 0;
-		value->m_object = 0;
-		value->m_buffer = 0;
-	}
-	if (value != 0)
-		++value->m_refCount;
-	result.m_bfmeAEVB = value;
-
-	BfmeDropNodeEVB *node = static_cast<BfmeDropNodeEVB *>(Rva008C5D70Alloc(8));
-	if (node != 0)
-	{
-		node->m_object = value;
-		node->m_next = 0;
-	}
-	else
-		node = 0;
-
-	node->m_next = m_head;
-	m_head = node;
-	return result;
+ RefHandle008958D0 found = find008958D0(name);
+ if(found.m_bfmeAEVB) return found;
+ BfmeDropObjectA *value = new BfmeDropObjectA(name);
+ RefHandle008958D0 made(value);
+ BfmeDropNodeEVB *node=static_cast<BfmeDropNodeEVB *>(Rva008C5D70Alloc(8));
+ if(node) { node->m_object=value; node->m_next=0; } else node=0;
+ node->m_next=m_head; m_head=node;
+ return made;
 }
