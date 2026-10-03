@@ -8310,7 +8310,8 @@ void InGameUI::resetCamera()
 //------------------------------------------------------------------------------
 Bool InGameUI::canSelectedObjectsNonAttackInteractWithObject( const Object *objectToInteractWith, SelectionRules rule ) const
 {
-	for( int i = 1; i < NUM_ACTIONTYPES; i++ )
+	// Retail compares against 21 at RVA00449169; the ZH enum stops at 18.
+	for( int i = 1; i < 21; i++ )
 	{
 		if( i != ACTIONTYPE_ATTACK_OBJECT )
 		{
