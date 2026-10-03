@@ -5,20 +5,34 @@
 // the slots this TU calls, so its use casts.
 class DisplayStringManager;
 
-template <typename T> class Rva0048EC80StringBase
+// The wide string base this ctor calls is retail's StringBase<unsigned short>
+// copy constructor at 0x00888400, so the local view carries the defining name
+// (the census had the old spelling as an alias of it). Both members below are
+// declared only and are DEFINED out of line by
+// game/Libraries/Source/string/StringBase.cpp, whose explicit instantiation
+// `template class StringBase<wchar_t>;` (line 779) emits them as COMDATs:
+// ??0?$StringBase@G@@AAE@ABV0@@Z (0x00888400, functions.csv row 1626) and
+// ??1?$StringBase@G@@AAE@XZ (0x000160F9 -> 0x008881D0, row 6324). Declaring
+// them here makes this TU reference both rather than define them. This is the
+// same local declared-only template view as
+// game/GameEngine/Source/Common/Rva0054D5A0Ctor.cpp: it is needed because
+// string_base.h befriends only AsciiString and UnicodeString, and this TU's
+// string class is neither. The derived class name is fixed by the ledger row
+// for this ctor (functions.csv row 4638).
+template <typename T> class StringBase
 {
 friend class Rva0048EC80UnicodeString;
 private:
-	Rva0048EC80StringBase(const Rva0048EC80StringBase<T> &other);
-	~Rva0048EC80StringBase();
+	StringBase(const StringBase<T> &other);
+	~StringBase();
 	T *m_data;
 };
 
-class Rva0048EC80UnicodeString : private Rva0048EC80StringBase<unsigned short>
+class Rva0048EC80UnicodeString : private StringBase<unsigned short>
 {
 public:
 	Rva0048EC80UnicodeString(const Rva0048EC80UnicodeString &other) :
-		Rva0048EC80StringBase<unsigned short>(other) {}
+		StringBase<unsigned short>(other) {}
 	~Rva0048EC80UnicodeString() {}
 };
 
