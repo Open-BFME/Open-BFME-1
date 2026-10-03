@@ -9,6 +9,12 @@ class SlaughterHordeContainModuleData
 {
 public:
 	virtual ~SlaughterHordeContainModuleData();
+
+private:
+	// This inline helper only materializes the vtable. Keep its private
+	// spelling distinct from the public constructor owned by CtorThunk.cpp.
+	SlaughterHordeContainModuleData() {}
+	friend void forceSlaughterHordeContainModuleDataDeletingDestructor();
 };
 
 void forceSlaughterHordeContainModuleDataDeletingDestructor()
