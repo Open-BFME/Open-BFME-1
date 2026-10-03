@@ -7,6 +7,7 @@
 class Rva00A13E03Owner
 {
 public:
+    unsigned long __stdcall rva00A13E8D();
     unsigned long __stdcall rva00A13EAE();
     unsigned long __stdcall rva00A13EBB();
     unsigned long __stdcall rva00A141B8();
@@ -49,4 +50,15 @@ unsigned long __stdcall Rva00A13E03Owner::rva00A141DF()
 {
     return *reinterpret_cast<const unsigned long *>(
         reinterpret_cast<const char *>(this) + 0x2bc);
+}
+
+// Table slot 1 increments receiver dword +4 and returns its new value.
+// Volatile readback preserves the separate retail load after the increment.
+// It does not claim an original volatile member type.
+unsigned long __stdcall Rva00A13E03Owner::rva00A13E8D()
+{
+    unsigned long *value = reinterpret_cast<unsigned long *>(
+        reinterpret_cast<char *>(this) + 4);
+    ++*value;
+    return *static_cast<volatile unsigned long *>(value);
 }
