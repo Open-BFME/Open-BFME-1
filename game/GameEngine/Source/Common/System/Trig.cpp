@@ -3,8 +3,6 @@
 
 #include <math.h>
 
-extern "C" void bfme_acos();
-extern "C" void bfme_asin();
 
 float Sin(float radians)
 {
@@ -23,20 +21,12 @@ float Tan(float radians)
 
 float ACos(float x)
 {
-    __asm {
-        fld dword ptr [esp + 4]
-        call bfme_acos
-        ret
-    }
+    return (float)acos(x);
 }
 
 float ASin(float x)
 {
-    __asm {
-        fld dword ptr [esp + 4]
-        call bfme_asin
-        ret
-    }
+    return (float)asin(x);
 }
 
 float deg2rad(float degrees)
