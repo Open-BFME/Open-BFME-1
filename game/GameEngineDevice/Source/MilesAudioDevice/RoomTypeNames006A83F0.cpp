@@ -16,7 +16,7 @@ struct Rva006A16B0Entry
     const char *m_name;
     int m_roomType;
 };
-extern Rva006A16B0Entry Rva006A16B0Table[];
+extern Rva006A16B0Entry g_rva0111BAC8[];
 class RoomNamesMutex006A83F0 {
     void *m_handle;
     unsigned char m_held;
@@ -46,7 +46,7 @@ const _STL::vector<const char *>& RoomTypeNames006A83F0::get() {
     if(names.empty()) {
         names.reserve(25);
         for(unsigned i=0;i<26;++i) {
-            if(Rva006A16B0Table[i].m_roomType) names.push_back(Rva006A16B0Table[i].m_name);
+            if(g_rva0111BAC8[i].m_roomType) names.push_back(g_rva0111BAC8[i].m_name);
         }
     }
     return names;

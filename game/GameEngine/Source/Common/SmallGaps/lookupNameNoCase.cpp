@@ -5,7 +5,7 @@ extern "C" unsigned int __cdecl strlen(const char*);
 struct Rva006A16B0StringData { int m_refs; unsigned short m_length; unsigned short m_alloc; char m_chars[1]; };
 struct Rva006A16B0String { Rva006A16B0StringData* m_data; };
 struct Rva006A16B0Entry { const char* m_name; int m_value; };
-extern Rva006A16B0Entry Rva006A16B0Table[0x1a];
+extern Rva006A16B0Entry g_rva0111BAC8[0x1a];
 extern char Rva006A16B0Empty[];
 static inline int Rva006A16B0Compare(const Rva006A16B0String* s, const char* name)
 {
@@ -23,8 +23,8 @@ static inline int Rva006A16B0Compare(const Rva006A16B0String* s, const char* nam
 int lookupNameNoCase(const Rva006A16B0String* s)
 {
 	for (unsigned int i = 0; i < 0x1a; ++i) {
-		if (Rva006A16B0Compare(s, Rva006A16B0Table[i].m_name) == 0)
-			return Rva006A16B0Table[i].m_value;
+		if (Rva006A16B0Compare(s, g_rva0111BAC8[i].m_name) == 0)
+			return g_rva0111BAC8[i].m_value;
 	}
 	return -1;
 }

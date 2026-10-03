@@ -22,15 +22,15 @@ public:
 	void *m_data;
 };
 
-// The 26 EAX room types and their display names, at VA 0x0111BAC8.  The
-// ledger pins the table under the address of the other body that reads it.
+// The 26 EAX room types and their display names, at VA 0x0111BAC8.
+// Defined once in MilesAudioRoomTypeLookupRva00694CA0.cpp.
 struct Rva006A16B0Entry
 {
 	const char *m_name;
 	int m_roomType;
 };
 
-extern Rva006A16B0Entry Rva006A16B0Table[];
+extern Rva006A16B0Entry g_rva0111BAC8[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 struct ProviderInfo
@@ -75,8 +75,8 @@ private:
 static const char *roomTypeName(int roomType)
 {
 	for (unsigned int i = 0; i < 26; ++i)
-		if (roomType == Rva006A16B0Table[i].m_roomType)
-			return Rva006A16B0Table[i].m_name;
+		if (roomType == g_rva0111BAC8[i].m_roomType)
+			return g_rva0111BAC8[i].m_name;
 
 	return "<Unknown>";
 }
