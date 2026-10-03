@@ -1,5 +1,5 @@
 // ?moveAlongWaypointPath@W3DView@@AAEXH_N@Z
-// partial score=0.3 date=2026-09-10
+// partial score=0.4624 date=2026-10-03
 // cl: /DNDEBUG /MD /EHsc
 // BFME W3DView::moveAlongWaypointPath(Int, Bool), retail 0x00741360 (545 bytes).
 //
@@ -29,6 +29,8 @@ struct WaypointRange
 {
 	WaypointRecord *current;
 	WaypointRecord *end;
+	WaypointRecord *begin(void) const { return current; }
+	Int size(void) const { return end - current; }
 };
 
 struct CameraMovementState
@@ -43,8 +45,7 @@ struct CameraMovementState
 	unsigned char padding20[0x04];
 	Bool active;
 	unsigned char padding25[0x07];
-	WaypointRecord *currentWaypoint;
-	WaypointRecord *endWaypoint;
+	WaypointRange waypoints;
 	unsigned char padding34[0x04];
 	Real distanceScale;
 	unsigned char padding3c[0x09];
@@ -63,7 +64,7 @@ extern void j_00012931(void);
 extern void j_000442bf(void);
 extern void j_000481fd(void);
 
-static __forceinline void updateMinMax(Real *minimum, Real value, Real *maximum)
+static __forceinline void updateMinMax(Real *minimum, Real sample, Real *maximum)
 {
 	typedef void (*Function)(Real *, Real, Real *);
 	union
@@ -72,7 +73,7 @@ static __forceinline void updateMinMax(Real *minimum, Real value, Real *maximum)
 		Function typed;
 	} thunk;
 	thunk.raw = j_00012931;
-	thunk.typed(minimum, value, maximum);
+	thunk.typed(minimum, sample, maximum);
 }
 
 struct SegmentIndexCall
@@ -154,7 +155,12 @@ public:
 	BFME_W3D_SLOT(18) BFME_W3D_SLOT(19) BFME_W3D_SLOT(20)
 	BFME_W3D_SLOT(21) BFME_W3D_SLOT(22) BFME_W3D_SLOT(23)
 	BFME_W3D_SLOT(24) BFME_W3D_SLOT(25) BFME_W3D_SLOT(26)
-	virtual void setPosition(const Coord3D *position) = 0;
+	virtual void setInt23BC(Int value) = 0;
+	void setPosition(const Coord3D *position)
+	{
+		*reinterpret_cast<Coord3D *>(
+			reinterpret_cast<unsigned char *>(this) + 0x0c) = *position;
+	}
 
 private:
 	unsigned char padding0004[0x22f4 - 0x04];
@@ -162,7 +168,7 @@ private:
 	Int cameraMovementMode;
 	CameraMovementState alternateMovement;
 	unsigned char padding23b8[0x08];
-	Bool cameraHasMoved;
+	Bool m_freezeTimeForCameraMovement;
 	unsigned char padding23c1[0x243c - 0x23c1];
 	Coord3D alternatePosition;
 
@@ -183,30 +189,46 @@ void W3DView::moveAlongWaypointPath(Int milliseconds, Bool alternate)
 	if (!movement.active)
 		return;
 
-	Int previousElapsed = movement.elapsedTime;
+	Real previousElapsed = (Real)movement.elapsedTime;
 	movement.elapsedTime += milliseconds;
 	if (TheWritableGlobalData->m_disableCameraMovement) {
 		if (movement.elapsedTime <= movement.totalTime)
 			return;
-		cameraHasMoved = false;
+		m_freezeTimeForCameraMovement = false;
 		return;
 	}
 	if (movement.elapsedTime > movement.totalTime) {
-		if (!alternate && !movement.segmentChanged)
-			setPosition(waypointAt(movement.currentWaypoint,
-				segmentIndex(&movement.currentWaypoint), 0xbc));
-		cameraHasMoved = false;
-	}
-
-	Int segment = segmentIndex(&movement.currentWaypoint);
-	Coord3D source = *waypointAt(movement.currentWaypoint, segment, 0xcc);
+		if (!alternate && !movement.segmentChanged) {
+			void **viewVtable = *reinterpret_cast<void ***>(this);
+			WaypointRange *range = &movement.waypoints;
+			Int segment = segmentIndex(&range->current);
+			typedef void (W3DView::*SetInt23BCMethod)(Int);
+			union SetPositionPointer {
+				void *raw;
+				SetInt23BCMethod method;
+			} setter;
+			setter.raw = viewVtable[27];
+			Int endpointValue = *reinterpret_cast<Int *>(
+				waypointAt(range->begin(), segment, 0xbc));
+			(this->*setter.method)(endpointValue);
+		}
+		m_freezeTimeForCameraMovement = false;
+	Int segment = movement.waypoints.size();
+	Coord3D *waypoint = waypointAt(movement.waypoints.begin(), segment, 0xcc);
+	Coord3D source;
+	volatile Coord3D *sourceView = &source;
+	source.x = waypoint->x;
+	source.y = waypoint->y;
+	source.z = waypoint->z;
 	if (alternate) {
-		alternatePosition = source;
+		alternatePosition.x = sourceView->x;
+		alternatePosition.y = sourceView->y;
+		alternatePosition.z = sourceView->z;
 	} else {
-		setPosition(&source);
-		updateMinMax(&reinterpret_cast<Real *>(this)[0x23fc / 4], source.x,
+		setPosition((const Coord3D *)sourceView);
+		updateMinMax(&reinterpret_cast<Real *>(this)[0x23fc / 4], sourceView->x,
 			&reinterpret_cast<Real *>(this)[0x2404 / 4]);
-		updateMinMax(&reinterpret_cast<Real *>(this)[0x2400 / 4], source.y,
+		updateMinMax(&reinterpret_cast<Real *>(this)[0x2400 / 4], sourceView->y,
 			&reinterpret_cast<Real *>(this)[0x2408 / 4]);
 	}
 
@@ -215,11 +237,13 @@ void W3DView::moveAlongWaypointPath(Int milliseconds, Bool alternate)
 
 	Int oldElapsed = movement.elapsedTime - milliseconds;
 	movement.elapsedTime = oldElapsed;
+	}
+
 	Real timeFraction = g_bfmeDefaultBU / (Real)movement.totalTime;
 	Real easedCurrent = easeValue(&movement.ease,
 		(Real)movement.elapsedTime * timeFraction);
 	Real easedPrevious = easeValue(&movement.ease,
-		(Real)previousElapsed * timeFraction);
+		previousElapsed * timeFraction);
 	movement.currentDistance += (easedCurrent - easedPrevious) * movement.distanceScale;
 
 	if (movement.movementFinished) {
