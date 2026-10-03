@@ -17258,5 +17258,25 @@
   "after_sha256": "129d21858379baeee36b714ce5d7d52549fb43367e99c881c587a6bd11d5b9ba",
   "evidence": "targets/game/reverse/identity_evidence/20261003-rva664680-string-result.md",
   "reason": "BfmeFrameAH is a legacy synthetic Bfme<Role><Suffix> owner with no named caller or symbol pin; independent retail format/copy/release calls refute the AH string alias but do not establish an owner name. Rva00664680 keeps the actual address while canonicalizing the proven AsciiString return type."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeOrderDescribeZJ.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/NetAckStage2Rva00674E10.cpp",
+  "old_name": "bfmeDescribeZJ",
+  "new_name": "rva00674E10",
+  "before_sha256": "b6fe94898e3571c7312b4ec09adea1077c0e9f162a9f09701115d03c1ef95391",
+  "after_sha256": "60b39a9fc218148702778ae069d057a4213b93140ab201029947ce4504553632",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-netackstage2-result.md",
+  "reason": "Legacy BfmeOrderZJ::bfmeDescribeZJ is a synthetic guessed family. Independent matched constructors and retail vtable slot establish NetAckStage2CommandMsg; no exact derived method name is claimed, so the recovered entry keeps674E10. Its base call and canonical AsciiString return replace the independently refuted ZJ aliases."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeDescribeZJ",
+  "new_name": "rva00674E10",
+  "before_sha256": "1770c620014b1812f6fc14f13d157d5ee0ae90840f76f69fb3850cb591cb11da",
+  "after_sha256": "aee1446b386b97dd0e2e998df5d947d5f13262c0dc0c728f0dfcaae5d03253db",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-netackstage2-result.md",
+  "reason": "Legacy BfmeOrderZJ::bfmeDescribeZJ is a synthetic guessed family. Independent matched constructors and retail vtable slot establish NetAckStage2CommandMsg; no exact derived method name is claimed, so the recovered entry keeps674E10. Its base call and canonical AsciiString return replace the independently refuted ZJ aliases."
  }
 ]
