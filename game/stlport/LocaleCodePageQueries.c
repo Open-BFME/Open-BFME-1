@@ -369,46 +369,17 @@ char *Rva008504C0(LocaleCodePageObject_0084EED0 *object)
 
 extern char locale_buffer_00850560[];
 extern char locale_output_00850560[];
-extern unsigned short locale_separator_00850560;
 
 char *Rva00850560(LocaleCodePageObject_0084EED0 *object)
 {
     LCID locale = object->locale;
     GetLocaleInfoA(locale, 0x20, locale_buffer_00850560, 0x104);
     {
-        char *buffer;
-        char *converted;
-        char *destination;
-        char *suffix;
-        char *suffixEnd;
-        char ch;
-        unsigned int suffixSize;
-
-        buffer = locale_buffer_00850560;
+        char *buffer = locale_buffer_00850560;
         __ConvertFromACP(buffer, 0x50, object->codePage);
-        converted = Rva0084DE40Tail(buffer);
-        strcpy(locale_output_00850560, converted);
-
-        destination = locale_output_00850560;
-        --destination;
-        do
-        {
-            ch = destination[1];
-            ++destination;
-        } while (ch);
-        *(unsigned short *)destination = locale_separator_00850560;
-
-        suffix = Rva0084ED20Tail(object);
-        suffixSize = strlen(suffix);
-
-        destination = locale_output_00850560;
-        --destination;
-        do
-        {
-            ch = destination[1];
-            ++destination;
-        } while (ch);
-        memcpy(destination, suffix, suffixSize);
+        strcpy(locale_output_00850560, Rva0084DE40Tail(buffer));
+        strcat(locale_output_00850560, " ");
+        strcat(locale_output_00850560, Rva0084ED20Tail(object));
         return locale_output_00850560;
     }
 }
