@@ -110,3 +110,43 @@ namespace D3DXShader
     };
     void CNodeStatement::rva00A68FE1() {}
 }
+
+// Each cnode.obj slot2 has its own void thiscall() signature and retail entry.
+namespace D3DXShader
+{
+    // Constructor store A6900C installs VA0115166C.
+    class CNodeExpression
+    {
+    public:
+        void rva00A690EA();
+    };
+    void CNodeExpression::rva00A690EA() {}
+    // Constructor store A69103 installs VA01151678.
+    class CNodeValue
+    {
+    public:
+        void rva00A692E5();
+    };
+    void CNodeValue::rva00A692E5() {}
+    // Constructor store A692F7 installs VA01151684.
+    class CNodeState
+    {
+    public:
+        void rva00A69381();
+    };
+    void CNodeState::rva00A69381() {}
+    // Constructor store A69393 installs VA01151690.
+    class CNodeBuffer
+    {
+    public:
+        void rva00A69415();
+    };
+    void CNodeBuffer::rva00A69415() {}
+    // Constructor store A69427 installs VA0115169C.
+    class CNodeRegister
+    {
+    public:
+        void rva00A69498();
+    };
+    void CNodeRegister::rva00A69498() {}
+}
