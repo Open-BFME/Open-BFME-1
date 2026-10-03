@@ -26,7 +26,6 @@ public:
 class BfmeThingUC
 {
 public:
-	void bfmeResetUC();
 	void *m_bfmeVft;
 	unsigned char m_bfmeGap[8];
 	BfmeSubUC *m_bfmeSub;
@@ -42,12 +41,22 @@ public:
 
 extern BfmeNodeUC *g_bfmeThingUCHead; // 0x0130B198
 
-void BfmeThingUC::bfmeResetUC()
+// Retail 0x0081E4B0 is this base destructor, as the VP6 EH cleanup proves.
+// Keep its established table external instead of synthesizing a partial one.
+class __declspec(novtable) Gen_0081E480
 {
-	BfmeSubUC *sub = m_bfmeSub;
-	m_bfmeVft = bfmeVftUC;
+public:
+	virtual ~Gen_0081E480();
+	int m_count; int m_first; int m_second; int m_flags;
+};
+
+Gen_0081E480::~Gen_0081E480()
+{
+	BfmeThingUC *view = reinterpret_cast<BfmeThingUC *>(this);
+	BfmeSubUC *sub = view->m_bfmeSub;
+	view->m_bfmeVft = bfmeVftUC;
 	if (sub != 0)
-		sub->bfmeDropUC(this);
+		sub->bfmeDropUC(view);
 }
 
 void BfmeSubUC::bfmeDropUC(BfmeThingUC *who)
