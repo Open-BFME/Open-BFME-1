@@ -30,7 +30,8 @@ private:
 
 char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 {
-	out->m_string.clear();
+	// Through the base: AsciiString::clear would emit a non-retail COMDAT.
+	static_cast<StringBase<char> &>(out->m_string).clear();
 	while (m_pos < m_end)
 	{
 		if (isspace(static_cast<signed char>(m_buf[m_pos])) == 0)
