@@ -1,9 +1,10 @@
 // ?bfmeClearEVG@BfmeHostEVG@@QAEXXZ
-// partial score=0.98 date=2026-09-16
+// partial score=0.9869 date=2026-10-03
 class TextureEVG
 {
 public:
 	void bfmeReleaseRefEVG();
+ void bfmeAddRefEVG();
 };
 
 class BfmeRefEVG
@@ -16,16 +17,29 @@ public:
 			m_bfmePtrEVG->bfmeReleaseRefEVG();
 	}
 
-	TextureEVG *m_bfmePtrEVG;
+	BfmeRefEVG &operator=(const BfmeRefEVG &other) {
+ if(other.m_bfmePtrEVG) other.m_bfmePtrEVG->bfmeAddRefEVG();
+  if(m_bfmePtrEVG) m_bfmePtrEVG->bfmeReleaseRefEVG();
+  m_bfmePtrEVG=other.m_bfmePtrEVG;
+ return *this;
+}
+operator TextureEVG*() const {return m_bfmePtrEVG;}
+TextureEVG *m_bfmePtrEVG;
 };
 
 class Render2DEVG
 {
 public:
 	void bfmeResetEVG();
+void set(const BfmeRefEVG &t) {
+ if(m_bfmeTexEVG.m_bfmePtrEVG != t.m_bfmePtrEVG) {
+ m_bfmeTexEVG=t;
+ m_bfmeFlagEVG = m_bfmeTexEVG ? -1 : 0;
+ }
+}
 
 	unsigned char m_bfmeHeadEVG[0x4c];
-	TextureEVG *volatile m_bfmeTexEVG;
+	BfmeRefEVG m_bfmeTexEVG;
 	int m_bfmeFlagEVG;
 };
 
@@ -60,21 +74,7 @@ public:
 
 void BfmeHostEVG::bfmeClearEVG()
 {
-	{
-		BfmeRefEVG ref;
-		Render2DEVG *r = m_bfmeR2DEVG;
-
-		if (r->m_bfmeTexEVG != 0)
-		{
-			TextureEVG *tex = r->m_bfmeTexEVG;
-
-			if (tex != 0)
-				tex->bfmeReleaseRefEVG();
-
-			r->m_bfmeTexEVG = 0;
-			r->m_bfmeFlagEVG = r->m_bfmeTexEVG != 0 ? -1 : 0;
-		}
-	}
+ m_bfmeR2DEVG->set(BfmeRefEVG());
 
 	m_bfmeR2DEVG->bfmeResetEVG();
 
