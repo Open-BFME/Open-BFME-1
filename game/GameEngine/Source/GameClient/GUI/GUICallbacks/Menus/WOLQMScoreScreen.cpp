@@ -45,6 +45,13 @@
 #include "GameClient/GadgetListBox.h"
 #include "GameClient/GadgetTextEntry.h"
 
+// Retail inlines the UnicodeString destructor: it calls StringBase<wchar_t>::releaseBuffer
+// (0x008881D0) directly instead of going through a ~UnicodeString stub.
+inline UnicodeString::~UnicodeString()
+{
+	((StringBase<wchar_t> *)this)->releaseBuffer();
+}
+
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes
