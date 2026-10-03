@@ -50,6 +50,10 @@ class RousingSpeechUpdateModuleData : public SpecialAbilityUpdateModuleData
 public:
     RousingSpeechUpdateModuleData();
 
+    // Retail scalar wrapper 0x2657D0 calls ILT 0x1CCA1 to the separately
+    // matched complete destructor at 0x265800. Do not synthesize it here.
+    virtual ~RousingSpeechUpdateModuleData();
+
 private:
     unsigned int m_bonusRadius;
     unsigned int m_speechDuration;
