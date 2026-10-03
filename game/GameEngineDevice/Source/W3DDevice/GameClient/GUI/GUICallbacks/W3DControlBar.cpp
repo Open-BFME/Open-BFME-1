@@ -452,32 +452,6 @@ void W3DPowerDrawA( GameWindow *window, WinInstanceData *instData )
 	TheWindowManager->winDrawImage(slider, posXstart, pos.y + size.y - slider->getImageHeight(), posXend, pos.y + size.y);
 }
 
-void W3DCommandBarGridDraw( GameWindow *window, WinInstanceData *instData )
-{
-	if( BitTest(window->winGetStatus(), WIN_STATUS_IMAGE ))
-	{
-		W3DGameWinDefaultDraw( window, instData );
-		return;
-	}
-
-	ICoord2D pos, size;
-	window->winGetScreenPosition( &pos.x, &pos.y );
-	window->winGetSize( &size.x, &size.y );
-		
-	Color color = TheControlBar->getBorderColor();
-	window->winSetEnabledBorderColor(0, color);
-	W3DGameWinDefaultDraw( window, instData );
-
-	TheDisplay->drawLine(pos.x, pos.y + size.y * .33, pos.x + size.x, pos.y+ size.y*.33, 1,color);
-	TheDisplay->drawLine(pos.x, pos.y + size.y * .66, pos.x + size.x, pos.y+ size.y*.66, 1,color);
-	TheDisplay->drawLine(pos.x + size.x * .33, pos.y, pos.x + size.x *.33, pos.y +size.y, 1,color);
-	TheDisplay->drawLine(pos.x + size.x  * .66, pos.y, pos.x + size.x *.66, pos.y + size.y, 1,color);
-
-	
-
-
-}
-
 void W3DCommandBarGenExpDraw( GameWindow *window, WinInstanceData *instData )
 {
 	Player *player = ThePlayerList->getLocalPlayer();
