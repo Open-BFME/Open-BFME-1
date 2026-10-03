@@ -12855,7 +12855,6 @@ name,address,notes
 ?Rva009A8110@@YAXXZ,0x009A8110,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A86F0Allocate@@YAHPAX@Z,0x009A86F0,Address-derived buffer allocator; caller 009A89C0 at 009A8B96 pushes context and tests EAX; callee allocates buffers via 009A5970 and returns zero or one with plain RET
 ?Rva009A8C50@@YAXPAURva009A6130Context@@PAE@Z,0x009A8C50,direct REL32 target at 0x009A6130+0x168/+0x1DA/+0x208/+0x46B; cdecl plain ret; two args (context and frame) pushed at every site; address-derived name
-?Rva009A91D0@@YAXXZ,0x009A91D0,codec dispatch outlier slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A92D0@@YAXXZ,0x009A92D0,codec dispatch slot7 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9370@@YAXXZ,0x009A9370,codec dispatch slot6 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9550@@YAXXZ,0x009A9550,codec dispatch slot20 filler (generic tier); no ghidra boundary or identity yet
