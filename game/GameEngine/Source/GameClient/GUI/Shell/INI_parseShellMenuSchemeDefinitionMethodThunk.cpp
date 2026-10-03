@@ -1,33 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// stlport
 // Clean BFME layout reconstruction of INI::parseShellMenuSchemeDefinition.
 
-typedef int Int;
-extern "C" unsigned int __cdecl strlen(const char *text);
-
-struct FieldParse;
-class ShellMenuScheme;
-
-class BfmeShellSchemeString
-{
-public:
-	BfmeShellSchemeString() : m_data(0) {}
-	BfmeShellSchemeString(const BfmeShellSchemeString &other) { copyFrom(other); }
-	~BfmeShellSchemeString() { releaseBuffer(); }
-	void set(const char *text, Int length);
-
-private:
-	void copyFrom(const BfmeShellSchemeString &other);
-	void releaseBuffer();
-	void *m_data;
-};
-
-class BfmeShellMenuSchemeManager
-{
-public:
-	ShellMenuScheme *newShellMenuScheme(BfmeShellSchemeString name);
-	const FieldParse *getFieldParse() const { return m_shellMenuSchemeFieldParseTable; }
-	static const FieldParse m_shellMenuSchemeFieldParseTable[];
-};
+#include "Common/INI.h"
+#include "GameClient/ShellMenuScheme.h"
 
 // TU-local view of the retail shell singleton; 0x012F4B58's one identity is
 // ?TheShell@@3PAVShell@@A.
@@ -35,30 +11,22 @@ class Shell
 {
 public:
 	unsigned char m_pad[0x60];
-	BfmeShellMenuSchemeManager *m_schemeManager;
+	ShellMenuSchemeManager *m_schemeManager;
 };
 
 extern Shell *TheShell;
 
-class INI
-{
-public:
-	static void parseShellMenuSchemeDefinition(INI *ini);
-	const char *getNextToken(const char *separators = 0);
-	void initFromINI(void *object, const FieldParse *parseTable);
-};
-
 // ?parseShellMenuSchemeDefinition@INI@@SAXPAV1@@Z
 void INI::parseShellMenuSchemeDefinition(INI *ini)
 {
-	BfmeShellSchemeString name;
+	AsciiString name;
 	const char *text = ini->getNextToken();
 	Int length = text ? strlen(text) : 0;
-	name.set(text, length);
+	name.StringBase<char>::set(text, length);
 
-	BfmeShellMenuSchemeManager *manager = TheShell->m_schemeManager;
+	ShellMenuSchemeManager *manager = TheShell->m_schemeManager;
 	if (manager) {
-		BfmeShellSchemeString &argument = name;
+		AsciiString &argument = name;
 		ShellMenuScheme *scheme = manager->newShellMenuScheme(argument);
 		ini->initFromINI(scheme, manager->getFieldParse());
 	}
