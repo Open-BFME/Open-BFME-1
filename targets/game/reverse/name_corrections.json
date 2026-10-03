@@ -17278,5 +17278,25 @@
   "after_sha256": "aee1446b386b97dd0e2e998df5d947d5f13262c0dc0c728f0dfcaae5d03253db",
   "evidence": "targets/game/reverse/identity_evidence/20261003-netackstage2-result.md",
   "reason": "Legacy BfmeOrderZJ::bfmeDescribeZJ is a synthetic guessed family. Independent matched constructors and retail vtable slot establish NetAckStage2CommandMsg; no exact derived method name is claimed, so the recovered entry keeps674E10. Its base call and canonical AsciiString return replace the independently refuted ZJ aliases."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00694130.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00694130.cpp",
+  "old_name": "build",
+  "new_name": "rva00694130",
+  "before_sha256": "892686a670d3b91d057063fbc97fdf58ad3ad18cf98db5900a7c6e1fa199a6fc",
+  "after_sha256": "0df115428a0c7858cc2dabfa27d215bc45177eaafcaa38176e5262440750e5f3",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
+  "reason": "The old bank invented build/dispatch names and its owner/argument interpretation was subsequently retracted. Matched caller ownership and independently decoded helper reference ABI establish the actual worker but no full semantic method names; address-preserving rva00694130/rva00693B90 are the honest identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00694130.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00694130.cpp",
+  "old_name": "dispatch",
+  "new_name": "rva00693B90",
+  "before_sha256": "892686a670d3b91d057063fbc97fdf58ad3ad18cf98db5900a7c6e1fa199a6fc",
+  "after_sha256": "0df115428a0c7858cc2dabfa27d215bc45177eaafcaa38176e5262440750e5f3",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
+  "reason": "The old bank invented build/dispatch names and its owner/argument interpretation was subsequently retracted. Matched caller ownership and independently decoded helper reference ABI establish the actual worker but no full semantic method names; address-preserving rva00694130/rva00693B90 are the honest identities."
  }
 ]

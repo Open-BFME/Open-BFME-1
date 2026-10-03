@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0df115428a0c7858cc2dabfa27d215bc45177eaafcaa38176e5262440750e5f3",
+  "symbol": "?rva00694130@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAudioEventRef@@H@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?rva00694130@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAudioEventRef@@H@Z\n// partial score=1.0 date=2026-10-03\n// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /I.\n#include \"game/Libraries/Source/WWVegas/WWLib/ascii_string.h\"\nstruct AudioEventInfo { char pad0[0x84]; int m_soundType; };\nclass RvaAudioEventFilenameForPortion { public: AsciiString getFilenameForPlayPortion(); };\nclass AudioEventRTS { public: char pad0[8]; AudioEventInfo *m_eventInfo; };\nclass AudioEventRef { public: AudioEventRTS *ptr; };\nclass Gen006BA220;\nclass Rva006910F0Handle\n{\npublic:\n Rva006910F0Handle();\n ~Rva006910F0Handle();\n Gen006BA220 *m_receiver;\n};\nclass Rva00694710AudioWorker\n{\npublic:\n Rva006910F0Handle rva00694130(const AudioEventRef &event,int value);\n Rva006910F0Handle rva00693B90(const AsciiString &filename,int value);\n};\nRva006910F0Handle Rva00694710AudioWorker::rva00694130(const AudioEventRef &event,int value)\n{\n AudioEventRTS *e=event.ptr;\n if(!e) return Rva006910F0Handle();\n if(!e->m_eventInfo) return Rva006910F0Handle();\n if(e->m_eventInfo->m_soundType!=2) return Rva006910F0Handle();\n return rva00693B90(reinterpret_cast<RvaAudioEventFilenameForPortion *>(e)->getFilenameForPlayPortion(),value);\n}\n"
+}

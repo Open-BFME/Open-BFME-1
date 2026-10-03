@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "053880970adda3620772b1073d43f19f6ebbdd213e527a6a4043eb8a8496ffe2",
+  "symbol": "??0Rva006910F0Handle@@QAE@XZ",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??0Rva006910F0Handle@@QAE@XZ\n// partial score=1.0 date=2026-10-03\n// cl: /DNDEBUG /MD /EHsc /O2 /Ob2\nclass Gen006BA220;\nclass Rva006910F0Handle { public: Rva006910F0Handle(); ~Rva006910F0Handle(); Gen006BA220 *m_receiver; };\nRva006910F0Handle::Rva006910F0Handle() : m_receiver(0) {}\n"
+}
