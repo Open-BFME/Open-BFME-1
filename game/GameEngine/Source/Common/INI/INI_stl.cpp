@@ -578,16 +578,7 @@ void INI::readLine( void )
 	* in a Real */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseAngularVelocityReal@INI@@ present-unmatched
-void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/, 
-																			void *store, const void *userData )
-{
-	const char *token = ini->getNextToken();
-
-	// scan the int and convert to radian and store as a real
-	*(Real *)store = ConvertAngularVelocityInDegreesPerSecToRadsPerFrame(scanReal( token ));
-
-}
+// The retail definition is owned by ini.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse Bool from buffer and assign at location 'store'.  The buffer token must
