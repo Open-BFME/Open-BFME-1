@@ -1789,30 +1789,7 @@ Weapon::Weapon(const Weapon& that)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??4Weapon@@AAEAAV0@ABV0@@Z present-unmatched
-Weapon& Weapon::operator=(const Weapon& that)
-{
-	if (this != &that)
-	{
-		// Weapons lose all ammo when copied.
-		this->m_template = that.m_template;
-		this->m_wslot = that.m_wslot;
-		this->m_status = OUT_OF_AMMO;
-		this->m_ammoInClip = 0;
-		this->m_whenPreAttackFinished = 0;
-		this->m_whenLastReloadStarted = 0;
-		this->m_whenWeCanFireAgain = 0;
-		this->m_leechWeaponRangeActive = false;
-		this->m_pitchLimited = (m_template->getMinTargetPitch() > -PI || m_template->getMaxTargetPitch() < PI);
-		this->m_maxShotCount = NO_MAX_SHOTS_LIMIT;
-		this->m_curBarrel = 0;
-		this->m_lastFireFrame = 0;
-		this->m_suspendFXFrame = that.getSuspendFXFrame();
-		this->m_numShotsForCurBarrel = m_template->getShotsPerBarrel();
-		this->m_projectileStreamID = INVALID_ID;
-	}
-	return *this;
-}
+// Retail assignment and BFME reset layout live in WeaponCopyAssignment.cpp.
 
 //-------------------------------------------------------------------------------------------------
 Weapon::~Weapon()

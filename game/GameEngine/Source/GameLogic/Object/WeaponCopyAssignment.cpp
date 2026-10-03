@@ -7,24 +7,7 @@
 // body.  The reference implementation documents the copy/reset semantics;
 // the unnamed padding fields are BFME state whose owners are not yet matched.
 
-class WeaponTemplate
-{
-public:
-	float getMinTargetPitch() const
-	{
-		return *(const float *)((const char *)this + 0x78);
-	}
-
-	float getMaxTargetPitch() const
-	{
-		return *(const float *)((const char *)this + 0x7C);
-	}
-
-	int getShotsPerBarrel() const
-	{
-		return *(const int *)((const char *)this + 0x4D0);
-	}
-};
+class WeaponTemplate;
 
 class Weapon
 {
@@ -71,14 +54,14 @@ Weapon& Weapon::operator=(const Weapon& that)
 		this->m_whenWeCanFireAgain = 0;
 		this->m_reset50 = 0;
 		this->m_reset54 = 0;
-		const int pitchLimited = (m_template->getMinTargetPitch() > -3.14159265358979323846f ||
-			m_template->getMaxTargetPitch() < 3.14159265358979323846f) ? 1 : 0;
+		const int pitchLimited = ((*(const float *)((const char *)m_template + 0x78)) > -3.14159265358979323846f ||
+			(*(const float *)((const char *)m_template + 0x7C)) < 3.14159265358979323846f) ? 1 : 0;
 		this->m_pitchLimited = (unsigned char)pitchLimited;
 		this->m_field34 = 0x7FFFFFFF;
 		this->m_curBarrel = 0;
 		this->m_reset2C = 0;
 		this->m_maxShotCount = that.m_maxShotCount;
-		this->m_numShotsForCurBarrel = (unsigned int)m_template->getShotsPerBarrel();
+		this->m_numShotsForCurBarrel = (unsigned int)(*(const int *)((const char *)m_template + 0x4D0));
 		this->m_reset58 = 0;
 	}
 	return *this;
