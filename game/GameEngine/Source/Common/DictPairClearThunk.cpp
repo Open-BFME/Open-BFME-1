@@ -1,21 +1,10 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
 // Standalone TU for Dict::DictPair::clear (retail jump-table switch).
 // Types: DICT_BOOL=0, DICT_INT=1, DICT_REAL=2, DICT_ASCIISTRING=3, DICT_UNICODESTRING=4.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void clear();
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	void clear();
-};
+#include "ascii_string.h"
+#include "unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
@@ -66,7 +55,7 @@ void Dict::DictPair::clear()
 		asAsciiString()->clear();
 		break;
 	case DICT_UNICODESTRING:
-		asUnicodeString()->clear();
+		((StringBase<unsigned short> *)asUnicodeString())->clear();
 		break;
 	}
 }
