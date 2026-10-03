@@ -21,3 +21,11 @@ template void __destroy<
 		_Nonconst_traits<Gen_t_008fb350_p12pod> >,
 	Gen_t_008fb350_p12pod *);
 }
+
+// Complete wrapper at008FAED0. The native iterator contract is two values,
+// each16 bytes; the established element/callee view is20 bytes, not12.
+typedef _STL::deque<Gen_t_008fb350_p12pod>::iterator Rva008FAED0Iterator;
+void Rva008FAED0(Rva008FAED0Iterator first, Rva008FAED0Iterator last)
+{
+    _STL::_Destroy(first, last);
+}
