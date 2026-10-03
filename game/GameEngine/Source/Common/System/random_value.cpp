@@ -36,6 +36,7 @@
 #include "client_random_value.h"
 #include "logic_random_value.h"
 #include "crc.h"
+#include "realcrc.h"
 #include "debug.h"
 #include "game_logic.h"
 
@@ -161,9 +162,7 @@ UnsignedInt GetGameLogicRandomSeed( void )
 
 UnsignedInt GetGameLogicRandomSeedCRC( void )
 {
-	CRC c;
-	c.computeCRC(theGameLogicSeed, 6*sizeof(UnsignedInt));
-	return c.get();
+	return CRC_Memory( reinterpret_cast<const UnsignedByte *>( theGameLogicSeed ), sizeof( theGameLogicSeed ), 0 );
 }
 
 void InitRandom( void )
@@ -422,7 +421,6 @@ void GameLogicRandomVariable::setRange( Real low, Real high, DistributionType ty
 /**
  * Return a value from the random distribution
  */
-// ?GameLogicRandomVariable::getValue present-unmatched
 Real GameLogicRandomVariable::getValue( void ) const
 {
 	switch( m_type )
@@ -434,7 +432,8 @@ Real GameLogicRandomVariable::getValue( void ) const
 			} // else return as though a UNIFORM.
 
 		case UNIFORM:
-			return GameLogicRandomValueReal( m_low, m_high );
+			// Retail records the original source line with deterministic logic draws.
+			return GetGameLogicRandomValueReal( m_low, m_high, "F:\\bfme\\Code\\gameengine\\Source\\Common\\RandomValue.cpp", 437 );
 
 		default:
 			/// @todo fill in support for nonuniform GameLogicRandomVariables.
