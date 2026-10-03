@@ -1,12 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
 // Address-derived Apt operand resolver; retail 0x008CE430.
 struct BfmeHdrVKI { unsigned short m_bfme00; };
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// Retail RVA 0x008CE50F loads VA 0x01337A30, then calls slot +4
+// with one pointer and caller cleanup. Apt.cpp owns this allocation pair.
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class BfmeStrVKI {
 public:
  void bfmeSetVKI(const char *);
  BfmeStrVKI(const char *s) { bfmeSetVKI(s); }
- ~BfmeStrVKI() { BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) Rva01337A30ReleaseTable[1](p); }
+ ~BfmeStrVKI() { BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) reinterpret_cast<void (__cdecl **)(void *)>(g_rva01337A30AllocPair)[1](p); }
  BfmeHdrVKI *m_bfme00;
 };
 class EAStringC { public: EAStringC &rva0089F530(const char *); };
