@@ -12,12 +12,10 @@
 #include <vector>
 #include <string>
 namespace _STL {
-void *__cdecl vectorLargeAllocate(unsigned int);
-void *__cdecl vectorSmallAllocate(unsigned int);
 template<> __forceinline void _String_base<char,allocator<char> >::_M_allocate_block(unsigned int n) {
  if(n<=max_size()+1 && n>0) {
   char *buffer;
-  if(n>128) buffer=(char*)vectorLargeAllocate(n); else buffer=(char*)vectorSmallAllocate(n);
+  if(n>128) buffer=(char*)::operator new(n); else buffer=(char*)__node_alloc<true,0>::allocate(n);
   _M_start=buffer; _M_finish=buffer; _M_end_of_storage._M_data=buffer+n;
  }
 }
