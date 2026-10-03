@@ -12,13 +12,24 @@ struct BfmeTab1022
 	BfmeElem1022 m_bfmeItems[1];
 };
 
-class BfmeE1022
+// The global this TU reaches at 0x012F33F8 is EA's control-bar singleton
+// `ControlBar *TheControlBar' (?TheControlBar@@3PAVControlBar@@A), defined
+// once in GameClient/GUI/ControlBar/ControlBar.cpp, and the drop it performs
+// is retail's ControlBar body at 0x004C1B60, reached through the ILT thunk
+// 0x0003BCCD and matched as ControlBar::rva004C1B60. Only the slot called here
+// is modelled; the view is this TU's own ABI of it, so the cast at the use is
+// a no-op and the bytes are unchanged.
+//
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
+class GameWindow;
+
+class ControlBar
 {
 public:
-	void bfmeDrop1022(int n, void *p);
+	void rva004C1B60(GameWindow *window, void *item);
 };
 
-extern BfmeE1022 *g_bfmeE1022;
+extern ControlBar *TheControlBar;			// retail 0x012F33F8
 
 class BfmeD1022
 {
@@ -34,7 +45,7 @@ void BfmeD1022::bfmeGo1022D(int unused)
 	void *p = m_bfmeTab->m_bfmeItems[m_bfmeIdx].m_bfmeP;
 
 	if (p != 0)
-		g_bfmeE1022->bfmeDrop1022(0, p);
+		TheControlBar->rva004C1B60(0, p);
 }
 
 class BfmeG1022

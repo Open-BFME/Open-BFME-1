@@ -20,17 +20,49 @@ public:
 class Object
 {
 public:
-	void bfmeRecordTransform(unsigned int frame);
 	char m_pad00[0x38];
 	Rva0029AB10Coord3D m_position;
 	char m_pad44[0x214 - 0x44];
 	Object *m_containedBy;
 };
 
-class UpdateModule
+// The frame transform is retail's Drawable body at 0x001C0BE0, reached through
+// the ILT thunk 0x0002BB43 and matched as Drawable::bfmeRecordTransform
+// (game/GameEngine/Source/GameClient/DrawableBFMERecordTransform.cpp). Only the
+// slot called here is modelled; the pointer is cast at the use, which is a
+// no-op, so the bytes are unchanged.
+//
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
+class Drawable
 {
 public:
-	void setWakeFrame(Object *object, int when);
+	void bfmeRecordTransform(unsigned int frame);
+};
+
+// The wake setter is retail's UpdateModule body at 0x002B2040, reached through
+// the ILT thunk 0x000157DA and matched as
+// UpdateModule::setWakeFrame(Object *, UpdateSleepTime)
+// (game/GameEngine/Source/GameLogic/Object/Update/UpdateModule.cpp). Retail
+// declares it protected and non-virtual -- "modules should only wake
+// themselves up" -- and UpdateModule is not a base of PhysicsBehavior here (no
+// part of it is laid out, and the sibling rva0029A150 TU shows the behaviour has
+// no vptr of its own), so this view only declares the one slot and names the
+// caller a friend.
+//
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_INVALID = 0,
+	UPDATE_SLEEP_NONE = 1,
+	UPDATE_SLEEP_FOREVER = 0x3fffffff
+};
+
+class UpdateModule
+{
+protected:
+	void setWakeFrame(Object *object, UpdateSleepTime when);
+
+	friend class PhysicsBehavior;
 };
 
 class Rva0029AB10GameLogic
@@ -46,7 +78,7 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-class PhysicsBehavior : public UpdateModule
+class PhysicsBehavior
 {
 public:
 	unsigned char rva0029A150(int option, float strength);
@@ -79,7 +111,7 @@ void PhysicsBehavior::rva0029AB10(const Rva0029AB10Coord3D *where,
 		}
 		if ((*(unsigned int *)(templateValue + 0xd4) & 0x1000) == 0)
 		{
-			setWakeFrame(object, 0x3fffffff);
+			reinterpret_cast<UpdateModule *>(this)->UpdateModule::setWakeFrame(object, UPDATE_SLEEP_FOREVER);
 			return;
 		}
 	}
@@ -90,8 +122,9 @@ void PhysicsBehavior::rva0029AB10(const Rva0029AB10Coord3D *where,
 	{
 		m_wakeFlag = 0;
 		m_flag.reset();
-		m_object->bfmeRecordTransform(((Rva0029AB10GameLogic *)TheGameLogic)->m_frame);
+		reinterpret_cast<Drawable *>(m_object)->bfmeRecordTransform(((Rva0029AB10GameLogic *)TheGameLogic)->m_frame);
 		m_flag.reset();
-		setWakeFrame(m_object, 1);
+		reinterpret_cast<UpdateModule *>(this)->UpdateModule::setWakeFrame(
+			m_object, UPDATE_SLEEP_NONE);
 	}
 }
