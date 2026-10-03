@@ -3,15 +3,20 @@
 // Apt handler 0x008CD520: resolve a string target, store it with offset and bounds, pop 3 or 7 values.
 
 struct Rva8CD520StringBlock { unsigned short m_refs; };
-extern Rva8CD520StringBlock g_bfmeDefaultString1284;
-extern void (__cdecl **g_bfmeStringPool1284)(void *);
+// Retail 0x008CD56C/577 use the empty block at VA 0x012D5298;
+// 0x008CD5E6 loads the allocation pair at VA 0x01337A30, then calls
+// its second slot with one pointer and caller cleanup. Both have owners.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva8CD520String
 {
 public:
 	Rva8CD520String()
 	{
-		m_block = &g_bfmeDefaultString1284;
+		m_block = reinterpret_cast<Rva8CD520StringBlock *>(&g_rva012D5298Empty);
 		++m_block->m_refs;
 	}
 	~Rva8CD520String()
@@ -19,7 +24,7 @@ public:
 		Rva8CD520StringBlock *block = m_block;
 		--block->m_refs;
 		if (block->m_refs == 0)
-			g_bfmeStringPool1284[1](block);
+			reinterpret_cast<void (__cdecl **)(void *)>(g_rva01337A30AllocPair)[1](block);
 	}
 	Rva8CD520StringBlock *m_block;
 };
@@ -97,7 +102,10 @@ struct Rva8CD520Packet
 	int m_height;
 };
 
-extern Rva8CD520Packet *g_bfmeHolderBU;
+// Retail loads from 0x008CD5FC onward read the canonical VA 0x013377D8
+// pointer defined by BfmePicker1284.cpp. Retain only this TU's packet view.
+struct BfmePickWorld1284;
+extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern void d_008c6320();
 typedef void (__cdecl *Rva8CD520ResolveName)(void *, void *, Rva8CD520String *, void **,
 	Rva8CD520String *);
@@ -117,27 +125,27 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 
 	int popCount = 3;
 	value->addRef();
-	g_bfmeHolderBU->m_value = value;
-	g_bfmeHolderBU->m_x = 0.0f;
-	g_bfmeHolderBU->m_y = 0.0f;
-	g_bfmeHolderBU->m_a = -9999.0f;
-	g_bfmeHolderBU->m_b = -9999.0f;
-	g_bfmeHolderBU->m_c = -9999.0f;
-	g_bfmeHolderBU->m_d = -9999.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_value = value;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_x = 0.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_y = 0.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_a = -9999.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_b = -9999.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_c = -9999.0f;
+	reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_d = -9999.0f;
 
 	if (!state->top(1)->isType(7))
 	{
-		g_bfmeHolderBU->m_x = (float)g_bfmeHolderBU->m_width - value->m_x;
-		g_bfmeHolderBU->m_y = (float)g_bfmeHolderBU->m_height - value->m_y;
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_x = (float)reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_width - value->m_x;
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_y = (float)reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_height - value->m_y;
 	}
 
 	if (state->top(2)->isType(7))
 	{
 		popCount = 7;
-		g_bfmeHolderBU->m_d = state->top(3)->toFloat();
-		g_bfmeHolderBU->m_c = state->top(4)->toFloat();
-		g_bfmeHolderBU->m_b = state->top(5)->toFloat();
-		g_bfmeHolderBU->m_a = state->top(6)->toFloat();
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_d = state->top(3)->toFloat();
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_c = state->top(4)->toFloat();
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_b = state->top(5)->toFloat();
+		reinterpret_cast<Rva8CD520Packet *>(g_bfmeHolderBU)->m_a = state->top(6)->toFloat();
 	}
 	state->popValues(popCount);
 }
