@@ -77,9 +77,6 @@ protected:
 		float V[4], Bool fullTile);
 };
 
-extern double Gen01085F58;
-extern float Gen01121AE4;
-
 class GlobalData;										///< retail pointee at 0x012ED5C8
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 
@@ -99,7 +96,7 @@ Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4],
 		if (((const BfmeGlobalData0074BEB0 *)TheWritableGlobalData) && !((const BfmeGlobalData0074BEB0 *)TheWritableGlobalData)->m_adjustCliffTextures) {
 			return false;
 		}
-		if (nU==Gen01085F58) {
+		if (nU==0.0) {
 			return false;
 		}
 		if (fullTile) {
@@ -120,7 +117,7 @@ Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4],
 			if (tilesMatch) {
 				Real minU = m_textureClasses[i].positionX;
 				Real maxV = m_textureClasses[i].positionY + m_textureClasses[i].width*64;
-				minU*=Gen01121AE4;
+				minU*=0.00048828125f;
 				maxV/=m_terrainTexHeight;
 				Real vFactor = 2048/m_terrainTexHeight;
 				U[0] = info.u0+minU;
