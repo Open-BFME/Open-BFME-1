@@ -10,7 +10,7 @@
 // independently receives the retail 32-bit reference increment at offset 4.
 extern "C" char *strcpy(char *, const char *);
 #pragma intrinsic(strcpy)
-extern void (__cdecl *g_bfmePrepVNV)(const char *);
+extern "C" __declspec(dllimport) char *__cdecl _strlwr(char *);
 class HAnimClass;
 // The counted owner releases through the leaf at 0x009EB7A0, which is
 // TextureBaseClass::Release_Ref in the real WW3D2 header.
@@ -42,7 +42,7 @@ HAnimClass *Get_HAnim(const char *name)
     if (!name) return 0;
     strcpy(buffer, "a*");
     strcpy(buffer + 2, name);
-    g_bfmePrepVNV(buffer);
+    _strlwr(buffer);
     // MSVC 7.1 keeps the returned aggregate alive through this construction.
     Gen0090BE20 reference(&(Rva009EBCE0AssetReference &)Rva009EBCE0_GetPrototype(buffer));
     if (!reference.m_object) return 0;
