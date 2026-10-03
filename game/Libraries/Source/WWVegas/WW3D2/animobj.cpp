@@ -456,35 +456,7 @@ void Animatable3DObjClass::Set_Animation(void)
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-void Animatable3DObjClass::Set_Animation
-( 
-	HAnimClass * motion0,
-	float frame0,
-	HAnimClass * motion1,
-	float frame1,
-	float percentage
-)
-{
-	Release();
-
-	CurMotionMode = DOUBLE_ANIM;
-	ModeInterp.Motion0 = motion0;
-	ModeInterp.Motion1 = motion1;
-	ModeInterp.PrevFrame0 = ModeInterp.Frame0;
-	ModeInterp.PrevFrame1 = ModeInterp.Frame1;
-	ModeInterp.Frame0 = frame0;
-	ModeInterp.Frame1 = frame1;
-	ModeInterp.Percentage = percentage;
-	Set_Hierarchy_Valid(false);
-
-	if ( ModeInterp.Motion0 != NULL ) {
-		ModeInterp.Motion0->Add_Ref();
-	}
-
-	if ( ModeInterp.Motion1 != NULL ) {
-		ModeInterp.Motion1->Add_Ref();
-	}
-}
+// Exact BFME blend setter: Animatable3DObj_Set_Animation_blend.cpp.
 
 
 /***********************************************************************************************
