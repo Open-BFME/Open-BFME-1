@@ -813,47 +813,7 @@ ProcessAnimateWindowSlideFromBottomTimed::~ProcessAnimateWindowSlideFromBottomTi
 
 // Retail reverse initializer: ProcessAnimateWindowSlideFromBottomTimed_initReverseAnimateWindow_Thunk.cpp.
 
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@@Z present-unmatched
-void ProcessAnimateWindowSlideFromBottomTimed::initAnimateWindow( AnimateWindow *animWin )
-{
-	ICoord2D restPos = {0,0};
-	ICoord2D startPos = {0,0};
-	ICoord2D curPos = {0,0};
-	ICoord2D endPos = {0,0};
-	Coord2D	vel = {0.0f,0.0f};
-	
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	
-	// it's set that the window is passed in as it's current position being it's rest position
-	// so save off the rest position
-	GameWindow *win = animWin->getGameWindow();
-	if(!win)
-	{
-		DEBUG_ASSERTCRASH( win, ("animWin contains a NULL Pointer for it's GameWindow... Whatup wit dat?"));
-		return;
-	}
-	win->winGetPosition(&restPos.x, &restPos.y);
-	endPos.x = restPos.x;
-	endPos.y = restPos.y;
-
-	//set the initial positions for the window. In this case, off the Bottom of the screen
-	Int travelDistance = TheDisplay->getWidth();// / 4 * 3;
-	startPos.x = curPos.x = restPos.x;
-	startPos.y = curPos.y = restPos.y + travelDistance;
-
-	//set the window's position to the new start positions.
-	win->winSetPosition(startPos.x, startPos.y);
-
-	UnsignedInt now = timeGetTime();
-	UnsignedInt delay = animWin->getDelay();
-
-	DEBUG_LOG(("initAnimateWindow at %d (%d->%d)\n", now, now + delay, now + m_maxDuration + delay));
-	animWin->setAnimData(startPos, endPos, curPos, restPos, vel, now + delay, now + m_maxDuration + delay);
-}
+// Retail forward initializer: ProcessAnimateWindowInitAnimate.cpp.
 
 Bool ProcessAnimateWindowSlideFromBottomTimed::updateAnimateWindow( AnimateWindow *animWin )
 {
