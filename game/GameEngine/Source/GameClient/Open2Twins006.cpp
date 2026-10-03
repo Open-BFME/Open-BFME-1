@@ -13,15 +13,8 @@ private:
 	void *m_name;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
-class Snapshot
-{
-public:
-	~Snapshot() {}
-	virtual void crc() = 0;
-	virtual void xfer() = 0;
-	virtual void loadPostProcess() = 0;
-};
+// Retail cleanup calls PE-exported virtual Snapshot::~Snapshot.
+#include "../Common/System/snapshot.h"
 
 enum NameKeyType
 {
