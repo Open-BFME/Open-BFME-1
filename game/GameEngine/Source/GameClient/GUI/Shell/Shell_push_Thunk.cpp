@@ -1,25 +1,14 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?push@Shell@@QAEXVAsciiString@@_N@Z: game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME5: clean C++ reconstruction of the shell layout push path.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-struct AsciiStringData
-{
-	unsigned short m_refCount;
-	unsigned short m_allocated;
-	unsigned short m_length;
-};
+#include "ascii_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+// The retail caller inlines StringBase's witnessed null/length test.
+template <> inline bool StringBase<char>::isEmpty() const
 {
-public:
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &);
-	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
-private:
-	AsciiStringData *m_data;
-};
+	return m_data == 0 || m_data->length == 0;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
