@@ -1,4 +1,7 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /D_STLP_LINK_TIME_INSTANTIATION
+// stlport
 // Open-BFME5 conversions.
+#include <map>
 
 struct BfmeNode1110
 {
@@ -17,8 +20,6 @@ struct BfmeW1110
 	int m_bfme158;
 };
 
-BfmeNode1110 *__cdecl bfmeNext1110(BfmeNode1110 *p);
-
 int __cdecl bfmeGo1110A(BfmeW1110 *w)
 {
 	BfmeNode1110 *h = w->m_bfme4c;
@@ -33,7 +34,8 @@ int __cdecl bfmeGo1110A(BfmeW1110 *w)
 			val = p->m_bfme10;
 			best = v;
 		}
-		p = bfmeNext1110(p);
+		p = reinterpret_cast<BfmeNode1110 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = w->m_bfme4c;
 	}
 	if (!best)
@@ -44,9 +46,14 @@ int __cdecl bfmeGo1110A(BfmeW1110 *w)
 class BfmeR1110
 {
 public:
-	BfmeR1110 *bfmeNextR1110(void);
 	char m_bfmePad[8];
 	unsigned int m_bfme08;
+};
+
+// ILT 0x00022A70 reaches the ledger's four-byte getter at 0x000C8A30.
+struct Gen_000c8a30
+{
+	int m();
 };
 
 struct BfmeQ1110
@@ -64,8 +71,6 @@ struct BfmeM1110
 	char m_bfmePad1[0xc];
 	BfmeQ1110 *m_bfme18;
 };
-
-BfmeM1110 *__cdecl bfmeNextM1110(BfmeM1110 *p);
 
 class BfmeV1110
 {
@@ -99,9 +104,10 @@ void BfmeV1110::bfmeGo1110B(void)
 
 			if (b >= m_bfme14)
 				m_bfme14 = b + 1;
-			r = r->bfmeNextR1110();
+			r = reinterpret_cast<BfmeR1110 *>(reinterpret_cast<Gen_000c8a30 *>(r)->m());
 		}
-		p = bfmeNextM1110(p);
+		p = reinterpret_cast<BfmeM1110 *>(_STL::_Rb_global<bool>::_M_increment(
+			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = m_bfme04;
 	}
 }
