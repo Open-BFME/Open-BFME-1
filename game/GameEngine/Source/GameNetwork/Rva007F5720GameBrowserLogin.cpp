@@ -7,11 +7,25 @@
 // listener-interface names are unavailable, so the remaining names are
 // address-derived.
 
-class Rva007E8810Message
+// 0x007E88A0 is W3DVideoBuffer::valid and 0x007E88B0 is the getter the ledger
+// defines as ?m@Gen_007e88b0@@QAEHXZ (game/gen_small/fun_005.cpp); this file
+// previously spelled them hasError/getError, which nothing defines.  Use the
+// ledger spellings through casts, the convention already used by
+// game/GameEngine/Source/Common/SmallGaps/Rva007F5A70VideoBufferValue.cpp.
+class W3DVideoBuffer
 {
 public:
-	bool hasError( void );
-	int getError( void );
+	virtual bool valid( void );
+};
+
+class Gen_007e88b0
+{
+public:
+	int m( void );
+};
+
+class Rva007E8810Message
+{
 };
 
 class Rva007F5720Listener
@@ -56,9 +70,9 @@ void Rva007F5720GameBrowser::handleLoginReply( Rva007E8810Message *msg )
 			0x173 );
 	}
 
-	if( msg->hasError() )
+	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
 	{
-		status = msg->getError();
+		status = ((Gen_007e88b0 *)msg)->m();
 		m_state = 3;
 	}
 	else

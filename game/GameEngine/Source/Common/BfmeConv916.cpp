@@ -19,10 +19,14 @@ struct BfmeSlotJA
 	unsigned int m_bfmeBits;
 };
 
-class BfmeSub916C
+// Retail calls the body at 0x008F7B50 by its ledger name
+// ?bfmeForward@Gen_008F7B50@@QAEXPAX@Z (defined in
+// game/GameEngine/Source/Common/S3GuardedVirtualArgs.cpp), so the local view of
+// the receiver takes that class/member spelling.
+class Gen_008F7B50
 {
 public:
-	void bfmeDo916C(void *a);
+	void bfmeForward(void *a);
 };
 
 class BfmeThing916C
@@ -32,12 +36,12 @@ public:
 	int m_bfmePad;
 	BfmeSlotJA *m_bfmeSlot;
 	char m_bfmePad2[0x3a8];
-	BfmeSub916C *m_bfmeSub;
+	Gen_008F7B50 *m_bfmeSub;
 };
 
 void BfmeThing916C::bfmeGo916C(void *a)
 {
-	BfmeSub916C *s = m_bfmeSub;
+	Gen_008F7B50 *s = m_bfmeSub;
 	if (!s)
 		return;
 	BfmeSlotJA *x = m_bfmeSlot;
@@ -48,7 +52,7 @@ void BfmeThing916C::bfmeGo916C(void *a)
 				reinterpret_cast<const BfmeSlotJA *>( h->getFinalOverride() ) );
 	}
 	if (!(x->m_bfmeBits & 0x100000))
-		s->bfmeDo916C(a);
+		s->bfmeForward(a);
 }
 
 class BfmeSub916D
@@ -143,10 +147,28 @@ public:
 	virtual void bfmeVirt916D(void *a);
 };
 
+// The last call of bfmeGo916D reaches its body (retail 0x001EBB40,
+// ?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z) through the ILT stub
+// at 0x0001192D, which the ledger defines as ?j_0001192d@@YAXXZ
+// (game/gen_small/thunks_008.cpp).  Reference that stub by its ledger name and
+// reach it through the usual thiscall cast so the emitted call is unchanged.
+extern void j_0001192d();
+
+template <typename Ret, typename Recv, typename Arg>
+static Ret CallOn(Recv *object, void (*function)(void), Arg arg)
+{
+	union {
+		void (*plain)(void);
+		Ret (Recv::*member)(Arg);
+	} cast;
+	cast.plain = function;
+	return (object->*cast.member)(arg);
+}
+
 class BfmeTail916D
 {
 public:
-	void bfmeCall916D(void *a);
+	char m_bfmePad[1];
 };
 
 class BfmeThing916D
@@ -168,5 +190,5 @@ void BfmeThing916D::bfmeGo916D(void *a)
 	BfmeSub916D *s = m_bfmeSub;
 	if (s)
 		s->bfmeVirt916D(a);
-	m_bfmeTail.bfmeCall916D(a);
+	CallOn<void>(&m_bfmeTail, j_0001192d, a);
 }

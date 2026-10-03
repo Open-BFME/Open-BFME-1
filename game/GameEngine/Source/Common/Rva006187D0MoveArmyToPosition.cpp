@@ -25,18 +25,28 @@ struct Coord3D
 	float z;
 };
 
-// The +0x288 flag is independently read by the matched
-// Gen_00609320::bfmeDisabled body.  The method name is an address-derived
-// direct-body view; retail ILT 0x00014858 reaches RVA 0x0060D5A0.
+// Retail's own call here is `call 0x00014858` (?j_00014858@@YAXXZ, defined in
+// game/gen_small/thunks_009.cpp), whose body is the 5-byte
+// ?dup_0060d5a0@@YAXXZ at 0x0060D5A0 (`mov al,1; ret 4`).  Nothing defines a
+// BfmeGameCW method at that address, so the call is named by the ledger's ILT
+// stub and reached through the usual thiscall union cast.
+extern void j_00014858();
+
+// The singleton receiver view; only the gate call is made on it.
 class BfmeGameCW
 {
 public:
 	char m_bfmeHead[0x288];
 	Bool m_bfmeOver;
-	Bool rva0060d5a0(UnsignedInt source);
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+// 0x012F706C is retail's `LivingWorldManager *TheLivingWorldManager`
+// (?TheLivingWorldManager@@3PAVLivingWorldManager@@A, defined in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManager.cpp); the
+// BfmeGameCW view is reached from it by reinterpret_cast, the convention
+// Rva006FD090Projection.cpp already uses.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // Existing matched layout: the destructor occupies vslot 0, and
 // buildFramePoint is vslot 8 (+0x20).  The source argument remains opaque.
@@ -137,7 +147,9 @@ private:
 Bool Rva00618600Poly::rva006187d0(UnsignedInt source)
 {
 	UnsignedInt sourceArg = source;
-	if (m_state != 5 || !g_bfmeGameCW->rva0060d5a0(sourceArg))
+	union { void (*plain)(void); Bool (BfmeGameCW::*gate)(UnsignedInt); } gateCall;
+	gateCall.plain = j_00014858;
+	if (m_state != 5 || !(reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->*gateCall.gate)(sourceArg))
 		goto failure;
 
 	Coord3D location;

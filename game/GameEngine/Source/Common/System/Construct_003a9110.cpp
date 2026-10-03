@@ -1,4 +1,4 @@
-// cl: /EHsc
+// cl: /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: the out-of-line STLport _Construct<T,T> at retail 0x003A9110.
 //
@@ -11,18 +11,22 @@
 
 #include <memory>
 
-// 4-byte member with an out-of-line copy constructor (retail: StringBase<char>).
-struct Gen_t_003a9110_s4
-{
-	void *m_rep;
-	Gen_t_003a9110_s4(const Gen_t_003a9110_s4 &);
-};
+// The 4-byte member at +4 is copied out of line at retail 0x00887B60, the
+// StringBase<char> copy constructor the ledger owns as
+// ??0?$StringBase@D@@AAE@ABV0@@Z (game/Libraries/Source/string/StringBase.cpp).
+// AsciiString's copy constructor is inline and calls exactly that base
+// constructor, which is the shape retail's copy sites emit, so the member is
+// the real AsciiString rather than a TU-local stand-in.
+#include "ascii_string.h"
 
-// 8-byte polymorphic payload: vptr at +0, the member above at +4.
+// 8-byte polymorphic payload: vptr at +0 (the immediate 0x010EC76C, the
+// Rva003B7BA0Record vftable), the member above at +4.
 struct Gen_t_003a9110_p8vs
 {
-	virtual void gen_v0();
-	Gen_t_003a9110_s4 m_str;
+	// Only shapes the vtable; retail never calls it, so it stays inline and
+	// emits no external reference.
+	virtual void gen_v0() {}
+	AsciiString m_str;
 };
 
 template void _STL::_Construct<Gen_t_003a9110_p8vs, Gen_t_003a9110_p8vs>(

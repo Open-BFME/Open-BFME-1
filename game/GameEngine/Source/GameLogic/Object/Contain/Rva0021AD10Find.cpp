@@ -12,8 +12,9 @@
 // method name are address-derived. The two direct calls reach their bodies
 // through the ILT stubs 0x00012224 (-> 0x002493A0, the matched
 // Rva002493A0::find list search) and 0x00036C05 (-> 0x00248AE0, the matched
-// bfmeAskDG query); the member declarations here are the address-derived
-// local spelling with identical ABI (thiscall, one stack slot, EAX out).
+// bfmeAskDG query); those stubs are referenced by their ledger names
+// ?j_00012224@@YAXXZ and ?j_00036c05@@YAXXZ through a union thiscall cast
+// (thiscall, one stack slot, EAX out).
 
 struct BfmeNodeAD10
 {
@@ -30,27 +31,34 @@ public:
 	virtual bool bfmeV06(void *a);
 };
 
+// The two direct calls reach their bodies through the ILT stubs the ledger
+// defines as ?j_00012224@@YAXXZ (game/gen_small/thunks_008.cpp) and
+// ?j_00036c05@@YAXXZ (game/gen_small/thunks_026.cpp).  Reference those stub
+// names through the thiscall cast so the emitted calls are unchanged.
+extern void j_00012224();
+extern void j_00036c05();
+
 class Gen_0021AD10
 {
 public:
 	void *bfmeFind(void *a);
-
-private:
-	void *bfmeFindRaw(void *a);
-	void *bfmeAskRaw(void *o);
 };
 
 // ?bfmeFind@Gen_0021AD10@@QAEPAXPAX@Z
 void *Gen_0021AD10::bfmeFind(void *a)
 {
-	void *found = bfmeFindRaw(a);
+	union { void (*plain)(void); void *(Gen_0021AD10::*find)(void *); } findCall;
+	findCall.plain = j_00012224;
+	void *found = (this->*findCall.find)(a);
 
 	if (found == 0) {
 		BfmeNodeAD10 *n = (*(BfmeNodeAD10 **)((char *)this + 0x9BC))->m_next;
 
 		if (n != *(BfmeNodeAD10 **)((char *)this + 0x9BC)) {
 			do {
-				void *chk = bfmeAskRaw(n->m_payload);
+				union { void (*plain)(void); void *(Gen_0021AD10::*ask)(void *); } askCall;
+				askCall.plain = j_00036c05;
+				void *chk = (this->*askCall.ask)(n->m_payload);
 
 				if (chk != 0) {
 					BfmeCheckAD10 *c = (BfmeCheckAD10 *)chk;
