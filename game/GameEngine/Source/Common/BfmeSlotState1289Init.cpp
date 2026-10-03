@@ -9,7 +9,7 @@ extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 #define BfmeTwoPi 3.1415927410125732
 #define BfmeAngleUpper 1.5707964f
 #define BfmeAngleLower (-1.5707964f)
-#define BfmeAngleSpan (*(const float *)0x01136850)
+static const float BfmeAngleSpan[] = { 3.1415927f };
 #define BfmeAngleScale 0.5f
 #define BfmeKTHE 57.295776f
 #define BfmeAxisScale 100.0f
@@ -26,9 +26,9 @@ static inline float wrapBfmeAngle1289(float angle)
 {
 	angle = (float)fmod((double)angle, BfmeTwoPi);
 	if (angle >= BfmeAngleUpper)
-		angle -= BfmeAngleSpan;
+		angle -= BfmeAngleSpan[0];
 	if (angle < BfmeAngleLower)
-		angle += BfmeAngleSpan;
+		angle += BfmeAngleSpan[0];
 	return angle;
 }
 
