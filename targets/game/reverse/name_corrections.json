@@ -15548,5 +15548,15 @@
   "after_sha256": "df195dc3fdb823da66ceb9ba8de608c9709325047a625229a454d13791cc27e4",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008a7270.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008A7270.cpp",
+  "old_name": "BfmeA1029",
+  "new_name": "Rva00897670HeaderedDelete",
+  "before_sha256": "8318abf12b6e4bcd7ad4b9dc072b632dd895c2b74254b14f4d9a28e5a35ebd91",
+  "after_sha256": "80614c97db46d31017d1d734a18124c101485be3f693b0df9c2e562533e70970",
+  "evidence": "targets/game/reverse/identity_evidence/008a7270-native-allocation.md",
+  "reason": "False source-move pairing of removed bank object placeholder with existing canonical allocation policy. Independent 899FC0 construction versus 897670 sized deallocation proves different roles; old BfmeA1029 source remains unchanged."
  }
 ]
