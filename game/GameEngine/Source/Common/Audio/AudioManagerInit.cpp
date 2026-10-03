@@ -243,6 +243,8 @@ extern void __cdecl rva006963B0ForwardSlot5();
 extern void __cdecl rva006963D0ForwardSlot3();
 
 void *operator new[](unsigned int);
+// Retail unwind state 2 releases the owner array through operator delete[].
+void operator delete[](void *) throw();
 
 void AudioManager::init()
 {
