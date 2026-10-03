@@ -7,7 +7,19 @@
 class BfmeZ1034
 {
 public:
-	void bfmeSet1034(char on);
+	char m_bfmeUnused;
+};
+
+// Retail calls the ILT thunk at 0x00016DF1, owned by game/gen_small/thunks_010.cpp
+// as ?j_00016df1@@YAXXZ (its target, 0x0026EC60, has no ledger row of its own).
+// The call is reached through a member-function pointer so it keeps its
+// thiscall shape; bfmeSet1034 is never referenced by name.
+extern "C" void __cdecl __identifier("?j_00016df1@@YAXXZ")();
+typedef void (BfmeZ1034::*BfmeSet1034Thunk)(char on);
+union BfmeSet1034ThunkRef
+{
+	void *m_thunk;
+	BfmeSet1034Thunk m_call;
 };
 
 struct BfmeW1034
@@ -33,5 +45,9 @@ void LocomotorSetUpgrade::upgradeImplementation()
 	BfmeZ1034 *z = (*(BfmeW1034 **)((char *)this - 8))->m_bfmeZ;
 
 	if (z != 0)
-		z->bfmeSet1034((char)((*(BfmeV1034 **)((char *)this - 0xc))->m_bfmeFlag == 0));
+	{
+		BfmeSet1034ThunkRef set;
+		set.m_thunk = (void *)&__identifier("?j_00016df1@@YAXXZ");
+		(z->*set.m_call)((char)((*(BfmeV1034 **)((char *)this - 0xc))->m_bfmeFlag == 0));
+	}
 }

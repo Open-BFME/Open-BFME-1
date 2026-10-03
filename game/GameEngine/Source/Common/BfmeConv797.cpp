@@ -55,16 +55,29 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 struct BfmeThingDZD
 {
 	void bfmeGoDZD(void *unused);
-	void bfmeDoDZD();
 	unsigned char m_bfmeHead[0x1c0];
 	unsigned int m_bfmeT;
+};
+
+// Retail calls the ILT thunk at 0x00022999, owned by game/gen_small/thunks_016.cpp
+// as ?j_00022999@@YAXXZ (its target, 0x0093FC00, has no ledger row of its own).
+// The call is reached through a member-function pointer so it keeps its
+// thiscall shape; bfmeDoDZD is never referenced by name.
+extern "C" void __cdecl __identifier("?j_00022999@@YAXXZ")();
+typedef void (BfmeThingDZD::*BfmeDoDZDThunk)();
+union BfmeDoDZDThunkRef
+{
+	void *m_thunk;
+	BfmeDoDZDThunk m_call;
 };
 
 void BfmeThingDZD::bfmeGoDZD(void *unused)
 {
 	if (reinterpret_cast<BfmeUiDZD *>(TheGameSpyInfo)->bfmeAskDZD())
 	{
-		bfmeDoDZD();
+		BfmeDoDZDThunkRef doDZD;
+		doDZD.m_thunk = (void *)&__identifier("?j_00022999@@YAXXZ");
+		(this->*doDZD.m_call)();
 		m_bfmeT = timeGetTime();
 	}
 }

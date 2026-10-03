@@ -41,10 +41,20 @@ extern AudioManager *TheAudio;
 class BfmeH1024
 {
 public:
-	void bfmeAdd1024(int a, int b);
-
 	char m_bfmePad[8];
 	int m_bfmeVal;
+};
+
+// Retail calls the ILT thunk at 0x000157DA, owned by game/gen_small/thunks_009.cpp
+// as ?j_000157da@@YAXXZ (its target, 0x002B2040, has no ledger row of its own).
+// The call is reached through a member-function pointer so it keeps its
+// thiscall shape; bfmeAdd1024 is never referenced by name.
+extern "C" void __cdecl __identifier("?j_000157da@@YAXXZ")();
+typedef void (BfmeH1024::*BfmeAdd1024Thunk)(int a, int b);
+union BfmeAdd1024ThunkRef
+{
+	void *m_thunk;
+	BfmeAdd1024Thunk m_call;
 };
 
 class AudioLoopUpgrade
@@ -64,6 +74,8 @@ void AudioLoopUpgrade::removeUpgrade()
 		m_bfmeH = 1;
 	}
 
-	((BfmeH1024 *)((char *)this - 0x20))->bfmeAdd1024(
+	BfmeAdd1024ThunkRef add1024;
+	add1024.m_thunk = (void *)&__identifier("?j_000157da@@YAXXZ");
+	(((BfmeH1024 *)((char *)this - 0x20))->*add1024.m_call)(
 		((BfmeH1024 *)((char *)this - 0x20))->m_bfmeVal, 0x3fffffff);
 }
