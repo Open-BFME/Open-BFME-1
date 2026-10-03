@@ -38,6 +38,8 @@ struct BfmeScoreEntryLess
 void Rva00570CC0(BfmeScoreEntry *last, BfmeScoreEntry value,
 	BfmeScoreEntryLess comp);
 
+void j_0002dbe1(void);
+
 namespace _STL
 {
 
@@ -45,8 +47,8 @@ struct random_access_iterator_tag
 {
 };
 
-BfmeScoreEntry *BfmeCopyBackward00570FC0(BfmeScoreEntry *first,
-	BfmeScoreEntry *last, BfmeScoreEntry *result,
+typedef BfmeScoreEntry *(__cdecl *BfmeScoreEntryBackwardCopyCall)(
+	BfmeScoreEntry *first, BfmeScoreEntry *last, BfmeScoreEntry *result,
 	const random_access_iterator_tag &tag, int *distance);
 
 void Rva00573980(BfmeScoreEntry *first, BfmeScoreEntry *last,
@@ -55,7 +57,8 @@ void Rva00573980(BfmeScoreEntry *first, BfmeScoreEntry *last,
 	if (comp(&val, first))
 	{
 		random_access_iterator_tag tag;
-		BfmeCopyBackward00570FC0(first, last, last + 1, tag, (int *)0);
+		reinterpret_cast<BfmeScoreEntryBackwardCopyCall>(&::j_0002dbe1)(
+			first, last, last + 1, tag, (int *)0);
 		*first = val;
 	}
 	else

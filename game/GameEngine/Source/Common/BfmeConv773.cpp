@@ -1,4 +1,5 @@
 extern const float g_rva01075350;
+void j_0002d538(void);
 
 class BfmeSubDSK
 {
@@ -26,41 +27,42 @@ public:
 	bool bfmeGoDSL();
 	float bfmeGoDSM();
 	float bfmeGoDSN();
-	bool bfmeAskDSK();
 	char m_bfmeHead[0x4c];
 	BfmeSubDSK *m_bfmeSub;
 };
 
+typedef bool (__fastcall *BfmeThingDSKAskCall)(BfmeThingDSK *);
+
 bool BfmeThingDSK::bfmeGoDSK()
 {
-	if (bfmeAskDSK())
+	if (reinterpret_cast<BfmeThingDSKAskCall>(&::j_0002d538)(this))
 		return m_bfmeSub->bfmeRunDSK();
 	return false;
 }
 
 bool BfmeThingDSK::bfmeGoDSL()
 {
-	if (bfmeAskDSK())
+	if (reinterpret_cast<BfmeThingDSKAskCall>(&::j_0002d538)(this))
 		return m_bfmeSub->bfmeRunDSL();
 	return false;
 }
 
 float BfmeThingDSK::bfmeGoDSM()
 {
-	if (bfmeAskDSK())
+	if (reinterpret_cast<BfmeThingDSKAskCall>(&::j_0002d538)(this))
 		return m_bfmeSub->bfmeRunDSM();
 	return g_rva01075350;
 }
 
 float BfmeThingDSK::bfmeGoDSN()
 {
-	if (bfmeAskDSK())
+	if (reinterpret_cast<BfmeThingDSKAskCall>(&::j_0002d538)(this))
 		return m_bfmeSub->bfmeRunDSN();
 	return g_rva01075350;
 }
 
 void BfmeThingDSK::bfmeGoDSP()
 {
-	if (bfmeAskDSK())
+	if (reinterpret_cast<BfmeThingDSKAskCall>(&::j_0002d538)(this))
 		m_bfmeSub->bfmeRun9DSK();
 }
