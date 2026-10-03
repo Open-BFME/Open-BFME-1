@@ -20,8 +20,6 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
-extern const char Rva006A16B0Empty[];
-
 class AsciiString
 {
 public:
@@ -31,7 +29,7 @@ public:
 	{
 		int rightLength = text ? (int)strlen(text) : 0;
 		int leftLength = m_data ? m_data->m_length : 0;
-		const char *leftText = m_data ? m_data->m_text : Rva006A16B0Empty;
+		const char *leftText = m_data ? m_data->m_text : "";
 		int length = leftLength < rightLength ? leftLength : rightLength;
 		int difference = memcmp(leftText, text, length);
 		if (difference != 0)

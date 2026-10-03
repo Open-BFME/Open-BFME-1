@@ -6,8 +6,6 @@ typedef bool Bool;
 
 #include "string_base.h"
 
-extern const char Rva006A16B0Empty[];
-
 #include "ascii_string.h"
 
 class UnicodeString : private StringBase<unsigned short>

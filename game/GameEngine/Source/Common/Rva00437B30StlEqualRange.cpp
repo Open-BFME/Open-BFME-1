@@ -6,8 +6,6 @@
 // the hidden pair-return storage followed by first, last, value, comparator,
 // and the unused distance pointer.  The owner remains address-derived: the
 // caller proves this ABI and the lower/upper callees, not a game-class name.
-
-extern const char Rva006A16B0Empty[];
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
@@ -17,7 +15,7 @@ struct GameTextAsciiString
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
+		return m_data ? (const char *)m_data + 8 : "";
 	}
 };
 

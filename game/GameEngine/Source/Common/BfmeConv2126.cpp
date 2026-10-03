@@ -8,8 +8,6 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-extern const char Rva006A16B0Empty[];
-
 class BFMERetailAsciiString
 {
 public:
@@ -28,7 +26,7 @@ private:
 __forceinline const char *bfmeNameText(const BFMERetailAsciiString &name)
 {
 	const char *text = name.str();
-	return text != 0 ? text + 8 : Rva006A16B0Empty;
+	return text != 0 ? text + 8 : "";
 }
 
 class BfmeItemAM

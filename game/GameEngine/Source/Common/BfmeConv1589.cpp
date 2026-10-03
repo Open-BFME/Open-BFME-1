@@ -23,8 +23,6 @@ class BfmeSrcVSO : public INI
 public:
 	BfmeStrVSO bfmeMakeVSO();
 };
-
-extern char Rva006A16B0Empty[];
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *left, const char *right);
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *text, const char *delimiters);
 
@@ -47,7 +45,7 @@ BfmeStrVSO BfmeSrcVSO::bfmeMakeVSO()
 
 		char *data = *(char **)&line;
 		int length = data != 0 ? *(unsigned short *)(data + 4) : 0;
-		const char *text = data != 0 ? data + 8 : Rva006A16B0Empty;
+		const char *text = data != 0 ? data + 8 : "";
 		((StringBase<char> &)accumulated).concat(text, length);
 	}
 	return accumulated;

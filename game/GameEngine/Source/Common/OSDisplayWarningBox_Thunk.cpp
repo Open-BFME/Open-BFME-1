@@ -27,8 +27,6 @@ private:
 };
 
 class UnicodeString;
-
-extern const char Rva006A16B0Empty[];
 extern const char g_bfmeEmptyUnicode[];
 
 class AsciiString : private StringBase<char>
@@ -40,7 +38,7 @@ public:
 
     const char *str() const
     {
-        return m_data ? m_data->m_text : Rva006A16B0Empty;
+        return m_data ? m_data->m_text : "";
     }
 
     void translate( const UnicodeString &other );

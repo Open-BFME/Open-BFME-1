@@ -85,7 +85,6 @@ public:
 
 extern unsigned char g_bfmeTableDH[];
 extern const char *const Rva00209130StatusNames[];
-extern const char Rva006A16B0Empty[];
 extern int __cdecl bfmeLookup_001c6340(void *name);
 extern "C" BfmeSubTwoExceptionBH *__cdecl bfmeFormatText(
 	BfmeSubTwoExceptionBH *exception, int reserved, const char *format, ...);
@@ -208,7 +207,7 @@ void BfmeSubTwoBH::bfmeSaveBH(BfmeAgentBH *ag)
 			if (value != 0)
 				value += 8;
 			else
-				value = Rva006A16B0Empty;
+				value = "";
 
 			int bit = bfmeLookup_001c6340(const_cast<char *>(value));
 			if (bit < 0)
