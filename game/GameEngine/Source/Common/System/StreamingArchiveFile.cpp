@@ -242,28 +242,7 @@ void StreamingArchiveFile::close( void )
 //=================================================================
 // StreamingArchiveFile::read 
 //=================================================================
-// if buffer is null, just advance the current position by 'bytes'
-// byte-exact reconstruction: game/GameEngine/Source/Common/StreamingArchiveFileRead.cpp
-// ?read@StreamingArchiveFile@@ present-unmatched
-Int StreamingArchiveFile::read( void *buffer, Int bytes )
-{
-	if (!m_file) {
-		return 0;
-	}
-
-	// There shouldn't be a way that this can fail, because we've already verified that the file 
-	// contains at least this many bits.
-	m_file->seek(m_startingPos + m_curPos, File::START);
-
-	if (bytes + m_curPos > m_size) 
-		bytes = m_size - m_curPos;
-
-	Int bytesRead = m_file->read(buffer, bytes);
-
-	m_curPos += bytesRead;
-
-	return bytesRead;
-}
+// Retail read, including archive lock/unlock, is in StreamingArchiveFileRead.cpp.
 
 //=================================================================
 // StreamingArchiveFile::write 
