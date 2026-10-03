@@ -39,7 +39,11 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AODCrushCollideFieldParse(MultiIniFieldParse &parse);
+// Retail's second argument is the address of the module-data buildFieldParse
+// proc, which here rides the matched ILT thunk ?j_0001a122@@YAXXZ at RVA
+// 0x0001A122 (route 0x00215C30). The pushed immediate is the thunk's own
+// address, not its target's.
+void __cdecl j_0001a122();
 
 class AODCrushCollide
 {
@@ -52,6 +56,7 @@ ModuleData *AODCrushCollide::friend_newModuleData(INI *ini)
 {
 	AODCrushCollideModuleData *data = new AODCrushCollideModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AODCrushCollideFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0001a122));
 	return (ModuleData *)data;
 }

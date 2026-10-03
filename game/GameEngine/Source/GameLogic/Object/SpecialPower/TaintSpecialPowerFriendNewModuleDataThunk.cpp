@@ -39,7 +39,11 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl TaintSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail's second argument is the address of the module-data buildFieldParse
+// proc, which here rides the matched ILT thunk ?j_0002c8c7@@YAXXZ at RVA
+// 0x0002C8C7 (route 0x0026B620). The pushed immediate is the thunk's own
+// address, not its target's.
+void __cdecl j_0002c8c7();
 
 class TaintSpecialPower
 {
@@ -52,6 +56,7 @@ ModuleData *TaintSpecialPower::friend_newModuleData(INI *ini)
 {
 	TaintSpecialPowerModuleData *data = new TaintSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &TaintSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data,
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0002c8c7));
 	return (ModuleData *)data;
 }

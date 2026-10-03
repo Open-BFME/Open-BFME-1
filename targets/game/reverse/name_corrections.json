@@ -15868,5 +15868,45 @@
   "after_sha256": "c6a17b48d0c704a6e96f1d30ff54f32c81bd7353b6954806af1b5c1fcae38b21",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Collide/AODCrushCollideFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Collide/AODCrushCollideFriendNewModuleDataThunk.cpp",
+  "old_name": "AODCrushCollideFieldParse",
+  "new_name": "j_0001a122",
+  "before_sha256": "a6addd18555ffa7966bd23057a073d88be58d1fc526e2f1814bca5001ea51ef6",
+  "after_sha256": "2dd4c3e1468f8af776c6b020441dad7e1297533a553b25ce7eab3d709096c70c",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Collide/HordeMemberCollideFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Collide/HordeMemberCollideFriendNewModuleDataThunk.cpp",
+  "old_name": "HordeMemberCollideFieldParse",
+  "new_name": "j_000173dc",
+  "before_sha256": "0450a0b1740add2bd2c623755ab45b80b8e9bc3926d07332956c2630ad569093",
+  "after_sha256": "4f7f64d02d62f07e045371dfeac2608bd3e336833e366c8e3d9c51d26898303e",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Damage/EvacuateDamageFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Damage/EvacuateDamageFriendNewModuleDataThunk.cpp",
+  "old_name": "EvacuateDamageFieldParse",
+  "new_name": "j_0002dd8a",
+  "before_sha256": "b67f3fd1c30bd392adae572409b7275f6bded12a93335bc68825aa60d2f43343",
+  "after_sha256": "61d47bd6f2f7215934e109e2d282cb65cd133994f825240e3ed1b70eebf708c5",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/TaintSpecialPowerFriendNewModuleDataThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/TaintSpecialPowerFriendNewModuleDataThunk.cpp",
+  "old_name": "TaintSpecialPowerFieldParse",
+  "new_name": "j_0002c8c7",
+  "before_sha256": "4b4af6ad20ec435823771b728d1c7e992fc71fe28bed9eba8b27fc4e4296d6a9",
+  "after_sha256": "82e3b9c6ebc223a7df405f2c7983b47bb99c7da56886bad45f05f6d83a27e22f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
