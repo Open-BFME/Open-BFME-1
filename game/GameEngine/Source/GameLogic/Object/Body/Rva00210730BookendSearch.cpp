@@ -15,12 +15,14 @@
 
 // cl: /O2 /G6
 
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 
-extern char g_bfmeEmptyF9[];
+extern const char g_bfmeEmptyAscii[];
 
 struct BfmeAsciiDataE15
 {
@@ -34,7 +36,7 @@ class BfmeStrE15
 {
 public:
 	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : g_bfmeEmptyF9; }
+	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : g_bfmeEmptyAscii; }
 
 	BfmeAsciiDataE15 *m_data;
 };
@@ -70,18 +72,6 @@ public:
 };
 
 void j_000358d2();
-
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer(void);
-
-	void *m_data;
-};
 
 class BfmeHostCL
 {
@@ -120,7 +110,7 @@ void Rva00210730Owner::rva00210730(void)
 			Int len = data ? data->m_len : 0;
 			const char *chars = (const char *)(data + 1);
 			if (data == 0)
-				chars = g_bfmeEmptyF9;
+				chars = g_bfmeEmptyAscii;
 			Int shorter = len < 7 ? len : 7;
 
 			Int diff = memcmp(chars, "Bookend", shorter);
@@ -130,7 +120,7 @@ void Rva00210730Owner::rva00210730(void)
 			if (diff == 0)
 			{
 				{
-					BFMERetailAsciiString bookend("Bookend");
+					AsciiString bookend("Bookend");
 					objF9->rva0087FA50(*(BfmeStrF9 *)&bookend, 0);
 				}
 
