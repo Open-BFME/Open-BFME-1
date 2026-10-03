@@ -1,6 +1,13 @@
 // Two more: twelve slots filled from one global, and twelve words copied in.
 
-extern int g_bfmeDefaultQA;
+// Use the existing owner of retail's 0x7FA00000 NaN payload at VA 0x0112E8AC.
+// The constructor copies its bits without interpreting them as a float.
+union Rva0112E8ACValue
+{
+    unsigned int bits;
+    float value;
+};
+extern const Rva0112E8ACValue g_Va0112E8AC;
 
 class Gen_000B4A90
 {
@@ -10,22 +17,21 @@ private:
 	int m_bfmeSlots[12];						// +0x00
 };
 
-// The global is read again for every slot, since writing one could have
-// changed it.
+// Preserve retail's separate load before each slot assignment.
 Gen_000B4A90::Gen_000B4A90(void)
 {
-	m_bfmeSlots[0] = g_bfmeDefaultQA;
-	m_bfmeSlots[1] = g_bfmeDefaultQA;
-	m_bfmeSlots[2] = g_bfmeDefaultQA;
-	m_bfmeSlots[3] = g_bfmeDefaultQA;
-	m_bfmeSlots[4] = g_bfmeDefaultQA;
-	m_bfmeSlots[5] = g_bfmeDefaultQA;
-	m_bfmeSlots[6] = g_bfmeDefaultQA;
-	m_bfmeSlots[7] = g_bfmeDefaultQA;
-	m_bfmeSlots[8] = g_bfmeDefaultQA;
-	m_bfmeSlots[9] = g_bfmeDefaultQA;
-	m_bfmeSlots[10] = g_bfmeDefaultQA;
-	m_bfmeSlots[11] = g_bfmeDefaultQA;
+	m_bfmeSlots[0] = g_Va0112E8AC.bits;
+	m_bfmeSlots[1] = g_Va0112E8AC.bits;
+	m_bfmeSlots[2] = g_Va0112E8AC.bits;
+	m_bfmeSlots[3] = g_Va0112E8AC.bits;
+	m_bfmeSlots[4] = g_Va0112E8AC.bits;
+	m_bfmeSlots[5] = g_Va0112E8AC.bits;
+	m_bfmeSlots[6] = g_Va0112E8AC.bits;
+	m_bfmeSlots[7] = g_Va0112E8AC.bits;
+	m_bfmeSlots[8] = g_Va0112E8AC.bits;
+	m_bfmeSlots[9] = g_Va0112E8AC.bits;
+	m_bfmeSlots[10] = g_Va0112E8AC.bits;
+	m_bfmeSlots[11] = g_Va0112E8AC.bits;
 }
 
 class BfmeBlockQB
