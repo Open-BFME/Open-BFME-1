@@ -63,6 +63,10 @@ extern WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt ms
 // Extended MessageBox ----------------------------------------------------------------------------------
 extern WindowMsgHandledType ExtendedMessageBoxSystem( GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2 );
 
+// BFME dispatch table names, independently matched at 004B6190/004B5E40.
+extern WindowMsgHandledType GadgetImageComboBoxSystem(GameWindow *, UnsignedInt, WindowMsgData, WindowMsgData);
+extern WindowMsgHandledType GadgetImageComboBoxInput(GameWindow *, UnsignedInt, WindowMsgData, WindowMsgData);
+
 // BFME layout callback tables that live in the retail data image.
 extern FunctionLexicon::TableEntry g_012A9308[];
 extern FunctionLexicon::TableEntry g_012A9960[];
@@ -86,43 +90,34 @@ static FunctionLexicon::TableEntry gameWinSystemTable[] =
 	{ NAMEKEY_INVALID, "PassSelectedButtonsToParentSystem",	PassSelectedButtonsToParentSystem },
 	{ NAMEKEY_INVALID, "PassMessagesToParentSystem",				PassMessagesToParentSystem },
 
-	{ NAMEKEY_INVALID, "GameWinDefaultSystem",							GameWinDefaultSystem },
 	{ NAMEKEY_INVALID, "GadgetPushButtonSystem",						GadgetPushButtonSystem },
 	{ NAMEKEY_INVALID, "GadgetCheckBoxSystem",							GadgetCheckBoxSystem },
 	{ NAMEKEY_INVALID, "GadgetRadioButtonSystem",						GadgetRadioButtonSystem },
 	{ NAMEKEY_INVALID, "GadgetTabControlSystem",						GadgetTabControlSystem },
 	{ NAMEKEY_INVALID, "GadgetListBoxSystem",								GadgetListBoxSystem },
 	{ NAMEKEY_INVALID, "GadgetComboBoxSystem",							GadgetComboBoxSystem },
+	{ NAMEKEY_INVALID, "GadgetImageComboBoxSystem", GadgetImageComboBoxSystem },
 	{ NAMEKEY_INVALID, "GadgetHorizontalSliderSystem",			GadgetHorizontalSliderSystem },
 	{ NAMEKEY_INVALID, "GadgetVerticalSliderSystem",				GadgetVerticalSliderSystem },
 	{ NAMEKEY_INVALID, "GadgetProgressBarSystem",						GadgetProgressBarSystem },
 	{ NAMEKEY_INVALID, "GadgetStaticTextSystem",						GadgetStaticTextSystem },
 	{ NAMEKEY_INVALID, "GadgetTextEntrySystem",							GadgetTextEntrySystem },
 	{ NAMEKEY_INVALID, "MessageBoxSystem",									MessageBoxSystem },
-	{ NAMEKEY_INVALID, "QuitMessageBoxSystem",							QuitMessageBoxSystem },
 
-	{ NAMEKEY_INVALID, "ExtendedMessageBoxSystem",					ExtendedMessageBoxSystem },
 
 	{ NAMEKEY_INVALID, "MOTDSystem",										MOTDSystem },
-	{ NAMEKEY_INVALID, "MainMenuSystem",								MainMenuSystem },
-	{ NAMEKEY_INVALID, "OptionsMenuSystem",							OptionsMenuSystem },
 	{ NAMEKEY_INVALID, "SinglePlayerMenuSystem",				SinglePlayerMenuSystem },
-	{ NAMEKEY_INVALID, "QuitMenuSystem",								QuitMenuSystem },
 	{ NAMEKEY_INVALID, "MapSelectMenuSystem",						MapSelectMenuSystem },
 	{ NAMEKEY_INVALID, "ReplayMenuSystem",							ReplayMenuSystem },
 	{ NAMEKEY_INVALID, "CreditsMenuSystem",							CreditsMenuSystem },
 	{ NAMEKEY_INVALID, "LanLobbyMenuSystem",						LanLobbyMenuSystem },
 	{ NAMEKEY_INVALID, "LanGameOptionsMenuSystem",			LanGameOptionsMenuSystem },
 	{ NAMEKEY_INVALID, "LanMapSelectMenuSystem",				LanMapSelectMenuSystem },
-	{ NAMEKEY_INVALID, "SkirmishGameOptionsMenuSystem", SkirmishGameOptionsMenuSystem },
-	{ NAMEKEY_INVALID, "SkirmishMapSelectMenuSystem",   SkirmishMapSelectMenuSystem },
-	{ NAMEKEY_INVALID, "ChallengeMenuSystem",			ChallengeMenuSystem },
 	{ NAMEKEY_INVALID, "SaveLoadMenuSystem",            SaveLoadMenuSystem },
 	{ NAMEKEY_INVALID, "PopupCommunicatorSystem",       PopupCommunicatorSystem },
 	{ NAMEKEY_INVALID, "PopupBuddyNotificationSystem",  PopupBuddyNotificationSystem },
 	{ NAMEKEY_INVALID, "PopupReplaySystem",							PopupReplaySystem },
 	{ NAMEKEY_INVALID, "KeyboardOptionsMenuSystem",     KeyboardOptionsMenuSystem },
-	{ NAMEKEY_INVALID, "WOLLadderScreenSystem",			    WOLLadderScreenSystem },
 	{ NAMEKEY_INVALID, "WOLLoginMenuSystem",						WOLLoginMenuSystem },
 	{ NAMEKEY_INVALID, "WOLLocaleSelectSystem",					WOLLocaleSelectSystem },
 	{ NAMEKEY_INVALID, "WOLLobbyMenuSystem",						WOLLobbyMenuSystem },
@@ -133,7 +128,6 @@ static FunctionLexicon::TableEntry gameWinSystemTable[] =
 	{ NAMEKEY_INVALID, "RCGameDetailsMenuSystem",				RCGameDetailsMenuSystem },
 	{ NAMEKEY_INVALID, "GameSpyPlayerInfoOverlaySystem",GameSpyPlayerInfoOverlaySystem },
 	{ NAMEKEY_INVALID, "WOLMessageWindowSystem",				WOLMessageWindowSystem },
-	{ NAMEKEY_INVALID, "WOLQuickMatchMenuSystem",				WOLQuickMatchMenuSystem },
 	{ NAMEKEY_INVALID, "WOLWelcomeMenuSystem",					WOLWelcomeMenuSystem },
 	{ NAMEKEY_INVALID, "WOLStatusMenuSystem",						WOLStatusMenuSystem },
 	{ NAMEKEY_INVALID, "WOLQMScoreScreenSystem",				WOLQMScoreScreenSystem },
@@ -147,8 +141,6 @@ static FunctionLexicon::TableEntry gameWinSystemTable[] =
 	{ NAMEKEY_INVALID, "ControlBarObserverSystem",			ControlBarObserverSystem },
 	{ NAMEKEY_INVALID, "IMECandidateWindowSystem",			IMECandidateWindowSystem },
 	{ NAMEKEY_INVALID, "ReplayControlSystem",						ReplayControlSystem },
-	{ NAMEKEY_INVALID, "InGameChatSystem",							InGameChatSystem },
-	{ NAMEKEY_INVALID, "DisconnectControlSystem",				DisconnectControlSystem },
 	{ NAMEKEY_INVALID, "DiplomacySystem",								DiplomacySystem },
 	{ NAMEKEY_INVALID, "GeneralsExpPointsSystem",				GeneralsExpPointsSystem },
 	{ NAMEKEY_INVALID, "DifficultySelectSystem",				DifficultySelectSystem },
@@ -160,14 +152,12 @@ static FunctionLexicon::TableEntry gameWinSystemTable[] =
 	{ NAMEKEY_INVALID, "DownloadMenuSystem",            DownloadMenuSystem },
 
 	{ NAMEKEY_INVALID, NULL,																NULL }
-
 };
 
 // game window input table ------------------------------------------------------------------------
 static FunctionLexicon::TableEntry gameWinInputTable[] = 
 {
 
-	{ NAMEKEY_INVALID, "GameWinDefaultInput",						GameWinDefaultInput },
 	{ NAMEKEY_INVALID, "GameWinBlockInput",							GameWinBlockInput },
 	{ NAMEKEY_INVALID, "GadgetPushButtonInput",					GadgetPushButtonInput },
 	{ NAMEKEY_INVALID, "GadgetCheckBoxInput",						GadgetCheckBoxInput },
@@ -176,14 +166,13 @@ static FunctionLexicon::TableEntry gameWinInputTable[] =
 	{ NAMEKEY_INVALID, "GadgetListBoxInput",						GadgetListBoxInput },
 	{ NAMEKEY_INVALID, "GadgetListBoxMultiInput",				GadgetListBoxMultiInput },
 	{ NAMEKEY_INVALID, "GadgetComboBoxInput",						GadgetComboBoxInput },
+	{ NAMEKEY_INVALID, "GadgetImageComboBoxInput", GadgetImageComboBoxInput },
 	{ NAMEKEY_INVALID, "GadgetHorizontalSliderInput",		GadgetHorizontalSliderInput },
 	{ NAMEKEY_INVALID, "GadgetVerticalSliderInput",			GadgetVerticalSliderInput },
 	{ NAMEKEY_INVALID, "GadgetStaticTextInput",					GadgetStaticTextInput },
 	{ NAMEKEY_INVALID, "GadgetTextEntryInput",					GadgetTextEntryInput },
 
-	{ NAMEKEY_INVALID, "MainMenuInput",									MainMenuInput },
 	{ NAMEKEY_INVALID, "MapSelectMenuInput",						MapSelectMenuInput },
-	{ NAMEKEY_INVALID, "OptionsMenuInput",							OptionsMenuInput },
 	{ NAMEKEY_INVALID, "SinglePlayerMenuInput",					SinglePlayerMenuInput },
 	{ NAMEKEY_INVALID, "LanLobbyMenuInput",							LanLobbyMenuInput },
 	{ NAMEKEY_INVALID, "ReplayMenuInput",								ReplayMenuInput },
@@ -192,10 +181,6 @@ static FunctionLexicon::TableEntry gameWinInputTable[] =
 	{ NAMEKEY_INVALID, "PopupCommunicatorInput",        PopupCommunicatorInput },
 	{ NAMEKEY_INVALID, "LanGameOptionsMenuInput",				LanGameOptionsMenuInput },
 	{ NAMEKEY_INVALID, "LanMapSelectMenuInput",					LanMapSelectMenuInput },
-	{ NAMEKEY_INVALID, "SkirmishGameOptionsMenuInput",  SkirmishGameOptionsMenuInput },
-	{ NAMEKEY_INVALID, "SkirmishMapSelectMenuInput",    SkirmishMapSelectMenuInput },
-	{ NAMEKEY_INVALID, "ChallengeMenuInput",			ChallengeMenuInput },
-	{ NAMEKEY_INVALID, "WOLLadderScreenInput",					WOLLadderScreenInput },
 	{ NAMEKEY_INVALID, "WOLLoginMenuInput",							WOLLoginMenuInput },
 	{ NAMEKEY_INVALID, "WOLLocaleSelectInput",					WOLLocaleSelectInput },
 	{ NAMEKEY_INVALID, "WOLLobbyMenuInput",							WOLLobbyMenuInput },
@@ -204,7 +189,6 @@ static FunctionLexicon::TableEntry gameWinInputTable[] =
 	{ NAMEKEY_INVALID, "WOLBuddyOverlayInput",					WOLBuddyOverlayInput },
 	{ NAMEKEY_INVALID, "GameSpyPlayerInfoOverlayInput",	GameSpyPlayerInfoOverlayInput },
 	{ NAMEKEY_INVALID, "WOLMessageWindowInput",					WOLMessageWindowInput },
-	{ NAMEKEY_INVALID, "WOLQuickMatchMenuInput",				WOLQuickMatchMenuInput },
 	{ NAMEKEY_INVALID, "WOLWelcomeMenuInput",						WOLWelcomeMenuInput },
 	{ NAMEKEY_INVALID, "WOLStatusMenuInput",						WOLStatusMenuInput },
 	{ NAMEKEY_INVALID, "WOLQMScoreScreenInput",					WOLQMScoreScreenInput },
@@ -216,8 +200,6 @@ static FunctionLexicon::TableEntry gameWinInputTable[] =
 	{ NAMEKEY_INVALID, "InGamePopupMessageInput",				InGamePopupMessageInput },
 	{ NAMEKEY_INVALID, "ControlBarInput",								ControlBarInput },
 	{ NAMEKEY_INVALID, "ReplayControlInput",						ReplayControlInput },
-	{ NAMEKEY_INVALID, "InGameChatInput",								InGameChatInput },
-	{ NAMEKEY_INVALID, "DisconnectControlInput",				DisconnectControlInput },
 	{ NAMEKEY_INVALID, "DiplomacyInput",								DiplomacyInput },
 	{ NAMEKEY_INVALID, "EstablishConnectionsControlInput", EstablishConnectionsControlInput },
 	{ NAMEKEY_INVALID, "LeftHUDInput",									LeftHUDInput },
@@ -232,7 +214,6 @@ static FunctionLexicon::TableEntry gameWinInputTable[] =
 
 	{ NAMEKEY_INVALID, "IMECandidateWindowInput",				IMECandidateWindowInput },
 	{ NAMEKEY_INVALID, NULL,														NULL }
-
 };
 
 // game window tooltip table ----------------------------------------------------------------------
@@ -240,10 +221,8 @@ static FunctionLexicon::TableEntry gameWinTooltipTable[] =
 {
 
 
-	{ NAMEKEY_INVALID, "GameWinDefaultTooltip",		GameWinDefaultTooltip },
 
 	{ NAMEKEY_INVALID, NULL,											NULL }
-
 };
 
 // window layout init table -----------------------------------------------------------------------
