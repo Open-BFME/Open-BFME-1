@@ -46,13 +46,15 @@ public:
 	void setFinished(Bool value) { m_isFinished = value; }
 	void setVel(Coord2D value) { m_vel = value; }
 	void setCurPos(ICoord2D value) { m_curPos = value; }
-	void setEndPos(ICoord2D value) { m_endPos = value; }
-	void setStartPos(ICoord2D value) { m_startPos = value; }
 
 private:
 	UnsignedInt m_delay;
+
+public:
 	ICoord2D m_startPos;
 	ICoord2D m_endPos;
+
+private:
 	ICoord2D m_curPos;
 	ICoord2D m_restPos;
 	GameWindow *m_gameWindow;
@@ -107,8 +109,8 @@ void ProcessAnimateWindowSlideFromRightFast::initReverseAnimateWindow(
 	window->setCurPos(tempPos);
 	tempPos = window->getEndPos();
 	tempPos.y = pos.y;
-	window->setEndPos(tempPos);
+	window->m_endPos = tempPos;
 	tempPos = window->getStartPos();
 	tempPos.y = pos.y;
-	window->setStartPos(tempPos);
+	window->m_startPos = tempPos;
 }
