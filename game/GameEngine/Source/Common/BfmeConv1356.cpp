@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
+#include <new>
+
 extern "C" __declspec(dllimport) int __stdcall InterlockedDecrement(int *p);
 extern "C" __declspec(dllimport) void __stdcall SysFreeString(void *p);
-void __cdecl bfmeDelArrVGP(void *p);
-void __cdecl bfmeDelVGP(void *p);
 
 class BfmeThingVGP
 {
@@ -23,8 +23,8 @@ int BfmeThingVGP::bfmeGoVGP()
 			if (m_bfme00)
 				SysFreeString(m_bfme00);
 			if (m_bfme04)
-				bfmeDelArrVGP(m_bfme04);
-			bfmeDelVGP(this);
+				::operator delete[](m_bfme04);
+			::operator delete(this);
 		}
 		return 0;
 	}

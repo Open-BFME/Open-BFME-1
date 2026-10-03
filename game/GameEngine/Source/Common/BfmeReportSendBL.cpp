@@ -4,20 +4,12 @@
 // parameters are unused: everything submitted comes from the object, and the
 // name goes by value.
 
-class StringBaseNarrowBL
-{
-protected:
-	StringBaseNarrowBL(const StringBaseNarrowBL &other) throw();
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	~StringBaseNarrowBL(void) throw();
-
-	char *m_bfmeNarrowBL;
-};
-
-class AsciiStringBL : public StringBaseNarrowBL
+class AsciiStringBL : public AsciiString
 {
 public:
-	AsciiStringBL(const AsciiStringBL &other) throw() : StringBaseNarrowBL(other)
+	AsciiStringBL(const AsciiStringBL &other) throw() : AsciiString(other)
 	{
 	}
 
