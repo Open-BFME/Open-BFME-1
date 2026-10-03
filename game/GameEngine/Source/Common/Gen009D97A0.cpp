@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the integer 2D-coordinate formatter at retail RVA 0x009D97A0.
+// Retail 0x01144414 is this literal itself ("x:%i,y:%i [icoord2d]\n"), not a global:
+// the pool entry is what the push names.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeICoord2DFormat[];
 
 struct BfmeICoord2D
 {
@@ -23,7 +24,7 @@ Gen009D97A0 *Gen009D97A0::bfmeEmit(const BfmeICoord2D *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeICoord2DFormat, value->x, value->y);
+	bfmeAppend(this, "x:%i,y:%i [icoord2d]\n", value->x, value->y);
 	m_pending = false;
 	return this;
 }
