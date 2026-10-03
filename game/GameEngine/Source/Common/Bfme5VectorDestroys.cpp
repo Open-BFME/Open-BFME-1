@@ -14,15 +14,25 @@
 // pointer span and multiplied straight back: five for the thirty-two byte
 // elements, four for the sixteen byte ones.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+inline void bfmeRelease(void *block, unsigned int bytes);
+
+namespace _STL
+{
+template <bool __threads, int __inst> class __node_alloc;
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend void ::bfmeRelease(void *block, unsigned int bytes);
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
+}
 
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
-		bfmeFreeScalar(block);
+		::operator delete(block);
 	else
-		bfmeDeallocate(block, bytes);
+		_STL::__node_alloc<true, 0>::_M_deallocate(block, bytes);
 }
 
 class BfmeVecElem_003AFBB0
