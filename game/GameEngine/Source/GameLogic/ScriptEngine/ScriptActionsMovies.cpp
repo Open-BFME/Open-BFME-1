@@ -29,22 +29,12 @@ extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
 #include "ascii_string.h"
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
-};
-
 class BfmeAsciiStringArg
 {
 public:
 	BfmeAsciiStringArg(const AsciiString &that)
 	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
+		((AsciiString *)this)->AsciiString::AsciiString(that);
 	}
 	~BfmeAsciiStringArg();
 
