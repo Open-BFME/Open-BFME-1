@@ -21,21 +21,40 @@ class __node_alloc
 static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+// Retail walks the override chain through the ILT at 0x000022BB, which the
+// tree already defines under its real name (body 0x00087A80,
+// game/GameEngine/Source/Common/INI/INIWater.cpp).  Declared without a body
+// here so this call stays a call to that ILT instead of being inlined.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
 class Rva226790Template
 {
 public:
-	Rva226790Template *getFinalOverride();
-
 	unsigned long m_unknown;
 	Rva226790Template *m_nextOverride;
 	unsigned char m_padding[0xc4];
 	unsigned long m_kindOf[3];
 };
 
-class BfmeDrop987
+// Retail calls the ILT at 0x00014506 with this receiver and the constant pair
+// (8, 0).  symbols.csv proves that ILT is Object::kill, whose matched body is
+// 0x001C30F0 (game/GameEngine/Source/GameLogic/Object/Object.cpp) and whose
+// real arguments are (DamageType, DeathType).  Spelling the call with the real
+// name keeps the same two stack arguments and lands on the same address, while
+// the invented BfmeDrop987::bfmeClear987 had no definition anywhere.
+enum DamageType
 {
-public:
-	void bfmeClear987(int state, int value);
+	BFME_DAMAGE_TYPE_8 = 8
+};
+
+enum DeathType
+{
+	BFME_DEATH_TYPE_0 = 0
 };
 
 class Object
@@ -43,6 +62,7 @@ class Object
 public:
 	unsigned long m_vtable;
 	Rva226790Template *m_template;
+	void kill(DamageType damageType, DeathType deathType);
 };
 
 class GameLogic
@@ -94,9 +114,9 @@ first_node:
 		_ReadWriteBarrier();
 		Rva226790Template *objectTemplate = object->m_template;
 		if (objectTemplate != 0 && objectTemplate->m_nextOverride != 0)
-			objectTemplate = objectTemplate->m_nextOverride->getFinalOverride();
+			objectTemplate = (Rva226790Template *)( (const Overridable *)objectTemplate->m_nextOverride )->getFinalOverride();
 		if ((objectTemplate->m_kindOf[1] & 0x02000000) != 0)
-			((BfmeDrop987 *)object)->bfmeClear987(8, 0);
+			object->kill(BFME_DAMAGE_TYPE_8, BFME_DEATH_TYPE_0);
 		else
 			TheGameLogic->destroyObject(object);
 	}
