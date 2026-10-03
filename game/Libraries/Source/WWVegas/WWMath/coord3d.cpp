@@ -15,10 +15,6 @@ Coord3DBase &Coord3DBase::operator=(const Coord3DBase &that)
     return *this;
 }
 
-Coord3D::Coord3D()
-{
-}
-
 Coord3D::Coord3D(const Coord3D &that)
 {
     x = that.x;
@@ -52,17 +48,6 @@ Coord3D::Coord3D(int x, int y, int z)
     this->x = (float)x;
     this->y = (float)y;
     this->z = (float)z;
-}
-
-Coord3D::~Coord3D()
-{
-}
-
-Coord3D &Coord3D::operator=(const Coord3D &that)
-{
-    Coord3DBase *base = this;
-    *base = that;
-    return *this;
 }
 
 Coord3D &Coord3D::operator=(const Coord2D &that)
