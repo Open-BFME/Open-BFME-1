@@ -268,15 +268,16 @@ private:
 	char m_retailData[ 0xD8 ];
 };
 
-// WeaponModeSpecialPowerUpdate has no header in this tree. Retail's pool getter
-// at 0x002B2B30 binds the pool name "WeaponModeSpecialPowerUpdate" and is
-// reached only through that class's vtable slot 4 (0x010C54EC), so this
-// TU-scoped declaration carries just the pool glue and the constructor.
-// identity_evidence/20261003-pool-getter-identities.md
+// Native module-name getter RVA002B2B30 occupies primary vtable slot 4,
+// reached through ILT0003ADDC. This existing narrow constructor/allocation view
+// gains only the proven const virtual getter; it reads no receiver fields.
+// The unmatched pool helper remains unresolved prior reconstruction debt.
+// identity_evidence/002b2b30-native-module-name-key.md
 class WeaponModeSpecialPowerUpdate : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( WeaponModeSpecialPowerUpdate, "WeaponModeSpecialPowerUpdate" )
 public:
+	virtual NameKeyType getModuleNameKey() const;
 	WeaponModeSpecialPowerUpdate( Thing *thing, const ModuleData *moduleData );
 private:
 	char m_retailData[ 0x3C ];
@@ -428,4 +429,11 @@ NameKeyType UpgradeSoundSelectorClientBehavior::getModuleNameKey() const
 {
 	static NameKeyType nk = NAMEKEY("UpgradeSoundSelectorClientBehavior");
 	return nk;
+}
+
+// Native module-name key at RVA002B2B30; no receiver layout access.
+NameKeyType WeaponModeSpecialPowerUpdate::getModuleNameKey() const
+{
+    static NameKeyType nk = NAMEKEY("WeaponModeSpecialPowerUpdate");
+    return nk;
 }

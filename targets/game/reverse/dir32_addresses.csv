@@ -115,7 +115,7 @@ name,va
 ?$S51@?1??getClassMemoryPool@FireWeaponWhenDamagedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7C8
 ?$S52@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7D0
 ?$S291@?1??getModuleNameKey@UpgradeSoundSelectorClientBehavior@@UBE?AW4NameKeyType@@XZ@4IA,0x012EF1C0
-?$S95@?1??getClassMemoryPool@WeaponModeSpecialPowerUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F0234
+?$S292@?1??getModuleNameKey@WeaponModeSpecialPowerUpdate@@UBE?AW4NameKeyType@@XZ@4IA,0x012F0234
 ??0?$CEdgeInfo@G@@QAE@XZ,0x00E0936C
 ??0?$CEdgeInfo@I@@QAE@XZ,0x00E09346
 ??0?$MultiListClass@VDX8TextureCategoryClass@@@@QAE@XZ,0x00D44D00
@@ -7918,7 +7918,7 @@ name,va
 ?TheWeaponBonusFieldNames@@3PAPBDA,0x012AD50C
 ?TheWeaponBonusNames@@3PAPBDA,0x012AD4B0
 ?TheWeaponBonusUpgradePool@?1??getClassMemoryPool@WeaponBonusUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F05E8
-?TheWeaponModeSpecialPowerUpdatePool@?1??getClassMemoryPool@WeaponModeSpecialPowerUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0230
+?nk@?1??getModuleNameKey@WeaponModeSpecialPowerUpdate@@UBE?AW4NameKeyType@@XZ@4W43@A,0x012F0230
 ?TheWeaponSetUpgradePool@?1??getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F05F0
 ?TheWeaponSlotTypeNames@@3QBQBDB,0x012AD678
 ?TheWeaponStore@@3PAVBfmeWeaponStore@@A,0x012EF738
