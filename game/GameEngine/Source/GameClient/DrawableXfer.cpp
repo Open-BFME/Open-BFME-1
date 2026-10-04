@@ -18,7 +18,7 @@ struct RGBColor { float r,g,b; };
 #define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
 typedef Matrix3D RvaMatrix;
-struct XferException { void *p; int tag; XferException(int,const char*,...);XferException(const XferException&);~XferException(); };
+class XferException { public: void *p; int tag; XferException(int,const char*,...);XferException(const XferException&);~XferException(); };
 extern "C" XferException* __cdecl bfmeFormatText(XferException*,int,const char*,...);
 extern void __stdcall _CxxThrowException(void*,void*);
 #define invalidData() throw XferException(5,0)

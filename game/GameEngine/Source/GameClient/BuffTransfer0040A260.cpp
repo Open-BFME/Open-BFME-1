@@ -4,7 +4,7 @@
 // cl: /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
 #include "ascii_string.h"
 #include "xfer.h"
-struct XferException {
+class XferException {public:
  XferException(int,const char*,...);
  XferException(const XferException&);
  ~XferException();
