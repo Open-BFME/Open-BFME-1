@@ -23,7 +23,19 @@ struct Rva00517870EntryData
 	unsigned short m_1e;
 };
 
-extern UnicodeString GadgetTextEntryGetText(GameWindow *window);
+// Retail destroys the returned text with releaseBuffer (0x008881D0) directly, not the
+// ??1UnicodeString stub, so the temporary is a one-pointer holder whose inline
+// destructor clears the StringBase<unsigned short> it carries.
+struct UnicodeStringTemp
+{
+	UnicodeStringTemp(const UnicodeStringTemp &);
+	~UnicodeStringTemp() { ((StringBase<unsigned short> *)this)->clear(); }
+
+	unsigned short *m_text;
+};
+
+// ILT 0x000220B1 reaches GadgetTextEntryGetText.
+extern "C" UnicodeStringTemp __identifier("?j_000220b1@@YAXXZ")(GameWindow *window);
 extern void j_00003df0();
 
 class Rva00517870Owner
@@ -50,7 +62,7 @@ int Rva00517870Owner::rva00517870(unsigned int message, unsigned int data1,
 		if (entry->m_1e == entry->m_1c)
 		{
 			GameWindow *window = m_entry;
-			UnicodeString text = GadgetTextEntryGetText(window);
+			UnicodeStringTemp text = __identifier("?j_000220b1@@YAXXZ")(window);
 			Rva00517870StringData *str =
 				*(Rva00517870StringData **)&text;
 			int length = str ? (int)str->m_length : 0;
