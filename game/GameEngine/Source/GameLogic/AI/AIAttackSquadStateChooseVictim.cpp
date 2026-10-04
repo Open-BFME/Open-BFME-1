@@ -286,11 +286,16 @@ public:
 	PartitionFilter *m_next;
 };
 
-extern "C" void *bfmeVftPartitionFilterRelationship[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+// The two filter vftables are named by their retail symbols directly.
+// PartitionFilterRelationship's own table needs no declaration: MSVC declares
+// `??_7X@@6B@` for every class with virtuals and
+// __declspec(novtable) keeps this TU from emitting it, so the store below
+// references retail's defining name.  The 0x01085DD0 table is
+// ??_7PartitionFilterSameMapStatus@@6B@ (dir32_addresses.csv), a name no class
+// in this TU declares, so it is declared outright -- the landed
+// AptFloatCreate.cpp / WorldHeightMapRva0074ACB0Load.cpp precedent.
+extern "C" const int __identifier("??_7PartitionFilterSameMapStatus@@6B@")[];
 extern const void *g_010956C4[];
-extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
 
 static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
 {
@@ -303,7 +308,7 @@ class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
 public:
 	PartitionFilterRelationship(Object *object, Int flags, Bool match)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterRelationship);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilterRelationship@@6B@"));
 		m_object = object;
 		m_flags = flags;
 		m_match = match;
@@ -343,7 +348,7 @@ class __declspec(novtable) Rva0025ED50ObjectFilter : public PartitionFilter
 public:
 	Rva0025ED50ObjectFilter(Object *object)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterSameMapStatus);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilterSameMapStatus@@6B@"));
 		m_object = object;
 	}
 	virtual ~Rva0025ED50ObjectFilter() {}
