@@ -1097,23 +1097,37 @@ typedef char BfmeWolPlayerStatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
 //-------------------------------------------------------------------------------------------------
 class GameSpyStagingRoom;
 
+// Retail reaches the game's name view through the 0x0002C7B4 incremental-link
+// thunk, so the call goes straight at the thunk instead of at a stand-in member.
+extern void j_0002c7b4();
+
+// The member keeps the thiscall register convention and the hidden return
+// pointer the retail call site used. It has to stay a named direct call: a call
+// through a member pointer returns a value the front end must copy into the
+// argument slot, and retail built the string there with no copy constructor in
+// between. The inline body leaves an unreferenced COMDAT/LNK_INFO copy of the
+// member behind; nothing relocates against it and the linker drops it, so the
+// only call in the object is the one to the thunk.
 class BfmeWolGameNameView
 {
 public:
-	UnicodeString getGameName();
+	UnicodeString getGameName()
+	{
+		typedef UnicodeString ( BfmeWolGameNameView::*Fn )();
+		union { void (*fn)(); Fn call; } u = { j_0002c7b4 };
+		return (this->*u.call)();
+	}
 };
-
-#pragma comment(linker, "/alternatename:?getGameName@BfmeWolGameNameView@@QAE?AVUnicodeString@@XZ=?j_0002c7b4@@YAXXZ")
 
 // BFME clears the menu's retail state block through the already matched
 // 0x004F0970 body (the 0x0001B095 incremental-link thunk).
 void bfmeClearStateVJ( void );
 
-// BFME's map-transfer predicate receives the game object.  The ZH header only
-// exposes the AsciiString overload; the retail call site passes the staging
-// room itself through the BFME overload below.
-Bool WouldMapTransfer( GameInfo *game );
-#pragma comment(linker, "/alternatename:?WouldMapTransfer@@YA_NPAVGameInfo@@@Z=?j_000393fb@@YAXXZ")
+// BFME's map-transfer predicate receives the game object and answers in al.
+// Retail calls it through the 0x000393FB incremental-link thunk, so the three
+// call sites below bind that thunk through a local function pointer.
+extern void j_000393fb();
+typedef Bool ( __cdecl *BfmeWolWouldMapTransferFn )( GameInfo *game );
 
 class BfmeVirtualGameSpyInfo
 {
@@ -2126,7 +2140,7 @@ static void StartPressed(void)
 	else
 	{
 		mapDisplayName.format(UnicodeString(L"%hs"), BfmeStartAsciiString(myGame->getMap()));
-		willTransfer = WouldMapTransfer(myGame);
+		willTransfer = ((BfmeWolWouldMapTransferFn)(void *)j_000393fb)(myGame);
 	}
 	for( int i = 0; i < MAX_SLOTS; i++ )
 	{
@@ -3089,7 +3103,6 @@ struct BfmeWolWideText {
     }
 };
 void WOLDisplaySlotList();
-Bool WouldMapTransfer(GameInfo *game);
 void SendStatsToOtherPlayers(const GameInfo *game);
 
 void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
@@ -3596,7 +3609,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										else
 										{
 											mapDisplayName.format(UnicodeString(L"%hs"), TheGameState->getMapLeafName(game->getMap()).str());
-											willTransfer = WouldMapTransfer(game);
+											willTransfer = ((BfmeWolWouldMapTransferFn)(void *)j_000393fb)(game);
 										}
 										if (willTransfer)
 											text.format(TheGameText->fetch("GUI:LocalPlayerNoMapWillTransfer"), BfmeWolWideText::str(mapDisplayName));
@@ -3751,7 +3764,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 									else
 									{
 										mapDisplayName.format(UnicodeString(L"%hs"), game->getMap().str());
-										willTransfer = WouldMapTransfer(game);
+										willTransfer = ((BfmeWolWouldMapTransferFn)(void *)j_000393fb)(game);
 									}
 									UnicodeString text;
 									if (willTransfer)
