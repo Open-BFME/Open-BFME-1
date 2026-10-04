@@ -56,8 +56,6 @@ class Gen009F5040
 {
 public:
 	void handle();
-	void calculate(Gen009F5040Node *node, int *result28, int *result2c,
-		int *result24);
 	__declspec(noinline) void remove(Gen009F5040Node *node);
 	void linkNode_009F4D80(Gen009F5040Node *node);
 
@@ -69,7 +67,18 @@ public:
 	Gen009F5040Node *m_node;
 };
 
-#pragma comment(linker, "/alternatename:?calculate@Gen009F5040@@QAEXPAVGen009F5040Node@@PAH11@Z=?d_009f4900@@YAXXZ")
+// The retail call sites load `this` into ecx before reaching the 0x009F4900
+// body, so the call shape is thiscall even though the body itself is a plain
+// __cdecl function taking all four arguments on the stack.
+extern void d_009f4900();
+
+static __forceinline void calculate(Gen009F5040 *self, Gen009F5040Node *node,
+	int *result28, int *result2c, int *result24)
+{
+	typedef void (Gen009F5040::*Fn)(Gen009F5040Node *, int *, int *, int *);
+	union { void (*fn)(); Fn call; } u = { d_009f4900 };
+	(self->*u.call)(node, result28, result2c, result24);
+}
 
 void Gen009F5040::remove(Gen009F5040Node *node)
 {
@@ -113,7 +122,7 @@ void Gen009F5040::handle()
 			int result28;
 			int result2c;
 			int result24;
-			calculate(node, &result28, &result2c, &result24);
+			calculate(this, node, &result28, &result2c, &result24);
 			if (result28 != node->m_result28 || result2c != node->m_result2c ||
 				result24 != node->m_result24)
 				shouldProcess = true;
@@ -132,7 +141,7 @@ void Gen009F5040::handle()
 // this insertion uses the +0x10/+0x14 pair.
 void Gen009F5040::linkNode_009F4D80(Gen009F5040Node *node)
 {
-	calculate(node, &node->m_result28, &node->m_result2c, &node->m_result24);
+	calculate(this, node, &node->m_result28, &node->m_result2c, &node->m_result24);
 	int index = node->m_item->getIndex();
 	if (index < -1 || index >= 16)
 		index = -1;
