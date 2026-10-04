@@ -103,8 +103,15 @@ class GameWindow
 public:
 	Int winGetScreenPosition( Int *x, Int *y );
 	Int winGetSize( Int *width, Int *height );
-	GameFont *winGetFont();
 };
+
+extern void j_0002db7d();
+static __forceinline GameFont *winGetFontViaIlt( GameWindow *window )
+{
+	typedef GameFont *(GameWindow::*GetFont)();
+	union { void (*fn)(); GetFont call; } get = { j_0002db7d };
+	return (window->*get.call)();
+}
 
 struct PushButtonData
 {
@@ -143,8 +150,9 @@ void DrawNumber00794B70( GameWindow *window,
 		Color dropColor;
 		getButtonTextColors( window, instData, &textColor, &dropColor );
 
-		if( text->getFont() != window->winGetFont() )
-			text->setFont( window->winGetFont() );
+		GameFont *currentFont = text->getFont();
+		if( currentFont != winGetFontViaIlt( window ) )
+			text->setFont( winGetFontViaIlt( window ) );
 
 		text->getSize( &width, &height );
 
