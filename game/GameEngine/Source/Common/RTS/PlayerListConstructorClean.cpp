@@ -17,6 +17,12 @@ private:
 
 class Player;
 
+// The three vftable aliases stay: a `__identifier` extern of a ??_7X@@6B@ name
+// is only accepted as the implicit vftable of the class it names, and taking it
+// over makes this TU *emit* strong non-COMDAT definitions of retail's
+// ??_7Snapshot@@6B@, ??_7PlayerList@@6BSnapshot@@@ and
+// ??_7PlayerList@@6BSubsystemInterface@@@ data (plus new __purecall / ??_E*
+// externals), which would shadow the resolver's pins for those data addresses.
 extern "C" const void *bfmeVftSnapshot[];
 #pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
 
@@ -49,7 +55,18 @@ private:
 extern void j_00041943();
 extern void j_00030e90();
 
+// The ctor call still needs the alias: `new Rva000DFBD0PlayerStorage(i)` is the
+// only spelling MSVC expands into retail's allocation shape (the frame temp at
+// [esp+0x10], the null path's `jmp +2; xor eax,eax`), and a hand-written
+// ::operator new plus member-pointer ctor call moves every register in the loop.
 #pragma comment(linker, "/alternatename:??0Rva000DFBD0PlayerStorage@@QAE@H@Z=?j_00041943@@YAXXZ")
+
+// A no-base carrier for the init() call below: a member pointer to a class
+// without bases is the bare code address, so the union's call folds back into
+// the direct thiscall the retail body performs.
+class Rva00030E90Thunk
+{
+};
 
 class __declspec(novtable) PlayerList : public SubsystemInterface, public Snapshot
 {
@@ -62,8 +79,6 @@ private:
 	int m_playerCount;
 	Rva000DFBD0PlayerStorage *m_players[32];
 };
-
-#pragma comment(linker, "/alternatename:?init@PlayerList@@UAEXXZ=?j_00030e90@@YAXXZ")
 
 extern "C" void *bfmeVftPlayerListSubsystemInterface[];
 extern "C" void *bfmeVftPlayerListSnapshot[];
@@ -85,5 +100,7 @@ PlayerList::PlayerList()
 		m_players[i] = new Rva000DFBD0PlayerStorage(i);
 	}
 
-	init();
+	// init() is reached through retail's incremental-link thunk at 0x00030E90.
+	union { void (*fn)(); void (Rva00030E90Thunk::*call)(); } u = { j_00030e90 };
+	((Rva00030E90Thunk *)this->*u.call)();
 }
