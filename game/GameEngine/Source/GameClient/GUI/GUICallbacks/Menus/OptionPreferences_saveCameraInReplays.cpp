@@ -2,7 +2,7 @@
 // Lift the OptionPreferences::saveCameraInReplays naked dump to clean C++.
 //
 // The preferences object is a string->string map, so every getter is the same
-// three steps: build the key, look it up, atoi the mapped string. The key lives
+// three steps: build the key, look it up, compare the mapped string. The key lives
 // in its own scope so it is destroyed after the lookup and before the end()
 // comparison, which is the order retail uses.
 //
@@ -65,7 +65,7 @@ bool OptionPreferences::saveCameraInReplays(void)
 	if (it == m_prefs.end())
 		return true;
 
-	if (_strcmpi(it->m_value.str(), "y") == 0)
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
 	{
 		return true;
 	}
