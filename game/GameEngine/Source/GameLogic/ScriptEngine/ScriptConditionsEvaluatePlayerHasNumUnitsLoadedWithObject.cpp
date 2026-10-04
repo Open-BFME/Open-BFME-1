@@ -18,6 +18,14 @@ typedef UnsignedShort PlayerMaskType;
 #include <list>
 #include "ascii_string.h"
 
+// Retail reaches each of these through an incremental-link thunk; the calls are
+// written as member-pointer unions so no linker alias mapping is needed.
+extern void j_00001140();
+extern void j_00022a70();
+extern void j_000022bb();
+extern void j_0003e80b();
+extern void j_00028560();
+
 class Parameter
 {
 public:
@@ -51,17 +59,20 @@ class ThingFactory;
 class BfmeThingFactory
 {
 public:
-	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const
+	// Retail's recursive walk: the recursive step is the ILT thunk, so exactly
+	// this one level of the recursion is inline here.
+	__forceinline const Overridable *getFinalOverride() const
 	{
+		typedef const Overridable *(Overridable::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_000022bb };
 		if( m_nextOverride )
-			return m_nextOverride->getFinalOverride();
+			return ( m_nextOverride->*u.call )();
 		return this;
 	}
 	Overridable *m_nextOverride;
@@ -70,7 +81,6 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isEquivalentTo( const ThingTemplate *other ) const;
 };
 
 #define THING_TU_MEMBERS \
@@ -116,7 +126,6 @@ public:
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
 
@@ -168,8 +177,10 @@ public:
 	BfmePlayerDlinkIterator<Rva003269C0DlinkObjectView>
 	iterate_TeamMemberList() const
 	{
+		typedef Object *(BfmeObjectDlinkBase::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_00001140 };
 		return BfmePlayerDlinkIterator<Rva003269C0DlinkObjectView>( m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList );
+			u.call );
 	}
 };
 
@@ -182,7 +193,6 @@ struct Rva003269C0PlayerTeamPrototypeView
 class BfmeTeamInstanceLink
 {
 public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class Rva003269C0TeamInstanceIterator
@@ -195,9 +205,11 @@ public:
 
 	void advance()
 	{
+		typedef BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_00022a70 };
 		if( m_cur )
 			m_cur = ( Rva003269C0TeamInstanceView * )
-				( ( BfmeTeamInstanceLink * )m_cur )->_bfme_nextInInstanceList();
+				( ( ( BfmeTeamInstanceLink * )m_cur )->*u.call )();
 	}
 
 private:
@@ -262,12 +274,19 @@ Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 	if (!player)
 		return false;
 
-	const ThingTemplate *loadedTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
+	typedef const ThingTemplate *(BfmeThingFactory::*FindFn)( const AsciiString & );
+	union { void (*fn)(); FindFn call; } find = { j_00028560 };
+	const ThingTemplate *loadedTemplate =
+		( ( (BfmeThingFactory *)TheThingFactory )->*find.call )(
 		loadedTemplateParameter->getString());
-	const ThingTemplate *transportTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
+	const ThingTemplate *transportTemplate =
+		( ( (BfmeThingFactory *)TheThingFactory )->*find.call )(
 		transportTemplateParameter->getString());
 	if (!loadedTemplate || !transportTemplate)
 		return false;
+
+	typedef Bool (ThingTemplate::*EquivFn)( const ThingTemplate * ) const;
+	union { void (*fn)(); EquivFn call; } equiv = { j_0003e80b };
 
 	Int count = 0;
 	for (BfmePlayerTeamListNode *it =
@@ -290,7 +309,7 @@ Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 				if (!object)
 					continue;
 
-				if (object->getTemplate()->isEquivalentTo(transportTemplate))
+				if ((object->getTemplate()->*equiv.call)(transportTemplate))
 				{
 					ContainModuleInterface *contain =
 						object->m_contain;
@@ -302,7 +321,7 @@ Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 							item != items->end(); ++item)
 						{
 							Object *loaded = *item;
-							if (loaded && loaded->getTemplate()->isEquivalentTo(loadedTemplate))
+							if (loaded && (loaded->getTemplate()->*equiv.call)(loadedTemplate))
 								++count;
 						}
 					}
@@ -314,9 +333,3 @@ Bool ScriptConditions::evaluatePlayerHasNumUnitsLoadedWithObject(
 	if (count < *(const Int *)((const char *)minimumCountParameter + 8)) return false;
 	return true;
 }
-
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
