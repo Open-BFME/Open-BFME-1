@@ -263,12 +263,6 @@ public:
 		using the state machine. */
 	virtual StateReturnType initDefaultState();	
 
-	// BFME has two more virtuals ahead of setState: recenterTurret @0x18C8D0
-	// reaches it through vtable +0x20 where this header puts it at +0x18.
-	// Names and signatures are unknown; parked immediately before the pinned
-	// slot so nothing below moves.
-	virtual void _bfme_sm_slot0( void ) { }
-	virtual void _bfme_sm_slot1( void ) { }
 	virtual StateReturnType setState( StateID newStateID );			///< change the current state of the machine (which may cause further state changes, due to onEnter)
 
 	// Retail's body (0x9FF60) reads the current state at +0x1c; m_currentState sits at +0x20 here.

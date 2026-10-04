@@ -748,14 +748,6 @@ private:
 		POSITION_EXPLICIT = 2,
 		ANGLE = 3
 	};
-	// BFME puts m_curLocomotorSet at +0x1D0 and m_turretAI at +0x1E8, while
-	// m_ignoreObstacleID is confirmed at +0x154 by the matched
-	// ignoreObstacleID row - so 0x14 bytes are unaccounted for ahead of the
-	// locomotor block (most likely LocomotorSet itself being 0x2C rather than
-	// 0x18) and another 4 between m_locomotorGoalData and m_turretAI. Held as
-	// holes here rather than guessed at inside LocomotorSet, which would
-	// change that type for every other user in the TU.
-	char							_bfme_hole_preLocomotorSet[0x14];
 	LocomotorSet			m_locomotorSet;
 	Locomotor*				m_curLocomotor;
 	LocomotorSetType	m_curLocomotorSet;
@@ -763,7 +755,6 @@ private:
 	Coord3D						m_locomotorGoalData;
 
 	// Turrets -------------------------------------------------------------------------------------------------
-	char							_bfme_hole_preTurretAI[4];
 	TurretAI*					m_turretAI[MAX_TURRETS];		// ai for our turret (or null if no turret)
 	WhichTurretType		m_turretSyncFlag;						///< for private use by multiturreted units where the turrets must sync with each other
 
