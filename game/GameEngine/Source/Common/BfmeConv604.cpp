@@ -12,21 +12,31 @@ public:
 	bool m_bfmeFlag;
 };
 
-extern BfmeOneCHF *bfmeTheOneCHF;
+// 0x012F1024 is EA's `TheLivingWorldCampaignManager`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldCampaignManager.cpp:
+// GameEngine::init pushes the literal "TheLivingWorldCampaignManager"
+// (0x01076174, its only occurrence and only xref) into a BFMERetailAsciiString
+// and passes 0x012F1024 as the `T*&` to `??$initSubsystem@VLivingWorldCampaignManager@@`
+// (RVA 0x00075660), whose `mov [esi],edi` is the store.  BfmeOneCHF above is
+// this TU's view of that pointee (its member is the pinned bfmeOneCHF callee),
+// so the use casts rather than declaring a second name for the address.
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
-// 0x012F1028 is the one Glo012F1028 global.  BfmeTwoCHF above is this TU's
-// view of that object (its member is the pinned bfmeTwoCHF callee), so the use
-// casts rather than declaring a second name for the address.
-class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+// 0x012F1028 is EA's `TheLivingWorldLogic`, defined once in
+// game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp, by the
+// same initSubsystem evidence (literal "TheLivingWorldLogic" at 0x010762B4,
+// RVA 0x00074B10).  BfmeTwoCHF above is this TU's view of that object.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 void bfmeGoCHF()
 {
-	BfmeTwoCHF *two = (BfmeTwoCHF *)Glo012F1028;
+	BfmeTwoCHF *two = (BfmeTwoCHF *)TheLivingWorldLogic;
 	if (two->m_bfmeFlag)
 	{
-		bfmeTheOneCHF->bfmeOneCHF();
+		((BfmeOneCHF *)TheLivingWorldCampaignManager)->bfmeOneCHF();
 		two->bfmeTwoCHF();
-		((BfmeTwoCHF *)Glo012F1028)->m_bfmeFlag = false;
+		((BfmeTwoCHF *)TheLivingWorldLogic)->m_bfmeFlag = false;
 	}
 }
