@@ -77,11 +77,31 @@ struct Coord3D
 	float z;
 };
 
+// Retail's AudioEventRTS ctor/dtor are reached through ILT thunks at
+// 0x25306 / 0x26f35; the inline bodies below keep the call sites identical.
+extern void j_00025306();
+extern void j_00026f35();
+
+struct BfmeAudioCtorCall
+{
+	void call(const AsciiString &eventName, int ownerID);
+};
+
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AsciiString &eventName, int ownerID);
-	~AudioEventRTS();
+	__forceinline AudioEventRTS(const AsciiString &eventName, int ownerID)
+	{
+		typedef void (BfmeAudioCtorCall::*Function)(const AsciiString &, int);
+		union { void (*fn)(); Function member; } u = { j_00025306 };
+		(reinterpret_cast<BfmeAudioCtorCall *>(this)->*u.member)(eventName, ownerID);
+	}
+	__forceinline ~AudioEventRTS()
+	{
+		typedef void (BfmeAudioCtorCall::*Function)();
+		union { void (*fn)(); Function member; } u = { j_00026f35 };
+		(reinterpret_cast<BfmeAudioCtorCall *>(this)->*u.member)();
+	}
 	AudioEventRTS &operator=(const AudioEventRTS &that);
 	void setPosition(const Coord3D *position);
 
@@ -285,15 +305,6 @@ private:
 	unsigned char m_pad1d4[0x28];
 	ContainModuleInterface *m_contain;
 };
-
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
-#pragma comment(linker, "/alternatename:??4AudioEventRTS@@QAEAAV0@ABV0@@Z=?j_0001f753@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setPosition@AudioEventRTS@@QAEXPBUCoord3D@@@Z=?j_00001e88@@YAXXZ")
-#pragma comment(linker, "/alternatename:?countInverseIntersection@?$BitFlags@$0L@@@QBEHABV1@@Z=?j_000108f2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?pauseAllSpecialPowers@Object@@QBEX_N@Z=?j_00023e11@@YAXXZ")
-#pragma comment(linker, "/alternatename:?checkDisabledStatus@Object@@QAEXXZ=?j_0001c85f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?onDisabledEdge@Object@@IAEX_N@Z=?j_00045430@@YAXXZ")
 
 extern void j_00001e88();
 extern void j_000108f2();
