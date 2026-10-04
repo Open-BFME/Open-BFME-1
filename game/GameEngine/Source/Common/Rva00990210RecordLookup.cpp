@@ -8,22 +8,22 @@ struct Rva00990210Record
 	unsigned m_C;
 };
 
-struct Rva00990210Range
+struct lua_State
 {
-	Rva00990210Record *m_begin;
+	Rva00990210Record *top;
 	unsigned char m_pad10[0x10 - 4];
-	Rva00990210Record *m_end;
+	Rva00990210Record *Cbase;
 };
 
-unsigned Rva00990210Lookup(Rva00990210Range *range, int index)
+unsigned Rva00990210Lookup(lua_State *range, int index)
 {
 	Rva00990210Record *record;
 	if (index >= 0) {
-		record = range->m_end + index - 1;
-		if (record >= range->m_begin)
+		record = range->Cbase + index - 1;
+		if (record >= range->top)
 			return 0;
 	} else {
-		record = range->m_begin + index;
+		record = range->top + index;
 	}
 	if (!record || record->m_type == 1)
 		return 0;

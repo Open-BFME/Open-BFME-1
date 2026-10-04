@@ -7,10 +7,8 @@ extern "C" int lua_gettop(lua_State *state);
 extern "C" int lua_type(lua_State *state, int index);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 
-struct Rva00990210Range;
-
 unsigned Rva00990030Lookup(lua_State *range, int index);
-unsigned Rva00990210Lookup(Rva00990210Range *range, int index);
+unsigned Rva00990210Lookup(lua_State *range, int index);
 
 #include "ascii_string.h"
 
@@ -63,7 +61,7 @@ int ObjectHideSubObject(lua_State *state)
 		typedef void (S4Sink004135C0::*Invoke)(const AsciiString &, bool, int, int, int);
 		union { void (*fn)(); Invoke call; } u = { j_000391c6 };
 		(object->getDrawable()->*u.call)(
-			name, Rva00990210Lookup((Rva00990210Range *)state, 3) == 0, 0, 0, 0);
+			name, Rva00990210Lookup(state, 3) == 0, 0, 0, 0);
 	}
 	return 0;
 }
