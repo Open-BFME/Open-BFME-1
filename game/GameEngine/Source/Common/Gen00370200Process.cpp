@@ -45,6 +45,10 @@ class GameLogic
 
 extern GameLogic *TheGameLogic;
 
+// Retail calls the retained logic member through its ILT thunk at 0x0003A279
+// (ledger ?j_0003a279@@YAXXZ); the body behind it is 0x00383930 bfmeCallFEA.
+extern void j_0003a279();
+
 void __stdcall gen00370200Process(Gen00370200Range *range, void *argument)
 {
 	register Gen00370200Range *list = range;
@@ -54,7 +58,13 @@ void __stdcall gen00370200Process(Gen00370200Range *range, void *argument)
 		do {
 			Object *value = logic->findObjectByIDInline(*it);
 			if (value != 0) {
-				((BfmeGlobFEA *)logic)->bfmeCallFEA(value, (int)argument);
+				union CallRoute
+				{
+					void (*raw)();
+					void (BfmeGlobFEA::*member)(void *, int);
+				} route;
+				route.raw = j_0003a279;
+				(((BfmeGlobFEA *)logic)->*route.member)(value, (int)argument);
 				logic = TheGameLogic;
 			}
 			++it;
