@@ -70,8 +70,11 @@ public:
 // spelling.
 extern WindowManager *g_rva012F19E8WindowManager;
 
-#pragma comment(linker, "/alternatename:?getText@Rva00788290Allocation@@QAE?AVUnicodeString@@XZ=?j_00005380@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfme_bindAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@PAVAptTextListener@@@Z=?j_00023362@@YAXXZ")
+// Retail calls both of these through incremental-link thunks at 0x00005380
+// and 0x00023362, so the thunks are called through a member-function-pointer
+// union rather than a stand-in name and a linker alias directive.
+extern void j_00005380();
+extern void j_00023362();
 
 class Rva00788290Base
 {
@@ -93,9 +96,15 @@ private:
 
 Rva00788290Allocation::~Rva00788290Allocation()
 {
+    typedef UnicodeString ( Rva00788290Allocation::*GetTextFn )();
+    typedef void ( WindowManager::*BindAptTextFn )( const AsciiString &, const UnicodeString &, class AptTextListener * );
+
     if ( !m_name.isEmpty() )
     {
-        g_rva012F19E8WindowManager->bfme_bindAptText( m_name, getText(), 0 );
+        union { void (*fn)(); GetTextFn call; } getText = { j_00005380 };
+        union { void (*fn)(); BindAptTextFn call; } bindAptText = { j_00023362 };
+
+        ( g_rva012F19E8WindowManager->*bindAptText.call )( m_name, ( this->*getText.call )(), 0 );
     }
 
     if ( TheDisplayStringManager )
