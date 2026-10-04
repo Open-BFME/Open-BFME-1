@@ -214,19 +214,38 @@ void RoadType::loadTestTexture(void)
 //=============================================================================
 /** Nulls index & vertex data. */
 //=============================================================================
-RoadSegment::RoadSegment(void) :
-m_curveRadius(0.0f),
-m_type(SEGMENT),
-m_scale(1.0f),
-m_widthInTexture(1.0f),
-m_uniqueID(0),
-m_visible(false),
-m_numVertex(0),
-m_vb(NULL),
-m_numIndex(0),
-m_ib(NULL),
-m_bounds(Vector3(0.0f, 0.0f, 0.0f), 1.0f)
+RoadSegment::RoadSegment(void)
 {
+	m_pt1.loc.X = 0; m_pt1.loc.Y = 0;
+	m_pt1.top.X = 0; m_pt1.top.Y = 0;
+	m_pt1.bottom.X = 0; m_pt1.bottom.Y = 0;
+	m_pt1.count = 0;
+	m_pt1.last = 0; m_pt1.multi = 0; m_pt1.isAngled = 0; m_pt1.isJoin = 0;
+	m_pt2.loc.X = 0; m_pt2.loc.Y = 0;
+	m_pt2.top.X = 0; m_pt2.top.Y = 0;
+	m_pt2.bottom.X = 0; m_pt2.bottom.Y = 0;
+	m_pt2.count = 0;
+	m_pt2.last = 0; m_pt2.multi = 0; m_pt2.isAngled = 0; m_pt2.isJoin = 0;
+	m_curveRadius = 0;
+	m_type = SEGMENT;
+	m_scale = 0;
+	m_widthInTexture = 0;
+	m_uniqueID = 0;
+	m_visible = 0;
+	m_numVertex = 0;
+	m_vb = 0;
+	m_numIndex = 0;
+	m_ib = 0;
+	m_info.loc.X = 0; m_info.loc.Y = 0;
+	m_info.roadNormal.X = 0; m_info.roadNormal.Y = 0;
+	m_info.roadVector.X = 0; m_info.roadVector.Y = 0;
+	m_info.uOffset = 0; m_info.vOffset = 0; m_info.scale = 0;
+	m_info.corners[0].X = 0; m_info.corners[0].Y = 0;
+	m_info.corners[1].X = 0; m_info.corners[1].Y = 0;
+	m_info.corners[2].X = 0; m_info.corners[2].Y = 0;
+	m_info.corners[3].X = 0; m_info.corners[3].Y = 0;
+	m_bounds.Center.X = 0; m_bounds.Center.Y = 0; m_bounds.Center.Z = 0;
+	m_bounds.Radius = 0;
 }
 
 //=============================================================================
