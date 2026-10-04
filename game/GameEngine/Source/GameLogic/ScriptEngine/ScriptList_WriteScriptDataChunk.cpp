@@ -81,7 +81,7 @@ void WriteScriptDataChunk(DataChunkOutput &output, ScriptList *list, Script *scr
 				} while (versionsBack);
 			}
 
-			output.openDataChunk("Script", 3);
+			output.openDataChunk("ScriptGroup", 3);
 			output.writeAsciiString(list->records[script->recordIndex].name);
 			output.writeByte(data->active);
 			output.writeByte(data->subroutine);
