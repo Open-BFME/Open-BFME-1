@@ -89,18 +89,26 @@ extern Rva008A9B00 *g_rva008C3B60Free;
 class Rva008CF3C0State
 {
 public:
-	char *parse(char *cursor, Rva008CF3C0String *name, Rva008CF3C0String *value);
-	void append(void *owner, void *scope, Rva008CF3C0String *name,
-		Rva008A9B00 *node, int a, int b, int c);
 	void parseAndAppend(void *owner, void *scope, Rva008CF3C0String *input);
 };
 
-#pragma comment(linker, "/alternatename:?parse@Rva008CF3C0State@@QAEPADPADPAVRva008CF3C0String@@1@Z=?d_008c55b0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?append@Rva008CF3C0State@@QAEXPAX0PAVRva008CF3C0String@@PAVRva008A9B00@@HHH@Z=?d_008cc690@@YAXXZ")
+// The retail body at 0x008C55B0 is the pair scanner thiscall on ecx; it is
+// linked under its own free-function identity ?d_008c55b0@@YAXXZ.
+extern void d_008c55b0();
+// The retail body at 0x008CC690 is the node append thiscall on ecx, linked
+// as ?d_008cc690@@YAXXZ.
+extern void d_008cc690();
 
 void Rva008CF3C0State::parseAndAppend(void *owner, void *scope,
 	Rva008CF3C0String *input)
 {
+	typedef char *(Rva008CF3C0State::*ParseFn)(char *, Rva008CF3C0String *,
+		Rva008CF3C0String *);
+	typedef void (Rva008CF3C0State::*AppendFn)(void *, void *,
+		Rva008CF3C0String *, Rva008A9B00 *, int, int, int);
+	union { void (*fn)(); ParseFn call; } parseThunk = { d_008c55b0 };
+	union { void (*fn)(); AppendFn call; } appendThunk = { d_008cc690 };
+
 	char *buffer;
 	if (input == 0)
 		buffer = g_rva01337860Empty();
@@ -110,7 +118,7 @@ void Rva008CF3C0State::parseAndAppend(void *owner, void *scope,
 	Rva008CF3C0String name;
 	Rva008CF3C0String value;
 	char *cursor = buffer;
-	while ((cursor = parse(cursor, &name, &value)) != 0)
+	while ((cursor = (this->*parseThunk.call)(cursor, &name, &value)) != 0)
 	{
 		if (name.m_block != &g_default012D5298)
 		{
@@ -132,7 +140,7 @@ void Rva008CF3C0State::parseAndAppend(void *owner, void *scope,
 			if (--outgoing->m_ref == 0)
 				g_pool01337A30->free(outgoing);
 			node->m_block = value.m_block;
-			append(owner, scope, &name, node, 1, 1, 0);
+			(this->*appendThunk.call)(owner, scope, &name, node, 1, 1, 0);
 		}
 	}
 	g_bfmeFreeDWF(buffer);
