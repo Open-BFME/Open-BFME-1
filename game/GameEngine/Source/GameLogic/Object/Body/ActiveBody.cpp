@@ -1103,36 +1103,6 @@ void ActiveBody::createParticleSystems( const AsciiString &boneBaseName,
 }  // end createParticleSystems
 
 // ------------------------------------------------------------------------------------------------
-/** Delete all the body particle systems */
-// ------------------------------------------------------------------------------------------------
-// ?deleteAllParticleSystems@ActiveBody@@ present-unmatched
-void ActiveBody::deleteAllParticleSystems( void )
-{
-	BodyParticleSystem *nextBodySystem;
-	ParticleSystem *particleSystem;
-
-	while( m_particleSystems )
-	{
-
-		// get this particle system
-		particleSystem = TheParticleSystemManager->findParticleSystem( m_particleSystems->m_particleSystemID );
-		if( particleSystem )
-			particleSystem->destroy();
-
-		// get next system in the body
-		nextBodySystem = m_particleSystems->m_next;
-
-		// destroy this entry
-		m_particleSystems->deleteInstance();
-
-		// set the body systems head to the next
-		m_particleSystems = nextBodySystem;
-
-	}  // end while
-
-}  // end deleteAllParticleSystems
-
-// ------------------------------------------------------------------------------------------------
 /* 	This function is called on state changes only.  Body Type or Aflameness. */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_updateBodyParticleSystems_Thunk.cpp
