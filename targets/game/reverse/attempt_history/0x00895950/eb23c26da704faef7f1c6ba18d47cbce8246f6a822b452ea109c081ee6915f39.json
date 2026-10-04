@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "eb23c26da704faef7f1c6ba18d47cbce8246f6a822b452ea109c081ee6915f39",
+  "symbol": "?rva00895950@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z",
+  "score_kind": "measured",
+  "score": 0.4049,
+  "source": "// ?rva00895950@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z\n// partial score=0.4049 date=2026-10-04\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nextern void (__cdecl *TheBfmeFree)(void *, unsigned int);\nclass BfmeDropObjectA {\npublic:\n ~BfmeDropObjectA();\n void operator delete(void *p,unsigned int n){TheBfmeFree(p,n);}\n int m_refCount; void *m_string; int m_kind; char m_tail[12];\n};\nclass BfmeStrVKI {public: void *m_data;};\nclass RefHandle008958D0 {\npublic:\n RefHandle008958D0():m_object(0){}\n RefHandle008958D0(const RefHandle008958D0 &o):m_object(o.m_object){if(m_object)++m_object->m_refCount;}\n RefHandle008958D0(BfmeDropObjectA *p):m_object(p){if(p)++p->m_refCount;}\n ~RefHandle008958D0(){BfmeDropObjectA *p=m_object;if(p && --p->m_refCount==0)delete p;}\n BfmeDropObjectA *m_object;\n};\nclass Rva00893030Manager {\npublic:\n RefHandle008958D0 find008958D0(BfmeStrVKI *);\n RefHandle008958D0 rva00895950(BfmeStrVKI *);\n};\nRefHandle008958D0 Rva00893030Manager::rva00895950(BfmeStrVKI *key){\n RefHandle008958D0 found=find008958D0(key);\n BfmeDropObjectA *p=found.m_object;\n if(p && (p->m_kind==4 || p->m_kind==5))return found;\n return RefHandle008958D0();\n}\n"
+}
