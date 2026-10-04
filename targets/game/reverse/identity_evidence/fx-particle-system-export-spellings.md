@@ -154,3 +154,50 @@ only.
 | 1420 | 0x0003CF5B | 0x005EBF10 | `?createModule` | U->Q |
 | 1421 | 0x00030E5E | 0x005EBFB0 | `?createModule` | U->Q |
 | 1426 | 0x0001B00E | 0x005EC040 | `?createModule` | U->Q |
+
+## ConcreteModuleTemplate::getClass: exported name moved off getInstance ILT thunks
+
+Retail exports each `getClass` instantiation as a virtual const member (`UBE`)
+whose 5-byte body is `jmp` to the incremental-link thunk of the matching
+`ConcreteModuleClass<TAG>::getInstance`. In the ledger the exported `getClass`
+name sat in `fx_particle_system.cpp` at that **getInstance** ILT thunk, which
+the export directory assigns to `?getInstance@...` (its `rva` column), not at
+the `getClass` body. The thunk is `jmp getInstance`, and `getClass` compiles to
+`jmp getInstance` as well, so the misplaced row byte-matched by coincidence.
+The body itself carried only a non-exported row in `fx_particle_system_bulk.cpp`:
+the `QBE` label the bulk shape compiles, or a truncated name with
+`object-symbol=` that label.
+
+Each exported name is repointed (`add_match.py --replace-existing`) to its
+exported body in `fx_particle_system_bulk.cpp` with `object-symbol=` the `QBE`
+label; the non-exported body rows are retired, and add_match tombstones the
+name at the ILT thunk. The 25 getInstance ILT thunks are left unclaimed: they
+are jump stubs, and a real name there was an over-claim.
+
+| getClass ordinal | getClass ILT | getClass body | thunk it sat on | thunk owner (export) | retired body row |
+|---|---|---|---|---|---|
+| 1534 | 0x000148B7 | 0x005E21A0 | 0x0000B686 | ordinal 1579, getInstance body 0x005E0B00 | QBE |
+| 1535 | 0x00031336 | 0x005E21F0 | 0x000101A9 | ordinal 1580, getInstance body 0x005E1370 | QBE |
+| 1536 | 0x0003D087 | 0x005E2020 | 0x00015FB9 | ordinal 1581, getInstance body 0x005DFD50 | QBE |
+| 1537 | 0x000376EB | 0x005E2050 | 0x00011F1D | ordinal 1582, getInstance body 0x005E0500 | QBE |
+| 1538 | 0x0003C2A4 | 0x005E2040 | 0x00014088 | ordinal 1583, getInstance body 0x005E0270 | QBE |
+| 1539 | 0x00003F1C | 0x005DFA70 | 0x0002C34F | ordinal 1584, getInstance body 0x005DEEE0 | QBE |
+| 1540 | 0x0002CE6C | 0x005E2060 | 0x00032867 | ordinal 1585, getInstance body 0x005E0790 | QBE |
+| 1541 | 0x00009741 | 0x005E2030 | 0x0002969F | ordinal 1586, getInstance body 0x005DFFE0 | QBE |
+| 1542 | 0x00047D98 | 0x005E2100 | 0x00016595 | ordinal 1587, getInstance body 0x005E08B0 | truncated |
+| 1543 | 0x0001AFB4 | 0x005E21D0 | 0x0003D875 | ordinal 1588, getInstance body 0x005E1010 | truncated |
+| 1544 | 0x00014F4C | 0x005E21C0 | 0x0004B0F1 | ordinal 1589, getInstance body 0x005E0E60 | truncated |
+| 1545 | 0x00007E0F | 0x005E21E0 | 0x00036458 | ordinal 1590, getInstance body 0x005E11C0 | truncated |
+| 1546 | 0x000332FD | 0x005E21B0 | 0x000078A1 | ordinal 1591, getInstance body 0x005E0CB0 | truncated |
+| 1547 | 0x0004A331 | 0x005E2210 | 0x0001361F | ordinal 1592, getInstance body 0x005E1690 | truncated |
+| 1548 | 0x00009B8D | 0x005E2230 | 0x00033479 | ordinal 1593, getInstance body 0x005E19B0 | truncated |
+| 1549 | 0x0002E34D | 0x005E2240 | 0x000340FE | ordinal 1594, getInstance body 0x005E1B50 | truncated |
+| 1550 | 0x00012BA2 | 0x005E2200 | 0x00011B76 | ordinal 1595, getInstance body 0x005E14F0 | truncated |
+| 1551 | 0x00038FE1 | 0x005E2220 | 0x00026058 | ordinal 1596, getInstance body 0x005E1830 | truncated |
+| 1552 | 0x000245C8 | 0x005DFAA0 | 0x00006B4A | ordinal 1597, getInstance body 0x005DF2D0 | truncated |
+| 1553 | 0x000088A5 | 0x005DFB40 | 0x0003E130 | ordinal 1598, getInstance body 0x005DF510 | QBE |
+| 1554 | 0x00005B5F | 0x005DFA90 | 0x00015CBC | ordinal 1599, getInstance body 0x005DF120 | truncated |
+| 1555 | 0x0001F195 | 0x005DFB30 | 0x00026684 | ordinal 1600, getInstance body 0x005DF480 | truncated |
+| 1556 | 0x00002DC9 | 0x005DFA80 | 0x00037F4C | ordinal 1601, getInstance body 0x005DEF70 | truncated |
+| 1557 | 0x0000625D | 0x005E20F0 | 0x00044BFC | ordinal 1602, getInstance body 0x005E0820 | truncated |
+| 1558 | 0x00038E74 | 0x005E2190 | 0x000124AE | ordinal 1603, getInstance body 0x005E0A70 | truncated |
