@@ -1,15 +1,15 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Retail 0x006279F0: invoke and clear the first download-completion callback.
-unsigned char g_rva006279F0CallbackActive;
-void (*g_rva006279F0Callback)();
+// Retail 0x006279F0: invoke and clear the message-box OK callback.
+extern volatile bool g_Va012F70A4;
+extern void (*okFunc)();
 
 void rva006279F0InvokeCallback()
 {
-	void (*callback)() = g_rva006279F0Callback;
-	g_rva006279F0CallbackActive = 0;
+	void (*callback)() = okFunc;
+	g_Va012F70A4 = 0;
 	if (callback)
 	{
 		callback();
-		g_rva006279F0Callback = 0;
+		okFunc = 0;
 	}
 }

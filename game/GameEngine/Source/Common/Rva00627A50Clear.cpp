@@ -4,19 +4,19 @@
 // tail-jumps to the body; the thunk is what defines that address, so name it.
 void j_00042a50();
 
-unsigned char g_rva00627A50Flag;
-void *g_rva00627A50A;
-void *g_rva00627A50B;
+extern volatile bool g_Va012F70A4;
+extern void (*okFunc)();
+extern void (*cancelFunc)();
 
 void rva00627A50Clear()
 {
-	if (g_rva00627A50Flag)
+	if (g_Va012F70A4)
 	{
 		j_00042a50();
-		g_rva00627A50Flag = 0;
+		g_Va012F70A4 = 0;
 	}
-	if (g_rva00627A50A)
-		g_rva00627A50A = 0;
-	if (g_rva00627A50B)
-		g_rva00627A50B = 0;
+	if (okFunc)
+		okFunc = 0;
+	if (cancelFunc)
+		cancelFunc = 0;
 }

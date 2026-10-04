@@ -181,9 +181,10 @@ public:
 };
 
 // Message boxes -------------------------------------
-static GameWinMsgBoxFunc okFunc = NULL;
-static GameWinMsgBoxFunc cancelFunc = NULL;
-static volatile Bool reOpenPlayerInfoFlag = FALSE;
+GameWinMsgBoxFunc okFunc = NULL;
+GameWinMsgBoxFunc cancelFunc = NULL;
+volatile Bool g_Va012F70A4 = FALSE;
+volatile Bool reOpenPlayerInfoFlag = FALSE;
 /**
 	* messageBoxOK is called when a message box is destroyed
 	* by way of an OK button, so we can clear our pointers to it.
@@ -234,17 +235,17 @@ void ClearGSMessageBoxes( void )
 	*/
 void GSMessageBoxOk(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newOkFunc)
 {
-	if (reOpenPlayerInfoFlag)
+	if (g_Va012F70A4)
 	{
 		b_00042a50();
-		reOpenPlayerInfoFlag = FALSE;
+		g_Va012F70A4 = FALSE;
 	}
 	if (okFunc)
 		okFunc = NULL;
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxOk(title, message, messageBoxOK);
-	reOpenPlayerInfoFlag = TRUE;
+	g_Va012F70A4 = TRUE;
 	okFunc = newOkFunc;
 }
 
@@ -254,10 +255,10 @@ void GSMessageBoxOk(UnicodeString title, UnicodeString message, GameWinMsgBoxFun
 	*/
 void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newOkFunc, GameWinMsgBoxFunc newCancelFunc)
 {
-	if (reOpenPlayerInfoFlag)
+	if (g_Va012F70A4)
 	{
 		b_00042a50();
-		reOpenPlayerInfoFlag = FALSE;
+		g_Va012F70A4 = FALSE;
 	}
 	if (okFunc)
 		okFunc = NULL;
@@ -266,7 +267,7 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 	MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
 	okFunc = newOkFunc;
 	cancelFunc = newCancelFunc;
-	reOpenPlayerInfoFlag = TRUE;
+	g_Va012F70A4 = TRUE;
 }
 
 /**
@@ -275,17 +276,17 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 	*/
 void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newYesFunc, GameWinMsgBoxFunc newNoFunc)
 {
-	if (reOpenPlayerInfoFlag)
+	if (g_Va012F70A4)
 	{
 		b_00042a50();
-		reOpenPlayerInfoFlag = FALSE;
+		g_Va012F70A4 = FALSE;
 	}
 	if (okFunc)
 		okFunc = NULL;
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
-	reOpenPlayerInfoFlag = TRUE;
+	g_Va012F70A4 = TRUE;
 	okFunc = newYesFunc;
 	cancelFunc = newNoFunc;
 }

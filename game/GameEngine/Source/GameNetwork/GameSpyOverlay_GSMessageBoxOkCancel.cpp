@@ -6,11 +6,11 @@
 // Retail 0x00627D80, 217B: GSMessageBoxOkCancel. GameSpyOverlay.cpp already
 // has a readable reconstruction of this function (unmatched, no functions.csv
 // row), but its field-write order is off by one swap: retail stores
-// cancelFunc, THEN reOpenPlayerInfoFlag=TRUE, THEN okFunc=newOkFunc; the
-// existing source stores okFunc/cancelFunc before reOpenPlayerInfoFlag; the
+// cancelFunc, THEN g_Va012F70A4=TRUE, THEN okFunc=newOkFunc; the
+// existing source stores okFunc/cancelFunc before g_Va012F70A4; the
 // compiler schedules the two pointer stores around the flag store, so the flag
-// store must come FIRST in source for retail's cancel-flag-ok order. Per
-// file policy the tracked file is left untouched and the fix lives here.
+// store must come FIRST in source for retail's cancel-flag-ok order. The
+// shared globals are defined in GameSpyOverlay.cpp.
 #define Matrix4x4 Matrix4  // BFME renamed it
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
@@ -31,9 +31,9 @@ inline UnicodeString::UnicodeString( const UnicodeString &other )
 
 void b_00042a50( void );
 
-static GameWinMsgBoxFunc okFunc = NULL;
-static GameWinMsgBoxFunc cancelFunc = NULL;
-static volatile Bool reOpenPlayerInfoFlag = FALSE;
+extern GameWinMsgBoxFunc okFunc;
+extern GameWinMsgBoxFunc cancelFunc;
+extern volatile Bool g_Va012F70A4;
 
 static void messageBoxOK( void )
 {
@@ -54,19 +54,19 @@ static void messageBoxCancel( void )
 }
 
 // ?GSMessageBoxOkCancel@@YAXVUnicodeString@@0P6AXXZ1@Z
-void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newCancelFunc, GameWinMsgBoxFunc newOkFunc)
+void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newOkFunc, GameWinMsgBoxFunc newCancelFunc)
 {
-	if (reOpenPlayerInfoFlag)
+	if (g_Va012F70A4)
 	{
 		b_00042a50();
-		reOpenPlayerInfoFlag = FALSE;
+		g_Va012F70A4 = FALSE;
 	}
 	if (okFunc)
 		okFunc = NULL;
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
-	reOpenPlayerInfoFlag = TRUE;
-	cancelFunc = newCancelFunc;
+	g_Va012F70A4 = TRUE;
 	okFunc = newOkFunc;
+	cancelFunc = newCancelFunc;
 }
