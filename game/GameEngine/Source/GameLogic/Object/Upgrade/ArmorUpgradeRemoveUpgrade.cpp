@@ -14,8 +14,12 @@ typedef int ArmorSetType;
 
 extern UnsignedInt g_012B2C98[];
 
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeClearZJ@BfmeBaseZJ@@QAEXXZ=?j_00041970@@YAXXZ")
+// Retail routes both calls through ILT thunks 0x0002191D (Object's
+// notifyModelConditionChanged) and 0x00041970 (BfmeBaseZJ's bfmeClearZJ).
+// Reference the thunks directly through a member-pointer union so the emitted
+// bytes are identical without a linker alias.
+extern void j_0002191d();
+extern void j_00041970();
 
 class BodyModuleInterface
 {
@@ -39,8 +43,6 @@ public:
 class Object
 {
 public:
-	void notifyModelConditionChanged();
-
 	UnsignedInt *modelConditionFlags()
 	{
 		return reinterpret_cast<UnsignedInt *>(
@@ -76,8 +78,6 @@ public:
 
 class BfmeBaseZJ
 {
-public:
-	void bfmeClearZJ();
 };
 
 struct ArmorUpgradeModuleData
@@ -107,6 +107,9 @@ void ArmorUpgrade::removeUpgrade()
 	if (!data || data->ignoreArmorUpgrade)
 		return;
 
+	typedef void (Object::*NotifyChanged)();
+	union { void (*fn)(); NotifyChanged call; } notifyChanged = { j_0002191d };
+
 	BodyModuleInterface *body = object->bodyModule();
 	if (body)
 	{
@@ -119,7 +122,7 @@ void ArmorUpgrade::removeUpgrade()
 			if (object->hasModelCondition(condition))
 			{
 				object->clearModelCondition(condition);
-				object->notifyModelConditionChanged();
+				(object->*notifyChanged.call)();
 			}
 		}
 		else
@@ -131,9 +134,12 @@ void ArmorUpgrade::removeUpgrade()
 			if (!object->hasModelCondition(condition))
 			{
 				object->setModelCondition(condition);
-				object->notifyModelConditionChanged();
+				(object->*notifyChanged.call)();
 			}
 		}
 	}
-	((BfmeBaseZJ *)((char *)this - 0x10))->bfmeClearZJ();
+
+	typedef void (BfmeBaseZJ::*Clear)();
+	union { void (*fn)(); Clear call; } clear = { j_00041970 };
+	(((BfmeBaseZJ *)((char *)this - 0x10))->*clear.call)();
 }
