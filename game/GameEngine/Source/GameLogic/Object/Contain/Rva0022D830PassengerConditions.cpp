@@ -19,8 +19,8 @@ public:
  void notifyModelConditionChanged();
  char pad[0x110];
  struct Flags { unsigned bits[10]; unsigned test(int i) const { return bits[i>>5] & (1u<<(i&31)); } void set(int i) { bits[i>>5] |= (1u<<(i&31)); } } m_modelConditionFlags;
- __forceinline void setCondition(int i) { if (!m_modelConditionFlags.test(i)) { m_modelConditionFlags.set(i); notifyModelConditionChanged(); } }
 };
+static __forceinline void setCondition(Object* o,int i) { if (!o->m_modelConditionFlags.test(i)) { o->m_modelConditionFlags.set(i); o->notifyModelConditionChanged(); } }
 struct MaskData0022D830 { char pad[0x1b0]; BitFlags<192> mask1,mask2,mask3; };
 // The receiver is the ContainModuleInterface subobject: retail loads module
 // data at this-0x1c and owner at this-0x18 after virtual slot 55. The original
@@ -93,7 +93,7 @@ void Rva0022D830::applyPassengerConditions(Thing* passenger) {
  slot55();
  const MaskData0022D830* data=*(const MaskData0022D830**)((char*)this-0x1c);
  Object* owner=*(Object**)((char*)this-0x18);
- if (data->mask1.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask1,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(18);
- else if (data->mask2.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask2,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(19);
- else if (data->mask3.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask3,(const BitFlags<116>&)KINDOFMASK_NONE)) owner->setCondition(20);
+ if (data->mask1.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask1,(const BitFlags<116>&)KINDOFMASK_NONE)) setCondition(owner,18);
+ else if (data->mask2.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask2,(const BitFlags<116>&)KINDOFMASK_NONE)) setCondition(owner,19);
+ else if (data->mask3.any() && passenger->isKindOfMulti((const BitFlags<116>&)data->mask3,(const BitFlags<116>&)KINDOFMASK_NONE)) setCondition(owner,20);
 }
