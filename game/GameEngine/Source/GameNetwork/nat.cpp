@@ -595,20 +595,6 @@ void NAT::establishConnectionPaths() {
 	doThisConnectionRound();
 }
 
-// ?attachSlotList@NAT@@QAEXPAPAVGameSlot@@HI@Z present-unmatched
-void NAT::attachSlotList(GameSlot *slotList[], Int localSlot, UnsignedInt localIP) {
-	m_slotList = slotList;
-	m_localIP = localIP;
-	m_transport = new Transport;
-	DEBUG_LOG(("NAT::attachSlotList - initting the transport socket with address %d.%d.%d.%d:%d\n",
-							m_localIP >> 24, (m_localIP >> 16) & 0xff, (m_localIP >> 8) & 0xff, m_localIP & 0xff, getSlotPort(localSlot)));
-
-	m_startingPortNumber = NETWORK_BASE_PORT_NUMBER + ((timeGetTime() / 1000) % 20000);
-	DEBUG_LOG(("NAT::attachSlotList - using %d as the starting port number\n", m_startingPortNumber));
-	generatePortNumbers(slotList, localSlot);
-	m_transport->init(m_localIP, getSlotPort(localSlot));
-}
-
 Int NAT::getSlotPort(Int slot) {
 //	return (slot + m_startingPortNumber);
 	if (m_slotList[slot] != NULL) {
