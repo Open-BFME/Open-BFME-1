@@ -24,8 +24,12 @@ private:
 
 class FXList;
 
-extern "C" const void *bfmeVftCategoryModuleInfo8[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+// The vftable of FXParticleSystem::CategoryModuleInfo<7>
+// (??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@), defined by the
+// template's TU in fx_particle_system.h's class. The declaration carries no
+// C++ name: __identifier spells the retail symbol exactly, so the store in
+// LifeEventFlagsSlice below references the defining name.
+extern "C" int __identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")[];
 
 class GameClientRandomVariable
 {
@@ -68,7 +72,8 @@ class LifeEventFlagsSlice
 public:
 	LifeEventFlagsSlice()
 	{
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
+		*(volatile unsigned int *)this =
+			(unsigned int)__identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@");
 		bool one = true;
 		*(volatile unsigned char *)( (unsigned char *)this + 4 ) = one;
 		*(volatile unsigned char *)( (unsigned char *)this + 5 ) = one;
