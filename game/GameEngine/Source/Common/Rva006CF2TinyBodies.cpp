@@ -54,16 +54,6 @@ int Rva006CF390Owner::value()
 	return 0;
 }
 
-class Rva006CF440Owner
-{
-public:
-	void invoke(int, int, int);
-};
-
-void Rva006CF440Owner::invoke(int, int, int)
-{
-}
-
 class Rva006CF450Owner
 {
 public:
@@ -175,16 +165,6 @@ public:
 int Rva006CF630Owner::value()
 {
 	return 0;
-}
-
-class Rva006CF640Owner
-{
-public:
-	void invoke(int, int);
-};
-
-void Rva006CF640Owner::invoke(int, int)
-{
 }
 
 class Rva006CF9C0Owner

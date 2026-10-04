@@ -16698,5 +16698,45 @@
   "after_sha256": "c938d1e3e6a4b1a1dfe02b92598a4964f7488b4db5b55626253ddcf3c4f9c644",
   "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
   "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "RenderObjClass",
+  "new_name": "Rva0060D210Owner",
+  "before_sha256": "1f388317bf8052baf6e503524d25b22d1071455f87c39cbbea34817228de4f42",
+  "after_sha256": "a6995c5fa9144b608f7103b17382a47825873a7575d9c2e454bb193200c2d505",
+  "evidence": "targets/game/reverse/identity_evidence/renderobj-vtable-slot-addresses.md",
+  "reason": "Retail's RenderObjClass vtable (0x0113BD88) reaches _bfme_ro_set_8c at a different address; this address is referenced by no vtable and only by its own unreferenced ILT stub, so the RenderObjClass claim on it is refuted and it keeps an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "RenderObjClass",
+  "new_name": "Rva006C8CC0Owner",
+  "before_sha256": "a2a9c868c02ea79e417c1b686b35e2b1339b3b3d476cfe34366c74290c0f96a5",
+  "after_sha256": "dce8a131e5aaf1b46c5b7aed0307f3ab42992516dbf0e050b55699f03b2c7c54",
+  "evidence": "targets/game/reverse/identity_evidence/renderobj-vtable-slot-addresses.md",
+  "reason": "Retail's RenderObjClass vtable (0x0113BD88) reaches Get_Snap_Point at a different address; this address is referenced by no vtable and only by its own unreferenced ILT stub, so the RenderObjClass claim on it is refuted and it keeps an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "RenderObjClass",
+  "new_name": "Rva006F6CB0Owner",
+  "before_sha256": "cf5fa42ce39b32bdf8827c7d21a5cf021d6e11ff1464d0294bee7996c6dc900e",
+  "after_sha256": "da44ae7e43ac10779ba60546024826e2c35fe20827bb3614c7f8c11c5870db1e",
+  "evidence": "targets/game/reverse/identity_evidence/renderobj-vtable-slot-addresses.md",
+  "reason": "Retail's RenderObjClass vtable (0x0113BD88) reaches Set_Container at a different address; this address is referenced by no vtable and only by its own unreferenced ILT stub, so the RenderObjClass claim on it is refuted and it keeps an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "RenderObjClass",
+  "new_name": "Rva0045C0D0Owner",
+  "before_sha256": "fcdac87998f4fe2bae668ac7e4067b6e125c97ea814aa7332eecf605558124ee",
+  "after_sha256": "ea4f19d724c01b8be335d8846df34fb44b6d4c9156e2f275140d0e862e3d8e7e",
+  "evidence": "targets/game/reverse/identity_evidence/renderobj-vtable-slot-addresses.md",
+  "reason": "Retail's RenderObjClass vtable (0x0113BD88) reaches _bfme_ro_get_98 at a different address; this address is referenced by no vtable and only by its own unreferenced ILT stub, so the RenderObjClass claim on it is refuted and it keeps an address-derived identity."
  }
 ]
