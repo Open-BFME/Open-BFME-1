@@ -34,6 +34,10 @@
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameClient/ShellHooks.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 typedef char BfmeCheckLoginStatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
 
 typedef std::map<AsciiString, AsciiString> PreferenceMap;

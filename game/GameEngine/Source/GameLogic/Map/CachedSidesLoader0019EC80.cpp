@@ -19,6 +19,10 @@
 #include "Common/Dict.h"
 #include <vector>
 #include <utility>
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void*,const void*,unsigned);
 class BfmeParserRegistryVE;
 class BfmeSubVE;
