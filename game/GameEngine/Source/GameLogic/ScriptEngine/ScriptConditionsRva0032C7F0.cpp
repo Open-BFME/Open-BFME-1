@@ -10,6 +10,13 @@
 typedef bool Bool;
 typedef unsigned short PlayerMaskType;
 
+// Retail reaches these four members through incremental-link thunks, so the
+// thunks are referenced directly instead of the stand-in member names.
+extern void j_000230b5();
+extern void j_0001dde5();
+extern void j_000022bb();
+extern void j_00022a70();
+
 class Parameter
 {
 	public:
@@ -19,14 +26,10 @@ class Parameter
 
 class ScriptEngine
 {
-public:
-	PlayerMaskType unidentified_0034DB40(Parameter *parameter);
 };
 
 class PlayerList
 {
-public:
-	class Player *getPlayerFromMask(PlayerMaskType mask);
 };
 
 extern ScriptEngine *TheScriptEngine;
@@ -36,7 +39,6 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 	Overridable *m_nextOverride;
 };
 
@@ -66,8 +68,6 @@ public:
 struct BfmePlayerTeamView { unsigned char m_beforeHead[0x0c]; Object *m_head; };
 class BfmeTeamInstanceLink
 {
-public:
-    BfmeTeamInstanceLink *_bfme_nextInInstanceList() const;
 };
 class BfmePlayerTeamPrototypeInstances
 {
@@ -98,6 +98,16 @@ private:
     GetNextFunc m_getNext;
 };
 
+// TU-local helper: hands the caller the pointer-to-member that the ILT thunk
+// stands for, so the thunk address still materializes as an immediate.
+typedef const Overridable *(Overridable::*FinalOverridePtr)() const;
+static __forceinline FinalOverridePtr finalOverridePtr()
+{
+	typedef const Overridable *(Overridable::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_000022bb };
+	return u.call;
+}
+
 class ScriptConditions
 {
 protected:
@@ -105,18 +115,17 @@ protected:
 		Parameter *thresholdParameter, Parameter *includeHeroesParameter);
 };
 
-#pragma comment(linker, "/alternatename:?unidentified_0034DB40@ScriptEngine@@QAEGPAVParameter@@@Z=?j_000230b5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPlayerFromMask@PlayerList@@QAEPAVPlayer@@G@Z=?j_0001dde5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QBEPAV1@XZ=?j_00022a70@@YAXXZ")
-
 Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 	Parameter *thresholdParameter, Parameter *includeHeroesParameter)
 {
+	typedef PlayerMaskType (ScriptEngine::*ScriptEngineMaskFn)(Parameter *);
+	union { void (*fn)(); ScriptEngineMaskFn call; } scriptEngineMask = { j_000230b5 };
+	typedef Player *(PlayerList::*PlayerListMaskFn)(PlayerMaskType);
+	union { void (*fn)(); PlayerListMaskFn call; } playerListMask = { j_0001dde5 };
+
 	int count;
-	Player *player = ThePlayerList->getPlayerFromMask(
-		TheScriptEngine->unidentified_0034DB40(playerParameter));
+	Player *player = (ThePlayerList->*playerListMask.call)(
+		(TheScriptEngine->*scriptEngineMask.call)(playerParameter));
 	if (player == 0)
 		return false;
 
@@ -125,9 +134,11 @@ Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 		player->m_playerTeamPrototypes.begin();
 		node != player->m_playerTeamPrototypes.end(); ++node)
 	{
+		typedef BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*TeamInstanceNextFn)() const;
+		union { void (*fn)(); TeamInstanceNextFn call; } teamInstanceNext = { j_00022a70 };
 		BfmePlayerDlinkIterator<BfmeTeamInstanceLink> teams(
 			(*node)->m_teamInstanceList,
-			&BfmeTeamInstanceLink::_bfme_nextInInstanceList);
+			teamInstanceNext.call);
 		for (; !teams.done(); teams.advance())
 		{
 			BfmePlayerTeamView *team =
@@ -135,6 +146,10 @@ Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 			if (team == 0)
 				continue;
 
+			// The DLINK pointer-to-member needs a link-time constant member
+			// address; this getter carries its own pin (symbols.csv,
+			// route=0x000C8980) so the literal is 0x00401140 with no
+			// linker alias needed.
 			BfmePlayerDlinkIterator<Object> objects(
 				team->m_head, &Object::dlink_next_TeamMemberList);
 			for (; !objects.done(); objects.advance())
@@ -152,7 +167,7 @@ Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 						thingTemplate->m_nextOverride != 0)
 					{
 						thingTemplate = (ThingTemplate *)
-							thingTemplate->m_nextOverride->getFinalOverride();
+							(thingTemplate->m_nextOverride->*finalOverridePtr())();
 					}
 					if ((thingTemplate->m_kind & 0x02000000) != 0)
 						continue;
