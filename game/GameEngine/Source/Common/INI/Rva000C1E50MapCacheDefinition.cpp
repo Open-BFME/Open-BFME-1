@@ -193,7 +193,8 @@ public:
 	MapMetaData &operator[](const AsciiString &key);
 };
 
-#pragma comment(linker, "/alternatename:??ARva000C1D10MapCache@@QAEAAVMapMetaData@@ABVAsciiString@@@Z=?j_00031e99@@YAXXZ")
+// Retail calls this map subscript through its incremental-link thunk.
+extern void j_00031e99();
 
 extern MapCache *TheMapCache;
 
@@ -290,6 +291,8 @@ void Rva000C1E50::parseMapCacheDefinition( INI *ini )
 		AsciiString lowerName = name;
 		lowerName.toLower();
 		md.m_fileName = lowerName;
-		(*reinterpret_cast<Rva000C1D10MapCache *>(TheMapCache))[lowerName] = md;
+		typedef MapMetaData & (Rva000C1D10MapCache::*Fn)(const AsciiString &);
+		union { void (*fn)(); Fn call; } u = { j_00031e99 };
+		( reinterpret_cast<Rva000C1D10MapCache *>(TheMapCache)->*u.call )(lowerName) = md;
 	}
 }
