@@ -2729,7 +2729,6 @@ name,address,notes
 ??0CampaignReviewShowHolder@@QAE@UFunctorBinding@@@Z,0x0002A815,CampaignReview Continue callback holder constructor
 ??0CashBountyPowerModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
 ??0CashHackSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,0x00014245,ModuleFactory retail instance constructor
-??0CashHackSpecialPowerModuleData@@QAE@XZ,0x0001235A,derived-ICF
 ??0CastleMemberBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000060F5,CastleMemberBehavior ctor for friend_new
 ??0CaveContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,CaveContain ctor base call
 ??0Cftp@@QAE@XZ,0x00885AD0
