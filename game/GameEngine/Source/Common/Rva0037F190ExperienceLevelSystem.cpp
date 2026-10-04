@@ -9,28 +9,22 @@ typedef bool Bool;
 
 class AsciiStringCompareShim
 {
-public:
-	int compare(const AsciiString &other) const;
-
 private:
 	void *m_data;
 };
 
-#pragma comment(linker, "/alternatename:?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z=?j_000220c5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?friend_getFinalOverride@Overridable@@QAEPAV1@XZ=?j_00048c61@@YAXXZ")
-#pragma comment(linker, "/alternatename:?query@ExperienceLevelSystemQueryShim@@QAEPAXPAX@Z=?j_0002603f@@YAXXZ")
+extern void j_000220c5();
+extern void j_00048c61();
+extern void j_0002603f();
 
 class ExperienceLevelSystemQueryShim
 {
-public:
-	void *query(void *object);
 };
 
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	Overridable *friend_getFinalOverride();
 	Overridable *getNextOverride()
 	{
 		return m_nextOverride;
@@ -81,8 +75,10 @@ void ExperienceLevelSystem::rva0037F190(
 
 	ExperienceLevelSystemQueryShim *querySystem =
 		(ExperienceLevelSystemQueryShim *)this;
+	typedef void *(ExperienceLevelSystemQueryShim::*Query)(void *);
+	union { void (*fn)(); Query call; } query = { j_0002603f };
 	ExperienceLevelList *levels = (ExperienceLevelList *)
-		querySystem->query((void *)object);
+		(querySystem->*query.call)((void *)object);
 	if (levels == 0)
 		goto noResult;
 
@@ -95,11 +91,17 @@ void ExperienceLevelSystem::rva0037F190(
 		ExperienceLevel *level = &node->m_value;
 		ExperienceLevel *finalLevel = level;
 		Overridable *nextOverride = level->getNextOverride();
+		typedef Overridable *(Overridable::*FinalOverride)();
+		union { void (*fn)(); FinalOverride call; } finalOverride =
+			{ j_00048c61 };
 		if (nextOverride != 0)
 			finalLevel = (ExperienceLevel *)
-				nextOverride->friend_getFinalOverride();
+				(nextOverride->*finalOverride.call)();
 
-		if (finalLevel->m_name.compare(*levelName) == 0)
+		typedef int (AsciiStringCompareShim::*Compare)(
+			const AsciiString &) const;
+		union { void (*fn)(); Compare call; } compare = { j_000220c5 };
+		if ((finalLevel->m_name.*compare.call)(*levelName) == 0)
 		{
 			volatile Rva0037F190Result *output = result;
 			output->m_list = levels;
