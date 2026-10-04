@@ -50,9 +50,6 @@ public:
 	char *m_endOfStorage;
 };
 
-#pragma comment(linker, "/alternatename:??0Rva00900FF0InnerVector@@QAE@H@Z=?d_008ffa50@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Rva00900FF0InnerVector@@QAE@ABV0@@Z=?d_008ffb80@@YAXXZ")
-
 class Rva00900FF0VecOfVec
 {
 public:
@@ -64,9 +61,6 @@ public:
 	char *m_finish;
 	char *m_endOfStorage;
 };
-
-#pragma comment(linker, "/alternatename:??0Rva00900FF0VecOfVec@@QAE@H@Z=?d_008ffa50@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Rva00900FF0VecOfVec@@QAE@ABV0@@Z=?d_008ffb80@@YAXXZ")
 
 class Gen_ve_001f9520
 {
