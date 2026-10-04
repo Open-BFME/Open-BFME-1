@@ -10,9 +10,6 @@ namespace _STL { using namespace std; }
 extern void j_00041998(void);
 extern void j_0002191d(void);
 
-#pragma comment(linker, "/alternatename:?apply@Rva002CDF00Result@@QAEXPAX@Z=?j_00041998@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notify@Rva002CDF00Thing@@QAEXXZ=?j_0002191d@@YAXXZ")
-
 class Rva002CDF00Result
 {
 public:
@@ -44,8 +41,6 @@ public:
 	virtual void slot09();
 	virtual Rva002CDF00Result *getResult();
 
-	void notify();
-
 	unsigned char m_head[0x12c];
 	Rva002CDF00ConditionBits m_flags;
 };
@@ -61,12 +56,18 @@ void Rva002CDF00Host::rva002CDF00(Rva002CDF00Thing *a)
 	if (!a->m_flags.test(16))
 	{
 		a->m_flags.set(16);
-		a->notify();
+		typedef void (Rva002CDF00Thing::*Notify)();
+		union { void (*fn)(); Notify call; } notify = { j_0002191d };
+		(a->*notify.call)();
 	}
 
 	Rva002CDF00Result *first = (*(Rva002CDF00Thing **)((char *)this - 0x18))->getResult();
 	Rva002CDF00Result *second = a->getResult();
 
 	if (second != 0 && first != 0)
-		second->apply(0);
+	{
+		typedef void (Rva002CDF00Result::*Apply)(void *);
+		union { void (*fn)(); Apply call; } apply = { j_00041998 };
+		(second->*apply.call)(0);
+	}
 }
