@@ -1,8 +1,8 @@
 // cl: /O2 /MD
-// Fifteen $E dynamic-initializer stubs (seat small20260927T211619_06,
-// retail 0x00C6B390..0x00C6B940, 22 bytes each): each global below is only
-// declared extern anywhere else in the tree, so it is defined exactly once
-// here and the compiler emits its initializer as a bare _$En body. Every
+// Fourteen $E dynamic-initializer stubs (seat small20260927T211619_06,
+// retail 0x00C6B390..0x00C6B940, 22 bytes each). The 0x00C6B7D0
+// initializer now belongs to TheSupplyAndTechImageLocations in
+// SkirmishGameOptionsMenu.cpp; the remaining globals emit bare _$En bodies.
 // stub is ecx = global, call thiscall ctor through its ILT thunk, push the
 // teardown forwarder, atexit. The ctor is invoked through the same union
 // member-pointer call the retail bytes encode (a direct call through the
@@ -15,7 +15,6 @@ extern void j_00008c92();
 extern void j_0001ea83();
 extern void j_0003493c();
 extern void j_0001221f();
-extern void j_0001ec90();
 extern void j_0003dcb2();
 extern void j_00027c7d();
 extern void j_0000f632();
@@ -80,18 +79,6 @@ struct Rva00C6B4E0Init
 		(this->*call.method)();
 	}
 	~Rva00C6B4E0Init();
-};
-
-struct Rva00C6B7D0Init
-{
-	Rva00C6B7D0Init()
-	{
-		typedef void *(Rva00C6B7D0Init::*Member)();
-		union { void (*function)(); Member method; } call;
-		call.function = (void (*)())j_0001ec90;
-		(this->*call.method)();
-	}
-	~Rva00C6B7D0Init();
 };
 
 struct Rva00C6B840Init
@@ -161,7 +148,6 @@ Rva00C6B3F0Init g_rva012F10F8;
 Rva00C6B450Init g_rva012F1108;
 Rva00C6B450Init g_rva012F1198;
 Rva00C6B4E0Init g_rva012F1404;
-Rva00C6B7D0Init g_rva012F15B0;
 Rva00C6B840Init g_rva012F1990;
 Rva00C6B860Init g_rva012F19A4;
 Rva00C6B880Init g_rva012F19B8;
