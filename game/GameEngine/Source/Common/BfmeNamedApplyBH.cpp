@@ -1,29 +1,36 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc
 //
 // Open-BFME5: the named apply at retail 0x002F83D0, 62 bytes.  The name is
 // handed to the registry by value; nothing happens unless it resolves.
 
-class StringBaseNarrowBH
-{
-protected:
-	StringBaseNarrowBH(const StringBaseNarrowBH &other) throw();
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	~StringBaseNarrowBH(void) throw();
-
-	char *m_bfmeNarrowBH;
-};
-
-class AsciiStringBH : public StringBaseNarrowBH
+// Retail's by-value name is retail AsciiString: one StringBase<char>, whose
+// copy constructor (0x00887B60) and releaseBuffer (0x00887940) this copy
+// reaches, both matched in game/Libraries/Source/string/StringBase.cpp.
+class AsciiStringBH
 {
 public:
-	AsciiStringBH(const AsciiStringBH &other) throw() : StringBaseNarrowBH(other)
+	AsciiStringBH(const AsciiStringBH &other) : m_value(other.m_value)
 	{
 	}
 
-	~AsciiStringBH(void) throw()
+	~AsciiStringBH(void)
 	{
 	}
+
+private:
+	AsciiString m_value;
 };
+
+// Retail's two calls in this body reach incremental-link thunks, which carry
+// no signature: the registry lookup through ILT 0x00020F04 and the apply
+// through ILT 0x000033B4.  Both thunks are generated bodies
+// (?j_00020f04@@YAXXZ in game/gen_small/thunks_015.cpp, ?j_000033b4@@YAXXZ in
+// game/gen_small/thunks_001.cpp), so call those rather than the unrelated
+// historical names pinned to the same ILTs.
+extern void j_00020f04(void);
+extern void j_000033b4(void);
 
 class BfmeRegistryBH
 {
@@ -62,11 +69,29 @@ public:
 	void bfmeAddBH(void *owner, const AsciiStringBH &name, BfmeTargetBH *target);
 };
 
+typedef void *(BfmeRegistryBH::*BfmeRegistryFindFunction)(AsciiStringBH);
+typedef void (BfmeApplierBH::*BfmeApplyFunction)(void *, void *, BfmeSubBH *);
+
 void BfmeApplierBH::bfmeAddBH(void *owner, const AsciiStringBH &name,
 		BfmeTargetBH *target)
 {
-	void *found = ((BfmeRegistryBH *)TheSpecialPowerStore)->bfmeFindBH(name);
+	union
+	{
+		void (*raw)(void);
+		BfmeRegistryFindFunction find;
+	} findThunk;
+	union
+	{
+		void (*raw)(void);
+		BfmeApplyFunction apply;
+	} applyThunk;
+
+	findThunk.raw = j_00020f04;
+	applyThunk.raw = j_000033b4;
+
+	void *found =
+		(((BfmeRegistryBH *)TheSpecialPowerStore)->*findThunk.find)(name);
 
 	if (found != 0)
-		bfmeApplyBH(owner, found, &target->m_bfmeSubBH);
+		(this->*applyThunk.apply)(owner, found, &target->m_bfmeSubBH);
 }
