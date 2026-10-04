@@ -15,7 +15,12 @@ typedef unsigned int UnsignedInt;
 
 extern void j_00001140();
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
+struct PmfNext
+{
+	void (*pfn)();
+	int delta;
+	int vbindex;
+};
 
 #define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
 
@@ -57,7 +62,24 @@ public:
 
 	BfmeEvacuateIterator<Object> iterateTeamMembers() const
 	{
-		return BfmeEvacuateIterator<Object>(m_memberHead, Object::dlink_next_TeamMemberList);
+		typedef Object *(Object::*Fn)() const;
+		// Retail's DLINK call reaches the ILT thunk at 0x00001140 as a
+		// {pfn, delta, vbindex} constant, not as a member-function name: the
+		// ObjectDlinkPmf.h law puts the vbptr at +0x68 with vbtable[0] == 0,
+		// so delta is 4 - 0x68 == -100 and vbindex is 0. Naming the thunk
+		// directly keeps the reference honest with no linker alias. The
+		// fields are assigned one at a time and copied through the union;
+		// a braced aggregate initializer here costs one extra spill.
+		PmfNext pmf;
+		pmf.pfn = j_00001140;
+		pmf.delta = -100;
+		pmf.vbindex = 0;
+		union {
+			PmfNext raw;
+			Fn call;
+		} u;
+		u.raw = pmf;
+		return BfmeEvacuateIterator<Object>(m_memberHead, u.call);
 	}
 };
 
