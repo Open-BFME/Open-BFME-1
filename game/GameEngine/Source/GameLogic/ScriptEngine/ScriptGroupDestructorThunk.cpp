@@ -1,9 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ lift of the retail pooled-list destructor.
 
-// Retail's prologue stores the ScriptGroup vftable VA 0x01073744 at +0.
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+// Retail's prologue stores the ScriptGroup vftable VA 0x01073744 at +0, which
+// is retail's RTTI vftable symbol for Snapshot.  It is referenced by its real
+// symbol name, with no linker alias: only the array-to-pointer decay matters
+// to the store, so an `extern "C"` array of the exact symbol name reproduces
+// the same relocation -- the same spelling game/GameEngine/Source/Common/
+// BfmeConv715.cpp uses for this very vftable.
+extern "C" unsigned char __identifier("??_7Snapshot@@6B@")[];
 
 class ScriptPoolObject
 {
@@ -93,7 +97,7 @@ private:
 // ??1ScriptGroup@@MAE@XZ
 ScriptGroup::~ScriptGroup()
 {
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftSnapshot;
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7Snapshot@@6B@");
 	PoolAllocation<ScriptGroupPoolObject> *nextGroup =
 		*(PoolAllocation<ScriptGroupPoolObject> * volatile *)&m_nextGroup;
 	delete nextGroup;
