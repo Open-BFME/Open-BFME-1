@@ -635,26 +635,7 @@ W3DTerrainBackground::~W3DTerrainBackground(void)
 	REF_PTR_RELEASE(m_terrainTexture4X);
 }
 
-//=============================================================================
-// W3DTerrainBackground::W3DTerrainBackground
-//=============================================================================
-/** Constructor. Sets m_initialized to true if it finds the w3d models it needs
-for the bibs. */
-//=============================================================================
-// ??0W3DTerrainBackground@@QAE@XZ present-unmatched
-W3DTerrainBackground::W3DTerrainBackground(void):
-m_vertexTerrain(NULL),
-m_vertexTerrainSize(0),
-m_initialized(FALSE),
-m_indexTerrain(NULL),
-m_indexTerrainSize(0),
-m_terrainTexture(NULL),
-m_terrainTexture2X(NULL),
-m_terrainTexture4X(NULL),
-m_cullStatus(CULL_STATUS_UNKNOWN),
-m_texMultiplier(TEX1X)
-{
-}
+// W3DTerrainBackground::W3DTerrainBackground is defined by its matched owner TU (W3DTerrainBackgroundConstructor.cpp).
 
 // W3DTerrainBackground::freeTerrainBuffers is defined by its matched owner TU.
 
