@@ -30,10 +30,14 @@ class Gen_005e9a20
 {
 public:
 	Gen_005e9a20( const Gen_005e9a20 &other );
-	virtual ~Gen_005e9a20();
-	virtual void v1( void );
-	virtual void v2( void );
-	virtual void v3( void );
+	// The four virtuals below exist only to give the class the vtable the body
+	// stores at +0. Their bodies are defined here (empty) because the vtable
+	// the body stores has to resolve at link time; none of them is called by
+	// the matched copy constructor and none has a matched ledger row.
+	virtual ~Gen_005e9a20() {}
+	virtual void v1( void ) {}
+	virtual void v2( void ) {}
+	virtual void v3( void ) {}
 
 	Int m_field04;
 	Int m_field08;
