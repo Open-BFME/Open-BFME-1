@@ -1,5 +1,5 @@
-// ?checkFootprint003DFF70@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_NPAH@Z
-// partial score=0.4233 date=2026-10-02
+// ?d_003dff70@@YAXXZ
+// partial score=0.4282 date=2026-10-04
 // cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing
 //
 // Retail 0x003DFF70 (816 bytes through ret 0x1c): a BFME variant of the Zero
@@ -241,8 +241,8 @@ Bool Pathfinder::checkFootprint003DFF70(const Object *obj, Int cellX, Int cellY,
 		else
 		{
 			Coord3D pos;
-			pos.x = (cellX + 0.5f) * 10.0f;
 			pos.y = (cellY + 0.5f) * 10.0f;
+			pos.x = (cellX + 0.5f) * 10.0f;
 			pos.z = TheTerrainLogic->getLayerHeight(pos.x, pos.y, LAYER_GROUND);
 			if (TheTerrainLogic->slotBC(&pos))
 			{
