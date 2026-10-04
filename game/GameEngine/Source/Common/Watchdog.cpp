@@ -40,7 +40,7 @@ class ThreadClass
 public:
 	ThreadClass(const char *name);
 	virtual ~ThreadClass();
-	void Execute(void);
+	virtual void Execute(void);
 	void Stop(void);
 	virtual void Thread_Function(void) = 0;
 
@@ -78,11 +78,12 @@ class Watchdog : public ThreadClass
 public:
 	Watchdog(int timeout, int warningInterval, int warningDelay);
 	virtual ~Watchdog();
+	virtual void Execute(void);
 	void suppressTimeouts(void);
 	void update(void);
 	void resumeTimeouts(void);
-	void start(void);
 	virtual void Thread_Function(void);
+	virtual void reportWatchdog(void);
 	void stop(void);
 
 private:
@@ -160,7 +161,7 @@ void Watchdog::resumeTimeouts(void)
 	}
 }
 
-void Watchdog::start(void)
+void Watchdog::Execute(void)
 {
 	MutexClass::LockClass *lock = new MutexClass::LockClass(m_mutex, -1);
 	if (lock != m_ownedLock)

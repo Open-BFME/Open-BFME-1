@@ -65,7 +65,7 @@ class Watchdog
 {
 public:
 	virtual ~Watchdog();
-	virtual void start();
+	virtual void Execute();
 	virtual void Thread_Function();
 	virtual void reportWatchdog();
 

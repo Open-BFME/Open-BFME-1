@@ -45,7 +45,9 @@ class ThreadClass
 {
 public:
 	virtual ~ThreadClass();
+	virtual void Execute(void);
 	void Stop(void);
+	virtual void Thread_Function(void) = 0;
 
 private:
 	char m_name[ 0x40 ];
@@ -58,6 +60,9 @@ class Watchdog : public ThreadClass
 {
 public:
 	virtual ~Watchdog();
+	virtual void Execute(void);
+	virtual void Thread_Function(void);
+	virtual void reportWatchdog(void);
 
 private:
 	unsigned int m_parentThreadId;
