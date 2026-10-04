@@ -41,10 +41,12 @@ struct Rva008D32B0Pool {
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
 extern Rva008D32B0Pool *g_rva8CD130IdleHook;
-extern "C" const void *bfmeVftAptValue[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
-extern "C" const void *bfmeVftAptInteger[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
+// Retail vtables: ??_7AptValue@@6B@ at 0x01135D68, ??_7AptInteger@@6B@ at
+// 0x01136400 (targets/game/reverse/dir32_addresses.csv). Referenced by their
+// own mangled names, the way CameraPath_dtor.cpp and WorldHeightMapRva0074ACB0Load.cpp
+// bind their vftables.
+extern "C" const void *__identifier("??_7AptValue@@6B@")[];
+extern "C" const void *__identifier("??_7AptInteger@@6B@")[];
 __forceinline Rva008D32B0Value *rva008D32B0Integer(int value) {
     Rva008D32B0Value *p = (Rva008D32B0Value *)g_rva008D2A10;
     if (p) {
@@ -55,18 +57,21 @@ __forceinline Rva008D32B0Value *rva008D32B0Integer(int value) {
     }
     p = (Rva008D32B0Value *)Rva008C5D70Alloc(12);
     if (p) {
-        p->m_00 = (void *)bfmeVftAptValue;
+        p->m_00 = (void *)__identifier("??_7AptValue@@6B@");
         p->m_04 = (p->m_04 & 0xf0008007) | 0x40008007;
         g_rva8CD130IdleHook->add(p);
-        p->m_00 = (void *)bfmeVftAptInteger;
+        p->m_00 = (void *)__identifier("??_7AptInteger@@6B@");
         p->m_value = value;
         return p;
     }
     return 0;
 }
 class BfmeTab1024 { public: void bfmeAdd1024(int, int); };
-extern void gen008CBDF0(void *, void *, int, void *);
-#pragma comment(linker, "/alternatename:?gen008CBDF0@@YAXPAX0H0@Z=?j_008cc560@@YAXXZ")
+// Retail reaches FUN_00ccbdf0 through the 5-byte ILT thunk at 0x008CC560, so
+// the call target is ?j_008cc560@@YAXXZ; declare that name and call it with the
+// same four stack arguments.
+extern void j_008cc560();
+typedef void (__cdecl *Rva008D32B0Thunk)(void *, void *, int, void *);
 struct Rva008D32B0Command { int m_00; unsigned m_04, m_08; unsigned m_0c[10]; unsigned m_34, m_38, m_3c; };
 struct Rva008D32B0Row { int m_count; Rva008D32B0Command **m_commands; };
 struct Rva008D32B0Item { unsigned m_00, m_04; void *m_08; };
@@ -89,11 +94,11 @@ void Rva008D32B0::relocate(unsigned base, int arg2, void *arg3) {
             switch (m_rows[i].m_commands[j]->m_00) {
             case 1:
                 RVA_RELOCATE(m_rows[i].m_commands[j]->m_04);
-                gen008CBDF0((void *)m_rows[i].m_commands[j]->m_04, (void *)base, arg2, arg3);
+                ((Rva008D32B0Thunk)(void *)j_008cc560)((void *)m_rows[i].m_commands[j]->m_04, (void *)base, arg2, arg3);
                 break;
             case 8:
                 RVA_RELOCATE(m_rows[i].m_commands[j]->m_08);
-                gen008CBDF0((void *)m_rows[i].m_commands[j]->m_08, (void *)base, arg2, arg3);
+                ((Rva008D32B0Thunk)(void *)j_008cc560)((void *)m_rows[i].m_commands[j]->m_08, (void *)base, arg2, arg3);
                 break;
             case 3: {
                 RVA_RELOCATE(m_rows[i].m_commands[j]->m_34);
@@ -103,7 +108,7 @@ void Rva008D32B0::relocate(unsigned base, int arg2, void *arg3) {
                     RVA_RELOCATE(sub->m_items);
                     for (int k = 0; k < sub->m_count; ++k) {
                         RVA_RELOCATE(sub->m_items[k].m_08);
-                        gen008CBDF0(sub->m_items[k].m_08, (void *)base, arg2, arg3);
+                        ((Rva008D32B0Thunk)(void *)j_008cc560)(sub->m_items[k].m_08, (void *)base, arg2, arg3);
                     }
                 }
                 break;
