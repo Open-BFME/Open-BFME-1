@@ -44,13 +44,16 @@ public:
 
 // The cached-float reader at 0x0000B816. Its owner type is not proven; all the
 // bodies show is that getUnitNamed returns something this can be called on.
+// Retail reaches it through the ILT thunk ?j_0000b816@@YAXXZ (game/gen_small/thunks_005.cpp),
+// which takes the object in ecx and a context pointer on the stack; the member
+// pointer is the honest spelling of that thiscall, so the call site names the
+// thunk directly instead of hiding a stand-in behind a linker alias.
 class BfmeThingFBA
 {
-public:
-	Real bfmeGoFBAThunk(void *context);
 };
 
-#pragma comment(linker, "/alternatename:?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z=?j_0000b816@@YAXXZ")
+// Retail body 0x0000B816, target FUN_005d2580 (game/gen_small/thunks_005.cpp).
+extern void j_0000b816();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BfmeBody
@@ -145,7 +148,12 @@ Bool ScriptConditions::evaluateDistanceBetweenObjects(
 					if (object) {
 						Real contextReal = pContextParm->m_real;
 						void *context = *(void **)&contextReal;
-						Real value = object->bfmeGoFBAThunk(context);
+						typedef Real (BfmeThingFBA::*CachedFloat)(void *);
+						union {
+							void (*thunk)(void);
+							CachedFloat call;
+						} route = { j_0000b816 };
+						Real value = (object->*route.call)(context);
 						switch (pComparisonParm->m_int) {
 						case 0: return (value < pValueParm->m_real);
 						case 1: return (value <= pValueParm->m_real);
