@@ -110,12 +110,15 @@ private:
 
 extern WindowManager *g_rva012F19E8WindowManager;
 extern void *g_obj12F4B54;
-extern "C" const void *bfmeVftBfmeAptScreenSkirmishPrimary[];
-extern "C" const void *bfmeVftBfmeAptScreenSkirmishGameWindow[];
-extern "C" const void *bfmeVftBfmeAptScreenSkirmish[];
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmishPrimary=??_7BfmeAptScreenSkirmish@@6BRva0057DA50Primary@@@")
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmishGameWindow=??_7BfmeAptScreenSkirmish@@6BRva00465200GameWindow@@@")
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmish=??_7BfmeAptScreenSkirmish@@6B@")
+// The three Skirmish vftables this destructor restores, each spelled exactly
+// as the object that defines it spells it: the primary view selected by the
+// Rva0057DA50Primary base at +0x00, the Rva00465200GameWindow base at +0x218
+// and the complete-object table at +0x258. The defining class is
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptSkirmishConstructor.cpp,
+// whose base list gives these three mangled names.
+extern "C" const void *__identifier("??_7BfmeAptScreenSkirmish@@6BRva0057DA50Primary@@@")[];
+extern "C" const void *__identifier("??_7BfmeAptScreenSkirmish@@6BRva00465200GameWindow@@@")[];
+extern "C" const void *__identifier("??_7BfmeAptScreenSkirmish@@6B@")[];
 
 class __declspec(novtable) BfmeAptScreenSkirmish
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker,
@@ -136,9 +139,9 @@ private:
 
 BfmeAptScreenSkirmish::~BfmeAptScreenSkirmish()
 {
-	*(const void ***)this = bfmeVftBfmeAptScreenSkirmishPrimary;
-	*(const void ***)((char *)this + 0x218) = bfmeVftBfmeAptScreenSkirmishGameWindow;
-	*(const void ***)((char *)this + 0x258) = bfmeVftBfmeAptScreenSkirmish;
+	*(const void ***)this = __identifier("??_7BfmeAptScreenSkirmish@@6BRva0057DA50Primary@@@");
+	*(const void ***)((char *)this + 0x218) = __identifier("??_7BfmeAptScreenSkirmish@@6BRva00465200GameWindow@@@");
+	*(const void ***)((char *)this + 0x258) = __identifier("??_7BfmeAptScreenSkirmish@@6B@");
 
 	if( g_obj12F4B54 == this )
 	{
