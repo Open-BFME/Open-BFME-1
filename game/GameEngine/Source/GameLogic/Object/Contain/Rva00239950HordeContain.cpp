@@ -34,13 +34,11 @@ public:
 	OBJECT_SLOT(08) OBJECT_SLOT(09)
 	virtual Drawable *getDrawable() const;
 #undef OBJECT_SLOT
-	Player *getControllingPlayer() const;
 };
 
 class Rva2225E0Filter
 {
 public:
-	Bool accepts(Object *object, Player *player);
 };
 
 struct BfmeMemberIndexNode
@@ -119,8 +117,25 @@ private:
 	BfmeMemberIndexNode *m_memberIndex;
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z=?j_0001da34@@YAXXZ")
+// Retail calls both stand-in members through ILT thunks at 0x00020824 and
+// 0x0001da34; route the calls straight at the thunk entry points.
+extern void j_00020824();
+extern void j_0001da34();
+
+__forceinline Player *rva00239950GetControllingPlayer(Object *owner)
+{
+	typedef Player *(Object::*GetControllingPlayer)() const;
+	union { void (*fn)(); GetControllingPlayer call; } u = { j_00020824 };
+	return (owner->*u.call)();
+}
+
+__forceinline Bool rva00239950Accepts(Rva2225E0Filter *filter, Object *object,
+	Player *player)
+{
+	typedef Bool (Rva2225E0Filter::*Accepts)(Object *, Player *);
+	union { void (*fn)(); Accepts call; } u = { j_0001da34 };
+	return (filter->*u.call)(object, player);
+}
 
 // ?rva00239950@Rva00239950HordeContain@@QAEXPAXMMPAVRva2225E0Filter@@@Z
 void Rva00239950HordeContain::rva00239950(void *what, Real target,
@@ -134,8 +149,8 @@ void Rva00239950HordeContain::rva00239950(void *what, Real target,
 	while (node != members.end())
 	{
 		Object *object = *node;
-		if (filter == 0 || filter->accepts(object,
-			owner->getControllingPlayer()))
+		if (filter == 0 || rva00239950Accepts(filter, object,
+			rva00239950GetControllingPlayer(owner)))
 		{
 			Drawable *drawable = object->getDrawable();
 			if (drawable != 0)
@@ -157,8 +172,8 @@ void Rva00239950HordeContain::rva00239950(void *what, Real target,
 				((BfmeGameLogic *)TheGameLogic)->findObjectByID(key);
 			if (object != 0)
 			{
-				if (filter == 0 || filter->accepts(object,
-					owner->getControllingPlayer()))
+				if (filter == 0 || rva00239950Accepts(filter, object,
+					rva00239950GetControllingPlayer(owner)))
 				{
 					Drawable *drawable = object->getDrawable();
 					if (drawable != 0)
