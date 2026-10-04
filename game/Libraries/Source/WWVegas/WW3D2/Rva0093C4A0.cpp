@@ -5,8 +5,9 @@
 extern "C" __declspec(dllimport) DWORD WINAPI GetGlyphIndicesW(
 	HDC dc, LPCWSTR text, int count, LPWORD glyphs, DWORD flags);
 
-struct FontCharsGDIState
+class FontCharsClassGdiState
 {
+public:
 	int refs;
 	void *old_bitmap;
 	void *bitmap;
@@ -16,7 +17,7 @@ struct FontCharsGDIState
 
 // retail VA 0x0134AEAC: the shared GDI state, under the name
 // FontCharsClassDestructorBFME.cpp already uses for this global.
-extern FontCharsGDIState *g_fontCharsGdiState0134AEAC;
+extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
 
 class Rva0093C4A0Target
 {

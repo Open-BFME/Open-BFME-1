@@ -23,7 +23,7 @@ public:
 };
 
 // Retail global 0x0134AEAC (targets/game/reverse/dir32_addresses.csv).
-extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
+FontCharsClassGdiState *g_fontCharsGdiState0134AEAC = 0;
 
 struct Gen_t_0093fa90_p4pod
 {
