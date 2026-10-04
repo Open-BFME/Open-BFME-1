@@ -65,9 +65,10 @@ public:
 
 extern AI *TheAI;
 
-// The retail body is reached through this import thunk rather than through a
-// named Object method in the current source tree.
-#pragma comment(linker, "/alternatename:?getDistanceSquared@Object@@QBEMPBV1@@Z=?j_00043ced@@YAXXZ")
+// The retail separation-squared body is reached through this incremental-link
+// thunk (0x00043CED, pinned ?getDistanceSquared@Object@@QBEMPBV1@@Z), so the
+// call binds the thunk directly instead of through a stand-in name.
+extern void j_00043ced();
 
 class Rva00210230
 {
@@ -94,7 +95,9 @@ Bool Rva00210230::check(Object *source, Object *target)
 		goto failure;
 
 	Real distanceLimit = TheAI->m_aiData->m_bfmeC4;
-    if (!(source->getDistanceSquared(target) > distanceLimit * distanceLimit))
+	typedef Real (Object::*DistanceSquared)(const Object *) const;
+	union { void (*fn)(); DistanceSquared call; } distanceSquared = { j_00043ced };
+    if (!((source->*distanceSquared.call)(target) > distanceLimit * distanceLimit))
         return source->getControllingPlayer()->m_bfme2c == 0;
 
 failure:
