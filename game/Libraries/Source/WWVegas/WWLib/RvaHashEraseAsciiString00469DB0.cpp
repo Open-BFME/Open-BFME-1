@@ -58,7 +58,23 @@ struct Rva00469FC0Value
 	int m_mapped;
 };
 
-#pragma comment(linker, "/alternatename:??1Rva00469FC0Value@@QAE@XZ=?j_00042c8f@@YAXXZ")
+// Retail's erase cleanup call goes through ILT thunk 0x00042C8F (`j_00042c8f`),
+// which routes to the value destructor body at 0x00042C8F.  STLport reaches that
+// destructor through `_STL::_Destroy`, so the TU-local specialization below is
+// the one place the thunk can be named; it carries the destructor signature
+// (thiscall, void, no arguments) the way the erased node holds it.
+extern void j_00042c8f();
+
+namespace _STL
+{
+template <>
+inline void _Destroy(Rva00469FC0Value *p)
+{
+	typedef void (Rva00469FC0Value::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_00042c8f };
+	(p->*u.call)();
+}
+}
 
 struct Rva00469FC0ExtractKey
 {
