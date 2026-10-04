@@ -16,10 +16,14 @@ struct Coord3D
 };
 
 class Object;
+// Only TheGameLogic's pointer value is used here. The pad byte keeps the class
+// non-empty: on a zero-size class this compiler emits the this-adjustment
+// sequence for a call through a member pointer instead of folding it to a
+// direct call, and retail has the direct call.
 class GameLogic
 {
 public:
-    Object *findObjectByID(Int id);
+    unsigned char m_pad00[1];
 };
 extern GameLogic *TheGameLogic;
 extern Real GetGameLogicRandomValueReal(Real lo, Real hi, char *file, Int line);
@@ -73,7 +77,6 @@ public:
     unsigned char m_padC4[0x200-0xc4];
     BodyModuleInterface *m_body;
     AIUpdateInterface *m_ai;
-    Real getDistanceSquared(const Object *other) const;
     const Coord3D *getPosition() const { return &m_position; }
     AIUpdateInterface *getAIUpdateInterface() const { return m_ai; }
 };
@@ -83,7 +86,6 @@ public:
 class DamageInfo
 {
 public:
-    DamageInfo();
     unsigned char m_pad00[0x10];
     Int m_damageType;
     Int m_status;
@@ -135,21 +137,27 @@ private:
     Bool m_repairing;
 };
 
-#pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0DamageInfo@@QAE@XZ=?j_0002c9d5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getDistanceSquared@Object@@QBEMPBV1@@Z=?j_00043ced@@YAXXZ")
+// Retail calls these three through incremental-link thunks; reference the
+// thunk symbols directly instead of aliasing stand-in member names to them.
+extern void j_0001f253();
+extern void j_0002c9d5();
+extern void j_00043ced();
 
 void SlavedUpdate::doRepairLogic()
 {
+    typedef Object *(GameLogic::*FnByID)(Int);
+    union { void (*fn)(); FnByID call; } byId = { j_0001f253 };
     Object *me = getObject();
-    Object *master = TheGameLogic->findObjectByID(m_slaver);
+    Object *master = (TheGameLogic->*byId.call)(m_slaver);
     const SlavedUpdateModuleData *data = getSlavedUpdateModuleData();
     AIUpdateInterface *ai = me->getAIUpdateInterface();
     if (!ai) return;
 
+    typedef Real (Object::*FnDistSq)(const Object *) const;
+    union { void (*fn)(); FnDistSq call; } distSq = { j_00043ced };
     // The decoded 0x000ED3B0 callee subtracts the two objects' XY positions
     // and their bounding radii before squaring the resulting distance.
-    Real distanceSq = me->getDistanceSquared(master);
+    Real distanceSq = (me->*distSq.call)(master);
     // The repair proximity threshold is the pooled float at retail 0x010C2D30,
     // which holds exactly 144.0f; the literal keeps the same read.
     Bool closeEnough = distanceSq < 144.0f;
@@ -185,7 +193,10 @@ void SlavedUpdate::doRepairLogic()
         if (body)
         {
             Real amount = data->m_repairRatePerSecond / 5.0f;  // BFME's logic runs 5 frames per second; Zero Hour ran 30
+            typedef void (DamageInfo::*FnCtor)();
+            union { void (*fn)(); FnCtor call; } ctor = { j_0002c9d5 };
             DamageInfo healing;
+            ((&healing)->*ctor.call)();
             healing.m_amount = amount;
             healing.m_damageType = 7;
             healing.m_deathType = 1;
