@@ -1,10 +1,20 @@
 // ?bfmePointsToNextRank@@YAHVGen_uw_00025c1b@@@Z
 // Recovered from the retail rank-band walk at 0x005549C0.
 
+// Retail's destructor calls land on the five-byte ILT thunk at 0x00025C1B
+// (nothing defines the ??1Gen_uw_00025c1b spelling), so the destructor
+// reaches it through the thunk's own address.
+extern void j_00025c1b();
+
 class Gen_uw_00025c1b
 {
 public:
-	~Gen_uw_00025c1b();
+	__forceinline ~Gen_uw_00025c1b()
+	{
+		typedef void ( Gen_uw_00025c1b::*Destroy )();
+		union { void ( *fn )(); Destroy call; } destroy = { j_00025c1b };
+		( this->*destroy.call )();
+	}
 
 	unsigned char m_head[ 0x1C4 ];
 	int m_points;
