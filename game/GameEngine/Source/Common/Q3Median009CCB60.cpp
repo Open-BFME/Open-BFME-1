@@ -28,7 +28,7 @@ struct Q3SortCompare
 		const Q3SortElem4 &right) const;
 };
 
-bool Q3SortCompare::operator()(const Q3SortElem4 &left,
+inline bool Q3SortCompare::operator()(const Q3SortElem4 &left,
 	const Q3SortElem4 &right) const
 {
 	char *a = left.m_base.m_data;
