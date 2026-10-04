@@ -114,13 +114,19 @@ public:
 
 extern ControlBar *TheControlBar;
 
-extern "C" void bfmeRun_00589680(void);
+// C++ linkage, not extern "C": the real definition in S3GuardedDelegates3.cpp is a
+// plain C++ function, so this must mangle to ?bfmeRun_00589680@@YAXXZ for the
+// ledger resolver to bind the call.
+void bfmeRun_00589680(void);
 
 // Retail loads Glo012F4B98 into ECX immediately before this call even though
 // bfmeRun_00589680's own (already landed) body never touches ECX -- almost
 // certainly a thiscall member whose identical-code-folded body the linker
 // merged onto that free function. Route through such a member so the ECX
-// setup reappears, and alias its never-defined body onto the real callee.
+// setup reappears. The member is never declared, defined or called by name: the
+// call site below loads the already-landed ?bfmeRun_00589680@@YAXXZ address into
+// a function-local union with a matching member-pointer type, so no linker
+// alias is needed and the object references the real callee directly.
 class Glo012F4B98Type
 {
 public:
@@ -129,8 +135,6 @@ public:
 
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;
-
-#pragma comment(linker, "/alternatename:?run@Glo012F4B98Type@@QAEXXZ=?bfmeRun_00589680@@YAXXZ")
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -170,7 +174,9 @@ public:
 	void rva00615c20();
 };
 
-extern "C" void __stdcall Rva0060D5D0Noop(void *);
+// C++ linkage, matching the definition in Rva0060D5D0Noop.cpp, so the
+// reference mangles to ?Rva0060D5D0Noop@@YGXPAX@Z.
+void __stdcall Rva0060D5D0Noop(void *);
 
 // The class both this view and Bfme5TinyTwentyNine.cpp's BfmeGameCW read the
 // same singleton at +0x288 through, so TheLivingWorldManager is the same object as
@@ -178,7 +184,9 @@ extern "C" void __stdcall Rva0060D5D0Noop(void *);
 // Retail reloads TheLivingWorldManager into ECX immediately before each tail call to
 // the already-landed Rva0060D5D0Noop stdcall no-op, which never touches
 // ECX -- the same identical-code-folded-thiscall-member shape as
-// Glo012F4B98Type::run above, so route through a member here too.
+// Glo012F4B98Type::run above, so route through a member here too -- again
+// through a function-local union holding the real
+// ?Rva0060D5D0Noop@@YGXPAX@Z address, with no linker alias.
 class BfmeGameCW
 {
 public:
@@ -192,8 +200,6 @@ public:
 // reached through casts.
 class LivingWorldManager;
 extern LivingWorldManager *TheLivingWorldManager;
-
-#pragma comment(linker, "/alternatename:?poke@BfmeGameCW@@QAEXH@Z=?Rva0060D5D0Noop@@YGXPAX@Z")
 
 class Gen_006091B0
 {
@@ -221,7 +227,11 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 		TheControlBar->slot14();
 	}
 
-	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->run();
+	{
+		typedef void (Glo012F4B98Type::*Run)(void);
+		union { void (*fn)(); Run call; } run = { bfmeRun_00589680 };
+		(reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->*run.call)();
+	}
 
 	TheGameLogic->m_field11D = m_bfmeFlag;
 
@@ -238,6 +248,8 @@ void Gen_006091B0::bfmeSetEnabled(Bool enable)
 
 		int state = TheGameLogic->m_field10C;
 		int value = (state == 0 || state == 7 || state == 1 || state == 5) ? 1 : 0;
-		((BfmeGameCW *)TheLivingWorldManager)->poke(value);
+		typedef void (BfmeGameCW::*Poke)(int);
+		union { void (__stdcall *fn)(void *); Poke call; } poke = { Rva0060D5D0Noop };
+		((BfmeGameCW *)TheLivingWorldManager->*poke.call)(value);
 	}
 }
