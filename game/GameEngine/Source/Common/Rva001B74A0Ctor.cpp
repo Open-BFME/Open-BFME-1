@@ -15,13 +15,13 @@ public:
 	LocomotorSet(int dummy);
 };
 
-// Retail vtable VA 0x0109DF3C; the alternate name defines no table.
-extern "C" void *bfmeVftGen_001BA9E0[];
-#pragma comment(linker, "/alternatename:_bfmeVftGen_001BA9E0=??_7Gen_001BA9E0@@6B@")
+// Retail vtable VA 0x0109DF3C, symbol ??_7Gen_001BA9E0@@6B@; that name is
+// not spellable in C++, so reference it verbatim.
+extern "C" void *__identifier("??_7Gen_001BA9E0@@6B@")[];
 
 LocomotorSet::LocomotorSet(int)
 {
-	m_vptr = bfmeVftGen_001BA9E0;
+	m_vptr = __identifier("??_7Gen_001BA9E0@@6B@");
 	m_locomotors = 0;
 	m_08 = 0;
 	m_0C = 0;
