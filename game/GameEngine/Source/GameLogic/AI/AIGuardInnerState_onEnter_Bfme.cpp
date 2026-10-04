@@ -247,8 +247,12 @@ inline Object *getGuardOwner(Rva0015C570GuardMachine *machine)
 	return machine->m_owner;
 }
 
-#pragma comment(linker, "/alternatename:??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z=?j_0000bf3c@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva002BD020AIAttackState@@UAE@XZ=??1AIAttackState@@MAE@XZ")
+// The construction below goes through the class constructor symbol
+// ??0Rva002BD020AIAttackState@@QAE@...; symbols.csv pins that local ABI
+// view to the retail incremental-link thunk ?j_0000bf3c@@YAXXZ (RVA
+// 0x0000BF3C, extent 5, target 0x0017C910), which is exactly what the
+// retail call at 0x0015C6DB targets.  No linker name-alias pragma is
+// needed here.
 
 StateReturnType AIGuardInnerState::onEnter()
 {
