@@ -30,7 +30,8 @@ class UnicodeString
 {
 public:
 	UnicodeString(const UnicodeString &);
-	~UnicodeString();
+	// Retail releases the operands with a direct call to StringBase<unsigned short>::releaseBuffer (0x008881D0).
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 private:
 	unsigned short *m_data;
