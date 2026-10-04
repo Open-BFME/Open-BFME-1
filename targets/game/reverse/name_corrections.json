@@ -16218,5 +16218,15 @@
   "after_sha256": "d7701ee8505b4ff07781ddce26ce967ca2234ebc47e4b48838f31501580c024a",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeReleaseSetBZB.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeReleaseSetBZB.cpp",
+  "old_name": "bfmeTwoBZB",
+  "new_name": "Rva009A5980",
+  "before_sha256": "0b5adaa49c87ed1fccdaae098d44887c582a5f0692a0d2a787b2d3d846d6f58f",
+  "after_sha256": "3c5e09860403a6902a11a1a8442fad68f1f2bbce7a63600af80b842daac94f68",
+  "evidence": "targets/game/reverse/identity_evidence/release-set-wrapper-009a5980.md",
+  "reason": "The old bfmeTwoBZB spelling was an undefined source-local stand-in with only a pin, not a recovered descriptive identity. Complete retail instructions prove six cdecl one-pointer calls to the separately padded 5-byte wrapper at 0x009A5980, distinct from its 29-byte target at 0x009A58E0. Use the exact address-derived wrapper owner and preserve both physical identities without asserting original semantics."
  }
 ]
