@@ -387,51 +387,8 @@ static const char *rankNames[] = {
 	"Commander",
 };
 
-const Image* LookupSmallRankImage(Int side, Int rankPoints)
-{
-	if (rankPoints == 0)
-		return NULL;
-
-	Int rank = 0;
-	Int i = 0;
-	while( rankPoints >= TheRankPointValues->m_ranks[i + 1])
-		++i;
-	rank = i;
-
-	if (rank < 0 || rank >= 10)
-		return NULL;
-
-	AsciiString sideStr = "N";
-	switch(side)
-	{
-		case 2:  //USA
-		case 5:  //Super Weapon
-		case 6:  //Laser
-		case 7:  //Air Force
-			sideStr = "USA";
-			break;
-
-		case 3:  //China
-		case 8:  //Tank
-		case 9:  //Infantry
-		case 10: //Nuke
-			sideStr = "CHA";
-			break;
-
-		case 4:  //GLA
-		case 11: //Toxin
-		case 12: //Demolition
-		case 13: //Stealth
-			sideStr = "GLA";
-			break;
-	}
-
-	AsciiString fullImageName;
-	fullImageName.format("%s-%s", rankNames[rank], sideStr.str());
-	const Image *img = TheMappedImageCollection->findImageByName(fullImageName);
-	DEBUG_ASSERTLOG(img, ("*** Could not load small rank image '%s' from TheMappedImageCollection!\n", fullImageName.str()));
-	return img;
-}
+// Body is retail 0x004F9CE0, defined once in LookupSmallRankImage_Thunk.cpp.
+const Image* LookupSmallRankImage(Int side, Int rankPoints);
 
 static Int insertPlayerInListbox(const PlayerInfo& info, Color color)
 {
