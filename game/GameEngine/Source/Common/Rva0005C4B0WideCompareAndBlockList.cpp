@@ -6,8 +6,17 @@
 
 typedef unsigned short WCHAR;
 
-// ?Rva0005C4B0CompareWide@@YGHPBG0H@Z
-int __stdcall Rva0005C4B0CompareWide(const WCHAR *a, const WCHAR *b, int count)
+// Every retail caller (the wide StringBase startsWith/endsWith bodies at
+// 0x008870D0, 0x00887170, 0x00887320 and 0x00887380) loads ECX with a stack
+// temporary before the call and the body returns with ret 0Ch: a thiscall
+// member of an empty helper whose this is unused.
+struct Rva0005C4B0WideTraits
+{
+	int compare(const WCHAR *a, const WCHAR *b, int count);
+};
+
+// ?compare@Rva0005C4B0WideTraits@@QAEHPBG0H@Z
+int Rva0005C4B0WideTraits::compare(const WCHAR *a, const WCHAR *b, int count)
 {
 	while (count > 0) {
 		if (*a != *b) {
