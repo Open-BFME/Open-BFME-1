@@ -1,8 +1,18 @@
+// The two EGA/EGB refresh helpers are reached through the five-byte ILT
+// thunk 0x00048C61 (?j_00048c61@@YAXXZ in game/gen_small/thunks_035.cpp),
+// the only name the ledger defines at that address, and the hashtable probe
+// through the ILT thunk 0x00038E4C (?j_00038e4c@@YAXXZ in thunks_027.cpp).
+// Each declaration carries no C++ name: __identifier spells the retail symbol
+// and the call sites load ecx themselves, which is all a no-argument thiscall
+// needs.
+extern "C" void *__identifier("?j_00048c61@@YAXXZ")();
+extern "C" void *__identifier("?j_00038e4c@@YAXXZ")();
+
 struct BfmeThingEGA;
 
 struct BfmeSubEGA
 {
-	BfmeThingEGA *bfmeUpdEGA();
+	BfmeThingEGA *m_bfmeThingA;
 };
 
 struct BfmeThingEGA
@@ -20,7 +30,7 @@ void *__stdcall bfmeGoEGAa(void *a, BfmeThingEGA *b)
 	BfmeSubEGA *s = b->m_bfmeS;
 	if (s)
 	{
-		b = s->bfmeUpdEGA();
+		b = (BfmeThingEGA *)__identifier("?j_00048c61@@YAXXZ")();
 		return b->m_bfmeX;
 	}
 	return b->m_bfmeY;
@@ -30,7 +40,7 @@ struct BfmeThingEGB;
 
 struct BfmeSubEGB
 {
-	BfmeThingEGB *bfmeUpdEGB();
+	BfmeThingEGB *m_bfmeThingB;
 };
 
 struct BfmeThingEGB
@@ -47,7 +57,7 @@ void *__stdcall bfmeGoEGAb(void *a, BfmeThingEGB *b)
 	BfmeSubEGB *s = b->m_bfmeS;
 	if (s)
 	{
-		b = s->bfmeUpdEGB();
+		b = (BfmeThingEGB *)__identifier("?j_00048c61@@YAXXZ")();
 		return b->m_bfmeX;
 	}
 	return b->m_bfmeY;
@@ -62,7 +72,6 @@ struct BfmeResEGC
 class BfmeSubEGCa
 {
 public:
-	BfmeResEGC *bfmeFindEGCa(void *a);
 };
 
 struct BfmeThingEGCa
@@ -74,7 +83,12 @@ struct BfmeThingEGCa
 
 int BfmeThingEGCa::bfmeGoEGCa(void *a)
 {
-	BfmeResEGC *r = m_bfmeSub.bfmeFindEGCa(a);
+	union FindCall {
+		void *(*thunk)();
+		BfmeResEGC *(BfmeSubEGCa::*find)(void *);
+	} findCall;
+	findCall.thunk = (void *(*)())&__identifier("?j_00038e4c@@YAXXZ");
+	BfmeResEGC *r = (m_bfmeSub.*findCall.find)(a);
 	if (!r)
 		return -1;
 	return r->m_bfmeX;

@@ -33,11 +33,16 @@ extern Display *TheDisplay;
 
 // Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
 // game_logic.cpp). This TU calls through a local view type, so keep the view
-// and cast at the use; the global itself uses the canonical spelling.
+// and cast at the use; the global itself uses the canonical spelling. The
+// query itself is an ILT thunk at 0x0001E0AB (?j_0001e0ab@@YAXXZ in
+// game/gen_small/thunks_014.cpp), the only name the ledger defines at that
+// address, so __identifier spells it and the union's member-pointer view types
+// the thiscall.
+extern "C" Bool __identifier("?j_0001e0ab@@YAXXZ")();
+
 class GameLogicShim
 {
 public:
-	Bool unidentified_0001e0ab(void);
 };
 
 class GameLogic;
@@ -47,14 +52,18 @@ extern GameLogic *TheGameLogic;
 // as GameWindowTransitionsHandler *TheTransitionHandler in
 // GameWindowTransitions.cpp (?TheTransitionHandler@@3PAVGameWindowTransitionsHandler@@A).
 // The member is reached through this file's own view of the object, cast at
-// the use, so the called ILT thunk 0x00045C28 stays the one retail calls.
+// the use, so the called ILT thunk 0x00045C28 (?j_00045c28@@YAXXZ in
+// game/gen_small/thunks_033.cpp) stays the one retail calls.
 class GameWindowTransitionsHandler;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
+extern "C" void __identifier("?j_00045c28@@YAXXZ")();
+
+// The transition handler's own view of the object; the callee carries no C++
+// name here, only the retail thunk symbol above.
 class TransitionHandler
 {
 public:
-	void setGroup(AsciiString name, Int i);
 };
 
 class VictoryConditions
@@ -80,9 +89,23 @@ void VictoryConditions::hideEndGame(void)
 	m_endGameShowing = false;
 	TheDisplay->setUnidentified13c(true);
 
-	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
+	union QueryCall {
+		Bool (*thunk)();
+		Bool (GameLogicShim::*query)(void);
+	} queryCall;
+	queryCall.thunk = (Bool (*)())&__identifier("?j_0001e0ab@@YAXXZ");
+
+	if ((reinterpret_cast<GameLogicShim *>(TheGameLogic)->*queryCall.query)())
 	{
 		if (m_singleAllianceRemaining)
-			((TransitionHandler *)TheTransitionHandler)->setGroup("MPorSkirmishFadeToScoreScreen", 0);
+		{
+			union SetGroupCall {
+				void (*thunk)();
+				void (TransitionHandler::*setGroup)(AsciiString, Int);
+			} setGroupCall;
+			setGroupCall.thunk = (void (*)())&__identifier("?j_00045c28@@YAXXZ");
+			((TransitionHandler *)TheTransitionHandler->*setGroupCall.setGroup)(
+				"MPorSkirmishFadeToScoreScreen", 0);
+		}
 	}
 }
