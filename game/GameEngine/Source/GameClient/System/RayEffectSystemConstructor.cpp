@@ -43,17 +43,13 @@ private:
 	RayEffectData m_effectData[ 128 ];
 };
 
-void RayEffectSystem::init( void )
+RayEffectSystem::RayEffectSystem( void )
 {
+	// retail inlines the init() loop here; init() itself is owned by RayEffect.cpp
 	for ( int i = 0; i < 128; ++i )
 	{
 		m_effectData[ i ].draw = 0;
 		m_effectData[ i ].startLoc.zero();
 		m_effectData[ i ].endLoc.zero();
 	}
-}
-
-RayEffectSystem::RayEffectSystem( void )
-{
-	init();
 }
