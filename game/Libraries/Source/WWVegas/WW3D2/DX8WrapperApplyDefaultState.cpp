@@ -226,7 +226,7 @@ static __forceinline void AssignDefaultTexture(TextureBaseClass *&slot, TextureB
  slot = texture;
 }
 
-__forceinline void BoxSetTexture(unsigned index, TextureBaseClass *&texture) {
+static __forceinline void BoxSetTexture(unsigned index, TextureBaseClass *&texture) {
  if (texture != TheBoxTextures[index]) {
   AssignDefaultTexture(TheBoxTextures[index], texture);
   TheBoxTextureDirtyMask |= 0x40 << index;
