@@ -36,11 +36,24 @@ public:
 
 extern FileSystem *TheFileSystem;
 
+extern void j_0000e7a0();      // retail ILT thunk for the BfmeLexEAN cleanup
+extern void j_00049ae4();      // retail ILT thunk for the XmlNameSlotList slot
+extern void j_0000ed95();      // retail ILT thunk for LuaScriptEngine::ParseToken
+
 class BfmeLexEAN
 {
 public:
 	BfmeLexEAN(char *text, char *buffer, Int limit);
-	~BfmeLexEAN();
+
+	// Retail cleans the lexer up through its ILT thunk at 0x0000e7a0, so the
+	// cleanup body is written here and inlined at every scope exit: the
+	// generated call carries the thunk's own name.
+	__forceinline ~BfmeLexEAN()
+	{
+		typedef void (BfmeLexEAN::*Cleanup)(void);
+		union { void (*fn)(); Cleanup call; } cleanup = { j_0000e7a0 };
+		(this->*cleanup.call)();
+	}
 
 	char *m_bfmePosEAN;
 	char *m_bfmeLineEAN;
@@ -59,23 +72,17 @@ public:
 class XmlNameSlotList
 {
 public:
-	Int finish();
 };
 
 class __declspec(novtable) LuaScriptEngine
 {
 public:
 	void rva002EC840ParseTokenFile(const char *filename, Bool keepOpen);
-	void rva002EC770ParseToken(BfmeLexEAN *parser);
 
 private:
 	char m_pad00B4[0xB4];
 	unsigned char m_keepOpen;
 };
-
-#pragma comment(linker, "/alternatename:??1BfmeLexEAN@@QAE@XZ=?j_0000e7a0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finish@XmlNameSlotList@@QAEHXZ=?j_00049ae4@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z=?j_0000ed95@@YAXXZ")
 
 void LuaScriptEngine::rva002EC840ParseTokenFile(const char *filename, Bool keepOpen)
 {
@@ -91,14 +98,18 @@ void LuaScriptEngine::rva002EC840ParseTokenFile(const char *filename, Bool keepO
 		char buffer[0x1000];
 		m_keepOpen = keepOpen;
 		BfmeLexEAN parser(source, buffer, 0xFFF);
+		typedef Int (XmlNameSlotList::*Slot)(void);
+		typedef void (LuaScriptEngine::*ParseToken)(BfmeLexEAN *);
 		for (;;)
 		{
-			Int status = ((XmlNameSlotList *)&parser)->finish();
+			union { void (*fn)(); Slot call; } slot = { j_00049ae4 };
+			Int status = (((XmlNameSlotList *)&parser)->*slot.call)();
 			if (status == 0)
 				break;
 			if (--status != 0)
 				return;
-			rva002EC770ParseToken(&parser);
+			union { void (*fn)(); ParseToken call; } parse = { j_0000ed95 };
+			(this->*parse.call)(&parser);
 		}
 
 		m_keepOpen = 0;
