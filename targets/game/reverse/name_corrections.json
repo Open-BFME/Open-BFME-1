@@ -17408,5 +17408,15 @@
   "after_sha256": "0f01bd7dbcd75e45b3ebb5a0ecd92d0e8ec3be71ba0d0287f28a2242a7f78911",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "old_name": "bfmeWeaponSlotXfer",
+  "new_name": "j_0002bfa8",
+  "before_sha256": "c938d1e3e6a4b1a1dfe02b92598a4964f7488b4db5b55626253ddcf3c4f9c644",
+  "after_sha256": "c6e69eede4f636f9f7f0798c15f3758af0ca320f211731f0b5c428aa717b9bdf",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

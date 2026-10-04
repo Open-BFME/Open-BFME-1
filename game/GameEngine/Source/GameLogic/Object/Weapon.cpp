@@ -3338,6 +3338,13 @@ public:
 	virtual BfmeWeaponXferView &xferBool(bool &);
 };
 
+// Weapon::xfer reads the template name through the incremental-link thunk at
+// 0x00034045. This pragma is KEPT: retail's call is a direct thiscall member
+// call whose callee pops the hidden return pointer, and MSVC 7.1 emits
+// `add esp, 4` for that argument on any *indirect* call (member-pointer union,
+// out-parameter member pointer, namespace-scope pun) because it cannot see the
+// callee's epilogue. Every pun shape changed the bytes; a direct thiscall
+// member call is the only matching shape, which is what this provides.
 class Rva00034045NameAccessor
 {
 public:
@@ -3376,10 +3383,13 @@ typedef char BfmeWeaponLayoutTemplateOffset[(offsetof(BfmeWeaponLayout, m_templa
 typedef char BfmeWeaponLayoutVectorOffset[(offsetof(BfmeWeaponLayout, m_scatterTargetsUnused) == 0x44) ? 1 : -1];
 
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
-extern void bfmeWeaponSlotXfer(Xfer *xfer, void *value);
-extern void bfmeWeaponStatusXfer(Xfer *xfer, void *value);
-#pragma comment(linker, "/alternatename:?bfmeWeaponSlotXfer@@YAXPAVXfer@@PAX@Z=?j_0002bfa8@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeWeaponStatusXfer@@YAXPAVXfer@@PAX@Z=?j_000399dc@@YAXXZ")
+// Retail calls these two free helpers through incremental-link thunks at
+// 0x0002BFA8 and 0x000399DC, so the calls are issued against the thunk
+// addresses rather than against a stand-in name of our own. Both are cdecl
+// free functions, so a plain function-pointer cast carries the call.
+extern void j_0002bfa8();
+extern void j_000399dc();
+typedef void (__cdecl *BfmeWeaponXferFn)(Xfer *xfer, void *value);
 
 void Weapon::xfer( Xfer *xfer )
 {
@@ -3405,7 +3415,7 @@ void Weapon::xfer( Xfer *xfer )
 	}
 
 	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &weapon->m_projectileStreamID);
-	bfmeWeaponSlotXfer(xfer, &weapon->m_wslot);
+	((BfmeWeaponXferFn)(void *)j_0002bfa8)(xfer, &weapon->m_wslot);
 	bfme->xferUnsignedInt(weapon->m_ammoInClip);
 	bfme->xferUnsignedInt(weapon->m_whenWeCanFireAgain);
 	bfme->xferUnsignedInt(weapon->m_whenPreAttackFinished);
@@ -3454,7 +3464,7 @@ void Weapon::xfer( Xfer *xfer )
 	bfme->xferInt(weapon->m_field54);
 	if (!bfme->IsLightCRC())
 	{
-		bfmeWeaponStatusXfer(xfer, &weapon->m_status);
+		((BfmeWeaponXferFn)(void *)j_000399dc)(xfer, &weapon->m_status);
 		bfme->xferUnsignedInt(weapon->m_gameFrame);
 	}
 	if (versionStorage.version.data[1] >= 2)
