@@ -1,12 +1,14 @@
 // ?_Allocate@MemoryPool@@YAPAXIW4AllocType@1@@Z
-// partial score=0.6751152073732719 date=2026-09-28
+// partial score=0.6813 date=2026-10-04
+// ?_Allocate@MemoryPool@@YAPAXIW4AllocType@1@@Z
 // cl: /O2 /DNDEBUG /MD /Igame/GameEngine/Source/Common/System
 #include "memory_pool.h"
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *);
 extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
 void memset32(void *, int, unsigned int);
-class Rva008838F0Owner { public: void rva008839B0(int, void *); };
+class Rva008838F0Owner;
+extern Rva008838F0Owner g_bfmeRva0130EA10Owner;
 struct Rva00882BA0Block {
     Rva00882BA0Block **m_field00;
     Rva00882BA0Block *m_field04;
@@ -43,7 +45,7 @@ void *MemoryPool::_Allocate(unsigned int size, AllocType type)
         unsigned int *large = (unsigned int *)HeapAlloc(g_rva0130E9C4, g_rva0130E9F8 ? 8 : 0, size + 4);
         *large = size;
         LeaveCriticalSection(g_rva0130E9D8);
-        if (g_rva0130E9F9) rva008833C0((void *)0x0130EA10, type, large + 1, size, 0);
+        if (g_rva0130E9F9) rva008833C0(&g_bfmeRva0130EA10Owner, type, large + 1, size, 0);
         return large + 1;
     }
     unsigned int index = (size - 1) >> 2;
@@ -57,12 +59,12 @@ void *MemoryPool::_Allocate(unsigned int size, AllocType type)
     if (g_rva0130E9D0[index]) g_rva0130E9D0[index]->m_field00 = &block->m_field04;
     block->m_field00 = &g_rva0130E9D0[index];
     Rva00882BA0Block **heads = g_rva0130E9D0;
-    int guardWords = Rva0130EA00GuardWords;
     heads[index] = block;
+    int guardWords = Rva0130EA00GuardWords;
     block->m_size08 = size;
     if (guardWords) memset32((char *)(block + 1) + size, 0x0BADF00D, guardWords * 4);
     if (g_rva0130E9F8) memset(block + 1, 0, size);
     LeaveCriticalSection(g_rva0130E9D8);
-    if (g_rva0130E9F9) rva008833C0((void *)0x0130EA10, type, block + 1, size, 0);
+    if (g_rva0130E9F9) rva008833C0(&g_bfmeRva0130EA10Owner, type, block + 1, size, 0);
     return block + 1;
 }
