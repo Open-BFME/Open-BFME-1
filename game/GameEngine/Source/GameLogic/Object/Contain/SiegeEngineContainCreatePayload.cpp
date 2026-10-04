@@ -18,7 +18,7 @@ class Team;
 class Player { public: char pad[0x230]; Team* team230; };
 class Object;
 extern void j_0002852e();
-class PayloadApply0022BA20 { public: void apply(int,int); };
+class PayloadApply0022BA20 { public: };
 class PayloadContain0022BA20 { public:
  virtual void slot0();
  virtual void slot1();
@@ -102,15 +102,8 @@ class PayloadContain0022BA20 { public:
 };
 class Object { public:
  Player* getControllingPlayer() const;
- void apply(int first,int second) {
-  typedef void (PayloadApply0022BA20::*Call)(int,int);
-  union { void (*raw)(); Call member; } call;
-  call.raw=j_0002852e;
-  (((PayloadApply0022BA20*)this)->*call.member)(first,second);
- }
  char pad000[0x84]; AsciiString m_name; char pad088[0x174]; PayloadContain0022BA20* m_contain;
 };
-#pragma comment(linker,"/alternatename:?apply@Object@@QAEXHH@Z=?j_0002852e@@YAXXZ")
 class ThingTemplate { public: char pad[0x2f4]; float field2f4; };
 template<int N> class BitFlags { public: _STL::bitset<N> words; };
 class ThingFactory { public:
@@ -118,18 +111,20 @@ class ThingFactory { public:
  Object* newObject(const ThingTemplate*,Team*,const BitFlags<86>&,unsigned);
 };
 extern ThingFactory* TheThingFactory;
-#pragma comment(linker,"/alternatename:?findTemplate@ThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
+extern void j_00028560();
+extern void j_0003a355();
 struct PayloadData0022BA20 { char pad[0x22c]; AsciiString field22c; int field230; };
 class TransportContain { protected: virtual void createPayload(); };
 class SiegeEngineContain : public TransportContain { protected:
  virtual void createPayload();
  PayloadData0022BA20* data; Object* object;
 };
-#pragma comment(linker,"/alternatename:?createPayload@TransportContain@@MAEXXZ=?j_0003a355@@YAXXZ")
 void SiegeEngineContain::createPayload() {
  PayloadData0022BA20* self=data;
  int count=self->field230;
- const ThingTemplate* payloadTemplate=self->field22c.isEmpty() ? 0 : TheThingFactory->findTemplate(self->field22c);
+ typedef const ThingTemplate* (ThingFactory::*Find)(const AsciiString&);
+ union { void (*fn)(); Find call; } find={j_00028560};
+ const ThingTemplate* payloadTemplate=self->field22c.isEmpty() ? 0 : (TheThingFactory->*find.call)(self->field22c);
  Object* owner=object;
  PayloadContain0022BA20* contain=owner->m_contain;
  if(contain && payloadTemplate) {
@@ -138,9 +133,11 @@ void SiegeEngineContain::createPayload() {
    BitFlags<86> status;
    Team* team=owner->getControllingPlayer()->team230;
    Object* payload=TheThingFactory->newObject(payloadTemplate,team,status,0);
+   typedef void (PayloadApply0022BA20::*Apply)(int,int);
+   union { void (*fn)(); Apply call; } applyCall={j_0002852e};
    if(contain->isValidContainerFor(payload,true)) {
     int value=(int)(payloadTemplate->field2f4*5.0f);
-    if(value>0) payload->apply(207,value);
+    if(value>0) (((PayloadApply0022BA20*)payload)->*applyCall.call)(207,value);
     if(!owner->m_name.isEmpty()) {
      char name[256]; sprintf(name,"%s%d",owner->m_name.str(),i);
      payload->m_name=AsciiString(name);
@@ -150,5 +147,7 @@ void SiegeEngineContain::createPayload() {
   }
   contain->enableLoadSounds(true);
  }
- TransportContain::createPayload();
+ typedef void (TransportContain::*Base)();
+ union { void (*fn)(); Base call; } base={j_0003a355};
+ (this->*base.call)();
 }
