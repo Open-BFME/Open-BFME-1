@@ -1211,13 +1211,15 @@ const StringClass& ShaderClass::Get_Description(StringClass& str) const
 
 	switch (Get_Primary_Gradient()) {
  	case GRADIENT_DISABLE: str+="GRADIENT_DISABLE | "; break;
-	case GRADIENT_MODULATE: str+="GRADIENT_MODULATE | "; break;
+	// Retail's jump table at VA 0x00D11FA0 sends value 6 to the "GRADIENT_MODULATE | " block
+	// (laid out second) and value 1 to the "GRADIENT_MODULATE_OR_2X | " block (laid out last,
+	// string at VA 0x0113A99C).
+	case 6: str+="GRADIENT_MODULATE | "; break;
 	case GRADIENT_ADD: str+="GRADIENT_ADD | "; break;
 	case GRADIENT_BUMPENVMAP: str+="GRADIENT_BUMPENVMAP | "; break;
 	case GRADIENT_BUMPENVMAPLUMINANCE: str+="GRADIENT_BUMPENVMAPLUMINANCE | "; break;
 	case GRADIENT_MODULATE2X: str+="GRADIENT_MODULATE2X | "; break;
-	// BFME retail case 6, witnessed by the string at VA 0x0113A99C.
-	case 6: str+="GRADIENT_MODULATE_OR_2X | "; break;
+	case GRADIENT_MODULATE: str+="GRADIENT_MODULATE_OR_2X | "; break;
 	}
 
 	switch (Get_Secondary_Gradient()) {
