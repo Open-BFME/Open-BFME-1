@@ -1,0 +1,1 @@
+0x00659670	EA chain label LivingWorldLogic::GameLogic_tacticalBattleComplete refuted: ZH twin GameSpyPSMessageQueueInterface::parsePlayerKVPairs in same file (3 refs), 6+ C++ callers all WOL/GameSpy login-persistence code, body parses GameSpy PS wire keys (locale/battle/WinRow/challenge/...); EA LivingWorldLogic file rows cluster at 0x003BCxxx, this name row is a lone outlier
