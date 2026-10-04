@@ -9,13 +9,12 @@ enum NameKeyType
 	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
-#pragma comment(linker, "/alternatename:?notify@Module@@QAEXPAX@Z=?j_00008f7b@@YAXXZ")
+extern void j_00008f7b();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module
 {
 public:
-	void notify(void *argument);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -69,8 +68,10 @@ void Gen_00374800::check(void *argument)
 				TheNameKeyGenerator->nameToKey("CastleBehavior");
 			NameKeyType lookup = key;
 			Module *module = object->findModule(lookup);
-			if (module != 0)
-				module->notify(argument);
+			if (module != 0) {
+				union { void (*fn)(); void (Module::*call)(void *); } notify = { j_00008f7b };
+				(module->*notify.call)(argument);
+			}
 		}
 	}
 }
