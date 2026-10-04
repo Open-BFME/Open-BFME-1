@@ -118,10 +118,6 @@ public:
 class Image
 {
 public:
-    AsciiString getFilename(void) const
-    {
-        return m_filename;
-    }
 	void load(void);
 
 private:
@@ -136,31 +132,36 @@ extern void Rva009EBAC0(int value);
 
 class Rva009EB960;
 extern Rva009EB960 *Rva0134FAA0;
-#define FirstUpdateSubsystem ((void *)Rva0134FAA0)
+static inline void *FirstUpdateSubsystemView() { return (void *)Rva0134FAA0; }
 
 // The retail Image getter is the 32-byte StringBase<char> copy accessor at
 // 0x00520640, reached by its existing incremental-link thunk 0x000336AE.
-#pragma comment(linker, "/alternatename:?getFilename@Image@@QBE?AVAsciiString@@XZ=?j_000336ae@@YAXXZ")
+extern void j_000336ae(void);
 
 // ?load@Image@@QAEXXZ
 void Image::load(void)
 {
-    Bool reject = bfmeIsEmpty(getFilename()) ||
+	// Reached through retail's incremental-link thunk: the copy accessor is
+	// not reproduced here, so each call site carries the thunk's real address.
+	typedef AsciiString (Image::*Fn)(void) const;
+	union { void (*fn)(); Fn call; } u = { j_000336ae };
+
+    Bool reject = bfmeIsEmpty((this->*u.call)()) ||
         m_rawTextureData != 0 || (m_status & 2) != 0;
     if (reject)
         return;
 
 	BFMEWaterTrackTextureHandle texture =
-		BFMEGetWaterTrackTexture(bfmeString(getFilename()), 1, 0);
+		BFMEGetWaterTrackTexture(bfmeString((this->*u.call)()), 1, 0);
 
 	((ShroudTexture *)&texture)->getFilter()->m_vAddress = 1;
 	((ShroudTexture *)&texture)->getFilter()->m_uAddress = 1;
 	((Gen_0090E810 *)&texture)->bfmeSetFlag(1);
 
-	if (FirstUpdateSubsystem)
+	if (FirstUpdateSubsystemView())
 	{
 		BfmeList950B assets;
-		(*(AssetList *)&assets) << getFilename();
+		(*(AssetList *)&assets) << (this->*u.call)();
 		Rva009EBAC0((int)&assets);
 	}
 }
