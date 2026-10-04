@@ -30,10 +30,15 @@ public:
 	int m_bfmeCount;
 };
 
+// Retail's body at 0x007F76D0 is the matched ret-8 ?bfmeAt@@YG...; callers load
+// ECX with the host and push the vector and index, so the call goes through a
+// thiscall member pointer bound to that body.
+int * __stdcall bfmeAt( BfmeVecCZ *vector, int index );
+
 class Rva00801670Host
 {
 public:
-	int *rva007F76D0( BfmeVecCZ *vector, int index );
+	typedef int *(Rva00801670Host::*AtThunk)( BfmeVecCZ *, int );
 
 	unsigned char m_unreconstructed00[0x2A8];
 	BfmeVecCZ m_gameKeys;
@@ -109,7 +114,8 @@ void Rva00801EC0Owner::measure( Rva007FBEF0GameRecord *rec )
 	locals.buffer->addPadded( count * 4 );
 	for( i = 0; i < count; i++ )
 	{
-		slot = m_host->rva007F76D0( vector, i );
+		union { int * (__stdcall *fn)( BfmeVecCZ *, int ); Rva00801670Host::AtThunk call; } at = { bfmeAt };
+		slot = (m_host->*at.call)( vector, i );
 		locals.buf[0] = 0;
 		if( rec->Rva007FBF40( (const char *)slot, locals.buf, 0x40 ) )
 			locals.buffer->addString( locals.buf );
@@ -138,7 +144,8 @@ void Rva00801EC0Owner::rva00801ec0( Rva007FBEF0GameRecord *rec )
 
 	for( i = 0; i < count; i++ )
 	{
-		key = (char *)m_host->rva007F76D0( vector, i );
+		union { int * (__stdcall *fn)( BfmeVecCZ *, int ); Rva00801670Host::AtThunk call; } at = { bfmeAt };
+		key = (char *)(m_host->*at.call)( vector, i );
 		buf[0] = 0;
 		if( !rec->Rva007FBF40( key, buf, 0x40 ) )
 			m_keys[i] = 0;
