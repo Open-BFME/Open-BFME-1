@@ -43,6 +43,8 @@ public:
 };
 
 
+extern void j_000193bc();
+
 // RVA 0x007B4180: BFME decal overload; exact public identity is unproven.
 class Rva007B4180Manager {
 public:
@@ -61,9 +63,12 @@ W3DProjectedShadow *Rva007B4180Manager::addDecal(RenderObjClass *robj, BFMEShado
   if (sizeY==0.0f) sizeY=box.Extent.Y*2.0f;
  }
  BFMEShadowManagerLayout *manager=(BFMEShadowManagerLayout*)this;
- if (simple) { return manager->addShadowCore(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+12),true,0,false); }
- else if (projected) { return manager->addShadowCore(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+28),false,(Drawable*)manager->getTexture(info->name+64),true); }
- else { return manager->addShadowCore(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+8),false,0,false); }
+ // Retail calls the 13-argument core through ILT 0x000193BC (?j_000193bc@@YAXXZ).
+ union CoreRoute { void (*raw)(); W3DProjectedShadow *(BFMEShadowManagerLayout::*member)(W3DShadowTexture *,RenderObjClass *,ShadowType,Bool,Real,Real,Int,Real,Real,W3DProjectedShadow **,Bool,Drawable *,Bool); } route;
+ route.raw = j_000193bc;
+ if (simple) { return (manager->*route.member)(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+12),true,0,false); }
+ else if (projected) { return (manager->*route.member)(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+28),false,(Drawable*)manager->getTexture(info->name+64),true); }
+ else { return (manager->*route.member)(manager->getTexture(info->name),robj,info->type,info->allowWorldAlign,sizeX,sizeY,flags,info->offsetX,info->offsetY,(W3DProjectedShadow**)((char*)this+8),false,0,false); }
 }
 
 
