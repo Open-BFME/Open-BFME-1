@@ -11,8 +11,11 @@
 // for its size to be pushed as a byte, and those two facts together are the
 // seven bytes it saves.
 
-extern "C" const void *bfmeVftW3DGameWindow[];
-#pragma comment(linker, "/alternatename:_bfmeVftW3DGameWindow=??_7W3DGameWindow@@6B@")
+// Retail vtable 0x010F7160 is W3DGameWindow's, i.e. ??_7W3DGameWindow@@6B@
+// (targets/game/reverse/dir32_addresses.csv row 5785). The declaration
+// carries no C++ name: __identifier spells the retail symbol exactly, so the
+// store below references the defining name.
+extern "C" int __identifier("??_7W3DGameWindow@@6B@")[];
 
 class BfmeMadeBase_0045DC70
 {
@@ -78,7 +81,7 @@ BfmeMade_0045DC70 * __stdcall bfmeMake_0045DC70(void *owner)
 __declspec(noinline) BfmeMade_0045DC70::BfmeMade_0045DC70(void *owner)
 	: BfmeMadeBase_0045DC70(owner)
 {
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftW3DGameWindow;
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7W3DGameWindow@@6B@");
 	m_bfmeTail = 0;
 }
 
