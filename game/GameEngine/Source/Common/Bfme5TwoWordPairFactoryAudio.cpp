@@ -69,6 +69,10 @@ struct Rva0013F8B0Pair
 };
 
 // ?rva0013f8b0@@YA?AURva0013F8B0Pair@@ABVAsciiString@@ABVAudioEventRTS@@@Z
+// Retail FuncInfo 0x00DF1F6C state 0 owns the cleanup at 0x00C039D0:
+// if the second copy throws, destroy the first member through the hidden
+// return pointer at [ebp+4]. This C++ return emits that exact 8-byte action;
+// the unwind-state pin selects $L385 rather than the local-pointer twins.
 Rva0013F8B0Pair __cdecl rva0013f8b0(
 	const AsciiString &first,
 	const AudioEventRTS &second)
