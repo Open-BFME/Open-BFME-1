@@ -13,7 +13,9 @@ typedef unsigned int ObjectID;
 
 class ExperienceLevelData;
 
-#pragma comment(linker, "/alternatename:?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z=?j_0002b7f6@@YAXXZ")
+// Retail routes this member call through the ILT thunk at 0x0002B7F6, so the
+// body names the thunk directly instead of aliasing a stand-in definition.
+extern void j_0002b7f6();
 
 #include "../GameLogic/Object/object.h"
 
@@ -51,8 +53,6 @@ struct PendingExperienceLevel
 
 class Gen0002B7F6
 {
-public:
-	void call( ExperienceLevelData *level, Object *object, Bool showEffect );
 };
 
 class ExperienceLevelSystem
@@ -66,12 +66,15 @@ public:
 
 void ExperienceLevelSystem::update()
 {
+	typedef void (Gen0002B7F6::*Fn)( ExperienceLevelData *level, Object *object, Bool showEffect );
+	union { void (*fn)(); Fn call; } u = { j_0002b7f6 };
+
 	for ( _STL::list<PendingExperienceLevel>::iterator it = m_pending.begin();
 		it != m_pending.end(); ++it )
 	{
 		Object *object = findObjectByID( TheGameLogic, (*it).m_objectID );
 		if ( object && !(object->m_privateStatus & 1) )
-			((Gen0002B7F6 *)this)->call(
+			(((Gen0002B7F6 *)this)->*u.call)(
 				(*it).m_level, object, (*it).m_showEffect );
 	}
 
