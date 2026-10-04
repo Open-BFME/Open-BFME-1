@@ -35,3 +35,25 @@ WideAllocPtr and WideFreePtr; after the one-file edit it reports LINKS,
 0 -> 168 LINKED bytes, 1/1 clean, exit 0. This is a scoped census preview.
 The source and both owner files are hash-identical to the publication base.
 The hash-bound correction entry covers only this precise AptArray edit.
+
+## Three matching operator-new copies
+
+BfmeThingBEConstructor.cpp, Rva008930C0AptLookup.cpp and AptDisplayList.cpp
+all emit the same 33-byte BfmeNestedBE::operator new COMDAT. The fresh census
+has exactly these three copies, with digest ae8d8dc4795c and the constructor
+TU first in link order. Each has DIR32 relocation +11 to WideAllocPtr and
+REL32 relocation +22 to the existing bfmePush. Retail independently calls
+VA 0x01337828 at RVAs 0x008BE3CC, 0x0089310F and 0x008BE5BE respectively.
+These three source/COFF views therefore refer to the same already-owned cell.
+
+Changing just AptDisplayList leaves its unpinned COMDAT different from the
+selected old copy. Change the allocator spelling consistently in all three
+copies, keeping the same types and code. Afterward all three COMDATs have
+digest d7530690a1f4: the same 33 raw bytes, the same bfmePush relocation,
+and only DIR32 +11 changed to the canonical allocator name.
+All five matched functions (848
+bytes of existing source coverage) and eight DIR32 references verify.
+The joint same-census preview then makes AptDisplayList LINK, adding 185
+preview-linked bytes with no COMDAT blocker. The other two sources retain
+unrelated operator-delete/bfmeLinked1284 blockers and add no LINKED bytes.
+Each hash-bound correction entry covers only its respective exact source edit.

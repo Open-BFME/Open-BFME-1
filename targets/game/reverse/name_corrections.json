@@ -16768,5 +16768,35 @@
   "after_sha256": "319f69d23f1a69564d3168ac6f57dc6447bc4d62f6f15d67fa39c9cb010bf64b",
   "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
   "reason": "Retail allocator call at RVA008B8DA5 uses shared cell VA01337828, whose existing singleton matched data owner is Rva008C5D70Alloc. WideAllocPtr is an unresolved reference view, not a separate or independently proven EA identity. Use the existing owner without adding storage, pins or aliases."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeThingBEConstructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeThingBEConstructor.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "79cf11ec8094c28ff484b07793f3ac7a014a854b1ad901f463e83dd0ba357f57",
+  "after_sha256": "477be17ba198ded84f2bbf9bcfee97307059a7a9330d355a3b883f0937246824",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
+  "reason": "The native allocator call reaches shared cell VA01337828, whose existing singleton matched owner is Rva008C5D70Alloc. Three identical BfmeNestedBE operator-new COMDAT copies must consistently use that owner spelling; no new storage, pins or semantic identity are introduced."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "c2119524e208ff71ac3551fdbcb24c1f2e6545a6757a75e55521cee861f6516e",
+  "after_sha256": "3aaf21b629c7cd420d4e76d135c53d8608d1a7ef455337d3e1a340fc93bce709",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
+  "reason": "The native allocator call reaches shared cell VA01337828, whose existing singleton matched owner is Rva008C5D70Alloc. Three identical BfmeNestedBE operator-new COMDAT copies must consistently use that owner spelling; no new storage, pins or semantic identity are introduced."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/AptDisplayList.cpp",
+  "new_path": "game/Libraries/Source/Apt/AptDisplayList.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "f8d0f6442c8e891ebf7f5391dfe1f19dd11fc827886c87fc3239996ff5a72bde",
+  "after_sha256": "2bb76972cbb242f610a46fda457c577c32043a27e5e0230ceccbaaf02a557562",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
+  "reason": "The native allocator call reaches shared cell VA01337828, whose existing singleton matched owner is Rva008C5D70Alloc. Three identical BfmeNestedBE operator-new COMDAT copies must consistently use that owner spelling; no new storage, pins or semantic identity are introduced."
  }
 ]

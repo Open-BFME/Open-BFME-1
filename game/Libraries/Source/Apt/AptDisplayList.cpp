@@ -1,4 +1,4 @@
-extern void *(*WideAllocPtr)(unsigned int bytes);
+extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 // Defining name at 0x00897300: void __cdecl bfmePush(BfmeItemDX *), defined in
 // game/GameEngine/Source/Common/Bfme5FiftyFour.cpp.
 class BfmeItemDX;
@@ -12,7 +12,7 @@ public:
 
 	void *operator new(unsigned int bytes)
 	{
-		char *raw = (char *)WideAllocPtr(bytes + 8);
+		char *raw = (char *)Rva008C5D70Alloc(bytes + 8);
 		char *block = raw + 8;
 		bfmePush((BfmeItemDX *)block);
 		return block;
