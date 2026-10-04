@@ -285,7 +285,9 @@ public:
 	//yet, and there's stuff being done inside of setTeam() that cares.
 	Bool areModulesReady() const { return m_modulesReady; }
 
-	BehaviorModule** getBehaviorModules() const { return m_behaviors; }
+	// Retail's Object::getBehaviorModules is `mov eax,[ecx+0x1F0]` (bfme_layout m_behaviors zh +0x18c -> bfme +0x1f0, 15/16 votes;
+	// 7-byte getters at 0x18C0F0/0x0C3BF0); m_behaviors sits at +0x18c here, so only the accessor reads retail's offset.
+	BehaviorModule** getBehaviorModules() const { return (BehaviorModule**)*(void* const*)((const char*)this + 0x1F0); }
 
 	// Retail's Object::getBodyModule inlines `mov eax,[ecx+0x200]` (matched localApplyBattlePlanBonusesToObject;
 	// ledger pins m_contain@+0x1FC, m_ai@+0x204); m_body sits at +0x194 here, so only the accessor reads retail's offset.
