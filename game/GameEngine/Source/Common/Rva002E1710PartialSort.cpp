@@ -23,10 +23,19 @@ struct Gen002E0D70Rec
 	char m_byte;
 };
 
-void gen002E0CD0(void *first, void *last, void *compare, int zero,
-	int alsoZero);
+// Retail's call sites reach both bodies through their own incremental-link
+// ILTs, which are defined by the matched thunk rows: ILT 0x00024DD9 jumps to the
+// make-heap body 0x002E0CD0 and ILT 0x0000C437 jumps to the pop-heap body
+// 0x002E0BC0.  Referencing those thunks keeps the call displacements at the
+// addresses retail actually encodes, and it keeps the observed stack shapes
+// (five words for the make-heap call, the copied twelve-byte record plus six
+// words for the pop-heap call) which the four leading zero words prove.
+extern void j_00024dd9();
+extern void j_0000c437();
 
-void gen002E0BC0(void *first, Gen002E0D70Rec *last,
+typedef void (__cdecl *MakeHeapCall)(void *first, void *last, void *compare,
+	int zero, int alsoZero);
+typedef void (__cdecl *PopHeapCall)(void *first, Gen002E0D70Rec *last,
 	Gen002E0D70Rec *result, Gen002E0D70Rec value, void *compare, int zero);
 
 void bfmeSortVOZ(void *first, void *middle, void *compare);
@@ -40,12 +49,14 @@ void rva002E1710PartialSort(void *firstArgument, void *middleArgument,
 	Gen002E0D70Rec *last = (Gen002E0D70Rec *)lastArgument;
 	void *compare = compareArgument;
 
-	gen002E0CD0(first, middle, compare, 0, 0);
+	MakeHeapCall makeHeap = (MakeHeapCall)j_00024dd9;
+	makeHeap(first, middle, compare, 0, 0);
+	PopHeapCall popHeap = (PopHeapCall)j_0000c437;
 	for (Gen002E0D70Rec *i = middle; i < last; ++i)
 	{
 		if (i->m_first < first->m_first)
 		{
-			gen002E0BC0(first, middle, i, *i, compare, 0);
+			popHeap(first, middle, i, *i, compare, 0);
 		}
 	}
 	bfmeSortVOZ(first, middle, compare);

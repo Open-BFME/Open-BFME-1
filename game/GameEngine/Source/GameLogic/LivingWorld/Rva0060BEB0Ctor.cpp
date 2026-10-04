@@ -14,11 +14,21 @@
 // them VC7.1 hoists the destructor receiver above the vtable store and swaps
 // two instructions.
 
+// Retail calls the base constructor through ILT 0x0001BD5B, whose matched row
+// is ?j_0001bd5b@@YAXXZ in game/gen_small/thunks_013.cpp; the ILT jumps to the
+// 252-byte body at 0x0061DA30.  The by-value AsciiString argument is copied to a
+// stack temporary first, exactly as the base-constructor call spells it, so the
+// call is made through the ILT name with a member-pointer cast to keep the
+// observed receiver and argument shape.
+extern void j_0001bd5b();
+
 class Rva0061DA30Base
 {
 public:
-	Rva0061DA30Base( AsciiString name );
+	void rva0061da30BaseConstructor( AsciiString name );
 };
+
+typedef void (Rva0061DA30Base::*BaseConstructorCall)( AsciiString name );
 
 extern int g_Rva0060BEB0VTable;
 
@@ -36,8 +46,10 @@ private:
 };
 
 Rva0060BEB0Object::Rva0060BEB0Object( AsciiString name )
-	: Rva0061DA30Base( name )
 {
+	union { void (__cdecl *raw)(); BaseConstructorCall member; } base;
+	base.raw = j_0001bd5b;
+	( static_cast<Rva0061DA30Base *>( this )->*base.member )( name );
 	m_vftable = &g_Rva0060BEB0VTable;
 	m_fieldA0 = 0;
 	m_fieldA4 = 0;
