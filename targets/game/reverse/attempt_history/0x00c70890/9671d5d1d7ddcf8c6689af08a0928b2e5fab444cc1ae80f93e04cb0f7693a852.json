@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9671d5d1d7ddcf8c6689af08a0928b2e5fab444cc1ae80f93e04cb0f7693a852",
+  "symbol": "_$E2",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// _$E2\n// partial score=1.0 date=2026-10-04\nstruct Rva00C70890Element { char storage[12]; ~Rva00C70890Element(); };\nRva00C70890Element Rva012F6E50Array[30];\n"
+}
