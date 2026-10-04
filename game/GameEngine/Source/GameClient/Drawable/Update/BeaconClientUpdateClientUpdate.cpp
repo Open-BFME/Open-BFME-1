@@ -298,7 +298,6 @@ static ParticleSystemHandle createParticleSystem( Drawable *draw )
 
 	@ai-generated
 */
-// ?clientUpdate@BeaconClientUpdate@@UAEXXZ present-unmatched
 void BeaconClientUpdate::clientUpdate( void )
 {
 	Drawable *draw = getDrawable();
