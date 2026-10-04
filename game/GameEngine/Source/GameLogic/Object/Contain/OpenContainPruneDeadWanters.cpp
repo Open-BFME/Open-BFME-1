@@ -13,12 +13,7 @@ typedef int ObjectID;
 class Object
 {
 public:
-    bool isEffectivelyDead() const
-    {
-        return (m_privateStatus & 1) != 0;
-    }
-
-private:
+    // Retail inlines isEffectivelyDead: Object +0x344, bit 0.
     unsigned char m_padding00[0x344];
     unsigned char m_privateStatus;
 };
@@ -91,7 +86,7 @@ void OpenContain::pruneDeadWanters()
     {
         ObjectID id = (*it).first;
         Object *obj = TheGameLogic->findObjectByID(id);
-        if (obj == 0 || obj->isEffectivelyDead())
+        if (obj == 0 || (obj->m_privateStatus & 1) != 0)
         {
             ObjectEnterExitMap::iterator tmp = it;
             ++it;

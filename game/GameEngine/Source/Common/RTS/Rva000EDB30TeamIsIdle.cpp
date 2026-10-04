@@ -34,11 +34,6 @@ public:
 		return *(AIUpdateInterface *const *)((const char *)this + 0x204);
 	}
 
-	Bool isEffectivelyDead() const
-	{
-		return (*(const unsigned char *)((const char *)this + 0x344) & 1) != 0;
-	}
-
 	unsigned char m_tail[0x2c0];
 };
 
@@ -116,7 +111,8 @@ Bool Rva000EDB30Team::isIdle() const
 		AIUpdateInterface *ai = object->getAIUpdateInterface();
 		if (ai == 0)
 			continue;
-		if (object->isEffectivelyDead())
+		// Retail inlines isEffectivelyDead: Object +0x344, bit 0.
+		if ((*(const unsigned char *)((const char *)object + 0x344) & 1) != 0)
 			continue;
 		if (!ai->isIdle())
 			return false;
