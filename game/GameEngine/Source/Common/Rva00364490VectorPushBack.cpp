@@ -5,6 +5,10 @@ struct Rva00364490Element
 	int m_value;
 };
 
+// Retail ILT thunk 0x0002634b: _STL::vector<>::_M_insert_overflow is called
+// through it, so the call is written against the thunk directly.
+extern void j_0002634b();
+
 namespace _STL
 {
 struct __false_type
@@ -42,13 +46,14 @@ void vector<Type, Allocator>::push_back(const Type *value)
 	}
 	else
 	{
-		_M_insert_overflow(m_finish, *value,
+		typedef void (vector<Type, Allocator>::*InsertOverflow)(
+			Type *, const Type &, const __false_type &, unsigned int, bool);
+		union { void (*fn)(); InsertOverflow call; } u = { j_0002634b };
+		(this->*u.call)(m_finish, *value,
 			reinterpret_cast<const __false_type &>(value), 1, true);
 	}
 }
 }
-
-#pragma comment(linker, "/alternatename:?_M_insert_overflow@?$vector@URva00364490Element@@V?$allocator@URva00364490Element@@@_STL@@@_STL@@IAEXPAURva00364490Element@@ABU3@ABU__false_type@2@I_N@Z=?j_0002634b@@YAXXZ")
 
 template class _STL::vector<Rva00364490Element,
 	_STL::allocator<Rva00364490Element> >;
