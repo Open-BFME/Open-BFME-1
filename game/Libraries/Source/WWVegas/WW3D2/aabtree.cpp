@@ -958,57 +958,7 @@ bool AABTreeClass::Cast_AABox_To_Polys(CullNodeStruct * node,AABoxCollisionTestC
  * HISTORY:                                                                                    *
  *   6/19/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?AABTreeClass::Cast_OBBox_To_Polys present-unmatched
-bool AABTreeClass::Cast_OBBox_To_Polys(CullNodeStruct * node,OBBoxCollisionTestClass & boxtest)
-{
-	int polycount = node->Get_Poly_Count();
-	int poly0 = node->Get_Poly0();
-
-	if (polycount > 0) {
-		/*
-		** Simply loop through the polys in this node, checking each for collision
-		*/	  
-		TriClass tri;
-
-		const Vector3 * loc = Mesh->Get_Vertex_Array();
-		const TriIndex * polyverts = Mesh->Get_Polygon_Array();
-#if (!OPTIMIZE_PLANEEQ_RAM)
-		const Vector4 * norms = Mesh->Get_Plane_Array();
-#endif
-
-		int polyhit = -1;
-
-		for (int poly_counter=0; poly_counter<polycount; poly_counter++) {
-
-			int poly_index = PolyIndices[poly0 + poly_counter];
-
-			tri.V[0] = &(loc[ polyverts[poly_index][0] ]);
-			tri.V[1] = &(loc[ polyverts[poly_index][1] ]);
-			tri.V[2] = &(loc[ polyverts[poly_index][2] ]);
-#if (!OPTIMIZE_PLANEEQ_RAM)
-			tri.N = (Vector3*)&(norms[poly_index]);
-#else
-			Vector3 normal;
-			tri.N = &normal;
-			tri.Compute_Normal();
-#endif
-
-			if (CollisionMath::Collide(boxtest.Box,boxtest.Move,tri,Vector3(0,0,0),boxtest.Result)) {
-				polyhit = poly_index;
-			}
-
-			if (boxtest.Result->StartBad) {
-				return true;
-			}
-		}
-		if (polyhit != -1) {
-			boxtest.Result->SurfaceType = Mesh->Get_Poly_Surface_Type (polyhit);
-			return true;
-		}
-	}
-	return false;
-
-}
+// AABTreeClass::Cast_OBBox_To_Polys is defined by its matched owner TU (AABTreeClass_Cast_OBBox_To_Polys_Thunk.cpp).
 
 
 /***********************************************************************************************
@@ -1023,49 +973,7 @@ bool AABTreeClass::Cast_OBBox_To_Polys(CullNodeStruct * node,OBBoxCollisionTestC
  * HISTORY:                                                                                    *
  *   1/20/00    gth : Created.                                                                 *
  *=============================================================================================*/
-bool AABTreeClass::Intersect_OBBox_With_Polys
-(
-	CullNodeStruct * node,
-	OBBoxIntersectionTestClass & test
-)
-{
-	int poly0 = node->Get_Poly0();
-	int polycount = node->Get_Poly_Count();
-
-	if (polycount > 0) {
-		/*
-		** Simply loop through the polys in this node, checking each for collision
-		*/	  
-		TriClass tri;
-
-		const Vector3 * loc = Mesh->Get_Vertex_Array();
-		const TriIndex * polyverts = Mesh->Get_Polygon_Array();
-#if (!OPTIMIZE_PLANEEQ_RAM)
-		const Vector4 * norms = Mesh->Get_Plane_Array();
-#endif
-
-		for (int poly_counter=0; poly_counter<polycount; poly_counter++) {
-
-			int poly_index = PolyIndices[poly0 + poly_counter];
-
-			tri.V[0] = &(loc[ polyverts[poly_index][0] ]);
-			tri.V[1] = &(loc[ polyverts[poly_index][1] ]);
-			tri.V[2] = &(loc[ polyverts[poly_index][2] ]);
-#if (!OPTIMIZE_PLANEEQ_RAM)
-			tri.N = (Vector3*)&(norms[poly_index]);
-#else
-			Vector3 normal;
-			tri.N = &normal;
-			tri.Compute_Normal();
-#endif
-
-			if (CollisionMath::Intersection_Test(test.Box,tri)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
+// AABTreeClass::Intersect_OBBox_With_Polys is defined by its matched owner TU (AABTreeClass_Intersect_OBBox_With_Polys_Thunk.cpp).
 
 
 /***********************************************************************************************
