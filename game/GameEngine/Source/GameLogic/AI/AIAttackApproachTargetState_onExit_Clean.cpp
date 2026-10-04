@@ -160,7 +160,11 @@ public:
 };
 
 // ?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z
-#pragma comment(linker, "/alternatename:?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z=?onExit@BfmeAIAttackApproachTargetState@@UAEXW4StateExitType@@@Z")
+// The body is emitted under the TU-local Bfme view class, so the object's own
+// symbol is ?onExit@BfmeAIAttackApproachTargetState@@UAEXW4StateExitType@@@Z
+// and the ledger row records it as object-symbol=.  Retail reaches this body
+// through vftable 0x0109A4C0 slot 5 (a data blob), not by a named call, so no
+// caller needs the ?onExit@AIAttackApproachTargetState@... name to resolve.
 void BfmeAIAttackApproachTargetState::onExit(StateExitType status)
 {
 	BFMEApproachTargetFields *self = (BFMEApproachTargetFields *)this;
