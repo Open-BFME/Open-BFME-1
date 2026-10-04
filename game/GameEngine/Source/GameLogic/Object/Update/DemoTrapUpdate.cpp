@@ -38,14 +38,15 @@ public:
 template <int N>
 class BitFlags;
 
+// Retail ILT 0x4386 routes the const thiscall `Thing::isAboveTerrainOrWater`
+// returning bool; the call goes through it directly.
+extern void j_00004386();
+
 class Thing
 {
 public:
 	bool isAnyKindOf(const BitFlags<116> &) const;
-	bool isAboveTerrainOrWater() const;
 };
-
-#pragma comment(linker, "/alternatename:?isAboveTerrainOrWater@Thing@@QBE_NXZ=?j_00004386@@YAXXZ")
 
 class Object : public Thing
 {
@@ -222,7 +223,9 @@ UpdateSleepTime DemoTrapUpdate::update()
 				return UPDATE_SLEEP_NONE;
 			continue;
 		}
-		if (other->isAboveTerrainOrWater())
+		typedef bool (Thing::*AboveTerrainOrWater)() const;
+		union { void (*fn)(); AboveTerrainOrWater call; } aboveTerrainOrWater = { j_00004386 };
+		if ((other->*aboveTerrainOrWater.call)())
 			continue;
 		float distance = ((Gen_0016E370 *)me)->bfmeDistanceSquared((const BfmeSpotCN *)other);
 		if (distance <= data->m_triggerDetonationRange * data->m_triggerDetonationRange)
