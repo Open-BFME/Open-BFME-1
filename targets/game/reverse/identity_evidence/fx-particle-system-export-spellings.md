@@ -285,3 +285,38 @@ lower LINKED.
 | 255 | 0x0005C6C0 | `??0TextureLoadTaskListNodeClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/textureloader.cpp` |
 | 255 | 0x0005C6C0 | `??0_Bit_iterator_base@_STL@@QAE@XZ` | `game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp` |
 | 1638 | 0x0005CBA0 | `?getName@Object@@QBEABVAsciiString@@XZ` | `game/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToCarBombCrateCollide.cpp` |
+
+## 0x005BF290: CategoryModuleTemplate<1>'s scalar deleting destructor
+
+The 30-byte body at 0x005BF290 is
+
+```text
+56              push esi
+8BF1            mov esi,ecx
+E84CADA8FF      call 0x00049FE4
+F644240801      test byte [esp+8],1
+7409            jz +9
+56              push esi
+E8xxxxxxxx      call operator delete
+83C404          add esp,4
+8BC6            mov eax,esi
+5E              pop esi
+C20400          ret 4
+```
+
+ILT 0x00049FE4 is the export directory's entry for
+`??1?$CategoryModuleTemplate@$00@FXParticleSystem@@UAE@XZ` (ordinal 358, body
+0x005BF220). A scalar deleting destructor calls its own class's destructor,
+and there is no vptr store an inlined derived destructor would need, so the
+body is `??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z`. Its
+neighbours agree: 0x005BF200-0x005BF280 are that class's exported constructor,
+copy constructor, destructor and `operator=`, and 0x005BF2C0 is its `??_E`.
+
+The address also carried 120 rows naming other classes' scalar deleting
+destructors (ActiveBody, Drawable, BlowfishEngine, STLport pairs, ...), all in
+`fx_particle_system.cpp` with `object-symbol=` the CategoryModuleTemplate<1>
+label. Each of those classes' `??_G` calls its own destructor and, with no
+identical-COMDAT folding, lives at its own address. The 120 rows are retired;
+the kept row stays in the same source, so the file's claimed bytes do not
+change. `tools/delta_sources.py` finds one retail call site affected, the ILT
+thunk `?j_0002db8c@@YAXXZ`, which still byte-verifies.
