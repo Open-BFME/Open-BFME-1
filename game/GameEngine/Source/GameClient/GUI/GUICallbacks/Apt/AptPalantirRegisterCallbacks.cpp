@@ -2,8 +2,8 @@
 //
 // AptPalantir's one-time callback registration.  The callback names and
 // handlers are retained from the retail string/data cross-references; the
-// address-derived registration thunks are kept as call-site pins until their
-// owning WindowManager overloads acquire names.
+// address-derived registration thunks are named directly at the call sites, as
+// retail reaches them through ILT thunks.
 
 #include "../../../../inputs/reference/shims/stringinline/StringInline.h"
 
@@ -103,16 +103,13 @@ public:
 		int unknown1, int unknown2, int unknown3 ) = 0;
 	void registerAptCallback( const BFMERetailAsciiString &name,
 		BannerAptCallbackHolder callback );
-	void setupPalantir();
-	void registerPalantirCallback( const BFMERetailAsciiString &name,
-		PalantirCallbackHolder callback );
-	void registerPalantirPlayerSide( const BFMERetailAsciiString &name,
-		int unknown, PalantirPlayerSideHolder callback );
 };
 
-#pragma comment(linker, "/alternatename:?setupPalantir@WindowManager@@QAEXXZ=?j_00043ad6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?registerPalantirCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VPalantirCallbackHolder@@@Z=?j_00026328@@YAXXZ")
-#pragma comment(linker, "/alternatename:?registerPalantirPlayerSide@WindowManager@@QAEXABVBFMERetailAsciiString@@HVPalantirPlayerSideHolder@@@Z=?j_0003a0bc@@YAXXZ")
+// Retail calls these three registration entry points through ILT thunks, so the
+// call sites name the thunks directly instead of a member of WindowManager.
+extern void j_00043ad6();
+extern void j_00026328();
+extern void j_0003a0bc();
 
 extern WindowManager *g_rva012F19E8WindowManager;
 
@@ -163,7 +160,9 @@ void d_00565f30()
 	if( windowIndex == -1 )
 		return;
 
-	g_rva012F19E8WindowManager->setupPalantir();
+	typedef void (WindowManager::*SetupPalantirFn)();
+	union { void (*fn)(); SetupPalantirFn call; } setupPalantir = { j_00043ad6 };
+	(g_rva012F19E8WindowManager->*setupPalantir.call)();
 
 	if( g_rva012F19E8WindowManager )
 	{
@@ -241,38 +240,47 @@ void d_00565f30()
 	{
 		const char *playerSide = g_012B7D7C;
 		BFMERetailAsciiString name( playerSide );
-		g_rva012F19E8WindowManager->registerPalantirPlayerSide( name, 0,
+		typedef void (WindowManager::*RegisterPalantirPlayerSideFn)(
+			const BFMERetailAsciiString &, int, PalantirPlayerSideHolder );
+		union { void (*fn)(); RegisterPalantirPlayerSideFn call; }
+			registerPalantirPlayerSide = { j_0003a0bc };
+		(g_rva012F19E8WindowManager->*registerPalantirPlayerSide.call)( name, 0,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00415253 ) ) );
 	}
+
+	typedef void (WindowManager::*RegisterPalantirCallbackFn)(
+		const BFMERetailAsciiString &, PalantirCallbackHolder );
+	union { void (*fn)(); RegisterPalantirCallbackFn call; }
+		registerPalantirCallback = { j_00026328 };
 
 	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderRadar" );
-		g_rva012F19E8WindowManager->registerPalantirCallback( name,
+		(g_rva012F19E8WindowManager->*registerPalantirCallback.call)( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00444544 ) ) );
 	}
 	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderRadarViewBox" );
-		g_rva012F19E8WindowManager->registerPalantirCallback( name,
+		(g_rva012F19E8WindowManager->*registerPalantirCallback.call)( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00419501 ) ) );
 	}
 	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::ClipRadar" );
-		g_rva012F19E8WindowManager->registerPalantirCallback( name,
+		(g_rva012F19E8WindowManager->*registerPalantirCallback.call)( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0043E4E6 ) ) );
 	}
 	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderMovie" );
-		g_rva012F19E8WindowManager->registerPalantirCallback( name,
+		(g_rva012F19E8WindowManager->*registerPalantirCallback.call)( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0041A0F0 ) ) );
 	}
 	if( g_rva012F19E8WindowManager )
 	{
 		BFMERetailAsciiString name( "AptPalantir::RenderGlobe" );
-		g_rva012F19E8WindowManager->registerPalantirCallback( name,
+		(g_rva012F19E8WindowManager->*registerPalantirCallback.call)( name,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0042D09C ) ) );
 	}
 

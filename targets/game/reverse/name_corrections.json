@@ -17618,5 +17618,35 @@
   "after_sha256": "2bf68cfc3a03c4725f8cbc088417606a1d58088c98681a279f1d658d6e47c61d",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "old_name": "registerPalantirCallback",
+  "new_name": "j_00026328",
+  "before_sha256": "dacdb006836becefc32e9a03230cbf748cf328f94d97d1026c84b3b1523db033",
+  "after_sha256": "4107733f563c3a4959b003da21c60df99613bb0fea1027c7e01f428315234ca7",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "old_name": "registerPalantirPlayerSide",
+  "new_name": "j_0003a0bc",
+  "before_sha256": "dacdb006836becefc32e9a03230cbf748cf328f94d97d1026c84b3b1523db033",
+  "after_sha256": "4107733f563c3a4959b003da21c60df99613bb0fea1027c7e01f428315234ca7",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantirRegisterCallbacks.cpp",
+  "old_name": "setupPalantir",
+  "new_name": "j_00043ad6",
+  "before_sha256": "dacdb006836becefc32e9a03230cbf748cf328f94d97d1026c84b3b1523db033",
+  "after_sha256": "4107733f563c3a4959b003da21c60df99613bb0fea1027c7e01f428315234ca7",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
