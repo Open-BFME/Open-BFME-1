@@ -1,5 +1,5 @@
 // ?updateObjectReference@BfmeObjectReferenceStore@@QAEXPAVObject@@_N@Z
-// partial score=0.8561 date=2026-09-08
+// partial score=0.9091 date=2026-10-04
 // cl: /DNDEBUG /MD /EHsc
 // Reprobe 2026-09-28: exact 264B extent, 38 non-reloc differences and one
 // relocation-site drift; normalized shape 0.947, with a prologue register swap.
@@ -121,9 +121,7 @@ void BfmeObjectReferenceStore::updateObjectReference(Object *rawObject,
 		}
 	}
 
-	Player *player = 0;
-	if (m_mask != 0)
-		player = ThePlayers->getPlayer(m_mask);
+	Player *player = m_mask == 0 ? 0 : ThePlayers->getPlayer(m_mask);
 	if (!m_filter.accepts(object, player))
 		return;
 

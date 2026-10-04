@@ -1,5 +1,5 @@
 // ?W3DGadgetCheckBoxDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.996 date=2026-09-10
+// partial score=0.9963 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME-local reconstruction of W3DGadgetCheckBoxDraw, retail 0x0078FF40.
 // The draw-data arrays belong to GameWindow and are witnessed at +0x48,
