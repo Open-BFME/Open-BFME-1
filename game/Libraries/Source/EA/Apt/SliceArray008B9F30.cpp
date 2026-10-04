@@ -24,13 +24,16 @@ class BfmeN1242 { public:
 void *Rva008A90F0(unsigned bytes);
 // The constructor at 0x008B9C60 is pinned under this ABI view; new calls the landed 0x008A90F0.
 // The unwind funclet deletes through 0x008A9120, landed as Rva008A9120HeaderedDelete's operator.
-class ArrayValue008B9C60 : public AptValue { public:
+class Rva008A9120HeaderedDelete { public:
+  static void operator delete(void *p, unsigned n);
+};
+class ArrayValue008B9C60 : public AptValue, public Rva008A9120HeaderedDelete { public:
  ArrayValue008B9C60();
  char m_unmodelled08[0x24];
  static void *operator new(unsigned n) { return Rva008A90F0(n); }
- static void operator delete(void *p, unsigned n);
-};
-#pragma comment(linker, "/alternatename:??3ArrayValue008B9C60@@SAXPAXI@Z=??3Rva008A9120HeaderedDelete@@SAXPAXI@Z")
+ };
+// ArrayValue008B9C60 takes operator delete from Rva008A9120HeaderedDelete, so
+// the compiler's unwind funclet calls 0x008A9120 by that name directly.
 extern AptValue **g_bfmeArr1233;
 extern AptValue *g_bfmeFallbackDB;
 struct Rva008AE770Stack { int field00; };
