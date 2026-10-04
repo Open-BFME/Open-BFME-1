@@ -287,3 +287,17 @@ def test_real_body_0x000E27A0():
     assert len(rel32) == 30
     assert dir32 == [(0x3, "imm"), (0x7C, "mem-abs"), (0x265, "imm"), (0x28E, "imm")]
     assert {r["target"] for r in c["relocs"] if r["site"] == 0x7C} == {0x01358E54}
+
+
+def test_output_root_groups_preserve_independent_verdicts(tmp_path):
+    sources = ("game/gen_asm/a.asm", "game/masm_dumps/b.asm", "game/gen_small/dumps_000.cpp")
+    statuses = ("exact", "failed", "ambiguous")
+    summaries = [dict(source=source, symbol=f"body{i}", rva=i, size=1, status=status,
+                      rel32=0, dir32=0, ambiguous=0, unreached=0, tables=0,
+                      reasons="fixture" if status == "failed" else "", detail="")
+                 for i, (source, status) in enumerate(zip(sources, statuses))]
+    summary = D.write_outputs([], [], summaries, [], tmp_path)
+    assert summary["by_root"] == {"gen_asm": {"exact": 1}, "masm_dumps": {"failed": 1},
+                                  "other .asm": {"ambiguous": 1}}
+    assert summary["status"] == {"exact": 1, "failed": 1, "ambiguous": 1}
+    assert [row["status"] for row in summaries] == list(statuses)

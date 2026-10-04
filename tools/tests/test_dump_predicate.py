@@ -11,6 +11,7 @@ build.is_scaffold_row is the predicate and build.load_claim_rows serves the two
 answers. The guard at the bottom is the point of the exercise: it fails the next
 tool that decides dumpness from a path instead.
 """
+import ast
 import csv
 import importlib.util
 import re
@@ -157,6 +158,46 @@ ALLOWED = {
 }
 
 
+def path_predicate_offences(path, text):
+    """Only the diagnostic root-label helper may inspect this placement here.
+
+    Do not exempt dump_relocs.py as a whole: classification or claim logic in
+    that file must still use the shared ledger predicate.
+    """
+    allowed_lines = set()
+    if path.name == "dump_relocs.py":
+        for node in ast.parse(text).body:
+            if isinstance(node, ast.FunctionDef) and node.name == "dump_root":
+                allowed_lines.update(range(node.lineno, node.end_lineno + 1))
+    return [f"{path.name}:{number}: {line.strip()}"
+            for number, line in enumerate(text.splitlines(), 1)
+            if BY_PATH.search(line) and number not in allowed_lines]
+
+
+def test_diagnostic_exception_does_not_exempt_other_dump_predicates():
+    predicate = "source." + "startswith(" + repr("game/" + "gen_asm/") + ")"
+    helper = "def dump_root(source):\n    return " + predicate + "\n"
+    bad = "def is_claimed(source):\n    return " + predicate + "\n"
+    assert not path_predicate_offences(Path("dump_relocs.py"), helper)
+    assert len(path_predicate_offences(Path("dump_relocs.py"), helper + bad)) == 1
+    assert len(path_predicate_offences(Path("other.py"), helper)) == 1
+
+
+def test_dump_root_is_only_used_for_output_grouping():
+    tree = ast.parse((TOOLS / "dump_relocs.py").read_text(encoding="utf-8"))
+    # An exception for a placement label is not permission to use it as a
+    # claim predicate. Both current calls live solely in summary["by_root"].
+    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
+             and isinstance(node.func, ast.Name) and node.func.id == "dump_root"]
+    write = next(node for node in tree.body
+                 if isinstance(node, ast.FunctionDef) and node.name == "write_outputs")
+    groups = [value for node in ast.walk(write) if isinstance(node, ast.Dict)
+              for key, value in zip(node.keys, node.values)
+              if isinstance(key, ast.Constant) and key.value == "by_root"]
+    assert len(calls) == 2 and len(groups) == 1
+    assert all(call in list(ast.walk(groups[0])) for call in calls)
+
+
 def test_no_tool_decides_dumpness_by_source_path():
     """The fourth instance of this bug fails here instead of in the ledger.
 
@@ -168,9 +209,7 @@ def test_no_tool_decides_dumpness_by_source_path():
     for path in sorted(TOOLS.rglob("*.py")):
         if "__pycache__" in path.parts or path.name in ALLOWED:
             continue
-        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-            if BY_PATH.search(line):
-                offences.append(f"{path.relative_to(TOOLS.parent)}:{number}: {line.strip()}")
+        offences.extend(path_predicate_offences(path, path.read_text(encoding="utf-8")))
     assert not offences, (
         "a dump is a gen-dump note, never a directory -- 349 of them live in "
         "game/gen_small/dumps_000.cpp. Ask build.is_scaffold_row or "

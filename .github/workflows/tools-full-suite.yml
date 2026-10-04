@@ -6,8 +6,8 @@ name: Tools full test suite (nightly)
 # fixtures that assumed one OS, a test that leaked the real ledger into another,
 # and tools that drifted from a shared predicate). This runs the WHOLE suite on
 # a full checkout once a day and on demand, so drift surfaces within a day.
-# Tests that need Linux cgroup-v2 delegation or the Windows toolchain skip
-# themselves where the runner cannot provide them.
+# Tests needing Linux cgroup-v2 delegation skip when unavailable. The committed
+# Windows toolchain is exercised through Wine, as in link-census.yml.
 
 on:
   schedule:
@@ -16,6 +16,8 @@ on:
 
 env:
   BFME_CLAIMS: 'off'  # tests use fixtures, never live remote body claims
+  WINEDEBUG: '-all'
+  WINEDLLOVERRIDES: 'mscoree,mshtml='
 
 permissions:
   contents: read
@@ -26,7 +28,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +40,22 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --quiet -r tools/requirements.txt
+      - name: Install WineHQ 11, ripgrep and a prefix
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo mkdir -pm755 /etc/apt/keyrings
+          sudo wget -qO /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+          sudo wget -qNP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --install-recommends winehq-stable ripgrep
+          command -v wine winepath rg
+          version=$(wine --version)
+          echo "$version"
+          major=${version#wine-}; major=${major%%.*}
+          [ "$major" -ge 11 ] || { echo "need Wine 11 or newer, got $version" >&2; exit 1; }
+          echo "WINEPREFIX=$HOME/.wine-bfme" >> "$GITHUB_ENV"
+          WINEPREFIX="$HOME/.wine-bfme" wineboot -i
+          WINEPREFIX="$HOME/.wine-bfme" wineserver -w
       - name: Configure git identity for fixture repositories
         run: |
           git config --global user.name 'tools-full-suite'

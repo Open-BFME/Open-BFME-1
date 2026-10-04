@@ -1,4 +1,5 @@
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) { parent(0); return 0; }
 """
 
 
+def fixture_commands(vc, out, *, windows):
+    # Linux must launch the Windows tools through Wine and translate every
+    # path argument; direct .exe execution only works on a Windows host.
+    runner = []
+    path = str
+    if not windows:
+        wine = shutil.which("wine")
+        assert wine is not None, "wine not found: the integration fixture requires Wine"
+        runner = [wine]
+        path = build.wine_path
+    return (
+        [*runner, str(vc / "bin" / "cl.exe"), "/nologo", "/c", "/MD", "/O2", "/EHsc", "/Gy",
+         f"/I{path(vc / 'include')}", f"/I{path(vc / 'PlatformSDK' / 'Include')}",
+         f"/Fo{path(out / 't.obj')}", path(out / "t.cpp")],
+        [*runner, str(vc / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO",
+         "/SUBSYSTEM:WINDOWS", "/SAFESEH:NO", f"/MAP:{path(out / 't.map')}",
+         f"/OUT:{path(out / 't.exe')}", path(out / "t.obj"),
+         path(vc / "lib" / "msvcrt.lib"), path(vc / "lib" / "kernel32.lib")]
+    )
+
+
 @pytest.fixture(scope="module")
 def linked(tmp_path_factory):
     try:
@@ -36,15 +58,9 @@ def linked(tmp_path_factory):
     vc = root / "Vc7"
     out = tmp_path_factory.mktemp("ehpins")
     (out / "t.cpp").write_text(SOURCE, encoding="ascii")
-    proc = subprocess.run([str(vc / "bin" / "cl.exe"), "/nologo", "/c", "/MD", "/O2", "/EHsc", "/Gy",
-                           f"/I{vc / 'include'}", f"/I{vc / 'PlatformSDK' / 'Include'}", f"/Fo{out / 't.obj'}",
-                           str(out / "t.cpp")], capture_output=True, text=True, env=env)
-    assert proc.returncode == 0, proc.stdout
-    proc = subprocess.run([str(vc / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO",
-                           "/SUBSYSTEM:WINDOWS", "/SAFESEH:NO", f"/MAP:{out / 't.map'}", f"/OUT:{out / 't.exe'}",
-                           str(out / "t.obj"), str(vc / "lib" / "msvcrt.lib"), str(vc / "lib" / "kernel32.lib")],
-                          capture_output=True, text=True, env=env)
-    assert proc.returncode == 0, proc.stdout
+    for command in fixture_commands(vc, out, windows=sys.platform == "win32"):
+        proc = subprocess.run(command, capture_output=True, text=True, env=env)
+        assert proc.returncode == 0, proc.stdout + proc.stderr
     text = (out / "t.map").read_text(encoding="latin-1")
     rva = int(re.search(r"\?parent@@YAXH@Z\s+([0-9a-f]{8})", text).group(1), 16) - 0x400000
     obj = ep.Obj((out / "t.obj").read_bytes())
@@ -100,3 +116,33 @@ def test_label_of_reads_object_symbol_or_name():
     assert ep.label_of({"name": "?a_1@@YAXXZ", "notes": "x;object-symbol=$L4571;y"}) == "$L4571"
     assert ep.label_of({"name": "$L314", "notes": ""}) == "$L314"
     assert ep.label_of({"name": "?f@@YAXXZ", "notes": "object-symbol=_$E1"}) is None
+
+
+@pytest.mark.parametrize("windows", [False, True])
+def test_fixture_commands_use_host_runner_and_translate_all_paths(monkeypatch, tmp_path, windows):
+    vc, out = tmp_path / "VC with spaces", tmp_path / "output with spaces"
+    monkeypatch.setattr(shutil, "which", lambda name: "/usr/bin/wine" if name == "wine" else None)
+    translated = []
+    def wine_path(path):
+        translated.append(path)
+        return "Z:" + str(path)
+    monkeypatch.setattr(build, "wine_path", wine_path)
+    compile_cmd, link_cmd = fixture_commands(vc, out, windows=windows)
+    prefix = [] if windows else ["/usr/bin/wine"]
+    assert compile_cmd[:len(prefix) + 1] == prefix + [str(vc / "bin" / "cl.exe")]
+    assert link_cmd[:len(prefix) + 1] == prefix + [str(vc / "bin" / "link.exe")]
+    paths = [vc / "include", vc / "PlatformSDK" / "Include", out / "t.obj", out / "t.cpp",
+             out / "t.map", out / "t.exe", out / "t.obj", vc / "lib" / "msvcrt.lib",
+             vc / "lib" / "kernel32.lib"]
+    assert translated == ([] if windows else paths)
+    mapped = lambda path: str(path) if windows else "Z:" + str(path)
+    assert compile_cmd[-4:] == ["/I" + mapped(paths[0]), "/I" + mapped(paths[1]),
+                               "/Fo" + mapped(paths[2]), mapped(paths[3])]
+    assert link_cmd[-5:] == ["/MAP:" + mapped(paths[4]), "/OUT:" + mapped(paths[5]),
+                            *(mapped(path) for path in paths[6:])]
+
+
+def test_fixture_requires_wine_on_non_windows(monkeypatch, tmp_path):
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    with pytest.raises(AssertionError, match="wine not found"):
+        fixture_commands(tmp_path, tmp_path, windows=False)
