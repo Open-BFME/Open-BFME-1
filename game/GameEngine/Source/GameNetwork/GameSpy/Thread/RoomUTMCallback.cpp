@@ -6,6 +6,15 @@
 
 #include <string>
 
+// Retail constructs and destroys the response through the incremental-link
+// thunks at RVA 0x00042069 and 0x00044733, so this TU calls those two bodies
+// directly instead of naming the constructor/destructor symbols.  PeerResponse
+// below is therefore never instantiated: RespThunkedPeerResponse owns the
+// 0x330 bytes, routes both calls itself, and the fields are read back through
+// a layout reference.
+extern void j_00042069();
+extern void j_00044733();
+
 typedef void *PEER;
 typedef int PEERBool;
 
@@ -59,6 +68,29 @@ public:
 
 typedef char PeerResponseSizeCheck[sizeof(PeerResponse) == 0x330 ? 1 : -1];
 
+// Empty class only used as the thiscall route type for the two thunks above:
+// the union lets the compiler keep this in ecx and still call j_00042069 /
+// j_00044733 by name, which is what retail's two call sites do.
+class RespThunkRoute {};
+
+class RespThunkedPeerResponse
+{
+public:
+	inline RespThunkedPeerResponse()
+	{
+		typedef void (RespThunkRoute::*Route)();
+		union { void (*fn)(); Route call; } u = { j_00042069 };
+		(reinterpret_cast<RespThunkRoute *>(this)->*u.call)();
+	}
+	inline ~RespThunkedPeerResponse()
+	{
+		typedef void (RespThunkRoute::*Route)();
+		union { void (*fn)(); Route call; } u = { j_00044733 };
+		(reinterpret_cast<RespThunkRoute *>(this)->*u.call)();
+	}
+	char raw[sizeof(PeerResponse)];
+};
+
 class PeerRequest;
 
 class GameSpyPeerMessageQueueInterface
@@ -77,9 +109,6 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
-
 #pragma optimize("y", on)
 void roomUTMCallback(PEER peer, RoomType roomType, const char *nick,
 	const char *command, const char *parameters, PEERBool authenticated,
@@ -87,7 +116,8 @@ void roomUTMCallback(PEER peer, RoomType roomType, const char *nick,
 {
 	if (roomType != StagingRoom)
 		return;
-	PeerResponse resp;
+	RespThunkedPeerResponse storage;
+	PeerResponse &resp = *reinterpret_cast<PeerResponse *>(storage.raw);
 	resp.peerResponseType = 15;
 	if (nick)
 	{
