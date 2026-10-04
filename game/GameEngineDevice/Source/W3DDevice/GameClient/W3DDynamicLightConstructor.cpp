@@ -49,17 +49,22 @@ private:
 	volatile float m_targetDiffuse[3];
 };
 
-extern "C" const void *bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase=??_7Rva006F5BE0MultiTailDtor@@6BRva0093BE00MultiBase@@@")
-extern "C" const void *bfmeVftRva006F5BE0MultiTailDtorTailMixinA[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva006F5BE0MultiTailDtorTailMixinA=??_7Rva006F5BE0MultiTailDtor@@6BTailMixinA@@@")
+// The two vftables this constructor seats are the ones the compiler emits for
+// Rva006F5BE0MultiTailDtor in game/GameEngine/Source/Common/MultiVptrTailJumpDestructors.cpp,
+// one per polymorphic base.  The declarations carry no C++ name: __identifier
+// spells the retail symbol exactly, so the stores below reference the defining
+// name instead of a stand-in alias.  The array type keeps the decay-to-pointer
+// that retail's `mov dword ptr [ecx], imm32` needs; a non-array declaration
+// would load the vftable's first slot instead.
+extern "C" int __identifier("??_7Rva006F5BE0MultiTailDtor@@6BRva0093BE00MultiBase@@@")[];
+extern "C" int __identifier("??_7Rva006F5BE0MultiTailDtor@@6BTailMixinA@@@")[];
 
 // ??0W3DDynamicLight@@QAE@XZ
 W3DDynamicLight::W3DDynamicLight() :
 	LightClass(POINT)
 {
-	m_vptr = (unsigned int)bfmeVftRva006F5BE0MultiTailDtorRva0093BE00MultiBase;
-	m_vptr2 = (unsigned int)bfmeVftRva006F5BE0MultiTailDtorTailMixinA;
+	m_vptr = (unsigned int)__identifier("??_7Rva006F5BE0MultiTailDtor@@6BRva0093BE00MultiBase@@@");
+	m_vptr2 = (unsigned int)__identifier("??_7Rva006F5BE0MultiTailDtor@@6BTailMixinA@@@");
 	m_targetAmbient[0] = 0.0f;
 	m_targetAmbient[1] = 0.0f;
 	m_targetAmbient[2] = 0.0f;
