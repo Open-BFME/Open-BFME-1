@@ -35,13 +35,15 @@ struct Rva002877F0Info
 
 extern GameLogic *TheGameLogic;
 
-#pragma comment(linker, "/alternatename:?getValue@GameLogicRandomVariable@@QBEMXZ=?j_000188cc@@YAXXZ")
+extern void j_000188cc();
 
 void __stdcall Rva002877F0(void *rawInfo, int *nextFrame)
 {
+	typedef float (GameLogicRandomVariable::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_000188cc };
 	Rva002877F0Info *info = (Rva002877F0Info *)rawInfo;
 	if (info->m_onlyOnce)
 		*nextFrame = -1;
 	else
-		*nextFrame = TheGameLogic->getFrame() + (int)info->m_gameLogicDelay.getValue();
+		*nextFrame = TheGameLogic->getFrame() + (int)(info->m_gameLogicDelay.*u.call)();
 }
