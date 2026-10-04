@@ -12,8 +12,16 @@
 // No game/ header declares WindowManager.
 class WindowManager
 {
-public:
-	void bfme_setAptText(const AsciiString &key, const AsciiString &value);
+};
+
+extern void j_00030cfb();
+
+typedef void (WindowManager::*SetAptTextCall)(const AsciiString &key, const AsciiString &value);
+
+union SetAptTextCast
+{
+	void (*raw)();
+	SetAptTextCall member;
 };
 
 // Defined once in game/GameEngine/Source/GameClient/GUI/WindowManager.cpp.
@@ -31,5 +39,7 @@ void bfmeSetPalantirYW(int count)
 	else
 		value.StringBase<char>::set(" ", 1);
 
-	g_rva012F19E8WindowManager->bfme_setAptText(s_bfmeKeyYW, value);
+	SetAptTextCast cast;
+	cast.raw = j_00030cfb;
+	(g_rva012F19E8WindowManager->*cast.member)(s_bfmeKeyYW, value);
 }
