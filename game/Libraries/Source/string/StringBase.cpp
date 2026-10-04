@@ -68,8 +68,9 @@ int __cdecl Rva0005DC70CompareWideLengths(const wchar_t *a, int aLen, const wcha
 
 // Per-character-type buffer lock. Retail guards each instantiation's shared
 // buffers with its own critical-section singleton: 0x008876E0 for char and
-// 0x008877A0 for wchar_t, both matched as standalone getters in
-// Common/Rva008876E0Singletons.cpp and inlined into every user here. The
+// 0x008877A0 for wchar_t. Both standalone copies and their .text$yd atexit
+// thunks (0x00C70EE0, 0x00C70EC0) are this object's; the getters are inlined
+// into every user here. The
 // imports are retail's KERNEL32 IAT cells (imports.csv): 0x01358E4C
 // InitializeCriticalSection, 0x01358D0C DeleteCriticalSection, 0x01358D18
 // EnterCriticalSection, 0x01358E74 LeaveCriticalSection; the buffer release
