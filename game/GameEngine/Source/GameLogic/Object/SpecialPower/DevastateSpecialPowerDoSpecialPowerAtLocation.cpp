@@ -37,14 +37,24 @@ class Matrix3D;
 class BfmeX1035;
 class GlobalData;
 
-#define OBJECT_TU_MEMBERS \
-	class Player *getControllingPlayer() const;
+#define OBJECT_TU_MEMBERS
 #include "../object.h"
 
 class Money
 {
 public:
 	void deposit(UnsignedInt amount, bool playSound);
+};
+
+// 0x00027D6D is the five-byte tail jump the ledger records against
+// Rva00027D6DMoney::unidentified_00027d6d (defined in
+// game/GameEngine/Source/Common/RTS/MoneyDepositILT.cpp, route=0x000C8730).
+// That name, not a `j_` spelling, is the address retail called through here, so
+// this TU names the same thunk and calls it directly.
+class Rva00027D6DMoney
+{
+public:
+	void unidentified_00027d6d(UnsignedInt amount, bool playSound);
 };
 
 // 0x000E8B20, the counter the score keeper sub-object at +0x348 carries.
@@ -181,19 +191,23 @@ extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;
 extern GlobalData *TheWritableGlobalData;
 
-#pragma comment(linker, "/alternatename:?bfmeGo1275@BfmeA1275@@QAEHHHHH@Z=?j_000226ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001AE4A0@Rva012EF4CCTerrain@@QAEXPAVBfmeX1035@@H@Z=?j_0001acbc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeIsBlocked@FXList@@QAE_NXZ=?j_00011f77@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doFXPos@FXList@@QBEXPBVCoord3D@@PBVMatrix3D@@M0@Z=?j_0001bb21@@YAXXZ")
-#pragma comment(linker, "/alternatename:?onMatch@TerrainLogicP48Owner@@QAEHPAUTerrainLogicP48Rec@@H@Z=?j_00003166@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isInMultiplayerOrSkirmishGame@GameLogicPortraitShim@@QAE_NXZ=?j_0001e0ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?unidentified_000df510@PlayerList@@QAEH_N@Z=?j_000389f6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeGet0@Gen_00083240@@QBEMH@Z=?j_00009e12@@YAXXZ")
-#pragma comment(linker, "/alternatename:?adjustBountyForLivingWorld@Rva000C97C0Player@@QAEHH@Z=?j_00024938@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeAddCount@Gen_000E8AF0@@QAEXH@Z=?j_0003a45e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doSpecialPowerAtLocation@SpecialPowerModuleInterface@@QAEXPBVCoord3D@@I@Z=?j_000170da@@YAXXZ")
-#pragma comment(linker, "/alternatename:?deposit@Money@@QAEXI_N@Z=?j_00027d6d@@YAXXZ")
+// Retail reached each of these bodies through an incremental-link thunk, so the
+// call target the linker used to substitute is the 5-byte ILT entry, spelled
+// here directly as a plain `extern void f()` and called through a same-shaped
+// member pointer.  The union keeps the flat thunk address and the typed call
+// in one local without inventing a member or a body here.
+extern void j_000226ab();
+extern void j_0001acbc();
+extern void j_00011f77();
+extern void j_0001bb21();
+extern void j_00003166();
+extern void j_0001e0ab();
+extern void j_000389f6();
+extern void j_00009e12();
+extern void j_00024938();
+extern void j_0003a45e();
+extern void j_00020824();
+extern void j_000170da();
 
 template<class T> inline const T &devastateMin(const T &a, const T &b)
 {
@@ -213,57 +227,134 @@ void DevastateSpecialPowerInterface::doSpecialPowerAtLocation(const Coord3D *tar
 	if (target == 0)
 		return;
 
-	player = owner->getControllingPlayer();
+	typedef Player *(Object::*GetControllingPlayer)() const;
+	union { void (*fn)(); GetControllingPlayer call; } uOwner = { j_00020824 };
+	player = (owner->*uOwner.call)();
 
 	if (player == 0)
 		return;
 
-	((SpecialPowerModuleInterface *)this)->doSpecialPowerAtLocation(target,
-		commandOptions);
+	{
+		typedef void (SpecialPowerModuleInterface::*Call)(const Coord3D *,
+			UnsignedInt);
+		union { void (*fn)(); Call call; } u = { j_000170da };
+		(((SpecialPowerModuleInterface *)this)->*u.call)(target,
+			commandOptions);
+	}
 
 	DevastateSpecialPowerModuleData *data = getModuleData();
 	money = 0.0f;
 	localTerrainLogic()->m_queryScratch = 0.1f;
 
-	BfmeX1035 *thing = (BfmeX1035 *)((BfmeA1275 *)localTerrainLogic())->bfmeGo1275(
-		(int)target, data->m_queryKind, 0, 2);
+	BfmeX1035 *thing;
+
+	{
+		typedef int (BfmeA1275::*Call)(int, int, int, int);
+		union { void (*fn)(); Call call; } u = { j_000226ab };
+		thing = (BfmeX1035 *)(((BfmeA1275 *)localTerrainLogic())->*u.call)(
+			(int)target, data->m_queryKind, 0, 2);
+	}
 
 	while (thing != 0)
 	{
 		if (*(unsigned char *)((char *)thing + 0x18) == 0)
-			localTerrainLogic()->rva001AE4A0(thing, (int)target);
+		{
+			typedef void (Rva012EF4CCTerrain::*Call)(BfmeX1035 *, int);
+			union { void (*fn)(); Call call; } u = { j_0001acbc };
+			(localTerrainLogic()->*u.call)(thing, (int)target);
+		}
 
 		FXList *fx = data->m_fx;
 
-		if (fx != 0 && !fx->bfmeIsBlocked())
-			fx->doFXPos((const Coord3D *)thing, 0, 0.0f, 0);
+		if (fx != 0)
+		{
+			typedef bool (FXList::*IsBlocked)();
+			union { void (*fn)(); IsBlocked call; } u = { j_00011f77 };
+			bool blocked = (fx->*u.call)();
 
-		UnsignedInt amount = (UnsignedInt)((TerrainLogicP48Owner *)localTerrainLogic())->onMatch(
-			(TerrainLogicP48Rec *)thing, 0x1869f);
-		UnsignedInt scale = (UnsignedInt)player->getSupplyBoxValue();
-		float reward = (float)(amount * scale);
+			if (!blocked)
+			{
+				typedef void (FXList::*DoFXPos)(const Coord3D *,
+					const Matrix3D *, float, const Coord3D *) const;
+				union { void (*fn)(); DoFXPos call; } u2 = { j_0001bb21 };
+				(fx->*u2.call)((const Coord3D *)thing, 0, 0.0f, 0);
+			}
+		}
+
+		UnsignedInt amount;
+		UnsignedInt scale;
+		float reward;
+
+		{
+			typedef int (TerrainLogicP48Owner::*Call)(TerrainLogicP48Rec *,
+				int);
+			union { void (*fn)(); Call call; } u = { j_00003166 };
+			amount = (UnsignedInt)(
+				(((TerrainLogicP48Owner *)localTerrainLogic())->*u.call)(
+					(TerrainLogicP48Rec *)thing, 0x1869f));
+		}
+
+		scale = (UnsignedInt)player->getSupplyBoxValue();
+
+		reward = (float)(amount * scale);
 
 		if (reward > 0.0f)
 		{
-			if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 			{
-				int playerCount = ThePlayerList->unidentified_000df510(false);
-				float factor = ((Gen_00083240 *)((char *)TheWritableGlobalData + 0xee0))->bfmeGet0(playerCount);
-				reward *= factor;
+				typedef bool (GameLogicPortraitShim::*IsMultiplayer)();
+				union { void (*fn)(); IsMultiplayer call; } u =
+					{ j_0001e0ab };
+				bool mp = (((GameLogicPortraitShim *)TheGameLogic)->*u.call)();
+
+				if (mp)
+				{
+					int playerCount;
+					float factor;
+
+					{
+						typedef int (PlayerList::*Count)(bool);
+						union { void (*fn)(); Count call; } u = { j_000389f6 };
+						playerCount = (ThePlayerList->*u.call)(false);
+					}
+
+					{
+						typedef float (Gen_00083240::*Get0)(int) const;
+						union { void (*fn)(); Get0 call; } u = { j_00009e12 };
+						factor = (((Gen_00083240 *)((char *)
+							TheWritableGlobalData + 0xee0))->*u.call)(
+								playerCount);
+					}
+
+					reward *= factor;
+				}
 			}
 
-			money += (float)((Rva000C97C0Player *)player)->adjustBountyForLivingWorld((int)reward)
-				* data->m_bountyScale;
+			{
+				typedef int (Rva000C97C0Player::*Adjust)(int);
+				union { void (*fn)(); Adjust call; } u = { j_00024938 };
+				money += (float)(((Rva000C97C0Player *)player)->*u.call)(
+					(int)reward) * data->m_bountyScale;
+			}
 		}
 
-		thing = (BfmeX1035 *)((BfmeA1275 *)localTerrainLogic())->bfmeGo1275(
-			(int)target, data->m_queryKind, 0, 2);
+		{
+			typedef int (BfmeA1275::*Call)(int, int, int, int);
+			union { void (*fn)(); Call call; } u = { j_000226ab };
+			thing = (BfmeX1035 *)(((BfmeA1275 *)localTerrainLogic())->*u.call)(
+				(int)target, data->m_queryKind, 0, 2);
+		}
 	}
 
 	localTerrainLogic()->m_queryScratch = 0.0f;
 
 	int deposit = (int)devastateMin(money, data->m_bountyCap);
 
-	player->getMoney()->deposit(deposit, true);
-	player->getScoreKeeper()->bfmeAddCount(deposit);
+	((Rva00027D6DMoney *)player->getMoney())->unidentified_00027d6d(
+		deposit, true);
+
+	{
+		typedef void (Gen_000E8AF0::*AddCount)(int);
+		union { void (*fn)(); AddCount call; } u = { j_0003a45e };
+		(player->getScoreKeeper()->*u.call)(deposit);
+	}
 }
