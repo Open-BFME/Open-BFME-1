@@ -16048,5 +16048,25 @@
   "after_sha256": "8786454a69ae1827864de61db42312472ba531e8834eb97b1c65fba21dd661e8",
   "evidence": "targets/game/reverse/identity_evidence/0090f2e0-unreferenced-indexed-load.md",
   "reason": "Nothing in retail references 0x0090F2E0 and no caller or vtable proves the Zero Hour name getNthCommandSourceMask@WeaponTemplateSet; the body keeps an address-derived name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1621.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1621.cpp",
+  "old_name": "g_bfmeDefaultVTM",
+  "new_name": "Rva01336E50EmptyString",
+  "before_sha256": "207d502a9076ebf7cc2888b1fbe4afe96f43c9157298c2aad743267f68b8c9e4",
+  "after_sha256": "1dfafd0b0446c75399bfb01a94386d0febe6e843c5611932cae5ae01fe25651f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1898.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1898.cpp",
+  "old_name": "BfmeSubAR",
+  "new_name": "Gen_002D9B90",
+  "before_sha256": "1c314326c7a10cf106e18fbb2f8fe97cb3e04d342bdcf9edc38addba01c3ffd8",
+  "after_sha256": "2aa37732257dec11c5d054e9aa176a1475b27c2359715bfdbe97f8ea6be62871",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

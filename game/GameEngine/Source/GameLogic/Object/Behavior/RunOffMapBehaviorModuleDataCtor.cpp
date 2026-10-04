@@ -35,7 +35,15 @@ private:
 	void *m_text;
 };
 
-extern UnicodeString Rva01336E50Str;
+// 0x01336E50 is the interned empty literal retail hands the member's set(). The
+// one spelling game/ defines at that VA is
+// ?Rva01336E50EmptyString@@3VAsciiString@@A, the object
+// game/GameEngine/Source/Common/Bfme/Rva00C6DC10StaticInit.cpp defines, so the
+// reference carries that name; the local UnicodeString above is only this body's
+// view of the same bytes, hence the cast at the one use.
+class AsciiString;
+
+extern AsciiString Rva01336E50EmptyString;
 
 class RunOffMapBehaviorModuleDataBase
 {
@@ -46,11 +54,25 @@ protected:
 	unsigned int m_unused04;
 };
 
+// This class declares no destructor of its own; the base's virtual destructor
+// is what the ctor's unwind path destroys.
+//
+// Evidence (tools/eh_info.py 0x00126760): retail's unwind map has exactly two
+// cleanup funclets. State 0 loads `this` unadjusted and jumps through ILT
+// 0x0041921D to RVA 0x00122D10; state 1 adds 0x14 and jumps through ILT
+// 0x0040D828 to RVA 0x0005EE90, which functions.csv:6837 owns as
+// `??1AsciiString@@QAE@XZ`, i.e. the +0x14 member. The state-0 callee is the
+// 7-byte `mov dword ptr [ecx], 0x01073744; ret` -- it restores 0x01073744, not
+// the 0x0108E9F0 the ctor installs at +0, so it destroys a base subobject and
+// cannot be a destructor of the class under construction. Declaring
+// `virtual ~RunOffMapBehaviorModuleData();` here invented a name retail never
+// emitted (no functions.csv row, no symbols.csv pin anywhere for it) and left
+// this TU referencing a destructor nothing defines; without it the compiler
+// emits the inherited destructor as a local COMDAT and the file links.
 class RunOffMapBehaviorModuleData : public RunOffMapBehaviorModuleDataBase
 {
 public:
 	RunOffMapBehaviorModuleData();
-	virtual ~RunOffMapBehaviorModuleData();
 
 private:
 	float m_speed1;				// +0x08
@@ -67,5 +89,5 @@ RunOffMapBehaviorModuleData::RunOffMapBehaviorModuleData()
 	m_speed1 = 10.0f;
 	m_speed2 = 10.0f;
 	m_flag10 = false;
-	m_text14.set( Rva01336E50Str );
+	m_text14.set( (const UnicodeString &)Rva01336E50EmptyString );
 }
