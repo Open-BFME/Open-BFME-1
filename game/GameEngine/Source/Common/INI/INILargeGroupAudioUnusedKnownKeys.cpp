@@ -90,8 +90,18 @@ public:
 	virtual void bfmeSlot0();
 };
 
-extern "C" const void *bfmeVftHordeContainModuleDataBase[];
-#pragma comment(linker, "/alternatename:_bfmeVftHordeContainModuleDataBase=??_7HordeContainModuleDataBase@@6B@")
+// AudioVectorInit stamps the retail vftables directly.  The
+// HordeContainModuleDataBase primary table is named by the class itself, so the
+// constructor references its real symbol (__identifier) with no stand-in.
+//
+// The two LargeGroupAudio tables keep their stand-ins: this TU declares
+// LargeGroupAudio as a multiply-inheriting class, and cl.exe 7.1 claims both
+// ??_7LargeGroupAudio@@6B<base>@@ names for that class' own secondary vftables.
+// An extern declaration of either name is then C2373 "redefinition: different
+// type modifiers" against the compiler's own unspellable vftable type, and a
+// reference placed before the class definition is C3861 "undeclared
+// identifier" instead.  Both checked against cl.exe directly; the alias is the
+// only spelling that links.
 extern "C" const void *bfmeVftLargeGroupAudioRva004948B0Base[];
 #pragma comment(linker, "/alternatename:_bfmeVftLargeGroupAudioRva004948B0Base=??_7LargeGroupAudio@@6BRva004948B0Base@@@")
 extern "C" const void *bfmeVftLargeGroupAudioHordeContainModuleDataBase[];
@@ -102,7 +112,7 @@ class AudioVectorInit
 public:
 	AudioVectorInit()
 	{
-		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = reinterpret_cast<int>( bfmeVftHordeContainModuleDataBase );
+		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = reinterpret_cast<int>( __identifier("??_7HordeContainModuleDataBase@@6B@") );
 		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x0C ) = reinterpret_cast<int>( bfmeVftLargeGroupAudioRva004948B0Base );
 		*reinterpret_cast<volatile int *>( reinterpret_cast<unsigned char *>( this ) - 0x04 ) = reinterpret_cast<int>( bfmeVftLargeGroupAudioHordeContainModuleDataBase );
 		m_begin = 0;
