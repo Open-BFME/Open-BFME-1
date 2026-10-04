@@ -60,8 +60,6 @@ public:
 		return m_ai;
 	}
 
-	Player *getControllingPlayer() const;
-
 	bool isEffectivelyDead() const
 	{
 		return (m_privateStatus & 1) != 0;
@@ -73,18 +71,17 @@ public:
 	unsigned char m_privateStatus;
 };
 
-// ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+// Retail call to Object::getControllingPlayer goes through ILT 0x20824.
+extern void j_00020824();
+
+// Retail call to AICommandInterface::aiRepair goes through ILT 0x29c08.
+extern void j_00029c08();
 
 class AICommandInterface
 {
 public:
 	virtual void aiDoCommand() = 0;
-	void aiRepair(Object *object, CommandSourceType source);
 };
-
-// ?aiRepair@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z
-#pragma comment(linker, "/alternatename:?aiRepair@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_00029c08@@YAXXZ")
 
 class DozerAIInterface002B9970
 {
@@ -259,7 +256,10 @@ StateReturnType Rva002B9970DozerPrimaryIdleState::update()
 
 	if (ai->isIdle() && !m_isMarkedAsIdle && !dozer->isEffectivelyDead())
 	{
-		m_idlePlayerNumber = dozer->getControllingPlayer()->getPlayerIndex();
+		typedef Player *(Object::*OwningPlayerFn)() const;
+		union { void (*fn)(); OwningPlayerFn call; } ownerFn = { j_00020824 };
+		Player *owner = (dozer->*ownerFn.call)();
+		m_idlePlayerNumber = owner->getPlayerIndex();
 		TheInGameUI->addIdleWorker(getMachineOwner());
 		m_isMarkedAsIdle = true;
 	}
@@ -281,7 +281,11 @@ StateReturnType Rva002B9970DozerPrimaryIdleState::update()
 		Object *repairTarget =
 			(reinterpret_cast<Object *(__cdecl *)(void)>(findObjectToRepair))();
 		if (repairTarget)
-			ai->aiRepair(repairTarget, CMD_FROM_AI);
+		{
+			typedef void (AICommandInterface::*RepairFn)(Object *, CommandSourceType);
+			union { void (*fn)(); RepairFn call; } repair = { j_00029c08 };
+			(static_cast<AICommandInterface *>(ai)->*repair.call)(repairTarget, CMD_FROM_AI);
+		}
 	}
 
 	return STATE_CONTINUE;
