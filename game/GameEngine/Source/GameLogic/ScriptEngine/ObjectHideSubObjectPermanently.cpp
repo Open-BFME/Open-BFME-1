@@ -14,13 +14,12 @@ unsigned Rva00990210Lookup(Rva00990210Range *range, int index);
 
 #include "ascii_string.h"
 
+// Retail 0x391C6 is an incremental-link thunk to FUN_008135c0; call it directly.
+extern void j_000391c6();
+
 class S4Sink004135C0
 {
-public:
-	void invoke(const AsciiString &name, bool a, int b, int c, int d);
 };
-
-#pragma comment(linker, "/alternatename:?invoke@S4Sink004135C0@@QAEXABVAsciiString@@_NHHH@Z=?j_000391c6@@YAXXZ")
 
 class Drawable;
 
@@ -60,7 +59,9 @@ int ObjectHideSubObjectPermanently(lua_State *state)
 
 	{
 		AsciiString name(lua_tostring(state, 2));
-		object->getDrawable()->invoke(
+		typedef void (S4Sink004135C0::*Invoke)(const AsciiString &, bool, int, int, int);
+		union { void (*fn)(); Invoke call; } u = { j_000391c6 };
+		(object->getDrawable()->*u.call)(
 			name, Rva00990210Lookup((Rva00990210Range *)state, 3) == 0, 1, 0, 0);
 	}
 	return 0;
