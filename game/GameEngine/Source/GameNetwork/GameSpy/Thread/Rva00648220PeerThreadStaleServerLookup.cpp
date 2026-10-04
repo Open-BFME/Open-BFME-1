@@ -42,6 +42,26 @@ enum
 struct _SBServer;
 typedef _SBServer *SBServer;
 
+// PeerThreadClass::removeServerFromMap has no definition anywhere under its
+// Rva00647F90-qualified spelling, so retail reaches it through ILT 0x0000252c
+// and this TU now names the ILT thunk directly (see RemoveServerFromMap below)
+// instead of relying on a linker alternate-name directive.
+extern void j_0000252c();
+
+// PeerResponse's constructor and destructor keep the plain spelling: their real
+// bodies are matched elsewhere (0x004DAB40 and 0x004DAC70,
+// game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp), so
+// the reference resolves to exactly the body retail's ILT thunks 0x00042069 and
+// 0x00044733 reach and needs no directive.  Defining them here instead would
+// emit a second, EH-bearing definition of an already-claimed identity.
+
+// Retail also reaches the STLport deque bodies for deque<SBServer*> through
+// the ILT thunks j_00018502, j_000399d7 and j_00012c51.  Those three stay
+// spelled STLport: each is defined as a local COMDAT by this TU (the inlined
+// deque constructor, the inlined push_back and its out-of-line copy), so they
+// never needed an alternate-name directive, and routing them through a thunk
+// would mean hand-writing the inlined STLport bodies.
+
 extern "C"
 {
 	const char *SBServerGetStringValueA(SBServer server, const char *key, const char *def);
@@ -162,23 +182,22 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
-#pragma comment(linker, "/alternatename:?_M_initialize_map@?$_Deque_base@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXI@Z=?j_00018502@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_push_back_aux_v@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXABQAU_SBServer@@@Z=?j_000399d7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?push_back@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@QAEXABQAU_SBServer@@@Z=?j_00012c51@@YAXXZ")
-
 namespace Rva00647F90
 {
 class PeerThreadClass
 {
-public:
-	Int removeServerFromMap(SBServer server);
 };
 }
 
-#pragma comment(linker, "/alternatename:?removeServerFromMap@PeerThreadClass@Rva00647F90@@QAEHPAU_SBServer@@@Z=?j_0000252c@@YAXXZ")
-
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
+// The real removeServerFromMap body at 0x00647F90 is claimed elsewhere; retail
+// reaches it through ILT 0x0000252c, so this TU calls the thunk instead of
+// naming the member.
+static __forceinline Int RemoveServerFromMap(Rva00647F90::PeerThreadClass *self, SBServer server)
+{
+	typedef Int (Rva00647F90::PeerThreadClass::*RemoveFromMap)(SBServer);
+	union { void (*fn)(); RemoveFromMap call; } u = { j_0000252c };
+	return (self->*u.call)(server);
+}
 
 class Rva00648220PeerThreadMapView
 {
@@ -245,7 +264,7 @@ Int Rva00648220PeerThreadMapView::lookupServer(SBServer server)
 
 		PeerResponse resp;
 		resp.peerResponseType = PeerResponse::PEERRESPONSE_STAGINGROOM;
-		resp.stagingRoom.id = peer->removeServerFromMap(serverToRemove);
+		resp.stagingRoom.id = RemoveServerFromMap(peer, serverToRemove);
 		resp.stagingRoom.action = PEER_REMOVE;
 		resp.stagingRoom.isStaging = true;
 		resp.stagingRoom.percentComplete = -1;
