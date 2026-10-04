@@ -28,12 +28,14 @@ public:
 	Rva00412140();
 };
 
-extern "C" const void *bfmeVftTintEnvelope[];
-#pragma comment(linker, "/alternatename:_bfmeVftTintEnvelope=??_7TintEnvelope@@6B@")
+// TintEnvelope's one vtable. __identifier lets this TU name the mangled
+// vftable data symbol directly, so no linker alias pragma is needed
+// (same pattern as AIAttackMeleeEngageStateCtor.cpp).
+extern "C" void *__identifier("??_7TintEnvelope@@6B@")[];
 
 Rva00412140::Rva00412140()
 {
-	m_00 = bfmeVftTintEnvelope;
+	m_00 = __identifier("??_7TintEnvelope@@6B@");
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
