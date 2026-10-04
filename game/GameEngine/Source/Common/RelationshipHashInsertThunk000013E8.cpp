@@ -2,9 +2,12 @@
 // stlport
 // The carved ILT at 0x000013E8 jumps to the matched Relationship hash insert
 // body at 0x00787140.  This wrapper keeps the ILT's address-qualified name.
+//
+// The call target is named directly: the _STL::hashtable instantiation for
+// pair<const int, Relationship> is declared here (only its shape matters for
+// the symbol), so no linker alias pragma is needed.
 
 #define _STLP_NO_EXCEPTIONS 1
-#include <hash_map>
 
 typedef int Int;
 
@@ -17,15 +20,40 @@ enum Relationship
 
 namespace _STL
 {
-class RelationshipHashtableInsertShim
+template <class _T1, class _T2>
+struct pair;
+
+template <class _Key>
+struct hash;
+
+template <class _Pair>
+struct _Select1st;
+
+template <class _Key>
+struct equal_to;
+
+template <class _Tp>
+class allocator;
+
+// Declared exactly as the retail body is, so the call resolves by name.
+template <class _Val, class _Key, class _HashF, class _ExtractKey, class _EqlF,
+	class _Alloc>
+class hashtable
 {
 public:
-	pair<const Int, Relationship> &insert(
+	pair<const Int, Relationship> &_M_insert(
 		const pair<const Int, Relationship> &value);
 };
-}
 
-#pragma comment(linker, "/alternatename:?insert@RelationshipHashtableInsertShim@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z=?_M_insert@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z")
+typedef hashtable<
+	pair<const Int, Relationship>,
+	Int,
+	hash<Int>,
+	_Select1st<pair<const Int, Relationship> >,
+	equal_to<Int>,
+	allocator<pair<const Int, Relationship> > >
+	RelationshipHashtable;
+}
 
 class Rva000013E8RelationshipHashInsertThunk
 {
@@ -33,7 +61,7 @@ public:
 	__declspec(noinline) _STL::pair<const Int, Relationship> &forward(
 		const _STL::pair<const Int, Relationship> &value)
 	{
-		return ((_STL::RelationshipHashtableInsertShim *)this)->insert(value);
+		return ((_STL::RelationshipHashtable *)this)->_M_insert(value);
 	}
 };
 
