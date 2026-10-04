@@ -87,7 +87,9 @@ extern unsigned char g_bfmeTableDH[];
 extern int g_bfmeTableDJc[];
 int __cdecl bfmeLookupB(void *name);
 
-#pragma comment(linker, "/alternatename:?xfer@?$BitFlags@$0BN@@@QAEXPAVXfer@@@Z=?j_000335be@@YAXXZ")
+// Retail routes this BitFlags<29>::xfer call through ILT thunk 0x000335BE
+// (5-byte j_ thunk), so the call site names the thunk directly.
+extern void j_000335be();
 
 class BfmeWeaponSetFlags
 {
@@ -106,7 +108,9 @@ void BfmeWeaponSetFlags::xfer(BfmeWeaponSetXferView *xfer)
 	xfer->xferVersion(version);
 	if (xfer->IsLightCRC())
 	{
-		reinterpret_cast<BitFlags<29> *>(this)->xfer(reinterpret_cast<Xfer *>(xfer));
+		typedef void (BitFlags<29>::*Fn)(Xfer *);
+		union { void (*fn)(); Fn call; } u = { j_000335be };
+		(reinterpret_cast<BitFlags<29> *>(this)->*u.call)(reinterpret_cast<Xfer *>(xfer));
 		return;
 	}
 
