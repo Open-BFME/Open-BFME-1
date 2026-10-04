@@ -326,7 +326,7 @@ SurfaceClass::~SurfaceClass(void)
 	}
 }
 
-void SurfaceClass::Get_Description(SurfaceDescription &surface_desc)
+inline __declspec(noinline) void SurfaceClass::Get_Description(SurfaceDescription &surface_desc)
 {
 	BFMESurfaceDescription008FC5C0 d3d_desc;
 	::ZeroMemory(&d3d_desc, sizeof(d3d_desc));

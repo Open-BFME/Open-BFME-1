@@ -91,7 +91,7 @@ private:
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-void SurfaceClass::Get_Description(SurfaceDescription &surface_desc) {
+inline __declspec(noinline) void SurfaceClass::Get_Description(SurfaceDescription &surface_desc) {
  BFMESurfaceDescription008FC5C0 d3d_desc;
  memset(&d3d_desc,0,sizeof(d3d_desc));
  _ReadWriteBarrier();
