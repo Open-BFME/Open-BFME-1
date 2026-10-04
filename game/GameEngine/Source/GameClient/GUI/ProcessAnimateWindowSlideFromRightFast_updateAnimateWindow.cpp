@@ -8,7 +8,6 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real BfmeShadowScale;
 
 struct ICoord2D
 {
@@ -123,8 +122,8 @@ Bool Rva00497640ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(Anim
 
 	if (curPos.x - endPos.x <= m_slowDownThreshold)
 		vel.x *= m_slowDownRatio;
-	if (vel.x >= BfmeShadowScale)
-		vel.x = BfmeShadowScale;
+	if (vel.x >= -1.0f)
+		vel.x = -1.0f;
 	animWin->setVel(vel);
 	return false;
 }
