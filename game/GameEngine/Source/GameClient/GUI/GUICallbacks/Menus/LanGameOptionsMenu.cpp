@@ -213,7 +213,7 @@ public:
 	Bool rva004CD5F0( Int slotIndex ) const;
 };
 
-#pragma comment(linker, "/alternatename:?rva004CD5F0@Rva004CD5F0GameInfo@@QBE_NH@Z=?d_004cd5f0@@YAXXZ")
+extern void d_004cd5f0();
 
 static void rva004CB810StartPosition( Int player, Int startPos );
 
@@ -879,8 +879,10 @@ static void handlePlayerTemplateSelection(register int index)
 			}
 		}
 
+		typedef Bool (Rva004CD5F0GameInfo::*Fn004CD5F0)( Int ) const;
+		union { void (*fn004CD5F0)(); Fn004CD5F0 call; } u004CD5F0 = { d_004cd5f0 };
 		if (slot->getStartPos() >= 0 &&
-			!((Rva004CD5F0GameInfo *)myGame)->rva004CD5F0(index))
+			!(((Rva004CD5F0GameInfo *)myGame)->*u004CD5F0.call)(index))
 			rva004CB810StartPosition(index, -1);
 	}
 }
