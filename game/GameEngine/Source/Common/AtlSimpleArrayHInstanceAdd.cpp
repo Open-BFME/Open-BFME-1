@@ -28,7 +28,9 @@ public:
 
 namespace ATL
 {
-inline void __declspec(noreturn) _AtlRaiseException(
+// TU-local: this /O1 copy differs from the other ATL TUs' copy of the same
+// COMDAT, and it has no retail address of its own.
+static void __declspec(noreturn) _AtlRaiseException(
 	DWORD code, DWORD flags = 1)
 {
 	RaiseException(code, flags, 0, 0);
