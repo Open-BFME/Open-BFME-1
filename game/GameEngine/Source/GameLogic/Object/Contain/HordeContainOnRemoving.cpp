@@ -225,47 +225,71 @@ public:
 #undef CONTAIN_SLOT
 };
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setStatus@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z=?j_000307e7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?onRemoving@OpenContain@@UAEXPAVObject@@@Z=?j_00032e61@@YAXXZ")
-#pragma comment(linker, "/alternatename:?forward@Rva00413FF0GuardedVCall@@QAEXH@Z=?j_00013435@@YAXXZ")
-#pragma comment(linker, "/alternatename:?broadcast@Rva004141C0@@QAEXXZ=?d_000376cd@@YAXXZ")
+// Retail calls these through incremental-link thunks; the local views below
+// keep the call shape but name the thunk directly.
+extern void j_000022bb();
+extern void j_0003251f();
+extern void j_000307e7();
+extern void j_0002191d();
+extern void j_00032e61();
+extern void j_00013435();
+extern void d_000376cd();
 
 void HordeContain::onRemoving(Object *member)
 {
-	((OpenContain *)this)->OpenContain::onRemoving(member);
+	typedef void (OpenContain::*BaseOnRemoving)(Object *);
+	union { void (*fn)(); BaseOnRemoving call; } baseOnRemoving = { j_00032e61 };
+	(reinterpret_cast<OpenContain *>(this)->*(baseOnRemoving.call))(member);
 
 	ThingTemplate *memberTemplate = member->m_template;
 	if (memberTemplate != 0 && memberTemplate->m_nextOverride != 0)
-		memberTemplate = (ThingTemplate *)memberTemplate->m_nextOverride->getFinalOverride();
+	{
+		typedef const Overridable *(Overridable::*GetFinalOverride)(void) const;
+		union { void (*fn)(); GetFinalOverride call; } getFinalOverride = { j_000022bb };
+		memberTemplate = (ThingTemplate *)(memberTemplate->m_nextOverride->*getFinalOverride.call)();
+	}
 	if ((memberTemplate->m_kindFlags0 & 0x00000800) != 0)
 		goto formation;
 	memberTemplate = member->m_template;
 	if (memberTemplate != 0 && memberTemplate->m_nextOverride != 0)
-		memberTemplate = (ThingTemplate *)memberTemplate->m_nextOverride->getFinalOverride();
+	{
+		typedef const Overridable *(Overridable::*GetFinalOverride)(void) const;
+		union { void (*fn)(); GetFinalOverride call; } getFinalOverride = { j_000022bb };
+		memberTemplate = (ThingTemplate *)(memberTemplate->m_nextOverride->*getFinalOverride.call)();
+	}
 	if ((memberTemplate->m_kindFlags2 & 0x10000000) != 0)
 		goto formation;
-	if (!member->isKindOf(KINDOF_TARGET))
-		goto clearFormationFlags;
+	{
+		typedef Bool (Thing::*IsKindOf)(KindOfType) const;
+		union { void (*fn)(); IsKindOf call; } isKindOf = { j_0003251f };
+		if (!(member->*isKindOf.call)(KINDOF_TARGET))
+			goto clearFormationFlags;
+	}
 
 formation:
-	member->setStatus(
-		ObjectStatusMaskType(ObjectStatusMaskType::kInit, 37), false);
+	{
+		typedef void (Object::*SetStatus)(const ObjectStatusMaskType &, Bool);
+		union { void (*fn)(); SetStatus call; } setStatus = { j_000307e7 };
+		(member->*setStatus.call)(
+			ObjectStatusMaskType(ObjectStatusMaskType::kInit, 37), false);
+	}
 
 clearFormationFlags:
 	UnsignedInt flags = member->m_bfmeModelConditionFlags;
 	if ((flags & 0x00080000) != 0)
 	{
+		typedef void (Object::*NotifyModelConditionChanged)(void);
+		union { void (*fn)(); NotifyModelConditionChanged call; } notify = { j_0002191d };
 		member->m_bfmeModelConditionFlags = flags & ~0x00080000;
-		member->notifyModelConditionChanged();
+		(member->*notify.call)();
 	}
 	flags = member->m_bfmeModelConditionFlags;
 	if ((flags & 0x00100000) != 0)
 	{
+		typedef void (Object::*NotifyModelConditionChanged)(void);
+		union { void (*fn)(); NotifyModelConditionChanged call; } notify = { j_0002191d };
 		member->m_bfmeModelConditionFlags = flags & ~0x00100000;
-		member->notifyModelConditionChanged();
+		(member->*notify.call)();
 	}
 	member->m_bfmeMemberInterface->enterFormationPose(5);
 
@@ -286,8 +310,10 @@ afterFormation:
 
 	if (((Rva006C9270GlobalData *)TheWritableGlobalData)->m_flagA76)
 	{
+		typedef void (Rva00413FF0GuardedVCall::*Forward)(Int);
+		union { void (*fn)(); Forward call; } forward = { j_00013435 };
 		Int value = ((HordeContainView *)((char *)this + 0xc4))->slot84(0);
-		((Rva00413FF0GuardedVCall *)drawable)->forward(value);
+		(((Rva00413FF0GuardedVCall *)drawable)->*forward.call)(value);
 		return;
 	}
 
@@ -309,5 +335,7 @@ afterFormation:
 				return;
 		}
 	}
-	((Rva004141C0 *)drawable)->broadcast();
+	typedef void (Rva004141C0::*Broadcast)(void);
+	union { void (*fn)(); Broadcast call; } broadcast = { d_000376cd };
+	(((Rva004141C0 *)drawable)->*broadcast.call)();
 }
