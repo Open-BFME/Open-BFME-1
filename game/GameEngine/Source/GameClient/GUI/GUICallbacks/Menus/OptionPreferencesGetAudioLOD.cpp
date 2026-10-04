@@ -6,6 +6,11 @@ struct PreferenceNode
 	AsciiString m_value;
 };
 
+// 0x0000AEAC is a 5-byte ILT thunk (?j_0000aeac@@YAXXZ) to the preferences
+// map find at 0x00480600; the ?find@PreferenceMap pin has no definition, so
+// call through the thunk's own name.
+extern void j_0000aeac();
+
 class PreferenceMap
 {
 public:
@@ -39,7 +44,13 @@ int OptionPreferences::getAudioLOD()
 	PreferenceNode *it;
 	{
 		AsciiString key("AudioLOD");
-		it = m_prefs.find(key);
+		union FindRoute
+		{
+			void (*raw)();
+			PreferenceNode *(PreferenceMap::*member)(const AsciiString &) const;
+		} route;
+		route.raw = j_0000aeac;
+		it = ( ( &m_prefs )->*route.member )( key );
 	}
 
 	if (it == m_prefs.end())
