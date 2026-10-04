@@ -5640,55 +5640,6 @@ void GameLogic::selectObject(Object *obj, Bool createNewSelection, PlayerMaskTyp
 }
 
 // ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?deselectObject@GameLogic@@QAEXPAVObject@@G_N@Z present-unmatched
-void GameLogic::deselectObject(Object *obj, PlayerMaskType playerMask, Bool affectClient)
-{
-	if (!obj) {
-		return;
-	}
-
-	while (playerMask) {
-		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
-		if (!player) {
-			return;
-		}
-
-		AIGroup *group = NULL;
-		CRCGEN_LOG(( "Removing a unit from a selected group in GameLogic::deselectObject()\n" ));
-		group = TheAI->createGroup();
-		player->getCurrentSelectionAsAIGroup(group);
-		
-		Bool deleted = FALSE;
-		Bool actuallyRemoved = FALSE;
-		
-		if (group) {
-			deleted = group->remove(obj);
-			actuallyRemoved = TRUE;
-		}
-		
-		if (actuallyRemoved) {
-			// Set this to be the currently selected group.
-			if (!deleted) {
-				player->setCurrentlySelectedAIGroup(group);
-				// Then, cleanup the group.
-				TheAI->destroyGroup(group);
-			} else {
-				// NULL will clear the group.
-				player->setCurrentlySelectedAIGroup(NULL);
-			}
-
-			if (affectClient) {
-				Drawable *draw = obj->getDrawable();
-				if (draw) {
-					TheInGameUI->deselectDrawable(draw);
-				}
-			}
-		}
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
 // ?validateSleepyUpdate@GameLogic@@ABEXXZ present-unmatched
 inline void GameLogic::validateSleepyUpdate() const
 {
