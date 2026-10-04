@@ -76,12 +76,14 @@ private:
 	Rva0020CA90ListNode *m_targets;
 };
 
-#pragma comment(linker, "/alternatename:?aiAttackPosition@AICommandInterface@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z=?j_000404c1@@YAXXZ")
+extern void j_000404c1();
 
 void Rva0020CA90Owner::attack(const Coord3D *position, Int maxShots,
 	CommandSourceType commandSource)
 {
 	Rva0020CA90ListNode *head = targetHead();
+	typedef void (AICommandInterface::*Fn)(const Coord3D *, Int,
+		CommandSourceType);
 	Rva0020CA90ListNode *node = head->m_next;
 	if (node == head)
 		return;
@@ -99,7 +101,8 @@ void Rva0020CA90Owner::attack(const Coord3D *position, Int maxShots,
 
 		if (object != 0 && object->m_ai != 0)
 		{
-			object->m_ai->m_commands.aiAttackPosition(
+			union { void (*fn)(); Fn call; } u = { j_000404c1 };
+			(object->m_ai->m_commands.*u.call)(
 				position, maxShots, commandSource);
 			_ReadWriteBarrier();
 		}
