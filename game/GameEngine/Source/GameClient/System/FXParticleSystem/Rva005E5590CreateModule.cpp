@@ -1,17 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-extern "C" const void *bfmeVftRva005EB2F0_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB2F0_V3Slot0N=??_7Rva005EB2F0@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EB2F0_V3Slot1W[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB2F0_V3Slot1W=??_7Rva005EB2F0@@6BV3Slot1W@@@")
-extern "C" const void *bfmeVftRva005EB2F0_V3Slot2[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB2F0_V3Slot2=??_7Rva005EB2F0@@6BV3Slot2@@@")
-extern "C" const void *bfmeVftRva005EAF40_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAF40_V3Slot0N=??_7Rva005EAF40@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EAF40_V3Slot1W[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAF40_V3Slot1W=??_7Rva005EAF40@@6BV3Slot1W@@@")
-extern "C" const void *bfmeVftRva005EAF40_V3Slot2[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAF40_V3Slot2=??_7Rva005EAF40@@6BV3Slot2@@@")
+// The three vftables stamped by each allocation ctor, bound to their retail
+// symbols directly.  MSVC 7.1 has no other way to spell a `??_7...` name in
+// C++; __identifier() emits it verbatim.
+extern "C" const char __identifier( "??_7Rva005EB2F0@@6BV3Slot0N@@@" )[];
+extern "C" const char __identifier( "??_7Rva005EB2F0@@6BV3Slot1W@@@" )[];
+extern "C" const char __identifier( "??_7Rva005EB2F0@@6BV3Slot2@@@" )[];
+extern "C" const char __identifier( "??_7Rva005EAF40@@6BV3Slot0N@@@" )[];
+extern "C" const char __identifier( "??_7Rva005EAF40@@6BV3Slot1W@@@" )[];
+extern "C" const char __identifier( "??_7Rva005EAF40@@6BV3Slot2@@@" )[];
 
 inline void *operator new( unsigned int, void *place )
 {
@@ -82,9 +79,9 @@ public:
 		void *owner, const ParticleModuleStateSource005FD300 *source )
 	{
 		new ( (void *)this ) ParticleModuleState005FD300( owner, source );
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EB2F0_V3Slot0N;
-		*(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)bfmeVftRva005EB2F0_V3Slot1W;
-		*(volatile unsigned int *)((unsigned char *)this + 0x10) = (unsigned int)bfmeVftRva005EB2F0_V3Slot2;
+		*(volatile unsigned int *)this = (unsigned int)__identifier( "??_7Rva005EB2F0@@6BV3Slot0N@@@" );
+		*(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)__identifier( "??_7Rva005EB2F0@@6BV3Slot1W@@@" );
+		*(volatile unsigned int *)((unsigned char *)this + 0x10) = (unsigned int)__identifier( "??_7Rva005EB2F0@@6BV3Slot2@@@" );
 	}
 
 private:
@@ -166,9 +163,9 @@ public:
 		void *owner, const ParticleModuleStateSource005FC800 *source )
 	{
 		new ( (void *)this ) ParticleModuleState005FC800( owner, source );
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EAF40_V3Slot0N;
-		*(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)bfmeVftRva005EAF40_V3Slot1W;
-		*(volatile unsigned int *)((unsigned char *)this + 0x10) = (unsigned int)bfmeVftRva005EAF40_V3Slot2;
+		*(volatile unsigned int *)this = (unsigned int)__identifier( "??_7Rva005EAF40@@6BV3Slot0N@@@" );
+		*(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)__identifier( "??_7Rva005EAF40@@6BV3Slot1W@@@" );
+		*(volatile unsigned int *)((unsigned char *)this + 0x10) = (unsigned int)__identifier( "??_7Rva005EAF40@@6BV3Slot2@@@" );
 	}
 
 private:
