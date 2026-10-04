@@ -39,15 +39,16 @@
 extern Int paralyzeTroop( Object *obj, void *userData );
 
 // BattlePlan's retail calls use the BFME vision-range setter body at
-// 0x001BF3A0 via ILT 0x000228E0. Keep that layout-specific callee distinct:
-// The BFME retail Object layout stores vision range at +0x194.
+// 0x001BF3A0 via ILT 0x000228E0 (a 5-byte jmp thunk claimed by address, so the
+// callee is referenced as j_000228e0 directly).  The BFME retail Object layout
+// stores vision range at +0x194; the thunk carries the same thiscall signature.
+extern void j_000228e0();
+
+//Carrier class for the thunk's member-pointer type; it carries no data and is
+//only used to spell the call's thiscall signature (no vtable adjustment).
 class BfmeBattlePlanVisionSetter
 {
-public:
-	void setVisionRange( Real newVisionRange );
 };
-
-#pragma comment(linker, "/alternatename:?setVisionRange@BfmeBattlePlanVisionSetter@@QAEXM@Z=?j_000228e0@@YAXXZ")
 
 // The retail Object keeps its BodyModuleInterface at +0x200.  The ordinary
 // Object header's convenience accessor is a different-layout inline (+0x194),
@@ -153,7 +154,9 @@ void BattlePlanUpdate::setBattlePlan( BattlePlanStatus plan )
 				//Remove sight range bonus
 				if( retailData->m_strategyCenterSearchAndDestroySightRangeScalar != 1.0f )
 				{
-					((BfmeBattlePlanVisionSetter *)obj)->setVisionRange( obj->getVisionRange() * 1.0f / retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
+					typedef void ( BfmeBattlePlanVisionSetter::*SetVisionRange )( Real );
+					union { void ( *fn )(); SetVisionRange call; } setVision = { j_000228e0 };
+					( ( (BfmeBattlePlanVisionSetter *)obj )->*setVision.call )( obj->getVisionRange() * 1.0f / retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
 					obj->setShroudClearingRange( obj->getShroudClearingRange() * 1.0f / retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
 				}
 
@@ -213,7 +216,9 @@ void BattlePlanUpdate::setBattlePlan( BattlePlanStatus plan )
 				//Add sight range bonus
 				if( retailData->m_strategyCenterSearchAndDestroySightRangeScalar != 1.0f )
 				{
-					((BfmeBattlePlanVisionSetter *)obj)->setVisionRange( obj->getVisionRange() * retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
+					typedef void ( BfmeBattlePlanVisionSetter::*SetVisionRange )( Real );
+					union { void ( *fn )(); SetVisionRange call; } setVision = { j_000228e0 };
+					( ( (BfmeBattlePlanVisionSetter *)obj )->*setVision.call )( obj->getVisionRange() * retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
 					obj->setShroudClearingRange( obj->getShroudClearingRange() * retailData->m_strategyCenterSearchAndDestroySightRangeScalar );
 				}
 
