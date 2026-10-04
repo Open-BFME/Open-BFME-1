@@ -10,7 +10,7 @@ class ModuleData;
 class BehaviorModule
 {
 public:
-	virtual void behaviorModuleAnchor();
+	virtual void behaviorModuleAnchor() = 0;
 
 private:
 	unsigned char m_data[8];
@@ -20,13 +20,13 @@ private:
 class SpecialPowerModuleInterface
 {
 public:
-	virtual void specialPowerModuleInterfaceAnchor();
+	virtual void specialPowerModuleInterfaceAnchor() = 0;
 };
 
 class SpecialPowerModuleExtra
 {
 public:
-	virtual void specialPowerExtraAnchor();
+	virtual void specialPowerExtraAnchor() = 0;
 
 private:
 	unsigned char m_pad[12];
@@ -35,19 +35,25 @@ private:
 class ModuleInterface
 {
 public:
-	virtual void moduleInterfaceAnchor();
+	virtual void moduleInterfaceAnchor() = 0;
 };
 
-class LevelGrantSpecialPowerBase : public BehaviorModule,
+// The retail base call leaves through ILT 0x00013462, whose jmp target is
+// 0x006A6360 = the body the ledger owns as
+// ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z (0x002A6360,
+// matched in SpecialAbilityUpdate_ctor_Thunk.cpp).  Spell the base with that
+// name so the reference resolves, exactly as
+// HeroModeSpecialAbilityUpdateCtorThunk.cpp does for the same ILT entry.
+class SpecialAbilityUpdate : public BehaviorModule,
 	public SpecialPowerModuleInterface,
 	public SpecialPowerModuleExtra,
 	public ModuleInterface
 {
 public:
-	LevelGrantSpecialPowerBase( Thing *thing, const ModuleData *moduleData );
+	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
 };
 
-class LevelGrantSpecialPower : public LevelGrantSpecialPowerBase
+class LevelGrantSpecialPower : public SpecialAbilityUpdate
 {
 public:
 	LevelGrantSpecialPower( Thing *thing, const ModuleData *moduleData );
@@ -55,6 +61,6 @@ public:
 
 // ??0LevelGrantSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z
 LevelGrantSpecialPower::LevelGrantSpecialPower( Thing *thing, const ModuleData *moduleData )
-	: LevelGrantSpecialPowerBase( thing, moduleData )
+	: SpecialAbilityUpdate( thing, moduleData )
 {
 }
