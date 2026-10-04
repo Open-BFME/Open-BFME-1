@@ -61,13 +61,13 @@ public:
 	Bool isCurrentlyPlaying() const;
 };
 
-// BFME Object::getDrawable vtable slot +0x28 and retail sound-lookup thunk
+// BFME Object::getDrawable vtable slot +0x28
 class Drawable {
-public:
-	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
 };
 
-#pragma comment(linker, "/alternatename:?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
+// retail ILT thunk for Drawable::getPerUnitSound; referenced directly through a
+// member-pointer call so the call target is named, not linker-aliased
+extern void j_0000fd44();
 
 #define TEN_VIRTUALS(prefix) \
 	virtual void prefix##0(); virtual void prefix##1(); \
@@ -363,7 +363,9 @@ void TurretAI::startRotOrPitchSound()
 		{
 			{
 				AsciiString soundName("TurretMoveLoop");
-				m_turretRotOrPitchSound = *drawable->getPerUnitSound(soundName);
+				typedef const AudioEventRTS *(Drawable::*Fn)(const AsciiString &) const;
+				union { void (*fn)(); Fn call; } u = { j_0000fd44 };
+				m_turretRotOrPitchSound = *(drawable->*u.call)(soundName);
 			}
 			m_turretRotOrPitchSound.setObjectID(Owner->getID());
 			m_turretRotOrPitchSound.setPlayingHandle(TheAudio->addAudioEvent(&m_turretRotOrPitchSound));
