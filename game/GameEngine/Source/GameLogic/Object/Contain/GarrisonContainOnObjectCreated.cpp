@@ -46,11 +46,7 @@ public:
 	virtual void addToContain(Object *object) = 0;
 };
 
-#define OBJECT_TU_MEMBERS \
-	Player *getControllingPlayer() const;
 #include "../object.h"
-
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
 
 class BfmeThingFactory
 {
@@ -58,9 +54,26 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
-
+extern void j_00020824();
+extern void j_00028560();
 extern void j_0004494a();
+
+static __forceinline Player *bfmeGetControllingPlayer(const Object *object)
+{
+	typedef Player *(Object::*Function)() const;
+	union { void (*raw)(); Function member; } function;
+	function.raw = j_00020824;
+	return (object->*function.member)();
+}
+
+static __forceinline const ThingTemplate *bfmeFindTemplate(
+	BfmeThingFactory *factory, const AsciiString &name)
+{
+	typedef const ThingTemplate *(BfmeThingFactory::*Function)(const AsciiString &);
+	union { void (*raw)(); Function member; } function;
+	function.raw = j_00028560;
+	return (factory->*function.member)(name);
+}
 
 static __forceinline Object *bfmeNewObject(BfmeThingFactory *factory,
 	const ThingTemplate *thingTemplate, Team *team,
@@ -104,13 +117,13 @@ void GarrisonContain::onObjectCreated()
 	if (count <= 0)
 		return;
 
-	const ThingTemplate *rosterTemplate =
-		((BfmeThingFactory *)TheThingFactory)->findTemplate(moduleData->m_initialRosterTemplateName);
+	const ThingTemplate *rosterTemplate = bfmeFindTemplate(
+		(BfmeThingFactory *)TheThingFactory, moduleData->m_initialRosterTemplateName);
 	Object *object = m_object;
 	for (int i = 0; i < count; ++i)
 	{
 		GarrisonContainObjectStatusMaskView status;
-		Team *team = object->getControllingPlayer()->m_defaultTeam;
+		Team *team = bfmeGetControllingPlayer(object)->m_defaultTeam;
 		Object *payload = bfmeNewObject((BfmeThingFactory *)TheThingFactory, rosterTemplate,
 			team, status, 0);
 		ContainModuleInterface *contain = object->m_contain;
