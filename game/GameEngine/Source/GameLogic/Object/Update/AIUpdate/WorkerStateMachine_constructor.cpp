@@ -45,8 +45,20 @@ protected:
 		StateID failureID, const StateConditionInfo *conditions);
 };
 
+// Retail reaches the base constructor through the incremental-link thunk
+// j_0000f123, but the call is emitted from a constructor initializer list, so
+// the compiler must name StateMachine::StateMachine and there is no spelling
+// of the base ctor call that names the thunk instead.  Kept deliberately.
 #pragma comment(linker, "/alternatename:??0StateMachine@@QAE@PAVObject@@VAsciiString@@_N@Z=?j_0000f123@@YAXXZ")
-#pragma comment(linker, "/alternatename:?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z=?j_0003d1b3@@YAXXZ")
+
+// Retail calls defineState through the incremental-link thunk j_0003d1b3; the
+// union in the constructor routes the member call straight to the thunk.
+extern void j_0003d1b3();
+
+// The state-condition callbacks are stored as function pointers whose retail
+// addresses are the ILT thunks j_0000a27c and j_0002d998.
+extern void j_0000a27c();
+extern void j_0002d998();
 
 class ActAsDozerState : public Rva000A19E0StateBase
 {
@@ -70,31 +82,29 @@ class WorkerStateMachine : public StateMachine
 {
 public:
 	WorkerStateMachine(Object *owner);
-
-	static bool supplyTruckSubMachineWantsToEnter(State *, void *);
-	static bool supplyTruckSubMachineReadyToLeave(State *, void *);
 };
-
-#pragma comment(linker, "/alternatename:?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z=?j_0000a27c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?supplyTruckSubMachineReadyToLeave@WorkerStateMachine@@SA_NPAVState@@PAX@Z=?j_0002d998@@YAXXZ")
 
 WorkerStateMachine::WorkerStateMachine(Object *owner)
 	: StateMachine(owner, AsciiString("WorkerStateMachine"), false)
 {
+	typedef void (StateMachine::*Define)(StateID, State *, StateID, StateID,
+		const StateConditionInfo *) const;
+	union { void (*fn)(); Define call; } define = { j_0003d1b3 };
+
 	static const StateConditionInfo asDozerConditions[] =
 	{
-		StateConditionInfo(supplyTruckSubMachineWantsToEnter, 1, 0),
+		StateConditionInfo((StateTransFuncPtr)(void *)j_0000a27c, 1, 0),
 		StateConditionInfo(0, 0, 0)
 	};
 
 	static const StateConditionInfo asTruckConditions[] =
 	{
-		StateConditionInfo(supplyTruckSubMachineReadyToLeave, 0, 0),
+		StateConditionInfo((StateTransFuncPtr)(void *)j_0002d998, 0, 0),
 		StateConditionInfo(0, 0, 0)
 	};
 
-	defineState(0, (State *)new ActAsDozerState(this), 999999, 999999,
+	(this->*define.call)(0, (State *)new ActAsDozerState(this), 999999, 999999,
 		asDozerConditions);
-	defineState(1, (State *)new ActAsSupplyTruckState(this), 999999, 999999,
+	(this->*define.call)(1, (State *)new ActAsSupplyTruckState(this), 999999, 999999,
 		asTruckConditions);
 }
