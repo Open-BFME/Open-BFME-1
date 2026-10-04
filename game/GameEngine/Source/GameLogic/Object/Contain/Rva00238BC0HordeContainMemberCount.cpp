@@ -17,18 +17,16 @@ class BfmeRvaA760Object
 
 class BfmeRvaA760CountOwner
 {
-public:
-	int getCount( void );
 };
 
 class BfmeRvaA760ProbeInterface
 {
-public:
-	bool accepts( BfmeRvaA760Object *object, int count );
 };
 
-#pragma comment(linker, "/alternatename:?getCount@BfmeRvaA760CountOwner@@QAEHXZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?accepts@BfmeRvaA760ProbeInterface@@QAE_NPAVBfmeRvaA760Object@@H@Z=?j_0001da34@@YAXXZ")
+// Retail calls these two sites through incremental-link thunks: 0x00020824
+// (count query) and 0x0001DA34 (probe filter), each a 5-byte j_ ILT thunk.
+extern void j_00020824();
+extern void j_0001da34();
 
 struct BfmeMemberIndexNode
 {
@@ -108,13 +106,17 @@ BfmeRvaA760ProbeInterface *filter ) const
 	}
 
 	Int count = 0;
+	typedef Int (BfmeRvaA760CountOwner::*CountFn)( void );
+	union { void (*fn)(); CountFn call; } getCount = { j_00020824 };
+	typedef bool (BfmeRvaA760ProbeInterface::*AcceptFn)( BfmeRvaA760Object *object, Int count );
+	union { void (*fn)(); AcceptFn call; } accepts = { j_0001da34 };
 	BfmeRvaA760CountOwner *countOwner =
 		*(BfmeRvaA760CountOwner **)((char *)this - 0xdc);
 	BfmeMemberList &members = *(BfmeMemberList *)((char *)this - 0xac);
 	BfmeMemberList::iterator node = members.begin();
 	while ( node != members.end() )
 	{
-		if ( probe->accepts( *node, countOwner->getCount() ) )
+		if ( (probe->*accepts.call)( *node, (countOwner->*getCount.call)() ) )
 			++count;
 		++node;
 	}
@@ -128,7 +130,7 @@ BfmeRvaA760ProbeInterface *filter ) const
 			BfmeRvaA760Object *object =
 				TheGameLogic->findObjectByID( key );
 			if ( object != 0
-				&& probe->accepts( object, countOwner->getCount() ) )
+				&& (probe->*accepts.call)( object, (countOwner->*getCount.call)() ) )
 				++count;
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
