@@ -7,7 +7,6 @@ stopping at the incremental-link thunk names the jump table rather than the
 function. Both mistakes score zero new identity while looking like they worked.
 """
 import csv
-import importlib.util
 import re
 import struct
 import sys
@@ -20,17 +19,11 @@ REL32 = 0x0014
 NOTES_RE = re.compile(r"reloc-derived;call-sites=[1-9]\d*;identity=(real|generated)")
 
 
-def _load(name):
-    spec = importlib.util.spec_from_file_location(name, TOOLS / f"{name}.py")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
 sys.path.insert(0, str(TOOLS))
-build = _load("build")
-next_work = _load("next_work")
+# Keep shared module identity across test collection; replacing build here
+# disconnects the census's build reference from its later-imported fixtures.
+import build
+import next_work
 
 
 def call_row(caller_rva, callee_rva, opcode=0xE8, symbol="?callee@@YAXXZ",

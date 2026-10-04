@@ -15,7 +15,6 @@ mistakes this file pins down are the ones that still look like they worked:
   * a baseline that admits new lines is a whitelist, and this repo has already
     been bitten by one.
 """
-import importlib.util
 import struct
 import sys
 from pathlib import Path
@@ -25,17 +24,12 @@ import pytest
 TOOLS = Path(__file__).resolve().parents[1]
 
 
-def _load(name):
-    spec = importlib.util.spec_from_file_location(name, TOOLS / f"{name}.py")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
 sys.path.insert(0, str(TOOLS))
-build = _load("build")
-pin_consistency = _load("pin_consistency")
+# Reuse the modules the census and its receipt fixtures already imported.
+# Replacing sys.modules["build"] at collection time leaves their monkeypatches
+# on a different module from the one the code under test actually uses.
+import build
+import pin_consistency
 
 # Two retail copies of one 25-byte function. Both call 0x000247E9; the only
 # difference between them is the E8 displacement at offset 17, which is what
