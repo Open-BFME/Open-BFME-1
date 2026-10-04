@@ -36,16 +36,28 @@ public:
 	void *bfmeGoRF( void *one, void *two );                       // 0x007E8900
 };
 
-// getString returns bool and three callers return its result; the ledger row at
-// its pinned address 0x007E8A80 (?bfmeGoUPB@BfmeThingUPB) returns char, and
-// converting that to bool changes those callers' bytes. The calls keep their
-// spelling and this alias names the same pinned body (tools/alias_guard.py).
-#pragma comment(linker, "/alternatename:?getString@Rva007E8810Message@@QAE_NPBDPADH@Z=?bfmeGoUPB@BfmeThingUPB@@QAEDPAXPAD0@Z")
+// The pinned body at 0x007E8A80 is the ledger's ?bfmeGoUPB@BfmeThingUPB
+// (char return), but these three helpers plus the constructor return a bool and
+// the retail bytes carry no char-to-bool conversion after the call. The calls
+// are therefore made through a union: the member-pointer slot is typed like the
+// old getString (bool (this)(const char *, char *, int)) so the call sequence is
+// byte-identical, while the value in the union is the address of the real
+// ?bfmeGoUPB@BfmeThingUPB body. Both classes are TU-local re-declarations and
+// a thiscall member pointer is a bare code address on x86, so the pun is exact.
+class BfmeThingUPB
+{
+public:
+	char bfmeGoUPB( void *key, char *dest, void *destSize );          // 0x007E8A80
+};
+
+class Rva007E8810Message;
+
+typedef char (BfmeThingUPB::*UpbFn007E8A80)( void *, char *, void * );
+typedef bool (Rva007E8810Message::*MsgFn007E8A80)( const char *, char *, int );
 
 class Rva007E8810Message
 {
 public:
-	bool getString( const char *key, char *dest, int destSize );     // 0x007E8A80
 	FeslInt64 getInt64( const char *key, FeslInt64 defaultValue );   // 0x007E8930
 };
 
@@ -85,7 +97,8 @@ Rva007FBEF0GameRecord::Rva007FBEF0GameRecord( Rva007E8810Message *msg )
 	m_gid = (int)(long)reinterpret_cast< BfmeThingRF * >( msg )->bfmeGoRF( (void *)"GID", (void *)0 );
 	m_msg = msg;
 	m_ugid[ 0 ] = 0;
-	m_msg->getString( "UGID", m_ugid, 0x25 );
+	union { UpbFn007E8A80 upb; MsgFn007E8A80 call; } u007e8a80 = { &BfmeThingUPB::bfmeGoUPB };
+	( m_msg->*u007e8a80.call )( "UGID", m_ugid, 0x25 );
 }
 
 bool Rva007FBEF0GameRecord::Rva007FBE80( const char *key, char *dest,
@@ -96,7 +109,8 @@ bool Rva007FBEF0GameRecord::Rva007FBE80( const char *key, char *dest,
 	if( key == 0 || destSize <= 0 )
 		return false;
 	sprintf( name, "B-%s", key );
-	return m_msg->getString( name, dest, destSize );
+	union { UpbFn007E8A80 upb; MsgFn007E8A80 call; } u007e8a80 = { &BfmeThingUPB::bfmeGoUPB };
+	return ( m_msg->*u007e8a80.call )( name, dest, destSize );
 }
 
 bool Rva007FBEF0GameRecord::Rva007FBF40( const char *key, char *dest,
@@ -107,7 +121,8 @@ bool Rva007FBEF0GameRecord::Rva007FBF40( const char *key, char *dest,
 	if( key == 0 || destSize <= 0 )
 		return false;
 	sprintf( name, "D-%s", key );
-	return m_msg->getString( name, dest, destSize );
+	union { UpbFn007E8A80 upb; MsgFn007E8A80 call; } u007e8a80 = { &BfmeThingUPB::bfmeGoUPB };
+	return ( m_msg->*u007e8a80.call )( name, dest, destSize );
 }
 
 bool Rva007FBEF0GameRecord::Rva007FBFB0( const char *key, char *dest,
@@ -118,5 +133,6 @@ bool Rva007FBEF0GameRecord::Rva007FBFB0( const char *key, char *dest,
 	if( key == 0 || destSize <= 0 )
 		return false;
 	sprintf( name, "P-%s", key );
-	return m_msg->getString( name, dest, destSize );
+	union { UpbFn007E8A80 upb; MsgFn007E8A80 call; } u007e8a80 = { &BfmeThingUPB::bfmeGoUPB };
+	return ( m_msg->*u007e8a80.call )( name, dest, destSize );
 }
