@@ -50,6 +50,9 @@ struct ScriptCounter
 // and returns node+0x18. Its historical shim calls this a flag and returns
 // bool*, but the writable sibling and this caller prove an 8-byte ScriptCounter.
 // Reuse the existing ABI and explicitly convert its returned storage pointer.
+// Retail calls the lookup through ILT 0x000142B3 (-> 0x00344B20).
+extern void j_000142b3();
+
 class Open2Lookup344B20
 {
 public:
@@ -98,8 +101,11 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 
 	if (copyCounter)
 	{
+		typedef bool *(Open2Lookup344B20::*FindCounter)(AsciiString);
+		union { void (*raw)(void); FindCounter member; } findCounter;
+		findCounter.raw = j_000142b3;
 		const ScriptCounter *source = reinterpret_cast<const ScriptCounter *>(
-			((Open2Lookup344B20 *)this)->findFlag(action->getParameter(1)->m_string));
+			(((Open2Lookup344B20 *)this)->*findCounter.member)(action->getParameter(1)->m_string));
 		if (source)
 		{
 			counter->m_value = source->m_value;
