@@ -33,6 +33,7 @@ class INIException
 public:
 	INIException(int, const char *, ...);
 	INIException(const INIException &);
+	~INIException();
 
 	char *m_failureMessage;
 	int m_argCount;

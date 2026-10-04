@@ -60,6 +60,7 @@ class INIException
 public:
 	INIException(Int code, const char *format, ...);
 	INIException(const INIException &other);
+	~INIException();
 
 	Int m_code;
 	const char *m_message;
