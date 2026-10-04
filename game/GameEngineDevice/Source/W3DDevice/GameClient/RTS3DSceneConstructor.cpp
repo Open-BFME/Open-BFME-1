@@ -61,11 +61,19 @@ class SubsystemInterface
 public:
 	SubsystemInterface();
 	virtual ~SubsystemInterface();
-	void setName(AsciiString name) { m_name = name; }
 
-private:
+public:
 	AsciiString m_name;
 };
+
+// Retail inlines this store at the RTS3DScene constructor; the out-of-line body
+// is owned by SubsystemInterfaceName.cpp. A TU-local forced-inline helper keeps
+// this file from emitting its own ?setName@SubsystemInterface COMDAT.
+template <class T>
+static __forceinline void bfmeSetSubsystemName(T *subsystem, AsciiString name)
+{
+	subsystem->m_name = name;
+}
 
 struct BfmeSceneListNode
 {
@@ -268,7 +276,7 @@ private:
 
 RTS3DScene::RTS3DScene()
 {
-	setName("RTS3DScene");
+	bfmeSetSubsystemName(this, "RTS3DScene");
 	m_drawTerrainOnly = false;
 	m_numGlobalLights = 0;
 	m_passFlag = true;

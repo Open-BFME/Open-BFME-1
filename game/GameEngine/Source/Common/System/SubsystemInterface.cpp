@@ -171,7 +171,10 @@ void SubsystemInterfaceList::removeSubsystem(SubsystemInterface* sys)
 // ?initSubsystem@SubsystemInterfaceList@@QAEXPAVSubsystemInterface@@PBD11PAVXfer@@VAsciiString@@@Z present-unmatched
 void SubsystemInterfaceList::initSubsystem(SubsystemInterface* sys, const char* path1, const char* path2, const char* dirpath, Xfer *pXfer, AsciiString name)
 {
-	sys->setName(name);
+	// Retail's name store is at +4 after the vptr; writing it here keeps this TU
+	// from emitting its own ?setName@SubsystemInterface COMDAT (the out-of-line
+	// body is owned by SubsystemInterfaceName.cpp).
+	*(AsciiString *)((char *)sys + 4) = name;
 	sys->init();
 
 	INI ini;

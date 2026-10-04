@@ -38,11 +38,20 @@ class SubsystemInterface
 public:
 	virtual ~SubsystemInterface(void);
 	virtual void init(void) = 0;
-	void setName(AsciiString name) { m_name = name; }
 
-protected:
+public:
 	AsciiString m_name;
 };
+
+// Retail inlines this store at every call site except GameLogic::init's
+// TheLargeGroupAudio, which reaches the out-of-line body (owned by
+// SubsystemInterfaceName.cpp) through ILT 0x0001CE9A. A TU-local forced-inline
+// helper keeps this file from emitting its own ?setName@SubsystemInterface COMDAT.
+template <class T>
+static __forceinline void bfmeSetSubsystemName(T *subsystem, AsciiString name)
+{
+	subsystem->m_name = name;
+}
 
 class PartitionManager : public SubsystemInterface
 {
@@ -111,6 +120,8 @@ class Manager012EF4F0 : public Snapshot, public SubsystemInterface
 };
 
 class GhostObjectManager;
+
+extern void j_0001ce9a(void);
 
 class LargeGroupAudio : public SubsystemInterface
 {
@@ -230,15 +241,15 @@ void GameLogic::init(void)
 
 	ThePartitionManager = new Rva009F2730Owner;
 	ThePartitionManager->init();
-	ThePartitionManager->setName("ThePartitionManager");
+	bfmeSetSubsystemName(ThePartitionManager, "ThePartitionManager");
 
 	TheShroudManager = new Rva008F7510ShroudManager;
 	TheShroudManager->init();
-	TheShroudManager->setName("TheShroudManager");
+	bfmeSetSubsystemName(TheShroudManager, "TheShroudManager");
 
 	TheCollisionManager = new CollisionManager;
 	TheCollisionManager->init();
-	TheCollisionManager->setName("TheCollisionManager");
+	bfmeSetSubsystemName(TheCollisionManager, "TheCollisionManager");
 	TheCollisionManager->rva009A2570();
 
 	Region3D extent;
@@ -252,18 +263,25 @@ void GameLogic::init(void)
 
 	TheTerrainLogic = createTerrainLogic();
 	TheTerrainLogic->init();
-	TheTerrainLogic->setName("TheTerrainLogic");
+	bfmeSetSubsystemName(TheTerrainLogic, "TheTerrainLogic");
 
 	TheLargeGroupAudio = new LargeGroupAudio;
 	if (TheLargeGroupAudio)
 	{
 		TheLargeGroupAudio->init();
-		TheLargeGroupAudio->setName("TheLargeGroupAudio");
+		typedef void (LargeGroupAudio::*SetNameThunk)(AsciiString);
+		union
+		{
+			void (*function)(void);
+			SetNameThunk member;
+		} setNameThunk;
+		setNameThunk.function = j_0001ce9a;
+		(TheLargeGroupAudio->*setNameThunk.member)("TheLargeGroupAudio");
 	}
 
 	g_012EF4F0 = vslot2C();
 	g_012EF4F0->init();
-	g_012EF4F0->setName("TheBuffLogic");
+	bfmeSetSubsystemName(g_012EF4F0, "TheBuffLogic");
 
 	g_bfmeTableERJ->rva0019B030();
 	g_bfmeTableERJ->rva0019F500();
