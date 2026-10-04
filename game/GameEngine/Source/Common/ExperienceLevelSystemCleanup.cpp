@@ -6,13 +6,11 @@
 #include <hash_map>
 #include <list>
 
+extern void j_00032d1c();
+
 class BfmeRefAB
 {
-public:
-    BfmeRefAB *bfmeReleaseThunk();
 };
-
-#pragma comment(linker, "/alternatename:?bfmeReleaseThunk@BfmeRefAB@@QAEPAV1@XZ=?j_00032d1c@@YAXXZ")
 
 class BfmeOwnedReference
 {
@@ -55,7 +53,9 @@ void ExperienceLevelSystem::cleanup()
             }
             else if (value->m_reference)
             {
-                value->m_reference = value->m_reference->bfmeReleaseThunk();
+                typedef BfmeRefAB *(BfmeRefAB::*Fn)();
+                union { void (*fn)(); Fn call; } release = { j_00032d1c };
+                value->m_reference = (value->m_reference->*release.call)();
             }
             ++entry;
         }
