@@ -27,10 +27,10 @@ class Overridable
 public:
 	void *m_vtable;
 	Overridable *m_nextOverride;
-	const Overridable *getFinalOverride() const;
 };
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+// Retail routes this call through the ILT thunk at 0x000022bb.
+extern void j_000022bb();
 
 class Rva00417060Query
 {
@@ -106,7 +106,11 @@ void *Rva00417060::rva00417060() const
 	}
 
 	if (parent->m_nextOverride != 0)
-		parent = (Rva00417060Parent *)parent->m_nextOverride->getFinalOverride();
+	{
+		typedef const void *(Overridable::*FinalOverride)() const;
+		union { void (*fn)(); FinalOverride call; } final = { j_000022bb };
+		parent = (Rva00417060Parent *)((parent->m_nextOverride->*final.call)());
+	}
 
 	_ReadWriteBarrier();
 	return parent->m_rva00417060Result;
