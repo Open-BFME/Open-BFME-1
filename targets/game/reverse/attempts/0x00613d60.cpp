@@ -1,5 +1,5 @@
-// ?d_00613d60@@YAXXZ
-// partial score=0.986 date=2026-09-10
+// ?rva00613d60@Rva00613D60Owner@@QAEXPAURva00613D60Region@@@Z
+// partial score=0.9922 date=2026-10-04
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: retail RVA 0x00613D60, 516 bytes.  A living-world region hand
@@ -248,13 +248,14 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 		Glo012F7090->rva0001b5db(path);
 		message->appendIntegerArgument(6);
 		extra = Glo012F1028->m_at90;
+		message->appendIntegerArgument(extra);
 	}
 	else
 	{
 		message->appendIntegerArgument(0);
 		extra = Glo012F1028->m_at90;
+		message->appendIntegerArgument(extra);
 	}
 
-	message->appendIntegerArgument(extra);
 	message->appendIntegerArgument(0);
 }
