@@ -51,9 +51,7 @@ public:
 		m_haveOutTangent( false )
 	{
 	}
-	void finish();
-
-private:
+	private:
 	Rva0006AB10Curve *m_curve;
 	bool m_firstKey;
 	float m_lastTime;
@@ -65,8 +63,9 @@ private:
 };
 
 // The shipped j-thunk is the independently recovered final-key body at
-// 0x00024000 -> 0x0006ACF0; map only this typed member call to that thunk.
-#pragma comment(linker, "/alternatename:?finish@Rva0006AB90FunctionCurve@@QAEXXZ=?j_00024000@@YAXXZ")
+// 0x00024000 -> 0x0006ACF0; this typed member call routes there through the
+// ILT thunk directly, with no linker alias.
+extern void j_00024000();
 
 class Rva0006AF00FunctionCurve
 {
@@ -87,5 +86,7 @@ void Rva0006AF00FunctionCurve::parse( INI *ini )
 	};
 
 	ini->initFromINI( this, fields );
-	accumulator.finish();
+	typedef void (Rva0006AB90FunctionCurve::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_00024000 };
+	(accumulator.*u.call)();
 }
