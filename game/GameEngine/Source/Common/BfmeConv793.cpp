@@ -4,10 +4,13 @@
 #include "oleauto.h"
 #include "Mss.H"
 
-class BfmeSubDXB
+// retail 0x009F68C6 is the matched body
+// ?RemoveAll@Rva009F68C6PointerArray@@QAEXXZ; this call site reaches it
+// through the same address, so the call is spelled with its defining name.
+class Rva009F68C6PointerArray
 {
 public:
-	void bfmeCallDXB();
+	void RemoveAll();
 };
 
 struct BfmeThingDXB
@@ -15,13 +18,13 @@ struct BfmeThingDXB
 	void bfmeGoDXB();
 	unsigned char m_bfmeHead[0x18];
 	CRITICAL_SECTION m_bfmeCs;
-	BfmeSubDXB m_bfmeSub;
+	Rva009F68C6PointerArray m_bfmeSub;
 };
 
 void BfmeThingDXB::bfmeGoDXB()
 {
 	DeleteCriticalSection(&m_bfmeCs);
-	m_bfmeSub.bfmeCallDXB();
+	m_bfmeSub.RemoveAll();
 }
 
 struct BfmeThingDXC

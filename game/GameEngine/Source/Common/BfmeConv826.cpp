@@ -1,11 +1,15 @@
-
-class BfmeMgrF1D
-{
-};
-extern BfmeMgrF1D *g_mgr12EF1D8;
-
 class ThingTemplate;
 class AsciiString;
+
+// Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory`, the
+// singleton game/GameEngine/Source/Common/Thing/ThingFactory.cpp defines
+// (?TheThingFactory@@3PAVThingFactory@@A). The address-derived
+// `g_mgr12EF1D8` spelling referenced a global nothing defines, so the two
+// bodies below take the defining name and keep this TU's own ABI view of the
+// factory, casting at the use.
+class ThingFactory;
+
+extern ThingFactory *TheThingFactory;
 
 // Both bodies below reach retail 0x00028560, the ILT thunk onto the matched
 // BfmeThingFactory::findTemplate body at 0x00137E80 -- the same address every
@@ -22,12 +26,12 @@ class BfmeSub4_78F
 public:
 	void* reg25C()
 	{
-		return (void*)((BfmeThingFactory*)g_mgr12EF1D8)->findTemplate(
+		return (void*)((BfmeThingFactory*)TheThingFactory)->findTemplate(
 			*(const AsciiString *)((char*)this + 0x25c));
 	}
 	void* reg260()
 	{
-		return (void*)((BfmeThingFactory*)g_mgr12EF1D8)->findTemplate(
+		return (void*)((BfmeThingFactory*)TheThingFactory)->findTemplate(
 			*(const AsciiString *)((char*)this + 0x260));
 	}
 };

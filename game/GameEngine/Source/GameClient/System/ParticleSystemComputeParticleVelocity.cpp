@@ -30,7 +30,7 @@
 //  - The x87 idiom (fld / fadd / fmul / fstp) is the volatile-qualified read
 //    spelled exactly as in the MATCHED sibling 0x005C36C0
 //    (Rva005C36C0Forward.cpp), which compiles byte-exact with the same
-//    g_bfmeK1239 / g_rva0107533C constants and the same GlobalData +0xAB4 load.
+//    g_bfmeDefaultBU / g_rva0107533C constants and the same GlobalData +0xAB4 load.
 //  - The +0x18 slot is computed by a helper that takes the slot pointer BY
 //    REFERENCE. That is the only spelling measured that keeps retail's
 //    redundant second null test at +0x19 (`cmp esi,edx / je +3`) and the
@@ -45,7 +45,7 @@
 //    bytes match.
 typedef float Real;
 
-extern const Real g_bfmeK1239;
+extern Real g_bfmeDefaultBU;
 extern const Real g_rva0107533C;
 
 struct Coord3D
@@ -64,7 +64,8 @@ struct BfmeG1269
 	Real m_valueAB4;
 };
 
-extern BfmeG1269 *g_bfme1269;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 // The callee is the MATCHED 0x005FAC90 body (Rva005FAC90Scale.cpp), reached
 // here through the ILT thunk 0x00008814. It is declared struct-returning, under
@@ -121,7 +122,7 @@ Coord3D ParticleSystem::computeParticleVelocity(const Coord3D *pos)
 			// retail passes the argument through unchanged; the callee's
 			// `context` is modelled unconstrained, hence the cast.
 			return m_receiver->rva005FAC90(const_cast<Coord3D *>(pos), &m_value134,
-				(*(volatile Real *)&g_bfme1269->m_valueAB4 + g_bfmeK1239) * g_rva0107533C,
+				(*(volatile Real *)&((BfmeG1269 *)TheWritableGlobalData)->m_valueAB4 + g_bfmeDefaultBU) * g_rva0107533C,
 				bfmeSlot018(m_value1c4));
 		}
 	}
