@@ -39,9 +39,11 @@ private:
 	unsigned char m_bfmeU;
 };
 
-void configureWindowParameters( Gen_004659D0 *parameters );
-
-#pragma comment(linker, "/alternatename:?configureWindowParameters@@YAXPAVGen_004659D0@@@Z=?d_00894800@@YAXXZ")
+// Retail 0x00894800 (GHIDRA FUN_00c94800) is called with the parameter block
+// on the stack; its body takes that block as its [esp+8] argument.  Call it
+// through the defining name so the emitted call references
+// ?d_00894800@@YAXXZ directly.
+extern void d_00894800();
 
 extern void j_00025086();
 extern void j_00039f1d();
@@ -79,7 +81,8 @@ void WindowManager::init()
 	Gen_004659D0 parameters;
 	parameters.setBfmeT();
 	int windowIndex;
-	configureWindowParameters( &parameters );
+	typedef void ( __cdecl *ConfigureWindowParameters )( Gen_004659D0 * );
+	( (ConfigureWindowParameters)(void *)d_00894800 )( &parameters );
 	*reinterpret_cast< unsigned int * >(
 		reinterpret_cast< unsigned char * >( &g_rva8CD130IdleHook ) + 8 ) |= 2;
 	j_00025086();
