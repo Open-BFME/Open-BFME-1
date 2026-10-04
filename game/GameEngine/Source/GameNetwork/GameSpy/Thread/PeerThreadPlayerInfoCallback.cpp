@@ -149,8 +149,35 @@ __declspec(noinline) static void getPlayerInfo(PeerThreadClass *thread,
 	peerGetPlayerFlagsA(peer, nick, roomType, &flags);
 }
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
+// Retail reaches PeerResponse's default ctor and dtor through the ILT thunks
+// at 0x42069 / 0x44733 (both called with ecx = &resp).  Route them explicitly
+// instead of through the implicit ??0/??1 symbols.
+extern void j_00042069();
+extern void j_00044733();
+
+__forceinline void constructPeerResponse(PeerResponse *p)
+{
+	typedef PeerResponse *(PeerResponse::*Ctor)();
+	union { void (*fn)(); Ctor call; } u = { j_00042069 };
+	(p->*u.call)();
+}
+
+__forceinline void destroyPeerResponse(PeerResponse *p)
+{
+	typedef void (PeerResponse::*Dtor)();
+	union { void (*fn)(); Dtor call; } u = { j_00044733 };
+	(p->*u.call)();
+}
+
+// Raw, 4-aligned storage for the 0x330-byte response.  Its ctor/dtor route to
+// the retail ILT thunks and give the function the unwind cleanup (and so the
+// SEH frame) the retail body has.
+struct PeerResponseBuffer
+{
+	int raw[sizeof(PeerResponse) / sizeof(int)];
+	__forceinline PeerResponseBuffer() { constructPeerResponse((PeerResponse *)raw); }
+	__forceinline ~PeerResponseBuffer() { destroyPeerResponse((PeerResponse *)raw); }
+};
 
 #pragma optimize("y", on)
 void playerInfoCallback(PEER peer, RoomType roomType, const char *nick,
@@ -158,7 +185,8 @@ void playerInfoCallback(PEER peer, RoomType roomType, const char *nick,
 {
 	if (!nick)
 		return;
-	PeerResponse resp;
+	PeerResponseBuffer storage;
+	PeerResponse &resp = *(PeerResponse *)storage.raw;
 	resp.peerResponseType = 13;
 	resp.nick = nick;
 	resp.player.roomType = roomType;
