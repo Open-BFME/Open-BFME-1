@@ -82,11 +82,21 @@ public:
 // These are the named array helpers already landed beside the Pathfinder
 // sources.  The first helper is the element operation used by the 512-cell
 // loop; the second transfers the 64-entry floating-point array.
-extern Xfer &__cdecl xferRva003D6CB0(Xfer &, Int (&)[512]);
-extern Xfer &__cdecl xferRva003D6D40(Xfer &, float (&)[64]);
+//
+// Retail reaches all three through the ILT thunks at 0x000163E7, 0x0000CF4A
+// and 0x00012576 (game/gen_small/thunks_010.cpp, thunks_005.cpp and
+// thunks_008.cpp), which forward to the bodies; the previous direct spellings
+// named nothing the link could find.
+extern void __cdecl j_000163e7();
+extern void __cdecl j_0000cf4a();
+extern void __cdecl j_00012576();
+
+typedef Xfer &(__cdecl *XferIntArray512Fn)(Xfer &, Int (&)[512]);
+typedef Xfer &(__cdecl *XferFloatArray64Fn)(Xfer &, float (&)[64]);
+typedef void (__cdecl *XferIntPtrFn)(Xfer *, Int *);
+
 class MidVirtualSlot90Receiver;
 extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
-extern void __cdecl bfmeXfer246FC(Xfer *, Int *);
 
 class PathfindCell
 {
@@ -163,11 +173,11 @@ void Pathfinder::xfer(Xfer *xfer)
 		xfer->xferBool(&m_field04);
 		xfer->xferBool(&m_field838);
 		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_field840);
-		xferRva003D6CB0(*xfer, m_field24714);
+		((XferIntArray512Fn)j_000163e7)(*xfer, m_field24714);
 		xfer->xferInt(&m_field24f14);
 		xfer->xferInt(&m_field24f18);
 		xfer->xferInt(&m_field243f4);
-		xferRva003D6D40(*xfer, m_field243f8);
+		((XferFloatArray64Fn)j_0000cf4a)(*xfer, m_field243f8);
 		xfer->xferInt(&m_field83c);
 		xfer->xferBool(&m_field243f0);
 		xfer->xferBool(&m_field243f1);
@@ -198,7 +208,7 @@ void Pathfinder::xfer(Xfer *xfer)
 		xfer->xferInt(&m_field20);
 		xfer->xferInt(&m_field24);
 		xfer->xferInt(&m_field830);
-		bfmeXfer246FC(xfer, &m_field246fc);
+		((XferIntPtrFn)j_00012576)(xfer, &m_field246fc);
 		xfer->xferInt(&m_field246f8);
 	}
 }

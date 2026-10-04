@@ -7,14 +7,16 @@
 #include "coord3d.h"
 #include <math.h>
 inline Coord3D::Coord3D() {}
-inline Coord3D::Coord3D(const Coord3D &c) { x=c.x; y=c.y; z=c.z; }
 inline Coord3D::~Coord3D() {}
-__forceinline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &c) {
-    struct Raw { unsigned int x,y,z; };
-    *(Raw *)this=*(const Raw *)&c; return *this;
+// coord3d.cpp owns ??0Coord3D@@QAE@ABV0@@Z and ??4Coord3DBase@@QAEAAU0@ABU0@@Z
+// as out-of-line definitions; giving them COMDAT copies here would collide.
+// This TU inlines every copy instead, so nothing external is referenced.
+__forceinline void Melee002705D0CopyCoord(Coord3DBase &d, const Coord3DBase &s) {
+    d.x=s.x; d.y=s.y; d.z=s.z;
 }
-__forceinline Coord3D &Coord3D::operator=(const Coord3D &c) {
-    *(Coord3DBase *)this=c; return *this;
+__forceinline void Melee002705D0AssignCoord(Coord3DBase &d, const Coord3DBase &s) {
+    struct Raw { unsigned int x,y,z; };
+    *(Raw *)&d=*(const Raw *)&s;
 }
 
 class Melee002705D0Route {};
@@ -67,7 +69,11 @@ static inline Melee002705D0GameLogic *frameView002705D0() { return (Melee002705D
 class AI;
 extern AI *TheAI;
 static inline Melee002705D0GlobalAI *aiView002705D0() { return (Melee002705D0GlobalAI *)TheAI; }
-extern Melee002705D0Terrain *g002705D0Va012EF4CC;
+// Retail 0x012EF4CC is the terrain singleton, defined out of line as
+// ?TheTerrainLogic@@3PAVTerrainLogic@@A by GameLogic/Map/terrainlogic.cpp.
+// Melee002705D0Terrain stays as this TU's virtual-table view of it.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
@@ -108,7 +114,8 @@ public:
 
 bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
     Melee002705D0Object *obj=m_object;
-    Coord3D oldPosition=*obj->position();
+    Coord3D oldPosition;
+    Melee002705D0CopyCoord(oldPosition,*obj->position());
     Coord3D pos;
     {
         // The normalized direction dies before the adjusted-distance temporary.
@@ -126,10 +133,10 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
         if (!flag) {
             pos.x+=delta.x;
             pos.y+=delta.y;
-            int layer=g002705D0Va012EF4CC->layer(obj,destination);
-            float height=g002705D0Va012EF4CC->slot01c(pos.x,pos.y,layer,0,true);
-            if (fabs(height-g002705D0Va012EF4CC->slot01c(destination->x,destination->y,layer,0,true))>10.0f)
-            pos=*destination;
+            int layer=((Melee002705D0Terrain *)TheTerrainLogic)->layer(obj,destination);
+            float height=((Melee002705D0Terrain *)TheTerrainLogic)->slot01c(pos.x,pos.y,layer,0,true);
+            if (fabs(height-((Melee002705D0Terrain *)TheTerrainLogic)->slot01c(destination->x,destination->y,layer,0,true))>10.0f)
+            Melee002705D0AssignCoord(pos,*destination);
         }
     }
     Melee002705D0Object *adjustObject=m_object;
@@ -140,10 +147,10 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
         Melee002705D0Pathfinder *finder=aiView002705D0()->pathfinder();
         typedef void (Melee002705D0Route::*UpdateCall)(Melee002705D0Object *,const Coord3D *,int,const char *,int);
         union { void (*address)(); UpdateCall member; } updateCall={j_000294e2};
-        (((Melee002705D0Route *)finder)->*updateCall.member)(owner,&pos,g002705D0Va012EF4CC->layer(owner,&pos),
+        (((Melee002705D0Route *)finder)->*updateCall.member)(owner,&pos,((Melee002705D0Terrain *)TheTerrainLogic)->layer(owner,&pos),
             "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate.cpp",0x351);
         Coord3D distance;
-        distance=oldPosition;
+        Melee002705D0AssignCoord(distance,oldPosition);
         distance.x-=pos.x;
         distance.y-=pos.y;
         if (!(sqrt(distance.x*distance.x+distance.y*distance.y)<20.0f)) {
@@ -151,7 +158,7 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
             ((void (__cdecl *)(void *,const char *,...))j_0003a17a)(TheCRCParameterCheck,
                 "CritterDesync: requestMeleeApproachPath1 -- m_requestedDestination changing from %g,%g,%g to %g,%g,%g",
                 m_requestedDestination.x,m_requestedDestination.y,m_requestedDestination.z,pos.x,pos.y,pos.z);
-            m_requestedDestination=pos;
+            Melee002705D0AssignCoord(m_requestedDestination,pos);
             at320=true;
             at31f=false;
             at144=0;

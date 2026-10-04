@@ -36,11 +36,31 @@ class BfmeCellFC
 public:
 	BfmeCellFC();
 	~BfmeCellFC();
-	void bfmeUpdate(int amount, bool absolute);
 
 	unsigned char m_bfmeKind;				// +0x00
 	unsigned char m_bfmeGap[3];				// +0x01
 	int m_bfmeValue;					// +0x04
+};
+
+// The three grid/cell bodies this TU calls are defined out of line under the
+// ledger's own (still address-derived) names, so the reference has to carry
+// those exact scopes.  Each is a separate view class over the same object,
+// cast at the use below; none of them is defined here, so no body moves.
+class Rva00881B90Class					// 0x00881B90, 75 bytes
+{
+public:
+	void update(int x, int y, int radius, int amount, bool absolute);
+};
+
+class Rva00881BE0Class					// 0x00881BE0, 68 bytes
+{
+public:
+	void update(int amount, bool absolute);
+};
+
+struct Gen_008811a0					// 0x008811A0, 1-byte ret
+{
+	void m(void);
 };
 
 // ??0BfmeCellFC@@QAE@XZ — retail881200,13B; array ctor callback in8815A0.
@@ -107,7 +127,6 @@ class Gen_008812D0
 public:
 	Gen_008812D0();
 	~Gen_008812D0();
-	void bfmeReset();
 	void bfmeConfigure(Region3D region, Real cellSize);
 	void bfmeSetRegion(const Region3D *region, Real cellSize);
 	BfmeCellFC *bfmeAt(int x, int y) const;
@@ -116,7 +135,6 @@ public:
 	BfmeCellFC *bfmeCellAtWorld(Real x, Real y) const;
 	void bfmeVisitCells(void);
 	int bfmeValueAtWorld(const BfmePointFC *point) const;
-	void bfmeApplyCircle(int x, int y, int radius, int amount, bool absolute);
 	int rva00880E70(Real worldX) const;
 	int rva00880EA0(Real worldY) const;
 	int rva00880ED0(Real distance) const;
@@ -255,7 +273,7 @@ void Gen_008812D0::bfmeSetRegion(const Region3D *region, Real cellSize)
 // ?bfmeResetGrid@BfmeTaintManager@@QAEXXZ
 void BfmeTaintManager::bfmeResetGrid()
 {
-	m_bfmeGrid->bfmeReset();
+	((Gen_008811a0 *)m_bfmeGrid)->m();
 
 	Region3D region;
 	region.lo.zero();
@@ -378,7 +396,7 @@ void BfmeRangeUpdaterFC::operator()(int firstX, int lastX, int y)
 
 	for (BfmeCellFC *cell = first; cell != last; ++cell)
 	{
-		cell->bfmeUpdate(m_bfmeAmount, m_bfmeAbsolute);
+		((Rva00881BE0Class *)cell)->update(m_bfmeAmount, m_bfmeAbsolute);
 		m_bfmeGrid->m_bfmeVisitor(firstX, y, cell->m_bfmeKind);
 		++firstX;
 	}
@@ -437,5 +455,5 @@ void BfmeTaintManager::bfmeApplyCircleWorld(const BfmePointFC *point,
 		(point->x - m_bfmeGrid->m_bfmeRegion.lo.x)
 			* m_bfmeGrid->m_bfmeCellSizeInv));
 
-	m_bfmeGrid->bfmeApplyCircle(x, y, cellRadius, amount, absolute);
+	((Rva00881B90Class *)m_bfmeGrid)->update(x, y, cellRadius, amount, absolute);
 }

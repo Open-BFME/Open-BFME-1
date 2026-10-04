@@ -7,10 +7,14 @@
 
 #include <cstring>
 
-extern "C" int (__cdecl *__imp__sprintf)(char *, const char *, ...);
+// The retail call goes through the CRT import slot, so the reference has to be
+// the slot's own name (`__imp__sprintf`). A hand-rolled `__imp__sprintf`
+// function-pointer declaration mangles to `___imp__sprintf`, which nothing in
+// the tree defines; the repo-wide dllimport spelling is used instead.
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *, const char *, ...);
 static inline int do_sprintf(char *b, const char *f, const char *a, const char *c)
 {
-	return (*__imp__sprintf)(b, f, a, c);
+	return sprintf(b, f, a, c);
 }
 
 template <class T>
