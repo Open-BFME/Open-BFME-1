@@ -3115,35 +3115,6 @@ void Team::killTeam(void)
 }
 
 // ------------------------------------------------------------------------
-// ?damageTeamMembers@Team@@QAE_NM@Z present-unmatched
-Bool Team::damageTeamMembers(Real amount) 
-{
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		if (iter.cur()->isEffectivelyDead())
-			continue;
-
-		if (iter.cur()->isDestroyed()) 
-			continue;
-
-		// do max amount of damage to object
-		if (amount < 0.0) {
-			iter.cur()->kill();
-		} else {
-			DamageInfo damageInfo;
-
-			damageInfo.in.m_damageType = DAMAGE_UNRESISTABLE;
-			damageInfo.in.m_deathType = DEATH_NORMAL;
-			damageInfo.in.m_sourceID = INVALID_ID;
-			damageInfo.in.m_amount = amount;
-			iter.cur()->attemptDamage( &damageInfo );
-		}
-		
-	}
-	return false;
-}
-
-// ------------------------------------------------------------------------
 /// @todo This should give a "team move" command, not individual move orders (MSB)
 // ?moveTeamTo@Team@@QAEXUCoord3D@@@Z present-unmatched
 void Team::moveTeamTo(Coord3D destination) 
