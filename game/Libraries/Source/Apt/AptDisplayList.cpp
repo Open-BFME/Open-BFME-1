@@ -18,16 +18,14 @@ public:
 		return block;
 	}
 
-	// No class operator delete.  BfmeNestedBE's constructor is out-of-line and
-	// may throw, so every `new BfmeNestedBE(...)` site grows an 11-byte SEH
-	// cleanup funclet (mov eax,[ebp-0x10]; push eax; call <free>; pop ecx; ret).
-	// A whole-image scan of retail finds 1126 funclets of exactly that shape and
-	// every one of them calls 0x00881EB0, which the ledger holds as the single
-	// matched global operator delete ??3@YAXPAX@Z
-	// (game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp).  No funclet of that shape
-	// calls any class-specific delete anywhere in the image, so retail's
-	// BfmeNestedBE has none and the cleanup must reach the global one.  Declaring
-	// one here only made this TU reference an undefined ??3BfmeNestedBE@@SAXPAX@Z.
+	// Unresolved EH reconstruction: this view currently emits an 11-byte
+	// cleanup calling global delete, but retail parent RVA 0x008BE5A0 reaches
+	// the 15-byte action at 0x00C592E0 through its handler/FuncInfo/unwind map.
+	// That action passes size 100 to the 34-byte sized-delete provider at
+	// 0x00891650. Its declaring class is not proved; neither a forwarding
+	// wrapper nor invented inheritance is an exact repair. Matching the
+	// parent body or linking this TU does not verify that cleanup. See
+	// targets/game/reverse/identity_evidence/apt_sized_delete_00891650.md.
 
 	unsigned int m_flags;
 	int m_bfme08;
