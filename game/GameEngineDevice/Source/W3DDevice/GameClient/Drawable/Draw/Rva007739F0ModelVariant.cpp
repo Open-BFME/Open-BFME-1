@@ -200,10 +200,10 @@ Int rva0075B4A0(const Drawable *drawable, Bool *forcedLow)
 	switch (level)
 	{
 	case 0:
-		return 2;
 	case 1:
-		return 1;
+		return 2;
 	case 2:
+		return 1;
 	case 3:
 	case 4:
 		return 0;
