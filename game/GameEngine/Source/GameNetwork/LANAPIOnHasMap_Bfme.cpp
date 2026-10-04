@@ -77,40 +77,11 @@ public:
 };
 extern const unsigned short BFMEEmptyUnicodeString;
 
-class StringBaseWideAP
-{
-protected:
-	StringBaseWideAP(void);
-	StringBaseWideAP(const StringBaseWideAP &other);
-	StringBaseWideAP(const unsigned short *text);
-
-	unsigned short *m_bfmeWideAP;
-};
-
-class UnicodeStringAP : public StringBaseWideAP
+// The display-name body at 0x00451240 returns the canonical UnicodeString.
+class MapMetaData
 {
 public:
-	UnicodeStringAP(void) {}
-	UnicodeStringAP(const UnicodeStringAP &other) : StringBaseWideAP(other) {}
-	__forceinline ~UnicodeStringAP(void)
-	{
-		((StringBase<unsigned short> *)this)->clear();
-	}
-
-	const unsigned short *bfmeTextAP(void) const
-	{
-		return m_bfmeWideAP != 0 ? m_bfmeWideAP + 4
-			: &BFMEEmptyUnicodeString;
-	}
-};
-
-class BfmeEntryAP
-{
-public:
-	UnicodeStringAP bfmeDisplayNameAP(void);
-
-	unsigned char m_bfmePadAP[0x20];
-	Int m_bfmeCountAP;
+	UnicodeString bfme_getDisplayName(void);
 };
 
 class GameTextInterface
@@ -251,7 +222,8 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 		if (mapData != 0)
 		{
 			mapDisplayName.format(UnicodeString(L"%ls"),
-				((BfmeEntryAP *)mapData)->bfmeDisplayNameAP().bfmeTextAP());
+				Rva00688CD0WideText(
+					const_cast<MapMetaData *>(mapData)->bfme_getDisplayName()));
 		}
 		else
 		{

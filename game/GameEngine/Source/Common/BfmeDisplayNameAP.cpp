@@ -1,95 +1,55 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 //
-// Open-BFME5: the numbered display name at retail 0x00451240, 212 bytes.  A
-// count above one is appended in brackets, and the append reads both the
-// characters and the length behind a single null test.
+// MapMetaData::bfme_getDisplayName, retail 0x00451240 (212 bytes).
+// The matched map-preview and quickmatch callers establish this identity.
+// The count at +0x20 is the player count; append the retail L" (%d)" suffix.
+// See targets/game/reverse/identity_evidence/map_display_name_00451240.md.
 
-#include "StringInline.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
-// The format call used to be spelled through the TU-local stand-in
-// UnicodeStringAP, naming retail's callee
-// ?format@UnicodeStringAP@@QAAXVUnicodeStringAP@@ZZ -- a name retail has no
-// body for.  UnicodeString::format (0x00889190, matched in
-// game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
-// it comes from the by-value string model and is named through the real class.
-// The stand-in class itself stays: it is these methods' return type, so retail
-// mangles the enclosing bodies with it.
+inline UnicodeString::UnicodeString(void)
+{
+    m_text = 0;
+}
 
-class StringBaseWideAP
+inline UnicodeString::UnicodeString(const wchar_t *text)
+{
+    ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(text);
+}
+
+inline UnicodeString::UnicodeString(const UnicodeString &other)
+{
+    ((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
+        *(const StringBase<wchar_t> *)&other);
+}
+
+inline UnicodeString::~UnicodeString(void)
+{
+    ((StringBase<wchar_t> *)this)->releaseBuffer();
+}
+
+class MapMetaData
 {
 public:
-	void bfmeConcatAP(const unsigned short *text, int length);
+    UnicodeString bfme_getBaseDisplayName(void);
+    UnicodeString bfme_getDisplayName(void);
 
-protected:
-	StringBaseWideAP(void)
-	{
-		m_bfmeWideAP = 0;
-	}
-
-	StringBaseWideAP(const unsigned short *text);
-
-	StringBaseWideAP(const StringBaseWideAP &other);
-
-	~StringBaseWideAP(void);
-
-	unsigned short *m_bfmeWideAP;
+    char m_bfmePadAP[0x20];
+    int m_numPlayers;
 };
 
-class UnicodeStringAP : public StringBaseWideAP
+UnicodeString MapMetaData::bfme_getDisplayName(void)
 {
-public:
-	UnicodeStringAP(void)
-	{
-	}
-
-	UnicodeStringAP(const unsigned short *text) : StringBaseWideAP(text)
-	{
-	}
-
-	UnicodeStringAP(const UnicodeStringAP &other) : StringBaseWideAP(other)
-	{
-	}
-
-	~UnicodeStringAP(void)
-	{
-	}
-
-	const unsigned short *bfmeTextAP(void) const
-	{
-		return (m_bfmeWideAP != 0) ? m_bfmeWideAP + 4 : L"";
-	}
-
-	int bfmeLengthAP(void) const
-	{
-		return (m_bfmeWideAP != 0) ? m_bfmeWideAP[2] : 0;
-	}
-};
-
-class BfmeEntryAP
-{
-public:
-	UnicodeStringAP bfmeBaseNameAP(void);
-
-	UnicodeStringAP bfmeDisplayNameAP(void);
-
-	char m_bfmePadAP[0x20];
-	int m_bfmeCountAP;
-};
-
-UnicodeStringAP BfmeEntryAP::bfmeDisplayNameAP(void)
-{
-	UnicodeStringAP name = bfmeBaseNameAP();
-
-	int count = m_bfmeCountAP;
-
-	if (count >= 2)
-	{
-		UnicodeStringAP suffix;
-
-		((UnicodeString &)suffix).format((UnicodeString)L" (%d)", count);
-
-		name.bfmeConcatAP(suffix.bfmeTextAP(), suffix.bfmeLengthAP());
-	}
-
-	return name;
+    UnicodeString name = bfme_getBaseDisplayName();
+    int count = m_numPlayers;
+    if (count >= 2)
+    {
+        UnicodeString suffix;
+        suffix.format(UnicodeString(L" (%d)"), count);
+        const StringBase<unsigned short> *suffixBuffer =
+            (const StringBase<unsigned short> *)&suffix;
+        ((StringBase<unsigned short> *)&name)->concat(
+            suffixBuffer->str(), suffixBuffer->getLength());
+    }
+    return name;
 }
