@@ -105,7 +105,10 @@ private:
 
 // The retail constructor calls the incremental-link thunk, whose body is the
 // already matched W3DTankDraw::createEmitters implementation at 0x0077EC40.
-#pragma comment(linker, "/alternatename:?createEmitters@W3DTankDraw@@IAEXXZ=?j_0001b32e@@YAXXZ")
+// Dispatched through the thunk's own name so the emitted call targets retail's
+// ILT address directly.
+extern void j_0001b32e();
+class CreateEmitters001B32E {};
 
 // ??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z
 W3DTankDraw::W3DTankDraw(Thing *thing, const ModuleData *moduleData)
@@ -119,5 +122,7 @@ W3DTankDraw::W3DTankDraw(Thing *thing, const ModuleData *moduleData)
 	m_lastDirection.y = 0.0f;
 	m_lastDirection.z = 0.0f;
 
-	createEmitters();
+	typedef void (CreateEmitters001B32E::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_0001b32e };
+	(((CreateEmitters001B32E *)this)->*u.call)();
 }
