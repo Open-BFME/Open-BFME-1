@@ -34,6 +34,7 @@ template <typename T> class StringBase
 {
 public:
     void set(const StringBase<T> &other);
+    void concat(const T *str);
 protected:
     TreeStringData<T> *m_data;
 };
@@ -42,7 +43,7 @@ class AsciiString : private StringBase<char>
 {
 public:
     void set(const AsciiString &other) { StringBase<char>::set(other); }
-    void concat(const char *text);
+    void concat(const char *s) { StringBase<char>::concat(s); }
     const char *str(void) const { return m_data ? m_data->m_text : ""; }
 };
 
