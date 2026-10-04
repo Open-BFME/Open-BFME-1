@@ -24,9 +24,25 @@ class Player
 
 class TeamFactory
 {
-public:
-	void removeTeamPrototypeFromList(TeamPrototype *team);
 };
+
+// The retail thunk is the named TeamFactory::removeTeamPrototypeFromList call
+// target, but its old neutral thunk spelling is already owned by the matched
+// import row.  Keep the canonical receiver/argument types local while routing
+// the call through that existing thiscall thunk without adding a competing pin.
+extern void j_00038677();
+
+static __forceinline void teamFactoryRemoveTeamPrototypeFromList(TeamFactory *factory, TeamPrototype *team)
+{
+	typedef void (TeamFactory::*MemberThunk)(TeamPrototype *);
+	union
+	{
+		void (*function)(void);
+		MemberThunk member;
+	} thunk;
+	thunk.function = j_00038677;
+	(factory->*thunk.member)(team);
+}
 
 class Script
 {
@@ -34,6 +50,13 @@ public:
 	virtual ~Script() { }
 };
 
+// The dtor below is spelled with its real retail name, so the call the compiler
+// emits from ~TeamPrototype needs no linker alias pragma: the resolver already
+// offers the ILT thunk 0x00022B97 as the first candidate for that name (the
+// matched body 0x000ED580 is the second) and takes the one that reproduces
+// retail.  The call cannot be spelled as an explicit statement instead, because
+// it has to sit between two implicit member-destructor calls to keep the unwind
+// state count.
 class TeamTemplateInfo
 {
 public:
@@ -60,9 +83,36 @@ static __forceinline void playerRemoveTeamFromList(Player *player, TeamPrototype
 	thunk.function = j_0004b367;
 	(player->*thunk.member)(team);
 }
-#pragma comment(linker, "/alternatename:?removeTeamPrototypeFromList@TeamFactory@@QAEXPAVTeamPrototype@@@Z=?j_00038677@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1TeamTemplateInfo@@QAE@XZ=?j_00022b97@@YAXXZ")
-#pragma comment(linker, "/alternatename:?removeAll_TeamInstanceList@TeamPrototype@@QAEXP6AXPAVTeam@@@Z@Z=?j_00040714@@YAXXZ")
+
+// The retail thunk is the named TeamPrototype::removeAll_TeamInstanceList call
+// target, but its old neutral thunk spelling is already owned by the matched
+// import row.  Keep the canonical receiver/argument types local while routing
+// the call through that existing thiscall thunk without adding a competing pin.
+//
+// TeamPrototype derives from MemoryPoolObject, and a pointer-to-member of a
+// derived class makes MSVC 7.1 emit its generic base-adjustor sequence instead of
+// folding the statically known thunk into a direct call.  The shape below has no
+// base, so the union folds exactly like the Player helper above; it names no
+// retail identity and is never defined, only used as a thiscall call shape.
+class TeamPrototypeThunkReceiver
+{
+public:
+	typedef void (TeamPrototypeThunkReceiver::*MemberThunk)(void (*)(Team *));
+};
+
+extern void j_00040714();
+
+static __forceinline void teamPrototypeRemoveAllInstanceList(TeamPrototype *prototype, void (*callback)(Team *))
+{
+	typedef TeamPrototypeThunkReceiver::MemberThunk MemberThunk;
+	union
+	{
+		void (*function)(void);
+		MemberThunk member;
+	} thunk;
+	thunk.function = j_00040714;
+	(reinterpret_cast<TeamPrototypeThunkReceiver *>(prototype)->*thunk.member)(callback);
+}
 
 // TeamPrototype is a memory-pool object in the shipped Team.h.  Its protected
 // virtual base destructor is also what makes the retail body restore the
@@ -102,21 +152,18 @@ private:
 	TeamTemplateInfo m_teamTemplate;                  // +0x12c
 	BFMERetailAsciiString m_attackPriorityName;       // +0x270
 	void *m_teamInstanceList;                          // +0x274
-
-public:
-	void removeAll_TeamInstanceList(void (*callback)(Team *));
 };
 
 // ??1TeamPrototype@@MAE@XZ
 TeamPrototype::~TeamPrototype()
 {
-	removeAll_TeamInstanceList(deleteTeamCallback);
+	teamPrototypeRemoveAllInstanceList(this, deleteTeamCallback);
 
 	if (m_owningPlayer)
 		playerRemoveTeamFromList(m_owningPlayer, this);
 
 	if (m_factory)
-		reinterpret_cast<TeamFactory *>(m_factory)->removeTeamPrototypeFromList(this);
+		teamFactoryRemoveTeamPrototypeFromList(reinterpret_cast<TeamFactory *>(m_factory), this);
 
 	if (m_productionConditionScript)
 	{

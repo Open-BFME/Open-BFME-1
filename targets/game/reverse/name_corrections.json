@@ -17608,5 +17608,15 @@
   "after_sha256": "0cb24ee5ef4f3fb8044b4e5852738de039586641eaefab9e23db8558d2a3ffc8",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/RTS/TeamPrototypeDestructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/TeamPrototypeDestructor.cpp",
+  "old_name": "removeTeamPrototypeFromList",
+  "new_name": "j_00038677",
+  "before_sha256": "9fc4ba6d10b9b41da574dc19c8eb12623f7f1f65ff8310d8fc8eb06313e6804a",
+  "after_sha256": "2bf68cfc3a03c4725f8cbc088417606a1d58088c98681a279f1d658d6e47c61d",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
