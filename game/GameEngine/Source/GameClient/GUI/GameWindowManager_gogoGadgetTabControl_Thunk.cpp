@@ -30,12 +30,16 @@ struct Rva0047D090TabControlData
 	char m_data[0x54];
 };
 
+// GameWindow needs a complete type here so that the union's member-pointer
+// spelling of the ?j_00002e69 thunk does not disturb codegen.
 class GameWindow
 {
-public:
-	void winSetUserData(void *data);
 };
 
+extern void j_00002e69();
+extern void j_00048365();
+extern void j_0004b501();
+extern void j_00008936();
 extern void j_00047230();
 class RouteWinSetOwner {};
 
@@ -76,15 +80,6 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
-void GadgetTabControlComputeTabRegion(GameWindow *tabControl);
-void GadgetTabControlCreateSubPanes(GameWindow *tabControl);
-void GadgetTabControlShowSubPane(GameWindow *tabControl, int pane);
-
-#pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetTabControlComputeTabRegion@@YAXPAVGameWindow@@@Z=?j_00048365@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetTabControlCreateSubPanes@@YAXPAVGameWindow@@@Z=?j_0004b501@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetTabControlShowSubPane@@YAXPAVGameWindow@@H@Z=?j_00008936@@YAXXZ")
-
 GameWindow *GameWindowManager::gogoGadgetTabControl(
 	Rva0047D090FactoryRecord *record,
 	Rva0047D090TabControlData *source,
@@ -98,10 +93,18 @@ GameWindow *GameWindowManager::gogoGadgetTabControl(
 		return 0;
 	Rva0047D090TabControlData *tabData = new Rva0047D090TabControlData;
 	*tabData = *source;
-	tabControl->winSetUserData(tabData);
-	GadgetTabControlComputeTabRegion(tabControl);
-	GadgetTabControlCreateSubPanes(tabControl);
-	GadgetTabControlShowSubPane(tabControl, 0);
+	typedef void (GameWindow::*SetUserData)(void *);
+	union { void (*fn)(); SetUserData call; } setUserData = { j_00002e69 };
+	(tabControl->*setUserData.call)(tabData);
+	typedef void (__cdecl *ComputeTabRegion)(GameWindow *);
+	union { void (*fn)(); ComputeTabRegion call; } computeTabRegion = { j_00048365 };
+	(computeTabRegion.call)(tabControl);
+	typedef void (__cdecl *CreateSubPanes)(GameWindow *);
+	union { void (*fn)(); CreateSubPanes call; } createSubPanes = { j_0004b501 };
+	(createSubPanes.call)(tabControl);
+	typedef void (__cdecl *ShowSubPane)(GameWindow *, int);
+	union { void (*fn)(); ShowSubPane call; } showSubPane = { j_00008936 };
+	(showSubPane.call)(tabControl, 0);
 	typedef int (RouteWinSetOwner::*SetOwner)(GameWindow *);
 	union { void (*fn)(); SetOwner call; } setOwner = { j_00047230 };
 	(((RouteWinSetOwner *)tabControl)->*setOwner.call)(record->m_owner);
