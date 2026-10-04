@@ -4,6 +4,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include "CastleBehaviorRecovery.h"
 #include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../GameClient/FXListRetail.h"
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum DamageType { DAMAGE_TYPE_8 = 8 };
 enum DeathType { DEATH_TYPE_0 = 0 };
@@ -35,7 +36,6 @@ class GameLogic { public: Object* findObjectByID(int); };
 class PlayerList { public: Player* getPlayerFromMask(unsigned short); };
 class AudioEventRTS;
 class ThingTemplate { public: const AudioEventRTS* getSound(int) const; };
-class FXList { public: static void doFXObj(const FXList*,const Object*,const Object*); };
 extern GameLogic* TheGameLogic;
 extern PlayerList* ThePlayerList;
 class AudioManager;
@@ -169,9 +169,7 @@ __forceinline R call2(void (*p)(), void *self, A a, B b)
 	return (((Rva00372BD0Calls *)self)->*u.f)(a, b);
 }
 
-extern void j_00011f77();
 extern void j_00014506();
-extern void j_00022bba();
 extern void j_00026094();
 extern void j_0002ae23();
 extern void j_0002ec44();
@@ -227,8 +225,8 @@ void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
 		FXList *effects = m_moduleData->m_effects;
 		if (effects != 0) {
 			Object *owner = m_object;
-			if (!call0<Bool>(j_00011f77, effects))
-				call2<void>(j_00022bba, effects, owner, (Object *)0);
+			if (!effects->bfmeIsBlocked())
+				effects->doFXObj(owner, (Object *)0);
 		}
 	}
 

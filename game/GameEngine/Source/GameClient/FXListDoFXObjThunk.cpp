@@ -4,6 +4,10 @@
 // retail method is the public-decorated QBEX body reached by the UpgradeMuxData
 // call site, while the upstream ZH header puts the same method under
 // `protected:` and would therefore emit IBEX here.
+// stlport
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "FXListRetail.h"
 
 typedef bool Bool;
 typedef int Int;
@@ -112,18 +116,6 @@ struct FXNuggetNode
 	FXNugget *value;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
-class FXList
-{
-public:
-	virtual ~FXList();
-	void doFXObj(const Object *primary, const Object *secondary) const;
-
-private:
-	FXNuggetNode *m_nuggetSentinel;
-	char m_bfmeFields[8];
-	Bool m_playEvenIfShrouded;
-};
 
 // ?doFXObj@FXList@@QBEXPBVObject@@0@Z
 void FXList::doFXObj(const Object *primary, const Object *secondary) const

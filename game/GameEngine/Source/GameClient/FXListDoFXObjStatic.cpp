@@ -3,22 +3,14 @@
 // ZH inlines `if (fx) fx->doFXObj(...)`. Retail also consults a bool member
 // through ILT 0x00011F77 (body 0x0042DAA0) and skips the play when it is set.
 
+// stlport
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "FXListRetail.h"
 class Object;
 struct Coord3D;
 class Matrix3D;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
-class FXList
-{
-public:
-	static void doFXObj(const FXList *fxList, const Object *primary, const Object *secondary);
-	static void doFXPos(const FXList *fxList, const Coord3D *position,
-		const Matrix3D *transform, float speed, const Coord3D *secondary);
-	bool bfmeIsBlocked(void);
-	void doFXObj(const Object *primary, const Object *secondary) const;
-	void doFXPos(const Coord3D *position, const Matrix3D *transform,
-		float speed, const Coord3D *secondary) const;
-};
 
 // ?doFXObj@FXList@@SAXPBV1@PBVObject@@1@Z
 void FXList::doFXObj(const FXList *fxList, const Object *primary, const Object *secondary)
