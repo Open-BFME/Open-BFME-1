@@ -16748,5 +16748,65 @@
   "after_sha256": "0f1a896d62215b963a002104c06c8bf434756d9ef98ecf62202295778af33aad",
   "evidence": "targets/game/reverse/identity_evidence/0023c5e0-opaque-owner.md",
   "reason": "The bank-only owner describes inferred selection behavior but has no class-name witness. Retail debug strings prove a HordeContain source file, not the member identity. Keep a fully opaque address owner and method instead of promoting the bank convenience name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "S32",
+  "new_name": "m_31C",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "S32",
+  "new_name": "m_328",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "S32",
+  "new_name": "m_330",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "S32",
+  "new_name": "m_334",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "m_storage",
+  "new_name": "m_pad",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainModuleDataCtorThunk.cpp",
+  "old_name": "m_tail",
+  "new_name": "m_2F4",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "3b08a2e0a877e6cacd0b58c6351a9f917fe804ce8611cd156cf3ea2453cd500d",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "The bank stored through a local S32 volatile-store macro into m_storage/m_tail padding; none is a member name. No witness names a BFME GarrisonContainModuleData field, so the exact typed body keeps offset names."
  }
 ]
