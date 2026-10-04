@@ -437,62 +437,7 @@ Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow( AnimateWindow *anim
 }
 #endif
 
-// ?reverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z present-unmatched
-Bool ProcessAnimateWindowSlideFromLeft::reverseAnimateWindow( AnimateWindow *animWin )
-{
-	
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into updateAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return TRUE;
-	}
-
-	// if the window has finished animating into position, return
-	if(animWin->isFinished())
-		return TRUE;
-
-	// if the window hasn't started animating...return that we're not finished
-	if(timeGetTime() < animWin->getStartTime())
-		return FALSE;
-
-	// it's set that the window is passed in as it's current position being it's rest position
-	// so save off the rest position
-	GameWindow *win = animWin->getGameWindow();
-	if(!win)
-	{
-		DEBUG_ASSERTCRASH( win, ("animWin contains a NULL Pointer for it's GameWindow... Whatup wit dat?"));
-		return TRUE;
-	}
-
-	ICoord2D curPos = animWin->getCurPos();
-	ICoord2D startPos = animWin->getStartPos();
-	Coord2D vel = animWin->getVel();
-	curPos.x += (Int)vel.x;
-
-	if(curPos.x < startPos.x)
-	{
-		curPos.x = startPos.x;
-		animWin->setFinished( TRUE );
-		win->winSetPosition(curPos.x, curPos.y);
-		return TRUE;
-	}
-	win->winSetPosition(curPos.x, curPos.y);
-	animWin->setCurPos(curPos);
-
-	ICoord2D endPos = animWin->getEndPos();
-	if( endPos.x - curPos.x <= m_slowDownThreshold )
-	{
-		vel.x *= m_speedUpRatio;
-	}
-	else
-	{
-		vel.x = -m_maxVel.x;
-	}
-	if( vel.x < -m_maxVel.x)
-		vel.x = -m_maxVel.x;
-	animWin->setVel(vel);
-	return FALSE;
-}
+// Retail Left reverseAnimateWindow: ProcessAnimateWindowSlideFromLeft_reverseAnimateWindow.cpp.
 
 //-----------------------------------------------------------------------------
 // ProcessAnimateWindowSlideFromTop PUBLIC FUNCTIONS ////////////////////////
