@@ -59,7 +59,23 @@ enum NATConnectionState
 	NATCONNECTIONSTATE_FAILED
 };
 
-void setConnectingPlayerStatus( int index, const UnicodeString &text );
+// Retail reaches setConnectingPlayerStatus 0x00538490 through ILT thunk 0x00022A7A.
+extern void j_00022a7a();
+
+typedef void (__cdecl *PlayerStatusFunction)( int index, const UnicodeString &text );
+
+union PlayerStatusCast
+{
+	void (*raw)();
+	PlayerStatusFunction function;
+};
+
+static __forceinline void writePlayerStatus( void (*thunk)(), int index, const UnicodeString &text )
+{
+	PlayerStatusCast cast;
+	cast.raw = thunk;
+	cast.function( index, text );
+}
 
 class EstablishConnectionsMenu
 {
@@ -98,5 +114,5 @@ void Rva006709F0::setPlayerStatus( int slot, NATConnectionState state )
 	} else {
 		text = TheGameText->fetch( "GUI:UnknownConnectionState" );
 	}
-	setConnectingPlayerStatus( slot, text );
+	writePlayerStatus( j_00022a7a, slot, text );
 }
