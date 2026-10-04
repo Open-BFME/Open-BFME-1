@@ -18,11 +18,14 @@ class Rva00832180
 	Rva00832180Unk *m_ptr;
 
 public:
-	bool goDSD(void *what);		// retail 0x008366C0, thiscall locale inequality test
 	Rva00832180 &set(Rva00832180Unk *const *src);
 };
 
-#pragma comment(linker, "/alternatename:?goDSD@Rva00832180@@QAE_NPAX@Z=?bfmeGoDSD@@YG_NPAX@Z")
+// retail 0x008366C0 is bfmeGoDSD (game/GameEngine/Source/Common/BfmeConv770.cpp,
+// ?bfmeGoDSD@@YG_NPAX@Z) but the call site passes the locale in ECX and the body
+// forwards ECX, so it is reached through the thiscall shape its caller used.
+extern bool __stdcall bfmeGoDSD(void *what);
+typedef bool (Rva00832180::*GoDSDFn)(void *what);
 
 struct U2Elem8
 {
@@ -88,7 +91,8 @@ void ios_base::_M_copy_state(const ios_base &x)
 	_M_precision = x._M_precision;
 	_M_width = x._M_width;
 
-	if (_M_locale.goDSD((void *)&x._M_locale))
+	union { bool (__stdcall *direct)(void *what); GoDSDFn call; } u = { bfmeGoDSD };
+	if ((_M_locale.*u.call)((void *)&x._M_locale))
 	{
 		_M_locale.set((Rva00832180Unk *const *)&x._M_locale);
 		_M_reserved0 = x._M_reserved0;
