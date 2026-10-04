@@ -27,8 +27,6 @@ private:
  * The callees are StringBase<char>::releaseBuffer (RVA 0x00887940) and
  * StringBase<char>::set(const StringBase<char>&) (RVA 0x00887C90), not
  * UnicodeString.
- *
- * @ai-generated
  */
 void Rva00415AA0::assign(const StringBase<char> &value) {
   if (*reinterpret_cast<const void *const *>(&value) == 0) {
