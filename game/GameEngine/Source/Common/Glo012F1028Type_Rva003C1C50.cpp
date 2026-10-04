@@ -36,10 +36,6 @@ class Rva003A5450
 {
 public:
 	Rva003A5450();
-	void setUnicode( const UnicodeString &value );
-	void setCoord( const Rva003C1C50Coord &value );
-	void setFlag( char value );
-	void setAscii( const AsciiString &value );
 
 private:
 	void *m_vtable;
@@ -69,11 +65,8 @@ private:
 	friend class Glo012F1028Type;
 };
 
-#pragma comment(linker, "/alternatename:?setUnicode@Rva003A5450@@QAEXABVUnicodeString@@@Z=?j_0001036b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setCoord@Rva003A5450@@QAEXABURva003C1C50Coord@@@Z=?j_0002e898@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setFlag@Rva003A5450@@QAEXD@Z=?j_0003688b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setAscii@Rva003A5450@@QAEXABVAsciiString@@@Z=?j_00028cf9@@YAXXZ")
-
+// The four ILT-routed setters are reached through retail thunks; call them
+// directly, with no linker alias.
 class Glo012F1028Type
 {
 public:
@@ -102,10 +95,14 @@ bool Glo012F1028Type::addItem( const UnicodeString &name,
 	item->m_label.set( label );
 	item->m_description.set( description );
 	item->m_finalFlag = finalFlag;
-	item->setUnicode( secondName );
-	item->setCoord( coord );
-	item->setFlag( flag );
-	item->setAscii( ascii );
+	union { void (*fn)(); void ( Rva003A5450::*call )( const UnicodeString & ); } uUnicode = { j_0001036b };
+	union { void (*fn)(); void ( Rva003A5450::*call )( const Rva003C1C50Coord & ); } uCoord = { j_0002e898 };
+	union { void (*fn)(); void ( Rva003A5450::*call )( char ); } uFlag = { j_0003688b };
+	union { void (*fn)(); void ( Rva003A5450::*call )( const AsciiString & ); } uAscii = { j_00028cf9 };
+	( item->*uUnicode.call )( secondName );
+	( item->*uCoord.call )( coord );
+	( item->*uFlag.call )( flag );
+	( item->*uAscii.call )( ascii );
 	m_items.push_back( item );
 	return true;
 }
