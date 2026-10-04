@@ -23,19 +23,22 @@ typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 class GameLogic
 {
 public:
-	__forceinline Object *findObjectByID( ObjectID id )
-	{
-		if ( id == 0 )
-			return 0;
-		ObjectPtrHash::iterator it = m_objectHash.find( id );
-		if ( it == m_objectHash.end() )
-			return 0;
-		return (*it).second;
-	}
-
 	char m_pad[ 0xB0 ];
 	ObjectPtrHash m_objectHash;
 };
+
+// Retail inlines the lookup here and has no out-of-line copy for this TU, so
+// the helper is a TU-local static rather than a GameLogic member whose COMDAT
+// copy would compete with the other TUs' findObjectByID emitters.
+static __forceinline Object *findObjectByID( GameLogic *logic, ObjectID id )
+{
+	if ( id == 0 )
+		return 0;
+	ObjectPtrHash::iterator it = logic->m_objectHash.find( id );
+	if ( it == logic->m_objectHash.end() )
+		return 0;
+	return (*it).second;
+}
 
 extern GameLogic *TheGameLogic;
 
@@ -66,7 +69,7 @@ void ExperienceLevelSystem::update()
 	for ( _STL::list<PendingExperienceLevel>::iterator it = m_pending.begin();
 		it != m_pending.end(); ++it )
 	{
-		Object *object = TheGameLogic->findObjectByID( (*it).m_objectID );
+		Object *object = findObjectByID( TheGameLogic, (*it).m_objectID );
 		if ( object && !(object->m_privateStatus & 1) )
 			((Gen0002B7F6 *)this)->call(
 				(*it).m_level, object, (*it).m_showEffect );
