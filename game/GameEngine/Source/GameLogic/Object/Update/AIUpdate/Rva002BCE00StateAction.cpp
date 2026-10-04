@@ -34,6 +34,19 @@ public:
 	void finish(void *argument);
 };
 
+// 0x0003F42C is a 5-byte ILT thunk (?j_0003f42c@@YAXXZ); the helper pin
+// ?finish@Rva002BC470StateAction@@QAEXPAX@Z is defined nowhere, so call
+// through the thunk's own name.
+extern void j_0003f42c();
+
+typedef void (Rva002BC470StateAction::*Rva002BC470FinishCall)(void *);
+
+union Rva002BC470FinishPointer
+{
+	void (*entry)();
+	Rva002BC470FinishCall member;
+};
+
 class BfmeSub30_7F0
 {
 public:
@@ -95,7 +108,9 @@ void Rva002BCE00StateAction::run(Rva002BCE00Path *path, Object *obstacle,
 		}
 
 		m_sink->step2(path);
-		((Rva002BC470StateAction *)this)->finish(finishArgument);
+		Rva002BC470FinishPointer finishCall;
+		finishCall.entry = j_0003f42c;
+		(((Rva002BC470StateAction *)this)->*finishCall.member)(finishArgument);
 		ignoreObstacle(obstacle);
 		m_sink->signalAction(0x3f6);
 		m_actionStarted = 1;

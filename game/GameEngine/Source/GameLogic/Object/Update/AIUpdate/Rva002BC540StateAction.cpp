@@ -16,6 +16,19 @@ public:
 	void finish(void *argument);
 };
 
+// 0x0003F42C is a 5-byte ILT thunk (?j_0003f42c@@YAXXZ); the helper pin
+// ?finish@Rva002BC470StateAction@@QAEXPAX@Z is defined nowhere, so call
+// through the thunk's own name.
+extern void j_0003f42c();
+
+typedef void (Rva002BC470StateAction::*Rva002BC470FinishCall)(void *);
+
+union Rva002BC470FinishPointer
+{
+	void (*entry)();
+	Rva002BC470FinishCall member;
+};
+
 class Rva002BC540Sink
 {
 public:
@@ -54,7 +67,9 @@ void Rva002BC540StateAction::run(void *first, void *second, unsigned char third)
 {
 	if (first && m_object->isMobile())
 	{
-		((Rva002BC470StateAction *)this)->finish(second);
+		Rva002BC470FinishPointer finishCall;
+		finishCall.entry = j_0003f42c;
+		(((Rva002BC470StateAction *)this)->*finishCall.member)(second);
 		m_sink->beginAction();
 		m_sink->dispatch(first);
 		if (third)
