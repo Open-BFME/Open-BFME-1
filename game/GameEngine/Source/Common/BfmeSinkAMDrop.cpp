@@ -43,15 +43,17 @@ __forceinline const char *bfmeNameText(const BFMERetailAsciiString &name)
 	return text;
 }
 
+// Retail routes these two BfmeItemAM calls through ILT thunks
+// (0x0000510F -> 0x0060AA10, 0x00009EDA -> 0x0061E3E0); call the real
+// bodies directly through a thiscall member-pointer alias.
+extern void dup_0060aa10();
+extern void d_0061e3e0();
+void __cdecl operator delete(void *);
+
 class BfmeItemAM
 {
 public:
-	BFMERetailAsciiString getName();
-	~BfmeItemAM();
 };
-
-#pragma comment(linker, "/alternatename:?getName@BfmeItemAM@@QAE?AVBFMERetailAsciiString@@XZ=?dup_0060aa10@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeItemAM@@QAE@XZ=?d_0061e3e0@@YAXXZ")
 
 class BfmeHostCA
 {
@@ -78,9 +80,24 @@ void BfmeSinkAM::bfmeDrop(int handle)
 		return;
 
 	BfmeItemAM *item = found->second;
+	typedef BFMERetailAsciiString(BfmeItemAM::*GetName)();
+	union
+	{
+		void (*fn)();
+		GetName call;
+	} u_getName = { dup_0060aa10 };
+	typedef void(BfmeItemAM::*Dtor)();
+	union
+	{
+		void (*fn)();
+		Dtor call;
+	} u_dtor = { d_0061e3e0 };
 	reinterpret_cast<BfmeHostCA *>(this)->bfmeRemoveCA(
-		bfmeNameText(item->getName()));
+		bfmeNameText((item->*u_getName.call)()));
 	if (item != 0)
-		delete item;
+	{
+		(item->*u_dtor.call)();
+		::operator delete(item);
+	}
 	m_items.erase(found);
 }
