@@ -40,13 +40,15 @@ struct Rva0048FAC0Line {
 	int m_width;
 };
 
+// Retail 0x0048F8C0 body (`ret 4`, one stack argument) is a thiscall member of
+// this owner class; its only ledger name is the address-derived `?d_0048f8c0@@YAXXZ`
+// byte dump, so the call goes through it as a member pointer of matching shape.
+extern void d_0048f8c0();
+
 class Rva0048FAC0Owner {
 public:
-	void flushLine(Rva0048FAC0Line *line);
 	void appendWord(Rva0048FAC0Line *line, int spaces, const UnicodeString &word);
 };
-
-#pragma comment(linker, "/alternatename:?flushLine@Rva0048FAC0Owner@@QAEXPAURva0048FAC0Line@@@Z=?d_0048f8c0@@YAXXZ")
 
 void Rva0048FAC0Owner::appendWord(Rva0048FAC0Line *line, int spaces, const UnicodeString &word)
 {
@@ -59,7 +61,9 @@ void Rva0048FAC0Owner::appendWord(Rva0048FAC0Line *line, int spaces, const Unico
 	line->m_displayString->getSize(&width, &height);
 	if (width > line->m_maxWidth) {
 		if (!line->m_text.isEmpty()) {
-			flushLine(line);
+			typedef void (Rva0048FAC0Owner::*FlushLine)(Rva0048FAC0Line *);
+			union { void (*fn)(); FlushLine call; } fl = { d_0048f8c0 };
+			(this->*fl.call)(line);
 			line->m_displayString->setText(word);
 			line->m_displayString->getSize(&width, &height);
 		} else if (spaces > 0) {
