@@ -9,15 +9,19 @@ typedef bool Bool;
 // Members are reached through this file's own view of the object, cast at the
 // use, so the called ILT thunks (0x00045C28 setGroup, 0x00042E6F isFinished)
 // stay the ones retail calls.
-class GameWindowTransitionsHandler;
-extern GameWindowTransitionsHandler *TheTransitionHandler;
-
-class TransitionHandler
+// Retail's two transition calls leave through the ILT thunks 0x00045C28
+// (setGroup) and 0x00042E6F (isFinished), which reach the real bodies
+// 0x0048AD80 and 0x0048A4D0. Both are members of GameWindowTransitionsHandler
+// and are defined once, in GameWindowTransitionsHandler.cpp and
+// GameWindowTransitions_isFinished.cpp; this TU must spell them under that
+// real class name, not a TU-local `TransitionHandler` view.
+class GameWindowTransitionsHandler
 {
 public:
-	void setGroup(AsciiString name, int immediate);
+	void setGroup(AsciiString name, bool immediate);
 	bool isFinished(void);
 };
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 // Retail global 0x012F4B58 is EA's shell singleton, defined once under the
 // canonical spelling (Shell *TheShell).
@@ -40,7 +44,10 @@ class WindowManager
 public:
 	void unidentified_0002e9a1(int value);
 };
-extern WindowManager *g_theWindowManager;
+// Retail loads 0x012F19E8 here; that VA is the WindowManager singleton defined
+// once as g_rva012F19E8WindowManager in GUI/WindowManager.cpp. `g_theWindowManager`
+// matched EA's spelling but pointed at no definition at all.
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class AudioClientUpdate
 {
@@ -74,12 +81,12 @@ int rva0051E280PreParchmentMapFadeStartNew(int, bool start)
 	int result = 1;
 	if (go)
 	{
-		((TransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("PreParchmentMapFade_StartNew"), 0);
+		TheTransitionHandler->setGroup(AsciiString("PreParchmentMapFade_StartNew"), 0);
 		if (TheShell)
 			((Rva0057F100 *)TheShell)->giveBack();
-		g_theWindowManager->unidentified_0002e9a1(-1);
+		g_rva012F19E8WindowManager->unidentified_0002e9a1(-1);
 	}
-	else if (((TransitionHandler *)TheTransitionHandler)->isFinished())
+	else if (TheTransitionHandler->isFinished())
 	{
 		((AudioClientUpdate *)TheAudio)->slot30(1, 1, 1);
 		((AudioClientUpdate *)TheAudio)->slot30(2, 1, 1);
