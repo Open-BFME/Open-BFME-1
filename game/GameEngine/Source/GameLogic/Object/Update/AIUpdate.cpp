@@ -936,21 +936,21 @@ public:
 	virtual void slot30(Coord3D *, Real, UnsignedInt, Int) = 0;
 };
 
-// C-linkage views of the retail tables ??_7Rva0026FA60FunctorValueWrapper@@6B@
-// and ??_7PartitionFilter@@6B@; the alternate names define no table.
-extern "C" void *bfmeVftRva0026FA60FunctorValueWrapper[];
-extern "C" void *bfmeVftPartitionFilter[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0026FA60FunctorValueWrapper=??_7Rva0026FA60FunctorValueWrapper@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+// The retail table ??_7Rva0026FA60FunctorValueWrapper@@6B@ itself.
+// __identifier spells the compiler-emitted vftable symbol; no C++ class
+// declares this one, so the declaration binds the name the retail link
+// carries.  The sibling ??_7PartitionFilter@@6B@ is already declared by
+// PartitionManager.h and needs no declaration here.
+extern "C" void *__identifier("??_7Rva0026FA60FunctorValueWrapper@@6B@")[];
 
 class Rva00279A50FunctorFilter
 {
 public:
 	Rva00279A50FunctorFilter(Object *object)
-		: m_vtable(bfmeVftRva0026FA60FunctorValueWrapper), m_zero(0), m_object(object) {}
+		: m_vtable(__identifier("??_7Rva0026FA60FunctorValueWrapper@@6B@")), m_zero(0), m_object(object) {}
 	~Rva00279A50FunctorFilter()
 	{
-		m_vtable = bfmeVftPartitionFilter;
+		m_vtable = (void *)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 private:
