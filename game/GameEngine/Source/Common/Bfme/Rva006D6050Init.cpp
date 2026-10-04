@@ -10,19 +10,19 @@ public:
 	void Release_Ref(void);
 };
 
-class Rva006D6050TextureBase
+class Rva006D51B0TextureBase
 {
 public:
-	Rva006D6050TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
-	virtual ~Rva006D6050TextureBase();
+	Rva006D51B0TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
+	virtual ~Rva006D51B0TextureBase();
 
 	unsigned m_refBits;
 	char m_body[0x34];
 };
 
-// Shared base body, now matched as Rva006D51B0Ctor.cpp's
-// ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z (retail 0x0090CF90).
-#pragma comment(linker, "/alternatename:??0Rva006D6050TextureBase@@QAE@IIIIII@Z=??0Rva006D51B0TextureBase@@QAE@IIIIII@Z")
+// The base body is Rva006D51B0Ctor.cpp's
+// ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z (retail 0x0090CF90); the local
+// declaration below spells that name directly, so no alias is needed.
 
 class Rva006D6050
 {
@@ -30,13 +30,13 @@ public:
 	void init(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
 
 private:
-	Rva006D6050TextureBase *m_texture;
+	Rva006D51B0TextureBase *m_texture;
 };
 
 void Rva006D6050::init(unsigned width, unsigned height, unsigned format,
 	unsigned mipLevels, unsigned pool, unsigned renderTarget)
 {
-	Rva006D6050TextureBase *texture = new Rva006D6050TextureBase(
+	Rva006D51B0TextureBase *texture = new Rva006D51B0TextureBase(
 		width, height, format, mipLevels, pool, renderTarget);
 	if (texture) {
 		++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(texture) + 4);
