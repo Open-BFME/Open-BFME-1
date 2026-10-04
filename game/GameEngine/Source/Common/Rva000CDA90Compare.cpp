@@ -41,10 +41,25 @@ private:
 	friend int Rva000CDA90Compare(Object *, class CastleBehavior *, Object *, class CastleBehavior *);
 };
 
-class BfmeThing934G
+// The complete 231-byte retail caller passes each CastleBehavior pointer
+// unchanged in ECX through ILT 0x00048761 to the 157-byte body at 0x0036F910.
+// It takes no stack arguments and returns the compared value in EAX. Preserve
+// the existing provider's exact local ABI view without claiming a type identity.
+typedef int ObjectID;
+
+class Rva0036F910Owner
 {
 public:
-	int bfmeOne934G();
+	int countCompleteStructures();
+	int countCompleteStructuresSecondary();
+
+private:
+	char m_pad000[0xb8];
+	ObjectID *m_begin;
+	ObjectID *m_end;
+	char m_pad0c0[0xdc - 0xc0];
+	ObjectID *m_secondaryBegin;
+	ObjectID *m_secondaryEnd;
 };
 
 class CastleBehavior
@@ -67,8 +82,8 @@ int Rva000CDA90Compare(Object *first, CastleBehavior *firstCastle,
 	{
 		if (secondCastle)
 		{
-			int firstComplete = ((BfmeThing934G *)firstCastle)->bfmeOne934G();
-			int secondComplete = ((BfmeThing934G *)secondCastle)->bfmeOne934G();
+			int firstComplete = ((Rva0036F910Owner *)firstCastle)->countCompleteStructures();
+			int secondComplete = ((Rva0036F910Owner *)secondCastle)->countCompleteStructures();
 			if (firstComplete != secondComplete)
 				return firstComplete - secondComplete;
 

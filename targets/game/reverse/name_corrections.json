@@ -16008,5 +16008,15 @@
   "after_sha256": "03aa740bc5156c35507b9f7205cec773165723b5acd1fba9b1f0ca3c63e26fbb",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva000CDA90Compare.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva000CDA90Compare.cpp",
+  "old_name": "BfmeThing934G",
+  "new_name": "Rva0036F910Owner",
+  "before_sha256": "4f841e4332b065fb5c4c2de339355c713a4c045f0967bffd283d66f6e8301525",
+  "after_sha256": "6681540a9c00a7a7c5967610f1f0f503808d54f9ac084edff7828b56cc2f4bb6",
+  "evidence": "targets/game/reverse/identity_evidence/countcompare-0x000cda90-binding.md",
+  "reason": "The complete retail caller passes unchanged ECX receivers with no stack arguments through ILT 0x00048761 to the complete existing 157-byte provider at 0x0036F910, returning compared EAX integers. The old declaration is an undefined source-local stand-in; use the exact existing address-derived provider declaration without asserting type identity. Complete caller COFF payloads and provider ownership remain unchanged."
  }
 ]
