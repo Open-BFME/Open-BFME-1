@@ -1187,8 +1187,10 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow( AnimateWindow 
 
 // BFME defines AnimateWindow::getVel out-of-line in this TU (retail 0x495610):
 // the header only declares it, so callers here emit a real call (e8) instead
-// of inlining the two field reads.
-__declspec(noinline) Coord2D AnimateWindow::getVel( void )
+// of inlining the two field reads.  C++ inline lets identical accessor
+// definitions in the matched caller TUs share this body; noinline preserves
+// the runtime calls and their compiler-visible memory effects.
+__declspec(noinline) inline Coord2D AnimateWindow::getVel( void )
 {
 	return m_vel;
 }
