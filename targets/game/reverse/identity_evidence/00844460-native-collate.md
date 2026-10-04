@@ -101,3 +101,65 @@ string being constructed in the caller's result buffer, not to a fabricated
 local string or neighboring function. The native range constructor maintains
 that one-state base-construction lifetime. No cleanup row or identity is
 claimed by this change.
+
+## Native helper-visibility recovery (2026-10-04)
+
+The bounded fresh hypothesis succeeds. The canonical-header declaration-only
+baseline reproduces 87 bytes with exactly the recorded +0x38 difference
+(ESP+0x20 instead of ESP+0x18). Exposing the complete existing
+`Gen_006616A0::bfmeAssign` implementation removes that difference. All four
+ordinary/noinline-helper by implicit/explicit-noinline-native-base-destructor
+variants reproduce all 87 parent bytes. No assembly or fabricated STL type is
+needed. The final source uses the ordinary existing helper and the canonical
+header's native base destructor, with no new helper annotation or body change.
+
+The parent now lives alongside its existing helper in
+`Bfme5WideStringRanges.cpp`. Its native forced-inline range adapter preserves
+the established address-qualified helper identity and maps unsigned-short
+pointers to the existing short-pointer spelling without reading any element.
+The real helper's visibility lets VC7.1 reuse the hidden result-pointer home
+for the unused empty forward-iterator tag. The body remains native
+`return wstring(low, high)`.
+
+The final object independently reproduces the complete 106-byte helper at
+006616A0 and all three other original claims in that TU: 004FA770/106B,
+004F9C80/77B and 00661730/23B. The changed STLport/EH/MD compile context does not
+change any of their bytes or call bindings. The parent call remains the real
+existing Gen_006616A0 COFF symbol, bound through ILT 00042BB8 to 006616A0.
+The helper's DIR32 copy pointer resolves through the actual retail import
+directory to MSVCR71.dll!memmove at VA 0135945C. No helper pin or ledger
+identity was added, renamed or migrated.
+
+The same final object emits the native `_String_base<unsigned short>`
+destructor, independently exact at 004D4DE0 for all 43 bytes with its actual
+deallocator calls resolved. This supports the already-established construction
+cleanup lifetime; it is not a new ledger claim or new recovered-byte credit.
+
+The parent and complete unwind graph were independently rebound and compared
+without relocation masking: 87-byte parent, 10-byte handler, 28-byte FuncInfo,
+8-byte unwind entry and 8-byte cleanup action, 141 bytes total. Handler C55B08
+uses E44CE8; its single unwind state (0 -> -1) at E44CE0 selects C55B00, which
+loads ECX from EBP+4 and jumps through ILT 00032D85 to 004D4DE0. The handler's
+runtime jump reaches the existing ___CxxFrameHandler at 009F6DD6. All parent
+relocations are accounted for; the three __except_list sites remain fs:[0].
+
+Fresh RTTI and boundary reads reconfirmed the wide-collate type descriptor,
+vtable slots and RET12/INT3 boundary documented above. Checks used the normal
+compiler and byte/reference verifiers with no unresolved parent/helper/base
+calls, no gen-alias or archive masking, and no changes to gates or runtime.
+
+The recommended complete source artifact is
+`build/cloud-wide-collate/Bfme5WideStringRanges.recovered.cpp`, SHA256
+`effd61dce7974d465f4846ffc15edf4736d5cae41f95de694bad7ef8c5b54a18`.
+This identifies the reviewed source; integration into the production path
+passed the normal whole-TU gate for all five rows and both DIR32 references.
+The same production object separately passed the full 141-byte EH graph
+assertions and strict 43-byte native base-destructor check. `verify_eh.py` asserts exact graph extents,
+relocation offsets and types; native parent-handler naming; FuncInfo magic
+0x19930520 and one state; unwind predecessor -1; cleanup bytes 8B4D04E9;
+real ILT E9 destinations; and ___CxxFrameHandler membership in the existing
+normal symbol map. It then applies those independently established bindings
+to the raw COFF parent/handler/data/cleanup bytes and asserts complete equality
+against retail for all 141 bytes. The final result is saved in
+`build/cloud-wide-collate/final-result.json`; no ledger entry for these
+auxiliary bytes is implied.

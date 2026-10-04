@@ -1,3 +1,7 @@
+// stlport
+// cl: /O2 /EHsc /MD /D_STLP_USE_STATIC_LIB
+#include <string>
+
 // Three two-byte-element reserves and range assignments.
 //
 // The reserve guards its count twice: once against the largest count the
@@ -128,4 +132,35 @@ void Gen_006616A0::bfmeAssign(const short *first, const short *last, void *tag)
 void Gen_006616A0::Rva00661730(const short *first, const short *last)
 {
 	bfmeAssign(first, last, &last);
+}
+
+// The native forward-range adapter keeps the existing address-qualified helper.
+// Its complete body above is visible to VC7.1: the unused empty iterator tag
+// can then reuse the hidden result-pointer home, as in retail 0x00844460.
+// Both the 106-byte helper and all prior claims in this TU remain byte-exact.
+namespace _STL
+{
+template<> template<>
+__forceinline void basic_string<wchar_t, char_traits<wchar_t>, allocator<wchar_t> >::_M_range_initialize<const wchar_t *>(
+    const wchar_t *first, const wchar_t *last, const forward_iterator_tag &tag)
+{
+    reinterpret_cast<Gen_006616A0 *>(this)->bfmeAssign(
+        reinterpret_cast<const short *>(first),
+        reinterpret_cast<const short *>(last),
+        const_cast<forward_iterator_tag *>(&tag));
+}
+}
+
+#include <locale>
+
+namespace _STL
+{
+// STLport 4.5.3 collate<unsigned short>::do_transform, 87 bytes.
+// RTTI identifies the wide collate vtable at VA 0x0112EAE8; slot 2 is this body.
+// The native string base destructor supplies the independently verified
+// 43-byte construction cleanup through ILT 0x00032D85 -> 0x004D4DE0.
+wstring collate<wchar_t>::do_transform(const wchar_t *low, const wchar_t *high) const
+{
+    return wstring(low, high);
+}
 }
