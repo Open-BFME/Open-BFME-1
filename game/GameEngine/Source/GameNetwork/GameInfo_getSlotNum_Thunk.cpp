@@ -30,6 +30,8 @@ private:
 	StringInlineData<T> *m_data;
 };
 
+extern void j_0001609f();
+
 class AsciiString : private StringBase<char>
 {
 public:
@@ -50,17 +52,17 @@ public:
 	void translate( const AsciiString &source );
 	int compareNoCase( const UnicodeString &other ) const throw()
 	{
-		return StringBase<unsigned short>::compareNoCase( other );
+		typedef int (StringBase<unsigned short>::*Fn)( const StringBase<unsigned short> & ) const throw();
+		union { void (*fn)(); Fn call; } u = { j_0001609f };
+		return (this->*u.call)( other );
 	}
 };
-
-#pragma comment(linker, "/alternatename:?compareNoCase@?$StringBase@G@@QBEHABV1@@Z=?j_0001609f@@YAXXZ")
 
 class GameSlot
 {
 public:
 	virtual void reset(void) = 0;
-	Bool isPlayer(UnicodeString userName) const;
+	Bool isPlayer(UnicodeString userName) const throw();
 
 protected:
 	int m_state;
@@ -68,7 +70,7 @@ protected:
 	UnicodeString m_name;
 };
 
-__forceinline Bool GameSlot::isPlayer(UnicodeString userName) const
+__forceinline Bool GameSlot::isPlayer(UnicodeString userName) const throw()
 {
 	Bool result;
 	if (m_state == 5 && m_name.compareNoCase(userName) == 0)
