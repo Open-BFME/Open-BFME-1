@@ -86,8 +86,6 @@ private:
 	AsciiString m_tail;
 };
 
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
-
 class RGBColor
 {
 public:
@@ -269,12 +267,6 @@ extern GlobalData *TheWritableGlobalData;
 class AudioManager;
 extern AudioManager *TheAudio;
 extern const Real Rva00C75334One;
-
-#pragma comment(linker, "/alternatename:?rva002a65c0@SpecialAbilityUpdate@@QAE_NXZ=?j_0004b466@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0002cdc7@RGBColor@@QAEXH@Z=?j_0002cdc7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000120ad@Drawable@@QAEXAAURGBColor@@M@Z=?j_000120ad@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0004067e@Drawable@@QAEXPBVRGBColor@@@Z=?j_0004067e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00040a3e@SpecialPowerTemplate@@QBEHXZ=?j_00040a3e@@YAXXZ")
 
 class SpecialAbilityUpdate
 {
