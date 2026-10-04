@@ -1,0 +1,398 @@
+{
+  "schema": 1,
+  "date": "2026-10-04",
+  "base_commit": "cc3fd2c8800fefdceef11d4239fe26bfda8e1a56",
+  "symbol": "?checkQueuedTeams@AIPlayer@@MAEXXZ",
+  "rva": "0x00161E20",
+  "native_size": 697,
+  "baseline_path": "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe",
+  "baseline_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+  "replay_source_sha256": "683059ad09170533fadfe9571931640b5a11a87000509fa229ac818cecfc081e",
+  "body_sha256": "4bf104679436bd5eeaa3019c36fe76cd8295b36351968693f2ad33969b0f53c9",
+  "native_body_sha256": "e6270019f05f5c040e812ff9cb7c54fc8a8220e3ab892a566ca969f530dd822d",
+  "original_object_body_and_relocations_equal": true,
+  "all_named_symbol_bodies_and_relocations_equal": 33,
+  "compiler": "MSVC 7.1 via repository tools/probe.py",
+  "compile_cache_reused": false,
+  "flags": "/DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib",
+  "includes": {
+    "inputs/reference/shims/objectdlink/ObjectDlinkPmf.h": "f3f7280ac6c75dce76fdf9464e5d7141705ee23c38a2d27c4f62f2b906ab67e9",
+    "game/Libraries/Source/WWVegas/WWLib/ascii_string.h": "3c3bf49bd66de89d1f6491fd34f7cd9b354e57ae22602b89eda4c1d731c0f1c4",
+    "game/Libraries/Source/WWVegas/WWLib/string_base.h": "5176177b03e69a157e7dd1c36cf81daa93335bda32021736ec69683348e69b79"
+  },
+  "nonrelocation_differences": [
+    {
+      "offset": "0x239",
+      "native": "d1",
+      "candidate": "d0"
+    }
+  ],
+  "relocation_count": 16,
+  "unresolved": [],
+  "rel32": [
+    {
+      "offset": "0x0A2",
+      "symbol": "?remove@Rva00160740@@QAEXPAVRva00160740Node@@@Z",
+      "native_rva": "0x0001DDB3"
+    },
+    {
+      "offset": "0x0AB",
+      "symbol": "?update@Rva000EC960FlagUpdate@@QAEXE@Z",
+      "native_rva": "0x00041222"
+    },
+    {
+      "offset": "0x0D7",
+      "symbol": "?remove@Rva00160740@@QAEXPAVRva00160740Node@@@Z",
+      "native_rva": "0x0001DDB3"
+    },
+    {
+      "offset": "0x0DE",
+      "symbol": "?disband@TeamInQueue@@QAEXXZ",
+      "native_rva": "0x00047C62"
+    },
+    {
+      "offset": "0x0FC",
+      "symbol": "?clearTeamFlags@ScriptEngine@@QAEXXZ",
+      "native_rva": "0x00033B22"
+    },
+    {
+      "offset": "0x189",
+      "symbol": "?update@Rva000EC960FlagUpdate@@QAEXE@Z",
+      "native_rva": "0x00041222"
+    },
+    {
+      "offset": "0x288",
+      "symbol": "?releaseBuffer@?$StringBase@D@@AAEXXZ",
+      "native_rva": "0x00887940"
+    }
+  ],
+  "dir32": [
+    {
+      "offset": "0x3",
+      "symbol": "__ehhandler$?checkQueuedTeams@AIPlayer@@MAEXXZ",
+      "native_va": "0x1005438",
+      "expected_va": "0x1005438",
+      "equal": true,
+      "basis": "native handler and full EH graph"
+    },
+    {
+      "offset": "0x9",
+      "symbol": "__except_list",
+      "native_va": "0x0",
+      "expected_va": "0x0",
+      "equal": true,
+      "basis": "x86 FS:[0] exception chain ABI"
+    },
+    {
+      "offset": "0x11",
+      "symbol": "__except_list",
+      "native_va": "0x0",
+      "expected_va": "0x0",
+      "equal": true,
+      "basis": "x86 FS:[0] exception chain ABI"
+    },
+    {
+      "offset": "0x4f",
+      "symbol": "?TheGameLogic@@3PAVGameLogic@@A",
+      "native_va": "0x12f0898",
+      "expected_va": "0x12f0898",
+      "equal": true,
+      "basis": "matched global pin plus PE image base"
+    },
+    {
+      "offset": "0xf7",
+      "symbol": "?TheScriptEngine@@3PAVScriptEngine@@A",
+      "native_va": "0x12f076c",
+      "expected_va": "0x12f076c",
+      "equal": true,
+      "basis": "matched global pin plus PE image base"
+    },
+    {
+      "offset": "0x1c9",
+      "symbol": "?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ",
+      "native_va": "0x401140",
+      "expected_va": "0x401140",
+      "equal": true,
+      "basis": "matched BfmeObjectDlinkBase getter via ILT1140; actual PMF shape from ObjectDlinkPmf.h"
+    },
+    {
+      "offset": "0x248",
+      "symbol": "?TheScriptEngine@@3PAVScriptEngine@@A",
+      "native_va": "0x12f076c",
+      "expected_va": "0x12f076c",
+      "equal": true,
+      "basis": "matched global pin plus PE image base"
+    },
+    {
+      "offset": "0x26d",
+      "symbol": "?TheScriptEngine@@3PAVScriptEngine@@A",
+      "native_va": "0x12f076c",
+      "expected_va": "0x12f076c",
+      "equal": true,
+      "basis": "matched global pin plus PE image base"
+    },
+    {
+      "offset": "0x2b1",
+      "symbol": "__except_list",
+      "native_va": "0x0",
+      "expected_va": "0x0",
+      "equal": true,
+      "basis": "x86 FS:[0] exception chain ABI"
+    }
+  ],
+  "native_code_checks": [
+    {
+      "rva": "0x347e90",
+      "size": 6,
+      "sha256": "c955c3d1a0e67a97b912d988e76bd11eec549c9c2de671b086fc8d16310ff6ff",
+      "purpose": "ScriptEngine constructor primary vptr store"
+    },
+    {
+      "rva": "0x161e20",
+      "size": 697,
+      "sha256": "e6270019f05f5c040e812ff9cb7c54fc8a8220e3ab892a566ca969f530dd822d",
+      "purpose": "checkQueuedTeams full body"
+    },
+    {
+      "rva": "0x3490c0",
+      "size": 160,
+      "sha256": "048f9450f8c43c5b248e3abc7c35cceb06d97287e081935c47578ea5970d792c",
+      "purpose": "slot25 scoped execute wrapper"
+    },
+    {
+      "rva": "0x34c7a0",
+      "size": 115,
+      "sha256": "5d2a69a61a3972fa178a8adb1f700eeaef984967ef1ceea5ec4db2bb87f62fa5",
+      "purpose": "slot53 scoped lookup wrapper"
+    },
+    {
+      "rva": "0x34c710",
+      "size": 36,
+      "sha256": "e5b434bd46a5bb560c87fdce921674aba06ce96b9c34f0f2a11e0ffc6cf3d57f",
+      "purpose": "slot52 narrow forwarding wrapper"
+    },
+    {
+      "rva": "0x339da0",
+      "size": 99,
+      "sha256": "f05512dc7fbc9c8c5ccc0563e8b723d749c8694b6958a191cbc89630acb7665e",
+      "purpose": "narrow latch constructor"
+    },
+    {
+      "rva": "0x339e20",
+      "size": 86,
+      "sha256": "c701dcf672c52f3eb52e99afc7cbb8a53abedfa94c4221462f0d3d0eb4e29d87",
+      "purpose": "narrow latch destructor"
+    },
+    {
+      "rva": "0x33c450",
+      "size": 209,
+      "sha256": "a1d1b3660d0cea1465dfb05ef4a1a102ad1c410ed30f320bb5cbd2b06dafe51d",
+      "purpose": "lookup writes narrow output"
+    },
+    {
+      "rva": "0x887b60",
+      "size": 121,
+      "sha256": "4810f7466db0977e99606d6ae9bb88e93ee04489ae10334fe35548a730c09ccc",
+      "purpose": "exported narrow copy"
+    },
+    {
+      "rva": "0x887c90",
+      "size": 135,
+      "sha256": "b1507697e270ea296253dcdc6c8e6969b7177ffb8c9b73320d86714ac7ca865f",
+      "purpose": "exported narrow set"
+    },
+    {
+      "rva": "0x887940",
+      "size": 134,
+      "sha256": "187c28abd2f21a735b24635bed48b6df2e41219d54945a45406c5b1143fd2644",
+      "purpose": "exported narrow release"
+    }
+  ],
+  "nested_layout_checks": [
+    {
+      "rva": "0x000F3E58",
+      "bytes": "8bf1",
+      "purpose": "preserve original complete-object receiver"
+    },
+    {
+      "rva": "0x000F3ED9",
+      "bytes": "8d8e2c010000c644241804e8165af5ff",
+      "purpose": "embedded ctor receiver+12c"
+    },
+    {
+      "rva": "0x000498FF",
+      "bytes": "e9ac650a00",
+      "purpose": "member ctor route"
+    },
+    {
+      "rva": "0x000EFEEA",
+      "bytes": "c74500705e0801",
+      "purpose": "actual member vptr at+0"
+    },
+    {
+      "rva": "0x000EFF23",
+      "bytes": "89b5bc000000",
+      "purpose": "narrow condition member+bc"
+    },
+    {
+      "rva": "0x000F06C1",
+      "bytes": "895578",
+      "purpose": "initial idle member+78"
+    },
+    {
+      "rva": "0x000F0834",
+      "bytes": "8d8dbc000000",
+      "purpose": "condition member+bc"
+    },
+    {
+      "rva": "0x000F0869",
+      "bytes": "8885c0000000",
+      "purpose": "execute flag member+c0"
+    },
+    {
+      "rva": "0x000EC420",
+      "bytes": "8d812c010000c3",
+      "purpose": "opaque member-start accessor"
+    }
+  ],
+  "mcp_recorded_byte_checks": [
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x10e7a30",
+      "size": 216,
+      "sha256": "1a7f48be4ceaaff626f6d095c13727d4178e064acd5d77e773161db45c952a69",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x4086e8",
+      "size": 5,
+      "sha256": "059eaa2a7148bafc5a12853433d973774d31a77cbe4e563fecf0114933570e7d",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x439347",
+      "size": 5,
+      "sha256": "27106e156f6b12b27b3a1a8e85d442d419d86b9e5aa55939904a214e87170e04",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x56204c",
+      "size": 96,
+      "sha256": "24dbf307ebf387d1a949d4a01d98559659ef2073cff0efc243b8cbfac4bf5006",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x74c7a0",
+      "size": 256,
+      "sha256": "a23af0da878f94c08304ddb2381eb59b4d241aec65f9e222f7677877f19be761",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0x7490c0",
+      "size": 256,
+      "sha256": "3e91f9e391cfd57713e5e4aa577f2beb8c73a89ade4aee6d4e655bbb73a57696",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:04.378247+00:00",
+      "tool": "read_bytes",
+      "va": "0xc87940",
+      "size": 134,
+      "sha256": "187c28abd2f21a735b24635bed48b6df2e41219d54945a45406c5b1143fd2644",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:49.572987+00:00",
+      "tool": "read_bytes",
+      "va": "0x739da0",
+      "size": 160,
+      "sha256": "37581b4b8055c68e05d9b6b146a7c31060d6b78587125322a6ab3af3cceca8dd",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:49.572987+00:00",
+      "tool": "read_bytes",
+      "va": "0x739e20",
+      "size": 160,
+      "sha256": "efd4d69cf25fc599aab2f9de397ef19c17bc22af3097e03437f5318311d22373",
+      "equal_current_pe": true
+    },
+    {
+      "timestamp_utc": "2026-10-04T13:40:49.572987+00:00",
+      "tool": "read_bytes",
+      "va": "0x74c710",
+      "size": 160,
+      "sha256": "fbdfe928dd50ff8726aa9fd6ed7704f58a9b009b37590d2fe49d14570a8b50a5",
+      "equal_current_pe": true
+    }
+  ],
+  "mcp_limitation": "Prior direct-only stdio adapter sessions, rechecked against the current pinned PE; no new MCP session. Decompile VA0074C710 returned not found, but its read_bytes and full native decode succeeded. No decompiler signature is original C++ signature proof.",
+  "acceptance": "partial only; no production, pin, header, ledger, verifier or LINKED change; hard-coded fallback VA01336E50 remains integration debt",
+  "compiler_binaries": {
+    "cl.exe": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515",
+    "c1xx.dll": "353f3d5dcd050b876e1c044b99c4bf47958d255f395a4919f406a19921be4dfa",
+    "c2.dll": "bcd28f39b1798b07989c30a1df471cf87fc20e3802d130901a08f83800e6b81e"
+  },
+  "compiler_flags": [
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-DNDEBUG",
+    "-DWIN32",
+    "-D_WINDOWS",
+    "-MD",
+    "-EHsc",
+    "-Iinputs/reference/shims/objectdlink",
+    "-Igame/Libraries/Source/WWVegas/WWLib"
+  ],
+  "compiler_environment": {
+    "CL": null,
+    "_CL_": null,
+    "INCLUDE": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include"
+  },
+  "bank_result": {
+    "alternative": "targets/game/reverse/attempt_history/0x00161e20/b48dbfdd19e58fb31ddce8208546a682e25b441b5ff1bd5d2cbd8d8ceeaaeb72.json",
+    "measured_score": 0.9986,
+    "preferred": "targets/game/reverse/attempts/0x00161e20.cpp",
+    "preferred_sha256": "9034003c1418f2e4f21a7cf5e942ac6c9f5e9e78d0358e46f1f48d830c5e0d50",
+    "preferred_unchanged": true,
+    "source_body_equal_excluding_bank_headers": true
+  },
+  "ai_player_slot17": {
+    "vtable_va": "0x010968B0",
+    "slot": 17,
+    "entry_va": "0x010968F4",
+    "ilt_va": "0x0041E27C",
+    "ilt_bytes": "e99f3b1400",
+    "target_va": "0x00561E20"
+  },
+  "fallback": {
+    "instruction_rva": "0x0016205C",
+    "bytes": "b8506e3301",
+    "coff_relocation_at_operand": false,
+    "image_base_relocation_directory": {
+      "rva": 0,
+      "size": 0
+    },
+    "pe_export": [
+      {
+        "name": "?TheEmptyString@AsciiString@@2V1@B",
+        "rva": "0x00F36E50"
+      }
+    ],
+    "limit": "Retained numeric TeamPrototype pointer is an unsupported object view; existing nullable name accessors support one-word narrow-string fallback. No candidate rewrite or new shape probe."
+  }
+}
