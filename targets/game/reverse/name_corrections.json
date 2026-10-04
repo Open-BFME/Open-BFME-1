@@ -17448,5 +17448,25 @@
   "after_sha256": "111dce096402796b69655da548239640a045785a58edd6b6016d33dd03d0de51",
   "evidence": "targets/game/reverse/identity_evidence/003ca710-existing-hook-route.md",
   "reason": "The retail call at 003CA76A targets ILT 00041164, independently decoded to existing Rva003C92A0. Two separate matched callers prove the same two-stack-word cdecl ABI and full EAX result. On the 32-bit target, pointer-to-int casts preserve both argument words while matching the existing provider signature; no semantic name, new provider, alias, pin or link-order change is introduced."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp",
+  "old_name": "BFMEWaterTrackTextureHandle",
+  "new_name": "Gen0090DB70",
+  "before_sha256": "c3586ddd6959e7b874e6137ac81b04d60811b79c6c08b7d368c55ad7784458f1",
+  "after_sha256": "99e81c6043ac7ff6978356ccbf307b39c2b5ea8a5bb5665874a06befe5145800",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp",
+  "old_name": "m_texture",
+  "new_name": "Gen0090DB70",
+  "before_sha256": "c3586ddd6959e7b874e6137ac81b04d60811b79c6c08b7d368c55ad7784458f1",
+  "after_sha256": "99e81c6043ac7ff6978356ccbf307b39c2b5ea8a5bb5665874a06befe5145800",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

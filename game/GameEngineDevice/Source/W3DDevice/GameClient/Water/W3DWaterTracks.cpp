@@ -138,10 +138,18 @@ public:
 	int m_bfme38;
 };
 
+// Retail builds the water-track texture handle at 0x0090DB70, the body of
+// Gen0090DB70::Gen0090DB70(void *); that constructor owns exactly one dword
+// (see game/GameEngine/Source/Common/P8ZeroingCtors.cpp), so the handle is
+// spelled as a class deriving from it and every handle field is inherited.
 class Gen0090DB70
 {
 public:
 	Gen0090DB70(void *source);
+	Gen0090DB70() : m_texture(0) {}
+	Gen0090DB70(const Gen0090DB70 &other) : m_texture(other.m_texture) {}
+
+	TextureClass *m_texture;
 };
 
 class Gen_0090DB10
@@ -156,19 +164,21 @@ public:
 	void bfmeGoVHN(int format);
 };
 
-class BFMEWaterTrackTextureHandle
+class BFMEWaterTrackTextureHandle : public Gen0090DB70
 {
 public:
-	BFMEWaterTrackTextureHandle() : m_texture(0) {}
-	BFMEWaterTrackTextureHandle(const Rva009EBCE0AssetReference &source);
+	BFMEWaterTrackTextureHandle() : Gen0090DB70() {}
+	__forceinline BFMEWaterTrackTextureHandle(const void *source)
+		: Gen0090DB70((void *)source)
+	{
+	}
 	BFMEWaterTrackTextureHandle(const BFMEWaterTrackTextureHandle &other)
-		: m_texture(other.m_texture)
+		: Gen0090DB70(other)
 	{
 		if (m_texture)
 			++*(unsigned short *)((char *)m_texture + 4);
 	}
 
-	TextureClass *m_texture;
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
@@ -188,8 +198,6 @@ public:
 extern Rva009EBCE0AssetReference Rva009EBCE0_GetPrototype(const char *name);
 extern void __cdecl Add_Prototype(void *prototype);
 
-#pragma comment(linker, "/alternatename:??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z=??0Gen0090DB70@@QAE@PAX@Z")
-
 extern const void *g_0113A6F8[];
 
 class WaterTrackThing : public BfmeThingSJ
@@ -207,7 +215,9 @@ BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(Char *name, Int mipCount, I
 	if (!name)
 		return BFMEWaterTrackTextureHandle();
 
-	BFMEWaterTrackTextureHandle texture(Rva009EBCE0_GetPrototype(name));
+	// The handle's retail body is Gen0090DB70::Gen0090DB70(void *) at 0x0090DB70,
+	// so the temporary prototype reference is handed to it by address.
+	BFMEWaterTrackTextureHandle texture((const void *)&Rva009EBCE0_GetPrototype(name));
 	if (!texture.m_texture)
 	{
 		WaterTrackThing *thing = new WaterTrackThing((int)name);
