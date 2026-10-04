@@ -48,9 +48,16 @@ public:
 	void addObjectDestroyedCount(const ThingTemplate *tmpl, const Player *byPlayer, int count);
 };
 
+extern void j_00020824();
+extern void j_00028560();
+extern void j_000385fa();
+extern void j_00031359();
+
 static __forceinline Player *controllingPlayerOf(const Object *object)
 {
-	return object->getControllingPlayer();
+	typedef Player *(Object::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_00020824 };
+	return (object->*u.call)();
 }
 
 // Retail's global at 0x012EF1D8 is EA's `ThingFactory *TheThingFactory` (name
@@ -59,11 +66,6 @@ static __forceinline Player *controllingPlayerOf(const Object *object)
 // the address-derived BfmeThingFactory view, reached by a cast.
 class ThingFactory;
 extern ThingFactory *TheThingFactory;
-
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addObjectCount@ScoreKeeper@@QAEXPBVThingTemplate@@H@Z=?j_000385fa@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addObjectDestroyedCount@ScoreKeeper@@QAEXPBVThingTemplate@@PBVPlayer@@H@Z=?j_00031359@@YAXXZ")
 
 class __declspec(novtable) Rva0024E8E0PrimaryBase
 {
@@ -148,14 +150,26 @@ void Rva0024E990Owner::rva0024e990(Object *other)
 	const ThingTemplate *tmpl;
 	creatorPlayer = controllingPlayerOf(m_creatorObj);
 	otherPlayer = controllingPlayerOf(self);
-	tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(name);
+	{
+		typedef const ThingTemplate *(BfmeThingFactory::*Fn)(const AsciiString &);
+		union { void (*fn)(); Fn call; } u = { j_00028560 };
+		tmpl = (((BfmeThingFactory *)TheThingFactory)->*u.call)(name);
+	}
 	if (creatorPlayer == otherPlayer)
 		goto release;
 	if (tmpl == 0)
 		goto release;
 
-	((ScoreKeeper *)((char *)creatorPlayer + 0x348))->addObjectCount(tmpl, m_count);
-	((ScoreKeeper *)((char *)otherPlayer + 0x348))->addObjectDestroyedCount(tmpl, creatorPlayer, m_count);
+	{
+		typedef void (ScoreKeeper::*Fn)(const ThingTemplate *, int);
+		union { void (*fn)(); Fn call; } u = { j_000385fa };
+		(((ScoreKeeper *)((char *)creatorPlayer + 0x348))->*u.call)(tmpl, m_count);
+	}
+	{
+		typedef void (ScoreKeeper::*Fn)(const ThingTemplate *, const Player *, int);
+		union { void (*fn)(); Fn call; } u = { j_00031359 };
+		(((ScoreKeeper *)((char *)otherPlayer + 0x348))->*u.call)(tmpl, creatorPlayer, m_count);
+	}
 
 release:
 	m_count = 0;
