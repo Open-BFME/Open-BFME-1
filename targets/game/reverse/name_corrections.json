@@ -16228,5 +16228,35 @@
   "after_sha256": "3c5e09860403a6902a11a1a8442fad68f1f2bbce7a63600af80b842daac94f68",
   "evidence": "targets/game/reverse/identity_evidence/release-set-wrapper-009a5980.md",
   "reason": "The old bfmeTwoBZB spelling was an undefined source-local stand-in with only a pin, not a recovered descriptive identity. Complete retail instructions prove six cdecl one-pointer calls to the separately padded 5-byte wrapper at 0x009A5980, distinct from its 29-byte target at 0x009A58E0. Use the exact address-derived wrapper owner and preserve both physical identities without asserting original semantics."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "old_name": "Coord3D",
+  "new_name": "Rva00172600Coord3D",
+  "before_sha256": "2f423957b2a0c5c8c34d09bd85d28a852ca0748fafcb6d683e7e6178c25a60dd",
+  "after_sha256": "ec71706a84c22c8b29b73077adfb749756a6ab24c08a51b76f50d835c1a01c86",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "old_name": "Coord3DBase",
+  "new_name": "Rva00172600Coord3D",
+  "before_sha256": "2f423957b2a0c5c8c34d09bd85d28a852ca0748fafcb6d683e7e6178c25a60dd",
+  "after_sha256": "ec71706a84c22c8b29b73077adfb749756a6ab24c08a51b76f50d835c1a01c86",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToState_onEnter.cpp",
+  "old_name": "include",
+  "new_name": "Rva00172600Coord3D",
+  "before_sha256": "2f423957b2a0c5c8c34d09bd85d28a852ca0748fafcb6d683e7e6178c25a60dd",
+  "after_sha256": "ec71706a84c22c8b29b73077adfb749756a6ab24c08a51b76f50d835c1a01c86",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
