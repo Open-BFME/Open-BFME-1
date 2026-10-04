@@ -67,7 +67,6 @@ class WWMath
 	}
 };
 
-extern Real g_bfmePiOverTwo;
 extern void __fastcall normAngle(Real &angle);
 
 class Vector2
@@ -126,7 +125,7 @@ void Rva00740440::setCameraPathAngles(Bool orient, Real angle, int firstWaypoint
 				pathAngle = -WWMath::Acos(pathAngle);
 			else
 				pathAngle = WWMath::Acos(pathAngle);
-			pathAngle -= g_bfmePiOverTwo;
+			pathAngle -= 1.57079637050628662109375f; // retail float32 pi/2
 			normAngle(pathAngle);
 			*cameraAngle++ = pathAngle;
 		}
