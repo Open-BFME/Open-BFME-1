@@ -220,3 +220,15 @@ are left unclaimed.
 | 422 | 0x00016DBA | 0x005DF720 | 0x00027656 | ordinal 475 `??1RenderObjectDrawModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DE490) |
 | 424 | 0x0003DAAA | 0x005E1E30 | 0x00044E31 | ordinal 455 `??1LifeEventModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DDFE0) |
 | 425 | 0x0001BA81 | 0x005E1F40 | 0x00038410 | ordinal 486 `??1TerrainCollisionModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DE870) |
+
+## Two clone bodies that carried only the U...ModuleTag spelling
+
+| ordinal | ILT | body | source |
+|---|---|---|---|
+| 1380 | 0x00018462 | 0x005DCD30 | `RenderObjectUpdateConcreteModuleTemplateCloneThunk.cpp` |
+| 1390 | 0x0002AE87 | 0x005DAD80 | `ButterflyDrawConcreteModuleTemplateCloneThunk.cpp` |
+
+Each body's only row was the `?clone@?$ConcreteModuleTemplate@U...ModuleTag@...`
+label the per-member TU compiles; retail exports the same instantiation as the
+`V?$ModuleTag<...>` spelling. The row is corrected to the exported name with
+`add_match.py --correct-identity`, keeping `object-symbol=` the compiled label.
