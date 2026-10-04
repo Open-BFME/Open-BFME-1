@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 class Rva00491DB0Display
 {
@@ -27,28 +27,29 @@ public:
 class Display;
 extern Display *TheDisplay;
 
-class Rva00491DB0String
-{
-public:
-	~Rva00491DB0String();
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
-class Rva00491DB0Base
+// Retail calls ILT 0x0004634E from the destructor tail, which routes to the
+// 0x00490470 body the ledger owns as ??1Rva00490470@@UAE@XZ
+// (game/GameEngine/Source/GameClient/GUI/Rva00490350LinkedCtorAndWindowDtor.cpp),
+// so the base class is that class, not an address-derived view of it.
+class Rva00490470
 {
 public:
-	virtual ~Rva00491DB0Base();
+	virtual ~Rva00490470();
 private:
 	unsigned char m_padding[0x10];
 };
 
-class Rva00491DB0DisplayOwner : public Rva00491DB0Base
+class Rva00491DB0DisplayOwner : public Rva00490470
 {
 public:
 	virtual ~Rva00491DB0DisplayOwner();
 private:
-	Rva00491DB0String m_name;
+	// The +0x14 member is EA's AsciiString: retail calls 0x00887940 on it,
+	// which is ?releaseBuffer@?$StringBase@D@@AAEXXZ, matched in
+	// game/Libraries/Source/string/StringBase.cpp.
+	AsciiString m_name;
 };
 
 Rva00491DB0DisplayOwner::~Rva00491DB0DisplayOwner()

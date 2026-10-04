@@ -15968,5 +15968,25 @@
   "after_sha256": "4899cde434f66b82ad5d96caf5ace2cc6da04526bf6f9cdd58e0859d37d6eab8",
   "evidence": "targets/game/reverse/identity_evidence/0081e4b0-vp6-base-destructor.md",
   "reason": "The old BfmeThingUC reset-method claim has no identity evidence. The matched Gen_0081E480 constructor, identical installed table, derived base-cleanup call at EH state -1 and both unwind funclets prove the complete virtual destructor at the same22B extent. Preserve the existing constructor-derived opaque class instead of the false ordinary method; raw bodies and all caller/EH objects remain unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme/Rva000F9940.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme/Rva000F9940.cpp",
+  "old_name": "Glo012F1028Type",
+  "new_name": "Gen003C3B50",
+  "before_sha256": "c6482c830b992ee6cb09df3ec646948ae90d9e1f7669bb367e9bc72f0375a4e2",
+  "after_sha256": "d6543efd204a266bad385cfd28639d273c33d5930eec2317915356cffd4ddd82",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme/Rva000F9940.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme/Rva000F9940.cpp",
+  "old_name": "Glo012F1028Type",
+  "new_name": "Rva003C3AC0",
+  "before_sha256": "c6482c830b992ee6cb09df3ec646948ae90d9e1f7669bb367e9bc72f0375a4e2",
+  "after_sha256": "d6543efd204a266bad385cfd28639d273c33d5930eec2317915356cffd4ddd82",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

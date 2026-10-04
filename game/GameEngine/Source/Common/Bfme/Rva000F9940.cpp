@@ -34,11 +34,28 @@ private:
 	P6Elem003C3B50 *m_storageEnd;
 };
 
-class Glo012F1028Type
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`.  The two
+// callees below are the bodies the ledger records at 0x003C3AC0 and 0x003C3B50
+// -- `Rva003C3AC0::forward` (game/GameEngine/Source/Common/
+// S1SubObjectPairCalls.cpp) and `Gen003C3B50::bfmeAppend` (game/GameEngine/
+// Source/Common/P6MemberVectorPushBack.cpp) -- and both take that exact object
+// as their receiver, so each call is made through a local view class carrying
+// the defining name.  Both views hold the same 0x68 opaque head followed by
+// the record vector those bodies walk.
+class Rva003C3AC0
 {
 public:
-	void rva003C3AC0();
-	void rva003C3B50(const P6Elem003C3B50 *value);
+	void forward();
+
+private:
+	unsigned char m_opaque00[0x68];
+	BfmeRecordVector m_records;
+};
+
+class Gen003C3B50
+{
+public:
+	void bfmeAppend(const P6Elem003C3B50 *value);
 
 private:
 	unsigned char m_opaque00[0x68];
@@ -47,8 +64,8 @@ private:
 
 // Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
 // once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
-// Glo012F1028Type above is this TU's own view of that address, so the two
-// reads cast at the use.
+// The two view classes above are this TU's own view of that address, so the
+// two reads cast at the use.
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
@@ -65,10 +82,10 @@ private:
 // ?rva000F9940@BfmeVecVLH@@QAEXXZ
 void BfmeVecVLH::rva000F9940()
 {
-	((Glo012F1028Type *)TheLivingWorldLogic)->rva003C3AC0();
+	((Rva003C3AC0 *)TheLivingWorldLogic)->forward();
 
 	for (unsigned int index = 0; index < m_records.size(); ++index)
 	{
-		((Glo012F1028Type *)TheLivingWorldLogic)->rva003C3B50(&m_records[index]);
+		((Gen003C3B50 *)TheLivingWorldLogic)->bfmeAppend(&m_records[index]);
 	}
 }
