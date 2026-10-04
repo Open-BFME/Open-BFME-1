@@ -207,8 +207,11 @@ const Image* Anim2DTemplate::getFrame( UnsignedShort frameNumber ) const
 // ------------------------------------------------------------------------------------------------
 // ??1Anim2D@@MAE@XZ
 extern const void *g_0110F29C[];
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+// Snapshot is visible (and polymorphic) in this TU, so VC7.1 already declares its
+// vftable implicitly as `void (__cdecl *const [3])(void)`; spelling it that way here
+// is what lets an extern "C" declaration of the real mangled name bind instead of
+// colliding (C2040/C2373).
+extern "C" void (__cdecl *const __identifier("??_7Snapshot@@6B@")[3])(void);
 Anim2D::~Anim2D( void )
 {
 	Anim2DCollection *collectionSystem = m_collectionSystem;
@@ -225,7 +228,7 @@ Anim2D::~Anim2D( void )
 			*(Anim2D **)((unsigned char *)collectionSystem + 0x0C) = m_collectionSystemNext;
 	}
 
-	*(volatile void **)this = (void *)bfmeVftSnapshot;
+	*(volatile void **)this = (void *)__identifier("??_7Snapshot@@6B@");
 }
 
 // ------------------------------------------------------------------------------------------------
