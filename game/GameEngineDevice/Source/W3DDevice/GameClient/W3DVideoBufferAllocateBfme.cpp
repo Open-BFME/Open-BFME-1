@@ -84,19 +84,19 @@ bool W3DVideoBuffer::allocate(unsigned int width, unsigned int height, bool flag
 
 	unsigned int state_format;
 	switch (format) {
-	case 1:
+	case 2:
 		state_format = 0x16;
 		break;
-	case 2:
+	case 5:
 		state_format = flag ? 0x15 : 0x16;
 		break;
-	case 3:
+	case 1:
 		state_format = 0x14;
 		break;
-	case 4:
+	case 3:
 		state_format = 0x17;
 		break;
-	case 5:
+	case 4:
 		state_format = 0x18;
 		break;
 	default:
