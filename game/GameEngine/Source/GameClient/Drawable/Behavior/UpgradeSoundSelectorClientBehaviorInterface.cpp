@@ -312,10 +312,9 @@ Bool Rva006083A0SoundUpgrade::matchesObject(void *object)
 }
 
 // 0x006083A0 tests the record's upgrade mask against the attached object.
-#pragma comment(linker, "/alternatename:?matchesObject@Rva006083A0SoundUpgrade@@QAE_NPAX@Z=?j_000420b9@@YAXXZ")
-
 // The existing BfmeMapSD implementation is reached through this ILT.
-#pragma comment(linker, "/alternatename:?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z=?j_00020e7d@@YAXXZ")
+extern void j_000420b9();
+extern void j_00020e7d();
 
 // ?findMappedSound@UpgradeSoundSelectorClientBehavior@@UAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z
 BfmeSlotSD *UpgradeSoundSelectorClientBehavior::findMappedSound(BfmeKeySD *key)
@@ -331,10 +330,22 @@ BfmeSlotSD *UpgradeSoundSelectorClientBehavior::findMappedSound(BfmeKeySD *key)
 	for (SoundUpgradeRecord *record = data->m_start; record != finish;
 		record = (SoundUpgradeRecord *)((char *)record + 0x210))
 	{
-		if (((Rva006083A0SoundUpgrade *)record)->matchesObject(upgrade))
+		typedef Bool (Rva006083A0SoundUpgrade::*MatchesObject)(void *);
+		union
+		{
+			void (*fn)();
+			MatchesObject call;
+		} matchesObjectThunk = {j_000420b9};
+		if ((((Rva006083A0SoundUpgrade *)record)->*matchesObjectThunk.call)(upgrade))
 		{
 			BfmeMapSD *map = &record->m_map;
-			BfmeSlotSD *node = map->bfmeFindSD(key);
+			typedef BfmeSlotSD *(BfmeMapSD::*BfmeFindSD)(BfmeKeySD *);
+			union
+			{
+				void (*fn)();
+				BfmeFindSD call;
+			} bfmeFindSDThunk = {j_00020e7d};
+			BfmeSlotSD *node = (map->*bfmeFindSDThunk.call)(key);
 			if (node == map->m_header)
 				continue;
 			void *sound = (void *)((char *)node + 0x14);
