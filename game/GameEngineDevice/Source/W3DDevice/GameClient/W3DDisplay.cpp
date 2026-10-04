@@ -2,6 +2,7 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#include "rendobj.h"  // the sweep shim's two-base RenderObjClass must win over the reference tree's (LightClass::Set_Specular layout)
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
