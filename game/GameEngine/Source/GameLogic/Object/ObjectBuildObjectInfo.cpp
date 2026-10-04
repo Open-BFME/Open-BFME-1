@@ -116,7 +116,7 @@ void Object::bfmeBuildObjectInfo(BfmeObjectInfo *info) const
 	info->m_value044 = m_value37c;
 	info->m_value040 = m_value378;
 	info->m_value048 = m_value380;
-	info->m_displayName = m_displayName;
+	((StringBase<unsigned short> *)&info->m_displayName)->set(*(const StringBase<unsigned short> *)&m_displayName);
 	info->m_commandSetOverride = m_commandSetOverride;
 	info->m_zeroVector = BfmeZeroVector();
 }
