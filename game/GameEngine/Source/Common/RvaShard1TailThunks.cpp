@@ -5,7 +5,7 @@
 // declarations preserve the real receiver and arguments on the caller stack.
 
 extern void rva0000EF5CTarget(void);
-extern void rva000070B3Target(void);
+extern void PopulateLobbyPlayerListbox(void); // ILT 0x000070B3 destination, called directly
 extern void rva000078E7Target(void);
 extern void rva0000CC3ETarget(void);
 extern void rva0000A47ATarget(void);
@@ -21,7 +21,7 @@ extern void rva000399A5Target(void);
 extern void rva0003D7B2Target(void);
 
 #pragma comment(linker, "/alternatename:?rva0000EF5CTarget@@YAXXZ=??0PropagandaTowerBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
-#pragma comment(linker, "/alternatename:?rva000070B3Target@@YAXXZ=?PopulateLobbyPlayerListbox@@YAXXZ")
+
 #pragma comment(linker, "/alternatename:?rva000078E7Target@@YAXXZ=??$__copy@PBVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z")
 #pragma comment(linker, "/alternatename:?rva0000CC3ETarget@@YAXXZ=??0FlightDeckBehaviorModuleData@@QAE@XZ")
 #pragma comment(linker, "/alternatename:?rva0000A47ATarget@@YAXXZ=?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z")
@@ -43,7 +43,7 @@ void j_0000EF5C(void)
 
 void j_000070B3(void)
 {
-	rva000070B3Target();
+	PopulateLobbyPlayerListbox();
 }
 
 void j_000078E7(void)
