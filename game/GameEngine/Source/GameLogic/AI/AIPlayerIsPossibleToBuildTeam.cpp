@@ -59,8 +59,6 @@ private:
 class ThingTemplate
 {
 public:
-	Int calcCostToBuild(const Player *player, Int buildIndex) const;
-
 	private:
 		char m_prefix[0xd8];
 		unsigned int m_flags;
@@ -147,11 +145,10 @@ extern AI *TheAI;
 class ThingFactory;
 extern ThingFactory *TheThingFactory;
 
-#pragma comment(linker, "/alternatename:?calcCostToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z=?j_0000da8a@@YAXXZ")
-
 extern void j_00028560();
 extern void j_000237d1();
 extern void j_0002b62f();
+extern void j_0000da8a();
 
 static const ThingTemplate *bfmeFindTemplate(const AsciiString *name)
 {
@@ -195,7 +192,13 @@ Bool AIPlayer::isPossibleToBuildTeam(TeamPrototype *proto,
 			if (bfmeFindFactory(this, thing, false, &buildIndex) != 0)
 				anyIdle = true;
 			if (buildIndex == -1)
-				thingCost = thing->calcCostToBuild(m_player, -1);
+			{
+				typedef Int (ThingTemplate::*CalcCostCall)(const Player *,
+					Int) const;
+				union { void (*raw)(void); CalcCostCall member; } call;
+				call.raw = j_0000da8a;
+				thingCost = (thing->*call.member)(m_player, -1);
+			}
 			else
 				thingCost = ((BfmeBuildIndexSetter *)((char *)m_player + 0x684))->set(buildIndex);
 			if ((*(const unsigned int *)((const char *)thing + 0xd8) & 0x10000000) != 0)
