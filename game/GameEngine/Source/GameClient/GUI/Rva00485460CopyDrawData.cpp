@@ -20,17 +20,15 @@ public:
 	WinDrawData m_hiliteDrawData[MAX_DRAW_DATA];
 };
 
+extern void j_00034991();
+
 class GameWindow
 {
-public:
-	WinInstanceData *winGetInstanceData(void);
 };
 
 #pragma intrinsic(memcpy)
 extern "C" void * __cdecl memcpy(void *destination, const void *source,
 	unsigned int count);
-
-#pragma comment(linker, "/alternatename:?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ=?j_00034991@@YAXXZ")
 
 // ?Rva00485460CopyDrawData@@YAXPAVGameWindow@@0PAVWinDrawData@@111@Z
 void Rva00485460CopyDrawData(GameWindow *destination, GameWindow *source,
@@ -39,13 +37,15 @@ void Rva00485460CopyDrawData(GameWindow *destination, GameWindow *source,
 {
 	WinInstanceData *destinationData;
 	WinInstanceData *sourceData;
+	typedef WinInstanceData * (GameWindow::*Fn)(void);
+	union { void (*thunk)(); Fn call; } u = { j_00034991 };
 
 	if (destination == 0)
 		return;
 
-	destinationData = destination->winGetInstanceData();
+	destinationData = (destination->*u.call)();
 	if (source != 0)
-		sourceData = source->winGetInstanceData();
+		sourceData = (source->*u.call)();
 	else
 		sourceData = 0;
 
