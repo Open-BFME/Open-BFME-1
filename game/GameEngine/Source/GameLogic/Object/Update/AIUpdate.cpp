@@ -4710,16 +4710,8 @@ void AIUpdateInterface::privateIdle(CommandSourceType cmdSource)
 }
 
 //----------------------------------------------------------------------------------------
-// ?isIdle@AIUpdateInterface@@ present-unmatched
-Bool AIUpdateInterface::isIdle() const
-{
-	const AIStateMachine *state = getStateMachine();
-	if( state->getCurrentStateID() == AI_IDLE )
-	{
-		return TRUE;
-	}
-	return state->isInIdleState();
-}
+// isIdle is owned by AIUpdateInterfaceIsIdle.cpp (RVA 0x00278720).
+// Retail tests object/linked-AI state before querying the current state.
 
 //----------------------------------------------------------------------------------------
 // ?isAttacking@AIUpdateInterface@@ present-unmatched
