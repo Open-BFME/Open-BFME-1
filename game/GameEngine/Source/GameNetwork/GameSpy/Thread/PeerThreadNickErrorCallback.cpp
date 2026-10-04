@@ -82,9 +82,43 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern "C" void peerRetryWithNickA(PEER peer, const char *nick);
+extern void j_00042069();
+extern void j_00044733();
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
+// Retail keeps PeerResponse's constructor and destructor out of line: every
+// call site reaches them through the incremental-link thunks 0x00042069 and
+// 0x00044733, so this TU never defines either one. The stack slot the calls
+// act on is a wrapper, whose own inline constructor and destructor exist only
+// so the compiler keeps emitting this scope's destructor unwind state while
+// the call itself goes straight to the thunk -- the same shape the linker
+// alias used to produce, with the alias gone.
+class Gen00649AE0Resp
+{
+public:
+	Gen00649AE0Resp()
+	{
+		union
+		{
+			void (*fn)();
+			void (Gen00649AE0Resp::*call)();
+		} u = {j_00042069};
+		(this->*u.call)();
+	}
+
+	~Gen00649AE0Resp()
+	{
+		union
+		{
+			void (*fn)();
+			void (Gen00649AE0Resp::*call)();
+		} u = {j_00044733};
+		(this->*u.call)();
+	}
+
+	long m_words[sizeof(PeerResponse) / sizeof(long)];
+};
+
+typedef char Gen00649AE0RespSizeCheck[sizeof(Gen00649AE0Resp) == 0x330 ? 1 : -1];
 
 #pragma optimize("y", on)
 void PeerThreadClass::nickErrorCallback(PEER peer, Int type, const char *nick)
@@ -113,7 +147,8 @@ void PeerThreadClass::nickErrorCallback(PEER peer, Int type, const char *nick)
 		}
 		else
 		{
-			PeerResponse resp;
+			Gen00649AE0Resp slot;
+			PeerResponse &resp = *(PeerResponse *)&slot;
 			resp.peerResponseType = PEER_RESPONSE_DISCONNECT;
 			resp.discon.reason = DISCONNECT_NICKTAKEN;
 			TheGameSpyPeerMessageQueue->addResponse(resp);
@@ -122,7 +157,8 @@ void PeerThreadClass::nickErrorCallback(PEER peer, Int type, const char *nick)
 	}
 	else
 	{
-		PeerResponse resp;
+		Gen00649AE0Resp slot;
+		PeerResponse &resp = *(PeerResponse *)&slot;
 		resp.peerResponseType = PEER_RESPONSE_DISCONNECT;
 		resp.discon.reason = DISCONNECT_BADNICK;
 		TheGameSpyPeerMessageQueue->addResponse(resp);
