@@ -1,5 +1,5 @@
 // ?bfmeSetERB@BfmeHostERB@@QAEXPAPAVBfmeTexERB@@@Z (identity unknown)
-// partial score=0.95 date=2026-09-06
+// partial score=0.9259 date=2026-09-06
 // 54/54; only the two tail stores are transposed (retail +0x4c then +0x50).
 // Pin needed: ?bfmeReleaseERB@BfmeTexERB@@QAEXXZ,0x009EB7A0 (Release_Ref)
 class BfmeTexERB

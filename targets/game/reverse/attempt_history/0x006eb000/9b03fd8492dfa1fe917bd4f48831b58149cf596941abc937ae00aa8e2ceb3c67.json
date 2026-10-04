@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9b03fd8492dfa1fe917bd4f48831b58149cf596941abc937ae00aa8e2ceb3c67",
+  "symbol": "?setTexture@Rva006EB000Renderer@@QAEXABURva006EB000Handle@@@Z",
+  "score_kind": "measured",
+  "score": 0.9259,
+  "source": "// ?setTexture@Rva006EB000Renderer@@QAEXABURva006EB000Handle@@@Z\n// partial score=0.9259 date=2026-10-04\n// Native address-qualified view of renderer setter RVA 0x006EB000.\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug\n#include \"texture.h\"\nstruct Rva006EB000Handle { TextureClass *value00; };\nstruct Rva006EB000Renderer {\n unsigned char unknown00[0x4c];\n TextureClass *value4c;\n int value50;\n void setTexture(const Rva006EB000Handle &texture);\n};\nvoid Rva006EB000Renderer::setTexture(const Rva006EB000Handle &texture)\n{\n if (texture.value00 != value4c) {\n  if (texture.value00) texture.value00->Add_Ref();\n  if (value4c) value4c->Release_Ref();\n  TextureClass *updated = texture.value00;\n  int flag = updated ? -1 : 0;\n  value50 = flag;\n  value4c = updated;\n }\n}\n"
+}
