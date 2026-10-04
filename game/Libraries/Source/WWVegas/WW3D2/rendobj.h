@@ -360,12 +360,15 @@ public:
 	virtual int						Get_Sub_Object_Bone_Index(int LodIndex, int ModelIndex)	const 		{ return 0; }
 	// BFME: retail Add_Sub_Object_To_Bone takes a third parameter (a Vector3
 	// copied into the model node, defaulted here for ZH call sites) and the
-	// (const char *) overload precedes the (int) overload.
-	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, const Vector3 * offset = NULL);
+	// (const char *) overload follows the (int) overload in declaration order
+	// (MSVC lays same-name virtuals out in reverse declaration order, so the
+	// retail vtable has the (const char *) overload in slot 36 and (int) in 37).
 	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, const Vector3 * offset = NULL)	{ return 0; }
-	// BFME: retail Remove_Sub_Objects_From_Bone overloads are swapped vs ZH.
-	virtual int						Remove_Sub_Objects_From_Bone(const char * bname);
+	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, const Vector3 * offset = NULL);
+	// BFME: retail Remove_Sub_Objects_From_Bone: retail slot 38 is the (const char *) overload and 39 the (int) one
+	// (reverse declaration order).
 	virtual int						Remove_Sub_Objects_From_Bone(int boneindex);
+	virtual int						Remove_Sub_Objects_From_Bone(const char * bname);
 
 	// BFME: unidentified retail slot 40, immediately ahead of
 	// Update_Sub_Object_Transforms. Its body at 0x006CF420 is a bare ret, so it
@@ -394,17 +397,19 @@ public:
 		ANIM_MODE_ONCE_BACKWARDS,
 	};
 
-	// BFME: retail Set_Animation overload order is (void), (combo), (5-arg),
-	// (motion,frame,mode) — reversed vs ZH after the no-arg version.
-	virtual void					Set_Animation( void )														{ }
-	virtual void					Set_Animation( HAnimComboClass * anim_combo)							{ }
-	virtual void					Set_Animation( HAnimClass * motion0,
-															float frame0,
-															HAnimClass * motion1,
-															float frame1,
-															float percentage)											{ }
+	// BFME: retail vtable slots 42..45 are (combo), (5-arg), (motion,frame,mode), (void)
+	// -- the Animatable3DObjClass overrides at 0x982330/0x9822C0/0x982190/0x982170 sit in
+	// that order and the base stubs 0x6CF460/450/440/430 ret 4/0x14/0xC/0. MSVC lays
+	// same-name virtuals out in reverse declaration order, hence the ZH declaration order.
+	virtual void					Set_Animation( void )												{ }
 	virtual void					Set_Animation( HAnimClass * motion,
-															float frame, int anim_mode = ANIM_MODE_MANUAL)	{ }
+											float frame, int anim_mode = ANIM_MODE_MANUAL)	{ }
+	virtual void					Set_Animation( HAnimClass * motion0,
+											float frame0,
+											HAnimClass * motion1,
+											float frame1,
+											float percentage)										{ }
+	virtual void					Set_Animation( HAnimComboClass * anim_combo)							{ }
 
 	virtual HAnimClass *			Peek_Animation( void )														{ return NULL; }
 	virtual int						Get_Num_Bones(void)															{ return 0; }
@@ -513,9 +518,10 @@ public:
 //	virtual float					Calculate_Texture_Reduction_Factor(float norm_screensize);
 //	virtual void					Set_Texture_Reduction_Factor(float trf);
 	virtual float					Get_Screen_Size(CameraClass &camera);
-	// BFME: retail has the 3-float Scale overload before the 1-float one.
-	virtual void					Scale(float scalex, float scaley, float scalez)						{ };
+	// BFME: retail vtable slot 90 is the 3-float Scale and 91 the 1-float one; MSVC lays
+	// same-name virtuals out in reverse declaration order, so the 1-float one is declared first.
 	virtual void					Scale(float scale) 															{ };
+	virtual void					Scale(float scalex, float scaley, float scalez)						{ };
  	virtual void					Set_ObjectScale(float scale) { ObjectScale=scale;}	//set's a scale factor that's factored into transform matrix.									{ScaleFactor=scale; };
 	const float						Get_ObjectScale( void ) const { return ObjectScale; };
  	void							Set_ObjectColor(unsigned int color) { ObjectColor=color;}	//the color that was used to modify the asset for player team color (for Generals). -MW
