@@ -31,6 +31,13 @@
 #include <vector>
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 template <class T> inline T StringBase<T>::getCharAt(int i) const { return m_data ? m_data->data[i] : 0; }
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c, 1); }
 template <> inline void StringBase<char>::concat(const char *s) { concat(s,strlen(s)); }
