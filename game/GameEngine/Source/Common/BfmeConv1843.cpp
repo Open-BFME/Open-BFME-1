@@ -1,7 +1,23 @@
 extern "C" void *bfmeVft1030B[];
 extern "C" char *g_bfmeFreeList1150[];
 extern "C" int g_bfmeGuardXH;
-extern "C" void __cdecl bfmeLockXH(void *guard);
+
+// 0x0082C760 is STLport's _STL::_STLP_mutex_spin<0>::_M_do_lock, owned by
+// game/Libraries/Source/WWVegas/WWLib/STLPortMutexSpinLock.cpp
+// (?_M_do_lock@?$_STLP_mutex_spin@$0A@@_STL@@SAXPCJ@Z). Declare the same
+// template STLportMutexSpinLock.cpp defines and never define it here, so the
+// object only references that body -- the pattern game/stlport/Rva008327E0.cpp
+// and game/GameEngine/Source/Common/NodeAllocMutexAcquireLock.cpp already use.
+namespace _STL
+{
+
+template <int Instance>
+struct _STLP_mutex_spin
+{
+	static void __cdecl _M_do_lock(volatile long *lock);
+};
+
+}  // namespace _STL
 
 void __cdecl operator delete(void *block);
 
@@ -35,7 +51,7 @@ void BfmeBufXH::bfmeDtorXH()
 		{
 			char **list = g_bfmeFreeList1150 + ((used - 1) >> 3);
 
-			bfmeLockXH(&g_bfmeGuardXH);
+			_STL::_STLP_mutex_spin<0>::_M_do_lock((volatile long *)&g_bfmeGuardXH);
 			*(char **)start = *list;
 			*list = start;
 			g_bfmeGuardXH = 0;
