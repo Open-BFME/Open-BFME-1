@@ -2,8 +2,8 @@
 //
 // Address-derived recovery for the BFME goal setup body at 0x002BC260.
 
-#pragma comment(linker, "/alternatename:?initialize@Rva002BC260Global@@QAEXPAX00000@Z=?j_0000a795@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finalize@Rva002BC260Goal@@QAEXXZ=?j_00049ae9@@YAXXZ")
+extern void j_0000a795();
+extern void j_00049ae9();
 
 class Rva002BC260Global
 {
@@ -53,9 +53,13 @@ extern Rva002BC260Global *g_rva002bc260;
 void Rva002BC260Owner::run(void *arg1, void *arg2, void *arg3, void *arg4)
 {
 	Rva002BC260Goal *goal = &m_goal;
-	g_rva002bc260->initialize(m_goalArguments, arg1, goal, arg2, arg3, arg4);
+	typedef void (Rva002BC260Global::*Init)(void *, void *, void *, void *, void *, void *);
+	union { void (*fn)(); Init call; } init = { j_0000a795 };
+	(g_rva002bc260->*init.call)(m_goalArguments, arg1, goal, arg2, arg3, arg4);
 	goal->configure(1, 0xfa0, 0x447a0000, 0x447a0000, 0, 0);
-	goal->finalize();
+	typedef void (Rva002BC260Goal::*Finalize)();
+	union { void (*fn)(); Finalize call; } finalize = { j_00049ae9 };
+	(goal->*finalize.call)();
 	m_destination = m_source;
 	m_unreconstructed468 = 0;
 	m_unreconstructed46c = 0;
