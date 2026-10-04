@@ -26,8 +26,12 @@ public:
 class DataChunkInput
 {
 public:
-	Real bfmeReadReal();
-	Byte bfmeReadByte();
+	// Returns AsciiString through the hidden return pointer.  Retail copy-
+	// initialises the local straight from that pointer (no default
+	// constructor runs), which no call through a member-pointer typedef
+	// reproduces: a raw/out-pointer call default-constructs the local and
+	// emits two extra zero stores, and a plain union member cannot be passed
+	// by value (C2621).  So this one call keeps its linker mapping.
 	AsciiString bfmeReadAsciiString();
 };
 
@@ -41,8 +45,6 @@ class BaseHeightMapRenderObjClass
 {
 public:
 	static Bool ParseEnvironmentData(DataChunkInput &file, DataChunkInfo *info, void *userData);
-	void bfmeUpdateMacroTexture(AsciiString textureName, Bool force);
-	void bfmeUpdateTexture(AsciiString textureName);
 
 	char m_padding00[0x3018];
 	Real m_environmentFirst;
@@ -56,34 +58,46 @@ public:
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
-#pragma comment(linker, "/alternatename:?bfmeReadReal@DataChunkInput@@QAEMXZ=?j_0002e5e1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeReadByte@DataChunkInput@@QAEEXZ=?j_0000c234@@YAXXZ")
+// Retail calls go through incremental-link thunks; call those directly.
+extern void j_0002e5e1();
+extern void j_0000c234();
+extern void j_000041c9();
+extern void j_00003ce2();
+extern void j_00003b66();
+
 #pragma comment(linker, "/alternatename:?bfmeReadAsciiString@DataChunkInput@@QAE?AVAsciiString@@XZ=?j_000041c9@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeUpdateMacroTexture@BaseHeightMapRenderObjClass@@QAEXVAsciiString@@_N@Z=?j_00003ce2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeUpdateTexture@BaseHeightMapRenderObjClass@@QAEXVAsciiString@@@Z=?j_00003b66@@YAXXZ")
 
 Bool BaseHeightMapRenderObjClass::ParseEnvironmentData(
 	DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
+	typedef Real (DataChunkInput::*ReadReal)();
+	typedef Byte (DataChunkInput::*ReadByte)();
+	typedef void (BaseHeightMapRenderObjClass::*UpdateMacroTexture)(AsciiString, Bool);
+	typedef void (BaseHeightMapRenderObjClass::*UpdateTexture)(AsciiString);
+	union { void (*fn)(); ReadReal call; } readReal = { j_0002e5e1 };
+	union { void (*fn)(); ReadByte call; } readByte = { j_0000c234 };
+	union { void (*fn)(); UpdateMacroTexture call; } updateMacroTexture = { j_00003ce2 };
+	union { void (*fn)(); UpdateTexture call; } updateTexture = { j_00003b66 };
+
 	Bool force = false;
 	Real first = TheTerrainRenderObject->m_environmentFirst;
 	Real second = TheTerrainRenderObject->m_environmentSecond;
 
 	if (info->version >= 3)
 	{
-		first = file.bfmeReadReal();
-		second = file.bfmeReadReal();
+		first = (file.*readReal.call)();
+		second = (file.*readReal.call)();
 	}
 
 	TheTerrainRenderObject->m_environmentFirst = first;
 	TheTerrainRenderObject->m_environmentSecond = second;
 
 	if (info->version >= 2)
-		force = file.bfmeReadByte();
+		force = (file.*readByte.call)();
 
 	AsciiString textureName = file.bfmeReadAsciiString();
-	TheTerrainRenderObject->bfmeUpdateMacroTexture(textureName, force);
+	(TheTerrainRenderObject->*updateMacroTexture.call)(textureName, force);
 	textureName = file.bfmeReadAsciiString();
-	TheTerrainRenderObject->bfmeUpdateTexture(textureName);
+	(TheTerrainRenderObject->*updateTexture.call)(textureName);
 	return true;
 }
