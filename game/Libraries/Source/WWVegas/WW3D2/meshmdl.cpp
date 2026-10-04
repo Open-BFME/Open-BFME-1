@@ -257,25 +257,10 @@ void MeshModelClass::Shadow_Render(SpecialRenderInfoClass & rinfo,const Matrix3D
 	}
 }
 
-// ?MeshModelClass::Make_Geometry_Unique present-unmatched
-void MeshModelClass::Make_Geometry_Unique()
-{
-	WWASSERT(Vertex);
-
-	ShareBufferClass<Vector3> * unique_verts = NEW_REF(ShareBufferClass<Vector3>,(*Vertex));
-	REF_PTR_SET(Vertex,unique_verts);
-	REF_PTR_RELEASE(unique_verts);
-	
-	ShareBufferClass<Vector3> * norms = NEW_REF(ShareBufferClass<Vector3>,(*VertexNorm));
-	REF_PTR_SET(VertexNorm,norms);
-	REF_PTR_RELEASE(norms);
-
-#if (!OPTIMIZE_PLANEEQ_RAM)
-	ShareBufferClass<Vector4> * peq = NEW_REF(ShareBufferClass<Vector4>,(*PlaneEq, "MeshModelClass::PlaneEq"));	
-	REF_PTR_SET(PlaneEq,peq);
-	REF_PTR_RELEASE(peq);
-#endif
-}
+// Make_Geometry_Unique is supplied by MeshModelClass_Make_Geometry_UniqueMethodThunk.cpp.
+// Its complete BFME body at RVA 0x0094EE80 clones buffers at +0x30/+0x40,
+// conditionally +0x34/+0x44, and +0x50. The old two-buffer ZH body here
+// was a competing strong definition, not the implementation retail calls.
 
 // ?MeshModelClass::Make_UV_Array_Unique present-unmatched
 void MeshModelClass::Make_UV_Array_Unique(int pass,int stage)
