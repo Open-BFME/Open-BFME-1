@@ -9,6 +9,9 @@ struct Gen_t_001da8b0_p12cd
 	int m_words[3];
 };
 
+// Retail calls this through an incremental-link thunk.
+extern void j_0000d0fd();
+
 namespace _STL
 {
 struct __false_type
@@ -28,8 +31,6 @@ class __new_alloc
 public:
 	static void *allocate(unsigned int bytes);
 };
-
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@UGen_t_001da8b0_p12cd@@V?$allocator@UGen_t_001da8b0_p12cd@@@_STL@@@_STL@@IAEXXZ=?j_0000d0fd@@YAXXZ")
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -109,7 +110,11 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	if (!atEnd)
 		newFinish = uninitialized_copy(position, _M_finish, newFinish);
 
-	_M_clear();
+	// vector::_M_clear() routes to the ILT thunk; call it through a
+	// thiscall member pointer so the emitted code keeps retail's shape.
+	typedef void (vector<Type, Allocator>::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_0000d0fd };
+	(this->*u.call)();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
