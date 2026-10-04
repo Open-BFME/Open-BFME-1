@@ -28,7 +28,9 @@ public:
 	class StringDataC;
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
-int bfmeCompareVSC(const char *left, const char *right);
+// Retail RVA 0x009F6FA0 jumps through IAT VA 0x0135933C to
+// MSVCR71._strcmpi. Keep a direct call so the import library supplies that thunk.
+extern "C" int __cdecl _strcmpi(const char *left, const char *right);
 
 class BfmeStringList0089CBA0
 {
@@ -52,7 +54,7 @@ BfmeStringEntry0089CBA0 *BfmeStringList0089CBA0::find(const BfmeString0089CBA0 &
 				return entry;
 			if (data->m_hash == keyData->m_hash)
 			{
-				volatile unsigned char equal = (unsigned char)(bfmeCompareVSC(
+				volatile unsigned char equal = (unsigned char)(_strcmpi(
 					reinterpret_cast<const char *>(data) + 8,
 					reinterpret_cast<const char *>(keyData) + 8) == 0);
 				if (equal)
