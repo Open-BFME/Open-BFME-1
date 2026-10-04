@@ -24,8 +24,6 @@ class Rva002377A0DrawableView;
 class Object
 {
 public:
-	Player *getControllingPlayer( void ) const;
-
 #define OBJECT_SLOT(N) virtual Int slot##N( void ) = 0
 	OBJECT_SLOT(00); OBJECT_SLOT(01); OBJECT_SLOT(02); OBJECT_SLOT(03);
 	OBJECT_SLOT(04); OBJECT_SLOT(05); OBJECT_SLOT(06); OBJECT_SLOT(07);
@@ -58,12 +56,16 @@ extern GlobalData *TheWritableGlobalData;
 
 class Rva004141A0GuardedVCall
 {
-public:
-	void forward( Int a0, Int a1 );
 };
 
-#pragma comment(linker, "/alternatename:?forward@Rva004141A0GuardedVCall@@QAEXHH@Z=?j_0003e7f7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+// Retail calls both members through incremental-link thunks: ILT 0x3E7F7 is
+// the guarded forwarding call and ILT 0x20824 the controlling-player query.
+// Reference the thunks directly instead of aliasing stand-in member names.
+extern void j_0003e7f7();
+extern void j_00020824();
+
+// The guarded forwarding call, taken through ILT 0x3E7F7.
+typedef void (Rva004141A0GuardedVCall::*Rva002377A0Fn)( Int, Int );
 
 struct Rva002377A0MemberIndexNode
 {
@@ -164,14 +166,17 @@ void Rva002377A0HordeContain::rva002377a0( void )
 
 	if ( owner != 0 )
 	{
-		if ( owner->getControllingPlayer() == localPlayer )
+		typedef Player *(Object::*Fn)( void ) const;
+		union { void (*fn)(); Fn call; } u = { j_00020824 };
+		if ( (owner->*u.call)() == localPlayer )
 		{
 			Rva002377A0DrawableView *drawable = owner->getDrawable();
 			if ( ((Rva002377A0GlobalDataView *)TheWritableGlobalData)->m_fieldA76 )
 			{
 				if ( drawable != 0 )
 				{
-					((Rva004141A0GuardedVCall *)drawable)->forward(
+					union { void (*fn)(); Rva002377A0Fn call; } u = { j_0003e7f7 };
+					(((Rva004141A0GuardedVCall *)drawable)->*u.call)(
 						slot84( 0 ), slot89( owner ) );
 				}
 			}
@@ -192,7 +197,8 @@ void Rva002377A0HordeContain::rva002377a0( void )
 			Rva002377A0DrawableView *drawable = member->getDrawable();
 			if ( drawable != 0 && forwardMembers )
 			{
-				((Rva004141A0GuardedVCall *)drawable)->forward(
+				union { void (*fn)(); Rva002377A0Fn call; } u = { j_0003e7f7 };
+				(((Rva004141A0GuardedVCall *)drawable)->*u.call)(
 					1, slot89( member ) );
 			}
 		}
@@ -212,7 +218,8 @@ void Rva002377A0HordeContain::rva002377a0( void )
 				Rva002377A0DrawableView *drawable = member->getDrawable();
 				if ( drawable != 0 && forwardMembers )
 				{
-					((Rva004141A0GuardedVCall *)drawable)->forward(
+					union { void (*fn)(); Rva002377A0Fn call; } u = { j_0003e7f7 };
+					(((Rva004141A0GuardedVCall *)drawable)->*u.call)(
 						1, slot89( member ) );
 				}
 			}
