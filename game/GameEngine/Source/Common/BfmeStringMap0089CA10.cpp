@@ -14,7 +14,9 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 
-int __cdecl bfmeCompareVSC(const char *left, const char *right);
+// Retail RVA 0x009F6FA0 jumps through IAT VA 0x0135933C to
+// MSVCR71._strcmpi. Keep a direct call so the import library supplies that thunk.
+extern "C" int __cdecl _strcmpi(const char *left, const char *right);
 
 struct BfmeStringData0089CA10
 {
@@ -56,7 +58,7 @@ static inline bool matchEntry0089CA10(
 		return true;
 	if (entry->m_data->m_hash != key.m_data->m_hash)
 		return false;
-	return bfmeCompareVSC(reinterpret_cast<const char *>(entry->m_data) + 8,
+	return _strcmpi(reinterpret_cast<const char *>(entry->m_data) + 8,
 		reinterpret_cast<const char *>(key.m_data) + 8) == 0;
 }
 
