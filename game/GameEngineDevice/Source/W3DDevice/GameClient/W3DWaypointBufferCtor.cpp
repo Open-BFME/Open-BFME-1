@@ -48,6 +48,8 @@ public:
 // The owning four-byte handle BFME's texture lookups return: constructed in
 // place through a hidden return pointer, so the value arrives in eax as the
 // address of the caller's slot (retail 0x007468B0 +0x82).
+class TextureBaseClass { public: void Release_Ref(); };
+
 class BFMEWaterTrackTextureHandle
 {
 public:
@@ -60,7 +62,7 @@ public:
 	~BFMEWaterTrackTextureHandle(void)
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 
 	TextureClass *m_texture;

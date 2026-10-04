@@ -7,13 +7,15 @@
 #include "ascii_string.h"
 
 class TextureClass { public: void Release_Ref(); };
+class TextureBaseClass { public: void Release_Ref(); };
+
 class BFMEWaterTrackTextureHandle {
 public:
 	TextureClass *m_texture;
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 	BFMEWaterTrackTextureHandle &operator=(const BFMEWaterTrackTextureHandle &other)
 	{

@@ -28,11 +28,11 @@ class BfmeShaderLoader {public: static long LoadAndCreateD3DShader(const char*,u
 struct Cu {unsigned f[8];};
 
 
-class BFMEWaterTrackTexture{public:void Release_Ref();};
-class BFMEWaterTrackTextureHandle{public:TextureClass*m_texture;~BFMEWaterTrackTextureHandle(){if(m_texture)((BFMEWaterTrackTexture*)m_texture)->Release_Ref();}};
+
+class BFMEWaterTrackTextureHandle{public:TextureClass*m_texture;~BFMEWaterTrackTextureHandle(){if(m_texture)((TextureBaseClass *)m_texture)->Release_Ref();}};
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char*,int,int);
 class ShroudFilter{public:char pad[12];int u,v;};
-class ShroudTexture{public:TextureClass*p;ShroudFilter*getFilter();__forceinline void bind(const BFMEWaterTrackTextureHandle&t){if(t.m_texture)++*(unsigned short*)((char*)t.m_texture+4);if(p)((BFMEWaterTrackTexture*)p)->Release_Ref();p=t.m_texture;}};
+class ShroudTexture{public:TextureClass*p;ShroudFilter*getFilter();__forceinline void bind(const BFMEWaterTrackTextureHandle&t){if(t.m_texture)++*(unsigned short*)((char*)t.m_texture+4);if(p)((TextureBaseClass*)p)->Release_Ref();p=t.m_texture;}};
 class Rva007DCA80 {
 public:
  virtual int init(); virtual int shutdown();
