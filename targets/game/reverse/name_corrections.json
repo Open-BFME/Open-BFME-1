@@ -17328,5 +17328,15 @@
   "after_sha256": "8e62063d0937c2ed1daed2a144444290ff6eb2d4a64df18e3e19c19c8cd6c0fe",
   "evidence": "targets/game/reverse/identity_evidence/20261003-rva675a80-string-result.md",
   "reason": "BfmeOrderZR is a legacy synthetic owner with no original full-name witness. The physical vtable owner and canonical base/string callees are independently established, while Rva00675A80 preserves the real parent address without asserting an invented class identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_onRemoving.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_onRemoving.cpp",
+  "old_name": "notifyModelConditionChanged",
+  "new_name": "j_0002191d",
+  "before_sha256": "10d19ddb0c40c161b58ba358919bb33696340ac3ec7450351cee839238c2bd14",
+  "after_sha256": "d514818f906b2d496c4c30ee1edd8f05821c73eca91744c9751aa096e2473e7e",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

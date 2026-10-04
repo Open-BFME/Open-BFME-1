@@ -153,11 +153,12 @@ class BfmeObjectModelCondition
 public:
 	unsigned char m_unmodelled_000[0x110];
 	UnsignedInt m_conditionFlags;
-
-	void notifyModelConditionChanged();
 };
 
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@BfmeObjectModelCondition@@QAEXXZ=?j_0002191d@@YAXXZ")
+// Retail reaches the model-condition notification through the ILT thunk
+// ?j_0002191d@@YAXXZ; the call site casts it to this thiscall member pointer.
+extern void j_0002191d();
+typedef void (BfmeObjectModelCondition::*NotifyModelConditionChangedCall)();
 
 struct Rva00367E30Logic
 {
@@ -344,7 +345,13 @@ void GarrisonContain::onRemoving(Object *removedObject)
 		if ((ownerModelCondition->m_conditionFlags & 0x400) != 0)
 		{
 			ownerModelCondition->m_conditionFlags &= ~0x400U;
-			ownerModelCondition->notifyModelConditionChanged();
+			union
+			{
+				void (*asVoid)();
+				NotifyModelConditionChangedCall asMember;
+			} notifyCast;
+			notifyCast.asVoid = j_0002191d;
+			(ownerModelCondition->*notifyCast.asMember)();
 		}
 	}
 	else
