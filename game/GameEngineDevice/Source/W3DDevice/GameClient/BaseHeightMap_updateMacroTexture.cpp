@@ -38,7 +38,7 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 };
 

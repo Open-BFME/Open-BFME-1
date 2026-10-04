@@ -11,11 +11,11 @@
 static __forceinline const char *textureName0059A3D0(const AsciiString &s) { const char *p=*(const char *const *)&s; return p?p+8:""; }
 class FileSystem { public: bool doesFileExist(const char *) const; };
 extern FileSystem *TheFileSystem;
-class BFMEWaterTrackTexture { public: void Release_Ref(); };
+class TextureBaseClass { public: void Release_Ref(); };
 class BFMEWaterTrackTextureHandle {
 public:
- BFMEWaterTrackTexture *m_texture;
- ~BFMEWaterTrackTextureHandle() { if(m_texture) m_texture->Release_Ref(); }
+ TextureBaseClass *m_texture;
+ ~BFMEWaterTrackTextureHandle() { if(m_texture) ((TextureBaseClass *)m_texture)->Release_Ref(); }
 };
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *,int,int);
 class ShroudFilter { public: char pad[12]; int field_c,field_10; };

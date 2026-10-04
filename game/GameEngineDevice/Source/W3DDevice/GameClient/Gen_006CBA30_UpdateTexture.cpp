@@ -53,6 +53,8 @@ public:
 	char *m_data;
 };
 
+class TextureBaseClass { public: void Release_Ref(); };
+
 class BFMEWaterTrackTextureHandle
 {
 public:
@@ -61,7 +63,7 @@ public:
 	~BFMEWaterTrackTextureHandle(void)
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 };
 

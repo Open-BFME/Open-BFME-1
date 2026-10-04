@@ -59,7 +59,7 @@ public:
 
 class TextureClass;
 
-class BFMEWaterTrackTexture
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -84,7 +84,7 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 };
 
@@ -106,7 +106,7 @@ public:
 	~BFMETextureRef()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 };
 
@@ -120,7 +120,7 @@ static inline void BFMEAssignWaterTrackTexture(
 	if (texture.m_texture)
 		++*(unsigned short *)((Char *)texture.m_texture + 4);
 	if (destination)
-		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+		((TextureBaseClass *)destination)->Release_Ref();
 	destination = texture.m_texture;
 }
 
