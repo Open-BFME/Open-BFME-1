@@ -12,8 +12,12 @@ typedef char LightSizeCheck[(sizeof(LightClass) == 0x124) ? 1 : -1];
 extern void j_00048b67();
 extern void j_000460a1();
 extern void j_0003d01e();
-extern "C" void *bfmeVftRva006FCAD0[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva006FCAD0=??_7Rva006FCAD0@@6B@")
+// Retail stores Rva006FCAD0's vftable (0x01120850) into this subobject's vptr
+// slot.  The defining mangled name is ??_7Rva006FCAD0@@6B@, which C++ cannot
+// spell, so name the retail symbol verbatim (the same __identifier spelling
+// game/Libraries/Source/WWVegas/WW3D2/Rva0090D210CreateStats.cpp uses) rather
+// than reaching it through a linker alias.
+extern "C" void *__identifier("??_7Rva006FCAD0@@6B@")[];
 
 static void callFirstInterfaceStep(void *self)
 {
@@ -46,7 +50,7 @@ class __declspec(novtable) SimpleSceneDerived00700030 : public SimpleSceneClass
 {
 public:
     // ??0SimpleSceneDerived00700030@@QAE@XZ absent-from-retail
-    SimpleSceneDerived00700030() { *(void **)this = bfmeVftRva006FCAD0; }
+    SimpleSceneDerived00700030() { *(void **)this = __identifier("??_7Rva006FCAD0@@6B@"); }
 private:
     unsigned char m_bfmeTail[0x108 - sizeof(SimpleSceneClass)];
 };
