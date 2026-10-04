@@ -11,13 +11,14 @@
 typedef int ObjectID;
 typedef bool Bool;
 
+// Retail ILT thunk reached in place of the Overridable::getFinalOverride call.
+extern void j_000022bb();
+
 class ThingTemplate;
 
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
-
 	void *m_vtable;
 	Overridable *m_nextOverride;
 };
@@ -72,6 +73,14 @@ private:
 	_STL::set<ObjectID> m_ownedObjectSetF4;
 };
 
+static __forceinline const Overridable *getFinalOverride0022bb(
+	Overridable *overridable)
+{
+	typedef const Overridable *(Overridable::*FinalOverrideFn)() const;
+	union { void (*fn)(); FinalOverrideFn call; } u = { j_000022bb };
+	return (overridable->*u.call)();
+}
+
 Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 {
 	for (_STL::set<ObjectID>::iterator it = m_ownedObjectSetF4.begin();
@@ -87,7 +96,7 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 					if (objectTemplate != 0 &&
 						objectTemplate->m_nextOverride != 0)
 						objectTemplate = (ThingTemplate *)
-							objectTemplate->m_nextOverride->getFinalOverride();
+							getFinalOverride0022bb(objectTemplate->m_nextOverride);
 					if (filter->isInSet(objectTemplate))
 						return true;
 				}
@@ -107,7 +116,7 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 					if (objectTemplate != 0 &&
 						objectTemplate->m_nextOverride != 0)
 						objectTemplate = (ThingTemplate *)
-							objectTemplate->m_nextOverride->getFinalOverride();
+							getFinalOverride0022bb(objectTemplate->m_nextOverride);
 					if (filter->isInSet(objectTemplate))
 						return true;
 				}
@@ -127,7 +136,7 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 					if (objectTemplate != 0 &&
 						objectTemplate->m_nextOverride != 0)
 						objectTemplate = (ThingTemplate *)
-							objectTemplate->m_nextOverride->getFinalOverride();
+							getFinalOverride0022bb(objectTemplate->m_nextOverride);
 					if (filter->isInSet(objectTemplate))
 						return true;
 				}
@@ -146,7 +155,7 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 				if (objectTemplate != 0 &&
 					objectTemplate->m_nextOverride != 0)
 					objectTemplate = (ThingTemplate *)
-						objectTemplate->m_nextOverride->getFinalOverride();
+						getFinalOverride0022bb(objectTemplate->m_nextOverride);
 				if (filter->isInSet(objectTemplate))
 					return true;
 			}
@@ -165,7 +174,7 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 					if (objectTemplate != 0 &&
 						objectTemplate->m_nextOverride != 0)
 						objectTemplate = (ThingTemplate *)
-							objectTemplate->m_nextOverride->getFinalOverride();
+							getFinalOverride0022bb(objectTemplate->m_nextOverride);
 					if (filter->isInSet(objectTemplate))
 						return true;
 				}
@@ -176,4 +185,4 @@ Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 	return false;
 }
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+
