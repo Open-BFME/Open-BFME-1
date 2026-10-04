@@ -10,14 +10,15 @@ struct Rva00769260Node
 
 struct Rva00769260Iterator
 {
-	Rva00769260Iterator(const Rva00769260Iterator &);
 	Rva00769260Node *m_node;
 };
+
+// ILT 0x0004B66E is the pointer-key tree find called by the wrapper.
+extern void j_0004b66e();
 
 class Rva00769260Tree
 {
 public:
-	Rva00769260Iterator find(void *const &key);
 	Rva00769260Node *m_end;
 };
 
@@ -37,7 +38,10 @@ void *Rva00769260Owner::lookup(void *key, int *value)
 {
 	if ((m_flags & 1) != 0 && key != 0)
 	{
-		Rva00769260Iterator found = m_tree.find(key);
+		typedef Rva00769260Iterator *(Rva00769260Tree::*Find)(Rva00769260Iterator *, void *const &);
+		union { void (*fn)(); Find call; } find = { j_0004b66e };
+		Rva00769260Iterator found;
+		(m_tree.*find.call)(&found, key);
 		if (found.m_node != m_tree.m_end)
 		{
 			if (value != 0)
