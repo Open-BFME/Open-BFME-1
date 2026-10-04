@@ -98,13 +98,22 @@ protected:
 	Bool m_bfmeAttackState4D;
 	char m_bfmeAttackState4E[2];
 	UnsignedInt m_attackMachineType;
-
-	void createAttackMachine(Object *owner);
 };
 
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
-#pragma comment(linker, "/alternatename:?createAttackMachine@AIAttackState@@IAEXPAVObject@@@Z=?j_0004121d@@YAXXZ")
+// Retail calls AIAttackState::createAttackMachine (RVA 0x00184110) through
+// the incremental-link thunk at 0x0004121d, so the call site references the
+// thunk rather than the defining symbol directly.
+extern void j_0004121d();
+
+typedef void (AIAttackState::*CreateAttackMachineThunk)(Object *owner);
+
+static __forceinline void callCreateAttackMachineThunk(AIAttackState *self, Object *owner)
+{
+	union { void (*fn)(); CreateAttackMachineThunk call; } u = { j_0004121d };
+	(self->*u.call)(owner);
+}
 
 // ?xfer@AIAttackState@@MAEXPAVXfer@@@Z
 void AIAttackState::xfer(Xfer *xfer)
@@ -123,7 +132,7 @@ void AIAttackState::xfer(Xfer *xfer)
 	if (hasMachine && m_attackMachine == 0)
 	{
 		Object *owner = m_machine->m_owner;
-		createAttackMachine(owner);
+		callCreateAttackMachineThunk(this, owner);
 	}
 
 	if (hasMachine)
@@ -150,7 +159,7 @@ void AIAttackState::xfer(Xfer *xfer)
 					xfer->slot08(m_attackMachine, block);
 					m_attackMachine = 0;
 					Object *owner = m_machine->m_owner;
-					createAttackMachine(owner);
+					callCreateAttackMachineThunk(this, owner);
 				}
 			}
 		}
