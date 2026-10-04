@@ -92,16 +92,33 @@ public:
 };
 
 // Retail's 0x0074ACB0 loader is still a matched ?d_0074acb0@@YAXXZ gen-dump
-// with no proven name, so the callee keeps its address token.  The pin
-// ?b_0074acb0@@YAXXZ -> 0x0074ACB0 already exists in symbols.csv and
-// tools/pin_consistency.py --symbol reports it consistent (extent 1511, owned by
-// the matched ?d_0074acb0 row).  tools/eh_info.py plus the call site
-// (ecx = this, then the DataChunkInput& and the bool, result unused) give the
-// ABI: __thiscall, two stack slots, void.  The recorded verdict on 0x0074ACB0
-// reads "caller proof identifies this as a parser-load helper split out of
-// ??0WorldHeightMap@@QAE@PAVChunkInputStream@@_N@Z", which is the only support
-// for the Load descriptor; no semantic name is claimed.
-#pragma comment(linker, "/alternatename:?Rva0074ACB0Load@WorldHeightMap@@AAEXAAVDataChunkInput@@_N@Z=?b_0074acb0@@YAXXZ")
+// with no proven name, so the callee keeps its address token.  tools/eh_info.py
+// plus the call site (ecx = this, then the DataChunkInput& and the bool, result
+// unused) give the ABI: __thiscall, two stack slots, void.  The recorded
+// verdict on 0x0074ACB0 reads "caller proof identifies this as a parser-load
+// helper split out of ??0WorldHeightMap@@QAE@PAVChunkInputStream@@_N@Z", which
+// is the only support for the Load descriptor; no semantic name is claimed.
+//
+// Retail does not call 0x0074ACB0 from here: it calls the incremental-link thunk
+// at 0x00038A6E (see tools/dis_retail.py 0x0074EB10, +0x138:
+// `call 0x438a6e ; ?j_00038a6e@@YAXXZ`), and that thunk jumps to 0x0074ACB0
+// (game/gen_small/thunks_027.cpp: `void j_00038a6e() { b_0074acb0(); }`).
+// So the call is the direct thiscall-to-thunk form reproduced by the canonical
+// member-pointer union recipe, with a TU-local empty non-polymorphic shim class
+// (same recipe as
+// game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/
+// MemberVision002434D0.cpp).  The shim is empty, so it invents no layout and no
+// relationship: it only tells the compiler that this call is a non-virtual
+// member call on `this`, which is what makes the call direct instead of the
+// indirect `call reg` a pointer-to-member on the polymorphic WorldHeightMap
+// would produce.
+extern void j_00038a6e();
+
+class Rva0074EB10LoaderThunk
+{
+public:
+	void Rva0074EB10Load(DataChunkInput &input, Bool parseSizeOnly);
+};
 
 // Declared so the retail element constructor/destructor operands have a name;
 // both live behind the matched ILT thunks ?j_00027c55 / ?j_00041b32.
@@ -155,8 +172,6 @@ public:
 	virtual void Delete_This(void);
 
 private:
-	void Rva0074ACB0Load(DataChunkInput &input, Bool parseSizeOnly);
-
 	Int m_width;
 	Int m_height;
 	Int m_borderSize;
@@ -205,5 +220,7 @@ WorldHeightMap::WorldHeightMap(ChunkInputStream *stream, Bool parseSizeOnly)
 	reinterpret_cast<BfmeBigJK *>(this)->bfmeClearJK();
 
 	DataChunkInput input(stream);
-	Rva0074ACB0Load(input, parseSizeOnly);
+	union { void (*fn)(); void (Rva0074EB10LoaderThunk::*call)(DataChunkInput &, Bool); }
+		load = { j_00038a6e };
+	(reinterpret_cast<Rva0074EB10LoaderThunk *>(this)->*load.call)(input, parseSizeOnly);
 }
