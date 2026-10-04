@@ -17378,5 +17378,35 @@
   "after_sha256": "9c758ca27dec28898b28378b6aa1830492c46440277cd67fb559493023d568de",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "old_name": "getNextMoodTarget",
+  "new_name": "j_00003f58",
+  "before_sha256": "e3b658ca7bd1c238fed5858c8876a3fc95c448052f71782f8090c7e6db247291",
+  "after_sha256": "0f01bd7dbcd75e45b3ebb5a0ecd92d0e8ec3be71ba0d0287f28a2242a7f78911",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "old_name": "getWhichTurretForCurWeapon",
+  "new_name": "j_000346a3",
+  "before_sha256": "e3b658ca7bd1c238fed5858c8876a3fc95c448052f71782f8090c7e6db247291",
+  "after_sha256": "0f01bd7dbcd75e45b3ebb5a0ecd92d0e8ec3be71ba0d0287f28a2242a7f78911",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp",
+  "old_name": "setTurretTargetObject",
+  "new_name": "j_0001a0e1",
+  "before_sha256": "e3b658ca7bd1c238fed5858c8876a3fc95c448052f71782f8090c7e6db247291",
+  "after_sha256": "0f01bd7dbcd75e45b3ebb5a0ecd92d0e8ec3be71ba0d0287f28a2242a7f78911",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

@@ -18,17 +18,15 @@ enum WhichTurretType
 
 class Object;
 
+// Opaque holder for the AIUpdate accessors below: retail reaches them through
+// incremental-link thunks, so the call sites bind ?j_* and route to this type.
 class Rva001764E0AIUpdate
 {
-public:
-	WhichTurretType getWhichTurretForCurWeapon() const;
-	Object *getNextMoodTarget(Bool calledByAI, Bool calledDuringIdle);
-	void setTurretTargetObject(WhichTurretType turret, Object *targetObject, Bool forceAttacking);
 };
 
-#pragma comment(linker, "/alternatename:?getWhichTurretForCurWeapon@Rva001764E0AIUpdate@@QBE?AW4WhichTurretType@@XZ=?j_000346a3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getNextMoodTarget@Rva001764E0AIUpdate@@QAEPAVObject@@_N0@Z=?j_00003f58@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTurretTargetObject@Rva001764E0AIUpdate@@QAEXW4WhichTurretType@@PAVObject@@_N@Z=?j_0001a0e1@@YAXXZ")
+extern void j_000346a3();
+extern void j_00003f58();
+extern void j_0001a0e1();
 
 struct Rva001764E0Object
 {
@@ -64,15 +62,22 @@ StateReturnType AIAttackPursueTargetState::update()
 	Rva001764E0Object *source = m_machine->m_owner;
 	Rva001764E0AIUpdate *ai = source->m_ai;
 
+	typedef WhichTurretType (Rva001764E0AIUpdate::*GetWhichTurret)() const;
+	union { void (*fn)(); GetWhichTurret call; } getWhich={j_000346a3};
+	typedef Object *(Rva001764E0AIUpdate::*GetNextMoodTarget)(Bool calledByAI, Bool calledDuringIdle);
+	union { void (*fn)(); GetNextMoodTarget call; } getNextMood={j_00003f58};
+	typedef void (Rva001764E0AIUpdate::*SetTurretTargetObject)(WhichTurretType turret, Object *targetObject, Bool forceAttacking);
+	union { void (*fn)(); SetTurretTargetObject call; } setTurretTarget={j_0001a0e1};
+
 	if (m_isInitialApproach)
 	{
-		WhichTurretType turret = ai->getWhichTurretForCurWeapon();
+		WhichTurretType turret = (ai->*getWhich.call)();
 		if (turret != TURRET_INVALID)
 		{
-			Object *temporaryTarget = ai->getNextMoodTarget(true, false);
+			Object *temporaryTarget = (ai->*getNextMood.call)(true, false);
 			if (temporaryTarget)
 			{
-				ai->setTurretTargetObject(turret, temporaryTarget, m_isForceAttacking);
+				(ai->*setTurretTarget.call)(turret, temporaryTarget, m_isForceAttacking);
 				*((Bool *)((unsigned char *)ai + 0x335)) = true;
 			}
 		}
