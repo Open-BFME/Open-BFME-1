@@ -338,28 +338,6 @@ void DockUpdate::onApproachReached( Object* docker )
 	}
 }
 
-// ?onEnterReached@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
-void DockUpdate::onEnterReached( Object* docker )
-{
-	Object *me = getObject();
-	me->clearAndSetModelConditionFlags( MAKE_MODELCONDITION_MASK(MODELCONDITION_DOCKING_ENDING),
-																			MAKE_MODELCONDITION_MASK2(MODELCONDITION_DOCKING_BEGINNING, MODELCONDITION_DOCKING) );
-	docker->clearAndSetModelConditionFlags( MAKE_MODELCONDITION_MASK(MODELCONDITION_DOCKING_ENDING),
-																					MAKE_MODELCONDITION_MASK2(MODELCONDITION_DOCKING_BEGINNING, MODELCONDITION_DOCKING) );
-	m_dockerInside = TRUE;
-
-	ObjectID dockerID = docker->getID();
-	for( Int positionIndex = 0; positionIndex < m_approachPositionOwners.size(); ++positionIndex )
-	{
-		if( m_approachPositionOwners[positionIndex] == dockerID )
-		{
-			m_approachPositionOwners[positionIndex] = INVALID_ID;
-			m_approachPositionReached[positionIndex] = FALSE;
-			return;
-		}
-	}
-}
-
 // ?onExitReached@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
 void DockUpdate::onExitReached( Object* docker )
 {
