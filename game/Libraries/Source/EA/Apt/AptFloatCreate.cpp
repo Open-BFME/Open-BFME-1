@@ -3,8 +3,6 @@
 // AptActionInterpreter::aptMax and the Math callbacks call its named
 // Rva008A4EA0MakeFloat entry, which the retail REL32 target pins to this body.
 
-#pragma comment(linker, "/alternatename:?d_008a4cd0@@YAXXZ=?Rva008A4EA0MakeFloat@@YAPAVAptValue@@M@Z")
-
 struct Rva008D2950Node
 {
 	void *m_vtable;
