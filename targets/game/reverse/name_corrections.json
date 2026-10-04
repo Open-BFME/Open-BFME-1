@@ -17738,5 +17738,15 @@
   "after_sha256": "dfd471916b3b7c79b57c686333ab3638778b84e3c2d1d134b102ccd890c5dd5b",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva0019FD00Fill.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva0019FD00Fill.cpp",
+  "old_name": "Dict",
+  "new_name": "Rva0002FF6DStringPresenceThunk",
+  "before_sha256": "c98ffd832ad9779dd1d1013dbecbc89c66bbeb71e0484ae6192c345a5002d5e0",
+  "after_sha256": "903a0fac437ff6fa67553164b089ea28e3ebe5f3fa9d1024a28a4b21021abd31",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
