@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import link_census as L  # noqa: E402
 
@@ -638,37 +640,84 @@ def test_selected_legacy_data_over_the_verified_provider_blocks_its_callers(monk
     assert results["d1"] == "ok"
 
 
-def test_pin_at_an_ilt_stub_to_a_second_copy_is_a_retail_call_target():
-    # one instantiation, two retail bodies: 0x1000 (ledger) and 0x1100 (second copy,
-    # differing only in the rel32 of its call), reached through a packed ILT stub at 0x1200
-    first = b"\x55\x8b\xec\xe8\x10\x00\x00\x00\x5d\xc3\x90\x90"
-    second = b"\x55\x8b\xec\xe8\x77\x00\x00\x00\x5d\xc3\x90\x90"
+def _second_copy_truth(tmp_path, monkeypatch, first, second, *, pin=0x1200, ledger_copy=False):
+    """Exercise the real constructor, including the symbols.csv candidate reader."""
+    assert len(first) == len(second)
+    image = bytearray(0x240)
+    image[:len(first)], image[0x100:0x100 + len(second)] = first, second
+    # Distinct inner callees return distinct values; a call-skeleton match is not equivalence.
+    image[0x180:0x186], image[0x190:0x196] = b"\xb8\x01\0\0\0\xc3", b"\xb8\x02\0\0\0\xc3"
+    image[0x200:0x205], image[0x205:0x20A] = jmp(0x1200, 0x1100), jmp(0x1205, 0x1000)
+    image[0x20C:0x211] = b"\xe8" + struct.pack("<i", pin - 0x1211)
+    image[0x214:0x219] = b"\xe8" + struct.pack("<i", 0x1100 - 0x1219)
+    image[0x220:0x225] = b"\xb8" + struct.pack("<I", L.BASE + pin)
+    image = bytes(image)
+    exe = tmp_path / "retail.exe"
+    exe.write_bytes(image)
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
+    (reverse / "symbols.csv").write_text(f"grow,0x{pin:X}\n", encoding="utf-8")
+    (reverse / "dir32_addresses.csv").write_text("name,va\n", encoding="utf-8")
+    monkeypatch.setattr(L, "ROOT", tmp_path)
+    monkeypatch.setattr(L.build, "EXE", exe)
+    monkeypatch.setattr(L.build, "exe_image", lambda: (image, [
+        {"name": ".text", "rva": TEXT, "size": len(image), "raw_pointer": 0}]))
+    monkeypatch.setattr(L.build, "ledger_object_symbol", lambda row: row["name"])
+    monkeypatch.setattr(L, "truth_inputs_fingerprint", lambda: "stable synthetic inputs")
+    monkeypatch.setattr(L, "data_ledger", lambda: [])
+    monkeypatch.setattr(L, "validated_import_routes", lambda: {})
+    monkeypatch.setattr(L, "retail_import_slots", lambda: [])
+    rows = [{"name": name, "target_rva": hex(address), "target_size": str(size)}
+            for name, address, size in (("grow", 0x1000, len(first)), ("caller", 0x120C, 5),
+                                        ("direct", 0x1214, 5), ("pointer", 0x1220, 5))]
+    if ledger_copy:
+        rows.append({"name": "grow", "target_rva": "0x1100", "target_size": str(len(second))})
+    return L.RetailTruth(rows)
 
-    def image(second_copy):
-        data = bytearray(0x220)
-        data[0x000:0x00C], data[0x100:0x10C] = first, second_copy
-        data[0x200:0x205] = jmp(0x1200, 0x1100)
-        data[0x205:0x20A] = jmp(0x1205, 0x1000)
-        data[0x20C:0x211] = b"\xe8" + struct.pack("<i", 0x1200 - 0x1211)  # the caller reaches the second copy
-        return data
 
-    def make(second_copy):
-        t = truth(image(second_copy), {"grow": {0x1000}, "caller": {0x120C}})
-        t.sizes = {"grow": {0x1000: len(first)}}
-        t.pin_copies = collections.defaultdict(set)
-        return t
+def _copy_call_body(home, target):
+    return b"\x55\x8b\xec\xe8" + struct.pack("<i", target - home - 8) + b"\x5d\xc3\x90\x90"
 
-    t = make(second)
+
+@pytest.mark.parametrize("first,second", [
+    # E8 is an immediate byte, not an opcode: the two functions return different constants.
+    (bytes.fromhex("b8 e8 01 00 00 c3"), bytes.fromhex("b8 e8 02 00 00 c3")),
+    # Blindly masking four bytes after that E8 even conceals NOP -> INT3.
+    (bytes.fromhex("b8 e8 01 00 00 90 c3"), bytes.fromhex("b8 e8 01 00 00 cc c3")),
+    # E8-shaped bytes may also be skipped inline data, not reachable call instructions.
+    (bytes.fromhex("eb 05 e8 11 22 33 44 31 c0 c3"), bytes.fromhex("eb 05 e8 aa bb cc dd 31 c0 c3")),
+    (_copy_call_body(0x1000, 0x1180), _copy_call_body(0x1100, 0x1190)),
+    # Even equivalent copies need independent identity evidence; the pin is only a candidate.
+    (_copy_call_body(0x1000, 0x1180), _copy_call_body(0x1100, 0x1180)),
+], ids=["immediate", "different-opcode", "inline-data", "different-callees", "same-callee"])
+def test_unproven_ilt_second_copy_does_not_prove_call_target(tmp_path, monkeypatch, first, second):
+    t = _second_copy_truth(tmp_path, monkeypatch, first, second)
     body = b"\xe8\0\0\0\0"
     relocs = [(1, L.RetailTruth.REL32, referent("grow"))]
-    assert t.verdict(symbol("caller"), body, relocs, "x", 5) == "wrong"  # no pin accepted: ledger address only
-    assert t._second_copy("grow", 0x1200)
-    assert not t._second_copy("grow", 0x1205)  # a stub to the ledger body itself is no second copy
-    t.ledger["grow"].add(0x1100)
-    assert not t._second_copy("grow", 0x1200)  # the target is the name's own address
-    t.ledger["grow"].discard(0x1100)
-    t.pin_copies["grow"].add(0x1200)
-    assert t.addresses("grow", L.RetailTruth.REL32) == {0x1000, 0x1200}
-    assert t.addresses("grow", L.RetailTruth.DIR32) == {0x1000}  # a call route only
-    assert t.verdict(symbol("caller"), body, relocs, "y", 5) == "retail"
-    assert not make(second.replace(b"\x8b\xec", b"\x8b\xed"))._second_copy("grow", 0x1200)  # differs outside a call
+    # Cover both the pinned stub and direct calls to the unproven body it reaches.
+    assert t.verdict(symbol("caller"), body, relocs, "through-pin", 5) == "wrong"
+    assert t.verdict(symbol("direct"), body, relocs, "direct-copy", 5) == "wrong"
+    assert t.addresses("grow", L.RetailTruth.REL32) == {0x1000}
+
+
+def test_ilt_route_to_original_ledger_body_remains_proven(tmp_path, monkeypatch):
+    t = _second_copy_truth(tmp_path, monkeypatch, _copy_call_body(0x1000, 0x1180),
+                           _copy_call_body(0x1100, 0x1190), pin=0x1205)
+    assert t.verdict(symbol("caller"), b"\xe8\0\0\0\0",
+                     [(1, L.RetailTruth.REL32, referent("grow"))], "ledger-ilt", 5) == "retail"
+
+
+def test_independently_ledger_proven_second_copy_remains_proven(tmp_path, monkeypatch):
+    t = _second_copy_truth(tmp_path, monkeypatch, _copy_call_body(0x1000, 0x1180),
+                           _copy_call_body(0x1100, 0x1180), ledger_copy=True)
+    for name in ("caller", "direct"):
+        assert t.verdict(symbol(name), b"\xe8\0\0\0\0",
+                         [(1, L.RetailTruth.REL32, referent("grow"))], name, 5) == "retail"
+
+
+def test_unproven_second_copy_does_not_expand_dir32_targets(tmp_path, monkeypatch):
+    t = _second_copy_truth(tmp_path, monkeypatch, _copy_call_body(0x1000, 0x1180),
+                           _copy_call_body(0x1100, 0x1190))
+    assert t.addresses("grow", L.RetailTruth.DIR32) == {0x1000}
+    assert t.verdict(symbol("pointer"), b"\xb8\0\0\0\0",
+                     [(1, L.RetailTruth.DIR32, referent("grow"))], "pointer", 5) == "wrong"
