@@ -20,11 +20,10 @@ extern void j_0003950e();
 extern void j_0003e56d();
 
 // The timed-operation pump's firstCall binding, retail 0x00435D6E
-// (?fade005651F0@@YAIM_N@Z: int __cdecl (bool)), and the serial key it
+// (?fade005651F0@@YAIM_N@Z: unsigned int __cdecl (float, bool)), and the serial key it
 // writes, retail 0x012ED588 (?fadeQueueKey@@3IA).
-extern "C" int __cdecl fade005651F0( bool );
+extern unsigned int __cdecl fade005651F0( float, bool );
 extern unsigned fadeQueueKey;
-#pragma comment(linker, "/alternatename:_fade005651F0=?fade005651F0@@YAIM_N@Z")
 
 class AudioEventRTS
 {
