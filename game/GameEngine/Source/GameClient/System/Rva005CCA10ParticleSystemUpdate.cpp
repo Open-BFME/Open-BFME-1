@@ -1,16 +1,15 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
+extern void j_00018f43();
+
 class Rva005CCA10Particle
 {
 public:
 	virtual void release( int flags );
-	bool update( void );
 
 	unsigned char m_unreconstructed_004[ 0x38 ];
 	Rva005CCA10Particle *m_systemNext;
 };
-
-#pragma comment(linker, "/alternatename:?update@Rva005CCA10Particle@@QAE_NXZ=?j_00018f43@@YAXXZ")
 
 class Rva005CCA10ParticleSystem
 {
@@ -21,10 +20,12 @@ public:
 bool Rva005CCA10ParticleSystem::update( void )
 {
 	Rva005CCA10Particle *particle = *(Rva005CCA10Particle **)( (unsigned char *)this + 0xa0 );
+	typedef bool (Rva005CCA10Particle::*Fn)( void );
+	union { void (*fn)(); Fn call; } u = { j_00018f43 };
 	if ( particle != 0 ) {
 		do {
 			Rva005CCA10Particle *next = particle->m_systemNext;
-			if ( !particle->update() ) {
+			if ( !( particle->*u.call )() ) {
 				particle->release( 1 );
 			}
 			particle = next;
