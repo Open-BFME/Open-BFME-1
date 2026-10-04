@@ -148,3 +148,15 @@ zero/nonzero mask at +0x50. A standalone address-qualified view using canonical
 stores are exchanged). It is only a bank, and establishes no newly recovered
 native class name or shared dependency benefit. It must not be promoted merely
 because a shape score is 1.000.
+
+An independent causal review suggested three further expression-local tests,
+all against the extern-aggregate version and with other four PI reads untouched:
+a const local reference bound to `corner`; an in-place `float &` add into the
+boundary3 local; and `const_cast<float &>(Rva00D1F874.value00)` read without
+writing the const object. Every form canonicalizes to the same 1416-byte,
+43-relocation, five-byte reversal. The `static __forceinline` in-place helper
+also emits an out-of-line `?addForBoundary3@@YAXAAMM@Z`, which is an additional
+reason to reject that variant. No helper or source mutation was promoted.
+The paired texture helper alone resolves all its current REL32 names and its
+patched 371 bytes equal retail; the unresolved caller dependency and five PI
+identity failures still prevent the paired source from landing.
