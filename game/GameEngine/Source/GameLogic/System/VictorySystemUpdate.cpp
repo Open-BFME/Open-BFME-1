@@ -54,7 +54,7 @@ private:
 	int m_currentPlayer;
 };
 
-FactionVictoryParameters *VictorySystem::bfmeParametersForPlayer( int playerIndex )
+inline FactionVictoryParameters *VictorySystem::bfmeParametersForPlayer( int playerIndex )
 {
 	unsigned int parameterIndex =
 		(unsigned int)m_playerParameterIndex[playerIndex] & 0x7fffffff;
