@@ -28,15 +28,17 @@ typedef bool Bool;
 #define FALSE false
 #define NULL 0
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?set@BfmeBuildIndexSetter@@QAEHH@Z=?j_000237d1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
-#pragma comment(linker, "/alternatename:?updateEntry@Rva000FA830PortraitList@@QAE_NHHPAPBVImage@@@Z=?j_0003a3f0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?withdraw@Money@@QAEII_N@Z=?j_00041894@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addToProductionQueue@ProductionUpdate@@IAEXPAVProductionEntry@@@Z=?j_000450f7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getSelectedPortraitImage@ThingTemplatePortraitShim@@QBEPBVImage@@XZ=?j_00047e38@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000F9670@BfmeVecVLH@@QAEPBVThingTemplate@@H@Z=?j_00002135@@YAXXZ")
+// Retail reaches every callee below through an incremental-link thunk; call the
+// thunks directly instead of aliasing a stand-in member name onto them.
+extern void j_00020824();
+extern void j_000237d1();
+extern void j_00028560();
+extern void j_0003a3f0();
+extern void j_0003e80b();
+extern void j_00041894();
+extern void j_000450f7();
+extern void j_00047e38();
+extern void j_00002135();
 
 class Image;
 class Object;
@@ -282,10 +284,16 @@ Bool ProductionUpdate::queueCreateUnit(const ThingTemplate *unitType, Int buildI
 		return FALSE;
 
 	Int cost = 0;
-	Player *player = getObject()->getControllingPlayer();
+	typedef Player *(Object::*GetControllingPlayerFn)() const;
+	union { void (*fn)(); GetControllingPlayerFn call; } uPlayer = { j_00020824 };
+	Player *player = (getObject()->*uPlayer.call)();
 	Money *money = player->getMoney();
 	if (fromIndex)
-		cost = player->getBuildIndexSetter()->set(buildIndex);
+	{
+		typedef Int (BfmeBuildIndexSetter::*SetFn)(Int);
+		union { void (*fn)(); SetFn call; } uSet = { j_000237d1 };
+		cost = (player->getBuildIndexSetter()->*uSet.call)(buildIndex);
+	}
 	else if ((unitType->rva0029D790FlagsD8() & 0x10000000) == 0)
 		cost = unitType->calcCostToBuild(player, -1);
 
@@ -296,7 +304,9 @@ Bool ProductionUpdate::queueCreateUnit(const ThingTemplate *unitType, Int buildI
 		if (m_productionCount >= (UnsignedInt)getProductionUpdateModuleData()->m_maxQueueEntries)
 			return TRUE;
 
-		money->withdraw(cost, TRUE);
+		typedef UnsignedInt (Money::*WithdrawFn)(UnsignedInt, Bool);
+		union { void (*fn)(); WithdrawFn call; } uWithdraw = { j_00041894 };
+		(money->*uWithdraw.call)(cost, TRUE);
 		ProductionEntry *production = new ProductionEntry;
 
 		if (first)
@@ -311,11 +321,17 @@ Bool ProductionUpdate::queueCreateUnit(const ThingTemplate *unitType, Int buildI
 		production->m_productionQuantityProduced = 0;
 		if (!fromIndex)
 		{
+			typedef const ThingTemplate *(BfmeThingFactory::*FindTemplateFn)(const AsciiString &);
+			union { void (*fn)(); FindTemplateFn call; } uFind = { j_00028560 };
+			typedef Bool (ThingTemplate::*IsEquivalentToFn)(const ThingTemplate *) const;
+			union { void (*fn)(); IsEquivalentToFn call; } uEq = { j_0003e80b };
+			typedef const Image *(ThingTemplatePortraitShim::*PortraitFn)() const;
+			union { void (*fn)(); PortraitFn call; } uPortrait = { j_00047e38 };
 			for (const QuantityModifier *it = data->m_quantityModifiers.begin();
 				it != data->m_quantityModifiers.end(); ++it)
 			{
-				const ThingTemplate *productionTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(it->m_templateName);
-				if (productionTemplate && productionTemplate->isEquivalentTo(unitType))
+				const ThingTemplate *productionTemplate = (reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->*uFind.call)(it->m_templateName);
+				if (productionTemplate && (productionTemplate->*uEq.call)(unitType))
 				{
 					production->m_productionQuantityTotal = it->m_quantity;
 					break;
@@ -323,23 +339,29 @@ Bool ProductionUpdate::queueCreateUnit(const ThingTemplate *unitType, Int buildI
 			}
 			production->m_type = 1;
 			production->m_objectToProduce = unitType;
-			production->m_portrait = reinterpret_cast<const ThingTemplatePortraitShim *>(unitType)->getSelectedPortraitImage();
+			production->m_portrait = (reinterpret_cast<const ThingTemplatePortraitShim *>(unitType)->*uPortrait.call)();
 		}
 		else
 		{
 			production->m_type = 3;
-			if (!player->getRva000FA830PortraitList()->updateEntry(buildIndex, production->m_productionID, &production->m_portrait))
+			typedef Bool (Rva000FA830PortraitList::*UpdateEntryFn)(Int, Int, const Image **);
+			union { void (*fn)(); UpdateEntryFn call; } uUpdate = { j_0003a3f0 };
+			typedef const ThingTemplate *(BfmeVecVLH::*LookupFn)(Int);
+			union { void (*fn)(); LookupFn call; } uLookup = { j_00002135 };
+			if (!(player->getRva000FA830PortraitList()->*uUpdate.call)(buildIndex, production->m_productionID, &production->m_portrait))
 			{
 				production->deleteInstance();
 				return FALSE;
 			}
-			production->m_objectToProduce = player->getBfmeVecVLH()->rva000F9670(buildIndex);
+			production->m_objectToProduce = (player->getBfmeVecVLH()->*uLookup.call)(buildIndex);
 		}
 
 		production->m_value2c = -1;
 		production->m_value30 = value30;
 		production->m_cost = cost;
-		getOwner()->addToProductionQueue(production);
+		typedef void (ProductionUpdate::*AddToProductionQueueFn)(ProductionEntry *);
+		union { void (*fn)(); AddToProductionQueueFn call; } uAdd = { j_000450f7 };
+		(getOwner()->*uAdd.call)(production);
 		--count;
 		if (money->countMoney() < (UnsignedInt)cost)
 			return TRUE;
