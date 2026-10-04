@@ -440,13 +440,18 @@ class UpdateModule
 	void setWakeFrame( Object *object, UpdateSleepTime sleepTime );
 };
 
-#pragma comment(linker, "/alternatename:?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z=?j_000157da@@YAXXZ")
+// The call is a thiscall through the retail ILT thunk ?j_000157da@@YAXXZ
+// (which takes no prototype of its own), so the member pointer carries the
+// observed signature.
+extern void j_000157da();
 
 void Rva002308A0WakeState::clearAndWake( void )
 {
 	Object *object = *(Object **)((char *)this - 0xdc);
 	*(unsigned char *)((char *)this + 0x11a) = 0;
-	((UpdateModule *)((char *)this - 0xe4))->setWakeFrame( object, UPDATE_SLEEP_NONE );
+	typedef void (UpdateModule::*Call)( Object *, UpdateSleepTime );
+	union { void (*address)(); Call call; } route = { j_000157da };
+	(((UpdateModule *)((char *)this - 0xe4))->*route.call)( object, UPDATE_SLEEP_NONE );
 }
 
 // mov eax,[ecx+4] / ret.  The field's owner is not identified.
