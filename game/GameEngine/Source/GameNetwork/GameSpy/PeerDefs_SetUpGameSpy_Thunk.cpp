@@ -36,6 +36,10 @@
 #include "GameLogic/GameLogic.h"
 #include "string_base.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // The retail accessor is the ILT at 0x000106EA.  GlobalData.h provides an
 // inline implementation for the normal build, so this declaration-only view
 // keeps this TU on the already-proven retail accessor without emitting a new

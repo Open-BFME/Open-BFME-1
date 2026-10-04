@@ -15,6 +15,10 @@
 #include "Common/Dict.h"
 #include <vector>
 #include <set>
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 template<> inline bool StringBase<char>::isEmpty() const {return !m_data || !m_data->length;}
 template<> inline int StringBase<char>::compare(const StringBase<char>& s) const {
  int thatLen=s.m_data?s.m_data->length:0;
