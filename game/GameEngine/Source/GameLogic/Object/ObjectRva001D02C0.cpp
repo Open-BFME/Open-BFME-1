@@ -57,7 +57,6 @@ class Rva001CF980Result : public BfmeContainListView {};
 class Object
 {
 public:
-	Rva001CF980Result *queryAt001CF980();
 	void rva001D02C0(Int condition, Int frames, Real percent);
 
 private:
@@ -66,15 +65,20 @@ private:
 	ObjectSMCHelper *m_smcHelper;
 };
 
-extern Int GetGameLogicRandomValue(Int low, Int high, char *file, Int line);
+extern void j_0002be77();
+extern void j_00012b70();
+extern void j_00001bae();
 
-#pragma comment(linker, "/alternatename:?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ=?j_0002be77@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setModelConditionState@ObjectSMCHelper@@QAEXHI@Z=?j_00012b70@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GetGameLogicRandomValue@@YAHHHPADH@Z=?j_00001bae@@YAXXZ")
+typedef Int (__cdecl *RndValueFn)(Int low, Int high, char *file, Int line);
 
 void Object::rva001D02C0(Int condition, Int frames, Real percent)
 {
-	Rva001CF980Result *result = queryAt001CF980();
+	typedef Rva001CF980Result *(Object::*QueryAt)(void);
+	union { void (*fn)(); QueryAt call; } queryAt = { j_0002be77 };
+	typedef void (ObjectSMCHelper::*SetModelConditionState)(Int, UnsignedInt);
+	union { void (*fn)(); SetModelConditionState call; } setState = { j_00012b70 };
+
+	Rva001CF980Result *result = (this->*queryAt.call)();
 	if (result != 0)
 	{
 		_STL::list<BfmeRva493A0Object *> objects(
@@ -101,7 +105,7 @@ void Object::rva001D02C0(Int condition, Int frames, Real percent)
 		for (_STL::list<BfmeRva493A0Object *>::iterator it = objects.begin();
 			it != objects.end(); ++it)
 		{
-			Int random = GetGameLogicRandomValue(1, remaining,
+			Int random = ((RndValueFn)(void *)j_00001bae)(1, remaining,
 				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Object.cpp",
 				0xAA6);
 			--remaining;
@@ -109,12 +113,12 @@ void Object::rva001D02C0(Int condition, Int frames, Real percent)
 			{
 				BfmeRva493A0Object *item = *it;
 				--selected;
-				item->m_smcHelper->setModelConditionState(condition,
+				(item->m_smcHelper->*setState.call)(condition,
 					(UnsignedInt)frames);
 			}
 		}
 		return;
 	}
 
-	m_smcHelper->setModelConditionState(condition, (UnsignedInt)frames);
+	(m_smcHelper->*setState.call)(condition, (UnsignedInt)frames);
 }
