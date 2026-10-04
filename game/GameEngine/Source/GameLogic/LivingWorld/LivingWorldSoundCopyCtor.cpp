@@ -60,12 +60,6 @@ public:
 
 class LwsAudioEventRTS
 {
-public:
-	LwsAudioEventRTS( const AsciiString &eventName, const Coord3D *position,
-		int extra );
-	~LwsAudioEventRTS();
-	void setIsLogicalAudio( bool logical );
-
 private:
 	char m_storage[ 0x70 ];
 };
@@ -156,9 +150,43 @@ private:
 	bool m_hasPlayed;
 };
 
-#pragma comment(linker, "/alternatename:??0LwsAudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z=?j_000113c4@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1LwsAudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setIsLogicalAudio@LwsAudioEventRTS@@QAEX_N@Z=?j_0002c5cf@@YAXXZ")
+extern void j_000113c4();
+extern void j_00026f35();
+extern void j_0002c5cf();
+
+// TU-local scope object standing in for a local LwsAudioEventRTS. Its inline
+// ctor/dtor/method bodies call the retail ILT thunks through member-function
+// pointers so no link-time alias is needed; the object needs a real destructor
+// so the compiler keeps the unwind frame retail emits for this function.
+class LwsAudioEventRTSScope
+{
+public:
+	typedef void ( LwsAudioEventRTS::*Ctor )( const AsciiString &, const Coord3D *, int );
+	typedef void ( LwsAudioEventRTS::*Dtor )();
+	typedef void ( LwsAudioEventRTS::*SetIsLogicalAudio )( bool );
+
+	__forceinline LwsAudioEventRTSScope( const AsciiString &eventName,
+		const Coord3D *position, int extra )
+	{
+		union { void ( *fn )(); Ctor call; } ctor = { j_000113c4 };
+		( reinterpret_cast<LwsAudioEventRTS *>( this )->*ctor.call )( eventName, position, extra );
+	}
+
+	__forceinline ~LwsAudioEventRTSScope()
+	{
+		union { void ( *fn )(); Dtor call; } dtor = { j_00026f35 };
+		( reinterpret_cast<LwsAudioEventRTS *>( this )->*dtor.call )();
+	}
+
+	__forceinline void setIsLogicalAudio( bool logical )
+	{
+		union { void ( *fn )(); SetIsLogicalAudio call; } setLogical = { j_0002c5cf };
+		( reinterpret_cast<LwsAudioEventRTS *>( this )->*setLogical.call )( logical );
+	}
+
+private:
+	char m_storage[ 0x70 ];
+};
 
 // ?Rva0061C060@LivingWorldSound@@QAEXXZ
 // Reactivates a copied LivingWorldSound when its sound is still eligible.
@@ -191,11 +219,11 @@ void LivingWorldSound::Rva0061C060()
 	else
 		TheAudio->startAudio( 1, 1, 0 );
 
-	LwsAudioEventRTS sound( reinterpret_cast<const AsciiString &>( *soundEvent ),
+	LwsAudioEventRTSScope sound( reinterpret_cast<const AsciiString &>( *soundEvent ),
 		reinterpret_cast<const Coord3D *>( &m_position ), 1 );
 	if ( m_flags & 0x40 )
 		sound.setIsLogicalAudio( true );
-	m_playState = TheAudio->addAudioEvent( &sound );
+	m_playState = TheAudio->addAudioEvent( (const LwsAudioEventRTS *)&sound );
 	m_shouldFade = true;
 }
 
