@@ -100,16 +100,15 @@ private:
 	AIUpdateInterface *m_aiUpdate;
 };
 
-// Retail vtables 0x010CFFD0, 0x01095714, 0x01085DD0 and 0x01083B5C; the
-// alternate names define no table.
-extern "C" void *bfmeVftPartitionFilterThing[];
-extern "C" void *bfmeVftPartitionFilterPolygonTrigger[];
-extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
-extern "C" void *bfmeVftPartitionFilter[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterThing=??_7PartitionFilterThing@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterPolygonTrigger=??_7PartitionFilterPolygonTrigger@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+// Retail vtables 0x010CFFD0, 0x01095714, 0x01085DD0 and 0x01083B5C.  Each is
+// named by its retail decorated vftable symbol directly (the same __identifier
+// spelling used for retail tables in Rva007F55F0Teardown.cpp); the stand-in
+// extern "C" arrays plus their linker alias pragmas resolved to these same
+// addresses and are gone.
+extern "C" void *__identifier("??_7PartitionFilterThing@@6B@")[];
+extern "C" void *__identifier("??_7PartitionFilterPolygonTrigger@@6B@")[];
+extern "C" void *__identifier("??_7PartitionFilterSameMapStatus@@6B@")[];
+extern "C" void *__identifier("??_7PartitionFilter@@6B@")[];
 
 class PartitionFilter
 {
@@ -132,14 +131,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterThing; // retail PartitionFilterThing vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilterThing@@6B@"); // retail PartitionFilterThing vtable
 		m_thingTemplate = thingTemplate;
 		m_match = match;
 	}
 
 	~PartitionFilterThing(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter; // retail PartitionFilter base vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@"); // retail PartitionFilter base vtable
 	}
 
 	const ThingTemplate *m_thingTemplate;
@@ -153,13 +152,13 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterPolygonTrigger; // retail PartitionFilterPolygonTrigger vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilterPolygonTrigger@@6B@"); // retail PartitionFilterPolygonTrigger vtable
 		m_trigger = trigger;
 	}
 
 	~PartitionFilterPolygonTrigger(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter; // retail PartitionFilter base vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@"); // retail PartitionFilter base vtable
 	}
 
 	const PolygonTrigger *m_trigger;
@@ -172,13 +171,13 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterSameMapStatus; // retail PartitionFilterSameMapStatus vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilterSameMapStatus@@6B@"); // retail PartitionFilterSameMapStatus vtable
 		m_object = object;
 	}
 
 	~PartitionFilterSameMapStatus(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter; // retail PartitionFilter base vtable
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@"); // retail PartitionFilter base vtable
 	}
 
 	const Object *m_object;
