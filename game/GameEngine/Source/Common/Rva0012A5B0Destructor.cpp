@@ -16,14 +16,13 @@
 #include "ascii_string.h"
 extern template _STL::vector<AsciiString>::~vector();
 
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+extern "C" unsigned char __identifier("??_7Snapshot@@6B@")[];
 
 struct BfmeVftSlot0012A5B0
 {
 	~BfmeVftSlot0012A5B0()
 	{
-		m_p = (void *)bfmeVftSnapshot;
+		m_p = __identifier("??_7Snapshot@@6B@");
 	}
 
 	void *m_p;
