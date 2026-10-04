@@ -1,4 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+
+// list_bc/list_d4 are retail's MultiListClass<DX8TextureCategoryClass> members:
+// naming the real template here lets the compiler emit calls to its own
+// destructor (0x009435A0) directly, so no linker alias is needed for them.
+#include "../WWLib/multilist.h"
+
+class DX8TextureCategoryClass;
 
 class RenderObjClass;
 
@@ -24,13 +31,6 @@ public:
             return 0;
         return (RenderObjClass *)((char *)node->object_link - 8);
     }
-};
-
-class BfmeNonRefSceneList
-{
-public:
-    virtual ~BfmeNonRefSceneList();
-    BfmeSceneListNode head;
 };
 
 class BfmeSceneVectorElement
@@ -91,8 +91,8 @@ private:
     BfmeRefSceneList update_list;
     BfmeRefSceneList light_list;
     BfmeRefSceneList release_list;
-    BfmeNonRefSceneList list_bc;
-    BfmeNonRefSceneList list_d4;
+    MultiListClass<DX8TextureCategoryClass> list_bc;
+    MultiListClass<DX8TextureCategoryClass> list_d4;
     BfmeRefSceneList visible_list;
 };
 
@@ -101,6 +101,14 @@ SimpleSceneClass::~SimpleSceneClass()
     remove_all_render_objects();
 }
 
+// The five BfmeRefSceneList destructor call sites are compiler-generated
+// implicit destructor calls, each preceded by the /EHsc destructor-state byte
+// written into the SEH record's state slot (`mov byte ptr [esp+0x18], N`) plus
+// the `push ebx` frame the state tracking needs.  A hand-written call to the
+// thunk loses both, so this alias cannot be replaced by a member-pointer call.
 #pragma comment(linker, "/alternatename:??1BfmeRefSceneList@@UAE@XZ=?j_000319df@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeNonRefSceneList@@UAE@XZ=??1?$MultiListClass@VDX8TextureCategoryClass@@@@UAE@XZ")
+// Same for the element destructor address that `delete[]` passes to the MSVC
+// CRT array-destruction helper ??_M@YGXPAXIHP6EX0@Z@Z: the compiler always
+// pushes that class's own ??1 name, never a plain member function such as
+// ?invoke@Rva00943970@@QAEXXZ, so no C++ spelling resolves it to the thunk.
 #pragma comment(linker, "/alternatename:??1BfmeSceneVectorElement@@QAE@XZ=?invoke@Rva00943970@@QAEXXZ")
