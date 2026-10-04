@@ -16,6 +16,7 @@ class INIException
 public:
 	INIException( int code, const char *format, ... );
 	INIException( const INIException &other );
+	~INIException();
 
 private:
 	char *m_failureMessage;
