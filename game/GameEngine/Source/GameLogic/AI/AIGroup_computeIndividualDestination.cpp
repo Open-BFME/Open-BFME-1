@@ -113,13 +113,14 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// Retail ILT thunk at 0x000294E2 reached from AIGroup::computeIndividualDestination.
+extern void j_000294e2();
+
 class Pathfinder
 {
 public:
 	bool adjustDestination(Object *object, const LocomotorSet &locomotorSet,
 		Coord3D *destination, const Coord3D *groupDestination);
-	void updateGoal(Object *object, const Coord3D *destination, int layer,
-		const char *reason, int flags);
 };
 
 class AI
@@ -240,9 +241,13 @@ void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const
 				*aiUpdate->getLocomotorSet(), individualDestination, groupDestination);
 		if (!destinationAdjusted)
 			*individualDestination = *groupDestination;
-		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGroup.cpp",
-			0x233);
+		{
+			// Retail routes this call through the ILT thunk at 0x000294E2.
+			typedef void (Pathfinder::*Fn)(Object *, const Coord3D *, int,
+				const char *, int);
+			union { void (*fn)(); Fn call; } u = { j_000294e2 };
+			(TheAI->pathfinder()->*u.call)(object, individualDestination, 1,
+				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGroup.cpp", 0x233);
+		}
 	}
 }
-
-#pragma comment(linker, "/alternatename:?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z=?j_000294e2@@YAXXZ")
