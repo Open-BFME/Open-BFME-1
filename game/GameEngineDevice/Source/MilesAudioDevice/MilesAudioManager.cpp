@@ -103,9 +103,12 @@ private:
 	HPROVIDER m_delayFilter;
 };
 
-#pragma comment(linker, "/alternatename:?buildProviderList@MilesAudioManager@@AAEXXZ=?j_0003972f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z=?j_0001f046@@YAXXZ")
-#pragma comment(linker, "/alternatename:?initSamplePools@MilesAudioManager@@AAEXXZ=?j_0002ca8e@@YAXXZ")
+// Retail reaches buildProviderList, setHardwareAccelerated and initSamplePools
+// through the incremental-link thunks 0x0003972F, 0x0001F046 and 0x0002CA8E.
+extern void j_0003972f(void);
+extern void j_0001f046(void);
+extern void j_0002ca8e(void);
+class MilesIlRoute {};
 
 extern void j_00010221(void);
 extern int bfmeGo937A(void);
@@ -154,14 +157,19 @@ void MilesAudioManager::openDevice(void)
 		m_audioSettings->m_outputRate, m_audioSettings->m_outputBits, m_audioSettings->m_outputChannels);
 
 	AIL_quick_handles(&m_digitalHandle, 0, 0);
+	typedef void (MilesIlRoute::*FnVoid)(void);
+	typedef void (MilesIlRoute::*FnBool)(Bool);
+	union { void (*fn)(); FnVoid call; } uProvider = { j_0003972f };
+	union { void (*fn)(); FnBool call; } uBool = { j_0001f046 };
+	union { void (*fn)(); FnVoid call; } uPools = { j_0002ca8e };
 	if (retval)
-		buildProviderList();
+		(((MilesIlRoute *)this)->*uProvider.call)();
 	else
 		setOn(0, 0x1f);
 
 	OptionPreferences prefs;
-	setHardwareAccelerated(prefs.getUseEAX3());
-	initSamplePools();
+	(((MilesIlRoute *)this)->*uBool.call)(prefs.getUseEAX3());
+	(((MilesIlRoute *)this)->*uPools.call)();
 	refreshCachedVariables();
 
 	HTIMER timer = AIL_register_timer(j_00010221);
