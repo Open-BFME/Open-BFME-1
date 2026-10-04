@@ -2,17 +2,29 @@
 // 0x007EBAA0: allocate the 0x14-byte FESL diagnostic singleton at
 // 0x0130A5A0 if it is still null.
 
-void *Gen007F0130(unsigned int size);
+// 0x007F0130 is retail's ILT thunk to ??2Gen007F0130@@SAPAXI@Z, the class
+// operator new recovered in game/GameEngine/Source/Common/
+// S3AllocatorOperatorNewDelete.cpp.  Same one-size signature.
+class Gen007F0130
+{
+public:
+	static void *operator new(unsigned int size);
+};
+
+// The singleton cell is declared and defined with this exact spelling in
+// game/GameEngine/Source/GameNetwork/Rva007EB920Assert.cpp, whose type gives
+// the mangled name ?g_Va0130A5A0@@3PAURva007EB810Diag@@A.
+struct Rva007EB810Diag;
 
 extern int vftable_01129D30;
 extern void Rva007EB820(void);
-extern void *g_Va0130A5A0;
+extern Rva007EB810Diag *g_Va0130A5A0;
 
 void Rva007EBAA0(void)
 {
 	if (g_Va0130A5A0)
 		return;
-	void *p = Gen007F0130(0x14);
+	void *p = Gen007F0130::operator new(0x14);
 	if (p)
 	{
 		*((int *)p + 2) = 0;
@@ -20,7 +32,7 @@ void Rva007EBAA0(void)
 		*((int *)p + 4) = 0;
 		*(int *)p = (int)&vftable_01129D30;
 		*((int *)p + 1) = (int)&Rva007EB820;
-		g_Va0130A5A0 = p;
+		g_Va0130A5A0 = (Rva007EB810Diag *)p;
 	}
 	else
 		g_Va0130A5A0 = 0;
