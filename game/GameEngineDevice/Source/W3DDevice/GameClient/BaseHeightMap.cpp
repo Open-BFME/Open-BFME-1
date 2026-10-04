@@ -1045,48 +1045,6 @@ Bool BaseHeightMapRenderObjClass::showAsVisibleCliff(Int xIndex, Int yIndex) con
 
 //=============================================================================
 //=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapEvaluateVisibleCliff.cpp
-// ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@ present-unmatched
-Bool BaseHeightMapRenderObjClass::evaluateAsVisibleCliff(Int xIndex, Int yIndex, Real valuesGreaterThanRad)
-{
-	// This one never changes, so don't bother recomputing it.
-	static const Real distance[4] = 
-	{
-		0.0f,
-		1.0 * MAP_XY_FACTOR,
-		sqrt(2.0f) * MAP_XY_FACTOR,
-		1.0 * MAP_XY_FACTOR,
-	};
-
-	// Note: getHeight will protect us from going out of bounds by returning 0 if we give it
-	// a value outside of its bounds.
-	UnsignedByte bytes[4] = 
-	{ 
-		m_map->getHeight(xIndex + 0, yIndex + 0), 
-		m_map->getHeight(xIndex + 1, yIndex + 0), 
-		m_map->getHeight(xIndex + 1, yIndex + 1), 
-		m_map->getHeight(xIndex + 0, yIndex + 1),
-	};
-
-	Real heights[4] = 
-	{
-		INT_TO_REAL(bytes[0]) * MAP_HEIGHT_SCALE,
-		INT_TO_REAL(bytes[1]) * MAP_HEIGHT_SCALE,
-		INT_TO_REAL(bytes[2]) * MAP_HEIGHT_SCALE,
-		INT_TO_REAL(bytes[3]) * MAP_HEIGHT_SCALE,
-	};
-
-	Bool anyImpassable = FALSE;	
-
-	for (Int i = 1; i < 4 && !anyImpassable; ++i) {
-		if (fabs((heights[i] - heights[0]) / distance[i]) > valuesGreaterThanRad) {
-			anyImpassable = TRUE;
-		}
-	}
-
-	return anyImpassable;
-}
-
 //=============================================================================
 // BaseHeightMapRenderObjClass::oversizeTerrain
 //=============================================================================
