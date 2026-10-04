@@ -17698,5 +17698,15 @@
   "after_sha256": "6f26a54e0c009feb73f0dda64f9b17df172236966dc8a9de1599df2c4af57c86",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/DestroyEnvironmentUpdateDestructorThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/DestroyEnvironmentUpdateDestructorThunk.cpp",
+  "old_name": "GameLogic",
+  "new_name": "Rva00367E30Logic",
+  "before_sha256": "c3a8e73764da6ba14e797f4fac371435a1a315943a38702270e93f48723012c0",
+  "after_sha256": "7f041673e49797b954d217b3dcc227d6e9b33c274d97f16831d59d3d2b0c6428",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

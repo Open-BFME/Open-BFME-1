@@ -16,7 +16,16 @@ public:
 	void destroyObject(Object *object);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// The retail global TheBfmeGameLogic is a Rva00367E30Logic *, so the
+// declaration must spell that pointee type to mangle to the same name.
+struct Rva00367E30Logic : GameLogic
+{
+};
+
+extern Rva00367E30Logic *TheBfmeGameLogic;
+
+// destroyObject is reached through the retail ILT thunk 0x0001D0DE.
+extern void j_0001d0de();
 
 class BfmeDestroyable
 {
@@ -75,10 +84,6 @@ private:
 	unsigned int m_objectID;
 };
 
-#pragma comment(linker, "/alternatename:?TheBfmeGameLogic@@3PAVGameLogic@@A=?TheBfmeGameLogic@@3PAURva00367E30Logic@@A")
-#pragma comment(linker, "/alternatename:?destroyObject@GameLogic@@QAEXPAVObject@@@Z=?j_0001d0de@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeFindModule@@YAPAVBfmeDestroyable@@XZ=?d_0028ccd0@@YAXXZ")
-
 // ??1DestroyEnvironmentUpdate@@UAE@XZ
 DestroyEnvironmentUpdate::~DestroyEnvironmentUpdate()
 {
@@ -90,8 +95,10 @@ DestroyEnvironmentUpdate::~DestroyEnvironmentUpdate()
 			BfmeDestroyable *module = bfmeFindModule();
 			if (module)
 			{
+				typedef void (GameLogic::*DestroyFn)(Object *);
+				union { void (*fn)(); DestroyFn call; } destroy = { j_0001d0de };
 				module->deleteInstance(0);
-				TheBfmeGameLogic->destroyObject(object);
+				(TheBfmeGameLogic->*destroy.call)(object);
 			}
 		}
 		m_objectID = 0;
