@@ -3,15 +3,18 @@
 
 #include "ascii_string.h"
 
-extern "C" const void *bfmeVftOrCondition[];
-#pragma comment(linker, "/alternatename:_bfmeVftOrCondition=??_7OrCondition@@6B@")
+// Retail vtable 0x00CE84D8 (targets/game/reverse/dir32_addresses.csv,
+// 0x010E84D8): ??_7OrCondition@@6B@. The declaration carries no C++ name:
+// __identifier spells the retail symbol exactly, so the store below
+// references the defining name.
+extern "C" const void *__identifier("??_7OrCondition@@6B@")[];
 
 class OrConditionAllocation
 {
 public:
 	__forceinline OrConditionAllocation()
 	{
-		m_vtable = (unsigned int)bfmeVftOrCondition;
+		m_vtable = (unsigned int)__identifier("??_7OrCondition@@6B@");
 		m_next = 0;
 		m_first = 0;
 	}
