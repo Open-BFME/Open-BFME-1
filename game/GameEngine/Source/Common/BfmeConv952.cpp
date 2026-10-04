@@ -25,8 +25,6 @@ public:
 	float m_bfmeY;
 };
 
-extern float g_bfmeLimit952;
-
 extern void j_0000e570();
 
 typedef BfmeTarget952 *(__fastcall *BfmeGoalThunk952)(BfmeHolder952 *);
@@ -39,7 +37,7 @@ bool BfmeCheck952::bfmeNear952()
 		float dx = t->m_bfmeX - m_bfmeX;
 		float dy = t->m_bfmeY - m_bfmeY;
 
-		if (dx * dx + dy * dy > g_bfmeLimit952)
+		if (dx * dx + dy * dy > 2500.0f)
 			return true;
 	}
 	return false;
