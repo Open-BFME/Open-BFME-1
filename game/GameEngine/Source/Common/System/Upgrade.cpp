@@ -391,40 +391,10 @@ const UpgradeTemplate *UpgradeCenter::findUpgrade( const AsciiString& name ) con
 
 }  // end findUpgrade
 
-//-------------------------------------------------------------------------------------------------
-/** Allocate a new upgrade template */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/UpgradeCenter_newUpgrade_Thunk.cpp
-// ?newUpgrade@UpgradeCenter@@QAEPAVUpgradeTemplate@@ABVAsciiString@@@Z present-unmatched
-UpgradeTemplate *UpgradeCenter::newUpgrade( const AsciiString& name )
-{
-	UpgradeTemplate *newUpgrade = newInstance(UpgradeTemplate);
-
-	// copy data from the default upgrade
-	const UpgradeTemplate *defaultUpgrade = findUpgrade( "DefaultUpgrade" );
-	if( defaultUpgrade )
-		*newUpgrade = *defaultUpgrade;
-
-	// assign name and starting data
-	newUpgrade->setUpgradeName( name );
-	newUpgrade->setUpgradeNameKey( TheNameKeyGenerator->nameToKey( name ) );
-
-	// Make a unique bitmask for this new template by keeping track of what bits have been assigned
-	// damn MSFT! proper ANSI syntax for a proper 64-bit constant is "1LL", but MSVC doesn't recognize it
-	UpgradeMaskType newMask;
-	newMask.set( m_nextTemplateMaskBit );
-	//Int64 newMask = 1i64 << m_nextTemplateMaskBit;
-	m_nextTemplateMaskBit++;
-	DEBUG_ASSERTCRASH( m_nextTemplateMaskBit < UPGRADE_MAX_COUNT, ("Can't have over %d types of Upgrades and have a Bitfield function.", UPGRADE_MAX_COUNT) );
-	newUpgrade->friend_setUpgradeMask( newMask );
-
-	// link upgrade
-	linkUpgrade( newUpgrade );
-
-	// return new upgrade
-	return newUpgrade;
-
-}  // end newUnlinkedUpgrade
+// Retail's UpgradeMaskType bitset<128>::_Unchecked_set body (0x000CEC30) used to be emitted
+// only through this TU's duplicate newUpgrade; the matched newUpgrade lives in
+// UpgradeCenter_newUpgrade_Thunk.cpp, so instantiate the body explicitly.
+template _STL::bitset<128> &_STL::bitset<128>::_Unchecked_set(size_t, int);
 
 //-------------------------------------------------------------------------------------------------
 /** Link an upgrade to our list */
