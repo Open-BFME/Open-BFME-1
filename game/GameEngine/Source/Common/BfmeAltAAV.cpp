@@ -116,6 +116,11 @@ public:
 
 #pragma comment(linker, "/alternatename:??0LANPreferences@@QAE@XZ=?j_00025b80@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1LANPreferences@@UAE@XZ=?j_00040db3@@YAXXZ")
+
+// getUserName returns a UnicodeString by value, and MSVC 7.1 only elides the
+// return temporary when the callee is a direct call. Reaching it through a
+// member-pointer union forces a separate temporary plus a copy constructor, so
+// this one pragma cannot be removed without changing retail's bytes. Kept.
 #pragma comment(linker, "/alternatename:?getUserName@LANPreferences@@QAE?AVUnicodeString@@XZ=?j_000351c5@@YAXXZ")
 
 extern AsciiString AsciiStringToQuotedPrintable(AsciiString original);
@@ -190,19 +195,17 @@ public:
 #undef LANAPI_SLOT
 
 #pragma comment(linker, "/alternatename:??0LANAPI@@QAE@XZ=?j_0003ecc5@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1LANAPI@@UAE@XZ=?j_00030224@@YAXXZ")
 
 extern LANAPI *TheLAN;
 
 class GameEngine
 {
-public:
-	void Rva0006C180(void *value);
 };
 
 extern void j_0002e8fc(void);
-#pragma comment(linker, "/alternatename:?Rva0006C180@GameEngine@@QAEXPAX@Z=?j_0002e8fc@@YAXXZ")
 #pragma comment(linker, "/include:?j_0002e8fc@@YAXXZ")
+
+typedef void (GameEngine::*GameEngineRva0006C180)(void *);
 
 extern GameEngine *TheGameEngine;
 
@@ -227,5 +230,6 @@ void bfmeAltAAV(void)
 	TheLAN->RequestSetName(userName);
 	TheLAN->RequestLocations();
 	TheLAN->RequestGameCreate(UnicodeString(g_Rva01088AF4EmptyWideString), false);
-	TheGameEngine->Rva0006C180(g_bfmePtrAAV);
+	union { void (*fn)(); GameEngineRva0006C180 call; } u = { j_0002e8fc };
+	(TheGameEngine->*u.call)(g_bfmePtrAAV);
 }
