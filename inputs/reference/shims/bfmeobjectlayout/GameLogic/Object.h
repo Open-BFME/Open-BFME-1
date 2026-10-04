@@ -287,7 +287,9 @@ public:
 
 	BehaviorModule** getBehaviorModules() const { return m_behaviors; }
 
-	BodyModuleInterface* getBodyModule() const { return m_body; }
+	// Retail's Object::getBodyModule inlines `mov eax,[ecx+0x200]` (matched localApplyBattlePlanBonusesToObject;
+	// ledger pins m_contain@+0x1FC, m_ai@+0x204); m_body sits at +0x194 here, so only the accessor reads retail's offset.
+	BodyModuleInterface* getBodyModule() const { return *(BodyModuleInterface* const*)((const char*)this + 0x200); }
 	// Retail's inline COMDATs (0x4C3C10, 0x56A700) are `mov eax,[ecx+0x1FC]`; m_contain sits at +0x190
 	// here, pinned by matched bodies, so only the accessor reads retail's offset.
 	ContainModuleInterface* getContain() const { return *(ContainModuleInterface* const*)((const char*)this + 0x1FC); }
