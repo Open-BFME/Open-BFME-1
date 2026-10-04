@@ -21,10 +21,10 @@ extern "C" char g_rva005c5100ThrowInfo;
 __declspec(noreturn) void __stdcall _CxxThrowException(void *, void *);
 extern GameLogic *TheGameLogic;
 class MidVirtualSlot90Receiver;
-void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
-// The existing address-derived slot-0x90 forwarder was declared void. Retail
-// consumes the virtual writer's unchanged EAX; this return-ABI cast preserves
-// the exact provider identity, as VersionedRecord37A610.cpp already does.
+Xfer &__cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+// The canonical address-derived slot-0x90 forwarder returns Xfer&. Retail
+// consumes the virtual writer's unchanged EAX. The receiver-view cast below
+// preserves that proven provider identity and its existing stack ABI.
 typedef Xfer &(__cdecl *Rva000A1510Writer)(Xfer *, void *);
 
 struct BfmeNodeABB;
