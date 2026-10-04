@@ -1,4 +1,15 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/displaystring /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // Open-BFME5 conversions.
+
+// Retail's 0x00046538 ILT thunk routes every BfmeKeyLC::bfmeFindLC call to
+// GameWindow::winGetUserData (body 0x00478C70), and 0x0000A3DF / 0x00010857
+// route the two tail calls to GadgetListBoxReset (0x004B7880) and
+// GadgetListBoxGetNumEntries (0x004B77C0). Spelled under their real names the
+// three references resolve; the scaffold spellings defined nothing.
+
+#include "GameClient/GameWindow.h"
+#include "GameClient/GadgetListBox.h"
 
 struct BfmeNodeLC
 {
@@ -23,21 +34,17 @@ struct BfmeNodeLC
 
 class BfmeKeyLC
 {
-public:
-	BfmeNodeLC *bfmeFindLC();
 };
 
 void bfmeGo925B(BfmeKeyLC *k)
 {
 	if (!k)
 		return;
-	BfmeNodeLC *o = k->bfmeFindLC();
+	BfmeNodeLC *o = (BfmeNodeLC *)((GameWindow *)k)->winGetUserData();
 	if (!o)
 		return;
 	o->bfmeTail925B();
 }
-
-void bfmeCall925C(void *p);
 
 class BfmeThing925C
 {
@@ -50,8 +57,8 @@ void BfmeThing925C::bfmeGo925C()
 {
 	BfmeKeyLC *k = m_bfmeKey;
 	if (k) {
-		BfmeNodeLC *o = k->bfmeFindLC();
-		bfmeCall925C(o->m_bfmeP);
+		BfmeNodeLC *o = (BfmeNodeLC *)((GameWindow *)k)->winGetUserData();
+		GadgetListBoxReset((GameWindow *)o->m_bfmeP);
 	}
 }
 
@@ -66,13 +73,11 @@ void BfmeThing925D::bfmeGo925D(void *v)
 {
 	BfmeKeyLC *k = m_bfmeKey;
 	if (k) {
-		BfmeNodeLC *o = k->bfmeFindLC();
-		BfmeNodeLC *p = ((BfmeKeyLC *)o->m_bfmeP)->bfmeFindLC();
+		BfmeNodeLC *o = (BfmeNodeLC *)((GameWindow *)k)->winGetUserData();
+		BfmeNodeLC *p = (BfmeNodeLC *)((GameWindow *)o->m_bfmeP)->winGetUserData();
 		p->m_bfmeR = v;
 	}
 }
-
-int bfmeCall925E(void *p);
 
 class BfmeThing925E
 {
@@ -86,6 +91,6 @@ int BfmeThing925E::bfmeGo925E()
 	BfmeKeyLC *k = m_bfmeKey;
 	if (!k)
 		return 0;
-	BfmeNodeLC *o = k->bfmeFindLC();
-	return bfmeCall925E(o->m_bfmeP);
+	BfmeNodeLC *o = (BfmeNodeLC *)((GameWindow *)k)->winGetUserData();
+	return GadgetListBoxGetNumEntries((GameWindow *)o->m_bfmeP);
 }
