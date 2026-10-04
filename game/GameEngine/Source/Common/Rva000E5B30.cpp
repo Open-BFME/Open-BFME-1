@@ -59,10 +59,12 @@ struct Bfme1A6320Record
 	unsigned char remainder[0x30 - sizeof(Coord3D)];
 };
 
+// Retail calls the query through ILT 0x0001DFED (body 0x001A6320).
+extern void j_0001dfed();
 class TerrainLogic
 {
 public:
-	Bfme1A6320Record *query1A6320(BfmeE5B30Object *obj, Coord3D *pos, float value);
+	Bfme1A6320Record *queryViaIlt(BfmeE5B30Object *obj, Coord3D *pos, float value);
 };
 
 extern TerrainLogic *TheTerrainLogic;
@@ -86,7 +88,9 @@ bool __stdcall rva000E5B30(BfmeE5B30Object *obj, Coord3D *out)
 					else
 						pos = obj->m_pos;
 
-					Bfme1A6320Record *got = TheTerrainLogic->query1A6320(obj, &pos, helper->radius());
+					typedef Bfme1A6320Record *(TerrainLogic::*Query)(BfmeE5B30Object *, Coord3D *, float);
+					union { void (*fn)(); Query call; } queryIlt = { j_0001dfed };
+					Bfme1A6320Record *got = (TheTerrainLogic->*queryIlt.call)(obj, &pos, helper->radius());
 					if (!got)
 						return false;
 					*out = got->position;
