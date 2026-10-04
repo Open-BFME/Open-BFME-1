@@ -19,7 +19,7 @@ typedef float Real;
 // The running maximum comes back as a REFERENCE: that is what makes MSVC pick
 // the address of the candidate or of the running best and reload through it,
 // rather than branching around a store.
-inline const Real &bfmeMax(const Real &a, const Real &b)
+static inline const Real &bfmeMax(const Real &a, const Real &b)
 {
 	return (a > b) ? a : b;
 }
