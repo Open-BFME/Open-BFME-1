@@ -79,8 +79,6 @@ struct Rva000F6C10Value
 	int m_numPlaying;
 };
 
-#pragma comment(linker, "/alternatename:??0Rva000F6C10Value@@QAE@ABU0@@Z=??0GameSpyGroupRoom@@QAE@ABV0@@Z")
-
 struct Rva000F6C10ExtractKey
 {
 	const AsciiString &operator()(const Rva000F6C10Value &entry) const
