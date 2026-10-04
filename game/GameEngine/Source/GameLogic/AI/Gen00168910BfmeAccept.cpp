@@ -124,8 +124,9 @@ extern "C" BfmeXferException *__cdecl bfmeFormatText(
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
-extern "C" void *bfmeVftTeamInQueue[];
-#pragma comment(linker, "/alternatename:_bfmeVftTeamInQueue=??_7TeamInQueue@@6B@")
+// Retail TeamInQueue vftable (0x01096940); clearNode stamps it into each node.
+// Named directly, so no stand-in spelling can hide a wrong reference.
+extern "C" void *__identifier("??_7TeamInQueue@@6B@")[];
 extern void j_0002fee6();
 extern void j_00008224();
 extern void j_0003e81f();
@@ -211,7 +212,7 @@ private:
 
 	static void clearNode(BfmeNode_00161220 *node)
 	{
-		node->m_vptr = bfmeVftTeamInQueue;
+		node->m_vptr = __identifier("??_7TeamInQueue@@6B@");
 		node->m_next04 = 0;
 		node->m_previous08 = 0;
 		node->m_next0C = 0;
