@@ -54,6 +54,16 @@
 #include "GameLogic/GameLogic.h"
 #include "string_base.h"
 
+// Retail 0x004D51B0 / 0x004D52D0: the PeerRequest constructor and destructor
+// are out of line (called through ILT 0x171fc / 0x16bd5 from 71 / 78 sites).
+PeerRequest::PeerRequest()
+{
+}
+
+PeerRequest::~PeerRequest()
+{
+}
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)

@@ -90,6 +90,16 @@ namespace _STL
 
 #include "GameNetwork/WOLBrowser/WebBrowser.h"
 
+// Retail 0x004DAB40 / 0x004DAC70: the PeerResponse constructor and destructor
+// are out of line (called through ILT 0x42069 / 0x44733 from 59 / 66 sites).
+PeerResponse::PeerResponse()
+{
+}
+
+PeerResponse::~PeerResponse()
+{
+}
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)

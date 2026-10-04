@@ -76,6 +76,15 @@
 #include "Common/CustomMatchPreferences.h"
 #include "Common/LadderPreferences.h"
 
+// These STLport string helpers have retail bodies claimed by this TU. They were
+// emitted only because the implicit PeerRequest constructor/destructor inlined
+// them here; those are out of line in retail (PeerDefs.cpp), so instantiate the
+// four helpers explicitly.
+template void _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >::_M_terminate_string();
+template void _STL::basic_string<wchar_t, _STL::char_traits<wchar_t>, _STL::allocator<wchar_t> >::_M_terminate_string();
+template void _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >::_M_terminate_string_aux(const _STL::__true_type&);
+template void _STL::basic_string<wchar_t, _STL::char_traits<wchar_t>, _STL::allocator<wchar_t> >::_M_terminate_string_aux(const _STL::__true_type&);
+
 namespace _STL
 {
 template <class Node, class NodeAllocator, class Value>
