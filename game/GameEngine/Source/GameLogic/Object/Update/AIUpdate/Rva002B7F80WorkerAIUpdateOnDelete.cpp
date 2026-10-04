@@ -159,7 +159,14 @@ public:
 	virtual ObjectID getBridgeID(void) = 0;
 };
 
-Rva002B7240Source *Rva002B7240Lookup(ObjectID id);
+// Retail calls the ILT thunk 0x00042424 (ledger row ?j_00042424@@YAXXZ), which
+// jumps to BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject.
+extern void j_00042424(void);
+static __forceinline Rva002B7240Source *Rva002B7240Lookup(ObjectID id)
+{
+	typedef Rva002B7240Source *(*LookupFn)(ObjectID);
+	return ((LookupFn)j_00042424)(id);
+}
 
 Bool Rva002B7F80Update::canAcceptNewRepair(Object *obj)
 {
