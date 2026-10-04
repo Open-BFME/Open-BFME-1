@@ -571,7 +571,10 @@ protected:
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
 
-#pragma comment(linker, "/alternatename:?populateStructureInventory@ControlBar@@IAEXPAVObject@@_N@Z=?j_0001df4d@@YAXXZ")
+// Retail calls the structure-inventory population through the ILT thunk at
+// 0x0001DF4D, so the call site names that thunk directly rather than the
+// member it stands for.
+extern void j_0001df4d();
 
 ContainEntry ControlBar::m_containData[MAX_COMMANDS_PER_SET];
 
@@ -758,7 +761,12 @@ void ControlBar::updateContextStructureInventory(void)
 		return;
 
 	if (m_lastRecordedInventoryCount != contain->getContainCount(false))
-		populateStructureInventory(reinterpret_cast<Object *>(source), false);
+	{
+		typedef void (ControlBar::*PopulateStructureInventory)(Object *, Bool);
+		union { void (*raw)(void); PopulateStructureInventory member; } call;
+		call.raw = j_0001df4d;
+		(this->*call.member)(reinterpret_cast<Object *>(source), false);
+	}
 }
 
 // ControlBar::resetContainData, retail 0x004A3B00, 59 bytes.
