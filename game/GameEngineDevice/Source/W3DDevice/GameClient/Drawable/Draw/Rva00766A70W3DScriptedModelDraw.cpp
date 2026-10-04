@@ -11,22 +11,22 @@ public:
 	void update(int value);
 
 private:
-	void apply(void *model, int value, int from, int to, int flags);
-
 	char m_pad00[0x14];
 	void *m_model;
 	char m_pad18[0x218];
 	unsigned char m_state;
 };
 
-#pragma comment(linker, "/alternatename:?apply@Rva00766A70W3DScriptedModelDraw@@AAEXPAXHHHH@Z=?j_00001ca8@@YAXXZ")
+extern void j_00001ca8();
 
 // ?update@Rva00766A70W3DScriptedModelDraw@@QAEXH@Z
 void Rva00766A70W3DScriptedModelDraw::update(int value)
 {
 	if (m_model)
 	{
+		typedef void (Rva00766A70W3DScriptedModelDraw::*Apply)(void *, int, int, int, int);
+		union { void (*fn)(); Apply call; } u = { j_00001ca8 };
 		m_state = 0;
-		apply(m_model, value, 0, 1, 1);
+		(this->*u.call)(m_model, value, 0, 1, 1);
 	}
 }
