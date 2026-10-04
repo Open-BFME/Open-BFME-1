@@ -11,17 +11,17 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleData
+class S4Base009A1A40
 {
 public:
-	virtual ~UpdateModuleData();
+	virtual ~S4Base009A1A40();
 
 private:
 	unsigned int m_moduleTagNameKey;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterProductionExitUpdate.h
-class SupplyCenterProductionExitUpdateModuleData : public UpdateModuleData
+class SupplyCenterProductionExitUpdateModuleData : public S4Base009A1A40
 {
 public:
 	virtual ~SupplyCenterProductionExitUpdateModuleData();

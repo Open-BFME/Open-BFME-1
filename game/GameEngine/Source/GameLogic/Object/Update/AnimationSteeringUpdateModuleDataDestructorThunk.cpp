@@ -14,15 +14,15 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleData
+class S4Base009A1A40
 {
 public:
-	virtual ~UpdateModuleData();	// out-of-line; pinned at 0x009A1A40
+	virtual ~S4Base009A1A40();	// out-of-line; pinned at 0x009A1A40
 	unsigned int m_04;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AnimationSteeringUpdate.h
-class AnimationSteeringUpdateModuleData : public UpdateModuleData
+class AnimationSteeringUpdateModuleData : public S4Base009A1A40
 {
 public:
 	virtual ~AnimationSteeringUpdateModuleData();

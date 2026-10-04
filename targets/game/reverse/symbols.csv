@@ -9901,7 +9901,6 @@ name,address,notes
 ??1UnpauseSpecialPowerUpgrade@@MAE@XZ,0x0003C6C8,vtable 0x00CCE464 slots name UnpauseSpecialPowerUpgrade; protected complete destructor called by wrapper 0x002D9860
 ??1UnpauseSpecialPowerUpgradeModuleData@@UAE@XZ,0x0002E6A9,destructor ILT used by the UnpauseSpecialPowerUpgradeModuleData scalar-deleting destructor
 ??1UnpauseSpecialPowerUpgradeModuleDataMember@@QAE@XZ,0x0001B97D,UnpauseSpecialPowerUpgradeModuleData dtor member at this+8; ILT thunk for body 0x00129C80
-??1UpdateModuleData@@UAE@XZ,0x009A1A40,Open-BFME5 ModuleData-family base dtor (ICF-folded with SubsystemInterface dtor) from AnimationSteering/PowerPlant/W3DPropDraw dtor call sites
 ??1UpgradeAudioMember@@UAE@XZ,0x00026F35,Open-BFME5 UpgradeTemplate audio member destructor
 ??1UpgradeDie@@MAE@XZ,0x0001B7B6,vtable 0x00CB350C slots name UpgradeDie; protected complete destructor called by wrapper 0x002561D0
 ??1UpgradeModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin

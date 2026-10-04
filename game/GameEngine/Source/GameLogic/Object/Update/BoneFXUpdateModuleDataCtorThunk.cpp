@@ -53,16 +53,16 @@ struct BoneParticleSystemInfo : public BaseBoneListInfo
 	const ParticleSystemTemplate *particleSysTemplate;
 };
 
-class __declspec(novtable) UpdateModuleData
+class __declspec(novtable) S4Base009A1A40
 {
 public:
-	UpdateModuleData() {}
-	virtual ~UpdateModuleData();
+	S4Base009A1A40() {}
+	virtual ~S4Base009A1A40();
 private:
 	Int m_moduleTagNameKey;
 };
 
-class BoneFXUpdateModuleData : public UpdateModuleData
+class BoneFXUpdateModuleData : public S4Base009A1A40
 {
 public:
 	BoneFXUpdateModuleData();

@@ -12,15 +12,15 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleData
+class S4Base009A1A40
 {
 public:
-	virtual ~UpdateModuleData();
+	virtual ~S4Base009A1A40();
 	unsigned int m_04;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TechBuildingBehavior.h
-class TechBuildingBehaviorModuleData : public UpdateModuleData
+class TechBuildingBehaviorModuleData : public S4Base009A1A40
 {
 public:
 	virtual ~TechBuildingBehaviorModuleData();

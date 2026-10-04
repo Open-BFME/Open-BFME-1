@@ -35,15 +35,15 @@ private:
 	int m_handle;
 };
 
-class __declspec(novtable) UpdateModuleData
+class __declspec(novtable) S4Base009A1A40
 {
 public:
-	virtual ~UpdateModuleData();
+	virtual ~S4Base009A1A40();
 private:
 	unsigned int m_value04;
 };
 
-class EmotionTrackerUpdateModuleData : public UpdateModuleData
+class EmotionTrackerUpdateModuleData : public S4Base009A1A40
 {
 public:
 	EmotionTrackerUpdateModuleData();
