@@ -19,17 +19,13 @@ struct BfmeBlendTileInfo0074C140
 	Int customBlendEdgeClass;
 };
 
-#pragma comment(linker, "/alternatename:?getUVForTileIndex@WorldHeightMap@@IAE_NHFQAM0_N@Z=?j_00009fc5@@YAXXZ")
+extern void j_00009fc5();
 
 class WorldHeightMap
 {
 public:
 	Bool getExtraAlphaUVData(Int xIndex, Int yIndex, float U[4],
 		float V[4], UnsignedByte alpha[4], Bool *needFlip, Bool *cliff);
-
-	protected:
-	Bool getUVForTileIndex(Int ndx, Short tileNdx, float U[4],
-		float V[4], Bool fullTile);
 
 private:
 	char m_prefix00[8];
@@ -63,7 +59,11 @@ Bool WorldHeightMap::getExtraAlphaUVData(Int xIndex, Int yIndex, float U[4],
 		} else {
 			const unsigned int blendBaseForCall =
 				(unsigned int)m_blendedTiles;
-			*cliff = getUVForTileIndex(ndx,
+			typedef Bool (WorldHeightMap::*GetUVForTileIndex)(Int, Short,
+				float[4], float[4], Bool);
+			union { void (*fn)(); GetUVForTileIndex call; } uv =
+				{ j_00009fc5 };
+			*cliff = (this->*uv.call)(ndx,
 				*(Short *)((blendNdx << 4) + blendBaseForCall), U, V, zero);
 			alpha[0] = alpha[1] = alpha[2] = alpha[3] = zero;
 			const unsigned int blendBaseForHoriz =
