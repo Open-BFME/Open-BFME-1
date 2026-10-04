@@ -24,11 +24,11 @@ private:
 	Rva002D9610UpgradeMask m_completedUpgrades;
 };
 
+extern void j_00020824();
+
 class Object
 {
 public:
-	Player *getControllingPlayer() const;
-
 	const Rva002D9610UpgradeMask &getCompletedUpgradeMask() const
 	{
 		return m_completedUpgrades;
@@ -39,7 +39,18 @@ private:
 	Rva002D9610UpgradeMask m_completedUpgrades;
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+// Retail's Object::getControllingPlayer body lives behind ILT 0x20824, so the
+// call site calls the thunk with the same thiscall shape.
+static Player *controllingPlayerOf(Object *object)
+{
+	typedef Player *(Object::*ControllingPlayer)() const;
+	union
+	{
+		void (*raw)();
+		ControllingPlayer call;
+	} route = { j_00020824 };
+	return (object->*route.call)();
+}
 
 class Rva002D9610Owner
 {
@@ -61,8 +72,8 @@ void Rva002D9610Owner::rva002D9610()
 	slot07();
 
 	Rva002D9610UpgradeMask mask =
-		*(*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(this) - 8))
-			->getControllingPlayer()->getCompletedUpgradeMask();
+		*controllingPlayerOf(*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(this) - 8))
+			->getCompletedUpgradeMask();
 	mask.m_bits[0] |= (*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(this) - 8))
 		->getCompletedUpgradeMask().m_bits[0];
 	mask.m_bits[1] |= (*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(this) - 8))
