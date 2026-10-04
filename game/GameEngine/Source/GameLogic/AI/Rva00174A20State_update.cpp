@@ -44,14 +44,15 @@ private:
 	UnsignedByte m_unmodelled[0x70];
 };
 
-// BFME Object::getDrawable vtable slot +0x28 and retail sound-lookup thunk
+// BFME Object::getDrawable vtable slot +0x28.  Retail reaches the per-unit
+// sound lookup through the ILT thunk at 0x0000FD44, so the call is made
+// through that thunk with the member-function's own signature.
 class Drawable
 {
-public:
-	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
 };
 
-#pragma comment(linker, "/alternatename:?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
+// retail ILT thunk for Drawable::getPerUnitSound(const AsciiString &) const
+extern void j_0000fd44();
 
 class Player
 {
@@ -250,7 +251,9 @@ StateReturnType Rva00174A20State::update()
 			const AudioEventRTS *event;
 			{
 				AsciiString soundName("VoiceDesperateAttack");
-				event = drawable->getPerUnitSound(soundName);
+				typedef const AudioEventRTS *(Drawable::*Fn)(const AsciiString &) const;
+			union { void (*fn)(); Fn call; } u = { j_0000fd44 };
+			event = (drawable->*u.call)(soundName);
 			}
 			if (event)
 			{
