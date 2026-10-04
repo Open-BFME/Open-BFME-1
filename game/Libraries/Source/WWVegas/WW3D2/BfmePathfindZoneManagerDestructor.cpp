@@ -5,22 +5,29 @@ typedef unsigned int UnsignedInt;
 void operator delete(void *value);
 void operator delete[](void *value);
 
+// Retail reaches both base cleanup routines through incremental-link thunks;
+// the call sites below name the thunk addresses directly.
+extern void j_0000742d();
+extern void j_00034e05();
+
 class BfmeZoneManagerReset
 {
-public:
-	void reset(void);
 };
 
-#pragma comment(linker, "/alternatename:?reset@BfmeZoneManagerReset@@QAEXXZ=?j_0000742d@@YAXXZ")
-
-template <bool threads, int instance>
-class BfmeNodeAllocator
+namespace _STL
 {
-public:
-	static void __cdecl deallocate(void *node, UnsignedInt bytes);
+// The node allocator's pool entry points are private STLport members; this
+// TU-local friend helper reaches _M_deallocate under its real name.
+template <bool threads, int instance> class __node_alloc;
+static void zonePoolDeallocate(void *block, UnsignedInt bytes);
+template <bool threads, int instance>
+class __node_alloc
+{
+	friend void zonePoolDeallocate(void *, UnsignedInt);
+	static void __cdecl _M_deallocate(void *node, UnsignedInt bytes);
 };
-
-#pragma comment(linker, "/alternatename:?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+static inline void zonePoolDeallocate(void *block, UnsignedInt bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
+}
 
 struct BfmeZonePointerMatrix
 {
@@ -44,7 +51,7 @@ public:
 			if (bytes > 0x80)
 				::operator delete(start);
 			else
-				BfmeNodeAllocator<true, 0>::deallocate(start, bytes);
+				_STL::zonePoolDeallocate(start, bytes);
 		}
 	}
 
@@ -57,13 +64,16 @@ public:
 class Rva00405B70Tree
 {
 public:
-	~Rva00405B70Tree();
+	~Rva00405B70Tree()
+	{
+		typedef void (Rva00405B70Tree::*Dtor)(void);
+		union { void (*fn)(); Dtor call; } dtor = { j_00034e05 };
+		(this->*dtor.call)();
+	}
 
 private:
 	void *m_data[4];
 };
-
-#pragma comment(linker, "/alternatename:??1Rva00405B70Tree@@QAE@XZ=?j_00034e05@@YAXXZ")
 
 class BfmePathfindZoneManager : public BfmeZoneManagerReset
 {
@@ -85,7 +95,9 @@ private:
 // ??1BfmePathfindZoneManager@@QAE@XZ
 BfmePathfindZoneManager::~BfmePathfindZoneManager()
 {
-	reset();
+	typedef void (BfmeZoneManagerReset::*Reset)(void);
+	union { void (*fn)(); Reset call; } reset = { j_0000742d };
+	(static_cast<BfmeZoneManagerReset *>(this)->*reset.call)();
 	for (int column = 0; column < 6; ++column) {
 		for (int row = 0; row < 12; ++row) {
 			delete [] m_fourth.value[row][column];
