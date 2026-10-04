@@ -10,9 +10,6 @@ typedef unsigned int UnsignedInt;
 extern void j_00001140();
 extern void j_000022bb();
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-
 #define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
 
 template<class OBJCLASS>
@@ -66,8 +63,6 @@ extern const BitFlags<192> KINDOFMASK_NONE;
 class BfmeOverridable
 {
 public:
-	const BfmeOverridable *getFinalOverride() const;
-
 	void *m_vtable;
 	BfmeOverridable *m_nextOverride;
 };
@@ -113,24 +108,32 @@ public:
 
 	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
 	{
-		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
+		// The retail pfn slot is the ILT thunk 0x1140, reached through the
+		// generic PMF dispatch; the member name itself is not a real symbol.
+		typedef Object *(BfmeObjectDlinkBase::*GetNextFunc)() const;
+		union { void (*fn)(); GetNextFunc call; } u = { j_00001140 };
+		return DLINK_ITERATOR<Object>(m_head, u.call);
 	}
 };
 
 static BfmeOverridable *bfmeFinalTemplate(Object *obj)
 {
+	typedef const BfmeOverridable *(BfmeOverridable::*FinalOverrideFunc)() const;
+	union { void (*fn)(); FinalOverrideFunc call; } u = { j_000022bb };
 	BfmeOverridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
 	if (tmpl != 0 && tmpl->m_nextOverride != 0)
-		tmpl = (BfmeOverridable *)tmpl->m_nextOverride->getFinalOverride();
+		tmpl = (BfmeOverridable *)(tmpl->m_nextOverride->*u.call)();
 	return tmpl;
 }
 
 static BfmeOverridable *bfmeFinalTemplateGuard(Object *obj)
 {
+	typedef const BfmeOverridable *(BfmeOverridable::*FinalOverrideFunc)() const;
+	union { void (*fn)(); FinalOverrideFunc call; } u = { j_000022bb };
 	if (!obj) return 0;
 	BfmeOverridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
 	if (tmpl != 0 && tmpl->m_nextOverride != 0)
-		tmpl = (BfmeOverridable *)tmpl->m_nextOverride->getFinalOverride();
+		tmpl = (BfmeOverridable *)(tmpl->m_nextOverride->*u.call)();
 	return tmpl;
 }
 
