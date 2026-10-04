@@ -1,5 +1,3 @@
-extern float g_bfmeScaleBC;
-
 struct BfmeNodeABA
 {
 	unsigned char m_bfmeHeadABA[0x14];
@@ -80,7 +78,7 @@ int BfmeHostABA::bfmeProgressABA(BfmeIterABA last)
 		return 0;
 
 	if (limit != 0)
-		return (int)((float)elapsed / (float)limit * g_bfmeScaleBC);
+		return (int)((float)elapsed / (float)limit * 100.0f);
 
 	return 100;
 }
