@@ -15,18 +15,32 @@ public:
 class Weapon
 {
 public:
-	bool privateFireWeapon(const Object *src, const Coord3D *pos, const Object *tgt, int n, const Coord3D *alt, int a, int b, int c, int *out);
 
 	bool bfmeFireYB(const Object *src, const Coord3D *pos, const Coord3D *alt, int n);
 	bool bfmeFireYC(const Object *src, const Coord3D *pos, const Object *tgt, int n);
 };
 
+// Retail reaches the nine-argument body through ILT 0x00030A8A, owned by the
+// ledger as ?j_00030a8a@@YAXXZ; ecx (the weapon) is not reloaded.
+extern void j_00030a8a();
+typedef bool (Weapon::*PrivateFireWeaponCall)(const Object *, const Coord3D *, const Object *, int, const Coord3D *, int, int, int, int *);
+
+union PrivateFireWeaponRoute
+{
+	void (*raw)();
+	PrivateFireWeaponCall member;
+};
+
 bool Weapon::bfmeFireYB(const Object *src, const Coord3D *pos, const Coord3D *alt, int n)
 {
-	return privateFireWeapon(src, pos, 0, 0, alt, 1, 0, n, 0);
+	PrivateFireWeaponRoute call;
+	call.raw = j_00030a8a;
+	return (this->*call.member)(src, pos, 0, 0, alt, 1, 0, n, 0);
 }
 
 bool Weapon::bfmeFireYC(const Object *src, const Coord3D *pos, const Object *tgt, int n)
 {
-	return privateFireWeapon(src, pos, tgt, tgt->m_id, 0, 1, 0, n, 0);
+	PrivateFireWeaponRoute call;
+	call.raw = j_00030a8a;
+	return (this->*call.member)(src, pos, tgt, tgt->m_id, 0, 1, 0, n, 0);
 }
