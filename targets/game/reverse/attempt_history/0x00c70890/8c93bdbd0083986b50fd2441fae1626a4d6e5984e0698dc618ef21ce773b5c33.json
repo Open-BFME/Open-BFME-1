@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8c93bdbd0083986b50fd2441fae1626a4d6e5984e0698dc618ef21ce773b5c33",
+  "symbol": "?d_00c70890@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.0,
+  "source": "// ?d_00c70890@@YAXXZ\n// partial score=0.0 date=2026-10-04\nstruct Rva00C70890Element { char storage[12]; ~Rva00C70890Element(); };\nRva00C70890Element Rva012F6E50Array[30];\n"
+}
