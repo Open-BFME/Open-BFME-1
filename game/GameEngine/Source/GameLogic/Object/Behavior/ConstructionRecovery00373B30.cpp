@@ -1,11 +1,13 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object /Iinputs/reference/shims/sweep /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
 // stlport
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
+#include <new>
+#define _OPERATOR_NEW_DEFINED_
+#include "Common/NameKeyGenerator.h"
 #include "CastleBehaviorRecovery.h"
 #include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 #include "../../../GameClient/FXListRetail.h"
-enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum DamageType { DAMAGE_TYPE_8 = 8 };
 enum DeathType { DEATH_TYPE_0 = 0 };
 enum ObjectStatusTypes { OBJECT_STATUS_4E = 0x4e };
@@ -30,7 +32,6 @@ class Module;
 // No identity correction of that already-landed callee is claimed here.
 class Team;
 class Object;
-enum Relationship { RELATIONSHIP_ENEMIES=0 };
 class Player { public: Relationship getRelationship(const Team*) const; };
 class GameLogic { public: Object* findObjectByID(int); };
 class PlayerList { public: Player* getPlayerFromMask(unsigned short); };
@@ -173,12 +174,9 @@ extern void j_00014506();
 extern void j_00026094();
 extern void j_0002ae23();
 extern void j_0002ec44();
-extern void j_0003add7();
 extern void j_0003bf11();
 extern void j_00045827();
 
-class NameKeyGenerator {};
-extern NameKeyGenerator *TheNameKeyGenerator;
 
 // The matched update at RVA 0x00373B30 calls through ILT 0x00013935 and passes
 // a boolean. Matched CastleBehavior method 0x00371EE0 identifies the receiver.
@@ -199,8 +197,7 @@ void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
 							(DamageType)8, (DeathType)0);
 					} else {
 						static NameKeyType enragedKey =
-							call1<NameKeyType>(j_0003add7, TheNameKeyGenerator,
-								"EntEnragedUpdate");
+							TheNameKeyGenerator->nameToKey("EntEnragedUpdate");
 						Module *enraged = call1<Module *>(j_0002ae23, child,
 							enragedKey);
 						if (enraged != 0)
@@ -208,8 +205,7 @@ void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
 								(unsigned char)1, (unsigned char)1);
 
 						static NameKeyType lifetimeKey =
-							call1<NameKeyType>(j_0003add7, TheNameKeyGenerator,
-								"LifetimeUpdate");
+							TheNameKeyGenerator->nameToKey("LifetimeUpdate");
 						Module *lifetime = call1<Module *>(j_0002ae23, child,
 							lifetimeKey);
 						if (lifetime != 0)
