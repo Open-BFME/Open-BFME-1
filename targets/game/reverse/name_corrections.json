@@ -17688,5 +17688,15 @@
   "after_sha256": "774d853ae8f331a92d8e2cc5ab4f471459f6369cf7d2a67cc0810d1e88d793df",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Helper/ObjectSMCHelperSetModelConditionState.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Helper/ObjectSMCHelperSetModelConditionState.cpp",
+  "old_name": "notifyModelConditionChanged",
+  "new_name": "j_00007d74",
+  "before_sha256": "df0efe84fe26a36e0dcc7d278ceb1a206d09d2ff6cdff7d28412ef37517b05b1",
+  "after_sha256": "6f26a54e0c009feb73f0dda64f9b17df172236966dc8a9de1599df2c4af57c86",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

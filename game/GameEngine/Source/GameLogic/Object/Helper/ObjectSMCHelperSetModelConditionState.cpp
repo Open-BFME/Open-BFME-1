@@ -20,7 +20,6 @@ public:
 	virtual void updateModuleAnchor();
 
 protected:
-	void setWakeFrame(Object *, UpdateSleepTime);
 	void *m_moduleData;
 	Object *m_object;
 };
@@ -61,9 +60,12 @@ private:
 };
 
 #define BFME_HAVE_MODELCONDITIONFLAGS
-#define OBJECT_TU_MEMBERS \
-	void notifyModelConditionChanged();
 #include "../object.h"
+
+// Retail routes these three member calls through ILT thunks.
+extern void j_00007d74();
+extern void j_0002191d();
+extern void j_000157da();
 
 struct Rva002571A0Elem
 {
@@ -99,7 +101,6 @@ public:
 	void setModelConditionState(int condition, UnsignedInt frames);
 
 private:
-	int framesUntilNext();
 	unsigned char m_padding[0xc];
 	Rva002571A0List m_timers;
 };
@@ -115,7 +116,7 @@ public:
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheBfmeGameLogic ((GameLogicFrameSource *)TheGameLogic)
+static inline GameLogicFrameSource *TheBfmeGameLogicView() { return (GameLogicFrameSource *)TheGameLogic; }
 
 template <typename T>
 const T &maximum(const T &left, const T &right)
@@ -123,9 +124,25 @@ const T &maximum(const T &left, const T &right)
 	return left > right ? left : right;
 }
 
-#pragma comment(linker, "/alternatename:?framesUntilNext@ObjectSMCHelper@@AAEHXZ=?j_00007d74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z=?j_000157da@@YAXXZ")
+// Route classes: retail's three calls go through ILT thunks, so the receiver is
+// only ever used to set ecx.
+class Route007d74 {};
+class Route0157da {};
+
+static __forceinline int callFramesUntilNext(ObjectSMCHelper *self)
+{
+	typedef int (Route007d74::*FramesUntilNext)();
+	union { void (*fn)(); FramesUntilNext call; } u = { j_00007d74 };
+	return ((Route007d74 *)self->*u.call)();
+}
+
+static __forceinline void callSetWakeFrame(UpdateModule *self, Object *object,
+	UpdateSleepTime sleepTime)
+{
+	typedef void (Route0157da::*SetWakeFrame)(Object *, UpdateSleepTime);
+	union { void (*fn)(); SetWakeFrame call; } u = { j_000157da };
+	((Route0157da *)self->*u.call)(object, sleepTime);
+}
 
 void ObjectSMCHelper::setModelConditionState(int condition,
 	UnsignedInt frames)
@@ -135,7 +152,7 @@ void ObjectSMCHelper::setModelConditionState(int condition,
 		return;
 	}
 
-	UnsignedInt frame = TheBfmeGameLogic->m_frame;
+	UnsignedInt frame = TheBfmeGameLogicView()->m_frame;
 	Rva002571A0Node *sentinel = m_timers.sentinel();
 	Rva002571A0Node *node = sentinel->m_next;
 	while (node != sentinel)
@@ -161,9 +178,12 @@ set_condition:
 	if (!object->m_modelConditionFlags.test(condition))
 	{
 		object->m_modelConditionFlags.set(condition);
-		object->notifyModelConditionChanged();
+		typedef void (Object::*Notify)();
+		union { void (*fn)(); Notify call; } notify = { j_0002191d };
+		(object->*notify.call)();
 	}
 
 set_wake:
-	setWakeFrame(m_object, (UpdateSleepTime)framesUntilNext());
+	int framesUntilNextValue = callFramesUntilNext(this);
+	callSetWakeFrame(this, m_object, (UpdateSleepTime)framesUntilNextValue);
 }
