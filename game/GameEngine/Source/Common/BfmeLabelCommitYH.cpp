@@ -5,12 +5,30 @@
 // embedded member of the global base, which is why its address is materialised
 // with an add rather than folded into a displacement.
 
-class AsciiStringYH
-{
-public:
-	~AsciiStringYH(void);
+// The label is a StringBase<char> (BFME's AsciiString), and both the copy into
+// the slot and the release at the end are real StringBase bodies the tree
+// already owns: ?set@?$StringBase@D@@QAEXABV1@@Z at 0x00887C90 and
+// ?releaseBuffer@?$StringBase@D@@AAEXXZ at 0x00887940. ascii_string.h is the
+// real header for that class, and its comments record both bodies.
+//
+// The by-value parameter keeps its own name because the function's identity is
+// ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z; the layout is StringBase<char>'s, which
+// the real AsciiString inherits unchanged.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	void set(const AsciiStringYH &other);
+// Retail's by-value parameter is a StringBase<char> (BFME's AsciiString), and
+// its copy is released at the end by the header's inline
+// { validate(); releaseBuffer(); }, i.e. a direct call to
+// ?releaseBuffer@?$StringBase@D@@AAEXXZ (0x00887940), the body the tree already
+// owns.  Retail holds no separate body for ??1AsciiStringYH@@QAE@XZ: that
+// release is the inherited one, inlined into this function's single scope exit,
+// exactly as ascii_string.h spells AsciiString's own destructor (a bare `{}`
+// over StringBase<char>'s inline destructor).  So the parameter type inherits
+// AsciiString and declares nothing; giving it a member of its own instead makes
+// VC7.1 emit a COMDAT copy of a destructor name retail does not have, and that
+// copy claims a retail address.
+class AsciiStringYH : public AsciiString
+{
 };
 
 class BfmeBaseYH
@@ -20,17 +38,26 @@ public:
 	AsciiStringYH m_bfmeLabel;				// +0xB84
 };
 
-class BfmeThingYH
-{
-public:
-	void bfmeNotifyYH(void);
-};
+// Both notifications go out through retail's own incremental-link thunks,
+// which the ledger owns as ?j_<rva>@@YAXXZ; retail carries no body name for
+// either callee. VC7.1 has no __thiscall function-pointer type, so each is
+// taken as a pointer-to-member out of a union, the pattern the tree's other
+// matched bodies already use.
+class Rva004D1080Receiver {};
 
-class BfmeOtherYH
+extern void j_0003dcee();
+extern void j_0000bd7f();
+
+typedef void (Rva004D1080Receiver::*Rva0003DCEE)();
+typedef void (Rva004D1080Receiver::*Rva0000BD7F)(int);
+
+template<class T> __forceinline T Rva004D1080Member(void (*raw)())
 {
-public:
-	void bfmeRefreshYH(int mode);
-};
+	union { void (*raw)(); T member; } fn;
+	fn.raw = raw;
+	return fn.member;
+}
+#define CALLYH(T, obj, fn) (((Rva004D1080Receiver*)(obj))->*Rva004D1080Member<T>(fn))
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
@@ -54,7 +81,13 @@ extern GlobalData *TheWritableGlobalData;		// retail 0x012ED5C8
 class Shell;
 
 extern Shell *TheShell;						// retail 0x012F4B58
-extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D
+// NEEDS A DATUM: retail global 0x012F3E6D is the dirty flag this commit
+// raises (`mov byte ptr [0x012F3E6D], 1`).  dir32_addresses.csv pins it under
+// two spellings, ?g_bfmeDirtyYH@@3_NA and ?g_bfmeDirtyYH@@3EA, and
+// BfmeConv2123.cpp declares the `unsigned char` one for the matching clear --
+// but no TU defines either, and data_rows.csv has no row for the address, so
+// nothing can be respelled to.
+extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D, UNDEFINED
 
 // ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z
 void __cdecl bfmeCommitYH(AsciiStringYH label)
@@ -63,10 +96,12 @@ void __cdecl bfmeCommitYH(AsciiStringYH label)
 
 	AsciiStringYH *slot = &((BfmeBaseYH *)TheWritableGlobalData)->m_bfmeLabel;
 
-	slot->set(label);
+	StringBase<char> *src = (StringBase<char> *)&label;
 
-	((BfmeThingYH *)TheShell)->bfmeNotifyYH();
+	((StringBase<char> *)slot)->set(*src);
+
+	CALLYH(Rva0003DCEE, TheShell, j_0003dcee)();
 
 	if (g_rva012F19E8WindowManager != 0)
-		((BfmeOtherYH *)g_rva012F19E8WindowManager)->bfmeRefreshYH(0);
+		CALLYH(Rva0000BD7F, g_rva012F19E8WindowManager, j_0000bd7f)(0);
 }

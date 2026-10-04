@@ -95,17 +95,38 @@ void BfmeA993::bfmeGo993A(int unused)
 	((BfmeHub993 *)TheInGameUI)->bfmeEnd993(0, 0);
 }
 
-class BfmeAskB993
-{
-public:
-	char bfmeAsk993B();
-};
+// Both helpers bfmeGo993B reaches are called through retail's own
+// incremental-link thunks, which the ledger owns as ?j_<rva>@@YAXXZ; retail
+// carries no body name for either callee.
+//
+// The first takes only its object, so the thiscall is spelled as a
+// one-argument __fastcall and the pointer still lands in ECX. The second also
+// pushes eight arguments, so its object goes through a pointer-to-member taken
+// out of a union, the pattern the other matched bodies in the tree already use.
+extern void j_00008ed1();
+extern void j_00015235();
 
-class BfmeLog993
+// Both calls take their object through ECX only, so both go through a
+// pointer-to-member taken out of a union; the tree's other matched bodies use
+// the same pattern for retail thunks.
+class BfmeAskB993;
+class BfmeLog993;
+
+// VC7.1 has no __thiscall function-pointer type, so each call is spelled as a
+// pointer-to-member taken out of a union; the tree's other matched bodies use
+// the same pattern for retail thunks.
+class Rva00564700Receiver {};
+
+typedef char (Rva00564700Receiver::*Rva00008ED1)();
+typedef void (Rva00564700Receiver::*Rva00015235)(int, char *, int, char *, int, int, int, int);
+
+template<class T> __forceinline T Rva00564700Member(void (*raw)())
 {
-public:
-	void bfmeLog993B(int a, char *fmt, int n, char *s, int p, int q, int r, int t);
-};
+	union { void (*raw)(); T member; } fn;
+	fn.raw = raw;
+	return fn.member;
+}
+#define CALL993(T, obj, fn) (((Rva00564700Receiver*)(obj))->*Rva00564700Member<T>(fn))
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
@@ -116,18 +137,31 @@ class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern BfmeAskB993 *g_bfmeAskB993;
+// Retail 0x012F4B98 is the AptPalantir singleton EA defines as
+// `AptPalantir *TheAptPalantir` in
+// game/GameEngine/Source/GameClient/GUI/AptPalantirConstructor.cpp; this TU
+// only asks it a question, so the pointee stays the local BfmeAskB993 view and
+// the access is cast at the use.
+class AptPalantir;
+
+extern AptPalantir *TheAptPalantir;
 // Retail 0x012B7D80; canonical spelling `int g_aptPalantirWindow`
 // (?g_aptPalantirWindow@@3HA), defined in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp.
 extern int g_aptPalantirWindow;
-extern char g_bfmeStrA993B[];
+// Retail 0x01081238 is the JPEG extended-message table text EA names
+// `char g_bfmeJpegExtendedMessage`, spelled ?g_bfmeJpegExtendedMessage@@3DA in
+// every matched TU that selects it.
+extern char g_bfmeJpegExtendedMessage;
 extern const char g_rva01080FC0[2];
 extern char g_bfmeFmt993B[];
 
 void bfmeGo993B(void)
 {
-	char *s = g_bfmeAskB993->bfmeAsk993B() ? g_bfmeStrA993B : const_cast<char *>(g_rva01080FC0);
+	char asked = CALL993(Rva00008ED1, TheAptPalantir, j_00008ed1)();
 
-	((BfmeLog993 *)g_rva012F19E8WindowManager)->bfmeLog993B(g_aptPalantirWindow, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);
+	char *s = asked ? &g_bfmeJpegExtendedMessage : const_cast<char *>(g_rva01080FC0);
+
+	CALL993(Rva00015235, g_rva012F19E8WindowManager, j_00015235)
+		(g_aptPalantirWindow, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);
 }
