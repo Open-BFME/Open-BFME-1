@@ -241,6 +241,7 @@ private:
 class Rva0058DBC0Owner
 {
 public:
+	void rva0058DD70();
 	void rva0058DDD0();
 
 private:
@@ -255,6 +256,20 @@ private:
 	Rva0058DDD0CountHolder m_countAnim20;	// +0x20
 	Rva0058DDD0MultiplierHolder m_multiplierAnim24;	// +0x24
 };
+
+void Rva0058DBC0Owner::rva0058DD70()
+{
+	m_resourcesShown08 = false;
+	m_shownResources0c = -2;
+	m_shownCount10 = -2;
+	m_shownTotal14 = -2;
+	m_shownMultiplier18 = 0.0f;
+	m_countAnim20.clear();
+	m_multiplierAnim24.clear();
+	m_lastCount00 = 0;
+	m_lastPercent04 = 0;
+	m_int1c = 0;
+}
 
 void Rva0058DBC0Owner::rva0058DDD0()
 {

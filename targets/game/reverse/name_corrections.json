@@ -16168,5 +16168,25 @@
   "after_sha256": "f3e16f8dc051a794d7e4a784c07ef35edf4d27a96af56369756305919f0005ce",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0058dd70.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva0058DBC0OwnerUpdate.cpp",
+  "old_name": "BfmeThingJQ",
+  "new_name": "Rva0058DBC0Owner",
+  "before_sha256": "38ee3427005e6c4089338cf5a2aaaf2d3e15443add04d45a566e43b0fa809e80",
+  "after_sha256": "a887d425d6dc61b09a50ecca5ae28dfb63acbcd53a2deaf9525c7e1aa9ec8cf2",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeThingJQ is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 143-144 describe; retail 0x0058DD70 is the state clear method of the resource-bar subobject Rva0058DBC0Owner whose identity is proven by Rva0058DBC0OwnerUpdate.cpp and destructor 0x0058DBC0. The landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0058dd70.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva0058DBC0OwnerUpdate.cpp",
+  "old_name": "bfmeResetJQ",
+  "new_name": "rva0058DD70",
+  "before_sha256": "38ee3427005e6c4089338cf5a2aaaf2d3e15443add04d45a566e43b0fa809e80",
+  "after_sha256": "a887d425d6dc61b09a50ecca5ae28dfb63acbcd53a2deaf9525c7e1aa9ec8cf2",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeResetJQ is a Bfme<Verb><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 143-144 describe; its verdict rows in targets/game/reverse/re_attempts.log carry (identity unknown). The landed rva0058DD70 keeps the address token as AGENTS.md requires for an unproven method; no descriptive identity existed to preserve."
  }
 ]
