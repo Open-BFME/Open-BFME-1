@@ -25,41 +25,49 @@ extern void j_0001f1bd();
 extern void j_0001fe2e();
 extern void j_00049eb8();
 
+// Receiver views for the thunked calls below.  They carry no members: the
+// thiscall shape of each call travels in the function-local member-pointer
+// typedefs, so no source-level callee identity is claimed here.
 class Rva000F4250ScriptCall
 {
-public:
-	void notify( Team *team );
 };
 
 class Rva000F4250GateCall
 {
-public:
-	void set( UnsignedInt gateID, UnsignedInt open );
 };
 
 class Rva000F4250PlayerListCall
 {
-public:
-	Player *getNthPlayer( int index );
 };
 
 class Rva000F4250PlayerCall
 {
-public:
-	void preTeamDestroy( const Team *team );
 };
 
 class Rva000F4250PrototypeCall
 {
-public:
-	void remove( Team *team );
 };
 
 class Rva000F4250Hash
 {
 public:
-	void clear();
-	void destroy();
+	// Retail reaches both bodies through incremental-link thunks; the
+	// function-local unions below carry the thiscall shape without inventing a
+	// source-level member identity for them.
+	void clear()
+	{
+		typedef void (Rva000F4250Hash::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_0001f1bd };
+		(this->*u.call)();
+	}
+
+	void destroy()
+	{
+		typedef void (Rva000F4250Hash::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_00049eb8 };
+		(this->*u.call)();
+	}
+
 	~Rva000F4250Hash() { destroy(); }
 
 private:
@@ -69,7 +77,13 @@ private:
 class Rva000F4250GateSet
 {
 public:
-	void destroy();
+	void destroy()
+	{
+		typedef void (Rva000F4250GateSet::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_0001fe2e };
+		(this->*u.call)();
+	}
+
 	~Rva000F4250GateSet() { destroy(); }
 
 	struct TreeHeader;
@@ -250,26 +264,32 @@ private:
 	Rva000F4250GateSet m_gateSet;            // +0x104
 };
 
-#pragma comment(linker, "/alternatename:?notify@Rva000F4250ScriptCall@@QAEXPAVTeam@@@Z=?j_00042910@@YAXXZ")
-#pragma comment(linker, "/alternatename:?set@Rva000F4250GateCall@@QAEXII@Z=?j_0000e6b5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getNthPlayer@Rva000F4250PlayerListCall@@QAEPAVPlayer@@H@Z=?j_00044f30@@YAXXZ")
-#pragma comment(linker, "/alternatename:?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z=?j_00014dcb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?remove@Rva000F4250PrototypeCall@@QAEXPAVTeam@@@Z=?j_0001e416@@YAXXZ")
-#pragma comment(linker, "/alternatename:?clear@Rva000F4250Hash@@QAEXXZ=?j_0001f1bd@@YAXXZ")
-#pragma comment(linker, "/alternatename:?destroy@Rva000F4250GateSet@@QAEXXZ=?j_0001fe2e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?destroy@Rva000F4250Hash@@QAEXXZ=?j_00049eb8@@YAXXZ")
+// The calls below are incremental-link thunks at the exact retail call sites.
+// The receiver and argument types are carried by the local unions; their
+// address-derived names do not claim an unproven source-level callee.
 
 // ??1Team@@MAE@XZ
 Team::~Team()
 {
+	typedef void (Rva000F4250ScriptCall::*ScriptNotifyFn)( Team * );
+	union { void (*fn)(); ScriptNotifyFn call; } scriptNotify = { j_00042910 };
+	typedef void (Rva000F4250GateCall::*GateSetFn)( UnsignedInt, UnsignedInt );
+	union { void (*fn)(); GateSetFn call; } gateSet = { j_0000e6b5 };
+	typedef Player *(Rva000F4250PlayerListCall::*NthPlayerFn)( int );
+	union { void (*fn)(); NthPlayerFn call; } nthPlayer = { j_00044f30 };
+	typedef void (Rva000F4250PlayerCall::*PreTeamDestroyFn)( const Team * );
+	union { void (*fn)(); PreTeamDestroyFn call; } preTeamDestroy = { j_00014dcb };
+	typedef void (Rva000F4250PrototypeCall::*RemoveFn)( Team * );
+	union { void (*fn)(); RemoveFn call; } removeFromPrototype = { j_0001e416 };
+
 	if ( TheScriptEngine )
-		((Rva000F4250ScriptCall *)TheScriptEngine)->notify( this );
+		(((Rva000F4250ScriptCall *)TheScriptEngine)->*scriptNotify.call)( this );
 
 	while ( m_gateSet.m_count != 0 )
 	{
 		Rva000F4250GateSetNode *root =
 			(Rva000F4250GateSetNode *)m_gateSet.m_tree->m_root;
-		((Rva000F4250GateCall *)this)->set( root->m_gateID, 0 );
+		(((Rva000F4250GateCall *)this)->*gateSet.call)( root->m_gateID, 0 );
 	}
 
 	if ( ThePlayerList )
@@ -277,9 +297,9 @@ Team::~Team()
 		for ( int i = 0; i < ThePlayerList->m_playerCount; ++i )
 		{
 			Player *player =
-				((Rva000F4250PlayerListCall *)ThePlayerList)->getNthPlayer( i );
+				(((Rva000F4250PlayerListCall *)ThePlayerList)->*nthPlayer.call)( i );
 			if ( player )
-				((Rva000F4250PlayerCall *)player)->preTeamDestroy( this );
+				(((Rva000F4250PlayerCall *)player)->*preTeamDestroy.call)( this );
 		}
 	}
 
@@ -293,7 +313,7 @@ Team::~Team()
 	{
 		if ( ((Rva000F4250TeamPrototype *)m_proto)->m_teamInstanceList == this ||
 			m_previous != 0 || m_next != 0 )
-			((Rva000F4250PrototypeCall *)m_proto)->remove( this );
+			(((Rva000F4250PrototypeCall *)m_proto)->*removeFromPrototype.call)( this );
 	}
 
 	if ( m_teamRelations )
