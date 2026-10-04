@@ -78,3 +78,79 @@ which is the label the TU compiles and which the kept row maps through
 | 1453 | 0x00041EF2 | 0x005E4400 | truncated | `ConcreteModuleClassDefaultModuleTag2CreateTemplateThunk.cpp` |
 | 1451 | 0x00043E46 | 0x005E4520 | truncated | `ConcreteModuleClassDefaultModuleTag1CreateTemplateThunk.cpp` |
 | 1457 | 0x000072BB | 0x005E4640 | truncated | `ConcreteModuleClassDefaultModuleTag6CreateTemplateThunk.cpp` |
+
+## ConcreteModuleTemplate members in fx_particle_system_bulk.cpp
+
+Retail exports these as virtual members (`UAE`/`UBE`). The bulk TU's shape
+declares them non-virtual, so it compiles `QAE`/`QBE` labels, and each
+address carried a second row in that spelling. The exported row stays and
+keeps `object-symbol=` the compiled label; the `Q` row is retired. Each
+retired name differs from its export in that one access/virtuality letter
+only.
+
+| ordinal | ILT | body | member | export -> retired |
+|---|---|---|---|---|
+| 408 | 0x00032C95 | 0x005DAF30 | `??1?$ConcreteModuleTemplate` | U->Q |
+| 1488 | 0x000195E2 | 0x005DF000 | `?createTemplate` | U->Q |
+| 1489 | 0x0000FF83 | 0x005DF0A0 | `?createTemplate` | U->Q |
+| 1484 | 0x0000A2EA | 0x005DF1B0 | `?createTemplate` | U->Q |
+| 1485 | 0x0001EF83 | 0x005DF250 | `?createTemplate` | U->Q |
+| 1480 | 0x00020F1D | 0x005DF360 | `?createTemplate` | U->Q |
+| 1481 | 0x000046C9 | 0x005DF400 | `?createTemplate` | U->Q |
+| 1482 | 0x000101B3 | 0x005DF5A0 | `?createTemplate` | U->Q |
+| 1483 | 0x0000B2AD | 0x005DF640 | `?createTemplate` | U->Q |
+| 1460 | 0x0003200B | 0x005E0940 | `?createTemplate` | U->Q |
+| 1461 | 0x00015406 | 0x005E09F0 | `?createTemplate` | U->Q |
+| 1444 | 0x00026D5A | 0x005E0B90 | `?createTemplate` | U->Q |
+| 1445 | 0x00043626 | 0x005E0C30 | `?createTemplate` | U->Q |
+| 1468 | 0x0002A734 | 0x005E0D40 | `?createTemplate` | U->Q |
+| 1469 | 0x000051F5 | 0x005E0DE0 | `?createTemplate` | U->Q |
+| 1464 | 0x00042050 | 0x005E0EF0 | `?createTemplate` | U->Q |
+| 1465 | 0x0001EC63 | 0x005E0F90 | `?createTemplate` | U->Q |
+| 1462 | 0x0003DDC5 | 0x005E10A0 | `?createTemplate` | U->Q |
+| 1463 | 0x000277D2 | 0x005E1140 | `?createTemplate` | U->Q |
+| 1466 | 0x00017A76 | 0x005E1250 | `?createTemplate` | U->Q |
+| 1467 | 0x00038C76 | 0x005E12F0 | `?createTemplate` | U->Q |
+| 1446 | 0x0000A8B2 | 0x005E1400 | `?createTemplate` | U->Q |
+| 1447 | 0x00019B50 | 0x005E14A0 | `?createTemplate` | U->Q |
+| 1476 | 0x00012922 | 0x005E1580 | `?createTemplate` | U->Q |
+| 1477 | 0x0001F343 | 0x005E1630 | `?createTemplate` | U->Q |
+| 1470 | 0x0002D646 | 0x005E1720 | `?createTemplate` | U->Q |
+| 1471 | 0x000439AF | 0x005E17D0 | `?createTemplate` | U->Q |
+| 1478 | 0x00009D95 | 0x005E18C0 | `?createTemplate` | U->Q |
+| 1479 | 0x000113DD | 0x005E1960 | `?createTemplate` | U->Q |
+| 1472 | 0x00006F87 | 0x005E1A40 | `?createTemplate` | U->Q |
+| 1473 | 0x00016E5A | 0x005E1AF0 | `?createTemplate` | U->Q |
+| 1474 | 0x0002F063 | 0x005E1BE0 | `?createTemplate` | U->Q |
+| 1475 | 0x00039BB7 | 0x005E1C90 | `?createTemplate` | U->Q |
+| 1486 | 0x0002ED02 | 0x005E3EB0 | `?createTemplate` | U->Q |
+| 1487 | 0x00005CC2 | 0x005E3F50 | `?createTemplate` | U->Q |
+| 1490 | 0x00019CD6 | 0x005E46C0 | `?createTemplate` | U->Q |
+| 1491 | 0x00048FD6 | 0x005E4760 | `?createTemplate` | U->Q |
+| 1492 | 0x00017571 | 0x005E47E0 | `?createTemplate` | U->Q |
+| 1493 | 0x0000A489 | 0x005E4880 | `?createTemplate` | U->Q |
+| 1423 | 0x00037C04 | 0x005E8780 | `?createModule` | U->Q |
+| 1440 | 0x0001DA7A | 0x005E8810 | `?createModule` | U->Q |
+| 1438 | 0x000347BB | 0x005E88A0 | `?createModule` | U->Q |
+| 1436 | 0x00009BAB | 0x005E8930 | `?createModule` | U->Q |
+| 1439 | 0x00040A89 | 0x005E89C0 | `?createModule` | U->Q |
+| 1437 | 0x0002967C | 0x005E8A50 | `?createModule` | U->Q |
+| 1425 | 0x000271F1 | 0x005E8AE0 | `?createModule` | U->Q |
+| 1422 | 0x00016734 | 0x005E8B80 | `?createModule` | U->Q |
+| 1424 | 0x0001A4F1 | 0x005E8C10 | `?createModule` | U->Q |
+| 1441 | 0x0000C685 | 0x005E8CA0 | `?createModule` | U->Q |
+| 1442 | 0x00019920 | 0x005E8D30 | `?createModule` | U->Q |
+| 1418 | 0x0000CE00 | 0x005E8DC0 | `?createModule` | U->Q |
+| 1430 | 0x0004407B | 0x005E8E20 | `?createModule` | U->Q |
+| 1428 | 0x00007315 | 0x005E8E80 | `?createModule` | U->Q |
+| 1427 | 0x00003963 | 0x005E8EE0 | `?createModule` | U->Q |
+| 1429 | 0x00005597 | 0x005E8F40 | `?createModule` | U->Q |
+| 1419 | 0x0004823E | 0x005E8FA0 | `?createModule` | U->Q |
+| 1434 | 0x00033645 | 0x005E9000 | `?createModule` | U->Q |
+| 1431 | 0x0002C002 | 0x005E9060 | `?createModule` | U->Q |
+| 1435 | 0x0002063A | 0x005E90C0 | `?createModule` | U->Q |
+| 1432 | 0x0000CE14 | 0x005E9120 | `?createModule` | U->Q |
+| 1433 | 0x00014BE1 | 0x005E9180 | `?createModule` | U->Q |
+| 1420 | 0x0003CF5B | 0x005EBF10 | `?createModule` | U->Q |
+| 1421 | 0x00030E5E | 0x005EBFB0 | `?createModule` | U->Q |
+| 1426 | 0x0001B00E | 0x005EC040 | `?createModule` | U->Q |
