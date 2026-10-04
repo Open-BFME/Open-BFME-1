@@ -49,13 +49,11 @@ public:
 
 extern TeamFactory *TheTeamFactory;
 
-class Rva002BD020AI
+class AI
 {
 public:
 	static Real getAdjustedVisionRangeForObject(const Object *object, Int factors);
 };
-
-#pragma comment(linker, "/alternatename:?getAdjustedVisionRangeForObject@Rva002BD020AI@@SAMPBVObject@@H@Z=?j_0002481b@@YAXXZ")
 
 class PolygonTrigger
 {
@@ -224,7 +222,6 @@ inline Object *getGuardOwner(GiantBirdGuardMachine *machine)
 }
 
 #pragma comment(linker, "/alternatename:??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z=?j_0000bf3c@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva002BD020AIAttackState@@UAE@XZ=??1AIAttackState@@MAE@XZ")
 
 StateReturnType GiantBirdGuardInnerState::onEnter()
 {
@@ -278,8 +275,7 @@ StateReturnType GiantBirdGuardInnerState::onEnter()
 
 	register Coord3D *center = &state->m_exitConditions.m_center;
 	*center = position;
-	Real range = Rva002BD020AI::getAdjustedVisionRangeForObject(
-		machine->m_owner, 7);
+	Real range = AI::getAdjustedVisionRangeForObject(machine->m_owner, 7);
 	state->m_exitConditions.m_radiusSqr = range * range;
 	state->m_exitConditions.m_conditionsToConsider = 5;
 
@@ -307,7 +303,7 @@ StateReturnType GiantBirdGuardInnerState::onEnter()
 	}
 	else
 	{
-		Real fallbackRange = Rva002BD020AI::getAdjustedVisionRangeForObject(
+		Real fallbackRange = AI::getAdjustedVisionRangeForObject(
 			getGuardOwner(machineForArea), 7);
 		state->m_exitConditions.m_radiusSqr = fallbackRange * fallbackRange;
 	}
