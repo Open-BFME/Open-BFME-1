@@ -58,17 +58,14 @@ public:
 	PartitionFilter *m_next;
 };
 
-extern "C" void *bfmeVftRva0014A580FunctorValueWrapper[];
-extern "C" void *bfmeVftRva0014A5E0FunctorValueWrapper[];
-extern "C" void *bfmeVftBfmeObjEQT[];
-extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
-extern "C" void *bfmeVftHLodPrototypeClass[];
+// The filter vtables retail installs are ordinary MSVC vftables; name each one
+// directly instead of routing the reference through a linker alias stand-in.
+extern "C" int __identifier("??_7Rva0014A580FunctorValueWrapper@@6B@")[];
+extern "C" int __identifier("??_7Rva0014A5E0FunctorValueWrapper@@6B@")[];
+extern "C" int __identifier("??_7BfmeObjEQT@@6B@")[];
+extern "C" int __identifier("??_7Rva00149F20VptrZeroObject@@6B@")[];
+extern "C" int __identifier("??_7HLodPrototypeClass@@6B@")[];
 extern const void *g_010956C4[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0014A580FunctorValueWrapper=??_7Rva0014A580FunctorValueWrapper@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0014A5E0FunctorValueWrapper=??_7Rva0014A5E0FunctorValueWrapper@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeObjEQT=??_7BfmeObjEQT@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftHLodPrototypeClass=??_7HLodPrototypeClass@@6B@")
 
 static __forceinline void setFilterVptr(void *filter, unsigned int value)
 {
@@ -80,7 +77,7 @@ class __declspec(novtable) Rva00203DB0FilterA : public PartitionFilter
 public:
 	explicit Rva00203DB0FilterA(const Object *object) : PartitionFilter()
 	{
-		setFilterVptr(this, (unsigned int)bfmeVftRva0014A580FunctorValueWrapper);
+		setFilterVptr(this, (unsigned int)__identifier("??_7Rva0014A580FunctorValueWrapper@@6B@"));
 		m_object = object;
 	}
 	virtual ~Rva00203DB0FilterA() {}
@@ -92,7 +89,7 @@ class __declspec(novtable) Rva00203DB0FilterC : public PartitionFilter
 public:
 	explicit Rva00203DB0FilterC(const Object *object) : PartitionFilter()
 	{
-		setFilterVptr(this, (unsigned int)bfmeVftRva0014A5E0FunctorValueWrapper);
+		setFilterVptr(this, (unsigned int)__identifier("??_7Rva0014A5E0FunctorValueWrapper@@6B@"));
 		m_object = object;
 	}
 	virtual ~Rva00203DB0FilterC() {}
@@ -131,7 +128,7 @@ class Rva00203DB0ObjectFilter : public PartitionFilter
 public:
 	explicit Rva00203DB0ObjectFilter(void *owner) : PartitionFilter()
 	{
-		setFilterVptr(this, (unsigned int)bfmeVftBfmeObjEQT);
+		setFilterVptr(this, (unsigned int)__identifier("??_7BfmeObjEQT@@6B@"));
 		m_owner = owner;
 	}
 	virtual ~Rva00203DB0ObjectFilter() {}
@@ -159,7 +156,7 @@ class __declspec(novtable) Rva00203DB0InsignificantFilter : public PartitionFilt
 public:
 	Rva00203DB0InsignificantFilter() : PartitionFilter()
 	{
-		setFilterVptr(this, (unsigned int)bfmeVftRva00149F20VptrZeroObject);
+		setFilterVptr(this, (unsigned int)__identifier("??_7Rva00149F20VptrZeroObject@@6B@"));
 		m_allowNonBuildings = 1;
 		m_allowInsignificant = 0;
 	}
@@ -173,7 +170,7 @@ class __declspec(novtable) Rva00203DB0FogFilter : public PartitionFilter
 public:
 	explicit Rva00203DB0FogFilter(int player) : PartitionFilter()
 	{
-		setFilterVptr(this, (unsigned int)bfmeVftHLodPrototypeClass);
+		setFilterVptr(this, (unsigned int)__identifier("??_7HLodPrototypeClass@@6B@"));
 		m_player = player;
 	}
 	virtual ~Rva00203DB0FogFilter() {}
