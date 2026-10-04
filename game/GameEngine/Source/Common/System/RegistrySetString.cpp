@@ -13,6 +13,7 @@
 #include <windows.h>
 
 #include "Common/AsciiString.h"
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 static const char *registryString(const AsciiString &value)
 {
