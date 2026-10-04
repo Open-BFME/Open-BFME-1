@@ -3657,14 +3657,13 @@ public:
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class BfmePathfindCell
-{
-public:
-	~BfmePathfindCell(void);
-	char m_pad[0x10];
-};
-
-#pragma comment(linker, "/alternatename:??1BfmePathfindCell@@QAE@XZ=?j_00036ab1@@YAXXZ")
+// The cell array is released through retail's array-delete helper, which takes
+// the per-element destructor as an argument. ?j_00036ab1 is the incremental-link
+// thunk retail's caller pushes; the helper's own name is unspellable, so it is
+// declared as an __identifier and reached through a local __stdcall view.
+extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
+extern void j_00036ab1(void);
+typedef void (__stdcall *ArrayDtorIteratorPathfind)(void *base, UnsignedInt size, Int count, void (*dtor)());
 
 class BfmeChildZM
 {
@@ -3685,14 +3684,15 @@ public:
 	BfmeReleaseNode * volatile m_next;
 };
 
+// Only the extent matters here: retail walks the layer array calling the
+// incremental-link thunk ?j_000379fc, reached as a member pointer.
 class BfmePathfindLayerReset
 {
 public:
-	void reset(void);
 	char m_pad[0x44];
 };
 
-#pragma comment(linker, "/alternatename:?reset@BfmePathfindLayerReset@@QAEXXZ=?j_000379fc@@YAXXZ")
+extern void j_000379fc(void);
 
 class BfmeZoneManagerReset
 {
@@ -3700,16 +3700,13 @@ public:
 	void reset(void);
 };
 
-#pragma comment(linker, "/alternatename:?reset@BfmeZoneManagerReset@@QAEXXZ=?j_0000742d@@YAXXZ")
+extern void j_0000742d(void);
 
-template <bool threads, int instance>
-class BfmeNodeAllocator
-{
-public:
-	static void __cdecl deallocate(void *node, UnsignedInt bytes);
-};
-
-#pragma comment(linker, "/alternatename:?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+// STLport's node allocator is already in scope through the real stlport headers
+// this TU includes, so its private-static _M_deallocate is named by its exact
+// mangled name rather than redeclared. That spelling is the body at 0x0082E5F0,
+// which retail calls directly.
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")();
 
 struct Rva004029F0GridExtent
 {
@@ -3854,7 +3851,8 @@ void BfmeZoneManagerReset::reset(void)
 				(tree->*erase.memberFn)(node->m_right);
 
 				Rva00406B10TreeNode *left = node->m_left;
-				BfmeNodeAllocator<true, 0>::deallocate(node, 0x34);
+				reinterpret_cast<void (__cdecl *)(void *, UnsignedInt)>(
+					__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z"))(node, 0x34);
 				node = left;
 			}
 			while (node != 0);
@@ -3880,10 +3878,9 @@ class BfmePathfindList
 public:
 	BfmePathfindListNode *m_head;
 	void *m_nonEmpty;
-	void release(void *value);
 };
 
-#pragma comment(linker, "/alternatename:?release@BfmePathfindList@@QAEXPAX@Z=?j_000371f5@@YAXXZ")
+extern void j_000371f5(void);
 
 static __forceinline void clearPathfindField(volatile UnsignedInt *field)
 {
@@ -3900,9 +3897,13 @@ void Pathfinder::reset( void )
 	base[8] = 0;
 	reinterpret_cast<PathfindCellInfoPool *>(this)->reset();
 
-	BfmePathfindCell *cells = *reinterpret_cast<BfmePathfindCell **>(base + 0xc);
+	void *cells = *reinterpret_cast<void **>(base + 0xc);
 	if (cells != 0) {
-		delete [] cells;
+		UnsignedByte *arrayBase = reinterpret_cast<UnsignedByte *>(cells) - 4;
+		((ArrayDtorIteratorPathfind)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
+			cells, 0x10, *reinterpret_cast<Int *>(arrayBase),
+			reinterpret_cast<void (*)()>(j_00036ab1));
+		::operator delete[](arrayBase);
 	}
 	void *mapStorage = *reinterpret_cast<void **>(base + 0x10);
 	*reinterpret_cast<void **>(base + 0xc) = 0;
@@ -3948,11 +3949,17 @@ void Pathfinder::reset( void )
 	}
 	*reinterpret_cast<BfmeReleaseNode **>(base + 0x858) = 0;
 
+	typedef void (BfmePathfindLayerReset::*LayerResetFn)(void);
+	union { void (*fn)(); LayerResetFn call; } layerReset;
+	layerReset.fn = j_000379fc;
 	BfmePathfindLayerReset *layers = reinterpret_cast<BfmePathfindLayerReset *>(base + 0x85c);
 	for (Int count = 0x10; count != 0; --count, ++layers)
-		layers->reset();
+		(layers->*layerReset.call)();
 
-	reinterpret_cast<BfmeZoneManagerReset *>(base + 0xc9c)->reset();
+	typedef void (BfmeZoneManagerReset::*ZoneResetFn)(void);
+	union { void (*fn)(); ZoneResetFn call; } zoneReset;
+	zoneReset.fn = j_0000742d;
+	(reinterpret_cast<BfmeZoneManagerReset *>(base + 0xc9c)->*zoneReset.call)();
 
 	BfmePathfindList *list = reinterpret_cast<BfmePathfindList *>(base + 0x24700);
 	*reinterpret_cast<unsigned char *>(base + 0x243f4) = 0;
@@ -3960,9 +3967,13 @@ void Pathfinder::reset( void )
 	if (list->m_nonEmpty != 0) {
 		BfmePathfindListNode *current = reinterpret_cast<BfmePathfindListNode *>(list->m_head->m_field04);
 		while (current != 0) {
-			list->release(current->m_value);
+			typedef void (BfmePathfindList::*ListReleaseFn)(void *);
+			union { void (*fn)(); ListReleaseFn call; } listRelease;
+			listRelease.fn = j_000371f5;
+			(list->*listRelease.call)(current->m_value);
 			BfmePathfindListNode *next = reinterpret_cast<BfmePathfindListNode *>(current->m_next);
-		BfmeNodeAllocator<true, 0>::deallocate(current, 0x14);
+			reinterpret_cast<void (__cdecl *)(void *, UnsignedInt)>(
+				__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z"))(current, 0x14);
 			current = next;
 		}
 		list->m_head->m_next = list->m_head;

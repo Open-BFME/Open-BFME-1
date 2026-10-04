@@ -17808,5 +17808,15 @@
   "after_sha256": "cc03d74e6925171ac677a95e5f5742ca0b6f78c5786b6d51b1bc6cc3e527bab6",
   "evidence": "targets/game/reverse/identity_evidence/00429080-dynamic-decal.md",
   "reason": "False position pairing: setOpacity remains an inline local bridge via j_0000dc7e to4597A0. j_00005119 bridges the separate already matched Shadow::rva00459960 at459960. Both preserve the original retail ILTs and checked receiver/argument ABI."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp",
+  "old_name": "release",
+  "new_name": "j_000371f5",
+  "before_sha256": "ec955b522098c0960f2bac59b68da43b0cc9e00be3fe81d31d24eceeccf6a2cb",
+  "after_sha256": "28b32dd77cdca63c1c2109c52445e7d46b3c8d3374773ad8907c596c28b90397",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
