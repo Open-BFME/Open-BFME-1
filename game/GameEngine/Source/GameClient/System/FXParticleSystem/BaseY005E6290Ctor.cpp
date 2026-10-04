@@ -14,8 +14,10 @@ class FXList;
 class FXListStore;
 extern FXListStore *TheFXListStore;
 
-extern "C" const void *bfmeVftCategoryModuleInfo8[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+// The CategoryModuleInfo<8> base vtable itself (VA 0x0107375C per symbols.csv,
+// recorded in dir32_addresses.csv); named with __identifier so the reference is
+// the retail vftable symbol directly.
+extern "C" unsigned char __identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -63,7 +65,8 @@ public:
 	{
 		// The volatile store preserves the interim CategoryModuleInfo<8>
 		// vtable before MSVC emits the delayed EH callee-save pair.
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
+		*(volatile unsigned int *)this =
+			(unsigned int)__identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@");
 		*(volatile unsigned char *)((unsigned char *)this + 4) = true;
 	}
 	virtual void unused();
