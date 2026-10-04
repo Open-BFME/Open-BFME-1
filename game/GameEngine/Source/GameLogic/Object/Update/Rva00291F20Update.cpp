@@ -219,14 +219,11 @@ public:
 	void *m_fx2c;
 };
 
-extern "C" const void *bfmeVftPartitionFilter[];
-extern "C" const void *bfmeVftPartitionFilterRelationship[];
-extern "C" const void *bfmeVftRva00265150RJFilter[];
-extern "C" const void *bfmeVftRva0025ED50RootFilter[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00265150RJFilter=??_7Rva00265150RJFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+// Retail vftables named by the linker aliases this TU used to request.
+extern "C" const char __identifier("??_7PartitionFilter@@6B@")[];
+extern "C" const char __identifier("??_7PartitionFilterRelationship@@6B@")[];
+extern "C" const char __identifier("??_7Rva00265150RJFilter@@6B@")[];
+extern "C" const char __identifier("??_7Rva0025ED50RootFilter@@6B@")[];
 extern int g_target_00291860;
 
 // ABI views of retail filters. Vtables 010A5158/01085DC0/010BE58C
@@ -247,7 +244,7 @@ public:
 	__forceinline PartitionFilterA00291F20(const void *field, Player *player, bool match)
 	{
 		m_next = 0;
-		*reinterpret_cast<unsigned int *>(this) = (unsigned int)bfmeVftRva00265150RJFilter;
+		*reinterpret_cast<unsigned int *>(this) = (unsigned int)__identifier("??_7Rva00265150RJFilter@@6B@");
 		m_field = field;
 		m_player = player;
 		m_match = match;
@@ -255,7 +252,7 @@ public:
 
 	~PartitionFilterA00291F20()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	const void *m_field;
@@ -270,7 +267,7 @@ public:
 
 	~Rva001DCBB0Filter()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	Player *m_player;
@@ -283,7 +280,7 @@ public:
 	__forceinline PartitionFilterB00291F20(Object *object, int mode, bool match)
 	{
 		m_next = 0;
-		*reinterpret_cast<unsigned int *>(this) = (unsigned int)bfmeVftPartitionFilterRelationship;
+		*reinterpret_cast<unsigned int *>(this) = (unsigned int)__identifier("??_7PartitionFilterRelationship@@6B@");
 		m_object = object;
 		m_mode = mode;
 		m_match = match;
@@ -291,7 +288,7 @@ public:
 
 	~PartitionFilterB00291F20()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	Object *m_object;
@@ -310,7 +307,7 @@ public:
 
 	~PartitionFilterBase00291F20()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	volatile unsigned int m_vptr;
@@ -323,12 +320,12 @@ public:
 	__forceinline PartitionFilterRoot00291F20()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
+		m_vptr = (unsigned int)__identifier("??_7Rva0025ED50RootFilter@@6B@");
 	}
 
 	~PartitionFilterRoot00291F20()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	volatile unsigned int m_vptr;
