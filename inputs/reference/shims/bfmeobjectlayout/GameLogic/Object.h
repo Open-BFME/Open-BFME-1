@@ -297,7 +297,9 @@ public:
 
 
 	// special case for the AIUpdateInterface, since it will be referred to a great deal
-	inline AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
+	// Retail's inline COMDAT reads [ecx+0x204] (AIGroup_getMinMaxAndCenter_Thunk.cpp byte-matches it);
+	// m_ai sits at +0x19C here, pinned by matched bodies, so only the accessor reads retail's offset.
+	inline AIUpdateInterface *getAIUpdateInterface() { return *(AIUpdateInterface**)((char*)this + 0x204); }
 	inline const AIUpdateInterface* getAIUpdateInterface() const { return m_ai; }
 
 	inline AIUpdateInterface *getAI() { return m_ai; }
