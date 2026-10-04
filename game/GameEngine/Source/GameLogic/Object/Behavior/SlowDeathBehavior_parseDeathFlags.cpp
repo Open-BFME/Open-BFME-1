@@ -40,11 +40,13 @@ public:
 	unsigned int m_words[3];
 };
 
-#pragma comment(linker, "/alternatename:?parse@?$DeathModelFlags@$09@@QAEXPAVINI@@PAVAsciiString@@@Z=?j_00033433@@YAXXZ")
-#pragma comment(linker, "/alternatename:?parse@DeathStatusFlags@@QAEXVAsciiString@@@Z=?j_0001b04f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?initialize@DeathStatusFlags@@QAEXHHHHHH@Z=?j_00034ce8@@YAXXZ")
-#pragma comment(linker, "/alternatename:?initialize@?$DeathModelFlags@$09@@QAEXHHHHHH@Z=?j_0000db0c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?invert@?$DeathModelFlags@$09@@QBEXPAV1@@Z=?j_000252b6@@YAXXZ")
+// Retail reaches these bodies through incremental-link thunks; call the thunks
+// directly so no linker alias pragma is needed.
+extern void j_00033433();	// DeathModelFlags<9>::parse
+extern void j_0001b04f();	// DeathStatusFlags::parse
+extern void j_00034ce8();	// DeathStatusFlags::initialize
+extern void j_0000db0c();	// DeathModelFlags<9>::initialize
+extern void j_000252b6();	// DeathModelFlags<9>::invert
 
 struct SlowDeathBehaviorModuleDataFields
 {
@@ -61,31 +63,45 @@ static unsigned int s_initialization;
 void parseDeathFlags( INI *ini, void *instance, void *, void * )
 {
 	unsigned int initialization = s_initialization;
+	typedef void (DeathModelFlags<10>::*ModelInit)( int, int, int, int, int, int );
+	typedef void (DeathModelFlags<10>::*ModelInvert)( DeathModelFlags<10> * ) const;
 	if ( !( initialization & 1 ) )
 	{
+		union { void (*fn)(); ModelInit call; } modelInit = { j_0000db0c };
 		initialization |= 1;
 		s_initialization = initialization;
-		s_modelMask.initialize( 0, 0x8b, 0x8c, 0x8d, 0x8e, 0xa7 );
+		( s_modelMask.*modelInit.call )( 0, 0x8b, 0x8c, 0x8d, 0x8e, 0xa7 );
 	}
 	if ( !( initialization & 2 ) )
 	{
+		union { void (*fn)(); ModelInvert call; } modelInvert = { j_000252b6 };
 		initialization |= 2;
 		s_initialization = initialization;
-		s_modelMask.invert( &s_inverseModelMask );
+		( s_modelMask.*modelInvert.call )( &s_inverseModelMask );
 	}
 
 	SlowDeathBehaviorModuleDataFields *self =
 		(SlowDeathBehaviorModuleDataFields *)instance;
 	DeathModelFlags<10> *modelFlags = &self->m_modelDeathFlags;
 	AsciiString description;
-	modelFlags->parse( ini, &description );
+	{
+		typedef void (DeathModelFlags<10>::*ModelParse)( INI *, AsciiString * );
+		union { void (*fn)(); ModelParse call; } modelParse = { j_00033433 };
+		( modelFlags->*modelParse.call )( ini, &description );
+	}
 	for ( int i = 0; i < 10; ++i )
 		modelFlags->m_words[i] &= s_modelMask.m_words[i];
-	self->m_statusDeathFlags.parse( description );
+	{
+		typedef void (DeathStatusFlags::*StatusParse)( AsciiString );
+		union { void (*fn)(); StatusParse call; } statusParse = { j_0001b04f };
+		( self->m_statusDeathFlags.*statusParse.call )( description );
+	}
 	if ( !( s_initialization & 4 ) )
 	{
+		typedef void (DeathStatusFlags::*StatusInit)( int, int, int, int, int, int );
+		union { void (*fn)(); StatusInit call; } statusInit = { j_00034ce8 };
 		s_initialization |= 4;
-		s_statusMask.initialize( 0, 0x1e, 0x1f, 0x20, 0x21, 0x22 );
+		( s_statusMask.*statusInit.call )( 0, 0x1e, 0x1f, 0x20, 0x21, 0x22 );
 	}
 	self->m_statusDeathFlags &= s_statusMask;
 }
