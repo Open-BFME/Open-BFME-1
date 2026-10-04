@@ -1,10 +1,15 @@
 // ??1ExperienceLevelSystem@@UAE@XZ
 // The complete destructor for the BFME experience subsystem at retail RVA
 // 0x00380D30.  Its constructor and update body establish the member order.
+// Retail reaches the scalar-table destructor and cleanup through ILT thunks,
+// so both are called through a file-scope member-pointer union over the thunk
+// address; the local copy keeps one temp live across the destructor call the
+// way `delete` did, which is what the retail register shape requires.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <cstring>
+void __cdecl operator delete(void *block);
 extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
 #define memmove (*bfme_memmove_ptr)
 #include <hash_map>
@@ -13,6 +18,9 @@ extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int)
 #undef memmove
 
 typedef bool Bool;
+
+extern void j_00016e6e();	// ILT -> ExperienceScalarTable::~ExperienceScalarTable
+extern void j_00002568();	// ILT -> ExperienceLevelSystem::cleanup
 
 class SubsystemInterface
 {
@@ -56,8 +64,6 @@ struct ExperienceScalarTable
 	~ExperienceScalarTable();
 };
 
-#pragma comment(linker, "/alternatename:??1ExperienceScalarTable@@QAE@XZ=?j_00016e6e@@YAXXZ")
-
 class ExperienceLevelSystem : public SubsystemInterface
 {
 public:
@@ -74,13 +80,15 @@ private:
 	ExperienceScalarTable *m_defaultLevel;
 };
 
-#pragma comment(linker, "/alternatename:?cleanup@ExperienceLevelSystem@@QAEXXZ=?j_00002568@@YAXXZ")
-
 ExperienceLevelSystem::~ExperienceLevelSystem()
 {
 	if (m_defaultLevel)
 	{
-		delete m_defaultLevel;
+		typedef void (ExperienceScalarTable::*Dtor)();
+		union { void (*fn)(); Dtor call; } dtor = { j_00016e6e };
+		ExperienceScalarTable *def = m_defaultLevel;
+		(def->*dtor.call)();
+		::operator delete(def);
 	}
 	m_defaultLevel = 0;
 
@@ -88,10 +96,17 @@ ExperienceLevelSystem::~ExperienceLevelSystem()
 	{
 		ExperienceScalarTable *level = m_scalarTables[index];
 		if (level)
-			delete level;
+		{
+			typedef void (ExperienceScalarTable::*Dtor)();
+			union { void (*fn)(); Dtor call; } dtor = { j_00016e6e };
+			(level->*dtor.call)();
+			::operator delete(level);
+		}
 	}
 	m_scalarTables.clear();
-	cleanup();
+	typedef void (ExperienceLevelSystem::*Cleanup)();
+	union { void (*fn)(); Cleanup call; } cleanup = { j_00002568 };
+	(this->*cleanup.call)();
 }
 
 void bfmeForceExperienceLevelSystemDestructor(ExperienceLevelSystem *system)
