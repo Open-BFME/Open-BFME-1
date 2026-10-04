@@ -4,31 +4,26 @@
 // entry count.  The count branch and the two UnicodeString temporaries match
 // the comparator shared by the retail S4 insertion and heap callers.
 
-template <typename T>
-class StringBase
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+// Retail does not establish an additional EH state for this comparison.
+template <>
+__declspec(nothrow) int StringBase<unsigned short>::compareNoCase(
+    const StringBase<unsigned short> &other) const;
+
+inline UnicodeString::~UnicodeString()
 {
-friend class UnicodeString;
+    ((StringBase<unsigned short> *)this)->releaseBuffer();
+}
 
-public:
-	__declspec(nothrow) int compareNoCase(const StringBase<T> &other) const;
-
-private:
-	~StringBase();
-
-	void *m_data;
-};
-
-class UnicodeString : private StringBase<unsigned short>
+// Keep the comparison on the canonical wide buffer, without emitting a second
+// public UnicodeString comparison provider from this comparator TU.
+static inline int compareDisplayNames(
+    const UnicodeString &left, const UnicodeString &right)
 {
-public:
-	~UnicodeString() {}
-
-	__declspec(nothrow) int compareNoCase(const UnicodeString &other) const
-	{
-		return ((const StringBase<unsigned short> *)this)->compareNoCase(
-			*(const StringBase<unsigned short> *)&other);
-	}
-};
+    return ((const StringBase<unsigned short> *)&left)->compareNoCase(
+        *(const StringBase<unsigned short> *)&right);
+}
 
 class MapMetaData
 {
@@ -48,7 +43,7 @@ struct S4Cmp00452A50
 bool S4Cmp00452A50::operator()(int a, int b) const
 {
 	if (((const MapMetaData *)a)->m_count == ((const MapMetaData *)b)->m_count)
-		return ((MapMetaData *)a)->bfme_getDisplayName().compareNoCase(
+		return compareDisplayNames(((MapMetaData *)a)->bfme_getDisplayName(),
 			((MapMetaData *)b)->bfme_getDisplayName()) < 0;
 
 	return ((const MapMetaData *)a)->m_count < ((const MapMetaData *)b)->m_count;
