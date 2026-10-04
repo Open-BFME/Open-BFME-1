@@ -34,15 +34,40 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-class LivingWorldOwnerLookup
+// Exact class/layout view from Common/Rva003BF540_find.cpp; no shared header
+// covers this provider. The semantic identity remains unproven. Retail isDead
+// calls ILT 0x00020379 -> 0x003BD7D0 with this in ECX, one int argument, and
+// tests the pointer returned in EAX; the provider returns with ret 4.
+class Gen003BD7D0Node;
+class Gen003BEAF0Owner;
+
+struct Rva003BF540Span
+{
+	Gen003BD7D0Node **m_begin;
+	Gen003BD7D0Node **m_end;
+
+	unsigned size() const { return m_end - m_begin; }
+	Gen003BD7D0Node *operator[]( unsigned index ) const { return m_begin[ index ]; }
+};
+
+class Rva003BF540
 {
 public:
-	void *findOwnerByID(ObjectID id);
+	Gen003BD7D0Node *find( int id );
+	bool test();
+
+private:
+	char m_pad00[ 0x0C ];
+	Rva003BF540Span m_items;
+	char m_pad14[ 0x14 ];
+	Gen003BEAF0Owner *m_at28;
+	char m_pad2C[ 0x4C ];
+	bool m_at78;
 };
 
 // The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
 // game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
-// views it through the local LivingWorldOwnerLookup struct above.
+// views its existing value through the provider ABI above, without adjustment.
 class LivingWorldLogic;
 
 extern GameClient *TheGameClient;
@@ -131,7 +156,7 @@ bool AudioEventRTS::isDead() const
 		return TheGameLogic->findObjectByID(m_ownerID) == 0;
 	case 5:
 		return TheLivingWorldLogic == 0 ||
-			((LivingWorldOwnerLookup *)TheLivingWorldLogic)->findOwnerByID(m_ownerID) == 0;
+			reinterpret_cast<Rva003BF540 *>(TheLivingWorldLogic)->find(m_ownerID) == 0;
 	default:
 		return false;
 	}
