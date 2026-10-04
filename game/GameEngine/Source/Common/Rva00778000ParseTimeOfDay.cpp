@@ -37,13 +37,28 @@ public:
 	Int m_value;
 };
 
-#pragma comment(linker, "/alternatename:??0S4Elem007746E0@@QAE@ABV0@@Z=?j_00039879@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_insert_overflow@?$vector@VS4Elem007746E0@@V?$allocator@VS4Elem007746E0@@@_STL@@@_STL@@IAEXPAVS4Elem007746E0@@ABV3@ABU__false_type@2@I_N@Z=?_M_insert_overflow@?$vector@URva00777E40Element@@V?$allocator@URva00777E40Element@@@_STL@@@_STL@@IAEXPAURva00777E40Element@@ABU3@ABU__false_type@2@I_N@Z")
+// The record vector's element type is retail's vector instantiation, which
+// names a struct Rva00777E40Element; the copy the fast path makes at retail
+// RVA 0x00039879 is an ILT thunk, so the copy constructor body is reached
+// through that thunk instead of a mangled call of its own.
+extern void j_00039879();
+
+struct Rva00777E40Element
+{
+	char m_body[44];
+
+	Rva00777E40Element(const Rva00777E40Element &other)
+	{
+		typedef void (Rva00777E40Element::*Fn)(const Rva00777E40Element &);
+		union { void (*fn)(); Fn call; } u = { j_00039879 };
+		(this->*u.call)(other);
+	}
+};
 
 struct Rva00778000Owner
 {
 	char m_pad[0x6c];
-	_STL::vector<S4Elem007746E0> m_records;
+	_STL::vector<Rva00777E40Element> m_records;
 };
 
 extern const char *const Rva00778000TimeOfDayNames[];
@@ -81,5 +96,5 @@ void Rva00778000Parse(INI *ini, void *instance, void *store, const void *userDat
 	else
 		value.m_second.assign("", "");
 
-	owner->m_records.push_back(value);
+	owner->m_records.push_back(*(const Rva00777E40Element *)&value);
 }
