@@ -110,18 +110,18 @@ public:
 	UnsignedInt getMoodMatrixActionAdjustment(MoodMatrixAction action) const;
 };
 
+// Retail reaches getFinalOverride through the incremental-link thunk
+// ?j_000022bb@@YAXXZ, which the call below names directly.
+extern void j_000022bb();
+
 // upstream layout: .../Common/Overridable.h
 class Overridable
 {
 public:
 	virtual ~Overridable();
 
-	const Overridable *getFinalOverride() const;
-
 	Overridable *m_nextOverride;
 };
-
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@Z=?j_000022bb@@YAXXZ")
 
 // upstream layout: .../Common/ThingTemplate.h
 class ThingTemplate : public Overridable
@@ -147,7 +147,11 @@ public:
 		if (tmpl == 0)
 			return 0;
 		if (tmpl->m_nextOverride)
-			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+		{
+			typedef const Overridable *(Overridable::*Fn)() const;
+			union { void (*fn)(); Fn call; } u = { j_000022bb };
+			tmpl = (const ThingTemplate *)(tmpl->m_nextOverride->*u.call)();
+		}
 		return tmpl;
 	}
 
