@@ -35,10 +35,11 @@ struct Rva00899560Pool {
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
-extern "C" const void *bfmeVftAptValue[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
-extern "C" const void *bfmeVftAptInteger[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
+// The Apt value tables the two stores below stamp are retail's own
+// ??_7AptValue@@6B@ and ??_7AptInteger@@6B@; __identifier binds those
+// symbols directly, so no linker alias stand-in is needed here.
+extern "C" const char __identifier("??_7AptValue@@6B@")[];
+extern "C" const char __identifier("??_7AptInteger@@6B@")[];
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 __forceinline Rva8CD130Value *integerOne008CD8E0() {
  Rva008CD8E0Integer *v=(Rva008CD8E0Integer *)g_rva008D2A10;
@@ -50,10 +51,10 @@ __forceinline Rva8CD130Value *integerOne008CD8E0() {
  }
  v=(Rva008CD8E0Integer *)Rva008C5D70Alloc(12);
  if(v) {
-  v->m_vtable=(void *)bfmeVftAptValue;
+  v->m_vtable=(void *)__identifier("??_7AptValue@@6B@");
   v->m_flags=(v->m_flags&0xf0008007)|0x40008007;
   g_rva8CD130IdleHook->add(v);
-  v->m_vtable=(void *)bfmeVftAptInteger;
+  v->m_vtable=(void *)__identifier("??_7AptInteger@@6B@");
   v->m_value=1;
   return (Rva8CD130Value *)v;
  }
