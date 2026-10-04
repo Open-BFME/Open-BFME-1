@@ -17,10 +17,10 @@ enum PathfindLayerEnum
 	LAYER_GROUND = 1
 };
 
-extern const Real g_pathfindCellSize;
-extern const Real g_pathfindDoubleCellSize;
+extern const float g_bfmeDirectionWeight1285;
+extern const float g_Rva010977E0;
 extern const float g_rva01075350;
-extern const Real g_pathfindCellCenterBias;
+extern float g_Rva01095F98;
 
 class BfmeOverridable
 {
@@ -203,7 +203,7 @@ inline __declspec(noinline) void Pathfinder::getRadiusAndCenter(
 	}
 
 	diameter = object->m_boundingCircleRadius * 2.0f;
-	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
+	if (diameter > g_bfmeDirectionWeight1285 && diameter < g_Rva010977E0) {
 		diameter = 20.0f;
 	}
 
@@ -213,7 +213,7 @@ inline __declspec(noinline) void Pathfinder::getRadiusAndCenter(
 		object->getTemplate()->getFinalOverride())->m_level;
 	}
 
-	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
+	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_Rva01095F98 );
 	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {

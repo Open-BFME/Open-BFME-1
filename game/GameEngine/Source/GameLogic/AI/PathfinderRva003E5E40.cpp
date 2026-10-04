@@ -37,10 +37,10 @@ extern "C" __declspec(dllimport) double __cdecl floor( double );
 // matter to this TU.
 #define REAL_TO_INT_FLOOR(x) ((Int)floor((double)(x)))
 
-extern const Real g_pathfindCellSize;
-extern const Real g_pathfindDoubleCellSize;
+extern const float g_bfmeDirectionWeight1285;
+extern const float g_Rva010977E0;
 extern const float g_rva01075350;
-extern const Real g_pathfindCellCenterBias;
+extern float g_Rva01095F98;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -192,7 +192,7 @@ inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *o
 	}
 
 	diameter = object->m_boundingCircleRadius * 2.0f;
-	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
+	if (diameter > g_bfmeDirectionWeight1285 && diameter < g_Rva010977E0) {
 		diameter = 20.0f;
 	}
 
@@ -202,7 +202,7 @@ inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *o
 		object->getTemplate()->getFinalOverride())->m_level;
 	}
 
-	radius = worldToCellFloor( diameter / 10.0f + g_pathfindCellCenterBias );
+	radius = worldToCellFloor( diameter / 10.0f + g_Rva01095F98 );
 	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {
