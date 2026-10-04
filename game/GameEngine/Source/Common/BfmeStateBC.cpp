@@ -1,59 +1,43 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: the AIBackAwayState constructor at retail 0x001804B0, 57 bytes.
 // Same family as 0x00185700: the state name goes into the by-value argument
-// the base initialiser takes.
+// the base initialiser takes. Retail calls the AIInternalMoveToState base
+// constructor through its ILT thunk 0x00032182 (body 0x0014F280, matched as
+// ??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z in
+// game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateCtor.cpp), then
+// writes its own fields and installs its own vftable last. The vftable is not
+// an extern datum: the derived class has a virtual, so this TU emits it.
 
-class StringBaseNarrowBC
-{
-protected:
-	StringBaseNarrowBC(const char *text) throw();
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-	StringBaseNarrowBC(const StringBaseNarrowBC &other) throw();
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	~StringBaseNarrowBC(void) throw();
+class StateMachine;
 
-	char *m_bfmeNarrowBC;
-};
-
-class AsciiStringBC : public StringBaseNarrowBC
+class AIInternalMoveToState
 {
 public:
-	AsciiStringBC(const char *text) throw() : StringBaseNarrowBC(text)
-	{
-	}
+	AIInternalMoveToState( StateMachine *machine, AsciiString name );
 
-	AsciiStringBC(const AsciiStringBC &other) throw() : StringBaseNarrowBC(other)
-	{
-	}
-
-	~AsciiStringBC(void) throw()
-	{
-	}
+	virtual void stateBaseAnchor() {}
 };
 
-extern "C" void *bfmeVftableBC[];
-
-class BfmeStateBC
+class BfmeStateBC : public AIInternalMoveToState
 {
 public:
 	BfmeStateBC(void *owner, const char *name);
 
-	void bfmeBaseInitBC(void *owner, AsciiStringBC name) throw();
-
-	void *volatile m_bfmeVfptrBC;
 	char m_bfmePadBC[0x4c];
 	volatile int m_bfmeCountBC;
 	volatile char m_bfmeFlagBC;
 };
 
 BfmeStateBC::BfmeStateBC(void *owner, const char *name)
+	: AIInternalMoveToState((StateMachine *)owner, AsciiString(name))
 {
-	bfmeBaseInitBC(owner, AsciiStringBC(name));
-
 	m_bfmeFlagBC = 0;
 
 	m_bfmeCountBC = 0;
-
-	m_bfmeVfptrBC = bfmeVftableBC;
 }
