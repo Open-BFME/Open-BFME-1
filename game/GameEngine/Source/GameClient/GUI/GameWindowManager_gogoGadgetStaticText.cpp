@@ -69,9 +69,6 @@ public:
 	GameWindow *owner;
 	char pad[0x2c];
 	WinInstanceData *instanceData;
-
-	int winSetOwner(GameWindow *owner);
-	void winSetUserData(void *data);
 };
 
 class DisplayString
@@ -182,19 +179,22 @@ public:
 };
 
 extern DisplayStringManager *TheDisplayStringManager;
-extern void GadgetStaticTextSetText(GameWindow *, UnicodeString);
 
-// Retail calls these incremental-link entry points.  Keep their established
-// named identities while selecting the actual thunk addresses used by this
-// body; no new pin is introduced here.
-#pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
-#pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_0002c16f@@YAXXZ")
+// Retail calls these incremental-link entry points directly.
+extern void j_00047230();
+extern void j_00002e69();
+extern void j_0002c16f();
 
 GameWindow *GameWindowManager::gogoGadgetStaticText(GameWindow *parent,
 	TextData *textData, GameFont *defaultFont, bool defaultVisual)
 {
 	GameWindow *textWin;
+	typedef int (GameWindow::*SetOwner)(GameWindow *);
+	typedef void (GameWindow::*SetUserData)(void *);
+	typedef void (__cdecl *SetStaticText)(GameWindow *, UnicodeString);
+	union { void (*fn)(); SetOwner setOwner; } uOwner = { j_00047230 };
+	union { void (*fn)(); SetUserData setUserData; } uUserData = { j_00002e69 };
+	union { void (*fn)(); SetStaticText setStaticText; } uStaticText = { j_0002c16f };
 
 	parent->instanceData->style &= ~0x1000;
 	if ((parent->instanceData->style & 0x80) != 0)
@@ -202,20 +202,20 @@ GameWindow *GameWindowManager::gogoGadgetStaticText(GameWindow *parent,
 		textWin = winCreate(parent);
 		if (textWin != 0)
 		{
-			textWin->winSetOwner(parent->owner);
+			(textWin->*uOwner.setOwner)(parent->owner);
 
 			TextData *data = new TextData;
 			memcpy(data, textData, sizeof(TextData));
 			data->text = TheDisplayStringManager->newDisplayString();
 			unsigned int status = parent->instanceData->status;
 			data->text->setWordWrapCentered((status & 0x40000) != 0);
-			textWin->winSetUserData(data);
+			(textWin->*uUserData.setUserData)(data);
 
 			assignDefaultGadgetLook(textWin, defaultFont, defaultVisual);
 
 			UnicodeString text = winTextLabelToText(parent->instanceData->textLabel);
 			if (text.getLength())
-				GadgetStaticTextSetText(textWin, text);
+				uStaticText.setStaticText(textWin, text);
 		}
 		return textWin;
 	}
