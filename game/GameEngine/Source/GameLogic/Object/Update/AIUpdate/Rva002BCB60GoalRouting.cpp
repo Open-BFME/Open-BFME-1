@@ -2,7 +2,8 @@
 //
 // Address-derived recovery for the Giant Bird goal-routing body at retail
 // RVA 0x002BCB60.  The selector call is the adjacent 0x002BC9C0 body; the
-// two goal sinks and the height adjustment retain their retail ILT aliases.
+// two goal sinks and the height adjustment call their retail ILT thunks
+// (?j_*) directly through function-local member-pointer unions.
 
 struct Coord3D
 {
@@ -14,10 +15,7 @@ struct Coord3D
 
 class Rva002BCB60Thing
 {
-public:
-	void setHeight(float height);
-
-	private:
+private:
 	unsigned char m_unreconstructed000[0x40];
 
 	public:
@@ -34,17 +32,12 @@ class Rva002BCB60QueryObject
 class Rva002BCB60AerialPathfinder
 {
 public:
-	bool query(Rva002BCB60Thing *thing, Rva002BCB60QueryObject *queryObject,
-		float range, void *mode);
-	bool tryQuery(Rva002BCB60QueryObject *queryObject, float range,
-		Coord3D *result);
 };
 
 class Rva002BCB60Owner
 {
 public:
 	int choose(void *mode, int fullRange);
-	unsigned char checkHeight();
 	void route(void *mode, Coord3D *position, int source);
 
 private:
@@ -64,15 +57,23 @@ private:
 
 class Rva002BC260GoalOwner
 {
-public:
-	void run(void *position, void *goalData, void *unused, void *source);
 };
 
-#pragma comment(linker, "/alternatename:?query@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60Thing@@PAVRva002BCB60QueryObject@@MPAX@Z=?j_0002fcd9@@YAXXZ")
-#pragma comment(linker, "/alternatename:?tryQuery@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60QueryObject@@MPAUCoord3D@@@Z=?j_0003e13a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?checkHeight@Rva002BCB60Owner@@QAEEXZ=?j_0004539f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setHeight@Rva002BCB60Thing@@QAEXM@Z=?j_000281ff@@YAXXZ")
-#pragma comment(linker, "/alternatename:?run@Rva002BC260GoalOwner@@QAEXPAX000@Z=?j_0000795a@@YAXXZ")
+// Retail ILT thunks the retail callers route through.
+extern void j_0002fcd9();	// ?query@Rva002BCB60AerialPathfinder
+extern void j_0003e13a();	// ?tryQuery@Rva002BCB60AerialPathfinder
+extern void j_0004539f();	// ?checkHeight@Rva002BCB60Owner
+extern void j_000281ff();	// ?setHeight@Rva002BCB60Thing
+extern void j_0000795a();	// ?run@Rva002BC260GoalOwner
+
+typedef bool (Rva002BCB60AerialPathfinder::*QueryFn)(Rva002BCB60Thing *thing,
+	Rva002BCB60QueryObject *queryObject, float range, void *mode);
+typedef bool (Rva002BCB60AerialPathfinder::*TryQueryFn)(Rva002BCB60QueryObject *queryObject,
+	float range, Coord3D *result);
+typedef unsigned char (Rva002BCB60Owner::*CheckHeightFn)();
+typedef void (Rva002BCB60Thing::*SetHeightFn)(float height);
+typedef void (Rva002BC260GoalOwner::*RunFn)(void *position, void *goalData,
+	void *unused, void *source);
 
 class AerialPathfinder;
 extern AerialPathfinder *TheAerialPathfinder;
@@ -90,19 +91,23 @@ int Rva002BCB60Owner::choose(void *mode, int fullRange)
 
 	if ((unsigned char)fullRange != 0)
 	{
+		union { void (*fn)(); QueryFn call; } query = { j_0002fcd9 };
 		float range = thing->m_heightC0 + thing->m_heightC0 + m_height468;
-		if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400, range, mode))
+		if (!(((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->*query.call)(thing,
+			&m_queryObject400, range, mode))
 			return 1;
 	}
 	else
 	{
+		union { void (*fn)(); QueryFn call; } query = { j_0002fcd9 };
 		float twiceHeight = m_height468 + m_height468;
-		if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400,
+		if (!(((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->*query.call)(thing,
+			&m_queryObject400,
 			twiceHeight
 				- thing->m_heightC0 * 0.5f, mode))
 			return 1;
-		if (((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400,
-			twiceHeight, mode))
+		if ((((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->*query.call)(thing,
+			&m_queryObject400, twiceHeight, mode))
 		{
 			// Continue to the height check below.
 		}
@@ -112,14 +117,20 @@ int Rva002BCB60Owner::choose(void *mode, int fullRange)
 		}
 	}
 
-	if (!checkHeight())
-		return 0;
+	{
+		union { void (*fn)(); CheckHeightFn call; } checkHeight = { j_0004539f };
+		if (!(this->*checkHeight.call)())
+			return 0;
+	}
 
 	// Preserve the retail x87 load of the current height before the offset.
 	Coord3D result;
-	if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->tryQuery(&m_queryObject400,
-		(volatile float &)m_height468 + 10.0f, &result))
-		return 0;
+	{
+		union { void (*fn)(); TryQueryFn call; } tryQuery = { j_0003e13a };
+		if (!(((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->*tryQuery.call)(
+			&m_queryObject400, (volatile float &)m_height468 + 10.0f, &result))
+			return 0;
+	}
 	if (result.z - 2.0f > thing->m_height40)
 	{
 		if (m_goalRange478 < thing->m_height40)
@@ -131,6 +142,9 @@ int Rva002BCB60Owner::choose(void *mode, int fullRange)
 // ?route@Rva002BCB60Owner@@QAEXPAXPAUCoord3D@@H@Z
 void Rva002BCB60Owner::route(void *mode, Coord3D *position, int source)
 {
+	union { void (*fn)(); SetHeightFn call; } setHeight = { j_000281ff };
+	union { void (*fn)(); RunFn call; } run = { j_0000795a };
+
 	int state = choose(mode, 0);
 	if (state == 0)
 		return;
@@ -144,15 +158,15 @@ void Rva002BCB60Owner::route(void *mode, Coord3D *position, int source)
 	if (state == 1)
 	{
 		Rva002BCB60Thing *thing = m_thing;
-		thing->setHeight(thing->m_height40 + 5.0f);
-		((Rva002BC260GoalOwner *)this)->run(&goal,
+		(thing->*setHeight.call)(thing->m_height40 + 5.0f);
+		(((Rva002BC260GoalOwner *)this)->*run.call)(&goal,
 			&g_012F02D8, 0, (void *)source);
 	}
 	else if (state == 2)
 	{
 		Rva002BCB60Thing *thing = m_thing;
-		thing->setHeight(thing->m_height40 - 1.0f);
-		((Rva002BC260GoalOwner *)this)->run(&goal,
+		(thing->*setHeight.call)(thing->m_height40 - 1.0f);
+		(((Rva002BC260GoalOwner *)this)->*run.call)(&goal,
 			&g_012F02D4, 0, (void *)source);
 	}
 }
