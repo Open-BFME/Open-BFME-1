@@ -177,15 +177,15 @@ void W3DDisplay::drawThirdDebugDisplay()
 				frame += 10 - currentFrame;
 				switch (frame)
 				{
-				case 0: color = 0xffffffa0; break;
-				case 1: color = 0xffa0ffa0; break;
-				case 2: color = 0xffa0a0ff; break;
-				case 3: color = 0xff9696ff; break;
-				case 4: color = 0xff8c8cff; break;
-				case 5: color = 0xff8282ff; break;
-				case 6: color = 0xff8282ff; break;
-				case 7: color = 0xff7878ff; break;
-				case 8: color = 0xff6e6eff; break;
+				case 8: color = 0xffffffa0; break;
+				case 7: color = 0xffa0ffa0; break;
+				case 5:
+				case 6: color = 0xffa0a0ff; break;
+				case 4: color = 0xff9696ff; break;
+				case 3: color = 0xff8c8cff; break;
+				case 2: color = 0xff8282ff; break;
+				case 1: color = 0xff7878ff; break;
+				case 0: color = 0xff6e6eff; break;
 				default:
 					color = g_012F81A9 ? -1 : 0xffff0000;
 					flip = true;
@@ -224,8 +224,8 @@ void W3DDisplay::drawThirdDebugDisplay()
 					{
 					case 1: color = 0xffffffa0; break;
 					case 2: color = 0xffa0ffa0; break;
-					case 3: color = 0xffa0a0ff; break;
-					case 4: color = 0xff9696ff; break;
+					case 3:
+					case 4: color = 0xffa0a0ff; break;
 					case 5: color = 0xff9696ff; break;
 					case 6: color = 0xff8c8cff; break;
 					case 7: color = 0xff8282ff; break;
