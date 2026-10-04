@@ -6107,33 +6107,6 @@ void AIWanderInPlaceState::loadPostProcess( void )
 	AIInternalMoveToState::loadPostProcess();
 }  // end loadPostProcess
 
-// ------------------------------------------------------------------------------------------------
-// ?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIWanderInPlaceState::onEnter()
-{
-	m_origin = *getMachineOwner()->getPosition();
-
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-	if (ai) {
-		ai->chooseLocomotorSet(LOCOMOTORSET_WANDER);
-	}
-
-	Int delta = 3;
-	if (ai->getCurLocomotor()) {
-		delta = REAL_TO_INT_FLOOR( (ai->getCurLocomotor()->getWanderAboutPointRadius()/PATHFIND_CELL_SIZE_F) + 0.5f);
-	}
-	Coord3D offset;
-	offset.x = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-	offset.y = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-	m_goalPosition = m_origin;
-	m_goalPosition.x += offset.x;
-	m_goalPosition.y += offset.y;
-	m_timer = 0;
-	m_waitFrames = 10 + (getMachineOwner()->getID() & 0x7);
-	StateReturnType ret = AIInternalMoveToState::onEnter();
-	return ret;
-}
-
 
 //----------------------------------------------------------------------------------------------------------
 // ?update@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ present-unmatched
