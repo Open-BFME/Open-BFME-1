@@ -113,13 +113,13 @@ public:
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
-// These are the two BFME call-site contracts used by the retail body.  The
-// thunks preserve the image's ILT-mediated calls while the source names retain
-// the ZH W3DShroud ownership established by the reference class.
+// These are the two BFME call-site contracts used by the retail body.  Both
+// retail call sites go through incremental-link thunks, so the calls are made
+// against the thunk addresses directly.
 class W3DShroud;
 
-#pragma comment(linker, "/alternatename:?interpolateFogLevels@W3DShroud@@IAEXPAUtagRECT@@@Z=?j_0001494d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?fillBorderShroudData@W3DShroud@@IAEXEPAVSurfaceClass@@@Z=?j_00045c46@@YAXXZ")
+extern void j_0001494d();
+extern void j_00045c46();
 
 class W3DShroud
 {
@@ -147,9 +147,6 @@ protected:
 	UnsignedByte *m_finalFogData;
 	UnsignedByte *m_currentFogData;
 	UnsignedByte m_trackDirtyCells;
-
-	void interpolateFogLevels(RECT *rect);
-	void fillBorderShroudData(UnsignedByte level, SurfaceClass *surface);
 };
 
 static __forceinline long BfmeFloatToLong(float value)
@@ -214,13 +211,18 @@ void W3DShroud::render(CameraClass *cam)
 	W3DRadarResetSurface surface =
 		reinterpret_cast<W3DRadarResetTexture *>(&m_dstTexture)->getSurfaceLevel();
 
+	typedef void (W3DShroud::*InterpolateFogLevels)(RECT *rect);
+	union { void (*fn)(); InterpolateFogLevels call; } interpolate = {j_0001494d};
 	RECT srcRect;
-	interpolateFogLevels(&srcRect);
+	(this->*interpolate.call)(&srcRect);
 
 	if (m_clearDstTexture)
 	{
+		typedef void (W3DShroud::*FillBorderShroudData)(
+			UnsignedByte level, SurfaceClass *surface);
+		union { void (*fn)(); FillBorderShroudData call; } fill = {j_00045c46};
 		m_clearDstTexture = 0;
-		fillBorderShroudData(m_borderShroudLevel,
+		(this->*fill.call)(m_borderShroudLevel,
 			reinterpret_cast<SurfaceClass *>(&surface));
 	}
 
