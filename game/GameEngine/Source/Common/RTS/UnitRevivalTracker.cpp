@@ -43,6 +43,7 @@ class Gen_000F9C60
 {
 public:
 	Gen_000F9C60(const Gen_000F9C60 &other);
+
 	~Gen_000F9C60(void);
 
 	int m_bfmeA;
@@ -53,10 +54,6 @@ public:
 	BfmeWideWK m_bfmeText;
 	BfmeStrWK m_bfmeName;
 };
-
-#pragma comment(linker, "/alternatename:??0Gen_000F9C60@@QAE@ABV0@@Z=?j_0003ed92@@YAXXZ")
-// Retail unwind state 1 destroys +0x44 through the AudioEventRTS destructor ILT 0x0002671F.
-#pragma comment(linker, "/alternatename:??1Gen_000F9C60@@QAE@XZ=?forward@Rva0002671FAudioEventRTSDestructorThunk@@QAEXXZ")
 
 struct Rva000F9FF0Block14
 {
@@ -76,6 +73,9 @@ extern void j_00004345();
 extern void j_0001c65c();
 extern void j_00021aee();
 extern void j_000347e3();
+extern void j_0003add7();
+extern void j_000022bb();
+extern void j_0002ae23();
 
 enum NameKeyType
 {
@@ -84,22 +84,30 @@ enum NameKeyType
 
 class NameKeyGenerator
 {
-public:
-	NameKeyType nameToKey(const char *name);
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern const AsciiString Rva01336E50EmptyString;
 
-#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z=?j_0003add7@@YAXXZ")
+// Retail ILT 0x0003ADD7 carries thiscall NameKeyGenerator::nameToKey.
+static __forceinline NameKeyType rva0003ADD7(NameKeyGenerator *generator, const char *name)
+{
+	typedef NameKeyType (NameKeyGenerator::*Fn)(const char *);
+	union { void (*fn)(); Fn call; } lookup = { j_0003add7 };
+	return (generator->*lookup.call)(name);
+}
 
 class Overridable
 {
-public:
-	const Overridable *getFinalOverride() const;
 };
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+// Retail ILT 0x00022BB carries the const thiscall Overridable::getFinalOverride.
+static __forceinline const Overridable *rva00022BB(Overridable *overridable)
+{
+	typedef const Overridable *(Overridable::*Fn)();
+	union { void (*fn)(); Fn call; } lookup = { j_000022bb };
+	return (overridable->*lookup.call)();
+}
 
 class Module
 {
@@ -170,7 +178,6 @@ public:
 class Object
 {
 public:
-	Module *findModule(NameKeyType key) const;
 	Rva000F9FF0ExperienceTracker *getExperienceTracker() const { return m_experienceTracker; }
 	int getF370() const { return m_f370; }
 
@@ -182,7 +189,7 @@ public:
 		if (!thingTemplate)
 			result = 0;
 		else if (thingTemplate->m_override)
-			result = reinterpret_cast<const ThingTemplate *>(thingTemplate->m_override->getFinalOverride());
+			result = reinterpret_cast<const ThingTemplate *>(rva00022BB(thingTemplate->m_override));
 		else
 			result = thingTemplate;
 		return result;
@@ -199,7 +206,13 @@ public:
 	Gen_000F9C60 m_gen374;
 };
 
-#pragma comment(linker, "/alternatename:?findModule@Object@@QBEPAVModule@@W4NameKeyType@@@Z=?j_0002ae23@@YAXXZ")
+// Retail ILT 0x0002AE23 carries the const thiscall Object::findModule.
+static __forceinline Module *rva0002AE23(const Object *object, NameKeyType key)
+{
+	typedef Module *(Object::*Fn)(NameKeyType) const;
+	union { void (*fn)(); Fn call; } lookup = { j_0002ae23 };
+	return (object->*lookup.call)(key);
+}
 
 class Rva000FB210Element
 {
@@ -238,8 +251,8 @@ Rva000FB210Element::Rva000FB210Element(Object *object)
 {
 	const ThingTemplate *thingTemplate = object->getFinalTemplate();
 	static NameKeyType respawnUpdateKey =
-		TheNameKeyGenerator->nameToKey("RespawnUpdate");
-	Module *module = object->findModule(respawnUpdateKey);
+		rva0003ADD7(TheNameKeyGenerator, "RespawnUpdate");
+	Module *module = rva0002AE23(object, respawnUpdateKey);
 	if (module != 0)
 	{
 		m_f04 = module->rva00000030();
