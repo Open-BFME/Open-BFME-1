@@ -17668,5 +17668,15 @@
   "after_sha256": "84035138aae90a0585f7bd02d26db7301bd8d9d55b519a3e8ed4e7bd8d631c56",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchPopulateMaxPing.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchPopulateMaxPing.cpp",
+  "old_name": "GadgetComboBoxAddEntryPopulateRemoteIPComboBox",
+  "new_name": "j_0002f338",
+  "before_sha256": "5d0183478aa7dfe2da9aa4ff1b2edfd2cf8d2a30a7c0ee378bf0dd9f035e78e5",
+  "after_sha256": "b8b6b74f7f68aaaebf3901abf6ee919d16b5503a893cc65dadebefacb92fb9c7",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
