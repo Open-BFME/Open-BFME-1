@@ -65,13 +65,16 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AsciiString &name = Rva01336E50EmptyString, int id = 0);
-	~AudioEventRTS();
+	virtual ~AudioEventRTS();
 
 private:
-	unsigned char m_bytes[0x70];
+	// Retail 0x000B31F0 is the public VIRTUAL destructor
+	// (??1AudioEventRTS@@UAE@XZ, defined by AudioEventRTSCopyAndLifetime.cpp).
+	// Declaring it virtual here makes the compiler-generated EH cleanup
+	// funclets reference that real definition directly, so no linker
+	// pragma is needed. vptr + 0x6C keeps sizeof 0x70.
+	unsigned char m_bytes[0x6C];
 };
-
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 
 class Rva001E3F90NuggetBase
 {
