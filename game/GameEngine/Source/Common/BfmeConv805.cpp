@@ -1,3 +1,12 @@
+// The placement form of the global operator new, declared here so that
+// `new (p) BfmeA1187()` below is a plain constructor call and needs no
+// unwinder, exactly as retail's twenty-four bytes show.
+inline void *__cdecl operator new(unsigned int size, void *place)
+{
+	(void)size;
+	return place;
+}
+
 class BfmeSubECJ
 {
 public:
@@ -129,59 +138,74 @@ void BfmeThingECJ::bfmeGoECJ()
 		m_bfmeP->bfmeSet112ECJ(1);
 }
 
-struct BfmeHeldECKa
+// The four names below are the ledger's identities for the bodies this TU
+// calls: ?prepare@Rva007EAA70Owner@@QAEXXZ (0x007EAA70),
+// ?prepare@Rva007EAB40Owner@@QAEXXZ (0x007EAB40), the class-scope allocator
+// ??2Gen007F0130@@SAPAXI@Z (0x007F0130) and the constructor
+// ??0BfmeA1187@@QAE@XZ (0x00806300). The placeholder names this TU used
+// (bfmeDoECKa, bfmeDoECKb, bfmeAllocECMa, bfmeCtorECMa) named nothing.
+// BfmeThingECMa stays because ?bfmeGoECMa@@YAPAVBfmeThingECMa@@XZ is the
+// ledger's own spelling of this TU's return type.
+struct Rva007EAA70Owner
 {
 	unsigned char m_bfmeHead[0x280];
 	void *m_bfmeX;
-	void bfmeDoECKa();
+	void prepare();
 };
 
 struct BfmeThingECKa
 {
 	void *bfmeGoECKa();
 	unsigned char m_bfmeHead[4];
-	BfmeHeldECKa *m_bfmeP;
+	Rva007EAA70Owner *m_bfmeP;
 };
 
 void *BfmeThingECKa::bfmeGoECKa()
 {
-	m_bfmeP->bfmeDoECKa();
+	m_bfmeP->prepare();
 	return m_bfmeP->m_bfmeX;
 }
 
-struct BfmeHeldECKb
+struct Rva007EAB40Owner
 {
 	unsigned char m_bfmeHead[0x29c];
 	void *m_bfmeX;
-	void bfmeDoECKb();
+	void prepare();
 };
 
 struct BfmeThingECKb
 {
 	void *bfmeGoECKb();
 	unsigned char m_bfmeHead[4];
-	BfmeHeldECKb *m_bfmeP;
+	Rva007EAB40Owner *m_bfmeP;
 };
 
 void *BfmeThingECKb::bfmeGoECKb()
 {
-	m_bfmeP->bfmeDoECKb();
+	m_bfmeP->prepare();
 	return m_bfmeP->m_bfmeX;
 }
 
-class BfmeThingECMa
+class BfmeA1187
 {
 public:
-	BfmeThingECMa *bfmeCtorECMa();
+	BfmeA1187();
 };
 
-void *__cdecl bfmeAllocECMa(unsigned int n);
+class BfmeThingECMa
+{
+};
+
+class Gen007F0130
+{
+public:
+	static void *__cdecl operator new(unsigned int size);
+};
 
 BfmeThingECMa *bfmeGoECMa()
 {
-	void *p = bfmeAllocECMa(0x48);
+	void *p = Gen007F0130::operator new(0x48);
 	if (p)
-		return ((BfmeThingECMa *)p)->bfmeCtorECMa();
+		return (BfmeThingECMa *)new(p) BfmeA1187();
 	return 0;
 }
-
