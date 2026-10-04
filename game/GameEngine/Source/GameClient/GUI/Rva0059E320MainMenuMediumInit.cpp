@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob0
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob1
 // Open-BFME: clean reconstruction of the BFME MainMenuMedium transition init.
 // The retail body is the 293-byte boundary at 0x0059E320.  Its fields are the
 // BFME layout proven by the adjacent medium update body: frame bounds at +10
