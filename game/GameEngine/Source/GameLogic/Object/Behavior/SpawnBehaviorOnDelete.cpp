@@ -60,7 +60,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
-#pragma comment(linker, "/alternatename:?destroyObject@GameLogic@@QAEXPAVObject@@@Z=?j_0001d0de@@YAXXZ")
+extern void j_0001d0de();
 
 void SpawnBehavior::onDelete()
 {
@@ -79,7 +79,9 @@ void SpawnBehavior::onDelete()
 		entry = entry->next;
 		if (object && ((*(unsigned char *)((char *)object + 0x344) & 1) == 0))
 		{
-			logic->destroyObject(object);
+			typedef void (GameLogic::*FnDestroy)(Object *);
+			union { void (*fn)(); FnDestroy call; } destroy = { j_0001d0de };
+			(logic->*destroy.call)(object);
 			logic = TheGameLogic;
 		}
 	}
