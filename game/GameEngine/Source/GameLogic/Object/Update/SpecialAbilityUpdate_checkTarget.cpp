@@ -6,8 +6,6 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef Int ObjectID;
 
-#pragma comment(linker, "/alternatename:?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z=?j_000077b6@@YAXXZ")
-
 class UpgradeTemplate;
 
 class BfmeThingND
@@ -19,6 +17,7 @@ public:
 class UpgradeCenter;
 extern UpgradeCenter *TheUpgradeCenter;
 extern void j_0001df16();
+extern void j_000077b6();
 
 static void *bfmeFindUpgrade(const UnsignedInt *mask)
 {
@@ -74,8 +73,6 @@ public:
 };
 
 #define BFME_HAVE_OBJECTID
-#define OBJECT_TU_MEMBERS \
-	Bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
 #include "../object.h"
 
 class GameLogic
@@ -122,7 +119,9 @@ Bool SpecialAbilityUpdate::checkTarget(Object *target)
 		goto fail;
 	}
 
-	if (target->affectedByUpgrade(
+	typedef Bool (Object::*AffectedByUpgrade)(const UpgradeTemplate *) const;
+	union { void (*fn)(); AffectedByUpgrade call; } u = { j_000077b6 };
+	if ((target->*u.call)(
 		reinterpret_cast<const UpgradeTemplate *>(upgrade)))
 		return true;
 
