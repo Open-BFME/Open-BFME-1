@@ -103,8 +103,10 @@ public:
 
 void *bfmeGo929C( void );
 
-extern "C" const void *bfmeVftRva007F6D60Child[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva007F6D60Child=??_7Rva007F6D60Child@@6B@")
+// 0x0112B5C4 is the vftable Rva007F6D60ChildConstructor.cpp emits (ledger
+// dir32 row ??_7Rva007F6D60Child@@6B@); bfmeVftRva007F6D60Child was a
+// stand-in spelling previously kept alive by a linker alias pragma.
+extern "C" void *__identifier("??_7Rva007F6D60Child@@6B@")[];
 extern void *g_bfmeVftBTWB[];
 extern const void *Rva0112B5F0[];
 extern const void *g_0112B800[];
@@ -116,7 +118,7 @@ struct Rva007F6D60Child
 {
 	~Rva007F6D60Child()
 	{
-		m_vftable = (unsigned)bfmeVftRva007F6D60Child;
+		m_vftable = (unsigned)__identifier("??_7Rva007F6D60Child@@6B@");
 		m_08 = 0;
 		m_chain3C.m();
 		m_chain2C.m();
