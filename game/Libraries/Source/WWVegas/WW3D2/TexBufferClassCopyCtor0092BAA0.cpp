@@ -6,8 +6,10 @@
 // and returns this (mov eax,esi idiom). The owner is identified by the
 // installed vtable, shared with the (int, name) constructor at 0x0092BA60.
 
-extern "C" const void *bfmeVftTexBufferClass[];
-#pragma comment(linker, "/alternatename:_bfmeVftTexBufferClass=??_7TexBufferClass@@6B@")
+// Retail installs vtable 0x0113C340, whose linker name is ??_7TexBufferClass@@6B@
+// (targets/game/reverse/dir32_addresses.csv). The extern binds the object file
+// to that exact symbol, so no stand-in name or linker alias is needed.
+extern "C" const void *__identifier("??_7TexBufferClass@@6B@")[];
 
 class BfmeOwnVVE
 {
@@ -24,5 +26,5 @@ public:
 TexBufferClass::TexBufferClass(const TexBufferClass &other)
 	: BfmeOwnVVE(other)
 {
-	*(unsigned int *)this = (unsigned int)bfmeVftTexBufferClass;
+	*(unsigned int *)this = (unsigned int)__identifier("??_7TexBufferClass@@6B@");
 }
