@@ -22,8 +22,6 @@ public:
 
 extern void j_0000f015();
 extern void j_00038140();
-#pragma comment(linker, "/alternatename:??0?$_Vector_base@VBfmeOwnVUM@@V?$allocator@VBfmeOwnVUM@@@_STL@@@_STL@@QAE@IABV?$allocator@VBfmeOwnVUM@@@1@@Z=?j_00038140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?get_allocator@?$vector@VBfmeOwnVUM@@V?$allocator@VBfmeOwnVUM@@@_STL@@@_STL@@QBE?AV?$allocator@VBfmeOwnVUM@@@2@XZ=?j_0000f015@@YAXXZ")
 
 namespace _STL
 {
@@ -55,9 +53,22 @@ namespace _STL
 		vector(const vector &other);
 	};
 
+	// Retail routes vector::get_allocator through the ILT thunk at 0x0000f015.
+	// The thunk is the thiscall member get_allocator, so a member pointer
+	// taken from it makes the call with the same shape.
+	typedef allocator<BfmeOwnVUM> (vector<BfmeOwnVUM, allocator<BfmeOwnVUM> >::*GetAllocatorFn)() const;
+	union GetAllocatorThunk { void (*fn)(); GetAllocatorFn call; };
+	static __forceinline GetAllocatorThunk get_allocator_thunk()
+	{
+		GetAllocatorThunk u;
+		u.fn = j_0000f015;
+		return u;
+	}
+
 	vector<BfmeOwnVUM, allocator<BfmeOwnVUM> >::vector(
 		const vector<BfmeOwnVUM, allocator<BfmeOwnVUM> > &other)
-		: Base((unsigned)(other.m_finish - other.m_start), other.get_allocator())
+		: Base((unsigned)(other.m_finish - other.m_start),
+			(other.*get_allocator_thunk().call)())
 	{
 		T *end = other.m_finish;
 		T *source = other.m_start;
