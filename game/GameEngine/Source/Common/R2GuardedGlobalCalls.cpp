@@ -249,13 +249,13 @@ int Rva00739D20( int value, bool enabled )
 	int result = 0;
 	switch ( value - 20 )
 	{
-	case 0:
+	case 1:
 		result = enabled ? 5 : 2;
 		break;
-	case 1:
+	case 2:
 		result = 2;
 		break;
-	case 2:
+	case 0:
 		result = 1;
 		break;
 	case 3:
@@ -275,19 +275,19 @@ int Rva00739CC0( int value, bool enabled )
 	int result = 0;
 	switch ( value - 1 )
 	{
-	case 0:
+	case 1:
 		result = 0x16;
 		break;
-	case 1:
+	case 4:
 		result = enabled ? 0x15 : 0x16;
 		break;
-	case 2:
+	case 0:
 		result = 0x14;
 		break;
-	case 3:
+	case 2:
 		result = 0x17;
 		break;
-	case 4:
+	case 3:
 		result = 0x18;
 		break;
 	default:
