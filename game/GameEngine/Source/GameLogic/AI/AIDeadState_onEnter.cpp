@@ -72,15 +72,15 @@ typedef BitFlags<320> ModelConditionFlags;
 
 class Object;
 
+// Retail reaches ScriptEngine::notifyOfObjectCreationOrDestruction through the
+// ILT thunk at 0x0003B15B, so the call site names the thunk directly.
+extern void j_0003b15b();
+
 class ScriptEngine
 {
-public:
-	void notifyOfObjectCreationOrDestruction();
 };
 
 extern ScriptEngine *TheScriptEngine;
-
-#pragma comment(linker, "/alternatename:?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ=?j_0003b15b@@YAXXZ")
 
 class Pathfinder
 {
@@ -114,12 +114,12 @@ class Overridable
 public:
 	virtual ~Overridable();
 
-	const Overridable *getFinalOverride() const;
-
 	Overridable *m_nextOverride;
 };
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+// Retail reaches Overridable::getFinalOverride through the ILT thunk at
+// 0x000022BB, so the call site names the thunk directly.
+extern void j_000022bb();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
@@ -145,7 +145,15 @@ public:
 		if (tmpl == 0)
 			return 0;
 		if (tmpl->m_nextOverride)
-			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+		{
+			typedef const Overridable *(Overridable::*GetFinalOverride)() const;
+			union
+			{
+				void (*fn)();
+				GetFinalOverride call;
+			} u = { j_000022bb };
+			tmpl = (const ThingTemplate *)(tmpl->m_nextOverride->*u.call)();
+		}
 		return tmpl;
 	}
 
@@ -238,7 +246,13 @@ StateReturnType AIDeadState::onEnter()
 
 		obj->clearAndSetModelConditionFlags(nonDyingStuff,
 			ModelConditionFlags(ModelConditionFlags::kInit, MODELCONDITION_DYING));
-		TheScriptEngine->notifyOfObjectCreationOrDestruction();
+		typedef void (ScriptEngine::*NotifyOfObjectCreationOrDestruction)();
+		union
+		{
+			void (*fn)();
+			NotifyOfObjectCreationOrDestruction call;
+		} u = { j_0003b15b };
+		(TheScriptEngine->*u.call)();
 
 		if (obj->isKindOf(KINDOF_INFANTRY))
 			TheAI->pathfinder()->removeObjectFromPathfindMap(obj);
