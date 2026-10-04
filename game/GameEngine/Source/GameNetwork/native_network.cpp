@@ -353,15 +353,20 @@ public:
 	virtual void dispatchEvents();
 };
 
-extern "C" const void *bfmeVftBFMENetworkInterfaceBase[];
-#pragma comment(linker, "/alternatename:_bfmeVftBFMENetworkInterfaceBase=??_7Rva00651690Deleting@@6B@")
+// BFMENetworkInterfaceBase has no slots of its own: the destructor below is
+// the whole class, so its only vftable holds the single scalar deleting
+// destructor that retail shares with the other one-virtual-slot classes.  That
+// vftable is emitted by Rva00651690Deleting in
+// game/GameEngine/Source/Common/ScalarDeletingDestructors.cpp, so bind the
+// symbol by its real mangled name instead of aliasing a stand-in.
+extern "C" const char __identifier("??_7Rva00651690Deleting@@6B@")[];
 
 class BFMENetworkInterfaceBase
 {
 public:
 	virtual ~BFMENetworkInterfaceBase()
 	{
-		*(const void **)this = bfmeVftBFMENetworkInterfaceBase;
+		*(const void **)this = (const void *)__identifier("??_7Rva00651690Deleting@@6B@");
 	}
 };
 
