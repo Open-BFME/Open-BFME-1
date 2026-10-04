@@ -182,16 +182,6 @@ void LANAPI::OnHasMap( UnsignedInt playerIP, Bool status )
 	}//if
 }// void LANAPI::OnHasMap( UnicodeString player, Bool status ) 
 
-void LANAPI::OnGameStartTimer( Int seconds )
-{
-	UnicodeString text;
-	if (seconds == 1)
-		text.format(TheGameText->fetch("LAN:GameStartTimerSingular"), seconds);
-	else
-		text.format(TheGameText->fetch("LAN:GameStartTimerPlural"), seconds);
-	OnChat(UnicodeString(L"SYSTEM"), m_localIP, text, LANCHAT_SYSTEM);
-}
-
 // ?OnGameOptions@LANAPI@@ present-unmatched
 void LANAPI::OnGameOptions( UnsignedInt playerIP, Int playerSlot, AsciiString options )
 {

@@ -63,7 +63,7 @@ public:
 		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase(
 			*(const StringBase<WCHAR> *)&that );
 	}
-	~UnicodeString( void );
+	~UnicodeString( void ) { ((StringBase<WCHAR> *)this)->releaseBuffer(); }
 
 	void format( UnicodeString fmt, ... );
 
