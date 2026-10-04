@@ -34,27 +34,36 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-#include "coord3d.h"
-
-// Real member implementations from game/Libraries/Source/WWVegas/WWMath/coord3d.cpp.
-// Kept in this TU so VC7.1 can inline the actual coordinate operations.
-inline Coord3D::Coord3D() {}
-inline Coord3D::~Coord3D() {}
-inline Coord3D::Coord3D(const Coord3D &that) { x=that.x; y=that.y; z=that.z; }
-inline Coord3D &Coord3D::Sub2D(const Coord3DBase &that) { x-=that.x; y-=that.y; return *this; }
-inline Coord3D &Coord3D::Sub2D(const Coord3DBase &left, const Coord3DBase &right)
+// TU-local coordinate view. The retail bodies of Coord3D's default ctor,
+// copy ctor, dtor, Sub2D and GetLengthEstimate2D belong to
+// game/Libraries/Source/WWVegas/WWMath/coord3d.cpp, the ledger owner; retail
+// linked without identical-COMDAT folding, so this TU must not emit a second
+// strong definition of any of them. The arithmetic below is byte-for-byte the
+// same code, kept in a TU-local type so VC7.1 still inlines it.
+class Rva00172600Coord3D
 {
-    x = left.x - right.x;
-    y = left.y - right.y;
-    return *this;
-}
-inline float Coord3D::GetLengthEstimate2D() const
-{
-    float ax = fabs(x);
-    float ay = fabs(y);
-    if (ax > ay) return ax + 0.25f * ay;
-    return ay + 0.25f * ax;
-}
+public:
+    Rva00172600Coord3D() {}
+    ~Rva00172600Coord3D() {}
+    Rva00172600Coord3D(const Rva00172600Coord3D &that) { x=that.x; y=that.y; z=that.z; }
+    Rva00172600Coord3D &Sub2D(const Rva00172600Coord3D &that) { x-=that.x; y-=that.y; return *this; }
+    Rva00172600Coord3D &Sub2D(const Rva00172600Coord3D &left, const Rva00172600Coord3D &right)
+    {
+        x = left.x - right.x;
+        y = left.y - right.y;
+        return *this;
+    }
+    float GetLengthEstimate2D() const
+    {
+        float ax = fabs(x);
+        float ay = fabs(y);
+        if (ax > ay) return ax + 0.25f * ay;
+        return ay + 0.25f * ax;
+    }
+    float x;
+    float y;
+    float z;
+};
 
 class Object;
 class Rva00172600AIUpdate;
@@ -102,7 +111,7 @@ public:
 	void *m_vptr;
 	Rva00172600Template *m_template;
 	unsigned char m_pad08[0x30];
-	Coord3D m_position;
+	Rva00172600Coord3D m_position;
 	unsigned char m_pad44[0x30];
 	UnsignedInt m_id;
 	unsigned char m_pad78[0x1c];
@@ -119,7 +128,7 @@ public:
         }
     }
     Rva00172600AIUpdate *getAI() const { return m_ai; }
-	Coord3D *getPosition() { return &m_position; }
+	Rva00172600Coord3D *getPosition() { return &m_position; }
 };
 
 template<int N>
@@ -178,7 +187,7 @@ public:
 	unsigned char m_pad04[0x18];
 	Rva00172600StateMachine *m_machine;
 	unsigned char m_pad20[4];
-	Coord3D m_goalPosition;
+	Rva00172600Coord3D m_goalPosition;
 	unsigned char m_pad30[0x10];
 	UnsignedInt m_ambientPlayingHandle;
 	UnsignedInt m_pathTimestamp;
@@ -245,16 +254,16 @@ typedef Bool (Rva00172600Calls::*Rva00172600BoolNoArgsCall)();
 typedef Int (Rva00172600Calls::*Rva00172600IntNoArgsCall)();
 typedef void (Rva00172600Calls::*Rva00172600VoidIntCall)(Int);
 typedef Bool (Rva00172600Calls::*Rva00172600BoolAdjustCall)(
-	Object *, void *, Coord3D *, const Coord3D *);
+	Object *, void *, Rva00172600Coord3D *, const Rva00172600Coord3D *);
 typedef void (Rva00172600Calls::*Rva00172600VoidObjectCoordCall)(
-	Object *, Coord3D *);
+	Object *, Rva00172600Coord3D *);
 typedef void (Rva00172600Calls::*Rva00172600VoidUpdateGoalCall)(
-	Object *, Coord3D *, Int, const char *, Int);
+	Object *, Rva00172600Coord3D *, Int, const char *, Int);
 typedef Int (Rva00172600Calls::*Rva00172600IntObjectCoordCall)(
-	Object *, Coord3D *);
+	Object *, Rva00172600Coord3D *);
 typedef Bool (Rva00172600Calls::*Rva00172600BoolObjectCall)(Object *);
 typedef Bool (Rva00172600Calls::*Rva00172600BoolCoordIntCall)(
-	Coord3D *, Int);
+	Rva00172600Coord3D *, Int);
 typedef Bool (Rva00172600Calls::*Rva00172600BoolIntCall)(Int);
 typedef void (Rva00172600Calls::*Rva00172600VoidRealCall)(Real);
 
@@ -401,8 +410,8 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			"CritterDesync: AIInternalMoveToState::onEnter() NOT adjustingDestination!!!");
 	}
 
-	Coord3D *position = owner->getPosition();
-	Coord3D delta(*position);
+	Rva00172600Coord3D *position = owner->getPosition();
+	Rva00172600Coord3D delta(*position);
 	delta.Sub2D(m_goalPosition);
 	Real lengthEstimate = delta.GetLengthEstimate2D();
 
@@ -527,4 +536,9 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 // ABI-compatible local spellings resolve to independently witnessed global pins.
 #pragma comment(linker, "/alternatename:?g_012F0239@@3EA=?Glo012F0239@@3_NA")
 #pragma comment(linker, "/alternatename:?g_012ED4FC@@3PAXA=?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A")
-#pragma comment(linker, "/alternatename:?g_01098AD4@@3MA=g_bfmeOffsetDF")
+
+// g_01098AD4 (retail VA 0x01098AD4, float 2.5f, also __real@40200000) is left
+// unresolved on purpose: no object in the tree defines that datum under any
+// spelling, so an alias to g_bfmeOffsetDF only moved the dangling name.  It
+// needs a data row and a defining TU, not a linker directive here.
+
